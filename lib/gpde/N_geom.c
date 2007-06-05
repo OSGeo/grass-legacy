@@ -186,7 +186,7 @@ N_geom_data *N_init_geom_data_2d(struct Cell_head * region,
  * \return area double
  *
  * */
-inline double N_get_geom_data_area_of_cell(N_geom_data * geom, int row)
+double N_get_geom_data_area_of_cell(N_geom_data * geom, int row)
 {
     if (geom->planimetric) {
 	G_debug(6, "N_get_geom_data_area_of_cell: %g", geom->Az);
