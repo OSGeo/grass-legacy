@@ -1233,8 +1233,8 @@ class MapFrame(wx.Frame):
             self._mgr.AddPane(self.maptoolbar.toolbar,
                               wx.aui.AuiPaneInfo().
                               Name("maptoolbar").Caption("Map Toolbar").
-                              ToolbarPane().Top().LeftDockable(True).RightDockable(False).
-                              BottomDockable(False).TopDockable(False).CloseButton(False))
+                              ToolbarPane().Top().LeftDockable(False).RightDockable(False).
+                              BottomDockable(False).TopDockable(True).CloseButton(False))
 
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
