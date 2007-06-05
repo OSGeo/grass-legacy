@@ -818,7 +818,7 @@ class Map:
         else:
             return None
 
-    def addOverlay(self, ovltype=None, type='overlay', command=None,
+    def AddOverlay(self, ovltype=None, type='overlay', command=None,
                    l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Adds overlay (grid, barscale, others?) to list of overlays
@@ -832,7 +832,7 @@ class Map:
             Added layer on success or None
         """
 
-        Debug.msg (2, "Map.addOverlay(): cmd=%s, render=%d" % (command, l_render))
+        Debug.msg (2, "Map.AddOverlay(): cmd=%s, render=%d" % (command, l_render))
         overlay = MapLayer(type='overlay', name=None, cmd=command,
                            active=l_active, hidden=l_hidden, opacity=l_opacity)
 

@@ -424,6 +424,7 @@ class BufferedWindow(wx.Window):
                 self.imagedict[img] = pdc_id # set image PeudoDC ID
 
         Debug.msg (3, "BufferedWindow.GetOverlay(): numberof=%d" % len(self.ovldict))
+
         return self.ovldict
 
 
@@ -1169,9 +1170,9 @@ class MapFrame(wx.Frame):
 
 
         # d.barscale overlay added to rendering overlay list
-        self.Map.addOverlay(0, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
+        self.Map.AddOverlay(0, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
         # d.barscale overlay added to rendering overlay list as placeholder for d.legend
-        self.Map.addOverlay(1, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
+        self.Map.AddOverlay(1, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
 
         #
         # Init map display
@@ -1732,7 +1733,7 @@ class MapFrame(wx.Frame):
         ovltype = id = 0 # index for overlay layer in render
 
         if ovltype not in self.Map.ovlookup:
-            self.Map.addOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
+            self.Map.AddOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
 
         if ovltype in self.params:
             params = self.params[ovltype]
@@ -1791,7 +1792,7 @@ class MapFrame(wx.Frame):
         ovltype = id = 1 # index for overlay layer in render
 
         if ovltype not in self.Map.ovlookup:
-            self.Map.addOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
+            self.Map.AddOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
 
         if ovltype in self.params:
             params = self.params[ovltype]
@@ -1889,7 +1890,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.textdict[id] = (maptext,textfont,textcolor,rotation)
         self.MapWindow.Draw(self.MapWindow.pdc, img=self.MapWindow.textdict[id],
                             drawid=id, pdctype='text', coords=textcoords)
-        self.MapWindow.Update()
+        self.MapWindow.UpdateMap()
 
 
     def GetOptData(self, dcmd, type, params, propwin):
