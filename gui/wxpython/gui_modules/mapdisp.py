@@ -1572,6 +1572,12 @@ class MapFrame(wx.Frame):
         toolsmenu.Destroy()
 
     def OnMeasure(self, event):
+        """
+        Init measurement routine that calculates
+        map distance along transect drawn on
+        map display
+        """
+
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)
 
@@ -1593,26 +1599,32 @@ class MapFrame(wx.Frame):
             self.gismanager.goutput.cmd_output.write('\nMeasuring distance:\n')
 
     def MeasureDist(self, beginpt, endpt):
+        """
+        Calculate map distance from screen distance
+        and print to output window
+        """
         x1,y1 = beginpt
         x2,y2 = endpt
         east = (x2-x1) * self.Map.region["ewres"]
         north = (y2-y1) * self.Map.region["nsres"]
         self.dist = round(math.sqrt(math.pow((east),2) + math.pow((north),2)),3)
         self.totaldist += self.dist
+        self.dist,dunits = self.FormatDist(self.dist)
+        self.totaldist,tdunits = self.FormatDist(self.totaldist)
+        strdist = str(self.dist)
+        strtotdist = str(self.totaldist)
 
         if self.projinfo['proj'] == 'xy' or 'degree' not in self.projinfo['unit']:
             angle = int(math.degrees(math.atan2(north,east)) + 0.5)
             angle = angle+90
             if angle < 0: angle = 360+angle
-            self.gismanager.goutput.cmd_output.write('segment = '+
-                                                 str(self.dist)+
-                                                 '\ttotal distance = '+
-                                                 str(self.totaldist)+'\tbearing = '+str(angle)+'\n')
+
+            mstring = 'segment = %s %s\ttotal distance = %s %s\tbearing = %d deg\n' \
+                % (strdist,dunits,strtotdist,tdunits,angle)
         else:
-            self.gismanager.goutput.cmd_output.write('segment = '+
-                                                 str(self.dist)+
-                                                 '\ttotal distance = '+
-                                                 str(self.totaldist)+'\n')
+            mstring = 'segment = %s %s\ttotal distance = %s %s\n' \
+                % (strdist,dunits,strtotdist,tdunits)
+        self.gismanager.goutput.cmd_output.write(mstring)
 
     def Profile(self, event):
         """
@@ -1622,6 +1634,54 @@ class MapFrame(wx.Frame):
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(700,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
         self.profile.Show()
+
+    def FormatDist(self, dist):
+        """Format length numbers and units in a nice way,
+        as a function of length. From code by Hamish Bowman
+        Grass Development Team 2006"""
+
+        mapunits = self.projinfo['units']
+        if mapunits == 'metres': mapunits = 'meters'
+        outunits = mapunits
+        dist = float(dist)
+        divisor = 1.0
+
+        # figure out which units to use
+        if mapunits == 'meters':
+            if dist > 2500.0:
+                outunits = 'km'
+                divisor = 1000.0
+            else: outunits = 'm'
+        elif mapunits == 'feet':
+            # nano-bug: we match any "feet", but US Survey feet is really
+            #  5279.9894 per statute mile, or 10.6' per 1000 miles. As >1000
+            #  miles the tick markers are rounded to the nearest 10th of a
+            #  mile (528'), the difference in foot flavours is ignored.
+            if dist > 5280.0:
+                outunits = 'miles'
+                divisor = 5280.0
+            else:
+                outunits = 'ft'
+        elif 'degree' in mapunits:
+            if dist < 1:
+                outunits = 'min'
+                divisor = (1/60.0)
+            else:
+                outunits = 'deg'
+
+        # format numbers in a nice way
+
+        if (dist/divisor) >= 2500.0:
+            outdist = round(dist/divisor)
+        elif (dist/divisor) >= 1000.0:
+            outdist = round(dist/divisor,1)
+        elif (dist/divisor) > 0.0:
+            outdist = round(dist/divisor,int(math.ceil(3-math.log10(dist/divisor))))
+        else:
+            outdist = float('%g' % dist/divisor)
+
+        return (outdist,outunits)
+
 
     def Histogram(self, event):
         """
