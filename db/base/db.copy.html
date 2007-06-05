@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
-<em>db.copy</em> allows the user to copy a table between two databases. Databases 
-can be connected through different drivers (see example).
+<em>db.copy</em> allows the user to copy a table between two databases.
+Databases can be connected through different drivers (see example).
 
 <h2>NOTES</h2>
 
@@ -13,7 +13,8 @@ settings are saved in <em>$LOCATION/vector_map/dbln</em>.
 
 <h3>DBF -> PG</h3>
 
-<em>Storing table 'markveggy.dbf' (in current directory) into PostgreSQL through ODBC:</em><br>
+<em>Storing table 'markveggy.dbf' (in current directory) into PostgreSQL
+through ODBC:</em><br>
 
 <div class="code"><pre>
 db.copy from_driver=dbf from_database=$HOME/grassdata/spearfish60/user1/dbf \
@@ -27,7 +28,7 @@ db.copy from_driver=dbf from_database=$HOME/grassdata/spearfish60/user1/dbf \
 <div class="code"><pre>
 db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb" \
   from_table=origtable to_driver=dbf \
-  to_database=$HOME/grassdata/spearfish60/user1/dbf to_table=origtable</tt>
+  to_database=$HOME/grassdata/spearfish60/user1/dbf to_table=origtable
 </pre></div>
 
 
@@ -70,4 +71,5 @@ db.copy from_driver=sqlite from_database=$HOME/grassdata/spearfish60/user1/mysql
 
 Radim Blazek, ITC-irst, Trento, Italy
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
