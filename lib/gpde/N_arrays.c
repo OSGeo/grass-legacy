@@ -175,7 +175,7 @@ int N_get_array_2d_type(N_array_2d * array)
  * \return void
  * */
 
-inline void
+void
 N_get_array_2d_value(N_array_2d * data, int col, int row, void *value)
 {
 
@@ -225,7 +225,7 @@ N_get_array_2d_value(N_array_2d * data, int col, int row, void *value)
  * \param row int
  * \return int - 1 = is null, 0 otherwise
  * */
-inline int N_is_array_2d_value_null(N_array_2d * data, int col, int row)
+int N_is_array_2d_value_null(N_array_2d * data, int col, int row)
 {
 
     if (data->offset == 0) {
@@ -308,7 +308,7 @@ inline int N_is_array_2d_value_null(N_array_2d * data, int col, int row)
  * \return CELL
  *        
  * */
-inline CELL N_get_array_2d_c_value(N_array_2d * data, int col, int row)
+CELL N_get_array_2d_c_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -340,7 +340,7 @@ inline CELL N_get_array_2d_c_value(N_array_2d * data, int col, int row)
  * \return FCELL
  
  * */
-inline FCELL N_get_array_2d_f_value(N_array_2d * data, int col, int row)
+FCELL N_get_array_2d_f_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -372,7 +372,7 @@ inline FCELL N_get_array_2d_f_value(N_array_2d * data, int col, int row)
  * \return DCELL
  *        
  * */
-inline DCELL N_get_array_2d_d_value(N_array_2d * data, int col, int row)
+DCELL N_get_array_2d_d_value(N_array_2d * data, int col, int row)
 {
     CELL value = 0;
     FCELL fvalue = 0.0;
@@ -405,7 +405,7 @@ inline DCELL N_get_array_2d_d_value(N_array_2d * data, int col, int row)
  * \param value char *
  * \return void
  * */
-inline void
+void
 N_put_array_2d_value(N_array_2d * data, int col, int row, char *value)
 {
 
@@ -452,7 +452,7 @@ N_put_array_2d_value(N_array_2d * data, int col, int row, char *value)
  * \param row int
  * \return void
  * */
-inline void N_put_array_2d_value_null(N_array_2d * data, int col, int row)
+void N_put_array_2d_value_null(N_array_2d * data, int col, int row)
 {
 
     G_debug(6,
@@ -516,7 +516,7 @@ inline void N_put_array_2d_value_null(N_array_2d * data, int col, int row)
  * \param value CELL
  * \return void
  * */
-inline void
+void
 N_put_array_2d_c_value(N_array_2d * data, int col, int row, CELL value)
 {
     FCELL fvalue;
@@ -547,7 +547,7 @@ return;
  * \param value FCELL
  * \return void
  * */
-inline void
+void
 N_put_array_2d_f_value(N_array_2d * data, int col, int row, FCELL value)
 {
     CELL  cvalue;
@@ -578,7 +578,7 @@ return;
  * \param value DCELL
  * \return void
  * */
-inline void
+void
 N_put_array_2d_d_value(N_array_2d * data, int col, int row, DCELL value)
 {
     CELL  cvalue;
@@ -822,7 +822,7 @@ int N_get_array_3d_type(N_array_3d * array)
  * \param value void *
  * \return void
  * */
-inline void
+void
 N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
 		     void *value)
 {
@@ -875,7 +875,7 @@ N_get_array_3d_value(N_array_3d * data, int col, int row, int depth,
  * \param depth int
  * \return void
  * */
-inline int
+int
 N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 {
 
@@ -958,7 +958,7 @@ N_is_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
  * \return float
  *
  * */
-inline float
+float
 N_get_array_3d_f_value(N_array_3d * data, int col, int row, int depth)
 {
     float fvalue = 0.0;
@@ -988,7 +988,7 @@ N_get_array_3d_f_value(N_array_3d * data, int col, int row, int depth)
  * \return double
  *
  * */
-inline double
+double
 N_get_array_3d_d_value(N_array_3d * data, int col, int row, int depth)
 {
     float fvalue = 0.0;
@@ -1019,7 +1019,7 @@ N_get_array_3d_d_value(N_array_3d * data, int col, int row, int depth)
  * \param value cahr *
  * \return void
  * */
-inline void
+void
 N_put_array_3d_value(N_array_3d * data, int col, int row, int depth,
 		     char *value)
 {
@@ -1073,7 +1073,7 @@ N_put_array_3d_value(N_array_3d * data, int col, int row, int depth,
  * \param depth int
  * \return void
  * */
-inline void
+void
 N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
 {
 
@@ -1143,7 +1143,7 @@ N_put_array_3d_value_null(N_array_3d * data, int col, int row, int depth)
  * \param value float
  * \return void
  * */
-inline void
+void
 N_put_array_3d_f_value(N_array_3d * data, int col, int row, int depth,
 		       float value)
 {
@@ -1169,7 +1169,7 @@ N_put_array_3d_f_value(N_array_3d * data, int col, int row, int depth,
  * \param value double
  * \return void
  * */
-inline void
+void
 N_put_array_3d_d_value(N_array_3d * data, int col, int row, int depth,
 		       double value)
 {
