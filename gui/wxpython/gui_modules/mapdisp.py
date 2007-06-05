@@ -53,13 +53,6 @@ import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
-icons = ""
-
-if not os.getenv("GRASS_ICONPATH"):
-    icons = os.getenv("GISBASE") + "/etc/gui/icons/"
-else:
-    icons = os.environ["GRASS_ICONPATH"]
-
 # for cmdlinef
 cmdfilename = None
 
@@ -2240,10 +2233,6 @@ if __name__ == "__main__":
 
     import gettext
     gettext.install("gm_map") # replace with the appropriate catalog name
-
-
-    if not os.getenv("GRASS_ICONPATH"):
-        os.environ["GRASS_ICONPATH"]=os.getenv("GISBASE")+"/etc/gui/icons/"
 
     print "Starting monitor <%s>" % (title)
 
