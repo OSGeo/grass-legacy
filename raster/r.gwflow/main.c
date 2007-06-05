@@ -36,7 +36,7 @@ typedef struct
 paramType param;		/*Parameters */
 
 /*- prototypes --------------------------------------------------------------*/
-void set_params();		/*Fill the paramType structure */
+void set_params(void);		/*Fill the paramType structure */
 void copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
 		 struct Cell_head *region, N_array_2d * target);
 N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
@@ -46,7 +46,7 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 /* ************************************************************************* */
 /* Set up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void set_params()
+void set_params(void)
 {
     param.phead = G_define_option();
     param.phead->key = "phead";
