@@ -27,7 +27,7 @@
  *
  * \return N_geom_data *
  * */
-N_geom_data *N_alloc_geom_data()
+N_geom_data *N_alloc_geom_data(void)
 {
     N_geom_data *geom = (N_geom_data *) G_calloc(1, sizeof(N_geom_data));
     geom->area = NULL;

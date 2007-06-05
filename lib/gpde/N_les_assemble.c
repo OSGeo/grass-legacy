@@ -41,7 +41,7 @@ static int make_les_entry_3d(int i, int j, int k, int offset_i, int offset_j,
  *
  * \return N_data_star *
  * */
-inline N_data_star *N_alloc_5star()
+N_data_star *N_alloc_5star(void)
 {
     N_data_star *star = (N_data_star *) G_calloc(1, sizeof(N_data_star));
     star->type = N_5_POINT_STAR;
@@ -57,7 +57,7 @@ inline N_data_star *N_alloc_5star()
  *
  * \return N_data_star *
  * */
-inline N_data_star *N_alloc_7star()
+N_data_star *N_alloc_7star(void)
 {
     N_data_star *star = (N_data_star *) G_calloc(1, sizeof(N_data_star));
     star->type = N_7_POINT_STAR;
@@ -76,7 +76,7 @@ inline N_data_star *N_alloc_7star()
  * \attention The 9 point start is not yet implemented in the matrix assembling function
  *
  * */
-inline N_data_star *N_alloc_9star()
+N_data_star *N_alloc_9star(void)
 {
     N_data_star *star = (N_data_star *) G_calloc(1, sizeof(N_data_star));
     star->type = N_9_POINT_STAR;
@@ -95,7 +95,7 @@ inline N_data_star *N_alloc_9star()
  * \attention The 27 point start is not yet implemented in the matrix assembling function
  *
  * */
-inline N_data_star *N_alloc_27star()
+N_data_star *N_alloc_27star(void)
 {
     N_data_star *star = (N_data_star *) G_calloc(1, sizeof(N_data_star));
     star->type = N_27_POINT_STAR;
@@ -117,7 +117,7 @@ inline N_data_star *N_alloc_27star()
  * \param V double
  * \return N_data_star *
  * */
-inline N_data_star *N_create_5star(double C, double W, double E, double N,
+N_data_star *N_create_5star(double C, double W, double E, double N,
 				   double S, double V)
 {
     N_data_star *star = N_alloc_5star();
@@ -152,7 +152,7 @@ inline N_data_star *N_create_5star(double C, double W, double E, double N,
  * \param V double
  * \return N_data_star *
  * */
-inline N_data_star *N_create_7star(double C, double W, double E, double N,
+N_data_star *N_create_7star(double C, double W, double E, double N,
 				   double S, double T, double B, double V)
 {
     N_data_star *star = N_alloc_7star();
@@ -193,7 +193,7 @@ inline N_data_star *N_create_7star(double C, double W, double E, double N,
  * \param V  double
  * \return N_data_star *
  * */
-inline N_data_star *N_create_9star(double C, double W, double E, double N,
+N_data_star *N_create_9star(double C, double W, double E, double N,
 				   double S, double NW, double SW, double NE,
 				   double SE, double V)
 {
@@ -367,7 +367,7 @@ N_set_les_callback_2d_func(N_les_callback_2d * data,
  *
  * \return N_les_callback_3d *
  * */
-N_les_callback_3d *N_alloc_les_callback_3d()
+N_les_callback_3d *N_alloc_les_callback_3d(void)
 {
     N_les_callback_3d *call;
     call = (N_les_callback_3d *) G_calloc(1, sizeof(N_les_callback_3d *));
@@ -387,7 +387,7 @@ N_les_callback_3d *N_alloc_les_callback_3d()
  *
  * \return N_les_callback_2d *
  * */
-N_les_callback_2d *N_alloc_les_callback_2d()
+N_les_callback_2d *N_alloc_les_callback_2d(void)
 {
     N_les_callback_2d *call;
     call = (N_les_callback_2d *) G_calloc(1, sizeof(N_les_callback_2d *));
@@ -573,7 +573,8 @@ N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
 	for (j = 0; j < geom->rows; j++) {
 	    for (i = 0; i < geom->cols; i++) {
 		/*use all non-inactive cells for les creation */
-		if (N_CELL_INACTIVE != N_get_array_2d_c_value(status, i, j))
+		if (N_CELL_INACTIVE < N_get_array_2d_c_value(status, i, j) &&
+		    N_get_array_2d_c_value(status, i, j) < N_MAX_CELL_STATE)
 		    cell_type_count++;
 	    }
 	}
@@ -612,7 +613,8 @@ N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
 	for (i = 0; i < geom->cols; i++) {
 	    /*count every non-inactive cell */
 	    if (cell_type == N_CELL_DIRICHLET) {
-		if (N_CELL_INACTIVE != N_get_array_2d_c_value(status, i, j)) {
+		if (N_CELL_INACTIVE < N_get_array_2d_c_value(status, i, j) &&
+		    N_get_array_2d_c_value(status, i, j) < N_MAX_CELL_STATE) {
 		    N_put_array_2d_c_value(cell_count, i, j, count);
 		    index_ij[count][0] = i;
 		    index_ij[count][1] = j;
@@ -636,7 +638,7 @@ N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
     }
 
     /* Assemble the matrix in parallel */
-#pragma omp parallel for private(i, j, pos, K, count) schedule(static)
+#pragma omp parallel for private(i, j, pos, count) schedule(static)
     for (count = 0; count < cell_type_count; count++) {
 	i = index_ij[count][0];
 	j = index_ij[count][1];
@@ -789,7 +791,7 @@ int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
     for (y = 0; y < rows; y++) {
 	for (x = 0; x < cols; x++) {
 	    stat = N_get_array_2d_c_value(status, x, y);
-	    if (stat > N_CELL_ACTIVE) {
+	    if (stat > N_CELL_ACTIVE && stat < N_MAX_CELL_STATE) {
 		dvect1[count] = N_get_array_2d_d_value(start_val, x, y);
 		count++;
 	    }
@@ -800,13 +802,17 @@ int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
 	}
     }
 
-    /*performe the matrix vector product and */
+#pragma omp parallel default(shared)
+  {
+    /*performe the matrix vector product */
     if (les->type == N_SPARSE_LES)
 	N_sparse_matrix_vector_product(les, dvect1, dvect2);
     else
 	N_matrix_vector_product(les, dvect1, dvect2);
+#pragma omp for schedule (static) private(i)
     for (i = 0; i < les->cols; i++)
 	les->b[i] = les->b[i] - dvect2[i];
+  }
 
     /*now set the Dirichlet cell rows and cols to zero and the 
      * diagonal entry to 1*/
@@ -814,7 +820,7 @@ int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
     for (y = 0; y < rows; y++) {
 	for (x = 0; x < cols; x++) {
 	    stat = N_get_array_2d_c_value(status, x, y);
-	    if (stat > N_CELL_ACTIVE) {
+	    if (stat > N_CELL_ACTIVE && stat < N_MAX_CELL_STATE) {
 		if (les->type == N_SPARSE_LES) {
 		    /*set the rows to zero */
 		    for (i = 0; i < les->Asp[count]->cols; i++)
@@ -843,7 +849,8 @@ int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
 		    les->A[count][count] = 1.0;
 		}
 	    }
-	    count++;
+	    if (stat >= N_CELL_ACTIVE)
+	        count++;
 	}
     }
 
@@ -869,7 +876,8 @@ int make_les_entry_2d(int i, int j, int offset_i, int offset_j, int count,
     /* active cells build the linear equation system */
     if (cell_type == N_CELL_ACTIVE) {
 	/* dirichlet or transmission cells must be handled like this */
-	if (N_get_array_2d_c_value(status, i + di, j + dj) > N_CELL_ACTIVE)
+	if (N_get_array_2d_c_value(status, i + di, j + dj) > N_CELL_ACTIVE &&
+	    N_get_array_2d_c_value(status, i + di, j + dj) < N_MAX_CELL_STATE)
 	    les->b[count] -=
 		N_get_array_2d_d_value(start_val, i + di, j + dj) * entry;
 	else if (N_get_array_2d_c_value(status, i + di, j + dj) ==
@@ -891,7 +899,8 @@ int make_les_entry_2d(int i, int j, int offset_i, int offset_j, int count,
     }				/* if dirichlet cells should be used then check for all valid cell neighbours */
     else if (cell_type == N_CELL_DIRICHLET) {
 	/* all valid cells */
-	if (N_get_array_2d_c_value(status, i + di, j + dj) > N_CELL_INACTIVE) {
+	if (N_get_array_2d_c_value(status, i + di, j + dj) > N_CELL_INACTIVE &&
+	    N_get_array_2d_c_value(status, i + di, j + dj) < N_MAX_CELL_STATE) {
 	    if ((count + K) >= 0 && (count + K) < les->cols) {
 		G_debug(5,
 			" make_les_entry_2d: (N_CELL_DIRICHLET) create matrix entry at row[%i] col[%i] value %g\n",
@@ -1008,8 +1017,9 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
 	    for (j = 0; j < geom->rows; j++) {
 		for (i = 0; i < geom->cols; i++) {
 		    /*use all non-inactive cells for les creation */
-		    if (N_CELL_INACTIVE !=
-			(int)N_get_array_3d_d_value(status, i, j, k))
+		    if (N_CELL_INACTIVE <
+			(int)N_get_array_3d_d_value(status, i, j, k) &&
+			(int)N_get_array_3d_d_value(status, i, j, k) < N_MAX_CELL_STATE)
 			cell_type_count++;
 		}
 	    }
@@ -1053,8 +1063,8 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
 	for (j = 0; j < geom->rows; j++) {
 	    for (i = 0; i < geom->cols; i++) {
 		if (cell_type == N_CELL_DIRICHLET) {
-		    if (N_CELL_INACTIVE !=
-			N_get_array_3d_d_value(status, i, j, k)) {
+		    if (N_CELL_INACTIVE < (int)N_get_array_3d_d_value(status, i, j, k) &&
+			(int)N_get_array_3d_d_value(status, i, j, k) < N_MAX_CELL_STATE) {
 			N_put_array_3d_d_value(cell_count, i, j, k, count);
 			index_ij[count][0] = i;
 			index_ij[count][1] = j;
@@ -1066,7 +1076,7 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
 		    }
 		}
 		else if (N_CELL_ACTIVE ==
-			 N_get_array_3d_d_value(status, i, j, k)) {
+			 (int)N_get_array_3d_d_value(status, i, j, k)) {
 		    N_put_array_3d_d_value(cell_count, i, j, k, count);
 		    index_ij[count][0] = i;
 		    index_ij[count][1] = j;
@@ -1080,7 +1090,7 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
 	}
     }
 
-#pragma omp parallel for private(i, j, k, pos, K, count) schedule(static)
+#pragma omp parallel for private(i, j, k, pos, count) schedule(static)
     for (count = 0; count < cell_type_count; count++) {
 	i = index_ij[count][0];
 	j = index_ij[count][1];
@@ -1223,7 +1233,7 @@ int N_les_integrate_dirichlet_3d(N_les * les, N_geom_data * geom,
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
 		stat = (int)N_get_array_3d_d_value(status, x, y, z);
-		if (stat > N_CELL_ACTIVE) {
+		if (stat > N_CELL_ACTIVE && stat < N_MAX_CELL_STATE) {
 		    dvect1[count] = N_get_array_3d_d_value(start_val, x, y, z);
 		    count++;
 		}
@@ -1235,13 +1245,17 @@ int N_les_integrate_dirichlet_3d(N_les * les, N_geom_data * geom,
 	}
     }
 
+#pragma omp parallel default(shared)
+  {
     /*performe the matrix vector product and */
     if (les->type == N_SPARSE_LES)
 	N_sparse_matrix_vector_product(les, dvect1, dvect2);
     else
 	N_matrix_vector_product(les, dvect1, dvect2);
+#pragma omp for schedule (static) private(i)
     for (i = 0; i < les->cols; i++)
 	les->b[i] = les->b[i] - dvect2[i];
+  }
 
     /*now set the Dirichlet cell rows and cols to zero and the 
      * diagonal entry to 1*/
@@ -1250,7 +1264,7 @@ int N_les_integrate_dirichlet_3d(N_les * les, N_geom_data * geom,
 	for (y = 0; y < rows; y++) {
 	    for (x = 0; x < cols; x++) {
 		stat = (int)N_get_array_3d_d_value(status, x, y, z);
-		if (stat > N_CELL_ACTIVE) {
+		if (stat > N_CELL_ACTIVE && stat < N_MAX_CELL_STATE) {
 		    if (les->type == N_SPARSE_LES) {
 			/*set the rows to zero */
 			for (i = 0; i < les->Asp[count]->cols; i++)
@@ -1307,7 +1321,7 @@ int make_les_entry_3d(int i, int j, int k, int offset_i, int offset_j,
 
     if (cell_type == N_CELL_ACTIVE) {
 	if ((int)N_get_array_3d_d_value(status, i + di, j + dj, k + dk) >
-	    N_CELL_ACTIVE)
+	    N_CELL_ACTIVE && (int)N_get_array_3d_d_value(status, i + di, j + dj, k + dk) < N_MAX_CELL_STATE)
 	    les->b[count] -=
 		N_get_array_3d_d_value(start_val, i + di, j + dj,
 				       k + dk) * entry;

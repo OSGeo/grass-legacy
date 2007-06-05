@@ -29,7 +29,6 @@ static void lu_decomposition(double **A, int rows);
 static void backward_solving(double **A, double *x, double *b, int rows);
 static void forward_solving(double **A, double *x, double *b, int rows);
 
-
 /***********************************************************
  * GAUSS elimination solver for Ax = b *********************
  * ********************************************************/

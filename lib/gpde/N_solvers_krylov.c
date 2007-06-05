@@ -70,6 +70,7 @@ int N_solver_pcg(N_les * L, int maxit, double err)
     double a0 = 0, a1 = 0, mygamma, tmp = 0;
     int m, rows, i;
     int finished = 2;
+    int error_break;
     N_les *M;
 
     if (L->quad != 1) {
@@ -79,8 +80,7 @@ int N_solver_pcg(N_les * L, int maxit, double err)
 
     /* check for symmetry */
     if (check_symmetry(L) != 1) {
-	G_warning(_("Matrix is not symmetric"));
-	return -1;
+	G_warning(_("Matrix is not symmetric!"));
     }
 
     x = L->x;
@@ -91,6 +91,8 @@ int N_solver_pcg(N_les * L, int maxit, double err)
     p = vectmem(rows);
     v = vectmem(rows);
     z = vectmem(rows);
+
+    error_break = 0;
 
     /*compute the preconditioning matrix */
     M = N_create_diag_precond_matrix(L);
@@ -185,7 +187,7 @@ int N_solver_pcg(N_les * L, int maxit, double err)
 		}
 		else {
 		    G_warning(_("unable to solve the linear equation system"));
-		    return -1;
+		    error_break = 1;
 		}
 	    }
 	    add_vectors_scalar(z, p, p, tmp, rows);
@@ -195,6 +197,13 @@ int N_solver_pcg(N_les * L, int maxit, double err)
 	    G_message(_("sparse PCG -- iteration %i error  %g\n"), m, a0);
 	else
 	    G_message(_("PCG -- iteration %i error  %g\n"), m, a0);
+
+	if(error_break == 1)
+	{
+		finished = -1;
+		break;
+	}
+
 
 	if (a0 < err) {
 	    finished = 1;
@@ -240,6 +249,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
     double a0 = 0, a1 = 0, mygamma, tmp = 0;
     int m, rows, i;
     int finished = 2;
+    int error_break;
 
     if (L->quad != 1) {
 	G_warning(_("The linear equation system is not quadratic"));
@@ -248,8 +258,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
 
     /* check for symmetry */
     if (check_symmetry(L) != 1) {
-	G_warning(_("Matrix is not symmetric"));
-	return -1;
+	G_warning(_("Matrix is not symmetric!"));
     }
 
     x = L->x;
@@ -260,6 +269,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
     p = vectmem(rows);
     v = vectmem(rows);
 
+    error_break = 0;
     /*
      * residual calculation 
      */
@@ -345,7 +355,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
 		}
 		else {
 		    G_warning(_("unable to solve the linear equation system"));
-		    return -1;
+		    error_break = 1;
 		}
 	    }
 	    add_vectors_scalar(r, p, p, tmp, rows);
@@ -355,6 +365,11 @@ int N_solver_cg(N_les * L, int maxit, double err)
 	    G_message(_("sparse CG -- iteration %i error  %g\n"), m, a0);
 	else
 	    G_message(_("CG -- iteration %i error  %g\n"), m, a0);
+
+	if (error_break == 1) {
+	    finished = -1;
+	    break;
+	}
 
 	if (a0 < err) {
 	    finished = 1;
@@ -402,6 +417,7 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
     double alpha = 0, beta = 0, omega, rr0 = 0, error;
     int m, rows, i;
     int finished = 2;
+    int error_break;
 
     if (L->quad != 1) {
 	G_warning(_("The linear equation system is not quadratic"));
@@ -418,6 +434,8 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
     v = vectmem(rows);
     s = vectmem(rows);
     t = vectmem(rows);
+
+    error_break = 0;
 
 #pragma omp parallel
     {
@@ -461,7 +479,7 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 		}
 		else {
 		    G_warning(_("unable to solve linear equation system"));
-		    return -1;
+		    error_break = 1;
 		}
 
 		rr0 = s2;
@@ -513,6 +531,11 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 		      error);
 	else
 	    G_message(_("BiCGStab -- iteration %i error  %g\n"), m, error);
+
+	if (error_break == 1) {
+	    finished = -1;
+	    break;
+	}
 
 	if (error < err) {
 	    finished = 1;
@@ -813,28 +836,30 @@ int check_symmetry(N_les * L)
     G_debug(2, "check_symmetry: Check if matrix is symmetric");
 
     if (L->type == N_SPARSE_LES) {
-	for (i = 0; i < L->rows; i++) {
-	    for (j = 0; j < L->Asp[i]->cols; j++) {
+	for (j = 0; j < L->rows; j++) {
+	    for (i = 1; i < L->Asp[j]->cols; i++) {
 		value1 = 0;
 		value2 = 0;
 		index = 0;
 
-		index = L->Asp[i]->index[j];
-		value1 = L->Asp[i]->values[j];
+		index = L->Asp[j]->index[i];
+		value1 = L->Asp[j]->values[i];
 
-		for (k = 0; k < L->Asp[index]->cols; k++) {
-		    if (L->Asp[index]->index[k] == i) {
+		for (k = 1; k < L->Asp[index]->cols; k++) {
+		    if (L->Asp[index]->index[k] == j) {
 			value2 = L->Asp[index]->values[k];
 			if ((value1 != value2)) {
 			    symm = 0;	/*matrix is unsymmetric */
-			    if (((fabs(value1) - fabs(value2)) >
-				 SYMM_TOLERANCE)) {
+			    if ((fabs((fabs(value1) - fabs(value2))) < SYMM_TOLERANCE)) {
 				symm = 1;	/*matrix is unsymmetric, but within tolerance */
 				G_debug(5,
 					"check_symmetry: sparse matrix is unsymmetric, but within tolerance");
 			    }
-			    else
-				break;
+			    else {
+				G_warning("Matrix unsymmetric: Position [%i][%i] : [%i][%i] \nError: %12.18lf != %12.18lf \ndifference = %12.18lf\nStop symmetry calculation.\n", j, index, index,
+				L->Asp[index]->index[k], value1, value2, fabs(fabs(value1) - fabs(value2)));
+				return symm;
+				}
 			}
 		    }
 		}
@@ -843,17 +868,19 @@ int check_symmetry(N_les * L)
     }
     else {
 	for (i = 0; i < L->rows; i++) {
-	    for (j = 0; j < L->rows; j++) {
+	    for (j = i + 1; j < L->rows; j++) {
 		if (L->A[i][j] != L->A[j][i]) {
 		    symm = 0;	/*matrix is unsymmetric */
-		    if (((fabs(L->A[i][j]) - fabs(L->A[j][i])) >
+		    if ((fabs(fabs(L->A[i][j]) - fabs(L->A[j][i])) <
 			 SYMM_TOLERANCE)) {
 			symm = 1;	/*matrix is unsymmetric, but within tolerance */
 			G_debug(5,
 				"check_symmetry: matrix is unsymmetric, but within tolerance");
 		    }
-		    else
-			break;
+		    else{
+			G_warning("Matrix unsymmetric: Position [%i][%i] : [%i][%i] \nError: %12.18lf != %12.18lf\ndifference = %12.18lf\nStop symmetry calculation.\n", i, j, j, i, L->A[i][j], L->A[j][i], fabs(fabs(L->A[i][j]) - fabs(L->A[j][i])));
+			return symm;
+			}
 		}
 	    }
 	}
@@ -866,7 +893,7 @@ int check_symmetry(N_les * L)
 /*!
  * \brief Compute a diagonal preconditioning matrix for krylov space solver
  *
- * \param les N_les* 
+ * \param L N_les* 
  * \return M N_les* -- the preconditioning matrix
  *
  * */
@@ -882,7 +909,7 @@ N_les *N_create_diag_precond_matrix(N_les * L)
 #pragma omp parallel for schedule (static) private(i) shared(L_new, L, rows)
 	for (i = 0; i < rows; i++) {
 	    N_spvector *spvect = N_alloc_spvector(1);
-	    spvect->values[0] = L->A[i][i];
+	    spvect->values[0] = 1.0/L->A[i][i];
 	    spvect->index[0] = i;
 	    spvect->cols = 1;;
 	    N_add_spvector_to_les(L_new, spvect, i);
@@ -893,7 +920,7 @@ N_les *N_create_diag_precond_matrix(N_les * L)
 #pragma omp parallel for schedule (static) private(i) shared(L_new, L, rows)
 	for (i = 0; i < rows; i++) {
 	    N_spvector *spvect = N_alloc_spvector(1);
-	    spvect->values[0] = L->Asp[i]->values[0];
+	    spvect->values[0] = 1.0/L->Asp[i]->values[0];
 	    spvect->index[0] = i;
 	    spvect->cols = 1;;
 	    N_add_spvector_to_les(L_new, spvect, i);

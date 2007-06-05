@@ -46,7 +46,7 @@ N_spvector *N_alloc_spvector(int cols)
  *
  * This function calls #N_alloc_les_param
  *
- * \params cols int
+ * \param cols int
  * \param rows int
  * \param type int
  * \return N_les *

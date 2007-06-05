@@ -24,7 +24,7 @@
  * \return N_gradient_2d *
  *
  * */
-N_gradient_2d *N_alloc_gradient_2d()
+N_gradient_2d *N_alloc_gradient_2d(void)
 {
     N_gradient_2d *grad;
 
@@ -147,7 +147,7 @@ N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field,
  * \return N_gradient_3d *
  *
  * */
-N_gradient_3d *N_alloc_gradient_3d()
+N_gradient_3d *N_alloc_gradient_3d(void)
 {
     N_gradient_3d *grad;
 
@@ -286,7 +286,7 @@ N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field,
  * \return N_gradient_neighbours_x  *
  *
  * */
-N_gradient_neighbours_x *N_alloc_gradient_neighbours_x()
+N_gradient_neighbours_x *N_alloc_gradient_neighbours_x(void)
 {
     N_gradient_neighbours_x *grad;
 
@@ -381,7 +381,7 @@ N_copy_gradient_neighbours_x(N_gradient_neighbours_x * source,
  * \return N_gradient_neighbours_y  *
  *
  * */
-N_gradient_neighbours_y *N_alloc_gradient_neighbours_y()
+N_gradient_neighbours_y *N_alloc_gradient_neighbours_y(void)
 {
     N_gradient_neighbours_y *grad;
 
@@ -475,7 +475,7 @@ N_copy_gradient_neighbours_y(N_gradient_neighbours_y * source,
  * \return N_gradient_neighbours_z  *
  *
  * */
-N_gradient_neighbours_z *N_alloc_gradient_neighbours_z()
+N_gradient_neighbours_z *N_alloc_gradient_neighbours_z(void)
 {
     N_gradient_neighbours_z *grad;
 
@@ -581,7 +581,7 @@ N_copy_gradient_neighbours_z(N_gradient_neighbours_z * source,
  * \return N_gradient_neighbours_2d *
  *
  * */
-N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d()
+N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d(void)
 {
     N_gradient_neighbours_2d *grad;
 
@@ -761,7 +761,7 @@ N_gradient_neighbours_2d *N_get_gradient_neighbours_2d(N_gradient_field_2d *
  * \return N_gradient_neighbours_3d *
  *
  * */
-N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d()
+N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d(void)
 {
     N_gradient_neighbours_3d *grad;
 

@@ -37,6 +37,10 @@
 #define N_CELL_ACTIVE 1
 #define N_CELL_DIRICHLET 2
 #define N_CELL_TRANSMISSION 3
+/*!
+ * \brief the maximum number of available cell states (eg: boundary condition, inactiven active)
+ * */
+#define N_MAX_CELL_STATE 20
 
 #define N_5_POINT_STAR 0
 #define N_7_POINT_STAR 1
@@ -129,7 +133,7 @@ typedef struct
 
 } N_geom_data;
 
-extern N_geom_data *N_alloc_geom_data();
+extern N_geom_data *N_alloc_geom_data(void);
 extern void N_free_geom_data(N_geom_data * geodata);
 extern N_geom_data *N_init_geom_data_3d(G3D_Region * region3d, N_geom_data * geodata);
 extern N_geom_data *N_init_geom_data_2d(struct Cell_head *region, N_geom_data * geodata);
@@ -325,12 +329,12 @@ typedef struct
 
 extern void N_set_les_callback_3d_func(N_les_callback_3d * data, N_data_star * (*callback_func_3d) ());
 extern void N_set_les_callback_2d_func(N_les_callback_2d * data, N_data_star * (*callback_func_2d) ());
-extern N_les_callback_3d *N_alloc_les_callback_3d();
-extern N_les_callback_2d *N_alloc_les_callback_2d();
-extern N_data_star *N_alloc_5star();
-extern N_data_star *N_alloc_7star();
-extern N_data_star *N_alloc_9star();
-extern N_data_star *N_alloc_27star();
+extern N_les_callback_3d *N_alloc_les_callback_3d(void);
+extern N_les_callback_2d *N_alloc_les_callback_2d(void);
+extern N_data_star *N_alloc_5star(void);
+extern N_data_star *N_alloc_7star(void);
+extern N_data_star *N_alloc_9star(void);
+extern N_data_star *N_alloc_27star(void);
 extern N_data_star *N_create_5star(double C, double W, double E, double N, double S, double V);
 extern N_data_star *N_create_7star(double C, double W, double E, double N, double S, double T, double B, double V);
 extern N_data_star *N_create_9star(double C, double W, double E, double N, double S, double NW, double SW, double NE, double SE, double V);
@@ -566,19 +570,19 @@ typedef struct
 } N_gradient_field_3d;
 
 
-extern N_gradient_2d *N_alloc_gradient_2d();
+extern N_gradient_2d *N_alloc_gradient_2d(void);
 extern void N_free_gradient_2d(N_gradient_2d * grad);
 extern N_gradient_2d *N_create_gradient_2d(double NC, double SC, double WC, double EC);
 extern int N_copy_gradient_2d(N_gradient_2d * source, N_gradient_2d * target);
 extern N_gradient_2d *N_get_gradient_2d(N_gradient_field_2d * field, N_gradient_2d * gradient, int col, int row);
 
-extern N_gradient_3d *N_alloc_gradient_3d();
+extern N_gradient_3d *N_alloc_gradient_3d(void);
 extern void N_free_gradient_3d(N_gradient_3d * grad);
 extern N_gradient_3d *N_create_gradient_3d(double NC, double SC, double WC, double EC, double TC, double BC);
 extern int N_copy_gradient_3d(N_gradient_3d * source, N_gradient_3d * target);
 extern N_gradient_3d *N_get_gradient_3d(N_gradient_field_3d * field, N_gradient_3d * gradient, int col, int row, int depth);
 
-extern N_gradient_neighbours_x *N_alloc_gradient_neighbours_x();
+extern N_gradient_neighbours_x *N_alloc_gradient_neighbours_x(void);
 extern void N_free_gradient_neighbours_x(N_gradient_neighbours_x * grad);
 extern N_gradient_neighbours_x *N_create_gradient_neighbours_x(double NWN,
 							       double NEN,
@@ -589,7 +593,7 @@ extern N_gradient_neighbours_x *N_create_gradient_neighbours_x(double NWN,
 extern int N_copy_gradient_neighbours_x(N_gradient_neighbours_x * source,
 					N_gradient_neighbours_x * target);
 
-extern N_gradient_neighbours_y *N_alloc_gradient_neighbours_y();
+extern N_gradient_neighbours_y *N_alloc_gradient_neighbours_y(void);
 extern void N_free_gradient_neighbours_y(N_gradient_neighbours_y * grad);
 extern N_gradient_neighbours_y *N_create_gradient_neighbours_y(double NWW,
 							       double NEE,
@@ -600,7 +604,7 @@ extern N_gradient_neighbours_y *N_create_gradient_neighbours_y(double NWW,
 extern int N_copy_gradient_neighbours_y(N_gradient_neighbours_y * source,
 					N_gradient_neighbours_y * target);
 
-extern N_gradient_neighbours_z *N_alloc_gradient_neighbours_z();
+extern N_gradient_neighbours_z *N_alloc_gradient_neighbours_z(void);
 extern void N_free_gradient_neighbours_z(N_gradient_neighbours_z * grad);
 extern N_gradient_neighbours_z *N_create_gradient_neighbours_z(double NWZ,
 							       double NZ,
@@ -614,14 +618,14 @@ extern N_gradient_neighbours_z *N_create_gradient_neighbours_z(double NWZ,
 extern int N_copy_gradient_neighbours_z(N_gradient_neighbours_z * source,
 					N_gradient_neighbours_z * target);
 
-extern N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d();
+extern N_gradient_neighbours_2d *N_alloc_gradient_neighbours_2d(void);
 extern void N_free_gradient_neighbours_2d(N_gradient_neighbours_2d * grad);
 extern N_gradient_neighbours_2d *N_create_gradient_neighbours_2d(N_gradient_neighbours_x * x, N_gradient_neighbours_y * y);
 extern int N_copy_gradient_neighbours_2d(N_gradient_neighbours_2d * source, N_gradient_neighbours_2d * target);
 extern N_gradient_neighbours_2d *N_get_gradient_neighbours_2d(N_gradient_field_2d * field, N_gradient_neighbours_2d * gradient, int col, int row);
 
 
-extern N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d();
+extern N_gradient_neighbours_3d *N_alloc_gradient_neighbours_3d(void);
 extern void N_free_gradient_neighbours_3d(N_gradient_neighbours_3d * grad);
 extern N_gradient_neighbours_3d *N_create_gradient_neighbours_3d(N_gradient_neighbours_x * xt, N_gradient_neighbours_x * xc, N_gradient_neighbours_x * xb, N_gradient_neighbours_y * yt,
 				     N_gradient_neighbours_y * yc, N_gradient_neighbours_y * yb, N_gradient_neighbours_z * zt, N_gradient_neighbours_z * zb);
