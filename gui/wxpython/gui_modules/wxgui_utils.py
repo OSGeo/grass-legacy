@@ -188,7 +188,8 @@ class LayerTree(CT.CustomTreeCtrl):
         """Change layer name"""
         Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
 
-        self.Map.ChangeLayerName (self.layer_selected, event.GetLabel())
+        if self.layers[self.layer_selected].type != 'group':
+            self.Map.ChangeLayerName (self.layer_selected, event.GetLabel())
 
     def OnContextMenu (self, event):
         """Context Layer Menu"""
@@ -197,10 +198,13 @@ class LayerTree(CT.CustomTreeCtrl):
             event.Skip()
             return
 
+        ltype = self.layers[self.layer_selected].type
+
+        Debug.msg (4, "LayerTree.OnContextMenu: layertype=%s" % \
+                       ltype)
+
         pos = event.GetPosition()
         pos = self.ScreenToClient(pos)
-        
-        ltype = self.layers[self.layer_selected].type
 
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
@@ -210,43 +214,46 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID5 = wx.NewId()
             self.popupID6 = wx.NewId()
 
-            self.Bind (wx.EVT_MENU, self.gismgr.DeleteLayer,        id=self.popupID1)
-            self.Bind (wx.EVT_MENU, self.RenameLayer,               id=self.popupID2)
-            self.Bind (wx.EVT_MENU, self.OnPopupProperties,         id=self.popupID3)
-
         self.popupMenu = wx.Menu()
         # general item
-        self.popupMenu.Append (self.popupID1, _("Delete"))
-        self.popupMenu.Append (self.popupID2, _("Rename"))
+        self.popupMenu.Append(self.popupID1, text=_("Delete"))
+        self.Bind(wx.EVT_MENU, self.gismgr.DeleteLayer, id=self.popupID1)
+        
+        if ltype != "command": # rename
+            self.popupMenu.Append(self.popupID2, text=_("Rename"))
+            self.Bind(wx.EVT_MENU, self.RenameLayer, id=self.popupID2)
 
         # map layer items
-        if ltype != "group": # properties
+        if ltype != "group" and \
+                ltype != "command": # properties
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID3, text=_("Properties"))
+            self.Bind(wx.EVT_MENU, self.OnPopupProperties, id=self.popupID3)
 
         # specific items
         try:
             mltype = self.layers[self.layer_selected].maplayer.type
         except:
-            return
+            mltype = None
         # vector specific items
-        if mltype == "vector": 
+        if mltype and mltype == "vector": 
             self.popupMenu.AppendSeparator()
-            self.popupMenu.Append(self.popupID4, _("Show attribute table"))
-            self.popupMenu.Append(self.popupID5, _("Start editing"))
+            self.popupMenu.Append(self.popupID4, text=_("Show attribute table"))
+            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
+
+            self.popupMenu.Append(self.popupID5, text=_("Start editing"))
+            self.popupMenu.Append(self.popupID6, text=_("Stop editing"))
+            self.Bind (wx.EVT_MENU, self.OnStartEditing, id=self.popupID5)
+            self.Bind (wx.EVT_MENU, self.OnStopEditing,  id=self.popupID6)
+
             layer = self.layers[self.layer_selected].maplayer
             # enable editing only for vector map layers available in the current mapset
             if layer.GetMapset() != grassenv.env["MAPSET"]:
                 self.popupMenu.Enable (self.popupID5, False)
-            self.popupMenu.Append(self.popupID6, _("Stop editing"))
-            self.popupMenu.Enable(self.popupID6, False)
-
-            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
-            self.Bind (wx.EVT_MENU, self.OnStartEditing,            id=self.popupID5)
-            self.Bind (wx.EVT_MENU, self.OnStopEditing,             id=self.popupID6)
+            self.popupMenu.Enable(self.popupID6, False)            
 
         # raster
-        elif mltype == "raster":
+        elif mltype and mltype == "raster":
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)

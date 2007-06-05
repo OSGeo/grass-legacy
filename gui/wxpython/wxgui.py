@@ -589,8 +589,13 @@ class GMFrame(wx.Frame):
             self.MsgNoLayerSelected()
             return
 
-        dlg = wx.MessageDialog (parent=self, message=_("Are you sure you want delete layer <" + \
-                                                       str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected)) + ">?"),
+        layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
+        if layerName:
+            message = _("Are you sure you want delete layer <" + layerName + ">?")
+        else:
+            message = _("Are you sure you want delete this layer?")
+
+        dlg = wx.MessageDialog (parent=self, message=message,
                                 caption=_("Delete layer"),
                                 style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
