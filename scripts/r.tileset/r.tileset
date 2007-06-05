@@ -117,7 +117,7 @@
 #% answer: 0
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
     exit 1
 fi
@@ -376,7 +376,11 @@ bboxesIntersect() {
 	# I have no way to have general knowledge of meridians
 	# This means rewrite in C I imagine
 	for bi_i in 0 1 ; do
-		calculate IN[$bi_i] "(${bi_A1[$bi_i]} <= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} >= ${bi_B2[$bi_i]}) || (${bi_A1[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} <= ${bi_B2[$bi_i]}) || (${bi_A1[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A1[$bi_i]} <= ${bi_B2[$bi_i]}) || (${bi_A2[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} <= ${bi_B2[$bi_i]})"
+		calculate IN[$bi_i] \
+		"(${bi_A1[$bi_i]} <= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} >= ${bi_B2[$bi_i]}) || \
+		 (${bi_A1[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} <= ${bi_B2[$bi_i]}) || \
+		 (${bi_A1[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A1[$bi_i]} <= ${bi_B2[$bi_i]}) || \
+		 (${bi_A2[$bi_i]} >= ${bi_B1[$bi_i]} && ${bi_A2[$bi_i]} <= ${bi_B2[$bi_i]})"
 	done
 
 	calculate $3 "${IN[0]} && ${IN[1]}"
