@@ -48,11 +48,11 @@
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
- exit 1
+    exit 1
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 PROG=`basename $0`
@@ -74,30 +74,30 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     g.message -e "Unable to create temporary files" 
     exit 1
 fi
-SQLTMP=$TMP.sql
+SQLTMP="$TMP.sql"
 # we need a random name
-TMPNAME=`basename $TMP`
+TMPNAME=`basename "$TMP"`
 
 cleanup()
 {
- #restore settings:
- g.region region=${TMPNAME}
- g.remove region=${TMPNAME} 2> /dev/null
- g.remove rast=${VECTOR}_${TMPNAME} 2> /dev/null
- g.remove MASK > /dev/null 2> /dev/null
- if [ $MASKFOUND -eq 1 ] ; then
-   g.message "Restoring previous MASK..."
-   g.rename ${TMPNAME}_origmask,MASK > /dev/null
- fi
- rm -f $TMP $TMPNAME $TMP.cats $SQLTMP
+   #restore settings:
+   g.region region="$TMPNAME"
+   g.remove region="$TMPNAME" --quiet
+   g.remove rast="${VECTOR}_${TMPNAME}" --quiet
+   g.remove MASK --quiet 2>/dev/null
+   if [ $MASKFOUND -eq 1 ] ; then
+      g.message "Restoring previous MASK..."
+      g.rename "${TMPNAME}_origmask",MASK --quiet
+   fi
+   rm -f "$TMP" "$TMPNAME" "$TMP.cats" "$SQLTMP"
 }
 
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
- cleanup
- exit 1
+   g.message -e 'User break!'
+   cleanup
+   exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
@@ -112,55 +112,55 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$VECTOR mapset=$MAPSET`
+eval `g.findfile element=vector file="$VECTOR" mapset="$MAPSET"`
 if [ ! "$file" ] ; then
-  g.message -e "Vector map '$VECTOR' not found in current mapset"
-  exit 1
+   g.message -e "Vector map <$VECTOR> not found"
+   exit 1
 fi
 #check the input raster map
-eval `g.findfile element=cell file=$RASTER`
+eval `g.findfile element=cell file="$RASTER"`
 if [ ! "$file" ] ; then
-  g.message -e "Input raster map $RASTER not found"
-  exit 1
+   g.message -e "Raster map <$RASTER> not found"
+   exit 1
 fi
 
 #check presence of raster MASK, put it aside
 MASKFOUND=0
 eval `g.findfile element=cell file=MASK`
 if [ "$file" ] ; then
-  g.message "Raster MASK found, temporarily disabled"
-  g.rename MASK,${TMPNAME}_origmask > /dev/null
-  MASKFOUND=1
+   g.message "Raster MASK found, temporarily disabled"
+   g.rename MASK,"${TMPNAME}_origmask" --quiet
+   MASKFOUND=1
 fi
 
 #get RASTER resolution of map which we want to query:
 #fetch separated to permit for non-square cells (latlong etc)
-NSRES=`r.info -s $RASTER | grep nsres | cut -d'=' -f2`
+NSRES=`r.info -s "$RASTER" | grep nsres | cut -d'=' -f2`
 if [ $? -ne 0 ] ; then
- g.message -e "An error occurred reading the input raster map resolution."
- exit 1
+   g.message -e "An error occurred reading the input raster map resolution."
+   exit 1
 fi
-EWRES=`r.info -s $RASTER | grep ewres | cut -d'=' -f2`
+EWRES=`r.info -s "$RASTER" | grep ewres | cut -d'=' -f2`
 
 #save current settings:
-g.region save=${TMPNAME} > /dev/null
+g.region save="$TMPNAME" --quiet
 
 #Temporarily setting raster resolution to $RASTER resolution
 #keep boundary settings
 g.region nsres=$NSRES ewres=$EWRES -a
 
 #prepare raster MASK
-v.to.rast in=$VECTOR out=${VECTOR}_${TMPNAME} use=cat > /dev/null 2> /dev/null
+v.to.rast in="$VECTOR" out="${VECTOR}_${TMPNAME}" use=cat --quiet
 if [ $? -ne 0 ] ; then
- g.message -e "An error occurred while converting vector to raster"
- exit 1
+   g.message -e "An error occurred while converting vector to raster"
+   exit 1
 fi
 
 
 #dump cats to file to avoid "too many argument" problem:
-r.cats ${VECTOR}_${TMPNAME} fs=';' 2> /dev/null | cut -d';' -f1 > $TMP.cats
+r.cats "${VECTOR}_${TMPNAME}" fs=';' --quiet | cut -d';' -f1 > "$TMP.cats"
 #echo "List of categories found: $CATSLIST"
-NUMBER=`cat $TMP.cats | wc -l | awk '{print $1}'`
+NUMBER=`cat "$TMP.cats" | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
    g.message -e "No categories found in raster map"
    exit 1
@@ -168,25 +168,28 @@ fi
 
 #check if DBF driver used, in this case cut to 10 chars col names:
 DBFDRIVER=0
-v.db.connect -g $VECTOR | cut -d' ' -f5 | grep -i dbf > /dev/null
+v.db.connect -g "$VECTOR" | cut -d' ' -f5 | grep -i dbf --quiet
 if [ $? -eq 0 ] ; then
-  DBFDRIVER=1
+   DBFDRIVER=1
 else
-  # in case a table is missing, we'll trap a crash later...
-  DBFDRIVER=0
+   # in case a table is missing, we'll trap a crash later...
+   DBFDRIVER=0
 fi
 # we need this for non-DBF driver:
-DB_SQLDRIVER=`v.db.connect -g $VECTOR | cut -d' ' -f5`
-DB_DATABASE="`v.db.connect -g $VECTOR | cut -d' ' -f4`"
+DB_SQLDRIVER=`v.db.connect -g "$VECTOR" | cut -d' ' -f5`
+DB_DATABASE="`v.db.connect -g "$VECTOR" | cut -d' ' -f4`"
 
+
+unset ADDCOLS
 for i in n min max range mean stddev variance cf_var sum ; do
   #check if column already present
   if [ $DBFDRIVER -eq 1 ] ; then
-     CURRCOLUMN="`echo ${COLPREFIX}_${i} | cut -b1-10`"
+     CURRCOLUMN="`echo "${COLPREFIX}_${i}" | cut -b1-10`"
   else
      CURRCOLUMN="${COLPREFIX}_${i}"
   fi
-  v.info -c $VECTOR 2> /dev/null | sed 's+^+|+g' |sed 's+$+|+g' | grep "|$CURRCOLUMN|" > /dev/null
+  v.info -c $VECTOR --quiet | sed 's+^+|+g' | sed 's+$+|+g' | \
+    grep "|$CURRCOLUMN|" --quiet
   if [ $? -eq 0 ] ; then
     if [ $GIS_FLAG_C -ne 1 ] ; then
        g.message -e "Cannot create column <$CURRCOLUMN> (already present). \
@@ -194,58 +197,68 @@ for i in n min max range mean stddev variance cf_var sum ; do
        exit 1
     fi
   else
-    g.message "Adding column <$CURRCOLUMN>"
-    v.db.addcol map=$VECTOR columns="$CURRCOLUMN double precision"
-    if [ $? -eq 1 ] ; then
-      g.message -e "Cannot continue (problem adding column)."
-      exit 1
+    if [ -n "$ADDCOLS" ] ; then
+       ADDCOLS="$ADDCOLS,"
     fi
+    ADDCOLS="$ADDCOLS $CURRCOLUMN DOUBLE PRECISION"
   fi
 done
 
+g.message -v "Adding columns <$ADDCOLS>"
+v.db.addcol map="$VECTOR" columns="$ADDCOLS"
+if [ $? -eq 1 ] ; then
+   g.message -e "Cannot continue (problem adding columns)."
+   exit 1
+fi
+
+
 #loop over cats and calculate statistics:
+g.message -v "Processing data"
 CURRNUM=1
-for i in `cat $TMP.cats` ; do
- g.message message="Processing category $i ($CURRNUM/$NUMBER)"
- g.remove MASK > /dev/null 2> /dev/null
- r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())" 2> /dev/null
+for i in `cat "$TMP.cats"` ; do
+   g.message -v message="Processing category $i ($CURRNUM/$NUMBER)"
+   g.remove MASK --quiet 2>/dev/null
+   # r.mapcalc doesn't use the parser, so we set the env var version instead
+   GRASS_VERBOSE=0 \
+     r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())"
 
- #n, min, max, range, mean, stddev, variance, coeff_var, sum
- eval `r.univar -g $RASTER | sed 's+nan+NULL+g'`
+   #n, min, max, range, mean, stddev, variance, coeff_var, sum
+   eval `r.univar -g "$RASTER" | sed 's+nan+NULL+g'`
 
- if [ $DBFDRIVER -eq 1 ] ; then
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_n| cut -b1-10`=$n     WHERE cat=$i;" > $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_min| cut -b1-10`=$min WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_max| cut -b1-10`=$max WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_range| cut -b1-10`=$range WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_mean| cut -b1-10`=$mean   WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_stddev| cut -b1-10`=$stddev     WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_variance| cut -b1-10`=$variance WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_cf_var| cut -b1-10`=$coeff_var  WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_sum| cut -b1-10`=$sum     WHERE cat=$i;" >> $SQLTMP
- else
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_n=$n     WHERE cat=$i;" > $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_min=$min WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_max=$max WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_range=$range WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_mean=$mean   WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_stddev=$stddev     WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_variance=$variance WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_cf_var=$coeff_var  WHERE cat=$i;" >> $SQLTMP
-  echo "UPDATE $VECTOR SET ${COLPREFIX}_sum=$sum     WHERE cat=$i;" >> $SQLTMP
- fi
+   if [ $DBFDRIVER -eq 1 ] ; then
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_n| cut -b1-10`=$n     WHERE cat=$i;" > "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_min| cut -b1-10`=$min WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_max| cut -b1-10`=$max WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_range| cut -b1-10`=$range WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_mean| cut -b1-10`=$mean   WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_stddev| cut -b1-10`=$stddev     WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_variance| cut -b1-10`=$variance WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_cf_var| cut -b1-10`=$coeff_var  WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_sum| cut -b1-10`=$sum     WHERE cat=$i;" >> "$SQLTMP"
+   else
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_n=$n     WHERE cat=$i;" > "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_min=$min WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_max=$max WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_range=$range WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_mean=$mean   WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_stddev=$stddev     WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_variance=$variance WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_cf_var=$coeff_var  WHERE cat=$i;" >> "$SQLTMP"
+     echo "UPDATE $VECTOR SET ${COLPREFIX}_sum=$sum     WHERE cat=$i;" >> "$SQLTMP"
+   fi
 
- cat $SQLTMP | db.execute database=$DB_DATABASE driver=$DB_SQLDRIVER
+   db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
+   EXITCODE=$?
 
- CURRNUM=`expr $CURRNUM + 1`
+   CURRNUM=`expr $CURRNUM + 1`
 done
 
-g.remove MASK > /dev/null 2> /dev/null
+g.remove MASK --quiet 2>/dev/null
 
 cleanup
 
 g.message "Statistics calculated from raster map <$RASTER> and uploaded to \
-  attribute table of vector map <$VECTOR>."
+    attribute table of vector map <$VECTOR>."
 g.message "Done."
 
-exit 0
+exit $EXITCODE
