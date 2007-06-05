@@ -326,7 +326,7 @@ class BufferedWindow(wx.Window):
         Return text boundary data
         """
         rotation = float(textinfo[3])
-        
+
         Debug.msg (4, "BufferedWindow.TextBounds(): text=%s, rotation=%f" % \
                    (textinfo[0], rotation))
 
@@ -645,7 +645,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnLeftDown(): use=%s" % \
                    self.mouse["use"])
-        
+
         if self.mouse["use"] == "measure" or self.mouse["use"] == "profile" or \
                (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
             # measure || profile || digit tool
@@ -668,7 +668,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnLeftUp(): use=%s" % \
                    self.mouse["use"])
-        
+
         if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
             # end point of zoom box or drag
             self.mouse['end'] = event.GetPositionTuple()[:]
@@ -736,7 +736,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnButtonDClick(): use=%s" % \
                    self.mouse["use"])
-        
+
         if self.mouse["use"] == "measure":
             # measure
             self.ClearLines()
@@ -778,14 +778,14 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnRightDown(): use=%s" % \
                    self.mouse["use"])
-        
+
         x,y = event.GetPositionTuple()[:]
         l = self.pdc.FindObjects(x=x, y=y, radius=self.hitradius)
         if not l:
             return
-        
+
         id = l[0]
-        
+
         if id != 99:
             if self.pdc.GetIdGreyedOut(id) == True:
                 self.pdc.SetIdGreyedOut(id, False)
@@ -802,7 +802,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.OnRightUp(): use=%s" % \
                    self.mouse["use"])
-        
+
         if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
             if self.parent.digittoolbar.type in ["line", "boundary"]:
                 try:
@@ -846,7 +846,7 @@ class BufferedWindow(wx.Window):
         """
         newx = self.Map.region['w'] + x * self.Map.region["ewres"]
         newy = self.Map.region['n'] - y * self.Map.region["nsres"]
-        
+
         return newx, newy
 
     def Zoom(self, begin, end, zoomtype):
@@ -1609,10 +1609,10 @@ class MapFrame(wx.Frame):
         north = (y2-y1) * self.Map.region["nsres"]
         self.dist = round(math.sqrt(math.pow((east),2) + math.pow((north),2)),3)
         self.totaldist += self.dist
-        self.dist,dunits = self.FormatDist(self.dist)
-        self.totaldist,tdunits = self.FormatDist(self.totaldist)
-        strdist = str(self.dist)
-        strtotdist = str(self.totaldist)
+        d,dunits = self.FormatDist(self.dist)
+        td,tdunits = self.FormatDist(self.totaldist)
+        strdist = str(d)
+        strtotdist = str(td)
 
         if self.projinfo['proj'] == 'xy' or 'degree' not in self.projinfo['unit']:
             angle = int(math.degrees(math.atan2(north,east)) + 0.5)
@@ -1775,7 +1775,7 @@ class MapFrame(wx.Frame):
 
         # update the map canvas
         self.MapWindow.UpdateMap()
-            
+
         dlg.Destroy()
 
         # close properties dialog if open
@@ -1955,7 +1955,7 @@ class DecDialog(wx.Dialog):
         self.params  = params #previously set decoration options to pass back to options dialog
 
         #self.MakeModal(True)
-        
+
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
@@ -2021,13 +2021,13 @@ class TextDialog(wx.Dialog):
     def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_DIALOG_STYLE,
                  ovltype=2,drawid=None):
-        
+
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
         self.ovltype = ovltype
         self.drawid  = drawid
         self.parent  = parent
-        
+
         if drawid in self.parent.MapWindow.textdict:
             self.currText, self.currFont, self.currClr, self.currRot = self.parent.MapWindow.textdict[drawid]
         else:
@@ -2041,7 +2041,7 @@ class TextDialog(wx.Dialog):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, wx.ID_ANY, _("Enter text:"))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        
+
         self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
         self.textentry.SetFont(self.currFont)
         self.textentry.SetForegroundColour(self.currClr)
@@ -2091,7 +2091,7 @@ class TextDialog(wx.Dialog):
         self.Bind(wx.EVT_BUTTON,     self.OnSelectFont, fontbtn)
         self.Bind(wx.EVT_TEXT,       self.OnText,       self.textentry)
         self.Bind(wx.EVT_SPINCTRL,   self.OnRotation,   self.rotation)
-        
+
     def OnText(self, event):
         """Change text string"""
         self.currText = event.GetString()
@@ -2103,7 +2103,7 @@ class TextDialog(wx.Dialog):
                self.currRot)
 
         event.Skip()
-        
+
     def OnSelectFont(self, event):
         """Change font"""
         data = wx.FontData()
