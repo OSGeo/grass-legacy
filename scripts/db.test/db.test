@@ -34,7 +34,7 @@ then
         exec g.parser "$0" "$@"
 fi
 
-test_file=$GIS_OPT_TEST
+test_file="$GIS_OPT_TEST"
 
 expected=`g.tempfile pid=$$`
 result=`g.tempfile pid=$$`
@@ -46,13 +46,13 @@ do
 
     # Copy expected result to temp file
 
-    cat /dev/null > $expected
+    cat /dev/null > "$expected"
 
     if [ $TYPE = "X" ]
     then
         echo "$SQL" | db.execute
     else
-        echo "$SQL" | db.select -c > $result
+        echo "$SQL" | db.select -c > "$result"
     fi
 
     if [ $? -ne 0 ]
@@ -68,12 +68,12 @@ do
         then
 	    break
         fi
-	echo $RES >> $expected
+	echo $RES >> "$expected"
     done
 
     if [ $TYPE = "S" ]
     then
-	diff $result $expected
+	diff "$result" "$expected"
 
 	if [ $? -ne 0 ]
 	then
@@ -83,7 +83,7 @@ do
 	fi
     fi
 
-done < $GISBASE/etc/db.test/$test_file
+done < "$GISBASE/etc/db.test/$test_file"
 
 
 exit 0
