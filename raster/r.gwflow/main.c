@@ -236,7 +236,9 @@ int main(int argc, char *argv[])
     /*read all input maps into the memory and take care of the
      * null values.*/
     N_read_rast_to_array_2d(param.phead->answer, data->phead);
+    N_convert_array_2d_null_to_zero(data->phead);
     N_read_rast_to_array_2d(param.phead->answer, data->phead_start);
+    N_convert_array_2d_null_to_zero(data->phead_start);
     N_read_rast_to_array_2d(param.status->answer, data->status);
     N_convert_array_2d_null_to_zero(data->status);
     N_read_rast_to_array_2d(param.hc_x->answer, data->hc_x);
@@ -277,6 +279,7 @@ int main(int argc, char *argv[])
 
     /* copy the result into the phead array for output or unconfined calculation */
     copy_result(data->status, data->phead_start, les->x, &region, data->phead);
+    N_convert_array_2d_null_to_zero(data->phead);
 
   /****************************************************/
   /*explicite calculation of free groundwater surface */
@@ -323,6 +326,8 @@ int main(int argc, char *argv[])
 	    /* copy the result into the phead array */
 	    copy_result(data->status, data->phead_start, les->x, &region,
 			data->phead);
+    	    N_convert_array_2d_null_to_zero(data->phead);
+
 	     /**/ inner_count++;
 	}
 	while (max_norm > 0.01 && inner_count < 100);
