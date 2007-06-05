@@ -7,8 +7,9 @@ Then univariate statistics are calculated per vector category (cat) from
 the raster map and the results uploaded to the vector map attribute table.
 New columns are generated in the attribute table if not already present.
 <p>
-Six columns are generated (n, min, max, range, mean, stddev, variance, 
+Nine columns are generated (n, min, max, range, mean, stddev, variance, 
 coeff_var, sum) according to the output of <em>r.univar</em>.
+
 
 <H2>NOTES</H2>
 
@@ -17,6 +18,10 @@ present in the vector map attribute table.
 <p>
 If a MASK is present, it will be restored after the script finished.
 The scripts changes temporarily to the resolution of the given raster map.
+<p>
+The module may take a long time to run if the raster region contains a large
+number of cells. In this case the <B>--verbose</B> flag may be used to track
+progress.
 
 
 <H2>EXAMPLES</H2>
@@ -47,4 +52,5 @@ v.db.select myfields
 
 Markus Neteler, CEA (<a href="http://www.eden-fp6project.net/">EDEN Project</a>)
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
