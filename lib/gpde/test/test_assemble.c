@@ -25,17 +25,17 @@
 #include "test_gpde_lib.h"
 
 /* prototypes */
-int test_matrix_assemble_2d();
-int test_matrix_assemble_3d();
-N_array_2d *create_status_array_2d();
-N_array_3d *create_status_array_3d();
-N_array_2d *create_value_array_2d();
-N_array_3d *create_value_array_3d();
+static int test_matrix_assemble_2d(void);
+static int test_matrix_assemble_3d(void);
+static N_array_2d *create_status_array_2d(void);
+static N_array_3d *create_status_array_3d(void);
+static N_array_2d *create_value_array_2d(void);
+static N_array_3d *create_value_array_3d(void);
 
 /* *************************************************************** */
 /* Performe the les assmbling tests ****************************** */
 /* *************************************************************** */
-int unit_test_assemble()
+int unit_test_assemble(void)
 {
     int sum = 0;
 
@@ -58,7 +58,7 @@ int unit_test_assemble()
 /* *************************************************************** */
 /* Create the status array with values of 1 and 2 **************** */
 /* *************************************************************** */
-N_array_2d *create_status_array_2d()
+N_array_2d *create_status_array_2d(void)
 {
     N_array_2d *data;
     int i, j;
@@ -83,7 +83,7 @@ N_array_2d *create_status_array_2d()
 /* *************************************************************** */
 /* Create a value array ****************************************** */
 /* *************************************************************** */
-N_array_2d *create_value_array_2d()
+N_array_2d *create_value_array_2d(void)
 {
     N_array_2d *data;
     int i, j;
@@ -108,7 +108,7 @@ N_array_2d *create_value_array_2d()
 /* *************************************************************** */
 /* Create the status array with values of 1 and 2 **************** */
 /* *************************************************************** */
-N_array_3d *create_status_array_3d()
+N_array_3d *create_status_array_3d(void)
 {
     N_array_3d *data;
     int i, j, k;
@@ -139,7 +139,7 @@ N_array_3d *create_status_array_3d()
 /* *************************************************************** */
 /* Create a value array ****************************************** */
 /* *************************************************************** */
-N_array_3d *create_value_array_3d()
+N_array_3d *create_value_array_3d(void)
 {
     N_array_3d *data;
     int i, j, k;
@@ -171,7 +171,7 @@ N_array_3d *create_value_array_3d()
 /* *************************************************************** */
 /* Test the matrix assembling with 3d array data ***************** */
 /* *************************************************************** */
-int test_matrix_assemble_3d()
+int test_matrix_assemble_3d(void)
 {
     N_geom_data *geom;
     N_les *les;
@@ -225,7 +225,7 @@ int test_matrix_assemble_3d()
 /* *************************************************************** */
 /* Test the matrix assembling with 2d array data ***************** */
 /* *************************************************************** */
-int test_matrix_assemble_2d()
+int test_matrix_assemble_2d(void)
 {
 
     N_geom_data *geom;

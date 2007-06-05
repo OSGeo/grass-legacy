@@ -27,16 +27,16 @@
 #define TEST_N_NUM_COLS_LOCAL 3
 
 /* prototypes */
-N_solute_transport_data2d *create_solute_transport_data_2d();
-N_solute_transport_data3d *create_solute_transport_data_3d();
-int test_solute_transport_2d();
-int test_solute_transport_3d();
+static N_solute_transport_data2d *create_solute_transport_data_2d(void);
+static N_solute_transport_data3d *create_solute_transport_data_3d(void);
+static int test_solute_transport_2d(void);
+static int test_solute_transport_3d(void);
 
 
 /* *************************************************************** */
 /* Performe the solute_transport integration tests ************************* */
 /* *************************************************************** */
-int integration_test_solute_transport()
+int integration_test_solute_transport(void)
 {
     int sum = 0;
 
@@ -61,7 +61,7 @@ int integration_test_solute_transport()
 /* *************************************************************** */
 /* Create valid solute transport data **************************** */
 /* *************************************************************** */
-N_solute_transport_data3d *create_solute_transport_data_3d()
+N_solute_transport_data3d *create_solute_transport_data_3d(void)
 {
     N_solute_transport_data3d *data;
     int i, j, k;
@@ -108,7 +108,7 @@ N_solute_transport_data3d *create_solute_transport_data_3d()
 /* *************************************************************** */
 /* Create valid solute transport data **************************** */
 /* *************************************************************** */
-N_solute_transport_data2d *create_solute_transport_data_2d()
+N_solute_transport_data2d *create_solute_transport_data_2d(void)
 {
     int i, j;
     N_solute_transport_data2d *data;
@@ -158,7 +158,7 @@ N_solute_transport_data2d *create_solute_transport_data_2d()
 /* *************************************************************** */
 /* Test the solute transport in 3d with different solvers ******** */
 /* *************************************************************** */
-int test_solute_transport_3d()
+int test_solute_transport_3d(void)
 {
     N_solute_transport_data3d *data;
     N_geom_data *geom;
@@ -254,7 +254,7 @@ int test_solute_transport_3d()
 /* *************************************************************** */
 /* Test the solute transport in 2d with different solvers ******** */
 /* *************************************************************** */
-int test_solute_transport_2d()
+int test_solute_transport_2d(void)
 {
     N_solute_transport_data2d *data = NULL;
     N_geom_data *geom = NULL;

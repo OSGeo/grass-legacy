@@ -23,14 +23,14 @@
 #include "test_gpde_lib.h"
 
 /* prototypes */
-int test_solvers();
-N_les *create_normal_les(int rows);
-N_les *create_sparse_les(int rows);
+static int test_solvers(void);
+static N_les *create_normal_les(int rows);
+static N_les *create_sparse_les(int rows);
 
 /* ************************************************************************* */
 /* Performe the solver unit tests ****************************************** */
 /* ************************************************************************* */
-int unit_test_solvers()
+int unit_test_solvers(void)
 {
     int sum = 0;
 
@@ -114,7 +114,7 @@ N_les *create_sparse_les(int rows)
 /* *************************************************************** */
 /* Test all implemented solvers for sparse and normal matrices *** */
 /* *************************************************************** */
-int test_solvers()
+int test_solvers(void)
 {
     N_les *les;
     N_les *sples;

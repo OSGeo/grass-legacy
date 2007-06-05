@@ -21,11 +21,12 @@
 //#include <grass/N_heatflow.h>
 #include "test_gpde_lib.h"
 
+static int integration_test_heatflow(void);
 
 /* *************************************************************** */
 /* Performe the heat flow integration tests ********************** */
 /* *************************************************************** */
-int integration_test_heatflow()
+int integration_test_heatflow(void)
 {
     int sum = 0;
 

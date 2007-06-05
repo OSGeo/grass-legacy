@@ -25,17 +25,17 @@
 #include "test_gpde_lib.h"
 
 /* prototypes */
-int test_gradient_2d();
-int test_gradient_3d();
-N_array_2d *create_relax_array_2d();
-N_array_3d *create_relax_array_3d();
-N_array_2d *create_potential_array_2d();
-N_array_3d *create_potential_array_3d();
+static int test_gradient_2d(void);
+static int test_gradient_3d(void);
+static N_array_2d *create_relax_array_2d(void);
+static N_array_3d *create_relax_array_3d(void);
+static N_array_2d *create_potential_array_2d(void);
+static N_array_3d *create_potential_array_3d(void);
 
 /* *************************************************************** */
 /* Performe the gradient tests *********************************** */
 /* *************************************************************** */
-int unit_test_gradient()
+int unit_test_gradient(void)
 {
     int sum = 0;
 
@@ -58,7 +58,7 @@ int unit_test_gradient()
 /* *************************************************************** */
 /* Create the status array with values of 1 and 2 **************** */
 /* *************************************************************** */
-N_array_2d *create_relax_array_2d()
+N_array_2d *create_relax_array_2d(void)
 {
     N_array_2d *data;
     int i, j;
@@ -77,7 +77,7 @@ N_array_2d *create_relax_array_2d()
 /* *************************************************************** */
 /* Create a value array ****************************************** */
 /* *************************************************************** */
-N_array_2d *create_potential_array_2d()
+N_array_2d *create_potential_array_2d(void)
 {
     N_array_2d *data;
     int i, j;
@@ -96,7 +96,7 @@ N_array_2d *create_potential_array_2d()
 /* *************************************************************** */
 /* Create the status array with values of 1 and 2 **************** */
 /* *************************************************************** */
-N_array_3d *create_relax_array_3d()
+N_array_3d *create_relax_array_3d(void)
 {
     N_array_3d *data;
     int i, j, k;
@@ -121,7 +121,7 @@ N_array_3d *create_relax_array_3d()
 /* *************************************************************** */
 /* Create a value array ****************************************** */
 /* *************************************************************** */
-N_array_3d *create_potential_array_3d()
+N_array_3d *create_potential_array_3d(void)
 {
     N_array_3d *data;
     int i, j, k;
@@ -145,7 +145,7 @@ N_array_3d *create_potential_array_3d()
 /* *************************************************************** */
 /* Test the gradient calculation with 3d array data ************** */
 /* *************************************************************** */
-int test_gradient_3d()
+int test_gradient_3d(void)
 {
     N_array_3d *relax = NULL;
     N_array_3d *pot = NULL;
@@ -321,7 +321,7 @@ int test_gradient_3d()
 /* *************************************************************** */
 /* Test the gradient calculation with 2d array data ************** */
 /* *************************************************************** */
-int test_gradient_2d()
+int test_gradient_2d(void)
 {
     N_array_2d *relax = NULL;
     N_array_2d *pot = NULL;

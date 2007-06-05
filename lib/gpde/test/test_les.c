@@ -22,12 +22,12 @@
 
 
 /* prototypes */
-int test_les();
+static int test_les(void);
 
 /* *************************************************************** */
 /* Perfrome the les creation tests ******************************* */
 /* *************************************************************** */
-int unit_test_les_creation()
+int unit_test_les_creation(void)
 {
     int sum = 0;
 
@@ -47,7 +47,7 @@ int unit_test_les_creation()
 /* *************************************************************** */
 /* test the les creation of normal and sparse matirces *********** */
 /* *************************************************************** */
-int test_les()
+int test_les(void)
 {
     N_spvector *spvector = NULL;
     N_les *les = NULL;
