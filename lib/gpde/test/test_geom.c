@@ -24,12 +24,12 @@
 #include "test_gpde_lib.h"
 
 /* prototypes */
-int test_geom_data();
+static int test_geom_data(void);
 
 /* ************************************************************************* */
 /* Performe the geom_data unit tests *************************************** */
 /* ************************************************************************* */
-int unit_test_geom_data()
+int unit_test_geom_data(void)
 {
     int sum = 0;
 
@@ -49,7 +49,7 @@ int unit_test_geom_data()
 /* ************************************************************************* */
 /* ************************************************************************* */
 /* ************************************************************************* */
-int test_geom_data()
+int test_geom_data(void)
 {
     struct Cell_head region2d;
     G3D_Region region3d;
@@ -163,9 +163,6 @@ int test_geom_data()
 	    sum++;
 	}
     }
-
-
-
 
     return sum;
 

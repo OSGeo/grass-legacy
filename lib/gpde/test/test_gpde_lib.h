@@ -24,30 +24,30 @@
 #define TEST_N_NUM_DEPTHS 10
 
 /* Array test functions */
-int unit_test_arrays ();
+extern int unit_test_arrays (void);
 
 /* matrix assembling */
-int unit_test_assemble();
+extern int unit_test_assemble(void);
 
 /* gradient creation and handling tests */
-int unit_test_gradient();
+extern int unit_test_gradient(void);
 
 /* direct and iterative solvers */
-int unit_test_solvers();
+extern int unit_test_solvers(void);
 
 /* test the meth tools of gpde */
-int unit_test_tools();
+extern int unit_test_tools(void);
 
 /* geom_data struct tests */
-int unit_test_geom_data();
+extern int unit_test_geom_data(void);
 
 /* les creation */
-int unit_test_les_creation ();
+extern int unit_test_les_creation (void);
 
 /*gwflow*/
-int integration_test_gwflow ();
+extern int integration_test_gwflow (void);
 
 /* solute transport */
-int integration_test_solute_transport();
+extern int integration_test_solute_transport(void);
 
 #endif

@@ -24,19 +24,19 @@
 #include "test_gpde_lib.h"
 
 /* prototypes */
-int fill_array_2d(N_array_2d * a);
-int fill_array_2d_null(N_array_2d * a);
-int compare_array_2d(N_array_2d * a, N_array_2d * b);
-int fill_array_3d(N_array_3d * a);
-int fill_array_3d_null(N_array_3d * a);
-int compare_array_3d(N_array_3d * a, N_array_3d * b);
-int test_array_2d();
-int test_array_3d();
+static int fill_array_2d(N_array_2d * a);
+static int fill_array_2d_null(N_array_2d * a);
+static int compare_array_2d(N_array_2d * a, N_array_2d * b);
+static int fill_array_3d(N_array_3d * a);
+static int fill_array_3d_null(N_array_3d * a);
+static int compare_array_3d(N_array_3d * a, N_array_3d * b);
+static int test_array_2d(void);
+static int test_array_3d(void);
 
 /* ************************************************************************* */
 /* Performe the array unit tests ******************************************* */
 /* ************************************************************************* */
-int unit_test_arrays()
+int unit_test_arrays(void)
 {
     int sum = 0;
 
@@ -254,7 +254,7 @@ int compare_array_3d(N_array_3d * a, N_array_3d * b)
 /* *************************************************************** */
 /* *************************************************************** */
 /* *************************************************************** */
-int test_array_2d()
+int test_array_2d(void)
 {
     int sum = 0, res = 0;
 
@@ -552,7 +552,7 @@ int test_array_2d()
 /* *************************************************************** */
 /* *************************************************************** */
 /* *************************************************************** */
-int test_array_3d()
+int test_array_3d(void)
 {
     int sum = 0, res = 0;
     char buff[1024];
@@ -805,7 +805,6 @@ int test_array_3d()
     sprintf(buff,
 	    "g.remove rast3d=gpde_lib_test_volume_1,gpde_lib_test_volume_2");
     system(buff);
-
 
     N_free_array_3d(data1);
     N_free_array_3d(data11);

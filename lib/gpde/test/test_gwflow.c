@@ -27,16 +27,16 @@
 #define TEST_N_NUM_COLS_LOCAL 3
 
 /* prototypes */
-N_gwflow_data2d *create_gwflow_data_2d();
-N_gwflow_data3d *create_gwflow_data_3d();
-int test_gwflow_2d();
-int test_gwflow_3d();
+static N_gwflow_data2d *create_gwflow_data_2d(void);
+static N_gwflow_data3d *create_gwflow_data_3d(void);
+static int test_gwflow_2d(void);
+static int test_gwflow_3d(void);
 
 
 /* *************************************************************** */
 /* Performe the gwflow integration tests ************************* */
 /* *************************************************************** */
-int integration_test_gwflow()
+int integration_test_gwflow(void)
 {
     int sum = 0;
 
@@ -60,7 +60,7 @@ int integration_test_gwflow()
 /* *************************************************************** */
 /* Create valid groundwater flow data **************************** */
 /* *************************************************************** */
-N_gwflow_data3d *create_gwflow_data_3d()
+N_gwflow_data3d *create_gwflow_data_3d(void)
 {
     N_gwflow_data3d *data;
     int i, j, k;
@@ -103,7 +103,7 @@ N_gwflow_data3d *create_gwflow_data_3d()
 /* *************************************************************** */
 /* Create valid groundwater flow data **************************** */
 /* *************************************************************** */
-N_gwflow_data2d *create_gwflow_data_2d()
+N_gwflow_data2d *create_gwflow_data_2d(void)
 {
     int i, j;
     N_gwflow_data2d *data;
@@ -142,7 +142,7 @@ N_gwflow_data2d *create_gwflow_data_2d()
 /* *************************************************************** */
 /* Test the groundwater flow in 3d with different solvers ******** */
 /* *************************************************************** */
-int test_gwflow_3d()
+int test_gwflow_3d(void)
 {
 
 
@@ -277,7 +277,7 @@ int test_gwflow_3d()
 }
 
 /* *************************************************************** */
-int test_gwflow_2d()
+int test_gwflow_2d(void)
 {
     N_gwflow_data2d *data;
     N_geom_data *geom;

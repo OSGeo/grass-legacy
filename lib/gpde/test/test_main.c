@@ -34,12 +34,12 @@ typedef struct
 paramType param;		/*Parameters */
 
 /*- prototypes --------------------------------------------------------------*/
-void set_params();		/*Fill the paramType structure */
+static void set_params(void);		/*Fill the paramType structure */
 
 /* ************************************************************************* */
 /* Set up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void set_params()
+void set_params(void)
 {
     param.unit = G_define_option();
     param.unit->key = "unit";
