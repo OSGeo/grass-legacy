@@ -18,8 +18,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import wx
-import wx.aui
-import os, sys, time, glob, math
+import os, sys, math
 import  wx.lib.colourselect as  csel
 
 try:
@@ -80,6 +79,8 @@ class ProfileFrame(wx.Frame):
 
         toolbar = self.__createToolBar()
 
+        self.parent = parent
+
         self.Map = render.Map()  # instance of render.Map to be associated with display
 
         #
@@ -124,7 +125,10 @@ class ProfileFrame(wx.Frame):
         self.profile = None # plot draw object
 
         self.ptitle = 'Profile of %s %s %s' % (self.rast1, self.rast2, self.rast3)
-        self.xlabel = "Distance"
+        if self.parent.projinfo['units'] != '':
+            self.xlabel = 'Distance (%s)' % self.parent.projinfo['units']
+        else:
+            self.xlabel = "Distance along transect"
         self.ylabel = "Cell values"
 
         self.datalist1 = [] #list of distance,value pairs for plotting profile
@@ -179,6 +183,8 @@ class ProfileFrame(wx.Frame):
         self.client.setLogScale((False,False)) # x and y axis set to normal (non-log)
         self.client.SetXSpec(self.xtype)
         self.client.SetYSpec(self.ytype)
+
+
 
 
     def __createToolBar(self):
@@ -356,19 +362,6 @@ class ProfileFrame(wx.Frame):
                         self.seglist.append((cumdist,val))
                         lasteast = east
                         lastnorth = north
-#                    output = os.popen('r.what input=%s east_north=%d,%d' % (self.rast1,east,north), "r").read().strip().split('|')
-#                    val = output[3]
-#
-#                    # calculate distance between coordinate points
-#                    if lasteast and lastnorth:
-#                         dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
-#                    cumdist += dist
-#
-#                    # build a list of distance,value pairs for each segment of transect
-#                    self.seglist.append((cumdist,val))
-#                    lasteast = east
-#                    lastnorth = north
-
                 except:
                     pass
 
@@ -664,7 +657,6 @@ class ProfileFrame(wx.Frame):
                            'Under Construction', wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
-
 
     def PText(self, event):
         """
