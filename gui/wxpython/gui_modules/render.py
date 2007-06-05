@@ -57,7 +57,7 @@ class MapLayer:
     def __del__(self):
         Debug.msg (3, "MapLayer.__del__(): layer=%s, cmd=%s" %
                    (self.name, self.GetCmd(string=True)))
-    
+
     def __renderLayer(self):
         """
         Stores generic command with all parameters in the self.cmdlist variable
@@ -139,7 +139,7 @@ class MapLayer:
         """Return mapset name of the layer or None"""
         if not self.name:
             return None
-        
+
         idxAt = self.name.find('@')
         if idxAt > -1:
             return self.name[idxAt+1:]
@@ -446,7 +446,9 @@ class Map:
             return None
 
     def ProjInfo(self):
-        # get map units from PROJ_UNITS
+        """
+        Return region projection and map units information
+        """
 
         projinfo = {}
         cmdlist = ['g.proj', '-p']
@@ -713,7 +715,7 @@ class Map:
                 layerNameList += layer.name + ','
         Debug.msg (4, "Map.ReoderLayers(): layers=%s" % \
                    (layerNameList))
-        
+
     def ChangeLayer(self, layer, type, command, name=None,
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
