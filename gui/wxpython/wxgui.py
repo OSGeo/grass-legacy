@@ -117,6 +117,7 @@ class GMFrame(wx.Frame):
         self.notebook = self.__createNoteBook()
 
         self.cmdinput = self.__createCommandInput()
+        self.cmdprompt = self.__createCommandPrompt()
         self.menubar = self.__createMenuBar()
         toolbar = self.__createToolBar()
         #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
@@ -149,10 +150,15 @@ class GMFrame(wx.Frame):
         self._auimgr.AddPane(self.notebook, wx.aui.AuiPaneInfo().
                               Left().CentrePane().BestSize((-1,-1)).Dockable(False).
                               CloseButton(False).DestroyOnClose(True).Row(1).Layer(0))
+        self._auimgr.AddPane(self.cmdprompt, wx.aui.AuiPaneInfo().
+                              Bottom().BestSize((-1,25)).Dockable(False).
+                              CloseButton(False).DestroyOnClose(True).
+                              PaneBorder(False).Row(2).Layer(0).Position(0).
+                              Fixed().CaptionVisible(False).PinButton(False))
         self._auimgr.AddPane(self.cmdinput, wx.aui.AuiPaneInfo().
                               Bottom().BestSize((-1,25)).Dockable(False).
                               CloseButton(False).DestroyOnClose(True).
-                              PaneBorder(False).Row(2).Layer(0).
+                              PaneBorder(False).Row(2).Layer(0).Position(1).
                               CaptionVisible(False))
         self._auimgr.Update()
 
@@ -166,6 +172,11 @@ class GMFrame(wx.Frame):
 
         # start default initial display
         self.NewDisplay()
+
+    def __createCommandPrompt(self):
+        """Creates command prompt"""
+        self.cmdprompt = wx.StaticText(self, -1, " command: ")
+        return self.cmdprompt
 
     def __createCommandInput(self):
         """Creates command input area"""
