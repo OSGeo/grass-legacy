@@ -218,7 +218,7 @@ class LayerTree(CT.CustomTreeCtrl):
         # general item
         self.popupMenu.Append(self.popupID1, text=_("Delete"))
         self.Bind(wx.EVT_MENU, self.gismgr.DeleteLayer, id=self.popupID1)
-        
+
         if ltype != "command": # rename
             self.popupMenu.Append(self.popupID2, text=_("Rename"))
             self.Bind(wx.EVT_MENU, self.RenameLayer, id=self.popupID2)
@@ -236,7 +236,7 @@ class LayerTree(CT.CustomTreeCtrl):
         except:
             mltype = None
         # vector specific items
-        if mltype and mltype == "vector": 
+        if mltype and mltype == "vector":
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, text=_("Show attribute table"))
             self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
@@ -250,7 +250,7 @@ class LayerTree(CT.CustomTreeCtrl):
             # enable editing only for vector map layers available in the current mapset
             if layer.GetMapset() != grassenv.env["MAPSET"]:
                 self.popupMenu.Enable (self.popupID5, False)
-            self.popupMenu.Enable(self.popupID6, False)            
+            self.popupMenu.Enable(self.popupID6, False)
 
         # raster
         elif mltype and mltype == "raster":
@@ -958,7 +958,7 @@ class GMConsole(wx.Panel):
                      style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
         #initialize variables
-
+        self.Map = render.Map()
         self.parent = parent
         self.cmd_output = ""
         self.console_command = ""
@@ -1077,9 +1077,13 @@ class GMConsole(wx.Panel):
             #self.cmd_output.write(command + "\n----------\n")
             self.cmd_output.write("$" + ' '.join(command))
             # TODO This needs to be fixed to use current rendering procedures
-            # dcmds = command.split(',')
-            #            curr_disp.addMapsToList(type='command', map=dcmds, mset=None)
-            #            curr_disp.ReDrawCommand()
+            #
+
+            dcmds = command.split(',')
+            for command in dcmds:
+                self.Map.AddLayer(type='command', command=[command],
+                                  l_active=checked, l_hidden=False, l_opacity=1, l_render=False)
+
 
         else:
             # Send any other command to the shell. Send output to
@@ -1092,7 +1096,15 @@ class GMConsole(wx.Panel):
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
-                p = cmd.Command(command + ["--verbose"])
+                if command in gcmdlst:
+                    cmdlist = command.split(' ')
+                    cmdlist = cmdlist.append('--verbose')
+                    p = cmd.Command(cmdlist)
+                else:
+                    output = os.popen(command, "r").read().strip().split('\n')
+                    for outline in output:
+                        self.cmd_output.write(outline+'\n')
+                    return
 
                 # deactivate computational region and return to display settings
                 if tmpreg:
