@@ -958,7 +958,7 @@ class GMConsole(wx.Panel):
                      style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
         #initialize variables
-        self.Map = render.Map()
+        self.Map = ''
         self.parent = parent
         self.cmd_output = ""
         self.console_command = ""
@@ -1022,7 +1022,7 @@ class GMConsole(wx.Panel):
         output text widget, and send stdout output to output
         text widget.
 
-        Note: 'command' is given as list
+        Command is transformed into a list for processing
 
         TODO: Display commands (*.d) are captured and
         processed separately by mapdisp.py. Display commands are
@@ -1035,15 +1035,16 @@ class GMConsole(wx.Panel):
         # cmd = self.console_command.GetLineText(0)
         try:
             curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
+            self.Map = self.mapdisplay.getRender()
         except:
             #            disp_idx = None
             curr_disp = None
 
-        if len(command) == 1 and command[0] in gcmdlst:
+        if len(command.split(' ')) == 1 and command in gcmdlst:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             global gmpath
-            if command[0][0:2] == "d.":
+            if command[0:2] == "d.":
                 try:
                     layertype = {'d.rast'         : 'raster',
                                  'd.rgb'          : 'rgb',
@@ -1055,7 +1056,7 @@ class GMConsole(wx.Panel):
                                  'd.vect.thematic': 'thememap',
                                  'd.vect.chart'   : 'themechart',
                                  'd.grid'         : 'grid',
-                                 'd.labels'       : 'labels'}[command[0]]
+                                 'd.labels'       : 'labels'}[command]
                 except KeyError:
                     print _('Command type not yet implemented')
                     return
@@ -1064,10 +1065,10 @@ class GMConsole(wx.Panel):
                 self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
-                menuform.GUI().ParseCommand(command[0], gmpath, parentframe=None)
-                self.command_output.write(command[0] + "\n----------\n")
+                menuform.GUI().ParseCommand(command, gmpath, parentframe=None)
+                self.cmd_output.write(command + "\n----------\n")
 
-        elif command[0][0:2] == "d." and len(command) > 1 and command[0] in gcmdlst:
+        elif command[0:2] == "d." and len(command.split(' ')) > 1 and command in gcmdlst:
             """
             Send GRASS display command(s)with arguments
             to the display processor and echo to command output console.
@@ -1081,8 +1082,10 @@ class GMConsole(wx.Panel):
 
             dcmds = command.split(',')
             for command in dcmds:
-                self.Map.AddLayer(type='command', command=[command],
+                cmdlist = command.split(' ')
+                self.Map.AddLayer(type='command', command=cmdlist,
                                   l_active=checked, l_hidden=False, l_opacity=1, l_render=False)
+            curr_disp.UpdateMap()
 
 
         else:
