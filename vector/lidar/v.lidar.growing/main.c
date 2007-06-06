@@ -360,7 +360,6 @@ main (int argc,char *argv[])
 			    /*CONVEX-HULL COMPUTATION */
 			    lungHull = ch2d(P, lungPunti);
 			    cvxHull = G_alloc_matrix (lungHull, 3);
-			    G_debug (0, "No puntos en el objeto <%d > del Convex-Hull: %d", count_obj, lungHull);
 
 			    
 			    for (xi = 0; xi < lungHull; xi++) {
