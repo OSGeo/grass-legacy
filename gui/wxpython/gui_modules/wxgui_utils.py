@@ -1035,7 +1035,7 @@ class GMConsole(wx.Panel):
         # cmd = self.console_command.GetLineText(0)
         try:
             curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
-            self.Map = self.mapdisplay.getRender()
+            self.Map = curr_disp.getRender()
         except:
             #            disp_idx = None
             curr_disp = None
@@ -1068,7 +1068,7 @@ class GMConsole(wx.Panel):
                 menuform.GUI().ParseCommand(command, gmpath, parentframe=None)
                 self.cmd_output.write(command + "\n----------\n")
 
-        elif command[0:2] == "d." and len(command.split(' ')) > 1 and command in gcmdlst:
+        elif command[0:2] == "d." and len(command.split(' ')) > 1 and command.split(' ')[0] in gcmdlst:
             """
             Send GRASS display command(s)with arguments
             to the display processor and echo to command output console.
@@ -1084,8 +1084,10 @@ class GMConsole(wx.Panel):
             for command in dcmds:
                 cmdlist = command.split(' ')
                 self.Map.AddLayer(type='command', command=cmdlist,
-                                  l_active=checked, l_hidden=False, l_opacity=1, l_render=False)
-            curr_disp.UpdateMap()
+                                  l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+
+
+            curr_disp.MapWindow.UpdateMap()
 
 
         else:
@@ -1137,7 +1139,6 @@ class GMConsole(wx.Panel):
                         self.cmd_output.write('North: '+rastqlist[1]+"\n")
                         self.cmd_output.write(rastqlist[2]+"\n")
                         data = rastqlist[3:]
-                        print 'data=',data
                         for x in range(0,len(data),2):
                             self.cmd_output.write('Category: '+data[x]+"\n")
                             self.cmd_output.write('Label: '+data[x+1]+"\n")
