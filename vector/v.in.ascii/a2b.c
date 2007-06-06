@@ -50,8 +50,7 @@ int asc_to_bin(
 		    G_debug(2, "a2b: skipping commented line");
 		    continue;
 		}
-		G_warning ( _("Error reading ASCII file: %s"), buff) ;
-		return 0;
+		G_fatal_error(_("Error reading ASCII file: (bad type) [%s]"), buff);
 	    }
 	    if (ctype == '#') {
 		G_debug(2, "a2b: Skipping commented line");
@@ -88,8 +87,7 @@ int asc_to_bin(
 			type = 0; /* dead -> ignore */
 			break;
 		default:
-			G_warning (_("Error reading ASCII file: %s"), buff) ;
-			return 0;
+			G_fatal_error(_("Error reading ASCII file: (unknown type) [%s]"), buff);
 	    }
 	    G_debug(5, "feature type = %d", type);
 
@@ -101,10 +99,9 @@ int asc_to_bin(
 	    /* Collect the points */
 	    for( i=0; i<n_coors; i++)
 	    {
-		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-			G_warning (_("End of ASCII file reached before end of coordinates")) ;
-			return 0;
-		    }
+		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 )
+			G_fatal_error(_("End of ASCII file reached before end of coordinates")) ;
+
 		    if (buff[0] == '\0') {
 			G_debug(3, "a2b: skipping blank line while reading vertices");
 			i--;
@@ -112,10 +109,9 @@ int asc_to_bin(
 		    }
 
 		    *z=0;
-		    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
-		        G_warning (_("Error reading ASCII file: %s"), buff) ;
-			return 0;
-		    }    
+		    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 )
+		        G_fatal_error(_("Error reading ASCII file: (bad point) [%s]"), buff);
+
 		    G_debug( 5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff), *x, *y, *z);
 		    
 		    n_points++;
@@ -138,20 +134,18 @@ int asc_to_bin(
 	    /* Collect the cats */
 	    for( i=0; i<n_cats; i++)
 	    {
-		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-			G_warning (_("End of ASCII file reached before end of categories"));
-			return 0;
-		    }
+		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 )
+			G_fatal_error(_("End of ASCII file reached before end of categories"));
+
 		    if (buff[0] == '\0') {
 			G_debug(3, "a2b: skipping blank line while reading category info");
 			i--;
 			continue;
 		    }
 
-		    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
-			G_warning (_("Error reading categories: %s"), buff) ;
-			return 0;
-		    }
+		    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 )
+			G_fatal_error(_("Error reading categories: [%s]"), buff);
+
 		    Vect_cat_set ( Cats, catn, cat );
 	    }
 
