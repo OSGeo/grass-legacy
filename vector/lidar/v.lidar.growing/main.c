@@ -47,7 +47,7 @@ main (int argc,char *argv[])
     double Z_interp;
     double Thres_j, Thres_d, ew_resol, ns_resol;
     double minNS, minEW, maxNS, maxEW;
-    char *dvr, *db, *mapset, buf[1024];
+    char *mapset, buf[1024];
 
     int colorBordo, ripieno, conta, lungPunti, lungHull, xi, c1, c2;
     double altPiano;
@@ -58,17 +58,17 @@ main (int argc,char *argv[])
     struct element_grow **raster_matrix;
 
     struct Map_info In, Out, First;
-    struct Option *in_opt, *out_opt, *first_opt, *dbdriver, *dbdatabase, *Thres_j_opt, *Thres_d_opt; 
+    struct Option *in_opt, *out_opt, *first_opt, *Thres_j_opt, *Thres_d_opt; 
     struct GModule *module;
 
     struct line_pnts *points, *points_first;
     struct line_cats *Cats, *Cats_first;
 
+    struct field_info *field;
     dbDriver *driver;
     dbString sql;
     dbTable *table;
     dbCursor cursor;
-	
 
 /*------------------------------------------------------------------------------------------*/
 /* Options' declaration */;
@@ -82,31 +82,12 @@ main (int argc,char *argv[])
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     first_opt = G_define_option();
-    	first_opt->key = "input_first";
+    	first_opt->key = "first";
     	first_opt->type = TYPE_STRING;
     	first_opt->key_desc     = "name";
 	first_opt->required     = YES;
 	first_opt->gisprompt    = "old,vector,vector";
 	first_opt->description = _("Name of the first pulse vector map");
-
-    dbdatabase = G_define_option() ;
-    	dbdatabase->key        	= "database" ;
-    	dbdatabase->type       	= TYPE_STRING ;
-    	dbdatabase->required   	= NO ;
-    	dbdatabase->multiple   	= NO ;
-    	dbdatabase->description	= _("Database name");
-    if ( (db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
-	    dbdatabase->answer = G_store ( db );
-
-    dbdriver = G_define_option() ;
-   	dbdriver->key         = "driver" ;
-    	dbdriver->type        = TYPE_STRING ;
-    	dbdriver->options     = db_list_drivers();
-    	dbdriver->required    = NO ;
-    	dbdriver->multiple    = NO ;
-    	dbdriver->description = _("Driver name");
-    if ( (dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
-	    dbdriver->answer = G_store ( dvr );
 
     Thres_j_opt = G_define_option();
     	Thres_j_opt->key = "tj";
@@ -135,7 +116,7 @@ main (int argc,char *argv[])
 /* Open input vector */
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	    G_fatal_error ( _("Cannot find input map <%s>"), in_opt->answer);
+	G_fatal_error ( _("Cannot find input map <%s>"), in_opt->answer);
     }
 
     /*Vect_set_open_level (2);		WITH TOPOLOGY*/
@@ -158,10 +139,14 @@ main (int argc,char *argv[])
 	Vect_hist_copy (&In, &Out);
 	Vect_hist_command (&Out);
 
-/* Starting driver and open db */
-    driver = db_start_driver_open_database (dbdriver->answer, dbdatabase->answer);
+/* Starting driver and open db for edgedetection interpolation table*/
+    field = Vect_get_field (&In, F_INTERPOLATION);
+    /*if (field == NULL)
+	G_fatal_error (_("Cannot read field info"));*/
+
+    driver = db_start_driver_open_database (field->driver, field->database);
     if (driver == NULL)
-	    G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect"), dbdriver->answer);
+	 G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect"), field->driver);
 
 /* Setting regions and boxes */
     G_debug (1, _("Setting regions and boxes"));
@@ -341,7 +326,7 @@ main (int argc,char *argv[])
 
 	/* REGION GROWING */
 	    if (region == TRUE) {
-		G_debug (1, _("Region Growing"));
+		G_debug (1, "Region Growing");
 
 		punti_bordo = G_alloc_matrix (MaxPoints, 3);
 		P = Pvector(0, MaxPoints);
@@ -364,7 +349,7 @@ main (int argc,char *argv[])
 				 punti_bordo[conta][0] = 0;
 				 punti_bordo[conta][1] = 0;
 				 punti_bordo[conta][2] = 0;
-				 P[conta] = punti_bordo[conta];
+				 P[conta] = punti_bordo[conta];		/* It only makes indexes to be equal, not coord values!! */
 			    }
 
 			    lungPunti = 0;
@@ -375,7 +360,9 @@ main (int argc,char *argv[])
 			    /*CONVEX-HULL COMPUTATION */
 			    lungHull = ch2d(P, lungPunti);
 			    cvxHull = G_alloc_matrix (lungHull, 3);
+			    G_debug (0, "No puntos en el objeto <%d > del Convex-Hull: %d", count_obj, lungHull);
 
+			    
 			    for (xi = 0; xi < lungHull; xi++) {
 				cvxHull[xi][0] = P[xi][0];
 				cvxHull[xi][1] = P[xi][1];
@@ -390,7 +377,8 @@ main (int argc,char *argv[])
 				    if (checkHull(c1, c2, cvxHull, lungHull) == 1) {
 					raster_matrix[c1][c2].obj = count_obj;
 
-					if ((raster_matrix[c1][c2].clas == PRE_TERRAIN) && (raster_matrix[c1][c2].orig >=altPiano))
+					if ((raster_matrix[c1][c2].clas == PRE_TERRAIN) 
+						&& (raster_matrix[c1][c2].orig >=altPiano) && (lungHull > 3))
 					    raster_matrix[c1][c2].clas = ripieno;
 				    }
 				}

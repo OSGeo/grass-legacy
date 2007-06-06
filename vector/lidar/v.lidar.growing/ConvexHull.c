@@ -16,11 +16,11 @@ void regGrow8 (struct Cell_head Elaboration, struct element_grow **mat, double *
 	mat[r][c].clas = v;
 	mat[r][c].obj = count_obj;
 
-	punti[*lung][0] = c;
+	punti[*lung][0] = c;			
 	punti[*lung][1] = r;
 	punti[*lung][2] = mat[r][c].interp;
 
-	assert ((*lung)++ < maxP - 1);
+	assert ((*lung)++ < maxP - 1);		/* Condition to finish regGrow8*/
 
 	if (r - 1 >= 0) {
 	    if ((mat[r - 1][c].clas > Th_j) && (mat[r - 1][c].clas < v) && (mat[r - 1][c].fi != 0)) 
@@ -63,12 +63,13 @@ void regGrow8 (struct Cell_head Elaboration, struct element_grow **mat, double *
 	}
 }
 
-/* true if points i, j, k counterclockwise */
 int ccw(double **P, int i, int j, int k)
+/* true if points i, j, k counterclockwise */
 {
 	double a, b, c, d;
 
-	a = P[i][0] - P[j][0];
+	/* It compares coord differences */
+	a = P[i][0] - P[j][0];		
 	b = P[i][1] - P[j][1];
 	c = P[k][0] - P[j][0];
 	d = P[k][1] - P[j][1];
@@ -94,8 +95,9 @@ int make_chain(double **V, int n, int (*cmp) (const void *, const void *))
 	int i, j, s = 1;
 	double *t;
 
-	qsort(V, (size_t)n, sizeof(double *), cmp);
+	qsort(V, (size_t)n, sizeof(double *), cmp); 	/* It sorts the V's index */
 
+	/* */
 	for (i = 2; i < n; i++) {
 	    for (j = s; j >= 1 && ccw(V, i, j, j - 1); j--);
 	    s = j + 1;
@@ -173,7 +175,7 @@ double pianOriz(double **punti, int obsNum, double *minNS, double *minEW,
 		double *maxNS, double *maxEW, struct element_grow **mat, int CBordo)
 {
 	int c1;
-	double minBordo, minBordo1, medioBordo;
+	double minBordo, medioBordo; /*, minBordo1;*/
 
 	/*Calcola coordinate min e max della zona e media delle righe e delle colonne */
 	*minNS = punti[0][1];
@@ -184,7 +186,7 @@ double pianOriz(double **punti, int obsNum, double *minNS, double *minEW,
 	medioBordo = 0;
 
 	minBordo = punti[0][2];
-	minBordo1 = punti[0][2];
+	/*minBordo1 = punti[0][2];*/
 
 	for (c1 = 0; c1 < obsNum; c1++) {
 	    if (punti[c1][0] > *maxEW)
@@ -198,12 +200,12 @@ double pianOriz(double **punti, int obsNum, double *minNS, double *minEW,
 
 	    if (punti[c1][1] < *minNS)
 		*minNS = punti[c1][1];
-
+/*
 	    if ((punti[c1][2] < minBordo1) && (mat[(int)(punti[c1][1])][(int)(punti[c1][0])].clas >= 1)
 			&& (mat[(int)(punti[c1][1])][(int)(punti[c1][0])].clas < CBordo)) {
 		minBordo1 = punti[c1][2];
 	    }
-
+*/
 	    if (punti[c1][2] < minBordo)
 		minBordo = punti[c1][2];
 
