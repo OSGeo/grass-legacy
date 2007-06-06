@@ -6,7 +6,7 @@ MODULE:  wxgui.py
 PURPOSE: Main Python app to set up GIS Manager window and trap commands
          Only command console is working currently, but windows for
          panels and layer tree done and demo tree items appear
-         
+
 AUTHORS: The GRASS Development Team
          Michael Barton (Arizona State University) &
          Jachym Cepicky (Mendel University of Agriculture)
@@ -26,6 +26,7 @@ import traceback
 import types
 
 import wx
+import wx.aui
 import wx.combo
 import wx.html
 import wx.stc
@@ -44,7 +45,6 @@ import icons
 gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
-import gui_modules.track as track
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
 import gui_modules.render as render
@@ -111,19 +111,21 @@ class GMFrame(wx.Frame):
         self.iconsize = (16, 16)
         wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
 
+        self._auimgr = wx.aui.AuiManager(self)
+
         # creating widgets
         self.notebook = self.__createNoteBook()
+
         self.cmdinput = self.__createCommandInput()
         self.menubar = self.__createMenuBar()
         toolbar = self.__createToolBar()
         #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
-        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.track = track
+#        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
-        self.SetMinSize((450, 450))
+        self.SetMinSize((400, 450))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
         # set environmental variables
@@ -141,10 +143,23 @@ class GMFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster)
 
+        self._auimgr.AddPane(toolbar, wx.aui.AuiPaneInfo().ToolbarPane().
+                              Top().Dockable(False).CloseButton(False).
+                              DestroyOnClose(True).Row(0).Layer(0))
+        self._auimgr.AddPane(self.notebook, wx.aui.AuiPaneInfo().
+                              Left().CentrePane().BestSize((-1,-1)).Dockable(False).
+                              CloseButton(False).DestroyOnClose(True).Row(1).Layer(0))
+        self._auimgr.AddPane(self.cmdinput, wx.aui.AuiPaneInfo().
+                              Bottom().BestSize((-1,25)).Dockable(False).
+                              CloseButton(False).DestroyOnClose(True).
+                              PaneBorder(False).Row(2).Layer(0).
+                              CaptionVisible(False))
+        self._auimgr.Update()
+
         # item, proportion, flag, border, userData
-        self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
-        self.sizer.Add(self.cmdinput, proportion=0, flag=wx.EXPAND, border=1)
-        self.SetSizer(self.sizer)
+#        self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
+#        self.sizer.Add(self.cmdinput, proportion=0, flag=wx.EXPAND, border=1)
+#        self.SetSizer(self.sizer)
         self.sizer.Fit(self)
         self.Layout()
         wx.CallAfter(self.notebook.SetSelection, 0)
@@ -235,6 +250,8 @@ class GMFrame(wx.Frame):
         #self.out_sizer.Fit(self.outpage)
         #self.outpage.Layout()
 
+
+
         self.Centre()
         return self.notebook
 
@@ -316,9 +333,6 @@ class GMFrame(wx.Frame):
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
                                            style=wx.DEFAULT_FRAME_STYLE)
 
-        # title
-#        self.histogram.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
-
         #show new display
         self.histogram.Show()
         self.histogram.Refresh()
@@ -396,7 +410,7 @@ class GMFrame(wx.Frame):
             return
 
         mapname = map = mapset = size = icon = None
-        
+
         for option in dcmd:
             if option.find('map') > -1:
                 mapname = option.split('=')[1]
@@ -425,7 +439,8 @@ class GMFrame(wx.Frame):
                                                        size=wx.DefaultSize, style=wx.TR_HAS_BUTTONS
                                                        |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
                                                        |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE,
-                                                       idx=self.disp_idx, gismgr=self, notebook=self.gm_cb)
+                                                       idx=self.disp_idx, gismgr=self, notebook=self.gm_cb,
+                                                       auimgr=self._auimgr)
 
         # layout for controls
         cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
@@ -436,6 +451,13 @@ class GMFrame(wx.Frame):
         self.curr_page.maptree.Layout()
 
         self.disp_idx += 1
+
+#        self._auimgr.AddPane(self.curr_page.maptree.mapdisplay, wx.aui.AuiPaneInfo().Right().
+#                           Dockable(False).BestSize((-1,-1)).
+#                           CloseButton(True).MinimizeButton(True).
+#                           DestroyOnClose(True).Layer(1))
+#
+#        self._auimgr.Update()
 
     # toolBar button handlers
     def OnRaster(self, event):
@@ -649,13 +671,13 @@ class GMApp(wx.App):
         wx.SplashScreen (bitmap=introBmp, splashStyle=wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
                          milliseconds=1500, parent=None, id=wx.ID_ANY)
         wx.Yield()
-        
+
         # create and show main frame
         mainframe = GMFrame(parent=None, id=wx.ID_ANY, title="")
 
         mainframe.Show()
         self.SetTopWindow(mainframe)
-        
+
         return True
 
 def reexec_with_pythonw():

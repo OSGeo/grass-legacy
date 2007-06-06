@@ -26,14 +26,14 @@ except:
 class AbstractLayer:
     """
     Abstract layer in LayerTree
-    
+
     Attributes:
-    * type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer() 
+    * type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer()
     """
 
     def __init__(self, type):
         self.type = type
-        
+
 class Layer(AbstractLayer):
     """
     This class represents general item in LayerTree
@@ -59,7 +59,7 @@ class Layer(AbstractLayer):
     def __del__(self):
         Debug.msg (3, "Layer.__del__(): type=%s" % \
                    self.type)
-        
+
     def AddMapLayer (self, maplayer):
         """Add reference to MapLayer instance"""
         self.maplayer = maplayer
@@ -78,7 +78,8 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
-                 CT.TR_EDIT_LABELS|CT.TR_MULTIPLE, idx=None, gismgr=None, notebook=None):
+                 CT.TR_EDIT_LABELS|CT.TR_MULTIPLE,
+                 idx=None, gismgr=None, notebook=None, auimgr=None):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
 
         self.SetAutoLayout(True)
@@ -99,18 +100,17 @@ class LayerTree(CT.CustomTreeCtrl):
         self.gismgr = gismgr
         self.notebook = notebook   # GIS Manager notebook for layer tree
         self.treepg = parent       # notebook page holding layer tree
-
+        self.auimgr = auimgr           # aui manager
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(640,480),
                                            style=wx.DEFAULT_FRAME_STYLE,
                                            tree=self, notebook=self.notebook, gismgr=self.gismgr, page=self.treepg,
-                                           Map=self.Map)
+                                           Map=self.Map, auimgr=self.auimgr)
 
         # title
         self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
-        #self.maptree[self.disp_idx] = self.mapdisplays[self.disp_idx].getTree()
 
         #show new display
         self.mapdisplay.Show()
@@ -272,19 +272,19 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if hasattr (self.mapdisplay, "histogram") and self.mapdisplay.histogram:
             self.histogramFrame = self.mapdisplay.histogram
-        
+
         if not self.histogramFrame:
             self.histogramFrame = histogram.HistFrame(self,
                                                       id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
                                                       style=wx.DEFAULT_FRAME_STYLE)
             # show new display
             self.histogramFrame.Show()
-            
+
         self.histogramFrame.SetHistLayer(['d.histogram', 'map=%s' % rastName])
         self.histogramFrame.HistWindow.UpdateHist()
         self.histogramFrame.Refresh()
         self.histogramFrame.Update()
-        
+
     def OnStartEditing (self, event):
         """
         Start editing vector map layer requested by the user
@@ -324,7 +324,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.first = True
         checked    = False
         params = {} # no initial options parameters
-        
+
         if self.layer_selected:
             self.SelectItem(self.layer_selected, select=False)
 
@@ -352,18 +352,18 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # add layer to the layer tree
         if (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-            self.layers[self.layer_selected].type != 'group'): 
+            self.layers[self.layer_selected].type != 'group'):
             parent = self.GetItemParent(self.layer_selected)
             layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
                                     text='', ct_type=1, wnd=ctrl)
         # add layer to the group
         elif (self.layer_selected and self.layer_selected != self.GetRootItem() and \
-              self.layers[self.layer_selected].type == 'group'): 
+              self.layers[self.layer_selected].type == 'group'):
             layer = self.PrependItem(parent=self.layer_selected,
                                      text='', ct_type=1, wnd=ctrl)
             self.Expand(self.layer_selected)
         # add first layer to the layer tree
-        else: 
+        else:
             layer = self.PrependItem(parent=self.root, text='', ct_type=1, wnd=ctrl)
 
         # create Layer instance & add to self.layers dictionary
@@ -431,7 +431,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         Debug.msg (3, "LayerTree.PropertiesDialog(): ltype=%s" % \
                    ltype)
-        
+
         if ltype == 'raster':
             menuform.GUI().ParseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rgb':
@@ -473,12 +473,12 @@ class LayerTree(CT.CustomTreeCtrl):
         """Remove selected layer for the layer tree"""
 
         item = event.GetItem()
-        
+
         try:
             item.properties.Close(True)
         except:
             pass
-        
+
         Debug.msg (3, "LayerTree.OnDeleteLayer(): name=%s" % \
                    (self.GetItemText(item)))
 
@@ -496,7 +496,7 @@ class LayerTree(CT.CustomTreeCtrl):
         item    = event.GetItem()
         checked = item.IsChecked()
         layer   = self.layers[item]
-        
+
         if self.drag == False and self.first == False:
             # change active parameter for item in layers list in render.Map
             if layer.type == 'group':
@@ -519,11 +519,11 @@ class LayerTree(CT.CustomTreeCtrl):
         cmd = event.GetString()
 
         layer = item = None
-        
+
         for item, layer in self.layers.iteritems():
             if layer.wxCtrl == ctrl:
                 break
-            
+
         # change parameters for item in layers list in render.Map
         if item and self.drag == False:
             self.ChangeLayer(item)
@@ -531,7 +531,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 if 'map=' in option:
                     mapname = option.split('=')[1]
                     self.Map.ChangeLayerName(layer.maplayer, mapname)
-            
+
         event.Skip()
 
     def OnOpacity(self, event):
@@ -580,7 +580,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         Drag and drop of tree nodes
         """
-        
+
         item  = event.GetItem()
         Debug.msg (3, "LayerTree.OnBeginDrag(): layer=%s" % \
                    (self.GetItemText(item)))
@@ -588,7 +588,7 @@ class LayerTree(CT.CustomTreeCtrl):
         event.Allow()
         self.drag = True
         self.DoSelectItem(item, unselect_others=True)
-        
+
         # save everthing associated with item to drag
         self.dragItem = item
 
@@ -597,7 +597,7 @@ class LayerTree(CT.CustomTreeCtrl):
         Recreate item (needed for OnEndDrag())
         """
         oldLayer = self.layers[oldItem]
-        
+
         Debug.msg (4, "LayerTree.RecreateItem(): layer=%s" % \
                    self.GetItemText(oldItem))
 
@@ -623,7 +623,7 @@ class LayerTree(CT.CustomTreeCtrl):
             except:
                 newctrl.SetValue(100)
             self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, newctrl)
-            
+
         # decide where to put new layer and put it there
         if not parent:
             flag = self.HitTest(event.GetPoint())[1]
@@ -634,7 +634,7 @@ class LayerTree(CT.CustomTreeCtrl):
         text    = self.GetItemText(oldItem)
         image   = self.GetItemImage(oldItem, 0)
         wind    = self.GetItemWindow(oldItem)
-        checked = self.IsItemChecked(oldItem) 
+        checked = self.IsItemChecked(oldItem)
         if oldLayer.type == 'group':
             windval = None
             data    = None
@@ -675,9 +675,9 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layers[new].wxCtrl = newctrl
 
         self.CheckItem(new, checked=checked)
-        
+
         event.Skip()
-        
+
         return new
 
     def OnEndDrag(self, event):
@@ -691,7 +691,7 @@ class LayerTree(CT.CustomTreeCtrl):
             old = self.dragItem  # make sure this member exists
         except:
             return
-        
+
         Debug.msg (4, "LayerTree.OnEndDrag(): layer=%s" % \
                    (self.GetItemText(self.dragItem)))
 
@@ -775,7 +775,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         Debug.msg (4, "LayerTree.ReoderLayers(): items=%s" % \
                    (itemList))
-        
+
         # reorder map layers
         treelayers.reverse()
         self.Map.ReorderLayers(treelayers)
@@ -783,7 +783,7 @@ class LayerTree(CT.CustomTreeCtrl):
     def ChangeLayer(self, item):
         """Change layer"""
         layer = self.layers[item]
-        
+
         if layer.type == 'command':
             if self.GetItemWindow(item).GetValue() != None:
                 cmdlist = self.GetItemWindow(item).GetValue().split(' ')
@@ -796,7 +796,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 opac = float(self.GetItemWindow(item).GetValue())/100
                 chk = self.IsItemChecked(item)
                 hidden = not self.IsVisible(item)
-        
+
         layer.maplayer = self.Map.ChangeLayer(layer=layer.maplayer, type=layer.maplayer.type, command=cmdlist, name=self.GetItemText(item),
                                               l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)
 
@@ -1012,7 +1012,7 @@ class GMConsole(wx.Panel):
         gisbase = os.environ['GISBASE']
         self.gcmdlst = os.listdir(gisbase+r'/bin')
         self.gcmdlst = self.gcmdlst + os.listdir(gisbase+r'/scripts')
-        
+
         return self.gcmdlst
 
     def RunCmd(self, command):

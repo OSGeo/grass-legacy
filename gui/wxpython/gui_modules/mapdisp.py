@@ -1088,7 +1088,8 @@ class MapFrame(wx.Frame):
     def __init__(self, parent=None, id = wx.ID_ANY, title="GRASS GIS Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
-                 tree=None, notebook=None, gismgr=None, page=None, Map=None):
+                 tree=None, notebook=None, gismgr=None, page=None,
+                 Map=None, auimgr=None):
         """
             Main map display window with toolbars, statusbar and
             DrawWindow
@@ -1137,6 +1138,7 @@ class MapFrame(wx.Frame):
         #
         # Fancy gui
         #
+#        self._mgr = auimgr
         self._mgr = wx.aui.AuiManager(self)
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
@@ -1200,7 +1202,10 @@ class MapFrame(wx.Frame):
         #
         # Update fancy gui style
         #
-        self._mgr.AddPane(self.MapWindow, wx.CENTER)
+        self._mgr.AddPane(self.MapWindow, wx.aui.AuiPaneInfo().CentrePane().
+                   Dockable(False).BestSize((-1,-1)).
+                   CloseButton(False).DestroyOnClose(True).
+                   Layer(0))
         self._mgr.Update()
 
         #
@@ -1227,16 +1232,20 @@ class MapFrame(wx.Frame):
             self._mgr.AddPane(self.maptoolbar.toolbar,
                               wx.aui.AuiPaneInfo().
                               Name("maptoolbar").Caption("Map Toolbar").
-                              ToolbarPane().Top().LeftDockable(False).RightDockable(False).
-                              BottomDockable(False).TopDockable(True).CloseButton(False))
+                              ToolbarPane().Top().
+                              LeftDockable(False).RightDockable(False).
+                              BottomDockable(False).TopDockable(True).
+                              CloseButton(False).Layer(2))
 
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
 
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                               Name("digittoolbar").Caption("Digit Toolbar").
-                              ToolbarPane().Top().Row(1).LeftDockable(False).RightDockable(True).
-                              BottomDockable(False).TopDockable(False).CloseButton(False))
+                              ToolbarPane().Top().Row(1).
+                              LeftDockable(False).RightDockable(True).
+                              BottomDockable(False).TopDockable(False).
+                              CloseButton(False).Layer(2))
 
         self._mgr.Update()
 
