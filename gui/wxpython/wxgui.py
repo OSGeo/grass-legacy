@@ -126,7 +126,7 @@ class GMFrame(wx.Frame):
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
-        self.SetMinSize((400, 450))
+        self.SetMinSize((400, 350))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
         # set environmental variables
@@ -235,20 +235,16 @@ class GMFrame(wx.Frame):
         """Creates notebook widgets"""
 
         # create main notebook widget
-        #bookStyle=FN.FNB_DEFAULT_STYLE #| FN.FNB_FANCY_TABS
-        #bookStyle=FN.FNB_DEFAULT_STYLE|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
         nbStyle=FN.FNB_FANCY_TABS|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
         self.notebook = FN.FlatNotebook(self, id=wx.ID_ANY, style=nbStyle)
 
         # create displays notebook widget and add it to main notebook page
         cbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT|FN.FNB_X_ON_TAB|FN.FNB_TABS_BORDER_SIMPLE
-        #self.cb_panel = wx.Panel(self,-1, style = wx.EXPAND)
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.gm_cb, text="Map layers for each display")
 
         # create command output text area and add it to main notebook page
-        #self.outpanel = wx.Panel(self,-1, style = wx.EXPAND)
         self.goutput = wxgui_utils.GMConsole(self)
         self.outpage = self.notebook.AddPage(self.goutput, text="Command output")
 
@@ -651,7 +647,8 @@ class GMFrame(wx.Frame):
                 self.gm_cb.GetPage(page).maptree.Map.Clean()
             self.DeleteAllPages()
         except:
-            self.DestroyChildren()
+            pass
+#            self.DestroyChildren()
         self.Destroy()
 
     def Nomethod(self, event):
