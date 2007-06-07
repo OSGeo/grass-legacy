@@ -587,7 +587,7 @@ else # CREATE_LINES
     #### create digit header
     cat << EOF > "${TMP}.dig"
 ORGANIZATION: GRASSroots organization
-DIGIT DATE:   `date +%D`
+DIGIT DATE:   `date "+%Y/%m/%d"`
 DIGIT NAME:   $PROG
 MAP NAME:     $NAME
 MAP DATE:     `date +%Y`
