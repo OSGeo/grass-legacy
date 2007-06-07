@@ -271,11 +271,12 @@ int main (int argc, char *argv[])
       sprintf (line, "              E: %17s    W: %17s", tmp1, tmp2);
       printline (line);
 
-      format_double(box.B, tmp1);
-      format_double(box.T, tmp2);
-      sprintf (line, "              B: %17s    T: %17s", tmp1, tmp2);
-      printline (line);
-
+      if( Vect_is_3d(&Map) ) {
+	  format_double(box.B, tmp1);
+	  format_double(box.T, tmp2);
+	  sprintf (line, "	       B: %17s    T: %17s", tmp1, tmp2);
+	  printline (line);
+      }
       printline ("");
 
       format_double(Vect_get_thresh(&Map), tmp1);
