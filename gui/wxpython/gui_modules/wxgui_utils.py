@@ -1080,7 +1080,7 @@ class GMConsole(wx.Panel):
             # TODO This needs to be fixed to use current rendering procedures
             #
 
-            dcmds = command.split(',')
+            dcmds = command.split(';')
             for command in dcmds:
                 cmdlist = command.split(' ')
                 self.Map.AddLayer(type='command', command=cmdlist,
