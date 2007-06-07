@@ -149,7 +149,7 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 	    grad = 0;
 	    mean = 0;
 
-	    //Only compute if the arrays are not null
+	    /* Only compute if the arrays are not null */
 	    if (!N_is_array_2d_value_null(pot, i, j) &&
 		!N_is_array_2d_value_null(pot, i + 1, j)) {
 		p1 = N_get_array_2d_d_value(pot, i, j);
@@ -174,7 +174,7 @@ N_gradient_field_2d *N_compute_gradient_field_2d(N_array_2d * pot,
 	    grad = 0;
 	    mean = 0;
 
-	    //Only compute if the arrays are not null
+	    /* Only compute if the arrays are not null */
 	    if (!N_is_array_2d_value_null(pot, i, j) &&
 		!N_is_array_2d_value_null(pot, i, j + 1)) {
 		p1 = N_get_array_2d_d_value(pot, i, j);
@@ -430,7 +430,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		grad = 0;
 		mean = 0;
 
-		//Only compute if the arrays are not null
+		/* Only compute if the arrays are not null */
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i + 1, j, k)) {
 		    p1 = N_get_array_3d_d_value(pot, i, j, k);
@@ -460,7 +460,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		grad = 0;
 		mean = 0;
 
-		//Only compute if the arrays are not null
+		/* Only compute if the arrays are not null */
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i, j + 1, k)) {
 		    p1 = N_get_array_3d_d_value(pot, i, j, k);
@@ -491,7 +491,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		grad = 0;
 		mean = 0;
 
-		//Only compute if the arrays are not null
+		/* Only compute if the arrays are not null */
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i, j, k + 1)) {
 		    p1 = N_get_array_3d_d_value(pot, i, j, k);
