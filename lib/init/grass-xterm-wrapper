@@ -1,9 +1,97 @@
 #!/bin/sh
-# script to wrap xterm 
+# script to wrap xterm
+# handles OSX Terminal as a special emulated case
+
+SYSTEM=`uname -s`
+case $SYSTEM in
+Darwin*)
+	MACOSX=1
+	;;
+esac
 
 if [ -z "$GRASS_XTERM" ] ; then
-   GRASS_XTERM=xterm
+    if [ "$MACOSX" ] ; then
+        GRASS_XTERM=Terminal.app
+    else
+        GRASS_XTERM=xterm
+    fi
 fi
 
-# run command
-exec $GRASS_XTERM "$@"
+case $GRASS_XTERM in
+*xterm)
+    # the basic way or on other platform than OSX - run command
+    exec $GRASS_XTERM "$@"
+    ;;
+*Terminal.app)
+    # manually transfer the necessary env vars
+    TMPSCRIPT="`g.tempfile pid=$$`"
+    if [ $? -ne 0 ] || [ -z "$TMPSCRIPT" ] ; then
+        g.message "Unable to create temporary script"
+        exit 1
+    fi
+    mv "$TMPSCRIPT" "$TMPSCRIPT.sh"
+    chmod +x "$TMPSCRIPT.sh"
+    echo "DISPLAY=$DISPLAY" > "$TMPSCRIPT.sh"
+    echo "PATH=\"$PATH\"" >> "$TMPSCRIPT.sh"
+    echo "GISRC=\"$GISRC\"" >> "$TMPSCRIPT.sh"
+    echo "GISBASE=\"$GISBASE\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_VERSION=\"$GRASS_VERSION\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_PAGER=$GRASS_PAGER" >> "$TMPSCRIPT.sh"
+    echo "DYLD_LIBRARY_PATH=\"$DYLD_LIBRARY_PATH\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_LD_LIBRARY_PATH=\"$GRASS_LD_LIBRARY_PATH\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_WISH=\"$GRASS_WISH\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_TCLSH=\"$GRASS_TCLSH\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_HTML_BROWSER=\"$GRASS_HTML_BROWSER\"" >> "$TMPSCRIPT.sh"
+    echo "GRASS_HTML_BROWSER_MACOSX=\"$GRASS_HTML_BROWSER_MACOSX\"" >> "$TMPSCRIPT.sh"
+    echo "export DISPLAY PATH GISRC GISBASE GRASS_VERSION GRASS_PAGER DYLD_LIBRARY_PATH GRASS_LD_LIBRARY_PATH GRASS_WISH GRASS_TCLSH GRASS_HTML_BROWSER GRASS_HTML_BROWSER_MACOSX" >> "$TMPSCRIPT.sh"
+    if [ "$GRASS_ADDON_PATH" ] ; then
+        echo "GRASS_ADDON_PATH=\"$GRASS_ADDON_PATH\"" >> "$TMPSCRIPT.sh"
+        echo "export GRASS_ADDON_PATH" >> "$TMPSCRIPT.sh"
+    fi
+    if [ "$TCL_LIBRARY" ] ; then
+        echo "TCL_LIBRARY=\"$TCL_LIBRARY\"" >> "$TMPSCRIPT.sh"
+        echo "export TCL_LIBRARY" >> "$TMPSCRIPT.sh"
+    fi
+    if [ "$TK_LIBRARY" ] ; then
+        echo "TK_LIBRARY=\"$TK_LIBRARY\"" >> "$TMPSCRIPT.sh"
+        echo "export TK_LIBRARY" >> "$TMPSCRIPT.sh"
+    fi
+
+    # get command, ignore all other xterm flags
+    while true ; do
+        if [ "$1" = -e ] ; then break ; fi
+        shift
+    done
+    shift
+
+    # execute
+    # save current active app/window, return to it when script finished.
+    # NOTE: if the user switches to another Terminal window before env.sh
+    # script finishes, command will never execute.
+    osascript <<EOF
+tell application "System Events"
+	set save_app to item 1 of (get name of processes whose frontmost is true)
+end tell
+tell application "Terminal"
+	activate
+	-- start new window with env script
+	do script "source \"$TMPSCRIPT.sh\""
+	tell window 1
+		-- wait for it to finish - use 'busy' since exports aren't processes
+		repeat while busy
+			delay 0.1
+		end repeat
+		-- and finally the command to run
+		do script "$@; exit" in it
+		-- wait for it to finish - use 'processes' here since busy doesn't work for some reason
+		repeat while (processes is not equal to {})
+			delay 1
+		end repeat
+		close
+	end tell
+end tell
+tell application save_app to activate
+EOF
+    rm -f "$TMPSCRIPT.sh"
+    ;;
+esac
