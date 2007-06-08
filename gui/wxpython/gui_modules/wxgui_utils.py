@@ -102,6 +102,9 @@ class LayerTree(CT.CustomTreeCtrl):
         self.treepg = parent       # notebook page holding layer tree
         self.auimgr = auimgr           # aui manager
 
+
+        self.testframe = wx.Frame(self, -1, title='Test Frame')
+
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(640,480),
@@ -116,8 +119,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.mapdisplay.Show()
         self.mapdisplay.Refresh()
         self.mapdisplay.Update()
-
-        self.Map = self.mapdisplay.getRender()
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, (None,None))

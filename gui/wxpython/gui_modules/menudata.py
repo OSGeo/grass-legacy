@@ -103,7 +103,7 @@ class Data:
                 ("Volumes to raster series", "Convert raster to vector map", "self.runMenuCmd", "r3.to.rast"),
                 )),
               ("","","", ""),
-              ("Georectify (not functional)", "Georectify raster and vector maps", "self.runMenuCmd", ""),
+              ("Georectify (not functional)", "Georectify raster and vector maps", "self.OnGeorectify", ""),
               ("","","", ""),
               ("Bearing/distance to coordinates", "Convert between bearing/distance and coordinates", "self.runMenuCmd", "m.cogo"),
               ("","","", ""),
