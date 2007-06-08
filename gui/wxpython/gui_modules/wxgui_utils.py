@@ -1041,7 +1041,13 @@ class GMConsole(wx.Panel):
             #            disp_idx = None
             curr_disp = None
 
-        if len(command.split(' ')) == 1 and command in gcmdlst:
+        try:
+            # if command is not already a list, make it one
+            cmdlist = command.split(' ')
+        except:
+            cmdlist = command
+
+        if len(cmdlist) == 1 and cmdlist[0] in gcmdlst:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             global gmpath
@@ -1066,27 +1072,30 @@ class GMConsole(wx.Panel):
                 self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
-                menuform.GUI().ParseCommand(command, gmpath, parentframe=None)
-                self.cmd_output.write(command + "\n----------\n")
+                menuform.GUI().ParseCommand(string.join(cmdlist), gmpath, parentframe=None)
+                self.cmd_output.write(string.join(cmdlist) + "\n----------\n")
 
-        elif command[0:2] == "d." and len(command.split(' ')) > 1 and command.split(' ')[0] in gcmdlst:
+        elif command[0:2] == "d." and len(cmdlist) > 1:
             """
             Send GRASS display command(s)with arguments
             to the display processor and echo to command output console.
-            Accepts a list of d.* commands separated by commas.
+            Accepts a list of d.* commands separated by semi-colons.
             Display with focus receives display command(s).
             """
-            #self.cmd_output.write(command + "\n----------\n")
-            self.cmd_output.write("$" + ' '.join(command))
-            # TODO This needs to be fixed to use current rendering procedures
-            #
+
+            print 'cmdlist 0=',cmdlist[0]
+            self.cmd_output.write("$" + ' '.join(cmdlist))
 
             dcmds = command.split(';')
             for command in dcmds:
-                cmdlist = command.split(' ')
-                self.Map.AddLayer(type='command', command=cmdlist,
-                                  l_active=True, l_hidden=False, l_opacity=1, l_render=False)
-
+                try:
+                    # only add the display command to the rendering list if it has arguments
+                    cmdlist = command.strip().split(' ')
+                    if cmdlist[0] in gcmdlst and len(cmdlist) > 1:
+                        self.Map.AddLayer(type='command', command=cmdlist,
+                                      l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+                except:
+                    pass
 
             curr_disp.MapWindow.UpdateMap()
 
@@ -1097,20 +1106,25 @@ class GMConsole(wx.Panel):
             try:
                 os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
                 #self.cmd_output.write(command+"\n----------\n")
-                self.cmd_output.write("$ " + ' '.join(command) + "\n")
+                self.cmd_output.write("$ " + ' '.join(cmdlist) + "\n")
                 # activate compuational region (set with g.region) for all non-display commands.
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
-                if command in gcmdlst:
-                    cmdlist = command.split(' ')
-                    cmdlist = cmdlist.append('--verbose')
-                    p = cmd.Command(cmdlist)
-                else:
+
+                if cmdlist[0] not in gcmdlst:
+                    # if command is not a GRASS command, treat it like a shell command
                     output = os.popen(command, "r").read().strip().split('\n')
                     for outline in output:
                         self.cmd_output.write(outline+'\n')
                     return
+                else:
+                    # process GRASS command with argument
+                    print 'cmdlist 2.5=',cmdlist
+                    cmdlist.append('--verbose')
+                    print 'cmdlist3=', cmdlist
+                    p = cmd.Command(cmdlist)
+
 
                 # deactivate computational region and return to display settings
                 if tmpreg:
