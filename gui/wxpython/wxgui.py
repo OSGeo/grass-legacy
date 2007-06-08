@@ -111,6 +111,8 @@ class GMFrame(wx.Frame):
         self.iconsize = (16, 16)
         wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
 
+        self.CreateStatusBar()
+
         self._auimgr = wx.aui.AuiManager(self)
 
         # creating widgets
@@ -217,6 +219,7 @@ class GMFrame(wx.Frame):
                 menu.AppendMenu(wx.NewId(), label, subMenu)
             else:
                 self.__createMenuItem(menu, *eachItem)
+        self.Bind(wx.EVT_MENU_HIGHLIGHT_ALL, self.OnMenuHighlight)
         return menu
 
     def __createMenuItem(self, menu, label, help, handler, gcmd, kind=wx.ITEM_NORMAL):
@@ -262,6 +265,19 @@ class GMFrame(wx.Frame):
         self.Centre()
         return self.notebook
 
+    def OnMenuHighlight(self, event):
+        """
+        Default menu help handler
+        """
+         # Show how to get menu item info from this event handler
+        id = event.GetMenuId()
+        item = self.GetMenuBar().FindItemById(id)
+        if item:
+            text = item.GetText()
+            help = item.GetHelp()
+
+        # but in this case just call Skip so the default is done
+        event.Skip()
 
     # choicebook methods
     def onCBPageChanged(self, event):
@@ -295,7 +311,7 @@ class GMFrame(wx.Frame):
         #global gmpath
         cmd = self.cmdinput.GetValue()
 
-        self.goutput.runCmd(cmd)
+        self.goutput.RunCmd(cmd)
         #menuform.GUI().ParseCommand(cmd, gmpath)
 
     def runMenuCmd(self, event):
@@ -459,10 +475,13 @@ class GMFrame(wx.Frame):
 
         self.disp_idx += 1
 
-#        self._auimgr.AddPane(self.curr_page.maptree.mapdisplay, wx.aui.AuiPaneInfo().Right().
-#                           Dockable(False).BestSize((-1,-1)).
-#                           CloseButton(True).MinimizeButton(True).
-#                           DestroyOnClose(True).Layer(1))
+#        self._auimgr.SetManagedWindow(self.curr_page.maptree.testframe)
+#
+#        self._auimgr.AddPane(self.curr_page.maptree.testframe,
+#                             wx.aui.AuiPaneInfo().Right().
+#                             BestSize((-1,-1)).
+#                             CloseButton(True).MinimizeButton(True).
+#                             DestroyOnClose(True).Layer(2))
 #
 #        self._auimgr.Update()
 
@@ -649,6 +668,7 @@ class GMFrame(wx.Frame):
         except:
             pass
 #            self.DestroyChildren()
+        self._auimgr.UnInit()
         self.Destroy()
 
     def Nomethod(self, event):
