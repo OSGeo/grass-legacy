@@ -190,7 +190,7 @@ class GMFrame(wx.Frame):
         self.cmdinput.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
         wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
 
-        self.Bind(wx.EVT_TEXT_ENTER, self.runCmd, self.cmdinput)
+        self.Bind(wx.EVT_TEXT_ENTER, self.OnRunCmd, self.cmdinput)
 
         return self.cmdinput
 
@@ -279,6 +279,24 @@ class GMFrame(wx.Frame):
         # but in this case just call Skip so the default is done
         event.Skip()
 
+    def OnGeorectify(self, event):
+        """
+        Launch georectifier module
+        """
+        pass
+
+    def OnMapsets(self, event):
+        """
+        Launch mapset access module
+        """
+        pass
+
+    def OnRDigit(self, event):
+        """
+        Launch raster digitizing module
+        """
+        pass
+
     # choicebook methods
     def onCBPageChanged(self, event):
         """Page in notebook changed"""
@@ -305,7 +323,7 @@ class GMFrame(wx.Frame):
         self.gm_cb.GetPage(event.GetSelection()).maptree.Close(True)
         event.Skip()
 
-    def runCmd(self,event):
+    def OnRunCmd(self,event):
         """Run command"""
 
         #global gmpath
@@ -314,7 +332,13 @@ class GMFrame(wx.Frame):
         self.goutput.RunCmd(cmd)
         #menuform.GUI().ParseCommand(cmd, gmpath)
 
-    def runMenuCmd(self, event):
+    def RunMenuCmd(self, event):
+        menuitem = self.menubar.FindItemById(event.GetId())
+        itemtext = menuitem.GetText()
+        cmd = menucmd[itemtext]
+        self.goutput.RunCmd(cmd)
+
+    def OnMenuCmd(self, event):
         """Run menu command"""
 
         menuitem = self.menubar.FindItemById(event.GetId())
