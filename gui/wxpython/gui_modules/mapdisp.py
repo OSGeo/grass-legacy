@@ -983,7 +983,6 @@ class BufferedWindow(wx.Window):
                      "rows=%f" % new['rows'],
                      "cols=%f" % new['cols']]
 
-        print cmdRegion
         p = cmd.Command(cmdRegion)
 
         if tmpreg:
