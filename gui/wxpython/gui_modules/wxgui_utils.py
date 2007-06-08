@@ -1120,9 +1120,7 @@ class GMConsole(wx.Panel):
                     return
                 else:
                     # process GRASS command with argument
-                    print 'cmdlist 2.5=',cmdlist
                     cmdlist.append('--verbose')
-                    print 'cmdlist3=', cmdlist
                     p = cmd.Command(cmdlist)
 
 
