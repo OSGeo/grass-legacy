@@ -59,8 +59,11 @@ int main(int argc, char *argv[])
     store_opt->description  = _("Where GRASS variable is stored") ;
     store_opt->required     = NO;
     
+    if (argc > 1 && G_parser(argc, argv) < 0)
+       exit(EXIT_FAILURE);
+
     /* Print or optionally set environment variables */
-    if (argc == 1)
+    if (!get->answer && !set->answer)
     {
         tty = isatty(1);
         for (n=0; (name = G__env_name (n)); n++)
@@ -75,9 +78,6 @@ int main(int argc, char *argv[])
         }
         return 0;
     }
-
-    if (G_parser(argc, argv) < 0)
-       exit(EXIT_FAILURE);
 
     store = G_VAR_GISRC;
     if ( store_opt->answer[0] == 'm' ) store = G_VAR_MAPSET;
