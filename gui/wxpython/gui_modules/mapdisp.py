@@ -640,7 +640,7 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.OnLeftDown(): use=%s" % \
                    self.mouse["use"])
 
-        if self.mouse["use"] == "measure" or self.mouse["use"] == "profile" or \
+        if self.mouse["use"] in ["measure", "profile"] or \
                (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
             # measure || profile || digit tool
             if len(self.polycoords) == 0:
@@ -652,7 +652,8 @@ class BufferedWindow(wx.Window):
                 self.mouse['begin'] = self.mouse['end']
         else: # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
-            idlist  = self.pdc.FindObjects(x=self.lastpos[0], y=self.lastpos[1], radius=self.hitradius)
+            idlist = self.pdc.FindObjects(x=self.lastpos[0], y=self.lastpos[1],
+                                          radius=self.hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
 
@@ -663,7 +664,7 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.OnLeftUp(): use=%s" % \
                    self.mouse["use"])
 
-        if self.mouse['use'] == "zoom" or self.mouse['use'] == "pan":
+        if self.mouse['use'] in ["zoom", "pan"]:
             # end point of zoom box or drag
             self.mouse['end'] = event.GetPositionTuple()[:]
 
@@ -673,21 +674,53 @@ class BufferedWindow(wx.Window):
             # redraw map
             self.render=True
             self.UpdateMap()
+
         elif self.mouse["use"] == "query":
             # querying
             self.parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
-        elif self.mouse["use"] == "measure" or self.mouse["use"] == "profile" or \
-                 (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
-            # measure || profile || digit tool
+
+        elif self.mouse["use"] in ["measure", "profile"]:
+            # measure or profile 
             self.mouse['end'] = event.GetPositionTuple()[:]
             if self.mouse["use"] == "measure":
-                self.parent.MeasureDist(self.mouse['begin'],self.mouse['end'])
+                self.parent.MeasureDist(self.mouse['begin'], self.mouse['end'])
             try:
                 self.polycoords.append(self.mouse['end'])
                 self.pdc.ClearId(self.lineid)
                 self.DrawLines()
             except:
                 pass
+        elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
+            # digit tool
+            digit = self.parent.digittoolbar
+            if digit.action == "add":
+                try:
+                    map = digit.layers[digit.layerID].name
+                except:
+                    map = None
+                    dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                                           _("Error"), wx.OK | wx.ICON_ERROR)
+                    dlg.ShowModal()
+                    dlg.Destroy()
+
+                    if map:
+                        east, north = self.Pixel2Cell(self.mouse['begin'][0],
+                                                      self.mouse['begin'][1])
+                        if digit.type in ["point", "centroid"]:
+                         # add new point
+                            Digit.AddPoint(map=map,
+                                           type=digit.type,
+                                           x=east, y=north)
+                        elif digit.type in ["line", "boundary"]:
+                            # add new point to the line
+                            Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % \
+                                           (east, north))
+                            self.savedpos.append ((east, north))
+
+                    # redraw map
+                    self.render=True
+                    self.UpdateMap()
+
         elif self.dragid != None:
             # end drag of overlay decoration
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
@@ -696,33 +729,6 @@ class BufferedWindow(wx.Window):
             id = None
             self.Update()
 
-#         # digitizing
-#         elif self.parent.digittoolbar:
-#             if self.parent.digittoolbar.action == "add":
-#                 try:
-#                     map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
-#                 except:
-#                     map = None
-#                     dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
-#                                            _("Error"), wx.OK | wx.ICON_ERROR)
-#                     dlg.ShowModal()
-#                     dlg.Destroy()
-
-#                 if map:
-#                     east, north = self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1])
-#                     if self.parent.digittoolbar.type in ["point", "centroid"]:
-#                         # add new point
-#                         Digit.AddPoint(map=map,
-#                                        type=self.parent.digittoolbar.type,
-#                                        x=east, y=north)
-#                     elif self.parent.digittoolbar.type in ["line", "boundary"]:
-#                         # add new point to the line
-#                         Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % (east, north))
-#                         self.savedpos.append ((east, north))
-
-#             # redraw map
-#             self.render=True
-#             self.UpdateMap()
 
     def OnButtonDClick(self, event):
         """
@@ -1121,7 +1127,9 @@ class MapFrame(wx.Frame):
         self.layerbook = notebook #GIS Manager layer tree notebook
         # available cursors
         self.cursors = {
-            "default" : wx.StockCursor(wx.CURSOR_DEFAULT),
+            # default: cross
+            # "default" : wx.StockCursor(wx.CURSOR_DEFAULT),
+            "default" : wx.StockCursor(wx.CURSOR_CROSS),
             "cross"   : wx.StockCursor(wx.CURSOR_CROSS),
             "hand"    : wx.StockCursor(wx.CURSOR_HAND),
             "pencil"  : wx.StockCursor(wx.CURSOR_PENCIL),
@@ -1485,13 +1493,13 @@ class MapFrame(wx.Frame):
         # change the cursor
         self.MapWindow.SetCursor(self.cursors["cross"])
 
-    def QueryMap(self,x,y):
+    def QueryMap(self, x, y):
         """
         Run *.what command in gis manager output window
         """
         #set query snap distance for v.what at mapunit equivalent of 10 pixels
-        qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w'])/self.Map.width)
-        east,north = self.MapWindow.Pixel2Cell(x,y)
+        qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
+        east,north = self.MapWindow.Pixel2Cell(x, y)
 
         if self.tree.GetSelections():
             mapname = None
@@ -1539,9 +1547,9 @@ class MapFrame(wx.Frame):
         # parse query command(s)
         if self.gismanager:
             if rcmd:
-                self.gismanager.goutput.runCmd(' '.join(rcmd))
+                self.gismanager.goutput.RunCmd(' '.join(rcmd))
             if vcmd:
-                self.gismanager.goutput.runCmd(' '.join(vcmd))
+                self.gismanager.goutput.RunCmd(' '.join(vcmd))
         else:
             os.system(' '.join(rcmd))
             os.system(' '.join(vcmd))
