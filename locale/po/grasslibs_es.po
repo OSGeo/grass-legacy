@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 16:56+0200\n"
-"PO-Revision-Date: 2007-06-01 16:59+0200\n"
+"POT-Creation-Date: 2007-06-08 17:22+0200\n"
+"PO-Revision-Date: 2007-06-08 17:39+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../lib/rst/interp_float/vinput2d.c:379
 msgid "some points outside of region -- will ignore..."
-msgstr "algunos puntos están fuera de la región -- se ignorarán"
+msgstr "algunos puntos están fuera de la región -- se ignorarán..."
 
 #: ../lib/gmath/del2g.c:51
 msgid "    taking FFT of image..."
@@ -156,7 +156,7 @@ msgstr "El tamaño de la matriz está fuera del rango"
 
 #: ../lib/gmath/la.c:154
 msgid "Matrix is not initialised fully."
-msgstr "La matriz no se inicializó por completo"
+msgstr "La matriz no se inicializó por completo."
 
 #: ../lib/gmath/la.c:159
 msgid "Unable to allocate space for matrix copy"
@@ -228,7 +228,7 @@ msgstr "La matriz es singular"
 
 #: ../lib/gmath/la.c:602
 msgid "Problem in LA procedure."
-msgstr "Problema en el procedimiento LA"
+msgstr "Problema en el procedimiento LA."
 
 #: ../lib/gmath/la.c:692
 msgid "Element array has not been allocated"
@@ -265,7 +265,7 @@ msgstr "El índice de la columna especificada está fuera del rango"
 
 #: ../lib/gmath/la.c:862
 msgid "Unknown vector type."
-msgstr "Tipo de vector desconocido"
+msgstr "Tipo de vector desconocido."
 
 #: ../lib/gmath/la.c:991
 msgid "Output vector is uninitialized"
@@ -390,7 +390,7 @@ msgstr "No se puede encontrar  o abrir el símbolo '%s'"
 #: ../lib/symbol/read.c:383
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
-msgstr "Color del símbolo incorrecto: %s, se usa por defecto"
+msgstr "Color del símbolo incorrecto: '%s', se usa el predeterminado."
 
 #: ../lib/proj/datum.c:256 ../lib/gis/get_datum_name.c:67
 #: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:47
@@ -451,7 +451,7 @@ msgstr "El socket está siendo utilizado o no acepta conexiones."
 
 #: ../lib/raster/io_sock.c:106
 msgid "Use d.mon to select a monitor"
-msgstr "Use \"d.mon\" para seleccionar un monitor gráfico."
+msgstr "Use d.mon para seleccionar un monitor gráfico"
 
 #: ../lib/raster/io_sock.c:113
 msgid "Trying to connect to something not a socket."
@@ -508,41 +508,49 @@ msgstr "ERROR - el monitor de gráficos <%s> no reponde.\n"
 msgid "Unable to open file %s"
 msgstr "No es posible abrir el archivo %s "
 
-#: ../lib/gpde/N_solvers_classic_iter.c:131
+#: ../lib/gpde/N_solvers_classic_iter.c:57
+#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers.c:53
+#: ../lib/gpde/N_solvers.c:86 ../lib/gpde/N_solvers_krylov.c:77
+#: ../lib/gpde/N_solvers_krylov.c:255 ../lib/gpde/N_solvers_krylov.c:423
+#: ../lib/gpde/N_solvers_krylov.c:832
+msgid "The linear equation system is not quadratic"
+msgstr "El sistema de ecuaciones lineal no es cuadrático"
+
+#: ../lib/gpde/N_solvers_classic_iter.c:152
 #, c-format
 msgid "sparse Jacobi -- iteration %5i error %g\n"
 msgstr "sistemas no lineales (Jacobi) -- iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers_classic_iter.c:133
+#: ../lib/gpde/N_solvers_classic_iter.c:154
 #, c-format
 msgid "sparse SOR -- iteration %5i error %g\n"
 msgstr "sistemas no lineales (SOR) -- iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers_classic_iter.c:176
+#: ../lib/gpde/N_solvers_classic_iter.c:197
 #, c-format
 msgid "Jacobi -- iteration %5i error %g\n"
 msgstr "Jacobi -- iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers_classic_iter.c:214
+#: ../lib/gpde/N_solvers_classic_iter.c:235
 #, c-format
 msgid "SOR -- iteration %5i error %g\n"
 msgstr "Resolviendo sistemas no lineales (SOR) -- iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers.c:44
-msgid "The gauss elimination solver works only with normal quadratic matrices"
-msgstr ""
-"El método de eliminación de Gauss sólo funciona con matrices cuadráticas "
-"normales"
+#: ../lib/gpde/N_solvers.c:50
+#, fuzzy
+msgid "The gauss elimination solver does not works with sparse matrices"
+msgstr "El método de resolución por eliminación de Gauss no funciona con matrices "
 
-#: ../lib/gpde/N_solvers.c:46
+#: ../lib/gpde/N_solvers.c:56
 msgid "Starting gauss elimination solver"
 msgstr "Iniciando el método de eliminación de Gauss"
 
-#: ../lib/gpde/N_solvers.c:74
-msgid "The lu solver works only with normal quadratic matrices"
+#: ../lib/gpde/N_solvers.c:83
+#, fuzzy
+msgid "The lu solver does not works with sparse matrices"
 msgstr "La factorización LU sólo funciona con matrices cuadráticas normales"
 
-#: ../lib/gpde/N_solvers.c:76
+#: ../lib/gpde/N_solvers.c:89
 msgid "Starting lu solver method"
 msgstr "Inciando la factorización LU"
 
@@ -633,11 +641,11 @@ msgstr ""
 "\n"
 "-- Las pruebas de la unidad de creación 'les' acabaron con éxito --"
 
-#: ../lib/gpde/test/test_les.c:57
+#: ../lib/gpde/test/test_les.c:95
 msgid "\t * testing les creation in parallel\n"
 msgstr "\t *Comprobando la creación de'les' en paralelo\n"
 
-#: ../lib/gpde/test/test_les.c:92
+#: ../lib/gpde/test/test_les.c:126
 msgid "\t * testing les creation in serial\n"
 msgstr "\t *Comprobando la creación de'les' en serie\n"
 
@@ -697,7 +705,7 @@ msgstr ""
 "\n"
 "-- Las pruebas de la unidad geom_data acabaron con éxito --"
 
-#: ../lib/gpde/test/test_heat.c:32
+#: ../lib/gpde/test/test_heat.c:33
 msgid ""
 "\n"
 "++ Running heat flow integration tests ++"
@@ -705,15 +713,15 @@ msgstr ""
 "\n"
 "++ Ejecutando pruebas de integración de flujo de calor ++"
 
-#: ../lib/gpde/test/test_heat.c:34
+#: ../lib/gpde/test/test_heat.c:35
 msgid "\t 1. testing 2d heat flow"
 msgstr "\t 1. probando flujo de calor 2D"
 
-#: ../lib/gpde/test/test_heat.c:36
+#: ../lib/gpde/test/test_heat.c:37
 msgid "\t 2. testing 3d heat flow"
 msgstr "\t 2. probando flujo de calor 3D"
 
-#: ../lib/gpde/test/test_heat.c:39
+#: ../lib/gpde/test/test_heat.c:40
 msgid ""
 "\n"
 "-- heat flow integration tests failure --"
@@ -721,7 +729,7 @@ msgstr ""
 "\n"
 "-- fallo en las pruebas de integración de flujo de calor --"
 
-#: ../lib/gpde/test/test_heat.c:41
+#: ../lib/gpde/test/test_heat.c:42
 msgid ""
 "\n"
 "-- heat flow integration tests finished successfully --"
@@ -880,11 +888,11 @@ msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
 msgid "The type of solver which should solve the symmetric linear equation system."
-msgstr "El método que debería resolver el sistema de ecuaciones lineal simétrico"
+msgstr "El método que debería resolver el sistema de ecuaciones lineal simétrico."
 
 #: ../lib/gpde/N_parse_options.c:71
 msgid "The type of solver which should solve the linear equation system."
-msgstr "El método que debería resolver el sistema de ecuaciones lineal"
+msgstr "El método que debería resolver el sistema de ecuaciones lineal."
 
 #: ../lib/gpde/N_parse_options.c:80
 msgid "Maximum number of iteration used to solver the linear equation system"
@@ -906,24 +914,47 @@ msgstr ""
 msgid "The calculation time in seconds"
 msgstr "Tiempo de cálculo en segundos"
 
-#: ../lib/gpde/N_solvers_krylov.c:135
+#: ../lib/gpde/N_solvers_krylov.c:83 ../lib/gpde/N_solvers_krylov.c:261
+msgid "Matrix is not symmetric!"
+msgstr "¡La matriz no es simétrica!"
+
+#: ../lib/gpde/N_solvers_krylov.c:189 ../lib/gpde/N_solvers_krylov.c:357
+msgid "unable to solve the linear equation system"
+msgstr "no se puede resolver el sistema de ecuaciones lineal"
+
+#: ../lib/gpde/N_solvers_krylov.c:197
+#, fuzzy, c-format
+msgid "sparse PCG -- iteration %i error  %g\n"
+msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
+
+#: ../lib/gpde/N_solvers_krylov.c:199
+#, c-format
+msgid "PCG -- iteration %i error  %g\n"
+msgstr "PCG -- iteración %i error %g\n"
+
+#: ../lib/gpde/N_solvers_krylov.c:365
 #, c-format
 msgid "sparse CG -- iteration %i error  %g\n"
 msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
 
-#: ../lib/gpde/N_solvers_krylov.c:137
+#: ../lib/gpde/N_solvers_krylov.c:367
 #, c-format
 msgid "CG -- iteration %i error  %g\n"
 msgstr "Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers_krylov.c:276
+#: ../lib/gpde/N_solvers_krylov.c:481
+#, fuzzy
+msgid "unable to solve linear equation system"
+msgstr "Número máximo de iteraciones usado para resolver el sistema lineal"
+
+#: ../lib/gpde/N_solvers_krylov.c:530
 #, c-format
 msgid "sparse BiCGStab -- iteration %i error  %g\n"
 msgstr ""
 "Sistemas no lineales - gradientes biconjugados estabilizados (BiCGStab)-- "
 "iteración %5i error %g\n"
 
-#: ../lib/gpde/N_solvers_krylov.c:279
+#: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
 msgid "BiCGStab -- iteration %i error  %g\n"
 msgstr "gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %g\n"
@@ -933,7 +964,7 @@ msgstr "gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %
 msgid "Requested raster map <%s> not found"
 msgstr "No se encontró el mapa ráster <%s> solicitado"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:178
+#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, c-format
 msgid "Error opening raster map %s"
 msgstr "Error al abrir el mapa raster %s"
@@ -947,45 +978,45 @@ msgstr "Leyendo el mapa ráster <%s> en memoria"
 msgid "Could not get raster row"
 msgstr "No se pudo obtener la fila ráster"
 
-#: ../lib/gpde/N_arrays_io.c:137 ../lib/gpde/N_arrays_io.c:219
+#: ../lib/gpde/N_arrays_io.c:149 ../lib/gpde/N_arrays_io.c:231
 msgid "Unable to close input map"
 msgstr "No se puede cerrar el mapa de entrada"
 
-#: ../lib/gpde/N_arrays_io.c:166
+#: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * la matriz está vacía"
 
-#: ../lib/gpde/N_arrays_io.c:187
+#: ../lib/gpde/N_arrays_io.c:199
 #, c-format
 msgid "Write 2d array to raster map <%s>"
 msgstr "Escribir matriz 2D en el mapa ráster <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:203 ../lib/gpde/N_arrays_io.c:208
-#: ../lib/gpde/N_arrays_io.c:213
+#: ../lib/gpde/N_arrays_io.c:215 ../lib/gpde/N_arrays_io.c:220
+#: ../lib/gpde/N_arrays_io.c:225
 #, c-format
 msgid "Unable to write rast row %i"
 msgstr "No se puede escribir la fila ráster %i"
 
-#: ../lib/gpde/N_arrays_io.c:270
+#: ../lib/gpde/N_arrays_io.c:282
 #, c-format
 msgid "Requested g3d map <%s> not found"
 msgstr "No se encontró el mapa g3D <%s> solicitado"
 
-#: ../lib/gpde/N_arrays_io.c:278 ../lib/gpde/N_arrays_io.c:408
+#: ../lib/gpde/N_arrays_io.c:290 ../lib/gpde/N_arrays_io.c:428
 #, c-format
 msgid "Error opening g3d map <%s>"
 msgstr "Error al abrir el mapa g3D <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:306
+#: ../lib/gpde/N_arrays_io.c:318
 #, c-format
 msgid "Read g3d map <%s> into the memory"
 msgstr "Leer el mapa g3D <%s> en memoria"
 
-#: ../lib/gpde/N_arrays_io.c:351 ../lib/gpde/N_arrays_io.c:449
+#: ../lib/gpde/N_arrays_io.c:371 ../lib/gpde/N_arrays_io.c:469
 msgid "Error closing g3d file"
 msgstr "Error al cerrar el archivo g3D"
 
-#: ../lib/gpde/N_arrays_io.c:410
+#: ../lib/gpde/N_arrays_io.c:430
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
 msgstr "Escribir matriz 3D en el mapa g3D <%s>"
@@ -1159,8 +1190,8 @@ msgstr ""
 #, c-format
 msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
-"Sólo el  %d%% de la ventana grabada en \"%s\" se superpone a la ventana "
-"actual de GRASS"
+" Sólo el  %d%% de la ventana grabada en \"%s\" se superpone a la ventana "
+"actual de GRASS."
 
 #: ../lib/gis/sample.c:74
 msgid "unknown interpolation type"
@@ -1686,7 +1717,7 @@ msgstr "El nombre del archivo es ilegal. El caracter <%c> no está permitido.\n"
 #: ../lib/gis/legal_name.c:75 ../lib/gis/legal_name.c:77
 #, c-format
 msgid "Output name '%s' is not valid rast name."
-msgstr "El nombre de salida '%s' no es un nombre de raster válido"
+msgstr "El nombre de salida '%s' no es un nombre de ráster válido."
 
 #: ../lib/gis/legal_name.c:88 ../lib/gis/legal_name.c:90
 #: ../lib/vector/Vlib/legal_vname.c:73 ../lib/vector/Vlib/legal_vname.c:75
@@ -1702,7 +1733,7 @@ msgstr "Mapa final '%s' esta siendo utilizado como entrada"
 
 #: ../lib/gis/system.c:87
 msgid "Can not create a new process!"
-msgstr "No es posible crear un proceso nuevo"
+msgstr "¡No se puede crear un proceso nuevo!"
 
 #: ../lib/gis/done_msg.c:37
 #, c-format
@@ -1738,13 +1769,13 @@ msgstr "error desconocido"
 msgid "bad rule (%s): %s"
 msgstr "Regla erronea (%s): %s"
 
-#: ../lib/gis/error.c:272
+#: ../lib/gis/error.c:305
 msgid "WARNING: "
 msgstr "ATENCIÓN: "
 
-#: ../lib/gis/error.c:273
+#: ../lib/gis/error.c:306
 msgid "ERROR: "
-msgstr "ERROR:"
+msgstr "ERROR: "
 
 #: ../lib/gis/color_read.c:123
 #, c-format
@@ -2075,11 +2106,11 @@ msgstr "la información histórica para [%s] no puede escribirse"
 
 #: ../lib/gis/history.c:269
 msgid "Not enough room in history file to record command line."
-msgstr "Sin memoria en el historial para guardar la línea de comando"
+msgstr "Memoria insuficiente en el historial para guardar la línea de comando."
 
 #: ../lib/gis/history.c:291
 msgid "Not enough room in history file for command line (truncated)."
-msgstr "Sin memoria en el historial para guardar la línea de comando (truncada)"
+msgstr "Memoria insuficiente en el historial para guardar la línea de comando (truncada)."
 
 #: ../lib/gis/histogram.c:60
 #, c-format
@@ -2727,7 +2758,7 @@ msgstr "se requiere: %s\n"
 #: ../lib/gis/parser.c:2513
 #, c-format
 msgid "multiple: %s\n"
-msgstr "multiple: %s\n"
+msgstr "múltiple: %s\n"
 
 #: ../lib/gis/parser.c:2515
 #, c-format
@@ -2899,7 +2930,7 @@ msgstr "El nombre del mapa no puede ser compilado por SQL."
 #: ../lib/vector/Vlib/open.c:533
 #, c-format
 msgid "The vector '%s' already exists and will be overwritten."
-msgstr "El vector '%s' existe y será sobreescrito"
+msgstr "El vectorial '%s' ya existe y será sobrescrito."
 
 #: ../lib/vector/Vlib/map.c:280
 #, c-format
@@ -2967,7 +2998,7 @@ msgstr "Nombre del mapa vectorial es ilegal<%s>. El caracter <%c> no es aceptado
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
 msgid "Output name '%s' is not valid vector name."
-msgstr "Nombre final '%s' no es un nombre de vector válido"
+msgstr "El nombre de salida '%s' no es un nombre de vectorial válido."
 
 #: ../lib/vector/Vlib/snap.c:139 ../lib/vector/Vlib/snap.c:179
 msgid "Registering points"
@@ -3067,11 +3098,11 @@ msgstr "Entidad %d sin geometría, ignorada"
 
 #: ../lib/vector/Vlib/build_ogr.c:357
 msgid "OGR feature without ID ignored."
-msgstr "Entidad OGR sin ID ignorada"
+msgstr "Elemento OGR sin ID ignorado."
 
 #: ../lib/vector/Vlib/net.c:120
 msgid "Building graph ..."
-msgstr "Creando grafo"
+msgstr "Construyendo gráfico..."
 
 #: ../lib/vector/Vlib/net.c:156
 msgid "Cannot build network graph"
@@ -3106,7 +3137,7 @@ msgstr "No se soporta el tipo de columna"
 
 #: ../lib/vector/Vlib/net.c:208
 msgid "Registering arcs ..."
-msgstr "Registrando arcos: "
+msgstr "Registrando arcos..."
 
 #: ../lib/vector/Vlib/net.c:230
 #, c-format
@@ -3144,7 +3175,7 @@ msgstr ""
 
 #: ../lib/vector/Vlib/net.c:368
 msgid "Flattening the graph ..."
-msgstr "Suavizando el grafo"
+msgstr "Suavizando el gráfico..."
 
 #: ../lib/vector/Vlib/net.c:370
 msgid "GngFlatten error"
@@ -3169,9 +3200,7 @@ msgstr "Mapa vectorial <%s> no encontrado"
 
 #: ../lib/vector/Vlib/open.c:189
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr ""
-"Un mapa que no está incluido en el directorio de mapas actual no puede ser "
-"abierto para realizar una actualización"
+msgstr "Un mapa que no está en el directorio de mapas actual no se puede abrir para actualizar."
 
 #: ../lib/vector/Vlib/open.c:207
 #, c-format
@@ -3356,7 +3385,7 @@ msgstr "No se soportan entidades del tipo [%d] OGR"
 #
 #: ../lib/vector/Vlib/read_ogr.c:165
 msgid "OGR feature without ID."
-msgstr "Entidad OGR sin ID ignorada"
+msgstr "Elemento OGR sin ID."
 
 #: ../lib/vector/Vlib/read_ogr.c:365
 #, c-format
