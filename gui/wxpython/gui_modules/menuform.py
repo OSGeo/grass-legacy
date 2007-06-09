@@ -644,13 +644,15 @@ class mainFrame(wx.Frame):
     def OnCopy(self, event):
         """Copy the command"""
         cmddata = wx.TextDataObject()
-        cmddata.SetText(self.createCmd(ignoreErrors=True))
+        # list -> string
+        cmdstring = ' '.join(self.createCmd(ignoreErrors=True))
+        cmddata.SetText(cmdstring)
         if wx.TheClipboard.Open():
             wx.TheClipboard.UsePrimarySelection(True)
             wx.TheClipboard.SetData(cmddata)
             wx.TheClipboard.Close()
-            self.SetStatusText( _("'%s' copied to clipboard") %\
-                            (self.createCmd(ignoreErrors=True)))
+            self.SetStatusText( _("'%s' copied to clipboard") % \
+                                    (cmdstring))
 
     def OnCancel(self, event):
         """Cancel button pressed"""
