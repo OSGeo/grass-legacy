@@ -82,7 +82,7 @@ main (int argc,char *argv[])
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     first_opt = G_define_option();
-    	first_opt->key = "input_first";
+    	first_opt->key = "first";
     	first_opt->type = TYPE_STRING;
     	first_opt->key_desc     = "name";
 	first_opt->required     = YES;
@@ -94,7 +94,7 @@ main (int argc,char *argv[])
     	dbdatabase->type       	= TYPE_STRING ;
     	dbdatabase->required   	= NO ;
     	dbdatabase->multiple   	= NO ;
-    	dbdatabase->description	= _("Database name");
+    	dbdatabase->description	= _("Database name - THIS OPTION WILL BE REMOVED SOON");
     if ( (db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
 	    dbdatabase->answer = G_store ( db );
 
@@ -104,7 +104,7 @@ main (int argc,char *argv[])
     	dbdriver->options     = db_list_drivers();
     	dbdriver->required    = NO ;
     	dbdriver->multiple    = NO ;
-    	dbdriver->description = _("Driver name");
+    	dbdriver->description = _("Driver name - THIS OPTION WILL BE REMOVED SOON");
     if ( (dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
 	    dbdriver->answer = G_store ( dvr );
 
