@@ -131,11 +131,12 @@ class BufferedWindow(wx.Window):
         #
         # Variable for drawing on DC
         #
-        self.pen = None     # pen for drawing zoom boxes, etc.
-        self.polypen = None # pen for drawing polylines (measurements, profiles, etc)
-        self.polycoords = []  # List of wx.Point tuples defining a polyline
-        self.lineid = None #ID of rubber band line
-        self.plineid = None #ID of poly line resulting from cumulative rubber band lines (e.g. measurement)
+        self.pen = None      # pen for drawing zoom boxes, etc.
+        self.polypen = None  # pen for drawing polylines (measurements, profiles, etc)
+        self.polycoords = [] # List of wx.Point tuples defining a polyline
+        self.lineid = None   # ID of rubber band line
+        # ID of poly line resulting from cumulative rubber band lines (e.g. measurement)
+        self.plineid = None  
 
         #
         # Event bindings
@@ -199,7 +200,6 @@ class BufferedWindow(wx.Window):
         # vars for handling mouse clicks
         self.dragid   = -1
         self.lastpos  = (0, 0)
-        self.savedpos = []
 
     def Draw(self, pdc, img=None, drawid=None, pdctype='image', coords=[0,0,0,0]):
         """
@@ -509,6 +509,8 @@ class BufferedWindow(wx.Window):
         """
         Drag an overlay decoration item
         """
+        Debug.msg (5, "BufferedWindow.DragItem(): id=%d" % \
+                       id)
         x,y = self.lastpos
         dx = event.GetX() - x
         dy = event.GetY() - y
@@ -531,6 +533,8 @@ class BufferedWindow(wx.Window):
         """
         Mouse zoom rectangles and lines
         """
+        Debug.msg (4, "BufferedWindow.MouseDraw(): use=%s, box=%s" % \
+                       (self.mouse['use'], self.mouse['box']))
         if self.mouse['box'] == "box":
             boxid = wx.ID_NEW
             mousecoords = [self.mouse['begin'][0], self.mouse['begin'][1], \
@@ -561,6 +565,10 @@ class BufferedWindow(wx.Window):
             self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=mousecoords)
 
     def DrawLines(self):
+        """Draw polyline in PseudoDC"""
+        Debug.msg (5, "BufferedWindow.DrawLines(): coords=%s" % \
+                       self.polycoords)
+
         self.plineid = wx.ID_NEW+1
         if len(self.polycoords) > 0:
             self.Draw(self.pdc, drawid=self.plineid, pdctype='polyline', coords=self.polycoords)
@@ -601,15 +609,17 @@ class BufferedWindow(wx.Window):
         elif event.Dragging():
             Debug.msg (5, "BufferedWindow.MouseAction(): Dragging")
             currpos = event.GetPositionTuple()[:]
-            end = (currpos[0]-self.mouse['begin'][0], \
-                             currpos[1]-self.mouse['begin'][1])
+            end = (currpos[0] - self.mouse['begin'][0], \
+                       currpos[1] - self.mouse['begin'][1])
 
             # dragging or drawing box with left button
             if self.mouse['use'] == 'pan':
                 self.DragMap(end)
 
             # dragging decoration overlay item
-            elif self.mouse['use'] == 'pointer' and self.dragid != None and self.dragid != 99:
+            elif (self.mouse['use'] == 'pointer' and not self.parent.digittoolbar) and \
+                    self.dragid != None and \
+                    self.dragid != 99:
                 self.DragItem(self.dragid, event)
 
             # dragging anything else - rubber band box or line
@@ -622,6 +632,10 @@ class BufferedWindow(wx.Window):
         elif event.ButtonDClick():
             self.OnButtonDClick(event)
 
+        # middle mouse button pressed
+        elif event.MiddleDown():
+            self.OnMiddleDown(event)
+
         # right mouse button pressed
         elif event.RightDown():
             self.OnRightDown(event)
@@ -629,6 +643,9 @@ class BufferedWindow(wx.Window):
         # right mouse button released
         elif event.RightUp():
             self.OnRightUp(event)
+
+        elif event.Moving():
+            self.OnMouseMoving(event)
 
         # store current mouse position
         self.mouse['pos'] = event.GetPositionTuple()[:]
@@ -640,9 +657,8 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.OnLeftDown(): use=%s" % \
                    self.mouse["use"])
 
-        if self.mouse["use"] in ["measure", "profile"] or \
-               (self.mouse["use"] == "pointer" and self.parent.digittoolbar):
-            # measure || profile || digit tool
+        if self.mouse["use"] in ["measure", "profile"]:
+            # measure || profile
             if len(self.polycoords) == 0:
                 self.mouse['begin'] = event.GetPositionTuple()[:]
                 self.mouse['end'] = self.mouse['begin']
@@ -650,12 +666,48 @@ class BufferedWindow(wx.Window):
                 self.ClearLines()
             else:
                 self.mouse['begin'] = self.mouse['end']
-        else: # get decoration id
+
+        elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
+            # digitization
+            digit = self.parent.digittoolbar
+            if digit.action == "add":
+                try:
+                    map = digit.layers[digit.layerSelectedID].name
+                except:
+                    map = None
+                    dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                                           _("Error"), wx.OK | wx.ICON_ERROR)
+                    dlg.ShowModal()
+                    dlg.Destroy()
+                
+                if map:
+                    if digit.type in ["point", "centroid"]:
+                        # add new point
+                        east, north = self.Pixel2Cell(event.GetPositionTuple()[0],
+                                                      event.GetPositionTuple()[1])
+
+                        Digit.AddPoint(map=map,
+                                       type=digit.type,
+                                       x=east, y=north)
+                                                       
+                        self.render=True
+                        self.UpdateMap() # redraw map
+
+                    elif digit.type in ["line", "boundary"]:
+                        # add new point to the line
+                        self.polycoords.append(event.GetPositionTuple()[:])
+                        self.mouse['begin'] = self.polycoords[-1]
+                        self.DrawLines()
+                        
+        else:
+            # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
             idlist = self.pdc.FindObjects(x=self.lastpos[0], y=self.lastpos[1],
                                           radius=self.hitradius)
             if idlist != []:
                 self.dragid = idlist[0]
+
+        event.Skip()
 
     def OnLeftUp(self, event):
         """
@@ -690,36 +742,10 @@ class BufferedWindow(wx.Window):
                 self.DrawLines()
             except:
                 pass
+
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
-            # digit tool
-            digit = self.parent.digittoolbar
-            if digit.action == "add":
-                try:
-                    map = digit.layers[digit.layerID].name
-                except:
-                    map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
-                                           _("Error"), wx.OK | wx.ICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
-
-                    if map:
-                        east, north = self.Pixel2Cell(self.mouse['begin'][0],
-                                                      self.mouse['begin'][1])
-                        if digit.type in ["point", "centroid"]:
-                         # add new point
-                            Digit.AddPoint(map=map,
-                                           type=digit.type,
-                                           x=east, y=north)
-                        elif digit.type in ["line", "boundary"]:
-                            # add new point to the line
-                            Debug.msg (3, "BufferedWindow.MouseAction(): new saved pos=%f,%f" % \
-                                           (east, north))
-                            self.savedpos.append ((east, north))
-
-                    # redraw map
-                    self.render=True
-                    self.UpdateMap()
+            # digitization
+            pass
 
         elif self.dragid != None:
             # end drag of overlay decoration
@@ -729,6 +755,7 @@ class BufferedWindow(wx.Window):
             id = None
             self.Update()
 
+        event.Skip()
 
     def OnButtonDClick(self, event):
         """
@@ -772,6 +799,8 @@ class BufferedWindow(wx.Window):
             elif self.dragid == 1:
                 self.parent.AddLegend(None)
 
+        event.Skip()
+
     def OnRightDown(self, event):
         """
         Right mouse button pressed
@@ -796,6 +825,8 @@ class BufferedWindow(wx.Window):
                 r.Inflate(4,4)
                 self.RefreshRect(r, False)
 
+        event.Skip()
+
     def OnRightUp(self, event):
         """
         Right mouse button released
@@ -804,25 +835,65 @@ class BufferedWindow(wx.Window):
                    self.mouse["use"])
 
         if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
-            if self.parent.digittoolbar.type in ["line", "boundary"]:
+            digit = self.parent.digittoolbar
+            if digit.type in ["line", "boundary"]:
                 try:
-                    map = self.parent.digittoolbar.layers[self.parent.digittoolbar.layerID].name
+                    map = digit.layers[digit.layerSelectedID].name
                 except:
                     map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"), _("Error"), wx.OK | wx.ICON_ERROR)
+                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"), 
+                                           _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
 
                 if map:
                     # add new line
+                    mapcoords = []
+                    # xy -> EN
+                    for coord in self.polycoords:
+                        mapcoords.append(self.Pixel2Cell (coord[0], coord[1]))
+
                     Digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
-                                  xy=self.savedpos)
+                                  coords=mapcoords)
+                   
                     # clean up saved positions
-                    self.savedpos = []
+                    self.polycoords = []
+
                     # redraw map
                     self.render=True
                     self.UpdateMap()
+
+        event.Skip()
+
+    def OnMouseMoving(self, event):
+        """Motion event and no mouse buttons were pressed"""
+        digit = self.parent.digittoolbar
+        if self.mouse["use"] == "pointer" and \
+                digit and \
+                digit.action == 'add' and \
+                digit.type in ["line", "boundary"]:
+            self.mouse['end'] = event.GetPositionTuple()[:]
+            Debug.msg (5, "BufferedWindow.OnMouseMoving(): coords=%f,%f" % \
+                           (self.mouse['end'][0], self.mouse['end'][1]))
+            if len(self.polycoords) > 0:
+                # draw mouse moving
+                self.MouseDraw()
+
+        event.Skip()
+
+    def OnMiddleDown(self, event):
+        """Middle mouse button pressed"""
+        digit = self.parent.digittoolbar
+        if self.mouse["use"] == "pointer" and \
+                digit and \
+                digit.action == 'add' and \
+                digit.type in ["line", "boundary"]:
+            # remove last point from the line
+            self.polycoords.pop()
+            self.mouse['begin'] = self.polycoords[-1]
+            self.ClearLines()
+            self.DrawLines()
 
     def ClearLines(self):
         """
@@ -841,13 +912,13 @@ class BufferedWindow(wx.Window):
         """
         Calculates real word coordinates to image coordinates
 
-        Input : x, y
-        Output: int x, int y
+        Input : int x, int y
+        Output: float x, float y
         """
         newx = self.Map.region['w'] + x * self.Map.region["ewres"]
         newy = self.Map.region['n'] - y * self.Map.region["nsres"]
 
-        return newx, newy
+        return (newx, newy)
 
     def Zoom(self, begin, end, zoomtype):
         """
@@ -1184,21 +1255,26 @@ class MapFrame(wx.Frame):
         self.dist = 0.0 #segment length for measurement
         self.totaldist = 0.0 # total length measured
         # initialize buffered DC
-        # self.MapWindow = DrawWindow(self)
-        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) # initialize buffered DC
+        ## self.MapWindow = DrawWindow(self)
+        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) 
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor(self.cursors["default"]) # default
 
         #
         # Init zoomhistory
         #
-        self.MapWindow.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+        self.MapWindow.ZoomHistory(self.Map.region['n'],
+                                   self.Map.region['s'],
+                                   self.Map.region['e'],
+                                   self.Map.region['w'])
 
         # decoration overlays
         self.ovlchk = self.MapWindow.ovlchk
         self.ovlcoords = self.MapWindow.ovlcoords
-        self.params = {} # previously set decoration options parameters to insert into options dialog
-        self.propwin = {} # ID of properties window open for overlay, indexed by overlay ID
+        # previously set decoration options parameters to insert into options dialog
+        self.params = {} 
+        # ID of properties window open for overlay, indexed by overlay ID
+        self.propwin = {} 
 
         #
         # Bind various events
@@ -1250,9 +1326,14 @@ class MapFrame(wx.Frame):
             self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
                               Name("digittoolbar").Caption("Digit Toolbar").
                               ToolbarPane().Top().Row(1).
-                              LeftDockable(False).RightDockable(True).
-                              BottomDockable(False).TopDockable(False).
+                              LeftDockable(False).RightDockable(False).
+                              BottomDockable(False).TopDockable(True).
                               CloseButton(False).Layer(2))
+            # change mouse to draw digitized line
+            self.MapWindow.mouse['box'] = "point"
+            self.MapWindow.zoomtype = 0
+            self.MapWindow.pen = wx.Pen(colour='red', width=2, style=wx.SHORT_DASH)
+            self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SHORT_DASH)
 
         self._mgr.Update()
 
@@ -1472,9 +1553,9 @@ class MapFrame(wx.Frame):
 
         #self.Destroy()
 
-    def getRender(self):
+    def GetRender(self):
         """
-        returns the current instance of render.Map()
+        Returns the current instance of render.Map()
         """
         return self.Map
 
@@ -1595,7 +1676,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = "measure"
         self.MapWindow.mouse['box'] = "line"
         self.MapWindow.zoomtype = 0
-        self.MapWindow.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+        self.MapWindow.pen = wx.Pen(colour='red', width=2, style=wx.SHORT_DASH)
         self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SHORT_DASH)
 
         # change the cursor
@@ -1680,7 +1761,6 @@ class MapFrame(wx.Frame):
                 outunits = 'deg'
 
         # format numbers in a nice way
-
         if (dist/divisor) >= 2500.0:
             outdist = round(dist/divisor)
         elif (dist/divisor) >= 1000.0:
@@ -1690,7 +1770,7 @@ class MapFrame(wx.Frame):
         else:
             outdist = float('%g' % dist/divisor)
 
-        return (outdist,outunits)
+        return (outdist, outunits)
 
 
     def Histogram(self, event):

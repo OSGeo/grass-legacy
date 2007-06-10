@@ -29,7 +29,8 @@ class Digit:
     """
     Abstract digitization class
     """
-    pass
+    def __init__(self):
+        pass
 
 class VEdit(Digit):
     """
@@ -37,7 +38,7 @@ class VEdit(Digit):
 
     Note: This should be replaced by VDigit class.
     """
-    def AddPoint (self, map, type, x, y):
+    def AddPoint (self, map, type, x, y, z=None):
         """
         Add point/centroid to the vector map layer
         """
@@ -45,20 +46,20 @@ class VEdit(Digit):
             key = "C"
         else:
             key = "P"
-            
-        addstring="""%s 1
-                    %f %f""" % (key, x, y)
+        
+        addstring="""%s 1 1
+                    %f %f\n1 1""" % (key, x, y)
 
         Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, x=%f, y=%f" % \
                    (map, type, x, y))
         
         self._AddFeature (map=map, input=addstring)
 
-    def AddLine (self, map, type, xy):
+    def AddLine (self, map, type, coords):
         """
         Add line/boundary to the vector map layer
         """
-        if len(xy) < 2:
+        if len(coords) < 2:
             return
 
         if type == "boundary":
@@ -66,9 +67,10 @@ class VEdit(Digit):
         else:
             key = "L"
             
-        addstring="%s %d 1\n" % (key, len(xy))
-        for point in xy:
-            addstring += "%f %f\n" % (point[0], point [1])
+        addstring="""%s %d 1\n""" % (key, len(coords))
+        for point in coords:
+            addstring += """%f %f\n""" % \
+                (float(point[0]), float(point [1]))
 
         addstring += "1 1"
 

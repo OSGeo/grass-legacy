@@ -88,7 +88,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
 
         self.Map = render.Map()    # instance of render.Map to be associated with display
-        self.root = None             # ID of layer tree root node
+        self.root = None           # ID of layer tree root node
         self.groupnode = 0         # index value for layers
         self.optpage = {}          # dictionary of notebook option pages for each map layer
         self.layer_selected = None # ID of currently selected layer
@@ -100,20 +100,20 @@ class LayerTree(CT.CustomTreeCtrl):
         self.gismgr = gismgr
         self.notebook = notebook   # GIS Manager notebook for layer tree
         self.treepg = parent       # notebook page holding layer tree
-        self.auimgr = auimgr           # aui manager
-
-
-        self.testframe = wx.Frame(self, -1, title='Test Frame')
+        self.auimgr = auimgr       # aui manager
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
                                            id=wx.ID_ANY, pos=wx.DefaultPosition, size=(640,480),
                                            style=wx.DEFAULT_FRAME_STYLE,
-                                           tree=self, notebook=self.notebook, gismgr=self.gismgr, page=self.treepg,
+                                           tree=self, notebook=self.notebook,
+                                           gismgr=self.gismgr, page=self.treepg,
                                            Map=self.Map, auimgr=self.auimgr)
 
         # title
-        self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + str(self.disp_idx) + " - Location: " + grassenv.env["LOCATION_NAME"]))
+        self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + \
+                                       str(self.disp_idx) + \
+                                       " - Location: " + grassenv.env["LOCATION_NAME"]))
 
         #show new display
         self.mapdisplay.Show()
@@ -170,8 +170,8 @@ class LayerTree(CT.CustomTreeCtrl):
         self.AssignImageList(il)
 
         # use when groups implemented
-        # self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
-        # self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
+        ## self.tree.SetItemImage(self.root, fldridx, wx.TreeItemIcon_Normal)
+        ## self.tree.SetItemImage(self.root, fldropenidx, wx.TreeItemIcon_Expanded)
 
         self.Bind(wx.EVT_TREE_ITEM_EXPANDING,   self.OnExpandNode)
         self.Bind(wx.EVT_TREE_ITEM_COLLAPSED,   self.OnCollapseNode)
@@ -181,16 +181,13 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_DELETE_ITEM,      self.OnDeleteLayer)
         self.Bind(wx.EVT_TREE_BEGIN_DRAG,       self.OnBeginDrag)
         self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
-        self.Bind(wx.EVT_CONTEXT_MENU,          self.OnContextMenu)
+        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnContextMenu)
         self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
         # self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
     def OnChangeLayerName (self, event):
         """Change layer name"""
         Debug.msg (3, "LayerTree.OnChangeLayerName: name=%s" % event.GetLabel())
-
-        if self.layers[self.layer_selected].type != 'group':
-            self.Map.ChangeLayerName (self.layer_selected, event.GetLabel())
 
     def OnContextMenu (self, event):
         """Context Layer Menu"""
@@ -204,8 +201,8 @@ class LayerTree(CT.CustomTreeCtrl):
         Debug.msg (4, "LayerTree.OnContextMenu: layertype=%s" % \
                        ltype)
 
-        pos = event.GetPosition()
-        pos = self.ScreenToClient(pos)
+        ## pos = event.GetPosition()
+        ## pos = self.ScreenToClient(pos)
 
         if not hasattr (self, "popupID1"):
             self.popupID1 = wx.NewId()
@@ -259,7 +256,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
 
-        self.PopupMenu(self.popupMenu, pos)
+        ## self.PopupMenu(self.popupMenu, pos)
+        self.PopupMenu(self.popupMenu)
         self.popupMenu.Destroy()
 
     def OnHistogram(self, event):
@@ -867,7 +865,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         return wx.Size(minWidth, min(200, maxHeight))
 
 
-    def getElementList(self, element):
+    def GetElementList(self, element):
         """
         Get list of GIS elements in accessible mapsets and display as tree
         with all relevant elements displayed beneath each mapset branch
@@ -909,6 +907,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     # helpers
 
     def FindItem(self, parentItem, text):
+        """Find item in the layer tree"""
         item, cookie = self.tree.GetFirstChild(parentItem)
         while item:
             if self.tree.GetItemText(item) == text:
@@ -920,6 +919,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
 
     def AddItem(self, value, parent=None):
+        """Add item to the layer tree"""
         if not parent:
             root = self.tree.GetRootItem()
             if not root:
@@ -931,7 +931,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
 
     def OnMotion(self, evt):
-        # have the selection follow the mouse, like in a real combobox
+        """Have the selection follow the mouse, like in a real combobox"""
         item, flags = self.tree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
             self.tree.SelectItem(item)
@@ -940,6 +940,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
 
 
     def OnLeftDown(self, evt):
+        """Left mouse button released"""
         # do the combobox selection
         item, flags = self.tree.HitTest(evt.GetPosition())
         if item and flags & wx.TREE_HITTEST_ONITEMLABEL:
@@ -1036,9 +1037,9 @@ class GMConsole(wx.Panel):
         # cmd = self.console_command.GetLineText(0)
         try:
             curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
-            self.Map = curr_disp.getRender()
+            self.Map = curr_disp.GetRender()
         except:
-            #            disp_idx = None
+            ## disp_idx = None
             curr_disp = None
 
         try:
