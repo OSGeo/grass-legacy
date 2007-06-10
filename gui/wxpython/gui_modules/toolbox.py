@@ -45,7 +45,7 @@ import menuform
 class handleQgisGrass:
     
     def __init__(self, qgisgrass):
-        modules = qgisgrass.childNodes[0].getElementsByTagName('modules')[0]
+        modules = qgisgrass.childNodes[0].GetElementsByTagName('modules')[0]
         for child in modules.childNodes:
             if child.localName == 'grass':
                 self.handleGrass( child )
@@ -53,7 +53,7 @@ class handleQgisGrass:
                 self.handleSection( child )
 
     def handleSection( self,section ):
-        for child in section.getElementsByTagName('grass'):
+        for child in section.GetElementsByTagName('grass'):
             self.handleGrass( child )
 
     def handleGrass( self, grass ):
@@ -79,7 +79,7 @@ class wxQgisGrass( handleQgisGrass ):
 class handleQgisGrassModule:
 
     def __init__( self, qgisgrassmodule):
-        qgisgrassm = qgisgrassmodule.getElementsByTagName( "qgisgrassmodule" )[0]
+        qgisgrassm = qgisgrassmodule.GetElementsByTagName( "qgisgrassmodule" )[0]
         self.handleAttributes( qgisgrassm )
         for inner in qgisgrassm.childNodes:
             it = inner.localName

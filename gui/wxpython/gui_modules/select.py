@@ -30,7 +30,7 @@ class Select(wx.combo.ComboCtrl):
         tcp = TreeCtrlComboPopup()
         self.SetPopupControl(tcp)
         self.SetPopupExtents(0,100)
-        tcp.getElementList(type)
+        tcp.GetElementList(type)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -100,7 +100,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     def GetAdjustedSize(self, minWidth, prefHeight, maxHeight):
         return wx.Size(minWidth, min(200, maxHeight))
 
-    def getElementList(self, element):
+    def GetElementList(self, element):
         """
         Get list of GIS elements in accessible mapsets and display as tree
         with all relevant elements displayed beneath each mapset branch

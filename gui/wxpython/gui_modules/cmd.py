@@ -114,7 +114,9 @@ class Command:
                   print >> sys.stderr, msg[1]
 
                if dlgMsg == "gui":
-                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % ' '.join(self.cmd), _("Error"), wx.OK | wx.ICON_ERROR)
+                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % \
+                                            ' '.join(self.cmd), _("Error"),
+                                         wx.OK | wx.ICON_ERROR)
                   dlg.ShowModal()
                   dlg.Destroy()
                else: # otherwise 'txt'
@@ -124,7 +126,8 @@ class Command:
         else:
             self.returncode = None
 
-        Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % (self.cmd, wait, self.returncode))
+        Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % \
+                      (self.cmd, wait, self.returncode))
 
     def Run(self, verbose=False):
         """

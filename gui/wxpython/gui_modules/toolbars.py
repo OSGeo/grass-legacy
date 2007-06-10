@@ -187,24 +187,63 @@ class DigitToolbar(AbstractToolbar):
         Toolbar data
         """
 
-        self.point = self.line = self.boundary = self.centroid = self.exit = None
+        self.addPoint = self.addLine = self.addBoundary = self.addCentroid = self.exit = None
+        self.moveVertex = self.addVertex = self.removeVertex = None
+        self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
+        self.displayCats = self.displayAttr = self.copyCats = self.settings = None
 
         return (("", "", "", "", "", "", ""),
-                (self.point, "digaddpoint", Icons["digaddpoint"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digaddpoint"].GetLabel(), Icons["digaddpoint"].GetDesc(),
+                (self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
                  self.OnAddPoint),
-                (self.line, "digaddline", Icons["digaddline"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digaddline"].GetLabel(), Icons["digaddline"].GetDesc(),
+                (self.addLine, "digAddLine", Icons["digAddLine"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digAddLine"].GetLabel(), Icons["digAddLine"].GetDesc(),
                  self.OnAddLine),
-                (self.boundary, "digaddbound", Icons["digaddbound"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digaddbound"].GetLabel(), Icons["digaddbound"].GetDesc(),
+                (self.addBoundary, "digAddBoundary", Icons["digAddBoundary"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digAddBoundary"].GetLabel(), Icons["digAddBoundary"].GetDesc(),
                  self.OnAddBoundary),
-                (self.centroid, "digaddcentr", Icons["digaddcentr"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digaddcentr"].GetLabel(), Icons["digaddcentr"].GetDesc(),
+                (self.addCentroid, "digAddCentroid", Icons["digAddCentroid"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digAddCentroid"].GetLabel(), Icons["digAddCentroid"].GetDesc(),
                  self.OnAddCentroid),
                 ("", "", "", "", "", "", ""),
-                (self.exit, "digexit", Icons["digexit"].GetBitmap(),
-                 wx.ITEM_NORMAL, Icons["digexit"].GetLabel(), Icons["digexit"].GetDesc(),
+                (self.moveVertex, "digMoveVertex", Icons["digMoveVertex"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digMoveVertex"].GetLabel(), Icons["digMoveVertex"].GetDesc(),
+                 self.OnMoveVertex),
+                (self.addVertex, "digAddVertex", Icons["digAddVertex"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digAddVertex"].GetLabel(), Icons["digAddVertex"].GetDesc(),
+                 self.OnAddVertex),
+                (self.removeVertex, "digRemoveVertex", Icons["digRemoveVertex"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digRemoveVertex"].GetLabel(), Icons["digRemoveVertex"].GetDesc(),
+                 self.OnRemoveVertex),
+                ("", "", "", "", "", "", ""),
+                (self.splitLine, "digSplitLine", Icons["digSplitLine"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digSplitLine"].GetLabel(), Icons["digSplitLine"].GetDesc(),
+                 self.OnSplitLine),
+                (self.editLine, "digEditLine", Icons["digEditLine"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digEditLine"].GetLabel(), Icons["digEditLine"].GetDesc(),
+                 self.OnEditLine),
+                (self.moveLine, "digMoveLine", Icons["digMoveLine"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digMoveLine"].GetLabel(), Icons["digMoveLine"].GetDesc(),
+                 self.OnMoveLine),
+                (self.deleteLine, "digDeleteLine", Icons["digDeleteLine"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digDeleteLine"].GetLabel(), Icons["digDeleteLine"].GetDesc(),
+                 self.OnDeleteLine),
+                ("", "", "", "", "", "", ""),
+                (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
+                 self.OnDisplayCats),
+                (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
+                 self.OnCopyCats),
+                (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
+                 self.OnDisplayAttr),
+                (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
+                 wx.ITEM_RADIO, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
+                 self.OnSettings),
+                ("", "", "", "", "", "", ""),
+                (self.exit, "digExit", Icons["digExit"].GetBitmap(),
+                 wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
                  self.OnExit))
 
     def OnAddPoint(self, event):
@@ -212,25 +251,28 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg (3, "DigitToolbar.OnAddPoint()")
         self.action = "add"
         self.type   = "point"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddLine(self, event):
         """Add line to the vector map layer"""
         Debug.msg (3, "DigitToolbar.OnAddLine()")
         self.action = "add"
         self.type   = "line"
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
         Debug.msg (3, "DigitToolbar.OnAddBoundary()")
         self.action = "add"
         self.type   = "boundary"
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnAddCentroid(self, event):
         """Add centroid to the vector map layer"""
         Debug.msg (3, "DigitToolbar.OnAddCentroid()")
         self.action = "add"
         self.type   = "centroid"
-
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnExit (self, event):
         """
@@ -241,6 +283,39 @@ class DigitToolbar(AbstractToolbar):
         
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
+
+    def OnMoveVertex(self, event):
+        pass
+
+    def OnAddVertex(self, event):
+        pass
+
+    def OnRemoveVertex(self, event):
+        pass
+
+    def OnSplitLine(self, event):
+        pass
+
+    def OnEditLine(self, event):
+        pass
+
+    def OnMoveLine(self, event):
+        pass
+
+    def OnDeleteLine(self, event):
+        pass
+
+    def OnDisplayCats(self, event):
+        pass
+    
+    def OnDisplayAttr(self, event):
+        pass
+
+    def OnCopyCats(self, event):
+        pass
+
+    def OnSettings(self, event):
+        pass
 
     def OnSelectMap (self, event):
         """
