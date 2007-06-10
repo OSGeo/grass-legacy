@@ -54,6 +54,9 @@ import gui_modules.grassenv as grassenv
 import gui_modules.defaultfont as defaultfont
 import gui_modules.histogram as histogram
 import gui_modules.profile as profile
+import gui_modules.rules as rules
+import gui_modules.utils as utils
+import gui_modules.cmd as cmd
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -260,8 +263,6 @@ class GMFrame(wx.Frame):
         #self.out_sizer.Fit(self.outpage)
         #self.outpage.Layout()
 
-
-
         self.Centre()
         return self.notebook
 
@@ -346,6 +347,30 @@ class GMFrame(wx.Frame):
         cmd = menucmd[itemtext]
         global gmpath
         menuform.GUI().ParseCommand(cmd,gmpath, parentframe=self)
+
+    def RulesCmd(self, event):
+        """
+        Launches dialog for commands that need rules
+        input and processes rules
+        """
+        menuitem = self.menubar.FindItemById(event.GetId())
+        itemtext = menuitem.GetText()
+        command = menucmd[itemtext]
+        dlg = rules.RulesText(self, cmd=command)
+        if dlg.ShowModal() == wx.ID_OK:
+            if command == 'r.colors':
+                gtemp = utils.GetTempfile()
+                output = open(gtemp,"w")
+                output.write(dlg.rules)
+                output.close()
+                cmdlst = [command, 'map=%s' % dlg.inmap,'rules=%s' % gtemp,'--verbose']
+            else:
+                cmdlst = [dlg.rules, '>', command, 'input%s' % dlg.inmap, 'output=%s' % outmap, '--verbose']
+
+            p = cmd.Command(cmdlst)
+
+
+        dlg.Destroy()
 
     def DefaultFont(self, event):
         """Set default font for GRASS displays"""
