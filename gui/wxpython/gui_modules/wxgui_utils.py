@@ -6,8 +6,8 @@ import string
 
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
-sys.path.append(gmpath)
+#gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
+#sys.path.append(gmpath)
 
 import select
 import menuform
@@ -1012,8 +1012,9 @@ class GMConsole(wx.Panel):
         """
         self.gcmdlst = []
         gisbase = os.environ['GISBASE']
-        self.gcmdlst = os.listdir(gisbase+r'/bin')
-        self.gcmdlst = self.gcmdlst + os.listdir(gisbase+r'/scripts')
+        self.gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
+        self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
+        self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
 
         return self.gcmdlst
 
@@ -1084,7 +1085,6 @@ class GMConsole(wx.Panel):
             Display with focus receives display command(s).
             """
 
-            print 'cmdlist 0=',cmdlist[0]
             self.cmd_output.write("$" + ' '.join(cmdlist))
 
             dcmds = command.split(';')
