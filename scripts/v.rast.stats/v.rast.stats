@@ -46,6 +46,7 @@
 #% required : yes
 #%end
 
+
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
     exit 1
@@ -213,8 +214,11 @@ fi
 
 
 #loop over cats and calculate statistics:
-g.message -v "Processing data"
+g.message -v "Processing data ..."
 CURRNUM=1
+# get rid of any earlier attempts
+rm -f "$SQLTMP"
+
 for i in `cat "$TMP.cats"` ; do
    g.message -v message="Processing category $i ($CURRNUM/$NUMBER)"
    g.remove MASK --quiet 2>/dev/null
@@ -224,34 +228,28 @@ for i in `cat "$TMP.cats"` ; do
 
    #n, min, max, range, mean, stddev, variance, coeff_var, sum
    eval `r.univar -g "$RASTER" | sed 's+nan+NULL+g'`
+   cf_var="$coeff_var"
 
-   if [ $DBFDRIVER -eq 1 ] ; then
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_n| cut -b1-10`=$n     WHERE cat=$i;" > "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_min| cut -b1-10`=$min WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_max| cut -b1-10`=$max WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_range| cut -b1-10`=$range WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_mean| cut -b1-10`=$mean   WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_stddev| cut -b1-10`=$stddev     WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_variance| cut -b1-10`=$variance WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_cf_var| cut -b1-10`=$coeff_var  WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET `echo ${COLPREFIX}_sum| cut -b1-10`=$sum     WHERE cat=$i;" >> "$SQLTMP"
-   else
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_n=$n     WHERE cat=$i;" > "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_min=$min WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_max=$max WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_range=$range WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_mean=$mean   WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_stddev=$stddev     WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_variance=$variance WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_cf_var=$coeff_var  WHERE cat=$i;" >> "$SQLTMP"
-     echo "UPDATE $VECTOR SET ${COLPREFIX}_sum=$sum     WHERE cat=$i;" >> "$SQLTMP"
-   fi
+   for var in n min max range mean stddev variance cf_var sum ; do
+      eval value=\${$var}
 
-   db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
-   EXITCODE=$?
+      if [ $DBFDRIVER -eq 1 ] ; then
+	colname="`echo "${COLPREFIX}_${var}" | cut -b1-10`"
+      else
+	colname="${COLPREFIX}_${var}"
+      fi
+
+      echo "UPDATE $VECTOR SET ${colname}=${value} WHERE cat=$i;" >> "$SQLTMP"
+   done
 
    CURRNUM=`expr $CURRNUM + 1`
 done
+
+
+g.message -v "Updating the database ..."
+db.execute input="$SQLTMP" database="$DB_DATABASE" driver="$DB_SQLDRIVER"
+EXITCODE=$?
+
 
 g.remove MASK --quiet 2>/dev/null
 

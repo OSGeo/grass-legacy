@@ -23,7 +23,20 @@
 #% type: string
 #% key_desc: name
 #% gisprompt: old,vector,vector
-#% description: Vector map with points for which to modify the attribute table
+#% description: Points vector map to modify
+#% required : yes
+#%end
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer in the vector to be modified
+#% answer: 1
+#% required : no
+#%end
+#%option
+#% key: column
+#% type: string
+#% description: Column to be updated with the query result
 #% required : yes
 #%end
 
@@ -35,36 +48,20 @@
 #% description: Vector map to be queried
 #% required : yes
 #%end
-
-#%option
-#% key: layer
-#% type: integer
-#% description: Layer of the vector for which to modify the attribute table
-#% answer: 1
-#% required : no
-#%end
-
 #%option
 #% key: qlayer
 #% type: integer
-#% description: Layer of the vector to be queried
+#% description: Layer of the query vector containg data
 #% answer: 1
 #% required : no
 #%end
-
-#%option
-#% key: column
-#% type: string
-#% description: Column to be updated with the query result
-#% required : yes
-#%end
-
 #%option
 #% key: qcolumn
 #% type: string
 #% description: Column to be queried
 #% required : yes
 #%end
+
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
@@ -76,6 +73,11 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 
-v.distance from=$GIS_OPT_VECTOR to=$GIS_OPT_QVECTOR column=$GIS_OPT_COLUMN \
-	to_column=$GIS_OPT_QCOLUMN upload=to_attr dmax=0 \
-	from_layer=$GIS_OPT_LAYER to_layer=$GIS_OPT_QLAYER
+exec v.distance from="$GIS_OPT_VECTOR" \
+	to="$GIS_OPT_QVECTOR" \
+	column="$GIS_OPT_COLUMN" \
+	to_column="$GIS_OPT_QCOLUMN" \
+	upload=to_attr \
+	dmax=0 \
+	from_layer=$GIS_OPT_LAYER \
+	to_layer=$GIS_OPT_QLAYER
