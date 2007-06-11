@@ -18,6 +18,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import os
 import wx
 import wx.combo
+import cmd
 
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id, size, type):
@@ -106,9 +107,15 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         with all relevant elements displayed beneath each mapset branch
         """
         #set environmental variables
-        gisdbase = os.popen('g.gisenv get=GISDBASE', "r").read().strip()
-        location = os.popen('g.gisenv get=LOCATION_NAME', "r").read().strip()
-        curr_mapset = os.popen('g.gisenv get=MAPSET', "r").read().strip()
+        cmdlist = ['g.gisenv', 'get=GISDBASE']
+        gisdbase = cmd.Command(cmdlist).module_stdout.read().strip()
+
+        cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
+        location = cmd.Command(cmdlist).module_stdout.read().strip()
+
+        cmdlist = ['g.gisenv', 'get=MAPSET']
+        curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
+
         location_path = os.path.join (gisdbase,location)
         windfile = os.path.join (location_path,'PERMANENT','WIND')
         symbol_path = os.path.join (os.environ['GISBASE'],'etc','symbol')
@@ -118,7 +125,8 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             pass
 
         #mapsets in current location
-        mapsets = os.popen('g.mapsets -p').read().strip().split(' ')
+        cmdlist = ['g.mapsets', '-p']
+        mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
 
         elementlist = ['cell',
                        'grid3d',
