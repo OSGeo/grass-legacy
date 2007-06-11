@@ -1415,14 +1415,14 @@ static void G_usage_html (void)
 	    pgm_name = "??";
 
 	fprintf(stdout, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
-	fprintf(stdout, "<html>\n<head>\n"),
+	fprintf(stdout, "<html>\n<head>\n");
 	fprintf(stdout, "<title>%s</title>\n", pgm_name);
-	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"),
-	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n"),
-	fprintf(stdout, "</head>\n"),
-	fprintf(stdout, "<body bgcolor=\"white\">\n\n"),
-	fprintf(stdout, "<img src=\"grass_logo.png\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n"),
-	fprintf(stdout, "<h2>NAME</h2>\n"),
+	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n");
+	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n");
+	fprintf(stdout, "</head>\n");
+	fprintf(stdout, "<body bgcolor=\"white\">\n\n");
+	fprintf(stdout, "<img src=\"grass_logo.png\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n");
+	fprintf(stdout, "<h2>%s</h2>\n", _("NAME"));
 	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
 
 	if (module_info.label || module_info.description)
@@ -1435,12 +1435,12 @@ static void G_usage_html (void)
 		fprintf(stdout, "%s\n", module_info.description);
 
 
-	fprintf(stdout, "<h2>KEYWORDS</h2>\n");
+	fprintf(stdout, "<h2>%s</h2>\n", _("KEYWORDS"));
 	if (module_info.keywords) {
 		fprintf(stdout, "%s", module_info.keywords);
 		fprintf(stdout, "\n");
 	}
-	fprintf(stdout, "<h2>SYNOPSIS</h2>\n");
+	fprintf(stdout, "<h2>%s</h2>\n", _("SYNOPSIS"));
 	fprintf(stdout, "<b>%s</b><br>\n", pgm_name);
 	fprintf(stdout, "<b>%s help</b><br>\n", pgm_name);
 
@@ -1514,7 +1514,7 @@ static void G_usage_html (void)
 	if(n_flags || new_prompt)
 	{
 		flag= &first_flag;
-		fprintf(stdout, "<h3>Flags:</h3>\n");
+		fprintf(stdout, "<h3>%s:</h3>\n", _("Flags"));
 		fprintf(stdout, "<DL>\n");
 		while(n_flags && flag != NULL )
 		{
@@ -1538,14 +1538,15 @@ static void G_usage_html (void)
 		if (new_prompt)
 		{
 			fprintf(stdout, "<DT><b>--overwrite</b></DT>\n");
-			fprintf(stdout, "<DD>Allow output files to overwrite existing files</DD>\n");
+			fprintf(stdout, "<DD>%s</DD>\n",
+			    _("Allow output files to overwrite existing files"));
 		}
 
                 fprintf(stdout, "<DT><b>--verbose</b></DT>\n");
-                fprintf(stdout, "<DD>Verbose module output</DD>\n");
+                fprintf(stdout, "<DD>%s</DD>\n", _("Verbose module output"));
 
                 fprintf(stdout, "<DT><b>--quiet</b></DT>\n");
-                fprintf(stdout, "<DD>Quiet module output</DD>\n");
+                fprintf(stdout, "<DD>%s</DD>\n", _("Quiet module output"));
 
 		fprintf(stdout, "</DL>\n");
 	}
@@ -1554,7 +1555,7 @@ static void G_usage_html (void)
 	if(n_opts)
 	{
 		opt= &first_option;
-		fprintf(stdout, "<h3>Parameters:</h3>\n");
+		fprintf(stdout, "<h3>%s:</h3>\n", _("Parameters"));
 		fprintf(stdout, "<DL>\n");
 		
 		while(opt != NULL)
@@ -1601,13 +1602,13 @@ static void G_usage_html (void)
 			}
 
 			if(opt->options) {
-				fprintf(stdout, "<DD>Options: <em>");
+				fprintf(stdout, "<DD>%s: <em>", _("Options"));
 				fprintf(stdout, "%s", opt->options);
 				fprintf(stdout, "</em></DD>\n");
 			}
 
 			if(opt->def) {
-				fprintf(stdout, "<DD>Default: <em>");
+				fprintf(stdout, "<DD>%s: <em>", _("Default"));
 				fprintf(stdout, "%s", opt->def);
 				fprintf(stdout, "</em></DD>\n");
 			}
