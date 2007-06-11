@@ -184,7 +184,7 @@ class GMFrame(wx.Frame):
 
     def __createCommandPrompt(self):
         """Creates command prompt"""
-        self.cmdprompt = wx.StaticText(self, -1, " command")
+        self.cmdprompt = wx.StaticText(self, -1, "GRASS>")
         return self.cmdprompt
 
     def __createCommandInput(self):
