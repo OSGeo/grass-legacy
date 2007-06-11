@@ -39,13 +39,13 @@ Typical header definitions are as follows:
 #%End
 #%flag
 #%  key: f
-#%  description: a flag
+#%  description: A flag
 #%end
 #%option
 #%  key: raster
 #%  type: string
 #%  gisprompt: old,cell,raster
-#%  description: raster input map
+#%  description: Raster input map
 #%  required : yes
 #%end
 </pre></div>
@@ -120,27 +120,27 @@ the build system to prepare GRASS scripts for translation.
 #%End
 #%flag
 #%  key: f
-#%  description: a flag
+#%  description: A flag
 #%END
 #%option
 #% key: raster
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: raster input map
+#% description: Raster input map
 #% required : yes
 #%end
 #%option
 #% key: vector
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector input map
+#% description: Vector input map
 #% required : yes
 #%end
 #%option
 #% key: option1
 #% type: string
-#% description: an option
-#% required : yes
+#% description: An option
+#% required : no
 #%end
 
 if [ -z "$GISBASE" ] ; then
@@ -149,27 +149,29 @@ if [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/bin/g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
-#add your code here
+#### add your code below ####
 echo ""
+
 if [ $GIS_FLAG_F -eq 1 ] ; then
-  echo "Flag -f set"
+    echo "Flag -f set"
 else
-  echo "Flag -f not set"
+    echo "Flag -f not set"
 fi
 
-#test if parameter present:
-if [ "$GIS_OPT_OPTION1" != "(null)" ] ; then
-  echo "Value of GIS_OPT_OPTION1: '$GIS_OPT_OPTION1'"
+# test if parameter present:
+if [ -n "$GIS_OPT_OPTION1" ] ; then
+    echo "Value of GIS_OPT_OPTION1: '$GIS_OPT_OPTION1'"
 fi
 
 echo "Value of GIS_OPT_RASTER: '$GIS_OPT_RASTER'"
 echo "Value of GIS_OPT_VECTOR: '$GIS_OPT_VECTOR'"
 
-#add your code here
 </pre></div>
+
+
 <h3>Example code for Python</h3>
 
 <div class="code"><pre>
@@ -276,27 +278,27 @@ use strict;
 #%End
 #%flag
 #%  key: f
-#%  description: a flag
+#%  description: A flag
 #%END
 #%option
 #% key: raster
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: raster input map
+#% description: Raster input map
 #% required : yes
 #%end
 #%option
 #% key: vector
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector input map
+#% description: Vector input map
 #% required : yes
 #%end
 #%option
 #% key: option1
 #% type: string
-#% description: an option
-#% required : yes
+#% description: An option
+#% required : no
 #%end
 
 if ( !$ENV{'GISBASE'} ) {
@@ -313,22 +315,25 @@ if( $ARGV[0] ne '@ARGS_PARSED@' ){
     system("$ENV{GISBASE}/bin/g.parser $0 $arg");
     exit;
 }
- 
- #add your code here
- print  "\n";
- if ( $ENV{'GIS_FLAG_F'} eq "1" ){
+
+#### add your code here ####
+print  "\n";
+if ( $ENV{'GIS_FLAG_F'} eq "1" ){
    print "Flag -f set\n"
- }
- else {
+}
+else {
    print "Flag -f not set\n"
- }
- 
- printf ("Value of GIS_OPT_option1: '%s'\n", $ENV{'GIS_OPT_OPTION1'});
- printf ("Value of GIS_OPT_raster: '%s'\n", $ENV{'GIS_OPT_RASTER'});
- printf ("Value of GIS_OPT_vect: '%s'\n", $ENV{'GIS_OPT_VECTOR'});
- 
- #end of your code
+}
+
+printf ("Value of GIS_OPT_option1: '%s'\n", $ENV{'GIS_OPT_OPTION1'});
+printf ("Value of GIS_OPT_raster: '%s'\n", $ENV{'GIS_OPT_RASTER'});
+printf ("Value of GIS_OPT_vect: '%s'\n", $ENV{'GIS_OPT_VECTOR'});
+
+#### end of your code ####
+
 </pre></div>
+
+
 <P>
 The <tt>test.pl</tt> script will provide following help text:
 <P>
