@@ -40,7 +40,7 @@ Typical header definitions are as follows:
 #%End
 #%flag
 #%  key: f
-#%  description: a flag
+#%  description: A flag
 #%end
 #%option
 #%  key: raster
@@ -151,7 +151,7 @@ else
 fi
 
 #test if parameter present:
-if [ "$GIS_OPT_OPTION1" != "(null)" ] ; then
+if [ -n "$GIS_OPT_OPTION1" ] ; then
   echo "Value of GIS_OPT_OPTION1: '$GIS_OPT_OPTION1'"
 fi
 
