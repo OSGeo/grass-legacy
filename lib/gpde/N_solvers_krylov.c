@@ -186,7 +186,7 @@ int N_solver_pcg(N_les * L, int maxit, double err)
 		    ;
 		}
 		else {
-		    G_warning(_("unable to solve the linear equation system"));
+		    G_warning(_("Unable to solve the linear equation system"));
 		    error_break = 1;
 		}
 	    }
@@ -354,7 +354,7 @@ int N_solver_cg(N_les * L, int maxit, double err)
 		    ;
 		}
 		else {
-		    G_warning(_("unable to solve the linear equation system"));
+		    G_warning(_("Unable to solve the linear equation system"));
 		    error_break = 1;
 		}
 	    }
@@ -478,7 +478,7 @@ int N_solver_bicgstab(N_les * L, int maxit, double err)
 		    ;
 		}
 		else {
-		    G_warning(_("unable to solve linear equation system"));
+		    G_warning(_("Unable to solve the linear equation system"));
 		    error_break = 1;
 		}
 
