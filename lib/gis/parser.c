@@ -1248,14 +1248,14 @@ static void G_usage_html (void)
 	    pgm_name = "??";
 
 	fprintf(stdout, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
-	fprintf(stdout, "<html>\n<head>\n"),
+	fprintf(stdout, "<html>\n<head>\n");
 	fprintf(stdout, "<title>%s</title>\n", pgm_name);
-	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"),
-	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n"),
-	fprintf(stdout, "</head>\n"),
-	fprintf(stdout, "<body bgcolor=\"white\">\n\n"),
-	fprintf(stdout, "<img src=\"grass.smlogo.gif\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n"),
-	fprintf(stdout, "<h2>NAME</h2>\n"),
+	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n");
+	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n");
+	fprintf(stdout, "</head>\n");
+	fprintf(stdout, "<body bgcolor=\"white\">\n\n");
+	fprintf(stdout, "<img src=\"grass.smlogo.gif\" alt=\"GRASS logo\"><hr align=center size=6 noshade>\n\n");
+	fprintf(stdout, "<h2>NAME</h2>\n");
 	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
 
 	if (module_info.description) {
