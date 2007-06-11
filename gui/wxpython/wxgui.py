@@ -32,6 +32,10 @@ import wx.html
 import wx.stc
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
+try:
+    import subprocess
+except:
+    from compat import subprocess
 
 import gui_modules
 gmpath = gui_modules.__path__[0]
@@ -180,7 +184,7 @@ class GMFrame(wx.Frame):
 
     def __createCommandPrompt(self):
         """Creates command prompt"""
-        self.cmdprompt = wx.StaticText(self, -1, " command: ")
+        self.cmdprompt = wx.StaticText(self, -1, " command")
         return self.cmdprompt
 
     def __createCommandInput(self):
@@ -331,20 +335,20 @@ class GMFrame(wx.Frame):
         cmd = self.cmdinput.GetValue()
 
         self.goutput.RunCmd(cmd)
-        #menuform.GUI().ParseCommand(cmd, gmpath)
 
-    def RunMenuCmd(self, event):
+    def GetMenuCmd(self, event):
         menuitem = self.menubar.FindItemById(event.GetId())
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
+        return cmd
+
+    def RunMenuCmd(self, event):
+        cmd = self.GetMenuCmd(event)
         self.goutput.RunCmd(cmd)
 
     def OnMenuCmd(self, event):
         """Run menu command"""
-
-        menuitem = self.menubar.FindItemById(event.GetId())
-        itemtext = menuitem.GetText()
-        cmd = menucmd[itemtext]
+        cmd = self.GetMenuCmd(event)
         global gmpath
         menuform.GUI().ParseCommand(cmd,gmpath, parentframe=self)
 
@@ -353,24 +357,61 @@ class GMFrame(wx.Frame):
         Launches dialog for commands that need rules
         input and processes rules
         """
-        menuitem = self.menubar.FindItemById(event.GetId())
-        itemtext = menuitem.GetText()
-        command = menucmd[itemtext]
+        command = self.GetMenuCmd(event)
         dlg = rules.RulesText(self, cmd=command)
         if dlg.ShowModal() == wx.ID_OK:
+            gtemp = utils.GetTempfile()
+            output = open(gtemp,"w")
+            output.write(dlg.rules)
+            output.close()
             if command == 'r.colors':
-                gtemp = utils.GetTempfile()
-                output = open(gtemp,"w")
-                output.write(dlg.rules)
-                output.close()
-                cmdlst = [command, 'map=%s' % dlg.inmap,'rules=%s' % gtemp,'--verbose']
+                cmdlist = [command, 'map=%s' % dlg.inmap, 'color=rules', '--verbose']
             else:
-                cmdlst = [dlg.rules, '>', command, 'input%s' % dlg.inmap, 'output=%s' % outmap, '--verbose']
+                cmdlist = [command, 'input=%s' % dlg.inmap, 'output=%s' % dlg.outmap, '--verbose']
 
-            p = cmd.Command(cmdlst)
-
+            p1 = subprocess.Popen(['cat', gtemp], stdout=subprocess.PIPE)
+            p2 = subprocess.Popen(cmdlist, stdin=p1.stdout, stdout=subprocess.PIPE)
 
         dlg.Destroy()
+
+    def OnXTerm(self, event):
+        """
+        Run commands that need interactive xmon
+        """
+        command = self.GetMenuCmd(event)
+
+        # unset display mode
+        del os.environ['GRASS_RENDER_IMMEDIATE']
+
+        # open next available xmon
+        xmonlist = []
+        cmdlist = ['d.mon', '-L']
+        p = cmd.Command(cmdlist)
+
+        output = p.module_stdout.read().split('\n')
+
+        for outline in output:
+            outline = outline.strip()
+            if outline.startswith('x') and 'not running' in outline:
+                # make list of xmons that are not running
+                xmonlist.append(outline[0:2])
+        xmon = xmonlist[0]
+        cmdlst = ['d.mon','start=%s' % xmon, '&']
+        p = cmd.Command(cmdlst)
+
+        # run the command
+        cmdlist = ['g.gisenv', 'get=GISDBASE']
+        gisdbase = cmd.Command(cmdlist).module_stdout.read().strip()
+        print 'gisbase=',gisbase
+        if os.environ['mingw'] == '1':
+            cmdlist ['cmd.exe', '/c', 'start', os.path.join(gisdbase,'etc','grass-run.bat'), command]
+        else:
+            cmdlist [os.path.join(gisdbase,'etc','grass-xterm-wrapper'), '-name', 'xterm-grass', '-e', os.path.join(gisdbase,'etc','grass-run.sh'), command, '&']
+        print 'cmdlist =',cmdlist
+        p = cmd.Command(cmdlist)
+
+        # reset display mode
+        os.environ['GRASS_RENDER_IMMEDIATE'] = True
 
     def DefaultFont(self, event):
         """Set default font for GRASS displays"""
