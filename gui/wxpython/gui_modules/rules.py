@@ -38,6 +38,7 @@ class RulesText(wx.Dialog):
         self.inmap = '' # input map to change
         self.outmap = '' # output map for reclass/recode
         self.rules = '' # rules for changing
+        self.overwrite = False
 
         if self.cmd == 'r.colors':
             label1 = 'Create new color table using color rules'
@@ -96,6 +97,16 @@ class RulesText(wx.Dialog):
                       wx.ALIGN_RIGHT|
                       wx.ALL,border=5)
 
+            box = wx.BoxSizer(wx.HORIZONTAL)
+            self.ovrwrtcheck = wx.CheckBox(self, wx.ID_ANY, 'overwrite existing file')
+            self.ovrwrtcheck.SetValue(self.overwrite)
+            box.Add(self.ovrwrtcheck, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+            sizer.Add(item=box, proportion=0,
+                      flag=wx.ALIGN_CENTER_VERTICAL|
+                      wx.ALIGN_RIGHT|
+                      wx.ALL,border=5)
+            self.Bind(wx.EVT_CHECKBOX, self.OnOverwrite,   self.ovrwrtcheck)
+
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, wx.ID_ANY, label4)
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
@@ -151,3 +162,5 @@ class RulesText(wx.Dialog):
     def OnHelp(self, event):
         os.popen('g.manual --quiet %s ' % self.cmd)
 
+    def OnOverwrite(self, event):
+        self.overwrite = event.IsChecked()
