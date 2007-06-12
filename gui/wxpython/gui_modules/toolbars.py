@@ -1,6 +1,12 @@
 """
 MODULE: toolbar
 
+
+CLASSES:
+    * AbstractToolbar
+    * MapToolbar
+    * DigitToolbar
+
 PURPOSE: Toolbars for Map Display window
 
 AUTHORS: The GRASS Development Team
@@ -42,7 +48,7 @@ class AbstractToolbar:
     def CreateTool(self, parent, toolbar, tool, label, bitmap, kind,
                    shortHelp, longHelp, handler):
         """Add tool to the toolbar"""
-        
+
         bmpDisabled=wx.NullBitmap
 
         if label:
@@ -98,7 +104,7 @@ class MapToolbar(AbstractToolbar):
             (self.erase, "erase", Icons["erase"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
              self.mapdisplay.OnErase),
-            ("", "", "", "", "", "", ""), 
+            ("", "", "", "", "", "", ""),
             (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
              self.mapdisplay.Pointer),
@@ -107,7 +113,7 @@ class MapToolbar(AbstractToolbar):
              self.mapdisplay.OnQuery),
             (self.pan, "pan", Icons["pan"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
-             self.mapdisplay.OnPan), 
+             self.mapdisplay.OnPan),
             (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
              wx.ITEM_RADIO, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
              self.mapdisplay.OnZoomIn),
@@ -280,7 +286,7 @@ class DigitToolbar(AbstractToolbar):
         """
         # stop editing of the currently selected map layer
         self.StopEditing()
-        
+
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
@@ -307,7 +313,7 @@ class DigitToolbar(AbstractToolbar):
 
     def OnDisplayCats(self, event):
         pass
-    
+
     def OnDisplayAttr(self, event):
         pass
 
@@ -358,11 +364,11 @@ class DigitToolbar(AbstractToolbar):
                        self.layers[self.layerSelectedID].name)
         else:
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=None")
-        
+
         self.layerSelectedID = None
         self.combo.SetValue ('Select vector map')
         # TODO
-        
+
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.

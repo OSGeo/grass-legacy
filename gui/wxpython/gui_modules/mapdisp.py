@@ -1,7 +1,18 @@
 """
-MODULE:    mapdisp
+MODULE:    mapdisp.py
 
-PURPOSE:   To be used either from GIS Manager or as p.mon backend
+CLASSES:
+    * Command
+    * BufferedWindow
+    * MapFrame
+    * DecDialog
+    * TextDialog
+    * SavedRegion
+    * MapApp
+
+PURPOSE:   GIS map display canvas, with toolbar for various display
+           management functions, and second toolbar for vector
+           digitizing. Can be used either from GIS Manager or as p.mon backend
 
            Usage:
             python mapdisp.py monitor-identifier /path/to/command/file
@@ -136,7 +147,7 @@ class BufferedWindow(wx.Window):
         self.polycoords = [] # List of wx.Point tuples defining a polyline
         self.lineid = None   # ID of rubber band line
         # ID of poly line resulting from cumulative rubber band lines (e.g. measurement)
-        self.plineid = None  
+        self.plineid = None
 
         #
         # Event bindings
@@ -679,7 +690,7 @@ class BufferedWindow(wx.Window):
                                            _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
-                
+
                 if map:
                     if digit.type in ["point", "centroid"]:
                         # add new point
@@ -689,7 +700,7 @@ class BufferedWindow(wx.Window):
                         Digit.AddPoint(map=map,
                                        type=digit.type,
                                        x=east, y=north)
-                                                       
+
                         self.render=True
                         self.UpdateMap() # redraw map
 
@@ -698,7 +709,7 @@ class BufferedWindow(wx.Window):
                         self.polycoords.append(event.GetPositionTuple()[:])
                         self.mouse['begin'] = self.polycoords[-1]
                         self.DrawLines()
-                        
+
         else:
             # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
@@ -732,7 +743,7 @@ class BufferedWindow(wx.Window):
             self.parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
 
         elif self.mouse["use"] in ["measure", "profile"]:
-            # measure or profile 
+            # measure or profile
             self.mouse['end'] = event.GetPositionTuple()[:]
             if self.mouse["use"] == "measure":
                 self.parent.MeasureDist(self.mouse['begin'], self.mouse['end'])
@@ -841,7 +852,7 @@ class BufferedWindow(wx.Window):
                     map = digit.layers[digit.layerSelectedID].name
                 except:
                     map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"), 
+                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"),
                                            _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
@@ -856,7 +867,7 @@ class BufferedWindow(wx.Window):
                     Digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
                                   coords=mapcoords)
-                   
+
                     # clean up saved positions
                     self.polycoords = []
 
@@ -1256,7 +1267,7 @@ class MapFrame(wx.Frame):
         self.totaldist = 0.0 # total length measured
         # initialize buffered DC
         ## self.MapWindow = DrawWindow(self)
-        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree) 
+        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree)
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor(self.cursors["default"]) # default
 
@@ -1272,9 +1283,9 @@ class MapFrame(wx.Frame):
         self.ovlchk = self.MapWindow.ovlchk
         self.ovlcoords = self.MapWindow.ovlcoords
         # previously set decoration options parameters to insert into options dialog
-        self.params = {} 
+        self.params = {}
         # ID of properties window open for overlay, indexed by overlay ID
-        self.propwin = {} 
+        self.propwin = {}
 
         #
         # Bind various events

@@ -1,3 +1,27 @@
+"""
+MODULE:     wxgui_utils.py
+
+CLASSES:
+    * AbstractLayer
+    * Layer
+    * LayerTree
+    * GMConsole
+
+PURPOSE:    Utility classes for GRASS wxPython GUI. Main functions include tree control
+            for GIS map layer management, command console, and command parsing.
+
+AUTHORS:    The GRASS Development Team
+            Michael Barton (Arizona State University) &
+            Jachym Cepicky (Mendel University of Agriculture)
+            Martin Landa
+
+COPYRIGHT:  (C) 2007 by the GRASS Development Team
+            This program is free software under the GNU General Public
+            License (>=v2). Read the file COPYING that comes with GRASS
+            for details.
+
+"""
+
 import os,sys
 import wx
 import wx.lib.customtreectrl as CT

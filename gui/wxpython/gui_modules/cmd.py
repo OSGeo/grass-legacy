@@ -1,7 +1,11 @@
 """
 PACKAGE:   cmd
 
-PURPOSE:   Command interface 
+CLASSES:
+    * EndOfCommand
+    * Command
+
+PURPOSE:   Command interface
 
 AUTHORS:   The GRASS Development Team
            Original author: Jachym Cepicky
@@ -46,7 +50,7 @@ class Command:
      verbose - verbose mode (GRASS commands '--v')
      wait    - wait for childer execution
      dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
-     
+
     Usage:
         cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=True, wait=True)
 
@@ -56,7 +60,7 @@ class Command:
             print 'SUCCESS'
         else:
             print 'FAILURE (%d)' % cmd.returncode
-        
+
         for msg in cmd.module_msg:
             if msg[0] == 'GRASS_INFO_PERCENT':
                 print 'Percent done: %d' % (int(msg[1]))
@@ -69,7 +73,7 @@ class Command:
         self.cmd    = cmd
 
         self.module = None
-            
+
         # output
         self.module_stderr = None
         self.module_msg    = [] # list of messages (msgtype, content)
@@ -94,7 +98,7 @@ class Command:
         if stdin:
            self.module_stdin.write(stdin)
            self.module_stdin.close()
-           
+
         os.environ["GRASS_MESSAGE_FORMAT"] = "text"
 
         try:
@@ -122,7 +126,7 @@ class Command:
                else: # otherwise 'txt'
                   print >> sys.stderr, _("Execution failed: '%s'") % self.cmd
 
-               
+
         else:
             self.returncode = None
 
@@ -140,14 +144,14 @@ class Command:
         while 1:
             line = self.module_stderr.readline()
             if not line or line.find("GRASS_INFO_END") > -1:
-                raise EndOfCommand 
+                raise EndOfCommand
             if line.find(':') > -1:
                 msgtype, content = line.split(":", 1)
                 if verbose:
                     self.module_msg.append((msgtype, content.strip()))
                 else: # write only fatal errors and warnigs
                     if msgtype.find("GRASS_INFO_ERROR") > -1 or \
-                            msgtype.find("GRASS_INFO_WARNING") > -1: 
+                            msgtype.find("GRASS_INFO_WARNING") > -1:
                         self.module_msg.append((msgtype, content.strip()))
 
         return
@@ -167,13 +171,13 @@ if __name__ == "__main__":
         print "SUCCESS"
     else:
         print "FAILURE (%d)" % cmd.returncode
-        
+
     for msg in cmd.module_msg:
         if msg[0] == "GRASS_INFO_PERCENT":
             print "Percent done: %d" % (int(msg[1]))
         else:
             print "General message:", msg[1]
-           
+
     # v.net.path silently, wait for process termination
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
 

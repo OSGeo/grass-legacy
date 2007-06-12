@@ -7,6 +7,7 @@ CLASSES:
 PURPOSE: Sets default display font
 
 AUTHORS: The GRASS Development Team
+         Michael Barton (Arizona State University)
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
        This program is free software under the GNU General Public

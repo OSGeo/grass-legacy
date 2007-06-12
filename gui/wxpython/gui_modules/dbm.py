@@ -1,9 +1,14 @@
 """
 MODULE:    dbm.py
 
+CLASSES:
+    * Log
+    * VirtualAttributeList
+    * AttributeManager
+
 PURPOSE:   GRASS attribute table manager
 
-           This program is based on FileHunter, publicated in 'The wxPython Linux
+           This program is based on FileHunter, published in 'The wxPython Linux
            Tutorial' on wxPython WIKI pages.
 
            It also uses some functions at
@@ -94,10 +99,10 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
         dbDescribe = cmd.Command (cmd = ["db.describe", "-c",
-					 "table=%s" % self.parent.tablename,
-					 "driver=%s" % self.parent.driver,
-					 "database=%s" % self.parent.database])
-        
+           "table=%s" % self.parent.tablename,
+           "driver=%s" % self.parent.driver,
+           "database=%s" % self.parent.database])
+
         for line in dbDescribe.module_stdout.readlines()[1:]:
             x,column,type,length = line.strip().split(":")
             # FIXME: here will be more types
@@ -158,20 +163,20 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
         # prepare command string
         cmdv = ["db.select", "-c",
-		"table=%s" % self.parent.tablename,
-		"database=%s" % self.parent.database,
-		"driver=%s" % self.parent.driver]
+    "table=%s" % self.parent.tablename,
+    "database=%s" % self.parent.database,
+    "driver=%s" % self.parent.driver]
 
         if where:
             self.ClearAll()
             cmdv = ["db.select", "-c",
-		    "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
-		    "database=%s" % self.parent.database,
-		    "driver=%s" % self.parent.driver]
+        "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
+        "database=%s" % self.parent.database,
+        "driver=%s" % self.parent.driver]
 
         # run command
         vDbSelect = cmd.Command (cmd=cmdv)
-        
+
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
         # read data
@@ -479,7 +484,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 class AttributeManager(wx.Frame):
     """
     The main window
-    
+
     This is where you populate the frame with a panel from the demo.
     original line in runTest (in the demo source):
     win = TestPanel(nb, log)
@@ -509,7 +514,7 @@ class AttributeManager(wx.Frame):
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(1)
-        
+
         self.vectmap = vectmap
         self.parent  = parent
         self.gismgr  = parent
@@ -523,7 +528,7 @@ class AttributeManager(wx.Frame):
         self.btn_apply = wx.Button(self, -1, "Apply")
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
         self.btn_sqlbuilder = wx.Button(self, -1, "SQL Builder")
-        
+
         # check
         # self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
 
@@ -533,15 +538,15 @@ class AttributeManager(wx.Frame):
         # label
         self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.tablename)
         self.label_query = wx.StaticText(self,-1,"")
-        
+
         # box
         self.sqlbox = wx.StaticBox(self, -1, "SQL Query:")
-        
+
         self.btn_sqlbuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
-        
+
         self.__layout()
         self.Show()
-        
+
     def OnBuilder(self,event):
         import sqlbuilder
         self.builder = sqlbuilder.SQLFrame(self,-1,"SQL Builder",self.vectmap)

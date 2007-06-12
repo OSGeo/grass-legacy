@@ -1,15 +1,26 @@
-import  wx
-# Based on wxPython demo
-# This is the header from the main.py wxPython calling program
-#
-# Author:       Robin Dunn
-#
-# Created:      A long time ago, in a galaxy far, far away...
-# RCS-ID:       $Id: Main.py,v 1.213 2007/01/17 23:39:00 RD Exp $
-# Copyright:    (c) 1999 by Total Control Software
-# Licence:      wxWindows license
+"""
+MODULE:     disp_print.py
 
-#----------------------------------------------------------------------
+CLASSES:
+    * MapPrint
+    * PrintOptions
+
+PURPOSE:    Print context and utility functions for printing
+            contents of map display window.
+
+AUTHORS:    The GRASS Development Team
+            Michael Barton (Arizona State University)
+            Based on generic example code from wxPython
+            demo program by Robin Dunn
+
+COPYRIGHT:  (C) 2007 by the GRASS Development Team
+            This program is free software under the GNU General Public
+            License (>=v2). Read the file COPYING that comes with GRASS
+            for details.
+
+"""
+
+import  wx
 
 
 class MapPrint(wx.Printout):
