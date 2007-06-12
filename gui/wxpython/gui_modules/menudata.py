@@ -121,6 +121,8 @@ class Data:
               ("","","", ""),
               ("Georectify (not functional)", "Georectify raster and vector maps", "self.OnGeorectify", ""),
               ("","","", ""),
+              ("NViz (requires TclTk)", "N-Dimensional visualization of maps and volumes", "self.OnMenuCmd", "nviz"),
+              ("","","", ""),
               ("Bearing/distance to coordinates", "Convert between bearing/distance and coordinates", "self.OnMenuCmd", "m.cogo"),
               ("","","", ""),
               ("Postscript plot", "Create cartographic PostScript plot", "self.OnMenuCmd", "ps.map"),
