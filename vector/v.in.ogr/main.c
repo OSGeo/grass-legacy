@@ -456,15 +456,15 @@ main (int argc, char *argv[])
             int     i_value;
 
             strcpy( error_msg,
-                    "Projection of dataset does not"
-                    " appear to match current location.\n\n");
+                    _("Projection of dataset does not"
+                    " appear to match current location.\n\n"));
 
     /* TODO: output this info sorted by key: */
 	    if(loc_wind.proj != cellhd.proj || err != -2)
 	    {
                 if( loc_proj_info != NULL )
                 {
-                    strcat( error_msg, "GRASS LOCATION PROJ_INFO is:\n" );
+                    strcat( error_msg, _("GRASS LOCATION PROJ_INFO is:\n" ));
                     for( i_value = 0; i_value < loc_proj_info->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  loc_proj_info->key[i_value],
@@ -474,7 +474,7 @@ main (int argc, char *argv[])
 
                 if( proj_info != NULL )
                 {
-                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, _("Import dataset PROJ_INFO is:\n" ));
                     for( i_value = 0; i_value < proj_info->nitems; i_value++ )
                         sprintf( error_msg + strlen(error_msg), "%s: %s\n",
                                  proj_info->key[i_value],
@@ -482,7 +482,7 @@ main (int argc, char *argv[])
                 }
                 else
                 {
-                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, _("Import dataset PROJ_INFO is:\n" ));
 		    if( cellhd.proj == PROJECTION_XY )
                         sprintf( error_msg + strlen(error_msg),
                                  "Dataset proj = %d (unreferenced/unknown)\n",
