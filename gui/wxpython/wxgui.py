@@ -358,6 +358,7 @@ class GMFrame(wx.Frame):
         input and processes rules
         """
         command = self.GetMenuCmd(event)
+        print 'command=',command
         dlg = rules.RulesText(self, cmd=command)
         if dlg.ShowModal() == wx.ID_OK:
             gtemp = utils.GetTempfile()
@@ -365,12 +366,16 @@ class GMFrame(wx.Frame):
             output.write(dlg.rules)
             output.close()
             if command == 'r.colors':
-                cmdlist = [command, 'map=%s' % dlg.inmap, 'color=rules', '--verbose']
+                cmdlist = [command, 'map=%s' % dlg.inmap, 'rules=%s' % gtemp, '--verbose']
+                cmd.Command(cmdlist)
+            elif command == 'v.reclass':
+                cmdlist = [command, 'input=%s' % dlg.inmap, 'output=%s' % dlg.outmap, 'rules=%s' % gtemp, '--verbose']
+                cmd.Command(cmdlist)
             else:
                 cmdlist = [command, 'input=%s' % dlg.inmap, 'output=%s' % dlg.outmap, '--verbose']
-
-            p1 = subprocess.Popen(['cat', gtemp], stdout=subprocess.PIPE)
-            p2 = subprocess.Popen(cmdlist, stdin=p1.stdout, stdout=subprocess.PIPE)
+                input = open(gtemp,"r")
+                p = subprocess.Popen(cmdlist, stdin=input, stdout=subprocess.PIPE)
+                input.close()
 
         dlg.Destroy()
 
@@ -385,33 +390,32 @@ class GMFrame(wx.Frame):
 
         # open next available xmon
         xmonlist = []
+        gisbase = os.environ['GISBASE']
+
+        # make list of xmons that are not running
         cmdlist = ['d.mon', '-L']
         p = cmd.Command(cmdlist)
-
         output = p.module_stdout.read().split('\n')
-
         for outline in output:
             outline = outline.strip()
             if outline.startswith('x') and 'not running' in outline:
-                # make list of xmons that are not running
+
                 xmonlist.append(outline[0:2])
+
+        # open available xmon
         xmon = xmonlist[0]
-        cmdlst = ['d.mon','start=%s' % xmon, '&']
-        p = cmd.Command(cmdlst)
+        cmdlist = ['d.mon','start=%s' % xmon]
+        p = subprocess.Popen(cmdlist)
 
         # run the command
-        cmdlist = ['g.gisenv', 'get=GISDBASE']
-        gisdbase = cmd.Command(cmdlist).module_stdout.read().strip()
-        print 'gisbase=',gisbase
-        if os.environ['mingw'] == '1':
-            cmdlist ['cmd.exe', '/c', 'start', os.path.join(gisdbase,'etc','grass-run.bat'), command]
+        if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
+            cmdlist = ['cmd.exe', '/c', 'start', os.path.join(gisbase,'etc','grass-run.bat'), command]
         else:
-            cmdlist [os.path.join(gisdbase,'etc','grass-xterm-wrapper'), '-name', 'xterm-grass', '-e', os.path.join(gisdbase,'etc','grass-run.sh'), command, '&']
-        print 'cmdlist =',cmdlist
-        p = cmd.Command(cmdlist)
+            cmdlist = [os.path.join(gisbase,'etc','grass-xterm-wrapper'), '-name', 'xterm-grass', '-e', os.path.join(gisbase,'etc','grass-run.sh'), command]
+        cmd.Command(cmdlist)
 
         # reset display mode
-        os.environ['GRASS_RENDER_IMMEDIATE'] = True
+        os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
 
     def DefaultFont(self, event):
         """Set default font for GRASS displays"""

@@ -134,7 +134,7 @@ class Data:
               )),
           ("Raster", (
               ("Develop map", (
-                ("Digitize raster (not functional)", "Digitize raster", "self.OnXTerm", "r.digit"),
+                ("Digitize raster (requires XTerm)", "Digitize raster", "self.OnXTerm", "r.digit"),
                 ("","","", ""),
                 ("Compress/decompress", "Compress/decompress raster file", "self.OnMenuCmd", "r.compress"),
                 ("Boundaries", "Manage boundary definition", "self.OnMenuCmd", "r.region"),
@@ -213,7 +213,7 @@ class Data:
                 ("Watershed basin creation", "Watershed basin creation", "self.OnMenuCmd", "r.water.outlet"),
                 )),
               ("Landscape structure modeling", (
-                ("Set up", "Set up sampling and analysis framework", "self.OnMenuCmd", "r.le.setup"),
+                ("Set up (requires XTerm)", "Set up sampling and analysis framework", "self.OnXTerm", "r.le.setup"),
                 ("","","", ""),
                 ("Analyze landscape", "Analyze landscape characteristics", "self.OnMenuCmd", "r.le.pixel"),
                 ("Analyze patches", "Analyze landscape patch characteristics", "self.OnMenuCmd", "r.le.patch"),
@@ -246,7 +246,7 @@ class Data:
                 )),
               ("","","", ""),
               ("Change category values and labels", (
-                ("Edit category values of individual cells for displayed raster map", "Edit category values of individual cells for displayed raster map", "self.OnMenuCmd", "d.rast.edit"),
+                ("Interactively edit category values (not functional)", "Edit category values of individual cells for displayed raster map", "self.OnMenuCmd", "d.rast.edit"),
                 ("","","", ""),
                 ("Reclassify by size", "Reclassify categories for areas of specified sizes", "self.OnMenuCmd", "r.reclass.area"),
                 ("Reclassify using rules", "Reclassify categories interactively with rules", "self.RulesCmd", "r.reclass"),
@@ -351,7 +351,7 @@ class Data:
                 ("Allocate subnets", "Allocate subnets", "self.OnMenuCmd", "v.net.alloc"),
                 ("Network maintenance", "Network maintenance", "self.OnMenuCmd", "v.net"),
                 ("Shortest route", "Shortest route", "self.OnMenuCmd", "v.net.path"),
-                ("Shortest route visualization", "Shortest route (visualization only)", "self.OnMenuCmd", "d.path"),
+                ("Shortest route visualization (requires XTErm)", "Shortest route (visualization only)", "self.OnXTerm", "d.path"),
                 ("Split net", "Split net into bands between cost isolines", "self.OnMenuCmd", "v.net.iso"),
                 ("Steiner tree", "Steiner tree", "self.OnMenuCmd", "v.net.steiner"),
                 ("Traveling salesman analysis", "Traveling salesman analysis", "self.OnMenuCmd", "v.net.salesman"),
@@ -365,8 +365,8 @@ class Data:
               ("","","", ""),
               ("Change attributes", (
                 ("Manage or report categories", "Attach/delete, or report categories", "self.OnMenuCmd", "v.category"),
-                ("Reclassify using rules", "Reclassify features interactively using rules", "self.RulesCmd", "v.reclass"),
-                ("Reclassify using rules file", "Reclassify features using rules file", "self.OnMenuCmd", "v.reclass"),
+                ("Reclassify vector using rules", "Reclassify features interactively using rules", "self.RulesCmd", "v.reclass"),
+                ("Reclassify vector using rules file", "Reclassify features using rules file", "self.OnMenuCmd", "v.reclass"),
                 )),
               ("","","", ""),
               ("Work with vector points", (
