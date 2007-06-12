@@ -1,3 +1,22 @@
+"""
+MODULE:     rules.py
+
+CLASSES:
+    * RulesText
+
+PURPOSE:    Dialog for interactive entry of rules for r.colors,
+            r.reclass, r.recode, and v.reclass
+
+AUTHORS:    The GRASS Development Team
+            Michael Barton (Arizona State University)
+
+COPYRIGHT:  (C) 2007 by the GRASS Development Team
+            This program is free software under the GNU General Public
+            License (>=v2). Read the file COPYING that comes with GRASS
+            for details.
+
+"""
+
 import wx
 import os
 import sys
@@ -19,7 +38,6 @@ class RulesText(wx.Dialog):
         self.inmap = '' # input map to change
         self.outmap = '' # output map for reclass/recode
         self.rules = '' # rules for changing
-
 
         if self.cmd == 'r.colors':
             label1 = 'Create new color table using color rules'

@@ -1,6 +1,10 @@
 """
 MODULE: histogram
 
+CLASSES:
+    * BufferedWindow
+    * HistFrame
+
 PURPOSE: Plotting histogram
 
 AUTHORS: The GRASS Development Team
@@ -399,12 +403,12 @@ class HistFrame(wx.Frame):
         for item in cmd:
             if 'map=' in item:
                 self.mapname = item.split('=')[1]
-                
+
         self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='', command=cmd,
                                           l_active=True, l_hidden=False, l_opacity=1, l_render=False)
 
         return self.layer
-        
+
     def SetHistFont(self, event):
         """
         Set font for histogram. If not

@@ -1,6 +1,10 @@
 """
 MODULE: render
 
+CLASSES:
+    * MapLayer
+    * Map
+
 PURPOSE: Rendering
 
 AUTHORS: The GRASS Development Team

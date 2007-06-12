@@ -1,21 +1,26 @@
-#!/usr/bin/env python
+#!/usr/bin python
 
 """
-MODULE:  wxgui.py
+MODULE:     wxgui.py
 
-PURPOSE: Main Python app to set up GIS Manager window and trap commands
-         Only command console is working currently, but windows for
-         panels and layer tree done and demo tree items appear
+CLASSES:
+    * GRasterDialog
+    * GMFrame
+    * GMApp
 
-AUTHORS: The GRASS Development Team
-         Michael Barton (Arizona State University) &
-         Jachym Cepicky (Mendel University of Agriculture)
-         Martin Landa
+PURPOSE:    Main Python app for GRASS wxPython GUI. Main menu, layer management
+            toolbar, notebook control for display management and access to
+            command console.
 
-COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
-           This program is free software under the GNU General Public
-           License (>=v2). Read the file COPYING that comes with GRASS
-           for details.
+AUTHORS:    The GRASS Development Team
+            Michael Barton (Arizona State University) &
+            Jachym Cepicky (Mendel University of Agriculture)
+            Martin Landa
+
+COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
+            This program is free software under the GNU General Public
+            License (>=v2). Read the file COPYING that comes with GRASS
+            for details.
 
 """
 
