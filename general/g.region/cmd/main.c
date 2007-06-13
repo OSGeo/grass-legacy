@@ -205,7 +205,7 @@ int main (int argc, char *argv[])
 	parm.north->required    = NO;
 	parm.north->multiple    = NO;
 	parm.north->type        = TYPE_STRING;
-	parm.north->description = llinfo("Value for the northern edge",
+	parm.north->description = llinfo(_("Value for the northern edge"),
 					 G_lat_format_string(), window.proj);
 	parm.north->guisection  = _("Bounds");
 
@@ -215,7 +215,7 @@ int main (int argc, char *argv[])
 	parm.south->required    = NO;
 	parm.south->multiple    = NO;
 	parm.south->type        = TYPE_STRING;
-	parm.south->description = llinfo("Value for the southern edge",
+	parm.south->description = llinfo(_("Value for the southern edge"),
 					 G_lat_format_string(), window.proj);
 	parm.south->guisection  = _("Bounds");
 
@@ -225,7 +225,7 @@ int main (int argc, char *argv[])
 	parm.east->required    = NO;
 	parm.east->multiple    = NO;
 	parm.east->type        = TYPE_STRING;
-	parm.east->description = llinfo("Value for the eastern edge ",
+	parm.east->description = llinfo(_("Value for the eastern edge"),
 					G_lon_format_string(), window.proj);
 	parm.east->guisection  = _("Bounds");
 
@@ -235,7 +235,7 @@ int main (int argc, char *argv[])
 	parm.west->required    = NO;
 	parm.west->multiple    = NO;
 	parm.west->type        = TYPE_STRING;
-	parm.west->description = llinfo("Value for the western edge ",
+	parm.west->description = llinfo(_("Value for the western edge"),
 					G_lon_format_string(), window.proj);
 	parm.west->guisection  = _("Bounds");
 
@@ -299,7 +299,7 @@ int main (int argc, char *argv[])
 	parm.nsres->required    = NO;
 	parm.nsres->multiple    = NO;
 	parm.nsres->type        = TYPE_STRING;
-	parm.nsres->description = llinfo("North-south grid resolution 2D ",
+	parm.nsres->description = llinfo(_("North-south grid resolution 2D"),
 					 G_llres_format_string(), window.proj);
 	parm.nsres->guisection  = _("Resolution");
 
@@ -309,7 +309,7 @@ int main (int argc, char *argv[])
 	parm.ewres->required    = NO;
 	parm.ewres->multiple    = NO;
 	parm.ewres->type        = TYPE_STRING;
-	parm.ewres->description = llinfo("East-west grid resolution 2D ",
+	parm.ewres->description = llinfo(_("East-west grid resolution 2D"),
 					 G_llres_format_string(), window.proj);
 	parm.ewres->guisection  = _("Resolution");
 
