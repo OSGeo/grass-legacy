@@ -35,10 +35,17 @@ main(int argc, char *argv[])
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    
+
+    /* Set description */
+    module              = G_define_module();
+    module->keywords    = _("database, SQL");
+    module->description =
+	_("Prints/sets general DB connection for current mapset and exits.");
+
+
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = _("print current connection parameters and exit");
+    print->description       = _("Print current connection parameters and exit");
     
     driver = G_define_option() ;
     driver->key        = "driver" ;
@@ -46,7 +53,7 @@ main(int argc, char *argv[])
     driver->options    = db_list_drivers();
     driver->required   = NO  ;
     driver->multiple   = NO ;
-    driver->description= _("driver name:") ;
+    driver->description= _("Driver name") ;
     driver->answer = db_get_default_driver_name();
 
     database = G_define_option() ;
@@ -54,7 +61,7 @@ main(int argc, char *argv[])
     database->type       = TYPE_STRING ;
     database->required   = NO  ;
     database->multiple   = NO ;
-    database->description= _("Database name:") ;
+    database->description= _("Database name") ;
     database->answer = db_get_default_database_name();
 
     schema = G_define_option() ;
@@ -63,16 +70,16 @@ main(int argc, char *argv[])
     schema->required   = NO  ;
     schema->multiple   = NO ;
     schema->answer     = db_get_default_schema_name();
-    schema->description = _("Database schema. Don't use this option if schemas are not supported "
-                          "by driver/database server.");
-    
+    schema->description = _("Database schema. Do not use this option if schemas "
+			    "are not supported by driver/database server");
+
     group = G_define_option() ;
     group->key        = "group" ;
     group->type       = TYPE_STRING ;
     group->required   = NO  ;
     group->multiple   = NO ;
     group->answer     = db_get_default_group_name();
-    group->description = _("Default group of database users to which select privilege is granted.");
+    group->description = _("Default group of database users to which select privilege is granted");
 
 /* commented due to new mechanism:
     user = G_define_option() ;
@@ -89,12 +96,6 @@ main(int argc, char *argv[])
     password->multiple   = NO ;
     password->description= "Password:" ;
 */
-
-    /* Set description */
-    module              = G_define_module();
-    module->keywords = _("database, SQL");
-    module->description = _("Prints/sets general DB connection for current mapset and exits.");
-
 
     if(G_parser(argc, argv))
 	exit(EXIT_FAILURE);
