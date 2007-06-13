@@ -342,21 +342,24 @@ class Data:
                 ("Convert 2D to 3D", "Convert 2D vector to 3D by sampling raster", "self.OnMenuCmd", "v.drape"),
                 ("Extrude 3D", "Extrude 2D vector into 3D vector", "self.OnMenuCmd", "v.extrude"),
                 ("","","", ""),
+                ("Link to OGR", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
+                ("","","", ""),
                 ("Create labels", "Create text label file for vector features", "self.OnMenuCmd", "v.label"),
                 ("","","", ""),
                 ("Reproject vector", "Reproject vector from other location", "self.OnMenuCmd", "v.proj"),
                 ("","","", "")
                 )),
               ("","","", ""),
-              ("vector<->database connections", (
-                ("Create new vector as link to external OGR layer", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
-                ("Set database connection for vector attributes", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
-                )),
               ("Query attributes", "Query by attributes", "self.OnMenuCmd", "v.extract"),
               ("Query coordinate(s)", "Query by coordinate(s)", "self.OnMenuCmd", "v.what"),
               ("Query map features", "Query by map features", "self.OnMenuCmd", "v.select"),
               ("","","", ""),
               ("Buffers", "Create vector buffers", "self.OnMenuCmd", "v.buffer"),
+              ("Lidar analysis", (
+                ("Detect edges", "Detect object edges in Lidar data", "self.OnMenuCmd", "v.lidar.edgedetection"),
+                ("Detect interiors", "Detect interior of objects in Lidar data", "self.OnMenuCmd", "v.lidar.growing"),
+                ("Correct and reclassify objects", "Correct and reclassify objects detected in Lidar data", "self.OnMenuCmd", "v.lidar.correction"),
+                )),
               ("Linear referencing", (
                 ("Create LRS", "Create linear reference system", "self.OnMenuCmd", "v.lrs.create"),
                 ("Create stationing", "Create stationing from input lines, and linear reference system", "self.OnMenuCmd", "v.lrs.label"),
@@ -377,8 +380,6 @@ class Data:
                 ("Overlay maps", "Overlay/combine 2 vector maps", "self.OnMenuCmd", "v.overlay"),
                 ("Patch maps", "Patch multiple maps (combine)", "self.OnMenuCmd", "v.patch"),
                 )),
-              ("Generate area for current region", "Generate area feature for extent of current region", "self.OnMenuCmd", "v.in.region"),
-              ("Generate grid", "Generate rectangular vector grid", "self.OnMenuCmd", "v.mkgrid"),
               ("","","", ""),
               ("Change attributes", (
                 ("Manage or report categories", "Attach/delete, or report categories", "self.OnMenuCmd", "v.category"),
@@ -386,15 +387,17 @@ class Data:
                 ("Reclassify vector using rules file", "Reclassify features using rules file", "self.OnMenuCmd", "v.reclass"),
                 )),
               ("","","", ""),
-              ("Generate points", (
-                  ("Generate from database", "Generate points from database", "self.OnMenuCmd", "v.in.db"),
-                  ("Generate random", "Generate random points", "self.OnMenuCmd", "v.random"),
-                  ("Perturb points", "Random location perturbations of points", "self.OnMenuCmd", "v.perturb"),
-                  )),
+              ("Generate area for current region", "Generate area feature for extent of current region", "self.OnMenuCmd", "v.in.region"),
               ("Generate areas from points", (
                   ("Convex hull", "Generate convex hull for point set", "self.OnMenuCmd", "v.hull"),
                   ("Delaunay triangles", "Generate Delaunay triangles for point set", "self.OnMenuCmd", "v.delaunay"),
                   ("Voronoi diagram/Thiessen polygons", "Generate Voronoi diagram/Thiessen polygons for point set", "self.OnMenuCmd", "v.voronoi"),
+                  )),
+              ("Generate grid", "Generate rectangular vector grid", "self.OnMenuCmd", "v.mkgrid"),
+              ("Generate points", (
+                  ("Generate from database", "Generate points from database", "self.OnMenuCmd", "v.in.db"),
+                  ("Generate random", "Generate random points", "self.OnMenuCmd", "v.random"),
+                  ("Perturb points", "Random location perturbations of points", "self.OnMenuCmd", "v.perturb"),
                   )),
               ("Sample raster maps at point locations", (
                   ("Calculate statistics for raster map overlain by vector map", "Calculate statistics for raster map overlain by vector map", "self.OnMenuCmd", "v.rast.stats"),
@@ -416,7 +419,7 @@ class Data:
                 )),
               ("","","", "")
               )),
-          ("Image", (
+          ("Imagery", (
               ("Develop images and groups", (
                 ("Create/edit imagery group", "Create/edit imagery group", "self.OnMenuCmd", "i.group"),
                 ("Target imagery group", "Target imagery group", "self.OnMenuCmd", "i.target"),
@@ -424,31 +427,31 @@ class Data:
                 ("Mosaic up to 4 adjacent images", "Mosaic up to 4 adjacent images", "self.OnMenuCmd", "i.image.mosaic"),
                 )),
               ("Manage image colors", (
-                ("Color balance and enhance color tables of multiband imagery for rgb display", "Color balance and enhance color tables of multiband imagery for rgb display", "self.OnMenuCmd", "i.landsat.rgb"),
-                ("Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "self.OnMenuCmd", "i.his.rgb"),
-                ("Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "self.OnMenuCmd", "i.rgb.his"),
+                ("Color balance for RGB", "Color balance and enhance color tables of multiband imagery for rgb display", "self.OnMenuCmd", "i.landsat.rgb"),
+                ("HIS to RGB", "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "self.OnMenuCmd", "i.his.rgb"),
+                ("RGB to HIS", "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "self.OnMenuCmd", "i.rgb.his"),
                 )),
               ("Rectify and georeference image group", (
-                ("Set ground control points (GCP's) from raster map or keyboard entry", "Set ground control points (GCP's) from raster map or keyboard entry", "self.OnMenuCmd", "i.points"),
-                ("Set ground control points (GCP's) from vector map or keyboard entry", "Set ground control points (GCP's) from vector map or keyboard entry", "self.OnMenuCmd", "i.vpoints"),
-                ("Affine and Polynomial rectification (rubber sheet)", "Affine and Polynomial rectification (rubber sheet)", "self.OnMenuCmd", "i.rectify"),
-                ("Ortho Photo rectification", "Ortho Photo rectification", "self.OnMenuCmd", "i.ortho.photo"),
+                ("Set GCP's from raster map (requires Xterm)", "Set ground control points (GCP's) from raster map or keyboard entry", "self.OnXTerm", "i.points"),
+                ("Set GCP's from vector map (requires Xterm)", "Set ground control points (GCP's) from vector map or keyboard entry", "self.OnXTerm", "i.vpoints"),
+                ("Georectification (rubber sheet)", "Affine and Polynomial rectification (rubber sheet)", "self.OnMenuCmd", "i.rectify"),
+                ("Ortho photo rectification (requies Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
                 )),
               ("","","", ""),
-              ("Brovey transformation and pan sharpening", "Brovey transformation and pan sharpening", "self.OnMenuCmd", "i.fusion.brovey"),
+              ("Brovey sharpening", "Brovey transformation and pan sharpening", "self.OnMenuCmd", "i.fusion.brovey"),
               ("Classify image", (
                 ("Clustering input for unsupervised classification", "Clustering input for unsupervised classification", "self.OnMenuCmd", "i.cluster"),
                 ("","","", ""),
                 ("Maximum likelihood Classification (MLC)", "Maximum likelihood Classification (MLC)", "self.OnMenuCmd", "i.maxlik"),
                 ("Sequential maximum a posteriori classification (SMAP)", "Sequential maximum a posteriori classification (SMAP)", "self.OnMenuCmd", "i.smap"),
                 ("","","", ""),
-                ("Interactive input for supervised classification", "Interactive input for supervised classification", "self.OnMenuCmd", "i.class"),
+                ("Interactive input for supervised classification (requires Xterm)", "Interactive input for supervised classification", "self.OnXTerm", "i.class"),
                 ("Non-interactive input for supervised classification (MLC)", "Non-interactive input for supervised classification (MLC)", "self.OnMenuCmd", "i.gensig"),
                 ("Non-interactive input for supervised classification (SMAP)", "Non-interactive input for supervised classification (SMAP)", "self.OnMenuCmd", "i.gensigset"),
                 )),
               ("Filter image", (
                 ("Zero edge crossing detection", "Zero edge crossing detection", "self.OnMenuCmd", "i.zc"),
-                ("User defined matrix/convolving filter", "User defined matrix/convolving filter", "self.OnMenuCmd", "r.mfilter"),
+                ("Matrix/convolving filter", "User defined matrix/convolving filter", "self.OnMenuCmd", "r.mfilter"),
                 )),
               ("Histogram image", "Histogram image", "self.DispHistogram", ""),
               ("Spectral response", "Spectral response", "self.OnMenuCmd", "i.spectral"),
@@ -460,27 +463,65 @@ class Data:
                 ("Inverse Fast Fourier Transform", "Inverse Fast Fourier Transform", "self.OnMenuCmd", "i.ifft"),
                 )),
               ("","","", ""),
-              ("Report and statistics", (
-                ("Report basic file information", "Report basic file information", "self.OnMenuCmd", "r.info"),
-                ("Range of image values", "Range of image values", "self.OnMenuCmd", "r.describe"),
-                ("","","", ""),
-                ("Bit pattern comparison for ID of low quality pixels", "Bit pattern comparison for ID of low quality pixels", "self.OnMenuCmd", "r.bitpattern"),
-                ("Kappa classification accuracy assessment", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
-                ("Optimum index factor for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
+              ("Report and statistics (also use raster reporting and stats)", (
+                ("Bit pattern comparison ", "Bit pattern comparison for ID of low quality pixels", "self.OnMenuCmd", "r.bitpattern"),
+                ("Kappa analysis", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
+                ("OIF for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
+                )),
+              ("","","", "")
+              )),
+          ("Volumes", (
+              ("Develop grid3D volumes", (
+                ("Manage nulls", "Manage nulls for grid3D volume", "self.OnMenuCmd", "r3.null"),
+                ("Manage timestamp", "Manage timestamp for grid3D volume", "self.OnMenuCmd", "r3.timestamp"),
+                )),
+              ("","","", ""),
+              ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
+              ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
+              ("Map calculator", "Map calculator for grid3D volume operations", "self.OnMenuCmd", "r3.mapcalculator"),
+              ("Interpoloate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
+              ("","","", ""),
+              ("Report and Statistics", (
+                ("Basic information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
                 )),
               ("","","", "")
               )),
           ("Database", (
-              ("Query", "Query database", "self.Nomethod", ""),
+              ("Database information", (
+                ("Create new vector as link to external OGR layer", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
+                ("Set database connection for vector attributes", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
+                )),
+              ("","","", ""),
+              ("Manage databases", (
+                ("Connect", "Connect to database", "self.OnMenuCmd", "db.connect"),
+                ("Login", "Login to database", "self.OnMenuCmd", "db.login"),
+                ("","","", ""),
+                ("New table", "Create and add new attribute table to vector map", "self.OnMenuCmd", "v.db.addtable"),
+                ("Copy table", "Copy attribute table", "self.OnMenuCmd", "db.copy"),
+                ("Remove table", "Remove existing attribute table for vector map", "self.OnMenuCmd", "db.login"),
+                ("","","", ""),
+                ("Add columns", "Add columns to table", "self.OnMenuCmd", "v.db.addcol"),
+                ("Change values", "Change values in a column", "self.OnMenuCmd", "v.db.update"),
+                ("Rename column", "Rename a column", "self.OnMenuCmd", "v.db.renamecol"),
+                ("","","", ""),
+                ("Test", "Test database", "self.OnMenuCmd", "db.test"),
+                ("","","", "")
+                )),
+              ("Query", (
+                ("Create new vector as link to external OGR layer", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
+                ("Set database connection for vector attributes", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
+                )),
+              ("","","", ""),
+              ("Vector<->database connections", (
+                ("Reconnect vector to database", "Reconnect vector map to attribute database", "self.OnMenuCmd", "v.db.reconnect.all"),
+                ("Set vector - database connection", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
+                )),
+              ("","","", "")
+              )),
+          ("Help", (
+              ("GRASS help", "GRASS help", "self.RunMenuCmd", ['g.manual', '-i']),
+              ("GIS Manager help", "GIS Manager help", "self.RunMenuCmd", ['g.manual', 'gis.m']),
+              ("About GRASS (not functional)", "About GRASS", "self.OnMenuCmd", ""),
+              ("About system (not functional)", "About system", "self.OnMenuCmd", ""),
               ("","","", "")
               )))]
-
-
-
-
-
-
-
-
-
-
