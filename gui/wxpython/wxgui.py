@@ -297,9 +297,28 @@ class GMFrame(wx.Frame):
 
     def OnMapsets(self, event):
         """
-        Launch mapset access module
+        Launch mapset access dialog
         """
-        pass
+        dlg = MapsetAccess(self, wx.ID_ANY)
+
+        dlg.CenterOnScreen()
+
+        # if OK is pressed...
+        if dlg.ShowModal() == wx.ID_OK:
+            # create string of accessible mapsets
+            ms_string = 'PERMANENT'
+            if dlg.curr_mapset == 'PERMANENT':
+                ms_string = 'PERMANENT'
+            else:
+                ms_string = 'PERMANENT,%s' % dlg.curr_mapset
+            for mset in dlg.all_mapsets:
+                    index = dlg.all_mapsets.index(mset)
+                    if dlg.mapsetlb.IsChecked(index):
+                        ms_string += ',%s' % mset
+
+            # run g.mapsets with string of accessible mapsets
+            cmdlist = ['g.mapsets', 'mapset=%s' % ms_string]
+            cmd.Command(cmdlist)
 
     def OnRDigit(self, event):
         """
@@ -363,7 +382,6 @@ class GMFrame(wx.Frame):
         input and processes rules
         """
         command = self.GetMenuCmd(event)
-        print 'command=',command
         dlg = rules.RulesText(self, cmd=command)
         if dlg.ShowModal() == wx.ID_OK:
             gtemp = utils.GetTempfile()
@@ -785,6 +803,86 @@ class GMFrame(wx.Frame):
         dlg = wx.MessageDialog(self, _("No layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
         dlg.ShowModal()
         dlg.Destroy()
+
+class MapsetAccess(wx.Dialog):
+    """
+    Controls setting options and displaying/hiding map overlay decorations
+    """
+    def __init__(self, parent, id, title=_('Set/unset access to mapsets in current location'),
+                           pos=wx.DefaultPosition, size=(-1,-1),
+                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+
+        cmdlist = ['g.mapsets', '-l']
+        self.all_mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
+        for mset in self.all_mapsets:
+            indx = self.all_mapsets.index(mset)
+            self.all_mapsets[indx] = mset.strip('\n')
+
+        cmdlist = ['g.mapsets', '-p']
+        self.accessible_mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
+        for mset in self.accessible_mapsets:
+            indx = self.accessible_mapsets.index(mset)
+            self.accessible_mapsets[indx] = mset.strip('\n')
+
+        cmdlist = ['g.gisenv', 'get=MAPSET']
+        self.curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
+
+
+        # remove PERMANENT and current mapset from list because they are always accessible
+        self.PERMANENT_ndx = self.all_mapsets.index("PERMANENT")
+        self.all_mapsets.pop(self.PERMANENT_ndx)
+        if self.curr_mapset != "PERMANENT":
+            self.curr_ndx = self.all_mapsets.index(self.curr_mapset)
+            self.all_mapsets.pop(self.curr_ndx)
+
+        # make a checklistbox from available mapsets and check those that are active
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        if len(self.all_mapsets) == 0:
+            label = wx.StaticText(self, -1, "No other accessible mapsets besides \
+                                \nPERMANENT and current mapset.",
+                                style=wx.ALIGN_CENTRE)
+        else:
+            label = wx.StaticText(self, -1, "Check mapset to make it accessible, uncheck it to hide it.\
+                                \nPERMANENT and current mapset are always accessible.",
+                                style=wx.ALIGN_CENTRE)
+        box.Add(label, 0, wx.ALIGN_CENTRE)
+        sizer.Add(box, 0, wx.ALIGN_CENTRE|wx.TOP|wx.BOTTOM, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        self.mapsetlb = wx.CheckListBox(self, -1, pos=wx.DefaultPosition,
+                                        size=(350,200), choices=self.all_mapsets)
+        box.Add(self.mapsetlb, 0, wx.ALIGN_CENTRE)
+        sizer.Add(box, 0, wx.ALIGN_CENTRE|wx.TOP|wx.BOTTOM, 5)
+
+        # check all accessible mapsets
+        for mset in self.accessible_mapsets:
+            if mset != 'PERMANENT' and mset != self.curr_mapset:
+                self.mapsetlb.Check(self.all_mapsets.index(mset),True)
+
+        # dialog buttons
+        line = wx.StaticLine(self, -1, size=(-1,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(line, 0, wx.EXPAND|wx.ALIGN_CENTRE|wx.TOP|wx.BOTTOM, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+        okbtn = wx.Button(self, wx.ID_OK)
+        okbtn.SetDefault()
+        btnsizer.AddButton(okbtn)
+
+        cancelbtn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(cancelbtn)
+        btnsizer.Realize()
+
+        sizer.Add(btnsizer, 0, wx.EXPAND|wx.ALIGN_RIGHT|wx.ALL, 5)
+
+        self.Layout()
+        self.SetSizer(sizer)
+
+        sizer.Fit(self)
+
 
 class GMApp(wx.App):
     """
