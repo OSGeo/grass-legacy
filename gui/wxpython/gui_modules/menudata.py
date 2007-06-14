@@ -346,6 +346,7 @@ class Data:
                 ("","","", ""),
                 ("Create labels", "Create text label file for vector features", "self.OnMenuCmd", "v.label"),
                 ("","","", ""),
+                ("Reposition vector", "Reposition (shift and rotate) vector file in coordinate space", "self.OnMenuCmd", "v.transform"),
                 ("Reproject vector", "Reproject vector from other location", "self.OnMenuCmd", "v.proj"),
                 ("","","", "")
                 )),
