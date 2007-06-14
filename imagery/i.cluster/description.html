@@ -106,9 +106,7 @@ running <EM>i.cluster</EM>.
 <DD>The name assigned to output signature file which
 contains signatures of classes and can be used as the input
 file for the GRASS program 
-
 <EM><A HREF="i.maxlik.html">i.maxlik</A></EM> 
-
 for an unsupervised classification.
 
 <DT><B>classes=</B><EM>value</EM> 
@@ -117,7 +115,7 @@ for an unsupervised classification.
 identified in the clustering process before the iterations
 begin.
 
-<DT></EM><B>seed=</B><EM>name</EM> 
+<DT><B>seed=</B><EM>name</EM> 
 
 <DD>The name of a seed signature file is optional. The seed
 signatures are signatures that contain cluster means and
@@ -153,7 +151,8 @@ rerun <EM>i.cluster</EM> with a higher number of iterations
 
 Default: 30
 
-<A NAME="convergence"><DT><B>convergence=</B><EM>value</EM></A>
+<A NAME="convergence"></a>
+<DT><B>convergence=</B><EM>value</EM>
 
 <DD>A high percent convergence is the point at which
 cluster means become stable during the iteration process.
@@ -207,7 +206,8 @@ calculated.
 
 Default: 17
 
-<A NAME="reportfile"><DT><B>reportfile=</B><EM>name</EM></A>
+<A NAME="reportfile"></A>
+<DT><B>reportfile=</B><EM>name</EM>
 
 <DD>The reportfile is an optional parameter which contains
 the result, i.e., the statistics for each cluster. Also
@@ -226,14 +226,19 @@ required by the user) without prompting if the files
 existed.
 
 <H2>SEE ALSO</H2>
-<EM>GRASS Tutorial: <A HREF="http://grass.itc.it/gdp/imagery/imagery.ps.gz">Image Processing</A></EM>
+
+The GRASS 4 <em>
+<A HREF="http://grass.itc.it/gdp/imagery/grass4_image_processing.pdf">Image
+Processing manual</A></EM>
 
 <P>
 
-<EM><A HREF="i.class.html">i.class</A></EM><br>
-<EM><A HREF="i.group.html">i.group</A></EM><br>
-<EM><A HREF="i.gensig.html">i.gensig</A></EM><br>
-<EM><A HREF="i.maxlik.html">i.maxlik</A></EM>
+<EM>
+<A HREF="i.class.html">i.class</A><br>
+<A HREF="i.group.html">i.group</A><br>
+<A HREF="i.gensig.html">i.gensig</A><br>
+<A HREF="i.maxlik.html">i.maxlik</A>
+</EM>
 
 <H2>AUTHORS</H2>
 
@@ -247,4 +252,5 @@ Tao Wen,
 University of Illinois at 
 Urbana-Champaign, 
 Illinois
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
