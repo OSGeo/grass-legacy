@@ -1,7 +1,6 @@
 #include <grass/gis.h>
 #include "format.h"
 #include "local_proto.h"
-#define debug stderr
 
 struct Cell_head region, page;
 

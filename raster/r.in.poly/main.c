@@ -12,8 +12,9 @@
  *****************************************************************************/
 #include <stdlib.h>
 #include <grass/gis.h>
-#include "local_proto.h"
 #include <grass/glocale.h>
+#include "local_proto.h"
+
 
 int main (int argc, char *argv[])
 {
@@ -26,23 +27,12 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster, import");
     module->description =
-		_("Create raster maps from ASCII polygon/line data files "
-		"in the current directory.");
+	_("Create raster maps from ASCII polygon/line/point data files.");
 
-    input = G_define_option();
-    input->key             = "input";
-    input->type            = TYPE_STRING;
-    input->required        = YES;
-    input->multiple        = NO;
-    input->description     = _("Input file");
 
-    output = G_define_option();
-    output->key            = "output";
-    output->type           = TYPE_STRING;
-    output->required       = YES;
-    output->multiple       = NO;
-    output->gisprompt      = "new,cell,raster";
-    output->description    = _("Raster output file");
+    input = G_define_standard_option(G_OPT_F_INPUT);
+
+    output = G_define_standard_option(G_OPT_R_OUTPUT);
 
     title                  = G_define_option();
     title->key             = "title";
@@ -55,18 +45,19 @@ int main (int argc, char *argv[])
     rows->key              = "rows";
     rows->type             = TYPE_INTEGER;
     rows->required         = NO;
-    rows->multiple         = NO;
-    rows->description      = _("Number of rows to hold in memory");
+    rows->description      = _("Number of raster rows to hold in memory");
     rows->answer           = "4096";
 
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
 
+
     sscanf (rows->answer, "%d", &n);
-    
-    G_suppress_warnings(1);
+    if(n < 1)
+	G_fatal_error(_("Minimum number of rows to hold in memory is 1"));
+
     /* otherwise get complaints about window changes */
-    
+    G_suppress_warnings(1);
+
     exit(poly_to_rast (input->answer, output->answer, title->answer, n));
 }
-
