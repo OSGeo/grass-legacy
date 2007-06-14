@@ -7,7 +7,6 @@ step in either an unsupervised or a supervised image
 classification.
 
 <P>
-
 Either image classification methods are performed in two
 steps.  The first step in an unsupervised image
 classification is performed by
@@ -20,7 +19,6 @@ performed by <EM>i.maxlik</EM>.
 
 
 <P>
-
 In an unsupervised classification, the maximum-likelihood
 classifier uses the cluster means and covariance matrices
 from the <EM><A HREF="i.cluster.html">i.cluster</A></EM>
@@ -37,7 +35,6 @@ probability of belonging.
 
 
 <P>
-
 In either case, the raster map layer output by
 <EM>i.maxlik</EM> is a classified image in which each cell
 has been assigned to a spectral class (i.e., a category).
@@ -46,7 +43,6 @@ specific land cover types on the ground.
 
 
 <P>
-
 The program will run non-interactively if the user
 specifies the names of raster map layers, i.e., group and
 subgroup names, seed signature file name, result
@@ -137,6 +133,7 @@ probability of being assigned to the correct class.
 
 </DL>
 
+
 <H2>NOTES</H2>
 
 The maximum-likelihood classifier assumes that the spectral 
@@ -153,25 +150,27 @@ If this occurs,
 <EM>i.maxlik</EM>
 will reject them and display a warning message.
 
-
 <P>
-
 This program runs interactively if the user types
 <EM>i.maxlik</EM> only. If the user types <EM>i.maxlik</EM>
 along with all required options, it will overwrite the
 classified raster map without prompting if this map
 existed.
 
+
 <H2>SEE ALSO</H2>
 
-<EM>GRASS Tutorial: <A HREF="http://grass.itc.it/gdp/imagery/imagery.ps.gz">Image Processing</A></EM>
+The GRASS 4 <em>
+<A HREF="http://grass.itc.it/gdp/imagery/grass4_image_processing.pdf">Image
+Processing manual</A></EM>
 
 <P>
-
-<EM><A HREF="i.class.html">i.class</A></EM><br>
-<EM><A HREF="i.cluster.html">i.cluster</A></EM><br>
-<EM><A HREF="i.gensig.html">i.gensig</A></EM><br>
-<EM><A HREF="i.group.html">i.group</A></EM>
+<EM>
+<A HREF="i.class.html">i.class</A><br>
+<A HREF="i.cluster.html">i.cluster</A><br>
+<A HREF="i.gensig.html">i.gensig</A><br>
+<A HREF="i.group.html">i.group</A>
+</EM>
 
 <H2>AUTHORS</H2>
 
@@ -180,10 +179,9 @@ U.S.Army Construction Engineering
 Research Laboratory
 
 <BR>
-
 Tao Wen, 
 University of Illinois at Urbana-Champaign,
 Illinois
 
-
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
