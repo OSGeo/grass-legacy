@@ -135,7 +135,7 @@ class Data:
                 ("Set region", "Change region settings", "self.OnMenuCmd", "g.region"),
               )),
               ("GRASS working environment", (
-                ("Mapset access (not functional)", "Set access to other mapsets in current location", "self.OnMapsets", ""),
+                ("Mapset access", "Set/unset access to other mapsets in current location", "self.OnMapsets", ""),
                 ("Change working environment", "Change current working session to new mapset, location, or data directory", "self.OnMenuCmd", "g.mapset"),
                 ("User access", "Change access by other users to current mapset", "self.OnMenuCmd", "g.access"),
                 ("Show settings", "Show current GRASS environment settings", "self.RunMenuCmd", ['g.gisenv',' ']),
