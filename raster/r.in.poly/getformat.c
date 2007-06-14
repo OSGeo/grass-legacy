@@ -1,8 +1,7 @@
 #include <grass/gis.h>
 #include "format.h"
 
-int 
-getformat (FILE *fd)
+int getformat (FILE *fd)
 {
     char buf[1024];
     long x;
@@ -15,7 +14,7 @@ getformat (FILE *fd)
     max = min = 0;
     first = 1;
     fseek (fd, 0L, 0);
-    while (fgets(buf, sizeof buf, fd))
+    while (G_getl2(buf, (sizeof buf)-1, fd))
     {
 	G_strip(buf);
 	if (*buf != '=')

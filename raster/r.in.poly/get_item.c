@@ -1,6 +1,6 @@
 #include <grass/gis.h>
-int 
-get_item (FILE *fd, int *type, long *cat, double **x, double **y, int *count, struct Categories *labels)
+int get_item(FILE *fd, int *type, long *cat, double **x, double **y,
+	     int *count, struct Categories *labels)
 {
     static double *X = NULL;
     static double *Y = NULL;
@@ -14,8 +14,14 @@ get_item (FILE *fd, int *type, long *cat, double **x, double **y, int *count, st
     *cat = 0;
     *count = 0;
     *type = 0;
-    while (fgets(buf, sizeof buf, fd))
+
+    /* scan until we find the start of a new feature */
+    while (G_getl2(buf, sizeof buf, fd))
     {
+	/* skip comments and blank lines */
+	if( (*buf == '#') || (*buf == '\0') )
+            continue;
+
 	G_strip(buf);
 	if (*buf == 'A' || *buf == 'a')
 	{
@@ -27,24 +33,43 @@ get_item (FILE *fd, int *type, long *cat, double **x, double **y, int *count, st
 	    *type = 'L';
 	    break;
 	}
+	if (*buf == 'P' || *buf == 'p')
+	{
+	    *type = 'P';
+	    break;
+	}
     }
     if (*type == 0) return 0;
 
+    /* read the feature's data */
     while(1)
     {
 	offset = ftell (fd);
-	if (!fgets(buf, sizeof buf, fd))
+
+	if (!G_getl2(buf, (sizeof buf)-1, fd))
 	    break;
+
+	/* skip comments and blank lines */
+	if( (*buf == '#') || (*buf == '\0') )
+            continue;
+
 	G_strip(buf);
-	if (*buf == 'A' || *buf == 'a' || *buf == 'L' || *buf == 'l')
+
+	/* if we've found the next feature, rewind to the start of it and complete */
+	if (*buf == 'A' || *buf == 'a' ||
+	    *buf == 'L' || *buf == 'l' ||
+	    *buf == 'P' || *buf == 'p')
 	{
 	    fseek (fd, offset, 0);
 	    break;
 	}
+
+	/* if we found a cat (and optionally a label), read them and continue to scan */
 	if (*buf == '=')
 	{
 	    if (sscanf (buf+1, "%ld", cat) != 1)
 		continue;
+	    /* probably change this as G_getl2() doesn't store the new line (?) */
 	    if (sscanf (buf+1, "%ld%[^\n]", cat, lbl) == 2)
 	    {
 		G_strip(lbl);
@@ -52,6 +77,7 @@ get_item (FILE *fd, int *type, long *cat, double **x, double **y, int *count, st
 	    }
 	    continue;
 	}
+
 	if (sscanf (buf, "%s %s", east, north) != 2)
 	    continue;
 	if (!G_scan_northing(north, &n, G_projection()))
