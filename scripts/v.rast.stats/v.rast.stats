@@ -139,6 +139,7 @@ fi
 NSRES=`r.info -s "$RASTER" | grep nsres | cut -d'=' -f2`
 if [ $? -ne 0 ] ; then
    g.message -e "An error occurred reading the input raster map resolution."
+   cleanup
    exit 1
 fi
 EWRES=`r.info -s "$RASTER" | grep ewres | cut -d'=' -f2`
@@ -154,6 +155,7 @@ g.region nsres=$NSRES ewres=$EWRES -a
 v.to.rast in="$VECTOR" out="${VECTOR}_${TMPNAME}" use=cat --quiet
 if [ $? -ne 0 ] ; then
    g.message -e "An error occurred while converting vector to raster"
+   cleanup
    exit 1
 fi
 
@@ -164,6 +166,7 @@ r.cats "${VECTOR}_${TMPNAME}" fs=';' --quiet | cut -d';' -f1 > "$TMP.cats"
 NUMBER=`cat "$TMP.cats" | wc -l | awk '{print $1}'`
 if [ $NUMBER -lt 1 ] ; then
    g.message -e "No categories found in raster map"
+   cleanup
    exit 1
 fi
 
@@ -195,6 +198,7 @@ for i in n min max range mean stddev variance cf_var sum ; do
     if [ $GIS_FLAG_C -ne 1 ] ; then
        g.message -e "Cannot create column <$CURRCOLUMN> (already present). \
          Use -c flag to update values in this column."
+       cleanup
        exit 1
     fi
   else
@@ -209,6 +213,7 @@ g.message -v "Adding columns <$ADDCOLS>"
 v.db.addcol map="$VECTOR" columns="$ADDCOLS"
 if [ $? -eq 1 ] ; then
    g.message -e "Cannot continue (problem adding columns)."
+   cleanup
    exit 1
 fi
 
