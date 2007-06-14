@@ -134,7 +134,7 @@ main (int argc, char *argv[])
         /* please, remove before GRASS 7 released */
 	vflag = G_define_flag();
 	vflag->key		= 'v';
-	vflag->description	= _("Verbose mode.");
+	vflag->description	= _("Verbose mode");
 
 	if (G_parser (argc, argv))
 		exit (EXIT_FAILURE);
