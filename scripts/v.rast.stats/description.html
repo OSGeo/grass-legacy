@@ -38,6 +38,7 @@ v.rast.stats myfields raster=elevation.dem colprefix=dem
 # verify results:
 v.info -c myfields
 v.db.select myfields
+v.univar myfields column=dem_range type=centroid
 </pre></div>
 
 
