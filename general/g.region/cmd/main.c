@@ -886,6 +886,6 @@ static char *llinfo(char *msg,char *llformat,int proj)
 	if (proj != PROJECTION_LL)
 		return msg;
 
-	sprintf (buf, "%s (format %s)", msg, llformat);
+	sprintf (buf, "%s (%s %s)", msg, _("format"), llformat);
 	return G_store(buf);
 }
