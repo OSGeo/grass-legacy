@@ -847,10 +847,14 @@ void D_line_width(double d)
 	int w = round(d);
 	double m;
 
-	if (w < 1)
-		w = 1;
+	if (w < 0)
+		w = 0;
 
 	R_line_width(w);
+
+	/* clip/cull margin should be >0 */
+	if (w < 1)
+		w = 1;
 
 	m = ceil(w / 2.0);
 	m /= D_get_u_to_d_xconv();
