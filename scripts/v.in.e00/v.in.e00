@@ -26,7 +26,7 @@
 #%End
 #%flag
 #%  key: v
-#%  description: verbose mode
+#%  description: Verbose mode
 #%end
 #%option
 #% key: file
