@@ -75,6 +75,7 @@ class Data:
                  ("MPEG-1", "Export MPEG-1 animations", "self.OnMenuCmd", "r.out.mpeg"),
                  ("PNG", "Export PNG image (not georeferenced)", "self.OnMenuCmd", "r.out.png"),
                  ("PPM", "Export PPM image (24bit)", "self.OnMenuCmd", "r.out.ppm"),
+                 ("PPM from RGB", "Export PPM image from red, green, blue raster maps", "self.OnMenuCmd", "r.out.ppm3"),
                  ("POV-Ray", "Export POVray height-field", "self.OnMenuCmd", "r.out.pov"),
                  ("TIFF", "Export TIFF image (8/24bit)", "self.OnMenuCmd", "r.out.tiff"),
                  ("VRML", "Export VRML file", "self.OnMenuCmd", "r.out.vrml"),
