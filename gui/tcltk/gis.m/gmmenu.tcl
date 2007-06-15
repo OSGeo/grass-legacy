@@ -557,50 +557,50 @@ set descmenu [subst  {
 		{command {[G_msg "Optimum index factor for LandSat TM"]} {} "i.oif" {} -command {execute i.oif }}
 	}}
  } 
- {[G_msg "&Grid3D"]} all options $tmenu {
+ {[G_msg "&Volumes"]} all options $tmenu {
 	{cascad {[G_msg "Develop grid3D volumes"]} {} "" $tmenu {			
-		{command {[G_msg "Manage nulls for grid3D volume"]} {} "r3.null" {} -command {execute r3.null }}
+		{command {[G_msg "Manage nulls for grid3D volume"]} {} "r3.null: Manage nulls for grid3D volume" {} -command {execute r3.null }}
 		{command {[G_msg "Manage timestamp for grid3D volume"]} {} "r3.timestamp" {} -command {execute r3.timestamp }}
 	}}
-	{command {[G_msg "Create 3D mask for grid3D operations"]} {} "r3.mask" {} -command {execute r3.mask }}
-	{command {[G_msg "Create 2D raster cross section from grid3d volume"]} {} "r3.cross.rast" {} -command { execute r3.cross.rast }}
-	{command {[G_msg "Map calculator for grid3D operations"]} {} "r3.mapcalculator" {} -command {execute r3.mapcalculator }}
-	{command {[G_msg "Interpolate volume from vector points using splines"]} {} "v.vol.rst" {} -command {execute v.vol.rst }}
+	{command {[G_msg "3D MASK"]} {} "r3.mask: " {} -command {execute r3.mask }}
+	{command {[G_msg "3D Map calculator"]} {} "r3.mapcalculator: Map calculator for grid3D operations" {} -command {execute r3.mapcalculator }}
+	{command {[G_msg "Cross section from volume"]} {} "r3.cross.rast: Create 2D raster cross section from grid3D volume" {} -command { execute r3.cross.rast }}
+	{command {[G_msg "Interpolate volume from vector points"]} {} "v.vol.rst: Interpolate volume from vector points using splines" {} -command {execute v.vol.rst }}
 	{cascad {[G_msg "Report and Statistics"]} {} "" $tmenu {			
-		{command {[G_msg "Display information about grid3D volume"]} {} "r3.info" {} -command {execute r3.info }}
+		{command {[G_msg "Basic information"]} {} "r3.info: Display information about grid3D volume" {} -command {execute r3.info }}
 	}}
  } 
  {[G_msg "&Databases"]} all options $tmenu {
 	{cascad {[G_msg "Database information"]} {} "" $tmenu {			
-		{command {[G_msg "Describe table"]} {} "db.describe" {} -command {execute db.describe }}
-		{command {[G_msg "List columns"]} {} "db.columns" {} -command {execute db.columns }}
-		{command {[G_msg "List drivers"]} {} "db.drivers" {} -command {execute db.drivers }}
-		{command {[G_msg "List tables"]} {} "db.tables" {} -command {execute db.tables }}
+		{command {[G_msg "Describe table"]} {} "db.describe: Describe table structure and attributes" {} -command {execute db.describe }}
+		{command {[G_msg "List columns"]} {} "db.columns: List columns for selected table" {} -command {execute db.columns }}
+		{command {[G_msg "List drivers"]} {} "db.drivers: List available database drivers" {} -command {execute db.drivers }}
+		{command {[G_msg "List tables"]} {} "db.tables: List tables in database" {} -command {execute db.tables }}
 	}}
 	{separator}
 	{cascad {[G_msg "Manage database"]} {} "" $tmenu {			
-		{command {[G_msg "Connect to database"]} {} "db.connect" {} -command {execute db.connect }}
-		{command {[G_msg "Login to database"]} {} "db.login" {} -command {execute db.login }}
+		{command {[G_msg "Connect to database"]} {} "db.connect: Connect to database" {} -command {execute db.connect }}
+		{command {[G_msg "Login to database"]} {} "db.login: Login to database" {} -command {execute db.login }}
 		{separator}
-		{command {[G_msg "Create and add new attribute table to vector map"]} {} "v.db.addtable" {} -command {execute v.db.addtable }}
-		{command {[G_msg "Copy attribute table"]} {} "db.copy" {} -command {execute db.copy }}
-		{command {[G_msg "Remove existing attribute table for vector map"]} {} "v.db.droptable" {} -command {execute v.db.droptable }}
+		{command {[G_msg "Copy table"]} {} "db.copy: Copy attribute table" {} -command {execute db.copy }}
+		{command {[G_msg "New table"]} {} "v.db.addtable: Create and connect new attribute table to vector map" {} -command {execute v.db.addtable }}
+		{command {[G_msg "Remove table"]} {} "v.db.droptable: Remove existing attribute table for vector map" {} -command {execute v.db.droptable }}
 		{separator}
-		{command {[G_msg "Add columns to table"]} {} "v.db.addcol" {} -command {execute v.db.addcol }}
-		{command {[G_msg "Change values in a column"]} {} "v.db.update" {} -command {execute v.db.update }}
-		{command {[G_msg "Rename a column"]} {} "v.db.renamecol" {} -command {execute v.db.renamecol }}
+		{command {[G_msg "Add columns"]} {} "v.db.addcol: Add columns to table" {} -command {execute v.db.addcol }}
+		{command {[G_msg "Change values"]} {} "v.db.update: Change values in a column" {} -command {execute v.db.update }}
+		{command {[G_msg "Rename a column"]} {} "v.db.renamecol: Rename a column" {} -command {execute v.db.renamecol }}
 		{separator}
-		{command {[G_msg "Test database"]} {} "db.test" {} -command {execute db.test }}
+		{command {[G_msg "Test database"]} {} "db.test: Test database" {} -command {execute db.test }}
 	}}
 	{separator}
 	{cascad {[G_msg "Query"]} {} "" $tmenu {			
-		{command {[G_msg "Query data in any table"]} {} "db.select" {} -command {execute db.select }}
-		{command {[G_msg "Query vector attribute data"]} {} "db.select" {} -command {execute v.db.select }}
-		{command {[G_msg "Execute SQL statement"]} {} "db.execute" {} -command {execute db.execute }}
+		{command {[G_msg "Query any table"]} {} "db.select: Query data in any table" {} -command {execute db.select }}
+		{command {[G_msg "Query vector attribute table"]} {} "v.db.select: Query vector attribute data" {} -command {execute v.db.select }}
+		{command {[G_msg "SQL statement"]} {} "db.execute: Execute SQL statement" {} -command {execute db.execute }}
 	}}
 	{cascad {[G_msg "Vector<->database connections"]} {} "" $tmenu {			
-		{command {[G_msg "Reconnect vector map to attribute database"]} {} "v.db.reconnect.all" {} -command {execute v.db.reconnect.all }}
-		{command {[G_msg "Set database connection for vector attributes"]} {} "v.db.connect" {} -command {execute v.db.connect }}
+		{command {[G_msg "Reconnect vector to database"]} {} "v.db.reconnect.all: Reconnect vector map to attribute database" {} -command {execute v.db.reconnect.all }}
+		{command {[G_msg "Set vector - database connection"]} {} "v.db.connect: Set database connection for vector attributes" {} -command {execute v.db.connect }}
 	}}
  } 
 {[G_msg "&Help"]} all options $tmenu {
