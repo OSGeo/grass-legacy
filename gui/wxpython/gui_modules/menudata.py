@@ -488,8 +488,8 @@ class Data:
                 )),
               ("","","", ""),
               ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
+              ("3D map calculator", "Map calculator for grid3D volume operations", "self.OnMenuCmd", "r3.mapcalculator"),
               ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
-              ("Map calculator", "Map calculator for grid3D volume operations", "self.OnMenuCmd", "r3.mapcalculator"),
               ("Interpoloate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
               ("","","", ""),
               ("Report and Statistics", (
@@ -499,16 +499,18 @@ class Data:
               )),
           ("Database", (
               ("Database information", (
-                ("Create new vector as link to external OGR layer", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
-                ("Set database connection for vector attributes", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
+                ("Describe table", "Describe table structure and attributes", "self.OnMenuCmd", "db.describe"),
+                ("List columns", "List columns for selected table", "self.OnMenuCmd", "db.columns"),
+                ("List drivers", "List available database drivers", "self.OnMenuCmd", "db.drivers"),
+                ("List tables", "List tables in database", "self.OnMenuCmd", "db.tables"),
                 )),
               ("","","", ""),
               ("Manage databases", (
                 ("Connect", "Connect to database", "self.OnMenuCmd", "db.connect"),
                 ("Login", "Login to database", "self.OnMenuCmd", "db.login"),
                 ("","","", ""),
-                ("New table", "Create and add new attribute table to vector map", "self.OnMenuCmd", "v.db.addtable"),
                 ("Copy table", "Copy attribute table", "self.OnMenuCmd", "db.copy"),
+                ("New table", "Create and connect new attribute table to vector map", "self.OnMenuCmd", "v.db.addtable"),
                 ("Remove table", "Remove existing attribute table for vector map", "self.OnMenuCmd", "db.login"),
                 ("","","", ""),
                 ("Add columns", "Add columns to table", "self.OnMenuCmd", "v.db.addcol"),
@@ -519,8 +521,9 @@ class Data:
                 ("","","", "")
                 )),
               ("Query", (
-                ("Create new vector as link to external OGR layer", "Create new vector as link to external OGR layer", "self.OnMenuCmd", "v.external"),
-                ("Set database connection for vector attributes", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
+                ("Query any table", "Query data in any table", "self.OnMenuCmd", "db.select"),
+                ("Query vector attribute table", "Query vector attribute data", "self.OnMenuCmd", "v.db.select"),
+                ("SQL statement", "Execute SQL statement", "self.OnMenuCmd", "db.execute"),
                 )),
               ("","","", ""),
               ("Vector<->database connections", (
