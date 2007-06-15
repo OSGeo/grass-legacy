@@ -85,7 +85,6 @@ class Data:
                  ("Multiple formats using OGR", "Export multiple formats using OGR", "self.OnMenuCmd", "v.out.ogr"),
                  ("","","", ""),
                  ("ASCII points or GRASS ASCII vector", "Import ASCII points file or GRASS ASCII vector file", "self.OnMenuCmd", "v.out.ascii"),
-
                  ("DXF", "Export DXF file", "self.OnMenuCmd", "v.out.dxf"),
                  ("POV-Ray", "Export POV-Ray format file", "self.OnMenuCmd", "v.out.pov"),
                  ("SVG", "Export SVG file", "self.OnMenuCmd", "v.out.svg"),
@@ -117,7 +116,7 @@ class Data:
                 ("Vector to volume", "Convert vector 3D points to volume voxels", "self.OnMenuCmd", "v.to.rast3"),
                 ("Sites to vector", "Convert sites (GRASS 5) to vector map", "self.OnMenuCmd", "v.in.sites"),
                 ("","","", ""),
-                ("Volumes to raster series", "Convert raster to vector map", "self.OnMenuCmd", "r3.to.rast"),
+                ("Volume to raster series", "Convert raster to vector map", "self.OnMenuCmd", "r3.to.rast"),
                 )),
               ("","","", ""),
               ("Georectify (not functional)", "Georectify raster and vector maps", "self.OnGeorectify", ""),
