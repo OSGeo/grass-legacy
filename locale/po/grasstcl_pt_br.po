@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-27 16:07+0000\n"
-"PO-Revision-Date: 2007-05-26 22:57-0300\n"
+"PO-Revision-Date: 2007-05-31 23:04-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:497 ../lib/init/gis_set.tcl:657
 msgid "WARNING: invalid mapset"
-msgstr "ATENÇÃO: mapset inválido"
+msgstr "ATENÇ?O: mapset inválido"
 
 #: ../lib/init/gis_set.tcl:498
 #, tcl-format
@@ -247,11 +247,11 @@ msgstr "Sair"
 
 #: ../lib/init/gis_set.tcl:564
 msgid "WARNING: Invalid Database"
-msgstr "ATENÇÃO: banco de dados inválido"
+msgstr "ATENÇÃO: base de dados inválida"
 
 #: ../lib/init/gis_set.tcl:565
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
-msgstr "ATENÇÃO: banco de dados inválido. Procurando primeiro diretório válido no pai"
+msgstr "ATENÇÃO: base de dados inválida. Procurando primeiro diretório válido no pai"
 
 #: ../lib/init/gis_set.tcl:613 ../lib/init/gis_set.tcl:634
 #: ../lib/init/gis_set.tcl:652 ../lib/init/gis_set.tcl:681
@@ -680,7 +680,6 @@ msgid "draw border"
 msgstr "desenhar borda"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:361 ../gui/tcltk/d.m/thematic.tcl:250
-#, fuzzy
 msgid "save thematic colors to GRASSRGB column of vector file"
 msgstr "salvar cores temáticas para a coluna GRASSRGB do arquivo vetorial"
 
@@ -767,7 +766,6 @@ msgid "Aspect map: "
 msgstr "Mapa de aspecto (azimute)"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:171
-#, fuzzy
 msgid "    aspect value type"
 msgstr "    tipo do valor do aspecto"
 
@@ -1005,33 +1003,28 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Mapa raster para o canal azul ou saturaç?o"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:133
-#, fuzzy
 msgid "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"
-msgstr "Display 3 mapas raster como canais RGB ou HIS."
+msgstr "Exibir 3 mapas raster como canais RGB ou HIS."
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:150
-#, fuzzy
 msgid "\tred (RGB) or hue (HIS):\t"
-msgstr "RGB:"
+msgstr "\tvermelho (RGB) ou matiz(hue)(HIS) :\t"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:153
-#, fuzzy
 msgid "raster map for red or hue channel"
 msgstr "mapa raster para o canal vermelho ou matiz (hue)"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:162
-#, fuzzy
 msgid "\tgreen (RGB) or intensity (HIS):"
-msgstr "RGB:"
+msgstr "\tverde (RGB) ou intensidade (HIS):"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:165
 msgid "raster map for green or intensity channel"
 msgstr "mapa raster para o canal verde ou intensidade"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:174
-#, fuzzy
 msgid "\tblue (RGB) or saturation (HIS):"
-msgstr "RGB:"
+msgstr "\tazul (RGB) ou saturaç?o (HIS):"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:177
 msgid "raster map for blue or saturation channel"
@@ -1054,9 +1047,8 @@ msgid "Help for HIS"
 msgstr "Ajuda para HIS"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:78 ../gui/tcltk/gis.m/maplabels.tcl:125
-#, fuzzy
 msgid "Select label font"
-msgstr "Selecionar fonte de texto padrão"
+msgstr "Selecionar fonte para rótulos"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:124
 msgid ""
@@ -1065,18 +1057,16 @@ msgid ""
 msgstr "Criar objeto de texto PostScript (apenas para saída impressa, PostScript EPS e PDF)"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:131
-#, fuzzy
 msgid "Text to display:"
-msgstr "mapear para exibir"
+msgstr "Texto a exibir: "
 
 #: ../gui/tcltk/gis.m/maptext.tcl:165
 msgid "     justification"
 msgstr "     justificado"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:168
-#, fuzzy
 msgid "  line width"
-msgstr "alinhar"
+msgstr "  espessura da linha"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:175 ../gui/tcltk/d.m/fttext.tcl:144
 msgid "Font:"
@@ -1087,9 +1077,8 @@ msgid "select font for text"
 msgstr "selecione a fonte para o texto"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:134
-#, fuzzy
 msgid "Display scale and north arrow"
-msgstr "Escala e seta norte"
+msgstr "Exibir escala e norte"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:151
 #, tcl-format
@@ -1105,9 +1094,8 @@ msgid "Scale appearance:  text color"
 msgstr "Aparência da escala:  cor do texto"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:181
-#, fuzzy
 msgid "\tbackground color "
-msgstr "    segundo plano "
+msgstr "\tcor de fundo"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:184
 msgid "transparent background"
