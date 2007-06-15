@@ -154,7 +154,7 @@ set descmenu [subst  {
 		{command {[G_msg "SVG"]} {} "v.out.svg: Export SVG file" {} -command { execute v.out.svg }}
 		{command {[G_msg "VTK"]} {} "v.out.vtk: Export VTK ASCII file" {} -command { execute v.out.vtk }}
 	}}
-	{cascad {[G_msg "Exort grid 3D volume"]} {} "" $tmenu {
+	{cascad {[G_msg "Export grid 3D volume"]} {} "" $tmenu {
 		{command {[G_msg "ASCII 3D"]} {} "r3.out.ascii: Export ASCII 3D file" {} -command { execute r3.out.ascii }}
 		{command {[G_msg "Vis5D"]} {} "r3.out.v5d: Export Vis5D file" {} -command { execute r3.out.v5d }}
 		{command {[G_msg "VTK"]} {} "r3.out.vtk: Export VTK ASCII file" {} -command { execute r3.out.vtk }}
@@ -291,7 +291,7 @@ set descmenu [subst  {
 		{command {[G_msg "Carve stream channels"]} {} "r.carve: Carve stream channels into elevation map using vector streams map" {} -command {execute r.carve }}
 		{command {[G_msg "Fill lake"]} {} "r.lake: Fill lake from seed point to specified level" {} -command {execute r.lake }}
 		{separator}
-		{command {[G_msg "Depressionless  map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
+		{command {[G_msg "Depressionless map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
 		{command {[G_msg "Flow accumulation"]} {} "r.terraflow: Flow accumulation for massive grids" {} -command {execute r.terraflow }}
 		{command {[G_msg "Flow lines"]} {} "r.flow: " {} -command {execute r.flow }}
 		{separator}
