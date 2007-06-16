@@ -1,19 +1,20 @@
-# translation of grasslibs_pt_br.po to Português Brasileiro
-# translation of grasslibs_pt_br.po to Brazilian Portuguese
+# translation of grasslibs_pt.po to Português
+# translation of grasslibs_pt.po to Portuguese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
 # Paulo Marcondes <paulomarcondes gmail.com>, Carlos Grohmann <carlos.grohmann gmail.com>, 2005.
 # Paulo Eduardo Pasquini Marcondes <paulomarcondes gmail.com>, 2005, 2006
 # Paulo E. P. Marcondes <paulomarcondes@gmail.com>, 2007.
+# Paulo Eduardo Pasquini Marcondes <paulomarcondes@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: grasslibs_pt_br\n"
+"Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-16 00:05+0200\n"
-"PO-Revision-Date: 2007-05-20 10:44-0300\n"
-"Last-Translator: Paulo E. P. Marcondes <paulomarcondes@gmail.com>\n"
-"Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
+"PO-Revision-Date: 2007-06-16 19:39-0300\n"
+"Last-Translator: Paulo Eduardo Pasquini Marcondes <paulomarcondes@gmail.com>\n"
+"Language-Team: Português <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -58,7 +59,7 @@ msgstr "Monitor: get_command: EOF Prematuro"
 #: ../lib/driver/main.c:89
 #, c-format
 msgid "Graphics driver [%s] started"
-msgstr ""
+msgstr "Controlador gráfico [%s] iniciado"
 
 #: ../lib/driver/parse_ftcap.c:33
 #, c-format
@@ -208,14 +209,12 @@ msgstr "Latitude Sul ilegal"
 #: ../lib/gis/adj_cellhd.c:103 ../lib/gis/adj_cellhd.c:270
 #, c-format
 msgid "Fixing subtle input data rounding error of west boundary (%g>%g)"
-msgstr ""
-"Corrigindo erro sutil de arredondamento de dados do limite Oeste (%g>%g)"
+msgstr "Corrigindo erro sutil de arredondamento de dados do limite Oeste (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:113 ../lib/gis/adj_cellhd.c:280
 #, c-format
 msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
-msgstr ""
-"Corrigindo erro sutil de arredondamento de dados do limite Leste (%g>%g)"
+msgstr "Corrigindo erro sutil de arredondamento de dados do limite Leste (%g>%g)"
 
 #: ../lib/gis/adj_cellhd.c:127 ../lib/gis/adj_cellhd.c:294
 msgid "North must be north of South"
@@ -472,7 +471,7 @@ msgstr "Não consegui abrir arquivo de depuração '%s'"
 #: ../lib/gis/done_msg.c:37
 #, c-format
 msgid "%s complete. %s"
-msgstr "%s completo. %"
+msgstr "%s completo. %s"
 
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
@@ -763,8 +762,7 @@ msgstr "MAPSET %s não encontrado"
 
 #: ../lib/gis/gisinit.c:101
 #, c-format
-msgid ""
-"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "\aERRO: Sistema não iniciado. O programador não incluiu a chamada a G_gisinit"
 "()\n"
@@ -838,9 +836,9 @@ msgid "Output map '%s' is used as input"
 msgstr "Mapa de saída '%s' usado como entrada"
 
 #: ../lib/gis/list.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "no <%s> files available in current mapset\n"
-msgstr "não há arquivos %s disponíveis no mapset ativo\n"
+msgstr "não há arquivos <%s> disponíveis no mapset ativo\n"
 
 #: ../lib/gis/list.c:127
 #, fuzzy, c-format
@@ -1028,8 +1026,7 @@ msgstr ""
 #: ../lib/gis/opencell.c:308
 #, c-format
 msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
-msgstr ""
-"[%s] no mapset [%s] - está em uma zona diferente [%d] da região atual [%d]"
+msgstr "[%s] no mapset [%s] - está em uma zona diferente [%d] da região atual [%d]"
 
 #: ../lib/gis/opencell.c:316
 #, c-format
@@ -1043,8 +1040,7 @@ msgstr "opencell: %s - nome de arquivo ilegal"
 
 #: ../lib/gis/opencell.c:718
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"não posso escrever valores nulos em um mapa aberto para acesso aleatório"
+msgstr "não posso escrever valores nulos em um mapa aberto para acesso aleatório"
 
 #: ../lib/gis/opencell.c:936 ../lib/gis/opencell.c:991
 #, c-format
@@ -1072,7 +1068,7 @@ msgstr "Cláusula WHERE do comando SQL sem palavra-chave 'where'"
 
 #: ../lib/gis/parser.c:344
 msgid "Example: income < 1000 and inhab >= 10000"
-msgstr ""
+msgstr "Exemplo: renda < 1000 e habitantes >= 10000"
 
 #: ../lib/gis/parser.c:352
 msgid "Name of attribute column"
@@ -1144,7 +1140,7 @@ msgstr "Tipo"
 
 #: ../lib/gis/parser.c:517
 msgid "Feature type(s)"
-msgstr ""
+msgstr "Tipo(s) de feição"
 
 #: ../lib/gis/parser.c:524
 msgid "Layer number"
@@ -1154,7 +1150,7 @@ msgstr "Número da camada"
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
-msgstr ""
+msgstr "Apenas um mapa vetorial pode ser conectado a múltiplas tabelas. Este número determina qual tabela usar."
 
 #: ../lib/gis/parser.c:532
 msgid "Category value"
@@ -1178,23 +1174,23 @@ msgstr "Nome do arquivo de saída"
 
 #: ../lib/gis/parser.c:566
 msgid "Field separator"
-msgstr ""
+msgstr "Separador de Campos"
 
 #: ../lib/gis/parser.c:577
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: ../lib/gis/parser.c:578
 msgid "Either a standard color name or R:G:B triplet"
-msgstr ""
+msgstr "Um nome de cor padrão ou tripla R:G:B"
 
 #: ../lib/gis/parser.c:587
 msgid "Background color"
-msgstr ""
+msgstr "Cor de fundo"
 
 #: ../lib/gis/parser.c:588
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr ""
+msgstr "Cor padrão do GRASS, tripla R:G:B ou \"none\""
 
 #: ../lib/gis/parser.c:888
 #, c-format
@@ -1216,6 +1212,8 @@ msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
+"\n"
+"Palavras chave:\n"
 
 #: ../lib/gis/parser.c:1009
 #, c-format
@@ -1239,15 +1237,15 @@ msgstr ""
 
 #: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1542 ../lib/gis/parser.c:1826
 msgid "Allow output files to overwrite existing files"
-msgstr ""
+msgstr "Permitir aos arquivos de saída a sobrescrever arquivos existentes"
 
 #: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1546
 msgid "Verbose module output"
-msgstr ""
+msgstr "Saída do módulo verbosa"
 
 #: ../lib/gis/parser.c:1107 ../lib/gis/parser.c:1549
 msgid "Quiet module output"
-msgstr ""
+msgstr "Saída do módulo silenciosa"
 
 #: ../lib/gis/parser.c:1113
 #, c-format
@@ -1265,22 +1263,19 @@ msgstr "  %*s   padrão: %s\n"
 
 #: ../lib/gis/parser.c:1425
 msgid "NAME"
-msgstr ""
+msgstr "NOME"
 
 #: ../lib/gis/parser.c:1438
 msgid "KEYWORDS"
-msgstr ""
+msgstr "PALAVRAS CHAVE"
 
 #: ../lib/gis/parser.c:1443
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "RESUMO"
 
 #: ../lib/gis/parser.c:1517
-#, fuzzy
 msgid "Flags"
-msgstr ""
-"\n"
-"Flags:\n"
+msgstr "Opções"
 
 #: ../lib/gis/parser.c:1558
 #, fuzzy
@@ -1301,15 +1296,15 @@ msgstr " padrão: %s\n"
 
 #: ../lib/gis/parser.c:1828
 msgid "Allow overwrite"
-msgstr ""
+msgstr "Permitir sobrescrever"
 
 #: ../lib/gis/parser.c:1836
 msgid "Run with minimal output messages"
-msgstr ""
+msgstr "Executar com mínimo de mensagens (silencioso)"
 
 #: ../lib/gis/parser.c:1838
 msgid "Run quietly"
-msgstr ""
+msgstr "Executa silenciosamente"
 
 #: ../lib/gis/parser.c:1902
 #, c-format
@@ -1612,9 +1607,9 @@ msgid "can't write range file for [%s in %s]"
 msgstr "não consegui escrever arquivo de intervalo para [%s em %s]"
 
 #: ../lib/gis/raster_metadata.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read %s for [%s in %s]"
-msgstr "não consegui ler o histograma para [%s em %s]"
+msgstr "Impossível ler %s para [%s em %s]"
 
 #: ../lib/gis/raster_metadata.c:143
 #, fuzzy, c-format
@@ -1762,8 +1757,7 @@ msgstr "Categorias de reclassificação demais para [%s em %s]"
 #: ../lib/gis/reclass.c:153
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr ""
-"Formato de reclassificação ilegal no cabeçalho do arquivo para [%s em %s]"
+msgstr "Formato de reclassificação ilegal no cabeçalho do arquivo para [%s em %s]"
 
 #: ../lib/gis/reclass.c:248
 msgid "Illegal reclass request"
@@ -1799,8 +1793,7 @@ msgstr "problema lendo arquivo cell raster"
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
-msgstr ""
-"G_set_window(): projeção/zona difere daquela nos arquivos raster abertos"
+msgstr "G_set_window(): projeção/zona difere daquela nos arquivos raster abertos"
 
 #: ../lib/gis/spawn.c:77 ../lib/gis/spawn.c:110
 msgid "Too many arguments"
@@ -1896,13 +1889,11 @@ msgstr "Janela do GRASS quando a visão foi salva:\n"
 #: ../lib/gis/view.c:547
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
-msgstr ""
-" Janela gravada em \"%s\" está completamente fora da janela atual do GRASS."
+msgstr " Janela gravada em \"%s\" está completamente fora da janela atual do GRASS."
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr "Apenas %d%% da janela salva em \"%s\" sobrepõe a janela atual do GRASS"
 
 #: ../lib/gmath/del2g.c:51
@@ -1919,7 +1910,7 @@ msgstr "    calculando del**2 g..."
 
 #: ../lib/gmath/del2g.c:63
 msgid "    taking FFT of del**2 g..."
-msgstr ""
+msgstr "    tomando FFT de del**2 g..."
 
 #: ../lib/gmath/del2g.c:67
 msgid "    multiplying transforms..."
@@ -1927,7 +1918,7 @@ msgstr "    multiplicando transformadas..."
 
 #: ../lib/gmath/del2g.c:70
 msgid "    taking inverse FFT..."
-msgstr ""
+msgstr "    tomando FFT inverso..."
 
 #: ../lib/gmath/la.c:63 ../lib/gmath/la.c:120
 msgid "Matrix dimensions out of range"
@@ -2183,19 +2174,20 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/test/test_gwflow.c:43
-#, fuzzy
 msgid ""
 "\n"
 "++ Running gwflow integration tests ++"
-msgstr "Tipo de interpolação desconhecida"
+msgstr ""
+"\n"
+"++ Executando testes de integração de gwflow ++"
 
 #: ../lib/gpde/test/test_gwflow.c:45
 msgid "\t 1. testing 2d gwflow"
-msgstr ""
+msgstr "\t 1. testando gwflow 2D"
 
 #: ../lib/gpde/test/test_gwflow.c:48
 msgid "\t 2. testing 3d gwflow"
-msgstr ""
+msgstr "\t 2. testando gwflow 3D"
 
 #: ../lib/gpde/test/test_gwflow.c:52
 #, fuzzy
@@ -2424,8 +2416,7 @@ msgid "Write 3d array to g3d map <%s>"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid ""
-"The type of solver which should solve the symmetric linear equation system."
+msgid "The type of solver which should solve the symmetric linear equation system."
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -2437,8 +2428,7 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid ""
-"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
@@ -2765,8 +2755,7 @@ msgstr "Não consegui ler coordenadas da linha de símbolos: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr "Nome de símbolo incorreto: '%s' (deveria ser: grupo/"
 
 #: ../lib/symbol/read.c:274
@@ -3173,8 +3162,7 @@ msgstr "Vetor de entrada '%s' não encontrado"
 
 #: ../lib/vector/Vlib/open.c:189
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr ""
-"Um mapa que não está no mapset atual não pode ser aberto para atualização."
+msgstr "Um mapa que não está no mapset atual não pode ser aberto para atualização."
 
 #: ../lib/vector/Vlib/open.c:207
 #, fuzzy, c-format
@@ -3326,8 +3314,7 @@ msgstr "não é possível apagar a linha, o mapa '%s' não está aberto no nível 2"
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
-msgstr ""
-"não consegui apagar a linha, o mapa '%s' não está aberto em modo de escrita"
+msgstr "não consegui apagar a linha, o mapa '%s' não está aberto em modo de escrita"
 
 #: ../lib/vector/Vlib/write.c:213
 msgid "Cannot delete line"
@@ -3418,3 +3405,4 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
