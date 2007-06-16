@@ -432,10 +432,10 @@ class Data:
               )),
           ("Imagery", (
               ("Develop images and groups", (
-                ("Create/edit imagery group", "Create/edit imagery group", "self.OnMenuCmd", "i.group"),
-                ("Target imagery group", "Target imagery group", "self.OnMenuCmd", "i.target"),
+                ("Create/edit group", "Create/edit imagery group", "self.OnMenuCmd", "i.group"),
+                ("Target group", "Target imagery group", "self.OnMenuCmd", "i.target"),
                 ("","","", ""),
-                ("Mosaic up to 4 adjacent images", "Mosaic up to 4 adjacent images", "self.OnMenuCmd", "i.image.mosaic"),
+                ("Mosaic images", "Mosaic up to 4 adjacent images", "self.OnMenuCmd", "i.image.mosaic"),
                 )),
               ("Manage image colors", (
                 ("Color balance for RGB", "Color balance and enhance color tables of multiband imagery for rgb display", "self.OnMenuCmd", "i.landsat.rgb"),
@@ -453,28 +453,28 @@ class Data:
               ("Classify image", (
                 ("Clustering input for unsupervised classification", "Clustering input for unsupervised classification", "self.OnMenuCmd", "i.cluster"),
                 ("","","", ""),
-                ("Maximum likelihood Classification (MLC)", "Maximum likelihood Classification (MLC)", "self.OnMenuCmd", "i.maxlik"),
+                ("Maximum likelihood classification (MLC)", "Maximum likelihood Classification", "self.OnMenuCmd", "i.maxlik"),
                 ("Sequential maximum a posteriori classification (SMAP)", "Sequential maximum a posteriori classification (SMAP)", "self.OnMenuCmd", "i.smap"),
                 ("","","", ""),
                 ("Interactive input for supervised classification (requires Xterm)", "Interactive input for supervised classification", "self.OnXTerm", "i.class"),
-                ("Non-interactive input for supervised classification (MLC)", "Non-interactive input for supervised classification (MLC)", "self.OnMenuCmd", "i.gensig"),
-                ("Non-interactive input for supervised classification (SMAP)", "Non-interactive input for supervised classification (SMAP)", "self.OnMenuCmd", "i.gensigset"),
+                ("Input for supervised MLC", "Non-interactive input for supervised classification (MLC)", "self.OnMenuCmd", "i.gensig"),
+                ("Input for supervised SMAP", "Non-interactive input for supervised classification (SMAP)", "self.OnMenuCmd", "i.gensigset"),
                 )),
               ("Filter image", (
-                ("Zero edge crossing detection", "Zero edge crossing detection", "self.OnMenuCmd", "i.zc"),
+                ("Edge detection", "Zero edge crossing detection", "self.OnMenuCmd", "i.zc"),
                 ("Matrix/convolving filter", "User defined matrix/convolving filter", "self.OnMenuCmd", "r.mfilter"),
                 )),
               ("Histogram image", "Histogram image", "self.DispHistogram", ""),
               ("Spectral response", "Spectral response", "self.OnMenuCmd", "i.spectral"),
               ("Tasseled cap vegetation index", "Tasseled cap vegetation index", "self.OnMenuCmd", "i.tasscap"),
               ("Transform image", (
-                ("Canonical component", "Canonical component", "self.OnMenuCmd", "i.cca"),
-                ("Principal component", "Principal component", "self.OnMenuCmd", "i.pca"),
-                ("Fast Fourier Transform", "Fast Fourier Transform", "self.OnMenuCmd", "i.fft"),
-                ("Inverse Fast Fourier Transform", "Inverse Fast Fourier Transform", "self.OnMenuCmd", "i.ifft"),
+                ("Canonical correlation", "Canonical correlation (discriminant analysis)", "self.OnMenuCmd", "i.cca"),
+                ("Principal components", "Principal components analysis", "self.OnMenuCmd", "i.pca"),
+                ("Fast Fourier", "Fast Fourier Transform", "self.OnMenuCmd", "i.fft"),
+                ("Inverse Fast Fourier", "Inverse Fast Fourier Transform", "self.OnMenuCmd", "i.ifft"),
                 )),
               ("","","", ""),
-              ("Report and statistics (also use raster reporting and stats)", (
+              ("Report and statistics (also see raster reports and stats)", (
                 ("Bit pattern comparison ", "Bit pattern comparison for ID of low quality pixels", "self.OnMenuCmd", "r.bitpattern"),
                 ("Kappa analysis", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
                 ("OIF for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
