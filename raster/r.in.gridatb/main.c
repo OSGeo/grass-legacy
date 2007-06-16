@@ -52,7 +52,7 @@ main (int argc, char **argv)
 
 	params.output			= G_define_option();
 	params.output->key		= "output";
-	params.output->description	= _("Output map");
+	params.output->description	= _("Name for output raster map");
 	params.output->type		= TYPE_STRING;
 	params.output->required		= YES;
 	params.output->gisprompt	= "new,cell,raster";

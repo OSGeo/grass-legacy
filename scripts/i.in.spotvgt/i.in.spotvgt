@@ -43,7 +43,7 @@
 #% key: rast
 #% type: string
 #% gisprompt: new,cell,raster
-#% description: name for new raster map
+#% description: name for output raster map
 #% required : no
 #%end
 
