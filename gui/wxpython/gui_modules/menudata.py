@@ -474,7 +474,7 @@ class Data:
                 ("Inverse Fast Fourier", "Inverse Fast Fourier Transform", "self.OnMenuCmd", "i.ifft"),
                 )),
               ("","","", ""),
-              ("Report and statistics (also see raster reports and stats)", (
+              ("Report and statistics", (
                 ("Bit pattern comparison ", "Bit pattern comparison for ID of low quality pixels", "self.OnMenuCmd", "r.bitpattern"),
                 ("Kappa analysis", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
                 ("OIF for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
