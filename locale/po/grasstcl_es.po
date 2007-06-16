@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-16 00:05+0200\n"
-"PO-Revision-Date: 2007-06-16 00:19+0200\n"
+"PO-Revision-Date: 2007-06-16 00:46+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -563,7 +563,7 @@ msgstr "Mapa ráster 2.5D a volumen"
 
 #: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:179
 msgid "Vector to raster"
-msgstr "Vector a ráster"
+msgstr "Vectorial a ráster"
 
 #: ../gui/tcltk/d.m/menu.tcl:162
 msgid "Vector to vector"
