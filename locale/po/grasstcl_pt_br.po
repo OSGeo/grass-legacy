@@ -1,5 +1,6 @@
 # translation of grasstcl_pt_br.po to Portugu?s Brasileiro
 # translation of grasstcl_pt_br.po to Portugu?s Brasileiro
+# translation of grasstcl_pt_br.po to Portugu?s Brasileiro
 # translation of grasstcl_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -13,7 +14,7 @@ msgstr ""
 "Project-Id-Version: grasstcl_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-16 00:05+0200\n"
-"PO-Revision-Date: 2007-06-16 15:59-0300\n"
+"PO-Revision-Date: 2007-06-16 18:27-0300\n"
 "Last-Translator: Paulo Eduardo Pasquini Marcondes <paulomarcondes@gmail.com>\n"
 "Language-Team: Portugu?s Brasileiro <paulomarcondes@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -1353,13 +1354,13 @@ msgstr "Criar estaç?es a partir do arquivo de entrada e sistema de refer?ncia li
 msgid ""
 "Create points/segments from input lines, linear reference system and "
 "positions read from stdin"
-msgstr ""
+msgstr "Cria pontos/segmentos a partir das linhas de entrada, sistema linear de refer?ncia e posiç?es lidas de stdin"
 
 #: ../gui/tcltk/d.m/menu.tcl:411
 msgid ""
 "Find line id and real km+offset for given points in vector map using linear "
 "reference system"
-msgstr ""
+msgstr "Encontra id da linha e km+afastamento reais para pontos dados num mapa vetorial usando sistema linear de refer?ncia"
 
 #: ../gui/tcltk/d.m/menu.tcl:414 ../gui/tcltk/gis.m/gmmenu.tcl:451
 msgid "Locate nearest features to points or centroids"
@@ -3232,7 +3233,7 @@ msgstr "Diversidade de Simpson"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:336
 msgid "Ricness"
-msgstr ""
+msgstr "Ricness"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:337
 msgid "Shape index"
@@ -3418,7 +3419,7 @@ msgstr "Criar pontos e segmentos em um sistema de refer?ncia linear"
 msgid ""
 "Find line ID and real km+offset for given points in vector map using linear "
 "reference system"
-msgstr ""
+msgstr "Encontra ID da linha e km+afastamento reais para pontos dados em mapa vetorial usando sistema de refer?ncia linear"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:494
 msgid "Remove outliers from vector point set"
@@ -4038,11 +4039,11 @@ msgstr "     justificado"
 
 #: ../gui/tcltk/gis.m/maptext.tcl:170
 msgid "  line width"
-msgstr "  espessura da linha"
+msgstr "  Espessura da linha"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:48
 msgid "Redraw all layers"
-msgstr "Redesenhar todos"
+msgstr "Redesenhar todas as camadas"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:55
 msgid "Start NVIZ using active layers in current region"
@@ -4149,14 +4150,12 @@ msgid "Save profile to EPS file"
 msgstr "Salvar perfil como arquivo EPS"
 
 #: ../gui/tcltk/gis.m/profile.tcl:428
-#, fuzzy
 msgid "You must select a raster to profile"
-msgstr "mapa raster base para exibir"
+msgstr "Voc? deve selecionar um raster para o perfil"
 
 #: ../gui/tcltk/gis.m/profile.tcl:429
-#, fuzzy
 msgid "No raster map selected"
-msgstr "Volumes para séries de raster"
+msgstr "Nenhum mapa raster selecionado"
 
 #: ../gui/tcltk/gis.m/profile.tcl:435
 msgid "You must draw a transect to profile"
@@ -4278,9 +4277,9 @@ msgid " Set background color (colored null value cells)"
 msgstr " Configurar cor de fundo (cor para células nulas)"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:103
-#, fuzzy, tcl-format
+#, tcl-format
 msgid "cell values for %s"
-msgstr "Adicionar camada de valores de célula"
+msgstr "valores de célula para %s"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:127
 msgid "Display cell values from raster map or image"
@@ -4291,23 +4290,20 @@ msgid "  (resolution must be 100x100 or less)"
 msgstr "..(resoluç?o deve ser 100x100 ou menos)"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:149
-#, fuzzy
 msgid "Raster to display: "
-msgstr "mapear para exibir"
+msgstr "Raster para exibir: "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:165
 msgid "Color for cell grid:       "
 msgstr "Cor para célula da malha:       "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:170
-#, fuzzy
 msgid "  cell values font "
-msgstr "Adicionar camada de valores de célula"
+msgstr "  fonte para valores de célula"
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:180
-#, fuzzy
 msgid "Color for cell values:   "
-msgstr "usar cores do raster para valores das células"
+msgstr "Cor para os valores de célula:   "
 
 #: ../gui/tcltk/gis.m/rastnums.tcl:185
 msgid "use raster colors for cell values"
@@ -4339,34 +4335,28 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Mapa raster para o canal azul ou saturaç?o"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:133
-#, fuzzy
 msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr "Exibir 3 mapas raster como canais RGB ou HIS."
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:172
-#, fuzzy
 msgid "red (RGB) or hue (HIS): "
-msgstr "RGB:"
+msgstr "vermelho (RGB) ou matiz (HIS):"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:175
-#, fuzzy
 msgid "raster map for red or hue channel (HIS drape)"
 msgstr "mapa raster para o canal vermelho ou matiz (hue)"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:184
-#, fuzzy
 msgid "green (RGB) or intensity (HIS): "
-msgstr "RGB:"
+msgstr "verde (RGB) ou intensidade (HIS): "
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:187
-#, fuzzy
 msgid "raster map for green or intensity channel (HIS relief)"
-msgstr "mapa raster para o canal verde ou intensidade"
+msgstr "mapa raster para o canal verde ou intensidade (HIS)"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:196
-#, fuzzy
 msgid "blue (RGB) or saturation (HIS): "
-msgstr "RGB:"
+msgstr "azul (RGB) ou saturaç?o (HIS): "
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:199
 msgid "raster map for blue or saturation channel"
@@ -4386,12 +4376,10 @@ msgid "Run"
 msgstr "Executar"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:108
-#, fuzzy
 msgid "Run (Background)"
-msgstr "Executar (Plano de Fundo)"
+msgstr "Executar (Segundo Plano)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:109
-#, fuzzy
 msgid "Run UI"
 msgstr "Executar interface de usuário"
 
@@ -4543,14 +4531,12 @@ msgid "Save legend to EPS file"
 msgstr "Salvar legenda como arquivo EPS"
 
 #: ../gui/tcltk/gis.m/vector.tcl:227
-#, fuzzy
 msgid "Vector output map"
-msgstr "Mapa de vetores"
+msgstr "Mapa vetorial de saída"
 
 #: ../gui/tcltk/gis.m/vector.tcl:287
-#, fuzzy
 msgid "Display vector maps"
-msgstr "Identificar categorias"
+msgstr "Exibir mapas vetoriais"
 
 #: ../gui/tcltk/gis.m/vector.tcl:307
 msgid "vector map to display"
@@ -4565,19 +4551,16 @@ msgid "Point symbols:"
 msgstr "Símbolos para pontos:"
 
 #: ../gui/tcltk/gis.m/vector.tcl:361
-#, fuzzy
 msgid "Icon size"
-msgstr "tamanho"
+msgstr "Tamanho do ícone"
 
 #: ../gui/tcltk/gis.m/vector.tcl:373
-#, fuzzy
 msgid " width"
-msgstr "largura:"
+msgstr "largura"
 
 #: ../gui/tcltk/gis.m/vector.tcl:375
-#, fuzzy
 msgid "Line width"
-msgstr "largura:"
+msgstr "Espessura da linha"
 
 #: ../gui/tcltk/gis.m/vector.tcl:377
 msgid "(pixels) "
@@ -4604,16 +4587,14 @@ msgid "Query vectors for display: "
 msgstr "Pesquisar vetores para exibir:"
 
 #: ../gui/tcltk/gis.m/vector.tcl:446
-#, fuzzy
 msgid "query cat values    "
-msgstr "pesquisar valores de cat    "
+msgstr "Pesquisar valores de categoria"
 
 #: ../gui/tcltk/gis.m/vector.tcl:457
 msgid "use SQL query"
 msgstr "usar pesquisa SQL"
 
 #: ../gui/tcltk/gis.m/vector.tcl:483
-#, fuzzy
 msgid "save displayed objects to new vector file "
 msgstr "salvar objetos exibidos para novo arquivo vetorial"
 
@@ -4772,7 +4753,7 @@ msgstr ""
 
 #: ../lib/init/epsg_option.tcl:436
 msgid "GUESS THAT IS NOT THE EPSG FILE"
-msgstr ""
+msgstr "ESTE N?O É O ARQUIVO EPSG"
 
 #: ../lib/init/epsg_option.tcl:442 ../lib/init/epsg_option.tcl:472
 #: ../lib/init/epsg_option.tcl:491
@@ -5050,9 +5031,8 @@ msgstr ""
 "Verifique permiss?es de diretório."
 
 #: ../vector/v.digit/cats.tcl:34
-#, fuzzy
 msgid "Categories already opened"
-msgstr "Ajuda já está aberta"
+msgstr "Categorias já est?o abertas"
 
 #: ../vector/v.digit/cats.tcl:42
 msgid "Categories"
@@ -5063,9 +5043,8 @@ msgid "Layer:"
 msgstr "Camada:"
 
 #: ../vector/v.digit/cats.tcl:55
-#, fuzzy
 msgid "   Category:"
-msgstr "Categoria"
+msgstr "   Categoria:"
 
 #: ../vector/v.digit/cats.tcl:62
 msgid "Insert new record to table"
@@ -5092,9 +5071,8 @@ msgid "Table successfully created"
 msgstr "Tabela criada com sucesso"
 
 #: ../vector/v.digit/settings.tcl:151
-#, fuzzy
 msgid "Settings already opened"
-msgstr "Ajuda já está aberta"
+msgstr "Configuraç?es já est?o abertas"
 
 #: ../vector/v.digit/settings.tcl:169
 msgid "Symbology"
@@ -5153,7 +5131,6 @@ msgid "Settings"
 msgstr "Configurações"
 
 #: ../vector/v.digit/settings.tcl:278
-#, fuzzy
 msgid "Snapping threshold in screen pixels"
 msgstr "Limite de snap em pixels na tela"
 
@@ -5162,14 +5139,12 @@ msgid "Snapping threshold in map units"
 msgstr "Limite de snap em unidades de mapa"
 
 #: ../vector/v.digit/settings.tcl:305
-#, fuzzy
 msgid "Line width in screen pixels"
-msgstr "Limite de snap em pixels na tela"
+msgstr "Espessura de linha em pixels na tela"
 
 #: ../vector/v.digit/settings.tcl:307
-#, fuzzy
 msgid "Set line width in pixels"
-msgstr "altura em pixels ao invés de %"
+msgstr "Ajustar a espessura da linha em pixels"
 
 #: ../vector/v.digit/settings.tcl:315
 msgid "Table"
@@ -5180,34 +5155,28 @@ msgid "Welcome to v.digit"
 msgstr "Bem-vindo a v.digit"
 
 #: ../vector/v.digit/toolbox.tcl:20
-#, fuzzy
 msgid "Left button"
-msgstr "botão esquerdo do mouse"
+msgstr "Bot?o esquerdo"
 
 #: ../vector/v.digit/toolbox.tcl:21
-#, fuzzy
 msgid "Middle button"
-msgstr "botão esquerdo do mouse"
+msgstr "Bot?o central"
 
 #: ../vector/v.digit/toolbox.tcl:22
-#, fuzzy
 msgid "Right button"
-msgstr "botão esquerdo do mouse"
+msgstr "Bot?o direito"
 
 #: ../vector/v.digit/toolbox.tcl:75
-#, fuzzy
 msgid "  Layer"
-msgstr "Camada"
+msgstr "  Camada"
 
 #: ../vector/v.digit/toolbox.tcl:79
-#, fuzzy
 msgid "  Category"
-msgstr "Categoria"
+msgstr "  Categoria"
 
 #: ../vector/v.digit/toolbox.tcl:83
-#, fuzzy
 msgid "  Mode "
-msgstr "Modo"
+msgstr "  Modo "
 
 #: ../vector/v.digit/toolbox.tcl:95
 msgid "Insert new record into table"
@@ -5262,7 +5231,6 @@ msgid "Redraw"
 msgstr "Redesenhar"
 
 #: ../vector/v.digit/toolbox.tcl:179
-#, fuzzy
 msgid "Zoom in by window"
 msgstr "Aproximar por janela"
 
