@@ -24,7 +24,7 @@
 #%option
 #% key: prefix
 #% type: string
-#% description: Map prefix. Specify character(s) to view selected maps only
+#% description: Map prefix. Specify character(s) to view selected maps only.
 #% required : no
 #%end
 #%option
@@ -44,7 +44,7 @@
 #%option
 #% key: mapsets
 #% type: string
-#% description: Mapsets to use. Specify multiple mapsets comma separated
+#% description: Mapsets to use. Specify multiple mapsets comma separated.
 #% multiple : yes
 #% required : no
 #%end
