@@ -1,4 +1,4 @@
 /* fancy.c */
-int fancy(char *, struct Cell_head *, struct Categories *);
+void fancy(char *, struct Cell_head *, struct Categories *, FILE *);
 /* normal.c */
-int normal(char *, struct Cell_head *, struct Categories *, int);
+void normal(char *, struct Cell_head *, struct Categories *, int, FILE *);
