@@ -100,8 +100,7 @@ main (int argc, char *argv[])
     		char buf1[256], buf2[256], buf3[256], *str;
 		FILE *fp;
 
-		G_message(_("Renaming in reclassed map%s"),
-			  (nrmaps > 1 ? "s" : ""));
+		G_message(_("Renaming reclass maps"));
 
 		for(; *rmaps; rmaps++)
 		{
