@@ -170,7 +170,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     G_message ( _("[%d] dead area boundaries skipped"), ndbounds);        
     G_message ( _("[%d] elements of unknown type skipped"), nunknown);
 
-    G_message ( _("[%d] elements read to memory."), line);
+    G_message ( _("[%d] elements read to memory"), line);
 
     *plines = lines;
     return (line);
