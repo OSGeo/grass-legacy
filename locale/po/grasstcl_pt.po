@@ -10,13 +10,15 @@
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_pt\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-16 00:05+0200\n"
-"PO-Revision-Date: 2007-06-18 17:41-0300\n"
+"PO-Revision-Date: 2007-06-18 20:35-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
-"PO-Revision-Date: 2007-06-18 17:41-0300\n"
+"PO-Revision-Date: 2007-06-18 20:35-0300\n"
 
 #: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
 msgid "Text color: "
@@ -1516,11 +1518,11 @@ msgstr "Teste de normalidade da distribuição de pontos"
 
 #: ../gui/tcltk/d.m/menu.tcl:466 ../gui/tcltk/gis.m/gmmenu.tcl:505
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr ""
+msgstr "Calcular estatísticas para mapa raster sob objetos vetoriais"
 
 #: ../gui/tcltk/d.m/menu.tcl:467 ../gui/tcltk/gis.m/gmmenu.tcl:506
 msgid "Indices of point counts in quadrats"
-msgstr ""
+msgstr "Índice da contagem de pontos por quadrante"
 
 #: ../gui/tcltk/d.m/menu.tcl:470 ../gui/tcltk/gis.m/gmmenu.tcl:509
 msgid "&Imagery"
@@ -1548,7 +1550,7 @@ msgstr "Gerenciar cores da imagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:478 ../gui/tcltk/gis.m/gmmenu.tcl:517
 msgid "Color balance and enhance color tables of multiband imagery for rgb display"
-msgstr ""
+msgstr "Balanceia cores e melhora tabela de cores de imagens multibanda para exibição RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:479 ../gui/tcltk/gis.m/gmmenu.tcl:518
 msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
@@ -1592,7 +1594,7 @@ msgstr "Entrada clusterizada para classificação não supervisionada"
 
 #: ../gui/tcltk/d.m/menu.tcl:495 ../gui/tcltk/gis.m/gmmenu.tcl:531
 msgid "Maximum likelyhood classification (MLC)"
-msgstr "Classificaç?o de máxima verossimilhança"
+msgstr "Classificação de máxima verossimilhança"
 
 #: ../gui/tcltk/d.m/menu.tcl:496 ../gui/tcltk/gis.m/gmmenu.tcl:532
 msgid "Sequential maximum a posteriory classification (SMAP)"
@@ -1620,7 +1622,7 @@ msgstr "Detecção de cruzamento de zero"
 
 #: ../gui/tcltk/d.m/menu.tcl:504 ../gui/tcltk/gis.m/gmmenu.tcl:540
 msgid "User defined matrix/convolving filter"
-msgstr "Matriz ou filtro de convoluç?o definido pelo utilizador"
+msgstr "Matriz ou filtro de convolução definido pelo utilizador"
 
 #: ../gui/tcltk/d.m/menu.tcl:506 ../gui/tcltk/gis.m/gmmenu.tcl:542
 msgid "Spectral response"
@@ -1656,11 +1658,11 @@ msgstr "Limite dos valores da imagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:519 ../gui/tcltk/gis.m/gmmenu.tcl:555
 msgid "Bit pattern comparison for ID of low quality pixels"
-msgstr ""
+msgstr "Comparação de padrão de bits para identificação de pixels de baixa qualidade"
 
 #: ../gui/tcltk/d.m/menu.tcl:520 ../gui/tcltk/gis.m/gmmenu.tcl:556
 msgid "Kappa classification accuracy assessment"
-msgstr "Estimativa da precisão da classificaç?o Kappa"
+msgstr "Estimativa da precisão da classificação Kappa"
 
 #: ../gui/tcltk/d.m/menu.tcl:521 ../gui/tcltk/gis.m/gmmenu.tcl:557
 msgid "Optimum index factor for LandSat TM"
@@ -1692,7 +1694,7 @@ msgstr "Criar seção transversal raster 2D a partir de volume grid3d"
 
 #: ../gui/tcltk/d.m/menu.tcl:531
 msgid "Map calculator for grid3D operations"
-msgstr "Calculadora de mapas para operaç?es grid3D"
+msgstr "Calculadora de mapas para operações grid3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:532
 msgid "Interpolate volume from vector points using splines"
@@ -1704,7 +1706,7 @@ msgstr "Relatórios e estatísticas"
 
 #: ../gui/tcltk/d.m/menu.tcl:534
 msgid "Display information about grid3D volume"
-msgstr "Exibir informaç?es sobre volumes grid3D"
+msgstr "Exibir informações sobre volumes grid3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:573
 msgid "&Databases"
@@ -1968,7 +1970,7 @@ msgstr "verde (RGB) ou intensidade (HIS):"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
-msgstr "azul (RGB) ou saturaç?o (HIS):"
+msgstr "azul (RGB) ou saturação (HIS):"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:152
 msgid "display maps as RGB"
@@ -2063,15 +2065,15 @@ msgstr "    selecionar monitor para legenda"
 
 #: ../gui/tcltk/d.m/tool1.tcl:22
 msgid "Display active layers in current region"
-msgstr "Exibir camadas ativas na regi?o atual"
+msgstr "Exibir camadas ativas na região atual"
 
 #: ../gui/tcltk/d.m/tool1.tcl:28
 msgid "Display active layers in default region"
-msgstr "Exibir camadas ativas na regi?o padr?o"
+msgstr "Exibir camadas ativas na região padrão"
 
 #: ../gui/tcltk/d.m/tool1.tcl:34
 msgid "Display active layers in saved region setting"
-msgstr "Exibir camadas ativas em regi?o salva"
+msgstr "Exibir camadas ativas em região salva"
 
 #: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:47
 #: ../gui/tcltk/gis.m/maptool.tcl:62
@@ -2159,7 +2161,7 @@ msgstr "Adicionar camada de mapa temático"
 
 #: ../gui/tcltk/d.m/tool2.tcl:76
 msgid "Add paint labels layer (from directory paint/labels)"
-msgstr ""
+msgstr "Adicionar camada de rótulos (do diretório paint/labels)"
 
 #: ../gui/tcltk/d.m/tool2.tcl:82
 msgid "Add freetype text layer"
@@ -2179,7 +2181,7 @@ msgstr "Sobrescrever linhas e malha"
 
 #: ../gui/tcltk/d.m/tool2.tcl:110
 msgid "Create or select display frame"
-msgstr "Criar ou selecionar o quadro de exibiç?o"
+msgstr "Criar ou selecionar o quadro de exibição"
 
 #: ../gui/tcltk/d.m/tool2.tcl:116 ../gui/tcltk/gis.m/gmtool2.tcl:39
 msgid "Add command layer"
@@ -2305,7 +2307,7 @@ msgstr "Consulta SQL"
 
 #: ../gui/tcltk/d.m/vector.tcl:340
 msgid "     SQL where statement"
-msgstr "     instruç?o SQL where"
+msgstr "     instrução SQL where"
 
 #: ../gui/tcltk/d.m/vector.tcl:366
 msgid "Mouse query setup:"
@@ -2325,7 +2327,7 @@ msgstr "Mostrar quando o tamanho médio da região for"
 
 #: ../gui/tcltk/d.m/vector.tcl:386
 msgid "Line width for ps.map print output:"
-msgstr "Espessura da linha para impress?o via ps.map"
+msgstr "Espessura da linha para impressão via ps.map"
 
 #: ../gui/tcltk/d.m/vector.tcl:388
 msgid "Line width used for printing"
@@ -4627,7 +4629,7 @@ msgstr "Opções"
 
 #: ../lib/gis/gui.tcl:562
 msgid "required"
-msgstr "solicitado"
+msgstr "obrigatório"
 
 #: ../lib/gis/gui.tcl:562
 msgid "optional"
