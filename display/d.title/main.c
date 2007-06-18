@@ -17,6 +17,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include <grass/gis.h>
@@ -32,7 +33,10 @@ int main (int argc, char **argv)
 	struct Categories cats ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *fancy_mode, *simple_mode;
+	struct Flag *fancy_mode, *simple_mode, *draw;
+	char *tmpfile;
+	char command[GPATH_MAX + 12];
+	FILE *fp;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -61,6 +65,10 @@ int main (int argc, char **argv)
 	opt3->description=
 	    _("Sets the text size as percentage of the frame's height");
 
+	draw = G_define_flag();
+	draw->key		= 'd';
+	draw->description  = _("Draw title on current display");
+
 	fancy_mode = G_define_flag();
 	fancy_mode->key        = 'f';
 	fancy_mode->description= _("Do a fancier title");
@@ -74,6 +82,7 @@ int main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 	    exit(EXIT_FAILURE);
+
 
 	strcpy(map_name, opt1->answer) ;
 
@@ -102,11 +111,29 @@ int main (int argc, char **argv)
 	    G_fatal_error(_("Cannot read category file for <%s>"), map_name);
 
 
-	if (type == NORMAL)
-	    normal(mapset, &window, &cats, simple_mode->answer);
+	if(draw->answer) {
+	    tmpfile = G_convert_dirseps_to_host(G_tempfile());
+	    if(!(fp = fopen(tmpfile, "w")))
+		G_fatal_error(_("Unable to open the temporary file."));
+	}
 	else
-	    fancy(mapset, &window, &cats);
+	    fp = stdout;
 
+
+	if (type == NORMAL)
+	    normal(mapset, &window, &cats, simple_mode->answer, fp);
+	else
+	    fancy(mapset, &window, &cats, fp);
+
+
+	if(draw->answer) {
+	    fclose(fp);
+	    sprintf(command, "d.text < \"%s\"", tmpfile);
+	    G_debug(3, "cmd = [%s]", command);
+	    G_system(command);
+	    unlink(tmpfile);
+	    /* note a tmp file will remain, created by d.text so it can survive d.redraw */
+	}
 
 	exit(EXIT_SUCCESS);
 }
