@@ -14,7 +14,7 @@
 #############################################################################
 
 #%Module
-#%  description: Downloads and imports data from WMS servers
+#%  description: Downloads and imports data from WMS servers.
 #%  keywords: wms
 #%End
 #%flag
@@ -127,7 +127,7 @@
 #%option
 #% key: region
 #% type: string
-#% description: Named region to request data for. Current region used if omitted.
+#% description: Named region to request data for. Current region used if omitted
 #% required : no
 #% guisection: Request
 #%end
