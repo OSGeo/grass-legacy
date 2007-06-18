@@ -21,7 +21,7 @@
 #      -  avcimport: http://avce00.maptools.org
 
 #%Module
-#%  description: Import of E00 file into a vector map.
+#%  description: Import E00 file into a vector map.
 #%  keywords: vector, import
 #%End
 #%flag
@@ -46,7 +46,7 @@
 #% key: vect
 #% type: string
 #% gisprompt: new,vector,vector
-#% description: name for new vector map
+#% description: Name for output vector map
 #% required : no
 #%end
 

@@ -38,7 +38,7 @@
 #% key: vect
 #% type: string
 #% gisprompt: new,vector,vector
-#% description: name for new vector map
+#% description: Name for output vector map
 #% required : no
 #%end
 
