@@ -8,8 +8,5 @@ default: script install_scripts
 
 install_scripts:
 	if [ ! -d $(GISBASE)/etc/gm ] ; then $(MKDIR) $(GISBASE)/etc/gm; fi
-	if [ ! -d $(GISBASE)/etc/gm/script ] ; then $(MKDIR) $(GISBASE)/etc/gm/script ; fi
 	for file in *.tcl ; do $(INSTALL) $$file $(GISBASE)/etc/gm/ ; done
 	for file in *.gif ; do $(INSTALL_DATA) $$file $(GISBASE)/etc/gm/ ; done
-	for file in script/*.* ; do $(INSTALL) $$file $(GISBASE)/etc/gm/script/ ; done
-

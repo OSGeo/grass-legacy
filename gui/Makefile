@@ -2,7 +2,7 @@ MODULE_TOPDIR = ..
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-SUBDIRS = icons
+SUBDIRS = icons scripts
 
 TCLTKBASED = tcltk
 

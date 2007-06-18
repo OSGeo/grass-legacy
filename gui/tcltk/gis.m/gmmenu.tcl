@@ -240,7 +240,7 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Manage map colors"]} {} "" $tmenu {			
 		{command {[G_msg "Color tables"]} {} "r.colors: Set colors to predefined color tables" {} -command {execute r.colors }}
-		{command {[G_msg "Color rules"]} {} "r.colors.rules: Set colors using color rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.colors.rules }}
+		{command {[G_msg "Color rules"]} {} "r.colors.rules: Set colors using color rules" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.colors.rules }}
 		{separator}
 		{command {[G_msg "Blend"]} {} "r.blend: Blend 2 color maps to produce 3 RGB files" {} -command {execute r.blend }}
 		{command {[G_msg "Create RGB"]} {} "r.composite: Create color image from RGB files" {} -command {execute r.composite }}
@@ -346,11 +346,11 @@ set descmenu [subst  {
 		{command {[G_msg "Interactively edit category values"]} {} "d.rast.edit: Edit category values of individual cells for displayed raster map" {} -command {execute d.rast.edit }}
 		{separator}
 		{command {[G_msg "Reclassify by size"]} {} "r.reclass.area: Reclassify categories for areas of specified sizes" {} -command {execute r.reclass.area }}
-		{command {[G_msg "Reclassify using rules"]} {} "r.reclass.rules: Reclassify categories using rules" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.rules }}
-		{command {[G_msg "Reclassify using rules file"]} {} "r.reclass.file: Reclassify categories using rules file" {} -command {execute $env(GISBASE)/etc/gm/script/r.reclass.file }}
+		{command {[G_msg "Reclassify using rules"]} {} "r.reclass.rules: Reclassify categories using rules" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.reclass.rules }}
+		{command {[G_msg "Reclassify using rules file"]} {} "r.reclass.file: Reclassify categories using rules file" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.reclass.file }}
 		{separator}
-		{command {[G_msg "Recode using rules"]} {} "r.recode.rules: Recode categories using rules (create new map)" {} -command {execute $env(GISBASE)/etc/gm/script/r.recode.rules }}
-		{command {[G_msg "Recode using rules file"]} {} "r.recode.file: Recode categories using rules file (create new map)" {} -command {execute $env(GISBASE)/etc/gm/script/r.recode.file }}
+		{command {[G_msg "Recode using rules"]} {} "r.recode.rules: Recode categories using rules (create new map)" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.recode.rules }}
+		{command {[G_msg "Recode using rules file"]} {} "r.recode.file: Recode categories using rules file (create new map)" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.recode.file }}
 		{separator}
 		{command {[G_msg "Rescale"]} {} "r.rescale: Rescale categories (create new map)" {} -command {execute r.rescale }}
 		{command {[G_msg "Rescale with histogram"]} {} "r.rescale.eq: Rescale categories with equalized histogram (create new map)" {} -command {execute r.rescale.eq }}
@@ -419,7 +419,7 @@ set descmenu [subst  {
 		{command {[G_msg "Create lines parallel to existing lines"]} {} "v.parallel" {} -command {execute v.parallel }}
 		{command {[G_msg "Dissolve common boundaries"]} {} "v.dissolve" {} -command {execute v.dissolve }}
 		{separator}
-		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute $env(GISBASE)/etc/gm/script/v.type.sh }}
+		{command {[G_msg "Convert vector feature types"]} {} "v.type" {} -command {execute $env(GISBASE)/etc/gui/scripts/v.type.sh }}
 		{command {[G_msg "Convert vector lines to points"]} {} "v.to.points" {} -command {execute v.to.points }}
 		{command {[G_msg "Convert 2D vector to 3D by sampling raster"]} {} "v.drape" {} -command {execute v.drape }}
 		{command {[G_msg "Extrude 2D vector into 3D vector"]} {} "v.extrude" {} -command {execute v.extrude }}
