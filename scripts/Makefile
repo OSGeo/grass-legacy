@@ -17,6 +17,7 @@ SUBDIRS = \
 	d.rast.leg \
 	d.redraw \
 	d.resize \
+	d.shadedmap \
 	d.slide.show \
 	d.split \
 	d.text.freetype \
