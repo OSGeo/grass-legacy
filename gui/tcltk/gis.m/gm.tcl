@@ -131,7 +131,7 @@ set max_prgindic 20
 ###############################################################################
 
 append regexp .* $env(GISBASE) {[^:]*}
-regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gm/script" env(PATH)
+regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
 
 
 ###############################################################################
