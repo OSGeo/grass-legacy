@@ -50,7 +50,7 @@
 #%option
 #% key: output
 #% type: string
-#% description: Name for resultant raster map
+#% description: Name for output raster map
 #% gisprompt: new,cell,raster
 #% required : no
 #% guisection: Import
