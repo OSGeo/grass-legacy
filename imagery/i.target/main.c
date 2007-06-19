@@ -6,7 +6,13 @@
  *               Bernhard Reiter <bernhard intevation.de>, 
  *               Brad Douglas <rez touchofmadness.com>, 
  *               Glynn Clements <glynn gclements.plus.com>
- * PURPOSE:      targets an imagery group to a GRASS data base location name 
+ *
+ *               Original INTER author: M. Shapiro
+ *               New cmd line version by Bob Covill 10/2001
+ *               Rewritten for GRASS6 by Brad Douglas 08/2005
+ *               Output existing group into by Hamish Bowman 6/2007
+ *
+ * PURPOSE:      Targets an imagery group to a GRASS data base location name 
  *               and mapset for reprojection
  * COPYRIGHT:    (C) 2001-2007 by the GRASS Development Team
  *
@@ -15,12 +21,8 @@
  *               for details.
  *
  *****************************************************************************/
-/* 
- * Original INTER author: M. Shapiro
- * New cmd line version by Bob Covill 10/2001
- * Rewritten for GRASS6 by Brad Douglas 08/2005
- */
- 
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -28,19 +30,20 @@
 #include <grass/imagery.h>
 
 
-int 
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
     struct Option *group, *mapset, *loc;
     struct GModule *module;
     struct Flag *c;
+    char t_mapset[GMAPSET_MAX], t_location[GMAPSET_MAX];
+
 
     G_gisinit (argv[0]);
 
     module = G_define_module();
     module->keywords = _("imagery");
     module->description =
-        	_("Targets an imagery group to a GRASS location and mapset.");
+        _("Targets an imagery group to a GRASS location and mapset.");
         	
     group = G_define_standard_option (G_OPT_I_GROUP);
 
@@ -58,34 +61,44 @@ main (int argc, char *argv[])
 
     c = G_define_flag();
     c->key              = 'c';
-    c->description      = _("Set current location and mapset as target for of imagery group");
+    c->description      =
+	_("Set current location and mapset as target for of imagery group");
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
-    /* error if -c is specified with other options */
-    if ((!c->answer) && (!mapset->answer || !loc->answer))
-	G_fatal_error(_("You must use either the Current Mapset and "
-             "Location Flag (-c)\n OR\n manually enter the variables."));
 
-    /* error if -c is not specified and not enough other options */
-    if ((c->answer) && (mapset->answer || loc->answer))
+    /* if no setting options are given, print the current target info */
+    if( !c->answer && !mapset->answer && !loc->answer ) {
+
+	if( I_get_target(group->answer, t_location, t_mapset) )
+	    G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
+		group->answer, t_location, t_mapset);
+	else
+	    G_message("Group <%s> has no target.", group->answer);
+
+	exit(EXIT_SUCCESS);
+    }
+
+    /* error if -c is specified with other options, or options are incomplete */
+    if( ( c->answer && ( mapset->answer ||  loc->answer)) ||
+	(!c->answer && (!mapset->answer || !loc->answer)) )
 	G_fatal_error(_("You must use either the Current Mapset and "
              "Location Flag (-c)\n OR\n manually enter the variables."));
 
     if (c->answer) {
         /* point group target to current mapset and location */
         I_put_target(group->answer, G_location(), G_mapset());
-        G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
+        G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
                 group->answer, G_location(), G_mapset());
     } else {
         /* point group target to specified mapset and location */
         I_put_target(group->answer, loc->answer, mapset->answer);
-        G_message(_("group [%s] targeted for location [%s], mapset [%s]\n"),
+        G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
                 group->answer, loc->answer, mapset->answer);
     }
 
-    return (EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 
