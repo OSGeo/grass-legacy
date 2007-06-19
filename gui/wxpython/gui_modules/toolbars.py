@@ -26,6 +26,7 @@ sys.path.append(gmpath)
 
 import cmd
 import grassenv
+import digit
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -34,11 +35,11 @@ class AbstractToolbar:
     def __init__():
         pass
 
-    def InitToolbar(self, parent):
+    def InitToolbar(self, parent, toolbar, toolData):
         """Initialize toolbar, i.e. add tools to the toolbar"""
 
-        for tool in self.ToolbarData():
-            self.CreateTool(parent, self.toolbar, *tool)
+        for tool in toolData:
+            self.CreateTool(parent, toolbar, *tool)
 
     def ToolbarData(self):
         """Toolbar data"""
@@ -74,7 +75,7 @@ class MapToolbar(AbstractToolbar):
         tsize = (24, 24)
         self.toolbar.SetToolBitmapSize(tsize)
 
-        self.InitToolbar(self.mapdisplay)
+        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
 
         # optional tools
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
@@ -173,11 +174,14 @@ class DigitToolbar(AbstractToolbar):
         self.comboid    = None
 
         # create toolbar
-        self.toolbar = wx.ToolBar(parent=self.parent, id=wx.ID_ANY)
-        self.toolbar.SetToolBitmapSize(wx.Size(24,24))
+        self.toolbar = []
+        numOfRows = 2
+        for row in range(0, numOfRows):
+            self.toolbar.append(wx.ToolBar(parent=self.parent, id=wx.ID_ANY))
+            self.toolbar[row].SetToolBitmapSize(wx.Size(24,24))
 
-        # create toolbar
-        self.InitToolbar(self.parent)
+            # create toolbar
+            self.InitToolbar(self.parent, self.toolbar[row], self.ToolbarData(row))
 
         # list of available vector maps
         self.UpdateListOfLayers(updateTool=True)
@@ -186,71 +190,73 @@ class DigitToolbar(AbstractToolbar):
         self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
         # realize toolbar
-        self.toolbar.Realize()
+        for row in range(0, numOfRows):
+            self.toolbar[row].Realize()
 
-    def ToolbarData(self):
+    def ToolbarData(self, row):
         """
         Toolbar data
         """
 
-        self.addPoint = self.addLine = self.addBoundary = self.addCentroid = self.exit = None
-        self.moveVertex = self.addVertex = self.removeVertex = None
-        self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
-        self.displayCats = self.displayAttr = self.copyCats = self.settings = None
+        if row == 0:
+            self.displayCats = self.displayAttr = self.copyCats = None
+            self.settings = self.exit = None
 
-        return (("", "", "", "", "", "", ""),
-                (self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
-                 self.OnAddPoint),
-                (self.addLine, "digAddLine", Icons["digAddLine"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digAddLine"].GetLabel(), Icons["digAddLine"].GetDesc(),
-                 self.OnAddLine),
-                (self.addBoundary, "digAddBoundary", Icons["digAddBoundary"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digAddBoundary"].GetLabel(), Icons["digAddBoundary"].GetDesc(),
-                 self.OnAddBoundary),
-                (self.addCentroid, "digAddCentroid", Icons["digAddCentroid"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digAddCentroid"].GetLabel(), Icons["digAddCentroid"].GetDesc(),
-                 self.OnAddCentroid),
-                ("", "", "", "", "", "", ""),
-                (self.moveVertex, "digMoveVertex", Icons["digMoveVertex"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digMoveVertex"].GetLabel(), Icons["digMoveVertex"].GetDesc(),
-                 self.OnMoveVertex),
-                (self.addVertex, "digAddVertex", Icons["digAddVertex"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digAddVertex"].GetLabel(), Icons["digAddVertex"].GetDesc(),
-                 self.OnAddVertex),
-                (self.removeVertex, "digRemoveVertex", Icons["digRemoveVertex"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digRemoveVertex"].GetLabel(), Icons["digRemoveVertex"].GetDesc(),
-                 self.OnRemoveVertex),
-                ("", "", "", "", "", "", ""),
-                (self.splitLine, "digSplitLine", Icons["digSplitLine"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digSplitLine"].GetLabel(), Icons["digSplitLine"].GetDesc(),
-                 self.OnSplitLine),
-                (self.editLine, "digEditLine", Icons["digEditLine"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digEditLine"].GetLabel(), Icons["digEditLine"].GetDesc(),
-                 self.OnEditLine),
-                (self.moveLine, "digMoveLine", Icons["digMoveLine"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digMoveLine"].GetLabel(), Icons["digMoveLine"].GetDesc(),
-                 self.OnMoveLine),
-                (self.deleteLine, "digDeleteLine", Icons["digDeleteLine"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digDeleteLine"].GetLabel(), Icons["digDeleteLine"].GetDesc(),
-                 self.OnDeleteLine),
-                ("", "", "", "", "", "", ""),
-                (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
-                 self.OnDisplayCats),
-                (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
-                 self.OnCopyCats),
-                (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
-                 self.OnDisplayAttr),
-                (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
-                 wx.ITEM_RADIO, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
-                 self.OnSettings),
-                ("", "", "", "", "", "", ""),
-                (self.exit, "digExit", Icons["digExit"].GetBitmap(),
-                 wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
-                 self.OnExit))
+            return (("", "", "", "", "", "", ""),
+                    (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
+                     self.OnDisplayCats),
+                    (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
+                     self.OnCopyCats),
+                    (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
+                     self.OnDisplayAttr),
+                    ("", "", "", "", "", "", ""),
+                    (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
+                     wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
+                     self.OnSettings),
+                    (self.exit, "digExit", Icons["digExit"].GetBitmap(),
+                     wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
+                     self.OnExit))
+        else:
+            self.addPoint = self.addLine = self.addBoundary = self.addCentroid = None
+            self.moveVertex = self.addVertex = self.removeVertex = None
+            self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
+
+            return ((self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
+                     self.OnAddPoint),
+                    (self.addLine, "digAddLine", Icons["digAddLine"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digAddLine"].GetLabel(), Icons["digAddLine"].GetDesc(),
+                     self.OnAddLine),
+                    (self.addBoundary, "digAddBoundary", Icons["digAddBoundary"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digAddBoundary"].GetLabel(), Icons["digAddBoundary"].GetDesc(),
+                     self.OnAddBoundary),
+                    (self.addCentroid, "digAddCentroid", Icons["digAddCentroid"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digAddCentroid"].GetLabel(), Icons["digAddCentroid"].GetDesc(),
+                     self.OnAddCentroid),
+                    (self.moveVertex, "digMoveVertex", Icons["digMoveVertex"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digMoveVertex"].GetLabel(), Icons["digMoveVertex"].GetDesc(),
+                     self.OnMoveVertex),
+                    (self.addVertex, "digAddVertex", Icons["digAddVertex"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digAddVertex"].GetLabel(), Icons["digAddVertex"].GetDesc(),
+                     self.OnAddVertex),
+                    (self.removeVertex, "digRemoveVertex", Icons["digRemoveVertex"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digRemoveVertex"].GetLabel(), Icons["digRemoveVertex"].GetDesc(),
+                     self.OnRemoveVertex),
+                    (self.splitLine, "digSplitLine", Icons["digSplitLine"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digSplitLine"].GetLabel(), Icons["digSplitLine"].GetDesc(),
+                     self.OnSplitLine),
+                    (self.editLine, "digEditLine", Icons["digEditLine"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digEditLine"].GetLabel(), Icons["digEditLine"].GetDesc(),
+                     self.OnEditLine),
+                    (self.moveLine, "digMoveLine", Icons["digMoveLine"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digMoveLine"].GetLabel(), Icons["digMoveLine"].GetDesc(),
+                     self.OnMoveLine),
+                    (self.deleteLine, "digDeleteLine", Icons["digDeleteLine"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digDeleteLine"].GetLabel(), Icons["digDeleteLine"].GetDesc(),
+                     self.OnDeleteLine))
 
     def OnAddPoint(self, event):
         """Add point to the vector map layer"""
@@ -265,7 +271,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "add"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
-
+        
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
         Debug.msg (3, "DigitToolbar.OnAddBoundary()")
@@ -285,7 +291,7 @@ class DigitToolbar(AbstractToolbar):
         Quit digitization tool
         """
         # stop editing of the currently selected map layer
-        self.StopEditing()
+        self.StopEditing(self.layers[self.layerSelectedID])
 
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
@@ -321,8 +327,11 @@ class DigitToolbar(AbstractToolbar):
         pass
 
     def OnSettings(self, event):
-        pass
-
+        """Show settings dialog"""
+        settingsDialog = digit.DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
+                                                   style=wx.DEFAULT_DIALOG_STYLE)
+        settingsDialog.Show()
+        
     def OnSelectMap (self, event):
         """
         Select vector map layer for editing
@@ -355,19 +364,19 @@ class DigitToolbar(AbstractToolbar):
         except:
             return False
 
-    def StopEditing (self):
+    def StopEditing (self, layerSelected):
         """
         Unmark currently enabled map layer.
         """
-        if self.layerSelectedID:
-            Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
-                       self.layers[self.layerSelectedID].name)
-        else:
-            Debug.msg (4, "DigitToolbar.StopEditing(): layer=None")
-
-        self.layerSelectedID = None
-        self.combo.SetValue ('Select vector map')
-        # TODO
+        try:
+            if self.layers[self.layerSelectedID] == layerSelected:
+                self.layerSelectedID = None
+                Debug.msg (4, "DigitToolbar.StopEditing(): layerSelectedID=%d layer=%s" % \
+                           (self.layerSelectedID, self.layers[self.layerSelectedID].name))
+                self.combo.SetValue ('Select vector map')
+                return True
+        except:
+            return False
 
     def UpdateListOfLayers (self, updateTool=False):
         """
@@ -396,13 +405,13 @@ class DigitToolbar(AbstractToolbar):
 
             # ugly ...
             if self.comboid:
-                self.toolbar.DeleteToolByPos(0)
+                self.toolbar[0].DeleteToolByPos(0)
                 #self.combo.Destroy()
 
-            self.combo = wx.ComboBox(self.toolbar, id=wx.ID_ANY, value=value,
+            self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
                                      choices=layerNameList, size=(150, -1))
 
-            self.comboid = self.toolbar.InsertControl(0, self.combo)
-            self.toolbar.Realize()
+            self.comboid = self.toolbar[0].InsertControl(0, self.combo)
+            self.toolbar[0].Realize()
 
         return layerNameList

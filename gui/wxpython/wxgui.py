@@ -140,7 +140,7 @@ class GMFrame(wx.Frame):
 
         # do layout
         self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
-        self.SetMinSize((400, 350))
+        self.SetMinSize((500, 400))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
         # set environmental variables
@@ -194,9 +194,7 @@ class GMFrame(wx.Frame):
 
     def __createCommandInput(self):
         """Creates command input area"""
-        #l = wx.StaticText(self, -1, "GRASS> ")
-
-        self.cmdinput = wx.TextCtrl(self, id=wx.ID_ANY, value="", style=wx.HSCROLL|wx.TE_LINEWRAP|
+        self.cmdinput = wx.TextCtrl(self, id=wx.ID_ANY, value="", style=wx.HSCROLL | wx.TE_LINEWRAP |
                                     wx.TE_PROCESS_ENTER)
 
         self.cmdinput.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))

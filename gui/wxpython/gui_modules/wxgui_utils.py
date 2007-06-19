@@ -265,14 +265,18 @@ class LayerTree(CT.CustomTreeCtrl):
 
             self.popupMenu.Append(self.popupID5, text=_("Start editing"))
             self.popupMenu.Append(self.popupID6, text=_("Stop editing"))
+            self.popupMenu.Enable(self.popupID6, False)
             self.Bind (wx.EVT_MENU, self.OnStartEditing, id=self.popupID5)
             self.Bind (wx.EVT_MENU, self.OnStopEditing,  id=self.popupID6)
 
             layer = self.layers[self.layer_selected].maplayer
             # enable editing only for vector map layers available in the current mapset
-            if layer.GetMapset() != grassenv.env["MAPSET"]:
+            digit = self.mapdisplay.digittoolbar
+            if layer.GetMapset() != grassenv.env["MAPSET"] or \
+               (digit and digit.layerSelectedID != None and \
+                digit.layers[digit.layerSelectedID] == layer):
                 self.popupMenu.Enable (self.popupID5, False)
-            self.popupMenu.Enable(self.popupID6, False)
+                self.popupMenu.Enable (self.popupID6, True)
 
         # raster
         elif mltype and mltype == "raster":
@@ -326,13 +330,23 @@ class LayerTree(CT.CustomTreeCtrl):
         # mark layer as 'edited'
         self.mapdisplay.digittoolbar.StartEditing (maplayer)
 
-        # enable 'stop editing'
-        self.popupMenu.Enable (self.popupID5, False)
-        self.popupMenu.Enable (self.popupID6, True)
-        self.popupMenu.UpdateUI(self)
-
     def OnStopEditing (self, event):
-        pass
+        """
+        Stop editing the current vector map layer
+        """
+        try:
+            maplayer = self.layers[self.layer_selected].maplayer
+        except:
+            event.Skip()
+            return
+
+        if self.mapdisplay.digittoolbar: # disable the tool
+            self.mapdisplay.RemoveToolbar("digit")
+        else: # tool already enabled
+            pass
+
+        # mark layer as 'edited'
+        self.mapdisplay.digittoolbar.StopEditing (maplayer)
 
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
