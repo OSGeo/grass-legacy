@@ -224,25 +224,25 @@ Icons = {
                              desc="Left: new point"),
     "digAddVertex": MetaIcon (img=icons_img["digAddVertex"], label="Add new vertex",
                               desc="Not implemented yet"),
-    "digCopyCats": MetaIcon (img=icons_img["digCopyCats"], label="",
+    "digCopyCats": MetaIcon (img=icons_img["digCopyCats"], label="Copy categories",
                               desc="Not implemented yet"),
-    "digDeleteLine": MetaIcon (img=icons_img["digDeleteLine"], label="Add new vertex",
+    "digDeleteLine": MetaIcon (img=icons_img["digDeleteLine"], label="Delete line",
                               desc="Not implemented yet"),
-    "digDispAttr": MetaIcon (img=icons_img["digDispAttr"], label="Add new vertex",
+    "digDispAttr": MetaIcon (img=icons_img["digDispAttr"], label="Display attributes",
                               desc="Not implemented yet"),
-    "digDispCats": MetaIcon (img=icons_img["digDispCats"], label="Add new vertex",
+    "digDispCats": MetaIcon (img=icons_img["digDispCats"], label="Display categories",
                               desc="Not implemented yet"),
-    "digEditLine": MetaIcon (img=icons_img["digEditLine"], label="Add new vertex",
+    "digEditLine": MetaIcon (img=icons_img["digEditLine"], label="Edit line",
                               desc="Not implemented yet"),
-    "digMoveLine": MetaIcon (img=icons_img["digMoveLine"], label="Add new vertex",
+    "digMoveLine": MetaIcon (img=icons_img["digMoveLine"], label="Move line",
                               desc="Not implemented yet"),
-    "digMoveVertex": MetaIcon (img=icons_img["digMoveVertex"], label="Add new vertex",
+    "digMoveVertex": MetaIcon (img=icons_img["digMoveVertex"], label="Move vertex",
                               desc="Not implemented yet"),
-    "digRemoveVertex": MetaIcon (img=icons_img["digRemoveVertex"], label="Add new vertex",
+    "digRemoveVertex": MetaIcon (img=icons_img["digRemoveVertex"], label="Remove vertex",
                               desc="Not implemented yet"),
-    "digSettings": MetaIcon (img=icons_img["digSettings"], label="Add new vertex",
+    "digSettings": MetaIcon (img=icons_img["digSettings"], label="Settings",
                               desc="Not implemented yet"),
-    "digSplitLine": MetaIcon (img=icons_img["digSplitLine"], label="Add new vertex",
+    "digSplitLine": MetaIcon (img=icons_img["digSplitLine"], label="Split line",
                               desc="Not implemented yet"),
     "digExit"    : MetaIcon (img=icons_img["digExit"], label="Quit digitization tool"),
     # analyze raster
@@ -257,7 +257,6 @@ Icons = {
     "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
     "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options"),
     "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze")}
-
 
 # testing ...
 if __name__ == "__main__":

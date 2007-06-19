@@ -1334,12 +1334,15 @@ class MapFrame(wx.Frame):
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
 
-            self._mgr.AddPane(self.digittoolbar.toolbar, wx.aui.AuiPaneInfo().
-                              Name("digittoolbar").Caption("Digit Toolbar").
-                              ToolbarPane().Top().Row(1).
-                              LeftDockable(False).RightDockable(False).
-                              BottomDockable(False).TopDockable(True).
-                              CloseButton(False).Layer(2))
+            for toolRow in range(0,2):
+                self._mgr.AddPane(self.digittoolbar.toolbar[toolRow],
+                                  wx.aui.AuiPaneInfo().
+                                  Name("digittoolbar" + str(toolRow)).Caption("Digit Toolbar").
+                                  ToolbarPane().Top().Row(toolRow + 1).
+                                  LeftDockable(False).RightDockable(False).
+                                  BottomDockable(False).TopDockable(True).
+                                  CloseButton(False).Layer(2))
+            
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
             self.MapWindow.zoomtype = 0
@@ -1360,8 +1363,9 @@ class MapFrame(wx.Frame):
             return
         elif name == "digit":
             # TODO: not destroy only hide
-            self._mgr.DetachPane (self.digittoolbar.toolbar)
-            self.digittoolbar.toolbar.Destroy()
+            for toolRow in range(0,2):
+                self._mgr.DetachPane (self.digittoolbar.toolbar[toolRow])
+                self.digittoolbar.toolbar[toolRow].Destroy()
             self.digittoolbar = None
 
         self.maptoolbar.combo.SetValue ("");
