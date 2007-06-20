@@ -53,6 +53,7 @@ import menuform
 import select
 import disp_print
 import cmd
+import dbm
 import defaultfont as defaultfont
 import histogram as histogram
 import profile as profile
@@ -700,6 +701,10 @@ class BufferedWindow(wx.Window):
                         Digit.AddPoint(map=map,
                                        type=digit.type,
                                        x=east, y=north)
+
+                        # add new record into atribute table
+                        if dbm.UpdateRecordDialog(parent=self, map=map, layer=1).ShowModal() == wx.ID_OK:
+                            pass
 
                         self.render=True
                         self.UpdateMap() # redraw map

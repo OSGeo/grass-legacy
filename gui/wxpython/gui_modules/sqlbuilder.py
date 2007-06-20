@@ -10,9 +10,9 @@ import os,sys
 import time
 
 import grassenv
-import images
-imagepath = images.__path__[0]
-sys.path.append(imagepath)
+#import images
+#imagepath = images.__path__[0]
+#sys.path.append(imagepath)
 
 
 class SQLFrame(wx.Frame):
