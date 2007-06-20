@@ -23,18 +23,18 @@
 
 #%flag
 #%  key: r
-#%  description: use regular expression instead of wildcard
+#%  description: Use regular expression instead of wildcard
 #%end
 
 #%flag
 #%  key: f
-#%  description: force removal (required for actual deletion of files)
+#%  description: Force removal (required for actual deletion of files)
 #%end
 
 #%option
 #% key: rast
 #% type: string
-#% description: raster to remove
+#% description: Raster to remove
 #% gisprompt: old,cell,raster
 #% required : no
 #%end
@@ -50,7 +50,7 @@
 #%option
 #% key: vect
 #% type: string
-#% description: vector to remove
+#% description: Vector to remove
 #% gisprompt: old,vector,vector
 #% required : no
 #%end
@@ -58,21 +58,21 @@
 #%option
 #% key: region
 #% type: string
-#% description: region to remove
+#% description: Region to remove
 #% required : no
 #%end
 
 #%option
 #% key: icon
 #% type: string
-#% description: icon to remove
+#% description: Icon to remove
 #% required : no
 #%end
 
 #%option
 #% key: label
 #% type: string
-#% description: label to remove
+#% description: Label to remove
 #% required : no
 #%end
 
@@ -86,7 +86,7 @@
 #%option
 #% key: group
 #% type: string
-#% description: group to remove
+#% description: Group to remove
 #% required : no
 #%end
 
