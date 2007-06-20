@@ -15,7 +15,7 @@ PURPOSE: Digitization tool wxPython GUI prototype
           (2) Reimplentation of v.digit (VDigit)
 
 AUTHORS: The GRASS Development Team
-         Martin Landa
+         Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -27,6 +27,7 @@ import wx
 import wx.lib.colourselect as csel
 
 import cmd
+import dbm
 from debug import Debug as Debug
 
 class Digit:
@@ -91,7 +92,7 @@ class VEdit(Digit):
 
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
-        
+
 class VDigit(Digit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -171,11 +172,16 @@ class DigitSettingsDialog(wx.Dialog):
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Settings"))
 
-        sizer = wx.BoxSizer(wx.VERTICAL)
+        border = wx.BoxSizer(wx.VERTICAL)
         
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Display"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        #
+        # display section
+        #
         flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-
         for label, defaultValue in self.__SettingsData():
             textLabel = wx.StaticText(parent=panel, id=wx.ID_ANY, label=label)
             value = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, value=defaultValue, min=1, max=1e6)
@@ -184,10 +190,33 @@ class DigitSettingsDialog(wx.Dialog):
             flexSizer.Add(textLabel, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL)
             flexSizer.Add(value, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
             flexSizer.Add(units, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
-        
-        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=10)
-        
-        panel.SetSizer(sizer)
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=10)
+
+        #
+        # attributes
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new feature"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        # checkbox
+        addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Add new record into table"))
+        sizer.Add(item=addRecord, proportion=0, flag=wx.ALL, border=5)
+        # settings
+        flexSizer = wx.FlexGridSizer(cols=2, hgap=3, vgap=3)
+        settings = ((_("Layer"), 1), (_("Category"), 1), (_("Mode"), _("Next to use")))
+        for label, value in settings:
+            text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=label)
+            if label is not "Mode":
+                value = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=str(value)) # TODO: validator
+            else:
+                value = wx.Choice(parent=panel, id=wx.ID_ANY, choices=[_("Next to use"), _("Manual entry"), _("No category")])
+            flexSizer.Add(item=text, proportion=0, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
+            flexSizer.Add(item=value, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+            
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=10)
+
+        panel.SetSizer(border)
         
         return panel
 

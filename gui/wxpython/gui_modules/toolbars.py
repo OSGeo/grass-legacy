@@ -291,8 +291,11 @@ class DigitToolbar(AbstractToolbar):
         Quit digitization tool
         """
         # stop editing of the currently selected map layer
-        self.StopEditing(self.layers[self.layerSelectedID])
-
+        try:
+            self.StopEditing(self.layers[self.layerSelectedID])
+        except:
+            pass
+        
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 

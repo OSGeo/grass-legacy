@@ -12,11 +12,11 @@ PURPOSE:   GRASS attribute table manager
            Tutorial' on wxPython WIKI pages.
 
            It also uses some functions at
-            http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
+           http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
 
-           dbm.py vectorm@mapset
+           dbm.py vector@mapset
 
-AUTHOR(S): GRASS Development Tean
+AUTHOR(S): GRASS Development Team
            Original author: Jachym Cepicky <jachym.cepicky gmail.com>
            Martin Landa <landa.martin gmail.com>
 
@@ -38,13 +38,12 @@ import cmd
 try:
     import subprocess
 except:
-    gmpath = os.getenv("GISBASE") + "/etc/wx"
+    gmpath = os.path.join(os.getenv("GISBASE"), "etc/wx")
     sys.path.append(gmpath)
     from compat import subprocess
 
 class Log:
     """
-    Needed by the wxdemos.
     The log output is redirected to the status bar of the containing frame.
     """
     def __init__(self,parent):
@@ -94,8 +93,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             self.mapdisp = self.parent.gismgr.curr_page.maptree.mapdisplay
             self.map     = self.parent.gismgr.curr_page.maptree.Map
 
-
-        #building the columns
+        # building the columns
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
         dbDescribe = cmd.Command (cmd = ["db.describe", "-c",
@@ -163,16 +161,16 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
         # prepare command string
         cmdv = ["db.select", "-c",
-    "table=%s" % self.parent.tablename,
-    "database=%s" % self.parent.database,
-    "driver=%s" % self.parent.driver]
+                "table=%s" % self.parent.tablename,
+                "database=%s" % self.parent.database,
+                "driver=%s" % self.parent.driver]
 
         if where:
             self.ClearAll()
             cmdv = ["db.select", "-c",
-        "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
-        "database=%s" % self.parent.database,
-        "driver=%s" % self.parent.driver]
+                    "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
+                    "database=%s" % self.parent.database,
+                    "driver=%s" % self.parent.driver]
 
         # run command
         vDbSelect = cmd.Command (cmd=cmdv)
@@ -203,11 +201,12 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
             i += 1
             if i >= 32000:
-                self.log.write("Can display only 32000 lines")
+                self.log.write(_("Can display only 32000 lines"))
                 break
 
     def OnCloseWindow(self, event):
-        if self.qlayer: self.map.delLayer(item='qlayer')
+        if self.qlayer:
+            self.map.delLayer(item='qlayer')
 
     def OnColClick(self,event):
         self._col = event.GetColumn()
@@ -292,52 +291,52 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         event.Skip()
 
 
-    #---------------------------------------------------
-    # These methods are callbacks for implementing the
-    # "virtualness" of the list...
-
-    # def OnGetItemText(self, item, col):
-    #     index=self.itemIndexMap[item]
-    #     s = self.itemDataMap[index][col]
-    #     return s
-
-    # def OnGetItemImage(self, item):
-    #     index=self.itemIndexMap[item]
-    #     if ( index % 2) == 0:
-
+        # ---------------------------------------------------
+        # These methods are callbacks for implementing the
+        # "virtualness" of the list...
+        
+        # def OnGetItemText(self, item, col):
+        #     index=self.itemIndexMap[item]
+        #     s = self.itemDataMap[index][col]
+        #     return s
+        
+        # def OnGetItemImage(self, item):
+        #     index=self.itemIndexMap[item]
+        #     if ( index % 2) == 0:
+        
     def OnGetItemAttr(self, item):
         index=self.itemIndexMap[item]
 
         return self.attr2
-        #if ( index % 2) == 0:
+        # if ( index % 2) == 0:
         #    return self.attr2
-        #else:
+        # else:
         #    return self.attr1
 
-    #---------------------------------------------------
-    # Matt C, 2006/02/22
-    # Here's a better SortItems() method --
-    # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
-    # and it knows to sort on another column if the chosen columns have the same value.
-
-    # def SortItems(self,sorter=cmp):
-    #     items = list(self.itemDataMap.keys())
-    #     # for i in range(len(items)):
-    #     #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
-    #     items.sort(self.Sorter)
-    #     #items.sort(sorter)
-    #     # for i in range(len(items)):
-    #     #     items[i] =  str(items[i])
-    #     self.itemIndexMap = items
-
-    #     # redraw the list
-    #     self.Refresh()
-
-    # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+        # ---------------------------------------------------
+        # Matt C, 2006/02/22
+        # Here's a better SortItems() method --
+        # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
+        # and it knows to sort on another column if the chosen columns have the same value.
+        
+        # def SortItems(self,sorter=cmp):
+        #     items = list(self.itemDataMap.keys())
+        #     # for i in range(len(items)):
+        #     #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
+        #     items.sort(self.Sorter)
+        #     #items.sort(sorter)
+        #     # for i in range(len(items)):
+        #     #     items[i] =  str(items[i])
+        #     self.itemIndexMap = items
+        
+        #     # redraw the list
+        #     self.Refresh()
+        
+        # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetListCtrl(self):
         return self
 
-    # # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
+    # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
     # def Sorter(self, key1,key2):
     #     col = self._col
     #     ascending = self._colSortFlag[col]
@@ -374,8 +373,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
     def GetSortImages(self):
         return (self.sm_dn, self.sm_up)
 
-    #XXX Looks okay to remove this one (was present in the original demo)
-    #def getColumnText(self, index, col):
+    # XXX Looks okay to remove this one (was present in the original demo)
+    # def getColumnText(self, index, col):
     #    item = self.GetItem(index, col)
     #    return item.GetText()
 
@@ -410,76 +409,71 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                 self.Select(idx,False)
 
 
-#        try:
-#            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-#            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
-##            self.cmd_output.write(cmd+"\n----------\n")
-#            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-#
-#            oline = p.stderr.readline()
-#            while oline:
-#                oline = oline.strip()
-#                oline = p.stderr.readline()
-#                if oline.find("GRASS_INFO_MESSAGE")>-1:
-#                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
-#                elif oline.find("GRASS_INFO_WARNING")>-1:
-#                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
-#                elif oline.find("GRASS_INFO_ERROR")>-1:
-#                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
-#
-#            oline = p.stdout.readline()
-#            while oline:
-#                oline = oline.strip()
-##                self.cmd_output.write(oline+"\n")
-#                print oline+"\n"
-#                print >> sys.stderr, oline
-#                oline = p.stdout.readline()
-#
-#            if p.stdout < 0:
-#                print >> sys.stderr, "Child was terminated by signal", p.stdout
-#            elif p.stdout > 0:
-#                print >> sys.stderr, p.stdout
-#                pass
-#        except OSError, e:
-#            print >> sys.stderr, "Execution failed:", e
+                #        try:
+                #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+                #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+                #            self.cmd_output.write(cmd+"\n----------\n")
+                #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                #
+                #            oline = p.stderr.readline()
+                #            while oline:
+                #                oline = oline.strip()
+                #                oline = p.stderr.readline()
+                #                if oline.find("GRASS_INFO_MESSAGE")>-1:
+                #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+                #                elif oline.find("GRASS_INFO_WARNING")>-1:
+                #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+                #                elif oline.find("GRASS_INFO_ERROR")>-1:
+                #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+                #
+                #            oline = p.stdout.readline()
+                #            while oline:
+                #                oline = oline.strip()
+                #                self.cmd_output.write(oline+"\n")
+                #                print oline+"\n"
+                #                print >> sys.stderr, oline
+                #                oline = p.stdout.readline()
+                #
+                #            if p.stdout < 0:
+                #                print >> sys.stderr, "Child was terminated by signal", p.stdout
+                #            elif p.stdout > 0:
+                #                print >> sys.stderr, p.stdout
+                #                pass
+                #        except OSError, e:
+                #            print >> sys.stderr, "Execution failed:", e
 
-
-
-
-
-
-#        try:
-#            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-#            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
-##            self.cmd_output.write(cmd+"\n----------\n")
-#            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-#
-#            oline = p.stderr.readline()
-#            while oline:
-#                oline = oline.strip()
-#                oline = p.stderr.readline()
-#                if oline.find("GRASS_INFO_MESSAGE")>-1:
-#                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
-#                elif oline.find("GRASS_INFO_WARNING")>-1:
-#                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
-#                elif oline.find("GRASS_INFO_ERROR")>-1:
-#                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
-#
-#            oline = p.stdout.readline()
-#            while oline:
-#                oline = oline.strip()
-##                self.cmd_output.write(oline+"\n")
-#                print oline+"\n"
-#                print >> sys.stderr, oline
-#                oline = p.stdout.readline()
-#
-#            if p.stdout < 0:
-#                print >> sys.stderr, "Child was terminated by signal", p.stdout
-#            elif p.stdout > 0:
-#                print >> sys.stderr, p.stdout
-#                pass
-#        except OSError, e:
-#            print >> sys.stderr, "Execution failed:", e
+                #        try:
+                #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+                #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+                #            self.cmd_output.write(cmd+"\n----------\n")
+                #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                #
+                #            oline = p.stderr.readline()
+                #            while oline:
+                #                oline = oline.strip()
+                #                oline = p.stderr.readline()
+                #                if oline.find("GRASS_INFO_MESSAGE")>-1:
+                #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+                #                elif oline.find("GRASS_INFO_WARNING")>-1:
+                #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+                #                elif oline.find("GRASS_INFO_ERROR")>-1:
+                #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+                #
+                #            oline = p.stdout.readline()
+                #            while oline:
+                #                oline = oline.strip()
+                #                self.cmd_output.write(oline+"\n")
+                #                print oline+"\n"
+                #                print >> sys.stderr, oline
+                #                oline = p.stdout.readline()
+                #
+                #            if p.stdout < 0:
+                #                print >> sys.stderr, "Child was terminated by signal", p.stdout
+                #            elif p.stdout > 0:
+                #                print >> sys.stderr, p.stdout
+                #                pass
+                #        except OSError, e:
+                #            print >> sys.stderr, "Execution failed:", e
 
 class AttributeManager(wx.Frame):
     """
@@ -590,6 +584,86 @@ class AttributeManager(wx.Frame):
         pagesizer.Fit(self)
         self.Layout()
 
+class UpdateRecordDialog(wx.Dialog):
+    """
+    Standard dialog used for adding new record into the attribute table
+    """
+    def __init__(self, parent, map, layer=1, cat=1, title=_("Add new record into table"), style=wx.DEFAULT_DIALOG_STYLE):
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+
+        # dialog body
+        flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
+        flexSizer.AddGrowableCol(0)
+
+        selectCommand = cmd.Command(cmd=["v.db.select", "-c",
+                                         "map=%s" % map, "layer=%d" % layer,
+                                         "where=cat=%d" % cat, "--q"])
+
+        if selectCommand.returncode == 0:
+            values = []
+            valueString = selectCommand.module_stdout.readline().replace("\n", "")
+            for value in valueString.split('|'):
+                values.append (value)
+            values.reverse() # reverse list because of calling 'pop'
+        else:
+            values = None
+        
+            
+        columnsCommand = cmd.Command (cmd=["v.info", "-c",
+                                           "map=%s" % map, "layer=%d" % layer, "--q"])
+
+
+        # determine column names and types
+        columns = []
+        if columnsCommand.returncode == 0:
+            while True:
+                columnDef = columnsCommand.module_stdout.readline() # type|name
+                if not columnDef:
+                    break
+                columnType, columnName = columnDef.replace("\n","").split('|')
+                columns.append ((columnName, columnType))
+        else:
+            pass
+
+        for name, type in columns:
+            colName = wx.StaticText(parent=self, id=wx.ID_ANY, label=name)
+            colType = wx.StaticText(parent=self, id=wx.ID_ANY, label="[" + type + "]")
+            delimiter = wx.StaticText(parent=self, id=wx.ID_ANY, label=":")
+            if name == "cat":
+                colValue = wx.StaticText(parent=self, id=wx.ID_ANY, label=values.pop())
+            else:
+                colValue = wx.TextCtrl(parent=self, id=wx.ID_ANY, value=values.pop(), size=(250, -1)) # TODO: validator
+                
+            flexSizer.Add(colName, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+            flexSizer.Add(colType, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+            flexSizer.Add(delimiter, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+            flexSizer.Add(colValue, proportion=0, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
+
+        # buttons
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnOk = wx.Button(self, wx.ID_OK, _("OK") )
+        btnOk.SetDefault()
+
+        # bindigs
+        #btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        #btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
+
+        # sizers
+        border = wx.BoxSizer(wx.VERTICAL)
+        border.Add(item=flexSizer, proportion=1, flag=wx.ALL, border=5)
+        
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(btnCancel)
+        btnSizer.AddButton(btnOk)
+        btnSizer.Realize()
+        
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        mainSizer.Add(item=border, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+        
 def main(argv=None):
     if argv is None:
         argv = sys.argv
@@ -607,7 +681,7 @@ def main(argv=None):
     #wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
-    f = AttributeManager(parent=None, id=wx.ID_ANY, title="GRASS Attribute Table Manager", size=(700,600), vectmap=argv[1])
+    f = AttributeManager(parent=None, id=wx.ID_ANY, title=_("GRASS Attribute Table Manager"), size=(700,600), vectmap=argv[1])
     app.MainLoop()
 
 if __name__ == '__main__':
