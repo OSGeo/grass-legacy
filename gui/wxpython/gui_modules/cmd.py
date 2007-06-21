@@ -17,21 +17,24 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
+# use Popen class or os.popen3 method
+usePopenClass = True
+
 import os, sys
 import wx
-
-from debug import Debug as Debug
-
-usePopenClass = True
 
 try:
    import subprocess
 except:
-   CompatPath = os.getenv("GISBASE") + "/etc/wx"
+   CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
    sys.path.append(CompatPath)
-   from compat import subprocess as subprocess
+   import subprocess
+
+GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(GuiModulePath)
 
 import grassenv
+from debug import Debug as Debug
 
 class EndOfCommand(Exception):
     """
@@ -118,20 +121,23 @@ class Command:
                   print >> sys.stderr, msg[1]
 
                if dlgMsg == "gui":
-                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % \
-                                            ' '.join(self.cmd), _("Error"),
-                                         wx.OK | wx.ICON_ERROR)
+                  dlg = wx.MessageDialog(None, _("Execution failed: '%s'") % (' '.join(self.cmd)),
+                                         _("Error"), wx.OK | wx.ICON_ERROR)
                   dlg.ShowModal()
                   dlg.Destroy()
                else: # otherwise 'txt'
-                  print >> sys.stderr, _("Execution failed: '%s'") % self.cmd
+                  print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
 
 
         else:
             self.returncode = None
 
-        Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % \
-                      (self.cmd, wait, self.returncode))
+        if self.returncode is not None:
+           Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % \
+                      (' '.join(self.cmd), wait, self.returncode))
+        else:
+           Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=?" % \
+                      (' '.join(self.cmd), wait))
 
     def Run(self, verbose=False):
         """
@@ -163,7 +169,7 @@ if __name__ == "__main__":
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
 
-    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True)
+    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, dlgMsg='txt')
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -184,7 +190,7 @@ if __name__ == "__main__":
     cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
-                  wait=True)
+                  wait=True, dlgMsg='txt')
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -197,7 +203,7 @@ if __name__ == "__main__":
     # returncode will be None
     print "Running d.vect tmp..."
 
-    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False)
+    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, dlgMsg='txt')
 
     if cmd.returncode == None:
         print "RUNNING"
