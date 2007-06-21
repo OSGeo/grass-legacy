@@ -168,7 +168,7 @@ main (int argc, char *argv[])
 
     formats_flag = G_define_flag ();
     formats_flag->key  	      = 'f';
-    formats_flag->description = _("List available formats and exit");
+    formats_flag->description = _("List supported formats and exit");
 
     /* if using -c, you lose topological information ! */
     no_clean_flag = G_define_flag ();
@@ -224,7 +224,7 @@ main (int argc, char *argv[])
     /* list supported formats */
     if(formats_flag->answer) {
 	int iDriver;
-	fprintf(stdout, "Available OGR Drivers:\n" );
+	fprintf(stdout, _("Available OGR Drivers:\n") );
 
 	for(iDriver = 0; iDriver < OGRGetDriverCount(); iDriver++) {
 	    OGRSFDriverH poDriver = OGRGetDriver(iDriver);

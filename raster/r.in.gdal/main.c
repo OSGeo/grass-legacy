@@ -117,7 +117,7 @@ int main (int argc, char *argv[])
 
     flag_f = G_define_flag();
     flag_f->key = 'f';
-    flag_f->description = _("List supported formats then exit");
+    flag_f->description = _("List supported formats and exit");
 
     flag_k = G_define_flag();
     flag_k->key = 'k';
