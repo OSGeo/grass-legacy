@@ -3,15 +3,6 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2006, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 #
 msgid ""
 msgstr ""
@@ -4872,7 +4863,7 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:211
 msgid "Select an existing project location and mapset\n"
-msgstr "Seleciona a projeção de um mapset e locação existente\n"
+msgstr "Seleciona a localização do projeto e mapset existente\n"
 
 #: ../lib/init/gis_set.tcl:212
 msgid "or define a new location\n"
@@ -4891,7 +4882,7 @@ msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
 msgstr ""
-"Projeção da locação\n"
+"Localizaç?o do Projeto\n"
 "(projeção/sistema de coordenadas)"
 
 #: ../lib/init/gis_set.tcl:311
