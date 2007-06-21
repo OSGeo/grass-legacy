@@ -5,7 +5,8 @@ CLASSES:
     * Log
     * VirtualAttributeList
     * AttributeManager
-
+    * UpdateRecordDialog
+    
 PURPOSE:   GRASS attribute table manager
 
            This program is based on FileHunter, published in 'The wxPython Linux
@@ -591,10 +592,7 @@ class UpdateRecordDialog(wx.Dialog):
     def __init__(self, parent, map, layer=1, cat=1, title=_("Add new record into table"), style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
 
-        # dialog body
-        flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
-        flexSizer.AddGrowableCol(0)
-
+        # select values
         selectCommand = cmd.Command(cmd=["v.db.select", "-c",
                                          "map=%s" % map, "layer=%d" % layer,
                                          "where=cat=%d" % cat, "--q"])
@@ -608,12 +606,12 @@ class UpdateRecordDialog(wx.Dialog):
         else:
             values = None
         
+
             
+        # determine column names and types
         columnsCommand = cmd.Command (cmd=["v.info", "-c",
                                            "map=%s" % map, "layer=%d" % layer, "--q"])
 
-
-        # determine column names and types
         columns = []
         if columnsCommand.returncode == 0:
             while True:
@@ -625,9 +623,16 @@ class UpdateRecordDialog(wx.Dialog):
         else:
             pass
 
+        # dialog body
+        border = wx.BoxSizer(wx.VERTICAL)
+        box = wx.StaticBox (parent=self, id=wx.ID_ANY, label=" %s " % _("Attributes"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
+        flexSizer.AddGrowableCol(0)
+
         for name, type in columns:
             colName = wx.StaticText(parent=self, id=wx.ID_ANY, label=name)
-            colType = wx.StaticText(parent=self, id=wx.ID_ANY, label="[" + type + "]")
+            colType = wx.StaticText(parent=self, id=wx.ID_ANY, label="[" + type.lower() + "]")
             delimiter = wx.StaticText(parent=self, id=wx.ID_ANY, label=":")
             if name == "cat":
                 colValue = wx.StaticText(parent=self, id=wx.ID_ANY, label=values.pop())
@@ -649,8 +654,8 @@ class UpdateRecordDialog(wx.Dialog):
         #btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
 
         # sizers
-        border = wx.BoxSizer(wx.VERTICAL)
-        border.Add(item=flexSizer, proportion=1, flag=wx.ALL, border=5)
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)

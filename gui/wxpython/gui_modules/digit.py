@@ -34,15 +34,43 @@ class Digit:
     """
     Abstract digitization class
     """
-    def __init__(self):
-        pass
-
+    def __init__(self, settings=None):
+        if not settings:
+            self.settings = {}
+            # symbology
+            self.settings["symbolBackground"] = (None, "white") # enabled, color
+            self.settings["symbolHighlight"] = (None, "yellow")
+            self.settings["symbolPoint"] = (True, "black")
+            self.settings["symbolLine"] = (True, "black")
+            self.settings["symbolBoundaryNo"] = (True, "grey")
+            self.settings["symbolBoundaryOne"] = (True, "orange")
+            self.settings["symbolBoundaryTwo"] = (True, "green")
+            self.settings["symbolCentroidIn"] = (True, "blue")
+            self.settings["symbolCentroidOut"] = (True, "brown")
+            self.settings["symbolCentroidDup"] = (True, "violet")
+            self.settings["symbolNodeOne"] = (True, "red")
+            self.settings["symbolNodeTwo"] = (True, "dark green")
+            
+            # display
+            self.settings["snapping"] = (10, "screen pixels") # value, unit
+            self.settings["lineWidth"] = (2, "screen pixels")
+            # digitize new record
+            self.settings["addRecord"] = True
+            self.settings["layer"] = 1
+            self.settings["category"] = 1
+            self.settings["categoryMode"] = "Next to use"
+        else:
+            self.settings = settings
+        
 class VEdit(Digit):
     """
     Prototype of digitization class based on v.edit command
 
     Note: This should be replaced by VDigit class.
     """
+    def __init__(self, settings=None):
+        Digit.__init__(self, settings)
+    
     def AddPoint (self, map, type, x, y, z=None):
         """
         Add point/centroid to the vector map layer
@@ -108,6 +136,8 @@ class DigitSettingsDialog(wx.Dialog):
     def __init__(self, parent, title, style):
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
 
+        self.parent = parent # mapdisplay.BufferedWindow class instance
+        
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
         self.__CreateSymbologyPage(notebook)
@@ -120,8 +150,8 @@ class DigitSettingsDialog(wx.Dialog):
         btnOk.SetDefault()
 
         # bindigs
-        #btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        #btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
@@ -147,16 +177,21 @@ class DigitSettingsDialog(wx.Dialog):
         
         flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        
-        for label, isCheckbox, color in self.__SymbologyData():
+
+        self.symbology = {}
+        for label, key in self.__SymbologyData():
             textLabel = wx.StaticText(panel, wx.ID_ANY, label)
-            if isCheckbox:
+            color = csel.ColourSelect(panel, id=wx.ID_ANY, colour=Digit.settings[key][1], size=(25, 25))
+            isEnabled = Digit.settings[key][0]
+            if isEnabled is not None:
                 enabled = wx.CheckBox(panel, id=wx.ID_ANY, label="")
+                enabled.SetValue(isEnabled)
+                self.symbology[key] = (enabled, color)
             else:
                 enabled = (1, 1)
-            color = csel.ColourSelect(panel, id=wx.ID_ANY, colour=color, size=(25, 25))
+                self.symbology[key] = (None, color)
             
-            flexSizer.Add(textLabel, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+            flexSizer.Add(textLabel, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
             flexSizer.Add(enabled, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
             flexSizer.Add(color, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
@@ -174,24 +209,36 @@ class DigitSettingsDialog(wx.Dialog):
 
         border = wx.BoxSizer(wx.VERTICAL)
         
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Display"))
-        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-
         #
         # display section
         #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Display"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        for label, defaultValue in self.__SettingsData():
-            textLabel = wx.StaticText(parent=panel, id=wx.ID_ANY, label=label)
-            value = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, value=defaultValue, min=1, max=1e6)
-            units = wx.Choice(parent=panel, id=wx.ID_ANY, choices=["screen pixels", "map units"])
-            
-            flexSizer.Add(textLabel, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL)
-            flexSizer.Add(value, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
-            flexSizer.Add(units, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
-        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=10)
+        # snapping
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
+        self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                         value=str(Digit.settings["snapping"][0]), min=1, max=1e6)
+        self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                         choices=["screen pixels", "map units"])
+        self.snappingUnit.SetValue(Digit.settings["snapping"][1])
+        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        # line width
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width"))
+        self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                          value=str(Digit.settings["lineWidth"][0]), min=1, max=1e6)
+        self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                         choices=["screen pixels", "map units"])
+        self.lineWidthUnit.SetValue(Digit.settings["lineWidth"][1])
+        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.lineWidthValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(self.lineWidthUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
 
         #
         # attributes
@@ -199,23 +246,47 @@ class DigitSettingsDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new feature"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         # checkbox
-        addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Add new record into table"))
-        sizer.Add(item=addRecord, proportion=0, flag=wx.ALL, border=5)
+        self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Add new record into table"))
+        self.addRecord.SetValue(Digit.settings["addRecord"])
+        sizer.Add(item=self.addRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         # settings
         flexSizer = wx.FlexGridSizer(cols=2, hgap=3, vgap=3)
+        flexSizer.AddGrowableCol(0)
         settings = ((_("Layer"), 1), (_("Category"), 1), (_("Mode"), _("Next to use")))
-        for label, value in settings:
-            text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=label)
-            if label is not "Mode":
-                value = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=str(value)) # TODO: validator
-            else:
-                value = wx.Choice(parent=panel, id=wx.ID_ANY, choices=[_("Next to use"), _("Manual entry"), _("No category")])
-            flexSizer.Add(item=text, proportion=0, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
-            flexSizer.Add(item=value, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-            
-        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
-        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=10)
+        # layer
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
+        self.layer = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                 value=str(Digit.settings["layer"])) # TODO: validator
+        if not self.addRecord.IsChecked():
+            self.layer.Enable(False)
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.layer, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        # category number
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
+        self.category = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                    value=str(Digit.settings["category"])) # TODO: validator
+        if Digit.settings["categoryMode"] != "Manual entry" or not self.addRecord.IsChecked():
+            self.category.SetEditable(False)
+            self.category.Enable(False)
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.category, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        # category mode
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
+        self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY, style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
+                                        choices=[_("Next to use"), _("Manual entry"), _("No category")])
+        self.categoryMode.SetValue(Digit.settings["categoryMode"])
+        if not self.addRecord.IsChecked():
+            self.categoryMode.Enable(False)
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.categoryMode, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
 
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+
+        # bindings
+        self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
+        self.Bind(wx.EVT_COMBOBOX, self.OnChangeCategoryMode, self.categoryMode)
+        
         panel.SetSizer(border)
         
         return panel
@@ -226,35 +297,77 @@ class DigitSettingsDialog(wx.Dialog):
 
         label | checkbox | color
         """
-        
-        return (
-            ("Background", False, "white"),
-            ("Highlight", False, "yellow"),
-            ("Point", True, "black"),
-            ("Line", True, "black"),
-            ("Boundary (no area)", True, "grey"),
-            ("Boundary (one area)", True, "orange"),
-            ("Boundary (two areas)", True, "green"),
-            ("Centroid (in area)", True, "blue"),
-            ("Centroid (outside area)", True, "brown"),
-            ("Centroid (duplicate in area)", True, "violet"),
-            ("Node (one line)", True, "red"),
-            ("Node (two lines)", True, "dark green"))
-
-    def __SettingsData(self):
-        """
-        Data for __CreateSettingsPage()
-
-        label | checkbox | default value
-        """
 
         return (
-            (_("Snapping threshold"), "10"),
-            (_("Line width"), "2")
-            )
+            ("Background", "symbolBackground"),
+            ("Highlight", "symbolHighlight"),
+            ("Point", "symbolPoint"),
+            ("Line", "symbolLine"),
+            ("Boundary (no area)", "symbolBoundaryNo"),
+            ("Boundary (one area)", "symbolBoundaryOne"),
+            ("Boundary (two areas)", "symbolBoundaryTwo"),
+            ("Centroid (in area)", "symbolCentroidIn"),
+            ("Centroid (outside area)", "symbolCentroidOut"),
+            ("Centroid (duplicate in area)", "symbolCentroidDup"),
+            ("Node (one line)", "symbolNodeOne"),
+            ("Node (two lines)", "symbolNodeTwo"))
+
+    def OnChangeCategoryMode(self, event):
+        """Change category mode"""
+
+        mode = event.GetString()
+        if mode == "Manual entry": # enable
+            self.category.Enable(True)
+            self.category.SetEditable(True)
+        elif self.category.IsEnabled(): # disable
+            self.category.SetEditable(False)
+            self.category.Enable(False)
+
+    def OnChangeAddRecord(self, event):
+        """Checkbox 'Add new record' status changed"""
+        if not event.IsChecked():
+            status = False
+        else:
+            status = True
+            
+        self.layer.Enable(status)
+        if status == False:
+            self.category.Enable(status)
+        elif status == True and self.categoryMode.GetCurrentSelection() == 1:
+            self.category.Enable(status)
+        self.categoryMode.Enable(status)
+
+    def OnOK(self, event):
+        """Button 'OK' clicked"""
+        self.UpdateSettings()
+        self.Close()
+
+    def OnApply(self, event):
+        """Button 'Apply' clicked"""
+        self.UpdateSettings()
+
+    def UpdateSettings(self):
+        """Update Digit.settings"""
+        try:
+            # symbology
+            for key, (enabled, color) in self.symbology.iteritems():
+                if enabled:
+                    Digit.settings[key] = (enabled.IsChecked(), color.GetColour())
+                else:
+                    Digit.settings[key] = (None, color.GetColour())
+            # display
+            Digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
+                                          self.snappingUnit.GetValue()) # unit
+            Digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
+                                           self.lineWidthUnit.GetValue())
+            # digitize new feature
+            Digit.settings["addRecord"] = self.addRecord.IsChecked()
+            Digit.settings["layer"] = int(self.layer.GetValue())
+            Digit.settings["category"] = int(self.category.GetValue())
+            Digit.settings["categoryMode"] = self.categoryMode.GetValue()
+        except:
+            pass
     
-
-
 ##############################
 # digitization class instance
 ##############################

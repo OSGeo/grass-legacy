@@ -354,7 +354,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def RenameLayer (self, event):
         """Rename layer"""
-        pass
+        self.EditLabel(self.layer_selected)
 
     def AddLayer(self, ltype):
         """Add layer, create MapLayer instance"""
