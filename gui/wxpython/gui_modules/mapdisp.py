@@ -251,7 +251,7 @@ class BufferedWindow(wx.Window):
             pdc.EndDrawing()
             return
 
-        if pdctype == 'image':
+        if pdctype == 'image': # draw selected image
             bitmap = wx.BitmapFromImage(img)
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
@@ -298,15 +298,15 @@ class BufferedWindow(wx.Window):
                 pdc.SetIdBounds(drawid,(x1,y1,x2,y2))
                 self.ovlcoords[drawid] = [x1,y1,x2,y2]
 
-        elif pdctype == 'point': #draw point
-            pen = self.RandomPen()
-            pdc.SetPen(pen)
+        elif pdctype == 'point': # draw point
+            ## pen = self.RandomPen()
+            pdc.SetPen(self.pen)
             pdc.DrawPoint(coords[0], coords[1])
-            coords[0] = coords[0] - 5
-            coords[1] = coords[1] - 5
-            coords[2] = coords[0] + 5
-            coords[3] = coords[1] + 5
-            pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
+            coordsBound = (coords[0] - 5,
+                           coords[1] - 5,
+                           coords[0] + 5,
+                           coords[1] + 5)
+            pdc.SetIdBounds(drawid, coordsBound)
             self.ovlcoords[drawid] = coords
 
         elif pdctype == 'text': # draw text on top of map
@@ -581,7 +581,7 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.DrawLines(): coords=%s" % \
                        self.polycoords)
 
-        self.plineid = wx.ID_NEW+1
+        self.plineid = wx.ID_NEW + 1
         if len(self.polycoords) > 0:
             self.Draw(self.pdc, drawid=self.plineid, pdctype='polyline', coords=self.polycoords)
 
@@ -695,13 +695,13 @@ class BufferedWindow(wx.Window):
                 if map:
                     if digit.type in ["point", "centroid"]:
                         # add new point
+                        self.mouse['begin'] = event.GetPositionTuple()[:]
+                        self.Draw(self.pdc, drawid=self.lineid, pdctype='point', coords=self.mouse['begin'])
                         east, north = self.Pixel2Cell(event.GetPositionTuple()[0],
                                                       event.GetPositionTuple()[1])
-
                         Digit.AddPoint(map=map,
                                        type=digit.type,
                                        x=east, y=north)
-
                         # add new record into atribute table
                         if dbm.UpdateRecordDialog(parent=self, map=map, layer=1).ShowModal() == wx.ID_OK:
                             pass
