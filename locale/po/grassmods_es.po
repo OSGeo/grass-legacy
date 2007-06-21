@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-18 20:42+0200\n"
-"PO-Revision-Date: 2007-06-18 20:48+0200\n"
+"POT-Creation-Date: 2007-06-21 23:37+0200\n"
+"PO-Revision-Date: 2007-06-21 23:40+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -4753,7 +4753,7 @@ msgstr "nombre completo=%s\n"
 #: ../imagery/i.ortho.photo/photo.2target/main.c:45 ../imagery/i.pca/main.c:61
 #: ../imagery/i.points/main.c:52 ../imagery/i.rectify/main.c:57
 #: ../imagery/i.rgb.his/r2hmain.c:44 ../imagery/i.smap/shapiro/main.c:37
-#: ../imagery/i.target/main.c:41 ../imagery/i.vpoints/main.c:53
+#: ../imagery/i.target/main.c:44 ../imagery/i.vpoints/main.c:53
 #: ../imagery/i.zc/main.c:59
 msgid "imagery"
 msgstr "imaginería"
@@ -6432,25 +6432,31 @@ msgstr "El archuvo de firma [%s] no es válido."
 msgid "Writing [%s] ..."
 msgstr "Escribiendo [%s] ..."
 
-#: ../imagery/i.target/main.c:43
+#: ../imagery/i.target/main.c:46
 msgid "Targets an imagery group to a GRASS location and mapset."
 msgstr "Destina un grupo de imagen a una localización GRASS y un conjunto de mapas"
 
-#: ../imagery/i.target/main.c:51
+#: ../imagery/i.target/main.c:54
 msgid "Name of imagery target location"
 msgstr "Nombre de destino de la localización de imágenes"
 
-#: ../imagery/i.target/main.c:57
+#: ../imagery/i.target/main.c:60
 msgid "Name of target mapset"
 msgstr "Nombre de destino del conjunto de mapas"
 
-#: ../imagery/i.target/main.c:61
+#: ../imagery/i.target/main.c:65
 msgid "Set current location and mapset as target for of imagery group"
 msgstr ""
 "Asignar la localización y el conjunto de mapas activo como destino del grupo "
 "de imágenes"
 
-#: ../imagery/i.target/main.c:68 ../imagery/i.target/main.c:73
+#: ../imagery/i.target/main.c:75 ../imagery/i.target/main.c:92
+#: ../imagery/i.target/main.c:97
+#, fuzzy, c-format
+msgid "Group <%s> targeted for location [%s], mapset [%s]"
+msgstr "el grupo [%s] se destinó a la localización [%s], conjunto de mapas [%s]\n"
+
+#: ../imagery/i.target/main.c:86
 msgid ""
 "You must use either the Current Mapset and Location Flag (-c)\n"
 " OR\n"
@@ -6459,11 +6465,6 @@ msgstr ""
 "Debe usarse el conjunto de mapas activo y la opción de localización (-c)\n"
 " O\n"
 " introducir las variables manualmente."
-
-#: ../imagery/i.target/main.c:79 ../imagery/i.target/main.c:84
-#, c-format
-msgid "group [%s] targeted for location [%s], mapset [%s]\n"
-msgstr "el grupo [%s] se destinó a la localización [%s], conjunto de mapas [%s]\n"
 
 #: ../imagery/i.vpoints/main.c:55
 msgid ""
@@ -6689,7 +6690,9 @@ msgstr "Nombre del ráster de entrada"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
 #: ../raster/r.in.gridatb/main.c:55
 msgid "Name for output raster map"
 msgstr "Nombre para el mapa ráster de salida"
@@ -6761,11 +6764,10 @@ msgid "Show vector maps rather than raster maps"
 msgstr "Muestra mapas vectoriales en vez de mapas ráster"
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:4
-#, fuzzy
 msgid "Map prefix. Specify character(s) to view selected maps only."
 msgstr ""
 "Prefijo de mapa. Especificar carácter(es) para ver sólo los mapas "
-"seleccionados"
+"seleccionados."
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:5
 msgid "Map number show across the monitor"
@@ -6776,10 +6778,9 @@ msgid "Map number show down the monitor"
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:7
-#, fuzzy
 msgid "Mapsets to use. Specify multiple mapsets comma separated."
 msgstr ""
-"Directorio de mapas a usar. Especificar múltiple directorios separados por "
+"Directorio de mapas a usar. Especificar múltiples directorios separados por "
 "comas."
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:8
@@ -7042,6 +7043,7 @@ msgid "Apply regular expressions and wildcards to g.list"
 msgstr "Aplicar expresiones regulares y comodines a g.list"
 
 #: ../locale/scriptstrings/g.mlist_to_translate.c:3
+#: ../locale/scriptstrings/g.mremove_to_translate.c:3
 msgid "Use regular expression instead of wildcard"
 msgstr "Usar expresiones regulares en vez de comodines"
 
@@ -7071,54 +7073,41 @@ msgstr "Patrón de búsqueda de nombre mapa (por defecto: todos)"
 msgid "Apply regular expressions and wildcards to g.remove"
 msgstr "Aplicar expresiones regulares y comodines a g.remove"
 
-#: ../locale/scriptstrings/g.mremove_to_translate.c:3
-msgid "use regular expression instead of wildcard"
-msgstr ""
-
 #: ../locale/scriptstrings/g.mremove_to_translate.c:4
-#, fuzzy
-msgid "force removal (required for actual deletion of files)"
-msgstr "requerido"
+msgid "Force removal (required for actual deletion of files)"
+msgstr "Forzar eliminación (requerido para la eliminación real de archivos)"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:5
-#, fuzzy
-msgid "raster to remove"
-msgstr "ráster a"
+msgid "Raster to remove"
+msgstr "Ráster a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:6
-#, fuzzy
 msgid "3d raster to remove"
-msgstr "ráster a"
+msgstr "Ráster 3D a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:7
-#, fuzzy
-msgid "vector to remove"
-msgstr "vectorial a"
+msgid "Vector to remove"
+msgstr "Vectorial a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:8
-#, fuzzy
-msgid "region to remove"
-msgstr "a"
+msgid "Region to remove"
+msgstr "Región a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:9
-#, fuzzy
-msgid "icon to remove"
-msgstr "icono a"
+msgid "Icon to remove"
+msgstr "Icono a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:10
-#, fuzzy
-msgid "label to remove"
-msgstr "Etiqueta a"
+msgid "Label to remove"
+msgstr "Etiqueta a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:11
-#, fuzzy
 msgid "3dview to remove"
-msgstr "a"
+msgstr "Vista 3D a eliminar"
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:12
-#, fuzzy
-msgid "group to remove"
-msgstr "grupo a"
+msgid "Group to remove"
+msgstr "Grupo a eliminar"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
 #, fuzzy
@@ -7126,46 +7115,40 @@ msgid "Brovey transform to merge multispectral and high-res panchromatic channel
 msgstr "a"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:2
-#, fuzzy
 msgid "raster, imagery, fusion"
-msgstr "ráster imaginería"
+msgstr "ráster imaginería, fusión"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:3
 msgid "sensor: LANDSAT"
-msgstr ""
+msgstr "sensor: LANDSAT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:4
 msgid "sensor: QuickBird"
-msgstr ""
+msgstr "sensor: QuickBird"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:5
 msgid "sensor: SPOT"
-msgstr ""
+msgstr "sensor: SPOT"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:6
-#, fuzzy
 msgid "raster input map (green: tm2 | qbird_green | spot1)"
-msgstr "ráster"
+msgstr "Mapa ráster de entrada (verde: tm2 | qbird_green | spot1)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:7
-#, fuzzy
 msgid "raster input map (NIR: tm4 | qbird_nir | spot2)"
-msgstr "ráster"
+msgstr "Mapa ráster entrada (NIR: tm4 | qbird_nir | spot2)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:8
-#, fuzzy
 msgid "raster input map (MIR; tm5 | qbird_red | spot3)"
-msgstr "ráster"
+msgstr "Mapa ráster de entrada (MIR: tm5 | qbird_red | spot3)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:9
-#, fuzzy
 msgid "raster input map (etmpan | qbird_pan | spotpan)"
-msgstr "ráster"
+msgstr "Mapa ráster de entrada (etmpan | qbird_pan | spotpan)"
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:10
-#, fuzzy
 msgid "raster output map prefix (e.g. 'brov')"
-msgstr "ráster"
+msgstr "Prefijo del mapa ráster de salida (ej.: 'brov')"
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:1
 #, fuzzy
@@ -7175,154 +7158,145 @@ msgstr "a"
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:2
 #, fuzzy
 msgid "raster, imagery, mosaicking"
-msgstr "ráster imaginería"
+msgstr "ráster, imaginería"
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:3
 msgid "1st map for mosaic (top of image stack)."
-msgstr ""
+msgstr "Primer mapa para mosaico (superior de la pila de imágenes)."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:4
 msgid "2nd map for mosaic."
-msgstr ""
+msgstr "Segundo mapa para mosaico."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:5
 msgid "3rd map for mosaic."
-msgstr ""
+msgstr "Tercer mapa para mosaico."
 
 #: ../locale/scriptstrings/i.image.mosaic_to_translate.c:6
 msgid "4th map for mosaic."
-msgstr ""
+msgstr "Cuarto mapa para mosaico."
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:1
-#, fuzzy
 msgid "Import of SPOT VGT NDVI file into a raster map"
-msgstr "Importar ráster"
+msgstr "Importar archivo SPOT VGT NDVI a un mapa ráster"
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:2
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:2
 msgid "raster, imagery, import"
-msgstr "ráster imaginería, importar"
+msgstr "ráster, imaginería, importar"
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:3
 msgid "also import quality map (SM status map layer) and filter NDVI map"
 msgstr ""
+"importar también mapa de calidad (capa de mapa de estado SM) y filtrar mapa "
+"NDVI"
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
 msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
-msgstr ""
+msgstr "archivo SPOT VGT NDVI HDF existente (0001_NDV.HDF)"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
 msgid "Auto-balancing of colors for LANDSAT images"
-msgstr ""
+msgstr "Balance automático de colores para imágenes LANDSAT"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:2
-#, fuzzy
 msgid "raster, imagery, colors"
-msgstr "ráster imaginería"
+msgstr "ráster, imaginería, colores"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:3
 msgid "LANDSAT red channel"
-msgstr ""
+msgstr "Canal rojo LANDSAT"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:4
 msgid "LANDSAT green channel"
-msgstr ""
+msgstr "Canal verde LANDSAT"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:5
 msgid "LANDSAT blue channel"
-msgstr ""
+msgstr "Canal azul LANDSAT"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:6
 msgid "Cropping intensity (upper brightness level)"
 msgstr ""
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:7
-#, fuzzy
 msgid "Extend colors to full range of data on each channel"
-msgstr "a datos"
+msgstr "Extender colores a todo el intervalo de datos de cada canal"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:8
 msgid "Preserve relative colors, adjust brightness only"
-msgstr ""
+msgstr "Conservar colore relativos, sólo ajustar brillo"
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:9
-#, fuzzy
 msgid "Reset to standard color range"
-msgstr "Restablecer a color"
+msgstr "Restablecer al intervalo de colores estándar"
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:1
 #, fuzzy
 msgid "Calculates Optimum-Index-Factor table for LANDSAT TM bands 1-5, & 7"
-msgstr "Índice"
+msgstr "Calcula Índice"
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:2
-#, fuzzy
 msgid "raster, imagery, statistics"
-msgstr "ráster imaginería"
+msgstr "ráster, imaginería, estadísticas"
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:3
 msgid "LANDSAT TM band 1."
-msgstr ""
+msgstr "LANDSAT TM banda 1."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:4
 msgid "LANDSAT TM band 2."
-msgstr ""
+msgstr "LANDSAT TM banda 2."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:5
 msgid "LANDSAT TM band 3."
-msgstr ""
+msgstr "LANDSAT TM banda 3."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:6
 msgid "LANDSAT TM band 4."
-msgstr ""
+msgstr "LANDSAT TM banda 4."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:7
 msgid "LANDSAT TM band 5."
-msgstr ""
+msgstr "LANDSAT TM banda 5."
 
 #: ../locale/scriptstrings/i.oif_to_translate.c:8
 msgid "LANDSAT TM band 7."
-msgstr ""
+msgstr "LANDSAT TM banda 7."
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:1
-#, fuzzy
 msgid "displays spectral response at user specified locations in group or images"
-msgstr "grupo"
+msgstr ""
+"muestra la respuesta espectral en localizaciones especificadas por el "
+"usuario en grupo o imágenes"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:2
-#, fuzzy
 msgid "imagery, raster, multispectral"
-msgstr "imaginería ráster"
+msgstr "imaginería, ráster, multiespectral"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:3
-#, fuzzy
 msgid "group input"
-msgstr "grupo"
+msgstr "entrada de grupo"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:4
-#, fuzzy
 msgid "raster input maps"
-msgstr "ráster"
+msgstr "mapas ráster de entrada"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:5
-#, fuzzy
 msgid "write output to PNG image"
-msgstr "a"
+msgstr "escribir la salida a imagen PNG"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:6
-#, fuzzy
 msgid "Use image list and not group"
-msgstr "Usar grupo"
+msgstr "Usar lista de imágenes y no grupo"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:7
-#, fuzzy
 msgid "Select multiple points"
-msgstr "múltiple puntos"
+msgstr "Seleccionar múltiples puntos"
 
 #: ../locale/scriptstrings/i.spectral_to_translate.c:8
-#, fuzzy
 msgid "label with coordinates instead of numbering"
-msgstr "Etiqueta"
+msgstr "Etiquetar con coordenadas en vez de numeración"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:1
 #, fuzzy
@@ -7330,51 +7304,44 @@ msgid "Tasseled Cap (Kauth Thomas) transformation for LANDSAT-TM data"
 msgstr "datos"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:2
-#, fuzzy
 msgid "raster, imagery"
-msgstr "ráster imaginería"
+msgstr "ráster, imaginería"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:3
 msgid "use transformation rules for LANDSAT-4"
-msgstr ""
+msgstr "usar reglas de transformación para LANDSAT-4"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:4
 msgid "use transformation rules for LANDSAT-5"
-msgstr ""
+msgstr "usar reglas de transformación para LANDSAT-5"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:5
 msgid "use transformation rules for LANDSAT-7"
-msgstr ""
+msgstr "usar reglas de transformación para LANDSAT-7"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:6
-#, fuzzy
 msgid "raster input map (LANDSAT channel 1)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 1)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:7
-#, fuzzy
 msgid "raster input map (LANDSAT channel 2)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 2)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:8
-#, fuzzy
 msgid "raster input map (LANDSAT channel 3)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 3)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:9
-#, fuzzy
 msgid "raster input map (LANDSAT channel 4)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 4)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:10
-#, fuzzy
 msgid "raster input map (LANDSAT channel 5)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 5)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:11
-#, fuzzy
 msgid "raster input map (LANDSAT channel 7)"
-msgstr "ráster"
+msgstr "mapa ráster de entrada (canal LANDSAT 7)"
 
 #: ../locale/scriptstrings/i.tasscap_to_translate.c:12
 #, fuzzy
@@ -7382,24 +7349,20 @@ msgid "raster output TC maps prefix"
 msgstr "ráster"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:1
-#, fuzzy
 msgid "Convert coordinates from one projection to another (cs2cs frontend)."
-msgstr "a."
+msgstr "Convierte coordenadas de una proyección a otra (interfaz cs2cs)."
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:2
-#, fuzzy
 msgid "miscellaneous, projection"
-msgstr "miscelánea"
+msgstr "miscelánea, proyección"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:3
-#, fuzzy
 msgid "Input coordinate file (omit to read from stdin)"
-msgstr "a"
+msgstr "Archivo de coordenadas de entrada (omitir para leer de stdin)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:4
-#, fuzzy
 msgid "Output coordinate file (omit to send to stdout)"
-msgstr "Salida a a"
+msgstr "Archivo de coordenadas de salida (omitir para enviar a stdout)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:5
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:5
@@ -7409,39 +7372,37 @@ msgstr "Separador de campos"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:6
 msgid "Input projection parameters (PROJ.4 style)"
-msgstr ""
+msgstr "Parámetros de la proyección de entrada (en estilo PROJ.4)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:7
-#, fuzzy
 msgid "Output projection parameters (PROJ.4 style)"
-msgstr "Salida"
+msgstr "Parámetros de la proyección de salida (en estilo PROJ.4)"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:8
-#, fuzzy
 msgid "Use LL WGS84 as input and current location as output projection"
-msgstr "Usar localización"
+msgstr "Usar LL WGS84 como entrada y la localización actual como proyección de salida"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:9
-#, fuzzy
 msgid "Use current location as input and LL WGS84 as output projection"
-msgstr "Usar localización"
+msgstr "Usar la localización actual como entrada y LL WGS84 como proyección de salida"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:10
-#, fuzzy
 msgid ""
 "Output long/lat in decimal degrees or other projections with many decimal "
 "places"
-msgstr "Salida"
+msgstr ""
+"Producir latitud/longitud en grados decimales u otras proyecciones con "
+"muchos decimales"
 
 #: ../locale/scriptstrings/m.proj_to_translate.c:11
-#, fuzzy
 msgid "Verbose mode (print projection parameters and filenames to stderr)"
-msgstr "Imprimir a"
+msgstr ""
+"Modo verboso (imprimir parámetros de proyección y nombres de archivo a "
+"stderr)"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:1
-#, fuzzy
 msgid "Blends color components of two raster maps by a given ratio"
-msgstr "color ráster"
+msgstr "Mezcla los componentes de color de dos mapas ráster en la proporción indicada"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:2
 #: ../raster/r.average/main.c:51 ../raster/r.basins.fill/main.c:51
@@ -7499,88 +7460,78 @@ msgid "raster"
 msgstr "ráster"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:3
-#, fuzzy
 msgid "Name of first raster map for blending"
-msgstr "Nombre ráster"
+msgstr "Nombre del primer mapa ráster a mezclar"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:4
-#, fuzzy
 msgid "Name of second raster map for blending"
-msgstr "Nombre ráster"
+msgstr "Nombre del segundo mapa ráster a mezclar"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:5
-#, fuzzy
 msgid "Base name for red, green, & blue output maps containing the blend"
-msgstr "nombre"
+msgstr ""
+"Nombre base para los mapas de salida rojo, verde y azul que contendrán la "
+"mezcla"
 
 #: ../locale/scriptstrings/r.blend_to_translate.c:6
-#, fuzzy
 msgid "Percentage weight of first map for color blending"
-msgstr "color"
+msgstr "Porcentaje de peso del primer mapa para la mezcla de color"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:1
-#, fuzzy
 msgid "Fills no-data areas in raster maps using v.surf.rst splines interpolation"
-msgstr "datos áreas ráster"
+msgstr ""
+"Rellenar áreas sin datos de los mapas ráster usando la interpolación splines "
+"de v.sufr.rst"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:2
-#, fuzzy
 msgid "raster, elevation, interpolation"
-msgstr "ráster"
+msgstr "ráster, elevación, interpolación"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:3
-#, fuzzy
 msgid "Raster map in which to fill nulls"
-msgstr "a"
+msgstr "Mapa ráster en el que rellenar los nulos"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:4
-#, fuzzy
 msgid "Output raster map with nulls filled by interpolation from surrounding values"
-msgstr "Salida ráster"
+msgstr ""
+"Producir mapa ráster con nulos rellenos por interpolación de los valores "
+"circundantes"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:5
-#, fuzzy
 msgid "Spline tension parameter"
-msgstr "No se puede crear el índice"
+msgstr "Parámetro de tensión spline"
 
 #: ../locale/scriptstrings/r.fillnulls_to_translate.c:6
-#, fuzzy
 msgid "Spline smoothing parameter"
-msgstr "Nombre"
+msgstr "Parámetro de suavizado spline"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:1
-#, fuzzy
 msgid ""
-"r.in.aster - georeferencing, rectification, and import of Terra-ASTER "
-"imagery and relative DEM's using gdalwarp"
-msgstr "imaginería"
+"Georeference, rectificate and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
+msgstr ""
+"Georreferenciar, rectificar e importar imaginería Terra ASTER y MDT "
+"relacionados usando gdalwarp."
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:3
-#, fuzzy
-msgid "Input ASTER image to be georeference & rectified"
-msgstr "a"
+msgid "Input ASTER image to be georeferenced & rectified"
+msgstr "Imagen ASTER de entrada a georreferenciar y rectificar"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:4
-#, fuzzy
 msgid "ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)"
-msgstr "imaginería"
+msgstr "Tipo de procesado de Imaginería ASTER (Nivel 1A, Nivel 1B o MDT relacionado)"
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:5
-#, fuzzy
 msgid ""
-"L1A or L1B band to translate (1, 2,3n,3b,4-14). Can only translate a single "
-"band"
-msgstr "a"
-
-#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
-#, fuzzy
-msgid "Output GRASS image file"
-msgstr "Salida GRASS"
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
+msgstr ""
+"Banda L1A o L1B a traducir (1, 2, 3n, 3b, 4-14). Sólo se puede traducir una "
+"banda"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
-#, fuzzy
 msgid "Import SRTM HGT files into GRASS"
-msgstr "Importar GRASS"
+msgstr "Importar archivos SRTM HGT a GRASS"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:2
 #: ../raster/r.in.bin/main.c:111 ../raster/r.in.poly/main.c:28
@@ -7589,21 +7540,20 @@ msgstr "ráster, importar"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:3
 msgid "SRTM input tile (file without .hgt.zip extension)"
-msgstr ""
+msgstr "Archivo de entrada SRTM (archivo sin extensión .hgt.zip)"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
 #, fuzzy
 msgid "Output raster map (default: input tile)"
-msgstr "Salida ráster"
+msgstr "Mapa ráster de salida (por defecto: tile de entrada)"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
 msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:1
-#, fuzzy
 msgid "Downloads and imports data from WMS servers."
-msgstr "Descarga e importa datos de servidores WMS"
+msgstr "Descarga e importa datos de servidores WMS."
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:2
 msgid "wms"
@@ -7700,9 +7650,8 @@ msgid "Additional options for r.tileset"
 msgstr "Opciones adicionales para r.tileset"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:35
-#, fuzzy
 msgid "Named region to request data for. Current region used if omitted"
-msgstr "Nombre de la región para la que solicitar datos. Región actual si se omite."
+msgstr "Nombre de la región para la que solicitar datos. Región actual si se omite"
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:37
 msgid "Folder to save downloaded data to"
@@ -7722,91 +7671,78 @@ msgid "Verbosity level"
 msgstr "Nivel de verbosidad"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
-#, fuzzy
-msgid "Calculates new raster map from a r.mapcalc expression"
-msgstr "ráster"
+msgid "Calculate new raster map from a r.mapcalc expression."
+msgstr "Calcular un nuevo mapa ráster a partir de una expresión r.mapcalc."
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
-msgid "A:"
-msgstr "A:"
+msgid "A"
+msgstr "A"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
-msgid "B:"
-msgstr "B:"
+msgid "B"
+msgstr "B"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
-msgid "C:"
-msgstr "C:"
+msgid "C"
+msgstr "C"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
-msgid "D:"
-msgstr "D:"
+msgid "D"
+msgstr "D"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
-msgid "E:"
-msgstr "E:"
+msgid "E"
+msgstr "E"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
-msgid "F:"
-msgstr "F:"
+msgid "F"
+msgstr "F"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
-#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
-msgid "Formula (e.g. A-B or A*C+B):"
-msgstr ""
-
-#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
-#, fuzzy
-msgid "Resulting output map"
-msgstr "No fue posible encontrar el archivo dig_cats."
+msgid "Formula (e.g. A-B or A*C+B)"
+msgstr "Formula (ej. A-B o A*C+B)"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:10
 msgid "Show help"
-msgstr ""
+msgstr "Mostrar ayuda"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r.mapcalc expressions)"
-msgstr ""
+msgstr "Modo avanzado (introducir un conjunto de expresiones de r.mapcalc)"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
-#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
-#, fuzzy
-msgid "Don't overwrite existing map"
-msgstr "a"
+msgid "Do not overwrite existing map"
+msgstr "No sobrescribir mapas existentes"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:1
-#, fuzzy
 msgid "Create a MASK for limiting raster operation"
-msgstr "ráster"
+msgstr "Crear una MÁSCARA para limitar la operación ráster"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:2
-#, fuzzy
 msgid "raster, mask"
-msgstr "ráster"
+msgstr "ráster, máscara"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:3
-#, fuzzy
 msgid "Raster map to use as MASK"
-msgstr "a"
+msgstr "Mapa ráster a usar como MÁSCARA"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:4
 #, fuzzy
 msgid "Category values to use for MASK (format: 1 2 3 thru 7 *)"
-msgstr "a"
+msgstr "Valores de categoría para usar para MÁSCARA (formato: 1 2 3 thru 7 *)"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:5
 msgid "Overwrite existing MASK"
-msgstr ""
+msgstr "Sobrescribir MÁSCARA existente"
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:6
 msgid "Remove existing MASK (overrides other options)"
-msgstr ""
+msgstr "Eliminar MÁSCARA existente (ignora otras opciones)"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
-#, fuzzy
 msgid "Exports GRASS raster data into various formats (requires GDAL)"
-msgstr "GRASS ráster datos"
+msgstr "Exporta datos ráster de GRASS a varios formatos (requiere GDAL)."
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:2
@@ -7818,30 +7754,28 @@ msgstr "ráster, exportar"
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:3
 #: ../raster/r.out.gdal/main.c:347
 msgid "List supported output formats"
-msgstr ""
+msgstr "Listar formatos de salida soportados"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:4
-#, fuzzy
 msgid "Region sensitive output"
-msgstr "Región"
+msgstr "Salida sensible a región"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:6
 #: ../raster/r.out.gdal/main.c:356
-#, fuzzy
 msgid "GIS format to write (case sensitive, see also -l flag)"
-msgstr "a"
+msgstr "Formato GIS a escribir (sensible a mayúsculas, ver también la opción -l)"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:7
 #: ../raster/r.out.gdal/main.c:377
-#, fuzzy
 msgid "File type"
-msgstr "Tipo desconocido: %c"
+msgstr "Tipo de archivo"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
 #: ../raster/r.out.gdal/main.c:391
-#, fuzzy
 msgid "Creation option to the output format driver. Multiple options may be listed"
-msgstr "a"
+msgstr ""
+"Opción de creación para el controlador de formato de salida. Se pueden "
+"indicar múltiples opciones."
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:10
 #: ../raster/r.out.gdal/main.c:399
@@ -7850,14 +7784,14 @@ msgid "Metadata key passed on the output dataset if possible"
 msgstr "Metadatos"
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
-#, fuzzy
-msgid "Export a raster map to a text file as x,y,z values based on cell centers"
-msgstr "Exportar ráster a"
+msgid "Export a raster map to a text file as x,y,z values based on cell centers."
+msgstr ""
+"Exportar un mapa ráster a un archivo de texto como valores X, Y, Z basados "
+"en los centros de las celdas."
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
-#, fuzzy
 msgid "Name for output file (if omitted or \"-\" output to stdout)"
-msgstr "Nombre a"
+msgstr "Nombre para el archivo de salida (si se omite o \"-\" salida a stdout)"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
 #, fuzzy
@@ -7883,7 +7817,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:5
 msgid "Azimuth of the plane. Value must be between 0 and 360 degrees."
-msgstr ""
+msgstr "Azimut del plano. El valor debe estar entre 0 y 360 grados."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:6
 msgid "Easting coordinate of a point on the plane."
@@ -8099,6 +8033,10 @@ msgstr "Nombre de archivo grid3 de entrada"
 msgid "F (grid3D file):"
 msgstr "Nombre de archivo grid3 de entrada"
 
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
+msgid "Formula (e.g. A-B or A*C+B):"
+msgstr "Formula (ej. A-B o A*C+B):"
+
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
 msgid "Resulting output grid3D volume"
 msgstr ""
@@ -8106,6 +8044,10 @@ msgstr ""
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r3.mapcalc expressions)"
 msgstr ""
+
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
+msgid "Don't overwrite existing map"
+msgstr "No sobrescribir mapas existentes"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
 #, fuzzy
@@ -8383,6 +8325,8 @@ msgid ""
 "Condition for update (everything after the 'where' sql statement; ex: cat=1 "
 "or col1/col2>1)"
 msgstr ""
+"Condición para actualizar (todo detrás de 'donde' en la sentencia sql; ej: "
+"cat=1 o col1/col2>1)"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:1
 #, fuzzy
@@ -8898,14 +8842,14 @@ msgid ""
 msgstr "GRASS."
 
 #: ../ps/ps.map/main.c:264
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: Required parameter <%s> not set:\n"
 "    (%s).\n"
 msgstr ""
 "\n"
-"ERROR: Parametro requerido  <%s> no ha sido inicializado:\n"
+"ERROR: El parámetro requerido <%s> no ha sido establecido:\n"
 "    (%s).\n"
 
 #: ../ps/ps.map/main.c:286
@@ -11539,8 +11483,8 @@ msgstr "Ignorar proyección (usar proyección de la localización)"
 msgid "Extend location extents based on new dataset"
 msgstr "Ampliar la extensión de la localización en base a nuevo conjunto de datos"
 
-#: ../raster/r.in.gdal/main.c:120
-msgid "List supported formats then exit"
+#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:171
+msgid "List supported formats and exit"
 msgstr "Listar los formatos soportados y salir"
 
 #: ../raster/r.in.gdal/main.c:124
@@ -22384,10 +22328,6 @@ msgstr ""
 msgid "List available layers in data source and exit"
 msgstr "Listar las capas disponibles en la fuente de datos y salir"
 
-#: ../vector/v.in.ogr/main.c:171
-msgid "List available formats and exit"
-msgstr "Listar formatos disponibles y salir"
-
 #: ../vector/v.in.ogr/main.c:176
 msgid "Do not clean polygons (not recommended)"
 msgstr "No limpiar polígonos (no recomendado)"
@@ -22408,6 +22348,11 @@ msgstr "Ignorar proyección del conjunto de datos (usar proyección de la localiza
 #: ../vector/v.in.ogr/main.c:196
 msgid "Change column names to lowercase characters"
 msgstr "Cambiar nombres de columna a minúsculas"
+
+#: ../vector/v.in.ogr/main.c:227
+#, c-format
+msgid "Available OGR Drivers:\n"
+msgstr "Controladores OGR disponibles:\n"
 
 #: ../vector/v.in.ogr/main.c:244 ../vector/v.in.ogr/main.c:293
 #, c-format
