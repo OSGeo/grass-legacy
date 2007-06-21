@@ -14,14 +14,14 @@
 #############################################################################
 
 #%Module
-#%  description: r.in.aster - georeferencing, rectification, and import of Terra-ASTER imagery and relative DEM's using gdalwarp
+#%  description: Georeference, rectificate and import Terra-ASTER imagery and relative DEM's using gdalwarp.
 #%  keywords: raster, imagery, import
 #%End
 #%option
 #% key: input
 #% type: string
 #% gisprompt: old_file,file,input
-#% description: Input ASTER image to be georeference & rectified
+#% description: Input ASTER image to be georeferenced & rectified
 #% required : yes
 #%end
 #%option
@@ -34,14 +34,14 @@
 #%option
 #% key: band
 #% type: string
-#% description: L1A or L1B band to translate (1, 2,3n,3b,4-14). Can only translate a single band
+#% description: L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a single band
 #% answer: 1
 #% required : yes
 #%end
 #%option
 #% key: output
 #% type: string
-#% description: Output GRASS image file
+#% description: Name for output raster map
 #% gisprompt: old,cell,raster
 #% required : yes
 #%end
