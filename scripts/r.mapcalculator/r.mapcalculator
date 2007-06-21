@@ -16,61 +16,61 @@
 #############################################################################
 
 #%Module
-#% description: Calculates new raster map from a r.mapcalc expression
+#% description: Calculate new raster map from a r.mapcalc expression.
 #%End
 #%option
 #% key: amap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: A:
+#% description: A
 #% required : no
 #%end
 #%option
 #% key: bmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: B:
+#% description: B
 #% required : no
 #%end
 #%option
 #% key: cmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: C:
+#% description: C
 #% required : no
 #%end
 #%option
 #% key: dmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: D:
+#% description: D
 #% required : no
 #%end
 #%option
 #% key: emap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: E:
+#% description: E
 #% required : no
 #%end
 #%option
 #% key: fmap
 #% type: string
 #% gisprompt: old,cell,raster
-#% description: F:
+#% description: F
 #% required : no
 #%end
 #%option
 #% key: formula
 #% type: string
-#% description: Formula (e.g. A-B or A*C+B):
+#% description: Formula (e.g. A-B or A*C+B)
 #% required : yes
 #%end
 #%option
 #% key: outfile
 #% type: string
 #% gisprompt: new,cell,raster
-#% description: Resulting output map
+#% description: Name for output raster map
 #% required : yes
 #%end
 #%option
@@ -87,7 +87,7 @@
 #%end
 #%flag
 #% key: o
-#% description: Don't overwrite existing map
+#% description: Do not overwrite existing map
 #%end
 
 
