@@ -9,6 +9,14 @@
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 #
 msgid ""
 msgstr ""
@@ -552,7 +560,7 @@ msgstr "Digite 'list' para ver a lista de datums existentes\n"
 #: ../lib/gis/get_datum_name.c:55
 #, c-format
 msgid "or 'custom' if you wish to enter custom parameters\n"
-msgstr ""
+msgstr "ou 'custom'se preferir digitar parâmetros personalizados\n"
 
 #: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
 #: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:341
@@ -1931,15 +1939,15 @@ msgstr "Não consegui alocar espaço para cópia da matriz"
 
 #: ../lib/gmath/la.c:251
 msgid "First scalar multiplier must be non-zero"
-msgstr ""
+msgstr "Primeiro multiplicador escalar não pode ser zero"
 
 #: ../lib/gmath/la.c:257 ../lib/gmath/la.c:265 ../lib/gmath/la.c:326
 msgid "One or both input matrices uninitialised"
-msgstr ""
+msgstr "Uma ou ambas matrizes não inicializadas"
 
 #: ../lib/gmath/la.c:270 ../lib/gmath/la.c:331
 msgid "Matrix order does not match"
-msgstr ""
+msgstr "Ordem das matrizes não combina"
 
 #: ../lib/gmath/la.c:276
 msgid "Unable to allocate space for matrix sum"
@@ -1951,39 +1959,40 @@ msgstr "Não consegui alocar espaço para multiplicar matrizes"
 
 #: ../lib/gmath/la.c:448
 msgid "Input: one or both data matrices uninitialised"
-msgstr ""
+msgstr "Entrada: uma ou ambas matrizes não inicializadas"
 
 #: ../lib/gmath/la.c:453
 msgid "Principal matrix is not properly dimensioned"
-msgstr ""
+msgstr "Matriz principal não foi corretamente dimensionada"
 
 #: ../lib/gmath/la.c:458
 msgid "Input: you must have at least one array to solve"
-msgstr ""
+msgstr "Entrada: você deve ter pelo menos um sistema para resolver"
 
 #: ../lib/gmath/la.c:464
 msgid "Could not allocate space for solution matrix"
-msgstr ""
+msgstr "Impossível alocar espaço para a matriz solução"
 
 #: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
 msgid "Could not allocate space for working matrix"
-msgstr ""
+msgstr "Impossível alocar espaço para a matriz de trabalho"
 
 #: ../lib/gmath/la.c:530
 msgid "Matrix (or submatrix is singular). Solution undetermined"
-msgstr ""
+msgstr "Matriz (ou submatriz) é singular. Solução indeterminada"
 
 #: ../lib/gmath/la.c:534
+#, fuzzy
 msgid "Problem in LA routine."
-msgstr ""
+msgstr "Problema na rotina LA"
 
 #: ../lib/gmath/la.c:541
 msgid "Procedure not yet available for selected matrix type"
-msgstr ""
+msgstr "Procedimento não disponível para tipo de matriz selecionada"
 
 #: ../lib/gmath/la.c:575
 msgid "Matrix is not square. Cannot determine inverse"
-msgstr ""
+msgstr "Matriz não é quadrada. Impossível determinar inversa."
 
 #: ../lib/gmath/la.c:580
 msgid "Unable to allocate space for matrix"
@@ -1991,23 +2000,24 @@ msgstr "Impossível alocar espaço para a matriz"
 
 #: ../lib/gmath/la.c:597
 msgid "Matrix is singular"
-msgstr ""
+msgstr "Matriz é singular"
 
 #: ../lib/gmath/la.c:602
 msgid "Problem in LA procedure."
-msgstr ""
+msgstr "Problema no procedimento LA"
 
 #: ../lib/gmath/la.c:692
 msgid "Element array has not been allocated"
-msgstr ""
+msgstr "Arranjo de elementos foi alocado"
 
 #: ../lib/gmath/la.c:698
+#, fuzzy
 msgid "Specified element is outside array bounds"
-msgstr ""
+msgstr "Elemento especificado está fora dos limites do array"
 
 #: ../lib/gmath/la.c:754
 msgid "Specified matrix column index is outside range"
-msgstr ""
+msgstr "Índice de coluna da matriz especificado fora do intervalo"
 
 #: ../lib/gmath/la.c:759 ../lib/gmath/la.c:801 ../lib/gmath/la.c:1125
 #: ../lib/gmath/la.c:1178 ../lib/gmath/la.c:1252
@@ -2016,7 +2026,7 @@ msgstr "Matriz não inicializada"
 
 #: ../lib/gmath/la.c:764 ../lib/gmath/la.c:806
 msgid "Could not allocate space for vector structure"
-msgstr ""
+msgstr "Impossível alocar espaço para estrutura de vetores"
 
 #: ../lib/gmath/la.c:796
 msgid "Specified matrix row index is outside range"
@@ -2024,11 +2034,11 @@ msgstr ""
 
 #: ../lib/gmath/la.c:837
 msgid "Specified row index is outside range"
-msgstr ""
+msgstr "Índice de linha especificado fora do intervalo"
 
 #: ../lib/gmath/la.c:842
 msgid "Specified column index is outside range"
-msgstr ""
+msgstr "Índice de coluna especificado fora do intervalo"
 
 #: ../lib/gmath/la.c:862
 msgid "Unknown vector type."
@@ -2036,27 +2046,27 @@ msgstr "Tipo de vetor desconhecido"
 
 #: ../lib/gmath/la.c:991
 msgid "Output vector is uninitialized"
-msgstr ""
+msgstr "Vetor de saída não inicializado"
 
 #: ../lib/gmath/la.c:996
 msgid "Vectors are not of the same type"
-msgstr ""
+msgstr "Vetores não são do mesmo tipo"
 
 #: ../lib/gmath/la.c:1001
 msgid "Output vector is of incorrect type"
-msgstr ""
+msgstr "Vetor de saída é de tipo incorreto"
 
 #: ../lib/gmath/la.c:1006
 msgid "Matrices not allowed"
-msgstr ""
+msgstr "Matrizes não são permitidas"
 
 #: ../lib/gmath/la.c:1013
 msgid "Vectors have differing dimensions"
-msgstr ""
+msgstr "Vetores tem dimensões diferentes"
 
 #: ../lib/gmath/la.c:1020
 msgid "Output vector has incorrect dimension"
-msgstr ""
+msgstr "Vetor de saída tem dimensões incorreta"
 
 #: ../lib/gmath/la.c:1067
 msgid "Vector dimensions out of range"
@@ -2064,25 +2074,29 @@ msgstr "Dimensões do vetor além dos limites"
 
 #: ../lib/gmath/la.c:1073
 msgid "Row/column out of range"
-msgstr ""
+msgstr "Linha/coluna fora do limite"
 
 #: ../lib/gmath/la.c:1291
 msgid "Vector structure is not initialised"
-msgstr ""
+msgstr "Estrutura de vetores não inicializada"
 
 #: ../lib/gmath/la.c:1413 ../lib/gmath/la.c:1421 ../lib/gmath/la.c:1426
 msgid "Input format error"
-msgstr ""
+msgstr "Erro no formato de entrada"
 
 #: ../lib/gpde/test/test_arrays.c:43
+#, fuzzy
 msgid ""
 "\n"
 "++ Running array unit tests ++"
 msgstr ""
+"\n"
+"++ Executando teste de unidade nos arrays ++"
 
 #: ../lib/gpde/test/test_arrays.c:45
+#, fuzzy
 msgid "\t 1. testing 2d arrays"
-msgstr ""
+msgstr "\t 1. testando arrays 2D"
 
 #: ../lib/gpde/test/test_arrays.c:48
 msgid "\t 2. testing 3d arrays"
@@ -2252,15 +2266,15 @@ msgstr ""
 
 #: ../lib/gpde/test/test_main.c:49
 msgid "Choose the unit tests to run"
-msgstr ""
+msgstr "Escolha os testes de unidade a executar"
 
 #: ../lib/gpde/test/test_main.c:56
 msgid "Choose the integration tests to run"
-msgstr ""
+msgstr "Escolha os testes de integração a executar"
 
 #: ../lib/gpde/test/test_main.c:61
 msgid "Run all unit tests"
-msgstr "Executar todos os testes unitários"
+msgstr "Executar todos os testes de unidade"
 
 #: ../lib/gpde/test/test_main.c:65
 msgid "Run all integration tests"
@@ -2276,7 +2290,7 @@ msgstr "teste, gpde"
 
 #: ../lib/gpde/test/test_main.c:87
 msgid "Performs unit and integration tests for gpde library"
-msgstr ""
+msgstr "Executar teste de unidade e de integração para a biblioteca gpde"
 
 #: ../lib/gpde/test/test_solute_transport.c:43
 msgid ""
@@ -2430,7 +2444,7 @@ msgstr ""
 
 #: ../lib/gpde/N_solvers.c:50
 msgid "The gauss elimination solver does not works with sparse matrices"
-msgstr ""
+msgstr "Sistema de eliminação de Gauss não funciona com matrizes esparsas"
 
 #: ../lib/gpde/N_solvers.c:53 ../lib/gpde/N_solvers.c:86
 #: ../lib/gpde/N_solvers_classic_iter.c:57
@@ -2438,7 +2452,7 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:255 ../lib/gpde/N_solvers_krylov.c:423
 #: ../lib/gpde/N_solvers_krylov.c:832
 msgid "The linear equation system is not quadratic"
-msgstr ""
+msgstr "O sistema de equações lineares não é quadrático"
 
 #: ../lib/gpde/N_solvers.c:56
 msgid "Starting gauss elimination solver"
@@ -2640,7 +2654,7 @@ msgstr "Vetor não é 3D"
 
 #: ../lib/rst/interp_float/vinput2d.c:84
 msgid "Loading data from attribute table ..."
-msgstr ""
+msgstr "Carregando dados da tabela de atributos ... "
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 msgid "Cannot get layer info"
@@ -2674,7 +2688,7 @@ msgstr "Tipo da coluna s não é suportado (deve ser inteiro ou double)"
 
 #: ../lib/rst/interp_float/vinput2d.c:125
 msgid "Reading lines from vector map ... "
-msgstr ""
+msgstr "Lendo linhas do mapa vetorial ... "
 
 #: ../lib/rst/interp_float/vinput2d.c:154
 #: ../lib/rst/interp_float/vinput2d.c:250
@@ -2684,7 +2698,7 @@ msgstr "Registro no banco de dados para categoria %d não encontrado"
 
 #: ../lib/rst/interp_float/vinput2d.c:218
 msgid "Reading nodes from vector map ... "
-msgstr ""
+msgstr "Lendo nós do mapa vetorial"
 
 #: ../lib/rst/interp_float/vinput2d.c:288
 msgid "strip exists with insufficient data"
@@ -3092,7 +3106,7 @@ msgstr "Impossível adicionar arco"
 
 #: ../lib/vector/Vlib/net.c:299
 msgid "Setting node costs ..."
-msgstr ""
+msgstr "Ajustando custo dos nós ..."
 
 #: ../lib/vector/Vlib/net.c:344
 #, c-format
@@ -3113,7 +3127,7 @@ msgstr "Grafo construído"
 
 #: ../lib/vector/Vlib/net.c:501
 msgid "Wrong line direction in Vect_net_get_line_cost()"
-msgstr ""
+msgstr "Direção da linha errada em Vect_net_get_line_cost()"
 
 #: ../lib/vector/Vlib/open.c:114
 msgid "Programmer requested unknown open_level"
@@ -3329,16 +3343,16 @@ msgstr ""
 
 #: ../lib/vector/diglib/plus_area.c:302
 msgid "Attempt to delete isle from dead area"
-msgstr ""
+msgstr "Tentativa de remover ilha de uma área morta"
 
 #: ../lib/vector/diglib/plus_area.c:316
 #, c-format
 msgid "Attempt to delete not registered isle [%d] from area [%d]"
-msgstr ""
+msgstr "Tentativa de remover ilha não registrada [%d] da área[%d]"
 
 #: ../lib/vector/diglib/plus_area.c:354
 msgid "Attempt to delete dead area"
-msgstr ""
+msgstr "Tentativa de remover área morta"
 
 #: ../lib/vector/diglib/plus_area.c:392
 #, c-format
@@ -3348,12 +3362,12 @@ msgstr "Centróide inexistente [%d] registrado para área (erro na biblioteca)."
 #: ../lib/vector/diglib/plus_area.c:413
 #, c-format
 msgid "Attempt to delete area [%d] info from dead isle [%d]"
-msgstr ""
+msgstr "Tentativa de remover área [%d] de ilha morta [%d]"
 
 #: ../lib/vector/diglib/plus_area.c:741
 #, c-format
 msgid "Attempt to delete isle [%d] info from dead area [%d]"
-msgstr ""
+msgstr "Tentativa de remover ilha [%d] da área[%d]"
 
 #: ../lib/vector/diglib/plus_node.c:244
 #, c-format
