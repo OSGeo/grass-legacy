@@ -70,7 +70,7 @@ main (int argc, char *argv[])
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 	out_opt->required = NO;
-	type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
+	type_opt = G_define_standard_option(G_OPT_V_TYPE);
 	
 	option_opt = G_define_option();
 	option_opt->key = "option";
@@ -180,7 +180,7 @@ main (int argc, char *argv[])
 	
 	if ( (option != O_REP) && (option != O_PRN) ) {
 	    if (out_opt->answer == NULL) {
-	        G_fatal_error ( _("Output vector wasn't entered.") );
+	        G_fatal_error ( _("Output vector wasn't entered") );
 	    }
 	    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 	}
@@ -242,7 +242,7 @@ main (int argc, char *argv[])
 			Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
 			new_centr++;
 		    }
-		    fprintf (stdout, "%d new centroids placed in output map\n", new_centr );
+		    G_message (_("%d new centroids placed in output map"), new_centr );
 		}
 		break;
 		
@@ -380,10 +380,12 @@ main (int argc, char *argv[])
 					freps[i]->max[FR_AREA]);
 		    } else {
 		        if (freps[i]->table != '\0') {
-			  fprintf (stdout, "LAYER/TABLE %d/%s:\n", freps[i]->field, freps[i]->table);
+			    G_message("%s: %d / %s", _("Layer / table"),
+				      freps[i]->field, freps[i]->table);
 		        }
 		        else {
-			  fprintf (stdout, "LAYER %d:\n", freps[i]->field);
+			    G_message ("%s: %d", _("Layer"),
+				       freps[i]->field);
 		        }
 			fprintf (stdout, "type       count        min        max\n");
 			fprintf (stdout, "point    %7d %10d %10d\n", 
@@ -457,5 +459,5 @@ main (int argc, char *argv[])
 	}
 	Vect_close (&In);
 
-	exit(EXIT_SUCCESS) ;
+	exit(EXIT_SUCCESS);
 }
