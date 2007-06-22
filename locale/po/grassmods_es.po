@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-21 23:37+0200\n"
-"PO-Revision-Date: 2007-06-21 23:40+0200\n"
+"POT-Creation-Date: 2007-06-22 17:31+0200\n"
+"PO-Revision-Date: 2007-06-23 00:02+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -4716,9 +4716,8 @@ msgid "%s=%s,%s: files are the same, no rename required"
 msgstr "%s=%s,%s: los archivos son iguales, no se necesita cambiar el nombre"
 
 #: ../general/manage/cmd/rename.c:103
-#, fuzzy
 msgid "Renaming reclass maps"
-msgstr "Cambiando el nombre en el(los) mapa%s reclasificado(s)"
+msgstr "Cambiando el nombre de los mapas reclasificados"
 
 #: ../imagery/i.ask/main.c:25
 #, c-format
@@ -6452,9 +6451,9 @@ msgstr ""
 
 #: ../imagery/i.target/main.c:75 ../imagery/i.target/main.c:92
 #: ../imagery/i.target/main.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Group <%s> targeted for location [%s], mapset [%s]"
-msgstr "el grupo [%s] se destinó a la localización [%s], conjunto de mapas [%s]\n"
+msgstr "El grupo <%s> se destinó a la localización [%s], conjunto de mapas [%s]"
 
 #: ../imagery/i.target/main.c:86
 msgid ""
@@ -7794,59 +7793,55 @@ msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Nombre para el archivo de salida (si se omite o \"-\" salida a stdout)"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
-#, fuzzy
 msgid ""
-"Creates raster plane map given dip (inclination), aspect (azimuth), and one "
-"point"
-msgstr "ráster"
+"Create raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
+msgstr ""
+"Crear un mapa ráster plano dando pendiente (inclinación), orientación (azimut) y un "
+"punto."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
-#, fuzzy
 msgid "raster, elevation"
-msgstr "ráster"
+msgstr "ráster, elevación"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:3
-#, fuzzy
-msgid "Name of raster plane to be created."
-msgstr "Nombre ráster a."
+msgid "Name of raster plane to be created"
+msgstr "Nombre del plano ráster a crear"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:4
-msgid "Dip of plane. Value must be between -90 and 90 degrees."
-msgstr ""
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
+msgstr "Pendiente del plano. El valor debe estar entre -90 y 90 grados"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:5
-msgid "Azimuth of the plane. Value must be between 0 and 360 degrees."
-msgstr "Azimut del plano. El valor debe estar entre 0 y 360 grados."
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
+msgstr "Azimut del plano. El valor debe estar entre 0 y 360 grados"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:6
-msgid "Easting coordinate of a point on the plane."
-msgstr ""
+msgid "Easting coordinate of a point on the plane"
+msgstr "Coordenada Este de un punto en el plano"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:7
-msgid "Northing coordinate of a point on the plane."
-msgstr ""
+msgid "Northing coordinate of a point on the plane"
+msgstr "Coordenada Norte de un punto en el plano"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:8
-msgid "Elevation coordinate of a point on the plane."
-msgstr ""
+msgid "Elevation coordinate of a point on the plane"
+msgstr "Coordenada de elevación de un punto en el plano"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:9
-#, fuzzy
-msgid "Type of the raster map to be created."
-msgstr "Tipo ráster a."
+msgid "Type of the raster map to be created"
+msgstr "Tipo de mapa ráster a crear"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
-#, fuzzy
 msgid ""
 "Reclasses a raster map greater or less than user specified area size (in "
 "hectares)"
-msgstr "ráster"
+msgstr "Reclasifica un mapa ráster mayor o menor que la superficie indicada por el usuario (en hectáreas)"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
-#, fuzzy
 msgid "raster, statistics, aggregation"
-msgstr "ráster"
+msgstr "ráster, estadísticas, agregación"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:4
 msgid "lesser val option that sets the <= area size limit [hectares]"
@@ -7862,9 +7857,8 @@ msgid "reclass raster output map"
 msgstr "ráster"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:1
-#, fuzzy
 msgid "Calculates linear regression from two raster maps: y = a + b*x"
-msgstr "ráster"
+msgstr "Calcula la regresión lineal de dos mapas ráster: y = a + b*x"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:2
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:2
@@ -7874,27 +7868,26 @@ msgstr "ráster, estadísticas"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:3
 msgid "Map for x coefficient"
-msgstr ""
+msgstr "Mapa para el coeficiente X"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:4
 msgid "Map for y coefficient"
-msgstr ""
+msgstr "Mapa para el coeficiente Y"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:5
-#, fuzzy
 msgid ""
 "ASCII file for storing regression coefficients (output to screen if file not "
 "specified)."
-msgstr "a."
+msgstr "Archivo ASCII para guardar los coeficientes de regresión (salida a pantalla si no se especifica ningún archivo)."
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
+#, fuzzy
 msgid "Creates shaded relief map from an elevation map (DEM)."
-msgstr ""
+msgstr "Crea "
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
-#, fuzzy
 msgid "Input elevation map"
-msgstr "Mapa de salida con la dirección"
+msgstr "Mapa de elevación de entrada"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:4
 #, fuzzy
@@ -7903,27 +7896,23 @@ msgstr "Salida nombre"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:5
 msgid "Altitude of the sun in degrees above the horizon"
-msgstr ""
+msgstr "Altura del sol sobre el horizonte en grados"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:6
-#, fuzzy
 msgid "Azimuth of the sun in degrees to the east of north"
-msgstr "a"
+msgstr "Azimut del sol al Este del Norte en grados"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:7
-#, fuzzy
 msgid "Factor for exaggerating relief"
-msgstr "Formato"
+msgstr "Factor para exagerar el relive"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:8
-#, fuzzy
 msgid "Scale factor for converting horizontal units to elevation units"
-msgstr "Escalar a"
+msgstr "Factor de escala para convertir unidades horizontales a unidades de elevación"
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
-#, fuzzy
 msgid "Set scaling factor (applies to lat./long. locations only)"
-msgstr "a"
+msgstr "Establecer factor de escala (aplicable sólo a localizaciones latitud/longitud)"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:1
 msgid ""
@@ -7986,18 +7975,16 @@ msgid "Output field seperator"
 msgstr "Salida"
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
-#, fuzzy
 msgid "calculates univariate statistics from a GRASS raster map"
-msgstr "GRASS ráster"
+msgstr "Calcula estadísticas univariantes a partir de un mapa ráster de GRASS."
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:3
 msgid "extended statistics (quartiles and percentile)"
-msgstr ""
+msgstr "estadísticas ampliadas (cuartiles y percentiles)"
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:5
-#, fuzzy
 msgid "Percentile to calculate (requires -e flag)"
-msgstr "a"
+msgstr "Percentil a calcular (requiere la opción -e)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
 msgid "r3.mapcalculator - Calculates new grid3D volume from r3.mapcalc expression"
@@ -8471,19 +8458,16 @@ msgid "Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assu
 msgstr "datos a"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
-#, fuzzy
 msgid "Import Mapgen or Matlab vector maps into GRASS."
-msgstr "Importar vectorial GRASS."
+msgstr "Importar mapas vectoriales Mapgen o Matlab a GRASS."
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:3
-#, fuzzy
 msgid "Input map is in Matlab format"
-msgstr "El archivo de ingreso es portable.\n"
+msgstr "El archivo de entrada está en formato Matlab"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
-#, fuzzy
 msgid "name of input file in Mapgen/Matlab format"
-msgstr "nombre"
+msgstr "nombre "
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
 #, fuzzy
@@ -8503,18 +8487,16 @@ msgid ""
 msgstr "GRASS ráster vectorial a columnas"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
-#, fuzzy
 msgid "vector, raster, statistics"
-msgstr "vectorial ráster"
+msgstr "vectorial, ráster, estadísticas"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
 msgid "continue if upload column(s) already exist"
 msgstr ""
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
-#, fuzzy
 msgid "Name of vector polygon map"
-msgstr "Nombre vectorial"
+msgstr "Nombre del mapa de polígono vectorial"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
 #, fuzzy
@@ -8531,9 +8513,8 @@ msgid "Reports geometry statistics for vectors"
 msgstr ""
 
 #: ../locale/scriptstrings/v.report_to_translate.c:2
-#, fuzzy
 msgid "vector, report, statistics"
-msgstr "vectorial"
+msgstr "vectorial, informe, estadísticas"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:3
 #, fuzzy
@@ -8571,9 +8552,8 @@ msgstr "GRASS vectorial"
 #: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
 #: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:68
 #: ../vector/v.random/main.c:82 ../vector/v.univar/main.c:60
-#, fuzzy
 msgid "vector, statistics"
-msgstr "vectorial"
+msgstr "vectorial, estadísticas"
 
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
 msgid "Extended statistics (quartiles and 90th percentile)"
@@ -8727,9 +8707,8 @@ msgid "Cannot open database <%s> by driver <%s>"
 msgstr "El controlador <%s> no puede abrir la Base de Datos <%s>"
 
 #: ../ps/ps.map/catval.c:58
-#, fuzzy
 msgid "Column type not supported (must be string)"
-msgstr "Tipo de columna no es soportada"
+msgstr "Tipo de columna no soportado (debe ser cadena)"
 
 #: ../ps/ps.map/catval.c:61 ../ps/ps.map/ps_vpoints.c:119
 #: ../vector/lidar/v.surf.bspline/main.c:279 ../vector/v.buffer/main.c:383
@@ -8793,7 +8772,7 @@ msgstr "Leyendo archivo de puntos vectoriales <%s en %s> ..."
 
 #: ../ps/ps.map/main.c:100
 msgid "postscript, map, printing"
-msgstr "postscript, mapa, imprimiendo"
+msgstr "postscript, mapa, impresión"
 
 #: ../ps/ps.map/main.c:101
 msgid "Hardcopy PostScript map output utility."
@@ -8834,12 +8813,15 @@ msgid "Number of copies to print"
 msgstr "Número de copias a imprimir"
 
 #: ../ps/ps.map/main.c:238
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
 "instruction instead. The parameter <%s> will removed in future versions of "
 "GRASS."
-msgstr "GRASS."
+msgstr ""
+"El uso de <%s> a partir de la línea de comando está despreciado. Por favor, "
+"use la instrucción mapeo <%s> en su lugar. El parámetro <%s> será eliminado "
+"en futuras versiones de GRASS."
 
 #: ../ps/ps.map/main.c:264
 #, c-format
@@ -8954,15 +8936,15 @@ msgstr "Error de lectura en el mapa vectorial"
 #: ../ps/ps.map/ps_vareas.c:105 ../ps/ps.map/ps_vlines.c:104
 #: ../ps/ps.map/ps_vpoints.c:173 ../ps/ps.map/ps_vpoints.c:182
 #: ../ps/ps.map/ps_vpoints.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "No record for category [%d]"
-msgstr "No hay registro en la base de datos para la categoría %d"
+msgstr "No hay registro para la categoría [%d]"
 
 #: ../ps/ps.map/ps_vareas.c:110 ../ps/ps.map/ps_vlines.c:109
 #: ../ps/ps.map/ps_vpoints.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid RGB color definition in column <%s> for category [%d]"
-msgstr "color"
+msgstr "Definición de color RGB no válida en la columna <%s> para la categoría [%d]"
 
 #: ../ps/ps.map/ps_vpoints.c:117 ../vector/lidar/v.surf.bspline/main.c:276
 #: ../vector/v.buffer/main.c:388 ../vector/v.surf.idw/read_sites.c:46
@@ -8971,20 +8953,22 @@ msgid "Column type not supported"
 msgstr "Tipo de columna no es soportada"
 
 #: ../ps/ps.map/ps_vpoints.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Attribute is of invalid size [%.3f] for category [%d]"
-msgstr "Atributo de tamaño no válido (%.3f) para la categoría %d."
+msgstr "Atributo de tamaño no válido [%.3f] para la categoría [%d]"
 
 #: ../ps/ps.map/r_group.c:32
 msgid "Can't get group information"
 msgstr "No se puede obtener información del grupo"
 
 #: ../ps/ps.map/r_vpoints.c:245
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The mapping instruction <%s> will be renamed to <%s> in future versions of "
 "GRASS. Please use <%s> instead."
-msgstr "a GRASS."
+msgstr ""
+"La instrucción de mapeo <%s> cambiará de nombre a <%s> en futuras versiones "
+"de GRASS. Por favor, use <%s> en su lugar."
 
 #: ../ps/ps.map/read_cfg.c:58
 #, c-format
@@ -18748,7 +18732,7 @@ msgstr "%s: especificación de valor no admitida"
 #: ../raster3d/r3.out.v5d/main.c:284 ../raster3d/r3.out.vtk/main.c:373
 #: ../raster3d/r3.to.rast/main.c:215
 msgid "raster3d, voxel"
-msgstr ""
+msgstr "ráster 3D, vóxel"
 
 #: ../raster3d/base/r3.info.main.c:81
 msgid "Outputs basic information about a user-specified 3D raster map layer."
@@ -19042,9 +19026,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:370
-#, fuzzy, c-format
+#, c-format
 msgid "Write the result to g3d map <%s>"
-msgstr "a"
+msgstr "Escribir el resultado al mapa G3D <%s>"
 
 #: ../raster3d/r3.gwflow/main.c:414
 msgid "Error closing g3d file"
@@ -19395,7 +19379,7 @@ msgid "write_vtk_unstructured_grid_cells: Writing the cells"
 msgstr "write_vtk_unstructured_grid_cells: escribiendo las celdas"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:333
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-"
 "ascii file"
@@ -19419,28 +19403,24 @@ msgid "write_vtk_vector_data: writing vector data"
 msgstr "write_vtk_vector_data: escribiendo datos vectoriales"
 
 #: ../raster3d/r3.stats/main.c:566
-#, fuzzy
 msgid "Generates volume statistics for raster3d maps."
-msgstr "Genera estadísticas de superficie para capas de mapa ráster."
+msgstr "Genera estadísticas de volúmenes para mapas ráster 3D."
 
 #: ../raster3d/r3.stats/main.c:577
-#, fuzzy
 msgid "Number of sub-ranges to collect stats from"
-msgstr "a"
+msgstr "Número de subrangos de los que recoger estadísticas"
 
 #: ../raster3d/r3.stats/main.c:582
 msgid "Calculate statistics based on equal value groups"
-msgstr ""
+msgstr "Calcula estadísticas basadas en grupos de valores iguales"
 
 #: ../raster3d/r3.stats/main.c:603
-#, fuzzy
 msgid "The number of subranges has to be equal or greater than 1"
-msgstr "a"
+msgstr "El número de subrangos tiene que ser igual o mayor que 1"
 
 #: ../raster3d/r3.stats/main.c:660
-#, fuzzy
 msgid "Sort non-null values"
-msgstr "Superponer (sólo valores no nulos)"
+msgstr "Ordenar valores no nulos"
 
 #: ../raster3d/r3.to.rast/main.c:55
 msgid "Could not close the 3d raster map"
@@ -26213,28 +26193,24 @@ msgid "Error reading wildcard."
 msgstr "Error al leer comodín."
 
 #: ../visualization/ximgview/main.c:60
-#, fuzzy
 msgid "unable to open display"
-msgstr "a mostrar"
+msgstr "No se puede mostrar"
 
 #: ../visualization/ximgview/main.c:82
-#, fuzzy
 msgid "cannot get window attributes"
-msgstr "No se puede seleccionar el atributo."
+msgstr "No se pueden obtener los atributo de la ventana"
 
 #: ../visualization/ximgview/main.c:240
-#, fuzzy
 msgid "unable to open image file"
-msgstr "a"
+msgstr "No se puede abrir el archivo de imagen"
 
 #: ../visualization/ximgview/main.c:243
-#, fuzzy
 msgid "unable to read BMP header"
-msgstr "a"
+msgstr "No se puede leer la cabecera BMP"
 
 #: ../visualization/ximgview/main.c:246
 msgid "invalid BMP header"
-msgstr ""
+msgstr "Cabecera BMP no válida"
 
 #: ../visualization/ximgview/main.c:252
 #, fuzzy
