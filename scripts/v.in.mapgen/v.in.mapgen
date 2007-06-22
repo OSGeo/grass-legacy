@@ -32,7 +32,7 @@
 #% key: input
 #% type: string
 #% gisprompt: old_file,file,input
-#% description: name of input file in Mapgen/Matlab format
+#% description: Name of input file in Mapgen/Matlab format
 #% required : yes
 #%end
 #%option
