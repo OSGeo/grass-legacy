@@ -30,11 +30,12 @@ import cmd
 import dbm
 from debug import Debug as Debug
 
-class Digit:
+class AbstractDigit:
     """
     Abstract digitization class
     """
     def __init__(self, settings=None):
+        self.map = None
         if not settings:
             self.settings = {}
             # symbology
@@ -61,16 +62,53 @@ class Digit:
             self.settings["categoryMode"] = "Next to use"
         else:
             self.settings = settings
+
+    def SetCategoryNextToUse(self):
+        """Find maximum category number in the map layer
+        and update Digit.settings['category']
+
+        Returns 'True' on success, 'False' on failure
+        """
+
+        categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
+                                       "input=%s" % self.map, 
+                                       "option=report",
+                                       "layer=%d" % self.settings["layer"]])
+
+        if categoryCmd.returncode != 0:
+            return
         
-class VEdit(Digit):
+        for line in categoryCmd.ReadStdOutput():
+            if "all" in line:
+                try:
+                    maxCat = int(line.split(' ')[-1]) + 1
+                    self.settings['category'] = maxCat
+                except:
+                    return False
+                return True
+
+    def SetCategory(self):
+        """Return category number to use (according Settings)"""
+        
+        if self.map and self.settings["categoryMode"] == "Next to use":
+            self.SetCategoryNextToUse()
+
+        return Digit.settings["category"]
+
+    def ReInitialize(self, map):
+        """Re-initialize settings according selected map layer"""
+        self.map = map
+        self.SetCategory()
+    
+class VEdit(AbstractDigit):
     """
     Prototype of digitization class based on v.edit command
 
     Note: This should be replaced by VDigit class.
     """
     def __init__(self, settings=None):
-        Digit.__init__(self, settings)
-    
+        AbstractDigit.__init__(self, settings)
+
     def AddPoint (self, map, type, x, y, z=None):
         """
         Add point/centroid to the vector map layer
@@ -79,12 +117,15 @@ class VEdit(Digit):
             key = "C"
         else:
             key = "P"
+
+        layer = self.settings["layer"]
+        cat   = self.SetCategory()
         
         addstring="""%s 1 1
-                    %f %f\n1 1""" % (key, x, y)
+                    %f %f\n%d %d""" % (key, x, y, layer, cat)
 
-        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, x=%f, y=%f" % \
-                   (map, type, x, y))
+        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, layer=%d, cat=%d, x=%f, y=%f" % \
+                   (map, type, layer, cat, x, y))
         
         self._AddFeature (map=map, input=addstring)
 
@@ -121,7 +162,7 @@ class VEdit(Digit):
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
 
-class VDigit(Digit):
+class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
 
@@ -133,14 +174,15 @@ class DigitSettingsDialog(wx.Dialog):
     """
     Standard settings dialog for digitization purposes
     """
-    def __init__(self, parent, title, style):
+    def __init__(self, parent, title, style=wx.DEFAULT_DIALOG_STYLE):
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
 
         self.parent = parent # mapdisplay.BufferedWindow class instance
-        
+
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
         self.__CreateSymbologyPage(notebook)
+        Digit.SetCategory() # update category number (next to use)
         self.__CreateSettingsPage(notebook)
         
         # buttons
@@ -257,15 +299,13 @@ class DigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
         self.layer = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                  value=str(Digit.settings["layer"])) # TODO: validator
-        if not self.addRecord.IsChecked():
-            self.layer.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.layer, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category number
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
         self.category = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                     value=str(Digit.settings["category"])) # TODO: validator
-        if Digit.settings["categoryMode"] != "Manual entry" or not self.addRecord.IsChecked():
+        if Digit.settings["categoryMode"] != "Manual entry":
             self.category.SetEditable(False)
             self.category.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -275,8 +315,6 @@ class DigitSettingsDialog(wx.Dialog):
         self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY, style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
                                         choices=[_("Next to use"), _("Manual entry"), _("No category")])
         self.categoryMode.SetValue(Digit.settings["categoryMode"])
-        if not self.addRecord.IsChecked():
-            self.categoryMode.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.categoryMode, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
 
@@ -323,20 +361,16 @@ class DigitSettingsDialog(wx.Dialog):
             self.category.SetEditable(False)
             self.category.Enable(False)
 
+        if mode == "No category":
+            self.category.SetValue("None")
+        else:
+            Digit.SetCategory()
+            self.category.SetValue(str(Digit.settings['category']))
+
     def OnChangeAddRecord(self, event):
         """Checkbox 'Add new record' status changed"""
-        if not event.IsChecked():
-            status = False
-        else:
-            status = True
+        Digit.settings["addRecord"] = event.IsChecked()
             
-        self.layer.Enable(status)
-        if status == False:
-            self.category.Enable(status)
-        elif status == True and self.categoryMode.GetCurrentSelection() == 1:
-            self.category.Enable(status)
-        self.categoryMode.Enable(status)
-
     def OnOK(self, event):
         """Button 'OK' clicked"""
         self.UpdateSettings()
@@ -363,7 +397,10 @@ class DigitSettingsDialog(wx.Dialog):
             # digitize new feature
             Digit.settings["addRecord"] = self.addRecord.IsChecked()
             Digit.settings["layer"] = int(self.layer.GetValue())
-            Digit.settings["category"] = int(self.category.GetValue())
+            if Digit.settings["categoryMode"] == "No category":
+                Digit.settings["category"] = None
+            else:
+                Digit.settings["category"] = int(self.category.GetValue())
             Digit.settings["categoryMode"] = self.categoryMode.GetValue()
         except:
             pass
