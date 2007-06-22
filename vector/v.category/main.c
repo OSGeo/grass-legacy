@@ -358,26 +358,31 @@ main (int argc, char *argv[])
 		    if ( shell->answer ) {
 			if ( freps[i]->count[FR_POINT] > 0 )
 			    fprintf (stdout, "%d point %d %d %d\n", freps[i]->field, freps[i]->count[FR_POINT],
-					freps[i]->min[FR_POINT], freps[i]->max[FR_POINT]);
-
+				     freps[i]->min[FR_POINT], freps[i]->max[FR_POINT]);
+			
 			if ( freps[i]->count[FR_LINE] > 0 )
 			    fprintf (stdout, "%d line %d %d %d\n", freps[i]->field, freps[i]->count[FR_LINE], 
-					freps[i]->min[FR_LINE], freps[i]->max[FR_LINE]);
-
+				     freps[i]->min[FR_LINE], freps[i]->max[FR_LINE]);
+			
 			if ( freps[i]->count[FR_BOUNDARY] > 0 )
 			    fprintf (stdout, "%d boundary %d %d %d\n", freps[i]->field, 
-				    	freps[i]->count[FR_BOUNDARY], freps[i]->min[FR_BOUNDARY], 
-				    	freps[i]->max[FR_BOUNDARY]);
-
+				     freps[i]->count[FR_BOUNDARY], freps[i]->min[FR_BOUNDARY], 
+				     freps[i]->max[FR_BOUNDARY]);
+			
 			if ( freps[i]->count[FR_CENTROID] > 0 )
 			    fprintf (stdout, "%d centroid %d %d %d\n", freps[i]->field, 
-					freps[i]->count[FR_CENTROID], freps[i]->min[FR_CENTROID], 
-					freps[i]->max[FR_CENTROID]);
-
+				     freps[i]->count[FR_CENTROID], freps[i]->min[FR_CENTROID], 
+				     freps[i]->max[FR_CENTROID]);
+			
 			if ( freps[i]->count[FR_AREA] > 0 )
 			    fprintf (stdout, "%d area %d %d %d\n", freps[i]->field, 
-				    	freps[i]->count[FR_AREA], freps[i]->min[FR_AREA], 
-					freps[i]->max[FR_AREA]);
+				     freps[i]->count[FR_AREA], freps[i]->min[FR_AREA], 
+				     freps[i]->max[FR_AREA]);
+			
+			if ( freps[i]->count[FR_ALL] > 0 )
+			    fprintf (stdout, "%d all %d %d %d\n", freps[i]->field, 
+				     freps[i]->count[FR_ALL], freps[i]->min[FR_ALL], 
+				     freps[i]->max[FR_ALL]);
 		    } else {
 		        if (freps[i]->table != '\0') {
 			    G_message("%s: %d / %s", _("Layer / table"),
