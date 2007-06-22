@@ -107,7 +107,7 @@ int main(int argc,char *argv[])
     pflag = G_define_flag();
     pflag->key = 'p';
     pflag->description =
-	_("Print paper formats ( name width height left right top bottom(margin) )");
+	_("List paper formats ( name width height left right top bottom(margin) )");
 
     eflag = G_define_flag();
     eflag->key = 'e';
@@ -237,7 +237,7 @@ int main(int argc,char *argv[])
     {
 	G_warning(_("Using <%s> from the command line is depreciated. "
 		    "Please use the <%s> mapping instruction instead. "
-		    "The parameter <%s> will removed in future versions of GRASS."),
+		    "The parameter <%s> will be removed in future versions of GRASS."),
 		  "scale", "scale", "scale");
 	can_reset_scale = isatty(0);
 	if (check_scale(map_scale->answer))
