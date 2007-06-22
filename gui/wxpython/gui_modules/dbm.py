@@ -589,8 +589,23 @@ class UpdateRecordDialog(wx.Dialog):
     """
     Standard dialog used for adding new record into the attribute table
     """
-    def __init__(self, parent, map, layer=1, cat=1, title=_("Add new record into table"), style=wx.DEFAULT_DIALOG_STYLE):
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+    def __init__(self, parent, map, layer=1, cat=1, title=_("Add new record into table"),
+                 style=wx.DEFAULT_DIALOG_STYLE, pos=wx.DefaultPosition):
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style, pos=pos)
+
+        # determine column names and types
+        columnsCommand = cmd.Command (cmd=["v.db.connect", "-c",
+                                           "map=%s" % map, "layer=%d" % layer, "--q"])
+
+        self.table = None
+        self.columns = [] # (name, type, value)
+        if columnsCommand.returncode == 0:
+            output = columnsCommand.ReadStdOutput()
+            for line in output:
+                columnType, columnName = line.split('|')
+                self.columns.append ([columnName.replace('\n', ''), columnType]) 
+        else:
+            return
 
         # select values
         selectCommand = cmd.Command(cmd=["v.db.select", "-c",
@@ -598,76 +613,97 @@ class UpdateRecordDialog(wx.Dialog):
                                          "where=cat=%d" % cat, "--q"])
 
         if selectCommand.returncode == 0:
-            values = []
-            valueString = selectCommand.module_stdout.readline().replace("\n", "")
-            for value in valueString.split('|'):
-                values.append (value)
-            values.reverse() # reverse list because of calling 'pop'
-        else:
-            values = None
+            idx = 0
+            try:
+                valueString = selectCommand.ReadStdOutput()[0] # read first line
+                for value in valueString.split('|'):
+                    self.columns[idx].append(value.replace('\n', ''))
+                    idx = idx + 1
+            except: # default values
+                for col in self.columns:
+                    col.append("")
+            if idx > 0:
+                self.SetTitle(_("Update existing record"))
+
+        print "#", self.columns
         
-
-            
-        # determine column names and types
-        columnsCommand = cmd.Command (cmd=["v.info", "-c",
-                                           "map=%s" % map, "layer=%d" % layer, "--q"])
-
-        columns = []
-        if columnsCommand.returncode == 0:
-            while True:
-                columnDef = columnsCommand.module_stdout.readline() # type|name
-                if not columnDef:
-                    break
-                columnType, columnName = columnDef.replace("\n","").split('|')
-                columns.append ((columnName, columnType))
-        else:
-            pass
-
         # dialog body
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        
         border = wx.BoxSizer(wx.VERTICAL)
-        box = wx.StaticBox (parent=self, id=wx.ID_ANY, label=" %s " % _("Attributes"))
+        box = wx.StaticBox (parent=self, id=wx.ID_ANY, label=" %s %d " % (_("Layer"), layer))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
         flexSizer.AddGrowableCol(0)
 
-        for name, type in columns:
+        # columns
+        for colIdx in range(len(self.columns)):
+            name  = self.columns[colIdx][0]
+            type  = self.columns[colIdx][1]
+            value = self.columns[colIdx][2]
             colName = wx.StaticText(parent=self, id=wx.ID_ANY, label=name)
             colType = wx.StaticText(parent=self, id=wx.ID_ANY, label="[" + type.lower() + "]")
             delimiter = wx.StaticText(parent=self, id=wx.ID_ANY, label=":")
-            if name == "cat":
-                colValue = wx.StaticText(parent=self, id=wx.ID_ANY, label=values.pop())
+            if name.lower() == "cat":
+                colValue = wx.StaticText(parent=self, id=wx.ID_ANY, label=str(cat))
             else:
-                colValue = wx.TextCtrl(parent=self, id=wx.ID_ANY, value=values.pop(), size=(250, -1)) # TODO: validator
+                colValue = wx.TextCtrl(parent=self, id=wx.ID_ANY, value=value, size=(250, -1)) # TODO: validator
+                
+
+            # add widget reference to self.columns
+            self.columns[colIdx].append(colValue)
                 
             flexSizer.Add(colName, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
             flexSizer.Add(colType, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
             flexSizer.Add(delimiter, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
             flexSizer.Add(colValue, proportion=0, flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
 
-        # buttons
-        btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnOk = wx.Button(self, wx.ID_OK, _("OK") )
-        btnOk.SetDefault()
-
-        # bindigs
-        #btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        #btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
-
-        # sizers
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         
+        # sql box
+        box    = wx.StaticBox (parent=self, id=wx.ID_ANY, label=" %s " % _("SQL statement"))
+        sizer  = wx.StaticBoxSizer(box, wx.VERTICAL)
+        sql = wx.StaticText(parent=self, id=wx.ID_ANY,
+                             label="INSERT into %s (cat) VALUES (%d)" % ("table", cat))
+        sizer.Add(item=sql, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+
+        mainSizer.Add(item=border, proportion=1, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
+
+        # buttons
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnReset  = wx.Button(self, wx.ID_APPLY, _("&Reset"))
+        btnSubmit = wx.Button(self, wx.ID_OK, _("&Submit"))
+        btnSubmit.SetDefault()
+
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
-        btnSizer.AddButton(btnOk)
+        btnSizer.AddButton(btnReset)
+        btnSizer.AddButton(btnSubmit)
         btnSizer.Realize()
-        
-        mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=border, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        # bindigs
+        btnReset.Bind(wx.EVT_BUTTON, self.OnReset)
+        btnSubmit.Bind(wx.EVT_BUTTON, self.OnSubmit)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
+
+    def OnReset(self, event):
+        """Reset form"""
+        for colIdx in range(len(self.columns)):
+            name  = self.columns[colIdx][0]
+            value = self.columns[colIdx][2]
+            win   = self.columns[colIdx][3]
+            if name.lower() != "cat":
+                win.SetValue(value)
+
+    def OnSubmit(self, event):
+        """Submit record"""
+        self.Close()
         
 def main(argv=None):
     if argv is None:

@@ -359,13 +359,21 @@ class DigitToolbar(AbstractToolbar):
         """
         try:
             self.layerSelectedID = self.layers.index(layerSelected)
-            self.combo.SetValue (layerSelected.name)
-            self.parent.maptoolbar.combo.SetValue ('Digitize')
-            Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
-                       (self.layerSelectedID, self.layers[self.layerSelectedID].name))
-            return True
+            mapName = self.layers[self.layerSelectedID].name
         except:
             return False
+
+        # update toolbar
+        self.combo.SetValue (layerSelected.name)
+        self.parent.maptoolbar.combo.SetValue ('Digitize')
+        # set initial category number for new features (layer=1), etc.
+
+        Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
+                   (self.layerSelectedID, mapName))
+        
+        digit.Digit.ReInitialize(mapName)
+
+        return True
 
     def StopEditing (self, layerSelected):
         """

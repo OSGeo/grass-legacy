@@ -585,6 +585,17 @@ class BufferedWindow(wx.Window):
         if len(self.polycoords) > 0:
             self.Draw(self.pdc, drawid=self.plineid, pdctype='polyline', coords=self.polycoords)
 
+    def DrawCross(self, coords, size, rotation=0):
+        """Draw cross in PseudoDC
+
+           TODO: implement rotation
+        """
+        coordsCross = ((coords[0] - size, coords[1], coords[0] + size, coords[1]),
+                       (coords[0], coords[1] - size, coords[0], coords[1] + size))
+        for lineCoords in coordsCross:
+            self.lineid = wx.ID_NEW + 1
+            self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=lineCoords)
+    
     def MouseActions(self, event):
         """
         Mouse motion and button click notifier
@@ -696,16 +707,25 @@ class BufferedWindow(wx.Window):
                     if digit.type in ["point", "centroid"]:
                         # add new point
                         self.mouse['begin'] = event.GetPositionTuple()[:]
-                        self.Draw(self.pdc, drawid=self.lineid, pdctype='point', coords=self.mouse['begin'])
-                        east, north = self.Pixel2Cell(event.GetPositionTuple()[0],
-                                                      event.GetPositionTuple()[1])
+                        self.DrawCross(self.mouse['begin'], 5)
+                        east, north = self.Pixel2Cell(self.mouse['begin'][0],
+                                                      self.mouse['begin'][1])
                         Digit.AddPoint(map=map,
                                        type=digit.type,
                                        x=east, y=north)
+                        
                         # add new record into atribute table
-                        if dbm.UpdateRecordDialog(parent=self, map=map, layer=1).ShowModal() == wx.ID_OK:
-                            pass
+                        if Digit.settings["addRecord"]:
+                            offset = 5
+                            posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
+                                                             self.mouse['begin'][1] + offset))
 
+                            if dbm.UpdateRecordDialog(parent=self, map=map,
+                                                      layer=Digit.settings["layer"],
+                                                      cat=Digit.settings["category"],
+                                                      pos=posWindow).ShowModal() == wx.ID_OK:
+                                pass
+                            
                         self.render=True
                         self.UpdateMap() # redraw map
 
@@ -1351,8 +1371,8 @@ class MapFrame(wx.Frame):
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
             self.MapWindow.zoomtype = 0
-            self.MapWindow.pen = wx.Pen(colour='red', width=2, style=wx.SHORT_DASH)
-            self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SHORT_DASH)
+            self.MapWindow.pen     = wx.Pen(colour='red',   width=2, style=wx.SOLID)
+            self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SOLID)
 
         self._mgr.Update()
 
