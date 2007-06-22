@@ -103,9 +103,10 @@ main (int argc, char *argv[])
         step_opt->description = _("Category increment");
 
 	shell = G_define_flag();
-        shell->key               = 'g';
-        shell->description       = _("Shell script style, currently only for report");
-	
+        shell->key         = 'g';
+        shell->label       = _("Shell script style, currently only for report");
+	shell->description = _("Format: layer type count min max");
+
 	G_gisinit(argv[0]);
 
         if (G_parser (argc, argv))
