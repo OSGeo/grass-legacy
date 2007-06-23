@@ -127,11 +127,12 @@ int main(int argc, char **argv)
 
     nlines = Vect_get_num_lines ( &PMap );
     G_debug ( 2, "nlines = %d", nlines );
+    G_message("pcat|lid|mpost|offset");
     for ( line = 1; line <= nlines; line++ ) {
 	int nearest, pcat, lcat, lid, ret;
 	double along, mpost, offset;
 
-	G_debug ( 4, "point = %d", line );
+	G_debug ( 3, "point = %d", line );
 	type = Vect_read_line ( &PMap, PPoints, PCats, line );
 	if ( type != GV_POINT ) continue;
 	Vect_cat_get ( PCats, pfield, &pcat );
@@ -176,7 +177,7 @@ int main(int argc, char **argv)
 	    continue;
 	}
 
-	G_debug ( 4, "  lid = %d mpost = %f offset = %f", lid, mpost, offset );
+	G_debug ( 3, "  lid = %d mpost = %f offset = %f", lid, mpost, offset );
 
 	fprintf (stdout, "|%d|%f+%f\n", lid, mpost, offset);
 	n_found++;

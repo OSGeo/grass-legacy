@@ -6,10 +6,11 @@ points in vector map using linear reference system.
 <h2>EXAMPLE</h2>
 
 In this example, the 'route_lrs' shall be queried for unknown
-positions (points) along the LRS:
+positions (points, stored in the map <em>newpoints</em>) along the LRS:
 
 <div class="code"><pre>
 v.lrs.where lines=route_lrs points=newpoints rstable=route_lrs
+pcat|lid|mpost|offset
 1|22|1.000000+432.113931
 [1] points read from input
 [1] positions found
