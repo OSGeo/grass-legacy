@@ -55,6 +55,14 @@ static int cmpvaluedouble (const void *pa, const void *pb)
     return 0;
 }
 
+static int cmpvaluestring(const void *pa, const void *pb)
+{
+   dbCatVal * const *a = pa;
+   dbCatVal * const *b = pb;
+
+   return strcmp( (char *) a, (char *) b );
+}
+
 /*!
  \fn db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pval)
  \brief Select array of ordered integers from table/column
@@ -329,7 +337,7 @@ db_CatValArray_sort ( dbCatValArray *arr )
 
 /*!
  \fn int db_CatValArray_sort_by_value (dbCatValArray *arr)
- \brief Sort key/value array by value (currently only integer or double type is supported)
+ \brief Sort key/value array by value
  \return DB_OK on success, DB_FAILED on error
  \param arr dbCatValArray (key/value array)
 */
@@ -343,6 +351,12 @@ db_CatValArray_sort_by_value ( dbCatValArray *arr )
 	break;
     case (DB_C_TYPE_DOUBLE):
 	qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpvaluedouble);
+	break;
+    case (DB_C_TYPE_STRING):
+        qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpvaluestring);
+	break;
+    case (DB_C_TYPE_DATETIME): /* is cmpvaluestring right here ? */
+        qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpvaluestring);
 	break;
     default:
 	return (DB_FAILED);
