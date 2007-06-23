@@ -5,18 +5,6 @@
 # Paulo Marcondes <paulomarcondes gmail.com>, Carlos Grohmann <carlos.grohmann gmail.com>, 2005.
 # Paulo Eduardo Pasquini Marcondes <paulomarcondes gmail.com>, 2005, 2006, 2007
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
-# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 #
 msgid ""
 msgstr ""
@@ -41,7 +29,7 @@ msgstr "Nome de tabela de mapa <%s> ilegal. Não pode conter '.' ou 'NULL'.\n"
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr "Nome de tabela de mapa Ilegal <%s>. Deve começar com uma letra.\n"
+msgstr "Nome de tabela de mapa ilegal <%s>. Deve começar com uma letra.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -65,7 +53,7 @@ msgstr "Comando desconhecido: %d último: %d"
 
 #: ../lib/driver/command.c:553
 msgid "Monitor: get_command: Premature EOF"
-msgstr "Monitor: get_command: EOF Prematuro"
+msgstr "Monitor: get_command: Fim de arquivo prematuro"
 
 #: ../lib/driver/main.c:89
 #, c-format
@@ -2030,7 +2018,7 @@ msgstr "Impossível alocar espaço para estrutura de vetores"
 
 #: ../lib/gmath/la.c:796
 msgid "Specified matrix row index is outside range"
-msgstr ""
+msgstr "Índice da linha da matriz especificada fora do limite"
 
 #: ../lib/gmath/la.c:837
 msgid "Specified row index is outside range"
@@ -2100,25 +2088,31 @@ msgstr "\t 1. testando arrays 2D"
 
 #: ../lib/gpde/test/test_arrays.c:48
 msgid "\t 2. testing 3d arrays"
-msgstr ""
+msgstr "\t 2. testando arrays 3d"
 
 #: ../lib/gpde/test/test_arrays.c:52
 msgid ""
 "\n"
 "-- Array unit tests failure --"
 msgstr ""
+"\n"
+"-- Falha nos teste de unidade de array"
 
 #: ../lib/gpde/test/test_arrays.c:54
 msgid ""
 "\n"
 "-- Array unit tests finished successfully --"
 msgstr ""
+"\n"
+"-- Testes de unidade de Array bem sucedidos --"
 
 #: ../lib/gpde/test/test_assemble.c:42
 msgid ""
 "\n"
 "++ Running assembling unit tests ++"
 msgstr ""
+"\n"
+"++ Executando testes de unidade de montagem ++"
 
 #: ../lib/gpde/test/test_assemble.c:44
 msgid "\t 1. testing 2d assembling"
@@ -2440,7 +2434,7 @@ msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:105
 msgid "The calculation time in seconds"
-msgstr ""
+msgstr "Tempo de cálculo em segundos"
 
 #: ../lib/gpde/N_solvers.c:50
 msgid "The gauss elimination solver does not works with sparse matrices"
@@ -2456,7 +2450,7 @@ msgstr "O sistema de equações lineares não é quadrático"
 
 #: ../lib/gpde/N_solvers.c:56
 msgid "Starting gauss elimination solver"
-msgstr ""
+msgstr "Iniciando eliminação de Gauss"
 
 #: ../lib/gpde/N_solvers.c:83
 msgid "The lu solver does not works with sparse matrices"
