@@ -157,7 +157,7 @@ class Data:
                 ("Compress/decompress", "Compress/decompress raster file", "self.OnMenuCmd", "r.compress"),
                 ("","","", ""),
                 ("Boundaries", "Manage boundary definition", "self.OnMenuCmd", "r.region"),
-                ("Null values", "Manage null values", "self.OnMenuCmd", "r.null"),
+                ("Manage NULL values", "Manage NULL values", "self.OnMenuCmd", "r.null"),
                 ("Quantization", "Quantization for floating-point maps", "self.OnMenuCmd", "r.quant"),
                 ("Timestamp", "Manage timestamp for files", "self.OnMenuCmd", "r.timestamp"),
                 ("","","", ""),
@@ -169,7 +169,7 @@ class Data:
                 ("Support file maintenance", "Support file creation and maintenance", "self.OnMenuCmd", "r.support"),
                 ("Update map statistics", "Update map statistics", "self.OnMenuCmd", "r.support.stats"),
                 ("","","", ""),
-                ("Reproject", "Reproject raster from other location", "self.OnMenuCmd", "r.proj"),
+                ("Reproject raster", "Reproject raster from other location", "self.OnMenuCmd", "r.proj"),
                 ("Tiling", "Generate tiling for other projection", "self.OnMenuCmd", "r.tileset"),
                 )),
               ("Manage map colors", (
@@ -182,10 +182,10 @@ class Data:
                 )),
               ("Query by coordinates", "Query by coordinates", "self.OnMenuCmd", "r.what"),
               ("","","", ""),
-              ("Buffers", "Develop raster buffer", "self.OnMenuCmd", "r.buffer"),
+              ("Buffer rasters", "Create raster buffers around raster objects", "self.OnMenuCmd", "r.buffer"),
               ("Closest points", "r.distance", "self.OnMenuCmd", "r.distance"),
               ("MASK", "Develop raster mask", "self.OnMenuCmd", "r.mask"),
-              ("Map calculator", "Map calculator", "self.OnMenuCmd", "scripts/mapcalc_gparser.sh"),
+              ("Map calculator", "Map calculator for map algebra", "self.OnMenuCmd", "scripts/mapcalc_gparser.sh"),
               ("Neighborhood analysis", (
                 ("Moving window", "Moving window analysis of raster cells", "self.OnMenuCmd", "r.neighbors"),
                 ("Neighborhood points", "Analyze vector points in neighborhood of raster cells", "self.OnMenuCmd", "v.neighbors"),
@@ -193,7 +193,7 @@ class Data:
               ("Overlay maps", (
                 ("Cross product", "Cross product", "self.OnMenuCmd", "r.cross"),
                 ("Map series", "Function of map series (time series)", "self.OnMenuCmd", "r.series"),
-                ("Patch maps", "Patch maps", "self.OnMenuCmd", "r.patch"),
+                ("Patch raster maps", "Patch maps", "self.OnMenuCmd", "r.patch"),
                 ("","","", ""),
                 ("Statistical overlay", "Statistical calculations for cover map over base map", "self.OnMenuCmd", "r.statistics"),
                 )),
@@ -316,7 +316,7 @@ class Data:
                 )),
               ("","","", ""),
               ("Report and statistics", (
-                ("Report basic information", "Report basic file information", "self.OnMenuCmd", "r.info"),
+                ("Basic raster information", "Report basic file information", "self.OnMenuCmd", "r.info"),
                 ("Report category information", "Report category labels and values", "self.OnMenuCmd", "r.cats"),
                 ("","","", ""),
                 ("General statistics", "General statistics", "self.OnMenuCmd", "r.stats"),
@@ -325,7 +325,7 @@ class Data:
                 ("Sum area by map and category", "Sum area by map and category", "self.OnMenuCmd", "r.report"),
                 ("Statistics for clumped cells", "Summary statistics for clumped cells (work with r.clump)", "self.OnMenuCmd", "r.volume"),
                 ("Total corrected area", "Total surface area corrected for topography", "self.OnMenuCmd", "r.surf.area"),
-                ("Univariate statistics", "Univariate statistics", "self.OnMenuCmd", "r.univar"),
+                ("Univariate raster statistics", "Calculate univariate statistics for raster categories", "self.OnMenuCmd", "r.univar"),
                 ("","","", ""),
                 ("Sample transects", "Sample values along transects", "self.OnMenuCmd", "r.profile"),
                 ("Sample transects (bearing/distance)", "Sample values along transects (use azimuth, distance)", "self.OnMenuCmd", "r.transect"),
@@ -365,7 +365,7 @@ class Data:
               ("Query coordinate(s)", "Query by coordinate(s)", "self.OnMenuCmd", "v.what"),
               ("Query map features", "Query by map features", "self.OnMenuCmd", "v.select"),
               ("","","", ""),
-              ("Buffers", "Create vector buffers", "self.OnMenuCmd", "v.buffer"),
+              ("Buffer vectors", "Create vector buffers around vector objects", "self.OnMenuCmd", "v.buffer"),
               ("Lidar analysis", (
                 ("Detect edges", "Detect object edges in Lidar data", "self.OnMenuCmd", "v.lidar.edgedetection"),
                 ("Detect interiors", "Detect interior of objects in Lidar data", "self.OnMenuCmd", "v.lidar.growing"),
@@ -389,7 +389,7 @@ class Data:
                 )),
               ("Overlay maps", (
                 ("Overlay maps", "Overlay/combine 2 vector maps", "self.OnMenuCmd", "v.overlay"),
-                ("Patch maps", "Patch multiple maps (combine)", "self.OnMenuCmd", "v.patch"),
+                ("Patch vector maps", "Patch multiple maps (combine)", "self.OnMenuCmd", "v.patch"),
                 )),
               ("","","", ""),
               ("Change attributes", (
@@ -419,10 +419,10 @@ class Data:
               ("Update point attributes from areas", "Transfer attribute data from queried area map to points", "self.OnMenuCmd", "v.what.vect"),
               ("","","", ""),
               ("Reports and statistics", (
-                ("Basic information", "Basic information", "self.OnMenuCmd", "v.info"),
+                ("Basic vector information", "Basic information", "self.OnMenuCmd", "v.info"),
                 ("Report topology or load to attributes", "Load vector attributes to database or create reports", "self.OnMenuCmd", "v.to.db"),
                 ("Report topology by category", "Report areas for vector attribute categories", "self.OnMenuCmd", "v.report"),
-                ("Univariate statistics", "Univariate statistics", "self.OnMenuCmd", "v.univar"),
+                ("Univariate attribute statistics", "Calculate univariate statistics for vector attributes", "self.OnMenuCmd", "v.univar"),
                 ("","","", ""),
                 ("Test normality", "Test normality of point distribution", "self.OnMenuCmd", "v.normal"),
                 ("Calculate stats for raster map underlying vector objects", "Calculate stats for raster map underlying vector objects", "self.OnMenuCmd", "v.rast.stats"),
@@ -483,17 +483,17 @@ class Data:
               )),
           ("Volumes", (
               ("Develop grid3D volumes", (
-                ("Manage nulls", "Manage nulls for grid3D volume", "self.OnMenuCmd", "r3.null"),
+                ("Manage 3d NULL values", "Manage NULL values for grid3D volume", "self.OnMenuCmd", "r3.null"),
                 ("Manage timestamp", "Manage timestamp for grid3D volume", "self.OnMenuCmd", "r3.timestamp"),
                 )),
               ("","","", ""),
               ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
-              ("3D map calculator", "Map calculator for grid3D volume operations", "self.OnMenuCmd", "r3.mapcalculator"),
+              ("3D map calculator", "Map calculator for volumetric map algebra", "self.OnMenuCmd", "r3.mapcalculator"),
               ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
               ("Interpoloate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
               ("","","", ""),
               ("Report and Statistics", (
-                ("Basic information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
+                ("Basic volume information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
                 )),
               ("","","", "")
               )),
