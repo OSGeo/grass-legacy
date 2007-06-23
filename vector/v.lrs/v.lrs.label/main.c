@@ -178,7 +178,7 @@ int main(int argc, char **argv)
     Width = G_define_option();
     Width->key = "width";
     Width->label = _("Line width of text");
-    Width->description = _("Only for p.map output");
+    Width->description = _("Only for d.label output");
     Width->type = TYPE_INTEGER;
     Width->answer = "1";
     Width->options = "1-100";
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
     Hcolor = G_define_option();
     Hcolor->key = "hcolor";
     Hcolor->label = _("Highlight color for text");
-    Hcolor->description = _("Only for p.map output");
+    Hcolor->description = _("Only for d.label output");
     Hcolor->type = TYPE_STRING;
     Hcolor->answer = "none";
     Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,magenta,"
@@ -195,7 +195,7 @@ int main(int argc, char **argv)
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
     Hwidth->label = _("Line width of highlight color");
-    Hwidth->description = _("Only for p.map output");
+    Hwidth->description = _("Only for d.label output");
     Hwidth->type = TYPE_INTEGER;
     Hwidth->answer = "0";
     Hwidth->options = "0-100";
@@ -295,7 +295,7 @@ int main(int argc, char **argv)
 	if ( cat < 0 ) continue;
 
 	sprintf ( buf, "select start_map, end_map, start_mp, start_off, end_mp, end_off, lid "
-		       "from %s where lcat = %d", table_opt->answer, cat );
+		       "from %s where lcat = %d;", table_opt->answer, cat );
 	G_debug(2, "  SQL: %s", buf);
 	db_append_string ( &stmt, buf);
 	
