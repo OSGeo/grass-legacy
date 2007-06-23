@@ -3043,11 +3043,11 @@ msgstr ""
 
 #: ../lib/vector/Vlib/build_nat.c:542
 msgid "Attaching islands: "
-msgstr "Füge Inselflächen hinzu:"
+msgstr "Füge Inselflächen hinzu: "
 
 #: ../lib/vector/Vlib/build_nat.c:557
 msgid "Attaching centroids: "
-msgstr "Füge Zentroide hinzu:"
+msgstr "Füge Zentroide hinzu: "
 
 #: ../lib/vector/Vlib/build_ogr.c:258
 #, c-format
@@ -3273,9 +3273,8 @@ msgid "GngFlatten error"
 msgstr ""
 
 #: ../lib/vector/Vlib/net.c:377
-#, fuzzy
 msgid "Graph was built"
-msgstr "Die Topologie wurde erstellt.\n"
+msgstr "Der Graph wurde erstellt"
 
 #: ../lib/vector/Vlib/net.c:501
 msgid "Wrong line direction in Vect_net_get_line_cost()"
