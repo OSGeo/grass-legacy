@@ -22,12 +22,12 @@ Contents
       still compile; fix otherwise
 
    - cleanup rubbish:
-       find . -name '*~'  | xargs rm
-       find . -name '*.o' | xargs rm
-       find . -name '*.bak' | xargs rm
-       find . -name '.#*' | xargs rm
+       find . -name '*~'     | xargs rm
+       find . -name '*.bak'  | xargs rm
+       find . -name '.#*'    | xargs rm
        find . -name '*.orig' | xargs rm
-       find . -name '*.rej' | xargs rm
+       find . -name '*.rej'  | xargs rm
+       find . -name '*.o'    | xargs rm
        chmod -R a+r *
 
    - Create release branch (only if not yet existing)
