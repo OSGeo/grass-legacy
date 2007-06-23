@@ -59,6 +59,7 @@ SUBDIRS = \
 	v.db.droptable \
 	v.db.renamecol \
 	v.db.reconnect.all \
+	v.db.univar \
 	v.db.update \
 	v.dissolve \
 	v.in.garmin \
