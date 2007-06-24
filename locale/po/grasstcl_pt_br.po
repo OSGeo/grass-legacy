@@ -1,6 +1,4 @@
 # translation of grasstcl_pt_br.po to Portugu?s Brasileiro
-# translation of grasstcl_pt_br.po to Portugu?s Brasileiro
-# translation of grasstcl_pt_br.po to Portugu?s Brasileiro
 # translation of grasstcl_pt_br.po to Brazilian Portuguese
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -16,7 +14,7 @@ msgstr ""
 "POT-Creation-Date: 2007-06-16 00:05+0200\n"
 "PO-Revision-Date: 2007-06-16 18:27-0300\n"
 "Last-Translator: Paulo Eduardo Pasquini Marcondes <paulomarcondes@gmail.com>\n"
-"Language-Team: Portugu?s Brasileiro <paulomarcondes@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
