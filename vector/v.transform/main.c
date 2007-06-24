@@ -4,7 +4,7 @@
 * AUTHOR(S):    See below also.
 *               Eric G. Miller <egm2@jps.net>
 *               Upgrade to 5.7 Radim Blazek
-* PURPOSE:      To transform a vector layer's coordinates via a set of tie
+* PURPOSE:      To transform a vector map's coordinates via a set of tie
 *               points.
 * COPYRIGHT:    (C) 2002 by the GRASS Development Team
 *
@@ -52,8 +52,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Transforms a vector map layer from one "
-			  "coordinate system into another coordinate system.");
+    module->description = _("Transforms a vector map via a set of tie points.");
 
     quiet_flag = G_define_flag();
     quiet_flag->key		= 'q';
