@@ -15,7 +15,7 @@
 #############################################################################
 
 #%Module
-#% description: Exports GRASS raster data into various formats (requires GDAL)
+#% description: Exports GRASS raster data into various formats (requires GDAL).
 #% keywords: raster, export
 #%End
 #%flag
@@ -51,7 +51,7 @@
 #%option
 #% key: output
 #% type: string
-#% description: Name of output file
+#% description: Name for output file
 #% required : no
 #%END
 #%option
@@ -77,7 +77,7 @@ fi
 PROG=`basename $0`
 
 g.message -w "This module is superseded and will be removed in future \
-  versions of GRASS. Use the much faster r.out.gdal instead."
+versions of GRASS. Use the much faster r.out.gdal instead."
 
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
