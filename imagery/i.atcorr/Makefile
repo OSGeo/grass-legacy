@@ -8,21 +8,20 @@ SOURCES = AerosolConcentration.cpp Transform.cpp Iwave.cpp Interp.cpp GeomCond.c
 
 HEADERS = 6s.h common.h Output.h Abstra.h AerosolModel.h Altitude.h AtmosModel.h Gauss.h GeomCond.h Interp.h Iwave.h Transform.h AerosolConcentration.h
 
-INCLUDE_GIS = $(INST_DIR)/include
-LIBRARY_GIS = $(INST_DIR)/lib
-
 OBJARCH=OBJ.$(ARCH)
 
 $(OBJARCH)/%.o:%.cpp
-	$(CXX) -c $< -o $@ -I$(INCLUDE_GIS) -L$(LIBRARY_GIS)
+	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) $< -o $@
 
 WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
   -Wimplicit-int -Wimplicit-function-declaration -Wreturn-type	\
   -Wcomment  -Wno-sign-compare
 
+LIBS = $(GISLIB) 
+DEPLIBS = $(DEPGISLIB)
 
-default: $(BIN)/$(PGM) $(BIN)/$(PGM) htmlcmd
+default: $(BIN)/$(PGM) htmlcmd
 
 $(BIN)/$(PGM): $(SOURCES)
-	$(CXX) $(LDFLAGS) -o $@ $(GISLIB) $(SOURCES) -I $(INCLUDE_GIS) -L $(LIBRARY_GIS)
+	$(CXX) $(LDFLAGS) $(ARCH_INC) -o $@ $(SOURCES) $(LIBS) $(MATHLIB)
 
