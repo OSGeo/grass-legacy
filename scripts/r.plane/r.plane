@@ -16,14 +16,14 @@
 #############################################################################
 
 #%Module
-#%  description: Creates raster plane map given dip (inclination), aspect (azimuth), and one point
+#%  description: Creates raster plane map given dip (inclination), aspect (azimuth) and one point.
 #%  keywords: raster, elevation
 #%End
 #%option
 #% key: name
 #% type: string
 #% gisprompt: new,cell,raster
-#% description: Name of raster plane to be created.
+#% description: Name of raster plane to be created
 #% required : yes
 #%end
 #%option
@@ -31,7 +31,7 @@
 #% type: double
 #% gisprompt: -90-90
 #% answer: 0.0
-#% description: Dip of plane. Value must be between -90 and 90 degrees.
+#% description: Dip of plane. Value must be between -90 and 90 degrees
 #% required : yes
 #%end
 #%option
@@ -39,32 +39,32 @@
 #% type: double
 #% gisprompt: 0-360
 #% answer: 0.0
-#% description: Azimuth of the plane. Value must be between 0 and 360 degrees.
+#% description: Azimuth of the plane. Value must be between 0 and 360 degrees
 #% required : yes
 #%end
 #%option
 #% key: easting
 #% type: double
-#% description: Easting coordinate of a point on the plane.
+#% description: Easting coordinate of a point on the plane
 #% required : yes
 #%end
 #%option
 #% key: northing
 #% type: double
-#% description: Northing coordinate of a point on the plane.
+#% description: Northing coordinate of a point on the plane
 #% required : yes
 #%end
 #%option
 #% key: elevation
 #% type: double
-#% description: Elevation coordinate of a point on the plane.
+#% description: Elevation coordinate of a point on the plane
 #% required : yes
 #%end
 #%option
 #% key: type
 #% type: string 
 #% options: int,float,double
-#% description: Type of the raster map to be created.
+#% description: Type of the raster map to be created
 #% required : yes
 #%end
 
