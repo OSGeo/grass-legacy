@@ -804,7 +804,7 @@ int G_parser (int argc, char **argv)
 			exit(EXIT_SUCCESS);
 		}
 
-		/* If first arg is "--tcltk" then then generate
+		/* If first arg is "--tcltk" then generate
 		 * code for tcltkgrass */
 		if (strcmp(argv[1],"--tcltk") == 0)
 		{
@@ -1182,6 +1182,25 @@ void print_escaped_for_xml (FILE * fp, char * str) {
 		}
 	}
 }
+
+
+/**
+ * \brief Format text for HTML output
+ */
+#define do_escape(c,escaped) case c: fputs(escaped,f);break
+static void print_escaped_for_html( FILE *f, char *str ) {
+	char *s;
+	for(s=str;*s;s++) {
+		switch(*s) {
+			do_escape('&',"&amp;");
+			do_escape('<',"&lt;");
+			do_escape('>',"&gt;");
+			do_escape('\n',"<br>");
+			default: fputc( *s, f );
+		}
+	}
+}
+#undef do_escape
 
 static void G_usage_xml (void)
 {
@@ -1591,14 +1610,8 @@ static void G_usage_html (void)
 			}
 			if (opt->description) {
 				fprintf(stdout, "<DD>");
-				newbuf = G_str_replace(opt->description, "\n","<br>");
-				if (newbuf) {
-					fprintf(stdout, "%s", newbuf);
-					G_free(newbuf);
-				} else
-					fprintf(stdout, "%s", opt->description);
+				print_escaped_for_html(stdout,opt->description);
 				fprintf(stdout, "</DD>\n");
-				
 			}
 
 			if(opt->options) {
