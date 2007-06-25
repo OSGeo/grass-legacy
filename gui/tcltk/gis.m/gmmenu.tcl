@@ -291,7 +291,7 @@ set descmenu [subst  {
 		{command {[G_msg "Carve stream channels"]} {} "r.carve: Carve stream channels into elevation map using vector streams map" {} -command {execute r.carve }}
 		{command {[G_msg "Fill lake"]} {} "r.lake: Fill lake from seed point to specified level" {} -command {execute r.lake }}
 		{separator}
-		{command {[G_msg "Depressionless  map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
+		{command {[G_msg "Depressionless map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
 		{command {[G_msg "Flow accumulation"]} {} "r.terraflow: Flow accumulation for massive grids" {} -command {execute r.terraflow }}
 		{command {[G_msg "Flow lines"]} {} "r.flow: " {} -command {execute r.flow }}
 		{separator}
