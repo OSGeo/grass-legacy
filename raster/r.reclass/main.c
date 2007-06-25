@@ -13,9 +13,10 @@
  *               for details.
  *
  *****************************************************************************/
+#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "rule.h"
@@ -30,10 +31,12 @@ int main (int argc, char *argv[])
     RULE *rules, *tail;
     int any;
     char *old_mapset;
+    FILE *srcfp;
+    int tty;
     struct GModule *module;
     struct
     {
-	struct Option *input, *output, *title;
+	struct Option *input, *output, *title, *rules;
     } parm;
 
     /* any interaction must run in a term window */
@@ -52,6 +55,13 @@ int main (int argc, char *argv[])
     parm.input->description =  _("Raster map to be reclassified");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
+
+    parm.rules = G_define_option();
+    parm.rules->key = "rules";
+    parm.rules->type = TYPE_STRING;
+    parm.rules->description = _("File containing reclass rules");
+    parm.rules->key_desc = "name";
+    parm.rules->gisprompt = "old_file,file,input";
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -72,6 +82,15 @@ int main (int argc, char *argv[])
     if (strcmp(parm.input->answer , parm.output->answer ) == 0 && strcmp(old_mapset,G_mapset())==0)
 	G_fatal_error (_("Input map can NOT be the same as output map"));
 
+    srcfp = stdin;
+    if (parm.rules->answer)
+    {
+	srcfp = fopen(parm.rules->answer, "r");
+	if (!srcfp)
+	    G_fatal_error (_("Cannot open rules file <%s>"), parm.rules->answer);
+    }
+    tty = isatty(fileno(srcfp));
+
     G_init_cats (0, "", &cats);
     fp = G_raster_map_is_fp (parm.input->answer, old_mapset);
     G_read_fp_range (parm.input->answer, old_mapset, &range);
@@ -79,7 +98,7 @@ int main (int argc, char *argv[])
     rules = tail = NULL;
     any = 0;
 
-    if(isatty(0))
+    if (tty)
 	{ 
 	  fprintf (stdout, _("Enter rule(s), \"end\" when done, \"help\" if you need it\n"));
 	  if (fp)
@@ -88,12 +107,12 @@ int main (int argc, char *argv[])
 	    fprintf (stdout, _("Data range is %ld to %ld\n"), (long)min, (long)max);
 	}
 
-    while (input(buf))
+    while (input(srcfp, tty, buf))
     {
 	switch (parse (buf, &rules, &tail, &cats))
 	{
 	case -1:
-	    if (isatty(0))
+	    if (tty)
 	    {
 		fprintf (stderr, _("Illegal reclass rule -"));
 		fprintf (stderr, _(" ignored\n"));
@@ -113,7 +132,7 @@ int main (int argc, char *argv[])
 
     if (!any)
     {
-	if (isatty(0))
+	if (tty)
 	    G_fatal_error(_("No rules specified. Raster map <%s> not created"), parm.output->answer);
 	else
 	    G_fatal_error(_("No rules specified"));
