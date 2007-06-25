@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <grass/gis.h>
 
 #define RULE struct _rule_
@@ -15,7 +16,7 @@ int parse(char *, RULE **, RULE **, struct Categories *);
 /* reclass.c */
 int reclass(char *, char *, char *, RULE *, struct Categories *, char *);
 /* input.c */
-int input(char *);
+int input(FILE *, int, char *);
 /* range.c */
 int new_range(char *, struct Reclass *);
 /* stats.c */
