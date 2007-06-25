@@ -1,11 +1,13 @@
 ###############################################################
-# gmmenu.tcl - menu file for GRASS GIS Manager
-# January 2006 Michael Barton, Arizona State University
-# COPYRIGHT:	(C) 1999 - 2006 by the GRASS Development Team
-#
-#		This program is free software under the GNU General Public
-#		License (>=v2). Read the file COPYING that comes with GRASS
-#		for details.
+# 	File:		gmmenu.tcl
+#	Purpose:	menu file for GRASS GIS Manager
+#	Author:		Michael Barton, Arizona State University
+#				Based originally on menu for d.m and tcltkgrass
+#				Additions by Cedrick Shock and Benjamin Ducke
+# 	COPYRIGHT:	(C) 2006-2007 by the GRASS Development Team
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
 ###############################################################
 
 # our job is simply to make a variable called descmenu
@@ -154,7 +156,7 @@ set descmenu [subst  {
 		{command {[G_msg "SVG"]} {} "v.out.svg: Export SVG file" {} -command { execute v.out.svg }}
 		{command {[G_msg "VTK"]} {} "v.out.vtk: Export VTK ASCII file" {} -command { execute v.out.vtk }}
 	}}
-	{cascad {[G_msg "Export grid 3D volume"]} {} "" $tmenu {
+	{cascad {[G_msg "Exort grid 3D volume"]} {} "" $tmenu {
 		{command {[G_msg "ASCII 3D"]} {} "r3.out.ascii: Export ASCII 3D file" {} -command { execute r3.out.ascii }}
 		{command {[G_msg "Vis5D"]} {} "r3.out.v5d: Export Vis5D file" {} -command { execute r3.out.v5d }}
 		{command {[G_msg "VTK"]} {} "r3.out.vtk: Export VTK ASCII file" {} -command { execute r3.out.vtk }}
@@ -240,7 +242,7 @@ set descmenu [subst  {
 	}}
 	{cascad {[G_msg "Manage map colors"]} {} "" $tmenu {			
 		{command {[G_msg "Color tables"]} {} "r.colors: Set colors to predefined color tables" {} -command {execute r.colors }}
-		{command {[G_msg "Color rules"]} {} "r.colors.rules: Set colors using color rules" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.colors.rules }}
+		{command {[G_msg "Color rules"]} {} "r.colors.rules: Set colors using color rules" {} -command {GmRules::main "r.colors" }}
 		{separator}
 		{command {[G_msg "Blend"]} {} "r.blend: Blend 2 color maps to produce 3 RGB files" {} -command {execute r.blend }}
 		{command {[G_msg "Create RGB"]} {} "r.composite: Create color image from RGB files" {} -command {execute r.composite }}
@@ -291,7 +293,7 @@ set descmenu [subst  {
 		{command {[G_msg "Carve stream channels"]} {} "r.carve: Carve stream channels into elevation map using vector streams map" {} -command {execute r.carve }}
 		{command {[G_msg "Fill lake"]} {} "r.lake: Fill lake from seed point to specified level" {} -command {execute r.lake }}
 		{separator}
-		{command {[G_msg "Depressionless map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
+		{command {[G_msg "Depressionless  map and flowlines"]} {} "r.fill.dir: Depressionless elevation map and flowline map" {} -command {execute r.fill.dir }}
 		{command {[G_msg "Flow accumulation"]} {} "r.terraflow: Flow accumulation for massive grids" {} -command {execute r.terraflow }}
 		{command {[G_msg "Flow lines"]} {} "r.flow: " {} -command {execute r.flow }}
 		{separator}
@@ -346,10 +348,10 @@ set descmenu [subst  {
 		{command {[G_msg "Interactively edit category values"]} {} "d.rast.edit: Edit category values of individual cells for displayed raster map" {} -command {execute d.rast.edit }}
 		{separator}
 		{command {[G_msg "Reclassify by size"]} {} "r.reclass.area: Reclassify categories for areas of specified sizes" {} -command {execute r.reclass.area }}
-		{command {[G_msg "Reclassify using rules"]} {} "r.reclass.rules: Reclassify categories using rules" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.reclass.rules }}
+		{command {[G_msg "Reclassify using rules"]} {} "r.reclass.rules: Reclassify categories using rules" {} -command {GmRules::main "r.reclass" }}
 		{command {[G_msg "Reclassify using rules file"]} {} "r.reclass.file: Reclassify categories using rules file" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.reclass.file }}
 		{separator}
-		{command {[G_msg "Recode using rules"]} {} "r.recode.rules: Recode categories using rules (create new map)" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.recode.rules }}
+		{command {[G_msg "Recode using rules"]} {} "r.recode.rules: Recode categories using rules (create new map)" {} -command {GmRules::main "r.recode" }}
 		{command {[G_msg "Recode using rules file"]} {} "r.recode.file: Recode categories using rules file (create new map)" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.recode.file }}
 		{separator}
 		{command {[G_msg "Rescale"]} {} "r.rescale: Rescale categories (create new map)" {} -command {execute r.rescale }}
@@ -471,7 +473,8 @@ set descmenu [subst  {
 	{separator}
 	{cascad {[G_msg "Change attributes"]} {} "" $tmenu {			
 		{command {[G_msg "Manage or report categories"]} {} "v.category: Attach, delete, or report categories" {} -command {execute v.category }}
-		{command {[G_msg "Reclassify objects using rules file"]} {} "v.reclass: " {} -command {execute v.reclass }}
+		{command {[G_msg "Reclassify objects interactively"]} {} "v.reclass: Reclassify objects interactively with SQL rules" {} -command {GmRules::main "v.reclass" }}
+		{command {[G_msg "Reclassify using rules file"]} {} "v.reclass: Reclassify objects using rules file" {} -command {execute v.reclass }}
 	}}
 	{separator}
 	{command {[G_msg "Generate area for current region"]} {} "v.in.region: Generate area object for extent of current region" {} -command {execute v.in.region }}
