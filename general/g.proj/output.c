@@ -191,7 +191,7 @@ void create_location(char *location, int interactive)
     	        fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
     	        fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
 
-    	        if (G_yes(_("Would you still like to overwrite the current projection information?"), 0))
+    	        if (G_yes(_("Would you still like to overwrite the current projection information "), 0))
     	            go_ahead = 1;
 	    }
 	    else
