@@ -4,6 +4,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 SUBDIRS1 = \
 	i.ask \
+	i.atcorr \
 	i.class \
 	i.cluster \
 	i.find \
