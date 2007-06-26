@@ -221,9 +221,7 @@ proc GmRules::process_rules { cmd w } {
 	    lappend options "input=$inmap"
 	}
 
-    if { $cmd == "r.colors" || $cmd == "v.reclass" } {
-        lappend options "rules=$rulesfile"
-    }
+    lappend options "rules=$rulesfile"
     
     if { $cmd != "r.colors"} {
         lappend options "output=$outmap"
@@ -234,10 +232,6 @@ proc GmRules::process_rules { cmd w } {
         lappend options "--o"
     } 
 
-    if { $cmd != "r.colors" && $cmd != "v.reclass"} {
-        lappend options "<" 
-        lappend options "$rulesfile"
-    }
     
     if {[catch {eval [list exec -- $cmd] $options} error]} {
         puts $error

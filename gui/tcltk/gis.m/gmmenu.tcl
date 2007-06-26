@@ -241,8 +241,8 @@ set descmenu [subst  {
 		{command {[G_msg "Tiling"]} {} "r.tileset: Generate tiling for other projection" {} -command {execute r.tileset }}
 	}}
 	{cascad {[G_msg "Manage map colors"]} {} "" $tmenu {			
-		{command {[G_msg "Color tables"]} {} "r.colors: Set colors to predefined color tables" {} -command {execute r.colors }}
-		{command {[G_msg "Color rules"]} {} "r.colors.rules: Set colors using color rules" {} -command {GmRules::main "r.colors" }}
+		{command {[G_msg "Color tables"]} {} "r.colors: Set colors to predefined color tables or from another raster map" {} -command {execute r.colors }}
+		{command {[G_msg "Color rules"]} {} "Set colors interactively by entering color rules" {} -command {GmRules::main "r.colors" }}
 		{separator}
 		{command {[G_msg "Blend"]} {} "r.blend: Blend 2 color maps to produce 3 RGB files" {} -command {execute r.blend }}
 		{command {[G_msg "Create RGB"]} {} "r.composite: Create color image from RGB files" {} -command {execute r.composite }}
@@ -348,11 +348,11 @@ set descmenu [subst  {
 		{command {[G_msg "Interactively edit category values"]} {} "d.rast.edit: Edit category values of individual cells for displayed raster map" {} -command {execute d.rast.edit }}
 		{separator}
 		{command {[G_msg "Reclassify by size"]} {} "r.reclass.area: Reclassify categories for areas of specified sizes" {} -command {execute r.reclass.area }}
-		{command {[G_msg "Reclassify using rules"]} {} "r.reclass.rules: Reclassify categories using rules" {} -command {GmRules::main "r.reclass" }}
-		{command {[G_msg "Reclassify using rules file"]} {} "r.reclass.file: Reclassify categories using rules file" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.reclass.file }}
+		{command {[G_msg "Reclassify interactively"]} {} "Reclassify categories interactively by entering reclass rules" {} -command {GmRules::main "r.reclass" }}
+		{command {[G_msg "Reclassify using rules file"]} {} "r.reclass: Reclassify categories by inputting rules from a text file" {} -command {execute r.reclass}}
 		{separator}
-		{command {[G_msg "Recode using rules"]} {} "r.recode.rules: Recode categories using rules (create new map)" {} -command {GmRules::main "r.recode" }}
-		{command {[G_msg "Recode using rules file"]} {} "r.recode.file: Recode categories using rules file (create new map)" {} -command {execute $env(GISBASE)/etc/gui/scripts/r.recode.file }}
+		{command {[G_msg "Recode interactively"]} {} "Recode categories interactively by entering recode rules (create new map)" {} -command {GmRules::main "r.recode" }}
+		{command {[G_msg "Recode using rules file"]} {} "r.recode: Recode categories  by inputting rules from a text file (create new map)" {} -command {execute r.recode }}
 		{separator}
 		{command {[G_msg "Rescale"]} {} "r.rescale: Rescale categories (create new map)" {} -command {execute r.rescale }}
 		{command {[G_msg "Rescale with histogram"]} {} "r.rescale.eq: Rescale categories with equalized histogram (create new map)" {} -command {execute r.rescale.eq }}
@@ -473,8 +473,8 @@ set descmenu [subst  {
 	{separator}
 	{cascad {[G_msg "Change attributes"]} {} "" $tmenu {			
 		{command {[G_msg "Manage or report categories"]} {} "v.category: Attach, delete, or report categories" {} -command {execute v.category }}
-		{command {[G_msg "Reclassify objects interactively"]} {} "v.reclass: Reclassify objects interactively with SQL rules" {} -command {GmRules::main "v.reclass" }}
-		{command {[G_msg "Reclassify using rules file"]} {} "v.reclass: Reclassify objects using rules file" {} -command {execute v.reclass }}
+		{command {[G_msg "Reclassify objects interactively"]} {} "Reclassify objects interactively by entering SQL rules" {} -command {GmRules::main "v.reclass" }}
+		{command {[G_msg "Reclassify using rules file"]} {} "v.reclass: Reclassify objects by inputting rules from a text file" {} -command {execute v.reclass }}
 	}}
 	{separator}
 	{command {[G_msg "Generate area for current region"]} {} "v.in.region: Generate area object for extent of current region" {} -command {execute v.in.region }}
