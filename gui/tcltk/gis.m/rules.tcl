@@ -174,8 +174,8 @@ proc GmRules::main { cmd } {
     pack $row.a $row.b -side right -padx 5
     pack $row -side bottom -pady 3 -padx 5 -expand 0 -fill none -anchor e
     
-    $rules_text tag bind <Control-c> {tk_textCopy %W}
-    $rules_text tag bind <Control-v> {%W insert [selection get]}
+    bind Text <Control-c> {tk_textCopy %W}
+    bind Text <Control-v> {tk_textPaste %W}
 
 }
 
