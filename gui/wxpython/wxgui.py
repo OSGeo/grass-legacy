@@ -386,22 +386,18 @@ class GMFrame(wx.Frame):
             output = open(gtemp,"w")
             output.write(dlg.rules)
             output.close()
-            if dlg.overwrite == True:
-                overwrite = '--o'
-            else:
-                overwrite -= ''
 
             if command == 'r.colors':
                 cmdlist = [command,'map=%s' % dlg.inmap,'rules=%s' % gtemp,'--verbose']
-                cmd.Command(cmdlist)
-            elif command == 'v.reclass':
-                cmdlist = [command,'input=%s' % dlg.inmap,'output=%s' % dlg.outmap,'rules=%s' % gtemp,overwrite,'--verbose']
-                cmd.Command(cmdlist)
             else:
-                cmdlist = [command,'input=%s' % dlg.inmap,'output=%s' % dlg.outmap,overwrite,'--verbose']
-                input = open(gtemp,"r")
-                p = subprocess.Popen(cmdlist, stdin=input, stdout=subprocess.PIPE)
-                input.close()
+                cmdlist = [command,'input=%s' % dlg.inmap,'output=%s' % dlg.outmap,'rules=%s' % gtemp]
+
+            if dlg.overwrite == True:
+                cmdlist.append('--o')
+
+            cmdlist.append('--verbose')
+
+            cmd.Command(cmdlist)
 
         dlg.Destroy()
 
