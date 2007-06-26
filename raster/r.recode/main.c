@@ -25,10 +25,11 @@ int
 main (int argc, char *argv[])
 {
     char *title;
+    FILE *srcfp;
     struct GModule *module;
     struct
     {
-	struct Option *input, *output, *title;
+	struct Option *input, *output, *title, *rules;
 	struct Flag *a, *d;
     } parm;
 
@@ -45,6 +46,13 @@ main (int argc, char *argv[])
     parm.input->description =  _("Raster map to be recoded");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
+
+    parm.rules = G_define_option();
+    parm.rules->key = "rules";
+    parm.rules->type = TYPE_STRING;
+    parm.rules->description = _("File containing recode rules");
+    parm.rules->key_desc = "name";
+    parm.rules->gisprompt = "old_file,file,input";
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -63,13 +71,11 @@ main (int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-
     name       = parm.input->answer;
     result     = parm.output->answer;
     title      = parm.title->answer;
     align_wind = parm.a->answer;
     make_dcell = parm.d->answer;
-
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
@@ -81,9 +87,17 @@ main (int argc, char *argv[])
     if (strcmp(name,result)==0 && strcmp(mapset,G_mapset())== 0)
 	G_fatal_error(_("input map can NOT be the same as output map"));
 
-    if (!read_rules())
+    srcfp = stdin;
+    if (parm.rules->answer)
     {
-	if (isatty(0))
+	srcfp = fopen(parm.rules->answer, "r");
+	if (!srcfp)
+	    G_fatal_error(_("Cannot open rules file <%s>"), parm.rules->answer);
+    }
+
+    if (!read_rules(srcfp))
+    {
+	if (isatty(fileno(srcfp)))
 	    G_fatal_error(_("no rules specified. [%s] not created"), result);
 	else
 	    G_fatal_error (_("no rules specified"));

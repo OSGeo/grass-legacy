@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <grass/glocale.h>
 #include "global.h"
 
 #define INCR 20
@@ -16,38 +17,34 @@ int report_range (void)
   if(inp_type != CELL_TYPE)
   {
      if(G_read_fp_range(name, mapset, &drange)<=0)
-     {
-        sprintf(buff, "Can't read f_range for map %s", name);
-        G_fatal_error(buff);
-     }
+        G_fatal_error(_("Can't read f_range for map %s"), name);
+
      G_get_fp_range_min_max(&drange, &old_dmin, &old_dmax);
      if(G_is_d_null_value(&old_dmin) || G_is_d_null_value(&old_dmax))
-         fprintf (stdout,"Data range is empty\n");
+         G_message(_("Data range is empty"));
      else
      {
          sprintf(buff, "%.10f",old_dmin);
          sprintf(buff2, "%.10f",old_dmax);
          G_trim_decimal(buff);
          G_trim_decimal(buff2);
-         fprintf (stdout,"Data range of %s is %s to %s (entire map)\n", name, buff, buff2);
+         G_message(_("Data range of %s is %s to %s (entire map)"), name, buff, buff2);
       }
   }
   if(G_read_range(name, mapset, &range)<=0)
-  {
-     sprintf(buff, "Can't read range for map %s", name);
-     G_fatal_error(buff);
-  }
+     G_fatal_error(_("Can't read range for map %s"), name);
+
   G_get_range_min_max(&range, &old_min, &old_max);
   if(G_is_c_null_value(&old_min) || G_is_c_null_value(&old_max))
-      fprintf (stdout,"Integer data range of %s is empty\n", name);
+      G_message(_("Integer data range of %s is empty"), name);
   else
-      fprintf (stdout,"Integer data range of %s is %d to %d\n", 
+      G_message(_("Integer data range of %s is %d to %d"), 
 		   name, (int)old_min, (int)old_max);
 
    return 0;
 }
 
-int read_rules (void)
+int read_rules (FILE *fp)
 {
    char buf[1024];
    DCELL oLow, oHigh, nLow, nHigh;
@@ -58,16 +55,16 @@ int read_rules (void)
    rules = (char**) G_malloc(INCR * sizeof(char *));
    rule_size = INCR;
 
-   if(isatty(0))
+   if(isatty(fileno(fp)))
    {
       report_range();
-      fprintf (stdout,"\nEnter the rule or 'help' for the format description:\n");
+      G_message(_("Enter the rule or 'help' for the format description:"));
    }
    G_fpreclass_init(&rcl_struct);
    for (line=1;;line++)
    {
-      if (isatty(0)) fprintf (stdout,"> ");
-      if (!fgets(buf,1024,stdin)) return nrules;
+      if (isatty(fileno(fp))) fprintf (stderr,"> ");
+      if (!fgets(buf,1024,fp)) return nrules;
       buf[strlen(buf)-1] = '\0';
       for (n=0;buf[n];n++)
 	   if(buf[n] == ',')
@@ -79,11 +76,11 @@ int read_rules (void)
 
       if (strcmp(buf, "help") == 0)
       {
-	  fprintf (stdout,"Enter a rule in one of these formats:\n");
-	  fprintf (stdout,"old_low:old_high:new_low:new_high\n");
-	  fprintf (stdout,"old_low:old_high:new_val      (i.e. new_high == new_low)\n");
-	  fprintf (stdout,"*:old_val:new_val             (interval [inf, old_val])\n");
-	  fprintf (stdout,"old_val:*:new_val             (interval [old_val, inf])\n");
+	  G_message(_("Enter a rule in one of these formats:"));
+	  G_message(_("old_low:old_high:new_low:new_high"));
+	  G_message(_("old_low:old_high:new_val      (i.e. new_high == new_low)"));
+	  G_message(_("*:old_val:new_val             (interval [inf, old_val])"));
+	  G_message(_("old_val:*:new_val             (interval [old_val, inf])"));
 	  continue;
       }	       
 
@@ -123,7 +120,7 @@ int read_rules (void)
 	       G_fpreclass_set_neg_infinite_rule(&rcl_struct, oHigh, nLow);
             }
 	    else
-	       fprintf (stdout,"%s is not a valid rule\n", buf);
+	       G_message(_("%s is not a valid rule"), buf);
 	    break;
       } /* switch */
     } /* loop */
