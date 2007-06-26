@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <grass/gis.h>
 #ifdef MAIN
   RASTER_MAP_TYPE in_type;
@@ -20,7 +21,7 @@
 #endif
 /* read_rules.c */
 int report_range(void);
-int read_rules(void);
+int read_rules(FILE *);
 int update_type(RASTER_MAP_TYPE *, DCELL);
 int update_rules(char *);
 /* recode.c */
