@@ -67,9 +67,9 @@ case $GRASS_XTERM in
     # execute
     # save current active app/window, return to it when script finishes.
     osascript - <<EOF
-tell application "System Events"
-	set save_app to item 1 of (get name of processes whose frontmost is true)
-end tell
+--tell application "System Events"
+--	set save_app to item 1 of (get name of processes whose frontmost is true)
+--end tell
 tell application "Terminal"
 	activate
 	-- start new window with env/cmd script
@@ -82,7 +82,7 @@ tell application "Terminal"
 		close
 	end tell
 end tell
-tell application save_app to activate
+--tell application save_app to activate
 EOF
     rm -f "$TMPSCRIPT.sh"
     ;;
