@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-22 17:31+0200\n"
-"PO-Revision-Date: 2007-06-23 00:02+0200\n"
+"POT-Creation-Date: 2007-06-25 21:03+0200\n"
+"PO-Revision-Date: 2007-06-25 23:51+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-es@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -3837,7 +3837,6 @@ msgid "Layer opacities"
 msgstr "Opacidades de capa"
 
 #: ../general/g.pnmcomp/main.c:331
-#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name of output file"
 msgstr "Nombre del archivo de salida"
 
@@ -3957,7 +3956,7 @@ msgid ""
 "Force override of datum transformation information in input co-ordinate "
 "system"
 msgstr ""
-"Forzar a ignorar la informacio? de transformación del datum en el sistema de "
+"Forzar a ignorar la información de transformación del datum en el sistema de "
 "coordenadas de entrada"
 
 #: ../general/g.proj/main.c:151
@@ -3997,12 +3996,12 @@ msgstr "¡Localización %s creada!"
 
 #: ../general/g.proj/output.c:156
 #, c-format
-msgid "Cannot create location: %s"
+msgid "Unable to create location: %s"
 msgstr "No se puede crear la localización: %s"
 
 #: ../general/g.proj/output.c:158
 #, c-format
-msgid "Cannot create projection files: %s"
+msgid "Unable to create projection files: %s"
 msgstr "No se pueden crear los archivos de proyección: %s"
 
 #: ../general/g.proj/output.c:161
@@ -4030,6 +4029,7 @@ msgstr ""
 "¡AVISO!  Ya existe un archivo de proyección para esta localización\n"
 
 #: ../general/g.proj/output.c:194
+#, fuzzy
 msgid "Would you still like to overwrite the current projection information "
 msgstr "¿Todavía quiere sobrescribir la información de la proyección actual?"
 
@@ -6269,7 +6269,7 @@ msgstr ""
 
 #: ../imagery/i.rectify/main.c:76
 msgid "Name of input raster map(s)"
-msgstr "Nombre del mapa (o mapas) de entrada"
+msgstr "Nombre del mapa (o mapas) ráster de entrada"
 
 #: ../imagery/i.rectify/main.c:83
 msgid "Output file extension (inputfile(s) + extension)"
@@ -6750,6 +6750,25 @@ msgstr "Nueva anchura de ventana"
 msgid "New height for window"
 msgstr "Nueva altura de ventana"
 
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+#, fuzzy
+msgid "Name of shaded relief or aspect map"
+msgstr "Nombre del nuevo mapa ráster"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+#, fuzzy
+msgid "Name of raster to drape over relief map"
+msgstr "Nombre del mapa ráster de ángulos"
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+#, fuzzy
+msgid "Percent to brighten"
+msgstr "Convergencia porcentual"
+
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:1
 msgid "Slide show of GRASS raster/vector maps"
 msgstr "Presentación de mapas ráster/vectoriales de GRASS"
@@ -6964,6 +6983,7 @@ msgstr ""
 "GIS"
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "Condiciones WHERE de sentencia SQL sin palabra clave 'where'"
@@ -7698,6 +7718,7 @@ msgid "F"
 msgstr "F"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
 msgid "Formula (e.g. A-B or A*C+B)"
 msgstr "Formula (ej. A-B o A*C+B)"
 
@@ -7711,6 +7732,7 @@ msgid "Expert mode (enter a set of r.mapcalc expressions)"
 msgstr "Modo avanzado (introducir un conjunto de expresiones de r.mapcalc)"
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
+#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
 msgid "Do not overwrite existing map"
 msgstr "No sobrescribir mapas existentes"
 
@@ -7740,7 +7762,7 @@ msgid "Remove existing MASK (overrides other options)"
 msgstr "Eliminar MÁSCARA existente (ignora otras opciones)"
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
-msgid "Exports GRASS raster data into various formats (requires GDAL)"
+msgid "Exports GRASS raster data into various formats (requires GDAL)."
 msgstr "Exporta datos ráster de GRASS a varios formatos (requiere GDAL)."
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
@@ -7769,6 +7791,11 @@ msgstr "Formato GIS a escribir (sensible a mayúsculas, ver también la opción -l)
 msgid "File type"
 msgstr "Tipo de archivo"
 
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
+#: ../raster/r.out.mpeg/main.c:420
+msgid "Name for output file"
+msgstr "Nombre para el archivo de salida"
+
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
 #: ../raster/r.out.gdal/main.c:391
 msgid "Creation option to the output format driver. Multiple options may be listed"
@@ -7793,12 +7820,13 @@ msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Nombre para el archivo de salida (si se omite o \"-\" salida a stdout)"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
+#, fuzzy
 msgid ""
-"Create raster plane map given dip (inclination), aspect (azimuth) and one "
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
 msgstr ""
-"Crear un mapa ráster plano dando pendiente (inclinación), orientación (azimut) y un "
-"punto."
+"Crear un mapa ráster plano dando pendiente (inclinación), orientación "
+"(azimut) y un punto."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:2
@@ -7837,7 +7865,9 @@ msgstr "Tipo de mapa ráster a crear"
 msgid ""
 "Reclasses a raster map greater or less than user specified area size (in "
 "hectares)"
-msgstr "Reclasifica un mapa ráster mayor o menor que la superficie indicada por el usuario (en hectáreas)"
+msgstr ""
+"Reclasifica un mapa ráster mayor o menor que la superficie indicada por el "
+"usuario (en hectáreas)"
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:2
 msgid "raster, statistics, aggregation"
@@ -7878,7 +7908,9 @@ msgstr "Mapa para el coeficiente Y"
 msgid ""
 "ASCII file for storing regression coefficients (output to screen if file not "
 "specified)."
-msgstr "Archivo ASCII para guardar los coeficientes de regresión (salida a pantalla si no se especifica ningún archivo)."
+msgstr ""
+"Archivo ASCII para guardar los coeficientes de regresión (salida a pantalla "
+"si no se especifica ningún archivo)."
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:1
 #, fuzzy
@@ -7912,22 +7944,25 @@ msgstr "Factor de escala para convertir unidades horizontales a unidades de elev
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:9
 msgid "Set scaling factor (applies to lat./long. locations only)"
-msgstr "Establecer factor de escala (aplicable sólo a localizaciones latitud/longitud)"
+msgstr ""
+"Establecer factor de escala (aplicable sólo a localizaciones latitud/"
+"longitud)"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:1
 msgid ""
 "Produces tilings of the source projection for use in the destination region "
 "and projection."
 msgstr ""
+"Produce teselado de la proyección del origen para usarlo en la región y "
+"proyección de destino."
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:2
-#, fuzzy
 msgid "raster, tiling"
-msgstr "ráster"
+msgstr "ráster, teselado"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:3
 msgid "Produces shell script output"
-msgstr ""
+msgstr "Produce salida de script de consola"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:4
 msgid "Produces web map server query string output"
@@ -7939,40 +7974,34 @@ msgid "Name of region to use instead of current region for bounds and resolution
 msgstr "Nombre a"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:6
-#, fuzzy
 msgid "Source projection"
-msgstr "Origen"
+msgstr "Proyeccion del origen"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:7
 #: ../locale/scriptstrings/r.tileset_to_translate.c:9
-#, fuzzy
 msgid "Conversion factor from units to meters in source projection"
-msgstr "a"
+msgstr "Factor de conversión de las unidades a metros en la proyección de origen"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:8
 #, fuzzy
 msgid "Destination projection, defaults to this location's projection"
-msgstr "a localización"
+msgstr "Proyección de destino, por defecto a localización"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:10
-#, fuzzy
 msgid "Maximum number of columns for a tile in the source projection"
-msgstr "columnas"
+msgstr "Número máximo de columnas para una tesela en la proyección de origen"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:11
-#, fuzzy
 msgid "Maximum number of rows for a tile in the source projection"
-msgstr "Número de columnas"
+msgstr "Número máximo de filas para una tesela en la proyección de origen"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:12
-#, fuzzy
 msgid "Number of cells tiles should overlap in each direction"
-msgstr "a"
+msgstr "El número de teselas de celda debería solapas en cada dirección"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:13
-#, fuzzy
 msgid "Output field seperator"
-msgstr "Salida"
+msgstr "Separador de campos de salida"
 
 #: ../locale/scriptstrings/r.univar.sh_to_translate.c:1
 msgid "calculates univariate statistics from a GRASS raster map"
@@ -7987,54 +8016,50 @@ msgid "Percentile to calculate (requires -e flag)"
 msgstr "Percentil a calcular (requiere la opción -e)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
-msgid "r3.mapcalculator - Calculates new grid3D volume from r3.mapcalc expression"
+#, fuzzy
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
 msgstr ""
+"r3.mapcalculator - Calcula un nuevo volumen grid3D a partir de una expresión "
+"r3.mapcalc"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
 #, fuzzy
-msgid "A (grid3D file):"
+msgid "A (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
 #, fuzzy
-msgid "B (grid3D file):"
+msgid "B (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
 #, fuzzy
-msgid "C (grid3D file):"
+msgid "C (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
 #, fuzzy
-msgid "D (grid3D file):"
+msgid "D (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
 #, fuzzy
-msgid "E (grid3D file):"
+msgid "E (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
 #, fuzzy
-msgid "F (grid3D file):"
+msgid "F (grid3D file)"
 msgstr "Nombre de archivo grid3 de entrada"
 
-#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
-msgid "Formula (e.g. A-B or A*C+B):"
-msgstr "Formula (ej. A-B o A*C+B):"
-
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
-msgid "Resulting output grid3D volume"
-msgstr ""
+#, fuzzy
+msgid "Name for output grid3D volume"
+msgstr "Nombre para el archivo de salida"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r3.mapcalc expressions)"
 msgstr ""
-
-#: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
-msgid "Don't overwrite existing map"
-msgstr "No sobrescribir mapas existentes"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
 #, fuzzy
@@ -8283,6 +8308,51 @@ msgstr ""
 msgid "New schema"
 msgstr "Nuevo"
 
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+#, fuzzy
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map"
+msgstr "GRASS vectorial"
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
+#: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:68
+#: ../vector/v.random/main.c:82 ../vector/v.univar/main.c:60
+msgid "vector, statistics"
+msgstr "vectorial, estadísticas"
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+#, fuzzy
+msgid "Name of data table"
+msgstr "Nombre datos"
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+#, fuzzy
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr "a"
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+#, fuzzy
+msgid "Database/directory for table"
+msgstr "No hay registro para la linea (cat = %d)"
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+#, fuzzy
+msgid "Database driver"
+msgstr "Base de datos:"
+
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
 #, fuzzy
 msgid ""
@@ -8466,7 +8536,8 @@ msgid "Input map is in Matlab format"
 msgstr "El archivo de entrada está en formato Matlab"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
-msgid "name of input file in Mapgen/Matlab format"
+#, fuzzy
+msgid "Name of input file in Mapgen/Matlab format"
 msgstr "nombre "
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
@@ -8541,44 +8612,6 @@ msgstr "a"
 msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 msgstr "mi(llas),f(pies),me(tros),k(ilómetros),a(cres),h(ectáreas)"
 
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
-#, fuzzy
-msgid ""
-"Calculates univariate statistics on selected table column for a GRASS vector "
-"map"
-msgstr "GRASS vectorial"
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
-#: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
-#: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:68
-#: ../vector/v.random/main.c:82 ../vector/v.univar/main.c:60
-msgid "vector, statistics"
-msgstr "vectorial, estadísticas"
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
-msgid "Extended statistics (quartiles and 90th percentile)"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
-#, fuzzy
-msgid "Name of data table"
-msgstr "Nombre datos"
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
-#, fuzzy
-msgid "Column on which to calculate statistics (must be numeric)"
-msgstr "a"
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
-#, fuzzy
-msgid "Database/directory for table"
-msgstr "No hay registro para la linea (cat = %d)"
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
-#, fuzzy
-msgid "Database driver"
-msgstr "Base de datos:"
-
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
 #, fuzzy
 msgid "Uploads vector values at positions of vector points to the table"
@@ -8613,25 +8646,6 @@ msgstr "vectorial a"
 #, fuzzy
 msgid "Column to be queried"
 msgstr "a"
-
-#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
-msgid "Drapes a color raster over a shaded relief map using d.his"
-msgstr ""
-
-#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
-#, fuzzy
-msgid "Name of shaded relief or aspect map"
-msgstr "Nombre del nuevo mapa ráster"
-
-#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
-#, fuzzy
-msgid "Name of raster to drape over relief map"
-msgstr "Nombre del mapa ráster de ángulos"
-
-#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
-#, fuzzy
-msgid "Percent to brighten"
-msgstr "Convergencia porcentual"
 
 #: ../misc/m.cogo/main.c:248
 msgid "miscellaneous"
@@ -8783,7 +8797,8 @@ msgid "Rotate plot 90 degrees"
 msgstr "Rotar impresión 90 grados"
 
 #: ../ps/ps.map/main.c:110
-msgid "Print paper formats ( name width height left right top bottom(margin) )"
+#, fuzzy
+msgid "List paper formats ( name width height left right top bottom(margin) )"
 msgstr ""
 "Formatos de papel para imprimir ( nombre anchura altura izquierda derecha "
 "arriba abajo (margen) )"
@@ -8813,11 +8828,11 @@ msgid "Number of copies to print"
 msgstr "Número de copias a imprimir"
 
 #: ../ps/ps.map/main.c:238
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
-"instruction instead. The parameter <%s> will removed in future versions of "
-"GRASS."
+"instruction instead. The parameter <%s> will be removed in future versions "
+"of GRASS."
 msgstr ""
 "El uso de <%s> a partir de la línea de comando está despreciado. Por favor, "
 "use la instrucción mapeo <%s> en su lugar. El parámetro <%s> será eliminado "
@@ -10018,13 +10033,12 @@ msgid "Range of levels: min = %f max = %f"
 msgstr "Rango de niveles: mínimo =%f máximo = %f"
 
 #: ../raster/r.contour/main.c:357
-#, fuzzy
 msgid "Displacing data: "
-msgstr "datos "
+msgstr "Desplazando datos: "
 
 #: ../raster/r.cost/btree.c:56
 msgid "new_cell is NULL"
-msgstr ""
+msgstr "new_cell es NULO"
 
 #: ../raster/r.cost/btree.c:154
 #, c-format
@@ -10084,14 +10098,12 @@ msgstr ""
 "cuadrícula"
 
 #: ../raster/r.cost/main.c:141 ../raster/r.walk/main.c:208
-#, fuzzy
 msgid "Starting points vector map"
-msgstr "puntos vectorial"
+msgstr "Iniciando mapa vectorial de puntos"
 
 #: ../raster/r.cost/main.c:148 ../raster/r.walk/main.c:215
-#, fuzzy
 msgid "Stop points vector map"
-msgstr "puntos vectorial"
+msgstr "Detener mapa vectorial de puntos"
 
 #: ../raster/r.cost/main.c:155
 msgid "Starting points raster map"
@@ -10119,9 +10131,8 @@ msgid "Percent of map to keep in memory"
 msgstr "Porcentaje de mapa a mantener en memoria"
 
 #: ../raster/r.cost/main.c:203 ../raster/r.walk/main.c:301
-#, fuzzy
 msgid "Use the 'Knight's move'; slower, but more accurate"
-msgstr "Usar"
+msgstr "Usar el 'Movimiento de caballero'; más lento, pero más preciso."
 
 #: ../raster/r.cost/main.c:207 ../raster/r.walk/main.c:305
 msgid "Keep null values in output map"
@@ -13218,10 +13229,6 @@ msgstr "Programa de conversión de series de archivos ráster a MPEG."
 #, c-format
 msgid "Raster file(s) for View%d"
 msgstr "Archivo(s) ráster para la vista%d"
-
-#: ../raster/r.out.mpeg/main.c:420
-msgid "Name for output file"
-msgstr "Nombre para el archivo de salida"
 
 #: ../raster/r.out.mpeg/main.c:430
 msgid "Quality factor (1 = highest quality, lowest compression)"
@@ -17227,11 +17234,8 @@ msgid ""
 "layer whose cell category values represent elevation combined with an input "
 "raster map layer whose cell values represent friction cost."
 msgstr ""
-"Produce una capa de mapa ráster que muestra el coste anisotrópico acumulado "
-"de moverse entre diferentes localizaciones geográficas en una capa de mapa "
-"ráster de elevación de entrada cuyos valores de categoría de celda "
-"representan elevación combinada con una capa de mapa ráster de entrada cuyos "
-"valores de ores de celda representan coste de fricción."
+"Produce una capa de mapa ráster que muestra el coste anisotrópico acumulado de moverse entre diferentes localizaciones geográficas en una capa de mapa ráster de elevación de entrada cuyos valores de categoría de celda "
+"representan elevación combinada con una capa de mapa ráster de entrada cuyos valores de celda representan coste de fricción."
 
 #: ../raster/r.walk/main.c:186
 msgid "Name of elevation input raster map"
@@ -17405,7 +17409,7 @@ msgstr "Error al obtener celdas nulas de entrada en la fila %d de %s"
 
 #: ../raster/r.water.outlet/main.c:47
 msgid "Watershed basin creation program."
-msgstr ""
+msgstr "Programa de creación de cuenca hidrográfica."
 
 #: ../raster/r.water.outlet/main.c:69
 msgid "The map E  grid coordinates"
@@ -20266,7 +20270,7 @@ msgid "Do not print polyline info"
 msgstr "Imprimir"
 
 #: ../vector/v.build.polylines/main.c:122 ../vector/v.db.select/main.c:101
-#: ../vector/v.out.ogr/main.c:190 ../vector/v.transform/main.c:178
+#: ../vector/v.out.ogr/main.c:190 ../vector/v.transform/main.c:177
 #, c-format
 msgid "Could not find input vector map <%s>"
 msgstr "No se pudo encontrar el mapa vectorial de entrada <%s>"
@@ -20310,26 +20314,46 @@ msgstr "añadir añadir borrar a añadir a Imprimir mínimo máximo Imprimir Imprimir
 msgid "Shell script style, currently only for report"
 msgstr ""
 
-#: ../vector/v.category/main.c:125
+#: ../vector/v.category/main.c:108
+msgid "Format: layer type count min max"
+msgstr ""
+
+#: ../vector/v.category/main.c:126
 msgid "Database connection and attribute tables for concerned layers are not changed"
 msgstr ""
 
-#: ../vector/v.category/main.c:176
+#: ../vector/v.category/main.c:177
 msgid "Too many layers for this operation"
 msgstr "Demasiadas capas para esta operación"
 
-#: ../vector/v.category/main.c:179
+#: ../vector/v.category/main.c:180
 msgid "2 layers must be specified"
 msgstr "2 capas deben ser especificadas"
 
-#: ../vector/v.category/main.c:183
-msgid "Output vector wasn't entered."
+#: ../vector/v.category/main.c:184
+#, fuzzy
+msgid "Output vector wasn't entered"
 msgstr "Vector de salida no ha sido especificado."
 
-#: ../vector/v.category/main.c:234 ../vector/v.in.ogr/main.c:877
+#: ../vector/v.category/main.c:235 ../vector/v.in.ogr/main.c:877
 #: ../vector/v.voronoi/dt_main.c:121
 msgid "Cannot calculate area centroid"
 msgstr "Imposible calcular el centroide del área"
+
+#: ../vector/v.category/main.c:246
+#, fuzzy, c-format
+msgid "%d new centroids placed in output map"
+msgstr "[%d] centroides escritos en el fichero de salida."
+
+#: ../vector/v.category/main.c:389
+#, fuzzy
+msgid "Layer / table"
+msgstr "Capa '%s' no disponible"
+
+#: ../vector/v.category/main.c:393
+#, fuzzy
+msgid "Layer"
+msgstr "Capa: %s"
 
 #: ../vector/v.clean/main.c:51
 msgid "Toolset for cleaning the vector topology"
@@ -21673,7 +21697,7 @@ msgstr "Nombre vectorial"
 msgid "Name of resulting 3D vector map"
 msgstr "Nombre vectorial"
 
-#: ../vector/v.extrude/main.c:84 ../vector/v.transform/main.c:110
+#: ../vector/v.extrude/main.c:84 ../vector/v.transform/main.c:109
 msgid "Shifting value for z coordinates"
 msgstr "Cambiando valor para coordenadas Z"
 
@@ -23185,7 +23209,7 @@ msgstr "Línea"
 #: ../vector/v.lrs/v.lrs.label/main.c:189
 #: ../vector/v.lrs/v.lrs.label/main.c:198
 #, fuzzy
-msgid "Only for p.map output"
+msgid "Only for d.label output"
 msgstr "Anchura de límites (sólo para salida de mapa PS)"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:197
@@ -23348,7 +23372,7 @@ msgid "Incorrect segment type: %s"
 msgstr "No se puede crear la tabla: %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:323
-#: ../vector/v.lrs/v.lrs.where/main.c:191
+#: ../vector/v.lrs/v.lrs.where/main.c:192
 #, fuzzy, c-format
 msgid "[%d] points read from input"
 msgstr "puntos"
@@ -23386,22 +23410,22 @@ msgstr "vectorial puntos"
 msgid "Maximum distance to nearest line"
 msgstr "Distancia máxima a la línea más próxima"
 
-#: ../vector/v.lrs/v.lrs.where/main.c:192
+#: ../vector/v.lrs/v.lrs.where/main.c:193
 #, fuzzy, c-format
 msgid "[%d] positions found"
 msgstr "mapa <%s> no encontrado"
 
-#: ../vector/v.lrs/v.lrs.where/main.c:194
+#: ../vector/v.lrs/v.lrs.where/main.c:195
 #, fuzzy, c-format
 msgid "[%d] points outside threshold"
 msgstr "puntos"
 
-#: ../vector/v.lrs/v.lrs.where/main.c:196
+#: ../vector/v.lrs/v.lrs.where/main.c:197
 #, fuzzy, c-format
 msgid "[%d] points - no record found"
 msgstr "puntos"
 
-#: ../vector/v.lrs/v.lrs.where/main.c:198
+#: ../vector/v.lrs/v.lrs.where/main.c:199
 #, fuzzy, c-format
 msgid "[%d] points - to many records found"
 msgstr "puntos a"
@@ -25526,20 +25550,19 @@ msgid "Reading coordinates from file."
 msgstr "Leer coordenadas de entrada estándar"
 
 #: ../vector/v.transform/main.c:55
-msgid ""
-"Transforms a vector map layer from one coordinate system into another "
-"coordinate system."
+#, fuzzy
+msgid "Transforms a vector map via a set of tie points."
 msgstr "Transforma una capa de mapa vectorial de un sistema de coordenadas a otro."
 
-#: ../vector/v.transform/main.c:61
+#: ../vector/v.transform/main.c:60
 msgid "Suppress display of residuals or other information"
 msgstr "Suprime la visualización de residuales y otra información"
 
-#: ../vector/v.transform/main.c:65
+#: ../vector/v.transform/main.c:64
 msgid "Shift all z values to bottom=0"
 msgstr "Cambiar todos los valores Z a altura=0"
 
-#: ../vector/v.transform/main.c:70
+#: ../vector/v.transform/main.c:69
 msgid ""
 "Instead of points use transformation options (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
@@ -25547,14 +25570,14 @@ msgstr ""
 "En vez de puntos usar opciones de transformación (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
 
-#: ../vector/v.transform/main.c:72 ../vector/v.transform/main.c:94
-#: ../vector/v.transform/main.c:103 ../vector/v.transform/main.c:112
-#: ../vector/v.transform/main.c:121 ../vector/v.transform/main.c:130
-#: ../vector/v.transform/main.c:139 ../vector/v.transform/main.c:148
+#: ../vector/v.transform/main.c:71 ../vector/v.transform/main.c:93
+#: ../vector/v.transform/main.c:102 ../vector/v.transform/main.c:111
+#: ../vector/v.transform/main.c:120 ../vector/v.transform/main.c:129
+#: ../vector/v.transform/main.c:138 ../vector/v.transform/main.c:147
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../vector/v.transform/main.c:83
+#: ../vector/v.transform/main.c:82
 #, fuzzy
 msgid ""
 "ASCII file holding transform coordinates (if not given transformation "
@@ -25564,31 +25587,31 @@ msgstr ""
 "En vez de puntos usar opciones de transformación (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
 
-#: ../vector/v.transform/main.c:92
+#: ../vector/v.transform/main.c:91
 msgid "Shifting value for x coordinates"
 msgstr "Cambiando valor para coordenadas X"
 
-#: ../vector/v.transform/main.c:101
+#: ../vector/v.transform/main.c:100
 msgid "Shifting value for y coordinates"
 msgstr "Cambiando valor para coordenadas Y"
 
-#: ../vector/v.transform/main.c:119
+#: ../vector/v.transform/main.c:118
 msgid "Scaling factor for x coordinates"
 msgstr "Factor de escala para coordenadas X"
 
-#: ../vector/v.transform/main.c:128
+#: ../vector/v.transform/main.c:127
 msgid "Scaling factor for y coordinates"
 msgstr "Factor de escala para coordenadas Y"
 
-#: ../vector/v.transform/main.c:137
+#: ../vector/v.transform/main.c:136
 msgid "Scaling factor for z coordinates"
 msgstr "Factor de escala para coordenadas Z"
 
-#: ../vector/v.transform/main.c:146
+#: ../vector/v.transform/main.c:145
 msgid "Rotation around z axis in degrees counterclockwise"
 msgstr "Rotación alrededor del eje Z en grados en sentido horario"
 
-#: ../vector/v.transform/main.c:160
+#: ../vector/v.transform/main.c:159
 #, fuzzy
 msgid ""
 "The '-s' flag is deprecated and will be removed in future. Transformation "
@@ -25597,34 +25620,34 @@ msgstr ""
 "La opción -q está suplantada y se eliminará en el futuro. Por favor, use '--"
 "quiet' en su lugar."
 
-#: ../vector/v.transform/main.c:173
+#: ../vector/v.transform/main.c:172
 #, fuzzy, c-format
 msgid "Could not open file with coordinates <%s>"
 msgstr "No se pudo abrir el fichero de coordenadas : %s\n"
 
-#: ../vector/v.transform/main.c:212
+#: ../vector/v.transform/main.c:211
 #, fuzzy
 msgid "Now transforming the vectors ..."
 msgstr ""
 "\n"
 "Transformando los vectores ...\n"
 
-#: ../vector/v.transform/main.c:231
+#: ../vector/v.transform/main.c:230
 #, fuzzy, c-format
 msgid "New vector map <%s> boundary coordinates:"
 msgstr "Nuevo vectorial:"
 
-#: ../vector/v.transform/main.c:232
+#: ../vector/v.transform/main.c:231
 #, fuzzy, c-format
 msgid " N: %-10.3f    S: %-10.3f"
 msgstr " N: %-10.3f    S: %-10.3f\n"
 
-#: ../vector/v.transform/main.c:233
+#: ../vector/v.transform/main.c:232
 #, fuzzy, c-format
 msgid " E: %-10.3f    W: %-10.3f"
 msgstr " E: %-10.3f    W: %-10.3f\n"
 
-#: ../vector/v.transform/main.c:234
+#: ../vector/v.transform/main.c:233
 #, fuzzy, c-format
 msgid " B: %6.3f    T: %6.3f"
 msgstr " B: %6.3f    T: %6.3f\n"
