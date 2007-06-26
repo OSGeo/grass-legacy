@@ -24,14 +24,12 @@ case $GRASS_XTERM in
     ;;
 *Terminal.app)
     # manually transfer the necessary env vars
-    TMPSCRIPT="`g.tempfile pid=$$`"
-    if [ $? -ne 0 ] || [ -z "$TMPSCRIPT" ] ; then
-        g.message "Unable to create temporary script"
-        exit 1
-    fi
-    mv "$TMPSCRIPT" "$TMPSCRIPT.sh"
+    TMPSCRIPT="/tmp/grassxterm_$$"
+    touch "$TMPSCRIPT.sh"
     chmod +x "$TMPSCRIPT.sh"
-    echo "DISPLAY=$DISPLAY" > "$TMPSCRIPT.sh"
+    echo "#!/bin/sh" > "$TMPSCRIPT.sh"
+    
+    echo "DISPLAY=$DISPLAY" >> "$TMPSCRIPT.sh"
     echo "PATH=\"$PATH\"" >> "$TMPSCRIPT.sh"
     echo "GISRC=\"$GISRC\"" >> "$TMPSCRIPT.sh"
     echo "GISBASE=\"$GISBASE\"" >> "$TMPSCRIPT.sh"
@@ -59,31 +57,25 @@ case $GRASS_XTERM in
 
     # get command, ignore all other xterm flags
     while true ; do
-        if [ "$1" = -e ] ; then break ; fi
+        if [ "$1" = "-e" ] ; then break ; fi
         shift
     done
     shift
+    # and add it to end of script
+    echo "$@" >> "$TMPSCRIPT.sh"
 
     # execute
-    # save current active app/window, return to it when script finished.
-    # NOTE: if the user switches to another Terminal window before env.sh
-    # script finishes, command will never execute.
-    osascript <<EOF
+    # save current active app/window, return to it when script finishes.
+    osascript - <<EOF
 tell application "System Events"
 	set save_app to item 1 of (get name of processes whose frontmost is true)
 end tell
 tell application "Terminal"
 	activate
-	-- start new window with env script
-	do script "source \"$TMPSCRIPT.sh\""
+	-- start new window with env/cmd script
+	do script "$TMPSCRIPT.sh; exit"
 	tell window 1
-		-- wait for it to finish - use 'busy' since exports aren't processes
-		repeat while busy
-			delay 0.1
-		end repeat
-		-- and finally the command to run
-		do script "$@; exit" in it
-		-- wait for it to finish - use 'processes' here since busy doesn't work for some reason
+		-- wait for it to finish
 		repeat while (processes is not equal to {})
 			delay 1
 		end repeat
