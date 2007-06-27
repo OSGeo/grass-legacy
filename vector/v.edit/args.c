@@ -116,14 +116,23 @@ int parser(int argc, char*argv[], struct GParams *params,
 
     params -> where = G_define_standard_option(G_OPT_WHERE);
     params -> where->guisection  = _("Query");
+
+    params -> reverse = G_define_flag();
+    params -> reverse -> key = 'r';
+    params -> reverse -> description = _("Reverse selection");
+
+    params -> print = G_define_flag();
+    params -> print -> key = 'i';
+    params -> print -> description = _("Print ID's of edited features");
+
+    params -> header = G_define_flag();
+    params -> header -> key          = 'n';
+    params -> header -> description  = _("Do not expect header of input data");
 	
     params -> topo = G_define_flag();
     params -> topo -> key = 't';
     params -> topo -> description = _("Do not build topology");
 
-    params -> print = G_define_flag();
-    params -> print -> key = 'i';
-    params -> print -> description = _("Print ID's of edited features");
     /*
     params -> boundary = G_define_flag();
     params -> boundary -> key = 'b';
@@ -137,9 +146,6 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> print_cat -> key = 'c';
     params -> print_cat -> description = _("Print category numbers instead of ID's");
     */
-    params -> header = G_define_flag();
-    params -> header -> key          = 'n';
-    params -> header -> description  = _("Do not expect header of input data");
 
     if(G_parser(argc, argv))
 	exit (EXIT_FAILURE);
