@@ -13,6 +13,7 @@
  *****************************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/codes.h>
@@ -24,7 +25,7 @@ struct {
 } parms;
 
 void parse_command_line();
-int print_table_definition(dbTable *);
+int print_table_definition(dbDriver *, dbTable *);
 	    
 int
 main(int argc, char *argv[])
@@ -32,9 +33,11 @@ main(int argc, char *argv[])
     dbDriver *driver;
     dbHandle handle;
     dbTable *table;
-    dbString table_name;
-    int col, ncols;
+    dbString table_name, keycol;
+    int col, ncols, nrows;
     dbColumn *column;
+    char buf[1024];
+    dbString stmt;
 
     parse_command_line (argc, argv);
     driver = db_start_driver(parms.driver);
@@ -57,11 +60,17 @@ main(int argc, char *argv[])
     }
 
     if(!parms.printcolnames)
-        print_table_definition(table);
+        print_table_definition(driver, table);
     else
     {
         ncols = db_get_table_number_of_columns(table);
+
+        db_init_string ( &stmt );
+        sprintf(buf, "select * from %s", db_get_table_name (table));
+        db_set_string (&stmt, buf);
+        nrows = db_get_table_number_of_rows (driver, &stmt);
         fprintf(stdout, "ncols:%d\n", ncols);
+        fprintf(stdout, "nrows:%d\n", nrows);
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
@@ -80,7 +89,7 @@ void
 parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *table;
-    struct Flag *cols;
+    struct Flag *cols, *tdesc;
     struct GModule *module;
     char *drv, *db;
 
@@ -90,6 +99,10 @@ parse_command_line(int argc, char *argv[])
     cols = G_define_flag();
     cols->key               = 'c';
     cols->description       = _("print column names only instead of full column descriptions");
+
+    tdesc = G_define_flag();
+    tdesc->key               = 't';
+    tdesc->description       = _("print table structure");
 
     table 		= G_define_option();
     table->key 		= "table";
