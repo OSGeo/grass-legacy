@@ -229,7 +229,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
     def RedrawMap(self):
         if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
-            if self.qlayer: self.map.delLayer(item='qlayer')
+            if self.qlayer:
+                self.map.DeleteLayer(self.qlayer)
 
             cats = self.selectedCats
             catstr = ""
@@ -265,12 +266,19 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
             # FIXME: width=1, because of maybe bug in PNG driver elusion
             # should be width=3 or something like this
-            cmd = "d.vect map=%s color=yellow fcolor=yellow cats=%s width=3" % (self.vectmap, catstr)
+            cmd = ["d.vect",
+                   "map=%s" % self.vectmap,
+                   "color=yellow",
+                   "fcolor=yellow",
+                   "cats=%s" % catstr,
+                   "width=3"]
             #print cmd
-            if self.icon: cmd = cmd +"  icon=%s" % (self.icon)
-            if self.pointsize: cmd = cmd + " size=%s" % (self.pointsize)
+            if self.icon:
+                cmd.append("icon=%s" % (self.icon))
+            if self.pointsize:
+                cmd.append("size=%s" % (self.pointsize))
 
-            self.qlayer = self.map.AddLayer(item='qlayer', type="vector", name='', command=cmd,
+            self.qlayer = self.map.AddLayer(type="vector", name='qlayer', command=cmd,
                                             l_active=True, l_hidden=True, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
             self.lastTurnSelectedCats = self.selectedCats[:]
