@@ -55,6 +55,7 @@ SUBDIRS = \
 	v.convert.all \
 	v.db.addcol \
 	v.db.addtable \
+	v.db.join \
 	v.db.dropcol \
 	v.db.droptable \
 	v.db.renamecol \
