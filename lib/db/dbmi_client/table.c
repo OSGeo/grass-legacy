@@ -72,3 +72,27 @@ db_table_exists ( char *drvname, char *dbname, char *tabname)
 
     return (found);
 }
+
+/*!
+ \fn
+ \brief return number of rows of table
+ \return
+ \param
+*/
+int
+db_get_table_number_of_rows (dbDriver *driver, dbString *sql)
+{
+    int nrows;
+    dbCursor cursor;
+
+    if (db_open_select_cursor(driver, sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+        G_warning ( "Cannot open select cursor: '%s'", db_get_string(sql) );
+        db_close_database_shutdown_driver(driver);
+        return DB_FAILED;
+    }
+
+    nrows=db_get_num_rows (&cursor);
+    db_close_cursor(&cursor);
+
+    return nrows;
+}
