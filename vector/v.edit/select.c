@@ -76,7 +76,11 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 		     layer, type, params -> where -> answer,
 		     List);
     }
-    
+
+    if (params -> reverse -> answer) {
+	reverse_selection(Map, &List);
+    }
+
     G_message (_("[%d] of [%d] features selected"),
 	       List -> n_values,
 	       Vect_get_num_lines (Map));
@@ -460,3 +464,24 @@ int merge_lists (struct ilist* alist, struct ilist* blist)
 
     return alist -> n_values;
 } 
+
+/* reverse selection */
+int reverse_selection (struct Map_info *Map, struct ilist** List) {
+
+    struct ilist* list_reverse;
+    int line, nlines;
+
+    list_reverse = Vect_new_list();
+
+    nlines = Vect_get_num_lines(Map);
+
+    for (line = 1; line <= nlines; line++) {
+	if (!Vect_val_in_list (*List, line))
+	    Vect_list_append (list_reverse, line);
+    }
+
+    Vect_destroy_list (*List);
+    *List = list_reverse;
+
+    return 1;
+}

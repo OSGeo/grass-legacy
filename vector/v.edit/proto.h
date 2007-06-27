@@ -62,6 +62,7 @@ int sel_by_id(struct Map_info *Map,
 int sel_by_where(struct Map_info *Map,
 		 int layer, int type, char *where,
 		 struct ilist *List);
+int reverse_selection(struct Map_info *Map, struct ilist **List);
 
 /* max_distance.c */
 double max_distance (double maxdistance);
