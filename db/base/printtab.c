@@ -4,11 +4,13 @@
 #include <grass/glocale.h>
 
 int
-print_table_definition (dbTable *table)
+print_table_definition (dbDriver *driver, dbTable *table)
 
 {
-    int ncols, col;
+    int ncols, col, nrows;
     dbColumn *column;
+    char buf[1024];
+    dbString stmt;
 
     fprintf(stdout, "table:%s\n", db_get_table_name(table));
     fprintf(stdout, "description:%s\n", db_get_table_description(table));
@@ -16,7 +18,13 @@ print_table_definition (dbTable *table)
     print_priv ("delete", db_get_table_delete_priv(table));
 
     ncols = db_get_table_number_of_columns(table);
+
+    db_init_string ( &stmt );
+    sprintf(buf, "select * from %s", db_get_table_name (table));
+    db_set_string (&stmt, buf);
+    nrows = db_get_table_number_of_rows (driver, &stmt);
     fprintf(stdout, "ncols:%d\n", ncols);
+    fprintf(stdout, "nrows:%d\n", nrows);
     for (col = 0; col < ncols; col++)
     {
 	column = db_get_table_column (table, col);

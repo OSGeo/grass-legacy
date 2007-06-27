@@ -165,6 +165,7 @@ char *      db_get_table_description  P((dbTable *table ));
 int         db_get_table_insert_priv  P((dbTable *table ));
 char *      db_get_table_name         P((dbTable *table ));
 int         db_get_table_number_of_columns P((dbTable *table ));
+int         db_get_table_number_of_rows P((dbDriver *driver, dbString *sql));
 int         db_get_table_select_priv  P((dbTable *table ));
 int         db_get_table_update_priv  P((dbTable *table ));
 double      db_get_value_as_double    P((dbValue *value, int ctype ));
