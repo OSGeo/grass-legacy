@@ -33,7 +33,7 @@ main(int argc, char *argv[])
     dbDriver *driver;
     dbHandle handle;
     dbTable *table;
-    dbString table_name, keycol;
+    dbString table_name;
     int col, ncols, nrows;
     dbColumn *column;
     char buf[1024];
