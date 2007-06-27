@@ -584,8 +584,8 @@ class Map:
         try:
             # render map layers
             for layer in self.layers + self.overlays:
-                # skip if hidden or not active
-                if layer == None or layer.active == False or layer.hidden == True:
+                # skip if not active
+                if layer == None or layer.active == False:
                     continue
 
                 # render if there is no mapfile
@@ -682,11 +682,8 @@ class Map:
 
     def DeleteLayer(self, layer):
         """
-        Removes layer from list of layers, defined by layer
-        tree item ID
-
-        Parameters:
-            item - wxPython ID for layer tree item
+        Removes layer from list of layers,
+        defined by reference to MapLayer instance
 
         Returns:
             Removed layer on success or None
