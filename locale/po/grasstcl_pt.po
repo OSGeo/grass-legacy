@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
 # Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2006, 2007.
+# Paulo E. P. Marcondes <paulomarcondes at gmail dot com>, 2007.
 #
 msgid ""
 msgstr ""
@@ -25,7 +26,7 @@ msgstr "Cor do texto: "
 
 #: ../gui/tcltk/d.m/barscale.tcl:69
 msgid " Background color: "
-msgstr " Plano de Fundo "
+msgstr "Cor de fundo: "
 
 #: ../gui/tcltk/d.m/barscale.tcl:71
 msgid "no background color"
@@ -4847,7 +4848,7 @@ msgstr "ATENÇÃO: locação <%s> em GISDBASE <%s> não é um diretório ou não existe.
 #: ../lib/init/gis_set.tcl:185
 #, tcl-format
 msgid "GRASS %s Startup"
-msgstr "Inicialização do GRASS %s"
+msgstr "Inicializaçao do GRASS %s"
 
 #: ../lib/init/gis_set.tcl:208
 msgid "Welcome to GRASS GIS Version"
@@ -4882,7 +4883,7 @@ msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
 msgstr ""
-"Localizaç?o do Projeto\n"
+"Localização do Projeto\n"
 "(projeção/sistema de coordenadas)"
 
 #: ../lib/init/gis_set.tcl:311
