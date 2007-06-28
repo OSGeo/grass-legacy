@@ -226,7 +226,7 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_vector2(name, "");
 		if (!mapset)
-			G_fatal_error(_("vector map <%s> not found"), name);
+			G_fatal_error(_("Vector map <%s> not found"), name);
 
 		Vect_set_open_level(1);
 		if (Vect_open_old(&Map, name, mapset) != 1)
