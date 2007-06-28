@@ -15,26 +15,26 @@
 
 
 #%Module
-#%  description: removes existing attribute table of a vector map
+#%  description: Removes existing attribute table of a vector map.
 #%  keywords: vector, database, attribute table
 #%End
 
 #%flag
 #%  key: f
-#%  description: force removal (required for actual deletion of table)
+#%  description: Force removal (required for actual deletion of table)
 #%end
 #%option
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: vector map from which to remove attribute table
+#% description: Vector map from which to remove attribute table
 #% required : yes
 #%end
 
 #%option
 #% key: table
 #% type: string
-#% description: name of existing attribute table (default: vector map name)
+#% description: Name of existing attribute table (default: vector map name)
 #% required : no
 #%end
 

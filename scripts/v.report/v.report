@@ -14,7 +14,7 @@
 #############################################################################
 
 #%Module
-#%  description: Reports geometry statistics for vectors
+#%  description: Reports geometry statistics for vectors.
 #%  keywords: vector, report, statistics
 #%End
 #%Flag
@@ -29,7 +29,7 @@
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: Input vector map
+#% description: Name of input vector map
 #% required: yes
 #%end
 #%option

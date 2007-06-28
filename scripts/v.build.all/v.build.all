@@ -13,7 +13,7 @@
 #############################################################################
 
 #%Module
-#% description: Rebuild topology on all vector maps in the current mapset
+#% description: Rebuilds topology on all vector maps in the current mapset.
 #% keywords: vector
 #%End
 

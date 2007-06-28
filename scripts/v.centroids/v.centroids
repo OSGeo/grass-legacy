@@ -12,7 +12,7 @@
 #############################################################################
 
 #%Module
-#% description: Adds missing centroids to closed boundaries
+#% description: Adds missing centroids to closed boundaries.
 #% keywords: vector, centroid, area
 #%End
 
