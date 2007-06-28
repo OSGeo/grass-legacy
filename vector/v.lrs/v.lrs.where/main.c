@@ -53,41 +53,41 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = "Find line id and real km+offset for given points in vector map "
-	   "using linear reference system";
+    module->description = _("Find line id and real km+offset for given points in vector map "
+			    "using linear reference system");
 
     lines_opt = G_define_standard_option(G_OPT_V_INPUT);
     lines_opt->key = "lines";
-    lines_opt->description = "Input map containing lines";
+    lines_opt->description = _("Input vector map containing lines");
     
     points_opt = G_define_standard_option(G_OPT_V_INPUT);
     points_opt->key = "points";
-    points_opt->description = "Input map containing points";
+    points_opt->description = _("Input vector map containing points");
     
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = "Line layer";
+    lfield_opt->description = _("Line layer");
     
     pfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     pfield_opt->key = "player";
     pfield_opt->answer = "1";
-    pfield_opt->description = "Point layer";
+    pfield_opt->description = _("Point layer");
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
     table_opt->type        = TYPE_STRING ;
     table_opt->required    = YES; 
-    table_opt->description = "Name of the reference system table";
+    table_opt->description = _("Name of the reference system table");
 
     thresh_opt = G_define_option();
     thresh_opt->key = "thresh";
     thresh_opt->type = TYPE_DOUBLE;
     thresh_opt->required = NO;
     thresh_opt->answer = "1000";
-    thresh_opt->description = "Maximum distance to nearest line";
+    thresh_opt->description = _("Maximum distance to nearest line");
     
-    if(G_parser(argc,argv)) exit(1);
+    if(G_parser(argc,argv)) exit(EXIT_FAILURE);
 
     LCats = Vect_new_cats_struct ();
     PCats = Vect_new_cats_struct ();
@@ -102,13 +102,17 @@ int main(int argc, char **argv)
 
     /* Open input lines */
     mapset = G_find_vector2 (lines_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", lines_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"), lines_opt->answer);
+    
     Vect_set_open_level ( 2 );
     Vect_open_old (&LMap, lines_opt->answer, mapset); 
 
     /* Open input points */
     mapset = G_find_vector2 (points_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", points_opt->answer);
+    if(mapset == NULL)
+	G_fatal_error (_("Vector map <%s> not found"), points_opt->answer);
+
     Vect_set_open_level ( 2 );
     Vect_open_old (&PMap, points_opt->answer, mapset); 
     
@@ -117,17 +121,18 @@ int main(int argc, char **argv)
     rsdriver = db_start_driver(NULL);
     db_set_handle (&rshandle, NULL, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
-        G_fatal_error("Cannot open database for reference table");
+        G_fatal_error(_("Cannot open database for reference table"));
 
     n_points = n_outside = n_found = n_no_record = n_many_records = 0;
 
     nlines = Vect_get_num_lines ( &PMap );
     G_debug ( 2, "nlines = %d", nlines );
+    G_message("pcat|lid|mpost|offset");
     for ( line = 1; line <= nlines; line++ ) {
 	int nearest, pcat, lcat, lid, ret;
 	double along, mpost, offset;
 
-	G_debug ( 4, "point = %d", line );
+	G_debug ( 3, "point = %d", line );
 	type = Vect_read_line ( &PMap, PPoints, PCats, line );
 	if ( type != GV_POINT ) continue;
 	Vect_cat_get ( PCats, pfield, &pcat );
@@ -172,7 +177,7 @@ int main(int argc, char **argv)
 	    continue;
 	}
 
-	G_debug ( 4, "  lid = %d mpost = %f offset = %f", lid, mpost, offset );
+	G_debug ( 3, "  lid = %d mpost = %f offset = %f", lid, mpost, offset );
 
 	fprintf (stdout, "|%d|%f+%f\n", lid, mpost, offset);
 	n_found++;
@@ -184,15 +189,14 @@ int main(int argc, char **argv)
     Vect_close(&LMap);
     Vect_close(&PMap);
 
-    fprintf ( stderr, "%d points read from input\n", n_points);
-    fprintf ( stderr, "%d positions found\n", n_found);
+    G_message ( _("[%d] points read from input"), n_points);
+    G_message ( _("[%d] positions found"), n_found);
     if ( n_outside )
-        fprintf ( stderr, "%d points outside threshold\n", n_outside);
+        G_message ( _("[%d] points outside threshold"), n_outside);
     if ( n_no_record )
-        fprintf ( stderr, "%d points - no record found\n", n_no_record);
+        G_message ( _("[%d] points - no record found"), n_no_record);
     if ( n_many_records )
-        fprintf ( stderr, "%d points - to many records found\n", n_many_records);
+        G_message ( _("[%d] points - to many records found"), n_many_records);
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
-
