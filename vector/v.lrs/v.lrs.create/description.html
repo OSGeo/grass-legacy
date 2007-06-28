@@ -27,21 +27,23 @@ This example is written for the Spearfish dataset.
 As first step, bus route data are prepared. 
 
 <div class="code"><pre>
-# copy into own mapset
-g.copy vect=roads_net,busroute
+# break into segments for correct route selection
+v.clean roads_net out=busroute_tmp tool=break
+
+# make polyline for easier line selection by coordinate pairs
+v.build.polylines busroute_tmp out=busroute_tmp2
 
 # reverse delete: reduce route map to bus route (enter in one line)
-v.edit -r busroute tool=delete coords=590272,4927306,590330,\
-4927241,590413,4927212,590435,4927108,590467,4926978,\
-590492,4926848,590517,4926718,590600,4926672,590709,4926693,\
-590831,4926722,590950,4926755,590993,4926841,590972,4926956,\
-590946,4927079,590925,4927187,590961,4927252 thresh=5
+v.edit -r busroute_tmp2 tool=delete coords=590273,4927304,\
+590346,4927246,590414,4927210,590438,4927096,590468,4926966,\
+590491,4926848,590566,4926798,590637,4926753,590701,4926698,\
+590830,4926726,590935,4926751,590993,4926830,590972,4926949,\
+590948,4927066,590922,4927182,590957,4927251 thresh=5
 
 # vector line needs to be polyline
-g.rename vect=busroute,busroute_tmp
-v.build.polylines busroute_tmp out=busroute_tmp2
-v.category busroute_tmp2 out=busroute op=add
-g.remove vect=busroute_tmp,busroute_tmp2
+v.build.polylines busroute_tmp2 out=busroute_tmp3
+v.category busroute_tmp3 out=busroute op=add
+g.remove vect=busroute_tmp,busroute_tmp2,busroute_tmp3
 </pre></div>
 
 The result can be visualized:
