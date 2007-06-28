@@ -514,6 +514,32 @@ G_define_standard_option (int opt)
 	    Opt->label        = _("Category values");
 	    Opt->description  = _("Example: 1,3,7-9,13");
 	    break;
+
+	/* files */
+	case G_OPT_F_INPUT:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old_file,file,input";
+	    Opt->description  = _("Name of input file");
+	    break;
+	case G_OPT_F_OUTPUT:
+	    Opt->key          = "output";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "new_file,file,output";
+	    Opt->description  = _("Name for output file");
+	    break;
+	case G_OPT_F_SEP:
+	    Opt->key          = "fs";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "character";
+	    Opt->required     = NO;
+	    Opt->answer       = "|";
+	    Opt->description  = _("Field separator");
+	    break;
     }
 
     return(Opt);
