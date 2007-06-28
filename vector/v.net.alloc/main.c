@@ -127,7 +127,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2 (map->answer, NULL); 
       
     if ( mapset == NULL)
-	G_fatal_error (_("Vector map <%s> not fould"), map->answer);
+	G_fatal_error (_("Vector map <%s> not found"), map->answer);
 
     Vect_set_open_level(2);
     Vect_open_old (&Map, map->answer, mapset); 
