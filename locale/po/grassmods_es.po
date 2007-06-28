@@ -1,4 +1,4 @@
-# translation of grassmods_es.po to Español
+# translation of grassmods_es.po to español
 # Spanish translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-25 21:03+0200\n"
-"PO-Revision-Date: 2007-06-25 23:51+0200\n"
+"POT-Creation-Date: 2007-06-27 23:40+0200\n"
+"PO-Revision-Date: 2007-06-28 14:58+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: Español <grass-es@grass.itc.it>\n"
+"Language-Team: español <grass-es@itc.it.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,30 +26,30 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/describe.c:42
+#: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/describe.c:45
 #: ../db/base/droptable.c:38 ../db/base/execute.c:57 ../db/base/select.c:60
 #: ../db/base/tables.c:41
 #, c-format
 msgid "Cannot start driver <%s>"
 msgstr "No se puede iniciar el controlador <%s>"
 
-#: ../db/base/columns.c:78 ../db/base/describe.c:98
+#: ../db/base/columns.c:78 ../db/base/describe.c:111
 msgid "table name"
 msgstr "nombre de tabla"
 
-#: ../db/base/columns.c:85 ../db/base/databases.c:75 ../db/base/describe.c:105
+#: ../db/base/columns.c:85 ../db/base/databases.c:75 ../db/base/describe.c:118
 #: ../db/base/select.c:197 ../db/base/tables.c:78
 msgid "driver name"
 msgstr "nombre del controlador"
 
-#: ../db/base/columns.c:93 ../db/base/describe.c:113 ../db/base/select.c:188
+#: ../db/base/columns.c:93 ../db/base/describe.c:126 ../db/base/select.c:188
 #: ../db/base/tables.c:86
 msgid "database name"
 msgstr "nombre de la base de datos"
 
 #: ../db/base/columns.c:99 ../db/base/connect.c:41 ../db/base/copy.c:33
 #: ../db/base/createdb.c:73 ../db/base/databases.c:87
-#: ../db/base/describe.c:119 ../db/base/drivers.c:68 ../db/base/dropdb.c:73
+#: ../db/base/describe.c:132 ../db/base/drivers.c:68 ../db/base/dropdb.c:73
 #: ../db/base/droptable.c:85 ../db/base/execute.c:100 ../db/base/select.c:252
 #: ../db/base/tables.c:100 ../db/db.login/main.c:42
 msgid "database, SQL"
@@ -177,15 +177,20 @@ msgstr "localización de la base de datos"
 msgid "List all databases for a given driver and location."
 msgstr "Listar todas las bases de datos para un controlador y localización dados."
 
-#: ../db/base/describe.c:55
+#: ../db/base/describe.c:58
 msgid "Cannot describe table"
 msgstr "Imposible describir la tabla"
 
-#: ../db/base/describe.c:92
+#: ../db/base/describe.c:101
 msgid "print column names only instead of full column descriptions"
 msgstr "imprimir sólo nombres de columna en vez de descripciones completas de columna"
 
-#: ../db/base/describe.c:120
+#: ../db/base/describe.c:105
+#, fuzzy
+msgid "print table structure"
+msgstr "imprimir tablas y salir"
+
+#: ../db/base/describe.c:133
 msgid "Describe a table (in detail)."
 msgstr "Describir una tabla (en detalle)."
 
@@ -2209,7 +2214,7 @@ msgstr "Factor de escala para las flechas (mapa de magnitud)"
 #: ../display/d.rast.num/number.c:150 ../raster/r.bitpattern/main.c:101
 #: ../raster/r.los/main.c:164 ../raster/r.los/main.c:171
 #: ../raster/r.out.bin/main.c:129 ../raster/r.param.scale/interface.c:167
-#: ../raster/r.recode/main.c:76 ../raster/r.resamp.rst/main.c:400
+#: ../raster/r.recode/main.c:82 ../raster/r.resamp.rst/main.c:400
 #: ../raster/r.resamp.rst/main.c:426 ../raster/r.texture/main.c:212
 #: ../raster/r.univar2/r.univar_main.c:93 ../raster/simwe/simlib/input.c:159
 #: ../raster/simwe/simlib/input.c:164 ../raster/simwe/simlib/input.c:169
@@ -2668,7 +2673,7 @@ msgstr "Ningún nombre de mapa especificado"
 #: ../imagery/i.rgb.his/openfiles.c:19 ../ps/ps.map/outl_io.c:72
 #: ../raster/r.cats/main.c:97 ../raster/r.out.mat/main.c:94
 #: ../raster/r.out.pov/main.c:171 ../raster/r.out.tiff/r.out.tiff.c:167
-#: ../raster/r.profile/main.c:142 ../raster/r.reclass/main.c:67
+#: ../raster/r.profile/main.c:142 ../raster/r.reclass/main.c:77
 #: ../raster/r.statistics/main.c:75 ../raster/r.statistics/main.c:81
 #: ../raster/r.support/front/front.c:218 ../raster/r.to.vect/main.c:108
 #: ../vector/v.sample/main.c:157 ../vector/v.what.rast/main.c:129
@@ -5546,7 +5551,7 @@ msgstr "clase %-3d "
 #: ../imagery/i.cluster/print4.c:16
 #, c-format
 msgid "class centroids (sum/count=mean)\n"
-msgstr "centróides de clase (suma(cuenta=media)\n"
+msgstr "centroides de clase (suma(cuenta=media)\n"
 
 #: ../imagery/i.cluster/print4.c:19
 #, c-format
@@ -6685,7 +6690,7 @@ msgstr "Salida gráfica usando Xgraph"
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:3
 #: ../raster/r.water.outlet/main.c:54
 msgid "Name of input raster map"
-msgstr "Nombre del ráster de entrada"
+msgstr "Nombre del mapa ráster de entrada"
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
@@ -7453,8 +7458,8 @@ msgstr "Mezcla los componentes de color de dos mapas ráster en la proporción ind
 #: ../raster/r.profile/main.c:53 ../raster/r.proj/main.c:131
 #: ../raster/r.proj.seg/main.c:132 ../raster/r.quant/main.c:41
 #: ../raster/r.random/main.c:46 ../raster/r.random.cells/main.c:39
-#: ../raster/r.random.surface/main.c:47 ../raster/r.reclass/main.c:45
-#: ../raster/r.recode/main.c:41 ../raster/r.region/main.c:52
+#: ../raster/r.random.surface/main.c:47 ../raster/r.reclass/main.c:48
+#: ../raster/r.recode/main.c:42 ../raster/r.region/main.c:52
 #: ../raster/r.report/main.c:27 ../raster/r.resamp.rst/main.c:155
 #: ../raster/r.resample/main.c:53 ../raster/r.rescale/main.c:48
 #: ../raster/r.rescale.eq/main.c:51 ../raster/r.series/main.c:102
@@ -7562,9 +7567,8 @@ msgid "SRTM input tile (file without .hgt.zip extension)"
 msgstr "Archivo de entrada SRTM (archivo sin extensión .hgt.zip)"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:4
-#, fuzzy
 msgid "Output raster map (default: input tile)"
-msgstr "Mapa ráster de salida (por defecto: tile de entrada)"
+msgstr "Mapa ráster de salida (por defecto: tesela de entrada)"
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:5
 msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
@@ -7820,12 +7824,11 @@ msgid "Name for output file (if omitted or \"-\" output to stdout)"
 msgstr "Nombre para el archivo de salida (si se omite o \"-\" salida a stdout)"
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
-#, fuzzy
 msgid ""
 "Creates raster plane map given dip (inclination), aspect (azimuth) and one "
 "point."
 msgstr ""
-"Crear un mapa ráster plano dando pendiente (inclinación), orientación "
+"Crea un mapa ráster plano dando pendiente (inclinación), orientación "
 "(azimut) y un punto."
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
@@ -7882,9 +7885,8 @@ msgid "greater val option that sets the >= area size limit [hectares]"
 msgstr ""
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:6
-#, fuzzy
 msgid "reclass raster output map"
-msgstr "ráster"
+msgstr "reclasificar mapa ráster de salida"
 
 #: ../locale/scriptstrings/r.regression.line_to_translate.c:1
 msgid "Calculates linear regression from two raster maps: y = a + b*x"
@@ -7971,7 +7973,7 @@ msgstr ""
 #: ../locale/scriptstrings/r.tileset_to_translate.c:5
 #, fuzzy
 msgid "Name of region to use instead of current region for bounds and resolution"
-msgstr "Nombre a"
+msgstr "Nombre de la región a usar en vez de la actual para bounds y resolución"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:6
 msgid "Source projection"
@@ -7983,9 +7985,8 @@ msgid "Conversion factor from units to meters in source projection"
 msgstr "Factor de conversión de las unidades a metros en la proyección de origen"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:8
-#, fuzzy
 msgid "Destination projection, defaults to this location's projection"
-msgstr "Proyección de destino, por defecto a localización"
+msgstr "Proyección de destino, por defecto la proyección de esta localización"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:10
 msgid "Maximum number of columns for a tile in the source projection"
@@ -8016,55 +8017,46 @@ msgid "Percentile to calculate (requires -e flag)"
 msgstr "Percentil a calcular (requiere la opción -e)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
-#, fuzzy
 msgid "Calculates new grid3D volume from r3.mapcalc expression."
 msgstr ""
-"r3.mapcalculator - Calcula un nuevo volumen grid3D a partir de una expresión "
-"r3.mapcalc"
+"Calcula un nuevo volumen grid3D a partir de una expresión "
+"r3.mapcalc."
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
-#, fuzzy
 msgid "A (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "A (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
-#, fuzzy
 msgid "B (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "B (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
-#, fuzzy
 msgid "C (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "C (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
-#, fuzzy
 msgid "D (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "D (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
-#, fuzzy
 msgid "E (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "E (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
-#, fuzzy
 msgid "F (grid3D file)"
-msgstr "Nombre de archivo grid3 de entrada"
+msgstr "F (archivo grid3D)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
-#, fuzzy
 msgid "Name for output grid3D volume"
-msgstr "Nombre para el archivo de salida"
+msgstr "Nombre para el volumen grid3D de salida"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
 msgid "Expert mode (enter a set of r3.mapcalc expressions)"
-msgstr ""
+msgstr "Modo experto (introducir un conjunto de expresiones r3.mapcalc)"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
-#, fuzzy
 msgid "Rebuild topology on all vector maps in the current mapset"
-msgstr "topología vectorial directorio de mapas"
+msgstr "Reconstruir topología de todos los mapas vectoriales en el directorio de mapas actual"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:2
 #: ../vector/v.buffer/main.c:245 ../vector/v.category/main.c:66
@@ -8083,18 +8075,15 @@ msgid "vector"
 msgstr "vectorial"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:1
-#, fuzzy
 msgid "Adds missing centroids to closed boundaries"
-msgstr "centróides a bordes"
+msgstr "Añade los centroides que faltan a contornos cerrados"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:2
-#, fuzzy
 msgid "vector, centroid, area"
-msgstr "vectorial"
+msgstr "vectorial, centroide, área"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
-#, fuzzy
 msgid "Name of input vector map"
 msgstr "Nombre del mapa vectorial de entrada"
 
@@ -8106,25 +8095,23 @@ msgid "Name for output vector map"
 msgstr "Nombre para el mapa vectorial de salida"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:5
-#, fuzzy
 msgid "Action to be taken"
-msgstr "a"
+msgstr "Acción a tomar"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:6
 #: ../locale/scriptstrings/v.report_to_translate.c:6
 #: ../vector/v.out.vtk/main.c:73
-#, fuzzy
 msgid "Layer number"
 msgstr "Número de capa"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:7
 msgid "Category number starting value"
-msgstr ""
+msgstr "Valor inicial de número de categoría"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:8
 #: ../vector/v.category/main.c:103
 msgid "Category increment"
-msgstr ""
+msgstr "Incremento de categoría"
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:1
 msgid ""
@@ -8157,6 +8144,7 @@ msgstr "columnas a a vectorial"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
@@ -8165,21 +8153,18 @@ msgstr "columnas a a vectorial"
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:2
 #: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:105
 #: ../vector/v.to.db/main.c:32
-#, fuzzy
 msgid "vector, database, attribute table"
-msgstr "vectorial"
+msgstr "vectorial, base de datos, tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:3
 #: ../locale/scriptstrings/v.db.update_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to edit attribute table"
-msgstr "a"
+msgstr "Mapa vectorial para el que editar la tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:4
 #: ../locale/scriptstrings/v.db.update_to_translate.c:4
-#, fuzzy
 msgid "Layer where to add column"
-msgstr "a añadir"
+msgstr "Capa a la que añadir la columna"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
 #, fuzzy
@@ -8196,19 +8181,16 @@ msgid ""
 msgstr "a vectorial"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to add new attribute table"
-msgstr "a añadir"
+msgstr "Mapa vectorial al que añadir nueva tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
-#, fuzzy
 msgid "Name of new attribute table (default: vector map name)"
-msgstr "Nombre vectorial nombre"
+msgstr "Nombre de la nueva tabla de atributos (por defecto: nombre del mapa vectorial)"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
-#, fuzzy
 msgid "Layer where to add new attribute table"
-msgstr "a añadir"
+msgstr "Capa a la que añadir la nueva tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
 #, fuzzy
@@ -8217,25 +8199,46 @@ msgid ""
 "all support VARCHAR(), INT, DOUBLE and DATE)"
 msgstr "Nombre"
 
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+msgid "Allows to join a table to a vector map table"
+msgstr "Permite unir una tabla a la tabla de un mapa vectorial"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+msgid "Vector map to which to join other table"
+msgstr "Mapa vectorial al que unir otra tabla"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+msgid "Layer where to join"
+msgstr "Capa a la que unir"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr "Columna a unir en la tabla del mapa"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+msgid "Other table name"
+msgstr "Nombre de la otra tabla"
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+msgid "Join column in other table"
+msgstr "Columna a unir en la otra tabla"
+
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
 #, fuzzy
 msgid "Drops a column from the attribute table connected to a given vector map"
-msgstr "a vectorial"
+msgstr "Elimina una a vectorial"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to drop attribute column"
-msgstr "a"
+msgstr "Mapa vectorial del que eliminar una columna de atributos"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:4
-#, fuzzy
 msgid "Layer where to drop column"
-msgstr "a"
+msgstr "Capa de la que eliminar una columna"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
-#, fuzzy
 msgid "Name of the column"
-msgstr "Nombre"
+msgstr "Nombre de la columna"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
 #, fuzzy
@@ -8258,9 +8261,8 @@ msgid "name of existing attribute table (default: vector map name)"
 msgstr "nombre vectorial nombre"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
-#, fuzzy
 msgid "Layer from which to drop linked attribute table"
-msgstr "a"
+msgstr "Capa de la que eliminar la tabla de atributos asociada"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
 #, fuzzy
@@ -8268,19 +8270,16 @@ msgid "Renames a column in a attribute table connected to a given vector map"
 msgstr "a vectorial"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
-#, fuzzy
 msgid "Vector map for which to rename attribute column"
-msgstr "a"
+msgstr "Mapa vectorial en el que cambiar el nombre de una columna de atributos"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:4
-#, fuzzy
 msgid "Layer where to rename column"
-msgstr "a"
+msgstr "Capa en la que cambiar el nombre de una columna"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:5
-#, fuzzy
 msgid "Old and new name of the column (old,new)"
-msgstr "nombre"
+msgstr "Nombre antiguo y nuevo de la columna (antiguo,nuevo)"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
 #, fuzzy
@@ -8295,9 +8294,8 @@ msgid ""
 msgstr "Nombre"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
-#, fuzzy
 msgid "Name of new database"
-msgstr "Nombre"
+msgstr "Nombre de la nueva base de datos"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
 msgid "Old schema"
@@ -8327,31 +8325,27 @@ msgstr "vectorial, estadísticas"
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:3
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
 msgid "Extended statistics (quartiles and 90th percentile)"
-msgstr ""
+msgstr "Estadísticas ampliadas (cuartiles y percentiles 90)"
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:4
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
-#, fuzzy
 msgid "Name of data table"
-msgstr "Nombre datos"
+msgstr "Nombre de la tabla de datos"
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:5
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
-#, fuzzy
 msgid "Column on which to calculate statistics (must be numeric)"
-msgstr "a"
+msgstr "Columna sobre la que calcular las estadísticas (debe ser numérica)"
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:6
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
-#, fuzzy
 msgid "Database/directory for table"
-msgstr "No hay registro para la linea (cat = %d)"
+msgstr "Base de datos/directorio para la tabla"
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:7
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
-#, fuzzy
 msgid "Database driver"
-msgstr "Base de datos:"
+msgstr "Controlador de base de datos"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
 #, fuzzy
@@ -8361,21 +8355,18 @@ msgid ""
 msgstr "a a a"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:5
-#, fuzzy
 msgid "Column to update"
-msgstr "a"
+msgstr "Columna a actualizar"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:6
-#, fuzzy
 msgid ""
 "New value to assign to the column (varchar values have to be in single "
 "quotes, ex: 'grass')"
-msgstr "Nuevo a a varchar a"
+msgstr "Nuevo valor a signar a la columna (los valores varchar tienen que estar entre comillas simples, ej.: 'grass')"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:7
-#, fuzzy
 msgid "Column to query"
-msgstr "a"
+msgstr "Columna a consultar"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:8
 msgid ""
@@ -8393,25 +8384,22 @@ msgid ""
 msgstr "bordes áreas"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:2
-#, fuzzy
 msgid "vector, area, dissolve"
-msgstr "vectorial"
+msgstr "vectorial, área, disolver"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:5
 msgid "Layer number. If -1, all layers are extracted"
-msgstr ""
+msgstr "Número de capa. Si es -1, se extraerán todas las capas"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:6
-#, fuzzy
 msgid "Name of column used to dissolve common boundaries"
-msgstr "Nombre a bordes"
+msgstr "Nombre de columna usada para disolver contornos comunes"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
-#, fuzzy
 msgid ""
 "Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
 "vector map."
-msgstr "Pistas vectorial."
+msgstr "Carga Waypoints, Rutas y Caminos de un receptor GPS Garmin a un mapa vectorial."
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
@@ -8472,7 +8460,6 @@ msgid "Port Garmin receiver is connected to"
 msgstr "Receptor Garmin conectado al puerto"
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
-#, fuzzy
 msgid "Import E00 file into a vector map."
 msgstr "Importar archivo E00 a mapa vectorial."
 
@@ -8494,11 +8481,11 @@ msgstr "GRASS vectorial puntos"
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:2
 #, fuzzy
 msgid "vector, import, gazetteer"
-msgstr "vectorial"
+msgstr "vectorial, importar, "
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:3
 msgid "Uncompressed GNS file from NGA (with .txt extension)"
-msgstr ""
+msgstr "Archivo GNS sin comprimir de NGA (con extensión .txt)"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
 #, fuzzy
@@ -8508,24 +8495,21 @@ msgid ""
 msgstr "Pistas vectorial."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
-#, fuzzy
 msgid "Force vertices of track or route data as points"
-msgstr "pista datos puntos"
+msgstr "Forzar vértices de caminos o rutas como puntos"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:9
-#, fuzzy
 msgid "Device or file used to import data"
-msgstr "a datos"
+msgstr "Dispositivo o archivo usado para importar datos"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:11
-#, fuzzy
 msgid "Format of GPS input data (use gpsbabel supported formats)"
-msgstr "datos"
+msgstr "Formato de datos de entrada del GPS (usar formatos soportados por gpsbabel)"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
 #, fuzzy
 msgid "Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
-msgstr "datos a"
+msgstr "Proyección de los datos de entrada (en estilo PROJ.4)"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
 msgid "Import Mapgen or Matlab vector maps into GRASS."
@@ -8536,9 +8520,8 @@ msgid "Input map is in Matlab format"
 msgstr "El archivo de entrada está en formato Matlab"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
-#, fuzzy
 msgid "Name of input file in Mapgen/Matlab format"
-msgstr "nombre "
+msgstr "Nombre del archivo de entrada en formato Mapgen/Matlab"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
 #, fuzzy
@@ -8548,7 +8531,7 @@ msgstr "GRASS lugares directorio de mapas a vectorial"
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
 #, fuzzy
 msgid "sites, vector, import"
-msgstr "lugares vectorial"
+msgstr "lugares, vectorial, importar"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
 #, fuzzy
@@ -8570,32 +8553,28 @@ msgid "Name of vector polygon map"
 msgstr "Nombre del mapa de polígono vectorial"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:5
-#, fuzzy
 msgid "Name of raster map to calculate statistics from"
-msgstr "Nombre ráster a"
+msgstr "Nombre del mapa ráster del que calcular estadísticas"
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:6
-#, fuzzy
 msgid "Column prefix for new attribute columns"
-msgstr "columnas"
+msgstr "Prefijo de columna para las nuevas columnas de atributos"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:1
 msgid "Reports geometry statistics for vectors"
-msgstr ""
+msgstr "Informa estadísticas de geometría para vectoriales"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:2
 msgid "vector, report, statistics"
 msgstr "vectorial, informe, estadísticas"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:3
-#, fuzzy
 msgid "Reverse sort the result"
-msgstr "nombre de tabla"
+msgstr "Resultado en orden inverso"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:4
-#, fuzzy
 msgid "Sort the result"
-msgstr "Nombre"
+msgstr "Ordenar el resultado"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:5
 #, fuzzy
@@ -8603,9 +8582,8 @@ msgid "Input vector map"
 msgstr "vectorial"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:7
-#, fuzzy
 msgid "Value to calculate"
-msgstr "a"
+msgstr "Valor a calcular"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:8
 #: ../vector/v.to.db/parse.c:76
@@ -8615,12 +8593,11 @@ msgstr "mi(llas),f(pies),me(tros),k(ilómetros),a(cres),h(ectáreas)"
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
 #, fuzzy
 msgid "Uploads vector values at positions of vector points to the table"
-msgstr "vectorial vectorial puntos a"
+msgstr "Carga valores vectorial vectorial puntos a"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:3
-#, fuzzy
 msgid "Points vector map to modify"
-msgstr "Imprimir sólo región del mapa vectorial"
+msgstr "Mapa vectorial de puntos a modificar"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:4
 #, fuzzy
@@ -8628,9 +8605,8 @@ msgid "Layer in the vector to be modified"
 msgstr "vectorial a"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:5
-#, fuzzy
 msgid "Column to be updated with the query result"
-msgstr "a"
+msgstr "Columna a actualizar con el resultado de la consulta"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:6
 #, fuzzy
@@ -8643,9 +8619,8 @@ msgid "Layer of the query vector containg data"
 msgstr "vectorial a"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:8
-#, fuzzy
 msgid "Column to be queried"
-msgstr "a"
+msgstr "Columna a consultar"
 
 #: ../misc/m.cogo/main.c:248
 msgid "miscellaneous"
@@ -8660,17 +8635,15 @@ msgstr "a"
 
 #: ../misc/m.cogo/main.c:252
 msgid "It assumes a cartesian coordinate system"
-msgstr ""
+msgstr "Asume un sistema de coordenadas cartesianas"
 
 #: ../misc/m.cogo/main.c:256
-#, fuzzy
 msgid "Lines are labelled"
-msgstr "Líneas"
+msgstr "Las líneas están etiquetadas"
 
 #: ../misc/m.cogo/main.c:260
-#, fuzzy
 msgid "Suppress warnings"
-msgstr "limpiar"
+msgstr "Suprimir advertencias"
 
 #: ../misc/m.cogo/main.c:264
 #, fuzzy
@@ -8678,9 +8651,8 @@ msgid "Convert from coordinates to bearing and distance"
 msgstr "a"
 
 #: ../misc/m.cogo/main.c:279
-#, fuzzy
 msgid "Starting coordinate pair"
-msgstr "Pares de coordenadas del perfil"
+msgstr "Par de coordenadas de inicio"
 
 #: ../misc/m.cogo/main.c:290
 #, fuzzy, c-format
@@ -8797,10 +8769,9 @@ msgid "Rotate plot 90 degrees"
 msgstr "Rotar impresión 90 grados"
 
 #: ../ps/ps.map/main.c:110
-#, fuzzy
 msgid "List paper formats ( name width height left right top bottom(margin) )"
 msgstr ""
-"Formatos de papel para imprimir ( nombre anchura altura izquierda derecha "
+"Listar formatos de papel ( nombre anchura altura izquierda derecha "
 "arriba abajo (margen) )"
 
 #: ../ps/ps.map/main.c:115
@@ -8828,13 +8799,13 @@ msgid "Number of copies to print"
 msgstr "Número de copias a imprimir"
 
 #: ../ps/ps.map/main.c:238
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
 "instruction instead. The parameter <%s> will be removed in future versions "
 "of GRASS."
 msgstr ""
-"El uso de <%s> a partir de la línea de comando está despreciado. Por favor, "
+"El uso de <%s> desde la línea de comandos está despreciado. Por favor, "
 "use la instrucción mapeo <%s> en su lugar. El parámetro <%s> será eliminado "
 "en futuras versiones de GRASS."
 
@@ -9029,7 +9000,7 @@ msgstr "%s: ERROR al leer el archivo de categoría para %s"
 #: ../raster/r.average/main.c:97
 #, c-format
 msgid "%s: ERROR running %s command"
-msgstr ""
+msgstr "%s: ERROR al ejecutar el comando %s"
 
 #: ../raster/r.average/main.c:106
 #, c-format
@@ -9037,17 +9008,14 @@ msgid "%s: ERROR can't open tempfile"
 msgstr ""
 
 #: ../raster/r.basins.fill/main.c:53
-#, fuzzy
 msgid "Generates a raster map layer showing watershed subbasins."
 msgstr "Genera una capa de mapa ráster mostrando subcuencas hidrográficas."
 
 #: ../raster/r.basins.fill/main.c:60
-#, fuzzy
 msgid "Number of passes through the dataset"
 msgstr "Número de pases por el conjunto de datos"
 
 #: ../raster/r.basins.fill/main.c:67
-#, fuzzy
 msgid "Coded stream network file name"
 msgstr "Nombre del archivo de red de corrientes codificado"
 
@@ -9057,7 +9025,6 @@ msgid "Thinned ridge network file name"
 msgstr "Nombre de archivo de red de divisorias adelgazadas"
 
 #: ../raster/r.basins.fill/main.c:81
-#, fuzzy
 msgid "Name for the resultant watershed partition file"
 msgstr "Nombre para el archivo de partición de cuenca resultante"
 
@@ -9085,9 +9052,8 @@ msgid "creating support files for %s"
 msgstr "creando archivos de soporte para %s"
 
 #: ../raster/r.bilinear/main.c:43
-#, fuzzy
 msgid "Bilinear interpolation utility for raster map layers."
-msgstr "ráster."
+msgstr "Utilidad de interpolación bilineal para capas de mapa ráster."
 
 #: ../raster/r.bilinear/main.c:52 ../raster/r.bilinear/main.c:58
 #, fuzzy
@@ -9098,7 +9064,7 @@ msgstr "a a"
 
 #: ../raster/r.bilinear/main.c:64
 msgid "This module is deprecated. Please use 'r.stats.interp' instead."
-msgstr ""
+msgstr "Este módulo está despreciado. Por favor, use 'r.stats.interp' en su lugar."
 
 #: ../raster/r.bilinear/main.c:78 ../raster/r.out.ppm/main.c:124
 #: ../raster/r.resamp.interp/main.c:102 ../raster/r.resamp.stats/main.c:302
@@ -9137,7 +9103,7 @@ msgstr ""
 
 #: ../raster/r.buffer/main.c:72
 msgid "Distance zone(s)"
-msgstr ""
+msgstr "Zona(s) de distancia"
 
 #: ../raster/r.buffer/main.c:79
 msgid "Units of distance"
@@ -9735,7 +9701,7 @@ msgstr "Ingrese reglas, \"end\" cuando ha finalizado, \"help\" si la necesitas.\
 msgid "fp: Data range is %s to %s\n"
 msgstr "fp: el rango de datos es de %s a %s\n"
 
-#: ../raster/r.colors/rules.c:51 ../raster/r.reclass/main.c:88
+#: ../raster/r.colors/rules.c:51 ../raster/r.reclass/main.c:107
 #, c-format
 msgid "Data range is %ld to %ld\n"
 msgstr "El intervalo es de %ld a %ld\n"
@@ -14277,60 +14243,70 @@ msgstr ""
 "%s: guardando capa de mapa ráster [%s].\n"
 "Porcentaje hecho:"
 
-#: ../raster/r.reclass/main.c:47
+#: ../raster/r.reclass/main.c:50
 #, fuzzy
 msgid ""
 "Creates a new map layer whose category values are based upon a "
 "reclassification of the categories in an existing raster map layer."
 msgstr "categorías ráster."
 
-#: ../raster/r.reclass/main.c:52
+#: ../raster/r.reclass/main.c:55
 msgid "Raster map to be reclassified"
 msgstr "Mapa por reclasificar"
 
-#: ../raster/r.reclass/main.c:60 ../raster/r.recode/main.c:53
+#: ../raster/r.reclass/main.c:62
+#, fuzzy
+msgid "File containing reclass rules"
+msgstr "Archivo que contiene las firmas iniciales"
+
+#: ../raster/r.reclass/main.c:70 ../raster/r.recode/main.c:61
 msgid "Title for the resulting raster map"
 msgstr "Título para el mapa ráster resultante"
 
-#: ../raster/r.reclass/main.c:70
+#: ../raster/r.reclass/main.c:80
 #, fuzzy, c-format
 msgid "<%s> is an illegal file name"
 msgstr "<%s> es un nombre de archivo no admitido"
 
-#: ../raster/r.reclass/main.c:73
+#: ../raster/r.reclass/main.c:83
 msgid "Input map can NOT be the same as output map"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:84
+#: ../raster/r.reclass/main.c:90 ../raster/r.recode/main.c:95
+#, fuzzy, c-format
+msgid "Cannot open rules file <%s>"
+msgstr "No se puede abrir el archivo dxf <%s>"
+
+#: ../raster/r.reclass/main.c:103
 #, fuzzy, c-format
 msgid "Enter rule(s), \"end\" when done, \"help\" if you need it\n"
 msgstr "Ingrese reglas, \"end\" cuando ha finalizado, \"help\" si la necesitas.\n"
 
-#: ../raster/r.reclass/main.c:86
+#: ../raster/r.reclass/main.c:105
 #, fuzzy, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
 msgstr "fp: el rango de datos es de %s a %s\n"
 
-#: ../raster/r.reclass/main.c:98
+#: ../raster/r.reclass/main.c:117
 #, fuzzy, c-format
 msgid "Illegal reclass rule -"
 msgstr "borrar"
 
-#: ../raster/r.reclass/main.c:99
+#: ../raster/r.reclass/main.c:118
 #, c-format
 msgid " ignored\n"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:103
+#: ../raster/r.reclass/main.c:122
 msgid " - invalid reclass rule"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:117
+#: ../raster/r.reclass/main.c:136
 #, fuzzy, c-format
 msgid "No rules specified. Raster map <%s> not created"
 msgstr "ráster"
 
-#: ../raster/r.reclass/main.c:119
+#: ../raster/r.reclass/main.c:138
 #, fuzzy
 msgid "No rules specified"
 msgstr "Mapa(s) de entrada no especificado(s)."
@@ -14376,39 +14352,105 @@ msgstr "No se puede crear el mapa ráster <%s>"
 msgid "Cannot create category file of <%s>"
 msgstr "No se puede leer el archivo de categoría para <%s>"
 
-#: ../raster/r.recode/main.c:42
+#: ../raster/r.recode/main.c:43
 msgid "Recode categorical raster maps."
 msgstr "Recodificar mapas ráster de categorías."
 
-#: ../raster/r.recode/main.c:45
+#: ../raster/r.recode/main.c:46
 msgid "Raster map to be recoded"
 msgstr "Mapa ráster a recodificar"
 
-#: ../raster/r.recode/main.c:57
+#: ../raster/r.recode/main.c:53
+#, fuzzy
+msgid "File containing recode rules"
+msgstr "Archivo que contiene sentencias SQL"
+
+#: ../raster/r.recode/main.c:65
 msgid "Align the current region to the input map"
 msgstr "Alinear la región actual al mapa de entrada"
 
-#: ../raster/r.recode/main.c:61
+#: ../raster/r.recode/main.c:69
 msgid "Force output to double map type (DCELL)"
 msgstr "Forzar la salida a tipo de mapa doble (DCELL)"
 
-#: ../raster/r.recode/main.c:79
+#: ../raster/r.recode/main.c:85
 #, c-format
 msgid "[%s] is an illegal file name"
 msgstr "[%s] en un nombre de archivo no admitido"
 
-#: ../raster/r.recode/main.c:82
+#: ../raster/r.recode/main.c:88
 msgid "input map can NOT be the same as output map"
 msgstr "El mapa de entrada NO puede ser el mismo que el de salida"
 
-#: ../raster/r.recode/main.c:87
+#: ../raster/r.recode/main.c:101
 #, c-format
 msgid "no rules specified. [%s] not created"
 msgstr "No se han especificado reglas. No se crea [%s]."
 
-#: ../raster/r.recode/main.c:89
+#: ../raster/r.recode/main.c:103
 msgid "no rules specified"
 msgstr "No se han especificado reglas"
+
+#: ../raster/r.recode/read_rules.c:20
+#, fuzzy, c-format
+msgid "Can't read f_range for map %s"
+msgstr "%s: no se puede leer el rango para [%s]"
+
+#: ../raster/r.recode/read_rules.c:24
+#, fuzzy
+msgid "Data range is empty"
+msgstr "El antiguo rango de datos está vacío"
+
+#: ../raster/r.recode/read_rules.c:31
+#, fuzzy, c-format
+msgid "Data range of %s is %s to %s (entire map)"
+msgstr "fp: el rango de datos es de %s a %s\n"
+
+#: ../raster/r.recode/read_rules.c:35
+#, fuzzy, c-format
+msgid "Can't read range for map %s"
+msgstr "%s: no se puede leer el rango para [%s]"
+
+#: ../raster/r.recode/read_rules.c:39
+#, fuzzy, c-format
+msgid "Integer data range of %s is empty"
+msgstr "El antiguo rango de datos enteros está vacío"
+
+#: ../raster/r.recode/read_rules.c:41
+#, fuzzy, c-format
+msgid "Integer data range of %s is %d to %d"
+msgstr "El antiguo rango de datos enteros es de %d a %d"
+
+#: ../raster/r.recode/read_rules.c:61
+#, fuzzy
+msgid "Enter the rule or 'help' for the format description:"
+msgstr "Ingrese una regla en uno de estos formatos:\n"
+
+#: ../raster/r.recode/read_rules.c:79
+#, fuzzy
+msgid "Enter a rule in one of these formats:"
+msgstr "Ingrese una regla en uno de estos formatos:\n"
+
+#: ../raster/r.recode/read_rules.c:80
+msgid "old_low:old_high:new_low:new_high"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:81
+msgid "old_low:old_high:new_val      (i.e. new_high == new_low)"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:82
+msgid "*:old_val:new_val             (interval [inf, old_val])"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:83
+msgid "old_val:*:new_val             (interval [old_val, inf])"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:123
+#, fuzzy, c-format
+msgid "%s is not a valid rule"
+msgstr "<%s> no es un nombre de mapa de GRASS válido"
 
 #: ../raster/r.region/main.c:54
 msgid "Sets the boundary definitions for a raster map."
@@ -17175,7 +17217,7 @@ msgstr "Error al abrir el mapa G3D <%s>"
 msgid ""
 "Calculates the volume of data \"clumps\", and (optionally) produces a GRASS "
 "vector points map containing the calculated centroids of these clumps."
-msgstr "datos GRASS vectorial puntos centróides."
+msgstr "datos GRASS vectorial puntos centroides."
 
 #: ../raster/r.volume/main.c:68
 #, fuzzy
@@ -17190,7 +17232,7 @@ msgstr "Ya existe ráster"
 #: ../raster/r.volume/main.c:83
 #, fuzzy
 msgid "Vector points map to contain clump centroids"
-msgstr "puntos a centróides"
+msgstr "puntos a centroides"
 
 #: ../raster/r.volume/main.c:87
 msgid "Generate unformatted report"
@@ -17217,7 +17259,7 @@ msgstr ""
 #: ../raster/r.volume/main.c:148
 #, fuzzy
 msgid "Can't open centroids vector points map."
-msgstr "centróides vectorial puntos."
+msgstr "centroides vectorial puntos."
 
 #: ../raster/r.volume/main.c:170
 msgid "Data or Clump file not open."
@@ -17234,8 +17276,11 @@ msgid ""
 "layer whose cell category values represent elevation combined with an input "
 "raster map layer whose cell values represent friction cost."
 msgstr ""
-"Produce una capa de mapa ráster que muestra el coste anisotrópico acumulado de moverse entre diferentes localizaciones geográficas en una capa de mapa ráster de elevación de entrada cuyos valores de categoría de celda "
-"representan elevación combinada con una capa de mapa ráster de entrada cuyos valores de celda representan coste de fricción."
+"Produce una capa de mapa ráster que muestra el coste anisotrópico acumulado "
+"de moverse entre diferentes localizaciones geográficas en una capa de mapa "
+"ráster de elevación de entrada cuyos valores de categoría de celda "
+"representan elevación combinada con una capa de mapa ráster de entrada cuyos "
+"valores de celda representan coste de fricción."
 
 #: ../raster/r.walk/main.c:186
 msgid "Name of elevation input raster map"
@@ -19617,9 +19662,9 @@ msgid "Low threshold for terrain to object reclassification"
 msgstr "Baja a"
 
 #: ../vector/lidar/v.lidar.correction/main.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "It could not be find input map <%s>"
-msgstr "No fue posible encontrar el mapa de entrada <%s>\n"
+msgstr "No fue posible encontrar el mapa de entrada <%s>"
 
 #: ../vector/lidar/v.lidar.correction/main.c:142
 #: ../vector/lidar/v.lidar.correction/main.c:147
@@ -20467,7 +20512,7 @@ msgstr "Escribiendo vértices..."
 #: ../vector/v.clean/main.c:204
 #, fuzzy
 msgid "Remove duplicate area centroids"
-msgstr "centróides"
+msgstr "centroides"
 
 #: ../vector/v.clean/main.c:207
 #, fuzzy
@@ -20884,7 +20929,7 @@ msgstr "mapa vectorial <%s> no encontrado"
 msgid "Database connection not defined for layer <%d>"
 msgstr "La conexión a la base de datos no ha sido definida"
 
-#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:411
+#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:415
 #, c-format
 msgid "Cannot open database <%s>"
 msgstr "No se puede abrir la base de datos <%s>"
@@ -21331,42 +21376,47 @@ msgstr ""
 msgid "Polygon for selecting features"
 msgstr ""
 
-#: ../vector/v.edit/args.c:122 ../vector/v.in.dxf/main.c:78
-msgid "Do not build topology"
-msgstr "No construir topología"
+#: ../vector/v.edit/args.c:122 ../vector/v.extract/main.c:92
+#, fuzzy
+msgid "Reverse selection"
+msgstr "nombre de tabla"
 
 #: ../vector/v.edit/args.c:126
 #, fuzzy
 msgid "Print ID's of edited features"
 msgstr "Imprimir"
 
-#: ../vector/v.edit/args.c:134
-#, fuzzy
-msgid "Do not close boundaries"
-msgstr "centróides a bordes"
-
-#: ../vector/v.edit/args.c:142
+#: ../vector/v.edit/args.c:130
 #, fuzzy
 msgid "Do not expect header of input data"
 msgstr "datos"
 
-#: ../vector/v.edit/args.c:154
+#: ../vector/v.edit/args.c:134 ../vector/v.in.dxf/main.c:78
+msgid "Do not build topology"
+msgstr "No construir topología"
+
+#: ../vector/v.edit/args.c:143
+#, fuzzy
+msgid "Do not close boundaries"
+msgstr "centroides a bordes"
+
+#: ../vector/v.edit/args.c:160
 #, fuzzy
 msgid "Polygon must have at least 3 coordinate pairs"
 msgstr "Necesitas introducir al menos %d puntos."
 
-#: ../vector/v.edit/args.c:216
+#: ../vector/v.edit/args.c:222
 #, c-format
 msgid "Operation <%s> not implemented."
 msgstr ""
 
-#: ../vector/v.edit/args.c:227
+#: ../vector/v.edit/args.c:233
 #, fuzzy, c-format
 msgid "At least one option from <%s> must be specified"
 msgstr "2 capas deben ser especificadas"
 
-#: ../vector/v.edit/args.c:235 ../vector/v.edit/args.c:247
-#: ../vector/v.edit/args.c:258
+#: ../vector/v.edit/args.c:241 ../vector/v.edit/args.c:253
+#: ../vector/v.edit/args.c:264
 #, c-format
 msgid "Tool <%s> requires option <%s>"
 msgstr ""
@@ -21490,21 +21540,21 @@ msgstr "líneas"
 msgid "[%d] features moved"
 msgstr ""
 
-#: ../vector/v.edit/select.c:80
+#: ../vector/v.edit/select.c:84
 #, fuzzy, c-format
 msgid "[%d] of [%d] features selected"
 msgstr "%d elementos escritos"
 
-#: ../vector/v.edit/select.c:391
+#: ../vector/v.edit/select.c:395
 msgid "Layer must be > 0 for 'where'."
 msgstr "La capa debe ser >0 para 'where' (donde)."
 
-#: ../vector/v.edit/select.c:397 ../vector/v.extract/main.c:227
+#: ../vector/v.edit/select.c:401 ../vector/v.extract/main.c:227
 #, fuzzy
 msgid "No layer database connection."
 msgstr "La conexión a la base de datos no ha sido definida"
 
-#: ../vector/v.edit/select.c:403
+#: ../vector/v.edit/select.c:407
 #, c-format
 msgid "Cannot open driver <%s>"
 msgstr "No se puede abrir el controlador <%s>"
@@ -21584,11 +21634,6 @@ msgstr "bordes"
 #: ../vector/v.extract/main.c:88
 msgid "Do not copy table (see also 'new' parameter)"
 msgstr ""
-
-#: ../vector/v.extract/main.c:92
-#, fuzzy
-msgid "Reverse selection"
-msgstr "nombre de tabla"
 
 #: ../vector/v.extract/main.c:102
 #, fuzzy
@@ -21676,7 +21721,7 @@ msgstr "Imposible copiar la tabla"
 #: ../vector/v.extract/main.c:357
 #, fuzzy
 msgid "Removing duplicate centroids ..."
-msgstr "centróides."
+msgstr "centroides."
 
 #: ../vector/v.extrude/main.c:70
 #, fuzzy
@@ -22311,10 +22356,10 @@ msgid ""
 "\t\tcentroid -> import points as centroids"
 msgstr ""
 "Cambiar opcionalmente el tipo de entrada por defecto:\n"
-"\t\tpunto    -> importar centróides de área como puntos\n"
-"\t\tlínea      -> importar bordes de área como centróides\n"
+"\t\tpunto    -> importar centroides de área como puntos\n"
+"\t\tlínea      -> importar bordes de área como centroides\n"
 "\t\tborde    -> importar líneas como bordes de área\n"
-"\t\tcentroide -> importar puntos como centróides"
+"\t\tcentroide -> importar puntos como centroides"
 
 #: ../vector/v.in.ogr/main.c:149
 msgid "Snapping threshold for boundaries. -1 for no snap"
@@ -23504,7 +23549,7 @@ msgstr "vectorial."
 #: ../vector/v.mkgrid/main.c:239
 #, fuzzy
 msgid "Creating centroids ..."
-msgstr "centróides."
+msgstr "centroides."
 
 #: ../vector/v.mkgrid/write_grid.c:43
 #, fuzzy
@@ -25727,7 +25772,7 @@ msgstr "vectorial"
 #: ../vector/v.univar/main.c:124
 #, fuzzy
 msgid "Extended statistics is currently supported only for points/centroids"
-msgstr "puntos centróides"
+msgstr "puntos centroides"
 
 #: ../vector/v.univar/main.c:359
 #, fuzzy
@@ -25860,7 +25905,7 @@ msgstr "No hay registro en la base de datos para la categoría %d"
 msgid ""
 "Create a Delaunay triangulation from an input vector map containing points "
 "or centroids."
-msgstr "vectorial puntos centróides."
+msgstr "vectorial puntos centroides."
 
 #: ../vector/v.voronoi/dt_main.c:53
 #, fuzzy
@@ -25882,7 +25927,7 @@ msgstr "a vectorial"
 msgid ""
 "Create a Voronoi diagram from an input vector map containing points or "
 "centroids."
-msgstr "vectorial puntos centróides."
+msgstr "vectorial puntos centroides."
 
 #: ../vector/v.voronoi/vo_main.c:122
 #, fuzzy
