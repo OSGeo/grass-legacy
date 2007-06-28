@@ -8,6 +8,12 @@ import sys
 import string
 import re
 
+import gui_modules
+gmpath = gui_modules.__path__[0]
+sys.path.append(gmpath)
+
+import gui_modules.cmd as cmd
+
 global coordsys
 global epsgcode
 global georeffile
@@ -19,6 +25,7 @@ global south
 global east
 global west
 global resolution
+global wizerror
 
 coordsys = ''
 epsgcode = ''
@@ -252,8 +259,8 @@ class DatumPage(TitledPage):
 
         except IOError, e:
             self.transformlist.DeleteAllItems()
-            dlg = wx.MessageDialog(self, "Could not read datum params: %s "
-                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self, "Could not read datum params: %s " % e,
+                                   "Could not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
@@ -284,8 +291,8 @@ class DatumPage(TitledPage):
             f.close()
             self.datumlist.SendSizeEvent()
         except IOError, e:
-            dlg = wx.MessageDialog(self, "Could not read datums: %s "
-                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self, "Could not read datums: %s " % e,
+                                   "Could not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
@@ -401,8 +408,8 @@ class BBoxPage(TitledPage):
         self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
 
         # buttons
-        self.bbrowsegdal = self.MakeButton("Browse ...", size=(150,-1))
-        self.bbrowseogr = self.MakeButton("Browse ...", size=(150,-1))
+        self.bbrowsegdal = self.MakeButton("Browse...", size=(150,-1))
+        self.bbrowseogr = self.MakeButton("Browse...", size=(150,-1))
         self.bgetlayers = self.MakeButton("Get Layers", size=(150,-1))
         self.bset = self.MakeButton("Set coordinates", size=(150,-1))
 
@@ -853,8 +860,8 @@ class ProjectionsPage(TitledPage):
             f.close()
             self.SendSizeEvent()
         except StandardError, e:
-            dlg = wx.MessageDialog(self, "Could not read datums: %s "
-                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self, "Could not read datums: %s " % e,
+                                   "Could not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
@@ -870,7 +877,7 @@ class GeoreferencedFilePage(TitledPage):
         self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
                 style=wx.ALIGN_RIGHT)
         self.tfile = wx.TextCtrl(self,-1, "", size=(150,-1))
-        self.bbrowse = self.MakeButton("Browse ...")
+        self.bbrowse = self.MakeButton("Browse...")
 
         # do layout
         self.sizer.Add(self.lfile, 0, wx.ALIGN_RIGHT |
@@ -920,8 +927,8 @@ class EPSGPage(TitledPage):
         self.tcode = wx.TextCtrl(self,-1, "", size=(200,-1))
 
         # buttons
-        self.bbrowse = wx.Button(self, -1, "Browse ...", size=(100,-1))
-        self.bbcodes = wx.Button(self, -1, "Browse Codes")
+        self.bbrowse = wx.Button(self, -1, "Browse...")
+        self.bbcodes = wx.Button(self, -1, "Browse Codes...")
 
         # search box
         self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
@@ -980,7 +987,7 @@ class EPSGPage(TitledPage):
     def onPageChange(self, event):
         global epsgcode
         epsgcode = self.tcode.GetValue()
-        self.parent.datumpage.SetPrev(self)
+        self.parent.bboxpage.SetPrev(self)
         #wx.MessageBox("setting epsgcode to %s" % (epsgcode))
 
     def OnDoSearch(self,event):
@@ -1008,6 +1015,7 @@ class EPSGPage(TitledPage):
 
     def OnItemSelected(self,event):
         item = event.GetItem()
+        #wx.MessageBox("item = %s" % (item.GetText()))
         self.tcode.SetValue(str(item.GetText()))
 
     def OnBrowseCodes(self,event,search=None):
@@ -1049,8 +1057,8 @@ class EPSGPage(TitledPage):
             self.epsgs.SetColumnWidth(2, wx.LIST_AUTOSIZE)
             self.SendSizeEvent()
         except StandardError, e:
-            dlg = wx.MessageDialog(self, "Could not read EPGS codes: %s "
-                    % e,"Can not read file",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self, "Could not read EPGS codes: %s " % e,
+                                   "Could not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
@@ -1070,11 +1078,11 @@ class CoordinateSystemPage(TitledPage):
         self.cs = "xy"
 
         # toggles
-        self.radio1 = wx.RadioButton( self, -1, " XY ", style = wx.RB_GROUP )
-        self.radio2 = wx.RadioButton( self, -1, " Lat/Long " )
-        self.radio3 = wx.RadioButton( self, -1, " UTM " )
-        self.radio4 = wx.RadioButton( self, -1, " Custom " )
-        self.radio5 = wx.RadioButton( self, -1, " EPSG " )
+        self.radio1 = wx.RadioButton( self, -1, " XY (arbitrary non-earth coordinate system)", style = wx.RB_GROUP )
+        self.radio2 = wx.RadioButton( self, -1, " Latitude/Longitude (geographical) " )
+        self.radio3 = wx.RadioButton( self, -1, " Universal Transverse Mercator (UTM) " )
+        self.radio4 = wx.RadioButton( self, -1, " Other coordinate system " )
+        self.radio5 = wx.RadioButton( self, -1, " Based on EPSG code " )
         self.radio6 = wx.RadioButton( self, -1, " Based on Georeferenced file " )
 
         # layout
@@ -1129,7 +1137,7 @@ class CoordinateSystemPage(TitledPage):
             self.parent.bboxpage.cstate.Enable(False)
         else:
             self.parent.bboxpage.cstate.Enable(True)
- 
+
 class UTMPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose zone for UTM coordinate system")
@@ -1152,7 +1160,7 @@ class DatabasePage(TitledPage):
         TitledPage.__init__(self, wizard, "Define GRASS database and new Location Name")
 
         # buttons
-        self.bbrowse = self.MakeButton("Browse ...", size=wx.DefaultSize)
+        self.bbrowse = self.MakeButton("Browse...")
 
         # text controls
         self.tgisdbase = self.MakeTextCtrl(grassdatabase, size=(300, -1))
@@ -1199,7 +1207,7 @@ class DatabasePage(TitledPage):
     def onPageChanging(self,event=None):
         if os.path.isdir(os.path.join(self.tgisdbase.GetValue(),self.tlocation.GetValue())):
             dlg = wx.MessageDialog(self, "Could not create new location: <%s> directory exists "\
-                    % str(self.tlocation.GetValue()),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+                    % str(self.tlocation.GetValue()),"Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             event.Veto()
@@ -1207,7 +1215,7 @@ class DatabasePage(TitledPage):
 
         if not self.tlocation.GetValue():
             dlg = wx.MessageDialog(self, "Could not create new location: not set "\
-                    ,"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+                    ,"Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             event.Veto()
@@ -1226,17 +1234,19 @@ class GWizard:
         wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","images","wizard.png"), wx.BITMAP_TYPE_PNG)
         wizbmp.Rescale(250,600)
         wizbmp = wizbmp.ConvertToBitmap()
-        wizard = wiz.Wizard(parent, -1, "Define new Location",
+        self.wizard = wiz.Wizard(parent, -1, "Define new Location",
                 bitmap=wizbmp)
-        self.startpage = DatabasePage(wizard, self, grassdatabase)
-        self.csystemspage = CoordinateSystemPage(wizard, self)
-        self.epsgpage = EPSGPage(wizard, self)
-        self.bboxpage = BBoxPage(wizard, self)
-        self.filepage = GeoreferencedFilePage(wizard, self)
-        self.projpage = ProjectionsPage(wizard, self)
-        self.sumpage = SummaryPage(wizard, self)
-        self.datumpage = DatumPage(wizard, self)
-        self.utmpage = UTMPage(wizard,self)
+        self.startpage = DatabasePage(self.wizard, self, grassdatabase)
+        self.csystemspage = CoordinateSystemPage(self.wizard, self)
+        self.epsgpage = EPSGPage(self.wizard, self)
+        self.bboxpage = BBoxPage(self.wizard, self)
+        self.filepage = GeoreferencedFilePage(self.wizard, self)
+        self.projpage = ProjectionsPage(self.wizard, self)
+        self.sumpage = SummaryPage(self.wizard, self)
+        self.datumpage = DatumPage(self.wizard, self)
+        self.utmpage = UTMPage(self.wizard,self)
+
+        global coordsys
 
         # Set the initial order of the pages
         # it should follow the epsg line
@@ -1246,17 +1256,25 @@ class GWizard:
         self.csystemspage.SetNext(self.bboxpage)
 
         self.epsgpage.SetPrev(self.csystemspage)
-        self.epsgpage.SetNext(self.datumpage)
+        self.epsgpage.SetNext(self.bboxpage)
 
         self.projpage.SetPrev(self.csystemspage)
         self.projpage.SetNext(self.datumpage)
 
         self.filepage.SetPrev(self.csystemspage)
-        self.filepage.SetNext(self.sumpage)
+        self.filepage.SetNext(self.bboxpage)
 
         self.datumpage.SetNext(self.bboxpage)
 
-        self.bboxpage.SetPrev(self.csystemspage)
+        if coordsys == "epsg":
+            self.bboxpage.SetPrev(self.epsgpage)
+        elif coordsys == "file":
+            self.bboxpage.SetPrev(self.filepage)
+        elif coordsys == "xy":
+            self.bboxpage.SetPrev(self.startpage)
+        else:
+            self.bboxpage.SetPrev(self.csystemspage)
+
         self.bboxpage.SetNext(self.sumpage)
 
         self.sumpage.SetPrev(self.bboxpage)
@@ -1264,24 +1282,25 @@ class GWizard:
         self.utmpage.SetPrev(self.csystemspage)
         self.utmpage.SetNext(self.datumpage)
 
-        wizard.FitToPage(self.bboxpage)
-        if wizard.RunWizard(self.startpage):
+        self.wizard.FitToPage(self.bboxpage)
+        if self.wizard.RunWizard(self.startpage):
             self.onWizFinished()
             wx.MessageBox("New location created.")
         else:
             wx.MessageBox("Location wizard canceled. New location not created.")
 
-        wizard.Destroy()
+        self.wizard.Destroy()
 
     def onWizFinished(self):
         database = self.startpage.tgisdbase.GetValue()
         location = self.startpage.tlocation.GetValue()
         global coordsys
 
-        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
+#        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
         if os.path.isdir(os.path.join(database,location)):
             dlg = wx.MessageDialog(self, "Could not create new location: %s already exists"
-                                   % os.path.join(self.parent.gisdbase,location),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+                                   % os.path.join(self.parent.gisdbase,location),"Could not create location",
+                                   wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
@@ -1298,9 +1317,9 @@ class GWizard:
         elif coordsys == "custom":
             self.customCreate
         elif coordsys == "epsg":
-            self.epsgCreate
-        elif "file":
-            self.fileCreate
+            self.EPSGCreate()
+        elif coordsys == "file":
+            self.FileCreate
 
     def xyCreate(self):
         """
@@ -1326,19 +1345,20 @@ class GWizard:
         """
         pass
 
-    def epsgCreate(self):
+    def EPSGCreate(self):
         """
         Create a new location from an EPSG code.
         """
         global epsgcode
-        global database
-        global location
+        database = self.startpage.tgisdbase.GetValue()
+        location = self.startpage.tlocation.GetValue()
+        cmdlist = []
 
         wx.MessageBox("Database: %s, Location: %s, EPSG code: %s" % (database, location, epsgcode))
 
         if not epsgcode:
-            dlg = wx.MessageDialog(self, "Could not create new location: EPSG Code value missing",
-                    "Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: EPSG Code value missing",
+                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
@@ -1347,11 +1367,13 @@ class GWizard:
         # all credit to Michael Barton and his file_option.tcl and
         # Markus Neteler
         try:
-            dtoptions = os.popen3(" g.proj epsg=%s datumtrans=-1" % (epsgcode))[1].read()
+            cmdlist = ['g.proj','epsg=%s' % epsgcode,'datumtrans=-1']
+            p = cmd.Command(cmdlist)
+            dtoptions = p.module_stdout.read()
             if dtoptions != None:
                 # open a dialog to select datum transform number
                 dtoptions = 'Select the number of a datum transformation to use: \n'+dtoptions
-                dlg = wx.TextEntryDialog(self, dtoptions)
+                dlg = wx.TextEntryDialog(self.wizard, dtoptions)
                 dlg.SetValue('1')
 
                 if dlg.ShowModal() == wx.ID_OK:
@@ -1359,13 +1381,15 @@ class GWizard:
 
                 dlg.Destroy()
 
-                cmd = os.system("g.proj -c epsg=%s location=%s datumtrans=%s" % (epsgcode, location, dtrans))
+                cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=%s' % dtrans]
             else:
-                os.system("g.proj -c epsg=%s location=%s datumtrans=1" % (epsgcode, location))
+                cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
+
+            cmd.Command(cmdlist)
 
         except StandardError, e:
-            dlg = wx.MessageDialog(self, "Could not create new location: %s "
-                    % str(e),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
+                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
@@ -1377,15 +1401,15 @@ class GWizard:
         global database
         global location
         if not os.path.isfile(georeffile):
-            dlg = wx.MessageDialog(self, "Could not create new location: %s not file"
-                    % georeffile,"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s; Could not find file" % georeffile,
+                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
         if not sgeoreffile:
-            dlg = wx.MessageDialog(self, "Could not create new location: name not set",
-                    "Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: name not set",
+                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
@@ -1398,8 +1422,8 @@ class GWizard:
             os.system("g.proj -c georef=%s location=%s >&2" % (georeffile, location))
 
         except StandardError, e:
-            dlg = wx.MessageDialog(self, "Could not create new location: %s "
-                    % str(e),"Can not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
+                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
 
