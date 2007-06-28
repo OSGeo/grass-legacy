@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 
     /* open input files */
     if ((vmapset = G_find_vector2(parm.invect->answer, "")) == NULL)
-        G_fatal_error(_("vector map <%s> not found"), parm.invect->answer);
+        G_fatal_error(_("Vector map <%s> not found"), parm.invect->answer);
 
     Vect_set_open_level(2);
     Vect_open_old(&Map, parm.invect->answer, vmapset);
