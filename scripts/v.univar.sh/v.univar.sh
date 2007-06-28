@@ -15,7 +15,7 @@
 #############################################################################
 
 #%Module
-#% description: Calculates univariate statistics on selected table column for a GRASS vector map
+#% description: Calculates univariate statistics on selected table column for a GRASS vector map.
 #% keywords: vector, statistics
 #%End
 #%flag

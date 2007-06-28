@@ -16,7 +16,7 @@
 
 
 #%Module
-#%  description: Allows to assign a new value to a column in the attribute table connected to a given map
+#%  description: Allows to assign a new value to a column in the attribute table connected to a given map.
 #%  keywords: vector, database, attribute table
 #%End
 

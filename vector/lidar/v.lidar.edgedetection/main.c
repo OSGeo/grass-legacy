@@ -161,7 +161,7 @@ main (int argc,char *argv[])
    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ( _("It could not be found input map <%s>"), in_opt->answer);
+	 G_fatal_error ( _("Vector map <%s> not found"), in_opt->answer);
     }
 
 /* Open output vector */

@@ -135,7 +135,7 @@ main (int argc,char *argv[])
 
 /* Open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) 
-	G_fatal_error ( _("It could not be find input map <%s>"), in_opt->answer);
+	G_fatal_error ( _("Vector map <%s> not found"), in_opt->answer);
 
     Vect_set_open_level (1); /*without topology*/
     if (1 > Vect_open_old (&In, in_opt->answer, mapset)) 

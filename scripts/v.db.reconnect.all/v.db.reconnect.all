@@ -13,13 +13,13 @@
 #############################################################################
 
 #%Module
-#% description: Reconnect vectors to a new database
+#% description: Reconnects vectors to a new database.
 #% keywords: vector, database, attribute table
 #%End
 #%option
 #% key: old_database
 #% type: string
-#% description: Name of old database, the database must be in form printed by v.db.connect -g, i.e. with substituted variables
+#% description: Name of old database. The database must be in form printed by v.db.connect -g, i.e. with substituted variables
 #% required : yes
 #%END
 #%option
