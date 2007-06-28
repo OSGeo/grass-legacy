@@ -1,6 +1,10 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.lrs.create</em> generates LRS (Linear Reference System).
+<em>v.lrs.create</em> generates a LRS (Linear Reference System) from
+vector line and point data.
+<p>
+It is highly recommended to work with polylines instead of segmented vector
+lines. The command <em>v.build.polylines</em> creates this map structure.
 
 <h2>NOTES</h2>
 
@@ -17,47 +21,129 @@ replaced.
 
 <h2>EXAMPLE</h2>
 
-A vector map 'route' contains a single line with integer <em>lidcol</em> column
-value be '22' in this example (bus route). The attributes table looks like this:
+This example is written for the Spearfish dataset.
+<p>
+
+As first step, bus route data are prepared. 
 
 <div class="code"><pre>
+# copy into own mapset
+g.copy roads_net,busroute_tmp
+d.mon x0
+d.vect busroute_tmp
+# zoom to Spearfish (nord-west city)
+d.zoom
+
+# reduce route map to bus route (reduce to one line)
+d.extract busroute_tmp out=busroute_tmp2
+
+# vector line needs to be polyline
+v.build.polylines busroute_tmp2 out=busroute_tmp3
+v.category busroute_tmp3 out=busroute op=add
+g.remove vect=busroute_tmp,busroute_tmp2,busroute_tmp3
+</pre></div>
+
+The result can be visualized:
+<div class="code"><pre>
+g.region vect=busroute n=n+100 s=s-100 w=w-100 e=e+100
+d.mon x0
+d.vect roads_net
+d.vect busroute col=red width=2
+</pre></div>
+
+The vector map 'busroute' needs have an attribute table which contain an integer column
+<em>lidcol</em> with value be '22' for this example (bus route):
+
+<div class="code"><pre>
+v.db.addtable busroute col="lid integer"
+v.db.update busroute col=lid value=22
+v.db.select busroute
 cat|lid
 1|22
 </pre></div>
 
-A point map 'stops' contains mileposts (bus stops) along this line (use <em>thresh</em>
-to define maximal accepted deviation from this line). The milepost attributes
-table looks like this:
+A new point map 'busstops' shall contain mileposts (bus stops) along
+this line (use <em>thresh</em> to define maximal accepted deviation from this line):
 
 <div class="code"><pre>
+# generate points map
+# use d.where to find coordinates along the bus route
+# use v.in.ascii out=busstops to generate map
+
+d.vect busstops icon=basic/triangle col=blue
+d.vect busstops disp=cat lcol=blue
+</pre></div>
+
+The milepost attributes table needs to be created with specific columns:
+
+<div class="code"><pre>
+v.db.addtable busstops col="lid integer, start_mp double precision, \
+            start_off double precision, end_mp double precision, \
+            end_off double precision"
+v.db.update busstops col=lid value=22
+</pre></div>
+
+Since the digitizing order of v.in.ascii above reflects the bus stop
+order along the route, we can simply copy the category number as milepost
+order number in column <em>start_mp</em>:
+
+<div class="code"><pre>
+v.db.update busstops col=start_mp qcol=cat
+# verify table
+v.db.select busstops
 cat|lid|start_mp|start_off|end_mp|end_off
 1|22|1|||
 2|22|2|||
 3|22|3|||
+4|22|4|||
+5|22|5|||
+6|22|6|||
+7|22|7|||
+
+# visualize with start_mp to check order
+d.erase
+d.vect roads_net
+d.vect busroute col=red width=2
+d.vect busstops icon=basic/triangle col=blue
+d.vect busstops disp=attr attrcol=start_mp lcol=blue
 </pre></div>
 
-Offsets can be used in case the route or mileposts are later modified.
-<br>
-The linear reference network is created like this:
+Offsets (<em>start_off</em>, <em>end_off</em>) can be later used in case the route or
+mileposts get modified.
+<p>
+
+As second step, the linear reference network is created:
 
 <div class="code"><pre>
-v.lrs.create in_lines=route points=stops out=route_lrs err=lrs_error \
+v.lrs.create busroute points=busstops out=route_lrs err=lrs_error \
              lidcol=lid pidcol=lid rstable=route_lrs thresh=50
 </pre></div>
 
-This will create the maps 'route_lrs' containing the LRS and 'lrs_error'
-containing the errors if any.
+This creates the maps 'route_lrs' containing the LRS and 'lrs_error'
+containing the errors if any. The resulting LRS table and map can
+be shown:
+
+<div class="code"><pre>
+# show LRS table
+db.select route_lrs
+
+d.vect route_lrs col=blue width=2
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="lrs.html">LRS tutorial</a></em>,<br>
-<em><a HREF="http://gisws.media.osaka-cu.ac.jp/grass04/viewpaper.php?id=50">Introducing the Linear Reference System in GRASS</a></em>,<br>
+<em><a HREF="http://gisws.media.osaka-cu.ac.jp/grass04/viewpaper.php?id=50">Introducing the Linear Reference System in GRASS</a></em>,
+<p>
+<em><a HREF="v.build.polylines.html">v.build.polylines</a></em>,
 <em><a HREF="v.lrs.segment.html">v.lrs.segment</a></em>,
 <em><a HREF="v.lrs.where.html">v.lrs.where</a></em>,
 <em><a HREF="v.lrs.label.html">v.lrs.label</a></em>
 
 <h2>AUTHOR</h2>
 
-Radim Blazek
+Radim Blazek, ITC-irst/MPA Solutions<br>
+Documentation update (based on above journal article and available fragments): Markus Neteler
 
 <p><i>Last changed: $Date$</i>

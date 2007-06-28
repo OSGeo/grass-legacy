@@ -93,7 +93,7 @@ end_off:   3000
 
 Because each MP can keep 2 values (start, end) it is called 'double' referenced LRS.
 <p>
-To avoid possible confusions, MP values, are limited to integers only. 
+To avoid potential confusion, MP values are limited to integers only. 
 It would be ambiguous to have for example segments 3.500 - 3.500+200 
 and 3.600 - 3.600+200. The position 3+650 would fall into 2 segments, 
 correct would be 3.600+50. 
@@ -103,9 +103,10 @@ from the last not changed MP.
 <p>
 The MP <em>start_mp</em> and <em>end_mp</em> columns must be decimal, but 
 <em>v.lrs.create</em> takes only the decimal part, and adds its value to
-<!-- still true with warning? -->
 offset and prints a warning.
 <p>
+It is highly recommended to work with polylines instead of segmented vector
+lines. The command <em>v.build.polylines</em> creates this map structure.
 
 <h3>LRS table structure</h3>
 
@@ -114,12 +115,13 @@ offset and prints a warning.
 <tr><td>rsid</td><td> integer</td><td> reference segment ID, unique in the table</td></tr>
 <tr><td>lcat</td><td> integer</td><td> category of the line in the LRS map</td></tr>
 <tr><td>lid</td><td> integer</td><td> route ID (LID)</td></tr>
-<tr><td>start_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the beginning of the segment</td></tr>
-<tr><td>end_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the end of the segment</td></tr>
-<tr><td>start_mp</td><td> double precision</td><td> milepost assigned to the start of the segment</td></tr>
+<tr><td>start_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the beginning of the segment (absolute milepost distance)</td></tr>
+<tr><td>end_map</td><td> double precision</td><td> distance measured along the line in LRS map from the beginning of the line to the end of the segment  (absolute distance of subsequent milepost)</td></tr>
+<tr><td>start_mp</td><td> double precision</td><td> milepost number assigned to the start of the segment</td></tr>
 <tr><td>start_off</td><td> double precision</td><td> distance from start_mp to the start of the segment measured along the physical object</td></tr>
-<tr><td>end_mp</td><td> double precision</td><td> milepost assigned to the end of the segment</td></tr>
+<tr><td>end_mp</td><td> double precision</td><td> milepost number assigned to the end of the segment</td></tr>
 <tr><td>end_off</td><td> double precision</td><td> distance from end_mp to end of the segment measured along the physical object</td></tr>
+<tr><td>end_type</td><td> integer</td><td>1: the same as specified for from_ ; 2: calculated from map along the line from previous MP; 3: defined by user </td></tr>
 </table>
 
 <h3>Available commands</h3>
@@ -133,7 +135,7 @@ for given points in vector map using linear reference system.
 </ul>
 
 <h3>Input lines for v.lrs.segment and v.lrs.label</h3>
-v.lrs.create joins all connected lines of the same line ID into one line, 
+<em>v.lrs.create</em> joins all connected lines of the same line ID into one line, 
 the LRS library and other modules using LRS expect this!
 LR_get_nearest_offset in the LRS library checks duplicate segments only
 by line_cat and map_offset, not by coordinates in map.
@@ -177,6 +179,8 @@ Explanations of selected options:
 
 <em>R. Blazek, 2004, <a HREF="http://gisws.media.osaka-cu.ac.jp/grass04/viewpaper.php?id=50">Introducing the Linear Reference System in GRASS</a>, Bangkok, GRASS User Conf. Proc.</em><br>
 <em>R. Blazek, 2005, <a HREF="http://www.j-geoinfo.net/Content/fulmar05/IJG_095-100.pdf">Introducing the Linear Reference System in GRASS</a>, International Journal of Geoinformatics Vol. 1(3)</em><br>
+<p>
+<em><a HREF="v.build.polylines.html">v.build.polylines</a></em>,
 <em><a HREF="v.lrs.create.html">v.lrs.create</a></em>,
 <em><a HREF="v.lrs.segment.html">v.lrs.segment</a></em>,
 <em><a HREF="v.lrs.where.html">v.lrs.where</a></em>,
@@ -184,7 +188,8 @@ Explanations of selected options:
 
 <h2>AUTHOR</h2>
 
-Radim Blazek
+Radim Blazek, ITC-irst/MPA Solutions Trento<br>
+Documentation update (based on above journal article and available fragments): Markus Neteler
 
 <p><i>Last changed: $Date$</i>
 
