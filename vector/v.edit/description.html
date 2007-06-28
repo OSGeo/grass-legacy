@@ -191,6 +191,14 @@ v.edit tool=delete map=roads cats=1,2
 </pre></div>
 
 <p>
+Remove all vector features except for those with category number 1 or 2
+(reverse deletion):
+</p>
+<div class="code"><pre>
+v.edit -r tool=delete map=roads cats=1,2
+</pre></div>
+
+<p>
 Remove features with category 1 or 2 located on coordinates
 600952.625,4926107 (bounding box based on the current 2D resolution):
 </p>
