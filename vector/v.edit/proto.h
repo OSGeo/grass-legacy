@@ -69,7 +69,7 @@ double max_distance (double maxdistance);
 double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
 			  int *mindistidx);
 void coord2bbox (double east, double north, double maxdist,
-		 BOUND_BOX *bbox);
+		 struct line_pnts *box);
 
 /* cats.c */
 int cats (struct Map_info *Map, struct ilist *List, int print,

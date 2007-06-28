@@ -113,19 +113,19 @@ double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
 }
 
 /* 
- * creates bounding box based on coordinates of its center and width=2*maxdist
- *
+ * creates bounding box (polygon) based on center point; size (2 * maxdist)
  */
 void coord2bbox (double east, double north, double maxdist,
-		 BOUND_BOX *bbox)
+		struct line_pnts *box)
 {
     /* TODO: 3D */
-    bbox -> N = north + maxdist;
-    bbox -> S = north - maxdist;
-    bbox -> E = east + maxdist;
-    bbox -> W = east - maxdist;
-    bbox -> T = PORT_DOUBLE_MAX;
-    bbox -> B = -PORT_DOUBLE_MAX;
+    Vect_reset_line(box);
+    
+    Vect_append_point(box, east - maxdist, north - maxdist, 0);
+    Vect_append_point(box, east + maxdist, north - maxdist, 0);
+    Vect_append_point(box, east + maxdist, north + maxdist, 0);
+    Vect_append_point(box, east - maxdist, north + maxdist, 0);
+    Vect_append_point(box, box->x[0], box->y[0], box->z[0]);
 	
     return;
 }

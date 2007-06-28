@@ -174,7 +174,7 @@ int sel_by_coordinates(struct Map_info *Map,
     double east, north, maxdist;
 
     struct ilist* List_tmp, *List_in_box;
-    BOUND_BOX box;
+    struct line_pnts *box;
 
     if (first_selection) {
 	List_tmp = List;
@@ -184,6 +184,7 @@ int sel_by_coordinates(struct Map_info *Map,
 	List_tmp = Vect_new_list();
     }
     
+    box = Vect_new_line_struct();
     List_in_box = Vect_new_list();
 
     maxdist = max_distance (thresh);
@@ -192,10 +193,9 @@ int sel_by_coordinates(struct Map_info *Map,
         east  = atof(coords -> answers[i]);
         north = atof(coords -> answers[i+1]);
 
-	coord2bbox (east, north, maxdist,
-		    &box);
-	
-	Vect_select_lines_by_box (Map, &box, type, List_in_box);
+	coord2bbox (east, north, maxdist, box);
+
+	Vect_select_lines_by_polygon(Map, box, 0, NULL, type, List_in_box);
 	
 	if (List_in_box -> n_values > 0) 
 	    Vect_list_append_list (List_tmp, List_in_box);
@@ -208,7 +208,8 @@ int sel_by_coordinates(struct Map_info *Map,
 	merge_lists (List, List_tmp);
 	Vect_destroy_list (List_tmp);
     }
-
+    
+    Vect_destroy_line_struct (box);
     Vect_destroy_list (List_in_box);
 
     return List -> n_values;
