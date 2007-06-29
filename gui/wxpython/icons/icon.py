@@ -20,8 +20,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import os
 import wx
 
-iconpath_default = os.getenv("GISBASE") + "/etc/gui/icons/"
-iconpath_vdigit  = os.getenv("GISBASE") + "/etc/v.digit/"
+iconpath_default = os.path.join(os.getenv("GISBASE"), "etc", "gui", "icons")
+iconpath_vdigit  = os.path.join(os.getenv("GISBASE"), "etc", "v.digit")
 iconpath = os.getenv("GRASS_ICONPATH")
 
 icons_default = {
@@ -229,7 +229,7 @@ Icons = {
     "digDeleteLine": MetaIcon (img=icons_img["digDeleteLine"], label="Delete line",
                               desc="Not implemented yet"),
     "digDispAttr": MetaIcon (img=icons_img["digDispAttr"], label="Display attributes",
-                              desc="Not implemented yet"),
+                              desc="Display attributes of given feature"),
     "digDispCats": MetaIcon (img=icons_img["digDispCats"], label="Display categories",
                               desc="Not implemented yet"),
     "digEditLine": MetaIcon (img=icons_img["digEditLine"], label="Edit line",
@@ -241,7 +241,7 @@ Icons = {
     "digRemoveVertex": MetaIcon (img=icons_img["digRemoveVertex"], label="Remove vertex",
                               desc="Not implemented yet"),
     "digSettings": MetaIcon (img=icons_img["digSettings"], label="Settings",
-                              desc="Not implemented yet"),
+                              desc="Settings dialog for digitization tool"),
     "digSplitLine": MetaIcon (img=icons_img["digSplitLine"], label="Split line",
                               desc="Not implemented yet"),
     "digExit"    : MetaIcon (img=icons_img["digExit"], label="Quit digitization tool"),

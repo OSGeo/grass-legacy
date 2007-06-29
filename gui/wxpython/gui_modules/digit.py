@@ -70,30 +70,37 @@ class AbstractDigit:
         Returns 'True' on success, 'False' on failure
         """
 
-        categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
-                                       "input=%s" % self.map, 
-                                       "option=report",
-                                       "layer=%d" % self.settings["layer"]])
+        if self.map:
+            categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
+                                           "input=%s" % self.map, 
+                                           "option=report",
+                                           "layer=%d" % self.settings["layer"]])
 
-        if categoryCmd.returncode != 0:
-            return
+            if categoryCmd.returncode != 0:
+                return
         
-        for line in categoryCmd.ReadStdOutput():
-            if "all" in line:
-                try:
-                    maxCat = int(line.split(' ')[-1]) + 1
-                    self.settings['category'] = maxCat
-                except:
-                    return False
-                return True
+            for line in categoryCmd.ReadStdOutput():
+                if "all" in line:
+                    try:
+                        maxCat = int(line.split(' ')[-1]) + 1
+                        self.settings['category'] = maxCat
+                    except:
+                        return False
+                    return True
+        else:
+            self.settings["category"] = 1
 
     def SetCategory(self):
         """Return category number to use (according Settings)"""
-        
-        if self.map and self.settings["categoryMode"] == "Next to use":
+        if self.settings["categoryMode"] == "No category":
+            self.settings["category"] = "None"
+        elif self.settings["categoryMode"] == "Next to use":
             self.SetCategoryNextToUse()
+        else:
+            if self.settings["category"] == "None":
+                self.SetCategoryNextToUse()
 
-        return Digit.settings["category"]
+        return self.settings["category"]
 
     def ReInitialize(self, map):
         """Re-initialize settings according selected map layer"""
@@ -136,6 +143,9 @@ class VEdit(AbstractDigit):
         if len(coords) < 2:
             return
 
+        layer = self.settings["layer"]
+        cat   = self.SetCategory()
+        
         if type == "boundary":
             key = "B"
         else:
@@ -146,7 +156,7 @@ class VEdit(AbstractDigit):
             addstring += """%f %f\n""" % \
                 (float(point[0]), float(point [1]))
 
-        addstring += "1 1"
+        addstring += "%d %d" % (layer, cat)
 
         Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s" % \
                    (map, type))
@@ -204,7 +214,8 @@ class DigitSettingsDialog(wx.Dialog):
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(item=notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
@@ -223,7 +234,8 @@ class DigitSettingsDialog(wx.Dialog):
         self.symbology = {}
         for label, key in self.__SymbologyData():
             textLabel = wx.StaticText(panel, wx.ID_ANY, label)
-            color = csel.ColourSelect(panel, id=wx.ID_ANY, colour=Digit.settings[key][1], size=(25, 25))
+            color = csel.ColourSelect(panel, id=wx.ID_ANY,
+                                      colour=Digit.settings[key][1], size=(25, 25))
             isEnabled = Digit.settings[key][0]
             if isEnabled is not None:
                 enabled = wx.CheckBox(panel, id=wx.ID_ANY, label="")
@@ -271,7 +283,8 @@ class DigitSettingsDialog(wx.Dialog):
         # line width
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width"))
         self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                          value=str(Digit.settings["lineWidth"][0]), min=1, max=1e6)
+                                          value=str(Digit.settings["lineWidth"][0]),
+                                          min=1, max=1e6)
         self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
         self.lineWidthUnit.SetValue(Digit.settings["lineWidth"][1])
@@ -288,7 +301,8 @@ class DigitSettingsDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new feature"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         # checkbox
-        self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Add new record into table"))
+        self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                     label=_("Add new record into table"))
         self.addRecord.SetValue(Digit.settings["addRecord"])
         sizer.Add(item=self.addRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         # settings
@@ -300,7 +314,8 @@ class DigitSettingsDialog(wx.Dialog):
         self.layer = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                  value=str(Digit.settings["layer"])) # TODO: validator
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.layer, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.layer, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category number
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
         self.category = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
@@ -309,17 +324,21 @@ class DigitSettingsDialog(wx.Dialog):
             self.category.SetEditable(False)
             self.category.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.category, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.category, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category mode
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
-        self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY, style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
+        self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY,
+                                        style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
                                         choices=[_("Next to use"), _("Manual entry"), _("No category")])
         self.categoryMode.SetValue(Digit.settings["categoryMode"])
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.categoryMode, proportion=0, flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.categoryMode, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
 
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
-        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
 
         # bindings
         self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
@@ -354,6 +373,7 @@ class DigitSettingsDialog(wx.Dialog):
         """Change category mode"""
 
         mode = event.GetString()
+        Digit.settings["categoryMode"] = mode
         if mode == "Manual entry": # enable
             self.category.Enable(True)
             self.category.SetEditable(True)
@@ -361,15 +381,14 @@ class DigitSettingsDialog(wx.Dialog):
             self.category.SetEditable(False)
             self.category.Enable(False)
 
-        if mode == "No category":
-            self.category.SetValue("None")
-        else:
-            Digit.SetCategory()
-            self.category.SetValue(str(Digit.settings['category']))
+        if mode == "No category" and self.addRecord.IsChecked():
+            self.addRecord.SetValue(False)
+        Digit.SetCategory()
+        self.category.SetValue(str(Digit.settings['category']))
 
     def OnChangeAddRecord(self, event):
         """Checkbox 'Add new record' status changed"""
-        Digit.settings["addRecord"] = event.IsChecked()
+        self.category.SetValue(str(Digit.SetCategory()))
             
     def OnOK(self, event):
         """Button 'OK' clicked"""

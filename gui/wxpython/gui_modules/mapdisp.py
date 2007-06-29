@@ -28,9 +28,15 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
            for details.
 """
 
+import os
+import sys
+import time
+import glob
+import math
+import tempfile
+
 import wx
 import wx.aui
-import os, sys, time, glob, math
 from threading import Thread
 
 try:
@@ -693,48 +699,79 @@ class BufferedWindow(wx.Window):
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
             digit = self.parent.digittoolbar
+            self.mouse['begin'] = event.GetPositionTuple()[:]
+            east, north = self.Pixel2Cell(self.mouse['begin'][0],
+                                                  self.mouse['begin'][1])
+            
+            try:
+                map = digit.layers[digit.layerSelectedID].name
+            except:
+                map = None
+                dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                                       _("Error"), wx.OK | wx.ICON_ERROR)
+                dlg.ShowModal()
+                dlg.Destroy()
+                event.Skip()
+                return 
+
+            # calculate position of 'update record' dialog 
+            offset = 5
+            posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
+                                             self.mouse['begin'][1] + offset))
+                    
             if digit.action == "add":
-                try:
-                    map = digit.layers[digit.layerSelectedID].name
-                except:
-                    map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
-                                           _("Error"), wx.OK | wx.ICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
-
-                if map:
-                    if digit.type in ["point", "centroid"]:
-                        # add new point
-                        self.mouse['begin'] = event.GetPositionTuple()[:]
-                        self.DrawCross(self.mouse['begin'], 5)
-                        east, north = self.Pixel2Cell(self.mouse['begin'][0],
-                                                      self.mouse['begin'][1])
-                        Digit.AddPoint(map=map,
-                                       type=digit.type,
-                                       x=east, y=north)
+                if digit.type in ["point", "centroid"]:
+                    # add new point
+                    self.DrawCross(self.mouse['begin'], 5)
+                    Digit.AddPoint(map=map,
+                                   type=digit.type,
+                                   x=east, y=north)
                         
-                        # add new record into atribute table
-                        if Digit.settings["addRecord"]:
-                            offset = 5
-                            posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
-                                                             self.mouse['begin'][1] + offset))
+                    # add new record into atribute table
+                    if Digit.settings["addRecord"]:
+                        # select attributes based on layer and category
+                        addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                   layer=Digit.settings["layer"],
+                                                                   cat=Digit.settings["category"],
+                                                                   pos=posWindow,
+                                                                   action="add")
+                        if addRecordDlg.mapInfo and \
+                               addRecordDlg.ShowModal() == wx.ID_OK:
+                            sqlfile = tempfile.NamedTemporaryFile(mode="w")
+                            sqlfile.file.write(addRecordDlg.GetSQLString())
+                            sqlfile.file.flush()
+                            executeCommand = cmd.Command(cmd=["db.execute",
+                                                              "--q",
+                                                              "input=%s" % sqlfile.name])
+                    self.render=True
+                    self.UpdateMap() # redraw map
 
-                            if dbm.UpdateRecordDialog(parent=self, map=map,
-                                                      layer=Digit.settings["layer"],
-                                                      cat=Digit.settings["category"],
-                                                      pos=posWindow).ShowModal() == wx.ID_OK:
-                                pass
-                            
-                        self.render=True
-                        self.UpdateMap() # redraw map
-
-                    elif digit.type in ["line", "boundary"]:
-                        # add new point to the line
-                        self.polycoords.append(event.GetPositionTuple()[:])
-                        self.mouse['begin'] = self.polycoords[-1]
-                        self.DrawLines()
-
+                elif digit.type in ["line", "boundary"]:
+                    # add new point to the line
+                    self.polycoords.append(event.GetPositionTuple()[:])
+                    self.mouse['begin'] = self.polycoords[-1]
+                    self.DrawLines()
+            elif digit.action == "dispAttr":
+                qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
+                # select attributes based on coordinates (all layers)
+                updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                       layer=-1, queryCoords=(east, north), qdist=qdist,
+                                                       pos=posWindow,
+                                                       action="update")
+                if not updateRecordDlg.mapInfo and \
+                       Digit.settings["addRecord"]:
+                    updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                  layer=-1, queryCoords=(east, north), qdist=qdist,
+                                                                  pos=posWindow,
+                                                                  action="add")
+                if updateRecordDlg.mapInfo and \
+                       updateRecordDlg.ShowModal() == wx.ID_OK:
+                    sqlfile = tempfile.NamedTemporaryFile(mode="w")
+                    sqlfile.file.write(updateRecordDlg.GetSQLString())
+                    sqlfile.file.flush()
+                    executeCommand = cmd.Command(cmd=["db.execute",
+                                                      "--q",
+                                                      "input=%s" % sqlfile.name])
         else:
             # get decoration id
             self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
@@ -892,6 +929,27 @@ class BufferedWindow(wx.Window):
                     Digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
                                   coords=mapcoords)
+
+                    # add new record into atribute table
+                    if Digit.settings["addRecord"]:
+                        offset = 5
+                        posWindow = self.ClientToScreen((self.polycoords[-1][0] + offset,
+                                                         self.polycoords[-1][1] + offset))
+                    
+                        # select attributes based on layer and category
+                        addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                   layer=Digit.settings["layer"],
+                                                                   cat=Digit.settings["category"],
+                                                                   pos=posWindow,
+                                                                   action="add")
+                        if addRecordDlg.mapInfo and \
+                               addRecordDlg.ShowModal() == wx.ID_OK:
+                            sqlfile = tempfile.NamedTemporaryFile(mode="w")
+                            sqlfile.file.write(addRecordDlg.GetSQLString())
+                            sqlfile.file.flush()
+                            executeCommand = cmd.Command(cmd=["db.execute",
+                                                              "--q",
+                                                              "input=%s" % sqlfile.name])
 
                     # clean up saved positions
                     self.polycoords = []
