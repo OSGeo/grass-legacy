@@ -867,7 +867,7 @@ class ProjectionsPage(TitledPage):
 
     def onPageChange(self,event):
         global projection
-        projection = self.tproj
+        projection = self.tproj.GetValue()
 
 class GeoreferencedFilePage(TitledPage):
     def __init__(self, wizard, parent):
@@ -1332,25 +1332,41 @@ class GWizard:
         """
         Create an XY location
         """
-        pass
+        wx.MessageBox('Not implemented: Create xy location')
 
     def LatlongCreate(self):
         """
         Create a new Lat/Long location
         """
-        pass
+        projection = self.projpage.tproj.GetValue()
+        datum = self.datumpage.tdatum.GetValue()
+        transform = self.datumpage.ttrans.GetValue()
+
+        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
+                      (projection, datum, transform))
 
     def UTMCreate(self):
         """
         Create a new UTM location
         """
-        pass
+        projection = self.projpage.tproj.GetValue()
+        datum = self.datumpage.tdatum.GetValue()
+        transform = self.datumpage.ttrans.GetValue()
+
+
+        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
+                      (projection, datum, transform))
 
     def CustomCreate(self):
         """
         Create a new custom-defined location
         """
-        pass
+        projection = self.projpage.tproj.GetValue()
+        datum = self.datumpage.tdatum.GetValue()
+        transform = self.datumpage.ttrans.GetValue()
+
+        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
+                      (projection, datum, transform))
 
     def EPSGCreate(self):
         """
