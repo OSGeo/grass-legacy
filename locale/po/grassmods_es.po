@@ -1,4 +1,4 @@
-# translation of grassmods_es.po to español
+# translation of grassmods_es.po to Español
 # Spanish translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -14,17 +14,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-27 23:40+0200\n"
-"PO-Revision-Date: 2007-06-28 14:58+0200\n"
+"POT-Creation-Date: 2007-06-29 21:10+0200\n"
+"PO-Revision-Date: 2007-06-29 21:50+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: español <grass-es@itc.it.org>\n"
+"Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/describe.c:45
 #: ../db/base/droptable.c:38 ../db/base/execute.c:57 ../db/base/select.c:60
@@ -2955,7 +2955,6 @@ msgstr "Color desconocido: [%s]"
 
 #: ../display/d.vect/main.c:450 ../display/d.vect.chart/main.c:227
 #: ../display/d.what.vect/main.c:149 ../vector/v.label/main.c:276
-#: ../vector/v.what/main.c:170
 #, c-format
 msgid "Vector file [%s] not available"
 msgstr "Archivo vectorial [%s] no disponible"
@@ -3149,7 +3148,7 @@ msgstr "Nombre del mapa vectorial existente"
 msgid "Print information as plain text to terminal window"
 msgstr "Imprimir información como texto plano en la consola"
 
-#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:97
+#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:98
 msgid "Print topological information (debugging)"
 msgstr "Imprimir información topológica (depuración)"
 
@@ -3166,7 +3165,7 @@ msgstr "Abrir formulario en modo edición"
 msgid "Unable to open vector map [%s]"
 msgstr "No se puede abrir el mapa vectorial [%s]"
 
-#: ../display/d.what.vect/main.c:152 ../vector/v.what/main.c:173
+#: ../display/d.what.vect/main.c:152
 #, c-format
 msgid "%s: You must build topology on vector map"
 msgstr "%s: Debe construir la topología en mapa vectorial"
@@ -3189,7 +3188,7 @@ msgid "warning: %s - vector map not found\n"
 msgstr "atención: %s - mapa vectorial encontrado\n"
 
 #: ../display/d.what.vect/what.c:155 ../display/d.what.vect/what.c:156
-#: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
+#: ../vector/v.what/what.c:87 ../vector/v.what/what.c:89
 #, c-format
 msgid "Nothing Found.\n"
 msgstr "No se ha encontrado nada.\n"
@@ -3199,7 +3198,8 @@ msgstr "No se ha encontrado nada.\n"
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
 msgstr "Línea: %d  Tipo: %s  Izquierda: %d  Derecha: %d  "
 
-#: ../display/d.what.vect/what.c:207 ../vector/v.what/what.c:125
+#: ../display/d.what.vect/what.c:207 ../vector/v.what/what.c:137
+#: ../vector/v.what/what.c:170
 #, c-format
 msgid "Length: %f\n"
 msgstr "Longitud: %f\n"
@@ -3214,17 +3214,17 @@ msgstr "  Nodo[%d]: %d  Número de lineas: %d  Coordenadas: %.6f, %.6f, %.6f\n"
 msgid "    Line: %5d  Angle: %.8f\n"
 msgstr "    Línea: %5d  Ángulo: %.8f\n"
 
-#: ../display/d.what.vect/what.c:231 ../vector/v.what/what.c:155
+#: ../display/d.what.vect/what.c:231
 #, c-format
 msgid "length %f\n"
 msgstr "longitud %f\n"
 
-#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:166
+#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:181
 #, c-format
 msgid "Point height: %f\n"
 msgstr "Altura del punto: %f\n"
 
-#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:178
+#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:193
 #, c-format
 msgid "Line height: %f\n"
 msgstr "Altura de la línea: %f\n"
@@ -3283,7 +3283,7 @@ msgstr ""
 msgid "Database connection not defined\n"
 msgstr "Conexión a la base de datos sin definir\n"
 
-#: ../display/d.what.vect/what.c:374 ../vector/v.what/what.c:257
+#: ../display/d.what.vect/what.c:374
 #, c-format
 msgid ""
 "driver: %s\n"
@@ -4300,7 +4300,10 @@ msgstr "Mapa ráster 3D <%s> no encontrado"
 msgid "Can't read header for 3D raster <%s> in <%s>"
 msgstr "No se puede leer la cabecera para el ráster 3D <%s> en <%s>"
 
-#: ../general/g.region/cmd/main.c:526 ../vector/lidar/v.outlier/main.c:143
+#: ../general/g.region/cmd/main.c:526 ../raster/r.carve/main.c:167
+#: ../raster/r.region/main.c:229 ../vector/lidar/v.lidar.correction/main.c:138
+#: ../vector/lidar/v.lidar.edgedetection/main.c:164
+#: ../vector/lidar/v.outlier/main.c:143
 #: ../vector/lidar/v.surf.bspline/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:213 ../vector/v.clean/main.c:225
 #: ../vector/v.hull/main.c:253 ../vector/v.kcv/main.c:132
@@ -4310,12 +4313,13 @@ msgstr "No se puede leer la cabecera para el ráster 3D <%s> en <%s>"
 #: ../vector/v.lrs/v.lrs.segment/main.c:135
 #: ../vector/v.lrs/v.lrs.where/main.c:106
 #: ../vector/v.lrs/v.lrs.where/main.c:114 ../vector/v.net/nodes.c:35
-#: ../vector/v.net/report.c:38 ../vector/v.net.iso/main.c:174
-#: ../vector/v.net.path/main.c:126 ../vector/v.net.salesman/main.c:159
-#: ../vector/v.net.steiner/main.c:394 ../vector/v.sample/main.c:151
-#: ../vector/v.segment/main.c:95 ../vector/v.to.db/parse.c:117
-#: ../vector/v.to.points/main.c:228 ../vector/v.to.rast/vect2rast.c:37
-#: ../vector/v.type/main.c:204 ../vector/v.univar/main.c:109
+#: ../vector/v.net/report.c:38 ../vector/v.net.alloc/main.c:130
+#: ../vector/v.net.iso/main.c:174 ../vector/v.net.path/main.c:126
+#: ../vector/v.net.salesman/main.c:159 ../vector/v.net.steiner/main.c:394
+#: ../vector/v.sample/main.c:151 ../vector/v.segment/main.c:95
+#: ../vector/v.to.db/parse.c:117 ../vector/v.to.points/main.c:228
+#: ../vector/v.to.rast/vect2rast.c:37 ../vector/v.type/main.c:204
+#: ../vector/v.univar/main.c:109 ../vector/v.what/main.c:170
 #: ../vector/v.what.rast/main.c:113
 #, c-format
 msgid "Vector map <%s> not found"
@@ -7971,9 +7975,8 @@ msgid "Produces web map server query string output"
 msgstr ""
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:5
-#, fuzzy
 msgid "Name of region to use instead of current region for bounds and resolution"
-msgstr "Nombre de la región a usar en vez de la actual para bounds y resolución"
+msgstr "Nombre de la región a usar en vez de la actual para contornos y resolución"
 
 #: ../locale/scriptstrings/r.tileset_to_translate.c:6
 msgid "Source projection"
@@ -8018,9 +8021,7 @@ msgstr "Percentil a calcular (requiere la opción -e)"
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
 msgid "Calculates new grid3D volume from r3.mapcalc expression."
-msgstr ""
-"Calcula un nuevo volumen grid3D a partir de una expresión "
-"r3.mapcalc."
+msgstr "Calcula un nuevo volumen grid3D a partir de una expresión r3.mapcalc."
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
 msgid "A (grid3D file)"
@@ -8055,8 +8056,10 @@ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
 msgstr "Modo experto (introducir un conjunto de expresiones r3.mapcalc)"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
-msgid "Rebuild topology on all vector maps in the current mapset"
-msgstr "Reconstruir topología de todos los mapas vectoriales en el directorio de mapas actual"
+msgid "Rebuilds topology on all vector maps in the current mapset."
+msgstr ""
+"Reconstruye la topología de todos los mapas vectoriales en el directorio de "
+"mapas actual"
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:2
 #: ../vector/v.buffer/main.c:245 ../vector/v.category/main.c:66
@@ -8070,13 +8073,13 @@ msgstr "Reconstruir topología de todos los mapas vectoriales en el directorio de
 #: ../vector/v.select/main.c:129 ../vector/v.surf.idw/main.c:116
 #: ../vector/v.surf.rst/main.c:159 ../vector/v.transform/main.c:54
 #: ../vector/v.vol.rst/main.c:201 ../vector/v.voronoi/dt_main.c:44
-#: ../vector/v.voronoi/vo_main.c:107 ../vector/v.what/main.c:71
+#: ../vector/v.voronoi/vo_main.c:107
 msgid "vector"
 msgstr "vectorial"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:1
-msgid "Adds missing centroids to closed boundaries"
-msgstr "Añade los centroides que faltan a contornos cerrados"
+msgid "Adds missing centroids to closed boundaries."
+msgstr "Añade los centroides que faltan a contornos cerrados."
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:2
 msgid "vector, centroid, area"
@@ -8084,6 +8087,7 @@ msgstr "vectorial, centroide, área"
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.report_to_translate.c:5
 msgid "Name of input vector map"
 msgstr "Nombre del mapa vectorial de entrada"
 
@@ -8136,11 +8140,12 @@ msgid "run non-interactively"
 msgstr "ejecutar de forma no interactiva"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
-#, fuzzy
 msgid ""
 "Adds one or more columns to the attribute table connected to a given vector "
-"map"
-msgstr "columnas a a vectorial"
+"map."
+msgstr ""
+"Añade una o más columnas a la tabla de atributos conectada a un mapa "
+"vectorial dado."
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
@@ -8167,18 +8172,21 @@ msgid "Layer where to add column"
 msgstr "Capa a la que añadir la columna"
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
-#, fuzzy
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
 msgid ""
 "Name and type of the new column(s) (types depend on database backend, but "
-"all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)"
-msgstr "Nombre"
+"all support VARCHAR(), INT, DOUBLE and DATE)"
+msgstr ""
+"Nombre y tipo de la nueva columna(s) (los tipos dependen de la base de datos "
+"de destino, pero todas soportan VARCHAR(), ENTERO, DOBLE Y FECHA)"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
-#, fuzzy
 msgid ""
-"creates and adds a new attribute table to a given layer of an existing "
-"vector map"
-msgstr "a vectorial"
+"Creates and adds a new attribute table to a given layer of an existing "
+"vector map."
+msgstr ""
+"Crea y añade una nueva tabla de atributos a una capa dada de un mapa "
+"vectorial existente."
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
 msgid "Vector map for which to add new attribute table"
@@ -8186,22 +8194,17 @@ msgstr "Mapa vectorial al que añadir nueva tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:4
 msgid "Name of new attribute table (default: vector map name)"
-msgstr "Nombre de la nueva tabla de atributos (por defecto: nombre del mapa vectorial)"
+msgstr ""
+"Nombre de la nueva tabla de atributos (por defecto: nombre del mapa "
+"vectorial)"
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:5
 msgid "Layer where to add new attribute table"
 msgstr "Capa a la que añadir la nueva tabla de atributos"
 
-#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
-#, fuzzy
-msgid ""
-"Name and type of the new column(s) (types depend on database backend, but "
-"all support VARCHAR(), INT, DOUBLE and DATE)"
-msgstr "Nombre"
-
 #: ../locale/scriptstrings/v.db.join_to_translate.c:1
-msgid "Allows to join a table to a vector map table"
-msgstr "Permite unir una tabla a la tabla de un mapa vectorial"
+msgid "Allows to join a table to a vector map table."
+msgstr "Permite unir una tabla a la tabla de un mapa vectorial."
 
 #: ../locale/scriptstrings/v.db.join_to_translate.c:3
 msgid "Vector map to which to join other table"
@@ -8224,9 +8227,10 @@ msgid "Join column in other table"
 msgstr "Columna a unir en la otra tabla"
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
-#, fuzzy
-msgid "Drops a column from the attribute table connected to a given vector map"
-msgstr "Elimina una a vectorial"
+msgid "Drops a column from the attribute table connected to a given vector map."
+msgstr ""
+"Elimina una columna de la tabla de atributos conectada a un mapa vectorial "
+"dado."
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
 msgid "Vector map for which to drop attribute column"
@@ -8241,33 +8245,32 @@ msgid "Name of the column"
 msgstr "Nombre de la columna"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
-#, fuzzy
-msgid "removes existing attribute table of a vector map"
-msgstr "vectorial"
+msgid "Removes existing attribute table of a vector map."
+msgstr "Elimina la tabla de atributos existente de un mapa vectorial."
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
-#, fuzzy
-msgid "force removal (required for actual deletion of table)"
-msgstr "requerido"
+msgid "Force removal (required for actual deletion of table)"
+msgstr "Forzar eliminación (requerido para el borrado real de la tabla)"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
-#, fuzzy
-msgid "vector map from which to remove attribute table"
-msgstr "vectorial a"
+msgid "Vector map from which to remove attribute table"
+msgstr "Mapa vectorial del que eliminar la tabla de atributos"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
-#, fuzzy
-msgid "name of existing attribute table (default: vector map name)"
-msgstr "nombre vectorial nombre"
+msgid "Name of existing attribute table (default: vector map name)"
+msgstr ""
+"Nombre de la tabla de atributos existente (por defecto: nombre del mapa "
+"vectorial)"
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
 msgid "Layer from which to drop linked attribute table"
 msgstr "Capa de la que eliminar la tabla de atributos asociada"
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
-#, fuzzy
-msgid "Renames a column in a attribute table connected to a given vector map"
-msgstr "a vectorial"
+msgid "Renames a column in a attribute table connected to a given vector map."
+msgstr ""
+"Cambia el nombre de una columna en la tabla de atributos conectada a un mapa "
+"vectorial dado."
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
 msgid "Vector map for which to rename attribute column"
@@ -8282,16 +8285,16 @@ msgid "Old and new name of the column (old,new)"
 msgstr "Nombre antiguo y nuevo de la columna (antiguo,nuevo)"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
-#, fuzzy
-msgid "Reconnect vectors to a new database"
-msgstr "a"
+msgid "Reconnects vectors to a new database."
+msgstr "Conecta vectoriales a una nueva base de datos."
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
-#, fuzzy
 msgid ""
-"Name of old database, the database must be in form printed by v.db.connect -"
+"Name of old database. The database must be in form printed by v.db.connect -"
 "g, i.e. with substituted variables"
-msgstr "Nombre"
+msgstr ""
+"Nombre de la antigua base de datos. La base de datos debe estar en la forma "
+"impresa por v.db.connect -g, esto es, con variables sustituidas"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:4
 msgid "Name of new database"
@@ -8299,20 +8302,20 @@ msgstr "Nombre de la nueva base de datos"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:5
 msgid "Old schema"
-msgstr ""
+msgstr "Esquema antiguo"
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:6
-#, fuzzy
 msgid "New schema"
-msgstr "Nuevo"
+msgstr "Esquema nuevo"
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:1
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
-#, fuzzy
 msgid ""
 "Calculates univariate statistics on selected table column for a GRASS vector "
-"map"
-msgstr "GRASS vectorial"
+"map."
+msgstr ""
+"Calcula estadísticas univariante sobre la columna de tabal seleccionada para "
+"un mapa vectorial de GRASS."
 
 #: ../locale/scriptstrings/v.db.univar_to_translate.c:2
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
@@ -8348,11 +8351,12 @@ msgid "Database driver"
 msgstr "Controlador de base de datos"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
-#, fuzzy
 msgid ""
 "Allows to assign a new value to a column in the attribute table connected to "
-"a given map"
-msgstr "a a a"
+"a given map."
+msgstr ""
+"Permite asignar un nuevo valora a una columna en la tabla de atributos "
+"conectada a un mapa dado."
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:5
 msgid "Column to update"
@@ -8362,7 +8366,9 @@ msgstr "Columna a actualizar"
 msgid ""
 "New value to assign to the column (varchar values have to be in single "
 "quotes, ex: 'grass')"
-msgstr "Nuevo valor a signar a la columna (los valores varchar tienen que estar entre comillas simples, ej.: 'grass')"
+msgstr ""
+"Nuevo valor a signar a la columna (los valores varchar tienen que estar "
+"entre comillas simples, ej.: 'grass')"
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:7
 msgid "Column to query"
@@ -8377,11 +8383,10 @@ msgstr ""
 "cat=1 o col1/col2>1)"
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:1
-#, fuzzy
 msgid ""
-"Dissolve boundaries between adjacent areas sharing a common category number "
-"or attribute"
-msgstr "bordes áreas"
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
+msgstr "Disuelve contornos entre áreas adyacentes que comparten un número de categoría o atributo común."
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:2
 msgid "vector, area, dissolve"
@@ -8397,9 +8402,11 @@ msgstr "Nombre de columna usada para disolver contornos comunes"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
 msgid ""
-"Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
+"Downloads Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
 "vector map."
-msgstr "Carga Waypoints, Rutas y Caminos de un receptor GPS Garmin a un mapa vectorial."
+msgstr ""
+"Descarga Waypoints, Rutas y Caminos desde un receptor GPS Garmin a un mapa "
+"vectorial."
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:2
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:2
@@ -8416,21 +8423,18 @@ msgstr "Modo verboso"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
-#, fuzzy
-msgid "Upload Waypoints from GPS"
-msgstr "Pista"
+msgid "Download Waypoints from GPS"
+msgstr "Descargar Waypoints desde GPS"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
-#, fuzzy
-msgid "Upload Routes from GPS"
-msgstr "Pista"
+msgid "Download Routes from GPS"
+msgstr "Descargar Rutas desde GPS"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
-#, fuzzy
-msgid "Upload Track from GPS"
-msgstr "Pista"
+msgid "Download Track from GPS"
+msgstr "Descargar Caminos desde GPS"
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
 msgid "Force import of track or route data as points"
@@ -8488,11 +8492,10 @@ msgid "Uncompressed GNS file from NGA (with .txt extension)"
 msgstr "Archivo GNS sin comprimir de NGA (con extensión .txt)"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
-#, fuzzy
 msgid ""
-"Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii "
+"Downloads Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii "
 "file into a vector map."
-msgstr "Pistas vectorial."
+msgstr "Descarga Waypoints, Rutas y Caminos desde un receptor GPS o un archivo ASCII de GPS a un mapa vectorial."
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
 msgid "Force vertices of track or route data as points"
@@ -8507,9 +8510,8 @@ msgid "Format of GPS input data (use gpsbabel supported formats)"
 msgstr "Formato de datos de entrada del GPS (usar formatos soportados por gpsbabel)"
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:12
-#, fuzzy
 msgid "Projection of input data (PROJ.4 style), if not set Lat/Lon WGS84 is assumed"
-msgstr "Proyección de los datos de entrada (en estilo PROJ.4)"
+msgstr "Proyección de los datos de entrada (en estilo PROJ.4). Si no se indica se asume Latitud/Longitud WGS84"
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:1
 msgid "Import Mapgen or Matlab vector maps into GRASS."
@@ -8529,7 +8531,6 @@ msgid "Convert all old GRASS < Ver5.7 sites maps in current mapset to vector map
 msgstr "GRASS lugares directorio de mapas a vectorial"
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
-#, fuzzy
 msgid "sites, vector, import"
 msgstr "lugares, vectorial, importar"
 
@@ -8561,8 +8562,8 @@ msgid "Column prefix for new attribute columns"
 msgstr "Prefijo de columna para las nuevas columnas de atributos"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:1
-msgid "Reports geometry statistics for vectors"
-msgstr "Informa estadísticas de geometría para vectoriales"
+msgid "Reports geometry statistics for vectors."
+msgstr "Informa estadísticas de geometría para vectoriales."
 
 #: ../locale/scriptstrings/v.report_to_translate.c:2
 msgid "vector, report, statistics"
@@ -8575,11 +8576,6 @@ msgstr "Resultado en orden inverso"
 #: ../locale/scriptstrings/v.report_to_translate.c:4
 msgid "Sort the result"
 msgstr "Ordenar el resultado"
-
-#: ../locale/scriptstrings/v.report_to_translate.c:5
-#, fuzzy
-msgid "Input vector map"
-msgstr "vectorial"
 
 #: ../locale/scriptstrings/v.report_to_translate.c:7
 msgid "Value to calculate"
@@ -8600,23 +8596,20 @@ msgid "Points vector map to modify"
 msgstr "Mapa vectorial de puntos a modificar"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:4
-#, fuzzy
 msgid "Layer in the vector to be modified"
-msgstr "vectorial a"
+msgstr "Capa del vectorial a modificar"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:5
 msgid "Column to be updated with the query result"
 msgstr "Columna a actualizar con el resultado de la consulta"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:6
-#, fuzzy
 msgid "Vector map to be queried"
-msgstr "a"
+msgstr "Mapa vectorial a consultar"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:7
-#, fuzzy
 msgid "Layer of the query vector containg data"
-msgstr "vectorial a"
+msgstr "Capa del vectorial consultado que contiene datos"
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:8
 msgid "Column to be queried"
@@ -8771,8 +8764,8 @@ msgstr "Rotar impresión 90 grados"
 #: ../ps/ps.map/main.c:110
 msgid "List paper formats ( name width height left right top bottom(margin) )"
 msgstr ""
-"Listar formatos de papel ( nombre anchura altura izquierda derecha "
-"arriba abajo (margen) )"
+"Listar formatos de papel ( nombre anchura altura izquierda derecha arriba "
+"abajo (margen) )"
 
 #: ../ps/ps.map/main.c:115
 msgid "Create EPS (Encapsulated PostScript) instead of PostScript file"
@@ -8805,9 +8798,9 @@ msgid ""
 "instruction instead. The parameter <%s> will be removed in future versions "
 "of GRASS."
 msgstr ""
-"El uso de <%s> desde la línea de comandos está despreciado. Por favor, "
-"use la instrucción mapeo <%s> en su lugar. El parámetro <%s> será eliminado "
-"en futuras versiones de GRASS."
+"El uso de <%s> desde la línea de comandos está despreciado. Por favor, use "
+"la instrucción mapeo <%s> en su lugar. El parámetro <%s> será eliminado en "
+"futuras versiones de GRASS."
 
 #: ../ps/ps.map/main.c:264
 #, c-format
@@ -9254,11 +9247,6 @@ msgstr "Valor de anchura '%s' no válido - se usa el predeterminado."
 #, c-format
 msgid "invalid depth value '%s' - using default."
 msgstr "Valor de profundidad '%s' no válido - se usa el predeterminado."
-
-#: ../raster/r.carve/main.c:167 ../raster/r.region/main.c:229
-#, c-format
-msgid "vector map <%s> not found"
-msgstr "mapa vectorial <%s> no encontrado"
 
 #: ../raster/r.carve/main.c:173
 #, c-format
@@ -19661,11 +19649,6 @@ msgstr "Alta a"
 msgid "Low threshold for terrain to object reclassification"
 msgstr "Baja a"
 
-#: ../vector/lidar/v.lidar.correction/main.c:138
-#, c-format
-msgid "It could not be find input map <%s>"
-msgstr "No fue posible encontrar el mapa de entrada <%s>"
-
 #: ../vector/lidar/v.lidar.correction/main.c:142
 #: ../vector/lidar/v.lidar.correction/main.c:147
 #: ../vector/lidar/v.lidar.correction/main.c:153
@@ -19781,11 +19764,6 @@ msgstr "El nombre de la base de datos no se pudo leer"
 #: ../vector/lidar/v.surf.bspline/main.c:186
 msgid "Driver's name couldn't be read"
 msgstr "El nombre del controlador no se pudo leer"
-
-#: ../vector/lidar/v.lidar.edgedetection/main.c:164
-#, fuzzy, c-format
-msgid "It could not be found input map <%s>"
-msgstr "No se pudo encontrar el mapa de entrada <%s>\n"
 
 #: ../vector/lidar/v.lidar.edgedetection/main.c:187
 #, fuzzy, c-format
@@ -20929,7 +20907,7 @@ msgstr "mapa vectorial <%s> no encontrado"
 msgid "Database connection not defined for layer <%d>"
 msgstr "La conexión a la base de datos no ha sido definida"
 
-#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:415
+#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:416
 #, c-format
 msgid "Cannot open database <%s>"
 msgstr "No se puede abrir la base de datos <%s>"
@@ -21545,16 +21523,16 @@ msgstr ""
 msgid "[%d] of [%d] features selected"
 msgstr "%d elementos escritos"
 
-#: ../vector/v.edit/select.c:395
+#: ../vector/v.edit/select.c:396
 msgid "Layer must be > 0 for 'where'."
 msgstr "La capa debe ser >0 para 'where' (donde)."
 
-#: ../vector/v.edit/select.c:401 ../vector/v.extract/main.c:227
+#: ../vector/v.edit/select.c:402 ../vector/v.extract/main.c:227
 #, fuzzy
 msgid "No layer database connection."
 msgstr "La conexión a la base de datos no ha sido definida"
 
-#: ../vector/v.edit/select.c:407
+#: ../vector/v.edit/select.c:408
 #, c-format
 msgid "Cannot open driver <%s>"
 msgstr "No se puede abrir el controlador <%s>"
@@ -23660,11 +23638,6 @@ msgid ""
 "Categories of centres (points on nodes) to which net will be allocated, "
 "layer for this categories is given by nlayer option"
 msgstr "Categorías puntos a categorías"
-
-#: ../vector/v.net.alloc/main.c:130
-#, fuzzy, c-format
-msgid "Vector map <%s> not fould"
-msgstr "Mapa vectorial <%s> no encontrado"
 
 #: ../vector/v.net.alloc/main.c:167 ../vector/v.net.iso/main.c:211
 #, c-format
@@ -25934,34 +25907,51 @@ msgstr "vectorial puntos centroides."
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr "Salida líneas áreas"
 
-#: ../vector/v.what/main.c:73
+#: ../vector/v.what/main.c:71
 #, fuzzy
-msgid "Queries a vector map layer at given locations"
+msgid "vector, querying"
 msgstr "vectorial"
 
-#: ../vector/v.what/main.c:93
+#: ../vector/v.what/main.c:73
+#, fuzzy
+msgid "Queries a vector map layer at given locations."
+msgstr "vectorial"
+
+#: ../vector/v.what/main.c:87
+#, fuzzy
+msgid "If not given reads from standard input"
+msgstr "Archivo ráster ASCII a importar (o \"-\" a leer de stdin)"
+
+#: ../vector/v.what/main.c:94
 msgid "Query threshold distance"
 msgstr "Consultar distancia umbral"
 
-#: ../vector/v.what/main.c:101
+#: ../vector/v.what/main.c:102
 msgid "Print attribute information"
 msgstr "Imprimir información de atributos"
 
-#: ../vector/v.what/main.c:105
+#: ../vector/v.what/main.c:106
 msgid "Read coordinates from standard input"
 msgstr "Leer coordenadas de entrada estándar"
 
-#: ../vector/v.what/main.c:188
+#: ../vector/v.what/main.c:173
+#, fuzzy, c-format
+msgid "You must build topology on vector map <%s>"
+msgstr "%s: Debe construir la topología en mapa vectorial"
+
+#: ../vector/v.what/main.c:181
+#, fuzzy
+msgid "The '-s' flag is deprecated and will be removed in future"
+msgstr ""
+"La opción -q está suplantada y se eliminará en el futuro. Por favor, use '--"
+"quiet' en su lugar."
+
+#: ../vector/v.what/main.c:192
 #, fuzzy, c-format
 msgid "Unknown input format, skipping: %s"
 msgstr "Entrada incorrecta para el multiplicador: %s"
 
-#: ../vector/v.what/main.c:196
-#, fuzzy
-msgid "No input coordinates provided"
-msgstr "Ningún nombre de mapa especificado"
-
-#: ../vector/v.what/what.c:121
+#: ../vector/v.what/what.c:133
 #, c-format
 msgid ""
 "Line: %d  \n"
@@ -25974,7 +25964,7 @@ msgstr ""
 "Izquierda: %d  \n"
 "Derecha: %d  \n"
 
-#: ../vector/v.what/what.c:141
+#: ../vector/v.what/what.c:154
 #, c-format
 msgid ""
 "Node[%d]: %d  \n"
@@ -25985,7 +25975,7 @@ msgstr ""
 "Número de lineas: %d\n"
 "Coordenadas: %.6f, %.6f, %.6f\n"
 
-#: ../vector/v.what/what.c:147
+#: ../vector/v.what/what.c:161
 #, c-format
 msgid ""
 "Line: %5d  \n"
@@ -25994,7 +25984,12 @@ msgstr ""
 "    Linea: %5d  \n"
 "Ángulo: %.8f\n"
 
-#: ../vector/v.what/what.c:182
+#: ../vector/v.what/what.c:168
+#, fuzzy, c-format
+msgid "Type: %s"
+msgstr "Capa: %s"
+
+#: ../vector/v.what/what.c:197
 #, c-format
 msgid ""
 "Line height min: %f \n"
@@ -26003,7 +25998,7 @@ msgstr ""
 "Altura mínima de linea: %f \n"
 "Altura máxima de línea: %f\n"
 
-#: ../vector/v.what/what.c:192
+#: ../vector/v.what/what.c:208
 #, c-format
 msgid ""
 "Object type: Area \n"
@@ -26012,12 +26007,12 @@ msgstr ""
 "Tipo de objeto: Área \n"
 "Altura del área: %f\n"
 
-#: ../vector/v.what/what.c:196
+#: ../vector/v.what/what.c:212
 #, c-format
 msgid "Object type: Area\n"
 msgstr "Tipo de objeto: Área \n"
 
-#: ../vector/v.what/what.c:204
+#: ../vector/v.what/what.c:220
 #, c-format
 msgid ""
 "Area: %d  \n"
@@ -26026,17 +26021,17 @@ msgstr ""
 "Área: %d  \n"
 "Número de islas: %d\n"
 
-#: ../vector/v.what/what.c:209
+#: ../vector/v.what/what.c:225
 #, c-format
 msgid "Isle[%d]: %d\n"
 msgstr "Isla[%d]: %d\n"
 
-#: ../vector/v.what/what.c:217
+#: ../vector/v.what/what.c:233
 #, c-format
 msgid "Island: %d In area: %d\n"
 msgstr "Isla: %d en área: %d\n"
 
-#: ../vector/v.what/what.c:222 ../vector/v.what/what.c:230
+#: ../vector/v.what/what.c:238 ../vector/v.what/what.c:246
 #, c-format
 msgid ""
 "Sq Meters: %.3f \n"
@@ -26045,7 +26040,7 @@ msgstr ""
 "Metros cuadrados: %.3f\n"
 "Hectáreas: %.3f\n"
 
-#: ../vector/v.what/what.c:224 ../vector/v.what/what.c:233
+#: ../vector/v.what/what.c:240 ../vector/v.what/what.c:249
 #, c-format
 msgid ""
 "Acres: %.3f \n"
@@ -26054,7 +26049,7 @@ msgstr ""
 "Acres: %.3f\n"
 "Millas cuadradas: %.4f\n"
 
-#: ../vector/v.what/what.c:252
+#: ../vector/v.what/what.c:268
 #, c-format
 msgid ""
 "Layer: %d\n"
@@ -26062,6 +26057,20 @@ msgid ""
 msgstr ""
 "Capa: %d\n"
 "Categoría: %d\n"
+
+#: ../vector/v.what/what.c:273
+#, fuzzy, c-format
+msgid ""
+"\n"
+"Driver: %s\n"
+"Database: %s\n"
+"Table: %s\n"
+"Key column: %s\n"
+msgstr ""
+"controlador: %s\n"
+"base de datos: %s\n"
+"tabla: %s\n"
+"columna de clave: %s\n"
 
 #: ../vector/v.what.rast/main.c:78
 #, fuzzy

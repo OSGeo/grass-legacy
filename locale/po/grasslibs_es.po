@@ -14,15 +14,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-25 21:13+0200\n"
-"PO-Revision-Date: 2007-06-25 20:26+0200\n"
+"POT-Creation-Date: 2007-06-29 21:09+0200\n"
+"PO-Revision-Date: 2007-06-29 21:05+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: Español <grass-es@grass.itc.it>\n"
+"Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:24
 #, c-format
@@ -1296,7 +1296,7 @@ msgstr ""
 #: ../lib/gis/parser.c:1136
 #, c-format
 msgid "  %*s   default: %s\n"
-msgstr "  %*s   defecto: %s\n"
+msgstr "  %*s   por defecto: %s\n"
 
 #: ../lib/gis/parser.c:1444
 msgid "NAME"
@@ -1456,7 +1456,7 @@ msgstr "  formato: %s\n"
 #: ../lib/gis/parser.c:2524
 #, c-format
 msgid " default: %s\n"
-msgstr " defecto: %s\n"
+msgstr " por defecto: %s\n"
 
 #: ../lib/gis/parser.c:2525
 #, c-format
@@ -2576,7 +2576,7 @@ msgstr "Iniciando el método de eliminación de Gauss"
 #: ../lib/gpde/N_solvers.c:83
 #, fuzzy
 msgid "The lu solver does not works with sparse matrices"
-msgstr "El método de resolucion LU no funciona con matrices sparse"
+msgstr "El método de resolución LU no funciona con matrices sparse"
 
 #: ../lib/gpde/N_solvers.c:89
 msgid "Starting lu solver method"
@@ -3095,13 +3095,13 @@ msgid ""
 "driver: dbf\n"
 "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 msgstr ""
-"El driver por defecto / base de datos incializada :\n"
+"El driver por defecto / base de datos inicializada :\n"
 "driver: dbf\n"
 "base de datos: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
 #: ../lib/vector/Vlib/field.c:262
 msgid "Default driver is not set"
-msgstr "El driver por defecto no ha sido inicializado"
+msgstr "El controlador predeterminado no ha sido inicializado"
 
 #: ../lib/vector/Vlib/field.c:264
 msgid "Default database is not set"
