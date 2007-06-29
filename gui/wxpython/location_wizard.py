@@ -876,8 +876,8 @@ class GeoreferencedFilePage(TitledPage):
         # create controls
         self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
                 style=wx.ALIGN_RIGHT)
-        self.tfile = wx.TextCtrl(self,-1, "", size=(150,-1))
-        self.bbrowse = self.MakeButton("Browse...")
+        self.tfile = wx.TextCtrl(self,-1, "", size=(300,-1))
+        self.bbrowse = wx.Button(self, -1, "Browse...")
 
         # do layout
         self.sizer.Add(self.lfile, 0, wx.ALIGN_RIGHT |
@@ -889,12 +889,12 @@ class GeoreferencedFilePage(TitledPage):
         self.sizer.Add(self.bbrowse, 0, wx.ALIGN_LEFT |
                        wx.ALL, 5, row=1, col=4)
 
-        wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
-        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChange)
+        self.bbrowse.Bind(wx.EVT_BUTTON, self.OnBrowse)
+        self.Bind(wx.EVT_TEXT, self.OnText, self.tfile)
 
-    def onPageChange(self, event):
+    def OnText(self, event):
         global georeffile
-        georeffile = self.tfile
+        georeffile = event.GetString()
 
     def OnBrowse(self, event):
 
@@ -910,7 +910,6 @@ class GeoreferencedFilePage(TitledPage):
 class EPSGPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose EPSG Code")
-        #wx.MessageBox("in epsgpage")
         self.parent = parent
 
         # labels
@@ -988,7 +987,6 @@ class EPSGPage(TitledPage):
         global epsgcode
         epsgcode = self.tcode.GetValue()
         self.parent.bboxpage.SetPrev(self)
-        #wx.MessageBox("setting epsgcode to %s" % (epsgcode))
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -1144,7 +1142,7 @@ class UTMPage(TitledPage):
 
         self.parent = parent
         self.text_utm = self.MakeTextCtrl(size=(300,-1))
-        self.label_utm= self.MakeLabel("Set your UTM zone: ")
+        self.label_utm = self.MakeLabel("Set UTM zone: ")
 
         self.sizer.Add(self.label_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=1)
         self.sizer.Add(self.text_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=2)
@@ -1214,7 +1212,7 @@ class DatabasePage(TitledPage):
             return
 
         if not self.tlocation.GetValue():
-            dlg = wx.MessageDialog(self, "Could not create new location: not set "\
+            dlg = wx.MessageDialog(self, "Could not create new location: location not set "\
                     ,"Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -1283,9 +1281,15 @@ class GWizard:
         self.utmpage.SetNext(self.datumpage)
 
         self.wizard.FitToPage(self.bboxpage)
+
+        success = False
+
         if self.wizard.RunWizard(self.startpage):
-            self.onWizFinished()
-            wx.MessageBox("New location created.")
+            success = self.onWizFinished()
+            if success == True:
+                wx.MessageBox("New location created.")
+            else:
+                wx.MessageBox("Unable to create new location.")
         else:
             wx.MessageBox("Location wizard canceled. New location not created.")
 
@@ -1295,6 +1299,7 @@ class GWizard:
         database = self.startpage.tgisdbase.GetValue()
         location = self.startpage.tlocation.GetValue()
         global coordsys
+        success = ''
 
 #        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
         if os.path.isdir(os.path.join(database,location)):
@@ -1303,43 +1308,45 @@ class GWizard:
                                    wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-            return
+            return False
 
         if coordsys == "xy":
-            self.xyCreate
+            success = self.XYCreate()
         elif coordsys == "latlong":
             rows = int(round((float(north)-float(south))/float(resolution)))
             cols = int(round((float(east)-float(west))/float(resolution)))
             cells = int(rows*cols)
-            self.latlongCreate
+            success = self.LatlongCreate()
         elif coordsys == "utm":
-            self.utmCreate
+            success = self.UTMCreate()
         elif coordsys == "custom":
-            self.customCreate
+            success = self.CustomCreate()
         elif coordsys == "epsg":
-            self.EPSGCreate()
+            success = self.EPSGCreate()
         elif coordsys == "file":
-            self.FileCreate
+            success = self.FileCreate()
 
-    def xyCreate(self):
+        return success
+
+    def XYCreate(self):
         """
         Create an XY location
         """
         pass
 
-    def latlongCreate(self):
+    def LatlongCreate(self):
         """
         Create a new Lat/Long location
         """
         pass
 
-    def utmCreate(self):
+    def UTMCreate(self):
         """
         Create a new UTM location
         """
         pass
 
-    def customCreate(self):
+    def CustomCreate(self):
         """
         Create a new custom-defined location
         """
@@ -1350,18 +1357,24 @@ class GWizard:
         Create a new location from an EPSG code.
         """
         global epsgcode
-        database = self.startpage.tgisdbase.GetValue()
         location = self.startpage.tlocation.GetValue()
         cmdlist = []
-
-        wx.MessageBox("Database: %s, Location: %s, EPSG code: %s" % (database, location, epsgcode))
 
         if not epsgcode:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: EPSG Code value missing",
                     "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-            return
+            return False
+
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to EPSG code %s"\
+                               % (location, epsgcode), "Create new location from EPSG code?",
+                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
+        if dlg.ShowModal() == wx.ID_NO:
+            dlg.Destroy()
+            return False
+        else:
+            dlg.Destroy()
 
         # creating location
         # all credit to Michael Barton and his file_option.tcl and
@@ -1371,61 +1384,86 @@ class GWizard:
             p = cmd.Command(cmdlist)
             dtoptions = p.module_stdout.read()
             if dtoptions != None:
+                dtrans = ''
                 # open a dialog to select datum transform number
-                dtoptions = 'Select the number of a datum transformation to use: \n'+dtoptions
-                dlg = wx.TextEntryDialog(self.wizard, dtoptions)
-                dlg.SetValue('1')
+                dlg = wx.TextEntryDialog(self.wizard, dtoptions,
+                                         caption='Select the number of a datum transformation to use',
+                                         defaultValue='1',
+                                         style=wx.TE_WORDWRAP|wx.MINIMIZE_BOX|wx.MAXIMIZE_BOX|
+                                         wx.RESIZE_BORDER|wx.VSCROLL|
+                                         wx.OK|wx.CANCEL)
 
-                if dlg.ShowModal() == wx.ID_OK:
+                if dlg.ShowModal() == wx.ID_CANCEL:
+                    dlg.Destroy()
+                    return False
+                else:
                     dtrans = dlg.GetValue()
-
-                dlg.Destroy()
+                    if dtrans != '':
+                        dlg.Destroy()
+                    else:
+                        wx.MessageBox('You must select a datum transform')
+                        return False
 
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=%s' % dtrans]
             else:
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
 
             cmd.Command(cmdlist)
+            return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
                                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
+            return False
 
     def FileCreate(self):
         """
         Create a new location from a georeferenced file
         """
         global georeffile
-        global database
-        global location
+        location = self.startpage.tlocation.GetValue()
+
+        cmdlist = []
+
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to file '%s'"\
+                               % (location, georeffile), "Create new location from georeferenced file?",
+                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
+        if dlg.ShowModal() == wx.ID_NO:
+            dlg.Destroy()
+            return False
+        else:
+            dlg.Destroy()
+
         if not os.path.isfile(georeffile):
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s; Could not find file" % georeffile,
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: could not find file %s" % georeffile,
                                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-            return
+            return False
 
-        if not sgeoreffile:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: name not set",
+        if not georeffile:
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: georeferenced file not set",
                     "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-            return
+            return False
 
         # creating location
         # all credit to Michael Barton and his file_option.tcl and
         # Markus Neteler
         try:
-            # FIXME: this does not need to work on windows
-            os.system("g.proj -c georef=%s location=%s >&2" % (georeffile, location))
+            cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
+            cmd.Command(cmdlist)
+            return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
                                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
+            return False
 
 if __name__ == "__main__":
     gWizard = GWizard(None,  "")

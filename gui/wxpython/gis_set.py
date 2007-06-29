@@ -425,7 +425,7 @@ class GRASSStartup(wx.Frame):
         self.llocation = wx.StaticText(self, -1, "Project Location\n(projection/coordinate system)", style=wx.ALIGN_CENTRE)
         self.lmapset = wx.StaticText(self, -1, "Accessible Mapsets\n(directories of GIS files)", style=wx.ALIGN_CENTRE)
         self.lcreate = wx.StaticText(self, -1, "Create new mapset\nin selected location", style=wx.ALIGN_CENTRE)
-        self.ldefine = wx.StaticText(self, -1, "Define new location with ...", style=wx.ALIGN_CENTRE)
+        self.ldefine = wx.StaticText(self, -1, "Define new location...", style=wx.ALIGN_CENTRE)
 
         # buttons
         buttonsize1 = (150,-1)
@@ -437,9 +437,9 @@ class GRASSStartup(wx.Frame):
         self.bhelp = wx.Button(self, -1, "Help", size=buttonsize2)
         self.bbrowse = wx.Button(self, -1, "Browse ...", size=(-1,-1))
         self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize1)
-        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize1)
-        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize1)
-        self.bwizard = wx.Button(self, -1, "Run Wizard", size=buttonsize1)
+#        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize1)
+#        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize1)
+        self.bwizard = wx.Button(self, -1, "Location wizard", size=buttonsize1)
 
 
         # textinputs
@@ -464,18 +464,25 @@ class GRASSStartup(wx.Frame):
         self.__do_layout()
 
         # events
-        wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
-        wx.EVT_BUTTON(self, self.bstart.GetId(), self.OnStart)
-        wx.EVT_BUTTON(self, self.bexit.GetId(), self.OnExit)
-        wx.EVT_BUTTON(self, self.bhelp.GetId(), self.OnHelp)
-        wx.EVT_BUTTON(self, self.bmapset.GetId(), self.OnCreateMapset)
-        wx.EVT_BUTTON(self, self.bgeoreferenced.GetId(), self.OnGeoreferenced)
-        wx.EVT_BUTTON(self, self.bepsg.GetId(), self.OnEpsg)
-        wx.EVT_BUTTON(self, self.bwizard.GetId(), self.OnWizard)
+#        wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
+        self.bbrowse.Bind(wx.EVT_BUTTON, self.OnBrowse)
+#        wx.EVT_BUTTON(self, self.bstart.GetId(), self.OnStart)
+        self.bstart.Bind(wx.EVT_BUTTON, self.OnStart)
+#        wx.EVT_BUTTON(self, self.bexit.GetId(), self.OnExit)
+        self.bexit.Bind(wx.EVT_BUTTON, self.OnExit)
+#        wx.EVT_BUTTON(self, self.bhelp.GetId(), self.OnHelp)
+        self.bhelp.Bind(wx.EVT_BUTTON, self.OnHelp)
+#        wx.EVT_BUTTON(self, self.bmapset.GetId(), self.OnCreateMapset)
+        self.bmapset.Bind(wx.EVT_BUTTON, self.OnCreateMapset)
+#        wx.EVT_BUTTON(self, self.bgeoreferenced.GetId(), self.OnGeoreferenced)
+#        wx.EVT_BUTTON(self, self.bepsg.GetId(), self.OnEpsg)
+        self.bwizard.Bind(wx.EVT_BUTTON, self.OnWizard)
         self.lblocations.Bind(wx.EVT_LISTBOX, self.OnSelectLocation)
         self.lbmapsets.Bind(wx.EVT_LISTBOX, self.OnSelectMapset)
-        wx.EVT_KEY_DOWN(self.tgisdbase, self.OnKeyPressedInDbase)
-        wx.EVT_KEY_DOWN(self.tnewmapset, self.OnKeyPressedInMapset)
+#        wx.EVT_KEY_DOWN(self.tgisdbase, self.OnKeyPressedInDbase)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressedInDbase, self.tgisdbase)
+#        wx.EVT_KEY_DOWN(self.tnewmapset, self.OnKeyPressedInMapset)
+        self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressedInMapset, self.tnewmapset)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
     def __set_properties(self):
@@ -531,8 +538,8 @@ class GRASSStartup(wx.Frame):
         mapset_sizer.Add(self.tnewmapset, 0, label_style|wx.BOTTOM, 5)
         mapset_sizer.Add(self.bmapset, 0, label_style|wx.BOTTOM, 10)
         mapset_sizer.Add(self.ldefine, 0, label_style|wx.RIGHT|wx.LEFT, 5)
-        mapset_sizer.Add(self.bgeoreferenced, 0, label_style|wx.TOP, 5)
-        mapset_sizer.Add(self.bepsg, 0, label_style|wx.TOP, 5)
+#        mapset_sizer.Add(self.bgeoreferenced, 0, label_style|wx.TOP, 5)
+#        mapset_sizer.Add(self.bepsg, 0, label_style|wx.TOP, 5)
         mapset_sizer.Add(self.bwizard, 0, label_style|wx.TOP, 5)
         mapset_sizer.Add((5,0))
 
@@ -717,7 +724,7 @@ class GRASSStartup(wx.Frame):
         self.Destroy()
 
     def OnHelp(self, event):
-        print "Event handler `OnHelp' not implemented!"
+        wx.MessageBox("Help not yet implemented")
         event.Skip()
 
     def onCloseWindow(self, event):
