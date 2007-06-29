@@ -34,7 +34,7 @@
 #        due to different number of downloaded decimal places.
 
 #%Module
-#% description: Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a vector map.
+#% description: Downloads Waypoints, Routes, and Tracks from a Garmin GPS receiver into a vector map.
 #% keywords: vector, import, GPS
 #%End
 #%flag
@@ -43,15 +43,15 @@
 #%end
 #%flag
 #%  key: w
-#%  description: Upload Waypoints from GPS
+#%  description: Download Waypoints from GPS
 #%end
 #%flag
 #%  key: r
-#%  description: Upload Routes from GPS
+#%  description: Download Routes from GPS
 #%end
 #%flag
 #%  key: t
-#%  description: Upload Track from GPS
+#%  description: Download Track from GPS
 #%end
 #%flag
 #%  key: p
@@ -223,7 +223,7 @@ if [ $GIS_FLAG_U -eq 0 ] ; then
     fi
 elif [ $VERBOSE -eq 1 ] ; then
     # not really needed for gardump as exit code is meaningful?
-    g.message "Testing GPS connection ..."
+    g.message "Testing GPS connection..."
     gardump -u -p "$GIS_OPT_PORT" 1>&2
     if [ $? -ne 0 ] ; then
 	g.message -e message="Receiver on $GIS_OPT_PORT not responding, exiting"
@@ -246,7 +246,7 @@ fi
 
 #### receive data
 if [ $WPT -eq 1 ] ; then
-    g.message "Receiving waypoints ..."
+    g.message "Receiving Waypoints..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
 	gpstrans "$GPSPORT" -dw > "$TMP".gpst 2>/dev/null
 	EXITCODE=$?
@@ -256,7 +256,7 @@ if [ $WPT -eq 1 ] ; then
     fi
 fi
 if [ $RTE -eq 1 ] ; then
-    g.message "Receiving routes ..."
+    g.message "Receiving Routes..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
 	gpstrans "$GPSPORT" -dr > "$TMP".gpst 2>/dev/null
 	EXITCODE=$?
@@ -266,7 +266,7 @@ if [ $RTE -eq 1 ] ; then
     fi
 fi
 if [ $TRK -eq 1 ] ; then
-    g.message "Receiving track ..."
+    g.message "Receiving Tracks..."
     if [ $GIS_FLAG_U -eq 0 ] ; then
 	gpstrans "$GPSPORT" -dt > "$TMP".gpst 2>/dev/null
 	EXITCODE=$?
@@ -316,7 +316,7 @@ else
     IS_WGS84=TRUE
 fi
 
-g.message -v "Processing data ..."
+g.message -v "Processing data..."
 
 ###################################
 if [ $CREATE_POINTS -eq 1 ] ; then
@@ -441,7 +441,7 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	g.message "No projection transformation performed"
 	cp "${TMP}.base" "${TMP}.P_base"
     else
-	g.message "Attempting waypoint projection transform with cs2cs ..."
+	g.message "Attempting waypoint projection transform with cs2cs..."
 	cs2cs -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_base"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
@@ -470,22 +470,22 @@ if [ $CREATE_POINTS -eq 1 ] ; then
     else
 	#### import into new ascii points file
 	if [ $WPT -eq 1 ] ; then
-	    g.message "Importing Waypoints ..."
+	    g.message "Importing Waypoints..."
 	    v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" --quiet
 	    EXITCODE=$?
 	fi
 	if [ $RTE -eq 1 ] ; then
-	    g.message "Importing Routes as points ..."
+	    g.message "Importing Routes as points..."
 	    v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
 	    EXITCODE=$?
 	fi
 	if [ $TRK -eq 1 ] ; then
 	    if [ $GIS_FLAG_Z -eq 1 ] && [ "$HAVE_ALT" = "TRUE" ] ; then
-		g.message "Importing Track as 3D points ..."
+		g.message "Importing Track as 3D points..."
 		v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS" -z z=5
 		EXITCODE=$?
 	    else
-		g.message "Importing Track as points ..."
+		g.message "Importing Track as points..."
 		v.in.ascii input="${TMP}.asc" output="$NAME" cat=0 columns="$ATTR_COLS"
 		EXITCODE=$?
 	    fi
@@ -649,7 +649,7 @@ else # CREATE_LINES
 	cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
 	    $1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
     else
-	g.message "Attempting waypoint projection transform with cs2cs ..."
+	g.message "Attempting waypoint projection transform with cs2cs..."
 	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
 	EXITCODE=$?
 	# check if transform REALLY worked (e.g. grid file not found)
@@ -742,7 +742,7 @@ EOF
 	    ZFLAG=""
 	fi
 
-	g.message "Importing with v.in.ascii ..."
+	g.message "Importing with v.in.ascii..."
 	v.in.ascii format=standard output="$NAME" input="${TMP}.dig" $ZFLAG
 
 	#### check success/failure
@@ -779,7 +779,7 @@ EOF
 # echo "COPY $NAME FROM '$ATTR_FILE'" | db.execute
 
 # "COPY table FROM 'filename.txt'" does not work for DBF and there is no
-#   db.in.ascii yet, so we use a hack ...
+#   db.in.ascii yet, so we use a hack...
 
 ### <hack>
 	if [ $RTE -eq 1 ] ; then
@@ -814,7 +814,7 @@ EOF
 	fi
 ### </hack>
 
-	g.message "Connecting attribute table to vector file.."
+	g.message "Connecting attribute table to vector file..."
 	v.db.connect map="$NAME" table="$NAME"
     fi
 

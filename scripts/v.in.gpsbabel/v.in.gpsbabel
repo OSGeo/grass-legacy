@@ -35,7 +35,7 @@
 #############################################################################
 
 #%Module
-#%  description: Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii file into a vector map.
+#%  description: Downloads Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii file into a vector map.
 #%  keywords: vector, import, GPS
 #%End
 #%flag
@@ -44,15 +44,15 @@
 #%end
 #%flag
 #%  key: w
-#%  description: Upload Waypoints from GPS
+#%  description: Download Waypoints from GPS
 #%end
 #%flag
 #%  key: r
-#%  description: Upload Routes from GPS
+#%  description: Download Routes from GPS
 #%end
 #%flag
 #%  key: t
-#%  description: Upload Track from GPS
+#%  description: Download Track from GPS
 #%end
 #%flag
 #%  key: p
@@ -228,18 +228,18 @@ STYLE="$GISBASE/etc/grass_write_ascii.style"
 #(GPX file example):
 # gpsbabel -w -i gpx -o xcsv,style=grass_write_ascii.style outfile.csv
 
-#### receive data ...
+#### receive data...
 
 if [ $CREATE_POINTS -eq 1 ] ; then
     if [ $WPT -eq 1 ] ; then
-	g.message "Loading Waypoints from <$GIS_OPT_INPUT> ..." 
+	g.message "Loading Waypoints from <$GIS_OPT_INPUT>..." 
 	TYPE="-w"
 	EXITCODE=$?
     elif [ $RTE -eq 1 ] ; then
-	g.message "Loading Routes as points from <$GIS_OPT_INPUT> ..." 
+	g.message "Loading Routes as points from <$GIS_OPT_INPUT>..." 
 	TYPE="-r"
     elif [ $TRK -eq 1 ] ; then
-	g.message "Loading Tracks as points from <$GIS_OPT_INPUT> ..." 
+	g.message "Loading Tracks as points from <$GIS_OPT_INPUT>..." 
 	TYPE="-t"
     fi
 
@@ -255,11 +255,11 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 
 else
     if [ $RTE -eq 1 ] ; then
-	g.message "Loading Routes from <$GIS_OPT_INPUT> ..." 
+	g.message "Loading Routes from <$GIS_OPT_INPUT>..." 
 	TYPE="-r"
 	EXITCODE=$?
     elif [ $TRK -eq 1 ] ; then
-	g.message "Loading Tracks from <$GIS_OPT_INPUT> ..." 
+	g.message "Loading Tracks from <$GIS_OPT_INPUT>..." 
 	TYPE="-t"
 	EXITCODE=$?
     fi
@@ -638,7 +638,7 @@ EOF
 	# echo "COPY $NAME FROM '$ATTR_FILE'" | db.execute
 
 	# "COPY table FROM 'filename.txt'" does not work for DBF and there is no
-	#   db.in.ascii yet, so we use a hack ...
+	#   db.in.ascii yet, so we use a hack...
 
 ### <hack>
 	if [ $RTE -eq 1 ] ; then
@@ -659,7 +659,7 @@ EOF
 	. "$ATTR_FILE"_exe
 ### </hack>
 
-	g.message "Connecting attribute table to vector file.."
+	g.message "Connecting attribute table to vector file..."
 	v.db.connect map="$NAME" table="$NAME"
 	EXITCODE=$?
     fi
