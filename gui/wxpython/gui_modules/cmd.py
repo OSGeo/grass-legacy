@@ -170,7 +170,7 @@ class Command:
             line = self.module_stdout.readline()
             if not line:
                 break
-            line.replace('\n', '')
+            line = line.replace('\n', '')
             lineList.append(line)
            
         return lineList

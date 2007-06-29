@@ -203,16 +203,6 @@ class DigitToolbar(AbstractToolbar):
             self.settings = self.exit = None
 
             return (("", "", "", "", "", "", ""),
-                    (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
-                     wx.ITEM_RADIO, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
-                     self.OnDisplayCats),
-                    (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
-                     wx.ITEM_RADIO, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
-                     self.OnCopyCats),
-                    (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
-                     wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
-                     self.OnDisplayAttr),
-                    ("", "", "", "", "", "", ""),
                     (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
                      wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
                      self.OnSettings),
@@ -256,7 +246,16 @@ class DigitToolbar(AbstractToolbar):
                      self.OnMoveLine),
                     (self.deleteLine, "digDeleteLine", Icons["digDeleteLine"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digDeleteLine"].GetLabel(), Icons["digDeleteLine"].GetDesc(),
-                     self.OnDeleteLine))
+                     self.OnDeleteLine),
+                    (self.displayCats, "digDispCats", Icons["digDispCats"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digDispCats"].GetLabel(), Icons["digDispCats"].GetDesc(),
+                     self.OnDisplayCats),
+                    (self.copyCats, "digCopyCats", Icons["digCopyCats"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digCopyCats"].GetLabel(), Icons["digCopyCats"].GetDesc(),
+                     self.OnCopyCats),
+                    (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
+                     wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
+                     self.OnDisplayAttr))
 
     def OnAddPoint(self, event):
         """Add point to the vector map layer"""
@@ -324,7 +323,8 @@ class DigitToolbar(AbstractToolbar):
         pass
 
     def OnDisplayAttr(self, event):
-        pass
+        self.action="dispAttr"
+        Debug.msg(4, "Digittoolbar.OnDisplayAttr():")
 
     def OnCopyCats(self, event):
         pass

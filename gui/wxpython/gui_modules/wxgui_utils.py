@@ -912,7 +912,7 @@ class GMConsole(wx.Panel):
         gisbase = os.environ['GISBASE']
         self.gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
         self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
-        self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
+        #self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
 
         return self.gcmdlst
 
