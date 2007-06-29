@@ -14,12 +14,12 @@
 #############################################################################
 
 #%Module
-#% description: Convert all old GRASS < Ver5.7 sites maps in current mapset to vector maps
+#% description: Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps.
 #% keywords: sites, vector, import
 #%End
 #%flag
 #% key: r
-#% description: run non-interactively
+#% description: Run non-interactively
 #%end
 
 if test "$GISBASE" = ""; then
