@@ -15,7 +15,7 @@
 #############################################################################
 
 #%Module
-#% description: Dissolve boundaries between adjacent areas sharing a common category number or attribute
+#% description: Dissolves boundaries between adjacent areas sharing a common category number or attribute.
 #% keywords: vector, area, dissolve
 #%End
 
