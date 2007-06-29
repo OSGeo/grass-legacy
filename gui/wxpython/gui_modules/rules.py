@@ -157,7 +157,9 @@ class RulesText(wx.Dialog):
         self.outmap = event.GetString()
 
     def OnRules(self, event):
-        self.rules = event.GetString()
+        self.rules = event.GetString().strip()
+        if self.cmd == 'r.recode':
+            self.rules = self.rules+'\n'
 
     def OnHelp(self, event):
         os.popen('g.manual --quiet %s ' % self.cmd)
