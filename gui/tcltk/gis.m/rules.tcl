@@ -205,6 +205,9 @@ proc GmRules::process_rules { cmd w } {
     # get rules from text widget
     set rules [$w get 1.0 end]
     set rules [string trim $rules]
+    if { $cmd == "r.recode" } {
+        set rules "$rules\n"
+     }
     
     # save rules to tempfile
     catch {set output [open $rulesfile w ]}
