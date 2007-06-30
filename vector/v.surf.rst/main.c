@@ -530,7 +530,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Cannot create tree info"));
 
     if ((mapset = G_find_vector2(input, "")) == NULL)
-	G_fatal_error(_("Could not find vector map %s"), input);
+	G_fatal_error(_("Vector map <%s> not found"), input);
 
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
