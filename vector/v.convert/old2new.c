@@ -24,7 +24,7 @@ old2new (char *in, char *out, int endian)
     
     /* open in map */
     if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
-	G_fatal_error( _("Input vector map <%s> not found."), in);
+	G_fatal_error( _("Vector map <%s> not found"), in);
     }
 
     /* open input dig file */

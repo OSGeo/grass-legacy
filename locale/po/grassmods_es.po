@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-06-29 21:10+0200\n"
-"PO-Revision-Date: 2007-06-29 21:50+0200\n"
+"PO-Revision-Date: 2007-06-30 17:01+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -6332,7 +6332,7 @@ msgstr "Mapa ráster de salida de saturación"
 
 #: ../imagery/i.smap/bouman/interp.c:38
 msgid "pyramid constructed."
-msgstr "pirámide construida"
+msgstr "pirámide construida."
 
 #: ../imagery/i.smap/bouman/interp.c:71 ../raster/r.cost/main.c:598
 msgid "Unable to allocate memory"
@@ -10041,7 +10041,7 @@ msgid ""
 "different geographic locations on an input raster map layer whose cell "
 "category values represent cost."
 msgstr ""
-"Producir una capa de mapa ráster que muestre el coste acumulado de moverse "
+"Produce una capa de mapa ráster que muestre el coste acumulado de moverse "
 "entre diferentes localizaciones geográficas en una capa de mapa ráster de "
 "entrada cuyos valores de categoría de celdas representan coste."
 
@@ -10053,11 +10053,11 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:141 ../raster/r.walk/main.c:208
 msgid "Starting points vector map"
-msgstr "Iniciando mapa vectorial de puntos"
+msgstr "Mapa vectorial de puntos inicial"
 
 #: ../raster/r.cost/main.c:148 ../raster/r.walk/main.c:215
 msgid "Stop points vector map"
-msgstr "Detener mapa vectorial de puntos"
+msgstr "Mapa vectorial de puntos final"
 
 #: ../raster/r.cost/main.c:155
 msgid "Starting points raster map"
@@ -10077,7 +10077,7 @@ msgstr "Un valor de coste acumulativo máximo opcional"
 
 #: ../raster/r.cost/main.c:189 ../raster/r.walk/main.c:249
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr "Coste asignado a celdas nulas. Por defecto, las celdas nulas son excluidas."
+msgstr "Coste asignado a celdas nulas. Por defecto, las celdas nulas son excluidas"
 
 #: ../raster/r.cost/main.c:198 ../raster/r.in.xyz/main.c:150
 #: ../raster/r.walk/main.c:258
@@ -19596,9 +19596,8 @@ msgstr "a"
 
 #: ../vector/lidar/v.lidar.correction/main.c:64
 #: ../vector/lidar/v.lidar.growing/main.c:76
-#, fuzzy
 msgid "vector, LIDAR"
-msgstr "vectorial"
+msgstr "vectorial, LIDAR"
 
 #: ../vector/lidar/v.lidar.correction/main.c:65
 msgid ""
