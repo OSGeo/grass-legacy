@@ -336,7 +336,7 @@ main (int argc,char *argv[])
     if (npoints > 0) {
        G_debug (1, _("Dropping <%s>"), table_name);
        if (Drop_Aux_Table (driver) != DB_OK)
-	  G_warning (_("Auxiliar Table could not be dropped."));
+	  G_warning (_("Auxiliar table could not be dropped"));
     }
 
     db_close_database_shutdown_driver (driver);

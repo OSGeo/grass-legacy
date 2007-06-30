@@ -602,7 +602,7 @@ main (int argc,char *argv[])
 	    /* Dropping auxiliar table */
 	    G_debug (1, "%s: Dropping <%s>", argv[0], table_name);
 	    if (P_Drop_Aux_Table (driver, table_name) != DB_OK)
-		G_fatal_error(_("Auxiliar Table could not be dropped"));
+		G_fatal_error(_("Auxiliar table could not be dropped"));
 	}
 	else {
 	    P_Aux_to_Raster (raster_matrix, raster);
