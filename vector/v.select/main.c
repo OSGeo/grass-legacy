@@ -177,7 +177,7 @@ main (int argc, char *argv[])
 	Vect_check_input_output_name ( in_opt[input]->answer, out_opt->answer, GV_FATAL_EXIT );
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
-	    G_fatal_error (_("Could not find vector '%s'"), in_opt[input]->answer);
+	    G_fatal_error (_("Vector map <%s> not found"), in_opt[input]->answer);
 	}
 
 	Vect_set_open_level (2);
