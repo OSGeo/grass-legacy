@@ -301,18 +301,19 @@ class SummaryPage(TitledPage):
 
         self.parent = parent
 
-        self.sizer.Add(self.MakeLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT, row=1, col=2)
-        self.sizer.Add(self.MakeLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT, row=2, col=2)
-        self.sizer.Add((200,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL, row=4, col=2)
-        self.sizer.Add(self.MakeLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT, row=5, col=2)
-        self.sizer.Add(self.MakeLabel("North:"), 1, flag=wx.ALIGN_RIGHT, row=6, col=2)
-        self.sizer.Add(self.MakeLabel("South:"), 1, flag=wx.ALIGN_RIGHT, row=7, col=2)
-        self.sizer.Add(self.MakeLabel("East:"), 1, flag=wx.ALIGN_RIGHT, row=8, col=2)
-        self.sizer.Add(self.MakeLabel("West:"), 1, flag=wx.ALIGN_RIGHT, row=9, col=2)
-        self.sizer.Add(self.MakeLabel("Resolution:"), 1, flag=wx.ALIGN_RIGHT, row=10, col=2)
-        self.sizer.Add(self.MakeLabel("Rows:"), 1, flag=wx.ALIGN_RIGHT, row=12, col=2)
-        self.sizer.Add(self.MakeLabel("Columns:"), 1, flag=wx.ALIGN_RIGHT, row=13, col=2)
-        self.sizer.Add(self.MakeLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT, row=14, col=2)
+        self.sizer.Add(self.MakeLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT, row=1, col=0)
+        self.sizer.Add(self.MakeLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT, row=2, col=0)
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.ALIGN_RIGHT|wx.EXPAND|wx.ALL, 0, row=3, col=0, colspan=2)
+        self.sizer.Add((10,10), 1, flag=wx.ALIGN_CENTER_HORIZONTAL, row=4, col=0)
+        self.sizer.Add(self.MakeLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT, row=5, col=0)
+        self.sizer.Add(self.MakeLabel("North:"), 1, flag=wx.ALIGN_RIGHT, row=6, col=0)
+        self.sizer.Add(self.MakeLabel("South:"), 1, flag=wx.ALIGN_RIGHT, row=7, col=0)
+        self.sizer.Add(self.MakeLabel("East:"), 1, flag=wx.ALIGN_RIGHT, row=8, col=0)
+        self.sizer.Add(self.MakeLabel("West:"), 1, flag=wx.ALIGN_RIGHT, row=9, col=0)
+        self.sizer.Add(self.MakeLabel("Resolution:"), 1, flag=wx.ALIGN_RIGHT, row=10, col=0)
+        self.sizer.Add(self.MakeLabel("Rows:"), 1, flag=wx.ALIGN_RIGHT, row=12, col=0)
+        self.sizer.Add(self.MakeLabel("Columns:"), 1, flag=wx.ALIGN_RIGHT, row=13, col=0)
+        self.sizer.Add(self.MakeLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT, row=14, col=0)
 
         # labels
         self.ldatabase  =	self.MakeLabel("")
@@ -327,21 +328,21 @@ class SummaryPage(TitledPage):
         self.lcols =	self.MakeLabel("")
         self.lcells =	self.MakeLabel("")
 
-        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT, row=1, col=3)
-        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT, row=4, col=3)
-        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT, row=5, col=3)
-        self.sizer.Add(self.lnorth, 1, flag=wx.ALIGN_LEFT, row=6, col=3)
-        self.sizer.Add(self.lsouth, 1, flag=wx.ALIGN_LEFT, row=7, col=3)
-        self.sizer.Add(self.least, 1, flag=wx.ALIGN_LEFT, row=8, col=3)
-        self.sizer.Add(self.lwest, 1, flag=wx.ALIGN_LEFT, row=9, col=3)
-        self.sizer.Add(self.lres, 1, flag=wx.ALIGN_LEFT, row=10, col=3)
-        self.sizer.Add(self.lrows, 1, flag=wx.ALIGN_LEFT, row=12, col=3)
-        self.sizer.Add(self.lcols, 1, flag=wx.ALIGN_LEFT, row=13, col=3)
-        self.sizer.Add(self.lcells, 1, flag=wx.ALIGN_LEFT, row=14, col=3)
+        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT, row=1, col=1)
+        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT, row=2, col=1)
+        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT, row=5, col=1)
+        self.sizer.Add(self.lnorth, 1, flag=wx.ALIGN_LEFT, row=6, col=1)
+        self.sizer.Add(self.lsouth, 1, flag=wx.ALIGN_LEFT, row=7, col=1)
+        self.sizer.Add(self.least, 1, flag=wx.ALIGN_LEFT, row=8, col=1)
+        self.sizer.Add(self.lwest, 1, flag=wx.ALIGN_LEFT, row=9, col=1)
+        self.sizer.Add(self.lres, 1, flag=wx.ALIGN_LEFT, row=10, col=1)
+        self.sizer.Add(self.lrows, 1, flag=wx.ALIGN_LEFT, row=12, col=1)
+        self.sizer.Add(self.lcols, 1, flag=wx.ALIGN_LEFT, row=13, col=1)
+        self.sizer.Add(self.lcells, 1, flag=wx.ALIGN_LEFT, row=14, col=1)
 
     def FillVars(self,event=None):
-        database = self.parent.startpage.tgisdbase.GetValue()
-        location = self.parent.startpage.tlocation.GetValue()
+        database = self.parent.startpage.grassdatabase
+        location = self.parent.startpage.location
         global coordsys
         global north
         global south
@@ -370,7 +371,14 @@ class SummaryPage(TitledPage):
 
         self.ldatabase.SetLabel(str(database))
         self.llocation.SetLabel(str(location))
-        self.lprojection.SetLabel(str(coordsys))
+        if coordsys == 'epsg':
+            label = 'EPSG code %s: %s' % (self.parent.epsgpage.epsgcode,self.parent.epsgpage.epsgdesc)
+            self.lprojection.SetLabel(label)
+        elif coordsys == 'file':
+            label = 'Matches file: %s' % self.parent.filepage.georeffile
+            self.lprojection.SetLabel(label)
+        else:
+            self.lprojection.SetLabel(str(coordsys))
         self.lnorth.SetLabel(str(north))
         self.lsouth.SetLabel(str(south))
         self.least.SetLabel(str(east))
@@ -871,6 +879,8 @@ class GeoreferencedFilePage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Select georeferenced file")
 
+        self.georeffile = ''
+
         # create controls
         self.lfile= wx.StaticText(self, -1, "Georeferenced file: ",
                 style=wx.ALIGN_RIGHT)
@@ -891,8 +901,7 @@ class GeoreferencedFilePage(TitledPage):
         self.Bind(wx.EVT_TEXT, self.OnText, self.tfile)
 
     def OnText(self, event):
-        global georeffile
-        georeffile = event.GetString()
+        self.georeffile = event.GetString()
 
     def OnBrowse(self, event):
 
@@ -935,7 +944,7 @@ class EPSGPage(TitledPage):
         # table
         self.tablewidth=675
         self.epsgs = wx.ListCtrl(self, id=wx.ID_ANY,
-                     size=(675,275),
+                     size=(650,275),
                      style=wx.LC_REPORT|
                      wx.LC_HRULES|
                      wx.EXPAND)
@@ -1150,6 +1159,9 @@ class DatabasePage(TitledPage):
     def __init__(self, wizard, parent, grassdatabase):
         TitledPage.__init__(self, wizard, "Define GRASS database and new Location Name")
 
+        self.grassdatabase = ''
+        self.location = ''
+
         # buttons
         self.bbrowse = self.MakeButton("Browse...")
 
@@ -1289,15 +1301,15 @@ class GWizard:
         self.wizard.Destroy()
 
     def onWizFinished(self):
-        database = self.startpage.tgisdbase.GetValue()
-        location = self.startpage.tlocation.GetValue()
+        database = self.startpage.grassdatabase
+        location = self.startpage.location
         global coordsys
         success = ''
 
 #        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
         if os.path.isdir(os.path.join(database,location)):
             dlg = wx.MessageDialog(self, "Could not create new location: %s already exists"
-                                   % os.path.join(self.parent.gisdbase,location),"Could not create location",
+                                   % os.path.join(database,location),"Could not create location",
                                    wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -1367,7 +1379,7 @@ class GWizard:
         """
         epsgcode = self.epsgpage.epsgcode
         epsgdesc = self.epsgpage.epsgdesc
-        location = self.startpage.tlocation.GetValue()
+        location = self.startpage.location
         cmdlist = []
 
         if not epsgcode:
@@ -1433,8 +1445,8 @@ class GWizard:
         """
         Create a new location from a georeferenced file
         """
-        global georeffile
-        location = self.startpage.tlocation.GetValue()
+        georeffile = self.filepage.georeffile
+        location = self.startpage.location
 
         cmdlist = []
 
