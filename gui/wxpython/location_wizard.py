@@ -18,7 +18,6 @@ global coordsys
 global georeffile
 global datum
 global transform
-global projection
 global north
 global south
 global east
@@ -30,7 +29,6 @@ coordsys = ''
 georeffile = ''
 datum = ''
 transform = ''
-projection = ''
 north = ''
 south = ''
 east = ''
@@ -54,13 +52,21 @@ class TitledPage(wiz.WizardPageSimple):
         self.SetSizer(tmpsizer)
         self.SetAutoLayout(True)
 
-    def MakeLabel(self, text=""):
+    def MakeRLabel(self, text=""):
         try:
             if text[-1] != " ":
                 text += " "
         except:
             pass
         return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
+
+    def MakeLLabel(self, text=""):
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
+        return wx.StaticText(self, -1, text, style=wx.ALIGN_LEFT)
 
     def MakeTextCtrl(self,text='', size=(100,-1)):
         return wx.TextCtrl(self,-1, text, size=size)
@@ -76,6 +82,14 @@ class DatumPage(TitledPage):
         TitledPage.__init__(self, wizard, "Specify geodetic datum")
 
         self.parent = parent
+        self.datum = ''
+        self.datumname = ''
+        self.ellipsoid = ''
+        self.datumparams = ''
+        self.transform = ''
+        self.transcountry = ''
+        self.transdesc = ''
+        self.transparams = ''
 
         # text input
         self.tdatum = self.MakeTextCtrl("", size=(200,-1))
@@ -89,15 +103,11 @@ class DatumPage(TitledPage):
         self.bupdate = self.MakeButton("Update trans. parms.",
                                        size=(-1,-1))
 
-        # table
-        self.tablewidth=675
-
         # create list control for datum/elipsoid list
         self.datumlist = wx.ListCtrl(self, id=wx.ID_ANY,
-                                     size=(675,150),
-                                     style=wx.LC_REPORT |
-                                     wx.LC_VRULES |
-                                     wx.LC_HRULES |
+                                     size=(650,150),
+                                     style=wx.LC_REPORT|
+                                     wx.LC_HRULES|
                                      wx.EXPAND)
         self.datumlist.InsertColumn(0, 'Short Name')
         self.datumlist.InsertColumn(1, 'Full EPSG-style name')
@@ -110,9 +120,8 @@ class DatumPage(TitledPage):
 
         # create list control for datum transformation parameters list
         self.transformlist = wx.ListCtrl(self, id=wx.ID_ANY,
-                                     size=(675,125),
+                                     size=(650,125),
                                      style=wx.LC_REPORT |
-                                     wx.LC_VRULES |
                                      wx.LC_HRULES |
                                      wx.EXPAND)
         self.transformlist.InsertColumn(0, 'ID')
@@ -125,7 +134,7 @@ class DatumPage(TitledPage):
         self.transformlist.SetColumnWidth(3, 250)
 
         # layout
-        self.sizer.Add(self.MakeLabel("Geodetic datum:"), 0,
+        self.sizer.Add(self.MakeRLabel("Geodetic datum:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, col=1, row=1)
@@ -137,7 +146,7 @@ class DatumPage(TitledPage):
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=1, col=3)
-        self.sizer.Add(self.MakeLabel("Search in description:"), 0,
+        self.sizer.Add(self.MakeRLabel("Search in description:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, col=1, row=2)
@@ -149,9 +158,9 @@ class DatumPage(TitledPage):
         self.sizer.Add(self.datumlist, 0 ,
                        wx.EXPAND |
                        wx.ALIGN_LEFT |
-                       wx.ALL, 5, row=3, col=1, colspan=5)
+                       wx.ALL, 5, row=3, col=1, colspan=4)
 
-        self.sizer.Add(self.MakeLabel("Transformation parameters:"), 0,
+        self.sizer.Add(self.MakeRLabel("Transformation parameters:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, col=1, row=5)
@@ -163,12 +172,10 @@ class DatumPage(TitledPage):
         self.sizer.Add(self.transformlist, 0 ,
                        wx.EXPAND |
                        wx.ALIGN_LEFT |
-                       wx.ALL, 5, row=6, col=1, colspan=5)
+                       wx.ALL, 5, row=6, col=1, colspan=4)
 
         # events
-        #wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
-        #wx.EVT_BUTTON(self, self.bbcodes.GetId(), self.OnBrowseCodes)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.datumlist)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnDatumSelected, self.datumlist)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnTransformSelected, self.transformlist)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChange)
         self.bupdate.Bind(wx.EVT_BUTTON, self._onBrowseParams)
@@ -176,17 +183,19 @@ class DatumPage(TitledPage):
         self.tdatum.Bind(wx.EVT_TEXT_ENTER, self._onBrowseParams, self.tdatum)
 
         self._onBrowseDatums(None,None)
+
         self.datumlist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
         self.datumlist.SetColumnWidth(1, wx.LIST_AUTOSIZE)
         self.datumlist.SetColumnWidth(2, wx.LIST_AUTOSIZE)
         self.datumlist.SetColumnWidth(3, wx.LIST_AUTOSIZE)
 
+        self.transformlist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
+        self.transformlist.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+        self.transformlist.SetColumnWidth(2, wx.LIST_AUTOSIZE)
+        self.transformlist.SetColumnWidth(3, wx.LIST_AUTOSIZE)
+
     def onPageChange(self,event):
         self.GetNext().SetPrev(self)
-        global datum
-        datum = self.tdatum.GetValue()
-        global transform
-        transform = self.ttrans.GetValue()
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -202,18 +211,33 @@ class DatumPage(TitledPage):
         self._onBrowseDatums(None,str)
 
     def OnTransformSelected(self,event):
+        index = event.m_itemIndex
         item = event.GetItem()
-        self.ttrans.SetValue(str(item.GetText()))
 
-    def OnItemSelected(self,event):
+        self.transform = item.GetText()
+        self.transcountry = self.transformlist.GetItem(index, 1).GetText()
+        self.transdesc = self.transformlist.GetItem(index, 2).GetText()
+        self.transparams = self.transformlist.GetItem(index, 3).GetText()
+
+        self.ttrans.SetValue(str(self.transform))
+
+
+    def OnDatumSelected(self,event):
+        index = event.m_itemIndex
         item = event.GetItem()
-        self.tdatum.SetValue(str(item.GetText()))
+
+        self.datum = item.GetText()
+        self.datumname = self.datumlist.GetItem(index, 1).GetText()
+        self.ellipsoid = self.datumlist.GetItem(index, 2).GetText()
+        self.datumparams = self.datumlist.GetItem(index, 3).GetText()
+
+        self.tdatum.SetValue(self.datum)
         self._onBrowseParams()
 
     def _onBrowseParams(self, event=None):
         params = [["","Use whole region",""]]
         file = os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table")
-        search = self.tdatum.GetValue()
+        search = self.datum
 
         try:
             f = open(file,"r")
@@ -301,44 +325,44 @@ class SummaryPage(TitledPage):
 
         self.parent = parent
 
-        self.sizer.Add(self.MakeLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT, row=1, col=0)
-        self.sizer.Add(self.MakeLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT, row=2, col=0)
+        self.sizer.Add(self.MakeRLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=1, col=0)
+        self.sizer.Add(self.MakeRLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=2, col=0)
         self.sizer.Add(wx.StaticLine(self, -1), 0, wx.ALIGN_RIGHT|wx.EXPAND|wx.ALL, 0, row=3, col=0, colspan=2)
-        self.sizer.Add((10,10), 1, flag=wx.ALIGN_CENTER_HORIZONTAL, row=4, col=0)
-        self.sizer.Add(self.MakeLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT, row=5, col=0)
-        self.sizer.Add(self.MakeLabel("North:"), 1, flag=wx.ALIGN_RIGHT, row=6, col=0)
-        self.sizer.Add(self.MakeLabel("South:"), 1, flag=wx.ALIGN_RIGHT, row=7, col=0)
-        self.sizer.Add(self.MakeLabel("East:"), 1, flag=wx.ALIGN_RIGHT, row=8, col=0)
-        self.sizer.Add(self.MakeLabel("West:"), 1, flag=wx.ALIGN_RIGHT, row=9, col=0)
-        self.sizer.Add(self.MakeLabel("Resolution:"), 1, flag=wx.ALIGN_RIGHT, row=10, col=0)
-        self.sizer.Add(self.MakeLabel("Rows:"), 1, flag=wx.ALIGN_RIGHT, row=12, col=0)
-        self.sizer.Add(self.MakeLabel("Columns:"), 1, flag=wx.ALIGN_RIGHT, row=13, col=0)
-        self.sizer.Add(self.MakeLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT, row=14, col=0)
+        self.sizer.Add((10,10), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=4, col=0)
+        self.sizer.Add(self.MakeRLabel("Projection:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=5, col=0)
+        self.sizer.Add(self.MakeRLabel("North:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=6, col=0)
+        self.sizer.Add(self.MakeRLabel("South:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=7, col=0)
+        self.sizer.Add(self.MakeRLabel("East:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=8, col=0)
+        self.sizer.Add(self.MakeRLabel("West:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=9, col=0)
+        self.sizer.Add(self.MakeRLabel("Resolution:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=10, col=0)
+        self.sizer.Add(self.MakeRLabel("Rows:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=12, col=0)
+        self.sizer.Add(self.MakeRLabel("Columns:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=13, col=0)
+        self.sizer.Add(self.MakeRLabel("Cells:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=14, col=0)
 
         # labels
-        self.ldatabase  =	self.MakeLabel("")
-        self.llocation  =	self.MakeLabel("")
-        self.lprojection =	self.MakeLabel("")
-        self.lnorth =	self.MakeLabel("")
-        self.lsouth  =	self.MakeLabel("")
-        self.least =	self.MakeLabel("")
-        self.lwest =	self.MakeLabel("")
-        self.lres =	self.MakeLabel("")
-        self.lrows =	self.MakeLabel("")
-        self.lcols =	self.MakeLabel("")
-        self.lcells =	self.MakeLabel("")
+        self.ldatabase  =	self.MakeLLabel("")
+        self.llocation  =	self.MakeLLabel("")
+        self.lprojection =	self.MakeLLabel("")
+        self.lnorth =	self.MakeLLabel("")
+        self.lsouth  =	self.MakeLLabel("")
+        self.least =	self.MakeLLabel("")
+        self.lwest =	self.MakeLLabel("")
+        self.lres =	self.MakeLLabel("")
+        self.lrows =	self.MakeLLabel("")
+        self.lcols =	self.MakeLLabel("")
+        self.lcells =	self.MakeLLabel("")
 
-        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT, row=1, col=1)
-        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT, row=2, col=1)
-        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT, row=5, col=1)
-        self.sizer.Add(self.lnorth, 1, flag=wx.ALIGN_LEFT, row=6, col=1)
-        self.sizer.Add(self.lsouth, 1, flag=wx.ALIGN_LEFT, row=7, col=1)
-        self.sizer.Add(self.least, 1, flag=wx.ALIGN_LEFT, row=8, col=1)
-        self.sizer.Add(self.lwest, 1, flag=wx.ALIGN_LEFT, row=9, col=1)
-        self.sizer.Add(self.lres, 1, flag=wx.ALIGN_LEFT, row=10, col=1)
-        self.sizer.Add(self.lrows, 1, flag=wx.ALIGN_LEFT, row=12, col=1)
-        self.sizer.Add(self.lcols, 1, flag=wx.ALIGN_LEFT, row=13, col=1)
-        self.sizer.Add(self.lcells, 1, flag=wx.ALIGN_LEFT, row=14, col=1)
+        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=1, col=1)
+        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=2, col=1)
+        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=5, col=1)
+        self.sizer.Add(self.lnorth, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=6, col=1)
+        self.sizer.Add(self.lsouth, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=7, col=1)
+        self.sizer.Add(self.least, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=8, col=1)
+        self.sizer.Add(self.lwest, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=9, col=1)
+        self.sizer.Add(self.lres, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=10, col=1)
+        self.sizer.Add(self.lrows, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=12, col=1)
+        self.sizer.Add(self.lcols, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=13, col=1)
+        self.sizer.Add(self.lcells, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=14, col=1)
 
     def FillVars(self,event=None):
         database = self.parent.startpage.grassdatabase
@@ -363,22 +387,47 @@ class SummaryPage(TitledPage):
         if not resolution:
             resolution = 1
 
-
         #if projection != "latlong":
         rows = int(round((float(north)-float(south))/float(resolution)))
         cols = int(round((float(east)-float(west))/float(resolution)))
         cells = int(rows*cols)
 
+        projection = self.parent.projpage.projname
+        projdesc = self.parent.projpage.projdesc
+        utmzone = self.parent.utmpage.utmzone
+        utmhemisphere = self.parent.utmpage.utmhemisphere
+        datum = self.parent.datumpage.datum
+        datumname = self.parent.datumpage.datumname
+        ellipsoid = self.parent.datumpage.ellipsoid
+        datumparams = self.parent.datumpage.datumparams
+        transform = self.parent.datumpage.transform
+        transcountry = self.parent.datumpage.transcountry
+        transdesc = self.parent.datumpage.transdesc
+        transparams = self.parent.datumpage.transparams
+
         self.ldatabase.SetLabel(str(database))
         self.llocation.SetLabel(str(location))
+
         if coordsys == 'epsg':
             label = 'EPSG code %s: %s' % (self.parent.epsgpage.epsgcode,self.parent.epsgpage.epsgdesc)
             self.lprojection.SetLabel(label)
         elif coordsys == 'file':
             label = 'Matches file: %s' % self.parent.filepage.georeffile
             self.lprojection.SetLabel(label)
-        else:
-            self.lprojection.SetLabel(str(coordsys))
+        elif coordsys == 'utm':
+            label = ('UTM zone: %s%s, datum: %s %s' % (utmzone,utmhemisphere, datumname, ellipsoid))
+            self.lprojection.SetLabel(label)
+        elif coordsys == 'latlon':
+            label = ('Geographic (latlon), datum: %s %s' % (datumname, ellipsoid))
+            self.lprojection.SetLabel(label)
+        elif coordsys == 'custom':
+            label = ('%s %s, datum: %s %s' % (projection, projdesc, datumname, ellipsoid))
+            self.lprojection.SetLabel(label)
+        elif coordsys == 'xy':
+            label = ('XY coordinate system. Not projected')
+            self.lprojection.SetLabel(label)
+        self.lprojection.Wrap(500)
+
         self.lnorth.SetLabel(str(north))
         self.lsouth.SetLabel(str(south))
         self.least.SetLabel(str(east))
@@ -447,7 +496,7 @@ class BBoxPage(TitledPage):
                        style=wx.CB_DROPDOWN)
 
         # layout
-        self.sizer.Add(self.MakeLabel("North"), 0,
+        self.sizer.Add(self.MakeRLabel("North"), 0,
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 0, row=1,col=2)
@@ -456,7 +505,7 @@ class BBoxPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=2,col=2)
 
-        self.sizer.Add(self.MakeLabel("West"), 0,
+        self.sizer.Add(self.MakeRLabel("West"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 0, row=3,col=0)
@@ -469,7 +518,7 @@ class BBoxPage(TitledPage):
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,  row=3,col=3)
-        self.sizer.Add(self.MakeLabel("East"), 0,
+        self.sizer.Add(self.MakeRLabel("East"), 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 0, row=3,col=4)
@@ -478,12 +527,12 @@ class BBoxPage(TitledPage):
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=4,col=2)
-        self.sizer.Add(self.MakeLabel("South"), 0,
+        self.sizer.Add(self.MakeRLabel("South"), 0,
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 0, row=5,col=2)
 
-        self.sizer.Add(self.MakeLabel("Initial resolution"), 0,
+        self.sizer.Add(self.MakeRLabel("Initial resolution"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=6,col=1)
@@ -498,12 +547,12 @@ class BBoxPage(TitledPage):
 
         self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
 
-        self.sizer.Add(self.MakeLabel("Match extents of georeferenced raster map or image"), 3,
+        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced raster map or image"), 3,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=8,col=0, colspan=3)
 
-        self.sizer.Add(self.MakeLabel("File:"), 0,
+        self.sizer.Add(self.MakeRLabel("File:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=9,col=0, colspan=1)
@@ -520,12 +569,12 @@ class BBoxPage(TitledPage):
                        wx.EXPAND|wx.ALL, 0,
                        row=10, col=0, colspan=6)
 
-        self.sizer.Add(self.MakeLabel("Match extents of georeferenced vector map"), 0,
+        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced vector map"), 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=11,col=0, colspan=3 )
 
-        self.sizer.Add(self.MakeLabel("Data source/directory:"), 0,
+        self.sizer.Add(self.MakeRLabel("Data source/directory:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=12,col=0, colspan=1)
@@ -538,7 +587,7 @@ class BBoxPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=12, col=3)
 
-        self.sizer.Add(self.MakeLabel("Layer/file:"), 0,
+        self.sizer.Add(self.MakeRLabel("Layer/file:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=13,col=0, colspan=1)
@@ -556,7 +605,7 @@ class BBoxPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,
                        row=14, col=0, colspan=6)
-        self.sizer.Add(self.MakeLabel("Match extents of selected country"), 0,
+        self.sizer.Add(self.MakeRLabel("Match extents of selected country"), 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=15,col=0, colspan=3)
@@ -775,20 +824,19 @@ class ProjectionsPage(TitledPage):
                                      style=wx.TE_PROCESS_ENTER)
 
         # table
-        self.tablewidth=675
+#        self.tablewidth=675
         self.list = wx.ListCtrl(self, id=wx.ID_ANY,
-                                     size=(675,275),
+                                     size=(650,275),
                                      style=wx.LC_REPORT |
-                                     wx.LC_VRULES |
                                      wx.LC_HRULES |
                                      wx.EXPAND)
         self.list.InsertColumn(0, 'Name')
         self.list.InsertColumn(1, 'Description')
         self.list.SetColumnWidth(0, 100)
-        self.list.SetColumnWidth(1, 575)
+        self.list.SetColumnWidth(1, 500)
 
         # layout
-        self.sizer.Add(self.MakeLabel("Projection name:"), 0,
+        self.sizer.Add(self.MakeRLabel("Projection name:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=1, col=2)
@@ -797,7 +845,7 @@ class ProjectionsPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=1, col=3)
 
-        self.sizer.Add(self.MakeLabel("Search in projection description"), 0,
+        self.sizer.Add(self.MakeRLabel("Search in projection description"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=2, col=2)
@@ -836,9 +884,12 @@ class ProjectionsPage(TitledPage):
 
 
     def OnItemSelected(self,event):
+        index = event.m_itemIndex
         item = event.GetItem()
-        self.tproj.SetValue(str(item.GetText()))
 
+        self.projname = item.GetText()
+        self.projdesc = self.list.GetItem(index, 1).GetText()
+        self.tproj.SetValue(str(self.projname))
 
     def _onBrowseDatums(self,event,search=None):
         try:
@@ -872,8 +923,9 @@ class ProjectionsPage(TitledPage):
             dlg.Destroy()
 
     def onPageChange(self,event):
-        global projection
-        projection = self.tproj.GetValue()
+        pass
+#        global projection
+#        projection = self.tproj.GetValue()
 
 class GeoreferencedFilePage(TitledPage):
     def __init__(self, wizard, parent):
@@ -931,6 +983,7 @@ class EPSGPage(TitledPage):
         epsgdir = os.path.join(os.environ["GRASS_PROJSHARE"], 'epsg')
         self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,-1))
         self.tcode = wx.TextCtrl(self,-1, "", size=(200,-1))
+
         self.epsgdesc = ''
         self.epsgcode = ''
 
@@ -942,7 +995,7 @@ class EPSGPage(TitledPage):
         self.searchb = wx.SearchCtrl(self, size=(200,-1), style=wx.TE_PROCESS_ENTER)
 
         # table
-        self.tablewidth=675
+#        self.tablewidth=675
         self.epsgs = wx.ListCtrl(self, id=wx.ID_ANY,
                      size=(650,275),
                      style=wx.LC_REPORT|
@@ -1142,18 +1195,29 @@ class UTMPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose zone for UTM coordinate system")
 
+        self.utmzone = ''
+        self.utmhemisphere = ''
+
         self.parent = parent
-        self.text_utm = self.MakeTextCtrl(size=(300,-1))
-        self.label_utm = self.MakeLabel("Set UTM zone: ")
+        self.text_utm = self.MakeTextCtrl(size=(100,-1))
+        self.label_utm = self.MakeRLabel("Set UTM zone: ")
+        hemischoices = ["north","south"]
+        self.hemisphere = wx.Choice(self, -1, (100, 50), choices = hemischoices)
+        self.label_hemisphere = self.MakeRLabel("Set hemisphere: ")
 
-        self.sizer.Add(self.label_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=1)
-        self.sizer.Add(self.text_utm, 0, wx.ALIGN_LEFT, 5, row=1,col=2)
+        self.sizer.Add(self.label_utm, 0, wx.ALIGN_RIGHT|wx.ALL, 5, row=1,col=1)
+        self.sizer.Add(self.text_utm, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=1,col=2)
+        self.sizer.Add(self.label_hemisphere, 0, wx.ALIGN_RIGHT|wx.ALL, 5, row=2,col=1)
+        self.sizer.Add(self.hemisphere, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=2,col=2)
 
+        self.Bind(wx.EVT_CHOICE, self.OnHemisphere, self.hemisphere)
+        self.Bind(wx.EVT_TEXT, self.GetUTM, self.text_utm)
 
-    def GetUtm(self):
-        return int(self.text_utm.GetValue())
+    def GetUTM(self, event):
+        self.utmzone = int(event.GetString())
 
-
+    def OnHemisphere(self, event):
+        self.utmhemisphere = event.GetString()
 
 class DatabasePage(TitledPage):
     def __init__(self, wizard, parent, grassdatabase):
@@ -1170,7 +1234,7 @@ class DatabasePage(TitledPage):
         self.tlocation = self.MakeTextCtrl("newLocation", size=(300, -1))
 
         # layout
-        self.sizer.Add(self.MakeLabel("GIS Data Directory:"), 0,
+        self.sizer.Add(self.MakeRLabel("GIS Data Directory:"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,
@@ -1186,7 +1250,7 @@ class DatabasePage(TitledPage):
                        wx.ALL, 5,
                        row=1, col=4)
         #
-        self.sizer.Add(self.MakeLabel("Project Location"), 0,
+        self.sizer.Add(self.MakeRLabel("Project Location"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,
@@ -1196,7 +1260,7 @@ class DatabasePage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,
                        row=2, col=3)
-        self.sizer.Add(self.MakeLabel("(projection/coordinate system)"), 0,
+        self.sizer.Add(self.MakeRLabel("(projection/coordinate system)"), 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5,
@@ -1343,35 +1407,54 @@ class GWizard:
         """
         Create a new Lat/Long location
         """
-        projection = self.projpage.tproj.GetValue()
-        datum = self.datumpage.tdatum.GetValue()
-        transform = self.datumpage.ttrans.GetValue()
+        datum = self.datumpage.datum
+        datumname = self.datumpage.datumname
+        ellipsoid = self.datumpage.ellipsoid
+        datumparams = self.datumpage.datumparams
+        transform = self.datumpage.transform
+        transcountry = self.datumpage.transcountry
+        transdesc = self.datumpage.transdesc
+        transparams = self.datumpage.transparams
 
-        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
-                      (projection, datum, transform))
+        wx.MessageBox('Not implemented: Create input for g.proj from \nlatitude/longitude \n%s: %s %s \n%s: %s' %
+                      (datum, datumname, ellipsoid, transform, transdesc))
 
     def UTMCreate(self):
         """
         Create a new UTM location
         """
-        projection = self.projpage.tproj.GetValue()
-        datum = self.datumpage.tdatum.GetValue()
-        transform = self.datumpage.ttrans.GetValue()
+        utm = self.utmpage.utm
+        zone = self.utmpage.zone
+        utmhemisphere = self.utmpage.utmhemisphere
+        datum = self.datumpage.datum
+        datumname = self.datumpage.datumname
+        ellipsoid = self.datumpage.ellipsoid
+        datumparams = self.datumpage.datumparams
+        transform = self.datumpage.transform
+        transcountry = self.datumpage.transcountry
+        transdesc = self.datumpage.transdesc
+        transparams = self.datumpage.transparams
 
-
-        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
-                      (projection, datum, transform))
+        wx.MessageBox('Not implemented: Create input for g.proj from \n%s: %s%s \n%s: %s %s \n%s: %s' %
+                      (utm, zone, utmhemisphere, datum, datumname, ellipsoid, transform, transdesc))
 
     def CustomCreate(self):
         """
         Create a new custom-defined location
         """
-        projection = self.projpage.tproj.GetValue()
-        datum = self.datumpage.tdatum.GetValue()
-        transform = self.datumpage.ttrans.GetValue()
+        projection = self.projpage.projname
+        projdesc = self.projpage.projdesc
+        datum = self.datumpage.datum
+        datumname = self.datumpage.datumname
+        ellipsoid = self.datumpage.ellipsoid
+        datumparams = self.datumpage.datumparams
+        transform = self.datumpage.transform
+        transcountry = self.datumpage.transcountry
+        transdesc = self.datumpage.transdesc
+        transparams = self.datumpage.transparams
 
-        wx.MessageBox('Not implemented: Create input for g.proj from \n%s \n%s \n%s' %
-                      (projection, datum, transform))
+        wx.MessageBox('Not implemented: Create input for g.proj from \n%s: %s \n%s: %s %s \n%s: %s' %
+                      (projection, projdesc, datum, datumname, ellipsoid, transform, transdesc))
 
     def EPSGCreate(self):
         """
