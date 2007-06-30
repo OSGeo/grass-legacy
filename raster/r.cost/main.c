@@ -295,7 +295,7 @@ int main(int argc, char *argv[])
     if (opt7->answer) {
 	search_mapset = G_find_vector(opt7->answer, "");
 	if (search_mapset == NULL)
-	    G_fatal_error(_("Cannot find vector map [%s]"), opt7->answer);
+	    G_fatal_error(_("Vector map <%s> not found"), opt7->answer);
     }
 
     if (!G_is_d_null_value(&null_cost)) {

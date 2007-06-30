@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 
     /* Open input */
     if ((mapset = G_find_vector2(parm.in->answer, "")) == NULL) {
-	G_fatal_error(_("Cannot not find input vector map <%s>"), parm.in->answer);
+	G_fatal_error(_("Vector map <%s> not found"), parm.in->answer);
     }
     Vect_set_open_level(2);
     Vect_open_old(&In, parm.in->answer, mapset);
