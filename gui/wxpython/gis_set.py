@@ -613,6 +613,7 @@ class GRASSStartup(wx.Frame):
         import location_wizard
         reload(location_wizard)
         gWizard = location_wizard.GWizard(self,   self.tgisdbase.GetValue())
+        self.OnSetDatabase(event)
 
 
     def UpdateLocations(self,dbase):
