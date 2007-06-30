@@ -15,7 +15,6 @@ sys.path.append(gmpath)
 import gui_modules.cmd as cmd
 
 global coordsys
-global epsgcode
 global georeffile
 global datum
 global transform
@@ -28,7 +27,6 @@ global resolution
 global wizerror
 
 coordsys = ''
-epsgcode = ''
 georeffile = ''
 datum = ''
 transform = ''
@@ -924,6 +922,8 @@ class EPSGPage(TitledPage):
         epsgdir = os.path.join(os.environ["GRASS_PROJSHARE"], 'epsg')
         self.tfile = wx.TextCtrl(self,-1, epsgdir, size=(200,-1))
         self.tcode = wx.TextCtrl(self,-1, "", size=(200,-1))
+        self.epsgdesc = ''
+        self.epsgcode = ''
 
         # buttons
         self.bbrowse = wx.Button(self, -1, "Browse...")
@@ -977,15 +977,13 @@ class EPSGPage(TitledPage):
         self.sizer.Add(self.epsgs, wx.ALIGN_LEFT|wx.EXPAND, 0, row=4, col=1, colspan=5)
 
         # events
-        wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
-        wx.EVT_BUTTON(self, self.bbcodes.GetId(), self.OnBrowseCodes)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowse, self.bbrowse)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseCodes, self.bbcodes)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.epsgs)
         self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChange)
 
     def onPageChange(self, event):
-        global epsgcode
-        epsgcode = self.tcode.GetValue()
         self.parent.bboxpage.SetPrev(self)
 
     def OnDoSearch(self,event):
@@ -995,8 +993,8 @@ class EPSGPage(TitledPage):
         for i in range(self.epsgs.GetItemCount()):
             listItem = self.epsgs.GetItem(i,1)
             if listItem.GetText().find(str) > -1:
-                epsgcode = self.epsgs.GetItem(i, 0)
-                self.tcode.SetValue(epsgcode.GetText())
+                self.epsgcode = self.epsgs.GetItem(i, 0)
+                self.tcode.SetValue(self.epsgcode.GetText())
                 break
 
         self.OnBrowseCodes(None,str)
@@ -1012,9 +1010,12 @@ class EPSGPage(TitledPage):
         dlg.Destroy()
 
     def OnItemSelected(self,event):
+        index = event.m_itemIndex
         item = event.GetItem()
-        #wx.MessageBox("item = %s" % (item.GetText()))
-        self.tcode.SetValue(str(item.GetText()))
+
+        self.epsgcode = item.GetText()
+        self.epsgdesc = self.epsgs.GetItem(index, 1).GetText()
+        self.tcode.SetValue(str(self.epsgcode))
 
     def OnBrowseCodes(self,event,search=None):
         try:
@@ -1059,14 +1060,6 @@ class EPSGPage(TitledPage):
                                    "Could not read file",  wx.OK|wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
-
-    def OnChange(self,event):
-        self.item =  event.GetItem()
-
-    def OnDoubleClick(self, event):
-        print self.epsgs.GetValue()
-        pass
-
 
 class CoordinateSystemPage(TitledPage):
     def __init__(self, wizard, parent):
@@ -1372,7 +1365,8 @@ class GWizard:
         """
         Create a new location from an EPSG code.
         """
-        global epsgcode
+        epsgcode = self.epsgpage.epsgcode
+        epsgdesc = self.epsgpage.epsgdesc
         location = self.startpage.tlocation.GetValue()
         cmdlist = []
 
@@ -1383,8 +1377,9 @@ class GWizard:
             dlg.Destroy()
             return False
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to EPSG code %s"\
-                               % (location, epsgcode), "Create new location from EPSG code?",
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to \
+                               EPSG code %s: %s" % (location, epsgcode, epsgdesc),
+                               "Create new location from EPSG code?",
                                wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
             dlg.Destroy()
