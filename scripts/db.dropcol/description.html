@@ -1,0 +1,29 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.dropcol</em> drops a column from an attribute table.
+
+<h2>NOTES</h2>
+
+<em>db.dropcol</em> is a front-end to <em>db.execute</em> to allow easier
+usage with a special workaround for the SQLite driver to support column
+drop.
+
+<h2>EXAMPLES</h2>
+
+Dropping a column:<br>
+<div class="code"><pre>
+db.dropcol sentiero_brenta_points column=slope
+db.describe -c sentiero_brenta_points
+</pre></div>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="db.execute.html">db.execute</a></em>,
+<em><a HREF="v.db.dropcol.html">v.db.dropcol</a></em>
+
+
+<h2>AUTHOR</h2>
+
+Markus Neteler
+
+<p><i>Last changed: $Date$</i>
