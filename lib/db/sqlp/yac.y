@@ -102,6 +102,7 @@ y_sql:
 	|	y_select
 	|	y_update
 	|	y_delete
+	|	y_sql ';'
 	;
 	
 y_alter:
