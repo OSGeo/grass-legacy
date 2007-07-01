@@ -157,7 +157,10 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	    case SQLITE_FLOAT:
 	    	value->d = sqlite3_column_double ( c->statement, col);
 		break;
-		
+
+	    case SQLITE_NULL:
+		/* do nothing  ? */
+		break;
 	}
     }
 

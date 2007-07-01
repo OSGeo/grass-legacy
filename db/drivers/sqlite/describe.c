@@ -228,6 +228,10 @@ void get_column_info ( sqlite3_stmt *statement, int col,
 	case SQLITE_FLOAT:
 	    *sqltype = DB_SQL_TYPE_DOUBLE_PRECISION;
 	    break;
+
+	case SQLITE_NULL:
+	    *sqltype = DB_SQL_TYPE_TEXT; /* good choice? */
+	    break;
 	    
 	default:
 	    *sqltype = DB_SQL_TYPE_UNKNOWN;
