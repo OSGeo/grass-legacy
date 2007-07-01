@@ -88,13 +88,17 @@ fi
 maptable="`v.db.connect -g $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d' ' -f2`"
 
 # we use map DBMI settings
-COLLIST=`db.describe  -c driver=$driver database=$database table=$GIS_OPT_otable | grep -v 'ncols:' | cut -d':' -f2`
+COLLIST=`db.describe  -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f2`
 # heck, types may have white space
-COLTYPES="`db.describe -c driver=$driver database=$database table=$GIS_OPT_otable | grep -v 'ncols:' | cut -d':' -f3 | tr -s ' ' '_'`"
+COLTYPES="`db.describe -c driver=$driver database=$database table=$GIS_OPT_otable | grep -v '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`"
 
 i=1
 for col in $COLLIST ; do
   v.db.addcol $GIS_OPT_MAP col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+  if [ $? -ne 0 ] ; then
+	g.message -e "Cannot continue."
+	exit 1
+  fi
   echo "UPDATE $maptable SET $col=(SELECT $col
         FROM $GIS_OPT_otable WHERE $GIS_OPT_otable.$GIS_OPT_ocolumn=$maptable.$GIS_OPT_column);" | db.execute
   i=`expr $i + 1`
