@@ -71,8 +71,7 @@
 %token OR
 %token NOT
 %token ALTER TABLE
-%token CREATE TABLE
-%token DROP TABLE
+%token CREATE
 %token NULL_VALUE
 %token VARCHAR
 %token INT
