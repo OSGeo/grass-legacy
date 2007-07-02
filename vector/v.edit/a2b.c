@@ -237,6 +237,8 @@ int do_close(struct Map_info *Map, int ltype,
 {
     int nlines, line, type, nlines_modified, newline;
     int npoints;
+    double *x, *y, *z;
+    double dist;
 
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -258,23 +260,23 @@ int do_close(struct Map_info *Map, int ltype,
 	if (!(type & ltype))
 	    continue;
 
-	if (thresh != 0.0) {
-	    npoints = Points -> n_points - 1;
-	    if (thresh < 0 ||
-		Vect_points_distance (Points -> x[npoints], Points -> y[npoints], Points -> z[npoints],
-				      Points -> x[0], Points -> y[0], Points -> z[0], WITHOUT_Z) <= thresh) {
-		Points -> x[npoints] = Points -> x[0];
-		Points -> y[npoints] = Points -> y[0];
-		Points -> z[npoints] = Points -> z[0];
+	npoints = Points -> n_points - 1;
+	x = Points -> x;
+	y = Points -> y;
+	z = Points -> z;
 
-		newline = Vect_rewrite_line (Map, line, type, Points, Cats);
-		if (newline < 0)  {
-		    G_warning(_("Cannot rewrite line [%d]"), line);
-		    return -1;
-		}
+	dist = Vect_points_distance (x[npoints], y[npoints], z[npoints],
+				     x[0], y[0], z[0], WITHOUT_Z);
 
-		nlines_modified++;
+	if (dist > 0 && (thresh < 0.0 || dist <= thresh)) {
+	    Vect_append_point (Points, x[0], y[0], z[0]); 
+	    
+	    newline = Vect_rewrite_line (Map, line, type, Points, Cats);
+	    if (newline < 0)  {
+		G_warning(_("Cannot rewrite line [%d]"), line);
+		return -1;
 	    }
+	    nlines_modified++;
 	}
     }
 
