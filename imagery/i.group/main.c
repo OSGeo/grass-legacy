@@ -174,7 +174,7 @@ static int add_or_update_group(char group[INAME_LEN], char **rasters, int k)
     for (m = 0; m < k; m++) {
 	skip = 0;
 	if ((mapset = G_find_cell(rasters[m], "")) == NULL)
-	    G_fatal_error(_("Unable to find raster [%s]."), rasters[m]);
+	    G_fatal_error(_("Raster map <%s> not found"), rasters[m]);
 
 	G_message(_("Adding raster map [%s]"), rasters[m]);
 
@@ -212,7 +212,7 @@ static int add_or_update_subgroup(char group[INAME_LEN],
     for (m = 0; m < k; m++) {
 	skip = 0;
 	if ((mapset = G_find_cell(rasters[m], "")) == NULL)
-	    G_fatal_error(_("Unable to find raster [%s]."), rasters[m]);
+	    G_fatal_error(_("Raster map <%s> not found"), rasters[m]);
 
 	G_message(_("Adding raster map [%s]"), rasters[m]);
 

@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("vector, import");
 	module->description =
-	    _("Create a vector map from ASCII points file or ASCII vector file.");
+	    _("Creates a vector map from ASCII points file or ASCII vector file.");
 
         /************************** Command Parser ************************************/
 	old = G_define_standard_option (G_OPT_F_INPUT);
@@ -196,7 +196,7 @@ main (int argc, char *argv[])
 	if ( old->answer != NULL ) {
 	    if ( (ascii = fopen ( old->answer, "r" ) ) == NULL )
 	    {
-	        G_fatal_error(_("Could not open ascii file <%s>"), old->answer);
+	        G_fatal_error(_("Could not open ASCII file <%s>"), old->answer);
 	    }
         } else {
 	    ascii = stdin;
@@ -234,7 +234,7 @@ main (int argc, char *argv[])
 	    /* Open temporary file */
 	    tmp = G_tempfile();
 	    if (NULL == (tmpascii = fopen(tmp, "w+"))) {
-		G_fatal_error(_("Could not open temp file <%s>"), tmp);
+		G_fatal_error(_("Unable to open temporary file <%s>"), tmp);
 	    }
 	    unlink(tmp);
 
@@ -468,7 +468,7 @@ main (int argc, char *argv[])
 			    coltype2, xcol, ycol, zcol, catcol, skip_lines );
 
 	    if ( driver ) {
-		G_message(_("Populating table ..."));
+		G_message(_("Populating table..."));
 	        db_commit_transaction ( driver );
 	        db_close_database_shutdown_driver ( driver );
 	    }

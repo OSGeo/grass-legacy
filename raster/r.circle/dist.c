@@ -52,7 +52,7 @@ int main(
     module->keywords = _("raster");
     module->description =
 		_("Creates a raster map containing concentric "
-		"rings around a given point");
+		"rings around a given point.");
 
     out_file = G_define_standard_option(G_OPT_R_OUTPUT);
 
