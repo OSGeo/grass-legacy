@@ -167,7 +167,7 @@ class DigitToolbar(AbstractToolbar):
         self.layerSelectedID    = None
         self.layers     = []
         # action (digitize new point, line, etc.
-        self.action     = "add"
+        self.action     = "addLine"
         self.type       = "point"
         self.addString  = ""
 
@@ -259,29 +259,29 @@ class DigitToolbar(AbstractToolbar):
 
     def OnAddPoint(self, event):
         """Add point to the vector map layer"""
-        Debug.msg (3, "DigitToolbar.OnAddPoint()")
-        self.action = "add"
+        Debug.msg (4, "DigitToolbar.OnAddPoint()")
+        self.action = "addLine"
         self.type   = "point"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddLine(self, event):
         """Add line to the vector map layer"""
-        Debug.msg (3, "DigitToolbar.OnAddLine()")
-        self.action = "add"
+        Debug.msg (4, "DigitToolbar.OnAddLine()")
+        self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
         
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
-        Debug.msg (3, "DigitToolbar.OnAddBoundary()")
-        self.action = "add"
+        Debug.msg (4, "DigitToolbar.OnAddBoundary()")
+        self.action = "addLine"
         self.type   = "boundary"
         self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnAddCentroid(self, event):
         """Add centroid to the vector map layer"""
-        Debug.msg (3, "DigitToolbar.OnAddCentroid()")
-        self.action = "add"
+        Debug.msg (4, "DigitToolbar.OnAddCentroid()")
+        self.action = "addLine"
         self.type   = "centroid"
         self.parent.MapWindow.mouse['box'] = 'point'
 
@@ -317,13 +317,14 @@ class DigitToolbar(AbstractToolbar):
         pass
 
     def OnDeleteLine(self, event):
-        pass
+        self.action = "deleteLine"
+        Debug.msg(4, "Digittoolbar.OnDeleteLine():")
 
     def OnDisplayCats(self, event):
         pass
 
     def OnDisplayAttr(self, event):
-        self.action="dispAttr"
+        self.action="displayAttributes"
         Debug.msg(4, "Digittoolbar.OnDisplayAttr():")
 
     def OnCopyCats(self, event):

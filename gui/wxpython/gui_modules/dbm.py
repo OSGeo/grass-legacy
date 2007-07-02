@@ -28,7 +28,10 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
-import sys, os, locale, string
+import sys
+import os
+import locale
+import string
 
 import wx
 import wx.lib.mixins.listctrl as listmix
@@ -36,13 +39,6 @@ import wx.lib.mixins.listctrl as listmix
 import grassenv
 import cmd
 from debug import Debug as Debug
-
-try:
-    import subprocess
-except:
-    gmpath = os.path.join(os.getenv("GISBASE"), "etc/wx")
-    sys.path.append(gmpath)
-    from compat import subprocess
 
 class Log:
     """
@@ -640,7 +636,7 @@ class DisplayAttributesDialog(wx.Dialog):
                     self.layer != layer:
                 continue
 
-            selected = self.mapInfo.SelectFromTable(layer, self.cat, self.queryCoords, self.qdist)
+            found, selected = self.mapInfo.SelectFromTable(layer, self.cat, self.queryCoords, self.qdist)
             if (self.action == "add" and selected > 0) or \
                    self.action == "update":
                 self.SetTitle(_("Update attributes"))
@@ -649,8 +645,8 @@ class DisplayAttributesDialog(wx.Dialog):
             else:
                 self.SetTitle(_("Display attributes"))
                 
-            if (self.action == "display" or self.action == "update") and \
-                   selected == 0:
+            if not found or \
+                   (self.action != "add" and selected == 0):
                 continue
             
             panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
@@ -725,6 +721,7 @@ class DisplayAttributesDialog(wx.Dialog):
         mainSizer.Fit(self)
 
         if notebook.GetPageCount() == 0:
+            Debug.msg(4, "DisplayAttributesDialog(): Nothing found!")
             self.mapInfo = None
         
     def __SelectAttributes(self, layer):
@@ -866,6 +863,7 @@ class VectorAttributesInfo:
         """
         table = self.layers[layer]["table"]
         selected = 0
+        found = False
         if queryCoords:
             # snapping distance
             cmdWhat = cmd.Command(cmd=['v.what',
@@ -878,6 +876,7 @@ class VectorAttributesInfo:
             if cmdWhat.returncode == 0:
                 read = False
                 for item in cmdWhat.ReadStdOutput():
+                    found = True
                     if read:
                         name, value = item.split(':')
                         name = name.strip()
@@ -888,6 +887,7 @@ class VectorAttributesInfo:
                     elif "key column" in item.lower():
                         read = True
         else:
+            found = True
             # select values
             selectCommand = cmd.Command(cmd=["v.db.select", "-v", "--q",
                                              "map=%s" % self.map,
@@ -900,7 +900,7 @@ class VectorAttributesInfo:
                     self.tables[table][name][1] = value
                     selected+=1
 
-        return selected
+        return (found, selected)
 
 def main(argv=None):
     if argv is None:

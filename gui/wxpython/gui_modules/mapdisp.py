@@ -719,7 +719,7 @@ class BufferedWindow(wx.Window):
             posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
                                              self.mouse['begin'][1] + offset))
                     
-            if digit.action == "add":
+            if digit.action == "addLine":
                 if digit.type in ["point", "centroid"]:
                     # add new point
                     self.DrawCross(self.mouse['begin'], 5)
@@ -751,7 +751,11 @@ class BufferedWindow(wx.Window):
                     self.polycoords.append(event.GetPositionTuple()[:])
                     self.mouse['begin'] = self.polycoords[-1]
                     self.DrawLines()
-            elif digit.action == "dispAttr":
+            elif digit.action == "deleteLine":
+                # delete selected feature
+                digit.DeleteLine(map=map,
+                                 east, north)
+            elif digit.action == "displayAttributes":
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
                 # select attributes based on coordinates (all layers)
                 updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
@@ -907,7 +911,7 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.OnRightUp(): use=%s" % \
                    self.mouse["use"])
 
-        if self.parent.digittoolbar and self.parent.digittoolbar.action == "add":
+        if self.parent.digittoolbar and self.parent.digittoolbar.action == "addLine":
             digit = self.parent.digittoolbar
             if digit.type in ["line", "boundary"]:
                 try:
@@ -941,7 +945,7 @@ class BufferedWindow(wx.Window):
                                                                    layer=Digit.settings["layer"],
                                                                    cat=Digit.settings["category"],
                                                                    pos=posWindow,
-                                                                   action="add")
+                                                                   action="addLine")
                         if addRecordDlg.mapInfo and \
                                addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
@@ -965,7 +969,7 @@ class BufferedWindow(wx.Window):
         digit = self.parent.digittoolbar
         if self.mouse["use"] == "pointer" and \
                 digit and \
-                digit.action == 'add' and \
+                digit.action == "addLine" and \
                 digit.type in ["line", "boundary"]:
             self.mouse['end'] = event.GetPositionTuple()[:]
             Debug.msg (5, "BufferedWindow.OnMouseMoving(): coords=%f,%f" % \
@@ -981,7 +985,7 @@ class BufferedWindow(wx.Window):
         digit = self.parent.digittoolbar
         if self.mouse["use"] == "pointer" and \
                 digit and \
-                digit.action == 'add' and \
+                digit.action == "addLine" and \
                 digit.type in ["line", "boundary"]:
             # remove last point from the line
             self.polycoords.pop()
