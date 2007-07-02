@@ -40,7 +40,7 @@ import wx.lib.flatnotebook as FN
 try:
     import subprocess
 except:
-    from compat import subprocess
+    import compat.subprocess as subprocess
 
 import gui_modules
 gmpath = gui_modules.__path__[0]

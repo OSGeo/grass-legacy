@@ -158,8 +158,9 @@ class VEdit(AbstractDigit):
 
         addstring += "%d %d" % (layer, cat)
 
-        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s" % \
-                   (map, type))
+        Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
+                   (key, layer, cat, coords))
+        Debug.msg (4, "Vline.AddLine(): input=%s" % addstring)
 
         self._AddFeature (map=map, input=addstring)
 
@@ -167,7 +168,10 @@ class VEdit(AbstractDigit):
         """
         General method which adds feature to the vector map
         """
-        command = ["v.edit", "-n", "map=%s" % map, "tool=add"]
+        command = ["v.edit", "-n", "--q",
+                   "map=%s" % map,
+                   "tool=add",
+                   "thresh=-1.0" ]
 
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
