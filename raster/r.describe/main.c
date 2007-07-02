@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
 	option.nv->required	= NO ;
 	option.nv->multiple	= NO ;
 	option.nv->answer	= "*" ;
-	option.nv->description	= _("string representing no data cell value");
+	option.nv->description	= _("String representing no data cell value");
 
         option.nsteps = G_define_option() ;
         option.nsteps->key          = "nsteps" ;
@@ -75,7 +75,7 @@ int main (int argc, char *argv[])
         option.nsteps->required     = NO ;
         option.nsteps->multiple     = NO ;
         option.nsteps->answer       = "255" ;
-        option.nsteps->description  = _("number of quantization steps");
+        option.nsteps->description  = _("Number of quantization steps");
 
 	/*define the different flags */
 
