@@ -10,7 +10,7 @@
 #include "local_proto.h"
 
 
-int plot_grid (double grid_size, double east, double north, int do_text, int fontsize)
+int plot_grid (double grid_size, double east, double north, int do_text, int gcolor, int tcolor, int fontsize)
 {
 	double x,y;
 	double e1,e2;
@@ -39,9 +39,11 @@ int plot_grid (double grid_size, double east, double north, int do_text, int fon
 
 	while (x <= window.east)
 	{
+		D_raster_use_color(gcolor);
 		G_plot_line (x, window.north, x, window.south);
 
 		if(do_text) {
+		    D_raster_use_color(tcolor);
 		    G_format_easting(x, text, G_projection());
 		    R_text_rotation(270.0);
 		    R_text_size(fontsize, fontsize);
@@ -77,11 +79,13 @@ int plot_grid (double grid_size, double east, double north, int do_text, int fon
 
 	while (y <= window.north)
 	{
+		D_raster_use_color(gcolor);
 		G_plot_line (window.east, y, e1, y);
 		G_plot_line (e1, y, e2, y);
 		G_plot_line (e2, y, window.west, y);
 
 		if(do_text) {
+		    D_raster_use_color(tcolor);
 		    G_format_northing(y, text, G_projection());
 		    R_text_size(fontsize, fontsize);
 
@@ -103,21 +107,21 @@ int plot_grid (double grid_size, double east, double north, int do_text, int fon
 
 
 int plot_geogrid(double size, struct pj_info info_in, struct pj_info info_out,
-		 int do_text, int fontsize)
+		 int do_text, int gcolor, int tcolor, int fontsize)
 {
-double g;
-double e1, e2, n1, n2;
-double east, west, north, south;
-double start_coord;
-double lat, lon;
-int j, ll;
-int SEGS=100;
-char text[128];
-float border_off = 4.5;
-float grid_off = 3.;
-double row_dist, colm_dist;
-float font_angle;
-struct Cell_head window ;
+	double g;
+	double e1, e2, n1, n2;
+	double east, west, north, south;
+	double start_coord;
+	double lat, lon;
+	int j, ll;
+	int SEGS=100;
+	char text[128];
+	float border_off = 4.5;
+	float grid_off = 3.;
+	double row_dist, colm_dist;
+	float font_angle;
+	struct Cell_head window ;
 
 	/* geo current region */
 	G_get_set_window (&window);
@@ -146,35 +150,45 @@ struct Cell_head window ;
     {
 	start_coord = -9999.;
         if (g == north || g == south) continue;
+
+	/* Set grid color */
+	D_raster_use_color(gcolor);
+
         for (ll = 0; ll < SEGS; ll++) {
                 n1 = n2 = g;
                 e1 = west + (ll *((east - west)/SEGS));
                 e2 = e1 + ((east - west)/SEGS);
-                        if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-                                G_fatal_error( _("Error in pj_do_proj"));
-			check_coords(e1, n1, &lon, &lat, 1, window, info_in, info_out);
-                        e1 = lon;
-                        n1 = lat;
-                        if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-                                G_fatal_error( _("Error in pj_do_proj"));
-			check_coords(e2, n2, &lon, &lat, 1, window, info_in, info_out);
-                        e2 = lon;
-                        n2 = lat;
-			if (start_coord == -9999.)
-			{
-				start_coord = n1;
-				font_angle = get_heading( (e1-e2), (n1-n2) );
-			}
-			G_plot_line(e1, n1, e2, n2);
-	}
-	if(do_text) {
-		    G_format_northing(g, text, PROJECTION_LL);
-		    R_text_rotation(font_angle);
-		    R_text_size(fontsize, fontsize);
-		    R_move_abs( (int)(D_get_d_west() + border_off), 
-				    (int)(D_u_to_d_row(start_coord) - grid_off) );
-		    R_text(text);
+		if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
+		    G_fatal_error( _("Error in pj_do_proj"));
+
+		check_coords(e1, n1, &lon, &lat, 1, window, info_in, info_out);
+		e1 = lon;
+		n1 = lat;
+		if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
+		    G_fatal_error( _("Error in pj_do_proj"));
+
+		check_coords(e2, n2, &lon, &lat, 1, window, info_in, info_out);
+		e2 = lon;
+		n2 = lat;
+		if (start_coord == -9999.)
+		{
+		    start_coord = n1;
+		    font_angle = get_heading( (e1-e2), (n1-n2) );
 		}
+		G_plot_line(e1, n1, e2, n2);
+	}
+
+	if(do_text) {
+	    /* Set text color */
+	    D_raster_use_color(tcolor);
+
+	    G_format_northing(g, text, PROJECTION_LL);
+	    R_text_rotation(font_angle);
+	    R_text_size(fontsize, fontsize);
+	    R_move_abs( (int)(D_get_d_west() + border_off), 
+			(int)(D_u_to_d_row(start_coord) - grid_off) );
+	    R_text(text);
+	}
     }
 
     /* Lines of Longitude */
@@ -184,6 +198,10 @@ struct Cell_head window ;
     {
 	start_coord = -9999.;
         if (g == east || g == west) continue;
+
+	/* Set grid color */
+	D_raster_use_color(gcolor);
+
         for (ll = 0; ll < SEGS; ll++) {
                 e1 = e2 = g;
 		n1 = north - (ll *((north - south)/SEGS));
@@ -192,32 +210,38 @@ struct Cell_head window ;
                 n1 = south + (ll *((north - south)/SEGS));
                 n2 = n1 + ((north - south)/SEGS);
 		*/
-                        if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
-                        G_fatal_error( _("Error in pj_do_proj"));
-                        check_coords(e1, n1, &lon, &lat, 2, window, info_in, info_out);
-                        e1 = lon;
-                        n1 = lat;
-                        if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
-                        G_fatal_error( _("Error in pj_do_proj"));
-                        check_coords(e2, n2, &lon, &lat, 2, window, info_in, info_out);
-                        e2 = lon;
-                        n2 = lat;
-			if (start_coord == -9999.)
-			{
-				font_angle = get_heading( (e1-e2), (n1-n2) );
-				start_coord = e1;
-			}
-                        G_plot_line(e1, n1, e2, n2);
+	    if (pj_do_proj(&e1, &n1, &info_in, &info_out) <0)
+		G_fatal_error( _("Error in pj_do_proj"));
 
+	    check_coords(e1, n1, &lon, &lat, 2, window, info_in, info_out);
+	    e1 = lon;
+	    n1 = lat;
+	    if (pj_do_proj(&e2, &n2, &info_in, &info_out) <0)
+		G_fatal_error( _("Error in pj_do_proj"));
+
+	    check_coords(e2, n2, &lon, &lat, 2, window, info_in, info_out);
+	    e2 = lon;
+	    n2 = lat;
+
+	    if (start_coord == -9999.)
+	    {
+		font_angle = get_heading( (e1-e2), (n1-n2) );
+		start_coord = e1;
+	    }
+
+	    G_plot_line(e1, n1, e2, n2);
 	}
 	if(do_text) {
-		    G_format_easting(g, text, PROJECTION_LL);
-		    R_text_rotation(font_angle);
-		    R_text_size(fontsize, fontsize);
-		    R_move_abs((int)(D_u_to_d_col(start_coord) + grid_off + 1.5), 
-		      (int)(D_get_d_north() + border_off));
-		    R_text(text);
-		}
+	    /* Set text color */
+	    D_raster_use_color(tcolor);
+
+	    G_format_easting(g, text, PROJECTION_LL);
+	    R_text_rotation(font_angle);
+	    R_text_size(fontsize, fontsize);
+	    R_move_abs((int)(D_u_to_d_col(start_coord) + grid_off + 1.5), 
+	      (int)(D_get_d_north() + border_off));
+	    R_text(text);
+	}
     }
 
     R_text_rotation(0.0); /* reset */

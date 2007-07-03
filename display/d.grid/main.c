@@ -34,11 +34,12 @@ main (int argc, char **argv)
 {
 	int colorg = 0;
 	int colorb = 0;
+	int colort = 0;
 	double size=0., gsize=0.; /* initialize to zero */
 	double east, north;
 	int do_text, fontsize;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3, *opt4, *fsize;
+	struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor;
 	struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
@@ -61,15 +62,6 @@ main (int argc, char **argv)
 	opt2->description= _("In map units or DDD:MM:SS format. "
 			     "Example: \"1000\" or \"0:10\"");
 
-	opt1 = G_define_option() ;
-	opt1->key        = "color" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = NO;
-	opt1->answer     = "gray" ;
-	opt1->description=
-	    _("Sets the grid color, either a standard GRASS color or R:G:B triplet (separated by colons)");
-	opt1->gisprompt  = GISPROMPT_COLOR ;
-	    
 	opt3 = G_define_option() ;
 	opt3->key        = "origin" ;
 	opt3->type       = TYPE_STRING ;
@@ -78,14 +70,18 @@ main (int argc, char **argv)
 	opt3->multiple   = NO;
 	opt3->description= _("Lines of the grid pass through this coordinate") ;
 
-	opt4 = G_define_option() ;
-	opt4->key        = "bordercolor" ;
-	opt4->type       = TYPE_STRING ;
-	opt4->required   = NO;
-	opt4->answer     = DEFAULT_FG_COLOR;
-	opt4->description=
-	    _("Sets the border color, either a standard GRASS color or R:G:B triplet");
-	opt4->gisprompt  = GISPROMPT_COLOR ;
+	opt1 = G_define_standard_option(G_OPT_C_FG);
+	opt1->answer = "gray";
+	opt1->label = _("Grid color");
+
+	opt4 = G_define_standard_option(G_OPT_C_FG);
+	opt4->key = "bordercolor";
+	opt4->label = _("Border color");
+
+	tcolor = G_define_standard_option(G_OPT_C_FG);
+	tcolor->key    = "textcolor";
+	tcolor->answer = "gray";
+	tcolor->label = _("Text color");
 
 	fsize = G_define_option();
 	fsize->key	  = "fontsize";
@@ -132,7 +128,7 @@ main (int argc, char **argv)
 		G_fatal_error(_("Geo-Grid option is not available for LL projection"));
 	if (geogrid->answer && G_projection() == PROJECTION_XY)
 		G_fatal_error(_("Geo-Grid option is not available for XY projection"));
-	
+
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
 
@@ -168,44 +164,39 @@ main (int argc, char **argv)
 	if (R_open_driver() != 0)
 		G_fatal_error (_("No graphics device selected"));
 
+
 	/* Parse and select grid color */
-	colorg = D_parse_color (opt1->answer, 0);	
-	
+	colorg = D_parse_color (opt1->answer, FALSE);	
 	/* Parse and select border color */
-	colorb = D_parse_color (opt4->answer, 0);
+	colorb = D_parse_color (opt4->answer, FALSE);
+	/* Parse and select text color */
+	colort = D_parse_color (tcolor->answer, FALSE);
+
 
 	D_setup(0);
 
 	/* draw grid */
 	if(!nogrid->answer)
 	{
-		/* Set grid color */
-		D_raster_use_color (colorg);
-
 		if (geogrid->answer)
 		{
 			/* initialzie proj stuff */
 			init_proj(&info_in, &info_out, wgs84->answer);
-			plot_geogrid(gsize, info_in, info_out, do_text, fontsize);
+			plot_geogrid(gsize, info_in, info_out, do_text, colorg, colort, fontsize);
 		} else {
 			/* Do the grid plotting */
-			plot_grid(size, east, north, do_text, fontsize);
+			plot_grid(size, east, north, do_text, colorg, colort, fontsize);
 		}
 	}
 
 	/* Draw border */
 	if(!noborder->answer)
 	{
-	    if (G_projection() == PROJECTION_LL)
-	  	G_warning(_("Border not yet implemented for LatLong locations: border not drawn."));
-	    else
-	    {
-		/* Set border color */
-		D_raster_use_color (colorb);
-	  
-		/* Do the border plotting */
-		plot_border(size, east, north) ;
-	    }
+	    /* Set border color */
+	    D_raster_use_color (colorb);
+
+	    /* Do the border plotting */
+	    plot_border(size, east, north) ;
 	}
 
 	D_add_to_list(G_recreate_command()) ;
