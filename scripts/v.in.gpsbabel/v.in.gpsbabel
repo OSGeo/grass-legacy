@@ -35,7 +35,7 @@
 #############################################################################
 
 #%Module
-#%  description: Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii file into a vector map.
+#%  description: Import waypoints, routes, and tracks from a GPS receiver or GPS download file into a vector map.
 #%  keywords: vector, import, GPS
 #%End
 #%flag
@@ -44,15 +44,15 @@
 #%end
 #%flag
 #%  key: w
-#%  description: Upload Waypoints from GPS
+#%  description: Import waypoints
 #%end
 #%flag
 #%  key: r
-#%  description: Upload Routes from GPS
+#%  description: Import routes
 #%end
 #%flag
 #%  key: t
-#%  description: Upload Track from GPS
+#%  description: Import track
 #%end
 #%flag
 #%  key: p
@@ -267,8 +267,9 @@ else
 	-o gpx -F "$TMP".gpx
     EXITCODE=$?
 
-    if [ "`grep -c '<rte>' "${TMP}.gpx"`" -eq 0 ] && \
-       [ "`grep -c '<trk>' "${TMP}.gpx"`" -eq 0 ]; then
+    if [ $EXITCODE -eq 0 ] && \
+       [ "`grep -c '<rte>' "${TMP}.gpx"`" -eq 0 ] && \
+       [ "`grep -c '<trk>' "${TMP}.gpx"`" -eq 0 ] ; then
 	echo 'ERROR No data! Exiting.' 1>&2
 	rm -f "${TMP}."*
 	exit 0
@@ -404,7 +405,7 @@ else # CREATE_LINES
 	    read R_NAME < "$TMP.var" # read the route name
 
 	    OFFSET="`expr $TO_READ - $OFFSET`"
-	    head -n$TO_READ "$TMP.gpx2" | tail -n$OFFSET | grep "<name" | head -n 1 | cut -f2 -d'<' | cut -f2 -d'>' > "$TMP.var"
+	    head -n $TO_READ "$TMP.gpx2" | tail -n $OFFSET | grep "<name" | head -n 1 | cut -f2 -d'<' | cut -f2 -d'>' > "$TMP.var"
 	    START_PNT=""
 	    read START_PNT < "$TMP.var" # read the name of start point
 
@@ -428,13 +429,13 @@ else # CREATE_LINES
 	    mv "$TMP.bytes2" "$TMP.bytes"
 	    head -n $TO_READ "$TMP.gpx2" > "$TMP.points"
 	    B_GPX=0
-	    stat -c%s "$TMP.gpx2" > "$TMP.var"
+	    wc -c < "$TMP.gpx2" > "$TMP.var"
 	    read B_GPX < "$TMP.var"
 	    B_PNT=0
-	    stat -c%s "$TMP.points" > "$TMP.var"
+	    wc -c < "$TMP.points" > "$TMP.var"
 	    read B_PNT < "$TMP.var"
 	    TO_READ="`expr $B_GPX - $B_PNT`"
-	    tail -c$TO_READ "$TMP.gpx2" > "$TMP.points"
+	    tail -c $TO_READ "$TMP.gpx2" > "$TMP.points"
 	    mv "$TMP.points" "$TMP.gpx2"
 	done
 	# create attr table: cat(int), id number(int 0-19), name varchar(16+), starting_wpt(varchar 10)
@@ -531,15 +532,15 @@ else # CREATE_LINES
 	    mv "$TMP.bytes2" "$TMP.bytes"
 	    head -n $TO_READ "$TMP.gpx2" > "$TMP.points"
 	    B_GPX=0
-	    stat -c%s "$TMP.gpx2" > "$TMP.var"
+	    wc -c < "$TMP.gpx2" > "$TMP.var"
 	    read B_GPX < "$TMP.var"
 	    B_PNT=0
-	    stat -c%s "$TMP.points" > "$TMP.var"
+	    wc -c < "$TMP.points" > "$TMP.var"
 	    read B_PNT < "$TMP.var"
 
 	    TO_READ="`expr $B_GPX - $B_PNT`"
 	    
-	    tail -c$TO_READ "$TMP.gpx2" > "$TMP.points"
+	    tail -c $TO_READ "$TMP.gpx2" > "$TMP.points"
 	    mv "$TMP.points" "$TMP.gpx2"
 	done
 
