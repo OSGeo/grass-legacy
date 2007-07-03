@@ -13,23 +13,23 @@ r.mapcalc "phead=50"
 r.mapcalc "status=if(col() == 1 || col() == 7 , 2, 1)"
 r.mapcalc "well=if((row() == 4 && col() == 4), -0.1, 0)"
 r.mapcalc "hydcond=0.0005"
-r.mapcalc "reacharge=0"
+r.mapcalc "recharge=0"
 r.mapcalc "top_conf=20"
 r.mapcalc "bottom=0"
 r.mapcalc "syield=0.0001"
 r.mapcalc "null=0.0"
 
 #First compute the steady state groundwater flow
-r.gwflow --o solver=gauss top=top_conf bottom=bottom phead=phead\
+r.gwflow --o solver=cholesky top=top_conf bottom=bottom phead=phead\
  status=status hc_x=hydcond hc_y=hydcond q=well s=syield\
- r=reacharge output=gwresult_conf dt=500 type=confined 
+ r=recharge output=gwresult_conf dt=500 type=confined 
 
 count=500
 
 while [ `expr $count \< 10000` -eq 1 ] ; do
-  r.gwflow --o solver=gauss top=top_conf bottom=bottom phead=gwresult_conf\
+  r.gwflow --o solver=cholesky top=top_conf bottom=bottom phead=gwresult_conf\
      status=status hc_x=hydcond hc_y=hydcond q=well s=syield\
-     r=reacharge output=gwresult_conf dt=500 type=confined
+     r=recharge output=gwresult_conf dt=500 type=confined
   count=`expr $count + 500`
 done
 
