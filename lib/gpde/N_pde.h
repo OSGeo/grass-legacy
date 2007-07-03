@@ -22,13 +22,21 @@
 #ifndef _N_PDE_H_
 #define _N_PDE_H_
 
+/*solver names*/
 #define N_SOLVER_DIRECT_GAUSS "gauss"
 #define N_SOLVER_DIRECT_LU "lu"
+#define N_SOLVER_DIRECT_CHOLESKY "cholesky"
 #define N_SOLVER_ITERATIVE_JACOBI "jacobi"
 #define N_SOLVER_ITERATIVE_SOR "sor"
 #define N_SOLVER_ITERATIVE_CG "cg"
 #define N_SOLVER_ITERATIVE_PCG "pcg"
 #define N_SOLVER_ITERATIVE_BICGSTAB "bicgstab"
+
+/*preconditioner*/
+#define N_DIAGONAL_PRECONDITION 1
+#define N_ROWSCALE_ABSSUMNORM_PRECONDITION 2
+#define N_ROWSCALE_EUKLIDNORM_PRECONDITION 3
+#define N_ROWSCALE_MAXNORM_PRECONDITION 4
 
 #define N_NORMAL_LES 0
 #define N_SPARSE_LES 1
@@ -145,14 +153,15 @@ extern double N_get_geom_data_area_of_cell(N_geom_data * geom, int row);
 /* *************************************************************** */
 extern int N_solver_gauss(N_les * les);
 extern int N_solver_lu(N_les * les);
+extern int N_solver_cholesky(N_les * les);
 extern int N_solver_jacobi(N_les * L, int maxit, double sor, double error);
 extern int N_solver_SOR(N_les * L, int maxit, double sor, double error);
 extern int N_solver_cg(N_les * les, int maxit, double error);
-extern int N_solver_pcg(N_les * les, int maxit, double error);
+extern int N_solver_pcg(N_les * les, int maxit, double error, int prec);
 extern int N_solver_bicgstab(N_les * les, int maxit, double error);
 extern void N_matrix_vector_product(N_les * les, double *source, double *result);
 extern void N_sparse_matrix_vector_product(N_les * les, double *source, double *result);
-extern N_les* N_create_diag_precond_matrix(N_les *les);
+extern N_les* N_create_diag_precond_matrix(N_les *les, int prec);
 
 /* *************************************************************** */
 /* *************** READING RASTER AND VOLUME DATA **************** */

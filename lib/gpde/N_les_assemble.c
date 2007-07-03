@@ -559,7 +559,7 @@ N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
     N_array_2d *cell_count;
     N_les *les = NULL;
 
-    G_debug(2, "N_assemble_les_2d: assemble the linear equation system");
+    G_debug(2, "N_assemble_les_2d: starting to assemble the linear equation system");
 
     /* At first count the number of valid cells and save the 
      * each number in a new 2d array. Those numbers are used 
@@ -636,6 +636,8 @@ N_les *N_assemble_les_2d_param(int les_type, N_geom_data * geom,
 	    }
 	}
     }
+
+    G_debug(2, "N_assemble_les_2d: starting the parallel assemble loop");
 
     /* Assemble the matrix in parallel */
 #pragma omp parallel for private(i, j, pos, count) schedule(static)
@@ -778,6 +780,8 @@ int N_les_integrate_dirichlet_2d(N_les * les, N_geom_data * geom,
     int i, j, x, y, stat;
     double *dvect1;
     double *dvect2;
+
+    G_debug(2, "N_les_integrate_dirichlet_2d: integrating the dirichlet boundary condition");
 
     rows = geom->rows;
     cols = geom->cols;
@@ -1002,7 +1006,7 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
     N_les *les = NULL;
     int **index_ij;
 
-    G_debug(2, "N_assemble_les_3d: assemble the linear equation system");
+    G_debug(2, "N_assemble_les_3d: starting to assemble the linear equation system");
 
     cell_count =
 	N_alloc_array_3d(geom->cols, geom->rows, geom->depths, 1, DCELL_TYPE);
@@ -1089,6 +1093,8 @@ N_les *N_assemble_les_3d_param(int les_type, N_geom_data * geom,
 	    }
 	}
     }
+
+    G_debug(2, "N_assemble_les_3d: starting the parallel assemble loop");
 
 #pragma omp parallel for private(i, j, k, pos, count) schedule(static)
     for (count = 0; count < cell_type_count; count++) {
@@ -1218,6 +1224,8 @@ int N_les_integrate_dirichlet_3d(N_les * les, N_geom_data * geom,
     int i, j, x, y, z, stat;
     double *dvect1;
     double *dvect2;
+
+    G_debug(2, "N_les_integrate_dirichlet_3d: integrating the dirichlet boundary condition");
 
     rows = geom->rows;
     cols = geom->cols;

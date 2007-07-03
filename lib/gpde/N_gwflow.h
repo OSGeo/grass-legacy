@@ -35,7 +35,7 @@ typedef struct
   N_array_3d *hc_y;		/*!y part of the hydraulic conductivity tensor */
   N_array_3d *hc_z;		/*!z part of the hydraulic conductivity tensor */
   N_array_3d *q;		/*!sources and sinks */
-  N_array_2d *r;		/*!reacharge at the top of the gw leayer */
+  N_array_2d *r;		/*!recharge at the top of the gw leayer */
   N_array_3d *s;		/*!specific yield */
   N_array_3d *nf;		/*!effective porosity */
 
@@ -56,7 +56,7 @@ typedef struct
   N_array_2d *hc_x;		/*!x part of the hydraulic conductivity tensor */
   N_array_2d *hc_y;		/*!y part of the hydraulic conductivity tensor */
   N_array_2d *q;		/*!sources and sinks */
-  N_array_2d *r;		/*!reacharge at the top of the gw leayer */
+  N_array_2d *r;		/*!recharge at the top of the gw leayer */
   N_array_2d *s;		/*!specific yield */
   N_array_2d *nf;		/*!effective porosity */
 
