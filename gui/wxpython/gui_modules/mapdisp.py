@@ -753,8 +753,9 @@ class BufferedWindow(wx.Window):
                     self.DrawLines()
             elif digit.action == "deleteLine":
                 # delete selected feature
-                digit.DeleteLine(map=map,
-                                 east, north)
+                pass
+                #digit.DeleteLine(map=map,
+                #east, north)
             elif digit.action == "displayAttributes":
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
                 # select attributes based on coordinates (all layers)
