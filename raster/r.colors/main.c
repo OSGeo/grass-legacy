@@ -107,12 +107,12 @@ int main(int argc, char **argv)
     struct FPRange range;
     DCELL min, max;
     char *name, *mapset;
-    char *type, *cmap, *cmapset;
+    char *style, *cmap, *cmapset;
     char *rules;
     int fp;
     struct GModule *module;
     struct {
-	struct Flag *r, *w, *l, *g, *e, *i, *q;
+	struct Flag *r, *w, *l, *g, *e, *i, *q, *n;
     } flag;
     struct {
 	struct Option *map, *colr, *rast, *rules;
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 
     opt.colr = G_define_option();
     opt.colr->key          = "color";
-    opt.colr->key_desc     = "type";
+    opt.colr->key_desc     = "style";
     opt.colr->type         = TYPE_STRING;
     opt.colr->required     = NO;
     opt.colr->options      = rules_list();
@@ -169,6 +169,10 @@ int main(int argc, char **argv)
     flag.l = G_define_flag();
     flag.l->key = 'l';
     flag.l->description = _("List available rules then exit");
+
+    flag.n = G_define_flag();
+    flag.n->key = 'n';  
+    flag.n->description = _("Invert colors");
 
     flag.g = G_define_flag();
     flag.g->key = 'g';  
@@ -211,33 +215,22 @@ int main(int argc, char **argv)
 
     name = opt.map->answer;
 
-    type = opt.colr->answer;
+    style = opt.colr->answer;
     cmap = opt.rast->answer;
     rules = opt.rules->answer;
 
     if (!name)
 	G_fatal_error(_("No map specified"));
 
-    if (!cmap && !type && !rules && !interactive && !remove)
-	G_fatal_error(_("One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" MUST be specified!"));
+    if (!cmap && !style && !rules && !interactive && !remove)
+	G_fatal_error(_("One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" must be specified!"));
 
-    if (interactive && type)
-	G_warning(_("Both \"-i\" AND \"color\" specified - ignoring color"));
+    if (interactive && (style || rules || cmap) )
+	G_fatal_error(_("Interactive mode is incompatible with \"color\", \"rules\", and \"raster\" options"));
 
-    if (interactive && rules)
-	G_warning(_("Both \"-i\" AND \"rules\" specified - ignoring rules"));
+    if ( (style && (cmap || rules)) || (cmap && rules) )
+	G_fatal_error(_("\"color\", \"rules\", and \"raster\" options are mutually exclusive"));
 
-    if (interactive && cmap)
-	G_warning(_("Both \"-i\" AND \"raster\" specified - ignoring raster"));
-
-    if (cmap && type)
-	G_warning(_("Both options \"color\" AND \"raster\" specified - ignoring raster"));
-
-    if (rules && type)
-	G_warning(_("Both options \"color\" AND \"rules\" specified - ignoring rules"));
-
-    if (rules && cmap)
-	G_warning(_("Both options \"raster\" AND \"rules\" specified - ignoring raster"));
 
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
@@ -273,18 +266,18 @@ int main(int argc, char **argv)
 	if (!read_color_rules(stdin, &colors, min, max, fp))
 	    exit(EXIT_FAILURE); 
     }
-    else if (type)
+    else if (style)
     {
 	/* 
-	 * here the predefined color-table color-types are created by GRASS library calls. 
+	 * here the predefined color-table color-styles are created by GRASS library calls. 
 	 */
-	if (strcmp(type, "random") == 0)
+	if (strcmp(style, "random") == 0)
 	{
 	    if (fp)
 		G_fatal_error(_("Can't make random color table for floating point map"));
 	    G_make_random_colors(&colors, (CELL) min, (CELL) max);
 	}
-	else if (strcmp(type, "grey.eq") == 0)
+	else if (strcmp(style, "grey.eq") == 0)
 	{
 	    if (fp)
 		G_fatal_error(_("Can't make grey.eq color table for floating point map"));
@@ -292,7 +285,7 @@ int main(int argc, char **argv)
 		have_stats = get_stats(name, mapset, &statf);
 	    G_make_histogram_eq_colors(&colors, &statf);
 	}
-	else if (strcmp(type, "grey.log") == 0)
+	else if (strcmp(style, "grey.log") == 0)
 	{
 	    if (fp)
 		G_fatal_error(_("Can't make logarithmic color table for floating point map"));
@@ -300,15 +293,15 @@ int main(int argc, char **argv)
 		have_stats = get_stats(name, mapset, &statf);
 	    G_make_histogram_log_colors(&colors, &statf, (CELL) min, (CELL) max);
 	}
-	else if (strcmp(type, "rules") == 0)
+	else if (strcmp(style, "rules") == 0)
 	{
 	    if (!read_color_rules(stdin, &colors, min, max, fp))
 		exit(EXIT_FAILURE); 
 	}
-	else if (find_rule(type))
-	    G_make_fp_colors(&colors, type, min, max);
+	else if (find_rule(style))
+	    G_make_fp_colors(&colors, style, min, max);
 	else
-	    G_fatal_error(_("%s - unknown color request"), type);
+	    G_fatal_error(_("%s - unknown color request"), style);
     }
     else if (rules)
     {
@@ -336,6 +329,9 @@ int main(int argc, char **argv)
     if (fp)
 	G_mark_colors_as_fp(&colors);
 
+    if (flag.n->answer)
+	G_invert_colors(&colors);
+
     if (flag.e->answer)
     {
 	if (!have_stats)
@@ -354,7 +350,8 @@ int main(int argc, char **argv)
 	G_mark_colors_as_fp(&colors);
 
     if (G_write_colors(name, mapset, &colors) >= 0)
-	G_message(_("Color table for [%s] set to %s"), name, interactive ? "rules" : type ? type : rules ? rules : cmap);
+	G_message(_("Color table for <%s> set to %s"), name,
+	  interactive ? "rules" : style ? style : rules ? rules : cmap);
 
     exit(EXIT_SUCCESS);
 }
