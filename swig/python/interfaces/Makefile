@@ -5,7 +5,7 @@ all: gis vector
 
 gis:
 	echo "/* auto-generate swig typedef file (with some GRASS functions removed) */" > gisdefs.i
-	cat ../../../include/gisdefs.h | grep -v '#\|asprintf\|G_snprintf\|G_debug\|G_fatal_error\|G_warning\|G_verbose\|lzw\|G_done_msg\|G_message' >> gisdefs.i
+	cat ../../../include/gisdefs.h | grep -v '#\|asprintf\|G_snprintf\|G_debug\|G_fatal_error\|G_warning\|G_verbose\|lzw\|G_done_msg\|G_message\|G_important_message' >> gisdefs.i
 
 vector:
 	echo "/* auto-generate swig typedef file */" > dig_structs.i
