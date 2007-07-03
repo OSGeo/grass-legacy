@@ -29,13 +29,15 @@
 int main(int argc, char *argv[])
 {
     FILE *ascii;
-    struct Option *input, *output, *type_opt, *dp_opt, *layer_opt;
+    struct Option *input, *output, *type_opt, *dp_opt, *layer_opt, *scale;
     struct Flag *coorcorr;
     int *types = NULL, typenum = 0, dp, i;
     struct Map_info Map;
     struct GModule *module;
     int layer;
     struct Cell_head region;
+    double zscale = 1.0, llscale = 1.0;
+   
     
     G_gisinit(argv[0]);
 
@@ -64,6 +66,13 @@ int main(int argc, char *argv[])
     dp_opt->required = NO;
     dp_opt->description =
 	_("Number of significant digits (floating point only)");
+
+    scale = G_define_option();
+    scale->key = "scale";
+    scale->type = TYPE_DOUBLE;
+    scale->required = NO;
+    scale->description = _("Scale factor for elevation");
+    scale->answer = "1.0";
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
@@ -118,6 +127,8 @@ int main(int argc, char *argv[])
 	i++;
     }
 
+    G_get_set_window(&region);
+
     /*Correct the coordinates, so the precision of VTK is not hurt :( */
     if(coorcorr->answer){
        /*Get the default region for coordiante correction*/
@@ -130,6 +141,16 @@ int main(int argc, char *argv[])
     {
        x_extent = 0;
        y_extent = 0;
+    }
+
+
+    /* read and compute the scale factor*/
+    sscanf(scale->answer, "%lf", &zscale);
+    /*if LL projection, convert the elevation values to degrees*/
+    if(region.proj == PROJECTION_LL) {
+      llscale = M_PI/(180)*6378137;
+      zscale /= llscale;
+      printf("Scale %g\n", zscale);
     }
 
     /*We need level 2 functions */
@@ -169,7 +190,7 @@ int main(int argc, char *argv[])
     /*Write the header */
     write_vtk_head(ascii, &Map);
     /*Write the geometry and data */
-    write_vtk(ascii, &Map, layer, types, typenum, dp);
+    write_vtk(ascii, &Map, layer, types, typenum, dp, zscale);
 
     if (ascii != NULL)
 	fclose(ascii);

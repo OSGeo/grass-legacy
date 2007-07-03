@@ -47,7 +47,7 @@ typedef struct
 
 /*Writes the point cooridanets for every vector type */
 int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
-		   int *type, int typenum, int dp);
+		   int *type, int typenum, int dp, double scale);
 /*Writes the polydata cells for every vector type */
 int write_vtk_cells(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		  int *type, int typenum);

@@ -20,17 +20,19 @@
 #include <grass/glocale.h>
 #include "writeVTK.h"
 #include "local_proto.h"
+#include <grass/config.h>
+
 
 /*Prototype */
 /*Formated coordinates output */
-void write_point_coordinates(struct line_pnts *Points, int dp, FILE * ascii);
+static void write_point_coordinates(struct line_pnts *Points, int dp, double scale, FILE * ascii);
 
 
 /* ************************************************************************* */
 /* This function writes the vtk points and coordinates ********************* */
 /* ************************************************************************* */
 int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
-		   int *types, int typenum, int dp)
+		   int *types, int typenum, int dp, double scale)
 {
     int type, cur, i, k, centroid;
     int pointoffset = 0;
@@ -209,7 +211,7 @@ int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    write_point_coordinates(Points, dp, ascii);
+		    write_point_coordinates(Points, dp, scale, ascii);
 
 		    if (Cats->n_cats == 0)
 			info->typeinfo[types[k]]->generatedata = 0;	/*No data generation */
@@ -233,7 +235,7 @@ int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    write_point_coordinates(Points, dp, ascii);
+		    write_point_coordinates(Points, dp, scale, ascii);
 		}
 		cur++;
 	    }
@@ -254,7 +256,7 @@ int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		if (type == -2)	/* EOF */
 		    break;
 		if (type == types[k]) {
-		    write_point_coordinates(Points, dp, ascii);
+		    write_point_coordinates(Points, dp, scale, ascii);
 		}
 		cur++;
 	    }
@@ -272,7 +274,7 @@ int write_vtk_points(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 		    Vect_read_line(Map, NULL, Cats, centroid);
 		}
 		Vect_get_area_points(Map, i, Points);
-		write_point_coordinates(Points, dp, ascii);
+		write_point_coordinates(Points, dp, scale, ascii);
 	    }
 
 	}
@@ -555,7 +557,7 @@ int write_vtk_db_data(FILE * ascii, struct Map_info *Map, VTKInfo * info,
 /* This function writes the point coordinates and the geometric feature **** */
 /* ************************************************************************* */
 int write_vtk(FILE * ascii, struct Map_info *Map, int layer, int *types,
-	     int typenum, int dp)
+	     int typenum, int dp, double scale)
 {
     VTKInfo *info;
     VTKTypeInfo **typeinfo;
@@ -591,7 +593,7 @@ int write_vtk(FILE * ascii, struct Map_info *Map, int layer, int *types,
     info->typeinfo = typeinfo;
 
     /*1. write the points */
-    write_vtk_points(ascii, Map, info, types, typenum, dp);
+    write_vtk_points(ascii, Map, info, types, typenum, dp, scale);
 
     /*2. write the cells */
     write_vtk_cells(ascii, Map, info, types, typenum);
@@ -617,7 +619,7 @@ int write_vtk(FILE * ascii, struct Map_info *Map, int layer, int *types,
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
 /* ************************************************************************* */
-void write_point_coordinates(struct line_pnts *Points, int dp, FILE * ascii)
+void write_point_coordinates(struct line_pnts *Points, int dp, double scale, FILE * ascii)
 {
     char *xstring = NULL, *ystring = NULL, *zstring = NULL;
     double *xptr, *yptr, *zptr;
@@ -631,7 +633,7 @@ void write_point_coordinates(struct line_pnts *Points, int dp, FILE * ascii)
 	G_trim_decimal(xstring);
 	G_asprintf(&ystring, "%.*f", dp, *yptr++ - y_extent);
 	G_trim_decimal(ystring);
-	G_asprintf(&zstring, "%.*f", dp, *zptr++);
+	G_asprintf(&zstring, "%.*f", dp, scale* (*zptr++));
 	G_trim_decimal(zstring);
 	fprintf(ascii, "%s %s %s \n", xstring, ystring, zstring);
     }
