@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
 
   /* open input vector */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-     G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
+     G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
   }
     
   Vect_set_open_level (2);
@@ -201,51 +201,57 @@ int main (int argc, char *argv[])
       }
      } else {  
       divider ('+');
-      sprintf (line, "Layer:    %-29.29s  Organization: %s", in_opt->answer, Vect_get_organization(&Map));
+      sprintf (line, _("Layer:           %s"), in_opt->answer);
       printline (line);
-      sprintf (line, "Mapset:   %-29.29s  Source Date: %s", mapset, Vect_get_map_date(&Map));
+      sprintf (line, _("Mapset:          %s"), mapset);
       printline (line);
-      sprintf (line, "Location: %-29.29s  Name of creator: %s", G_location(), Vect_get_person(&Map));
+      sprintf (line, _("Location:        %s"), G_location());
       printline (line);
-      sprintf (line, "Database: %s", G_gisdbase() );
+      sprintf (line, _("Database:        %s"), G_gisdbase());
       printline (line);
-      sprintf (line, "Title:    %s", Vect_get_map_name(&Map) );
+      sprintf (line, _("Title:           %s"), Vect_get_map_name(&Map));
       printline (line);
-      sprintf (line, "Map Scale:  1:%d", Vect_get_scale(&Map));
+      sprintf (line, _("Map scale:       1:%d"), Vect_get_scale(&Map));
       printline (line);
-      sprintf (line, "Map format: %s",  Vect_maptype_info(&Map) );
+      sprintf (line, _("Map format:      %s"),  Vect_maptype_info(&Map));
+      printline (line);
+      sprintf (line, _("Name of creator: %s"), Vect_get_person(&Map));
+      printline (line);
+      sprintf (line, _("Organization:    %s"), Vect_get_organization(&Map));
+      printline (line);
+      sprintf (line, _("Source date:     %s"), Vect_get_map_date(&Map));
       printline (line);
 
       divider ('|');
 
-      sprintf (line, "  Type of Map:  %s (level: %i)        ", "Vector", Vect_level (&Map));
+      sprintf (line, _("  Type of Map:  %s (level: %i)        "), _("vector"), Vect_level (&Map));
 
       printline (line);
 
       if ( Vect_level (&Map) > 1)
       {
 	printline ("");
-	sprintf (line, "  Number of points:       %-9ld       Number of areas:      %-9ld", 
+	sprintf (line, _("  Number of points:       %-9ld       Number of areas:      %-9ld"), 
 			  (long)Vect_get_num_primitives(&Map, GV_POINT), (long)Vect_get_num_areas(&Map));
 	printline (line);
-	sprintf (line, "  Number of lines:        %-9ld       Number of islands:    %-9ld",
+	sprintf (line, _("  Number of lines:        %-9ld       Number of islands:    %-9ld"),
 			  (long)Vect_get_num_primitives(&Map, GV_LINE), (long)Vect_get_num_islands(&Map));
 	printline (line);
-	sprintf (line, "  Number of boundaries:   %-9ld       Number of faces:      %-9ld",
+	sprintf (line, _("  Number of boundaries:   %-9ld       Number of faces:      %-9ld"),
 			  (long)Vect_get_num_primitives(&Map, GV_BOUNDARY), (long)Vect_get_num_primitives(&Map, GV_FACE));
 	printline (line);
-	sprintf (line, "  Number of centroids:    %-9ld       Number of kernels:    %-9ld",
+	sprintf (line, _("  Number of centroids:    %-9ld       Number of kernels:    %-9ld"),
 			  (long)Vect_get_num_primitives(&Map, GV_CENTROID), (long)Vect_get_num_primitives(&Map, GV_KERNEL));
 	printline (line);
 	printline ("");
-	sprintf (line, "  Map is 3D:              %d", Vect_is_3d(&Map));
+	sprintf (line, _("  Map is 3D:              %d"), Vect_is_3d(&Map));
 	printline (line);
-	sprintf (line, "  Number of dblinks:      %-9ld", (long)Vect_get_num_dblinks(&Map));
+	sprintf (line, _("  Number of dblinks:      %-9ld"), (long)Vect_get_num_dblinks(&Map));
 	printline (line);
       }
       else
       { /* should not be reached */
-	sprintf (line, "                No topology present.");
+	sprintf (line, _("                No topology present"));
 	printline (line);
       }
 
@@ -253,10 +259,10 @@ int main (int argc, char *argv[])
       /* this differs from r.info in that proj info IS taken from the map here, not the location settings */
       /* Vect_get_proj_name() and _zone() are typically unset?! */
       if(G_projection() == PROJECTION_UTM)
-	sprintf (line, "        Projection: %s (zone %d)",
+	sprintf (line, _("        Projection: %s (zone %d)"),
 		 Vect_get_proj_name(&Map), Vect_get_zone(&Map));
       else
-	sprintf (line, "        Projection: %s", Vect_get_proj_name(&Map));
+	sprintf (line, _("        Projection: %s"), Vect_get_proj_name(&Map));
       printline (line);
 
       Vect_get_map_box (&Map, &box );
@@ -274,15 +280,15 @@ int main (int argc, char *argv[])
       if( Vect_is_3d(&Map) ) {
 	  format_double(box.B, tmp1);
 	  format_double(box.T, tmp2);
-	  sprintf (line, "	       B: %17s    T: %17s", tmp1, tmp2);
+	  sprintf (line, "              B: %17s    T: %17s", tmp1, tmp2);
 	  printline (line);
       }
       printline ("");
 
       format_double(Vect_get_thresh(&Map), tmp1);
-      sprintf (line, "  Digitization threshold: %s", tmp1);
+      sprintf (line, _("  Digitization threshold: %s"), tmp1);
       printline (line);
-      sprintf (line, "  Comments:");
+      sprintf (line, _("  Comments:"));
       printline (line);
       sprintf (line, "    %s", v_head.line_3);
       printline (line);
