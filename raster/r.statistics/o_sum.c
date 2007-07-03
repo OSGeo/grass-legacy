@@ -40,7 +40,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	G_fatal_error (_("%s: can't open tempfile"), me);
+	G_fatal_error (_("Unable to open temporary file <%s>"), me);
     }
     sum_out(fd2, 0L, 0.0);	/* force at least one reclass rule */
 
