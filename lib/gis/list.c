@@ -122,9 +122,9 @@ int G_list_element (
     {
 	if (count == 0){
 	   if (mapset == 0 || *mapset == 0)
-	    fprintf (more,_("no <%s> files available in current mapset\n"), desc);
+	    fprintf (more,_("no %s files available in current mapset\n"), desc);
 	   else
-	    fprintf (more,_("no <%s> files available in mapset <%s>\n"), desc, mapset);
+	    fprintf (more,_("no %s files available in mapset <%s>\n"), desc, mapset);
 	}
 
 	fprintf (more,"----------------------------------------------\n");
@@ -190,7 +190,7 @@ static int list_element( FILE *out,
 
     if (count > 0)
     {
-        fprintf(out, _("<%s> files available in mapset <%s>:\n"), desc, mapset);
+        fprintf(out, _("%s files available in mapset <%s>:\n"), desc, mapset);
         if (lister)
         {
     	    char title[400];
