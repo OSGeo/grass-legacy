@@ -306,7 +306,7 @@ int main(int argc, char *argv[])
     /*Loop over all output maps! open */
     for (i = 0; i < region.depths; i++) {
 	/*Create the outputmaps */
-	G_asprintf(&RasterFileName, "%s_%i", param.output->answer, i + 1);
+	G_asprintf(&RasterFileName, "%s_%05d", param.output->answer, i + 1);
 	G_message(_("Raster map %i Filename: %s"), i + 1, RasterFileName);
 
 	if (G_find_cell2(RasterFileName, ""))
