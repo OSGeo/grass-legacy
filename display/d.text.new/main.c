@@ -395,7 +395,7 @@ int main(int argc, char **argv)
 
     cmd_file = G_tempfile();
     if ((cmd_fp = fopen(cmd_file, "w")) == NULL)
-	G_fatal_error(_("Unable to open the temporary file."));
+	G_fatal_error(_("Unable to open temporary file <%s>"), cmd_file);
 
     set_x = set_y = set_l = 0;
     first_text = 1;
