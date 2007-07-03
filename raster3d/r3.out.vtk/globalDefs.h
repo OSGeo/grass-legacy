@@ -39,7 +39,7 @@ typedef struct
     int topMapType;
     int bottomMapType;
 
-} inputMaps;
+} input_maps;
 
 #ifdef MAIN
 double x_extent;

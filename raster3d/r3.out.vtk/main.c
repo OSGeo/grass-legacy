@@ -34,30 +34,30 @@
 /** prototypes ***************************************************************/
 
 /*Open the rgb voxel maps and write the data to the output */
-void open_write_rgb_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp);
+static void open_write_rgb_maps(input_maps * in, G3D_Region region, FILE * fp, int dp);
 
 /*Open the rgb voxel maps and write the data to the output */
-void open_write_vector_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp);
+static void open_write_vector_maps(input_maps * in, G3D_Region region, FILE * fp, int dp);
 
 /*opens a raster input map */
-int open_input_map(char *name, char *mapset);
+static int open_input_map(char *name, char *mapset);
 
 /*Check if all maps are available */
-void check_input_maps();
+static void check_input_maps(void);
 
 /*Initiate the input maps structure */
-inputMaps *create_input_maps_struct();
+static input_maps *create_input_maps_struct(void);
 
 
 
 /* ************************************************************************* */
 /* Open the raster input map *********************************************** */
 /* ************************************************************************* */
-inputMaps *create_input_maps_struct()
+input_maps *create_input_maps_struct(void)
 {
-    inputMaps *in;
+    input_maps *in;
 
-    in = (inputMaps *) calloc(1, sizeof(inputMaps));
+    in = (input_maps *) calloc(1, sizeof(input_maps));
 
     in->map = NULL;
     in->map_r = NULL;
@@ -104,7 +104,7 @@ int open_input_map(char *name, char *mapset)
 /* ************************************************************************* */
 /* Check the input maps **************************************************** */
 /* ************************************************************************* */
-void check_input_maps()
+void check_input_maps(void)
 {
     int i = 0;
     char *mapset, *name;
@@ -185,7 +185,7 @@ void check_input_maps()
 /* ************************************************************************* */
 /* Prepare the VTK RGB voxel data for writing ****************************** */
 /* ************************************************************************* */
-void open_write_rgb_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp)
+void open_write_rgb_maps(input_maps * in, G3D_Region region, FILE * fp, int dp)
 {
     int i, changemask[3] = { 0, 0, 0 };
     void *maprgb = NULL;
@@ -268,7 +268,7 @@ void open_write_rgb_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp)
 /* ************************************************************************* */
 /* Prepare the VTK vector data for writing ********************************* */
 /* ************************************************************************* */
-void open_write_vector_maps(inputMaps * in, G3D_Region region, FILE * fp, int dp)
+void open_write_vector_maps(input_maps * in, G3D_Region region, FILE * fp, int dp)
 {
     int i, changemask[3] = { 0, 0, 0 };
     void *mapvect = NULL;
@@ -363,8 +363,9 @@ int main(int argc, char *argv[])
     int dp, i, changemask = 0;
     int rows, cols;
     char *mapset, *name;
+    double scale = 1.0, llscale = 1.0;
 
-    inputMaps *in;
+    input_maps *in;
 
     /* Initialize GRASS */
     G_gisinit(argv[0]);
@@ -428,6 +429,14 @@ int main(int argc, char *argv[])
     in = create_input_maps_struct();
 
 
+    /* read and compute the scale factor*/
+    sscanf(param.elevscale->answer, "%lf", &scale);
+    /*if LL projection, convert the elevation values to degrees*/
+    if(region.proj == PROJECTION_LL) {
+      llscale = M_PI/(180)*6378137;
+      scale /= llscale;
+    }
+
     /*Open the top and bottom file */
     if (param.structgrid->answer) {
 
@@ -466,11 +475,11 @@ int main(int argc, char *argv[])
 	/* Write the vtk-header and the points */
 	if (param.point->answer) {
 	    write_vtk_structured_grid_header(fp, output, region);
-	    write_vtk_points(in, fp, region, dp, 1);
+	    write_vtk_points(in, fp, region, dp, 1, scale);
 	}
 	else {
 	    write_vtk_unstructured_grid_header(fp, output, region);
-	    write_vtk_points(in, fp, region, dp, 0);
+	    write_vtk_points(in, fp, region, dp, 0, scale);
 	    write_vtk_unstructured_grid_cells(fp, region);
 	}
 
@@ -486,7 +495,7 @@ int main(int argc, char *argv[])
     }
     else {
 	/* Write the structured point vtk-header */
-	write_vtk_structured_point_header(fp, output, region, dp);
+	write_vtk_structured_point_header(fp, output, region, dp, scale);
     }
 
     /*Write the normal VTK data (cell or point data) */

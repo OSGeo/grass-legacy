@@ -27,8 +27,8 @@
 #include "errorHandling.h"
 
 /*local prototypes */
-double get_raster_value_as_double(int maptype, void *ptr, double nullval);
-double get_g3d_raster_value_as_double(void *map, int x, int y, int z, int type,
+static double get_raster_value_as_double(int maptype, void *ptr, double nullval);
+static double get_g3d_raster_value_as_double(void *map, int x, int y, int z, int type,
 				 double nullval);
 
 
@@ -98,8 +98,8 @@ double get_g3d_raster_value_as_double(void *map, int x, int y, int z, int type,
 /* ************************************************************************* */
 /* This function writes the point coordinates ****************************** */
 /* ************************************************************************* */
-void write_vtk_points(inputMaps * in, FILE * fp, G3D_Region region, int dp,
-		    int type)
+void write_vtk_points(input_maps * in, FILE * fp, G3D_Region region, int dp,
+		    int type, double scale)
 {
     int x, y, z, status = 0;
     int rows, cols, depths;
@@ -110,9 +110,6 @@ void write_vtk_points(inputMaps * in, FILE * fp, G3D_Region region, int dp,
     double topval = 0, bottomval = 0;
     double zcoor, ycoor, xcoor;
     double zcoor1, ycoor1, xcoor1;
-    double scale;
-
-    scale = atof(param.elevscale->answer);
 
     rows = region.rows;
     cols = region.cols;

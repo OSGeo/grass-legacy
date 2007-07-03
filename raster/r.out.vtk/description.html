@@ -8,10 +8,15 @@ The module is sensitive to region settings (set with g.region).
 <br>
 <br>
 Elevation, scaling, point/celldata, vector and RGB Data are supported.
+If the map is in LL projection, the elevation values will automatically scaled to 
+degrees. It is supposed that the elevation values are provided in meters. 
+If the elevation values are in a different unit than meters, use 
+the scale parameter to convert the units. 
 <br>
 <br>
 If no elevation map is given, the user can set the hight of the map by one value. 
 Point or cell data are available. Also scaling is supported for this elevation value. 
+The elevation value must be provided in meters.
 <br>
 <br>
 The RGB input requires three raster maps: red, green, blue  - in this order. 
@@ -49,7 +54,7 @@ These dataformats a documented at <EM><A HREF="http://www.vtk.org">VTK Toolkit</
 If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
 modules, be sure the "-c" flag was also set in these modules.
 But this will only work with data from the SAME location 
-(The reference point for the coordinates transformation is based on the default region).
+(The reference point for the coordinates transformation is based on the center point of the default region).
 <br>
 <br>
 

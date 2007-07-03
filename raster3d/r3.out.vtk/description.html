@@ -22,11 +22,18 @@ visualize the valid data. Just filter all data which is greater/lesser than the
 choosen null value in the VTK-ASCII file.
 
 <BR><BR>
+The top and bottom region settings are expected in meters. 
+If a LL projection is used, the elevation value for each voxel will be
+converrted into degrees.
+<BR><BR>
 The <I>input</I>, <I>rgbmaps</I> and <I>vectormaps</I> are optional, 
 so only the geometry can be exported.
 <BR><BR>
 If you use <I>top</I> and <I>bottom</I> and the 2d and 3d region settings are different,
-the 2d resolution will be adjust to the 3d resolution.
+the 2d resolution will be adjust to the 3d resolution. The elevation maps are expected
+in meters. If a LL projection is used, the elevation will automatically converted into degrees.
+If the surface and bottom maps are in a different unit than meters, use the scale parameter
+to convert them into meters.
 <BR><BR>
 The RGB voxel data can be created from 2d raster maps (Landsat TM images) 
 with <EM><A HREF="r.to.rast3.html">r.to.rast3</A></EM>. The values of the RGB maps
@@ -41,7 +48,7 @@ StreamTracer filters within Paraview.
 If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
 modules, be sure the "-c" flag was also set in these modules.
 But this will only work with data from the SAME location 
-(The reference point for the coordinates transformation is based on the default region).
+(The reference point for the coordinates transformation is based on the center point of the default region).
 <br>
 <br>
 

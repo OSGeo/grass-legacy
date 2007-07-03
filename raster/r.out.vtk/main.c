@@ -28,13 +28,13 @@
 #include "globaldefs.h"
 
 /*local protos */
-void check_input_maps();
+static void check_input_maps(void);
 
 
 /* ************************************************************************* */
 /* Check the input maps **************************************************** */
 /* ************************************************************************* */
-void check_input_maps()
+void check_input_maps(void)
 {
     char *mapset = NULL;
     int i;
@@ -140,6 +140,8 @@ int main(int argc, char *argv[])
     int vectfd[3];
     int celltype[3] = { 0, 0, 0 };
     int headertype;
+    double scale = 1.0, llscale = 1.0, eleval = 0.0;
+    int digits = 12;
 
     /* Initialize GRASS */
     G_gisinit(argv[0]);
@@ -190,7 +192,19 @@ int main(int argc, char *argv[])
     /*Set the null Value, maybe i have to check this? */
     null_value = param.null_val->answer;
 
-  /********************* WRITE ELEVATION *************************************/
+    /*number of significant digits*/
+    sscanf(param.decimals->answer, "%i", &digits);
+
+    /* read and compute the scale factor*/
+    sscanf(param.elevscale->answer, "%lf", &scale);
+    sscanf(param.elev->answer, "%lf", &eleval);
+    /*if LL projection, convert the elevation values to degrees*/
+    if(region.proj == PROJECTION_LL) {
+      llscale = M_PI/(180)*6378137;
+      scale /= llscale;
+    }
+
+    /********************* WRITE ELEVATION *************************************/
     if (param.elevationmap->answer) {
 	/*If the elevation is set, write the correct Header */
 	if (param.usestruct->answer) {
@@ -215,8 +229,7 @@ int main(int argc, char *argv[])
 	/*The write the Coordinates */
 	if (param.usestruct->answer) {
 	    write_vtk_structured_coordinates(fd, fp, param.elevationmap->answer,
-					  region, out_type, null_value,
-					  atof(param.elevscale->answer));
+					  region, out_type, null_value, scale, digits);
 	}
 	else {
 	    polytype = QUADS;	/*The default */
@@ -228,9 +241,7 @@ int main(int argc, char *argv[])
 		polytype = VERTICES;
 
 	    write_vtk_polygonal_coordinates(fd, fp, param.elevationmap->answer,
-					 region, out_type, null_value,
-					 atof(param.elevscale->answer),
-					 polytype);
+					 region, out_type, null_value, scale, polytype, digits);
 	}
 	G_close_cell(fd);
     }
@@ -243,12 +254,9 @@ int main(int argc, char *argv[])
 
 	/*If no elevation is given, write the normal Header */
 	if (param.origin->answer)
-	    write_vtk_normal_header(fp, region,
-				 atof(param.elevscale->answer) *
-				 (atof(param.elev->answer)), headertype);
+	    write_vtk_normal_header(fp, region, scale * eleval, headertype);
 	else
-	    write_vtk_normal_header(fp, region, atof(param.elev->answer),
-				 headertype);
+	    write_vtk_normal_header(fp, region, eleval/llscale, headertype);
     }
 
 
@@ -280,7 +288,7 @@ int main(int argc, char *argv[])
 	    out_type = G_get_raster_map_type(fd);
 	    /*Now write the data */
 	    write_vtk_data(fd, fp, param.input->answers[i], region, out_type,
-			 null_value);
+			 null_value, digits);
 	    G_close_cell(fd);
 	}
     }
@@ -316,7 +324,7 @@ int main(int argc, char *argv[])
 
 		/*Now write the data */
 		write_vtk_rgb_image_data(rgbfd[0], rgbfd[1], rgbfd[2], fp,
-				     "RGB_Image", region, out_type);
+				     "RGB_Image", region, out_type, digits);
 	    }
 	    else {
 		G_warning(_
@@ -363,7 +371,7 @@ int main(int argc, char *argv[])
 
 		/*Now write the data */
 		write_vtk_vector_data(vectfd[0], vectfd[1], vectfd[2], fp,
-				   "Vector_Data", region, out_type);
+				   "Vector_Data", region, out_type, digits);
 	    }
 	    else {
 		G_warning(_
