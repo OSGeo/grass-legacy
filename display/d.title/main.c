@@ -114,7 +114,7 @@ int main (int argc, char **argv)
 	if(draw->answer) {
 	    tmpfile = G_convert_dirseps_to_host(G_tempfile());
 	    if(!(fp = fopen(tmpfile, "w")))
-		G_fatal_error(_("Unable to open the temporary file."));
+		G_fatal_error(_("Unable to open temporary file <%s>"), tmpfile);
 	}
 	else
 	    fp = stdout;

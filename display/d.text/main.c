@@ -188,7 +188,7 @@ main (int argc, char **argv)
 
         wind_file_name = G_tempfile();
         if ((wind_file=fopen(wind_file_name,"w")) == NULL)
-	    G_fatal_error(_("Unable to open the temporary file."));
+	    G_fatal_error(_("Unable to open temporary file <%s>"),wind_file_name);
 
         /* Do the plotting */
         while (fgets(buff,512,stdin))
