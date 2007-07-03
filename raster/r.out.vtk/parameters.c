@@ -30,6 +30,13 @@ void set_params()
 {
     param.input = G_define_standard_option(G_OPT_R_INPUTS);
 
+    param.output = G_define_option();
+    param.output->key = "output";
+    param.output->type = TYPE_STRING;
+    param.output->gisprompt = "new_file,file,output";
+    param.output->required = NO;
+    param.output->description = _("Name for VTK-ASCII output file");
+
     param.elevationmap = G_define_option();
     param.elevationmap->key = "elevation";
     param.elevationmap->type = TYPE_STRING;
@@ -38,34 +45,7 @@ void set_params()
     param.elevationmap->multiple = NO;
     param.elevationmap->description =
 	_
-	("Raster map that represents the elevation, used for the 3D information");
-
-    param.rgbmaps = G_define_option();
-    param.rgbmaps->key = "rgbmaps";
-    param.rgbmaps->type = TYPE_STRING;
-    param.rgbmaps->required = NO;
-    param.rgbmaps->gisprompt = "old,cell,raster";
-    param.rgbmaps->multiple = YES;
-    param.rgbmaps->description =
-	_
-	("Three (r,g,b) raster maps which are used to create rgb values [redmap,greenmap,bluemap]");
-
-    param.vectmaps = G_define_option();
-    param.vectmaps->key = "vectormaps";
-    param.vectmaps->type = TYPE_STRING;
-    param.vectmaps->required = NO;
-    param.vectmaps->gisprompt = "old,cell,raster";
-    param.vectmaps->multiple = YES;
-    param.vectmaps->description =
-	_
-	("Three (x,y,z) raster maps which are used to create vector values [xmap,ymap,zmap]");
-
-    param.output = G_define_option();
-    param.output->key = "output";
-    param.output->type = TYPE_STRING;
-    param.output->gisprompt = "new_file,file,output";
-    param.output->required = NO;
-    param.output->description = _("Name for VTK-ASCII output file");
+	("Elevation raster map");
 
     param.null_val = G_define_option();
     param.null_val->key = "null";
@@ -74,40 +54,12 @@ void set_params()
     param.null_val->description = _("Value to represent no data cell");
     param.null_val->answer = "-10.0";
 
-    param.elevscale = G_define_option();
-    param.elevscale->key = "elevscale";
-    param.elevscale->type = TYPE_DOUBLE;
-    param.elevscale->required = NO;
-    param.elevscale->description = _("Scale factor for elevation");
-    param.elevscale->answer = "1.0";
-
     param.elev = G_define_option();
     param.elev->key = "elevation2d";
     param.elev->type = TYPE_DOUBLE;
     param.elev->required = NO;
-    param.elev->description = _("Elevation (if no elevation map is given)");
+    param.elev->description = _("Elevation (if no elevation map is specified)");
     param.elev->answer = "0.0";
-
-    param.usestruct = G_define_flag();
-    param.usestruct->key = 's';
-    param.usestruct->description =
-	_("Use structured grid for elevation (not recommended)");
-
-    param.usetriangle = G_define_flag();
-    param.usetriangle->key = 't';
-    param.usetriangle->description =
-	_("Use polydata-trianglestrips for elevation grid creation");
-
-    param.usevertices = G_define_flag();
-    param.usevertices->key = 'v';
-    param.usevertices->description =
-	_
-	("Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)");
-
-    param.origin = G_define_flag();
-    param.origin->key = 'o';
-    param.origin->description =
-	_("Scale factor effects the origin (if no elevation map is given)");
 
     param.point = G_define_flag();
     param.point->key = 'p';
@@ -115,8 +67,75 @@ void set_params()
 	_
 	("Create VTK point data instead of VTK cell data (if no elevation map is given)");
 
+    param.rgbmaps = G_define_option();
+    param.rgbmaps->key = "rgbmaps";
+    param.rgbmaps->type = TYPE_STRING;
+    param.rgbmaps->required = NO;
+    param.rgbmaps->gisprompt = "old,cell,raster";
+    param.rgbmaps->multiple = YES;
+    param.rgbmaps->guisection = "Advanced options";
+    param.rgbmaps->description =
+	_
+	("Three (r,g,b) raster maps to create rgb values [redmap,greenmap,bluemap]");
+
+    param.vectmaps = G_define_option();
+    param.vectmaps->key = "vectormaps";
+    param.vectmaps->type = TYPE_STRING;
+    param.vectmaps->required = NO;
+    param.vectmaps->gisprompt = "old,cell,raster";
+    param.vectmaps->multiple = YES;
+    param.vectmaps->guisection = "Advanced options";
+    param.vectmaps->description =
+	_
+	("Three (x,y,z) raster maps to create vector values [xmap,ymap,zmap]");
+
+    param.elevscale = G_define_option();
+    param.elevscale->key = "elevscale";
+    param.elevscale->type = TYPE_DOUBLE;
+    param.elevscale->required = NO;
+    param.elevscale->guisection = "Advanced options";
+    param.elevscale->description = _("Scale factor for elevation");
+    param.elevscale->answer = "1.0";
+
+    param.decimals = G_define_option();
+    param.decimals->key = "dp";
+    param.decimals->type = TYPE_INTEGER;
+    param.decimals->required = NO;
+    param.decimals->multiple = NO;
+    param.decimals->answer = "12";
+    param.decimals->options = "0-20";
+    param.decimals->guisection = "Advanced options";
+    param.decimals->description =
+	_("Number of significant digits (floating point only)");
+
+    param.usestruct = G_define_flag();
+    param.usestruct->key = 's';
+    param.usestruct->guisection = "Advanced options";
+    param.usestruct->description =
+	_("Use structured grid for elevation (not recommended)");
+
+    param.usetriangle = G_define_flag();
+    param.usetriangle->key = 't';
+    param.usetriangle->guisection = "Advanced options";
+    param.usetriangle->description =
+	_("Use polydata-trianglestrips for elevation grid creation");
+
+    param.usevertices = G_define_flag();
+    param.usevertices->key = 'v';
+    param.usevertices->guisection = "Advanced options";
+    param.usevertices->description =
+	_
+	("Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)");
+
+    param.origin = G_define_flag();
+    param.origin->key = 'o';
+    param.origin->guisection = "Advanced options";
+    param.origin->description =
+	_("Scale factor effects the origin (if no elevation map is given)");
+
     param.coorcorr = G_define_flag();                                            
     param.coorcorr->key = 'c';                                                   
+    param.coorcorr->guisection = "Advanced options";
     param.coorcorr->description = _("Correct the coordinates to fit the VTK-OpenGL precision");
     
 

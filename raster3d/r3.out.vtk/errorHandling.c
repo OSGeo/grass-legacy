@@ -32,7 +32,7 @@ int close_input_raster3d_map(void *map);
 /* ************************************************************************* */
 /* Error handling ********************************************************** */
 /* ************************************************************************* */
-void fatal_error(char *errorMsg, inputMaps * in)
+void fatal_error(char *errorMsg, input_maps * in)
 {
     G_warning("%s\n", errorMsg);
 
@@ -77,7 +77,7 @@ int close_input_raster3d_map(void *map)
 /* ************************************************************************* */
 /* Close alls open raster and 3d raster maps and free memory ********************* */
 /* ************************************************************************* */
-void release_input_maps_struct(inputMaps * in)
+void release_input_maps_struct(input_maps * in)
 {
     int error = 0;		/*0 == true, 1 = false */
     int i;

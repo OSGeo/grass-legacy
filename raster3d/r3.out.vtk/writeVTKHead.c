@@ -32,11 +32,8 @@
 /* Writes the strcutured points Header ************************************* */
 /* ************************************************************************* */
 void write_vtk_structured_point_header(FILE * fp, char *vtkFile, G3D_Region region,
-				   int dp)
+				   int dp, double scale)
 {
-    double scale;
-
-    scale = atof(param.elevscale->answer);
     G_debug(3,
 	    _
 	    ("write_vtk_structured_point_header: Writing VTKStructuredPoint-Header"));

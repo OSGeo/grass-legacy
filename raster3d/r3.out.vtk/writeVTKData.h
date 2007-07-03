@@ -19,11 +19,11 @@
 #ifndef __R3_OUT_VTK_WRITE_DATA_H__
 #define __R3_OUT_VTK_WRITE_DATA_H__
 
-struct inputMaps;
+struct input_maps;
 
 /*Write the point coordinates of type point (1) or celldata (0) */
-void write_vtk_points(inputMaps * in, FILE * fp, G3D_Region region, int dp,
-		    int type);
+void write_vtk_points(input_maps * in, FILE * fp, G3D_Region region, int dp,
+		    int type, double scale);
 /*Write the uGrid Cells */
 void write_vtk_unstructured_grid_cells(FILE * fp, G3D_Region region);
 /*Write the outputdata */

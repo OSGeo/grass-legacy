@@ -18,13 +18,13 @@
 #ifndef __R3_OUT_VTK_ERROR_HANDLING_H__
 #define __R3_OUT_VTK_ERROR_HANDLING_H__
 
-struct inputMaps;
+struct input_maps;
 
 /*Simple Error message */
-void fatal_error(char *errorMsg, inputMaps * in);
+void fatal_error(char *errorMsg, input_maps * in);
 
 /*Free the input maps structure und close all open maps */
-void release_input_maps_struct(inputMaps * in);
+void release_input_maps_struct(input_maps * in);
 
 #endif
 
