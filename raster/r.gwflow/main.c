@@ -204,6 +204,8 @@ int main(int argc, char *argv[])
 	G_fatal_error(_ ("The direct LU solver do not work with sparse matrices"));
     if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0 && param.sparse->answer)
 	G_fatal_error(_ ("The direct Gauss solver do not work with sparse matrices"));
+    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0 && param.sparse->answer)
+        G_fatal_error(_ ("The direct cholesky solver do not work with sparse matrices"));
 
 
     /*get the current region */
@@ -254,7 +256,7 @@ int main(int argc, char *argv[])
     N_read_rast_to_array_2d(param.bottom->answer, data->bottom);
     N_convert_array_2d_null_to_zero(data->bottom);
 
-    /*Reacharge is optional */
+    /*Recharge is optional */
     if (param.r->answer) {
 	N_read_rast_to_array_2d(param.r->answer, data->r);
 	N_convert_array_2d_null_to_zero(data->r);
@@ -326,8 +328,7 @@ int main(int argc, char *argv[])
 	    /* copy the result into the phead array */
 	    copy_result(data->status, data->phead_start, les->x, &region,
 			data->phead);
-    	    N_convert_array_2d_null_to_zero(data->phead);
-
+            N_convert_array_2d_null_to_zero(data->phead);
 	     /**/ inner_count++;
 	}
 	while (max_norm > 0.01 && inner_count < 100);
@@ -454,7 +455,7 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 	N_solver_cg(les, maxit, error);
 
     if (strcmp(solver, N_SOLVER_ITERATIVE_PCG) == 0) 
-	N_solver_pcg(les, maxit, error);
+	N_solver_pcg(les, maxit, error, N_DIAGONAL_PRECONDITION);
 
     if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0) 
 	N_solver_bicgstab(les, maxit, error);
@@ -462,12 +463,15 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
     if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0) 
 	N_solver_lu(les);
 
+    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0) 
+	N_solver_cholesky(les);
+
     if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0) 
 	N_solver_gauss(les);
 
     if (les == NULL)
 	G_fatal_error(_
-		      ("Could not create and solve the linear equation system"));
+		      ("Unable to create and solve the linear equation system"));
 
     return les;
 }

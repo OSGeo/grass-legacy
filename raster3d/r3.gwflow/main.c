@@ -37,7 +37,7 @@ typedef struct
 paramType param;		/*Parameters */
 
 /*- prototypes --------------------------------------------------------------*/
-void set_params();		/*Fill the paramType structure */
+void set_params(void);		/*Fill the paramType structure */
 void write_result(N_array_3d * status, N_array_3d * phead_start,
 		  N_array_3d * phead, double *result, G3D_Region * region,
 		  char *name);
@@ -45,7 +45,7 @@ void write_result(N_array_3d * status, N_array_3d * phead_start,
 /* ************************************************************************* */
 /* Set up the arguments we are expecting ********************************** */
 /* ************************************************************************* */
-void set_params()
+void set_params(void)
 {
     param.phead = G_define_option();
     param.phead->key = "phead";
@@ -193,6 +193,8 @@ int main(int argc, char *argv[])
 	G_fatal_error(_ ("The direct LU solver do not work with sparse matrices"));
     if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0 && param.sparse->answer)
 	G_fatal_error(_ ("The direct Gauss solver do not work with sparse matrices"));
+    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0 && param.sparse->answer)
+        G_fatal_error(_ ("The direct cholesky solver do not work with sparse matrices"));
 
 
 
@@ -278,6 +280,9 @@ int main(int argc, char *argv[])
     if (strcmp(solver, N_SOLVER_ITERATIVE_CG) == 0) 
 	N_solver_cg(les, maxit, error);
 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_PCG) == 0)
+        N_solver_pcg(les, maxit, error, N_DIAGONAL_PRECONDITION);
+
     if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0) 
 	N_solver_bicgstab(les, maxit, error);
 
@@ -287,9 +292,12 @@ int main(int argc, char *argv[])
     if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0) 
 	N_solver_gauss(les);
 
+    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0)
+        N_solver_cholesky(les);
+
     if (les == NULL)
 	G_fatal_error(_
-		      ("Could not create and solve the linear equation system"));
+		      ("Unable to create and solve the linear equation system"));
 
 
     /*write the result to the output file and copy the values to the data->phead array */
