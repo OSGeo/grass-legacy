@@ -54,7 +54,7 @@ int main (int argc, char **argv)
 	module = G_define_module();
 	module->keywords = _("display, cartography");
 	module->description =
-		_("Displays a barscale on GRASS monitor.");
+		_("Displays a barscale on the graphics monitor.");
 
 	mouse = G_define_flag() ;
 	mouse->key       = 'm';
