@@ -269,8 +269,17 @@ N_compute_gradient_field_components_2d(N_gradient_field_2d * field,
     for (j = 0; j < rows; j++)
 	for (i = 0; i < cols; i++) {
 	    N_get_gradient_2d(field, &grad, i, j);
-	    vx = (grad.WC + grad.EC) / 2;
-	    vy = (grad.NC + grad.SC) / 2;
+
+	    /* in case a gradient is zero, we expect a no flow boundary*/
+	    if(grad.WC == 0.0 || grad.EC == 0.0)
+	      vx = (grad.WC + grad.EC);
+	    else
+	      vx = (grad.WC + grad.EC) / 2;
+	    if(grad.NC == 0.0 || grad.SC == 0.0)
+	      vy = (grad.NC + grad.SC);
+	    else
+	      vy = (grad.NC + grad.SC) / 2;
+
 	    N_put_array_2d_d_value(x, i, j, vx);
 	    N_put_array_2d_d_value(y, i, j, vy);
 	}
@@ -430,7 +439,7 @@ N_gradient_field_3d *N_compute_gradient_field_3d(N_array_3d * pot,
 		grad = 0;
 		mean = 0;
 
-		/* Only compute if the arrays are not null */
+		/*Only compute if the arrays are not null */
 		if (!N_is_array_3d_value_null(pot, i, j, k) &&
 		    !N_is_array_3d_value_null(pot, i + 1, j, k)) {
 		    p1 = N_get_array_3d_d_value(pot, i, j, k);
@@ -603,9 +612,20 @@ N_compute_gradient_field_components_3d(N_gradient_field_3d * field,
 	for (j = 0; j < rows; j++)
 	    for (i = 0; i < cols; i++) {
 		N_get_gradient_3d(field, &grad, i, j, k);
-		vx = (grad.WC + grad.EC) / 2;
-		vy = (grad.NC + grad.SC) / 2;
-		vz = (grad.TC + grad.BC) / 2;
+		/* in case a gradient is zero, we expect a no flow boundary*/
+	        if(grad.WC == 0.0 || grad.EC == 0.0)
+		  vx = (grad.WC + grad.EC);
+		else
+		  vx = (grad.WC + grad.EC) / 2;
+	        if(grad.NC == 0.0 || grad.SC == 0.0)
+		  vy = (grad.NC + grad.SC);
+		else  
+		  vy = (grad.NC + grad.SC) / 2;
+	        if(grad.TC == 0.0 || grad.BC == 0.0)
+		  vz = (grad.TC + grad.BC);
+		else  
+		  vz = (grad.TC + grad.BC) / 2;
+
 		N_put_array_3d_d_value(x, i, j, k, vx);
 		N_put_array_3d_d_value(y, i, j, k, vy);
 		N_put_array_3d_d_value(z, i, j, k, vz);

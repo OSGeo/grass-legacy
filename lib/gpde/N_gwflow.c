@@ -247,7 +247,7 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     /*the entry in the right side b of Ax = b */
     V = (q + hc_start * Ss / data->dt);
 
-    /*only the top cells will have reacharge */
+    /*only the top cells will have recharge */
     if (depth == geom->depths - 2) {
 	r = N_get_array_2d_d_value(data->r, col, row);
 	V += r * Az;
@@ -372,7 +372,7 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 
     /* specific yield */
     Ss = N_get_array_2d_d_value(data->s, col, row) * Az;
-    /* reacharge */
+    /* recharge */
     r = N_get_array_2d_d_value(data->r, col, row);
 
     /*get the surrounding permeabilities */
