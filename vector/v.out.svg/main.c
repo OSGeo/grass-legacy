@@ -1,8 +1,8 @@
 /****************************************************************************
  *
  * MODULE:       v.out.svg
- * AUTHOR(S):    Original author Klaus Förster
- *               Klaus Förster - klaus.foerster@uibk.ac.at
+ * AUTHOR(S):    Original author Klaus Foerster
+ *               Klaus Foerster - klaus.foerster@uibk.ac.at
  * PURPOSE:      Export GRASS vector map to SVG with custom
  *               coordinate-precision and optional attributes
  * COPYRIGHT:    (C) 2006 by the GRASS Development Team
@@ -70,12 +70,8 @@ int main (int argc, char *argv[]) {
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
-    out_opt = G_define_option();
-    out_opt->key         = "output";
-    out_opt->type	 = TYPE_STRING;
-    out_opt->required	 = YES;
-    out_opt->multiple	 = NO;
-    out_opt->description = _("SVG output file");
+    out_opt = G_define_standard_option(G_OPT_F_OUTPUT);
+    out_opt->description = _("Name for SVG output file");
 
     type_opt = G_define_option();
     type_opt->key         = "type";
@@ -84,7 +80,8 @@ int main (int argc, char *argv[]) {
     type_opt->multiple    = NO;
     type_opt->answer      = "poly";
     type_opt->options     = "poly,line,point";
-    type_opt->description = _("Output type - defines which feature-type will be extracted");
+    type_opt->label       = _("Output type");
+    type_opt->description = _("Defines which feature-type will be extracted");
 
     prec_opt = G_define_option();
     prec_opt->key         = "precision";
@@ -94,14 +91,14 @@ int main (int argc, char *argv[]) {
     prec_opt->multiple    = NO;
     prec_opt->description = _("Coordinate precision");
 
-    field_opt = G_define_standard_option(G_OPT_V_FIELD);
-
     attr_opt = G_define_option();
     attr_opt->key         = "attribute";
     attr_opt->type        = TYPE_STRING;
     attr_opt->required    = NO;
     attr_opt->multiple    = YES;
     attr_opt->description = _("Attribute(s) to include in output SVG");
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     if (G_parser (argc, argv)) {
        exit (EXIT_FAILURE);
