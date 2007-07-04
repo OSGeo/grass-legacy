@@ -152,6 +152,16 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	struct line_pnts *Points;
 	struct line_cats *Line_Cats_Old, *CCats;
 
+	int left_area, right_area;               /* left/right area */
+	int left_field_match, right_field_match; /* left/right area field match conditions */
+	int left_cat_match, right_cat_match;     /* left/right area cat match conditions */
+	int type_match;                          /* line type match */
+	int field_match;                         /* category of field match */
+	int cat_match;                           /* category found in list */
+	int centroid_in_area;                    /* centroid is in area */
+	int type;
+	int i, tmp, write;
+	    
         /* Initialize the Point structure, ONCE */
         Points = Vect_new_line_struct();
 	Line_Cats_Old = Vect_new_cats_struct ();
@@ -165,44 +175,42 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	
         /* Cycle through all lines */
         for ( line = 1; line <= Vect_get_num_lines ( In ); line++) {
-	    int left_area=0, right_area=0; /* left/right area */
-	    int left_field_match=0, right_field_match=0; /* left/right area field match conditions */
-	    int left_cat_match=0, right_cat_match=0; /* left/right area cat match conditions */
-	    int type_match=0;  /* line type match */
-	    int field_match=0; /* category of field match */
-	    int cat_match=0;   /* category found in list */
-	    int centroid_in_area=0;   /* centroid is in area */
-	    int type;
-	    int i, tmp, write;
-	    
+	    /* default values */
+	    left_area = right_area = 0;
+	    left_field_match = right_field_match = 0;
+	    left_cat_match = right_cat_match = 0;
+	    type_match = field_match = cat_match = 0;
+	    centroid_in_area = 0;
+	    write = 0;
+
 	    G_debug ( 3, "Line = %d", line );
-
-	     /* Get data */
-	     type = Vect_read_line ( In, Points, Line_Cats_Old, line);
-	     G_debug ( 3, "type = %d ncats = %d", type, Line_Cats_Old->n_cats);
-	     
-	     if ( type & select_type ) type_match = 1;
-
-	     field_match = Vect_cat_get(Line_Cats_Old,field,&tmp);
-	     
-	     for ( i = 0; i < Line_Cats_Old->n_cats; i++ ) {
-	         G_debug ( 3, "field = %d cat = %d", Line_Cats_Old->field[i], Line_Cats_Old->cat[i]);
-		 if ( Line_Cats_Old->field[i] == field ) {
-		     if ( (!reverse && in_list(Line_Cats_Old->cat[i])) ||
-			  (reverse && !in_list(Line_Cats_Old->cat[i])) ) {
-			 cat_match = 1;
-			 break;
-		     }
-		 }
-	     }
-
+	    
+	    /* Get data */
+	    type = Vect_read_line ( In, Points, Line_Cats_Old, line);
+	    G_debug ( 3, "type = %d ncats = %d", type, Line_Cats_Old->n_cats);
+	    
+	    if ( type & select_type ) type_match = 1;
+	    
+	    field_match = Vect_cat_get(Line_Cats_Old,field,&tmp);
+	    
+	    for ( i = 0; i < Line_Cats_Old->n_cats; i++ ) {
+		G_debug ( 3, "field = %d cat = %d", Line_Cats_Old->field[i], Line_Cats_Old->cat[i]);
+		if ( Line_Cats_Old->field[i] == field ) {
+		    if ( (!reverse && in_list(Line_Cats_Old->cat[i])) ||
+			 (reverse && !in_list(Line_Cats_Old->cat[i])) ) {
+			cat_match = 1;
+			break;
+		    }
+		}
+	    }
+	    
 	     if ( type == GV_BOUNDARY ) {
 	         int centroid;
 		 
 		 Vect_get_line_areas ( In, line, &left_area, &right_area );
-
+		 
 		 if ( left_area < 0 )
-		    left_area = Vect_get_isle_area ( In, abs(left_area) ); 
+		     left_area = Vect_get_isle_area ( In, abs(left_area) ); 
 		 if ( left_area > 0 ) {
 		     centroid = Vect_get_area_centroid ( In, left_area );
 		     if ( centroid > 0 ) {
@@ -221,7 +229,7 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 		 } 
 		 
 		 if ( right_area < 0 ) 
-		    right_area = Vect_get_isle_area ( In, abs(right_area) ); 
+		     right_area = Vect_get_isle_area ( In, abs(right_area) ); 
 		 if ( right_area > 0 ) {
 		     centroid = Vect_get_area_centroid ( In, right_area );
 		     if ( centroid > 0 ) {
@@ -239,30 +247,32 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 		     }
 		 }
 	     }
-
+	     
 	     if ( type == GV_CENTROID ) {
 		 int area;
 		 
 		 area = Vect_get_centroid_area ( In, line );
-		 if ( area > 0 ) centroid_in_area = 1;
+		 if (area > 0)
+		     centroid_in_area = 1;
 	     }
 		 
 	     G_debug ( 2, "type_match = %d field_match = %d cat_match = %d", type_match, field_match, cat_match );
 	     G_debug ( 2, "left_area = %d left_field_match = %d left_cat_match = %d", 
-		           left_area, left_field_match, left_cat_match );
-
+		       left_area, left_field_match, left_cat_match );
+	     
 	     G_debug ( 2, "right_area = %d right_field_match = %d right_cat_match = %d", 
-		           right_area, right_field_match, right_cat_match );
+		       right_area, right_field_match, right_cat_match );
 	     
 	     /* Check if the line match conditions */
-	     write = 0;
 	     if ( type_only && field == -1 ) /* type only */
 	     {
 		 /* line */
-		 if ( type_match ) write = 1; 
-
+		 if ( type == GV_LINE && type_match )
+		     write = 1; 
+		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area ) write = 1;
+	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area )
+		     write = 1;
 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && ( left_area || right_area ) ) {
@@ -273,11 +283,13 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     else if ( type_only && field > 0 ) /* type and field only */
 	     {
 		 /* line */
-		 if ( type_match && field_match ) write = 1; 
-
+		 if ( type == GV_LINE && type_match && field_match )
+		     write = 1; 
+		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && field_match ) write = 1;
-
+	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && field_match )
+		     write = 1;
+		 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_field_match || right_field_match ) ) {
 		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new, reverse) )
@@ -287,11 +299,13 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     else  /* type, field and category */
 	     {
 		 /* line */
-		 if ( type_match && cat_match ) write = 1; 
-
+		 if ( type == GV_LINE && type_match && cat_match )
+		     write = 1; 
+		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && cat_match ) write = 1;
-
+	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && cat_match )
+		     write = 1;
+		 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_cat_match || right_cat_match ) ) {
 		     if ( !dissolve || !areas_new_cats_match ( In, left_area, right_area, type_only, field, new, reverse) )
@@ -303,10 +317,10 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 		 
 	    if ( write ) {
 		extract_cats ( Line_Cats_Old, type_only, field, new, reverse);
-
+		
 		Vect_write_line (Out, type, Points, Line_Cats_Old);
 	    }
-		      
+	    
         }  /* end lines section */
 
 	return(0) ;

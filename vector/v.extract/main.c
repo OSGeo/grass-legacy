@@ -96,37 +96,30 @@ int main (int argc, char **argv)
     outopt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     typopt = G_define_standard_option(G_OPT_V_TYPE);
-
-    typopt->answer           = "point,line,boundary,centroid,area,face" ;
-    typopt->options          = "point,line,boundary,centroid,area,face" ;
+    typopt->answer           = "point,line,boundary,centroid,area,face";
+    typopt->options          = "point,line,boundary,centroid,area,face";
     typopt->description      = _("Types to be extracted ");
 
     fieldopt = G_define_standard_option(G_OPT_V_FIELD);
-    fieldopt->description = _("Layer number. If -1, all features in all layers of given type "
-			   "are extracted.");
+    fieldopt->description = _("If -1, all features in all layers of given type "
+			      "are extracted");
 
     newopt = G_define_option();
     newopt->key              = "new";
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
     newopt->answer           = "-1";
-    newopt->description      = _("Enter -1 to keep original categories or the desired NEW category value. "
-	                       "If new >= 0, table is not copied.");
+    newopt->label            = _("Enter -1 to keep original categories or the desired NEW category value");
+    newopt->description      = _("If new >= 0, table is not copied");
 
-    listopt = G_define_option();
+    listopt = G_define_standard_option(G_OPT_V_CATS);
     listopt->key             = "list";
-    listopt->type            =  TYPE_STRING;
-    listopt->required        =  NO;
-    listopt->multiple        =  YES;
-    listopt->key_desc        = "range";
-    listopt->description     = _("Category ranges: e.g. 1,3-8,13");
 
-    fileopt = G_define_option();
+    fileopt = G_define_standard_option(G_OPT_F_INPUT);
     fileopt->key             = "file";
-    fileopt->type            =  TYPE_STRING;
-    fileopt->required        =  NO;
-    fileopt->description     = _("Input text file with category numbers/number ranges to be extracted "
-				 "(if '-' given reads from standard input");
+    fileopt->required        = NO;
+    fileopt->label           = _("Input text file with category numbers/number ranges to be extracted");
+    fileopt->description     = _("If '-' given reads from standard input");
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
@@ -293,7 +286,7 @@ int main (int argc, char **argv)
 	}
 
 	/* Copy tables */
-	G_message ( _("Writing attributes ...\n") );
+	G_message ( _("Writing attributes ...") );
 
 	/* Number of output tabs */
 	for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
