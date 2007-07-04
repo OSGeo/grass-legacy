@@ -1,7 +1,7 @@
 import wx
 import wx.wizard as wiz
-import  wx.lib.rcsizer  as rcs
-from wx.lib.combotreebox import ComboTreeBox
+import wx.lib.rcsizer  as rcs
+import wx.lib.mixins.listctrl  as  listmix
 
 import os
 import sys
@@ -291,6 +291,7 @@ class ProjectionsPage(TitledPage):
         global proj4string
         proj4string = '+proj=%s' % self.proj
 
+
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
         listItem  = self.projlist.GetColumn(1)
@@ -314,17 +315,16 @@ class ProjectionsPage(TitledPage):
 
     def _onBrowseProj(self,event,search=None):
         try:
+            projlist = self.parent.projections.items()
+            projlist.sort()
             self.projlist.DeleteAllItems()
-            for item in self.parent.projections:
-                desc = self.parent.projections[item]
+            for proj,desc in projlist:
                 entry = self.projlist.GetItemCount()
-                if search and (item.lower().find(search.lower()) > -1 or \
+                if search and (proj.lower().find(search.lower()) > -1 or \
                                desc.lower().find(search.lower()) > -1) or \
                                not search:
-                    index = self.projlist.InsertStringItem(entry,item)
+                    index = self.projlist.InsertStringItem(entry,proj)
                     self.projlist.SetStringItem(index,1,desc)
-#                    if item.lower() == 'utm': self.projlist.SetItem(item, m_itemId=0)
-#                    if item.lower() == 'll': self.projlist.SetItem(item, m_itemId=1)
 
             self.projlist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
             self.projlist.SetColumnWidth(1, wx.LIST_AUTOSIZE)
@@ -376,6 +376,9 @@ class ProjTypePage(TitledPage):
         if self.parent.projpage.proj == 'utm' and self.utmzone == '':
             wx.MessageBox('You must set a zone for a UTM projection')
             event.Veto()
+        if self.parent.projpage.proj == 'utm':
+            global proj4string
+            proj4string = '%s +zone=%s' % (proj4string, self.utmzone)
 
     def SetVal(self, event):
         global coordsys
@@ -576,15 +579,17 @@ class DatumPage(TitledPage):
             self.datum = ''
             self.datumlist.DeleteAllItems()
 
-            for item in self.parent.datums:
-                datumdesc = self.parent.datums[item][0]
-                ellipse = self.parent.datums[item][1]
+            datumlist = self.parent.datums.items()
+            datumlist.sort()
+            for datum,info in datumlist:
+                datumdesc = info[0]
+                ellipse = info[1]
                 entry = self.datumlist.GetItemCount()
                 if search and (datum.lower().find(search.lower()) > -1 or\
                               datumdesc.lower().find(search.lower()) > -1 or\
                               ellipse.lower().find(search.lower()) > -1) or\
                         not search:
-                    index = self.datumlist.InsertStringItem(entry,item)
+                    index = self.datumlist.InsertStringItem(entry,datum)
                     self.datumlist.SetStringItem(index,1,datumdesc)
                     self.datumlist.SetStringItem(index,2,ellipse)
 
@@ -665,8 +670,11 @@ class EllipsePage(TitledPage):
         self.GetNext().SetPrev(self)
 
         global proj4string
+        params = ''
         for item in self.ellipseparams:
-            proj4string = '%s +%s' % (proj4string,item)
+            item = '+'+str(item)
+            params = '%s %s' % (params, item)
+        proj4string = '%s %s' % (proj4string,params)
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -689,21 +697,23 @@ class EllipsePage(TitledPage):
 
         self.ellipse = item.GetText()
         self.ellipsedesc = self.parent.ellipsoids[self.ellipse][0]
-        self.ellipseparam = self.parent.ellipsoids[self.ellipse][1]
+        self.ellipseparams = self.parent.ellipsoids[self.ellipse][1]
 
         self.tellipse.SetValue(self.ellipse)
         self._onBrowseEllipse(None)
 
     def _onBrowseEllipse(self,event,search=None):
         try:
+            ellipselist = self.parent.ellipsoids.items()
+            ellipselist.sort()
             self.ellipselist.DeleteAllItems()
-            for item in self.parent.ellipsoids:
-                desc = self.parent.ellipsoids[item][0]
+            for ellipsoid,info in ellipselist:
+                desc = info[0]
                 entry = self.ellipselist.GetItemCount()
-                if search and (item.lower().find(search.lower()) > -1 or \
+                if search and (ellipsoid.lower().find(search.lower()) > -1 or \
                                desc.lower().find(search.lower()) > -1) or \
                                not search:
-                    index = self.ellipselist.InsertStringItem(entry,item)
+                    index = self.ellipselist.InsertStringItem(entry,ellipsoid)
                     self.ellipselist.SetStringItem(index,1,desc)
 
             self.ellipselist.SetColumnWidth(0, wx.LIST_AUTOSIZE)
@@ -1034,11 +1044,11 @@ class SummaryPage(TitledPage):
         ellipse = self.parent.ellipsepage.ellipse
         ellipsedesc = self.parent.ellipsepage.ellipsedesc
         datum = self.parent.datumpage.datum
-        datumname = self.parent.datumpage.datumdesc
+        datumdesc = self.parent.datumpage.datumdesc
         ellipsoid = self.parent.datumpage.ellipsoid
         datumparams = self.parent.datumpage.datumparams
         transform = self.parent.datumpage.transform
-        transcountry = self.parent.datumpage.transregion
+        transregion = self.parent.datumpage.transregion
         transparams = self.parent.datumpage.transparams
 
         self.ldatabase.SetLabel(str(database))
@@ -1470,12 +1480,6 @@ class GWizard:
             projdesc = projdesc.strip()
             self.projections[proj] = projdesc
         f.close()
-        # sort the projections dictionary
-        templist = self.projections.items()
-        self.projections = {}
-        templist.sort()
-        for item in templist:
-            self.projections[item[0]]=item[1]
 
         f = open(os.path.join(os.getenv("GISBASE"), "etc","datum.table"),"r")
         self.datums = {}
@@ -1495,12 +1499,6 @@ class GWizard:
             ellipsoid = paramlist.pop(0)
             self.datums[datum] = (datumdesc,ellipsoid,paramlist)
         f.close()
-        # sort datums dictionary
-        templist = self.datums.items()
-        self.datums = {}
-        templist.sort()
-        for item in templist:
-            self.datums[item[0]]=item[1]
 
         # make datum transforms dictionary
         f = open(os.path.join(os.getenv("GISBASE"), "etc","datumtransform.table"),"r")
@@ -1546,12 +1544,6 @@ class GWizard:
             paramslist = params.split()
             self.ellipsoids[ellipse] = (desc,paramslist)
         f.close()
-        # sort ellipsoid dictionary
-        templist = self.ellipsoids.items()
-        self.ellipsoids = {}
-        templist.sort()
-        for item in templist:
-            self.ellipsoids[item[0]]=item[1]
 
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Define new Location",
@@ -1621,6 +1613,7 @@ class GWizard:
         database = self.startpage.grassdatabase
         location = self.startpage.location
         global coordsys
+        global proj4string
         success = ''
 
 #        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
@@ -1639,8 +1632,6 @@ class GWizard:
             cols = int(round((float(east)-float(west))/float(resolution)))
             cells = int(rows*cols)
             success = self.LatlongCreate()
-        elif coordsys == "utm":
-            success = self.UTMCreate()
         elif coordsys == "proj":
             success = self.ProjCreate()
         elif coordsys == "epsg":
@@ -1656,40 +1647,6 @@ class GWizard:
         """
         wx.MessageBox('Not implemented: Create xy location')
 
-    def LatlongCreate(self):
-        """
-        Create a new Lat/Long location
-        """
-        datum = self.datumpage.datum
-        datumname = self.datumpage.datumname
-        ellipsoid = self.datumpage.ellipsoid
-        datumparams = self.datumpage.datumparams
-        transform = self.datumpage.transform
-        transcountry = self.datumpage.transcountry
-        transdesc = self.datumpage.transdesc
-        transparams = self.datumpage.transparams
-
-        wx.MessageBox('Not implemented: Create input for g.proj from \nlatitude/longitude \n%s: %s %s \n%s: %s' %
-                      (datum, datumname, ellipsoid, transform, transdesc))
-
-    def UTMCreate(self):
-        """
-        Create a new UTM location
-        """
-        utm = self.projtypepage.utm
-        zone = self.projtypepage.zone
-        utmhemisphere = self.projtypepage.utmhemisphere
-        datum = self.datumpage.datum
-        datumname = self.datumpage.datumname
-        ellipsoid = self.datumpage.ellipsoid
-        datumparams = self.datumpage.datumparams
-        transform = self.datumpage.transform
-        transcountry = self.datumpage.transcountry
-        transdesc = self.datumpage.transdesc
-        transparams = self.datumpage.transparams
-
-        wx.MessageBox('Not implemented: Create input for g.proj from \n%s: %s%s \n%s: %s %s \n%s: %s' %
-                      (utm, zone, utmhemisphere, datum, datumname, ellipsoid, transform, transdesc))
 
     def ProjCreate(self):
         """
@@ -1698,16 +1655,17 @@ class GWizard:
         projection = self.projpage.proj
         projdesc = self.projpage.projdesc
         datum = self.datumpage.datum
-        datumname = self.datumpage.datumname
-        ellipsoid = self.datumpage.ellipsoid
+        datumdesc = self.datumpage.datumdesc
+        datumellipse = self.datumpage.ellipsoid
         datumparams = self.datumpage.datumparams
+        ellipsoid = self.ellipsepage.ellipse
+        ellipsedesc = self.ellipsepage.ellipsedesc
         transform = self.datumpage.transform
-        transcountry = self.datumpage.transcountry
-        transdesc = self.datumpage.transdesc
+        transregion = self.datumpage.transregion
         transparams = self.datumpage.transparams
 
-        wx.MessageBox('Not implemented: Create input for g.proj from \n%s: %s \n%s: %s %s \n%s: %s' %
-                      (projection, projdesc, datum, datumname, ellipsoid, transform, transdesc))
+#        wx.MessageBox('Not implemented: Create input for g.proj from \n%s: %s \n%s: %s %s \n%s: %s' %
+#                      (projection, projdesc, datum, datumname, ellipsoid, transform, transdesc))
 
     def EPSGCreate(self):
         """
