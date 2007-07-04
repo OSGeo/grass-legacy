@@ -1,19 +1,20 @@
 <H2>DESCRIPTION</H2>
 
-Outputs <I>G3D</I> maps in <I>VTK-ASCII</I> format.  <I>Map's</I> are
+Outputs <I>G3D</I> maps into <I>VTK-ASCII</I> format.  <I>Map's</I> are
 valid G3D map's in the current mapset.  <I>output</I> is the name of
-an VTK-ASCII file which will be written in the current working directory.
+a VTK-ASCII file which will be written in the current working directory.
 If <I>output</I> is not specified then <B>stdout</B> is used.  
-The module is sensitive to region settings (set with g.region).
+The module is sensitive to region settings (set with <em>g.region</em>).
 
 <H2>NOTES</H2>
-This filter generates <I>structured points</I>  with <I>celldata</I> (default) or <I>pointdata</I>. 
-If top  and bottom surfaces are requested a <I>unstructured grid</I> with <I>celldata</I>  or a <I>structured grid</I> with 
-<I>pointdata</I> is generated.
-This data is put in a simple VTK-ASCII file. Nor XML or 
+This filter generates <I>structured points</I>  with <I>celldata</I> 
+(default) or <I>pointdata</I>. If top and bottom surfaces are requested
+a <I>unstructured grid</I> with <I>celldata</I>  or a <I>structured grid</I>
+with <I>pointdata</I> is generated.
+This data is put in a simple VTK-ASCII file. Neither XML nor 
 binary output are supported. It is possible to choose more then one G3D map
-to be written in the VTK-ASCII file. Each celldata is named like the G3D map it represents.
-You can visualize this file with the 
+to be written in the VTK-ASCII file. Each <I>celldata</I> is named as the
+G3D map it represents. You can visualize this file with the 
 <EM><A HREF="http://www.vtk.org">VTK Toolkit</A></EM>, 
 <EM><A HREF="http://www.paraview.org">Paraview</A></EM> and 
 <EM><A HREF="http://mayavi.sourceforge.net">MayaVi</A></EM> which are based on VTK.
@@ -23,35 +24,33 @@ choosen null value in the VTK-ASCII file.
 
 <BR><BR>
 The top and bottom region settings are expected in meters. 
-If a LL projection is used, the elevation value for each voxel will be
-converrted into degrees.
+If a Latitude-Longitude (LL) coordinates are used, the elevation value for each voxel
+will be converted into degree.
 <BR><BR>
 The <I>input</I>, <I>rgbmaps</I> and <I>vectormaps</I> are optional, 
 so only the geometry can be exported.
 <BR><BR>
 If you use <I>top</I> and <I>bottom</I> and the 2d and 3d region settings are different,
 the 2d resolution will be adjust to the 3d resolution. The elevation maps are expected
-in meters. If a LL projection is used, the elevation will automatically converted into degrees.
+in meters. If LL coordinates are used, the elevation will automatically converted into degree.
 If the surface and bottom maps are in a different unit than meters, use the scale parameter
 to convert them into meters.
 <BR><BR>
 The RGB voxel data can be created from 2d raster maps (Landsat TM images) 
 with <EM><A HREF="r.to.rast3.html">r.to.rast3</A></EM>. The values of the RGB maps
-must be within 0 and 255. Whether not, the values are set automaticly 
+must be within 0 and 255. If not, the values are automatically set
 to 0 and warnings will be printed to stderr.
 <BR><BR>
 The vector data is created from three 3d raster maps. Each map represents a vector component.
-So x, y and z components are required in this order! This data can be visualized with Glyph3d or 
+So x, y and z components are required in this order. This data can be visualized with Glyph3d or 
 StreamTracer filters within Paraview.
 <br>
 <br>
-If the "-c" flag is used and the data should be visualised together with other data exported via *.out.vtk
-modules, be sure the "-c" flag was also set in these modules.
-But this will only work with data from the SAME location 
-(The reference point for the coordinates transformation is based on the center point of the default region).
-<br>
-<br>
-
+If the <em>-c</em> flag is used and the data should be visualised together with other
+data exported via <em>*.out.vtk</em> modules, be sure the <em>-c</em> flag was also
+set in these modules. But this will only work with data from the SAME location (the
+reference point for the coordinates transformation is based on the center point of
+the default region).
 
 <H3>Difference between point- and celldata</H3>
 
