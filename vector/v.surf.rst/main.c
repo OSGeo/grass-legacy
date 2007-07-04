@@ -214,58 +214,44 @@ int main(int argc, char *argv[])
 
     parm.wheresql = G_define_standard_option(G_OPT_WHERE);
 
-    parm.elev = G_define_option();
+    parm.elev = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.elev->key = "elev";
-    parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
-    parm.elev->gisprompt = "new,cell,raster";
     parm.elev->description = _("Output surface raster map (elevation)");
 
-    parm.slope = G_define_option();
+    parm.slope = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.slope->key = "slope";
-    parm.slope->type = TYPE_STRING;
     parm.slope->required = NO;
-    parm.slope->gisprompt = "new,cell,raster";
     parm.slope->description = _("Output slope raster map");
     parm.slope->guisection  = _("Output_options");
 
-    parm.aspect = G_define_option();
+    parm.aspect = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.aspect->key = "aspect";
-    parm.aspect->type = TYPE_STRING;
     parm.aspect->required = NO;
-    parm.aspect->gisprompt = "new,cell,raster";
     parm.aspect->description = _("Output aspect raster map");
     parm.aspect->guisection  = _("Output_options");
 
-    parm.pcurv = G_define_option();
+    parm.pcurv = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.pcurv->key = "pcurv";
-    parm.pcurv->type = TYPE_STRING;
     parm.pcurv->required = NO;
-    parm.pcurv->gisprompt = "new,cell,raster";
     parm.pcurv->description = _("Output profile curvature raster map");
     parm.pcurv->guisection  = _("Output_options");
 
-    parm.tcurv = G_define_option();
+    parm.tcurv = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.tcurv->key = "tcurv";
-    parm.tcurv->type = TYPE_STRING;
     parm.tcurv->required = NO;
-    parm.tcurv->gisprompt = "new,cell,raster";
     parm.tcurv->description = _("Output tangential curvature raster map");
     parm.tcurv->guisection  = _("Output_options");
 
-    parm.mcurv = G_define_option();
+    parm.mcurv = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.mcurv->key = "mcurv";
-    parm.mcurv->type = TYPE_STRING;
     parm.mcurv->required = NO;
-    parm.mcurv->gisprompt = "new,cell,raster";
     parm.mcurv->description = _("Output mean curvature raster map");
     parm.mcurv->guisection  = _("Output_options");
 
-    parm.maskmap = G_define_option();
+    parm.maskmap = G_define_standard_option(G_OPT_R_INPUT);
     parm.maskmap->key = "maskmap";
-    parm.maskmap->type = TYPE_STRING;
     parm.maskmap->required = NO;
-    parm.maskmap->gisprompt = "old,cell,raster";
     parm.maskmap->description = _("Name of the raster map used as mask");
 
     parm.fi = G_define_option();
@@ -343,28 +329,22 @@ int main(int argc, char *argv[])
     parm.devi->description = _("Output deviations vector point file");
     parm.devi->guisection  = _("Analysis");
 
-    parm.cvdev = G_define_option ();
+    parm.cvdev = G_define_standard_option(G_OPT_V_OUTPUT);
     parm.cvdev->key = "cvdev";
-    parm.cvdev->type = TYPE_STRING;
     parm.cvdev->required = NO;
-    parm.cvdev->gisprompt = "new,vector,vector";
     parm.cvdev->description = _("Output cross-validation errors vector point file");
     parm.cvdev->guisection  = _("Analysis");
 
-    parm.treefile = G_define_option();
+    parm.treefile = G_define_standard_option(G_OPT_V_OUTPUT);
     parm.treefile->key = "treefile";
-    parm.treefile->type = TYPE_STRING;
     parm.treefile->required = NO;
-    parm.treefile->gisprompt = "new,dig,vector";
     parm.treefile->description =
 	_("Output vector map showing quadtree segmentation");
     parm.treefile->guisection  = _("Analysis");
 
-    parm.overfile = G_define_option();
+    parm.overfile = G_define_standard_option(G_OPT_V_OUTPUT);
     parm.overfile->key = "overfile";
-    parm.overfile->type = TYPE_STRING;
     parm.overfile->required = NO;
-    parm.overfile->gisprompt = "new,dig,vector";
     parm.overfile->description =
 	_("Output vector map showing overlapping windows");
     parm.overfile->guisection  = _("Analysis");
