@@ -8,7 +8,7 @@ volume maps.
 This module calculates the piezometric head and optionally the 
 groundwater velocity field.
 The vector components can be visualized with paraview if they are exported
-with r3.out.vtk.
+with <em>r3.out.vtk</em>.
 <br>
 <br>
 The groundwater flow will always be calculated transient. 
@@ -81,7 +81,6 @@ hc_z=hydcond q=well s=syield r=recharge output=gwresult dt=8640000 velocity=gwre
 r3.out.vtk -p in=gwresult,status vector=gwresult_velocity_x,gwresult_velocity_y,gwresult_velocity_z out=/tmp/gwdata3d.vtk
 
 #now load the data into paraview
-
 </pre></div>
 
 <H2>SEE ALSO</H2>
