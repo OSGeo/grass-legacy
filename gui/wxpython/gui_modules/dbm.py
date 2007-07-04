@@ -6,7 +6,7 @@ CLASSES:
     * VirtualAttributeList
     * AttributeManager
     * DisplayAttributesDialog
-    
+
 PURPOSE:   GRASS attribute table manager
 
            This program is based on FileHunter, published in 'The wxPython Linux
@@ -99,8 +99,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
            "driver=%s" % self.parent.driver,
            "database=%s" % self.parent.database])
 
-        for line in dbDescribe.module_stdout.readlines()[1:]:
-            column, type, length = line.strip().split(":")
+        for line in dbDescribe.module_stdout.readlines()[2:]:
+            colnum, column, type, length = line.strip().split(":")
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
                 self.columns.append({"name":column,"type":int})
@@ -228,7 +228,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
             if self.qlayer:
                 self.map.DeleteLayer(self.qlayer)
-                
+
             cats = self.selectedCats
             catstr = ""
             i = 0
@@ -300,16 +300,16 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # ---------------------------------------------------
         # These methods are callbacks for implementing the
         # "virtualness" of the list...
-        
+
         # def OnGetItemText(self, item, col):
         #     index=self.itemIndexMap[item]
         #     s = self.itemDataMap[index][col]
         #     return s
-        
+
         # def OnGetItemImage(self, item):
         #     index=self.itemIndexMap[item]
         #     if ( index % 2) == 0:
-        
+
     def OnGetItemAttr(self, item):
         index=self.itemIndexMap[item]
 
@@ -324,7 +324,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # Here's a better SortItems() method --
         # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
         # and it knows to sort on another column if the chosen columns have the same value.
-        
+
         # def SortItems(self,sorter=cmp):
         #     items = list(self.itemDataMap.keys())
         #     # for i in range(len(items)):
@@ -334,10 +334,10 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #     # for i in range(len(items)):
         #     #     items[i] =  str(items[i])
         #     self.itemIndexMap = items
-        
+
         #     # redraw the list
         #     self.Refresh()
-        
+
         # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
     def GetListCtrl(self):
         return self
@@ -622,7 +622,7 @@ class DisplayAttributesDialog(wx.Dialog):
             dlg.Destroy()
             self.mapInfo = None
             return
-        
+
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY,
                            title="", style=style, pos=pos)
 
@@ -644,11 +644,11 @@ class DisplayAttributesDialog(wx.Dialog):
                 self.SetTitle(_("Add attributes"))
             else:
                 self.SetTitle(_("Display attributes"))
-                
+
             if not found or \
                    (self.action != "add" and selected == 0):
                 continue
-            
+
             panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
             notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
@@ -676,11 +676,11 @@ class DisplayAttributesDialog(wx.Dialog):
                     colName = wx.StaticText(parent=panel, id=wx.ID_ANY, label=name)
                     colType = wx.StaticText(parent=panel, id=wx.ID_ANY, label="[" + type.lower() + "]")
                     delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
-                    
+
                     colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value, size=(250, -1)) # TODO: validator
                     colValue.SetName(name)
                     self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
-                    
+
                     flexSizer.Add(colName, proportion=0,
                                   flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
                     flexSizer.Add(colType, proportion=0,
@@ -693,7 +693,7 @@ class DisplayAttributesDialog(wx.Dialog):
                     sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
                     border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
                     panel.SetSizer(border)
-                    
+
                 # add widget reference to self.columns
                 columns[name].append(colValue.GetId())
 
@@ -723,14 +723,14 @@ class DisplayAttributesDialog(wx.Dialog):
         if notebook.GetPageCount() == 0:
             Debug.msg(4, "DisplayAttributesDialog(): Nothing found!")
             self.mapInfo = None
-        
+
     def __SelectAttributes(self, layer):
         """Select attributes"""
-    
+
     def OnSQLStatement(self, event):
         """Update SQL statement"""
         pass
-    
+
     def GetSQLString(self):
         """Create SQL statement string based on self.sqlStatement"""
         for layer in self.mapInfo.layers.keys():
@@ -759,19 +759,19 @@ class DisplayAttributesDialog(wx.Dialog):
                 sqlString = ""
                 Debug.msg(3, "DisplayAttributesDialog.GetSQLString(): %s" % sqlString)
                 return sqlString
-            
+
             if self.action == "add":
                 sqlString = "INSERT INTO %s (cat," % table
             else:
                 sqlString = "UPDATE %s SET " % table
-                
+
             for idx in range(len(updatedColumns)):
                 name = updatedColumns[idx]
                 if self.action == "add":
                     sqlString += name + ","
                 else:
                     sqlString += name + "=" + updatedValues[idx] + ","
-      
+
             sqlString = sqlString[:-1] # remove last comma
 
             if self.action == "add":
@@ -798,7 +798,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnSubmit(self, event):
         """Submit record"""
-        
+
         self.Close()
 
 class VectorAttributesInfo:
@@ -814,7 +814,7 @@ class VectorAttributesInfo:
             return
 
         self.__DescribeTables() # -> self.tables
-        
+
     def __CheckDBConnection(self):
         """Check DB connection"""
         layerCommand = cmd.Command(cmd=["v.db.connect",
@@ -822,14 +822,14 @@ class VectorAttributesInfo:
                                         "map=%s" % self.map])
         if layerCommand.returncode != 0:
             return False
-        
+
         # list of available layers & (table, database, driver)
         for line in layerCommand.ReadStdOutput():
             lineList = line.split(' ')
             self.layers[int(lineList[0])] = { "table"    : lineList[1],
                                               "database" : lineList[3],
                                               "driver"   : lineList[4] }
-            
+
         if (len(self.layers.keys()) == 0):
             return False
 
