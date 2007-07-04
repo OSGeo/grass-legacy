@@ -34,7 +34,7 @@
 #        due to different number of downloaded decimal places.
 
 #%Module
-#% description: Downloads Waypoints, Routes, and Tracks from a Garmin GPS receiver into a vector map.
+#% description: Download waypoints, routes, and tracks from a Garmin GPS receiver into a vector map.
 #% keywords: vector, import, GPS
 #%End
 #%flag
@@ -90,7 +90,13 @@ if [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    # save command line
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+	CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 
@@ -827,6 +833,8 @@ if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
     db.columns "$NAME"
 fi
 
+# write cmd history:
+v.support map="$NAME" cmdhist="${CMDLINE}"
 
 #### clean up the mess
 \rm -f "${TMP}"*
