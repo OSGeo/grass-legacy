@@ -2704,11 +2704,11 @@ msgstr "Geographische Koordinaten"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1021
 msgid "forward error"
-msgstr "Vorwärtz-Fehler"
+msgstr "Vorwärz-Fehler"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1023
 msgid "backward error"
-msgstr "Rückwärtz-Fehler"
+msgstr "Rückwärz-Fehler"
 
 #: ../gui/tcltk/gis.m/georect.tcl:1064
 msgid "Manage ground control points (GCPs)"
@@ -5026,11 +5026,11 @@ msgstr "Den eingegebenen Text in der EPSG-Datei suchen."
 
 #: ../lib/init/epsg_option.tcl:484
 msgid "forward search"
-msgstr "Vorwärtzsuche"
+msgstr "Vorwärzsuche"
 
 #: ../lib/init/epsg_option.tcl:485
 msgid "backward search"
-msgstr "Rückwärtzsuche"
+msgstr "Rückwärzsuche"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
