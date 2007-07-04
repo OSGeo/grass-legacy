@@ -94,7 +94,13 @@ if [ -z "$GISBASE" ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+    # save command line
+    CMDLINE="`basename $0`"
+    for arg in "$@" ; do
+	CMDLINE="$CMDLINE \"$arg\""
+    done
+    export CMDLINE
+    exec g.parser "$0" "$@"
 fi
 
 # set environment so that awk works properly in all languages
@@ -348,7 +354,6 @@ if [ $CREATE_POINTS -eq 1 ] ; then
 	    rm -f "${TMP}."*
 	    exit 1
 	fi
-
     fi
 
 
@@ -674,6 +679,8 @@ if [ $VERBOSE -eq 1 ] && [ -n "$NAME" ] ; then
     db.columns "$NAME"
 fi
 
+# write cmd history:
+v.support map="$NAME" cmdhist="${CMDLINE}"
 
 #### clean up the mess
 rm -f "${TMP}."* "${TMP}"
