@@ -1,3 +1,26 @@
+/****************************************************************************
+ *
+ * MODULE:       r.slope.aspect
+ * AUTHOR(S):    Michael Shapiro and 
+ *               Olga Waupotitsch (original CERL contributors), 
+ *               Markus Neteler <neteler itc.it>,
+ *               Bernhard Reiter <bernhard intevation.de>, 
+ *               Brad Douglas <rez touchofmadness.com>,
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Hamish Bowman <hamish_nospam yahoo.com>,
+ *               Jachym Cepicky <jachym les-ejk.cz>,
+ *               Jan-Oliver Wagner <jan intevation.de>,
+ *               Radim Blazek <radim.blazek gmail.com>
+ * PURPOSE:      generates raster maps of slope, aspect, curvatures and
+ *               first and second order partial derivatives from a raster map
+ *               of true elevation values
+ * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -118,17 +141,19 @@ int r_slope_aspect (int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *a,*q;
+	struct Flag *a;
+    /* please, remove before GRASS 7 released */
+	struct Flag *q;
     } flag;
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->keywords = _("raster");
     module->description =
-		_("Generates raster map layers of slope, aspect, "
-		"curvatures and partial derivatives from a raster "
-		"map layer of true elevation values. Aspect is calculated counterclockwise from east.");
+	_("Generates raster map layers of slope, aspect, curvatures and "
+	  "partial derivatives from a raster map layer of true elevation "
+	  "values. Aspect is calculated counterclockwise from east.");
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;
@@ -145,22 +170,6 @@ int r_slope_aspect (int argc, char *argv[])
     parm.slope->gisprompt  = "new,cell,raster" ;
     parm.slope->description= _("Output slope filename") ;
 
-    parm.slope_fmt = G_define_option() ;
-    parm.slope_fmt->key        = "format" ;
-    parm.slope_fmt->type       = TYPE_STRING ;
-    parm.slope_fmt->required   = NO ;
-    parm.slope_fmt->answer     = "degrees";
-    parm.slope_fmt->options  = "degrees,percent";
-    parm.slope_fmt->description= _("Format for reporting the slope") ;
-
-    parm.out_precision = G_define_option() ;
-    parm.out_precision->key        = "prec";
-    parm.out_precision->type       = TYPE_STRING ;
-    parm.out_precision->required   = NO ;
-    parm.out_precision->answer     = "float";
-    parm.out_precision->options  = "default,double,float,int";
-    parm.out_precision->description= _("Type of output aspect and slope maps") ;
-
     parm.aspect = G_define_option() ;
     parm.aspect->key        = "aspect" ;
     parm.aspect->type       = TYPE_STRING ;
@@ -169,6 +178,24 @@ int r_slope_aspect (int argc, char *argv[])
     parm.aspect->gisprompt  = "new,cell,raster" ;
     parm.aspect->description= _("Output aspect filename") ;
 
+    parm.slope_fmt = G_define_option() ;
+    parm.slope_fmt->key        = "format" ;
+    parm.slope_fmt->type       = TYPE_STRING ;
+    parm.slope_fmt->required   = NO ;
+    parm.slope_fmt->answer     = "degrees";
+    parm.slope_fmt->options    = "degrees,percent";
+    parm.slope_fmt->description= _("Format for reporting the slope") ;
+    parm.slope_fmt->guisection = _("Settings");
+
+    parm.out_precision = G_define_option() ;
+    parm.out_precision->key        = "prec";
+    parm.out_precision->type       = TYPE_STRING ;
+    parm.out_precision->required   = NO ;
+    parm.out_precision->answer     = "float";
+    parm.out_precision->options    = "default,double,float,int";
+    parm.out_precision->description= _("Type of output aspect and slope maps") ;
+    parm.out_precision->guisection = _("Settings");
+
     parm.pcurv = G_define_option() ;
     parm.pcurv->key        = "pcurv" ;
     parm.pcurv->type       = TYPE_STRING ;
@@ -176,6 +203,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.pcurv->answer     = NULL ;
     parm.pcurv->gisprompt  = "new,cell,raster" ;
     parm.pcurv->description= _("Output profile curvature filename" );
+    parm.pcurv->guisection = _("Advanced");
 
     parm.tcurv = G_define_option() ;
     parm.tcurv->key        = "tcurv" ;
@@ -184,6 +212,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.tcurv->answer     = NULL ;
     parm.tcurv->gisprompt  = "new,cell,raster" ;
     parm.tcurv->description= _("Output tangential curvature filename") ;
+    parm.tcurv->guisection = _("Advanced");
 
     parm.dx = G_define_option() ;
     parm.dx->key        = "dx" ;
@@ -192,6 +221,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dx->answer     = NULL ;
     parm.dx->gisprompt  = "new,cell,raster" ;
     parm.dx->description= _("Output first order partial derivative dx (E-W slope) filename") ;
+    parm.dx->guisection = _("Advanced");
 
     parm.dy = G_define_option() ;
     parm.dy->key        = "dy" ;
@@ -200,6 +230,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dy->answer     = NULL ;
     parm.dy->gisprompt  = "new,cell,raster" ;
     parm.dy->description= _("Output first order partial derivative dy (N-S slope) filename") ;
+    parm.dy->guisection = _("Advanced");
 
     parm.dxx = G_define_option() ;
     parm.dxx->key        = "dxx" ;
@@ -208,6 +239,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dxx->answer     = NULL ;
     parm.dxx->gisprompt  = "new,cell,raster" ;
     parm.dxx->description= _("Output second order partial derivative dxx filename") ;
+    parm.dxx->guisection = _("Advanced");
 
     parm.dyy = G_define_option() ;
     parm.dyy->key        = "dyy" ;
@@ -216,6 +248,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dyy->answer     = NULL ;
     parm.dyy->gisprompt  = "new,cell,raster" ;
     parm.dyy->description= _("Output second order partial derivative dyy filename") ;
+    parm.dyy->guisection = _("Advanced");
 
     parm.dxy = G_define_option() ;
     parm.dxy->key        = "dxy" ;
@@ -224,6 +257,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dxy->answer     = NULL ;
     parm.dxy->gisprompt  = "new,cell,raster" ;
     parm.dxy->description= _("Output second order partial derivative dxy filename") ;
+    parm.dxy->guisection = _("Advanced");
 
     parm.zfactor = G_define_option();
     parm.zfactor->key         = "zfactor";
@@ -231,6 +265,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.zfactor->type        = TYPE_DOUBLE;
     parm.zfactor->required    = NO;
     parm.zfactor->answer      = "1.0";
+    parm.zfactor->guisection  = _("Settings");
 
     parm.min_slp_allowed = G_define_option();
     parm.min_slp_allowed->key         = "min_slp_allowed";
@@ -238,14 +273,18 @@ int r_slope_aspect (int argc, char *argv[])
     parm.min_slp_allowed->type        = TYPE_DOUBLE;
     parm.min_slp_allowed->required    = NO;
     parm.min_slp_allowed->answer      = "0.0";
+    parm.min_slp_allowed->guisection  = _("Settings");
+
+    /* please, remove before GRASS 7 released */
+    flag.q = G_define_flag() ;
+    flag.q->key         = 'q' ;
+    flag.q->description = _("Quiet") ;
 
     flag.a = G_define_flag() ;
     flag.a->key         = 'a' ;
     flag.a->description = _("Do not align the current region to the elevation layer") ;
+    flag.a->guisection  = _("Settings");
 
-    flag.q = G_define_flag() ;
-    flag.q->key         = 'q' ;
-    flag.q->description = _("Quiet") ;
 
     radians_to_degrees = 180.0 / M_PI ;
     degrees_to_radians = M_PI / 180.0 ;
@@ -273,6 +312,15 @@ int r_slope_aspect (int argc, char *argv[])
 
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
+
+    /* please, remove before GRASS 7 released */
+    if(flag.q->answer) {
+        putenv("GRASS_VERBOSE=0");
+        G_warning(_("The '-q' flag is superseded and will be removed "
+            "in future. Please use '--quiet' instead."));
+    }
+
+
 
     elev_name = parm.elevation->answer;
     slope_name = parm.slope->answer;
@@ -558,7 +606,7 @@ int r_slope_aspect (int argc, char *argv[])
     }
     else G_get_d_raster_row_nomask (elevation_fd, elev_cell[2],1);
 
-    if (!flag.q->answer) fprintf (stderr, "percent complete: ");
+    G_message (_("Percent complete: "));
     for (row = 2; row < nrows; row++)
     {
         /*  if projection is Lat/Lon, recalculate  V and H   */
@@ -590,7 +638,7 @@ int r_slope_aspect (int argc, char *argv[])
 */
 	}
 
-        if (!flag.q->answer) G_percent (row, nrows, 2);
+        G_percent (row, nrows, 2);
         temp = elev_cell[0];
         elev_cell[0] = elev_cell[1];
         elev_cell[1] = elev_cell[2];
@@ -980,13 +1028,13 @@ int r_slope_aspect (int argc, char *argv[])
             G_put_raster_row(dxy_fd, dxy_raster, data_type);
 
     } /* row loop */
-    if (flag.q->answer) G_percent (row, nrows, 2);
+
+    G_percent (row, nrows, 2);
 
     G_close_cell (elevation_fd);
-    if (!flag.q->answer)
-        G_message(_("CREATING SUPPORT FILES"));
+    G_message(_("Creating support files"));
 
-    G_message(_("ELEVATION PRODUCTS for mapset [%s] in [%s]"),
+    G_message(_("Elevation products for mapset [%s] in [%s]"),
         G_mapset(), G_location());
 
     if (aspect_fd >= 0)
@@ -1373,3 +1421,6 @@ int r_slope_aspect (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
+
+
+
