@@ -1,5 +1,5 @@
 /*
-*  v.lrs.create - Generate segments or points from imput map for existing 
+*  v.lrs.create - Generate segments or points from input map for existing 
 *                 linear reference system
 */
 
