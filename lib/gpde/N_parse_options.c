@@ -56,7 +56,7 @@ struct Option *N_define_standard_option(int opt)
 	Opt->options = "gauss,lu,cholesky,jacobi,sor,cg,bicgstab,pcg";
 	Opt->description =
 	    _
-	    ("The type of solver which should solve the symmetric linear equation system.");
+	    ("The type of solver which should solve the symmetric linear equation system");
 	break;
 	/*solver for unsymmetric linear equation systems */
     case N_OPT_SOLVER_UNSYMM:
@@ -68,7 +68,7 @@ struct Option *N_define_standard_option(int opt)
 	Opt->options = "gauss,lu,jacobi,sor,bicgstab";
 	Opt->description =
 	    _
-	    ("The type of solver which should solve the linear equation system.");
+	    ("The type of solver which should solve the linear equation system");
 	break;
     case N_OPT_MAX_ITERATIONS:
 	Opt->key = "maxit";
