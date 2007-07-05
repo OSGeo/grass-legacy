@@ -15,7 +15,7 @@ getcells(void)
 
 
 	if((fd = G_open_cell_old(iname,mapset)) < 0)
-	    G_fatal_error(_("Unable to open raster map [%s]"), iname);
+	    G_fatal_error(_("Unable to open raster map <%s>"), iname);
 
 	data_type = G_get_raster_map_type(fd);
 
@@ -62,7 +62,7 @@ getcells(void)
 		}else
 		if(G_get_d_raster_row(fd,cell[i],i) < 0){
 			G_close_cell(fd);
-			G_fatal_error(_("Unable to read row %d in raster map [%s]"), i, iname);
+			G_fatal_error(_("Unable to read raster map <%s> row %d"),iname i, );
 		}
 	}
 	if(data_type == CELL_TYPE)
