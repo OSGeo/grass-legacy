@@ -60,7 +60,7 @@ void set_params(void)
     param.status->type = TYPE_STRING;
     param.status->required = YES;
     param.status->gisprompt = "old,raster,raster";
-    param.status->description = _("boundary condition status, 0-inactive, 1-active, 2-dirichlet");
+    param.status->description = _("Boundary condition status, 0-inactive, 1-active, 2-dirichlet");
 
     param.hc_x = G_define_option();
     param.hc_x->key = "hc_x";
@@ -118,19 +118,15 @@ void set_params(void)
     param.output->type = TYPE_STRING;
     param.output->required = YES;
     param.output->gisprompt = "new,raster,raster";
-    param.output->description =
-	_
-	("The map storing the numerical result [m].");
+    param.output->description =	_("The map storing the numerical result [m]");
 
     param.vector = G_define_option();
     param.vector->key = "velocity";
     param.vector->type = TYPE_STRING;
     param.vector->required = NO;
     param.vector->gisprompt = "new,raster,raster";
-    param.vector->description =
-	_
-	("Calculate the groundwater filter velocity vector field [m/s]\n"
-         "and write the x, and y components to maps named name_[xy]\n");
+    param.vector->description =	_("Calculate the groundwater filter velocity vector field [m/s]\n"
+         "and write the x, and y components to maps named name_[xy]");
 
     param.type = G_define_option();
     param.type->key = "type";
@@ -138,8 +134,7 @@ void set_params(void)
     param.type->required = NO;
     param.type->answer = "confined";
     param.type->options = "confined,unconfined";
-    param.type->description =
-	_("The type of groundwater flow.");
+    param.type->description = _("The type of groundwater flow");
 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
     param.maxit = N_define_standard_option(N_OPT_MAX_ITERATIONS);
@@ -149,9 +144,7 @@ void set_params(void)
 
     param.sparse = G_define_flag();
     param.sparse->key = 's';
-    param.sparse->description =
-	_
-	("Use a sparse matrix, only available with iterative solvers");
+    param.sparse->description =	_("Use a sparse matrix, only available with iterative solvers");
 
 }
 
@@ -182,9 +175,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster");
-    module->description =
-	_
-	("Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions");
+    module->description = _("Numerical calculation program for transient, confined and unconfined groundwater flow in two dimensions.");
 
     /* Get parameters from user */
     set_params();
@@ -321,8 +312,7 @@ int main(int argc, char *argv[])
 		tmp_vect[i] = les->x[i];
 	    }
 
-	    G_message(_
-		      ("Maximum difference between this and last increment: %g"),
+	    G_message(_("Maximum difference between this and last increment: %g"),
 		      max_norm);
 
 	    /* copy the result into the phead array */
@@ -470,8 +460,7 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 	N_solver_gauss(les);
 
     if (les == NULL)
-	G_fatal_error(_
-		      ("Unable to create and solve the linear equation system"));
+	G_fatal_error(_("Unable to create and solve the linear equation system"));
 
     return les;
 }

@@ -66,11 +66,11 @@ main (int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster, import, conversion");
 	module->description =
-		_("Convert ASCII raster file to binary raster map layer.");
+		_("Converts ASCII raster file to binary raster map layer.");
 
 	parm.input = G_define_standard_option(G_OPT_R_INPUT);
 	parm.input->description =
-	  _("ASCII raster file to be imported if not given reads from standard input");
+	  _("ASCII raster file to be imported. If not given reads from standard input");
 	parm.input->gisprompt = "old_file,file,input";
 	parm.input->required  = NO;
 
@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 	parm.mult->type = TYPE_DOUBLE;
 	parm.mult->answer = "1.0 or read from header";
 	parm.mult->required = NO;
-	parm.mult->description = _("Multiplier for ascii data") ;
+	parm.mult->description = _("Multiplier for ASCII data") ;
 
         parm.nv = G_define_option();
         parm.nv->key = "nv";
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
 	temp = G_tempfile();
 	ft=fopen(temp,"w+");
 	if(ft==NULL)
-            G_fatal_error(_("Unable to open temporary file"));
+            G_fatal_error(_("Unable to open temporary file <%s>"), temp);
 
 	if ((title = parm.title->answer))
 		G_strip (title);
@@ -157,7 +157,7 @@ main (int argc, char *argv[])
 	  {
 		Tmp_file = G_tempfile();
 		if (NULL == (Tmp_fd = fopen (Tmp_file, "w+")))
-                    G_fatal_error(_("Unable to open temp file"));
+                    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file);
 		unlink (Tmp_file);
 		if (0 > file_cpy(stdin, Tmp_fd))
                     G_fatal_error(_("Unable to read input from stdin"));
