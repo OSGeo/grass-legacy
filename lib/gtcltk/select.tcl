@@ -69,7 +69,7 @@ namespace eval GSelect_ {
 }
 
 proc GSelect_::create { element args } {
-    global env
+    global env id
     variable selwin
     variable count
     
@@ -178,10 +178,8 @@ proc GSelect_::create { element args } {
 
     # buttons
     button $selwin($id,self).ok -text [G_msg "Ok"] -command "destroy $selwin($id,self)"
-    button $selwin($id,self).cancel -text [G_msg "Cancel"] -command "
-        set selwin($id,selected) {}
-        destroy $selwin($id,self)
-    "
+    button $selwin($id,self).cancel -text [G_msg "Cancel"] -command "GSelect_::terminate $id"
+
     pack $selwin($id,self).ok $selwin($id,self).cancel -side left -expand yes
 
 
@@ -196,6 +194,7 @@ proc GSelect_::create { element args } {
     ScrollView $selftop.sv -window $tree -fill black
     pack $selftop.sv -fill both -expand yes
 
+    wm protocol $selwin($id,self) WM_DELETE_WINDOW "GSelect_::terminate $id"
     tkwait window $selwin($id,self)
 
     destroy $selftop 
@@ -257,6 +256,14 @@ proc GSelect_::selectclose { id tree node } {
 
     GSelect_::select $id $tree $node
     destroy $selwin($id,self)
+}
+
+# Just close window
+proc GSelect_::terminate { id } {
+	variable selwin
+	
+	set selwin($id,selected) {}
+	destroy $selwin($id,self)
 }
 
 proc GSelect_::moddir { idx tree node } {
