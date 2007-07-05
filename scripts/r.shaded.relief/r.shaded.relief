@@ -134,7 +134,7 @@ scale=$GIS_OPT_SCALE
 
 eval `g.findfile element=cell file=$elev`
 if [ -z "$name" ] ; then
-   g.message -e  "Nap <$elev> not found."
+   g.message -e  "Map <$elev> not found."
    exit 1
 fi
 
