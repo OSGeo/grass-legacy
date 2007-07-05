@@ -542,10 +542,10 @@ int main(int argc, char *argv[])
     cost_fd = G_open_cell_old(cost_layer, cost_mapset);
 
     if (dtm_fd < 0)
-	G_fatal_error(_("%s - can't open raster map"), dtm_layer);
+	G_fatal_error(_("Unable to open raster map <%s>"), dtm_layer);
 
     if (cost_fd < 0)
-	G_fatal_error(_("%s - can't open raster map"), cost_layer);
+	G_fatal_error(_("Unable to open raster map <%s>"), cost_layer);
 
     dtm_head_ok = G_get_cellhd(dtm_layer, dtm_mapset, &dtm_cellhd) >= 0;
     cost_head_ok = G_get_cellhd(cost_layer, cost_mapset, &cost_cellhd) >= 0;
@@ -697,8 +697,7 @@ int main(int argc, char *argv[])
 	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(dtm_fd, dtm_cell, row, dtm_data_type) < 0)
-		G_fatal_error(_("Can't get row %d from raster map %s"), row,
-			      dtm_layer);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), dtm_layer, row);
 	    /* INPUT NULL VALUES: ??? */
 	    ptr2 = dtm_cell;
 	    switch (dtm_data_type) {
@@ -756,8 +755,7 @@ int main(int argc, char *argv[])
 	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cost_fd, cost_cell, row, cost_data_type) < 0)
-		G_fatal_error(_("Can't get row %d from raster map %s"), row,
-			      cost_layer);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), cost_layer, row);
 	    /* INPUT NULL VALUES: ??? */
 	    ptr2 = cost_cell;
 	    switch (cost_data_type) {
@@ -854,7 +852,7 @@ int main(int argc, char *argv[])
 
 	cum_fd = G_open_cell_old(cum_cost_layer, cum_cost_mapset);
 	if (cum_fd < 0)
-	    G_fatal_error(_("Can't open raster map %s"), cum_cost_layer);
+	    G_fatal_error(_("Unable to open raster map <%s>"), cum_cost_layer);
 
 	data_type2 = G_get_raster_map_type(cum_fd);
 
@@ -872,8 +870,7 @@ int main(int argc, char *argv[])
 	    
 		G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cum_fd, cell2, row, data_type2) < 0)
-		G_fatal_error(_("Can't get row %d from raster map %s"), row,
-			      cum_cost_layer);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), cum_cost_layer, row);
 	    ptr2 = cell2;
 	    for (col = 0; col < ncols; col++) {
 		/* Did I understand that concept of cummulative cost map? - (pmx) 12 april 2000 */

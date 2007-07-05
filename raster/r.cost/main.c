@@ -334,7 +334,7 @@ int main(int argc, char *argv[])
     cost_fd = G_open_cell_old(cost_layer, cost_mapset);
 
     if (cost_fd < 0)
-	G_fatal_error(_("%s - can't open raster map"), cost_layer);
+	G_fatal_error(_("Unable to open raster map <%s>"), cost_layer);
 
     data_type = G_get_raster_map_type(cost_fd);
     cell = G_allocate_raster_buf(data_type);
@@ -396,8 +396,7 @@ int main(int argc, char *argv[])
 	for (row = 0; row < nrows; row++) {
             G_percent(row, nrows, 2);
 	    if (G_get_raster_row(cost_fd, cell, row, data_type) < 0)
-		G_fatal_error(_("Can't get row %d from raster map %s"), row,
-		              cost_layer);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), cost_layer, row);
 
 	    /* INPUT NULL VALUES: ??? */
 	    ptr2 = cell;

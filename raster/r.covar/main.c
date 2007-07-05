@@ -93,10 +93,10 @@ int main(int argc, char *argv[])
 	name = maps->answers[i];
 	mapset = G_find_cell(name, "");
 	if (!mapset)
-	    G_fatal_error(_("%s - raster map not found"), name);
+	    G_fatal_error(_("Raster map <%s> not found"), name);
 	fd[i] = G_open_cell_old (name, mapset);
 	if (fd[i] < 0)
-	    G_fatal_error(_("%s - can't open raster map"), name);
+	    G_fatal_error(_("Unable to open raster map <%s>"), name);
     }
 
     nrows = G_window_rows();
