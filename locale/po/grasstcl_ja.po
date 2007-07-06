@@ -1079,8 +1079,9 @@ msgstr "色"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:130 ../gui/tcltk/gis.m/barscale.tcl:143
 #: ../gui/tcltk/gis.m/gridline.tcl:150
+#, fuzzy
 msgid "   "
-msgstr ""
+msgstr "フォント "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:141
 #, fuzzy
@@ -1393,8 +1394,9 @@ msgid "Add postscript labels layer (using v.labels file)"
 msgstr "ポストスクリプト ファイル"
 
 #: ../gui/tcltk/gis.m/gmtool1.tcl:135
+#, fuzzy
 msgid "Add posttscript text layer"
-msgstr ""
+msgstr "ファイル"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:136
 msgid "geodetic grid  "
@@ -1464,9 +1466,8 @@ msgid "Save current display geometry to named region"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:789
-#, fuzzy
 msgid "Enter region name"
-msgstr "地域"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/maplabels.tcl:136
 #, fuzzy
@@ -3349,8 +3350,9 @@ msgid "Name of new location"
 msgstr ""
 
 #: ../lib/init/file_option.tcl:78
+#, fuzzy
 msgid "Path to new location"
-msgstr ""
+msgstr "ロケーション"
 
 #: ../lib/init/file_option.tcl:80
 #, fuzzy
@@ -3417,11 +3419,14 @@ msgid ""
 msgstr "入力"
 
 #: ../lib/init/file_option.tcl:191
+#, fuzzy
 msgid ""
 "\n"
 "   Path to location:\n"
 "\n"
 msgstr ""
+"\n"
+" ファイル"
 
 #: ../lib/init/file_option.tcl:192
 msgid ""
@@ -3556,9 +3561,8 @@ msgid "GRASS Help"
 msgstr "ヘルプ"
 
 #: ../lib/init/gis_set.tcl:591
-#, fuzzy
 msgid "Exit"
-msgstr "エクスポート"
+msgstr ""
 
 #: ../lib/init/gis_set.tcl:629
 #, fuzzy
@@ -3575,37 +3579,43 @@ msgid "Back"
 msgstr ""
 
 #: ../lib/init/help.tcl:116
+#, fuzzy
 msgid "Contents"
-msgstr ""
+msgstr "継続"
 
 #: ../lib/init/help.tcl:117
+#, fuzzy
 msgid "Decrease"
-msgstr ""
+msgstr "フォント"
 
 #: ../lib/init/help.tcl:118 ../lib/init/help.tcl:2942
 #: ../lib/init/help.tcl:2943 ../lib/init/help.tcl:2946
+#, fuzzy
 msgid "Find"
-msgstr ""
+msgstr "終了."
 
 #: ../lib/init/help.tcl:119 ../lib/init/help.tcl:1567
 msgid "Forward"
 msgstr ""
 
 #: ../lib/init/help.tcl:120
+#, fuzzy
 msgid "Increase"
-msgstr ""
+msgstr "フォント"
 
 #: ../lib/init/help.tcl:121
 msgid "Index"
 msgstr ""
 
 #: ../lib/init/help.tcl:122
+#, fuzzy
 msgid "Next"
-msgstr ""
+msgstr "テキスト"
 
 #: ../lib/init/help.tcl:123
+#, fuzzy
 msgid "Open"
-msgstr ""
+msgstr "ファイル."
 
 #: ../lib/init/help.tcl:124
 msgid "Previous"
@@ -3638,12 +3648,14 @@ msgid "Copy"
 msgstr "コピー"
 
 #: ../lib/init/help.tcl:1572
+#, fuzzy
 msgid "Find..."
-msgstr ""
+msgstr "終了."
 
 #: ../lib/init/help.tcl:1573
+#, fuzzy
 msgid "Search in topics..."
-msgstr ""
+msgstr " ."
 
 #: ../lib/init/help.tcl:1575
 #, fuzzy
@@ -3679,12 +3691,14 @@ msgid "Creating title..."
 msgstr ""
 
 #: ../lib/init/help.tcl:2051
+#, fuzzy
 msgid "Displaying..."
-msgstr ""
+msgstr "ガンマ:"
 
 #: ../lib/init/help.tcl:2170
+#, fuzzy
 msgid "Done."
-msgstr ""
+msgstr "��"
 
 #: ../lib/init/help.tcl:2708
 #, fuzzy
@@ -3696,8 +3710,9 @@ msgid "Filename will be ignored"
 msgstr ""
 
 #: ../lib/init/help.tcl:2715
+#, fuzzy
 msgid "Generating HTMLs...."
-msgstr ""
+msgstr " "
 
 #: ../lib/init/help.tcl:2724
 #, fuzzy
@@ -3718,8 +3733,9 @@ msgid "Find what: "
 msgstr ""
 
 #: ../lib/init/help.tcl:2965
+#, fuzzy
 msgid "Direction"
-msgstr ""
+msgstr "アイコン"
 
 #: ../lib/init/help.tcl:2979
 msgid "Up"
@@ -4007,461 +4023,1163 @@ msgid "mouse button actions (left, right, center)"
 msgstr ""
 
 #, fuzzy
-#~ msgid "html-browser"
-#~ msgstr "ブラウザのヘルプ"
+msgid "html-browser"
+msgstr "ブラウザのヘルプ"
 
 #, fuzzy
-#~ msgid "Quit"
-#~ msgstr "終了"
+msgid "Quit"
+msgstr "終了"
 
 #, fuzzy
-#~ msgid "Scripting "
-#~ msgstr "スクリプトの作成/実行 "
+msgid "Scripting "
+msgstr "スクリプトの作成/実行 "
 
 #, fuzzy
-#~ msgid "About "
-#~ msgstr "GRASSについて "
+msgid "About "
+msgstr "GRASSについて "
 
 #, fuzzy
-#~ msgid "Family:"
-#~ msgstr "フォント:"
+msgid "Family:"
+msgstr "フォント:"
 
 #, fuzzy
-#~ msgid "Pick"
-#~ msgstr "フォント"
+msgid "Pick"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Font family"
-#~ msgstr "フォント"
+msgid "Font family"
+msgstr "フォント"
 
 #, fuzzy
-#~ msgid "Size:"
-#~ msgstr "サイズ:"
+msgid "Size:"
+msgstr "サイズ:"
 
 #, fuzzy
-#~ msgid "Weight:"
-#~ msgstr "太さ:"
+msgid "Weight:"
+msgstr "太さ:"
 
 #, fuzzy
-#~ msgid "normal"
-#~ msgstr "標準"
+msgid "normal"
+msgstr "標準"
 
 #, fuzzy
-#~ msgid "bold"
-#~ msgstr "太字"
+msgid "bold"
+msgstr "太字"
 
 #, fuzzy
-#~ msgid "Slant:"
-#~ msgstr "字体:"
+msgid "Slant:"
+msgstr "字体:"
 
 #, fuzzy
-#~ msgid "roman"
-#~ msgstr "標準"
+msgid "roman"
+msgstr "標準"
 
 #, fuzzy
-#~ msgid "italic"
-#~ msgstr "斜体"
+msgid "italic"
+msgstr "斜体"
 
 #, fuzzy
-#~ msgid "Display dimensions"
-#~ msgstr "ガンマ"
+msgid "Display dimensions"
+msgstr "ガンマ"
 
 #, fuzzy
-#~ msgid "CELL driver WIDTH"
-#~ msgstr "セル"
+msgid "CELL driver WIDTH"
+msgstr "セル"
 
 #, fuzzy
-#~ msgid "CELL driver HEIGHT"
-#~ msgstr "セル"
+msgid "CELL driver HEIGHT"
+msgstr "セル"
 
 #, fuzzy
-#~ msgid "Cont"
-#~ msgstr "継続"
+msgid "Cont"
+msgstr "継続"
 
 #, fuzzy
-#~ msgid "Finished."
-#~ msgstr "終了."
+msgid "Finished."
+msgstr "終了."
 
 #, fuzzy
-#~ msgid "Terminated."
-#~ msgstr "終了."
+msgid "Terminated."
+msgstr "終了."
 
 #, fuzzy
-#~ msgid "output"
-#~ msgstr "出力"
+msgid "output"
+msgstr "出力"
 
 #, fuzzy
-#~ msgid "quit_window"
-#~ msgstr "TCLTKGRASSの終了"
+msgid "quit_window"
+msgstr "TCLTKGRASSの終了"
 
 #, fuzzy
-#~ msgid "CANCEL"
-#~ msgstr "キャンセル"
+msgid "CANCEL"
+msgstr "キャンセル"
 
 #, fuzzy
-#~ msgid "Scripting already running, stop first"
-#~ msgstr "スクリプトの作成/実行"
+msgid "Scripting already running, stop first"
+msgstr "スクリプトの作成/実行"
 
 #, fuzzy
-#~ msgid "Scripting not running, start first"
-#~ msgstr "スクリプトの作成/実行"
+msgid "Scripting not running, start first"
+msgstr "スクリプトの作成/実行"
 
 #, fuzzy
-#~ msgid "Script recording in progress, stop first"
-#~ msgstr "スクリプト"
+msgid "Script recording in progress, stop first"
+msgstr "スクリプト"
 
 #, fuzzy
-#~ msgid "Open recorded script file for replay"
-#~ msgstr "ファイル の"
+msgid "Open recorded script file for replay"
+msgstr "ファイル の"
 
 #, fuzzy
-#~ msgid "is empty file"
-#~ msgstr "  ��"
+msgid "is empty file"
+msgstr "  ��"
 
 #, fuzzy
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr " :"
+msgid "is not a valid tcltkgrass script:"
+msgstr " :"
 
 #, fuzzy
-#~ msgid "invalid script file:"
+msgid "invalid script file:"
+msgstr "ファイル:"
+
+#, fuzzy
+msgid "Script"
+msgstr "スクリプト"
+
+#, fuzzy
+msgid "executed"
+msgstr "を実行しました"
+
+#, fuzzy
+msgid "for"
+msgstr "の"
+
+#, fuzzy
+msgid "first."
+msgstr "を起動してください"
+
+#, fuzzy
+msgid "Configure html-browser"
+msgstr "ブラウザ"
+
+#, fuzzy
+msgid "html browser (netscape)"
+msgstr "ブラウザ"
+
+#, fuzzy
+msgid "path or url for html manual pages"
+msgstr "の"
+
+#, fuzzy
+msgid "prefix for html path or url (file:)"
+msgstr "の ファイル"
+
+#, fuzzy
+msgid "postfix for html files (.html)"
+msgstr "の"
+
+#, fuzzy
+msgid "auto raise window of browser"
+msgstr "ブラウザ"
+
+#, fuzzy
+msgid "open in new window instance of browser"
+msgstr "ブラウザ"
+
+#, fuzzy
+msgid "Location:"
+msgstr "ロケーション"
+
+#, fuzzy
+msgid "Please select location and mapset\n"
+msgstr "マップセット"
+
+#, fuzzy
+msgid "Location"
+msgstr "ロケーション"
+
+#, fuzzy
+msgid "Mapset"
+msgstr "マップセット"
+
+#, fuzzy
+msgid "Create New Location"
+msgstr "ロケーション"
+
+#, fuzzy
+msgid "Vector Panel"
+msgstr "ベクトル"
+
+#, fuzzy
+msgid "Color"
+msgstr "色"
+
+#, fuzzy
+msgid "Display on surface(s):"
+msgstr "ガンマ:"
+
+#, fuzzy
+msgid "Input File:"
+msgstr "ファイル:"
+
+#, fuzzy
+msgid "Output File:"
+msgstr "ファイル:"
+
+#, fuzzy
+msgid "Color File:"
+msgstr "色 "
+
+#, fuzzy
+msgid "Threshold Type"
+msgstr "アイコン"
+
+#, fuzzy
+msgid "Interpolation"
+msgstr "補間"
+
+#, fuzzy
+msgid "Pipe to: None"
+msgstr "��"
+
+#, fuzzy
+msgid "Query map: None"
+msgstr "��"
+
+#, fuzzy
+msgid "What's Here?"
+msgstr " ?"
+
+#, fuzzy
+msgid "What's Here Panel"
+msgstr " "
+
+#, fuzzy
+msgid "Query vector"
+msgstr "データ情報 ファイル"
+
+#, fuzzy
+msgid "sites"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "Color: "
+msgstr "色"
+
+#, fuzzy
+msgid "distance along surface:      "
+msgstr "単位 "
+
+#, fuzzy
+msgid "Query map: "
+msgstr "データ情報 "
+
+#, fuzzy
+msgid "Invalid query object type"
+msgstr "アイコン"
+
+#, fuzzy
+msgid "xy distance from previous:  "
+msgstr "xy 単位 "
+
+#, fuzzy
+msgid "xyz distance from previous:  "
+msgstr "xyz 単位 "
+
+#, fuzzy
+msgid "distance along exag. surface: "
+msgstr "単位 "
+
+#, fuzzy
+msgid "Remove"
+msgstr "削除"
+
+#, fuzzy
+msgid "Map Type:"
+msgstr "管理 アイコン:"
+
+#, fuzzy
+msgid "Map Browser"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "Sites"
+msgstr "サイト"
+
+#, fuzzy
+msgid "Site Panel"
+msgstr "サイト"
+
+#, fuzzy
+msgid "site size"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "3D Sites"
+msgstr "サイト"
+
+#, fuzzy
+msgid "show site"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "tension"
+msgstr "���� ����"
+
+#, fuzzy
+msgid "Ok"
+msgstr "OK"
+
+#, fuzzy
+msgid "There is already a keyframe at this time, do you wish to replace it?"
+msgstr " ?"
+
+#, fuzzy
+msgid "Can't create file"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "None"
+msgstr "��"
+
+#, fuzzy
+msgid "None Selected"
+msgstr "��"
+
+#, fuzzy
+msgid "Run and Save Images"
+msgstr "実行 保存"
+
+#, fuzzy
+msgid "for keyframe"
+msgstr "の"
+
+#, fuzzy
+msgid "There is already a keyframe at this time, replace it?"
+msgstr " ?"
+
+#, fuzzy
+msgid "There are no keys in the current animation to save"
+msgstr " "
+
+#, fuzzy
+msgid "File Error"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "Error - Could not open file"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "for reading"
+msgstr "の"
+
+#, fuzzy
+msgid "Select Color"
+msgstr "選択 色"
+
+#, fuzzy
+msgid "Use Surface Color"
+msgstr "色"
+
+#, fuzzy
+msgid "File Browser"
+msgstr "ファイル"
+
+#, fuzzy
+msgid "Raster"
+msgstr "ラスター"
+
+#, fuzzy
+msgid "Site"
+msgstr "サイト"
+
+#, fuzzy
+msgid "Color Panel"
+msgstr "色"
+
+#, fuzzy
+msgid "Wire Color"
+msgstr "色"
+
+#, fuzzy
+msgid "New Map"
+msgstr "管理"
+
+#, fuzzy
+msgid "Remove Mask"
+msgstr "削除"
+
+#, fuzzy
+msgid "Use as color"
+msgstr "色"
+
+#, fuzzy
+msgid "color:"
+msgstr "色:"
+
+#, fuzzy
+msgid "Surface Color"
+msgstr "色"
+
+#, fuzzy
+msgid "Font Size:"
+msgstr "フォント:"
+
+#, fuzzy
+msgid "Label Text"
+msgstr "テキスト"
+
+#, fuzzy
+msgid "Use List"
+msgstr "一覧"
+
+#, fuzzy
+msgid "Current List"
+msgstr "一覧"
+
+#, fuzzy
+msgid "  Label Sites  "
+msgstr "サイト "
+
+#, fuzzy
+msgid "Create new mapset : "
+msgstr "マップセット "
+
+#, fuzzy
+msgid "Create Location From EPSG"
+msgstr "ロケーション"
+
+#, fuzzy
+msgid "c. Select raster"
+msgstr "選択 マップセット"
+
+#, fuzzy
+msgid "Select xy raster to display for georectification"
+msgstr "選択 xy ファイル の"
+
+#, fuzzy
+msgid "a. Select vector"
+msgstr "選択 ファイル"
+
+#, fuzzy
+msgid "list ghostscript output devices"
+msgstr "出力"
+
+#, fuzzy
+msgid "Select raster map to profile"
+msgstr "選択 ファイル"
+
+#, fuzzy
+msgid "Create WIND3 (default 3D window) from current 2D region"
+msgstr "地域"
+
+#, fuzzy
+msgid "Manage 3D region"
+msgstr "地域"
+
+#, fuzzy
+msgid "Modify mapset search path"
+msgstr "マップセット"
+
+#, fuzzy
+#~ msgid "DXF file"
 #~ msgstr "ファイル:"
 
 #, fuzzy
-#~ msgid "Script"
-#~ msgstr "スクリプト"
-
-#, fuzzy
-#~ msgid "executed"
-#~ msgstr "を実行しました"
-
-#, fuzzy
-#~ msgid "for"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "first."
-#~ msgstr "を起動してください"
-
-#, fuzzy
-#~ msgid "Configure html-browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "html browser (netscape)"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "path or url for html manual pages"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "prefix for html path or url (file:)"
-#~ msgstr "の ファイル"
-
-#, fuzzy
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "auto raise window of browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "open in new window instance of browser"
-#~ msgstr "ブラウザ"
-
-#, fuzzy
-#~ msgid "Location:"
-#~ msgstr "ロケーション"
-
-#, fuzzy
-#~ msgid "Please select location and mapset\n"
-#~ msgstr "マップセット"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "ロケーション"
-
-#, fuzzy
-#~ msgid "Mapset"
-#~ msgstr "マップセット"
-
-#, fuzzy
-#~ msgid "Create New Location"
-#~ msgstr "ロケーション"
-
-#, fuzzy
-#~ msgid "Vector Panel"
-#~ msgstr "ベクトル"
-
-#, fuzzy
-#~ msgid "Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "Display on surface(s):"
-#~ msgstr "ガンマ:"
-
-#, fuzzy
-#~ msgid "Input File:"
-#~ msgstr "ファイル:"
-
-#, fuzzy
-#~ msgid "Output File:"
-#~ msgstr "ファイル:"
-
-#, fuzzy
-#~ msgid "Color File:"
-#~ msgstr "色 ファイル:"
-
-#, fuzzy
-#~ msgid "Threshold Type"
-#~ msgstr "アイコン"
-
-#, fuzzy
-#~ msgid "Interpolation"
-#~ msgstr "補間"
-
-#, fuzzy
-#~ msgid "Pipe to: None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "Query map: None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "What's Here?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "What's Here Panel"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Query vector"
-#~ msgstr "データ情報 ファイル"
-
-#, fuzzy
-#~ msgid "sites"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Color: "
-#~ msgstr "色 "
-
-#, fuzzy
-#~ msgid "distance along surface:      "
-#~ msgstr "単位 "
-
-#, fuzzy
-#~ msgid "Query map: "
-#~ msgstr "データ情報 "
-
-#, fuzzy
-#~ msgid "Invalid query object type"
-#~ msgstr "アイコン"
-
-#, fuzzy
-#~ msgid "xy distance from previous:  "
-#~ msgstr "xy 単位 "
-
-#, fuzzy
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "xyz 単位 "
-
-#, fuzzy
-#~ msgid "distance along exag. surface: "
-#~ msgstr "単位 "
-
-#, fuzzy
-#~ msgid "Remove"
-#~ msgstr "削除"
-
-#, fuzzy
-#~ msgid "Map Type:"
-#~ msgstr "管理 アイコン:"
-
-#, fuzzy
-#~ msgid "Map Browser"
-#~ msgstr "管理"
-
-#, fuzzy
-#~ msgid "Sites"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "Site Panel"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "site size"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "3D Sites"
-#~ msgstr "サイト"
-
-#, fuzzy
-#~ msgid "show site"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "tension"
-#~ msgstr "���� ����"
-
-#, fuzzy
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#, fuzzy
-#~ msgid "There is already a keyframe at this time, do you wish to replace it?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "Can't create file"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "None"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "None Selected"
-#~ msgstr "��"
-
-#, fuzzy
-#~ msgid "Run and Save Images"
-#~ msgstr "実行 保存"
-
-#, fuzzy
-#~ msgid "for keyframe"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "There is already a keyframe at this time, replace it?"
-#~ msgstr " ?"
-
-#, fuzzy
-#~ msgid "There are no keys in the current animation to save"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "File Error"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Error - Could not open file"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "for reading"
-#~ msgstr "の"
-
-#, fuzzy
-#~ msgid "Select Color"
-#~ msgstr "選択 色"
-
-#, fuzzy
-#~ msgid "Use Surface Color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "File Browser"
-#~ msgstr "ファイル"
-
-#, fuzzy
-#~ msgid "Raster"
+#~ msgid "Raster 2.5D map to volume"
 #~ msgstr "ラスター"
 
 #, fuzzy
-#~ msgid "Site"
-#~ msgstr "サイト"
+#~ msgid "Resample (change resolution)"
+#~ msgstr "方法"
 
 #, fuzzy
-#~ msgid "Color Panel"
-#~ msgstr "色"
+#~ msgid "Resample using various interpolation methods"
+#~ msgstr "方法"
 
 #, fuzzy
-#~ msgid "Wire Color"
-#~ msgstr "色"
+#~ msgid "Display scale and north arrow"
+#~ msgstr "ガンマ "
 
 #, fuzzy
-#~ msgid "New Map"
-#~ msgstr "管理"
+#~ msgid "Vector map for chart"
+#~ msgstr "ベクトル:"
 
 #, fuzzy
-#~ msgid "Remove Mask"
-#~ msgstr "削除"
-
-#, fuzzy
-#~ msgid "Use as color"
-#~ msgstr "色"
-
-#, fuzzy
-#~ msgid "color:"
+#~ msgid "\tchart outline color:"
 #~ msgstr "色:"
 
 #, fuzzy
-#~ msgid "Surface Color"
-#~ msgstr "色"
+#~ msgid "Display text"
+#~ msgstr "ガンマ "
 
 #, fuzzy
-#~ msgid "Font Size:"
+#~ msgid "Text to display: "
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Text options: font "
+#~ msgstr "テキスト 色"
+
+#, fuzzy
+#~ msgid "Exit georectifier"
+#~ msgstr "開始"
+
+#, fuzzy
+#~ msgid "Map Display %d"
+#~ msgstr "ガンマ "
+
+#, fuzzy
+#~ msgid "All Files"
+#~ msgstr "色 ファイル:"
+
+#, fuzzy
+#~ msgid "Save File"
+#~ msgstr "保存 グループ ファイル"
+
+#, fuzzy
+#~ msgid "Select default font for GRASS displays"
+#~ msgstr "選択 フォント"
+
+#, fuzzy
+#~ msgid "Font: "
 #~ msgstr "フォント:"
 
 #, fuzzy
-#~ msgid "Label Text"
+#~ msgid "Import raster map"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Aggregate ASCII xyz"
+#~ msgstr "xyz ファイル"
+
+#, fuzzy
+#~ msgid "ASCII grid"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Binary"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Import vector map"
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "ASCII points or GRASS ASCII vector"
+#~ msgstr "ファイル ファイル ファイル"
+
+#, fuzzy
+#~ msgid "Old GRASS vector"
+#~ msgstr "インポート ファイル"
+
+#, fuzzy
+#~ msgid "Import grid 3D volume"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "ASCII 3D"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Vis5D"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Export raster map"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "VRML"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Export vector map"
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "Export grid 3D volume"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "List filtered"
+#~ msgstr "一覧"
+
+#, fuzzy
+#~ msgid "Rename"
+#~ msgstr "名前の変更"
+
+#, fuzzy
+#~ msgid "Delete filtered"
+#~ msgstr "選択 ファイル"
+
+#, fuzzy
+#~ msgid "Raster to vector"
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "Raster series to volume"
+#~ msgstr "ラスター"
+
+#, fuzzy
+#~ msgid "Raster 2.5D to volume"
+#~ msgstr "ラスター"
+
+#, fuzzy
+#~ msgid "Vector to volume"
+#~ msgstr "ベクトル ファイル"
+
+#, fuzzy
+#~ msgid "Sites to vector"
+#~ msgstr "サイト ファイル"
+
+#, fuzzy
+#~ msgid "Volume to raster series"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Bearing/distance to coordinates"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Show settings"
+#~ msgstr "ガンマ"
+
+#, fuzzy
+#~ msgid "Change settings"
+#~ msgstr "ガンマ"
+
+#, fuzzy
+#~ msgid "Projection for current location"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "Convert coordinates"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Display font"
+#~ msgstr "ガンマ "
+
+#, fuzzy
+#~ msgid "Compress/decompress"
+#~ msgstr "ファイル ファイル"
+
+#, fuzzy
+#~ msgid "Null values"
+#~ msgstr "色 ファイル:"
+
+#, fuzzy
+#~ msgid "Timestamps"
+#~ msgstr "一覧"
+
+#, fuzzy
+#~ msgid "Resample using multiple methods"
+#~ msgstr "方法"
+
+#, fuzzy
+#~ msgid "Resample using nearest neighbor"
+#~ msgstr "方法"
+
+#, fuzzy
+#~ msgid "Resample using spline tension"
+#~ msgstr "���� ����"
+
+#, fuzzy
+#~ msgid "Support file maintenance"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Update map statistics"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Color tables"
+#~ msgstr "コピー"
+
+#, fuzzy
+#~ msgid "HIS to RGB"
+#~ msgstr "ヘルプ の"
+
+#, fuzzy
+#~ msgid "Closest points"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid "Moving window"
+#~ msgstr "ズーム"
+
+#, fuzzy
+#~ msgid "Neighborhood points"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Map series"
+#~ msgstr "管理"
+
+#, fuzzy
+#~ msgid "Solar irradiance irradiation"
+#~ msgstr "共分散/相関"
+
+#, fuzzy
+#~ msgid "Flow accumulation"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "Shape index"
+#~ msgstr "保存 終了"
+
+#, fuzzy
+#~ msgid "Rate of spread"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Reclassify using rules"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Reclassify using rules file"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Recode using rules"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "Recode using rules file"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Rescale with histogram"
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "Random cells and vector points"
+#~ msgstr "ファイル ファイル"
+
+#, fuzzy
+#~ msgid "Plane"
+#~ msgstr "ラベル"
+
+#, fuzzy
+#~ msgid "Bilinear from raster points"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Bilinear and bicubic from vector points"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "IDW from raster points"
+#~ msgstr "補間 ファイル"
+
+#, fuzzy
+#~ msgid "IDW from vector points"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Raster contours"
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "Regularized spline tension"
+#~ msgstr "���� ����"
+
+#, fuzzy
+#~ msgid "Report category information"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Statistics for clumped cells (works with r.clump)"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "Sample transects"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Sample transects (bearing/distance)"
+#~ msgstr "単位"
+
+#, fuzzy
+#~ msgid "Linear regression"
+#~ msgstr "地域"
+
+#, fuzzy
+#~ msgid "Convert vector lines to points"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid "Create stationing from input lines and a linear reference system"
+#~ msgstr "入力"
+
+#, fuzzy
+#~ msgid "Create points and line segments along a linear reference system"
+#~ msgstr "入力"
+
+#, fuzzy
+#~ msgid ""
+#~ "Find line ID and real km+offset for given points in vector map using "
+#~ "linear reference system"
+#~ msgstr "の ファイル"
+
+#, fuzzy
+#~ msgid "Remove outliers from vector point set"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "3D Map calculator"
+#~ msgstr "管理"
+
+#, fuzzy
+#~ msgid "Cross section from volume"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Interpolate volume from vector points"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "New table"
+#~ msgstr "コピー"
+
+#, fuzzy
+#~ msgid "Remove table"
+#~ msgstr "削除"
+
+#, fuzzy
+#~ msgid "Add columns"
+#~ msgstr "一覧"
+
+#, fuzzy
+#~ msgid "Rename a column"
+#~ msgstr "名前の変更"
+
+#, fuzzy
+#~ msgid "Query any table"
+#~ msgstr "データ情報"
+
+#, fuzzy
+#~ msgid "Query vector attribute table"
+#~ msgstr "データ情報"
+
+#, fuzzy
+#~ msgid "SQL statement"
+#~ msgstr "実行"
+
+#, fuzzy
+#~ msgid "Reconnect vector to database"
+#~ msgstr "接続"
+
+#, fuzzy
+#~ msgid "Set vector - database connection"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid "Map Layers for Display %s"
+#~ msgstr "データ情報 の "
+
+#, fuzzy
+#~ msgid "You can digitize raster or vector maps only"
+#~ msgstr "ファイル ファイル ファイル"
+
+#, fuzzy
+#~ msgid "Grid options: "
+#~ msgstr "テキスト 色"
+
+#, fuzzy
+#~ msgid "  grid text font "
+#~ msgstr "色 "
+
+#, fuzzy
+#~ msgid " line color"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid " text color"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "Raster map for histogram"
+#~ msgstr "ラスター の:"
+
+#, fuzzy
+#~ msgid "Raster to histogram: "
+#~ msgstr "ラスター ファイル"
+
+#, fuzzy
+#~ msgid "\ttext font "
+#~ msgstr "選択 色"
+
+#, fuzzy
+#~ msgid "Histogram color: text & frame"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "  background"
+#~ msgstr "実行"
+
+#, fuzzy
+#~ msgid "Labels for vectors"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid "Raster map for legend"
+#~ msgstr "ラスター の:"
+
+#, fuzzy
+#~ msgid "Raster map: "
+#~ msgstr "ラスター"
+
+#, fuzzy
+#~ msgid "  legend text font "
+#~ msgstr "フォント "
+
+#, fuzzy
+#~ msgid "Lines to display"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "You have to select map layer first"
+#~ msgstr "データ情報"
+
+#, fuzzy
+#~ msgid "No map layer selected"
+#~ msgstr "��"
+
+#, fuzzy
+#~ msgid "Save Region"
+#~ msgstr "地域"
+
+#, fuzzy
+#~ msgid "Select label font"
+#~ msgstr "選択 フォント"
+
+#, fuzzy
+#~ msgid "Create postscript labels for vector objects from v.labels file"
+#~ msgstr "ポストスクリプト ファイル"
+
+#, fuzzy
+#~ msgid "Background color:"
+#~ msgstr "色 "
+
+#, fuzzy
+#~ msgid "Border color:"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "Font"
+#~ msgstr "フォント:"
+
+#, fuzzy
+#~ msgid "Text to display:"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Zoom to selected map"
+#~ msgstr "ズーム"
+
+#, fuzzy
+#~ msgid "Save display geometry to named region"
+#~ msgstr "保存 ファイル"
+
+#, fuzzy
+#~ msgid "No raster map selected"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Aspect map"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid "Aspect map: "
+#~ msgstr "��������"
+
+#, fuzzy
+#~ msgid "    aspect value type"
+#~ msgstr "ファイル アイコン"
+
+#, fuzzy
+#~ msgid "    arrow color      "
+#~ msgstr "色 "
+
+#, fuzzy
+#~ msgid "     cell grid color"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "    null value color"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Raster drape map"
+#~ msgstr "ラスター"
+
+#, fuzzy
+#~ msgid "Display raster maps"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Base map:\t"
+#~ msgstr "ラスター"
+
+#, fuzzy
+#~ msgid "\tvalues to display"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Raster to display: "
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "  cell values font "
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid "Color for cell values:   "
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid "Raster map for blue or saturation channel"
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid ""
+#~ "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation "
+#~ "channels"
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid "raster map for red or hue channel (HIS drape)"
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid "raster map for green or intensity channel (HIS relief)"
+#~ msgstr "ファイル の"
+
+#, fuzzy
+#~ msgid "thematic map for %s"
+#~ msgstr "アイコン"
+
+#, fuzzy
+#~ msgid "Vector point symbol"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid " attribute layer"
+#~ msgstr "の"
+
+#, fuzzy
+#~ msgid " end color"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid " font color"
+#~ msgstr "色"
+
+#, fuzzy
+#~ msgid "clear"
+#~ msgstr "クリア"
+
+#, fuzzy
+#~ msgid "save"
+#~ msgstr "保存"
+
+#, fuzzy
+#~ msgid "Vector output map"
+#~ msgstr "ベクトル"
+
+#, fuzzy
+#~ msgid "Display vector maps"
+#~ msgstr "ガンマ"
+
+#, fuzzy
+#~ msgid "Icon size"
+#~ msgstr "地域"
+
+#, fuzzy
+#~ msgid "Load File"
+#~ msgstr "色 ファイル:"
+
+#, fuzzy
+#~ msgid "Select item"
+#~ msgstr "選択 ファイル"
+
+#, fuzzy
+#~ msgid "Path to the EPSG-codes file"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Browse to locate EPSG file"
+#~ msgstr "保存 ファイル"
+
+#, fuzzy
+#~ msgid "WARNING: Error creating new location"
+#~ msgstr "�������"
+
+#, fuzzy
+#~ msgid "Select datum transform"
+#~ msgstr "選択 フォント"
+
+#, fuzzy
+#~ msgid "Browse to locate georeferenced file"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "Choose georeferenced file"
+#~ msgstr "ファイル"
+
+#, fuzzy
+#~ msgid "WARNING: can not save"
+#~ msgstr "�������"
+
+#, fuzzy
+#~ msgid "WARNING: invalid mapset name"
+#~ msgstr "�������"
+
+#, fuzzy
+#~ msgid "WARNING: unable to mkdir"
+#~ msgstr "�������"
+
+#, fuzzy
+#~ msgid "Warning: <%%s> is not a valid mapset"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Categories already opened"
+#~ msgstr "ヘルプ"
+
+#, fuzzy
+#~ msgid "Settings already opened"
+#~ msgstr "ヘルプ"
+
+#, fuzzy
+#~ msgid "Test"
 #~ msgstr "テキスト"
 
 #, fuzzy
-#~ msgid "Use List"
-#~ msgstr "一覧"
+#~ msgid "Select font file"
+#~ msgstr "フォント の ラベル"
 
 #, fuzzy
-#~ msgid "Current List"
-#~ msgstr "一覧"
+#~ msgid "select font for text (default is GRASS romans)"
+#~ msgstr "フォント の"
 
 #, fuzzy
-#~ msgid "  Label Sites  "
-#~ msgstr "サイト "
+#~ msgid "SVG file"
+#~ msgstr "ファイル:"
 
 #, fuzzy
-#~ msgid "Create new mapset : "
-#~ msgstr "マップセット "
+#~ msgid ""
+#~ "Bicubic and bilinear interpolation with Tykhonov regularization from "
+#~ "vector points"
+#~ msgstr "ファイル"
 
 #, fuzzy
-#~ msgid "Create Location From EPSG"
-#~ msgstr "ロケーション"
+#~ msgid "Copy attribute table"
+#~ msgstr "の"
 
 #, fuzzy
-#~ msgid "c. Select raster"
-#~ msgstr "選択 ファイル"
-
-#, fuzzy
-#~ msgid "Select xy raster to display for georectification"
-#~ msgstr "選択 xy ファイル の"
-
-#, fuzzy
-#~ msgid "a. Select vector"
-#~ msgstr "選択 ファイル"
-
-#, fuzzy
-#~ msgid "list ghostscript output devices"
-#~ msgstr "出力"
-
-#, fuzzy
-#~ msgid "Select raster map to profile"
-#~ msgstr "選択 ファイル"
-
-#, fuzzy
-#~ msgid "Create WIND3 (default 3D window) from current 2D region"
-#~ msgstr "地域"
-
-#, fuzzy
-#~ msgid "Manage 3D region"
-#~ msgstr "地域"
-
-#, fuzzy
-#~ msgid "Modify mapset search path"
-#~ msgstr "マップセット"
+#~ msgid "Remove existing attribute table for vector map"
+#~ msgstr "ラベル ファイル の ファイル"

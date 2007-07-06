@@ -35,13 +35,14 @@ msgid "Color file for [%s] not available"
 msgstr ""
 
 #: ../lib/D/Dcell.c:90
+#, fuzzy
 msgid "Cannot use current window"
-msgstr ""
+msgstr "���"
 
 #: ../lib/D/Dcell.c:96
-#, c-format
+#, fuzzy, c-format
 msgid "Not able to open cellfile for [%s]"
-msgstr ""
+msgstr "���"
 
 #: ../lib/D/Derase.c:23
 msgid "getting graphics window"
@@ -615,9 +616,9 @@ msgid "error reading compressed map [%s] in mapset [%s], row %d"
 msgstr ""
 
 #: ../lib/gis/get_row.c:568
-#, fuzzy, c-format
+#, c-format
 msgid "error reading map [%s] in mapset [%s], row %d"
-msgstr "���"
+msgstr ""
 
 #: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
 #, c-format
@@ -756,8 +757,9 @@ msgstr ""
 "フラグ:\n"
 
 #: ../lib/gis/parser.c:887
+#, fuzzy
 msgid "Force overwrite of output files"
-msgstr ""
+msgstr "���"
 
 #: ../lib/gis/parser.c:894
 #, fuzzy, c-format
@@ -845,9 +847,9 @@ msgid "       You provided %d items:\n"
 msgstr ""
 
 #: ../lib/gis/parser.c:2052
-#, c-format
+#, fuzzy, c-format
 msgid "Error: option <%s>: <%s> exists.\n"
-msgstr ""
+msgstr "��� - ����<%s> ���\n"
 
 #: ../lib/gis/parser.c:2099
 #, c-format
@@ -955,8 +957,9 @@ msgstr ""
 
 #: ../lib/gis/gisinit.c:67
 #, fuzzy, c-format
-msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr "���: ����� �� ��������. ���G_gisinit()\n"
+msgid ""
+"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr "\a���: ����� �� ��������. ���G_gisinit()\n"
 
 #: ../lib/gis/closecell.c:229
 #, c-format
@@ -1028,9 +1031,9 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr ""
 
 #: ../lib/gis/legal_name.c:39
-#, c-format
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
-msgstr ""
+msgstr "���"
 
 #: ../lib/gis/legal_name.c:65 ../lib/gis/legal_name.c:67
 #, fuzzy, c-format
@@ -1350,19 +1353,19 @@ msgid "Temporary name for NEW NULL files %s"
 msgstr ""
 
 #: ../lib/gis/debug.c:126
-#, c-format
+#, fuzzy, c-format
 msgid "for existing raster maps %d"
-msgstr ""
+msgstr "���"
 
 #: ../lib/gis/debug.c:127
-#, c-format
+#, fuzzy, c-format
 msgid "Name of open file %s"
-msgstr ""
+msgstr "���"
 
 #: ../lib/gis/debug.c:128
-#, c-format
+#, fuzzy, c-format
 msgid "Mapset of open file %s"
-msgstr ""
+msgstr "���"
 
 #: ../lib/gis/debug.c:129
 #, c-format
@@ -1770,12 +1773,14 @@ msgid "too many arguments"
 msgstr ""
 
 #: ../lib/gis/spawn.c:87 ../lib/gis/spawn.c:399
+#, fuzzy
 msgid "unable to create a new process"
-msgstr ""
+msgstr "�������: ����� �����������n"
 
 #: ../lib/gis/spawn.c:97 ../lib/gis/spawn.c:422
+#, fuzzy
 msgid "unable to execute command"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/gis/spawn.c:173 ../lib/gis/spawn.c:181
 #, c-format
@@ -1813,9 +1818,9 @@ msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr ""
 
 #: ../lib/gis/spawn.c:414
-#, c-format
+#, fuzzy, c-format
 msgid "unable to change directory to %s"
-msgstr ""
+msgstr "����� ���� ���\n"
 
 #: ../lib/gis/system.c:83
 #, fuzzy
@@ -1908,9 +1913,9 @@ msgid "Error - Monitor <%s> is in use.\n"
 msgstr "��� - ����<%s> ���\n"
 
 #: ../lib/raster/io_fifo.c:383
-#, c-format
+#, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use by %s.\n"
-msgstr ""
+msgstr "��� - ����<%s> ���\n"
 
 #: ../lib/raster/io_fifo.c:393
 #, fuzzy, c-format
@@ -2197,18 +2202,18 @@ msgid "Number of isles     :   -\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:251
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open topo file for write: %s\n"
-msgstr ""
+msgstr "���"
 
 #: ../lib/vector/Vlib/build.c:259
 msgid "Error writing out topo file.\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:390
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open spatial index file for write: %s\n"
-msgstr ""
+msgstr "���"
 
 #: ../lib/vector/Vlib/build.c:398
 msgid "Error writing out spatial index file.\n"
@@ -2471,5 +2476,165 @@ msgid "Cannot delete line"
 msgstr ""
 
 #, fuzzy
-#~ msgid "ERROR: GISBASE not set\n"
-#~ msgstr "���: GISBASE � �����\n"
+msgid "ERROR: GISBASE not set\n"
+msgstr "���: GISBASE � �����\n"
+
+#, fuzzy
+#~ msgid "Cannot describe table <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Can't open directory %s"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of attribute column"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of attribute column(s)"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of input imagery group"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of elevation raster map(s)"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of input raster3d map(s)"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name for output raster3d map"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of input vector map(s)"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Name of input file"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Flags"
+#~ msgstr ""
+#~ "\n"
+#~ "フラグ:\n"
+
+#, fuzzy
+#~ msgid "Parameters"
+#~ msgstr ""
+#~ "\n"
+#~ "パラメータ:\n"
+
+#, fuzzy
+#~ msgid "Can't read %s for [%s in %s]"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Unable to allocate space for matrix copy"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Unable to allocate space for matrix sum"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Unable to allocate space for matrix product"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Unable to allocate space for matrix"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Reading raster map <%s> into memory"
+#~ msgstr "��"
+
+#, fuzzy
+#~ msgid "Unable to close input map"
+#~ msgstr "����� ���� ���\n"
+
+#, fuzzy
+#~ msgid "Unable to write rast row %i"
+#~ msgstr "�������: ����� �����������n"
+
+#, fuzzy
+#~ msgid "Use d.mon to select a monitor"
+#~ msgstr "�����\"d.mon\" ����� ������ ����\n"
+
+#, fuzzy
+#~ msgid "Cannot build network graph"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot open database <%s> by driver <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot add network arc"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Vector map <%s> not found"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot open existing vector map <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read head file"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot open topo file for vector map <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot open category index file for vector map <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot open history file for vector map <%s>"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for nodes"
+#~ msgstr "�������: ����� �����������n"
+
+#, fuzzy
+#~ msgid "Cannot read topo for lines"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for line [%d]"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for areas"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for area [%d]"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for isles"
+#~ msgstr "���"
+
+#, fuzzy
+#~ msgid "Cannot read topo for isle [%d]"
+#~ msgstr "���"

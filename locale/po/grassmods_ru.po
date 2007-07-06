@@ -50,8 +50,9 @@ msgid "list all columns for a given table."
 msgstr ""
 
 #: ../db/base/connect.c:27
+#, fuzzy
 msgid "print current connection parameters and exit"
-msgstr ""
+msgstr "вектор"
 
 #: ../db/base/connect.c:35
 msgid "driver name:"
@@ -299,8 +300,9 @@ msgid "Cannot connect to MySQL: "
 msgstr ""
 
 #: ../db/drivers/mysql/db.c:83
+#, fuzzy
 msgid "Cannot parse MySQL embeded database name"
-msgstr ""
+msgstr " "
 
 #: ../db/drivers/mysql/db.c:100
 msgid "Cannot initialize MySQL embeded server"
@@ -870,8 +872,9 @@ msgid "Raster map for which histogram will be displayed"
 msgstr ""
 
 #: ../display/d.histogram/main.c:83
+#, fuzzy
 msgid "Color for legend and title"
-msgstr ""
+msgstr " ."
 
 #: ../display/d.histogram/main.c:92
 msgid "Indicate if cell counts or map areas should be displayed"
@@ -1398,8 +1401,9 @@ msgid "warning: unable to open [%s] in [%s]"
 msgstr "   "
 
 #: ../display/d.profile/What.c:37
+#, fuzzy
 msgid "error reading cell file"
-msgstr ""
+msgstr " "
 
 #: ../display/d.profile/main.c:51
 msgid "Interactive profile plotting utility with optional output."
@@ -1625,8 +1629,9 @@ msgid ""
 msgstr ""
 
 #: ../display/d.rast.num/number.c:97
+#, fuzzy
 msgid "Name of existing raster map to be displayed"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../display/d.rast.num/number.c:115
 msgid "Color for drawing text"
@@ -1798,8 +1803,9 @@ msgid "Text to display"
 msgstr ""
 
 #: ../display/d.text.freetype/main.c:162
+#, fuzzy
 msgid "Map coordinates"
-msgstr ""
+msgstr "   "
 
 #: ../display/d.text.freetype/main.c:177 ../display/d.vect/main.c:263
 #: ../vector/v.label/main.c:117
@@ -2168,15 +2174,15 @@ msgid "%d errors in cat option"
 msgstr ""
 
 #: ../display/d.vect/main.c:557
-#, c-format
+#, fuzzy, c-format
 msgid "Plotting ... "
-msgstr ""
+msgstr "вектор."
 
 #: ../display/d.vect/main.c:566
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
-msgstr ""
+msgstr "вектор    "
 
 #: ../display/d.vect/main.c:587
 msgid "Cannot display areas, topology not available"
@@ -2708,8 +2714,9 @@ msgid "Monitor: XGetWMName: bad result\n"
 msgstr ""
 
 #: ../doc/raster/r.example/main.c:84
+#, fuzzy
 msgid "My first raster module."
-msgstr ""
+msgstr " "
 
 #: ../doc/raster/r.example/main.c:94 ../raster/r.bitpattern/main.c:87
 #: ../raster/r.clump/main.c:52 ../raster/r.covar/main.c:46
@@ -3200,8 +3207,9 @@ msgid "can't write region <%s>"
 msgstr " "
 
 #: ../general/g.region/cmd/main.c:760
+#, fuzzy
 msgid "unable to update current region"
-msgstr ""
+msgstr " "
 
 #: ../general/g.region/cmd/main.c:774
 #, fuzzy, c-format
@@ -3309,8 +3317,9 @@ msgid ""
 msgstr ""
 
 #: ../general/manage/cmd/list.c:54
+#, fuzzy
 msgid "mapset to list (default: current search path)"
-msgstr ""
+msgstr " "
 
 #: ../general/manage/cmd/list.c:59
 msgid "verbose listing (also list map titles)"
@@ -3405,20 +3414,23 @@ msgid "Canonical components analysis (cca) program for image processing."
 msgstr ""
 
 #: ../imagery/i.cca/main.c:74
+#, fuzzy
 msgid "Imagery files group"
-msgstr ""
+msgstr "Линия"
 
 #: ../imagery/i.cca/main.c:80
+#, fuzzy
 msgid "Imagery files subgroup"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.cca/main.c:86
 msgid "Ascii file containing spectral signatures"
 msgstr ""
 
 #: ../imagery/i.cca/main.c:92
+#, fuzzy
 msgid "Output raster file prefix name"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../imagery/i.cca/main.c:99
 #, fuzzy, c-format
@@ -3449,8 +3461,9 @@ msgid "Unable to find subgroup reference information."
 msgstr ""
 
 #: ../imagery/i.cca/main.c:148
+#, fuzzy
 msgid "Unable to open the signature file."
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.cca/main.c:151
 msgid "Error while reading the signatures file."
@@ -3525,7 +3538,7 @@ msgstr ""
 #: ../imagery/i.class/ask_files.c:51
 #, fuzzy, c-format
 msgid ""
-"\n"
+"\a\n"
 "** The following cell files in subgroup [%s] do not exist."
 msgstr " ."
 
@@ -3555,8 +3568,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.class/ask_files.c:83
+#, fuzzy
 msgid "Unable to open output signature file."
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.class/ask_files.c:89
 msgid ""
@@ -3642,8 +3656,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.class/main.c:70
+#, fuzzy
 msgid "Did not find input cell map."
-msgstr ""
+msgstr " ."
 
 #: ../imagery/i.class/outline.c:59
 msgid "Absurd polygon."
@@ -3655,8 +3670,9 @@ msgid "Outlined area is too large."
 msgstr " ."
 
 #: ../imagery/i.class/readbands.c:13
+#, fuzzy
 msgid "Error reading cell file in function readbands."
-msgstr ""
+msgstr " ."
 
 #: ../imagery/i.class/redisplay.c:66
 #, fuzzy
@@ -3753,16 +3769,18 @@ msgid "Subgroup name in the above group"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:62
+#, fuzzy
 msgid "File contains result signatures"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.cluster/main.c:69
 msgid "Initial number of classes"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:75
+#, fuzzy
 msgid "File contains initial signatures"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.cluster/main.c:83
 msgid "Sampling intervals (by row and col); default: ~10,000 pixels"
@@ -3785,8 +3803,9 @@ msgid "Minimum number of pixels in a class"
 msgstr ""
 
 #: ../imagery/i.cluster/main.c:118
+#, fuzzy
 msgid "Name of an output file to contain final report"
-msgstr ""
+msgstr "вектор"
 
 #: ../imagery/i.cluster/main.c:138
 #, fuzzy, c-format
@@ -4032,7 +4051,7 @@ msgstr " "
 #: ../imagery/i.cluster/open_files.c:35
 #, fuzzy, c-format
 msgid ""
-"\n"
+"\a\n"
 "** The following raster files in subgroup [%s] do not exist:"
 msgstr " :"
 
@@ -4156,8 +4175,9 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:65
+#, fuzzy
 msgid "input raster file being fft"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.fft/fftmain.c:73
 msgid "output real part arrays stored as raster file"
@@ -4471,16 +4491,19 @@ msgid "Inverse Fast Fourier Transform (ifft) for image processing."
 msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:66
+#, fuzzy
 msgid "input raster file (image fft, real part)"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.ifft/ifftmain.c:74
+#, fuzzy
 msgid "input raster file (image fft, imaginary part"
-msgstr ""
+msgstr "   "
 
 #: ../imagery/i.ifft/ifftmain.c:82
+#, fuzzy
 msgid "output inverse raster file after ifft"
-msgstr ""
+msgstr " "
 
 #: ../imagery/i.ifft/ifftmain.c:94
 #, fuzzy, c-format
@@ -4719,8 +4742,9 @@ msgid "pyramid constructed."
 msgstr ""
 
 #: ../imagery/i.smap/bouman/interp.c:71
+#, fuzzy
 msgid "Unable to allocate memory."
-msgstr ""
+msgstr "   "
 
 #: ../imagery/i.smap/bouman/interp.c:104
 #, c-format
@@ -5297,18 +5321,18 @@ msgid "lat/lon projection not supported at this time."
 msgstr ""
 
 #: ../raster/r.carve/raster.c:13
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Reading raster file... "
-msgstr ""
+msgstr " ."
 
 #: ../raster/r.carve/raster.c:34
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Writing raster file... "
-msgstr ""
+msgstr "  "
 
 #: ../raster/r.cats/main.c:32
 msgid ""
@@ -5420,12 +5444,14 @@ msgid "Raster map name from which to copy color table"
 msgstr ""
 
 #: ../raster/r.colors/main.c:172
+#, fuzzy
 msgid "Name of predefined rules file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.colors/main.c:177
+#, fuzzy
 msgid "Keep existing color table"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.colors/main.c:181 ../raster/r.rescale/main.c:78
 msgid "Quietly"
@@ -5747,8 +5773,9 @@ msgid "Stop points vector map"
 msgstr "вектор"
 
 #: ../raster/r.cost/main.c:133
+#, fuzzy
 msgid "Starting points raster file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.cost/main.c:141 ../raster/r.walk/main.c:186
 msgid "The map E and N grid coordinates of a starting point (E,N)"
@@ -5859,9 +5886,9 @@ msgstr " "
 
 #: ../raster/r.cost/main.c:328 ../raster/r.walk/main.c:570
 #: ../raster/r.walk/main.c:607
-#, c-format
+#, fuzzy, c-format
 msgid " %d rows, %d cols."
-msgstr ""
+msgstr "  вектор  "
 
 #: ../raster/r.cost/main.c:341 ../raster/r.walk/main.c:625
 msgid "Creating some temporary files ..."
@@ -5925,7 +5952,7 @@ msgstr ""
 #: ../raster/r.cost/main.c:894
 #, fuzzy, c-format
 msgid "Writing %s ... "
-msgstr "  "
+msgstr " ."
 
 #: ../raster/r.cost/main.c:900 ../raster/r.walk/main.c:1370
 msgid "Will copy input map null values into output map"
@@ -6243,16 +6270,18 @@ msgid "Could not open map %s"
 msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:117 ../raster/r.to.rast3/main.c:351
+#, fuzzy
 msgid "unable to close input map"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:129 ../raster/r.to.rast3/main.c:56
 msgid "Could not close the map"
 msgstr ""
 
 #: ../raster/r.elev.to.rast3/main.c:152
+#, fuzzy
 msgid "2d raster maps which represent the values"
-msgstr ""
+msgstr "Склоны"
 
 #: ../raster/r.elev.to.rast3/main.c:161
 msgid "2d raster maps which represent the elevation"
@@ -6286,7 +6315,7 @@ msgstr ""
 #: ../raster/r.elev.to.rast3/main.c:239
 #, fuzzy
 msgid "Could not get raster row from input map\n"
-msgstr " "
+msgstr "вектор"
 
 #: ../raster/r.elev.to.rast3/main.c:241
 #, fuzzy
@@ -6294,8 +6323,9 @@ msgid "Could not get raster row from elev map\n"
 msgstr "вектор"
 
 #: ../raster/r.elev.to.rast3/main.c:281
+#, fuzzy
 msgid "error writing G3D double data"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:285 ../raster/r.to.rast3/main.c:160
 #: ../raster3d/r3.cross.rast/main.c:228 ../raster3d/r3.to.rast/main.c:167
@@ -6305,8 +6335,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.elev.to.rast3/main.c:319
+#, fuzzy
 msgid "raster, raster3d, voxel"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.elev.to.rast3/main.c:322
 msgid "Creates a 3D volume map based on a 2D elevation and value raster map"
@@ -6345,17 +6376,20 @@ msgid "elev cell file not found\n"
 msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:415 ../raster/r.to.rast3/main.c:279
+#, fuzzy
 msgid "Creating 3D raster map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:422 ../raster/r.to.rast3/main.c:302
+#, fuzzy
 msgid "error opening g3d file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.elev.to.rast3/main.c:434 ../raster/r.to.rast3/main.c:316
 #: ../raster3d/base/r3.info.main.c:422 ../raster3d/r3.to.rast/main.c:338
+#, fuzzy
 msgid "Error closing g3d file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.fill.dir/main.c:87
 msgid ""
@@ -6398,8 +6432,9 @@ msgid ""
 msgstr "Склоны"
 
 #: ../raster/r.flow/io.c:139
+#, fuzzy
 msgid "Input elevation file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.flow/io.c:141
 #, fuzzy
@@ -6407,8 +6442,9 @@ msgid "Input aspect file"
 msgstr "Экспозиция"
 
 #: ../raster/r.flow/io.c:143
+#, fuzzy
 msgid "Input barrier file"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../raster/r.flow/io.c:145
 msgid "Number of cells between flowlines"
@@ -6424,12 +6460,14 @@ msgid "Output flowline vector file"
 msgstr "вектор"
 
 #: ../raster/r.flow/io.c:157
+#, fuzzy
 msgid "Output flowpath length raster file"
-msgstr ""
+msgstr "Склоны"
 
 #: ../raster/r.flow/io.c:159
+#, fuzzy
 msgid "Output flowline density raster file"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../raster/r.flow/io.c:161
 msgid "Compute upslope flowlines instead of default downhill flowlines"
@@ -6470,7 +6508,7 @@ msgstr " "
 msgid ""
 "Elevation file's resolution differs from                        current "
 "region resolution"
-msgstr " "
+msgstr "Экспозиция  "
 
 #: ../raster/r.flow/io.c:283
 #, fuzzy
@@ -6626,10 +6664,11 @@ msgid "Error reading 'saturation' map"
 msgstr ""
 
 #: ../raster/r.in.arc/main.c:44
+#, fuzzy
 msgid ""
 "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
 "layer."
-msgstr ""
+msgstr "вектор."
 
 #: ../raster/r.in.arc/main.c:51
 msgid "ARC/INFO ascii raster file (GRID) to be imported"
@@ -6740,12 +6779,14 @@ msgid "** errors detected in header section **\n"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:51
+#, fuzzy
 msgid "Convert an ASCII raster text file into a (binary) raster map layer."
-msgstr ""
+msgstr "вектор."
 
 #: ../raster/r.in.ascii/main.c:54 ../raster3d/r3.in.ascii/main.c:81
+#, fuzzy
 msgid "Ascii raster file to be imported"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.in.ascii/main.c:79
 msgid "String representing NULL value data cell"
@@ -6802,8 +6843,9 @@ msgid "Unable to write to file"
 msgstr ""
 
 #: ../raster/r.in.bin/main.c:113
+#, fuzzy
 msgid "Import a binary raster file into a GRASS raster map layer."
-msgstr ""
+msgstr "вектор."
 
 #: ../raster/r.in.bin/main.c:117
 msgid "Signed data (high bit means negative value)"
@@ -6826,8 +6868,9 @@ msgid "Get region info from GMT style header"
 msgstr ""
 
 #: ../raster/r.in.bin/main.c:139
+#, fuzzy
 msgid "Bin raster file to be imported"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.in.bin/main.c:156
 msgid "Number of bytes per cell (1, 2, 4)"
@@ -6862,8 +6905,9 @@ msgid "Set Value to NULL"
 msgstr ""
 
 #: ../raster/r.in.gdal/main.c:71
+#, fuzzy
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr ""
+msgstr "вектор."
 
 #: ../raster/r.in.gdal/main.c:80
 msgid "Raster file to be imported"
@@ -7016,18 +7060,21 @@ msgid "Writing map, row %d"
 msgstr ""
 
 #: ../raster/r.in.poly/main.c:17
+#, fuzzy
 msgid ""
 "Create raster maps from ascii polygon/line data files in the current "
 "directory."
-msgstr ""
+msgstr "вектор вектор."
 
 #: ../raster/r.in.poly/main.c:25
+#, fuzzy
 msgid "Input file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.in.poly/main.c:33
+#, fuzzy
 msgid "Raster output file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.in.poly/main.c:47
 msgid "Number of rows to hold in memory"
@@ -7143,8 +7190,9 @@ msgid "Range:     min         max\n"
 msgstr ""
 
 #: ../raster/r.info/main.c:72
+#, fuzzy
 msgid "Outputs basic information about a user-specified raster map layer."
-msgstr ""
+msgstr "вектор."
 
 #: ../raster/r.info/main.c:78 ../raster3d/base/r3.info.main.c:92
 msgid "Print range only"
@@ -7481,12 +7529,14 @@ msgid "Raster file matrix filter."
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
+#, fuzzy
 msgid "Name of the input raster file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.mfilter/main.c:53
+#, fuzzy
 msgid "Name of the output raster file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.mfilter/main.c:60
 msgid "Name of the filter file"
@@ -7497,8 +7547,9 @@ msgid "Number of times to repeat the filter"
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:75
+#, fuzzy
 msgid "Output raster file title"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../raster/r.mfilter/main.c:91
 msgid "Apply filter only to zero data values"
@@ -7526,12 +7577,14 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.neighbors/main.c:67
+#, fuzzy
 msgid "Name of existing raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.neighbors/main.c:74 ../raster/r.series/main.c:108
+#, fuzzy
 msgid "Name of the new raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.neighbors/main.c:89
 msgid "Neighborhood operation"
@@ -7542,8 +7595,9 @@ msgid "Neighborhood size"
 msgstr ""
 
 #: ../raster/r.neighbors/main.c:103
+#, fuzzy
 msgid "Title of the output raster file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.neighbors/main.c:107
 msgid "Do not align output with the input"
@@ -7838,12 +7892,14 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:95
+#, fuzzy
 msgid "Existing raster file name"
-msgstr ""
+msgstr "Сглаживание должно быть положительным"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:102
+#, fuzzy
 msgid "File name for new TIFF file."
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:109
 msgid "TIFF file compression"
@@ -7862,8 +7918,9 @@ msgid "Output Tiled TIFF"
 msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:126
+#, fuzzy
 msgid "Verbose mode."
-msgstr ""
+msgstr "Вывод статистики на экран"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:150
 #, fuzzy, c-format
@@ -7884,12 +7941,14 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.tiff/r.out.tiff.c:267
+#, fuzzy
 msgid "error reading cell data"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.out.tiff/r.out.tiff.c:420
+#, fuzzy
 msgid "Writing TIFF World file ..."
-msgstr ""
+msgstr " ."
 
 #: ../raster/r.out.tiff/r.out.tiff.c:423
 msgid "Got null file name"
@@ -8039,20 +8098,24 @@ msgid "Correct the coordinates to fit the VTK-OpenGL precision"
 msgstr ""
 
 #: ../raster/r.out.vtk/writeascii.c:72
+#, fuzzy
 msgid "writeVTKNormalHeader: Writing VTK-Header"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:103
+#, fuzzy
 msgid "writeVTKStructuredElevationHeader: Writing VTK-Header"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:119
+#, fuzzy
 msgid "writeVTKPolygonalElevationHeader: Writing VTK-Header"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:134
+#, fuzzy
 msgid "writeVTKCellDataHeader: Writing VTK-DataHeader"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:143
 msgid "writeVTKPointHeader: Writing VTK-DataHeader"
@@ -8076,12 +8139,14 @@ msgid "writeVTKPolygonalCoordinates: Writing VTK Polygonal data"
 msgstr ""
 
 #: ../raster/r.out.vtk/writeascii.c:328
+#, fuzzy
 msgid "writeVTKData: Writing VTK-Data"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:380
+#, fuzzy
 msgid "writeVTKRGBImageData: Writing VTK-ImageData"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.out.vtk/writeascii.c:418
 msgid "Wrong map values! Values should in between 0 and 255!\n"
@@ -8196,8 +8261,9 @@ msgstr "  "
 
 #: ../raster/r.profile/input.c:31 ../raster/r.profile/input.c:48
 #: ../raster/r.profile/input.c:61
+#, fuzzy
 msgid "One coordinate pair per line, please."
-msgstr ""
+msgstr " "
 
 #: ../raster/r.profile/main.c:54
 #, fuzzy
@@ -8209,8 +8275,9 @@ msgid "Name of file for output (use output=- for stdout)"
 msgstr ""
 
 #: ../raster/r.profile/main.c:72
+#, fuzzy
 msgid "Profile Coordinate Pairs"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.profile/main.c:79
 msgid "Resolution along profile (default = current region resolution)"
@@ -8286,8 +8353,9 @@ msgid "Resolution of output map"
 msgstr ""
 
 #: ../raster/r.proj/main.c:180
+#, fuzzy
 msgid "List raster files in input location and exit"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.proj/main.c:184
 msgid "Do not perform region cropping optimization"
@@ -8418,16 +8486,18 @@ msgid "Raster map to be reclassified"
 msgstr ""
 
 #: ../raster/r.reclass/main.c:47 ../raster/r.recode/main.c:41
+#, fuzzy
 msgid "Name for the resulting raster map"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.reclass/main.c:53 ../raster/r.recode/main.c:47
 msgid "Title for the resulting raster map"
 msgstr ""
 
 #: ../raster/r.recode/main.c:27
+#, fuzzy
 msgid "Recode raster maps."
-msgstr ""
+msgstr " "
 
 #: ../raster/r.recode/main.c:34
 msgid "Raster map to be recoded"
@@ -8825,8 +8895,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.series/main.c:101
+#, fuzzy
 msgid "Names of existing raster files"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.series/main.c:115
 msgid "Aggregate operation"
@@ -9046,8 +9117,9 @@ msgid "DXY [%s] COMPLETE"
 msgstr " "
 
 #: ../raster/r.statistics/main.c:44
+#, fuzzy
 msgid "Category or object oriented statistics."
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.statistics/main.c:73
 msgid "Method of object-based statistic"
@@ -9582,8 +9654,9 @@ msgid "Allows creation and/or modification of raster map layer support files."
 msgstr ""
 
 #: ../raster/r.support/front/front.c:67
+#, fuzzy
 msgid "Text to use for new map title"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.support/front/front.c:74
 #, fuzzy
@@ -9596,8 +9669,9 @@ msgid "Unable to find [%s]."
 msgstr " ."
 
 #: ../raster/r.support/front/front.c:104
+#, fuzzy
 msgid "Not enough room in history file."
-msgstr ""
+msgstr "Не хватает памяти для az"
 
 #: ../raster/r.support/front/front.c:108
 #, c-format
@@ -9695,8 +9769,9 @@ msgid "Which vector file needs updated categories?"
 msgstr "вектор?"
 
 #: ../raster/r.support/modcats/modcats.c:49
+#, fuzzy
 msgid "Which raster file needs updated categories?"
-msgstr ""
+msgstr "вектор?"
 
 #: ../raster/r.support/modcats/modcats.c:53
 #: ../raster/r.support/modcats/modcats.c:61
@@ -9886,8 +9961,9 @@ msgid "Header for raster file [%s] updated."
 msgstr " ."
 
 #: ../raster/r.support/modhist/modhist.c:37
+#, fuzzy
 msgid "Which raster file needs an updated history? "
-msgstr ""
+msgstr "вектор?"
 
 #: ../raster/r.support/modhist/modhist.c:43
 #, fuzzy, c-format
@@ -10080,8 +10156,9 @@ msgid "Name of the input raster map"
 msgstr ""
 
 #: ../raster/r.texture/main.c:89
+#, fuzzy
 msgid "Name of the ouput raster map"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/r.texture/main.c:96
 msgid "The size of the sliding window (odd and >= 3)"
@@ -10186,13 +10263,14 @@ msgid "RasterToG3D: Writing %i raster maps with rows %i cols."
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:116
-#, c-format
+#, fuzzy, c-format
 msgid "Writing g3d slice %i\n"
-msgstr ""
+msgstr " ."
 
 #: ../raster/r.to.rast3/main.c:121
+#, fuzzy
 msgid "Cold not get raster row \n"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.to.rast3/main.c:192
 msgid "Converts 2D raster map slices to one 3D raster volume map"
@@ -10203,12 +10281,14 @@ msgid "No output map"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:230 ../raster3d/r3.to.rast/main.c:278
+#, fuzzy
 msgid "out of memory!"
-msgstr ""
+msgstr "Не хватает памяти"
 
 #: ../raster/r.to.rast3/main.c:254
+#, fuzzy
 msgid "Cell file not found\n"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.to.rast3/main.c:262
 #, fuzzy, c-format
@@ -10329,8 +10409,9 @@ msgid "Converts a raster map into a vector map layer."
 msgstr "вектор."
 
 #: ../raster/r.to.vect/main.c:40
+#, fuzzy
 msgid "raster input file"
-msgstr ""
+msgstr " "
 
 #: ../raster/r.to.vect/main.c:51
 msgid "Feature type"
@@ -10972,11 +11053,11 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/ram/main.c:33
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "SECTION %d: Watershed determination."
-msgstr ""
+msgstr "Склоны:"
 
 #: ../raster/r.watershed/ram/main.c:35
 #, c-format
@@ -11071,11 +11152,11 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.watershed/seg/main.c:39
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "SECTION %d beginning: Watershed determination."
-msgstr ""
+msgstr "Склоны:"
 
 #: ../raster/r.watershed/shed/basin_maps.c:13
 msgid ""
@@ -11626,52 +11707,64 @@ msgid ""
 msgstr ""
 
 #: ../raster/simwe/r.sim.water/main.c:136
+#, fuzzy
 msgid "Name of the elevation raster file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/simwe/r.sim.water/main.c:143
+#, fuzzy
 msgid "Name of the x-derivatives raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:150
+#, fuzzy
 msgid "Name of the y-derivatives raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:157
+#, fuzzy
 msgid "Name of the rainfall excess raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:164
+#, fuzzy
 msgid "Name of the infiltration excess raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:171
+#, fuzzy
 msgid "Name of the flow control raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:178
+#, fuzzy
 msgid "Name of the Mannings n raster file"
-msgstr ""
+msgstr " "
 
 #: ../raster/simwe/r.sim.water/main.c:185
+#, fuzzy
 msgid "Name of the site file with x,y locations"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/simwe/r.sim.water/main.c:192
+#, fuzzy
 msgid "Output water depth raster file"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../raster/simwe/r.sim.water/main.c:199
+#, fuzzy
 msgid "Output water discharge raster file"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../raster/simwe/r.sim.water/main.c:206
+#, fuzzy
 msgid "Output simulation error raster file"
-msgstr ""
+msgstr "Склоны"
 
 #: ../raster/simwe/r.sim.water/main.c:213
+#, fuzzy
 msgid "Name of the output walkers site file"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster/simwe/r.sim.water/main.c:220
 msgid "Number of walkers"
@@ -11949,8 +12042,9 @@ msgstr ""
 
 #: ../raster3d/base/r3.mask.main.c:78 ../raster3d/base/r3.null.main.c:104
 #: ../raster3d/r3.out.ascii/main.c:273 ../raster3d/r3.out.v5d/main.c:305
+#, fuzzy
 msgid "Requested g3d file not found"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/base/r3.mask.main.c:84
 msgid "makeMask: error opening map."
@@ -11987,8 +12081,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:57
+#, fuzzy
 msgid "3dcell map for which to modify null values"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster3d/base/r3.null.main.c:65
 msgid "List of cell values to be set to NULL"
@@ -11999,8 +12094,9 @@ msgid "The value to replace the null value by"
 msgstr ""
 
 #: ../raster3d/base/r3.null.main.c:86
+#, fuzzy
 msgid "illegal value for null"
-msgstr ""
+msgstr "Кривизна сплайна"
 
 #: ../raster3d/base/r3.null.main.c:111
 msgid "modifyNull: error opening map"
@@ -12035,8 +12131,9 @@ msgid "print/add/remove a timestamp for a 3D raster map"
 msgstr ""
 
 #: ../raster3d/base/r3.timestamp.main.c:39
+#, fuzzy
 msgid "input grid3 filename"
-msgstr ""
+msgstr "Склоны"
 
 #: ../raster3d/base/r3.timestamp.main.c:46
 #, fuzzy
@@ -12069,8 +12166,9 @@ msgid "Use g3d mask (if exists) with input map"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:152
+#, fuzzy
 msgid "Could not get elevation raster row \n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.cross.rast/main.c:219 ../raster3d/r3.cross.rast/main.c:225
 #: ../raster3d/r3.to.rast/main.c:157 ../raster3d/r3.to.rast/main.c:164
@@ -12100,20 +12198,24 @@ msgid "Error opening g3d file <%s>"
 msgstr " "
 
 #: ../raster3d/r3.cross.rast/main.c:320
+#, fuzzy
 msgid "Elevation map not found\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.cross.rast/main.c:325
+#, fuzzy
 msgid "Could not open elevation map\n"
-msgstr ""
+msgstr "вектор  "
 
 #: ../raster3d/r3.cross.rast/main.c:340
+#, fuzzy
 msgid "Output map already exists. Will be overwritten!\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.cross.rast/main.c:345 ../raster3d/r3.cross.rast/main.c:350
+#, fuzzy
 msgid "Could not open output map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.cross.rast/main.c:378 ../raster3d/r3.cross.rast/main.c:402
 #: ../raster3d/r3.to.rast/main.c:367
@@ -12138,8 +12240,9 @@ msgid "any,grid3,3d raster"
 msgstr ""
 
 #: ../raster3d/r3.in.ascii/main.c:89
+#, fuzzy
 msgid "Name for G3d raster map"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster3d/r3.in.ascii/main.c:98
 #, fuzzy
@@ -12147,9 +12250,10 @@ msgid "String representing NULL value data cell (use 'none' if no such value)"
 msgstr "нет"
 
 #: ../raster3d/r3.in.ascii/main.c:239
+#, fuzzy
 msgid ""
 "Convert a 3D ASCII raster text file into a (binary) 3D raster map layer "
-msgstr ""
+msgstr "вектор."
 
 #: ../raster3d/r3.mkdspf/main.c:60
 msgid ""
@@ -12158,8 +12262,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.mkdspf/main.c:68
+#, fuzzy
 msgid "Name of an existing 3dcell map"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster3d/r3.mkdspf/main.c:74
 msgid "Name of output display file"
@@ -12210,8 +12315,9 @@ msgid "Writing %s from %s..."
 msgstr "   ."
 
 #: ../raster3d/r3.out.ascii/main.c:78
+#, fuzzy
 msgid "3dcell map to be converted to ASCII"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.ascii/main.c:85
 msgid "Name for ASCII output file"
@@ -12230,12 +12336,14 @@ msgid "Converts a 3D raster map layer into an ASCII text file"
 msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:282
+#, fuzzy
 msgid "Error opening g3d file"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.v5d/main.c:68
+#, fuzzy
 msgid "3dcell map to be converted to Vis5d (v5d) file"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.v5d/main.c:75
 msgid "Name for v5d output file"
@@ -12275,12 +12383,14 @@ msgid "Use map coordinates instead of xyz coordinates"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/errorHandling.c:48
+#, fuzzy
 msgid "unable to close input raster map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.vtk/errorHandling.c:63
+#, fuzzy
 msgid "unable to close input g3d raster map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.vtk/main.c:116
 msgid "You have to specify top and bottom map\n"
@@ -12373,12 +12483,14 @@ msgid "dp has to be from 0 to 20"
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:478
+#, fuzzy
 msgid "unable to close top raster map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.vtk/main.c:483
+#, fuzzy
 msgid "unable to close bottom raster map\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.vtk/main.c:497
 #, fuzzy, c-format
@@ -12441,8 +12553,9 @@ msgid ""
 msgstr " ."
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:124
+#, fuzzy
 msgid "writeVTKPoints: Writing point coordinates"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:133
 msgid "Could not get top raster row \n"
@@ -12464,8 +12577,9 @@ msgid ""
 msgstr " "
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:391
+#, fuzzy
 msgid "writeVTKRGBVoxelData: writing rgb data"
-msgstr ""
+msgstr "вектор"
 
 #: ../raster3d/r3.out.vtk/writeVTKData.c:428
 #: ../raster3d/r3.out.vtk/writeVTKData.c:461
@@ -12503,9 +12617,9 @@ msgid "G3dToRaster: Writing %i raster maps with rows %i cols."
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:133
-#, c-format
+#, fuzzy, c-format
 msgid "Writing raster map %i\n"
-msgstr ""
+msgstr "  "
 
 #: ../raster3d/r3.to.rast/main.c:198
 msgid "Converts 3D raster maps to 2D raster maps"
@@ -12533,9 +12647,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:283
-#, c-format
+#, fuzzy, c-format
 msgid "Creating %i raster maps\n"
-msgstr ""
+msgstr " "
 
 #: ../raster3d/r3.to.rast/main.c:289
 #, fuzzy, c-format
@@ -12564,9 +12678,9 @@ msgstr ""
 #: ../vector/lidar/lidarlib/raster.c:100 ../vector/lidar/lidarlib/raster.c:116
 #: ../vector/lidar/lidarlib/raster.c:130 ../vector/lidar/lidarlib/raster.c:142
 #: ../vector/lidar/lidarlib/raster.c:156 ../vector/lidar/lidarlib/raster.c:167
-#, c-format
+#, fuzzy, c-format
 msgid "It was no possible writting in <%s>."
-msgstr ""
+msgstr " "
 
 #: ../vector/lidar/lidarlib/zones.c:219
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:404
@@ -12631,8 +12745,9 @@ msgid "Thychonov regularization weigth"
 msgstr ""
 
 #: ../vector/lidar/v.bspline/main.c:171
+#, fuzzy
 msgid "Choose either vector or raster output, not both."
-msgstr ""
+msgstr " "
 
 #: ../vector/lidar/v.bspline/main.c:174
 #, fuzzy
@@ -12648,9 +12763,9 @@ msgstr " "
 
 #: ../vector/lidar/v.bspline/main.c:183 ../vector/lidar/v.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
-#, c-format
+#, fuzzy, c-format
 msgid "Vector <%s> could not be open at the topological level"
-msgstr ""
+msgstr " "
 
 #: ../vector/lidar/v.bspline/main.c:189
 #, c-format
@@ -12732,8 +12847,9 @@ msgid "Dropping <s>"
 msgstr ""
 
 #: ../vector/lidar/v.bspline/main.c:447
+#, fuzzy
 msgid "Auxiliar Table could not be drop"
-msgstr ""
+msgstr " "
 
 #: ../vector/lidar/v.lidar.correction/correction.c:55
 #: ../vector/lidar/v.lidar.correction/correction.c:82
@@ -13021,8 +13137,9 @@ msgid "Columns = %d"
 msgstr " "
 
 #: ../vector/lidar/v.lidar.growing/main.c:344
+#, fuzzy
 msgid "Region Growing"
-msgstr ""
+msgstr "Чтение %s ..."
 
 #: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
 #: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:67
@@ -13164,8 +13281,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.clean/main.c:99
+#, fuzzy
 msgid "Do not rebuild and store the topology at the end"
-msgstr ""
+msgstr "  вектор"
 
 #: ../vector/v.clean/main.c:117
 msgid "You must select at least one tool"
@@ -13195,9 +13313,9 @@ msgid "| Break                           |  "
 msgstr ""
 
 #: ../vector/v.clean/main.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "| Remove duplicates               |  "
-msgstr ""
+msgstr "  "
 
 #: ../vector/v.clean/main.c:186
 #, c-format
@@ -13225,9 +13343,9 @@ msgid "| Snap vertices                   |  "
 msgstr ""
 
 #: ../vector/v.clean/main.c:201
-#, c-format
+#, fuzzy, c-format
 msgid "| Remove duplicate area centroids |  "
-msgstr ""
+msgstr "  "
 
 #: ../vector/v.clean/main.c:204
 #, c-format
@@ -13402,8 +13520,9 @@ msgid "Failed opening input dig_att file."
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:71
+#, fuzzy
 msgid "Attaching categories...\n"
-msgstr ""
+msgstr "вектор."
 
 #: ../vector/v.convert/old2new.c:89
 #, c-format
@@ -13416,22 +13535,24 @@ msgid "WARNING: line %d label: %d matched another label: %d."
 msgstr "ПРЕДУПРЕЖДЕНИЕ."
 
 #: ../vector/v.convert/old2new.c:100
+#, fuzzy
 msgid "Writing new file...\n"
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.convert/old2new.c:121
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d points and lines written to output file.\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/old2new.c:135
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d centroids written to output file.\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:41
+#, fuzzy
 msgid "Reading dig file...\n"
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.convert/read.c:75
 #, fuzzy
@@ -13456,44 +13577,44 @@ msgid ""
 msgstr "ПРЕДУПРЕЖДЕНИЕ  ."
 
 #: ../vector/v.convert/read.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d points read to memory\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:162
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d lines read to memory\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:164
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d points read and written to output\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:165
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d lines read and written to output\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:167
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d area boundaries read and written to output\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:168
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead points skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:169
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead lines skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:170
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead area boundaries skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:171
 #, c-format
@@ -13501,13 +13622,14 @@ msgid "%-5d elements of unknown type skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d elements read to memory.\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:212
+#, fuzzy
 msgid "Reading dig_att file...\n"
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.convert/read.c:220
 #, fuzzy, c-format
@@ -13520,34 +13642,34 @@ msgid "Unknown type: %c"
 msgstr ""
 
 #: ../vector/v.convert/read.c:260
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d point categories read\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:261
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d line categories read\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:262
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d centroids read\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:263
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead point categories skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:264
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead line categories skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:265
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead centroids skipped\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/read.c:266
 #, c-format
@@ -13555,9 +13677,9 @@ msgid "%-5d categories of unknown type skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:268
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d categories read into memory.\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.convert/type.c:29
 #, fuzzy, c-format
@@ -13715,8 +13837,9 @@ msgid "Cannot open toolbox: %s"
 msgstr " "
 
 #: ../vector/v.digit/main.c:83
+#, fuzzy
 msgid "Cannot open toolbox."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.digit/main.c:103
 #, fuzzy
@@ -13954,8 +14077,9 @@ msgid "points"
 msgstr ""
 
 #: ../vector/v.edit/add.c:60
+#, fuzzy
 msgid "centroids"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.edit/add.c:78
 msgid "point"
@@ -14000,8 +14124,9 @@ msgid "Object points will snap to existing points within snap units."
 msgstr ""
 
 #: ../vector/v.edit/args.c:51
+#, fuzzy
 msgid "Do not use topology."
-msgstr ""
+msgstr "  вектор"
 
 #: ../vector/v.edit/args.c:55
 msgid "No database updates."
@@ -14016,12 +14141,14 @@ msgid "Do not close boundaries"
 msgstr ""
 
 #: ../vector/v.edit/args.c:81
+#, fuzzy
 msgid "Required parameter <points> not set"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.edit/args.c:89 ../vector/v.edit/args.c:105
+#, fuzzy
 msgid "Required parameter <cats> not set"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.edit/args.c:97
 #, fuzzy
@@ -14033,8 +14160,9 @@ msgid "This should never happen."
 msgstr ""
 
 #: ../vector/v.edit/main.c:33
+#, fuzzy
 msgid "vector, editing"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.edit/main.c:34
 #, fuzzy
@@ -14046,7 +14174,7 @@ msgstr "вектор вектор."
 #: ../vector/v.edit/main.c:59
 #, fuzzy
 msgid "Reading vector file ..."
-msgstr "вектор."
+msgstr " ."
 
 #: ../vector/v.external/main.c:72
 #, fuzzy
@@ -14134,9 +14262,9 @@ msgid "Load cats from the database (table = %s, db = %s).\n"
 msgstr "   "
 
 #: ../vector/v.extract/main.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "%d cats loaded from the database\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.extract/main.c:278
 msgid "Writing attributes ...\n"
@@ -14382,9 +14510,9 @@ msgid "Column %d defined as double has only integer values"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:386
-#, c-format
+#, fuzzy, c-format
 msgid "Column %d defined as string has only integer values"
-msgstr ""
+msgstr "Сглаживание должно быть положительным"
 
 #: ../vector/v.in.ascii/in.c:392
 #, c-format
@@ -14465,8 +14593,9 @@ msgid "%d points written to vector"
 msgstr "вектор"
 
 #: ../vector/v.in.db/main.c:216
+#, fuzzy
 msgid "Vector import complete"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.in.dxf/add_3dface.c:29 ../vector/v.in.dxf/add_arc.c:36
 #: ../vector/v.in.dxf/add_circle.c:32 ../vector/v.in.dxf/add_line.c:28
@@ -14544,7 +14673,7 @@ msgstr "вектор"
 #: ../vector/v.in.dxf/main.c:160
 #, fuzzy, c-format
 msgid "%s: Cannot open new vector file"
-msgstr "  вектор"
+msgstr " "
 
 #: ../vector/v.in.dxf/main.c:180
 msgid "Building topology failed"
@@ -14564,11 +14693,11 @@ msgid "Cannot execute: %s"
 msgstr " "
 
 #: ../vector/v.in.dxf/write_vect.c:78
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "No DXF layers found!\n"
-msgstr ""
+msgstr "%s не найден"
 
 #: ../vector/v.in.dxf/write_vect.c:87
 #, c-format
@@ -14583,9 +14712,9 @@ msgid "Cannot link table: %s"
 msgstr " "
 
 #: ../vector/v.in.ogr/main.c:95
-#, c-format
+#, fuzzy, c-format
 msgid "Convert OGR vectors to GRASS. Available drivers:\n"
-msgstr ""
+msgstr "вектор."
 
 #: ../vector/v.in.ogr/main.c:112
 msgid ""
@@ -14827,20 +14956,23 @@ msgid "output raster/vector map"
 msgstr "вектор"
 
 #: ../vector/v.kernel/main.c:116
+#, fuzzy
 msgid "stddeviation in map units"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.kernel/main.c:122
+#, fuzzy
 msgid "discretization error in map units"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.kernel/main.c:129
 msgid "maximum length of segment on network"
 msgstr ""
 
 #: ../vector/v.kernel/main.c:136
+#, fuzzy
 msgid "maximum distance from point to network"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.kernel/main.c:143
 msgid "multiply the density result by this number"
@@ -14931,11 +15063,11 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.kernel/main.c:364
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Writing output raster file using smooth parameter=%f."
-msgstr ""
+msgstr "вектор."
 
 #: ../vector/v.kernel/main.c:372
 msgid "unable to read MASK"
@@ -15178,8 +15310,9 @@ msgid "Not able to open dig_att file <%s>\n"
 msgstr " "
 
 #: ../vector/v.out.dxf/main.c:48
+#, fuzzy
 msgid "Exports GRASS vector files to DXF file format."
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.out.dxf/main.c:58
 msgid "DXF output file"
@@ -15223,11 +15356,12 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:108
+#, fuzzy
 msgid ""
 "OGR layer name.\n"
 "\t\tESRI Shapefile: shapefile name\n"
 "\t\tMapInfo File: mapinfo file name"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.out.ogr/main.c:122
 msgid "OGR format."
@@ -15328,9 +15462,8 @@ msgid "Cannot select attributes for cat = %d"
 msgstr ""
 
 #: ../vector/v.out.pov/main.c:44
-#, fuzzy
 msgid "vector, export"
-msgstr "вектор"
+msgstr ""
 
 #: ../vector/v.out.vtk/head.c:27
 msgid "writeVTKHeader: Writing VTK-Header"
@@ -15385,24 +15518,29 @@ msgid "Missing table"
 msgstr ""
 
 #: ../vector/v.patch/main.c:195
+#, fuzzy
 msgid "Key columns differ."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.patch/main.c:202
+#, fuzzy
 msgid "Number of columns differ."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.patch/main.c:216
+#, fuzzy
 msgid "Column names differ."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.patch/main.c:222
+#, fuzzy
 msgid "Column types differ."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.patch/main.c:228
+#, fuzzy
 msgid "Length of string columns differ."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.patch/main.c:244
 msgid "Key column not found"
@@ -15428,9 +15566,9 @@ msgid "Error reading file '%s'.Some data may not be correct\n"
 msgstr " "
 
 #: ../vector/v.patch/main.c:363
-#, c-format
+#, fuzzy, c-format
 msgid "Patch complete. %d files patched."
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.patch/main.c:364
 msgid "Intersections at borders will have to be snapped."
@@ -15567,8 +15705,9 @@ msgid ""
 msgstr "вектор"
 
 #: ../vector/v.proj/main.c:199
+#, fuzzy
 msgid "Reading input dig file."
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.proj/main.c:205
 #, c-format
@@ -15586,8 +15725,9 @@ msgid "vector file to be created"
 msgstr "вектор"
 
 #: ../vector/v.random/main.c:97
+#, fuzzy
 msgid "number of points to be created"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../vector/v.random/main.c:103
 msgid "minimum z height (needs -z flag)"
@@ -15612,8 +15752,9 @@ msgid "vector, attribute table"
 msgstr "вектор"
 
 #: ../vector/v.sample/main.c:87
+#, fuzzy
 msgid "Sample a raster file at site locations"
-msgstr ""
+msgstr "вектор."
 
 #: ../vector/v.sample/main.c:93
 msgid "Vector map defining sample points"
@@ -15660,7 +15801,7 @@ msgstr " "
 #: ../vector/v.sample/main.c:170
 #, fuzzy, c-format
 msgid "unable to open cell file [%s]"
-msgstr " "
+msgstr " ."
 
 #: ../vector/v.sample/main.c:175
 #, fuzzy
@@ -15673,12 +15814,14 @@ msgid "cannot open database %s by driver %s"
 msgstr "   "
 
 #: ../vector/v.sample/main.c:188
+#, fuzzy
 msgid "column type not supported"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.sample/main.c:191
+#, fuzzy
 msgid "cannot select data from table"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.sample/main.c:193 ../vector/v.surf.idw/read_sites.c:52
 #, c-format
@@ -15691,8 +15834,9 @@ msgid "cannot create table: %s"
 msgstr " "
 
 #: ../vector/v.sample/main.c:223
+#, fuzzy
 msgid "cannot create index"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.sample/main.c:226
 #, fuzzy, c-format
@@ -15710,8 +15854,9 @@ msgid "no record for cat = %d"
 msgstr ""
 
 #: ../vector/v.sample/main.c:268
+#, fuzzy
 msgid "column type  not supported"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.sample/main.c:288
 #, fuzzy, c-format
@@ -15836,8 +15981,9 @@ msgid "Output cross-validation errors vector point file"
 msgstr "вектор"
 
 #: ../vector/v.surf.rst/main.c:245
+#, fuzzy
 msgid "Output surface raster file (elevation)"
-msgstr ""
+msgstr "Склоны"
 
 #: ../vector/v.surf.rst/main.c:249
 msgid "Output partial derivatives instead of topographic parameters"
@@ -15854,16 +16000,19 @@ msgid "Output aspect raster file"
 msgstr "Экспозиция"
 
 #: ../vector/v.surf.rst/main.c:270
+#, fuzzy
 msgid "Output profile curvature raster file"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../vector/v.surf.rst/main.c:277
+#, fuzzy
 msgid "Output tangential curvature raster file"
-msgstr ""
+msgstr "Склоны"
 
 #: ../vector/v.surf.rst/main.c:284
+#, fuzzy
 msgid "Output mean curvature raster file"
-msgstr ""
+msgstr "Склоны"
 
 #: ../vector/v.surf.rst/main.c:291 ../vector/v.vol.rst/main.c:292
 #, fuzzy
@@ -16029,8 +16178,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.to.db/parse.c:95
+#, fuzzy
 msgid "print only"
-msgstr ""
+msgstr "Завершено:"
 
 #: ../vector/v.to.db/parse.c:99
 msgid "only print sql statements"
@@ -16066,32 +16216,39 @@ msgid "The 'sides' option makes sense only for boundaries"
 msgstr ""
 
 #: ../vector/v.to.points/main.c:153
+#, fuzzy
 msgid "Create points along input lines."
-msgstr ""
+msgstr "вектор."
 
 #: ../vector/v.to.points/main.c:156
+#, fuzzy
 msgid "Input map containing lines"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.to.points/main.c:162
+#, fuzzy
 msgid "Output map where points will be written"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.to.points/main.c:171
+#, fuzzy
 msgid "Write line vertices."
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.to.points/main.c:175
+#, fuzzy
 msgid "Interpolate points between line vertices."
-msgstr ""
+msgstr " ."
 
 #: ../vector/v.to.points/main.c:182
+#, fuzzy
 msgid "Maximum distance between points in map units."
-msgstr ""
+msgstr " "
 
 #: ../vector/v.to.points/main.c:186
+#, fuzzy
 msgid "Do not create attribute table."
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.to.points/main.c:204
 #, fuzzy, c-format
@@ -16099,9 +16256,9 @@ msgid "Could not find input %s\n"
 msgstr " "
 
 #: ../vector/v.to.points/main.c:325
-#, c-format
+#, fuzzy, c-format
 msgid "%d points written to output map\n"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.to.rast/main.c:36
 #, fuzzy
@@ -16127,8 +16284,9 @@ msgid "Raster value"
 msgstr ""
 
 #: ../vector/v.to.rast/main.c:80
+#, fuzzy
 msgid "number of rows to hold in memory"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.to.rast/main.c:91
 #, fuzzy
@@ -16155,8 +16313,9 @@ msgid ""
 msgstr "вектор."
 
 #: ../vector/v.to.rast3/main.c:47
+#, fuzzy
 msgid "Name of output G3D grid file"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.to.rast3/main.c:66
 #, fuzzy, c-format
@@ -16173,8 +16332,9 @@ msgid "Can't create output map"
 msgstr ""
 
 #: ../vector/v.to.rast3/main.c:154
+#, fuzzy
 msgid "Could not close new g3d map"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.transform/ask_trans.c:84
 msgid "ask_transform_coor():  Leaving session.. \n"
@@ -16191,9 +16351,9 @@ msgid "Please answer yes or no"
 msgstr "Ответьте yes или no"
 
 #: ../vector/v.transform/creat_trans.c:127
-#, c-format
+#, fuzzy, c-format
 msgid "Number of points that have been entered: %d\n"
-msgstr ""
+msgstr "Экспозиция"
 
 #: ../vector/v.transform/main.c:54
 #, fuzzy
@@ -16255,10 +16415,11 @@ msgid "Could not find input map <%s>\n"
 msgstr " "
 
 #: ../vector/v.transform/main.c:195
+#, fuzzy
 msgid ""
 "\n"
 "Now transforming the vectors ...\n"
-msgstr ""
+msgstr "Чтение %s ..."
 
 #: ../vector/v.transform/main.c:213
 #, fuzzy, c-format
@@ -16302,12 +16463,12 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.transform/print_trans.c:43
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "\n"
 "  Number of points: %d\n"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.transform/print_trans.c:44
 #, c-format
@@ -16378,8 +16539,9 @@ msgid "Conversion factor for z-values"
 msgstr "Множитель для z-значений"
 
 #: ../vector/v.vol.rst/main.c:336
+#, fuzzy
 msgid "Output cross-section cell file"
-msgstr ""
+msgstr "вектор"
 
 #: ../vector/v.vol.rst/main.c:344
 msgid "Output elevation g3d-file"
@@ -16592,12 +16754,14 @@ msgid "Cannot open database <%s> by driver <%s>"
 msgstr "   "
 
 #: ../vector/v.what.rast/main.c:129
+#, fuzzy
 msgid "Cannot find raster map"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.what.rast/main.c:132
+#, fuzzy
 msgid "Cannot open raster map"
-msgstr ""
+msgstr " "
 
 #: ../vector/v.what.rast/main.c:145
 #, fuzzy, c-format
@@ -16773,74 +16937,1613 @@ msgid "Error reading wildcard."
 msgstr ""
 
 #, fuzzy
-#~ msgid "Makes 3D trees from input point vector file"
+msgid "Makes 3D trees from input point vector file"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Total species representation is > 100"
+msgstr " "
+
+#, fuzzy
+msgid "Total species representation is < 100"
+msgstr " "
+
+#, fuzzy
+msgid "Species <%s> not known. I'll use parameters for spruce instead"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Calculate statistics for vector points within each raster cell of the "
+"current region"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Name of input vector points map"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"Name of output vector points map (if not specified, the program writes to "
+"standard output)"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"Minimum sample size per cell (If fewer than 'min' vector points found for "
+"given cell, statistics are not calculated for that cell)"
+msgstr "вектор  "
+
+#, fuzzy
+msgid ""
+"Calculates Simpson's index on a raster file.\n"
+"Return -1 if all the cells in the area are null"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Calculates Shannon's index on a raster file\n"
+"Return -1 if all the cells in the area are null"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Calculates mean pixel attribute index on a raster file.\n"
+"Return -1 if all the cells in the area are null"
+msgstr " "
+
+#, fuzzy
+msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
+msgstr " !"
+
+#, fuzzy
+msgid ""
+" \t\t\t\tMASKEDAREA MESSAGE: \n"
+" \t\t\t\taid = %i \n"
+" \t\t\t\tx = %i \n"
+" \t\t\t\ty = %i \n"
+" \t\t\t\trl = %i \n"
+" \t\t\t\tcl = %i \n"
+" \t\t\t\tmask = %s \n"
+" "
+msgstr ""
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"   "
+
+#, fuzzy
+msgid "Cannot close %s file\n"
+msgstr " "
+
+#, fuzzy
+msgid "Cannot delete %s file\n"
+msgstr " "
+
+#, fuzzy
+msgid "Cannot make stat of %s configuration file "
+msgstr "  "
+
+#, fuzzy
+msgid "The configuration file can be used only with \t\t\t%s rasterfile"
+msgstr " "
+
+#, fuzzy
+msgid "%s\n"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"creates and adds a new attribute table to a given layer of an existing "
+"vector map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Name of new attribute table (default: vector map name)"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"Name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR(), INT, DOUBLE and DATE)"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
+"points map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "name for new binary vector file"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Uploads vector values at positions of vector points to the table"
+msgstr "вектор вектор"
+
+#, fuzzy
+msgid "vector map to be queried"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
+"vector map."
+msgstr "вектор."
+
+#, fuzzy
+msgid "name for new binary vector file (omit for display to stdout)"
+msgstr "вектор"
+
+#, fuzzy
+msgid "port Garmin receiver is connected to"
+msgstr " "
+
+#, fuzzy
+msgid "force removal (use only if you know what you are doing)"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"r.in.aster - georeferencing, rectification, and import of Terra-ASTER "
+"imagery and relative DEM's using gdalwarp"
+msgstr " "
+
+#, fuzzy
+msgid "Input vector map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"adds one or more columns to the attribute table connected to a given vector "
+"map"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"name and type of the new column(s) (types depend on database backend, but "
+"all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)"
+msgstr " "
+
+#, fuzzy
+msgid "Draws polar diagram of angle map such as aspect or flow directions"
+msgstr "Экспозиция"
+
+#, fuzzy
+msgid ""
+"Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii "
+"file into a vector map."
+msgstr "вектор."
+
+#, fuzzy
+msgid "name for new vector file (omit for display to stdout)"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"projection of input data (use PROJ.4 options), if not set the input is "
+"assumed to be Lat/Lon WGS84"
+msgstr " "
+
+#, fuzzy
+msgid "Slide show of GRASS raster/vector maps"
+msgstr "вектор"
+
+#, fuzzy
+msgid "map prefix. Specify character(s) to view selected maps only"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"calculates univariate statistics on selected table column for a GRASS vector "
+"map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Destination projection, defaults to this location's projection"
+msgstr " "
+
+#, fuzzy
+msgid "omit entries with missing label"
+msgstr "отсутствует"
+
+#, fuzzy
+msgid ""
+"Creates raster plane map given dip (inclination), aspect (azimuth), and one "
+"point"
+msgstr "Экспозиция"
+
+#, fuzzy
+msgid ""
+"convert all old GRASS < V5.7 vector maps in current mapset to current format"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Compression for PNG files (0=none, 1=fastest, 9=most)"
+msgstr "нет"
+
+#, fuzzy
+msgid "Import of E00 file into a vector map."
+msgstr "вектор."
+
+#, fuzzy
+msgid ""
+"convert all old GRASS < V5.7 sites maps to vector maps in current mapset"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Spline tension parameter"
+msgstr "Кривизна сплайна"
+
+#, fuzzy
+msgid ""
+"Calculates univariate statistics from a GRASS raster map based on vector "
+"objects"
+msgstr "вектор"
+
+#, fuzzy
+msgid "continue if upload column(s) already exist"
+msgstr " "
+
+#, fuzzy
+msgid "Import Mapgen or Matlab vector maps into GRASS."
+msgstr "вектор."
+
+#, fuzzy
+msgid "Input map is in Matlab format"
+msgstr " "
+
+#, fuzzy
+msgid "mapset(s) to list (default: current mapset search path)"
+msgstr " "
+
+#, fuzzy
+msgid "removes existing attribute table of a vector map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "vector map from which to remove attribute table"
+msgstr "вектор"
+
+#, fuzzy
+msgid "name of existing attribute table (default: vector map name)"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Group [%s] contains no files"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Only calculate optimal standard deviation and return (no map is written)"
+msgstr " "
+
+#, fuzzy
+msgid "Writing column <%s> with fixed length 40 chars (may be truncated)"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"List vector files in input location and return (a dummy value must be given "
+"for input)"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Vector maps containing starting point(s) and stop point(s)"
+msgstr "   "
+
+#, fuzzy
+msgid "Starting vector map %s is outside the current region"
+msgstr " "
+
+#, fuzzy
+msgid "Open raster map %s\n"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Interactive tool used to draw and save vector features on a graphics monitor "
+"using a pointing device (mouse)."
+msgstr "вектор."
+
+#, fuzzy
+msgid ""
+"3 raster maps (r,g,b) which are used to create rgb values [redmap,greenmap,"
+"bluemap]"
+msgstr " "
+
+#, fuzzy
+msgid "unable to find raster file %s"
+msgstr " "
+
+#, fuzzy
+msgid ""
+"Vect runs out of region and re-enters - this case is not yet implemented!"
+msgstr " !"
+
+#, fuzzy
+#~ msgid ""
+#~ "pg driver: PostGIS column '%s', type 'geometry'  will not be converted"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Manages display frames on the user's graphics monitor."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "List map names displayed in GRASS monitor"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "name"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Frame to be created/selected"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Total species representation is > 100"
+#~ msgid "Error choosing frame [%s]\n"
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "Total species representation is < 100"
+#~ msgid "Left:   Select frame\n"
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "Species <%s> not known. I'll use parameters for spruce instead"
+#~ msgid "Error reading intensity data"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error reading saturation data"
 #~ msgstr " "
 
 #, fuzzy
 #~ msgid ""
-#~ "Calculate statistics for vector points within each raster cell of the "
-#~ "current region"
+#~ "Generates and displays simple line graphs in the active graphics monitor "
+#~ "display frame."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Path to file location"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Name of input vector points map"
+#~ msgid "Problem reading X data file at line %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No such monitor as <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No such monitor as '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error - No such monitor as '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error - Locking mechanism failed"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Starting and ending coordinates"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "No coordinates given"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s - illegal x value"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s - illegal y value"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Left:   Select From\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Interactively edit cell values in a raster map."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Path to font file"
 #~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%s]: No such color. Use '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid " Left:    Place text here\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Sets the text color"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot read map header for <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot read category file for <%s>"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Can't read vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot select attributes: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to determine mapset permssions"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Change current mapset"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Create mapset if it doesn't exist"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s is already the current mapset"
+#~ msgstr "ОШИБКА    "
+
+#, fuzzy
+#~ msgid "Cannot read GIS_LOCK enviroment variable."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Erasing monitors ..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cleaning up temporary files ..."
+#~ msgstr " "
 
 #, fuzzy
 #~ msgid ""
-#~ "Name of output vector points map (if not specified, the program writes to "
-#~ "standard output)"
-#~ msgstr "вектор"
+#~ "Modifies the user's current mapset search path, affecting the user's "
+#~ "access to data existing under the other GRASS mapsets in the current "
+#~ "location."
+#~ msgstr "   ."
 
 #, fuzzy
-#~ msgid ""
-#~ "Minimum sample size per cell (If fewer than 'min' vector points found for "
-#~ "given cell, statistics are not calculated for that cell)"
+#~ msgid "Name(s) of existing mapset(s)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name(s) of existing mapset(s) to add to search list"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Print current mapset search path"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Text of the message to be printed"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Invalid color: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "File '%s' not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Invalid magic number: 'P%c'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to open file '%s'"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error writing PPM file"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error writing PGM file"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Image width"
+#~ msgstr "Линия"
+
+#, fuzzy
+#~ msgid "Region <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Can't read region <%s> in <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Can't open 3dview file <%s> in <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Can't read 3dview file <%s> in <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Can't read header for <%s> in <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Vector map <%s> not found"
 #~ msgstr "вектор  "
 
 #, fuzzy
-#~ msgid ""
-#~ "Calculates Simpson's index on a raster file.\n"
-#~ "Return -1 if all the cells in the area are null"
-#~ msgstr "   "
+#~ msgid "Can't open vector map <%s> in <%s>"
+#~ msgstr "вектор    "
 
 #, fuzzy
-#~ msgid ""
-#~ "Calculates Shannon's index on a raster file\n"
-#~ "Return -1 if all the cells in the area are null"
-#~ msgstr "   "
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates mean pixel attribute index on a raster file.\n"
-#~ "Return -1 if all the cells in the area are null"
+#~ msgid "No LatLong information for XY-Projection"
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "CHILD[pid = %i]: unable to open %s mask ... continue without!!!"
+#~ msgid "Interactively reset the location's projection settings."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Invalid input ellipsoid"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Enter conversion factor from %s to meters: "
+#~ msgstr "  вектор "
+
+#, fuzzy
+#~ msgid "Error writing into UNITS output file: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "<%s> illegal name"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Force remove"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "%s <%s> not found"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Renaming in reclassed map%s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of input imagery subgroup"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Illegal group name <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal subgroup name <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Illegal signature file name <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Illegal output file name <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "File containing input signatures (seed)"
+#~ msgstr "Набор данных вектор"
+
+#, fuzzy
+#~ msgid "Unable to find input cell map '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "** The following raster maps in subgroup [%s] do not exist:"
+#~ msgstr " :"
+
+#, fuzzy
+#~ msgid "Subgroup [%s] does not have any files"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "The subgroup must have at least 2 files to run"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to read signature file [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "** Unable to read signature file [%s] **"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Hue map name"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Intensity map name"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Saturation map name"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Output map representing the red"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "Output map representing the green"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "Cannot read row from raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot write row to raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to allocate the input row buffer"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot allocate memory for row buffer"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot read raster row [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot allocate memory for raster row"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot write color table of raster map <%s>"
 #~ msgstr " !"
 
 #, fuzzy
+#~ msgid "Red input raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Green input raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Blue input raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Moves displayed maps to another monitor"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Name of PNG file"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Saves the contents of the active display monitor to a graphics file."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Name for output file (do NOT add extension)"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Graphics file format"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Images"
+#~ msgstr "Линия"
+
+#, fuzzy
+#~ msgid "Name of raster angle map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of optional EPS output file"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of aspect raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Maximum number of rows to load"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Maximum number of columns to load"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Redraws the current display frame in the GRASS monitor"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Show vector maps rather than raster maps"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Number of seconds to pause between slides"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Enter raster map to display in 1st frame"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Enter raster map to display in 2nd frame"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Vector map to display thematically"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map type"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Type of thematic display"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "database, attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Test name"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Manual entry to be displayed"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Print mapset name"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Data type"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster to remove"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "vector to remove"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "region to remove"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "icon to remove"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "label to remove"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "3dview to remove"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Import of SPOT VGT NDVI file into a raster map"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "raster, imagery, import"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "raster, imagery, statistics"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input maps"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster, imagery"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 1)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 2)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 3)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 4)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 5)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster input map (LANDSAT channel 7)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster output TC maps prefix"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of first raster map for blending"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of second raster map for blending"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster, elevation, interpolation"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Raster map in which to fill nulls"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Spline smoothing parameter"
+#~ msgstr "Параметр сглаживания"
+
+#, fuzzy
+#~ msgid "Output GRASS image file"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Import SRTM HGT files into GRASS"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "raster, import"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Resulting output map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster, mask"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Raster map to use as MASK"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "List supported output formats"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster, elevation"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of raster plane to be created."
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Type of the raster map to be created."
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "reclass raster output map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Output shaded relief map name"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Factor for exaggerating relief"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "Scale factor for converting horizontal units to elevation units"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster, tiling"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Output field seperator"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "A (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "B (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "C (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "D (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "E (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "F (grid3D file):"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "vector, centroid, area"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map for which to add new attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer where to add new attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
 #~ msgid ""
-#~ " \t\t\t\tMASKEDAREA MESSAGE: \n"
+#~ "Drops a column from the attribute table connected to a given vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map for which to drop attribute column"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of the column"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer from which to drop linked attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid ""
+#~ "Renames a column in a attribute table connected to a given vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map for which to rename attribute column"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer where to rename column"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of new database"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Allows to assign a new value to a column in the attribute table connected "
+#~ "to a given map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Column to update"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column to query"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "vector, area, dissolve"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer number. If -1, all layers are extracted"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Name of column used to dissolve common boundaries"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "vector, import, GPS"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name for new vector map (omit for display to stdout)"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "name of input file in Mapgen/Matlab format"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Convert all old GRASS < Ver5.7 sites maps in current mapset to vector maps"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "sites, vector, import"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid ""
+#~ "Calculates univariate statistics from a GRASS raster map based on vector "
+#~ "polygons and uploads statistics to new attribute columns"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "vector, raster, statistics"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of vector polygon map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of raster map to calculate statistics from"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column prefix for new attribute columns"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of data table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Points vector map to modify"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer in the vector to be modified"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Layer of the query vector containg data"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Starting coordinate pair"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Couldn't open COGO file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Couldn't open output file <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Converting starting coordinate pair"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Column type not supported (must be string)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading labels file <%s in %s> ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Can't open temporary PostScript mask file."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading point/line file ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Reading PostScript include file <%s> ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Reading vector map <%s in %s> ..."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Reading vector points file <%s in %s> ..."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Cannot set GRASS_VERBOSE variable."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to open prolog <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open raster map <%s> in <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Creating color table for <%s in %s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Outlining areas in raster map <%s in %s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Can't create temporary PostScript mask file."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading raster map <%s in %s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Reading raster maps in group <%s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "No record for category [%d]"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Invalid RGB color definition in column <%s> for category [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Attribute is of invalid size [%.3f] for category [%d]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Can't get group information"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Paper '%s' not found, using defaults"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "This module is deprecated. Please use 'r.stats.interp' instead."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s: %s - illegal distance specification"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: %s - can't open"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Reading input map (%s)    ... "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s - ERROR reading %s"
+#~ msgstr "  ОШИБКА  "
+
+#, fuzzy
+#~ msgid "%s: %s - can't create raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: unable to re-open %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Writing output map (%s)   ... "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s - ERROR re-reading %s"
+#~ msgstr "  ОШИБКА  "
+
+#, fuzzy
+#~ msgid "%s - ERROR writing %s"
+#~ msgstr "  ОШИБКА  "
+
+#, fuzzy
+#~ msgid "Cannot read header of raster map <%s> in <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot open cell file of raster map <%s> in <%s>"
+#~ msgstr "   !"
+
+#, fuzzy
+#~ msgid "Reading <%s> in <%s>"
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Cannot read category file of raster map <%s> in <%s>"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Unable to create raster map [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unable to properly read input raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to properly write output raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Enter the file name or path\n"
+#~ "> "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Unable to create any tempfiles"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to run r.stats"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to open tempfile"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Preparing report ..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Path to rules file"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s - unable to remove color table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s - color table not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "fp: Data range is %s to %s\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%s] is a reclass file of map <%s> in mapset <%s> - can't uncompress"
+#~ msgstr "       !"
+
+#, fuzzy
+#~ msgid "[%s] is a reclass file of map <%s> in mapset <%s> - can't compress"
+#~ msgstr "       !"
+
+#, fuzzy
+#~ msgid "[%s] already uncompressed"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "[%s] already compressed"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%d crossings founds"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal edge number"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading data: "
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "This step value is not allowed."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Displacing data: "
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Can't find %d,%d:%f"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Creating some temporary files"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading %s"
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Writing %s"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s: complete ... "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Creating support files for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading map %s ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Reading map..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Input elevation raster map"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "Input aspect raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Input barrier raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Elevation file's resolution differs from current region resolution"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading input files: aspect"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Resolution of aspect file differs from current region resolution"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create raster map '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to write segment file for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to find raster map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Could not open temporary file: [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Could not open input file [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "raster, import, conversion"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Convert ASCII raster file to binary raster map layer."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid ""
+#~ "ASCII raster file to be imported if not given reads from standard input"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Location PROJ_INFO is:\n"
+#~ msgstr "Район  "
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "You can use the -o flag to r.in.gdal to override this check and use the "
+#~ "location definition for the dataset.\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Selected band (%d) does not exist.\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Copying %d GCPS in points file for %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Mapset [%s] in target location [%s] - "
+#~ msgstr "Набор данных    "
+
+#, fuzzy
+#~ msgid "not found\n"
+#~ msgstr "%s не найден"
+
+#, fuzzy
+#~ msgid "File not found: %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Reading MAT-File ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Writing new raster map ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Minimum number of rows to hold in memory is 1"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Can't create raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Writing raster map..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Output basic information about a raster map layer."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Print raster map data units only"
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Print raster map vertical datum only"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Print raster map title only"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "<%s> - illegal output file name"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "can't open file <%s> to write header"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Raster map to use to setup sampling"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector map to overlay"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Configuration file"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Error opening channel %i"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to create raster"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create random access file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create .r.li directory"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot create .r.li/output directory"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot delete %s file (PIPE)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot close %s file (PIPE2)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot delete %s file (PIPE2)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot close receive channel file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot read setup file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal configuration file"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Cannot read raster header file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Too many strats for raster map"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot make lseek"
+#~ msgstr "Невозможно открыть %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "\t\t\t\tAREA MESSAGE: \n"
 #~ " \t\t\t\taid = %i \n"
 #~ " \t\t\t\tx = %i \n"
 #~ " \t\t\t\ty = %i \n"
 #~ " \t\t\t\trl = %i \n"
 #~ " \t\t\t\tcl = %i \n"
-#~ " \t\t\t\tmask = %s \n"
 #~ " "
 #~ msgstr ""
 #~ "\n"
@@ -16852,256 +18555,1932 @@ msgstr ""
 #~ "   "
 
 #, fuzzy
-#~ msgid "Cannot close %s file\n"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Cannot delete %s file\n"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Cannot make stat of %s configuration file "
-#~ msgstr "  "
-
-#, fuzzy
-#~ msgid "The configuration file can be used only with \t\t\t%s rasterfile"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "%s\n"
-#~ msgstr " "
-
-#, fuzzy
 #~ msgid ""
-#~ "creates and adds a new attribute table to a given layer of an existing "
-#~ "vector map"
-#~ msgstr "вектор"
+#~ " \t\t\t\tDONE MESSAGE: \n"
+#~ " \t\t\t\taid = %i \n"
+#~ " \t\t\t\tpid = %i \n"
+#~ " \t\t\t\tresult = %f \n"
+#~ " "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "   "
 
 #, fuzzy
-#~ msgid "Name of new attribute table (default: vector map name)"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name and type of the new column(s) (types depend on database backend, but "
-#~ "all support VARCHAR(), INT, DOUBLE and DATE)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS "
-#~ "vector points map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "name for new binary vector file"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Uploads vector values at positions of vector points to the table"
-#~ msgstr "вектор вектор"
-
-#, fuzzy
-#~ msgid "vector map to be queried"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
-#~ "vector map."
-#~ msgstr "вектор."
-
-#, fuzzy
-#~ msgid "name for new binary vector file (omit for display to stdout)"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "port Garmin receiver is connected to"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "force removal (use only if you know what you are doing)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "r.in.aster - georeferencing, rectification, and import of Terra-ASTER "
-#~ "imagery and relative DEM's using gdalwarp"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Input vector map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "adds one or more columns to the attribute table connected to a given "
-#~ "vector map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "name and type of the new column(s) (types depend on database backend, but "
-#~ "all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Draws polar diagram of angle map such as aspect or flow directions"
-#~ msgstr "Экспозиция"
-
-#, fuzzy
-#~ msgid ""
-#~ "Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii "
-#~ "file into a vector map."
-#~ msgstr "вектор."
-
-#, fuzzy
-#~ msgid "name for new vector file (omit for display to stdout)"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "projection of input data (use PROJ.4 options), if not set the input is "
-#~ "assumed to be Lat/Lon WGS84"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Slide show of GRASS raster/vector maps"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "map prefix. Specify character(s) to view selected maps only"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "calculates univariate statistics on selected table column for a GRASS "
-#~ "vector map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Destination projection, defaults to this location's projection"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "omit entries with missing label"
-#~ msgstr "отсутствует"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates raster plane map given dip (inclination), aspect (azimuth), and "
-#~ "one point"
-#~ msgstr "Экспозиция"
-
-#, fuzzy
-#~ msgid ""
-#~ "convert all old GRASS < V5.7 vector maps in current mapset to current "
-#~ "format"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Compression for PNG files (0=none, 1=fastest, 9=most)"
-#~ msgstr "нет"
-
-#, fuzzy
-#~ msgid "Import of E00 file into a vector map."
-#~ msgstr "вектор."
-
-#, fuzzy
-#~ msgid ""
-#~ "convert all old GRASS < V5.7 sites maps to vector maps in current mapset"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Spline tension parameter"
-#~ msgstr "Кривизна сплайна"
-
-#, fuzzy
-#~ msgid ""
-#~ "Calculates univariate statistics from a GRASS raster map based on vector "
-#~ "objects"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "continue if upload column(s) already exist"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Import Mapgen or Matlab vector maps into GRASS."
-#~ msgstr "вектор."
-
-#, fuzzy
-#~ msgid "Input map is in Matlab format"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "mapset(s) to list (default: current mapset search path)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "removes existing attribute table of a vector map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "vector map from which to remove attribute table"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "name of existing attribute table (default: vector map name)"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Group [%s] contains no files"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "Only calculate optimal standard deviation and return (no map is written)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid "Writing column <%s> with fixed length 40 chars (may be truncated)"
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "List vector files in input location and return (a dummy value must be "
-#~ "given for input)"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Vector maps containing starting point(s) and stop point(s)"
+#~ msgid "CHILD[pid = %i] cannot open raster map"
 #~ msgstr "   "
 
 #, fuzzy
-#~ msgid "Starting vector map %s is outside the current region"
-#~ msgstr "вектор    "
+#~ msgid "Calculates dominance's diversity index on a raster map"
+#~ msgstr "   "
 
 #, fuzzy
-#~ msgid "Open raster map %s\n"
+#~ msgid "Calculates mean pixel attribute index on a raster map"
 #~ msgstr " "
 
 #, fuzzy
 #~ msgid ""
-#~ "Interactive tool used to draw and save vector features on a graphics "
-#~ "monitor using a pointing device (mouse)."
+#~ "Calculates mean patch size index on a raster map, using a 4 neighbour "
+#~ "algorithm"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Calculates Shannon's diversity index on a raster map"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Calculates Simpson's diversity index on a raster map"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: base raster map not found"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: cover raster map not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: illegal map name"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: can't read category labels"
+#~ msgstr "     "
+
+#, fuzzy
+#~ msgid "%s: raster map not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Filtering [%s] in [%s]"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Open raster map %s in %s = %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Closing raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Swap temp files"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Writing [%s]"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s: <%s> illegal file name"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "can't open raster map <%s> in mapset %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Creating BIL support files ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Header File = %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot get raster band."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot allocate buffer for reading null values."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot read GRASS raster."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot write GDAL raster."
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Raster map or group [%s] not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No raster maps in group [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot get [%s] driver"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot get in-memory raster driver"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create dataset using memory raster driver."
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot create [%s] dataset using [%s] driver."
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot export [%s] raster map."
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Cannot create [%s] raster map using [%s] driver."
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Exporting <%s>"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "cols=%d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Exporting raster as floating point values"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading in map ... "
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Writing out map ... "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%ld bytes written to '%s'."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Converting %s..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Cannot read header of raster map <%s>"
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Cannot open TIFF file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading raster map"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Name of color file"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Writing vertices..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Writing color file..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s - %s not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "One or more input maps not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal resolution! [%g]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Using resolution [%g]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open file for <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Left:   Mark next point\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Endpoint coordinates are outside of current region settings"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Checking location %s, mapset %s:"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Rounding..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Quant table not changed for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "New quant table created for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Old data range is %s to %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Old integer data range is %d to %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Collecting Stats ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s: Unable to find raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "<%s> is illegal file name"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "<%s=%s> invalid percentage"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "<%s=%s> invalid number of points"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "There aren't [%ld] cells in the current region"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "There aren't [%ld] non-zero cells in the current region"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "There aren't any valid locations in the current region"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Writing raster map <%s> and vector map <%s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Writing raster map <%s> ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Writing vector map <%s> ..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot read raster row [%d] from raster map <%s>"
+#~ msgstr " !"
+
+#, fuzzy
+#~ msgid "Cannot insert new record: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Starting map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Percent done:"
+#~ msgstr "Завершено:"
+
+#, fuzzy
+#~ msgid "<%s> is an illegal file name"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Illegal reclass rule -"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No rules specified. Raster map <%s> not created"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No rules specified"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Cannot read header file of <%s@%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create reclass file of <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create category file of <%s>"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "[%s] is an illegal file name"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "no rules specified"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s: only %d unit%s allowed"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Invalid method: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to write color table for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%d bytes of disk space for temp files."
+#~ msgstr "Не достаточно места на диске -- не могу создать файлы"
+
+#, fuzzy
+#~ msgid "Creating support files"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Elevation products for mapset [%s] in [%s]"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s - illegal name "
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Failed in attempt to open %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot read category file of raster map <%s>"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s: running %s command"
+#~ msgstr "  ОШИБКА  "
+
+#, fuzzy
+#~ msgid "%s: can't open tempfile"
+#~ msgstr "  ОШИБКА"
+
+#, fuzzy
+#~ msgid "Reading %s..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "elevin raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "aspin raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "slopein raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "linkein raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "albedo raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "latin raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "coefbh raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "coefdh raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Raster map from which to copy category table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Raster map <%s> not found in current mapset"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "cats table for [%s] set to %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Updating statistics for [%s]..."
+#~ msgstr ""
+#~ "\n"
+#~ "  "
+
+#, fuzzy
+#~ msgid "Updating the number of categories for [%s]..."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Update raster map statistics"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Raster file [%s] not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Statistics for [%s] updated"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Couldn't find raster map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal output file name. Please try another."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "ERROR: Problem opening output file."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s - can't create raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: %s - map not found"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: can't open %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading raster map <%s> ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Prefix for the ouput raster map(s)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: Unable to open raster map <%s> in mapset <%s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: Unable to create temporary file <%s> -- errno = %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: Error writing temporary file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: Error reading from raster map <%s> in mapset <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s:  Unable to open output raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cell file [%s] not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot grant privileges on table <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading row %d"
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "raster3d, statistics"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Calculates univariate statistics from the non-null 3d cells of a raster3d "
+#~ "map."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Can't open raster map %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal east coordinate <%s>\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal north coordinate <%s>\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to open drainage pointer map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to open new basin map"
+#~ msgstr "Экспозиция."
+
+#, fuzzy
+#~ msgid "unable to close new basin map layer"
+#~ msgstr "Экспозиция."
+
+#, fuzzy
+#~ msgid "Queries colors for a raster map layer."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Name of existing raster map to query colors"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Values to query colors for"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Read values from stdin"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of the detachment capacity coefficient raster map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of the transport capacity coefficient raster map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Output transport capacity raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Output transp.limited erosion-deposition raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Output sediment concentration raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Output sediment flux raster map"
+#~ msgstr "Экспозиция"
+
+#, fuzzy
+#~ msgid "Output erosion-deposition raster map"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "You are not outputing any raster or site files"
+#~ msgstr "  вектор"
+
+#, fuzzy
+#~ msgid "Name of the elevation raster map, same units as N,E: [m] or [ft] "
+#~ msgstr "Имя растрового файла-маски"
+
+#, fuzzy
+#~ msgid "You are not outputting any raster or vector points maps"
+#~ msgstr "  вектор"
+
+#, fuzzy
+#~ msgid "Percent Completed ... "
+#~ msgstr "Завершено:"
+
+#, fuzzy
+#~ msgid "Input_maps"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Reading inputs ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "%s: illegal value spec"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Unable to close output map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error opening 3d raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reacharge raster map in m^3/s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error closing new 3d raster map"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Error closing ascii file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Requested 3d raster map <%s> not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Generates volume statistics for raster3d maps."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Number of sub-ranges to collect stats from"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "<Auxiliar_edge_table> created in database."
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot open vector map <%s>"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Cannot open vector map <%s> at the topological level"
+#~ msgstr "вектор    "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: %d points read in region.\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Cannot open database %s by driver %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Column type not supported"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: Cannot select data from table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: No point lies into the current region"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create vector map <%s>"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "[%d] records selected from table"
 #~ msgstr "вектор."
 
 #, fuzzy
 #~ msgid ""
-#~ "3 raster maps (r,g,b) which are used to create rgb values [redmap,"
-#~ "greenmap,bluemap]"
+#~ "Interpolation: No database connection for driver <%s> defined. Run db."
+#~ "connect"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid ""
+#~ "Interpolation: Creating table: It was impossible to create table <%s>."
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "unable to find raster file %s"
+#~ msgid "Rebuilding topology ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Building parts of topology ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Breaking boundaries ..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Removing duplicates ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Attaching islands ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Attaching centroids ..."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Creates topology for GRASS vector data."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Name of vector map where erroneous vectors are written to"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Could not find input map <%s> in current mapset."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "The number of lines in the input vector map is [%d]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Action to be done"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Don't build topology for the output vector"
+#~ msgstr "  вектор"
+
+#, fuzzy
+#~ msgid "Snap vertices"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "vector, import, conversion"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Imports older versions of GRASS vector maps."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Endian of input vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Input vector map <%s> not found."
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Vector map <%s> is connected by:"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Print output to stdout, don't update attribute table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column <%s> not found in table <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "can't open raster map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading categories: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "[%d] features added"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Unexpected data in vector head: %s"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Unknown keyword <%s> in vector head"
+#~ msgstr "  вектор."
+
+#, fuzzy
+#~ msgid "Cannot rewrite line [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines closed"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Editing tool"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "ASCII file to be converted to binary vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "If not given (or \"-\") reads from standard input"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Do not expect header of input data"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Operation <%s> not implemented."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines broken"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot connect line id [%d] to line [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines connected"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Could not get cat list <%s>, editing terminated"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot set category [%d] line [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot delete layer/category [%d/%d] line [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] features modified"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] features copied"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot delete line [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines flipped"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Could not open ASCII file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector map <%s> not found in the current mapset"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot open vector map <%s> at topo level [%d]"
+#~ msgstr "вектор    "
+
+#, fuzzy
+#~ msgid "Operation not implemented"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines merged"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot open driver <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot snap lines [%d,%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] vertices moved"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] lines modified"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] vertices added"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] vertices removed"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Create a new vector as a read-only link to OGR layer."
+#~ msgstr "вектор вектор."
+
+#, fuzzy
+#~ msgid ""
+#~ "Input text file with category numbers/number ranges to be extracted (if "
+#~ "'-' given reads from standard input"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Name of output vector area map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Use all vector points (do not limit to current region)"
+#~ msgstr "вектор  ."
+
+#, fuzzy
+#~ msgid "Error loading vector points map <%s>"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (bad type) [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (unknown type) [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading ASCII file: (bad point) [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading categories: [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid ""
+#~ "Unexpected data in vector head:\n"
+#~ "[%s]"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Create a vector map from ASCII points file or ASCII vector file."
+#~ msgstr "вектор вектор."
+
+#, fuzzy
+#~ msgid "ASCII file to be imported, if not given reads from standard input"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Columns"
 #~ msgstr " "
 
 #, fuzzy
 #~ msgid ""
-#~ "Vect runs out of region and re-enters - this case is not yet implemented!"
-#~ msgstr " !"
+#~ "Number of column used as z coordinate (first column is 1) for points mode"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Number of column used as category (first column is 1) for points mode"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "If 0, unique category is assigned to each row and written to new column "
+#~ "'cat'"
+#~ msgstr "   ."
+
+#, fuzzy
+#~ msgid "Could not open ascii file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Could not open temp file <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Maximum number of columns: %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Minimum number of columns: %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot describe table <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unparsable longitude value: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unparsable latitude value: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Skipping [%d] of [%d] rows falling outside of current region"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Importing points ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Cannot insert values: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open dxf file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open new vector map <%s>"
+#~ msgstr "  вектор"
+
+#, fuzzy
+#~ msgid "Layer %d: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot write part of geometry"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unknown geometry type"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Override dataset projection (use location's projection)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Illegal filename: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "GRASS LOCATION PROJ_INFO is:\n"
+#~ msgstr "Район  "
+
+#, fuzzy
+#~ msgid "Import dataset PROJ_INFO is:\n"
+#~ msgstr "Район  "
+
+#, fuzzy
+#~ msgid "Layer: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Create a new vector from the current region."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Print map title only"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Print topology information only"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot get layer info for vector map <%s>"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot alter table: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Font file can not be loaded"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to set font size"
+#~ msgstr "Линия."
+
+#, fuzzy
+#~ msgid "Cannot load glyph for '%c'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Input vector map containing lines"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Output vector map where oriented lines are written"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Output vector map of errors"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Input vector map containing reference points"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Line layer"
+#~ msgstr "Линия"
+
+#, fuzzy
+#~ msgid "Name of table where the reference system will be written"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "New table is created by this module"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot get layer info for lines"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot get layer info for points"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot open database for reference table"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Cannot drop table: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot select line id values from %s.%s."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Line id column must be integer"
+#~ msgstr "Линия  ."
+
+#, fuzzy
+#~ msgid "Cannot fetch line id from line table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No lines selected for line id [%d]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot select point attributes from <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Point [%d] without category (layer [%d])"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Cannot insert reference records: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Building topology for output (out_lines) map ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Building topology for error (err) map ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Output vector map where stationing will be written"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of the reference system table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Offset label in label x-direction in map units"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Offset label in label y-direction in map units"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Line width of text"
+#~ msgstr "Линия"
+
+#, fuzzy
+#~ msgid "Opaque to vector"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Only relevant if background color is selected"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot open labels <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot select records from LRS table: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot fetch data from table"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No record in LR table"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Output vector map where segments will be written"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of file containing segment rules. If not given, read from stdin"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Cannot read input: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No record in LR table for: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "More than one record in LR table for: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot find line of cat [%d]"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Incorrect segment type: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] points read from input"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] points written to output map (%d lost)"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] lines read from input"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] lines written to output map (%d lost)"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Input vector map containing points"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] positions found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] points outside threshold"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] points - no record found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] points - to many records found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Performing map %s + %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Creating centroids ..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Writing out vector rows ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Writing out vector columns ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Could not find vector map <%s> in current mapset"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Operation to be performed"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Output vector map must be specified"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "[%d] new points written to output"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Topology is not available"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector map <%s> not fould"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot get line segment, segment out of line"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] points without category (nfield: [%d])"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Wrong input format: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No point with category [%d]"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "[%d] input format errors"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] points of given category missing"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Not enough cities (< 2)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Not enough terminals (< 2)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Doing log transformation"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "got type %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "[%d] features written"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Exporting %i points/lines..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%d features written"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "%d features written."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Exports a GRASS vector map to SVG."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Attribute(s) to include in output SVG"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "SVG file <%s> cannot be opened"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot select attributes for cat=%d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Breaking lines ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Querying input '%s' ... "
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Writing centroids ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Collecting input attributes ..."
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Building partial topology ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "vector, projection"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "3D vector maps only"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Checking location <%s>, mapset <%s>:"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Parameter <%s> not set"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Re-projecting vector map..."
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Reading input vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector of points defining sample points"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Finding quadrats ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Column type <%s> not supported (must be integer or double precision)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot create table <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Output map where segments will be written"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot find line of cat %d"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "%d points read from input\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%d lines read from input\n"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%d lines written to output map (%d lost)\n"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "vector, metadata"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Updates vector map metadata"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Person who created vector map"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Vector map title"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Vector map projection zone"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Text to append to the comment line of the map's metadata file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot open history file for vector '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading data trom the map ..."
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid ""
+#~ "Database connection not defined for layer [%d]. Use v.db.connect first"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Querying database ... "
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "Cannot fetch record"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] categories read from map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "[%d] categories read from map exist in selection from table"
+#~ msgstr "вектор отсутствует"
+
+#, fuzzy
+#~ msgid "[%d] categories read from map don't exist in selection from table"
+#~ msgstr "вектор отсутствует"
+
+#, fuzzy
+#~ msgid "Updating database ..."
+#~ msgstr "Чтение %s ..."
+
+#, fuzzy
+#~ msgid "More elements of category [%d], nothing loaded to DB"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Write line nodes"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "[%d] points written to output vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "No record for area (cat = %d)"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Unable to use column specified"
+#~ msgstr "Линия."
+
+#, fuzzy
+#~ msgid "vector, raster, conversion"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Name of column used as raster category labels"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unknown option '%s'"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to get layer info for vector map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Unable to open database %s by driver %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "No records selected from table '%s'"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "No records selected"
+#~ msgstr "вектор."
+
+#, fuzzy
+#~ msgid "Error in color definition column (%s) with cat %d: colorstring [%s]"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Error in color definition column (%s), with cat %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to open raster <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column type [%d] not supported"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to get row %d from <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unknown use type: %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to write categories for map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector map is not 3D"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column type [%s] not supported (did you mean 'labelcolumn'?)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to use column '%s'"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unknown raster map type"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to process areas from vector map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading coordinates from file."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Nothing to do"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Not enough types"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Odd number of types"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Extended statistics is currently supported only for points/centroids"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Cannot sort the key/value array"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector is not 3D"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Column type of wcolumn is not supported (must be integer or double)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid ""
+#~ "Column type of smooth column is not supported (must be integer or double)"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Database record for cat %d not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Queries a vector map layer at given locations"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Read coordinates from standard input"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unknown input format, skipping: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No input coordinates provided"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to open display"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "cannot get window attributes"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to open image file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to read BMP header"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "unable to map image file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Writing raster map ... "
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "%s in %s - can't read header file"
+#~ msgstr "     "
+
+#, fuzzy
+#~ msgid "%s - unable to create reclass file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s - unable to create raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s - unable to create category file"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "verbose mode"
+#~ msgstr "Вывод статистики на экран"
+
+#, fuzzy
+#~ msgid "Vector map with points for which to modify the attribute table"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Path to the input file"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Path to an output file"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "unable to open raster map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error while reading cell map."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error while writing new cell map."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error in opening output file <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to find input cell map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error in opening input file <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unable to find cell map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to read map raster row %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to get row %d from raster map"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to write color table to raster [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Reading raster map row %d"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unable to find base map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to find cover map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: reading category file for %s"
+#~ msgstr "  ОШИБКА  "
+
+#, fuzzy
+#~ msgid "%s: unable to open raster map [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: unable to create raster map [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unable to open database %s with driver %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "%s: Unable to read raster map [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Unable to insert new row: %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: unable to open raster map <%s>"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: Failed to read raster row %d"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to read cats table for %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: o_open_file: raster map %s not found"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "%s: o_open_file: could not open raster map %s in %s"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "No record for category for [%d]"
+#~ msgstr "  "
+
+#, fuzzy
+#~ msgid "Error reading ASCII file <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading categories: <%s>"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Option <%s> must be set"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Lines could not be merged"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Error reading ascii file: [%s]"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "Error reading ascii file: %s"
+#~ msgstr " ."
+
+#, fuzzy
+#~ msgid "%s: Dropping <s>"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "CrossCorrelation: It shouldn't take too long."
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "raster map [%s] "
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "No line found."
+#~ msgstr "%s не найден"
+
+#, fuzzy
+#~ msgid "Conversion of [%s] to vector map ..."
+#~ msgstr "  вектор "
+
+#, fuzzy
+#~ msgid "output layer name"
+#~ msgstr "Склоны"
+
+#, fuzzy
+#~ msgid "Error opening %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Open 3d raster map %s"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Unable to create raster map for [%s]"
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Checking input maps\n"
+#~ msgstr "   "
+
+#, fuzzy
+#~ msgid "Open elev raster map %s\n"
+#~ msgstr " "
