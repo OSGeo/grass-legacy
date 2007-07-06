@@ -48,7 +48,7 @@ int N_solver_gauss(N_les * les)
 
     if (les->type != N_NORMAL_LES) {
 	G_warning(_
-		  ("The gauss elimination solver does not works with sparse matrices"));
+		  ("The gauss elimination solver does not work with sparse matrices"));
 	return 0;
     }
 
@@ -86,7 +86,7 @@ int N_solver_lu(N_les * les)
     double *c, *tmpv;
 
     if (les->type != N_NORMAL_LES) {
-	G_warning(_("The lu solver does not works with sparse matrices"));
+	G_warning(_("The lu solver does not work with sparse matrices"));
 	return 0;
     }
 
@@ -153,7 +153,7 @@ int N_solver_lu(N_les * les)
 int N_solver_cholesky(N_les * les)
 {
     if (les->type != N_NORMAL_LES) {
-	G_warning(_("The cholesky solver does not works with sparse matrices"));
+	G_warning(_("The cholesky solver does not work with sparse matrices"));
 	return 0;
     }
 
