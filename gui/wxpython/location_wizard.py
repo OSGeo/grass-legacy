@@ -1773,8 +1773,7 @@ class GWizard:
             dlg.Destroy()
 
         try:
-            cmdlist = ['g.proj','-c','proj4="%s"' % proj4string,'location=%s' % location]
-            wx.MessageBox('cmdlist: %s' % cmdlist)
+            cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
             cmd.Command(cmdlist)
             return True
 
