@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-16 00:05+0200\n"
+"POT-Creation-Date: 2007-07-06 18:06+0200\n"
 "PO-Revision-Date: 2007-03-23 16:35+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Greek <translations@grass.itc.it>\n"
@@ -793,12 +793,12 @@ msgstr ""
 
 #: ../lib/gis/list.c:125
 #, c-format
-msgid "no <%s> files available in current mapset\n"
+msgid "no %s files available in current mapset\n"
 msgstr ""
 
 #: ../lib/gis/list.c:127
 #, c-format
-msgid "no <%s> files available in mapset <%s>\n"
+msgid "no %s files available in mapset <%s>\n"
 msgstr ""
 
 #: ../lib/gis/list.c:141
@@ -808,7 +808,7 @@ msgstr ""
 
 #: ../lib/gis/list.c:193
 #, c-format
-msgid "<%s> files available in mapset <%s>:\n"
+msgid "%s files available in mapset <%s>:\n"
 msgstr ""
 
 #: ../lib/gis/list.c:273
@@ -1170,15 +1170,15 @@ msgid ""
 "Flags:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1542 ../lib/gis/parser.c:1826
+#: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1561 ../lib/gis/parser.c:1839
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1546
+#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1565
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1107 ../lib/gis/parser.c:1549
+#: ../lib/gis/parser.c:1107 ../lib/gis/parser.c:1568
 msgid "Quiet module output"
 msgstr ""
 
@@ -1194,98 +1194,98 @@ msgstr ""
 msgid "  %*s   default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1425
+#: ../lib/gis/parser.c:1444
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1438
+#: ../lib/gis/parser.c:1457
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1443
+#: ../lib/gis/parser.c:1462
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1517
+#: ../lib/gis/parser.c:1536
 msgid "Flags"
 msgstr ""
 
-#: ../lib/gis/parser.c:1558
+#: ../lib/gis/parser.c:1577
 msgid "Parameters"
 msgstr ""
 
-#: ../lib/gis/parser.c:1605
+#: ../lib/gis/parser.c:1618
 msgid "Options"
 msgstr ""
 
-#: ../lib/gis/parser.c:1611
+#: ../lib/gis/parser.c:1624
 msgid "Default"
 msgstr ""
 
-#: ../lib/gis/parser.c:1828
+#: ../lib/gis/parser.c:1841
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1836
+#: ../lib/gis/parser.c:1849
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1838
+#: ../lib/gis/parser.c:1851
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1902
+#: ../lib/gis/parser.c:1915
 #, c-format
 msgid "  %*s   options: "
 msgstr ""
 
-#: ../lib/gis/parser.c:1951 ../lib/gis/parser.c:1968
+#: ../lib/gis/parser.c:1964 ../lib/gis/parser.c:1981
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2023
+#: ../lib/gis/parser.c:2036
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2030
+#: ../lib/gis/parser.c:2043
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2115
+#: ../lib/gis/parser.c:2128
 #, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2117
+#: ../lib/gis/parser.c:2130
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2120
+#: ../lib/gis/parser.c:2133
 #, c-format
 msgid ""
 "\n"
 "ERROR: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2122
+#: ../lib/gis/parser.c:2135
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2125
+#: ../lib/gis/parser.c:2138
 #, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2285
+#: ../lib/gis/parser.c:2298
 #, c-format
 msgid ""
 "\n"
@@ -1293,82 +1293,82 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2388
+#: ../lib/gis/parser.c:2401
 #, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2390
+#: ../lib/gis/parser.c:2403
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2445
+#: ../lib/gis/parser.c:2458
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2492
+#: ../lib/gis/parser.c:2505
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2506
+#: ../lib/gis/parser.c:2519
 #, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2507
+#: ../lib/gis/parser.c:2520
 #, c-format
 msgid "     key: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2509
+#: ../lib/gis/parser.c:2522
 #, c-format
 msgid "  format: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2511
+#: ../lib/gis/parser.c:2524
 #, c-format
 msgid " default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2512
+#: ../lib/gis/parser.c:2525
 #, c-format
 msgid "required: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2514
+#: ../lib/gis/parser.c:2527
 #, c-format
 msgid "multiple: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2516
+#: ../lib/gis/parser.c:2529
 #, c-format
 msgid " options: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2531
+#: ../lib/gis/parser.c:2544
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2545 ../lib/gis/parser.c:2556
+#: ../lib/gis/parser.c:2558 ../lib/gis/parser.c:2569
 msgid "   Try again? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2554
+#: ../lib/gis/parser.c:2567
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2565
+#: ../lib/gis/parser.c:2578
 #, c-format
 msgid ""
 "\n"
@@ -1376,11 +1376,11 @@ msgid ""
 "  %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2566
+#: ../lib/gis/parser.c:2579
 msgid "Is this correct? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2635
+#: ../lib/gis/parser.c:2648
 msgid "to accept the default"
 msgstr ""
 
@@ -2316,11 +2316,11 @@ msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
 msgid ""
-"The type of solver which should solve the symmetric linear equation system."
+"The type of solver which should solve the symmetric linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:71
-msgid "The type of solver which should solve the linear equation system."
+msgid "The type of solver which should solve the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:80
@@ -2342,28 +2342,46 @@ msgstr ""
 msgid "The calculation time in seconds"
 msgstr ""
 
-#: ../lib/gpde/N_solvers.c:50
-msgid "The gauss elimination solver does not works with sparse matrices"
+#: ../lib/gpde/N_solvers.c:51
+msgid "The gauss elimination solver does not work with sparse matrices"
 msgstr ""
 
-#: ../lib/gpde/N_solvers.c:53 ../lib/gpde/N_solvers.c:86
-#: ../lib/gpde/N_solvers_classic_iter.c:57
-#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers_krylov.c:77
+#: ../lib/gpde/N_solvers.c:56 ../lib/gpde/N_solvers.c:94
+#: ../lib/gpde/N_solvers.c:161 ../lib/gpde/N_solvers_classic_iter.c:57
+#: ../lib/gpde/N_solvers_classic_iter.c:94 ../lib/gpde/N_solvers_krylov.c:78
 #: ../lib/gpde/N_solvers_krylov.c:255 ../lib/gpde/N_solvers_krylov.c:423
 #: ../lib/gpde/N_solvers_krylov.c:832
 msgid "The linear equation system is not quadratic"
 msgstr ""
 
-#: ../lib/gpde/N_solvers.c:56
-msgid "Starting gauss elimination solver"
-msgstr ""
-
-#: ../lib/gpde/N_solvers.c:83
-msgid "The lu solver does not works with sparse matrices"
+#: ../lib/gpde/N_solvers.c:61
+msgid "Starting direct gauss elimination solver"
 msgstr ""
 
 #: ../lib/gpde/N_solvers.c:89
-msgid "Starting lu solver method"
+msgid "The lu solver does not work with sparse matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:99
+msgid "Starting direct lu decomposition solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:156
+msgid "The cholesky solver does not work with sparse matrices"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:167 ../lib/gpde/N_solvers_krylov.c:84
+#: ../lib/gpde/N_solvers_krylov.c:261
+msgid "Matrix is not symmetric!"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:171
+msgid "Starting cholesky decomposition solver"
+msgstr ""
+
+#: ../lib/gpde/N_solvers.c:174 ../lib/gpde/N_solvers_krylov.c:190
+#: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
+msgid "Unable to solve the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_solvers_classic_iter.c:152
@@ -2386,28 +2404,19 @@ msgstr ""
 msgid "SOR -- iteration %5i error %g\n"
 msgstr ""
 
-#: ../lib/gpde/N_solvers_krylov.c:83 ../lib/gpde/N_solvers_krylov.c:261
-msgid "Matrix is not symmetric!"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:189 ../lib/gpde/N_solvers_krylov.c:357
-#: ../lib/gpde/N_solvers_krylov.c:481
-msgid "Unable to solve the linear equation system"
-msgstr ""
-
-#: ../lib/gpde/N_solvers_krylov.c:197
+#: ../lib/gpde/N_solvers_krylov.c:198
 #, c-format
-msgid "sparse PCG -- iteration %i error  %g\n"
+msgid "Sparse PCG -- iteration %i error  %g\n"
 msgstr ""
 
-#: ../lib/gpde/N_solvers_krylov.c:199
+#: ../lib/gpde/N_solvers_krylov.c:200
 #, c-format
 msgid "PCG -- iteration %i error  %g\n"
 msgstr ""
 
 #: ../lib/gpde/N_solvers_krylov.c:365
 #, c-format
-msgid "sparse CG -- iteration %i error  %g\n"
+msgid "Sparse CG -- iteration %i error  %g\n"
 msgstr ""
 
 #: ../lib/gpde/N_solvers_krylov.c:367
@@ -2417,7 +2426,7 @@ msgstr ""
 
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, c-format
-msgid "sparse BiCGStab -- iteration %i error  %g\n"
+msgid "Sparse BiCGStab -- iteration %i error  %g\n"
 msgstr ""
 
 #: ../lib/gpde/N_solvers_krylov.c:533

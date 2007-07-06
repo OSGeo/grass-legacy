@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-16 00:05+0200\n"
+"POT-Creation-Date: 2007-07-06 18:06+0200\n"
 "PO-Revision-Date: 2007-03-23 16:35+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Greek <translations@grass.itc.it>\n"
@@ -16,30 +16,30 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-7\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/describe.c:42
+#: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/describe.c:45
 #: ../db/base/droptable.c:38 ../db/base/execute.c:57 ../db/base/select.c:60
 #: ../db/base/tables.c:41
 #, c-format
 msgid "Cannot start driver <%s>"
 msgstr ""
 
-#: ../db/base/columns.c:78 ../db/base/describe.c:98
+#: ../db/base/columns.c:78 ../db/base/describe.c:111
 msgid "table name"
 msgstr ""
 
-#: ../db/base/columns.c:85 ../db/base/databases.c:75 ../db/base/describe.c:105
+#: ../db/base/columns.c:85 ../db/base/databases.c:75 ../db/base/describe.c:118
 #: ../db/base/select.c:197 ../db/base/tables.c:78
 msgid "driver name"
 msgstr ""
 
-#: ../db/base/columns.c:93 ../db/base/describe.c:113 ../db/base/select.c:188
+#: ../db/base/columns.c:93 ../db/base/describe.c:126 ../db/base/select.c:188
 #: ../db/base/tables.c:86
 msgid "database name"
 msgstr ""
 
 #: ../db/base/columns.c:99 ../db/base/connect.c:41 ../db/base/copy.c:33
 #: ../db/base/createdb.c:73 ../db/base/databases.c:87
-#: ../db/base/describe.c:119 ../db/base/drivers.c:68 ../db/base/dropdb.c:73
+#: ../db/base/describe.c:132 ../db/base/drivers.c:68 ../db/base/dropdb.c:73
 #: ../db/base/droptable.c:85 ../db/base/execute.c:100 ../db/base/select.c:252
 #: ../db/base/tables.c:100 ../db/db.login/main.c:42
 msgid "database, SQL"
@@ -157,15 +157,19 @@ msgstr ""
 msgid "List all databases for a given driver and location."
 msgstr ""
 
-#: ../db/base/describe.c:55
+#: ../db/base/describe.c:58
 msgid "Cannot describe table"
 msgstr ""
 
-#: ../db/base/describe.c:92
+#: ../db/base/describe.c:101
 msgid "print column names only instead of full column descriptions"
 msgstr ""
 
-#: ../db/base/describe.c:120
+#: ../db/base/describe.c:105
+msgid "print table structure"
+msgstr ""
+
+#: ../db/base/describe.c:133
 msgid "Describe a table (in detail)."
 msgstr ""
 
@@ -468,11 +472,11 @@ msgstr ""
 
 #: ../doc/raster/r.example/main.c:95 ../imagery/i.cluster/main.c:135
 #: ../raster/r.bitpattern/main.c:87 ../raster/r.grow2/main.c:165
-#: ../raster/r.mfilter/main.c:98 ../raster/r.patch/main.c:81
-#: ../raster/r.report/parse.c:91 ../raster/r.resample/main.c:78
-#: ../raster/r.rescale.eq/main.c:96 ../raster/r.slope.aspect/main.c:281
-#: ../raster/r.texture/main.c:105
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:248
+#: ../raster/r.kappa/main.c:82 ../raster/r.mfilter/main.c:98
+#: ../raster/r.patch/main.c:81 ../raster/r.report/parse.c:91
+#: ../raster/r.resample/main.c:78 ../raster/r.rescale.eq/main.c:96
+#: ../raster/r.slope.aspect/main.c:281 ../raster/r.texture/main.c:105
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:281
 #: ../vector/v.kcv/main.c:104 ../vector/v.perturb/main.c:116
 #: ../vector/v.sample/main.c:128
 msgid "Quiet"
@@ -558,7 +562,7 @@ msgstr ""
 #: ../display/d.rgb/main.c:53 ../display/d.rhumbline/main.c:43
 #: ../display/d.save/main.c:80 ../display/d.text/main.c:67
 #: ../display/d.text.freetype/main.c:140 ../display/d.text.new/main.c:139
-#: ../display/d.title/main.c:41 ../display/d.vect/main.c:126
+#: ../display/d.title/main.c:45 ../display/d.vect/main.c:126
 #: ../display/d.vect.chart/main.c:62 ../display/d.what.rast/main.c:44
 #: ../display/d.what.vect/main.c:53 ../display/d.where/main.c:41
 #: ../display/d.zoom/main.c:56
@@ -569,12 +573,12 @@ msgid "display"
 msgstr ""
 
 #: ../display/d.barscale/main.c:55 ../display/d.graph/main.c:53
-#: ../display/d.grid/main.c:50
+#: ../display/d.grid/main.c:51
 msgid "display, cartography"
 msgstr ""
 
 #: ../display/d.barscale/main.c:57
-msgid "Displays a barscale on GRASS monitor."
+msgid "Displays a barscale on the graphics monitor."
 msgstr ""
 
 #: ../display/d.barscale/main.c:61
@@ -631,7 +635,7 @@ msgstr ""
 #: ../display/d.font.freetype/main.c:101 ../display/d.frame/frame.c:130
 #: ../display/d.frame/frame.c:189 ../display/d.frame/frame.c:230
 #: ../display/d.frame/list.c:24 ../display/d.frame/select.c:36
-#: ../display/d.graph/main.c:95 ../display/d.grid/main.c:169
+#: ../display/d.graph/main.c:95 ../display/d.grid/main.c:165
 #: ../display/d.his/main.c:117 ../display/d.histogram/main.c:175
 #: ../display/d.info/main.c:68 ../display/d.legend/main.c:274
 #: ../display/d.linegraph/linegraph.c:256 ../display/d.measure/main.c:86
@@ -916,98 +920,98 @@ msgstr ""
 msgid "Graph file <%s> not found"
 msgstr ""
 
-#: ../display/d.grid/main.c:52
+#: ../display/d.grid/main.c:53
 msgid ""
 "Overlays a user-specified grid in the active display frame on the graphics "
 "monitor."
 msgstr ""
 
-#: ../display/d.grid/main.c:60
+#: ../display/d.grid/main.c:61
 msgid "Size of grid to be drawn"
 msgstr ""
 
-#: ../display/d.grid/main.c:61
+#: ../display/d.grid/main.c:62
 msgid "In map units or DDD:MM:SS format. Example: \"1000\" or \"0:10\""
 msgstr ""
 
-#: ../display/d.grid/main.c:70
-msgid ""
-"Sets the grid color, either a standard GRASS color or R:G:B triplet "
-"(separated by colons)"
-msgstr ""
-
-#: ../display/d.grid/main.c:79
+#: ../display/d.grid/main.c:71
 msgid "Lines of the grid pass through this coordinate"
 msgstr ""
 
-#: ../display/d.grid/main.c:87
-msgid "Sets the border color, either a standard GRASS color or R:G:B triplet"
+#: ../display/d.grid/main.c:75
+msgid "Grid color"
 msgstr ""
 
-#: ../display/d.grid/main.c:96
+#: ../display/d.grid/main.c:79 ../vector/v.label/main.c:202
+#: ../vector/v.lrs/v.lrs.label/main.c:213
+msgid "Border color"
+msgstr ""
+
+#: ../display/d.grid/main.c:84 ../vector/v.label/main.c:151
+#: ../vector/v.lrs/v.lrs.label/main.c:172
+msgid "Text color"
+msgstr ""
+
+#: ../display/d.grid/main.c:92
 msgid "Font size for gridline coordinate labels"
 msgstr ""
 
-#: ../display/d.grid/main.c:101
+#: ../display/d.grid/main.c:97
 msgid "Draw geographic grid (referenced to current ellipsoid)"
 msgstr ""
 
-#: ../display/d.grid/main.c:106
+#: ../display/d.grid/main.c:102
 msgid "Draw geographic grid (referenced to WGS84 ellipsoid)"
 msgstr ""
 
-#: ../display/d.grid/main.c:110
+#: ../display/d.grid/main.c:106
 msgid "Disable grid drawing"
 msgstr ""
 
-#: ../display/d.grid/main.c:114
+#: ../display/d.grid/main.c:110
 msgid "Disable border drawing"
 msgstr ""
 
-#: ../display/d.grid/main.c:118
+#: ../display/d.grid/main.c:114
 msgid "Disable text drawing"
 msgstr ""
 
-#: ../display/d.grid/main.c:128
+#: ../display/d.grid/main.c:124
 msgid "Both grid and border drawing are disabled"
 msgstr ""
 
-#: ../display/d.grid/main.c:132
+#: ../display/d.grid/main.c:128
 msgid "Geo-Grid option is not available for LL projection"
 msgstr ""
 
-#: ../display/d.grid/main.c:134
+#: ../display/d.grid/main.c:130
 msgid "Geo-Grid option is not available for XY projection"
 msgstr ""
 
-#: ../display/d.grid/main.c:145
+#: ../display/d.grid/main.c:141
 #, c-format
 msgid "Invalid geo-grid size <%s>"
 msgstr ""
 
-#: ../display/d.grid/main.c:148
+#: ../display/d.grid/main.c:144
 #, c-format
 msgid "Invalid grid size <%s>"
 msgstr ""
 
-#: ../display/d.grid/main.c:155
+#: ../display/d.grid/main.c:151
 #, c-format
 msgid "Illegal east coordinate <%s>"
 msgstr ""
 
-#: ../display/d.grid/main.c:163
+#: ../display/d.grid/main.c:159
 #, c-format
 msgid "Illegal north coordinate <%s>"
 msgstr ""
 
-#: ../display/d.grid/main.c:200
-msgid "Border not yet implemented for LatLong locations: border not drawn."
-msgstr ""
-
-#: ../display/d.grid/plot.c:154 ../display/d.grid/plot.c:159
-#: ../display/d.grid/plot.c:196 ../display/d.grid/plot.c:201
-#: ../display/d.grid/plot.c:331 ../display/d.grid/plot.c:345
-#: ../display/d.grid/plot.c:360 ../display/d.grid/plot.c:375
+#: ../display/d.grid/plot.c:162 ../display/d.grid/plot.c:168
+#: ../display/d.grid/plot.c:214 ../display/d.grid/plot.c:220
+#: ../display/d.grid/plot.c:355 ../display/d.grid/plot.c:369
+#: ../display/d.grid/plot.c:384 ../display/d.grid/plot.c:399
 #: ../ps/ps.map/do_geogrid.c:86 ../ps/ps.map/do_geogrid.c:91
 #: ../ps/ps.map/do_geogrid.c:115 ../ps/ps.map/do_geogrid.c:120
 #: ../ps/ps.map/do_geogrid.c:189 ../ps/ps.map/do_geogrid.c:227
@@ -1019,42 +1023,42 @@ msgstr ""
 msgid "Error in pj_do_proj"
 msgstr ""
 
-#: ../display/d.grid/plot.c:242 ../display/d.where/main.c:95
+#: ../display/d.grid/plot.c:266 ../display/d.where/main.c:95
 #: ../general/g.region/cmd/printwindow.c:237
 #: ../general/g.region/cmd/printwindow.c:487 ../ps/ps.map/do_geogrid.c:268
 #: ../raster/r.sun/main.c:445
 msgid "Can't get projection key values of current location"
 msgstr ""
 
-#: ../display/d.grid/plot.c:250 ../display/d.grid/plot.c:278
+#: ../display/d.grid/plot.c:274 ../display/d.grid/plot.c:302
 #: ../display/d.where/main.c:103 ../display/d.where/main.c:130
 #: ../ps/ps.map/do_geogrid.c:274 ../raster/r.sun/main.c:455
 msgid "Unable to set up lat/long projection parameters"
 msgstr ""
 
-#: ../display/d.grid/plot.c:265
+#: ../display/d.grid/plot.c:289
 msgid ""
 "WGS84 grid output not possible as this location does not contain\n"
 "datum transformation parameters. Try running g.setproj."
 msgstr ""
 
-#: ../display/d.grid/plot.c:433
+#: ../display/d.grid/plot.c:457
 msgid "Error in pj_do_proj1"
 msgstr ""
 
-#: ../display/d.grid/plot.c:439
+#: ../display/d.grid/plot.c:463
 msgid "Error in pj_do_proj2"
 msgstr ""
 
-#: ../display/d.grid/plot.c:443
+#: ../display/d.grid/plot.c:467
 msgid "Error in pj_do_proj3"
 msgstr ""
 
-#: ../display/d.grid/plot.c:451
+#: ../display/d.grid/plot.c:475
 msgid "Error in pj_do_proj5"
 msgstr ""
 
-#: ../display/d.grid/plot.c:455
+#: ../display/d.grid/plot.c:479
 msgid "Error in pj_do_proj6"
 msgstr ""
 
@@ -1094,8 +1098,7 @@ msgstr ""
 
 #: ../display/d.his/main.c:137 ../raster/r.basins.fill/main.c:92
 #: ../raster/r.basins.fill/main.c:105 ../raster/r.coin/cmd_parms.c:93
-#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.kappa/main.c:151
-#: ../raster/r.kappa/stats.c:30 ../raster/r.neighbors/main.c:164
+#: ../raster/r.coin/cmd_parms.c:96 ../raster/r.neighbors/main.c:164
 #: ../raster/r.transect/main.c:117
 #, c-format
 msgid "%s: <%s> raster map not found"
@@ -1259,9 +1262,16 @@ msgstr ""
 #: ../raster/r.slope.aspect/main.c:206 ../raster/r.slope.aspect/main.c:215
 #: ../raster/r.slope.aspect/main.c:224 ../raster/r.slope.aspect/main.c:233
 #: ../raster/r.slope.aspect/main.c:242 ../raster/r.slope.aspect/main.c:251
-#: ../raster/r.slope.aspect/main.c:260 ../vector/v.buffer/main.c:269
-#: ../vector/v.buffer/main.c:277 ../vector/v.buffer/main.c:284
-#: ../vector/v.buffer/main.c:294
+#: ../raster/r.slope.aspect/main.c:260
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:206
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:215
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:224
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:233
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:242
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:251
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:260
+#: ../vector/v.buffer/main.c:269 ../vector/v.buffer/main.c:277
+#: ../vector/v.buffer/main.c:284 ../vector/v.buffer/main.c:294
 msgid "Advanced"
 msgstr ""
 
@@ -1868,7 +1878,7 @@ msgid "The current projection is not longitude-latitude"
 msgstr ""
 
 #: ../display/d.path/main.c:192 ../vector/v.buffer/main.c:353
-#: ../vector/v.distance/main.c:280 ../vector/v.out.svg/main.c:127
+#: ../vector/v.distance/main.c:280 ../vector/v.out.svg/main.c:124
 #: ../vector/v.voronoi/dt_main.c:74 ../vector/v.voronoi/vo_main.c:143
 #, c-format
 msgid "Could not find input map <%s>"
@@ -2098,15 +2108,15 @@ msgstr ""
 #: ../display/d.rast.arrow/arrow.c:196 ../display/d.rast.arrow/arrow.c:238
 #: ../display/d.rast.num/number.c:150 ../raster/r.bitpattern/main.c:101
 #: ../raster/r.los/main.c:164 ../raster/r.los/main.c:171
-#: ../raster/r.out.bin/main.c:129 ../raster/r.param.scale/interface.c:167
-#: ../raster/r.recode/main.c:76 ../raster/r.resamp.rst/main.c:400
-#: ../raster/r.resamp.rst/main.c:426 ../raster/r.texture/main.c:212
-#: ../raster/r.univar2/r.univar_main.c:93 ../raster/simwe/simlib/input.c:159
-#: ../raster/simwe/simlib/input.c:164 ../raster/simwe/simlib/input.c:169
-#: ../raster/simwe/simlib/input.c:174 ../raster/simwe/simlib/input.c:180
-#: ../raster/simwe/simlib/input.c:186 ../raster/simwe/simlib/input.c:192
-#: ../raster/simwe/simlib/input.c:198 ../raster/simwe/simlib/input.c:204
-#: ../raster/simwe/simlib/input.c:210 ../raster/simwe/simlib/input.c:216
+#: ../raster/r.out.bin/main.c:129 ../raster/r.recode/main.c:82
+#: ../raster/r.resamp.rst/main.c:400 ../raster/r.resamp.rst/main.c:426
+#: ../raster/r.texture/main.c:212 ../raster/r.univar2/r.univar_main.c:93
+#: ../raster/simwe/simlib/input.c:159 ../raster/simwe/simlib/input.c:164
+#: ../raster/simwe/simlib/input.c:169 ../raster/simwe/simlib/input.c:174
+#: ../raster/simwe/simlib/input.c:180 ../raster/simwe/simlib/input.c:186
+#: ../raster/simwe/simlib/input.c:192 ../raster/simwe/simlib/input.c:198
+#: ../raster/simwe/simlib/input.c:204 ../raster/simwe/simlib/input.c:210
+#: ../raster/simwe/simlib/input.c:216
 #, c-format
 msgid "Raster map [%s] not found"
 msgstr ""
@@ -2170,8 +2180,9 @@ msgid "Color for drawing text"
 msgstr ""
 
 #: ../display/d.rast.num/number.c:118 ../raster/r.out.ascii/main.c:84
-#: ../raster3d/r3.out.vtk/parameters.c:104 ../vector/v.out.ascii/out.c:81
-#: ../vector/v.out.vtk/main.c:66
+#: ../raster/r.out.vtk/parameters.c:109
+#: ../raster3d/r3.out.vtk/parameters.c:122 ../vector/v.out.ascii/out.c:81
+#: ../vector/v.out.vtk/main.c:68
 msgid "Number of significant digits (floating point only)"
 msgstr ""
 
@@ -2229,10 +2240,8 @@ msgstr ""
 msgid "Raster map [%s] does not exist"
 msgstr ""
 
-#: ../display/d.rgb/main.c:104 ../raster/r.his/main.c:130
-#: ../raster/r.his/main.c:156 ../raster/r.his/main.c:184
-#: ../raster/r.los/main.c:197 ../raster/r.los/main.c:209
-#: ../raster/r.surf.area/main.c:124 ../raster/r.topidx/file_io.c:18
+#: ../display/d.rgb/main.c:104 ../raster/r.los/main.c:197
+#: ../raster/r.los/main.c:209 ../raster/r.surf.area/main.c:124
 #: ../raster/r.univar2/r.univar_main.c:98
 #, c-format
 msgid "Unable to open raster map [%s]"
@@ -2328,7 +2337,12 @@ msgid "value [%.0f,%.0f] out of range [0-100]"
 msgstr ""
 
 #: ../display/d.text/main.c:191 ../display/d.text.new/main.c:398
-msgid "Unable to open the temporary file."
+#: ../display/d.title/main.c:117 ../raster/r.average/main.c:106
+#: ../raster/r.in.ascii/main.c:130 ../raster/r.in.ascii/main.c:160
+#: ../raster/r.statistics/o_average.c:42 ../raster/r.statistics/o_distrib.c:41
+#: ../raster/r.statistics/o_sum.c:43 ../vector/v.in.ascii/in.c:237
+#, c-format
+msgid "Unable to open temporary file <%s>"
 msgstr ""
 
 #: ../display/d.text.freetype/main.c:142
@@ -2496,57 +2510,69 @@ msgstr ""
 msgid " Right:   Quit\n"
 msgstr ""
 
-#: ../display/d.title/main.c:43
+#: ../display/d.title/main.c:47
 msgid ""
 "Create a TITLE for a raster map in a form suitable for display with d.text."
 msgstr ""
 
-#: ../display/d.title/main.c:54
+#: ../display/d.title/main.c:58
 msgid "Sets the text color"
 msgstr ""
 
-#: ../display/d.title/main.c:62
+#: ../display/d.title/main.c:66
 msgid "Sets the text size as percentage of the frame's height"
 msgstr ""
 
-#: ../display/d.title/main.c:66
+#: ../display/d.title/main.c:70
+msgid "Draw title on current display"
+msgstr ""
+
+#: ../display/d.title/main.c:74
 msgid "Do a fancier title"
 msgstr ""
 
-#: ../display/d.title/main.c:71
+#: ../display/d.title/main.c:79
 msgid "Do a simple title"
 msgstr ""
 
-#: ../display/d.title/main.c:88
+#: ../display/d.title/main.c:97
 msgid "Title can be fancy or simple, not both"
 msgstr ""
 
-#: ../display/d.title/main.c:91
+#: ../display/d.title/main.c:100
 msgid "No map name given"
 msgstr ""
 
-#: ../display/d.title/main.c:96 ../general/g.region/cmd/main.c:458
+#: ../display/d.title/main.c:105 ../general/g.region/cmd/main.c:458
 #: ../general/g.region/cmd/main.c:816 ../general/g.region/cmd/main.c:825
+#: ../imagery/i.group/main.c:177 ../imagery/i.group/main.c:215
 #: ../imagery/i.his.rgb/openfiles.c:32 ../imagery/i.his.rgb/openfiles.c:34
 #: ../imagery/i.his.rgb/openfiles.c:36 ../imagery/i.pca/main.c:122
 #: ../imagery/i.rgb.his/openfiles.c:15 ../imagery/i.rgb.his/openfiles.c:17
 #: ../imagery/i.rgb.his/openfiles.c:19 ../ps/ps.map/outl_io.c:72
-#: ../raster/r.cats/main.c:97 ../raster/r.out.mat/main.c:94
-#: ../raster/r.out.pov/main.c:171 ../raster/r.out.tiff/r.out.tiff.c:167
-#: ../raster/r.profile/main.c:142 ../raster/r.reclass/main.c:67
-#: ../raster/r.statistics/main.c:75 ../raster/r.statistics/main.c:81
-#: ../raster/r.support/front/front.c:218 ../raster/r.to.vect/main.c:108
+#: ../raster/r.carve/main.c:173 ../raster/r.cats/main.c:97
+#: ../raster/r.contour/main.c:156 ../raster/r.covar/main.c:96
+#: ../raster/r.his/main.c:126 ../raster/r.his/main.c:167
+#: ../raster/r.his/main.c:195 ../raster/r.kappa/main.c:141
+#: ../raster/r.kappa/stats.c:30 ../raster/r.kappa/stats.c:35
+#: ../raster/r.median/main.c:73 ../raster/r.mfilter/main.c:133
+#: ../raster/r.out.mat/main.c:94 ../raster/r.out.pov/main.c:171
+#: ../raster/r.out.tiff/r.out.tiff.c:167
+#: ../raster/r.param.scale/interface.c:165 ../raster/r.profile/main.c:142
+#: ../raster/r.reclass/main.c:77 ../raster/r.statistics/main.c:75
+#: ../raster/r.statistics/main.c:81 ../raster/r.support/front/front.c:218
+#: ../raster/r.to.vect/main.c:108 ../raster/r.topidx/check_ready.c:12
 #: ../vector/v.sample/main.c:157 ../vector/v.what.rast/main.c:129
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr ""
 
-#: ../display/d.title/main.c:99
+#: ../display/d.title/main.c:108
 #, c-format
 msgid "Cannot read map header for <%s>"
 msgstr ""
 
-#: ../display/d.title/main.c:102
+#: ../display/d.title/main.c:111
 #, c-format
 msgid "Cannot read category file for <%s>"
 msgstr ""
@@ -2566,7 +2592,7 @@ msgstr ""
 #: ../vector/v.label/main.c:286 ../vector/v.label.sa/labels.c:85
 #: ../vector/v.patch/main.c:125 ../vector/v.patch/main.c:157
 #: ../vector/v.patch/main.c:276 ../vector/v.patch/main.c:334
-#: ../vector/v.surf.idw/read_sites.c:39 ../vector/v.surf.rst/main.c:573
+#: ../vector/v.surf.idw/read_sites.c:39 ../vector/v.surf.rst/main.c:553
 #: ../vector/v.to.rast/vect2rast.c:54 ../vector/v.to.rast3/main.c:85
 #, c-format
 msgid "Cannot open database %s by driver %s"
@@ -2804,13 +2830,12 @@ msgstr ""
 
 #: ../display/d.vect/main.c:450 ../display/d.vect.chart/main.c:227
 #: ../display/d.what.vect/main.c:149 ../vector/v.label/main.c:276
-#: ../vector/v.what/main.c:170
 #, c-format
 msgid "Vector file [%s] not available"
 msgstr ""
 
-#: ../display/d.vect/main.c:463 ../vector/v.extract/main.c:223
-#: ../vector/v.surf.rst/main.c:424
+#: ../display/d.vect/main.c:463 ../vector/v.extract/main.c:216
+#: ../vector/v.surf.rst/main.c:404
 msgid "'layer' must be > 0 for 'where'."
 msgstr ""
 
@@ -2820,15 +2845,15 @@ msgid "Database connection not defined"
 msgstr ""
 
 #: ../display/d.vect/main.c:471 ../vector/v.db.connect/main.c:185
-#: ../vector/v.extract/main.c:233 ../vector/v.extrude/main.c:183
-#: ../vector/v.out.ogr/main.c:251 ../vector/v.out.svg/main.c:141
+#: ../vector/v.extract/main.c:226 ../vector/v.extrude/main.c:183
+#: ../vector/v.out.ogr/main.c:251 ../vector/v.out.svg/main.c:138
 #, c-format
 msgid "Cannot open driver %s"
 msgstr ""
 
 #: ../display/d.vect/main.c:476 ../vector/v.convert/att.c:68
-#: ../vector/v.extract/main.c:238 ../vector/v.out.ogr/main.c:256
-#: ../vector/v.out.svg/main.c:148 ../vector/v.vol.rst/user1.c:96
+#: ../vector/v.extract/main.c:231 ../vector/v.out.ogr/main.c:256
+#: ../vector/v.out.svg/main.c:145 ../vector/v.vol.rst/user1.c:96
 #, c-format
 msgid "Cannot open database %s"
 msgstr ""
@@ -2986,7 +3011,7 @@ msgstr ""
 msgid "Print information as plain text to terminal window"
 msgstr ""
 
-#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:97
+#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:98
 msgid "Print topological information (debugging)"
 msgstr ""
 
@@ -3003,7 +3028,7 @@ msgstr ""
 msgid "Unable to open vector map [%s]"
 msgstr ""
 
-#: ../display/d.what.vect/main.c:152 ../vector/v.what/main.c:173
+#: ../display/d.what.vect/main.c:152
 #, c-format
 msgid "%s: You must build topology on vector map"
 msgstr ""
@@ -3015,7 +3040,7 @@ msgstr ""
 #: ../display/d.what.vect/main.c:172 ../imagery/i.gensig/write_sig.c:20
 #: ../imagery/i.group/main.c:197 ../imagery/i.group/main.c:234
 #: ../imagery/i.group/main.c:279 ../imagery/i.group/main.c:325
-#: ../raster/r.support/front/front.c:348 ../vector/v.extract/main.c:346
+#: ../raster/r.support/front/front.c:348 ../vector/v.extract/main.c:339
 #: ../vector/v.voronoi/vo_main.c:322
 msgid "Done."
 msgstr ""
@@ -3026,7 +3051,7 @@ msgid "warning: %s - vector map not found\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:155 ../display/d.what.vect/what.c:156
-#: ../vector/v.what/what.c:77 ../vector/v.what/what.c:78
+#: ../vector/v.what/what.c:87 ../vector/v.what/what.c:89
 #, c-format
 msgid "Nothing Found.\n"
 msgstr ""
@@ -3036,7 +3061,8 @@ msgstr ""
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
 msgstr ""
 
-#: ../display/d.what.vect/what.c:207 ../vector/v.what/what.c:125
+#: ../display/d.what.vect/what.c:207 ../vector/v.what/what.c:137
+#: ../vector/v.what/what.c:170
 #, c-format
 msgid "Length: %f\n"
 msgstr ""
@@ -3051,17 +3077,17 @@ msgstr ""
 msgid "    Line: %5d  Angle: %.8f\n"
 msgstr ""
 
-#: ../display/d.what.vect/what.c:231 ../vector/v.what/what.c:155
+#: ../display/d.what.vect/what.c:231
 #, c-format
 msgid "length %f\n"
 msgstr ""
 
-#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:166
+#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:181
 #, c-format
 msgid "Point height: %f\n"
 msgstr ""
 
-#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:178
+#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:193
 #, c-format
 msgid "Line height: %f\n"
 msgstr ""
@@ -3118,7 +3144,7 @@ msgstr ""
 msgid "Database connection not defined\n"
 msgstr ""
 
-#: ../display/d.what.vect/what.c:374 ../vector/v.what/what.c:257
+#: ../display/d.what.vect/what.c:374
 #, c-format
 msgid ""
 "driver: %s\n"
@@ -3635,7 +3661,6 @@ msgid "Layer opacities"
 msgstr ""
 
 #: ../general/g.pnmcomp/main.c:331
-#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
 msgid "Name of output file"
 msgstr ""
 
@@ -3783,12 +3808,12 @@ msgstr ""
 
 #: ../general/g.proj/output.c:156
 #, c-format
-msgid "Cannot create location: %s"
+msgid "Unable to create location: %s"
 msgstr ""
 
 #: ../general/g.proj/output.c:158
 #, c-format
-msgid "Cannot create projection files: %s"
+msgid "Unable to create projection files: %s"
 msgstr ""
 
 #: ../general/g.proj/output.c:161
@@ -4067,23 +4092,31 @@ msgstr ""
 msgid "Can't read header for 3D raster <%s> in <%s>"
 msgstr ""
 
-#: ../general/g.region/cmd/main.c:526 ../vector/lidar/v.outlier/main.c:143
+#: ../general/g.region/cmd/main.c:526 ../raster/r.carve/main.c:167
+#: ../raster/r.cost/main.c:298 ../raster/r.region/main.c:229
+#: ../vector/lidar/v.lidar.correction/main.c:138
+#: ../vector/lidar/v.lidar.edgedetection/main.c:164
+#: ../vector/lidar/v.lidar.growing/main.c:119
+#: ../vector/lidar/v.outlier/main.c:143
 #: ../vector/lidar/v.surf.bspline/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:213 ../vector/v.clean/main.c:225
-#: ../vector/v.hull/main.c:253 ../vector/v.kcv/main.c:132
+#: ../vector/v.convert/old2new.c:27 ../vector/v.hull/main.c:253
+#: ../vector/v.info/main.c:96 ../vector/v.kcv/main.c:132
 #: ../vector/v.lrs/v.lrs.create/main.c:220
 #: ../vector/v.lrs/v.lrs.create/main.c:228
 #: ../vector/v.lrs/v.lrs.label/main.c:256
 #: ../vector/v.lrs/v.lrs.segment/main.c:135
 #: ../vector/v.lrs/v.lrs.where/main.c:106
 #: ../vector/v.lrs/v.lrs.where/main.c:114 ../vector/v.net/nodes.c:35
-#: ../vector/v.net/report.c:38 ../vector/v.net.iso/main.c:174
-#: ../vector/v.net.path/main.c:126 ../vector/v.net.salesman/main.c:159
-#: ../vector/v.net.steiner/main.c:394 ../vector/v.sample/main.c:151
-#: ../vector/v.segment/main.c:95 ../vector/v.to.db/parse.c:117
+#: ../vector/v.net/report.c:38 ../vector/v.net.alloc/main.c:130
+#: ../vector/v.net.iso/main.c:174 ../vector/v.net.path/main.c:126
+#: ../vector/v.net.salesman/main.c:159 ../vector/v.net.steiner/main.c:394
+#: ../vector/v.perturb/main.c:153 ../vector/v.sample/main.c:151
+#: ../vector/v.segment/main.c:95 ../vector/v.select/main.c:180
+#: ../vector/v.surf.rst/main.c:513 ../vector/v.to.db/parse.c:117
 #: ../vector/v.to.points/main.c:228 ../vector/v.to.rast/vect2rast.c:37
 #: ../vector/v.type/main.c:204 ../vector/v.univar/main.c:109
-#: ../vector/v.what.rast/main.c:113
+#: ../vector/v.what/main.c:170 ../vector/v.what.rast/main.c:113
 #, c-format
 msgid "Vector map <%s> not found"
 msgstr ""
@@ -4461,8 +4494,7 @@ msgid "%s=%s,%s: files are the same, no rename required"
 msgstr ""
 
 #: ../general/manage/cmd/rename.c:103
-#, c-format
-msgid "Renaming in reclassed map%s"
+msgid "Renaming reclass maps"
 msgstr ""
 
 #: ../imagery/i.ask/main.c:25
@@ -4498,7 +4530,7 @@ msgstr ""
 #: ../imagery/i.ortho.photo/photo.2target/main.c:45 ../imagery/i.pca/main.c:61
 #: ../imagery/i.points/main.c:52 ../imagery/i.rectify/main.c:57
 #: ../imagery/i.rgb.his/r2hmain.c:44 ../imagery/i.smap/shapiro/main.c:37
-#: ../imagery/i.target/main.c:41 ../imagery/i.vpoints/main.c:53
+#: ../imagery/i.target/main.c:44 ../imagery/i.vpoints/main.c:53
 #: ../imagery/i.zc/main.c:59
 msgid "imagery"
 msgstr ""
@@ -4535,6 +4567,7 @@ msgid "Illegal signature file name <%s>"
 msgstr ""
 
 #: ../imagery/i.cca/main.c:116 ../raster/r.in.ascii/main.c:207
+#: ../raster/r.kappa/main.c:101
 #, c-format
 msgid "Illegal output file name <%s>"
 msgstr ""
@@ -4570,10 +4603,12 @@ msgstr ""
 #: ../imagery/i.his.rgb/openfiles.c:41 ../imagery/i.his.rgb/openfiles.c:43
 #: ../imagery/i.pca/main.c:125 ../imagery/i.rgb.his/openfiles.c:22
 #: ../imagery/i.rgb.his/openfiles.c:24 ../imagery/i.rgb.his/openfiles.c:26
-#: ../raster/r.out.tiff/r.out.tiff.c:188 ../raster/r.profile/main.c:144
+#: ../raster/r.out.tiff/r.out.tiff.c:188
+#: ../raster/r.param.scale/open_files.c:19 ../raster/r.profile/main.c:144
 #: ../raster/r.random/count.c:24 ../raster/r.random/random.c:39
 #: ../raster/r.support/front/front.c:221 ../raster/r.to.vect/main.c:111
-#: ../vector/v.sample/main.c:160 ../vector/v.what.rast/main.c:132
+#: ../raster/r.topidx/file_io.c:17 ../vector/v.sample/main.c:160
+#: ../vector/v.what.rast/main.c:132
 #, c-format
 msgid "Cannot open raster map <%s>"
 msgstr ""
@@ -4582,7 +4617,9 @@ msgstr ""
 #: ../imagery/i.his.rgb/openfiles.c:18 ../imagery/i.his.rgb/openfiles.c:20
 #: ../imagery/i.pca/main.c:395 ../imagery/i.rgb.his/openfiles.c:30
 #: ../imagery/i.rgb.his/openfiles.c:32 ../imagery/i.rgb.his/openfiles.c:34
-#: ../raster/r.random/random.c:45 ../raster/r.reclass/reclass.c:244
+#: ../raster/r.param.scale/open_files.c:26
+#: ../raster/r.param.scale/open_files.c:29 ../raster/r.random/random.c:45
+#: ../raster/r.reclass/reclass.c:244 ../raster/r.topidx/file_io.c:84
 #: ../vector/lidar/v.surf.bspline/main.c:256
 #, c-format
 msgid "Cannot create raster map <%s>"
@@ -5409,8 +5446,15 @@ msgid "Calculating class means ..."
 msgstr ""
 
 #: ../imagery/i.gensig/opencell.c:12 ../imagery/i.smap/shapiro/opencell.c:16
+#: ../raster/r.carve/main.c:176 ../raster/r.contour/main.c:160
+#: ../raster/r.cost/main.c:337 ../raster/r.covar/main.c:99
+#: ../raster/r.his/main.c:130 ../raster/r.his/main.c:156
+#: ../raster/r.his/main.c:184 ../raster/r.out.mat/main.c:99
+#: ../raster/r.out.pov/main.c:175 ../raster/r.walk/main.c:545
+#: ../raster/r.walk/main.c:548 ../raster/r.walk/main.c:855
+#: ../vector/v.to.rast/support.c:246 ../vector/v.to.rast/support.c:393
 #, c-format
-msgid "Unable to open raster map [%s]."
+msgid "Unable to open raster map <%s>"
 msgstr ""
 
 #: ../imagery/i.gensig/openfiles.c:17 ../imagery/i.smap/shapiro/openfiles.c:15
@@ -5519,11 +5563,6 @@ msgstr ""
 #: ../imagery/i.group/main.c:152
 #, c-format
 msgid "Adding files to subgroup [%s]"
-msgstr ""
-
-#: ../imagery/i.group/main.c:177 ../imagery/i.group/main.c:215
-#, c-format
-msgid "Unable to find raster [%s]."
 msgstr ""
 
 #: ../imagery/i.group/main.c:179 ../imagery/i.group/main.c:217
@@ -5726,7 +5765,7 @@ msgstr ""
 #: ../imagery/i.maxlik/main.c:86 ../imagery/i.smap/shapiro/parse.c:54
 #: ../raster/r.buffer/main.c:89 ../raster/r.carve/main.c:113
 #: ../raster/r.clump/main.c:69 ../raster/r.coin/cmd_parms.c:75
-#: ../raster/r.colors/main.c:188 ../raster/r.compress/main.c:82
+#: ../raster/r.colors/main.c:192 ../raster/r.compress/main.c:82
 #: ../raster/r.contour/main.c:133 ../raster/r.covar/main.c:66
 #: ../raster/r.cross/main.c:90 ../raster/r.describe/main.c:101
 #: ../raster/r.distance/parse.c:63 ../raster/r.neighbors/main.c:156
@@ -5971,7 +6010,7 @@ msgstr ""
 msgid "pyramid constructed."
 msgstr ""
 
-#: ../imagery/i.smap/bouman/interp.c:71 ../raster/r.cost/main.c:598
+#: ../imagery/i.smap/bouman/interp.c:71 ../raster/r.cost/main.c:597
 msgid "Unable to allocate memory"
 msgstr ""
 
@@ -6031,9 +6070,11 @@ msgid ""
 "posteriori (SMAP) estimation."
 msgstr ""
 
-#: ../imagery/i.smap/shapiro/opencell.c:31 ../raster/r.los/main.c:202
+#: ../imagery/i.smap/shapiro/opencell.c:31 ../raster/r.in.mat/main.c:386
+#: ../raster/r.in.xyz/main.c:325 ../vector/v.to.rast/vect2rast.c:117
+#: ../vector/v.to.rast/vect2rast.c:121
 #, c-format
-msgid "Unable to create raster map [%s]."
+msgid "Unable to create raster map <%s>"
 msgstr ""
 
 #: ../imagery/i.smap/shapiro/parse.c:24
@@ -6071,32 +6112,33 @@ msgstr ""
 msgid "Writing [%s] ..."
 msgstr ""
 
-#: ../imagery/i.target/main.c:43
+#: ../imagery/i.target/main.c:46
 msgid "Targets an imagery group to a GRASS location and mapset."
 msgstr ""
 
-#: ../imagery/i.target/main.c:51
+#: ../imagery/i.target/main.c:54
 msgid "Name of imagery target location"
 msgstr ""
 
-#: ../imagery/i.target/main.c:57
+#: ../imagery/i.target/main.c:60
 msgid "Name of target mapset"
 msgstr ""
 
-#: ../imagery/i.target/main.c:61
+#: ../imagery/i.target/main.c:65
 msgid "Set current location and mapset as target for of imagery group"
 msgstr ""
 
-#: ../imagery/i.target/main.c:68 ../imagery/i.target/main.c:73
+#: ../imagery/i.target/main.c:75 ../imagery/i.target/main.c:92
+#: ../imagery/i.target/main.c:97
+#, c-format
+msgid "Group <%s> targeted for location [%s], mapset [%s]"
+msgstr ""
+
+#: ../imagery/i.target/main.c:86
 msgid ""
 "You must use either the Current Mapset and Location Flag (-c)\n"
 " OR\n"
 " manually enter the variables."
-msgstr ""
-
-#: ../imagery/i.target/main.c:79 ../imagery/i.target/main.c:84
-#, c-format
-msgid "group [%s] targeted for location [%s], mapset [%s]\n"
 msgstr ""
 
 #: ../imagery/i.vpoints/main.c:55
@@ -6314,6 +6356,11 @@ msgid "Name of input raster map"
 msgstr ""
 
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:4
+#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
+#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
+#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
+#: ../raster/r.in.gridatb/main.c:55
 msgid "Name for output raster map"
 msgstr ""
 
@@ -6369,6 +6416,22 @@ msgstr ""
 msgid "New height for window"
 msgstr ""
 
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:1
+msgid "Drapes a color raster over a shaded relief map using d.his"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:2
+msgid "Name of shaded relief or aspect map"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:3
+msgid "Name of raster to drape over relief map"
+msgstr ""
+
+#: ../locale/scriptstrings/d.shadedmap_to_translate.c:4
+msgid "Percent to brighten"
+msgstr ""
+
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:1
 msgid "Slide show of GRASS raster/vector maps"
 msgstr ""
@@ -6382,7 +6445,7 @@ msgid "Show vector maps rather than raster maps"
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:4
-msgid "Map prefix. Specify character(s) to view selected maps only"
+msgid "Map prefix. Specify character(s) to view selected maps only."
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:5
@@ -6394,7 +6457,7 @@ msgid "Map number show down the monitor"
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:7
-msgid "Mapsets to use. Specify multiple mapsets comma separated"
+msgid "Mapsets to use. Specify multiple mapsets comma separated."
 msgstr ""
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:8
@@ -6562,6 +6625,7 @@ msgid "Save thematic map commands to group file for GIS Manager"
 msgstr ""
 
 #: ../locale/scriptstrings/d.vect.thematic_to_translate.c:40
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:8
 #: ../locale/scriptstrings/v.univar.sh_to_translate.c:8
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr ""
@@ -6596,12 +6660,26 @@ msgstr ""
 msgid "Use math notation brackets in legend"
 msgstr ""
 
-#: ../locale/scriptstrings/db.test_to_translate.c:1
-msgid "Test database driver, database must exist and set by db.connect."
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:1
+msgid "Drops a column from selected attribute table"
 msgstr ""
 
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:2
 #: ../locale/scriptstrings/db.test_to_translate.c:2
 msgid "database, attribute table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:3
+msgid "Table from which to drop attribute column"
+msgstr ""
+
+#: ../locale/scriptstrings/db.dropcol_to_translate.c:4
+#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
+msgid "Name of the column"
+msgstr ""
+
+#: ../locale/scriptstrings/db.test_to_translate.c:1
+msgid "Test database driver, database must exist and set by db.connect."
 msgstr ""
 
 #: ../locale/scriptstrings/db.test_to_translate.c:3
@@ -6633,6 +6711,7 @@ msgid "Apply regular expressions and wildcards to g.list"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mlist_to_translate.c:3
+#: ../locale/scriptstrings/g.mremove_to_translate.c:3
 msgid "Use regular expression instead of wildcard"
 msgstr ""
 
@@ -6660,16 +6739,12 @@ msgstr ""
 msgid "Apply regular expressions and wildcards to g.remove"
 msgstr ""
 
-#: ../locale/scriptstrings/g.mremove_to_translate.c:3
-msgid "use regular expression instead of wildcard"
-msgstr ""
-
 #: ../locale/scriptstrings/g.mremove_to_translate.c:4
-msgid "force removal (required for actual deletion of files)"
+msgid "Force removal (required for actual deletion of files)"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:5
-msgid "raster to remove"
+msgid "Raster to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:6
@@ -6677,19 +6752,19 @@ msgid "3d raster to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:7
-msgid "vector to remove"
+msgid "Vector to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:8
-msgid "region to remove"
+msgid "Region to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:9
-msgid "icon to remove"
+msgid "Icon to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:10
-msgid "label to remove"
+msgid "Label to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:11
@@ -6697,7 +6772,7 @@ msgid "3dview to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/g.mremove_to_translate.c:12
-msgid "group to remove"
+msgid "Group to remove"
 msgstr ""
 
 #: ../locale/scriptstrings/i.fusion.brovey_to_translate.c:1
@@ -6780,10 +6855,6 @@ msgstr ""
 
 #: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:4
 msgid "existing SPOT VGT NDVI HDF file (0001_NDV.HDF)"
-msgstr ""
-
-#: ../locale/scriptstrings/i.in.spotvgt_to_translate.c:5
-msgid "name for new raster map"
 msgstr ""
 
 #: ../locale/scriptstrings/i.landsat.rgb_to_translate.c:1
@@ -6998,47 +7069,47 @@ msgstr ""
 #: ../raster/r.cross/main.c:65 ../raster/r.describe/main.c:57
 #: ../raster/r.digit/main.c:44 ../raster/r.distance/main.c:38
 #: ../raster/r.drain/main.c:102 ../raster/r.fill.dir/main.c:85
-#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:184
+#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:177
 #: ../raster/r.his/main.c:63 ../raster/r.in.arc/main.c:58
 #: ../raster/r.in.gdal/main.c:69 ../raster/r.in.gridatb/main.c:43
 #: ../raster/r.in.mat/main.c:93 ../raster/r.in.xyz/main.c:75
-#: ../raster/r.info/main.c:67 ../raster/r.kappa/main.c:51
+#: ../raster/r.info/main.c:67 ../raster/r.kappa/main.c:49
 #: ../raster/r.lake/main.c:156 ../raster/r.le/r.le.patch/main.c:47
 #: ../raster/r.le/r.le.pixel/main.c:45 ../raster/r.le/r.le.setup/main.c:60
 #: ../raster/r.le/r.le.trace/main.c:57 ../raster/r.los/main.c:76
-#: ../raster/r.median/main.c:43 ../raster/r.mfilter/main.c:49
+#: ../raster/r.median/main.c:44 ../raster/r.mfilter/main.c:49
 #: ../raster/r.mode/main.c:48 ../raster/r.neighbors/main.c:99
 #: ../raster/r.null/null.c:45 ../raster/r.out.arc/main.c:58
 #: ../raster/r.out.bin/main.c:63 ../raster/r.out.gridatb/main.c:46
 #: ../raster/r.out.mpeg/main.c:396 ../raster/r.out.png/r.out.png.c:135
 #: ../raster/r.out.pov/main.c:120 ../raster/r.out.ppm/main.c:52
-#: ../raster/r.out.ppm3/main.c:54 ../raster/r.out.vtk/main.c:148
-#: ../raster/r.param.scale/interface.c:46 ../raster/r.patch/main.c:53
-#: ../raster/r.profile/main.c:53 ../raster/r.proj/main.c:131
-#: ../raster/r.proj.seg/main.c:132 ../raster/r.quant/main.c:41
-#: ../raster/r.random/main.c:46 ../raster/r.random.cells/main.c:39
-#: ../raster/r.random.surface/main.c:47 ../raster/r.reclass/main.c:45
-#: ../raster/r.recode/main.c:41 ../raster/r.region/main.c:52
-#: ../raster/r.report/main.c:27 ../raster/r.resamp.rst/main.c:155
-#: ../raster/r.resample/main.c:53 ../raster/r.rescale/main.c:48
-#: ../raster/r.rescale.eq/main.c:51 ../raster/r.series/main.c:102
-#: ../raster/r.slope.aspect/main.c:152 ../raster/r.stats/main.c:87
-#: ../raster/r.sum/main.c:47 ../raster/r.sun/main.c:153
-#: ../raster/r.sunmask/main.c:124 ../raster/r.support/front/front.c:54
-#: ../raster/r.surf.area/main.c:89 ../raster/r.surf.contour/main.c:50
-#: ../raster/r.surf.fractal/interface.c:32 ../raster/r.surf.gauss/main.c:44
-#: ../raster/r.surf.idw/main.c:68 ../raster/r.surf.idw2/main.c:59
-#: ../raster/r.surf.random/main.c:41 ../raster/r.texture/main.c:71
-#: ../raster/r.thin/main.c:54 ../raster/r.timestamp/main.c:34
-#: ../raster/r.to.vect/main.c:49 ../raster/r.topidx/main.c:40
-#: ../raster/r.topmodel/main.c:56 ../raster/r.transect/main.c:53
-#: ../raster/r.volume/main.c:56 ../raster/r.walk/main.c:172
-#: ../raster/r.watershed/front/main.c:49 ../raster/r.what/main.c:88
-#: ../raster/r.what.color/main.c:89 ../raster/simwe/r.sim.sediment/main.c:78
+#: ../raster/r.out.ppm3/main.c:54 ../raster/r.out.vtk/main.c:150
+#: ../raster/r.patch/main.c:53 ../raster/r.profile/main.c:53
+#: ../raster/r.proj/main.c:131 ../raster/r.proj.seg/main.c:132
+#: ../raster/r.quant/main.c:41 ../raster/r.random/main.c:46
+#: ../raster/r.random.cells/main.c:39 ../raster/r.random.surface/main.c:47
+#: ../raster/r.reclass/main.c:48 ../raster/r.recode/main.c:42
+#: ../raster/r.region/main.c:52 ../raster/r.report/main.c:27
+#: ../raster/r.resamp.rst/main.c:155 ../raster/r.resample/main.c:53
+#: ../raster/r.rescale/main.c:48 ../raster/r.rescale.eq/main.c:51
+#: ../raster/r.series/main.c:102 ../raster/r.slope.aspect/main.c:152
+#: ../raster/r.stats/main.c:87 ../raster/r.sum/main.c:47
+#: ../raster/r.sun/main.c:153 ../raster/r.sunmask/main.c:124
+#: ../raster/r.support/front/front.c:54 ../raster/r.surf.area/main.c:89
+#: ../raster/r.surf.contour/main.c:50 ../raster/r.surf.fractal/interface.c:32
+#: ../raster/r.surf.gauss/main.c:44 ../raster/r.surf.idw/main.c:68
+#: ../raster/r.surf.idw2/main.c:59 ../raster/r.surf.random/main.c:41
+#: ../raster/r.texture/main.c:71 ../raster/r.thin/main.c:54
+#: ../raster/r.timestamp/main.c:34 ../raster/r.to.vect/main.c:49
+#: ../raster/r.topidx/main.c:37 ../raster/r.topmodel/main.c:56
+#: ../raster/r.transect/main.c:53 ../raster/r.volume/main.c:56
+#: ../raster/r.walk/main.c:172 ../raster/r.watershed/front/main.c:49
+#: ../raster/r.what/main.c:88 ../raster/r.what.color/main.c:89
+#: ../raster/simwe/r.sim.sediment/main.c:78
 #: ../raster/simwe/r.sim.water/main.c:81 ../raster/wildfire/r.ros/main.c:212
 #: ../raster/wildfire/r.spread/main.c:102
 #: ../raster/wildfire/r.spreadpath/main.c:71
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:127
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:152
 msgid "raster"
 msgstr ""
 
@@ -7086,12 +7157,12 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:1
 msgid ""
-"r.in.aster - georeferencing, rectification, and import of Terra-ASTER "
-"imagery and relative DEM's using gdalwarp"
+"Georeference, rectificate and import Terra-ASTER imagery and relative DEM's "
+"using gdalwarp."
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:3
-msgid "Input ASTER image to be georeference & rectified"
+msgid "Input ASTER image to be georeferenced & rectified"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:4
@@ -7100,12 +7171,8 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.in.aster_to_translate.c:5
 msgid ""
-"L1A or L1B band to translate (1, 2,3n,3b,4-14). Can only translate a single "
-"band"
-msgstr ""
-
-#: ../locale/scriptstrings/r.in.aster_to_translate.c:6
-msgid "Output GRASS image file"
+"L1A or L1B band to translate (1, 2, 3n, 3b, 4-14). Can only translate a "
+"single band"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.srtm_to_translate.c:1
@@ -7130,7 +7197,7 @@ msgid "Input is a 1-arcsec tile (default: 3-arcsec)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:1
-msgid "Downloads and imports data from WMS servers"
+msgid "Downloads and imports data from WMS servers."
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:2
@@ -7191,10 +7258,6 @@ msgstr ""
 msgid "Don't reproject the data, just patch it."
 msgstr ""
 
-#: ../locale/scriptstrings/r.in.wms_to_translate.c:15
-msgid "Name for resultant raster map"
-msgstr ""
-
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:17
 msgid "Mapserver to request data from"
 msgstr ""
@@ -7232,7 +7295,7 @@ msgid "Additional options for r.tileset"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:35
-msgid "Named region to request data for. Current region used if omitted."
+msgid "Named region to request data for. Current region used if omitted"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:37
@@ -7253,40 +7316,36 @@ msgid "Verbosity level"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:1
-msgid "Calculates new raster map from a r.mapcalc expression"
+msgid "Calculate new raster map from a r.mapcalc expression."
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:2
-msgid "A:"
+msgid "A"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:3
-msgid "B:"
+msgid "B"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:4
-msgid "C:"
+msgid "C"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:5
-msgid "D:"
+msgid "D"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:6
-msgid "E:"
+msgid "E"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:7
-msgid "F:"
+msgid "F"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:8
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:8
-msgid "Formula (e.g. A-B or A*C+B):"
-msgstr ""
-
-#: ../locale/scriptstrings/r.mapcalculator_to_translate.c:9
-msgid "Resulting output map"
+msgid "Formula (e.g. A-B or A*C+B)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:10
@@ -7300,7 +7359,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.mapcalculator_to_translate.c:12
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:12
-msgid "Don't overwrite existing map"
+msgid "Do not overwrite existing map"
 msgstr ""
 
 #: ../locale/scriptstrings/r.mask_to_translate.c:1
@@ -7328,7 +7387,7 @@ msgid "Remove existing MASK (overrides other options)"
 msgstr ""
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:1
-msgid "Exports GRASS raster data into various formats (requires GDAL)"
+msgid "Exports GRASS raster data into various formats (requires GDAL)."
 msgstr ""
 
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:2
@@ -7357,6 +7416,11 @@ msgstr ""
 msgid "File type"
 msgstr ""
 
+#: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:8
+#: ../raster/r.out.mpeg/main.c:420
+msgid "Name for output file"
+msgstr ""
+
 #: ../locale/scriptstrings/r.out.gdal.sh_to_translate.c:9
 #: ../raster/r.out.gdal/main.c:391
 msgid ""
@@ -7370,7 +7434,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:1
 msgid ""
-"Export a raster map to a text file as x,y,z values based on cell centers"
+"Export a raster map to a text file as x,y,z values based on cell centers."
 msgstr ""
 
 #: ../locale/scriptstrings/r.out.xyz_to_translate.c:4
@@ -7379,8 +7443,8 @@ msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:1
 msgid ""
-"Creates raster plane map given dip (inclination), aspect (azimuth), and one "
-"point"
+"Creates raster plane map given dip (inclination), aspect (azimuth) and one "
+"point."
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:2
@@ -7389,31 +7453,31 @@ msgid "raster, elevation"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:3
-msgid "Name of raster plane to be created."
+msgid "Name of raster plane to be created"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:4
-msgid "Dip of plane. Value must be between -90 and 90 degrees."
+msgid "Dip of plane. Value must be between -90 and 90 degrees"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:5
-msgid "Azimuth of the plane. Value must be between 0 and 360 degrees."
+msgid "Azimuth of the plane. Value must be between 0 and 360 degrees"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:6
-msgid "Easting coordinate of a point on the plane."
+msgid "Easting coordinate of a point on the plane"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:7
-msgid "Northing coordinate of a point on the plane."
+msgid "Northing coordinate of a point on the plane"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:8
-msgid "Elevation coordinate of a point on the plane."
+msgid "Elevation coordinate of a point on the plane"
 msgstr ""
 
 #: ../locale/scriptstrings/r.plane_to_translate.c:9
-msgid "Type of the raster map to be created."
+msgid "Type of the raster map to be created"
 msgstr ""
 
 #: ../locale/scriptstrings/r.reclass.area_to_translate.c:1
@@ -7467,6 +7531,7 @@ msgid "Creates shaded relief map from an elevation map (DEM)."
 msgstr ""
 
 #: ../locale/scriptstrings/r.shaded.relief_to_translate.c:3
+#: ../raster/r.topidx/main.c:42
 msgid "Input elevation map"
 msgstr ""
 
@@ -7559,36 +7624,35 @@ msgid "Percentile to calculate (requires -e flag)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:1
-msgid ""
-"r3.mapcalculator - Calculates new grid3D volume from r3.mapcalc expression"
+msgid "Calculates new grid3D volume from r3.mapcalc expression."
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:2
-msgid "A (grid3D file):"
+msgid "A (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:3
-msgid "B (grid3D file):"
+msgid "B (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:4
-msgid "C (grid3D file):"
+msgid "C (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:5
-msgid "D (grid3D file):"
+msgid "D (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:6
-msgid "E (grid3D file):"
+msgid "E (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:7
-msgid "F (grid3D file):"
+msgid "F (grid3D file)"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:9
-msgid "Resulting output grid3D volume"
+msgid "Name for output grid3D volume"
 msgstr ""
 
 #: ../locale/scriptstrings/r3.mapcalculator_to_translate.c:11
@@ -7596,7 +7660,7 @@ msgid "Expert mode (enter a set of r3.mapcalc expressions)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:1
-msgid "Rebuild topology on all vector maps in the current mapset"
+msgid "Rebuilds topology on all vector maps in the current mapset."
 msgstr ""
 
 #: ../locale/scriptstrings/v.build.all_to_translate.c:2
@@ -7605,18 +7669,18 @@ msgstr ""
 #: ../vector/v.drape/main.c:67 ../vector/v.external/main.c:58
 #: ../vector/v.extract/main.c:73 ../vector/v.extrude/main.c:68
 #: ../vector/v.in.region/main.c:38 ../vector/v.info/main.c:63
-#: ../vector/v.mkgrid/main.c:62 ../vector/v.out.ascii/out.c:43
-#: ../vector/v.out.vtk/main.c:43 ../vector/v.patch/main.c:67
-#: ../vector/v.perturb/main.c:73 ../vector/v.sample/main.c:86
-#: ../vector/v.select/main.c:129 ../vector/v.surf.idw/main.c:116
-#: ../vector/v.surf.rst/main.c:159 ../vector/v.transform/main.c:54
-#: ../vector/v.vol.rst/main.c:201 ../vector/v.voronoi/dt_main.c:44
-#: ../vector/v.voronoi/vo_main.c:107 ../vector/v.what/main.c:71
+#: ../vector/v.info/main.c:227 ../vector/v.mkgrid/main.c:62
+#: ../vector/v.out.ascii/out.c:43 ../vector/v.out.vtk/main.c:45
+#: ../vector/v.patch/main.c:67 ../vector/v.perturb/main.c:73
+#: ../vector/v.sample/main.c:86 ../vector/v.select/main.c:129
+#: ../vector/v.surf.idw/main.c:116 ../vector/v.surf.rst/main.c:159
+#: ../vector/v.transform/main.c:54 ../vector/v.vol.rst/main.c:201
+#: ../vector/v.voronoi/dt_main.c:44 ../vector/v.voronoi/vo_main.c:107
 msgid "vector"
 msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:1
-msgid "Adds missing centroids to closed boundaries"
+msgid "Adds missing centroids to closed boundaries."
 msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:2
@@ -7625,11 +7689,14 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:3
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:3
+#: ../locale/scriptstrings/v.report_to_translate.c:5
 msgid "Name of input vector map"
 msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:4
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:4
+#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
+#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
 msgid "Name for output vector map"
 msgstr ""
 
@@ -7639,7 +7706,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.centroids_to_translate.c:6
 #: ../locale/scriptstrings/v.report_to_translate.c:6
-#: ../vector/v.out.vtk/main.c:73
+#: ../vector/v.out.vtk/main.c:82
 msgid "Layer number"
 msgstr ""
 
@@ -7668,18 +7735,18 @@ msgid "vector, import"
 msgstr ""
 
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:3
-#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
 msgid "run non-interactively"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:1
 msgid ""
 "Adds one or more columns to the attribute table connected to a given vector "
-"map"
+"map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:2
+#: ../locale/scriptstrings/v.db.join_to_translate.c:2
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:2
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:2
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:2
@@ -7702,15 +7769,16 @@ msgid "Layer where to add column"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addcol_to_translate.c:5
+#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
 msgid ""
 "Name and type of the new column(s) (types depend on database backend, but "
-"all support VARCHAR, INT, DOUBLE PRECISION/REAL and DATE)"
+"all support VARCHAR(), INT, DOUBLE and DATE)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:1
 msgid ""
-"creates and adds a new attribute table to a given layer of an existing "
-"vector map"
+"Creates and adds a new attribute table to a given layer of an existing "
+"vector map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.addtable_to_translate.c:3
@@ -7725,14 +7793,33 @@ msgstr ""
 msgid "Layer where to add new attribute table"
 msgstr ""
 
-#: ../locale/scriptstrings/v.db.addtable_to_translate.c:6
-msgid ""
-"Name and type of the new column(s) (types depend on database backend, but "
-"all support VARCHAR(), INT, DOUBLE and DATE)"
+#: ../locale/scriptstrings/v.db.join_to_translate.c:1
+msgid "Allows to join a table to a vector map table."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:3
+msgid "Vector map to which to join other table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:4
+msgid "Layer where to join"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:5
+msgid "Join column in map table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:6
+msgid "Other table name"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.join_to_translate.c:7
+msgid "Join column in other table"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:1
-msgid "Drops a column from the attribute table connected to a given vector map"
+msgid ""
+"Drops a column from the attribute table connected to a given vector map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.dropcol_to_translate.c:3
@@ -7743,24 +7830,20 @@ msgstr ""
 msgid "Layer where to drop column"
 msgstr ""
 
-#: ../locale/scriptstrings/v.db.dropcol_to_translate.c:5
-msgid "Name of the column"
-msgstr ""
-
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:1
-msgid "removes existing attribute table of a vector map"
+msgid "Removes existing attribute table of a vector map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:3
-msgid "force removal (required for actual deletion of table)"
+msgid "Force removal (required for actual deletion of table)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:4
-msgid "vector map from which to remove attribute table"
+msgid "Vector map from which to remove attribute table"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:5
-msgid "name of existing attribute table (default: vector map name)"
+msgid "Name of existing attribute table (default: vector map name)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.droptable_to_translate.c:6
@@ -7768,7 +7851,7 @@ msgid "Layer from which to drop linked attribute table"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:1
-msgid "Renames a column in a attribute table connected to a given vector map"
+msgid "Renames a column in a attribute table connected to a given vector map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.renamecol_to_translate.c:3
@@ -7784,12 +7867,12 @@ msgid "Old and new name of the column (old,new)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:1
-msgid "Reconnect vectors to a new database"
+msgid "Reconnects vectors to a new database."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:3
 msgid ""
-"Name of old database, the database must be in form printed by v.db.connect -"
+"Name of old database. The database must be in form printed by v.db.connect -"
 "g, i.e. with substituted variables"
 msgstr ""
 
@@ -7805,10 +7888,50 @@ msgstr ""
 msgid "New schema"
 msgstr ""
 
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:1
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
+msgid ""
+"Calculates univariate statistics on selected table column for a GRASS vector "
+"map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:2
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
+#: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
+#: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:68
+#: ../vector/v.random/main.c:82 ../vector/v.univar/main.c:60
+msgid "vector, statistics"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:3
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
+msgid "Extended statistics (quartiles and 90th percentile)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:4
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
+msgid "Name of data table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:5
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
+msgid "Column on which to calculate statistics (must be numeric)"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:6
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
+msgid "Database/directory for table"
+msgstr ""
+
+#: ../locale/scriptstrings/v.db.univar_to_translate.c:7
+#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
+msgid "Database driver"
+msgstr ""
+
 #: ../locale/scriptstrings/v.db.update_to_translate.c:1
 msgid ""
 "Allows to assign a new value to a column in the attribute table connected to "
-"a given map"
+"a given map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.db.update_to_translate.c:5
@@ -7833,8 +7956,8 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:1
 msgid ""
-"Dissolve boundaries between adjacent areas sharing a common category number "
-"or attribute"
+"Dissolves boundaries between adjacent areas sharing a common category number "
+"or attribute."
 msgstr ""
 
 #: ../locale/scriptstrings/v.dissolve_to_translate.c:2
@@ -7851,7 +7974,7 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:1
 msgid ""
-"Upload Waypoints, Routes, and Tracks from a Garmin GPS receiver into a "
+"Download waypoints, routes, and tracks from a Garmin GPS receiver into a "
 "vector map."
 msgstr ""
 
@@ -7869,18 +7992,15 @@ msgid "Verbose mode"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:4
-#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
-msgid "Upload Waypoints from GPS"
+msgid "Download Waypoints from GPS"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:5
-#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
-msgid "Upload Routes from GPS"
+msgid "Download Routes from GPS"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:6
-#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
-msgid "Upload Track from GPS"
+msgid "Download Track from GPS"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:7
@@ -7902,7 +8022,8 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:11
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:10
-msgid "Name for new vector map (omit for display to stdout)"
+#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
+msgid "Name for output vector map (omit for display to stdout)"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.garmin_to_translate.c:12
@@ -7910,7 +8031,7 @@ msgid "Port Garmin receiver is connected to"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:1
-msgid "Import of E00 file into a vector map."
+msgid "Import E00 file into a vector map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:4
@@ -7921,15 +8042,10 @@ msgstr ""
 msgid "Input type point, line or area"
 msgstr ""
 
-#: ../locale/scriptstrings/v.in.e00_to_translate.c:6
-#: ../locale/scriptstrings/v.in.gns_to_translate.c:4
-msgid "name for new vector map"
-msgstr ""
-
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:1
 msgid ""
 "Imports US-NGA GEOnet Names Server (GNS) country files into a GRASS vector "
-"points map"
+"points map."
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.gns_to_translate.c:2
@@ -7942,8 +8058,20 @@ msgstr ""
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:1
 msgid ""
-"Download Waypoints, Routes, and Tracks from a GPS receiver or a GPS ascii "
+"Import waypoints, routes, and tracks from a GPS receiver or GPS download "
 "file into a vector map."
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:4
+msgid "Import waypoints"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:5
+msgid "Import routes"
+msgstr ""
+
+#: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:6
+msgid "Import track"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.gpsbabel_to_translate.c:7
@@ -7972,26 +8100,26 @@ msgid "Input map is in Matlab format"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:4
-msgid "name of input file in Mapgen/Matlab format"
-msgstr ""
-
-#: ../locale/scriptstrings/v.in.mapgen_to_translate.c:5
-msgid "name for new vector map (omit for display to stdout)"
+msgid "Name of input file in Mapgen/Matlab format"
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:1
 msgid ""
-"Convert all old GRASS < Ver5.7 sites maps in current mapset to vector maps"
+"Converts all old GRASS < Ver5.7 sites maps in current mapset to vector maps."
 msgstr ""
 
 #: ../locale/scriptstrings/v.in.sites.all_to_translate.c:2
 msgid "sites, vector, import"
 msgstr ""
 
+#: ../locale/scriptstrings/v.in.sites.all_to_translate.c:3
+msgid "Run non-interactively"
+msgstr ""
+
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:1
 msgid ""
 "Calculates univariate statistics from a GRASS raster map based on vector "
-"polygons and uploads statistics to new attribute columns"
+"polygons and uploads statistics to new attribute columns."
 msgstr ""
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:2
@@ -7999,7 +8127,7 @@ msgid "vector, raster, statistics"
 msgstr ""
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:3
-msgid "continue if upload column(s) already exist"
+msgid "Continue if upload column(s) already exist"
 msgstr ""
 
 #: ../locale/scriptstrings/v.rast.stats_to_translate.c:4
@@ -8015,7 +8143,7 @@ msgid "Column prefix for new attribute columns"
 msgstr ""
 
 #: ../locale/scriptstrings/v.report_to_translate.c:1
-msgid "Reports geometry statistics for vectors"
+msgid "Reports geometry statistics for vectors."
 msgstr ""
 
 #: ../locale/scriptstrings/v.report_to_translate.c:2
@@ -8030,10 +8158,6 @@ msgstr ""
 msgid "Sort the result"
 msgstr ""
 
-#: ../locale/scriptstrings/v.report_to_translate.c:5
-msgid "Input vector map"
-msgstr ""
-
 #: ../locale/scriptstrings/v.report_to_translate.c:7
 msgid "Value to calculate"
 msgstr ""
@@ -8043,41 +8167,8 @@ msgstr ""
 msgid "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)"
 msgstr ""
 
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:1
-msgid ""
-"Calculates univariate statistics on selected table column for a GRASS vector "
-"map"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:2
-#: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
-#: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:68
-#: ../vector/v.random/main.c:82 ../vector/v.univar/main.c:60
-msgid "vector, statistics"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:3
-msgid "Extended statistics (quartiles and 90th percentile)"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:4
-msgid "Name of data table"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:5
-msgid "Column on which to calculate statistics (must be numeric)"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:6
-msgid "Database/directory for table"
-msgstr ""
-
-#: ../locale/scriptstrings/v.univar.sh_to_translate.c:7
-msgid "Database driver"
-msgstr ""
-
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:1
-msgid "Uploads vector values at positions of vector points to the table"
+msgid "Uploads vector values at positions of vector points to the table."
 msgstr ""
 
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:3
@@ -8246,7 +8337,7 @@ msgid "Rotate plot 90 degrees"
 msgstr ""
 
 #: ../ps/ps.map/main.c:110
-msgid "Print paper formats ( name width height left right top bottom(margin) )"
+msgid "List paper formats ( name width height left right top bottom(margin) )"
 msgstr ""
 
 #: ../ps/ps.map/main.c:115
@@ -8274,8 +8365,8 @@ msgstr ""
 #, c-format
 msgid ""
 "Using <%s> from the command line is depreciated. Please use the <%s> mapping "
-"instruction instead. The parameter <%s> will removed in future versions of "
-"GRASS."
+"instruction instead. The parameter <%s> will be removed in future versions "
+"of GRASS."
 msgstr ""
 
 #: ../ps/ps.map/main.c:264
@@ -8455,11 +8546,6 @@ msgstr ""
 msgid "%s: ERROR running %s command"
 msgstr ""
 
-#: ../raster/r.average/main.c:106
-#, c-format
-msgid "%s: ERROR can't open tempfile"
-msgstr ""
-
 #: ../raster/r.basins.fill/main.c:53
 msgid "Generates a raster map layer showing watershed subbasins."
 msgstr ""
@@ -8564,16 +8650,17 @@ msgstr ""
 
 #: ../raster/r.buffer/main.c:98 ../raster/r.carve/main.c:123
 #: ../raster/r.clump/main.c:78 ../raster/r.coin/cmd_parms.c:84
-#: ../raster/r.colors/main.c:198 ../raster/r.compress/main.c:90
+#: ../raster/r.colors/main.c:202 ../raster/r.compress/main.c:90
 #: ../raster/r.covar/main.c:74 ../raster/r.cross/main.c:97
 #: ../raster/r.describe/main.c:109 ../raster/r.distance/parse.c:71
-#: ../raster/r.kappa/main.c:122 ../raster/r.mfilter/main.c:116
-#: ../raster/r.neighbors/main.c:256 ../raster/r.out.png/r.out.png.c:145
-#: ../raster/r.out.ppm/main.c:89 ../raster/r.out.ppm3/main.c:98
-#: ../raster/r.patch/main.c:95 ../raster/r.random.surface/init.c:107
-#: ../raster/r.resample/main.c:89 ../raster/r.rescale/main.c:101
-#: ../raster/r.rescale.eq/main.c:105 ../raster/r.series/main.c:145
-#: ../raster/r.slope.aspect/main.c:319 ../raster/r.to.vect/main.c:94
+#: ../raster/r.mfilter/main.c:116 ../raster/r.neighbors/main.c:256
+#: ../raster/r.out.png/r.out.png.c:145 ../raster/r.out.ppm/main.c:89
+#: ../raster/r.out.ppm3/main.c:98 ../raster/r.patch/main.c:95
+#: ../raster/r.random.surface/init.c:107 ../raster/r.resample/main.c:89
+#: ../raster/r.rescale/main.c:101 ../raster/r.rescale.eq/main.c:105
+#: ../raster/r.series/main.c:145 ../raster/r.slope.aspect/main.c:319
+#: ../raster/r.to.vect/main.c:94
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:319
 #: ../vector/v.mkgrid/main.c:127 ../vector/v.qcount/main.c:115
 msgid ""
 "The '-q' flag is superseded and will be removed in future. Please use '--"
@@ -8659,8 +8746,8 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:77
 msgid ""
-"Takes vector stream data, transforms it to raster, and subtracts depth from "
-"the output DEM"
+"Takes vector stream data, transforms it to raster and subtracts depth from "
+"the output DEM."
 msgstr ""
 
 #: ../raster/r.carve/main.c:82
@@ -8672,7 +8759,7 @@ msgid "Name of vector input map containing stream(s)"
 msgstr ""
 
 #: ../raster/r.carve/main.c:93
-msgid "Name of output vector map for adjusted stream points"
+msgid "Name for output vector map for adjusted stream points"
 msgstr ""
 
 #: ../raster/r.carve/main.c:98
@@ -8689,27 +8776,17 @@ msgstr ""
 
 #: ../raster/r.carve/main.c:145
 #, c-format
-msgid "invalid width value '%s' - using default."
+msgid "Invalid width value '%s' - using default."
 msgstr ""
 
 #: ../raster/r.carve/main.c:158
 #, c-format
-msgid "invalid depth value '%s' - using default."
+msgid "Invalid depth value '%s' - using default."
 msgstr ""
 
-#: ../raster/r.carve/main.c:167 ../raster/r.region/main.c:229
+#: ../raster/r.carve/main.c:182
 #, c-format
-msgid "vector map <%s> not found"
-msgstr ""
-
-#: ../raster/r.carve/main.c:173
-#, c-format
-msgid "unable to find raster map [%s]"
-msgstr ""
-
-#: ../raster/r.carve/main.c:176 ../raster/r.carve/main.c:182
-#, c-format
-msgid "unable to open cellfile for [%s]"
+msgid "Unable to open cellfile for <%s>"
 msgstr ""
 
 #: ../raster/r.carve/main.c:223
@@ -8771,7 +8848,7 @@ msgid "vals argument is required for floating point map!"
 msgstr ""
 
 #: ../raster/r.circle/dist.c:54
-msgid "Creates a raster map containing concentric rings around a given point"
+msgid "Creates a raster map containing concentric rings around a given point."
 msgstr ""
 
 #: ../raster/r.circle/dist.c:64
@@ -9022,97 +9099,87 @@ msgid "List available rules then exit"
 msgstr ""
 
 #: ../raster/r.colors/main.c:175
-msgid "Logarithmic scaling"
+msgid "Invert colors"
 msgstr ""
 
 #: ../raster/r.colors/main.c:179
-msgid "Histogram equalization"
+msgid "Logarithmic scaling"
 msgstr ""
 
 #: ../raster/r.colors/main.c:183
+msgid "Histogram equalization"
+msgstr ""
+
+#: ../raster/r.colors/main.c:187
 msgid "Enter rules interactively"
 msgstr ""
 
-#: ../raster/r.colors/main.c:219
+#: ../raster/r.colors/main.c:223
 msgid "No map specified"
 msgstr ""
 
-#: ../raster/r.colors/main.c:222
+#: ../raster/r.colors/main.c:226
 msgid ""
-"One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" MUST be "
+"One of \"-i\" or \"-r\" or options \"color\", \"rast\" or \"rules\" must be "
 "specified!"
 msgstr ""
 
-#: ../raster/r.colors/main.c:225
-msgid "Both \"-i\" AND \"color\" specified - ignoring color"
+#: ../raster/r.colors/main.c:229
+msgid ""
+"Interactive mode is incompatible with \"color\", \"rules\", and \"raster\" "
+"options"
 msgstr ""
 
-#: ../raster/r.colors/main.c:228
-msgid "Both \"-i\" AND \"rules\" specified - ignoring rules"
+#: ../raster/r.colors/main.c:232
+msgid "\"color\", \"rules\", and \"raster\" options are mutually exclusive"
 msgstr ""
 
-#: ../raster/r.colors/main.c:231
-msgid "Both \"-i\" AND \"raster\" specified - ignoring raster"
-msgstr ""
-
-#: ../raster/r.colors/main.c:234
-msgid "Both options \"color\" AND \"raster\" specified - ignoring raster"
-msgstr ""
-
-#: ../raster/r.colors/main.c:237
-msgid "Both options \"color\" AND \"rules\" specified - ignoring rules"
-msgstr ""
-
-#: ../raster/r.colors/main.c:240
-msgid "Both options \"raster\" AND \"rules\" specified - ignoring raster"
-msgstr ""
-
-#: ../raster/r.colors/main.c:244 ../raster/r.colors/main.c:330
+#: ../raster/r.colors/main.c:237 ../raster/r.colors/main.c:323
 #, c-format
 msgid "%s - map not found"
 msgstr ""
 
-#: ../raster/r.colors/main.c:251
+#: ../raster/r.colors/main.c:244
 #, c-format
 msgid "%s - unable to remove color table"
 msgstr ""
 
-#: ../raster/r.colors/main.c:253
+#: ../raster/r.colors/main.c:246
 #, c-format
 msgid "%s - color table not found"
 msgstr ""
 
-#: ../raster/r.colors/main.c:284
+#: ../raster/r.colors/main.c:277
 msgid "Can't make random color table for floating point map"
 msgstr ""
 
-#: ../raster/r.colors/main.c:290
+#: ../raster/r.colors/main.c:283
 msgid "Can't make grey.eq color table for floating point map"
 msgstr ""
 
-#: ../raster/r.colors/main.c:298
+#: ../raster/r.colors/main.c:291
 msgid "Can't make logarithmic color table for floating point map"
 msgstr ""
 
-#: ../raster/r.colors/main.c:311
+#: ../raster/r.colors/main.c:304
 #, c-format
 msgid "%s - unknown color request"
 msgstr ""
 
-#: ../raster/r.colors/main.c:322
+#: ../raster/r.colors/main.c:315
 #, c-format
 msgid "Unable to load rules file %s"
 msgstr ""
 
-#: ../raster/r.colors/main.c:333 ../raster/r.resamp.interp/main.c:337
+#: ../raster/r.colors/main.c:326 ../raster/r.resamp.interp/main.c:337
 #: ../raster/r.resamp.stats/main.c:378
 #, c-format
 msgid "Unable to read color table for %s"
 msgstr ""
 
-#: ../raster/r.colors/main.c:357
+#: ../raster/r.colors/main.c:353
 #, c-format
-msgid "Color table for [%s] set to %s"
+msgid "Color table for <%s> set to %s"
 msgstr ""
 
 #: ../raster/r.colors/rules.c:39
@@ -9125,7 +9192,7 @@ msgstr ""
 msgid "fp: Data range is %s to %s\n"
 msgstr ""
 
-#: ../raster/r.colors/rules.c:51 ../raster/r.reclass/main.c:88
+#: ../raster/r.colors/rules.c:51 ../raster/r.reclass/main.c:107
 #, c-format
 msgid "Data range is %ld to %ld\n"
 msgstr ""
@@ -9184,7 +9251,7 @@ msgstr ""
 
 #: ../raster/r.colors/stats.c:37 ../raster/r.rescale/get_range.c:27
 #: ../raster/r.rescale.eq/get_stats.c:19 ../raster/r.walk/main.c:685
-#: ../raster/r.walk/main.c:747
+#: ../raster/r.walk/main.c:746
 #, c-format
 msgid "Reading %s ..."
 msgstr ""
@@ -9347,16 +9414,6 @@ msgstr ""
 msgid "Neither \"levels\" nor \"step\" parameter specified."
 msgstr ""
 
-#: ../raster/r.contour/main.c:156
-#, c-format
-msgid "<%s> raster map not found"
-msgstr ""
-
-#: ../raster/r.contour/main.c:160
-#, c-format
-msgid "<%s> unable to open raster map"
-msgstr ""
-
 #: ../raster/r.contour/main.c:163
 msgid "Could not read range file"
 msgstr ""
@@ -9365,7 +9422,7 @@ msgstr ""
 #: ../vector/v.convert/att.c:74 ../vector/v.in.ascii/in.c:366
 #: ../vector/v.in.dxf/write_vect.c:204 ../vector/v.in.ogr/main.c:684
 #: ../vector/v.lrs/v.lrs.create/main.c:293 ../vector/v.net.path/path.c:102
-#: ../vector/v.surf.rst/main.c:578 ../vector/v.to.points/main.c:273
+#: ../vector/v.surf.rst/main.c:558 ../vector/v.to.points/main.c:273
 #, c-format
 msgid "Cannot create table: %s"
 msgstr ""
@@ -9525,8 +9582,8 @@ msgstr ""
 msgid "Must specify exactly one of start_points, start_rast or coordinate"
 msgstr ""
 
-#: ../raster/r.cost/main.c:275 ../raster/r.cost/main.c:526
-#: ../raster/r.cost/main.c:631
+#: ../raster/r.cost/main.c:275 ../raster/r.cost/main.c:525
+#: ../raster/r.cost/main.c:630
 msgid "No start points"
 msgstr ""
 
@@ -9548,11 +9605,6 @@ msgstr ""
 msgid "Input null cell will be retained into output map"
 msgstr ""
 
-#: ../raster/r.cost/main.c:298
-#, c-format
-msgid "Cannot find vector map [%s]"
-msgstr ""
-
 #: ../raster/r.cost/main.c:303 ../raster/r.walk/main.c:495
 msgid "Warning: assigning negative cost to null cell. Null cells excluded."
 msgstr ""
@@ -9566,12 +9618,6 @@ msgstr ""
 #: ../raster/r.cost/main.c:324 ../raster/r.walk/main.c:531
 #, c-format
 msgid "%s - illegal name"
-msgstr ""
-
-#: ../raster/r.cost/main.c:337 ../raster/r.covar/main.c:99
-#: ../raster/r.walk/main.c:545 ../raster/r.walk/main.c:548
-#, c-format
-msgid "%s - can't open raster map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:346
@@ -9596,99 +9642,100 @@ msgstr ""
 msgid "Creating some temporary files"
 msgstr ""
 
-#: ../raster/r.cost/main.c:387 ../raster/r.cost/main.c:600
+#: ../raster/r.cost/main.c:387 ../raster/r.cost/main.c:599
 #, c-format
 msgid "Reading %s"
 msgstr ""
 
-#: ../raster/r.cost/main.c:399 ../raster/r.walk/main.c:700
-#: ../raster/r.walk/main.c:759 ../raster/r.walk/main.c:875
+#: ../raster/r.cost/main.c:399 ../raster/r.topidx/file_io.c:64
+#: ../raster/r.walk/main.c:700 ../raster/r.walk/main.c:758
+#: ../raster/r.walk/main.c:873 ../vector/v.to.rast/support.c:408
 #, c-format
-msgid "Can't get row %d from raster map %s"
+msgid "Unable to read raster map <%s> row %d"
 msgstr ""
 
-#: ../raster/r.cost/main.c:451 ../raster/r.walk/main.c:815
+#: ../raster/r.cost/main.c:450 ../raster/r.walk/main.c:813
 msgid "Initializing output "
 msgstr ""
 
-#: ../raster/r.cost/main.c:460 ../raster/r.walk/main.c:823
+#: ../raster/r.cost/main.c:459 ../raster/r.walk/main.c:821
 msgid "Can't allocate memory for segment fbuff == NULL"
 msgstr ""
 
-#: ../raster/r.cost/main.c:588
+#: ../raster/r.cost/main.c:587
 #, c-format
 msgid "can't open raster map [%s] needed for input coordinates"
 msgstr ""
 
-#: ../raster/r.cost/main.c:604
+#: ../raster/r.cost/main.c:603
 #, c-format
 msgid "Error reading map %s"
 msgstr ""
 
-#: ../raster/r.cost/main.c:646 ../raster/r.walk/main.c:916
+#: ../raster/r.cost/main.c:645 ../raster/r.walk/main.c:913
 msgid "specified starting location outside database window"
 msgstr ""
 
-#: ../raster/r.cost/main.c:661 ../raster/r.walk/main.c:933
+#: ../raster/r.cost/main.c:660 ../raster/r.walk/main.c:930
 msgid "Finding cost path"
 msgstr ""
 
-#: ../raster/r.cost/main.c:886 ../raster/r.walk/main.c:1380
+#: ../raster/r.cost/main.c:885 ../raster/r.walk/main.c:1377
 msgid "End of map!"
 msgstr ""
 
-#: ../raster/r.cost/main.c:890 ../raster/r.walk/main.c:1384
+#: ../raster/r.cost/main.c:889 ../raster/r.walk/main.c:1381
 msgid "Error, ct == pres_cell"
 msgstr ""
 
-#: ../raster/r.cost/main.c:902
+#: ../raster/r.cost/main.c:901
 #, c-format
 msgid "Writing %s"
 msgstr ""
 
-#: ../raster/r.cost/main.c:906 ../raster/r.walk/main.c:1402
+#: ../raster/r.cost/main.c:905 ../raster/r.walk/main.c:1399
 msgid "Will copy input map null values into output map"
 msgstr ""
 
-#: ../raster/r.cost/main.c:913 ../raster/r.walk/main.c:1409
+#: ../raster/r.cost/main.c:912 ../raster/r.walk/main.c:1406
 msgid ""
 "Integer cell type.\n"
 "Writing..."
 msgstr ""
 
-#: ../raster/r.cost/main.c:918 ../raster/r.cost/main.c:950
-#: ../raster/r.cost/main.c:982 ../raster/r.walk/main.c:1487
+#: ../raster/r.cost/main.c:917 ../raster/r.cost/main.c:949
+#: ../raster/r.cost/main.c:981 ../raster/r.walk/main.c:1484
 msgid "Error getting input null cells"
 msgstr ""
 
-#: ../raster/r.cost/main.c:945 ../raster/r.walk/main.c:1445
+#: ../raster/r.cost/main.c:944 ../raster/r.walk/main.c:1442
 msgid ""
 "Float cell type.\n"
 "Writing..."
 msgstr ""
 
-#: ../raster/r.cost/main.c:977 ../raster/r.walk/main.c:1481
+#: ../raster/r.cost/main.c:976 ../raster/r.walk/main.c:1478
 msgid ""
 "Double cell type.\n"
 "Writing..."
 msgstr ""
 
-#: ../raster/r.cost/main.c:1009 ../raster/r.walk/main.c:1516
+#: ../raster/r.cost/main.c:1008 ../raster/r.walk/main.c:1513
 #, c-format
 msgid "Peak cost value: %f"
 msgstr ""
 
-#: ../raster/r.cost/main.c:1052 ../raster/r.walk/main.c:1567
+#: ../raster/r.cost/main.c:1051 ../raster/r.walk/main.c:1564
 #, c-format
 msgid "Illegal x coordinate <%s>"
 msgstr ""
 
-#: ../raster/r.cost/main.c:1054 ../raster/r.walk/main.c:1569
+#: ../raster/r.cost/main.c:1053 ../raster/r.walk/main.c:1566
 #, c-format
 msgid "Illegal y coordinate <%s>"
 msgstr ""
 
-#: ../raster/r.cost/main.c:1058 ../raster/r.walk/main.c:1573
+#: ../raster/r.cost/main.c:1057 ../raster/r.walk/main.c:1570
 #, c-format
 msgid "Warning, ignoring point outside window: %.4f,%.4f"
 msgstr ""
@@ -9701,11 +9748,6 @@ msgstr ""
 
 #: ../raster/r.covar/main.c:61
 msgid "Print correlation matrix"
-msgstr ""
-
-#: ../raster/r.covar/main.c:96
-#, c-format
-msgid "%s - raster map not found"
 msgstr ""
 
 #: ../raster/r.covar/main.c:105
@@ -9781,12 +9823,12 @@ msgstr ""
 msgid "Prints terse list of category values found in a raster map layer."
 msgstr ""
 
-#: ../raster/r.describe/main.c:70
-msgid "string representing no data cell value"
+#: ../raster/r.describe/main.c:70 ../raster/r.stats/main.c:116
+msgid "String representing no data cell value"
 msgstr ""
 
 #: ../raster/r.describe/main.c:78
-msgid "number of quantization steps"
+msgid "Number of quantization steps"
 msgstr ""
 
 #: ../raster/r.describe/main.c:84
@@ -10293,7 +10335,7 @@ msgid "The initial piezometric head in [m]"
 msgstr ""
 
 #: ../raster/r.gwflow/main.c:63
-msgid "boundary condition status, 0-inactive, 1-active, 2-dirichlet"
+msgid "Boundary condition status, 0-inactive, 1-active, 2-dirichlet"
 msgstr ""
 
 #: ../raster/r.gwflow/main.c:71
@@ -10324,62 +10366,66 @@ msgstr ""
 msgid "Bottom surface of the aquifer in [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:123
-msgid "The map storing the numerical result [m]."
+#: ../raster/r.gwflow/main.c:121
+msgid "The map storing the numerical result [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:132
+#: ../raster/r.gwflow/main.c:128
 msgid ""
 "Calculate the groundwater filter velocity vector field [m/s]\n"
-"and write the x, and y components to maps named name_[xy]\n"
+"and write the x, and y components to maps named name_[xy]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:142
-msgid "The type of groundwater flow."
+#: ../raster/r.gwflow/main.c:137
+msgid "The type of groundwater flow"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:154
+#: ../raster/r.gwflow/main.c:147
 msgid "Use a sparse matrix, only available with iterative solvers"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:187
+#: ../raster/r.gwflow/main.c:178
 msgid ""
 "Numerical calculation program for transient, confined and unconfined "
-"groundwater flow in two dimensions"
+"groundwater flow in two dimensions."
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:204 ../raster3d/r3.gwflow/main.c:193
+#: ../raster/r.gwflow/main.c:195 ../raster3d/r3.gwflow/main.c:193
 msgid "The direct LU solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:206 ../raster3d/r3.gwflow/main.c:195
+#: ../raster/r.gwflow/main.c:197 ../raster3d/r3.gwflow/main.c:195
 msgid "The direct Gauss solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:290 ../raster3d/r3.out.v5d/main.c:197
+#: ../raster/r.gwflow/main.c:199 ../raster3d/r3.gwflow/main.c:197
+msgid "The direct cholesky solver do not work with sparse matrices"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:283 ../raster3d/r3.out.v5d/main.c:197
 #: ../vector/v.edit/a2b.c:162 ../vector/v.in.ascii/a2b.c:154
-#: ../vector/v.mapcalc/list.c:549 ../vector/v.surf.rst/main.c:846
+#: ../vector/v.mapcalc/list.c:549 ../vector/v.surf.rst/main.c:826
 msgid "Out of memory"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:300
+#: ../raster/r.gwflow/main.c:293
 #, c-format
 msgid "Calculation of unconfined groundwater flow loop %i\n"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:323
+#: ../raster/r.gwflow/main.c:315
 #, c-format
 msgid "Maximum difference between this and last increment: %g"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:470 ../raster3d/r3.gwflow/main.c:292
-msgid "Could not create and solve the linear equation system"
+#: ../raster/r.gwflow/main.c:463 ../raster3d/r3.gwflow/main.c:300
+msgid "Unable to create and solve the linear equation system"
 msgstr ""
 
 #: ../raster/r.his/main.c:65
 msgid ""
-"Generates red, green and blue raster map layers combining hue, intensity, "
-"and saturation (his) values from user-specified input raster map layers."
+"Generates red, green and blue raster map layers combining hue, intensity and "
+"saturation (HIS) values from user-specified input raster map layers."
 msgstr ""
 
 #: ../raster/r.his/main.c:95
@@ -10392,12 +10438,6 @@ msgstr ""
 
 #: ../raster/r.his/main.c:109
 msgid "Name of output layer to be used for BLUE"
-msgstr ""
-
-#: ../raster/r.his/main.c:126 ../raster/r.his/main.c:167
-#: ../raster/r.his/main.c:195
-#, c-format
-msgid "Unable to find raster map [%s]"
 msgstr ""
 
 #: ../raster/r.his/main.c:252
@@ -10451,7 +10491,7 @@ msgstr ""
 msgid "Title for resultant raster map"
 msgstr ""
 
-#: ../raster/r.in.arc/main.c:92 ../raster/r.in.ascii/main.c:91
+#: ../raster/r.in.arc/main.c:92
 msgid "Multiplier for ascii data"
 msgstr ""
 
@@ -10561,11 +10601,16 @@ msgid "raster, import, conversion"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:69
-msgid "Convert ASCII raster file to binary raster map layer."
+msgid "Converts ASCII raster file to binary raster map layer."
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:73
-msgid "ASCII raster file to be imported if not given reads from standard input"
+msgid ""
+"ASCII raster file to be imported. If not given reads from standard input"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:91
+msgid "Multiplier for ASCII data"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:99
@@ -10588,17 +10633,9 @@ msgstr ""
 msgid "SURFER (Golden Software) ASCII file will be imported"
 msgstr ""
 
-#: ../raster/r.in.ascii/main.c:130
-msgid "Unable to open temporary file"
-msgstr ""
-
 #: ../raster/r.in.ascii/main.c:138
 #, c-format
 msgid "Wrong entry for multiplier: %s"
-msgstr ""
-
-#: ../raster/r.in.ascii/main.c:160
-msgid "Unable to open temp file"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:163
@@ -10637,6 +10674,11 @@ msgstr ""
 #: ../raster/r.resamp.rst/main.c:266 ../raster/r.slope.aspect/main.c:188
 #: ../raster/r.slope.aspect/main.c:197 ../raster/r.slope.aspect/main.c:268
 #: ../raster/r.slope.aspect/main.c:276 ../raster/r.slope.aspect/main.c:286
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:188
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:197
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:268
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:276
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:286
 #: ../vector/lidar/v.lidar.edgedetection/main.c:87
 #: ../vector/lidar/v.lidar.edgedetection/main.c:95
 #: ../vector/lidar/v.lidar.edgedetection/main.c:103
@@ -10650,10 +10692,10 @@ msgstr ""
 #: ../vector/lidar/v.surf.bspline/main.c:142
 #: ../vector/lidar/v.surf.bspline/main.c:149
 #: ../vector/lidar/v.surf.bspline/main.c:157 ../vector/v.surf.rst/main.c:193
-#: ../vector/v.surf.rst/main.c:277 ../vector/v.surf.rst/main.c:284
-#: ../vector/v.surf.rst/main.c:292 ../vector/v.surf.rst/main.c:300
-#: ../vector/v.surf.rst/main.c:309 ../vector/v.surf.rst/main.c:318
-#: ../vector/v.surf.rst/main.c:327 ../vector/v.surf.rst/main.c:336
+#: ../vector/v.surf.rst/main.c:263 ../vector/v.surf.rst/main.c:270
+#: ../vector/v.surf.rst/main.c:278 ../vector/v.surf.rst/main.c:286
+#: ../vector/v.surf.rst/main.c:295 ../vector/v.surf.rst/main.c:304
+#: ../vector/v.surf.rst/main.c:313 ../vector/v.surf.rst/main.c:322
 #: ../vector/v.vol.rst/main.c:258 ../vector/v.vol.rst/main.c:266
 #: ../vector/v.vol.rst/main.c:274 ../vector/v.vol.rst/main.c:307
 #: ../vector/v.vol.rst/main.c:316 ../vector/v.vol.rst/main.c:325
@@ -10779,8 +10821,8 @@ msgstr ""
 msgid "Extend location extents based on new dataset"
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:120
-msgid "List supported formats then exit"
+#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:171
+msgid "List supported formats and exit"
 msgstr ""
 
 #: ../raster/r.in.gdal/main.c:124
@@ -10899,10 +10941,6 @@ msgstr ""
 msgid "GRIDATB i/o map file"
 msgstr ""
 
-#: ../raster/r.in.gridatb/main.c:55 ../raster/r.mode/main.c:70
-msgid "Output map"
-msgstr ""
-
 #: ../raster/r.in.gridatb/main.c:70
 #, c-format
 msgid "File not found: %s"
@@ -11003,13 +11041,6 @@ msgstr ""
 
 #: ../raster/r.in.mat/main.c:362
 msgid "Using default bounds"
-msgstr ""
-
-#: ../raster/r.in.mat/main.c:386 ../raster/r.in.xyz/main.c:325
-#: ../raster/r.topidx/file_io.c:85 ../vector/v.to.rast/vect2rast.c:117
-#: ../vector/v.to.rast/vect2rast.c:121
-#, c-format
-msgid "Unable to create raster map <%s>"
 msgstr ""
 
 #: ../raster/r.in.mat/main.c:389
@@ -11207,65 +11238,61 @@ msgstr ""
 
 #: ../raster/r.kappa/calc_kappa.c:33
 #, c-format
-msgid "Can't open file <%s> to write kappa and relevant parameters"
+msgid "Cannot open file <%s> to write kappa and relevant parameters"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:53
+#: ../raster/r.kappa/main.c:51
 msgid ""
 "Calculate error matrix and kappa parameter for accuracy assessment of "
 "classification result."
 msgstr ""
 
+#: ../raster/r.kappa/main.c:57
+msgid "Name of raster map containing classification result"
+msgstr ""
+
 #: ../raster/r.kappa/main.c:61
-msgid "File name of classification result"
+msgid "Name of raster map containing reference classes"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:67
-msgid "File name of reference classes"
+#: ../raster/r.kappa/main.c:65
+msgid "Name for output file containing error matrix and kappa"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:73
-msgid "Name of an output file containing of error matrix and kappa"
-msgstr ""
-
-#: ../raster/r.kappa/main.c:79
+#: ../raster/r.kappa/main.c:71
 msgid "Title for error matrix and kappa"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:84
-msgid "wide report, 132 columns (default: 80)"
+#: ../raster/r.kappa/main.c:76
+msgid "Wide report"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:89
-msgid "quiet"
+#: ../raster/r.kappa/main.c:77
+msgid "132 columns (default: 80)"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:93
-msgid "no header in the report"
+#: ../raster/r.kappa/main.c:86
+msgid "No header in the report"
 msgstr ""
 
-#: ../raster/r.kappa/main.c:108
-#, c-format
-msgid "<%s> - illegal output file name"
+#: ../raster/r.kappa/main.c:113
+msgid ""
+"The '-q' flag is superseded and will be removed in future. Please use '--"
+"quiet' instead"
 msgstr ""
 
 #: ../raster/r.kappa/prt_hdr.c:18
 #, c-format
-msgid "can't open file <%s> to write header"
+msgid "Cannot open file <%s> to write header"
 msgstr ""
 
 #: ../raster/r.kappa/prt_mat.c:39
 #, c-format
-msgid "Can't open file <%s> to write cats and counts (error matrix)"
+msgid "Cannot open file <%s> to write cats and counts (error matrix)"
 msgstr ""
 
 #: ../raster/r.kappa/stats.c:13
 msgid "Problem reading r.stats output"
-msgstr ""
-
-#: ../raster/r.kappa/stats.c:35
-#, c-format
-msgid "%s: <%s> reference map not found"
 msgstr ""
 
 #: ../raster/r.lake/main.c:46
@@ -11457,9 +11484,9 @@ msgstr ""
 
 #: ../raster/r.le/r.le.trace/main.c:59
 msgid ""
-"Display the boundary of each r.le patch and show how the boundary is traced, "
-"display the attribute, size, perimeter, and shape indices for each patch, "
-"and save the data in an output file."
+"Displays the boundary of each r.le patch and shows how the boundary is "
+"traced, displays the attribute, size, perimeter and shape indices for each "
+"patch and saves the data in an output file."
 msgstr ""
 
 #: ../raster/r.li/r.li.cwed/cwed.c:42
@@ -11732,7 +11759,7 @@ msgstr ""
 
 #: ../raster/r.li/r.li.patchnum/main.c:30
 msgid ""
-"Calculates patch number index on a raster map, using a 4 neighbour algorithm"
+"Calculates patch number index on a raster map, using a 4 neighbour algorithm."
 msgstr ""
 
 #: ../raster/r.li/r.li.richness/richness.c:39
@@ -11793,51 +11820,47 @@ msgstr ""
 msgid "[%s]: Cannot read map header"
 msgstr ""
 
-#: ../raster/r.median/main.c:45
+#: ../raster/r.los/main.c:202
+#, c-format
+msgid "Unable to create raster map [%s]."
+msgstr ""
+
+#: ../raster/r.median/main.c:46
 msgid ""
 "Finds the median of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
 msgstr ""
 
-#: ../raster/r.median/main.c:51
-msgid "Base raster map"
+#: ../raster/r.median/main.c:52
+msgid "Name of base raster map"
 msgstr ""
 
-#: ../raster/r.median/main.c:58
-msgid "Cover raster map"
+#: ../raster/r.median/main.c:56
+msgid "Name of cover raster map"
 msgstr ""
 
-#: ../raster/r.median/main.c:65
-msgid "Resultant raster map"
-msgstr ""
-
-#: ../raster/r.median/main.c:79 ../raster/r.mode/main.c:85
+#: ../raster/r.median/main.c:69 ../raster/r.mode/main.c:85
 #, c-format
 msgid "%s: base raster map not found"
 msgstr ""
 
-#: ../raster/r.median/main.c:83 ../raster/r.mode/main.c:91
+#: ../raster/r.median/main.c:75
 #, c-format
-msgid "%s: cover raster map not found"
+msgid "Illegal map name <%s>"
 msgstr ""
 
-#: ../raster/r.median/main.c:85 ../raster/r.mode/main.c:95
+#: ../raster/r.median/main.c:77
 #, c-format
-msgid "%s: illegal map name"
+msgid "Base map and output map <%s> must be different"
 msgstr ""
 
-#: ../raster/r.median/main.c:87 ../raster/r.mode/main.c:99
+#: ../raster/r.median/main.c:80
 #, c-format
-msgid "%s: base map and output map must be different"
+msgid "Cannot read category labels of raster map <%s>"
 msgstr ""
 
-#: ../raster/r.median/main.c:90 ../raster/r.mode/main.c:104
-#, c-format
-msgid "%s: can't read category labels"
-msgstr ""
-
-#: ../raster/r.median/read_stats.c:14 ../raster/r.mode/read_stats.c:15
-msgid "reading r.stats output"
+#: ../raster/r.median/read_stats.c:14 ../raster/r.statistics/read_stats.c:21
+msgid "Reading r.stats output"
 msgstr ""
 
 #: ../raster/r.mfilter/getfilt.c:154
@@ -11854,7 +11877,7 @@ msgid "Name of the input raster map"
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:69
-msgid "Name of the output raster map"
+msgid "Name for the output raster map"
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:76
@@ -11871,11 +11894,6 @@ msgstr ""
 
 #: ../raster/r.mfilter/main.c:108
 msgid "Apply filter only to zero data values"
-msgstr ""
-
-#: ../raster/r.mfilter/main.c:133
-#, c-format
-msgid "%s: raster map not found"
 msgstr ""
 
 #: ../raster/r.mfilter/main.c:146
@@ -11918,6 +11936,34 @@ msgstr ""
 
 #: ../raster/r.mode/main.c:63
 msgid "Coverage map"
+msgstr ""
+
+#: ../raster/r.mode/main.c:70
+msgid "Output map"
+msgstr ""
+
+#: ../raster/r.mode/main.c:91
+#, c-format
+msgid "%s: cover raster map not found"
+msgstr ""
+
+#: ../raster/r.mode/main.c:95
+#, c-format
+msgid "%s: illegal map name"
+msgstr ""
+
+#: ../raster/r.mode/main.c:99
+#, c-format
+msgid "%s: base map and output map must be different"
+msgstr ""
+
+#: ../raster/r.mode/main.c:104
+#, c-format
+msgid "%s: can't read category labels"
+msgstr ""
+
+#: ../raster/r.mode/read_stats.c:15
+msgid "reading r.stats output"
 msgstr ""
 
 #: ../raster/r.neighbors/main.c:101
@@ -12284,11 +12330,6 @@ msgstr ""
 msgid "Name for the output binary MAT-File"
 msgstr ""
 
-#: ../raster/r.out.mat/main.c:99 ../raster/r.out.pov/main.c:175
-#, c-format
-msgid "Unable to open raster map <%s>"
-msgstr ""
-
 #: ../raster/r.out.mat/main.c:106 ../raster/r.out.pov/main.c:183
 #, c-format
 msgid "Unable to open output file <%s>"
@@ -12399,10 +12440,6 @@ msgstr ""
 msgid "Raster file(s) for View%d"
 msgstr ""
 
-#: ../raster/r.out.mpeg/main.c:420
-msgid "Name for output file"
-msgstr ""
-
 #: ../raster/r.out.mpeg/main.c:430
 msgid "Quality factor (1 = highest quality, lowest compression)"
 msgstr ""
@@ -12456,7 +12493,7 @@ msgstr ""
 msgid "Elevation bias"
 msgstr ""
 
-#: ../raster/r.out.pov/main.c:154 ../raster/r.param.scale/interface.c:100
+#: ../raster/r.out.pov/main.c:154 ../raster/r.param.scale/interface.c:98
 msgid "Vertical scaling factor"
 msgstr ""
 
@@ -12635,101 +12672,99 @@ msgstr ""
 msgid "Cannot create vector data, please provide three maps [x,y,z]"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:149
+#: ../raster/r.out.vtk/main.c:151
 msgid "Converts raster maps into the VTK-Ascii format"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:203 ../raster/r.out.vtk/main.c:270
-#: ../raster/r.out.vtk/main.c:297 ../raster/r.out.vtk/main.c:342
+#: ../raster/r.out.vtk/main.c:217 ../raster/r.out.vtk/main.c:278
+#: ../raster/r.out.vtk/main.c:305 ../raster/r.out.vtk/main.c:350
 #, c-format
 msgid "Open Raster file %s"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:210 ../raster/r.out.vtk/main.c:278
-#: ../raster/r.out.vtk/main.c:306 ../raster/r.out.vtk/main.c:352
+#: ../raster/r.out.vtk/main.c:224 ../raster/r.out.vtk/main.c:286
+#: ../raster/r.out.vtk/main.c:314 ../raster/r.out.vtk/main.c:360
 #: ../raster/r.to.rast3/main.c:363 ../raster/r.to.rast3elev/main.c:161
 #: ../raster3d/r3.out.vtk/main.c:97
 #, c-format
 msgid "Could not open map %s"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:313
+#: ../raster/r.out.vtk/main.c:321
 msgid "Writing VTK ImageData\n"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:323
+#: ../raster/r.out.vtk/main.c:331
 msgid "Wrong RGB maps. Maps should have the same type! RGB output not added!"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:360
+#: ../raster/r.out.vtk/main.c:368
 msgid "Writing VTK Vector Data\n"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:370
+#: ../raster/r.out.vtk/main.c:378
 msgid ""
 "Wrong vector maps. Maps should have the same type! Vector output not added!"
 msgstr ""
 
-#: ../raster/r.out.vtk/main.c:382 ../raster3d/r3.out.vtk/main.c:551
+#: ../raster/r.out.vtk/main.c:390 ../raster3d/r3.out.vtk/main.c:560
 msgid "Error closing VTK-ASCII file"
 msgstr ""
 
-#: ../raster/r.out.vtk/parameters.c:41
-msgid "Raster map that represents the elevation, used for the 3D information"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:51
-msgid ""
-"Three (r,g,b) raster maps which are used to create rgb values [redmap,"
-"greenmap,bluemap]"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:61
-msgid ""
-"Three (x,y,z) raster maps which are used to create vector values [xmap,ymap,"
-"zmap]"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:68 ../raster3d/r3.out.vtk/parameters.c:77
+#: ../raster/r.out.vtk/parameters.c:38 ../raster3d/r3.out.vtk/parameters.c:41
 msgid "Name for VTK-ASCII output file"
 msgstr ""
 
-#: ../raster/r.out.vtk/parameters.c:74
+#: ../raster/r.out.vtk/parameters.c:48
+msgid "Elevation raster map"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:54
 msgid "Value to represent no data cell"
 msgstr ""
 
-#: ../raster/r.out.vtk/parameters.c:81 ../raster3d/r3.out.vtk/parameters.c:93
-msgid "Scale factor for elevation"
+#: ../raster/r.out.vtk/parameters.c:61
+msgid "Elevation (if no elevation map is specified)"
 msgstr ""
 
-#: ../raster/r.out.vtk/parameters.c:88
-msgid "Elevation (if no elevation map is given)"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:94
-msgid "Use structured grid for elevation (not recommended)"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:99
-msgid "Use polydata-trianglestrips for elevation grid creation"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:105
-msgid ""
-"Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:110
-msgid "Scale factor effects the origin (if no elevation map is given)"
-msgstr ""
-
-#: ../raster/r.out.vtk/parameters.c:116
+#: ../raster/r.out.vtk/parameters.c:68
 msgid ""
 "Create VTK point data instead of VTK cell data (if no elevation map is given)"
 msgstr ""
 
-#: ../raster/r.out.vtk/parameters.c:120
-#: ../raster3d/r3.out.vtk/parameters.c:127 ../vector/v.out.vtk/main.c:77
+#: ../raster/r.out.vtk/parameters.c:79
+msgid ""
+"Three (r,g,b) raster maps to create rgb values [redmap,greenmap,bluemap]"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:90
+msgid "Three (x,y,z) raster maps to create vector values [xmap,ymap,zmap]"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:97 ../raster3d/r3.out.vtk/parameters.c:109
+#: ../vector/v.out.vtk/main.c:74
+msgid "Scale factor for elevation"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:115
+msgid "Use structured grid for elevation (not recommended)"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:121
+msgid "Use polydata-trianglestrips for elevation grid creation"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:128
+msgid ""
+"Use polydata-vertices for elevation grid creation (to use with vtkDelauny2D)"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:134
+msgid "Scale factor effects the origin (if no elevation map is given)"
+msgstr ""
+
+#: ../raster/r.out.vtk/parameters.c:139
+#: ../raster3d/r3.out.vtk/parameters.c:137 ../vector/v.out.vtk/main.c:86
 msgid "Correct the coordinates to fit the VTK-OpenGL precision"
 msgstr ""
 
@@ -12786,58 +12821,59 @@ msgstr ""
 msgid "write_vtk_vector_data: Writing VTK-vector data"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:48
-msgid ""
-"Extracts terrain parameters from a DEM. Uses a multi-scale approach by "
-"taking fitting quadratic parameters to any size window (via least squares)"
+#: ../raster/r.param.scale/interface.c:44
+msgid "raster, geomorphology"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:65
+#: ../raster/r.param.scale/interface.c:45
+msgid "Extracts terrain parameters from a DEM."
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:46
+msgid ""
+"Uses a multi-scale approach by taking fitting quadratic parameters to any "
+"size window (via least squares)."
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:63
 msgid "Output raster layer containing morphometric parameter"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:68
+#: ../raster/r.param.scale/interface.c:66
 msgid "Slope tolerance that defines a 'flat' surface (degrees)"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:74
+#: ../raster/r.param.scale/interface.c:72
 msgid "Curvature tolerance that defines 'planar' surface"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:79
+#: ../raster/r.param.scale/interface.c:77
 #, c-format
 msgid "Size of processing window (odd number only, max: %i)"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:87
+#: ../raster/r.param.scale/interface.c:85
 msgid "Morphometric parameter in 'size' window to calculate"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:94
+#: ../raster/r.param.scale/interface.c:92
 msgid "Exponent for distance weighting (0.0-4.0)"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:106
+#: ../raster/r.param.scale/interface.c:104
 msgid "Constrain model through central window cell"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:159
+#: ../raster/r.param.scale/interface.c:157
 msgid "Morphometric parameter not recognised. Assuming 'Elevation'"
 msgstr ""
 
-#: ../raster/r.param.scale/interface.c:183
+#: ../raster/r.param.scale/interface.c:181
 msgid "Inappropriate window size (too big or even)"
 msgstr ""
 
-#: ../raster/r.param.scale/open_files.c:19
-#, c-format
-msgid "Problem opening input file [%s]"
-msgstr ""
-
-#: ../raster/r.param.scale/open_files.c:26
-#: ../raster/r.param.scale/open_files.c:29
-#, c-format
-msgid "Problem opening output file [%s]"
+#: ../raster/r.param.scale/main.c:41
+msgid "Lat/Long location is not supported"
 msgstr ""
 
 #: ../raster/r.param.scale/process.c:67
@@ -12846,7 +12882,7 @@ msgstr ""
 
 #: ../raster/r.param.scale/write_cats.c:37
 #, c-format
-msgid "can't write category file for <%s>"
+msgid "Cannot write category file for raster map <%s>"
 msgstr ""
 
 #: ../raster/r.patch/main.c:55
@@ -13379,59 +13415,68 @@ msgid ""
 "Percent complete:"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:47
+#: ../raster/r.reclass/main.c:50
 msgid ""
 "Creates a new map layer whose category values are based upon a "
 "reclassification of the categories in an existing raster map layer."
 msgstr ""
 
-#: ../raster/r.reclass/main.c:52
+#: ../raster/r.reclass/main.c:55
 msgid "Raster map to be reclassified"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:60 ../raster/r.recode/main.c:53
+#: ../raster/r.reclass/main.c:62
+msgid "File containing reclass rules"
+msgstr ""
+
+#: ../raster/r.reclass/main.c:70 ../raster/r.recode/main.c:61
 msgid "Title for the resulting raster map"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:70
+#: ../raster/r.reclass/main.c:80
 #, c-format
 msgid "<%s> is an illegal file name"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:73
+#: ../raster/r.reclass/main.c:83
 msgid "Input map can NOT be the same as output map"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:84
+#: ../raster/r.reclass/main.c:90 ../raster/r.recode/main.c:95
+#, c-format
+msgid "Cannot open rules file <%s>"
+msgstr ""
+
+#: ../raster/r.reclass/main.c:103
 #, c-format
 msgid "Enter rule(s), \"end\" when done, \"help\" if you need it\n"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:86
+#: ../raster/r.reclass/main.c:105
 #, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:98
+#: ../raster/r.reclass/main.c:117
 #, c-format
 msgid "Illegal reclass rule -"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:99
+#: ../raster/r.reclass/main.c:118
 #, c-format
 msgid " ignored\n"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:103
+#: ../raster/r.reclass/main.c:122
 msgid " - invalid reclass rule"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:117
+#: ../raster/r.reclass/main.c:136
 #, c-format
 msgid "No rules specified. Raster map <%s> not created"
 msgstr ""
 
-#: ../raster/r.reclass/main.c:119
+#: ../raster/r.reclass/main.c:138
 msgid "No rules specified"
 msgstr ""
 
@@ -13475,38 +13520,100 @@ msgstr ""
 msgid "Cannot create category file of <%s>"
 msgstr ""
 
-#: ../raster/r.recode/main.c:42
+#: ../raster/r.recode/main.c:43
 msgid "Recode categorical raster maps."
 msgstr ""
 
-#: ../raster/r.recode/main.c:45
+#: ../raster/r.recode/main.c:46
 msgid "Raster map to be recoded"
 msgstr ""
 
-#: ../raster/r.recode/main.c:57
+#: ../raster/r.recode/main.c:53
+msgid "File containing recode rules"
+msgstr ""
+
+#: ../raster/r.recode/main.c:65
 msgid "Align the current region to the input map"
 msgstr ""
 
-#: ../raster/r.recode/main.c:61
+#: ../raster/r.recode/main.c:69
 msgid "Force output to double map type (DCELL)"
 msgstr ""
 
-#: ../raster/r.recode/main.c:79
+#: ../raster/r.recode/main.c:85
 #, c-format
 msgid "[%s] is an illegal file name"
 msgstr ""
 
-#: ../raster/r.recode/main.c:82
+#: ../raster/r.recode/main.c:88
 msgid "input map can NOT be the same as output map"
 msgstr ""
 
-#: ../raster/r.recode/main.c:87
+#: ../raster/r.recode/main.c:101
 #, c-format
 msgid "no rules specified. [%s] not created"
 msgstr ""
 
-#: ../raster/r.recode/main.c:89
+#: ../raster/r.recode/main.c:103
 msgid "no rules specified"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:20
+#, c-format
+msgid "Can't read f_range for map %s"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:24
+msgid "Data range is empty"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:31
+#, c-format
+msgid "Data range of %s is %s to %s (entire map)"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:35
+#, c-format
+msgid "Can't read range for map %s"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:39
+#, c-format
+msgid "Integer data range of %s is empty"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:41
+#, c-format
+msgid "Integer data range of %s is %d to %d"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:61
+msgid "Enter the rule or 'help' for the format description:"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:79
+msgid "Enter a rule in one of these formats:"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:80
+msgid "old_low:old_high:new_low:new_high"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:81
+msgid "old_low:old_high:new_val      (i.e. new_high == new_low)"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:82
+msgid "*:old_val:new_val             (interval [inf, old_val])"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:83
+msgid "old_val:*:new_val             (interval [old_val, inf])"
+msgstr ""
+
+#: ../raster/r.recode/read_rules.c:123
+#, c-format
+msgid "%s is not a valid rule"
 msgstr ""
 
 #: ../raster/r.region/main.c:54
@@ -13715,9 +13822,9 @@ msgstr ""
 #: ../raster/simwe/r.sim.water/main.c:210
 #: ../raster/simwe/r.sim.water/main.c:218
 #: ../raster/simwe/r.sim.water/main.c:226 ../vector/v.surf.rst/main.c:199
-#: ../vector/v.surf.rst/main.c:230 ../vector/v.surf.rst/main.c:238
-#: ../vector/v.surf.rst/main.c:246 ../vector/v.surf.rst/main.c:254
-#: ../vector/v.surf.rst/main.c:262 ../vector/v.vol.rst/main.c:350
+#: ../vector/v.surf.rst/main.c:226 ../vector/v.surf.rst/main.c:232
+#: ../vector/v.surf.rst/main.c:238 ../vector/v.surf.rst/main.c:244
+#: ../vector/v.surf.rst/main.c:250 ../vector/v.vol.rst/main.c:350
 #: ../vector/v.vol.rst/main.c:367 ../vector/v.vol.rst/main.c:376
 #: ../vector/v.vol.rst/main.c:385 ../vector/v.vol.rst/main.c:394
 #: ../vector/v.vol.rst/main.c:403 ../vector/v.vol.rst/main.c:412
@@ -13765,11 +13872,11 @@ msgid "Anisotropy angle (in degrees)"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:273 ../raster/r.resamp.rst/main.c:280
-#: ../vector/v.surf.rst/main.c:378 ../vector/v.surf.rst/main.c:385
+#: ../vector/v.surf.rst/main.c:358 ../vector/v.surf.rst/main.c:365
 msgid "Anisotropy"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:279 ../vector/v.surf.rst/main.c:384
+#: ../raster/r.resamp.rst/main.c:279 ../vector/v.surf.rst/main.c:364
 msgid "Anisotropy scaling factor"
 msgstr ""
 
@@ -13813,27 +13920,27 @@ msgstr ""
 msgid "When using anisotropy both theta and scalex must be specified"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:369 ../vector/v.surf.rst/main.c:488
+#: ../raster/r.resamp.rst/main.c:369 ../vector/v.surf.rst/main.c:468
 msgid "Not enough memory for az"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:374 ../vector/v.surf.rst/main.c:493
+#: ../raster/r.resamp.rst/main.c:374 ../vector/v.surf.rst/main.c:473
 msgid "Not enough memory for adx"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:378 ../vector/v.surf.rst/main.c:497
+#: ../raster/r.resamp.rst/main.c:378 ../vector/v.surf.rst/main.c:477
 msgid "Not enough memory for ady"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:383 ../vector/v.surf.rst/main.c:502
+#: ../raster/r.resamp.rst/main.c:383 ../vector/v.surf.rst/main.c:482
 msgid "Not enough memory for adxx"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:387 ../vector/v.surf.rst/main.c:506
+#: ../raster/r.resamp.rst/main.c:387 ../vector/v.surf.rst/main.c:486
 msgid "Not enough memory for adyy"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:391 ../vector/v.surf.rst/main.c:510
+#: ../raster/r.resamp.rst/main.c:391 ../vector/v.surf.rst/main.c:490
 msgid "Not enough memory for adxy"
 msgstr ""
 
@@ -13887,8 +13994,9 @@ msgid "Cannot set region to back to the initial region !!!"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:528 ../raster/r.resample/main.c:137
-#: ../raster/r.slope.aspect/main.c:609 ../vector/v.surf.rst/main.c:586
-#: ../vector/v.surf.rst/main.c:732
+#: ../raster/r.slope.aspect/main.c:609
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:609
+#: ../vector/v.surf.rst/main.c:566 ../vector/v.surf.rst/main.c:712
 msgid "Percent complete: "
 msgstr ""
 
@@ -13902,16 +14010,16 @@ msgstr ""
 msgid "dnorm in mainc after grid before out2= %f"
 msgstr ""
 
-#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:602
+#: ../raster/r.resamp.rst/main.c:607 ../vector/v.surf.rst/main.c:582
 msgid "Not enough memory for zero_array_cell"
 msgstr ""
 
 #: ../raster/r.resamp.rst/main.c:616 ../raster/r.resamp.rst/main.c:627
 #: ../raster/r.resamp.rst/main.c:639 ../raster/r.resamp.rst/main.c:652
 #: ../raster/r.resamp.rst/main.c:664 ../raster/r.resamp.rst/main.c:676
-#: ../vector/v.surf.rst/main.c:610 ../vector/v.surf.rst/main.c:618
-#: ../vector/v.surf.rst/main.c:626 ../vector/v.surf.rst/main.c:635
-#: ../vector/v.surf.rst/main.c:643 ../vector/v.surf.rst/main.c:651
+#: ../vector/v.surf.rst/main.c:590 ../vector/v.surf.rst/main.c:598
+#: ../vector/v.surf.rst/main.c:606 ../vector/v.surf.rst/main.c:615
+#: ../vector/v.surf.rst/main.c:623 ../vector/v.surf.rst/main.c:631
 #, c-format
 msgid "Can't open temp file [%s]"
 msgstr ""
@@ -13919,9 +14027,9 @@ msgstr ""
 #: ../raster/r.resamp.rst/main.c:621 ../raster/r.resamp.rst/main.c:633
 #: ../raster/r.resamp.rst/main.c:645 ../raster/r.resamp.rst/main.c:658
 #: ../raster/r.resamp.rst/main.c:670 ../raster/r.resamp.rst/main.c:682
-#: ../vector/v.surf.rst/main.c:613 ../vector/v.surf.rst/main.c:621
-#: ../vector/v.surf.rst/main.c:629 ../vector/v.surf.rst/main.c:638
-#: ../vector/v.surf.rst/main.c:646 ../vector/v.surf.rst/main.c:654
+#: ../vector/v.surf.rst/main.c:593 ../vector/v.surf.rst/main.c:601
+#: ../vector/v.surf.rst/main.c:609 ../vector/v.surf.rst/main.c:618
+#: ../vector/v.surf.rst/main.c:626 ../vector/v.surf.rst/main.c:634
 msgid "Not enough disk space -- cannot write files"
 msgstr ""
 
@@ -14049,7 +14157,7 @@ msgid "Percent complete ... "
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:154
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:129
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:154
 msgid ""
 "Generates raster map layers of slope, aspect, curvatures and partial "
 "derivatives from a raster map layer of true elevation values. Aspect is "
@@ -14057,173 +14165,177 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:163
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:138
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:163
 msgid "Raster elevation file name"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:171
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:146
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:171
 msgid "Output slope filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:179
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:170
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:179
 msgid "Output aspect filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:187
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:154
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:187
 msgid "Format for reporting the slope"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:196
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:162
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:196
 msgid "Type of output aspect and slope maps"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:205
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:178
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:205
 msgid "Output profile curvature filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:214
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:186
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:214
 msgid "Output tangential curvature filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:223
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:194
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:223
 msgid "Output first order partial derivative dx (E-W slope) filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:232
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:202
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:232
 msgid "Output first order partial derivative dy (N-S slope) filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:241
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:210
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:241
 msgid "Output second order partial derivative dxx filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:250
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:218
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:250
 msgid "Output second order partial derivative dyy filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:259
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:226
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:259
 msgid "Output second order partial derivative dxy filename"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:264
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:230
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:264
 msgid "Multiplicative factor to convert elevation units to meters"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:272
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:237
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:272
 msgid "Minimum slope val. (in percent) for which aspect is computed"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:285
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:244
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:285
 msgid "Do not align the current region to the elevation layer"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:383
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:335
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:383
 #, c-format
 msgid "elevation file [%s] not found"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:405
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:357
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:405
 #, c-format
 msgid "wrong type: %s"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1035
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1035
 msgid "Creating support files"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1037
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1037
 #, c-format
 msgid "Elevation products for mapset [%s] in [%s]"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1055
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1007
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1055
 #, c-format
 msgid "min computed aspect %.4f  max computed aspect %.4f"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1108
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1060
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1108
 #, c-format
 msgid "ASPECT [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1148
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1100
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1148
 #, c-format
 msgid "min computed slope %.4f  max computed slope %.4f"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1198
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1150
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1198
 #, c-format
 msgid "SLOPE [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1267
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1219
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1267
 #, c-format
 msgid "PROFILE CURVE [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1294
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1246
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1294
 #, c-format
 msgid "TANGENTIAL CURVE [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1319
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1271
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1319
 #, c-format
 msgid "E-W SLOPE [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1344
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1296
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1344
 #, c-format
 msgid "N-S SLOPE [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1369
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1321
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1369
 #, c-format
 msgid "DXX [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1394
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1346
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1394
 #, c-format
 msgid "DYY [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/main.c:1419
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1371
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:1419
 #, c-format
 msgid "DXY [%s] COMPLETE"
 msgstr ""
 
 #: ../raster/r.slope.aspect/opennew.c:11
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
 #, c-format
 msgid "%s - illegal name "
 msgstr ""
 
 #: ../raster/r.slope.aspect/opennew.c:19
+#: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:19
 #, c-format
 msgid "Failed in attempt to open %s"
 msgstr ""
@@ -14277,12 +14389,6 @@ msgstr ""
 msgid "%s: running %s command"
 msgstr ""
 
-#: ../raster/r.statistics/o_average.c:42 ../raster/r.statistics/o_distrib.c:41
-#: ../raster/r.statistics/o_sum.c:43
-#, c-format
-msgid "%s: can't open tempfile"
-msgstr ""
-
 #: ../raster/r.statistics/o_kurt.c:102
 msgid "o_kurto: No data in array"
 msgstr ""
@@ -14295,20 +14401,12 @@ msgstr ""
 msgid "o_skew: No data in array"
 msgstr ""
 
-#: ../raster/r.statistics/read_stats.c:21
-msgid "Reading r.stats output"
-msgstr ""
-
 #: ../raster/r.stats/main.c:89
 msgid "Generates area statistics for raster map layers."
 msgstr ""
 
 #: ../raster/r.stats/main.c:99
 msgid "Raster input maps(s)"
-msgstr ""
-
-#: ../raster/r.stats/main.c:116
-msgid "String representing no data cell value"
 msgstr ""
 
 #: ../raster/r.stats/main.c:123
@@ -15974,33 +16072,25 @@ msgstr ""
 msgid "Extracting points ... "
 msgstr ""
 
-#: ../raster/r.topidx/file_io.c:32
-msgid "Reading elevation map:"
+#: ../raster/r.topidx/file_io.c:31
+msgid "Reading elevation map..."
 msgstr ""
 
-#: ../raster/r.topidx/file_io.c:65
-#, c-format
-msgid "Unable to read row %d in raster map [%s]"
+#: ../raster/r.topidx/file_io.c:86
+msgid "Writing topographic index map..."
 msgstr ""
 
-#: ../raster/r.topidx/file_io.c:87
-msgid "Writing topographic index map:"
-msgstr ""
-
-#: ../raster/r.topidx/main.c:42
-msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
+#: ../raster/r.topidx/main.c:39
+msgid "Creates topographic index [ln(a/tan(beta))] map from elevation map."
 msgstr ""
 
 #: ../raster/r.topidx/main.c:46
-msgid "Elevation map"
+msgid "Output topographic index map"
 msgstr ""
 
-#: ../raster/r.topidx/main.c:53
-msgid "Topographic index ln(a/tanB) map"
-msgstr ""
-
-#: ../raster/r.topidx/main.c:60
-msgid "Output verbosely"
+#: ../raster/r.topidx/main.c:54
+#, c-format
+msgid "Lat/Long location is not supported by %s. Please reproject map first"
 msgstr ""
 
 #: ../raster/r.topmodel/main.c:58
@@ -16125,7 +16215,7 @@ msgstr ""
 msgid "Requested g3d map <%s> not found"
 msgstr ""
 
-#: ../raster/r.univar2/r3.univar_main.c:110 ../raster3d/r3.gwflow/main.c:368
+#: ../raster/r.univar2/r3.univar_main.c:110 ../raster3d/r3.gwflow/main.c:376
 #: ../raster3d/r3.stats/main.c:615
 #, c-format
 msgid "Error opening g3d map <%s>"
@@ -16317,32 +16407,27 @@ msgstr ""
 msgid "Creating some temporary files ..."
 msgstr ""
 
-#: ../raster/r.walk/main.c:852
+#: ../raster/r.walk/main.c:850
 #, c-format
 msgid "Raster output map %s - not found (no start_points given)"
 msgstr ""
 
-#: ../raster/r.walk/main.c:857
-#, c-format
-msgid "Can't open raster map %s"
-msgstr ""
-
-#: ../raster/r.walk/main.c:867
+#: ../raster/r.walk/main.c:865
 #, c-format
 msgid "Memory allocation error on reading start points from raster map %s"
 msgstr ""
 
-#: ../raster/r.walk/main.c:870 ../raster/wildfire/r.spread/main.c:537
+#: ../raster/r.walk/main.c:868 ../raster/wildfire/r.spread/main.c:537
 #, c-format
 msgid "Reading %s ... "
 msgstr ""
 
-#: ../raster/r.walk/main.c:1398
+#: ../raster/r.walk/main.c:1395
 #, c-format
 msgid "Writing output raster map %s ... "
 msgstr ""
 
-#: ../raster/r.walk/main.c:1416 ../raster/r.walk/main.c:1452
+#: ../raster/r.walk/main.c:1413 ../raster/r.walk/main.c:1449
 #, c-format
 msgid "Error getting input null cells at row %d from %s"
 msgstr ""
@@ -17303,8 +17388,8 @@ msgid "You are not outputing any raster or site files"
 msgstr ""
 
 #: ../raster/simwe/r.sim.sediment/main.c:338
-#: ../raster/simwe/r.sim.water/main.c:346 ../vector/v.surf.rst/main.c:674
-#: ../vector/v.surf.rst/main.c:728
+#: ../raster/simwe/r.sim.water/main.c:346 ../vector/v.surf.rst/main.c:654
+#: ../vector/v.surf.rst/main.c:708
 msgid "Input failed"
 msgstr ""
 
@@ -17580,7 +17665,7 @@ msgstr ""
 #: ../raster3d/base/r3.null.main.c:203 ../raster3d/base/r3.timestamp.main.c:42
 #: ../raster3d/r3.cross.rast/main.c:268 ../raster3d/r3.gwflow/main.c:172
 #: ../raster3d/r3.in.v5d/main.c:198 ../raster3d/r3.mkdspf/main.c:74
-#: ../raster3d/r3.out.v5d/main.c:284 ../raster3d/r3.out.vtk/main.c:373
+#: ../raster3d/r3.out.v5d/main.c:284 ../raster3d/r3.out.vtk/main.c:374
 #: ../raster3d/r3.to.rast/main.c:215
 msgid "raster3d, voxel"
 msgstr ""
@@ -17769,7 +17854,7 @@ msgid "Requested 3d raster map not found <%s>"
 msgstr ""
 
 #: ../raster3d/r3.cross.rast/main.c:316 ../raster3d/r3.out.vtk/main.c:208
-#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:506
+#: ../raster3d/r3.out.vtk/main.c:291 ../raster3d/r3.out.vtk/main.c:515
 #: ../raster3d/r3.to.rast/main.c:243 ../raster3d/r3.to.rast/main.c:284
 #, c-format
 msgid "Error opening 3d raster map <%s>"
@@ -17864,12 +17949,12 @@ msgid ""
 "three dimensions"
 msgstr ""
 
-#: ../raster3d/r3.gwflow/main.c:370
+#: ../raster3d/r3.gwflow/main.c:378
 #, c-format
 msgid "Write the result to g3d map <%s>"
 msgstr ""
 
-#: ../raster3d/r3.gwflow/main.c:414
+#: ../raster3d/r3.gwflow/main.c:422
 msgid "Error closing g3d file"
 msgstr ""
 
@@ -18105,34 +18190,34 @@ msgstr ""
 msgid "Error closing g3d vector map."
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:375
+#: ../raster3d/r3.out.vtk/main.c:376
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:386 ../vector/v.out.ascii/out.c:120
-#: ../vector/v.out.vtk/main.c:152
+#: ../raster3d/r3.out.vtk/main.c:387 ../vector/v.out.ascii/out.c:120
+#: ../vector/v.out.vtk/main.c:173
 msgid "failed to interpret dp as an integer"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:388
+#: ../raster3d/r3.out.vtk/main.c:389
 msgid "dp has to be from 0 to 20"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:441
+#: ../raster3d/r3.out.vtk/main.c:450
 msgid ""
 "The 2d and 3d region settings are different. The g3d settings are used to "
 "adjust the 2d region."
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:478
+#: ../raster3d/r3.out.vtk/main.c:487
 msgid "unable to close top raster map"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:483
+#: ../raster3d/r3.out.vtk/main.c:492
 msgid "unable to close bottom raster map"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/main.c:536
+#: ../raster3d/r3.out.vtk/main.c:545
 msgid "Error closing 3d raster map, the VTK file may be incomplete."
 msgstr ""
 
@@ -18140,81 +18225,78 @@ msgstr ""
 msgid "G3D map(s) to be converted to VTK-ASCII data format"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/parameters.c:44
-msgid ""
-"Three (r,g,b) 3d raster maps which are used to create rgb values [redmap,"
-"greenmap,bluemap]"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/parameters.c:54
-msgid ""
-"Three (x,y,z) 3d raster maps which are used to create vector values [xmap,"
-"ymap,zmap]"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/parameters.c:62
-msgid "top surface 2D raster map"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/parameters.c:70
-msgid "bottom surface 2D raster map"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/parameters.c:85
+#: ../raster3d/r3.out.vtk/parameters.c:48
 msgid "Float value to represent no data cell/points"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/parameters.c:108
-msgid "Use g3d mask (if exists) with input maps"
-msgstr ""
-
-#: ../raster3d/r3.out.vtk/parameters.c:113
+#: ../raster3d/r3.out.vtk/parameters.c:54
 msgid "Create VTK pointdata instead of VTK celldata (celldata is default)"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/parameters.c:117
-msgid "Scale factor effects the origin"
+#: ../raster3d/r3.out.vtk/parameters.c:63
+msgid "top surface 2D raster map"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/parameters.c:123
+#: ../raster3d/r3.out.vtk/parameters.c:72
+msgid "bottom surface 2D raster map"
+msgstr ""
+
+#: ../raster3d/r3.out.vtk/parameters.c:79
 msgid ""
 "Create 3d elevation output with a top and a bottom surface, both raster maps "
 "are required."
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:124
+#: ../raster3d/r3.out.vtk/parameters.c:91
+msgid ""
+"Three (r,g,b) 3d raster maps to create rgb values [redmap,greenmap,bluemap]"
+msgstr ""
+
+#: ../raster3d/r3.out.vtk/parameters.c:102
+msgid "Three (x,y,z) 3d raster maps to create vector values [xmap,ymap,zmap]"
+msgstr ""
+
+#: ../raster3d/r3.out.vtk/parameters.c:127
+msgid "Use g3d mask (if exists) with input maps"
+msgstr ""
+
+#: ../raster3d/r3.out.vtk/parameters.c:132
+msgid "Scale factor effects the origin"
+msgstr ""
+
+#: ../raster3d/r3.out.vtk/writeVTKData.c:121
 msgid "write_vtk_points: Writing point coordinates"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:133
+#: ../raster3d/r3.out.vtk/writeVTKData.c:130
 msgid "Could not get top raster row \n"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:137
+#: ../raster3d/r3.out.vtk/writeVTKData.c:134
 msgid "Could not get bottom raster row \n"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:254
+#: ../raster3d/r3.out.vtk/writeVTKData.c:251
 msgid "write_vtk_unstructured_grid_cells: Writing the cells"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:333
+#: ../raster3d/r3.out.vtk/writeVTKData.c:330
 #, c-format
 msgid ""
 "write_vtk_data: Writing Celldata %s with rows %i cols %i depths %i to vtk-"
 "ascii file"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:391
+#: ../raster3d/r3.out.vtk/writeVTKData.c:388
 msgid "write_vtk_rgb_data: writing rgb data"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:428
-#: ../raster3d/r3.out.vtk/writeVTKData.c:461
+#: ../raster3d/r3.out.vtk/writeVTKData.c:425
+#: ../raster3d/r3.out.vtk/writeVTKData.c:458
 msgid "Wrong 3d raster map values! Values should in between 0 and 255!\n"
 msgstr ""
 
-#: ../raster3d/r3.out.vtk/writeVTKData.c:491
+#: ../raster3d/r3.out.vtk/writeVTKData.c:488
 msgid "write_vtk_vector_data: writing vector data"
 msgstr ""
 
@@ -18293,15 +18375,6 @@ msgstr ""
 
 #: ../sites/s.in.ascii/main.c:50 ../sites/s.out.ascii/main.c:46
 msgid "sites"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:987
-msgid "CREATING SUPPORT FILES"
-msgstr ""
-
-#: ../swig/perl/R_slope_aspect/r_slope_aspect/r_slope_aspect.c:989
-#, c-format
-msgid "ELEVATION PRODUCTS for mapset [%s] in [%s]"
 msgstr ""
 
 #: ../vector/lidar/lidarlib/TcholBand.c:21
@@ -18415,11 +18488,6 @@ msgstr ""
 msgid "Low threshold for terrain to object reclassification"
 msgstr ""
 
-#: ../vector/lidar/v.lidar.correction/main.c:138
-#, c-format
-msgid "It could not be find input map <%s>"
-msgstr ""
-
 #: ../vector/lidar/v.lidar.correction/main.c:142
 #: ../vector/lidar/v.lidar.correction/main.c:147
 #: ../vector/lidar/v.lidar.correction/main.c:153
@@ -18475,13 +18543,16 @@ msgid "Correction and creation of terrain vector"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:305
-msgid "Dropping <s>"
+#: ../vector/lidar/v.lidar.edgedetection/main.c:337
+#, c-format
+msgid "Dropping <%s>"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:307
+#: ../vector/lidar/v.lidar.edgedetection/main.c:339
 #: ../vector/lidar/v.outlier/main.c:323
 #: ../vector/lidar/v.surf.bspline/main.c:605
-msgid "Auxiliar Table could not be dropped"
+msgid "Auxiliar table could not be dropped"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.edgedetection/edgedetection.c:428
@@ -18528,11 +18599,6 @@ msgstr ""
 msgid "Driver's name couldn't be read"
 msgstr ""
 
-#: ../vector/lidar/v.lidar.edgedetection/main.c:164
-#, c-format
-msgid "It could not be found input map <%s>"
-msgstr ""
-
 #: ../vector/lidar/v.lidar.edgedetection/main.c:187
 #, c-format
 msgid "It was impossible to create <%s> interpolation table in database."
@@ -18567,15 +18633,6 @@ msgstr ""
 msgid "Point classification"
 msgstr ""
 
-#: ../vector/lidar/v.lidar.edgedetection/main.c:337
-#, c-format
-msgid "Dropping <%s>"
-msgstr ""
-
-#: ../vector/lidar/v.lidar.edgedetection/main.c:339
-msgid "Auxiliar Table could not be dropped."
-msgstr ""
-
 #: ../vector/lidar/v.lidar.growing/ConvexHull.c:247
 msgid "...now exiting to system..."
 msgstr ""
@@ -18596,11 +18653,6 @@ msgstr ""
 
 #: ../vector/lidar/v.lidar.growing/main.c:103
 msgid "Threshold for double pulse in region growing"
-msgstr ""
-
-#: ../vector/lidar/v.lidar.growing/main.c:119
-#, c-format
-msgid "Cannot find input map <%s>"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.growing/main.c:125
@@ -18794,7 +18846,7 @@ msgid "vector, interpolation"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:82
-msgid "Bicubic or bilinear interpolation with Tykhonov regularization"
+msgid "Bicubic or bilinear spline interpolation with Tykhonov regularization"
 msgstr ""
 
 #: ../vector/lidar/v.surf.bspline/main.c:88
@@ -19022,7 +19074,7 @@ msgid "Do not print polyline info"
 msgstr ""
 
 #: ../vector/v.build.polylines/main.c:122 ../vector/v.db.select/main.c:101
-#: ../vector/v.out.ogr/main.c:190 ../vector/v.transform/main.c:178
+#: ../vector/v.out.ogr/main.c:190 ../vector/v.transform/main.c:177
 #, c-format
 msgid "Could not find input vector map <%s>"
 msgstr ""
@@ -19062,26 +19114,43 @@ msgstr ""
 msgid "Shell script style, currently only for report"
 msgstr ""
 
-#: ../vector/v.category/main.c:125
+#: ../vector/v.category/main.c:108
+msgid "Format: layer type count min max"
+msgstr ""
+
+#: ../vector/v.category/main.c:126
 msgid ""
 "Database connection and attribute tables for concerned layers are not changed"
 msgstr ""
 
-#: ../vector/v.category/main.c:176
+#: ../vector/v.category/main.c:177
 msgid "Too many layers for this operation"
 msgstr ""
 
-#: ../vector/v.category/main.c:179
+#: ../vector/v.category/main.c:180
 msgid "2 layers must be specified"
 msgstr ""
 
-#: ../vector/v.category/main.c:183
-msgid "Output vector wasn't entered."
+#: ../vector/v.category/main.c:184
+msgid "Output vector wasn't entered"
 msgstr ""
 
-#: ../vector/v.category/main.c:234 ../vector/v.in.ogr/main.c:877
+#: ../vector/v.category/main.c:235 ../vector/v.in.ogr/main.c:877
 #: ../vector/v.voronoi/dt_main.c:121
 msgid "Cannot calculate area centroid"
+msgstr ""
+
+#: ../vector/v.category/main.c:246
+#, c-format
+msgid "%d new centroids placed in output map"
+msgstr ""
+
+#: ../vector/v.category/main.c:389
+msgid "Layer / table"
+msgstr ""
+
+#: ../vector/v.category/main.c:393
+msgid "Layer"
 msgstr ""
 
 #: ../vector/v.clean/main.c:51
@@ -19319,11 +19388,6 @@ msgstr ""
 msgid "Endian of input vector map"
 msgstr ""
 
-#: ../vector/v.convert/old2new.c:27
-#, c-format
-msgid "Input vector map <%s> not found."
-msgstr ""
-
 #: ../vector/v.convert/old2new.c:32
 msgid "Failed opening input dig file."
 msgstr ""
@@ -19433,7 +19497,7 @@ msgstr ""
 
 #: ../vector/v.convert/read.c:173
 #, c-format
-msgid "[%d] elements read to memory."
+msgid "[%d] elements read to memory"
 msgstr ""
 
 #: ../vector/v.convert/read.c:212
@@ -19534,7 +19598,7 @@ msgstr ""
 msgid "Delete connection for certain layer (not the table)"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:134 ../vector/v.extract/main.c:150
+#: ../vector/v.db.connect/main.c:134 ../vector/v.extract/main.c:143
 #, c-format
 msgid "Vector file [%s] not available in search list"
 msgstr ""
@@ -19563,7 +19627,7 @@ msgstr ""
 msgid "Database connection not defined for layer <%d>"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:411
+#: ../vector/v.db.connect/main.c:190 ../vector/v.edit/select.c:416
 #, c-format
 msgid "Cannot open database <%s>"
 msgstr ""
@@ -19629,7 +19693,7 @@ msgid "Cannot open select cursor"
 msgstr ""
 
 #: ../vector/v.db.select/main.c:147 ../vector/v.out.ogr/main.c:584
-#: ../vector/v.out.svg/main.c:362
+#: ../vector/v.out.svg/main.c:359
 msgid "Cannot fetch data"
 msgstr ""
 
@@ -19915,7 +19979,7 @@ msgstr ""
 msgid "Unknown keyword <%s> in vector head"
 msgstr ""
 
-#: ../vector/v.edit/a2b.c:272 ../vector/v.edit/break.c:100
+#: ../vector/v.edit/a2b.c:276 ../vector/v.edit/break.c:100
 #: ../vector/v.edit/break.c:120 ../vector/v.edit/break.c:296
 #: ../vector/v.edit/cats.c:88 ../vector/v.edit/flip.c:54
 #: ../vector/v.edit/merge.c:169 ../vector/v.edit/move.c:63
@@ -19925,7 +19989,7 @@ msgstr ""
 msgid "Cannot rewrite line [%d]"
 msgstr ""
 
-#: ../vector/v.edit/a2b.c:281
+#: ../vector/v.edit/a2b.c:283
 #, c-format
 msgid "[%d] lines closed"
 msgstr ""
@@ -19981,38 +20045,42 @@ msgstr ""
 msgid "Polygon for selecting features"
 msgstr ""
 
-#: ../vector/v.edit/args.c:122 ../vector/v.in.dxf/main.c:78
-msgid "Do not build topology"
+#: ../vector/v.edit/args.c:122 ../vector/v.extract/main.c:92
+msgid "Reverse selection"
 msgstr ""
 
 #: ../vector/v.edit/args.c:126
 msgid "Print ID's of edited features"
 msgstr ""
 
-#: ../vector/v.edit/args.c:134
-msgid "Do not close boundaries"
-msgstr ""
-
-#: ../vector/v.edit/args.c:142
+#: ../vector/v.edit/args.c:130
 msgid "Do not expect header of input data"
 msgstr ""
 
-#: ../vector/v.edit/args.c:154
+#: ../vector/v.edit/args.c:134 ../vector/v.in.dxf/main.c:78
+msgid "Do not build topology"
+msgstr ""
+
+#: ../vector/v.edit/args.c:143
+msgid "Do not close boundaries"
+msgstr ""
+
+#: ../vector/v.edit/args.c:160
 msgid "Polygon must have at least 3 coordinate pairs"
 msgstr ""
 
-#: ../vector/v.edit/args.c:216
+#: ../vector/v.edit/args.c:222
 #, c-format
 msgid "Operation <%s> not implemented."
 msgstr ""
 
-#: ../vector/v.edit/args.c:227
+#: ../vector/v.edit/args.c:233
 #, c-format
 msgid "At least one option from <%s> must be specified"
 msgstr ""
 
-#: ../vector/v.edit/args.c:235 ../vector/v.edit/args.c:247
-#: ../vector/v.edit/args.c:258
+#: ../vector/v.edit/args.c:241 ../vector/v.edit/args.c:253
+#: ../vector/v.edit/args.c:264
 #, c-format
 msgid "Tool <%s> requires option <%s>"
 msgstr ""
@@ -20094,7 +20162,7 @@ msgid ""
 "vector map."
 msgstr ""
 
-#: ../vector/v.edit/main.c:62
+#: ../vector/v.edit/main.c:62 ../vector/v.in.ascii/in.c:199
 #, c-format
 msgid "Could not open ASCII file <%s>"
 msgstr ""
@@ -20132,20 +20200,20 @@ msgstr ""
 msgid "[%d] features moved"
 msgstr ""
 
-#: ../vector/v.edit/select.c:80
+#: ../vector/v.edit/select.c:84
 #, c-format
 msgid "[%d] of [%d] features selected"
 msgstr ""
 
-#: ../vector/v.edit/select.c:391
+#: ../vector/v.edit/select.c:396
 msgid "Layer must be > 0 for 'where'."
 msgstr ""
 
-#: ../vector/v.edit/select.c:397 ../vector/v.extract/main.c:227
+#: ../vector/v.edit/select.c:402 ../vector/v.extract/main.c:220
 msgid "No layer database connection."
 msgstr ""
 
-#: ../vector/v.edit/select.c:403
+#: ../vector/v.edit/select.c:408
 #, c-format
 msgid "Cannot open driver <%s>"
 msgstr ""
@@ -20220,90 +20288,85 @@ msgstr ""
 msgid "Do not copy table (see also 'new' parameter)"
 msgstr ""
 
-#: ../vector/v.extract/main.c:92
-msgid "Reverse selection"
-msgstr ""
-
-#: ../vector/v.extract/main.c:102
+#: ../vector/v.extract/main.c:101
 msgid "Types to be extracted "
 msgstr ""
 
-#: ../vector/v.extract/main.c:105
-msgid ""
-"Layer number. If -1, all features in all layers of given type are extracted."
+#: ../vector/v.extract/main.c:104
+msgid "If -1, all features in all layers of given type are extracted"
+msgstr ""
+
+#: ../vector/v.extract/main.c:112
+msgid "Enter -1 to keep original categories or the desired NEW category value"
 msgstr ""
 
 #: ../vector/v.extract/main.c:113
-msgid ""
-"Enter -1 to keep original categories or the desired NEW category value. If "
-"new >= 0, table is not copied."
+msgid "If new >= 0, table is not copied"
+msgstr ""
+
+#: ../vector/v.extract/main.c:121
+msgid "Input text file with category numbers/number ranges to be extracted"
 msgstr ""
 
 #: ../vector/v.extract/main.c:122
-msgid "Category ranges: e.g. 1,3-8,13"
+msgid "If '-' given reads from standard input"
 msgstr ""
 
-#: ../vector/v.extract/main.c:128
-msgid ""
-"Input text file with category numbers/number ranges to be extracted (if '-' "
-"given reads from standard input"
-msgstr ""
-
-#: ../vector/v.extract/main.c:159
+#: ../vector/v.extract/main.c:152
 msgid "Layer 0 not supported"
 msgstr ""
 
-#: ../vector/v.extract/main.c:184
+#: ../vector/v.extract/main.c:177
 #, c-format
 msgid "Category value in <%s> not valid"
 msgstr ""
 
-#: ../vector/v.extract/main.c:198
+#: ../vector/v.extract/main.c:191
 #, c-format
 msgid "Process file <%s> for category numbers"
 msgstr ""
 
-#: ../vector/v.extract/main.c:202
+#: ../vector/v.extract/main.c:195
 #, c-format
 msgid "Can't open specified file <%s>"
 msgstr ""
 
-#: ../vector/v.extract/main.c:210
+#: ../vector/v.extract/main.c:203
 #, c-format
 msgid "Ignored text entry: %s"
 msgstr ""
 
-#: ../vector/v.extract/main.c:229
+#: ../vector/v.extract/main.c:222
 #, c-format
 msgid "Load cats from the database (table = %s, db = %s)."
 msgstr ""
 
-#: ../vector/v.extract/main.c:241
+#: ../vector/v.extract/main.c:234
 #, c-format
 msgid "%d cats loaded from the database"
 msgstr ""
 
-#: ../vector/v.extract/main.c:296
-msgid "Writing attributes ...\n"
+#: ../vector/v.extract/main.c:289 ../vector/v.select/main.c:429
+msgid "Writing attributes ..."
 msgstr ""
 
-#: ../vector/v.extract/main.c:325 ../vector/v.select/main.c:456
+#: ../vector/v.extract/main.c:318 ../vector/v.select/main.c:456
 #: ../vector/v.voronoi/vo_main.c:301
 #, c-format
 msgid "Layer %d"
 msgstr ""
 
-#: ../vector/v.extract/main.c:330 ../vector/v.voronoi/vo_main.c:306
+#: ../vector/v.extract/main.c:323 ../vector/v.voronoi/vo_main.c:306
 msgid "No table."
 msgstr ""
 
-#: ../vector/v.extract/main.c:341 ../vector/v.in.db/main.c:210
+#: ../vector/v.extract/main.c:334 ../vector/v.in.db/main.c:210
 #: ../vector/v.select/main.c:472 ../vector/v.to.points/main.c:256
 #: ../vector/v.voronoi/vo_main.c:317
 msgid "Cannot copy table"
 msgstr ""
 
-#: ../vector/v.extract/main.c:357
+#: ../vector/v.extract/main.c:350
 msgid "Removing duplicate centroids ..."
 msgstr ""
 
@@ -20323,7 +20386,7 @@ msgstr ""
 msgid "Name of resulting 3D vector map"
 msgstr ""
 
-#: ../vector/v.extrude/main.c:84 ../vector/v.transform/main.c:110
+#: ../vector/v.extrude/main.c:84 ../vector/v.transform/main.c:109
 msgid "Shifting value for z coordinates"
 msgstr ""
 
@@ -20419,7 +20482,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:49
-msgid "Create a vector map from ASCII points file or ASCII vector file."
+msgid "Creates a vector map from ASCII points file or ASCII vector file."
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:55
@@ -20512,16 +20575,6 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:192
 msgid "Please specify reasonable z column"
-msgstr ""
-
-#: ../vector/v.in.ascii/in.c:199
-#, c-format
-msgid "Could not open ascii file <%s>"
-msgstr ""
-
-#: ../vector/v.in.ascii/in.c:237
-#, c-format
-msgid "Could not open temp file <%s>"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:244
@@ -20630,7 +20683,7 @@ msgid "Length of column [%d] (%d) is less than maximum value length (%d)"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:471
-msgid "Populating table ..."
+msgid "Populating table..."
 msgstr ""
 
 #: ../vector/v.in.ascii/points.c:94
@@ -20908,10 +20961,6 @@ msgstr ""
 msgid "List available layers in data source and exit"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:171
-msgid "List available formats and exit"
-msgstr ""
-
 #: ../vector/v.in.ogr/main.c:176
 msgid "Do not clean polygons (not recommended)"
 msgstr ""
@@ -20931,6 +20980,11 @@ msgstr ""
 
 #: ../vector/v.in.ogr/main.c:196
 msgid "Change column names to lowercase characters"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:227
+#, c-format
+msgid "Available OGR Drivers:\n"
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:244 ../vector/v.in.ogr/main.c:293
@@ -21132,6 +21186,116 @@ msgstr ""
 #: ../vector/v.info/main.c:180
 #, c-format
 msgid "Displaying column types/names for database connection of layer %d:"
+msgstr ""
+
+#: ../vector/v.info/main.c:204
+#, c-format
+msgid "Layer:           %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:206
+#, c-format
+msgid "Mapset:          %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:208
+#, c-format
+msgid "Location:        %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:210
+#, c-format
+msgid "Database:        %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:212
+#, c-format
+msgid "Title:           %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:214
+#, c-format
+msgid "Map scale:       1:%d"
+msgstr ""
+
+#: ../vector/v.info/main.c:216
+#, c-format
+msgid "Map format:      %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:218
+#, c-format
+msgid "Name of creator: %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:220
+#, c-format
+msgid "Organization:    %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:222
+#, c-format
+msgid "Source date:     %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:227
+#, c-format
+msgid "  Type of Map:  %s (level: %i)        "
+msgstr ""
+
+#: ../vector/v.info/main.c:234
+#, c-format
+msgid "  Number of points:       %-9ld       Number of areas:      %-9ld"
+msgstr ""
+
+#: ../vector/v.info/main.c:237
+#, c-format
+msgid "  Number of lines:        %-9ld       Number of islands:    %-9ld"
+msgstr ""
+
+#: ../vector/v.info/main.c:240
+#, c-format
+msgid "  Number of boundaries:   %-9ld       Number of faces:      %-9ld"
+msgstr ""
+
+#: ../vector/v.info/main.c:243
+#, c-format
+msgid "  Number of centroids:    %-9ld       Number of kernels:    %-9ld"
+msgstr ""
+
+#: ../vector/v.info/main.c:247
+#, c-format
+msgid "  Map is 3D:              %d"
+msgstr ""
+
+#: ../vector/v.info/main.c:249
+#, c-format
+msgid "  Number of dblinks:      %-9ld"
+msgstr ""
+
+#: ../vector/v.info/main.c:254
+#, c-format
+msgid "                No topology present"
+msgstr ""
+
+#: ../vector/v.info/main.c:262
+#, c-format
+msgid "        Projection: %s (zone %d)"
+msgstr ""
+
+#: ../vector/v.info/main.c:265
+#, c-format
+msgid "        Projection: %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:289
+#, c-format
+msgid "  Digitization threshold: %s"
+msgstr ""
+
+#: ../vector/v.info/main.c:291
+#, c-format
+msgid "  Comments:"
 msgstr ""
 
 #: ../vector/v.kcv/main.c:77
@@ -21368,10 +21532,6 @@ msgstr ""
 msgid "Label size (in points)"
 msgstr ""
 
-#: ../vector/v.label/main.c:151 ../vector/v.lrs/v.lrs.label/main.c:172
-msgid "Text color"
-msgstr ""
-
 #: ../vector/v.label/main.c:160
 msgid "Rotation angle (degrees counter-clockwise from East)"
 msgstr ""
@@ -21386,10 +21546,6 @@ msgstr ""
 
 #: ../vector/v.label/main.c:186
 msgid "Width of highlight coloring"
-msgstr ""
-
-#: ../vector/v.label/main.c:202 ../vector/v.lrs/v.lrs.label/main.c:213
-msgid "Border color"
 msgstr ""
 
 #: ../vector/v.label/main.c:212
@@ -21689,7 +21845,7 @@ msgstr ""
 #: ../vector/v.lrs/v.lrs.label/main.c:181
 #: ../vector/v.lrs/v.lrs.label/main.c:189
 #: ../vector/v.lrs/v.lrs.label/main.c:198
-msgid "Only for p.map output"
+msgid "Only for d.label output"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.label/main.c:197
@@ -21842,7 +21998,7 @@ msgid "Incorrect segment type: %s"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:323
-#: ../vector/v.lrs/v.lrs.where/main.c:191
+#: ../vector/v.lrs/v.lrs.where/main.c:192
 #, c-format
 msgid "[%d] points read from input"
 msgstr ""
@@ -21876,22 +22032,22 @@ msgstr ""
 msgid "Maximum distance to nearest line"
 msgstr ""
 
-#: ../vector/v.lrs/v.lrs.where/main.c:192
+#: ../vector/v.lrs/v.lrs.where/main.c:193
 #, c-format
 msgid "[%d] positions found"
 msgstr ""
 
-#: ../vector/v.lrs/v.lrs.where/main.c:194
+#: ../vector/v.lrs/v.lrs.where/main.c:195
 #, c-format
 msgid "[%d] points outside threshold"
 msgstr ""
 
-#: ../vector/v.lrs/v.lrs.where/main.c:196
+#: ../vector/v.lrs/v.lrs.where/main.c:197
 #, c-format
 msgid "[%d] points - no record found"
 msgstr ""
 
-#: ../vector/v.lrs/v.lrs.where/main.c:198
+#: ../vector/v.lrs/v.lrs.where/main.c:199
 #, c-format
 msgid "[%d] points - to many records found"
 msgstr ""
@@ -22066,11 +22222,6 @@ msgstr ""
 msgid ""
 "Categories of centres (points on nodes) to which net will be allocated, "
 "layer for this categories is given by nlayer option"
-msgstr ""
-
-#: ../vector/v.net.alloc/main.c:130
-#, c-format
-msgid "Vector map <%s> not fould"
 msgstr ""
 
 #: ../vector/v.net.alloc/main.c:167 ../vector/v.net.iso/main.c:211
@@ -22341,7 +22492,7 @@ msgstr ""
 msgid "'output' must be given for old version"
 msgstr ""
 
-#: ../vector/v.out.ascii/out.c:137 ../vector/v.out.vtk/main.c:142
+#: ../vector/v.out.ascii/out.c:137 ../vector/v.out.vtk/main.c:163
 #, c-format
 msgid "Cannot open file [%s]"
 msgstr ""
@@ -22463,7 +22614,7 @@ msgstr ""
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:260 ../vector/v.out.svg/main.c:153
+#: ../vector/v.out.ogr/main.c:260 ../vector/v.out.svg/main.c:150
 #: ../vector/v.patch/main.c:133 ../vector/v.patch/main.c:175
 #, c-format
 msgid "Cannot describe table %s"
@@ -22546,68 +22697,72 @@ msgstr ""
 msgid "Exports a GRASS vector map to SVG."
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:78
-msgid "SVG output file"
+#: ../vector/v.out.svg/main.c:74
+msgid "Name for SVG output file"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:87
-msgid "Output type - defines which feature-type will be extracted"
+#: ../vector/v.out.svg/main.c:83
+msgid "Output type"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:95
+#: ../vector/v.out.svg/main.c:84
+msgid "Defines which feature-type will be extracted"
+msgstr ""
+
+#: ../vector/v.out.svg/main.c:92
 msgid "Coordinate precision"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:104
+#: ../vector/v.out.svg/main.c:99
 msgid "Attribute(s) to include in output SVG"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:116
+#: ../vector/v.out.svg/main.c:113
 msgid "Precision must not be negative."
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:119
+#: ../vector/v.out.svg/main.c:116
 msgid "Precision must not be higher than 15."
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:188
+#: ../vector/v.out.svg/main.c:185
 #, c-format
 msgid "SVG file <%s> cannot be opened"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:203
+#: ../vector/v.out.svg/main.c:200
 msgid "No areas found, skipping type=poly."
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:212
+#: ../vector/v.out.svg/main.c:209
 #, c-format
 msgid "Skipping area %d without centroid"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:237
+#: ../vector/v.out.svg/main.c:234
 #, c-format
 msgid "Extracted %d areas"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:243
+#: ../vector/v.out.svg/main.c:240
 msgid "No points found, skipping type=point"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:267
+#: ../vector/v.out.svg/main.c:264
 #, c-format
 msgid "Extracted %d points"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:273
+#: ../vector/v.out.svg/main.c:270
 msgid "No lines found, skipping type=line"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:294
+#: ../vector/v.out.svg/main.c:291
 #, c-format
 msgid "Extracted %d lines"
 msgstr ""
 
-#: ../vector/v.out.svg/main.c:358
+#: ../vector/v.out.svg/main.c:355
 #, c-format
 msgid "Cannot select attributes for cat=%d"
 msgstr ""
@@ -22616,19 +22771,19 @@ msgstr ""
 msgid "writeVTKHeader: Writing VTK-Header"
 msgstr ""
 
-#: ../vector/v.out.vtk/main.c:45
+#: ../vector/v.out.vtk/main.c:47
 msgid "Convert a GRASS binary vector map to VTK ASCII output"
 msgstr ""
 
-#: ../vector/v.out.vtk/main.c:55
+#: ../vector/v.out.vtk/main.c:57
 msgid "Path to resulting VTK file."
 msgstr ""
 
-#: ../vector/v.out.vtk/main.c:154
+#: ../vector/v.out.vtk/main.c:175
 msgid "dp has to be from 0 to 8"
 msgstr ""
 
-#: ../vector/v.out.vtk/main.c:163
+#: ../vector/v.out.vtk/main.c:184
 msgid "failed to interpret layer as an integer"
 msgstr ""
 
@@ -22793,11 +22948,6 @@ msgstr ""
 
 #: ../vector/v.perturb/main.c:146
 msgid "Standard deviation of normal distribution must be >= zero"
-msgstr ""
-
-#: ../vector/v.perturb/main.c:153
-#, c-format
-msgid "Cannot not find input vector map <%s>"
 msgstr ""
 
 #: ../vector/v.perturb/main.c:226
@@ -23073,21 +23223,12 @@ msgid ""
 "\t overlap: features partially or completely overlap"
 msgstr ""
 
-#: ../vector/v.select/main.c:180
-#, c-format
-msgid "Could not find vector '%s'"
-msgstr ""
-
 #: ../vector/v.select/main.c:213
 msgid "Processing ainput lines ..."
 msgstr ""
 
 #: ../vector/v.select/main.c:288
 msgid "Processing ainput areas ..."
-msgstr ""
-
-#: ../vector/v.select/main.c:429
-msgid "Writing attributes ..."
 msgstr ""
 
 #: ../vector/v.support/main.c:38
@@ -23143,8 +23284,8 @@ msgstr ""
 msgid "Replace comment instead of appending it"
 msgstr ""
 
-#: ../vector/v.support/main.c:126 ../vector/v.surf.rst/main.c:537
-#: ../vector/v.surf.rst/main.c:681 ../vector/v.surf.rst/main.c:772
+#: ../vector/v.support/main.c:126 ../vector/v.surf.rst/main.c:517
+#: ../vector/v.surf.rst/main.c:661 ../vector/v.surf.rst/main.c:752
 #, c-format
 msgid "Could not open vector map <%s>"
 msgstr ""
@@ -23209,154 +23350,149 @@ msgid ""
 "layer>0)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:222
+#: ../vector/v.surf.rst/main.c:220
 msgid "Output surface raster map (elevation)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:229
+#: ../vector/v.surf.rst/main.c:225
 msgid "Output slope raster map"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:237
+#: ../vector/v.surf.rst/main.c:231
 msgid "Output aspect raster map"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:245
+#: ../vector/v.surf.rst/main.c:237
 msgid "Output profile curvature raster map"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:253
+#: ../vector/v.surf.rst/main.c:243
 msgid "Output tangential curvature raster map"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:261
+#: ../vector/v.surf.rst/main.c:249
 msgid "Output mean curvature raster map"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:269 ../vector/v.vol.rst/main.c:299
+#: ../vector/v.surf.rst/main.c:255 ../vector/v.vol.rst/main.c:299
 msgid "Name of the raster map used as mask"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:276 ../vector/v.vol.rst/main.c:257
+#: ../vector/v.surf.rst/main.c:262 ../vector/v.vol.rst/main.c:257
 msgid "Tension parameter"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:283 ../vector/v.vol.rst/main.c:265
+#: ../vector/v.surf.rst/main.c:269 ../vector/v.vol.rst/main.c:265
 msgid "Smoothing parameter"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:291
+#: ../vector/v.surf.rst/main.c:277
 msgid "Name of the attribute column with smoothing parameters"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:299 ../vector/v.vol.rst/main.c:306
+#: ../vector/v.surf.rst/main.c:285 ../vector/v.vol.rst/main.c:306
 msgid "Maximum number of points in a segment"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:308 ../vector/v.vol.rst/main.c:315
+#: ../vector/v.surf.rst/main.c:294 ../vector/v.vol.rst/main.c:315
 msgid "Minimum number of points for approximation in a segment (>segmax)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:317 ../vector/v.vol.rst/main.c:324
+#: ../vector/v.surf.rst/main.c:303 ../vector/v.vol.rst/main.c:324
 msgid "Minimum distance between points (to remove almost identical points)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:326
+#: ../vector/v.surf.rst/main.c:312
 msgid ""
 "Maximum distance between points on isoline (to insert additional points)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:335
+#: ../vector/v.surf.rst/main.c:321
 msgid "Conversion factor for values used for approximation"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:343 ../vector/v.vol.rst/main.c:283
+#: ../vector/v.surf.rst/main.c:329 ../vector/v.vol.rst/main.c:283
 msgid "Output deviations vector point file"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:344 ../vector/v.surf.rst/main.c:352
-#: ../vector/v.surf.rst/main.c:361 ../vector/v.surf.rst/main.c:370
+#: ../vector/v.surf.rst/main.c:330 ../vector/v.surf.rst/main.c:336
+#: ../vector/v.surf.rst/main.c:343 ../vector/v.surf.rst/main.c:350
 #: ../vector/v.vol.rst/main.c:284 ../vector/v.vol.rst/main.c:292
 msgid "Analysis"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:351
+#: ../vector/v.surf.rst/main.c:335
 msgid "Output cross-validation errors vector point file"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:360
+#: ../vector/v.surf.rst/main.c:342
 msgid "Output vector map showing quadtree segmentation"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:369
+#: ../vector/v.surf.rst/main.c:349
 msgid "Output vector map showing overlapping windows"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:377
+#: ../vector/v.surf.rst/main.c:357
 msgid "Anisotropy angle (in degrees counterclockwise from East)"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:420
+#: ../vector/v.surf.rst/main.c:400
 msgid "You are not outputing any raster or vector maps"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:433
+#: ../vector/v.surf.rst/main.c:413
 msgid ""
 "Both cross-validation options (-c flag and cvdev vector output) must be "
 "specified"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:436
+#: ../vector/v.surf.rst/main.c:416
 msgid ""
 "The cross-validation cannot be computed simultaneously with output raster or "
 "devi file"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:454
+#: ../vector/v.surf.rst/main.c:434
 msgid "Using anisotropy - both theta and scalex have to be specified"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:461
+#: ../vector/v.surf.rst/main.c:441
 msgid "Both smatt and smooth options specified - using constant"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:470
+#: ../vector/v.surf.rst/main.c:450
 msgid "The computation will last too long - lower npmin is suggested"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:517
+#: ../vector/v.surf.rst/main.c:497
 msgid "Cannot create quaddata"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:523
+#: ../vector/v.surf.rst/main.c:503
 msgid "Cannot create quadfunc"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:526
+#: ../vector/v.surf.rst/main.c:506
 msgid "Cannot create tree"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:530
+#: ../vector/v.surf.rst/main.c:510
 msgid "Cannot create tree info"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:533
-#, c-format
-msgid "Could not find vector map %s"
-msgstr ""
-
-#: ../vector/v.surf.rst/main.c:712
+#: ../vector/v.surf.rst/main.c:692
 #, c-format
 msgid ""
 "Processing all selected output files\n"
 "will require %d bytes of disk space for temp files"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:738
+#: ../vector/v.surf.rst/main.c:718
 msgid "Interp_segmets failed"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:755
+#: ../vector/v.surf.rst/main.c:735
 msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
@@ -23679,11 +23815,6 @@ msgstr ""
 msgid "Error in color definition column (%s), with cat %d"
 msgstr ""
 
-#: ../vector/v.to.rast/support.c:246 ../vector/v.to.rast/support.c:393
-#, c-format
-msgid "Unable to open raster <%s>"
-msgstr ""
-
 #: ../vector/v.to.rast/support.c:280
 msgid "Label column was not specified, no labels will be written"
 msgstr ""
@@ -23697,11 +23828,6 @@ msgstr ""
 #: ../vector/v.to.rast/support.c:320
 #, c-format
 msgid "Column type [%d] not supported"
-msgstr ""
-
-#: ../vector/v.to.rast/support.c:408
-#, c-format
-msgid "Unable to get row %d from <%s>"
 msgstr ""
 
 #: ../vector/v.to.rast/support.c:461 ../vector/v.to.rast/vect2rast.c:110
@@ -23820,94 +23946,92 @@ msgid "Reading coordinates from file."
 msgstr ""
 
 #: ../vector/v.transform/main.c:55
-msgid ""
-"Transforms a vector map layer from one coordinate system into another "
-"coordinate system."
+msgid "Transforms a vector map via a set of tie points."
 msgstr ""
 
-#: ../vector/v.transform/main.c:61
+#: ../vector/v.transform/main.c:60
 msgid "Suppress display of residuals or other information"
 msgstr ""
 
-#: ../vector/v.transform/main.c:65
+#: ../vector/v.transform/main.c:64
 msgid "Shift all z values to bottom=0"
 msgstr ""
 
-#: ../vector/v.transform/main.c:70
+#: ../vector/v.transform/main.c:69
 msgid ""
 "Instead of points use transformation options (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
 msgstr ""
 
-#: ../vector/v.transform/main.c:72 ../vector/v.transform/main.c:94
-#: ../vector/v.transform/main.c:103 ../vector/v.transform/main.c:112
-#: ../vector/v.transform/main.c:121 ../vector/v.transform/main.c:130
-#: ../vector/v.transform/main.c:139 ../vector/v.transform/main.c:148
+#: ../vector/v.transform/main.c:71 ../vector/v.transform/main.c:93
+#: ../vector/v.transform/main.c:102 ../vector/v.transform/main.c:111
+#: ../vector/v.transform/main.c:120 ../vector/v.transform/main.c:129
+#: ../vector/v.transform/main.c:138 ../vector/v.transform/main.c:147
 msgid "Custom"
 msgstr ""
 
-#: ../vector/v.transform/main.c:83
+#: ../vector/v.transform/main.c:82
 msgid ""
 "ASCII file holding transform coordinates (if not given transformation "
 "options [xshift, yshift, zshift, xscale, yscale, zscale, zrot] will be used "
 "instead)"
 msgstr ""
 
-#: ../vector/v.transform/main.c:92
+#: ../vector/v.transform/main.c:91
 msgid "Shifting value for x coordinates"
 msgstr ""
 
-#: ../vector/v.transform/main.c:101
+#: ../vector/v.transform/main.c:100
 msgid "Shifting value for y coordinates"
 msgstr ""
 
-#: ../vector/v.transform/main.c:119
+#: ../vector/v.transform/main.c:118
 msgid "Scaling factor for x coordinates"
 msgstr ""
 
-#: ../vector/v.transform/main.c:128
+#: ../vector/v.transform/main.c:127
 msgid "Scaling factor for y coordinates"
 msgstr ""
 
-#: ../vector/v.transform/main.c:137
+#: ../vector/v.transform/main.c:136
 msgid "Scaling factor for z coordinates"
 msgstr ""
 
-#: ../vector/v.transform/main.c:146
+#: ../vector/v.transform/main.c:145
 msgid "Rotation around z axis in degrees counterclockwise"
 msgstr ""
 
-#: ../vector/v.transform/main.c:160
+#: ../vector/v.transform/main.c:159
 msgid ""
 "The '-s' flag is deprecated and will be removed in future. Transformation "
 "options are used automatically when no pointsfile is given."
 msgstr ""
 
-#: ../vector/v.transform/main.c:173
+#: ../vector/v.transform/main.c:172
 #, c-format
 msgid "Could not open file with coordinates <%s>"
 msgstr ""
 
-#: ../vector/v.transform/main.c:212
+#: ../vector/v.transform/main.c:211
 msgid "Now transforming the vectors ..."
 msgstr ""
 
-#: ../vector/v.transform/main.c:231
+#: ../vector/v.transform/main.c:230
 #, c-format
 msgid "New vector map <%s> boundary coordinates:"
 msgstr ""
 
-#: ../vector/v.transform/main.c:232
+#: ../vector/v.transform/main.c:231
 #, c-format
 msgid " N: %-10.3f    S: %-10.3f"
 msgstr ""
 
-#: ../vector/v.transform/main.c:233
+#: ../vector/v.transform/main.c:232
 #, c-format
 msgid " E: %-10.3f    W: %-10.3f"
 msgstr ""
 
-#: ../vector/v.transform/main.c:234
+#: ../vector/v.transform/main.c:233
 #, c-format
 msgid " B: %6.3f    T: %6.3f"
 msgstr ""
@@ -24118,32 +24242,45 @@ msgstr ""
 msgid "Output tessellation as a graph (lines), not areas"
 msgstr ""
 
-#: ../vector/v.what/main.c:73
-msgid "Queries a vector map layer at given locations"
+#: ../vector/v.what/main.c:71
+msgid "vector, querying"
 msgstr ""
 
-#: ../vector/v.what/main.c:93
+#: ../vector/v.what/main.c:73
+msgid "Queries a vector map layer at given locations."
+msgstr ""
+
+#: ../vector/v.what/main.c:87
+msgid "If not given reads from standard input"
+msgstr ""
+
+#: ../vector/v.what/main.c:94
 msgid "Query threshold distance"
 msgstr ""
 
-#: ../vector/v.what/main.c:101
+#: ../vector/v.what/main.c:102
 msgid "Print attribute information"
 msgstr ""
 
-#: ../vector/v.what/main.c:105
+#: ../vector/v.what/main.c:106
 msgid "Read coordinates from standard input"
 msgstr ""
 
-#: ../vector/v.what/main.c:188
+#: ../vector/v.what/main.c:173
+#, c-format
+msgid "You must build topology on vector map <%s>"
+msgstr ""
+
+#: ../vector/v.what/main.c:181
+msgid "The '-s' flag is deprecated and will be removed in future"
+msgstr ""
+
+#: ../vector/v.what/main.c:192
 #, c-format
 msgid "Unknown input format, skipping: %s"
 msgstr ""
 
-#: ../vector/v.what/main.c:196
-msgid "No input coordinates provided"
-msgstr ""
-
-#: ../vector/v.what/what.c:121
+#: ../vector/v.what/what.c:133
 #, c-format
 msgid ""
 "Line: %d  \n"
@@ -24152,7 +24289,7 @@ msgid ""
 "Right: %d  \n"
 msgstr ""
 
-#: ../vector/v.what/what.c:141
+#: ../vector/v.what/what.c:154
 #, c-format
 msgid ""
 "Node[%d]: %d  \n"
@@ -24160,68 +24297,83 @@ msgid ""
 "Coordinates: %.6f, %.6f, %.6f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:147
+#: ../vector/v.what/what.c:161
 #, c-format
 msgid ""
 "Line: %5d  \n"
 "Angle: %.8f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:182
+#: ../vector/v.what/what.c:168
+#, c-format
+msgid "Type: %s"
+msgstr ""
+
+#: ../vector/v.what/what.c:197
 #, c-format
 msgid ""
 "Line height min: %f \n"
 "Line height max: %f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:192
+#: ../vector/v.what/what.c:208
 #, c-format
 msgid ""
 "Object type: Area \n"
 "Area height: %f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:196
+#: ../vector/v.what/what.c:212
 #, c-format
 msgid "Object type: Area\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:204
+#: ../vector/v.what/what.c:220
 #, c-format
 msgid ""
 "Area: %d  \n"
 "Number of isles: %d\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:209
+#: ../vector/v.what/what.c:225
 #, c-format
 msgid "Isle[%d]: %d\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:217
+#: ../vector/v.what/what.c:233
 #, c-format
 msgid "Island: %d In area: %d\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:222 ../vector/v.what/what.c:230
+#: ../vector/v.what/what.c:238 ../vector/v.what/what.c:246
 #, c-format
 msgid ""
 "Sq Meters: %.3f \n"
 "Hectares: %.3f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:224 ../vector/v.what/what.c:233
+#: ../vector/v.what/what.c:240 ../vector/v.what/what.c:249
 #, c-format
 msgid ""
 "Acres: %.3f \n"
 "Sq Miles: %.4f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:252
+#: ../vector/v.what/what.c:268
 #, c-format
 msgid ""
 "Layer: %d\n"
 "Category: %d \n"
+msgstr ""
+
+#: ../vector/v.what/what.c:273
+#, c-format
+msgid ""
+"\n"
+"Driver: %s\n"
+"Database: %s\n"
+"Table: %s\n"
+"Key column: %s\n"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:78
