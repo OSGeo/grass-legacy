@@ -34,7 +34,7 @@ void write_cats(void)
     /*                     WRITE OUT CATEGORIES STRUCTURE                     */
     /*------------------------------------------------------------------------*/ 
     if (G_write_cats(rast_out_name,&cats) <=0)
-	G_warning(_("can't write category file for <%s>"), rast_out_name);
+	G_warning(_("Cannot write category file for raster map <%s>"), rast_out_name);
 
     G_free_cats(&cats);
 
