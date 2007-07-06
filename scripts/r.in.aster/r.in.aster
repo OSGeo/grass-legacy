@@ -13,6 +13,9 @@
 #
 #############################################################################
 
+# Requires:
+#   gdalwarp
+
 #%Module
 #%  description: Georeference, rectificate and import Terra-ASTER imagery and relative DEM's using gdalwarp.
 #%  keywords: raster, imagery, import
@@ -144,7 +147,8 @@ tempfile=`g.tempfile $$`.tif
 #run gdalwarp with selected options (must be in $PATH)
 #to translate aster image to geotiff
 g.message "Georeferencing aster image ..."
-g.message -d "gdalwarp -t_srs \"`g.proj -jf`\" $srcfile $tempfile"
+proj=`g.proj -jf`
+g.message -d message="gdalwarp -t srs $proj $srcfile $tempfile"
 
 gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
 
