@@ -63,7 +63,7 @@ main (int argc, char **argv)
 	module->keywords = _("raster");
     module->description =
 		_("Generates red, green and blue raster map layers "
-		"combining hue, intensity, and saturation (his) "
+		"combining hue, intensity and saturation (HIS) "
 		"values from user-specified input raster map layers.");
 
 	opt_h = G_define_option() ;
@@ -123,11 +123,11 @@ main (int argc, char **argv)
 
 	mapset = G_find_cell2(name_h, "");
 	if (mapset == NULL)
-		G_fatal_error(_("Unable to find raster map [%s]"), opt_h->answer);
+		G_fatal_error(_("Raster map <%s> not found"), opt_h->answer);
 
 	/* Make sure map is available */
 	if ((hue_file = G_open_cell_old(name_h, mapset)) == -1)
-		G_fatal_error(_("Unable to open raster map [%s]"), name_h);
+		G_fatal_error(_("Unable to open raster map <%s>"), name_h);
 
 	hue_r = G_malloc(window.cols);
 	hue_g = G_malloc(window.cols);
@@ -153,7 +153,7 @@ main (int argc, char **argv)
 			int_used = 1 ;
 			/* Make sure map is available */
 			if ((int_file = G_open_cell_old(name_i, mapset)) == -1)
-				G_fatal_error(_("Unable to open raster map [%s]"), name_i);
+				G_fatal_error(_("Unable to open raster map <%s>"), name_i);
 
 			int_r = G_malloc(window.cols);
 			int_n = G_malloc(window.cols);
@@ -164,7 +164,7 @@ main (int argc, char **argv)
 					      name_i) ;
 		}
 		else
-			G_fatal_error(_("Unable to find raster map [%s]"), name_i);
+			G_fatal_error(_("Raster map <%s> not found"), name_i);
 
 	}
 
@@ -181,7 +181,7 @@ main (int argc, char **argv)
 
 			/* Make sure map is available */
 			if ((sat_file = G_open_cell_old(name_s, mapset)) == -1)
-				G_fatal_error(_("Unable to open raster map [%s]"), name_s);
+				G_fatal_error(_("Unable to open raster map <%s>"), name_s);
 
 			sat_r = G_malloc(window.cols);
 			sat_n = G_malloc(window.cols);
@@ -192,7 +192,7 @@ main (int argc, char **argv)
 					      name_s) ;
 		}
 		else
-			G_fatal_error(_("Unable to find raster map [%s]"), name_s);
+			G_fatal_error(_("Raster map <%s> not found"), name_s);
 
 	}
 
