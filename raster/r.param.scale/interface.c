@@ -44,7 +44,7 @@ void interface(int argc, char **argv)
     module->keywords = _("raster, geomorphology");
     module->label = _("Extracts terrain parameters from a DEM.");
     module->description = _("Uses a multi-scale approach"
-			    " by taking fitting quadratic parameters to any size window (via least squares)");
+			    " by taking fitting quadratic parameters to any size window (via least squares).");
 
     rast_in   = G_define_standard_option(G_OPT_R_INPUT);
     rast_out  = G_define_standard_option(G_OPT_R_OUTPUT);
