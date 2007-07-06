@@ -4,7 +4,6 @@
 #include <grass/glocale.h>
 #include "global.h"
 
-
 void
 getcells(void)
 {
@@ -62,7 +61,7 @@ getcells(void)
 		}else
 		if(G_get_d_raster_row(fd,cell[i],i) < 0){
 			G_close_cell(fd);
-			G_fatal_error(_("Unable to read raster map <%s> row %d"),iname i, );
+			G_fatal_error(_("Unable to read raster map <%s> row %d"), iname, i);
 		}
 	}
 	if(data_type == CELL_TYPE)
