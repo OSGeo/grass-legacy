@@ -1,23 +1,52 @@
+"""
+MODULE:    location_wizard.py
+
+CLASSES:
+    * TitledPage
+    * DatabasePage
+    * CoordinateSystemPage
+    * ProjectionsPage
+    * ProjTypePage
+    * DatumPage
+    * EllipsePage
+    * GeoreferencedFilePage
+    * EPSGPage
+    * CustomPage
+    * SummaryPage
+    * BBoxPage
+    * GWizard
+
+PURPOSE:   Create a new GRASS location. User can choose from multiple methods
+
+AUTHORS:   The GRASS Development Team
+           Michael Barton
+           Jachym Cepicky
+
+COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
+"""
+import gui_modules
+import gui_modules.cmd as cmd
+import os
+import re
+import string
+import sys
 import wx
-import wx.wizard as wiz
-import wx.lib.rcsizer  as rcs
 import wx.lib.mixins.listctrl  as  listmix
+import wx.lib.rcsizer  as rcs
+import wx.wizard as wiz
 
 try:
     import subprocess
 except:
     from compat import subprocess
 
-import os
-import sys
-import string
-import re
 
-import gui_modules
 gmpath = gui_modules.__path__[0]
 sys.path.append(gmpath)
 
-import gui_modules.cmd as cmd
 
 global coordsys
 global north
@@ -37,6 +66,10 @@ resolution = ''
 proj4string = ''
 
 class TitledPage(wiz.WizardPageSimple):
+    """
+    Class to make wizard pages. Generic methods to make
+    labels, text entries, and buttons.
+    """
     def __init__(self, parent, title):
         wiz.WizardPageSimple.__init__(self, parent)
 
@@ -54,6 +87,7 @@ class TitledPage(wiz.WizardPageSimple):
         self.SetAutoLayout(True)
 
     def MakeRLabel(self, text=""):
+        """Make right-aligned label"""
         try:
             if text[-1] != " ":
                 text += " "
@@ -62,6 +96,7 @@ class TitledPage(wiz.WizardPageSimple):
         return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
 
     def MakeLLabel(self, text=""):
+        """Make left-aligned label"""
         try:
             if text[-1] != " ":
                 text += " "
@@ -70,15 +105,20 @@ class TitledPage(wiz.WizardPageSimple):
         return wx.StaticText(self, -1, text, style=wx.ALIGN_LEFT)
 
     def MakeTextCtrl(self,text='', size=(100,-1)):
+        """Generic text control"""
         return wx.TextCtrl(self,-1, text, size=size)
 
     def MakeButton(self,text, size=(75,25)):
+        """Generic button"""
         return wx.Button(self, -1, text,
                 style=wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL,
                 size=size)
 
 
 class DatabasePage(TitledPage):
+    """
+    Wizard page for setting GIS data directory and location name
+    """
     def __init__(self, wizard, parent, grassdatabase):
         TitledPage.__init__(self, wizard, "Define GRASS database and new Location Name")
 
@@ -163,8 +203,11 @@ class DatabasePage(TitledPage):
 
 
 class CoordinateSystemPage(TitledPage):
+    """
+    Wizard page for choosing method for location creation
+    """
     def __init__(self, wizard, parent):
-        TitledPage.__init__(self, wizard, "Choose coordinate system for location")
+        TitledPage.__init__(self, wizard, "Choose method for creating a new location")
 
         self.parent = parent
         global coordsys
@@ -228,6 +271,9 @@ class CoordinateSystemPage(TitledPage):
 
 
 class ProjectionsPage(TitledPage):
+    """
+    Wizard page for selecting projection (select coordinate system option)
+    """
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose projection")
 
@@ -346,6 +392,11 @@ class ProjectionsPage(TitledPage):
             dlg.Destroy()
 
 class ProjTypePage(TitledPage):
+    """
+    Wizard page for selecting method of setting coordinate system parameters
+    (select coordinate system option)
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose method of specifying georeferencing parameters")
         global coordsys
@@ -401,6 +452,11 @@ class ProjTypePage(TitledPage):
 
 
 class DatumPage(TitledPage):
+    """
+    Wizard page for selecting datum (with associated ellipsoid)
+    and datum transformation parameters (select coordinate system option)
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Specify geodetic datum")
 
@@ -627,6 +683,10 @@ class DatumPage(TitledPage):
 
 
 class EllipsePage(TitledPage):
+    """
+    Wizard page for selecting ellipsoid (select coordinate system option)
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Specify ellipsoid")
 
@@ -751,6 +811,11 @@ class EllipsePage(TitledPage):
 
 
 class GeoreferencedFilePage(TitledPage):
+    """
+    Wizard page for selecting georeferenced file to use
+    for setting coordinate system parameters
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Select georeferenced file")
 
@@ -798,6 +863,11 @@ class GeoreferencedFilePage(TitledPage):
 
 
 class EPSGPage(TitledPage):
+    """
+    Wizard page for selecting EPSG code for
+    setting coordinate system parameters
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose EPSG Code")
         self.parent = parent
@@ -961,6 +1031,11 @@ class EPSGPage(TitledPage):
 
 
 class CustomPage(TitledPage):
+    """
+    Wizard page for entering custom PROJ.4 string
+    for setting coordinate system parameters
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose method of specifying georeferencing parameters")
         global coordsys
@@ -990,6 +1065,10 @@ class CustomPage(TitledPage):
 
 
 class SummaryPage(TitledPage):
+    """
+    Shows summary result of choosing coordinate system parameters
+    prior to creating location
+    """
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Summary")
 
@@ -1112,6 +1191,10 @@ class SummaryPage(TitledPage):
 
 
 class BBoxPage(TitledPage):
+    """
+    Wizard page for setting default region extents and resolution
+    """
+
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Set default region extents and resolution")
 
@@ -1487,6 +1570,10 @@ class BBoxPage(TitledPage):
 
 
 class GWizard:
+    """
+    Start wizard here and finish wizard here
+    """
+
     def __init__(self, parent, grassdatabase):
         wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","images","wizard.png"), wx.BITMAP_TYPE_PNG)
         wizbmp.Rescale(250,600)
