@@ -29,7 +29,7 @@ int update_hist (char *raster_name, char *vector_name,
 
     /* store information from digit file into history */
     sprintf(hist.datsrc_1, "Vector Map: %s in mapset %s", vector_name, vector_mapset);
-    sprintf(hist.datsrc_2, "Original Scale from Vector Map: 1:%ld", scale) ;  /* 4.0 */
+    sprintf(hist.datsrc_2, "Original scale from vector map: 1:%ld", scale) ;  /* 4.0 */
 
     /* store command line options */
     G_command_history(&hist);
@@ -243,7 +243,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
     G_init_cats ((CELL)0, "Categories", &rast_cats);
 
     if (!(fd = G_open_cell_old (rast_name, G_mapset ())))
-        G_fatal_error (_("Unable to open raster <%s>"), rast_name);
+        G_fatal_error (_("Unable to open raster map <%s>"), rast_name);
 
     switch (use)
     {
@@ -390,7 +390,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
         mapset = G_mapset ();
 
         if (!(fd = G_open_cell_old (rast_name, mapset)))
-            G_fatal_error (_("Unable to open raster <%s>"), rast_name);
+            G_fatal_error (_("Unable to open raster map <%s>"), rast_name);
 
         map_type = G_raster_map_type (rast_name, mapset);
 
@@ -405,7 +405,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
         for (row = 0; row < rows; row++)
         {
             if (G_get_raster_row (fd, rowbuf, row, map_type) < 0)
-                G_fatal_error (_("Unable to get row %d from <%s>"), row, rast_name);
+                G_fatal_error (_("Unable to read raster map <%s> row %d"), rast_name, row);
 
             G_update_cell_stats (rowbuf, G_window_cols (), &stats);
         }

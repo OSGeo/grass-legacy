@@ -13,7 +13,7 @@ open_cell_old (char *name, char *mapset)
     if (fd >= 0)
 	return fd;
     
-    G_fatal_error(_("Unable to open raster map [%s]."), name);
+    G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     /* should not get here */
     return -1;
@@ -28,7 +28,7 @@ open_cell_new (char *name)
     if (fd >= 0)
 	return fd;
 
-    G_fatal_error(_("Unable to create raster map [%s]."), name);
+    G_fatal_error(_("Unable to create raster map <%s>"), name);
 
     /* should not get here */
     return -1;
