@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
     opt2->multiple   = NO;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name of the output raster map") ;
+    opt2->description= _("Name for the output raster map") ;
 
     opt3 = G_define_option() ;
     opt3->key        = "filter";
@@ -130,7 +130,7 @@ int main (int argc, char *argv[])
 
     in_mapset = G_find_cell2 (in_name,"");
     if (in_mapset == NULL)
-        G_fatal_error (_("%s: raster map not found"), in_name);
+        G_fatal_error (_("Raster map <%s> not found"), in_name);
 
     nrows = G_window_rows();
     ncols = G_window_cols();
