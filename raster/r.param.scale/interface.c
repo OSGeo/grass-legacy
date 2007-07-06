@@ -7,11 +7,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-
-#include "param.h"
 #include <grass/gis.h>
 #include <grass/glocale.h>
-
+#include "param.h"
 
 void interface(int argc, char **argv) 
 {
@@ -43,10 +41,10 @@ void interface(int argc, char **argv)
     /*--------------------------------------------------------------------------*/
 
     module = G_define_module();
-    module->keywords = _("raster");
-    module->description =
-      _("Extracts terrain parameters from a DEM. Uses a multi-scale approach"
-      " by taking fitting quadratic parameters to any size window (via least squares)");
+    module->keywords = _("raster, geomorphology");
+    module->label = _("Extracts terrain parameters from a DEM.");
+    module->description = _("Uses a multi-scale approach"
+			    " by taking fitting quadratic parameters to any size window (via least squares)");
 
     rast_in   = G_define_standard_option(G_OPT_R_INPUT);
     rast_out  = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -78,7 +76,7 @@ void interface(int argc, char **argv)
 
     sprintf(buf, _("Size of processing window (odd number only, max: %i)"), MAX_WSIZE);
     win_size->key	  = "size";
-    win_size->description = buf;
+    win_size->description = G_store(buf);
     win_size->type	  = TYPE_INTEGER;
     win_size->required	  = NO;
     win_size->answer	  = "3";
@@ -164,7 +162,7 @@ void interface(int argc, char **argv)
     /*                      CHECK INPUT RASTER FILE EXISTS			*/
     /*--------------------------------------------------------------------------*/
     if ( (mapset_in=G_find_cell2(rast_in_name,"")) == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), rast_in_name);
+	G_fatal_error(_("Raster map <%s> not found"), rast_in_name);
 
     /*--------------------------------------------------------------------------*/
     /*                  CHECK OUTPUT RASTER FILE DOES NOT EXIST			*/
@@ -181,5 +179,4 @@ void interface(int argc, char **argv)
 
     if ( (wsize/2 != (wsize-1)/2) || (wsize > MAX_WSIZE) )
 	G_fatal_error(_("Inappropriate window size (too big or even)"));
-
 }
