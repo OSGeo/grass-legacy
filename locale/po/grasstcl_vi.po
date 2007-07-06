@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_vi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-16 00:05+0200\n"
+"POT-Creation-Date: 2007-07-06 18:06+0200\n"
 "PO-Revision-Date: 2006-09-20 12:01+0200\n"
 "Last-Translator: Bui Huu Manh <bhmanh73@yahoo.com>\n"
 "Language-Team: vietnamese <translations@grass.itc.it>\n"
@@ -59,6 +59,7 @@ msgstr " "
 #: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
 #: ../gui/tcltk/gis.m/rastnums.tcl:156 ../gui/tcltk/gis.m/rastnums.tcl:159
 #: ../gui/tcltk/gis.m/rgbhis.tcl:153 ../gui/tcltk/gis.m/rgbhis.tcl:162
+#: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:239
 #: ../gui/tcltk/gis.m/thematic.tcl:243 ../gui/tcltk/gis.m/vector.tcl:312
 #: ../gui/tcltk/gis.m/vector.tcl:316 ../lib/gis/gui.tcl:489
@@ -327,7 +328,7 @@ msgstr "vẽ gradient trơn"
 msgid "flip legend"
 msgstr "lật chú giải"
 
-#: ../gui/tcltk/d.m/menu.tcl:75 ../gui/tcltk/gis.m/gmmenu.tcl:84
+#: ../gui/tcltk/d.m/menu.tcl:75 ../gui/tcltk/gis.m/gmmenu.tcl:86
 msgid "&File"
 msgstr "&Tập tin"
 
@@ -341,7 +342,7 @@ msgid "Raster map"
 msgstr "Bản đồ raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:78 ../gui/tcltk/d.m/menu.tcl:114
-#: ../gui/tcltk/gis.m/gmmenu.tcl:93 ../gui/tcltk/gis.m/gmmenu.tcl:128
+#: ../gui/tcltk/gis.m/gmmenu.tcl:95 ../gui/tcltk/gis.m/gmmenu.tcl:130
 msgid "Multiple formats using GDAL"
 msgstr "Nhiều loại định dạng bằng cách dùng GDAL"
 
@@ -385,7 +386,7 @@ msgstr "các tập tin hgt SRTM"
 msgid "Terra ASTER HDF files"
 msgstr "Các tập tin ASTER HDF Terra"
 
-#: ../gui/tcltk/d.m/menu.tcl:92 ../gui/tcltk/gis.m/gmmenu.tcl:107
+#: ../gui/tcltk/d.m/menu.tcl:92 ../gui/tcltk/gis.m/gmmenu.tcl:109
 msgid "Web Mapping Server"
 msgstr ""
 
@@ -515,7 +516,7 @@ msgstr "Tập tin điểm hoặc vector ASCII/tập tin vector ASCII cũ của G
 msgid "POV-Ray format"
 msgstr "định dạng POV-Ray"
 
-#: ../gui/tcltk/d.m/menu.tcl:149 ../gui/tcltk/gis.m/gmmenu.tcl:163
+#: ../gui/tcltk/d.m/menu.tcl:149 ../gui/tcltk/gis.m/gmmenu.tcl:165
 msgid "Manage maps and volumes"
 msgstr "Quản lý các bản đồ và các thể tích"
 
@@ -543,7 +544,7 @@ msgstr "Loại bỏ các bản đồ"
 msgid "Remove maps using expressions and 'wildcards'"
 msgstr "Loại bỏ các bản đồ bằng cách dùng biểu thức và ký tự đại diện"
 
-#: ../gui/tcltk/d.m/menu.tcl:157 ../gui/tcltk/gis.m/gmmenu.tcl:174
+#: ../gui/tcltk/d.m/menu.tcl:157 ../gui/tcltk/gis.m/gmmenu.tcl:176
 msgid "Map type conversions"
 msgstr "Đổi kiểu bản đồ"
 
@@ -560,7 +561,7 @@ msgstr "Chuỗi bản đồ raster thành thể tích"
 msgid "Raster 2.5D map to volume"
 msgstr "Chuỗi bản đồ raster thành thể tích"
 
-#: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:179
+#: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:181
 msgid "Vector to raster"
 msgstr "Vector thành raster"
 
@@ -596,7 +597,7 @@ msgstr "Mới"
 msgid "Create new group file"
 msgstr "Tạo nhóm mới"
 
-#: ../gui/tcltk/d.m/menu.tcl:171 ../gui/tcltk/gis.m/gmmenu.tcl:86
+#: ../gui/tcltk/d.m/menu.tcl:171 ../gui/tcltk/gis.m/gmmenu.tcl:88
 msgid "Open..."
 msgstr "Mở..."
 
@@ -604,7 +605,7 @@ msgstr "Mở..."
 msgid "Open group file"
 msgstr "Mở tập tin nhóm"
 
-#: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:87
+#: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:89
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:843
 #: ../gui/tcltk/gis.m/runandoutput.tcl:112
 msgid "Save"
@@ -614,7 +615,7 @@ msgstr "Lưu"
 msgid "Save group file"
 msgstr "Lưu tập tin nhóm"
 
-#: ../gui/tcltk/d.m/menu.tcl:173 ../gui/tcltk/gis.m/gmmenu.tcl:88
+#: ../gui/tcltk/d.m/menu.tcl:173 ../gui/tcltk/gis.m/gmmenu.tcl:90
 msgid "Save as..."
 msgstr "Lưu thành..."
 
@@ -623,7 +624,7 @@ msgid "Save group file as name"
 msgstr "Lưu tập tin nhóm thành tên"
 
 #: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
-#: ../gui/tcltk/gis.m/gmmenu.tcl:89 ../gui/tcltk/gis.m/mapprint.tcl:357
+#: ../gui/tcltk/gis.m/gmmenu.tcl:91 ../gui/tcltk/gis.m/mapprint.tcl:357
 #: ../gui/tcltk/gis.m/runandoutput.tcl:48 ../lib/gis/gui.tcl:491
 #: ../lib/init/epsg_option.tcl:450 ../lib/init/epsg_option.tcl:494
 msgid "Close"
@@ -658,7 +659,7 @@ msgstr "In ra máy in mặc định"
 msgid "print"
 msgstr "in"
 
-#: ../gui/tcltk/d.m/menu.tcl:184 ../gui/tcltk/gis.m/gmmenu.tcl:192
+#: ../gui/tcltk/d.m/menu.tcl:184 ../gui/tcltk/gis.m/gmmenu.tcl:194
 msgid "E&xit"
 msgstr "T&hoát"
 
@@ -666,19 +667,19 @@ msgstr "T&hoát"
 msgid "Exit Display Manager"
 msgstr "Thoát Trình Quản lý Hiển thị"
 
-#: ../gui/tcltk/d.m/menu.tcl:186 ../gui/tcltk/gis.m/gmmenu.tcl:194
+#: ../gui/tcltk/d.m/menu.tcl:186 ../gui/tcltk/gis.m/gmmenu.tcl:196
 msgid "&Config"
 msgstr "&Cấu hình"
 
-#: ../gui/tcltk/d.m/menu.tcl:187 ../gui/tcltk/gis.m/gmmenu.tcl:195
+#: ../gui/tcltk/d.m/menu.tcl:187 ../gui/tcltk/gis.m/gmmenu.tcl:197
 msgid "Region"
 msgstr "Vùng"
 
-#: ../gui/tcltk/d.m/menu.tcl:188 ../gui/tcltk/gis.m/gmmenu.tcl:196
+#: ../gui/tcltk/d.m/menu.tcl:188 ../gui/tcltk/gis.m/gmmenu.tcl:198
 msgid "Display region settings"
 msgstr "Trình bày các thiết lập vùng"
 
-#: ../gui/tcltk/d.m/menu.tcl:189 ../gui/tcltk/gis.m/gmmenu.tcl:197
+#: ../gui/tcltk/d.m/menu.tcl:189 ../gui/tcltk/gis.m/gmmenu.tcl:199
 #, fuzzy
 msgid "Change region settings"
 msgstr "Trình bày các thiết lập vùng"
@@ -687,7 +688,7 @@ msgstr "Trình bày các thiết lập vùng"
 msgid "Zoom to maximum extent of all displayed maps"
 msgstr "Phóng đến phạm vi tối đa của tất cả các bản đồ được trình bày"
 
-#: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:199
+#: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:201
 msgid "GRASS working environment"
 msgstr "Môi trường làm việc của GRASS"
 
@@ -712,12 +713,12 @@ msgstr "Hiển thị các thiết lập biến môi trường hiện tại của
 msgid "Set GRASS environment settings"
 msgstr "Thiết lập các biến môi trường của GRASS"
 
-#: ../gui/tcltk/d.m/menu.tcl:198 ../gui/tcltk/gis.m/gmmenu.tcl:205
+#: ../gui/tcltk/d.m/menu.tcl:198 ../gui/tcltk/gis.m/gmmenu.tcl:207
 msgid "Show current GRASS version"
 msgstr "Hiển thị phiên bản GRASS hiện tại"
 
-#: ../gui/tcltk/d.m/menu.tcl:200 ../gui/tcltk/gis.m/gmmenu.tcl:207
-#: ../gui/tcltk/gis.m/gmmenu.tcl:208
+#: ../gui/tcltk/d.m/menu.tcl:200 ../gui/tcltk/gis.m/gmmenu.tcl:209
+#: ../gui/tcltk/gis.m/gmmenu.tcl:210
 msgid "Manage projections"
 msgstr "Quản lý các phép chiếu"
 
@@ -769,16 +770,16 @@ msgstr "Thiết lập màn hình x kích hoạt về kích thước chỉ địn
 msgid "Display information about active xmonitor"
 msgstr "Trình bày thông tin về màn hình x kích hoạt"
 
-#: ../gui/tcltk/d.m/menu.tcl:218 ../gui/tcltk/gis.m/gmmenu.tcl:215
+#: ../gui/tcltk/d.m/menu.tcl:218 ../gui/tcltk/gis.m/gmmenu.tcl:217
 msgid "&Raster"
 msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:219 ../gui/tcltk/d.m/menu.tcl:376
-#: ../gui/tcltk/gis.m/gmmenu.tcl:216 ../gui/tcltk/gis.m/gmmenu.tcl:410
+#: ../gui/tcltk/gis.m/gmmenu.tcl:218 ../gui/tcltk/gis.m/gmmenu.tcl:412
 msgid "Develop map"
 msgstr "Phát triển bản đồ"
 
-#: ../gui/tcltk/d.m/menu.tcl:220 ../gui/tcltk/gis.m/gmmenu.tcl:217
+#: ../gui/tcltk/d.m/menu.tcl:220 ../gui/tcltk/gis.m/gmmenu.tcl:219
 msgid "Digitize raster"
 msgstr "Số hóa raster"
 
@@ -818,7 +819,7 @@ msgstr "Thu mẫu lại (đổi độ phân giải), dùng phương pháp lân c
 msgid "Resample using various interpolation methods"
 msgstr "Thu mẫu lại (đổi độ phân giải), dùng phương pháp lân cận gần nhất"
 
-#: ../gui/tcltk/d.m/menu.tcl:231 ../gui/tcltk/gis.m/gmmenu.tcl:230
+#: ../gui/tcltk/d.m/menu.tcl:231 ../gui/tcltk/gis.m/gmmenu.tcl:232
 #, fuzzy
 msgid "Resample using aggregate statistics"
 msgstr "Thông kê một biến"
@@ -841,7 +842,7 @@ msgstr "Quy chiếu lại raster từ location khác"
 msgid "Generate tiling for other projection"
 msgstr "Tạo chồng xếp (tiling) cho phép chiếu khác"
 
-#: ../gui/tcltk/d.m/menu.tcl:240 ../gui/tcltk/gis.m/gmmenu.tcl:241
+#: ../gui/tcltk/d.m/menu.tcl:240 ../gui/tcltk/gis.m/gmmenu.tcl:243
 msgid "Manage map colors"
 msgstr "Quản lý các màu của bản đồ"
 
@@ -870,7 +871,7 @@ msgstr ""
 "hoà"
 
 #: ../gui/tcltk/d.m/menu.tcl:249 ../gui/tcltk/d.m/menu.tcl:403
-#: ../gui/tcltk/gis.m/gmmenu.tcl:250 ../gui/tcltk/gis.m/gmmenu.tcl:436
+#: ../gui/tcltk/gis.m/gmmenu.tcl:252
 msgid "Query by coordinate(s)"
 msgstr "Truy vấn theo tọa độ"
 
@@ -886,12 +887,12 @@ msgstr "Tạo MẶT NẠ raster"
 msgid "Locate closest points between areas in 2 raster maps"
 msgstr "Định vị điểm gần nhất giữa các vùng trong 2 bản đồ raster"
 
-#: ../gui/tcltk/d.m/menu.tcl:254 ../gui/tcltk/gis.m/gmmenu.tcl:255
+#: ../gui/tcltk/d.m/menu.tcl:254 ../gui/tcltk/gis.m/gmmenu.tcl:257
 msgid "Map calculator"
 msgstr "Tính toán bản đồ"
 
 #: ../gui/tcltk/d.m/menu.tcl:255 ../gui/tcltk/d.m/menu.tcl:413
-#: ../gui/tcltk/gis.m/gmmenu.tcl:256
+#: ../gui/tcltk/gis.m/gmmenu.tcl:258
 msgid "Neighborhood analysis"
 msgstr "Phân tích lân cận"
 
@@ -904,11 +905,11 @@ msgid "Analyze vector points in neighborhood of raster cells"
 msgstr "Phân tích các điểm vector lân cận với các cell raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:259 ../gui/tcltk/d.m/menu.tcl:427
-#: ../gui/tcltk/gis.m/gmmenu.tcl:260 ../gui/tcltk/gis.m/gmmenu.tcl:465
+#: ../gui/tcltk/gis.m/gmmenu.tcl:262 ../gui/tcltk/gis.m/gmmenu.tcl:469
 msgid "Overlay maps"
 msgstr "Chồng các bản đồ"
 
-#: ../gui/tcltk/d.m/menu.tcl:260 ../gui/tcltk/gis.m/gmmenu.tcl:261
+#: ../gui/tcltk/d.m/menu.tcl:260 ../gui/tcltk/gis.m/gmmenu.tcl:263
 msgid "Cross product"
 msgstr "Sản phẩm giao nhau"
 
@@ -916,7 +917,7 @@ msgstr "Sản phẩm giao nhau"
 msgid "Function of map series (time series)"
 msgstr "Chức năng của chuỗi bản đồ (chuỗi thời gian)"
 
-#: ../gui/tcltk/d.m/menu.tcl:262 ../gui/tcltk/gis.m/gmmenu.tcl:263
+#: ../gui/tcltk/d.m/menu.tcl:262 ../gui/tcltk/gis.m/gmmenu.tcl:265
 msgid "Patch maps"
 msgstr "'Vá' bản đồ"
 
@@ -924,7 +925,7 @@ msgstr "'Vá' bản đồ"
 msgid "Statistical calculations for cover map over base map"
 msgstr "Tính toán thống kê cho bản đồ lớp phủ trên bản đồ nền"
 
-#: ../gui/tcltk/d.m/menu.tcl:266 ../gui/tcltk/gis.m/gmmenu.tcl:267
+#: ../gui/tcltk/d.m/menu.tcl:266 ../gui/tcltk/gis.m/gmmenu.tcl:269
 msgid "Solar radiance and shadows"
 msgstr "Bức xạ mặt trời và bóng đổ"
 
@@ -936,7 +937,7 @@ msgstr "Bức xạ mặt trời và chiếu sáng hàng ngày"
 msgid "Shadows map for sun position or date/time"
 msgstr "Bản đồ đổ bóng theo vị trí mặt trời hoặc ngày/giờ"
 
-#: ../gui/tcltk/d.m/menu.tcl:270 ../gui/tcltk/gis.m/gmmenu.tcl:271
+#: ../gui/tcltk/d.m/menu.tcl:270 ../gui/tcltk/gis.m/gmmenu.tcl:273
 msgid "Terrain analysis"
 msgstr "Phân tích địa hình"
 
@@ -944,11 +945,11 @@ msgstr "Phân tích địa hình"
 msgid "Calculate cumulative movement costs between locales"
 msgstr "Tính toán các chi phí di chuyển tích lũy giữa các địa bàn"
 
-#: ../gui/tcltk/d.m/menu.tcl:272 ../gui/tcltk/gis.m/gmmenu.tcl:273
+#: ../gui/tcltk/d.m/menu.tcl:272 ../gui/tcltk/gis.m/gmmenu.tcl:275
 msgid "Cost surface"
 msgstr "Bề mặt chi phí"
 
-#: ../gui/tcltk/d.m/menu.tcl:273 ../gui/tcltk/gis.m/gmmenu.tcl:274
+#: ../gui/tcltk/d.m/menu.tcl:273 ../gui/tcltk/gis.m/gmmenu.tcl:276
 msgid "Least cost route or flow"
 msgstr "Lộ trình hoặc dòng chảy chi phí nhỏ nhất"
 
@@ -960,15 +961,15 @@ msgstr "Phân tích mặt cắt"
 msgid "Shaded relief map"
 msgstr "Bản đồ nổi đổ bóng"
 
-#: ../gui/tcltk/d.m/menu.tcl:276 ../gui/tcltk/gis.m/gmmenu.tcl:278
+#: ../gui/tcltk/d.m/menu.tcl:276 ../gui/tcltk/gis.m/gmmenu.tcl:280
 msgid "Slope and aspect"
 msgstr "Độ dốc và hướng"
 
-#: ../gui/tcltk/d.m/menu.tcl:277 ../gui/tcltk/gis.m/gmmenu.tcl:279
+#: ../gui/tcltk/d.m/menu.tcl:277 ../gui/tcltk/gis.m/gmmenu.tcl:281
 msgid "Terrain parameters"
 msgstr "Các tham số địa hình"
 
-#: ../gui/tcltk/d.m/menu.tcl:278 ../gui/tcltk/gis.m/gmmenu.tcl:280
+#: ../gui/tcltk/d.m/menu.tcl:278 ../gui/tcltk/gis.m/gmmenu.tcl:282
 msgid "Textural features"
 msgstr "Các đối tượng cấu trúc"
 
@@ -976,7 +977,7 @@ msgstr "Các đối tượng cấu trúc"
 msgid "Visibility/line of sight"
 msgstr "Khả năng nhìn thấy/đường nhìn thấy"
 
-#: ../gui/tcltk/d.m/menu.tcl:281 ../gui/tcltk/gis.m/gmmenu.tcl:284
+#: ../gui/tcltk/d.m/menu.tcl:281 ../gui/tcltk/gis.m/gmmenu.tcl:286
 msgid "Transform features"
 msgstr "Chuyển đổi các đối tượng"
 
@@ -992,7 +993,7 @@ msgstr "Làm lớn các vùng"
 msgid "Thin linear features"
 msgstr "Làm mảnh các đối tượng tuyến tính"
 
-#: ../gui/tcltk/d.m/menu.tcl:287 ../gui/tcltk/gis.m/gmmenu.tcl:290
+#: ../gui/tcltk/d.m/menu.tcl:287 ../gui/tcltk/gis.m/gmmenu.tcl:292
 msgid "Hydrologic modeling"
 msgstr "Mô hình hóa thủy văn"
 
@@ -1017,7 +1018,7 @@ msgstr "Sự tích lũy dòng chảy đối với các lưới thô"
 msgid "Generate flow lines for raster map"
 msgstr "Sinh ra các đường dòng chảy cho bản đồ raster"
 
-#: ../gui/tcltk/d.m/menu.tcl:293 ../gui/tcltk/gis.m/gmmenu.tcl:298
+#: ../gui/tcltk/d.m/menu.tcl:293 ../gui/tcltk/gis.m/gmmenu.tcl:300
 msgid "SIMWE overland flow modeling"
 msgstr "Mô hình dòng chảy bề mặt SIMWE"
 
@@ -1025,31 +1026,31 @@ msgstr "Mô hình dòng chảy bề mặt SIMWE"
 msgid "SIMWE sediment erosion, transport, & deposition modeling"
 msgstr "Mô hình xói mòn chất lắng tụ, di chuyển và dịch chuyển SIMWE"
 
-#: ../gui/tcltk/d.m/menu.tcl:295 ../gui/tcltk/gis.m/gmmenu.tcl:301
+#: ../gui/tcltk/d.m/menu.tcl:295 ../gui/tcltk/gis.m/gmmenu.tcl:303
 msgid "Topographic index map"
 msgstr "Bản đồ chỉ mục tôpô"
 
-#: ../gui/tcltk/d.m/menu.tcl:296 ../gui/tcltk/gis.m/gmmenu.tcl:302
+#: ../gui/tcltk/d.m/menu.tcl:296 ../gui/tcltk/gis.m/gmmenu.tcl:304
 msgid "TOPMODEL simulation"
 msgstr "Mô hình giả lập TOPMODEL"
 
-#: ../gui/tcltk/d.m/menu.tcl:297 ../gui/tcltk/gis.m/gmmenu.tcl:304
+#: ../gui/tcltk/d.m/menu.tcl:297 ../gui/tcltk/gis.m/gmmenu.tcl:306
 msgid "Watershed subbasins"
 msgstr "Các lưu vực phụ của đường chia nước"
 
-#: ../gui/tcltk/d.m/menu.tcl:298 ../gui/tcltk/gis.m/gmmenu.tcl:305
+#: ../gui/tcltk/d.m/menu.tcl:298 ../gui/tcltk/gis.m/gmmenu.tcl:307
 msgid "Watershed analysis"
 msgstr "Phân tích đường chia nước"
 
-#: ../gui/tcltk/d.m/menu.tcl:299 ../gui/tcltk/gis.m/gmmenu.tcl:306
+#: ../gui/tcltk/d.m/menu.tcl:299 ../gui/tcltk/gis.m/gmmenu.tcl:308
 msgid "Watershed basin creation"
 msgstr "Tạo lưu vực đường chia nước"
 
-#: ../gui/tcltk/d.m/menu.tcl:301 ../gui/tcltk/gis.m/gmmenu.tcl:308
+#: ../gui/tcltk/d.m/menu.tcl:301 ../gui/tcltk/gis.m/gmmenu.tcl:310
 msgid "Landscape structure modeling"
 msgstr "Mô hình hóa cấu trúc cảnh quan"
 
-#: ../gui/tcltk/d.m/menu.tcl:302 ../gui/tcltk/gis.m/gmmenu.tcl:320
+#: ../gui/tcltk/d.m/menu.tcl:302 ../gui/tcltk/gis.m/gmmenu.tcl:322
 msgid "Set up sampling and analysis framework"
 msgstr "Thiết lập mạng lưới thu mẫu và phân tích"
 
@@ -1065,7 +1066,7 @@ msgstr "Phân tích các tính chất 'vá' của cảnh quan"
 msgid "Output landscape patch information"
 msgstr "Xuất ra thông tin 'vá' của cảnh quan"
 
-#: ../gui/tcltk/d.m/menu.tcl:308 ../gui/tcltk/gis.m/gmmenu.tcl:339
+#: ../gui/tcltk/d.m/menu.tcl:308 ../gui/tcltk/gis.m/gmmenu.tcl:341
 msgid "Wildfire modeling"
 msgstr "Mô hình hóa lửa tự nhiên"
 
@@ -1081,7 +1082,7 @@ msgstr "Sinh ra các đường dẫn phát tán chi phí thấp nhất"
 msgid "Simulate anisotropic spread phenomena"
 msgstr "Giả lập các hiện tượng phát tán không đẳng hướng"
 
-#: ../gui/tcltk/d.m/menu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:345
+#: ../gui/tcltk/d.m/menu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:347
 msgid "Change category values and labels"
 msgstr "Thay đổi các giá trị phạm trù và nhãn phạm trù"
 
@@ -1128,7 +1129,7 @@ msgstr "Tạo các vòng đồng tâm quanh các điểm"
 msgid "Generate random raster cells"
 msgstr "Sinh ra các ô raster ngẫu nhiên"
 
-#: ../gui/tcltk/d.m/menu.tcl:331 ../gui/tcltk/gis.m/gmmenu.tcl:360
+#: ../gui/tcltk/d.m/menu.tcl:331 ../gui/tcltk/gis.m/gmmenu.tcl:362
 msgid "Generate random cells"
 msgstr "Sinh ra các ô ngẫu nhiên"
 
@@ -1136,7 +1137,7 @@ msgstr "Sinh ra các ô ngẫu nhiên"
 msgid "Generate random cells and vector points from raster map"
 msgstr "Sinh ra các ô ngẫu nhiên và các điểm vector từ bản đồ raster"
 
-#: ../gui/tcltk/d.m/menu.tcl:334 ../gui/tcltk/gis.m/gmmenu.tcl:364
+#: ../gui/tcltk/d.m/menu.tcl:334 ../gui/tcltk/gis.m/gmmenu.tcl:366
 msgid "Generate surfaces"
 msgstr "Tạo các bề mặt"
 
@@ -1168,7 +1169,7 @@ msgstr "Sinh ra bề mặt ngẫu nhiên có sự phụ thuộc không gian"
 msgid "Generate vector contour lines"
 msgstr "Sinh ra các đường bình độ vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:343 ../gui/tcltk/gis.m/gmmenu.tcl:376
+#: ../gui/tcltk/d.m/menu.tcl:343 ../gui/tcltk/gis.m/gmmenu.tcl:378
 msgid "Interpolate surfaces"
 msgstr "Nội suy các bề mặt"
 
@@ -1199,13 +1200,13 @@ msgstr ""
 "Lấp đầy các ô rỗng bằng cách nội suy, dùng đường spline chính quy có sức căng"
 
 #: ../gui/tcltk/d.m/menu.tcl:354 ../gui/tcltk/d.m/menu.tcl:459
-#: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:389
-#: ../gui/tcltk/gis.m/gmmenu.tcl:498 ../gui/tcltk/gis.m/gmmenu.tcl:551
+#: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:391
+#: ../gui/tcltk/gis.m/gmmenu.tcl:504 ../gui/tcltk/gis.m/gmmenu.tcl:558
 msgid "Reports and statistics"
 msgstr "Báo cáo và thống kê"
 
 #: ../gui/tcltk/d.m/menu.tcl:355 ../gui/tcltk/d.m/menu.tcl:516
-#: ../gui/tcltk/gis.m/gmmenu.tcl:390 ../gui/tcltk/gis.m/gmmenu.tcl:552
+#: ../gui/tcltk/gis.m/gmmenu.tcl:392
 msgid "Report basic file information"
 msgstr "Báo cáo thông tin cơ bản về tập tin"
 
@@ -1213,7 +1214,7 @@ msgstr "Báo cáo thông tin cơ bản về tập tin"
 msgid "Report category labels and values"
 msgstr "Báo cáo các nhãn và giá trị phạm trù"
 
-#: ../gui/tcltk/d.m/menu.tcl:358 ../gui/tcltk/gis.m/gmmenu.tcl:393
+#: ../gui/tcltk/d.m/menu.tcl:358 ../gui/tcltk/gis.m/gmmenu.tcl:395
 msgid "General statistics"
 msgstr "Các thống kê tổng quát"
 
@@ -1225,7 +1226,7 @@ msgstr "Miền của tất cả các giá trị phạm trù"
 msgid "Sum all cell category values"
 msgstr "Tổng của tất cả các giá trị phạm trù"
 
-#: ../gui/tcltk/d.m/menu.tcl:361 ../gui/tcltk/gis.m/gmmenu.tcl:396
+#: ../gui/tcltk/d.m/menu.tcl:361 ../gui/tcltk/gis.m/gmmenu.tcl:398
 msgid "Sum area by map and category"
 msgstr "Tổng diện tích theo bản đồ và phạm trù"
 
@@ -1233,12 +1234,12 @@ msgstr "Tổng diện tích theo bản đồ và phạm trù"
 msgid "Summary statistics for clumped cells (works with r.clump)"
 msgstr "Thống kê tóm tắt cho các ô được gộp khối (tạo ra từ r.clump)"
 
-#: ../gui/tcltk/d.m/menu.tcl:363 ../gui/tcltk/gis.m/gmmenu.tcl:398
+#: ../gui/tcltk/d.m/menu.tcl:363 ../gui/tcltk/gis.m/gmmenu.tcl:400
 msgid "Total surface area corrected for topography"
 msgstr "Tổng diện tích bề mặt được hiệu chỉnh đối với tôpô"
 
 #: ../gui/tcltk/d.m/menu.tcl:364 ../gui/tcltk/d.m/menu.tcl:463
-#: ../gui/tcltk/gis.m/gmmenu.tcl:399 ../gui/tcltk/gis.m/gmmenu.tcl:502
+#: ../gui/tcltk/gis.m/gmmenu.tcl:401
 msgid "Univariate statistics"
 msgstr "Thông kê một biến"
 
@@ -1254,7 +1255,7 @@ msgstr "Lấy mẫu các giá trị dọc theo các tuyến"
 msgid "Sample values along transects (use azimuth, distance)"
 msgstr "Lấy mẫu các giá trị dọc theo các tuyến (dùng phương vị, kh.cách)"
 
-#: ../gui/tcltk/d.m/menu.tcl:370 ../gui/tcltk/gis.m/gmmenu.tcl:404
+#: ../gui/tcltk/d.m/menu.tcl:370 ../gui/tcltk/gis.m/gmmenu.tcl:406
 msgid "Covariance/correlation"
 msgstr "Hiệp phương sai/tương quan"
 
@@ -1266,28 +1267,28 @@ msgstr "Hồi quy tuyến tính giữa hai bản đồ"
 msgid "Mutual category occurences (coincidence)"
 msgstr "Sự xuất hiện phạm trù chung (ngẫu nhiên)"
 
-#: ../gui/tcltk/d.m/menu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:409
+#: ../gui/tcltk/d.m/menu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:411
 msgid "&Vector"
 msgstr "&Vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:377 ../gui/tcltk/gis.m/gmmenu.tcl:411
+#: ../gui/tcltk/d.m/menu.tcl:377 ../gui/tcltk/gis.m/gmmenu.tcl:413
 msgid "Digitize"
 msgstr "Số hóa"
 
-#: ../gui/tcltk/d.m/menu.tcl:379 ../gui/tcltk/gis.m/gmmenu.tcl:413
+#: ../gui/tcltk/d.m/menu.tcl:379
 msgid "Create/rebuild topology"
 msgstr "Tạo/xây dựng tôpô"
 
-#: ../gui/tcltk/d.m/menu.tcl:380 ../gui/tcltk/gis.m/gmmenu.tcl:414
+#: ../gui/tcltk/d.m/menu.tcl:380
 #, fuzzy
 msgid "Clean vector files"
 msgstr "Làm sạch các tập tin vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:381 ../gui/tcltk/gis.m/gmmenu.tcl:415
+#: ../gui/tcltk/d.m/menu.tcl:381
 msgid "Add missing centroids"
 msgstr ""
 
-#: ../gui/tcltk/d.m/menu.tcl:383 ../gui/tcltk/gis.m/gmmenu.tcl:417
+#: ../gui/tcltk/d.m/menu.tcl:383
 msgid "Build polylines from adjacent segments"
 msgstr "Xây dựng các đường từ các đoạn kề nhau"
 
@@ -1295,39 +1296,39 @@ msgstr "Xây dựng các đường từ các đoạn kề nhau"
 msgid "Split polylines into segments"
 msgstr "Ngắt đường thành các đoạn"
 
-#: ../gui/tcltk/d.m/menu.tcl:385 ../gui/tcltk/gis.m/gmmenu.tcl:419
+#: ../gui/tcltk/d.m/menu.tcl:385
 msgid "Create lines parallel to existing lines"
 msgstr "Tạo các đường song song với các đường hiện có"
 
-#: ../gui/tcltk/d.m/menu.tcl:386 ../gui/tcltk/gis.m/gmmenu.tcl:420
+#: ../gui/tcltk/d.m/menu.tcl:386
 msgid "Dissolve common boundaries"
 msgstr ""
 
-#: ../gui/tcltk/d.m/menu.tcl:388 ../gui/tcltk/gis.m/gmmenu.tcl:422
+#: ../gui/tcltk/d.m/menu.tcl:388
 msgid "Convert vector feature types"
 msgstr "Đổi kiểu đối tượng vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:389 ../gui/tcltk/gis.m/gmmenu.tcl:424
+#: ../gui/tcltk/d.m/menu.tcl:389
 msgid "Convert 2D vector to 3D by sampling raster"
 msgstr "Đổi vector 2D thành 3D bằng cách thu mẫu raster"
 
-#: ../gui/tcltk/d.m/menu.tcl:390 ../gui/tcltk/gis.m/gmmenu.tcl:425
+#: ../gui/tcltk/d.m/menu.tcl:390
 msgid "Extrude 2D vector into 3D vector"
 msgstr "Trồi vector 2D vào trong vector 3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:392 ../gui/tcltk/gis.m/gmmenu.tcl:429
+#: ../gui/tcltk/d.m/menu.tcl:392
 msgid "Create text label file for vector features"
 msgstr "Tạo tập tin nhãn cho các đối tượng vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:394 ../gui/tcltk/gis.m/gmmenu.tcl:431
+#: ../gui/tcltk/d.m/menu.tcl:394
 msgid "Reproject vector from other location"
 msgstr "Quy chiếu lại vector từ location khác"
 
-#: ../gui/tcltk/d.m/menu.tcl:396 ../gui/tcltk/gis.m/gmmenu.tcl:601
+#: ../gui/tcltk/d.m/menu.tcl:396 ../gui/tcltk/gis.m/gmmenu.tcl:605
 msgid "Vector<->database connections"
 msgstr "Vector <-> kết nối CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:397 ../gui/tcltk/gis.m/gmmenu.tcl:427
+#: ../gui/tcltk/d.m/menu.tcl:397
 msgid "Create new vector as link to external OGR layer"
 msgstr "Tạo vector mới dạng liên kết đến lớp OGR ngoài"
 
@@ -1335,27 +1336,27 @@ msgstr "Tạo vector mới dạng liên kết đến lớp OGR ngoài"
 msgid "Set database connection for vector attributes"
 msgstr "Thiết lập kết nối CSDL với các thuộc tính vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:400 ../gui/tcltk/gis.m/gmmenu.tcl:433
+#: ../gui/tcltk/d.m/menu.tcl:400
 msgid "Rectify and georeference vector map"
 msgstr "Nắn chỉnh và tham chiếu địa lý bản đồ vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:402 ../gui/tcltk/gis.m/gmmenu.tcl:435
+#: ../gui/tcltk/d.m/menu.tcl:402
 msgid "Query by attributes"
 msgstr "Truy vấn theo thuộc tính"
 
-#: ../gui/tcltk/d.m/menu.tcl:404 ../gui/tcltk/gis.m/gmmenu.tcl:437
+#: ../gui/tcltk/d.m/menu.tcl:404
 msgid "Query by map features"
 msgstr "Truy vấn theo các đối tượng của bản đồ"
 
-#: ../gui/tcltk/d.m/menu.tcl:406 ../gui/tcltk/gis.m/gmmenu.tcl:439
+#: ../gui/tcltk/d.m/menu.tcl:406
 msgid "Create vector buffers"
 msgstr "Tạo các vùng đệm vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:407 ../gui/tcltk/gis.m/gmmenu.tcl:445
+#: ../gui/tcltk/d.m/menu.tcl:407
 msgid "Linear referencing for vectors"
 msgstr "Tham chiếu tuyến tính cho các vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:408 ../gui/tcltk/gis.m/gmmenu.tcl:446
+#: ../gui/tcltk/d.m/menu.tcl:408
 msgid "Create linear reference system"
 msgstr "Tạo hệ thống tham chiếu tuyến tính"
 
@@ -1381,7 +1382,7 @@ msgstr ""
 "Tìm id đường và km+độ dịch thực sự đối với các điểm cho trước trong một bản "
 "đồ vector, dùng hệ thống tham chiếu tuyến tính"
 
-#: ../gui/tcltk/d.m/menu.tcl:414 ../gui/tcltk/gis.m/gmmenu.tcl:451
+#: ../gui/tcltk/d.m/menu.tcl:414
 msgid "Locate nearest features to points or centroids"
 msgstr "Định vị các đối tượng gần nhất với các điểm hoặc trọng tâm"
 
@@ -1393,191 +1394,191 @@ msgstr "Sinh ra các vùng Thiessen quanh các điểm (sơ đồ Voronoi)"
 msgid "Connect points to create Delaunay triangles"
 msgstr "Nối các điểm để tạo các tam giác Delaunay"
 
-#: ../gui/tcltk/d.m/menu.tcl:418 ../gui/tcltk/gis.m/gmmenu.tcl:452
+#: ../gui/tcltk/d.m/menu.tcl:418 ../gui/tcltk/gis.m/gmmenu.tcl:456
 msgid "Network analysis"
 msgstr "Phân tích mạng lưới"
 
-#: ../gui/tcltk/d.m/menu.tcl:419 ../gui/tcltk/gis.m/gmmenu.tcl:453
+#: ../gui/tcltk/d.m/menu.tcl:419 ../gui/tcltk/gis.m/gmmenu.tcl:457
 msgid "Allocate subnets"
 msgstr "Cấp phát các mạng lưới con"
 
-#: ../gui/tcltk/d.m/menu.tcl:420 ../gui/tcltk/gis.m/gmmenu.tcl:454
+#: ../gui/tcltk/d.m/menu.tcl:420 ../gui/tcltk/gis.m/gmmenu.tcl:458
 msgid "Network maintenance"
 msgstr "Bảo trì mạng lưới"
 
-#: ../gui/tcltk/d.m/menu.tcl:421 ../gui/tcltk/gis.m/gmmenu.tcl:455
+#: ../gui/tcltk/d.m/menu.tcl:421 ../gui/tcltk/gis.m/gmmenu.tcl:459
 msgid "Shortest route"
 msgstr "Lộ trình ngắn nhất"
 
-#: ../gui/tcltk/d.m/menu.tcl:422 ../gui/tcltk/gis.m/gmmenu.tcl:456
+#: ../gui/tcltk/d.m/menu.tcl:422
 msgid "Shortest route (visualization only)"
 msgstr "Lộ trình ngắn nhất (chỉ để xem)"
 
-#: ../gui/tcltk/d.m/menu.tcl:423 ../gui/tcltk/gis.m/gmmenu.tcl:461
+#: ../gui/tcltk/d.m/menu.tcl:423
 msgid "Split net to bands between cost isolines"
 msgstr "Ngắt mạng lưới thành các bằng giữa các đường đồng giá trị"
 
-#: ../gui/tcltk/d.m/menu.tcl:424 ../gui/tcltk/gis.m/gmmenu.tcl:462
+#: ../gui/tcltk/d.m/menu.tcl:424 ../gui/tcltk/gis.m/gmmenu.tcl:466
 msgid "Steiner tree"
 msgstr "Cây Steiner"
 
-#: ../gui/tcltk/d.m/menu.tcl:425 ../gui/tcltk/gis.m/gmmenu.tcl:463
+#: ../gui/tcltk/d.m/menu.tcl:425 ../gui/tcltk/gis.m/gmmenu.tcl:467
 msgid "Traveling salesman analysis"
 msgstr "Phân tích di chuyển của người bán hàng"
 
-#: ../gui/tcltk/d.m/menu.tcl:428 ../gui/tcltk/gis.m/gmmenu.tcl:466
+#: ../gui/tcltk/d.m/menu.tcl:428
 msgid "Overlay/combine 2 vector maps"
 msgstr "Chồng/tổ hợp hai bản đồ vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:429 ../gui/tcltk/gis.m/gmmenu.tcl:467
+#: ../gui/tcltk/d.m/menu.tcl:429
 msgid "Patch multiple maps (combine)"
 msgstr "'Vá' nhiều bản đồ (tổ hợp)"
 
-#: ../gui/tcltk/d.m/menu.tcl:431 ../gui/tcltk/gis.m/gmmenu.tcl:469
+#: ../gui/tcltk/d.m/menu.tcl:431
 msgid "Generate area feature for extent of current region"
 msgstr "Sinh ra đối tượng vùng cho phạm vi của vùng hiện tại"
 
-#: ../gui/tcltk/d.m/menu.tcl:432 ../gui/tcltk/gis.m/gmmenu.tcl:470
+#: ../gui/tcltk/d.m/menu.tcl:432
 msgid "Generate rectangular vector grid"
 msgstr "Sinh ra lưới vector hình chữ nhật"
 
-#: ../gui/tcltk/d.m/menu.tcl:434 ../gui/tcltk/gis.m/gmmenu.tcl:472
+#: ../gui/tcltk/d.m/menu.tcl:434 ../gui/tcltk/gis.m/gmmenu.tcl:474
 msgid "Change attributes"
 msgstr "Thay đổi các thuộc tính"
 
-#: ../gui/tcltk/d.m/menu.tcl:435 ../gui/tcltk/gis.m/gmmenu.tcl:473
+#: ../gui/tcltk/d.m/menu.tcl:435
 msgid "Attach, delete, or report categories"
 msgstr "Gắn, xóa, hoặc báo cáo các phạm trù"
 
-#: ../gui/tcltk/d.m/menu.tcl:436 ../gui/tcltk/gis.m/gmmenu.tcl:474
+#: ../gui/tcltk/d.m/menu.tcl:436
 msgid "Reclassify features using rules file"
 msgstr "Phân loại lại các đối tượng-dùng tập tin quy tắc"
 
-#: ../gui/tcltk/d.m/menu.tcl:439 ../gui/tcltk/gis.m/gmmenu.tcl:477
+#: ../gui/tcltk/d.m/menu.tcl:439
 msgid "Work with vector points"
 msgstr "Làm việc với các điểm vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:440 ../gui/tcltk/gis.m/gmmenu.tcl:478
+#: ../gui/tcltk/d.m/menu.tcl:440 ../gui/tcltk/gis.m/gmmenu.tcl:487
 msgid "Generate points"
 msgstr "Sinh ra các điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:441 ../gui/tcltk/gis.m/gmmenu.tcl:479
+#: ../gui/tcltk/d.m/menu.tcl:441
 msgid "Generate points from database with x/y coordinates"
 msgstr "Sinh ra các điểm từ CSDL có các tọa độ x/y"
 
-#: ../gui/tcltk/d.m/menu.tcl:442 ../gui/tcltk/gis.m/gmmenu.tcl:480
+#: ../gui/tcltk/d.m/menu.tcl:442 ../gui/tcltk/gis.m/gmmenu.tcl:490
 msgid "Generate random points"
 msgstr "Sinh ra các điểm ngẫu nhiên"
 
-#: ../gui/tcltk/d.m/menu.tcl:443 ../gui/tcltk/gis.m/gmmenu.tcl:481
+#: ../gui/tcltk/d.m/menu.tcl:443
 msgid "Random location perturbations of points"
 msgstr "Các sự xáo trộn vị trí ngẫu nhiên của các điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:445 ../gui/tcltk/gis.m/gmmenu.tcl:483
+#: ../gui/tcltk/d.m/menu.tcl:445 ../gui/tcltk/gis.m/gmmenu.tcl:481
 msgid "Generate areas from points"
 msgstr "Sinh ra các vùng từ các điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:446 ../gui/tcltk/gis.m/gmmenu.tcl:484
+#: ../gui/tcltk/d.m/menu.tcl:446
 msgid "Generate convex hull for point set"
 msgstr "Sinh ra bao lồi hoặc tập hợp điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:447 ../gui/tcltk/gis.m/gmmenu.tcl:485
+#: ../gui/tcltk/d.m/menu.tcl:447
 msgid "Generate Delaunay triangles for point set"
 msgstr "Sinh ra tam giác Delaunay từ tập hợp điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:448 ../gui/tcltk/gis.m/gmmenu.tcl:486
+#: ../gui/tcltk/d.m/menu.tcl:448
 msgid "Generate Voronoi diagram/Thiessen polygons for point set"
 msgstr "Sinh ra sơ đồ Voronoi/đa giác Thiessen từ tập hợp điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:450 ../gui/tcltk/gis.m/gmmenu.tcl:488
+#: ../gui/tcltk/d.m/menu.tcl:450
 msgid "Sample raster maps"
 msgstr "Lấy mẫu các bản đồ raster"
 
-#: ../gui/tcltk/d.m/menu.tcl:451 ../gui/tcltk/gis.m/gmmenu.tcl:489
+#: ../gui/tcltk/d.m/menu.tcl:451
 msgid "Calculate statistics for raster map overlain by vector map"
 msgstr "Tính toán thống kê cho bản đồ raster chồng lên bởi bản đồ vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:452 ../gui/tcltk/gis.m/gmmenu.tcl:490
+#: ../gui/tcltk/d.m/menu.tcl:452 ../gui/tcltk/gis.m/gmmenu.tcl:500
 msgid "Sample raster map at point locations"
 msgstr "Lấy mẫu bản đồ raster tại các vị trí điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:453 ../gui/tcltk/gis.m/gmmenu.tcl:491
+#: ../gui/tcltk/d.m/menu.tcl:453 ../gui/tcltk/gis.m/gmmenu.tcl:501
 msgid "Sample raster neighborhood around points"
 msgstr "Lấy mẫu raster lân cận quanh các điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:455 ../gui/tcltk/gis.m/gmmenu.tcl:493
+#: ../gui/tcltk/d.m/menu.tcl:455
 msgid "Partition points into test/training sets for k-fold cross validatation"
 msgstr ""
 "Phân chia các điểm thành các bộ/tập hợp 'huấn luyện' dùng cho kiểm chứng "
 "chéo k-fold"
 
-#: ../gui/tcltk/d.m/menu.tcl:456 ../gui/tcltk/gis.m/gmmenu.tcl:495
+#: ../gui/tcltk/d.m/menu.tcl:456
 msgid "Transfer attribute data from queried vector map to points"
 msgstr "Chuyển dữ liệu thuộc tính từ bản đồ vector được truy vấn vào điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:460 ../gui/tcltk/gis.m/gmmenu.tcl:499
-#: ../gui/tcltk/gis.m/gmmenu.tcl:570
+#: ../gui/tcltk/d.m/menu.tcl:460 ../gui/tcltk/gis.m/gmmenu.tcl:505
+#: ../gui/tcltk/gis.m/gmmenu.tcl:574
 msgid "Basic information"
 msgstr "Thông tin cơ bản"
 
-#: ../gui/tcltk/d.m/menu.tcl:461 ../gui/tcltk/gis.m/gmmenu.tcl:500
+#: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Load vector attributes to database or create reports"
 msgstr "Nạp các thuộc tính vector vào CSDL hoặc tạo báo cáo"
 
-#: ../gui/tcltk/d.m/menu.tcl:462 ../gui/tcltk/gis.m/gmmenu.tcl:501
+#: ../gui/tcltk/d.m/menu.tcl:462
 msgid "Report areas for vector attribute categories"
 msgstr "Báo cáo diện tích cho các phạm trù thuộc tính vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:465 ../gui/tcltk/gis.m/gmmenu.tcl:504
+#: ../gui/tcltk/d.m/menu.tcl:465
 msgid "Test normality of point distribution"
 msgstr "Thử mức độ bình thường của phân bố điểm"
 
-#: ../gui/tcltk/d.m/menu.tcl:466 ../gui/tcltk/gis.m/gmmenu.tcl:505
+#: ../gui/tcltk/d.m/menu.tcl:466
 msgid "Calculate stats for raster map underlying vector objects"
 msgstr ""
 "Tính toán các thống kê cho lớp bản đồ raster ở dưới các đối tượng vector"
 
-#: ../gui/tcltk/d.m/menu.tcl:467 ../gui/tcltk/gis.m/gmmenu.tcl:506
+#: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Indices of point counts in quadrats"
 msgstr "Các chỉ số đếm các điểm trong các mẫu ô vuông"
 
-#: ../gui/tcltk/d.m/menu.tcl:470 ../gui/tcltk/gis.m/gmmenu.tcl:509
+#: ../gui/tcltk/d.m/menu.tcl:470 ../gui/tcltk/gis.m/gmmenu.tcl:516
 #, fuzzy
 msgid "&Imagery"
 msgstr "Ả&nh"
 
-#: ../gui/tcltk/d.m/menu.tcl:471 ../gui/tcltk/gis.m/gmmenu.tcl:510
+#: ../gui/tcltk/d.m/menu.tcl:471 ../gui/tcltk/gis.m/gmmenu.tcl:517
 msgid "Develop images and groups"
 msgstr "Phát triển các ảnh và nhóm ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:472 ../gui/tcltk/gis.m/gmmenu.tcl:511
+#: ../gui/tcltk/d.m/menu.tcl:472
 msgid "Create/edit imagery group"
 msgstr "Tạo/chỉnh sửa nhóm ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:473 ../gui/tcltk/gis.m/gmmenu.tcl:512
+#: ../gui/tcltk/d.m/menu.tcl:473
 msgid "Target imagery group"
 msgstr "Xác định đích cho nhóm ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:475 ../gui/tcltk/gis.m/gmmenu.tcl:514
+#: ../gui/tcltk/d.m/menu.tcl:475
 msgid "Mosaic up to 4 adjacent images"
 msgstr "Khảm tối đa 4 ảnh kề nhau"
 
-#: ../gui/tcltk/d.m/menu.tcl:477 ../gui/tcltk/gis.m/gmmenu.tcl:516
+#: ../gui/tcltk/d.m/menu.tcl:477 ../gui/tcltk/gis.m/gmmenu.tcl:523
 msgid "Manage image colors"
 msgstr "Quản lý màu của ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:478 ../gui/tcltk/gis.m/gmmenu.tcl:517
+#: ../gui/tcltk/d.m/menu.tcl:478
 msgid ""
 "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr "Cân bằng màu và cải thiện bảng màu của ảnh nhiều băng để hiển thị rgb"
 
-#: ../gui/tcltk/d.m/menu.tcl:479 ../gui/tcltk/gis.m/gmmenu.tcl:518
+#: ../gui/tcltk/d.m/menu.tcl:479
 msgid ""
 "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 "Chuyển đổi ảnh màu HIS (màu sắc/cường độ/độ bão hòa) thành RGB (đỏ/lục/xanh)"
 
-#: ../gui/tcltk/d.m/menu.tcl:480 ../gui/tcltk/gis.m/gmmenu.tcl:519
+#: ../gui/tcltk/d.m/menu.tcl:480
 msgid ""
 "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
@@ -1601,95 +1602,95 @@ msgstr ""
 msgid "Affine and Polynomial rectification (rubber sheet)"
 msgstr "Nắn chỉnh affine và đa thức (kiểu tấm cao su)"
 
-#: ../gui/tcltk/d.m/menu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:521
+#: ../gui/tcltk/d.m/menu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:528
 msgid "Ortho photo rectification"
 msgstr "Nắn chỉnh ảnh thẳng"
 
-#: ../gui/tcltk/d.m/menu.tcl:491 ../gui/tcltk/gis.m/gmmenu.tcl:527
+#: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Brovey transformation and pan sharpening"
 msgstr "Phép chuyển đổi Brovey và làm sắc ảnh toàn sắc"
 
-#: ../gui/tcltk/d.m/menu.tcl:492 ../gui/tcltk/gis.m/gmmenu.tcl:528
+#: ../gui/tcltk/d.m/menu.tcl:492 ../gui/tcltk/gis.m/gmmenu.tcl:535
 msgid "Classify image"
 msgstr "Phân loại ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:493 ../gui/tcltk/gis.m/gmmenu.tcl:529
+#: ../gui/tcltk/d.m/menu.tcl:493 ../gui/tcltk/gis.m/gmmenu.tcl:536
 msgid "Clustering input for unsupervised classification"
 msgstr "Gộp nhóm đầu vào dùng cho phân loại không hướng dẫn"
 
-#: ../gui/tcltk/d.m/menu.tcl:495 ../gui/tcltk/gis.m/gmmenu.tcl:531
+#: ../gui/tcltk/d.m/menu.tcl:495 ../gui/tcltk/gis.m/gmmenu.tcl:538
 msgid "Maximum likelyhood classification (MLC)"
 msgstr "Phép phân loại Giống nhau tối đa (MLC)"
 
-#: ../gui/tcltk/d.m/menu.tcl:496 ../gui/tcltk/gis.m/gmmenu.tcl:532
+#: ../gui/tcltk/d.m/menu.tcl:496 ../gui/tcltk/gis.m/gmmenu.tcl:539
 msgid "Sequential maximum a posteriory classification (SMAP)"
 msgstr "Phân loại bằng phương pháp SMAP"
 
-#: ../gui/tcltk/d.m/menu.tcl:498 ../gui/tcltk/gis.m/gmmenu.tcl:534
+#: ../gui/tcltk/d.m/menu.tcl:498 ../gui/tcltk/gis.m/gmmenu.tcl:541
 msgid "Interactive input for supervised classification"
 msgstr "Đầu vào tương tác cho phân loại có hướng dẫn"
 
-#: ../gui/tcltk/d.m/menu.tcl:499 ../gui/tcltk/gis.m/gmmenu.tcl:535
+#: ../gui/tcltk/d.m/menu.tcl:499
 msgid "Non-interactive input for supervised classification (MLC)"
 msgstr "Đầu vào không tương tác cho phân loại có hướng dẫn (MLC)"
 
-#: ../gui/tcltk/d.m/menu.tcl:500 ../gui/tcltk/gis.m/gmmenu.tcl:536
+#: ../gui/tcltk/d.m/menu.tcl:500
 msgid "Non-interactive input for supervised classification (SMAP)"
 msgstr "Đầu vào không tương tác cho phân loại có hướng dẫn (SMAP)"
 
-#: ../gui/tcltk/d.m/menu.tcl:502 ../gui/tcltk/gis.m/gmmenu.tcl:538
+#: ../gui/tcltk/d.m/menu.tcl:502 ../gui/tcltk/gis.m/gmmenu.tcl:545
 msgid "Filter image"
 msgstr "Lọc ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:503 ../gui/tcltk/gis.m/gmmenu.tcl:539
+#: ../gui/tcltk/d.m/menu.tcl:503
 msgid "Zero edge crossing detection"
 msgstr "Phát hiện mép giao nhau bằng 0"
 
-#: ../gui/tcltk/d.m/menu.tcl:504 ../gui/tcltk/gis.m/gmmenu.tcl:540
+#: ../gui/tcltk/d.m/menu.tcl:504
 msgid "User defined matrix/convolving filter"
 msgstr "phép lọc ma trận/quấn do người dùng định nghĩa"
 
-#: ../gui/tcltk/d.m/menu.tcl:506 ../gui/tcltk/gis.m/gmmenu.tcl:542
+#: ../gui/tcltk/d.m/menu.tcl:506 ../gui/tcltk/gis.m/gmmenu.tcl:549
 msgid "Spectral response"
 msgstr "Đáp ứng phổ"
 
-#: ../gui/tcltk/d.m/menu.tcl:507 ../gui/tcltk/gis.m/gmmenu.tcl:543
+#: ../gui/tcltk/d.m/menu.tcl:507 ../gui/tcltk/gis.m/gmmenu.tcl:550
 msgid "Tassled cap vegetation index"
 msgstr "Chỉ số thực vật Tassled cap"
 
-#: ../gui/tcltk/d.m/menu.tcl:508 ../gui/tcltk/gis.m/gmmenu.tcl:544
+#: ../gui/tcltk/d.m/menu.tcl:508 ../gui/tcltk/gis.m/gmmenu.tcl:551
 msgid "Transform image"
 msgstr "Chuyển đổi ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:509 ../gui/tcltk/gis.m/gmmenu.tcl:545
+#: ../gui/tcltk/d.m/menu.tcl:509
 msgid "Canonical component"
 msgstr "thành phần chính tắc"
 
-#: ../gui/tcltk/d.m/menu.tcl:510 ../gui/tcltk/gis.m/gmmenu.tcl:546
+#: ../gui/tcltk/d.m/menu.tcl:510
 msgid "Principal component"
 msgstr "Thành phần chủ yếu"
 
-#: ../gui/tcltk/d.m/menu.tcl:511 ../gui/tcltk/gis.m/gmmenu.tcl:547
+#: ../gui/tcltk/d.m/menu.tcl:511
 msgid "Fast Fourier Transform"
 msgstr "Phép chuyển đổi Fast Fourier"
 
-#: ../gui/tcltk/d.m/menu.tcl:512 ../gui/tcltk/gis.m/gmmenu.tcl:548
+#: ../gui/tcltk/d.m/menu.tcl:512
 msgid "Inverse Fast Fourier Transform"
 msgstr "Phép chuyển đổi Inverse Fast Fourier"
 
-#: ../gui/tcltk/d.m/menu.tcl:517 ../gui/tcltk/gis.m/gmmenu.tcl:553
+#: ../gui/tcltk/d.m/menu.tcl:517
 msgid "Range of image values"
 msgstr "Miền của các giá trị ảnh"
 
-#: ../gui/tcltk/d.m/menu.tcl:519 ../gui/tcltk/gis.m/gmmenu.tcl:555
+#: ../gui/tcltk/d.m/menu.tcl:519
 msgid "Bit pattern comparison for ID of low quality pixels"
 msgstr "So sánh bit để nhận diện các điểm ảnh chất lượng thấp"
 
-#: ../gui/tcltk/d.m/menu.tcl:520 ../gui/tcltk/gis.m/gmmenu.tcl:556
+#: ../gui/tcltk/d.m/menu.tcl:520
 msgid "Kappa classification accuracy assessment"
 msgstr "Phép phân loại Kappa để đánh giá độ chính xác"
 
-#: ../gui/tcltk/d.m/menu.tcl:521 ../gui/tcltk/gis.m/gmmenu.tcl:557
+#: ../gui/tcltk/d.m/menu.tcl:521
 msgid "Optimum index factor for LandSat TM"
 msgstr "Hệ số chỉ mục tối ưu (OIF) cho ảnh LandSat TM"
 
@@ -1697,15 +1698,15 @@ msgstr "Hệ số chỉ mục tối ưu (OIF) cho ảnh LandSat TM"
 msgid "&Grid3D"
 msgstr "&Grid3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:525 ../gui/tcltk/gis.m/gmmenu.tcl:561
+#: ../gui/tcltk/d.m/menu.tcl:525 ../gui/tcltk/gis.m/gmmenu.tcl:565
 msgid "Develop grid3D volumes"
 msgstr "Phát triển các thể tích 3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:526 ../gui/tcltk/gis.m/gmmenu.tcl:562
+#: ../gui/tcltk/d.m/menu.tcl:526 ../gui/tcltk/gis.m/gmmenu.tcl:566
 msgid "Manage nulls for grid3D volume"
 msgstr "Quản lý các giá trị rỗng của thể tích grid3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:527 ../gui/tcltk/gis.m/gmmenu.tcl:563
+#: ../gui/tcltk/d.m/menu.tcl:527 ../gui/tcltk/gis.m/gmmenu.tcl:567
 msgid "Manage timestamp for grid3D volume"
 msgstr "Quản lý đánh dấu thời gian cho thể tích grid3D"
 
@@ -1725,7 +1726,7 @@ msgstr "Tính toán bản đồ cho các lệnh về grid3D"
 msgid "Interpolate volume from vector points using splines"
 msgstr "Nội suy thể tích từ các điểm vector (dùng đường spline)"
 
-#: ../gui/tcltk/d.m/menu.tcl:533 ../gui/tcltk/gis.m/gmmenu.tcl:569
+#: ../gui/tcltk/d.m/menu.tcl:533 ../gui/tcltk/gis.m/gmmenu.tcl:573
 msgid "Report and Statistics"
 msgstr "Báo cáo và thống kê"
 
@@ -1733,23 +1734,23 @@ msgstr "Báo cáo và thống kê"
 msgid "Display information about grid3D volume"
 msgstr "Trình bày thông tin về thể tích grid3D"
 
-#: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:573
+#: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:577
 msgid "&Databases"
 msgstr "&CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:538 ../gui/tcltk/gis.m/gmmenu.tcl:581
+#: ../gui/tcltk/d.m/menu.tcl:538 ../gui/tcltk/gis.m/gmmenu.tcl:585
 msgid "Manage database"
 msgstr "Quản lý CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:539 ../gui/tcltk/gis.m/gmmenu.tcl:582
+#: ../gui/tcltk/d.m/menu.tcl:539 ../gui/tcltk/gis.m/gmmenu.tcl:586
 msgid "Connect to database"
 msgstr "Kết nối đến CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:540 ../gui/tcltk/gis.m/gmmenu.tcl:583
+#: ../gui/tcltk/d.m/menu.tcl:540 ../gui/tcltk/gis.m/gmmenu.tcl:587
 msgid "Login to database"
 msgstr "Đăng nhập vào CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:542 ../gui/tcltk/gis.m/gmmenu.tcl:585
+#: ../gui/tcltk/d.m/menu.tcl:542 ../gui/tcltk/gis.m/gmmenu.tcl:589
 msgid "Copy table"
 msgstr "Sao chép bảng"
 
@@ -1761,31 +1762,31 @@ msgstr "Thêm cột vào bảng"
 msgid "Change values in a column"
 msgstr "Thay đổi các giá trị trong một cột"
 
-#: ../gui/tcltk/d.m/menu.tcl:545 ../gui/tcltk/gis.m/gmmenu.tcl:593
+#: ../gui/tcltk/d.m/menu.tcl:545 ../gui/tcltk/gis.m/gmmenu.tcl:597
 msgid "Test database"
 msgstr "Kiểm tra CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:547 ../gui/tcltk/gis.m/gmmenu.tcl:574
+#: ../gui/tcltk/d.m/menu.tcl:547 ../gui/tcltk/gis.m/gmmenu.tcl:578
 msgid "Database information"
 msgstr "Thông tin CSDL"
 
-#: ../gui/tcltk/d.m/menu.tcl:548 ../gui/tcltk/gis.m/gmmenu.tcl:575
+#: ../gui/tcltk/d.m/menu.tcl:548 ../gui/tcltk/gis.m/gmmenu.tcl:579
 msgid "Describe table"
 msgstr "Mô tả bảng"
 
-#: ../gui/tcltk/d.m/menu.tcl:549 ../gui/tcltk/gis.m/gmmenu.tcl:576
+#: ../gui/tcltk/d.m/menu.tcl:549 ../gui/tcltk/gis.m/gmmenu.tcl:580
 msgid "List columns"
 msgstr "Liệt kê cột"
 
-#: ../gui/tcltk/d.m/menu.tcl:550 ../gui/tcltk/gis.m/gmmenu.tcl:577
+#: ../gui/tcltk/d.m/menu.tcl:550 ../gui/tcltk/gis.m/gmmenu.tcl:581
 msgid "List drivers"
 msgstr "Liệt kê trình điều khiển"
 
-#: ../gui/tcltk/d.m/menu.tcl:551 ../gui/tcltk/gis.m/gmmenu.tcl:578
+#: ../gui/tcltk/d.m/menu.tcl:551 ../gui/tcltk/gis.m/gmmenu.tcl:582
 msgid "List tables"
 msgstr "Liệt kê bảng"
 
-#: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:596
+#: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:600
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1805 ../gui/tcltk/gis.m/maptool.tcl:222
 msgid "Query"
 msgstr "Truy vấn"
@@ -1798,39 +1799,39 @@ msgstr "Truy vấn dữ liệu (chọn SQL)"
 msgid "Execute SQL statement"
 msgstr "Thực thi câu lệnh SQL"
 
-#: ../gui/tcltk/d.m/menu.tcl:559 ../gui/tcltk/gis.m/gmmenu.tcl:606
+#: ../gui/tcltk/d.m/menu.tcl:559 ../gui/tcltk/gis.m/gmmenu.tcl:610
 msgid "&Help"
 msgstr "Trợ &Giúp"
 
-#: ../gui/tcltk/d.m/menu.tcl:560 ../gui/tcltk/gis.m/gmmenu.tcl:607
+#: ../gui/tcltk/d.m/menu.tcl:560 ../gui/tcltk/gis.m/gmmenu.tcl:611
 msgid "GRASS help"
 msgstr "Trợ giúp GRASS"
 
-#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:608
+#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:612
 msgid "GIS Manager &help"
 msgstr "Trình Quản lý GIS và Trợ &giúp"
 
-#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:608
+#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:612
 msgid "GIS Manager help"
 msgstr "Trợ giúp Trình Quản lý GIS"
 
-#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:609
+#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:613
 msgid "About &GRASS"
 msgstr "Nói về &GRASS"
 
-#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:609
+#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:613
 msgid "About GRASS"
 msgstr "Nói về GRASS"
 
-#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:610
+#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:614
 msgid "About &System"
 msgstr "Về &Hệ thống"
 
-#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:610
+#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:614
 msgid "About System"
 msgstr "Về hệ thống"
 
-#: ../gui/tcltk/d.m/menu.tcl:571 ../gui/tcltk/gis.m/gmmenu.tcl:618
+#: ../gui/tcltk/d.m/menu.tcl:571 ../gui/tcltk/gis.m/gmmenu.tcl:622
 msgid "&Xtns"
 msgstr "&Xtns"
 
@@ -2637,9 +2638,9 @@ msgid "Start georectifying"
 msgstr "Bắt đầu nắn chỉnh địa lý"
 
 #: ../gui/tcltk/gis.m/georect.tcl:694 ../gui/tcltk/gis.m/gm.tcl:530
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:839 ../lib/gtcltk/select.tcl:181
-#: ../lib/init/epsg_option.tcl:167 ../lib/init/epsg_option.tcl:369
-#: ../lib/init/file_option.tcl:114
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:839 ../gui/tcltk/gis.m/rules.tcl:172
+#: ../lib/gtcltk/select.tcl:181 ../lib/init/epsg_option.tcl:167
+#: ../lib/init/epsg_option.tcl:369 ../lib/init/file_option.tcl:114
 msgid "Cancel"
 msgstr "Hủy"
 
@@ -2806,8 +2807,8 @@ msgstr "Phông chữ:"
 msgid "Character encoding: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:527 ../lib/init/epsg_option.tcl:366
-#: ../vector/v.digit/settings.tcl:160
+#: ../gui/tcltk/gis.m/gm.tcl:527 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../lib/init/epsg_option.tcl:366 ../vector/v.digit/settings.tcl:160
 msgid "OK"
 msgstr "Đồng ý"
 
@@ -2816,856 +2817,1130 @@ msgstr "Đồng ý"
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "GRASS%s Trình Quản lý GIS - %s %s"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:85
+#: ../gui/tcltk/gis.m/gmmenu.tcl:87
 msgid "Workspace"
 msgstr "Vùng làm việc"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:92
+#: ../gui/tcltk/gis.m/gmmenu.tcl:94
 #, fuzzy
 msgid "Import raster map"
 msgstr "Lấy mẫu các bản đồ raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:95
+#: ../gui/tcltk/gis.m/gmmenu.tcl:97
 #, fuzzy
 msgid "Aggregate ASCII xyz"
 msgstr "Tổng hợp dữ liệu xyz ASCII vào lưới raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:96 ../gui/tcltk/gis.m/gmmenu.tcl:130
+#: ../gui/tcltk/gis.m/gmmenu.tcl:98 ../gui/tcltk/gis.m/gmmenu.tcl:132
 #, fuzzy
 msgid "ASCII grid"
 msgstr "Tập tin ASCII 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:97
+#: ../gui/tcltk/gis.m/gmmenu.tcl:99
 msgid "ASCII polygons and lines"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:99 ../gui/tcltk/gis.m/gmmenu.tcl:137
+#: ../gui/tcltk/gis.m/gmmenu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:139
 #, fuzzy
 msgid "Binary"
 msgstr "Tập tin nhị phân"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:100
+#: ../gui/tcltk/gis.m/gmmenu.tcl:102
 msgid "ESRI grid"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:134
+#: ../gui/tcltk/gis.m/gmmenu.tcl:103 ../gui/tcltk/gis.m/gmmenu.tcl:136
 msgid "GRIDATB.FOR"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:135
+#: ../gui/tcltk/gis.m/gmmenu.tcl:104 ../gui/tcltk/gis.m/gmmenu.tcl:137
 msgid "MAT-File (v.4)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:103
+#: ../gui/tcltk/gis.m/gmmenu.tcl:105
 msgid "SPOT NDVI"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:104
+#: ../gui/tcltk/gis.m/gmmenu.tcl:106
 #, fuzzy
 msgid "SRTM hgt"
 msgstr "các tập tin hgt SRTM"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:105
+#: ../gui/tcltk/gis.m/gmmenu.tcl:107
 #, fuzzy
 msgid "Terra ASTER"
 msgstr "Các tập tin ASTER HDF Terra"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:109
+#: ../gui/tcltk/gis.m/gmmenu.tcl:111
 #, fuzzy
 msgid "Import vector map"
 msgstr "Bản đồ raster thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:110 ../gui/tcltk/gis.m/gmmenu.tcl:149
+#: ../gui/tcltk/gis.m/gmmenu.tcl:112 ../gui/tcltk/gis.m/gmmenu.tcl:151
 #, fuzzy
 msgid "Multiple formats using OGR"
 msgstr "Nhiều loại định dạng bằng cách dùng GDAL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:112 ../gui/tcltk/gis.m/gmmenu.tcl:151
+#: ../gui/tcltk/gis.m/gmmenu.tcl:114 ../gui/tcltk/gis.m/gmmenu.tcl:153
 #, fuzzy
 msgid "ASCII points or GRASS ASCII vector"
 msgstr "Tập tin điểm ASCII hoặc tập tin vector ASCII GRASS"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:113
+#: ../gui/tcltk/gis.m/gmmenu.tcl:115
 #, fuzzy
 msgid "Old GRASS vector"
 msgstr "Nhập định dạng vector GRASS cũ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:115 ../gui/tcltk/gis.m/gmmenu.tcl:152
+#: ../gui/tcltk/gis.m/gmmenu.tcl:117 ../gui/tcltk/gis.m/gmmenu.tcl:154
 msgid "DXF"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:116
+#: ../gui/tcltk/gis.m/gmmenu.tcl:118
 #, fuzzy
 msgid "ESRI e00"
 msgstr "định dạng e00 của ESRI"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:117
+#: ../gui/tcltk/gis.m/gmmenu.tcl:119
 msgid "Garmin GPS"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:118
+#: ../gui/tcltk/gis.m/gmmenu.tcl:120
 msgid "GPSBabel GPS"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:119
+#: ../gui/tcltk/gis.m/gmmenu.tcl:121
 msgid "GEOnet"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:120
+#: ../gui/tcltk/gis.m/gmmenu.tcl:122
 #, fuzzy
 msgid "Matlab and MapGen"
 msgstr "Các tập tin Matlab và MapGen"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:122
+#: ../gui/tcltk/gis.m/gmmenu.tcl:124
 #, fuzzy
 msgid "Import grid 3D volume"
 msgstr "Phát triển các thể tích 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:123 ../gui/tcltk/gis.m/gmmenu.tcl:158
+#: ../gui/tcltk/gis.m/gmmenu.tcl:125 ../gui/tcltk/gis.m/gmmenu.tcl:160
 #, fuzzy
 msgid "ASCII 3D"
 msgstr "Tập tin ASCII 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:124 ../gui/tcltk/gis.m/gmmenu.tcl:159
+#: ../gui/tcltk/gis.m/gmmenu.tcl:126 ../gui/tcltk/gis.m/gmmenu.tcl:161
 #, fuzzy
 msgid "Vis5D"
 msgstr "tập tin Vis5D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:127
+#: ../gui/tcltk/gis.m/gmmenu.tcl:129
 #, fuzzy
 msgid "Export raster map"
 msgstr "Lấy mẫu các bản đồ raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:131
+#: ../gui/tcltk/gis.m/gmmenu.tcl:133
 msgid "ASCII x,y,z"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:133
+#: ../gui/tcltk/gis.m/gmmenu.tcl:135
 #, fuzzy
 msgid "ESRI ASCII grid"
 msgstr "lưới Arc/Info ASCII của ESRI"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:139
+#: ../gui/tcltk/gis.m/gmmenu.tcl:141
 msgid "MPEG-1"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:140
+#: ../gui/tcltk/gis.m/gmmenu.tcl:142
 msgid "PNG"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:141
+#: ../gui/tcltk/gis.m/gmmenu.tcl:143
 msgid "PPM"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:142
+#: ../gui/tcltk/gis.m/gmmenu.tcl:144
 msgid "PPM from RGB"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:143 ../gui/tcltk/gis.m/gmmenu.tcl:153
+#: ../gui/tcltk/gis.m/gmmenu.tcl:145 ../gui/tcltk/gis.m/gmmenu.tcl:155
 #, fuzzy
 msgid "POV-Ray"
 msgstr "định dạng POV-Ray"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:144
+#: ../gui/tcltk/gis.m/gmmenu.tcl:146
 msgid "TIFF"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:145
+#: ../gui/tcltk/gis.m/gmmenu.tcl:147
 #, fuzzy
 msgid "VRML"
 msgstr "Tập tin VRML"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:146 ../gui/tcltk/gis.m/gmmenu.tcl:155
-#: ../gui/tcltk/gis.m/gmmenu.tcl:160
+#: ../gui/tcltk/gis.m/gmmenu.tcl:148 ../gui/tcltk/gis.m/gmmenu.tcl:157
+#: ../gui/tcltk/gis.m/gmmenu.tcl:162
 msgid "VTK"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:148
+#: ../gui/tcltk/gis.m/gmmenu.tcl:150
 #, fuzzy
 msgid "Export vector map"
 msgstr "Bản đồ raster thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:154
+#: ../gui/tcltk/gis.m/gmmenu.tcl:156
 msgid "SVG"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:157
+#: ../gui/tcltk/gis.m/gmmenu.tcl:159
 #, fuzzy
 msgid "Export grid 3D volume"
 msgstr "Phát triển các thể tích 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:164 ../lib/gis/gui.tcl:449
+#: ../gui/tcltk/gis.m/gmmenu.tcl:166 ../lib/gis/gui.tcl:449
 msgid "Copy"
 msgstr "Sao chép"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:166
+#: ../gui/tcltk/gis.m/gmmenu.tcl:168
 #, fuzzy
 msgid "List"
 msgstr "Liệt kê các bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:167
+#: ../gui/tcltk/gis.m/gmmenu.tcl:169
 #, fuzzy
 msgid "List filtered"
 msgstr "Liệt kê trình điều khiển"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:169
+#: ../gui/tcltk/gis.m/gmmenu.tcl:171
 #, fuzzy
 msgid "Rename"
 msgstr "Đặt lại tên các bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:171 ../vector/v.digit/cats.tcl:20
+#: ../gui/tcltk/gis.m/gmmenu.tcl:173 ../vector/v.digit/cats.tcl:20
 msgid "Delete"
 msgstr "Xóa"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:172
+#: ../gui/tcltk/gis.m/gmmenu.tcl:174
 #, fuzzy
 msgid "Delete filtered"
 msgstr "Xóa lớp"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:175
+#: ../gui/tcltk/gis.m/gmmenu.tcl:177
 #, fuzzy
 msgid "Raster to vector"
 msgstr "Bản đồ raster thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:176
+#: ../gui/tcltk/gis.m/gmmenu.tcl:178
 #, fuzzy
 msgid "Raster series to volume"
 msgstr "Chuỗi bản đồ raster thành thể tích"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:177
+#: ../gui/tcltk/gis.m/gmmenu.tcl:179
 #, fuzzy
 msgid "Raster 2.5D to volume"
 msgstr "Chuỗi bản đồ raster thành thể tích"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:180
+#: ../gui/tcltk/gis.m/gmmenu.tcl:182
 #, fuzzy
 msgid "Vector to volume"
 msgstr "Vector thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:181
+#: ../gui/tcltk/gis.m/gmmenu.tcl:183
 #, fuzzy
 msgid "Sites to vector"
 msgstr "Địa điểm (GRASS 5.x) thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:183
+#: ../gui/tcltk/gis.m/gmmenu.tcl:185
 #, fuzzy
 msgid "Volume to raster series"
 msgstr "Thể tích thành các chuỗi bản đồ raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:186
+#: ../gui/tcltk/gis.m/gmmenu.tcl:188
 msgid "Georectify"
 msgstr "Nắn chỉnh địa lý"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:188
+#: ../gui/tcltk/gis.m/gmmenu.tcl:190
 #, fuzzy
 msgid "Bearing/distance to coordinates"
 msgstr "các tọa độ địa lý"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:190
+#: ../gui/tcltk/gis.m/gmmenu.tcl:192
 msgid "PostScript plot"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:200
-msgid "Mapset access"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/gmmenu.tcl:201
-#, fuzzy
-msgid "Change working environment"
-msgstr "Môi trường làm việc của GRASS"
-
 #: ../gui/tcltk/gis.m/gmmenu.tcl:202
-msgid "User access"
+msgid "Mapset access"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:203
 #, fuzzy
+msgid "Change working environment"
+msgstr "Môi trường làm việc của GRASS"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:204
+msgid "User access"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:205
+#, fuzzy
 msgid "Show settings"
 msgstr "Các thiết lập"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:204
+#: ../gui/tcltk/gis.m/gmmenu.tcl:206
 #, fuzzy
 msgid "Change settings"
 msgstr "Trình bày các thiết lập vùng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:209
+#: ../gui/tcltk/gis.m/gmmenu.tcl:211
 #, fuzzy
 msgid "Projection for current location"
 msgstr "Tạo/chỉnh sửa thông tin phép chiếu của location hiện tại"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:211
+#: ../gui/tcltk/gis.m/gmmenu.tcl:213
 #, fuzzy
 msgid "Convert coordinates"
 msgstr "Các tọa độ xy"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:213
+#: ../gui/tcltk/gis.m/gmmenu.tcl:215
 #, fuzzy
 msgid "Display font"
 msgstr "Trình bày: "
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:223
+#: ../gui/tcltk/gis.m/gmmenu.tcl:225
 #, fuzzy
 msgid "Compress/decompress"
 msgstr "Nén/giải nén tập tin raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:225
+#: ../gui/tcltk/gis.m/gmmenu.tcl:227
 #, fuzzy
 msgid "Boundaries"
 msgstr "ranh giới"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:226
+#: ../gui/tcltk/gis.m/gmmenu.tcl:228
 #, fuzzy
 msgid "Null values"
 msgstr "Quản lý các giá trị rỗng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:227
+#: ../gui/tcltk/gis.m/gmmenu.tcl:229
 #, fuzzy
 msgid "Quantization"
 msgstr " canh thẳng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:228
+#: ../gui/tcltk/gis.m/gmmenu.tcl:230
 #, fuzzy
 msgid "Timestamps"
 msgstr "Liệt kê các bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:231
+#: ../gui/tcltk/gis.m/gmmenu.tcl:233
 #, fuzzy
 msgid "Resample using multiple methods"
 msgstr "Thu mẫu lại (đổi độ phân giải), dùng phương pháp lân cận gần nhất"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:232
+#: ../gui/tcltk/gis.m/gmmenu.tcl:234
 #, fuzzy
 msgid "Resample using nearest neighbor"
 msgstr "Thu mẫu lại (đổi độ phân giải), dùng phương pháp lân cận gần nhất"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:233
+#: ../gui/tcltk/gis.m/gmmenu.tcl:235
 #, fuzzy
 msgid "Resample using spline tension"
 msgstr ""
 "Thu mẫu lại (đổi độ phân giải), dùng đường spline chính quy có sức căng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:235
+#: ../gui/tcltk/gis.m/gmmenu.tcl:237
 #, fuzzy
 msgid "Support file maintenance"
 msgstr "Tạo và bảo trì tập tin hỗ trợ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:236
+#: ../gui/tcltk/gis.m/gmmenu.tcl:238
 #, fuzzy
 msgid "Update map statistics"
 msgstr "Thông kê một biến"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:238
+#: ../gui/tcltk/gis.m/gmmenu.tcl:240
 msgid "Reproject"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:239
+#: ../gui/tcltk/gis.m/gmmenu.tcl:241
 msgid "Tiling"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:242
+#: ../gui/tcltk/gis.m/gmmenu.tcl:244
 #, fuzzy
 msgid "Color tables"
 msgstr "Sao chép bảng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:243
+#: ../gui/tcltk/gis.m/gmmenu.tcl:245
 #, fuzzy
 msgid "Color rules"
 msgstr "Trợ giúp về đường rhumb"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:245
+#: ../gui/tcltk/gis.m/gmmenu.tcl:247
 msgid "Blend"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:246
+#: ../gui/tcltk/gis.m/gmmenu.tcl:248
 #, fuzzy
 msgid "Create RGB"
 msgstr "Tạo bảng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:247
+#: ../gui/tcltk/gis.m/gmmenu.tcl:249 ../gui/tcltk/gis.m/gmmenu.tcl:525
 #, fuzzy
 msgid "HIS to RGB"
 msgstr "Trợ giúp về RGB"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:252
+#: ../gui/tcltk/gis.m/gmmenu.tcl:254
 msgid "Buffers"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:253
+#: ../gui/tcltk/gis.m/gmmenu.tcl:255
 #, fuzzy
 msgid "Closest points"
 msgstr "Sinh ra các điểm"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:254
+#: ../gui/tcltk/gis.m/gmmenu.tcl:256
 msgid "MASK"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:257
+#: ../gui/tcltk/gis.m/gmmenu.tcl:259
 #, fuzzy
 msgid "Moving window"
 msgstr "Phóng theo cửa sổ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:258
+#: ../gui/tcltk/gis.m/gmmenu.tcl:260
 #, fuzzy
 msgid "Neighborhood points"
 msgstr "Phân tích lân cận"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:262
+#: ../gui/tcltk/gis.m/gmmenu.tcl:264
 #, fuzzy
 msgid "Map series"
 msgstr "phạm trù"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:265
+#: ../gui/tcltk/gis.m/gmmenu.tcl:267
 msgid "Statistical overlay"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:268
+#: ../gui/tcltk/gis.m/gmmenu.tcl:270
 #, fuzzy
 msgid "Solar irradiance irradiation"
 msgstr "Bức xạ mặt trời và chiếu sáng hàng ngày"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:269
+#: ../gui/tcltk/gis.m/gmmenu.tcl:271
 #, fuzzy
 msgid "Shadows map"
 msgstr "Hiển thị dữ liệu"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:272
+#: ../gui/tcltk/gis.m/gmmenu.tcl:274
 #, fuzzy
 msgid "Cumulative movement costs"
 msgstr "Tính toán các chi phí di chuyển tích lũy giữa các địa bàn"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:276
+#: ../gui/tcltk/gis.m/gmmenu.tcl:278
 #, fuzzy
 msgid "Shaded relief"
 msgstr "Bản đồ nổi đổ bóng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:282
+#: ../gui/tcltk/gis.m/gmmenu.tcl:284
 msgid "Visibility"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:285
+#: ../gui/tcltk/gis.m/gmmenu.tcl:287
 msgid "Clump"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:286
+#: ../gui/tcltk/gis.m/gmmenu.tcl:288
 #, fuzzy
 msgid "Grow"
 msgstr "Duyệt"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:287
+#: ../gui/tcltk/gis.m/gmmenu.tcl:289
 msgid "Thin"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:291
+#: ../gui/tcltk/gis.m/gmmenu.tcl:293
 msgid "Carve stream channels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:292
+#: ../gui/tcltk/gis.m/gmmenu.tcl:294
 #, fuzzy
 msgid "Fill lake"
 msgstr "Tô màu vùng:"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:294
+#: ../gui/tcltk/gis.m/gmmenu.tcl:296
 #, fuzzy
 msgid "Depressionless map and flowlines"
 msgstr "Bản đồ độ cao không giảm cấp và bản đồ dòng chảy"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:295
+#: ../gui/tcltk/gis.m/gmmenu.tcl:297
 #, fuzzy
 msgid "Flow accumulation"
 msgstr "Sự tích lũy dòng chảy đối với các lưới thô"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:296
+#: ../gui/tcltk/gis.m/gmmenu.tcl:298
 #, fuzzy
 msgid "Flow lines"
 msgstr "đường"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:299
+#: ../gui/tcltk/gis.m/gmmenu.tcl:301
 #, fuzzy
 msgid "SIMWE sediment flux modeling"
 msgstr "Mô hình dòng chảy bề mặt SIMWE"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:309
+#: ../gui/tcltk/gis.m/gmmenu.tcl:311
 #, fuzzy
 msgid "Set up"
 msgstr "Dừng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:315
+#: ../gui/tcltk/gis.m/gmmenu.tcl:317
 #, fuzzy
 msgid "Analyze landscape"
 msgstr "Phân tích các đặc điểm cảnh quan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:316
+#: ../gui/tcltk/gis.m/gmmenu.tcl:318
 msgid "Analyze patches"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:317 ../lib/gis/gui.tcl:285
+#: ../gui/tcltk/gis.m/gmmenu.tcl:319 ../lib/gis/gui.tcl:285
 #: ../lib/gis/gui.tcl:465
 msgid "Output"
 msgstr "Đầu_ra"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:319
+#: ../gui/tcltk/gis.m/gmmenu.tcl:321
 #, fuzzy
 msgid "Landscape patch analysis"
 msgstr "Phân tích các tính chất 'vá' của cảnh quan"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:322
+#: ../gui/tcltk/gis.m/gmmenu.tcl:324
 msgid "Edge density"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:323
+#: ../gui/tcltk/gis.m/gmmenu.tcl:325
 msgid "Contrast weighted edge density"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:325
+#: ../gui/tcltk/gis.m/gmmenu.tcl:327
 #, fuzzy
 msgid "Patch size mean"
 msgstr "'Vá' bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:326
+#: ../gui/tcltk/gis.m/gmmenu.tcl:328
 msgid "Patch area range"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:327
+#: ../gui/tcltk/gis.m/gmmenu.tcl:329
 msgid "Patch area Std Dev"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:328
+#: ../gui/tcltk/gis.m/gmmenu.tcl:330
 msgid "Patch area Coeff Var"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:329
+#: ../gui/tcltk/gis.m/gmmenu.tcl:331
 #, fuzzy
 msgid "Patch density"
 msgstr "'Vá' bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:330
+#: ../gui/tcltk/gis.m/gmmenu.tcl:332
 #, fuzzy
 msgid "Patch number"
 msgstr "'Vá' bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:332
+#: ../gui/tcltk/gis.m/gmmenu.tcl:334
 msgid "Dominance's diversity"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:333
+#: ../gui/tcltk/gis.m/gmmenu.tcl:335
 msgid "Shannon's diversity"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:334
+#: ../gui/tcltk/gis.m/gmmenu.tcl:336
 msgid "Simpson's diversity"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:336
+#: ../gui/tcltk/gis.m/gmmenu.tcl:338
 #, fuzzy
 msgid "Ricness"
 msgstr "đường"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:337
+#: ../gui/tcltk/gis.m/gmmenu.tcl:339
 #, fuzzy
 msgid "Shape index"
 msgstr "Lưu và thoát"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:340
+#: ../gui/tcltk/gis.m/gmmenu.tcl:342
 #, fuzzy
 msgid "Rate of spread"
 msgstr "bản đồ vector cần trình bày"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:341
+#: ../gui/tcltk/gis.m/gmmenu.tcl:343
 #, fuzzy
 msgid "Least-cost spread paths"
 msgstr "Sinh ra các đường dẫn phát tán chi phí thấp nhất"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:342
+#: ../gui/tcltk/gis.m/gmmenu.tcl:344
 #, fuzzy
 msgid "Anisotropic spread simulation"
 msgstr "Giả lập các hiện tượng phát tán không đẳng hướng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:346
+#: ../gui/tcltk/gis.m/gmmenu.tcl:348
 #, fuzzy
 msgid "Interactively edit category values"
 msgstr "Miền của tất cả các giá trị phạm trù"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:348
+#: ../gui/tcltk/gis.m/gmmenu.tcl:350
 #, fuzzy
 msgid "Reclassify by size"
 msgstr "Phân loại ảnh"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:349
+#: ../gui/tcltk/gis.m/gmmenu.tcl:351
 #, fuzzy
-msgid "Reclassify using rules"
+msgid "Reclassify interactively"
 msgstr "Phân loại lại các phạm trù-dùng quy tắc"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:350
+#: ../gui/tcltk/gis.m/gmmenu.tcl:352 ../gui/tcltk/gis.m/gmmenu.tcl:477
 #, fuzzy
 msgid "Reclassify using rules file"
 msgstr "Phân loại lại các đối tượng-dùng tập tin quy tắc"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:352
-#, fuzzy
-msgid "Recode using rules"
-msgstr "Phân loại lại các phạm trù-dùng quy tắc"
+#: ../gui/tcltk/gis.m/gmmenu.tcl:354
+msgid "Recode interactively"
+msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:353
+#: ../gui/tcltk/gis.m/gmmenu.tcl:355
 #, fuzzy
 msgid "Recode using rules file"
 msgstr "Phân loại lại các phạm trù-dùng tập tin quy tắc"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:355
+#: ../gui/tcltk/gis.m/gmmenu.tcl:357
 msgid "Rescale"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:356
+#: ../gui/tcltk/gis.m/gmmenu.tcl:358
 #, fuzzy
 msgid "Rescale with histogram"
 msgstr "Bản đồ raster thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:359
+#: ../gui/tcltk/gis.m/gmmenu.tcl:361
 msgid "Concentric circles"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:361
+#: ../gui/tcltk/gis.m/gmmenu.tcl:363
 #, fuzzy
 msgid "Random cells"
 msgstr "màu ngẫu nhiên"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:362
+#: ../gui/tcltk/gis.m/gmmenu.tcl:364
 #, fuzzy
 msgid "Random cells and vector points"
 msgstr "Sinh ra các ô ngẫu nhiên và các điểm vector từ bản đồ raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:365
+#: ../gui/tcltk/gis.m/gmmenu.tcl:367
 #, fuzzy
 msgid "Fractal surface"
 msgstr "Tạo các mặt"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:367
+#: ../gui/tcltk/gis.m/gmmenu.tcl:369
 #, fuzzy
 msgid "Gausian kernal density surface"
 msgstr "Tạo bề mặt các độ lệch kiểu Gauss"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:368
+#: ../gui/tcltk/gis.m/gmmenu.tcl:370
 #, fuzzy
 msgid "Gaussian deviates surface"
 msgstr "Tạo bề mặt các độ lệch kiểu Gauss"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:370
+#: ../gui/tcltk/gis.m/gmmenu.tcl:372
 #, fuzzy
 msgid "Plane"
 msgstr "Di chuyển"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:372
+#: ../gui/tcltk/gis.m/gmmenu.tcl:374
 #, fuzzy
 msgid "Random deviates surface"
 msgstr "Sinh ra bề mặt độ lệch ngẫu nhiên"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:373
+#: ../gui/tcltk/gis.m/gmmenu.tcl:375
 #, fuzzy
 msgid "Random surface with spatial dependence"
 msgstr "Sinh ra bề mặt ngẫu nhiên có sự phụ thuộc không gian"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:375
+#: ../gui/tcltk/gis.m/gmmenu.tcl:377
 #, fuzzy
 msgid "Contour lines"
 msgstr "Các phạm trù"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:377
+#: ../gui/tcltk/gis.m/gmmenu.tcl:379
 #, fuzzy
 msgid "Bilinear from raster points"
 msgstr "Nội suy song tuyến tính từ các điểm raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:378
+#: ../gui/tcltk/gis.m/gmmenu.tcl:380
 #, fuzzy
 msgid "Bilinear and bicubic from vector points"
 msgstr "Nội suy song tuyến tính từ các điểm raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:380
+#: ../gui/tcltk/gis.m/gmmenu.tcl:382
 #, fuzzy
 msgid "IDW from raster points"
 msgstr "Nội suy từ các đường bình độ raster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:381
+#: ../gui/tcltk/gis.m/gmmenu.tcl:383
 #, fuzzy
 msgid "IDW from vector points"
 msgstr "Làm việc với các điểm vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:383
+#: ../gui/tcltk/gis.m/gmmenu.tcl:385
 #, fuzzy
 msgid "Raster contours"
 msgstr "Bản đồ raster thành vector"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:384
+#: ../gui/tcltk/gis.m/gmmenu.tcl:386
 #, fuzzy
 msgid "Regularized spline tension"
 msgstr ""
 "Thu mẫu lại (đổi độ phân giải), dùng đường spline chính quy có sức căng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:386
+#: ../gui/tcltk/gis.m/gmmenu.tcl:388
 msgid "Fill NULL cells"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:391
+#: ../gui/tcltk/gis.m/gmmenu.tcl:393
 #, fuzzy
 msgid "Report category information"
 msgstr "Báo cáo thông tin cơ bản về tập tin"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:394
+#: ../gui/tcltk/gis.m/gmmenu.tcl:396
 #, fuzzy
 msgid "Range of category values"
 msgstr "Miền của tất cả các giá trị phạm trù"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:395
+#: ../gui/tcltk/gis.m/gmmenu.tcl:397
 #, fuzzy
 msgid "Sum cell category values"
 msgstr "Tổng của tất cả các giá trị phạm trù"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:397
+#: ../gui/tcltk/gis.m/gmmenu.tcl:399
 #, fuzzy
 msgid "Statistics for clumped cells (works with r.clump)"
 msgstr "Thống kê tóm tắt cho các ô được gộp khối (tạo ra từ r.clump)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:401
+#: ../gui/tcltk/gis.m/gmmenu.tcl:403
 #, fuzzy
 msgid "Sample transects"
 msgstr "Lấy mẫu các giá trị dọc theo các tuyến"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:402
+#: ../gui/tcltk/gis.m/gmmenu.tcl:404
 #, fuzzy
 msgid "Sample transects (bearing/distance)"
 msgstr "Lấy mẫu các giá trị dọc theo các tuyến (dùng phương vị, kh.cách)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:405
+#: ../gui/tcltk/gis.m/gmmenu.tcl:407
 #, fuzzy
 msgid "Linear regression"
 msgstr "Hồi quy tuyến tính giữa hai bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:406
+#: ../gui/tcltk/gis.m/gmmenu.tcl:408
 #, fuzzy
 msgid "Mutual category occurences"
 msgstr "Sự xuất hiện phạm trù chung (ngẫu nhiên)"
 
+#: ../gui/tcltk/gis.m/gmmenu.tcl:415
+#, fuzzy
+msgid "Create/rebuild topology: "
+msgstr "Tạo/xây dựng tôpô"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:416
+#, fuzzy
+msgid "Clean vector"
+msgstr "Làm sạch các tập tin vector"
+
 #: ../gui/tcltk/gis.m/gmmenu.tcl:418
-msgid "Create points and line segments along a vector line"
+#, fuzzy
+msgid "Convert object types"
+msgstr "Đổi kiểu đối tượng vector"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:420
+#, fuzzy
+msgid "Add centroids"
+msgstr "trọng tâm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:422
+msgid "Build polylines"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:423
 #, fuzzy
-msgid "Convert vector lines to points"
-msgstr "Đường vector thành điểm"
+msgid "Split polylines"
+msgstr "Ngắt đường"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:424
+#, fuzzy
+msgid "Parallel lines"
+msgstr "Vẽ đường:"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:426
+#, fuzzy
+msgid "Dissolve boundaries"
+msgstr "ranh giới"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:428
+#, fuzzy
+msgid "Create 3D vector over raster"
+msgstr "Tạo các vùng đệm vector"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:429
+#, fuzzy
+msgid "Extrude 3D vector"
+msgstr "Trồi vector 2D vào trong vector 3D"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:431
+msgid "Link to OGR"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:433
+#, fuzzy
+msgid "Create labels"
+msgstr "Tạo bảng"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:435
+#, fuzzy
+msgid "Reposition vector"
+msgstr "Địa điểm (GRASS 5.x) thành vector"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:436
+#, fuzzy
+msgid "Reproject vector"
+msgstr "Bản đồ raster thành vector"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:439
+#, fuzzy
+msgid "Query with attributes"
+msgstr "Truy vấn theo thuộc tính"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:440
-msgid "Lidar object filtering and detection"
-msgstr ""
+#, fuzzy
+msgid "Query with coordinate(s)"
+msgstr "Truy vấn theo tọa độ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:441
-msgid "Detect object edges in Lidar data"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/gmmenu.tcl:442
-msgid "Detect interior of objects in Lidar data"
+msgid "Query with another map"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:443
-msgid "Correct and reclassify objects detected in Lidar data"
+#, fuzzy
+msgid "Buffer vectors"
+msgstr "Truy vấn vector:"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:444
+#, fuzzy
+msgid "Lidar analysis"
+msgstr "Phân tích đường chia nước"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:445
+msgid "Detect edges"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:446
+msgid "Detect interiors"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:447
-#, fuzzy
-msgid "Create stationing from input lines and a linear reference system"
+msgid "Correct and reclassify objects"
 msgstr ""
-"Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến "
-"tính"
-
-#: ../gui/tcltk/gis.m/gmmenu.tcl:448
-#, fuzzy
-msgid "Create points and line segments along a linear reference system"
-msgstr ""
-"Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu tuyến "
-"tính"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:449
 #, fuzzy
-msgid ""
-"Find line ID and real km+offset for given points in vector map using linear "
-"reference system"
+msgid "Linear referencing"
+msgstr "Tham chiếu tuyến tính cho các vector"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:450
+#, fuzzy
+msgid "Create LRS"
+msgstr "Tạo bảng"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:451
+#, fuzzy
+msgid "Create stationing"
+msgstr "Trình bày các thiết lập vùng"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:452
+#, fuzzy
+msgid "Create points/segments"
+msgstr "Tạo bộ bản đồ mới"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:453
+msgid "Find ID and offset"
 msgstr ""
-"Tìm id đường và km+độ dịch thực sự đối với các điểm cho trước trong một bản "
-"đồ vector, dùng hệ thống tham chiếu tuyến tính"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:455
+#, fuzzy
+msgid "Nearest features"
+msgstr "Các đối tượng cấu trúc"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:460
+#, fuzzy
+msgid "Display shortest route"
+msgstr "Lộ trình ngắn nhất"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:465
+#, fuzzy
+msgid "Split net"
+msgstr "Ngắt đường"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:470
+#, fuzzy
+msgid "Overlay"
+msgstr "Chồng các bản đồ"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:471
+#, fuzzy
+msgid "Patch (combine)"
+msgstr "'Vá' nhiều bản đồ (tổ hợp)"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:475
+#, fuzzy
+msgid "Manage or report categories"
+msgstr "Gắn, xóa, hoặc báo cáo các phạm trù"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:476
+#, fuzzy
+msgid "Reclassify objects interactively"
+msgstr "Phân loại ảnh"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:480
+#, fuzzy
+msgid "Generate area for current region"
+msgstr "Sinh ra đối tượng vùng cho phạm vi của vùng hiện tại"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:482
+msgid "Convex hull"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:483
+#, fuzzy
+msgid "Delaunay triangles"
+msgstr "Sinh ra tam giác Delaunay từ tập hợp điểm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:484
+#, fuzzy
+msgid "Voronoi diagram/Thiessen polygons"
+msgstr "Sinh ra sơ đồ Voronoi/đa giác Thiessen từ tập hợp điểm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:486
+#, fuzzy
+msgid "Generate grid"
+msgstr "Sinh ra các điểm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:488
+#, fuzzy
+msgid "Generate points from database"
+msgstr "Sinh ra các điểm từ CSDL có các tọa độ x/y"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:489
+#, fuzzy
+msgid "Generate points along lines"
+msgstr "Sinh ra các điểm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:491
+#, fuzzy
+msgid "Perturb points"
+msgstr "Sinh ra các điểm"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:494
 #, fuzzy
-msgid "Remove outliers from vector point set"
+msgid "Remove outliers in point sets"
 msgstr "Nội suy thể tích từ các điểm vector (dùng đường spline)"
 
+#: ../gui/tcltk/gis.m/gmmenu.tcl:495
+msgid "Test/training sets"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:497
+#, fuzzy
+msgid "Update area attributes from raster"
+msgstr "chỉnh sửa thuộc tính (chế độ biểu mẫu)"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:498
+#, fuzzy
+msgid "Update point attributes from areas"
+msgstr "chỉnh sửa thuộc tính (chế độ biểu mẫu)"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:499
+#, fuzzy
+msgid "Update point attributes from raster"
+msgstr "chỉnh sửa thuộc tính (chế độ biểu mẫu)"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:507
+msgid "Report topology by category"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:508
+msgid "Upload or report topology"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:510
+#, fuzzy
+msgid "Univariate attribute statistics"
+msgstr "Thông kê một biến"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:512
+msgid "Quadrat indices"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:513
+msgid "Test normality"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:518
+#, fuzzy
+msgid "Create/edit group"
+msgstr "2. Tạo/chỉnh sửa nhóm"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:519
+#, fuzzy
+msgid "Target group"
+msgstr "Xác định đích cho nhóm ảnh"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:521
+#, fuzzy
+msgid "Mosaic images"
+msgstr "Khảm tối đa 4 ảnh kề nhau"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:524
+msgid "Color balance for RGB"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:526
+#, fuzzy
+msgid "RGB to HIS"
+msgstr "Thêm lớp RGB hay HIS"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:534
+msgid "Brovey sharpening"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:542
+msgid "Input for supervised MLC"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:543
+msgid "Input for supervised SMAP"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:546
+#, fuzzy
+msgid "Edge detection"
+msgstr "hướng đường"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:547
+#, fuzzy
+msgid "Matrix/convolving filter"
+msgstr "phép lọc ma trận/quấn do người dùng định nghĩa"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:552
+#, fuzzy
+msgid "Canonical correlation"
+msgstr "thành phần chính tắc"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:553
+#, fuzzy
+msgid "Principal components"
+msgstr "Thành phần chủ yếu"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:554
+#, fuzzy
+msgid "Fast Fourier"
+msgstr "Phép chuyển đổi Fast Fourier"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:555
+#, fuzzy
+msgid "Inverse Fast Fourier"
+msgstr "Phép chuyển đổi Inverse Fast Fourier"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:559
+#, fuzzy
+msgid "Bit pattern comparison"
+msgstr "So sánh bit để nhận diện các điểm ảnh chất lượng thấp"
+
 #: ../gui/tcltk/gis.m/gmmenu.tcl:560
+#, fuzzy
+msgid "Kappa analysis"
+msgstr "Phân tích các tính chất 'vá' của cảnh quan"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:561
+#, fuzzy
+msgid "OIF for LandSat TM"
+msgstr "Hệ số chỉ mục tối ưu (OIF) cho ảnh LandSat TM"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:564
 #, fuzzy
 msgid "&Volumes"
 msgstr "các cột"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:565
+#: ../gui/tcltk/gis.m/gmmenu.tcl:569
 msgid "3D MASK"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:566
+#: ../gui/tcltk/gis.m/gmmenu.tcl:570
 #, fuzzy
 msgid "3D Map calculator"
 msgstr "Tính toán bản đồ"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:567
+#: ../gui/tcltk/gis.m/gmmenu.tcl:571
 #, fuzzy
 msgid "Cross section from volume"
 msgstr "Tạo mặt cắt raster 2D cho thể tích grid3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:568
+#: ../gui/tcltk/gis.m/gmmenu.tcl:572
 #, fuzzy
 msgid "Interpolate volume from vector points"
 msgstr "Nội suy thể tích từ các điểm vector (dùng đường spline)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:586
+#: ../gui/tcltk/gis.m/gmmenu.tcl:590
 #, fuzzy
 msgid "New table"
 msgstr "Tạo bảng"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:587
+#: ../gui/tcltk/gis.m/gmmenu.tcl:591
 #, fuzzy
 msgid "Remove table"
 msgstr "Loại bỏ đỉnh"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:589
+#: ../gui/tcltk/gis.m/gmmenu.tcl:593
 #, fuzzy
 msgid "Add columns"
 msgstr "Thêm cột mới"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:590
+#: ../gui/tcltk/gis.m/gmmenu.tcl:594
 #, fuzzy
 msgid "Change values"
 msgstr "Thay đổi các thuộc tính"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:591
+#: ../gui/tcltk/gis.m/gmmenu.tcl:595
 #, fuzzy
 msgid "Rename a column"
 msgstr "Thêm cột mới"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:597
+#: ../gui/tcltk/gis.m/gmmenu.tcl:601
 #, fuzzy
 msgid "Query any table"
 msgstr "Truy vấn dữ liệu (chọn SQL)"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:598
+#: ../gui/tcltk/gis.m/gmmenu.tcl:602
 #, fuzzy
 msgid "Query vector attribute table"
 msgstr "Truy vấn theo thuộc tính"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:599
+#: ../gui/tcltk/gis.m/gmmenu.tcl:603
 #, fuzzy
 msgid "SQL statement"
 msgstr "Thực thi câu lệnh SQL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:602
+#: ../gui/tcltk/gis.m/gmmenu.tcl:606
 #, fuzzy
 msgid "Reconnect vector to database"
 msgstr "Kết nối đến CSDL"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:603
+#: ../gui/tcltk/gis.m/gmmenu.tcl:607
 #, fuzzy
 msgid "Set vector - database connection"
 msgstr "Vector <-> kết nối CSDL"
@@ -4606,6 +4881,39 @@ msgstr ""
 msgid "Adjusts the HIS intensity channel brightness"
 msgstr ""
 
+#: ../gui/tcltk/gis.m/rules.tcl:35
+#, fuzzy
+msgid "Select input map"
+msgstr "4. Chọn bản đồ tham chiếu"
+
+#: ../gui/tcltk/gis.m/rules.tcl:97
+msgid "Interactive rules entry"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rules.tcl:147
+#, fuzzy
+msgid "overwrite existing file"
+msgstr "ghi đè tập tin hiện có"
+
+#: ../gui/tcltk/gis.m/rules.tcl:192
+#, fuzzy
+msgid "You must select an input map"
+msgstr "Chọn bản đồ raster để tạo mặt cắt"
+
+#: ../gui/tcltk/gis.m/rules.tcl:192
+#, fuzzy
+msgid "No input map selected"
+msgstr "Thể tích thành các chuỗi bản đồ raster"
+
+#: ../gui/tcltk/gis.m/rules.tcl:197
+msgid "You must specify an output map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rules.tcl:197
+#, fuzzy
+msgid "No output map specified"
+msgstr "Thể tích thành các chuỗi bản đồ raster"
+
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:107 ../lib/gis/gui.tcl:488
 msgid "Run"
@@ -5518,6 +5826,34 @@ msgstr ""
 #, fuzzy
 msgid "Test"
 msgstr "Chữ"
+
+#, fuzzy
+#~ msgid "Recode using rules"
+#~ msgstr "Phân loại lại các phạm trù-dùng quy tắc"
+
+#, fuzzy
+#~ msgid "Convert vector lines to points"
+#~ msgstr "Đường vector thành điểm"
+
+#, fuzzy
+#~ msgid "Create stationing from input lines and a linear reference system"
+#~ msgstr ""
+#~ "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu "
+#~ "tuyến tính"
+
+#, fuzzy
+#~ msgid "Create points and line segments along a linear reference system"
+#~ msgstr ""
+#~ "Tạo các trạm (stationing) từ các đường đầu vào và hệ thống tham chiếu "
+#~ "tuyến tính"
+
+#, fuzzy
+#~ msgid ""
+#~ "Find line ID and real km+offset for given points in vector map using "
+#~ "linear reference system"
+#~ msgstr ""
+#~ "Tìm id đường và km+độ dịch thực sự đối với các điểm cho trước trong một "
+#~ "bản đồ vector, dùng hệ thống tham chiếu tuyến tính"
 
 #, fuzzy
 #~ msgid "Select font file"
