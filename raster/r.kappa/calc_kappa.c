@@ -30,8 +30,8 @@ void calc_kappa(void)
     fd = stdout;
   else
     if ((fd = fopen (output, "a")) == NULL) {
-      G_fatal_error (_("Can't open file <%s> to write kappa and relevant parameters"),
-	output);
+      G_fatal_error (_("Cannot open file <%s> to write kappa and relevant parameters"),
+		     output);
       return;
     }
 
@@ -44,7 +44,7 @@ void calc_kappa(void)
   kpp = (double *) G_calloc(ns, sizeof(double));
 
   for (i=0; i<ncat; i++) {
-   for (j=0; j<ns; j++) {
+    for (j=0; j<ns; j++) {
     if (Gstats[j].cats[0] == rlst[i])
       pi[i] += Gstats[j].count;
   
