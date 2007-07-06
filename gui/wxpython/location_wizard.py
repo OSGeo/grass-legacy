@@ -3,6 +3,11 @@ import wx.wizard as wiz
 import wx.lib.rcsizer  as rcs
 import wx.lib.mixins.listctrl  as  listmix
 
+try:
+    import subprocess
+except:
+    from compat import subprocess
+
 import os
 import sys
 import string
@@ -291,14 +296,10 @@ class ProjectionsPage(TitledPage):
             self.parent.projtypepage.text_utm.SetEditable(False)
             self.parent.projtypepage.hemischoices = []
 
-        global proj4string
-        if self.proj == 'll':
-            proj4string = '+proj=longlat'
-        else:
-            proj4string = '+proj=%s' % self.proj
-
     def OnText(self, event):
         self.proj = event.GetString()
+        if self.proj in self.parent.projections:
+            self.projdesc = self.parent.projections[self.proj]
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -384,11 +385,6 @@ class ProjTypePage(TitledPage):
         if self.parent.projpage.proj == 'utm' and self.utmzone == '':
             wx.MessageBox('You must set a zone for a UTM projection')
             event.Veto()
-        if self.parent.projpage.proj == 'utm':
-            global proj4string
-            proj4string = '%s +zone=%s' % (proj4string, self.utmzone)
-            if self.utmhemisphere == 'south':
-                proj4string = '%s +%s' % (proj4string, self.utmhemisphere)
 
     def SetVal(self, event):
         global coordsys
@@ -517,22 +513,23 @@ class DatumPage(TitledPage):
 #            wx.MessageBox('You must select a datum transform')
 #            event.Veto()
         self.GetNext().SetPrev(self)
+        self.parent.ellipsepage.ellipseparams = self.parent.ellipsoids[self.ellipsoid][1]
 
         global proj4string
-        for item in self.datumparams:
-            if item[:2] == 'f=':
-                item = 'r'+item
-            self.proj4params = '%s +%s' % (self.proj4params,item)
-        if self.transparams:
-            self.proj4params = '%s +no_defs +%s' % (self.proj4params,self.transparams)
-        proj4string = '%s %s' % (proj4string, self.proj4params)
 
     def OnDText(self, event):
         self.datum = event.GetString()
+        self.datumdesc = self.parent.datums[self.datum][0]
+        self.ellipsoid = self.parent.datums[self.datum][1]
+        self.datumparams = self.parent.datums[self.datum][2]
+
         self._onBrowseParams(None,self.datum)
 
     def OnTText(self, event):
         self.transform = event.GetString()
+        self.transdatum = self.parent.transforms[self.transform][0]
+        self.transregion = self.parent.transforms[self.transform][1]
+        self.transparams = self.parent.transforms[self.transform][2]
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -694,19 +691,14 @@ class EllipsePage(TitledPage):
             wx.MessageBox('You must select an ellipse')
             event.Veto()
         self.GetNext().SetPrev(self)
-
-        global proj4string
-        for item in self.ellipseparams:
-            if item[:2] == 'f=':
-                item = '+r'+item
-            else:
-                item = '+'+str(item)
-            self.proj4params = '%s %s' % (params, item)
-        self.proj4params = '%s +no_defs' % self.proj4params
-        proj4string = '%s %s' % (proj4string,self.proj4params)
+        self.parent.datumpage.datumparams = ''
+        self.parent.datumpage.transparams = ''
 
     def OnText(self, event):
         self.ellipse = event.GetString()
+        if self.ellipse in self.parent.ellipseoids:
+            self.ellipsedesc = self.parent.ellipsoids[self.ellipse][0]
+            self.ellipseparams = self.parent.ellipsoids[self.ellipse][1]
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -878,6 +870,7 @@ class EPSGPage(TitledPage):
         # events
         self.Bind(wx.EVT_BUTTON, self.OnBrowse, self.bbrowse)
         self.Bind(wx.EVT_BUTTON, self.OnBrowseCodes, self.bbcodes)
+        self.Bind(wx.EVT_TEXT, self.OnText, self.tcode)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.epsglist)
         self.searchb.Bind(wx.EVT_TEXT_ENTER, self.OnDoSearch, self.searchb)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
@@ -887,6 +880,9 @@ class EPSGPage(TitledPage):
             wx.MessageBox('You must select an EPSG code')
             event.Veto()
         self.GetNext().SetPrev(self)
+
+    def OnText(self, event):
+        self.epsgcode = self.GetString()
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -968,7 +964,7 @@ class CustomPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose method of specifying georeferencing parameters")
         global coordsys
-        global proj4string
+        self.proj4string = ''
         self.parent = parent
 
         self.text_proj4string = self.MakeTextCtrl(size=(400,100))
@@ -983,15 +979,14 @@ class CustomPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
 
     def OnPageChange(self, event):
-        global proj4string
-        if not proj4string:
+        if not self.proj4string:
             wx.MessageBox('You must enter a PROJ.4 string')
             event.Veto()
         self.GetNext().SetPrev(self)
 
     def GetProjstring(self, event):
-        global proj4string
-        proj4string = event.GetString()
+        proj4string
+        self.proj4string = event.GetString()
 
 
 class SummaryPage(TitledPage):
@@ -1649,7 +1644,6 @@ class GWizard:
         database = self.startpage.grassdatabase
         location = self.startpage.location
         global coordsys
-        global proj4string
         success = ''
 
 #        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
@@ -1668,8 +1662,10 @@ class GWizard:
             cols = int(round((float(east)-float(west))/float(resolution)))
             cells = int(rows*cols)
             success = self.LatlongCreate()
-        elif coordsys == "proj" or coordsys == 'custom':
+        elif coordsys == "proj":
             success = self.Proj4Create()
+        elif coordsys == 'custom':
+            success - self.CustomCreate
         elif coordsys == "epsg":
             success = self.EPSGCreate()
         elif coordsys == "file":
@@ -1688,16 +1684,86 @@ class GWizard:
         """
         Create a new location for selected projection
         """
-        global proj4string
+
         location = self.startpage.location
+        proj = self.projpage.proj
         projdesc = self.projpage.projdesc
+
+        utmzone = self.projtypepage.utmzone
+        utmhemisphere = self.projtypepage.utmhemisphere
+
+        datum = self.datumpage.datum
         if self.datumpage.datumdesc:
             datumdesc = self.datumpage.datumdesc+' - '+self.datumpage.ellipsoid
         else: datumdesc = ''
-        ellipsedesc = self.ellipsepage.ellipsedesc
+        datumparams = self.datumpage.datumparams
+        transparams = self.datumpage.transparams
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to \
-                            %s: %s%s" % (location, projdesc, datumdesc, ellipsedesc),
+        ellipse = self.ellipsepage.ellipse
+        ellipsedesc = self.ellipsepage.ellipsedesc
+        ellipseparams = self.ellipsepage.ellipseparams
+
+        # Creating PROJ.4 string
+        if proj == 'll':
+            proj = 'longlat'
+
+        if proj == 'utm' and utmhemisphere == 'south':
+            proj4string = '+proj=%s +zone=%s +south' % (proj, utmzone)
+        elif proj == 'utm':
+            proj4string = '+proj=%s +zone=%s' % (proj, utmzone)
+        else:
+            proj4string = '+proj=%s ' % (proj)
+
+        proj4params = ''
+        # set ellipsoid parameters
+        for item in ellipseparams:
+            if item[:4] == 'f=1/':
+                item = '+rf='+item[4:]
+            else:
+                item = '+'+item
+            proj4params = '%s %s' % (proj4params, item)
+        # set datum and transform parameters if relevant
+        if datumparams:
+            for item in datumparams:
+                proj4params = '%s +%s' % (proj4params,item)
+            if transparams:
+                proj4params = '%s +no_defs +%s' % (proj4params,transparams)
+            else:
+                proj4params = '%s +no_defs' % proj4params
+        else:
+            proj4params = '%s +no_defs' % proj4params
+
+        proj4string = '%s %s' % (proj4string, proj4params)
+
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to \n\
+                            %s: %s%s\n\
+                            (PROJ.4 string: %s)" % (location,projdesc,datumdesc,ellipsedesc,proj4string),
+                            "Create new location?",
+                            wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
+        if dlg.ShowModal() == wx.ID_NO:
+            dlg.Destroy()
+            return False
+        else:
+            dlg.Destroy()
+
+        # Creating location from PROJ.4 string passed to g.proj
+        try:
+            cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
+            cmd.Command(cmdlist)
+            return True
+
+        except StandardError, e:
+            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
+                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
+    def CustomCreate(self):
+        proj4string = self.custompage.proj4string
+
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using \
+                            PROJ.4 string: %s" % (location,proj4string),
                                "Create new location?",
                                wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
@@ -1706,7 +1772,6 @@ class GWizard:
         else:
             dlg.Destroy()
 
-        # creating location from PROJ.4 string
         try:
             cmdlist = ['g.proj','-c','proj4="%s"' % proj4string,'location=%s' % location]
             wx.MessageBox('cmdlist: %s' % cmdlist)
