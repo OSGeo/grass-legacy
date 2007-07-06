@@ -56,9 +56,9 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-      _("Display the boundary of each r.le patch and show how the boundary "
-	"is traced, display the attribute, size, perimeter, and shape "
-	"indices for each patch, and save the data in an output file.");
+      _("Displays the boundary of each r.le patch and shows how the boundary "
+	"is traced, displays the attribute, size, perimeter and shape "
+	"indices for each patch and saves the data in an output file.");
 
   user_input(argc,argv) ;
 
@@ -549,7 +549,7 @@ void cell_clip (DCELL **buf, DCELL **null_buf, int row0, int col0, int nrows, in
 
   if (0 > (finput = G_open_cell_old(choice->fn, G_mapset()))) {
      fprintf(stderr, "\n");
-     fprintf(stderr, "   ******* *************************************************\n");
+     fprintf(stderr, "   ********************************************************\n");
      fprintf(stderr, "    The raster map you specified with the 'map=' parameter \n");
      fprintf(stderr, "    was not found in your mapset.                          \n");
      fprintf(stderr, "   ********************************************************\n");

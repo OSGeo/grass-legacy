@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("raster");
     module->description = _("Takes vector stream data, transforms it "
-                    "to raster, and subtracts depth from the output DEM");
+                    "to raster and subtracts depth from the output DEM.");
 
     parm.inrast = G_define_standard_option(G_OPT_R_INPUT);
     parm.inrast->key           = "rast";
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
     parm.outvect = G_define_standard_option(G_OPT_V_OUTPUT);
     parm.outvect->key          = "points";
     parm.outvect->required     = NO;
-    parm.outvect->description  = _("Name of output vector map for adjusted stream points");
+    parm.outvect->description  = _("Name for output vector map for adjusted stream points");
 
     width = G_define_option();
     width->key            = "width";
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
     } else {
         if (sscanf(width->answer, "%lf", &parm.swidth) != 1)
         {
-            G_warning(_("invalid width value '%s' - using default."), width->answer);
+            G_warning(_("Invalid width value '%s' - using default."), width->answer);
             parm.swidth = G_distance((win.east + win.west) / 2,
                                      (win.north + win.south) / 2, 
                                      ((win.east + win.west) / 2) + win.ew_res,
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
     else {
         if (sscanf(depth->answer, "%lf", &parm.sdepth) != 1)
         {
-            G_warning(_("invalid depth value '%s' - using default."), depth->answer);
+            G_warning(_("Invalid depth value '%s' - using default."), depth->answer);
             parm.sdepth = 0.0;
         }
     }
@@ -170,16 +170,16 @@ int main(int argc, char **argv)
     Vect_open_old(&Map, parm.invect->answer, vmapset);
 
     if ((rmapset = G_find_file2("cell", parm.inrast->answer, "")) == NULL)
-        G_fatal_error(_("unable to find raster map [%s]"), parm.inrast->answer);
+        G_fatal_error(_("Raster map <%s> not found"), parm.inrast->answer);
 
     if ((infd = G_open_cell_old(parm.inrast->answer, rmapset)) == -1)
-        G_fatal_error(_("unable to open cellfile for [%s]"), parm.inrast->answer);
+        G_fatal_error(_("Unable to open raster map <%s>"), parm.inrast->answer);
 
     parm.raster_type = G_get_raster_map_type(infd);
 
     /* open new map for output */
     if ((outfd = G_open_raster_new(parm.outrast->answer,  parm.raster_type)) < 0)
-        G_fatal_error(_("unable to open cellfile for [%s]"), parm.outrast->answer);
+        G_fatal_error(_("Unable to open cellfile for <%s>"), parm.outrast->answer);
 
     /* if specified, open vector for output */
     if (parm.outvect->answer)
