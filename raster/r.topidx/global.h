@@ -25,7 +25,6 @@ void	atanb(void);
 #endif
 
 GLOBAL	char	*mapset,*iname,*oname;
-GLOBAL	char	verbose;
 GLOBAL	struct	Cell_head	window;
 GLOBAL	DCELL	**cell;
 GLOBAL	DCELL	**atb,**a;
