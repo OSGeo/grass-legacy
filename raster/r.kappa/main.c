@@ -28,10 +28,8 @@
 #define GLOBAL
 #include "kappa.h"
 
-
 /* function prototypes */
 static void layer(char *s);
-
 
 int main (int argc, char **argv)
 {
@@ -50,27 +48,21 @@ int main (int argc, char **argv)
  module = G_define_module();
  module->keywords = _("raster");
     module->description =
-  _("Calculate error matrix and kappa "
-  "parameter for accuracy assessment of classification "
-  "result.");
+      _("Calculate error matrix and kappa "
+	"parameter for accuracy assessment of classification "
+	"result.");
 
- parms.map = G_define_option();
+ parms.map = G_define_standard_option(G_OPT_R_INPUT);
  parms.map->key		="classification";
- parms.map->type	=TYPE_STRING;
- parms.map->required	=YES;
- parms.map->description	=_("File name of classification result");
+ parms.map->description	=_("Name of raster map containing classification result");
 
- parms.ref = G_define_option();
+ parms.ref = G_define_standard_option(G_OPT_R_INPUT);
  parms.ref->key		="reference";
- parms.ref->type	=TYPE_STRING;
- parms.ref->required	=YES;
- parms.ref->description	=_("File name of reference classes");
+ parms.ref->description	=_("Name of raster map containing reference classes");
 
- parms.output = G_define_option();
- parms.output->key		="output";
- parms.output->type		=TYPE_STRING;
+ parms.output = G_define_standard_option(G_OPT_F_OUTPUT);
  parms.output->required		=NO;
- parms.output->description 	=_("Name of an output file containing of error matrix and kappa");
+ parms.output->description 	=_("Name for output file containing error matrix and kappa");
 
  parms.titles = G_define_option();
  parms.titles->key		="title";
@@ -81,19 +73,20 @@ int main (int argc, char **argv)
 
  flags.w = G_define_flag();
  flags.w->key = 'w';
- flags.w->description = _("wide report, 132 columns (default: 80)");
+ flags.w->label = _("Wide report");
+ flags.w->description = _("132 columns (default: 80)");
 
 /* please, remove before GRASS 7 released */
  flags.q = G_define_flag();
  flags.q->key	= 'q';
- flags.q->description = _("quiet");
+ flags.q->description = _("Quiet");
 
  flags.h = G_define_flag();
  flags.h->key = 'h';
- flags.h->description = _("no header in the report");
+ flags.h->description = _("No header in the report");
 
  if (G_parser(argc, argv))
-   exit (-1);
+   exit (EXIT_FAILURE);
 
  G_get_window (&window);
 
@@ -105,10 +98,8 @@ int main (int argc, char **argv)
  if (parms.output->answer) {
    output=parms.output->answer;
    if (G_legal_filename (output) < 0) {
-     G_warning (_("<%s> - illegal output file name"), 
-	parms.output->answer);
-     G_usage();
-     exit(EXIT_FAILURE);
+     G_fatal_error (_("Illegal output file name <%s>"), 
+		    parms.output->answer);
    }
  }
  else
@@ -120,9 +111,8 @@ int main (int argc, char **argv)
  if(flags.q->answer) {
         G_putenv("GRASS_VERBOSE","0");
         G_warning(_("The '-q' flag is superseded and will be removed "
-            "in future. Please use '--quiet' instead."));
+            "in future. Please use '--quiet' instead"));
     }
-
 
 /* run r.stats to obtain statistics of map layers */
  stats();
@@ -148,7 +138,7 @@ static void layer(char *s)
 
   strcpy (name, s);
   if ((mapset = G_find_cell2 (name, "")) == NULL)
-    G_fatal_error( _("%s: <%s> raster map not found"), G_program_name(), s);
+    G_fatal_error( _("Raster map <%s> not found"), s);
 
   n = nlayers++;
   layers = (LAYER *) G_realloc(layers, 2*sizeof(LAYER));
@@ -156,6 +146,3 @@ static void layer(char *s)
   layers[n].mapset = mapset;
   G_read_cats (name, mapset, &layers[n].labels);
 } 
-
-
-

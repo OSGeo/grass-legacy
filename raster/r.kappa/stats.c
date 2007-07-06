@@ -27,12 +27,12 @@ int stats(void)
   strcpy (mname, maps[0]);
   mmapset = G_find_cell2 (mname, "");
   if (mmapset == NULL)
-    G_fatal_error ( _("%s: <%s> raster map not found"), G_program_name(), maps[0]);
+    G_fatal_error ( _("Raster map <%s> not found"), maps[0]);
 
   strcpy (rname, maps[1]);
   rmapset = G_find_cell2 (rname, "");
   if (rmapset == NULL)
-    G_fatal_error ( _("%s: <%s> reference map not found"), G_program_name(), maps[1]);
+    G_fatal_error ( _("Raster map <%s> not found"), maps[1]);
 
   stats_file = G_tempfile();
   strcpy (buf, "r.stats -cin");
@@ -52,7 +52,7 @@ int stats(void)
   fd = fopen (stats_file, "r");
   if (fd == NULL) {
     unlink (stats_file);
-    sprintf(buf,"%s: unable to open result file <%s>\n",G_program_name(),stats_file);
+    sprintf(buf, "Unable to open result file <%s>\n", stats_file);
   }
     
   while (G_getl(buf, sizeof buf, fd)){

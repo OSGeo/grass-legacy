@@ -15,8 +15,8 @@ void prn_header(void)
     fd = stdout;
   else
     if ((fd = fopen (output, "w")) == NULL) {
-      G_fatal_error (_("can't open file <%s> to write header"),
-	      output);
+      G_fatal_error (_("Cannot open file <%s> to write header"),
+		     output);
       return;
     }
 
