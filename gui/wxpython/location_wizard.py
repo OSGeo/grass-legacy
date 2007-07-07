@@ -575,17 +575,19 @@ class DatumPage(TitledPage):
 
     def OnDText(self, event):
         self.datum = event.GetString()
-        self.datumdesc = self.parent.datums[self.datum][0]
-        self.ellipsoid = self.parent.datums[self.datum][1]
-        self.datumparams = self.parent.datums[self.datum][2]
+        if self.datum in self.parent.datums:
+            self.datumdesc = self.parent.datums[self.datum][0]
+            self.ellipsoid = self.parent.datums[self.datum][1]
+            self.datumparams = self.parent.datums[self.datum][2]
 
         self._onBrowseParams(None,self.datum)
 
     def OnTText(self, event):
         self.transform = event.GetString()
-        self.transdatum = self.parent.transforms[self.transform][0]
-        self.transregion = self.parent.transforms[self.transform][1]
-        self.transparams = self.parent.transforms[self.transform][2]
+        if self.transform in self.parent.transforms:
+            self.transdatum = self.parent.transforms[self.transform][0]
+            self.transregion = self.parent.transforms[self.transform][1]
+            self.transparams = self.parent.transforms[self.transform][2]
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -1822,9 +1824,11 @@ class GWizard:
 
         proj4string = '%s %s' % (proj4string, proj4params)
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to \n\
-                            %s: %s%s\n\
-                            (PROJ.4 string: %s)" % (location,projdesc,datumdesc,ellipsedesc,proj4string),
+        msgtext = "New location '%s' will be created georeferenced to" % location
+        georeftext = '%s: %s%s' % (projdesc,datumdesc,ellipsedesc)
+        p4text = '(PROJ.4 string: %s)' % proj4string
+
+        dlg = wx.MessageDialog(self.wizard, msgtext+' '+georeftext+' '+p4text,
                             "Create new location?",
                             wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
@@ -1849,8 +1853,8 @@ class GWizard:
     def CustomCreate(self):
         proj4string = self.custompage.proj4string
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using \
-                            PROJ.4 string: %s" % (location,proj4string),
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using PROJ.4 string: %s"
+                               % (location,proj4string),
                                "Create new location?",
                                wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
@@ -1888,8 +1892,8 @@ class GWizard:
             dlg.Destroy()
             return False
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to \
-                               EPSG code %s: %s" % (location, epsgcode, epsgdesc),
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to EPSG code %s: %s"
+                               % (location, epsgcode, epsgdesc),
                                "Create new location from EPSG code?",
                                wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
@@ -1947,7 +1951,7 @@ class GWizard:
 
         cmdlist = []
 
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to file '%s'"\
+        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to file '%s'"
                                % (location, georeffile), "Create new location from georeferenced file?",
                                wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
         if dlg.ShowModal() == wx.ID_NO:
