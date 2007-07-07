@@ -174,7 +174,7 @@ main (int argc, char *argv[])
 	 ((GV_LINES & otype) && (GV_FACE & otype))
        ) 
       {
-	 G_warning (_("The combination of types is not supported "
+	 G_warning (_("The combination of types is not supported"
                       " by all formats."));
           wkbtype=wkbUnknown;
       }
