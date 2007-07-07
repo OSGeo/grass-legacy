@@ -255,7 +255,7 @@ int main(int argc, char **argv)
         }
 	else
         {
-            G_fatal_error(_("Column type  not supported"));
+            G_fatal_error(_("Column type not supported"));
         }
 
         G_debug(4, "actual = %e", actual);

@@ -145,7 +145,7 @@ int main(int argc,char *argv[])
     if ( col_type == -1 ) G_fatal_error ( _("Column <%s> not found"), col_opt->answer );
 
     if ( col_type != DB_C_TYPE_INT && col_type != DB_C_TYPE_DOUBLE )
-	 G_fatal_error ( _("Column type is not supported") ); 
+	 G_fatal_error ( _("Column type not supported") ); 
 
     if ( out_type == CELL_TYPE && col_type == DB_C_TYPE_DOUBLE ) 
 	G_warning ( _("Raster type is integer and column type is float") );
