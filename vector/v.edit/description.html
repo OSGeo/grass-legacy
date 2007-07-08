@@ -18,7 +18,7 @@ purpose, use <code>db.*</code> commands.
 <p>
 Vector features can be selected either by internal id's <code>id</code>,
 category number <code>cats</code>, coordinates <code>coords</code>,
-bounding box <code>bbox</code>, polygon <code>polygon</code> or
+bounding box <code>bbox</code> (x1,y1,x2,y2), polygon <code>polygon</code> or
 'where' statement (attribute data) <code>where</code>. Selecting
 features by coordinates is affected by the current 2D resolution. It
 can be changed using threshold distance <code>thresh</code>. These
@@ -27,7 +27,9 @@ combinations. For example:
 </p>
 
 <div class="code"><pre>
-v.edit map=roads tool=select coord=599505,4921010,603389.0625,4918292.1875 thresh=10000 where="label='interstate'"
+v.edit map=roads tool=select \
+  coord=599505,4921010,603389.0625,4918292.1875 \
+  thresh=10000 where="label='interstate'"
 </pre></div>
 
 selects all features (and prints their id's to standard output)
@@ -181,6 +183,27 @@ Add new features read from standard input:
 v.out.ascii in=railroads format=standard | v.edit tool=add map=vectmap
 </pre></div>
 
+<h3>Select features and print their ID's</h3>
+
+<p>
+Print ID's of selected features, e.g.:
+</p>
+
+<div class="code"><pre>
+v.edit map=soils@PERMANENT tool=select \
+  bbox=595733.8125,4919781.75,598536.1875,4917396.75
+</pre></div>
+
+Example with <em>d.vect</em>:
+
+<div class="code"><pre>
+d.erase;
+d.vect roads;
+d.vect -i map=roads cats=`v.edit map=roads tool=select \
+  coord=592542.89243878,4924766.99622811,603389.0625,4918292.1875 \
+  thresh=1000 --q` col=red
+</pre></div>
+
 <h3>Delete selected features from vector map layer</h3>
 
 <p>
@@ -213,7 +236,9 @@ Remove all features with category 1 and 2 covered by two bounding boxes
 size 2000 map units):
 </p>
 <div class="code"><pre>
-v.edit map=roads tool=delete coord=592542.892,4924766.996,603389.062,4918292.187 thresh=1000 cat=1,2
+v.edit map=roads tool=delete \
+  coord=592542.892,4924766.996,603389.062,4918292.187 \
+  thresh=1000 cat=1,2
 </pre></div>
 
 
@@ -262,7 +287,9 @@ v.edit tool=flip map=streams cats=1-9999 type=line
 Add new layer/category 2/1,2/3,2/4,2/5 to features covered by given polygon:
 
 <div class="code"><pre>
-v.edit tool=catadd map=roads polygon=599877.75,4925088.375,597164.812,4922524.5,601338.562,4920914.625 layer=2 cat=1,3-5
+v.edit tool=catadd map=roads \
+  polygon=599877.75,4925088.375,597164.812,4922524.5,601338.562,4920914.625 \
+  layer=2 cat=1,3-5
 </pre></div>
 
 Delete layer/category 1/1, line id 1:
@@ -346,7 +373,8 @@ Delete vertex located at 593191.608,4925684.849 (threshold set to 0.1 map units)
 Modify only lines with category 1:
 
 <div class="code"><pre>
-v.edit tool=vertexdel map=roads coord=593191.608,4925684.849 thresh=1-e1 cats=1
+v.edit tool=vertexdel map=roads coord=593191.608,4925684.849 \
+  thresh=1-e1 cats=1
 </pre></div>
 
 <h3>Move vertices</h3>
@@ -355,27 +383,10 @@ Move vertices located at 604441,4921088 (threshold set to 100 map units).
 Modify only lines with categories 1-10:
 
 <div class="code"><pre>
-v.edit tool=vertexmove map=roads cats=1-10 coord=604441,4921088 thresh=100 move=1000,1000
+v.edit tool=vertexmove map=roads cats=1-10 coord=604441,4921088 \
+  thresh=100 move=1000,1000
 </pre></div>
 
-
-<h3>Select features and print their ID's</h3>
-
-<p>
-Print ID's of selected features, e.g.:
-</p>
-
-<div class="code"><pre>
-v.edit map=soils@PERMANENT tool=select bbox=595733.8125,4919781.75,598536.1875,4917396.75
-</pre></div>
-
-Example with <em>d.vect</em>:
-
-<div class="code"><pre>
-d.erase;
-d.vect roads;
-d.vect -i map=roads cats=`v.edit map=roads tool=select coord=592542.89243878,4924766.99622811,603389.0625,4918292.1875 thresh=1000 --q` col=red
-</pre></div>
 
 <h2>SEE ALSO</h2>
 
