@@ -61,7 +61,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	ctype = cvarr.ctype;
 	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Column type [%s] not supported (did you mean 'labelcolumn'?)"), db_sqltype_name(ctype));
+	    G_fatal_error (_("Column type [%s] not supported (did you mean 'labelcolumn'?)"),
+				db_sqltype_name(ctype));
 
 	if ( nrec < 0 )
             G_fatal_error (_("Cannot select data from table"));
@@ -145,7 +146,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	pass++;
 
 	if (npasses > 1)
-            G_message (_("Pass [%d] of [%d]:"), pass, npasses);
+            G_message (_("Pass %d of %d:"), pass, npasses);
 
 	stat = 0;
 
@@ -165,8 +166,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	    }
 	}
 
-	G_message (_("Converted areas: [%d] of [%d]"), nareas, nareas_all);
-	G_message (_("Converted points/lines: [%d] of [%d]"), nlines, nplines_all);
+	G_message (_("Converted areas: %d of %d"), nareas, nareas_all);
+	G_message (_("Converted points/lines: %d of %d"), nlines, nplines_all);
 
 	G_debug (1, "Writing raster map ...");
 
