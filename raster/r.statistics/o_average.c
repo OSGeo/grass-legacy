@@ -39,7 +39,7 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	G_fatal_error (_("Unable to open temporary file <%s>"), me);
+	G_fatal_error (_("%s: unable to open temporary file"), me);
     }
     out(fd2, 0L, 0.0, 1.0);	/* force at least one reclass rule */
 
