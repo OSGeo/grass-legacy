@@ -5,7 +5,7 @@
 # MODULE:       v.db.addtable
 # AUTHOR(S):   	Markus Neteler 
 # PURPOSE:      interface to db.execute to creates and add a new table to given vector map
-# COPYRIGHT:    (C) 2005 by the GRASS Development Team
+# COPYRIGHT:    (C) 2005, 2007  by Markus Neteler & the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #               License (>=v2). Read the file COPYING that comes with GRASS
@@ -80,6 +80,7 @@ export LC_NUMERIC
 ### setup enviro vars ###
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
 
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
@@ -159,29 +160,20 @@ if [ $? -ne 0 ] ; then
    fi
    g.message "Creating table with columns ($COLUMN_DEF)"
 
+   # take care if the DBF directory is missing (heck, the DBF driver should take care!)
+   if [ "$driver" = "dbf" ] ; then
+       if test ! -d ${LOCATION}/dbf ; then
+          g.message "Creating missing DBF directory in MAPSET <${MAPSET}>" 
+          mkdir -p ${LOCATION}/dbf
+         db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+       fi
+   fi
+
    echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute database=$database driver=$driver
    if [ $? -ne 0 ] ; then
-       # take care if no DB was ever defined (e.g., in a new mapset)
-       # probably the DBF directory is missing (heck, the DBF driver should take care!)
-     echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute database=$database \
-        driver=$driver | grep 'Cannot open dbf database'
-     if [ $? -ne 0 ] ; then
-        GISDBASE=`g.gisenv GISDBASE`
-        LOCATION_NAME=`g.gisenv LOCATION_NAME`
-        MAPSET=`g.gisenv MAPSET`
-        g.message "Creating missing DBF directory in MAPSET <${MAPSET}>" 
-        mkdir -p ${GISDBASE}/${LOCATION_NAME}/${MAPSET}/dbf
-        db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
-        echo "CREATE TABLE $table ($COLUMN_DEF)" | db.execute
-        if [ $? -ne 0 ] ; then
-          g.message -e "An error occured while running db.connect"
-          exit 1
-        fi
-      fi
+     g.message -e "Cannot continue."
+     exit 1
    fi
-else
-   g.message -e "A table of the name <$table> already exists in <$database>."
-   exit 1
 fi
 
 # connect the map to the DB:
