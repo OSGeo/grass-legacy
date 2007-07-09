@@ -45,7 +45,9 @@ ifneq ($(strip $(OPENGLLIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
-default: headers subdirs
+default: subdirs
+
+subdirs: headers
 
 headers: 
 	if [ ! -d $(GISBASE)/include/grass ]; then $(MKDIR) $(GISBASE)/include/grass; fi
