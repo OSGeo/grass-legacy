@@ -15,7 +15,7 @@
 #############################################################################
 
 #%Module
-#% description: Exports GRASS raster data into various formats (requires GDAL).
+#% description: Exports GRASS raster into GDAL supported formats.
 #% keywords: raster, export
 #%End
 #%flag
