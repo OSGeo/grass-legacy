@@ -10,7 +10,7 @@
 #               http://earth-info.nga.mil/gns/html/
 #                -> Download Names Files for Countries and Territories (FTP)
 #
-#               Column names: http://earth-info.nga.mil/gns/html/gis_contryfiles.html
+#               Column names: http://earth-info.nga.mil/gns/html/help.htm
 #
 # COPYRIGHT:    (c) 2005 GRASS Development Team
 #
@@ -129,7 +129,7 @@ g.message "Converted $NUM_PLACES place names."
 #
 # pump data into GRASS:
 cat ${TMPFILE}_ascii.csv | v.in.ascii cat=0 x=5 y=4 fs=';' \
-  out=$FILE columns='rc integer,uf1 integer,uni integer,lat double precision,lon double precision,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(2),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
+  out=$FILE columns='rc integer,uf1 integer,uni integer,lat double precision,lon double precision,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(3),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
 
 rm -f ${TMPFILE}_ascii.csv
 
