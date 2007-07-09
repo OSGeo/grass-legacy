@@ -34,7 +34,9 @@ endif
 
 SUBDIRS = $(SUBDIRS2)
 
-default: subdirs htmldir
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 

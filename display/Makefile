@@ -46,7 +46,9 @@ SUBDIRS = \
 	d.where \
 	d.zoom
 
-default: subdirs
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 

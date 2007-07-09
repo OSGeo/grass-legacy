@@ -10,7 +10,9 @@ HTML2MAN = GRASS_PERL=${PERL} VERSION_NUMBER=${GRASS_VERSION_NUMBER} sh $(GRASS_
 
 MANPAGES := $(patsubst $(HTMLDIR)/%.html,$(MANDIR)/%.$(SECT),$(wildcard $(HTMLDIR)/*.html))
 
-default: $(MANDIR) $(MANPAGES)
+default: $(MANPAGES)
+
+$(MANPAGES): $(MANDIR)
 
 $(MANDIR):
 	$(MKDIR) $(MANDIR)

@@ -148,7 +148,9 @@ ifneq ($(strip $(TIFFLIB)),)
     SUBDIRS += $(TIFFBASED)
 endif
 
-default: subdirs htmldir
+default: htmldir
+
+htmldir: subdirs 
 
 clean: cleansubdirs
 

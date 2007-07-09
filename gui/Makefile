@@ -11,7 +11,9 @@ ifneq ($(strip $(TCLTKLIBS)),)
     SUBDIRS += $(TCLTKBASED)
 endif
 
-default: subdirs
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 
