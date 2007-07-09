@@ -610,6 +610,8 @@ class DisplayAttributesDialog(wx.Dialog):
         self.qdist       = qdist
         self.action      = action
 
+        self.selectedLines = [] # id of selected feature
+
         self.mapInfo = VectorAttributesInfo(self.map)
 
         if self.layer > 0 and \
@@ -636,7 +638,10 @@ class DisplayAttributesDialog(wx.Dialog):
                     self.layer != layer:
                 continue
 
-            found, selected = self.mapInfo.SelectFromTable(layer, self.cat, self.queryCoords, self.qdist)
+            # line detected, number of selected records
+            line, selected = self.mapInfo.SelectFromTable(layer, self.cat,
+                                                          self.queryCoords, self.qdist)
+
             if (self.action == "add" and selected > 0) or \
                    self.action == "update":
                 self.SetTitle(_("Update attributes"))
@@ -645,9 +650,12 @@ class DisplayAttributesDialog(wx.Dialog):
             else:
                 self.SetTitle(_("Display attributes"))
 
-            if not found or \
-                   (self.action != "add" and selected == 0):
+            if not line or \
+                    (self.action != "add" and selected == 0):
                 continue
+
+            if line:
+                self.selectedLines.append(line)
 
             panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
             notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
@@ -819,7 +827,8 @@ class VectorAttributesInfo:
         """Check DB connection"""
         layerCommand = cmd.Command(cmd=["v.db.connect",
                                         "-g", "--q",
-                                        "map=%s" % self.map])
+                                        "map=%s" % self.map,],
+                                   dlgMsg='txt')
         if layerCommand.returncode != 0:
             return False
 
@@ -863,11 +872,11 @@ class VectorAttributesInfo:
         """
         table = self.layers[layer]["table"]
         selected = 0
-        found = False
+        line = None
         if queryCoords:
             # snapping distance
             cmdWhat = cmd.Command(cmd=['v.what',
-                                       '-a', '--q',
+                                       '-a', '-d', '--q',
                                        'map=%s' % self.map,
                                        'east_north=%f,%f' % \
                                        (float(queryCoords[0]), float(queryCoords[1])),
@@ -882,12 +891,13 @@ class VectorAttributesInfo:
                         name = name.strip()
                         self.tables[table][name][1] = value.strip()
                         selected+=1;
-                    if "category" in item.lower():
+                    if "line:" in item.lower():
+                        line = int(item.split(':')[1].strip())
+                    elif "category:" in item.lower():
                         self.tables[table]["cat"][1] = item.split(':')[1].strip()
-                    elif "key column" in item.lower():
+                    elif "key column:" in item.lower():
                         read = True
         else:
-            found = True
             # select values
             selectCommand = cmd.Command(cmd=["v.db.select", "-v", "--q",
                                              "map=%s" % self.map,
@@ -900,7 +910,7 @@ class VectorAttributesInfo:
                     self.tables[table][name][1] = value
                     selected+=1
 
-        return (found, selected)
+        return (line, selected)
 
 def main(argv=None):
     if argv is None:

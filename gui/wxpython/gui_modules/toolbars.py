@@ -26,7 +26,8 @@ sys.path.append(gmpath)
 
 import cmd
 import grassenv
-import digit
+from digit import Digit as Digit
+from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -160,8 +161,8 @@ class DigitToolbar(AbstractToolbar):
     """
 
     def __init__(self, parent, map):
-        self.mapcontent = map
-        self.parent     = parent
+        self.mapcontent    = map    # Map class instance
+        self.parent        = parent #
 
         # selected map to digitize
         self.layerSelectedID    = None
@@ -314,11 +315,14 @@ class DigitToolbar(AbstractToolbar):
         pass
 
     def OnMoveLine(self, event):
-        pass
-
+        Debug.msg(4, "Digittoolbar.OnMoveLine():")
+        self.action = "moveLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+        
     def OnDeleteLine(self, event):
-        self.action = "deleteLine"
         Debug.msg(4, "Digittoolbar.OnDeleteLine():")
+        self.action = "deleteLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnDisplayCats(self, event):
         pass
@@ -332,9 +336,8 @@ class DigitToolbar(AbstractToolbar):
 
     def OnSettings(self, event):
         """Show settings dialog"""
-        settingsDialog = digit.DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
-                                                   style=wx.DEFAULT_DIALOG_STYLE)
-        settingsDialog.Show()
+        DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
+                            style=wx.DEFAULT_DIALOG_STYLE).Show()
         
     def OnSelectMap (self, event):
         """
@@ -360,7 +363,7 @@ class DigitToolbar(AbstractToolbar):
         """
         try:
             self.layerSelectedID = self.layers.index(layerSelected)
-            mapName = self.layers[self.layerSelectedID].name
+            mapLayer = self.layers[self.layerSelectedID]
         except:
             return False
 
@@ -370,26 +373,37 @@ class DigitToolbar(AbstractToolbar):
         # set initial category number for new features (layer=1), etc.
 
         Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
-                   (self.layerSelectedID, mapName))
+                   (self.layerSelectedID, mapLayer.name))
         
-        digit.Digit.ReInitialize(mapName)
+        Digit.ReInitialize(mapLayer.name, self.parent.MapWindow)
 
+        # deactive layer 
+        self.mapcontent.ChangeLayerActive(mapLayer, False)
+
+        # draw map content
+        #self.driver.DrawMap()
+        
         return True
 
     def StopEditing (self, layerSelected):
         """
         Unmark currently enabled map layer.
         """
-        try:
-            if self.layers[self.layerSelectedID] == layerSelected:
-                self.layerSelectedID = None
-                Debug.msg (4, "DigitToolbar.StopEditing(): layerSelectedID=%d layer=%s" % \
-                           (self.layerSelectedID, self.layers[self.layerSelectedID].name))
-                self.combo.SetValue ('Select vector map')
-                return True
-        except:
-            return False
+        if self.layers[self.layerSelectedID] == layerSelected:
+            self.layerSelectedID = None
+            Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
+                       (layerSelected.name))
+            self.combo.SetValue ('Select vector map')
+            
+            # re-active layer
+            self.mapcontent.ChangeLayerActive(layerSelected, True)
 
+            Digit.ReInitialize()
+            
+            return True
+
+        return False
+            
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.

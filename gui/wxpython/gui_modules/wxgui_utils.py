@@ -30,8 +30,6 @@ import string
 
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
-#gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
-#sys.path.append(gmpath)
 
 import select
 import menuform
@@ -340,13 +338,13 @@ class LayerTree(CT.CustomTreeCtrl):
             event.Skip()
             return
 
+        # mark layer as 'edited'
+        self.mapdisplay.digittoolbar.StopEditing(maplayer)
+
         if self.mapdisplay.digittoolbar: # disable the tool
             self.mapdisplay.RemoveToolbar("digit")
         else: # tool already enabled
             pass
-
-        # mark layer as 'edited'
-        self.mapdisplay.digittoolbar.StopEditing (maplayer)
 
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
