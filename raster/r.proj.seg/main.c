@@ -131,13 +131,13 @@ int main (int argc, char **argv)
 	module = G_define_module();
 	module->keywords = _("raster");
 	module->description =
-		_("Re-project a raster map from one location to the current location.");
+		_("Re-projects a raster map from one location to the current location.");
 
 	inmap = G_define_option();
 	inmap->key = "input";
 	inmap->type = TYPE_STRING;
 	inmap->required = YES;
-	inmap->description = _("Input raster map");
+	inmap->description = _("Name of input raster map");
 
 	inlocation = G_define_option();
 	inlocation->key = "location";

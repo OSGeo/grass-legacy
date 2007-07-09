@@ -45,7 +45,7 @@ void supported_formats(char **formats)
     db_init_string(&gdal_formats);
 
     if (*formats)
-	fprintf(stdout, _("Supported Formats:\n"));
+	fprintf(stdout, _("Supported formats:\n"));
 
     for (iDr = 0; iDr < GDALGetDriverCount(); iDr++) {
 
@@ -339,7 +339,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->description = _("Exports GRASS raster into GDAL supported formats");
+    module->description = _("Exports GRASS raster into GDAL supported formats.");
     module->keywords = _("raster, export");
 
     flag_l = G_define_flag();

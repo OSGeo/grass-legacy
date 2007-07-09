@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->gisprompt = "old,cell,raster";
-    parm.input->description = _("Name of an existing raster map");
+    parm.input->description = _("Name of input raster map");
 
     parm.output = G_define_option();
     parm.output->key = "output";
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 
     flag.gmt_hd = G_define_flag();
     flag.gmt_hd->key = 'h';
-    flag.gmt_hd->description = _("Export Array with GMT compatible header");
+    flag.gmt_hd->description = _("Export array with GMT compatible header");
 
     flag.BIL_hd = G_define_flag();
     flag.BIL_hd->key = 'b';
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     flag.swap = G_define_flag();
     flag.swap->key = 's';
-    flag.swap->description = _("Byte Swap output");
+    flag.swap->description = _("Byte swap output");
 
     if (G_parser(argc, argv))
 	exit (EXIT_FAILURE);
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     mapset = G_find_cell(name, "");
 
     if (mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     fd = G_open_cell_old(name, mapset);
     if (fd < 0)
@@ -178,7 +178,7 @@ int main(int argc, char *argv[])
 
 	/* Swap Header if Required */
 	if (flag.swap->answer) {
-            G_message(_("Swapping Header Data"));
+            G_message(_("Swapping header data"));
 	    TIFFSwabLong((uint32 *) & header.nx);
 	    TIFFSwabLong((uint32 *) & header.ny);
 	    TIFFSwabLong((uint32 *) & header.node_offset);
@@ -313,22 +313,22 @@ int main(int argc, char *argv[])
     ncols = G_window_cols();
 
     if (out_type == CELL_TYPE) {
-	G_message(_("Exporting Raster as integer values (bytes=%d)"),
+	G_message(_("Exporting raster as integer values (bytes=%d)"),
 		sizeof(short));
 	if (flag.gmt_hd->answer)
 	    G_message(_("Writing GMT integer format ID=2"));
     }
     if (out_type == FCELL_TYPE) {
-	G_message(_("Exporting Raster as floating values (bytes=%d)"),
+	G_message(_("Exporting raster as floating values (bytes=%d)"),
 		sizeof(float));
 	if (flag.gmt_hd->answer)
 	    G_message(_("Writing GMT float format ID=1"));
     }
     if (out_type == DCELL_TYPE)
-	G_message(_("Exporting Raster as double values(bytes=%d)"),
+	G_message(_("Exporting raster as double values(bytes=%d)"),
 		sizeof(double));
 
-    G_message(_("Using the Current Region settings ..."));
+    G_message(_("Using the current region settings ..."));
     G_message(_("north=%f"), region.north);
     G_message(_("south=%f"), region.south);
     G_message(_("east=%f"), region.east);
