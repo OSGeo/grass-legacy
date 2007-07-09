@@ -4,6 +4,7 @@ MODULE: digit
 CLASSES:
  * VEdit
  * VDigit
+ * DisplayDriver
  * SettingsDialog
  
 PURPOSE: Digitization tool wxPython GUI prototype
@@ -23,6 +24,9 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
+import sys
+import string
+
 import wx
 import wx.lib.colourselect as csel
 
@@ -30,12 +34,25 @@ import cmd
 import dbm
 from debug import Debug as Debug
 
+try:
+    # replace with the path to the GRASS SWIG-Python interface
+    g6libPath = "/hardmnt/schiele0/ssi/landa/src/grass6/swig/python"
+    # g6libPath = "/usr/src/gis/grass6/swig/python"
+    sys.path.append(g6libPath)
+    import python_grass6 as g6lib
+except:
+    print >> sys.stderr, "For running digitization tool you need to enable GRASS SWIG-Python interface.\n" \
+          "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
+          "Will be replaced by C/C++ display driver."
+
 class AbstractDigit:
     """
     Abstract digitization class
     """
     def __init__(self, settings=None):
-        self.map = None
+        self.map    = None
+        self.driver = None
+
         if not settings:
             self.settings = {}
             # symbology
@@ -51,6 +68,7 @@ class AbstractDigit:
             self.settings["symbolCentroidDup"] = (True, "violet")
             self.settings["symbolNodeOne"] = (True, "red")
             self.settings["symbolNodeTwo"] = (True, "dark green")
+            self.settings["symbolVertex"] = (True, "pink")
             
             # display
             self.settings["snapping"] = (10, "screen pixels") # value, unit
@@ -102,11 +120,20 @@ class AbstractDigit:
 
         return self.settings["category"]
 
-    def ReInitialize(self, map):
+    def ReInitialize(self, map=None, mapwindow=None):
         """Re-initialize settings according selected map layer"""
         self.map = map
-        self.SetCategory()
-    
+        
+        if self.map:
+            Debug.msg (3, "AbstractDigit.ReInitialize(): map=%s" % \
+                       map)
+
+            self.SetCategory()
+            self.driver = DisplayDriver(map, mapwindow)
+        else:
+            del self.driver
+            self.driver = None
+
 class VEdit(AbstractDigit):
     """
     Prototype of digitization class based on v.edit command
@@ -133,8 +160,9 @@ class VEdit(AbstractDigit):
 
         Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, layer=%d, cat=%d, x=%f, y=%f" % \
                    (map, type, layer, cat, x, y))
-        
-        self._AddFeature (map=map, input=addstring)
+        Debug.msg (4, "Vline.AddPoint(): input=%s" % addstring)
+                
+        self._AddFeature (map=map, input=addstring, flags=['-s'])
 
     def AddLine (self, map, type, coords):
         """
@@ -148,8 +176,10 @@ class VEdit(AbstractDigit):
         
         if type == "boundary":
             key = "B"
+            flags = ['-c', '-s'] # close boundaries
         else:
             key = "L"
+            flags = ['-s']
             
         addstring="""%s %d 1\n""" % (key, len(coords))
         for point in coords:
@@ -162,20 +192,58 @@ class VEdit(AbstractDigit):
                    (key, layer, cat, coords))
         Debug.msg (4, "Vline.AddLine(): input=%s" % addstring)
 
-        self._AddFeature (map=map, input=addstring)
+        self._AddFeature (map=map, input=addstring, flags=flags)
 
-    def _AddFeature (self, map, input):
+    def _AddFeature (self, map, input, flags):
         """
         General method which adds feature to the vector map
         """
-        command = ["v.edit", "-n", "--q",
+        threshold = Digit.settings["snapping"][0]
+        if Digit.settings["snapping"][1] == "screen pixels":
+            # pixel -> cell
+            print "#", threshold
+            threshold = self.driver.mapwindow.Distance(beginpt=(0,0),
+                                                       endpt=(threshold,0))
+                                                       
+
+        print "#", threshold
+
+        command = ["v.edit", "-n", "--q", 
                    "map=%s" % map,
                    "tool=add",
-                   "thresh=-1.0" ]
+                   "thresh=%f" % threshold]
+        # additional flags
+        for flag in flags:
+            command.append(flag)
 
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
 
+        # redraw map
+        self.driver.ReDrawMap(map)
+        
+    def DeleteSelectedLines(self):
+        """Delete vector feature from map"""
+
+        if not self.driver.highlighted:
+            Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
+                      self.driver.highligted)
+            return False
+        
+        ids = ",".join(["%d" % v for v in self.driver.highlighted])
+        command = ["v.edit", "-n", "--q",
+                   "map=%s" % self.map,
+                   "tool=delete",
+                   "ids=%s" % ids]
+
+        # run the command
+        vedit = cmd.Command(cmd=command)
+
+        # redraw map
+        self.driver.ReDrawMap(self.map)
+
+        return True
+    
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -184,6 +252,252 @@ class VDigit(AbstractDigit):
     """
     pass
 
+class DisplayDriver:
+    """
+    Experimental display driver implemented in Python using
+    GRASS-Python SWIG interface
+
+    Note: This will be in the future rewritten in C/C++
+    """
+    def __init__(self, map, mapwindow):
+        self.mapwindow   = mapwindow
+        self.ids         = {}   # dict[g6id] = [DCid]
+        self.highlighted = [] # list of highlighted objects (g6id)
+
+        g6lib.G_gisinit('')
+
+        name, mapset = map.split('@')
+
+        Debug.msg(4, "DisplayDriver.__init__(): name=%s, mapset=%s" % \
+                      (name, mapset))
+
+        # define map structure
+        self.mapInfo = g6lib.Map_info()
+        # define open level (level 2: topology)
+        g6lib.Vect_set_open_level(2)
+
+        # open existing map
+        # python 2.5 (unicode) -> str()
+        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
+
+        # auxilary structures
+        self.points = g6lib.Vect_new_line_struct();
+        self.cats = g6lib.Vect_new_cats_struct();
+
+    def __del__(self):
+        if self.mapInfo:
+            g6lib.Vect_close(self.mapInfo)
+        if self.points:
+            g6lib.Vect_destroy_line_struct(self.points)
+        if self.cats:
+            g6lib.Vect_destroy_cats_struct(self.cats)
+
+    def __SetPen(self, line, symbol):
+        # see include/vect/dig_defines.h
+        # define GV_POINT      0x01
+        # define GV_LINE       0x02
+        # define GV_BOUNDARY   0x04
+        # define GV_CENTROID   0x08
+        # define GV_FACE       0x10
+        # define GV_KERNEL     0x20
+        # define GV_AREA       0x40
+        # define GV_VOLUME     0x80
+
+        if line in self.highlighted:
+            symbol = "symbolHighlight"
+        
+        width = Digit.settings["lineWidth"][0]
+        
+        if Digit.settings[symbol][0] in [True, None]:
+            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=Digit.settings[symbol][1],
+                                                                 width=width, style=wx.SOLID)
+        else:
+            self.mapwindow.pen = self.mapwindow.polypen = None
+
+    def SetHighlighted(self, ids):
+        """Set highlighted objects in PseudoDC
+
+        For disable highlighting set ids=[]
+        """
+        # reset
+        self.highlighted = []
+        
+        for line in ids:
+            self.highlighted.append(line)
+
+        Debug.msg(4, "DisplayDriver.SetHightlighted(): dcIds=%s, lineIds=%s" % \
+                      (ids, self.highlighted))
+
+    def SelectLinesByBox(self, rect):
+        """Alternative method for selecting vector feature
+        in the map by given bounding box.
+
+        rect = ((x1, y1), (x2, y2))
+        This method should be in the future reimplemented using
+        PseudoDC.FindObjectInsideBBox()"""
+
+        type = 255 # all types (see include/vect/dig_defines.h)
+        list = g6lib.Vect_new_list()
+        bbox = g6lib.Vect_new_line_struct()
+
+        x1, y1 = rect[0]
+        x2, y2 = rect[1]
+        dx = abs(x2 - x1)
+        dy = abs(y2 - y1)
+        
+        g6lib.Vect_append_point(bbox, x1, y1, 0)
+        g6lib.Vect_append_point(bbox, x2, y1, 0)
+        g6lib.Vect_append_point(bbox, x2, y2, 0)
+        g6lib.Vect_append_point(bbox, x1, y2, 0)
+        g6lib.Vect_append_point(bbox, x1, y1, 0)
+        
+        g6lib.Vect_select_lines_by_polygon(self.mapInfo, bbox,
+                                           0, None,
+                                           type, list)
+
+        self.highligted = []
+        for idx in range(list.n_values):
+            line = g6lib.intArray_getitem(list.value, idx)
+            if line not in self.highlighted:
+                self.highlighted.append(line)
+
+        Debug.msg(4, "DisplayDriver.SelectLinesByBox(%s): n=%d, ids=%s" % \
+                  (rect, list.n_values, self.highlighted))
+        
+        g6lib.Vect_destroy_line_struct(bbox)
+        g6lib.Vect_destroy_list(list)
+
+        return self.highlighted
+        
+    def ReDrawMap(self, map):
+        """Reopen map and draw its content in PseudoDC"""
+        # close map
+        if self.mapInfo:
+            g6lib.Vect_close(self.mapInfo)
+        
+        # re-open map
+        name, mapset = map.split('@')
+        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
+
+        self.DrawMap()
+        
+    def DrawMap(self):
+        """Draw map content in PseudoDC"""
+        Debug.msg(4, "DisplayDriver.DrawMap()")
+        self.DisplayLines()
+
+    def DisplayLines(self):
+        """Display all lines in PseudoDC"""
+        nlines = g6lib.Vect_get_num_lines(self.mapInfo)
+        Debug.msg(4, "DisplayDriver.DisplayLines(): nlines=%d" % nlines)
+        #symb_set_driver_color ( SYMB_HIGHLIGHT );
+        for line in range(1, nlines + 1):
+            #symb = LineSymb[i];
+            #if ( !Symb[symb].on ) continue;
+            self.DisplayLine(line)
+
+        return nlines
+    
+    def DisplayLine(self, line):
+        """Display line (defined by id) in PseudoDC"""
+        Debug.msg(4, "DisplayDriver.DisplayLine(): line=%d" % line)
+        
+        if not g6lib.Vect_line_alive (self.mapInfo, line):
+            return
+        
+        type = g6lib.Vect_read_line (self.mapInfo, self.points, self.cats, line)
+
+        Debug.msg (4, "DisplayDriver.DisplayLine(): line=%d type=%d" % \
+                   (line, type))
+
+        # add id
+        self.ids[line] = []
+        self.DisplayPoints(line, type, self.points)
+
+    def DisplayNodes(self, line):
+        """Display nodes of the given line"""
+        Debug.msg(4, "DisplayDriver.DisplayNodes(): line=%d" % line)
+
+        n1 = g6lib.new_intp()
+        n2 = g6lib.new_intp()
+        x = g6lib.new_doublep()
+        y = g6lib.new_doublep()
+        z = g6lib.new_doublep()
+
+        nodes = [n1, n2]
+        g6lib.Vect_get_line_nodes(self.mapInfo, line, n1, n2)
+        
+        for nodep in nodes:
+            node = g6lib.intp_value(nodep)
+            g6lib.Vect_get_node_coor(self.mapInfo, node,
+                                     x, y, z)
+            coords = (self.mapwindow.Cell2Pixel(g6lib.doublep_value(x),
+                                                g6lib.doublep_value(y)))
+
+            if g6lib.Vect_get_node_n_lines(self.mapInfo, node) == 1:
+                self.__SetPen(line, "symbolNodeOne") # one line
+            else:
+                self.__SetPen(line, "symbolNodeTwo") # two lines
+
+            self.ids[line].append(self.mapwindow.DrawCross(coords, size=5))
+
+        g6lib.delete_doublep(x)
+        g6lib.delete_doublep(y)
+        g6lib.delete_doublep(z)
+        g6lib.delete_intp(n1)
+        g6lib.delete_intp(n2)
+
+    def DisplayPoints(self, line, type, points):
+        """Draw points in PseudoDC"""
+
+        coords = []
+        npoints = points.n_points
+        Debug.msg(4, "DisplayDriver.DisplayPoints() npoints=%d" % npoints);
+
+        for idx in range(npoints):
+            x = g6lib.doubleArray_getitem(self.points.x, idx)
+            y = g6lib.doubleArray_getitem(self.points.y, idx)
+            z = g6lib.doubleArray_getitem(self.points.z, idx)
+            coords.append(self.mapwindow.Cell2Pixel(x, y))
+
+        if len(coords) > 1: # -> line
+            # draw line
+            if type == g6lib.GV_BOUNDARY:
+                leftp = g6lib.new_intp()
+                rightp = g6lib.new_intp()
+                g6lib.Vect_get_line_areas(self.mapInfo, line,
+                                          leftp, rightp)
+                left, right = g6lib.intp_value(leftp), g6lib.intp_value(rightp)
+                if left == 0 and right == 0:
+                    self.__SetPen(line, "symbolBoundaryNo")
+                elif left > 0 and right > 0:
+                    self.__SetPen(line, "symbolBoundaryTwo")
+                else:
+                    self.__SetPen(line, "symbolBoundaryOne")
+                g6lib.delete_intp(leftp)
+                g6lib.delete_intp(rightp)
+            else: # GV_LINE
+                self.__SetPen(line, "symbolLine")
+            self.ids[line].append(self.mapwindow.DrawLines(coords))
+            # draw verteces
+            self.__SetPen(line, "symbolVertex")
+            for idx in range(1, npoints-1):
+                self.ids[line].append(self.mapwindow.DrawCross(coords[idx], size=4))
+            # draw nodes
+            self.DisplayNodes(line)
+        else:
+            if type == g6lib.GV_CENTROID:
+                cret = g6lib.Vect_get_centroid_area(self.mapInfo, line)
+                if cret > 0: # -> area
+                    self.__SetPen(line, "symbolCentroidIn")
+                elif cret == 0:
+                    self.__SetPen(line, "symbolCentroidOut")
+                else:
+                    self.__SetPen(line, "symbolCentroidDup")
+            else:
+                self.__SetPen(line, "symbolPoint")
+            self.ids[line].append(self.mapwindow.DrawCross(coords[0], size=5))
+        
 class DigitSettingsDialog(wx.Dialog):
     """
     Standard settings dialog for digitization purposes
@@ -371,7 +685,8 @@ class DigitSettingsDialog(wx.Dialog):
             ("Centroid (outside area)", "symbolCentroidOut"),
             ("Centroid (duplicate in area)", "symbolCentroidDup"),
             ("Node (one line)", "symbolNodeOne"),
-            ("Node (two lines)", "symbolNodeTwo"))
+            ("Node (two lines)", "symbolNodeTwo"),
+            ("Vertex", "symbolVertex"))
 
     def OnChangeCategoryMode(self, event):
         """Change category mode"""
