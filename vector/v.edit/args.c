@@ -74,7 +74,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> maxdist->type        = TYPE_DOUBLE;
     params -> maxdist->required    = NO;
     params -> maxdist->multiple    = NO;
-    params -> maxdist->label       = _("Snapping threshold distance");
+    params -> maxdist->label       = _("Threshold distance");
     params -> maxdist->description = _("'-1' for no limit");
     params -> maxdist->answer      = "-1";
 
@@ -129,18 +129,18 @@ int parser(int argc, char*argv[], struct GParams *params,
 
     params -> snap = G_define_flag();
     params -> snap -> key = 's';
-    params -> snap -> label = _("Use snapping to the nearest feature");
-    params -> snap -> description = _("See Snapping threshold distance");
+    params -> snap -> label = _("Snap added features to the nearest existing feature");
+    params -> snap -> description = _("For tool 'add', see also 'thresh' parameter");
 
     params -> snap2vertex = G_define_flag();
     params -> snap2vertex -> key = 'v';
-    params -> snap2vertex -> label = _("Snapping also to vertex");
-    params -> snap2vertex -> description = _("See Snapping threshold distance");
+    params -> snap2vertex -> label = _("Snap also to vertex (not implemented yet)");
+    params -> snap2vertex -> description = _("For tool 'add', see also 'thresh' parameter");
 
     params -> close = G_define_flag();
     params -> close -> key = 'c';
     params -> close -> label = _("Close boundaries");
-    params -> close -> description = _("See Snapping threshold distance");
+    params -> close -> description = _("For tool 'add', see also 'thresh' parameter");
 
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
