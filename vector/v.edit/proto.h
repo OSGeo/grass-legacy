@@ -8,9 +8,11 @@ int parser(int argc, char*argv[], struct GParams *params, enum mode *action_mode
 int do_del(struct Map_info *Map, struct ilist *List, int print);
 
 /* a2b.c */
-int asc_to_bin(FILE *, struct Map_info *);
+int asc_to_bin(FILE *, struct Map_info *, struct ilist *);
 int read_head ( FILE * dascii, struct Map_info *Map );
 int do_close(struct Map_info *Map, int type, double thresh);
+int do_snapping(struct Map_info *Map, struct ilist* List, int layer,
+		double thresh, int to_vertex);
 
 /* move.c */
 int do_move(struct Map_info *Map, struct ilist *List, int print,
@@ -36,7 +38,7 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print);
 
 /* snap.c */
 int do_snap(struct Map_info *Map, struct ilist *List, int print,
-	    int layer);
+	    int layer, struct ilist *);
 
 /* select.c */
 int do_print_selected(struct ilist *List);

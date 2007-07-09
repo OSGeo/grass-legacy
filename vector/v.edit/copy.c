@@ -46,11 +46,11 @@ int do_copy (struct Map_info *Map, struct ilist *List, int print)
 
         type = Vect_read_line(Map, Points, Cats, line);
 
-        G_debug(3, "Copying line type [%d] number [%d]", type, line);
+        G_debug(3, "Copying line type %d number %d", type, line);
 
         /* copy */
         if (Vect_write_line (Map, type, Points, Cats) < 0) {
-            G_warning (_("Cannot copy line [%d], editing terminated"), line);
+            G_warning (_("Cannot copy line %d, editing terminated"), line);
 	    return -1;
 	}
         
@@ -64,7 +64,7 @@ int do_copy (struct Map_info *Map, struct ilist *List, int print)
 	nlines_copied++;
     }
 
-    G_message (_("[%d] features copied"), nlines_copied);
+    G_message (_("%d features copied"), nlines_copied);
 
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);

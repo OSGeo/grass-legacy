@@ -47,7 +47,7 @@ int do_move(struct Map_info *Map, struct ilist *List, int print,
 
         type = Vect_read_line(Map, Points, Cats, line);
 
-        G_debug(3, "Moving type [%d] number [%d]", type, line);
+        G_debug(3, "Moving type %d number %d", type, line);
 
         /* move */
         for (j = 0; j < Points -> n_points; j++) {
@@ -60,7 +60,7 @@ int do_move(struct Map_info *Map, struct ilist *List, int print,
 	newline = Vect_rewrite_line (Map, line, type, Points, Cats);
 
         if (newline < 0)  {
-	  G_warning(_("Cannot rewrite line [%d]"),
+	  G_warning(_("Cannot rewrite line %d"),
 		    line);
             return -1;
         }
@@ -78,7 +78,7 @@ int do_move(struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
 
-    G_message(_("[%d] features moved"), nlines_moved);
+    G_message(_("%d features moved"), nlines_moved);
 
     return nlines_moved;
 }

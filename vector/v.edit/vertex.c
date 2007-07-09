@@ -94,7 +94,7 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
 	
 	if (rewrite) {
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_warning(_("Cannot rewrite line [%d]"), line);
+		G_warning(_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -113,8 +113,8 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_cats_struct(Cats);
 /*     G_free ((void *) moved); */
 
-    G_message(_("[%d] vertices moved"), nvertices_moved);
-    G_message(_("[%d] lines modified"), nlines_modified);
+    G_message(_("%d vertices moved"), nvertices_moved);
+    G_message(_("%d lines modified"), nlines_modified);
     
     return nlines_modified;
 }
@@ -185,7 +185,7 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
 	if (rewrite) {
 	    Vect_line_prune (Points);
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning(_("Cannot rewrite line [%d]"), line);
+		G_warning(_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 		
@@ -203,8 +203,8 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 
-    G_message(_("[%d] vertices added"), nvertices_added);    
-    G_message(_("[%d] lines modified"), nlines_modified);
+    G_message(_("%d vertices added"), nvertices_added);    
+    G_message(_("%d lines modified"), nlines_modified);
 
     return nlines_modified;
 }
@@ -270,7 +270,7 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
 	if (rewrite) {
 	    /* rewrite the line */
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning (_("Cannot rewrite line [%d]"), line);
+		G_warning (_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -288,8 +288,8 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
     
-    G_message(_("[%d] vertices removed"), nvertices_removed);
-    G_message(_("[%d] lines modified"), nlines_modified);
+    G_message(_("%d vertices removed"), nvertices_removed);
+    G_message(_("%d lines modified"), nlines_modified);
 
     return nlines_modified;
 }

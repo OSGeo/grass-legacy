@@ -97,7 +97,7 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line [%d]"), line);
+		G_warning(_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -117,7 +117,7 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    if (newline  < 0)  {
-		G_warning(_("Cannot rewrite line [%d]"), line);
+		G_warning(_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -131,7 +131,7 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
 	} /* for each bounding box */
     } /* for each selected line */
 
-    G_message(_("[%d] lines broken"), nlines_modified);
+    G_message(_("%d lines broken"), nlines_modified);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_line_struct(Points2);
@@ -246,7 +246,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	}
     
 	if (!n_on_line[0] || !n_on_line[1]) {
-	    G_warning (_("Cannot connect line id [%d] to line [%d]"), line[0], line[1]);
+	    G_warning (_("Cannot connect line id %d to line %d"), line[0], line[1]);
 	    continue;
 	}
 
@@ -274,7 +274,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 		 dist[0], dist[1], pnt_idx[0], nx[pnt_idx[1]], ny[pnt_idx[1]], dist_connect, thresh);
 
 	if (thresh >= 0.0 && dist_connect > thresh) {
-	    G_warning (_("Cannot connect line id [%d] to line [%d] because of threshold distance, "
+	    G_warning (_("Cannot connect line id %d to line %d because of threshold distance, "
 			 "run v.edit with other threshold distance value"),
 		       line[0], line[1]);
 	    continue;
@@ -293,7 +293,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	    /* rewrite the first line */
 	    newline = Vect_rewrite_line (Map, line[0], type[0], Points[0], Cats[0]);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line [%d]"), line[0]);
+		G_warning(_("Cannot rewrite line %d"), line[0]);
 		return -1;
 	    }
 	    Vect_list_append (List_updated, newline);
@@ -329,7 +329,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	if (connected)
 	    nlines_modified += 2;
 	else
-	    G_warning (_("Cannot connect line id [%d] to line [%d]"), line[0], line[1]);
+	    G_warning (_("Cannot connect line id %d to line %d"), line[0], line[1]);
     } /* for each line pair */
 
     /* destroy structures */
@@ -342,7 +342,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_list (List_break);
     Vect_destroy_list (List_updated);
 
-    G_message(_("[%d] lines connected"), nlines_modified);
+    G_message(_("%d lines connected"), nlines_modified);
 
     return nlines_modified;
 }

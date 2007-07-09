@@ -4,6 +4,7 @@ int parser(int argc, char*argv[], struct GParams *params,
 	   enum mode *action_mode)
 {
     params -> map = G_define_standard_option(G_OPT_V_MAP);
+    params -> map -> description = _("Name of vector map to edit");
 
     params -> fld = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -73,7 +74,8 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> maxdist->type        = TYPE_DOUBLE;
     params -> maxdist->required    = NO;
     params -> maxdist->multiple    = NO;
-    params -> maxdist->description = _("Threshold distance (-1 for no limit)");
+    params -> maxdist->label       = _("Snapping threshold distance");
+    params -> maxdist->description = _("'-1' for no limit");
     params -> maxdist->answer      = "-1";
 
     params -> id = G_define_standard_option(G_OPT_V_CATS);
@@ -125,6 +127,21 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> print -> key = 'i';
     params -> print -> description = _("Print ID's of edited features");
 
+    params -> snap = G_define_flag();
+    params -> snap -> key = 's';
+    params -> snap -> label = _("Use snapping to the nearest feature");
+    params -> snap -> description = _("See Snapping threshold distance");
+
+    params -> snap2vertex = G_define_flag();
+    params -> snap2vertex -> key = 'v';
+    params -> snap2vertex -> label = _("Snapping also to vertex");
+    params -> snap2vertex -> description = _("See Snapping threshold distance");
+
+    params -> close = G_define_flag();
+    params -> close -> key = 'c';
+    params -> close -> label = _("Close boundaries");
+    params -> close -> description = _("See Snapping threshold distance");
+
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
     params -> header -> description  = _("Do not expect header of input data");
@@ -137,11 +154,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> boundary = G_define_flag();
     params -> boundary -> key = 'b';
     params -> boundary -> description = _("Assign cats to boundaries too");
-    */
-    params -> close = G_define_flag();
-    params -> close -> key = 'c';
-    params -> close -> description = _("Do not close boundaries");
-    /*
+
     params -> print_cat = G_define_flag();
     params -> print_cat -> key = 'c';
     params -> print_cat -> description = _("Print category numbers instead of ID's");

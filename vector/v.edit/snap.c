@@ -28,11 +28,12 @@
  * return -1 on error
  */
 int do_snap(struct Map_info *Map, struct ilist *List, int print,
-	    int layer)
+	    int layer, struct ilist *List_updated)
 {
     struct line_pnts *Points1, *Points2;
     struct line_cats *Cats1, *Cats2;
     int line1, line2, type1, type2, cat1, cat2;
+    int newline;
     double mindist;
     int mindistidx;
     
@@ -42,9 +43,12 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print,
     Cats2 = Vect_new_cats_struct();
 
     if (List->n_values != 2) {
-        G_message(_("Cannot snap selected lines. Only 2 lines can be snapped at the time"));
-		    
+        G_message(_("Cannot snap selected lines. Only %d lines can be snapped at the time"), 2);
         return -1;
+    }
+
+    if (List_updated) {
+	Vect_reset_list(List_updated);
     }
 
     line1 = List -> value[0];
@@ -81,9 +85,14 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print,
                 break;
     }
 
-    if ( Vect_rewrite_line (Map, line2, type2, Points2, Cats2) < 0)  {
-	G_warning(_("Cannot snap lines [%d,%d]"), line1, line2);
+    newline = Vect_rewrite_line (Map, line2, type2, Points2, Cats2);
+    if (newline < 0) {
+	G_warning(_("Cannot snap lines %d,%d"), line1, line2);
         return -1;
+    }
+    
+    if (List_updated) {
+	Vect_list_append(List_updated, newline);
     }
 
     if (print) 
@@ -92,7 +101,7 @@ int do_snap(struct Map_info *Map, struct ilist *List, int print,
     Vect_cat_get (Cats1, layer, &cat1); /* if not found, cat1 is set to -1 */
     Vect_cat_get (Cats2, layer, &cat2);
 
-    G_message(_("Line id/cat [%d/%d] snapped to line [%d/%d]"),
+    G_message(_("Line id/cat %d/%d snapped to line %d/%d"),
 	      line2, cat2,
 	      line1, cat1);
 
