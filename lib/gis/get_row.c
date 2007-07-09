@@ -932,7 +932,7 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 
     if (row > G__.window.rows || row < 0)   
     {
-	G_warning("[%s in %s] - read request for row %d is outside region",
+	G_warning(_("[%s in %s] - read request for row %d is outside region"),
 		  fcb->name, fcb->mapset, row);
     }
           
