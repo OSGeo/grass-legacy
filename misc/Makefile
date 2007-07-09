@@ -5,6 +5,8 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 SUBDIRS = \
 	m.cogo
 
-default: subdirs
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs

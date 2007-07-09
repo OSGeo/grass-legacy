@@ -21,7 +21,9 @@ ifneq ($(strip $(OPENGLULIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
-default: subdirs htmldir
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 

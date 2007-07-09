@@ -17,7 +17,9 @@ ifneq ($(strip $(XMLIB)),)
     SUBDIRS += $(MOTIFBASED)
 endif
 
-default: subdirs
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 

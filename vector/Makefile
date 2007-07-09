@@ -92,7 +92,9 @@ ifneq ($(USE_OPENDWG),)
     SUBDIRS += $(OPENDWGBASED)
 endif
 
-default: subdirs htmldir
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 
