@@ -44,15 +44,40 @@ v.out.pov roads3d out=roads3d.pov
 r.out.pov elevation.10m tga=elevation.tga
 r.out.png landcover.30m out=landcover30m.png
 
-# now write a complete povscript and launch povray
+# now write a complete povray-script and launch povray
 </pre></div>
+
+<h2>ERROR MESSAGES</h2>
+
+If the following error message appears
+
+<div class="code"><pre>
+ WARNING: [demname in mapset] - read request for row -1 is outside region
+ ERROR: problem reading raster cell file
+</pre></div>
+
+it indicates that the vector map is spatially larger than the raster map.
+To avoid this problem, the vector map needs to be clipped to the raster
+map extent, for example:
+
+<div class="code"><pre>
+g.region rast=demname
+v.in.region clipbox
+v.overlay ain=clipbox bin=vectmap out=vectmap_clipped op=and
+v.drape vectmap_clipped out=vectdrape rast=demname
+</pre></div>
+
+Then <em>v.drape</em> should perform the draping.
+
 
 <h2>SEE ALSO</h2>
 
 <EM>
 <A HREF="r.out.pov.html">r.out.pov</A>,
-<A HREF="v.split.html">v.split</A>,
+<A HREF="v.in.region.html">v.in.region</A>,
 <A HREF="v.out.pov.html">v.out.pov</A>,
+<A HREF="v.overlay.html">v.overlay</A>,
+<A HREF="v.split.html">v.split</A>,
 <A HREF="v.what.rast.html">v.what.rast</A>
 </EM>
 
