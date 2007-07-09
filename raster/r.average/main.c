@@ -103,7 +103,7 @@ main (int argc, char *argv[])
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	G_fatal_error(_("Unable to open temporary file <%s>"), G_program_name());
+	G_fatal_error(_("%s: unable to open temporary file"), G_program_name());
     }
     out(fd2, 0L, 0L, 0.0, 1.0);	/* force at least one reclass rule */
 

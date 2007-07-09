@@ -38,7 +38,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     {
 	unlink(tempfile1);
 	unlink(tempfile2);
-	G_fatal_error (_("Unable to open temporary file <%s>"), me);
+	G_fatal_error (_("%s: unable to open temporary file"), me);
     }
     o_out(fd2, 0L, 0);	/* force at least one reclass rule */
 
