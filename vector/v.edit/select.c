@@ -81,7 +81,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 	reverse_selection(Map, &List);
     }
 
-    G_message (_("[%d] of [%d] features selected"),
+    G_message (_("%d of %d features selected"),
 	       List -> n_values,
 	       Vect_get_num_lines (Map));
 

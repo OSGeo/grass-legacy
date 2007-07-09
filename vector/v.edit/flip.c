@@ -51,7 +51,7 @@ int do_flip (struct Map_info *Map, struct ilist *List, int print)
 	Vect_line_reverse (Points);
 
 	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    G_warning (_("Cannot rewrite line [%d]"),
+	    G_warning (_("Cannot rewrite line %d"),
 		       line);
 	    return -1;
 	}
@@ -70,7 +70,7 @@ int do_flip (struct Map_info *Map, struct ilist *List, int print)
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 
-    G_message(_("[%d] lines flipped"), nlines_flipped);
+    G_message(_("%d lines flipped"), nlines_flipped);
 
     return nlines_flipped;
 }

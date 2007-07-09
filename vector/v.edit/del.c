@@ -37,9 +37,9 @@ int do_del(struct Map_info *Map, struct ilist *List, int print)
 	line = List -> value[i];
 
 	if (Vect_line_alive(Map, line)) {
-	    G_debug (3, "Line [%d] deleted", List->value[i] );
+	    G_debug (3, "Line %d deleted", List->value[i] );
 	    if (-1 == Vect_delete_line(Map, List->value[i])) { 
-		G_warning (_("Cannot delete line [%d]"), line);
+		G_warning (_("Cannot delete line %d"), line);
 		return -1;
 	    }
 
@@ -53,7 +53,7 @@ int do_del(struct Map_info *Map, struct ilist *List, int print)
 	}
     }
 
-    G_message(_("[%d] features deleted"), nlines_removed);
+    G_message(_("%d features deleted"), nlines_removed);
 
     return nlines_removed;
 }

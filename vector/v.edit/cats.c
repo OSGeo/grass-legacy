@@ -62,7 +62,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		    /* add new category */
 		    if (!del) {
 			if(Vect_cat_set (Cats, layer, cat) < 1) {
-			    G_warning (_("Cannot set category [%d] line [%d]"),
+			    G_warning (_("Cannot set category %d line %d"),
 				       cat, line);
 			}
 			else {
@@ -71,7 +71,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		    }
 		    else { /* delete old category */
 			if(Vect_field_cat_del (Cats, layer, cat) == 0) {
-			    G_warning (_("Cannot delete layer/category [%d/%d] line [%d]"), 
+			    G_warning (_("Cannot delete layer/category [%d/%d] line %d"), 
 				       layer, cat, line);
 			}
 			else {
@@ -85,7 +85,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		continue;
 
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_warning (_("Cannot rewrite line [%d]"), line);
+		G_warning (_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 
@@ -104,7 +104,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 	Vect_destroy_cats_struct(Cats);
     }
 
-    G_message(_("[%d] features modified"), nlines_modified);
+    G_message(_("%d features modified"), nlines_modified);
 
     return nlines_modified;
 }

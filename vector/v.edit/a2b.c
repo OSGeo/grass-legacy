@@ -1,13 +1,19 @@
-/*
- * This file and funtions have been adopted from v.in.ascii code
- */
-
 #include <string.h>
 #include "global.h"
 
 #define BUFFSIZE 128
 
-int asc_to_bin(FILE *ascii , struct Map_info *Map)
+/* 
+ * adopted from v.in.ascii code!
+ *
+ * add vector features to the map (input in
+ * GRASS ASCII vector format)
+ *
+ * return number of added features
+ *
+ * id's of added features can be stored in List (if given)
+ */
+int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 {
     char ctype;
     char buff[BUFFSIZE];
@@ -16,7 +22,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
     double *zarray;	
     double *x, *y, *z;
     int i, n_points, n_coors, n_cats;
-    int type;
+    int type, newline;
     int alloc_points;
     int end_of_file;
     int catn;
@@ -28,10 +34,13 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
     
     nlines = 0;
 
-    /* Must always use this to create an initialized  line_pnts structure */
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();	
     
+    if (List) {
+	Vect_reset_list(List);
+    }
+
     end_of_file = 0 ;
     /*alloc_points     = 1000 ; */
     alloc_points     = 1;
@@ -78,7 +87,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 	    break ;
 	case 'F':
 	    type = GV_FACE ;
-			break ;
+	    break ;
 	case 'K':
 	    type = GV_KERNEL ;
 	    break ;
@@ -162,14 +171,17 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map)
 	    G_fatal_error(_("Out of memory"));
 	
 	if ( type > 0 ) {
-	    Vect_write_line ( Map, type, Points, Cats );
+	    newline = Vect_write_line ( Map, type, Points, Cats );
+	    if (List) {
+		Vect_list_append(List, newline);
+	    }
 	    nlines++;
 
 	    Vect_reset_cats ( Cats ); 
 	}
     }
 
-    G_message(_("[%d] features added"), nlines);
+    G_message(_("%d features added"), nlines);
 
     return nlines;	
 }
@@ -269,18 +281,82 @@ int do_close(struct Map_info *Map, int ltype,
 				     x[0], y[0], z[0], WITHOUT_Z);
 
 	if (dist > 0 && (thresh < 0.0 || dist <= thresh)) {
+	    Vect_line_delete_point (Points, npoints);
 	    Vect_append_point (Points, x[0], y[0], z[0]); 
 	    
 	    newline = Vect_rewrite_line (Map, line, type, Points, Cats);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line [%d]"), line);
+		G_warning(_("Cannot rewrite line %d"), line);
 		return -1;
 	    }
 	    nlines_modified++;
 	}
     }
 
-    G_message (_("[%d] lines closed"), nlines_modified);
+    G_message (_("%d lines closed"), nlines_modified);
+
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
+
+    return nlines_modified;
+}
+
+/*
+ * snap lines given in List to the nearest feature
+ *
+ * return number of snapped lines
+ */
+int do_snapping(struct Map_info *Map, struct ilist* List, int layer,
+		double thresh, int to_vertex)
+{
+    int i, line, type, npoints, node;
+    int line_to_snap;
+    int nlines_modified;
+
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    struct ilist *List_snap, *List_updated;
+
+    nlines_modified = 0;
+
+    Points = Vect_new_line_struct();
+    Cats   = Vect_new_cats_struct();
+
+    List_snap = Vect_new_list();
+    List_updated = Vect_new_list();
+
+    for(i = 0; i < List -> n_values; i++) {
+	line = List -> value[i];
+
+	if (!Vect_line_alive (Map, line))
+	    continue;
+
+        type = Vect_read_line(Map, Points, Cats, line);
+	npoints = Points -> n_points;
+
+	for (node = 0; node < npoints; node += npoints - 1) {
+
+	    line_to_snap = Vect_find_line(Map, Points -> x[node],
+					  Points -> y[node], Points -> z[node],
+					  -1, thresh, WITHOUT_Z, line);
+
+	    if(line_to_snap > 0 && Vect_line_alive(Map, line_to_snap)) {
+		Vect_list_append(List_snap, line_to_snap);
+		Vect_list_append(List_snap, line); /* add line which should be snapped */
+		if (do_snap(Map, List_snap, 0, layer, List_updated)) {
+		    line = List_updated->value[0];
+		    nlines_modified++;
+		}
+		Vect_reset_list(List_snap);
+	    }
+	    if (npoints == 1) {
+		break;
+	    }
+	}
+    }
+
+    Vect_destroy_list (List_snap);
+    Vect_destroy_list (List_updated);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);

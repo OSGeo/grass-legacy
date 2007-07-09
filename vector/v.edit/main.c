@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
 	}
 	
 	if (ret < 2)
-	    G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+	    G_fatal_error (_("Cannot open vector map <%s> at topo level %d"),
 			   params.map -> answer, 2);
     }
     
@@ -149,10 +149,19 @@ int main (int argc, char *argv[])
 	print = 0;
 	if (!params.header -> answer)
 	    read_head(ascii, &Map);
-	ret = asc_to_bin(ascii, &Map);
-	if (ret > 0 && !params.close -> answer) { /* close boundaries */
-	    do_close (&Map, GV_BOUNDARY, thresh);
+	struct ilist *List_added;
+	List_added = Vect_new_list();
+	ret = asc_to_bin(ascii, &Map, List_added);
+	if (ret > 0) {
+	    if (params.snap -> answer) { /* apply snapping */
+		do_snapping (&Map, List_added, layer,
+			     thresh, 0);
+	    }
+	    if (params.close -> answer) { /* close boundaries */
+		do_close (&Map, GV_BOUNDARY, thresh);
+	    }
 	}
+	Vect_destroy_list (List_added);
 	break;
     case MODE_DEL:
 	ret = do_del(&Map, List, print);
@@ -207,7 +216,7 @@ int main (int argc, char *argv[])
 	break;
     case MODE_SNAP:
 	ret = do_snap(&Map, List, print,
-		      layer);
+		      layer, NULL);
 	break;
     case MODE_FLIP:
 	ret = do_flip(&Map, List, print);

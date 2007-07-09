@@ -56,7 +56,7 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
     nlines_merged = 0;
     
     if (List->n_values < 2) {
-	G_warning (_("Only [%d] lines found, at least two needed"),
+	G_warning (_("Only %d lines found, at least two needed"),
 		   List->n_values);
 	return -1;
     }
@@ -145,7 +145,7 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
 		
 		if (Points -> n_points > 0) {
 		    if (Vect_delete_line(Map, line2) == -1) {
-			G_warning (_("Cannot delete line [%d]"),
+			G_warning (_("Cannot delete line %d"),
 				   line2);
 			return -1;
 		    }
@@ -166,7 +166,7 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
 	if (Points -> n_points > 0) {
 	    line = Vect_rewrite_line (Map, line1, type1, Points, Cats1);
 	    if (line < 0) {
-		G_warning (_("Cannot rewrite line [%d]"),
+		G_warning (_("Cannot rewrite line %d"),
 			   line1);
 		return -1;
 	    }
@@ -194,7 +194,7 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
     Vect_destroy_cats_struct(Cats1);
     Vect_destroy_cats_struct(Cats2);
     
-    G_message (_("[%d] lines merged"),
+    G_message (_("%d lines merged"),
 	       nlines_merged);
     
     return nlines_merged;
