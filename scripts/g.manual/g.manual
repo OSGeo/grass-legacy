@@ -40,30 +40,29 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-GRASS_DOC_BASE="$GISBASE"
-
-#hack for MacOSX:
-if [ "$HOSTTYPE" = "macintosh" ] ; then
-    BROWSERNAME="default Macintosh web browser"
-#hack for Cygwin:
-elif [ "$OSTYPE" = "cygwin" ] ; then
-    for i in C D E F G H I J K L M N O P Q R S T U V W X Y Z NOT_FOUND
-    do
-        j="$i:$CYGWIN_ROOT$GRASS_DOC_BASE"
-        if [ -f "$j"/docs/html/index.html ] ; then
-            GRASS_DOC_BASE=$j
-            break
+check_docbase()
+{
+    #hack for cygwin:
+    if [ "$OSTYPE" = "cygwin" ] ; then
+        for i in C D E F G H I J K L M N O P Q R S T U V W X Y Z NOT_FOUND
+        do
+            j="$i:$CYGWIN_ROOT$1"
+            if [ -f "$j"/docs/html/index.html ] ; then
+                break
+            fi
+        done
+        if [ "$i" = "NOT_FOUND" ] ; then
+            g.message -e "Cannot find GRASS document base."
+            exit 1
         fi
-    done
-    if [ "$i" = "NOT_FOUND" ] ; then
-        g.message -e "Cannot find GRASS document base."
-        exit 1
+        echo "$j"
+    else
+        if [ -f "$1"/docs/html/index.html ] ; then
+            echo "$1"
+        fi
     fi
-    BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`
-else
-    BROWSERNAME="$GRASS_HTML_BROWSER"
-fi
-
+    echo ""
+}
 
 start_browser()
 {
@@ -87,6 +86,19 @@ start_man()
     man "$GRASS_DOC_BASE"/man/man1/$1.1
   fi
 }
+
+GRASS_DOC_BASE=`check_docbase "$GISBASE"`
+
+#hack for MacOSX:
+ISMAC=`echo "$GRASS_HTML_BROWSER" | grep "html_browser_mac.sh"`
+if [ ! -z "$ISMAC" ] ; then
+    BROWSERNAME=`echo "$GRASS_HTML_BROWSER_MACOSX" | cut -d . -f 3`
+#hack for Cygwin:
+elif [ "$OSTYPE" = "cygwin" ] ; then
+    BROWSERNAME=`basename "$GRASS_HTML_BROWSER" | sed 's/\.exe$//i'`
+else
+    BROWSERNAME="$GRASS_HTML_BROWSER"
+fi
 
 #keep order!
 #first test for index...
