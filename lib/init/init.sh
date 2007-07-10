@@ -634,7 +634,7 @@ if [ ! "$LOCATION" ] ; then
 
 		    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
     	    		echo "The selected location is not a valid GRASS location"
-    	    		exit
+    	    		exit 1
 		    fi
 
 		    ;;
@@ -650,7 +650,7 @@ if [ ! "$LOCATION" ] ; then
 	    # Shouldn't need this but you never know
 	    echo "ERROR: Invalid user interface specified - <$GRASS_GUI>."
 	    echo "Use the -help option to select a valid interface."
-	    exit
+	    exit 1
 	    ;;
     esac
 fi
@@ -666,7 +666,7 @@ if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
     echo "MAPSET=[$MAPSET]"
     echo
     echo "Check the <$GISRCRC> file."
-    exit
+    exit 1
 fi
 
 LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
