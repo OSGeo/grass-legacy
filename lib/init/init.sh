@@ -648,7 +648,7 @@ if [ ! "$LOCATION" ] ; then
 	    ;;
 	*)
 	    # Shouldn't need this but you never know
-	    echo "ERROR: Invalid user interface specified - $GRASS_GUI."
+	    echo "ERROR: Invalid user interface specified - <$GRASS_GUI>."
 	    echo "Use the -help option to select a valid interface."
 	    exit
 	    ;;
@@ -658,6 +658,16 @@ fi
 GISDBASE=`g.gisenv GISDBASE`
 LOCATION_NAME=`g.gisenv LOCATION_NAME`
 MAPSET=`g.gisenv MAPSET`
+
+if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
+    echo "ERROR: Reading data path information from g.gisenv."
+    echo "GISDBASE=[$GISDBASE]"
+    echo "LOCATION_NAME=[$LOCATION_NAME]"
+    echo "MAPSET=[$MAPSET]"
+    echo
+    echo "Check the <$GISRCRC> file."
+    exit
+fi
 
 LOCATION="${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}"
 
