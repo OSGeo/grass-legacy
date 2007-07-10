@@ -40,7 +40,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster");
-    module->description = _("Recode categorical raster maps.");
+    module->description = _("Recodes categorical raster maps.");
 		        
     parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description =  _("Raster map to be recoded");
@@ -79,7 +79,7 @@ main (int argc, char *argv[])
 
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (G_legal_filename(result) < 0)
 	G_fatal_error(_("[%s] is an illegal file name"), result);
@@ -98,9 +98,9 @@ main (int argc, char *argv[])
     if (!read_rules(srcfp))
     {
 	if (isatty(fileno(srcfp)))
-	    G_fatal_error(_("no rules specified. [%s] not created"), result);
+	    G_fatal_error(_("No rules specified. Raster map <%s> not created"), result);
 	else
-	    G_fatal_error (_("no rules specified"));
+	    G_fatal_error (_("No rules specified"));
     }
 
     no_mask = 0;
