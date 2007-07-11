@@ -136,7 +136,7 @@ int main (int argc, char **argv)
 	inmap->key = "input";
 	inmap->type = TYPE_STRING;
 	inmap->required = YES;
-	inmap->description = _("Name or input raster map");
+	inmap->description = _("Name of input raster map");
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
