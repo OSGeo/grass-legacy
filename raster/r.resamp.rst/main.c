@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->gisprompt = "old,cell,raster";
-    parm.input->description = _("Name of the input raster map");
+    parm.input->description = _("Name of input raster map");
 
     parm.res_ew = G_define_option();
     parm.res_ew->key = "ew_res";
@@ -397,12 +397,12 @@ int main(int argc, char *argv[])
 	mapset = G_find_file("cell", smooth, "");
 
 	if (mapset == NULL)
-	    G_fatal_error(_("Raster map [%s] not found"), smooth);
+	    G_fatal_error(_("Raster map <%s> not found"), smooth);
 
 	G_debug(1, "mapset for smooth map is [%s]", mapset);
 
 	if ((fdsmooth = G_open_cell_old(smooth, mapset)) < 0)
-	    G_fatal_error(_("Cannot open %s"), smooth);
+	    G_fatal_error(_("Unable to open raster map <%s>"), smooth);
 
 	if (G_get_cellhd(smooth, mapset, &smhd) < 0)
 	    G_fatal_error(_("[%s]: Cannot read map header"), smooth);
@@ -423,7 +423,7 @@ int main(int argc, char *argv[])
     mapset = G_find_file("cell", input, "");
 
     if (mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), input);
+	G_fatal_error(_("Raster map <%s> not found"), input);
 
     G_debug(1, "mapset for input map is [%s]", mapset);
 
@@ -434,7 +434,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Input map resolution differs from current region resolution!"));
 
     if ((fdinp = G_open_cell_old(input, mapset)) < 0)
-	G_fatal_error(_("Cannot open raster map [%s]"), input);
+	G_fatal_error(_("Unable to open raster map <%s>"), input);
 
 
     sdisk = 0;
@@ -613,7 +613,7 @@ void create_temp_files(void)
     if (elev != NULL) {
 	Tmp_file_z = G_tempfile();
 	if (NULL == (Tmp_fd_z = fopen(Tmp_file_z, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_z);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_z);
 
 	for (i = 0; i < nsizr; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), nsizc, Tmp_fd_z)))
@@ -624,7 +624,7 @@ void create_temp_files(void)
     if (slope != NULL) {
 	Tmp_file_dx = G_tempfile();
 	if (NULL == (Tmp_fd_dx = fopen(Tmp_file_dx, "w+"))) {
-	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_dx);
+	    sprintf(msg, _("Unable to open temporary file <%s>"), Tmp_file_dx);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
@@ -636,7 +636,7 @@ void create_temp_files(void)
     if (aspect != NULL) {
 	Tmp_file_dy = G_tempfile();
 	if (NULL == (Tmp_fd_dy = fopen(Tmp_file_dy, "w+"))) {
-	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_dy);
+	    sprintf(msg, _("Unable to open temporary file <%s>"), Tmp_file_dy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
@@ -649,7 +649,7 @@ void create_temp_files(void)
     if (pcurv != NULL) {
 	Tmp_file_xx = G_tempfile();
 	if (NULL == (Tmp_fd_xx = fopen(Tmp_file_xx, "w+"))) {
-	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_xx);
+	    sprintf(msg, _("Unable to open temporary file <%s>"), Tmp_file_xx);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
@@ -661,7 +661,7 @@ void create_temp_files(void)
     if (tcurv != NULL) {
 	Tmp_file_yy = G_tempfile();
 	if (NULL == (Tmp_fd_yy = fopen(Tmp_file_yy, "w+"))) {
-	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_yy);
+	    sprintf(msg, _("Unable to open temporary file <%s>"), Tmp_file_yy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {
@@ -673,7 +673,7 @@ void create_temp_files(void)
     if (mcurv != NULL) {
 	Tmp_file_xy = G_tempfile();
 	if (NULL == (Tmp_fd_xy = fopen(Tmp_file_xy, "w+"))) {
-	    sprintf(msg, _("Can't open temp file [%s]"), Tmp_file_xy);
+	    sprintf(msg, _("Unable to open temporary file <%s>"), Tmp_file_xy);
 	    clean_fatal_error(msg);
 	}
 	for (i = 0; i < nsizr; i++) {

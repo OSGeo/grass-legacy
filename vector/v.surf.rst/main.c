@@ -514,7 +514,7 @@ int main(int argc, char *argv[])
 
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
-	G_fatal_error(_("Could not open vector map <%s>"), input);
+	G_fatal_error(_("Unable to open vector map <%s>"), input);
 /*    if (open_check < 2)
 	G_fatal_error(_("You first need to run v.build on vector map <%s>"), input);*/
 
@@ -595,7 +595,7 @@ int main(int argc, char *argv[])
     }
     if (Tmp_file_dx != NULL) {
 	if (NULL == (Tmp_fd_dx = fopen(Tmp_file_dx, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_dx);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_dx);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_dx)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
@@ -603,7 +603,7 @@ int main(int argc, char *argv[])
     }
     if (Tmp_file_dy != NULL) {
 	if (NULL == (Tmp_fd_dy = fopen(Tmp_file_dy, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_dy);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_dy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_dy)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
@@ -612,7 +612,7 @@ int main(int argc, char *argv[])
 
     if (Tmp_file_xx != NULL) {
 	if (NULL == (Tmp_fd_xx = fopen(Tmp_file_xx, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_xx);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_xx);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_xx)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
@@ -620,7 +620,7 @@ int main(int argc, char *argv[])
     }
     if (Tmp_file_yy != NULL) {
 	if (NULL == (Tmp_fd_yy = fopen(Tmp_file_yy, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_yy);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_yy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_yy)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
@@ -628,7 +628,7 @@ int main(int argc, char *argv[])
     }
     if (Tmp_file_xy != NULL) {
 	if (NULL == (Tmp_fd_xy = fopen(Tmp_file_xy, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_xy);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_xy);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_xy)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
@@ -658,7 +658,7 @@ int main(int argc, char *argv[])
 
     if (treefile != NULL) {
 	if (0 > Vect_open_new(&TreeMap, treefile, 0)) {
-	    sprintf(msg, _("Could not open vector map <%s>"), treefile);
+	    sprintf(msg, _("Unable to open vector map <%s>"), treefile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&TreeMap);
@@ -749,7 +749,7 @@ int main(int argc, char *argv[])
 
     if (overfile != NULL) {
 	if (0 > Vect_open_new(&OverMap, overfile, 0)) {
-	    sprintf(msg, _("Could not open vector map <%s>"), overfile);
+	    sprintf(msg, _("Unalbe to open vector map <%s>"), overfile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&OverMap);
