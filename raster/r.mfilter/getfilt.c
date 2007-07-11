@@ -3,9 +3,6 @@
 #include "filter.h"
 #include "local_proto.h"
 
-#define ERROR(err) G_fatal_error("%s%s%s", name, *name?": ":"", (err))
-
-
 FILTER *get_filter (char *name, int *nfilters, char *title)
 {
     FILE *fd ;
@@ -27,8 +24,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
     fd = fopen (name,"r");
     if (!fd)
     {
-    	sprintf (buf,"%s: can't open filter file", name);
-    	G_fatal_error (buf);
+    	G_fatal_error (_("Cannot open filter file '%s'"), name);
     }
 
     while (fgets (buf, sizeof buf, fd))
@@ -52,11 +48,11 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 	{
 	    if (n < 3)
 	    {
-     		ERROR ("illegal filter matrix size specified");
+		G_fatal_error (_("Illegal filter matrix size specified"));
 	    }
 	    if (n%2 == 0)
 	    {
-	    	ERROR ("even filter matrix size specified");
+	    	G_fatal_error (_("Even filter matrix size specified"));
 	    }
 
 	    count++ ;
@@ -79,7 +75,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 		for (col = 0; col < n; col++)
 		    if (fscanf (fd, "%d", &f->matrix[row][col]) != 1)
 		    {
-	    		ERROR ("illegal filter matrix");
+	    		G_fatal_error (_("Illegal filter matrix"));
 		    }
 	    continue ;
 	}
@@ -88,11 +84,11 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 	{
 	    if (!filter)
 	    {
-	    	ERROR ("filter file format error");
+	    	G_fatal_error (_("Filter file format error"));
 	    }
 	    if (have_divisor)
 	    {
-	    	ERROR ("duplicate filter divisor specified");
+	    	G_fatal_error (_("Duplicate filter divisor specified"));
 	    }
 	    have_divisor = 1;
 	    if (sscanf (buf, "DIVISOR %d", &n) == 1)
@@ -110,7 +106,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 		for (col = 0; col < f->size; col++)
 		    if (fscanf (fd, "%d", &f->dmatrix[row][col]) != 1)
 		    {
-	    		ERROR ("illegal divisor matrix");
+	    		G_fatal_error (_("Illegal divisor matrix"));
 		    }
 	    continue ;
 	}
@@ -118,11 +114,11 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 	{
 	    if (!filter)
 	    {
-	    	ERROR ("filter file format error");
+	    	G_fatal_error (_("Filter file format error"));
 	    }
 	    if (have_type)
 	    {
-	    	ERROR ("duplicate filter type specified");
+	    	G_fatal_error (_("Duplicate filter type specified"));
 	    }
 	    if (strcmp (temp, "P")==0)
 		f->type = PARALLEL;
@@ -130,7 +126,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 		f->type = SEQUENTIAL ;
 	    else
 	    {
-	    	ERROR ("illegal filter type specified");
+	    	G_fatal_error (_("Illegal filter type specified"));
 	    }
 	    have_type = 1;
 	    continue ;
@@ -139,11 +135,11 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 	{
 	    if (!filter)
 	    {
-	    	ERROR ("filter file format error");
+	    	G_fatal_error (_("Filter file format error"));
 	    }
 	    if (have_start)
 	    {
-	    	ERROR ("duplicate filter start specified");
+	    	G_fatal_error (_("Duplicate filter start specified"));
 	    }
 	    if (strcmp (temp, "UL") == 0)
 		f->start  = UL ;
@@ -174,7 +170,7 @@ FILTER *get_filter (char *name, int *nfilters, char *title)
 
     if (!filter)
     {
-    	ERROR ("illegal filter file format");
+    	G_fatal_error (_("Illegal filter file format"));
     }
 
     *nfilters = count ;
