@@ -209,13 +209,13 @@ main(int argc, char *argv[])
 	/* find map in mapset */
 	mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
-	    G_fatal_error(_("Raster map [%s] not found"), name);
+	    G_fatal_error(_("Raster map <%s> not found"), name);
 
         if (G_legal_filename (result) < 0)
 	    G_fatal_error(_("[%s] is an illegal name"), result);
 
 	if ( (infd = G_open_cell_old (name, mapset)) < 0)
-	    G_fatal_error(_("Cannot open raster map [%s]"), name);
+	    G_fatal_error(_("Unable tp open raster map <%s>"), name);
 
 	/* determine the inputmap type (CELL/FCELL/DCELL) */
 	data_type = G_get_raster_map_type(infd);

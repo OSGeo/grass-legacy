@@ -90,12 +90,12 @@ int main(int argc, char *argv[])
 
     mapset = G_find_cell2(infile, "");
     if (mapset == NULL) {
-	G_fatal_error(_("Raster map [%s] not found"), infile);
+	G_fatal_error(_("Raster map <%s> not found"), infile);
     }
 
     fd = G_open_cell_old(infile, mapset);
     if (fd < 0)
-	G_fatal_error(_("Unable to open raster map [%s]"), infile);
+	G_fatal_error(_("Unable to open raster map <%s>"), infile);
 
     map_type = G_get_raster_map_type(fd);
 

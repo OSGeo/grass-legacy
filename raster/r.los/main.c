@@ -161,14 +161,14 @@ main (int argc, char *argv[])
 
     /*  check if elevation layer present in database    */
     if (old_mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), elev_layer);
+	G_fatal_error(_("Raster map <%s> not found"), elev_layer);
 
     /* if pattern layer used, check if present in database  */
     if(patt_flag == 1)
     {
         patt_mapset = G_find_cell (patt_layer, search_mapset);
         if(patt_mapset == NULL)
-	    G_fatal_error(_("Raster map [%s] not found"), patt_layer);
+	    G_fatal_error(_("Raster map <%s> not found"), patt_layer);
     }
 
     /* check if specified output layer name is legal    */
@@ -194,19 +194,19 @@ main (int argc, char *argv[])
 	/*	open elevation overlay file for reading		*/
 	old = G_open_cell_old (elev_layer, old_mapset);
 	if (old < 0)
-	    G_fatal_error(_("Unable to open raster map [%s]"), elev_layer);
+	    G_fatal_error(_("Unable to open raster map <%s>"), elev_layer);
 	
 	/*	open cell layer for writing output 		*/
 	new = G_open_raster_new (out_layer,FCELL_TYPE);
 	if (new < 0)
-	    G_fatal_error(_("Unable to create raster map [%s]."), out_layer);
+	    G_fatal_error(_("Unable to create raster map <%s>."), out_layer);
 
 	/* if pattern layer specified, open it for reading	*/
 	if(patt_flag == 1)
 	{
 	    patt = G_open_cell_old (patt_layer, patt_mapset);
 	    if (patt < 0)
-		G_fatal_error(_("Unable to open raster map [%s]"), patt_layer);
+		G_fatal_error(_("Unable to open raster map <%s>"), patt_layer);
 	}
 
 	/*	parameters for map submatrices			*/

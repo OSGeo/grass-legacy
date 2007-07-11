@@ -156,64 +156,64 @@ G_sites_close(fdsfile);
    printf("Running MAY 10 version\n");
 
   if((mapset=G_find_cell(elevin,""))==NULL)
-  G_fatal_error(_("Raster map [%s] not found"), elevin);
+  G_fatal_error(_("Raster map <%s> not found"), elevin);
 
   fd1 = G_open_cell_old(elevin,mapset);
 
   if((mapset=G_find_cell(dxin,""))==NULL)
-  G_fatal_error(_("Raster map [%s] not found"), dxin);
+  G_fatal_error(_("Raster map <%s> not found"), dxin);
 
   fd2 = G_open_cell_old(dxin,mapset);
 
   if((mapset=G_find_cell(dyin,""))==NULL)
-  G_fatal_error(_("Raster map [%s] not found"), dyin);
+  G_fatal_error(_("Raster map <%s> not found"), dyin);
 
   fd3 = G_open_cell_old(dyin,mapset);
 
   if((mapset=G_find_cell(manin,""))==NULL)
-  G_fatal_error(_("Raster map [%s] not found"), manin);
+  G_fatal_error(_("Raster map <%s> not found"), manin);
 
   fd5 = G_open_cell_old(manin,mapset);
 
   if(rain != NULL){
 	  if((mapset=G_find_cell(rain,""))==NULL)
-	  G_fatal_error(_("Raster map [%s] not found"), rain);
+	  G_fatal_error(_("Raster map <%s> not found"), rain);
 	  fd4 = G_open_cell_old(rain,mapset);
   }
 
   if(infil != NULL){
           if((mapset=G_find_cell(infil,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), infil);
+          G_fatal_error(_("Raster map <%s> not found"), infil);
           fd4a = G_open_cell_old(infil,mapset);
   }
 
   if(traps != NULL){
           if((mapset=G_find_cell(traps,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), traps);
+          G_fatal_error(_("Raster map <%s> not found"), traps);
           fd4b = G_open_cell_old(traps,mapset);
   }
 
   if(detin != NULL){
           if((mapset=G_find_cell(detin,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), detin);
+          G_fatal_error(_("Raster map <%s> not found"), detin);
           fd9 = G_open_cell_old(detin,mapset);
   }
 
   if(tranin != NULL){
           if((mapset=G_find_cell(tranin,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), tranin);
+          G_fatal_error(_("Raster map <%s> not found"), tranin);
           fd10 = G_open_cell_old(tranin,mapset);
   }
 
   if(tauin != NULL){
           if((mapset=G_find_cell(tauin,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), tauin);
+          G_fatal_error(_("Raster map <%s> not found"), tauin);
           fd11 = G_open_cell_old(tauin,mapset);
   }
 
   if(wdepth != NULL){
           if((mapset=G_find_cell(wdepth,""))==NULL)
-          G_fatal_error(_("Raster map [%s] not found"), wdepth);
+          G_fatal_error(_("Raster map <%s> not found"), wdepth);
           fd12 = G_open_cell_old(wdepth,mapset);
   }
 
