@@ -224,7 +224,7 @@ main (int argc, char **argv)
     /* Make sure map is available */
     mapset = G_find_vector2 (map_opt->answer, NULL) ; 
     if (mapset == NULL)
-	G_fatal_error(_("Vector file [%s] not available"), map_opt->answer);
+	G_fatal_error(_("Vector map <%s> not found"), map_opt->answer);
 
     /* open vector */
     Vect_set_open_level (2);
