@@ -300,17 +300,27 @@ class DigitToolbar(AbstractToolbar):
         self.parent.RemoveToolbar ("digit")
 
     def OnMoveVertex(self, event):
-        pass
+        Debug.msg(4, "Digittoolbar.OnMoveVertex():")
+        self.action = "moveVertex"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddVertex(self, event):
-        pass
+        Debug.msg(4, "Digittoolbar.OnAddVertex():")
+        self.action = "addVertex"
+        self.parent.MapWindow.mouse['box'] = 'point'
+
 
     def OnRemoveVertex(self, event):
-        pass
+        Debug.msg(4, "Digittoolbar.OnRemoveVertex():")
+        self.action = "removeVertex"
+        self.parent.MapWindow.mouse['box'] = 'point'
+
 
     def OnSplitLine(self, event):
-        pass
-
+        Debug.msg(4, "Digittoolbar.OnSplitLine():")
+        self.action = "splitLine"
+        self.parent.MapWindow.mouse['box'] = 'point'
+        
     def OnEditLine(self, event):
         pass
 

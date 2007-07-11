@@ -142,7 +142,6 @@ class BufferedWindow(wx.Window):
         #
         # Flags
         #
-        self.render = True  # re-render the map from GRASS or just redraw image
         self.resize = False # indicates whether or not a resize event has taken place
         self.dragimg = None # initialize variable for map panning
 
@@ -400,7 +399,6 @@ class BufferedWindow(wx.Window):
         # update map display
         if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
             self.img = self.img.Scale(self.Map.width, self.Map.height)
-            self.render = False
             self.UpdateMap()
 
         # re-render image on idle
@@ -413,7 +411,6 @@ class BufferedWindow(wx.Window):
         """
 
         if self.resize:
-            self.render = True
             self.UpdateMap()
         event.Skip()
 
@@ -457,22 +454,32 @@ class BufferedWindow(wx.Window):
         return img
 
 
-    def UpdateMap(self):
+    def UpdateMap(self, render=True, redrawAll=True, removeId=[]):
         """
         Updates the canvas anytime there is a change to the underlying images
         or to the geometry of the canvas.
         """
 
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s" % \
-                   (self.render))
-        if self.render:
+                   (render))
+        
+        if render:
             # render new map images
             self.Map.width, self.Map.height = self.GetClientSize()
-            self.mapfile = self.Map.Render(force=self.render)
+            self.mapfile = self.Map.Render(force=True)
             self.img = self.GetImage()
             self.resize = False
 
-        if not self.img:
+        # paint images to PseudoDC
+        if len(removeId) > 0:
+            for id in removeId:
+                self.pdc.ClearId(id)
+                self.pdc.RemoveId(id)
+        else:
+            self.pdc.Clear()
+            self.pdc.RemoveAll()
+
+        if not self.img or redrawAll == False:
             return
 
         try:
@@ -480,10 +487,7 @@ class BufferedWindow(wx.Window):
         except:
             return
 
-        # paint images to PseudoDC
-        self.pdc.Clear()
-        self.pdc.RemoveAll()
-            
+        
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
         self.ovldict = self.GetOverlay() # list of decoration overlay images
         if self.ovldict != {}: # draw scale and legend overlays
@@ -599,8 +603,8 @@ class BufferedWindow(wx.Window):
         if not polycoords: # alternative coordinates
             polycoords = self.polycoords
             
-        Debug.msg (4, "BufferedWindow.DrawLines(): coords=%s" % \
-                       polycoords)
+        #Debug.msg (4, "BufferedWindow.DrawLines(): coords=%s" % \
+        #               polycoords)
 
         if len(polycoords) > 0:
             self.plineid = wx.NewId()
@@ -645,7 +649,6 @@ class BufferedWindow(wx.Window):
             # zoom
             self.Zoom(begin, end, zoomtype)
             # redraw map
-            self.render=True
             self.UpdateMap()
             return
 
@@ -709,10 +712,12 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.OnLeftDown(): use=%s" % \
                    self.mouse["use"])
 
+        self.mouse['begin'] = event.GetPositionTuple()[:]
+        
         if self.mouse["use"] in ["measure", "profile"]:
             # measure || profile
             if len(self.polycoords) == 0:
-                self.mouse['begin'] = event.GetPositionTuple()[:]
+
                 self.mouse['end'] = self.mouse['begin']
                 self.polycoords.append(self.mouse['begin'])
                 self.ClearLines()
@@ -722,7 +727,6 @@ class BufferedWindow(wx.Window):
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
             digit = self.parent.digittoolbar
-            self.mouse['begin'] = event.GetPositionTuple()[:]
             east, north = self.Pixel2Cell(self.mouse['begin'][0],
                                           self.mouse['begin'][1])
             
@@ -770,7 +774,6 @@ class BufferedWindow(wx.Window):
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",
                                                               "input=%s" % sqlfile.name])
-                    self.render=True
                     self.UpdateMap() # redraw map
 
                 elif digit.type in ["line", "boundary"]:
@@ -781,9 +784,12 @@ class BufferedWindow(wx.Window):
             elif digit.action == "deleteLine":
                 # delete selected feature
                 # -> unselect selected feature
-                # Digit.driver.SetHighlighted([])
+                # Digit.driver.SetSelected([])
                 pass
-            elif digit.action == "moveLine":
+            elif digit.action in ["moveLine", "moveVertex"]:
+                self.moveBegin = [0,0]
+                self.modeIds   = []
+            elif digit.action == "splitLine":
                 pass
             elif digit.action == "displayAttributes":
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
@@ -803,7 +809,7 @@ class BufferedWindow(wx.Window):
                                                                   action="add")
                 if updateRecordDlg.mapInfo:
                     # highlight feature & re-draw map
-                    Digit.driver.SetHighlighted(updateRecordDlg.selectedLines)
+                    Digit.driver.SetSelected(updateRecordDlg.selectedLines)
                     self.UpdateMap()
                     
                     if updateRecordDlg.ShowModal() == wx.ID_OK:
@@ -814,11 +820,11 @@ class BufferedWindow(wx.Window):
                                                           "--q",
                                                           "input=%s" % sqlfile.name])
                     # unselect & re-draw
-                    Digit.driver.SetHighlighted([])
+                    Digit.driver.SetSelected([])
                     self.UpdateMap()
         else:
             # get decoration id
-            self.lastpos = self.mouse['begin'] = event.GetPositionTuple()[:]
+            self.lastpos = self.mouse['begin']
             idlist = self.pdc.FindObjects(x=self.lastpos[0], y=self.lastpos[1],
                                           radius=self.hitradius)
             if idlist != []:
@@ -841,7 +847,6 @@ class BufferedWindow(wx.Window):
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
             # redraw map
-            self.render=True
             self.UpdateMap()
 
         elif self.mouse["use"] == "query":
@@ -864,12 +869,27 @@ class BufferedWindow(wx.Window):
             # digitization
             digit = self.parent.digittoolbar
             self.mouse['end'] = event.GetPositionTuple()[:]
-            if digit.action in ["deleteLine", "moveLine"]:
-                highlight = Digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],self.mouse['begin'][1]),
-                                                           self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])))
-                
-                self.UpdateMap()
-                
+            if digit.action in ["deleteLine", "moveLine", "moveVertex"]:
+                if digit.action == "moveVertex":
+                    Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
+                                                                    self.mouse['begin'][1]),
+                                                    onlyType="line")
+                    self.moveIds = Digit.driver.GetSelectedVertex(self.mouse['begin'])
+                else: # moveLine
+                    Digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
+                                                                   self.mouse['begin'][1]),
+                                                   self.Pixel2Cell(self.mouse['end'][0],
+                                                                   self.mouse['end'][1])))
+                    self.moveIds = Digit.driver.GetSelected(grassId=False)
+                if len(self.moveIds) > 0:
+                    self.UpdateMap(render=False)
+                    if digit.action in ["moveLine", "moveVertex"]:
+                        self.UpdateMap(render=False, redrawAll=False, removeId=self.moveIds)
+                    
+            if digit.action in ["splitLine", "addVertex", "removeVertex"]:
+                Digit.driver.SetSelected([])
+                Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
+                self.UpdateMap(render=False)
         elif self.dragid != None:
             # end drag of overlay decoration
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
@@ -1007,35 +1027,32 @@ class BufferedWindow(wx.Window):
 
                     # clean up saved positions
                     self.polycoords = []
-
-                    # redraw map
-                    self.render=True
-                    self.UpdateMap()
             elif digit.action == "deleteLine":
                 Digit.DeleteSelectedLines()
-                Digit.driver.SetHighlighted([])
-                self.UpdateMap()
             elif digit.action == "moveLine":
-                #Digit.MoveSelectedLines()
-                Digit.driver.SetHighlighted([])
-                self.UpdateMap()
+                #if Digit.driver.GetSelected():
+                # pixel -> cell
+                move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
+                        self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
+                # ES -> EN
+                if self.moveBegin[0] < 0.0:
+                    move[0] *= -1.0
+                if self.moveBegin[1] > 0.0:
+                    move[1] *= -1.0
                 
-        event.Skip()
-
-    def OnMouseMoving(self, event):
-        """Motion event and no mouse buttons were pressed"""
-        digit = self.parent.digittoolbar
-        if self.mouse["use"] == "pointer" and \
-                digit and \
-                digit.action == "addLine" and \
-                digit.type in ["line", "boundary"]:
-            self.mouse['end'] = event.GetPositionTuple()[:]
-            Debug.msg (5, "BufferedWindow.OnMouseMoving(): coords=%f,%f" % \
-                           (self.mouse['end'][0], self.mouse['end'][1]))
-            if len(self.polycoords) > 0:
-                # draw mouse moving
-                self.MouseDraw()
-
+                Digit.MoveSelectedLines(move)
+                del self.moveBegin
+                del self.moveIds
+            elif digit.action == "splitLine":
+                Digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+            elif digit.action == "addVertex":
+                Digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+            elif digit.action == "removeVertex":
+                Digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                
+            Digit.driver.SetSelected([])
+            self.UpdateMap(render=False)
+                
         event.Skip()
 
     def OnMiddleDown(self, event):
@@ -1049,10 +1066,39 @@ class BufferedWindow(wx.Window):
                 self.mouse['begin'] = self.polycoords[-1]
                 self.ClearLines()
                 self.DrawLines()
-            elif digit.action in ["deleteLine", "moveLine"]:
+            elif digit.action in ["deleteLine", "moveLine", "splitLine", "addVertex", "removeVertex", "moveVertex"]:
                 # unselected selected features
-                Digit.driver.SetHighlighted([])
+                Digit.driver.SetSelected([])
+                if digit.action in ["moveLine", "moveVertex"]:
+                    del self.moveBegin
+                    del self.moveIds
                 self.UpdateMap()
+
+    def OnMouseMoving(self, event):
+        """Motion event and no mouse buttons were pressed"""
+        digit = self.parent.digittoolbar
+        if self.mouse["use"] == "pointer" and digit:
+            self.mouse['end'] = event.GetPositionTuple()[:]
+            Debug.msg (5, "BufferedWindow.OnMouseMoving(): coords=%f,%f" % \
+                           (self.mouse['end'][0], self.mouse['end'][1]))
+            if digit.action == "addLine" and \
+                    digit.type in ["line", "boundary"]:
+                if len(self.polycoords) > 0:
+                    # draw mouse moving
+                    self.MouseDraw()
+            elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
+                dx = self.mouse['end'][0] - self.mouse['begin'][0]
+                dy = self.mouse['end'][1] - self.mouse['begin'][1]
+                self.moveBegin[0] += dx
+                self.moveBegin[1] += dy
+                for id in self.moveIds:
+                    print "#", id, dx, dy
+                    self.pdc.TranslateId(id, dx, dy)
+                
+                self.Refresh() # TODO: use RefreshRect()
+                self.mouse['begin'] = self.mouse['end']
+
+        event.Skip()
 
     def ClearLines(self):
         """
@@ -1147,7 +1193,6 @@ class BufferedWindow(wx.Window):
             self.Map.region['s'] = zoom[1]
             self.Map.region['e'] = zoom[2]
             self.Map.region['w'] = zoom[3]
-            self.render=True
             self.UpdateMap()
 
     def ZoomHistory(self, n,s,e,w):
@@ -1329,12 +1374,12 @@ class BufferedWindow(wx.Window):
 
     def Distance(self, beginpt, endpt):
         """Calculete distance"""
-        x1,y1 = beginpt
-        x2,y2 = endpt
-        east = (x2-x1) * self.Map.region["ewres"]
-        north = (y2-y1) * self.Map.region["nsres"]
+        x1, y1 = beginpt
+        x2, y2 = endpt
+        dEast  = (x2-x1) * self.Map.region["ewres"]
+        dNorth = (y2-y1) * self.Map.region["nsres"]
         
-        return math.sqrt(math.pow((east),2) + math.pow((north),2))
+        return (math.sqrt(math.pow((dEast),2) + math.pow((dNorth),2)), (dEast, dNorth))
 
 class MapFrame(wx.Frame):
     """
@@ -1588,7 +1633,6 @@ class MapFrame(wx.Frame):
         Rerender button clicked
         """
         Debug.msg(3, "BufferedWindow.ReRender():")
-        self.render = True
         self.MapWindow.UpdateMap()
 
     def Pointer(self, event):
@@ -1880,7 +1924,7 @@ class MapFrame(wx.Frame):
         Calculate map distance from screen distance
         and print to output window
         """
-        dist = self.MapWindow.Distance(beginpt, endpt)
+        dist, (north, east) = self.MapWindow.Distance(beginpt, endpt)
 
         dist = round(dist, 3)
         d, dunits = self.FormatDist(dist)
