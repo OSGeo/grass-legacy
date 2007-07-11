@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Unable to create file [%s]"), out_tmp2);
 
 
-	G_message(_("Creating BIL support files ..."));
+	G_message(_("Creating BIL support files..."));
 	G_message(_("Header File = %s"), out_tmp1);
 	G_message(_("World File = %s"), out_tmp2);
 
@@ -325,10 +325,10 @@ int main(int argc, char *argv[])
 	    G_message(_("Writing GMT float format ID=1"));
     }
     if (out_type == DCELL_TYPE)
-	G_message(_("Exporting raster as double values(bytes=%d)"),
+	G_message(_("Exporting raster as double values (bytes=%d)"),
 		sizeof(double));
 
-    G_message(_("Using the current region settings ..."));
+    G_message(_("Using the current region settings..."));
     G_message(_("north=%f"), region.north);
     G_message(_("south=%f"), region.south);
     G_message(_("east=%f"), region.east);

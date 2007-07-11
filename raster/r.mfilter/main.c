@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
     opt2->multiple   = NO;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name for the output raster map") ;
+    opt2->description= _("Name for output raster map") ;
 
     opt3 = G_define_option() ;
     opt3->key        = "filter";
