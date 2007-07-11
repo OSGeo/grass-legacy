@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
     char   *fs; /* field delim */
     off_t  filesize;
     int    linesize, estimated_lines;
+    int    from_stdin = FALSE;
 
     RASTER_MAP_TYPE rtype;
     struct History history;
@@ -76,13 +77,8 @@ int main(int argc, char *argv[])
     module->description =
       _("Create a raster map from an assemblage of many coordinates using univariate statistics.");
 
-    input_opt = G_define_option();
-    input_opt->key	   = "input";
-    input_opt->type	   =  TYPE_STRING;
-    input_opt->required    =  YES;
-    input_opt->key_desc    = "name";
-    input_opt->gisprompt   = "old_file,file,input";
-    input_opt->description = _("ASCII file containing input data");
+    input_opt = G_define_standard_option(G_OPT_F_INPUT);
+    input_opt->description = _("ASCII file containing input data (or \"-\" to read from stdin)");
 
     output_opt = G_define_standard_option(G_OPT_R_OUTPUT);
 
@@ -102,13 +98,7 @@ int main(int argc, char *argv[])
     type_opt->answer = "FCELL";
     type_opt->description = _("Storage type for resultant raster map");
 
-    delim_opt = G_define_option();
-    delim_opt->key = "fs";
-    delim_opt->type = TYPE_STRING;
-    delim_opt->required = NO;
-    delim_opt->key_desc    = "character";
-    delim_opt->description = _("Field separator");
-    delim_opt->answer = "|";
+    delim_opt = G_define_standard_option(G_OPT_F_SEP);
 
     xcol_opt = G_define_option();
     xcol_opt->key = "x";
@@ -281,7 +271,7 @@ int main(int argc, char *argv[])
     G_debug(2, "region.rows=%d  [box_rows=%d]  region.cols=%d", region.rows,
 	rows, region.cols);
 
-    npasses = ceil( 1.0 * region.rows / rows);
+    npasses = (int)ceil( 1.0 * region.rows / rows);
 
     if( ! scan_flag->answer) {
 	/* allocate memory (test for enough before we start) */
@@ -307,8 +297,20 @@ int main(int argc, char *argv[])
 
 
     /* open input file */
-    if((in_fp = fopen(infile, "r" )) == NULL )
-	G_fatal_error(_("Could not open input file <%s>."), infile);
+    if (strcmp ("-", infile) == 0) {
+	from_stdin = TRUE;
+	in_fp = stdin;
+	strcpy(infile, "stdin"); /* filename for history metadata */  /* need to realloc()?? */
+	/* can't rewind() stdin; dumping to a tmp file first is slow and prone to LFS problems */
+	if(npasses != 1) {
+	    G_warning(_("Can only perform a single pass if input is from stdin."));
+	    npasses = 1;
+	}
+    }
+    else {
+	if((in_fp = fopen(infile, "r" )) == NULL )
+	    G_fatal_error(_("Could not open input file <%s>."), infile);
+    }
 
     if(scan_flag->answer) {
 	if( zrange_opt->answer )
@@ -324,19 +326,22 @@ int main(int argc, char *argv[])
     if (out_fd < 0)
 	G_fatal_error(_("Unable to create raster map <%s>"), outmap);
 
-    /* guess at number of lines in the file without actually reading it all in */
-    for(line=0; line<10; line++) {  /* arbitrarily use 10th line for guess */
-	if( 0 == G_getl2(buff, BUFFSIZE-1, in_fp) ) break;
-	linesize = strlen(buff) + 1;
+    if(!from_stdin) {
+	/* guess at number of lines in the file without actually reading it all in */
+	for(line=0; line<10; line++) {  /* arbitrarily use 10th line for guess */
+	    if( 0 == G_getl2(buff, BUFFSIZE-1, in_fp) ) break;
+	    linesize = strlen(buff) + 1;
+	}
+	fseek(in_fp, 0L, SEEK_END);
+	filesize = ftell(in_fp);
+	rewind(in_fp);
+	if(linesize < 6)  /* min possible: "0,0,0\n" */
+	    linesize = 6;
+	estimated_lines = filesize/linesize;
+	G_debug(2, "estimated number of lines in file: %d", estimated_lines);
     }
-    fseek(in_fp, 0L, SEEK_END);
-    filesize = ftell(in_fp);
-    rewind(in_fp);
-    if(linesize < 6)  /* min possible: "0,0,0\n" */
-	linesize = 6;
-    estimated_lines = filesize/linesize;
-    G_debug(2, "estimated number of lines in file: %d", estimated_lines);
-
+    else
+	estimated_lines = -1;
 
     /* allocate memory for a single row of output data */
     raster_row = G_allocate_raster_buf(rtype);
@@ -350,7 +355,8 @@ int main(int argc, char *argv[])
 	if(npasses > 1)
 	    G_message(_("Pass #%d (of %d) ..."), pass, npasses);
 
-	rewind(in_fp);
+	if(!from_stdin)
+	    rewind(in_fp);
 
 	/* figure out segmentation */
 	pass_north = region.north - (pass-1)*rows*region.ns_res;
@@ -395,8 +401,13 @@ int main(int argc, char *argv[])
 
 	while( 0 != G_getl2(buff, BUFFSIZE-1, in_fp) ) {
 	    line++;
-	    if( (line%10000 == 0) && (line < estimated_lines) ) /* mod for speed */
-		G_percent(line, estimated_lines, 3);
+
+	    if(line%10000 == 0) { /* mod for speed */
+		if(from_stdin)
+		    G_clicker();
+		else if(line < estimated_lines)
+		    G_percent(line, estimated_lines, 3);
+	    }
 
 	    if((buff[0] == '#') || (buff[0] == '\0')) {
 		continue; /* line is a comment or blank */
@@ -593,7 +604,8 @@ int main(int argc, char *argv[])
     G_free(raster_row);
 
     /* close input file */
-    fclose(in_fp);
+    if(!from_stdin)
+	fclose(in_fp);
 
     /* close raster file & write history */
     G_close_cell(out_fd);
