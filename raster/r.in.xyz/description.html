@@ -43,7 +43,8 @@ min, max, sum</em> will also use less memory, while <em>stddev, variance,
 and coeff_var</em> will use more. The default map <b>type</b>=<tt>FCELL</tt>
 is intended as compromise between preserving data precision and limiting
 system resource consumption.
-
+If reading data from a <tt>stdin</tt> stream, the program can only run using
+a single pass.
 
 <h4>Setting region bounds and resolution</h4>
 
