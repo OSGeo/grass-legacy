@@ -89,7 +89,7 @@ int main (int argc, char **argv)
 
     old_mapset = G_find_cell2 (old_mapname, "") ;
     if (old_mapset == NULL)
-        G_fatal_error(_("Raster map [%s] not available"), old_mapname);
+        G_fatal_error(_("Raster map <%s> not found"), old_mapname);
 
     if (plotfile->answer != NULL)
         doplot = 1;

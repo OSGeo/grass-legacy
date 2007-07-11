@@ -154,7 +154,7 @@ int main (int argc, char **argv)
 	/* Make sure map is available */
 	mapset = G_find_cell2 (map_name, "") ;
 	if (mapset == NULL)
-	    G_fatal_error(_("Raster map [%s] not available"), map_name);
+	    G_fatal_error(_("Raster map <%s> not found"), map_name);
 
 	if (G_read_colors(map_name, mapset, &pcolors) == -1)
 	    G_fatal_error(_("color file for [%s] not available"), map_name);

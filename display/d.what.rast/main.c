@@ -147,7 +147,7 @@ int main (int argc, char **argv)
 			mapset[i] = (char *)G_malloc(80);
 
 			if ((fd[i] = opencell (rast[i], name[i], mapset[i])) < 0)
-			    G_fatal_error(_("Raster map [%s] not available"), rast[i]);
+			    G_fatal_error(_("Raster map <%s> not found"), rast[i]);
 
 			j = strlen(name[i]);
 			if(j > width)

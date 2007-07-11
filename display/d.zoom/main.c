@@ -215,7 +215,7 @@ main (int argc, char **argv)
 	for(i=0; i<nrasts; i++){
     	    mapset = G_find_cell2 (rast[i], "");
     	    if (mapset == NULL)
-	    	G_fatal_error(_("Raster map [%s] not available"), rast[i]);
+	    	G_fatal_error(_("Raster map <%s> not found"), rast[i]);
 
 	    if(G_get_cellhd(rast[i], mapset, &window) >= 0)
 	    {
@@ -256,7 +256,7 @@ main (int argc, char **argv)
 	for(i=0; i<nvects; i++){
 	    mapset = G_find_vector2 (vect[i], "");
 	    if (mapset == NULL)
-		G_fatal_error(_("Vector map [%s] not available"), vect[i]);
+		G_fatal_error(_("Vector map <%s> not found"), vect[i]);
 
 	    if(Vect_open_old(&Map, vect[i], mapset) >= 2)
 	    {
