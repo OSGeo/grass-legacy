@@ -52,7 +52,7 @@ main (int argc, char *argv[])
         module              = G_define_module();
         module->keywords = _("imagery");
 	module->description = 
-            _("Inverse Fast Fourier Transform (ifft) for image processing.");
+            _("Inverse Fast Fourier Transform (IFFT) for image processing.");
 
         /* define options */
         op1=G_define_option();
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
         op1->required         = YES;
         op1->multiple         = NO;
         op1->gisprompt        = "old,cell,raster";
-        op1->description      = _("input raster map (image fft, real part)");
+        op1->description      = _("Input raster map (image fft, real part)");
 
         op2=G_define_option();
         op2->key              = "imaginary_image";
@@ -69,7 +69,7 @@ main (int argc, char *argv[])
         op2->required         = YES;
         op2->multiple         = NO;
         op2->gisprompt        = "old,cell,raster";
-        op2->description      = _("input raster map (image fft, imaginary part");
+        op2->description      = _("Input raster map (image fft, imaginary part");
 
         op3=G_define_option();
         op3->key              = "output_image";
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
         op3->required         = YES;
         op3->multiple         = NO;
         op3->gisprompt        = "new,cell,raster";
-        op3->description      = _("output inverse raster map after ifft");
+        op3->description      = _("Output inverse raster map after IFFT");
 
         /*call parser*/
         if(G_parser(argc, argv))
@@ -131,7 +131,7 @@ main (int argc, char *argv[])
         data[0] = (double *) G_malloc((rows*cols)*sizeof(double));
         data[1] = (double *) G_malloc((rows*cols)*sizeof(double));
         if (data[0] == NULL || data[1] == NULL)
-                G_fatal_error(_("Insufficent memory for allocation of data structure."));
+                G_fatal_error(_("Insufficent memory for allocation of data structure"));
 
         /* Initialize real & complex components to zero */
         G_message(_("Reading the raster maps..."));
