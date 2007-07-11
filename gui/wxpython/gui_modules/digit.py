@@ -37,7 +37,7 @@ from debug import Debug as Debug
 try:
     # replace with the path to the GRASS SWIG-Python interface
     g6libPath = "/hardmnt/schiele0/ssi/landa/src/grass6/swig/python"
-    # g6libPath = "/usr/src/gis/grass6/swig/python"
+    #g6libPath = "/usr/src/gis/grass6/swig/python"
     sys.path.append(g6libPath)
     import python_grass6 as g6lib
 except:
@@ -52,7 +52,8 @@ class AbstractDigit:
     def __init__(self, settings=None):
         self.map    = None
         self.driver = None
-
+        self.threshold = 0 # set by driver constructor
+        
         if not settings:
             self.settings = {}
             # symbology
@@ -71,8 +72,11 @@ class AbstractDigit:
             self.settings["symbolVertex"] = (True, "pink")
             
             # display
-            self.settings["snapping"] = (10, "screen pixels") # value, unit
             self.settings["lineWidth"] = (2, "screen pixels")
+
+            # snapping
+            self.settings["snapping"] = (10, "screen pixels") # value, unit
+            self.settings["snapToVertex"] = False
             # digitize new record
             self.settings["addRecord"] = True
             self.settings["layer"] = 1
@@ -198,20 +202,14 @@ class VEdit(AbstractDigit):
         """
         General method which adds feature to the vector map
         """
-        threshold = Digit.settings["snapping"][0]
-        if Digit.settings["snapping"][1] == "screen pixels":
-            # pixel -> cell
-            print "#", threshold
-            threshold = self.driver.mapwindow.Distance(beginpt=(0,0),
-                                                       endpt=(threshold,0))
-                                                       
-
-        print "#", threshold
-
+                                                     
         command = ["v.edit", "-n", "--q", 
                    "map=%s" % map,
                    "tool=add",
-                   "thresh=%f" % threshold]
+                   "thresh=%f" % self.threshold]
+
+        print "#", self.threshold
+        
         # additional flags
         for flag in flags:
             command.append(flag)
@@ -223,18 +221,97 @@ class VEdit(AbstractDigit):
         self.driver.ReDrawMap(map)
         
     def DeleteSelectedLines(self):
-        """Delete vector feature from map"""
+        """Delete selected vector features from the vector map"""
 
-        if not self.driver.highlighted:
-            Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
-                      self.driver.highligted)
+        if not self.driver.selected:
             return False
-        
-        ids = ",".join(["%d" % v for v in self.driver.highlighted])
-        command = ["v.edit", "-n", "--q",
+
+        Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
+                      self.driver.selected)
+
+        ids = ",".join(["%d" % v for v in self.driver.selected])
+        command = ["v.edit", "--q",
                    "map=%s" % self.map,
                    "tool=delete",
                    "ids=%s" % ids]
+
+        # run the command
+        vedit = cmd.Command(cmd=command)
+
+        # redraw map
+        self.driver.ReDrawMap(self.map)
+
+        return True
+
+    def MoveSelectedLines(self, move):
+        """Move selected vector features"""
+
+        if not self.driver.selected:
+            return False
+
+        Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
+                      (self.driver.selected, move))
+
+        print "#", move
+        
+        ids = ",".join(["%d" % v for v in self.driver.selected])
+        command = ["v.edit", "--q",
+                   "map=%s" % self.map,
+                   "tool=move",
+                   "ids=%s" % ids,
+                   "move=%f,%f" % (float(move[0]),float(move[1]))]
+
+        # run the command
+        vedit = cmd.Command(cmd=command)
+
+        # redraw map
+        self.driver.ReDrawMap(self.map)
+
+        return True
+
+    def SplitLine(self, coords):
+        """Split selected line on position 'coords'"""
+        try:
+            line = self.driver.selected[0]
+        except:
+            return False
+
+        command = ["v.edit", "--q",
+                   "map=%s" % self.map,
+                   "tool=break",
+                   "ids=%s" % line,
+                   "coords=%f,%f" % (float(coords[0]),float(coords[1])),
+                   "thresh=%f" % self.threshold]
+
+        # run the command
+        vedit = cmd.Command(cmd=command)
+
+        # redraw map
+        self.driver.ReDrawMap(self.map)
+        
+        return True
+
+    def AddVertex(self, coords):
+        """Add new vertex to the selected line on position 'coords'"""
+        return self.__ModifyVertex(coords, "vertexadd")
+
+    def RemoveVertex(self, coords):
+        """Remove vertex from the selected line on position 'coords'"""
+        return self.__ModifyVertex(coords, "vertexdel")
+    
+    def __ModifyVertex(self, coords, action):
+        
+        try:
+            line = self.driver.selected[0]
+        except:
+            return False
+
+        command = ["v.edit", "--q",
+                   "map=%s" % self.map,
+                   "tool=%s" % action,
+                   "ids=%s" % line,
+                   "coords=%f,%f" % (float(coords[0]),float(coords[1])),
+                   "thresh=%f" % self.threshold]
 
         # run the command
         vedit = cmd.Command(cmd=command)
@@ -261,8 +338,11 @@ class DisplayDriver:
     """
     def __init__(self, map, mapwindow):
         self.mapwindow   = mapwindow
-        self.ids         = {}   # dict[g6id] = [DCid]
-        self.highlighted = [] # list of highlighted objects (g6id)
+
+        Digit.threshold = self.GetThreshold()
+        
+        self.ids         = {}   # dict[g6id] = [pdcId]
+        self.selected    = []   # list of selected objects (grassId!)
 
         g6lib.G_gisinit('')
 
@@ -292,6 +372,18 @@ class DisplayDriver:
         if self.cats:
             g6lib.Vect_destroy_cats_struct(self.cats)
 
+    def GetThreshold(self):
+        """Return threshold in map units"""
+        if Digit.settings["snapping"][1] == "screen pixels":
+            # pixel -> cell
+            threshold = self.mapwindow.Distance(beginpt=(0,0),
+                                                      endpt=(Digit.settings["snapping"][0],0))[0]
+        else:
+            threshold = Digit.settings["snapping"][0]
+
+        Debug.msg(4, "DisplayDriver.GetThreshold(): thresh=%f" % threshold)
+        return threshold
+
     def __SetPen(self, line, symbol):
         # see include/vect/dig_defines.h
         # define GV_POINT      0x01
@@ -303,7 +395,7 @@ class DisplayDriver:
         # define GV_AREA       0x40
         # define GV_VOLUME     0x80
 
-        if line in self.highlighted:
+        if line in self.selected:
             symbol = "symbolHighlight"
         
         width = Digit.settings["lineWidth"][0]
@@ -314,29 +406,94 @@ class DisplayDriver:
         else:
             self.mapwindow.pen = self.mapwindow.polypen = None
 
-    def SetHighlighted(self, ids):
-        """Set highlighted objects in PseudoDC
+    def SetSelected(self, pdcId):
+        """Set selected objects (their ids) in PseudoDC
 
-        For disable highlighting set ids=[]
+        For deseleids=[]
         """
         # reset
-        self.highlighted = []
+        self.selected = []
         
-        for line in ids:
-            self.highlighted.append(line)
+        for line in pdcId:
+            self.selected.append(line)
 
-        Debug.msg(4, "DisplayDriver.SetHightlighted(): dcIds=%s, lineIds=%s" % \
-                      (ids, self.highlighted))
+        Debug.msg(4, "DisplayDriver.SetSelected(): pdcId=%s, grassId=%s" % \
+                      (pdcId, self.selected))
 
-    def SelectLinesByBox(self, rect):
-        """Alternative method for selecting vector feature
-        in the map by given bounding box.
+    def GetSelected(self, grassId=True):
+        """Get ids of selected objects in PseudoDC
+
+        If grassId=True return GRASS line id otherwise PseudoDC id"""
+        if grassId:
+            return self.selected
+        else:
+            pdcId = []
+            for line in self.selected:
+                for id in self.ids[line]:
+                    pdcId.append(id)
+            return pdcId
+
+    def GetSelectedVertex(self, coords):
+        """Return PseudoDC id(s) of vertex (of selected line)
+        on position 'coords'"""
+
+        selectedId = []
+
+        try:
+            line = self.selected[0]
+        except:
+            return selectedId
+
+        idx = 0
+
+        type = g6lib.Vect_read_line (self.mapInfo, self.points, self.cats, line)
+
+        npoints = self.points.n_points
+        
+        for idx in range(npoints):
+            x = g6lib.doubleArray_getitem(self.points.x, idx)
+            y = g6lib.doubleArray_getitem(self.points.y, idx)
+            z = g6lib.doubleArray_getitem(self.points.z, idx)
+
+            dist = g6lib.Vect_points_distance(coords[0], coords[1], 0,
+                                              x, y, z, 0)
+
+            if idx == 0:
+                minDist = dist
+                minIdx  = idx
+            else:
+                if minDist > dist:
+                    minDist = dist
+                    minIdx = idx
+
+        # [line, node1, node2, vertex1, ...]
+        if minIdx == 0:
+            finalIdx = 1
+        elif minIdx == npoints - 1:
+            finalIdx = 2
+        else:
+            finalIdx = minIdx + 1
+
+        selectedId.append(self.ids[line][finalIdx])
+        
+        return selectedId
+        
+    def SelectLinesByBox(self, rect, onlyType=None):
+        """Select vector features by given bounding box.
 
         rect = ((x1, y1), (x2, y2))
-        This method should be in the future reimplemented using
-        PseudoDC.FindObjectInsideBBox()"""
+        Number of selected features can be decreased by 'onlyType'
+        ('None' for no types)
+        """
 
-        type = 255 # all types (see include/vect/dig_defines.h)
+        type = 0
+        if not onlyType:
+            type = -1 # all types (see include/vect/dig_defines.h)
+        elif onlyType == "line":
+            type = g6lib.GV_LINES
+        elif onlyType == "point":
+            type = g6lib.GV_POINTS
+                    
         list = g6lib.Vect_new_list()
         bbox = g6lib.Vect_new_line_struct()
 
@@ -355,20 +512,42 @@ class DisplayDriver:
                                            0, None,
                                            type, list)
 
-        self.highligted = []
+        self.selected = []
         for idx in range(list.n_values):
             line = g6lib.intArray_getitem(list.value, idx)
-            if line not in self.highlighted:
-                self.highlighted.append(line)
+            if line not in self.selected:
+                self.selected.append(line)
 
         Debug.msg(4, "DisplayDriver.SelectLinesByBox(%s): n=%d, ids=%s" % \
-                  (rect, list.n_values, self.highlighted))
+                  (rect, list.n_values, self.selected))
         
         g6lib.Vect_destroy_line_struct(bbox)
         g6lib.Vect_destroy_list(list)
 
-        return self.highlighted
-        
+        return self.selected
+
+    def SelectLinesByPoint(self, point, onlyType=""):
+        """Select vector features by the box given by its center and thresh (size/2)
+        Number of selected features can be decreased by 'onlyType'
+        ('None' for all types)"""
+                           
+        type = 0
+        if not onlyType:
+            type = -1 # all types (see include/vect/dig_defines.h)
+        elif onlyType == "line":
+            type = g6lib.GV_LINES
+        elif onlyType == "point":
+            type = g6lib.GV_POINTS
+
+        line = g6lib.Vect_find_line(self.mapInfo, point[0], point[1], 0,
+                                    type, Digit.threshold, 0, 0)
+
+        self.selected = []
+        if line > 0:
+            self.selected.append(line)
+
+        return self.selected
+
     def ReDrawMap(self, map):
         """Reopen map and draw its content in PseudoDC"""
         # close map
@@ -588,16 +767,6 @@ class DigitSettingsDialog(wx.Dialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        # snapping
-        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
-        self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                         value=str(Digit.settings["snapping"][0]), min=1, max=1e6)
-        self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                         choices=["screen pixels", "map units"])
-        self.snappingUnit.SetValue(Digit.settings["snapping"][1])
-        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
-        flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
         # line width
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width"))
         self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
@@ -611,6 +780,33 @@ class DigitSettingsDialog(wx.Dialog):
         flexSizer.Add(self.lineWidthUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+
+        #
+        # snapping section
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Snapping"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        # snapping
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
+        self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                         value=str(Digit.settings["snapping"][0]), min=1, max=1e6)
+        self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                         choices=["screen pixels", "map units"])
+        self.snappingUnit.SetValue(Digit.settings["snapping"][1])
+        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        vertexSizer = wx.BoxSizer(wx.VERTICAL)
+        self.snapVertex = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                      label=_("Snap also to vertex"))
+        self.snapVertex.SetValue(Digit.settings["snapToVertex"])
+        vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        sizer.Add(item=vertexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
 
         #
@@ -720,26 +916,33 @@ class DigitSettingsDialog(wx.Dialog):
 
     def UpdateSettings(self):
         """Update Digit.settings"""
-        try:
-            # symbology
-            for key, (enabled, color) in self.symbology.iteritems():
-                if enabled:
-                    Digit.settings[key] = (enabled.IsChecked(), color.GetColour())
-                else:
-                    Digit.settings[key] = (None, color.GetColour())
-            # display
-            Digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
-                                          self.snappingUnit.GetValue()) # unit
-            Digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
-                                           self.lineWidthUnit.GetValue())
-            # digitize new feature
-            Digit.settings["addRecord"] = self.addRecord.IsChecked()
-            Digit.settings["layer"] = int(self.layer.GetValue())
-            if Digit.settings["categoryMode"] == "No category":
-                Digit.settings["category"] = None
+        # symbology
+        for key, (enabled, color) in self.symbology.iteritems():
+            if enabled:
+                Digit.settings[key] = (enabled.IsChecked(), color.GetColour())
             else:
-                Digit.settings["category"] = int(self.category.GetValue())
-            Digit.settings["categoryMode"] = self.categoryMode.GetValue()
+                Digit.settings[key] = (None, color.GetColour())
+        # display
+        Digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
+                                       self.lineWidthUnit.GetValue())
+
+        # snapping
+        Digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
+                                      self.snappingUnit.GetValue()) # unit
+        Digit.settings["snapToVertex"] = self.snapVertex.IsChecked()
+        
+        # digitize new feature
+        Digit.settings["addRecord"] = self.addRecord.IsChecked()
+        Digit.settings["layer"] = int(self.layer.GetValue())
+        if Digit.settings["categoryMode"] == "No category":
+            Digit.settings["category"] = None
+        else:
+            Digit.settings["category"] = int(self.category.GetValue())
+        Digit.settings["categoryMode"] = self.categoryMode.GetValue()
+
+        # threshold
+        try:
+            Digit.threshold = Digit.driver.GetThreshold()
         except:
             pass
     
