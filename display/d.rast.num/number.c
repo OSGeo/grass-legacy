@@ -147,11 +147,11 @@ int main (int argc, char **argv)
 
 	mapset = G_find_cell (full_name, "");
 	if(mapset == NULL)
-	    G_fatal_error(_("Raster map [%s] not found"), full_name);
+	    G_fatal_error(_("Raster map <%s> not found"), full_name);
 
 	layer_fd = G_open_cell_old (full_name, mapset);
 	if (layer_fd < 0)
-	    G_fatal_error(_("Unable to open [%s]"), full_name);
+	    G_fatal_error(_("Unable to open raster map <%s>"), full_name);
 
 	/* determine the inputmap type (CELL/FCELL/DCELL) */
 	inmap_type = G_get_raster_map_type(layer_fd);
