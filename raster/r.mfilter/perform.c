@@ -22,8 +22,6 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 
     cell = G_allocate_cell_buf();
 
-    G_message(_("Filtering [%s] in [%s]"), in_name, in_mapset);
-
     count=0;
     for (pass=0; pass < repeat; pass++ ) {
         G_debug(1,"Pass %d", pass+1);
@@ -32,37 +30,33 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
 
 	    if (count==0) {
 		in = G_open_cell_old (in_name, in_mapset);
-#ifdef DEBUG
-                G_message (_("Open raster map %s in %s = %d"), in_name, in_mapset, in);
-#endif
+		
+                G_debug (1, "Open raster map %s in %s = %d", in_name, in_mapset, in);
+
 		if (in < 0) {
-		    char msg[100];
-		    sprintf (msg, "unable to open raster map [%s] in [%s]",
-			in_name, in_mapset);
-		    G_fatal_error (msg);
+		    G_fatal_error(_("Cannot open raster map <%s>"), in_name);
 		}
 		close(creat(tmp1=G_tempfile(),0666));
 		out = open (tmp1, 2);
 		if (out < 0)
-		    G_fatal_error ("unable to create a temporary file");
+		    G_fatal_error (_("Unable to create temporary file"));
 	    }
 	    else if (count==1) {
-#ifdef DEBUG
-                G_message (_("Closing raster map"));
-#endif
+
+		G_debug (1, "Closing raster map");
+
 		G_close_cell(in);
 		in = out;
 		close(creat(tmp2=G_tempfile(),0666));
 		out = open (tmp2, 2);
 		if (out < 0)
-		    G_fatal_error ("unable to create a temporary file");
+		    G_fatal_error (_("Unable to create temporary file"));
 	    }
 	    else {
 		int fd;
 
-#ifdef DEBUG
-                G_message(_("Swap temp files"));
-#endif
+                G_debug(1, "Swap temp files");
+
 		fd = in;
 		in = out;
 		out = fd;
@@ -85,13 +79,10 @@ int perform_filter (char *in_name, char *in_mapset, char *out_name,
     in = out;
     out = G_open_cell_new (out_name);
     if (out < 0) {
-	char msg[100];
-	sprintf (msg, "unable to create raster map [%s] in [%s]",
-	    out_name, G_mapset());
-	G_fatal_error (msg);
+	G_fatal_error (_("Cannot create raster map <%s>"), out_name);
     }
 
-    G_message (_("Writing [%s]"), out_name);
+    G_message (_("Writing raster map <%s>"), out_name);
     for (row=0; row<nrows; row++){
 	getrow (in, cell, row, buflen);
 	G_put_raster_row (out, cell, CELL_TYPE);

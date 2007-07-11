@@ -1,7 +1,7 @@
-#include "filter.h"
 #include <unistd.h>
 #include <grass/rowio.h>
 #include "glob.h"
+#include "filter.h"
 
 int 
 execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
@@ -51,17 +51,16 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
 	break;
     }
     direction = dy;
-#ifdef DEBUG
-    fprintf (stdout,"direction %d, dx=%d, dy=%d\n", direction,dx,dy);
-#endif
+
+    G_debug (3, "direction %d, dx=%d, dy=%d", direction,dx,dy);
 
     rcount = nrows - (size - 1);
     ccount = ncols - (size - 1);
 
-/* rewind output */
+    /* rewind output */
     lseek (out, 0L, 0);
 
-/* copy border rows to output */
+    /* copy border rows to output */
     row = starty;
     for (i=0; i < mid; i++)
     {
@@ -70,7 +69,7 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
 	row += dy;
     }
 
-/* for each row */
+    /* for each row */
     for (count=0; count < rcount; count++)
     {
         G_percent (count, rcount, 2);
@@ -85,7 +84,7 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
 	}
 	if (filter->type == SEQUENTIAL)
 	    cell = bufs[mid];
-    /* copy border */
+	/* copy border */
 	cp = cell;
 	for (i=0; i < mid; i++)
 	    *cp++ = bufs[mid][i];
@@ -109,7 +108,7 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
 		box[i] += dx;
 	}
 
-    /* copy border */
+	/* copy border */
 	for (i=ncols-mid; i < ncols; i++)
 	    *cp++ = bufs[mid][i];
 
@@ -118,7 +117,7 @@ execute_filter (ROWIO *r, int out, FILTER *filter, CELL *cell)
     }
     G_percent (count, rcount, 2);
 
-/* copy border rows to output */
+    /* copy border rows to output */
     row = starty + mid*dy;
     for (i=0; i < mid; i++)
     {

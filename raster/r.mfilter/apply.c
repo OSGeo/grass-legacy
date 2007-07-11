@@ -36,9 +36,9 @@ apply_filter (FILTER *filter, CELL **input)
 		    divisor += matrix[r][c];
     }
 
-/* now round the result to nearest integer. negative numbers are rounded
-   a little differently than non-negative numbers
-*/
+    /* now round the result to nearest integer. negative numbers are rounded
+       a little differently than non-negative numbers
+    */
     if (divisor)
     {
 	if(round = divisor/2)
