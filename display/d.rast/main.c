@@ -52,7 +52,7 @@ int main(
 	module->keywords = _("display");
     module->description =
 		_("Displays and overlays raster map layers "
-		"in the active display frame on the graphics monitor");
+		"in the active display frame on the graphics monitor.");
 
 /* set up command line */
     map              = G_define_option();
@@ -108,7 +108,7 @@ int main(
 /* Make sure map is available */
     mapset = G_find_cell2 (name, "") ;
     if (mapset == NULL)
-        G_fatal_error(_("Raster map [%s] not available"), name) ;
+        G_fatal_error(_("Raster map <%s> not found"), name) ;
 
     if (R_open_driver() != 0)
 	G_fatal_error (_("No graphics device selected"));
