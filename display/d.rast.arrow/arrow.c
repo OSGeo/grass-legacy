@@ -144,7 +144,7 @@ int main (int argc, char **argv)
     opt4->required   = NO ;
     opt4->answer     = "gray" ;
     opt4->options    = D_COLOR_LIST ",none";
-    opt4->description= _("Color for drawing grid, or \"none\"");
+    opt4->description= _("Color for drawing grid or \"none\"");
 
     opt5 = G_define_option() ;
     opt5->key        = "x_color" ;
@@ -193,7 +193,7 @@ int main (int argc, char **argv)
     if (opt1->answer) {
 	G_strncpy(layer_name, opt1->answer, sizeof(layer_name)-1);
 	if((mapset = G_find_cell2 (layer_name, "")) == NULL)
-	    G_fatal_error(_("Raster map [%s] not found"), layer_name);
+	    G_fatal_error(_("Raster map <%s> not found"), layer_name);
 	layer_set = 1;
     }
     else
@@ -235,7 +235,7 @@ int main (int argc, char **argv)
 
 	mag_map = opt7->answer;
     	if((mag_mapset = G_find_cell2(mag_map, "")) == NULL)
-    	    G_fatal_error(_("Raster map [%s] not found"), mag_map);
+    	    G_fatal_error(_("Raster map <%s> not found"), mag_map);
     }
     else if(scale != 1.0)
 	G_warning(_("scale option requires magnitude_map"));
@@ -371,7 +371,7 @@ int main (int argc, char **argv)
 
 	mapset = G_find_cell (full_name, "");
 	if(mapset == NULL)
-	    G_fatal_error(_("[%s] not found"), full_name);
+	    G_fatal_error(_("Raster map <%s> not found"), full_name);
 
 	sscanf (full_name, "%s", layer_name);
     }
