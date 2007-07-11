@@ -152,10 +152,10 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
     # interpolate using a regularized spline fit
   v.surf.rst layer=0 in=lidar_min_pt elev=lidar_min.rst
     # set color scale to something interesting
-  r.colors lidar_min.rst rule=bcyr
+  r.colors lidar_min.rst rule=bcyr -n -e
     # prepare a 1:1:1 scaled version for NVIZ visualization (for lat/lon input)
   r.mapcalc "lidar_min.rst_scaled = lidar_min.rst / (1852*60)"
-  r.colors lidar_min.rst_scaled rule=bcyr
+  r.colors lidar_min.rst_scaled rule=bcyr -n -e
 </pre></div>
 <BR>
 
@@ -163,17 +163,9 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 <H2>TODO</H2>
 
 <ul>
-<li>Accept input piped directly from stdin  (input="-")
-
-<li> Support for advanced statistics (in parallel with <em>r.univar</em>).
+<li> Support for advanced statistics (as from <em>r.univar</em>).
      Especially useful for dealing with outliers would be median and
      5-10% trimmed means.
-<BR>
-The equivalent module from GRASS 5 (<em>
-<a href="http://grass.itc.it/gdp/html_grass5/html/s.cellstats.html">s.cellstats</a>
-</em>) contains code for additional statistical options, claiming to use only
-16 bytes per cell: <em>skewness, kurtosis, mean of squares, mean of absolute
-values, first quartile, median, third quartile</em>.</li>
 
 <li> Support for multiple map output from a single run.<BR>
      <tt>method=string[,string,...] output=name[,name,...]</tt>
@@ -226,4 +218,5 @@ University of Otago<BR>
 New Zealand</i><BR>
 
 <BR>
-<p><i>Last changed: $Date$</i></p>
+<p>
+<i>Last changed: $Date$</i></p>
