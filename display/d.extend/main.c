@@ -31,7 +31,7 @@ main (int argc, char **argv)
     module = G_define_module();
     module->keywords = _("display, setup");
     module->description =
-		"Set window region so that all currently displayed raster "
+		"Sets window region so that all currently displayed raster "
 		"and vector maps can be shown in a monitor.";
 
     if(argc > 1 && G_parser(argc, argv))
@@ -39,7 +39,7 @@ main (int argc, char **argv)
 
 
     if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
+	G_fatal_error (_("No graphics device selected"));
 
     if(D_get_cell_list (&rast, &nrasts) < 0)
 	rast = NULL;
@@ -50,7 +50,7 @@ main (int argc, char **argv)
     R_close_driver();
 
     if (rast == NULL && vect == NULL)
-    	G_fatal_error("No raster or vector map displayed");
+    	G_fatal_error(_("No raster or vector map displayed"));
 
     G_get_window(&window);
 
@@ -59,7 +59,7 @@ main (int argc, char **argv)
 	for(i=0; i<nrasts; i++){
     		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
-			G_fatal_error("Raster file [%s] not available", rast[i]) ;
+			G_fatal_error(_("Raster map <%s> not found"), rast[i]) ;
 	 	if(G_get_cellhd(rast[i], mapset, &temp_window) >= 0)
 		{
 			if(first)
@@ -100,7 +100,7 @@ main (int argc, char **argv)
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
-			G_fatal_error("Vector file [%s] not available", vect[i]) ;
+			G_fatal_error(_("Vector map <%s> not found"), vect[i]) ;
 		if(Vect_open_old_head(&Map, vect[i], mapset) == 2)
 		{
 			if(first)

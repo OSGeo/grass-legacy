@@ -125,7 +125,7 @@ int main(int argc, char **argv)
 	{
 	  mapset = openvect(vect[i]);
 	  if(mapset == NULL)
-	     G_fatal_error(_("Unable to open vector map [%s]"), vect[i]) ;
+	     G_fatal_error(_("Unable to open vector map <%s>"), vect[i]) ;
 	}
 
       Map = (struct Map_info *) G_malloc(nvects * sizeof(struct Map_info));
@@ -146,12 +146,12 @@ int main(int argc, char **argv)
     
           level = Vect_open_old (&Map[i], vect[i], mapset);
           if (level < 0)
-              G_fatal_error(_("Vector file [%s] not available"), vect[i]);
+              G_fatal_error(_("Vector map <%s> not found"), vect[i]);
 
           if (level < 2)
               G_fatal_error(_("%s: You must build topology on vector map"), vect[i]);
 
-	  G_message ( _("Building spatial index ...") );
+	  G_message ( _("Building spatial index...") );
 	  Vect_build_spatial_index ( &Map[i], stderr );
         }
     }

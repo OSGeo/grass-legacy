@@ -447,7 +447,7 @@ main (int argc, char **argv)
 	mapset = G_find_vector2 (map_name, "") ; 
 	
 	if (mapset == NULL)
-		G_fatal_error(_("Vector file [%s] not available"), map_name) ;
+		G_fatal_error(_("Vector map <%s> not found"), map_name) ;
 
 	/* if where_opt was specified select categories from db 
 	 * otherwise parse cat_opt */
