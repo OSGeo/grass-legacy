@@ -587,7 +587,7 @@ int main(int argc, char *argv[])
 
     if (Tmp_file_z != NULL) {
 	if (NULL == (Tmp_fd_z = fopen(Tmp_file_z, "w+")))
-	    G_fatal_error(_("Can't open temp file [%s]"), Tmp_file_z);
+	    G_fatal_error(_("Unable to open temporary file <%s>"), Tmp_file_z);
 	for (i = 0; i < n_rows; i++) {
 	    if (!(fwrite(zero_array_cell, sizeof(FCELL), n_cols, Tmp_fd_z)))
 		G_fatal_error(_("Not enough disk space -- cannot write files"));
