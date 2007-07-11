@@ -61,7 +61,7 @@ main (int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, paint labels");
     module->description =
-	_("Create paint labels for GRASS vector map and attached attributes.");
+	_("Creates paint labels for GRASS vector map and attached attributes.");
 
     Vectfile = G_define_standard_option(G_OPT_V_MAP);
 
@@ -273,7 +273,7 @@ main (int argc, char **argv)
     /* open vector */	
     mapset = G_find_vector2 ( Vectfile->answer, NULL) ; 
     if (mapset == NULL)
-	G_fatal_error(_("Vector file [%s] not available"), Vectfile->answer);
+	G_fatal_error(_("Vector map <%s> not found"), Vectfile->answer);
 
     Vect_open_old (&Map, Vectfile->answer, mapset);
 	
