@@ -782,13 +782,11 @@ class BufferedWindow(wx.Window):
                     self.mouse['begin'] = self.polycoords[-1]
                     self.DrawLines()
             elif digit.action == "deleteLine":
-                # delete selected feature
-                # -> unselect selected feature
-                # Digit.driver.SetSelected([])
                 pass
             elif digit.action in ["moveLine", "moveVertex"]:
-                self.moveBegin = [0,0]
-                self.modeIds   = []
+                self.moveBegin = [0, 0]
+                self.moveCoords = self.mouse['begin']
+                self.moveIds   = []
             elif digit.action == "splitLine":
                 pass
             elif digit.action == "displayAttributes":
@@ -871,23 +869,26 @@ class BufferedWindow(wx.Window):
             self.mouse['end'] = event.GetPositionTuple()[:]
             if digit.action in ["deleteLine", "moveLine", "moveVertex"]:
                 if digit.action == "moveVertex":
-                    Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
+                    self.moveIds = Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
                                                                     self.mouse['begin'][1]),
                                                     onlyType="line")
-                    self.moveIds = Digit.driver.GetSelectedVertex(self.mouse['begin'])
-                else: # moveLine
-                    Digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
-                                                                   self.mouse['begin'][1]),
-                                                   self.Pixel2Cell(self.mouse['end'][0],
-                                                                   self.mouse['end'][1])))
-                    self.moveIds = Digit.driver.GetSelected(grassId=False)
+
+                else: # moveLine | deleteLine
+                    self.moveIds = Digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
+                                                                                  self.mouse['begin'][1]),
+                                                                  self.Pixel2Cell(self.mouse['end'][0],
+                                                                                  self.mouse['end'][1])))
                 if len(self.moveIds) > 0:
                     self.UpdateMap(render=False)
                     if digit.action in ["moveLine", "moveVertex"]:
                         self.UpdateMap(render=False, redrawAll=False, removeId=self.moveIds)
-                    
-            if digit.action in ["splitLine", "addVertex", "removeVertex"]:
-                Digit.driver.SetSelected([])
+                        # get pseudoDC id of objects which should be redrawn
+                        if digit.action == "moveLine":
+                            self.moveIds = Digit.driver.GetSelected(grassId=False)
+                        else:
+                            self.moveIds = Digit.driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
+                                                                                          self.mouse['begin'][1]))
+            elif digit.action in ["splitLine", "addVertex", "removeVertex"]:
                 Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
                 self.UpdateMap(render=False)
         elif self.dragid != None:
@@ -1029,8 +1030,7 @@ class BufferedWindow(wx.Window):
                     self.polycoords = []
             elif digit.action == "deleteLine":
                 Digit.DeleteSelectedLines()
-            elif digit.action == "moveLine":
-                #if Digit.driver.GetSelected():
+            elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                 # pixel -> cell
                 move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
                         self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
@@ -1039,9 +1039,14 @@ class BufferedWindow(wx.Window):
                     move[0] *= -1.0
                 if self.moveBegin[1] > 0.0:
                     move[1] *= -1.0
+
+                if digit.action == "moveLine":
+                    Digit.MoveSelectedLines(move)
+                else: # moveVertex
+                    Digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0], self.moveCoords[1]),move)
                 
-                Digit.MoveSelectedLines(move)
                 del self.moveBegin
+                del self.moveCoords
                 del self.moveIds
             elif digit.action == "splitLine":
                 Digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
@@ -1069,8 +1074,9 @@ class BufferedWindow(wx.Window):
             elif digit.action in ["deleteLine", "moveLine", "splitLine", "addVertex", "removeVertex", "moveVertex"]:
                 # unselected selected features
                 Digit.driver.SetSelected([])
-                if digit.action in ["moveLine", "moveVertex"]:
+                if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                     del self.moveBegin
+                    del self.moveCoords
                     del self.moveIds
                 self.UpdateMap()
 
@@ -1091,10 +1097,10 @@ class BufferedWindow(wx.Window):
                 dy = self.mouse['end'][1] - self.mouse['begin'][1]
                 self.moveBegin[0] += dx
                 self.moveBegin[1] += dy
-                for id in self.moveIds:
-                    print "#", id, dx, dy
-                    self.pdc.TranslateId(id, dx, dy)
-                
+                if len(self.moveIds) > 0:
+                    # draw lines on new position
+                    for id in self.moveIds:
+                        self.pdc.TranslateId(id, dx, dy)
                 self.Refresh() # TODO: use RefreshRect()
                 self.mouse['begin'] = self.mouse['end']
 
