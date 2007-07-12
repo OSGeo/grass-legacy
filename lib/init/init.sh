@@ -858,7 +858,6 @@ bash|msh)
     rm -f "$bashrc"
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
-    echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
     echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
     
@@ -886,7 +885,6 @@ cygwin)
     # this does not work on cygwin for unknown reasons
     # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
-    echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
