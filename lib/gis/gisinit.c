@@ -100,7 +100,6 @@ static int gisinit(void)
     G__init_null_patterns();
 
     initialized = 1;
-    umask(022);
 
     return 0;
 }
