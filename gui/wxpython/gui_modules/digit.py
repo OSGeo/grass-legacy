@@ -245,6 +245,14 @@ class VEdit(AbstractDigit):
 
     def MoveSelectedLines(self, move):
         """Move selected vector features"""
+        return self.__MoveFeature("move", None, move)
+
+    def MoveSelectedVertex(self, coords, move):
+        """Move selected vertex of the line"""
+        return self.__MoveFeature("vertexmove", coords, move)
+
+    def __MoveFeature(self, tool, coords, move):
+        """Move selected vector feature or vertex"""
 
         if not self.driver.selected:
             return False
@@ -252,15 +260,17 @@ class VEdit(AbstractDigit):
         Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
                       (self.driver.selected, move))
 
-        print "#", move
-        
         ids = ",".join(["%d" % v for v in self.driver.selected])
-        command = ["v.edit", "--q",
+        command = ["v.edit", "--q", "-s", # snap
                    "map=%s" % self.map,
-                   "tool=move",
+                   "tool=%s" % tool,
                    "ids=%s" % ids,
-                   "move=%f,%f" % (float(move[0]),float(move[1]))]
+                   "move=%f,%f" % (float(move[0]),float(move[1])),
+                   "thresh=%f" % Digit.threshold]
 
+        if tool == "vertexmove":
+            command.append("coords=%f,%f" % (float(coords[0]), float(coords[1])))
+                                             
         # run the command
         vedit = cmd.Command(cmd=command)
 
@@ -466,16 +476,14 @@ class DisplayDriver:
                     minDist = dist
                     minIdx = idx
 
-        # [line, node1, node2, vertex1, ...]
+        # [line, vertex1, ..., node1, node2]
         if minIdx == 0:
-            finalIdx = 1
+            selectedId.append(self.ids[line][-2])
         elif minIdx == npoints - 1:
-            finalIdx = 2
+            selectedId.append(self.ids[line][-1])
         else:
-            finalIdx = minIdx + 1
+            selectedId.append(self.ids[line][minIdx])
 
-        selectedId.append(self.ids[line][finalIdx])
-        
         return selectedId
         
     def SelectLinesByBox(self, rect, onlyType=None):
@@ -512,7 +520,6 @@ class DisplayDriver:
                                            0, None,
                                            type, list)
 
-        self.selected = []
         for idx in range(list.n_values):
             line = g6lib.intArray_getitem(list.value, idx)
             if line not in self.selected:
@@ -538,6 +545,7 @@ class DisplayDriver:
             type = g6lib.GV_LINES
         elif onlyType == "point":
             type = g6lib.GV_POINTS
+
 
         line = g6lib.Vect_find_line(self.mapInfo, point[0], point[1], 0,
                                     type, Digit.threshold, 0, 0)

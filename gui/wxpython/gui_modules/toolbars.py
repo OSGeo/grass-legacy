@@ -187,9 +187,6 @@ class DigitToolbar(AbstractToolbar):
         # list of available vector maps
         self.UpdateListOfLayers(updateTool=True)
 
-        # additional bindings
-        self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
-
         # realize toolbar
         for row in range(0, numOfRows):
             self.toolbar[row].Realize()
@@ -358,12 +355,11 @@ class DigitToolbar(AbstractToolbar):
         selected map layer activated for editing.
         """
         if self.layerSelectedID: # deactive map layer for editing
-            # TODO
-            pass
+            self.StopEditing(self.layers[self.layerSelectedID])
 
         # select the given map layer for editing
-        layerSelectedID = self.combo.GetCurrentSelection()
-        self.StartEditing(self.layers[layerSelectedID])
+        self.layerSelectedID = self.combo.GetCurrentSelection()
+        self.StartEditing(self.layers[self.layerSelectedID])
 
     def StartEditing (self, layerSelected):
         """
@@ -445,7 +441,10 @@ class DigitToolbar(AbstractToolbar):
                 #self.combo.Destroy()
 
             self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
-                                     choices=layerNameList, size=(150, -1))
+                                     choices=layerNameList, size=(150, -1), style=wx.CB_READONLY)
+
+            # additional bindings
+            self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
             self.comboid = self.toolbar[0].InsertControl(0, self.combo)
             self.toolbar[0].Realize()
