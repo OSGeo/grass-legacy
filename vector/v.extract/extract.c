@@ -267,12 +267,12 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     if ( type_only && field == -1 ) /* type only */
 	     {
 		 /* line */
-		 if ( type == GV_LINE && type_match )
+		 if ( type_match )
 		     write = 1; 
 		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area )
-		     write = 1;
+	         if ( (type == GV_CENTROID && (select_type & GV_AREA)) && !(centroid_in_area && field_match) )
+		     write = 0;
 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && ( left_area || right_area ) ) {
@@ -283,12 +283,12 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     else if ( type_only && field > 0 ) /* type and field only */
 	     {
 		 /* line */
-		 if ( type == GV_LINE && type_match && field_match )
+		 if ( type_match && field_match )
 		     write = 1; 
 		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && field_match )
-		     write = 1;
+	         if ( (type == GV_CENTROID && (select_type & GV_AREA)) && !(centroid_in_area && field_match) )
+		     write = 0;
 		 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_field_match || right_field_match ) ) {
@@ -299,12 +299,12 @@ xtract_line (int num_index, int *num_array, struct Map_info *In, struct Map_info
 	     else  /* type, field and category */
 	     {
 		 /* line */
-		 if ( type == GV_LINE && type_match && cat_match )
+		 if ( type_match && cat_match )
 		     write = 1; 
 		 
 		 /* centroid */
-	         if ( type == GV_CENTROID && (select_type & GV_AREA) && centroid_in_area && cat_match )
-		     write = 1;
+	         if ( (type == GV_CENTROID && (select_type & GV_AREA)) && !(centroid_in_area && field_match) )
+		     write = 0;
 		 
 		 /* areas */ 
 		 if ( type == GV_BOUNDARY && (select_type & GV_AREA) && ( left_cat_match || right_cat_match ) ) {
