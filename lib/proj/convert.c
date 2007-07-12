@@ -24,6 +24,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
+#include <grass/glocale.h>
 #include <cpl_csv.h>
 #include "local_proto.h"
 
@@ -106,12 +107,12 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     hSRS = OSRNewSpatialReference(NULL);
 
     if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0) {
-	G_warning("Can't parse GRASS PROJ_INFO file");
+	G_warning(_("Can't parse GRASS PROJ_INFO file"));
 	return NULL;
     }
 
     if ((proj4 = pj_get_def(pjinfo.pj, 0)) == NULL) {
-	G_warning("Can't get PROJ.4-style parameter string");
+	G_warning(_("Can't get PROJ.4-style parameter string"));
 	return NULL;
     }
 
@@ -123,14 +124,14 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 	proj4mod = proj4;
 
     if ((errcode = OSRImportFromProj4(hSRS, proj4mod)) != OGRERR_NONE) {
-	G_warning("OGR can't parse PROJ.4-style parameter string:\n" 
-		      "%s\n(OGR Error code was %d)", proj4mod, errcode);
+	G_warning(_("OGR can't parse PROJ.4-style parameter string:\n" 
+		    "%s\n(OGR Error code was %d)"), proj4mod, errcode);
 	return NULL;
     }
 
     if ((errcode = OSRExportToWkt(hSRS, &wkt)) != OGRERR_NONE) {
-	G_warning("OGR can't get WKT-style parameter string\n"
-		  "(OGR Error code was %d)", errcode);
+	G_warning(_("OGR can't get WKT-style parameter string\n"
+		    "(OGR Error code was %d)"), errcode);
 	return NULL;
     }
 
@@ -390,7 +391,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	G_set_key_value( "proj", pszProj, *projinfo );
     }
     else
-	G_warning("No projection name! Projection parameters likely to be meaningless.");
+	G_warning(_("No projection name! Projection parameters likely to be meaningless"));
 
        
 /* -------------------------------------------------------------------- */
@@ -445,12 +446,12 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 
                     if( paramsets < 0 )
                         G_warning(_("Datum '%s' apparently recognised by GRASS but no parameters found. "
-                                  "You may want to look into this."), datum );
+				    "You may want to look into this"), datum );
                     else if( datumtrans > paramsets )
                     {
 
                         G_warning(_("Invalid tranformation number %d; valid range is 1 to %d. "
-                                  "Leaving datum transform parameters unspecified."),
+				    "Leaving datum transform parameters unspecified"),
                                   datumtrans, paramsets);
                         datumtrans = 0;
                     }
