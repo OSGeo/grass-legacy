@@ -32,7 +32,7 @@ int extract_points(int z_flag)
 	    break;
     }
 
-    G_message( _("Extracting points ... "));
+    G_message( _("Extracting points..."));
 
     count = 1;
     for (row = 0; row < cell_head.rows; row++) {

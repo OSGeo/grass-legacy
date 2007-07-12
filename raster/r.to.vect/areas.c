@@ -118,7 +118,7 @@ int extract_areas (void)
   /* represents the "outside", the external null values */
   assign_area(nullVal,0);
 
-  G_message(_("Extracting areas ... "));
+  G_message(_("Extracting areas..."));
 
   scan_length = read_next();
   while (read_next())			/* read rest of file, one row at */

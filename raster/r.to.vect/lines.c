@@ -65,7 +65,7 @@ int extract_lines (void)
 	read_next();
 	read_next();
 
-        G_message( _("Extracting lines ... "));
+        G_message( _("Extracting lines..."));
 
 	switch (data_type) {
 		case CELL_TYPE:
