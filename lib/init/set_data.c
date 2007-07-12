@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
  *   note: G_getenv() make a special case of this variable
  */
     G_no_gisinit();
-    umask(0);
+
     G_unsetenv ("GISBASE");      /* this cleans the variable */
     G_getenv ("GISBASE") ;         /* this reads it from the unix environment */
 
