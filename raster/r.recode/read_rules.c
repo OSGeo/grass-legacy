@@ -17,7 +17,7 @@ int report_range (void)
   if(inp_type != CELL_TYPE)
   {
      if(G_read_fp_range(name, mapset, &drange)<=0)
-        G_fatal_error(_("Can't read f_range for map %s"), name);
+        G_fatal_error(_("Unable to read f_range for map %s"), name);
 
      G_get_fp_range_min_max(&drange, &old_dmin, &old_dmax);
      if(G_is_d_null_value(&old_dmin) || G_is_d_null_value(&old_dmax))
@@ -32,7 +32,7 @@ int report_range (void)
       }
   }
   if(G_read_range(name, mapset, &range)<=0)
-     G_fatal_error(_("Can't read range for map %s"), name);
+     G_fatal_error(_("Unable to read range for map %s"), name);
 
   G_get_range_min_max(&range, &old_min, &old_max);
   if(G_is_c_null_value(&old_min) || G_is_c_null_value(&old_max))
@@ -58,7 +58,7 @@ int read_rules (FILE *fp)
    if(isatty(fileno(fp)))
    {
       report_range();
-      G_message(_("Enter the rule or 'help' for the format description:"));
+      G_message(_("Enter the rule or 'help' for the format description"));
    }
    G_fpreclass_init(&rcl_struct);
    for (line=1;;line++)
