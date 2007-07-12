@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
 	exit(EXIT_FAILURE);
     }
     tempfile = G__tempfile(p);
-    umask(0);
+
 /* create tempfile so next run of this program will create a unique name */
     close(creat(tempfile,0666));
     fprintf (stdout,"%s\n", tempfile);
