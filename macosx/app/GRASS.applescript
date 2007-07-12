@@ -5,9 +5,24 @@
 --	Read the file COPYING that comes with GRASS for details.
 
 on launched theObject
-	set grass_path to (path to me as string) & "Contents:Resources:"
-	set grass_startup to grass_path & "grass.sh"
+	set grass_path to (posix path of (path to me as string)) & "Contents/Resources/"
+	set grass_startup to (quoted form of (grass_path & "grass.sh"))
+	set grassRun to grass_startup & "; exit"
 	
-	tell application "Finder" to open file grass_startup using (application file "Terminal.app" in folder "Utilities" in folder "Applications" in startup disk)
+	set TerminalRunning to false
+	try
+		if ((do shell script "ps -axc | grep '\\bTerminal\\b'") is not null) then
+			set TerminalRunning to true
+		end if
+	end try
+	tell application "Terminal"
+		activate
+		if TerminalRunning then
+			do script (grassRun)
+		else
+			do script (grassRun) in window 1
+		end if
+	end tell
+	
 	tell me to quit
 end launched
