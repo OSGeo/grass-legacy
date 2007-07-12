@@ -427,7 +427,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    {
 	        if( paramspresent < 2)
 		    /* Only give warning if no parameters present */
-	            G_warning("Datum '%s' not recognised by GRASS and no parameters found.",
+	            G_warning(_("Datum '%s' not recognised by GRASS and no parameters found."),
 			      pszDatumName);
 	    }
             else
@@ -444,13 +444,13 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
                     paramsets = GPJ_get_default_datum_params_by_name(datum, &params);
 
                     if( paramsets < 0 )
-                        G_warning("Datum '%s' apparently recognised by GRASS but no parameters found. "
-                                  "You may want to look into this.", datum );
+                        G_warning(_("Datum '%s' apparently recognised by GRASS but no parameters found. "
+                                  "You may want to look into this."), datum );
                     else if( datumtrans > paramsets )
                     {
 
-                        G_warning("Invalid tranformation number %d; valid range is 1 to %d. "
-                                  "Leaving datum transform parameters unspecified.",
+                        G_warning(_("Invalid tranformation number %d; valid range is 1 to %d. "
+                                  "Leaving datum transform parameters unspecified."),
                                   datumtrans, paramsets);
                         datumtrans = 0;
                     }
