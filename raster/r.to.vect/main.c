@@ -64,7 +64,7 @@ int main (int argc, char *argv[])
 
     smooth_flg = G_define_flag();
     smooth_flg->key = 's';
-    smooth_flg->description = _("Smooth Corners");
+    smooth_flg->description = _("Smooth corners");
 
     value_flg = G_define_flag();
     value_flg->key = 'v';
