@@ -10,3 +10,12 @@
 #define TOOL_PRUNE   10 /* remove vertices in threshold from lines and boundaries */
 #define TOOL_RMAREA  11 /* remove small areas */
 #define TOOL_RMSA    12 /* remove small angles between lines at nodes */
+#define TOOL_RMLINE  13 /* remove all line or boudaries of zero length */
+
+#define SEP \
+    "--------------------------------------------------"
+
+int rmdac ( struct Map_info *Out );
+void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
+int prune ( struct Map_info *, int, double );
+int remove_zero_line(struct Map_info *Map, int type, struct Map_info *Err);
