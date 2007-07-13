@@ -13,10 +13,9 @@
  *  See: Press, W.H. et al. (1992), Numerical recipes in C.
  */
 
+#include <math.h>
 #include <grass/gis.h>
 #include "local_proto.h"
-#include <math.h>
-
 
 void 
 p_bilinear (

@@ -4,9 +4,10 @@
  *		    x,y position
  */ 
 
+#include <math.h>
 #include <grass/gis.h>
 #include "local_proto.h"
-#include <math.h>
+
 
 void p_nearest (
     FCELL **ibuffer,		/* input matrix			 */

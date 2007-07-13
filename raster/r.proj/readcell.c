@@ -20,12 +20,12 @@ int 	fdi)			/* handle of input layer		 */
 
 	ibuffer = (FCELL **) G_malloc(sizeof(FCELL **) * nrows);
 
-	G_message(_("Allocating memory and reading input map... "));
+	G_important_message(_("Allocating memory and reading input map..."));
 	G_percent(0, nrows, 5);
 	for (row = 0; row < nrows; row++){
 		ibuffer[row] = (FCELL *) G_allocate_raster_buf(FCELL_TYPE);
 		if(G_get_raster_row(fdi, ibuffer[row], row, FCELL_TYPE) < 0)
-			G_fatal_error("Error reading input");
+			G_fatal_error(_("Unable to read raster map row %d"), row);
 		G_percent(row, nrows - 1, 5);
 	}
 	return(ibuffer);
