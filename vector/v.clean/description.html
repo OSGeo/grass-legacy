@@ -89,13 +89,33 @@ v.clean in=crossed_lines out=crossed_lines_brk \
         error=intersection tool=break
 </pre></div>
 
+<h3>Remove all lines of zero length</h3>
+
+<div class="code"><pre>
+v.out.ascii zero format=standard 
+L  2 1
+ -819832.09065589 -987825.2187231
+ -806227.28362601 -971104.80702988
+ 1     1         
+L  2 1
+ -799165.24638913 -972974.16982788
+ -799165.24638913 -972974.16982788
+ 1     2         
+
+v.clean input=zero output=zero_clean tool=rmline type=line
+
+v.out.ascii zero_clean format=standard 
+L  2 1
+ -819832.09065589 -987825.2187231
+ -806227.28362601 -971104.80702988
+ 1     1         
+</pre></div>
 
 
 <h2>AUTHORS</h2>
 
-David Gerdes, U.S. Army Construction Engineering 
-Research Laboratory
-<br>
-Radim Blazek, ITC-Irst, Trento, Italy
+David Gerdes, U.S. Army Construction Engineering Research Laboratory<br>
+Radim Blazek, ITC-irst, Trento, Italy<br>
+Martin Landa, FBK-irst (formerly ITC-irst), Trento, Italy<br>
 
 <p><i>Last changed: $Date$</i></p>

@@ -22,13 +22,6 @@
 #include <grass/glocale.h>
 #include "proto.h"
 
-#define SEP \
-    "--------------------------------------------------"
-
-int rmdac ( struct Map_info *Out );
-void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
-int prune ( struct Map_info *, int, double );
-
 int 
 main (int argc, char *argv[])
 {
@@ -48,11 +41,11 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("vector, topology");
-	module->description = _("Toolset for cleaning the vector topology");
+	module->description = _("Toolset for cleaning topology of vector map.");
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
-	type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
+	type_opt = G_define_standard_option(G_OPT_V_TYPE);
 	
 	err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 	err_opt->key = "error";
@@ -64,8 +57,8 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,"
-	                    "rmarea,rmsa";
+	tool_opt->options = "break,snap,rmdangle,chdangle,rmbridge,chbridge,rmdupl,rmdac,bpol,prune,"
+	                    "rmarea,rmline,rmsa";
         tool_opt->description = _("Cleaning tool");
         tool_opt->descriptions = 
 	    _("break;break lines at each intersection;"
@@ -79,13 +72,14 @@ main (int argc, char *argv[])
 	      "snap;snap lines to vertex in threshold;"
 	      "rmdac;remove duplicate area centroids ('type' option ignored);"
 	      "bpol;break (topologically clean) polygons (imported from "
-	      "non topological format (like shapefile). Boundaries are broken on each "
+	      "non topological format, like ShapeFile). Boundaries are broken on each "
 	      "point shared between 2 and more polygons where angles of segments are different;"
 	      "prune;remove vertices in threshold from lines and boundaries, "
 	      "boundary is pruned only if topology is not damaged (new intersection, "
 	      "changed attachement of centroid), first and last segment of the boundary "
 	      "is never changed;"
 	      "rmarea;remove small areas, the longest boundary with adjacent area is removed;"
+	      "rmline;remove all lines or boundaries of zero length, threshold is ignored;"
 	      "rmsa;remove small angles between lines at nodes");
 
 	thresh_opt = G_define_option();
@@ -149,6 +143,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_RMAREA;
 	    else if ( strcmp ( tool_opt->answers[i], "rmsa" ) == 0 )
 		tools[ntools] = TOOL_RMSA;
+	    else if ( strcmp ( tool_opt->answers[i], "rmline" ) == 0 )
+		tools[ntools] = TOOL_RMLINE;
 	    else 
 		G_fatal_error ( _("Tool doesn't exist") );
 
@@ -175,45 +171,48 @@ main (int argc, char *argv[])
 
         /* Print tool table */
 	G_message(SEP);
-	G_message(_("Tool : Threshold"));
+	G_message(_("Tool: Threshold"));
 
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-		    G_message("%s : %13e", _("Break"), threshs[i]);
+		    G_message("%s: %13e", _("Break"), threshs[i]);
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            G_message("%s : %13e", _("Remove duplicates"), threshs[i]);
+	            G_message("%s: %13e", _("Remove duplicates"), threshs[i]);
 		    break;
 		case ( TOOL_RMDANGLE ) :
-	            G_message("%s : %13e", _("Remove dangles"), threshs[i]);
+	            G_message("%s: %13e", _("Remove dangles"), threshs[i]);
 		    break;
 		case ( TOOL_CHDANGLE ) :
-	            G_message("%s : %13e", _("Change type of boundary dangles"), threshs[i]);
+	            G_message("%s: %13e", _("Change type of boundary dangles"), threshs[i]);
 		    break;
 		case ( TOOL_RMBRIDGE ) :
-	            G_message("%s : %13e", _("Remove bridges"), threshs[i]);
+	            G_message("%s: %13e", _("Remove bridges"), threshs[i]);
 		    break;
 		case ( TOOL_CHBRIDGE ) :
-	            G_message("%s : %13e", _("Change type of boundary bridges"), threshs[i]);
+	            G_message("%s: %13e", _("Change type of boundary bridges"), threshs[i]);
 		    break;
 		case ( TOOL_SNAP ) :
-	            G_message("%s : %13e", _("Snap vertices"), threshs[i]);
+	            G_message("%s: %13e", _("Snap vertices"), threshs[i]);
 		    break;
 		case ( TOOL_RMDAC ) :
-	            G_message("%s : %13e", _("Remove duplicate area centroids"), threshs[i]);
+	            G_message("%s: %13e", _("Remove duplicate area centroids"), threshs[i]);
 		    break;
 		case ( TOOL_BPOL ) :
-	            G_message("%s : %13e", _("Break polygons"), threshs[i]);
+	            G_message("%s: %13e", _("Break polygons"), threshs[i]);
 		    break;
 		case ( TOOL_PRUNE ) :
-	            G_message("%s : %13e", _("Prune"), threshs[i]);
+	            G_message("%s: %13e", _("Prune"), threshs[i]);
 		    break;
 		case ( TOOL_RMAREA ) :
-	            G_message("%s : %13e", _("Remove small areas"), threshs[i]);
+	            G_message("%s: %13e", _("Remove small areas"), threshs[i]);
 		    break;
 		case ( TOOL_RMSA ) :
-	            G_message("%s : %13e", _("Remove small angles at nodes"), threshs[i]);
+	            G_message("%s: %13e", _("Remove small angles at nodes"), threshs[i]);
+		    break;
+	        case ( TOOL_RMLINE ) :
+		    G_message("%s: %13e", _("Remove all lines or boundaries of zero length"), threshs[i]);
 		    break;
 	    }
 	}
@@ -252,7 +251,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Copy input to output */
-	G_message(_("Copying vector lines ..."));
+	G_message(_("Copying vector lines..."));
 	Vect_copy_head_data (&In, &Out);
 	Vect_hist_copy (&In, &Out);
 	Vect_hist_command ( &Out );
@@ -271,7 +270,7 @@ main (int argc, char *argv[])
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
 		} else {
-	            G_message(_("Rebuilding parts of topology ..."));
+	            G_message(_("Rebuilding parts of topology..."));
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
 	            G_message(SEP);
 		}
@@ -279,7 +278,7 @@ main (int argc, char *argv[])
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_BASE )	{
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, NULL );
 		} else {
-	            G_message(_("Rebuilding parts of topology ..."));
+	            G_message(_("Rebuilding parts of topology..."));
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
 	            G_message(SEP);
 		}
@@ -336,13 +335,18 @@ main (int argc, char *argv[])
                     count = Vect_clean_small_angles_at_nodes ( &Out, otype, pErr, stderr );
 		    G_message(_("%d modifications done"), count);
 		    break;
+		case TOOL_RMLINE:
+		    G_message(_("Tool: Remove all lines and boundaries of zero length"));
+                    count = remove_zero_line(&Out, otype, pErr);
+		    G_message(_("%d lines removed"), count);
+		    break;
 	    }
 
 	    G_message(SEP);
 	}
 
 	if ( !no_build_flag->answer ) {
-	    G_message(_("Rebuilding topology for output vector ..."));
+	    G_message(_("Rebuilding topology for output vector map..."));
 	    Vect_build_partial (&Out, GV_BUILD_NONE, NULL);
 	    Vect_build (&Out, stderr);
 	} else { 
@@ -352,7 +356,7 @@ main (int argc, char *argv[])
 
 	if ( pErr ) {
 	    G_message (SEP);
-	    G_message (_("Building topology for error vector ..."));
+	    G_message (_("Building topology for error vector map..."));
 	    Vect_build (pErr, stderr);
 	    Vect_close (pErr);
 	}
