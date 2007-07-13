@@ -76,7 +76,7 @@ $(OBJDIR)/Info.plist: Info.plist.in
 
 $(OBJDIR)/GRASS.scpt: GRASS.applescript
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	osacompile -d -x -i /System/Library/Frameworks/AppleScriptKit.framework -U GRASS.applescript -o $(OBJDIR)/GRASS.scpt GRASS.applescript
+	osacompile -d -x -i /System/Library/Frameworks/AppleScriptKit.framework -o $(OBJDIR)/GRASS.scpt GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
