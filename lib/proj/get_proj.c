@@ -23,6 +23,8 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
+#include <grass/glocale.h>
+
 #define MAIN
 
 /* Finder function for datum conversion lookup tables */
@@ -147,8 +149,7 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
     str = G_find_key_value("zone", in_proj_keys);
     if (str != NULL) {
 	if (sscanf(str, "%d", &(info->zone)) != 1) {
-	    sprintf(buffa, "Invalid zone %s specified", str);
-	    G_fatal_error(buffa);
+	    G_fatal_error(_("Invalid zone %s specified"), str);
 	}
 	if (info->zone < 0) {
 
@@ -227,12 +228,15 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
     pj_set_finder(FINDERFUNC);
 
     if (!(pj = pj_init(nopt1, opt_in))) {
-	fprintf(stderr,
-		"Unable to initialise PROJ.4 with the following parameter list:\n");
-	for (i = 0; i < nopt1; i++)
-	    fprintf(stderr, " +%s", opt_in[i]);
-	fprintf(stderr, "\nThe error message was '%s'\n",
-		pj_strerrno(pj_errno));
+	strcpy(buffa, _("Unable to initialise PROJ.4 with the following parameter list:"));
+	char err[50];
+	for (i = 0; i < nopt1; i++) {
+	    sprintf (err, " +%s", opt_in[i]);
+	    strcat (buffa, err);
+	}
+	G_warning (buffa);
+	G_warning (_("The error message was '%s'"),
+		   pj_strerrno(pj_errno));
 	return -1;
     }
     info->pj = pj;
@@ -246,7 +250,7 @@ static void alloc_options(char *buffa)
 
     nsize = strlen(buffa);
     if (!(opt_in[nopt1++] = (char *)malloc(nsize + 1)))
-	G_fatal_error("cannot allocate options\n");
+	G_fatal_error(_("Unable to allocate options"));
     sprintf(opt_in[nopt1 - 1], buffa);
     return;
 }
@@ -272,7 +276,7 @@ int pj_get_string(struct pj_info *info, char *str)
 	sprintf(buffa, "proj=latlong ellps=WGS84");
 	nsize = strlen(buffa);
 	if (!(opt_in[nopt] = (char *)malloc(nsize + 1)))
-	    G_fatal_error("Option input memory failure");
+	    G_fatal_error(_("Option input memory failure"));
 	sprintf(opt_in[nopt++], buffa);
     }
     else {
@@ -292,7 +296,7 @@ int pj_get_string(struct pj_info *info, char *str)
 		if (nsize = strlen(s), nsize) {
 		    if (nopt >= MAX_PARGS) {
 			fprintf(stderr, "nopt = %d, s=%s\n", nopt, str);
-			G_fatal_error("Option input overflowed option table");
+			G_fatal_error(_("Option input overflowed option table"));
 		    }
 
 		    if (strncmp("zone=", s, 5) == 0) {
@@ -312,7 +316,7 @@ int pj_get_string(struct pj_info *info, char *str)
 		    }
 		    nsize = strlen(buffa);
 		    if (!(opt_in[nopt] = (char *)malloc(nsize + 1)))
-			G_fatal_error("Option input memory failure");
+			G_fatal_error(_("Option input memory failure"));
 		    sprintf(opt_in[nopt++], buffa);
 		}
 	    }
@@ -324,8 +328,7 @@ int pj_get_string(struct pj_info *info, char *str)
     pj_set_finder(FINDERFUNC);
 
     if (!(pj = pj_init(nopt, opt_in))) {
-	fprintf(stderr, "cannot initialize pj\ncause: ");
-	fprintf(stderr, "%s\n", pj_strerrno(pj_errno));
+	G_warning (_("Unable to initialize pj cause: %s"), pj_strerrno(pj_errno));
 	return -1;
     }
     info->pj = pj;
@@ -400,9 +403,9 @@ int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
     if (iproj) {
 	str = pj_get_def(iproj->pj, 1);
 	if (str != NULL) {
-	    fprintf(stderr, "\nInput Projection Parameters:%s\n", str);
+	    fprintf (stderr, _("Input Projection Parameters:%s\n"), str);
 	    G_free(str);
-	    fprintf(stderr, "Input Unit Factor: %.16g\n", iproj->meters);
+	    fprintf (stderr, _("Input Unit Factor: %.16g\n"), iproj->meters);
 	}
 	else
 	    return -1;
@@ -411,9 +414,9 @@ int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
     if (oproj) {
 	str = pj_get_def(oproj->pj, 1);
 	if (str != NULL) {
-	    fprintf(stderr, "\nOutput Projection Parameters:%s\n", str);
+	    fprintf (stderr, _("Output Projection Parameters:%s\n"), str);
 	    G_free(str);
-	    fprintf(stderr, "Output Unit Factor: %.16g\n", oproj->meters);
+	    fprintf (stderr, _("Output Unit Factor: %.16g\n"), oproj->meters);
 	}
 	else
 	    return -1;
