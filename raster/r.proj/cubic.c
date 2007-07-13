@@ -15,9 +15,10 @@
  *	 Springer-Verlag, Berlin, 2nd edition.
  */
 
+#include <math.h>
 #include <grass/gis.h>
 #include "local_proto.h"
-#include <math.h>
+
 
 
 void p_cubic (
@@ -93,12 +94,10 @@ void p_cubic (
    			}	
    	
    /* and now the interpolation	*/
-#ifdef DEBUG	
-	fprintf(stderr,"\nMatrix used:\n");
+	G_debug(3, "Matrix used:");
 	for(i=0; i<4; i++)
-		fprintf(stderr,"%d %d %d %d\n",
+		G_debug(3, "%d %d %d %d",
 		(int) ibuffer[mrow[i]][mcol[0]],(int) ibuffer[mrow[i]][mcol[1]],(int) ibuffer[mrow[i]][mcol[2]],(int) ibuffer[mrow[i]][mcol[3]]);	
-#endif
 	
 	for (i = 0; i < 4; i++){
 		FCELL *cp = ibuffer[mrow[i]];
@@ -110,9 +109,8 @@ void p_cubic (
 				    (-c3 + 4*c2  - 5*c1 + 2*c0)) +
 			       (c2 - c0)) +
 			  2*c1)/2;
-#ifdef DEBUG
-	fprintf(stderr,"Ipolval[%d] = %f\n",i,val[i]);
-#endif
+
+	G_debug(3, "Ipolval[%d] = %f", i, val[i]);
 	}
 	
 	result = (u * (u * (u * (val[3] - 3*val[2] + 3*val[1] - val[0]) +
@@ -120,10 +118,8 @@ void p_cubic (
 		       (val[2] - val[0])) +
 		  2*val[1])/2;
 
-#ifdef DEBUG  
-	fprintf(stderr, "r1: %d  ridx: %f  c1: %d  cidx: %f  Value: %f \n", 
-			 row, u, col, t, value);
-#endif
+	G_debug(3, "r1: %d  ridx: %f  c1: %d  cidx: %f  Value: %f", 
+		row, u, col, t, result);
   
 	switch(cell_type){
 		case CELL_TYPE:
