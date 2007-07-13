@@ -281,8 +281,8 @@ Vect_get_node_line_angle ( struct Map_info *Map, int node, int line )
 
 /*!
  \fn int Vect_get_centroid_area ( struct Map_info *Map, int centroid )
- \brief returns number of area the centroid is within
- \return number of area the node is within, 0 for not in area, negative number of area if duplicate
+ \brief returns ID of area the centroid is within
+ \return ID of area the centroid is within, 0 for not in area, negative ID if area/centroid (?) is duplicate
  \param Map_info structure, centroid number
 */
 int 
