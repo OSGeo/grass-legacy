@@ -12,7 +12,6 @@
 #               for details.
 #
 #############################################################################
-# TODO:  get overwrite test working
 
 #%Module
 #%  description: Imports attribute tables in various formats.
@@ -72,16 +71,22 @@ if [ -z "$GIS_OPT_OUTPUT" ] ; then
   GIS_OPT_OUTPUT="`basename $TMPNAME`"
 fi
 
-if [ "$GIS_FLAG__O" != 1 ]; then
+if [ -z "$GRASS_OVERWRITE" ] ; then
   if [ `db.tables -p | grep "^${GIS_OPT_OUTPUT}$"` ] ; then
      g.message -e "Table <${GIS_OPT_OUTPUT}> already exists"
      exit 1
   fi
+else
+  # user gave --o
+  echo "DROP TABLE ${GIS_OPT_OUTPUT}" | db.execute
 fi
 
-# trat as real vector map...
-v.in.ogr --q "$GIS_OPT_INPUT" out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null 
-
+# treat as real vector map...
+v.in.ogr --q "$GIS_OPT_INPUT" out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null
+if [ $? -ne 0 ] ;  then
+   g.message -e "Input table <$GIS_OPT_INPUT> not found or not readable"
+   exit 1
+fi
 # ... and immediately drop the empty geometry
 eval `g.findfile element=vector file=$GIS_OPT_OUTPUT mapset=$MAPSET`
 if [ ! "$file" ] ; then
