@@ -21,6 +21,11 @@
 #%  keywords: database, attribute table
 #%End
 
+#%flag
+#%  key: f
+#%  description: Force removal (required for actual deletion of files)
+#%end
+
 #%option
 #% key: table
 #% type: string
@@ -91,6 +96,12 @@ driver=`db.connect -p | grep 'driver' | cut -d ':' -f2`
 # schema needed for PG?
 col="$GIS_OPT_COLUMN"
 
+force=$GIS_FLAG_F
+if [ $force -eq 1 ] ; then
+   g.message "Forcing ..."
+fi
+
+
 if [ "$col" = "cat" ] ; then
    g.message -w "Deleting <$col> column which may be needed to keep table\
       connected to a vector map"
@@ -104,6 +115,14 @@ if [ $? -ne 0 ] ; then
 	cleanup
 	exit 1
 fi
+
+if [ $force -eq 0 ] ; then
+    g.message "The <$col> column would be deleted."
+    g.message message=""
+    g.message "You must use the force flag to actually remove it. Exiting."
+    exit 0
+fi
+
 
 if [ "$driver" = "sqlite" ] ; then
 	#echo "Using special trick for SQLite"
