@@ -86,6 +86,16 @@ if [ "$driver" = "dbf" ] ; then
    exit 1
 fi
 maptable="`v.db.connect -g $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d' ' -f2`"
+if [ -z "$maptable" ] ; then
+   g.message 'There is no table connected to this map! Cannot join any column.'
+   cleanup
+   exit 1
+fi
+v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${GIS_OPT_column}$" 2>&1 >/dev/null
+if [ $? -ne 0 ] ; then
+	g.message -e "Column <$GIS_OPT_column> not found in table"
+	exit 1
+fi
 
 # we use map DBMI settings
 COLLIST=`db.describe  -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f2`
