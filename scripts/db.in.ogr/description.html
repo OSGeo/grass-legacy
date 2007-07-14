@@ -1,0 +1,28 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.in.ogr</em> imports attribute tables in various formats as
+supported by the OGR driver on the local system (DBF, CSV,
+PostgreSQL, SQLite, MySQL, ODBC, etc.).
+
+<h2>NOTES</h2>
+
+
+<h2>EXAMPLES</h2>
+
+Import of a CSV table file:
+<p>
+<div class="code"><pre>
+db.in.ogr koeppen_gridcode.csv out=koeppen_gridcode
+db.select koeppen_gridcode
+</pre></div>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.in.ogr.html">v.in.ogr</a></em><br>
+<em><a href="sql.html">GRASS SQL interface</a></em>
+
+<h2>AUTHOR</h2>
+
+Markus Neteler
+
+<p><i>Last changed: $Date$</i>

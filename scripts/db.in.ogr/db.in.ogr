@@ -1,0 +1,100 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       db.in.ogr
+# AUTHOR(S):   	Markus Neteler
+# PURPOSE:      imports attribute tables in various formats
+# COPYRIGHT:    (C) 2007 by Markus Neteler and the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+# TODO:  get overwrite test working
+
+#%Module
+#%  description: Imports attribute tables in various formats.
+#%  keywords: database, attribute table
+#%End
+
+#%option
+#% key: input
+#% type: string
+#% key_desc : name
+#% gisprompt: old_file,file,input
+#% description: Table to be imported
+#% required : yes
+#%end
+
+#%option
+#% key: output
+#% type: string
+#% description: Name for output table
+#% required : no
+#%end
+
+
+if  [ -z "$GISBASE" ] ; then
+    echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+PROG=`basename $0`
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
+
+
+# what to do in case of user break:
+exitprocedure()
+{
+ g.message -e 'User break!'
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
+### setup enviro vars ###
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+
+if [ -z "$GIS_OPT_OUTPUT" ] ; then
+  # file name laundery
+  TMPNAME="`echo $GIS_OPT_INPUT | tr -s '.' '_'`"
+  GIS_OPT_OUTPUT="`basename $TMPNAME`"
+fi
+
+if [ "$GIS_FLAG__O" != 1 ]; then
+  if [ `db.tables -p | grep "^${GIS_OPT_OUTPUT}$"` ] ; then
+     g.message -e "Table <${GIS_OPT_OUTPUT}> already exists"
+     exit 1
+  fi
+fi
+
+# trat as real vector map...
+v.in.ogr --q "$GIS_OPT_INPUT" out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null 
+
+# ... and immediately drop the empty geometry
+eval `g.findfile element=vector file=$GIS_OPT_OUTPUT mapset=$MAPSET`
+if [ ! "$file" ] ; then
+   g.message -e "Something went wrong. Should not happen"
+   exit 1
+else
+   # remove the vector part
+   rm -rf "$file"
+fi
+
+# get rid of superfluous auto-added cat column
+db.dropcol --q -f $GIS_OPT_OUTPUT colum=cat >/dev/null 2>/dev/null 
+
+
+exit 0
+
