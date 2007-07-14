@@ -114,4 +114,7 @@ for col in $COLLIST ; do
   i=`expr $i + 1`
 done
 
+# write cmd history:
+v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+
 exit 0
