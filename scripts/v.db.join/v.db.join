@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+
 ############################################################################
 #
 # MODULE:       v.db.join
@@ -100,7 +100,7 @@ fi
 # we use map DBMI settings
 COLLIST=`db.describe  -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f2`
 # heck, types may have white space
-COLTYPES="`db.describe -c driver=$driver database=$database table=$GIS_OPT_otable | grep -v '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`"
+COLTYPES="`db.describe -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`"
 
 i=1
 for col in $COLLIST ; do
