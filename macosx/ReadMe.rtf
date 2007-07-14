@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-5-17\
+\f2\i \cf0 2007-7-14\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -25,7 +25,7 @@
 \cf0 Quickstart\
 About\
 Building GRASS\
-	Build\
+	Application Build\
 	Universal Build*\
 	Configure Example*\
 	Building an Installer Package\
@@ -191,7 +191,7 @@ export LDFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Configure Example\ulnone \
 \
-As an example, to build GRASS using my frameworks (site link below) and Tcl/Tk as built in the build notes below, this should work 
+As an example, to build GRASS using my frameworks and Tcl/Tk as built in the build notes below, this should work 
 \f2\i (for a unix build, just remove the --prefix and --enable-macosx-app flags)
 \f1\i0 :\
 \
@@ -259,7 +259,7 @@ GRASS uses
 \f3\fs20 PATH
 \f1\fs24 , so helper programs installed there will be found.\
 \
-The Tcl/Tk bundling below is an example of bundling both libraries and programs.\
+The Tcl/Tk bundling below is an example of bundling both libraries and programs.  This is hardwired into the install make target.\
 \
 There is NO need to bundle 
 \f2\i everything
@@ -288,7 +288,7 @@ By default, the application is built expecting a local copy of Tcl/Tk inside the
 \
 If you want to try building GRASS using Tcl/Tk Aqua (not recommended), remove the comments from the if block for Tcl/Tk in 
 \f3\fs20 grass.sh
-\f1\fs24 .\
+\f1\fs24  after make.\
 \
 Tcl/Tk Aqua has some cosmetic issues in general - widgets displayed from OSX are often too big and mess up layout, some widgets don't even use OSX equivalents (sliders are an example).  There are also problems with NVIZ that come and go.\
 \
@@ -312,7 +312,7 @@ Help files are linked into the OSX help system.  Independent of what browser you
 \f3\fs20 GRASS_HTML_BROWSER
 \f1\fs24 ), you can open Help Viewer from almost any application's Help menu (it's best to use Mac Help from the Finder Help menu), and GRASS Help will be available in the Library menu.\
 \
-Since they are linked to the help system, if GRASS.app is moved, the link will be broken.  This may change in the future.\
+Since they are linked to the help system, if GRASS.app is moved or renamed, the link will be broken.  This may change in the future.\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -333,9 +333,13 @@ GRASS.app is setup to find addon modules in
 \
 When GRASS is started, grass.sh adds these to the 
 \f3\fs20 GRASS_ADDON_PATH
+\f1\fs24 , 
+\f3\fs20 GRASS_ADDON_ETC
 \f1\fs24  and 
 \f3\fs20 DYLD_LIBRARY_PATH
-\f1\fs24 .  It also rebuilds the html help index, and GUI menu file (soon).  Eventually there should be functions for modules to locate their etc/ files, if needed.\
+\f1\fs24 .  It also rebuilds the html help index, and GUI menu file.\
+\
+GRASS_ADDON_ETC is fairly new, and many addon modules may not make use of it yet.  Instead of accessing it's etc/ support files from $GISBASE/etc, the function G_find_etc("file") should be used to locate the file wherever it may be in any of the folders listed in GRASS_ADDON_ETC.  $GISBASE/etc is searched last and does not need to be included in GRASS_ADDON_ETC.\
 \
 Help indexes and GUI menus for both global and user modules are maintained in the user's Library/GRASS folder, so the user doesn't need admin privs to write to the global folder.\
 \
@@ -369,8 +373,7 @@ $ cd [/path/to/Tk/source]/unix\
 $ CFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3" ./configure --prefix=/usr/local/tcltk --enable-threads --with-x --with-tcl=/usr/local/tcltk/lib\
 $ make\
 $ sudo make install\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 $ sudo ln -sf libtk8.4.dylib /usr/local/tcltk/lib/libtk.dylib\
+$ sudo ln -sf libtk8.4.dylib /usr/local/tcltk/lib/libtk.dylib\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
