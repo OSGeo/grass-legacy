@@ -1,6 +1,8 @@
 <h2>DESCRIPTION</h2>
 
 <em>db.dropcol</em> drops a column from an attribute table.
+If the <b>-f</b> force flag is not given then nothing is removed, instead
+a preview of the action to be taken is printed.
 
 <h2>NOTES</h2>
 
@@ -10,10 +12,20 @@ drop.
 
 <h2>EXAMPLES</h2>
 
-Dropping a column:<br>
+Dropping a column (Spearfish):
+<p>
 <div class="code"><pre>
-db.dropcol sentiero_brenta_points column=slope
-db.describe -c sentiero_brenta_points
+# work on own copy
+g.copy vect=roads,myroads
+db.describe -c myroads
+
+# only shows what would happen:
+db.dropcol myroads column=label
+
+# actually drops the column
+db.dropcol -f myroads column=label
+
+db.describe -c myroads
 </pre></div>
 
 <h2>SEE ALSO</h2>
