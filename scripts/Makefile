@@ -21,6 +21,7 @@ SUBDIRS = \
 	d.text.freetype \
 	d.vect.thematic \
 	db.dropcol \
+	db.in.ogr \
 	db.test \
 	g.manual \
 	g.mlist \
