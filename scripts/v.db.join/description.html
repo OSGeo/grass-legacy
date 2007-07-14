@@ -8,9 +8,10 @@ attribute table of a vector map.
 <em>v.db.join</em> is a front-end to <em>db.execute</em> to allow easier usage.
 
 The vector attribute table must be stored in a SQL database (SQLite, PostgreSQL,
-MySQL, ODBC, ...). The DBF backend is not supported.
-
-The existing database connection(s) can be verified with <em>v.db.connect</em>.
+MySQL, ODBC, ...). The DBF backend is not supported. Tables can be
+imported with <em>db.in.ogr</em>.
+<p>
+The vector map-database connection(s) can be verified with <em>v.db.connect</em>.
 
 <h2>EXAMPLE</h2>
 
@@ -19,6 +20,9 @@ into the Spearfish soils map (<a href="http://mpa.itc.it/grasstutor/examples_men
 
 <div class="code"><pre>
 g.copy vect=soils,mysoils
+
+# import legend table
+db.in.ogr soils_legend.csv out=soils_legend
 
 # get join column names
 v.info -c mysoils
@@ -63,6 +67,7 @@ cat|label|id|shortname|longname
 <h2>SEE ALSO</h2>
 
 <em><a HREF="db.execute.html">db.execute</a></em>,
+<em><a HREF="db.in.ogr.html">db.in.ogr</a></em>,
 <em><a HREF="v.db.update.html">v.db.update</a></em><br>
 <em><a href="sql.html">GRASS SQL interface</a></em>
 
