@@ -12,11 +12,22 @@
 \
 NOTE: for now, this version will probably NOT run on a case-sensitive file system, such as the optional case-sensitive HFS+ or UFS.\
 \
-The X11 Tcl/Tk binaries are included.\
+\ul Starting GRASS\ulnone  - there are a few different ways to start GRASS:\
+\
+- Double-click GRASS.app.\
+\
+- Drag a mapset folder onto GRASS.app to start GRASS in that mapset.\
+\
+- In a Terminal, type (substitute the correct application name if a different version is installed):\
+\
+
+\f2\fs24 open -a "GRASS-6.3.app" /path/to/db/location/mapset\
+
+\f1\fs28 \
 \
 GRASS.app opens a Terminal window to start GRASS in the normal commandline way.  After starting the Terminal it quits, leaving GRASS running in the Terminal.  While a GRASS session is running you can run GRASS.app again to start another session.\
 \
-X11 is also started regardless of the Tcl/Tk you use.\
+X11 is also started regardless of the GUI you use.\
 \
 \
 
@@ -68,7 +79,7 @@ Where
 \f0\b Addon Modules\
 
 \f1\b0 \
-To install extra modules, see the 
+To install extra modules and user scripts, see the 
 \f2\fs24 modbuild
 \f1\fs28  folder in 
 \f2\fs24 /Library/GRASS/$VERSION
@@ -98,9 +109,9 @@ See the GRASS {\field{\*\fldinst{HYPERLINK "http://grass.itc.it/statsgrass/grass
 \f1\b0 \
 There are a few different ways to create animations in GRASS.  xganim animates a series of rasters on the fly, and is useful for a quick check of an animation, but it requires Motif or Lesstif in X11.  There may be a TclTk version of xganim in the future.\
 \
-The OGSF GRASS library can be built with mpeg support using the ffmpeg libraries, this is used only in NVIZ.  ffmpeg is a difficult one to build on any platform because it is in constant flux.  Without ffmpeg, NVIZ can only generate a series of images which can then be run through any mpeg program.\
+The OGSF GRASS library can be built with mpeg support using the ffmpeg libraries, this is used only in NVIZ.  ffmpeg is a difficult one to build on any platform because it is in constant flux, and none of the binaries available include the libraries.  Without ffmpeg, NVIZ can only generate a series of images which can then be run through any mpeg program.\
 \
-The last option built into GRASS, r.out.mpeg, starts with rasters and generates an mpeg1 video using an external program mpeg-encode (aka ppmtompeg).  The two problems with this are: mpeg1 is low quality, and you can't use it on an NVIZ image sequence, just rasters.\
+The last option built into GRASS, r.out.mpeg, starts with rasters and generates an mpeg1 video using an external program mpeg-encode (aka ppmtompeg).  The two problems with this are: mpeg1 is low quality, and you can't use it on an NVIZ image sequence, just rasters.  A copy of ppmtompeg may be included in the GRASS application package.\
 \
 That leaves a completely external option.  There are many mpeg encoding programs available.  Pick one of your choice and feed the NVIZ image sequence to that outside of GRASS.  {\field{\*\fldinst{HYPERLINK "http://ffmpegx.com/"}}{\fldrslt ffmpegX}} is a handy package ready-made for Mac OS X.  It includes commandline binaries for ffmpeg AND many other encoders, including the popular mencoder.  You can either use the GUI, or run them from the Terminal - all the individual programs are in the app package's Resources folder, except a couple external ones in the ffmpegX Application Support.\
 \
@@ -109,7 +120,7 @@ That leaves a completely external option.  There are many mpeg encoding programs
 \f0\b GPS\
 
 \f1\b0 \
-A universal copy of gpsbabel is included for v.in.gpsbabel.  There is no need to install a separate GPSBabel application.  Serial ports (both old-style and USB) on OS X are named a little different than most 'nix systems, and they will all go thru USB, including old RS-232 serial.  You need to use the 
+A copy of gpsbabel may be included for v.in.gpsbabel to use.  If not, you need to install a separate GPSBabel application.  Serial ports (both old-style and USB) on OS X are named a little different than most 'nix systems, and they will all go thru USB, including old RS-232 serial.  You need to use the 
 \f2\fs24 cu.*
 \f1\fs28  ports.  All ports are in 
 \f2\fs24 /dev
