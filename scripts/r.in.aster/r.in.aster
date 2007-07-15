@@ -1,7 +1,7 @@
 #!/bin/sh
 ############################################################################
 #
-# MODULE:		r.in.aster v.3 for GRASS 6.0 (2005/11/4)
+# MODULE:	r.in.aster
 # AUTHOR(S):	Michael Barton (michael.barton@asu.edu) and Paul Kelly
 # PURPOSE:	Rectifies, georeferences, & imports Terra-ASTER imagery 
 #			using gdalwarp
@@ -17,7 +17,7 @@
 #   gdalwarp
 
 #%Module
-#%  description: Georeference, rectificate and import Terra-ASTER imagery and relative DEM's using gdalwarp.
+#%  description: Georeference, rectify and import Terra-ASTER imagery and relative DEM's using gdalwarp.
 #%  keywords: raster, imagery, import
 #%End
 #%option
@@ -148,6 +148,12 @@ tempfile=`g.tempfile $$`.tif
 #to translate aster image to geotiff
 g.message "Georeferencing aster image ..."
 proj=`g.proj -jf`
+echo $proj | grep 'XY location' > /dev/null
+if [ $? -eq 0 ] ; then
+  g.message -e "This module needs to be run in a projected location (found: $proj)"
+  exit 1
+fi
+
 g.message -d message="gdalwarp -t srs $proj $srcfile $tempfile"
 
 gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
