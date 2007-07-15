@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
     if (G_read_cats (covermap, cover_mapset, &cover_cats) < 0)
 	G_fatal_error (_("Cannot read category labels of raster map <%s>"), covermap);
 
-    strcpy (command, "r.stats -a \"");
+    strcpy (command, "r.stats -an \"");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));
     strcat (command, ",");
     strcat (command, G_fully_qualified_name (covermap, cover_mapset));
