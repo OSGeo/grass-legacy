@@ -61,7 +61,7 @@ int main( int argc, char *argv[])
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
 
-    G_warning(_("This module is deprecated. Please use 'r.stats.interp' instead."));
+    G_warning(_("This module is deprecated. Please use 'r.resamp.interp' instead."));
 
     o_east = o_north = 0.0;
 
