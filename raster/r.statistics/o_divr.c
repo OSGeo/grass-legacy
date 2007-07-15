@@ -17,11 +17,11 @@ o_divr (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
   double area;
    
           
-    sprintf(command, "r.stats -an input='%s,%s' fs=space", basemap, covermap);
+    sprintf(command, "r.stats -an input=\"%s,%s\" fs=space", basemap, covermap);
     stats_fd = popen (command, "r");
          
 
-    sprintf (command, "r.reclass i='%s' o='%s'",basemap, outputmap);
+    sprintf (command, "r.reclass i=\"%s\" o=\"%s\"",basemap, outputmap);
     reclass_fd = popen (command, "w");
 
     first = 1;
