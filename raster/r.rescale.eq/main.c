@@ -149,7 +149,7 @@ int main (int argc, char *argv[])
     G_message (_("Rescale %s[%d,%d] to %s[%d,%d]"),
             old_name, old_min, old_max, new_name, new_min, new_max);
 
-    sprintf (buf, "r.reclass input='%s' output='%s' title='", old_name, new_name);
+    sprintf (buf, "r.reclass input=\"%s\" output=\"%s\" title=\"", old_name, new_name);
     if (parm.title->answer)
         strcat (buf, parm.title->answer);
     else
@@ -157,7 +157,7 @@ int main (int argc, char *argv[])
         strcat (buf, "rescale of ");
         strcat (buf, old_name);
     }
-    strcat (buf, "'");
+    strcat (buf, "\"");
 
     fd = popen (buf, "w");
     G_cell_stats_histo_eq(&statf, (CELL)old_min, (CELL)old_max, (CELL)new_min, (CELL)new_max, 0, reclass);
