@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
 	exit(1);
     }
 
-    strcpy (command, "r.stats -a '");
+    strcpy (command, "r.stats -an '");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));
     strcat (command, ",");
     strcat (command, G_fully_qualified_name (covermap, cover_mapset));
