@@ -144,7 +144,7 @@ int main (int argc, char *argv[])
         G_message (_("Rescale %s[%ld,%ld] to %s[%ld,%ld]"),
 		    old_name, old_min, old_max, new_name, new_min, new_max);
 
-	sprintf (buf, "r.reclass input='%s' output='%s' title='", old_name, new_name);
+	sprintf (buf, "r.reclass input=\"%s\" output=\"%s\" title=\"", old_name, new_name);
 	if (parm.title->answer)
 		strcat (buf, parm.title->answer);
 	else
@@ -152,7 +152,7 @@ int main (int argc, char *argv[])
 		strcat (buf, "rescale of ");
 		strcat (buf, old_name);
 	}
-	strcat (buf, "'");
+	strcat (buf, "\"");
 
 	fd = popen (buf, "w");
 	old_delta = old_max - old_min ;
