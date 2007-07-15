@@ -34,7 +34,7 @@
 static void DatumNameMassage( char ** );
 
 /**
- * \brief Convert a GRASS co-ordinate system representation to WKT style
+ * \brief Converts a GRASS co-ordinate system representation to WKT style.
  * 
  * Takes a GRASS co-ordinate system as specifed by two sets of key/value
  * pairs derived from the PROJ_INFO and PROJ_UNITS files, and converts it
@@ -76,7 +76,7 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
 }
 
 /**
- * \brief Convert a GRASS co-ordinate system to an OGRSpatialReferenceH object
+ * \brief Converts a GRASS co-ordinate system to an OGRSpatialReferenceH object.
  * 
  * \param proj_info Set of GRASS PROJ_INFO key/value pairs
  * \param proj_units Set of GRASS PROJ_UNIT key/value pairs
@@ -237,7 +237,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 }
 
 /**
- * \brief Convert an OGRSpatialReferenceH object to a GRASS co-ordinate system
+ * \brief Converts an OGRSpatialReferenceH object to a GRASS co-ordinate system.
  * 
  * \param cellhd      Pointer to a GRASS Cell_head structure that will have its
  *                    projection-related members populated with appropriate values
@@ -391,7 +391,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	G_set_key_value( "proj", pszProj, *projinfo );
     }
     else
-	G_warning(_("No projection name! Projection parameters likely to be meaningless"));
+	G_warning(_("No projection name! Projection parameters likely to be meaningless."));
 
        
 /* -------------------------------------------------------------------- */
@@ -428,7 +428,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    {
 	        if( paramspresent < 2)
 		    /* Only give warning if no parameters present */
-	            G_warning(_("Datum '%s' not recognised by GRASS and no parameters found."),
+	            G_warning(_("Datum <%s> not recognised by GRASS and no parameters found."),
 			      pszDatumName);
 	    }
             else
@@ -445,13 +445,13 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
                     paramsets = GPJ_get_default_datum_params_by_name(datum, &params);
 
                     if( paramsets < 0 )
-                        G_warning(_("Datum '%s' apparently recognised by GRASS but no parameters found. "
-				    "You may want to look into this"), datum );
+                        G_warning(_("Datum <%s> apparently recognised by GRASS but no parameters found. "
+				    "You may want to look into this."), datum );
                     else if( datumtrans > paramsets )
                     {
 
                         G_warning(_("Invalid tranformation number %d; valid range is 1 to %d. "
-				    "Leaving datum transform parameters unspecified"),
+				    "Leaving datum transform parameters unspecified."),
                                   datumtrans, paramsets);
                         datumtrans = 0;
                     }
@@ -666,7 +666,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 
 
 /**
- * \brief Convert a WKT projection description to a GRASS co-ordinate system
+ * \brief Converts a WKT projection description to a GRASS co-ordinate system.
  * 
  * \param cellhd      Pointer to a GRASS Cell_head structure that will have its
  *                    projection-related members populated with appropriate values
