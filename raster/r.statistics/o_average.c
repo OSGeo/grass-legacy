@@ -25,7 +25,7 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
     tempfile1 = G_tempfile();
     tempfile2 = G_tempfile();
 
-    sprintf (command, "%s -an input='%s,%s' fs=space > %s",
+    sprintf (command, "%s -an input=\"%s,%s\" fs=space > %s",
 	STATS, basemap, covermap, tempfile1);
     if (stat = system(command))
     {
@@ -65,7 +65,7 @@ o_average (char *basemap, char *covermap, char *outputmap, int usecats, struct C
     out(fd2, basecat, sum1, sum2);
     fclose (fd1);
     fclose (fd2);
-    sprintf (command, "%s input='%s' output='%s' < %s",
+    sprintf (command, "%s input=\"%s\" output=\"%s\" < %s",
 	RECLASS, basemap, outputmap, tempfile2);
     stat = system(command);
     unlink (tempfile1);

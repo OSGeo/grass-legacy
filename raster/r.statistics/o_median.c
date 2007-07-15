@@ -18,11 +18,11 @@ o_median (char *basemap, char *covermap, char *outputmap, int usecats, struct Ca
   struct stats stats;
    
           
-    sprintf(command, "r.stats -an input='%s,%s' fs=space", basemap, covermap);
+    sprintf(command, "r.stats -an input=\"%s,%s\" fs=space", basemap, covermap);
     stats_fd = popen (command, "r");
          
 
-    sprintf (command, "r.reclass i='%s' o='%s'",basemap, outputmap);
+    sprintf (command, "r.reclass i=\"%s\" o=\"%s\"",basemap, outputmap);
     reclass_fd = popen (command, "w");
 
     first = 1;

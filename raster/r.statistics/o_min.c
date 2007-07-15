@@ -11,10 +11,10 @@ o_min (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     int first;
     long basecat, covercat, catb, catc;
 
-    sprintf(command, "r.stats -n input='%s,%s' fs=space", basemap, covermap);
+    sprintf(command, "r.stats -n input=\"%s,%s\" fs=space", basemap, covermap);
     stats = popen (command, "r");
 
-    sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
+    sprintf (command, "r.reclass i=\"%s\" o=\"%s\"", basemap, outputmap);
     reclass = popen (command, "w");
 
     first = 1;
