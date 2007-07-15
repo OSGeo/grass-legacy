@@ -32,14 +32,14 @@ get_stats (void)
 	    strcat(buf, tmp);
         }
 
-	strcat (buf, " fs=: 'input=");
+	strcat (buf, " fs=: \"input=");
 
 	for (i = 0; i < nlayers; i++)
 	{
 	    if (i) strcat (buf, ",");
 	    strcat (buf, G_fully_qualified_name(layers[i].name,layers[i].mapset));
 	}
-	strcat (buf, "'");
+	strcat (buf, "\"");
 
 	strcat (buf, " > ");
 	strcat (buf, stats_file);

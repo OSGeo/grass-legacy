@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
     else
 	strcpy(coord_str, "");
 
-    sprintf (command, "r.profile %s input='%s' output='-' null='%s' profile=", 
+    sprintf (command, "r.profile %s input=\"%s\" output=\"-\" null=\"%s\" profile=", 
 		coord_str, parms.map->answer, parms.null_str->answer);
 
     err = 0;
