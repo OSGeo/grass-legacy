@@ -133,19 +133,19 @@ int main (int argc, char **argv)
 		_("Re-projects a raster map from one location to the current location.");
 
 	inmap = G_define_standard_option(G_OPT_R_INPUT);
-	inmap -> description = _("Name of raster map to re-project");
+	inmap -> description = _("Name of input raster map to re-project");
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
 	inlocation->type = TYPE_STRING;
 	inlocation->required = YES;
-	inlocation->description = _("Location of raster map");
+	inlocation->description = _("Location of input raster map");
 
 	imapset = G_define_option();
 	imapset->key = "mapset";
 	imapset->type = TYPE_STRING;
 	imapset->required = NO;
-	imapset->description = _("Mapset of raster map");
+	imapset->description = _("Mapset of input raster map");
 
 	indbase = G_define_option();
 	indbase->key = "dbase";
