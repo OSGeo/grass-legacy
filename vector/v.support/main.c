@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     /* initialize module */
     module = G_define_module();
     module->keywords = _("vector, metadata");
-    module->description = _("Updates vector map metadata");
+    module->description = _("Updates vector map metadata.");
 
     /* Define the different options as defined in gis.h */
     map = G_define_standard_option(G_OPT_V_MAP);
@@ -118,12 +118,12 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
 
     if ((mapset = G_find_vector2(map->answer, G_mapset())) == NULL)
-	G_fatal_error(_("Could not find vector map <%s> in current mapset"), map->answer);
+	G_fatal_error(_("Vector map <%s> not found in current mapset"), map->answer);
 
     Vect_set_open_level(2);
 
     if (1 > Vect_open_old(&Map, map->answer, mapset))
-	G_fatal_error(_("Could not open vector map <%s>"), map->answer);
+	G_fatal_error(_("Unable to open vector map <%s>"), map->answer);
 
     /* modify 'head' file */
     Vect_read_header (&Map);
@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map.name);
       Map.hist_fp = G_fopen_modify (buf, GRASS_VECT_HIST_ELEMENT);
       if ( Map.hist_fp == NULL ) {
-        G_warning ( _("Cannot open history file for vector '%s'"), Vect_get_full_name(&Map) );
+        G_warning ( _("Unable to open history file for vector map <%s>"), Vect_get_full_name(&Map) );
         Vect_close(&Map);
         exit(EXIT_FAILURE);
       }
