@@ -60,9 +60,9 @@ Contents
      gzip ChangeLog_$VERSION
 
  o   Tag release:
-          echo grass_${MAJOR}_${MINOR}_${RELEASE}
+          echo release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
 
-          cvs tag grass_${MAJOR}_${MINOR}_${RELEASE}
+          cvs tag release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
 
  o create source package (in the source directory):
      echo grass-${VERSION}
@@ -106,10 +106,14 @@ Contents
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
  o upload user HTML manual in case of *final release* from compiled English
-   version at (warning: needs stuff to be compiled, but include/VERSION set
-   back temporarily!!):
-     cd dist.$ARCH/docs/html
-     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
+   version at (warning: needs stuff to be compiled).
+      - download new source code package, compile with most settings
+      -  cd dist.$ARCH/docs/html
+         echo www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
+         scp -r * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
+
+ o stable release: update cronjob 'cron_grass62_release_src_snapshot.sh' to next but one
+                   release tag for the differences
 
 2. Tell others about it:
 
@@ -136,14 +140,11 @@ Contents
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
    Geowanking:         <geowanking@lists.burri.to>
-   OSGeo.org:          <announce@mail.osgeo.org> + <discuss@mail.osgeo.org>
-                       at https://mail.osgeo.org/servlets/ProjectMailingListList
-                       <news_item@osgeo.org>
-                       http://grass.osgeo.org (is fed through <grass-announce@grass.itc.it>)
+   OSGeo.org:          <news_item@osgeo.org>
 
  Email:
    http://www.gismonitor.com/news/submit_news.php (matteo@gismonitor.com)
-   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.gis-news.de/  (franz-josef.behr@gismngt.de)
    http://www.gisdevelopment.net (news@gisdevelopment.net)
    http://spatialnews.geocomm.com/submitnews.html (not free any more, convince editor@geocomm.com)
    admin@cartographyonline.com
