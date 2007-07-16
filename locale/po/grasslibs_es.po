@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-12 00:32+0200\n"
-"PO-Revision-Date: 2007-07-06 14:35+0200\n"
+"POT-Creation-Date: 2007-07-15 13:18+0200\n"
+"PO-Revision-Date: 2007-07-15 15:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -27,14 +27,12 @@ msgstr ""
 #: ../lib/db/dbmi_base/legal_dbname.c:24
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr ""
-"Nombre de tabla de mapa <%s> no admitido. No puede contener '.' o 'NULO'.\n"
+msgstr "Nombre de tabla de mapa <%s> no admitido. No puede contener '.' o 'NULO'.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr ""
-"Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
+msgstr "Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -112,8 +110,7 @@ msgstr "G3d_openCellOld: error en G3d_readHeader"
 
 #: ../lib/g3d/g3dopen.c:126
 msgid "G3d_openCellOld: projection does not match window projection"
-msgstr ""
-"G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
+msgstr "G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
 
 #: ../lib/g3d/g3dopen.c:130
 msgid "G3d_openCellOld: zone does not match window zone"
@@ -161,8 +158,7 @@ msgstr "Tipo de datos empleados en el archivo de salida"
 
 #: ../lib/g3d/g3dparam.c:63
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr ""
-"La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
+msgstr "La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
 
 #: ../lib/g3d/g3dparam.c:73
 msgid "The compression method used in the output file"
@@ -704,8 +700,7 @@ msgstr ""
 #: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
-msgstr ""
-"[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
+msgstr "[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
 
 #: ../lib/gis/get_row.c:378
 #, c-format
@@ -720,8 +715,7 @@ msgstr "cell_values_double: falló xdr_double para el índice %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr ""
-"error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
+msgstr "error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -786,8 +780,7 @@ msgstr "directorio de mapas %s no encontrado"
 
 #: ../lib/gis/gisinit.c:101
 #, c-format
-msgid ""
-"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "\aERROR: Sistema no iniciado. EL programador no incluyo la llamada a "
 "G_gisinit()\n"
@@ -795,8 +788,7 @@ msgstr ""
 #: ../lib/gis/histogram.c:60
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr ""
-"El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
+msgstr "El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
 
 #: ../lib/gis/histogram.c:68
 #, c-format
@@ -840,8 +832,7 @@ msgstr "El nombre del archivo no está permitido. No puede ser '.' o 'NULL'\n"
 #: ../lib/gis/legal_name.c:45
 #, c-format
 msgid "Illegal filename. Character <%c> not allowed.\n"
-msgstr ""
-"El nombre del archivo no es admitido. El carácter <%c> no está permitido.\n"
+msgstr "El nombre del archivo no es admitido. El carácter <%c> no está permitido.\n"
 
 #: ../lib/gis/legal_name.c:75 ../lib/gis/legal_name.c:77
 #, c-format
@@ -1014,8 +1005,7 @@ msgstr "G_gisinit() debe ser llamado primero. "
 
 #: ../lib/gis/null_val.c:117
 msgid "Please advise GRASS developers of this error.\n"
-msgstr ""
-"Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
+msgstr "Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
 
 #: ../lib/gis/null_val.c:231
 msgid "G_set_null_value: wrong data type!"
@@ -1071,8 +1061,7 @@ msgstr "opencell: %s - nombre de archivo no admitido"
 
 #: ../lib/gis/opencell.c:718
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"No es posible escribir valores nulos en un mapa abierto por acceso aleatorio"
+msgstr "No es posible escribir valores nulos en un mapa abierto por acceso aleatorio"
 
 #: ../lib/gis/opencell.c:936 ../lib/gis/opencell.c:991
 #, c-format
@@ -1536,8 +1525,7 @@ msgstr "%s: el mapa [%s] no está abierto para escritura - petición ignorada"
 #: ../lib/gis/put_row.c:256
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr ""
-"%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
+msgstr "%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
 
 #: ../lib/gis/put_row.c:263
 #, c-format
@@ -1639,8 +1627,7 @@ msgstr "no es posible leer el archivo conteniendo los rangos para [%s en %s]"
 #: ../lib/gis/range.c:365 ../lib/gis/range.c:416
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr ""
-"no es posible escribir el archivo conteniendo los rangos para [%s en %s]"
+msgstr "no es posible escribir el archivo conteniendo los rangos para [%s en %s]"
 
 #: ../lib/gis/raster_metadata.c:111
 #, c-format
@@ -1831,8 +1818,7 @@ msgstr "problema leyendo archivo ráster de celdas"
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
-msgstr ""
-"G_set_window(): la proyección/zona difiere en los archivos ráster abiertos"
+msgstr "G_set_window(): la proyección/zona difiere en los archivos ráster abiertos"
 
 #: ../lib/gis/spawn.c:77 ../lib/gis/spawn.c:110
 msgid "Too many arguments"
@@ -1942,8 +1928,7 @@ msgstr ""
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Sólo el  %d%% de la ventana grabada en \"%s\" se superpone a la ventana "
 "actual de GRASS."
@@ -2524,10 +2509,8 @@ msgid "Write 3d array to g3d map <%s>"
 msgstr "Escribir matriz 3D en el mapa g3D <%s>"
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid ""
-"The type of solver which should solve the symmetric linear equation system"
-msgstr ""
-"El método que debería resolver el sistema de ecuaciones lineal simétrico"
+msgid "The type of solver which should solve the symmetric linear equation system"
+msgstr "El método que debería resolver el sistema de ecuaciones lineal simétrico"
 
 #: ../lib/gpde/N_parse_options.c:71
 msgid "The type of solver which should solve the linear equation system"
@@ -2538,10 +2521,8 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr "Número máximo de iteraciones usado para resolver el sistema lineal"
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid ""
-"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
-msgstr ""
-"Error en los criterios de métodos iterativos (jacobi, sor, cg or bicgstab)"
+msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgstr "Error en los criterios de métodos iterativos (jacobi, sor, cg or bicgstab)"
 
 #: ../lib/gpde/N_parse_options.c:98
 msgid ""
@@ -2558,8 +2539,7 @@ msgstr "Tiempo de cálculo en segundos"
 #: ../lib/gpde/N_solvers.c:51
 #, fuzzy
 msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr ""
-"El método de resolución por eliminación de Gauss no funciona con matrices "
+msgstr "El método de resolución por eliminación de Gauss no funciona con matrices "
 
 #: ../lib/gpde/N_solvers.c:56 ../lib/gpde/N_solvers.c:94
 #: ../lib/gpde/N_solvers.c:161 ../lib/gpde/N_solvers_classic_iter.c:57
@@ -2624,8 +2604,7 @@ msgstr "Resolviendo sistemas no lineales (SOR) -- iteración %5i error %g\n"
 #: ../lib/gpde/N_solvers_krylov.c:198
 #, fuzzy, c-format
 msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr ""
-"Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
+msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:200
 #, c-format
@@ -2635,14 +2614,12 @@ msgstr "PCG -- iteración %i error %g\n"
 #: ../lib/gpde/N_solvers_krylov.c:365
 #, fuzzy, c-format
 msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr ""
-"Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
+msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:367
 #, c-format
 msgid "CG -- iteration %i error  %g\n"
-msgstr ""
-"Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g\n"
+msgstr "Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, fuzzy, c-format
@@ -2654,8 +2631,7 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
 msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr ""
-"gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %g\n"
+msgstr "gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %g\n"
 
 #: ../lib/imagery/fopen.c:28
 #, c-format
@@ -2693,6 +2669,54 @@ msgstr ""
 "No es posible encontrar el archivo [%s] para el subgrupo [%s] del grupo [%s "
 "en %s]"
 
+#: ../lib/proj/convert.c:110
+msgid "Can't parse GRASS PROJ_INFO file"
+msgstr ""
+
+#: ../lib/proj/convert.c:115
+msgid "Can't get PROJ.4-style parameter string"
+msgstr ""
+
+#: ../lib/proj/convert.c:127
+#, c-format
+msgid ""
+"OGR can't parse PROJ.4-style parameter string:\n"
+"%s\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:133
+#, c-format
+msgid ""
+"OGR can't get WKT-style parameter string\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:394
+msgid "No projection name! Projection parameters likely to be meaningless."
+msgstr ""
+"¡Ningún nombre de proyección! Los parámetros de proyección probablemente no "
+"tengan sentido."
+
+#: ../lib/proj/convert.c:431
+#, c-format
+msgid "Datum <%s> not recognised by GRASS and no parameters found."
+msgstr "El datum <%s> no es reconocido por GRASS y no se han encontrado parámetos."
+
+#: ../lib/proj/convert.c:448
+#, c-format
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
+msgstr "El datum <%s> aparentemente es reconocido por GRASS, pero no se han encontrado parámetros. Quizá quiera revisar esto."
+
+#: ../lib/proj/convert.c:453
+#, c-format
+msgid ""
+"Invalid tranformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
+msgstr "Número de transformación %d no válido; el intervalo válido es de 1 a %d. Se dejan sin especificar los parámetros de transformación del datum."
+
 #: ../lib/proj/ellipse.c:77
 #, c-format
 msgid "invalid ellipsoid %s in file"
@@ -2701,6 +2725,57 @@ msgstr "elipsoide inválida %s en el archivo"
 #: ../lib/proj/ellipse.c:120
 msgid "No ellipsoid info given in file"
 msgstr "No hay información de elipsoide en el archivo"
+
+#: ../lib/proj/get_proj.c:152
+#, c-format
+msgid "Invalid zone %s specified"
+msgstr "Especificada la zona %s no válida"
+
+#: ../lib/proj/get_proj.c:231
+msgid "Unable to initialise PROJ.4 with the following parameter list:"
+msgstr "No se puede inicializar PROJ.4 con la siguiente lista de parámetros:"
+
+#: ../lib/proj/get_proj.c:238
+#, c-format
+msgid "The error message was '%s'"
+msgstr "El mensaje de error fue '%s'"
+
+#: ../lib/proj/get_proj.c:253
+msgid "Unable to allocate options"
+msgstr "No se pueden asignar las opciones"
+
+#: ../lib/proj/get_proj.c:279 ../lib/proj/get_proj.c:319
+msgid "Option input memory failure"
+msgstr "Fallo de memoria de entrada de opciones"
+
+#: ../lib/proj/get_proj.c:299
+msgid "Option input overflowed option table"
+msgstr "La entrada de opciones desbordó la tabla de opciones"
+
+#: ../lib/proj/get_proj.c:331
+#, c-format
+msgid "Unable to initialize pj cause: %s"
+msgstr "No se puede inicializar pj causa: %s"
+
+#: ../lib/proj/get_proj.c:406
+#, c-format
+msgid "Input Projection Parameters:%s\n"
+msgstr "Parámetros de proyección de entrada: %s\n"
+
+#: ../lib/proj/get_proj.c:408
+#, c-format
+msgid "Input Unit Factor: %.16g\n"
+msgstr "Factor de unidades de entrada: %.16g\n"
+
+#: ../lib/proj/get_proj.c:417
+#, c-format
+msgid "Output Projection Parameters:%s\n"
+msgstr "Parámetros de proyección de salida: %s\n"
+
+#: ../lib/proj/get_proj.c:419
+#, c-format
+msgid "Output Unit Factor: %.16g\n"
+msgstr ""
 
 #: ../lib/raster/io_sock.c:65
 msgid "No graphics monitor has been selected for output."
@@ -2850,8 +2925,7 @@ msgstr "La franja no tiene suficientes datos"
 #: ../lib/rst/interp_float/vinput2d.c:302
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr ""
-"Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
+msgstr "Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
 
 #: ../lib/rst/interp_float/vinput2d.c:304
 #, c-format
@@ -2888,8 +2962,7 @@ msgstr "No se pueden leer los símbolos de líneas de las coordenadas: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid ""
-"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 "Nombre de símbolo incorrecto: %s (debe ser: grupo/nombre o grupo/"
 "nombre@mapset)"
@@ -3364,8 +3437,7 @@ msgstr "No se pudo obtener información del archivo '%s'"
 
 #: ../lib/vector/Vlib/open.c:719
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr ""
-"Tamaño del archivo 'coord' es diferente del valor grabado en el archivo topo."
+msgstr "Tamaño del archivo 'coord' es diferente del valor grabado en el archivo topo."
 
 #: ../lib/vector/Vlib/open.c:730
 #, c-format
@@ -3540,8 +3612,7 @@ msgstr "Intento de borrar un área inexistente"
 #: ../lib/vector/diglib/plus_area.c:392
 #, c-format
 msgid "Dead centroid [%d] registered for area (bug in the library)."
-msgstr ""
-"Centroide inexistente [%d] registrado para el área (bug en la biblioteca)."
+msgstr "Centroide inexistente [%d] registrado para el área (bug en la biblioteca)."
 
 #: ../lib/vector/diglib/plus_area.c:413
 #, c-format
@@ -3561,3 +3632,4 @@ msgid ""
 msgstr ""
 "Intento de leer el ángulo para la línea que no está conectada al nodo: nodo "
 "= [%d] línea = [%d]"
+
