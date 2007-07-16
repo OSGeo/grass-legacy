@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
     name = G_store(opt1->answer);
 
     if ((mapset = G_find_grid3(name, "")) == NULL)
-	G_fatal_error(_("Cannot find %s"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     /*We need to open the map */
     g3map =

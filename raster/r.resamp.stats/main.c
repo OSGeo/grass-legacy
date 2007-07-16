@@ -299,7 +299,7 @@ int main( int argc, char *argv[])
 
 	inmap = G_find_cell2(parm.rastin->answer, "");
 	if (!inmap)
-		G_fatal_error(_("Couldn't find raster map %s"), parm.rastin->answer);
+		G_fatal_error(_("Raster map <%s> not found"), parm.rastin->answer);
 
 	/* set window to old map */
 	G_get_cellhd(parm.rastin->answer, inmap, &src_w);
@@ -332,7 +332,7 @@ int main( int argc, char *argv[])
 	/* open old map */
 	infile = G_open_cell_old(parm.rastin->answer, inmap);
 	if (infile < 0)
-		G_fatal_error(_("Not able to open cellfile for [%s]"), parm.rastin->answer);
+		G_fatal_error(_("Unable to open raster map <%s>"), parm.rastin->answer);
 
 	/* reset window to current region */
 	G_set_window(&dst_w);
@@ -343,7 +343,7 @@ int main( int argc, char *argv[])
 	/* open new map */
 	outfile = G_open_raster_new(parm.rastout->answer, DCELL_TYPE);
 	if (outfile < 0)
-		G_fatal_error(_("Not able to open cellfile for [%s]"), parm.rastout->answer);
+		G_fatal_error(_("Unable to create raster map <%s>"), parm.rastout->answer);
 
 	/* prevent complaints about window changes */
 	G_suppress_warnings(1);

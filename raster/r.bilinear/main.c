@@ -75,7 +75,7 @@ int main( int argc, char *argv[])
 
     inmap = G_find_file2 ("cell", rastin->answer, "");
     if(!inmap){
-	G_fatal_error(_("Couldn't find raster map %s"), rastin->answer);
+	G_fatal_error(_("Raster map <%s> not found"), rastin->answer);
     }
 
     /* set window to old map */
@@ -89,7 +89,7 @@ int main( int argc, char *argv[])
     /* open old map */
     if ((infile = G_open_cell_old(rastin->answer, inmap)) == -1)
     {
-	G_fatal_error(_("Not able to open cellfile for [%s]"), rastin->answer);
+	G_fatal_error(_("Unable to open raster map <%s>"), rastin->answer);
     }
 
     /* reset window to current region */
@@ -100,7 +100,7 @@ int main( int argc, char *argv[])
     /* open new map */
     if ((outfile = G_open_raster_new(rastout->answer, DCELL_TYPE)) < 0)
     {
-	G_fatal_error(_("Not able to open cellfile for [%s]"), rastout->answer);
+	G_fatal_error(_("Unable to create raster map <%s>"), rastout->answer);
     }
     G_suppress_warnings(1);
     /* otherwise get complaints about window changes */

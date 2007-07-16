@@ -70,7 +70,7 @@ main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	_("Generate images with textural features from a raster map.");
+	_("Generates images with textural features from a raster map.");
 					        
     /* Define the different options */
 
@@ -224,7 +224,7 @@ main(int argc, char *argv[])
 	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (G_legal_filename (result) < 0)
-	G_fatal_error(_("<%s> is illegal name"), result);
+	G_fatal_error(_("<%s> is an illegal file name"), result);
 
     if ( (infd = G_open_cell_old (name, mapset)) < 0)
 	G_fatal_error(_("Unable to open raster map <%s>"), name);

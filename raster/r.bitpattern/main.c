@@ -60,7 +60,7 @@ main(int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("raster");
-    module->description = _("Compares bit patterns with a raster map");
+    module->description = _("Compares bit patterns with a raster map.");
 
     /* Define the different options */
 
@@ -98,20 +98,20 @@ main(int argc, char *argv[])
     /* find map in mapset */
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
-	G_fatal_error(_("Raster map [%s] not found"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (G_legal_filename(result) < 0)
-	G_fatal_error(_("[%s] is an illegal name"), result);
+	G_fatal_error(_("<%s> is an illegal file name"), result);
 
     /*if Gispf() error */
     if ((infd = G_open_cell_old(name, mapset)) < 0)
-	G_fatal_error(_("Cannot open raster map [%s]"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     /* determine the inputmap type (CELL/FCELL/DCELL) */
     data_type = G_get_raster_map_type(infd);
 
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
-	G_fatal_error(_("Cannot read file header of [%s]"), name);
+	G_fatal_error(_("Unable to read header of raster map <%s>"), name);
 
     /* Allocate input buffer */
     inrast = G_allocate_raster_buf(data_type);
@@ -122,7 +122,7 @@ main(int argc, char *argv[])
     outrast = G_allocate_raster_buf(data_type);
 
     if ((outfd = G_open_raster_new(result, data_type)) < 0)
-	G_fatal_error(_("Could not open <%s>"), result);
+	G_fatal_error(_("Unable to create raster map <%s>"), result);
 
     for (row = 0; row < nrows; row++) {
 	CELL c;
@@ -132,7 +132,7 @@ main(int argc, char *argv[])
 
 	/* read input map */
 	if (G_get_raster_row(infd, inrast, row, data_type) < 0)
-	    G_fatal_error(_("Could not read from <%s>"), name);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), name, row);
 
 	/*process the data */
 	for (col = 0; col < ncols; col++) {
@@ -147,7 +147,7 @@ main(int argc, char *argv[])
 	}
 
 	if (G_put_raster_row(outfd, outrast, data_type) < 0)
-	    G_fatal_error(_("Cannot write to <%s>"), result);
+	    G_fatal_error(_("Unable to write to <%s>"), result);
     }
 
     G_free(inrast);
