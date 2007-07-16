@@ -80,6 +80,18 @@ appears in the module's usage help section. For example:
 added to an <b>input</b> option would create the usage summary
 <tt>[input=filename]</tt>.
 
+<P>
+If a script is run with --o, G_parser() will set <tt>GRASS_OVERWRITE=1</tt>,
+which has the same effect as passing --o to every module which is run
+from the script.
+Similarly, passing --q or --v will set <tt>GRASS_VERBOSE</tt> to 0 or 3
+respectively, which has the same effect as passing --q or --v to every
+module which is run from the script.
+Rather than checking whether --o, --q or --v were used, you should be
+checking $GRASS_OVERWRITE and/or $GRASS_VERBOSE instead. If those
+variables are set, the script should behave the same way regardless of
+whether they were set by --o, --q or --v being passed to the script or
+set by other means.
 
 <H2>AUTOMATED SCRIPT CREATION</H2>
 
