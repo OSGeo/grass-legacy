@@ -35,6 +35,7 @@ struct menu
 	{c_max,    "maximum",   "highest value"},
 	{c_maxx,   "max_raster","raster with highest value"}, 
 	{c_stddev, "stddev",    "standard deviation"},
+	{c_range,  "range" ,    "range of values"},
 	{c_sum,    "sum",       "sum of values"},
 	{c_var,    "variance",  "statistical variance"},
 	{c_divr,   "diversity", "number of different values"},
