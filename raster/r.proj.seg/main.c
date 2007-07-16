@@ -137,19 +137,19 @@ int main (int argc, char **argv)
 	inmap->key = "input";
 	inmap->type = TYPE_STRING;
 	inmap->required = YES;
-	inmap->description = _("Name of input raster map");
+	inmap->description = _("Name of input raster map to re-project");
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
 	inlocation->type = TYPE_STRING;
 	inlocation->required = YES;
-	inlocation->description = _("Location of input map");
+	inlocation->description = _("Location of input raster map");
 
 	imapset = G_define_option();
 	imapset->key = "mapset";
 	imapset->type = TYPE_STRING;
 	imapset->required = NO;
-	imapset->description = _("Mapset of input map");
+	imapset->description = _("Mapset of input raster map");
 
 	indbase = G_define_option();
 	indbase->key = "dbase";
@@ -213,13 +213,13 @@ int main (int argc, char **argv)
 
 	/* Get projection info for output mapset */
 	if ((out_proj_info = G_get_projinfo()) == NULL)
-		G_fatal_error(_("Can't get projection info of output map"));
+		G_fatal_error(_("Unable to get projection info of output raster map"));
 
 	if ((out_unit_info = G_get_projunits()) == NULL)
-		G_fatal_error(_("Can't get projection units of output map"));
+		G_fatal_error(_("Unable to get projection units of output raster map"));
 
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-		G_fatal_error(_("Can't get projection key values of output map"));
+		G_fatal_error(_("Unable to get projection key values of output raster map"));
 
 	/* Change the location 		 */
 	G__create_alt_env();
@@ -228,24 +228,24 @@ int main (int argc, char **argv)
 
 	permissions = G__mapset_permissions(setname);
 	if (permissions < 0)	/* can't access mapset 	 */
-		G_fatal_error("Mapset [%s] in input location [%s] - %s\n",
+		G_fatal_error(_("Mapset <%s> in input location <%s> - %s"),
 			      setname, inlocation->answer,
 			      permissions == 0
-			      ? "permission denied"
-			      : "not found");
+			      ? _("permission denied")
+			      : _("not found"));
 
 	/* if requested, list the raster maps in source location - MN 5/2001*/
 	if (list->answer)
 	{
 		if (isatty(0))  /* check if on command line */
-			G_message(_("Checking location %s, mapset %s:"),
+			G_message(_("Checking location <%s>, mapset <%s>..."),
 				inlocation->answer, setname);
 		G_list_element ("cell", "raster", setname, 0);
 		exit(EXIT_SUCCESS); /* leave r.proj after listing*/
 	}
 
 	if (!G_find_cell(inmap->answer, setname))
-		G_fatal_error(_("Input map [%s] in location [%s] in mapset [%s] not found."),
+		G_fatal_error(_("Raster map <%s> in location <%s> in mapset <%s> not found"),
 			      inmap->answer, inlocation->answer, setname);
 
 	/* Read input map colour table */   
@@ -253,13 +253,13 @@ int main (int argc, char **argv)
    
 	/* Get projection info for input mapset */
 	if ((in_proj_info = G_get_projinfo()) == NULL)
-		G_fatal_error(_("Can't get projection info of input map"));
+		G_fatal_error(_("Unable to get projection info of input map"));
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
-		G_fatal_error(_("Can't get projection units of input map"));
+		G_fatal_error(_("Unable to get projection units of input map"));
 
 	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-		G_fatal_error(_("Can't get projection key values of input map"));
+		G_fatal_error(_("Unable to get projection key values of input map"));
    
         G_free_key_value( in_proj_info );	   
         G_free_key_value( in_unit_info );
@@ -273,7 +273,7 @@ int main (int argc, char **argv)
 	G_set_window(&incellhd);
 
 	if (G_projection() == PROJECTION_XY)
-		G_fatal_error(_("Can't work with xy data"));
+		G_fatal_error(_("Unable to work with unprojected data (xy location)"));
 
 	/* Save default borders so we can show them later */
 	inorth = incellhd.north;
@@ -341,25 +341,26 @@ int main (int argc, char **argv)
 	G_set_window(&outcellhd);
 
 	G_message(_("Input:"));
-	G_message(_("Cols:	%d (%d)"), incellhd.cols, icols);
-	G_message(_("Rows:	%d (%d)"), incellhd.rows, irows);
+	G_message(_("Cols: %d (%d)"), incellhd.cols, icols);
+	G_message(_("Rows: %d (%d)"), incellhd.rows, irows);
 	G_message(_("North: %f (%f)"), incellhd.north, inorth);
 	G_message(_("South: %f (%f)"), incellhd.south, isouth);
-	G_message(_("West:  %f (%f)"), incellhd.west, iwest);
-	G_message(_("East:  %f (%f)"), incellhd.east, ieast);
-	G_message(_("ew-res:	%f"), incellhd.ew_res);
-	G_message(_("ns-res:	%f"), incellhd.ns_res);
+	G_message(_("West: %f (%f)"), incellhd.west, iwest);
+	G_message(_("East: %f (%f)"), incellhd.east, ieast);
+	G_message(_("EW-res: %f"), incellhd.ew_res);
+	G_message(_("NS-res: %f"), incellhd.ns_res);
 	G_message("");
 
 	G_message(_("Output:"));
-	G_message(_("Cols:	%d (%d)"), outcellhd.cols, ocols);
-	G_message(_("Rows:	%d (%d)"), outcellhd.rows, orows);
+	G_message(_("Cols: %d (%d)"), outcellhd.cols, ocols);
+	G_message(_("Rows: %d (%d)"), outcellhd.rows, orows);
 	G_message(_("North: %f (%f)"), outcellhd.north, onorth);
 	G_message(_("South: %f (%f)"), outcellhd.south, osouth);
 	G_message(_("West:  %f (%f)"), outcellhd.west, owest);
 	G_message(_("East:  %f (%f)"), outcellhd.east, oeast);
-	G_message(_("ew-res:	%f"), outcellhd.ew_res);
-	G_message(_("ns-res:	%f"), outcellhd.ns_res);
+	G_message(_("EW-res: %f"), outcellhd.ew_res);
+	G_message(_("NS-res: 
+%f"), outcellhd.ns_res);
 
 	/* open and read the relevant parts of the input map and close it */
 	G__switch_env();
