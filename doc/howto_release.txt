@@ -16,13 +16,19 @@ Contents
 
 1. Local work (basically at ITC-irst)
 
- o - cleanup rubbish:
-       find . -name '*~'  | xargs rm
-       find . -name '*.o' | xargs rm
-       find . -name '*.bak' | xargs rm
-       find . -name '.#*' | xargs rm
+   - check if
+        doc/raster/r.example/
+        doc/vector/v.example/
+      still compile; fix otherwise
+
+   - cleanup rubbish:
+       find . -name '*~'     | xargs rm
+       find . -name '*.bak'  | xargs rm
+       find . -name '.#*'    | xargs rm
        find . -name '*.orig' | xargs rm
-       find . -name '*.rej' | xargs rm
+       find . -name '*.rej'  | xargs rm
+       find . -name '*.o'    | xargs rm
+       chmod -R a+r *
 
    - Create release branch (only if not yet existing)
 
@@ -54,9 +60,9 @@ Contents
      gzip ChangeLog_$VERSION
 
  o   Tag release:
-          echo grass_${MAJOR}_${MINOR}_${RELEASE}
+          echo release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
 
-          cvs tag grass_${MAJOR}_${MINOR}_${RELEASE}
+          cvs tag release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
 
  o create source package (in the source directory):
      echo grass-${VERSION}
@@ -100,7 +106,8 @@ Contents
       - store in Web as announces/announce_grass$MAJOR$MINOR$RELEASE.html
 
  o upload user HTML manual in case of *final release* from compiled English
-   version at:
+   version at (warning: needs stuff to be compiled, but include/VERSION set
+   back temporarily!!):
      cd dist.$ARCH/docs/html
      scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
 
@@ -114,6 +121,7 @@ Contents
    - publish related announcement press release at:
    
    Our GRASS web site: /announces/
+                       Note: DON'T use relative links there
 
    Our main mailing lists:
                        http://grass.itc.it/mailman/listinfo/grass-announce
