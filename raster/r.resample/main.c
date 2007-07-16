@@ -93,10 +93,10 @@ int main(int argc, char *argv[])
 
         mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
-                G_fatal_error ( "raster map [%s] not found", name);
+                G_fatal_error ( _("Raster map <%s> not found"), name);
 
         if (G_legal_filename (result) < 0)
-                G_fatal_error ( "[%s] illegal name", result);
+                G_fatal_error ( "<%s> is an illegal file name", result);
 
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
 	colr_ok = G_read_colors (name, mapset, &colr) > 0;
@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
 		rast1 = rast; 
 		rast2 = G_incr_void_ptr(rast, G_raster_size(data_type));
 
-                G_message(_("creating new cats file..."));
+                G_message(_("Creating new cats file..."));
 		while (G_get_next_marked_raster_cat(&cats, 
 			     rast1, rast2, &count, data_type)) 
 		   G_set_raster_cat(rast1, rast2, 

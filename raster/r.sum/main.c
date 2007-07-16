@@ -61,11 +61,11 @@ int main(
 
     cellmap = G_find_file2 ("cell", rast->answer, "");
     if(!cellmap){
-	G_fatal_error(_("Couldn't find raster map %s"), rast->answer);
+	G_fatal_error(_("Raster map <%s> not found"), rast->answer);
     }
     if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1)
     {
-	G_fatal_error(_("Not able to open cellfile for [%s]"), rast->answer);
+	G_fatal_error(_("Unable to open raster map <%s>"), rast->answer);
     }
  
     

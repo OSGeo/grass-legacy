@@ -118,10 +118,10 @@ main (int argc, char *argv[])
     {  
 	cellmap = G_find_file2 ("cell", surf->answer, "");
 	if(!cellmap)
-	    G_fatal_error (_("Couldn't find raster map [%s]"), surf->answer);
+	    G_fatal_error (_("Raster map <%s> not found"), surf->answer);
 
 	if ((cellfile = G_open_cell_old(surf->answer, cellmap)) == -1) 
-	    G_fatal_error (_("Unable to open raster map [%s]"), surf->answer);
+	    G_fatal_error (_("Unable to open raster map <%s>"), surf->answer);
     }
     
     cell_buf[0] = (DCELL *) G_malloc (w.cols * G_raster_size(DCELL_TYPE));

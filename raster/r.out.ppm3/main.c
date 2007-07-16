@@ -114,18 +114,18 @@ int main(int argc, char **argv)
 		/* Get mapset of layer */
 		mapset = G_find_cell2(name, "");
 		if(!mapset)
-			G_fatal_error("Couldn't find raster map %s", name);
+			G_fatal_error(_("Raster map <%s> not found"), name);
 
 		/* Open raster map */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1) 
-			G_fatal_error("Unable to open cellfile for [%s]", name);
+			G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 		/* Get map type (CELL/FCELL/DCELL) */
 		B[i].type = G_get_raster_map_type(B[i].file);
 
 		/* Get color table */
 		if (G_read_colors(name, mapset, &B[i].colors) == -1)
-			G_fatal_error("Color file for [%s] not available", name);
+			G_fatal_error(_("Color file for <%s> not available"), name);
 
 		/* Allocate input buffer */
 		B[i].array = G_allocate_raster_buf(B[i].type);
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
 	{
 		fp = fopen(ppm_file->answer, "w");
 		if(!fp)
-			G_fatal_error("Unable to open file [%s]", ppm_file->answer);
+			G_fatal_error(_("Unable to open file <%s>"), ppm_file->answer);
 	}
 
 	/* write header info */
