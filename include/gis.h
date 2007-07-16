@@ -143,12 +143,19 @@ static const char *GRASS_copyright __attribute__((unused))
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
 
-    G_OPT_R_INPUT,  /* old input raster */
-    G_OPT_R_OUTPUT, /* new output raster */
-    G_OPT_R_MAP,    /* old input raster */
-    G_OPT_R_MAPS,   /* old input rasters */
-    G_OPT_R_BASE,   /* old input base raster */
-    G_OPT_R_COVER,  /* old input cover raster */
+    G_OPT_R_INPUT,  /* old input raster map */
+    G_OPT_R_INPUTS,  /* old input raster maps */
+    G_OPT_R_OUTPUT, /* new output raster map */
+    G_OPT_R_MAP,    /* old input raster map */
+    G_OPT_R_MAPS,   /* old input rasters map */
+    G_OPT_R_BASE,   /* old input base raster map */
+    G_OPT_R_COVER,  /* old input cover raster map */
+    G_OPT_R_ELEV,  /* old input elevation raster map */
+    G_OPT_R_ELEVS,  /* old input elevation raster maps */
+
+    G_OPT_R3_INPUT,  /* old input raster3d map */
+    G_OPT_R3_INPUTS,  /* old input raster3d maps */
+    G_OPT_R3_OUTPUT, /* new output raster3d map */
 
     G_OPT_V_INPUT,  /* old input vector */
     G_OPT_V_OUTPUT, /* new output vector */
@@ -156,7 +163,11 @@ typedef enum {
     G_OPT_V_TYPE,   /* primitive type */
     G_OPT_V_FIELD,  /* field number */
     G_OPT_V_CAT,    /* one category */
-    G_OPT_V_CATS    /* more categories */
+    G_OPT_V_CATS,   /* more categories */
+
+    G_OPT_F_INPUT,  /* old input file */
+    G_OPT_F_OUTPUT, /* new output file */
+    G_OPT_F_SEP    /* data field separator */
 } STD_OPT;
 
 /* Message format */
@@ -560,6 +571,7 @@ struct GModule                      /* Structure that stores module info  */
 {
     char *label;                    /* Optional short description for GUI */
     char *description;              /* String describing module */
+    char *keywords;                 /* Keywords describing module */
 	/* further items are possible: author(s), version */
     int overwrite; /* overwrite old files */
 };

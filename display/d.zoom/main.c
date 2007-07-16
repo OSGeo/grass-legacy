@@ -38,6 +38,7 @@ main (int argc, char **argv)
     G_gisinit(argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("display");
     module->description = 
 	_("Allows the user to change the current geographic "
           "region settings interactively, with a mouse.");

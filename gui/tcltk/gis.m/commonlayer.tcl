@@ -37,18 +37,23 @@ proc namespace_import_variables {namespace args} {
 # directory and add it to the compositing list)
 proc GmCommonLayer::display_commands {namespace id cmds} {
 	global mon
-	global mapfile
-	global maskfile
-	global complist
-	global opclist
-	global masklist
 	namespace_import_variables $namespace lfile lfilemask opt optlist dup first
+	
+	set mapfile($mon) $MapCanvas::mapfile($mon)
+	set maskfile($mon) $MapCanvas::maskfile($mon)
+
+	if {[info exists $mapfile($mon)] == ""} {return}
+	if {![info exists first]} {set first 0}
 
 	# There's no point in doing any of this unless the layer is actually on
 	if {! $opt($id,1,_check) } {
 		return 0
 	}
 
+	if {![info exists opt($id,1,mod)]} {
+		set opt($id,1,mod) 0
+	}
+	
 	# check to see if options have changed
 	foreach key $optlist {
 		if {$opt($id,0,$key) != $opt($id,1,$key)} {
@@ -56,7 +61,7 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 			set opt($id,0,$key) $opt($id,1,$key)
 		}
 	} 
-    
+
 	# if options have changed (or mod flag set by other procedures) re-render map
 	if {$opt($id,1,mod) == 1 || $dup($id) == 1 || $first == 1} {
 		runcmd "d.frame -e"
@@ -65,8 +70,12 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 				run_panel $cmd
 			}
 		}
-		file rename -force $mapfile($mon) $lfile($id)
-		file rename -force $maskfile($mon) $lfilemask($id)
+		# work around MS-Windows TclTk bug:
+		# file rename -force returns bad code.
+		catch {file delete $lfile($id)}
+		catch {file delete $lfilemask($id)}
+		catch {file rename -force $mapfile($mon) $lfile($id)}
+		catch {file rename -force $maskfile($mon) $lfilemask($id)}
 		# reset options changed flag
 		set opt($id,1,mod) 0
 		set dup($id) 0
@@ -74,26 +83,27 @@ proc GmCommonLayer::display_commands {namespace id cmds} {
 	}
 	
 	#add lfile, maskfile, and opacity to compositing lists
-	if {$complist($mon) != "" } {
-		append complist($mon) ","
-		append complist($mon) [file tail $lfile($id)]
+	if {$MapCanvas::complist($mon) != "" } {
+		append MapCanvas::complist($mon) ","
+		append MapCanvas::complist($mon) [file tail $lfile($id)]
 	} else {
-		append complist($mon) [file tail $lfile($id)]
+		append MapCanvas::complist($mon) [file tail $lfile($id)]
 	}	
 
-	if {$masklist($mon) != "" } {
-		append masklist($mon) ","
-		append masklist($mon) [file tail $lfilemask($id)]
+	if {$MapCanvas::masklist($mon) != "" } {
+		append MapCanvas::masklist($mon) ","
+		append MapCanvas::masklist($mon) [file tail $lfilemask($id)]
 	} else {
-		append masklist($mon) [file tail $lfilemask($id)]
+		append MapCanvas::masklist($mon) [file tail $lfilemask($id)]
 	}	
 	
-	if {$opclist($mon) != "" } {
-		append opclist($mon) ","
-		append opclist($mon) $opt($id,1,opacity)
+	if {$MapCanvas::opclist($mon) != "" } {
+		append MapCanvas::opclist($mon) ","
+		append MapCanvas::opclist($mon) $opt($id,1,opacity)
 	} else {
-		append opclist($mon) $opt($id,1,opacity)
+		append MapCanvas::opclist($mon) $opt($id,1,opacity)
 	}
+	
 }
 
 # Display something on the canvas

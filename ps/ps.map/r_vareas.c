@@ -119,7 +119,7 @@ read_vareas (char *name, char *mapset)
 	    if (sscanf(data, "%lf%s", &width, mapset) < 1 || width < 0.)
 	    {
 		width = 1.;
-		error(key, data, "illegal width");
+		error(key, data, "illegal width (vareas)");
 		continue;
 	    }
 	    if(mapset[0] == 'i') width = width/72.;
@@ -135,7 +135,7 @@ read_vareas (char *name, char *mapset)
 	    else if ( ret == 2 )
 		unset_color ( &(vector.layer[vec].color));
 	    else
-		error (key,data,"illegal color request");
+		error (key,data,"illegal color request (vareas)");
 
 	    continue;
 	}
@@ -148,7 +148,7 @@ read_vareas (char *name, char *mapset)
 	    else if ( ret == 2 )
 		unset_color ( &(vector.layer[vec].fcolor));
 	    else
-		error (key,data,"illegal color request");
+		error (key,data,"illegal color request (vareas)");
 
 	    continue;
         } 
@@ -165,7 +165,7 @@ read_vareas (char *name, char *mapset)
             if (sscanf(data, "%d", &itmp) < 1 || itmp < 0 )
             {
                 itmp = -1;
-                error(key, data, "illegal lpos");
+                error(key, data, "illegal lpos (vareas)");
                 continue;
             }
             vector.layer[vec].lpos = itmp;
@@ -192,7 +192,7 @@ read_vareas (char *name, char *mapset)
 	    if (sscanf(data, "%lf%s", &width, mapset) < 1 || width < 0.)
 	    {
 		width = 0.;
-		error(key, data, "illegal pwidth");
+		error(key, data, "illegal pwidth (vareas)");
 		continue;
 	    }
 	    if(mapset[0] == 'i') width = width/72.;
@@ -200,7 +200,7 @@ read_vareas (char *name, char *mapset)
 	    continue;
 	}
 
-	error(key, "", "illegal request");
+	error(key, "", "illegal request (vareas)");
     }
 
     vector.count++;

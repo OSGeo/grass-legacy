@@ -26,7 +26,8 @@ main (int argc, char *argv[])
 	G_gisinit( argv[0]);
 	/* Set description */
 	module              = G_define_module();
-	module->description = 
+	module->keywords = _("raster");
+    module->description = 
 	_("Generates random cell values with spatial dependence.");
 	
 	Init( argc, argv);

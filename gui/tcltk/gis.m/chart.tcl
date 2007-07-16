@@ -40,6 +40,8 @@ proc GmChart::create { tree parent } {
     image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
     
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -74,7 +76,7 @@ proc GmChart::create { tree parent } {
     set opt($count,1,fcolors) "" 
     set opt($count,1,mod) 1
     
-	set optlist { _check map layer ctype columns sizecol csize cscale ocolor fcolors \
+	set optlist { _check map opacity layer ctype columns sizecol csize cscale ocolor fcolors \
              type_point type_line type_boundary type_centroid type_area} 
 
     foreach key $optlist {
@@ -129,7 +131,9 @@ proc GmChart::show_data { id } {
 	set layer $opt($id,1,layer)
 	if ![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb] {
 		set vectdb [read $vdb]
-		catch {close $vdb}
+		if {[catch {close $vdb} error]} {
+		    puts $error
+		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
 		set db [lindex $vdblist 3]
@@ -144,7 +148,7 @@ proc GmChart::show_data { id } {
 # chart options
 proc GmChart::options { id frm } {
     variable opt
-    global gmpath
+    
     global bgcolor
 	global iconpath
 	
@@ -297,11 +301,6 @@ proc GmChart::mapname { node } {
 
 proc GmChart::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -312,7 +311,7 @@ proc GmChart::display { node mod } {
 
     set line ""
     set input ""
-    global gmpath
+    
     set cmd ""
 
     set tree($mon) $GmTree::tree($mon)
@@ -398,7 +397,9 @@ proc GmChart::duplicate { tree parent node id } {
 
     image create photo chartico -file "$iconpath/module-d.vect.chart.gif"
     set ico [label $frm.ico -image chartico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

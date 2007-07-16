@@ -171,8 +171,14 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 					 (i + 1) * sizeof(struct field_info *));
 
     Fi[i] = Vect_default_field_info(Map, *field, field_name, type);
-    Vect_map_add_dblink(Map, *field, field_name, Fi[i]->table, "cat",
-			Fi[i]->database, Fi[i]->driver);
+    {
+	char *p;
+
+	/* make table name SQL compliant */
+	for (p = Fi[i]->table; *p; p++)
+	    if (*p == '.' || *p == '-')
+		*p = '_';
+    }
 
     if (!driver) {
 	driver =
@@ -204,6 +210,10 @@ static int get_field_cat(struct Map_info *Map, char *field_name, int *field,
 	G_fatal_error(_("Cannot grant privileges on table %s"), Fi[i]->table);
     if (db_create_index2(driver, Fi[i]->table, Fi[i]->key) != DB_OK)
 	G_warning(_("Cannot create index"));
+
+    if (Vect_map_add_dblink(Map, *field, field_name, Fi[i]->table, "cat",
+			    Fi[i]->database, Fi[i]->driver))
+	G_warning(_("Cannot link table: %s"), Fi[i]->table);
 
     return i;
 }

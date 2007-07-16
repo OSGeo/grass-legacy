@@ -1,0 +1,15 @@
+MODULE_TOPDIR = ../..
+
+SUBDIRS = lidarlib \
+	v.bspline \
+	v.outlier \
+	v.lidar.correction \
+	v.lidar.edgedetection \
+	v.lidar.growing
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+default: subdirs
+
+clean: cleansubdirs
+

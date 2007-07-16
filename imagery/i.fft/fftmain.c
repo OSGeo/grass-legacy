@@ -51,7 +51,8 @@ int main (int argc, char *argv[])
         me = G_program_name();
 
 	    module = G_define_module();
-	    module->description =
+	    module->keywords = _("imagery");
+    module->description =
 			_("Fast Fourier Transform (FFT) for image processing.");
 
         /* define options */

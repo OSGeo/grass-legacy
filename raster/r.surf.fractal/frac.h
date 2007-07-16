@@ -4,11 +4,12 @@
 /***		     Jo Wood, V 1.0  - 19th October, 1994	      ***/
 /************************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
                                 /* programs. It sets up the necessary   */
                                 /* prototypes for GRASS library calls.  */
-#include "string.h"
-#include "stdio.h"
 
 #define MAX(a,b) ((a)>(b) ? (a):(b))
 #define SWAP(a,b) tempr=(a); (a)=(b); (b) = tempr

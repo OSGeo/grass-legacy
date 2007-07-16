@@ -46,6 +46,7 @@
 
 #% Module
 #%  description: Creates shaded relief map from an elevation map (DEM).
+#%  keywords: raster, elevation
 #% End
 #% option
 #%  key: map
@@ -117,6 +118,11 @@ fi
 #ewres=`g.region -g | grep 'ewres=' | sed s/ewres=//`
 
 PROG=`basename $0`
+
+# setting environment, so that awk works properly in all languages
+unset LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
 
 alt=$GIS_OPT_ALTITUDE
 az=$GIS_OPT_AZIMUTH

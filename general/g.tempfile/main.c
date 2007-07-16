@@ -4,10 +4,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *pid;
     char *tempfile, *G__tempfile();
     int p;
@@ -15,8 +16,9 @@ int main (int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("general");
+    module->description =
 		"Creates a temporary file and prints the file name.";
 
     pid = G_define_option();
@@ -34,7 +36,7 @@ int main (int argc, char *argv[])
 	exit(1);
     }
     tempfile = G__tempfile(p);
-    umask(0);
+
 /* create tempfile so next run of this program will create a unique name */
     close(creat(tempfile,0666));
     fprintf (stdout,"%s\n", tempfile);

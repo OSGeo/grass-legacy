@@ -82,6 +82,7 @@ main (int argc, char *argv[])
 
     /* Module options */
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Convert to one of the supported OGR vector formats.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -96,9 +97,9 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->description = _("OGR datasource name.\n"
-			   "\t\tESRI Shapefile: directory containing shapefiles\n"
-			   "\t\tMapInfo File: directory containing mapinfo files");
+    dsn_opt->description = _("OGR output datasource name. For example:\n"
+			   "\t\tESRI Shapefile: filename or directory for storage\n"
+			   "\t\tMapInfo File: filename or directory for storage");
 
     layer_opt = G_define_option();
     layer_opt->key = "olayer";
@@ -156,7 +157,7 @@ main (int argc, char *argv[])
     
     /* Check output type */
     otype = Vect_option_to_types ( type_opt ); 
-
+    
     if ( otype & GV_POINTS ) wkbtype = wkbPoint;
     else if ( otype & GV_LINES ) wkbtype = wkbLineString;
     else if ( otype & GV_AREA ) wkbtype = wkbPolygon;

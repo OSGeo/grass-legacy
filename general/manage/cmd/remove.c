@@ -21,6 +21,7 @@ main (int argc, char *argv[])
     init (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("general");
     module->description =
 		_("Removes data base element files from "
 		"the user's current mapset.");

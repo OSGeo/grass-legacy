@@ -29,6 +29,7 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Load values from vector to database. In uploaded/printed category values "
 			"'-1' is used for 'no category' and 'null'/'-' if category cannot be found or "
                         "multiple categories were found.");

@@ -11,20 +11,20 @@ DRIVER=$(DBDRIVERDIR)/pg$(EXE_SUFFIX)
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	$(GISLIB) $(DATETIMELIB) $(PQLIB)
 
-EXTRA_CFLAGS = $(PQINCPATH) $(TCLINCDIR) $(TKINCDIR)
+EXTRA_CFLAGS = $(PQINCPATH)
 EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
 OBJS = $(subst .c,.o,$(wildcard *.c))
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-DRVDOC=$(GISBASE)/docs/html/pg.html
+DRVDOC=$(GISBASE)/docs/html/grass-pg.html
 
 default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(PQLIBPATH) $(LIBES) $(TCLTKLIBPATH) $(TCLTKLIBS) \
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(PQLIBPATH) $(LIBES) \
 		$(MATHLIB) $(XDRLIB)
 
-$(DRVDOC): pg.html
-	$(INSTALL) -m 644 pg.html $(DRVDOC)
+$(DRVDOC): grass-pg.html
+	$(INSTALL) -m 644 grass-pg.html $(DRVDOC)

@@ -24,6 +24,7 @@
 #include <grass/colors.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 #include "proto.h"
 
 int main(int argc, char **argv)
@@ -44,6 +45,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->keywords = _("display, networking");
     module->description = 
     "Find shortest path for selected starting and ending node";
 

@@ -19,6 +19,7 @@
 #include <grass/raster.h>
 #include <grass/display.h>
 #include <grass/colors.h>
+#include <grass/glocale.h>
 #include "linegraph.h"
 
 #define MAX(x,y) ((x) > (y) ? (x) : (y))
@@ -95,6 +96,7 @@ main (int argc, char **argv)
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("display");
     module->description = ""\
     "Generates and displays simple line graphs in the active graphics monitor display frame.";
     

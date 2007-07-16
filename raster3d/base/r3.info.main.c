@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster3d, voxel");
     module->description =
 	_
 	("Outputs basic information about a user-specified 3D raster map layer.");

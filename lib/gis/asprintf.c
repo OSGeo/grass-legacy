@@ -6,6 +6,10 @@
 #include <assert.h>
 #include <grass/gis.h>
 
+#ifdef __MINGW32__
+#include <windows.h>
+#endif /* __MINGW32__ */
+
 /* Warning: Temporarily the G_asprintf macro cannot be used 
 * see explanation in gisdefs.h */
 
@@ -58,6 +62,8 @@ int G_asprintf(char **out, const char *fmt, ...)
 {
     va_list ap;
     int ret_status = EOF;
+    char dir_name[2001];
+    char file_name[2000];
     FILE *fp = NULL;
     char *work = NULL;
 
@@ -65,7 +71,19 @@ int G_asprintf(char **out, const char *fmt, ...)
 
     va_start(ap, fmt);
 
-    if ( fp = tmpfile() ) {
+    /* Warning: tmpfile() does not work well on Windows (MinGW)
+     *          if user does not have write access on the drive where 
+     *          working dir is? */
+#ifdef __MINGW32__
+    /* file_name = G_tempfile(); */
+    GetTempPath ( 2000, dir_name );
+    GetTempFileName ( dir_name, "asprintf", 0, file_name );
+    fp = fopen ( file_name, "w+" );
+#else
+    fp = tmpfile(); 
+#endif /* __MINGW32__ */
+
+    if ( fp ) {
 	int count;
 
 	count = vfprintf(fp, fmt, ap);
@@ -82,6 +100,9 @@ int G_asprintf(char **out, const char *fmt, ...)
 	    }
 	}
 	fclose(fp);
+#ifdef __MINGW32__
+	unlink ( file_name );
+#endif /* __MINGW32__ */
     }
     va_end(ap);
     *out = work;

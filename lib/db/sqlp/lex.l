@@ -67,6 +67,7 @@
 [Dd][Oo][Uu][Bb][Ll][Ee]	{ return DOUBLE; }
 [Pp][Rr][Ee][Cc][Ii][Ss][Ii][Oo][Nn]	{ return PRECISION; }
 [Dd][Aa][Tt][Ee]		{ return DATE; }
+[Tt][Ii][Mm][Ee]		{ return TIME; }
 [Oo][Rr]			{ return OR; }
 [Nn][Oo][Tt]			{ return NOT; }
 [Oo][Rr][Dd][Ee][Rr]		{ return ORDER; }

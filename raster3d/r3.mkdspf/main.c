@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module ();
+    module->keywords = _("raster3d, voxel");
     module->description = _("Creates a display file from an existing grid3 file according to specified threshold levels.");
 
     name=G_define_option () ;

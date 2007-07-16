@@ -138,13 +138,31 @@ is less than or equal to zero, the default vertical location is used.
 
 <DT><B>font</B> <EM>font name</EM> 
 
-<DD>The name of the PostScript font.  The default is Helvetica.
-Other options include Helvetica&nbsp;Bold, 
-<EM>Helvetica&nbsp;Oblique</EM>, <tt>Courier</tt>, etc.
+<DD>The name of the PostScript font.
+Fonts present in all PostScript implementations are:
+<tt>
+Times-Roman,
+Times-Italic,
+Times-Bold,
+Times-BoldItalic,
+Helvetica,
+Helvetica-Oblique,
+Helvetica-Bold,
+Helvetica-BoldOblique,
+Courier,
+Courier-Oblique,
+Courier-Bold,
+and
+Courier-BoldOblique</tt>.
+<BR>
+The default is Helvetica.
+</DD>
+
 
 <DT><B>fontsize</B> <EM>font size</EM> 
 
-<DD>The size of the PostScript font in 1/72 inch.  The default is 10.
+<DD>The size of the PostScript font (in 1/72nds of an inch).
+The default is 10.
 </DD>
 </DL>
 <P>
@@ -651,9 +669,12 @@ USAGE:	<B>paper</B> paper name
 	<B>top</B> #
 	<B>end</B>	
 </PRE>
-<B>paper</B> may select predefined paper name (a4,a3,a2,a1,a0,us-legal,us-letter,us-tabloid).
-Default paper size is a4.
+<B>paper</B> may select predefined paper name
+ (a4,a3,a2,a1,a0,us-legal,us-letter,us-tabloid).
+ Default paper size is a4. The measures are defined in <em>inches</em>.
 <B>left</B>, <B>right</B>, <B>bottom</B> and <B>top</B> are paper margins.
+If the plot is rotated with the <b>-r</b> command line flag, measures
+are applied to the <em>rotated</em> page.
 <P>
 
 <PRE>
@@ -753,7 +774,7 @@ For each <EM>ps.map</EM> run, only one raster map layer (or set
 of layers or imagery group; see below) can be requested. If no
 raster map layer is requested, a completely white map will be
 produced. It can be useful to select no raster map layer in
-order to provide a white background for vector images.
+order to provide a white background for vector maps.
 <P>
 Note that an imagery group selected with the <EM>group</EM>
 option, or a set of three raster layers selected with the
@@ -1045,11 +1066,10 @@ More than one line of text can be specified by notating the end of a line with
 (e.g. USA<B>\n</B>CERL).
 <P>
 The user can then specify various text features:
-<!-- <P> wrong??
+<P>
 <B>font:</B>
-cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks italicc
-italiccs italict romanc romancs romand romans romant scriptc scripts
-(The default font is romans); -->
+the PostScript font. Common possibilities are listed at the start of this
+help page. The default is <tt>Helvetica</tt>.
 <P>
 <B>color</B>
 (see <a href="#NAMED_COLORS">NAMED COLORS</a> below);
@@ -1140,7 +1160,7 @@ The user can specify:
 <P>
 <B>color</B> - color of the vector lines or area boundaries;
 <P>
-<B>fcolor</B> - the area fill color.
+<B>fcolor</B> - the area fill color;
 <P>
 <B>width</B> - width of the vectors lines or area boundaries in pixels
 (accepts decimal points [floating points] as well as integers);
@@ -1164,7 +1184,8 @@ first vector is used.
 simple PostScript commands. It is similar to EPS but more limited, meaning that
 while each pattern file is a true EPS file, most EPS files are not useful as pattern
 files because they contain restricted commands. Color and width of patterns are set
-by <B>fcolor</B> and <B>width</B> until overwritten in the pattern file.
+by <B>fcolor</B> (red, green, ..., none, R:G:B) and <B>width</B> until overwritten
+in the pattern file.
 Pattern may be scaled with the <b>scale</b> command. Several standard hatching
 patterns are provided in <tt>$GISBASE/etc/paint/patterns/</tt>.
 Demonstrative images can be found on the
@@ -1295,7 +1316,7 @@ EXAMPLE:
 
 Selects vector point data to be placed on the output map
 <PRE>
-USAGE:	<B>vpoints</B> vector
+USAGE:	<B>vpoints</B> vectormap
 	<B>type</B> point or/and centroid
 	<B>layer</B> # (layer number used with cats/where/sizecol options)
 	<B>cats</B> list of categories (e.g. 1,3,5-7)
@@ -1536,15 +1557,30 @@ Some, but not all of the non-interactive requests are available
 at this level.
 
 <H2>NOTES</H2> 
-
+<P>
 The user can specify negative values for position of EPS-files in ps.map
 to move them outside the current region (to position a barscale or other
 legend entries).
+</P>
+<P>
+For users wanting to use special characters (such as accented characters) it
+is important to note that <em>ps.map</em> uses <tt>ISO-8859-1</tt> encoding.
+This means that your instructions file will have to be encoded in this
+encoding. If you normally work in a different encoding environment (such as
+<tt>UTF-8</tt>), you have to transform your file to the <tt>ISO-8859-1</tt>
+encoding, for example by using <EM>iconv</EM>:
+</P>
+<DIV class="code"><PRE>
+iconv -f UTF-8 -t ISO_8859-1 utf_file > iso_file
+</PRE></DIV>
 
-<!-- <H2>SEE ALSO</H2> -->
+
+<H2>SEE ALSO</H2>
+<a href="v.label.html">v.label</a>
+
 
 <H2>AUTHOR</H2>
 
 Paul Carlson, USDA, SCS, NHQ-CGIS<BR>
-Modifications: Radim Blazek, Glynn Clements, Bob Covill
+Modifications: Radim Blazek, Glynn Clements, Bob Covill, Hamish Bowman
 <p><i>Last changed: $Date$</i>

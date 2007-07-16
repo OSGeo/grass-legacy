@@ -57,7 +57,8 @@ main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Line-of-sight raster analysis program.");
 
 	/* Define the different options */

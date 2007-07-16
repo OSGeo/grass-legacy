@@ -18,6 +18,7 @@
 #include <string.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 int 
 main (int argc, char *argv[])
@@ -40,6 +41,7 @@ main (int argc, char *argv[])
 
     /* Module options */
     module = G_define_module();
+    module->keywords = _("vector, export");
     module->description = "Convert to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);

@@ -28,7 +28,8 @@ main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = _("Convert GRASS ascii file or points file to binary vector.");
+	module->keywords = _("vector");
+    module->description = _("Convert GRASS ascii file or points file to binary vector.");
 
         /************************** Command Parser ************************************/
 	old = G_define_option();
@@ -49,7 +50,7 @@ main (int argc, char *argv[])
 	format_opt->multiple    =  NO;
 	format_opt->options     = "point,standard";
 	format_opt->answer      = "point";
-	format_opt->description = _("Output format");
+	format_opt->description = _("Input file format");
 
 	delim_opt = G_define_option();
 	delim_opt->key = "fs";

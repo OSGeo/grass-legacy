@@ -3,7 +3,7 @@ How to release GRASS binaries and source code
 $Date$
 
 Note: This text contains *some* rules only applicable to the
-      development coordinators (currently Markus Neteler, Radim Blazek).
+      development coordinators at ITC-irst (currently Markus Neteler).
 
 
 ###########################################
@@ -21,27 +21,30 @@ Contents
        find . -name '*.o' | xargs rm
        find . -name '*.bak' | xargs rm
        find . -name '.#*' | xargs rm
+       find . -name '*.orig' | xargs rm
+       find . -name '*.rej' | xargs rm
+
+   - Create release branch (only if not yet existing)
 
    - Update VERSION file to release version:
       vim include/VERSION
 
 #example:
 6
-0
-2RC1
+2
+0RC1
 2006
       rm -f include/VERSION~
 
    - submit include/VERSION to CVS
    - cvs up -dP
-   - Create release branch (only if not yet existing)
 
  o Create Changelog file
      CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
      echo $CVSBRANCH
      #version:
-     MAJOR=6
-     MINOR=1
+     MAJOR=`cat include/VERSION | head -1 | tail -1`
+     MINOR=`cat include/VERSION | head -2 | tail -1`
      RELEASE=`cat include/VERSION | head -3 | tail -1`
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
@@ -74,17 +77,18 @@ Contents
 
 #example
 6
-0
-2cvs
+2
+0cvs
 2006
+
 
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
    along with associated files:
-     scp grass-$VERSION.* AUTHORS ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
+     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
-      - main.inc
+      - rss.xml (for news section)
       - download/software.inc
       - grass$MAJOR$MINOR/main.inc
       - devel/grasshist.html
@@ -98,7 +102,7 @@ Contents
  o upload user HTML manual in case of *final release* from compiled English
    version at:
      cd dist.$ARCH/docs/html
-     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR$MINOR_user/
+     scp * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
 
 2. Tell others about it:
 
@@ -108,42 +112,52 @@ Contents
 
  * If official release:
    - publish related announcement press release at:
-
+   
    Our GRASS web site: /announces/
 
-   Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+   Our main mailing lists:
+                       http://grass.itc.it/mailman/listinfo/grass-announce
                          <grass-announce@grass.itc.it>
-                       http://grass.itc.it/mailman/listinfo/grass5
-                         <grass5@grass.itc.it>
-                       http://grass.itc.it/community/support.php#int_list
-                         <grasslist@baylor.edu>
+                       http://grass.itc.it/mailman/listinfo/grass-dev
+                         <grass-dev@grass.itc.it>
+                       http://grass.itc.it/mailman/listinfo/grassuser
+                         <grassuser@grass.itc.it>
+                       http://grass.itc.it/mailman/listinfo/wingrass
+                         <wingrass@grass.itc.it>
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
    Geowanking:         <geowanking@lists.burri.to>
+   OSGeo.org:          <announce@mail.osgeo.org> + <discuss@mail.osgeo.org>
+                       at https://mail.osgeo.org/servlets/ProjectMailingListList
+                       <news_item@osgeo.org>
+                       http://grass.osgeo.org (is fed through <grass-announce@grass.itc.it>)
 
-   http://groups.google.com/group/comp.infosystems.gis
+ Email:
+   http://www.gismonitor.com/news/submit_news.php (matteo@gismonitor.com)
+   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.gisdevelopment.net (news@gisdevelopment.net)
+   http://spatialnews.geocomm.com/submitnews.html (not free any more, convince editor@geocomm.com)
+   admin@cartographyonline.com
+   redazionenews@mondogis.net
+
+ Web:
    http://slashgeo.org/submit.pl
-   http://www.osgeo.org (discuss list + news_item@osgeo.org)
-   http://grass.osgeo.org (is fed through grass-announce@grass.itc.it)
-   http://spatialnews.geocomm.com/submitnews.html (not free any more)
-   http://freshmeat.net/projects/grass/?highlight=GRASS
+   http://freshmeat.net/projects/grass/?highlight=GRASS (update, MN)
    http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
-   http://programming.newsforge.com/submit.pl
-   http://osx.macnn.com/    (email to news tips)
-   http://www.gis-news.de/  (news@gismngt.de)
-   http://www.giscafe.com/  (link: submit material, needs registration)
-   http://www.freegis.org
+   http://osx.macnn.com/    (email to "contact" -> news tips)
+   http://www.giscafe.com/submit_material/submit_options.php#Press (MN)
+   http://www.freegis.org   (update, MN)
    http://www.directionsmag.com/pressreleases.php (News -> Post Press Release)
-   http://www.gismonitor.com/news/submit_news.php
-   http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
-   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type
+   http://news.eoportal.org/cgi-bin/eoportal_header.pl?dw=psr&site=software&words=type (MN)
+            -> Share your news with the EO community
    http://www.osdir.com/Downloads+index-req-viewsdownload-sid-206.phtml
    http://www.foss4g.org/FOSS4G/modules.php?name=Submit_News
    http://groups.google.com/group/Remote-Sensing-GIS-for-a-New-World
+   http://groups.google.com/group/comp.infosystems.gis
 
    ... anywhere else? Please add here.
 

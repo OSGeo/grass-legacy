@@ -29,7 +29,7 @@ proc GmLegend::create { tree parent } {
     variable optlist
     variable first
 	variable dup
-    global gmpath
+    
 
     set node "legend:$count"
 	set dup($count) 1
@@ -41,7 +41,9 @@ proc GmLegend::create { tree parent } {
 
     set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
     icon_configure $ico module d.legend
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -75,7 +77,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,flip) 0 
     set opt($count,1,mod) 1
     
-	set optlist { _check map color lines thin labelnum at use range \
+	set optlist { _check map opacity color lines thin labelnum at use range \
              nolbl noval skip smooth flip}
              
     foreach key $optlist {
@@ -117,7 +119,6 @@ proc GmLegend::select_map { id } {
 # legend options
 proc GmLegend::options { id frm } {
     variable opt
-    global gmpath
     global bgcolor
 
     # Panel heading
@@ -265,11 +266,6 @@ proc GmLegend::save { tree depth node } {
 # render and composite legend layer
 proc GmLegend::display { node mod } {
     global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
     variable optlist
     variable lfile 
     variable lfilemask
@@ -352,7 +348,9 @@ proc GmLegend::duplicate { tree parent node id } {
 		-height 1 -padx 0 -width 0]
 
     set ico [label $frm.ico -bd 1 -relief raised -text "Leg"]
-	icon_configure $ico module d.legend
+    icon_configure $ico module d.legend
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
     
     pack $check $ico -side left
 

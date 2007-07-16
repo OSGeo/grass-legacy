@@ -53,6 +53,12 @@ echo "UPDATE dourokukan SET testc=50 WHERE testc is NULL" | db.execute
 </pre></div>
 
 <P>
+<em>Delete selected rows from attribute table:</em><br>
+<div class="code"><pre>
+echo "DELETE FROM gsod_stationlist WHERE latitude < -91" | db.execute
+</pre></div>
+
+<P>
 <em>Add new column to attribute table:</em><br>
 <div class="code"><pre>
 echo "ALTER TABLE roads ADD COLUMN length double" | db.execute

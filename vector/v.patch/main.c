@@ -63,6 +63,7 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Creates a new binary vector map layer "
 			    "by combining other binary vector map layers.");
 

@@ -126,6 +126,7 @@ main (int argc, char *argv[])
     pre[1] ="b";
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = _("Select features from ainput by features from binput");
 
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);

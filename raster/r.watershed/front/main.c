@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 	_("Watershed basin analysis program.");
 	
 	opt1 = G_define_option() ; 

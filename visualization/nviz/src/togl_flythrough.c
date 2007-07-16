@@ -777,7 +777,7 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 	const char *buf_north_arrow, *arrow_x, *buf_label, *buf_legend;
 	const char *buf_fringe;
 	const char* buf_is_drawing = Tcl_GetVar(interp, "is_drawing", TCL_GLOBAL_ONLY);
-	
+	const char* EMPTYSTRING="";
 	if (buf_is_drawing && atoi(buf_is_drawing))
 		return (TCL_OK);
 
@@ -808,6 +808,22 @@ int Ndraw_all_together_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current inter
 	
 	GS_done_draw();
         GS_set_draw(GSD_BACK);
+
+        if ( buf_north_arrow == NULL ) {
+	 buf_north_arrow = EMPTYSTRING; 
+	}
+        if ( arrow_x == NULL ) {
+	 arrow_x = EMPTYSTRING; 
+	}
+        if ( buf_fringe == NULL ) {
+	 buf_fringe = EMPTYSTRING; 
+	}
+        if ( buf_label == NULL ) {
+	 buf_label = EMPTYSTRING; 
+	}
+        if ( buf_legend == NULL ) {
+	 buf_legend = EMPTYSTRING; 
+	}
         
         /* Draw decorations */
         

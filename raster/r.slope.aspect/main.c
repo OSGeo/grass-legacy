@@ -124,6 +124,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Generates raster map layers of slope, aspect, "
 		"curvatures and partial derivatives from a raster "

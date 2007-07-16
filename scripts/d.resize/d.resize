@@ -16,6 +16,7 @@
 
 #% Module
 #% description: Resizes active display monitor
+#% keywords: display, setup
 #% End
 #% option
 #% key: width
@@ -53,7 +54,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 # Check the current status of the monitor
 monitorcheck=`d.mon -p|sed s/'No monitor currently selected for output'//`
@@ -75,8 +77,10 @@ d.mon stop=$mon
 echo ""
 echo "Display set to $GIS_OPT_WIDTH x $GIS_OPT_HEIGHT"
 echo ""
-export GRASS_WIDTH=$GIS_OPT_WIDTH
-export GRASS_HEIGHT=$GIS_OPT_HEIGHT
+GRASS_WIDTH=$GIS_OPT_WIDTH
+export GRASS_WIDTH
+GRASS_HEIGHT=$GIS_OPT_HEIGHT
+export GRASS_HEIGHT
 d.mon start=$mon
 
 #redisplay map
