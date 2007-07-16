@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #generates HTML man pages docs/html/index.html
-# Markus Neteler, 2003, 2004, 2005, 2006
+# Markus Neteler, 2003, 2004, 2005, 2006, 2007
 
 #exclude following list of modules from help index:
 # escape it properly:
@@ -81,7 +81,7 @@ write_html_footer()
 # $2: help index url
 echo "<hr>" >> $1
 echo "<a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003-2006 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
+echo "&copy; 2003-2007 <a href=\"http://grass.itc.it\">GRASS Development Team</a>" >> $1
 echo "</body>" >> $1   
 echo "</html>" >> $1
 }
