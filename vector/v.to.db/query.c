@@ -22,7 +22,7 @@ query (struct Map_info *Map )
     Cats = Vect_new_cats_struct ();
 
     /* Cycle through all lines and make a list of categories of 'qfield' for each category given by 'field' */
-    G_message (_("Reading data trom the map ..."));
+    G_message (_("Reading data from the map..."));
     nlines = Vect_get_num_lines ( Map );
     for (line_num = 1 ; line_num <= nlines; line_num++) {
 	G_percent( line_num, nlines, 1 );
@@ -73,7 +73,7 @@ query (struct Map_info *Map )
     db_init_string (&value_string);
 
     if ( (Fi = Vect_get_field ( Map, options.qfield)) == NULL)
-	G_fatal_error(_("Database connection not defined for layer [%d]. Use v.db.connect first"), options.qfield);
+	G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first"), options.qfield);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -81,7 +81,7 @@ query (struct Map_info *Map )
 	G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     
     /* Query the database for each category */
-    G_message (_("Querying database ... "));
+    G_message (_("Querying database... "));
     for ( i = 0; i < vstat.rcat; i++ ) {
 	int  j, ctype, nrows, more;
         char buf[2000];
