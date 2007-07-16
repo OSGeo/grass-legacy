@@ -10,7 +10,8 @@ report (void)
 
     switch (options.option) {
         case O_CAT:
-    	    fprintf (stdout,"cat\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
 	        fprintf (stdout, "%d\n", Values[i].cat);
             break;	
@@ -23,7 +24,8 @@ report (void)
 		}
 		fprintf (stdout,"total count: %d\n", sum);
             } else { 
-		fprintf (stdout,"cat|count\n");
+		if (G_verbose() > G_verbose_min())
+		    fprintf (stdout,"cat|count\n");
 		for ( i = 0; i < vstat.rcat; i++ )
 		    fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].count1);
 	    }
@@ -37,20 +39,23 @@ report (void)
 		}
 		fprintf (stdout,"total area: %.15g\n", sum);
             } else { 
-		fprintf (stdout,"cat|area\n");
+		if (G_verbose() > G_verbose_min())
+		    fprintf (stdout, "cat|area\n");
 		for ( i = 0; i < vstat.rcat; i++ )
 		    fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	
             }
             break;
 
         case O_COMPACT:
-	    fprintf (stdout,"cat|compact\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|compact\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
 		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
 	    break;
 
         case O_PERIMETER:
-	    fprintf (stdout,"cat|perimeter\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|perimeter\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
 		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
 	    break;
@@ -63,13 +68,15 @@ report (void)
 		}
 		fprintf (stdout,"total length: %.15g\n", sum);
             } else { 
-		fprintf (stdout,"cat|length\n");
+		if (G_verbose() > G_verbose_min())
+		    fprintf (stdout,"cat|length\n");
 		for ( i = 0; i < vstat.rcat; i++ )
 		    fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);	        
 	    }
 	    break;
         case O_SLOPE:
-	    fprintf (stdout,"cat|slope\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|slope\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
 		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
 
@@ -79,7 +86,8 @@ report (void)
         case O_COOR:
         case O_START:
         case O_END:
-    	    fprintf (stdout,"cat|x|y|z\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|x|y|z\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].count1 == 1 )
 	            fprintf (stdout, "%d|%.15g|%.15g|%.15g\n", Values[i].cat, Values[i].d1, Values[i].d2, Values[i].d3);
@@ -87,7 +95,8 @@ report (void)
             break;
 
         case O_SIDES:
-    	    fprintf (stdout,"cat|left|right\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|left|right\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].count1 == 1 ) {
 		    if ( Values[i].i1 >= 0 )
@@ -119,7 +128,8 @@ report (void)
             break;
 
         case O_QUERY:
-    	    fprintf (stdout,"cat|query\n");
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|query\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].null ) {
 	            fprintf (stdout, "%d|-\n", Values[i].cat);
@@ -146,14 +156,14 @@ report (void)
 int 
 print_stat (void)
 {
-    G_message (_("[%d] categories read from map"), vstat.rcat);        
-    G_message (_("[%d] records selected from table"), vstat.select);        
-    G_message (_("[%d] categories read from map exist in selection from table"), vstat.exist);
-    G_message (_("[%d] categories read from map don't exist in selection from table"), vstat.notexist);    
-    G_message (_("[%d] records updated/inserted"), vstat.update);    
-    G_message (_("[%d] update/insert errors"), vstat.error);
+    G_message (_("%d categories read from map"), vstat.rcat);        
+    G_message (_("%d records selected from table"), vstat.select);        
+    G_message (_("%d categories read from map exist in selection from table"), vstat.exist);
+    G_message (_("%d categories read from map don't exist in selection from table"), vstat.notexist);    
+    G_message (_("%d records updated/inserted"), vstat.update);    
+    G_message (_("%d update/insert errors"), vstat.error);
     if ( vstat.dupl > 0 )
-	G_message (_("[%d] categories with more points (coordinates not loaded)"), vstat.dupl);        
+	G_message (_("%d categories with more points (coordinates not loaded)"), vstat.dupl);        
 
     return 0;
 }    

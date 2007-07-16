@@ -32,9 +32,9 @@ main (int argc, char *argv[])
     module->keywords = _("vector, database, attribute table");
     module->label    = _("Populate database values from vector features.");
     module->description = _("Load values from vector to database. For "
-	"uploaded/printed category values '-1' is used for 'no category' "
-	"and 'null'/'-' if category cannot be found or multiple categories "
-	"were found.");
+			    "uploaded/printed category values '-1' is used for 'no category' "
+			    "and 'null'/'-' if category cannot be found or multiple categories "
+			    "were found.");
 
     parse_command_line (argc, argv);
 
@@ -48,7 +48,7 @@ main (int argc, char *argv[])
     Fi = Vect_get_field ( &Map, options.field);
 
     if ( !options.print && Fi == NULL ) {
-         G_fatal_error(_("Database connection not defined for layer <%d>. Use v.db.connect first."), options.field);
+         G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first"), options.field);
     }
 
     /* allocate array for values */
