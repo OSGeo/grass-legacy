@@ -98,7 +98,7 @@ main (int argc, char *argv[])
     }
 
     if ( err_opt->answer ) {
-	int    nlines, line, type, area, left, right, err;
+	int    nlines, line, type, area, left, right, err, narea;
         struct Map_info  Err;
 	struct line_pnts *Points;
 	struct line_cats *Cats;
@@ -112,9 +112,12 @@ main (int argc, char *argv[])
 
 	for ( line = 1; line <= nlines; line++ ){
 	    err = 0;
+
+	    if (!Vect_line_alive (&Map, line))
+		continue;
+
 	    type = Vect_read_line (&Map, Points, Cats, line);
 
-	    
 	    if ( type == GV_BOUNDARY ) {
 		Vect_get_line_areas ( &Map, line, &left, &right );
 		if ( left == 0 || right == 0 )
@@ -127,8 +130,24 @@ main (int argc, char *argv[])
 	    
 	    if (err)
 		Vect_write_line ( &Err, type, Points, Cats );
+
 	}
 
+	narea = Vect_get_num_areas (&Map);
+
+	for (area = 1; area <= narea; area++) {
+	    if (!Vect_area_alive (&Map, area))
+		continue;
+
+	    if (Vect_get_area_centroid(&Map, area) == 0) {
+		Vect_get_area_points (&Map, area, Points);
+		Vect_reset_cats (Cats);
+		Vect_write_line (&Err, GV_BOUNDARY, Points, Cats);
+	    }
+	}
+
+	G_message (NULL);
+	G_important_message (_("Building topology for error vector map..."));
 	Vect_build ( &Err, stdout );
         Vect_close ( &Err );
     }
