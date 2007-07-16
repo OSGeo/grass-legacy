@@ -129,14 +129,11 @@ int main (int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
+	module->keywords = _("raster, projection");
 	module->description =
 		_("Re-projects a raster map from one location to the current location.");
 
-	inmap = G_define_option();
-	inmap->key = "input";
-	inmap->type = TYPE_STRING;
-	inmap->required = YES;
+	inmap = G_define_standard_option(G_OPT_R_INPUT);
 	inmap->description = _("Name of input raster map to re-project");
 
 	inlocation = G_define_option();
@@ -349,7 +346,7 @@ int main (int argc, char **argv)
 	G_message(_("East: %f (%f)"), incellhd.east, ieast);
 	G_message(_("EW-res: %f"), incellhd.ew_res);
 	G_message(_("NS-res: %f"), incellhd.ns_res);
-	G_message("");
+	G_message(NULL);
 
 	G_message(_("Output:"));
 	G_message(_("Cols: %d (%d)"), outcellhd.cols, ocols);
@@ -359,8 +356,7 @@ int main (int argc, char **argv)
 	G_message(_("West:  %f (%f)"), outcellhd.west, owest);
 	G_message(_("East:  %f (%f)"), outcellhd.east, oeast);
 	G_message(_("EW-res: %f"), outcellhd.ew_res);
-	G_message(_("NS-res: 
-%f"), outcellhd.ns_res);
+	G_message(_("NS-res: %f"), outcellhd.ns_res);
 
 	/* open and read the relevant parts of the input map and close it */
 	G__switch_env();
@@ -441,7 +437,7 @@ int main (int argc, char **argv)
 	G_command_history(&history);
 	G_write_history(mapname, &history);
 
-	G_done_msg("");
+	G_done_msg(NULL);
 	exit(EXIT_SUCCESS);
 }
 

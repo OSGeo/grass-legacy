@@ -63,13 +63,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 		}
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Top:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n", ymax);
-#endif
+	G_debug(3, "Top: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 
 	/* Right */
 	for (idx=from_hd->north-from_hd->ns_res/2; idx>from_hd->south; idx-=from_hd->ns_res) {
@@ -85,13 +79,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 		}
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Right:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n", ymax);
-#endif
+	G_debug(3, "Right: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 
 	/* Bottom */
 	for (idx=from_hd->east-from_hd->ew_res/2; idx>from_hd->west; idx-=from_hd->ew_res) {
@@ -107,13 +95,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 		}
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Bottom:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n", ymax);
-#endif
+	G_debug(3, "Bottom: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 
 	/* Left */
 	for (idx=from_hd->south+from_hd->ns_res/2; idx<from_hd->north; idx+=from_hd->ns_res) {
@@ -129,13 +111,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 		}
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Left:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n\n", ymax);
-#endif
+	G_debug(3, "Left: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 
 	/* check some special cases by reversing the projection */
 
@@ -175,13 +151,7 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 			ymax = to_hd->north - to_hd->ns_res/2;
 	}
 
-#ifdef DEBUG
-	fprintf(stderr, "Extra check:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n\n", ymax);
-#endif
+	G_debug(3, "Extra check: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 
 	/* if we still have some unresonable default minmax left, then abort */	
 
@@ -210,12 +180,6 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 	to_hd->south = (ymin < to_hd->south) ? to_hd->south : ymin;
 	to_hd->north = (ymax > to_hd->north) ? to_hd->north : ymax;
 
-#ifdef DEBUG
-	fprintf(stderr, "Final check:\n");
-	fprintf(stderr, "xmin: %f ", xmin);
-	fprintf(stderr, "xmax: %f ", xmax);
-	fprintf(stderr, "ymin: %f ", ymin);
-	fprintf(stderr, "ymax: %f\n\n", ymax);
-#endif
+	G_debug(3, "Final check: xmin: %f; xmax: %f; ymin: %f; ymax: %f", xmin, xmax, ymin, ymax);
 }
 

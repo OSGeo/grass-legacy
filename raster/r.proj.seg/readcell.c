@@ -54,13 +54,13 @@ struct cache *readcell(int fdi, const char *size)
 		G__switch_env();
 		c->fd = open(filename, O_RDWR|O_CREAT|O_EXCL, 0600);
 		if (c->fd < 0)
-			G_fatal_error("Unable to open temporary file");
+			G_fatal_error(_("Unable to open temporary file"));
 		remove(filename);
 	}
 	else
 		c->fd = -1;
 
-	G_message(_("Allocating memory and reading input map... "));
+	G_important_message(_("Allocating memory and reading input map..."));
 	G_percent(0, nrows, 5);
 
 	for (i = 0; i < c->nblocks; i++)
@@ -80,7 +80,7 @@ struct cache *readcell(int fdi, const char *size)
 				break;
 
 			if (G_get_f_raster_row(fdi, &tmpbuf[y * nx * BDIM], row + y) < 0)
-				G_fatal_error("Error reading input");
+				G_fatal_error(_("Error reading input"));
 		}
 
 		for (x = 0; x < nx; x++)
@@ -88,7 +88,7 @@ struct cache *readcell(int fdi, const char *size)
 				if (c->fd >= 0)
 				{
 					if (write(c->fd, &tmpbuf[(y * nx + x) * BDIM], BDIM * sizeof(FCELL)) < 0)
-						G_fatal_error("Error writing segment file");
+						G_fatal_error(_("Error writing segment file"));
 				}
 				else
 					memcpy(	&c->blocks[BKIDX(c, HI(row), x)][LO(y)][0],
@@ -116,7 +116,7 @@ block *get_block(struct cache *c, int idx)
 	off_t offset = (off_t) idx * sizeof(FCELL) << L2BSIZE;
 
 	if (c->fd < 0)
-		G_fatal_error("Internal error: cache miss on fully-cached map");
+		G_fatal_error(_("Internal error: cache miss on fully-cached map"));
 
 	if (ref >= 0)
 		c->grid[ref] = NULL;
@@ -125,10 +125,10 @@ block *get_block(struct cache *c, int idx)
 	c->refs[replace] = idx;
 
 	if (lseek(c->fd, offset, SEEK_SET) < 0)
-		G_fatal_error("Error seeking on segment file");
+		G_fatal_error(_("Error seeking on segment file"));
 
 	if (read(c->fd, p, sizeof(block)) < 0)
-		G_fatal_error("Error writing segment file");
+		G_fatal_error(_("Error writing segment file"));
 
 	return p;
 }
