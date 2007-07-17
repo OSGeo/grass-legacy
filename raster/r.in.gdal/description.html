@@ -725,6 +725,27 @@ line has to be added to each .hdr file:
 PIXELTYPE SIGNEDINT
 </pre></div>
 
+<h3>HDF</h3>
+
+The import of HDF bands requires the specification of the individual bands
+as seen by GDAL:
+<div class="code"><pre>
+# Example MODIS FPAR
+gdalinfo MOD15A2.A2003153.h18v04.004.2003171141042.hdf
+...
+Subdatasets:
+  SUBDATASET_1_NAME=HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Fpar_1km
+  SUBDATASET_1_DESC=[1200x1200] Fpar_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+  SUBDATASET_2_NAME=HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Lai_1km
+  SUBDATASET_2_DESC=[1200x1200] Lai_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+...
+
+# import of first band, here FPAR 1km:
+r.in.gdal HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Fpar_1km \
+          out=fpar_1km_2003_06_02
+# ... likewise for other HDF bands in the file.
+</pre></div>
+
 
 <H2>NOTES</H2>
 
