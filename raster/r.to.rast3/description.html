@@ -21,16 +21,21 @@ are counted from bottom to the top, so the bottom slice has to be number 1.
 If fewer 2D raster maps are provided than depths, the last give 2D map is
 used to fill up the  G3D slices to the top.
 
-<h2>Example 1</h2>
-This example shows how to convert 6 maps into one 3d map with 6 layers.<br><br>
+<h2>EXAMPLES</h2>
+
+<h3>EXAMPLE 1</h3>
+
+This example shows how to convert 6 maps into one 3d map with 6 layers.
+<br>
 
 <div class="code"><pre>
 # Mapset data in Location slovakia3d
 r.to.rast3 input=prec_1,prec_2,prec_3,prec_4,prec_5,prec_6 output=new_3dmap
 </pre></div>
 
-<b>Example 2</b>
+<h3>EXAMPLE 2</h3>
 This example shows how to convert 3 maps into one 3d map with 6 layers.
+<br>
 
 <div class="code"><pre>
 # Mapset data in Location slovakia3d
@@ -39,8 +44,11 @@ r.to.rast3 input=prec_1,prec_2,prec_3 output=new_3dmap
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="r3.to.rast.html">r3.to.rast</A></EM><br>
-<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM>
+<A HREF="g.region.html">g.region</A>,
+<A HREF="r3.to.rast.html">r3.to.rast</A>,
+<A HREF="r.to.rast3elev.html">r.to.rast3elev</A>
+</EM>
 
 <H2>AUTHOR</H2>
 Soeren Gebbert
