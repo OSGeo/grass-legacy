@@ -242,7 +242,10 @@ int main( int argc, char *argv[])
 */
     fclose(fp);
 
-    G_done_msg(NULL);
+    if (do_stdout)
+	G_done_msg(NULL);
+    else
+	G_done_msg(_("File <%s> created"), ofile);
 
     return(EXIT_SUCCESS);
 }
