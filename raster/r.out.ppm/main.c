@@ -30,11 +30,11 @@ typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule      *module;
     struct Option 	*rast, *ppm_file;
     /* please, remove before GRASS 7 released */
     struct Flag 	*bequiet, *gscale;
-    char 		*cellmap, *map, *p, errbuf[100], ofile[1000];
+    char 		*cellmap, *map, *p, ofile[1000];
     unsigned char 	*set, *ored, *ogrn, *oblu;
     CELL		*cell_buf;
     FCELL		*fcell_buf;
@@ -48,28 +48,19 @@ int main( int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->keywords = _("raster");
+    module = G_define_module();
+    module->keywords = _("raster, export");
     module->description =
-		_("Converts a GRASS raster map to a PPM image file "
-		"at the pixel resolution of the CURRENTLY DEFINED REGION.");
+	_("Converts a GRASS raster map to a PPM image file "
+	  "at the pixel resolution of the currently defined region.");
 
-    rast = G_define_option();
-    rast->key                    = "input";
-    rast->type                   = TYPE_STRING;
-    rast->required               = YES;
-    rast->multiple               = NO;
-    rast->gisprompt              = "old,cell,Raster";
-    rast->description            = _("Raster input map");
+    rast = G_define_standard_option(G_OPT_R_INPUT);
 
-    ppm_file = G_define_option();
-    ppm_file->key                    = "output";
-    ppm_file->type                   = TYPE_STRING;
+    ppm_file = G_define_standard_option(G_OPT_F_OUTPUT);
     ppm_file->required               = NO;
-    ppm_file->multiple               = NO;
     ppm_file->answer	       	     = "<rasterfilename>.ppm";
     ppm_file->description            
-		    = _("Name for new PPM file. (use out=- for stdout)");
+	= _("Name for new PPM file (use '-' for stdout)");
 
     /* please, remove before GRASS 7 released */
     bequiet = G_define_flag ();
@@ -81,13 +72,13 @@ int main( int argc, char *argv[])
     gscale->description = _("Output greyscale instead of color");
 
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (EXIT_FAILURE);
 
     /* please, remove before GRASS 7 released */
     if(bequiet->answer) {
         putenv("GRASS_VERBOSE=0");
         G_warning(_("The '-q' flag is superseded and will be removed "
-            "in future. Please use '--quiet' instead."));
+            "in future. Please use '--quiet' instead"));
     }
 
 
@@ -121,14 +112,12 @@ int main( int argc, char *argv[])
     {  
 	cellmap = G_find_file2 ("cell", rast->answer, "");
 	if(!cellmap){
-	    sprintf(errbuf,_("Raster map <%s> not found"), rast->answer);
-	    G_fatal_error(errbuf);
+	    G_fatal_error(_("Raster map <%s> not found"), rast->answer);
 	}
 
 	if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1) 
 	{
-	    sprintf(errbuf,_("Unable to open raster map <%s>"), rast->answer);
-	    G_fatal_error(errbuf);
+	    G_fatal_error(_("Unable to open raster map <%s>"), rast->answer);
 	}
     }
 
@@ -145,8 +134,7 @@ int main( int argc, char *argv[])
     {
 	if(do_stdout) fp = stdout;
 	else if(NULL == (fp = fopen(ofile, "w"))) {
-	    sprintf(errbuf,_("Unable to open file for [%s]"), ofile);
-	    G_fatal_error(errbuf);
+	    G_fatal_error(_("Unable to open file <%s> for write"), ofile);
 	}
     }
     /* write header info */
@@ -160,7 +148,7 @@ int main( int argc, char *argv[])
 
     if(!do_stdout){
 	fprintf(fp,"# CREATOR: %s from GRASS raster map \"%s\"\n", 
-		argv[0], rast->answer);
+		G_program_name(), rast->answer);
 	fprintf(fp,"# east-west resolution: %f\n", w.ew_res);
 	fprintf(fp,"# north-south resolution: %f\n", w.ns_res);
 	fprintf(fp,"# South edge: %f\n", w.south);
@@ -175,7 +163,7 @@ int main( int argc, char *argv[])
     /* max intensity val */
 
 
-    G_message(_("Converting %s..."),rast->answer);
+    G_important_message(_("Converting..."));
 
     {	
     struct Colors colors;
@@ -196,7 +184,7 @@ int main( int argc, char *argv[])
 	for (row = 0; row < w.rows; row++) {
             G_percent (row, w.rows, 5);
 	    if (G_get_raster_row (cellfile, (void *)voidc, row, rtype) < 0)
-		exit(1);
+		G_fatal_error (_("Unable to read raster map <%s> row %d"), rast->answer, row);
 	    G_lookup_raster_colors((void *)voidc, ored, ogrn, oblu, set, 
 				    w.cols, &colors, rtype);
 
@@ -252,7 +240,9 @@ int main( int argc, char *argv[])
 /*
     if(!do_stdout)
 */
-	fclose(fp);
+    fclose(fp);
+
+    G_done_msg(NULL);
 
     return(EXIT_SUCCESS);
 }
