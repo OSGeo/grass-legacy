@@ -72,13 +72,8 @@ void fatal_error(void *map, int *fd, int depths, char *errorMsg)
 /* ************************************************************************* */
 void set_params()
 {
-    param.input = G_define_option();
-    param.input->key = "input";
-    param.input->type = TYPE_STRING;
-    param.input->required = YES;
+    param.input = G_define_standard_option(G_OPT_R_INPUTS);
     param.input->description = _("2d raster maps which represent the slices");
-    param.input->gisprompt = "old,cell,raster";
-    param.input->multiple = YES;
 
     param.output = G_define_standard_option(G_OPT_R3_OUTPUT);
 
