@@ -24,19 +24,12 @@
 /* ************************************************************************* */
 void set_params()
 {
-    param.input = G_define_option();
-    param.input->key = "input";
-    param.input->type = TYPE_STRING;
+    param.input = G_define_standard_option(G_OPT_R3_INPUTS);
     param.input->required = NO;
-    param.input->gisprompt = "old,grid3,3d-raster";
-    param.input->multiple = YES;
     param.input->description =
 	_("G3D map(s) to be converted to VTK-ASCII data format");
 
-    param.output = G_define_option();
-    param.output->key = "output";
-    param.output->type = TYPE_STRING;
-    param.output->gisprompt = "new_file,file,output";
+    param.output = G_define_standard_option(G_OPT_F_OUTPUT);
     param.output->required = NO;
     param.output->description = _("Name for VTK-ASCII output file");
 
