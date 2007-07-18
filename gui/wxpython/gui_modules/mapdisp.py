@@ -512,8 +512,8 @@ class BufferedWindow(wx.Window):
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
 
-        digitActive = self.parent.digittoolbar
-        if digitActive and self.parent.digit.driver:
+        digitToolbar = self.parent.digittoolbar
+        if digitToolbar and self.parent.digit.driver:
             self.pen = wx.Pen(colour='red', width=2, style=wx.SOLID)
             self.parent.digit.driver.DrawMap()
         
@@ -726,12 +726,12 @@ class BufferedWindow(wx.Window):
 
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
-            digit = self.parent.digittoolbar
+            digitToolbar = self.parent.digittoolbar
             east, north = self.Pixel2Cell(self.mouse['begin'][0],
                                           self.mouse['begin'][1])
             
             try:
-                map = digit.layers[digit.layerSelectedID].name
+                map = digitToolbar.layers[digitToolbar.layerSelectedID].name
             except:
                 map = None
                 dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
@@ -750,20 +750,20 @@ class BufferedWindow(wx.Window):
             self.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
             self.polypen = wx.Pen(colour='dark green', width=2, style=wx.SOLID)
 
-            if digit.action == "addLine":
-                if digit.type in ["point", "centroid"]:
+            if digitToolbar.action == "addLine":
+                if digitToolbar.type in ["point", "centroid"]:
                     # add new point
                     #self.DrawCross(self.mouse['begin'], 5)
-                    Digit.AddPoint(map=map,
-                                   type=digit.type,
-                                   x=east, y=north)
+                    self.parent.digit.AddPoint(map=map,
+                                               type=digitToolbar.type,
+                                               x=east, y=north)
                         
                     # add new record into atribute table
-                    if Digit.settings["addRecord"]:
+                    if self.parent.digit.settings["addRecord"]:
                         # select attributes based on layer and category
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                   layer=Digit.settings["layer"],
-                                                                   cat=Digit.settings["category"],
+                                                                   layer=self.parent.digit.settings["layer"],
+                                                                   cat=self.parent.digit.settings["category"],
                                                                    pos=posWindow,
                                                                    action="add")
                         if addRecordDlg.mapInfo and \
@@ -776,20 +776,20 @@ class BufferedWindow(wx.Window):
                                                               "input=%s" % sqlfile.name])
                     self.UpdateMap() # redraw map
 
-                elif digit.type in ["line", "boundary"]:
+                elif digitToolbar.type in ["line", "boundary"]:
                     # add new point to the line
                     self.polycoords.append(event.GetPositionTuple()[:])
                     self.mouse['begin'] = self.polycoords[-1]
                     self.DrawLines()
-            elif digit.action == "deleteLine":
+            elif digitToolbar.action == "deleteLine":
                 pass
-            elif digit.action in ["moveLine", "moveVertex"]:
+            elif digitToolbar.action in ["moveLine", "moveVertex"]:
                 self.moveBegin = [0, 0]
                 self.moveCoords = self.mouse['begin']
                 self.moveIds   = []
-            elif digit.action == "splitLine":
+            elif digitToolbar.action == "splitLine":
                 pass
-            elif digit.action == "displayAttributes":
+            elif digitToolbar.action == "displayAttributes":
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
                 # select attributes based on coordinates (all layers)
                 updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
@@ -798,7 +798,7 @@ class BufferedWindow(wx.Window):
                                                               pos=posWindow,
                                                               action="update")
                 if not updateRecordDlg.mapInfo and \
-                       Digit.settings["addRecord"]:
+                       self.parent.digit.settings["addRecord"]:
                     updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                   layer=-1,
                                                                   queryCoords=(east, north),
@@ -807,7 +807,7 @@ class BufferedWindow(wx.Window):
                                                                   action="add")
                 if updateRecordDlg.mapInfo:
                     # highlight feature & re-draw map
-                    Digit.driver.SetSelected(updateRecordDlg.selectedLines)
+                    self.parent.digit.driver.SetSelected(updateRecordDlg.selectedLines)
                     self.UpdateMap()
                     
                     if updateRecordDlg.ShowModal() == wx.ID_OK:
@@ -865,31 +865,31 @@ class BufferedWindow(wx.Window):
 
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
-            digit = self.parent.digittoolbar
+            digitToolbar = self.parent.digittoolbar
             self.mouse['end'] = event.GetPositionTuple()[:]
-            if digit.action in ["deleteLine", "moveLine", "moveVertex"]:
-                if digit.action == "moveVertex":
-                    self.moveIds = Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
+            if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"]:
+                if digitToolbar.action == "moveVertex":
+                    self.moveIds = self.parent.digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
                                                                     self.mouse['begin'][1]),
                                                     onlyType="line")
 
                 else: # moveLine | deleteLine
-                    self.moveIds = Digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
+                    self.moveIds = self.parent.digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
                                                                                   self.mouse['begin'][1]),
                                                                   self.Pixel2Cell(self.mouse['end'][0],
                                                                                   self.mouse['end'][1])))
                 if len(self.moveIds) > 0:
                     self.UpdateMap(render=False)
-                    if digit.action in ["moveLine", "moveVertex"]:
+                    if digitToolbar.action in ["moveLine", "moveVertex"]:
                         self.UpdateMap(render=False, redrawAll=False, removeId=self.moveIds)
                         # get pseudoDC id of objects which should be redrawn
-                        if digit.action == "moveLine":
-                            self.moveIds = Digit.driver.GetSelected(grassId=False)
+                        if digitToolbar.action == "moveLine":
+                            self.moveIds = self.parent.digit.driver.GetSelected(grassId=False)
                         else:
-                            self.moveIds = Digit.driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
+                            self.moveIds = self.parent.digit.driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
                                                                                           self.mouse['begin'][1]))
-            elif digit.action in ["splitLine", "addVertex", "removeVertex"]:
-                Digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
+            elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
+                self.parent.digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
                 self.UpdateMap(render=False)
         elif self.dragid != None:
             # end drag of overlay decoration
@@ -1001,20 +1001,20 @@ class BufferedWindow(wx.Window):
                     for coord in self.polycoords:
                         mapcoords.append(self.Pixel2Cell (coord[0], coord[1]))
                         
-                    Digit.AddLine(map=map,
+                    self.parent.digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
                                   coords=mapcoords)
 
                     # add new record into atribute table
-                    if Digit.settings["addRecord"]:
+                    if self.parent.digit.settings["addRecord"]:
                         offset = 5
                         posWindow = self.ClientToScreen((self.polycoords[-1][0] + offset,
                                                          self.polycoords[-1][1] + offset))
                             
                         # select attributes based on layer and category
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                   layer=Digit.settings["layer"],
-                                                                   cat=Digit.settings["category"],
+                                                                   layer=self.parent.digit.settings["layer"],
+                                                                   cat=self.parent.digit.settings["category"],
                                                                    pos=posWindow,
                                                                    action="addLine")
                         if addRecordDlg.mapInfo and \
@@ -1029,7 +1029,7 @@ class BufferedWindow(wx.Window):
                     # clean up saved positions
                     self.polycoords = []
             elif digit.action == "deleteLine":
-                Digit.DeleteSelectedLines()
+                self.parent.digit.DeleteSelectedLines()
             elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                 # pixel -> cell
                 move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
@@ -1041,21 +1041,21 @@ class BufferedWindow(wx.Window):
                     move[1] *= -1.0
 
                 if digit.action == "moveLine":
-                    Digit.MoveSelectedLines(move)
+                    self.parent.digit.MoveSelectedLines(move)
                 else: # moveVertex
-                    Digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0], self.moveCoords[1]),move)
+                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0], self.moveCoords[1]),move)
                 
                 del self.moveBegin
                 del self.moveCoords
                 del self.moveIds
             elif digit.action == "splitLine":
-                Digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                self.parent.digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
             elif digit.action == "addVertex":
-                Digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
             elif digit.action == "removeVertex":
-                Digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
                 
-            Digit.driver.SetSelected([])
+            self.parent.digit.driver.SetSelected([])
             self.UpdateMap(render=False)
                 
         event.Skip()
@@ -1073,7 +1073,7 @@ class BufferedWindow(wx.Window):
                 self.DrawLines()
             elif digit.action in ["deleteLine", "moveLine", "splitLine", "addVertex", "removeVertex", "moveVertex"]:
                 # unselected selected features
-                Digit.driver.SetSelected([])
+                self.parent.digit.driver.SetSelected([])
                 if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                     del self.moveBegin
                     del self.moveCoords
