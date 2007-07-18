@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
     z_flg = G_define_flag();
     z_flg->key = 'z';
     z_flg->description = _("Write raster values as z coordinate. Table is not created. "
-	                   "Currently supported only for points");
+	                   "Currently supported only for points.");
 
     no_topol = G_define_flag();
     no_topol->key = 'b';
@@ -108,7 +108,7 @@ int main (int argc, char *argv[])
 	G_fatal_error (_("Raster map <%s> not found"), in_opt->answer);
 
     if ( (input_fd = G_open_cell_old(in_opt->answer,mapset)) < 0 )
-	G_fatal_error (_("Cannot open raster map <%s>"), in_opt->answer);
+	G_fatal_error (_("Unable to open raster map <%s>"), in_opt->answer);
 
     data_type = G_get_raster_map_type(input_fd);
     data_size = G_raster_size(data_type);
@@ -150,7 +150,7 @@ int main (int argc, char *argv[])
 
         driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL ) 
-	    G_fatal_error (_("Cannot open database <%s> by driver <%s>"),
+	    G_fatal_error (_("Unable to open database <%s> by driver <%s>"),
 			   Fi->database, Fi->driver );
 	    
 	/* Create new table */
@@ -185,13 +185,13 @@ int main (int argc, char *argv[])
 	G_debug ( 3, db_get_string ( &sql ) );
 
 	if (db_execute_immediate (driver, &sql) != DB_OK )
-	    G_fatal_error (_("Cannot create table: %s"), db_get_string (&sql)  );
+	    G_fatal_error (_("Unable to create table: %s"), db_get_string (&sql)  );
 
 	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	    G_warning (_("Cannot create index"));
+	    G_warning (_("Unable to create index"));
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error (_("Cannot grant privileges on table <%s>"), Fi->table );
+	    G_fatal_error (_("Unable to grant privileges on table <%s>"), Fi->table );
 
 	db_begin_transaction ( driver );
 
@@ -254,7 +254,7 @@ int main (int argc, char *argv[])
 		G_debug ( 3, db_get_string ( &sql ) );
 
 		if (db_execute_immediate (driver, &sql) != DB_OK ) 
-		    G_fatal_error (_("Cannot insert into table: %s"), db_get_string (&sql));
+		    G_fatal_error (_("Unable to insert into table: %s"), db_get_string (&sql));
 
 		lastcat = cat;
 	    }
