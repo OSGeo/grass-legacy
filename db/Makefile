@@ -8,7 +8,9 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs htmldir
+default: htmldir
+
+htmldir: subdirs
 
 clean: cleansubdirs
 
