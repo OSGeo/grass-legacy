@@ -2,9 +2,12 @@
 MODULE: digit
 
 CLASSES:
+ * AbstractDigit 
  * VEdit
  * VDigit
- * DisplayDriver
+ * AbstractDisplayDriver
+ * PyDisplayDriver
+ * CDisplayDriver
  * SettingsDialog
  
 PURPOSE: Digitization tool wxPython GUI prototype
@@ -15,6 +18,9 @@ PURPOSE: Digitization tool wxPython GUI prototype
           (1) v.edit called on the background (class VEdit)
           (2) Reimplentation of v.digit (VDigit)
 
+         Import:
+          from digit import Digit as Digit
+          
 AUTHORS: The GRASS Development Team
          Martin Landa <landa.martin gmail.com>
 
@@ -49,11 +55,19 @@ class AbstractDigit:
     """
     Abstract digitization class
     """
-    def __init__(self, settings=None):
-        self.map    = None
-        self.driver = None
-        self.threshold = 0 # set by driver constructor
+    def __init__(self, mapwindow, settings=None):
+        self.map       = None
+
+        Debug.msg (3, "AbstractDigit.__init__(): map=%s" % \
+                   self.map)
+
+        #self.SetCategory()
         
+        self.driver = PyDisplayDriver(self, mapwindow)
+
+        #self.threshold = self.driver.GetThreshold()
+
+        # is unique for map window instance
         if not settings:
             self.settings = {}
             # symbology
@@ -77,6 +91,7 @@ class AbstractDigit:
             # snapping
             self.settings["snapping"] = (10, "screen pixels") # value, unit
             self.settings["snapToVertex"] = False
+
             # digitize new record
             self.settings["addRecord"] = True
             self.settings["layer"] = 1
@@ -91,7 +106,6 @@ class AbstractDigit:
 
         Returns 'True' on success, 'False' on failure
         """
-
         if self.map:
             categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
                                            "input=%s" % self.map, 
@@ -99,7 +113,7 @@ class AbstractDigit:
                                            "layer=%d" % self.settings["layer"]])
 
             if categoryCmd.returncode != 0:
-                return
+                return False
         
             for line in categoryCmd.ReadStdOutput():
                 if "all" in line:
@@ -124,28 +138,21 @@ class AbstractDigit:
 
         return self.settings["category"]
 
-    def ReInitialize(self, map=None, mapwindow=None):
-        """Re-initialize settings according selected map layer"""
+    def SetMapName(self, map):
+        """Set map name"""
+        Debug.msg (3, "AbstractDigit.SetMapName map=%s" % map)
         self.map = map
+
+        self.driver.Reset(self.map)
         
-        if self.map:
-            Debug.msg (3, "AbstractDigit.ReInitialize(): map=%s" % \
-                       map)
-
-            self.SetCategory()
-            self.driver = DisplayDriver(map, mapwindow)
-        else:
-            del self.driver
-            self.driver = None
-
 class VEdit(AbstractDigit):
     """
     Prototype of digitization class based on v.edit command
 
     Note: This should be replaced by VDigit class.
     """
-    def __init__(self, settings=None):
-        AbstractDigit.__init__(self, settings)
+    def __init__(self, mapwindow, settings=None):
+        AbstractDigit.__init__(self, mapwindow, settings)
 
     def AddPoint (self, map, type, x, y, z=None):
         """
@@ -339,79 +346,43 @@ class VDigit(AbstractDigit):
     """
     pass
 
-class DisplayDriver:
-    """
-    Experimental display driver implemented in Python using
-    GRASS-Python SWIG interface
+class Digit(VEdit):
+    """Default digit class"""
+    def __init__(self, mapwindow):
+        VEdit.__init__(self, mapwindow)
 
-    Note: This will be in the future rewritten in C/C++
-    """
-    def __init__(self, map, mapwindow):
+class AbstractDisplayDriver:
+    """Abstract classs for display driver"""
+    def __init__(self, parent, mapwindow):
+        self.parent      = parent
         self.mapwindow   = mapwindow
 
-        Digit.threshold = self.GetThreshold()
-        
         self.ids         = {}   # dict[g6id] = [pdcId]
         self.selected    = []   # list of selected objects (grassId!)
-
-        g6lib.G_gisinit('')
-
-        name, mapset = map.split('@')
-
-        Debug.msg(4, "DisplayDriver.__init__(): name=%s, mapset=%s" % \
-                      (name, mapset))
-
-        # define map structure
-        self.mapInfo = g6lib.Map_info()
-        # define open level (level 2: topology)
-        g6lib.Vect_set_open_level(2)
-
-        # open existing map
-        # python 2.5 (unicode) -> str()
-        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
-
-        # auxilary structures
-        self.points = g6lib.Vect_new_line_struct();
-        self.cats = g6lib.Vect_new_cats_struct();
-
-    def __del__(self):
-        if self.mapInfo:
-            g6lib.Vect_close(self.mapInfo)
-        if self.points:
-            g6lib.Vect_destroy_line_struct(self.points)
-        if self.cats:
-            g6lib.Vect_destroy_cats_struct(self.cats)
 
     def GetThreshold(self):
         """Return threshold in map units"""
         if Digit.settings["snapping"][1] == "screen pixels":
             # pixel -> cell
             threshold = self.mapwindow.Distance(beginpt=(0,0),
-                                                      endpt=(Digit.settings["snapping"][0],0))[0]
+                                                endpt=(Digit.settings["snapping"][0],0))[0]
         else:
             threshold = Digit.settings["snapping"][0]
 
-        Debug.msg(4, "DisplayDriver.GetThreshold(): thresh=%f" % threshold)
+        Debug.msg(4, "AbstractDisplayDriver.GetThreshold(): thresh=%f" % threshold)
+        
         return threshold
 
-    def __SetPen(self, line, symbol):
-        # see include/vect/dig_defines.h
-        # define GV_POINT      0x01
-        # define GV_LINE       0x02
-        # define GV_BOUNDARY   0x04
-        # define GV_CENTROID   0x08
-        # define GV_FACE       0x10
-        # define GV_KERNEL     0x20
-        # define GV_AREA       0x40
-        # define GV_VOLUME     0x80
-
+    def SetPen(self, line, symbol):
+        """Set Pen for PseudoDC according vector feature status"""
+        
         if line in self.selected:
             symbol = "symbolHighlight"
         
-        width = Digit.settings["lineWidth"][0]
+        width = self.parent.settings["lineWidth"][0]
         
-        if Digit.settings[symbol][0] in [True, None]:
-            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=Digit.settings[symbol][1],
+        if self.parent.settings[symbol][0] in [True, None]:
+            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=self.parent.settings[symbol][1],
                                                                  width=width, style=wx.SOLID)
         else:
             self.mapwindow.pen = self.mapwindow.polypen = None
@@ -442,6 +413,63 @@ class DisplayDriver:
                 for id in self.ids[line]:
                     pdcId.append(id)
             return pdcId
+
+    def DrawMap(self):
+        """Draw map content in PseudoDC"""
+        Debug.msg(4, "DisplayDriver.DrawMap()")
+        self.DisplayLines()
+
+class CDisplayDriver(AbstractDisplayDriver):
+    """
+    Display driver using grass6_wxdriver module
+    """
+    pass
+
+class PyDisplayDriver(AbstractDisplayDriver):
+    """
+    Experimental display driver implemented in Python using
+    GRASS-Python SWIG interface
+
+    Note: This will be in the future rewritten in C/C++
+    """
+    def __init__(self, parent, mapwindow):
+        AbstractDisplayDriver.__init__(self, parent, mapwindow)
+        self.mapInfo = None
+        
+    def Reset(self, map):
+        g6lib.G_gisinit('')
+
+        print map
+        if map == None:
+            if self.mapInfo:
+                g6lib.Vect_close(self.mapInfo)
+
+            self.mapInfo = None
+            return
+        
+        name, mapset = map.split('@')
+
+        Debug.msg(4, "DisplayDriver.__init__(): name=%s, mapset=%s" % \
+                      (name, mapset))
+        
+        # define map structure
+        self.mapInfo = g6lib.Map_info()
+        # define open level (level 2: topology)
+        g6lib.Vect_set_open_level(2)
+
+        # open existing map
+        # python 2.5 (unicode) -> str()
+        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
+
+        # auxilary structures
+        self.points = g6lib.Vect_new_line_struct();
+        self.cats = g6lib.Vect_new_cats_struct();
+
+    def __del__(self):
+        if self.points:
+            g6lib.Vect_destroy_line_struct(self.points)
+        if self.cats:
+            g6lib.Vect_destroy_cats_struct(self.cats)
 
     def GetSelectedVertex(self, coords):
         """Return PseudoDC id(s) of vertex (of selected line)
@@ -548,7 +576,7 @@ class DisplayDriver:
 
 
         line = g6lib.Vect_find_line(self.mapInfo, point[0], point[1], 0,
-                                    type, Digit.threshold, 0, 0)
+                                    type, self.parent.threshold, 0, 0)
 
         self.selected = []
         if line > 0:
@@ -568,13 +596,11 @@ class DisplayDriver:
 
         self.DrawMap()
         
-    def DrawMap(self):
-        """Draw map content in PseudoDC"""
-        Debug.msg(4, "DisplayDriver.DrawMap()")
-        self.DisplayLines()
-
     def DisplayLines(self):
         """Display all lines in PseudoDC"""
+        if not self.mapInfo:
+            return
+        
         nlines = g6lib.Vect_get_num_lines(self.mapInfo)
         Debug.msg(4, "DisplayDriver.DisplayLines(): nlines=%d" % nlines)
         #symb_set_driver_color ( SYMB_HIGHLIGHT );
@@ -622,9 +648,9 @@ class DisplayDriver:
                                                 g6lib.doublep_value(y)))
 
             if g6lib.Vect_get_node_n_lines(self.mapInfo, node) == 1:
-                self.__SetPen(line, "symbolNodeOne") # one line
+                self.SetPen(line, "symbolNodeOne") # one line
             else:
-                self.__SetPen(line, "symbolNodeTwo") # two lines
+                self.SetPen(line, "symbolNodeTwo") # two lines
 
             self.ids[line].append(self.mapwindow.DrawCross(coords, size=5))
 
@@ -656,18 +682,18 @@ class DisplayDriver:
                                           leftp, rightp)
                 left, right = g6lib.intp_value(leftp), g6lib.intp_value(rightp)
                 if left == 0 and right == 0:
-                    self.__SetPen(line, "symbolBoundaryNo")
+                    self.SetPen(line, "symbolBoundaryNo")
                 elif left > 0 and right > 0:
-                    self.__SetPen(line, "symbolBoundaryTwo")
+                    self.SetPen(line, "symbolBoundaryTwo")
                 else:
-                    self.__SetPen(line, "symbolBoundaryOne")
+                    self.SetPen(line, "symbolBoundaryOne")
                 g6lib.delete_intp(leftp)
                 g6lib.delete_intp(rightp)
             else: # GV_LINE
-                self.__SetPen(line, "symbolLine")
+                self.SetPen(line, "symbolLine")
             self.ids[line].append(self.mapwindow.DrawLines(coords))
             # draw verteces
-            self.__SetPen(line, "symbolVertex")
+            self.SetPen(line, "symbolVertex")
             for idx in range(1, npoints-1):
                 self.ids[line].append(self.mapwindow.DrawCross(coords[idx], size=4))
             # draw nodes
@@ -676,15 +702,15 @@ class DisplayDriver:
             if type == g6lib.GV_CENTROID:
                 cret = g6lib.Vect_get_centroid_area(self.mapInfo, line)
                 if cret > 0: # -> area
-                    self.__SetPen(line, "symbolCentroidIn")
+                    self.SetPen(line, "symbolCentroidIn")
                 elif cret == 0:
-                    self.__SetPen(line, "symbolCentroidOut")
+                    self.SetPen(line, "symbolCentroidOut")
                 else:
-                    self.__SetPen(line, "symbolCentroidDup")
+                    self.SetPen(line, "symbolCentroidDup")
             else:
-                self.__SetPen(line, "symbolPoint")
+                self.SetPen(line, "symbolPoint")
             self.ids[line].append(self.mapwindow.DrawCross(coords[0], size=5))
-        
+
 class DigitSettingsDialog(wx.Dialog):
     """
     Standard settings dialog for digitization purposes
@@ -697,7 +723,7 @@ class DigitSettingsDialog(wx.Dialog):
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
         self.__CreateSymbologyPage(notebook)
-        Digit.SetCategory() # update category number (next to use)
+        parent.digit.SetCategory() # update category number (next to use)
         self.__CreateSettingsPage(notebook)
         
         # buttons
@@ -740,8 +766,8 @@ class DigitSettingsDialog(wx.Dialog):
         for label, key in self.__SymbologyData():
             textLabel = wx.StaticText(panel, wx.ID_ANY, label)
             color = csel.ColourSelect(panel, id=wx.ID_ANY,
-                                      colour=Digit.settings[key][1], size=(25, 25))
-            isEnabled = Digit.settings[key][0]
+                                      colour=self.parent.digit.settings[key][1], size=(25, 25))
+            isEnabled = self.parent.digit.settings[key][0]
             if isEnabled is not None:
                 enabled = wx.CheckBox(panel, id=wx.ID_ANY, label="")
                 enabled.SetValue(isEnabled)
@@ -778,11 +804,11 @@ class DigitSettingsDialog(wx.Dialog):
         # line width
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width"))
         self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                          value=str(Digit.settings["lineWidth"][0]),
+                                          value=str(self.parent.digit.settings["lineWidth"][0]),
                                           min=1, max=1e6)
         self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
-        self.lineWidthUnit.SetValue(Digit.settings["lineWidth"][1])
+        self.lineWidthUnit.SetValue(self.parent.digit.settings["lineWidth"][1])
         flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.lineWidthValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.lineWidthUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
@@ -800,17 +826,17 @@ class DigitSettingsDialog(wx.Dialog):
         # snapping
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                         value=str(Digit.settings["snapping"][0]), min=1, max=1e6)
+                                         value=str(self.parent.digit.settings["snapping"][0]), min=1, max=1e6)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
-        self.snappingUnit.SetValue(Digit.settings["snapping"][1])
+        self.snappingUnit.SetValue(self.parent.digit.settings["snapping"][1])
         flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
         vertexSizer = wx.BoxSizer(wx.VERTICAL)
         self.snapVertex = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                       label=_("Snap also to vertex"))
-        self.snapVertex.SetValue(Digit.settings["snapToVertex"])
+        self.snapVertex.SetValue(self.parent.digit.settings["snapToVertex"])
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
 
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
@@ -825,7 +851,7 @@ class DigitSettingsDialog(wx.Dialog):
         # checkbox
         self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                      label=_("Add new record into table"))
-        self.addRecord.SetValue(Digit.settings["addRecord"])
+        self.addRecord.SetValue(self.parent.digit.settings["addRecord"])
         sizer.Add(item=self.addRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         # settings
         flexSizer = wx.FlexGridSizer(cols=2, hgap=3, vgap=3)
@@ -834,15 +860,15 @@ class DigitSettingsDialog(wx.Dialog):
         # layer
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
         self.layer = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                 value=str(Digit.settings["layer"])) # TODO: validator
+                                 value=str(self.parent.digit.settings["layer"])) # TODO: validator
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.layer, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category number
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
         self.category = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                    value=str(Digit.settings["category"])) # TODO: validator
-        if Digit.settings["categoryMode"] != "Manual entry":
+                                    value=str(self.parent.digit.settings["category"])) # TODO: validator
+        if self.parent.digit.settings["categoryMode"] != "Manual entry":
             self.category.SetEditable(False)
             self.category.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -853,7 +879,7 @@ class DigitSettingsDialog(wx.Dialog):
         self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY,
                                         style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
                                         choices=[_("Next to use"), _("Manual entry"), _("No category")])
-        self.categoryMode.SetValue(Digit.settings["categoryMode"])
+        self.categoryMode.SetValue(self.parent.digit.settings["categoryMode"])
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.categoryMode, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
@@ -896,7 +922,7 @@ class DigitSettingsDialog(wx.Dialog):
         """Change category mode"""
 
         mode = event.GetString()
-        Digit.settings["categoryMode"] = mode
+        self.parent.digit.settings["categoryMode"] = mode
         if mode == "Manual entry": # enable
             self.category.Enable(True)
             self.category.SetEditable(True)
@@ -906,12 +932,12 @@ class DigitSettingsDialog(wx.Dialog):
 
         if mode == "No category" and self.addRecord.IsChecked():
             self.addRecord.SetValue(False)
-        Digit.SetCategory()
-        self.category.SetValue(str(Digit.settings['category']))
+        self.parent.digit.SetCategory()
+        self.category.SetValue(str(self.parent.digit.settings['category']))
 
     def OnChangeAddRecord(self, event):
         """Checkbox 'Add new record' status changed"""
-        self.category.SetValue(str(Digit.SetCategory()))
+        self.category.SetValue(str(self.parent.digit.SetCategory()))
             
     def OnOK(self, event):
         """Button 'OK' clicked"""
@@ -923,39 +949,33 @@ class DigitSettingsDialog(wx.Dialog):
         self.UpdateSettings()
 
     def UpdateSettings(self):
-        """Update Digit.settings"""
+        """Update self.parent.digit.settings"""
         # symbology
         for key, (enabled, color) in self.symbology.iteritems():
             if enabled:
-                Digit.settings[key] = (enabled.IsChecked(), color.GetColour())
+                self.parent.digit.settings[key] = (enabled.IsChecked(), color.GetColour())
             else:
-                Digit.settings[key] = (None, color.GetColour())
+                self.parent.digit.settings[key] = (None, color.GetColour())
         # display
-        Digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
+        self.parent.digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
                                        self.lineWidthUnit.GetValue())
 
         # snapping
-        Digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
+        self.parent.digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
                                       self.snappingUnit.GetValue()) # unit
-        Digit.settings["snapToVertex"] = self.snapVertex.IsChecked()
+        self.parent.digit.settings["snapToVertex"] = self.snapVertex.IsChecked()
         
         # digitize new feature
-        Digit.settings["addRecord"] = self.addRecord.IsChecked()
-        Digit.settings["layer"] = int(self.layer.GetValue())
-        if Digit.settings["categoryMode"] == "No category":
-            Digit.settings["category"] = None
+        self.parent.digit.settings["addRecord"] = self.addRecord.IsChecked()
+        self.parent.digit.settings["layer"] = int(self.layer.GetValue())
+        if self.parent.digit.settings["categoryMode"] == "No category":
+            self.parent.digit.settings["category"] = None
         else:
-            Digit.settings["category"] = int(self.category.GetValue())
-        Digit.settings["categoryMode"] = self.categoryMode.GetValue()
+            self.parent.digit.settings["category"] = int(self.category.GetValue())
+        self.parent.digit.settings["categoryMode"] = self.categoryMode.GetValue()
 
         # threshold
         try:
-            Digit.threshold = Digit.driver.GetThreshold()
+            self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
         except:
             pass
-    
-##############################
-# digitization class instance
-##############################
-
-Digit = VEdit()
