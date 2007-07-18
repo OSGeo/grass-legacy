@@ -4,7 +4,7 @@
  * * 
  * * AUTHOR(S):    Radim Blazek
  * *               
- * * PURPOSE:      Clean lines
+ * * PURPOSE:      Clean lines - prune lines / boundaries
  * *               
  * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
  * *
@@ -32,19 +32,20 @@
  */
 
 int 
-prune ( struct Map_info *Out, int otype, double thresh )
+prune ( struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 {
         int line, type, nlines;
 	int nremoved = 0; /* number of removed vertices */
 	int nvertices = 0; /* number of input vertices in given type */
 	int not_pruned_lines = 0; /* number of not pruned because of topology */
 	int norig;
-	struct line_pnts *Points, *TPoints, *BPoints;
+	struct line_pnts *Points, *TPoints, *BPoints, *Points_orig;
         struct line_cats *Cats;
 	BOUND_BOX box;
 	struct ilist *List;
 
         Points = Vect_new_line_struct ();
+        Points_orig = Vect_new_line_struct ();
         TPoints = Vect_new_line_struct ();
         BPoints = Vect_new_line_struct ();
         Cats = Vect_new_cats_struct ();
@@ -54,7 +55,12 @@ prune ( struct Map_info *Out, int otype, double thresh )
 
         G_debug (1, "nlines =  %d", nlines );
 
-	fprintf (stderr, _("Removed vertices: %5d"), nremoved);
+	if (Err)
+	    Vect_build_partial(Err, GV_BUILD_BASE, NULL);
+
+	if (G_verbose() > G_verbose_min())
+	    fprintf (stderr, _("Removed vertices: %5d"), nremoved);
+
 	for ( line = 1; line <= nlines; line++ ){ 
 	    
 	    if ( !Vect_line_alive ( Out, line ) ) continue;
@@ -65,6 +71,8 @@ prune ( struct Map_info *Out, int otype, double thresh )
             G_debug (3, "line = %d n_point = %d", line, Points->n_points );
 
 	    norig = Points->n_points;
+	    Vect_reset_line(Points_orig);
+	    Vect_append_points(Points_orig, Points, GV_FORWARD);
 	    nvertices += Points->n_points;
 
 	    if ( type == GV_LINE ) {
@@ -72,11 +80,14 @@ prune ( struct Map_info *Out, int otype, double thresh )
 
 		if ( Points->n_points < norig ) {
 		    Vect_rewrite_line ( Out, line, type, Points, Cats );
+		    if (Err) {
+			Vect_write_line (Err, type, Points_orig, Cats);
+		    }
 		    nremoved += norig - Points->n_points;
 		}
 		    
 	    } else if ( type == GV_BOUNDARY ) {
-		int i, intersect, newline, left_old, right_old, left_new, right_new;
+		int i, intersect, newline, left_old, right_old, left_new, right_new, newline_err;
 		
 		if ( norig < 5 ) continue; /* Nothing can be removed */
 		
@@ -153,6 +164,9 @@ prune ( struct Map_info *Out, int otype, double thresh )
 
 		/* OK, rewrite pruned */
 		newline = Vect_rewrite_line ( Out, line, type, TPoints, Cats );
+		if (Err) {
+		   newline_err = Vect_write_line (Err, type, Points_orig, Cats);
+		}
 
 		/* Check position of centroids */
 		Vect_get_line_areas ( Out, newline, &left_new, &right_new );
@@ -164,6 +178,9 @@ prune ( struct Map_info *Out, int otype, double thresh )
 		if ( left_new != left_old || right_new != right_old ) {
 		    G_debug ( 3, "The pruned boundary changes attachement of centroid -> not pruned" );
 		    Vect_rewrite_line ( Out, newline, type, Points, Cats );
+		    if (Err) {
+			Vect_delete_line (Err, newline_err);
+		    }
 		    not_pruned_lines++;
 		    continue;
 		}
@@ -172,16 +189,25 @@ prune ( struct Map_info *Out, int otype, double thresh )
 		G_debug ( 4, "%d vertices removed", norig - TPoints->n_points );
 	    }
 		
-	    fprintf (stderr, _("\rRemoved vertices: %5d"), nremoved);
+	    if (G_verbose() > G_verbose_min()) 
+	      fprintf (stderr, _("\rRemoved vertices: %5d"), nremoved);
+	    
 	    fflush ( stderr );
 	}
 
-	G_message(_("\n%d vertices from input %d (vertices of given type) removed, i.e. %.2f %%"),
-	                 nremoved, nvertices, 100.0*nremoved/nvertices);
+	G_important_message(_("\n%d vertices from input %d (vertices of given type) removed, i.e. %.2f %%"),
+			    nremoved, nvertices, 100.0*nremoved/nvertices);
 
 	if ( not_pruned_lines > 0 )
-	    G_message(_("%d boundaries not pruned because pruning would damage topology."), 
-		              not_pruned_lines);
+	  G_message(_("%d boundaries not pruned because pruning would damage topology"), 
+		    not_pruned_lines);
+
+        Vect_destroy_line_struct (Points);
+        Vect_destroy_line_struct (Points_orig);
+        Vect_destroy_line_struct (TPoints);
+        Vect_destroy_line_struct (BPoints);
+        Vect_destroy_cats_struct (Cats);
+	Vect_destroy_list (List);
 
 	return 1;
 }

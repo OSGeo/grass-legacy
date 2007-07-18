@@ -15,7 +15,7 @@
 #define SEP \
     "--------------------------------------------------"
 
-int rmdac ( struct Map_info *Out );
+int rmdac ( struct Map_info *Out, struct Map_info *Err );
 void remove_bridges ( struct Map_info *Map, struct Map_info *Err );
-int prune ( struct Map_info *, int, double );
+int prune ( struct Map_info *Out, int otype, double thresh, struct Map_info *Err);
 int remove_zero_line(struct Map_info *Map, int type, struct Map_info *Err);
