@@ -380,8 +380,8 @@ class DigitToolbar(AbstractToolbar):
 
         Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
                    (self.layerSelectedID, mapLayer.name))
-        
-        Digit.ReInitialize(mapLayer.name, self.parent.MapWindow)
+
+        self.parent.digit.SetMapName(mapLayer.name)
 
         # deactive layer 
         self.mapcontent.ChangeLayerActive(mapLayer, False)
@@ -404,7 +404,7 @@ class DigitToolbar(AbstractToolbar):
             # re-active layer
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
-            Digit.ReInitialize()
+            self.parent.digit.SetMapName(None)
             
             return True
 

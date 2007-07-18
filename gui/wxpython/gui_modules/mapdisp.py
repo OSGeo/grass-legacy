@@ -512,10 +512,10 @@ class BufferedWindow(wx.Window):
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
 
-        digit = self.parent.digittoolbar
-        if digit and Digit.driver:
+        digitActive = self.parent.digittoolbar
+        if digitActive and self.parent.digit.driver:
             self.pen = wx.Pen(colour='red', width=2, style=wx.SOLID)
-            Digit.driver.DrawMap()
+            self.parent.digit.driver.DrawMap()
         
     def EraseMap(self):
         """
@@ -1532,6 +1532,11 @@ class MapFrame(wx.Frame):
         #
         self.projinfo = self.Map.ProjInfo()
 
+        #
+        # Initialization of digitization tool
+        #
+        self.digit = Digit(mapwindow=self.MapWindow)
+        
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
