@@ -30,6 +30,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
+import os
 import sys
 import string
 
@@ -40,17 +41,24 @@ import cmd
 import dbm
 from debug import Debug as Debug
 
-try:
-    # replace with the path to the GRASS SWIG-Python interface
-    g6libPath = "/hardmnt/schiele0/ssi/landa/src/grass6/swig/python"
-    #g6libPath = "/usr/src/gis/grass6/swig/python"
-    sys.path.append(g6libPath)
-    import python_grass6 as g6lib
-except:
-    print >> sys.stderr, "For running digitization tool you need to enable GRASS SWIG-Python interface.\n" \
-          "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
-          "Will be replaced by C/C++ display driver."
+usePyDisplayDriver = False
 
+if usePyDisplayDriver:
+    try:
+        # replace with the path to the GRASS SWIG-Python interface
+        g6libPath = "/hardmnt/schiele0/ssi/landa/src/grass6/swig/python"
+        # g6libPath = "/usr/src/gis/grass6/swig/python"
+        sys.path.append(g6libPath)
+        import python_grass6 as g6lib
+    except:
+        print >> sys.stderr, "For running digitization tool you need to enable GRASS SWIG-Python interface.\n" \
+              "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
+              "Will be replaced by C/C++ display driver."
+else:
+    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+    sys.path.append(driverPath)
+    from grass6_wxdriver import DisplayDriver
+    
 class AbstractDigit:
     """
     Abstract digitization class
@@ -62,11 +70,12 @@ class AbstractDigit:
                    self.map)
 
         #self.SetCategory()
-        
-        self.driver = PyDisplayDriver(self, mapwindow)
 
-        #self.threshold = self.driver.GetThreshold()
-
+        if usePyDisplayDriver:
+            self.driver = PyDisplayDriver(self, mapwindow)
+        else:
+            self.driver = CDisplayDriver(self, mapwindow)
+            
         # is unique for map window instance
         if not settings:
             self.settings = {}
@@ -99,6 +108,8 @@ class AbstractDigit:
             self.settings["categoryMode"] = "Next to use"
         else:
             self.settings = settings
+
+        self.threshold = self.driver.GetThreshold()
 
     def SetCategoryNextToUse(self):
         """Find maximum category number in the map layer
@@ -215,8 +226,6 @@ class VEdit(AbstractDigit):
                    "tool=add",
                    "thresh=%f" % self.threshold]
 
-        print "#", self.threshold
-        
         # additional flags
         for flag in flags:
             command.append(flag)
@@ -273,7 +282,7 @@ class VEdit(AbstractDigit):
                    "tool=%s" % tool,
                    "ids=%s" % ids,
                    "move=%f,%f" % (float(move[0]),float(move[1])),
-                   "thresh=%f" % Digit.threshold]
+                   "thresh=%f" % self.threshold]
 
         if tool == "vertexmove":
             command.append("coords=%f,%f" % (float(coords[0]), float(coords[1])))
@@ -356,16 +365,16 @@ class AbstractDisplayDriver:
     def __init__(self, parent, mapwindow):
         self.parent      = parent
         self.mapwindow   = mapwindow
-
+        
         self.ids         = {}   # dict[g6id] = [pdcId]
         self.selected    = []   # list of selected objects (grassId!)
 
     def GetThreshold(self):
         """Return threshold in map units"""
-        if Digit.settings["snapping"][1] == "screen pixels":
+        if self.parent.settings["snapping"][1] == "screen pixels":
             # pixel -> cell
             threshold = self.mapwindow.Distance(beginpt=(0,0),
-                                                endpt=(Digit.settings["snapping"][0],0))[0]
+                                                endpt=(self.parent.settings["snapping"][0],0))[0]
         else:
             threshold = Digit.settings["snapping"][0]
 
@@ -414,17 +423,26 @@ class AbstractDisplayDriver:
                     pdcId.append(id)
             return pdcId
 
-    def DrawMap(self):
-        """Draw map content in PseudoDC"""
-        Debug.msg(4, "DisplayDriver.DrawMap()")
-        self.DisplayLines()
-
 class CDisplayDriver(AbstractDisplayDriver):
     """
     Display driver using grass6_wxdriver module
     """
-    pass
-
+    def __init__(self, parent, mapwindow):
+        AbstractDisplayDriver.__init__(self, parent, mapwindow)
+        self.display = DisplayDriver(None)
+        
+    def Reset(self, map):
+        if map:
+            name, mapset = map.split('@')
+            self.display.Reset(name, mapset)
+        else:
+            self.display.Reset1()
+    
+    def DrawMap(self):
+        """Display content of the map in PseudoDC"""
+        nlines = self.display.DrawMap()
+        Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
+    
 class PyDisplayDriver(AbstractDisplayDriver):
     """
     Experimental display driver implemented in Python using
@@ -434,12 +452,17 @@ class PyDisplayDriver(AbstractDisplayDriver):
     """
     def __init__(self, parent, mapwindow):
         AbstractDisplayDriver.__init__(self, parent, mapwindow)
-        self.mapInfo = None
-        
+        self.mapInfo     = None
+
+    def __del__(self):
+        if self.points:
+            g6lib.Vect_destroy_line_struct(self.points)
+        if self.cats:
+            g6lib.Vect_destroy_cats_struct(self.cats)
+
     def Reset(self, map):
         g6lib.G_gisinit('')
 
-        print map
         if map == None:
             if self.mapInfo:
                 g6lib.Vect_close(self.mapInfo)
@@ -464,12 +487,6 @@ class PyDisplayDriver(AbstractDisplayDriver):
         # auxilary structures
         self.points = g6lib.Vect_new_line_struct();
         self.cats = g6lib.Vect_new_cats_struct();
-
-    def __del__(self):
-        if self.points:
-            g6lib.Vect_destroy_line_struct(self.points)
-        if self.cats:
-            g6lib.Vect_destroy_cats_struct(self.cats)
 
     def GetSelectedVertex(self, coords):
         """Return PseudoDC id(s) of vertex (of selected line)
@@ -596,17 +613,14 @@ class PyDisplayDriver(AbstractDisplayDriver):
 
         self.DrawMap()
         
-    def DisplayLines(self):
-        """Display all lines in PseudoDC"""
+    def DrawMap(self):
+        """Display content of the map in PseudoDC"""
         if not self.mapInfo:
             return
-        
         nlines = g6lib.Vect_get_num_lines(self.mapInfo)
-        Debug.msg(4, "DisplayDriver.DisplayLines(): nlines=%d" % nlines)
-        #symb_set_driver_color ( SYMB_HIGHLIGHT );
+        Debug.msg(4, "PyDisplayDriver.DrawMap(): nlines=%d" % nlines)
+
         for line in range(1, nlines + 1):
-            #symb = LineSymb[i];
-            #if ( !Symb[symb].on ) continue;
             self.DisplayLine(line)
 
         return nlines
