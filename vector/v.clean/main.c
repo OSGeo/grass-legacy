@@ -36,6 +36,7 @@ main (int argc, char *argv[])
 	int    level;
 	int    count;
 	double size;
+	FILE   *output; /* NULL | stderr */
 
 	G_gisinit(argv[0]);
 
@@ -240,6 +241,7 @@ main (int argc, char *argv[])
 
 	if ( err_opt->answer ) {
 	    Vect_set_fatal_error (GV_FATAL_PRINT);
+	    Vect_set_open_level (2);
 	    if (0 > Vect_open_new (&Err, err_opt->answer, with_z)) {
 		 Vect_close (&In);
 		 Vect_close (&Out);
@@ -263,6 +265,11 @@ main (int argc, char *argv[])
 	Vect_set_release_support ( &In );
 	Vect_close (&In);
 
+	if (G_verbose() > G_verbose_min())
+	    output = stderr;
+	else
+	    output = NULL;
+
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
 
 	for ( i = 0; i < ntools ; i++ ) { 
@@ -270,16 +277,16 @@ main (int argc, char *argv[])
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
 		} else {
-	            G_message(_("Rebuilding parts of topology..."));
-		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
+	            G_important_message(_("Rebuilding parts of topology..."));
+		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, output );
 	            G_message(SEP);
 		}
 	    } else {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_BASE )	{
 		    Vect_build_partial ( &Out, GV_BUILD_BASE, NULL );
 		} else {
-	            G_message(_("Rebuilding parts of topology..."));
-		    Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
+	            G_important_message(_("Rebuilding parts of topology..."));
+		    Vect_build_partial ( &Out, GV_BUILD_BASE, output );
 	            G_message(SEP);
 		}
 	    }
@@ -287,15 +294,15 @@ main (int argc, char *argv[])
 	    switch ( tools[i] ) {
 		case TOOL_BREAK:
 		    G_message(_("Tool: Break lines at intersections"));
-                    Vect_break_lines ( &Out, otype, pErr, stderr );
+                    Vect_break_lines ( &Out, otype, pErr, output );
 		    break;
 		case TOOL_RMDUPL:
 		    G_message(_("Tool: Remove duplicates"));
-                    Vect_remove_duplicates ( &Out, otype, pErr, stderr );
+                    Vect_remove_duplicates ( &Out, otype, pErr, output );
 		    break;
 		case TOOL_RMDANGLE:
 		    G_message(_("Tool: Remove dangles"));
-                    Vect_remove_dangles ( &Out, otype, threshs[i], pErr, stderr );
+                    Vect_remove_dangles ( &Out, otype, threshs[i], pErr, output );
 		    break;
 		case TOOL_CHDANGLE:
 		    G_message(_("Tool: Change type of boundary dangles"));
@@ -303,19 +310,19 @@ main (int argc, char *argv[])
 		    break;
 		case TOOL_RMBRIDGE:
 		    G_message(_("Tool: Remove bridges"));
-                    Vect_remove_bridges ( &Out, pErr, stderr );
+                    Vect_remove_bridges ( &Out, pErr, output );
 		    break;
 		case TOOL_CHBRIDGE:
 		    G_message(_("Tool: Change type of boundary bridges"));
-                    Vect_chtype_bridges ( &Out, pErr, stderr );
+                    Vect_chtype_bridges ( &Out, pErr, output );
 		    break;
 		case TOOL_RMDAC:
 		    G_message(_("Tool: Remove duplicate area centroids"));
-                    rmdac ( &Out );
+                    count = rmdac ( &Out, pErr );
 		    break;
 		case TOOL_SNAP:
 		    G_message(_("Tool: Snap line to vertex in threshold"));
-                    Vect_snap_lines ( &Out, otype, threshs[i], pErr, stderr );
+                    Vect_snap_lines ( &Out, otype, threshs[i], pErr, output );
 		    break;
 		case TOOL_BPOL:
 		    G_message(_("Tool: Break polygons"));
@@ -323,22 +330,22 @@ main (int argc, char *argv[])
 		    break;
 		case TOOL_PRUNE:
 		    G_message(_("Tool: Prune lines/boundaries"));
-                    prune ( &Out, otype, threshs[i] );
+                    prune ( &Out, otype, threshs[i], pErr );
 		    break;
 		case TOOL_RMAREA:
 		    G_message(_("Tool: Remove small areas"));
-                    count = Vect_remove_small_areas ( &Out, threshs[i], pErr, stderr, &size );
+                    count = Vect_remove_small_areas ( &Out, threshs[i], pErr, output, &size );
 		    G_message(_("%d areas of total size %g removed"), count, size );
 		    break;
 		case TOOL_RMSA:
 		    G_message(_("Tool: Remove small angles at nodes"));
-                    count = Vect_clean_small_angles_at_nodes ( &Out, otype, pErr, stderr );
+                    count = Vect_clean_small_angles_at_nodes ( &Out, otype, pErr, output );
 		    G_message(_("%d modifications done"), count);
 		    break;
 		case TOOL_RMLINE:
 		    G_message(_("Tool: Remove all lines and boundaries of zero length"));
                     count = remove_zero_line(&Out, otype, pErr);
-		    G_message(_("%d lines removed"), count);
+		    G_message(_("%d lines / boundaries removed"), count);
 		    break;
 	    }
 
@@ -346,9 +353,9 @@ main (int argc, char *argv[])
 	}
 
 	if ( !no_build_flag->answer ) {
-	    G_message(_("Rebuilding topology for output vector map..."));
+	    G_important_message(_("Rebuilding topology for output vector map..."));
 	    Vect_build_partial (&Out, GV_BUILD_NONE, NULL);
-	    Vect_build (&Out, stderr);
+	    Vect_build (&Out, output);
 	} else { 
 	    Vect_build_partial ( &Out, GV_BUILD_NONE, NULL ); /* -> topo not saved */
 	}
@@ -356,8 +363,8 @@ main (int argc, char *argv[])
 
 	if ( pErr ) {
 	    G_message (SEP);
-	    G_message (_("Building topology for error vector map..."));
-	    Vect_build (pErr, stderr);
+	    G_important_message (_("Building topology for error vector map..."));
+	    Vect_build (pErr, output);
 	    Vect_close (pErr);
 	}
 

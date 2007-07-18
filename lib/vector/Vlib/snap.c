@@ -375,6 +375,9 @@ Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thr
 	    else {
 		Vect_delete_line ( Map, line);
 	    }
+	    if (Err) {
+		Vect_write_line ( Err, ltype, Points, Cats);
+	    }
 	}
 
 	if ( msgout && printed > 1000 ) {
