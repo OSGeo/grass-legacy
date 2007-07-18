@@ -70,7 +70,7 @@ main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	_("Generates images with textural features from a raster map.");
+	_("Generate images with textural features from a raster map.");
 					        
     /* Define the different options */
 
@@ -209,13 +209,13 @@ main(int argc, char *argv[])
     dist	= atoi(dist_O->answer);
 
     if (a && c && corr && v && idm && sa && sv && se && e && dv && de && moc1 && moc2 && mcc)
-	G_fatal_error(_("Nothing to compute. Use at least one of the flags"));
+	G_fatal_error(_("Nothing to compute. Use at least one of the flags."));
 
     /* please, remove before GRASS 7 released */
     if(flag1->answer) {
         putenv("GRASS_VERBOSE=0");
         G_warning(_("The '-q' flag is superseded and will be removed "
-		    "in future. Please use '--quiet' instead"));
+		    "in future. Please use '--quiet' instead."));
     }
 
     /* find map in mapset */

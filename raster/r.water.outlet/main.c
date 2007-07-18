@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
 	opt3->key_desc   = "x" ;
 	opt3->multiple   = NO;
 	opt3->required   = YES ;
-	opt3->description= _("The map E  grid coordinates") ;
+	opt3->description= _("The map E grid coordinates") ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "northing" ;
@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 
 	if (G_get_window(&window) < 0)
 	{
-		G_asprintf (&buf,_("can't read current window parameters"));
+		G_asprintf (&buf,_("Unable to read current window parameters"));
 		G_fatal_error (buf);
 	}
 
@@ -120,7 +120,7 @@ int main (int argc, char *argv[])
 	drain_fd = G_open_cell_old (drain_name, drain_mapset);
 
 	if (drain_fd < 0) 
-		G_fatal_error (_("unable to open drainage pointer map"));
+		G_fatal_error (_("Unable to open drainage pointer map"));
 
 	drain_ptrs = (char *) G_malloc (sizeof(char) * size_array (&pt_seg, nrows, ncols));
 	bas = (CELL *) G_calloc (size_array (&ba_seg, nrows, ncols), sizeof(CELL));
@@ -144,7 +144,7 @@ int main (int argc, char *argv[])
 	basin_fd = G_open_cell_new (basin_name);
 
 	if (basin_fd < 0)
-		G_fatal_error (_("unable to open new basin map"));
+		G_fatal_error (_("Unable to open new basin map"));
 
 	for (row = 0; row < nrows; row++) {
 		for (col = 0; col < ncols; col++) {
@@ -155,7 +155,7 @@ int main (int argc, char *argv[])
 	G_free (bas);
 	G_free (cell_buf);
 	if (G_close_cell (basin_fd) < 0) 
-		G_fatal_error (_("unable to close new basin map layer"));
+		G_fatal_error (_("Unable to close new basin map layer"));
 
 	return 0;
 }
