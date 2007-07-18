@@ -12,14 +12,29 @@
 
 <h1>DBF driver in GRASS</h1>
 
+<H2>Defining the DBF driver</H2>
+
+The DBF driver is the default driver, in theory no user interaction is
+required. However, if the settings should be set back from a different
+to the DBF driver, the following step is required:
+
+<div class="code"><pre>
+# keep single quotes:
+db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+db.connect -p
+</pre></div>
+
+The dbf/ subdirectory in the mapset must exist or must be created by the user.
+
 <H2>Creating a DBF table</H2>
 
 Usually DBF tables are created by GRASS when generating a vector map
-with attribute (and using DBF as default attribute driver).
+with attributes (and using DBF as default attribute driver).
 <p>
 If a DBF table has to be created manually, <a href="db.execute.html">db.execute</a>
 can be used or a spreadsheet application. Also <a href="db.copy.html">db.copy</a>
-is sometimes useful.
+is sometimes useful as well as <a href="db.in.ogr.html">db.in.ogr</a> to import external
+tables.
 
 <H2>Supported SQL commands by DBF driver</H2>
 <div class="code"><pre>
@@ -81,7 +96,9 @@ column names on the fly.
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="sql.html">SQL support in GRASS GIS</a><br>
+<em>
+<a HREF="db.connect.html">db.connect</a>,
+<a HREF="sql.html">SQL support in GRASS GIS</a><br>
 <a href="http://shapelib.maptools.org/dbf_api.html">DBF Specifications</a> (Shapelib)
 </em>
 
