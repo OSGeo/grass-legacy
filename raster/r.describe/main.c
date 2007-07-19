@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
 	  struct Flag *r;
 	  struct Flag *d;
 	  struct Flag *i;
+	  struct Flag *n;
 	} flag;
 	struct
 	{
@@ -55,8 +56,8 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
-		_("Prints terse list of category values found in a raster map layer.");
+	module->description =
+	    _("Prints terse list of category values found in a raster map layer.");
 
 	/* define different options */
 	option.map = G_define_standard_option(G_OPT_R_MAP);
@@ -87,6 +88,10 @@ int main (int argc, char *argv[])
 	flag.r->key         = 'r';
 	flag.r->description = _("Only print the range of the data");
 
+	flag.n =G_define_flag() ;
+	flag.n->key         = 'n';
+	flag.n->description = _("Suppress reporting of any NULLs");
+
 	flag.d =G_define_flag() ;
 	flag.d->key        = 'd';
 	flag.d->description = _("Use the current region");
@@ -115,17 +120,20 @@ int main (int argc, char *argv[])
 	windowed =  flag.d->answer;
 	as_int =  flag.i->answer;
 	no_data_str =  option.nv->answer;
+
 	if (sscanf(option.nsteps->answer, "%d", &nsteps) != 1 || nsteps < 1)
 	  G_fatal_error ( _("%s = %s -- must be greater than zero"),
                option.nsteps->key,option.nsteps->answer);
+
 	strcpy (name, option.map->answer);
 
 	if ((mapset =  G_find_cell2 (name, "")))
 	{
-		describe(name, mapset, compact,  no_data_str,
-			range, windowed, nsteps, as_int);
-		exit(EXIT_SUCCESS);
+	    describe(name, mapset, compact, no_data_str,
+		     range, windowed, nsteps, as_int, flag.n->answer);
+	    exit(EXIT_SUCCESS);
 	}
+
 	G_fatal_error ( _("%s: [%s] not found"), G_program_name(), name);
 
 	return EXIT_SUCCESS;
