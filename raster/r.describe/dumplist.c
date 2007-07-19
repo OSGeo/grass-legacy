@@ -23,8 +23,8 @@ static int show (CELL,CELL, int *,DCELL,DCELL, RASTER_MAP_TYPE,int);
 
 int long_list (
     struct Cell_stats *statf,
-    DCELL dmin,DCELL dmax,
-    char *no_data_str,
+    DCELL dmin, DCELL dmax,
+    char *no_data_str, int skip_nulls,
     RASTER_MAP_TYPE map_type,
     int nsteps)
 {
@@ -32,7 +32,7 @@ int long_list (
     long count;	/* not used, but required by cell stats call */
 
     G_get_stats_for_null_value(&count, statf);
-    if (count != 0)
+    if (count != 0 && !skip_nulls)
       fprintf (stdout, "%s\n", no_data_str);
 
     while (G_next_cell_stat (&cat, &count, statf)) {
@@ -45,10 +45,11 @@ int long_list (
     return(0) ;
 }
 
+
 int compact_list (
     struct Cell_stats *statf,
     DCELL dmin,DCELL dmax,
-    char *no_data_str,
+    char *no_data_str, int skip_nulls,
     RASTER_MAP_TYPE map_type,
     int nsteps)
 {
@@ -58,11 +59,13 @@ int compact_list (
 
     len = 0;
     G_get_stats_for_null_value(&count, statf);
-    if (count != 0)
+    if (count != 0 && !skip_nulls)
       fprintf (stdout, "%s ", no_data_str);
+
     if(!G_next_cell_stat (&cat1, &count, statf))
 	/* map doesn't contain any non-null data */
 	return 1;
+
     cat2 = cat1;
     while (G_next_cell_stat (&temp, &count, statf))
     {
@@ -77,6 +80,7 @@ int compact_list (
     fprintf (stdout, "\n");
     return(0) ;
 }
+
 
 static int show ( CELL low,CELL high, int *len,
     DCELL dmin,DCELL dmax, RASTER_MAP_TYPE map_type,int nsteps)
@@ -113,9 +117,10 @@ static int show ( CELL low,CELL high, int *len,
     return(0) ;
 }
 
+
 int compact_range_list (
     CELL negmin,CELL negmax,CELL zero,CELL posmin,CELL posmax,CELL null,
-    char *no_data_str)
+    char *no_data_str, int skip_nulls)
 {
     if (negmin)
     {
@@ -133,14 +138,17 @@ int compact_range_list (
 	    fprintf (stdout, " thru %ld", (long)posmax);
 	fprintf (stdout, "\n");
     }
-    if (null)
+
+    if (null && !skip_nulls)
 	fprintf (stdout, "%s\n", no_data_str);
+
     return(0) ;
 }
 
+
 int range_list (
     CELL negmin,CELL negmax,CELL zero,CELL posmin,CELL posmax,CELL null,
-    char *no_data_str)
+    char *no_data_str, int skip_nulls)
 {
     if (negmin)
     {
@@ -156,7 +164,9 @@ int range_list (
 	if (posmin != posmax)
 	    fprintf (stdout, "%ld\n",(long)posmax);
     }
-    if (null)
+
+    if (null && !skip_nulls)
 	fprintf (stdout, "%s\n", no_data_str);
+
     return(0) ;
 }

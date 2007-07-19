@@ -19,9 +19,8 @@
 #include "local_proto.h"
 
 
-int describe (
-    char *name,char *mapset, int compact, 
-    char *no_data_str, int range,int windowed,int nsteps,int as_int)
+int describe(char *name, char *mapset, int compact, char *no_data_str,
+	     int range, int windowed, int nsteps, int as_int, int skip_nulls)
 {
     int fd;
     struct Cell_stats statf;
@@ -97,7 +96,7 @@ int describe (
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    G_message ("reading [%s in %s] ...", name,mapset);
+    G_verbose_message("Reading [%s in %s] ...", name, mapset);
     for (row = 0 ; row < nrows; row++)
     {
         G_percent (row, nrows, 2);
@@ -141,17 +140,19 @@ int describe (
     if (range)
     {
 	if (compact)
-	    compact_range_list (negmin, negmax, zero, posmin, posmax, null, no_data_str);
+	    compact_range_list (negmin, negmax, zero, posmin, posmax, null, no_data_str, skip_nulls);
 	else
-	    range_list (negmin, negmax, zero, posmin, posmax, null, no_data_str);
+	    range_list (negmin, negmax, zero, posmin, posmax, null, no_data_str, skip_nulls);
     }
     else
     {
 	G_rewind_cell_stats (&statf);
+
 	if (compact)
-	    compact_list (&statf, dmin, dmax, no_data_str, map_type, nsteps);
+	    compact_list (&statf, dmin, dmax, no_data_str, skip_nulls, map_type, nsteps);
 	else
-	    long_list (&statf, dmin, dmax, no_data_str, map_type, nsteps);
+	    long_list (&statf, dmin, dmax, no_data_str, skip_nulls, map_type, nsteps);
+
 	G_free_cell_stats (&statf);
     }
     return 1;
