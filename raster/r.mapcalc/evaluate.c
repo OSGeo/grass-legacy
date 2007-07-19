@@ -3,6 +3,8 @@
 #include <unistd.h>
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
+
 #include "mapcalc.h"
 #include "globals.h"
 
@@ -78,7 +80,7 @@ static void initialize(expression *e)
 	case expr_type_function:	initialize_function(e);	break;
 	case expr_type_binding:		initialize_binding(e);	break;
 	default:
-		G_fatal_error("internal error: initialize: unknown type: %d",
+		G_fatal_error(_("Unknown type: %d"),
 			      e->type);
 	}
 }
@@ -109,7 +111,7 @@ static void evaluate_constant(expression *e)
 			dbuf[i] = e->data.con.fval;
 		break;
 	default:
-		G_fatal_error("internal error: evaluate_constant: invalid type: %d", e->res_type);
+		G_fatal_error(_("Invalid type: %d"), e->res_type);
 	}
 }
 
@@ -144,25 +146,25 @@ static void evaluate_function(expression *e)
 	switch (res)
 	{
 	case E_ARG_LO:
-		G_fatal_error("too few arguments for function '%s'", e->data.func.name);
+		G_fatal_error(_("Too few arguments for function '%s'"), e->data.func.name);
 		break;
 	case E_ARG_HI:
-		G_fatal_error("too many arguments for function '%s'", e->data.func.name);
+		G_fatal_error(_("Too many arguments for function '%s'"), e->data.func.name);
 		break;
 	case E_ARG_TYPE:
-		G_fatal_error("invalid argument type for function '%s'", e->data.func.name);
+		G_fatal_error(_("Invalid argument type for function '%s'"), e->data.func.name);
 		break;
 	case E_RES_TYPE:
-		G_fatal_error("invalid return type for function '%s'", e->data.func.name);
+		G_fatal_error(_("Invalid return type for function '%s'"), e->data.func.name);
 		break;
 	case E_INV_TYPE:
-		G_fatal_error("unknown type for function '%s'", e->data.func.name);
+		G_fatal_error(_("Unknown type for function '%s'"), e->data.func.name);
 		break;
 	case E_ARG_NUM:
-		G_fatal_error("number of arguments for function '%s'", e->data.func.name);
+		G_fatal_error(_("Number of arguments for function '%s'"), e->data.func.name);
 		break;
 	case E_WTF:
-		G_fatal_error("unknown error for function '%s'", e->data.func.name);
+		G_fatal_error(_("Unknown error for function '%s'"), e->data.func.name);
 		break;
 	}
 }
@@ -184,7 +186,7 @@ static void evaluate(expression *e)
 	case expr_type_function:	evaluate_function(e);	break;
 	case expr_type_binding:		evaluate_binding(e);	break;
 	default:
-		G_fatal_error("internal error: evaluate: unknown type: %d",
+		G_fatal_error(_("Unknown type: %d"),
 			      e->type);
 	}
 }

@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "mapcalc.h"
 #include "func_proto.h"
@@ -191,7 +193,7 @@ expression *variable(const char *name)
 	expression *e;
 
 	if (!var)
-		syntax_error("undefined variable: %s", name);
+		syntax_error(_("Undefined variable '%s'"), name);
 
 	e = allocate(expr_type_variable, var ? var->res_type : CELL_TYPE);
 	e->data.var.name = name;
@@ -206,7 +208,7 @@ expression *mapname(const char *name, int mod, int row, int col, int depth)
 				 res_type >= 0 ? res_type : CELL_TYPE);
 
 	if (res_type < 0)
-		syntax_error("invalid map: %s", name);
+		syntax_error(_("Invalid map <%s>"), name);
 
 	e->data.map.name = name;
 	e->data.map.mod = mod;
@@ -247,24 +249,24 @@ expression *operator(const char *name, const char *oper, int prec, expr_list *ar
 	switch (!d ? -1 : d->check_args(argc, argt))
 	{
 	case -1:
-		syntax_error("undefined function: %s", name);
+		syntax_error(_("Undefined function '%s'"), name);
 		break;
 	case 0:
 		break;
 	case E_ARG_LO:
-		syntax_error("Too few arguments (%d) to function %s()",
+		syntax_error(_("Too few arguments (%d) to function %s()"),
 			     argc, name);
 		break;
 	case E_ARG_HI:
-		syntax_error("Too many arguments (%d) to function %s()",
+		syntax_error(_("Too many arguments (%d) to function %s()"),
 			     argc, name);
 		break;
 	case E_ARG_TYPE:
-		syntax_error("Incorrect argument types to function %s()",
+		syntax_error(_("Incorrect argument types to function %s()"),
 			     name);
 		break;
 	default:
-		G_fatal_error("Internal error for function %s()",
+		G_fatal_error(_("Internal error for function %s()"),
 			      name);
 		break;
 	}
@@ -334,8 +336,8 @@ static char *format_map(const expression *e)
 	case '@':	mod = "@";	break;
 	case 'M':	mod = "";	break;
 	default:
-		fprintf(stderr, "Invalid map modifier: '%c'\n",
-			e->data.map.mod);
+		G_warning (_("Invalid map modifier: '%c'"),
+			   e->data.map.mod);
 		mod = "?";
 		break;
 	}
@@ -432,8 +434,8 @@ static char *format_operator(const expression *e, int prec)
 		G_free (arg3);
 		return result;
 	default:
-		fprintf(stderr, "Illegal number of arguments (%d) for operator '%s'\n",
-			e->data.func.argc, e->data.func.oper);
+		G_warning (_("Illegal number of arguments (%d) for operator '%s'"),
+			   e->data.func.argc, e->data.func.oper);
 		return format_function(e, prec);
 	}
 }
@@ -473,9 +475,8 @@ static char *format_expression_prec(const expression *e, int prec)
 	case expr_type_function:	return format_func_op (e, prec);
 	case expr_type_binding:		return format_binding (e, prec);
 	default:
-		fprintf(stderr,
-			"format_expression_prec: unknown type: %d\n",
-			e->type);
+		G_warning (_("Format_expression_prec: unknown type: %d"),
+			   e->type);
 		return strdup("??");
 	}
 }

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <grass/glocale.h>
+
 #include "expression.h"
 #include "func_proto.h"
 
@@ -88,7 +90,7 @@ void print_function_names(void)
 {
 	int i;
 
-	fprintf(stderr, "known functions:");
+	fprintf(stderr, _("Known functions:"));
 	for (i = 0; func_descs[i].name; i++)
 		fprintf(stderr, "%c%-10s",
 			i % 7 ? ' ' : '\n',

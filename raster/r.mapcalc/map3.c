@@ -7,6 +7,7 @@
 #include <grass/gis.h>
 #include <grass/G3d.h>
 #include <grass/btree.h>
+#include <grass/glocale.h>
 
 #include "mapcalc.h"
 #include "globals.h"
@@ -147,7 +148,7 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 				x = ((FCELL*)buf)[i];
 
 			if (G3d_putValue(handle, i, row, depth, (char *) &x, FCELL_TYPE) < 0)
-				G_fatal_error("error writing data");
+				G_fatal_error(_("Error writing data"));
 		}
 		break;
 	case DCELL_TYPE:
@@ -161,7 +162,7 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 				x = ((DCELL*)buf)[i];
 
 			if (G3d_putValue(handle, i, row, depth, (char *) &x, DCELL_TYPE) < 0)
-				G_fatal_error("error writing data");
+				G_fatal_error(_("Error writing data"));
 		}
 		break;
 	}
@@ -182,7 +183,7 @@ static void init_colors(map *m)
 	if (!set) set = G_malloc(columns);
 
 	if (G3d_readColors((char *) m->name, (char *) m->mapset, &m->colors) < 0)
-		G_fatal_error("error reading color file for [%s in %s]\n",
+		G_fatal_error(_("Unable to read color file for raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	m->have_colors = 1;
@@ -191,11 +192,11 @@ static void init_colors(map *m)
 static void init_cats(map *m)
 {
 	if (G3d_readCats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
-		G_fatal_error("error reading category file for [%s in %s]\n",
+		G_fatal_error(_("Unable to read category file for raster map <%s@%s>"),
 			      m->name, m->mapset);
-
+			      
 	if (!btree_create(&m->btree, compare_ints, 1))
-		G_fatal_error("unable to create btree for [%s in %s]\n",
+		G_fatal_error(_("Unable to create btree for raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	m->have_cats = 1;
@@ -238,7 +239,7 @@ static void translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, in
 	case 'M':
 	case '@':
 	default:
-		G_fatal_error("invalid map modifier: '%c'\n", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 }
@@ -358,7 +359,7 @@ static void read_map(
 				SET_NULL_D(&dbuf[i]);
 			break;
 		default:
-			G_fatal_error("read_map: unknown type: %d", res_type);
+			G_fatal_error(_("unknown type: %d"), res_type);
 			break;
 		}
 
@@ -377,7 +378,7 @@ static void close_map(map *m)
 		return;
 
 	if (!G3d_closeCell(m->handle))
-		G_fatal_error("unable to close map [%s in %s]",
+		G_fatal_error(_("Unable to close raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	if (m->have_cats)
@@ -432,7 +433,7 @@ int map_type(const char *name, int mod)
 	case 'i':
 		return CELL_TYPE;
 	default:
-		G_fatal_error("invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		return -1;
 	}
 }
@@ -473,7 +474,7 @@ int open_map(const char *name, int mod, int row, int col)
 		use_colors = 1;
 		break;
 	default:
-		G_fatal_error("internal error: open_map: invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 
@@ -523,7 +524,7 @@ int open_map(const char *name, int mod, int row, int col)
 		DCELL_TYPE, G3D_USE_CACHE_DEFAULT);
 
 	if (!m->handle)
-		G_fatal_error("unable to open map [%s in %s]", name, mapset);
+		G_fatal_error(_("Unable to open raster map <%s@%s>"), name, mapset);
 
 	return num_maps++;
 }
@@ -565,7 +566,7 @@ void get_map_row(int idx, int mod, int depth, int row, int col, void *buf, int r
 		translate_from_colors(m, fbuf, buf, columns, mod);
 		break;
 	default:
-		G_fatal_error("internal error: get_map_row: invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 }
@@ -594,7 +595,7 @@ int open_output_map(const char *name, int res_type)
 		&current_region3);
 
 	if (!handle)
-		G_fatal_error("cannot create output map [%s]", name);
+		G_fatal_error(_("Unable to create output raster map <%s>"), name);
 
 	fd = handle_to_fd(handle);
 
@@ -613,7 +614,7 @@ void close_output_map(int fd)
 	void *handle = fd_to_handle(fd);
 
 	if (!G3d_closeCell(handle))
-		G_fatal_error("unable to close output map");
+		G_fatal_error(_("Unable to close output raster map"));
 }
 
 void unopen_output_map(int fd)
