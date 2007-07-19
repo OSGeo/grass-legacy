@@ -65,7 +65,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Creates a new vector map layer "
+    module->description = _("Create a new vector map layer "
 			    "by combining other vector map layers.");
     
     old = G_define_standard_option(G_OPT_V_INPUTS);
@@ -79,8 +79,8 @@ main (int argc, char *argv[])
 
     table_flag = G_define_flag();
     table_flag->key = 'e';
-    table_flag->description = _("Copy also attribute table. "
-				"Only the table of layer 1 is currently supported");
+    table_flag->label = _("Copy also attribute table");
+    table_flag->description = _("Only the table of layer 1 is currently supported");
     
     if (G_parser(argc, argv)) exit (EXIT_FAILURE);
 
@@ -122,15 +122,15 @@ main (int argc, char *argv[])
 			      fi_out->driver, fi_out->database );
 		if ( ! driver_out )
 		{
-		  G_fatal_error (_("Cannot open database %s "
-				   "by driver %s"), fi_out->database, fi_out->driver );
+		  G_fatal_error (_("Unable to open database <%s> by driver <%s>"),
+				 fi_out->database, fi_out->driver );
 		}
 
 		db_set_string(&table_name_out,fi_out->table);
 		if ( db_describe_table (driver_out, &table_name_out, &table_out) 
 		     != DB_OK) 
 		{
-		  G_fatal_error (_("Cannot describe table %s"), 
+		  G_fatal_error (_("Unable to describe table <%s>"), 
 				 fi_out->table);
 		}
 		db_close_database_shutdown_driver ( driver_out );
@@ -154,8 +154,7 @@ main (int argc, char *argv[])
 			      fi_in->driver, fi_in->database );
 		if ( ! driver_in )
 		{
-		  G_fatal_error (_("Cannot open database %s "
-				   "by driver %s"), fi_in->database, fi_in->driver );
+		  G_fatal_error (_("Unable to open database <%s> by driver <%s>"), fi_in->database, fi_in->driver );
 		}
 
 		if ( !append->answer && i == 0 )
@@ -172,7 +171,7 @@ main (int argc, char *argv[])
 		if ( db_describe_table (driver_in, &table_name_in, table) 
 		     != DB_OK) 
 		{
-		  G_fatal_error (_("Cannot describe table %s"), 
+		  G_fatal_error (_("Unable to describe table <%s>"), 
 				 fi_in->table);
 		}
 		db_close_database_shutdown_driver ( driver_in );
@@ -273,8 +272,7 @@ main (int argc, char *argv[])
 			  fi_out->driver, fi_out->database );
 	    if ( ! driver_out )
 	    {
-	      G_fatal_error (_("Cannot open database %s "
-			       "by driver %s"), fi_out->database, fi_out->driver );
+	      G_fatal_error (_("Unable to open database <%s> by driver <%s>"), fi_out->database, fi_out->driver );
 	    }
             db_begin_transaction ( driver_out );
 	}
@@ -285,7 +283,7 @@ main (int argc, char *argv[])
         if ( !append->answer ) {
             if ( db_create_table ( driver_out, table_out ) != DB_OK ) 
             {
-	      G_fatal_error (_("Cannot create new table"));
+	      G_fatal_error (_("Unable to create table <%s>"), fi_out->table);
             }
             Vect_map_add_dblink ( &OutMap, 1, NULL, fi_out->table, 
                                   fi_in->key, fi_out->database, 
@@ -298,7 +296,7 @@ main (int argc, char *argv[])
     {
         int add_cat;
 	in_name = old->answers[i++];
-	G_message (_("Patching file <%s@%s>"), in_name,
+	G_important_message (_("Patching vector map <%s@%s>..."), in_name,
 		   G_find_vector2 (in_name, ""));
 	Vect_set_open_level (1);
 	Vect_open_old ( &InMap, in_name, "" );
@@ -319,8 +317,8 @@ main (int argc, char *argv[])
             
 	ret = patch (&InMap, &OutMap, add_cat, &maxcat);
 	if (ret < 0)
-	  G_warning (_("Error reading file '%s'." 
-		       "Some data may not be correct\n"), in_name);
+	  G_warning (_("Error reading vector map <%s> - " 
+		       "some data may not be correct"), in_name);
 
         if ( do_table ) 
         {
@@ -331,8 +329,7 @@ main (int argc, char *argv[])
 			      fi_in->driver, fi_in->database );
 		if ( ! driver_in )
 		{
-		  G_fatal_error (_("Cannot open database %s "
-				   "by driver %s"), fi_in->database, fi_in->driver );
+		  G_fatal_error (_("Unable to open database <%s> by driver <%s>"), fi_in->database, fi_in->driver );
 		}
 
 		db_set_string(&table_name_in,fi_in->table);
@@ -358,13 +355,18 @@ main (int argc, char *argv[])
     Vect_set_map_name ( &OutMap, "Output from v.patch");
     Vect_set_person ( &OutMap, G_whoami ());
 
-    Vect_build (&OutMap, stderr);
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&OutMap, stderr);
+    else
+	Vect_build (&OutMap, NULL);
+
     Vect_close (&OutMap);
 
-    G_done_msg (_("[%d] files patched"), n_files);
     G_message (_("Intersections at borders will have to be snapped"));
     G_message (_("Lines common between files will have to be edited"));
     G_message (_("The header information also may have to be edited"));
+
+    G_done_msg (_("%d vector maps patched"), n_files);
 
     exit (EXIT_SUCCESS);
 }
