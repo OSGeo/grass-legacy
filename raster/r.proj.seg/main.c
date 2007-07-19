@@ -44,6 +44,11 @@
 *		 assymetrical rounding errors. Added missing offset outcellhd.ew_res/2 
 *		 to initial xcoord for each row in main projection loop (we want to  project 
 *		 center of cell, not border).
+*
+*                Glynn Clements 2006: Use G_interp_* functions, modified      
+*                  version of r.proj which uses a tile cache instead  of loading the
+*                  entire map into memory.
+
 *****************************************************************************/
 
 
@@ -53,8 +58,8 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/gprojects.h>
-#include "r.proj.h"
 #include <grass/glocale.h>
+#include "r.proj.h"
 
 /* modify this table to add new methods */
 struct menu menu[] = {
@@ -190,6 +195,9 @@ int main (int argc, char **argv)
 	nocrop->key = 'n';
 	nocrop->description = _("Do not perform region cropping optimization");
 
+        /* The parser checks if the map already exists in current mapset,
+           we switch out the check and do it
+           in the module after the parser */
 	overwrite = G_check_overwrite(argc, argv);
 
 	if (G_parser(argc, argv))
@@ -349,6 +357,7 @@ int main (int argc, char **argv)
 	G_adjust_Cell_head(&outcellhd, 0, 0);
 	G_set_window(&outcellhd);
 
+	G_message(NULL);
 	G_message(_("Input:"));
 	G_message(_("Cols: %d (%d)"), incellhd.cols, icols);
 	G_message(_("Rows: %d (%d)"), incellhd.rows, irows);
@@ -369,6 +378,7 @@ int main (int argc, char **argv)
 	G_message(_("East:  %f (%f)"), outcellhd.east, oeast);
 	G_message(_("EW-res: %f"), outcellhd.ew_res);
 	G_message(_("NS-res: %f"), outcellhd.ns_res);
+	G_message(NULL);
 
 	/* open and read the relevant parts of the input map and close it */
 	G__switch_env();
@@ -398,7 +408,7 @@ int main (int argc, char **argv)
 	xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);	/**/
 	ycoord1 = ycoord2 = outcellhd.north - (outcellhd.ns_res / 2);	/**/
 
-	G_message(_("Projecting... "));
+	G_important_message(_("Projecting..."));
 	G_percent(0, outcellhd.rows, 2);
 
 	for (row = 0; row < outcellhd.rows; row++)
@@ -429,7 +439,7 @@ int main (int argc, char **argv)
 		}
 
 		if (G_put_raster_row(fdo, obuffer, cell_type) < 0)
-			G_fatal_error(_("Error writing output map"));
+			G_fatal_error(_("Failed writing raster map <%s> row %d"), mapname, row);
 
 		xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);
 		ycoord2 -= outcellhd.ns_res;

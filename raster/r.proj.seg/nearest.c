@@ -4,8 +4,8 @@
  *		    x,y position
  */
 
-#include <grass/gis.h>
 #include <math.h>
+#include <grass/gis.h>
 #include "r.proj.h"
 
 void p_nearest(

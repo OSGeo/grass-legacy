@@ -13,8 +13,8 @@
  *  See: Press, W.H. et al. (1992), Numerical recipes in C.
  */
 
-#include <grass/gis.h>
 #include <math.h>
+#include <grass/gis.h>
 #include "r.proj.h"
 
 void p_bilinear(
