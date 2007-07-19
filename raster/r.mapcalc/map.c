@@ -7,6 +7,7 @@
 #include <grass/gis.h>
 #include <grass/btree.h>
 #include <grass/rowio.h>
+#include <grass/glocale.h>
 
 #include "mapcalc.h"
 #include "globals.h"
@@ -75,7 +76,7 @@ static void init_colors(map *m)
 	if (!set) set = G_malloc(columns);
 
 	if (G_read_colors((char *) m->name, (char *) m->mapset, &m->colors) < 0)
-		G_fatal_error("error reading color file for [%s in %s]\n",
+		G_fatal_error(_("Unable to read color file for raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	m->have_colors = 1;
@@ -84,11 +85,11 @@ static void init_colors(map *m)
 static void init_cats(map *m)
 {
 	if (G_read_cats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
-		G_fatal_error("error reading category file for [%s in %s]\n",
+		G_fatal_error(_("Unable to read category file for raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	if (!btree_create(&m->btree, compare_ints, 1))
-		G_fatal_error("unable to create btree for [%s in %s]\n",
+		G_fatal_error(_("Unable to create btree for raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	m->have_cats = 1;
@@ -131,7 +132,7 @@ static void translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, in
 	case 'M':
 	case '@':
 	default:
-		G_fatal_error("invalid map modifier: '%c'\n", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 }
@@ -229,7 +230,7 @@ static void set_read_row_type(int res_type)
 static int read_row(int fd, void *buf, int row, int dummy)
 {
 	if (G_get_raster_row(fd, (DCELL *) buf, row, read_row_type) < 0)
-		G_fatal_error("read_row: error reading data");
+		G_fatal_error(_("Unable to read raster map row %d"), row);
 
 	return 0;
 }
@@ -245,7 +246,7 @@ static void setup_map(map *m)
 	{
 		if (rowio_setup(&m->rowio, m->fd, nrows,
 				columns * size, read_row, NULL) < 0)
-			G_fatal_error("setup_map: rowio_setup failed");
+			G_fatal_error(_("Rowio_setup failed"));
 		m->use_rowio = 1;
 	}
 	else
@@ -278,7 +279,7 @@ static void read_map(map *m, void *buf, int res_type, int row, int col)
 				SET_NULL_D(&dbuf[i]);
 			break;
 		default:
-			G_fatal_error("read_map: unknown type: %d", res_type);
+			G_fatal_error(_("Unknown type: %d"), res_type);
 			break;
 		}
 
@@ -291,7 +292,7 @@ static void read_map(map *m, void *buf, int res_type, int row, int col)
 	{
 		bp = rowio_get(&m->rowio, row);
 		if (!bp)
-			G_fatal_error("read_map: rowio_get failed");
+			G_fatal_error(_("Rowio_get failed"));
 
 		G_copy(buf, bp, columns * G_raster_size(res_type));
 	}
@@ -308,7 +309,7 @@ static void close_map(map *m)
 		return;
 
 	if (G_close_cell(m->fd) < 0)
-		G_fatal_error("unable to close map [%s in %s]",
+		G_fatal_error(_("Unable to close raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	if (m->have_cats)
@@ -356,7 +357,7 @@ int map_type(const char *name, int mod)
 	case 'i':
 		return CELL_TYPE;
 	default:
-		G_fatal_error("invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		return -1;
 	}
 }
@@ -376,7 +377,7 @@ int open_map(const char *name, int mod, int row, int col)
 
 	mapset = G_find_cell2((char *) name, "");
 	if (!mapset)
-		G_fatal_error("open_map: map [%s] not found", name);
+		G_fatal_error(_("Raster map <%s> not found"), name);
 
 	switch (mod)
 	{
@@ -394,7 +395,7 @@ int open_map(const char *name, int mod, int row, int col)
 		use_colors = 1;
 		break;
 	default:
-		G_fatal_error("internal error: open_map: invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 
@@ -443,7 +444,7 @@ int open_map(const char *name, int mod, int row, int col)
 	m->fd = G_open_cell_old((char *) name, mapset);
 
 	if (m->fd < 0)
-		G_fatal_error("unable to open map [%s in %s]", name, mapset);
+		G_fatal_error(_("Unable to open raster map <%s@%s>"), name, mapset);
 
 	return num_maps++;
 }
@@ -486,7 +487,7 @@ void get_map_row(
 		translate_from_colors(m, fbuf, buf, columns, mod);
 		break;
 	default:
-		G_fatal_error("internal error: get_map_row: invalid map modifier: '%c'", mod);
+		G_fatal_error(_("Invalid map modifier: '%c'"), mod);
 		break;
 	}
 }
@@ -509,7 +510,7 @@ int open_output_map(const char *name, int res_type)
 
 	fd = G_open_raster_new((char *) name, res_type);
 	if (fd < 0)
-		G_fatal_error("cannot create output map [%s]", name);
+		G_fatal_error(_("Unable to create raster map <%s>"), name);
 
 	return fd;
 }
@@ -517,13 +518,13 @@ int open_output_map(const char *name, int res_type)
 void put_map_row(int fd, void *buf, int res_type)
 {
 	if (G_put_raster_row(fd, buf, res_type) < 0)
-		G_fatal_error("error writing data");
+		G_fatal_error(_("Failed writing raster map row"));
 }
 
 void close_output_map(int fd)
 {
 	if (G_close_cell(fd) < 0)
-		G_fatal_error("unable to close output map");
+		G_fatal_error(_("Unable to close raster map"));
 }
 
 void unopen_output_map(int fd)

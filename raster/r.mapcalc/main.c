@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <grass/glocale.h>
+
 #include "mapcalc.h"
 
 /****************************************************************************/
@@ -120,6 +122,7 @@ int
 main(int argc, char **argv)
 {
 	int all_ok;
+	int overwrite;
 
 	G_gisinit(argv[0]);
 
@@ -127,7 +130,7 @@ main(int argc, char **argv)
 			  strcmp(argv[1], "--help") == 0) )
 	{
 		fputs(help_text, stderr);
-		return 0;
+		return EXIT_SUCCESS;
 	}
 
 	result = (argc >= 2)
@@ -135,8 +138,11 @@ main(int argc, char **argv)
 		: parse_stream(stdin);
 
 	if (!result)
-		return 1;
+		return EXIT_FAILURE;
 
+	overwrite = G_check_overwrite(argc, argv);
+	
+	
 	pre_exec();
 	execute(result);
 	post_exec();
@@ -145,17 +151,17 @@ main(int argc, char **argv)
 
 	if (floating_point_exception_occurred)
 	{
-		fprintf(stderr, "NOTE: floating point error(s) occured in the calculation\n");
+		G_warning(_("Floating point error(s) occured in the calculation"));
 		all_ok = 0;
 	}
 
 	if (overflow_occurred)
 	{
-		fprintf(stderr, "NOTE: overflow occured in the calculation\n");
+		G_warning(_("Overflow occured in the calculation"));
 		all_ok = 0;
 	}
 
-	return all_ok ? 0 : 1;
+	return all_ok ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 /****************************************************************************/
