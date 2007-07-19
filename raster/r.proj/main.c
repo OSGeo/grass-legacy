@@ -70,7 +70,8 @@ int main (int argc, char **argv)
 {
 	char     *mapname,		 /* ptr to name of output layer	 */
 	         *setname,		 /* ptr to name of input mapset	 */
-	         *ipolname;		 /* name of interpolation method */
+	         *ipolname,		 /* name of interpolation method */
+     	         *overstr;               /* for overwrite               */
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -81,7 +82,8 @@ int main (int argc, char **argv)
 	          row, col,		 /* counters			 */
 		  irows, icols,		 /* original rows, cols		 */
 		  orows, ocols,
-		  have_colors;     	 /* Input map has a colour table */
+		  have_colors,     	 /* Input map has a colour table */
+	          overwrite;             /* overwrite output map         */
 
 	void     *obuffer,		 /* buffer that holds one output row	 */
 	         *obufptr;		 /* column ptr in output buffer	 */
@@ -155,6 +157,7 @@ int main (int argc, char **argv)
 
 	outmap = G_define_standard_option(G_OPT_R_OUTPUT);
 	outmap->required = NO;
+	outmap->description = _("Name for output raster map (default: input)");
 
 	ipolname = make_ipol_list();
 
@@ -180,6 +183,29 @@ int main (int argc, char **argv)
 	nocrop->key = 'n';
 	nocrop->description = _("Do not perform region cropping optimization");
 
+	/* The parser checks if the map already exists in current mapset,
+	   we switch out the check and do it
+	 * in the module after the parser */
+	overwrite = 0;
+	if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
+	    overwrite = atoi ( overstr );
+	}
+	/* check if inherited GRASS_OVERWRITE is 1 */
+	if ( !overwrite && (overstr = getenv ( "GRASS_OVERWRITE" )) ) {
+	    overwrite = atoi ( overstr );
+	}
+	/* check for --o or --overwrite option */
+	if (!overwrite) {
+	    int i;
+	    for(i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "--o") == 0 || strcmp(argv[i], "--overwrite") == 0) {
+		    overwrite = 1;
+		    break;
+		}
+	    }
+	}
+	G__setenv ( "OVERWRITE", "1" );
+
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
@@ -194,6 +220,10 @@ int main (int argc, char **argv)
 	interpolate = menu[method].method;
 
 	mapname = outmap->answer ? outmap->answer : inmap->answer;
+	if (!overwrite && G_find_cell(mapname, G_mapset()))
+	    G_fatal_error(_("option <%s>: <%s> exists."),
+			  "output", mapname);
+	
 	setname = imapset->answer ? imapset->answer : G_store(G_mapset());
 
 	if (strcmp(inlocation->answer, G_location()) == 0)
