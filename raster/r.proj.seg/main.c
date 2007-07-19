@@ -81,7 +81,8 @@ int main (int argc, char **argv)
 		row, col,		/* counters			*/
 		irows, icols,		/* original rows, cols		*/
 		orows, ocols,
-		have_colors;		/* Input map has a colour table	*/
+		have_colors,		/* Input map has a colour table	*/
+ 	        overwrite;              /* Overwrite                    */
 
 	void	 *obuffer,		/* buffer that holds one output row	*/
 		 *obufptr;		/* column ptr in output buffer	*/
@@ -135,6 +136,7 @@ int main (int argc, char **argv)
 
 	inmap = G_define_standard_option(G_OPT_R_INPUT);
 	inmap->description = _("Name of input raster map to re-project");
+	inmap->required = NO;
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
@@ -156,6 +158,7 @@ int main (int argc, char **argv)
 
 	outmap = G_define_standard_option(G_OPT_R_OUTPUT);
 	outmap->required = NO;
+	outmap->description = _("Name for output raster map (default: input)");
 
 	ipolname = make_ipol_list();
 
@@ -187,6 +190,8 @@ int main (int argc, char **argv)
 	nocrop->key = 'n';
 	nocrop->description = _("Do not perform region cropping optimization");
 
+	overwrite = G_check_overwrite(argc, argv);
+
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
@@ -201,6 +206,10 @@ int main (int argc, char **argv)
 	interpolate = menu[method].method;
 
 	mapname = outmap->answer ? outmap->answer : inmap->answer;
+	if (mapname && !list->answer && !overwrite && G_find_cell(mapname, G_mapset()))
+	    G_fatal_error(_("option <%s>: <%s> exists."),
+			  "output", mapname);
+
 	setname = imapset->answer ? imapset->answer : G_store(G_mapset());
 
 	if (strcmp(inlocation->answer, G_location()) == 0)
@@ -240,6 +249,9 @@ int main (int argc, char **argv)
 		G_list_element ("cell", "raster", setname, 0);
 		exit(EXIT_SUCCESS); /* leave r.proj after listing*/
 	}
+
+	if (!inmap->answer)
+	    G_fatal_error (_("Required parameter <%s> not set"), inmap->key);
 
 	if (!G_find_cell(inmap->answer, setname))
 		G_fatal_error(_("Raster map <%s> in location <%s> in mapset <%s> not found"),
