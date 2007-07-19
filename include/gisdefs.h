@@ -856,6 +856,9 @@ int G_open_raster_new(const char *, RASTER_MAP_TYPE);
 int G_open_raster_new_uncompressed(const char *, RASTER_MAP_TYPE);
 int G_set_quant_rules(int, struct Quant *);
 
+/* overwrite.c */
+int G_check_overwrite(int argc, char **argv);
+
 /* parser.c */
 int G_disable_interactive(void);
 struct GModule *G_define_module(void);
