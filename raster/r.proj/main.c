@@ -70,8 +70,7 @@ int main (int argc, char **argv)
 {
 	char     *mapname,		 /* ptr to name of output layer	 */
 	         *setname,		 /* ptr to name of input mapset	 */
-	         *ipolname,		 /* name of interpolation method */
-     	         *overstr;               /* for overwrite               */
+	         *ipolname;		 /* name of interpolation method */
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -136,6 +135,7 @@ int main (int argc, char **argv)
 
 	inmap = G_define_standard_option(G_OPT_R_INPUT);
 	inmap -> description = _("Name of input raster map to re-project");
+	inmap->required = NO;
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
@@ -186,26 +186,8 @@ int main (int argc, char **argv)
 	/* The parser checks if the map already exists in current mapset,
 	   we switch out the check and do it
 	 * in the module after the parser */
-	overwrite = 0;
-	if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
-	    overwrite = atoi ( overstr );
-	}
-	/* check if inherited GRASS_OVERWRITE is 1 */
-	if ( !overwrite && (overstr = getenv ( "GRASS_OVERWRITE" )) ) {
-	    overwrite = atoi ( overstr );
-	}
-	/* check for --o or --overwrite option */
-	if (!overwrite) {
-	    int i;
-	    for(i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "--o") == 0 || strcmp(argv[i], "--overwrite") == 0) {
-		    overwrite = 1;
-		    break;
-		}
-	    }
-	}
-	G__setenv ( "OVERWRITE", "1" );
-
+	overwrite = G_check_overwrite(argc, argv);
+	
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
@@ -220,7 +202,7 @@ int main (int argc, char **argv)
 	interpolate = menu[method].method;
 
 	mapname = outmap->answer ? outmap->answer : inmap->answer;
-	if (!overwrite && G_find_cell(mapname, G_mapset()))
+	if (mapname && !list->answer && !overwrite && G_find_cell(mapname, G_mapset()))
 	    G_fatal_error(_("option <%s>: <%s> exists."),
 			  "output", mapname);
 	
@@ -263,6 +245,9 @@ int main (int argc, char **argv)
 		G_list_element ("cell", "raster", setname, 0);
 		exit(EXIT_SUCCESS); /* leave r.proj after listing*/
 	}
+
+	if (!inmap->answer)
+	    G_fatal_error (_("Required parameter <%s> not set"), inmap->key);
 
 	if (!G_find_cell(inmap->answer, setname))
 		G_fatal_error(_("Raster map <%s> in location <%s> in mapset <%s> not found"),
