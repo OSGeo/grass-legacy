@@ -66,7 +66,7 @@ main (int argc,char *argv[])
     /* Options' declaration */
     module = G_define_module ();
     	module->keywords = _("vector, statistics");
-    	module->description = _("Removes outliers from vector point data");
+    	module->description = _("Removes outliers from vector point data.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -86,7 +86,7 @@ main (int argc,char *argv[])
     	qgis_opt->key_desc     = "name";
     	qgis_opt->required     = NO; 
     	qgis_opt->gisprompt    = "new,vector,vector";
-    	qgis_opt->description  = _("Name of vector map for visualization in qgis");
+    	qgis_opt->description  = _("Name of vector map for visualization in QGIS");
 
     passoE_opt = G_define_option ();
     	passoE_opt->key = "soe";
@@ -123,10 +123,10 @@ main (int argc,char *argv[])
 	exit (EXIT_FAILURE); 
 
    if ( !(db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
-    	G_fatal_error (_("Database's name couldn't be read"));
+    	G_fatal_error (_("Unable to read name of database"));
 	
     if ( !(dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
-	G_fatal_error (_("Driver's name couldn't be read")); 
+	G_fatal_error (_("Unable to read name of driver")); 
 
     passoN = atof (passoN_opt->answer);
     passoE = atof (passoE_opt->answer);
@@ -182,7 +182,7 @@ main (int argc,char *argv[])
     /* Start driver and open db*/
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL) 
-	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dvr);
+	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect."), dvr);
 
     /* Setting regions and boxes */
     G_get_set_window (&original_reg);

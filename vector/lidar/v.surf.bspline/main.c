@@ -180,10 +180,10 @@ main (int argc,char *argv[])
     map = out_map_opt->answer;
 
     if ( !(db=G__getenv2("DB_DATABASE",G_VAR_MAPSET)) )
-	G_fatal_error (_("Database's name couldn't be read"));
+	G_fatal_error (_("Unable to read name of database"));
 
     if ( !(dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
-	G_fatal_error (_("Driver's name couldn't be read"));
+	G_fatal_error (_("Unable to read name of driver"));
 
     if (vector && map) 
 	G_fatal_error (_("Choose either vector or raster output, not both"));
@@ -253,7 +253,7 @@ main (int argc,char *argv[])
 	    */
 
 	if ((raster = G_open_fp_cell_new (out_map_opt->answer)) < 0) 
-	    G_fatal_error (_("Cannot create raster map <%s>"), out_map_opt->answer);
+	    G_fatal_error (_("Unable to create raster map <%s>"), out_map_opt->answer);
     }
 
     if (bspline_field > 0) {
@@ -266,7 +266,7 @@ main (int argc,char *argv[])
 	/*G_debug (0, _("driver=%s db=%s"), Fi->driver, Fi->database);*/
 	
 	if ( driver_cats == NULL )
-    	G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver);
+    	G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
     
         nrec = db_select_CatValArray ( driver_cats, Fi->table, Fi->key, col_opt->answer, NULL, &cvarr );
         G_debug (3, "nrec = %d", nrec );
@@ -312,8 +312,7 @@ main (int argc,char *argv[])
     /* Open driver and database */
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
-	G_fatal_error( _("Interpolation: No database connection for driver "
-		    "<%s> defined. Run db.connect"), dvr);
+	G_fatal_error( _("No database connection for driver <%s> defined. Run db.connect."), dvr);
 
     /* Setting auxiliar table's name */
     if (vector)

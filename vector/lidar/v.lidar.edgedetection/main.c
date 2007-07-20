@@ -72,7 +72,7 @@ main (int argc,char *argv[])
 /* Options' declaration */
     module = G_define_module ();
     module->keywords = _("vector, LIDAR, edges");
-    module->description = _("Detect the object's edges from a LIDAR data set.");
+    module->description = _("Detects the object's edges from a LIDAR data set.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -149,10 +149,10 @@ main (int argc,char *argv[])
     grad_L = atof (gradL_opt->answer);
     alpha = atof (alfa_opt->answer);
     if ( !(db=G__getenv2 ("DB_DATABASE",G_VAR_MAPSET)) )
-	G_fatal_error (_("Database's name couldn't be read"));
+	G_fatal_error (_("Unable to read neme of database"));
 
     if ( !(dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET)) )
-	G_fatal_error (_("Driver's name couldn't be read"));
+	G_fatal_error (_("Unable to read name of driver"));
 
 /* Setting auxiliar table's name */
     sprintf (table_name, "%s_aux", out_opt->answer);
@@ -171,7 +171,7 @@ main (int argc,char *argv[])
     Vect_set_open_level (1);
 /* Open input vector */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset))
-    	G_fatal_error ( _("Vector <%s> could not be opened"), in_opt->answer);
+    	G_fatal_error ( _("Unable to open vector map <%s>"), in_opt->answer);
 
 /* Copy vector Head File */
     Vect_copy_head_data (&In, &Out);
@@ -181,7 +181,7 @@ main (int argc,char *argv[])
 /* Start driver and open db*/
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL) 
-	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect"), dvr);
+	G_fatal_error (_("No database connection for driver <%s> is defined. Run db.connect."), dvr);
 
     if (Create_Interpolation_Table (out_opt->answer, driver) != DB_OK) 
 	G_fatal_error (_("It was impossible to create <%s> interpolation table in database."), out_opt->answer);
