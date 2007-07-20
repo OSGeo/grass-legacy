@@ -4,7 +4,8 @@
  * AUTHOR(S):    Dave Gerdes, U.S.Army Construction Engineering Research Laboratory
  *               (original contributor)
  *               Radim Blazek <radim.blazek gmail.com> (update to GRASS 6)
- *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>,
+ *               Martin Landa <landa.martin gmail.com> (bbox)
  * PURPOSE:      
  * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
  *
@@ -35,7 +36,7 @@
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
 
-int patch(struct Map_info *, struct Map_info *, int, int *);
+int patch(struct Map_info *, struct Map_info *, int, int *, struct Map_info *);
 int copy_records ( dbDriver *driver_in, dbString *table_name_in,
                    dbDriver *driver_out, dbString *table_name_out,
                    int, int );
@@ -45,11 +46,11 @@ int
 main (int argc, char *argv[])
 {
     int i, ret;
-    char *in_name, *out_name;
+    char *in_name, *out_name, *bbox_name;
     struct GModule *module;
-    struct Option *old, *new;
+    struct Option *old, *new, *bbox;
     struct Flag *append, *table_flag;
-    struct Map_info InMap, OutMap;
+    struct Map_info InMap, OutMap, BBoxMap;
     int  n_files;
     int do_table;
     struct field_info *fi_in, *fi_out;
@@ -72,6 +73,11 @@ main (int argc, char *argv[])
 
     new = G_define_standard_option(G_OPT_V_OUTPUT);
 
+    bbox = G_define_standard_option(G_OPT_V_OUTPUT);
+    bbox->required = NO;
+    bbox->key = "bbox";
+    bbox->description = _("Name for output vector map where bounding boxes of input vector maps are written to");
+
     append = G_define_flag();
     append->key = 'a';
     append->description = _("Append files to existing file "
@@ -85,6 +91,7 @@ main (int argc, char *argv[])
     if (G_parser(argc, argv)) exit (EXIT_FAILURE);
 
     out_name = new->answer;
+    bbox_name = bbox->answer;
     do_table = table_flag->answer;
 
     db_init_string(&table_name_in);
@@ -254,6 +261,11 @@ main (int argc, char *argv[])
     } else {
 	Vect_open_new (&OutMap, out_name, out_is_3d);
     }
+    
+    if (bbox_name) {
+	Vect_open_new (&BBoxMap, bbox_name, out_is_3d); /* TODO 3D */
+	Vect_hist_command (&BBoxMap);
+    }
 
     Vect_hist_command ( &OutMap );
 
@@ -298,7 +310,10 @@ main (int argc, char *argv[])
 	in_name = old->answers[i++];
 	G_important_message (_("Patching vector map <%s@%s>..."), in_name,
 		   G_find_vector2 (in_name, ""));
-	Vect_set_open_level (1);
+	if (bbox_name)
+	    Vect_set_open_level (2); /* needed for Vect_map_box() */
+	else
+	    Vect_set_open_level (1);
 	Vect_open_old ( &InMap, in_name, "" );
 
 	/*first time around, copy first in head to out head*/
@@ -315,7 +330,7 @@ main (int argc, char *argv[])
         }
         G_debug ( 2, "maxcat = %d add_cat = %d", maxcat, add_cat);
             
-	ret = patch (&InMap, &OutMap, add_cat, &maxcat);
+	ret = patch (&InMap, &OutMap, add_cat, &maxcat, bbox_name ? &BBoxMap : NULL);
 	if (ret < 0)
 	  G_warning (_("Error reading vector map <%s> - " 
 		       "some data may not be correct"), in_name);
@@ -361,6 +376,19 @@ main (int argc, char *argv[])
 	Vect_build (&OutMap, NULL);
 
     Vect_close (&OutMap);
+
+    if (bbox_name) {
+	Vect_set_map_name (&BBoxMap, "Output from v.patch (bounding boxes)");
+	Vect_set_person (&BBoxMap, G_whoami ());
+	G_important_message (NULL);
+	G_important_message (_("Building topology for vector map <%s>..."), bbox_name);
+	if (G_verbose() > G_verbose_min())
+	    Vect_build (&BBoxMap, stderr);
+	else
+	    Vect_build (&BBoxMap, NULL);
+	
+	Vect_close (&BBoxMap);
+    }
 
     G_message (_("Intersections at borders will have to be snapped"));
     G_message (_("Lines common between files will have to be edited"));
@@ -468,7 +496,7 @@ int copy_records ( dbDriver *driver_in, dbString *table_name_in,
     return 1;
 } 
 
-int patch ( struct Map_info *InMap, struct Map_info *OutMap, int add_cat, int *max_cat)
+int patch ( struct Map_info *InMap, struct Map_info *OutMap, int add_cat, int *max_cat, struct Map_info *BBoxMap)
 {
     int type;
     struct line_pnts *Points;
@@ -501,12 +529,61 @@ int patch ( struct Map_info *InMap, struct Map_info *OutMap, int add_cat, int *m
 	Vect_write_line (OutMap, type, Points, Cats);
     }
 
+    if (BBoxMap) { /* inspired by v.in.region */
+	BOUND_BOX box;
+	double diff_long, mid_long;
+	static int cat;
+
+	Vect_get_map_box (InMap, &box);
+
+	diff_long = box.E - box.W;
+	mid_long = (box.W + box.E) / 2;
+
+	/* rectangle */
+	Vect_reset_cats (Cats);
+
+	/* write each line, useful for snapping */
+	Vect_reset_line (Points);
+	Vect_append_point (Points, box.W, box.S, 0.0);
+	if (Vect_get_proj (BBoxMap) == PROJECTION_LL && diff_long >= 179) {
+	    Vect_append_point (Points, mid_long, box.S, 0.0);
+	}
+	Vect_append_point (Points, box.E, box.S, 0.0);
+        Vect_write_line (BBoxMap, GV_BOUNDARY, Points, Cats);
+
+	Vect_reset_line (Points);
+	Vect_append_point (Points, box.E, box.S, 0.0);
+	Vect_append_point (Points, box.E, box.N, 0.0);
+	Vect_write_line (BBoxMap, GV_BOUNDARY, Points, Cats);
+
+	Vect_reset_line (Points);
+	Vect_append_point (Points, box.E, box.N, 0.0);
+	if (Vect_get_proj (BBoxMap) == PROJECTION_LL && diff_long >= 179) {
+	    Vect_append_point (Points, mid_long, box.N, 0.0);
+	}
+	Vect_append_point (Points, box.W, box.N, 0.0);
+	Vect_write_line (BBoxMap, GV_BOUNDARY, Points, Cats);
+
+	Vect_reset_line (Points);
+	Vect_append_point (Points, box.W, box.N, 0.0);
+	Vect_append_point (Points, box.W, box.S, 0.0);
+	Vect_write_line (BBoxMap, GV_BOUNDARY, Points, Cats);
+
+	/* centroid */
+        Vect_reset_line (Points);
+	Vect_cat_set (Cats, 1, ++cat); /* first layer */
+        Vect_append_point (Points, (box.W+box.E)/2, (box.S+box.N)/2, 0.0);
+        
+	Vect_write_line (BBoxMap, GV_CENTROID, Points, Cats);
+    }
+
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
 
-    if (type != -2) return (-1);
+    if (type != -2)
+	return -1;
 
-    return (0);
+    return 0;
 }
 
 int max_cat ( struct Map_info *Map, int layer )
