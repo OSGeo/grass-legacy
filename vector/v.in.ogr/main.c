@@ -287,7 +287,7 @@ main (int argc, char *argv[])
     }
 
     if (G_legal_filename(out_opt->answer) < 0)
-        G_fatal_error(_("<%s> is illegal filename"), out_opt->answer);
+        G_fatal_error(_("<%s> is an illegal file name"), out_opt->answer);
 
     if ( !outloc_opt->answer ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
