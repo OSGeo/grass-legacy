@@ -191,7 +191,7 @@ int com_line_Gwater (INPUT *input, OUTPUT *output)
   	fprintf (stderr, _("\nPlease name this file:"));
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
-		G_message(_("[%s] file name not legal"), char_input);
+		G_message(_("<%s> is an illegal file name"), char_input);
 	} else	input->ar_file_name = G_store (char_input);
   }
 
@@ -221,7 +221,7 @@ make the armsed file query manditory if this option is invoked.
   	fprintf (stderr, _("\nPlease name this file:"));
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
-		G_message(_("[%s] file name not legal\n"), char_input);
+		G_message(_("<%s> is an illegal file name"), char_input);
 	} else	output->file_name = G_store (char_input);
   }
  
