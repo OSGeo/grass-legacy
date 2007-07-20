@@ -119,7 +119,7 @@ Additional parameters for vector feature specification are:
     two lines on location given by <code>coords</code>. Shape of the
     line is not changed.</li>
     
-    <li><code>snap</code> - Snap one vector line to another.</li>
+    <li><code>snap</code> - Snap line or boundary to vertex in threshold.</li>
 
     <li><code>connect</code> - Connect selected lines, the first given
     line is connected to the second one. The second line is broken if
@@ -341,7 +341,11 @@ v.edit map=roads tool=break coords=604268,4923570 id=810
 
 <h3>Snap lines</h3>
 
-TODO
+Snap all lines in given bounding box (in threshold 20 map units):
+
+<div class="code"><pre>
+v.edit map=mapa bbox=4342289,2341033,4422296,2641319 tool=snap thresh=20 type=line
+</pre></div>
 
 <h3>Connect lines</h3>
 

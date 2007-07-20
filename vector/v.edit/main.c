@@ -45,8 +45,8 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, editing, geometry");
-    module->description = _("Edits a vector map - allows adding, deleting "
-			    "and modifying objects in a vector map.");
+    module->description = _("Edit a vector map layer - allow adding, deleting "
+			    "and modifying selected vector features.");
 
     if(!parser(argc, argv, &params, &action_mode))
 	exit(EXIT_FAILURE);
@@ -215,8 +215,8 @@ int main (int argc, char *argv[])
 	ret = do_copy(&Map, List, print);
 	break;
     case MODE_SNAP:
-	ret = do_snap(&Map, List, print,
-		      layer, NULL);
+	ret = do_snap(&Map, List, thresh, layer,
+		      print, NULL);
 	break;
     case MODE_FLIP:
 	ret = do_flip(&Map, List, print);
@@ -240,7 +240,10 @@ int main (int argc, char *argv[])
     /* build topology only if requested or if tool!=select */
     if  (!(action_mode == MODE_SELECT || params.topo -> answer == 1 || !MODE_NONE)) {
         Vect_build_partial(&Map, GV_BUILD_NONE, NULL);
-        Vect_build (&Map, stderr);
+	if (G_verbose() > G_verbose_min())
+	    Vect_build (&Map, stderr);
+	else
+	    Vect_build (&Map, NULL);
     }
 
     if (List)

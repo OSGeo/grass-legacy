@@ -47,7 +47,7 @@ int parser(int argc, char*argv[], struct GParams *params,
 				     "copy;"
 				     "Copy selected features;"
 				     "snap;"
-				     "Snap one vector line to another;"
+				     "Snap line or boundary to vertex in threshold;"
 				     "flip;"
 				     "Flip direction of selected vector lines;"
 				     "connect;"
@@ -104,7 +104,8 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> bbox->type        = TYPE_DOUBLE;
     params -> bbox->required    = NO;
     params -> bbox->multiple    = NO;
-    params -> bbox->description = _("Bounding box for selecting features");
+    params -> bbox->label = _("Bounding box for selecting features");
+    params -> bbox->description = _("Usually W,S,E,N");
     params -> bbox->guisection  = _("Query");
 
     params -> poly =  G_define_option();

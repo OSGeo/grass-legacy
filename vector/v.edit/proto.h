@@ -37,8 +37,11 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 int do_merge(struct Map_info *Map, struct ilist *List, int print);
 
 /* snap.c */
-int do_snap(struct Map_info *Map, struct ilist *List, int print,
-	    int layer, struct ilist *);
+int do_snap(struct Map_info *Map, struct ilist *List, double thresh, int layer,
+	    int print, struct ilist *List_updated);
+
+int do_snap2(struct Map_info *Map, struct ilist *List, int layer,
+	    int print, struct ilist *List_updated);
 
 /* select.c */
 int do_print_selected(struct ilist *List);
