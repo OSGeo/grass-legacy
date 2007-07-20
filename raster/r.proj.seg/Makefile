@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = r.proj.seg
+PGM = r.proj
 
 LIBES =  $(GPROJLIB) $(GISLIB)
 DEPENDENCIES = $(GPROJDEP) $(GISDEP)
