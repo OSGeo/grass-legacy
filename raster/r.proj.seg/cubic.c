@@ -10,9 +10,6 @@
  *
  *  If single surrounding points in the interpolation matrix are
  *  NULL they where filled with their neighbor
- *
- *  See: Richards, John A. (1993), Remote Sensing Digital Image Analysis,
- *	 Springer-Verlag, Berlin, 2nd edition.
  */
 
 #include <grass/gis.h>

@@ -1,4 +1,3 @@
-
 /*
  * Name
  *  bilinear.c -- use bilinear interpolation for given row, col
@@ -9,8 +8,6 @@
  *  the point in the output map is set to NULL.
  *  If any of the 4 surrounding points to be used in the interpolation
  *  is NULL it is filled with is neighbor value
- *
- *  See: Press, W.H. et al. (1992), Numerical recipes in C.
  */
 
 #include <math.h>
