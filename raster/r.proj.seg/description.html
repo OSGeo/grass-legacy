@@ -34,13 +34,13 @@ Projections are defined by precise mathematical relations, so the method
 of projecting coordinates from a geographic reference frame
 (latitude-longitude) into a projected cartesian reference frame (eg metres)
 is governed by these equations.  Inverse projections can also be achieved. 
-The public-domain Unix software package <I>proj</I> [1] has been designed to
+The public-domain Unix software package <i>PROJ</i> [1] has been designed to
 perform these transformations, and the user's manual contains a detailed
 description of over 100 useful projections.  This also includes a
 programmers library of the projection methods to support other software
 development.  
 <P>
-Thus, converting a &quot;vector&quot; map - in which objects are located
+Thus, converting a vector map - in which objects are located
 with arbitrary spatial precision - from one projection into another is
 usually accomplished by a simple two-step process:  first the location of
 all the points in the map are converted from the source through an inverse
@@ -48,7 +48,7 @@ projection into latitude-longitude, and then through a forward projection
 into the target.  (Of course the procedure will be one-step if either the
 source or target is in geographic coordinates.)
 <P>
-Converting a &quot;raster map&quot;, or image, between different projections, 
+Converting a raster map, or image, between different projections, 
 however, involves additional considerations.  
 A raster may be considered to represent a sampling of a
 process at a regular, ordered set of locations.  The set of locations that
@@ -56,7 +56,7 @@ lie at the intersections of a cartesian grid in one projection will not, in
 general, coincide with the sample points in another projection.  Thus, the
 conversion of raster maps involves an interpolation step in which the values
 of points at intermediate locations relative to the source grid are
-estimated.  
+estimated.
 
 <H5>Projecting vector maps within the GRASS GIS</H5>
 <!-- move this into v.proj.html !! -->
@@ -65,49 +65,49 @@ step, since the source or client will frequently be in a different
 projection to the working projection.
 <P>
 In some cases it is convenient to do the conversion outside the package,
-prior to import or after export, using software such as <I>PROJ4</I>'s 
-<i><a href="http://proj.maptools.org/">cs2cs</a></i> [1]. This is an easy 
-method for converting an ASCII file containing a list of coordinate points, 
-since there is no topology to be preserved and <I>cs2cs</I> can be used to 
+prior to import or after export, using software such as <I>PROJ.4</I>'s
+<i><a href="http://proj.maptools.org/">cs2cs</a></i> [1]. This is an easy
+method for converting an ASCII file containing a list of coordinate points,
+since there is no topology to be preserved and <I>cs2cs</I> can be used to
 process simple lists using a one-line command.
 <P>
-The format of vector maps describing maps containing <B>lines</B> and 
-<B>arcs</B> is generally more complex, as parts of the data stored in the 
-files will describe topology, and not just coordinates.  In GRASS GIS
-the <I><A HREF="v.proj.html">v.proj</a></I> module is provided  to reproject
-&quot;vector&quot; maps, transferring topology and attributes as well as node
-coordinates.  This program uses the projection definition and 
-parameters which are stored in the PROJ_INFO and PROJ_UNITS files in the 
-PERMANENT mapset directory for every GRASS location.  
+The format of files containing vector maps with <B>lines</B> and <B>arcs</B> is
+generally more complex, as parts of the data stored in the files will describe
+topology, and not just coordinates. In GRASS GIS the
+<I><A HREF="v.proj.html">v.proj</a></I> module is provided to reproject
+vector maps, transferring topology and attributes as well as node coordinates.
+This program uses the projection definition and parameters which are stored in
+the PROJ_INFO and PROJ_UNITS files in the PERMANENT mapset directory for every
+GRASS location.
 <BR><BR>
 
 <H4>Design of r.proj</H4>
 
 As discussed briefly above, the fundamental step in re-projecting a
 raster is resampling the source grid at locations corresponding to the
-intersections of a grid in the target projection.  The basic procedure for
+intersections of a grid in the target projection. The basic procedure for
 accomplishing this, therefore, is as follows:
 <p>
 <EM>r.proj</EM> converts a map to a new geographic projection. It reads a
-map from a different location, projects it and write it out
-to the current location. 
+map from a different location, projects it and write it out to the current
+location.
 <br>
 The projected data is resampled with one of three different methods: 
 nearest neighbor, bilinear and cubic convolution.
 <p>
-The nearest option, which performs a nearest neighbor assignment is the
-fastest of the three resampling methods. It is primarily used for
+The <em>method=nearest</em> method, which performs a nearest neighbor assignment,
+is the fastest of the three resampling methods. It is primarily used for
 categorical data such as a land use classification, since it will not change
-the values of the data cells. The bilinear option determines the new value
-of the cell based on a weighted distance average of the 4 surrounding cells
-in the input map. The cubic option determines the new value of the cell
-based on a weighted distance average of the 16 surrounding cells in the
-input map.
+the values of the data cells. The <em>method=bilinear</em> method determines the new
+value of the cell based on a weighted distance average of the 4 surrounding
+cells in the input map. The <em>method=cubic</em> method determines the new value of
+the cell based on a weighted distance average of the 16 surrounding cells in
+the input map.
 <p>
 The bilinear and cubic interpolation methods are most appropriate for
 continuous data and cause some smoothing. Both options should not be used
 with categorical data, since the cell values will be altered.
-
+<p>
 If nearest neighbor assignment is used, the output map has the same raster
 format as the input map. If any of the both interpolations is used, the
 output map is written as floating point.
@@ -139,16 +139,16 @@ This "box" map is then reprojected into the target location with
 <em><A HREF="v.proj.html">v.proj</a></em>.
 Next the region in the target location is set to the extent of the new vector
 map with <em><A HREF="g.region.html">g.region</a></em> along with the desired
-raster resolution (<em>g.region</em> -m can be used in Latitude/Longitude 
+raster resolution (<em>g.region -m</em> can be used in Latitude/Longitude
 locations to measure the geodetic length of a pixel).
 <em>r.proj</em> is then run for the raster map the user wants to reproject.
 In this case a little preparation goes a long way.
 <P>
-When reprojecting whole-world maps the user should disable map-trimming with the
-<em>-n</em> flag. Trimming is not useful here because the module has the whole
-map in memory anyway. Besides that, world "edges" are hard (or impossible)
-to find in projections other than latitude-longitude so results may be odd
-with trimming.
+When reprojecting whole-world maps the user should disable map-trimming with
+the <em>-n</em> flag. Trimming is not useful here because the module has the
+whole map in memory anyway. Besides that, world "edges" are hard (or
+impossible) to find in projections other than latitude-longitude so results
+may be odd with trimming.
 
 <h2>REFERENCES</h2>
 
@@ -159,12 +159,12 @@ See also there: Interim Report and 2nd Interim Report on Release 4, Evenden 1994
 Richards, John A. (1993), Remote Sensing Digital Image Analysis,
 Springer-Verlag, Berlin, 2nd edition. 
 <P>
-<a href=http://proj.maptools.org/>PROJ 4</a>: Projection/datum support library.
+<a href=http://proj.maptools.org/>PROJ.4</a>: Projection/datum support library.
 <P>
 <B>Further reading</B>
 <ul>
 <li> <a href="http://www.asprs.org/resources/grids/">ASPRS Grids and Datum</a>
-<li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ4)
+<li> <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections Transform List</a> (PROJ.4)
 <li> <a href="http://www.mapref.org">MapRef - The Collection of Map Projections and Reference Systems for Europe</a> 
 <li> <a href="http://crs.bkg.bund.de/crs-eu/">Information and Service System for European Coordinate Reference Systems - CRS</a>
 </ul>
