@@ -23,12 +23,37 @@
 #include "global.h"
 
 /* 
+ * alternative snapping function using library function
+ * return 1
+ */
+int do_snap(struct Map_info *Map, struct ilist *List, double thresh, int layer,
+	    int print, struct ilist *List_updated) {
+    
+    FILE * output;
+
+    if (G_verbose() > G_verbose_min()) {
+	G_important_message (SEP);
+	output = stderr;
+    }
+    else
+	output = NULL;
+
+    Vect_snap_lines_list (Map, List, thresh, NULL, output);
+
+    if (G_verbose() > G_verbose_min()) {
+	G_important_message (SEP);
+    }
+
+    return 1;
+}
+
+/* 
  * snap *two* selected lines
  * return 1 on successs
  * return -1 on error
  */
-int do_snap(struct Map_info *Map, struct ilist *List, int print,
-	    int layer, struct ilist *List_updated)
+int do_snap2(struct Map_info *Map, struct ilist *List, int layer,
+	    int print, struct ilist *List_updated)
 {
     struct line_pnts *Points1, *Points2;
     struct line_cats *Cats1, *Cats2;

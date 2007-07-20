@@ -343,7 +343,7 @@ int do_snapping(struct Map_info *Map, struct ilist* List, int layer,
 	    if(line_to_snap > 0 && Vect_line_alive(Map, line_to_snap)) {
 		Vect_list_append(List_snap, line_to_snap);
 		Vect_list_append(List_snap, line); /* add line which should be snapped */
-		if (do_snap(Map, List_snap, 0, layer, List_updated)) {
+		if (do_snap2(Map, List_snap, layer, 0, List_updated)) {
 		    line = List_updated->value[0];
 		    nlines_modified++;
 		}
