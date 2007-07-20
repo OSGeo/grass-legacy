@@ -369,7 +369,7 @@ int main (int argc, char *argv[])
 	&& dxx_name == NULL && dyy_name == NULL && dxy_name == NULL)
     {
 	G_warning("You must specify at least one of the parameters:"
-		"\n<%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>,  or <%s>\n", 
+		"\n<%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s>, <%s> or <%s>.\n", 
 		parm.slope->key, parm.aspect->key, parm.pcurv->key, 
 		parm.tcurv->key, parm.dx->key, parm.dy->key, 
 		parm.dxx->key, parm.dyy->key, parm.dxy->key);
@@ -380,7 +380,7 @@ int main (int argc, char *argv[])
     /* check elevation file existence */
     mapset = G_find_cell2(elev_name, "");
     if (!mapset)
-        G_fatal_error (_("elevation file [%s] not found"), elev_name);
+        G_fatal_error (_("Raster map <%s> not found"), elev_name);
 
     /* set the window from the header for the elevation file */
     if (!flag.a->answer)
@@ -431,7 +431,7 @@ int main (int argc, char *argv[])
    /* give warning if location units are different from meters and zfactor=1*/
     factor = G_database_units_to_meters_factor();
     if (factor != 1.0)
-        G_warning("converting units to meters, factor=%.6f", factor);
+        G_warning("Converting units to meters, factor=%.6f", factor);
 
     G_begin_distance_calculations();
     north = G_row_to_northing(0.5, &window);
@@ -1052,7 +1052,7 @@ int main (int argc, char *argv[])
         G_read_raster_cats (aspect_name, G_mapset(), &cats);
         G_set_raster_cats_title ("aspect counterclockwise in degrees from east", &cats);
 
-	G_message(_("min computed aspect %.4f  max computed aspect %.4f"), min_asp, max_asp);
+	G_message(_("Min computed aspect %.4f, max computed aspect %.4f"), min_asp, max_asp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but
@@ -1145,7 +1145,7 @@ int main (int argc, char *argv[])
         if(deg) G_set_raster_cats_title ("slope in degrees", &cats);
         else if(perc) G_set_raster_cats_title ("percent slope", &cats);
 
-	G_message(_("min computed slope %.4f  max computed slope %.4f"), min_slp, max_slp);
+	G_message(_("Min computed slope %.4f, max computed slope %.4f"), min_slp, max_slp);
 	/* the categries quant intervals are 1.0 long, plus
 	   we are using reverse order so that the label looked up
 	   for i-.5 is not the one defined for i-.5, i+.5 interval, but

@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
     /*  Get database window parameters      */
 
     if (G_get_window(&window) < 0)
-	G_fatal_error(_("can't read current window parameters"));
+	G_fatal_error(_("Unable to read current window parameters"));
 
     /*  Find north-south, east_west and diagonal factors */
 
@@ -316,12 +316,12 @@ int main(int argc, char *argv[])
     cost_mapset = G_find_cell2(cost_layer, "");
 
     if (cost_mapset == NULL)
-	G_fatal_error(_("%s - not found"), cost_layer);
+	G_fatal_error(_("Raster map <%s> not found"), cost_layer);
 
     /*  Check if specified output layer name is legal   */
 
     if (G_legal_filename(cum_cost_layer) < 0)
-	G_fatal_error(_("%s - illegal name"), cum_cost_layer);
+	G_fatal_error(_("<%s> is an illegal file name"), cum_cost_layer);
 
     /*  Find number of rows and columns in window    */
 
@@ -456,7 +456,7 @@ int main(int argc, char *argv[])
 	fbuff = (double *)G_malloc(ncols * sizeof(double));
 
 	if (fbuff == NULL)
-	    G_fatal_error(_("Can't allocate memory for segment fbuff == NULL"));
+	    G_fatal_error(_("Unable to allocate memory for segment fbuff == NULL"));
 
 	G_set_d_null_value(fbuff, ncols);
 
@@ -600,7 +600,7 @@ int main(int argc, char *argv[])
 	for (row = 0; row < nrows; row++) {
             G_percent(row, nrows, 2);
 	    if (G_get_raster_row(fd, cell2, row, data_type2) < 0)
-		G_fatal_error(_("Error reading map %s"), opt9->answer);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), opt9->answer, row);
 	    ptr2 = cell2;
 	    for (col = 0; col < ncols; col++) {
 		/* Did I understand that concept of cummulative cost map? - (pmx) 12 april 2000 */
@@ -642,7 +642,7 @@ int main(int argc, char *argv[])
 	    if (top_start_pt->row < 0 || top_start_pt->row >= nrows
 		|| top_start_pt->col < 0 || top_start_pt->col >= ncols)
 		G_fatal_error(_
-			      ("specified starting location outside database window"));
+			      ("Specified starting location outside database window"));
 	    new_cell = insert(zero, top_start_pt->row, top_start_pt->col);
 	    segment_put(&out_seg, value, top_start_pt->row, top_start_pt->col);
 	    top_start_pt = top_start_pt->next;

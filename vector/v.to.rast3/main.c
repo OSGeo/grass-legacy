@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
 
     if (G_legal_filename(out_opt->answer) < 0)
-	G_fatal_error(_("Illegal output name: '%s'"), out_opt->answer);
+	G_fatal_error(_("<%s> is an illegal file name"), out_opt->answer);
 
     G3d_getWindow (&region);
     G3d_readWindow(&region,NULL);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 		G3D_USE_CACHE_DEFAULT, &region);
 
     if (map == NULL)
- 	G_fatal_error(_("Can't create output map"));
+ 	G_fatal_error(_("Unable to create output map"));
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
     Vect_close ( &Map );
 
     if (! G3d_closeCell (map) )
-        G_fatal_error(_("Could not close new 3d raster map"));
+        G_fatal_error(_("Unable to close new 3d raster map"));
 
 
     exit(EXIT_SUCCESS);

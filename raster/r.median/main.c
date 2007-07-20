@@ -72,12 +72,12 @@ int main (int argc, char *argv[])
     if (cover_mapset == NULL)
 	G_fatal_error(_("Raster map <%s> not found"), covermap);
     if (G_legal_filename(outmap) < 0)
-	G_fatal_error(_("Illegal map name <%s>"), outmap);
+	G_fatal_error(_("<%s> is an illegal file name"), outmap);
     if (strcmp(G_mapset(),base_mapset)==0 && strcmp(basemap, outmap) == 0)
 	G_fatal_error(_("Base map and output map <%s> must be different"),
 		      outmap);
     if (G_read_cats (covermap, cover_mapset, &cover_cats) < 0)
-	G_fatal_error (_("Cannot read category labels of raster map <%s>"), covermap);
+	G_fatal_error (_("Unable to read category labels of raster map <%s>"), covermap);
 
     strcpy (command, "r.stats -an \"");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));

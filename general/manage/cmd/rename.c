@@ -84,7 +84,7 @@ main (int argc, char *argv[])
 	    }
 	    if (G_legal_filename (new) < 0)
 	    {
-		G_warning (_("<%s> illegal name"), new);
+		G_warning (_("<%s> is an illegal file name"), new);
 		continue;
 	    }
 	    if (strcmp (old, new) == 0)

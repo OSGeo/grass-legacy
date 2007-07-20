@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
     }
     if (G_legal_filename(outmap) < 0)
     {
-	G_fatal_error(_("%s: illegal map name"), outmap);
+	G_fatal_error(_("<%s> is an illegal file name"), outmap);
     }
     if (strcmp(G_mapset(),base_mapset)==0 && strcmp(basemap, outmap) == 0)
     {
@@ -101,7 +101,7 @@ int main (int argc, char *argv[])
     }
     if (G_read_cats (covermap, cover_mapset, &cover_cats) < 0)
     {
-	G_fatal_error (_( "%s: can't read category labels"), covermap);
+	G_fatal_error (_( "%s: Unable to read category labels"), covermap);
     }
 
     strcpy (command, "r.stats -an \"");

@@ -77,10 +77,10 @@ main (int argc, char *argv[])
 
 /* Make sure that the current projection is not lat/long */
     if ((G_projection() == PROJECTION_LL))
-         G_fatal_error (_("lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"));
+         G_fatal_error (_("Lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"));
                             
     if (G_legal_filename(parm.output->answer) < 0)
-	G_fatal_error (_("%s=%s - illegal name"), parm.output->key, parm.output->answer);
+	G_fatal_error (_("<%s> is an illegal file name"), parm.output->answer);
 
     if(sscanf(parm.npoints->answer,"%d", &search_points) != 1 || search_points<1)
 	G_fatal_error (_("%s=%s - illegal number of interpolation points"),
@@ -107,9 +107,9 @@ main (int argc, char *argv[])
 
     fd = G_open_cell_new(parm.output->answer);
     if (fd < 0)
-	G_fatal_error (_("%s: can't create %s"), G_program_name(), parm.output->answer);
+	G_fatal_error (_("Unable to create raster map <%s>"), parm.output->answer);
 
-    G_message (_("Interpolating raster map <%s> ... %d rows ... "),
+    G_message (_("Interpolating raster map <%s>... %d rows... "),
 	parm.output->answer, window.rows);
 
     north = window.north - window.ns_res/2.0;

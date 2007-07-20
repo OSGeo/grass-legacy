@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
     /*  Get database window parameters      */
 
     if (G_get_window(&window) < 0)
-	G_fatal_error(_("Can't read current window parameters"));
+	G_fatal_error(_("Unable to read current window parameters"));
 
     /*  Find north-south, east_west and diagonal factors */
 
@@ -406,7 +406,7 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 	search_mapset = G_find_sites(opt7->answer, "");
 	if (search_mapset == NULL)
-	    G_fatal_error(_("Can't find starting vector %s "), opt7->answer);
+	    G_fatal_error(_("Unable to find starting vector %s "), opt7->answer);
 	fp = G_fopen_sites_old(opt7->answer, search_mapset);
 
 	if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
@@ -452,7 +452,7 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 	search_mapset = G_find_sites(opt8->answer, "");
 	if (search_mapset == NULL)
-	    G_fatal_error(_("Can't find stop vector %s"), opt8->answer);
+	    G_fatal_error(_("Unable to find stop vector %s"), opt8->answer);
 	fp = G_fopen_sites_old(opt8->answer, search_mapset);
 
 	if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
@@ -528,7 +528,7 @@ int main(int argc, char *argv[])
     /*  Check if specified output layer name is legal   */
 
     if (G_legal_filename(cum_cost_layer) < 0)
-	G_fatal_error(_("%s - illegal name"), cum_cost_layer);
+	G_fatal_error(_("<%s> is an illegal file name"), cum_cost_layer);
 
     /*  Find number of rows and columns in window    */
 
@@ -743,7 +743,7 @@ int main(int argc, char *argv[])
     }
 
     
-	G_message(_("Reading %s ..."), cost_layer);
+	G_message(_("Reading %s..."), cost_layer);
 
     {
 	int i;
@@ -818,7 +818,7 @@ int main(int argc, char *argv[])
 	fbuff = (double *)G_malloc((unsigned int)(ncols * sizeof(double)));
 
 	if (fbuff == NULL)
-	    G_fatal_error(_("Can't allocate memory for segment fbuff == NULL"));
+	    G_fatal_error(_("Unable to allocate memory for segment fbuff == NULL"));
 
 	G_set_d_null_value(fbuff, ncols);
 
@@ -910,7 +910,7 @@ int main(int argc, char *argv[])
 	    if (top_start_pt->row < 0 || top_start_pt->row >= nrows
 		|| top_start_pt->col < 0 || top_start_pt->col >= ncols)
 		G_fatal_error(_
-			      ("specified starting location outside database window"));
+			      ("Specified starting location outside database window"));
 	    new_cell = insert(zero, top_start_pt->row, top_start_pt->col);
 	    segment_put(&out_seg, value_start_pt, top_start_pt->row,
 			top_start_pt->col);
@@ -1392,7 +1392,7 @@ int main(int argc, char *argv[])
     /*  Copy segmented map to output map  */
      
 	/* system("date"); */
-	G_message(_("Writing output raster map %s ... "), cum_cost_layer);
+	G_message(_("Writing output raster map %s... "), cum_cost_layer);
     
     if (keep_nulls) {
 	
@@ -1410,8 +1410,7 @@ int main(int argc, char *argv[])
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
 		    G_fatal_error(_
-				  ("Error getting input null cells at row %d from %s"),
-				  row, dtm_layer);
+				  ("Unable to read raster map <%s> row %d"), dtm_layer, row);
 	    }
 	    p = cum_cell;
 	    p2 = cell2;
@@ -1446,8 +1445,7 @@ int main(int argc, char *argv[])
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
 		    G_fatal_error(_
-				  ("Error getting input null cells at row %d from %s"),
-				  row, dtm_layer);
+				  ("Unable to read raster map <%s> row %d"), dtm_layer, row);
 	    }
 	    p = cum_cell;
 	    p2 = cell2;
@@ -1481,7 +1479,7 @@ int main(int argc, char *argv[])
 		G_percent(row, nrows, 2);
 	    if (keep_nulls) {
 		if (G_get_raster_row(dtm_fd, cell2, row, dtm_data_type) < 0)
-		    G_fatal_error(_("Error getting input null cells"));
+		    G_fatal_error(_("Unable to read raster map <%s> row %d"), cell2, row);
 	    }
 	    p = cum_cell;
 	    p2 = cell2;

@@ -108,14 +108,14 @@ int main (int argc, char *argv[])
 	parm.input->type       = TYPE_STRING ;
 	parm.input->required   = YES ;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= _("Name of existing raster map") ;
+	parm.input->description= _("Name of input raster map") ;
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= _("Name of the new raster map") ;
+	parm.output->description= _("Name for output raster map") ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
@@ -161,14 +161,12 @@ int main (int argc, char *argv[])
 	p = ncb.oldcell.name = parm.input->answer;
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
 	{
-		G_fatal_error(_("%s: <%s> raster map not found"),
-			 G_program_name(), p);
+		G_fatal_error(_("Raster map <%s> not found"), p);
 	}
 	p = ncb.newcell.name = parm.output->answer;
 	if (G_legal_filename(p) < 0)
 	{
-		G_fatal_error (_("%s: <%s> illegal file name"),
-			 G_program_name(), p);
+		G_fatal_error (_("<%s> is an illegal file name"), p);
 	}
 	ncb.newcell.mapset = G_mapset();
 
@@ -186,7 +184,7 @@ int main (int argc, char *argv[])
 
 	/* open raster maps */
 	if ((in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset)) < 0)
-		G_fatal_error (_("can't open raster map <%s> in mapset %s"),
+		G_fatal_error (_("Unable to open raster map <%s> in mapset %s"),
 			ncb.oldcell.name, ncb.oldcell.mapset);
 
 	map_type = G_get_raster_map_type(in_fd);

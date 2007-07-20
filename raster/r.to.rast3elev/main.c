@@ -111,7 +111,7 @@ void check_input_maps(Database * db)
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.elev->answers[i], "");
 	    if (mapset == NULL) {
-		G_fatal_error(_("Cell file [%s] not found"),
+		G_fatal_error(_("Raster map <%s> not found"),
 			      param.elev->answers[i]);
 		exit(EXIT_FAILURE);
 	    }
@@ -126,7 +126,7 @@ void check_input_maps(Database * db)
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.input->answers[i], "");
 	    if (mapset == NULL) {
-		G_fatal_error(_("Cell file [%s] not found"),
+		G_fatal_error(_("Raster map <%s> not found"),
 			      param.input->answers[i]);
 		exit(EXIT_FAILURE);
 	    }
@@ -158,7 +158,7 @@ int open_input_raster_map(char *name, char *mapset)
     fd = G_open_cell_old(name, mapset);
 
     if (fd < 0)
-	G_fatal_error(_("Could not open map %s"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     return fd;
 }
@@ -400,7 +400,7 @@ int main(int argc, char *argv[])
     module->keywords = _("raster, raster3d, voxel, conversion");
     module->description =
 	_
-	("Creates a 3D volume map based on 2D elevation and value raster maps");
+	("Creates a 3D volume map based on 2D elevation and value raster maps.");
 
     /* Get parameters from user */
     set_params();
@@ -471,7 +471,7 @@ int main(int argc, char *argv[])
     }
 
     if (G_legal_filename(param.output->answer) < 0)
-	G3d_fatalError(_("Illegal output file name"));
+	G3d_fatalError(_("<%s> is an illegal file name"), param.output->answer);
 
     G_debug(2, "Open 3d raster map %s", param.output->answer);
 

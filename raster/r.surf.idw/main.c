@@ -100,17 +100,16 @@ int main(int argc, char **argv)
 
     /*  Get database window parameters                              */
     if (G_get_window(&window) < 0)
-	G_fatal_error(_("Can't read current region parameters"));
+	G_fatal_error(_("Unable to read current region parameters"));
 
     /* Make sure layer_map is available                                     */
     layer_mapset = G_find_cell(input, "");
     if (layer_mapset == NULL)
-	G_fatal_error(_("%s: %s - raster map not found"), G_program_name(),
-		      input);
+	G_fatal_error(_("Raster map <%s> not found"), input);
 
     /* check if specified output layer name is legal                */
     if (G_legal_filename(output) < 0)
-	G_fatal_error(_("%s: %s - illegal name"), G_program_name(), output);
+	G_fatal_error(_("<%s> is an illegal file name"), output);
 
     /*  find number of rows and columns in window                   */
     nrows = G_window_rows();
@@ -133,8 +132,7 @@ int main(int argc, char **argv)
     /*  Open input cell layer for reading                           */
     fd = G_open_cell_old(input, layer_mapset);
     if (fd < 0)
-	G_fatal_error(_("%s in %s -can't open raster map"), input,
-		      layer_mapset);
+	G_fatal_error(_("Unable to open raster map <%s>"), input);
 
     /* Store input data in array-indexed doubly-linked lists and close input file */
     rowlist = row_lists(nrows, ncols, &datarows, &n, fd, cell);
@@ -146,7 +144,7 @@ int main(int argc, char **argv)
     /* open cell layer for writing output              */
     fd = G_open_cell_new(output);
     if (fd < 0)
-	G_fatal_error(_("%s - can't create raster map"), output);
+	G_fatal_error(_("Unable to create raster map <%s>"), output);
 
     /* call the interpolation function                              */
     interpolate(rowlist, nrows, ncols, datarows, npoints, fd, maskfd);
@@ -231,7 +229,7 @@ interpolate(MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows,
     nbr_head->searchptr = &(nbr_head->Mptr);	/* see replace_neighbor */
 #endif
 
-    G_message(_("Interpolating raster map <%s> ... %d rows ... "), output,
+    G_message(_("Interpolating raster map <%s>... %d rows... "), output,
 	    nrows);
 
     for (row = 0; row < nrows; row++) {	/*  loop over rows      */
@@ -682,7 +680,7 @@ MELEMENT *row_lists(
 
     /* enter data by allocation of individual matrix elements */
     *npts = 0;
-    fprintf(stderr, "Reading %s ...", input);
+    fprintf(stderr, "Reading %s...", input);
 
     for (row = 0, Rptr = rowlist; row < rows; row++) {
 	G_percent(row, rows, 1);

@@ -355,7 +355,7 @@ int open_input_raster_map(char *name, char *mapset)
     fd = G_open_cell_old(name, mapset);
 
     if (fd < 0)
-	G_fatal_error(_("Could not open map %s"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 
     return fd;

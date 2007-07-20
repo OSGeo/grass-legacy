@@ -104,8 +104,7 @@ main (int argc, char *argv[])
 
         /* check command line args for validity */
         if (G_legal_filename(Cellmap_orig) < 0)
-                G_fatal_error(_("%s: %s - illegal name for output raster map."),
-                              me, Cellmap_orig);
+                G_fatal_error(_("<%s> is an illegal file name"), Cellmap_orig);
 
         /* get and compare the original window data */
         get_orig_window(&orig_wind, realmapset, imagmapset);

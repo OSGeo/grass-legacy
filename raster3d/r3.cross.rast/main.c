@@ -159,7 +159,7 @@ void rast3d_cross_section(void *map, G3D_Region region, int elevfd, int outfd)
 	/*Read the input map row */
 	if (!G_get_raster_row(elevfd, elevrast, y, globalElevMapType))
 	    fatal_error(map, elevfd, outfd,
-		       _("Could not get elevation raster row"));
+		       _("Unable to get elevation raster row"));
 
 	for (x = 0, ptr = elevrast; x < cols; x++, ptr =
 	     G_incr_void_ptr(ptr, G_raster_size(globalElevMapType))) {
@@ -280,7 +280,7 @@ int main(int argc, char *argv[])
     G_debug(3, "Open 3D raster map %s", param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
-	G3d_fatalError(_("Requested 3d raster map not found <%s>"), param.input->answer);
+	G3d_fatalError(_("3d raster map <%s> not found"), param.input->answer);
 
     /* Figure out the region from the map */
     G3d_initDefaults();
@@ -332,7 +332,7 @@ int main(int argc, char *argv[])
 
 	elevfd = G_open_cell_old(param.elevation->answer, mapset);
 	if (elevfd <= 0)
-	    fatal_error(map, -1, -1, _("Could not open elevation map"));
+	    fatal_error(map, -1, -1, _("Unable to open elevation map"));
 
 	globalElevMapType = G_get_raster_map_type(elevfd);
 
@@ -351,12 +351,12 @@ int main(int argc, char *argv[])
 	if (output_type == FCELL_TYPE) {
 	    outfd = G_open_raster_new(param.output->answer, FCELL_TYPE);
 	    if (outfd < 0)
-		fatal_error(map, elevfd, -1, _("Could not open output map"));
+		fatal_error(map, elevfd, -1, _("Unable to create raster map"));
 	}
 	else if (output_type == DCELL_TYPE) {
 	    outfd = G_open_raster_new(param.output->answer, DCELL_TYPE);
 	    if (outfd < 0)
-		fatal_error(map, elevfd, -1, _("Could not open output map"));
+		fatal_error(map, elevfd, -1, _("Unable to create raster map"));
 	}
 
 	/*if requested set the Mask on */
@@ -384,9 +384,9 @@ int main(int argc, char *argv[])
 	}
 
 	if (G_close_cell(outfd) < 0)
-	    fatal_error(map, elevfd, -1, _("unable to close output map"));
+	    fatal_error(map, elevfd, -1, _("Unable to close output map"));
 	if (G_close_cell(elevfd) < 0)
-	    fatal_error(map, -1, -1, _("unable to close elevation map"));
+	    fatal_error(map, -1, -1, _("Unable to close elevation map"));
 
     }
     else {

@@ -49,7 +49,7 @@ main (int argc, char *argv[])
         "containing randomly located sites.");
 
     parm.input = G_define_standard_option(G_OPT_R_INPUT) ;
-    parm.input->description= _("Name of existing raster map") ;
+    parm.input->description= _("Name of input raster map") ;
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "n" ;
@@ -90,8 +90,7 @@ main (int argc, char *argv[])
 
     myState.mapset = G_find_cell (myState.inraster, "");
     if (myState.mapset == NULL)
-	G_fatal_error (_("%s: Unable to find raster map <%s>"),
-                    G_program_name(), myState.inraster);
+	G_fatal_error (_("Raster map <%s> not found"), myState.inraster);
 
     /* If they only want info we ignore the rest */
     get_stats(&myState);
@@ -114,12 +113,12 @@ main (int argc, char *argv[])
     
     if (myState.outraster)
         if (G_legal_filename (myState.outraster) < 0)
-            G_fatal_error(_("<%s> is illegal file name"),
+            G_fatal_error(_("<%s> is an illegal file name"),
 			  myState.outraster);
 
     if (myState.outvector)
         if (G_legal_filename (myState.outvector) < 0)
-            G_fatal_error (_("<%s> is illegal file name"),
+            G_fatal_error (_("<%s> is an illegal file name"),
 			   myState.outvector);
 
     /* look for n[%] */
@@ -159,7 +158,7 @@ main (int argc, char *argv[])
         }
 
         if (targets <= 0)
-            G_fatal_error (_("There aren't any valid locations in the current region"));
+            G_fatal_error (_("There are no valid locations in the current region"));
 
         myState.nRand = targets;
     }
