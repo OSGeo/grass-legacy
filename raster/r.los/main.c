@@ -173,7 +173,7 @@ main (int argc, char *argv[])
 
     /* check if specified output layer name is legal    */
     if (G_legal_filename(out_layer) < 0)
-	G_fatal_error(_("[%s] is an illegal name"), out_layer);
+	G_fatal_error(_("<%s> is an illegal file name"), out_layer);
 
     /*  read header info for elevation layer        */
     if(G_get_cellhd(elev_layer,old_mapset,&cellhd_elev)<0)
@@ -199,7 +199,7 @@ main (int argc, char *argv[])
 	/*	open cell layer for writing output 		*/
 	new = G_open_raster_new (out_layer,FCELL_TYPE);
 	if (new < 0)
-	    G_fatal_error(_("Unable to create raster map <%s>."), out_layer);
+	    G_fatal_error(_("Unable to create raster map <%s>"), out_layer);
 
 	/* if pattern layer specified, open it for reading	*/
 	if(patt_flag == 1)

@@ -107,10 +107,10 @@ int main(int argc, char *argv[])
      * mapset name otherwise */
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
-	G_fatal_error(_("cell file [%s] not found"), name);
+	G_fatal_error(_("Raster file <%s> not found"), name);
 
     if (G_legal_filename(result) < 0)
-	G_fatal_error(_("[%s] is an illegal name"), result);
+	G_fatal_error(_("<%s> is an illegal file name"), result);
 
 
     /* determine the inputmap type (CELL/FCELL/DCELL) */
@@ -118,12 +118,12 @@ int main(int argc, char *argv[])
 
     /* G_open_cell_old - returns file destriptor (>0) */
     if ((infd = G_open_cell_old(name, mapset)) < 0)
-	G_fatal_error(_("Cannot open raster map [%s]"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 
     /* controlling, if we can open input raster */
     if (G_get_cellhd(name, mapset, &cellhd) < 0)
-	G_fatal_error(_("Cannot read file header of [%s]"), name);
+	G_fatal_error(_("Unable to read file header of <%s>"), name);
 
     G_debug(3, "number of rows %d", cellhd.rows);
 
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 
     /* controlling, if we can write the raster */
     if ((outfd = G_open_raster_new(result, data_type)) < 0)
-	G_fatal_error(_("Could not open <%s>"), result);
+	G_fatal_error(_("Unable to create raster map <%s>"), result);
 
     /* for each row */
     for (row = 0; row < nrows; row++) {
@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
 
 	/* read input map */
 	if (G_get_raster_row(infd, inrast, row, data_type) < 0)
-	    G_fatal_error(_("Could not read from <%s>"), name);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), name, row);
 
 	/* process the data */
 	for (col = 0; col < ncols; col++) {
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 
 	/* write raster row to output raster map */
 	if (G_put_raster_row(outfd, outrast, data_type) < 0)
-	    G_fatal_error(_("Cannot write to <%s>"), result);
+	    G_fatal_error(_("Failed writing raster map <%s>"), result);
     }
 
     /* memory cleanup */

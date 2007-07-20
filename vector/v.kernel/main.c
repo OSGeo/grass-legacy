@@ -91,7 +91,7 @@ int main(int argc, char **argv)
   module->keywords = _("vector, kernel density");
     module->description = 
       _("Generates a raster density map from vector points data using a moving 2D isotropic Gaussian kernel or "
-      "optionally generates a vector density map on vector network with a 1D kernel");
+      "optionally generates a vector density map on vector network with a 1D kernel.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
   in_opt->description = _("Input vector with training points");
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
 
   /* Open input vector */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL)
-      G_fatal_error (_("Could not find input map '%s'."), in_opt->answer);
+      G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
@@ -204,7 +204,7 @@ int main(int argc, char **argv)
     dimension=1.;
       /* Open input network */
       if ((mapset = G_find_vector2 (net_opt->answer, "")) == NULL)
-	  G_fatal_error (_("Could not find network input map '%s'."), net_opt->answer);
+	  G_fatal_error (_("Network input map <%s> not found"), net_opt->answer);
 
       Vect_set_open_level (2);
       Vect_open_old (&Net, net_opt->answer, mapset);
@@ -229,11 +229,11 @@ int main(int argc, char **argv)
       /* check and open the name of output map */
       if( !flag_q->answer ) {
 	  if(G_legal_filename( out_opt->answer ) < 0)
-	    G_fatal_error(_("illegal file name [%s]."), out_opt->answer);
+	    G_fatal_error(_("<%s> is an illegal file name"), out_opt->answer);
 	 
 	  G_set_fp_type (DCELL_TYPE);
 	  if((fdout = G_open_raster_new(out_opt->answer,DCELL_TYPE)) < 0)
-	    G_fatal_error(_("error opening raster map [%s]."), out_opt->answer);
+	    G_fatal_error(_("Unable to create raster map <%s>"), out_opt->answer);
 
 	  /* open mask file */
 	  if ((maskfd = G_maskfd()) >= 0)
@@ -272,8 +272,8 @@ int main(int argc, char **argv)
     G_message(_("%d distances read from the map."), ndists);
 
     if (ndists == 0)
-        G_fatal_error(_("distances between all points are beyond %e (4 * "
-                "standard deviation) cannot calculate optimal value."), dmax);
+        G_fatal_error(_("Distances between all points are beyond %e (4 * "
+                "standard deviation), unable to calculate optimal value."), dmax);
 
     /*  double iii;
 	for ( iii = 1.; iii <= 10000; iii++){
@@ -376,7 +376,7 @@ int main(int argc, char **argv)
 	if (mask)
 	  {
 	    if(G_get_map_row(maskfd, mask, row) < 0)
-	      G_fatal_error(_("unable to read MASK"));
+	      G_fatal_error(_("Unable to read MASK"));
 	  }
 	
 	for(col=0; col<window.cols; col++) {

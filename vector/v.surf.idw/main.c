@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     parm.output->key        = "output" ;
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
-    parm.output->description= _("Name of output raster map") ;
+    parm.output->description= _("Name for output raster map") ;
     parm.output->gisprompt  = "any,cell,raster" ;
 
     parm.npoints = G_define_option() ;
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
 
     if (G_legal_filename(parm.output->answer) < 0)
-        G_fatal_error( _("%s=%s - illegal name"), parm.output->key, parm.output->answer);
+        G_fatal_error( _("<%s> is an illegal file name"), parm.output->answer);
 
     if(sscanf(parm.npoints->answer,"%d", &search_points) != 1 || search_points<1)
         G_fatal_error( _( "%s=%s - illegal number of interpolation points"),
@@ -235,9 +235,9 @@ int main(int argc, char *argv[])
 
     fd=G_open_raster_new(parm.output->answer, DCELL_TYPE);
     if (fd < 0)
-        G_fatal_error( _("%s: can't create %s"), G_program_name(), parm.output->answer);
+        G_fatal_error( _("Unable to create raster map <%s>"), parm.output->answer);
                                   
-    G_message ( _("Interpolating raster map <%s> ... %d rows ... "),
+    G_message ( _("Interpolating raster map <%s>... %d rows... "),
         parm.output->answer, window.rows);
 
     north = window.north + window.ns_res/2.0;

@@ -82,10 +82,10 @@ main (int argc, char *argv[])
 	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (G_legal_filename(result) < 0)
-	G_fatal_error(_("[%s] is an illegal file name"), result);
+	G_fatal_error(_("<%s> is an illegal file name"), result);
 
     if (strcmp(name,result)==0 && strcmp(mapset,G_mapset())== 0)
-	G_fatal_error(_("input map can NOT be the same as output map"));
+	G_fatal_error(_("Input map can NOT be the same as output map"));
 
     srcfp = stdin;
     if (parm.rules->answer)

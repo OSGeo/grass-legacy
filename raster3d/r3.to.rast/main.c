@@ -149,14 +149,14 @@ void g3d_to_raster(void *map, G3D_Region region, int *fd)
 		check = G_put_f_raster_row(fd[pos], fcell);
 		if (check != 1)
 		    fatal_error(map, fd, depths,
-			       _("Could not write raster row"));
+			       _("Unable to write raster row"));
 	    }
 
 	    if (typeIntern == DCELL_TYPE) {
 		check = G_put_d_raster_row(fd[pos], dcell);
 		if (check != 1)
 		    fatal_error(map, fd, depths,
-			       _("Could not write raster row"));
+			       _("Unable to write raster row"));
 	    }
 	}
 	G_debug(2, "Finished writing map %d.", z+1);
@@ -180,7 +180,7 @@ int open_output_map(const char *name, int res_type)
 
     fd = G_open_raster_new((char *)name, res_type);
     if (fd < 0)
-	G_fatal_error(_("Cannot create output map [%s]"), name);
+	G_fatal_error(_("Unable to create raster map <%s>"), name);
 
     return fd;
 }
@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
     G_debug(3, _("Open 3d raster map <%s>"), param.input->answer);
 
     if (NULL == G_find_grid3(param.input->answer, ""))
-	G3d_fatalError(_("Requested 3d raster map <%s> not found"),
+	G3d_fatalError(_("3d raster map <%s> not found"),
 		       param.input->answer);
 
     /*Set the defaults */

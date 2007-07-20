@@ -81,7 +81,7 @@ interface (
 
     if (G_legal_filename(rast_out_name)=='\0')
     {
-        G_fatal_error (_("Illegal output file name. Please try another."));
+        G_fatal_error (_("<%s> is an illegal file name"), rast_out_name);
     }
 
     /*--------------------------------------------------------------------*/

@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
 	    }
             if (G_legal_filename (to) < 0)
             {
-                G_warning (_("<%s> illegal name"), to);
+                G_warning (_("<%s> is an illegal file name"), to);
                 continue;
             }
             if ( do_copy (n, from, mapset, to) == 1 )
