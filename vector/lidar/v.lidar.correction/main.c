@@ -139,7 +139,7 @@ main (int argc,char *argv[])
 
     Vect_set_open_level (1); /*without topology*/
     if (1 > Vect_open_old (&In, in_opt->answer, mapset)) 
-	G_fatal_error (_("Vector <%s> could not be opened"), in_opt->answer);
+	G_fatal_error (_("Unable to open vector map <%s>"), in_opt->answer);
 
 /* Open output vector */
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
@@ -164,7 +164,7 @@ main (int argc,char *argv[])
 /* Start driver and open db*/
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
-	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect"), dvr);
+	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect."), dvr);
 
 /* Setting regions and boxes */    
     G_get_set_window (&original_reg);
