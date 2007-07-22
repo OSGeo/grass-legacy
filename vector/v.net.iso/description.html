@@ -30,13 +30,18 @@ g.copy vect=roads,myroads
 
 #create line map connecting point to network
 v.distance -p from=startnode to=myroads out=connect upload=dist column=dist
+# fix missing category number:
+v.category connect out=connect2 op=add
+
 d.vect myroads
 d.vect startnode col=red
-d.vect connect col=green
+d.vect connect2 col=green
 
-v.patch in=myroads,connect,startnode out=roads_n
+v.patch in=myroads,connect2,startnode out=roads_n
 v.clean roads_n out=roads_net tool=snap,break thresh=5,0
-v.net.iso input=roads_net output=isomap ccats=1 costs=1000,2000,5000 nlayer=1
+
+# specify range of center cats (easier to catch all):
+v.net.iso input=roads_net output=isomap ccats=1-100000 costs=1000,2000,5000 nlayer=1
 v.category isomap option=report
 # ... reports 4 categories:
 </pre></div>
