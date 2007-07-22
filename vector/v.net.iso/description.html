@@ -22,10 +22,31 @@ The map must contain at least one center
 <a HREF="v.patch.html">v.patch</a>.
 
 <div class="code"><pre>
-v.net.iso input=streets output=isomap ccats=1 costs=1000,2000,5000
+# Spearfish
+
+# start node:
+echo "591280.5|4926396.0|1" | v.in.ascii out=startnode
+g.copy vect=roads,myroads
+
+#create line map connecting point to network
+v.distance -p from=startnode to=myroads out=connect upload=dist column=dist
+# fix missing category number:
+v.category connect out=connect2 op=add
+
+d.vect myroads
+d.vect startnode col=red
+d.vect connect2 col=green
+
+v.patch in=myroads,connect2,startnode out=roads_n
+v.clean roads_n out=roads_net tool=snap,break thresh=5,0
+
+# specify range of center cats (easier to catch all):
+v.net.iso input=roads_net output=isomap ccats=1-100000 costs=1000,2000,5000 nlayer=1
+v.category isomap option=report
+# ... reports 4 categories:
 </pre></div>
 
-that should cut network to 4 categories:
+The network is 4 categories:
 
 <div class="code"><pre>
 cat | distance from point
@@ -38,9 +59,10 @@ cat | distance from point
 To see the result, run for example:
 
 <div class="code"><pre>
-d.vect isomap col=green  cats=1
-d.vect isomap col=yellow cats=2
-d.vect isomap col=orange cats=3
+d.erase
+d.vect isomap col=blue  cats=1
+d.vect isomap col=green cats=2
+d.vect isomap col=yellow cats=3
 d.vect isomap col=red    cats=4
 </pre></div>
 
