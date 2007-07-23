@@ -169,6 +169,8 @@ class BufferedWindow(wx.Window):
         #
         self.mapfile = None   # image file to be rendered
         self.img = ""         # wx.Image object (self.mapfile)
+        # used in digitization tool (do not redraw vector map)
+        self.imgVectorMap = None 
         self.ovldict = {}     # list of images for overlays
         self.ovlcoords = {}   # positioning coordinates for decoration overlay
         self.ovlchk = {}      # showing/hiding decorations
@@ -205,11 +207,12 @@ class BufferedWindow(wx.Window):
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
-        #!!! self.OnSize(None)
+        self.OnSize(None)
 
         # create a PseudoDC for map decorations like scales and legends
         self.pdc = wx.PseudoDC()
-        self._Buffer = '' # will store an off screen empty bitmap for saving to file
+        # will store an off screen empty bitmap for saving to file
+        self._Buffer = ''
         self.Map.SetRegion() # make sure that extents are updated at init
 
         self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
@@ -236,12 +239,13 @@ class BufferedWindow(wx.Window):
             self.select[drawid] = False
 
         pdc.BeginDrawing()
-        if drawid != 99:
+
+        if drawid != 99 and drawid != 100:
             bg = wx.TRANSPARENT_BRUSH
         else:
             bg = wx.Brush(self.GetBackgroundColour())
         pdc.SetBackground(bg)
-        #pdc.Clear() #FIXME (to avoid black background)
+        #pdc.Clear()
         self.Refresh()
 
         Debug.msg (5, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
@@ -361,29 +365,35 @@ class BufferedWindow(wx.Window):
     def OnPaint(self, event):
         """
         Draw psuedo DC to buffered paint DC
+
+        Additionaly draw also vector map which is edited
         """
 
         dc = wx.BufferedPaintDC(self, self._Buffer)
 
-        # use PrepareDC to set position correctly
-        self.PrepareDC(dc)
         # we need to clear the dc BEFORE calling PrepareDC
         bg = wx.Brush(self.GetBackgroundColour())
         dc.SetBackground(bg)
         dc.Clear()
+
+        # use PrepareDC to set position correctly
+        self.PrepareDC(dc)
+
         # create a clipping rect from our position and size
-        # and the Update Region
+        # and update region
         rgn = self.GetUpdateRegion()
         r = rgn.GetBox()
+        dc.SetClippingRect(r)
         # draw to the dc using the calculated clipping rect
         self.pdc.DrawToDCClipped(dc,r)
-
-
+            
     def OnSize(self, event):
         """
         Scale map image so that it is
         the same size as the Window
         """
+        
+        Debug.msg(3, "BufferedWindow.OnSize():")
 
         # set size of the input image
         self.Map.width, self.Map.height = self.GetClientSize()
@@ -454,7 +464,7 @@ class BufferedWindow(wx.Window):
         return img
 
 
-    def UpdateMap(self, render=True, redrawAll=True, removeId=[]):
+    def UpdateMap(self, render=True, redraw=True, removeId=[]):
         """
         Updates the canvas anytime there is a change to the underlying images
         or to the geometry of the canvas.
@@ -470,6 +480,9 @@ class BufferedWindow(wx.Window):
             self.img = self.GetImage()
             self.resize = False
 
+        if not self.img or redraw == False:
+            return
+
         # paint images to PseudoDC
         if len(removeId) > 0:
             for id in removeId:
@@ -479,16 +492,25 @@ class BufferedWindow(wx.Window):
             self.pdc.Clear()
             self.pdc.RemoveAll()
 
-        if not self.img or redrawAll == False:
-            return
-
         try:
             id = self.imagedict[self.img]
         except:
             return
 
+
+        # render vector map layer which is edited
+        digitToolbar = self.parent.digittoolbar
+        if digitToolbar and \
+                digitToolbar.layerSelectedID != None:
+            # set region
+            self.parent.digit.driver.SetRegion(self.Map.region)
+            # draw map
+            self.imgVectorMap = self.parent.digit.driver.DrawMap()
+
         
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
+        if self.imgVectorMap:
+            self.Draw(self.pdc, self.imgVectorMap, drawid=100) # draw vector map image
         self.ovldict = self.GetOverlay() # list of decoration overlay images
         if self.ovldict != {}: # draw scale and legend overlays
             for id in self.ovldict:
@@ -512,11 +534,6 @@ class BufferedWindow(wx.Window):
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
 
-        digitToolbar = self.parent.digittoolbar
-        if digitToolbar and self.parent.digit.driver:
-            self.pen = wx.Pen(colour='red', width=2, style=wx.SOLID)
-            self.parent.digit.driver.DrawMap()
-        
     def EraseMap(self):
         """
         Erase the map display
@@ -530,11 +547,16 @@ class BufferedWindow(wx.Window):
 
         dc = wx.BufferedDC(wx.ClientDC(self))
         dc.SetBackground(wx.Brush("White"))
+
         bitmap = wx.BitmapFromImage(self.img)
+        if self.imgVectorMap:
+            bitmap = wx.BitmapFromImage(self.imgVectorMap)
+
         self.dragimg = wx.DragImage(bitmap)
         self.dragimg.BeginDrag((0, 0), self)
         self.dragimg.GetImageRect(moveto)
         self.dragimg.Move(moveto)
+
         dc.Clear()
         self.dragimg.DoDrawImage(dc, moveto)
         self.dragimg.EndDrag()
@@ -681,7 +703,6 @@ class BufferedWindow(wx.Window):
             else:
                 self.mouse['end'] = event.GetPositionTuple()[:]
                 self.MouseDraw()
-
 
         # double click
         elif event.ButtonDClick():
@@ -845,7 +866,7 @@ class BufferedWindow(wx.Window):
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
             # redraw map
-            self.UpdateMap()
+            self.UpdateMap(redraw=True)
 
         elif self.mouse["use"] == "query":
             # querying
@@ -881,7 +902,7 @@ class BufferedWindow(wx.Window):
                 if len(self.moveIds) > 0:
                     self.UpdateMap(render=False)
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
-                        self.UpdateMap(render=False, redrawAll=False, removeId=self.moveIds)
+                        self.UpdateMap(render=False, redraw=False, removeId=self.moveIds)
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             self.moveIds = self.parent.digit.driver.GetSelected(grassId=False)
@@ -1750,6 +1771,7 @@ class MapFrame(wx.Frame):
                 type = wx.BITMAP_TYPE_TIF
                 if ext != '.gif': path = base+'.gif'
             self.MapWindow.SaveToFile(path, type)
+
         dlg.Destroy()
 
     def PrintMenu(self, event):

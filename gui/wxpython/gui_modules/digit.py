@@ -55,9 +55,13 @@ if usePyDisplayDriver:
               "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
               "Will be replaced by C/C++ display driver."
 else:
-    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
-    sys.path.append(driverPath)
-    from grass6_wxdriver import DisplayDriver
+    try:
+        driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+        sys.path.append(driverPath)
+        from grass6_wxdriver import DisplayDriver
+    except:
+        print >> sys.stderr, "Digitization tool is disabled.\n" \
+              "Under development..."
     
 class AbstractDigit:
     """
@@ -71,28 +75,23 @@ class AbstractDigit:
 
         #self.SetCategory()
 
-        if usePyDisplayDriver:
-            self.driver = PyDisplayDriver(self, mapwindow)
-        else:
-            self.driver = CDisplayDriver(self, mapwindow)
-            
         # is unique for map window instance
         if not settings:
             self.settings = {}
             # symbology
-            self.settings["symbolBackground"] = (None, "white") # enabled, color
-            self.settings["symbolHighlight"] = (None, "yellow")
-            self.settings["symbolPoint"] = (True, "black")
-            self.settings["symbolLine"] = (True, "black")
-            self.settings["symbolBoundaryNo"] = (True, "grey")
-            self.settings["symbolBoundaryOne"] = (True, "orange")
-            self.settings["symbolBoundaryTwo"] = (True, "green")
-            self.settings["symbolCentroidIn"] = (True, "blue")
-            self.settings["symbolCentroidOut"] = (True, "brown")
-            self.settings["symbolCentroidDup"] = (True, "violet")
-            self.settings["symbolNodeOne"] = (True, "red")
-            self.settings["symbolNodeTwo"] = (True, "dark green")
-            self.settings["symbolVertex"] = (True, "pink")
+            self.settings["symbolBackground"] = (None, (255,255,255, 255)) # white
+            self.settings["symbolHighlight"] = (None, (255, 255, 0, 255)) #yellow
+            self.settings["symbolPoint"] = (True, (0, 0, 0, 255)) # black
+            self.settings["symbolLine"] = (True, (0, 0, 0, 255)) # black
+            self.settings["symbolBoundaryNo"] = (True, (126, 126, 126, 255)) # grey
+            self.settings["symbolBoundaryOne"] = (True, (255, 135, 0, 255)) # orange
+            self.settings["symbolBoundaryTwo"] = (True, (0, 255, 0, 255)) # green
+            self.settings["symbolCentroidIn"] = (True, (0, 0, 255, 255)) # blue
+            self.settings["symbolCentroidOut"] = (True, (165, 42, 42, 255)) # brown
+            self.settings["symbolCentroidDup"] = (True, (156, 62, 206, 255)) # violet
+            self.settings["symbolNodeOne"] = (True, (255, 0, 0, 255)) # red
+            self.settings["symbolNodeTwo"] = (True, (0, 86, 45, 255)) # dark green
+            self.settings["symbolVertex"] = (True, (255, 20, 147, 255)) # deep pink
             
             # display
             self.settings["lineWidth"] = (2, "screen pixels")
@@ -108,6 +107,11 @@ class AbstractDigit:
             self.settings["categoryMode"] = "Next to use"
         else:
             self.settings = settings
+
+        if usePyDisplayDriver:
+            self.driver = PyDisplayDriver(self, mapwindow)
+        else:
+            self.driver = CDisplayDriver(self, mapwindow)
 
         self.threshold = self.driver.GetThreshold()
 
@@ -234,7 +238,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command, stdin=input)
 
         # redraw map
-        self.driver.ReDrawMap(map)
+        #self.driver.ReDrawMap(map)
         
     def DeleteSelectedLines(self):
         """Delete selected vector features from the vector map"""
@@ -255,7 +259,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        self.driver.ReDrawMap(self.map)
+        #self.driver.ReDrawMap(self.map)
 
         return True
 
@@ -291,7 +295,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        self.driver.ReDrawMap(self.map)
+        #self.driver.ReDrawMap(self.map)
 
         return True
 
@@ -313,7 +317,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        self.driver.ReDrawMap(self.map)
+        #self.driver.ReDrawMap(self.map)
         
         return True
 
@@ -343,7 +347,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        self.driver.ReDrawMap(self.map)
+        #self.driver.ReDrawMap(self.map)
 
         return True
     
@@ -429,20 +433,117 @@ class CDisplayDriver(AbstractDisplayDriver):
     """
     def __init__(self, parent, mapwindow):
         AbstractDisplayDriver.__init__(self, parent, mapwindow)
-        self.display = DisplayDriver(None)
-        
+
+        # initialize wx display driver
+        try:
+            self.display = DisplayDriver()
+        except:
+            self.display = None
+            
+        settings = self.parent.settings
+        self.UpdateSettings()
+
     def Reset(self, map):
         if map:
             name, mapset = map.split('@')
-            self.display.Reset(name, mapset)
+            self.display.OpenMap(str(name), str(mapset))
         else:
-            self.display.Reset1()
+            self.display.CloseMap()
     
     def DrawMap(self):
-        """Display content of the map in PseudoDC"""
-        nlines = self.display.DrawMap()
+        """Display content of the map in PseudoDC
+
+        Return wx.Image 
+        """
+        bmp = wx.EmptyBitmap(self.mapwindow.Map.width, self.mapwindow.Map.height)
+        dc = wx.MemoryDC( bmp) 
+        dc.Clear()
+        dc.SetBackgroundMode(wx.TRANSPARENT)
+
+        nlines = self.display.DrawMap(dc)
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
+
+        return bmp.ConvertToImage()
+
+    def SetRegion(self, reg):
+        """Set geographical region
+        
+        Needed for 'cell2pixel' conversion"""
+        Debug.msg(3, "CDisplayDriver.SetRegion(): %s" % reg)
+        self.display.SetRegion(reg['n'],
+                               reg['s'],
+                               reg['e'],
+                               reg['w'],
+                               reg['nsres'],
+                               reg['ewres'])
     
+    def UpdateSettings(self):
+        """Update display driver settings"""
+        settings = self.parent.settings
+        # TODO map units
+
+        if not self.display:
+            return
+        
+        self.display.SetSettings (0,
+                                  settings['symbolPoint'][0],
+                                  wx.Color(settings['symbolPoint'][1][0],
+                                           settings['symbolPoint'][1][1],
+                                           settings['symbolPoint'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolLine'][0],
+                                  wx.Color(settings['symbolLine'][1][0],
+                                           settings['symbolLine'][1][1],
+                                           settings['symbolLine'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolBoundaryNo'][0],
+                                  wx.Color(settings['symbolBoundaryNo'][1][0],
+                                           settings['symbolBoundaryNo'][1][1],
+                                           settings['symbolBoundaryNo'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolBoundaryOne'][0],
+                                  wx.Color(settings['symbolBoundaryOne'][1][0],
+                                           settings['symbolBoundaryOne'][1][1],
+                                           settings['symbolBoundaryOne'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolBoundaryTwo'][0],
+                                  wx.Color(settings['symbolBoundaryTwo'][1][0],
+                                           settings['symbolBoundaryTwo'][1][1],
+                                           settings['symbolBoundaryTwo'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolCentroidIn'][0],
+                                  wx.Color(settings['symbolCentroidIn'][1][0],
+                                           settings['symbolCentroidIn'][1][1],
+                                           settings['symbolCentroidIn'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolCentroidOut'][0],
+                                  wx.Color(settings['symbolCentroidOut'][1][0],
+                                           settings['symbolCentroidOut'][1][1],
+                                           settings['symbolCentroidOut'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolCentroidDup'][0],
+                                  wx.Color(settings['symbolCentroidDup'][1][0],
+                                           settings['symbolCentroidDup'][1][1],
+                                           settings['symbolCentroidDup'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolNodeOne'][0],
+                                  wx.Color(settings['symbolNodeOne'][1][0],
+                                           settings['symbolNodeOne'][1][1],
+                                           settings['symbolNodeOne'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolNodeTwo'][0],
+                                  wx.Color(settings['symbolNodeTwo'][1][0],
+                                           settings['symbolNodeTwo'][1][1],
+                                           settings['symbolNodeTwo'][1][2],
+                                           255).GetRGB(),
+                                  settings['symbolVertex'][0],
+                                  wx.Color(settings['symbolVertex'][1][0],
+                                           settings['symbolVertex'][1][1],
+                                           settings['symbolVertex'][1][2],
+                                           255).GetRGB(),
+                                  settings['lineWidth'][0])
+
+
 class PyDisplayDriver(AbstractDisplayDriver):
     """
     Experimental display driver implemented in Python using
@@ -993,3 +1094,7 @@ class DigitSettingsDialog(wx.Dialog):
             self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
         except:
             pass
+
+        # update driver settings
+        if not usePyDisplayDriver:
+            self.parent.digit.driver.UpdateSettings()
