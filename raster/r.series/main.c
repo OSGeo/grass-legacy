@@ -100,26 +100,15 @@ int main (int argc, char *argv[])
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->keywords = _("raster");
-    module->description =
-		_("Makes each output cell value a "
-		"function of the values assigned to the corresponding cells "
-		"in the input raster map layers.");
+	module->keywords = _("raster, series");
+	module->description =
+	    _("Makes each output cell value a "
+	      "function of the values assigned to the corresponding cells "
+	      "in the input raster map layers.");
 
-	parm.input = G_define_option() ;
-	parm.input->key        = "input" ;
-	parm.input->type       = TYPE_STRING ;
-	parm.input->required   = YES ;
-	parm.input->multiple   = YES ;
-	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= _("Names of existing raster maps") ;
+	parm.input = G_define_standard_option(G_OPT_R_INPUTS);
 
-	parm.output = G_define_option() ;
-	parm.output->key        = "output" ;
-	parm.output->type       = TYPE_STRING ;
-	parm.output->required   = YES ;
-	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= _("Name of the new raster map") ;
+	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
@@ -128,7 +117,7 @@ int main (int argc, char *argv[])
 	parm.method->options    = build_method_list();
 	parm.method->description= _("Aggregate operation") ;
 
-    /* please, remove before GRASS 7 released */
+	/* please, remove before GRASS 7 released */
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Run quietly");
@@ -146,7 +135,6 @@ int main (int argc, char *argv[])
             G_warning(_("The '-q' flag is superseded and will be removed "
                 "in future. Please use '--quiet' instead."));
         }
-
 
 	/* get the method */
 	method = -1;
@@ -167,7 +155,7 @@ int main (int argc, char *argv[])
 	num_inputs = i;
 
 	if(num_inputs < 1)
-	    G_fatal_error(_("Raster map not found."));
+	    G_fatal_error(_("Raster map not found"));
 
 	inputs = G_malloc(num_inputs * sizeof(struct input));
 
@@ -177,10 +165,12 @@ int main (int argc, char *argv[])
 		p->name = parm.input->answers[i];
 		p->mapset = G_find_cell2(p->name,"");
 		if (!p->mapset)
-			G_fatal_error(_("Raster file <%s> not found"), p->name);
+			G_fatal_error(_("Raster map <%s> not found"), p->name);
+		else
+		        G_message (_("Reading raster map <%s>..."), p->name);
 		p->fd = G_open_cell_old(p->name, p->mapset);
 		if (p->fd < 0)
-			G_fatal_error(_("Unable to open input map <%s> in mapset <%s>"),
+			G_fatal_error(_("Unable to open raster map <%s> in mapset <%s>"),
 				      p->name, p->mapset);
 		p->buf = G_allocate_d_raster_buf();
 	}
@@ -190,7 +180,7 @@ int main (int argc, char *argv[])
 
 	out_fd = G_open_raster_new(out_name, DCELL_TYPE);
 	if (out_fd < 0)
-		G_fatal_error(_("Unable to create output map <%s>"), out_name);
+		G_fatal_error(_("Unable to create raster map <%s>"), out_name);
 
 	out_buf = G_allocate_d_raster_buf();
 
@@ -201,7 +191,7 @@ int main (int argc, char *argv[])
 	ncols = G_window_cols();
 
 	/* process the data */
-        G_message (_("Percent complete ... "));
+        G_important_message (_("Percent complete..."));
 
 	for (row = 0; row < nrows; row++)
 	{
@@ -247,4 +237,3 @@ int main (int argc, char *argv[])
 
 	exit(EXIT_SUCCESS);
 }
-
