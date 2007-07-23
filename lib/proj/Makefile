@@ -16,8 +16,7 @@ NAD_TABLES = FL.lla MD.lla TN.lla WI.lla WO.lla alaska.lla conus.lla \
 
 NT_TABLES = ntv1_can.dat nzgd2kgrid0005.gsb
 
-CSV_FILES = gdal_datum.csv projop_wparm.csv ellipsoid.csv pcs.csv \
-            stateplane.csv gcs.csv prime_meridian.csv unit_of_measure.csv
+CSV_FILES := $(wildcard *.csv)
 
 NAD_DIR = $(GISBASE)/etc/nad
 NAD2BIN = nad2bin
