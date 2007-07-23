@@ -112,8 +112,9 @@ Additional parameters for vector feature specification are:
 
     <li><code>merge</code> - Merges all (at least two) selected vector lines
     (lines or boundaries). The nearest distance between start and end
-    nodes of both lines is found. The second line from two selected
-    lines can eventually be flipped in it's direction.</li>
+    nodes of both lines is found. The geometry of the merged vector lines
+    can be changed. If the second line from two selected lines is in
+    opposite direction to the first, it will be flipped.</li>
 
     <li><code>break</code> - Split (break) given vector line(s) into
     two lines on location given by <code>coords</code>. Shape of the
