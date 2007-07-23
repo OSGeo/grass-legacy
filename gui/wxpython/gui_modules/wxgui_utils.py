@@ -346,6 +346,8 @@ class LayerTree(CT.CustomTreeCtrl):
         else: # tool already enabled
             pass
 
+        self.mapdisplay.imgVectorMap = None
+
     def OnPopupProperties (self, event):
         """Popup properties dialog"""
         self.PropertiesDialog(self.layer_selected)
