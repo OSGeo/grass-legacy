@@ -105,7 +105,7 @@ double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
     /* find the minimal distance between first or last point of both lines */
     *mindistidx = 0;
     for (i = 0; i < sizeof (distances) / sizeof (double); i++) {
-	if (distances[i] > 0.0 && distances[i] < distances[*mindistidx])
+	if (distances[i] >= 0.0 && distances[i] < distances[*mindistidx])
 	    *mindistidx = i;
     }
 
