@@ -54,7 +54,7 @@ static struct menu menu[] =
 	{c_var,    NO_CATS,	0, 1, "variance", "statistical variance"},
 	{c_divr,   divr_cats,	0, 0, "diversity", "number of different values"},
 	{c_intr,   intr_cats,	0, 0, "interspersion", "number of values different than center value"},
-	{0,0,0,0,0}
+	{0,0,0,0,0,0}
 };
 
 struct ncb ncb;
@@ -103,24 +103,15 @@ int main (int argc, char *argv[])
 		  "around it, and stores new cell values in an output raster "
 		  "map layer.");
 
-	parm.input = G_define_option() ;
-	parm.input->key        = "input" ;
-	parm.input->type       = TYPE_STRING ;
-	parm.input->required   = YES ;
-	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= _("Name of input raster map") ;
+	parm.input = G_define_standard_option(G_OPT_R_INPUT);
 
-	parm.output = G_define_option() ;
-	parm.output->key        = "output" ;
-	parm.output->type       = TYPE_STRING ;
-	parm.output->required   = YES ;
-	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= _("Name for output raster map") ;
+	parm.output = G_define_standard_option(G_OPT_R_OUTPUT) ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
 	parm.method->type       = TYPE_STRING ;
-	parm.method->required   = YES ;
+	parm.method->required   = NO ;
+	parm.method->answer     = "average";
 	p = parm.method->options  = G_malloc(1024);
 	for (n = 0; menu[n].name; n++)
 	{
@@ -135,9 +126,10 @@ int main (int argc, char *argv[])
 	parm.size = G_define_option() ;
 	parm.size->key        = "size" ;
 	parm.size->type       = TYPE_INTEGER ;
-	parm.size->required   = YES ;
+	parm.size->required   = NO ;
 	parm.size->options    = "1,3,5,7,9,11,13,15,17,19,21,23,25" ;
 	parm.size->description= _("Neighborhood size") ;
+	parm.size->answer     = "3";
 
 	parm.title = G_define_option() ;
 	parm.title->key        = "title" ;
@@ -184,7 +176,7 @@ int main (int argc, char *argv[])
 
 	/* open raster maps */
 	if ((in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset)) < 0)
-		G_fatal_error (_("Unable to open raster map <%s> in mapset %s"),
+		G_fatal_error (_("Unable to open raster map <%s> in mapset <%s>"),
 			ncb.oldcell.name, ncb.oldcell.mapset);
 
 	map_type = G_get_raster_map_type(in_fd);
@@ -292,6 +284,3 @@ int main (int argc, char *argv[])
 
 	exit(EXIT_SUCCESS);
 }
-
-
-
