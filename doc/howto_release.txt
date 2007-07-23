@@ -158,6 +158,7 @@ Contents
    http://osx.macnn.com/    (email to "contact" -> news tips)
    http://www.giscafe.com/submit_material/submit_options.php#Press (MN)
    http://www.freegis.org   (update, MN)
+   http://www.blinkgeo.com (markusN)
    http://www.directionsmag.com/pressreleases.php (News -> Post Press Release)
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
