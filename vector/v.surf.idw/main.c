@@ -74,16 +74,18 @@ int main(int argc, char *argv[])
     struct cell_list **search_list = NULL, **search_list_start = NULL;
     int max_radius, radius;
     int searchallpoints = 0;
-   
 
+    G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->keywords = _("vector, interpolation");
+    module->description =        
+	_("Surface interpolation from vector point data by Inverse "
+	  "Distance Squared Weighting.");
+  
     parm.input = G_define_standard_option(G_OPT_V_INPUT);
 
-    parm.output = G_define_option() ;
-    parm.output->key        = "output" ;
-    parm.output->type       = TYPE_STRING ;
-    parm.output->required   = YES;
-    parm.output->description= _("Name for output raster map") ;
-    parm.output->gisprompt  = "any,cell,raster" ;
+    parm.output = G_define_standard_option(G_OPT_R_OUTPUT) ;
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "npoints" ;
@@ -95,29 +97,23 @@ int main(int argc, char *argv[])
 
     parm.dfield = G_define_standard_option(G_OPT_V_FIELD);
     parm.dfield->description =
-	_("Field value. If set to 0, z coordinates are used. (3D vector only)");
+	_("If set to 0, z coordinates are used (3D vector only)");
     parm.dfield->answer = "1";
 
     parm.col = G_define_option() ;
     parm.col->key        = "column" ;
     parm.col->type       = TYPE_STRING ;
     parm.col->required   = NO ;
-    parm.col->description= _("Attribute table column with values to interpolate (if layer>0)");
+    parm.col->label      = _("Attribute table column with values to interpolate");
+    parm.col->description = _("Required if layer > 0");
 
     noindex = G_define_flag();
     noindex->key = 'n';
-    noindex->description = _("Don't index points by raster cell (slower but uses"
-                           " less memory and includes points from outside region"
-                           " in the interpolation)");
+    noindex->label = _("Don't index points by raster cell");
+    noindex->description = _("Slower but uses"
+			     " less memory and includes points from outside region"
+			     " in the interpolation");
 
-    G_gisinit(argv[0]);
-
-    module = G_define_module();
-    module->keywords = _("vector");
-    module->description =        
-                    _("Surface interpolation from vector point data by Inverse "
-                    "Distance Squared Weighting.");
-                    
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
@@ -162,7 +158,7 @@ int main(int argc, char *argv[])
     read_sites (parm.input->answer, field, parm.col->answer);
 
     if (npoints == 0)
-        G_fatal_error( _("%s: no data points found"), G_program_name());
+        G_fatal_error( _("No data points found"));
     nsearch = npoints < search_points ? npoints : search_points;
 
   if(!noindex->answer)
@@ -237,8 +233,8 @@ int main(int argc, char *argv[])
     if (fd < 0)
         G_fatal_error( _("Unable to create raster map <%s>"), parm.output->answer);
                                   
-    G_message ( _("Interpolating raster map <%s>... %d rows... "),
-        parm.output->answer, window.rows);
+    G_important_message ( _("Interpolating raster map <%s> (%d rows, %d cols)... "),
+			  parm.output->answer, window.rows, window.cols);
 
     north = window.north + window.ns_res/2.0;
     for (row = 0; row < window.rows; row++)
@@ -378,7 +374,9 @@ int main(int argc, char *argv[])
     G_short_history(parm.output->answer, "raster", &history);
     G_command_history(&history);
     G_write_history(parm.output->answer, &history);
-    G_message ( _("Done          "));
+
+    G_done_msg(NULL);
+
     exit(EXIT_SUCCESS);
 }
 
@@ -514,7 +512,3 @@ void calculate_distances_noindex(double north, double east)
 	    }
 
 }
-
-
-
-

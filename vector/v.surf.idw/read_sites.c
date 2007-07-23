@@ -32,11 +32,11 @@ void read_sites ( char *name, int field, char *col)
     
         Fi = Vect_get_field( &Map, field);
         if ( Fi == NULL )
-    	G_fatal_error (_("Cannot read field info"));	
+	    G_fatal_error (_("Database connection not defined for layer %d"), field);	
     
         Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
         if ( Driver == NULL )
-    	G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
     
         nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col, NULL, &cvarr );
         G_debug (3, "nrec = %d", nrec );
@@ -46,7 +46,7 @@ void read_sites ( char *name, int field, char *col)
 	    G_fatal_error ( _("Column type not supported") );
     
         if ( nrec < 0 )
-	    G_fatal_error (_("Cannot select data from table"));
+	    G_fatal_error (_("Unable to select data from table"));
     
         G_message ( _("%d records selected from table"), nrec);
     
@@ -94,6 +94,5 @@ void read_sites ( char *name, int field, char *col)
     Vect_set_release_support ( &Map );
     Vect_close ( &Map );
 
-    G_message ( _("%d points loaded\n"), npoints);
+    G_message ( _("%d points loaded"), npoints);
 }
-
