@@ -40,7 +40,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, out, In.head.with_z)){
         Vect_close (&In);
-	G_fatal_error (_("Cannot open vector map <%s>"), out);
+	G_fatal_error (_("Unable to open vector map <%s>"), out);
     }
 
     Vect_copy_head_data (&In, &Out);
@@ -104,7 +104,8 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
 	    count++;
 	}
     }
-    G_message (_("[%d] new points written to output"), count );
+
+    G_message (_("%d new points written to output"), count );
     
     Vect_destroy_line_struct (Points);
     Vect_destroy_line_struct (Pout);
