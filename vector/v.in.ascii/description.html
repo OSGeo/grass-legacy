@@ -32,6 +32,12 @@ The field separator may be a character, the word '<tt>tab</tt>'
 (or '<tt>\t</tt>') for tab, or '<tt>space</tt>' (or '&nbsp;') for a blank.
 
 <P>
+Attribute table is only created if it is needed, i.e. when at
+least one attribute column is present in the input file besides
+geometry columns. The attribute column types have to be declared
+along with the geometry columns using the <em>columns</em> parameter.
+
+<P>
 Latitude/Longitude data may be given in a number of ways.
 Decimal degrees must be positive or negative instead of using a hemisphere
 letter. Mixed coordinates must use a hemisphere letter. Whole minutes and
