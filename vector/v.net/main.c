@@ -32,12 +32,13 @@ int main (int argc, char **argv)
     struct Option *action;
     struct Option *afield_opt, *nfield_opt, *thresh_opt;
     struct Flag *cats_flag;
-    struct Map_info In;
+    struct Map_info In, Out, Points;
 
     char   *mapset;
     int    afield, nfield;
     int    act;
-
+    double thresh;
+	    
     /*  Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
@@ -101,6 +102,7 @@ int main (int argc, char **argv)
   
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
+    thresh = 0.0;
 
     if (strcmp ( action->answer, "nodes") == 0)
 	act = TOOL_NODES;
@@ -112,24 +114,53 @@ int main (int argc, char **argv)
 	act = TOOL_NREPORT;
     else 
 	G_fatal_error(_("Unknow operation"));
+
+    if (act == TOOL_NODES || act == TOOL_CONNECT) {
+        if (output->answer == NULL) 
+	    G_fatal_error(_("Output vector map must be specified"));
+    }
     
+    if (act == TOOL_CONNECT) {
+	if (points->answer == NULL) 
+	    G_fatal_error(_("Point vector map must be specified"));
+	
+	if (thresh_opt->answer == NULL) 
+	    G_fatal_error(_("Threshold value must be specified"));
+
+	thresh = atof (thresh_opt->answer);
+	
+	if (thresh < 0.0)
+	    G_fatal_error (_("Threshold value must be >= 0"));
+    }
+
+    /* open input map */
     mapset = G_find_vector2 (input->answer, "");
     if (mapset == NULL) 
 	G_fatal_error(_("Vector map <%s> not found"), input->answer);
     
     Vect_set_open_level (2);
     Vect_open_old (&In, input->answer, mapset);
-
     
     if (act == TOOL_NODES || act == TOOL_CONNECT) { /* nodes */
-        if ( output->answer == NULL ) 
-	    G_fatal_error(_("Output vector map must be specified"));
+	int is3d;
 
 	Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
 
-	struct Map_info Out;
-	int is3d;
+	if (act == TOOL_CONNECT) {
+	    /* open points map */
+	    mapset = G_find_vector2 (points->answer, "");
+	    if (mapset == NULL) 
+		G_fatal_error(_("Vector map <%s> not found"), points->answer);
+	    
+	    Vect_set_open_level (1);
+	    Vect_set_fatal_error (GV_FATAL_PRINT);
+	    if (Vect_open_old (&Points, points->answer, mapset) == -1) {
+		Vect_close(&In);
+		G_fatal_error (_("Unable to open vector map <%s>"), points->answer);
+	    }
+	}
 
+	/* create output map */
 	is3d = Vect_is_3d (&In);
 	Vect_set_fatal_error (GV_FATAL_PRINT);
 	if (1 > Vect_open_new (&Out, output->answer, is3d)) {
@@ -141,29 +172,11 @@ int main (int argc, char **argv)
 	Vect_hist_copy (&In, &Out);
 	Vect_hist_command (&Out);
 
-	if (act == TOOL_NODES)
+	if (act == TOOL_NODES) {
 	    nodes (&In, &Out, cats_flag->answer, nfield);
+	}
 	else { /* TOOL_CONNECT */
-	    if (points->answer == NULL) 
-		G_fatal_error(_("Point vector map must be specified"));
-
-	    if (thresh_opt->answer == NULL) 
-		G_fatal_error(_("Threshold value must be specified"));
-
-	    struct Map_info Points;
 	    int narcs;
-	    double thresh;
-	    
-	    thresh = atof (thresh_opt->answer);
-
-	    if (thresh < 0.0)
-		G_fatal_error (_("Threshold value must be >= 0"));
-	    mapset = G_find_vector2 (points->answer, "");
-	    if (mapset == NULL) 
-		G_fatal_error(_("Vector map <%s> not found"), points->answer);
-
-	    Vect_set_open_level (1);
-	    Vect_open_old (&Points, points->answer, mapset);
 
 	    narcs = connect_arcs (&In, &Points, &Out, nfield, thresh);
 
