@@ -5,6 +5,7 @@
  * COPYRIGHT:    (C) 2007 Glynn Clements and the GRASS Development Team
  *
  * NOTE:         Based upon r.colors/rules.c
+ *               The colors are stored in ./colors/
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
