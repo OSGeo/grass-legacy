@@ -62,7 +62,7 @@ main(int argc, char *argv[])
     RASTER_MAP_TYPE data_type, out_data_type;
     struct GModule *module;
     struct Option *input, *output, *size_O, *dist_O;
-    struct Flag *flag0, *flag1, *flag2, *flag3, *flag4, *flag5, 
+    struct Flag *flag1, *flag2, *flag3, *flag4, *flag5, 
 	*flag6, *flag7, *flag8, *flag9, *flag10, *flag11, 
 	*flag12, *flag13, *flag14, *flag15;
     G_gisinit(argv[0]);
@@ -87,7 +87,7 @@ main(int argc, char *argv[])
     size_O->key        = "size";
     size_O->key_desc   = "value";
     size_O->type       = TYPE_INTEGER;
-    size_O->required   = YES;
+    size_O->required   = NO;
     size_O->description= _("The size of sliding window (odd and >= 3)");
     size_O->answer     = "3";
 
@@ -97,7 +97,7 @@ main(int argc, char *argv[])
     dist_O->key        = "distance";
     dist_O->key_desc   = "value";
     dist_O->type       = TYPE_INTEGER;
-    dist_O->required   = YES;
+    dist_O->required   = NO;
     dist_O->description= _("The distance between two samples (>= 1)");
     dist_O->answer     = "1";
 
