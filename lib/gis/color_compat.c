@@ -146,6 +146,16 @@ int G_make_byr_fp_colors(struct Colors *colors, DCELL min, DCELL max)
 	return G_make_fp_colors(colors, "byr", min, max);
 }
 
+int G_make_bgyr_colors(struct Colors *colors, CELL min, CELL max)
+{
+	return G_make_colors(colors, "bgyr", min, max);
+}
+
+int G_make_bgyr_fp_colors(struct Colors *colors, DCELL min, DCELL max)
+{
+	return G_make_fp_colors(colors, "bgyr", min, max);
+}
+
 int G_make_byg_colors(struct Colors *colors, CELL min, CELL max)
 {
 	return G_make_colors(colors, "byg", min, max);

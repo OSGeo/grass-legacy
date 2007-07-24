@@ -222,6 +222,8 @@ int G_make_aspect_colors(struct Colors *, CELL, CELL);
 int G_make_aspect_fp_colors(struct Colors *, DCELL, DCELL);
 int G_make_byr_colors(struct Colors *, CELL, CELL);
 int G_make_byr_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_bgyr_colors(struct Colors *, CELL, CELL);
+int G_make_bgyr_fp_colors(struct Colors *, DCELL, DCELL);
 int G_make_byg_colors(struct Colors *, CELL, CELL);
 int G_make_byg_fp_colors(struct Colors *, DCELL, DCELL);
 int G_make_grey_scale_colors(struct Colors *, CELL, CELL);
