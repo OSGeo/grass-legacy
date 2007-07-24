@@ -75,7 +75,7 @@ G_find_vector  (char *name, const char *mapset)
  *  \return char *
  */
 char *
-G_find_vector2  (const const char *name, const char *mapset)
+G_find_vector2  (const char *name, const char *mapset)
 
 {
 	return G_find_file2 (GRASS_VECT_DIRECTORY, name, mapset);
