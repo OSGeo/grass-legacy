@@ -69,6 +69,7 @@ SUBDIRS = \
 	v.in.gpsbabel \
 	v.in.mapgen \
 	v.in.sites.all \
+	v.in.wfs \
 	v.rast.stats \
 	v.report \
 	v.univar.sh \
