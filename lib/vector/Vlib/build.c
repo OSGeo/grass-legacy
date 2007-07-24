@@ -88,12 +88,12 @@ Vect_get_built ( struct Map_info *Map )
 
  This functions optionaly builds only some parts of topology. Highest level is specified by build
  parameter which may be:
- GV_BUILD_NONE - nothing is build
- GV_BUILD_BASE - basic topology, nodes, spatial index
- GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas
- GV_BUILD_ATTACH_ISLES - attach islands to areas
- GV_BUILD_CENTROIDS - assign centroids to areas
- GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS
+ GV_BUILD_NONE - nothing is build;
+ GV_BUILD_BASE - basic topology, nodes, spatial index;
+ GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas;
+ GV_BUILD_ATTACH_ISLES - attach islands to areas;
+ GV_BUILD_CENTROIDS - assign centroids to areas;
+ GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS.
 
  If functions is called with build lower than current value of the Map, the level is downgraded to 
  requested value.
