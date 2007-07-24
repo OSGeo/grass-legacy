@@ -20,32 +20,13 @@
 #include <grass/glocale.h>
 #include "proto.h"
 
-int nodes ( char *in, char *out, int add_cats, int nfield)
+int nodes (struct Map_info *In, struct Map_info *Out, int add_cats, int nfield)
 {
     int    i, node, nnodes, line, nlines, count, type, found;
     double x, y, z;
-    struct Map_info In, Out;
-    char   *mapset;
     struct line_pnts *Points, *Pout;
     struct line_cats *Cats;
     int    cat;
-
-    mapset = G_find_vector2 (in, "");
-    if (mapset == NULL) 
-	G_fatal_error(_("Vector map <%s> not found"), in );
-
-    Vect_set_open_level (2);
-    Vect_open_old (&In, in, mapset);
-
-    Vect_set_fatal_error (GV_FATAL_PRINT);
-    if (1 > Vect_open_new (&Out, out, In.head.with_z)){
-        Vect_close (&In);
-	G_fatal_error (_("Unable to open vector map <%s>"), out);
-    }
-
-    Vect_copy_head_data (&In, &Out);
-    Vect_hist_copy (&In, &Out);
-    Vect_hist_command ( &Out );
 
     Points = Vect_new_line_struct ();
     Pout = Vect_new_line_struct ();
@@ -54,7 +35,7 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     
     /* Rewrite all primitives to output file */
     cat = 0;
-    while ( (type = Vect_read_next_line (&In, Points, Cats)) >= 0) 
+    while ( (type = Vect_read_next_line (In, Points, Cats)) >= 0) 
     {
         if ( type == GV_POINT )
         {
@@ -69,21 +50,21 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
                 }
             }
         }
-        Vect_write_line (&Out, type, Points, Cats);      
+        Vect_write_line (Out, type, Points, Cats);      
     }
     cat++;
     
     /* Go thorough all nodes in old map and write a new point if missing */    
-    nnodes = Vect_get_num_nodes ( &In );
+    nnodes = Vect_get_num_nodes ( In );
     count = 0;
     for ( node = 1; node <= nnodes; node++ ) {
 	int has_lines = 0;
 	
-	nlines = Vect_get_node_n_lines ( &In, node );
+	nlines = Vect_get_node_n_lines ( In, node );
 	found = 0;
 	for ( i = 0; i < nlines; i++ ) {
-	    line = abs ( Vect_get_node_line ( &In, node, i ) );
-            type = Vect_read_line (&In, NULL, NULL, line);
+	    line = abs ( Vect_get_node_line ( In, node, i ) );
+            type = Vect_read_line (In, NULL, NULL, line);
 	    if ( type == GV_POINT ) {
 		found = 1;
 	    }
@@ -93,14 +74,14 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
 	}
 	if ( has_lines && !found ) { /* Write new point */
 	    Vect_reset_line ( Pout );    
-	    Vect_get_node_coor ( &In, node, &x, &y, &z);
+	    Vect_get_node_coor ( In, node, &x, &y, &z);
 	    Vect_append_point ( Pout, x, y, z);
             Vect_reset_cats (Cats);
             if ( add_cats )
             {
                 Vect_cat_set ( Cats, nfield, cat++ );
             }
-	    Vect_write_line ( &Out, GV_POINT, Pout, Cats);
+	    Vect_write_line ( Out, GV_POINT, Pout, Cats);
 	    count++;
 	}
     }
@@ -111,13 +92,5 @@ int nodes ( char *in, char *out, int add_cats, int nfield)
     Vect_destroy_line_struct (Pout);
     Vect_destroy_cats_struct (Cats);
 
-    Vect_copy_tables ( &In, &Out, 0 );
-    
-    /* Support */    
-    Vect_build (&Out, stderr); 
-    
-    Vect_close (&In);
-    Vect_close (&Out);
-    
     return 0;
 }

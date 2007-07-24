@@ -20,11 +20,9 @@
 #include <grass/glocale.h>
 #include "proto.h"
 
-int report ( char *in, int afield, int nfield, int action)
+int report (struct Map_info *In, int afield, int nfield, int action)
 {
-    struct Map_info In;
     int    i, j, k, line, ltype, nnodes;
-    char   *mapset;
     int    cat_line, cat_node[2];
     struct line_cats *Cats, *Cats2;
     int    node;
@@ -33,20 +31,12 @@ int report ( char *in, int afield, int nfield, int action)
     Cats = Vect_new_cats_struct ();
     Cats2 = Vect_new_cats_struct ();
     
-    mapset = G_find_vector2 (in, "");
-    if (mapset == NULL) 
-	G_fatal_error(_("Vector map <%s> not found"), in );
-
-    Vect_set_open_level (2);
-    if (2 > Vect_open_old (&In, in, mapset))
-	G_fatal_error (_("Unable to open vector map<%s> at topology level %d"), in, 2);
-
-    if ( action == REPORT )
+    if ( action == TOOL_REPORT )
     { 
 	/* For all lines find categories for points on nodes */ 
-	for (i = 1 ; i <= Vect_get_num_lines (&In) ; i++)
+	for (i = 1 ; i <= Vect_get_num_lines (In) ; i++)
 	  {
-	    ltype = Vect_read_line (&In, NULL, Cats, i);
+	    ltype = Vect_read_line (In, NULL, Cats, i);
 	    if ( ltype != GV_LINE)
 		continue;
 	    
@@ -57,16 +47,16 @@ int report ( char *in, int afield, int nfield, int action)
 	    cat_node[0] = cat_node[1] = 0;
 	    for (j=0; j<2; j++) {
 		if (j==0)
-		    Vect_get_line_nodes ( &In, i, &node, NULL);
+		    Vect_get_line_nodes ( In, i, &node, NULL);
 		else
-		    Vect_get_line_nodes ( &In, i, NULL, &node);
+		    Vect_get_line_nodes ( In, i, NULL, &node);
 
-		Vect_get_node_coor (&In, node, &x, &y, &z); 
+		Vect_get_node_coor (In, node, &x, &y, &z); 
 		nnodes = 0;
 		
-		for ( k=0; k < Vect_get_node_n_lines ( &In, node ); k++) {
-		    line = abs ( Vect_get_node_line ( &In, node, k ) ); 
-		    ltype = Vect_read_line (&In, NULL, Cats, line);
+		for ( k=0; k < Vect_get_node_n_lines ( In, node ); k++) {
+		    line = abs ( Vect_get_node_line ( In, node, k ) ); 
+		    ltype = Vect_read_line (In, NULL, Cats, line);
 		    if ( ltype != GV_POINT)
 			continue;
 		    
@@ -88,19 +78,19 @@ int report ( char *in, int afield, int nfield, int action)
     {
         int nnodes, node;
          
-        nnodes = Vect_get_num_nodes ( &In );
+        nnodes = Vect_get_num_nodes ( In );
         
         for ( node = 1; node <= nnodes; node++ ) 
         {
             int nelem, elem, type, i, j, k, l;
 
-            nelem = Vect_get_node_n_lines ( &In, node );
+            nelem = Vect_get_node_n_lines ( In, node );
 
             /* Loop through all points */
             for ( i = 0; i < nelem; i++ ) 
             {       
-                elem = abs ( Vect_get_node_line ( &In, node, i ) );
-                type = Vect_read_line (&In, NULL, Cats, elem);
+                elem = abs ( Vect_get_node_line ( In, node, i ) );
+                type = Vect_read_line (In, NULL, Cats, elem);
                 if ( type != GV_POINT ) continue;
 
                 /* Loop through all cats of point */
@@ -114,8 +104,8 @@ int report ( char *in, int afield, int nfield, int action)
                         /* Loop through all lines */
 			for ( k = 0; k < nelem; k++ ) 
 			{       
-			    elem = abs ( Vect_get_node_line ( &In, node, k ) );
-			    type = Vect_read_line (&In, NULL, Cats2, elem);
+			    elem = abs ( Vect_get_node_line ( In, node, k ) );
+			    type = Vect_read_line (In, NULL, Cats2, elem);
 			    if ( !(type & GV_LINES) ) continue;
 
                             /* Loop through all cats of line */
@@ -137,7 +127,5 @@ int report ( char *in, int afield, int nfield, int action)
         }
     }
 
-    Vect_close (&In);
-    
     return 0;
 }
