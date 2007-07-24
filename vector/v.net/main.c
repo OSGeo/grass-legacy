@@ -180,7 +180,7 @@ int main (int argc, char **argv)
 
 	    narcs = connect_arcs (&In, &Points, &Out, nfield, thresh);
 
-	    G_message (_("%d arcs added to network"), narcs);
+	    G_message (_("%d arcs added to network (nlayer: [%d])"), narcs, nfield);
 
 	    Vect_close(&Points);
 	}
