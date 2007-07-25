@@ -1,6 +1,6 @@
-                   INSTALL GRASS 5.0 source code
+                   INSTALL GRASS 5.4 source code
 
-($Id: INSTALL,v 1.27.2.2 2004-10-31 20:07:51 paul Exp $)
+($Id: INSTALL,v 1.27.2.3 2007-07-25 20:20:01 paul Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -39,10 +39,10 @@ size of the compiled binaries and install footprint.
 The intent of the install method is to have the following sequence
 of commands work to install GRASS on any platform.
 
-	gunzip -fc grass-5.4.0.tar.gz | tar xvf -
+	gunzip -fc grass-5.4.1.tar.gz | tar xvf -
 	mkdir grass-build
 	cd grass-build
-	../grass-5.4.0/configure ... [system-specific options] ..
+	../grass-5.4.1/configure ... [system-specific options] ..
 	make
 	sudo make install
 
@@ -55,13 +55,13 @@ output of
 In addition, for faster smaller binaries you may want to enable
 optimisation and stripping. This may be done by, for example,
 
-	CFLAGS=-O2 LDFLAGS=-s ../grass-5.4.0/configure ...
+	CFLAGS=-O2 LDFLAGS=-s ../grass-5.4.1/configure ...
 
 in Bourne or Bash shell or
 
 	setenv CFLAGS -O2
 	setenv LDFLAGS -s
-	../grass-5.4.0/configure ...
+	../grass-5.4.1/configure ...
 
 in C shell. This should not be done if you need to debug the GRASS 
 binaries. See section CODE OPTIMIZATION below for additional hints.
@@ -370,4 +370,4 @@ in /usr/local/grass54):
 should suffice.
 
 
-$Date: 2004-10-31 20:07:51 $
+$Date: 2007-07-25 20:20:01 $
