@@ -127,7 +127,11 @@ else
 	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
-PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
+if [ "$GRASS_ADDON_PATH" ] ; then
+   PATH="$GISBASE/bin:$GISBASE/scripts:$GRASS_ADDON_PATH:$PATH"
+else
+   PATH="$GISBASE/bin:$GISBASE/scripts:$PATH"
+fi
 export PATH
 
 # Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
