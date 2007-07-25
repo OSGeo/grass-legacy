@@ -456,7 +456,7 @@ clean: FORCE mostlyclean
 	@ echo "Performing clean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
-	${SHELL} -c "(cd src.contrib/DUKE/r.terraflow/IOStream/lib/src ; make clean) ; true"
+	${SHELL} -c "(cd src.contrib/DUKE/r.terraflow/IOStream/lib ; make clean) ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmake${NAME_VER}    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmakelinks${NAME_VER}  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/grass${NAME_VER}    2>/dev/null ; true"
