@@ -2,12 +2,28 @@
 
 <em>v.net</em> is used for vector network maps maintenance.
 
-<h3>EXAMPLE</h3>
+<h3>EXAMPLES</h3>
 
+Spearfish based examples:<P>
+
+Create nodes globally for all line ends and intersections:
+<br>
 <div class="code"><pre>
-# create nodes
 v.net in=streams out=streams_node
 </pre></div>
+
+<P>
+Merge in nodes from a separate map within given threshold:
+<br>
+<div class="code"><pre>
+echo "1|601653.5|4922869.2|start
+2|593330.8|4924096.6|end" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
+                         east double precision, north double precision, label varchar(43)"
+
+#create lines map connecting points to network (on layer 2)
+v.net myroads points=startend out=myroads_net op=connect thresh=200
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
@@ -16,8 +32,9 @@ v.net in=streams out=streams_node
 <em><a HREF="v.net.steiner.html">v.net.steiner</a></em>,
 <em><a HREF="v.net.salesman.html">v.net.salesman</a></em>
 
-<h2>AUTHOR</h2>
+<h2>AUTHORS</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-Irst, Trento, Italy<BR>
+Martin Landa, FBK-Irst, Trento, Italy
 
 <p><i>Last changed: $Date$</i>
