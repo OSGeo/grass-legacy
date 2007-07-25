@@ -492,6 +492,11 @@ void R_font_list(char ***list, int *count)
 	trans->font_list(list, count);
 }
 
+void R_font_info(char ***list, int *count)
+{
+	trans->font_info(list, count);
+}
+
 void R_panel_save(const char *name, int t, int b, int l, int r)
 {
 	trans->panel_save(name, t, b, l, r);

@@ -67,7 +67,8 @@
 #define PAD_LIST_ITEMS              74
 #define PAD_SET_ITEM                75
 
-/* freetype */
+/* fonts */
+#define FONT_INFO                   76
 #define FONT_LIST                   77
 #define CHARSET                     78
 

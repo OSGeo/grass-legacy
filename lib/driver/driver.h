@@ -96,6 +96,7 @@ extern void COM_Erase(void);
 extern void COM_Font_get(const char *);
 extern void COM_Font_init_charset(const char *);
 extern void COM_Font_list(char ***, int *);
+extern void COM_Font_info(char ***, int *);
 /* Get_location.c */
 extern int COM_Get_location_with_box(int,int,int *,int *,int *);
 extern int COM_Get_location_with_line(int,int,int *,int *,int *);
