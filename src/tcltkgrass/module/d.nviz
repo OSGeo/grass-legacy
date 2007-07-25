@@ -1,0 +1,19 @@
+interface_build {
+    {d.nviz} 0
+    {Creates a path for scripting a fly-through animation in NVIZ.}
+    {entry input {Name of elevation raster map:} 0 raster}
+    {entry output {Name of NVIZ animation script created:} 0 file}
+    {entry name {Prefix for output images in full render mode (-f) [default="NVIZ"]:} 0 ""}
+    {entry dist {Distance of camera behind center of view:} 0 ""}
+    {entry ht {Height of camera above center of view (actual height if -c flag set):} 0 ""}
+    {entry frames {Number of frames in animation:} 0 ""}
+    {entry start {Starting frame number [default=0]:} 0 ""}
+    {entry route {Geographic coordinates for keyframe locations (x1,y1,x2,y2,...):} 0 ""}
+    {separator blue 1}
+    {checkbox -i {Interactive mode (overrides route coordinates).} "" -i}
+    {checkbox -f {Full render mode. Draw all NVIZ data and save to PPM.} "" -f}
+    {checkbox -c {Fly at constant elevation (rather than constant height above terrain).} "" -c}
+    {checkbox -k {Produce a keyframe animation file.} "" -k}
+    {checkbox -o {Render animation in offscreen context.} "" -o}
+    {checkbox -e {Enable drawing of vectors and sites.} "" -e}
+}

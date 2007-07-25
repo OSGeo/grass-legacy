@@ -27,7 +27,7 @@
 
 #include "rom_proto.h"
 
-#define MAXIMAGES 100
+#define MAXIMAGES 400
 #define DEF_MAX 500
 #define DEF_MIN 200
 #define MAXVIEWS    4 
@@ -37,6 +37,7 @@
 int     nrows, ncols, numviews, quality, quiet=0;
 char 	*vfiles[MAXVIEWS][MAXIMAGES];
 char 	outfile[BUFSIZ];
+char    encoder[15];
 
 float 	vscale, scale;  /* resampling scale factors */
 int 	irows, icols, vrows, vcols;
@@ -44,12 +45,22 @@ int 	frames;
 
 int main ( int  argc, char **argv)
 {
-    int	     	i, j, d;
+/*    int	     	i, j, d; */
     int       	*sdimp, longdim, r_out;
-    char 	dummy, *p;
+/*    char 	dummy, *p; */
 
     G_gisinit (argv[0]);
     parse_command(argc, argv, vfiles, &numviews, &frames, &quality, &r_out);
+
+
+    /* find a working encoder */
+    if(256 == G_system("ppmtompeg 2> /dev/null"))
+	strcpy(encoder, "ppmtompeg");
+    else if(256 == G_system("mpeg_encode 2> /dev/null"))
+	strcpy(encoder, "mpeg_encode");
+    else G_fatal_error("either mpeg_encode or ppmtompeg must be installed");
+/*    G_debug(1, "encoder = [%s]\n", encoder); */
+
 
     vrows = G_window_rows();
     vcols = G_window_cols();
@@ -124,7 +135,7 @@ int	vnum;
 int	y_rows, y_cols;
 char    *pr, *pg, *pb;
 unsigned char *tr, *tg, *tb, *tset;
-int     R, G, B;
+/* int     R, G, B; */
 char	*mpfilename, *mapset, name[BUFSIZ];
 char 	cmd[1000], *yfiles[MAXIMAGES];
 struct Colors colors;
@@ -262,13 +273,13 @@ struct Colors colors;
     write_params(mpfilename, yfiles, outfile, cnt, quality, y_rows, y_cols, 0);
 
     if(quiet)
-	sprintf(cmd, "mpeg_encode %s 2> /dev/null > /dev/null", 
-		mpfilename);
+	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", 
+		encoder, mpfilename);
     else
-	sprintf(cmd, "mpeg_encode %s", mpfilename);
+	sprintf(cmd, "%s %s", encoder, mpfilename);
 
     if(0 != G_system(cmd))
-	fprintf(stderr,"mpeg_encode ERROR\n");
+	G_warning("mpeg_encode ERROR");
 
     clean_files(mpfilename, yfiles, cnt);
 
@@ -295,13 +306,13 @@ char	*mpfilename, cmd[1000];
 		outfile, frames, quality, 0, 0, 1);
 
     if(quiet)
-	sprintf(cmd, "mpeg_encode %s 2> /dev/null > /dev/null", 
-		mpfilename);
+	sprintf(cmd, "%s %s 2> /dev/null > /dev/null", 
+		encoder, mpfilename);
     else
-	sprintf(cmd, "mpeg_encode %s", mpfilename);
+	sprintf(cmd, "%s %s", encoder, mpfilename);
 
     if(0 != G_system(cmd))
-	fprintf(stderr,"mpeg_encode ERROR\n");
+	G_warning("mpeg_encode ERROR");
 
     clean_files(mpfilename, NULL, 0);
 

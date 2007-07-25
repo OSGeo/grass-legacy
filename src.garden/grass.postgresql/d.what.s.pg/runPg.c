@@ -119,7 +119,7 @@ int runPg(SQL_stmt, str_dist, print_out)
     }
 /* help I always screw up atof functions ---  look closely and fix it */
 
-    (double) pts->distance = (double) searchdist;
+    pts->distance = (double) searchdist;
 
     R_open_driver();
     D_setup(0);

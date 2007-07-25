@@ -113,6 +113,12 @@ the variable(s) in the <a href=html/grass5.html>.grassrc5</a> file.
 <p>GRASS_HTMLMINBBOX -?
 <p>GRASS_HTMLMINDIST -?
 <p>GRASS_HTMLTYPE -?
+<P>GRASS_INT_ZLIB
+<br>[libgis] If the environment variable GRASS_INT_ZLIB exists, new compressed
+ rasters will be compressed using zlib instead of RLE compression. Such
+ rasters will have a "compressed" value of 2 in the cellhd file.<br>
+ Obviously, decompression is controlled by the raster's "compressed"
+ value, not the environment variable.
 <p>GRASS_ORGANIZATION
 <br>[various vector modules which generate new vector maps]
 <br>&nbsp; To set the owner of the vector map ("Organization"). Default

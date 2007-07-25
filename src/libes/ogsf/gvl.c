@@ -9,6 +9,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "gstypes.h"
 #include "gsget.h"
@@ -284,7 +285,7 @@ void gvl_unload_dsp(geovol * gvl, struct dspinfo *dspi)
 void gvl_load_dsp(geovol * gvl, char *dspfname, geodsp * dspinfo)
 {
     /* allocate dspfinfo, send to Gvol routine for filling */
-    Gvol_open_dspf(gvl->filename, dspfname, dspinfo);
+    /* Gvol_open_dspf(gvl->filename, dspfname, dspinfo); */
 
     return;
 }

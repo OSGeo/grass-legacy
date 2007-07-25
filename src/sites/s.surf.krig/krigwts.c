@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
+#include "gis.h"
 #include "krig.h"
 /* #include "dgesv.h" */
 
@@ -22,9 +23,8 @@ matrix x, the Kriging weights.
 
 void krig_weights (void) {
 
-  int i, j, k, n;
+  int i, j;
   int matdim, lda;
-  double e, tmp = 0;
   extern int nsearch;
   extern mat_struct *x, *sv_to_cell, *sv_btw_smpl;
   mat_struct *C, *w;

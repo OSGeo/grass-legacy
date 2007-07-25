@@ -50,7 +50,7 @@
 #%end
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-    exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+    exec g.parser "$0" "$@"
 fi
 
 if test "$GISBASE" = ""; then
@@ -101,9 +101,11 @@ if [ ! "$list" ] ; then
     exit 1
 fi
 
+sorted_list=`echo "$list" | tr ' ' '\n' | sort | tr '\n' ' '`
+
 start=
 i=""
-for i in $list
+for i in $sorted_list
 do
     if [ "$start" ] ; then
 	if [ ! "$sep" ] ; then

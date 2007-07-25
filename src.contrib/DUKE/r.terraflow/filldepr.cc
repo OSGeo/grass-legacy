@@ -122,7 +122,7 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
   /*__________________________________________________________*/
 
   /* allocate the raised-elevation array */
-  elevation_type* raise = new (elevation_type) [maxWatersheds];
+  elevation_type* raise = new elevation_type [maxWatersheds];
   assert(raise);
   
   /*allocate and initialize done; done[i] = true iff watershed i has

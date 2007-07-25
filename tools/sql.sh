@@ -187,7 +187,7 @@ vfprintf
 vsprintf
 EOF
 
-destroydb "$dbname"
+dropdb "$dbname"
 createdb "$dbname"
 
 psql -n -q -d "$dbname" << EOF
@@ -197,21 +197,21 @@ psql -n -q -d "$dbname" << EOF
 CREATE TABLE stlib_exp (
 	library VARCHAR(80) NOT NULL,
 	object VARCHAR(40) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY stlib_exp FROM '$tmpdir/stlib_exp.lst' ;
 
 CREATE TABLE shlib_exp (
 	library VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY shlib_exp FROM '$tmpdir/shlib_exp.lst' ;
 
 CREATE TABLE obj_exp (
 	object VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY obj_exp FROM '$tmpdir/obj_exp.lst' ;
@@ -219,42 +219,42 @@ COPY obj_exp FROM '$tmpdir/obj_exp.lst' ;
 CREATE TABLE stlib_imp (
 	library VARCHAR(80) NOT NULL,
 	object VARCHAR(40) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY stlib_imp FROM '$tmpdir/stlib_imp.lst' ;
 
 CREATE TABLE shlib_imp (
 	library VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY shlib_imp FROM '$tmpdir/shlib_imp.lst' ;
 
 CREATE TABLE obj_imp (
 	object VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY obj_imp FROM '$tmpdir/obj_imp.lst' ;
 
 CREATE TABLE prog_imp (
 	program VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY prog_imp FROM '$tmpdir/prog_imp.lst' ;
 
 CREATE TABLE prog_exp (
 	program VARCHAR(80) NOT NULL,
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY prog_exp FROM '$tmpdir/prog_exp.lst' ;
 
 CREATE TABLE libs (
-	library VARCHAR(20) NOT NULL,
-	symbol VARCHAR(60) NOT NULL
+	library VARCHAR(80) NOT NULL,
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY libs FROM '$tmpdir/libs.lst' ;
@@ -268,7 +268,7 @@ CREATE TABLE ldd (
 COPY ldd FROM '$tmpdir/ldd.lst' ;
 
 CREATE TABLE ansi (
-	symbol VARCHAR(80) NOT NULL
+	symbol VARCHAR(150) NOT NULL
 	) ;
 
 COPY ansi FROM '$tmpdir/ansi.lst' ;

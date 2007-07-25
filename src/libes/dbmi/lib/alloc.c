@@ -1,9 +1,6 @@
-#include "dbmi.h"
 #include <string.h>
-
-extern char *malloc();
-extern char *calloc();
-extern char *realloc();
+#include <stdlib.h>
+#include "dbmi.h"
 
 char *
 db_store(s)

@@ -133,14 +133,14 @@ int main(int argc, char *argv[])
    
   if(!noindex->answer)
   { 
-    npoints_currcell = (long **)G_malloc(window.rows * sizeof(long));
-    points = (struct Point ***)G_malloc(window.rows * sizeof(struct Point));
+    npoints_currcell = (long **)G_malloc(window.rows * sizeof(long *));
+    points = (struct Point ***)G_malloc(window.rows * sizeof(struct Point **));
    
      
     for(row = 0; row < window.rows; row++)
     {
         npoints_currcell[row] = (long *)G_malloc(window.cols * sizeof(long));
-        points[row] = (struct Point **)G_malloc(window.cols * sizeof(struct Point));
+        points[row] = (struct Point **)G_malloc(window.cols * sizeof(struct Point *));
        
         for(col = 0; col < window.cols; col++)
         {
@@ -193,8 +193,8 @@ int main(int argc, char *argv[])
         max_radius = (int)(0.5 + sqrt(window.cols*window.cols +
           (window.rows*window.ns_res/window.ew_res)*(window.rows*window.ns_res/window.ew_res)));
 
-        search_list = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list));
-        search_list_start = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list));
+        search_list = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list *));
+        search_list_start = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list *));
    
         for(radius = 0; radius < max_radius; radius++)
             search_list[radius] = NULL;

@@ -25,7 +25,7 @@ windfile (char *name, char *mapset)
 
     sprintf (fullname, "%s in %s", name, mapset);
 
-    if (G__get_window (&window, "windows", name, mapset) == NULL )
+    if (G__get_window (&window, "windows", name, mapset) != NULL )
     {
 	error (fullname,"","can't read region definition file");
 	gobble_input();

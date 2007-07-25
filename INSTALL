@@ -1,6 +1,6 @@
-                   INSTALL GRASS 5.0 source code
+                   INSTALL GRASS 5.4 source code
 
-($Id: INSTALL,v 1.27 2004-02-09 14:52:37 markus Exp $)
+($Id: INSTALL,v 1.27.2.3 2007-07-25 20:20:01 paul Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -16,7 +16,6 @@ instruction file and contains the following sections:
     COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
     THINGS TO DO
     UNINSTALLING GRASS
-    APPENDIX: LZW compression note
 
 Please read through these sections before installing GRASS.
 
@@ -24,41 +23,66 @@ Please read through these sections before installing GRASS.
 INSTALLATION
 
 Before you compile GRASS, please read the file "REQUIREMENTS.html". 
-Note: If your system does not fulfill all requirements, some modules
-won't be compiled (for example PostgresSQL or fftw, see section on
-CONFIGURE OPTIONS). However, for the general usability of GRASS this
-is no problem.
+Note: Building of modules that depend on certain pre-requisite software
+may be disabled by passing options to the configure script (for example 
+PostgreSQL or fftw, see section on CONFIGURE OPTIONS). For general 
+usability of GRASS, leaving out a few modules will often pose no problem.
+
+This release of GRASS uses a new build system by default, known as 
+the 'Alternate' build system. This uses separate build and source 
+directories, i.e. you cannot run ./configure from the top-level source
+directory. This is convenient when dealing with a project with such a 
+large code base as GRASS. In addition the alternate build system allows
+to compile the core GRASS libraries as shared, greatly reducing the 
+size of the compiled binaries and install footprint.
 
 The intent of the install method is to have the following sequence
 of commands work to install GRASS on any platform.
 
-	./configure
-        make
-	make install
+	gunzip -fc grass-5.4.1.tar.gz | tar xvf -
+	mkdir grass-build
+	cd grass-build
+	../grass-5.4.1/configure ... [system-specific options] ..
+	make
+	sudo make install
 
-The `configure' command (possibly with options; see below) should
-identify all relevant system dependencies and create several files
-(see below) containing dependency information. Eventually have a look
-at
+The `configure' command (almost always with options; see below) should
+identify relevant system dependencies and create several files
+(see below) containing dependency information. Make sure to read the 
+output of
 	./configure --help
 
+In addition, for faster smaller binaries you may want to enable
+optimisation and stripping. This may be done by, for example,
+
+	CFLAGS=-O2 LDFLAGS=-s ../grass-5.4.1/configure ...
+
+in Bourne or Bash shell or
+
+	setenv CFLAGS -O2
+	setenv LDFLAGS -s
+	../grass-5.4.1/configure ...
+
+in C shell. This should not be done if you need to debug the GRASS 
+binaries. See section CODE OPTIMIZATION below for additional hints.
+
 The `make' command will compile the sources in the current directory. Note
-that you do not need root access to run `make', and in fact it is HIGHLY
-recommended that you do not compile GRASS as the root user. At this point
+that you do not need root access to run `make'. If any compilation errors
+are reported in individual modules you will need to check the output of
+the make command to see what the error was. At this point
 you should be able to run grass by typing
 
-	bin.$ARCH/grass5
+	./bin.$ARCH/grass54
 
 where $ARCH is a reference to your machine (eg mips-sgi-irix6.5 - is an
 SGI machine running IRIX 6.5). Running `ls' will show you the appropriate
 name for your system.
 
 The `make install' command should install GRASS in the main filesystem. By
-default, the majority of the GRASS files are stored under /usr/local/grass5,
-while a few user executable files (eg. the GRASS executable) are stored
-under /usr/local/bin. These directories are typically only writable by user
-'root'. Thus, you will probably need to have root access if you use the
-default locations.
+default, all the GRASS files are stored under /usr/local/grass54 except
+the start-up script grass54, which is stored in /usr/local/bin
+These directories are typically only writable by user 'root'. Thus, you 
+will probably need to have root access if you use the default locations.
 
 If you want to change the default locations, use a sequence like this:
 
@@ -67,12 +91,12 @@ If you want to change the default locations, use a sequence like this:
 	make install
 
 Here the default directories have been changed to /opt/grass5 for most of
-the GRASS files, and /local/grass/bin for the executable files. If you had
+the GRASS files, and /local/grass/bin for the start-up script. If you had
 not specified --bindir then the bindir would have been /opt/bin. See the
 configure options below for more information.
 
 At this point the system should be installed and ready to run by typing
-grass5, with a few known exceptions (see below).  If you identify problems
+grass54, with a few known exceptions (see below).  If you identify problems
 (e.g., system dependencies not already accounted for by `configure') please
 pass along the relevant information (e.g., operating system, dependency
 information, and ideally a fix) so the configuration system can be
@@ -102,10 +126,10 @@ STARTING GRASS
 
 Ensure that the path to grass is in your PATH environment or
 start grass with the full path name.  To start grass:
-  grass53
+  grass54
 
 Usage:
-  grass53 [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]
+  grass54 [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]
 
 Flags:
   -h or -help or --help          print this help message
@@ -235,15 +259,12 @@ The `configure' script creates the following files to contain system
 dependencies: 
 
 	Makefile
-	src/CMD/head/head.$ARCH
+	mk/vars.mk
 	src/include/config.h
-
-$ARCH is a variable containing the host system (example:
-head.i686-pc-linux-gnu).
 
 After running `configure' it is wise to check these files to verify
 that they contain the correct information.  In particular, several
-known exceptions (see below) might need fixing in src/CMD/head/head.$ARCH.
+known exceptions (see below) might need fixing in mk/vars.mk.
 
 
 KNOWN EXCEPTIONS
@@ -292,103 +313,61 @@ make savebinclean    	- delete object files, next step file, the binary
    	    	    	  configure files, and Makefile - good for deleting
    	    	    	  everything but the binary files
 make uninstall		- deletes the installation files, by default
-			  /usr/local/grass5, /usr/local/bin/grass5, 
-			  /usr/local/bin/gmake5, and
-			  /usr/local/bin/gmakelinks5. This option does not
-			  delete any files that were compiled only the 
-			  installation files. You may need root access for
-			  this option.
+			  /usr/local/grass54, /usr/local/bin/grass54
+			  This option does not delete any files that were 
+			  compiled, only the installation files. You may 
+			  need root access for this option.
 
 
 COMPILING MODULES NOT COMPILED BY DEFAULT (INDIVIDUAL MODULES)
 
-As part of the installation a general "gmake5" script is created in
-/usr/local/bin (default) which allows you to compile modules separately.
+As part of the installation a general "gmake54" script is created in
+the build directory which allows you to compile modules separately.
 
-To compile a single module go into the module's directory and compile it with:
+To compile a single module go into the build directory and compile it with:
 
-   gmake5
+	./gmake54 path/to/module
+e.g.    ./gmake54 src/raster/r.example
 
 Then the module has to be linked to the GRASS front.end by:
   
-   gmakelinks5
+   make links
 
 Finally you have to install it:
 
 a) either with a full installation:
-   cd root_of_grass_sources
+   
    make install
 
-b) simplified you can also install just this module:
-   gmake5 -i
-   gmakelinks5 -i
-
-Then you should be able to use the module. Note that gmakelinks5 only needs
-to be run once after the module is compiled, but you always need to run the
-make install procedure (full installation or using the "-i" flag). 
-This will be finally improved in GRASS 5.1.
-
-If you never run "make install" then gmake5 and gmakelinks5 will be located
-in the bin.$ARCH/ directory. Note that you will have to specify the absolute 
-path to these executables in order to run them. For example
-    
-    /home/grass/bin.i686-pc-linux-gnu/gmake5
-    /home/grass/bin.i686-pc-linux-gnu/gmakelinks5
+Then you should be able to use the module. Note that make links only needs
+to be run once after the module is compiled for the first time, but you 
+need to run make install after each re-compile.
 
 If you want to compile your own modules then please see the "SUBMITTING" file
 for instructions regarding programming and submitting GRASS modules.
 
-To save the gmake5/compiler related messages into a file, use the following
+To save the compiler output messages into a file, use the following
 call for sh or bash shells:
 
-	gmake5 2>&1 | tee gmake5.log
+	./gmake54 src/raster/r.example 2>&1 | tee make.log
 	
 or for csh or tcsh shells:
 
-	gmake5 | & tee gmake5.log
+	./gmake54 src/raster/r.example | & tee make.log
 
 The tee command sends output to both the terminal and the specified file
-so you will still be able to see the output of gmake5.
-
-
-THINGS TO DO
-
-A major task remaining is to replace the GISGEN system with a
-proper set of Makefiles, all of which include a common one containing
-the system dependencies (scheduled and started for GRASS 5.1).
-GRASS 5.1 is in /grass51 in CVS.
+so you will still be able to see the output of make in the terminal window.
 
 
 UNINSTALLING GRASS
 
 Uninstallation of GRASS binaries is pretty simple (example for installation
-in /usr/local/grass5):
+in /usr/local/grass54):
 
-	rm -rf /usr/local/grass5
-	rm -f /usr/local/bin/{grass5,gmake5,gmakelinks5}
+	rm -rf /usr/local/grass54
+	rm -f /usr/local/bin/grass54
 
 should suffice.
 
 
-APPENDIX: LZW compression note
-(Jan 18 2001)
-
-Because of the UNISYS patent on the LZW compression algorithm, GRASS 5
-library code no longer uses this method to compress floating point 
-rasters and G3D files.  Unfortunately, this creates an incompatible 
-change for persons using earlier versions of GRASS 5.0.  
-Note this DOES _NOT_ EFFECT CELL type rasters or persons just now upgrading 
-from GRASS 4.x.  In order to make your data readable you *must* 
-uncompress all floating point rasters *before* installing newer GRASS 
-libraries and binaries.  The command "r.compress -u" will do the job.  
-After installing the new binaries you may recompress your rasters 
-with "r.compress" which will use the DEFLATE method availabe in libz.  
-Unfortunately, any LZW compressed G3D files must be dumped with 
-r3.out.ascii, and then reimported.
-
-The GRASS 5.0 team apologizes for this inconvenience. See also:
-http://grass.itc.it/announces/announce_lzw_removal.html
-
-
-GRASS Development Team
-$Date: 2004-02-09 14:52:37 $
+$Date: 2007-07-25 20:20:01 $

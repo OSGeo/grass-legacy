@@ -1,3 +1,11 @@
+5/2005:
+
+ A new version of GSHHS was published in 9/2004 with a slightly
+ modified file format. The v.in.gshhs was updated accordingly.
+
+Markus Neteler
+
+######################
 v.in.gshhs
 
 Program to extract and import binned shoreline data
@@ -14,4 +22,5 @@ The Global Self Consistant Hierarchical High Resolution Shorelines
 - high
 - full
 
+Bob Covill
 

@@ -87,16 +87,16 @@ typedef unsigned int HeapIndex;
 
 template <class T>
 class BasicMinMaxHeap {
+
 protected:  
   HeapIndex maxsize;
   HeapIndex lastindex;			// last used position (0 unused) (?)
   T *A;
-
-protected:
   /* couple of memory mgt functions to keep things consistent */
   static T *allocateHeap(HeapIndex n);
   static void freeHeap(T *);
-
+  virtual void grow()=0;
+  
 public:
   BasicMinMaxHeap(HeapIndex size) : maxsize(size) { 
     char str[100];
@@ -115,10 +115,7 @@ public:
   };
 
   bool empty(void) const { return size() == 0; };
-  HeapIndex size() const { 
-	assert(A ||  !lastindex);
-    return lastindex; 
-  };
+  HeapIndex size() const;
 
   T get(HeapIndex i) const { assert(i <= size()); return A[i]; }
    
@@ -152,12 +149,12 @@ public:
     return s;
   }
 
-protected:
-  virtual void grow()=0;
 
 private:
-  long log2(long n) const;
-  int isOnMaxLevel(HeapIndex i) const { return (log2(i) % 2); };
+  // Changed log2() to log2_() just in case log2() macro was already
+  // defined in math.h: e.g., log2() is defined in Cygwin gcc by default.
+  long log2_(long n) const;
+  int isOnMaxLevel(HeapIndex i) const { return (log2_(i) % 2); };
   int isOnMinLevel(HeapIndex i) const { return !isOnMaxLevel(i); };
 
   HeapIndex leftChild(HeapIndex i) const { return 2*i; };
@@ -189,12 +186,20 @@ private:
 // index 0 is invalid
 // index <= size
 
+
+// ----------------------------------------------------------------------
+template <class T>
+HeapIndex BasicMinMaxHeap<T>::size() const { 
+	assert(A || !lastindex);
+  return lastindex; 
+}
+
 // ----------------------------------------------------------------------
 
 template <class T> 
-long BasicMinMaxHeap<T>::log2(long n) const {
+long BasicMinMaxHeap<T>::log2_(long n) const {
   long i=-1;
-  // let log2(0)==-1
+  // let log2_(0)==-1
   while(n) {
 	n = n >> 1;
 	i++;
@@ -731,11 +736,16 @@ BasicMinMaxHeap<T>::verify() {
 
 template <class T>
 class MinMaxHeap : public BasicMinMaxHeap<T> {
+
+//using BasicMinMaxHeap<T>::maxsize;
+//using BasicMinMaxHeap<T>::lastindex;
+//using BasicMinMaxHeap<T>::size;
+
 public:
   MinMaxHeap(HeapIndex size) : BasicMinMaxHeap<T>(size) {};
   virtual ~MinMaxHeap() {};
-  bool full(void) const { return size() >= maxsize; };
-  HeapIndex get_maxsize() const { return maxsize; };
+  bool full(void) const { return this->size() >= this->maxsize; };
+  HeapIndex get_maxsize() const { return this->maxsize; };
   HeapIndex fill(T* arr, HeapIndex n);
   
 protected:
@@ -750,12 +760,12 @@ template <class T>
 HeapIndex MinMaxHeap<T>::fill(T* arr, HeapIndex n) {
   HeapIndex i;
   //heap must be empty
-  assert(size()==0);
+  assert(get_maxsize()==0);
   for (i = 0; !full() && i<n; i++) {
     insert(arr[i]);
   }
   if (i < n) {
-    assert(i == maxsize);
+    assert(i == get_maxsize());
     return n - i;
   } else {
     return 0;
@@ -768,6 +778,11 @@ HeapIndex MinMaxHeap<T>::fill(T* arr, HeapIndex n) {
 
 template <class T>
 class UnboundedMinMaxHeap : public BasicMinMaxHeap<T> {
+
+using BasicMinMaxHeap<T>::A;
+using BasicMinMaxHeap<T>::maxsize;
+using BasicMinMaxHeap<T>::size;
+
 public:
   UnboundedMinMaxHeap() : BasicMinMaxHeap<T>(MMHEAP_INITIAL_SIZE) {};
   virtual ~UnboundedMinMaxHeap() {};

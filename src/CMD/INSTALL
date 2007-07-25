@@ -2,13 +2,10 @@ October 1999
 
 Information:
 
-The GRASS code compiling is managed by the "auto-conf"
+GRASS code compilation is managed by the "autoconf"
 tool now. Please read the instructions in the main
 source code directory.
 
-The code cannot be compiled directly from the "GISGEN.sh"
-script any more due to the change to "auto-conf".
+The code cannot be compiled directly with the "GISGEN.sh"
+script any more due to the changeover to autoconf.
 
-Use /usr/local/bin/gmake5 and
-    /usr/local/bin/gmakelinks5
-tp compile single modules.

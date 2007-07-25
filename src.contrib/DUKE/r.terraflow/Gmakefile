@@ -12,10 +12,43 @@ HEADERS = common.h stats.h streamutils.h types.h \
 	weightWindow.h
 
 
-OBJ := $(patsubst %.cc, %.o , $(SOURCES))
 FLOAT_OBJ = $(patsubst %.cc, FLOAT/%.o , $(SOURCES))
 SHORT_OBJ = $(patsubst %.cc, SHORT/%.o , $(SOURCES))
 
+
+IOSTREAM_DIR = IOStream
+IOSTREAM_INC = $(IOSTREAM_DIR)/include
+IOSTREAM_LIBDIR = $(IOSTREAM_DIR)/lib
+IOSTREAM_LIB = $(IOSTREAM_LIBDIR)/libiostream.a
+
+
+WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
+  -Wimplicit-int -Wimplicit-function-declaration -Wreturn-type	\
+  -Wcomment  -Wno-sign-compare
+
+
+EXTRA_CXXFLAGS = -I$(IOSTREAM_INC) -DNODATA_FIX -D_FILE_OFFSET_BITS=64
+
+LIBS = $(IOSTREAM_LIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+DEPLIBS = $(IOSTREAM_LIB) $(DEPGISLIB)
+
+
+all: $(IOSTREAM_LIB) $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
+
+$(BIN_CMD)/r.terraflow: $(OBJARCH)/FLOAT $(FLOAT_OBJ) $(DEPLIBS)
+	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS)
+
+$(BIN_CMD)/r.terraflow.short: $(OBJARCH)/SHORT $(SHORT_OBJ) $(DEPLIBS)
+	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS)
+
+$(IOSTREAM_LIB):
+	$(GMAKE) IOStream/lib
+
+$(OBJARCH)/FLOAT:
+	-mkdir -p $(OBJARCH)/FLOAT
+
+$(OBJARCH)/SHORT:
+	-mkdir -p $(OBJARCH)/SHORT
 
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
@@ -24,51 +57,8 @@ FLOAT/%.o : %.cc
 	$(CXX) -c $(CXXFLAGS) -DELEV_FLOAT $< -o $@
 
 SHORT/%.o : %.cc
-	$(CXX) $(CXXFLAGS)  -DELEV_SHORT -c $< -o $@
+	$(CXX) -c $(CXXFLAGS) -DELEV_SHORT $< -o $@
 
-
-
-IOSTREAM_DIR =  ./IOStream
-IOSTREAM_INC = $(IOSTREAM_DIR)/include
-IOSTREAM_LIBDIR = $(IOSTREAM_DIR)/lib
-IOSTREAM_LIB =  -liostream
-
-
-WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
-  -Wimplicit-int -Wimplicit-function-declaration -Wreturn-type	\
-  -Wcomment  -Wno-sign-compare
-
-
-CXXFLAGS += -I$(IOSTREAM_INC) \
-		-DUSER=\"$(USER)\" \
-		-DNODATA_FIX -D_FILE_OFFSET_BITS=64
-
-LDFLAGS += -L$(IOSTREAM_LIBDIR)
-
-LIBS = $(GISLIB) 
-DEPLIBS = $(DEPGISLIB)
-
-
-
-all: dofirst $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
-
-dofirst:
-	-mkdir -p $(OBJARCH)/FLOAT
-	-mkdir -p $(OBJARCH)/SHORT
-
-$(BIN_CMD)/r.terraflow: $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; $(MAKE) )
-	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
-	$(XDRLIB) $(IOSTREAM_LIB)
-
-$(BIN_CMD)/r.terraflow.short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; $(MAKE) )
-	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
-	$(XDRLIB) $(IOSTREAM_LIB)
-
-
-
-$(GISLIB):	#
 $(DEPGISLIB):	#
 
 

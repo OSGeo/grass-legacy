@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "krig.h"
 #include "site.h"
@@ -7,7 +8,6 @@ int read_sites (char *name)
     char *mapset;
     FILE *fd;
     double east, north;
-    char *desc;
     double z;
     int count;
 
@@ -16,7 +16,7 @@ int read_sites (char *name)
     RASTER_MAP_TYPE rmt0;
     int n_dim, n_num, n_str;
 
-    extern int zindx, nindx, sindx;
+    extern int zindx, nindx;
 
     mapset = G_find_sites (name,"");
     if (mapset == NULL)

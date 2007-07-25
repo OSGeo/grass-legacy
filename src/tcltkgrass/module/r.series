@@ -1,0 +1,21 @@
+interface_build {
+    {r.series} 0
+    {Creates raster map whose cells are a function of the cells of a series of input maps.}
+    {entry input {Input raster map series:} 0 +raster}
+    {entry output {Output raster map (function of input series):} 0 raster}
+    {checkbox method {Average of cells.} "" average}
+    {checkbox method {Count of non-NULL cells.} "" count}
+    {checkbox method {Median of cells.} "" median}
+    {checkbox method {Mode (most frequent cell value).} "" mode}
+    {checkbox method {Minimum cell value.} "" minimum}
+    {checkbox method {Maximum cell value.} "" maximum}
+    {checkbox method {Standard deviation of cells.} "" stddev}
+    {checkbox method {Sum of cell values.} "" sum}
+    {checkbox method {Variance of cells.} "" variance}
+    {checkbox method {Number of different cell values.} "" diversity}
+    {checkbox method {Slope of linear regression of cells.} "" slope}
+    {checkbox method {Offset of linear regression of cells.} "" offset}
+    {separator blue 1}
+    {checkbox -n {Propagate nulls.} "" -n}
+    {checkbox -q {Run quietly.} "" -q}
+}

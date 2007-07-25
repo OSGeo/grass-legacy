@@ -64,6 +64,9 @@ menu_build 1 .main_menu {
 					"run i.tape.tm.fast &"
 					}
 				}
+				"MAT-File, ver. 4 (from MatLab or Octave)" "" {
+				"source $env(TCLTKGRASSBASE)/module/r.in.mat"
+				}
 				"MIADS ASCII file" "" {
 				"source $env(TCLTKGRASSBASE)/module/r.in.miads"
 				}
@@ -252,6 +255,9 @@ menu_build 1 .main_menu {
          	   		"HDF" "" {
          	     	  	"source $env(TCLTKGRASSBASE)/module/r.out.hdf"
          	   		}
+				"MAT-File, ver. 4 (for use by MatLab or Octave)" "" {
+				    "source $env(TCLTKGRASSBASE)/module/r.out.mat"
+				}
 				-separator
       	      	"BIL file with header (to $GISBASE/bil directory)" "" {
        	         		"run r.out.bil &"
@@ -578,11 +584,14 @@ menu_build 1 .main_menu {
 		}
 	}
     	Display "Display maps" {
-		"Display Manager" "" {
-          	"exec xterm -title {Display Manager Messages} -e d.dm &"
-		}
-        	"NVIZ visualization tool" "" {
-            	"source $env(TCLTKGRASSBASE)/module/nviz"
+		    "Display Manager" "" {
+          	    "exec xterm -title {Display Manager Messages} -e d.dm &"
+		    }
+            "NVIZ visualization tool" "" {
+                "source $env(TCLTKGRASSBASE)/module/nviz"
+        	}
+            "Create path for scripting a fly-through animation in NVIZ" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.nviz"
         	}
 		-separator
     		"Start displays" "" {
@@ -786,6 +795,9 @@ menu_build 1 .main_menu {
 		"Manage display frames" "" {
             	"source $env(TCLTKGRASSBASE)/module/d.frame"
         	}
+		"Show information about active display monitor" "" {
+            	"run d.info &"
+        	}
 		-separator
         	"Manage colormode" "" {
             	"source $env(TCLTKGRASSBASE)/module/d.colormode"
@@ -892,32 +904,36 @@ menu_build 1 .main_menu {
 			"source $env(TCLTKGRASSBASE)/module/r.neighbors"
 		}
 		"Overlay maps" "" {
-               "Cross product" "" {
-				"source $env(TCLTKGRASSBASE)/module/r.cross"
-               }
-               "Patch maps" "" {
-                    "source $env(TCLTKGRASSBASE)/module/r.patch"
-               }
+            "Cross product" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.cross"
+            }
+            "Patch maps" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.patch"
+            }
 			-separator
-               "Bayesian expert system" "" {
-                 	"source $env(TCLTKGRASSBASE)/module/r.binfer"
-               }
+            "Bayesian expert system" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.binfer"
+            }
 			"Boolean overlays" "" {
 			 	"source $env(TCLTKGRASSBASE)/module/r.combine"
-               }
-               "Inference engine" "" {
-                    "source $env(TCLTKGRASSBASE)/module/r.infer"
-               }
+            }
+            "Inference engine" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.infer"
+            }
 			"Weighted overlays" "" {
 				"run r.weight &"
 			}
 			"Weighted overlays using rules file" "" {
-                	"source $env(TCLTKGRASSBASE)/module/r.weight2"
+                "source $env(TCLTKGRASSBASE)/module/r.weight2"
 			}
 			-separator
+			"Create map whose cells are a function of corresponding cells in a series of maps" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.series"
+            }
+			-separator
 			"Statistical calculations for cover map over base map" "" {
-                	"source $env(TCLTKGRASSBASE)/module/r.statistics"
-            	}
+                "source $env(TCLTKGRASSBASE)/module/r.statistics"
+            }
 		}
 		"Solar radiance and shadows" "" {
 			"Cumulative daily solar irradiation" "" {
@@ -1145,8 +1161,11 @@ menu_build 1 .main_menu {
             	"Total surface area, considering toppography" "" {
             	    "source $env(TCLTKGRASSBASE)/module/r.surf.area"
             	}
-            	"Univariate statistics" "" {
+            	"Univariate statistics (faster binary version)" "" {
             	    "run r.univar &"
+            	}
+            	"Univariate statistics (script version with median and quartiles)" "" {
+            	    "run r.univar.sh &"
             	}
             	"Volume of clumped cells" "" {
              	   "source $env(TCLTKGRASSBASE)/module/r.volume"
@@ -1176,8 +1195,8 @@ menu_build 1 .main_menu {
                 	"run v.digit &"
             	}
 			-separator
-            	"Create/rebuild topology" "" {
-                	"source $env(TCLTKGRASSBASE)/module/v.support_option_build"
+            	"Create/rebuild topology or edit vector categories" "" {
+                	"source $env(TCLTKGRASSBASE)/module/v.support"
             	}
             	-separator
             	"Add intermediate points between nodes" "" {
@@ -1274,9 +1293,6 @@ menu_build 1 .main_menu {
             	}
         	}
 		"Change category values and labels" "" {
-            	"Edit vector categories" "" {
-                	"source $env(TCLTKGRASSBASE)/module/v.support_option_edit"
-            	}
             	"Reclassify features using rules" "" {
                 	"source $env(TCLTKGRASSBASE)/module/v.reclass"
             	}
@@ -1411,6 +1427,9 @@ menu_build 1 .main_menu {
 				"source $env(TCLTKGRASSBASE)/module/s.surf.rst"
             	}
         	}
+		"Create raster density map of site distributions using moving Gaussian kernel" "" {
+			"source $env(TCLTKGRASSBASE)/module/s.kernel"
+		}
 		"Generate random sites" "" {
 			"Generate randomly placed sites" "" {
 				"source $env(TCLTKGRASSBASE)/module/s.random"

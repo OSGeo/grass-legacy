@@ -13,10 +13,18 @@
 #include <stdio.h>
 #include "vizual.h"
 
+#include "config.h"
+
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
       /* include file for GL drawing widget */
-#include <GL/GLwMDrawA.h>
+#ifdef HAVE_GL_GLWMDRAWA_H
+#include <GL/GLwMDrawA.h> 
+#else
+#ifdef HAVE_X11_GLW_GLWMDRAWA_H
+#include <X11/GLw/GLwMDrawA.h> 
+#endif
+#endif
 #include "Ball.h"
 
 BallData Trackball;

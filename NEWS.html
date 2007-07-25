@@ -22,6 +22,59 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
+<h3><font color="#00A000">What's new in GRASS 5.4.1 compared to 5.4.0</font></h3>
+[GRASS 5.4.1 released 26 July 2007]<p>
+
+<b>Source Code:</b><br>
+<ul>
+<li>Various accumulated minor bugfixes</li>
+<li>Many more bugs have only been fixed in the 6.x development series,
+and usage of it is strongly recommended over 5.x.</li>
+</ul>
+
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.4.0 compared to 5.3.0</font></h3>
+[GRASS 5.4.0 released 5 November 2004]<p>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.zoom: fixes (Hamish Bowman)</li>
+<li>g.mlist: sort output (Hamish Bowman)</li>
+<li>nviz: some bugfixes (Glynn Clements, Hamish Bowman)</li>
+<li>PNGdriver: can now also write PPM images and optionally supports
+incremental writing of PNG after each display operation (Glynn Clements)</li>
+<li>ps.map: floating point legend fixes (Hamish Bowman)</li>
+<li>rgb.hsv.sh: bugfix (Glynn Clements)</li>
+<li>r.buffer: nautical miles support (Hamish Bowman)</li>
+<li>r.colors: new format for rules files (Hamish Bowman, Glynn Clements)</li>
+<li>r.univar: faster C implementation now operational and script
+version renamed to r.univar.sh (Hamish Bowman)</li>
+<li>v.in.garmin.sh: now operational (Hamish Bowman)</li>
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>New modules now built by default: d.info, d.nviz, r.grow2, r.in.mat,
+r.out.mat, r.series</li>
+<li>Alternate Build system now default (Glynn Clements, Paul Kelly)</li>
+<li>Support for zlib compression in integer/CELL maps (GRASS_INT_ZLIB
+environment variable) (Glynn Clements)</li>
+<li>Cygwin and Mac OSX shared library compilation working (Paul Kelly)</li>
+<li>Longer names for database, location and mapset allowed in
+start-up screen (Markus Neteler, Glynn Clements)</li>
+<li>Doxygen comments in libraries for improved Programmers'
+Manual (Markus Neteler)</li>
+<li>Raster map titles standardised to 1024 characters in all
+relevant modules and libraries (Hamish Bowman)</li>
+<li>Various compiler warnings fixed (Glynn Clements)</li>
+<li>r3.mapcalc: now built using 2-D r.mapcalc code instead of
+duplicate version (Glynn Clements)</li>
+<li>g.pnmcomp: Added for internal use (Glynn Clements)</li>
+</ul>
+
+
+<hr>
 <h3><font color="#00A000">What's new in GRASS 5.3.0 compared to 5.0.3</font></h3>
 [GRASS 5.3.0 released 15 May 2004]<p>
 

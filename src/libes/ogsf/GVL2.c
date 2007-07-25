@@ -8,6 +8,8 @@
     May 1997
 */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "gstypes.h"
 #include "gsget.h"

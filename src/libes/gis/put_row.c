@@ -612,6 +612,15 @@ static int rle_compress(unsigned char *dst, unsigned char *src, int n, int nbyte
     return nwrite;
 }
 
+static int zlib_compress(unsigned char *dst, unsigned char *src, int n, int nbytes)
+{
+    int total = nbytes * n;
+    int nwrite = G_zlib_compress(G__.work_buf + 1, total,
+				 G__.compressed_buf + 1, G__.compressed_buf_size - 1);
+
+    return (nwrite >= total) ? 0 : nwrite;
+}
+
 /*--------------------------------------------------------------------------*/
 
 static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nulls)
@@ -659,8 +668,7 @@ static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nul
 	/* then compress the data */
 	nwrite = compressed == 1
 	    ? rle_compress(G__.compressed_buf + 1, G__.work_buf + 1, n, nbytes)
-	    : G_zlib_compress(G__.work_buf + 1, n * nbytes,
-			      G__.compressed_buf + 1, G__.compressed_buf_size - 1);
+	    : zlib_compress(G__.compressed_buf + 1, G__.work_buf + 1, n, nbytes);
 
 	if (nwrite > 0)
 	{

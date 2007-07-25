@@ -1,16 +1,13 @@
-# $Id: Gmakefile,v 1.20 2002-02-20 02:23:28 glynn Exp $
+# $Id: Gmakefile,v 1.20.4.1 2005-10-16 14:20:36 paul Exp $
 #
 # Toplevel makefile for building everything
 
 VER=2.2
 NV_VER=nviz$(VER)
 PROG=nviz
-NVWISH_VER=NVWISH$(VER)
 INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
-SCRIPTDIR=$(NV_VER)/scripts
-
-all: configure nvwish nviz install 
+all: configure nviz nvwish install 
 
 #
 # DO NOT CHANGE configure: TARGET TO doconfigure:
@@ -19,19 +16,17 @@ all: configure nvwish nviz install
 configure:
 	@GRASS_IN_GMAKEFILE=yes ./doconfigure $(VER) "$(PQLIB)"
 
+nviz:
+	'rm' -rf $(INSTALL_DIR)
+	mkdir $(INSTALL_DIR)
+
 nvwish:
 	$(GMAKE) $(SRC)/libes/libimage
 	$(GMAKE) $(SRC)/libes/ogsf
 	$(GMAKE) $(SRC).contrib/GMSL/NVIZ2.2/src
 
-nviz:
-	'rm' -rf $(INSTALL_DIR)
-	mkdir $(INSTALL_DIR)
-
 # Install the scripts in the appropriate directory
 install:
-	'rm' -rf $(INSTALL_DIR)/
-	mkdir $(INSTALL_DIR)
 	mkdir $(INSTALL_DIR)/scripts
 	mkdir $(INSTALL_DIR)/bitmaps
 	(cd scripts; cp script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
@@ -47,6 +42,4 @@ install:
 		$(INSTALL_DIR)/scripts/script_tools \
 		$(GISBASE)/bin/$(PROG)
 # test required for winGRASS, check for cygwin first:
-	if test -f "src/nvwish.exe" ; then mv src/nvwish.exe $(INSTALL_DIR)/$(NVWISH_VER) ; fi
-	if test -f "src/nvwish" ; then mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER) ; fi
 	$(GMAKE) html

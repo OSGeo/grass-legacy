@@ -2,6 +2,7 @@
    Thu Jul 27, 1995
  */
 
+#include <stdlib.h>
 #include "gis.h"
 
 typedef int FILEDESC;
@@ -44,11 +45,13 @@ int main( int argc, char *argv[])
     northoff = G_define_option();
     northoff->key                    = "north";
     northoff->type                   = TYPE_DOUBLE;
+    northoff->description            = "specific input value to be assigned to the north and/or south poles for longitude-latitude grids";
     northoff->required               = NO;
 
     eastoff = G_define_option();
     eastoff->key                    = "east";
     eastoff->type                   = TYPE_DOUBLE;
+    eastoff->description            = "specific input value to be assigned to the north and/or south poles for longitude-latitude grids";
     eastoff->required               = NO;
 
     if (G_parser (argc, argv))
