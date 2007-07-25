@@ -95,6 +95,19 @@ int LIB_command_get_input(void)
     return _rfd;
 }
 
+static void send_fonts(void (*func)(char ***, int *))
+{
+    char **fonts;
+    int num_fonts;
+    int i;
+
+    (*func)(&fonts, &num_fonts);
+    SEND(&num_fonts, sizeof num_fonts);
+    for (i = 0; i < num_fonts; i++)
+	SENDTEXT(fonts[i]);
+    free_font_list(fonts, num_fonts);
+}
+
 int process_command(int c)
 {
     static char *name;
@@ -333,17 +346,10 @@ int process_command(int c)
 	COM_Font_init_charset(text);
 	break;
     case FONT_LIST:
-	{
-	    char **fonts;
-	    int num_fonts;
-	    int i;
-
-	    COM_Font_list(&fonts, &num_fonts);
-	    SEND(&num_fonts, sizeof num_fonts);
-	    for (i = 0; i < num_fonts; i++)
-		SENDTEXT(fonts[i]);
-	    free_font_list(fonts, num_fonts);
-	}
+	send_fonts(COM_Font_list);
+	break;
+    case FONT_INFO:
+	send_fonts(COM_Font_info);
 	break;
     case TEXT:
 	RECTEXT(text, text_size);

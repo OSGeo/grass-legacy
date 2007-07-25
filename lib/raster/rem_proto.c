@@ -535,13 +535,13 @@ void REM_charset(const char *name)
 	_send_text(name);
 }
 
-void REM_font_list(char ***list, int *count)
+static void font_list(char ***list, int *count, int op)
 {
 	char **fonts;
 	int num_fonts;
 	int i;
 
-	_send_ident(FONT_LIST);
+	_send_ident(op);
 	_get_int(&num_fonts);
 
 	fonts = G_malloc(num_fonts * sizeof(char *));
@@ -550,6 +550,16 @@ void REM_font_list(char ***list, int *count)
 
 	*list = fonts;
 	*count = num_fonts;
+}
+
+void REM_font_list(char ***list, int *count)
+{
+	font_list(list, count, FONT_LIST);
+}
+
+void REM_font_info(char ***list, int *count)
+{
+	font_list(list, count, FONT_INFO);
 }
 
 void REM_panel_save(const char *name, int t, int b, int l, int r)

@@ -27,14 +27,14 @@ static char **fonts;
 static int max_fonts;
 static int num_fonts;
 
-static void read_freetype_fonts(void);
-static void print_font_list(FILE *fp);
+static void read_freetype_fonts(int verbose);
+static void print_font_list(FILE *fp, int verbose);
 
 int main( int argc , char **argv )
 {
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3;
-	struct Flag *flag1;
+	struct Flag *flag1, *flag2;
 
 	G_gisinit(argv[0]);
 
@@ -69,12 +69,22 @@ int main( int argc , char **argv )
 	flag1->key	= 'l';
 	flag1->description = _("List fonts");
 
+	flag2 = G_define_flag();
+	flag2->key	= 'L';
+	flag2->description = _("List fonts verbosely");
+
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
 	if (flag1->answer)
 	{
-		print_font_list(stdout);
+		print_font_list(stdout, 0);
+		exit(EXIT_SUCCESS);
+	}
+
+	if (flag2->answer)
+	{
+		print_font_list(stdout, 1);
 		exit(EXIT_SUCCESS);
 	}
 
@@ -98,7 +108,7 @@ int main( int argc , char **argv )
 	exit(EXIT_SUCCESS);
 }
 
-static void read_freetype_fonts(void)
+static void read_freetype_fonts(int verbose)
 {
 	char **list;
 	int count;
@@ -108,7 +118,10 @@ static void read_freetype_fonts(void)
 	if (R_open_driver() != 0)
 		return;
 
-	R_font_list(&list, &count);
+	if (verbose)
+		R_font_info(&list, &count);
+	else
+		R_font_list(&list, &count);
 
 	R_close_driver();
 
@@ -122,12 +135,12 @@ static void read_freetype_fonts(void)
 		fonts[num_fonts++] = list[i];
 }
 
-static void print_font_list(FILE *fp)
+static void print_font_list(FILE *fp, int verbose)
 {
 	int i;
 
 	/* find out what fonts we have */
-	read_freetype_fonts();
+	read_freetype_fonts(verbose);
 
 	for (i = 0; i < num_fonts; i++)
 		fprintf(fp, "%s\n", fonts[i]);

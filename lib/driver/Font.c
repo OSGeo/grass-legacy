@@ -62,7 +62,7 @@ int font_is_freetype(void)
 	return font_type == GFONT_FREETYPE;
 }
 
-void COM_Font_list(char ***list, int *count)
+static void font_list(char ***list, int *count, int verbose)
 {
 	char **fonts;
 	int num_fonts;
@@ -76,10 +76,35 @@ void COM_Font_list(char ***list, int *count)
 	fonts = G_malloc(num_fonts * sizeof(const char *));
 
 	for (i = 0; i < num_fonts; i++)
-		fonts[i] = G_store(ftcap[i].name);
+	{
+		struct GFONT_CAP *p = &ftcap[i];
+
+		if (verbose)
+		{
+			char buf[GPATH_MAX];
+
+			sprintf(buf, "%s|%s|%d|%s|%d|%s|",
+				p->name, p->longname, p->type,
+				p->path, p->index, p->encoding);
+
+			fonts[i] = G_store(buf);
+		}
+		else
+			fonts[i] = G_store(p->name);
+	}
 
 	*list = fonts;
 	*count = num_fonts;
+}
+
+void COM_Font_list(char ***list, int *count)
+{
+	font_list(list, count, 0);
+}
+
+void COM_Font_info(char ***list, int *count)
+{
+	font_list(list, count, 1);
 }
 
 void free_font_list(char **fonts, int count)
