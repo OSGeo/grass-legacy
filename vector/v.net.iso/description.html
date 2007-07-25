@@ -28,21 +28,18 @@ The map must contain at least one center
 echo "591280.5|4926396.0|1" | v.in.ascii out=startnode
 g.copy vect=roads,myroads
 
-#create line map connecting point to network
-v.distance -p from=startnode to=myroads out=connect upload=dist column=dist
-# fix missing category number:
-v.category connect out=connect2 op=add
+#connect point to network
+v.net myroads points=startnode out=myroads_net op=connect thresh=200
 
-d.vect myroads
-d.vect startnode col=red
-d.vect connect2 col=green
-
-v.patch in=myroads,connect2,startnode out=roads_n
-v.clean roads_n out=roads_net tool=snap,break thresh=5,0
+g.region vect=myroads_net
+d.mon x0
+d.vect myroads_net
+d.vect myroads_net col=red icon=basic/triangle fcol=green size=12 layer=2
+v.category myroads_net layer=2 op=print
 
 # specify range of center cats (easier to catch all):
-v.net.iso input=roads_net output=isomap ccats=1-100000 costs=1000,2000,5000 nlayer=1
-v.category isomap option=report
+v.net.iso input=myroads_net output=myroads_net_iso ccats=1-100000 costs=1000,2000,5000
+v.category myroads_net_iso option=report
 # ... reports 4 categories:
 </pre></div>
 
@@ -59,11 +56,13 @@ cat | distance from point
 To see the result, run for example:
 
 <div class="code"><pre>
+g.region n=4928200 s=4922300 w=589200 e=596500
 d.erase
-d.vect isomap col=blue  cats=1
-d.vect isomap col=green cats=2
-d.vect isomap col=yellow cats=3
-d.vect isomap col=red    cats=4
+d.vect myroads_net_iso col=blue  cats=1
+d.vect myroads_net_iso col=green cats=2
+d.vect myroads_net_iso col=yellow cats=3
+d.vect myroads_net_iso col=red    cats=4
+d.vect myroads_net col=red icon=basic/triangle fcol=green size=12 layer=2
 </pre></div>
 
 <h2>SEE ALSO</h2>
@@ -78,6 +77,7 @@ d.vect isomap col=red    cats=4
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-Irst, Trento, Italy<br>
+Documentation: Markus Neteler
 
 <p><i>Last changed: $Date$</i>
