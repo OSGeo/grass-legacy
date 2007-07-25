@@ -75,46 +75,27 @@ v.db.update myroads col=backward val=1/5 where="label='unimproved road'"
 v.db.update myroads col=forward val=1/25 where="label='light-duty road, improved surface'"
 v.db.update myroads col=backward val=1/25 where="label='light-duty road, improved surface'"
 v.db.select myroads
-echo "1|601653.5|4922869.2|start|0|0
-2|593330.8|4924096.6|end|0|0" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
-                         east double precision, north double precision, label varchar(43), \
-                         forward double precision, backward double precision"
+echo "1|601653.5|4922869.2|start
+2|593330.8|4924096.6|end" | v.in.ascii cat=1 x=2 y=3 out=startend col="cat integer, \
+                         east double precision, north double precision, label varchar(43)"
 
-v.db.dropcol startend col=east
-v.db.dropcol startend col=north
+v.db.select startend
 
-#create lines map connecting points to network
-v.distance -p from=startend to=myroads out=connect upload=dist column=dist
-d.vect myroads
+#create lines map connecting points to network (on layer 2)
+v.net myroads points=startend out=myroads_net op=connect thresh=200
+g.region vect=myroads_net
+d.mon x0
+d.vect myroads_net
 d.vect startend col=red
-d.vect connect col=green
 
-# note that tables needs to be identical for v.patch:
-db.describe myroads -c
-v.db.addtable connect col="label varchar(43), forward double precision, backward double precision"
-# add categories, use cat 0 (no data) for both roads as "off-road":
-v.category in=connect out=connect_cat cat=0 step=0
-# insert attributes:
-echo "INSERT INTO connect_cat (cat, label, forward, backward) VALUES (0, 'no data', 50, 50)" | db.execute
-v.db.select connect_cat
-
-v.info -c connect_cat
-v.info -c startend
-
-#merge all maps into a new one: streets, connections, points:
-v.patch -e myroads,connect_cat,startend out=myroads_n
-
-#fix the topology: break lines, snap to nodes:
-# (note: this removes overpasses, better use v.edit)
-v.clean myroads_n output=myroads_net tool=snap,break,rmdupl thresh=1,0,0
 v.db.select myroads_net
-d.vect myroads_net icon=basic/triangle fcol=green size=12
-d.vect myroads_net disp=cat type=point lsize=14
-# ... the 'start' and 'end' nodes have category number 9 and 10
+
+d.vect myroads_net icon=basic/triangle fcol=green size=12 layer=2
+d.vect myroads_net disp=cat type=point lsize=14 layer=2
+# ... the 'start' and 'end' nodes have category number 1 and 2
 
 # ID as first number, then cat1 and cat2
-# (nlayer=1 if no extra table for nodes)
-echo "1 9 10" | v.net.path myroads_net afcol=forward abcol=backward out=mypath nlayer=1
+echo "1 1 2" | v.net.path myroads_net afcol=forward abcol=backward out=mypath
 d.vect mypath col=red width=2
 </pre></div>
 
@@ -131,6 +112,7 @@ d.vect mypath col=red width=2
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-Irst, Trento, Italy<br>
+Documentation: Markus Neteler
 
 <p><i>Last changed: $Date$</i>
