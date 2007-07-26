@@ -271,6 +271,7 @@ real-install: FORCE
 	-cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap
+	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
 	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
 	#GEM installation
@@ -295,6 +296,8 @@ bindist:
 	${MAKE} real-bindist
 
 real-bindist:
+	mkdir -p ${ARCH_DISTDIR}/etc/nad/src ; \
+	    cp -f ${MODULE_TOPDIR}/lib/proj/*.lla ${ARCH_DISTDIR}/etc/nad/src ; true
 	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
 	-date=`date '+%d_%m_%Y'`; name=grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
@@ -302,6 +305,7 @@ real-bindist:
 	    -e "s/GRASSPRG_NAME/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
 	    -e "s/ARCHITECTURE/${ARCH}/" \
+	    -e "s/LD_LIBRARY_PATH_VAR/${LD_LIBRARY_PATH_VAR}/" \
 	    -e "s/TEST_STR=/TEST_STR=executable/" \
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
