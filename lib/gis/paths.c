@@ -53,7 +53,7 @@ int G_is_absolute_path(const char *path)
 {
     if ( G_is_dirsep(path[0])
 #ifdef __MINGW32__	
-	|| ((path[1] == ':') && G_is_dirsep(path[2])) 
+	|| ( isalpha(path[0]) && (path[1] == ':') && G_is_dirsep(path[2]) )
 #endif
        )
         return 1;
