@@ -76,21 +76,23 @@ int main( int argc , char **argv )
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
+	/* load the font */
+	if (R_open_driver() != 0)
+		G_fatal_error (_("No graphics device selected"));
+
 	if (flag1->answer)
 	{
 		print_font_list(stdout, 0);
+		R_close_driver();
 		exit(EXIT_SUCCESS);
 	}
 
 	if (flag2->answer)
 	{
 		print_font_list(stdout, 1);
+		R_close_driver();
 		exit(EXIT_SUCCESS);
 	}
-
-	/* load the font */
-	if (R_open_driver() != 0)
-		G_fatal_error (_("No graphics device selected"));
 
 	if (opt2->answer)
 		R_font(opt2->answer);
@@ -114,15 +116,10 @@ static void read_freetype_fonts(int verbose)
 	int count;
 	int i;
 
-	if (R_open_driver() != 0)
-		return;
-
 	if (verbose)
 		R_font_info(&list, &count);
 	else
 		R_font_list(&list, &count);
-
-	R_close_driver();
 
 	if (max_fonts < num_fonts + count)
 	{
@@ -144,7 +141,4 @@ static void print_font_list(FILE *fp, int verbose)
 	for (i = 0; i < num_fonts; i++)
 		fprintf(fp, "%s\n", fonts[i]);
 }
-
-
-
 
