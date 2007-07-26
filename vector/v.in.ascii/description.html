@@ -34,8 +34,9 @@ The field separator may be a character, the word '<tt>tab</tt>'
 <P>
 Attribute table is only created if it is needed, i.e. when at
 least one attribute column is present in the input file besides
-geometry columns. The attribute column types have to be declared
-along with the geometry columns using the <em>columns</em> parameter.
+geometry columns. The attribute column will be auto-scanned for type, but
+may be explicitly declared along with the geometry columns using the
+<em>columns</em> parameter.
 
 <P>
 Latitude/Longitude data may be given in a number of ways.
