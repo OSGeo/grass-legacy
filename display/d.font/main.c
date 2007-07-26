@@ -114,7 +114,6 @@ static void read_freetype_fonts(int verbose)
 	int count;
 	int i;
 
-	R__open_quiet();
 	if (R_open_driver() != 0)
 		return;
 
