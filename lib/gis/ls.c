@@ -17,7 +17,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <unistd.h>
-#include <math.h>
 
 #include <grass/gis.h>
 #include <grass/config.h>
@@ -162,7 +161,7 @@ void G_ls_format(const char **list, int num_items, int perline, FILE *stream)
     /* Field width to accomodate longest filename */
     field_width = screen_width / perline;
     /* Longest column height (i.e. num_items <= perline * column_height) */
-    column_height = (int)ceil((double)num_items / perline);
+    column_height = (num_items / perline) + ((num_items % perline) > 0);
 
     for (i=0; i < column_height; i++)     
     {	
