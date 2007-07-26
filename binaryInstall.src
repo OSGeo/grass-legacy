@@ -319,6 +319,33 @@ chmod -R 1777 $DESTDIR/locks
 
 echo""
 
+echo "Creating datum transformation gridshift files..."
+
+if test -x "${DESTDIR}/etc/nad2bin" ; then
+    NAD2BIN="${DESTDIR}/etc/nad2bin"
+else
+    # Use version installed with PROJ.4 (should be in path)
+    NAD2BIN=nad2bin
+fi
+
+for i in "${DESTDIR}"/etc/nad/src/*.lla
+do 
+    "${NAD2BIN}" < $i \
+    "${DESTDIR}"/etc/nad/`echo \`basename "$i"\` | sed 's/.lla//'` && rm -f "$i"
+done
+
+if test -z "`ls \"${DESTDIR}/etc/nad/src\"`" ; then
+    rmdir "${DESTDIR}/etc/nad/src"
+fi
+
+echo""
+
+echo "Generating display font configuration file..."
+
+GISBASE="$DESTDIR" GISRC=junk LD_LIBRARY_PATH_VAR="${DESTDIR}/lib:$LD_LIBRARY_PATH_VAR" "${DESTDIR}/bin/g.mkfontcap" -o
+
+echo""
+
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"
 echo "    $BINDIR/$GRASSPRG"
