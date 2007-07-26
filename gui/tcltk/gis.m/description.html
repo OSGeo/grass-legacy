@@ -336,16 +336,33 @@ control point) manager window.
   box in the GCP manager,
 <li> Click on a point in a georectified map to get geographic coordinates
   (use Pointer icon),
-<li> Repeat until you have enough xy and geographic coordinate pairs.
+<li> Repeat until you have enough xy and geographic coordinate pairs.<br>
+   NOTE: you can edit/enter any point by typing. You can also edit
+   existing points by clicking on a new spot in the display.
+<li> Click the button to save the points to a POINTS file.
 </ol>
 
-NOTE: you can edit/enter any point by typing. You can also edit
-existing points by clicking on a new spot in the display.
-<P>
-Click the button to save the points to a POINTS file
-<P>
-Click on the <em>georectify</em> button to select the type of georectification you
-want (polynomial order).
+<!-- please improve this paragraph -->
+Before running the rectification, it is important to set the target region
+and resolution properly. The georectifier tool gets the region setting from
+running <tt>g.region -gp</tt>. The display is set to "explore mode" and
+doesn't bother with resolution or extents set with <em>g.region</em> --
+beyond determining initial extents when you start it.
+<p>
+
+To change extents, you can
+<ol>
+<li> zoom interactively and then pick "set region"
+  from the display pull-down <b>or</b> 
+<li> use g.region (Configure -&gt; SetRegion) to set the extents and pick set
+ display from region in the pull-down. To set the resolution, use 
+ "Configure" -&gt; "Set Region"; it will have no effect on the display but
+ should affect the underlying <em>i.rectify</em>.
+</ol>
+
+
+Click on the <em>georectify</em> button to select the type of georectification
+you want (polynomial order). After some computations, the map will be geocoded.
 
 
 <h2>SEE ALSO</h2>
