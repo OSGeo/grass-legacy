@@ -15,7 +15,6 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd $(CAPFILE)
 
 $(CAPFILE): $(PROG)
-	GISRC=$(RUN_GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
-	GISBASE=$(RUN_GISBASE) \
+	GISRC=junk GISBASE=$(RUN_GISBASE) \
 	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
-	$< -o
+	$< ; true
