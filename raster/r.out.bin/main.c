@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
 
     /* Write out BIL support files compatible with Arc-View */
     if (flag.BIL_hd->answer) {
-	char out_tmp1[100], out_tmp2[100];
+	char out_tmp1[GNAME_MAX], out_tmp2[GNAME_MAX];
 	FILE *fp_1, *fp_2;
 
 	strcpy(out_tmp1, outfile);
