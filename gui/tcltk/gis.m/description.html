@@ -306,7 +306,8 @@ Fonts used in <em>gis.m</em> can be changed as follows:
 
 <h2>Georectify tool</h2>
 
-Start out in the location/mapset where you want the georectified map to END
+The unrectified (scanned/CAD etc.) map is imported into a XY location. Then
+start GRASS with the location/mapset where you want the georectified map to END
 UP (i.e., the projected TARGET location). Open any map display (or displays)
 that you want to use for getting geographic coordinates.
 <P>
@@ -316,8 +317,7 @@ In the <em>Georectify</em> startup, you must:
 
 <ol>
 <li> select if you want to geocode a raster or vector map,
-<li> select the mapset of the file to be georectified (the location and
-  gisdbase are automatically noted),
+<li> select the source (XY) location/mapset of the map to be georectified,
 <li> create a group to georectify. Target is automatically
   set to the current location and mapset,
 <li> select the group to georectify,
