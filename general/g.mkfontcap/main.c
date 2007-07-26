@@ -48,7 +48,7 @@ static int compare_fonts(const void *, const void *);
 
 int main(int argc, char *argv[])
 {
-    struct Flag *tostdout, *overwrite, *oldformat;
+    struct Flag *tostdout, *overwrite;
     struct Option *extradirs;
     struct GModule *module;
    
@@ -76,12 +76,7 @@ int main(int argc, char *argv[])
     tostdout->description = 
      "Write font configuration file to standard output instead of "
      "$GISBASE/etc";
-
-    oldformat = G_define_flag();
-    oldformat->key = 'f';
-    oldformat->description = 
-     "Write an \"old\" format freetypecap file rather than \"new\" fontcap";
-     
+   
     extradirs = G_define_option();
     extradirs->key = "extradirs";
     extradirs->type = TYPE_STRING;
@@ -90,28 +85,19 @@ int main(int argc, char *argv[])
      "Comma-separated list of extra directories to scan for "
      "Freetype-compatible fonts as well as the defaults (see documentation)";
    
-    if (G_parser(argc, argv))
+    if (argc > 1 && G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
     if (!tostdout->answer)
     {
-        char *gisbase = G_gisbase();
-        char *alt_file;
-       
-        if (oldformat->answer)
-	    alt_file = getenv("GRASS_FT_CAP");
-        else
-	    alt_file = getenv("GRASS_FONT_CAP");
+        const char *gisbase = G_gisbase();
+        const char *alt_file = getenv("GRASS_FONT_CAP");
        
 	if (alt_file)
 	    fontcapfile = G_store(alt_file);
 	else
-	{
-            if (oldformat->answer)	    
-                G_asprintf(&fontcapfile, "%s/etc/freetypecap", gisbase);
-	    else	    
-                G_asprintf(&fontcapfile, "%s/etc/fontcap", gisbase);	    
-	}       
+            G_asprintf(&fontcapfile, "%s/etc/fontcap", gisbase);       
+
         if ( !stat(fontcapfile, &status) ) /* File exists? */
         {
             if (!overwrite->answer)
@@ -162,9 +148,7 @@ int main(int argc, char *argv[])
     totalfonts = maxfonts = 0;
     fontcap = NULL;
    
-    if (!oldformat->answer)
-        find_stroke_fonts();
-   
+    find_stroke_fonts();   
     find_freetype_fonts();
 
     qsort(fontcap, totalfonts, sizeof(struct GFONT_CAP), compare_fonts);
@@ -180,16 +164,10 @@ int main(int argc, char *argv[])
     }   
     
     for(i = 0; i < totalfonts; i++)
-    {
-        if (oldformat->answer)
-	    fprintf(outstream, "%s:%s|%d:%s:\n",
-		    fontcap[i].longname, fontcap[i].path, fontcap[i].index,
-		    fontcap[i].encoding);
-        else
-	    fprintf(outstream, "%s|%s|%d|%s|%d|%s|\n", fontcap[i].name,
-		    fontcap[i].longname, fontcap[i].type, fontcap[i].path,
-		    fontcap[i].index, fontcap[i].encoding);
-    }
+	fprintf(outstream, "%s|%s|%d|%s|%d|%s|\n", fontcap[i].name,
+		fontcap[i].longname, fontcap[i].type, fontcap[i].path,
+		fontcap[i].index, fontcap[i].encoding);
+    
     fclose(outstream);
    
     exit(EXIT_SUCCESS);
