@@ -484,7 +484,7 @@ proc Gm:DefaultFont { source } {
 	# text entry for character encoding
 
     toplevel .dispfont
-    wm title .dispfont [G_msg "Select default font for GRASS displays"]
+    wm title .dispfont [G_msg "Select GRASS display font"]
 
     set fontlist [string trim [exec d.font --q -l]]
     set fontlist [split $fontlist "\n"]
@@ -503,7 +503,7 @@ proc Gm:DefaultFont { source } {
     	$fontlb insert end $item
     }
     
-    if {[info exists env(GRASS_FONT)] && $env(GRASS_FONT) != ""} {
+    if {![catch {set env(GRASS_FONT)}] && $env(GRASS_FONT) != ""} {
     	set fontindex [lsearch $fontlist $env(GRASS_FONT)]
     	if {$fontindex > -1} {
     		$fontlb selection set $fontindex
