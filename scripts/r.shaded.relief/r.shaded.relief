@@ -18,6 +18,8 @@
 #
 #############################################################################
 #
+#   July 2007 - allow input from other mapsets (Brad Douglas)
+#
 #   May 2005 - fixed wrong units parameter (Markus Neteler)
 #
 #   September 2004 - Added z exaggeration control (Michael Barton) 
@@ -144,7 +146,7 @@ if [ "$GIS_OPT_MAP" = "$GIS_OPT_SHADEDMAP" ]; then
 fi
 
 if [ -z "$GIS_OPT_SHADEDMAP" ]; then
-    ELEVSHADE="${elev}.shade"
+    ELEVSHADE="${elev%%@*}.shade"
 else
     ELEVSHADE="$GIS_OPT_SHADEDMAP"
 fi
