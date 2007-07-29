@@ -170,7 +170,7 @@ class BufferedWindow(wx.Window):
         self.mapfile = None   # image file to be rendered
         self.img = ""         # wx.Image object (self.mapfile)
         # used in digitization tool (do not redraw vector map)
-        self.imgVectorMap = None 
+        self.imgVectorMap = None
         self.ovldict = {}     # list of images for overlays
         self.ovlcoords = {}   # positioning coordinates for decoration overlay
         self.ovlchk = {}      # showing/hiding decorations
@@ -204,6 +204,8 @@ class BufferedWindow(wx.Window):
         self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
         self.hitradius = 10 # distance for selecting map decorations
 
+        self.Map.SetRegion() # make sure that extents are updated at init
+
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
@@ -213,7 +215,6 @@ class BufferedWindow(wx.Window):
         self.pdc = wx.PseudoDC()
         # will store an off screen empty bitmap for saving to file
         self._Buffer = ''
-        self.Map.SetRegion() # make sure that extents are updated at init
 
         self.Bind(wx.EVT_ERASE_BACKGROUND, lambda x:None)
 
@@ -293,7 +294,7 @@ class BufferedWindow(wx.Window):
                 pdc.SetBrush(wx.Brush(wx.CYAN, wx.TRANSPARENT))
                 pdc.SetPen(self.polypen)
                 pdc.DrawLines(coords)
-                
+
                 # get bounding rectangle for polyline
                 xlist = []
                 ylist = []
@@ -338,7 +339,7 @@ class BufferedWindow(wx.Window):
         self.Refresh()
 
         return drawid
-    
+
     def TextBounds(self, textinfo, coords):
         """
         Return text boundary data
@@ -386,13 +387,13 @@ class BufferedWindow(wx.Window):
         dc.SetClippingRect(r)
         # draw to the dc using the calculated clipping rect
         self.pdc.DrawToDCClipped(dc,r)
-            
+
     def OnSize(self, event):
         """
         Scale map image so that it is
         the same size as the Window
         """
-        
+
         Debug.msg(3, "BufferedWindow.OnSize():")
 
         # set size of the input image
@@ -472,7 +473,7 @@ class BufferedWindow(wx.Window):
 
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s" % \
                    (render))
-        
+
         if render:
             # render new map images
             self.Map.width, self.Map.height = self.GetClientSize()
@@ -507,7 +508,7 @@ class BufferedWindow(wx.Window):
             # draw map
             self.imgVectorMap = self.parent.digit.driver.DrawMap()
 
-        
+
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
         if self.imgVectorMap:
             self.Draw(self.pdc, self.imgVectorMap, drawid=100) # draw vector map image
@@ -624,7 +625,7 @@ class BufferedWindow(wx.Window):
         """Draw polyline in PseudoDC"""
         if not polycoords: # alternative coordinates
             polycoords = self.polycoords
-            
+
         #Debug.msg (4, "BufferedWindow.DrawLines(): coords=%s" % \
         #               polycoords)
 
@@ -650,7 +651,7 @@ class BufferedWindow(wx.Window):
             self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=lineCoords)
 
         return self.lineid
-    
+
     def MouseActions(self, event):
         """
         Mouse motion and button click notifier
@@ -734,7 +735,7 @@ class BufferedWindow(wx.Window):
                    self.mouse["use"])
 
         self.mouse['begin'] = event.GetPositionTuple()[:]
-        
+
         if self.mouse["use"] in ["measure", "profile"]:
             # measure || profile
             if len(self.polycoords) == 0:
@@ -750,7 +751,7 @@ class BufferedWindow(wx.Window):
             digitToolbar = self.parent.digittoolbar
             east, north = self.Pixel2Cell(self.mouse['begin'][0],
                                           self.mouse['begin'][1])
-            
+
             try:
                 map = digitToolbar.layers[digitToolbar.layerSelectedID].name
             except:
@@ -760,9 +761,9 @@ class BufferedWindow(wx.Window):
                 dlg.ShowModal()
                 dlg.Destroy()
                 event.Skip()
-                return 
+                return
 
-            # calculate position of 'update record' dialog 
+            # calculate position of 'update record' dialog
             offset = 5
             posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
                                              self.mouse['begin'][1] + offset))
@@ -778,7 +779,7 @@ class BufferedWindow(wx.Window):
                     self.parent.digit.AddPoint(map=map,
                                                type=digitToolbar.type,
                                                x=east, y=north)
-                        
+
                     # add new record into atribute table
                     if self.parent.digit.settings["addRecord"]:
                         # select attributes based on layer and category
@@ -830,7 +831,7 @@ class BufferedWindow(wx.Window):
                     # highlight feature & re-draw map
                     self.parent.digit.driver.SetSelected(updateRecordDlg.selectedLines)
                     self.UpdateMap()
-                    
+
                     if updateRecordDlg.ShowModal() == wx.ID_OK:
                         sqlfile = tempfile.NamedTemporaryFile(mode="w")
                         sqlfile.file.write(updateRecordDlg.GetSQLString())
@@ -1014,14 +1015,14 @@ class BufferedWindow(wx.Window):
                                            _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
-                    
+
                 if map:
                     # add new line
                     mapcoords = []
                     # xy -> EN
                     for coord in self.polycoords:
                         mapcoords.append(self.Pixel2Cell (coord[0], coord[1]))
-                        
+
                     self.parent.digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
                                   coords=mapcoords)
@@ -1031,7 +1032,7 @@ class BufferedWindow(wx.Window):
                         offset = 5
                         posWindow = self.ClientToScreen((self.polycoords[-1][0] + offset,
                                                          self.polycoords[-1][1] + offset))
-                            
+
                         # select attributes based on layer and category
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                    layer=self.parent.digit.settings["layer"],
@@ -1065,7 +1066,7 @@ class BufferedWindow(wx.Window):
                     self.parent.digit.MoveSelectedLines(move)
                 else: # moveVertex
                     self.parent.digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0], self.moveCoords[1]),move)
-                
+
                 del self.moveBegin
                 del self.moveCoords
                 del self.moveIds
@@ -1075,10 +1076,10 @@ class BufferedWindow(wx.Window):
                 self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
             elif digit.action == "removeVertex":
                 self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
-                
+
             self.parent.digit.driver.SetSelected([])
             self.UpdateMap(render=False)
-                
+
         event.Skip()
 
     def OnMiddleDown(self, event):
@@ -1159,7 +1160,7 @@ class BufferedWindow(wx.Window):
         Input : float east, float north
         Output: int x, int y
         """
-        
+
         x = int((east  - self.Map.region['w']) / self.Map.region["ewres"])
         y = int((self.Map.region['n'] - north) / self.Map.region["nsres"])
 
@@ -1405,7 +1406,7 @@ class BufferedWindow(wx.Window):
         x2, y2 = endpt
         dEast  = (x2-x1) * self.Map.region["ewres"]
         dNorth = (y2-y1) * self.Map.region["nsres"]
-        
+
         return (math.sqrt(math.pow((dEast),2) + math.pow((dNorth),2)), (dEast, dNorth))
 
 class MapFrame(wx.Frame):
@@ -1557,7 +1558,7 @@ class MapFrame(wx.Frame):
         # Initialization of digitization tool
         #
         self.digit = Digit(mapwindow=self.MapWindow)
-        
+
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
@@ -1588,7 +1589,7 @@ class MapFrame(wx.Frame):
                                   LeftDockable(False).RightDockable(False).
                                   BottomDockable(False).TopDockable(True).
                                   CloseButton(False).Layer(2))
-            
+
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
             self.MapWindow.zoomtype = 0
