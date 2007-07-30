@@ -102,7 +102,8 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        if self.type == "command" or self.type == "raster" or self.type == "vector" or self.type == "overlay":
+        layertypes = ['raster','rgb','his','vector','thememap','themechart','grid','labels','command','overlay']
+        if self.type in layertypes:
             self.__renderLayer()
         elif self.type == "wms":
             print "Type wms is not supported yet"
