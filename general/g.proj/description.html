@@ -178,10 +178,10 @@ gdalwarp -of HFA -t_srs "`g.proj -wf`" aster.img aster_tmerc.img
 </pre></div>
 
 <p>
-Reproject external vector map to current GRASS projection (does not always make sense!)
-using the OGR 'ogr2ogr' tool (using ESRI style of .prj file):<br>
+Reproject external vector map to current GRASS projection
+using the OGR 'ogr2ogr' tool:<br>
 <div class="code"><pre>
-ogr2ogr -t_srs "`g.proj -wef`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
+ogr2ogr -t_srs "`g.proj -wf`" polbnda_italy_GB_ovest.shp polbnda_italy_LL.shp
 </pre></div>
 
 
