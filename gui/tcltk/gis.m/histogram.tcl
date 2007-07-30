@@ -65,7 +65,7 @@ proc GmHist::create { tree parent } {
     set opt($count,1,bgcolor) #ffffff
     set opt($count,1,bgcolor_none) 0
     set opt($count,1,style) "bar" 
-    set opt($count,1,font) "romans" 
+    set opt($count,1,font) "" 
     set opt($count,1,nsteps) 255 
     set opt($count,1,nulls) 0 
     
@@ -112,11 +112,15 @@ proc GmHist::select_map { id } {
 ##########################################################################
 proc GmHist::set_font { id } {
 	variable opt
-
 	
+	if {$GmHist::opt($id,1,font) != "" } {
+		set Gm::dfont $GmHist::opt($id,1,font)
+	}
 	Gm:DefaultFont dhist
 	tkwait variable Gm::dfont
 	set GmHist::opt($id,1,font) $Gm::dfont
+	set Gm::dfont ""
+
 
 }
 
@@ -262,10 +266,10 @@ proc GmHist::display { node mod } {
 	}
 
     # check value of GRASS_FONT variable prior to display
-	if ![catch {set env(GRASS_FONT)}] {
+	if {![catch {set env(GRASS_FONT)}]} {
 		set currfont $env(GRASS_FONT)
 	} else {
-		set currfont ""
+		set currfont "romans"
 	}
 
     # set grass font environmental variable to user selection"
@@ -277,11 +281,8 @@ proc GmHist::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == "" && ![catch set {env(GRASS_FONT)}]} {
-		unset env(GRASS_FONT)
-	} else {
-		set env(GRASS_FONT) $currfont
-	}
+	set env(GRASS_FONT) $currfont
+
 }
     
 ##########################################################################

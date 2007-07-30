@@ -18,7 +18,7 @@ namespace eval GmBarscale {
     variable first
     variable array dup # layer
     variable placement #LabelEntry widget for scale bar placment coordinates
-}
+};
 
 
 ###############################################################################
@@ -68,7 +68,7 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,tcolor) \#000000 
     set opt($count,1,bcolor) \#FFFFFF 
     set opt($count,1,bcolor_none) 0
-    set opt($count,1,font) "romans"
+    set opt($count,1,font) ""
     set opt($count,1,line) 0 
     set opt($count,1,at) "2,2" 
     set opt($count,1,feet) 0 
@@ -95,7 +95,7 @@ proc GmBarscale::create { tree parent } {
     incr count
 
     return $node
-}
+};
 
 ###############################################################################
 proc GmBarscale::set_option { node key value } {
@@ -104,7 +104,7 @@ proc GmBarscale::set_option { node key value } {
     set id [GmTree::node_id $node]
     set opt($id,1,$key) $value
 
-}
+};
 
 
 ###############################################################################
@@ -120,18 +120,21 @@ proc GmBarscale::mouseset { id } {
 		set pctentry ""
 	}
 
-}
+};
 
 ##########################################################################
 proc GmBarscale::set_font { id } {
 	variable opt
 
-	
+	if {$GmBarscale::opt($id,1,font) != "" } {
+		set Gm::dfont $GmBarscale::opt($id,1,font)
+	}
 	Gm:DefaultFont dbarscale
 	tkwait variable Gm::dfont
 	set GmBarscale::opt($id,1,font) $Gm::dfont
+	set Gm::dfont ""
 
-}
+};
 
 
 ###############################################################################
@@ -239,7 +242,7 @@ proc GmBarscale::options { id frm } {
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
-}
+};
 
 ###############################################################################
 # save barscale layer node to grc file
@@ -253,7 +256,7 @@ proc GmBarscale::save { tree depth node } {
     foreach key $optlist {
         GmTree::rc_write $depth "$key $opt($id,1,$key)"
     } 
-}
+};
 
 
 ###############################################################################
@@ -319,14 +322,16 @@ proc GmBarscale::display { node mod } {
 	}
 
     # check value of GRASS_FONT variable prior to display
-	if ![catch {set env(GRASS_FONT)}] {
+	if {![catch {set env(GRASS_FONT)}]} {
 		set currfont $env(GRASS_FONT)
 	} else {
-		set currfont ""
+		set currfont "romans"
 	}
-
+	
     # set grass font environmental variable to user selection"
-	if { $GmBarscale::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmBarscale::opt($id,1,font) }
+	if { $GmBarscale::opt($id,1,font) != ""} { 
+		set env(GRASS_FONT) $GmBarscale::opt($id,1,font) 
+	}
 
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_command [namespace current] $id $cmd
@@ -334,12 +339,9 @@ proc GmBarscale::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == "" && ![catch {set env(GRASS_FONT)}]} {
-		unset env(GRASS_FONT)
-	} else {
-		set env(GRASS_FONT) $currfont
-	}
-}
+	set env(GRASS_FONT) $currfont
+	
+};
 
 ###############################################################################
 #duplicate barscale layer

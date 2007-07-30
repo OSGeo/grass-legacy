@@ -64,7 +64,7 @@ proc GmRnums::create { tree parent } {
     set opt($count,1,grid_color) "grey" 
     set opt($count,1,text_color) "black" 
     set opt($count,1,cellcolor) 0 
-    set opt($count,1,font) "romans" 
+    set opt($count,1,font) "" 
     set opt($count,1,mod) 1
 
 	set optlist {_check map opacity grid_color text_color cellcolor font}
@@ -107,11 +107,15 @@ proc GmRnums::select_map { id } {
 ##########################################################################
 proc GmRnums::set_font { id } {
 	variable opt
-
 	
+	if {$GmRnums::opt($id,1,font) != "" } {
+		set Gm::dfont $GmRnums::opt($id,1,font)
+	}
 	Gm:DefaultFont drastnum
 	tkwait variable Gm::dfont
 	set GmRnums::opt($id,1,font) $Gm::dfont
+	set Gm::dfont ""
+
 
 }
 
@@ -247,10 +251,10 @@ proc GmRnums::display { node mod } {
 	if {$cells < 1} {return}
 
     # check value of GRASS_FONT variable prior to display
-	if ![catch {set env(GRASS_FONT)}] {
+	if {![catch {set env(GRASS_FONT)}]} {
 		set currfont $env(GRASS_FONT)
 	} else {
-		set currfont ""
+		set currfont "romans"
 	}
 
     # set grass font environmental variable to user selection"
@@ -271,11 +275,7 @@ proc GmRnums::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == "" && ![catch {set env(GRASS_FONT)}]} {
-		unset env(GRASS_FONT)
-	} else {
-		set env(GRASS_FONT) $currfont
-	}
+	set env(GRASS_FONT) $currfont
 
 }
     

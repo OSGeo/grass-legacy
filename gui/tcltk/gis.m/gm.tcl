@@ -56,14 +56,16 @@ set execom "execute"
 set msg 0
 set mon 1
 
-if {[info exists env(HOSTTYPE)]} {
+
+
+if {![catch {set env(HOSTTYPE)}]} {
 	set HOSTTYPE $env(HOSTTYPE)
 } else {
 	set HOSTTYPE ""
 }
 
 # add for OSX aqua
-if {[info exists env(osxaqua)]} {
+if {![catch {set env(osxaqua)}]} {
     set osxaqua $env(osxaqua)
 } else {
     set osxaqua "0"
@@ -76,7 +78,7 @@ if { $osxaqua == "1"} {
     set execom "spawn"
 }
 
-if {[info exists env(OS)] && $env(OS) == "Windows_NT"} {
+if {![catch {set env(OS)}] && $env(OS) == "Windows_NT"} {
 	set mingw "1"
 	set devnull "NUL:"
 } else {
@@ -113,8 +115,7 @@ namespace eval Gm {
     variable prgtext
     variable mainwindow
     variable dfont 
-    variable fonttype
-    variable fontpath
+    variable selectedfont
     variable encoding
 	global array filename # mon
 
@@ -232,8 +233,6 @@ proc Gm::create { } {
     variable gm_mainframe
     variable tree
 	variable moncount
-	variable fontpath
-	variable fonttype
 	variable dfont
 	variable ecoding
     global gmpath
@@ -245,10 +244,12 @@ proc Gm::create { } {
     global keycontrol
     global env
     
+    # set display rendering environment for PNG/PPM output
     set env(GRASS_RENDER_IMMEDIATE) "TRUE"
-	set fontpath ""
-	set Gm::fonttype "grassfont"
-	set Gm::dfont "romans"
+    
+    # set default font
+    if {[catch {set env(GRASS_FONT)}]} {set env(GRASS_FONT) "romans"}
+	set Gm::dfont ""
 	set Gm::encoding "ISO-8859-1"
 
 	set moncount 1
@@ -478,6 +479,7 @@ proc Gm::SaveFileBox { } {
 proc Gm:DefaultFont { source } {
 	global env iconpath
 	variable dfont
+	variable selectedfont
 	variable encoding
 
 	# create a dialog with selector for stroke font and true type font, and
@@ -502,9 +504,18 @@ proc Gm:DefaultFont { source } {
     foreach item $fontlist {
     	$fontlb insert end $item
     }
-    
-    if {![catch {set env(GRASS_FONT)}] && $env(GRASS_FONT) != ""} {
-    	set fontindex [lsearch $fontlist $env(GRASS_FONT)]
+    # If $Gm::dfont is empty then it hasn't been set by a layer module
+    # before calling this procedure, so we should read the current
+    # default font from the GRASS_FONT environment variable
+    if {$Gm::dfont == ""} {    
+        if {![catch {set env(GRASS_FONT)}] && $env(GRASS_FONT) != ""} {
+    	    set Gm::dfont $env(GRASS_FONT)
+	    }
+    }
+    set selectedfont $Gm::dfont
+     
+    if {$Gm::dfont != ""} {
+    	set fontindex [lsearch $fontlist $Gm::dfont]
     	if {$fontindex > -1} {
     		$fontlb selection set $fontindex
     		$fontlb see $fontindex
@@ -533,9 +544,8 @@ proc Gm:DefaultFont { source } {
     pack $row -side bottom -pady 3  -padx 5 -expand 0 -fill x 
     
     bind $fontlb <<ListboxSelect>> {
-    	set Gm::dfont [%W get [%W curselection]]
-    }
-	    
+    	set Gm::selectedfont [%W get [%W curselection]]
+    }   
     
 };
 
@@ -543,6 +553,7 @@ proc Gm:DefaultFont { source } {
 proc Gm::SetFont { source } {
 	global env
 	variable dfont
+	variable selectedfont
 	variable encoding
 
 	# Set GRASS environmental variables for default display font and
@@ -552,8 +563,11 @@ proc Gm::SetFont { source } {
 		set env(GRASS_ENCODING) $encoding
 	}
 
+    set dfont $selectedfont
+    
 	if { $source == "menu" && $dfont != "" } {
 		set env(GRASS_FONT) $dfont
+		set dfont ""
 	}
 
 };
