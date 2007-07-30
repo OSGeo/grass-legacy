@@ -69,7 +69,9 @@ proc GmGridline::create { tree parent } {
     set opt($count,1,gridgeod) 0
     set opt($count,1,borderdraw) 1 
     set opt($count,1,textdraw) 1 
-    set opt($count,1,font) "romans" 
+    set opt($count,1,textcolor) #AAAAAA
+    set opt($count,1,font) "" 
+    set opt($count,1,fontsize) 9
     
     set opt($count,1,rhumbdraw) 0 
     set opt($count,1,rhumbcoor) "" 
@@ -84,8 +86,8 @@ proc GmGridline::create { tree parent } {
     set opt($count,1,mod) 1
     
 	set optlist { _check opacity gridcolor gridborder gridsize gridorigin griddraw gridgeod \
-    			borderdraw textdraw font rhumbdraw rhumbcoor geoddraw geodcoor geodcolor \
-    			geodtxtcolor} 
+    			borderdraw textdraw textcolor font fontsize rhumbdraw rhumbcoor geoddraw \
+    			geodcoor geodcolor geodtxtcolor} 
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -113,11 +115,14 @@ proc GmGridline::set_option { node key value } {
 proc GmGridline::set_font { id } {
 	variable opt
 
-	
+	if {$GmGridline::opt($id,1,font) != "" } {
+		set Gm::dfont $GmGridline::opt($id,1,font)
+	}
 	Gm:DefaultFont dgrid
 	tkwait variable Gm::dfont
 	set GmGridline::opt($id,1,font) $Gm::dfont
-
+	set Gm::dfont ""
+	
 }
 
 ##########################################################################
@@ -150,34 +155,14 @@ proc GmGridline::options { id frm } {
     Label $row.a -text [G_msg "Grid options: "]
     checkbutton $row.b -text [G_msg "draw grid"] -variable GmGridline::opt($id,1,griddraw) 
     checkbutton $row.c -text [G_msg "geodetic grid  "] -variable GmGridline::opt($id,1,gridgeod) 
-    Button $row.d -text [G_msg "Help"] \
+    SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridcolor)    
+    Label $row.e -text [G_msg "grid color "] 
+    Button $row.f -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "spawn g.manual --q d.grid" \
             -background $bgcolor \
             -helptext [G_msg "Help for grids"]
-    pack $row.a $row.b $row.c $row.d -side left
-    pack $row -side top -fill both -expand yes
-
-    # grid options 2
-    set row [ frame $frm.grid2 ]
-    Label $row.a -text [G_msg "   grid & text color "] 
-    SelectColor $row.b -type menubutton -variable GmGridline::opt($id,1,gridcolor)    
-    Label $row.c -text [G_msg "  grid text font "]
-    Button $row.d -image [image create photo -file "$iconpath/gui-font.gif"] \
-        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-        -helptext [G_msg "select font for text"] \
-	    -command "GmGridline::set_font $id"
-    pack $row.a $row.b $row.c $row.d -side left
-    pack $row -side top -fill both -expand yes
-
-    # grid options 3
-    set row [ frame $frm.grid3 ]
-    Label $row.a -text "   "
-    checkbutton $row.b -text [G_msg "draw grid border"] -variable GmGridline::opt($id,1,borderdraw) 
-    checkbutton $row.c -text [G_msg "draw border text  "] -variable GmGridline::opt($id,1,textdraw) 
-    SelectColor $row.d -type menubutton -variable GmGridline::opt($id,1,gridborder)
-    Label $row.e -text [G_msg " border color"] 
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
     # grid options 4
@@ -189,6 +174,32 @@ proc GmGridline::options { id frm } {
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
     
+    # grid options 2
+    set row [ frame $frm.grid2 ]
+    Label $row.a -text "   "
+    checkbutton $row.b -text [G_msg "draw border text "] -variable GmGridline::opt($id,1,textdraw) 
+    SelectColor $row.c -type menubutton -variable GmGridline::opt($id,1,textcolor)    
+    Label $row.d -text [G_msg "text color "] 
+    Button $row.e -image [image create photo -file "$iconpath/gui-font.gif"] \
+        -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
+        -helptext [G_msg "select font for text"] \
+	    -command "GmGridline::set_font $id"
+    Label $row.f -text [G_msg "text font "]
+    Label $row.g -text [G_msg "  text size"]
+    SpinBox $row.h -range {1 72 1} -textvariable GmGridline::opt($id,1,fontsize) \
+                   -width 2 -helptext [G_msg "Grid text size in points"] 
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left
+    pack $row -side top -fill both -expand yes
+
+    # grid options 3
+    set row [ frame $frm.grid3 ]
+    Label $row.a -text "   "
+    checkbutton $row.b -text [G_msg "draw grid border "] -variable GmGridline::opt($id,1,borderdraw) 
+    SelectColor $row.c -type menubutton -variable GmGridline::opt($id,1,gridborder)
+    Label $row.d -text [G_msg "border color "] 
+    pack $row.a $row.b $row.c $row.d -side left
+    pack $row -side top -fill both -expand yes
+
     set row [ frame $frm.line ]
     Label $row.a -text [G_msg "Geodesic and rhumblines for latlong locations only"]
     pack $row.a -side left
@@ -288,12 +299,14 @@ proc GmGridline::display { node mod } {
     # set hex colors to rgb         
     set gridcolor [Gm::color $opt($id,1,gridcolor)]
     set gridborder [Gm::color $opt($id,1,gridborder)]
+    set txtcolor [Gm::color $opt($id,1,textcolor)]
 
     
     # d.grid command
     if { $opt($id,1,griddraw) || $opt($id,1,borderdraw) } {
             set cmd "d.grid size=$opt($id,1,gridsize) origin=$opt($id,1,gridorigin) \
-                color=$gridcolor bordercolor=$gridborder" 
+                color=$gridcolor bordercolor=$gridborder textcolor=$txtcolor \
+                fontsize=$opt($id,1,fontsize)" 
         } 
         
     if { $opt($id,1,gridgeod) && $cmd != "" } {append cmd " -g"} 
@@ -315,14 +328,16 @@ proc GmGridline::display { node mod } {
     }
 
     # check value of GRASS_FONT variable prior to display
-	if ![catch {set env(GRASS_FONT)}] {
+	if {![catch {set env(GRASS_FONT)}]} {
 		set currfont $env(GRASS_FONT)
 	} else {
-		set currfont ""
+		set currfont "romans"
 	}
 
     # set grass font environmental variable to user selection"
-	if { $GmGridline::opt($id,1,font) != ""} { set env(GRASS_FONT) $GmGridline::opt($id,1,font) }
+	if { $GmGridline::opt($id,1,font) != ""} { 
+		set env(GRASS_FONT) $GmGridline::opt($id,1,font) 
+	}
 
 	# Decide whether to run, run command, and copy files to temp
 	GmCommonLayer::display_commands [namespace current] $id [list $cmd $cmd2 $cmd3]
@@ -330,11 +345,8 @@ proc GmGridline::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == "" && ![catch {set env(GRASS_FONT)}]} {
-		unset env(GRASS_FONT)
-	} else {
-		set env(GRASS_FONT) $currfont
-	}
+	set env(GRASS_FONT) $currfont
+
 }
 
 
