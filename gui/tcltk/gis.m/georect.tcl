@@ -1327,24 +1327,24 @@ proc GRMap::rectify { } {
         # run i.rectify on raster group
         # First, switch to xy mapset
         GRMap::setxyenv $xymset $xyloc
-        #set cmd "i.rectify -ca group=$xygroup extension=$mappid order=$rectorder"
         
-        set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
-        set env(GRASS_MESSAGE_FORMAT) gui
-		if {![catch {open [concat "|i.rectify" "-ca" "group=$xygroup" "extension=$mappid" "order=$rectorder"] r} fh]} {
-			while {[gets $fh line] >= 0} {
-				puts "line = $line"
-			}
-		}
+#         set message_env [exec g.gisenv get=GRASS_MESSAGE_FORMAT]
+#         set env(GRASS_MESSAGE_FORMAT) gui
+# 		if {![catch {open [concat "|i.rectify" "-ca" "group=$xygroup" "extension=$mappid" "order=$rectorder"] r} fh]} {
+# 			while {[gets $fh line] >= 0} {
+# 				puts "line = $line"
+# 			}
+# 		}
+# 
+#         set env(GRASS_MESSAGE_FORMAT) $message_env
+#         
+# 		if {[catch {close $fh} error]} {
+# 			puts $error
+# 		}
 
-        set env(GRASS_MESSAGE_FORMAT) $message_env
+        set cmd "i.rectify -ca group=$xygroup extension=$mappid order=$rectorder"
         
-		if {[catch {close $fh} error]} {
-			puts $error
-		}
-
-        
-        #runcmd $cmd
+        run_panel $cmd
         # Return to georectified mapset
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
