@@ -67,7 +67,7 @@ proc GmLegend::create { tree parent } {
     set opt($count,1,color) "black" 
     set opt($count,1,lines) 0 
     set opt($count,1,thin) 1 
-    set opt($count,1,font) "romans" 
+    set opt($count,1,font) "" 
     set opt($count,1,mouseset) 0
     set opt($count,1,labelnum) 5 
     set opt($count,1,at) "5,90" 
@@ -111,11 +111,15 @@ proc GmLegend::set_option { node key value } {
 ##########################################################################
 proc GmLegend::set_font { id } {
 	variable opt
-
 	
+	if {$GmLegend::opt($id,1,font) != "" } {
+		set Gm::dfont $GmLegend::opt($id,1,font)
+	}
 	Gm:DefaultFont dlegend
 	tkwait variable Gm::dfont
 	set GmLegend::opt($id,1,font) $Gm::dfont
+	set Gm::dfont ""
+
 
 }
 
@@ -388,10 +392,10 @@ proc GmLegend::display { node mod } {
     }
     
     # check value of GRASS_FONT variable prior to display
-	if ![catch {set env(GRASS_FONT)}] {
+	if {![catch {set env(GRASS_FONT)}]} {
 		set currfont $env(GRASS_FONT)
 	} else {
-		set currfont ""
+		set currfont "romans"
 	}
 
     # set grass font environmental variable to user selection"
@@ -403,11 +407,8 @@ proc GmLegend::display { node mod } {
 	# set grass font environmental variable to whatever it was when we started
 	# this lets different text layers have different fonts
 	
-	if {$currfont == "" && ![catch {set env(GRASS_FONT)}]} {
-		unset env(GRASS_FONT)
-	} else {
-		set env(GRASS_FONT) $currfont
-	}
+	set env(GRASS_FONT) $currfont
+
 }
 
 
