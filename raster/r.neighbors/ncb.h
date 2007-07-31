@@ -8,6 +8,7 @@ struct ncb  /* neighborhood control block */
     struct Categories cats;
     char title[1024];
     FILE *out;
+    char **mask;
     struct
     {
 	char *name;

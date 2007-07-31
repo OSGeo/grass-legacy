@@ -7,6 +7,25 @@
    and return the number of values copied.
 */
 
+#define sqr(x) ((x) * (x))
+
+void circle_mask(void)
+{
+    int i, j;
+
+    if (ncb.mask)
+	return;
+
+    ncb.mask = G_malloc(ncb.nsize * sizeof(char *));
+
+    for (i = 0; i < ncb.nsize; i++)
+	ncb.mask[i] = G_malloc(ncb.nsize);
+
+    for (i = 0; i < ncb.nsize; i++)
+	for (j = 0; j < ncb.nsize; j++)
+	    ncb.mask[i][j] = sqr(i - ncb.dist) + sqr(j - ncb.dist) <= sqr(ncb.dist);
+}
+
 int gather(DCELL *values, int offset)
 {
     int row, col;
@@ -18,6 +37,9 @@ int gather(DCELL *values, int offset)
 	for (col = 0; col < ncb.nsize; col++)
 	{
 	    DCELL *c = &ncb.buf[row][offset + col];
+
+	    if (ncb.mask && !ncb.mask[row][col])
+		continue;
 
 	    if (G_is_d_null_value(c))
 		G_set_d_null_value(&values[n], 1);
