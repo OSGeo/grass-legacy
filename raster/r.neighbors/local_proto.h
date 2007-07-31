@@ -2,6 +2,7 @@
 extern int allocate_bufs(void);
 extern int rotate_bufs(void);
 /* gather */
+extern void circle_mask(void);
 extern int gather(DCELL *,int);
 /* readcell.c */
 extern int readcell(int, int, int, int);

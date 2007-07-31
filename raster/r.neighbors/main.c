@@ -88,7 +88,7 @@ int main (int argc, char *argv[])
 	struct
 	{
                 /* please, remove before GRASS 7 released */
-		struct Flag *quiet, *align;
+		struct Flag *quiet, *align, *circle;
 	} flag;
 
 	DCELL *values;   /* list of neighborhood values */
@@ -146,6 +146,10 @@ int main (int argc, char *argv[])
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = _("Run quietly");
+
+	flag.circle = G_define_flag();
+	flag.circle->key = 'c';
+	flag.circle->description = _("Use circular neighborhood");
 
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
@@ -247,6 +251,8 @@ int main (int argc, char *argv[])
                 "in future. Please use '--quiet' instead."));
         }
 
+	if (flag.circle->answer)
+	    circle_mask();
 
 	for (row = 0; row < nrows; row++)
 	{
