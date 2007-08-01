@@ -250,7 +250,8 @@ class GRASSStartup(wx.Frame):
             self.lbmapsets.SetSelection(0)
 
     def OnRegion(self,event):
-        RegionDef(self)
+        defineRegion = RegionDef(self)
+        defineRegion.Show()
 
     def UpdateLocations(self,dbase):
 
@@ -365,7 +366,7 @@ class RegionDef(wx.Frame):
     """
 
     def __init__(self,parent,id=wx.ID_ANY, title="Set default region values"):
-        wx.Frame.__init__(self, parent, id, title, size=(300,300))
+        wx.Frame.__init__(self, parent, id, title, size=(650,300))
 
         self.parent = parent
         # inputs
@@ -375,23 +376,24 @@ class RegionDef(wx.Frame):
         self.tright = self.MakeTextCtrl("1", size=(150, -1))
         self.tres = self.MakeTextCtrl("1", size=(150, -1))
 
-        self.tgdal = self.MakeTextCtrl("", size=(250, -1))
-        self.tdsn = self.MakeTextCtrl("", size=(250, -1))
+#        self.tgdal = self.MakeTextCtrl("", size=(250, -1))
+#        self.tdsn = self.MakeTextCtrl("", size=(250, -1))
         # list of layers
         self.layers = []
-        self.llayers = wx.ComboBox(self, -1,
-                       choices=self.layers,
-                       size=(250,-1),
-                       style=wx.CB_DROPDOWN)
+#        self.llayers = wx.ComboBox(self, -1,
+#                       choices=self.layers,
+#                       size=(250,-1),
+#                       style=wx.CB_DROPDOWN)
 
         # labels
         self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
 
         # buttons
-        self.bbrowsegdal = self.MakeButton("Browse...", size=(150,-1))
-        self.bbrowseogr = self.MakeButton("Browse...", size=(150,-1))
-        self.bgetlayers = self.MakeButton("Get Layers", size=(150,-1))
+#        self.bbrowsegdal = self.MakeButton("Browse...", size=(150,-1))
+#        self.bbrowseogr = self.MakeButton("Browse...", size=(150,-1))
+#        self.bgetlayers = self.MakeButton("Get Layers", size=(150,-1))
         self.bset = self.MakeButton("Set coordinates", size=(150,-1))
+        self.bcancel = self.MakeButton("Cancel", size=(150,-1))
 
         # list of states
         self.states = []
@@ -415,10 +417,10 @@ class RegionDef(wx.Frame):
         # self.cstate = wx.combo.ComboCtrl(self, -1, pos=(50, 170), size=(150, -1),
         #          style=wx.CB_READONLY)
 
-        self.cstate = wx.ComboBox(self, -1,
-                       size=(250,-1),
-                       choices=self.states,
-                       style=wx.CB_DROPDOWN)
+#        self.cstate = wx.ComboBox(self, -1,
+#                       size=(250,-1),
+#                       choices=self.states,
+#                       style=wx.CB_DROPDOWN)
 
         # layout
         self.sizer = rcs.RowColSizer()
@@ -429,10 +431,11 @@ class RegionDef(wx.Frame):
 #        tmpsizer.Add(self.sizer, wx.EXPAND)
 #
 #        self.SetSizer(tmpsizer)
-        self.SetSizer(self.sizer)
-        self.SetAutoLayout(True)
 
-
+        self.sizer.Add(self.MakeLLabel("Region extents and resolution:"), 3,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 10, row=0,col=0, colspan=2)
 
         self.sizer.Add(self.MakeRLabel("North"), 0,
                        wx.ALIGN_CENTER_HORIZONTAL |
@@ -470,7 +473,7 @@ class RegionDef(wx.Frame):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 0, row=5,col=2)
 
-        self.sizer.Add(self.MakeRLabel("Initial resolution"), 0,
+        self.sizer.Add(self.MakeRLabel("Resolution"), 0,
                        wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=6,col=1)
@@ -478,92 +481,103 @@ class RegionDef(wx.Frame):
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, 5, row=6,col=2)
-        self.sizer.Add(self.bset, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=6, col=3 )
 
         self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
 
-        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced raster map or image"), 3,
+        self.sizer.Add(self.bset, 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=8,col=0, colspan=3)
+                       wx.ALL, 5, row=8, col=3 )
 
-        self.sizer.Add(self.MakeRLabel("File:"), 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=9,col=0, colspan=1)
-        self.sizer.Add(self.tgdal, 0,
+        self.sizer.Add(self.bcancel, 0,
                        wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=9,col=1, colspan=2)
-        self.sizer.Add(self.bbrowsegdal, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=9,col=3)
+                       wx.ALL, 5, row=8, col=1 )
 
-        self.sizer.Add(wx.StaticLine(self, -1), 0,
-                       wx.EXPAND|wx.ALL, 0,
-                       row=10, col=0, colspan=6)
+#        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced raster map or image"), 3,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=8,col=0, colspan=3)
+#
+#        self.sizer.Add(self.MakeRLabel("File:"), 0,
+#                       wx.ALIGN_RIGHT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=9,col=0, colspan=1)
+#        self.sizer.Add(self.tgdal, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=9,col=1, colspan=2)
+#        self.sizer.Add(self.bbrowsegdal, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=9,col=3)
+#
+#        self.sizer.Add(wx.StaticLine(self, -1), 0,
+#                       wx.EXPAND|wx.ALL, 0,
+#                       row=10, col=0, colspan=6)
+#
+#        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced vector map"), 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=11,col=0, colspan=3 )
+#
+#        self.sizer.Add(self.MakeRLabel("Data source/directory:"), 0,
+#                       wx.ALIGN_RIGHT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=12,col=0, colspan=1)
+#        self.sizer.Add(self.tdsn, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=12, col=1, colspan=2)
+#        self.sizer.Add(self.bbrowseogr, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=12, col=3)
+#
+#        self.sizer.Add(self.MakeRLabel("Layer/file:"), 0,
+#                       wx.ALIGN_RIGHT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=13,col=0, colspan=1)
+#        self.sizer.Add(self.llayers, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=13,col=1, colspan=2)
+#        self.sizer.Add(self.bgetlayers, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=13,col=3)
+#
+#        self.sizer.Add(wx.StaticLine(self, -1), 0,
+#                       wx.EXPAND|wx.ALL |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5,
+#                       row=14, col=0, colspan=6)
+#        self.sizer.Add(self.MakeRLabel("Match extents of selected country"), 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=15,col=0, colspan=3)
+#        self.sizer.Add(self.cstate, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5, row=16,col=1, colspan=2)
+#
+#        self.sizer.Add(self.lmessage, 0,
+#                       wx.ALIGN_LEFT |
+#                       wx.ALIGN_CENTER_VERTICAL |
+#                       wx.ALL, 5,
+#                       row=17,col=1, colspan=3)
 
-        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced vector map"), 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=11,col=0, colspan=3 )
+        self.SetSizer(self.sizer)
+        self.SetAutoLayout(True)
+        self.Layout()
 
-        self.sizer.Add(self.MakeRLabel("Data source/directory:"), 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=12,col=0, colspan=1)
-        self.sizer.Add(self.tdsn, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=12, col=1, colspan=2)
-        self.sizer.Add(self.bbrowseogr, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=12, col=3)
-
-        self.sizer.Add(self.MakeRLabel("Layer/file:"), 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=13,col=0, colspan=1)
-        self.sizer.Add(self.llayers, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=13,col=1, colspan=2)
-        self.sizer.Add(self.bgetlayers, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=13,col=3)
-
-        self.sizer.Add(wx.StaticLine(self, -1), 0,
-                       wx.EXPAND|wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5,
-                       row=14, col=0, colspan=6)
-        self.sizer.Add(self.MakeRLabel("Match extents of selected country"), 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=15,col=0, colspan=3)
-        self.sizer.Add(self.cstate, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=16,col=1, colspan=2)
-
-        self.sizer.Add(self.lmessage, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5,
-                       row=17,col=1, colspan=3)
-
-        self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
-        self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
+#        self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
+#        self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
         self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
-        self.Bind(wx.EVT_BUTTON, self.OnBrowseGdal, self.bbrowsegdal)
-        self.Bind(wx.EVT_BUTTON, self.OnBrowseOGR, self.bbrowseogr)
-        self.Bind(wx.EVT_BUTTON, self.OnGetOGRLayers, self.bgetlayers)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, self.bcancel)
+#        self.Bind(wx.EVT_BUTTON, self.OnBrowseGdal, self.bbrowsegdal)
+#        self.Bind(wx.EVT_BUTTON, self.OnBrowseOGR, self.bbrowseogr)
+#        self.Bind(wx.EVT_BUTTON, self.OnGetOGRLayers, self.bgetlayers)
 
     def MakeRLabel(self, text=""):
         """Make right-aligned label"""
@@ -620,6 +634,9 @@ class RegionDef(wx.Frame):
         elif self.cstate.GetSelection() > -1:
             sys.stderr.write("##############"+str(self.cstate.GetSelection())+"\n")
             self.OnItemSelected(None)
+
+    def OnCancel(self, event):
+        self.Destroy()
 
     def OnGetOGRLayers(self, event):
         path = self.tdsn.GetValue()
