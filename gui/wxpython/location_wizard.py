@@ -240,10 +240,10 @@ class CoordinateSystemPage(TitledPage):
             wx.MessageBox('You must select a coordinate system')
             event.Veto()
 
-        if coordsys == "xy":
-            self.parent.bboxpage.cstate.Enable(False)
-        else:
-            self.parent.bboxpage.cstate.Enable(True)
+#        if coordsys == "xy":
+#            self.parent.bboxpage.cstate.Enable(False)
+#        else:
+#            self.parent.bboxpage.cstate.Enable(True)
 
     def SetVal(self,event):
         global coordsys
@@ -954,7 +954,7 @@ class EPSGPage(TitledPage):
         self.GetNext().SetPrev(self)
 
     def OnText(self, event):
-        self.epsgcode = self.GetString()
+        self.epsgcode = event.GetString()
 
     def OnDoSearch(self,event):
         str =  self.searchb.GetValue()
@@ -1673,7 +1673,7 @@ class GWizard:
         self.projpage = ProjectionsPage(self.wizard, self)
         self.projtypepage = ProjTypePage(self.wizard,self)
         self.epsgpage = EPSGPage(self.wizard, self)
-        self.bboxpage = BBoxPage(self.wizard, self)
+#        self.bboxpage = BBoxPage(self.wizard, self)
         self.filepage = GeoreferencedFilePage(self.wizard, self)
         self.datumpage = DatumPage(self.wizard, self)
         self.ellipsepage = EllipsePage(self.wizard, self)
@@ -1686,35 +1686,37 @@ class GWizard:
         self.startpage.SetNext(self.csystemspage)
 
         self.csystemspage.SetPrev(self.startpage)
-        self.csystemspage.SetNext(self.bboxpage)
+        self.csystemspage.SetNext(self.sumpage)
 
         self.projtypepage.SetPrev(self.projpage)
         self.projtypepage.SetNext(self.datumpage)
 
         self.datumpage.SetPrev(self.projtypepage)
-        self.datumpage.SetNext(self.bboxpage)
+        self.datumpage.SetNext(self.sumpage)
 
         self.ellipsepage.SetPrev(self.projtypepage)
-        self.ellipsepage.SetNext(self.bboxpage)
+        self.ellipsepage.SetNext(self.sumpage)
 
         self.projpage.SetPrev(self.csystemspage)
-        self.projpage.SetNext(self.projtypepage)
+        self.projpage.SetNext(self.sumpage)
 
         self.epsgpage.SetPrev(self.csystemspage)
-        self.epsgpage.SetNext(self.bboxpage)
+        self.epsgpage.SetNext(self.sumpage)
 
         self.filepage.SetPrev(self.csystemspage)
-        self.filepage.SetNext(self.bboxpage)
+        self.filepage.SetNext(self.sumpage)
 
         self.custompage.SetPrev(self.csystemspage)
-        self.custompage.SetNext(self.bboxpage)
+        self.custompage.SetNext(self.sumpage)
 
-        self.bboxpage.SetPrev(self.csystemspage)
-        self.bboxpage.SetNext(self.sumpage)
+#        self.bboxpage.SetPrev(self.csystemspage)
+#        self.bboxpage.SetNext(self.sumpage)
 
-        self.sumpage.SetPrev(self.bboxpage)
+#        self.sumpage.SetPrev(self.bboxpage)
+#
+        self.wizard.FitToPage(self.datumpage)
 
-        self.wizard.FitToPage(self.bboxpage)
+        self.location = None #New location created
 
         success = False
 
@@ -1722,12 +1724,13 @@ class GWizard:
             success = self.onWizFinished()
             if success == True:
                 wx.MessageBox("New location created.")
+                self.location = self.startpage.location
             else:
                 wx.MessageBox("Unable to create new location.")
         else:
             wx.MessageBox("Location wizard canceled. New location not created.")
 
-        self.wizard.Destroy()
+#        self.wizard.Destroy()
 
     def onWizFinished(self):
         database = self.startpage.grassdatabase
@@ -1852,6 +1855,7 @@ class GWizard:
 
     def CustomCreate(self):
         proj4string = self.custompage.proj4string
+        location = self.startpage.location
 
         dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using PROJ.4 string: %s"
                                % (location,proj4string),
