@@ -6,7 +6,7 @@ import wx
 import os
 import glob
 import shutil
-
+import wx.lib.rcsizer  as rcs
 
 def read_grassrc():
     """
@@ -61,6 +61,7 @@ class GRASSStartup(wx.Frame):
         self.lmapset = wx.StaticText(self, -1, "Accessible Mapsets\n(directories of GIS files)", style=wx.ALIGN_CENTRE)
         self.lcreate = wx.StaticText(self, -1, "Create new mapset\nin selected location", style=wx.ALIGN_CENTRE)
         self.ldefine = wx.StaticText(self, -1, "Define new location...", style=wx.ALIGN_CENTRE)
+        self.lregion = wx.StaticText(self, -1, "Define default region...", style=wx.ALIGN_CENTRE)
 
         # buttons
         buttonsize1 = (150,-1)
@@ -75,6 +76,7 @@ class GRASSStartup(wx.Frame):
 #        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize1)
 #        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize1)
         self.bwizard = wx.Button(self, -1, "Location wizard", size=buttonsize1)
+        self.bregion = wx.Button(self, -1, "Define region", size=buttonsize1)
 
 
         # textinputs
@@ -99,24 +101,16 @@ class GRASSStartup(wx.Frame):
         self.__do_layout()
 
         # events
-#        wx.EVT_BUTTON(self, self.bbrowse.GetId(), self.OnBrowse)
         self.bbrowse.Bind(wx.EVT_BUTTON, self.OnBrowse)
-#        wx.EVT_BUTTON(self, self.bstart.GetId(), self.OnStart)
         self.bstart.Bind(wx.EVT_BUTTON, self.OnStart)
-#        wx.EVT_BUTTON(self, self.bexit.GetId(), self.OnExit)
         self.bexit.Bind(wx.EVT_BUTTON, self.OnExit)
-#        wx.EVT_BUTTON(self, self.bhelp.GetId(), self.OnHelp)
         self.bhelp.Bind(wx.EVT_BUTTON, self.OnHelp)
-#        wx.EVT_BUTTON(self, self.bmapset.GetId(), self.OnCreateMapset)
         self.bmapset.Bind(wx.EVT_BUTTON, self.OnCreateMapset)
-#        wx.EVT_BUTTON(self, self.bgeoreferenced.GetId(), self.OnGeoreferenced)
-#        wx.EVT_BUTTON(self, self.bepsg.GetId(), self.OnEpsg)
         self.bwizard.Bind(wx.EVT_BUTTON, self.OnWizard)
+        self.bregion.Bind(wx.EVT_BUTTON, self.OnRegion)
         self.lblocations.Bind(wx.EVT_LISTBOX, self.OnSelectLocation)
         self.lbmapsets.Bind(wx.EVT_LISTBOX, self.OnSelectMapset)
-#        wx.EVT_KEY_DOWN(self.tgisdbase, self.OnKeyPressedInDbase)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressedInDbase, self.tgisdbase)
-#        wx.EVT_KEY_DOWN(self.tnewmapset, self.OnKeyPressedInMapset)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressedInMapset, self.tnewmapset)
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
@@ -173,9 +167,9 @@ class GRASSStartup(wx.Frame):
         mapset_sizer.Add(self.tnewmapset, 0, label_style|wx.BOTTOM, 5)
         mapset_sizer.Add(self.bmapset, 0, label_style|wx.BOTTOM, 10)
         mapset_sizer.Add(self.ldefine, 0, label_style|wx.RIGHT|wx.LEFT, 5)
-#        mapset_sizer.Add(self.bgeoreferenced, 0, label_style|wx.TOP, 5)
-#        mapset_sizer.Add(self.bepsg, 0, label_style|wx.TOP, 5)
         mapset_sizer.Add(self.bwizard, 0, label_style|wx.TOP, 5)
+        mapset_sizer.Add(self.lregion, 0, label_style|wx.TOP|wx.RIGHT|wx.LEFT, 5)
+        mapset_sizer.Add(self.bregion, 0, label_style|wx.TOP, 5)
         mapset_sizer.Add((5,0))
 
         grid_sizer.Add(self.llocation, 0,label_style|wx.ALL, 5)
@@ -254,6 +248,9 @@ class GRASSStartup(wx.Frame):
                     self.gisbase,gWizard.location))
             self.lblocations.SetSelection(self.listOfLocations.index(gWizard.location))
             self.lbmapsets.SetSelection(0)
+
+    def OnRegion(self,event):
+        RegionDef(self)
 
     def UpdateLocations(self,dbase):
 
@@ -344,15 +341,6 @@ class GRASSStartup(wx.Frame):
             #self.bmapset.Enable(True)
             event.Skip()
 
-    def OnGeoreferenced(self,event):
-        NewLocation = GeoreferencedFile(self, -1, "Define new Location")
-        NewLocation.Show()
-
-    def OnEpsg(self,event):
-        NewLocation = EpsgCode(self, -1, "Define new Location")
-        NewLocation.Show()
-
-
     def OnStart(self, event):
         print "g.gisenv set=GISDBASE='%s';" % self.tgisdbase.GetValue()
         print "g.gisenv set=LOCATION_NAME='%s';" % self.listOfLocations[self.lblocations.GetSelection()]
@@ -370,6 +358,423 @@ class GRASSStartup(wx.Frame):
     def onCloseWindow(self, event):
         print "exit"
         event.Skip()
+
+class RegionDef(wx.Frame):
+    """
+    Page for setting default region extents and resolution
+    """
+
+    def __init__(self,parent,id=wx.ID_ANY, title="Set default region values"):
+        wx.Frame.__init__(self, parent, id, title, size=(300,300))
+
+        self.parent = parent
+        # inputs
+        self.ttop = self.MakeTextCtrl("1", size=(150, -1))
+        self.tbottom = self.MakeTextCtrl("0", size=(150, -1))
+        self.tleft = self.MakeTextCtrl("0", size=(150, -1))
+        self.tright = self.MakeTextCtrl("1", size=(150, -1))
+        self.tres = self.MakeTextCtrl("1", size=(150, -1))
+
+        self.tgdal = self.MakeTextCtrl("", size=(250, -1))
+        self.tdsn = self.MakeTextCtrl("", size=(250, -1))
+        # list of layers
+        self.layers = []
+        self.llayers = wx.ComboBox(self, -1,
+                       choices=self.layers,
+                       size=(250,-1),
+                       style=wx.CB_DROPDOWN)
+
+        # labels
+        self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
+
+        # buttons
+        self.bbrowsegdal = self.MakeButton("Browse...", size=(150,-1))
+        self.bbrowseogr = self.MakeButton("Browse...", size=(150,-1))
+        self.bgetlayers = self.MakeButton("Get Layers", size=(150,-1))
+        self.bset = self.MakeButton("Set coordinates", size=(150,-1))
+
+        # list of states
+        self.states = []
+        self.coords = []
+        try:
+            f = open(os.path.join(os.getenv("GISBASE"),"etc","wx","states.txt"),"r")
+            for line in f.readlines():
+                if line[0] == "#":
+                    continue
+                state,coord = line.split(";")
+                coord = coord.replace(","," ")
+                self.states.append(state)
+                self.coords.append(coord.split())
+            f.close()
+        except:
+            pass
+        # NOTE: ComboCtcl should come here, but nobody knows, how to
+        # implement it
+        # self.stateslist = wx.ListCtrl(self,
+        #                    style=wx.LC_LIST|wx.LC_SINGLE_SEL|wx.SIMPLE_BORDER)
+        # self.cstate = wx.combo.ComboCtrl(self, -1, pos=(50, 170), size=(150, -1),
+        #          style=wx.CB_READONLY)
+
+        self.cstate = wx.ComboBox(self, -1,
+                       size=(250,-1),
+                       choices=self.states,
+                       style=wx.CB_DROPDOWN)
+
+        # layout
+        self.sizer = rcs.RowColSizer()
+#        tmpsizer = wx.BoxSizer(wx.VERTICAL)
+#
+#        tmpsizer.Add(self.title, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+#        tmpsizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0)
+#        tmpsizer.Add(self.sizer, wx.EXPAND)
+#
+#        self.SetSizer(tmpsizer)
+        self.SetSizer(self.sizer)
+        self.SetAutoLayout(True)
+
+
+
+        self.sizer.Add(self.MakeRLabel("North"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=1,col=2)
+        self.sizer.Add(self.ttop, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2,col=2)
+
+        self.sizer.Add(self.MakeRLabel("West"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=0)
+        self.sizer.Add(self.tleft, 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=1)
+
+        self.sizer.Add(self.tright, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=3)
+        self.sizer.Add(self.MakeRLabel("East"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=4)
+
+        self.sizer.Add(self.tbottom, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=4,col=2)
+        self.sizer.Add(self.MakeRLabel("South"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=5,col=2)
+
+        self.sizer.Add(self.MakeRLabel("Initial resolution"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=1)
+        self.sizer.Add(self.tres, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=2)
+        self.sizer.Add(self.bset, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6, col=3 )
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
+
+        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced raster map or image"), 3,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=8,col=0, colspan=3)
+
+        self.sizer.Add(self.MakeRLabel("File:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=0, colspan=1)
+        self.sizer.Add(self.tgdal, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=1, colspan=2)
+        self.sizer.Add(self.bbrowsegdal, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=9,col=3)
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0,
+                       wx.EXPAND|wx.ALL, 0,
+                       row=10, col=0, colspan=6)
+
+        self.sizer.Add(self.MakeRLabel("Match extents of georeferenced vector map"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=11,col=0, colspan=3 )
+
+        self.sizer.Add(self.MakeRLabel("Data source/directory:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12,col=0, colspan=1)
+        self.sizer.Add(self.tdsn, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12, col=1, colspan=2)
+        self.sizer.Add(self.bbrowseogr, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=12, col=3)
+
+        self.sizer.Add(self.MakeRLabel("Layer/file:"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=0, colspan=1)
+        self.sizer.Add(self.llayers, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=1, colspan=2)
+        self.sizer.Add(self.bgetlayers, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=13,col=3)
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0,
+                       wx.EXPAND|wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=14, col=0, colspan=6)
+        self.sizer.Add(self.MakeRLabel("Match extents of selected country"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=15,col=0, colspan=3)
+        self.sizer.Add(self.cstate, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=16,col=1, colspan=2)
+
+        self.sizer.Add(self.lmessage, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,
+                       row=17,col=1, colspan=3)
+
+        self.Bind(wx.EVT_COMBOBOX, self.OnItemSelected, self.cstate)
+        self.Bind(wx.EVT_TEXT, self.OnStateText, self.cstate)
+        self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseGdal, self.bbrowsegdal)
+        self.Bind(wx.EVT_BUTTON, self.OnBrowseOGR, self.bbrowseogr)
+        self.Bind(wx.EVT_BUTTON, self.OnGetOGRLayers, self.bgetlayers)
+
+    def MakeRLabel(self, text=""):
+        """Make right-aligned label"""
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
+        return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
+
+    def MakeLLabel(self, text=""):
+        """Make left-aligned label"""
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
+        return wx.StaticText(self, -1, text, style=wx.ALIGN_LEFT)
+
+    def MakeTextCtrl(self,text='', size=(100,-1)):
+        """Generic text control"""
+        return wx.TextCtrl(self,-1, text, size=size)
+
+    def MakeButton(self,text, size=(75,25)):
+        """Generic button"""
+        return wx.Button(self, -1, text,
+                style=wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL,
+                size=size)
+
+    def OnBrowseGdal(self, event):
+        dlg = wx.FileDialog(self, "Choose a raster file:", os.getcwd(), "", "*.*", wx.OPEN)
+        path = ""
+        if dlg.ShowModal() == wx.ID_OK:
+                    path = dlg.GetPath()
+                    self.tgdal.SetValue(path)
+        dlg.Destroy()
+
+        self.OnSetButton()
+
+    def OnBrowseOGR(self, event):
+        dlg = wx.FileDialog(self, "Choose a data source name:", os.getcwd(), "", "*.*", wx.OPEN)
+        path = ""
+        if dlg.ShowModal() == wx.ID_OK:
+                    path = dlg.GetPath()
+                    self.tdsn.SetValue(path)
+        dlg.Destroy()
+        self.OnGetOGRLayers(None)
+
+    def OnSetButton(self,event=None):
+        if self.tgdal.GetValue():
+            self.__setGDAL()
+        if self.tdsn.GetValue() and self.llayers.GetSelection()>-1:
+            self.__setOGR()
+        elif self.cstate.GetSelection() > -1:
+            sys.stderr.write("##############"+str(self.cstate.GetSelection())+"\n")
+            self.OnItemSelected(None)
+
+    def OnGetOGRLayers(self, event):
+        path = self.tdsn.GetValue()
+        line = ""
+
+        sys.stderr.write(path+"####\n")
+        self.layers = []
+        self.llayers.Clear()
+        cmd = os.popen("ogrinfo -so %s\n" % (path))
+        line = cmd.readline()
+        # 1: cr (Polygon)
+        rex = re.compile("^(\d+):\s+(.+)\s+\(.*\)")
+        while 1:
+            if not line or line == "":
+                break
+            try:
+                sys.stderr.write("#####"+line+"####\n")
+                number, name = rex.findall(line)[0]
+                self.layers.append(name)
+            except:
+                pass
+            line = cmd.readline()
+        self.llayers.AppendItems(self.layers)
+        #sys.stderr.write(str( self.layers)+"\n")
+        #self.sizer.Remove(self.llayers)
+        #self.llayers = wx.ComboBox(self, -1, choices=self.layers, size=(100,-1),
+        #        style=wx.CB_DROPDOWN)
+        #self.sizer.Add(self.llayers, 0, wx.ALIGN_CENTER_VERTICAL, row=12,col=3)
+        #self.sizer.ShowItems(True)
+        self.OnSetButton()
+        pass
+
+    def __setOGR(self):
+        layer = self.layers[self.llayers.GetSelection()]
+        path = self.tdsn.GetValue()
+        number="-?\d+\.\d+"
+        line = ""
+
+        #test values
+        self.ttop.SetValue(500)
+        self.tleft.SetValue(500)
+
+        #Extent: (-146.976217, -55.985484) - (72.774632, 80.594358)
+        rex = re.compile("\((%s),\s*(%s)\)\s*-\s*\((%s),\s*(%s)\)" %(number, number, number, number))
+        cmd = os.popen("ogrinfo -so %s %s" % (path ,layer))
+        line = cmd.readline()
+        while 1:
+            if not line or line == "":
+                    break
+            sys.stderr.write(line+"\n")
+            if line.find("Extent")>-1:
+                sys.stderr.write(line[0]+"#####\n")
+                x1,y1,x2,y2 = rex.findall(line)[0]
+                self.tbottom.SetValue(y1)
+                self.tleft.SetValue(x1)
+                self.ttop.SetValue(y2)
+                self.tright.SetValue(x2)
+                break
+            line = cmd.readline()
+        return
+
+    def __setGDAL(self):
+        path = self.tgdal.GetValue()
+        line = ""
+        number="-?\d+\.\d+"
+
+        #test values
+        self.ttop.SetValue(500)
+        self.tleft.SetValue(500)
+
+        # Upper Left  (    0.0,    0.0)
+        rex=re.compile("\(\s*(%s)\s*,\s*(%s)\)" % (number, number))
+        obj = os.popen("gdalinfo %s | grep \"Upper\|Lower\"" % path)
+
+        line = obj.readline()
+        while 1:
+            sys.stderr.write(line+"\n")
+            if not line:
+                    break
+            if line.find("Upper Left")>-1:
+                x,y = rex.findall(line)[0]
+                self.ttop.SetValue(y)
+                self.tleft.SetValue(x)
+            if line.find("Lower Right")>-1:
+                x,y = rex.findall(line)[0]
+                self.tbottom.SetValue(y)
+                self.tright.SetValue(x)
+            line = obj.readline()
+        return
+
+    def OnStateText(self,event):
+        item = self.llayers.FindString(event.GetString())
+        self.llayers.SetSelection(item)
+        self.llayers.SetValue(self.llayers.GetStringSelection())
+        pass
+        #.log.WriteText('EvtTextEnter: %s' % event.GetString())
+        #sys.stderr.write(event.GetString()+"\n")
+        #text=event.GetString().lower()
+        #for idx in range(len(self.states)):
+        #    if self.states[idx].lower() == text:
+        #        self.cstate.Select(idx)
+        #        break
+
+    def OnPageChange(self, event):
+        self.GetNext().FillVars()
+        self.GetNext().SetPrev(self)
+
+        global north
+        north = self.ttop.GetValue()
+        global south
+        south = self.tbottom.GetValue()
+        global east
+        east = self.tright.GetValue()
+        global west
+        west = self.tleft.GetValue()
+        global resolution
+        resolution = self.tres.GetValue()
+
+    def OnItemSelected(self, event):
+        item = self.cstate.GetSelection()
+        w,s,e,n = self.coords[item]
+        #  4
+        # 1 3
+        #  2
+
+        if self.parent.csystemspage.cs == "latlong":
+            pass
+        if self.parent.csystemspage.cs == "xy":
+            pass
+        else:
+            if self.parent.csystemspage.cs == "epsg":
+                to="+init=epsg:%d" % (int(self.parent.epsgpage.tcode.GetValue()))
+            elif self.parent.csystemspage.cs == "proj":
+                to="+proj=%s" % (self.parent.projpage.tproj.GetValue())
+            elif self.parent.csystemspage.cs == "utm":
+                to="+proj=utm"
+            else:
+                sys.stderr.write(self.parent.csystemspage.cs+"\n")
+
+            try:
+                sin, sout = os.popen2("cs2cs +proj=latlong +datum=WGS84 +to %s" %  (to))
+                sin.write("%s %s\n" % (w,s))
+                sin.write("%s %s\n" % (e,n))
+                sin.close()
+                w,s,t = sout.readline().split()
+                e,n,t = sout.readline().split()
+                self.lmessage.SetLabel("")
+            except:
+                n = s = w = e="NULL"
+                self.lmessage.SetLabel("Unable to calculate country extends:\n cs2cs +proj=latlong +datum=WGS84 +to %s"% to)
+
+        self.ttop.SetValue( str(n) )
+        self.tbottom.SetValue( str(s) )
+        self.tright.SetValue( str(e) )
+        self.tleft.SetValue( str(w) )
 
 
 class StartUp(wx.App):
