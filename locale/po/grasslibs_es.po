@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-21 00:24+0200\n"
+"POT-Creation-Date: 2007-08-02 17:43+0200\n"
 "PO-Revision-Date: 2007-07-15 15:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -53,12 +53,12 @@ msgstr "No se puede describir la tabla <%s>"
 msgid "[%s]: No such color"
 msgstr "[%s]: No existe tal color"
 
-#: ../lib/driver/command.c:511
+#: ../lib/driver/command.c:517
 #, c-format
 msgid "Unknown command: %d last: %d"
 msgstr "Comando desconocido: %d último: %d"
 
-#: ../lib/driver/command.c:553
+#: ../lib/driver/command.c:559
 msgid "Monitor: get_command: Premature EOF"
 msgstr "Monitor: get_command: EOF prematuro"
 
@@ -446,31 +446,31 @@ msgstr "No es posible crear el encabezado para el archivo [%s]"
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "soporte de los colores [%s] en el directorio de mapas [%s] %s"
 
-#: ../lib/gis/color_rules.c:114
+#: ../lib/gis/color_rules.c:115
 msgid "syntax error"
 msgstr "error sintáctico"
 
-#: ../lib/gis/color_rules.c:115
+#: ../lib/gis/color_rules.c:116
 msgid "R/G/B not in range 0-255"
 msgstr "El valor R/G/B no se encuentra en el rango 0-255"
 
-#: ../lib/gis/color_rules.c:116
+#: ../lib/gis/color_rules.c:117
 msgid "invalid color name"
 msgstr "Nombre de color incorrecto"
 
-#: ../lib/gis/color_rules.c:117
+#: ../lib/gis/color_rules.c:118
 msgid "percentage not in range 0-100"
 msgstr "El valor de porcentaje no se encuentra en el intervalo 0-100"
 
-#: ../lib/gis/color_rules.c:118
+#: ../lib/gis/color_rules.c:119
 msgid "invalid value"
 msgstr "valor incorrecto"
 
-#: ../lib/gis/color_rules.c:119
+#: ../lib/gis/color_rules.c:120
 msgid "unknown error"
 msgstr "error desconocido"
 
-#: ../lib/gis/color_rules.c:150
+#: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): %s"
 msgstr "Regla errónea (%s): %s"
@@ -889,7 +889,7 @@ msgstr "G_list: tipo de elemento desconocido"
 msgid "LOCATION << %s >> not available"
 msgstr "LOCALIZACIÓN << %s >> no disponible"
 
-#: ../lib/gis/ls.c:63
+#: ../lib/gis/ls.c:62
 #, c-format
 msgid "Can't open directory %s"
 msgstr "No se puede abrir el directorio %s"
