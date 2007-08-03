@@ -52,14 +52,18 @@ d.vect -c centers icon=basic/triangle
 d.font verdana
 d.vect centers col=red disp=attr attrcol=label lsize=12
 
-v.net.salesman myroads_net acol=cost ccats=1-6 out=mysalesman
-d.vect mysalesman col=red width=2
+# due to the costs (?, TODO), the result looks like a Steiner tree:
+# v.net.salesman myroads_net acol=cost ccats=1-6 out=mysalesman
+
+# run without traveling costs
+v.net.salesman myroads_net ccats=1-6 out=mysalesman
+d.vect mysalesman col=green width=2
+d.vect centers col=red disp=attr attrcol=label lsize=12
 </pre></div>
 
-<!--
- The result look like a steiner tree!
+
 <img src="vnetsalesman.png" alt="v.net.salesman example" border="1">
--->
+
 
 <h2>SEE ALSO</h2>
 
