@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	 _("Import a binary MAT-File(v4) to a GRASS raster.");
+	 _("Imports a binary MAT-File(v4) to a GRASS raster.");
 
 
     /* Define the different options */
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 
 
   /******  READ MAP  ****************************************************/
-    G_message(_("Reading MAT-File ..."));
+    G_message(_("Reading MAT-File..."));
 
     while (!feof(fp1)) {
 
@@ -349,7 +349,7 @@ int main(int argc, char *argv[]) {
     
     G_strip(map_name);  /* remove leading and trailing whitespace */
     if(G_legal_filename(map_name) != 1)
-	G_fatal_error(_("<%s> is not a valid GRASS map name"), map_name);
+	G_fatal_error(_("<%s> is an illegal file name"), map_name);
 
 
     /* set region info */
@@ -386,7 +386,7 @@ int main(int argc, char *argv[]) {
 	G_fatal_error (_("Unable to create raster map <%s>"), outfile);
 
     /* write new raster map*/
-    G_message(_("Writing new raster map ..."));
+    G_message(_("Writing new raster map..."));
 
     mrows = region.rows;
     ncols = region.cols;
@@ -436,7 +436,7 @@ int main(int argc, char *argv[]) {
 
 	if( 1 != G_put_raster_row(cf, raster, map_type) ) {
 	    G_close_cell(cf);
-	    G_fatal_error(_("Writing map, row %d"), row);
+	    G_fatal_error(_("Failed writing raster map <%s> row %d"), raster, row);
 	}
 
  	G_percent(row, mrows, 5);

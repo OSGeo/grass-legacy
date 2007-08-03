@@ -333,16 +333,15 @@ static int load_files()
 	    }
 
 	    strcpy(name,vfiles[vnum][cnt]);
-	    G_message(_("Reading file [%s] ..."), name);
+	    G_message(_("Reading file [%s]..."), name);
 
 	    mapset = G_find_cell2 (name, "");
 	    if (mapset == NULL)
-                G_fatal_error(_("%s: cellfile [%s] not found."),
-                              G_program_name(), name);
+                G_fatal_error(_("Raster map <%s>] not found"), name);
 
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)
-                G_fatal_error(_("Unable to open cellfile [%s]."), name);
+                G_fatal_error(_("Unable to open raster map <%s>"), name);
     /*
 	    strcpy(title[cnt],G_get_cell_title(name, mapset));
     */
@@ -356,15 +355,15 @@ static int load_files()
 		voidc = (DCELL *)dcell;
 	    else
                 /* should not reach here */
-                G_fatal_error(_("Unable to determine raster cell type."));
+                G_fatal_error(_("Unable to determine raster cell type"));
 
 	    ret = G_read_colors(name, mapset, &colors);
 	    if (ret < 0)
-                G_fatal_error(_("Unable to read color file."));
+                G_fatal_error(_("Unable to read color file"));
 
 	    for (row = 0; row < vrows; row++){
 		if (G_get_raster_row (fd, (void *)voidc, (int)(row/vscale), rtype) < 0)
-                    G_fatal_error(_("Unable to read raster row."));
+                    G_fatal_error(_("Unable to read raster row"));
 
 		rowoff = (vyoff+row)*ncols;
 		G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
@@ -513,7 +512,7 @@ static char **gee_wildfiles(char *wildarg, char *element, int *num)
     }
 
     if (NULL == (tf = fopen(tfile, "r")))
-        G_warning(_("Error reading wildcard."));
+        G_warning(_("Error reading wildcard"));
     else{
 	while(NULL != fgets(buf,512,tf)){
 	    /* replace newline with null */
