@@ -138,7 +138,7 @@ main (int argc, char **argv)
 
 	/* Reading color lookup table */
 	if (G_read_colors(name_h, mapset, &hue_colors) == -1)
-		G_fatal_error(_("Color file for [%s] not available"),
+		G_fatal_error(_("Color file for <%s> not available"),
 			      name_h) ;
 
 	int_used = 0 ;
@@ -160,7 +160,7 @@ main (int argc, char **argv)
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_i, mapset, &int_colors) == -1)
-				G_fatal_error(_("Color file for [%s] not available"),
+				G_fatal_error(_("Color file for <%s> not available"),
 					      name_i) ;
 		}
 		else
@@ -188,7 +188,7 @@ main (int argc, char **argv)
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
-				G_fatal_error(_("Color file for [%s] not available"),
+				G_fatal_error(_("Color file for <%s> not available"),
 					      name_s) ;
 		}
 		else

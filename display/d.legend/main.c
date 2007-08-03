@@ -252,10 +252,10 @@ int main( int argc, char **argv )
 	/* Make sure map is available */
 	mapset = G_find_cell (map_name, "") ;
 	if (mapset == NULL)
-	    G_fatal_error(_("Raster file [%s] not available"), map_name);
+	    G_fatal_error(_("Raster map <%s> not found"), map_name);
 
 	if (G_read_colors(map_name, mapset, &colors) == -1)
-	    G_fatal_error(_("Color file for [%s] not available"), map_name);
+	    G_fatal_error(_("Color file for <%s> not available"), map_name);
 
         fp = G_raster_map_is_fp(map_name, mapset);
 	if (fp && !use_catlist)
@@ -266,7 +266,7 @@ int main( int argc, char **argv )
 	}
 	
 	if (G_read_cats(map_name, mapset, &cats) == -1)
-	    G_warning(_("Category file for [%s] not available"), map_name) ;
+	    G_warning(_("Category file for <%s> not available"), map_name) ;
 
 	G_set_c_null_value(&null_cell, 1);
 
@@ -350,7 +350,7 @@ int main( int argc, char **argv )
 	/* How many categories to show */
 	if(!fp) {
 		if (G_read_range(map_name, mapset, &range) == -1)
-		    G_fatal_error(_("Range information for [%s] not available (run r.support)"), map_name);
+		    G_fatal_error(_("Range information for <%s> not available (run r.support)"), map_name);
 
 		G_get_range_min_max (&range, &min_ind, &max_ind);
 
@@ -502,7 +502,7 @@ int main( int argc, char **argv )
         }
 	else { /* is fp */
 		if (G_read_fp_range(map_name, mapset, &fprange) == -1)
-		    G_fatal_error(_("Range information for [%s] not available"), map_name);
+		    G_fatal_error(_("Range information for <%s> not available"), map_name);
 
 		G_get_fp_range_min_max(&fprange, &dmin, &dmax);
 

@@ -278,7 +278,7 @@ int main (int argc, char **argv)
 
 	/* read the color table in the color structures of the displayed map */
 	if (G_read_colors(full_name, mapset, &colors) == -1)
-	    G_fatal_error(_("Color file for [%s] not available"), full_name);
+	    G_fatal_error(_("Color file for <%s> not available"), full_name);
 
 	/* fixed text color */
 	if ( fixed_color == 1 )

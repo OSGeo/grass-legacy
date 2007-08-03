@@ -48,7 +48,7 @@ int Dcell(char *name, char *mapset, int overlay)
 
 	/* Set the colors for the display */
 	if (G_read_colors(name, mapset, &colors) == -1)
-		G_fatal_error(_("Color file for [%s] not available"), name) ;
+		G_fatal_error(_("Color file for <%s> not available"), name) ;
 
 	/* Go draw the cell file */
 	cell_draw(name, mapset, &colors, overlay) ;
@@ -87,7 +87,7 @@ static int cell_draw(char *name, char *mapset, struct Colors *colors, int overla
 
 	/* Make sure map is available */
 	if ((cellfile = G_open_cell_old(name, mapset)) == -1)
-		G_fatal_error(_("Not able to open cellfile for [%s]"), name);
+		G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 	/* Allocate space for cell buffer */
 	xarray = G_allocate_d_raster_buf() ;

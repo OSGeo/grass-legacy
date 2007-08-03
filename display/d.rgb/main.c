@@ -97,17 +97,17 @@ int main(int argc, char **argv)
 
 		mapset = G_find_cell2(name, "");
 		if (mapset == NULL)
-		    G_fatal_error(_("Raster map [%s] does not exist"), name);
+		    G_fatal_error(_("Raster map <%s> not found"), name);
 
 		/* Make sure map is available */
 		if ((B[i].file = G_open_cell_old(name, mapset)) == -1)
-		    G_fatal_error(_("Unable to open raster map [%s]"), name);
+		    G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 		B[i].type = G_get_raster_map_type(B[i].file);
 
 		/* Reading color lookup table */
 		if (G_read_colors(name, mapset, &B[i].colors) == -1)
-		    G_fatal_error(_("Color file for [%s] not available"), name);
+		    G_fatal_error(_("Color file for <%s> not available"), name);
 
 		B[i].array = G_allocate_raster_buf(B[i].type);
 	}

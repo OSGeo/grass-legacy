@@ -19,7 +19,7 @@ int display(
     int r,g,b;
 
     if (G_read_colors(name, mapset, &colors) == -1)
-        G_fatal_error(_("Color file for [%s] not available"), name);
+        G_fatal_error(_("Color file for <%>] not available"), name);
 
     /***DEBUG ***
     if (G_write_colors(name, mapset, &colors) == -1)
@@ -89,7 +89,7 @@ static int cell_draw(
 
     /* Make sure map is available */
     if ((cellfile = G_open_cell_old(name, mapset)) == -1)
-	G_fatal_error(_("Not able to open cellfile for [%s]"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     /* Allocate space for cell buffer */
     xarray = G_allocate_raster_buf(data_type) ;
