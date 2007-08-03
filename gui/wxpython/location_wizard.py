@@ -29,6 +29,7 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
 import gui_modules
 import gui_modules.cmd as cmd
 import os
+import shutil
 import re
 import string
 import sys
@@ -1070,11 +1071,36 @@ class SummaryPage(TitledPage):
 
         self.parent = parent
 
+        # labels
+        self.ldatabase  =    self.MakeLLabel("")
+        self.llocation  =    self.MakeLLabel("")
+        self.lprojection =    self.MakeLLabel("")
+
+        self.lprojection.Wrap(500)
+
+        self.sizer.Add(self.MakeRLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=1, col=0)
+        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=1, col=1)
+        self.sizer.Add(self.MakeRLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=2, col=0)
+        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=2, col=1)
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.ALIGN_RIGHT|wx.EXPAND|wx.ALL, 0, row=3, col=0, colspan=2)
+        self.sizer.Add((10,10), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=4, col=0)
+        self.sizer.Add(self.MakeRLabel("Projection: "), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=5, col=0)
+        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=5, col=1)
+        self.sizer.Add((10,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=6, col=0)
+        self.sizer.Add(self.MakeLLabel("You can set the default extents and resolution after creating a new location"), \
+                       1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
+
+        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChange)
+
+    def OnPageChange(self,event):
+        """
+        Insert values into text controls for summary of location creation options
+        """
+
         database = self.parent.startpage.grassdatabase
         location = self.parent.startpage.location
 
         global coordsys
-
         if not coordsys:
             coordsys = 0
 
@@ -1092,14 +1118,8 @@ class SummaryPage(TitledPage):
         transregion = self.parent.datumpage.transregion
         transparams = self.parent.datumpage.transparams
 
-        # labels
-        self.ldatabase  =    self.MakeLLabel("")
-        self.llocation  =    self.MakeLLabel("")
-        self.lprojection =    self.MakeLLabel("")
-
         self.ldatabase.SetLabel(str(database))
         self.llocation.SetLabel(str(location))
-
         label = ''
         if coordsys == 'epsg':
             label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode,self.parent.epsgpage.epsgdesc)
@@ -1116,23 +1136,6 @@ class SummaryPage(TitledPage):
         elif coordsys == 'custom':
             label = ('%s' % self.custompage.proj4string)
             self.lprojection.SetLabel(label)
-
-        wx.MessageBox('label=%s' % label)
-
-        self.lprojection.Wrap(500)
-
-        self.sizer.Add(self.MakeRLabel("GRASS database:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=1, col=0)
-        self.sizer.Add(self.ldatabase, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=1, col=1)
-        self.sizer.Add(self.MakeRLabel("Location name:"), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=2, col=0)
-        self.sizer.Add(self.llocation, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=2, col=1)
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.ALIGN_RIGHT|wx.EXPAND|wx.ALL, 0, row=3, col=0, colspan=2)
-        self.sizer.Add((10,10), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=4, col=0)
-        self.sizer.Add(self.MakeRLabel("Projection: "), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=5, col=0)
-        self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=5, col=1)
-        self.sizer.Add((10,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=6, col=0)
-        self.sizer.Add(self.MakeLLabel("You can set the default extents and resolution after creating a new location"), \
-                       1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
-
 
 class GWizard:
     """
@@ -1326,7 +1329,55 @@ class GWizard:
         """
         Create an XY location
         """
-        wx.MessageBox('Not implemented: Create xy location')
+        database = self.startpage.grassdatabase
+        location = self.startpage.location
+
+        dlg = wx.MessageDialog(self.wizard, "New XY location '%s' will be created (not projected or georeferenced)"
+                               % location,
+                               "Create new XY location?",
+                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
+        if dlg.ShowModal() == wx.ID_NO:
+            dlg.Destroy()
+            return False
+        else:
+            dlg.Destroy()
+
+        #Make location folder and PERMANT mapset
+        os.mkdir(os.path.join(database,location))
+        os.mkdir(os.path.join(database,location,'PERMANENT'))
+
+        #Make DEFAULT_WIND and WIND files
+        regioninfo =   ['proj:       0',
+                        'zone:       0',
+                        'north:      1',
+                        'south:      0',
+                        'east:       1',
+                        'west:       0',
+                        'cols:       1',
+                        'rows:       1',
+                        'e-w resol:  1',
+                        'n-s resol:  1',
+                        'top:        1',
+                        'bottom:     0',
+                        'cols3:      1',
+                        'rows3:      1',
+                        'depths:     1',
+                        'e-w resol3: 1',
+                        'n-s resol3: 1',
+                        't-b resol:  1']
+
+        defwind = open(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),'w')
+        for param in regioninfo:
+            defwind.write(param+'\n')
+        defwind.close()
+        shutil.copy(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),\
+                    os.path.join(database,location,"PERMANENT","WIND"))
+
+        #Make MYNAME file
+        myname = open(os.path.join(database,location,"PERMANENT","MYNAME"),'w')
+        myname.write('')
+        myname.close()
+        return True
 
 
     def Proj4Create(self):
