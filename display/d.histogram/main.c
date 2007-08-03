@@ -160,7 +160,7 @@ int main (int argc, char **argv)
 	    G_fatal_error(_("Color file for <%s> not available"), map_name);
 
 	if (G_read_cats(map_name, mapset, &cats) == -1)
-	    G_fatal_error(_("Category file for <%s< not available"), map_name);
+	    G_fatal_error(_("Category file for <%s> not available"), map_name);
 
 	if (G_read_range(map_name, mapset, &range) == -1)
 	    G_fatal_error(_("Range information for <%s> not available"), map_name);

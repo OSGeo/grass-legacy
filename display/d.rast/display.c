@@ -19,7 +19,7 @@ int display(
     int r,g,b;
 
     if (G_read_colors(name, mapset, &colors) == -1)
-        G_fatal_error(_("Color file for <%>] not available"), name);
+        G_fatal_error(_("Color file for <%s> not available"), name);
 
     /***DEBUG ***
     if (G_write_colors(name, mapset, &colors) == -1)
