@@ -1,25 +1,27 @@
-# translation of grasstcl_fr.po to French
+# translation of grasstcl_fr.po to french
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006 GRASS Development Team
-# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2006
 #
+# Eve (alias 'phyto') <dendrosociology[a]yahoo.co.uk>, 2006.
+# BAIN <bain@toraval.fr>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-06 18:06+0200\n"
-"PO-Revision-Date: 2006-07-15 21:49+0100\n"
-"Last-Translator: Eve 'phyto' <dendrosociology@yahoo.co.uk>\n"
-"Language-Team: French <translations@grass.itc.it>\n"
+"POT-Creation-Date: 2007-08-03 17:39+0200\n"
+"PO-Revision-Date: 2007-08-02 22:42+0200\n"
+"Last-Translator: BAIN <bain@toraval.fr>\n"
+"Language-Team: french\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "X-Poedit-Language: French\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
 msgid "Text color: "
-msgstr "Couleur de texte :"
+msgstr "Couleur du texte : "
 
 #: ../gui/tcltk/d.m/barscale.tcl:69
 msgid " Background color: "
@@ -45,18 +47,18 @@ msgstr ""
 #: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/rgbhis.tcl:130
 #: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/thematic.tcl:121
 #: ../gui/tcltk/d.m/thematic.tcl:125 ../gui/tcltk/d.m/vector.tcl:202
-#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/gis.m/barscale.tcl:175
-#: ../gui/tcltk/gis.m/barscale.tcl:179 ../gui/tcltk/gis.m/chart.tcl:182
-#: ../gui/tcltk/gis.m/chart.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:172
-#: ../gui/tcltk/gis.m/dtext.tcl:176 ../gui/tcltk/gis.m/frames.tcl:115
-#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:153
-#: ../gui/tcltk/gis.m/gridline.tcl:201 ../gui/tcltk/gis.m/gridline.tcl:228
-#: ../gui/tcltk/gis.m/histogram.tcl:156 ../gui/tcltk/gis.m/histogram.tcl:159
+#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/gis.m/barscale.tcl:178
+#: ../gui/tcltk/gis.m/barscale.tcl:182 ../gui/tcltk/gis.m/chart.tcl:182
+#: ../gui/tcltk/gis.m/chart.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:175
+#: ../gui/tcltk/gis.m/dtext.tcl:179 ../gui/tcltk/gis.m/frames.tcl:115
+#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:160
+#: ../gui/tcltk/gis.m/gridline.tcl:212 ../gui/tcltk/gis.m/gridline.tcl:239
+#: ../gui/tcltk/gis.m/histogram.tcl:160 ../gui/tcltk/gis.m/histogram.tcl:163
 #: ../gui/tcltk/gis.m/labels.tcl:134 ../gui/tcltk/gis.m/labels.tcl:138
-#: ../gui/tcltk/gis.m/legend.tcl:183 ../gui/tcltk/gis.m/legend.tcl:186
+#: ../gui/tcltk/gis.m/legend.tcl:187 ../gui/tcltk/gis.m/legend.tcl:190
 #: ../gui/tcltk/gis.m/rastarrows.tcl:162 ../gui/tcltk/gis.m/rastarrows.tcl:165
 #: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
-#: ../gui/tcltk/gis.m/rastnums.tcl:156 ../gui/tcltk/gis.m/rastnums.tcl:159
+#: ../gui/tcltk/gis.m/rastnums.tcl:160 ../gui/tcltk/gis.m/rastnums.tcl:163
 #: ../gui/tcltk/gis.m/rgbhis.tcl:153 ../gui/tcltk/gis.m/rgbhis.tcl:162
 #: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:239
@@ -70,7 +72,7 @@ msgstr "Aide"
 msgid "display N. arrow only "
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:219
+#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:222
 #, fuzzy
 msgid "display scale only"
 msgstr "Afficher les couches actives"
@@ -79,18 +81,18 @@ msgstr "Afficher les couches actives"
 msgid "line scale instead of bar scale "
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:227
+#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:230
 msgid "text on top of scale, instead of to right"
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:237
+#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:240
 msgid "use feet/miles instead of meters"
 msgstr ""
 
 #: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
 msgid "place with mouse (cannot save placement with group)"
 msgstr ""
-"Placer avec la souris (impossible de sauvegarder le placement dans le groupe)"
+"placer avec la souris (impossible de sauvegarder la position dans le groupe)"
 
 #: ../gui/tcltk/d.m/chart.tcl:91 ../gui/tcltk/gis.m/chart.tcl:174
 msgid "Vector map to chart:"
@@ -106,7 +108,7 @@ msgid "points"
 msgstr "points"
 
 #: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
-#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/gis.m/legend.tcl:271
+#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/gis.m/legend.tcl:275
 #: ../gui/tcltk/gis.m/vector.tcl:339
 msgid "lines"
 msgstr "lignes"
@@ -136,13 +138,13 @@ msgstr " afficher les colonnes attributaires"
 #: ../gui/tcltk/d.m/vector.tcl:349 ../gui/tcltk/gis.m/chart.tcl:211
 #: ../gui/tcltk/gis.m/thematic.tcl:267 ../gui/tcltk/gis.m/vector.tcl:466
 msgid "columns"
-msgstr "colonnes"
+msgstr "champs"
 
 #: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/thematic.tcl:155
 #: ../gui/tcltk/d.m/vector.tcl:353 ../gui/tcltk/gis.m/chart.tcl:215
 #: ../gui/tcltk/gis.m/thematic.tcl:271 ../gui/tcltk/gis.m/vector.tcl:470
 msgid "Show columns"
-msgstr "Montrer les colonnes"
+msgstr "Montrer les champs"
 
 #: ../gui/tcltk/d.m/chart.tcl:158 ../gui/tcltk/gis.m/chart.tcl:250
 msgid "Chart type:"
@@ -154,13 +156,13 @@ msgstr "\tcouleur de contour du diagramme :"
 
 #: ../gui/tcltk/d.m/cmd.tcl:52 ../gui/tcltk/gis.m/cmd.tcl:113
 msgid "Command:"
-msgstr "Commande :"
+msgstr "Commande :"
 
-#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:256
+#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:257
 msgid "Loading GIS Manager"
 msgstr "Chargement du Gestionnaire SIG"
 
-#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:303
+#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:304
 msgid "Done"
 msgstr "Fait."
 
@@ -173,7 +175,7 @@ msgid "Text options: color"
 msgstr "Options du texte : couleur"
 
 #: ../gui/tcltk/d.m/dtext.tcl:106 ../gui/tcltk/d.m/fttext.tcl:151
-#: ../gui/tcltk/gis.m/dtext.tcl:225
+#: ../gui/tcltk/gis.m/dtext.tcl:228
 msgid "bold text"
 msgstr "texte en gras"
 
@@ -221,7 +223,7 @@ msgstr "rotations en radians"
 msgid "Font:"
 msgstr "Police :"
 
-#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:223
+#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:226
 #: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/gis.m/maptext.tcl:184
 msgid "  color"
 msgstr " couleur"
@@ -230,7 +232,7 @@ msgstr " couleur"
 msgid "height in pixels instead of %"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:151
+#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:156
 msgid "draw grid"
 msgstr "tracer la grille"
 
@@ -242,7 +244,7 @@ msgstr ""
 msgid " grid color "
 msgstr " couleur de grille "
 
-#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:157
+#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:164
 msgid "Help for grids"
 msgstr "Aide pour les grilles"
 
@@ -254,7 +256,7 @@ msgstr " couleur de grille"
 msgid "     "
 msgstr "     "
 
-#: ../gui/tcltk/d.m/gridline.tcl:93 ../gui/tcltk/gis.m/gridline.tcl:176
+#: ../gui/tcltk/d.m/gridline.tcl:93
 msgid "draw grid border"
 msgstr "tracer la bordure de grille"
 
@@ -266,20 +268,20 @@ msgstr "tracer la bordure de texte"
 msgid " border & text color"
 msgstr "couleur de texte et bordure"
 
-#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:200
+#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:211
 msgid "draw geodesic line"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:205
+#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:216
 #, fuzzy
 msgid "Help for geodesic lines"
 msgstr "Aide pour l'orthodromie"
 
-#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:227
+#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:238
 msgid "draw rhumbline"
 msgstr "tracer l'orthodromie"
 
-#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:232
+#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:243
 msgid "Help for rhumblines"
 msgstr "Aide pour l'orthodromie"
 
@@ -302,39 +304,39 @@ msgid " ignore rotation setting and draw horizontally"
 msgstr ""
 
 #: ../gui/tcltk/d.m/legend.tcl:81
-#, fuzzy
 msgid "Raster map for legend:"
-msgstr "Couche raster"
+msgstr "Carte raster pour la légende :"
 
 #: ../gui/tcltk/d.m/legend.tcl:96
-#, fuzzy
 msgid "Display legend in monitor: "
-msgstr "Afficher les dimensions"
+msgstr "Afficher la légende dans le moniteur :"
 
 #: ../gui/tcltk/d.m/legend.tcl:99
 msgid " erase monitor before drawing legend"
-msgstr ""
+msgstr " effacer le moniteur avant de dessiner la légende"
 
 #: ../gui/tcltk/d.m/legend.tcl:164
 #, fuzzy
 msgid "do not show cat labels"
-msgstr "ne pas afficher les valeurs"
+msgstr "ne pas afficher les labels de cat"
 
 #: ../gui/tcltk/d.m/legend.tcl:166
+#, fuzzy
 msgid "do not show cat numbers"
-msgstr ""
+msgstr "ne pas afficher les numéros de cat"
 
 #: ../gui/tcltk/d.m/legend.tcl:173
+#, fuzzy
 msgid "skip cats with no labels"
-msgstr ""
+msgstr "omettre les cats sans labels"
 
 #: ../gui/tcltk/d.m/legend.tcl:175
 msgid "draw smooth gradient"
-msgstr ""
+msgstr "dessiner un gradient lissé"
 
 #: ../gui/tcltk/d.m/legend.tcl:177
 msgid "flip legend"
-msgstr ""
+msgstr "retourner la légende"
 
 #: ../gui/tcltk/d.m/menu.tcl:75 ../gui/tcltk/gis.m/gmmenu.tcl:86
 msgid "&File"
@@ -356,15 +358,15 @@ msgstr "Formats multiples avec GDAL"
 
 #: ../gui/tcltk/d.m/menu.tcl:80
 msgid "Aggregate ASCII xyz data into raster grid"
-msgstr ""
+msgstr "Incorporer des points ASCII xyz dans une grille raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:81
 msgid "ASCII GRID (includes GRASS ASCII)"
-msgstr "GRID ASCII (dont GRASS ASCII)"
+msgstr "Grille ASCII (dont GRASS ASCII)"
 
 #: ../gui/tcltk/d.m/menu.tcl:82
 msgid "Polygons and lines from ASCII file"
-msgstr "Polygones et lignes du fichier ASCII"
+msgstr "Polygones et lignes d'un fichier ASCII"
 
 #: ../gui/tcltk/d.m/menu.tcl:84
 msgid "Binary file (includes GTOPO30 format)"
@@ -372,19 +374,19 @@ msgstr "Fichier binaire (dont le format GTOPO30)"
 
 #: ../gui/tcltk/d.m/menu.tcl:85
 msgid "ESRI Arc/Info ASCII grid"
-msgstr "ESRI Arc/Info ASCII grid"
+msgstr "Grille ASCII ESRI Arc/Info"
 
 #: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
 msgid "GRIDATB.FOR map file (TOPMODEL)"
-msgstr "GRIDATB.FOR map file (TOPMODEL)"
+msgstr "fichier GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/tcltk/d.m/menu.tcl:87 ../gui/tcltk/d.m/menu.tcl:121
 msgid "MAT-File (v.4) array (Matlab or Octave)"
-msgstr "MAT-File (v.4) array (Matlab ou Octave)"
+msgstr "Tableau MAT-File (v.4) (Matlab ou Octave)"
 
 #: ../gui/tcltk/d.m/menu.tcl:88
 msgid "SPOT vegetation NDVI data sets"
-msgstr ""
+msgstr "Jeux de données SPOT végétation NDVI"
 
 #: ../gui/tcltk/d.m/menu.tcl:89
 msgid "SRTM hgt files"
@@ -404,9 +406,8 @@ msgid "Vector map"
 msgstr "Couche vecteur"
 
 #: ../gui/tcltk/d.m/menu.tcl:95
-#, fuzzy
 msgid "Various formats using OGR"
-msgstr "Formats multiples avec GDAL"
+msgstr "Formats divers avec GDAL"
 
 #: ../gui/tcltk/d.m/menu.tcl:97
 #, fuzzy
@@ -418,13 +419,12 @@ msgid "Import old GRASS vector format"
 msgstr "Importer ancien format vectoriel GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:100
-#, fuzzy
 msgid "DXF file"
-msgstr "Fichier PDF :"
+msgstr "Fichier DXF"
 
 #: ../gui/tcltk/d.m/menu.tcl:101
 msgid "ESRI e00 format"
-msgstr "format ESRI e00"
+msgstr "format e00 ESRI"
 
 #: ../gui/tcltk/d.m/menu.tcl:102
 msgid "Garmin GPS Waypoints/Routes/Tracks"
@@ -445,7 +445,7 @@ msgstr "Fichiers Matlab et MapGen"
 
 #: ../gui/tcltk/d.m/menu.tcl:107 ../gui/tcltk/d.m/menu.tcl:142
 msgid "Grid 3D"
-msgstr "Grid 3D"
+msgstr "Grille 3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:108 ../gui/tcltk/d.m/menu.tcl:143
 msgid "ASCII 3D file"
@@ -461,15 +461,15 @@ msgstr "Exporter"
 
 #: ../gui/tcltk/d.m/menu.tcl:116
 msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
-msgstr "ASCII grid (pour GRASS, Surfer, Modflow, etc)"
+msgstr "Grille ASCII (pour GRASS, Surfer, Modflow, etc.)"
 
 #: ../gui/tcltk/d.m/menu.tcl:117
 msgid "ASCII x,y,z values of cell centers"
-msgstr ""
+msgstr "Valeurs x,y,z des cellules ASCII"
 
 #: ../gui/tcltk/d.m/menu.tcl:119
 msgid "ESRI ARC/INFO ASCII grid"
-msgstr "ESRI ARC/INFO ASCII grid"
+msgstr "Grille ASCII ARC/INFO ESRI"
 
 #: ../gui/tcltk/d.m/menu.tcl:123
 msgid "Binary file"
@@ -481,7 +481,7 @@ msgstr "Animations MPEG-1"
 
 #: ../gui/tcltk/d.m/menu.tcl:126
 msgid "PNG image (not georeferenced)"
-msgstr ""
+msgstr "Image PNG (non géorégérencée)"
 
 #: ../gui/tcltk/d.m/menu.tcl:127
 msgid "PPM image (24bit)"
@@ -489,7 +489,7 @@ msgstr "image PPM (24bit)"
 
 #: ../gui/tcltk/d.m/menu.tcl:128
 msgid "PPM image from red, green, blue raster maps"
-msgstr ""
+msgstr "Image PPM à partir de couches raster rouge, vert, bleu"
 
 #: ../gui/tcltk/d.m/menu.tcl:129
 msgid "POVray height-field"
@@ -500,9 +500,8 @@ msgid "TIFF image (8/24bit)"
 msgstr "image TIFF (8/24bit)"
 
 #: ../gui/tcltk/d.m/menu.tcl:131
-#, fuzzy
 msgid "VRML file"
-msgstr "Fichier Vis5D"
+msgstr "Fichier VRML"
 
 #: ../gui/tcltk/d.m/menu.tcl:132 ../gui/tcltk/d.m/menu.tcl:140
 #: ../gui/tcltk/d.m/menu.tcl:145
@@ -511,40 +510,40 @@ msgstr "Fichier ASCII VTK"
 
 #: ../gui/tcltk/d.m/menu.tcl:135
 msgid "Various formats using OGR (SHAPE, MapInfo etc)"
-msgstr ""
+msgstr "Formats divers avec OGR (SHAPE, MapInfo, etc.)"
 
 #: ../gui/tcltk/d.m/menu.tcl:137
 msgid "DXF file (ASCII)"
 msgstr "Fichier DXF (ASCII)"
 
 #: ../gui/tcltk/d.m/menu.tcl:138
-#, fuzzy
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr "Vecteur ASCII ou fichier point/ ancien vecteur ASCII GRASS"
+msgstr ""
+"Vecteur ASCII ou fichier de points / ancien fichier vecteur ASCII GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:139
 msgid "POV-Ray format"
-msgstr "format POV-Ray"
+msgstr "Format POV-Ray"
 
 #: ../gui/tcltk/d.m/menu.tcl:149 ../gui/tcltk/gis.m/gmmenu.tcl:165
 msgid "Manage maps and volumes"
-msgstr ""
+msgstr "Gérer couches et volumes"
 
 #: ../gui/tcltk/d.m/menu.tcl:150
 msgid "Copy maps"
-msgstr "Copier les couches"
+msgstr "Copier des couches"
 
 #: ../gui/tcltk/d.m/menu.tcl:151
 msgid "List maps"
-msgstr "Lister les couches"
+msgstr "Lister des couches"
 
 #: ../gui/tcltk/d.m/menu.tcl:152
 msgid "List maps using expressions and 'wildcards'"
-msgstr "Lister les couches en utilisant des expressions et des wildcards"
+msgstr "Lister des couches en utilisant des expressions et des 'wildcards'"
 
 #: ../gui/tcltk/d.m/menu.tcl:153
 msgid "Rename maps"
-msgstr "Renommer les couches"
+msgstr "Renommer des couches"
 
 #: ../gui/tcltk/d.m/menu.tcl:154
 msgid "Remove maps"
@@ -552,53 +551,47 @@ msgstr "Supprimer des couches"
 
 #: ../gui/tcltk/d.m/menu.tcl:155
 msgid "Remove maps using expressions and 'wildcards'"
-msgstr "Supprimer des couches en utilisant des expressions et des wildcards"
+msgstr "Supprimer des couches en utilisant des expressions et des 'wildcards'"
 
 #: ../gui/tcltk/d.m/menu.tcl:157 ../gui/tcltk/gis.m/gmmenu.tcl:176
 msgid "Map type conversions"
 msgstr "Conversions de type de couches"
 
 #: ../gui/tcltk/d.m/menu.tcl:158
-#, fuzzy
 msgid "Raster to vector map"
-msgstr "Couche raster"
+msgstr "Couche raster vers couche vecteur"
 
 #: ../gui/tcltk/d.m/menu.tcl:159
 msgid "Raster map series to volume"
-msgstr ""
+msgstr "Séries de couches raster vers volume"
 
 #: ../gui/tcltk/d.m/menu.tcl:160
-#, fuzzy
 msgid "Raster 2.5D map to volume"
-msgstr "Couche raster"
+msgstr "Couche raster 2.5D vers volume"
 
 #: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:181
-#, fuzzy
 msgid "Vector to raster"
-msgstr "Couche vecteur pour laquelle produire un diagramme :"
+msgstr "Couche vecteur vers couche raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:162
-#, fuzzy
 msgid "Vector to vector"
-msgstr "Couche vecteur pour laquelle produire un diagramme :"
+msgstr "Couche vecteur vers couche vecteur"
 
 #: ../gui/tcltk/d.m/menu.tcl:163
-#, fuzzy
 msgid "Vector lines to points"
-msgstr "Travailler avec des points vecteurs"
+msgstr "Lignes vers points"
 
 #: ../gui/tcltk/d.m/menu.tcl:164
 msgid "Vector 3D points to volume voxels"
-msgstr ""
+msgstr "couche de points 3D vers volume"
 
 #: ../gui/tcltk/d.m/menu.tcl:165
 msgid "Sites (GRASS 5.x) to vector"
-msgstr ""
+msgstr "Couche sites (GRASS 5.x) vers couche vecteur"
 
 #: ../gui/tcltk/d.m/menu.tcl:166
-#, fuzzy
 msgid "Volumes to raster map series"
-msgstr "Echantillonner des couches rasters"
+msgstr "Couche volume vers série de couches raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:169
 msgid "Groups"
@@ -609,9 +602,8 @@ msgid "New"
 msgstr "Nouveau"
 
 #: ../gui/tcltk/d.m/menu.tcl:170
-#, fuzzy
 msgid "Create new group file"
-msgstr "Ouvrir le fichier groupe"
+msgstr "Créer un nouveau fichier groupe"
 
 #: ../gui/tcltk/d.m/menu.tcl:171 ../gui/tcltk/gis.m/gmmenu.tcl:88
 msgid "Open..."
@@ -619,7 +611,7 @@ msgstr "Ouvrir..."
 
 #: ../gui/tcltk/d.m/menu.tcl:171
 msgid "Open group file"
-msgstr "Ouvrir le fichier groupe"
+msgstr "Ouvrir un fichier groupe"
 
 #: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:89
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:843
@@ -629,15 +621,15 @@ msgstr "Sauvegarder"
 
 #: ../gui/tcltk/d.m/menu.tcl:172
 msgid "Save group file"
-msgstr "Sauvegarder le fichier groupe"
+msgstr "Sauvegarder un fichier groupe"
 
 #: ../gui/tcltk/d.m/menu.tcl:173 ../gui/tcltk/gis.m/gmmenu.tcl:90
 msgid "Save as..."
-msgstr "Enregistrer sous"
+msgstr "Enregistrer sous..."
 
 #: ../gui/tcltk/d.m/menu.tcl:173
 msgid "Save group file as name"
-msgstr "Sauvegarder le fichier groupe sous"
+msgstr "Sauvegarder un fichier groupe sous"
 
 #: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
 #: ../gui/tcltk/gis.m/gmmenu.tcl:91 ../gui/tcltk/gis.m/mapprint.tcl:357
@@ -657,11 +649,12 @@ msgstr "Sauvegarder l'affichage dans un fichier image"
 #: ../gui/tcltk/d.m/menu.tcl:178
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
 msgstr ""
+"XWD (sauvegarder l'affichage, sélectionné avec la souris, dans un fichier "
+"map.xwd du répertoire personnel)"
 
 #: ../gui/tcltk/d.m/menu.tcl:179
-#, fuzzy
 msgid "Save displays to multiple graphic file formats"
-msgstr "Sauvegarder l'affichage dans un fichier image"
+msgstr "Sauvegarder l'affichage dans dans divers formats image"
 
 #: ../gui/tcltk/d.m/menu.tcl:181
 msgid "Save map to Postscript file"
@@ -669,7 +662,7 @@ msgstr "Sauvegarder la couche dans un fichier Postscript"
 
 #: ../gui/tcltk/d.m/menu.tcl:182
 msgid "Print to default printer"
-msgstr ""
+msgstr "Imprimer sur l'imprimante par défaut"
 
 #: ../gui/tcltk/d.m/menu.tcl:182
 msgid "print"
@@ -688,49 +681,45 @@ msgid "&Config"
 msgstr "&Config"
 
 #: ../gui/tcltk/d.m/menu.tcl:187 ../gui/tcltk/gis.m/gmmenu.tcl:197
-#, fuzzy
 msgid "Region"
-msgstr "tension"
+msgstr "Région"
 
 #: ../gui/tcltk/d.m/menu.tcl:188 ../gui/tcltk/gis.m/gmmenu.tcl:198
-#, fuzzy
 msgid "Display region settings"
-msgstr "Afficher les contraintes :"
+msgstr "Afficher les réglages de région"
 
 #: ../gui/tcltk/d.m/menu.tcl:189 ../gui/tcltk/gis.m/gmmenu.tcl:199
 msgid "Change region settings"
-msgstr ""
+msgstr "Changer les réglages de région"
 
 #: ../gui/tcltk/d.m/menu.tcl:190
 msgid "Zoom to maximum extent of all displayed maps"
-msgstr ""
+msgstr "Zoomer sur l'étendue maximale des couches affichées"
 
 #: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:201
 msgid "GRASS working environment"
 msgstr "Environnement de travail GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:193
-#, fuzzy
 msgid "Access other mapsets in current location"
-msgstr "dans le Secteur courant"
+msgstr "Accéder à d'autres jeux de données dans le Secteur courant"
 
 #: ../gui/tcltk/d.m/menu.tcl:194
 msgid "Change current working session to new mapset, location, or GISDBASE"
 msgstr ""
+"Changer de jeu de données, secteur, ou GISDBASE pour la session en cours"
 
 #: ../gui/tcltk/d.m/menu.tcl:195
 msgid "Modify access by other users to current mapset"
-msgstr ""
+msgstr "Modifier les droits d'accès du jeu de données courant"
 
 #: ../gui/tcltk/d.m/menu.tcl:196
-#, fuzzy
 msgid "Show current GRASS environment settings"
-msgstr "Afficher la version courante de GRASS"
+msgstr "Afficher l'environnement de travail courant de GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:197
-#, fuzzy
 msgid "Set GRASS environment settings"
-msgstr "Environnement de travail GRASS"
+msgstr "Fixer l'environnement de travail GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:198 ../gui/tcltk/gis.m/gmmenu.tcl:207
 msgid "Show current GRASS version"
@@ -738,22 +727,21 @@ msgstr "Afficher la version courante de GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:200 ../gui/tcltk/gis.m/gmmenu.tcl:209
 #: ../gui/tcltk/gis.m/gmmenu.tcl:210
-#, fuzzy
 msgid "Manage projections"
-msgstr "Utiliser des valeurs de projection"
+msgstr "Gérer les projections"
 
 #: ../gui/tcltk/d.m/menu.tcl:201
-#, fuzzy
 msgid "Create/edit projection information for current location"
-msgstr "dans le Secteur courant"
+msgstr "Créer / éditer les informations de projection du secteur courant"
 
 #: ../gui/tcltk/d.m/menu.tcl:202
 msgid "Show projection information and create projection files"
 msgstr ""
+"Montrer les informations de projection et créer des fichiers de projection"
 
 #: ../gui/tcltk/d.m/menu.tcl:204
 msgid "Convert coordinates from one projection to another"
-msgstr ""
+msgstr "Convertir des coordonnées dans un autre système de projection"
 
 #: ../gui/tcltk/d.m/menu.tcl:206
 msgid "Text"
@@ -761,11 +749,11 @@ msgstr "Texte"
 
 #: ../gui/tcltk/d.m/menu.tcl:207
 msgid "Select default text font"
-msgstr ""
+msgstr "Sélectionner la police de caractère par défaut"
 
 #: ../gui/tcltk/d.m/menu.tcl:208
 msgid "Select default freetype text font"
-msgstr ""
+msgstr "Sélectionner la police de caractère freetype par défaut"
 
 #: ../gui/tcltk/d.m/menu.tcl:210
 msgid "X-monitor displays"
@@ -781,7 +769,7 @@ msgstr "Configurer les cadres des moniteurs X"
 
 #: ../gui/tcltk/d.m/menu.tcl:213
 msgid "Start/restart xmonitor at specified window size"
-msgstr ""
+msgstr "Démarrer / redémarrer un moniteur X aux dimensions spécifiées"
 
 #: ../gui/tcltk/d.m/menu.tcl:214
 msgid "Set active xmonitor to specified size"
@@ -1766,19 +1754,19 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:577
 msgid "&Databases"
-msgstr ""
+msgstr "Bases de &Données"
 
 #: ../gui/tcltk/d.m/menu.tcl:538 ../gui/tcltk/gis.m/gmmenu.tcl:585
 msgid "Manage database"
-msgstr ""
+msgstr "Gérer les bases de données"
 
 #: ../gui/tcltk/d.m/menu.tcl:539 ../gui/tcltk/gis.m/gmmenu.tcl:586
 msgid "Connect to database"
-msgstr ""
+msgstr "Se connecter à la base de données"
 
 #: ../gui/tcltk/d.m/menu.tcl:540 ../gui/tcltk/gis.m/gmmenu.tcl:587
 msgid "Login to database"
-msgstr ""
+msgstr "S'identifier sur la base de données"
 
 #: ../gui/tcltk/d.m/menu.tcl:542 ../gui/tcltk/gis.m/gmmenu.tcl:589
 msgid "Copy table"
@@ -1786,28 +1774,27 @@ msgstr "Copier la table"
 
 #: ../gui/tcltk/d.m/menu.tcl:543
 msgid "Add columns to table"
-msgstr ""
+msgstr "Ajouter des champs à la table"
 
 #: ../gui/tcltk/d.m/menu.tcl:544
 msgid "Change values in a column"
-msgstr "Changer les valeurs dans une colonne"
+msgstr "Changer les valeurs dans un champ"
 
 #: ../gui/tcltk/d.m/menu.tcl:545 ../gui/tcltk/gis.m/gmmenu.tcl:597
 msgid "Test database"
-msgstr ""
+msgstr "Tester la base de données"
 
 #: ../gui/tcltk/d.m/menu.tcl:547 ../gui/tcltk/gis.m/gmmenu.tcl:578
-#, fuzzy
 msgid "Database information"
-msgstr "Information de base"
+msgstr "Information de base de données"
 
 #: ../gui/tcltk/d.m/menu.tcl:548 ../gui/tcltk/gis.m/gmmenu.tcl:579
 msgid "Describe table"
-msgstr "Description de table"
+msgstr "Décrire une table"
 
 #: ../gui/tcltk/d.m/menu.tcl:549 ../gui/tcltk/gis.m/gmmenu.tcl:580
 msgid "List columns"
-msgstr "Lister les colonnes"
+msgstr "Lister les champs"
 
 #: ../gui/tcltk/d.m/menu.tcl:550 ../gui/tcltk/gis.m/gmmenu.tcl:581
 msgid "List drivers"
@@ -1820,16 +1807,15 @@ msgstr "Lister les tables"
 #: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:600
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1805 ../gui/tcltk/gis.m/maptool.tcl:222
 msgid "Query"
-msgstr ""
+msgstr "Interroger"
 
 #: ../gui/tcltk/d.m/menu.tcl:555
 msgid "Query data (SQL select)"
-msgstr ""
+msgstr "Interroger des données (sélection SQL)"
 
 #: ../gui/tcltk/d.m/menu.tcl:556
-#, fuzzy
 msgid "Execute SQL statement"
-msgstr "\tclause SQL where"
+msgstr "Exécuter une clause SQL"
 
 #: ../gui/tcltk/d.m/menu.tcl:559 ../gui/tcltk/gis.m/gmmenu.tcl:610
 msgid "&Help"
@@ -1849,23 +1835,22 @@ msgstr "Aide Gestionnaire SIG"
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:613
 msgid "About &GRASS"
-msgstr "A propos de &GRASS"
+msgstr "À propos de &GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:613
 msgid "About GRASS"
-msgstr "A propos de GRASS"
+msgstr "À propos de GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:614
-#, fuzzy
 msgid "About &System"
-msgstr "A propos de &GRASS"
+msgstr "À propos du &Système"
 
 #: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:614
-#, fuzzy
 msgid "About System"
-msgstr "A propos de "
+msgstr "À propos du système"
 
 #: ../gui/tcltk/d.m/menu.tcl:571 ../gui/tcltk/gis.m/gmmenu.tcl:622
+#, fuzzy
 msgid "&Xtns"
 msgstr "&Xtns"
 
@@ -1874,99 +1859,92 @@ msgid "x0"
 msgstr "x0"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:35
-#, fuzzy
 msgid "Start/select display monitor x0"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x0"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:38
 msgid "x1"
 msgstr "x1"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:40
-#, fuzzy
 msgid "Start/select display monitor x1"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x1"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:43
 msgid "x2"
 msgstr "x2"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:45
-#, fuzzy
 msgid "Start/select display monitor x2"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x2"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:48
 msgid "x3"
 msgstr "x3"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:50
-#, fuzzy
 msgid "Start/select display monitor x3"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x3"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:53
 msgid "x4"
 msgstr "x4"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:55
-#, fuzzy
 msgid "Start/select display monitor x4"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x4"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:58
 msgid "x5"
 msgstr "x5"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:60
-#, fuzzy
 msgid "Start/select display monitor x5"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x5"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:63
 msgid "x6"
 msgstr "x6"
 
 #: ../gui/tcltk/d.m/monitorsel.tcl:65
-#, fuzzy
 msgid "Start/select display monitor x6"
-msgstr "Lancer un nouveau moniteur"
+msgstr "Démarrer/sélectionner un moniteur x6"
 
 #: ../gui/tcltk/d.m/print.tcl:169
 msgid "Paper format"
-msgstr "Format papier"
+msgstr "Format de papier"
 
 #: ../gui/tcltk/d.m/print.tcl:180
 msgid "Custom"
-msgstr ""
+msgstr "Personnalisé"
 
 #: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:266
 msgid "width:"
-msgstr "largeur :"
+msgstr "largeur :"
 
 #: ../gui/tcltk/d.m/print.tcl:184
 msgid "height:"
-msgstr "hauteur :"
+msgstr "hauteur :"
 
 #: ../gui/tcltk/d.m/print.tcl:191
 msgid "left:"
-msgstr "gauche :"
+msgstr "gauche :"
 
 #: ../gui/tcltk/d.m/print.tcl:193
 msgid "right:"
-msgstr "droite :"
+msgstr "droite :"
 
 #: ../gui/tcltk/d.m/print.tcl:195
 msgid "top:"
-msgstr "haut :"
+msgstr "haut :"
 
 #: ../gui/tcltk/d.m/print.tcl:197
 msgid "bottom:"
-msgstr "bas :"
+msgstr "bas :"
 
 #: ../gui/tcltk/d.m/print.tcl:210
 msgid "PS file:"
-msgstr "Fichier PS :"
+msgstr "Fichier PS :"
 
 #: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
 #: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
@@ -1976,23 +1954,23 @@ msgstr "Parcourir"
 
 #: ../gui/tcltk/d.m/print.tcl:221
 msgid "PDF file:"
-msgstr "Fichier PDF :"
+msgstr "Fichier PDF :"
 
 #: ../gui/tcltk/d.m/print.tcl:232
 msgid "PNG file:"
-msgstr "Fichier PNG :"
+msgstr "Fichier PNG :"
 
 #: ../gui/tcltk/d.m/print.tcl:241
 msgid "PNG file resolution (points/inch):"
-msgstr ""
+msgstr "Résolution du fichier PNG (points/pouce) :"
 
 #: ../gui/tcltk/d.m/print.tcl:250
 msgid "Printer:"
-msgstr "Imprimante :"
+msgstr "Imprimante :"
 
 #: ../gui/tcltk/d.m/print.tcl:259
 msgid "Script file:"
-msgstr "Fichier de script :"
+msgstr "Fichier de script :"
 
 #: ../gui/tcltk/d.m/print.tcl:279 ../gui/tcltk/gis.m/mapprint.tcl:356
 msgid "Print"
@@ -2000,7 +1978,7 @@ msgstr "Imprimer"
 
 #: ../gui/tcltk/d.m/print.tcl:280
 msgid "Preview"
-msgstr ""
+msgstr "Aperçu"
 
 #: ../gui/tcltk/d.m/raster.tcl:85
 msgid "Raster name:"
@@ -2030,78 +2008,74 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:96
 msgid "red (RGB) or hue (HIS):"
-msgstr "rouge (RGB) ou teinte (HIS) :"
+msgstr "rouge (RVB) ou teinte (TVS) :"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:107
-#, fuzzy
 msgid "green (RGB) or intensity (HIS):"
-msgstr "rouge (RGB) ou teinte (HIS) :"
+msgstr "vert (RVB) ou valeur (TVS) :"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:118
 msgid "blue (RGB) or saturation (HIS):"
-msgstr "bleu (RGB) ou saturation (HIS) :"
+msgstr "bleu (RVB) ou saturation (TVS) :"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:152
 msgid "display maps as RGB"
-msgstr "afficher couches en RGB"
+msgstr "afficher les couches en RVB"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:157
 msgid "Help for RGB"
-msgstr "Aide sur RGB"
+msgstr "Aide sur RVB"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:161
 msgid "display maps as HIS"
-msgstr "afficher couches pour HIS"
+msgstr "afficher les couches en TVS "
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:166
 msgid "Help for HIS"
-msgstr "Aide sur HIS"
+msgstr "Aide sur TVS"
 
 #: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:231
 #: ../gui/tcltk/gis.m/vector.tcl:304
 msgid "Vector map:"
-msgstr "Couche vecteur :"
+msgstr "Carte vecteur :"
 
 #: ../gui/tcltk/d.m/thematic.tcl:131 ../gui/tcltk/gis.m/thematic.tcl:249
 msgid "    vector type"
-msgstr "\ttype vecteur"
+msgstr "type de vecteur"
 
 #: ../gui/tcltk/d.m/thematic.tcl:150 ../gui/tcltk/d.m/vector.tcl:348
 #: ../gui/tcltk/gis.m/thematic.tcl:266 ../gui/tcltk/gis.m/vector.tcl:465
 msgid "    show attribute columns"
-msgstr "\tmontrer les colonnes attributaires"
+msgstr "montrer les champs attributaires"
 
 #: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
-#, fuzzy
 msgid "     show data"
-msgstr "montrer chemin"
+msgstr "     montrer les données"
 
 #: ../gui/tcltk/d.m/thematic.tcl:157 ../gui/tcltk/d.m/vector.tcl:355
 #: ../gui/tcltk/gis.m/chart.tcl:217 ../gui/tcltk/gis.m/thematic.tcl:273
 #: ../gui/tcltk/gis.m/vector.tcl:472
 msgid "data"
-msgstr ""
+msgstr "données"
 
 #: ../gui/tcltk/d.m/thematic.tcl:161 ../gui/tcltk/d.m/vector.tcl:359
 #: ../gui/tcltk/gis.m/chart.tcl:221 ../gui/tcltk/gis.m/thematic.tcl:277
 #: ../gui/tcltk/gis.m/vector.tcl:476
-#, fuzzy
 msgid "Show data"
-msgstr "montrer chemin"
+msgstr "Montrer les données"
 
 #: ../gui/tcltk/d.m/thematic.tcl:168 ../gui/tcltk/gis.m/thematic.tcl:283
 msgid "Thematic map: type"
-msgstr ""
+msgstr "Carte thématique : type"
 
 #: ../gui/tcltk/d.m/thematic.tcl:171 ../gui/tcltk/gis.m/thematic.tcl:286
 msgid " map by"
-msgstr "couche par"
+msgstr "carte par"
 
 #: ../gui/tcltk/d.m/thematic.tcl:205 ../gui/tcltk/d.m/vector.tcl:245
 #: ../gui/tcltk/gis.m/thematic.tcl:318 ../gui/tcltk/gis.m/vector.tcl:355
-#, fuzzy
 msgid "icon"
-msgstr "Icones"
+msgstr "icône"
 
 #: ../gui/tcltk/d.m/thematic.tcl:210 ../gui/tcltk/gis.m/thematic.tcl:322
 msgid "point color"
@@ -2113,7 +2087,7 @@ msgstr "couleur de ligne"
 
 #: ../gui/tcltk/d.m/thematic.tcl:230
 msgid "Graduate colors: preset color schemes"
-msgstr ""
+msgstr "Couleurs graduelles : chartes de couleurs"
 
 #: ../gui/tcltk/d.m/thematic.tcl:243 ../gui/tcltk/gis.m/thematic.tcl:356
 msgid "draw border"
@@ -2153,7 +2127,7 @@ msgstr "Afficher les couches actives"
 #: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:47
 #: ../gui/tcltk/gis.m/maptool.tcl:62
 msgid "Erase to white"
-msgstr "Effacer et mettre en blanc"
+msgstr "Effacer tout"
 
 #: ../gui/tcltk/d.m/tool1.tcl:54 ../gui/tcltk/gis.m/gmtool2.tcl:111
 msgid "NVIZ - n dimensional visualization"
@@ -2170,7 +2144,7 @@ msgstr "Echantillonner des couches rasters"
 
 #: ../gui/tcltk/d.m/tool1.tcl:81
 msgid "Zoom"
-msgstr "Zoomer"
+msgstr "Zoom"
 
 #: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:144
 #: ../gui/tcltk/gis.m/maptool.tcl:159
@@ -2415,85 +2389,85 @@ msgstr "Largeur de ligne pour la sortie d'impression ps.map :"
 msgid "Line width used for printing"
 msgstr "Largeur de ligne pour la sortie d'impression ps.map :"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:148
+#: ../gui/tcltk/gis.m/barscale.tcl:151
 #, fuzzy
 msgid "Display scale and north arrow"
 msgstr "Afficher les dimensions"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:155 ../gui/tcltk/gis.m/chart.tcl:164
-#: ../gui/tcltk/gis.m/cmd.tcl:103 ../gui/tcltk/gis.m/dtext.tcl:161
-#: ../gui/tcltk/gis.m/gridline.tcl:140 ../gui/tcltk/gis.m/histogram.tcl:139
-#: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:166
+#: ../gui/tcltk/gis.m/barscale.tcl:158 ../gui/tcltk/gis.m/chart.tcl:164
+#: ../gui/tcltk/gis.m/cmd.tcl:103 ../gui/tcltk/gis.m/dtext.tcl:164
+#: ../gui/tcltk/gis.m/gridline.tcl:145 ../gui/tcltk/gis.m/histogram.tcl:143
+#: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:170
 #: ../gui/tcltk/gis.m/rastarrows.tcl:145 ../gui/tcltk/gis.m/raster.tcl:148
-#: ../gui/tcltk/gis.m/rastnums.tcl:139 ../gui/tcltk/gis.m/rgbhis.tcl:140
+#: ../gui/tcltk/gis.m/rastnums.tcl:143 ../gui/tcltk/gis.m/rgbhis.tcl:140
 #: ../gui/tcltk/gis.m/thematic.tcl:221 ../gui/tcltk/gis.m/vector.tcl:294
 msgid "Opaque "
 msgstr "Opaque "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:159 ../gui/tcltk/gis.m/chart.tcl:168
-#: ../gui/tcltk/gis.m/cmd.tcl:107 ../gui/tcltk/gis.m/dtext.tcl:165
-#: ../gui/tcltk/gis.m/gridline.tcl:144 ../gui/tcltk/gis.m/histogram.tcl:143
-#: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:170
+#: ../gui/tcltk/gis.m/barscale.tcl:162 ../gui/tcltk/gis.m/chart.tcl:168
+#: ../gui/tcltk/gis.m/cmd.tcl:107 ../gui/tcltk/gis.m/dtext.tcl:168
+#: ../gui/tcltk/gis.m/gridline.tcl:149 ../gui/tcltk/gis.m/histogram.tcl:147
+#: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:174
 #: ../gui/tcltk/gis.m/rastarrows.tcl:149 ../gui/tcltk/gis.m/raster.tcl:152
-#: ../gui/tcltk/gis.m/rastnums.tcl:143 ../gui/tcltk/gis.m/rgbhis.tcl:144
+#: ../gui/tcltk/gis.m/rastnums.tcl:147 ../gui/tcltk/gis.m/rgbhis.tcl:144
 #: ../gui/tcltk/gis.m/thematic.tcl:225 ../gui/tcltk/gis.m/vector.tcl:298
 msgid " Transparent"
 msgstr " Transparent"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:165
+#: ../gui/tcltk/gis.m/barscale.tcl:168
 #, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:171
+#: ../gui/tcltk/gis.m/barscale.tcl:174
 msgid "\t enter x,y of scale/arrow upper left corner"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:174
+#: ../gui/tcltk/gis.m/barscale.tcl:177
 #, fuzzy
 msgid "    "
 msgstr "     "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:185
+#: ../gui/tcltk/gis.m/barscale.tcl:188
 msgid "\t "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:192
-#: ../gui/tcltk/gis.m/legend.tcl:202 ../gui/tcltk/gis.m/maptext.tcl:150
+#: ../gui/tcltk/gis.m/barscale.tcl:189 ../gui/tcltk/gis.m/dtext.tcl:195
+#: ../gui/tcltk/gis.m/legend.tcl:206 ../gui/tcltk/gis.m/maptext.tcl:150
 msgid "place with mouse"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:194
+#: ../gui/tcltk/gis.m/barscale.tcl:197
 #, fuzzy
 msgid "Scale appearance:  text color"
 msgstr "couleur de texte et bordure"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:196
+#: ../gui/tcltk/gis.m/barscale.tcl:199
 #, fuzzy
 msgid "  font "
 msgstr "     "
 
-#: ../gui/tcltk/gis.m/barscale.tcl:199 ../gui/tcltk/gis.m/dtext.tcl:221
-#: ../gui/tcltk/gis.m/gridline.tcl:168 ../gui/tcltk/gis.m/histogram.tcl:171
-#: ../gui/tcltk/gis.m/legend.tcl:228 ../gui/tcltk/gis.m/maptext.tcl:180
-#: ../gui/tcltk/gis.m/rastnums.tcl:173
+#: ../gui/tcltk/gis.m/barscale.tcl:202 ../gui/tcltk/gis.m/dtext.tcl:224
+#: ../gui/tcltk/gis.m/gridline.tcl:185 ../gui/tcltk/gis.m/histogram.tcl:175
+#: ../gui/tcltk/gis.m/legend.tcl:232 ../gui/tcltk/gis.m/maptext.tcl:180
+#: ../gui/tcltk/gis.m/rastnums.tcl:177
 msgid "select font for text"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:206
+#: ../gui/tcltk/gis.m/barscale.tcl:209
 #, fuzzy
 msgid "\tbackground color "
 msgstr "\tcouleur de fond"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:209 ../gui/tcltk/gis.m/histogram.tcl:183
+#: ../gui/tcltk/gis.m/barscale.tcl:212 ../gui/tcltk/gis.m/histogram.tcl:187
 msgid "transparent background"
 msgstr "fond transparent"
 
-#: ../gui/tcltk/gis.m/barscale.tcl:217
+#: ../gui/tcltk/gis.m/barscale.tcl:220
 msgid "display N. arrow only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:235
+#: ../gui/tcltk/gis.m/barscale.tcl:238
 msgid "line scale instead of bar"
 msgstr ""
 
@@ -2554,43 +2528,43 @@ msgstr ""
 msgid "\tchart outline color:"
 msgstr "\tcouleur de contour du diagramme :"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:154
+#: ../gui/tcltk/gis.m/dtext.tcl:157
 #, fuzzy
 msgid "Display text"
 msgstr "Affichage :"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:171
+#: ../gui/tcltk/gis.m/dtext.tcl:174
 #, fuzzy
 msgid "Text to display: "
 msgstr "Couche vecteur pour laquelle produire un diagramme"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:183 ../gui/tcltk/gis.m/maptext.tcl:140
+#: ../gui/tcltk/gis.m/dtext.tcl:186 ../gui/tcltk/gis.m/maptext.tcl:140
 msgid "Text placement: x,y coordinates (from upper left) "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:189 ../gui/tcltk/gis.m/maptext.tcl:147
+#: ../gui/tcltk/gis.m/dtext.tcl:192 ../gui/tcltk/gis.m/maptext.tcl:147
 #, fuzzy
 msgid "     coordinate type for text placement "
 msgstr "\ttype vecteur"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:200 ../gui/tcltk/gis.m/maptext.tcl:158
+#: ../gui/tcltk/gis.m/dtext.tcl:203 ../gui/tcltk/gis.m/maptext.tcl:158
 msgid "     align text with coordinate point  "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:209
+#: ../gui/tcltk/gis.m/dtext.tcl:212
 msgid "     text rotation (degrees)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:218
+#: ../gui/tcltk/gis.m/dtext.tcl:221
 #, fuzzy
 msgid "Text options: font "
 msgstr "Options du texte : couleur"
 
-#: ../gui/tcltk/gis.m/dtext.tcl:232
+#: ../gui/tcltk/gis.m/dtext.tcl:235
 msgid "     text height in pixels "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:234
+#: ../gui/tcltk/gis.m/dtext.tcl:237
 msgid "  line spacing"
 msgstr ""
 
@@ -2694,7 +2668,7 @@ msgstr ""
 msgid "Start georectifying"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/georect.tcl:694 ../gui/tcltk/gis.m/gm.tcl:530
+#: ../gui/tcltk/gis.m/georect.tcl:694 ../gui/tcltk/gis.m/gm.tcl:541
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:839 ../gui/tcltk/gis.m/rules.tcl:172
 #: ../lib/gtcltk/select.tcl:181 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:369 ../lib/init/file_option.tcl:114
@@ -2795,83 +2769,82 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:92 ../gui/tcltk/gis.m/maptool.tcl:107
 msgid "Zoom In"
-msgstr "Zoomer"
+msgstr "Zoom avant"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:111 ../gui/tcltk/gis.m/maptool.tcl:126
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Zoomer"
+msgstr "Zoom arrière"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:130 ../gui/tcltk/gis.m/maptool.tcl:145
 #: ../vector/v.digit/toolbox.tcl:189
 msgid "Pan"
-msgstr "Panner"
+msgstr "Déplacement"
 
 #: ../gui/tcltk/gis.m/georecttool.tcl:151
 msgid "Zoom to map"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:263
+#: ../gui/tcltk/gis.m/gm.tcl:264
 msgid "Creating MainFrame..."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:305
+#: ../gui/tcltk/gis.m/gm.tcl:306
 #, fuzzy
 msgid "Welcome to GRASS GIS"
 msgstr "Bienvenue dans GRASS GIS Versionne"
 
-#: ../gui/tcltk/gis.m/gm.tcl:338
+#: ../gui/tcltk/gis.m/gm.tcl:339
 #, fuzzy, tcl-format
 msgid "Map Display %d"
 msgstr "Affichage :"
 
-#: ../gui/tcltk/gis.m/gm.tcl:363
+#: ../gui/tcltk/gis.m/gm.tcl:364
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr "GRASS%s Gestionnaire SIG - %s"
 
-#: ../gui/tcltk/gis.m/gm.tcl:435 ../gui/tcltk/gis.m/gm.tcl:465
+#: ../gui/tcltk/gis.m/gm.tcl:436 ../gui/tcltk/gis.m/gm.tcl:466
 msgid "Map Resource File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:436 ../gui/tcltk/gis.m/gm.tcl:467
+#: ../gui/tcltk/gis.m/gm.tcl:437 ../gui/tcltk/gis.m/gm.tcl:468
 #, fuzzy
 msgid "All Files"
 msgstr "Fichier couleur :"
 
-#: ../gui/tcltk/gis.m/gm.tcl:440
+#: ../gui/tcltk/gis.m/gm.tcl:441
 #, fuzzy
 msgid "Open File"
 msgstr "Ouvrir fichier..."
 
-#: ../gui/tcltk/gis.m/gm.tcl:466
+#: ../gui/tcltk/gis.m/gm.tcl:467
 msgid "DM Resource File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:470 ../lib/gis/gui.tcl:219
-#, fuzzy
+#: ../gui/tcltk/gis.m/gm.tcl:471 ../lib/gis/gui.tcl:219
 msgid "Save File"
-msgstr "Sauvegarder le fichier groupe"
+msgstr "Sauvegarder le fichier"
 
-#: ../gui/tcltk/gis.m/gm.tcl:487
-msgid "Select default font for GRASS displays"
-msgstr ""
+#: ../gui/tcltk/gis.m/gm.tcl:489
+#, fuzzy
+msgid "Select GRASS display font"
+msgstr "Démarrer/sélectionner un moniteur x0"
 
-#: ../gui/tcltk/gis.m/gm.tcl:494
+#: ../gui/tcltk/gis.m/gm.tcl:496
 #, fuzzy
 msgid "Font: "
 msgstr "Police :"
 
-#: ../gui/tcltk/gis.m/gm.tcl:520
+#: ../gui/tcltk/gis.m/gm.tcl:531
 msgid "Character encoding: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:527 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../gui/tcltk/gis.m/gm.tcl:538 ../gui/tcltk/gis.m/rules.tcl:170
 #: ../lib/init/epsg_option.tcl:366 ../vector/v.digit/settings.tcl:160
 msgid "OK"
 msgstr "OK"
 
-#: ../gui/tcltk/gis.m/gm.tcl:603
+#: ../gui/tcltk/gis.m/gm.tcl:617
 #, fuzzy, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr "GRASS%s Gestionnaire SIG - %s"
@@ -4043,62 +4016,82 @@ msgstr ""
 msgid "You can digitize raster or vector maps only"
 msgstr "Imprimer les couches raster & vecteur dans un fichier eps"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:133
+#: ../gui/tcltk/gis.m/gridline.tcl:138
 msgid "Display grid lines, and geodesic lines or rhumblines"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:150
+#: ../gui/tcltk/gis.m/gridline.tcl:155
 #, fuzzy
 msgid "Grid options: "
 msgstr "Options du texte : couleur"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:152
+#: ../gui/tcltk/gis.m/gridline.tcl:157
 msgid "geodetic grid  "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:163
+#: ../gui/tcltk/gis.m/gridline.tcl:159
 #, fuzzy
-msgid "   grid & text color "
-msgstr " couleur de grille\t"
+msgid "grid color "
+msgstr " couleur de grille "
 
-#: ../gui/tcltk/gis.m/gridline.tcl:165
-#, fuzzy
-msgid "  grid text font "
-msgstr " couleur de grille\t"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:177
-#, fuzzy
-msgid "draw border text  "
-msgstr "tracer la bordure de texte"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:179
-#, fuzzy
-msgid " border color"
-msgstr "couleur de texte et bordure"
-
-#: ../gui/tcltk/gis.m/gridline.tcl:185
+#: ../gui/tcltk/gis.m/gridline.tcl:170
 msgid "    grid size (map units)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:187
+#: ../gui/tcltk/gis.m/gridline.tcl:172
 msgid " grid origin (east, north)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:193
+#: ../gui/tcltk/gis.m/gridline.tcl:180
+#, fuzzy
+msgid "draw border text "
+msgstr "tracer la bordure de texte"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:182
+#, fuzzy
+msgid "text color "
+msgstr "couleur de texte"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:187
+#, fuzzy
+msgid "text font "
+msgstr "Fermer groupe"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:188
+#, fuzzy
+msgid "  text size"
+msgstr " taille de texte"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:190
+#, fuzzy
+msgid "Grid text size in points"
+msgstr "Digitaliser un nouveau pont"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:197
+#, fuzzy
+msgid "draw grid border "
+msgstr "tracer la bordure de grille"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:199
+#, fuzzy
+msgid "border color "
+msgstr "couleur de texte et bordure"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:204
 msgid "Geodesic and rhumblines for latlong locations only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:206 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:217 ../gui/tcltk/gis.m/gridline.tcl:244
 #, fuzzy
 msgid " line color"
 msgstr "couleur de ligne"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:210
+#: ../gui/tcltk/gis.m/gridline.tcl:221
 #, fuzzy
 msgid " text color"
 msgstr "couleur de texte"
 
-#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:242
+#: ../gui/tcltk/gis.m/gridline.tcl:230 ../gui/tcltk/gis.m/gridline.tcl:253
 msgid "     line endpoints (x1,y1,x2,y2)"
 msgstr ""
 
@@ -4112,39 +4105,39 @@ msgstr "Couche raster"
 msgid "histogram of %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:132
+#: ../gui/tcltk/gis.m/histogram.tcl:136
 msgid "Draw histogram of values from raster map or image"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:149
+#: ../gui/tcltk/gis.m/histogram.tcl:153
 #, fuzzy
 msgid "Raster to histogram: "
 msgstr "Couche raster"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:165
+#: ../gui/tcltk/gis.m/histogram.tcl:169
 msgid "Graph style"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:168
+#: ../gui/tcltk/gis.m/histogram.tcl:172
 #, fuzzy
 msgid "\ttext font "
 msgstr "Fermer groupe"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:178
+#: ../gui/tcltk/gis.m/histogram.tcl:182
 #, fuzzy
 msgid "Histogram color: text & frame"
 msgstr "couleur de texte et bordure"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:180
+#: ../gui/tcltk/gis.m/histogram.tcl:184
 #, fuzzy
 msgid "  background"
 msgstr "Couleur de fond"
 
-#: ../gui/tcltk/gis.m/histogram.tcl:190
+#: ../gui/tcltk/gis.m/histogram.tcl:194
 msgid "Steps/bins for values (fp maps only)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:194
+#: ../gui/tcltk/gis.m/histogram.tcl:198
 msgid "include null values"
 msgstr "inclure les valeurs null"
 
@@ -4183,118 +4176,118 @@ msgstr ""
 msgid "v.label"
 msgstr "v.label"
 
-#: ../gui/tcltk/gis.m/legend.tcl:143
+#: ../gui/tcltk/gis.m/legend.tcl:147
 #, fuzzy
 msgid "Raster map for legend"
 msgstr "Couche raster"
 
-#: ../gui/tcltk/gis.m/legend.tcl:146
+#: ../gui/tcltk/gis.m/legend.tcl:150
 #, tcl-format
 msgid "legend for %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:159
+#: ../gui/tcltk/gis.m/legend.tcl:163
 msgid "Display legend for raster map using cat values and labels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:176
+#: ../gui/tcltk/gis.m/legend.tcl:180
 #, fuzzy
 msgid "Raster map: "
 msgstr "Couche raster"
 
-#: ../gui/tcltk/gis.m/legend.tcl:193
+#: ../gui/tcltk/gis.m/legend.tcl:197
 #, tcl-format
 msgid "Legend placement and size as 0-100% of display"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:199
+#: ../gui/tcltk/gis.m/legend.tcl:203
 #, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:210
+#: ../gui/tcltk/gis.m/legend.tcl:214
 msgid "    legend height "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:212
+#: ../gui/tcltk/gis.m/legend.tcl:216
 #, tcl-format
 msgid "Legend height (% of display)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:213
+#: ../gui/tcltk/gis.m/legend.tcl:217
 #, fuzzy
 msgid "%  width"
 msgstr "largeur :"
 
-#: ../gui/tcltk/gis.m/legend.tcl:215
+#: ../gui/tcltk/gis.m/legend.tcl:219
 #, tcl-format
 msgid "Legend width (% of display)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:222
+#: ../gui/tcltk/gis.m/legend.tcl:226
 msgid "Legend appearance: text color"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:226
+#: ../gui/tcltk/gis.m/legend.tcl:230
 #, fuzzy
 msgid "  legend text font "
 msgstr "     "
 
-#: ../gui/tcltk/gis.m/legend.tcl:237
+#: ../gui/tcltk/gis.m/legend.tcl:241
 #, fuzzy
 msgid "do not display labels"
 msgstr "ne pas afficher les valeurs"
 
-#: ../gui/tcltk/gis.m/legend.tcl:239
+#: ../gui/tcltk/gis.m/legend.tcl:243
 msgid "do not display values"
 msgstr "ne pas afficher les valeurs"
 
-#: ../gui/tcltk/gis.m/legend.tcl:246
+#: ../gui/tcltk/gis.m/legend.tcl:250
 msgid "    number of lines (0=display all):"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:248
+#: ../gui/tcltk/gis.m/legend.tcl:252
 #, fuzzy
 msgid "Lines to display"
 msgstr "Couche vecteur pour laquelle produire un diagramme"
 
-#: ../gui/tcltk/gis.m/legend.tcl:250
+#: ../gui/tcltk/gis.m/legend.tcl:254
 msgid "invert legend"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:257
+#: ../gui/tcltk/gis.m/legend.tcl:261
 msgid "    interval between categories (integer maps)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:259
+#: ../gui/tcltk/gis.m/legend.tcl:263
 msgid "Thinning interval"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:266
+#: ../gui/tcltk/gis.m/legend.tcl:270
 msgid "draw smooth gradient (fp maps)"
 msgstr "tracer en gradient lisse (couches en fp)"
 
-#: ../gui/tcltk/gis.m/legend.tcl:268
+#: ../gui/tcltk/gis.m/legend.tcl:272
 msgid "with maximum of"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:270
+#: ../gui/tcltk/gis.m/legend.tcl:274
 msgid "Maximum lines to display for gradient"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:277
+#: ../gui/tcltk/gis.m/legend.tcl:281
 msgid "Display legend for subset of raster values"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:284
+#: ../gui/tcltk/gis.m/legend.tcl:288
 msgid "skip categories with no labels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:291
+#: ../gui/tcltk/gis.m/legend.tcl:295
 msgid "    legend for only these categories     "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:298
+#: ../gui/tcltk/gis.m/legend.tcl:302
 msgid "    legend for only this range of values"
 msgstr ""
 
@@ -4580,7 +4573,7 @@ msgstr "Fermer groupe"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:181 ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom to saved region"
-msgstr ""
+msgstr "Zoom sur la région sauvegardée"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:184
 #, fuzzy
@@ -4593,7 +4586,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/maptool.tcl:190 ../vector/v.digit/toolbox.tcl:194
 msgid "Zoom to default region"
-msgstr ""
+msgstr "Zoom sur la région par défaut"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
 msgid "Set current region (WIND file) to match display"
@@ -4813,38 +4806,38 @@ msgstr ""
 msgid "cell values for %s"
 msgstr "Ajouter une couche de valeurs de cellules"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:127
+#: ../gui/tcltk/gis.m/rastnums.tcl:131
 msgid "Display cell values from raster map or image"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:133
+#: ../gui/tcltk/gis.m/rastnums.tcl:137
 msgid "  (resolution must be 100x100 or less)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:149
+#: ../gui/tcltk/gis.m/rastnums.tcl:153
 #, fuzzy
 msgid "Raster to display: "
 msgstr "Couche vecteur pour laquelle produire un diagramme"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:165
+#: ../gui/tcltk/gis.m/rastnums.tcl:169
 msgid "Color for cell grid:       "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:170
+#: ../gui/tcltk/gis.m/rastnums.tcl:174
 #, fuzzy
 msgid "  cell values font "
 msgstr "Ajouter une couche de valeurs de cellules"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:180
+#: ../gui/tcltk/gis.m/rastnums.tcl:184
 #, fuzzy
 msgid "Color for cell values:   "
 msgstr "utiliser des couleurs du raster pour les valeurs de cellules"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:185
+#: ../gui/tcltk/gis.m/rastnums.tcl:189
 msgid "use raster colors for cell values"
 msgstr "utiliser des couleurs du raster pour les valeurs de cellules"
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:266
+#: ../gui/tcltk/gis.m/rastnums.tcl:270
 msgid ""
 "Cell values can only be displayed\n"
 "for regions of < 10,000 cells"
@@ -4947,7 +4940,7 @@ msgstr "Echantillonner des couches rasters"
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:107 ../lib/gis/gui.tcl:488
 msgid "Run"
-msgstr ""
+msgstr "Exécuter"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:108
 #, fuzzy
@@ -4989,10 +4982,12 @@ msgstr "Travailler avec des points vecteurs"
 #: ../gui/tcltk/gis.m/thematic.tcl:208
 msgid "Display vector maps thematically by graduate colors (all types)"
 msgstr ""
+"Affiche des cartes vecteur par thèmes via des couleurs graduelles (tous "
+"types)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:214
 msgid "  or by graduated sizes (points and lines)"
-msgstr ""
+msgstr " ou par tailles graduées (points et lignes)"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:234
 msgid "vector for thematic mapping"
@@ -5026,7 +5021,7 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/thematic.tcl:317
 msgid "Graduated points & lines: "
-msgstr ""
+msgstr "Points et lignes gradués"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:331
 msgid "    size/min size (graduated pts/lines)"
@@ -5209,9 +5204,8 @@ msgid " or <"
 msgstr ""
 
 #: ../lib/gis/gui.tcl:221
-#, fuzzy
 msgid "Load File"
-msgstr "Charger"
+msgstr "Charger le fichier"
 
 #: ../lib/gis/gui.tcl:340
 msgid "Options"
@@ -5231,7 +5225,7 @@ msgstr "multiple"
 
 #: ../lib/gtcltk/select.tcl:80
 msgid "Select item"
-msgstr ""
+msgstr "Sélectionner un item"
 
 #: ../lib/gtcltk/select.tcl:180
 msgid "Ok"
@@ -5239,7 +5233,7 @@ msgstr "Ok"
 
 #: ../lib/init/epsg_option.tcl:93
 msgid "WARNING: cant get enviromental variable"
-msgstr ""
+msgstr "ATTENTION : impossible d'accéder à la variable d'environnement"
 
 #: ../lib/init/epsg_option.tcl:94
 msgid ""
@@ -5248,28 +5242,27 @@ msgid ""
 "Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
 "EPSG file. "
 msgstr ""
+"Attention : impossible d'accéder à la variable d'environnement "
+"GRASS_PROJSHARE.\n"
+"Il s'agit d'une erreur d'installation de GRASS.\n"
+"Fixer la variable d'environnement GRASS_PROJSHARE pour qu'elle pointe vers "
+"le répertoire contenant le fichier EPSG Proj4."
 
 #: ../lib/init/epsg_option.tcl:103
 msgid "Define location using EPSG projection codes"
-msgstr ""
+msgstr "Définir le secteur à partir de codes de projection EPSG"
 
 #: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:92
 msgid "Name of new location"
-msgstr "Nom du nouveau Secteur"
+msgstr "Nom du nouveau secteur"
 
 #: ../lib/init/epsg_option.tcl:125 ../lib/init/file_option.tcl:95
-#, fuzzy
 msgid "Enter name of location to be created"
-msgstr ""
-"\n"
-"\n"
+msgstr "Entrer le nom du secteur à créer"
 
 #: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
-#, fuzzy
 msgid "Path to the EPSG-codes file"
-msgstr ""
-"\n"
-"\n"
+msgstr "Chemin vers le fichier de codes EPSG"
 
 #: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
 #: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:251
@@ -5277,46 +5270,45 @@ msgid "Browse..."
 msgstr "Parcourir..."
 
 #: ../lib/init/epsg_option.tcl:136
-#, fuzzy
 msgid "Browse to locate EPSG file"
-msgstr "Sauvegarder l'affichage dans un fichier image"
+msgstr "Naviguer pour localiser le fichier EPSG"
 
 #: ../lib/init/epsg_option.tcl:143
 msgid "EPSG code number of projection"
-msgstr ""
+msgstr "Code EPSG de la projection"
 
 #: ../lib/init/epsg_option.tcl:146
 msgid "Enter EPSG code for selected projection"
-msgstr ""
+msgstr "Entrer le code EPSG de la projection sélectionnée"
 
 #: ../lib/init/epsg_option.tcl:149
 msgid "View EPSG codes and projection information."
-msgstr ""
+msgstr "Voir les codes EPSG et les informations de projection."
 
 #: ../lib/init/epsg_option.tcl:155
 msgid "WARNING: epsg-codes file not found"
-msgstr ""
+msgstr "ATTENTION : fichier de codes EPSG introuvable"
 
 #: ../lib/init/epsg_option.tcl:156
 msgid "WARNING: The epsg-codes file was not found!"
-msgstr ""
+msgstr "ATTENTION : le fichier de codes EPSG est introuvable !"
 
 #: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:111
-#, fuzzy
 msgid "Define location"
-msgstr "Nom du nouveau Secteur"
+msgstr "Définir le secteur"
 
 #: ../lib/init/epsg_option.tcl:187
 msgid ""
 "WARNING: Please supply a\n"
 "valid EPSG code (integer)"
 msgstr ""
+"ATTENTION : merci de fournir un\n"
+"code EPSG valide (nombre entier)"
 
 #: ../lib/init/epsg_option.tcl:320 ../lib/init/file_option.tcl:241
 #: ../lib/init/file_option.tcl:262
-#, fuzzy
 msgid "WARNING: Error creating new location"
-msgstr "Nom du nouveau Secteur"
+msgstr "ATTENTION : erreur lors de la création du nouveau secteur"
 
 #: ../lib/init/epsg_option.tcl:321
 #, tcl-format
@@ -5326,26 +5318,35 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Erreur lors de la création du secteur à partir d'un code EPSG. g.proj a "
+"renvoyé le message suivant :\n"
+"\n"
+"%s"
 
 #: ../lib/init/epsg_option.tcl:342
+#, fuzzy
 msgid "Select datum transform"
-msgstr ""
+msgstr "Sélectionner un datum"
 
 #: ../lib/init/epsg_option.tcl:359
+#, fuzzy
 msgid "Datum transform number: "
-msgstr ""
+msgstr "Numéro de datum :"
 
 #: ../lib/init/epsg_option.tcl:362
+#, fuzzy
 msgid "Enter number of datum transform selected"
-msgstr ""
+msgstr "Entrer le numéro du datum sélectionné"
 
 #: ../lib/init/epsg_option.tcl:399
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
 msgstr ""
+"Vous pouvez sélectionner un code EPSG (entre <chevrons>) et le copier pour "
+"un usage ultérieur."
 
 #: ../lib/init/epsg_option.tcl:436
 msgid "GUESS THAT IS NOT THE EPSG FILE"
-msgstr ""
+msgstr "ÇA N'EST SANS DOUTE PAS LE FICHIER EPSG"
 
 #: ../lib/init/epsg_option.tcl:442 ../lib/init/epsg_option.tcl:472
 #: ../lib/init/epsg_option.tcl:491
@@ -5353,61 +5354,56 @@ msgid "Search"
 msgstr "Chercher"
 
 #: ../lib/init/epsg_option.tcl:445
-#, fuzzy
 msgid "Grab code"
-msgstr "tracer la bordure"
+msgstr "Capter le code"
 
 #: ../lib/init/epsg_option.tcl:478
-#, fuzzy
 msgid "Search text: "
-msgstr "Chercher"
+msgstr "Rechercher le texte :"
 
 #: ../lib/init/epsg_option.tcl:479
 msgid "Search for entered text in EPSG file"
-msgstr ""
+msgstr "Rechercher le texte dans le fichier EPSG"
 
 #: ../lib/init/epsg_option.tcl:484
 msgid "forward search"
-msgstr ""
+msgstr "recherche vers l'avant"
 
 #: ../lib/init/epsg_option.tcl:485
 msgid "backward search"
-msgstr ""
+msgstr "recherche vers l'arrière"
 
 #: ../lib/init/file_option.tcl:72
 msgid "Define location using projection information in georeferenced file"
 msgstr ""
+"Définir le secteur à partir des informations de projection d'un fichier "
+"géoréférencé"
 
 #: ../lib/init/file_option.tcl:99
-#, fuzzy
 msgid "Path to georeferenced file"
-msgstr ""
-"\n"
-"\n"
+msgstr "Chemin vers le fichier géoréférencé"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
 msgstr ""
+"Chemin vers le fichier géoréférencé (le format doit être lisible par GDAL/"
+"OGR)"
 
 #: ../lib/init/file_option.tcl:106
-#, fuzzy
 msgid "Browse to locate georeferenced file"
-msgstr ""
-"\n"
-"\n"
+msgstr "Naviguer pour localiser le fichier géoréférencé"
 
 #: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
-#, fuzzy
 msgid "Choose georeferenced file"
-msgstr ""
-"\n"
-"\n"
+msgstr "Choisir le fichier géoréférencé"
 
 #: ../lib/init/file_option.tcl:152
 msgid ""
 "WARNING: Please supply a\n"
 "valid georeferenced file"
 msgstr ""
+"ATTENTION : merci de fournir\n"
+"un fichier géoréférencé valide"
 
 #: ../lib/init/file_option.tcl:242 ../lib/init/file_option.tcl:263
 #, tcl-format
@@ -5417,10 +5413,14 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Erreur lors de la création du nouveau secteur à partir d'un fichier "
+"géoréférencé. g.proj a renvoyé le message suivant :\n"
+"\n"
+"%s"
 
 #: ../lib/init/gis_set.tcl:117
 msgid "WARNING: can not save"
-msgstr ""
+msgstr "ATTENTION : impossible de sauvegarder"
 
 #: ../lib/init/gis_set.tcl:118
 #, tcl-format
@@ -5428,28 +5428,32 @@ msgid ""
 "Warning: unable to save data to <%s> file.\n"
 "Error message: %s"
 msgstr ""
+"Attention : impossible de sauvegarder les données dans le fichier <%s>.\n"
+"Message d'erreur : %s"
 
 #: ../lib/init/gis_set.tcl:139 ../lib/init/gis_set.tcl:387
 #: ../lib/init/gis_set.tcl:491 ../lib/init/gis_set.tcl:612
 #: ../lib/init/gis_set.tcl:633 ../lib/init/gis_set.tcl:651
 #: ../lib/init/gis_set.tcl:680
 msgid "WARNING: invalid location"
-msgstr ""
+msgstr "ATTENTION secteur non valide"
 
 #: ../lib/init/gis_set.tcl:140
-#, tcl-format
+#, fuzzy, tcl-format
 msgid ""
 "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
 msgstr ""
+"Attention : le secteur <%s> de la géodatabase <%s> n'est pas un répertoire "
+"ou n'existe pas."
 
 #: ../lib/init/gis_set.tcl:185
 #, tcl-format
 msgid "GRASS %s Startup"
-msgstr ""
+msgstr "Démarrage de GRASS %s"
 
 #: ../lib/init/gis_set.tcl:208
 msgid "Welcome to GRASS GIS Version"
-msgstr "Bienvenue dans GRASS GIS Versionne"
+msgstr "Bienvenue dans GRASS GIS Version"
 
 #: ../lib/init/gis_set.tcl:210
 msgid ""
@@ -5461,47 +5465,53 @@ msgstr ""
 
 #: ../lib/init/gis_set.tcl:211
 msgid "Select an existing project location and mapset\n"
-msgstr ""
+msgstr "Sélectionnez un secteur et un jeu de cartes existants\n"
 
 #: ../lib/init/gis_set.tcl:212
-#, fuzzy
 msgid "or define a new location\n"
-msgstr "Nom du nouveau Secteur"
+msgstr "ou définissez un nouveau secteur\n"
 
 #: ../lib/init/gis_set.tcl:236
 msgid "GIS Data Directory: "
-msgstr ""
+msgstr "Répertoire de données SIG :"
 
 #: ../lib/init/gis_set.tcl:253
 msgid "New GIS data directory"
-msgstr ""
+msgstr "Nouveau répertoire de données SIG"
 
 #: ../lib/init/gis_set.tcl:277
 msgid ""
 "Project Location\n"
 "(projection/coordinate system)"
 msgstr ""
+"Secteur de projet\n"
+"(projection/système de coordonnées)"
 
 #: ../lib/init/gis_set.tcl:311
 msgid ""
 "Accessible Mapsets\n"
 "(directories of GIS files)"
 msgstr ""
+"Jeux de cartes accessibles\n"
+"(répertoires de fichiers SIG)"
 
 #: ../lib/init/gis_set.tcl:366
-#, fuzzy
 msgid ""
 "Create new mapset\n"
 "in selected location"
-msgstr "dans le Secteur courant"
+msgstr ""
+"Créer un nouveau jeu de cartes dans le\n"
+"secteur sélectionné"
 
 #: ../lib/init/gis_set.tcl:374
 msgid "Create new mapset"
 msgstr ""
+"Créer un nouveau\n"
+"jeu de cartes"
 
 #: ../lib/init/gis_set.tcl:379
 msgid "WARNING: invalid mapset name"
-msgstr ""
+msgstr "ATTENTION : nom de jeu de cartes non valide"
 
 #: ../lib/init/gis_set.tcl:380
 #, tcl-format
@@ -5510,6 +5520,9 @@ msgid ""
 "New mapset is NOT created. \n"
 "Choose different mapset name and try again."
 msgstr ""
+"Attention : le jeu de cartes nommé <%s> existe déjà. \n"
+"Le nouveau jeu de cartes n'a PAS été créé. \n"
+"Réessayer avec un nom différent."
 
 #: ../lib/init/gis_set.tcl:388
 #, tcl-format
@@ -5518,10 +5531,13 @@ msgid ""
 " New mapset is NOT created. \n"
 " Select valid location and try again."
 msgstr ""
+"Attention : le secteur <%s> n'est pas valide. \n"
+" Le nouveau jeu de cartes n'a PAS été créé.\n"
+" Réessayer avec un secteur valide."
 
 #: ../lib/init/gis_set.tcl:395
 msgid "WARNING: unable to mkdir"
-msgstr ""
+msgstr "ATTENTION : impossible d'exécuter mkdir"
 
 #: ../lib/init/gis_set.tcl:396
 #, tcl-format
@@ -5529,27 +5545,25 @@ msgid ""
 "Warning: Unable to create directory for new mapset. \n"
 "Error message: %s"
 msgstr ""
+"Attention : Impossible de créer le répertoire pour le nouveau jeu de "
+"cartes.\n"
+"Message d'erreur : %s"
 
 #: ../lib/init/gis_set.tcl:422
-#, fuzzy
 msgid "Define new location with..."
-msgstr "Nom du nouveau Secteur"
+msgstr "Définir un nouveau secteur à partir..."
 
 #: ../lib/init/gis_set.tcl:426
-#, fuzzy
 msgid "Georeferenced file"
-msgstr ""
-"\n"
-"\n"
+msgstr "d'un fichier géoréférencé"
 
 #: ../lib/init/gis_set.tcl:438
 msgid "EPSG codes"
-msgstr ""
+msgstr "d'un code EPSG"
 
 #: ../lib/init/gis_set.tcl:450
-#, fuzzy
 msgid "Projection values"
-msgstr "Utiliser des valeurs de projection"
+msgstr "de valeurs de projection"
 
 #: ../lib/init/gis_set.tcl:487
 msgid "Enter GRASS"
@@ -5561,32 +5575,35 @@ msgid ""
 "Warning: selected location <%s> is not valid. \n"
 " Select valid location and try again."
 msgstr ""
+"Attention : le secteur <%s> n'est pas valide.\n"
+" Réessayer avec un secteur valide."
 
 #: ../lib/init/gis_set.tcl:497 ../lib/init/gis_set.tcl:657
 msgid "WARNING: invalid mapset"
-msgstr ""
+msgstr "ATTENTION : jeu de cartes non valide"
 
 #: ../lib/init/gis_set.tcl:498
 #, tcl-format
 msgid "Warning: <%s> is not a valid mapset"
-msgstr ""
+msgstr "Attention : <%s> n'est pas un jeu de cartes valide"
 
 #: ../lib/init/gis_set.tcl:519
 msgid "Help already opened"
-msgstr ""
+msgstr "Aide déjà ouverte"
 
 #: ../lib/init/gis_set.tcl:532
-#, fuzzy
 msgid "Exit"
-msgstr "Sortir &x"
+msgstr "Quitter"
 
 #: ../lib/init/gis_set.tcl:564
 msgid "WARNING: Invalid Database"
-msgstr ""
+msgstr "ATTENTION : base de données non valide"
 
 #: ../lib/init/gis_set.tcl:565
 msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
 msgstr ""
+"ATTENTION : base de données non valide. Recherche d'un répertoire valide "
+"dans l'arborescence supérieure"
 
 #: ../lib/init/gis_set.tcl:613 ../lib/init/gis_set.tcl:634
 #: ../lib/init/gis_set.tcl:652 ../lib/init/gis_set.tcl:681
@@ -5595,15 +5612,17 @@ msgid ""
 "Warning: selected location <%%s> is not valid. \n"
 " Select valid location and try again."
 msgstr ""
+"Attention : le secteur <%%s> n'est pas valide.\n"
+" Réessayer avec un secteur valide."
 
 #: ../lib/init/gis_set.tcl:658
 #, tcl-format
 msgid "Warning: <%%s> is not a valid mapset"
-msgstr ""
+msgstr "Attention : <%%s> n'est pas un jeu de cartes valide"
 
 #: ../lib/init/gis_set.tcl:751
 msgid "WARNING: change directory failed"
-msgstr ""
+msgstr "ATTENTION : le changement de répertoire a échoué"
 
 #: ../lib/init/gis_set.tcl:752
 #, tcl-format
@@ -5611,26 +5630,31 @@ msgid ""
 "Warning: could not change directory to <%s>.\n"
 "Check directory permissions."
 msgstr ""
+"Attention : impossible de passer au répertoire <%s>.\n"
+"Vérifier les droits du répertoire."
 
 #: ../vector/v.digit/cats.tcl:34
+#, fuzzy
 msgid "Categories already opened"
-msgstr ""
+msgstr "Catégories déjà ouvertes"
 
 #: ../vector/v.digit/cats.tcl:42
+#, fuzzy
 msgid "Categories"
-msgstr ""
+msgstr "Catégories"
 
 #: ../vector/v.digit/cats.tcl:53
 msgid "Layer:"
-msgstr "Couche :"
+msgstr "Couche :"
 
 #: ../vector/v.digit/cats.tcl:55
+#, fuzzy
 msgid "   Category:"
-msgstr ""
+msgstr "   Catégorie :"
 
 #: ../vector/v.digit/cats.tcl:62
 msgid "Insert new record to table"
-msgstr ""
+msgstr "insérer un nouvel enregistrement dans la table"
 
 #: ../vector/v.digit/cats.tcl:63
 msgid "Add new"
@@ -5638,24 +5662,24 @@ msgstr "Ajouter nouveau"
 
 #: ../vector/v.digit/settings.tcl:63
 msgid "Add new column"
-msgstr "Ajouter nouveau champ"
+msgstr "Ajouter un nouveau champ"
 
 #: ../vector/v.digit/settings.tcl:66
-#, fuzzy
 msgid "Create table"
-msgstr "Copier la table"
+msgstr "Créer une table"
 
 #: ../vector/v.digit/settings.tcl:99
 msgid "Add command"
 msgstr "Ajouter une commande"
 
 #: ../vector/v.digit/settings.tcl:135
+#, fuzzy
 msgid "Table successfully created"
-msgstr ""
+msgstr "Table créée"
 
 #: ../vector/v.digit/settings.tcl:151
 msgid "Settings already opened"
-msgstr ""
+msgstr "Réglages déjà ouverts"
 
 #: ../vector/v.digit/settings.tcl:169
 msgid "Symbology"
@@ -5663,11 +5687,11 @@ msgstr "Symbologie"
 
 #: ../vector/v.digit/settings.tcl:173 ../vector/v.digit/settings.tcl:326
 msgid "Background"
-msgstr "Couleur de fond"
+msgstr "Fond"
 
 #: ../vector/v.digit/settings.tcl:180
 msgid "Highlight"
-msgstr "Mise en valeur"
+msgstr "Mise en surbrillance"
 
 #: ../vector/v.digit/settings.tcl:187
 msgid "Point"
@@ -5679,56 +5703,55 @@ msgstr "Ligne"
 
 #: ../vector/v.digit/settings.tcl:205
 msgid "Boundary (no area)"
-msgstr ""
+msgstr "Contour (pas de surface)"
 
 #: ../vector/v.digit/settings.tcl:213
 msgid "Boundary (1 area)"
-msgstr ""
+msgstr "Contour (1 surface)"
 
 #: ../vector/v.digit/settings.tcl:221
 msgid "Boundary (2 areas)"
-msgstr ""
+msgstr "Contour (2 surfaces)"
 
 #: ../vector/v.digit/settings.tcl:230
 msgid "Centroid (in area)"
-msgstr ""
+msgstr "Centroïde (dans une surface)"
 
 #: ../vector/v.digit/settings.tcl:238
 msgid "Centroid (outside area)"
-msgstr ""
+msgstr "Centroïde (hors d'une surface)"
 
 #: ../vector/v.digit/settings.tcl:246
 msgid "Centroid (duplicate in area)"
-msgstr ""
+msgstr "Centroïde (multiple dans une surface)"
 
 #: ../vector/v.digit/settings.tcl:255
 msgid "Node (1 line)"
-msgstr "Noeud (1 ligne)"
+msgstr "Nœud (1 ligne)"
 
 #: ../vector/v.digit/settings.tcl:263
 msgid "Node (2 lines)"
-msgstr "Noeud (2 lignes)"
+msgstr "Nœud (2 lignes)"
 
 #: ../vector/v.digit/settings.tcl:273
 msgid "Settings"
-msgstr ""
+msgstr "Réglages"
 
 #: ../vector/v.digit/settings.tcl:278
 msgid "Snapping threshold in screen pixels"
-msgstr ""
+msgstr "Seuil de capture en pixels"
 
 #: ../vector/v.digit/settings.tcl:288
 msgid "Snapping threshold in map units"
-msgstr ""
+msgstr "Seuil de capture en unités cartographiques"
 
 #: ../vector/v.digit/settings.tcl:305
-#, fuzzy
 msgid "Line width in screen pixels"
-msgstr "Largeur de ligne (pixels)"
+msgstr "Largeur de ligne en pixels"
 
 #: ../vector/v.digit/settings.tcl:307
 msgid "Set line width in pixels"
-msgstr ""
+msgstr "Fixer la largeur de ligne en pixels"
 
 #: ../vector/v.digit/settings.tcl:315
 msgid "Table"
@@ -5736,108 +5759,102 @@ msgstr "Table"
 
 #: ../vector/v.digit/toolbox.tcl:19
 msgid "Welcome to v.digit"
-msgstr "Bienvenu dans v.digit"
+msgstr "Bienvenue dans v.digit"
 
 #: ../vector/v.digit/toolbox.tcl:20
-#, fuzzy
 msgid "Left button"
-msgstr "Bouton gauche de la souris"
+msgstr "Bouton gauche"
 
 #: ../vector/v.digit/toolbox.tcl:21
-#, fuzzy
 msgid "Middle button"
-msgstr "Bouton du milieu de la souris"
+msgstr "Bouton du milieu"
 
 #: ../vector/v.digit/toolbox.tcl:22
-#, fuzzy
 msgid "Right button"
-msgstr "Bouton droit de la souris"
+msgstr "Bouton droit"
 
 #: ../vector/v.digit/toolbox.tcl:75
-#, fuzzy
 msgid "  Layer"
-msgstr "Couche"
+msgstr "  Couche"
 
 #: ../vector/v.digit/toolbox.tcl:79
 msgid "  Category"
-msgstr ""
+msgstr "  Catégorie"
 
 #: ../vector/v.digit/toolbox.tcl:83
-#, fuzzy
 msgid "  Mode "
-msgstr "Mode"
+msgstr "  Mode "
 
 #: ../vector/v.digit/toolbox.tcl:95
 msgid "Insert new record into table"
-msgstr ""
+msgstr "insérer un nouvel enregistrement dans la table"
 
 #: ../vector/v.digit/toolbox.tcl:112
 msgid "Digitize new point"
-msgstr ""
+msgstr "Digitaliser un nouveau pont"
 
 #: ../vector/v.digit/toolbox.tcl:117
 msgid "Digitize new line"
-msgstr ""
+msgstr "Digitaliser une nouvelle ligne"
 
 #: ../vector/v.digit/toolbox.tcl:122
-#, fuzzy
 msgid "Digitize new boundary"
-msgstr "Editer la ligne/le contour"
+msgstr "Digitaliser un nouveau contour"
 
 #: ../vector/v.digit/toolbox.tcl:127
 msgid "Digitize new centroid"
-msgstr ""
+msgstr "Digitaliser un nouveau centroïde"
 
 #: ../vector/v.digit/toolbox.tcl:133
-#, fuzzy
 msgid "Move vertex"
-msgstr "Supprimer un sommet"
+msgstr "Déplacer un vertex"
 
 #: ../vector/v.digit/toolbox.tcl:138
 msgid "Add vertex"
-msgstr "Ajouter un sommet"
+msgstr "Ajouter un vertex"
 
 #: ../vector/v.digit/toolbox.tcl:143
 msgid "Remove vertex"
-msgstr "Supprimer un sommet"
+msgstr "Supprimer un vertex"
 
 #: ../vector/v.digit/toolbox.tcl:148
 msgid "Split line"
-msgstr "Interrompre la ligne"
+msgstr "Scinder une ligne"
 
 #: ../vector/v.digit/toolbox.tcl:153
 msgid "Edit line/boundary"
-msgstr "Editer la ligne/le contour"
+msgstr "Éditer une ligne / un contour"
 
 #: ../vector/v.digit/toolbox.tcl:158
 msgid "Move point, line, boundary, or centroid"
-msgstr ""
+msgstr "Déplacer un point, une ligne, un contour, ou un centroïde"
 
 #: ../vector/v.digit/toolbox.tcl:163
 msgid "Delete point, line, boundary, or centroid"
-msgstr ""
+msgstr "Supprimer un point, une ligne, un contour, ou un centroïde"
 
 #: ../vector/v.digit/toolbox.tcl:174
 msgid "Redraw"
-msgstr "Retracer"
+msgstr "Redessiner"
 
 #: ../vector/v.digit/toolbox.tcl:179
+#, fuzzy
 msgid "Zoom in by window"
-msgstr ""
+msgstr "Zoom avant cadré"
 
 #: ../vector/v.digit/toolbox.tcl:184
-#, fuzzy
 msgid "Zoom out"
-msgstr "Zoomer"
+msgstr "Zoom arrière"
 
 #: ../vector/v.digit/toolbox.tcl:213
 #, fuzzy
 msgid "Display categories"
-msgstr "Afficher les attributs"
+msgstr "Afficher les catégories"
 
 #: ../vector/v.digit/toolbox.tcl:218
+#, fuzzy
 msgid "Copy categories"
-msgstr ""
+msgstr "Copier les catégories"
 
 #: ../vector/v.digit/toolbox.tcl:223
 msgid "Display attributes"
@@ -5845,7 +5862,7 @@ msgstr "Afficher les attributs"
 
 #: ../vector/v.digit/toolbox.tcl:235
 msgid "Open settings"
-msgstr ""
+msgstr "Ouvrir les réglages"
 
 #: ../vector/v.digit/toolbox.tcl:241
 msgid "Save and exit"
@@ -5853,7 +5870,7 @@ msgstr "Sauvegarder et sortir"
 
 #: ../vector/v.digit/toolbox.tcl:252
 msgid "mouse button actions (left, middle, right)"
-msgstr ""
+msgstr "Actions des boutons de la souris (gauche, milieu, droit)"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 #, fuzzy
@@ -5861,834 +5878,9 @@ msgid "Test"
 msgstr "Texte"
 
 #, fuzzy
-#~ msgid "Convert vector lines to points"
-#~ msgstr "Travailler avec des points vecteurs"
+#~ msgid "   grid & text color "
+#~ msgstr " couleur de grille\t"
 
 #, fuzzy
-#~ msgid "GRASS"
-#~ msgstr "Aide GRASS"
-
-#, fuzzy
-#~ msgid "Other"
-#~ msgstr "ici"
-
-#, fuzzy
-#~ msgid "\tred (RGB) or hue (HIS):\t"
-#~ msgstr "rouge (RGB) ou teinte (HIS) :"
-
-#, fuzzy
-#~ msgid "\tgreen (RGB) or intensity (HIS):"
-#~ msgstr "rouge (RGB) ou teinte (HIS) :"
-
-#, fuzzy
-#~ msgid "\tblue (RGB) or saturation (HIS):"
-#~ msgstr "bleu (RGB) ou saturation (HIS) :"
-
-#, fuzzy
-#~ msgid "SVG file"
-#~ msgstr "Fichier PS :"
-
-#, fuzzy
-#~ msgid "Copy attribute table"
-#~ msgstr "Edition d'attributs (formulaire)"
-
-#, fuzzy
-#~ msgid "Remove existing attribute table for vector map"
-#~ msgstr "Couche raster"
-
-#, fuzzy
-#~ msgid "integer"
-#~ msgstr "Pointer"
-
-#, fuzzy
-#~ msgid "varchar"
-#~ msgstr "Chercher"
-
-#~ msgid "     chart outline color:"
-#~ msgstr "\tcouleur de contour des diagrammes :"
-
-#~ msgid "Path to new location"
-#~ msgstr "Chemin du nouveau Secteur"
-
-#~ msgid ""
-#~ " \n"
-#~ "CREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n"
-#~ "\n"
-#~ " "
-#~ msgstr ""
-#~ " \n"
-#~ "CREER UN NOUVEAU SECTEUR EN UTILISANT UN FICHIER GEOREFERENCE\n"
-#~ "\n"
-#~ " "
-
-#, fuzzy
-#~ msgid ""
-#~ "by GDAL or OGR, and GRASS must be compiled with GDAL and OGR.\n"
-#~ "\n"
-#~ msgstr "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "   Name of new location:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "   Nom du nouveau Secteur:\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "   Path to location:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "   Chemin du Secteur:\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "The folder (Grass database) in which the location should be created\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "   Path to georeferenced file:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Georeferenced file with projection information that can be read\n"
-#~ msgstr "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "by GDAL (raster) or OGR (vector)\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "avec GDAL (raster) ou OGR (vecteur)\n"
-#~ "\n"
-
-#~ msgid "dxf file"
-#~ msgstr "fichier dxf"
-
-#~ msgid "html-browser"
-#~ msgstr "Navigateur html"
-
-#~ msgid "Enter filename to save info text"
-#~ msgstr "Entrer le nom de fichier pour sauvegarder le texte d'info"
-
-#~ msgid "Scripting "
-#~ msgstr "Script"
-
-#~ msgid ""
-#~ "Left button:\trun command\n"
-#~ "Middle button:\tprint man page\n"
-#~ "Ctrl-Mid button:\tshow html page\n"
-#~ "Right button:\tprint usage"
-#~ msgstr ""
-#~ "Bouton gauche :\tlancer la commande\n"
-#~ "Bouton du milieu :\timprimer la page de manuel\n"
-#~ "Bouton du milieu-Ctrl :\tafficher la page html\n"
-#~ "Bouton droit :\tutilisation de l'impression"
-
-#~ msgid "Pick"
-#~ msgstr "Choisir"
-
-#~ msgid "Font family"
-#~ msgstr "Famille de police"
-
-#~ msgid "Size:"
-#~ msgstr "Taille :"
-
-#~ msgid "Weight:"
-#~ msgstr "Empatement :"
-
-#~ msgid "bold"
-#~ msgstr "gras"
-
-#~ msgid "roman"
-#~ msgstr "roman"
-
-#~ msgid "italic"
-#~ msgstr "italique"
-
-#~ msgid "CELL driver WIDTH"
-#~ msgstr "pilote CELL LARGEUR"
-
-#~ msgid "CELL driver HEIGHT"
-#~ msgstr "pilote CELL HAUTEUR"
-
-#~ msgid "Right button to KILL"
-#~ msgstr "Bouton droit pour TUER"
-
-#~ msgid "Continued ..."
-#~ msgstr "Poursuite..."
-
-#~ msgid "output"
-#~ msgstr "sortie"
-
-#~ msgid "CANCEL"
-#~ msgstr "ANNULER"
-
-#~ msgid "Do you want to start a script session?"
-#~ msgstr "Voulez-vous lancer une session de script?"
-
-#~ msgid "Enter filename to save script"
-#~ msgstr "Entrez un nom de fichier pour sauvegarder le script"
-
-#~ msgid "Scripting not running, start first"
-#~ msgstr "Pas de session de script en cours, lancez-la d'abord"
-
-#~ msgid "No filename, quitting"
-#~ msgstr "Pas de nom de fichier, fin"
-
-#~ msgid "is empty file"
-#~ msgstr "est un fichier vide"
-
-#~ msgid "is not a valid tcltkgrass script:"
-#~ msgstr "n'est pas un script tcltkgrass valide :"
-
-#~ msgid "invalid script file:"
-#~ msgstr "fichier script invalide :"
-
-#~ msgid "Script"
-#~ msgstr "Script"
-
-#~ msgid "for"
-#~ msgstr "pour"
-
-#~ msgid ""
-#~ "ist not running or not in your path or an other error occurred. Please "
-#~ "try starting"
-#~ msgstr ""
-#~ "n'est pas en cours, ou pas dans votre chemin ou une autre erreur s'est "
-#~ "produite. Veuillez recommencer"
-
-#~ msgid "first."
-#~ msgstr "d'abord."
-
-#~ msgid "Configure html-browser"
-#~ msgstr "Configurez le navigateur html"
-
-#~ msgid "html browser (netscape)"
-#~ msgstr "navigateur html (netscape)"
-
-#~ msgid "path or url for html manual pages"
-#~ msgstr "chemin ou url pour les pages de manuel html"
-
-#~ msgid "postfix for html files (.html)"
-#~ msgstr "extension pour fichier html (.html)"
-
-#~ msgid "auto raise window of browser"
-#~ msgstr "lancer automatiquement la fenêtre du navigateur"
-
-#~ msgid "auto raise   "
-#~ msgstr "auto-lancement"
-
-#~ msgid "no auto raise"
-#~ msgstr "pas d'auto-lancement"
-
-#~ msgid "Location:"
-#~ msgstr "Secteur :"
-
-#~ msgid "About"
-#~ msgstr "A propos"
-
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.0\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bienvenue dans GRASS GIS Version 5.0\n"
-#~ "\n"
-
-#~ msgid "Location"
-#~ msgstr "Secteur"
-
-#~ msgid "Vectors"
-#~ msgstr "Vecteurs"
-
-#~ msgid "Current:"
-#~ msgstr "Courant:"
-
-#~ msgid "Color"
-#~ msgstr "Couleur"
-
-#~ msgid "Draw Current"
-#~ msgstr "Tracer conf courante"
-
-#~ msgid "Display on surface(s):"
-#~ msgstr "Affichage de surface(s):"
-
-#~ msgid "Mkdspf"
-#~ msgstr "Mkdspf"
-
-#~ msgid "Output File:"
-#~ msgstr "Fichier en sortie :"
-
-#~ msgid "flat"
-#~ msgstr "plat"
-
-#~ msgid "gradient"
-#~ msgstr "gradient"
-
-#~ msgid "Accept"
-#~ msgstr "Accepter"
-
-#~ msgid "Threshold Type"
-#~ msgstr "Type de seuillage"
-
-#~ msgid "Interval Size:"
-#~ msgstr "Taille d'intervalle :"
-
-#~ msgid "Min:"
-#~ msgstr "Min :"
-
-#~ msgid "Max:"
-#~ msgstr "Max :"
-
-#~ msgid "Num. Levels:"
-#~ msgstr "Nombre de niveaux :"
-
-#~ msgid "Interpolation"
-#~ msgstr "Interpolation"
-
-#~ msgid "logarithmic"
-#~ msgstr "logarithmique"
-
-#~ msgid "Arbitrary"
-#~ msgstr "Arbitraire"
-
-#~ msgid "Iso Levels"
-#~ msgstr "Iso Levels"
-
-#~ msgid "Add"
-#~ msgstr "Ajouter"
-
-#~ msgid "Range"
-#~ msgstr "Intervalle"
-
-#~ msgid "Individual"
-#~ msgstr "Individuel"
-
-#~ msgid "Pipe to: None"
-#~ msgstr "Flux pipe vers : aucun"
-
-#~ msgid "What's Here?"
-#~ msgstr "Qu'y a-t-il ici?"
-
-#~ msgid "Attributes"
-#~ msgstr "Attributs"
-
-#~ msgid "Xcol:"
-#~ msgstr "Xcol :"
-
-#~ msgid "Ycol:"
-#~ msgstr "Ycol :"
-
-#~ msgid "PG table:"
-#~ msgstr "Table PG :"
-
-#~ msgid "Key col:"
-#~ msgstr "col clef :"
-
-#~ msgid "sites"
-#~ msgstr "sites"
-
-#~ msgid "Pipe to: "
-#~ msgstr "Flux pipe vers :"
-
-#~ msgid "easting: "
-#~ msgstr "X :"
-
-#~ msgid "northing: "
-#~ msgstr "Y :"
-
-#~ msgid "Topo: "
-#~ msgstr "Topo :"
-
-#~ msgid "constant"
-#~ msgstr "constante"
-
-#~ msgid "distance along surface:      "
-#~ msgstr "distance le long de la surface"
-
-#~ msgid "Point not on surface"
-#~ msgstr "Point pas sur la surface"
-
-#~ msgid "Postgres: "
-#~ msgstr "Postgres :"
-
-#~ msgid "xy distance from previous:  "
-#~ msgstr "distance xy depuis précédent :"
-
-#~ msgid "xyz distance from previous:  "
-#~ msgstr "distance xyz depuis précédent :"
-
-#~ msgid "distance along exag. surface: "
-#~ msgstr "distance le long de la surface exag."
-
-#~ msgid "Solid"
-#~ msgstr "Plein"
-
-#~ msgid "Cube"
-#~ msgstr "Cube"
-
-#~ msgid "NW"
-#~ msgstr "NW"
-
-#~ msgid "NE"
-#~ msgstr "NE"
-
-#~ msgid "SW"
-#~ msgstr "SW"
-
-#~ msgid "SE"
-#~ msgstr "SE"
-
-#~ msgid "<- elev ->"
-#~ msgstr "<- alti ->"
-
-#~ msgid "Auto"
-#~ msgstr "Auto"
-
-#~ msgid "Remove"
-#~ msgstr "Enlever"
-
-#~ msgid "MAPSETS"
-#~ msgstr "JEUX DE DONNEES"
-
-#~ msgid "FILES"
-#~ msgstr "FICHIERS"
-
-#~ msgid "Map Type:"
-#~ msgstr "Type de couches :"
-
-#~ msgid "Sites"
-#~ msgstr "Sites"
-
-#~ msgid "use X"
-#~ msgstr "utiliser X"
-
-#~ msgid "use sphere"
-#~ msgstr "utiliser rond"
-
-#~ msgid "use diamond"
-#~ msgstr "utiliser losange"
-
-#~ msgid "3D Sites"
-#~ msgstr "Sites 3D"
-
-#~ msgid "show vect"
-#~ msgstr "montrer vect"
-
-#~ msgid "show site"
-#~ msgstr "montrer site"
-
-#~ msgid "spline -->"
-#~ msgstr "spline -->"
-
-#~ msgid "Dismiss"
-#~ msgstr "Annuler"
-
-#~ msgid "Internal Error"
-#~ msgstr "Erreur interne"
-
-#~ msgid "Replace Key"
-#~ msgstr "Remplacer l'index"
-
-#~ msgid "ras_fname"
-#~ msgstr "ras_fname"
-
-#~ msgid "Iris RGB"
-#~ msgstr "RVB Iris"
-
-#~ msgid "E"
-#~ msgstr "E"
-
-#~ msgid "W"
-#~ msgstr "W"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "None"
-#~ msgstr "Aucun"
-
-#~ msgid "Auto:"
-#~ msgstr "Auto :"
-
-#~ msgid "Draw"
-#~ msgstr "Tracer"
-
-#~ msgid "Surface"
-#~ msgstr "Surface"
-
-#~ msgid "DRAW"
-#~ msgstr "TRACER"
-
-#~ msgid "LOOK"
-#~ msgstr "REGARDER"
-
-#~ msgid "top"
-#~ msgstr "haut"
-
-#~ msgid "cancel"
-#~ msgstr "annuler"
-
-#~ msgid "perspective"
-#~ msgstr "perspective"
-
-#~ msgid "RESET"
-#~ msgstr "ANNULER"
-
-#~ msgid "height"
-#~ msgstr "hauteur"
-
-#~ msgid "New Key Time:"
-#~ msgstr "Nouveau temps index :"
-
-#~ msgid "FromX"
-#~ msgstr "A partir de X"
-
-#~ msgid "FromY"
-#~ msgstr "A partir de Y"
-
-#~ msgid "FromZ"
-#~ msgstr "A partir de Z"
-
-#~ msgid "FOV"
-#~ msgstr "FOV"
-
-#~ msgid "TWIST"
-#~ msgstr "TORSION"
-
-#~ msgid "On"
-#~ msgstr "Marche"
-
-#~ msgid "New Key Time"
-#~ msgstr "Nouveau temps index"
-
-#~ msgid "Minute:"
-#~ msgstr "Minute :"
-
-#~ msgid "Second:"
-#~ msgstr "Seconde :"
-
-#~ msgid "KeyTime Error"
-#~ msgstr "Erreur de temps index"
-
-#~ msgid "Internal Error - Can't find channel"
-#~ msgstr "Erreur interne - impossible de trouver le canal"
-
-#~ msgid "keyanimtag"
-#~ msgstr "keyanimtag"
-
-#~ msgid "No Anim Error"
-#~ msgstr "Erreur pas d'anim"
-
-#~ msgid "File Error"
-#~ msgstr "Erreur fichier"
-
-#~ msgid "for reading"
-#~ msgstr "pour lecture"
-
-#~ msgid "Blank"
-#~ msgstr "Vide"
-
-#~ msgid "Use Surface Color"
-#~ msgstr "Utiliser la couleur de surface"
-
-#~ msgid "Red"
-#~ msgstr "Rouge"
-
-#~ msgid "Green"
-#~ msgstr "Vert"
-
-#~ msgid "DIRECTORIES"
-#~ msgstr "REPERTOIRES"
-
-#~ msgid "CURRENT:"
-#~ msgstr "COURANT :"
-
-#~ msgid "File Browser"
-#~ msgstr "Explorateur de fichier"
-
-#~ msgid "Lights"
-#~ msgstr "Eclairage"
-
-#~ msgid "Follow ViewPoint"
-#~ msgstr "Suivre le point de vue"
-
-#~ msgid "Brightness"
-#~ msgstr "Brillant"
-
-#~ msgid "Height"
-#~ msgstr "Hauteur"
-
-#~ msgid "Raster"
-#~ msgstr "Raster"
-
-#~ msgid "Site"
-#~ msgstr "Site"
-
-#~ msgid "3d.view"
-#~ msgstr "Vue.3d"
-
-#~ msgid "Surfaces"
-#~ msgstr "Surfaces"
-
-#~ msgid "Current Surface Only"
-#~ msgstr "Surface courante seulement"
-
-#~ msgid "All Surfaces"
-#~ msgstr "Toutes les surfaces"
-
-#~ msgid "Surface Style:"
-#~ msgstr "Style de surface :"
-
-#~ msgid "Polygon"
-#~ msgstr "Polygones"
-
-#~ msgid "Shading:"
-#~ msgstr "Ombrage :"
-
-#~ msgid "Flat"
-#~ msgstr "Plat"
-
-#~ msgid "Gouraud"
-#~ msgstr "Gouraud"
-
-#~ msgid "Position"
-#~ msgstr "Position"
-
-#~ msgid "Position Surface"
-#~ msgstr "Position de surface"
-
-#~ msgid "Attribute"
-#~ msgstr "Attribut"
-
-#~ msgid "Change Attribute"
-#~ msgstr "Modifier attribut"
-
-#~ msgid "Change Attribute:"
-#~ msgstr "Modifier attribut :"
-
-#~ msgid "New Map"
-#~ msgstr "Nouvelle couche"
-
-#~ msgid "Remove Mask"
-#~ msgstr "Enlever le Masque"
-
-#~ msgid "Invert Mask"
-#~ msgstr "Inverser le Masque"
-
-#~ msgid "New Constant"
-#~ msgstr "Nouvelle constante"
-
-#~ msgid "Status: "
-#~ msgstr "Statut :"
-
-#~ msgid "color:"
-#~ msgstr "couleur :"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "G"
-#~ msgstr "V"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "Surface Color"
-#~ msgstr "couleur de surface"
-
-#~ msgid "b"
-#~ msgstr "b"
-
-#~ msgid "new_const"
-#~ msgstr "new_const"
-
-#~ msgid "Enter a constant value :"
-#~ msgstr "Entrer une valeur constante :"
-
-#~ msgid "Label"
-#~ msgstr "Etiquette"
-
-#~ msgid "Font Size:"
-#~ msgstr "Taille de police :"
-
-#~ msgid "Italic"
-#~ msgstr "Italique"
-
-#~ msgid "Bold"
-#~ msgstr "Gras"
-
-#~ msgid "Invert"
-#~ msgstr "Inverser"
-
-#~ msgid "Low:"
-#~ msgstr "Bas :"
-
-#~ msgid "Hi:"
-#~ msgstr "Haut :"
-
-#~ msgid "Use List"
-#~ msgstr "Utiliser une liste"
-
-#~ msgid "Current List"
-#~ msgstr "Liste courante"
-
-#~ msgid "  Label Sites  "
-#~ msgstr "Etiquette de sites"
-
-#~ msgid "cat_list"
-#~ msgstr "cat_list"
-
-#~ msgid "Cutting Planes"
-#~ msgstr "Coupe de plans"
-
-#~ msgid "All Off"
-#~ msgstr "Tout désactivé"
-
-#~ msgid "Plane 0"
-#~ msgstr "Plan 0"
-
-#~ msgid "TP"
-#~ msgstr "TP"
-
-#~ msgid "BP"
-#~ msgstr "BP"
-
-#~ msgid "BL"
-#~ msgstr "BL"
-
-#~ msgid "GR"
-#~ msgstr "GR"
-
-#~ msgid "NP"
-#~ msgstr "NP"
-
-#~ msgid "Rotate"
-#~ msgstr "Rotation"
-
-#~ msgid ""
-#~ "Welcome to GRASS GIS Version 5.7\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bienvenue dans GRASS GIS Version 5.7\n"
-#~ "\n"
-
-#~ msgid "Contents"
-#~ msgstr "Contenu"
-
-#~ msgid "Decrease"
-#~ msgstr "Diminuer"
-
-#~ msgid "Find"
-#~ msgstr "Trouver"
-
-#~ msgid "Forward"
-#~ msgstr "Suivant"
-
-#~ msgid "Increase"
-#~ msgstr "Augmenter"
-
-#~ msgid "Index"
-#~ msgstr "Index"
-
-#~ msgid "Open"
-#~ msgstr "Ouvrir"
-
-#~ msgid "Reload"
-#~ msgstr "Recharger"
-
-#~ msgid "Find..."
-#~ msgstr "Trouver..."
-
-#~ msgid "Search in topics..."
-#~ msgstr "Chercher dans les sujets..."
-
-#~ msgid "Increase font size"
-#~ msgstr "Augmenter la taille de police"
-
-#~ msgid "Decrease font size"
-#~ msgstr "Diminuer la taille de police"
-
-#~ msgid "Save as HTML files..."
-#~ msgstr "Sauvegarder comme fichiers HTML..."
-
-#~ msgid "Displaying..."
-#~ msgstr "Affichage..."
-
-#~ msgid "Done."
-#~ msgstr "Fait."
-
-#~ msgid "Can't open output file:"
-#~ msgstr "Impossible d'ouvrir le fichier de sortie :"
-
-#~ msgid "Search in all topics"
-#~ msgstr "Chercher dans tous les sujets"
-
-#~ msgid "Find what: "
-#~ msgstr "Trouver ceci :"
-
-#~ msgid "Direction"
-#~ msgstr "Direction"
-
-#~ msgid "Up"
-#~ msgstr "Haut"
-
-#~ msgid "Down"
-#~ msgstr "Bas"
-
-#~ msgid "Match case"
-#~ msgstr "Respecter la casse"
-
-#~ msgid "Searching in %s..."
-#~ msgstr "Recherche dans %s..."
-
-#~ msgid ""
-#~ "Error in regular expression:\n"
-#~ "\"%s\""
-#~ msgstr "\"%s\""
-
-#~ msgid "New location path"
-#~ msgstr "Chemin du nouveau Secteur"
-
-#~ msgid "Path to location : "
-#~ msgstr "Chemin du Secteur :"
-
-#~ msgid "Use EPSG values"
-#~ msgstr "Utiliser des codes EPSG"
-
-#~ msgid "GRASS Help"
-#~ msgstr "Aide GRASS"
-
-#~ msgid "list devices"
-#~ msgstr "lister les pilotes"
-
-#~ msgid "list ghostscript output devices"
-#~ msgstr "lister les pilotes de sortie ghostscript"
-
-#~ msgid "Strict Draw Mode"
-#~ msgstr "Mode Dessin strict"
-
-#~ msgid "Explore Draw Mode"
-#~ msgstr "Explorer le mode Dessin"
-
-#~ msgid "Show standard GRASS fonts"
-#~ msgstr "Afficher les polices GRASS standard"
-
-#~ msgid "Break lines at intersections"
-#~ msgstr "Interrompre les lignes aux intersections"
+#~ msgid "  grid text font "
+#~ msgstr " couleur de grille\t"
