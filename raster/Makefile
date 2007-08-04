@@ -45,6 +45,7 @@ SUBDIRS = \
 	r.mapcalc \
 	r.median \
 	r.mfilter \
+	r.mfilter.fp \
 	r.mode \
 	r.neighbors \
 	r.null \
