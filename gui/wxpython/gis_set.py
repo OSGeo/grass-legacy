@@ -8,6 +8,7 @@ import glob
 import shutil
 import wx.lib.rcsizer  as rcs
 import gui_modules.cmd as cmd
+import shutil
 
 def read_grassrc():
     """
@@ -61,8 +62,8 @@ class GRASSStartup(wx.Frame):
         self.llocation = wx.StaticText(self, -1, "Project Location\n(projection/coordinate system)", style=wx.ALIGN_CENTRE)
         self.lmapset = wx.StaticText(self, -1, "Accessible Mapsets\n(directories of GIS files)", style=wx.ALIGN_CENTRE)
         self.lcreate = wx.StaticText(self, -1, "Create new mapset\nin selected location", style=wx.ALIGN_CENTRE)
-        self.ldefine = wx.StaticText(self, -1, "Define new location...", style=wx.ALIGN_CENTRE)
-        self.lregion = wx.StaticText(self, -1, "Define default region...", style=wx.ALIGN_CENTRE)
+        self.ldefine = wx.StaticText(self, -1, "Define new location", style=wx.ALIGN_CENTRE)
+        self.lmanageloc = wx.StaticText(self, -1, "Manage location", style=wx.ALIGN_CENTRE)
 
         # buttons
         buttonsize1 = (150,-1)
@@ -74,11 +75,9 @@ class GRASSStartup(wx.Frame):
         self.bhelp = wx.Button(self, -1, "Help", size=buttonsize2)
         self.bbrowse = wx.Button(self, -1, "Browse ...", size=(-1,-1))
         self.bmapset = wx.Button(self, -1, "Create new mapset", size=buttonsize1)
-#        self.bgeoreferenced = wx.Button(self, -1, "Georeferenced file", size=buttonsize1)
-#        self.bepsg = wx.Button(self, -1, "EPSG codes", size=buttonsize1)
         self.bwizard = wx.Button(self, -1, "Location wizard", size=buttonsize1)
-        self.bregion = wx.Button(self, -1, "Define region", size=buttonsize1)
-
+        choicelist = ['Rename selected mapset','Rename selected location', 'Delete selected mapset', 'Delete selected location']
+        self.manageloc = wx.Choice(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choices=choicelist)
 
         # textinputs
         self.tgisdbase = wx.TextCtrl(self, -1, "", size=(300, 20),
@@ -108,7 +107,7 @@ class GRASSStartup(wx.Frame):
         self.bhelp.Bind(wx.EVT_BUTTON, self.OnHelp)
         self.bmapset.Bind(wx.EVT_BUTTON, self.OnCreateMapset)
         self.bwizard.Bind(wx.EVT_BUTTON, self.OnWizard)
-        self.bregion.Bind(wx.EVT_BUTTON, self.OnRegion)
+        self.manageloc.Bind(wx.EVT_CHOICE, self.OnManageLoc)
         self.lblocations.Bind(wx.EVT_LISTBOX, self.OnSelectLocation)
         self.lbmapsets.Bind(wx.EVT_LISTBOX, self.OnSelectMapset)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyPressedInDbase, self.tgisdbase)
@@ -169,8 +168,8 @@ class GRASSStartup(wx.Frame):
         mapset_sizer.Add(self.bmapset, 0, label_style|wx.BOTTOM, 10)
         mapset_sizer.Add(self.ldefine, 0, label_style|wx.RIGHT|wx.LEFT, 5)
         mapset_sizer.Add(self.bwizard, 0, label_style|wx.TOP|wx.BOTTOM, 5)
-        mapset_sizer.Add(self.lregion, 0, label_style|wx.TOP|wx.RIGHT|wx.LEFT, 5)
-        mapset_sizer.Add(self.bregion, 0, label_style|wx.TOP, 5)
+        mapset_sizer.Add(self.lmanageloc, 0, label_style|wx.TOP|wx.RIGHT|wx.LEFT, 5)
+        mapset_sizer.Add(self.manageloc, 0, label_style|wx.TOP|wx.RIGHT|wx.LEFT, 5)
         mapset_sizer.Add((5,0))
 
         grid_sizer.Add(self.llocation, 0,label_style|wx.ALL, 5)
@@ -246,13 +245,81 @@ class GRASSStartup(wx.Frame):
         if gWizard.location != None:
             self.OnSetDatabase(event)
             self.UpdateMapsets(os.path.join(
-                    self.gisbase,gWizard.location))
+                    self.gisdbase,gWizard.location))
             self.lblocations.SetSelection(self.listOfLocations.index(gWizard.location))
             self.lbmapsets.SetSelection(0)
 
-    def OnRegion(self,event):
-        defineRegion = RegionDef(self, location=self.listOfLocations[self.lblocations.GetSelection()])
-        defineRegion.Show()
+    def OnManageLoc(self,event):
+        if event.GetString() == 'Rename selected mapset':
+            self.RenameMapset()
+        elif event.GetString() == 'Rename selected location':
+            self.RenameLocation()
+        elif event.GetString() == 'Delete selected mapset':
+            self.DeleteMapset()
+        elif event.GetString() == 'Delete selected location':
+            self.DeleteLocation()
+
+    def RenameMapset(self):
+        location = location=self.listOfLocations[self.lblocations.GetSelection()]
+        mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
+        dlg = wx.TextEntryDialog(
+                self, 'Current name: %s\nEnter new name:' % mapset,
+                'Rename selected mapset')
+
+        if dlg.ShowModal() == wx.ID_OK:
+            newmapset = dlg.GetValue()
+            try:
+                os.rename(os.path.join(self.gisdbase,location,mapset),\
+                            os.path.join(self.gisdbase,location,newmapset))
+                self.OnSelectLocation(None)
+                self.lbmapsets.SetSelection(self.listOfMapsets.index(newmapset))
+            except:
+                wx.MessageBox('Mapset could not be renamed')
+
+        dlg.Destroy()
+
+    def RenameLocation(self):
+        location = location=self.listOfLocations[self.lblocations.GetSelection()]
+        dlg = wx.TextEntryDialog(
+                self, 'Current name: %s\nEnter new name:' % location,
+                'Rename selected location')
+
+        if dlg.ShowModal() == wx.ID_OK:
+            newlocation = dlg.GetValue()
+            mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
+            try:
+                os.rename(os.path.join(self.gisdbase,location),\
+                            os.path.join(self.gisdbase,newlocation))
+                self.UpdateLocations(self.gisdbase)
+                self.lblocations.SetSelection(self.listOfLocations.index(newlocation))
+
+            except:
+                wx.MessageBox('Location could not be renamed')
+
+        dlg.Destroy()
+
+    def DeleteMapset(self):
+        location = location=self.listOfLocations[self.lblocations.GetSelection()]
+        mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
+        dlg = wx.MessageDialog(self, "Do you want to continue with deleting the mapset?",
+                               "WARNING! Mapset '%s', and ALL MAPS it contains will be PERMANENTLY DELETED!"
+                               % mapset,wx.YES_NO|wx.NO_DEFAULT|wx.ICON_EXCLAMATION)
+        if dlg.ShowModal() == wx.ID_YES:
+            pass
+            #delete the mapset
+
+        dlg.Destroy()
+
+    def DeleteLocation(self):
+        location = location=self.listOfLocations[self.lblocations.GetSelection()]
+        dlg = wx.MessageDialog(self, "Do you want to continue with deleting the location?",
+                               "WARNING! Location '%s', and ALL MAPSETS and MAPS it contains will be PERMANENTLY DELETED!"
+                               % location,wx.YES_NO|wx.NO_DEFAULT|wx.ICON_EXCLAMATION)
+        if dlg.ShowModal() == wx.ID_YES:
+            pass
+            #delete the mapset
+
+        dlg.Destroy()
 
     def UpdateLocations(self,dbase):
 
@@ -280,7 +347,7 @@ class GRASSStartup(wx.Frame):
     def OnSelectLocation(self,event):
         if self.lblocations.GetSelection() > -1:
             self.UpdateMapsets(os.path.join(
-                    self.gisbase,self.listOfLocations[self.lblocations.GetSelection()]))
+                    self.gisdbase,self.listOfLocations[self.lblocations.GetSelection()]))
         else:
             self.listOfMapsets = []
         self.lbmapsets.Clear()
@@ -291,8 +358,8 @@ class GRASSStartup(wx.Frame):
         pass
 
     def OnSetDatabase(self,event):
-        self.gisbase = self.tgisdbase.GetValue()
-        self.UpdateLocations(self.gisbase)
+        self.gisdbase = self.tgisdbase.GetValue()
+        self.UpdateLocations(self.gisdbase)
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations,0)
         if self.listOfLocations != []: self.lblocations.SetSelection(0)
@@ -305,8 +372,8 @@ class GRASSStartup(wx.Frame):
         dlg = wx.DirDialog(self, "Choose a GRASS directory:",
                 style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dlg.ShowModal() == wx.ID_OK:
-            self.gisbase = dlg.GetPath()
-            self.tgisdbase.SetValue(self.gisbase)
+            self.gisdbase = dlg.GetPath()
+            self.tgisdbase.SetValue(self.gisdbase)
         dlg.Destroy()
 
         self.OnSetDatabase(event)
@@ -318,15 +385,15 @@ class GRASSStartup(wx.Frame):
             event.Skip()
 
     def OnCreateMapset(self,event):
-        self.gisbase = self.tgisdbase.GetValue()
+        self.gisdbase = self.tgisdbase.GetValue()
         location = self.listOfLocations[self.lblocations.GetSelection()]
 
         try:
             mapset = self.tnewmapset.GetValue()
-            os.mkdir(os.path.join(self.gisbase,location,mapset))
+            os.mkdir(os.path.join(self.gisdbase,location,mapset))
             # copy WIND file and its permissions from PERMANENT and set permissions to u+rw,go+r
-            shutil.copy(os.path.join(self.gisbase,location,'PERMANENT','WIND'),
-                        os.path.join(self.gisbase,location,mapset))
+            shutil.copy(os.path.join(self.gisdbase,location,'PERMANENT','WIND'),
+                        os.path.join(self.gisdbase,location,mapset))
 #            os.chmod(os.path.join(database,location,mapset,'WIND'), 0644)
             self.OnSelectLocation(None)
             self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
@@ -360,221 +427,6 @@ class GRASSStartup(wx.Frame):
     def onCloseWindow(self, event):
         print "exit"
         event.Skip()
-
-class RegionDef(wx.Frame):
-    """
-    Page for setting default region extents and resolution
-    """
-
-    def __init__(self,parent,id=wx.ID_ANY, title="Set default region values", location=None):
-        wx.Frame.__init__(self, parent, id, title, size=(650,300))
-
-        self.parent = parent
-        self.location = location
-
-        # inputs
-        self.ttop = self.MakeTextCtrl("1", size=(150, -1))
-        self.tbottom = self.MakeTextCtrl("0", size=(150, -1))
-        self.tleft = self.MakeTextCtrl("0", size=(150, -1))
-        self.tright = self.MakeTextCtrl("1", size=(150, -1))
-        self.tres = self.MakeTextCtrl("1", size=(150, -1))
-
-        self.north = 1.0
-        self.south = 0.0
-        self.east = 1.0
-        self.west = 0.0
-        self.res = 1.0
-
-        # labels
-        self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
-
-        # buttons
-        self.bset = self.MakeButton("Set coordinates", size=(150,-1))
-        self.bcancel = self.MakeButton("Cancel", size=(150,-1))
-
-        #Set current working environment to PERMANENT mapset in selected location in order to set default region (WIND)
-        envval = {}
-        cmdlist = ['g.gisenv']
-        p = cmd.Command(cmdlist)
-        if p.returncode == 0:
-            output = p.module_stdout.read().strip("'").split(';\n')
-            for line in output:
-                line = line.strip()
-                if '=' in line: key,val = line.split('=')
-                envval[key] = val
-            self.currlocation = envval['LOCATION_NAME'].strip("';")
-            self.currmapset = envval['MAPSET'].strip("';")
-            if self.currlocation == self.location and self.currmapset == 'PERMANENT':
-                pass
-            else:
-                cmdlist = ['g.mapset', 'location=%s' % self.location, 'mapset=PERMANENT']
-                cmd.Command(cmdlist)
-        else:
-            wx.MessageBox('A valid location must be selected')
-            return
-
-        #Get current region settings
-        region = {}
-        cmdlist = ['g.region', '-gp']
-        p = cmd.Command(cmdlist)
-        if p.returncode == 0:
-            output = p.module_stdout.read().split('\n')
-            for line in output:
-                line = line.strip()
-                if '=' in line: key,val = line.split('=')
-                region[key] = float(val)
-        else:
-            wx.MessageBox('Invalid region')
-            return
-
-        self.north = region['n']
-        self.south = region['s']
-        self.east = region['e']
-        self.west = region['w']
-        self.res = region['ewres']
-
-        # Insert current region settings into text controls
-        self.ttop.SetValue(str(self.north))
-        self.tbottom.SetValue(str(self.south))
-        self.tleft.SetValue(str(self.west))
-        self.tright.SetValue(str(self.east))
-        self.tres.SetValue(str(self.res))
-
-        # layout
-        self.sizer = rcs.RowColSizer()
-
-        self.sizer.Add(self.MakeLLabel("Region extents and resolution:"), 3,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 10, row=0,col=0, colspan=2)
-
-        self.sizer.Add(self.MakeRLabel("North"), 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 0, row=1,col=2)
-        self.sizer.Add(self.ttop, 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=2,col=2)
-
-        self.sizer.Add(self.MakeRLabel("West"), 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 0, row=3,col=0)
-        self.sizer.Add(self.tleft, 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5,  row=3,col=1)
-
-        self.sizer.Add(self.tright, 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5,  row=3,col=3)
-        self.sizer.Add(self.MakeRLabel("East"), 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 0, row=3,col=4)
-
-        self.sizer.Add(self.tbottom, 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=4,col=2)
-        self.sizer.Add(self.MakeRLabel("South"), 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 0, row=5,col=2)
-
-        self.sizer.Add(self.MakeRLabel("Resolution"), 0,
-                       wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=6,col=1)
-        self.sizer.Add(self.tres, 0,
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=6,col=2)
-
-        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
-
-        self.sizer.Add(self.bset, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=8, col=3 )
-
-        self.sizer.Add(self.bcancel, 0,
-                       wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALL, 5, row=8, col=1 )
-
-
-        self.SetSizer(self.sizer)
-        self.SetAutoLayout(True)
-        self.Layout()
-
-        self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
-        self.Bind(wx.EVT_BUTTON, self.OnCancel, self.bcancel)
-        self.Bind(wx.EVT_TEXT, self.OnNorth, self.ttop)
-        self.Bind(wx.EVT_TEXT, self.OnSouth, self.tbottom)
-        self.Bind(wx.EVT_TEXT, self.OnEast, self.tright)
-        self.Bind(wx.EVT_TEXT, self.OnWest, self.tleft)
-        self.Bind(wx.EVT_TEXT, self.OnRes, self.tres)
-
-    def MakeRLabel(self, text=""):
-        """Make right-aligned label"""
-        try:
-            if text[-1] != " ":
-                text += " "
-        except:
-            pass
-        return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
-
-    def MakeLLabel(self, text=""):
-        """Make left-aligned label"""
-        try:
-            if text[-1] != " ":
-                text += " "
-        except:
-            pass
-        return wx.StaticText(self, -1, text, style=wx.ALIGN_LEFT)
-
-    def MakeTextCtrl(self,text='', size=(100,-1)):
-        """Generic text control"""
-        return wx.TextCtrl(self,-1, text, size=size)
-
-    def MakeButton(self,text, size=(75,25)):
-        """Generic button"""
-        return wx.Button(self, -1, text,
-                style=wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL,
-                size=size)
-
-    def OnNorth(self,event):
-        self.north = event.GetString()
-
-    def OnSouth(self, event):
-        self.south = event.GetString()
-
-    def OnEast(self,event):
-        self.east = event.GetString()
-
-    def OnWest(self,event):
-        self.west = event.GetString()
-
-    def OnRes(self,event):
-        self.res = event.GetString()
-
-    def OnSetButton(self,event=None):
-        cmdlist = ['g.region', '-sgpa', 'n=%s' % self.north, 's=%s' % self.south, \
-                   'e=%s' % self.east, 'w=%s' % self.west, 'res=%s' % self.res]
-        p = cmd.Command(cmdlist)
-        if p.returncode == 0:
-            output = p.module_stdout.read()
-            wx.MessageBox('New default region:\n%s' % output)
-        else:
-            wx.MessageBox('Setting default region failed\n%s %s' % \
-                          (p.module_stderr.read(),p.module_stdout.read()))
-        self.Destroy()
-
-    def OnCancel(self, event):
-        self.Destroy()
 
 class StartUp(wx.App):
     def OnInit(self):
