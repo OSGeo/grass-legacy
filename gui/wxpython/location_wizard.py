@@ -13,6 +13,7 @@ CLASSES:
     * EPSGPage
     * CustomPage
     * SummaryPage
+    * RegionDef
     * GWizard
 
 PURPOSE:   Create a new GRASS location. User can choose from multiple methods
