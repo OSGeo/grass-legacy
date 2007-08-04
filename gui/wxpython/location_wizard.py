@@ -1087,7 +1087,9 @@ class SummaryPage(TitledPage):
         self.sizer.Add(self.MakeRLabel("Projection: "), 1, flag=wx.ALIGN_RIGHT|wx.ALL, border=5, row=5, col=0)
         self.sizer.Add(self.lprojection, 1, flag=wx.ALIGN_LEFT|wx.ALL, border=5, row=5, col=1)
         self.sizer.Add((10,20), 1, flag=wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, border=5, row=6, col=0)
-        self.sizer.Add(self.MakeLLabel("You can set the default extents and resolution after creating a new location"), \
+        self.sizer.Add(self.MakeLLabel("You can set the default extents and resolution after creating new location"), \
+                       1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
+        self.sizer.Add(self.MakeLLabel("or you can set them during a working session."), \
                        1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChange)
@@ -1137,6 +1139,221 @@ class SummaryPage(TitledPage):
             label = ('%s' % self.custompage.proj4string)
             self.lprojection.SetLabel(label)
 
+class RegionDef(wx.Frame):
+    """
+    Page for setting default region extents and resolution
+    """
+
+    def __init__(self,parent,id=wx.ID_ANY, title="Set default region values", location=None):
+        wx.Frame.__init__(self, parent, id, title, size=(650,300))
+
+        self.parent = parent
+        self.location = location
+
+        # inputs
+        self.ttop = self.MakeTextCtrl("1", size=(150, -1))
+        self.tbottom = self.MakeTextCtrl("0", size=(150, -1))
+        self.tleft = self.MakeTextCtrl("0", size=(150, -1))
+        self.tright = self.MakeTextCtrl("1", size=(150, -1))
+        self.tres = self.MakeTextCtrl("1", size=(150, -1))
+
+        self.north = 1.0
+        self.south = 0.0
+        self.east = 1.0
+        self.west = 0.0
+        self.res = 1.0
+
+        # labels
+        self.lmessage = wx.StaticText(self,-1, "", size=(300,50))
+
+        # buttons
+        self.bset = self.MakeButton("Set coordinates", size=(150,-1))
+        self.bcancel = self.MakeButton("Cancel", size=(150,-1))
+
+        #Set current working environment to PERMANENT mapset in selected location in order to set default region (WIND)
+        envval = {}
+        cmdlist = ['g.gisenv']
+        p = cmd.Command(cmdlist)
+        if p.returncode == 0:
+            output = p.module_stdout.read().strip("'").split(';\n')
+            for line in output:
+                line = line.strip()
+                if '=' in line: key,val = line.split('=')
+                envval[key] = val
+            self.currlocation = envval['LOCATION_NAME'].strip("';")
+            self.currmapset = envval['MAPSET'].strip("';")
+            if self.currlocation == self.location and self.currmapset == 'PERMANENT':
+                pass
+            else:
+                cmdlist = ['g.mapset', 'location=%s' % self.location, 'mapset=PERMANENT']
+                cmd.Command(cmdlist)
+        else:
+            wx.MessageBox('A valid location must be selected')
+            return
+
+        #Get current region settings
+        region = {}
+        cmdlist = ['g.region', '-gp']
+        p = cmd.Command(cmdlist)
+        if p.returncode == 0:
+            output = p.module_stdout.read().split('\n')
+            for line in output:
+                line = line.strip()
+                if '=' in line: key,val = line.split('=')
+                region[key] = float(val)
+        else:
+            wx.MessageBox('Invalid region')
+            return
+
+        self.north = region['n']
+        self.south = region['s']
+        self.east = region['e']
+        self.west = region['w']
+        self.res = region['ewres']
+
+        # Insert current region settings into text controls
+        self.ttop.SetValue(str(self.north))
+        self.tbottom.SetValue(str(self.south))
+        self.tleft.SetValue(str(self.west))
+        self.tright.SetValue(str(self.east))
+        self.tres.SetValue(str(self.res))
+
+        # layout
+        self.sizer = rcs.RowColSizer()
+
+        self.sizer.Add(self.MakeLLabel("Region extents and resolution:"), 3,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 10, row=0,col=0, colspan=2)
+
+        self.sizer.Add(self.MakeRLabel("North"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=1,col=2)
+        self.sizer.Add(self.ttop, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=2,col=2)
+
+        self.sizer.Add(self.MakeRLabel("West"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=0)
+        self.sizer.Add(self.tleft, 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=1)
+
+        self.sizer.Add(self.tright, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5,  row=3,col=3)
+        self.sizer.Add(self.MakeRLabel("East"), 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=3,col=4)
+
+        self.sizer.Add(self.tbottom, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=4,col=2)
+        self.sizer.Add(self.MakeRLabel("South"), 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 0, row=5,col=2)
+
+        self.sizer.Add(self.MakeRLabel("Resolution"), 0,
+                       wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=1)
+        self.sizer.Add(self.tres, 0,
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=6,col=2)
+
+        self.sizer.Add(wx.StaticLine(self, -1), 0, wx.EXPAND|wx.ALL, 0, row=7, col=0, colspan=6)
+
+        self.sizer.Add(self.bset, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=8, col=3 )
+
+        self.sizer.Add(self.bcancel, 0,
+                       wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALL, 5, row=8, col=1 )
+
+
+        self.SetSizer(self.sizer)
+        self.SetAutoLayout(True)
+        self.Layout()
+
+        self.Bind(wx.EVT_BUTTON, self.OnSetButton, self.bset)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, self.bcancel)
+        self.Bind(wx.EVT_TEXT, self.OnNorth, self.ttop)
+        self.Bind(wx.EVT_TEXT, self.OnSouth, self.tbottom)
+        self.Bind(wx.EVT_TEXT, self.OnEast, self.tright)
+        self.Bind(wx.EVT_TEXT, self.OnWest, self.tleft)
+        self.Bind(wx.EVT_TEXT, self.OnRes, self.tres)
+
+    def MakeRLabel(self, text=""):
+        """Make right-aligned label"""
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
+        return wx.StaticText(self, -1, text, style=wx.ALIGN_RIGHT)
+
+    def MakeLLabel(self, text=""):
+        """Make left-aligned label"""
+        try:
+            if text[-1] != " ":
+                text += " "
+        except:
+            pass
+        return wx.StaticText(self, -1, text, style=wx.ALIGN_LEFT)
+
+    def MakeTextCtrl(self,text='', size=(100,-1)):
+        """Generic text control"""
+        return wx.TextCtrl(self,-1, text, size=size)
+
+    def MakeButton(self,text, size=(75,25)):
+        """Generic button"""
+        return wx.Button(self, -1, text,
+                style=wx.ALIGN_CENTER_HORIZONTAL|wx.ALIGN_CENTER_VERTICAL,
+                size=size)
+
+    def OnNorth(self,event):
+        self.north = event.GetString()
+
+    def OnSouth(self, event):
+        self.south = event.GetString()
+
+    def OnEast(self,event):
+        self.east = event.GetString()
+
+    def OnWest(self,event):
+        self.west = event.GetString()
+
+    def OnRes(self,event):
+        self.res = event.GetString()
+
+    def OnSetButton(self,event=None):
+        cmdlist = ['g.region', '-sgpa', 'n=%s' % self.north, 's=%s' % self.south, \
+                   'e=%s' % self.east, 'w=%s' % self.west, 'res=%s' % self.res]
+        p = cmd.Command(cmdlist)
+        if p.returncode == 0:
+            output = p.module_stdout.read()
+            wx.MessageBox('New default region:\n%s' % output)
+        else:
+            wx.MessageBox('Setting default region failed\n%s %s' % \
+                          (p.module_stderr.read(),p.module_stdout.read()))
+        self.Destroy()
+
+    def OnCancel(self, event):
+        self.Destroy()
+
 class GWizard:
     """
     Start wizard here and finish wizard here
@@ -1148,7 +1365,7 @@ class GWizard:
         wizbmp = wizbmp.ConvertToBitmap()
 
         global coordsys
-
+        self.parent = parent
         # get georeferencing information from tables in $GISBASE/etc
 
         # make projections dictionary
@@ -1283,8 +1500,18 @@ class GWizard:
         if self.wizard.RunWizard(self.startpage):
             success = self.onWizFinished()
             if success == True:
-                wx.MessageBox("New location created.")
                 self.location = self.startpage.location
+                dlg = wx.MessageDialog(self.wizard,
+                                       "Do you want to set the default region extents and resolution now?",
+                                       "New location '%s' created"% self.location,
+                                       wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
+                if dlg.ShowModal() == wx.ID_YES:
+                    dlg.Destroy()
+                    defineRegion = RegionDef(None, location=self.location)
+                    defineRegion.Show()
+                else:
+                    dlg.Destroy()
+
             else:
                 wx.MessageBox("Unable to create new location.")
         else:
