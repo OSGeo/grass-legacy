@@ -1091,7 +1091,7 @@ class SummaryPage(TitledPage):
         self.sizer.Add(self.MakeLLabel("You can set the default extents and resolution after creating new location"), \
                        1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
         self.sizer.Add(self.MakeLLabel("or you can set them during a working session."), \
-                       1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=7, col=0, colspan=2)
+                       1, flag=wx.ALIGN_CENTRE|wx.ALL, border=5, row=8, col=0, colspan=2)
 
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChange)
 
@@ -1481,7 +1481,7 @@ class GWizard:
         self.ellipsepage.SetNext(self.sumpage)
 
         self.projpage.SetPrev(self.csystemspage)
-        self.projpage.SetNext(self.sumpage)
+        self.projpage.SetNext(self.projtypepage)
 
         self.epsgpage.SetPrev(self.csystemspage)
         self.epsgpage.SetNext(self.sumpage)
