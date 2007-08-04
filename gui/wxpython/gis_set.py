@@ -281,13 +281,13 @@ class GRASSStartup(wx.Frame):
         Location management choice control handler
         """
 
-        if event.GetString() == 'Rename selected mapset':
+        if event.GetString() == 'Rename mapset':
             self.RenameMapset()
-        elif event.GetString() == 'Rename selected location':
+        elif event.GetString() == 'Rename location':
             self.RenameLocation()
-        elif event.GetString() == 'Delete selected mapset':
+        elif event.GetString() == 'Delete mapset':
             self.DeleteMapset()
-        elif event.GetString() == 'Delete selected location':
+        elif event.GetString() == 'Delete location':
             self.DeleteLocation()
 
     def RenameMapset(self):
