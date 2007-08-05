@@ -178,8 +178,10 @@ int G_site_put_head ( FILE *ptr, Site_head *head)
     if (head->name!=NULL)
 	Vect_set_map_name (Map, head->name);
       
+/* crashes:
     if (head->desc!=NULL)
-	Vect_set_comment (Map, head->name);
+	Vect_set_comment (Map, head->desc);
+*/
 
     /*
     if (head->form!=NULL)
