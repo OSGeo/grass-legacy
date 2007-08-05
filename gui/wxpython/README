@@ -11,7 +11,9 @@ Requirements:
  Get wxPython 2.8.x packages from:
  * Debian: http://www.bitpim.org/developer.html -> "Install wxPython"
  * Fedora: 
- * Mandriva 2007: http://mpa.itc.it/markus/wxpython_rpms/
+ * Mandriva 2007.0: http://mpa.itc.it/markus/wxpython_rpms/
+ * Mandriva 2007.1 (spring): available from main/backports (see
+        http://club.mandriva.com/xwiki/bin/view/Downloads/MirrorFinder2 )
  * MS-Windows:
  * SuSe: 
  * Ubuntu: deb http://wxpython.wxcommunity.com/apt/ubuntu/dapper /
