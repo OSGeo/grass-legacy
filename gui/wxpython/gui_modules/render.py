@@ -102,7 +102,8 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        layertypes = ['raster','rgb','his','vector','thememap','themechart','grid','labels','command','overlay']
+        layertypes = ['raster','rgb','his','shaded','vector','thememap','themechart',\
+                      'grid','geodesic','rhumb','labels','command','overlay']
         if self.type in layertypes:
             self.__renderLayer()
         elif self.type == "wms":
