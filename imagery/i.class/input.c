@@ -14,7 +14,7 @@ static int mouse (Objects *,int,int,int);
 
 #define TEXT_COLOR BLACK
 #define FILL_COLOR GREY
-#define OUTLINE_COLOR WHITE
+#define OUTLINE_COLOR BLACK 
 
 /* Input: drive mouse. returns status of handler that returns != 0 */
 int 
@@ -164,7 +164,7 @@ static int draw_objects ( Objects *objects)
 		if (*obj->label == 0) break;
 		if (*obj->status < 0) break;
 		right = left + 2*edge + Text_width (obj->label);
-		R_standard_color (WHITE);
+		R_standard_color (BLACK);
 		Text (obj->label, top, bottom, left, right, edge);
 
 		left = right;
@@ -255,7 +255,7 @@ Menu_msg (char *msg)
     if (*msg)
     {
 	R_text_size (size, size);
-	R_standard_color (WHITE);
+	R_standard_color (BLACK);
 	Text (msg, VIEW_MENU->top, VIEW_MENU->bottom,
 		   VIEW_MENU->left, VIEW_MENU->right, edge);
     }

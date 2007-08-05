@@ -43,7 +43,7 @@ In_view (View *view, int x, int y)
 int 
 Erase_view (View *view)
 {
-    R_standard_color (BLACK);
+    R_standard_color (WHITE);
     R_box_abs (view->left, view->top, view->right, view->bottom);
 
     return 0;

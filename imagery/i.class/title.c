@@ -29,13 +29,13 @@ int display_title ( View *view)
     }
 
     Erase_view (title);
-    R_standard_color (WHITE);
+    R_standard_color (BLACK);
     size = title->nrows - 4;
     R_text_size (size, size);
     Text (left, title->top, title->bottom, title->left, title->right, 2);
     if (*center)
     {
-	R_standard_color (YELLOW);
+	R_standard_color (RED);
 	Text (center, title->top, title->bottom,
 		(title->left + title->right - Text_width (center)) / 2,
 		title->right, 2);

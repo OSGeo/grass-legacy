@@ -91,7 +91,7 @@ int histograms (int nbands, float *sum, float **product, int **histo,
   else
     scale = 0;
 
-  R_standard_color(YELLOW);
+  R_standard_color(BLACK);
 
   /* print header message */
   if (b_or_a == BEFORE_STD)
@@ -218,13 +218,13 @@ int histograms (int nbands, float *sum, float **product, int **histo,
 	  }
 	  R_move_abs(mp,bottom_adjusted);
 	  R_cont_abs(mp, top_adjusted);
-	  R_standard_color(YELLOW);
+	  R_standard_color(BLACK);
 	}
       R_font(NORMAL_FONT);
 
       h_top = h_bottom + 1;
     }
-  R_standard_color(WHITE);
+  R_standard_color(BLACK);
   R_text_size(3*NORMAL_TEXT_SIZE/4,NORMAL_TEXT_SIZE);
   R_set_window (SCREEN_TOP, SCREEN_BOTTOM, SCREEN_LEFT, SCREEN_RIGHT);
 
