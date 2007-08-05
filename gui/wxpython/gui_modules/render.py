@@ -102,7 +102,7 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        layertypes = ['raster','rgb','his','shaded','vector','thememap','themechart',\
+        layertypes = ['raster','rgb','his','shaded','rastarrow','vector','thememap','themechart',\
                       'grid','geodesic','rhumb','labels','command','overlay']
         if self.type in layertypes:
             self.__renderLayer()
