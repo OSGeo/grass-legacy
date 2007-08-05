@@ -516,6 +516,7 @@ class GMFrame(wx.Frame):
                  ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.AddCommand),
                  ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.AddGroup),
                  ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.OnOverlay),
+                 ('addlabels',  Icons["addlabels"].GetBitmap(),  Icons["addlabels"].GetLabel(), self.AddLabels),
                  ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.DeleteLayer),
                  ('', '', '', ''),
                  ('attrtable', Icons["attrtable"].GetBitmap(), Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
@@ -612,6 +613,11 @@ class GMFrame(wx.Frame):
         rastmenu.AppendItem(addrast)
         self.Bind(wx.EVT_MENU, self.AddRaster, addrast)
 
+        addshaded = wx.MenuItem(rastmenu, -1, Icons ["addshaded"].GetLabel())
+        addshaded.SetBitmap(Icons["addshaded"].GetBitmap (self.iconsize))
+        rastmenu.AppendItem(addshaded)
+        self.Bind(wx.EVT_MENU, self.AddShaded, addshaded)
+
         addrgb = wx.MenuItem(rastmenu, -1, Icons["addrgb"].GetLabel())
         addrgb.SetBitmap(Icons["addrgb"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrgb)
@@ -671,16 +677,20 @@ class GMFrame(wx.Frame):
         ovlmenu.AppendItem(addgrid)
         self.Bind(wx.EVT_MENU, self.AddGrid, addgrid)
 
-        addlbl = wx.MenuItem(ovlmenu, -1, Icons["addlabels"].GetLabel())
-        addlbl.SetBitmap(Icons["addlabels"].GetBitmap(self.iconsize))
-        ovlmenu.AppendItem(addlbl)
-        self.Bind(wx.EVT_MENU, self.AddLabels, addlbl)
+        addgeodesic = wx.MenuItem(ovlmenu, -1, Icons["addgeodesic"].GetLabel())
+        addgeodesic.SetBitmap(Icons["addgeodesic"].GetBitmap(self.iconsize))
+        ovlmenu.AppendItem(addgeodesic)
+        self.Bind(wx.EVT_MENU, self.AddGeodesic, addgeodesic)
+
+        addrhumb = wx.MenuItem(ovlmenu, -1, Icons["addrhumb"].GetLabel())
+        addrhumb.SetBitmap(Icons["addrhumb"].GetBitmap(self.iconsize))
+        ovlmenu.AppendItem(addrhumb)
+        self.Bind(wx.EVT_MENU, self.AddRhumb, addrhumb)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(ovlmenu)
         ovlmenu.Destroy()
-
 
     def AddRaster(self, event):
         self.notebook.SetSelection(0)
@@ -695,6 +705,11 @@ class GMFrame(wx.Frame):
         """Add HIS layer"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('his')
+
+    def AddShaded(self, event):
+        """Add shaded relief map layer"""
+        self.notebook.SetSelection(0)
+        self.curr_page.maptree.AddLayer('shaded')
 
     def AddRastarrow(self, event):
         """Add raster flow arrows map"""
@@ -735,6 +750,16 @@ class GMFrame(wx.Frame):
         """Add layer grid"""
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('grid')
+
+    def AddGeodesic(self, event):
+        """Add layer geodesic"""
+        self.notebook.SetSelection(0)
+        self.curr_page.maptree.AddLayer('geodesic')
+
+    def AddRhumb(self, event):
+        """Add layer rhumb"""
+        self.notebook.SetSelection(0)
+        self.curr_page.maptree.AddLayer('rhumb')
 
     def AddLabels(self, event):
         """Add layer vector labels"""

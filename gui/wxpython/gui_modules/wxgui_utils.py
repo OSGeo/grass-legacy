@@ -163,6 +163,9 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = Icons["addhis"].GetBitmap(bmpsize)
         self.his_icon = il.Add(trgif)
 
+        trgif = Icons["addshaded"].GetBitmap(bmpsize)
+        self.shaded_icon = il.Add(trgif)
+
         trgif = Icons["addrarrow"].GetBitmap(bmpsize)
         self.rarrow_icon = il.Add(trgif)
 
@@ -180,6 +183,12 @@ class LayerTree(CT.CustomTreeCtrl):
 
         trgif = Icons["addgrid"].GetBitmap(bmpsize)
         self.grid_icon = il.Add(trgif)
+
+        trgif = Icons["addgeodesic"].GetBitmap(bmpsize)
+        self.geodesic_icon = il.Add(trgif)
+
+        trgif = Icons["addrhumb"].GetBitmap(bmpsize)
+        self.rhumb_icon = il.Add(trgif)
 
         trgif = Icons["addlabels"].GetBitmap(bmpsize)
         self.labels_icon = il.Add(trgif)
@@ -425,6 +434,9 @@ class LayerTree(CT.CustomTreeCtrl):
         elif ltype == 'his':
             self.SetItemImage(layer, self.his_icon)
             self.SetItemText(layer, 'HIS (double click to set properties)')
+        elif ltype == 'shaded':
+            self.SetItemImage(layer, self.shaded_icon)
+            self.SetItemText(layer, 'Shaded relief (double click to set properties)')
         elif ltype == 'rastnum':
             self.SetItemImage(layer, self.rnum_icon)
             self.SetItemText(layer, 'raster cell numbers (double click to set properties)')
@@ -443,6 +455,12 @@ class LayerTree(CT.CustomTreeCtrl):
         elif ltype == 'grid':
             self.SetItemImage(layer, self.grid_icon)
             self.SetItemText(layer, 'grid (double click to set properties)')
+        elif ltype == 'geodesic':
+            self.SetItemImage(layer, self.geodesic_icon)
+            self.SetItemText(layer, 'geodesic line (double click to set properties)')
+        elif ltype == 'rhumb':
+            self.SetItemImage(layer, self.rhumb_icon)
+            self.SetItemText(layer, 'rhumbline (double click to set properties)')
         elif ltype == 'labels':
             self.SetItemImage(layer, self.labels_icon)
             self.SetItemText(layer, 'vector labels (double click to set properties)')
@@ -475,6 +493,8 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().ParseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'his':
             menuform.GUI().ParseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+        elif ltype == 'shaded':
+            menuform.GUI().ParseCommand('d.shadedmap', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastarrow':
             menuform.GUI().ParseCommand('d.rast.arrow', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastnum':
@@ -487,6 +507,10 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().ParseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'grid':
             menuform.GUI().ParseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+        elif ltype == 'geodesic':
+            menuform.GUI().ParseCommand('d.geodesic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+        elif ltype == 'rhumb':
+            menuform.GUI().ParseCommand('d.rhumbline', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'labels':
             menuform.GUI().ParseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'cmdlayer':
@@ -763,8 +787,14 @@ class LayerTree(CT.CustomTreeCtrl):
                 mapname = item.split('=')[1]
             elif 'h_map=' in item:
                 mapname = item.split('=')[1]
+            elif 'reliefmap' in item:
+                mapname = item.split('=')[1]
             elif 'd.grid' in item:
                 mapname = 'grid'
+            elif 'd.geodesic' in item:
+                mapname = 'geodesic'
+            elif 'd.rhumbline' in item:
+                mapname = 'rhumb'
             elif 'labels=' in item:
                 mapname = item.split('=')[1]+' labels'
 
@@ -956,6 +986,7 @@ class GMConsole(wx.Panel):
                     layertype = {'d.rast'         : 'raster',
                                  'd.rgb'          : 'rgb',
                                  'd.his'          : 'his',
+                                 'd.shaded'       : 'shaded',
                                  'd.legend'       : 'rastleg',
                                  'd.rast.arrow'   : 'rastarrow',
                                  'd.rast.num'     : 'rastnum',
@@ -963,6 +994,8 @@ class GMConsole(wx.Panel):
                                  'd.vect.thematic': 'thememap',
                                  'd.vect.chart'   : 'themechart',
                                  'd.grid'         : 'grid',
+                                 'd.geodesic'     : 'geodesic',
+                                 'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[command]
                 except KeyError:
                     print _('Command type not yet implemented')
