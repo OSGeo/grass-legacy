@@ -64,7 +64,7 @@ int Init_graphics (void)
     WHITE  = D_translate_color ("white");
     YELLOW = D_translate_color ("yellow");
 
-    R_standard_color (WHITE);
+    R_standard_color (BLACK);
 
     VIEW_TITLE1      = makeview (97.5, 100.0, 50.0, 100.0);
     VIEW_MAP1        = makeview (51.0,  97.5, 50.0, 100.0);
