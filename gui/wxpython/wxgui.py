@@ -628,11 +628,11 @@ class GMFrame(wx.Frame):
         rastmenu.AppendItem(addhis)
         self.Bind(wx.EVT_MENU, self.AddHIS, addhis)
 
-        #        addrastarrow = wx.MenuItem(rastmenu, -1, Icons ["addrarrow"].GetLabel())
-        #        addrastarrow.SetBitmap(Icons["addrarrow"].GetBitmap (self.iconsize))
-        #        rastmenu.AppendItem(addrastarrow)
-        #        self.Bind(wx.EVT_MENU, self.AddRastarrow, addrastarrow)
-        #
+        addrastarrow = wx.MenuItem(rastmenu, -1, Icons ["addrarrow"].GetLabel())
+        addrastarrow.SetBitmap(Icons["addrarrow"].GetBitmap (self.iconsize))
+        rastmenu.AppendItem(addrastarrow)
+        self.Bind(wx.EVT_MENU, self.AddRastarrow, addrastarrow)
+
         #        addrastnums = wx.MenuItem(rastmenu, -1, Icons ["addrnum"].GetLabel())
         #        addrastnums.SetBitmap(Icons["addrnum"].GetBitmap (self.iconsize))
         #        rastmenu.AppendItem(addrastnums)
