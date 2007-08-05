@@ -9,6 +9,7 @@ struct ncb  /* neighborhood control block */
     char title[1024];
     FILE *out;
     char **mask;
+    DCELL **weights;
     struct
     {
 	char *name;

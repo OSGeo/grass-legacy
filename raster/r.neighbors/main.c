@@ -32,6 +32,7 @@ typedef int (*ifunc)(void);
 struct menu
 {
 	stat_func *method;	/* routine to compute new value */
+	stat_func_w *method_w;	/* routine to compute new value (weighted) */
 	ifunc cat_names;	/* routine to make category names */
 	int copycolr;		/* flag if color table can be copied */
 	int half;		/* whether to add 0.5 to result */
@@ -44,17 +45,17 @@ struct menu
 /* modify this table to add new methods */
 static struct menu menu[] =
 {
-	{c_ave,    NO_CATS,	1, 1, "average", "average value"},
-	{c_median, NO_CATS,	1, 0, "median","median value"},
-	{c_mode,   NO_CATS,	1, 0, "mode",  "most frequently occuring value"},
-	{c_min,    NO_CATS,	1, 0, "minimum", "lowest value"},
-	{c_max,    NO_CATS,	1, 0, "maximum", "highest value"},
-	{c_stddev, NO_CATS,	0, 1, "stddev", "standard deviation"},
-	{c_sum,    NO_CATS,	1, 0, "sum", "sum of values"},
-	{c_var,    NO_CATS,	0, 1, "variance", "statistical variance"},
-	{c_divr,   divr_cats,	0, 0, "diversity", "number of different values"},
-	{c_intr,   intr_cats,	0, 0, "interspersion", "number of values different than center value"},
-	{0,0,0,0,0,0}
+	{c_ave,    w_ave,    NO_CATS,	1, 1, "average", "average value"},
+	{c_median, w_median, NO_CATS,	1, 0, "median","median value"},
+	{c_mode,   w_mode,   NO_CATS,	1, 0, "mode",  "most frequently occuring value"},
+	{c_min,    NULL,     NO_CATS,	1, 0, "minimum", "lowest value"},
+	{c_max,    NULL,     NO_CATS,	1, 0, "maximum", "highest value"},
+	{c_stddev, w_stddev, NO_CATS,	0, 1, "stddev", "standard deviation"},
+	{c_sum,    w_sum,    NO_CATS,	1, 0, "sum", "sum of values"},
+	{c_var,    w_var,    NO_CATS,	0, 1, "variance", "statistical variance"},
+	{c_divr,   NULL,     divr_cats,	0, 0, "diversity", "number of different values"},
+	{c_intr,   NULL,     intr_cats,	0, 0, "interspersion", "number of values different than center value"},
+	{0,0,0,0,0,0,0}
 };
 
 struct ncb ncb;
@@ -74,6 +75,7 @@ int main (int argc, char *argv[])
 	int copycolr;
 	int half;
 	stat_func *newvalue;
+	stat_func_w *newvalue_w;
 	ifunc cat_names;
 	struct Colors colr;
 	struct Cell_head cellhd;
@@ -84,6 +86,7 @@ int main (int argc, char *argv[])
 		struct Option *input, *output;
 		struct Option *method, *size;
 		struct Option *title;
+		struct Option *weight;
 	} parm;
 	struct
 	{
@@ -92,6 +95,7 @@ int main (int argc, char *argv[])
 	} flag;
 
 	DCELL *values;   /* list of neighborhood values */
+	DCELL (*values_w)[2];   /* list of neighborhood values and weights */
 
 	G_gisinit (argv[0]);
 
@@ -138,6 +142,13 @@ int main (int argc, char *argv[])
 	parm.title->required   = NO ;
 	parm.title->description= _("Title of the output raster map") ;
 
+	parm.weight = G_define_option() ;
+	parm.weight->key        = "weight" ;
+	parm.weight->type       = TYPE_STRING ;
+	parm.weight->required   = NO ;
+	parm.weight->gisprompt  = "old_file,file,input";
+	parm.weight->description= _("File containing weights") ;
+
 	flag.align = G_define_flag();
 	flag.align->key = 'a';
 	flag.align->description = _("Do not align output with the input");
@@ -153,6 +164,9 @@ int main (int argc, char *argv[])
 
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
+
+	if (parm.weight->answer && flag.circle->answer)
+		G_fatal_error(_("weight= and -c are mutually exclusive"));
 
 	p = ncb.oldcell.name = parm.input->answer;
 	if(NULL == (ncb.oldcell.mapset = G_find_cell2(p,"")))
@@ -199,6 +213,10 @@ int main (int argc, char *argv[])
 
 	half = menu[method].half;
 
+	/* establish the newvalue routine */
+	newvalue = menu[method].method;
+	newvalue_w = menu[method].method_w;
+
 	/* copy color table? */
 	copycolr = menu[method].copycolr;
 	if (copycolr)
@@ -212,9 +230,18 @@ int main (int argc, char *argv[])
 	sscanf (parm.size->answer, "%d", &ncb.nsize);
 	ncb.dist = ncb.nsize/2;
 
+	/* read the weights */
+	if (parm.weight->answer)
+	{
+		read_weights(parm.weight->answer);
+		if (!newvalue_w)
+			weights_mask();
+	}
+	else
+		newvalue_w = NULL;
+
 	/* allocate the cell buffers */
 	allocate_bufs ();
-	values = (DCELL *) G_malloc (ncb.nsize * ncb.nsize * sizeof (DCELL));
 	result = G_allocate_d_raster_buf();
 
 	/* get title, initialize the category and stat info */
@@ -230,9 +257,6 @@ int main (int argc, char *argv[])
 	readrow = 0;
 	for (row = 0; row < ncb.dist; row++)
 		readcell (in_fd, readrow++, nrows, ncols);
-
-	/* establish the newvalue routine */
-	newvalue = menu[method].method;
 
 	/* open raster map */
 	in_fd = G_open_cell_old (ncb.oldcell.name, ncb.oldcell.mapset);
@@ -254,6 +278,11 @@ int main (int argc, char *argv[])
 	if (flag.circle->answer)
 	    circle_mask();
 
+	if (newvalue_w)
+		values_w = (DCELL (*)[2]) G_malloc(ncb.nsize * ncb.nsize * 2 * sizeof (DCELL));
+	else
+		values = (DCELL *) G_malloc (ncb.nsize * ncb.nsize * sizeof (DCELL));
+
 	for (row = 0; row < nrows; row++)
 	{
                 G_percent (row, nrows, 2);
@@ -261,12 +290,21 @@ int main (int argc, char *argv[])
 		for (col = 0; col < ncols; col++)
 		{
 			DCELL *rp = &result[col];
-			n = gather (values, col);
+
+			if (newvalue_w)
+				n = gather_w(values_w, col);
+			else
+				n = gather(values, col);
+
 			if (n < 0)
 				G_set_d_null_value (rp, 1);
 			else
 			{
-				newvalue(rp, values, n);
+				if (newvalue_w)
+					newvalue_w(rp, values_w, n);
+				else
+					newvalue(rp, values, n);
+
 				if (half && !G_is_d_null_value(rp))
 					*rp += 0.5;
 			}
