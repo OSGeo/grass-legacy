@@ -56,7 +56,6 @@ global east
 global west
 global resolution
 global wizerror
-global proj4string
 
 coordsys = ''
 north = ''
@@ -64,7 +63,6 @@ south = ''
 east = ''
 west = ''
 resolution = ''
-proj4string = ''
 
 class TitledPage(wiz.WizardPageSimple):
     """
@@ -241,15 +239,11 @@ class CoordinateSystemPage(TitledPage):
             wx.MessageBox('You must select a coordinate system')
             event.Veto()
 
-#        if coordsys == "xy":
-#            pass
-
     def SetVal(self,event):
         global coordsys
         if event.GetId() == self.radio1.GetId():
             coordsys = "proj"
             self.SetNext(self.parent.projpage)
-            self.parent.datumpage.SetPrev(self.parent.projpage)
         elif event.GetId() == self.radio2.GetId():
             coordsys = "epsg"
             self.SetNext(self.parent.epsgpage)
@@ -265,6 +259,7 @@ class CoordinateSystemPage(TitledPage):
         elif event.GetId() == self.radio5.GetId():
             coordsys = "xy"
             self.SetNext(self.parent.sumpage)
+            set.parent.sumpage.SetPrev(self.parent.csystemspage)
 
 class ProjectionsPage(TitledPage):
     """
@@ -327,8 +322,8 @@ class ProjectionsPage(TitledPage):
         self._onBrowseProj(None, None)
 
     def OnPageChange(self,event):
-        if not self.proj:
-            wx.MessageBox('You must select a projection')
+        if event.GetDirection() and self.proj not in self.parent.projections:
+            wx.MessageBox('You must select a valid projection in order to continue')
             event.Veto()
         if self.proj == 'utm':
             self.parent.projtypepage.text_utm.SetEditable(True)
@@ -404,41 +399,62 @@ class ProjTypePage(TitledPage):
 
         self.radio1 = wx.RadioButton( self, -1, " Select datum with associated ellipsoid", style = wx.RB_GROUP )
         self.radio2 = wx.RadioButton( self, -1, " Select ellipsoid" )
-
-        # layout
-        self.sizer.Add(self.radio1, 0, wx.ALIGN_LEFT, row=1, col=2)
-        self.sizer.Add(self.radio2, 0, wx.ALIGN_LEFT, row=2, col=2)
-
         self.title_utm = self.MakeLLabel("Set zone for UTM projection")
         self.text_utm = self.MakeTextCtrl(size=(100,-1))
         self.label_utm = self.MakeRLabel("Zone: ")
         self.hemisphere = wx.Choice(self, -1, (100, 50), choices = self.hemischoices)
         self.label_hemisphere = self.MakeRLabel("Hemisphere for zone: ")
 
+        # layout
+        self.sizer.Add(self.radio1, 0, wx.ALIGN_LEFT, row=1, col=2)
+        self.sizer.Add(self.radio2, 0, wx.ALIGN_LEFT, row=2, col=2)
         self.sizer.Add(self.title_utm, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=4,col=2)
         self.sizer.Add(self.label_utm, 0, wx.ALIGN_RIGHT|wx.ALL, 5, row=5,col=1)
         self.sizer.Add(self.text_utm, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=5,col=2)
         self.sizer.Add(self.label_hemisphere, 0, wx.ALIGN_RIGHT|wx.ALL, 5, row=6,col=1)
         self.sizer.Add(self.hemisphere, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=6,col=2)
 
+        self.title_utm.Hide()
+        self.text_utm.Hide()
+        self.label_utm.Hide()
+        self.hemisphere.Hide()
+        self.label_hemisphere.Hide()
+
         # bindings
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio1.GetId())
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio2.GetId())
-        self.Bind(wx.EVT_CHOICE, self.OnHemisphere, self.hemisphere)
-        self.Bind(wx.EVT_TEXT, self.GetUTM, self.text_utm)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
+        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnEnterPage)
 
     def OnPageChange(self,event=None):
-        if self.parent.projpage.proj == 'utm' and self.utmzone == '':
+        if event.GetDirection() and self.parent.projpage.proj == 'utm' and self.utmzone == '':
             wx.MessageBox('You must set a zone for a UTM projection')
             event.Veto()
+        self.title_utm.Hide()
+        self.text_utm.Hide()
+        self.label_utm.Hide()
+        self.hemisphere.Hide()
+        self.label_hemisphere.Hide()
+
+    def OnEnterPage(self,event):
+        if self.parent.projpage.proj == 'utm':
+            self.title_utm.Show()
+            self.text_utm.Show()
+            self.label_utm.Show()
+            self.hemisphere.Show()
+            self.label_hemisphere.Show()
+
+        self.Bind(wx.EVT_CHOICE, self.OnHemisphere, self.hemisphere)
+        self.Bind(wx.EVT_TEXT, self.GetUTM, self.text_utm)
 
     def SetVal(self, event):
         global coordsys
         if event.GetId() == self.radio1.GetId():
             self.SetNext(self.parent.datumpage)
+            self.parent.sumpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio2.GetId():
             self.SetNext(self.parent.ellipsepage)
+            self.parent.sumpage.SetPrev(self.parent.ellipsepage)
 
     def GetUTM(self, event):
         self.utmzone = event.GetString()
@@ -558,16 +574,15 @@ class DatumPage(TitledPage):
 
     def OnPageChange(self,event):
         self.proj4params = ''
-        if not self.datum:
-            wx.MessageBox('You must select a datum')
+        if event.GetDirection() and self.datum not in self.parent.datums:
+            wx.MessageBox('You must select a valid datum in order to continue')
             event.Veto()
 #        if self.hastransform == True and self.transform == '':
 #            wx.MessageBox('You must select a datum transform')
 #            event.Veto()
         self.GetNext().SetPrev(self)
         self.parent.ellipsepage.ellipseparams = self.parent.ellipsoids[self.ellipsoid][1]
-
-        global proj4string
+        self.GetNext().SetPrev(self)
 
     def OnDText(self, event):
         self.datum = event.GetString()
@@ -745,16 +760,17 @@ class EllipsePage(TitledPage):
 
     def OnPageChange(self,event):
         self.proj4params = ''
-        if not self.ellipse:
-            wx.MessageBox('You must select an ellipse')
+        if event.GetDirection() and self.ellipse not in self.parent.ellipsoids:
+            wx.MessageBox('You must select a valid ellipsoid in order to continue')
             event.Veto()
         self.GetNext().SetPrev(self)
         self.parent.datumpage.datumparams = ''
         self.parent.datumpage.transparams = ''
+        self.GetNext().SetPrev(self)
 
     def OnText(self, event):
         self.ellipse = event.GetString()
-        if self.ellipse in self.parent.ellipseoids:
+        if self.ellipse in self.parent.ellipsoids:
             self.ellipsedesc = self.parent.ellipsoids[self.ellipse][0]
             self.ellipseparams = self.parent.ellipsoids[self.ellipse][1]
 
@@ -840,8 +856,8 @@ class GeoreferencedFilePage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
 
     def OnPageChange(self, event):
-        if self.georeffile == '':
-            wx.MessageBox('You must select a file')
+        if event.GetDirection() and self.georeffile == '':
+            wx.MessageBox('You must select a georeferenced file in order to continue')
             event.Veto()
         self.GetNext().SetPrev(self)
 
@@ -944,7 +960,7 @@ class EPSGPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
 
     def OnPageChange(self, event):
-        if not self.epsgcode:
+        if event.GetDirection() and not self.epsgcode:
             wx.MessageBox('You must select an EPSG code')
             event.Veto()
         self.GetNext().SetPrev(self)
@@ -964,7 +980,6 @@ class EPSGPage(TitledPage):
                 break
 
         self.OnBrowseCodes(None,str)
-
 
     def OnBrowse(self, event):
 
@@ -1037,14 +1052,11 @@ class CustomPage(TitledPage):
     def __init__(self, wizard, parent):
         TitledPage.__init__(self, wizard, "Choose method of specifying georeferencing parameters")
         global coordsys
-        self.proj4string = ''
+        self.customstring = ''
         self.parent = parent
 
         self.text_proj4string = self.MakeTextCtrl(size=(400,100))
         self.label_proj4string = self.MakeRLabel("Enter PROJ.4 parameters string: ")
-        if proj4string:
-            self.text_proj4string.SetValue(proj4string)
-
         self.sizer.Add(self.label_proj4string, 0, wx.ALIGN_RIGHT|wx.ALL, 5, row=5,col=1)
         self.sizer.Add(self.text_proj4string, 0, wx.ALIGN_LEFT|wx.ALL, 5, row=5,col=2)
 
@@ -1052,14 +1064,13 @@ class CustomPage(TitledPage):
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChange)
 
     def OnPageChange(self, event):
-        if not self.proj4string:
+        if event.GetDirection() and not self.customstring:
             wx.MessageBox('You must enter a PROJ.4 string')
             event.Veto()
         self.GetNext().SetPrev(self)
 
     def GetProjstring(self, event):
-        proj4string
-        self.proj4string = event.GetString()
+        self.customstring = event.GetString()
 
 
 class SummaryPage(TitledPage):
@@ -1137,7 +1148,7 @@ class SummaryPage(TitledPage):
             label = ('XY coordinate system. Not projected')
             self.lprojection.SetLabel(label)
         elif coordsys == 'custom':
-            label = ('%s' % self.custompage.proj4string)
+            label = ('%s' % self.parent.custompage.customstring)
             self.lprojection.SetLabel(label)
 
 class RegionDef(wx.Frame):
@@ -1469,19 +1480,17 @@ class GWizard:
         self.startpage.SetNext(self.csystemspage)
 
         self.csystemspage.SetPrev(self.startpage)
-        self.csystemspage.SetNext(self.sumpage)
+
+        self.projpage.SetPrev(self.csystemspage)
+        self.projpage.SetNext(self.projtypepage)
 
         self.projtypepage.SetPrev(self.projpage)
-        self.projtypepage.SetNext(self.datumpage)
 
         self.datumpage.SetPrev(self.projtypepage)
         self.datumpage.SetNext(self.sumpage)
 
         self.ellipsepage.SetPrev(self.projtypepage)
         self.ellipsepage.SetNext(self.sumpage)
-
-        self.projpage.SetPrev(self.csystemspage)
-        self.projpage.SetNext(self.projtypepage)
 
         self.epsgpage.SetPrev(self.csystemspage)
         self.epsgpage.SetNext(self.sumpage)
@@ -1524,7 +1533,7 @@ class GWizard:
         database = self.startpage.grassdatabase
         location = self.startpage.location
         global coordsys
-        success = ''
+        success = False
 
 #        wx.MessageBox("finished database: %s, location: %s, coordsys: %s" % (database, location, coordsys))
         if os.path.isdir(os.path.join(database,location)):
@@ -1545,7 +1554,7 @@ class GWizard:
         elif coordsys == "proj":
             success = self.Proj4Create()
         elif coordsys == 'custom':
-            success - self.CustomCreate
+            success = self.CustomCreate()
         elif coordsys == "epsg":
             success = self.EPSGCreate()
         elif coordsys == "file":
@@ -1679,8 +1688,9 @@ class GWizard:
         # Creating location from PROJ.4 string passed to g.proj
         try:
             cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
-            cmd.Command(cmdlist)
-            return True
+            p = cmd.Command(cmdlist)
+            if p == 0:
+                return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1690,7 +1700,7 @@ class GWizard:
             return False
 
     def CustomCreate(self):
-        proj4string = self.custompage.proj4string
+        proj4string = self.custompage.customstring
         location = self.startpage.location
 
         dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using PROJ.4 string: %s"
@@ -1705,8 +1715,9 @@ class GWizard:
 
         try:
             cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
-            cmd.Command(cmdlist)
-            return True
+            p = cmd.Command(cmdlist)
+            if p == 0:
+                return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1772,8 +1783,9 @@ class GWizard:
             else:
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
 
-            cmd.Command(cmdlist)
-            return True
+            p = cmd.Command(cmdlist)
+            if p == 0:
+                return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1817,8 +1829,9 @@ class GWizard:
         # creating location
         try:
             cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
-            cmd.Command(cmdlist)
-            return True
+            p = cmd.Command(cmdlist)
+            if p == 0:
+                return True
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
