@@ -79,7 +79,7 @@ main (int argc,char *argv[])
     module = G_define_module(); {
 	module->keywords = _("vector, interpolation");
 	module->description = 
-	   _("Bicubic or bilinear spline interpolation with Tykhonov regularization");
+	   _("Bicubic or bilinear spline interpolation with Tykhonov regularization.");
     }
 
     cross_corr_flag = G_define_flag (); {
@@ -223,13 +223,13 @@ main (int argc,char *argv[])
     if (vector && !map) {
 	if ( strcmp(dvr, "dbf") == 0)
 	    G_fatal_error (_("Sorry, <%s> driver is not allowed for vector output in this module. " \
-			"Try with a raster output or other driver"), dvr); 
+			"Try with a raster output or other driver."), dvr); 
 
 	Vect_check_input_output_name (in_opt->answer, out_opt->answer, GV_FATAL_EXIT);
 	grid = FALSE;
 
 	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) 
-	    G_fatal_error (_("Cannot create vector map <%s>"), out_opt->answer);
+	    G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
 
 	/* Copy vector Head File */
 	if (ext == FALSE) {
@@ -312,7 +312,7 @@ main (int argc,char *argv[])
     /* Open driver and database */
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
-	G_fatal_error( _("No database connection for driver <%s> defined. Run db.connect."), dvr);
+	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect."), dvr);
 
     /* Setting auxiliar table's name */
     if (vector)

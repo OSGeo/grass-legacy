@@ -53,7 +53,7 @@ listitem (size_t size)
   item = G_calloc (1, size);
   if (!item)
   {
-    G_fatal_error (_("Out of memory!"));
+    G_fatal_error (_("Out of memory"));
     exit (1);
   }
 

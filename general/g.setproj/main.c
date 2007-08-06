@@ -435,7 +435,7 @@ int main(int argc, char *argv[])
 			    G_message(_("But if you change zone, all the existing "
 				"data will be interpreted by projection software. "
 				"GRASS will not automatically re-project or even "
-				"change the headers for existing maps"));
+				"change the headers for existing maps."));
 			    if (!G_yes(_("Would you still like to change the UTM zone?"),
 				 0)) {
 				zone = old_zone;

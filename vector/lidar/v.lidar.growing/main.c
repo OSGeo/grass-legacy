@@ -122,10 +122,10 @@ main (int argc,char *argv[])
     /*Vect_set_open_level (2);		WITH TOPOLOGY*/
     Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY*/
     if (Vect_open_old (&In, in_opt->answer, mapset) < 1)
-        G_fatal_error ( _("Cannot open vector points map <%s>"), in_opt->answer);
+        G_fatal_error ( _("Unable to open vector map <%s>"), in_opt->answer);
 	
     if (Vect_open_old (&First, first_opt->answer, mapset) < 1)
-	G_fatal_error ( _("Cannot open vector points map <%s>"), first_opt->answer);
+	G_fatal_error ( _("Unable to open vector map <%s>"), first_opt->answer);
 
 /* Open output vector */
     	if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
@@ -146,7 +146,7 @@ main (int argc,char *argv[])
 
     driver = db_start_driver_open_database (field->driver, field->database);
     if (driver == NULL)
-	 G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect"), field->driver);
+	 G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect."), field->driver);
 
 /* Setting regions and boxes */
     G_debug (1, _("Setting regions and boxes"));
@@ -169,7 +169,7 @@ main (int argc,char *argv[])
     db_append_string (&sql, buf);
 
     if (db_open_select_cursor (driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
-	    G_fatal_error (_("It was impossible open table"));
+	    G_fatal_error (_("It was impossible to open table"));
 
     count_obj = 1;
 

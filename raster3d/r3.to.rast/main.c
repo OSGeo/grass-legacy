@@ -52,7 +52,7 @@ void fatal_error(void *map, int *fd, int depths, char *errorMsg)
     /* Close files and exit */
     if (map != NULL) {
 	if (!G3d_closeCell(map))
-	    G3d_fatalError(_("Could not close the 3d raster map"));
+	    G3d_fatalError(_("Unable to close the 3d raster map"));
     }
 
     if (fd != NULL) {
@@ -296,7 +296,7 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	fatal_error(map, NULL, 0, _("Out of memory!"));
+	fatal_error(map, NULL, 0, _("Out of memory"));
 
     if (G_legal_filename(param.output->answer) < 0)
 	fatal_error(map, NULL, 0, _("Illegal output file name"));

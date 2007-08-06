@@ -117,8 +117,7 @@ int main (int argc, char *argv[])
         /* open input cell map */
         if ((inmapset = G_find_cell(Cellmap_orig, "")) == NULL)
         {
-                G_fatal_error(_("%s: %s - Unable to open the input raster map\n"),
-					me, Cellmap_orig);
+                G_fatal_error(_("Raster map <%s> not found"), Cellmap_orig);
                 exit(1);
         }
         inputfd = G_open_cell_old(Cellmap_orig, inmapset);

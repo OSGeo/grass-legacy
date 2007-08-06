@@ -149,7 +149,7 @@ main (int argc,char *argv[])
     grad_L = atof (gradL_opt->answer);
     alpha = atof (alfa_opt->answer);
     if ( !(db=G__getenv2 ("DB_DATABASE",G_VAR_MAPSET)) )
-	G_fatal_error (_("Unable to read neme of database"));
+	G_fatal_error (_("Unable to read name of database"));
 
     if ( !(dvr = G__getenv2 ("DB_DRIVER",G_VAR_MAPSET)) )
 	G_fatal_error (_("Unable to read name of driver"));

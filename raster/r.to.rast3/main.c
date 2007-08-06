@@ -125,7 +125,7 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 			dvalue = *(CELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &dvalue, DCELL_TYPE) < 0)
-				fatal_error(map, fd, depths, "error writing double data");		    
+				fatal_error(map, fd, depths, "Error writing double data");		    
 		}
 		else if (globalRastMapType == FCELL_TYPE) {
 		    if (G_is_null_value(ptr, globalRastMapType)) {
@@ -135,7 +135,7 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 			fvalue = *(FCELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &fvalue, FCELL_TYPE) < 0)
-				fatal_error(map, fd, depths, "error writing float data");		    
+				fatal_error(map, fd, depths, "Error writing float data");		    
 
 		}
 		else if (globalRastMapType == DCELL_TYPE) {
@@ -146,7 +146,7 @@ void raster_to_g3d(void *map, G3D_Region region, int *fd)
 			dvalue = *(DCELL *) ptr;
 		    }
 		if (G3d_putValue(map, x, y, z, (char *) &dvalue, DCELL_TYPE) < 0)
-				fatal_error(map, fd, depths, "error writing double data");		    
+				fatal_error(map, fd, depths, "Error writing double data");		    
 
 		}
 
@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster, volume, conversion");
     module->description =
-	_("Converts 2D raster map slices to one 3D raster volume map");
+	_("Converts 2D raster map slices to one 3D raster volume map.");
 
     /* Get parameters from user */
     set_params();
@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
     fd = (int *)G_malloc(region.depths * sizeof(int));
 
     if (fd == NULL)
-	fatal_error(map, NULL, 0, _("Out of memory!"));
+	fatal_error(map, NULL, 0, _("Out of memory"));
 
     if (G_legal_filename(param.output->answer) < 0)
 	fatal_error(map, NULL, 0, _("Illegal output file name"));
