@@ -139,7 +139,7 @@ class GMFrame(wx.Frame):
 #        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # do layout
-        self.SetTitle(_("GRASS GIS Manager - wxPython Prototype"))
+        self.SetTitle(_("GRASS Layer Manager"))
         self.SetMinSize((500, 400))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
@@ -372,7 +372,7 @@ class GMFrame(wx.Frame):
         """Run menu command"""
         cmd = self.GetMenuCmd(event)
         global gmpath
-        menuform.GUI().ParseCommand(cmd,gmpath, parentframe=self)
+        menuform.GUI().ParseCommand(cmd, parentframe=self)
 
     def RulesCmd(self, event):
         """

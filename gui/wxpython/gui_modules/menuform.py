@@ -549,8 +549,8 @@ class mainFrame(wx.Frame):
         except ValueError:
             self.SetStatusText( status_text )
 
-        
-        
+
+
         # buttons
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
@@ -1081,7 +1081,7 @@ class GUI:
     def __init__(self, parent=-1):
         self.parent = parent
 
-    def ParseCommand(self, cmd, gmpath, completed=None, parentframe=-1, modal=False):
+    def ParseCommand(self, cmd, gmpath=None, completed=None, parentframe=-1, modal=False):
         """
         Parse command
 
@@ -1115,7 +1115,7 @@ class GUI:
                     self.grass_task.params = dcmd_params['params']
                 if 'flags' in dcmd_params:
                     self.grass_task.flags = dcmd_params['flags']
-            
+
             self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
             self.mf.Show(True)
             self.mf.MakeModal(modal)
