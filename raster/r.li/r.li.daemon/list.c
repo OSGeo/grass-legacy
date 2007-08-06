@@ -40,7 +40,7 @@ void insertNode(list l, msg mess){
       	l->tail = new; 
     	}
    }
-  	else G_message( _("OUT OF MEMORY !!!\n"));
+  	else G_message( _("Out of memory"));
   	l->size++;
 }
 
