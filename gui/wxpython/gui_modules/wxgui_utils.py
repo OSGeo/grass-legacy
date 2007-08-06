@@ -488,31 +488,31 @@ class LayerTree(CT.CustomTreeCtrl):
                    ltype)
 
         if ltype == 'raster':
-            menuform.GUI().ParseCommand('d.rast', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rgb':
-            menuform.GUI().ParseCommand('d.rgb', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rgb', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'his':
-            menuform.GUI().ParseCommand('d.his', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.his', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'shaded':
-            menuform.GUI().ParseCommand('d.shadedmap', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.shadedmap', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastarrow':
-            menuform.GUI().ParseCommand('d.rast.arrow', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.arrow', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rastnum':
-            menuform.GUI().ParseCommand('d.rast.num', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.num', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'vector':
-            menuform.GUI().ParseCommand('d.vect', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'thememap':
-            menuform.GUI().ParseCommand('d.vect.thematic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.thematic', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'themechart':
-            menuform.GUI().ParseCommand('d.vect.chart', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.chart', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'grid':
-            menuform.GUI().ParseCommand('d.grid', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.grid', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'geodesic':
-            menuform.GUI().ParseCommand('d.geodesic', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.geodesic', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'rhumb':
-            menuform.GUI().ParseCommand('d.rhumbline', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rhumbline', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'labels':
-            menuform.GUI().ParseCommand('d.labels', gmpath, completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.labels', completed=(self.getOptData,layer,params), parentframe=self)
         elif ltype == 'cmdlayer':
             pass
         elif ltype == 'group':
@@ -1005,7 +1005,7 @@ class GMConsole(wx.Panel):
                 self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
 
             else:
-                menuform.GUI().ParseCommand(string.join(cmdlist), gmpath, parentframe=None)
+                menuform.GUI().ParseCommand(string.join(cmdlist), parentframe=None)
                 self.cmd_output.write(string.join(cmdlist) + "\n----------\n")
 
         elif command[0:2] == "d." and len(cmdlist) > 1:
