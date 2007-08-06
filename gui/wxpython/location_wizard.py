@@ -235,7 +235,7 @@ class CoordinateSystemPage(TitledPage):
 
     def OnPageChange(self,event=None):
         global coordsys
-        if not coordsys:
+        if event.GetDirection() and not coordsys:
             wx.MessageBox('You must select a coordinate system')
             event.Veto()
 
@@ -244,6 +244,7 @@ class CoordinateSystemPage(TitledPage):
         if event.GetId() == self.radio1.GetId():
             coordsys = "proj"
             self.SetNext(self.parent.projpage)
+            self.parent.sumpage.SetPrev(self.parent.datumpage)
         elif event.GetId() == self.radio2.GetId():
             coordsys = "epsg"
             self.SetNext(self.parent.epsgpage)
@@ -1480,11 +1481,13 @@ class GWizard:
         self.startpage.SetNext(self.csystemspage)
 
         self.csystemspage.SetPrev(self.startpage)
+        self.csystemspage.SetNext(self.sumpage)
 
         self.projpage.SetPrev(self.csystemspage)
         self.projpage.SetNext(self.projtypepage)
 
         self.projtypepage.SetPrev(self.projpage)
+        self.projtypepage.SetNext(self.datumpage)
 
         self.datumpage.SetPrev(self.projtypepage)
         self.datumpage.SetNext(self.sumpage)
@@ -1500,6 +1503,8 @@ class GWizard:
 
         self.custompage.SetPrev(self.csystemspage)
         self.custompage.SetNext(self.sumpage)
+
+        self.sumpage.SetPrev(self.csystemspage)
 
         self.wizard.FitToPage(self.datumpage)
 
@@ -1603,19 +1608,21 @@ class GWizard:
                         'n-s resol3: 1',
                         't-b resol:  1']
 
-        defwind = open(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),'w')
-        for param in regioninfo:
-            defwind.write(param+'\n')
-        defwind.close()
-        shutil.copy(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),\
-                    os.path.join(database,location,"PERMANENT","WIND"))
+        try:
+            defwind = open(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),'w')
+            for param in regioninfo:
+                defwind.write(param+'\n')
+            defwind.close()
+            shutil.copy(os.path.join(database,location,"PERMANENT","DEFAULT_WIND"),\
+                        os.path.join(database,location,"PERMANENT","WIND"))
 
-        #Make MYNAME file
-        myname = open(os.path.join(database,location,"PERMANENT","MYNAME"),'w')
-        myname.write('')
-        myname.close()
-        return True
-
+            #Make MYNAME file
+            myname = open(os.path.join(database,location,"PERMANENT","MYNAME"),'w')
+            myname.write('')
+            myname.close()
+            return True
+        except:
+            return False
 
     def Proj4Create(self):
         """
@@ -1689,8 +1696,10 @@ class GWizard:
         try:
             cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
             p = cmd.Command(cmdlist)
-            if p == 0:
+            if p.module.returncode == 0:
                 return True
+            else:
+                return False
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1716,8 +1725,10 @@ class GWizard:
         try:
             cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
             p = cmd.Command(cmdlist)
-            if p == 0:
+            if p.module.returncode == 0:
                 return True
+            else:
+                return False
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1784,8 +1795,10 @@ class GWizard:
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
 
             p = cmd.Command(cmdlist)
-            if p == 0:
+            if p.module.returncode == 0:
                 return True
+            else:
+                return False
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
@@ -1830,8 +1843,10 @@ class GWizard:
         try:
             cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
             p = cmd.Command(cmdlist)
-            if p == 0:
+            if p.module.returncode == 0:
                 return True
+            else:
+                return False
 
         except StandardError, e:
             dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
