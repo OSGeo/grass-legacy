@@ -25,7 +25,6 @@
 #include <grass/stats.h>
 #include "ncb.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 typedef int (*ifunc)(void);
 
