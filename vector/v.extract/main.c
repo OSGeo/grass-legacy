@@ -140,7 +140,7 @@ int main (int argc, char **argv)
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;
 
-    if (!mapset) G_fatal_error(_("Vector file [%s] not available in search list"), input);
+    if (!mapset) G_fatal_error(_("Vector map <%s> not found"), input);
       
     G_debug ( 3, "Mapset = %s", mapset);
     /* set output vector map name */
@@ -192,7 +192,7 @@ int main (int argc, char **argv)
 
 	    /* open input file */
 	    if( (in = fopen(fileopt->answer,"r")) == NULL )
-		G_fatal_error(_("Can't open specified file <%s>"), fileopt->answer) ;
+		G_fatal_error(_("Unable to open specified file <%s>"), fileopt->answer) ;
 	}
 
 	while (1)
@@ -223,12 +223,12 @@ int main (int argc, char **argv)
 	
         driver = db_start_driver(Fi->driver);
         if (driver == NULL)
-            G_fatal_error(_("Cannot open driver %s"), Fi->driver) ;
+            G_fatal_error(_("Unable to open driver <%s>"), Fi->driver) ;
 				 
 	db_init_handle (&handle);
 	db_set_handle (&handle, Fi->database, NULL);
 	if (db_open_database(driver, &handle) != DB_OK)
-            G_fatal_error(_("Cannot open database %s"), Fi->database) ;
+            G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, driver) ;
 											 
 	ncats = db_select_int( driver, Fi->table, Fi->key, whereopt->answer, &cats);
 	G_message(_("%d cats loaded from the database"),  ncats);
@@ -286,7 +286,7 @@ int main (int argc, char **argv)
 	}
 
 	/* Copy tables */
-	G_message ( _("Writing attributes ...") );
+	G_message ( _("Writing attributes...") );
 
 	/* Number of output tabs */
 	for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
@@ -320,7 +320,7 @@ int main (int argc, char **argv)
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( _("No table.") );
+		G_message ( _("No table") );
 		continue;
 	    }
 	    
@@ -331,12 +331,12 @@ int main (int argc, char **argv)
 				  IFi->key, ocats[i], nocats[i] );
 
 	    if ( ret == DB_FAILED ) {
-		G_warning ( _("Cannot copy table") );
+		G_warning ( _("Unable to copy table") );
 	    } else {
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( _("Done.") );
+	    G_message ( _("Done") );
 	}
     }
 
@@ -347,7 +347,7 @@ int main (int argc, char **argv)
     if ( dissolve ) { 
 	int line, nlines, ltype, area;
 	
-	G_message(_("Removing duplicate centroids ...") );
+	G_message(_("Removing duplicate centroids...") );
 	nlines = Vect_get_num_lines ( &Out );
 	for ( line = 1; line <= nlines; line++) {
 	    if ( !Vect_line_alive ( &Out, line ) ) continue; /* should not happen */

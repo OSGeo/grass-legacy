@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
      * mapset name otherwise */
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
-	G_fatal_error(_("Raster file <%s> not found"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (G_legal_filename(result) < 0)
 	G_fatal_error(_("<%s> is an illegal file name"), result);

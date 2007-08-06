@@ -44,7 +44,7 @@ main(int argc, char *argv[])
     
     driver = db_start_driver (parms.driver);
     if (driver == NULL)
-        G_fatal_error(_("Cannot start driver '%s'."), parms.driver);
+        G_fatal_error(_("Cannot start driver <%s>"), parms.driver);
         
     if(db_list_databases (driver, &locations, nlocs, &handles, &count) != DB_OK)
 	G_fatal_error(_("Cannot list databases."));

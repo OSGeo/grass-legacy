@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, editing, geometry");
-    module->description = _("Edit a vector map layer - allow adding, deleting "
+    module->description = _("Edits a vector map layer. Allows adding, deleting "
 			    "and modifying selected vector features.");
 
     if(!parser(argc, argv, &params, &action_mode))
@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
     else if (params.in -> answer) {
 	ascii = fopen (params.in -> answer, "r");
 	if (ascii == NULL) {
-	    G_fatal_error(_("Could not open ASCII file <%s>"),
+	    G_fatal_error(_("Unable to open ASCII file <%s>"),
 			  params.in -> answer);
 	}
     }
@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
     if (action_mode == MODE_CREATE) {
 	/* 3D vector maps? */
 	if (-1 == Vect_open_new (&Map, params.map -> answer, 0)) { /* new */
-	    G_fatal_error (_("Cannot create vector map <%s>"),
+	    G_fatal_error (_("Unable to create vector map <%s>"),
 			   params.map -> answer);
 	}
 
@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
 	}
 	
 	if (ret < 2)
-	    G_fatal_error (_("Cannot open vector map <%s> at topo level %d"),
+	    G_fatal_error (_("Unable to open vector map <%s> at topological level %d"),
 			   params.map -> answer, 2);
     }
     
