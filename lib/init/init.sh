@@ -794,11 +794,17 @@ echo "This version running thru:               $shellname ($SHELL)"
 echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"
 
-if [ "$GRASS_GUI" = "text" ] ; then
-    echo "Start the graphical user interface with: gis.m"
-else
-    echo "If required, restart the graphical user interface with: gis.m"
-fi
+case "$GRASS_GUI" in
+    tcltk | gis.m)
+        echo "If required, restart the graphical user interface with: gis.m"
+        ;;
+    wx)
+        echo "If required, restart the graphical user interface with: wxgrass &"
+        ;;
+    *)
+        echo "Start the graphical user interface with: gis.m"
+        ;;
+esac
 
 echo "When ready to quit enter:                exit"
 
