@@ -83,6 +83,7 @@
 #include <stdarg.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include <grass/spawn.h>
 
 
 #define BAD_SYNTAX  1
@@ -1856,8 +1857,8 @@ static void generate_tcl(FILE *fp)
 	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
 
-/* Build gui */
-static void G_gui (void)
+/* Build Tcl/Tk gui */
+static void G_gui_tcltk (void)
 {
 	FILE *fp;
 
@@ -1886,6 +1887,31 @@ static void G_gui (void)
 	generate_tcl(fp);
 
 	pclose(fp);
+}
+
+/* Build wxPython gui */
+static void G_gui_wx (void)
+{
+	char script[GPATH_MAX];
+
+	if (!pgm_name)
+		pgm_name = G_program_name ();
+	if (!pgm_name)
+		G_fatal_error("unable to determine program name");
+
+	sprintf(script, "%s/etc/wx/gui_modules/menuform.py", getenv("GISBASE"));
+	G_spawn("python", "menuform.py", script, pgm_name, NULL);
+}
+
+/* Invoke gui */
+static void G_gui (void)
+{
+	char *gui = getenv("GRASS_GUI");
+
+	if (gui && strcmp(gui, "wx") == 0)
+		G_gui_wx();
+	else
+		G_gui_tcltk();
 }
 
 /* Send Tcl/Tk code to tcltkgrass */
