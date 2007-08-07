@@ -22,11 +22,15 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 # ugly hack - assume tcl and tk in same prefix, and same as TCLTKLIBPATH minus 'lib'
 ifndef TCLTKPREFIX
-TCLTKPREFIX = `echo ${TCLTKLIBPATH} | sed 's,-L,,' | sed 's,/lib *$$,,'`
+TCLTKPREFIX = `echo "${TCLTKLIBPATH}" | sed -e "s,-L,," -e "s,/lib *$$,,"`
 endif
 # ugly hack - assume gdal prefix starts with -L flag
 ifndef GDAL_BIN
-GDAL_BIN = `echo ${GDALLIBS} | sed 's,-L,,' | sed 's,/lib.*$$,/bin,'`
+GDAL_BIN = `echo "${GDALLIBS}" | sed -e "s,-L,," -e "s,/lib.*$$,/bin,"`
+endif
+# ugly hack - extract path to PROJ bin from nad2bin
+ifndef PROJ_BIN
+PROJ_BIN = `echo "${NAD2BIN}" | sed -e "s,.=,," -e "s,/nad2bin,,"`
 endif
 
 default: macosxapp
@@ -80,7 +84,7 @@ $(OBJDIR)/GRASS.scpt: GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
+	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
