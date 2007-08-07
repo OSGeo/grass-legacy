@@ -120,7 +120,7 @@ fi
 if [ ! "$GRASS_GUI" ] ; then
 	GRASS_GUI="tcltk"
 fi
-if [ "$GRASS_GUI" = "text" ] ; then
+if [ "$GRASS_GUI" != "tcltk" ] ; then
 	osascript -e 'tell application "Terminal" to activate'
 fi
 
