@@ -33,9 +33,9 @@ grass_ver=`cut -d . -f 1-2 "$GISBASE/etc/VERSIONNUMBER"`
 GISBASE_USER="$HOME/Library/GRASS/$grass_ver"
 GISBASE_SYSTEM="/Library/GRASS/$grass_ver"
 
-# for GDAL utils
-# hack - ideally user should have this in their PATH, but make sure here
-PATH="@GDAL_BIN_PATH@:$PATH"
+# for extra utils
+# hack - ideally user should have these in their PATH, but make sure here
+PATH="@GDAL_BIN_PATH@:@PROJ_BIN_PATH@:$PATH"
 
 # add some OS X style app support paths, and create user one if missing.
 mkdir -p "$GISBASE_USER/Modules/bin"
