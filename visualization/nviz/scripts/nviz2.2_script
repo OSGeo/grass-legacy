@@ -121,13 +121,13 @@ set Nv_(panels) [list]
 foreach i $user_path {
 	set index $i/panelIndex
 	if {[file exists $index]} then {
-	set panels [exec cat $index]
-	set panels [split $panels]
-	foreach j $panels {
-		if {[lsearch -exact $Nv_(panels) $j] == -1} then {
-		lappend Nv_(panels) $j
+		set panels [open $index]
+		while {[gets $panels j] >= 0} {
+			if {[lsearch -exact $Nv_(panels) $j] == -1} then {
+				lappend Nv_(panels) $j
+			}
 		}
-	}
+		close $panels
 	}
 }
 
@@ -135,13 +135,13 @@ set Nv_(config) [list]
 foreach i $user_path {
 	set index $i/configIndex
 	if {[file exists $index]} then {
-	set config [exec cat $index]
-	set config [split $config]
-	foreach j $config {
-		if {[lsearch -exact $Nv_(config) $j] == -1} then {
-		lappend Nv_(config) $j
+		set config [open $index]
+		while {[gets $config j] >= 0} {
+			if {[lsearch -exact $Nv_(config) $j] == -1} then {
+				lappend Nv_(config) $j
+			}
 		}
-	}
+		close $config
 	}
 }
 
