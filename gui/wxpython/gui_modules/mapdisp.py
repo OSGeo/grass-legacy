@@ -1452,7 +1452,7 @@ class MapFrame(wx.Frame):
         self.cursors = {
             # default: cross
             # "default" : wx.StockCursor(wx.CURSOR_DEFAULT),
-            "default" : wx.StockCursor(wx.CURSOR_CROSS),
+            "default" : wx.StockCursor(wx.CURSOR_ARROW),
             "cross"   : wx.StockCursor(wx.CURSOR_CROSS),
             "hand"    : wx.StockCursor(wx.CURSOR_HAND),
             "pencil"  : wx.StockCursor(wx.CURSOR_PENCIL),
