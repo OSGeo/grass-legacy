@@ -76,7 +76,7 @@ int main (int argc, char **argv)
 	  "creates a new map containing only the selected objects.");
     module->description =
 	_("If 'list', 'file' and 'where' options are not specified, "
-	  "all features of given type and layer are extracted, categories "
+	  "all features of given type and layer are extracted. Categories "
 	  "are not changed in that case.");
 
     d_flag = G_define_flag();
@@ -217,13 +217,13 @@ int main (int argc, char **argv)
 	}
         Fi = Vect_get_field( &In, field);
 	if ( !Fi ) {
-	    G_fatal_error ( _("No layer database connection.") );
+	    G_fatal_error ( _("No layer database connection") );
 	}
-	G_message(_("Load cats from the database (table = %s, db = %s)."),  Fi->table, Fi->database);
+	G_message(_("Load categories from the database (table = %s, db = %s)."),  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
         if (driver == NULL)
-            G_fatal_error(_("Unable to open driver <%s>"), Fi->driver) ;
+            G_fatal_error(_("Unable to start driver <%s>"), Fi->driver) ;
 				 
 	db_init_handle (&handle);
 	db_set_handle (&handle, Fi->database, NULL);
@@ -231,7 +231,7 @@ int main (int argc, char **argv)
             G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, driver) ;
 											 
 	ncats = db_select_int( driver, Fi->table, Fi->key, whereopt->answer, &cats);
-	G_message(_("%d cats loaded from the database"),  ncats);
+	G_message(_("%d categories loaded from the database"),  ncats);
 	
 	db_close_database(driver);
 	db_shutdown_driver(driver);

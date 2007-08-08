@@ -468,12 +468,12 @@ main (int argc, char **argv)
 	      {
                 driver = db_start_driver(fi->driver);
 		if (driver == NULL)
-		    G_fatal_error(_("Cannot open driver %s"), fi->driver) ;
+		    G_fatal_error(_("Unable to open driver <%s>"), fi->driver) ;
 		
  	        db_init_handle (&handle);
 	        db_set_handle (&handle, fi->database, NULL);
 	        if (db_open_database(driver, &handle) != DB_OK)
-		    G_fatal_error(_("Cannot open database %s"), fi->database) ;
+		    G_fatal_error(_("Unable to open database <%s>"), fi->database) ;
 		
 		ncat = db_select_int( driver, fi->table, fi->key, where_opt->answer, &cats);
 

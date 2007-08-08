@@ -143,7 +143,7 @@ int main (int argc, char **argv)
     else
     {
       if ( Vect_open_update_head ( &Map, inopt->answer, G_mapset()) < 1 )
-               G_fatal_error(_("Unable to edit vector map stored in other mapset"));
+               G_fatal_error(_("Cannot edit vector map stored in other mapset."));
       Vect_hist_command ( &Map );
     }
 
@@ -182,12 +182,12 @@ int main (int argc, char **argv)
                G_fatal_error(_("Database connection not defined for layer <%d>"), field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
-                G_warning(_("Unable to open driver %s"), fi->driver) ; /* G_fatal_error ? */
+                G_warning(_("Unable to open driver <%s>"), fi->driver) ; /* G_fatal_error ? */
           
           db_init_handle (&handle);
           db_set_handle (&handle, fi->database, NULL);
           if (db_open_database(driver, &handle) != DB_OK)
-             G_fatal_error(_("Unable to open database <%s>"), fi->database);
+             G_fatal_error(_("Unable to open database <%s> by driver <%s>"), fi->database, fi->driver);
           db_init_string(&table_name);
           db_set_string(&table_name, fi->table);
           if(db_describe_table (driver, &table_name, &table) != DB_OK)
@@ -255,10 +255,10 @@ int main (int argc, char **argv)
 		       G_fatal_error(_("Unable to open database <%s> by driver <%s>"), fi->database, fi->driver);
 
 		   if ( db_create_index2(driver, fi->table, fi->key ) != DB_OK )
-		       G_warning (_("Unable to create index"));
+		       G_warning (_("Cannot create index"));
 
 		   if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-		       G_warning (_("Unable to grant privileges on table %s"), fi->table );
+		       G_warning (_("Cannot grant privileges on table %s"), fi->table );
 
 		   G_warning (_("Select privileges were granted on the table"));
 

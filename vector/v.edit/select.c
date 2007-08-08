@@ -405,7 +405,7 @@ int sel_by_where (struct Map_info *Map,
     driver = db_start_driver (Fi -> driver);
 
     if (!driver)
-	G_fatal_error(_("Cannot open driver <%s>"),
+	G_fatal_error(_("Unable to open driver <%s>"),
 		      Fi->driver) ;
     
     db_init_handle (&handle);
@@ -413,7 +413,7 @@ int sel_by_where (struct Map_info *Map,
     db_set_handle (&handle, Fi -> database, NULL);
 
     if (db_open_database(driver, &handle) != DB_OK)
-	G_fatal_error(_("Cannot open database <%s>"),
+	G_fatal_error(_("Unable to open database <%s>"),
 		      Fi->database);
     
     ncats = db_select_int (driver, Fi -> table, Fi -> key,

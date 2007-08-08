@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
     /* set input vector map name and mapset */
     Vect_check_input_output_name(old->answer, new->answer, GV_FATAL_EXIT);
     if ((mapset = G_find_vector2(old->answer, "")) == NULL)
-	G_fatal_error(_("Could not find input vector map %s"), old->answer);
+	G_fatal_error(_("Vector map <%s> not found"), old->answer);
 
     /* vector setup */
     Points = Vect_new_line_struct();
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
 	if ((driver =
 	     db_start_driver_open_database(Fi->driver, Fi->database)) == NULL)
-	    G_fatal_error(_("Cannot open driver %s"), Fi->driver);
+	    G_fatal_error(_("Unable to open driver <%s>"), Fi->driver);
 
     }
 
@@ -192,11 +192,11 @@ int main(int argc, char *argv[])
 
 	/* check for the elev raster, and check for error condition */
 	if ((mapset = G_find_cell2(elevation->answer, "")) == NULL)
-	    G_fatal_error(_("cell file [%s] not found"), elevation->answer);
+	    G_fatal_error(_("Raster map <%s> not found"), elevation->answer);
 
 	/* open the elev raster, and check for error condition */
 	if ((fdrast = G_open_cell_old(elevation->answer, mapset)) < 0)
-	    G_fatal_error(_("can't open raster map [%s]"), elevation->answer);
+	    G_fatal_error(_("Unable to open raster map <%s>"), elevation->answer);
     }
 
     /* if area */

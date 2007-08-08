@@ -56,7 +56,7 @@ main (int argc, char *argv[])
     }
     module = G_define_module();
     module->keywords = _("vector");
-    module->label    = _("Create a new vector as a read-only link to OGR layer.");
+    module->label    = _("Creates a new vector as a read-only link to OGR layer.");
     module->description = G_store(buf);
 
     dsn_opt = G_define_option();
@@ -70,7 +70,7 @@ main (int argc, char *argv[])
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = NO;
-    out_opt->description = _("Output vector, if not given, available layers are printed only"); 
+    out_opt->description = _("Output vector. If not given, available layers are printed only."); 
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
@@ -85,11 +85,11 @@ main (int argc, char *argv[])
 	exit(EXIT_FAILURE); 
 
     if ( !out_opt->answer && layer_opt->answer )
-	G_fatal_error ( "Output vector name was not specified.");
+	G_fatal_error (_("Output vector name was not specified"));
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
-    if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source");
+    if( Ogr_ds == NULL ) G_fatal_error (_("Cannot open data source"));
 
     /* Make a list of available layers */
     nlayers = OGR_DS_GetLayerCount(Ogr_ds);
@@ -119,7 +119,7 @@ main (int argc, char *argv[])
     }
 
     if ( layer == -1 ) {
-	G_fatal_error ("Layer '%s' not available", layer_opt->answer);
+	G_fatal_error (_("Layer <%s> not available", layer_opt->answer));
     }
 
     G_debug (2, "layer '%s' was found", layer_opt->answer );

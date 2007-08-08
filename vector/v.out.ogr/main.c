@@ -83,7 +83,7 @@ main (int argc, char *argv[])
     /* Module options */
     module = G_define_module();
     module->keywords = _("vector, export");
-    module->description = _("Convert to one of the supported OGR vector formats.");
+    module->description = _("Converts to one of the supported OGR vector formats.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -187,7 +187,7 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error (_("Could not find input vector map <%s>"), in_opt->answer);
+	 G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
     
     Vect_set_open_level (2); 
@@ -248,16 +248,16 @@ main (int argc, char *argv[])
 	     doatt = 0;
 	 } else {  
 	     Driver = db_start_driver(Fi->driver);
-	     if (Driver == NULL) G_fatal_error(_("Cannot open driver %s"), Fi->driver);
+	     if (Driver == NULL) G_fatal_error(_("Unable to open driver <%s>"), Fi->driver);
 
 	     db_init_handle (&handle);
 	     db_set_handle (&handle, Fi->database, NULL);
 	     if (db_open_database(Driver, &handle) != DB_OK)
-		 G_fatal_error(_("Cannot open database %s"), Fi->database);
+		 G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
 	     db_set_string(&dbstring, Fi->table);
 	     if(db_describe_table (Driver, &dbstring, &Table) != DB_OK) 
-		 G_fatal_error(_("Cannot describe table %s"), Fi->table);
+		 G_fatal_error(_("Unable to describe table <%s>"), Fi->table);
 
 	     ncol = db_get_table_number_of_columns(Table); 
 	     G_debug (2, "ncol = %d", ncol );
