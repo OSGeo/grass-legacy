@@ -375,7 +375,7 @@ int main(int argc, char *argv[])
     G_command_history(&history);
     G_write_history(parm.output->answer, &history);
 
-    G_done_msg(NULL);
+    G_done_msg("");
 
     exit(EXIT_SUCCESS);
 }

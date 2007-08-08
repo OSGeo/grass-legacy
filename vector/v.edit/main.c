@@ -253,7 +253,7 @@ int main (int argc, char *argv[])
     
     G_debug(1, "Map closed");
 
-    G_done_msg (NULL);
+    G_done_msg ("");
 
     if (ret > -1) {
 	exit (EXIT_SUCCESS);

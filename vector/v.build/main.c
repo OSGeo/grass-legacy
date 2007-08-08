@@ -146,7 +146,7 @@ main (int argc, char *argv[])
 	    }
 	}
 
-	G_message (NULL);
+	G_message ("");
 	G_important_message (_("Building topology for error vector map..."));
 	Vect_build ( &Err, stdout );
         Vect_close ( &Err );

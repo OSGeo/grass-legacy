@@ -380,7 +380,7 @@ main (int argc, char *argv[])
     if (bbox_name) {
 	Vect_set_map_name (&BBoxMap, "Output from v.patch (bounding boxes)");
 	Vect_set_person (&BBoxMap, G_whoami ());
-	G_important_message (NULL);
+	G_important_message ("");
 	G_important_message (_("Building topology for vector map <%s>..."), bbox_name);
 	if (G_verbose() > G_verbose_min())
 	    Vect_build (&BBoxMap, stderr);

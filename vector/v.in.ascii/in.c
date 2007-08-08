@@ -493,7 +493,7 @@ main (int argc, char *argv[])
 	    Vect_close ( &Map );
         }
 
-	G_done_msg(NULL);
+	G_done_msg("");
 
 	exit(EXIT_SUCCESS);
 }
