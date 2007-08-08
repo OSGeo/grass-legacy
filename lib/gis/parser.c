@@ -678,6 +678,7 @@ int G_parser (int argc, char **argv)
 			break;
 		}
 	}
+	G_basename(pgm_name, "exe");   
 
 	/* Stash default answers */
 
