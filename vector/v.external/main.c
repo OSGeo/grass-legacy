@@ -119,7 +119,7 @@ main (int argc, char *argv[])
     }
 
     if ( layer == -1 ) {
-	G_fatal_error (_("Layer <%s> not available", layer_opt->answer));
+	G_fatal_error (_("Layer <%s> not available"), layer_opt->answer);
     }
 
     G_debug (2, "layer '%s' was found", layer_opt->answer );
