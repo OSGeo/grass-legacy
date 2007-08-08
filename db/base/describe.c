@@ -42,7 +42,7 @@ main(int argc, char *argv[])
     parse_command_line (argc, argv);
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
-	G_fatal_error(_("Cannot start driver <%s>"), parms.driver);
+	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
         exit(ERROR);
     }
 
@@ -55,7 +55,7 @@ main(int argc, char *argv[])
     db_set_string(&table_name, parms.table);
 
     if(db_describe_table (driver, &table_name, &table) != DB_OK) {
-	G_warning (_("Cannot describe table") ); 
+	G_warning (_("Unable to describe table <%s>"), &table_name); 
 	exit(ERROR);
     }
 
