@@ -498,7 +498,6 @@ class BufferedWindow(wx.Window):
         except:
             return
 
-
         # render vector map layer which is edited
         digitToolbar = self.parent.digittoolbar
         if digitToolbar and \
@@ -507,7 +506,6 @@ class BufferedWindow(wx.Window):
             self.parent.digit.driver.SetRegion(self.Map.region)
             # draw map
             self.imgVectorMap = self.parent.digit.driver.DrawMap()
-
 
         self.Draw(self.pdc, self.img, drawid=id) # draw map image background
         if self.imgVectorMap:
@@ -1250,7 +1248,7 @@ class BufferedWindow(wx.Window):
                    (layer.name, layer.type))
 
         # selected layer must be a valid map
-        if layer.type in ('raster', 'rgb', 'his'):
+        if layer.type in ('raster', 'rgb', 'his', 'shaded', 'arrow'):
             cmdVec = ["r.info", "-g", "map=%s" % layer.name]
         elif layer.type in ('vector', 'thememap', 'themechart'):
             cmdVec = ["v.info", "-g", "map=%s" % layer.name]
