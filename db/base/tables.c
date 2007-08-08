@@ -38,7 +38,7 @@ main(int argc, char *argv[])
 
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
-	G_fatal_error(_("Cannot start driver <%s>"), parms.driver);
+	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
         exit (ERROR);
     }
 
@@ -89,11 +89,11 @@ parse_command_line(int argc, char *argv[])
 
     p = G_define_flag();
     p->key              = 'p';
-    p->description      = _("print tables and exit");    
+    p->description      = _("Print tables and exit");    
 
     s			= G_define_flag();
     s->key		= 's';
-    s->description	= _("system tables instead of user tables");
+    s->description	= _("System tables instead of user tables");
 
     /* Set description */
     module              = G_define_module();

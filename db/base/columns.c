@@ -37,7 +37,7 @@ main(int argc, char *argv[])
 
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
-        G_fatal_error(_("Cannot start driver <%s>"), parms.driver);
+        G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
         exit(ERROR);
     }
        
@@ -97,7 +97,7 @@ parse_command_line(int argc, char *argv[])
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = _("list all columns for a given table.");
+    module->description = _("List all columns for a given table.");
 
         
     if(G_parser(argc, argv))
