@@ -324,42 +324,35 @@ class Map:
         Also adjusts extents when zooming so that zoomed map is centered
         in display.
         """
-        if self.width > self.height and \
-          self.region["w"] - self.region["e"] > \
-          self.region['n'] - self.region['s']:
+        mapwidth = abs(self.region["e"] - self.region["w"])
+        mapheight = abs(self.region['n'] - self.region['s'])
+
+        if self.width/self.height > \
+            mapwidth/mapheight:
 
             # changing e-w region
-            self.region["ewres"] = self.region["nsres"] = \
-                (self.region['n'] - self.region['s']) / self.height
+            res = mapheight / self.height
 
-            center = self.region['w'] + \
-                (self.region['e'] - self.region['w']) / 2
+            center = self.region['w'] + mapwidth / 2
 
-            self.region['w'] = center - self.width / 2 * \
-                self.region["nsres"]
+            self.region['w'] = center - self.width / 2 * res
 
-            self.region['e'] = center + self.width / 2 * \
-                self.region["nsres"]
-
-            self.region['rows'] = self.width
-            self.region['cols'] = self.height
+            self.region['e'] = center + self.width / 2 * res
 
         else:
+
             # changing n-s region
-            self.region["ewres"] = self.region["nsres"] = \
-                (self.region['e'] - self.region['w']) / self.width
+            res =  mapwidth / self.width
 
-            center = self.region['s'] + \
-                (self.region['n'] - self.region['s']) / 2
+            center = self.region['s'] + mapheight / 2
 
-            self.region['s'] = center - self.height / 2 * \
-                self.region["ewres"]
+            self.region['s'] = center - self.height / 2 * res
 
-            self.region['n'] = center + self.height / 2 * \
-                self.region["ewres"]
+            self.region['n'] = center + self.height / 2 * res
 
-            self.region['rows'] = self.width
-            self.region['cols'] = self.height
+        self.region["ewres"] = self.region["nsres"] = res
+        self.region['rows'] = self.width
+        self.region['cols'] = self.height
 
         Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
 
