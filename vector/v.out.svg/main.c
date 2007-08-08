@@ -121,7 +121,7 @@ int main (int argc, char *argv[]) {
 
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-        G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
+        G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
 
     Vect_set_open_level (2);
@@ -135,19 +135,19 @@ int main (int argc, char *argv[]) {
     if ( Fi != NULL ) {
         Driver = db_start_driver(Fi->driver);
         if (Driver == NULL) {
-            G_fatal_error(_("Cannot open driver %s"), Fi->driver);
+            G_fatal_error(_("Unable to open driver <%s>"), Fi->driver);
         }
 
         /* open db */
         db_init_handle (&handle);
         db_set_handle (&handle, Fi->database, NULL);
         if (db_open_database(Driver, &handle) != DB_OK) {
-            G_fatal_error(_("Cannot open database %s"), Fi->database);
+            G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
         }
 
         db_set_string(&dbstring, Fi->table);
         if(db_describe_table (Driver, &dbstring, &Table) != DB_OK) {
-            G_fatal_error(_("Cannot describe table %s"), Fi->table);
+            G_fatal_error(_("Unable to describe table <%s>"), Fi->table);
         }
 
         /* define column-indices for columns to extract */
