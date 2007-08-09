@@ -1234,7 +1234,9 @@ class BufferedWindow(wx.Window):
         Set display extents to match selected raster
         or vector map.
         """
+        zoomreg = {}
 
+        # find selected map
         if not self.tree.GetSelection():
             return
 
@@ -1249,28 +1251,27 @@ class BufferedWindow(wx.Window):
 
         # selected layer must be a valid map
         if layer.type in ('raster', 'rgb', 'his', 'shaded', 'arrow'):
-            cmdVec = ["r.info", "-g", "map=%s" % layer.name]
+            cmdlist = ["g.region", "-ugp", "rast=%s" % layer.name]
         elif layer.type in ('vector', 'thememap', 'themechart'):
-            cmdVec = ["v.info", "-g", "map=%s" % layer.name]
+            cmdlist = ["g.region", "-ugp", "vect=%s" % layer.name]
         else:
             return
 
-        p = cmd.Command(cmdVec)
+        # get map extents using g.region and update display
+        p = cmd.Command(cmdlist)
 
-        output = p.module_stdout.read().split('\n')
-        for oline in output:
-            extent = oline.split('=')
-            if extent[0] == 'north':
-                self.Map.region['n'] = float(extent[1])
-            elif extent[0] == 'south':
-                self.Map.region['s'] = float(extent[1])
-            elif extent[0] == 'east':
-                self.Map.region['e'] = float(extent[1])
-            elif extent[0] == 'west':
-                self.Map.region['w'] = float(extent[1])
-
-        self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
-        self.UpdateMap()
+        if p.returncode == 0:
+            output = p.module_stdout.read().split('\n')
+            for line in output:
+                line = line.strip()
+                if '=' in line: key,val = line.split('=')
+                zoomreg[key] = float(val)
+            self.Map.region['n'] = zoomreg['n']
+            self.Map.region['s'] = zoomreg['s']
+            self.Map.region['e'] = zoomreg['e']
+            self.Map.region['w'] = zoomreg['w']
+            self.ZoomHistory(self.Map.region['n'],self.Map.region['s'],self.Map.region['e'],self.Map.region['w'])
+            self.UpdateMap()
 
     def ZoomToWind(self, event):
         """
