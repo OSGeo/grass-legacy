@@ -102,7 +102,7 @@ class MapLayer:
         #
         # prepare command for each layer
         #
-        layertypes = ['raster','rgb','his','shaded','rastarrow','vector','thememap','themechart',\
+        layertypes = ['raster','rgb','his','shaded','rastarrow','rastnum','vector','thememap','themechart',\
                       'grid','geodesic','rhumb','labels','command','overlay']
         if self.type in layertypes:
             self.__renderLayer()
@@ -202,8 +202,8 @@ class Map:
 
         self.wind      = {}  # WIND settings
         self.region    = {}  # region settings
-        self.width     = 300 # map width
-        self.height    = 400 # map height
+        self.width     = 640.0 # map width
+        self.height    = 480.0 # map height
 
         self.layers    = []  # stack of available layer
         self.overlays  = []  # stack of available overlays
@@ -235,6 +235,7 @@ class Map:
         """
         Reads current region settings from g.region command
         """
+        print "in initregion"
 
         #
         # setting region
@@ -265,34 +266,35 @@ class Map:
             value = value.strip()
             self.wind[key] = value
 
-        self.__adjustRegion()
-
         windfile.close()
-
-
 
         #
         # setting resolution
         #
+        self.SetRegion()
+
+
         # self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e'])
         # - float(self.region['w']))/self.width
 
-    def __initMonSize(self):
-        """
-        Reads current GRASS monitor dimensions from env or
-        use the default values [640x480]
-        """
-
-        try:
-            self.width = int (os.getenv("GRASS_WIDTH"))
-        except:
-            self.width = 640
-
-        try:
-            self.height = int(os.getenv("GRASS_HEIGHT"))
-
-        except:
-            self.height = 480
+# I don't think that this method is used anymore (Michael 8/6/2007
+#    def __initMonSize(self):
+#        """
+#        Reads current GRASS monitor dimensions from env or
+#        use the default values [640x480]
+#        """
+#        print 'in initmonsize'
+#
+#        try:
+#            self.width = int (os.getenv("GRASS_WIDTH"))
+#        except:
+#            self.width = 640
+#
+#        try:
+#            self.height = int(os.getenv("GRASS_HEIGHT"))
+#
+#        except:
+#            self.height = 480
 
 
     def __initEnv(self):
@@ -320,41 +322,58 @@ class Map:
         Maintains constant display resolution, not related to computational
         region. Do NOT use the display resolution to set computational
         resolution. Set computational resolution through g.region.
-
-        Also adjusts extents when zooming so that zoomed map is centered
-        in display.
         """
+
+        self.width = float(self.width)
+        self.height = float(self.height)
         mapwidth = abs(self.region["e"] - self.region["w"])
         mapheight = abs(self.region['n'] - self.region['s'])
 
-        if self.width/self.height > \
-            mapwidth/mapheight:
-
-            # changing e-w region
-            res = mapheight / self.height
-
-            center = self.region['w'] + mapwidth / 2
-
-            self.region['w'] = center - self.width / 2 * res
-
-            self.region['e'] = center + self.width / 2 * res
-
-        else:
-
-            # changing n-s region
-            res =  mapwidth / self.width
-
-            center = self.region['s'] + mapheight / 2
-
-            self.region['s'] = center - self.height / 2 * res
-
-            self.region['n'] = center + self.height / 2 * res
-
-        self.region["ewres"] = self.region["nsres"] = res
-        self.region['rows'] = self.width
-        self.region['cols'] = self.height
+        self.region["nsres"] = mapheight / self.height
+        self.region["ewres"] =  mapwidth / self.width
+        self.region['rows'] = round(mapheight/self.region["nsres"])
+        self.region['cols'] = round(mapwidth/self.region["ewres"])
 
         Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
+
+        return self.region
+
+    def alignResolution(self):
+        """
+        Sets display extents to even multiple of
+        current resolution in WIND file from SW corner.
+        This must be done manually as using the -a flag
+        can produce incorrect extents.
+
+        Used for saving current display settings to WIND file
+        """
+
+        # new values to use for saving to region file
+        new = {}
+#        windreg = {}
+        n = s = e = w = 0.0
+        nwres = ewres = 0.0
+
+        # Get current values for region and display
+#        windreg = self.GetRegion()
+        nsres = self.GetRegion()['nsres']
+        ewres = self.GetRegion()['ewres']
+
+        n = float(self.region['n'])
+        s = float(self.region['s'])
+        e = float(self.region['e'])
+        w = float(self.region['w'])
+
+        # Calculate rows, columns, and extents
+        new['rows'] = math.fabs(round((n-s)/nsres))
+        new['cols'] = math.fabs(round((e-w)/ewres))
+
+        # Calculate new extents
+        new['s'] = nsres * round(s/nsres)
+        new['w'] = ewres * round(w/ewres)
+        new['n'] = new['s'] + (new['rows'] * nsres)
+        new['e'] = new['w'] + (new['cols'] * ewres)
+        return new
 
     def GetRegion(self):
         """
@@ -363,6 +382,7 @@ class Map:
         Example:
             {"n":"4928010", "s":"4913700", "w":"589980",...}
         """
+        print "in getregion"
 
         region = {}
 
@@ -381,6 +401,7 @@ class Map:
             os.environ["GRASS_REGION"] = tmpreg
 
         Debug.msg (3, "Map.GetRegion(): %s" % region)
+
         return region
 
     def SetRegion(self):
@@ -392,14 +413,17 @@ class Map:
         string usable for GRASS_REGION variable or None
         """
 
+        print "in setregion"
+
         grass_region = ""
 
-        self.__adjustRegion()
-        newextents = self.alignResolution()
-        self.region['n'] = newextents['n']
-        self.region['s'] = newextents['s']
-        self.region['e'] = newextents['e']
-        self.region['w'] = newextents['w']
+        self.region = self.__adjustRegion()
+
+#        newextents = self.alignResolution()
+#        self.region['n'] = newextents['n']
+#        self.region['s'] = newextents['s']
+#        self.region['e'] = newextents['e']
+#        self.region['w'] = newextents['w']
 
         try:
             for key in self.wind.keys():
@@ -439,6 +463,7 @@ class Map:
                     grass_region += key + ": "  + self.wind[key] + "; "
 
             Debug.msg (4, "Map.SetRegion(): %s" % grass_region)
+
             return grass_region
 
         except:
@@ -467,41 +492,6 @@ class Map:
             return projinfo
         else:
             return
-
-    def alignResolution(self):
-        """
-        Sets display extents to even multiple of
-        current resolution in WIND file from SW corner.
-        This must be done manually as using the -a flag
-        can produce incorrect extents.
-        """
-
-        # new values to use for saving to region file
-        new = {}
-#        windreg = {}
-        n = s = e = w = 0.0
-        nwres = ewres = 0.0
-
-        # Get current values for region and display
-        windreg = self.GetRegion()
-        nsres = windreg['nsres']
-        ewres = windreg['ewres']
-
-        n = float(self.region['n'])
-        s = float(self.region['s'])
-        e = float(self.region['e'])
-        w = float(self.region['w'])
-
-        # Calculate rows, columns, and extents
-        new['rows'] = math.fabs(round((n-s)/nsres))
-        new['cols'] = math.fabs(round((e-w)/ewres))
-
-        # Calculate new extents
-        new['s'] = nsres * round(s/nsres)
-        new['w'] = ewres * round(w/ewres)
-        new['n'] = new['s'] + (new['rows'] * nsres)
-        new['e'] = new['w'] + (new['cols'] * ewres)
-        return new
 
     def GetListOfLayers(self, l_type=None, l_mapset=None, l_active=None, l_hidden=None):
         """
@@ -918,8 +908,8 @@ if __name__ == "__main__":
     os.system("g.region -d")
 
     map = Map()
-    map.width = 300
-    map.height = 400
+    map.width = 640
+    map.height = 480
 
     map.AddLayer(item=None, type="raster", name="elevation.dem", command = "d.rast elevation.dem@PERMANENT catlist=1000-1500 -i", l_opacity=.7)
 
