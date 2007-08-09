@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_mr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-06 18:06+0200\n"
+"POT-Creation-Date: 2007-08-09 20:17+0200\n"
 "PO-Revision-Date: 2007-03-16 21:31+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Marathi <translations@grass.itc.it>\n"
@@ -43,18 +43,18 @@ msgstr ""
 #: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/rgbhis.tcl:130
 #: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/thematic.tcl:121
 #: ../gui/tcltk/d.m/thematic.tcl:125 ../gui/tcltk/d.m/vector.tcl:202
-#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/gis.m/barscale.tcl:175
-#: ../gui/tcltk/gis.m/barscale.tcl:179 ../gui/tcltk/gis.m/chart.tcl:182
-#: ../gui/tcltk/gis.m/chart.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:172
-#: ../gui/tcltk/gis.m/dtext.tcl:176 ../gui/tcltk/gis.m/frames.tcl:115
-#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:153
-#: ../gui/tcltk/gis.m/gridline.tcl:201 ../gui/tcltk/gis.m/gridline.tcl:228
-#: ../gui/tcltk/gis.m/histogram.tcl:156 ../gui/tcltk/gis.m/histogram.tcl:159
+#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/gis.m/barscale.tcl:178
+#: ../gui/tcltk/gis.m/barscale.tcl:182 ../gui/tcltk/gis.m/chart.tcl:182
+#: ../gui/tcltk/gis.m/chart.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:175
+#: ../gui/tcltk/gis.m/dtext.tcl:179 ../gui/tcltk/gis.m/frames.tcl:115
+#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:160
+#: ../gui/tcltk/gis.m/gridline.tcl:212 ../gui/tcltk/gis.m/gridline.tcl:239
+#: ../gui/tcltk/gis.m/histogram.tcl:160 ../gui/tcltk/gis.m/histogram.tcl:163
 #: ../gui/tcltk/gis.m/labels.tcl:134 ../gui/tcltk/gis.m/labels.tcl:138
-#: ../gui/tcltk/gis.m/legend.tcl:183 ../gui/tcltk/gis.m/legend.tcl:186
+#: ../gui/tcltk/gis.m/legend.tcl:187 ../gui/tcltk/gis.m/legend.tcl:190
 #: ../gui/tcltk/gis.m/rastarrows.tcl:162 ../gui/tcltk/gis.m/rastarrows.tcl:165
 #: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
-#: ../gui/tcltk/gis.m/rastnums.tcl:156 ../gui/tcltk/gis.m/rastnums.tcl:159
+#: ../gui/tcltk/gis.m/rastnums.tcl:160 ../gui/tcltk/gis.m/rastnums.tcl:163
 #: ../gui/tcltk/gis.m/rgbhis.tcl:153 ../gui/tcltk/gis.m/rgbhis.tcl:162
 #: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:239
@@ -68,7 +68,7 @@ msgstr ""
 msgid "display N. arrow only "
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:219
+#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:222
 msgid "display scale only"
 msgstr ""
 
@@ -76,11 +76,11 @@ msgstr ""
 msgid "line scale instead of bar scale "
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:227
+#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:230
 msgid "text on top of scale, instead of to right"
 msgstr ""
 
-#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:237
+#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:240
 msgid "use feet/miles instead of meters"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgid "points"
 msgstr ""
 
 #: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
-#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/gis.m/legend.tcl:271
+#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/gis.m/legend.tcl:275
 #: ../gui/tcltk/gis.m/vector.tcl:339
 msgid "lines"
 msgstr ""
@@ -150,11 +150,11 @@ msgstr ""
 msgid "Command:"
 msgstr ""
 
-#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:256
+#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:257
 msgid "Loading GIS Manager"
 msgstr ""
 
-#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:303
+#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:304
 msgid "Done"
 msgstr ""
 
@@ -167,7 +167,7 @@ msgid "Text options: color"
 msgstr ""
 
 #: ../gui/tcltk/d.m/dtext.tcl:106 ../gui/tcltk/d.m/fttext.tcl:151
-#: ../gui/tcltk/gis.m/dtext.tcl:225
+#: ../gui/tcltk/gis.m/dtext.tcl:228
 msgid "bold text"
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Font:"
 msgstr ""
 
-#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:223
+#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:226
 #: ../gui/tcltk/gis.m/maplabels.tcl:272 ../gui/tcltk/gis.m/maptext.tcl:184
 msgid "  color"
 msgstr ""
@@ -223,7 +223,7 @@ msgstr ""
 msgid "height in pixels instead of %"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:151
+#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:156
 msgid "draw grid"
 msgstr ""
 
@@ -235,7 +235,7 @@ msgstr ""
 msgid " grid color "
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:157
+#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:164
 msgid "Help for grids"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgstr ""
 msgid "     "
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:93 ../gui/tcltk/gis.m/gridline.tcl:176
+#: ../gui/tcltk/d.m/gridline.tcl:93
 msgid "draw grid border"
 msgstr ""
 
@@ -259,19 +259,19 @@ msgstr ""
 msgid " border & text color"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:200
+#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:211
 msgid "draw geodesic line"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:205
+#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:216
 msgid "Help for geodesic lines"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:227
+#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:238
 msgid "draw rhumbline"
 msgstr ""
 
-#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:232
+#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:243
 msgid "Help for rhumblines"
 msgstr ""
 
@@ -2314,80 +2314,80 @@ msgstr ""
 msgid "Line width used for printing"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:148
+#: ../gui/tcltk/gis.m/barscale.tcl:151
 msgid "Display scale and north arrow"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:155 ../gui/tcltk/gis.m/chart.tcl:164
-#: ../gui/tcltk/gis.m/cmd.tcl:103 ../gui/tcltk/gis.m/dtext.tcl:161
-#: ../gui/tcltk/gis.m/gridline.tcl:140 ../gui/tcltk/gis.m/histogram.tcl:139
-#: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:166
+#: ../gui/tcltk/gis.m/barscale.tcl:158 ../gui/tcltk/gis.m/chart.tcl:164
+#: ../gui/tcltk/gis.m/cmd.tcl:103 ../gui/tcltk/gis.m/dtext.tcl:164
+#: ../gui/tcltk/gis.m/gridline.tcl:145 ../gui/tcltk/gis.m/histogram.tcl:143
+#: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:170
 #: ../gui/tcltk/gis.m/rastarrows.tcl:145 ../gui/tcltk/gis.m/raster.tcl:148
-#: ../gui/tcltk/gis.m/rastnums.tcl:139 ../gui/tcltk/gis.m/rgbhis.tcl:140
+#: ../gui/tcltk/gis.m/rastnums.tcl:143 ../gui/tcltk/gis.m/rgbhis.tcl:140
 #: ../gui/tcltk/gis.m/thematic.tcl:221 ../gui/tcltk/gis.m/vector.tcl:294
 msgid "Opaque "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:159 ../gui/tcltk/gis.m/chart.tcl:168
-#: ../gui/tcltk/gis.m/cmd.tcl:107 ../gui/tcltk/gis.m/dtext.tcl:165
-#: ../gui/tcltk/gis.m/gridline.tcl:144 ../gui/tcltk/gis.m/histogram.tcl:143
-#: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:170
+#: ../gui/tcltk/gis.m/barscale.tcl:162 ../gui/tcltk/gis.m/chart.tcl:168
+#: ../gui/tcltk/gis.m/cmd.tcl:107 ../gui/tcltk/gis.m/dtext.tcl:168
+#: ../gui/tcltk/gis.m/gridline.tcl:149 ../gui/tcltk/gis.m/histogram.tcl:147
+#: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:174
 #: ../gui/tcltk/gis.m/rastarrows.tcl:149 ../gui/tcltk/gis.m/raster.tcl:152
-#: ../gui/tcltk/gis.m/rastnums.tcl:143 ../gui/tcltk/gis.m/rgbhis.tcl:144
+#: ../gui/tcltk/gis.m/rastnums.tcl:147 ../gui/tcltk/gis.m/rgbhis.tcl:144
 #: ../gui/tcltk/gis.m/thematic.tcl:225 ../gui/tcltk/gis.m/vector.tcl:298
 msgid " Transparent"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:165
+#: ../gui/tcltk/gis.m/barscale.tcl:168
 #, tcl-format
 msgid "Scale placement: 0-100% from top left of display"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:171
+#: ../gui/tcltk/gis.m/barscale.tcl:174
 msgid "\t enter x,y of scale/arrow upper left corner"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:174
+#: ../gui/tcltk/gis.m/barscale.tcl:177
 msgid "    "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:185
+#: ../gui/tcltk/gis.m/barscale.tcl:188
 msgid "\t "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:186 ../gui/tcltk/gis.m/dtext.tcl:192
-#: ../gui/tcltk/gis.m/legend.tcl:202 ../gui/tcltk/gis.m/maptext.tcl:150
+#: ../gui/tcltk/gis.m/barscale.tcl:189 ../gui/tcltk/gis.m/dtext.tcl:195
+#: ../gui/tcltk/gis.m/legend.tcl:206 ../gui/tcltk/gis.m/maptext.tcl:150
 msgid "place with mouse"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:194
+#: ../gui/tcltk/gis.m/barscale.tcl:197
 msgid "Scale appearance:  text color"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:196
+#: ../gui/tcltk/gis.m/barscale.tcl:199
 msgid "  font "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:199 ../gui/tcltk/gis.m/dtext.tcl:221
-#: ../gui/tcltk/gis.m/gridline.tcl:168 ../gui/tcltk/gis.m/histogram.tcl:171
-#: ../gui/tcltk/gis.m/legend.tcl:228 ../gui/tcltk/gis.m/maptext.tcl:180
-#: ../gui/tcltk/gis.m/rastnums.tcl:173
+#: ../gui/tcltk/gis.m/barscale.tcl:202 ../gui/tcltk/gis.m/dtext.tcl:224
+#: ../gui/tcltk/gis.m/gridline.tcl:185 ../gui/tcltk/gis.m/histogram.tcl:175
+#: ../gui/tcltk/gis.m/legend.tcl:232 ../gui/tcltk/gis.m/maptext.tcl:180
+#: ../gui/tcltk/gis.m/rastnums.tcl:177
 msgid "select font for text"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:206
+#: ../gui/tcltk/gis.m/barscale.tcl:209
 msgid "\tbackground color "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:209 ../gui/tcltk/gis.m/histogram.tcl:183
+#: ../gui/tcltk/gis.m/barscale.tcl:212 ../gui/tcltk/gis.m/histogram.tcl:187
 msgid "transparent background"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:217
+#: ../gui/tcltk/gis.m/barscale.tcl:220
 msgid "display N. arrow only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/barscale.tcl:235
+#: ../gui/tcltk/gis.m/barscale.tcl:238
 msgid "line scale instead of bar"
 msgstr ""
 
@@ -2445,39 +2445,39 @@ msgstr ""
 msgid "\tchart outline color:"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:154
+#: ../gui/tcltk/gis.m/dtext.tcl:157
 msgid "Display text"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:171
+#: ../gui/tcltk/gis.m/dtext.tcl:174
 msgid "Text to display: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:183 ../gui/tcltk/gis.m/maptext.tcl:140
+#: ../gui/tcltk/gis.m/dtext.tcl:186 ../gui/tcltk/gis.m/maptext.tcl:140
 msgid "Text placement: x,y coordinates (from upper left) "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:189 ../gui/tcltk/gis.m/maptext.tcl:147
+#: ../gui/tcltk/gis.m/dtext.tcl:192 ../gui/tcltk/gis.m/maptext.tcl:147
 msgid "     coordinate type for text placement "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:200 ../gui/tcltk/gis.m/maptext.tcl:158
+#: ../gui/tcltk/gis.m/dtext.tcl:203 ../gui/tcltk/gis.m/maptext.tcl:158
 msgid "     align text with coordinate point  "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:209
+#: ../gui/tcltk/gis.m/dtext.tcl:212
 msgid "     text rotation (degrees)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:218
+#: ../gui/tcltk/gis.m/dtext.tcl:221
 msgid "Text options: font "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:232
+#: ../gui/tcltk/gis.m/dtext.tcl:235
 msgid "     text height in pixels "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/dtext.tcl:234
+#: ../gui/tcltk/gis.m/dtext.tcl:237
 msgid "  line spacing"
 msgstr ""
 
@@ -2576,7 +2576,7 @@ msgstr ""
 msgid "Start georectifying"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/georect.tcl:694 ../gui/tcltk/gis.m/gm.tcl:530
+#: ../gui/tcltk/gis.m/georect.tcl:694 ../gui/tcltk/gis.m/gm.tcl:541
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:839 ../gui/tcltk/gis.m/rules.tcl:172
 #: ../lib/gtcltk/select.tcl:181 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:369 ../lib/init/file_option.tcl:114
@@ -2688,62 +2688,62 @@ msgstr ""
 msgid "Zoom to map"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:263
+#: ../gui/tcltk/gis.m/gm.tcl:264
 msgid "Creating MainFrame..."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:305
+#: ../gui/tcltk/gis.m/gm.tcl:306
 msgid "Welcome to GRASS GIS"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:338
+#: ../gui/tcltk/gis.m/gm.tcl:339
 #, tcl-format
 msgid "Map Display %d"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:363
+#: ../gui/tcltk/gis.m/gm.tcl:364
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:435 ../gui/tcltk/gis.m/gm.tcl:465
+#: ../gui/tcltk/gis.m/gm.tcl:436 ../gui/tcltk/gis.m/gm.tcl:466
 msgid "Map Resource File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:436 ../gui/tcltk/gis.m/gm.tcl:467
+#: ../gui/tcltk/gis.m/gm.tcl:437 ../gui/tcltk/gis.m/gm.tcl:468
 msgid "All Files"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:440
+#: ../gui/tcltk/gis.m/gm.tcl:441
 msgid "Open File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:466
+#: ../gui/tcltk/gis.m/gm.tcl:467
 msgid "DM Resource File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:470 ../lib/gis/gui.tcl:219
+#: ../gui/tcltk/gis.m/gm.tcl:471 ../lib/gis/gui.tcl:219
 msgid "Save File"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:487
-msgid "Select default font for GRASS displays"
+#: ../gui/tcltk/gis.m/gm.tcl:489
+msgid "Select GRASS display font"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:494
+#: ../gui/tcltk/gis.m/gm.tcl:496
 msgid "Font: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:520
+#: ../gui/tcltk/gis.m/gm.tcl:531
 msgid "Character encoding: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:527 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../gui/tcltk/gis.m/gm.tcl:538 ../gui/tcltk/gis.m/rules.tcl:170
 #: ../lib/init/epsg_option.tcl:366 ../vector/v.digit/settings.tcl:160
 msgid "OK"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:603
+#: ../gui/tcltk/gis.m/gm.tcl:617
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr ""
@@ -3772,55 +3772,71 @@ msgstr ""
 msgid "You can digitize raster or vector maps only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:133
+#: ../gui/tcltk/gis.m/gridline.tcl:138
 msgid "Display grid lines, and geodesic lines or rhumblines"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:150
+#: ../gui/tcltk/gis.m/gridline.tcl:155
 msgid "Grid options: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:152
+#: ../gui/tcltk/gis.m/gridline.tcl:157
 msgid "geodetic grid  "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:163
-msgid "   grid & text color "
+#: ../gui/tcltk/gis.m/gridline.tcl:159
+msgid "grid color "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:165
-msgid "  grid text font "
-msgstr ""
-
-#: ../gui/tcltk/gis.m/gridline.tcl:177
-msgid "draw border text  "
-msgstr ""
-
-#: ../gui/tcltk/gis.m/gridline.tcl:179
-msgid " border color"
-msgstr ""
-
-#: ../gui/tcltk/gis.m/gridline.tcl:185
+#: ../gui/tcltk/gis.m/gridline.tcl:170
 msgid "    grid size (map units)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:187
+#: ../gui/tcltk/gis.m/gridline.tcl:172
 msgid " grid origin (east, north)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:193
+#: ../gui/tcltk/gis.m/gridline.tcl:180
+msgid "draw border text "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:182
+msgid "text color "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:187
+msgid "text font "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:188
+msgid "  text size"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:190
+msgid "Grid text size in points"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:197
+msgid "draw grid border "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:199
+msgid "border color "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:204
 msgid "Geodesic and rhumblines for latlong locations only"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:206 ../gui/tcltk/gis.m/gridline.tcl:233
+#: ../gui/tcltk/gis.m/gridline.tcl:217 ../gui/tcltk/gis.m/gridline.tcl:244
 msgid " line color"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:210
+#: ../gui/tcltk/gis.m/gridline.tcl:221
 msgid " text color"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gridline.tcl:219 ../gui/tcltk/gis.m/gridline.tcl:242
+#: ../gui/tcltk/gis.m/gridline.tcl:230 ../gui/tcltk/gis.m/gridline.tcl:253
 msgid "     line endpoints (x1,y1,x2,y2)"
 msgstr ""
 
@@ -3833,35 +3849,35 @@ msgstr ""
 msgid "histogram of %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:132
+#: ../gui/tcltk/gis.m/histogram.tcl:136
 msgid "Draw histogram of values from raster map or image"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:149
+#: ../gui/tcltk/gis.m/histogram.tcl:153
 msgid "Raster to histogram: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:165
+#: ../gui/tcltk/gis.m/histogram.tcl:169
 msgid "Graph style"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:168
+#: ../gui/tcltk/gis.m/histogram.tcl:172
 msgid "\ttext font "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:178
+#: ../gui/tcltk/gis.m/histogram.tcl:182
 msgid "Histogram color: text & frame"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:180
+#: ../gui/tcltk/gis.m/histogram.tcl:184
 msgid "  background"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:190
+#: ../gui/tcltk/gis.m/histogram.tcl:194
 msgid "Steps/bins for values (fp maps only)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/histogram.tcl:194
+#: ../gui/tcltk/gis.m/histogram.tcl:198
 msgid "include null values"
 msgstr ""
 
@@ -3897,112 +3913,112 @@ msgstr ""
 msgid "v.label"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:143
+#: ../gui/tcltk/gis.m/legend.tcl:147
 msgid "Raster map for legend"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:146
+#: ../gui/tcltk/gis.m/legend.tcl:150
 #, tcl-format
 msgid "legend for %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:159
+#: ../gui/tcltk/gis.m/legend.tcl:163
 msgid "Display legend for raster map using cat values and labels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:176
+#: ../gui/tcltk/gis.m/legend.tcl:180
 msgid "Raster map: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:193
+#: ../gui/tcltk/gis.m/legend.tcl:197
 #, tcl-format
 msgid "Legend placement and size as 0-100% of display"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:199
+#: ../gui/tcltk/gis.m/legend.tcl:203
 #, tcl-format
 msgid "    x,y of lower left corner (in % from display top left)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:210
+#: ../gui/tcltk/gis.m/legend.tcl:214
 msgid "    legend height "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:212
+#: ../gui/tcltk/gis.m/legend.tcl:216
 #, tcl-format
 msgid "Legend height (% of display)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:213
+#: ../gui/tcltk/gis.m/legend.tcl:217
 msgid "%  width"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:215
+#: ../gui/tcltk/gis.m/legend.tcl:219
 #, tcl-format
 msgid "Legend width (% of display)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:222
+#: ../gui/tcltk/gis.m/legend.tcl:226
 msgid "Legend appearance: text color"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:226
+#: ../gui/tcltk/gis.m/legend.tcl:230
 msgid "  legend text font "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:237
+#: ../gui/tcltk/gis.m/legend.tcl:241
 msgid "do not display labels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:239
+#: ../gui/tcltk/gis.m/legend.tcl:243
 msgid "do not display values"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:246
+#: ../gui/tcltk/gis.m/legend.tcl:250
 msgid "    number of lines (0=display all):"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:248
+#: ../gui/tcltk/gis.m/legend.tcl:252
 msgid "Lines to display"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:250
+#: ../gui/tcltk/gis.m/legend.tcl:254
 msgid "invert legend"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:257
+#: ../gui/tcltk/gis.m/legend.tcl:261
 msgid "    interval between categories (integer maps)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:259
+#: ../gui/tcltk/gis.m/legend.tcl:263
 msgid "Thinning interval"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:266
+#: ../gui/tcltk/gis.m/legend.tcl:270
 msgid "draw smooth gradient (fp maps)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:268
+#: ../gui/tcltk/gis.m/legend.tcl:272
 msgid "with maximum of"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:270
+#: ../gui/tcltk/gis.m/legend.tcl:274
 msgid "Maximum lines to display for gradient"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:277
+#: ../gui/tcltk/gis.m/legend.tcl:281
 msgid "Display legend for subset of raster values"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:284
+#: ../gui/tcltk/gis.m/legend.tcl:288
 msgid "skip categories with no labels"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:291
+#: ../gui/tcltk/gis.m/legend.tcl:295
 msgid "    legend for only these categories     "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/legend.tcl:298
+#: ../gui/tcltk/gis.m/legend.tcl:302
 msgid "    legend for only this range of values"
 msgstr ""
 
@@ -4484,35 +4500,35 @@ msgstr ""
 msgid "cell values for %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:127
+#: ../gui/tcltk/gis.m/rastnums.tcl:131
 msgid "Display cell values from raster map or image"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:133
+#: ../gui/tcltk/gis.m/rastnums.tcl:137
 msgid "  (resolution must be 100x100 or less)"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:149
+#: ../gui/tcltk/gis.m/rastnums.tcl:153
 msgid "Raster to display: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:165
+#: ../gui/tcltk/gis.m/rastnums.tcl:169
 msgid "Color for cell grid:       "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:170
+#: ../gui/tcltk/gis.m/rastnums.tcl:174
 msgid "  cell values font "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:180
+#: ../gui/tcltk/gis.m/rastnums.tcl:184
 msgid "Color for cell values:   "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:185
+#: ../gui/tcltk/gis.m/rastnums.tcl:189
 msgid "use raster colors for cell values"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/rastnums.tcl:266
+#: ../gui/tcltk/gis.m/rastnums.tcl:270
 msgid ""
 "Cell values can only be displayed\n"
 "for regions of < 10,000 cells"

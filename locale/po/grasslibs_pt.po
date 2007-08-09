@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-06 18:06+0200\n"
+"POT-Creation-Date: 2007-08-09 20:17+0200\n"
 "PO-Revision-Date: 2007-06-18 22:26-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <translations@grass.itc.it>\n"
@@ -46,12 +46,12 @@ msgstr "Impossível descrever tabela <%s>"
 msgid "[%s]: No such color"
 msgstr "[%s]: cor não existe"
 
-#: ../lib/driver/command.c:511
+#: ../lib/driver/command.c:517
 #, c-format
 msgid "Unknown command: %d last: %d"
 msgstr "Comando desconhecido: %d último: %d"
 
-#: ../lib/driver/command.c:553
+#: ../lib/driver/command.c:559
 msgid "Monitor: get_command: Premature EOF"
 msgstr "Monitor: get_command: Fim de arquivo prematuro"
 
@@ -425,31 +425,31 @@ msgstr "impossível escrever arquivo f_format para mapas CELL"
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "suporte das cores [%s] no mapset [%s] %s"
 
-#: ../lib/gis/color_rules.c:114
+#: ../lib/gis/color_rules.c:115
 msgid "syntax error"
 msgstr "erro de sintaxe"
 
-#: ../lib/gis/color_rules.c:115
+#: ../lib/gis/color_rules.c:116
 msgid "R/G/B not in range 0-255"
 msgstr "R/G/B fora do intervalo 0-255"
 
-#: ../lib/gis/color_rules.c:116
+#: ../lib/gis/color_rules.c:117
 msgid "invalid color name"
 msgstr "nome de cor inválido"
 
-#: ../lib/gis/color_rules.c:117
+#: ../lib/gis/color_rules.c:118
 msgid "percentage not in range 0-100"
 msgstr "porcentagem fora do intervalo 0-100"
 
-#: ../lib/gis/color_rules.c:118
+#: ../lib/gis/color_rules.c:119
 msgid "invalid value"
 msgstr "valor inválido"
 
-#: ../lib/gis/color_rules.c:119
+#: ../lib/gis/color_rules.c:120
 msgid "unknown error"
 msgstr "Erro desconhecido"
 
-#: ../lib/gis/color_rules.c:150
+#: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): %s"
 msgstr "Regra incorreta (%s): %s"
@@ -483,11 +483,11 @@ msgstr "GISRC - variável não incializada"
 msgid "%s not set"
 msgstr "%s não inicializado"
 
-#: ../lib/gis/error.c:305
+#: ../lib/gis/error.c:316
 msgid "WARNING: "
 msgstr "ATENÇÃO: "
 
-#: ../lib/gis/error.c:306
+#: ../lib/gis/error.c:317
 msgid "ERROR: "
 msgstr "ERRO:"
 
@@ -680,7 +680,7 @@ msgstr ""
 "\n"
 "projeção inválida\n"
 
-#: ../lib/gis/get_row.c:110
+#: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
 msgstr "[%s em %s] - instrução de leitura para a linha %d está fora da região"
@@ -866,7 +866,7 @@ msgstr "G_list: Tipo de elemento desconhecido"
 msgid "LOCATION << %s >> not available"
 msgstr "LOCAÇÃO << %s >> indisponível"
 
-#: ../lib/gis/ls.c:63
+#: ../lib/gis/ls.c:62
 #, c-format
 msgid "Can't open directory %s"
 msgstr "Impossível abrir diretório %s"
@@ -1065,91 +1065,91 @@ msgstr "não consegui abrir [%s]"
 msgid "invalid type: field %s in file %s "
 msgstr "tipo inválido: campo %s no arquivo %s"
 
-#: ../lib/gis/parser.c:343
+#: ../lib/gis/parser.c:344
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr "Cláusula WHERE do comando SQL sem palavra-chave 'where'"
 
-#: ../lib/gis/parser.c:344
+#: ../lib/gis/parser.c:345
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr "Exemplo: renda < 1000 e habitantes >= 10000"
 
-#: ../lib/gis/parser.c:352
+#: ../lib/gis/parser.c:353
 msgid "Name of attribute column"
 msgstr "Nome da coluna de atributos"
 
-#: ../lib/gis/parser.c:360
+#: ../lib/gis/parser.c:361
 msgid "Name of attribute column(s)"
 msgstr "Nome da coluna de atributos"
 
-#: ../lib/gis/parser.c:369
+#: ../lib/gis/parser.c:370
 msgid "Name of input imagery group"
 msgstr "Nome do grupo de imagens de entrada"
 
-#: ../lib/gis/parser.c:378 ../lib/gis/parser.c:403
+#: ../lib/gis/parser.c:379 ../lib/gis/parser.c:404
 msgid "Name of input raster map"
 msgstr "Nome do mapa raster de entrada"
 
-#: ../lib/gis/parser.c:387 ../lib/gis/parser.c:412
+#: ../lib/gis/parser.c:388 ../lib/gis/parser.c:413
 msgid "Name of input raster map(s)"
 msgstr "Nome do mapa raster de entrada"
 
-#: ../lib/gis/parser.c:395
+#: ../lib/gis/parser.c:396
 msgid "Name for output raster map"
 msgstr "Nome do mapa raster de saída"
 
-#: ../lib/gis/parser.c:420
+#: ../lib/gis/parser.c:421
 msgid "Name of base raster map"
 msgstr "Nome do mapa raster base"
 
-#: ../lib/gis/parser.c:428
+#: ../lib/gis/parser.c:429
 msgid "Name of cover raster map"
 msgstr "Nome do mapa raster de cobertura"
 
-#: ../lib/gis/parser.c:436
+#: ../lib/gis/parser.c:437
 msgid "Name of elevation raster map"
 msgstr "Nome do mapa raster de elevação"
 
-#: ../lib/gis/parser.c:445
+#: ../lib/gis/parser.c:446
 msgid "Name of elevation raster map(s)"
 msgstr "Nome dos mapas raster de elevação"
 
-#: ../lib/gis/parser.c:455
+#: ../lib/gis/parser.c:456
 msgid "Name of input raster3d map"
 msgstr "Nome do mapa raster3D de entrada"
 
-#: ../lib/gis/parser.c:464
+#: ../lib/gis/parser.c:465
 msgid "Name of input raster3d map(s)"
 msgstr "Nome dos mapas raster3d de entrada"
 
-#: ../lib/gis/parser.c:472
+#: ../lib/gis/parser.c:473
 msgid "Name for output raster3d map"
 msgstr "Nome do mapa raster3d de saída"
 
-#: ../lib/gis/parser.c:482 ../lib/gis/parser.c:507
+#: ../lib/gis/parser.c:483 ../lib/gis/parser.c:508
 msgid "Name of input vector map"
 msgstr "Nome do mapa vetor de entrada"
 
-#: ../lib/gis/parser.c:491
+#: ../lib/gis/parser.c:492
 msgid "Name of input vector map(s)"
 msgstr "Nome do mapa vetor de entrada"
 
-#: ../lib/gis/parser.c:499
+#: ../lib/gis/parser.c:500
 msgid "Name for output vector map"
 msgstr "Nome do mapa vetor de saída"
 
-#: ../lib/gis/parser.c:516
+#: ../lib/gis/parser.c:517
 msgid "Type"
 msgstr "Tipo"
 
-#: ../lib/gis/parser.c:517
+#: ../lib/gis/parser.c:518
 msgid "Feature type(s)"
 msgstr "Tipo(s) de feição"
 
-#: ../lib/gis/parser.c:524
+#: ../lib/gis/parser.c:525
 msgid "Layer number"
 msgstr "Número da camada"
 
-#: ../lib/gis/parser.c:525
+#: ../lib/gis/parser.c:526
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
@@ -1157,52 +1157,52 @@ msgstr ""
 "Apenas um mapa vetorial pode ser conectado a múltiplas tabelas. Este número "
 "determina qual tabela usar."
 
-#: ../lib/gis/parser.c:532
+#: ../lib/gis/parser.c:533
 msgid "Category value"
 msgstr "Valor da categoria"
 
-#: ../lib/gis/parser.c:539
+#: ../lib/gis/parser.c:540
 msgid "Category values"
 msgstr "Valores da categoria"
 
-#: ../lib/gis/parser.c:540
+#: ../lib/gis/parser.c:541
 msgid "Example: 1,3,7-9,13"
 msgstr "Exemplo: 1,3,7-9,13"
 
-#: ../lib/gis/parser.c:550
+#: ../lib/gis/parser.c:551
 msgid "Name of input file"
 msgstr "Nome do arquivo de entrada"
 
-#: ../lib/gis/parser.c:558
+#: ../lib/gis/parser.c:559
 msgid "Name for output file"
 msgstr "Nome do arquivo de saída"
 
-#: ../lib/gis/parser.c:566
+#: ../lib/gis/parser.c:567
 msgid "Field separator"
 msgstr "Separador de Campos"
 
-#: ../lib/gis/parser.c:577
+#: ../lib/gis/parser.c:578
 msgid "Color"
 msgstr "Cor"
 
-#: ../lib/gis/parser.c:578
+#: ../lib/gis/parser.c:579
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Um nome de cor padrão ou tripla R:G:B"
 
-#: ../lib/gis/parser.c:587
+#: ../lib/gis/parser.c:588
 msgid "Background color"
 msgstr "Cor de fundo"
 
-#: ../lib/gis/parser.c:588
+#: ../lib/gis/parser.c:589
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Cor padrão do GRASS, tripla R:G:B ou \"none\""
 
-#: ../lib/gis/parser.c:888
+#: ../lib/gis/parser.c:890
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Desculpe <%s> não é uma opção válida\n"
 
-#: ../lib/gis/parser.c:998
+#: ../lib/gis/parser.c:1000
 #, c-format
 msgid ""
 "\n"
@@ -1211,7 +1211,7 @@ msgstr ""
 "\n"
 "Descrição:\n"
 
-#: ../lib/gis/parser.c:1005
+#: ../lib/gis/parser.c:1007
 #, c-format
 msgid ""
 "\n"
@@ -1220,7 +1220,7 @@ msgstr ""
 "\n"
 "Palavras chave:\n"
 
-#: ../lib/gis/parser.c:1009
+#: ../lib/gis/parser.c:1011
 #, c-format
 msgid ""
 "\n"
@@ -1231,7 +1231,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1081
+#: ../lib/gis/parser.c:1083
 #, c-format
 msgid ""
 "\n"
@@ -1240,19 +1240,19 @@ msgstr ""
 "\n"
 "Flags:\n"
 
-#: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1561 ../lib/gis/parser.c:1839
+#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1563 ../lib/gis/parser.c:1841
 msgid "Allow output files to overwrite existing files"
 msgstr "Permitir aos arquivos de saída a sobrescrever arquivos existentes"
 
-#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1565
+#: ../lib/gis/parser.c:1108 ../lib/gis/parser.c:1567
 msgid "Verbose module output"
 msgstr "Saída do módulo verbosa"
 
-#: ../lib/gis/parser.c:1107 ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1109 ../lib/gis/parser.c:1570
 msgid "Quiet module output"
 msgstr "Saída do módulo silenciosa"
 
-#: ../lib/gis/parser.c:1113
+#: ../lib/gis/parser.c:1115
 #, c-format
 msgid ""
 "\n"
@@ -1261,72 +1261,72 @@ msgstr ""
 "\n"
 "Parâmetros:\n"
 
-#: ../lib/gis/parser.c:1136
+#: ../lib/gis/parser.c:1138
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   padrão: %s\n"
 
-#: ../lib/gis/parser.c:1444
+#: ../lib/gis/parser.c:1446
 msgid "NAME"
 msgstr "NOME"
 
-#: ../lib/gis/parser.c:1457
+#: ../lib/gis/parser.c:1459
 msgid "KEYWORDS"
 msgstr "PALAVRAS CHAVE"
 
-#: ../lib/gis/parser.c:1462
+#: ../lib/gis/parser.c:1464
 msgid "SYNOPSIS"
 msgstr "RESUMO"
 
-#: ../lib/gis/parser.c:1536
+#: ../lib/gis/parser.c:1538
 msgid "Flags"
 msgstr "Opções"
 
-#: ../lib/gis/parser.c:1577
+#: ../lib/gis/parser.c:1579
 msgid "Parameters"
 msgstr "Parâmetros"
 
-#: ../lib/gis/parser.c:1618
+#: ../lib/gis/parser.c:1620
 msgid "Options"
 msgstr "Opções"
 
-#: ../lib/gis/parser.c:1624
+#: ../lib/gis/parser.c:1626
 msgid "Default"
 msgstr "padrão"
 
-#: ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1843
 msgid "Allow overwrite"
 msgstr "Permitir sobrescrever"
 
-#: ../lib/gis/parser.c:1849
+#: ../lib/gis/parser.c:1851
 msgid "Run with minimal output messages"
 msgstr "Executar com mínimo de mensagens (silencioso)"
 
-#: ../lib/gis/parser.c:1851
+#: ../lib/gis/parser.c:1853
 msgid "Run quietly"
 msgstr "Executa silenciosamente"
 
-#: ../lib/gis/parser.c:1915
+#: ../lib/gis/parser.c:1942
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opções: "
 
-#: ../lib/gis/parser.c:1964 ../lib/gis/parser.c:1981
+#: ../lib/gis/parser.c:1991 ../lib/gis/parser.c:2008
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Desculpe, <%c> não é um flag válido\n"
 
-#: ../lib/gis/parser.c:2036
+#: ../lib/gis/parser.c:2063
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Desculpe, <%s=> é ambíguo\n"
 
-#: ../lib/gis/parser.c:2043
+#: ../lib/gis/parser.c:2070
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Desculpe, <%s> não é um parâmetro válido\n"
 
-#: ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2155
 #, c-format
 msgid ""
 "\n"
@@ -1335,12 +1335,12 @@ msgstr ""
 "\n"
 "ERRO: sintaxe ilegal no intervalo do parâmetro <%s>\n"
 
-#: ../lib/gis/parser.c:2130
+#: ../lib/gis/parser.c:2157
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Apresentado como: %s\n"
 
-#: ../lib/gis/parser.c:2133
+#: ../lib/gis/parser.c:2160
 #, c-format
 msgid ""
 "\n"
@@ -1349,12 +1349,12 @@ msgstr ""
 "\n"
 "ERRO: valor <%s> fora do intervalo do parâmetro <%s>\n"
 
-#: ../lib/gis/parser.c:2135
+#: ../lib/gis/parser.c:2162
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2138
+#: ../lib/gis/parser.c:2165
 #, c-format
 msgid ""
 "\n"
@@ -1363,7 +1363,7 @@ msgstr ""
 "\n"
 "ERRO: Falta valor para o parâmetro <%s>\n"
 
-#: ../lib/gis/parser.c:2298
+#: ../lib/gis/parser.c:2325
 #, c-format
 msgid ""
 "\n"
@@ -1374,7 +1374,7 @@ msgstr ""
 "ERRO: Parâmetro necessário <%s> não fornecido:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2401
+#: ../lib/gis/parser.c:2428
 #, c-format
 msgid ""
 "\n"
@@ -1383,17 +1383,17 @@ msgstr ""
 "\n"
 "ERRO: A opção <%s> deve ser múltipla de %d\n"
 
-#: ../lib/gis/parser.c:2403
+#: ../lib/gis/parser.c:2430
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Você forneceu %d elementos:\n"
 
-#: ../lib/gis/parser.c:2458
+#: ../lib/gis/parser.c:2485
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERRO: opção <%s>:<%s> já existe.\n"
 
-#: ../lib/gis/parser.c:2505
+#: ../lib/gis/parser.c:2532
 #, c-format
 msgid ""
 "\n"
@@ -1402,7 +1402,7 @@ msgstr ""
 "\n"
 "FLAG: forneça o flag seguinte?\n"
 
-#: ../lib/gis/parser.c:2519
+#: ../lib/gis/parser.c:2546
 #, c-format
 msgid ""
 "\n"
@@ -1411,51 +1411,51 @@ msgstr ""
 "\n"
 "OPÇÃO:   %s\n"
 
-#: ../lib/gis/parser.c:2520
+#: ../lib/gis/parser.c:2547
 #, c-format
 msgid "     key: %s\n"
 msgstr "     chave: %s\n"
 
-#: ../lib/gis/parser.c:2522
+#: ../lib/gis/parser.c:2549
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2524
+#: ../lib/gis/parser.c:2551
 #, c-format
 msgid " default: %s\n"
 msgstr " padrão: %s\n"
 
-#: ../lib/gis/parser.c:2525
+#: ../lib/gis/parser.c:2552
 #, c-format
 msgid "required: %s\n"
 msgstr "obrigatória: %s\n"
 
-#: ../lib/gis/parser.c:2527
+#: ../lib/gis/parser.c:2554
 #, c-format
 msgid "multiple: %s\n"
 msgstr "múltipla: %s\n"
 
-#: ../lib/gis/parser.c:2529
+#: ../lib/gis/parser.c:2556
 #, c-format
 msgid " options: %s\n"
 msgstr " opções: %s\n"
 
-#: ../lib/gis/parser.c:2544
+#: ../lib/gis/parser.c:2571
 #, c-format
 msgid "enter option > "
 msgstr "Digite uma opção > "
 
-#: ../lib/gis/parser.c:2558 ../lib/gis/parser.c:2569
+#: ../lib/gis/parser.c:2585 ../lib/gis/parser.c:2596
 msgid "   Try again? "
 msgstr "  Tentar outra vez? "
 
-#: ../lib/gis/parser.c:2567
+#: ../lib/gis/parser.c:2594
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Desculpe, %s não é aceito.\n"
 
-#: ../lib/gis/parser.c:2578
+#: ../lib/gis/parser.c:2605
 #, c-format
 msgid ""
 "\n"
@@ -1466,11 +1466,11 @@ msgstr ""
 "Você escolheu.:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2579
+#: ../lib/gis/parser.c:2606
 msgid "Is this correct? "
 msgstr "Isso está certo? "
 
-#: ../lib/gis/parser.c:2648
+#: ../lib/gis/parser.c:2675
 msgid "to accept the default"
 msgstr "para aceitar os valores padrão"
 
@@ -2579,6 +2579,52 @@ msgstr "Impossível abrir arquivo [%s] para subgrupo [%s] do grupo [%s em %s]"
 msgid "Unable to find file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
 
+#: ../lib/proj/convert.c:110
+msgid "Can't parse GRASS PROJ_INFO file"
+msgstr ""
+
+#: ../lib/proj/convert.c:115
+msgid "Can't get PROJ.4-style parameter string"
+msgstr ""
+
+#: ../lib/proj/convert.c:127
+#, c-format
+msgid ""
+"OGR can't parse PROJ.4-style parameter string:\n"
+"%s\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:133
+#, c-format
+msgid ""
+"OGR can't get WKT-style parameter string\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:394
+msgid "No projection name! Projection parameters likely to be meaningless."
+msgstr ""
+
+#: ../lib/proj/convert.c:431
+#, c-format
+msgid "Datum <%s> not recognised by GRASS and no parameters found."
+msgstr ""
+
+#: ../lib/proj/convert.c:448
+#, c-format
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
+msgstr ""
+
+#: ../lib/proj/convert.c:453
+#, c-format
+msgid ""
+"Invalid tranformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
+msgstr ""
+
 #: ../lib/proj/ellipse.c:77
 #, c-format
 msgid "invalid ellipsoid %s in file"
@@ -2587,6 +2633,58 @@ msgstr "elipsóide inválido %s no arquivo"
 #: ../lib/proj/ellipse.c:120
 msgid "No ellipsoid info given in file"
 msgstr "O arquivo não contém informações sobre o elipsóide"
+
+#: ../lib/proj/get_proj.c:152
+#, fuzzy, c-format
+msgid "Invalid zone %s specified"
+msgstr "elipsóide inválido %s no arquivo"
+
+#: ../lib/proj/get_proj.c:231
+msgid "Unable to initialise PROJ.4 with the following parameter list:"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:238
+#, c-format
+msgid "The error message was '%s'"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:253
+#, fuzzy
+msgid "Unable to allocate options"
+msgstr "não consegui alocar memória\n"
+
+#: ../lib/proj/get_proj.c:279 ../lib/proj/get_proj.c:319
+msgid "Option input memory failure"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:299
+msgid "Option input overflowed option table"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:331
+#, fuzzy, c-format
+msgid "Unable to initialize pj cause: %s"
+msgstr "não foi possível abrir o arquivo %s em %s"
+
+#: ../lib/proj/get_proj.c:406
+#, c-format
+msgid "Input Projection Parameters:%s\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:408
+#, c-format
+msgid "Input Unit Factor: %.16g\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:417
+#, c-format
+msgid "Output Projection Parameters:%s\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:419
+#, c-format
+msgid "Output Unit Factor: %.16g\n"
+msgstr ""
 
 #: ../lib/raster/io_sock.c:65
 msgid "No graphics monitor has been selected for output."
@@ -3267,15 +3365,15 @@ msgstr ""
 msgid "Nodes marked to be snapped"
 msgstr "Nós marcados para encaixar"
 
-#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:381
+#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:384
 msgid "Snaps"
 msgstr "Encaixe"
 
-#: ../lib/vector/Vlib/snap.c:389
+#: ../lib/vector/Vlib/snap.c:392
 msgid "Snapped vertices"
 msgstr "Vértices encaixados"
 
-#: ../lib/vector/Vlib/snap.c:390
+#: ../lib/vector/Vlib/snap.c:393
 msgid "New vertices"
 msgstr "Novos vértices"
 
