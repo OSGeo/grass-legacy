@@ -101,6 +101,8 @@ static int log_error (const char *, int);
  * \brief Print a message to stderr
  *
  * The output format depends on enviroment variable GRASS_MESSAGE_FORMAT
+ *
+ * \param[in] msg string.  Cannot be NULL.
 */
 void G_message (const char *msg,...)
 {
@@ -124,6 +126,8 @@ void G_message (const char *msg,...)
  *
  * The output format depends on enviroment variables
  *  GRASS_MESSAGE_FORMAT and GRASS_VERBOSE
+ *
+ * \param[in] msg string.  Cannot be NULL.
 */
 void G_verbose_message (const char *msg, ...)
 {
@@ -150,6 +154,8 @@ void G_verbose_message (const char *msg, ...)
  *
  * The output format depends on enviroment variables
  *  GRASS_MESSAGE_FORMAT and GRASS_VERBOSE
+ *
+ * \param[in] msg string.  Cannot be NULL.
 */
 void G_important_message(const char *msg, ...)
 {
@@ -184,6 +190,8 @@ void G_important_message(const char *msg, ...)
  *
  * \return Terminates with an exit status of EXIT_FAILURE if no external
  * routine is specified by G_set_error_routine()
+ *
+ * \param[in] msg string.  Cannot be NULL.
 */
 int G_fatal_error (const char *msg,...)
 {
@@ -209,6 +217,8 @@ int G_fatal_error (const char *msg,...)
  * GRASS_MESSAGE_FORMAT
  *
  * A warning message can be suppressed by G_suppress_warnings()
+ *
+ * \param[in] msg string.  Cannot be NULL.
 */
 int G_warning (const char *msg, ...)
 {
@@ -230,7 +240,7 @@ int G_warning (const char *msg, ...)
  *
  * \brief Suppress printing a warning message to stderr
  * 
- * \param flag a warning message will be suppressed if non-zero value is given
+ * \param[in] flag a warning message will be suppressed if non-zero value is given
  * \return previous flag
 */
 int G_suppress_warnings (int flag)
@@ -249,6 +259,7 @@ int G_suppress_warnings (int flag)
  * 
  * \param flag if non-zero/zero value is given G_sleep() will be activated/deactivated
  *
+ * \param[in] flag error  message will be suppressed if non-zero value is given
  * \return previous flag
 */
 int G_sleep_on_error (int flag)
@@ -266,7 +277,7 @@ int G_sleep_on_error (int flag)
  * \brief Establishes error_routine as the routine that will handle
  * the printing of subsequent error messages.
  * 
- * \param error_routine routine will be called like this: error_routine(msg,
+ * \param[in] error_routine routine will be called like this: error_routine(msg,
  * fatal)
  *
  * \return always null
@@ -285,7 +296,7 @@ int G_set_error_routine(int (*error_routine)(const char *, int))
  * 
  * Error messages are printed directly to the screen: ERROR: message or WARNING: message
  *
- * \return null
+ * \return always returns 0.
 */
 int G_unset_error_routine(void)
 {

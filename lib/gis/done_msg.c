@@ -21,7 +21,7 @@
  *
  * \brief Print a final message.
  *
- * \param[in] msg
+ * \param[in] msg string.  Cannot be NULL.
  * \return always returns 0
  */
 
