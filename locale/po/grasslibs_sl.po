@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_sl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-06 18:06+0200\n"
+"POT-Creation-Date: 2007-08-09 20:17+0200\n"
 "PO-Revision-Date: 2005-04-26 09:38+0200\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
@@ -43,12 +43,12 @@ msgstr "Ne morem zapisati povezav z bazo podatkov."
 msgid "[%s]: No such color"
 msgstr ""
 
-#: ../lib/driver/command.c:511
+#: ../lib/driver/command.c:517
 #, c-format
 msgid "Unknown command: %d last: %d"
 msgstr ""
 
-#: ../lib/driver/command.c:553
+#: ../lib/driver/command.c:559
 msgid "Monitor: get_command: Premature EOF"
 msgstr ""
 
@@ -423,36 +423,36 @@ msgstr "Nezmo¾en ustvariti vzglavno datoteko za [%s]"
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "barvna podpora za [%s] v \"mapset\" [%s] %s"
 
-#: ../lib/gis/color_rules.c:114
+#: ../lib/gis/color_rules.c:115
 msgid "syntax error"
 msgstr ""
 
-#: ../lib/gis/color_rules.c:115
+#: ../lib/gis/color_rules.c:116
 msgid "R/G/B not in range 0-255"
 msgstr ""
 
-#: ../lib/gis/color_rules.c:116
+#: ../lib/gis/color_rules.c:117
 #, fuzzy
 msgid "invalid color name"
 msgstr "Neveljavne koordinate"
 
-#: ../lib/gis/color_rules.c:117
+#: ../lib/gis/color_rules.c:118
 msgid "percentage not in range 0-100"
 msgstr ""
 
-#: ../lib/gis/color_rules.c:118
+#: ../lib/gis/color_rules.c:119
 #, fuzzy
 msgid "invalid value"
 msgstr ""
 "\n"
 "neveljavna fundamentalna toèka\n"
 
-#: ../lib/gis/color_rules.c:119
+#: ../lib/gis/color_rules.c:120
 #, fuzzy
 msgid "unknown error"
 msgstr "Nepoznan \"location\""
 
-#: ../lib/gis/color_rules.c:150
+#: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): %s"
 msgstr ""
@@ -486,11 +486,11 @@ msgstr "GISRC - spremenljivka ni nastavljena"
 msgid "%s not set"
 msgstr "%s ni nastavljen"
 
-#: ../lib/gis/error.c:305
+#: ../lib/gis/error.c:316
 msgid "WARNING: "
 msgstr "OPOZORILO: "
 
-#: ../lib/gis/error.c:306
+#: ../lib/gis/error.c:317
 msgid "ERROR: "
 msgstr "NAPAKA: "
 
@@ -683,7 +683,7 @@ msgstr ""
 "\n"
 "neveljavna projekcija\n"
 
-#: ../lib/gis/get_row.c:110
+#: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
 msgstr "[%s v %s] - zahteva po branju za vrstico %d je izven regije"
@@ -867,7 +867,7 @@ msgstr "Nepoznan \"location\""
 msgid "LOCATION << %s >> not available"
 msgstr "LOCATION  << %s >>  ne obstaja"
 
-#: ../lib/gis/ls.c:63
+#: ../lib/gis/ls.c:62
 #, fuzzy, c-format
 msgid "Can't open directory %s"
 msgstr "Starega vektorja %s ne morem odpreti"
@@ -1065,165 +1065,165 @@ msgstr "Ne morem odpreti %s"
 msgid "invalid type: field %s in file %s "
 msgstr "neveljavni tip: polje %s v datoteki %s"
 
-#: ../lib/gis/parser.c:343
+#: ../lib/gis/parser.c:344
 #, fuzzy
 msgid "WHERE conditions of SQL statement without 'where' keyword"
 msgstr ""
 "WHERE pogoji SQL stavka brez kljuène besede 'where': (primer: dohodek < 1000 "
 "and preb >= 10000)"
 
-#: ../lib/gis/parser.c:344
+#: ../lib/gis/parser.c:345
 msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
-#: ../lib/gis/parser.c:352
+#: ../lib/gis/parser.c:353
 #, fuzzy
 msgid "Name of attribute column"
 msgstr "Ime vhodnega vektorskega sloja"
 
-#: ../lib/gis/parser.c:360
+#: ../lib/gis/parser.c:361
 #, fuzzy
 msgid "Name of attribute column(s)"
 msgstr "Ime vhodnega vektorskega sloja"
 
-#: ../lib/gis/parser.c:369
+#: ../lib/gis/parser.c:370
 #, fuzzy
 msgid "Name of input imagery group"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:378 ../lib/gis/parser.c:403
+#: ../lib/gis/parser.c:379 ../lib/gis/parser.c:404
 #, fuzzy
 msgid "Name of input raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:387 ../lib/gis/parser.c:412
+#: ../lib/gis/parser.c:388 ../lib/gis/parser.c:413
 #, fuzzy
 msgid "Name of input raster map(s)"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:395
+#: ../lib/gis/parser.c:396
 #, fuzzy
 msgid "Name for output raster map"
 msgstr "Ime izhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:420
+#: ../lib/gis/parser.c:421
 #, fuzzy
 msgid "Name of base raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:428
+#: ../lib/gis/parser.c:429
 #, fuzzy
 msgid "Name of cover raster map"
 msgstr "Ime izhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:436
+#: ../lib/gis/parser.c:437
 #, fuzzy
 msgid "Name of elevation raster map"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:445
+#: ../lib/gis/parser.c:446
 #, fuzzy
 msgid "Name of elevation raster map(s)"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:455
+#: ../lib/gis/parser.c:456
 #, fuzzy
 msgid "Name of input raster3d map"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:464
+#: ../lib/gis/parser.c:465
 #, fuzzy
 msgid "Name of input raster3d map(s)"
 msgstr "Ime vhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:472
+#: ../lib/gis/parser.c:473
 #, fuzzy
 msgid "Name for output raster3d map"
 msgstr "Ime izhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:482 ../lib/gis/parser.c:507
+#: ../lib/gis/parser.c:483 ../lib/gis/parser.c:508
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "Ime vhodnega vektorskega sloja"
 
-#: ../lib/gis/parser.c:491
+#: ../lib/gis/parser.c:492
 #, fuzzy
 msgid "Name of input vector map(s)"
 msgstr "Ime vhodnega vektorskega sloja"
 
-#: ../lib/gis/parser.c:499
+#: ../lib/gis/parser.c:500
 #, fuzzy
 msgid "Name for output vector map"
 msgstr "Ime izhodnega vektorskega sloja"
 
-#: ../lib/gis/parser.c:516
+#: ../lib/gis/parser.c:517
 msgid "Type"
 msgstr "Tip"
 
-#: ../lib/gis/parser.c:517
+#: ../lib/gis/parser.c:518
 msgid "Feature type(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:524
+#: ../lib/gis/parser.c:525
 msgid "Layer number"
 msgstr "©tevilka sloja"
 
-#: ../lib/gis/parser.c:525
+#: ../lib/gis/parser.c:526
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
 msgstr ""
 
-#: ../lib/gis/parser.c:532
+#: ../lib/gis/parser.c:533
 msgid "Category value"
 msgstr "Vrednost kategorije"
 
-#: ../lib/gis/parser.c:539
+#: ../lib/gis/parser.c:540
 #, fuzzy
 msgid "Category values"
 msgstr "Vrednost kategorij"
 
-#: ../lib/gis/parser.c:540
+#: ../lib/gis/parser.c:541
 #, fuzzy
 msgid "Example: 1,3,7-9,13"
 msgstr "Vrednost kategorij (primer: 1,3,7-9,13)"
 
-#: ../lib/gis/parser.c:550
+#: ../lib/gis/parser.c:551
 #, fuzzy
 msgid "Name of input file"
 msgstr "Ime odprte datoteke %s\n"
 
-#: ../lib/gis/parser.c:558
+#: ../lib/gis/parser.c:559
 #, fuzzy
 msgid "Name for output file"
 msgstr "Ime izhodnega rastrskega sloja"
 
-#: ../lib/gis/parser.c:566
+#: ../lib/gis/parser.c:567
 msgid "Field separator"
 msgstr ""
 
-#: ../lib/gis/parser.c:577
+#: ../lib/gis/parser.c:578
 msgid "Color"
 msgstr ""
 
-#: ../lib/gis/parser.c:578
+#: ../lib/gis/parser.c:579
 msgid "Either a standard color name or R:G:B triplet"
 msgstr ""
 
-#: ../lib/gis/parser.c:587
+#: ../lib/gis/parser.c:588
 msgid "Background color"
 msgstr ""
 
-#: ../lib/gis/parser.c:588
+#: ../lib/gis/parser.c:589
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr ""
 
-#: ../lib/gis/parser.c:888
+#: ../lib/gis/parser.c:890
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Oprostite <%s> ni veljavna mo¾nost\n"
 
-#: ../lib/gis/parser.c:998
+#: ../lib/gis/parser.c:1000
 #, c-format
 msgid ""
 "\n"
@@ -1232,14 +1232,14 @@ msgstr ""
 "\n"
 "Opis:\n"
 
-#: ../lib/gis/parser.c:1005
+#: ../lib/gis/parser.c:1007
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1009
+#: ../lib/gis/parser.c:1011
 #, c-format
 msgid ""
 "\n"
@@ -1250,7 +1250,7 @@ msgstr ""
 "Uporaba:\n"
 " "
 
-#: ../lib/gis/parser.c:1081
+#: ../lib/gis/parser.c:1083
 #, c-format
 msgid ""
 "\n"
@@ -1259,19 +1259,19 @@ msgstr ""
 "\n"
 "Izbire:\n"
 
-#: ../lib/gis/parser.c:1104 ../lib/gis/parser.c:1561 ../lib/gis/parser.c:1839
+#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1563 ../lib/gis/parser.c:1841
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1565
+#: ../lib/gis/parser.c:1108 ../lib/gis/parser.c:1567
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1107 ../lib/gis/parser.c:1568
+#: ../lib/gis/parser.c:1109 ../lib/gis/parser.c:1570
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1113
+#: ../lib/gis/parser.c:1115
 #, c-format
 msgid ""
 "\n"
@@ -1280,80 +1280,80 @@ msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1136
+#: ../lib/gis/parser.c:1138
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   privzet: %s\n"
 
-#: ../lib/gis/parser.c:1444
+#: ../lib/gis/parser.c:1446
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1457
+#: ../lib/gis/parser.c:1459
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1462
+#: ../lib/gis/parser.c:1464
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1536
+#: ../lib/gis/parser.c:1538
 #, fuzzy
 msgid "Flags"
 msgstr ""
 "\n"
 "Izbire:\n"
 
-#: ../lib/gis/parser.c:1577
+#: ../lib/gis/parser.c:1579
 #, fuzzy
 msgid "Parameters"
 msgstr ""
 "\n"
 "Parametri:\n"
 
-#: ../lib/gis/parser.c:1618
+#: ../lib/gis/parser.c:1620
 #, fuzzy
 msgid "Options"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:1624
+#: ../lib/gis/parser.c:1626
 #, fuzzy
 msgid "Default"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1843
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1849
+#: ../lib/gis/parser.c:1851
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1851
+#: ../lib/gis/parser.c:1853
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1915
+#: ../lib/gis/parser.c:1942
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   mo¾nosti: "
 
-#: ../lib/gis/parser.c:1964 ../lib/gis/parser.c:1981
+#: ../lib/gis/parser.c:1991 ../lib/gis/parser.c:2008
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Oprostite <%c> ni veljavna izbira\n"
 
-#: ../lib/gis/parser.c:2036
+#: ../lib/gis/parser.c:2063
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Oprostite <%s=> je dvoumno\n"
 
-#: ../lib/gis/parser.c:2043
+#: ../lib/gis/parser.c:2070
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Oprostite <%s> ni veljaven parameter\n"
 
-#: ../lib/gis/parser.c:2128
+#: ../lib/gis/parser.c:2155
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1362,12 +1362,12 @@ msgstr ""
 "\n"
 "Napaka: neveljaven razpon sintakse za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2130
+#: ../lib/gis/parser.c:2157
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Predstavljen kot: %s\n"
 
-#: ../lib/gis/parser.c:2133
+#: ../lib/gis/parser.c:2160
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1376,12 +1376,12 @@ msgstr ""
 "\n"
 "Napaka: vrednost <%s> izven razpona za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2135
+#: ../lib/gis/parser.c:2162
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Dovoljeni razpon: %s\n"
 
-#: ../lib/gis/parser.c:2138
+#: ../lib/gis/parser.c:2165
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1390,7 +1390,7 @@ msgstr ""
 "\n"
 "Napaka: Manjkajoèa vrednost za parameter <%s>\n"
 
-#: ../lib/gis/parser.c:2298
+#: ../lib/gis/parser.c:2325
 #, c-format
 msgid ""
 "\n"
@@ -1401,7 +1401,7 @@ msgstr ""
 "NAPAKA: Zahtevani parameter <%s> ni nastavljen:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2401
+#: ../lib/gis/parser.c:2428
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1410,17 +1410,17 @@ msgstr ""
 "\n"
 "Napaka: mo¾nost <%s> mora biti podana v veèkratnikih %d\n"
 
-#: ../lib/gis/parser.c:2403
+#: ../lib/gis/parser.c:2430
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Podali ste %d postavk:\n"
 
-#: ../lib/gis/parser.c:2458
+#: ../lib/gis/parser.c:2485
 #, fuzzy, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "Napaka: mo¾nost <%s>: <%s> obstaja.\n"
 
-#: ../lib/gis/parser.c:2505
+#: ../lib/gis/parser.c:2532
 #, c-format
 msgid ""
 "\n"
@@ -1429,7 +1429,7 @@ msgstr ""
 "\n"
 "IZBIRA: Doloèite naslednjo izbiro?\n"
 
-#: ../lib/gis/parser.c:2519
+#: ../lib/gis/parser.c:2546
 #, c-format
 msgid ""
 "\n"
@@ -1438,51 +1438,51 @@ msgstr ""
 "\n"
 "MO®NOST:   %s\n"
 
-#: ../lib/gis/parser.c:2520
+#: ../lib/gis/parser.c:2547
 #, c-format
 msgid "     key: %s\n"
 msgstr "     kljuè: %s\n"
 
-#: ../lib/gis/parser.c:2522
+#: ../lib/gis/parser.c:2549
 #, c-format
 msgid "  format: %s\n"
 msgstr "  format: %s\n"
 
-#: ../lib/gis/parser.c:2524
+#: ../lib/gis/parser.c:2551
 #, c-format
 msgid " default: %s\n"
 msgstr " privzet: %s\n"
 
-#: ../lib/gis/parser.c:2525
+#: ../lib/gis/parser.c:2552
 #, c-format
 msgid "required: %s\n"
 msgstr "zahtevan: %s\n"
 
-#: ../lib/gis/parser.c:2527
+#: ../lib/gis/parser.c:2554
 #, c-format
 msgid "multiple: %s\n"
 msgstr "veèkraten: %s\n"
 
-#: ../lib/gis/parser.c:2529
+#: ../lib/gis/parser.c:2556
 #, c-format
 msgid " options: %s\n"
 msgstr "mo¾nosti: %s\n"
 
-#: ../lib/gis/parser.c:2544
+#: ../lib/gis/parser.c:2571
 #, c-format
 msgid "enter option > "
 msgstr "vpi¹ite mo¾nost > "
 
-#: ../lib/gis/parser.c:2558 ../lib/gis/parser.c:2569
+#: ../lib/gis/parser.c:2585 ../lib/gis/parser.c:2596
 msgid "   Try again? "
 msgstr "   Poskusite ¹e enkrat. "
 
-#: ../lib/gis/parser.c:2567
+#: ../lib/gis/parser.c:2594
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Oprostite, %s ni sprejet.\n"
 
-#: ../lib/gis/parser.c:2578
+#: ../lib/gis/parser.c:2605
 #, c-format
 msgid ""
 "\n"
@@ -1493,11 +1493,11 @@ msgstr ""
 "Izbrali ste:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2579
+#: ../lib/gis/parser.c:2606
 msgid "Is this correct? "
 msgstr "Ali je to pravilno? "
 
-#: ../lib/gis/parser.c:2648
+#: ../lib/gis/parser.c:2675
 msgid "to accept the default"
 msgstr "za izbrati privzeto"
 
@@ -2609,6 +2609,52 @@ msgstr "Nezmo¾en odpreti datoteko %s v %s"
 msgid "Unable to find file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
 
+#: ../lib/proj/convert.c:110
+msgid "Can't parse GRASS PROJ_INFO file"
+msgstr ""
+
+#: ../lib/proj/convert.c:115
+msgid "Can't get PROJ.4-style parameter string"
+msgstr ""
+
+#: ../lib/proj/convert.c:127
+#, c-format
+msgid ""
+"OGR can't parse PROJ.4-style parameter string:\n"
+"%s\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:133
+#, c-format
+msgid ""
+"OGR can't get WKT-style parameter string\n"
+"(OGR Error code was %d)"
+msgstr ""
+
+#: ../lib/proj/convert.c:394
+msgid "No projection name! Projection parameters likely to be meaningless."
+msgstr ""
+
+#: ../lib/proj/convert.c:431
+#, c-format
+msgid "Datum <%s> not recognised by GRASS and no parameters found."
+msgstr ""
+
+#: ../lib/proj/convert.c:448
+#, c-format
+msgid ""
+"Datum <%s> apparently recognised by GRASS but no parameters found. You may "
+"want to look into this."
+msgstr ""
+
+#: ../lib/proj/convert.c:453
+#, c-format
+msgid ""
+"Invalid tranformation number %d; valid range is 1 to %d. Leaving datum "
+"transform parameters unspecified."
+msgstr ""
+
 #: ../lib/proj/ellipse.c:77
 #, c-format
 msgid "invalid ellipsoid %s in file"
@@ -2617,6 +2663,58 @@ msgstr "neveljaven elipsoid %s v datoteki"
 #: ../lib/proj/ellipse.c:120
 msgid "No ellipsoid info given in file"
 msgstr "V datoteki ni informacije o elipsoidu"
+
+#: ../lib/proj/get_proj.c:152
+#, fuzzy, c-format
+msgid "Invalid zone %s specified"
+msgstr "neveljaven elipsoid %s v datoteki"
+
+#: ../lib/proj/get_proj.c:231
+msgid "Unable to initialise PROJ.4 with the following parameter list:"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:238
+#, c-format
+msgid "The error message was '%s'"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:253
+#, fuzzy
+msgid "Unable to allocate options"
+msgstr "Nezmo¾en dodeliti spomin\n"
+
+#: ../lib/proj/get_proj.c:279 ../lib/proj/get_proj.c:319
+msgid "Option input memory failure"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:299
+msgid "Option input overflowed option table"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:331
+#, fuzzy, c-format
+msgid "Unable to initialize pj cause: %s"
+msgstr "Nezmo¾en odpreti datoteko %s v %s"
+
+#: ../lib/proj/get_proj.c:406
+#, c-format
+msgid "Input Projection Parameters:%s\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:408
+#, c-format
+msgid "Input Unit Factor: %.16g\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:417
+#, c-format
+msgid "Output Projection Parameters:%s\n"
+msgstr ""
+
+#: ../lib/proj/get_proj.c:419
+#, c-format
+msgid "Output Unit Factor: %.16g\n"
+msgstr ""
 
 #: ../lib/raster/io_sock.c:65
 #, fuzzy
@@ -3316,15 +3414,15 @@ msgstr ""
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:381
+#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:384
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:389
+#: ../lib/vector/Vlib/snap.c:392
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:390
+#: ../lib/vector/Vlib/snap.c:393
 msgid "New vertices"
 msgstr ""
 

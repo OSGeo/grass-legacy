@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-08 17:50+0200\n"
-"PO-Revision-Date: 2007-08-08 14:57+0200\n"
+"POT-Creation-Date: 2007-08-09 20:17+0200\n"
+"PO-Revision-Date: 2007-08-08 18:28+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -24,13 +24,14 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/databases.c:47
 #: ../db/base/describe.c:45 ../db/base/dropdb.c:37 ../db/base/droptable.c:38
 #: ../db/base/execute.c:57 ../db/base/select.c:60 ../db/base/tables.c:41
+#: ../vector/v.extract/main.c:226
 #, c-format
-msgid "Cannot start driver <%s>"
+msgid "Unable to start driver <%s>"
 msgstr "No se puede iniciar el controlador <%s>"
 
 #: ../db/base/columns.c:78 ../db/base/describe.c:111
@@ -56,7 +57,7 @@ msgid "database, SQL"
 msgstr "base de datos, SQL"
 
 #: ../db/base/columns.c:100
-msgid "list all columns for a given table."
+msgid "List all columns for a given table."
 msgstr "Muestra todas las columnas de una tabla dada."
 
 #: ../db/base/connect.c:43
@@ -174,9 +175,12 @@ msgid "List all databases for a given driver and location."
 msgstr ""
 "Listar todas las bases de datos para un controlador y localización dados."
 
-#: ../db/base/describe.c:58
-msgid "Cannot describe table"
-msgstr "Imposible describir la tabla"
+#: ../db/base/describe.c:58 ../vector/v.out.ogr/main.c:260
+#: ../vector/v.out.svg/main.c:150 ../vector/v.patch/main.c:140
+#: ../vector/v.patch/main.c:181
+#, c-format
+msgid "Unable to describe table <%s>"
+msgstr "No se puede describir la tabla<%s>"
 
 #: ../db/base/describe.c:101
 msgid "print column names only instead of full column descriptions"
@@ -273,12 +277,12 @@ msgid "Select data from database."
 msgstr "Seleccionar datos desde una base."
 
 #: ../db/base/tables.c:92
-msgid "print tables and exit"
-msgstr "imprimir tablas y salir"
+msgid "Print tables and exit"
+msgstr "Imprimir tablas y salir"
 
 #: ../db/base/tables.c:96
-msgid "system tables instead of user tables"
-msgstr "tablas de sistema en vez de tablas de usuario"
+msgid "System tables instead of user tables"
+msgstr "Tablas de sistema en vez de tablas de usuario"
 
 #: ../db/base/tables.c:101
 msgid "List all tables for a given database."
@@ -620,9 +624,9 @@ msgid "Unable to open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
 
 #: ../doc/raster/r.example/main.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to read file header of <%s>"
-msgstr "No se puede leer la cabecera del mapa ráster <%s>"
+msgstr "No se puede leer la cabecera del archivo <%s>"
 
 #: ../doc/raster/r.example/main.c:140 ../imagery/i.smap/shapiro/opencell.c:31
 #: ../raster/r.bilinear/main.c:103 ../raster/r.bitpattern/main.c:125
@@ -651,9 +655,9 @@ msgid "Unable to read raster map <%s> row %d"
 msgstr "No se puede leer en el mapa ráster <%s> la fila %d"
 
 #: ../doc/raster/r.example/main.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Failed writing raster map <%s>"
-msgstr "No se puede leer en el mapa ráster <%s> la fila %d"
+msgstr "Fallo al escribir el mapa ráster <%s>"
 
 #: ../doc/vector/v.example/main.c:43
 msgid "vector, keyword2, keyword3"
@@ -1374,14 +1378,14 @@ msgstr ""
 "de tramos)"
 
 #: ../display/d.histogram/main.c:163 ../display/d.legend/main.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "Category file for <%s> not available"
-msgstr "Archivo de categoría para [%s] no disponible"
+msgstr "Archivo de categoría para <%s> no disponible"
 
 #: ../display/d.histogram/main.c:166 ../display/d.legend/main.c:505
-#, fuzzy, c-format
+#, c-format
 msgid "Range information for <%s> not available"
-msgstr "Información de rango para [%s] no disponible"
+msgstr "Información de rango para <%s> no disponible"
 
 #: ../display/d.info/main.c:35
 msgid "Display information about the active display monitor"
@@ -1513,9 +1517,9 @@ msgstr ""
 "Dibujar la leyenda horizontal como anchura de la caja excede la altura.\n"
 
 #: ../display/d.legend/main.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Range information for <%s> not available (run r.support)"
-msgstr "Información de rango para [%s] no disponible (ejecutar r.support)"
+msgstr "Información de rango para <%s> no disponible (ejecutar r.support)"
 
 #: ../display/d.legend/main.c:366 ../display/d.legend/main.c:518
 msgid "Color range exceeds lower limit of actual data"
@@ -3037,8 +3041,8 @@ msgid "Database connection not defined"
 msgstr "Conexión a la base de datos no definida"
 
 #: ../display/d.vect/main.c:471 ../vector/v.db.connect/main.c:185
-#: ../vector/v.edit/select.c:408 ../vector/v.extrude/main.c:183
-#: ../vector/v.out.ogr/main.c:251 ../vector/v.out.svg/main.c:138
+#: ../vector/v.edit/select.c:408 ../vector/v.out.ogr/main.c:251
+#: ../vector/v.out.svg/main.c:138
 #, fuzzy, c-format
 msgid "Unable to open driver <%s>"
 msgstr "No se puede abrir el archivo '%s'"
@@ -14363,13 +14367,13 @@ msgid "South: %f (%f)"
 msgstr "Sur: %f (%f)"
 
 #: ../raster/r.proj/main.c:354 ../raster/r.proj/main.c:365
-#: ../raster/r.proj.seg/main.c:366
+#: ../raster/r.proj.seg/main.c:366 ../raster/r.proj.seg/main.c:377
 #, c-format
 msgid "West: %f (%f)"
 msgstr "Oeste: %f (%f)"
 
 #: ../raster/r.proj/main.c:355 ../raster/r.proj/main.c:366
-#: ../raster/r.proj.seg/main.c:367
+#: ../raster/r.proj.seg/main.c:367 ../raster/r.proj.seg/main.c:378
 #, c-format
 msgid "East: %f (%f)"
 msgstr "Este: %f (%f)"
@@ -14401,16 +14405,6 @@ msgstr "Asignando memoria y leyendo el mapa de entrada..."
 #: ../raster/r.proj.seg/main.c:182
 msgid "Cache size (MiB)"
 msgstr "Tamaño de caché (MiB)"
-
-#: ../raster/r.proj.seg/main.c:377
-#, c-format
-msgid "West:  %f (%f)"
-msgstr "Oeste:  %f (%f)"
-
-#: ../raster/r.proj.seg/main.c:378
-#, c-format
-msgid "East:  %f (%f)"
-msgstr "Este:  %f (%f)"
 
 #: ../raster/r.proj.seg/readcell.c:57
 #, fuzzy
@@ -17368,13 +17362,14 @@ msgstr ""
 
 #: ../raster/r.to.vect/main.c:153 ../vector/lidar/v.surf.bspline/main.c:269
 #: ../vector/v.db.connect/main.c:190 ../vector/v.db.connect/main.c:255
-#: ../vector/v.extract/main.c:231 ../vector/v.out.ogr/main.c:256
-#: ../vector/v.out.svg/main.c:145 ../vector/v.patch/main.c:132
-#: ../vector/v.patch/main.c:164 ../vector/v.patch/main.c:287
-#: ../vector/v.patch/main.c:347 ../vector/v.surf.idw/read_sites.c:39
-#, fuzzy, c-format
+#: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:183
+#: ../vector/v.out.ogr/main.c:256 ../vector/v.out.svg/main.c:145
+#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
+#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
+#: ../vector/v.surf.idw/read_sites.c:39
+#, c-format
 msgid "Unable to open database <%s> by driver <%s>"
-msgstr "a"
+msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
 
 #: ../raster/r.to.vect/main.c:188
 #, fuzzy, c-format
@@ -22118,11 +22113,6 @@ msgid "Load categories from the database (table = %s, db = %s)."
 msgstr ""
 "Cargar categorías de la base de datos (tabla = %s, base de datos = %s)."
 
-#: ../vector/v.extract/main.c:226
-#, fuzzy, c-format
-msgid "Unable to start driver <%s>"
-msgstr "No se puede abrir el archivo '%s'"
-
 #: ../vector/v.extract/main.c:234
 #, fuzzy, c-format
 msgid "%d categories loaded from the database"
@@ -24707,12 +24697,6 @@ msgstr ""
 "No se encontró ninguna tabla de atributos -> sólo se usan los números de "
 "categoría como atributos"
 
-#: ../vector/v.out.ogr/main.c:260 ../vector/v.out.svg/main.c:150
-#: ../vector/v.patch/main.c:140 ../vector/v.patch/main.c:181
-#, fuzzy, c-format
-msgid "Unable to describe table <%s>"
-msgstr "No se puede describir la tabla<%s>"
-
 #: ../vector/v.out.ogr/main.c:297
 #, c-format
 msgid "Key column '%s' not found"
@@ -26984,26 +26968,8 @@ msgstr "Fichero de imagen"
 msgid "Percentage of CPU time to use"
 msgstr "a"
 
-#~ msgid "Cannot open driver %s"
-#~ msgstr "No se puede abrir el controlador %s"
+#~ msgid "West:  %f (%f)"
+#~ msgstr "Oeste:  %f (%f)"
 
-#, fuzzy
-#~ msgid "Unable to open driver %s"
-#~ msgstr "No se puede abrir el archivo '%s'"
-
-#, fuzzy
-#~ msgid "Unable to grant privileges on table %s"
-#~ msgstr "No se pueden otorgar privilegios sobre la tabla <%s>"
-
-#~ msgid "Cannot open driver <%s>"
-#~ msgstr "No se puede abrir el controlador <%s>"
-
-#~ msgid "Cannot open database <%s>"
-#~ msgstr "No se puede abrir la base de datos <%s>"
-
-#, fuzzy
-#~ msgid "Could not find input vector map %s"
-#~ msgstr "vectorial"
-
-#~ msgid "Cannot describe table %s"
-#~ msgstr "No se puede describir la tabla %s"
+#~ msgid "East:  %f (%f)"
+#~ msgstr "Este:  %f (%f)"
