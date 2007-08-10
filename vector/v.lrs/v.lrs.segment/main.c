@@ -1,5 +1,5 @@
 /*
-*  v.lrs.create - Generate segments or points from input map for existing 
+*  v.lrs.segment - Generate segments or points from input map for existing 
 *                 linear reference system
 */
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
     module->description =
-	_("Create points/segments from input lines, linear reference "
-	  "system and positions read from stdin or a file");
+	_("Creates points/segments from input lines, linear reference "
+	  "system and positions read from stdin or a file.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     in_opt->description = _("Input vector map containing lines");
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
     file_opt->key = "file";
     file_opt->required = NO;
     file_opt->description = _("Name of file containing segment rules. "
-	"If not given, read from stdin");
+	"If not given, read from stdin.");
 
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     if(file_opt->answer) {
 	/* open input file */
 	if((in_file = fopen(file_opt->answer, "r" )) == NULL )
-	    G_fatal_error(_("Could not open input file <%s>."), file_opt->answer);
+	    G_fatal_error(_("Unable to open input file <%s>"), file_opt->answer);
     }
 
     /* Open input lines */
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
     rsdriver = db_start_driver(driver_opt->answer);
     db_set_handle (&rshandle, database_opt->answer, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
-        G_fatal_error(_("Cannot open database for reference table"));
+        G_fatal_error(_("Unable to open database for reference table"));
 
     points_read = 0; lines_read = 0;
     points_written = 0; lines_written = 0;
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 		/* OK, write point */
                 line = find_line ( &In, lfield, lcat1 );
 		if ( line == 0 ) {
-		    G_warning (_("Cannot find line of cat [%d]"), lcat1);
+		    G_warning (_("Unable to find line of cat [%d]"), lcat1);
 		    break;
 		}
 
@@ -265,7 +265,7 @@ int main(int argc, char **argv)
 		G_debug (2, "segment: lcat = %d : %f -  %f", lcat1, map_offset1, map_offset2);
                 line = find_line ( &In, lfield, lcat1 );
 		if ( line == 0 ) {
-		    G_warning (_("Cannot find line of cat [%d]"), lcat1);
+		    G_warning (_("Unable to find line of cat [%d]"), lcat1);
 		    break;
 		}
 

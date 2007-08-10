@@ -356,7 +356,7 @@ int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
     }
     else {
         if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) {
-            G_fatal_error (_("Cannot fetch data"));
+            G_fatal_error (_("Unable to fetch data from table"));
         }
 
         /* extract attribs and data if wanted*/

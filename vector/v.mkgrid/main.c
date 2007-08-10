@@ -60,7 +60,7 @@ main (int argc, char *argv[])
   /* Set description */
   module              = G_define_module();
   module->keywords = _("vector");
-    module->description = "Creates a (binary) GRASS vector map of a user-defined grid.";
+    module->description = _("Creates a (binary) GRASS vector map of a user-defined grid.");
 
   vectname = G_define_option ();
   vectname->key = "map";
@@ -68,7 +68,7 @@ main (int argc, char *argv[])
   vectname->required = YES;
   vectname->multiple = NO;
   vectname->gisprompt = "new,vector,vector";
-  vectname->description = "name of vector map";
+  vectname->description = _("Name of vector map");
 
   grid = G_define_option ();
   grid->key = "grid";
@@ -76,7 +76,7 @@ main (int argc, char *argv[])
   grid->type = TYPE_INTEGER;
   grid->required = YES;
   grid->multiple = NO;
-  grid->description = "number of ROWS and COLUMNS in grid";
+  grid->description = _("Number of ROWS and COLUMNS in grid");
   
   position_opt = G_define_option ();
   position_opt->key = "position";
@@ -85,9 +85,9 @@ main (int argc, char *argv[])
   position_opt->multiple = NO;
   position_opt->options = "region,coor";
   position_opt->answer = "region";
-  position_opt->description = "Where to place the grid:\n"
+  position_opt->description = _("Where to place the grid:\n"
     			      "\tregion - current region\n"
-			      "\tcoor - use 'coor' and 'box' options";
+			      "\tcoor - use 'coor' and 'box' options");
 
   coord = G_define_option ();
   coord->key = "coor";
@@ -95,7 +95,7 @@ main (int argc, char *argv[])
   coord->type = TYPE_DOUBLE;
   coord->required = NO;
   coord->multiple = NO;
-  coord->description = "lower left EASTING and NORTHING coordinates of map";
+  coord->description = _("Lower left EASTING and NORTHING coordinates of map");
 
   box = G_define_option ();
   box->key = "box";
@@ -103,19 +103,19 @@ main (int argc, char *argv[])
   box->type = TYPE_DOUBLE;
   box->required = NO;
   box->multiple = NO;
-  box->description = "WIDTH and HEIGHT of boxes in grid";
+  box->description = _("WIDTH and HEIGHT of boxes in grid");
 
   angle = G_define_option ();
   angle->key = "angle";
   angle->type = TYPE_DOUBLE;
   angle->required = NO;
-  angle->description = "angle of rotation (in degrees counter-clockwise)";
+  angle->description = _("Angle of rotation (in degrees counter-clockwise)");
   angle->answer = "0";
 
   /* please, remove before GRASS 7 released */
   q = G_define_flag ();
   q->key = 'q';
-  q->description = "Quiet; No chatter";
+  q->description = _("Quiet; No chatter");
   q->answer = 0;
 
   if (G_parser (argc, argv))
@@ -167,20 +167,20 @@ main (int argc, char *argv[])
     }
   } else {
     if ( !coord->answer ) 
-      G_fatal_error ( "'coor' option missing" );
+      G_fatal_error (_("'coor' option missing"));
 
     if ( !box->answer ) 
-      G_fatal_error ( "'box' option missing" );
+      G_fatal_error (_("'box' option missing"));
 
     if(!G_scan_easting(coord->answers[0], &(grid_info.origin_x), window.proj))
-	G_fatal_error("Invalid easting!");;
+	G_fatal_error(_("Invalid easting!"));;
     if(!G_scan_northing(coord->answers[1], &(grid_info.origin_y), window.proj))
-	G_fatal_error("Invalid northing!");;
+	G_fatal_error(_("Invalid northing!"));;
 
     if(!G_scan_resolution(box->answers[0], &(grid_info.length), window.proj))
-	G_fatal_error("Invalid distance!");;
+	G_fatal_error(_("Invalid distance!"));;
     if(!G_scan_resolution(box->answers[1], &(grid_info.width), window.proj))
-	G_fatal_error("Invalid distance!");;
+	G_fatal_error(_("Invalid distance!"));;
 
   }
 
@@ -198,7 +198,7 @@ main (int argc, char *argv[])
   /* Open output map */
   if (0 > Vect_open_new (&Map, dig_file, 0))
   {
-    G_fatal_error ( "Cannot open vector output file <%s>\n", dig_file);
+    G_fatal_error (_("Unable to create vector map <%s>"), dig_file);
   }
 
   Vect_hist_command ( &Map );
@@ -209,7 +209,7 @@ main (int argc, char *argv[])
   
   Driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
   if (Driver == NULL)
-    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
   if ( grid_info.num_rows < 27 && grid_info.num_cols < 27 ) {
       sprintf ( buf, "create table %s ( cat integer, row integer, col integer, "
@@ -222,21 +222,21 @@ main (int argc, char *argv[])
   G_debug ( 1, "SQL: %s", db_get_string(&sql) );
   
   if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql ) );
+    G_fatal_error (_("Cannot create table: %s"), db_get_string ( &sql ) );
   }
 
   if ( db_create_index2(Driver, Fi->table, Fi->key ) != DB_OK )
       G_warning ( "Cannot create index" );
 
   if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-      G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+      G_fatal_error (_("Unable to grant privileges on table <%s>"), Fi->table );
 
-  G_message (_("Creating vector grid ...") );
+  G_message (_("Creating vector grid...") );
   
   write_grid (&grid_info, &Map);
 
   /* Create a grid of label points at the centres of the grid cells */
-  G_message ( _("Creating centroids ...") );
+  G_message ( _("Creating centroids...") );
   
   /* Write out centroids and attributes */
   attCount = 0;
@@ -267,7 +267,7 @@ main (int argc, char *argv[])
           G_debug ( 3, "SQL: %s", db_get_string(&sql) );
 
 	  if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	      G_fatal_error ( "Cannot insert row: %s", db_get_string ( &sql ) );
+	      G_fatal_error (_("Unable to insert row: %s"), db_get_string ( &sql ) );
 	  }
 	  attCount++;
       }

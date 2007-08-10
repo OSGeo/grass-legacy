@@ -98,7 +98,7 @@ int main (int argc, char **argv)
 
     /* open input vector */
     if ((mapset = G_find_vector2 (map_opt->answer, "")) == NULL) {
-         G_fatal_error (_("Could not find input vector map <%s>"), map_opt->answer);
+         G_fatal_error (_("Vector map <%s> not found"), map_opt->answer);
     }
 
     Vect_open_old_head ( &Map, map_opt->answer, mapset);
@@ -144,7 +144,7 @@ int main (int argc, char **argv)
     /* fetch the data */
     while(1) {
 	if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-	    G_fatal_error(_("Cannot fetch data"));
+	    G_fatal_error(_("Unable to fetch data from table"));
 
 	if (!more) break;
 
@@ -174,7 +174,7 @@ int main (int argc, char **argv)
     }
 
     if ( !driver )
-        G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+        G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     db_close_database_shutdown_driver(driver);
     Vect_close ( &Map);

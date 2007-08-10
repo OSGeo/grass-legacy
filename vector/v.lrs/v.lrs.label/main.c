@@ -266,7 +266,7 @@ int main(int argc, char **argv)
     if ( labels_opt->answer ) {
         labels = G_fopen_new ("paint/labels", labels_opt->answer);
 	if ( labels == NULL )
-	    G_fatal_error (_("Cannot open labels <%s>"),
+	    G_fatal_error (_("Unable to open labels file <%s>"),
 			   labels_opt->answer);
     }
     
@@ -275,7 +275,7 @@ int main(int argc, char **argv)
     driver = db_start_driver(NULL);
     db_set_handle (&handle, NULL, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-        G_fatal_error(_("Cannot open database for reference table"));
+        G_fatal_error(_("Unable to open database for reference table"));
 
     /* For each line select all existeng reference segments, sort them along the line
     *  and fcreate stationing. */
@@ -301,7 +301,7 @@ int main(int argc, char **argv)
 	
 	G_debug(1, "    select");
 	if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-	    G_fatal_error (_("Cannot select records from LRS table: %s"), buf);
+	    G_fatal_error (_("Unable to select records from LRS table: %s"), buf);
 
 	table = db_get_cursor_table (&cursor);
 
@@ -309,7 +309,7 @@ int main(int argc, char **argv)
 	nrseg = 0;
 	while(1) {
 	    if( db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
-		G_fatal_error (_("Cannot fetch data from table"));
+		G_fatal_error (_("Unable to fetch data from table"));
 			 
 	    if (!more) break;
 	    
