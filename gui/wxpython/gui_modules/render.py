@@ -413,8 +413,6 @@ class Map:
         string usable for GRASS_REGION variable or None
         """
 
-        print "in setregion"
-
         grass_region = ""
 
         self.region = self.__adjustRegion()
