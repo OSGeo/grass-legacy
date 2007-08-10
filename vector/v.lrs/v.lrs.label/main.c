@@ -266,7 +266,7 @@ int main(int argc, char **argv)
     if ( labels_opt->answer ) {
         labels = G_fopen_new ("paint/labels", labels_opt->answer);
 	if ( labels == NULL )
-	    G_fatal_error (_("Unable to open labels file <%s>"),
+	    G_fatal_error (_("Unable to open label file <%s>"),
 			   labels_opt->answer);
     }
     
