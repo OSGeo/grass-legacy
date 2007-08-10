@@ -53,8 +53,8 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, LRS, networking");
-    module->description = _("Find line id and real km+offset for given points in vector map "
-			    "using linear reference system");
+    module->description = _("Finds line id and real km+offset for given points in vector map "
+			    "using linear reference system.");
 
     lines_opt = G_define_standard_option(G_OPT_V_INPUT);
     lines_opt->key = "lines";
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
     rsdriver = db_start_driver(NULL);
     db_set_handle (&rshandle, NULL, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
-        G_fatal_error(_("Cannot open database for reference table"));
+        G_fatal_error(_("Unable to open database for reference table"));
 
     n_points = n_outside = n_found = n_no_record = n_many_records = 0;
 

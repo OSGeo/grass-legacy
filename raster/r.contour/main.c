@@ -176,7 +176,7 @@ int main ( int argc, char *argv[])
     
     Driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
     if (Driver == NULL)
-      G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+      G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     sprintf ( buf, "create table %s ( cat integer, level double precision )", Fi->table );
 
@@ -185,14 +185,14 @@ int main ( int argc, char *argv[])
     G_debug ( 1, "SQL: %s", db_get_string(&sql) );
     
     if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-      G_fatal_error (_("Cannot create table: %s"), db_get_string ( &sql ) );
+      G_fatal_error (_("Unable to create table: %s"), db_get_string ( &sql ) );
     }
 
     if ( db_create_index2(Driver, Fi->table, "cat" ) != DB_OK )
 	G_warning ( _("Cannot create index") );
 
     if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
+	G_fatal_error ( _("Unable to grant privileges on table <%s>"), Fi->table );
     
     z_array = get_z_array (fd,Wind.rows,Wind.cols);
     lev = getlevels(levels, max, min, step, &range, &nlevels);
@@ -208,7 +208,7 @@ int main ( int argc, char *argv[])
         G_debug ( 3, "SQL: %s", db_get_string(&sql) );
 
 	if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	    G_fatal_error ( _("Cannot insert row: %s"), db_get_string ( &sql ) );
+	    G_fatal_error ( _("Unable to insert row: %s"), db_get_string ( &sql ) );
 	}
     }
   

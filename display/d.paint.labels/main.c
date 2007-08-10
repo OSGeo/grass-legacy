@@ -81,7 +81,7 @@ int main (int argc, char **argv)
     /* Make sure map is available */
     mapset = G_find_file ("paint/labels", label_name, "") ;
     if (mapset == NULL)
-	    G_fatal_error(_("Label file [%s] not available"), label_name);
+	    G_fatal_error(_("Label file <%s> not found"), label_name);
 
     if (R_open_driver() != 0)
 	    G_fatal_error(_("No graphics device selected"));
@@ -115,7 +115,7 @@ int main (int argc, char **argv)
     /* Open map is available */
     infile = G_fopen_old ("paint/labels", label_name, mapset) ;
     if (infile == NULL)
-	G_fatal_error(_("Can't open label file [%s]"), label_name);
+	G_fatal_error(_("Unable to open label file <%s>"), label_name);
 
     if (D_get_cur_wind(window_name))
 	G_fatal_error(_("No current window"));

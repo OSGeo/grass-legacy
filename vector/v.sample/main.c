@@ -157,7 +157,7 @@ int main(int argc, char **argv)
         G_fatal_error(_("Raster map <%s> not found"), parm.rast->answer);
 
     if ((fdrast = G_open_cell_old(parm.rast->answer, mapset)) < 0)
-        G_fatal_error(_("Cannot open raster map <%s>"), parm.rast->answer);
+        G_fatal_error(_("Unable to open raster map <%s>"), parm.rast->answer);
 
     /* Read attributes */
     field=1;
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
 
     Driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (Driver == NULL)
-        G_fatal_error("Cannot open database <%s> by driver <%s>", Fi->database, Fi->driver);
+        G_fatal_error("Unable to open database <%s> by driver <%s>", Fi->database, Fi->driver);
 
     nrecords = db_select_CatValArray(Driver, Fi->table, Fi->key, 
                       parm.column->answer, NULL, &cvarr);
@@ -178,7 +178,7 @@ int main(int argc, char **argv)
         G_fatal_error(_("Column type <%s> not supported (must be integer or double precision)"), db_sqltype_name(ctype));
 
     if (nrecords < 0)
-        G_fatal_error(_("Cannot select data from table"));
+        G_fatal_error(_("Unable to select data from table"));
 
     G_message(_("%d records selected from table"), nrecords);
 
@@ -198,7 +198,7 @@ int main(int argc, char **argv)
 
     Driver = db_start_driver_open_database(Fi->driver, Vect_subst_var(Fi->database, &Out));
     if (Driver == NULL)
-        G_fatal_error(_("Cannot open database <%s> by driver <%s>"), 
+        G_fatal_error(_("Unable to open database <%s> by driver <%s>"), 
                       Fi->database, Fi->driver);
 
     sprintf(buf,
@@ -207,16 +207,16 @@ int main(int argc, char **argv)
     db_set_string(&sql, buf);
 
     if (db_execute_immediate(Driver, &sql) != DB_OK)
-        G_fatal_error(_("Cannot create table <%s>"), db_get_string(&sql));
+        G_fatal_error(_("Unable to create table <%s>"), db_get_string(&sql));
 
     if (db_create_index2(Driver, Fi->table, Fi->key) != DB_OK)
         G_warning(_("Cannot create index"));
 
     if (db_grant_on_table(Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP | DB_PUBLIC) != DB_OK)
-        G_fatal_error(_("Cannot grant privileges on table <%s>"), Fi->table);
+        G_fatal_error(_("Unable to grant privileges on table <%s>"), Fi->table);
 
     if (flag.q->answer)
-        G_message(_("Checking vector points ..."));
+        G_message(_("Checking vector points..."));
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
@@ -275,7 +275,7 @@ int main(int argc, char **argv)
         db_set_string(&sql, buf);
 
         if (db_execute_immediate(Driver, &sql) != DB_OK)
-            G_fatal_error(_("cannot insert row: %s"), db_get_string(&sql));
+            G_fatal_error(_("Unable to insert row: %s"), db_get_string(&sql));
 
         Vect_write_line(&Out, GV_POINT, Points, Cats);
     }

@@ -254,7 +254,7 @@ int main(int argc, char **argv)
     ldriver = db_start_driver(Lfi->driver);
     db_set_handle (&lhandle, Lfi->database, NULL);
     if (db_open_database(ldriver, &lhandle) != DB_OK)
-        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+        G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 		      Lfi->database, Lfi->driver) ;
     
     db_init_handle (&phandle);
@@ -262,7 +262,7 @@ int main(int argc, char **argv)
     pdriver = db_start_driver(Pfi->driver);
     db_set_handle (&phandle, Pfi->database, NULL);
     if (db_open_database(pdriver, &phandle) != DB_OK)
-        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+        G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 		      Pfi->database, Pfi->driver) ;
     
     /* Open database for RS table */
@@ -271,7 +271,7 @@ int main(int argc, char **argv)
     rsdriver = db_start_driver(NULL);
     db_set_handle (&rshandle, NULL, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
-        G_fatal_error(_("Cannot open database for reference table"));
+        G_fatal_error(_("Unable to open database for reference table"));
 
     /* Create new reference table */
     /* perhaps drop table to be conditionalized upon --o ?*/
@@ -281,7 +281,7 @@ int main(int argc, char **argv)
        sprintf ( buf, "drop table %s", table_opt->answer);
        db_append_string ( &rsstmt, buf);
        if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-	  G_warning (_("Cannot drop table: %s"), buf );
+	  G_warning (_("Unable to drop table: %s"), buf );
     }
     db_init_string ( &rsstmt );
     sprintf ( buf, "create table %s (rsid int, lcat int, lid int, start_map double precision, "
@@ -290,14 +290,14 @@ int main(int argc, char **argv)
     G_debug(debug, "ref tab SQL: %s", buf);
     db_append_string ( &rsstmt, buf);
     if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-	G_fatal_error (_("Cannot create table: %s"), buf );
+	G_fatal_error (_("Unable to create table: %s"), buf );
 
     /* Select all lid from line table */
     sprintf ( buf, "select %s from %s", lidcol_opt->answer, Lfi->table );
     G_debug(debug, "line tab lid SQL: %s", buf);
     db_append_string ( &lstmt, buf);
     if (db_open_select_cursor(ldriver, &lstmt, &lcursor, DB_SEQUENTIAL) != DB_OK)
-        G_fatal_error (_("Cannot select line id values from %s.%s."),
+        G_fatal_error (_("Unable to select line id values from %s.%s."),
 		       Lfi->table, lidcol_opt->answer);
 
     /* TODO: we expect line id to be integer, extend to string later */
@@ -318,7 +318,7 @@ int main(int argc, char **argv)
     Lid_int = (int *) G_malloc ( aLid * sizeof (int) );
     while(1) {
 	if( db_fetch(&lcursor, DB_NEXT, &more) != DB_OK)
-            G_fatal_error (_("Cannot fetch line id from line table"));
+            G_fatal_error (_("Unable to fetch line id from line table"));
 			      
         if (!more) break;
 
@@ -406,7 +406,7 @@ int main(int argc, char **argv)
         db_append_string ( &pstmt, buf);
 
 	if (db_open_select_cursor(pdriver, &pstmt, &pcursor, DB_SEQUENTIAL) != DB_OK)
-            G_fatal_error (_("Cannot select point attributes from <%s>"),
+            G_fatal_error (_("Unable to select point attributes from <%s>"),
 			   Pfi->table);
 
 	ptable = db_get_cursor_table (&pcursor);
@@ -415,7 +415,7 @@ int main(int argc, char **argv)
 	while(1) {
 	    double mp_tmp, mp_tmp2, off_tmp, off_tmp2;
 	    if( db_fetch(&pcursor, DB_NEXT, &more) != DB_OK)
-		G_fatal_error (_("Cannot fetch line id from line table"));
+		G_fatal_error (_("Unable to fetch line id from line table"));
 				  
 	    if (!more) break;
 
@@ -691,7 +691,7 @@ int main(int argc, char **argv)
 				 "line skip."), 
 			       rlines[j].nmposts, rlines[j].cat  );
 		} else if ( rlines[j].direction == DIR_UNKNOWN ){ /* Unknown direction */
-		    G_warning (_("Could not guess direction for the line (cat %d), "
+		    G_warning (_("Unable to guess direction for the line (cat %d), "
 				 "line skip."),
 			       rlines[j].cat);
 		} else {
@@ -742,7 +742,7 @@ int main(int argc, char **argv)
 		db_init_string ( &rsstmt );
 		db_append_string ( &rsstmt, buf);
 		if ( db_execute_immediate (rsdriver, &rsstmt) != DB_OK )
-		    G_fatal_error (_("Cannot insert reference records: %s"), buf );
+		    G_fatal_error (_("Unable to insert reference records: %s"), buf );
 		rsid++;
 
 	    }
@@ -780,13 +780,13 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&PMap);
 
-    G_message (_("Building topology for output (out_lines) map ..."));
+    G_message (_("Building topology for output (out_lines) map..."));
     Vect_build (&Out, stderr);
     Vect_close(&Out);
 
     /* Write errors */
     if ( err_opt->answer ) {
-        G_message (_("Building topology for error (err) map ..."));
+        G_message (_("Building topology for error (err) map..."));
         Vect_build (&EMap, stderr);
         Vect_close(&EMap);
     }

@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     file_opt->key = "file";
     file_opt->required = NO;
     file_opt->description = _("Name of file containing segment rules. "
-	"If not given, read from stdin");
+	"If not given, read from stdin.");
 
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     if(file_opt->answer) {
 	/* open input file */
 	if((in_file = fopen(file_opt->answer, "r" )) == NULL )
-	    G_fatal_error(_("Could not open input file <%s>."), file_opt->answer);
+	    G_fatal_error(_("Unable to open input file <%s>"), file_opt->answer);
     }
 
     /* Open input lines */
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 		/* OK, write point */
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( _("Cannot find line of cat %d"), lcat);
+		    G_warning ( _("Unable to find line of cat [%d]"), lcat);
 		    break;
 		}
 
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 		
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( _("Cannot find line of cat %d"), lcat);
+		    G_warning ( _("Unable to find line of cat [%d]"), lcat);
 		    break;
 		}
 

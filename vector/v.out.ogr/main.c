@@ -581,7 +581,7 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
 	    if ( db_open_select_cursor(Driver, &dbstring, &cursor, DB_SEQUENTIAL) != DB_OK ) {
 		G_fatal_error ( _("Cannot select attributes for cat = %d"), cat);
 	    } else {
-		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) G_fatal_error (_("Cannot fetch data"));
+		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) G_fatal_error (_("Unable to fetch data from table"));
 		if (!more) {
 		    /* G_warning ("No database record for cat = %d", cat); */
 		    /* Set at least key column to category */
