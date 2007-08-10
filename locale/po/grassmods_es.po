@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 20:17+0200\n"
-"PO-Revision-Date: 2007-08-08 18:28+0200\n"
+"POT-Creation-Date: 2007-08-10 16:32+0200\n"
+"PO-Revision-Date: 2007-08-10 14:55+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/databases.c:47
 #: ../db/base/describe.c:45 ../db/base/dropdb.c:37 ../db/base/droptable.c:38
@@ -617,8 +617,9 @@ msgstr "<%s> es un nombre de archivo no admitido"
 #: ../raster/r.to.rast3elev/main.c:161 ../raster/r.to.vect/main.c:111
 #: ../raster/r.univar2/r.univar_main.c:98 ../raster/r.walk/main.c:545
 #: ../raster/r.walk/main.c:548 ../raster/r.walk/main.c:855
-#: ../vector/v.extrude/main.c:199 ../vector/v.to.rast/support.c:246
-#: ../vector/v.to.rast/support.c:393 ../visualization/xganim/main.c:344
+#: ../vector/v.extrude/main.c:199 ../vector/v.sample/main.c:160
+#: ../vector/v.to.rast/support.c:246 ../vector/v.to.rast/support.c:393
+#: ../visualization/xganim/main.c:344
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -882,10 +883,11 @@ msgstr "Ningún mapa ráster o vectorial mostrado"
 #: ../vector/lidar/v.surf.bspline/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:213 ../vector/v.clean/main.c:225
 #: ../vector/v.convert/old2new.c:27 ../vector/v.db.connect/main.c:134
-#: ../vector/v.extract/main.c:143 ../vector/v.extrude/main.c:159
-#: ../vector/v.hull/main.c:253 ../vector/v.info/main.c:96
-#: ../vector/v.kcv/main.c:132 ../vector/v.kernel/main.c:192
-#: ../vector/v.label/main.c:276 ../vector/v.lrs/v.lrs.create/main.c:220
+#: ../vector/v.db.select/main.c:101 ../vector/v.extract/main.c:143
+#: ../vector/v.extrude/main.c:159 ../vector/v.hull/main.c:253
+#: ../vector/v.info/main.c:96 ../vector/v.kcv/main.c:132
+#: ../vector/v.kernel/main.c:192 ../vector/v.label/main.c:276
+#: ../vector/v.lrs/v.lrs.create/main.c:220
 #: ../vector/v.lrs/v.lrs.create/main.c:228
 #: ../vector/v.lrs/v.lrs.label/main.c:256
 #: ../vector/v.lrs/v.lrs.segment/main.c:135
@@ -1598,8 +1600,7 @@ msgstr "Título para el gráfico"
 
 #: ../display/d.linegraph/linegraph.c:194
 #: ../display/d.linegraph/linegraph.c:206 ../raster/r.in.xyz/main.c:312
-#: ../vector/v.lrs/v.lrs.segment/main.c:129 ../vector/v.net.path/path.c:46
-#: ../vector/v.segment/main.c:89
+#: ../vector/v.net.path/path.c:46
 #, c-format
 msgid "Could not open input file <%s>."
 msgstr "No se pudo abrir el archivo de entrada <%s>."
@@ -1978,9 +1979,9 @@ msgid "Maximum region size (diagonal) when labels are displayed"
 msgstr "Tamaño máximo de región (diagonal) cuando se muestran etiquetas"
 
 #: ../display/d.paint.labels/main.c:84
-#, c-format
-msgid "Label file [%s] not available"
-msgstr "Archivo de etiquetas [%s] no disponible"
+#, fuzzy, c-format
+msgid "Label file <%s> not found"
+msgstr "Archivo gráfico <%s> no encontrado"
 
 #: ../display/d.paint.labels/main.c:99 ../display/d.vect/main.c:386
 msgid "Region size is lower than minreg, nothing displayed."
@@ -1991,9 +1992,9 @@ msgid "Region size is greater than maxreg, nothing displayed."
 msgstr "La región es mayor que maxreg, no se muestra nada."
 
 #: ../display/d.paint.labels/main.c:118
-#, c-format
-msgid "Can't open label file [%s]"
-msgstr "No se puede abrir el archivo de etiquetas [%s]"
+#, fuzzy, c-format
+msgid "Unable to open label file <%s>"
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../display/d.path/main.c:48
 msgid "display, networking"
@@ -2770,8 +2771,7 @@ msgstr "No se puede leer la información del campo"
 
 #: ../display/d.vect/area.c:57 ../display/d.vect/attr.c:44
 #: ../display/d.vect/plot1.c:203 ../ps/ps.map/ps_vpoints.c:106
-#: ../raster/r.contour/main.c:179 ../vector/v.buffer/main.c:375
-#: ../vector/v.db.select/main.c:177 ../vector/v.distance/main.c:333
+#: ../vector/v.buffer/main.c:375 ../vector/v.distance/main.c:333
 #: ../vector/v.distance/main.c:364 ../vector/v.in.dxf/write_vect.c:185
 #: ../vector/v.in.ogr/main.c:669 ../vector/v.label/main.c:286
 #: ../vector/v.label.sa/labels.c:85 ../vector/v.surf.rst/main.c:553
@@ -3473,7 +3473,7 @@ msgstr ""
 "Permite al usuario cambiar la configuración de la región geográfica actual "
 "de forma interactiva, con el ratón."
 
-#: ../display/d.zoom/main.c:102
+#: ../display/d.zoom/main.c:102 ../vector/v.mkgrid/main.c:71
 msgid "Name of vector map"
 msgstr "Nombre de mapa vectorial"
 
@@ -4908,8 +4908,7 @@ msgstr ""
 #: ../raster/r.param.scale/open_files.c:19 ../raster/r.profile/main.c:144
 #: ../raster/r.random/count.c:24 ../raster/r.random/random.c:39
 #: ../raster/r.support/front/front.c:221 ../raster/r.mfilter.fp/perform.c:37
-#: ../raster/r.topidx/file_io.c:17 ../vector/v.sample/main.c:160
-#: ../vector/v.what.rast/main.c:132
+#: ../raster/r.topidx/file_io.c:17 ../vector/v.what.rast/main.c:132
 #, c-format
 msgid "Cannot open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -8827,11 +8826,9 @@ msgstr "No se puede obtener información de la capa para el mapa vectorial"
 
 #: ../ps/ps.map/catval.c:49 ../raster/r.random/random.c:63
 #: ../vector/v.in.ascii/in.c:300 ../vector/v.in.db/main.c:127
-#: ../vector/v.kcv/main.c:173 ../vector/v.lrs/v.lrs.create/main.c:257
-#: ../vector/v.lrs/v.lrs.create/main.c:265 ../vector/v.net.path/path.c:90
-#: ../vector/v.sample/main.c:201 ../vector/v.to.db/query.c:81
-#: ../vector/v.to.db/update.c:32 ../vector/v.to.points/main.c:266
-#: ../vector/v.what.rast/main.c:124
+#: ../vector/v.kcv/main.c:173 ../vector/v.net.path/path.c:90
+#: ../vector/v.to.db/query.c:81 ../vector/v.to.db/update.c:32
+#: ../vector/v.to.points/main.c:266 ../vector/v.what.rast/main.c:124
 #, c-format
 msgid "Cannot open database <%s> by driver <%s>"
 msgstr "El controlador <%s> no puede abrir la Base de Datos <%s>"
@@ -8842,8 +8839,8 @@ msgstr "Tipo de columna no soportado (debe ser cadena)"
 
 #: ../ps/ps.map/catval.c:61 ../ps/ps.map/ps_vpoints.c:119
 #: ../vector/lidar/v.surf.bspline/main.c:279 ../vector/v.buffer/main.c:383
-#: ../vector/v.sample/main.c:181 ../vector/v.to.rast/vect2rast.c:68
-#: ../vector/v.to.rast3/main.c:93 ../vector/v.univar/main.c:147
+#: ../vector/v.to.rast/vect2rast.c:68 ../vector/v.to.rast3/main.c:93
+#: ../vector/v.univar/main.c:147
 msgid "Cannot select data from table"
 msgstr "Imposible seleccionar datos de la tabla"
 
@@ -10088,14 +10085,25 @@ msgstr "Parámetros \"niveles\" o \"paso\" no especificados."
 msgid "Could not read range file"
 msgstr "No se pudo leer el archivo de rango"
 
-#: ../raster/r.contour/main.c:188 ../vector/v.convert/att.c:74
-#: ../vector/v.in.ascii/in.c:366 ../vector/v.in.dxf/write_vect.c:204
-#: ../vector/v.in.ogr/main.c:676 ../vector/v.lrs/v.lrs.create/main.c:293
-#: ../vector/v.net.path/path.c:102 ../vector/v.surf.rst/main.c:558
-#: ../vector/v.to.points/main.c:273
+#: ../raster/r.contour/main.c:179 ../raster/r.to.vect/main.c:153
+#: ../vector/lidar/v.surf.bspline/main.c:269 ../vector/v.db.connect/main.c:190
+#: ../vector/v.db.connect/main.c:255 ../vector/v.db.select/main.c:177
+#: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:183
+#: ../vector/v.lrs/v.lrs.create/main.c:257
+#: ../vector/v.lrs/v.lrs.create/main.c:265 ../vector/v.mkgrid/main.c:212
+#: ../vector/v.out.ogr/main.c:256 ../vector/v.out.svg/main.c:145
+#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
+#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
+#: ../vector/v.sample/main.c:201 ../vector/v.surf.idw/read_sites.c:39
 #, c-format
-msgid "Cannot create table: %s"
-msgstr "No se puede crear la tabla: %s"
+msgid "Unable to open database <%s> by driver <%s>"
+msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
+
+#: ../raster/r.contour/main.c:188 ../raster/r.to.vect/main.c:188
+#: ../vector/v.lrs/v.lrs.create/main.c:293
+#, fuzzy, c-format
+msgid "Unable to create table: %s"
+msgstr "No se puede crear el archivo [%s]"
 
 #: ../raster/r.contour/main.c:192 ../vector/v.db.connect/main.c:258
 #: ../vector/v.in.ascii/in.c:456 ../vector/v.in.dxf/write_vect.c:211
@@ -10104,17 +10112,17 @@ msgstr "No se puede crear la tabla: %s"
 msgid "Cannot create index"
 msgstr "No se puede crear el índice"
 
-#: ../raster/r.contour/main.c:195 ../vector/v.db.connect/main.c:261
-#: ../vector/v.distance/main.c:710 ../vector/v.in.dxf/write_vect.c:209
-#: ../vector/v.in.ogr/main.c:683
-#, c-format
-msgid "Cannot grant privileges on table %s"
-msgstr "No se pueden otorgar privilegios sobre la tabla %s"
+#: ../raster/r.contour/main.c:195 ../raster/r.to.vect/main.c:194
+#: ../vector/v.mkgrid/main.c:232 ../vector/v.sample/main.c:216
+#, fuzzy, c-format
+msgid "Unable to grant privileges on table <%s>"
+msgstr "No se pueden otorgar privilegios sobre la tabla <%s>"
 
-#: ../raster/r.contour/main.c:211 ../vector/v.kcv/main.c:245
-#, c-format
-msgid "Cannot insert row: %s"
-msgstr "No se puede insertar la fila: %s"
+#: ../raster/r.contour/main.c:211 ../vector/v.mkgrid/main.c:270
+#: ../vector/v.sample/main.c:278
+#, fuzzy, c-format
+msgid "Unable to insert row: %s"
+msgstr "No se puede insertar en la tabla: %s"
 
 #: ../raster/r.contour/main.c:233
 msgid "Reading data: "
@@ -17360,31 +17368,10 @@ msgstr ""
 "El ráster no es CELL, se ignora la opción '-v', los valores ráster se "
 "escribirán en la tabla."
 
-#: ../raster/r.to.vect/main.c:153 ../vector/lidar/v.surf.bspline/main.c:269
-#: ../vector/v.db.connect/main.c:190 ../vector/v.db.connect/main.c:255
-#: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:183
-#: ../vector/v.out.ogr/main.c:256 ../vector/v.out.svg/main.c:145
-#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
-#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
-#: ../vector/v.surf.idw/read_sites.c:39
-#, c-format
-msgid "Unable to open database <%s> by driver <%s>"
-msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
-
-#: ../raster/r.to.vect/main.c:188
-#, fuzzy, c-format
-msgid "Unable to create table: %s"
-msgstr "No se puede crear el archivo [%s]"
-
 #: ../raster/r.to.vect/main.c:191
 #, fuzzy
 msgid "Unable to create index"
 msgstr "No se puede crear la cara"
-
-#: ../raster/r.to.vect/main.c:194
-#, fuzzy, c-format
-msgid "Unable to grant privileges on table <%s>"
-msgstr "No se pueden otorgar privilegios sobre la tabla <%s>"
 
 #: ../raster/r.to.vect/main.c:257
 #, fuzzy, c-format
@@ -20349,6 +20336,7 @@ msgstr ""
 "este módulo. Pruebe con una salida ráster u otro controlador."
 
 #: ../vector/lidar/v.surf.bspline/main.c:232 ../vector/v.edit/main.c:70
+#: ../vector/v.mkgrid/main.c:201
 #, fuzzy, c-format
 msgid "Unable to create vector map <%s>"
 msgstr "No se puede crear el mapa ráster <%s>"
@@ -20665,8 +20653,7 @@ msgstr "Construir polilíneas a partir de líneas."
 msgid "Do not print polyline info"
 msgstr "No imprimir información de polilíneas"
 
-#: ../vector/v.build.polylines/main.c:122 ../vector/v.db.select/main.c:101
-#: ../vector/v.transform/main.c:177
+#: ../vector/v.build.polylines/main.c:122 ../vector/v.transform/main.c:177
 #, c-format
 msgid "Could not find input vector map <%s>"
 msgstr "No se pudo encontrar el mapa vectorial de entrada <%s>"
@@ -21023,6 +21010,14 @@ msgstr "No fue posible encontrar el archivo dig_cats."
 msgid "Cannot open database %s"
 msgstr "No se puede abrir la base de datos %s"
 
+#: ../vector/v.convert/att.c:74 ../vector/v.in.ascii/in.c:366
+#: ../vector/v.in.dxf/write_vect.c:204 ../vector/v.in.ogr/main.c:676
+#: ../vector/v.mkgrid/main.c:225 ../vector/v.net.path/path.c:102
+#: ../vector/v.surf.rst/main.c:558 ../vector/v.to.points/main.c:273
+#, c-format
+msgid "Cannot create table: %s"
+msgstr "No se puede crear la tabla: %s"
+
 #: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
@@ -21312,6 +21307,12 @@ msgstr ""
 "La tabla <%s> ahora es parte del mapa vectorial <%s> y se puede borrar o "
 "sobrescribir por los módulos de GRASS"
 
+#: ../vector/v.db.connect/main.c:261 ../vector/v.distance/main.c:710
+#: ../vector/v.in.dxf/write_vect.c:209 ../vector/v.in.ogr/main.c:683
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "No se pueden otorgar privilegios sobre la tabla %s"
+
 #: ../vector/v.db.connect/main.c:263
 msgid "Select privileges were granted on the table"
 msgstr "Los privilegios seleccionados fueron asignados sobre la tabla"
@@ -21352,10 +21353,11 @@ msgstr "Salida vertical (en vez de horizontal)"
 msgid "Cannot open select cursor"
 msgstr "No se puede abrir el cursor de selección"
 
-#: ../vector/v.db.select/main.c:147 ../vector/v.out.ogr/main.c:584
-#: ../vector/v.out.svg/main.c:359
-msgid "Cannot fetch data"
-msgstr "No se puede recuperar datos"
+#: ../vector/v.db.select/main.c:147 ../vector/v.lrs/v.lrs.label/main.c:312
+#: ../vector/v.out.ogr/main.c:584 ../vector/v.out.svg/main.c:359
+#, fuzzy
+msgid "Unable to fetch data from table"
+msgstr "Imposible seleccionar datos de la tabla"
 
 #: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
@@ -21992,7 +21994,6 @@ msgid "Creates a new vector as a read-only link to OGR layer."
 msgstr "Crea un nuevo vectorial como un enlace de sólo lectura a una capa OGR."
 
 #: ../vector/v.external/main.c:73
-#, fuzzy
 msgid "Output vector. If not given, available layers are printed only."
 msgstr ""
 "Vectorial de salida. Si no se indica, las capas disponibles sólo se imprimen."
@@ -22009,9 +22010,8 @@ msgstr ""
 "\t\tArchivo MapInfo: nombre del archivo MapInfo"
 
 #: ../vector/v.external/main.c:88
-#, fuzzy
 msgid "Output vector name was not specified"
-msgstr "Salida vectorial"
+msgstr "El nombre del vectorial de salida no se especificó"
 
 #: ../vector/v.external/main.c:92
 #, fuzzy
@@ -22032,7 +22032,6 @@ msgstr ""
 "mapa que contiene sólo los objetos seleccionados."
 
 #: ../vector/v.extract/main.c:78
-#, fuzzy
 msgid ""
 "If 'list', 'file' and 'where' options are not specified, all features of "
 "given type and layer are extracted. Categories are not changed in that case."
@@ -22103,20 +22102,19 @@ msgid "Ignored text entry: %s"
 msgstr "Entrada de texto ignorada: %s"
 
 #: ../vector/v.extract/main.c:220
-#, fuzzy
 msgid "No layer database connection"
-msgstr "La conexión a la base de datos no ha sido definida"
+msgstr "Ninguna conexión a la base de datos de la capa"
 
 #: ../vector/v.extract/main.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Load categories from the database (table = %s, db = %s)."
 msgstr ""
 "Cargar categorías de la base de datos (tabla = %s, base de datos = %s)."
 
 #: ../vector/v.extract/main.c:234
-#, fuzzy, c-format
+#, c-format
 msgid "%d categories loaded from the database"
-msgstr "%d categorías subidas del mapa\n"
+msgstr "%d categorías cargadas de la base de datos"
 
 #: ../vector/v.extract/main.c:289
 msgid "Writing attributes..."
@@ -22444,7 +22442,7 @@ msgid "Category column is not of integer type"
 msgstr "La columna de categoría no es de tipo entero"
 
 #: ../vector/v.in.ascii/in.c:372 ../vector/v.net.path/path.c:109
-#: ../vector/v.sample/main.c:216 ../vector/v.to.points/main.c:280
+#: ../vector/v.to.points/main.c:280
 #, c-format
 msgid "Cannot grant privileges on table <%s>"
 msgstr "No se pueden otorgar privilegios sobre la tabla <%s>"
@@ -23216,9 +23214,8 @@ msgstr ""
 "Nombre para la nueva columna en la que se escribe el número de partición"
 
 #: ../vector/v.kcv/main.c:99
-#, fuzzy
 msgid "Use drand48()"
-msgstr "Usar"
+msgstr "Usar drand48()"
 
 #: ../vector/v.kcv/main.c:137
 #, fuzzy, c-format
@@ -23235,6 +23232,11 @@ msgstr "vectorial"
 msgid "Cannot alter table: %s"
 msgstr "No se puede crear la tabla: %s"
 
+#: ../vector/v.kcv/main.c:245
+#, c-format
+msgid "Cannot insert row: %s"
+msgstr "No se puede insertar la fila: %s"
+
 #: ../vector/v.kernel/main.c:56
 #, c-format
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
@@ -23245,7 +23247,6 @@ msgid "vector, kernel density"
 msgstr "vectorial, densidad de kernel"
 
 #: ../vector/v.kernel/main.c:93
-#, fuzzy
 msgid ""
 "Generates a raster density map from vector points data using a moving 2D "
 "isotropic Gaussian kernel or optionally generates a vector density map on "
@@ -23253,7 +23254,7 @@ msgid ""
 msgstr ""
 "Genera un mapa ráster de densidad a partir de datos de puntos vectoriales "
 "usando un kernel de Gauss isotrópico 2D en movimiento u opcionalmente genera "
-"un mapa vectorial de densidad en una red vectorial con un kernel 1D"
+"un mapa vectorial de densidad en una red vectorial con un kernel 1D."
 
 #: ../vector/v.kernel/main.c:97
 msgid "Input vector with training points"
@@ -23264,14 +23265,12 @@ msgid "Input network vector map"
 msgstr "Mapa vectorial de red de entrada"
 
 #: ../vector/v.kernel/main.c:109
-#, fuzzy
 msgid "Output raster/vector map"
-msgstr "mapa ráster/vectorial de salida"
+msgstr "Mapa ráster/vectorial de salida"
 
 #: ../vector/v.kernel/main.c:115
-#, fuzzy
 msgid "Standard deviation in map units"
-msgstr "desviación estándar en unidades de mapa"
+msgstr "Desviación estándar en unidades de mapa"
 
 #: ../vector/v.kernel/main.c:121
 #, fuzzy
@@ -23279,19 +23278,16 @@ msgid "Discretization error in map units"
 msgstr "Error de discretización en unidades de mapa"
 
 #: ../vector/v.kernel/main.c:128
-#, fuzzy
 msgid "Maximum length of segment on network"
-msgstr "lóngitud máxima de segmento en la red"
+msgstr "Longitud máxima de segmento en la red"
 
 #: ../vector/v.kernel/main.c:135
-#, fuzzy
 msgid "Maximum distance from point to network"
-msgstr "a"
+msgstr "Distancia máxima desde el punto a la red"
 
 #: ../vector/v.kernel/main.c:142
-#, fuzzy
 msgid "Multiply the density result by this number"
-msgstr "multiplicar el resultado de densidad por este número"
+msgstr "Multiplicar el resultado de densidad por este número"
 
 #: ../vector/v.kernel/main.c:147
 msgid ""
@@ -23307,9 +23303,9 @@ msgstr ""
 "Sólo calcular desviación estándar óptima y salir (no se escribe ningún mapa)"
 
 #: ../vector/v.kernel/main.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Network input map <%s> not found"
-msgstr "Mapa vectorial <%s> no encontrado"
+msgstr "Mapa de red de entrada <%s> no encontrado"
 
 #: ../vector/v.kernel/main.c:227
 #, c-format
@@ -23341,12 +23337,12 @@ msgid "%d distances read from the map."
 msgstr "%d distancias leídas del mapa."
 
 #: ../vector/v.kernel/main.c:275
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Distances between all points are beyond %e (4 * standard deviation), unable "
 "to calculate optimal value."
 msgstr ""
-"las distancias entre todos los puntos están más allá de %e (4 * desviación "
+"Las distancias entre todos los puntos están más allá de %e (4 * desviación "
 "estándar). No se puede calcular el valor óptimo."
 
 #: ../vector/v.kernel/main.c:285
@@ -23382,9 +23378,8 @@ msgstr ""
 "Escribiendo mapa ráster de salida usando parámetro de suavizado=%f."
 
 #: ../vector/v.kernel/main.c:379
-#, fuzzy
 msgid "Unable to read MASK"
-msgstr "no se puede leer MASK"
+msgstr "No se puede leer MASK"
 
 #: ../vector/v.kernel/main.c:403
 #, c-format
@@ -23396,10 +23391,9 @@ msgid "vector, paint labels"
 msgstr "vectorial, etiquetas de pintura"
 
 #: ../vector/v.label/main.c:64
-#, fuzzy
 msgid "Creates paint labels for GRASS vector map and attached attributes."
 msgstr ""
-"Crear etiquetas de pintura para mapa vectorial GRASS y atributos asociados."
+"Crea etiquetas de pintura para mapa vectorial GRASS y atributos asociados."
 
 #: ../vector/v.label/main.c:78 ../vector/v.label.sa/main.c:90
 msgid "Name of attribute column to be used for labels"
@@ -23515,24 +23509,20 @@ msgid "Cannot allocate %d bytes of memory"
 msgstr "No se puede asignar el cursor."
 
 #: ../vector/v.label.sa/labels.c:96
-#, fuzzy
 msgid "Font file format is not supported by FreeType"
-msgstr "Fuente"
+msgstr "El formato de archivo de fuentes no está soportado por FreeType"
 
 #: ../vector/v.label.sa/labels.c:98
-#, fuzzy
 msgid "Font file can not be loaded"
-msgstr "Fuente"
+msgstr "No se puede cargar el archivo de fuentes"
 
 #: ../vector/v.label.sa/labels.c:106
-#, fuzzy
 msgid "Unable to set font size"
-msgstr "a"
+msgstr "No se puede establecer el tamaño de fuente"
 
 #: ../vector/v.label.sa/labels.c:127
-#, fuzzy
 msgid "Cannot allocate more memory"
-msgstr "No se puede asignar el cursor."
+msgstr "No se puede asignar más memoria"
 
 #: ../vector/v.label.sa/labels.c:241
 #, fuzzy, c-format
@@ -23540,72 +23530,62 @@ msgid "Cannot load glyph for '%c'"
 msgstr "No se puede leer la cabecera del mapa para <%s>"
 
 #: ../vector/v.label.sa/main.c:47
-#, fuzzy
 msgid "Create optimally placed labels for vector map(s)"
-msgstr "vectorial"
+msgstr "Crear etiquetas situadas de forma óptima para el mapa(s) vectorial"
 
 #: ../vector/v.label.sa/main.c:116
 msgid "Icon size of point features (in map-units)"
-msgstr ""
+msgstr "Tamaño de icono para elementos punto (en unidades de mapa)"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:117
 #: ../vector/v.lrs/v.lrs.label/main.c:101
 #: ../vector/v.lrs/v.lrs.segment/main.c:69
 #: ../vector/v.lrs/v.lrs.where/main.c:55
-#, fuzzy
 msgid "vector, LRS, networking"
-msgstr "vectorial"
+msgstr "vectorial, LRS, trabajo en red"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:118
 msgid "Create Linear Reference System"
-msgstr ""
+msgstr "Crear Sistema de Referencia Lineal (LRS)"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:122
 #: ../vector/v.lrs/v.lrs.label/main.c:106
 #: ../vector/v.lrs/v.lrs.segment/main.c:75
 #: ../vector/v.lrs/v.lrs.where/main.c:61 ../vector/v.to.points/main.c:165
-#, fuzzy
 msgid "Input vector map containing lines"
-msgstr "vectorial líneas"
+msgstr "Mapa vectorial de entrada que contiene líneas"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:126
-#, fuzzy
 msgid "Output vector map where oriented lines are written"
-msgstr "Salida vectorial líneas"
+msgstr "Mapa vectorial de salida en el que se escriben las líneas orientadas"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:131
-#, fuzzy
 msgid "Output vector map of errors"
-msgstr "Salida vectorial"
+msgstr "Mapa vectorial de salida de errores"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:135
-#, fuzzy
 msgid "Input vector map containing reference points"
-msgstr "vectorial puntos"
+msgstr "Mapa vectorial de entrada que contiene puntos de referencia"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:139
 #: ../vector/v.lrs/v.lrs.label/main.c:114
 #: ../vector/v.lrs/v.lrs.segment/main.c:83
 #: ../vector/v.lrs/v.lrs.where/main.c:70 ../vector/v.segment/main.c:64
-#, fuzzy
 msgid "Line layer"
-msgstr "Línea"
+msgstr "Capa de líneas"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:143
 #: ../vector/v.lrs/v.lrs.where/main.c:75
-#, fuzzy
 msgid "Point layer"
-msgstr "Punto"
+msgstr "Capa de puntos"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:149
-#, fuzzy
 msgid "Column containing line identifiers for lines"
-msgstr "líneas"
+msgstr "Columna que contiene identificadores de línea para las líneas"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:155
-#, fuzzy
 msgid "Column containing line identifiers for points"
-msgstr "puntos"
+msgstr "Columna que contiene identificadores de línea para los puntos"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:162
 msgid "Column containing milepost position for the beginning of next segment"
@@ -23625,19 +23605,16 @@ msgid "Column containing offset from milepost for the end of previous segment"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:193
-#, fuzzy
 msgid "Name of table where the reference system will be written"
-msgstr "Nombre"
+msgstr "Nombre de la tabla donde se escribirá el sistema de referencia"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:194
-#, fuzzy
 msgid "New table is created by this module"
-msgstr "Nuevo"
+msgstr "La nueva tabla es creada por este módulo"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:201
-#, fuzzy
 msgid "Maximum distance of point to line allowed"
-msgstr "a"
+msgstr "Distancia máxima permitida de punto a línea"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:248
 #, fuzzy
@@ -23654,28 +23631,27 @@ msgstr "puntos"
 #: ../vector/v.lrs/v.lrs.segment/main.c:148
 #: ../vector/v.lrs/v.lrs.where/main.c:124
 #, fuzzy
-msgid "Cannot open database for reference table"
+msgid "Unable to open database for reference table"
 msgstr "No se puede abrir la base de datos %s por el controlador %s"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:284
 #, fuzzy, c-format
-msgid "Cannot drop table: %s"
-msgstr "No se puede abrir la base de datos %s"
+msgid "Unable to drop table: %s"
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:300
 #, fuzzy, c-format
-msgid "Cannot select line id values from %s.%s."
+msgid "Unable to select line id values from %s.%s."
 msgstr "Imposible seleccionar datos de la tabla"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:310
-#, fuzzy
 msgid "Line id column must be integer"
-msgstr "Línea entero"
+msgstr "La columna ID de línea debe ser de tipo entero"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:321
 #: ../vector/v.lrs/v.lrs.create/main.c:418
 #, fuzzy
-msgid "Cannot fetch line id from line table"
+msgid "Unable to fetch line id from line table"
 msgstr "Imposible seleccionar datos de la tabla"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:370
@@ -23684,13 +23660,13 @@ msgid "Line [%d] without category (layer [%d])"
 msgstr "Línea"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:390
-#, fuzzy, c-format
+#, c-format
 msgid "No lines selected for line id [%d]"
-msgstr "líneas"
+msgstr "Ninguna línea seleccionada para la línea con ID [%d]"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:409
 #, fuzzy, c-format
-msgid "Cannot select point attributes from <%s>"
+msgid "Unable to select point attributes from <%s>"
 msgstr "No se pueden seleccionar los atributos: %s"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:438
@@ -23714,9 +23690,9 @@ msgid "Point [%d] cat [%d] is out of threshold (distance = %f)"
 msgstr "Punto"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:641
-#, fuzzy, c-format
+#, c-format
 msgid "End > start for point cat [%d]"
-msgstr "Fin"
+msgstr "Final > inicio para la categoría [%d] de punto"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:653
 #, fuzzy
@@ -23734,34 +23710,38 @@ msgid "Distance along line identical for points' cats [%d], [%d]"
 msgstr "puntos"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:690
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough points (%d) attached to the line (cat %d), line skip."
-msgstr "puntos a."
+msgstr ""
+"Puntos insuficientes (%d) asignados a la línea (categoría %d). Se salta la ?"
+"ínea."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:694
-#, c-format
-msgid "Could not guess direction for the line (cat %d), line skip."
+#, fuzzy, c-format
+msgid "Unable to guess direction for the line (cat %d), line skip."
 msgstr ""
+"Puntos insuficientes (%d) asignados a la línea (categoría %d). Se salta la ?"
+"ínea."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:698
-#, fuzzy, c-format
+#, c-format
 msgid "Incorrect order of points along line cat [%d]"
-msgstr "puntos"
+msgstr "Orden de puntos incorrecto a lo largo de la línea con categoría [%d]"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:745
 #, fuzzy, c-format
-msgid "Cannot insert reference records: %s"
-msgstr "No se puede insertar nueva línea: %s"
+msgid "Unable to insert reference records: %s"
+msgstr "No se pueden insertar registros de referencia: %s"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:783
 #, fuzzy
-msgid "Building topology for output (out_lines) map ..."
-msgstr "topología líneas."
+msgid "Building topology for output (out_lines) map..."
+msgstr "Construyendo topología para el mapa de salida (out_lines)..."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:789
 #, fuzzy
-msgid "Building topology for error (err) map ..."
-msgstr "topología."
+msgid "Building topology for error (err) map..."
+msgstr "Construyendo topología para el mapa de errores (err)..."
 
 #: ../vector/v.lrs/v.lrs.label/main.c:102
 #, fuzzy
@@ -23776,9 +23756,8 @@ msgstr "Salida vectorial"
 #: ../vector/v.lrs/v.lrs.label/main.c:120
 #: ../vector/v.lrs/v.lrs.segment/main.c:105
 #: ../vector/v.lrs/v.lrs.where/main.c:81
-#, fuzzy
 msgid "Name of the reference system table"
-msgstr "Nombre"
+msgstr "Nombre de la tabla del sistema de referencia"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:128
 msgid "Label file"
@@ -23799,82 +23778,77 @@ msgid "Offset label in label y-direction in map units"
 msgstr "Etiqueta Etiqueta"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:180
-#, fuzzy
 msgid "Line width of text"
-msgstr "Línea"
+msgstr "Anchura de línea del texto"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:181
 #: ../vector/v.lrs/v.lrs.label/main.c:189
 #: ../vector/v.lrs/v.lrs.label/main.c:198
-#, fuzzy
 msgid "Only for d.label output"
-msgstr "Anchura de límites (sólo para salida de mapa PS)"
+msgstr "Sólo para salida de d.label"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:197
-#, fuzzy
 msgid "Line width of highlight color"
-msgstr "Línea color"
+msgstr "Anchura de línea de color de selección"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:221
-#, fuzzy
 msgid "Opaque to vector"
-msgstr "a vectorial"
+msgstr "Opaco a vectorial"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:222
-#, fuzzy
 msgid "Only relevant if background color is selected"
-msgstr "color"
+msgstr "Sólo es relevante si está seleccionado el color de fondo"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:269
-#, c-format
-msgid "Cannot open labels <%s>"
-msgstr "No se pueden abrir las etiquetas <%s>"
+#, fuzzy, c-format
+msgid "Unable to open labels file <%s>"
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:304
 #, fuzzy, c-format
-msgid "Cannot select records from LRS table: %s"
+msgid "Unable to select records from LRS table: %s"
 msgstr "Imposible seleccionar datos de la tabla"
 
-#: ../vector/v.lrs/v.lrs.label/main.c:312
-#, fuzzy
-msgid "Cannot fetch data from table"
-msgstr "datos"
-
 #: ../vector/v.lrs/v.lrs.label/main.c:387
-#, fuzzy
 msgid "No record in LR table"
-msgstr "%d registros seleccionados de la tabla"
+msgstr "Ningún registro en la tabla LR"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:391
 msgid "More than one record in LR table"
-msgstr ""
+msgstr "Más de un registro en la tabla LR"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:71
 #, fuzzy
 msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin or a file"
-msgstr "puntos líneas"
+"Creates points/segments from input lines, linear reference system and "
+"positions read from stdin or a file."
+msgstr ""
+"Crear puntos/segmentos a partir de las líneas de entrada, sistema de "
+"referencia lineal y posiciones leídas de stdin o un archivo"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:78
-#, fuzzy
 msgid "Output vector map where segments will be written"
-msgstr "Salida vectorial"
+msgstr "Mapa vectorial de salida en el que se escribirán los segmentos"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:89
-#, fuzzy
 msgid "Driver name for reference system table"
-msgstr "nombre"
+msgstr "Nombre del controlador para la tabla del sistema de referencia"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:97
-#, fuzzy
 msgid "Database name for reference system table"
-msgstr "nombre"
+msgstr "Nombre de la base de datos para la tabla del sistema de referencia"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:110 ../vector/v.segment/main.c:69
 #, fuzzy
-msgid "Name of file containing segment rules. If not given, read from stdin"
-msgstr "Nombre"
+msgid "Name of file containing segment rules. If not given, read from stdin."
+msgstr ""
+"Nombre del archivo que contiene reglas de segmentos. Si no se indica, se lee "
+"de stdin."
+
+#: ../vector/v.lrs/v.lrs.segment/main.c:129 ../vector/v.segment/main.c:89
+#, fuzzy, c-format
+msgid "Unable to open input file <%s>"
+msgstr "No se puede abrir el archivo de entrada <%s>."
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:172
 #: ../vector/v.lrs/v.lrs.segment/main.c:221 ../vector/v.segment/main.c:127
@@ -23884,19 +23858,20 @@ msgid "Cannot read input: %s"
 msgstr "No se puede crear la tabla: %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "No record in LR table for: %s"
-msgstr "No se puede leer la tabla de color para %s"
+msgstr "Ningún registro en la tabla LR para: %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "More than one record in LR table for: %s"
-msgstr "No se puede leer la tabla de color para %s"
+msgstr "Más de un registro en la tabla LR para: %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:193
-#: ../vector/v.lrs/v.lrs.segment/main.c:268
+#: ../vector/v.lrs/v.lrs.segment/main.c:268 ../vector/v.segment/main.c:137
+#: ../vector/v.segment/main.c:172
 #, fuzzy, c-format
-msgid "Cannot find line of cat [%d]"
+msgid "Unable to find line of cat [%d]"
 msgstr "vectorial"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:201
@@ -23907,11 +23882,13 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:233
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No record in LRS table for 1. point of:\n"
 "  %s"
-msgstr "No hay registro para la linea (cat = %d)"
+msgstr ""
+"Ningún registro en la tabla LRS para 1. punto de:\n"
+"  %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:237
 #, c-format
@@ -23928,11 +23905,13 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:249
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No record in LRS table for 2. point of:\n"
 "  %s"
-msgstr "No hay registro para la linea (cat = %d)"
+msgstr ""
+"Ningún registro en la tabla LRS para 2. punto de:\n"
+"  %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:253
 #, c-format
@@ -23953,9 +23932,9 @@ msgid "Segment over 2 (or more) segments, not yet supported"
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "End of segment > line length (%e) -> cut"
-msgstr "Fin"
+msgstr "Final del segmento > longitud de línea (%e) ->cortado"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:286 ../vector/v.segment/main.c:186
 #, c-format
@@ -23965,63 +23944,62 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:308 ../vector/v.segment/main.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Incorrect segment type: %s"
-msgstr "No se puede crear la tabla: %s"
+msgstr "Tipo de segmento incorrecto: %s"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:323
 #: ../vector/v.lrs/v.lrs.where/main.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points read from input"
-msgstr "puntos"
+msgstr "[%d] puntos leídos de la entrada"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:324
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points written to output map (%d lost)"
-msgstr "puntos a"
+msgstr "[%d] puntos escritos en el mapa de salida (%d perdidos)"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:326
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] lines read from input"
-msgstr "líneas"
+msgstr "[%d] líneas leídas de la entrada"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] lines written to output map (%d lost)"
-msgstr "líneas a"
+msgstr "[%d] líneas escritas en el mapa de salida (%d perdidas)"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:56
 #, fuzzy
 msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
+"Finds line id and real km+offset for given points in vector map using linear "
+"reference system."
 msgstr ""
 "Hallar una id de línea y km reales + compensación para puntos especificados "
 "en un mapa vectorial empleando sistema de referencia lineal"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:65
-#, fuzzy
 msgid "Input vector map containing points"
-msgstr "vectorial puntos"
+msgstr "Mapa vectorial de entrada que contiene puntos"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:88
 msgid "Maximum distance to nearest line"
 msgstr "Distancia máxima a la línea más próxima"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] positions found"
-msgstr "mapa <%s> no encontrado"
+msgstr "[%d] posiciones encontradas"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:195
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points outside threshold"
-msgstr "puntos"
+msgstr "[%d] puntos fuera del umbral"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points - no record found"
-msgstr "puntos"
+msgstr "[%d] puntos - ningún registro encontrado"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:199
 #, fuzzy, c-format
@@ -24094,15 +24072,73 @@ msgstr "No se puede llamar a función incorrecta"
 msgid "Bad arguments to pointfunc %s"
 msgstr "Argumentos no válidos para pointfunc %s"
 
+#: ../vector/v.mkgrid/main.c:63
+#, fuzzy
+msgid "Creates a (binary) GRASS vector map of a user-defined grid."
+msgstr "GRASS vectorial GRASS ráster."
+
+#: ../vector/v.mkgrid/main.c:79
+msgid "Number of ROWS and COLUMNS in grid"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:88
+msgid ""
+"Where to place the grid:\n"
+"\tregion - current region\n"
+"\tcoor - use 'coor' and 'box' options"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:98
+msgid "Lower left EASTING and NORTHING coordinates of map"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:106
+msgid "WIDTH and HEIGHT of boxes in grid"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:112
+#, fuzzy
+msgid "Angle of rotation (in degrees counter-clockwise)"
+msgstr "Ángulo de rotación en grados (en el sentido de las agujas del reloj)"
+
+#: ../vector/v.mkgrid/main.c:118
+msgid "Quiet; No chatter"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:170
+#, fuzzy
+msgid "'coor' option missing"
+msgstr "falta la opción to_column (a_columna)"
+
+#: ../vector/v.mkgrid/main.c:173
+#, fuzzy
+msgid "'box' option missing"
+msgstr "falta la opción to_column (a_columna)"
+
+#: ../vector/v.mkgrid/main.c:176
+#, fuzzy
+msgid "Invalid easting!"
+msgstr "Marca de tiempo no válida"
+
+#: ../vector/v.mkgrid/main.c:178
+#, fuzzy
+msgid "Invalid northing!"
+msgstr "Coordenadas inválidas"
+
+#: ../vector/v.mkgrid/main.c:181 ../vector/v.mkgrid/main.c:183
+#, fuzzy
+msgid "Invalid distance!"
+msgstr "Marca de tiempo no válida"
+
 #: ../vector/v.mkgrid/main.c:234
 #, fuzzy
-msgid "Creating vector grid ..."
-msgstr "vectorial."
+msgid "Creating vector grid..."
+msgstr "Creando cuadrícula vectorial..."
 
 #: ../vector/v.mkgrid/main.c:239
 #, fuzzy
-msgid "Creating centroids ..."
-msgstr "centroides."
+msgid "Creating centroids..."
+msgstr "Creando centroides..."
 
 #: ../vector/v.mkgrid/write_grid.c:43
 #, fuzzy
@@ -24115,9 +24151,8 @@ msgid "Writing out vector columns ..."
 msgstr "vectorial columnas."
 
 #: ../vector/v.neighbors/main.c:47
-#, fuzzy
 msgid "vector, raster, aggregation"
-msgstr "vectorial ráster"
+msgstr "vectorial ráster, agregacion"
 
 #: ../vector/v.neighbors/main.c:76
 #, fuzzy, c-format
@@ -24127,37 +24162,38 @@ msgstr "vectorial directorio de mapas"
 #: ../vector/v.net/main.c:46 ../vector/v.net.alloc/main.c:57
 #: ../vector/v.net.iso/main.c:68 ../vector/v.net.path/main.c:39
 #: ../vector/v.net.salesman/main.c:91 ../vector/v.net.steiner/main.c:319
-#, fuzzy
 msgid "vector, networking"
-msgstr "vectorial"
+msgstr "vectorial, trabajo en red"
 
 #: ../vector/v.net/main.c:47
 msgid "Network maintenance."
-msgstr ""
+msgstr "Mantenimiento de redes."
 
 #: ../vector/v.net/main.c:54
-#, fuzzy
 msgid "Name of input point vector map"
-msgstr "Nombre del mapa vectorial de entrada"
+msgstr "Nombre del mapa vectorial de puntos de entrada"
 
 #: ../vector/v.net/main.c:55
 msgid "Required for operation 'connect'"
-msgstr ""
+msgstr "Requerido para la operación 'conectar'"
 
 #: ../vector/v.net/main.c:68
-#, fuzzy
 msgid "Operation to be performed"
-msgstr "a"
+msgstr "Operación a realizar"
 
 #: ../vector/v.net/main.c:69
-#, fuzzy
 msgid ""
 "nodes;new point is placed on each node (line end) if doesn't exist;connect;"
 "connect still unconnected points to vector network by inserting new line(s);"
 "report;print to standard output {line_category start_point_category "
 "end_point_category};nreport;print to standard output {point_category "
 "line_category[,line_category...]}"
-msgstr "Imprimir a Imprimir a"
+msgstr ""
+"nodos;el nuevo punto es situado en cada nodo (final de línea) si no existe;"
+"conectar;conecta puntos aún si conectar a la red vectorial insertando nueva "
+"línea(s);informar;imprimir a la salida estándar {line_category "
+"start_point_category end_point_category};nreport;imprimir a la salida "
+"estándar {point_category line_category[,line_category...]}"
 
 #: ../vector/v.net/main.c:80
 #, fuzzy
@@ -24165,52 +24201,46 @@ msgid "Arc layer (network)"
 msgstr "Capa de arco"
 
 #: ../vector/v.net/main.c:85
-#, fuzzy
 msgid "Node layer (points)"
-msgstr "Nombre a"
+msgstr "Capa de nodos (puntos)"
 
 #: ../vector/v.net/main.c:93
 msgid "Required for operation 'connect'. Connect points in given threshold."
 msgstr ""
+"Requerido para la operación 'conectar'. Conectar puntos en el umbral dado."
 
 #: ../vector/v.net/main.c:97
-#, fuzzy
 msgid "Assign unique categories to new points"
-msgstr "categorías a puntos"
+msgstr "Asignar categorías únicas a nuevos puntos"
 
 #: ../vector/v.net/main.c:98
-#, fuzzy
 msgid "For operation 'nodes'"
-msgstr "Proyección desconocida"
+msgstr "Para la operación 'nodos'"
 
 #: ../vector/v.net/main.c:116
-#, fuzzy
 msgid "Unknow operation"
-msgstr "Proyección desconocida"
+msgstr "Operación desconocida"
 
 #: ../vector/v.net/main.c:120
-#, fuzzy
 msgid "Output vector map must be specified"
-msgstr "Salida vectorial"
+msgstr "Se debe especificar el mapa vectorial de salida"
 
 #: ../vector/v.net/main.c:125
-#, fuzzy
 msgid "Point vector map must be specified"
-msgstr "Salida vectorial"
+msgstr "Se debe especificar el mapa vectorial de puntos"
 
 #: ../vector/v.net/main.c:128
-#, fuzzy
 msgid "Threshold value must be specified"
-msgstr "2 capas deben ser especificadas"
+msgstr "Se debe especificar el valor umbral"
 
 #: ../vector/v.net/main.c:133
 msgid "Threshold value must be >= 0"
-msgstr ""
+msgstr "El valor umbral debe ser >=0"
 
 #: ../vector/v.net/main.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open vector map <%s> at topology level %d"
-msgstr "vectorial"
+msgstr "No se puede abrir el mapa vectorial <%s> en el nivel topológico %d"
 
 #: ../vector/v.net/main.c:183
 #, c-format
@@ -24218,34 +24248,37 @@ msgid "%d arcs added to network (nlayer: [%d])"
 msgstr ""
 
 #: ../vector/v.net/nodes.c:89
-#, fuzzy, c-format
+#, c-format
 msgid "%d new points written to output"
-msgstr "puntos a"
+msgstr "%d puntos nuevos escritos en la salida"
 
 #: ../vector/v.net/report.c:45
-#, fuzzy, c-format
+#, c-format
 msgid "Line %d has no category"
-msgstr "Línea"
+msgstr "La línea %d no tiene categoría"
 
 #: ../vector/v.net/report.c:68
-#, fuzzy, c-format
+#, c-format
 msgid "Point not found: %.3lf %.3lf %.3lf line category: %d"
-msgstr "Punto"
+msgstr "Punto no encontrado: %.3lf %.3lf %.3lf catagoría de línea: %d"
 
 #: ../vector/v.net/report.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "%d points found: %.3lf %.3lf %.3lf line category: %d"
-msgstr "puntos"
+msgstr "%d puntos no encontrados: %.3lf %.3lf %.3lf categoría de línea: %d"
 
 #: ../vector/v.net.alloc/main.c:58
 msgid "Allocate subnets for nearest centres (direction from centre)."
 msgstr ""
+"Asigna subredes para los centros más próximos (dirección desde el centro)."
 
 #: ../vector/v.net.alloc/main.c:59
 msgid ""
 "Centre node must be opened (costs >= 0). Costs of centre node are used in "
 "calculation"
 msgstr ""
+"El nodo central debe estar abierto (costes >=0). Los costes del nodo central "
+"se usan en los cálculos."
 
 #: ../vector/v.net.alloc/main.c:85 ../vector/v.net.iso/main.c:94
 msgid "Arc forward/both direction(s) cost column (number)"
@@ -24994,7 +25027,7 @@ msgstr "mapa vectorial <%s> no encontrado"
 msgid "The output map is not 3D"
 msgstr "Mapa vectorial %s no encontrado"
 
-#: ../vector/v.patch/main.c:298
+#: ../vector/v.patch/main.c:298 ../vector/v.sample/main.c:210
 #, fuzzy, c-format
 msgid "Unable to create table <%s>"
 msgstr "No se puede crear la salida <%s>"
@@ -25308,25 +25341,20 @@ msgstr ""
 msgid "Column type <%s> not supported (must be integer or double precision)"
 msgstr "entero"
 
-#: ../vector/v.sample/main.c:210
-#, fuzzy, c-format
-msgid "Cannot create table <%s>"
-msgstr "No se puede crear la tabla: %s"
+#: ../vector/v.sample/main.c:181 ../vector/v.surf.idw/read_sites.c:49
+#, fuzzy
+msgid "Unable to select data from table"
+msgstr "Imposible seleccionar datos de la tabla"
 
 #: ../vector/v.sample/main.c:219
 #, fuzzy
-msgid "Checking vector points ..."
+msgid "Checking vector points..."
 msgstr "vectorial puntos."
 
 #: ../vector/v.sample/main.c:244 ../vector/v.sample/main.c:252
 #, fuzzy, c-format
 msgid "no record for cat = %d"
 msgstr "No hay registro para la linea (cat = %d)"
-
-#: ../vector/v.sample/main.c:278
-#, fuzzy, c-format
-msgid "cannot insert row: %s"
-msgstr "No se puede insertar nueva línea: %s"
 
 #: ../vector/v.segment/main.c:53
 #, fuzzy
@@ -25342,11 +25370,6 @@ msgstr "Mapas de entrada que contienen líneas"
 #, fuzzy
 msgid "Output map where segments will be written"
 msgstr "Salida"
-
-#: ../vector/v.segment/main.c:137 ../vector/v.segment/main.c:172
-#, fuzzy, c-format
-msgid "Cannot find line of cat %d"
-msgstr "vectorial"
 
 #: ../vector/v.segment/main.c:145
 #, c-format
@@ -25529,11 +25552,6 @@ msgstr "Interpolando mapa ráster <%s> ... %d filas ... "
 #, fuzzy, c-format
 msgid "Database connection not defined for layer %d"
 msgstr "La conexión a la base de datos no ha sido definida"
-
-#: ../vector/v.surf.idw/read_sites.c:49
-#, fuzzy
-msgid "Unable to select data from table"
-msgstr "Imposible seleccionar datos de la tabla"
 
 #: ../vector/v.surf.idw/read_sites.c:81
 #, fuzzy, c-format
@@ -26968,8 +26986,34 @@ msgstr "Fichero de imagen"
 msgid "Percentage of CPU time to use"
 msgstr "a"
 
-#~ msgid "West:  %f (%f)"
-#~ msgstr "Oeste:  %f (%f)"
+#~ msgid "Label file [%s] not available"
+#~ msgstr "Archivo de etiquetas [%s] no disponible"
 
-#~ msgid "East:  %f (%f)"
-#~ msgstr "Este:  %f (%f)"
+#~ msgid "Can't open label file [%s]"
+#~ msgstr "No se puede abrir el archivo de etiquetas [%s]"
+
+#~ msgid "Cannot fetch data"
+#~ msgstr "No se puede recuperar datos"
+
+#, fuzzy
+#~ msgid "Cannot drop table: %s"
+#~ msgstr "No se puede abrir la base de datos %s"
+
+#~ msgid "Cannot open labels <%s>"
+#~ msgstr "No se pueden abrir las etiquetas <%s>"
+
+#, fuzzy
+#~ msgid "Cannot fetch data from table"
+#~ msgstr "datos"
+
+#, fuzzy
+#~ msgid "Cannot create table <%s>"
+#~ msgstr "No se puede crear la tabla: %s"
+
+#, fuzzy
+#~ msgid "cannot insert row: %s"
+#~ msgstr "No se puede insertar nueva línea: %s"
+
+#, fuzzy
+#~ msgid "Cannot find line of cat %d"
+#~ msgstr "vectorial"
