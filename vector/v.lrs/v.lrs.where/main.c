@@ -196,7 +196,7 @@ int main(int argc, char **argv)
     if ( n_no_record )
         G_message ( _("[%d] points - no record found"), n_no_record);
     if ( n_many_records )
-        G_message ( _("[%d] points - to many records found"), n_many_records);
+        G_message ( _("[%d] points - too many records found"), n_many_records);
 
     exit(EXIT_SUCCESS);
 }
