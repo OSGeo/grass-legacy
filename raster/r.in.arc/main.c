@@ -57,14 +57,14 @@ int main (int argc, char *argv[])
 	module = G_define_module();
 	module->keywords = _("raster");
     module->description =
-		_("Convert an ESRI ARC/INFO ascii raster file (GRID) "
+		_("Converts an ESRI ARC/INFO ascii raster file (GRID) "
 		"into a (binary) raster map layer.");
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
-	parm.input->description = _("ARC/INFO ascii raster file (GRID) to be imported");
+	parm.input->description = _("ARC/INFO ASCII raster file (GRID) to be imported");
 	parm.input->gisprompt = "old_file,file,input";
 
 	parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
         parm.mult->type = TYPE_DOUBLE;
         parm.mult->answer = "1.0";
         parm.mult->required = NO;
-        parm.mult->description = _("Multiplier for ascii data") ;
+        parm.mult->description = _("Multiplier for ASCII data") ;
 
 	if (G_parser(argc,argv))
 		exit(EXIT_FAILURE);
@@ -110,7 +110,7 @@ int main (int argc, char *argv[])
 	{
 		Tmp_file = G_tempfile ();
 		if (NULL == (Tmp_fd = fopen (Tmp_file, "w+")))
-			G_fatal_error(_("Could not open temporary file: [%s]"),Tmp_file);
+			G_fatal_error(_("Unable to open temporary file <%s>"),Tmp_file);
 		unlink (Tmp_file);
 		if (0 > file_cpy (stdin, Tmp_fd))
 			exit (EXIT_FAILURE);
@@ -120,7 +120,7 @@ int main (int argc, char *argv[])
 		fd = fopen (input, "r");
 
 	if (fd == NULL)
-		G_fatal_error(_("Could not open input file [%s]"),input);
+		G_fatal_error(_("Unable to open input file <%s>"),input);
 
 	if(!gethead (fd, &cellhd, &missingval))
 		G_fatal_error ( _("Can't get cell header"));
@@ -148,7 +148,7 @@ int main (int argc, char *argv[])
 	}
 	cf = G_open_raster_new (output, rtype);
 	if (cf < 0)
-		G_fatal_error ( _("Unable to create raster map %s"), output);
+		G_fatal_error ( _("Unable to create raster map <%s>"), output);
 	
 	for (row = 0; row < nrows; row++)
 	{

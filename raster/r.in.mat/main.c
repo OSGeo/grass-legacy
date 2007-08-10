@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
     /* open bin file for reading */
     fp1 = fopen(infile, "rb");
     if(NULL == fp1)
-       G_fatal_error(_("Unable to open input file <%s>."), infile);
+       G_fatal_error(_("Unable to open input file <%s>"), infile);
 
     have_name = have_data = have_title = 0;
     have_n = have_s = have_e = have_w = 0;
