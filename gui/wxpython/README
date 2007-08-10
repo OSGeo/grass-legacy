@@ -6,18 +6,26 @@ $LastChangedDate$
 
 ---------------------------------------------------------------------
 Requirements:
- Python >=2.4 and wxPython 2.8.1.1
+ Python >=2.4 and wxPython >=2.8.1.1
 
  Get wxPython 2.8.x packages from:
+ * Source: : http://www.wxpython.org/download.php
  * Debian: http://www.bitpim.org/developer.html -> "Install wxPython"
- * Fedora: 
+ * Fedora: http://www.wxpython.org/download.php
  * Mandriva 2007.0: http://mpa.itc.it/markus/wxpython_rpms/
  * Mandriva 2007.1 (spring): available from main/backports (see
         http://club.mandriva.com/xwiki/bin/view/Downloads/MirrorFinder2 )
- * MS-Windows:
- * SuSe: 
+      	Also http://www.wxpython.org/download.php
+ * MS-Windows: http://www.wxpython.org/download.php
+ * OS X: http://www.wxpython.org/download.php
+ * SuSe:
  * Ubuntu: deb http://wxpython.wxcommunity.com/apt/ubuntu/dapper /
            deb http://wxpython.wxcommunity.com/apt/ubuntu/feisty /
+
+ Get Python from:
+ * Python.org for Source, MS-Windows, OS X: http://www.python.org/download/
+ * ActiveStates for AIX, HP-UX, Linux (x86), Linux 64-bit (x86_64 AMD64), Mac OS X,
+     Solaris (SPARC), Windows: http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
 ---------------------------------------------------------------------
 
 How to start:
@@ -49,10 +57,7 @@ $~ cd grassaddons/gui
 2 - STARTUP WITH GRASS INITIALIZATION
 
 If you want to start the wxgrass GUI automatically when you start
-GRASS, replace your $GRASS/etc/init.sh with the one that accompanies
-wxgrass. Rename your original init.sh to avoid overwriting it.
-
-Edit your .grassrc6 file to replace...
+GRASS, edit your .grassrc6 file to replace...
 
 GRASS_GUI: tcktk (or whatever you have here)
 
@@ -60,14 +65,9 @@ GRASS_GUI: tcktk (or whatever you have here)
 
 GRASS_GUI: wx
 
-***NOTE***
-You may need to edit init.sh to match your settings for LD_DISPLAY
-
-
 3 - STARTUP FROM GRASS TERMINAL
 
-Do not use the wxgrass init.sh. Simply type wxgrass& from the GRASS
-terminal to start the GUI using the wxgrass script.
+Simply type wxgrass& from the GRASS terminal to start the GUI using the wxgrass script.
 
 
 4 - CLI Display scripts
@@ -124,7 +124,7 @@ $ g.gisenv set=DEBUG=3
 This enables all debug messages (GRASS modules + GUI). GUI debug
 messages starts with 'GUI', e.g.
 
-	GUI D1/1: MapFrame.__init__()
+    GUI D1/1: MapFrame.__init__()
 
 If you want to enable *only* GUI debug messages set DEBUG variable to 'GUI:level', e.g.
 
@@ -133,8 +133,8 @@ $ g.gisenv set=DEBUG=GUI:3
 6 - ICON THEMES
 
 Currently only two icon themes are available:
-	* default (based on TCL/TK GUI prototype)
- 	* Silk
+    * default (based on TCL/TK GUI prototype)
+     * Silk
 
 To enable 'Silk' icon theme set environment variable:
 
