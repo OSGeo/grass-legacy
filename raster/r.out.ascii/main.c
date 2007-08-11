@@ -113,7 +113,7 @@ main(int argc, char *argv[])
     flag.int_out->description = _("Force output of integer values");
 
     if (G_parser(argc, argv))
-       	exit (-1);
+       	exit (EXIT_FAILURE);
 
     if(parm.dp->answer)
     {
@@ -203,5 +203,5 @@ main(int argc, char *argv[])
 /* tidy up and go away */
     G_close_cell(fd);
     fclose(fp);
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
