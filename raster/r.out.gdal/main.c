@@ -553,6 +553,8 @@ int main(int argc, char *argv[])
     char **papszOptions;
     papszOptions = createopt->answers;
     GDALDatasetH hCurrDS = NULL, hMEMDS = NULL, hDstDS = NULL;
+    if(!output->answer)
+	G_fatal_error(_("Output file name not specified"));
     if (hMEMDriver) {
 	hMEMDS =
 	    GDALCreate(hMEMDriver, "", cellhead.cols, cellhead.rows, ref.nfiles,
