@@ -189,6 +189,10 @@ set descmenu [subst  {
 	{separator}
 	{command {[G_msg "Bearing/distance to coordinates"]} {} "m.cogo: Convert between bearing/distance and coordinates" {} -command { execute m.cogo }}
 	{separator}
+	{cascad {[G_msg "3D rendering"]} {} "" $tmenu {
+		{command {[G_msg "NVIZ"]} {} "nviz: Launch N-dimensional visualization" {} -command {execute nviz }}
+		{command {[G_msg "NVIZ fly through path"]} {} "d.nviz: Create a fly-through path for NVIZ (requires xterm for interactive path creation)" {} -command {execute d.nviz }}
+	}}
 	{command {[G_msg "PostScript plot"]} {} "ps.map: Create cartographic PostScript plot" {} -command { execute ps.map }}
 	{separator}
 	{command {[G_msg "E&xit"]} {} "Exit GIS Manager" {} -accelerator $keyctrl-Q -command { exit } }
