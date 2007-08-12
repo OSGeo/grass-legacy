@@ -103,20 +103,6 @@ proc GmToolBar2::create { tb } {
     # 3D AND ANIMATION
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 ]
 
-    # nviz
-    $bbox4 add -image [image create photo -file "$iconpath/module-nviz.gif"] \
-        -command "Gm::nviz" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
-        -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "NVIZ - n dimensional visualization"]
-    
-    # d.nviz
-    $bbox4 add -image [image create photo -file "$iconpath/module-d.nviz.gif"] \
-        -command "Gm::fly" \
-        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
-        -highlightbackground $bgcolor -activebackground $bgcolor \
-        -helptext [G_msg "Fly through path for NVIZ"]
-
     # xganim
     $bbox4 add -image [image create photo -file "$iconpath/module-xganim.gif"] \
         -command "Gm::xganim" \
