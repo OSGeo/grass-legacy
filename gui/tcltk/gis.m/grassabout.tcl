@@ -89,8 +89,5 @@ proc Gm::helptext {title textopts tagopts message} {
 #grassabout.tcl
 # open g.version and print in window
 #
-global env
-set shell $env(SHELL)
-set cmd "g.version -c"
-set text [eval "exec echo \"$cmd\" | $shell "]
+set text [exec g.version -c]
 Gm::helptext {About GRASS} {-width 75} {-justify left} $text
