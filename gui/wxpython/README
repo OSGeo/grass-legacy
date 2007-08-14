@@ -12,7 +12,8 @@ Requirements:
  * Source: : http://www.wxpython.org/download.php
  * Debian: http://www.bitpim.org/developer.html -> "Install wxPython"
  * Fedora: http://www.wxpython.org/download.php
- * Mandriva 2007.0: http://mpa.itc.it/markus/wxpython_rpms/
+           http://mpa.itc.it/markus/wxpython_rpms/fedora/
+ * Mandriva 2007.0: http://mpa.itc.it/markus/wxpython_rpms/mandriva2007.0/
  * Mandriva 2007.1 (spring): available from main/backports (see
         http://club.mandriva.com/xwiki/bin/view/Downloads/MirrorFinder2 )
       	Also http://www.wxpython.org/download.php
