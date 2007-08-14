@@ -563,17 +563,6 @@ if [ ! "$LOCATION" ] ; then
 			#exit
 			eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
 			thetest=$?
-	        #0: failure
-	        #1: successfully read environment
-        
-		###########################################################################
-		# at the moment when the EPSG facility is used, the eval returns "1"
-		# whereas everything should be ok, therefore til that problem is not solved
-		# the return is forced to be ok ("0")
-			if [ "$EPSGSCRIPT" = "yes" ] ; then
-				thetest=0
-			fi
-		############################################################################
 		else
 			#"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"
 			#exit
@@ -689,7 +678,7 @@ esac
 # build user fontcap if specified but not present
 if [ "$GRASS_FONT_CAP" ] && [ ! -f "$GRASS_FONT_CAP" ] ; then
 	echo "Building user fontcap ..."
-	g.mkfontcap -o
+	g.mkfontcap
 fi
 
 trap "" 2 3 15
@@ -763,7 +752,7 @@ case "$GRASS_GUI" in
 	;;
 
     wx)
-        # comming soon, see ^
+        # coming soon, see ^
         "$GISBASE/scripts/wxgrass" &
 	;;
 

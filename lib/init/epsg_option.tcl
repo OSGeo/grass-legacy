@@ -122,7 +122,7 @@ proc epsgOpt::epsgLocCom args {
 	LabelEntry $row1.newloc -label [G_msg "Name of new location"] \
 		-labeljustify right -labelanchor e -labelwidth 30 -wraplength 200 \
 		-textvariable epsgOpt::epsgLocation -width 35 \
-		-helptext [G_msg "Enter name of location to be created"]
+		-helptext [G_msg "Enter name for location to be created"]
 		
 	pack $row1.newloc -side left -expand 0 -fill x -padx 2
 
@@ -177,22 +177,27 @@ proc epsgOpt::epsgLocCom args {
 proc epsgOpt::def_loc { } {
 # define new location using EPSG code
 	global refresh
+	global database
 	variable epsg_code
 	variable epsgLocation
 
 	if {$epsg_code==""} {return}
 
 	if {![string is integer $epsg_code]} {
-		tk_messageBox -type ok -icon error \
-			-message [G_msg "WARNING: Please supply a\nvalid EPSG code (integer)"] 
+		DialogGen .wrnDlg [G_msg "Invalid EPSG Code!"] error \
+		[format [G_msg "ERROR: Invalid EPSG code %s: should be an integer."] \
+	       	$epsg_code] \
+	       	0 OK
+		set epsg_code ""
 		return
 	} 
 
 	set epsgLocation [ string trim $epsgLocation ]
 
-	if {[file exists $epsgLocation ]== 1} {
-		tk_messageBox -type ok -icon error \
-			-message [G_msg "WARNING: The location '$epsgLocation'\nalready exists, please try another name"] 
+	if {[file exists ${database}/$epsgLocation]} {
+		DialogGen .wrnDlg [G_msg "Location Exists!"] warning \
+		[format [G_msg "WARNING: Location '%s' already exists: please try another name."] \
+		$epsgLocation] 0 OK
 		set epsgLocation ""
 		return
 	}
@@ -209,82 +214,8 @@ proc epsgOpt::create_loc { } {
 # Create a new location using g.proj
 # original bash code by M. Neteler
 
-	variable epsg_code
-	variable epsgLocation
-	global env database
-	global location
-	global mapset
-
-	#test for valid WIND file
-	if {[catch {exec g.region -p}] != 0} {
-
-		# Create temporary location in order to run g.proj. For 1st time use
-
-		set GRASSRC "grassrc6"
-		set curr_gisrc $env(GISRC)
-
-		set tempdir [pid]
-		append tempdir ".tmp"
-		file mkdir "$database/$tempdir/PERMANENT"
-		
-		# save existing .grassrc file
-		if {[file exists "$env(HOME)/.$GRASSRC"] } {
-			file copy "$env(HOME)/.$GRASSRC" "$database/$tempdir/$GRASSRC"
-		}
-		
-		# create temporary .grassrc file to hold temporary location information
-		set output [open "$env(HOME)/.$GRASSRC" w+]
-			puts $output "LOCATION_NAME: $tempdir" 
-			puts $output "MAPSET: PERMANENT"
-			puts $output "DIGITIZER: none"
-			puts $output "GISDBASE: $database" 
-		close $output
-		
-		set env(GISRC) "$env(HOME)/.$GRASSRC"
-				
-		# Populate a temporary location with a minimal set of files
-		set output [open "$database/$tempdir/PERMANENT/DEFAULT_WIND" w+]
-			puts $output "proj:       3"
-			puts $output "zone:       0"
-			puts $output "north:      72N"
-			puts $output "south:      27N"
-			puts $output "east:       42E"
-			puts $output "west:       11W"
-			puts $output "cols:       6360"
-			puts $output "rows:       5400"
-			puts $output "e-w resol:  0:00:30"
-			puts $output "n-s resol:  0:00:30"
-		close $output
-	
-		set output [open "$database/$tempdir/PERMANENT/PROJ_INFO" w+]
-			puts $output "name: Lat/Lon"
-			puts $output "datum: wgs84"
-			puts $output "towgs84: 0.000,0.000,0.000"
-			puts $output "proj: ll"
-			puts $output "ellps: wgs84"
-		close $output
-		
-		set output [open "$database/$tempdir/PERMANENT/PROJ_UNITS" w+]
-			puts $output "unit: degree"
-			puts $output "units: degrees"
-			puts $output "meters: 1.0"
-		close $output
-		
-		
-		# create new location from EPSG code
-		epsgOpt::runproj	
-		# restore previous .$GRASSRC
-		if {[file exists "$database/$tempdir/$GRASSRC"]} {
-			file copy -force "$database/$tempdir/$GRASSRC" "$env(HOME)/.$GRASSRC"
-		}
-		
-		# cleanup
-		catch {file delete -force "$database/$tempdir"}
-		set env(GISRC) $curr_gisrc
-	} else {
-		# create new location from EPSG code
-		epsgOpt::runproj	
-	}
+	# create new location from EPSG code
+	epsgOpt::runproj	
 
 	return
 
@@ -293,83 +224,97 @@ proc epsgOpt::create_loc { } {
 proc epsgOpt::runproj {} {
 	# first run g.proj to see if there are more than the default
 	# parameters to choose from
+	global location
+	global mapset
 	variable epsgLocation 
 	variable epsg_code
 	
 	set dtrans ""
+	catch {set dtrans [exec g.proj --q -c location=$epsgLocation epsg=$epsg_code datumtrans=-1]} errMsg
 	
-	catch {set dtrans [exec g.proj epsg=$epsg_code datumtrans=-1 2> /dev/null]} errMsg
+	if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+		DialogGen .wrnDlg [G_msg "Error creating location!"] error \
+		[format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
+		0 OK
+	} elseif {$dtrans == ""} {
+		# if nothing written to stdout, there was no choice of
+		# datum parameters and we need not do anything more   
 	
-	if {$dtrans==""} {
-		 # if nothing returned, use default. 
-		 catch {exec g.proj -c epsg=$epsg_code location=$epsgLocation datumtrans=1} errMsg
-	 } else {
-		 # user selects datum transform
-		 #create dialog that lists datum transforms, asks user to enter a number and press OK
-		 set dtnum [epsgOpt::sel_dtrans $dtrans]
+ 		if {$errMsg != ""} {
+		    DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
+		    [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
+		    0 OK
+	        }
+		set location $epsgLocation
+		set mapset "PERMANENT"
+	} else {
+		# user selects datum transform
+		#create dialog that lists datum transforms, asks user to enter a number and press OK
+		set paramset [epsgOpt::sel_dtrans $dtrans]
 
 		# operation canceled
-		if {$dtnum == -9} {return}
+		if {$paramset == -9} {return}
 		
 		# create new location from epsg code
-		catch {exec g.proj -c epsg=$epsg_code location=$epsgLocation datumtrans=$dtnum} errMsg
-	 }
+		catch {exec g.proj --q -c epsg=$epsg_code location=$epsgLocation datumtrans=$paramset} errMsg
 	 	 
-	 #catch any other errors
-	if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-		DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-		[format [G_msg "Error creating new location from EPSG code. \
-		g.proj returned following message:\n\n%s"] $errMsg] \
-		0 OK
-	} else {
-			set location $epsgLocation
-			set mapset "PERMANENT"
+		#catch any other errors 
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+		    DialogGen .wrnDlg [G_msg "Error creating location!"] warning \
+		    [format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
+		    0 OK
+		} else {
+ 		    if {$errMsg != ""} {
+		        DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
+		        [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
+		        0 OK
+	            }
+		    set location $epsgLocation
+		    set mapset "PERMANENT"
+		}
 	}
-
 }
 
 proc epsgOpt::sel_dtrans {dtrans} {
 
 # Dialog for selecting optional datum transform parameters
 # Argument is stdout from g.proj
-	variable dtnum
 	
-	# default datum transformation
-	set epsgOpt::dtnum 1 
+    # default is not to specify datum transformation
+    set epsgOpt::dtnum 0
 
     # Create a popup search dialog
     toplevel .dtrans_sel
-    wm title .dtrans_sel [G_msg "Select datum transform"]
+    wm title .dtrans_sel [G_msg "Select datum transformation parameters:"]
     set row1 [frame .dtrans_sel.frame1] 
-    set row2 [frame .dtrans_sel.frame2] 
     set row3 [frame .dtrans_sel.frame3] 
-    #set row4 [frame .dtrans_sel.frame4]
+
+    radiobutton $row1.0 -value 0 -variable epsgOpt::dtnum -wraplength 640 -justify left -text [G_msg "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."]
+    pack $row1.0 -anchor w
+
+    set dtrans [split $dtrans "\n"]
+    for {set i 0} { $i < [llength $dtrans] } {incr i} {
+        set thisnum [lindex $dtrans $i]
+        if {$thisnum == "---"} {
+	    continue
+        }
+	set thisdesc $thisnum.
+	while { [incr i] < [llength $dtrans] && [lindex $dtrans $i] != "---"} {
+	    set thisdesc ${thisdesc}\n[lindex $dtrans $i]
+	}
+	radiobutton $row1.$thisnum -variable epsgOpt::dtnum -value $thisnum -wraplength 640 -justify left -text $thisdesc
+	pack $row1.$thisnum -anchor w
+    }
     
-    set dt_text [text $row1.dttxt \
-    	-wrap word -relief flat  \
-    	-yscrollcommand "$row1.vscroll set"]
-    $dt_text insert end $dtrans 
-	scrollbar $row1.vscroll \
-				-relief sunken \
-				-command "$dt_text yview"
-    pack $row1.dttxt -side left -fill both -expand 0 
-    pack $row1.vscroll -side right -fill y -expand 0
-    pack $row1 -side top -pady 3 -expand 1 -fill both
-			      
-    Label $row2.label -text [G_msg "Datum transform number: "] 
-    set dt_entry [Entry $row2.enter -relief sunken \
-    	-textvariable epsgOpt::dtnum -width 5 \
-    	-helptext [G_msg "Enter number of datum transform selected"]]
-    pack $row2.label $row2.enter -side left -fill x -expand 0 -anchor w
-    pack $row2 -side top -padx 3 -pady 4 -expand 0 -fill x
+    pack $row1
         
     Button $row3.ok -text [G_msg "OK"] -width 8 -bd 1 \
     	-command "destroy .dtrans_sel"
-    pack $row3.ok -side left -fill x -expand 0
+    pack $row3.ok -side left -padx 3
     button $row3.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "set epsgOpt::dtnum -9; destroy .dtrans_sel"
-    pack $row3.cancel -side right -fill x -expand 0
-    pack $row3 -side bottom -pady 3 -expand 0 -fill x
+    pack $row3.cancel -side left -padx 3
+    pack $row3 -anchor center -pady 3
     
     tkwait window .dtrans_sel
     return $epsgOpt::dtnum
