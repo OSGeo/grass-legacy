@@ -57,7 +57,6 @@ static int hit_return = 0;
 static int list_element(FILE *,const char *,const char *,const char *,
 			int (*)(const char *, const char *, const char *));
 static void sigpipe_catch(int);
-static int pstrcmp(const void *, const void *);
 
 int G_set_list_hit_return(int flag)
 {
@@ -157,8 +156,8 @@ static int list_element( FILE *out,
     int (*lister)(const char *, const char *, const char *))
 {
     char path[GPATH_MAX];
-    int count = 0, maxlen = 0;
-    char **list;
+    int count = 0;
+    const char **list;
     int i;
 
 /*
@@ -208,12 +207,6 @@ static int list_element( FILE *out,
         for(i = 0; i < count; i++)
         {
 	    char title[400];
-            char *b;
-    
-            /* remove the trailing newline */
-            for (b = list[i]; *b; b++)
-        	if (*b == '\n')
-        	    *b = 0;
     
             lister (list[i], mapset, title);
             fprintf(out,"%-18s %-.60s\n",list[i],title);
@@ -225,7 +218,7 @@ static int list_element( FILE *out,
     fprintf(out, "\n");
 
     for(i = 0; i < count; i++)       
-	G_free(list[i]);
+	G_free((char *)list[i]);
     if (list)
         G_free(list);
 

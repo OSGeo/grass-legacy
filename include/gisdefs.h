@@ -709,7 +709,7 @@ char *G_location(void);
 char *G__location_path(void);
 
 /* ls.c */
-char **G__ls(const char *, int *);
+const char **G__ls(const char *, int *);
 void G_ls(const char *, FILE *);
 void G_ls_format(const char **, int, int, FILE *);
 

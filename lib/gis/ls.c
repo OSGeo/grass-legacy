@@ -51,11 +51,11 @@ static int cmp_names(const void *aa, const void *bb)
  * \return          Pointer to array of strings containing the listing
  **/
 
-char **G__ls(const char *dir, int *num_files)
+const char **G__ls(const char *dir, int *num_files)
 {
     struct dirent *dp;
     DIR *dfd;
-    char **dir_listing = NULL;
+    const char **dir_listing = NULL;
     int n = 0;
 
     if ((dfd = opendir(dir)) == NULL)
@@ -65,7 +65,7 @@ char **G__ls(const char *dir, int *num_files)
     {
        if(dp->d_name[0] != '.') /* Don't list hidden files */
        {
-          dir_listing = (char **)G_realloc(dir_listing, 
+          dir_listing = (const char **)G_realloc(dir_listing, 
 					   (1 + n) * sizeof(char *));
           dir_listing[n] = G_store(dp->d_name);
           n++;
@@ -94,14 +94,12 @@ char **G__ls(const char *dir, int *num_files)
 void G_ls(const char *dir, FILE *stream)
 {
     int i, n;
-    char **dir_listing;
-   
-    dir_listing = G__ls(dir, &n);
+    const char **dir_listing = G__ls(dir, &n);
 
     G_ls_format(dir_listing, n, 0, stream);
 
     for (i = 0; i < n; i++)
-        G_free(dir_listing[i]);
+        G_free((char *)dir_listing[i]);
    
     G_free(dir_listing);
    
