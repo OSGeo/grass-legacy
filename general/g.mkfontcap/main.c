@@ -122,28 +122,7 @@ int main(int argc, char *argv[])
     }       
     i = -1;
     while (standarddirs[++i])
-    {
-        char envvar_name[256];
-        char *fullname = NULL;
- 	 
-        if (sscanf(standarddirs[i], "${%255[^}]}", envvar_name) == 1)
-	{
-	    char *envvar_value = getenv(envvar_name);
-
-	    /* N.B. If the envvar isn't set, directory is skipped completely */
-	    if (envvar_value)
-	        G_asprintf(&fullname, "%s%s", envvar_value,
-			   (standarddirs[i] + strlen(envvar_name) + 3));
-	}
-        else
-	    fullname = G_store(standarddirs[i]);
-       
-        if (fullname)	 
-	{	    
-	    add_search_dir(fullname);
-	    G_free(fullname);
-	}       
-    }
+	add_search_dir(standarddirs[i]);
 
     totalfonts = maxfonts = 0;
     fontcap = NULL;
@@ -176,11 +155,29 @@ int main(int argc, char *argv[])
 
 static void add_search_dir(const char *name)
 {   
-    searchdirs = (char **) G_realloc(searchdirs,
-			   (numsearchdirs + 1) * sizeof(char *));
-    searchdirs[numsearchdirs] = G_store(name);
-    G_convert_dirseps_to_host(searchdirs[numsearchdirs]);
-    numsearchdirs++;
+    char envvar_name[256];
+    char *fullname = NULL;
+ 	 
+    if (sscanf(name, "${%255[^}]}", envvar_name) == 1)
+    {
+	char *envvar_value = getenv(envvar_name);
+
+	/* N.B. If the envvar isn't set, directory is skipped completely */
+	if (envvar_value)
+	    G_asprintf(&fullname, "%s%s", envvar_value,
+		       (name + strlen(envvar_name) + 3));
+    }
+    else
+	fullname = G_store(name);
+       
+    if (fullname)	 
+    {	    
+        searchdirs = (char **) G_realloc(searchdirs,
+			       (numsearchdirs + 1) * sizeof(char *));
+        searchdirs[numsearchdirs] = fullname;
+        G_convert_dirseps_to_host(searchdirs[numsearchdirs]);
+        numsearchdirs++;
+    }       
 
     return;
 }
@@ -195,8 +192,8 @@ static int compare_fonts(const void *a, const void *b)
         return (aa->type > bb->type);
     else
     {
-        const char *na = aa->longname;
-        const char *nb = bb->longname;
+        const char *na = aa->name;
+        const char *nb = bb->name;
        
         return G_strcasecmp(na, nb);
     }  	   
