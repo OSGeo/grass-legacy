@@ -42,12 +42,8 @@ set gmpath $env(GISBASE)/etc/gm
 # path to icons for GIS Manager
 set iconpath $env(GISBASE)/etc/gui/icons
 
-# path to X11 TrueType fonts
-set xfontdir "/usr/X11R6/lib/X11/fonts/TTF/"
-
 global iconpath
 global gmpath
-global xfontdir
 
 set keycontrol "Control"
 set tmenu "1"
