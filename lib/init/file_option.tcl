@@ -173,102 +173,23 @@ proc fileOpt::def_loc { } {
 proc fileOpt::create_loc { } {
 # Create a new location using g.proj
 # original bash code by M. Neteler
-
 	variable filepath
 	variable fileLocation
-	global env database
 	global location
 	global mapset
 
-	#test for valid WIND file
-	if {[catch {exec g.region -p}] != 0} {
-
-		# Create temporary location in order to run g.proj. For 1st time use
-
-		set GRASSRC "grassrc6"
-		set curr_gisrc $env(GISRC)
-
-		set tempdir [pid]
-		append tempdir ".tmp"
-		file mkdir "$database/$tempdir/PERMANENT"
-		
-		# save existing .grassrc file
-		if {[file exists "$env(HOME)/.$GRASSRC"] } {
-			file copy "$env(HOME)/.$GRASSRC" "$database/$tempdir/$GRASSRC"
-		}
-		
-		# create temporary .grassrc file to hold temporary location information
-		set output [open "$env(HOME)/.$GRASSRC" w+]
-			puts $output "LOCATION_NAME: $tempdir" 
-			puts $output "MAPSET: PERMANENT"
-			puts $output "DIGITIZER: none"
-			puts $output "GISDBASE: $database" 
-		close $output
-		
-		set env(GISRC) "$env(HOME)/.$GRASSRC"
-				
-		# Populate a temporary location with a minimal set of files
-		set output [open "$database/$tempdir/PERMANENT/DEFAULT_WIND" w+]
-			puts $output "proj:       3"
-			puts $output "zone:       0"
-			puts $output "north:      72N"
-			puts $output "south:      27N"
-			puts $output "east:       42E"
-			puts $output "west:       11W"
-			puts $output "cols:       6360"
-			puts $output "rows:       5400"
-			puts $output "e-w resol:  0:00:30"
-			puts $output "n-s resol:  0:00:30"
-		close $output
-	
-		set output [open "$database/$tempdir/PERMANENT/PROJ_INFO" w+]
-			puts $output "name: Lat/Lon"
-			puts $output "datum: wgs84"
-			puts $output "towgs84: 0.000,0.000,0.000"
-			puts $output "proj: ll"
-			puts $output "ellps: wgs84"
-		close $output
-		
-		set output [open "$database/$tempdir/PERMANENT/PROJ_UNITS" w+]
-			puts $output "unit: degree"
-			puts $output "units: degrees"
-			puts $output "meters: 1.0"
-		close $output
-				
-		# create new location from georeferenced file
-		catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
-		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-                        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-				[format [G_msg "Error creating new location from georeferenced file. \
-		                g.proj returned following message:\n\n%s"] $errMsg] \
-				0 OK
-		} else {
-			set location $fileLocation
-			set mapset "PERMANENT"
-		}
-	
-		# restore previous .$GRASSRC
-		if {[file exists "$database/$tempdir/$GRASSRC"]} {
-			file copy -force "$database/$tempdir/$GRASSRC" "$env(HOME)/.$GRASSRC"
-		}
-		
-		# cleanup
-		catch {file delete -force "$database/$tempdir"}
-		set env(GISRC) $curr_gisrc
+	# create new location from georeferenced file
+	catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
+	if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+	        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
+			[format [G_msg "Error creating new location from georeferenced file. \
+	                g.proj returned following message:\n\n%s"] $errMsg] \
+			0 OK
 	} else {
-		# create new location from georeferenced file
-		catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
-		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-		        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-				[format [G_msg "Error creating new location from georeferenced file. \
-		                g.proj returned following message:\n\n%s"] $errMsg] \
-				0 OK
-		} else {
-			set location $fileLocation
-			set mapset "PERMANENT"
-		}
-	
+		set location $fileLocation
+		set mapset "PERMANENT"
 	}
+	
 
 	return
 

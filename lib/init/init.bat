@@ -31,9 +31,9 @@ if not "%GRASS_ADDON_PATH%"=="" set PATH=%WINGISBASE%\bin;%WINGISBASE%\lib;%GRAS
 set GRASS_VERSION=GRASS_VERSION_NUMBER
 if "%HOME%"=="" set HOME=%USERPROFILE%
 set WINGISRC=%HOME%\.grassrc6
-rem Set a temporary %GISRC% so g.dirseps will work
-rem OK to have \ dirseps here as not used for much.
-set GISRC=%WINGISBASE%\demolocation\.grassrc63
+rem Make sure %GISRC% is set so g.dirseps will work
+rem (not actually used)
+set GISRC=junk
 
 rem Generate GISBASE by converting dirsep characters from \ to /
 FOR /F "usebackq delims==" %%i IN (`g.dirseps -g "%WINGISBASE%"`) DO @set GISBASE=%%i

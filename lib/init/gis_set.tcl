@@ -36,14 +36,6 @@ set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
 set GRASSVERSION [read -nonewline $fp]
 close $fp
 
-# exit grass - 1 = completly; 0 - start main app
-proc exitgrass code {
-	if {$code} {
-		puts stdout "exit"
-	}
-	destroy .
-}
-
 #############################################################################
 
 proc searchGISRC { filename } {
@@ -404,7 +396,7 @@ proc gisSetWindow {} {
                     catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
                     file mkdir $mymapset/dbf
                     #copy over the WIND definition:
-                                    catch {file copy $mymapset/../PERMANENT/WIND $mymapset}
+                                    catch {file copy $mymapset/../PERMANENT/DEFAULT_WIND $mymapset/WIND}
                     catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
                     .frame0.frameMS.listbox insert end $mymapset
                     selFromList .frame0.frameMS.listbox $mymapset
@@ -426,7 +418,8 @@ proc gisSetWindow {} {
     	-text [G_msg "Georeferenced file"] \
     	-width 20 -bd 1 -wraplength 160\
     	-relief raised \
-    	-command {fileOpt::fileLocCom
+    	-command {putGRASSRC $gisrc_name
+		fileOpt::fileLocCom
     		tkwait window .fileloc
     		refresh_loc
     		refresh_ms
@@ -438,7 +431,8 @@ proc gisSetWindow {} {
     	-text [G_msg "EPSG codes"] \
     	-width 20 -bd 1 -wraplength 160\
     	-relief raised \
-    	-command { if { [epsgOpt::epsgLocCom] } {
+    	-command { putGRASSRC $gisrc_name
+		if { [epsgOpt::epsgLocCom] } {
     		tkwait window .optPopup
     		refresh_loc
     		refresh_ms
@@ -503,7 +497,7 @@ proc gisSetWindow {} {
                     puts stdout "LOCATION_NAME='$location';"
                     puts stdout "MAPSET='$mapset';"
                     putGRASSRC $gisrc_name
-                    exitgrass 0
+                    exit 0
                 }
             } 
         }
@@ -531,7 +525,7 @@ proc gisSetWindow {} {
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
     	-width 10 -bd 1 -wraplength 100 \
-    	-command { exitgrass 1 }
+    	-command { exit 1 }
 
 
     pack append .frame0.frameBUTTONS \
@@ -663,7 +657,7 @@ proc gisSetWindow {} {
                     puts stdout "LOCATION_NAME='$location';"
                     puts stdout "MAPSET='$mapset';"
                     putGRASSRC $gisrc_name
-                    exitgrass 0
+                    exit 0
                 }
             }
         }
@@ -691,7 +685,7 @@ proc gisSetWindow {} {
 	
 	# Exit GRASS, if window gets closed.
 	wm protocol . WM_DELETE_WINDOW {
-		exitgrass 1
+		exit 1
 	}
   
 	grab .
@@ -829,7 +823,7 @@ proc DialogGen {widget title bitmap text default buttons} \
     # Create the pushbuttons
     set i 0
     foreach buttonLabel $buttons {
-		button $widget.buttonFrame.$i -text $buttonLabel -command "set buttonNum $i"
+		button $widget.buttonFrame.$i -bd 1 -text $buttonLabel -command "set buttonNum $i"
 		pack $widget.buttonFrame.$i -side left -expand 1 -padx 10 -pady 5
 		incr i
     }
@@ -896,10 +890,4 @@ if { [info exists env(GISRC)] } {
 if { [searchGISRC $gisrc_name] } {
    gisSetWindow
 }
-
-
-
-
-
-
 
