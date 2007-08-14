@@ -36,22 +36,24 @@
  * 
  * \param interactive Interactively prompt user for parameters, ignoring
  *                    value of datumtrans variable.
+ * 
+ * \return            1 if a change was made, 0 if not.
  **/
 
 int set_datumtrans(int datumtrans, int force, int interactive)
 {
     char *params, *datum = NULL;
     int paramsets, status;
+    struct gpj_datum dstruct;
 
     if(cellhd.proj == PROJECTION_XY)
         return 0;
 
     status = GPJ__get_datum_params(projinfo, &datum, &params);
-    if( status > 0 && datum != NULL )
+    if( datum )
     {
         /* A datum name is specifed; need to determine if
 	 * there are parameters to choose from for this datum */       
-        struct gpj_datum dstruct;
        
         if( GPJ_get_datum_by_name(datum, &dstruct) > 0 ) {
     	    char *defparams;
@@ -62,7 +64,6 @@ int set_datumtrans(int datumtrans, int force, int interactive)
 	        /* Parameters are missing and there is a choice to be made */
 	        force = 1;
 	   
-    	    GPJ_free_datum(&dstruct);
 	}
         else
             /* Datum name not found in table; can't do anything. */
@@ -83,7 +84,12 @@ int set_datumtrans(int datumtrans, int force, int interactive)
         /* First of all obtain the new parameters either interactively
 	 * or through the supplied transform number index */
         if( interactive )
-	    GPJ_ask_datum_params(datum, &chosenparams);
+        {
+            /* Print to stderr here as the function call will also */
+            fprintf(stderr, "Datum name: %s (%s)", dstruct.name, 
+                    dstruct.longname);
+            GPJ_ask_datum_params(datum, &chosenparams);
+        }
         else
 	{
             struct gpj_datum_transform_list *list;
@@ -155,9 +161,7 @@ int set_datumtrans(int datumtrans, int force, int interactive)
 	G_free_key_value( projinfo );
 	projinfo = temp_projinfo;
 
-	return 1;
     }
    
-    return 0;
-
+    return force;
 }
