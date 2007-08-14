@@ -662,23 +662,24 @@ int G_parser (int argc, char **argv)
 	int need_first_opt ;
 	int opt_checked = 0;
 	int error ;
-	char *ptr ;
+	char *ptr, *tmp_name ;
 	int i;
 	struct Option *opt ;
 	char force_gui = FALSE;
 
 	error = 0 ;
 	need_first_opt = 1 ;
-	i = strlen(pgm_name = argv[0]) ;
+	i = strlen(tmp_name = G_store(argv[0])) ;
 	while (--i >= 0)
 	{
-		if ( G_is_dirsep(pgm_name[i]) )
+		if ( G_is_dirsep(tmp_name[i]) )
 		{
-			pgm_name += i+1;
+			tmp_name += i+1;
 			break;
 		}
 	}
-	G_basename(pgm_name, "exe");   
+	G_basename(tmp_name, "exe");
+	pgm_name = tmp_name;
 
 	/* Stash default answers */
 
@@ -916,7 +917,8 @@ int G_parser (int argc, char **argv)
 
 	if(error)
 	{
-		G_usage();
+		if (G_verbose() > G_verbose_min())   
+		    G_usage();
 		return -1;
 	}
 
@@ -1425,7 +1427,6 @@ static void G_usage_html (void)
 	struct Option *opt ;
 	struct Flag *flag ;
 	char *type;
-	char *newbuf;
 	int new_prompt = 0;
 
 	new_prompt = uses_new_gisprompt();
