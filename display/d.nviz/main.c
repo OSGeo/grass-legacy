@@ -156,6 +156,8 @@ int main(int argc, char *argv[])
 /* get GRASS parameters */
     G_get_window(&window);
     projection = G_projection();
+    D_do_conversions(&window, 0, 1, 0, 1);
+
 /* setup screen coords */
     screen_x = ((int) D_get_d_west() + (int) D_get_d_east()) / 2;
     screen_y = ((int) D_get_d_north() + (int) D_get_d_south()) / 2;
