@@ -165,7 +165,7 @@ main (int argc, char **argv)
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
 	size_opt->type       = TYPE_INTEGER ;
-	size_opt->answer     = "8" ;
+	size_opt->answer     = "5" ;
 	size_opt->guisection = _("Symbols");
 	size_opt->description= _("Symbol size");
 
