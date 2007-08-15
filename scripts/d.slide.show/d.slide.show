@@ -192,8 +192,8 @@ drawraster()
 
 			d.frame -s map.$at_hori.$at_vert
 			d.erase
-			echo "[$i]"
-			d.rast $i 
+#			echo "[$i]"
+			d.rast $i 2> /dev/null
 
 			if [ "$GIS_OPT_DELAY" -gt 0 ] ; then
 			    sleep "$GIS_OPT_DELAY"
@@ -228,8 +228,8 @@ drawvector()
 
 		d.frame -s map.$at_hori.$at_vert
 		d.erase
-		echo "[$i]"
-		d.vect -c $i 
+#		echo "[$i]"
+		d.vect -c $i 2> /dev/null
 
 		if [ "$GIS_OPT_DELAY" -gt 0 ] ; then
 		    sleep "$GIS_OPT_DELAY"
