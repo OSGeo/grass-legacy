@@ -1,7 +1,8 @@
 GRASS graphical user interface
 ==============================
 
-AUTHORS: Jachym, Michael, MartinL
+AUTHORS: Michael Barton, Jachym Cepicky, Martin Landa
+
 $LastChangedDate$
 
 ---------------------------------------------------------------------
@@ -9,8 +10,10 @@ Requirements:
  Python >=2.4 and wxPython >=2.8.1.1
 
  Get wxPython 2.8.x packages from:
- * Source: : http://www.wxpython.org/download.php
- * Debian: http://www.bitpim.org/developer.html -> "Install wxPython"
+ * Source: http://www.wxpython.org/download.php
+ * Debian GNU/Linux: http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
+		     [ deb http://apt.wxwidgets.org/ etch-wx main ]
+	             http://www.bitpim.org/developer.html -> "Install wxPython"
  * Fedora: http://www.wxpython.org/download.php
            http://mpa.itc.it/markus/wxpython_rpms/fedora/
  * Mandriva 2007.0: http://mpa.itc.it/markus/wxpython_rpms/mandriva2007.0/
