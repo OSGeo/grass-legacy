@@ -22,7 +22,7 @@ import utils
 import cmd
 from debug import Debug as Debug
 
-class MapLayer:
+class MapLayer(object):
     """
     This class serves for storing map layers to be displayed
 
@@ -166,7 +166,7 @@ class MapLayer:
         else:
             return int (self.opacity * 100)
 
-class Map:
+class Map(object):
     """
     This class serves for rendering of output images.
 
@@ -489,7 +489,7 @@ class Map:
                     projinfo['proj'] = "xy"
             return projinfo
         else:
-            return
+            return None
 
     def GetListOfLayers(self, l_type=None, l_mapset=None, l_active=None, l_hidden=None):
         """
