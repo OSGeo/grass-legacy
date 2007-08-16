@@ -5,12 +5,12 @@ if [ -z "$GISBASE" ] ; then
     exit 1
 fi
 
-SYSTEM=`uname -s`
+#SYSTEM=`uname -s`
 
-if [ "$SYSTEM" = "Darwin" ] ; then
-	pythonw "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
-else
-	python "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
-fi
+#if [ "$SYSTEM" = "Darwin" ] ; then
+#	pythonw "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
+#else
+    python "$GISBASE/etc/wx/wxgui.py" -name wxgui_py &
+#fi
 
 exit 0
