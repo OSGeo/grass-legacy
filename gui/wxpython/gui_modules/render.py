@@ -235,7 +235,6 @@ class Map:
         """
         Reads current region settings from g.region command
         """
-        print "in initregion"
 
         #
         # setting region
@@ -382,7 +381,6 @@ class Map:
         Example:
             {"n":"4928010", "s":"4913700", "w":"589980",...}
         """
-        print "in getregion"
 
         region = {}
 
@@ -404,13 +402,15 @@ class Map:
 
         return region
 
-    def SetRegion(self):
+    def SetRegion(self, windres=False):
         """
         Render string for GRASS_REGION env. variable, so that the images will be rendered
         from desired zoom level.
 
         Returns:
         string usable for GRASS_REGION variable or None
+        If windres set to True, uses resolution from WIND file rather than display
+        (for modules that require set resolution like d.rast.num)
         """
 
         grass_region = ""
