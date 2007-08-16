@@ -1494,12 +1494,6 @@ class MapFrame(wx.Frame):
         for i in range(len(map_frame_statusbar_fields)):
             self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
 
-
-        # d.barscale overlay added to rendering overlay list
-        self.Map.AddOverlay(0, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
-        # d.barscale overlay added to rendering overlay list as placeholder for d.legend
-        self.Map.AddOverlay(1, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
-
         #
         # Init map display
         #
@@ -2087,28 +2081,17 @@ class MapFrame(wx.Frame):
 
         ovltype = id = 0 # index for overlay layer in render
 
-        if ovltype not in self.Map.ovlookup:
-            self.Map.AddOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
-
         if ovltype in self.params:
             params = self.params[ovltype]
         else:
             params = ''
 
-        # get overlay images (overlay must be active)
-        if not self.Map.ovlookup[ovltype].active:
-            self.Map.ovlookup[ovltype].active = True
-            self.Map.Render(force=True)
-
-        ovldict = self.MapWindow.GetOverlay()
-
-        if id not in ovldict:
-            return
-
-        img = ovldict[id]
-
-        if id not in self.ovlcoords:
-            self.ovlcoords[id] = [10,10]
+        # If location is latlon, only display north arrow (scale won't work)
+#        proj = self.projinfo['proj']
+#        if proj == 'll':
+#            barcmd = 'd.barscale -n'
+#        else:
+#            barcmd = 'd.barscale'
 
         # decoration overlay control dialog
         dlg = DecDialog(self, wx.ID_ANY, _('Scale and North arrow'), size=(350, 200),
@@ -2122,16 +2105,34 @@ class MapFrame(wx.Frame):
 
         dlg.CenterOnScreen()
 
+#        if ovltype not in self.Map.ovlookup:
+#            self.Map.AddOverlay(ovltype, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
+
+
         # if OK button pressed in decoration control dialog
         if dlg.ShowModal() == wx.ID_OK:
             if self.ovlchk[id] == True:
+                # get overlay images (overlay must be active)
+                if not self.Map.ovlookup[ovltype].active:
+                    self.Map.ovlookup[ovltype].active = True
+                    self.Map.Render(force=True)
+
+                ovldict = self.MapWindow.GetOverlay()
+
+                if id not in ovldict:
+                    self.MapWindow.UpdateMap()
+                    return
+
+                img = ovldict[id]
+
+                if id not in self.ovlcoords:
+                    self.ovlcoords[id] = [10,10]
+
                 self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
                                     img=img, pdctype='image',
                                     coords=self.ovlcoords[id])
 
-        # update the map canvas
         self.MapWindow.UpdateMap()
-
         dlg.Destroy()
 
         # close properties dialog if open
@@ -2146,28 +2147,10 @@ class MapFrame(wx.Frame):
         """
         ovltype = id = 1 # index for overlay layer in render
 
-        if ovltype not in self.Map.ovlookup:
-            self.Map.AddOverlay(ovltype, type='overlay', command='d.barscale', l_active=False, l_render=False)
-
         if ovltype in self.params:
             params = self.params[ovltype]
         else:
             params = ''
-
-        # get overlay images (overlay must be active)
-        if not self.Map.ovlookup[ovltype].active:
-            self.Map.ovlookup[ovltype].active = True
-            self.Map.Render(force=True)
-
-        ovldict = self.MapWindow.GetOverlay()
-
-        if id not in ovldict:
-            return
-
-        img = ovldict[id]
-
-        if id not in self.ovlcoords:
-            self.ovlcoords[id] = [10,10]
 
         # Decoration overlay control dialog
         dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
@@ -2184,10 +2167,27 @@ class MapFrame(wx.Frame):
         # If OK button pressed in decoration control dialog
         val = dlg.ShowModal()
         if val == wx.ID_OK:
+
             if self.ovlchk[id] == True:
+                # get overlay images (overlay must be active)
+                if not self.Map.ovlookup[ovltype].active:
+                    self.Map.ovlookup[ovltype].active = True
+                    self.Map.Render(force=True)
+
+                ovldict = self.MapWindow.GetOverlay()
+
+                if id not in ovldict:
+                    self.MapWindow.UpdateMap()
+                    return
+
+                img = ovldict[id]
+
+                if id not in self.ovlcoords:
+                    self.ovlcoords[id] = [10,10]
+
                 self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
-                                       img=img, pdctype='image',
-                                       coords=self.ovlcoords[id])
+                                    img=img, pdctype='image',
+                                    coords=self.ovlcoords[id])
 
         self.MapWindow.UpdateMap()
         dlg.Destroy()
@@ -2234,10 +2234,13 @@ class MapFrame(wx.Frame):
 
         # delete object if if it has no text
         if maptext == '':
-            self.MapWindow.pdc.ClearId(id)
-            self.MapWindow.pdc.RemoveId(id)
-            del self.MapWindow.textdict[id]
-            del self.ovlcoords[id]
+            try:
+                self.MapWindow.pdc.ClearId(id)
+                self.MapWindow.pdc.RemoveId(id)
+                del self.MapWindow.textdict[id]
+                del self.ovlcoords[id]
+            except:
+                pass
             return
 
         self.MapWindow.pdc.ClearId(id)
@@ -2310,6 +2313,9 @@ class DecDialog(wx.Dialog):
         self.ovlchk  = self.parent.MapWindow.ovlchk
         self.params  = params #previously set decoration options to pass back to options dialog
 
+        if self.ovltype not in self.parent.Map.ovlookup:
+            self.parent.Map.AddOverlay(self.ovltype, type='overlay', command=[self.ovlcmd], l_active=False, l_render=False)
+
         #self.MakeModal(True)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -2364,6 +2370,7 @@ class DecDialog(wx.Dialog):
         """
         Sets option for decoration map overlays
         """
+
         # display properties dialog (modal mode)
         menuform.GUI().ParseCommand(self.ovlcmd, gmpath,
                                     completed=(self.parent.GetOptData, self.ovltype, self.params),
