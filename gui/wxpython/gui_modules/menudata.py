@@ -24,7 +24,7 @@ class Data:
     Probably could be changed to XML or *.dtd file.'''
     def GetMenu(self):
         return [(
-          ("Files", (
+          ("File", (
               ("Import raster map", (
                  ("Multiple import formats using GDAL", "Import multiple formats using GDAL", "self.OnMenuCmd", "r.in.gdal"),
                  ("","","", ""),
