@@ -27,13 +27,13 @@ class MapLayer(object):
     This class serves for storing map layers to be displayed
 
     Common layer attributes:
-    type     - layer type (raster, vector, overlay, command)
+    type     - layer type (raster, vector, overlay, command, etc.)
     name     - layer name, e.g. map name ('elevation@PERMANENT')
-    cmd      - GRASS command string
+    cmdlist  - GRASS command (e.g. 'd.rast map=elevation@PERMANENT')
 
     active   - layer is active, will be rendered only if True
     hidden   - layer is hidden, won't be listed in GIS Manager if True
-    opacity  - layer opacity [0-1]
+    opacity  - layer opacity <0;1>
 
     mapfile  - file name of rendered layer
     maskfile - mask name of rendered layer
@@ -48,8 +48,10 @@ class MapLayer(object):
         self.hidden  = hidden
         self.opacity = opacity
 
-        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd=%s, name=%s, active=%d, opacity=%d, hidden=%d" %
-                       (self.type, self.GetCmd(string=True), self.name, self.active, self.opacity, self.hidden))
+        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, " \
+                   "active=%d, opacity=%d, hidden=%d" % \
+                   (self.type, self.GetCmd(string=True), self.name, self.active,
+                    self.opacity, self.hidden))
 
         gtemp = utils.GetTempfile()
         self.maskfile = gtemp + ".pgm"
@@ -59,7 +61,7 @@ class MapLayer(object):
             self.mapfile = gtemp + ".ppm"
 
     def __del__(self):
-        Debug.msg (3, "MapLayer.__del__(): layer=%s, cmd=%s" %
+        Debug.msg (3, "MapLayer.__del__(): layer=%s, cmd='%s'" %
                    (self.name, self.GetCmd(string=True)))
 
     def __renderLayer(self):
@@ -747,7 +749,7 @@ class Map(object):
         """
         layer.active = active
 
-        Debug.msg (3, "Map.ChangeLayerActive(): layer=%s, active=%d" % \
+        Debug.msg (3, "Map.ChangeLayerActive(): name='%s' -> active=%d" % \
                    (layer.name, layer.active))
 
     def ChangeLayerName (self, layer, name):

@@ -213,6 +213,9 @@ class BufferedWindow(wx.Window):
 
         # create a PseudoDC for map decorations like scales and legends
         self.pdc = wx.PseudoDC()
+        # used for digitization tool
+        self.pdcVector = None
+        
         # will store an off screen empty bitmap for saving to file
         self._Buffer = ''
 
@@ -365,9 +368,7 @@ class BufferedWindow(wx.Window):
 
     def OnPaint(self, event):
         """
-        Draw psuedo DC to buffered paint DC
-
-        Additionaly draw also vector map which is edited
+        Draw PseudoDC to buffered paint DC
         """
 
         dc = wx.BufferedPaintDC(self, self._Buffer)
@@ -382,11 +383,14 @@ class BufferedWindow(wx.Window):
 
         # create a clipping rect from our position and size
         # and update region
-        rgn = self.GetUpdateRegion()
-        r = rgn.GetBox()
-        dc.SetClippingRect(r)
+        rgn = self.GetUpdateRegion().GetBox()
+        dc.SetClippingRect(rgn)
         # draw to the dc using the calculated clipping rect
-        self.pdc.DrawToDCClipped(dc,r)
+        self.pdc.DrawToDCClipped(dc, rgn)
+
+        # draw vector map layer 
+        if self.pdcVector:
+            self.pdcVector.DrawToDCClipped(dc, rgn)
 
     def OnSize(self, event):
         """
@@ -461,13 +465,14 @@ class BufferedWindow(wx.Window):
         else:
             img = None
 
-        self.imagedict[img] = 99 # set image PeudoDC ID
+        self.imagedict[img] = 99 # set image PseudoDC ID
+        
         return img
 
 
     def UpdateMap(self, render=True, redraw=True, removeId=[]):
         """
-        Updates the canvas anytime there is a change to the underlying images
+        Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
         """
 
@@ -478,11 +483,11 @@ class BufferedWindow(wx.Window):
             # render new map images
             self.Map.width, self.Map.height = self.GetClientSize()
             self.mapfile = self.Map.Render(force=True)
-            self.img = self.GetImage()
+            self.img = self.GetImage() # id=99
             self.resize = False
 
         if not self.img or redraw == False:
-            return
+            return False
 
         # paint images to PseudoDC
         if len(removeId) > 0:
@@ -496,20 +501,22 @@ class BufferedWindow(wx.Window):
         try:
             id = self.imagedict[self.img]
         except:
-            return
+            return False
 
-        # render vector map layer which is edited
+        # draw background map image to PseudoDC
+        self.Draw(self.pdc, self.img, drawid=id) 
+            
+        # render vector map layer 
         digitToolbar = self.parent.digittoolbar
         if digitToolbar and \
                 digitToolbar.layerSelectedID != None:
             # set region
             self.parent.digit.driver.SetRegion(self.Map.region)
             # draw map
-            self.imgVectorMap = self.parent.digit.driver.DrawMap()
+            self.pdcVector = wx.PseudoDC()
+            self.parent.digit.driver.DrawMap(self.pdcVector)
 
-        self.Draw(self.pdc, self.img, drawid=id) # draw map image background
-        if self.imgVectorMap:
-            self.Draw(self.pdc, self.imgVectorMap, drawid=100) # draw vector map image
+        # overlay
         self.ovldict = self.GetOverlay() # list of decoration overlay images
         if self.ovldict != {}: # draw scale and legend overlays
             for id in self.ovldict:
@@ -532,6 +539,8 @@ class BufferedWindow(wx.Window):
         self.parent.statusbar.SetStatusText("Ext: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
                                             (self.Map.region["w"], self.Map.region["e"],
                                              self.Map.region["n"], self.Map.region["s"]), 0)
+
+        return True
 
     def EraseMap(self):
         """
@@ -894,10 +903,14 @@ class BufferedWindow(wx.Window):
                                                     onlyType="line")
 
                 else: # moveLine | deleteLine
-                    self.moveIds = self.parent.digit.driver.SelectLinesByBox((self.Pixel2Cell(self.mouse['begin'][0],
-                                                                                  self.mouse['begin'][1]),
-                                                                  self.Pixel2Cell(self.mouse['end'][0],
-                                                                                  self.mouse['end'][1])))
+                    x1, y1 = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
+                    x2, y2 = self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])
+                    # PyDisplayDriver
+                    # self.moveIds = self.parent.digit.driver.SelectLinesByBox((x1,y1),
+                    # x2, y2)))
+                    nselected = self.parent.digit.driver.SelectLinesByBox(x1, y1, x2, y2)
+                    Debug.msg (3, "")
+                    
                 if len(self.moveIds) > 0:
                     self.UpdateMap(render=False)
                     if digitToolbar.action in ["moveLine", "moveVertex"]:

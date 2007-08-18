@@ -55,6 +55,9 @@ if usePyDisplayDriver:
               "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
               "Will be replaced by C/C++ display driver."
 else:
+    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+    sys.path.append(driverPath)
+    from grass6_wxdriver import DisplayDriver
     try:
         driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
         sys.path.append(driverPath)
@@ -435,6 +438,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         AbstractDisplayDriver.__init__(self, parent, mapwindow)
 
         # initialize wx display driver
+        self.display = DisplayDriver()
         try:
             self.display = DisplayDriver()
         except:
@@ -450,26 +454,35 @@ class CDisplayDriver(AbstractDisplayDriver):
         else:
             self.display.CloseMap()
     
-    def DrawMap(self):
-        """Display content of the map in PseudoDC
+    def DrawMap(self, pdc):
+        """Draw vector map layer content
 
         Return wx.Image 
         """
-        bmp = wx.EmptyBitmap(self.mapwindow.Map.width, self.mapwindow.Map.height)
-        dc = wx.MemoryDC( bmp) 
-        dc.Clear()
-        dc.SetBackgroundMode(wx.TRANSPARENT)
-
-        nlines = self.display.DrawMap(dc)
+        
+        nlines = self.display.DrawMap(pdc)
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
 
-        return bmp.ConvertToImage()
+        return nlines
+    def SelectLinesByBox(self, rect, onlyType=None):
+        """Select vector features by given bounding box.
 
+        rect = ((x1, y1), (x2, y2))
+        Number of selected features can be decreased by 'onlyType'
+        ('None' for no types)
+        """
+
+        nselected = self.display.SelectLinesByBox()
+        Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
+                  nselected)
+        
     def SetRegion(self, reg):
         """Set geographical region
         
         Needed for 'cell2pixel' conversion"""
+        
         Debug.msg(3, "CDisplayDriver.SetRegion(): %s" % reg)
+        
         self.display.SetRegion(reg['n'],
                                reg['s'],
                                reg['e'],
