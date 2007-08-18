@@ -154,6 +154,75 @@ class MapToolbar(AbstractToolbar):
         if tool == "Digitize" and not self.mapdisplay.digittoolbar:
             self.mapdisplay.AddToolbar("digit")
 
+class GRToolbar(AbstractToolbar):
+    """
+    Georectify Display toolbar
+    """
+
+    def __init__(self, mapdisplay, map):
+        self.mapcontent = map
+        self.mapdisplay = mapdisplay
+
+        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+
+        # self.SetToolBar(self.toolbar)
+        tsize = (24, 24)
+        self.toolbar.SetToolBitmapSize(tsize)
+
+        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
+
+        # realize the toolbar
+        self.toolbar.Realize()
+
+    def ToolbarData(self):
+        """Toolbar data"""
+
+        self.displaymap = self.rendermap = self.erase = \
+        self.pointer = self.query = self.pan = self.zoomin = self.zoomout = \
+        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap =None
+
+        # tool, label, bitmap, kind, shortHelp, longHelp, handler
+        return (
+            (self.displaymap, "displaymap", Icons["displaymap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["displaymap"].GetLabel(), Icons["displaymap"].GetDesc(),
+             self.mapdisplay.ReDraw),
+            (self.rendermap, "rendermap", Icons["rendermap"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["rendermap"].GetLabel(), Icons["rendermap"].GetDesc(),
+             self.mapdisplay.ReRender),
+            (self.erase, "erase", Icons["erase"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["erase"].GetLabel(), Icons["erase"].GetDesc(),
+             self.mapdisplay.OnErase),
+            ("", "", "", "", "", "", ""),
+            (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
+             self.mapdisplay.Pointer),
+            (self.pan, "pan", Icons["pan"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
+             self.mapdisplay.OnPan),
+            (self.zoomin, "zoom_in", Icons["zoom_in"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["zoom_in"].GetLabel(), Icons["zoom_in"].GetDesc(),
+             self.mapdisplay.OnZoomIn),
+            (self.zoomout, "zoom_out", Icons["zoom_out"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["zoom_out"].GetLabel(), Icons["zoom_out"].GetDesc(),
+             self.mapdisplay.OnZoomOut),
+            (self.zoomback, "zoom_back", Icons["zoom_back"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoom_back"].GetLabel(), Icons["zoom_back"].GetDesc(),
+             self.mapdisplay.OnZoomBack),
+            (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
+             wx.ITEM_NORMAL, Icons["zoommenu"].GetLabel(), Icons["zoommenu"].GetDesc(),
+             self.mapdisplay.OnZoomMenu)
+            )
+
+    def OnSelect(self, event):
+        """
+        Select / enable tool available in tools list
+        """
+        tool =  event.GetString()
+
+        if tool == "Digitize" and not self.mapdisplay.digittoolbar:
+            self.mapdisplay.AddToolbar("digit")
+
+
 class DigitToolbar(AbstractToolbar):
     """
     Toolbar for digitization
@@ -268,7 +337,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
-        
+
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
         Debug.msg (2, "DigitToolbar.OnAddBoundary()")
@@ -292,7 +361,7 @@ class DigitToolbar(AbstractToolbar):
             self.StopEditing(self.layers[self.layerSelectedID])
         except:
             pass
-        
+
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
@@ -317,7 +386,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnSplitLine():")
         self.action = "splitLine"
         self.parent.MapWindow.mouse['box'] = 'point'
-        
+
     def OnEditLine(self, event):
         pass
 
@@ -325,7 +394,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnMoveLine():")
         self.action = "moveLine"
         self.parent.MapWindow.mouse['box'] = 'box'
-        
+
     def OnDeleteLine(self, event):
         Debug.msg(2, "Digittoolbar.OnDeleteLine():")
         self.action = "deleteLine"
@@ -345,7 +414,7 @@ class DigitToolbar(AbstractToolbar):
         """Show settings dialog"""
         DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
                             style=wx.DEFAULT_DIALOG_STYLE).Show()
-        
+
     def OnSelectMap (self, event):
         """
         Select vector map layer for editing
@@ -383,7 +452,7 @@ class DigitToolbar(AbstractToolbar):
 
         self.parent.digit.SetMapName(mapLayer.name)
 
-        # deactive layer 
+        # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)
 
         # change cursor
@@ -391,7 +460,7 @@ class DigitToolbar(AbstractToolbar):
 
         # create pseudoDC for drawing the map
         self.parent.pdcVector = wx.PseudoDC()
-        
+
         return True
 
     def StopEditing (self, layerSelected):
@@ -404,12 +473,12 @@ class DigitToolbar(AbstractToolbar):
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
                        (layerSelected.name))
             self.combo.SetValue ('Select vector map')
-            
+
             # re-active layer
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
-            
+
             # change cursor
             self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
 
@@ -419,7 +488,7 @@ class DigitToolbar(AbstractToolbar):
             return True
 
         return False
-            
+
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.
