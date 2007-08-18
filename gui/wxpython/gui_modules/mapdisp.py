@@ -1596,6 +1596,17 @@ class MapFrame(wx.Frame):
                                   BottomDockable(False).TopDockable(True).
                                   CloseButton(False).Layer(2))
 
+        elif name == "georect":
+            self.grtoolbar = toolbars.GRToolbar(self, self.Map)
+
+            self._mgr.AddPane(self.grtoolbar.toolbar,
+                              wx.aui.AuiPaneInfo().
+                              Name("grtoolbar").Caption("Georectification Toolbar").
+                              ToolbarPane().Top().
+                              LeftDockable(False).RightDockable(False).
+                              BottomDockable(False).TopDockable(True).
+                              CloseButton(False).Layer(2))
+
             # change mouse to draw digitized line
             self.MapWindow.mouse['box'] = "point"
             self.MapWindow.zoomtype = 0
