@@ -32,6 +32,7 @@ DisplayDriver::DisplayDriver()
     G_gisinit(""); /* need by other GRASS functions */
 
     mapInfo = NULL;
+    dcId    = 1;
 
     points       = Vect_new_line_struct();
     pointsScreen = new wxList();
@@ -71,7 +72,10 @@ int DisplayDriver::DrawMap(void *device)
     if (!mapInfo)
 	return -1;
 
-    dc = (wxDC *) device;
+    dc   = (wxPseudoDC *) device;
+    dcId = 1;
+
+    ids.clear();
 
     int nlines;
 
@@ -80,6 +84,8 @@ int DisplayDriver::DrawMap(void *device)
     for (int line = 1; line <= nlines; line++) {
 	DrawLine(line);
     }
+
+    PrintIds();
 
     dc = NULL;
 
@@ -105,7 +111,6 @@ int DisplayDriver::DrawLine(int line)
 
     type = Vect_read_line (mapInfo, points, cats, line);
     pointsScreen->Clear();
-
     //self.ids[line] = []
     for (int i = 0; i < points->n_points; i++) {
 	Cell2Pixel(points->x[i], points->y[i], points->z[i],
@@ -143,10 +148,21 @@ int DisplayDriver::DrawLine(int line)
 	}
 
 	if (draw) {
-	    dc->DrawLines(pointsScreen);
+	    //dc->DrawLines(pointsScreen);
+	    for (int i = 0; i < pointsScreen->GetCount() - 1;) {
+		wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
+		wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
+
+		ids[line].push_back(dcId);
+		dc->SetId(dcId++);
+
+		dc->DrawLine(point_beg->x, point_beg->y,
+			     point_end->x, point_end->y);
+	    }
+
 	    if (settings.vertex.enabled) {
 		dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
-		DrawLineVerteces();
+		DrawLineVerteces(line);
 	    }
 	    DrawLineNodes(line);
 	}
@@ -154,7 +170,7 @@ int DisplayDriver::DrawLine(int line)
     else if (type & GV_POINTS) {
 	if (type == GV_POINT && settings.point.enabled) {
 	    dc->SetPen(wxPen(settings.point.color, settings.lineWidth, wxSOLID));
-	    DrawCross((const wxPoint *) pointsScreen->GetFirst()->GetData());
+	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
 	}
 	else if (type == GV_CENTROID) {
 	    int cret = Vect_get_centroid_area(mapInfo, line);
@@ -172,7 +188,7 @@ int DisplayDriver::DrawLine(int line)
 	    }
 
 	    if (draw) 
-		DrawCross((const wxPoint *) pointsScreen->GetFirst()->GetData());
+		DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
 	}
     }
 
@@ -188,10 +204,10 @@ int DisplayDriver::DrawLine(int line)
 
    \return number of displayed verteces
 */
-int DisplayDriver::DrawLineVerteces()
+int DisplayDriver::DrawLineVerteces(int line)
 {
     for (int i = 1; i < pointsScreen->GetCount() - 1; i++) {
-	DrawCross((const wxPoint*) pointsScreen->Item(i)->GetData());
+	DrawCross(line, (const wxPoint*) pointsScreen->Item(i)->GetData());
     }
 
     return pointsScreen->GetCount() - 2;
@@ -221,13 +237,13 @@ int DisplayDriver::DrawLineNodes(int line)
 	Cell2Pixel(east, north, depth,
 		   &x, &y, &z);
 
-	if (Vect_get_node_n_lines(mapInfo, node) == 1) 
+	if (Vect_get_node_n_lines(mapInfo, node) == 1)
 	    dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
 	else
 	    dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
 
 	wxPoint point(x, y);
-	DrawCross(&point);
+	DrawCross(line, &point);
 
 	//elf.ids[line].append(self.mapwindow.DrawCross(coords, size=5))
     }
@@ -328,12 +344,14 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
    \return 1 on success
    \return -1 on failure
 */
-int DisplayDriver::DrawCross(const wxPoint* point, int size)
+int DisplayDriver::DrawCross(int line, const wxPoint* point, int size)
 {
     if (!dc || !point)
 	return -1;
 
-    //self.lineid = wx.NewId()
+    ids[line].push_back(dcId);
+    dc->SetId(dcId++);
+
     dc->DrawLine(point->x - size, point->y, point->x + size, point->y);
     dc->DrawLine(point->x, point->y - size, point->x, point->y + size);
 
@@ -397,4 +415,94 @@ void DisplayDriver::SetSettings(unsigned long highlight,
 
     settings.lineWidth = lineWidth;
     
+}
+
+/**
+   \brief Prints gId: dcIds
+
+   Useful for debugging purposes.
+
+   \param
+
+   \return
+*/
+void DisplayDriver::PrintIds()
+{
+    for (ids_map::const_iterator i = ids.begin(), e = ids.end();
+	 i != e; ++i) {
+	std::cout << i->first << ":";
+	for(std::vector<long int>::const_iterator ii = i->second.begin(), ee = i->second.end();
+	    ii != ee; ++ii) {
+	    std::cout << " " << *ii;
+	}
+	std::cout << std::endl;
+    }
+    return;
+}
+
+/**
+   \brief Select vector features by given bounding box
+   
+   rect = ((x1, y1), (x2, y2))
+   Number of selected features can be decreased by 'onlyType'
+   ('NULL' for all types)
+
+   \param
+
+   \return number of selected features
+   \return -1 on error
+*/
+int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2,
+				    std::vector<int>* ids)
+{
+    if (!mapInfo)
+	return -1;
+
+    int type, line;
+    double dx, dy;
+
+    struct ilist *list;
+    struct line_pnts *bbox;
+
+    std::vector<int> selected;
+
+    type = -1; // all types
+
+    list = Vect_new_list();
+    bbox = Vect_new_line_struct();
+
+    dx = std::fabs(x2 - x1);
+    dy = std::fabs(y2 - y1);
+        
+    Vect_append_point(bbox, x1, y1, 0.0);
+    Vect_append_point(bbox, x2, y1, 0.0);
+    Vect_append_point(bbox, x2, y2, 0.0);
+    Vect_append_point(bbox, x1, y2, 0.0);
+    Vect_append_point(bbox, x1, y1, 0.0);
+        
+    Vect_select_lines_by_polygon(mapInfo, bbox,
+				 0, NULL,
+				 type, list);
+	
+    for (int i = 0; i < list->n_values; i++) {
+	line = list->value[i];
+	selected.push_back(line);
+    }
+
+    // remove all duplicate ids
+    sort(selected.begin(), selected.end());
+    selected.erase(unique(selected.begin(), selected.end()), selected.end());
+
+    Vect_destroy_line_struct(bbox);
+    Vect_destroy_list(list);
+
+    for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
+	 i != e; ++i)
+	std::cout << *i << " ";
+    std::cout << std::endl;
+
+    if (ids)
+	*ids = selected;
+
+    return selected.size();
 }

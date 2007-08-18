@@ -1,7 +1,6 @@
 """
 MODULE: toolbar
 
-
 CLASSES:
     * AbstractToolbar
     * MapToolbar
@@ -162,19 +161,20 @@ class DigitToolbar(AbstractToolbar):
 
     def __init__(self, parent, map):
         self.mapcontent    = map    # Map class instance
-        self.parent        = parent #
+        self.parent        = parent # MapFrame
 
         # selected map to digitize
-        self.layerSelectedID    = None
+        self.layerSelectedID  = None
         self.layers     = []
-        # action (digitize new point, line, etc.
+        
+        # default action (digitize new point, line, etc.)
         self.action     = "addLine"
         self.type       = "point"
         self.addString  = ""
 
         self.comboid    = None
 
-        # create toolbar
+        # create toolbars (two rows)
         self.toolbar = []
         numOfRows = 2
         for row in range(0, numOfRows):
@@ -256,29 +256,29 @@ class DigitToolbar(AbstractToolbar):
                      self.OnDisplayAttr))
 
     def OnAddPoint(self, event):
-        """Add point to the vector map layer"""
-        Debug.msg (4, "DigitToolbar.OnAddPoint()")
+        """Add point to the vector map Laier"""
+        Debug.msg (2, "DigitToolbar.OnAddPoint()")
         self.action = "addLine"
         self.type   = "point"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddLine(self, event):
         """Add line to the vector map layer"""
-        Debug.msg (4, "DigitToolbar.OnAddLine()")
+        Debug.msg (2, "DigitToolbar.OnAddLine()")
         self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
         
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
-        Debug.msg (4, "DigitToolbar.OnAddBoundary()")
+        Debug.msg (2, "DigitToolbar.OnAddBoundary()")
         self.action = "addLine"
         self.type   = "boundary"
         self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnAddCentroid(self, event):
         """Add centroid to the vector map layer"""
-        Debug.msg (4, "DigitToolbar.OnAddCentroid()")
+        Debug.msg (2, "DigitToolbar.OnAddCentroid()")
         self.action = "addLine"
         self.type   = "centroid"
         self.parent.MapWindow.mouse['box'] = 'point'
@@ -297,24 +297,24 @@ class DigitToolbar(AbstractToolbar):
         self.parent.RemoveToolbar ("digit")
 
     def OnMoveVertex(self, event):
-        Debug.msg(4, "Digittoolbar.OnMoveVertex():")
+        Debug.msg(2, "Digittoolbar.OnMoveVertex():")
         self.action = "moveVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddVertex(self, event):
-        Debug.msg(4, "Digittoolbar.OnAddVertex():")
+        Debug.msg(2, "Digittoolbar.OnAddVertex():")
         self.action = "addVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
 
     def OnRemoveVertex(self, event):
-        Debug.msg(4, "Digittoolbar.OnRemoveVertex():")
+        Debug.msg(2, "Digittoolbar.OnRemoveVertex():")
         self.action = "removeVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
 
     def OnSplitLine(self, event):
-        Debug.msg(4, "Digittoolbar.OnSplitLine():")
+        Debug.msg(2, "Digittoolbar.OnSplitLine():")
         self.action = "splitLine"
         self.parent.MapWindow.mouse['box'] = 'point'
         
@@ -322,12 +322,12 @@ class DigitToolbar(AbstractToolbar):
         pass
 
     def OnMoveLine(self, event):
-        Debug.msg(4, "Digittoolbar.OnMoveLine():")
+        Debug.msg(2, "Digittoolbar.OnMoveLine():")
         self.action = "moveLine"
         self.parent.MapWindow.mouse['box'] = 'box'
         
     def OnDeleteLine(self, event):
-        Debug.msg(4, "Digittoolbar.OnDeleteLine():")
+        Debug.msg(2, "Digittoolbar.OnDeleteLine():")
         self.action = "deleteLine"
         self.parent.MapWindow.mouse['box'] = 'box'
 
@@ -336,7 +336,7 @@ class DigitToolbar(AbstractToolbar):
 
     def OnDisplayAttr(self, event):
         self.action="displayAttributes"
-        Debug.msg(4, "Digittoolbar.OnDisplayAttr():")
+        Debug.msg(2, "Digittoolbar.OnDisplayAttr():")
 
     def OnCopyCats(self, event):
         pass
@@ -363,7 +363,7 @@ class DigitToolbar(AbstractToolbar):
 
     def StartEditing (self, layerSelected):
         """
-        Mark selected map layer as enabled for digitization
+        Start editing of selected vector map layer.
 
         Return True on success or False if layer cannot be edited
         """
@@ -386,15 +386,19 @@ class DigitToolbar(AbstractToolbar):
         # deactive layer 
         self.mapcontent.ChangeLayerActive(mapLayer, False)
 
-        # draw map content
-        #self.driver.DrawMap()
+        # change cursor
+        self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
+
+        # create pseudoDC for drawing the map
+        self.parent.pdcVector = wx.PseudoDC()
         
         return True
 
     def StopEditing (self, layerSelected):
         """
-        Unmark currently enabled map layer.
+        Stop editing of selected vector map layer.
         """
+        
         if self.layers[self.layerSelectedID] == layerSelected:
             self.layerSelectedID = None
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
@@ -405,6 +409,12 @@ class DigitToolbar(AbstractToolbar):
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
+            
+            # change cursor
+            self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
+
+            # destroy pseudodc
+            del self.parent.pdcVector
             
             return True
 
@@ -418,6 +428,9 @@ class DigitToolbar(AbstractToolbar):
         Optionaly also update toolbar
         """
 
+        Debug.msg (4, "DigitToolbar.UpdateListOfLayers(): updateTool=%d" % \
+                   updateTool)
+        
         layerNameSelected = None
         if self.layerSelectedID != None: # name of currently selected layer
             layerNameSelected = self.layers[self.layerSelectedID].name
@@ -438,15 +451,15 @@ class DigitToolbar(AbstractToolbar):
             # ugly ...
             if self.comboid:
                 self.toolbar[0].DeleteToolByPos(0)
-                #self.combo.Destroy()
 
             self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
                                      choices=layerNameList, size=(150, -1), style=wx.CB_READONLY)
 
+            self.comboid = self.toolbar[0].InsertControl(0, self.combo)
+            
             # additional bindings
             self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
-            self.comboid = self.toolbar[0].InsertControl(0, self.combo)
             self.toolbar[0].Realize()
 
         return layerNameList

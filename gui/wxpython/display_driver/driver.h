@@ -1,4 +1,7 @@
-#include <iostream>
+#include <iostream> // debug
+#include <vector>
+#include <map>
+#include <cmath>
 
 // For compilers that support precompilation, includes "wx.h".
 #include <wx/wxprec.h>
@@ -15,6 +18,9 @@
 #include <wx/dc.h>
 #include <wx/list.h>
 
+#include <Python.h>
+#include <wx/wxPython/pseudodc.h>
+
 extern "C" {
 #include <grass/gis.h>
 #include <grass/Vect.h>
@@ -23,7 +29,12 @@ extern "C" {
 class DisplayDriver
 {
  private:
-    wxDC             *dc; /* device content */
+    wxPseudoDC *dc;  // device content
+    long int   dcId; // wxDC id starting
+
+    typedef std::map<long int, std::vector<long int> > ids_map;
+
+    ids_map ids;
 
     struct Map_info  *mapInfo;
     struct line_pnts *points;       // east, north, depth
@@ -70,11 +81,14 @@ class DisplayDriver
     void Cell2Pixel (double east, double north, double depth,
 		     int *x, int *y, int *z);
     
-    int DrawCross(const wxPoint *point, int size=5);
+    int DrawCross(int line, const wxPoint *point, int size=5);
 
     int DrawLine(int line);
-    int DrawLineVerteces();
+    int DrawLineVerteces(int line);
     int DrawLineNodes(int line);
+
+    /* debug */
+    void PrintIds();
 
  public:
     /* constructor */
@@ -84,6 +98,10 @@ class DisplayDriver
 
     /* display */
     int DrawMap(void *device);
+
+    /* select */
+    int SelectLinesByBox(double x1, double y1, double x2, double y2,
+			 std::vector<int>* ids);
 
     /* general */
     void CloseMap();

@@ -7,7 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 SWIG=swig
 
-CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags`
+CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` 
 
 LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs`
 
@@ -30,5 +30,8 @@ grass6_wxdriver_wrap.o: grass6_wxdriver_wrap.cxx
 driver.o: driver.cc
 	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
 
-grass6_wxdriver.so: grass6_wxdriver_wrap.o driver.o
-	$(CXX) $(LDFLAGS) grass6_wxdriver_wrap.o driver.o -o _grass6_wxdriver.so
+pseudodc.o: pseudodc.cpp
+	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
+
+grass6_wxdriver.so: grass6_wxdriver_wrap.o driver.o pseudodc.o
+	$(CXX) $(LDFLAGS) grass6_wxdriver_wrap.o driver.o pseudodc.o -o _grass6_wxdriver.so

@@ -366,17 +366,20 @@ class LayerTree(CT.CustomTreeCtrl):
         self.EditLabel(self.layer_selected)
 
     def AddLayer(self, ltype):
-        """Add layer, create MapLayer instance"""
+        """Add new item to the layer tree, create corresponding MapLayer instance.
+        Launch property dialog if needed (raster, vector, etc.)"""
         self.first = True
         checked    = False
         params = {} # no initial options parameters
 
+        # deselect active item
         if self.layer_selected:
             self.SelectItem(self.layer_selected, select=False)
 
         Debug.msg (3, "LayerTree().AddLayer(): ltype=%s" % (ltype))
+        
         if ltype == 'command':
-            # generic command layer
+            # generic command item
             ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,25),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
@@ -384,16 +387,16 @@ class LayerTree(CT.CustomTreeCtrl):
             ctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
             ctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
         elif ltype == 'group':
+            # group item
             ctrl = None
             grouptext = 'Layer group:' + str(self.groupnode)
             self.groupnode += 1
             checked = True
         else:
-            # all other layers
+            # all other items (raster, vector, ...)
             ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                               style=wx.SP_ARROW_KEYS)
-            ctrl.SetRange(1,100)
-            ctrl.SetValue(100)
+                               style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100)
+            
             self.Bind(wx.EVT_SPINCTRL, self.OnOpacity, ctrl)
 
         # add layer to the layer tree
@@ -488,37 +491,55 @@ class LayerTree(CT.CustomTreeCtrl):
                    ltype)
 
         if ltype == 'raster':
-            menuform.GUI().ParseCommand('d.rast', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'rgb':
-            menuform.GUI().ParseCommand('d.rgb', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rgb', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'his':
-            menuform.GUI().ParseCommand('d.his', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.his', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'shaded':
-            menuform.GUI().ParseCommand('d.shadedmap', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.shadedmap', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'rastarrow':
-            menuform.GUI().ParseCommand('d.rast.arrow', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.arrow', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'rastnum':
-            menuform.GUI().ParseCommand('d.rast.num', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rast.num', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'vector':
-            menuform.GUI().ParseCommand('d.vect', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'thememap':
-            menuform.GUI().ParseCommand('d.vect.thematic', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.thematic',
+                                        completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'themechart':
-            menuform.GUI().ParseCommand('d.vect.chart', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.vect.chart',
+                                        completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'grid':
-            menuform.GUI().ParseCommand('d.grid', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.grid', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'geodesic':
-            menuform.GUI().ParseCommand('d.geodesic', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.geodesic', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'rhumb':
-            menuform.GUI().ParseCommand('d.rhumbline', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.rhumbline', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'labels':
-            menuform.GUI().ParseCommand('d.labels', completed=(self.getOptData,layer,params), parentframe=self)
+            menuform.GUI().ParseCommand('d.labels', completed=(self.getOptData,layer,params),
+                                        parentframe=self)
         elif ltype == 'cmdlayer':
             pass
         elif ltype == 'group':
             pass
 
     def OnActivateLayer(self, event):
+        """Click on the layer item.
+        Launch property dialog, or expand/collapse group of items, etc."""
+        
         layer = event.GetItem()
         self.layer_selected = layer
 
@@ -531,7 +552,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 self.Expand(layer)
 
     def OnDeleteLayer(self, event):
-        """Remove selected layer for the layer tree"""
+        """Remove selected layer item from the layer tree"""
 
         item = event.GetItem()
 
@@ -554,6 +575,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layers.pop(item)
 
     def OnLayerChecked(self, event):
+        """Enable/disable given layer item"""
         item    = event.GetItem()
         checked = item.IsChecked()
         layer   = self.layers[item]
@@ -677,8 +699,7 @@ class LayerTree(CT.CustomTreeCtrl):
             newctrl = None
         else:
             newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                                  style=wx.SP_ARROW_KEYS)
-            newctrl.SetRange(1,100)
+                                  style=wx.SP_ARROW_KEYS, min=0, max=100)
             try:
                 newctrl.SetValue(oldLayer.maplayer.GetOpacity())
             except:
