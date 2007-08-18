@@ -26,6 +26,45 @@ sys.path.append(GuiModulePath)
 
 import cmd
 
+class SelectDialog(wx.Dialog):
+    def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',
+                           pos=wx.DefaultPosition, size=(-1,-1), type='cell',
+                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+        """
+        A dialog box for the GIS element selector control so that it can be launched f
+        rom a button or other control.
+        """
+
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+
+        self.selection = ''
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        self.selection = Select(self, id=wx.ID_ANY, size=(300,-1),type=type)
+        box.Add(self.selection, 0, wx.ALIGN_CENTER|wx.ALL, 5)
+        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+
+        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id, size, type):
         """
