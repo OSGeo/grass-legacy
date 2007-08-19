@@ -51,21 +51,23 @@ of the PNG driver.
 
 <H3>Example</H3>
 <OL>
+<LI>Define driver settings (here: bash shell syntax)<BR><PRE>
+         export GRASS_RENDER_IMMEDIATE=TRUE
+         export GRASS_TRUECOLOR=TRUE
+</PRE></LI>
 <LI>Start up the driver<BR><PRE>
          d.mon start=PNG
-         d.mon select=PNG
-</PRE>
+</PRE></LI>
 <LI>Display raster map and vector polygons<BR>
 <PRE>
          d.rast <i>somerastermap</i>
-         d.vect map=<i>somevectormap</i> color=red
-</PRE>
+         d.vect <i>somevectormap</i> color=red
+</PRE></LI>
 <LI> Stop the driver subsequently. This will write a 
 file named <i>map.png</i> to be created in your current directory:
 <PRE>
          d.mon stop=PNG
 </PRE></LI>
-
 </OL>
 
 <H2>NOTES</H2> 
