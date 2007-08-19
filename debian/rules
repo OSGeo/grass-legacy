@@ -43,7 +43,6 @@ config.status: patch configure
                     --with-motif \
                     --with-readline \
                     --with-nls \
-                    --with-glw \
                     --with-odbc \
                     --with-freetype-includes=/usr/include/freetype2 \
                     --with-tcltk-includes=/usr/include/tcl8.4 \
