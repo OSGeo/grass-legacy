@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-10 16:32+0200\n"
+"POT-Creation-Date: 2007-08-20 17:19+0200\n"
 "PO-Revision-Date: 2007-08-08 17:52+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -860,27 +860,27 @@ msgstr "No se puede encontrar el mapa de entrada '%s'"
 msgid "Output map '%s' is used as input"
 msgstr "Mapa final '%s' esta siendo utilizado como entrada"
 
-#: ../lib/gis/list.c:125
+#: ../lib/gis/list.c:124
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "no hay archivos %s disponibles en el directorio de mapas actual\n"
 
-#: ../lib/gis/list.c:127
+#: ../lib/gis/list.c:126
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr "no hay archivos %s disponibles en el directorio de mapas <%s>\n"
 
-#: ../lib/gis/list.c:141
+#: ../lib/gis/list.c:140
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "Presiona ENTER para continuar -->"
 
-#: ../lib/gis/list.c:193
+#: ../lib/gis/list.c:192
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr "%s archivos disponibles en el directorio de mapas <%s>:\n"
 
-#: ../lib/gis/list.c:273
+#: ../lib/gis/list.c:266
 msgid "G_list: Unknown element type"
 msgstr "G_list: tipo de elemento desconocido"
 
@@ -1229,12 +1229,12 @@ msgstr "Color de fondo"
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Un color estándar de GRASS, un triplete R:G:B o \"ninguno\""
 
-#: ../lib/gis/parser.c:890
+#: ../lib/gis/parser.c:891
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Lo siento <%s> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:1000
+#: ../lib/gis/parser.c:1002
 #, c-format
 msgid ""
 "\n"
@@ -1243,7 +1243,7 @@ msgstr ""
 "\n"
 "Descripción:\n"
 
-#: ../lib/gis/parser.c:1007
+#: ../lib/gis/parser.c:1009
 #, c-format
 msgid ""
 "\n"
@@ -1252,7 +1252,7 @@ msgstr ""
 "\n"
 "Palabras clave:\n"
 
-#: ../lib/gis/parser.c:1011
+#: ../lib/gis/parser.c:1013
 #, c-format
 msgid ""
 "\n"
@@ -1263,7 +1263,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1083
+#: ../lib/gis/parser.c:1085
 #, c-format
 msgid ""
 "\n"
@@ -1272,19 +1272,19 @@ msgstr ""
 "\n"
 "Opciones:\n"
 
-#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1563 ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1108 ../lib/gis/parser.c:1564 ../lib/gis/parser.c:1842
 msgid "Allow output files to overwrite existing files"
 msgstr "Permitir a los archivos de salida sobrescribir los archivos existentes"
 
-#: ../lib/gis/parser.c:1108 ../lib/gis/parser.c:1567
+#: ../lib/gis/parser.c:1110 ../lib/gis/parser.c:1568
 msgid "Verbose module output"
 msgstr "Salida verbosa del módulo"
 
-#: ../lib/gis/parser.c:1109 ../lib/gis/parser.c:1570
+#: ../lib/gis/parser.c:1111 ../lib/gis/parser.c:1571
 msgid "Quiet module output"
 msgstr "Salida silenciosa del módulo"
 
-#: ../lib/gis/parser.c:1115
+#: ../lib/gis/parser.c:1117
 #, c-format
 msgid ""
 "\n"
@@ -1293,72 +1293,72 @@ msgstr ""
 "\n"
 "Parámetros:\n"
 
-#: ../lib/gis/parser.c:1138
+#: ../lib/gis/parser.c:1140
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   por defecto: %s\n"
 
-#: ../lib/gis/parser.c:1446
+#: ../lib/gis/parser.c:1447
 msgid "NAME"
 msgstr "NOMBRE"
 
-#: ../lib/gis/parser.c:1459
+#: ../lib/gis/parser.c:1460
 msgid "KEYWORDS"
 msgstr "PALABRAS CLAVE"
 
-#: ../lib/gis/parser.c:1464
+#: ../lib/gis/parser.c:1465
 msgid "SYNOPSIS"
 msgstr "SINOPSIS"
 
-#: ../lib/gis/parser.c:1538
+#: ../lib/gis/parser.c:1539
 msgid "Flags"
 msgstr "Opciones"
 
-#: ../lib/gis/parser.c:1579
+#: ../lib/gis/parser.c:1580
 msgid "Parameters"
 msgstr "Parámetros"
 
-#: ../lib/gis/parser.c:1620
+#: ../lib/gis/parser.c:1621
 msgid "Options"
 msgstr "Opciones"
 
-#: ../lib/gis/parser.c:1626
+#: ../lib/gis/parser.c:1627
 msgid "Default"
 msgstr "Por defecto"
 
-#: ../lib/gis/parser.c:1843
+#: ../lib/gis/parser.c:1844
 msgid "Allow overwrite"
 msgstr "Permitir sobrescribir"
 
-#: ../lib/gis/parser.c:1851
+#: ../lib/gis/parser.c:1852
 msgid "Run with minimal output messages"
 msgstr "Ejecutar con el mínimo de mensajes de salida"
 
-#: ../lib/gis/parser.c:1853
+#: ../lib/gis/parser.c:1854
 msgid "Run quietly"
 msgstr "Ejecutar en modo silencioso"
 
-#: ../lib/gis/parser.c:1942
+#: ../lib/gis/parser.c:1943
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opciones: "
 
-#: ../lib/gis/parser.c:1991 ../lib/gis/parser.c:2008
+#: ../lib/gis/parser.c:1992 ../lib/gis/parser.c:2009
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Lo sentimos, <%c> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:2063
+#: ../lib/gis/parser.c:2064
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Lo sentimos, <%s=> es ambiguo\n"
 
-#: ../lib/gis/parser.c:2070
+#: ../lib/gis/parser.c:2071
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Lo sentimos, <%s> no es un parámetro válido\n"
 
-#: ../lib/gis/parser.c:2155
+#: ../lib/gis/parser.c:2156
 #, c-format
 msgid ""
 "\n"
@@ -1367,12 +1367,12 @@ msgstr ""
 "\n"
 "ERROR: sintaxis del rango no admitida para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2157
+#: ../lib/gis/parser.c:2158
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentado como: %s\n"
 
-#: ../lib/gis/parser.c:2160
+#: ../lib/gis/parser.c:2161
 #, c-format
 msgid ""
 "\n"
@@ -1381,12 +1381,12 @@ msgstr ""
 "\n"
 "ERROR: valor <%s> fuera del rango para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2162
+#: ../lib/gis/parser.c:2163
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2165
+#: ../lib/gis/parser.c:2166
 #, c-format
 msgid ""
 "\n"
@@ -1395,7 +1395,7 @@ msgstr ""
 "\n"
 "ERROR: falta el valor del parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2325
+#: ../lib/gis/parser.c:2326
 #, c-format
 msgid ""
 "\n"
@@ -1406,7 +1406,7 @@ msgstr ""
 "ERROR: el parámetro requerido  <%s> no se ha establecido:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2428
+#: ../lib/gis/parser.c:2429
 #, c-format
 msgid ""
 "\n"
@@ -1415,17 +1415,17 @@ msgstr ""
 "\n"
 "ERROR: la opción <%s> debe proporcionarse en múltiplos de %d\n"
 
-#: ../lib/gis/parser.c:2430
+#: ../lib/gis/parser.c:2431
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Tu proporcionaste %d elementos:\n"
 
-#: ../lib/gis/parser.c:2485
+#: ../lib/gis/parser.c:2486
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERROR: la opción <%s>: <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2532
+#: ../lib/gis/parser.c:2533
 #, c-format
 msgid ""
 "\n"
@@ -1434,7 +1434,7 @@ msgstr ""
 "\n"
 "OPCIÓN: ¿Definir la siguiente opción?\n"
 
-#: ../lib/gis/parser.c:2546
+#: ../lib/gis/parser.c:2547
 #, c-format
 msgid ""
 "\n"
@@ -1443,51 +1443,51 @@ msgstr ""
 "\n"
 "OPCIÓN:   %s\n"
 
-#: ../lib/gis/parser.c:2547
+#: ../lib/gis/parser.c:2548
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clave: %s\n"
 
-#: ../lib/gis/parser.c:2549
+#: ../lib/gis/parser.c:2550
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2551
+#: ../lib/gis/parser.c:2552
 #, c-format
 msgid " default: %s\n"
 msgstr " por defecto: %s\n"
 
-#: ../lib/gis/parser.c:2552
+#: ../lib/gis/parser.c:2553
 #, c-format
 msgid "required: %s\n"
 msgstr "se requiere: %s\n"
 
-#: ../lib/gis/parser.c:2554
+#: ../lib/gis/parser.c:2555
 #, c-format
 msgid "multiple: %s\n"
 msgstr "múltiple: %s\n"
 
-#: ../lib/gis/parser.c:2556
+#: ../lib/gis/parser.c:2557
 #, c-format
 msgid " options: %s\n"
 msgstr " opciones: %s\n"
 
-#: ../lib/gis/parser.c:2571
+#: ../lib/gis/parser.c:2572
 #, c-format
 msgid "enter option > "
 msgstr "introduce una opción > "
 
-#: ../lib/gis/parser.c:2585 ../lib/gis/parser.c:2596
+#: ../lib/gis/parser.c:2586 ../lib/gis/parser.c:2597
 msgid "   Try again? "
 msgstr "   ¿Intentar de nuevo? "
 
-#: ../lib/gis/parser.c:2594
+#: ../lib/gis/parser.c:2595
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Lo siento, %s no se acepta.\n"
 
-#: ../lib/gis/parser.c:2605
+#: ../lib/gis/parser.c:2606
 #, c-format
 msgid ""
 "\n"
@@ -1498,11 +1498,11 @@ msgstr ""
 "Usted ha seleccionado:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2606
+#: ../lib/gis/parser.c:2607
 msgid "Is this correct? "
 msgstr "¿Es correcto? "
 
-#: ../lib/gis/parser.c:2675
+#: ../lib/gis/parser.c:2676
 msgid "to accept the default"
 msgstr "para aceptar los valores por defecto"
 
