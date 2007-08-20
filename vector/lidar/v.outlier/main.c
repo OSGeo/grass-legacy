@@ -146,23 +146,23 @@ main (int argc,char *argv[])
     /* Open output vector */
     if (qgis_opt->answer)  
 	if (0 > Vect_open_new (&Qgis, qgis_opt->answer, WITHOUT_Z))
-	    G_fatal_error (_("Cannot open vector map <%s>"), qgis_opt->answer);
+	    G_fatal_error (_("Unable to create vector map <%s>"), qgis_opt->answer);
 
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	Vect_close (&Qgis);
-	G_fatal_error (_("Cannot open vector map <%s>"), out_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
     }
 
     if (0 > Vect_open_new (&Outlier, outlier_opt->answer, WITH_Z)) {
 	Vect_close (&Out);
 	Vect_close (&Qgis);
-	G_fatal_error (_("Cannot open vector map <%s>"), out_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
     }
 
     Vect_set_open_level (1);
     /* Open input vector */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset))
-	G_fatal_error ( _("Cannot open vector map <%s> at the topological level"), in_opt->answer);
+	G_fatal_error ( _("Unable to open vector map <%s> at the topological level"), in_opt->answer);
 
     /* Copy vector Head File */
     Vect_copy_head_data (&In, &Out);

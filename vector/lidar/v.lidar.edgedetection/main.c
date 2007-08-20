@@ -166,7 +166,7 @@ main (int argc,char *argv[])
 
 /* Open output vector */
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) 
-	G_fatal_error (_("Vector <%s> could not be opened"), out_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
 
     Vect_set_open_level (1);
 /* Open input vector */

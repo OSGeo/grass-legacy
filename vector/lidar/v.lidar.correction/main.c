@@ -62,7 +62,7 @@ main (int argc,char *argv[])
 /* Options' declaration */
     module = G_define_module();
     module->keywords = _("vector, LIDAR");
-    module->description = _("Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering");
+    module->description = _("Correction of the v.lidar.growing output. It is the last of the three algorithms for LIDAR filtering.");
 
     in_opt = G_define_standard_option (G_OPT_V_INPUT);
 	in_opt->description = _("Input observation vector map name (v.lidar.growing output)");
@@ -144,13 +144,13 @@ main (int argc,char *argv[])
 /* Open output vector */
     if (0 > Vect_open_new (&Out, out_opt->answer, WITH_Z)) {
 	Vect_close (&In);
-	G_fatal_error (_("Vector <%s> could not be opened"), out_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
     }
 
     if (0 > Vect_open_new (&Out_Terrain, out_terrain_opt->answer, WITH_Z)) {
 	Vect_close (&In);
 	Vect_close (&Out);
-	G_fatal_error (_("Vector <%s> could not be opened"), out_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
     }
 
 /* Copy vector Head File */
