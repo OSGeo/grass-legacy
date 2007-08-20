@@ -36,8 +36,8 @@
 int
 main(int argc, char **argv)
 {
-    struct Flag *printattributes, *topo_flag, *stdin_flag;
-    struct Option *opt1, *opt4, *maxdistance;
+    struct Flag *printattributes, *topo_flag;
+    struct Option *opt1, *coords_opt, *maxdistance;
     struct Cell_head window;
     struct GModule *module;
     char *mapset;
@@ -76,15 +76,17 @@ main(int argc, char **argv)
     opt1->multiple   = YES;
     if (vect)
 	opt1->answers = vect;
-    
-    opt4 = G_define_option();
-    opt4->key         = "east_north";
-    opt4->type        = TYPE_DOUBLE;
-    opt4->key_desc    = "east,north";
-    opt4->required    = NO;
-    opt4->multiple    = YES;
-    opt4->label       = _("Coordinates for query");
-    opt4->description = _("If not given reads from standard input");
+    if(!vect)
+        opt1->required = YES;
+
+    coords_opt = G_define_option();
+    coords_opt->key         = "east_north";
+    coords_opt->type        = TYPE_DOUBLE;
+    coords_opt->key_desc    = "east,north";
+    coords_opt->required    = NO;
+    coords_opt->multiple    = YES;
+    coords_opt->label       = _("Coordinates for query");
+    coords_opt->description = _("If not given reads from standard input");
     
     maxdistance = G_define_option();
     maxdistance->type = TYPE_DOUBLE;
@@ -101,15 +103,9 @@ main(int argc, char **argv)
     printattributes->key = 'a';
     printattributes->description = _("Print attribute information");
     
-    stdin_flag = G_define_flag();
-    stdin_flag->key = 's';
-    stdin_flag->description = _("Read coordinates from standard input");
-    
-    if(!vect)
-        opt1->required = YES;
-    
     if((argc > 1 || !vect) && G_parser(argc,argv))
         exit(EXIT_FAILURE);
+
 
     if (opt1->answers && opt1->answers[0])
         vect = opt1->answers;
@@ -144,7 +140,6 @@ main(int argc, char **argv)
     }
     
     /* Look at maps given on command line */
-    
     if(vect)
     {
         for(i=0; vect[i]; i++);
@@ -167,21 +162,18 @@ main(int argc, char **argv)
 	    
             level = Vect_open_old (&Map[i], vect[i], mapset);
             if (level < 0) 
-                G_fatal_error ( _("Vector map <%s> not found"), vect[i]);
+                G_fatal_error(_("Vector map <%s> not found"), vect[i]);
     
             if (level < 2) 
-                G_fatal_error ( _("You must build topology on vector map <%s>"), vect[i]);
+                G_fatal_error(_("You must build topology on vector map <%s>"), vect[i]);
 
-            /* G_message ("Building spatial index ..."); */
+            G_verbose_message(_("Building spatial index ..."));
             Vect_build_spatial_index ( &Map[i], NULL );
        }
     }
 
-    if( stdin_flag->answer ) {
-	G_warning (_("The '-s' flag is deprecated and will be removed in future"));
-    }
-
-    if (!opt4->answer) {
+    if (!coords_opt->answer) {
+	/* if coords are not given on command line, read them from stdin */
 	setvbuf(stdin,  NULL, _IOLBF, 0);
 	setvbuf(stdout, NULL, _IOLBF, 0);
 	while ( fgets (buf, sizeof(buf), stdin) != NULL ) { 
@@ -189,14 +181,15 @@ main(int argc, char **argv)
 	    if(ret == 3 && (ch == ',' || ch == ' ' || ch == '\t') ) {
 		what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
 	    } else {
-		G_warning ( _("Unknown input format, skipping: %s"), buf);
+		G_warning ( _("Unknown input format, skipping: [%s]"), buf);
 		continue;
 	    }
 	}
     } else {
-	for(i=0; opt4->answers[i] != NULL; i+=2) {
-	    xval = atof(opt4->answers[i]);
-	    yval = atof(opt4->answers[i+1]);
+	/* use coords given on command line */
+	for(i=0; coords_opt->answers[i] != NULL; i+=2) {
+	    xval = atof(coords_opt->answers[i]);
+	    yval = atof(coords_opt->answers[i+1]);
 	    what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
 	}
     }
