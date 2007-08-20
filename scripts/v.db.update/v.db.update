@@ -78,8 +78,12 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
-# does map exist?
-eval `g.findfile element=vector file=$GIS_OPT_MAP`
+### setup enviro vars ###
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+
+# does map exist in CURRENT mapset?
+eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
 if [ ! "$file" ] ; then
    echo "Vector map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
@@ -94,11 +98,20 @@ fi
 database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
 driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 
+# checking column types
+coltype=`v.info -c map=$GIS_OPT_MAP | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1`
+# we insert a value
+if [ "$coltype" = "INTEGER" -o "$coltype" = "DOUBLE PRECISION" ] ; then
+    value=$GIS_OPT_VALUE
+else
+    value=\'$GIS_OPT_VALUE\'
+fi
+
 if [ -n "$GIS_OPT_WHERE" ]
   then
-	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE' WHERE $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
-  else
-	echo "UPDATE $table SET $GIS_OPT_COLUMN='$GIS_OPT_VALUE'" | db.execute database=$database driver=$driver
+       echo "UPDATE $table SET $GIS_OPT_COLUMN=$value WHERE $GIS_OPT_WHERE" | db.execute database=$database driver=$driver
+else
+       echo "UPDATE $table SET $GIS_OPT_COLUMN=$value" | db.execute database=$database driver=$driver
 fi
 
 exit 0
