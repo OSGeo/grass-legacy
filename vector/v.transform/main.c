@@ -52,7 +52,8 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Transforms a vector map via a set of tie points.");
+    module->description =
+	_("Transforms a vector map via scaling parameters or a set of tie points.");
 
     quiet_flag = G_define_flag();
     quiet_flag->key		= 'q';
