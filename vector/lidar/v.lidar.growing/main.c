@@ -146,7 +146,7 @@ main (int argc,char *argv[])
 
     driver = db_start_driver_open_database (field->driver, field->database);
     if (driver == NULL)
-	 G_fatal_error( _("No db connection for driver <%s> defined. Run db.connect."), field->driver);
+	 G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect."), field->driver);
 
 /* Setting regions and boxes */
     G_debug (1, _("Setting regions and boxes"));

@@ -257,7 +257,7 @@ int main(int argc, char **argv) {
 
     /* open site file */
     if (Vect_open_old(&Map, sitefile, mapset) < 0)
-        G_fatal_error (_("Cannot open vector map <%s>"), sitefile);
+        G_fatal_error (_("Unable to open vector map <%s>"), sitefile);
 
     /* load site coordinates */
     G_get_window (&window);
@@ -270,7 +270,7 @@ int main(int argc, char **argv) {
 
     /* create vector map */
     if (0 > Vect_open_new (&Map, output->answer, 0) )
-        G_fatal_error (_("Cannot open vector map <%s>"), output->answer);
+        G_fatal_error (_("Unable to create vector map <%s>"), output->answer);
 
     Vect_hist_command ( &Map );
 

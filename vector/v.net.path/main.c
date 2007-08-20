@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector, networking");
-    module->description = _("Find shortest path on vector network.");
+    module->description = _("Finds shortest path on vector network.");
 
     input_opt = G_define_standard_option(G_OPT_V_INPUT);
     output_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -131,7 +131,7 @@ int main(int argc, char **argv)
     Vect_set_fatal_error (GV_FATAL_PRINT);
     if (1 > Vect_open_new (&Out, output_opt->answer, Vect_is_3d(&In) )){
         Vect_close (&In);
-	G_fatal_error (_("Cannot open vector map <%s>"), output_opt->answer);
+	G_fatal_error (_("Unable to create vector map <%s>"), output_opt->answer);
     }
     Vect_hist_command ( &Out );
 
