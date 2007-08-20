@@ -337,7 +337,7 @@ static int load_files()
 
 	    mapset = G_find_cell2 (name, "");
 	    if (mapset == NULL)
-                G_fatal_error(_("Raster map <%s>] not found"), name);
+                G_fatal_error(_("Raster map <%s> not found"), name);
 
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)
