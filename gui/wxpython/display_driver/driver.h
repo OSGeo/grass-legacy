@@ -26,15 +26,19 @@ extern "C" {
 #include <grass/Vect.h>
 }
 
+#define DEBUG
+
 class DisplayDriver
 {
  private:
     wxPseudoDC *dc;  // device content
     long int   dcId; // wxDC id starting
 
-    typedef std::map<long int, std::vector<long int> > ids_map;
+    typedef std::map<int, std::vector<long int> > ids_map;
 
-    ids_map ids;
+    ids_map ids; // gId : {dcIds, ...}
+
+    std::vector<int> selected; // list of selected features (gId)
 
     struct Map_info  *mapInfo;
     struct line_pnts *points;       // east, north, depth
@@ -90,6 +94,9 @@ class DisplayDriver
     /* debug */
     void PrintIds();
 
+    /* select feature */
+    bool IsSelected(int line);
+
  public:
     /* constructor */
     DisplayDriver();
@@ -100,12 +107,14 @@ class DisplayDriver
     int DrawMap(void *device);
 
     /* select */
-    int SelectLinesByBox(double x1, double y1, double x2, double y2,
-			 std::vector<int>* ids);
+    int SelectLinesByBox(double x1, double y1, double x2, double y2);
+    void Unselect();
+    std::vector<int> GetSelected();
 
     /* general */
     void CloseMap();
     void OpenMap(const char *mapname, const char *mapset);
+    void ReOpenMap();
 
     /* set */
     void SetRegion(double north, double south, double east, double west,

@@ -427,6 +427,7 @@ class BufferedWindow(wx.Window):
 
         if self.resize:
             self.UpdateMap()
+
         event.Skip()
 
     def SaveToFile(self, FileName, FileType):
@@ -470,7 +471,7 @@ class BufferedWindow(wx.Window):
         return img
 
 
-    def UpdateMap(self, render=True, redraw=True, removeId=[]):
+    def UpdateMap(self, render=True):
         """
         Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
@@ -486,17 +487,11 @@ class BufferedWindow(wx.Window):
             self.img = self.GetImage() # id=99
             self.resize = False
 
-        if not self.img or redraw == False:
+        if not self.img:
             return False
 
-        # paint images to PseudoDC
-        if len(removeId) > 0:
-            for id in removeId:
-                self.pdc.ClearId(id)
-                self.pdc.RemoveId(id)
-        else:
-            self.pdc.Clear()
-            self.pdc.RemoveAll()
+        self.pdc.Clear()
+        self.pdc.RemoveAll()
 
         try:
             id = self.imagedict[self.img]
@@ -874,7 +869,7 @@ class BufferedWindow(wx.Window):
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
             # redraw map
-            self.UpdateMap(redraw=True)
+            self.UpdateMap()
 
         elif self.mouse["use"] == "query":
             # querying
@@ -893,34 +888,39 @@ class BufferedWindow(wx.Window):
                 pass
 
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
-            # digitization
+            # digitization tool active
             digitToolbar = self.parent.digittoolbar
             self.mouse['end'] = event.GetPositionTuple()[:]
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"]:
+                nselected = 0
+                driver =  self.parent.digit.driver
+                # -> delete line || move line || move vertex
                 if digitToolbar.action == "moveVertex":
-                    self.moveIds = self.parent.digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
+                    # -> move vertex (select by point)
+                    self.moveIds = driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
                                                                     self.mouse['begin'][1]),
                                                     onlyType="line")
 
-                else: # moveLine | deleteLine
+                else:
+                    # -> moveLine || deleteLine (select by box)
                     x1, y1 = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
                     x2, y2 = self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])
-                    # PyDisplayDriver
-                    # self.moveIds = self.parent.digit.driver.SelectLinesByBox((x1,y1),
-                    # x2, y2)))
-                    nselected = self.parent.digit.driver.SelectLinesByBox(x1, y1, x2, y2)
-                    Debug.msg (3, "")
+                    nselected = driver.SelectLinesByBox(((x1, y1), (x2, y2)))
                     
-                if len(self.moveIds) > 0:
+                if nselected > 0:
+                    # highlight selected features
                     self.UpdateMap(render=False)
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
-                        self.UpdateMap(render=False, redraw=False, removeId=self.moveIds)
+                        # -> move line || move vertex
+                        self.UpdateMap(render=False)
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
-                            self.moveIds = self.parent.digit.driver.GetSelected(grassId=False)
+                            # -> move line
+                            self.moveIds = driver.GetSelected(grassId=False)
                         else:
-                            self.moveIds = self.parent.digit.driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
-                                                                                          self.mouse['begin'][1]))
+                            # -> move vertex
+                            self.moveIds = driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
+                                                                                    self.mouse['begin'][1]))
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
                 self.parent.digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
                 self.UpdateMap(render=False)
@@ -1016,8 +1016,10 @@ class BufferedWindow(wx.Window):
 
         digit = self.parent.digittoolbar
         if digit:
+            # digitization tool (confirm action)
             if digit.action == "addLine" and \
                     digit.type in ["line", "boundary"]:
+                # -> add new line / boundary
                 try:
                     map = digit.layers[digit.layerSelectedID].name
                 except:
@@ -1028,7 +1030,6 @@ class BufferedWindow(wx.Window):
                     dlg.Destroy()
 
                 if map:
-                    # add new line
                     mapcoords = []
                     # xy -> EN
                     for coord in self.polycoords:
@@ -1062,6 +1063,7 @@ class BufferedWindow(wx.Window):
                     # clean up saved positions
                     self.polycoords = []
             elif digit.action == "deleteLine":
+                # -> delete selected vector features
                 self.parent.digit.DeleteSelectedLines()
             elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                 # pixel -> cell
@@ -1088,7 +1090,8 @@ class BufferedWindow(wx.Window):
             elif digit.action == "removeVertex":
                 self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
 
-            self.parent.digit.driver.SetSelected([])
+            #self.parent.digit.driver.SetSelected([])
+            self.parent.digit.driver.Unselect()
             self.UpdateMap(render=False)
 
         event.Skip()
@@ -1104,9 +1107,11 @@ class BufferedWindow(wx.Window):
                 self.mouse['begin'] = self.polycoords[-1]
                 self.ClearLines()
                 self.DrawLines()
-            elif digit.action in ["deleteLine", "moveLine", "splitLine", "addVertex", "removeVertex", "moveVertex"]:
+            elif digit.action in ["deleteLine", "moveLine", "splitLine",
+                                  "addVertex", "removeVertex", "moveVertex"]:
                 # unselected selected features
-                self.parent.digit.driver.SetSelected([])
+                # self.parent.digit.driver.SetSelect([])
+                self.parent.digit.driver.Unselect()
                 if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                     del self.moveBegin
                     del self.moveCoords

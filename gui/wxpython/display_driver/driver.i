@@ -8,3 +8,8 @@
 #include <grass/vect/dig_structs.h>
 #include "driver.h"
 %}
+
+%include "std_vector.i" 
+namespace std { 
+   %template(IntVector) vector<int>;
+}

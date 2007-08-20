@@ -85,7 +85,9 @@ int DisplayDriver::DrawMap(void *device)
 	DrawLine(line);
     }
 
+#ifdef DEBUG
     PrintIds();
+#endif
 
     dc = NULL;
 
@@ -143,11 +145,16 @@ int DisplayDriver::DrawLine(int line)
 	    }
 	    break;
 	default:
-	    draw = FALSE;
+	    draw = false;
 	    break;
 	}
 
 	if (draw) {
+	    // highlight feature?
+	    if (IsSelected(line)) {
+		dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	    }
+
 	    //dc->DrawLines(pointsScreen);
 	    for (int i = 0; i < pointsScreen->GetCount() - 1;) {
 		wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
@@ -170,7 +177,7 @@ int DisplayDriver::DrawLine(int line)
     else if (type & GV_POINTS) {
 	if (type == GV_POINT && settings.point.enabled) {
 	    dc->SetPen(wxPen(settings.point.color, settings.lineWidth, wxSOLID));
-	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
+	    draw = true;
 	}
 	else if (type == GV_CENTROID) {
 	    int cret = Vect_get_centroid_area(mapInfo, line);
@@ -186,9 +193,16 @@ int DisplayDriver::DrawLine(int line)
 		draw = settings.centroidDup.enabled;
 		dc->SetPen(wxPen(settings.centroidDup.color, settings.lineWidth, wxSOLID));
 	    }
+	}
 
-	    if (draw) 
-		DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
+	if (draw) {
+	    // highlight feature?
+	    if (IsSelected(line)) {
+		std::cout << line << " " << IsSelected(line) << std::endl;
+		dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	    }
+
+	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
 	}
     }
 
@@ -290,6 +304,27 @@ void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
     Vect_open_old(mapInfo, (char*) mapname, (char *) mapset);
 
     return;
+}
+
+/**
+   \brief Close and open vector map layer
+
+   Need for modification using v.edit
+
+   \param
+   
+   \return
+*/
+void DisplayDriver::ReOpenMap()
+{
+    // char* name   = G_store(Vect_get_map_name(mapInfo)); ???
+    char* name   = G_store(mapInfo->name);
+    char* mapset = G_store(Vect_get_mapset(mapInfo));
+
+    Vect_close(mapInfo);
+    mapInfo = NULL;
+
+    return OpenMap(name, mapset);
 }
 
 /*
@@ -452,8 +487,7 @@ void DisplayDriver::PrintIds()
    \return number of selected features
    \return -1 on error
 */
-int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2,
-				    std::vector<int>* ids)
+int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
 {
     if (!mapInfo)
 	return -1;
@@ -463,8 +497,6 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2,
 
     struct ilist *list;
     struct line_pnts *bbox;
-
-    std::vector<int> selected;
 
     type = -1; // all types
 
@@ -496,13 +528,60 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2,
     Vect_destroy_line_struct(bbox);
     Vect_destroy_list(list);
 
+#ifdef DEBUG
     for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
 	 i != e; ++i)
-	std::cout << *i << " ";
+	std::cout << "selected:" << *i << " ";
     std::cout << std::endl;
-
-    if (ids)
-	*ids = selected;
+#endif
 
     return selected.size();
 }
+
+/**
+   \brief Is vector feature selected?
+   
+   \param[in] line vector feature id
+
+   \return if vector feature is selected return true
+   \return if not return false
+*/
+bool DisplayDriver::IsSelected(int line)
+{
+    for(std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
+	i != e; ++i) {
+	if (line == *i)
+	    return true;
+    }
+
+    return false;
+}
+
+/**
+   \brief Unselect selected features by user
+
+   Clear list of ids of selected vector features
+
+   \param
+
+   \return
+*/
+void DisplayDriver::Unselect()
+{
+    selected.clear();
+
+    return;
+}
+
+/**
+   \brief Return grass ids of selected vector features
+
+   \param
+   
+   \return list of ids of selected vector features
+*/
+std::vector<int> DisplayDriver::GetSelected()
+{
+    return selected;
+}
+
