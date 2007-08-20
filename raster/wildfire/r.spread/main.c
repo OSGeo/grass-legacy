@@ -102,7 +102,7 @@ main (int argc, char *argv[])
 	module->keywords = _("raster");
 	module->label =
 	  _("Simulates elliptically anisotropic spread on a graphics window and "
-	    "and generates a raster map of the cumulative time of spread, "
+	    "generates a raster map of the cumulative time of spread, "
 	    "given raster maps containing the rates of spread (ROS), the ROS "
 	    "directions and the spread origins.");
 	module->description =
@@ -482,7 +482,7 @@ main (int argc, char *argv[])
 
 	/*   Write the input layers in the map "arrays"  */
 
-        G_message (_("Reading inputs ..."));
+        G_message (_("Reading inputs..."));
 
 	for( row=0 ; row<nrows ; row++ ) {
                 G_percent (row, nrows, 2);
@@ -534,9 +534,9 @@ main (int argc, char *argv[])
         heap = (struct costHa *) G_calloc (nrows*ncols + 1, sizeof(struct costHa));
         heap_len = 0;
 
-        G_message (_("Reading %s ... "), start_layer);
+        G_message (_("Reading %s... "), start_layer);
 #ifdef DEBUG
-printf ("Collecting origins ...");
+printf ("Collecting origins...");
 #endif
 	collect_ori (start_fd);
 #ifdef DEBUG
@@ -546,7 +546,7 @@ printf ("Done\n");
 
 	/* Major computation of spread time */
 #ifdef DEBUG
-printf ("Spreading ...");
+printf ("Spreading...");
 #endif
 	spread ();      
 #ifdef DEBUG
