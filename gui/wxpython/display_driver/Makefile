@@ -7,7 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 SWIG=swig
 
-CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` 
+CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` `gdal-config --cflags`
 
 LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs`
 

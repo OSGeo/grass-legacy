@@ -222,7 +222,6 @@ class GRToolbar(AbstractToolbar):
         if tool == "Digitize" and not self.mapdisplay.digittoolbar:
             self.mapdisplay.AddToolbar("digit")
 
-
 class DigitToolbar(AbstractToolbar):
     """
     Toolbar for digitization
@@ -337,7 +336,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
-
+        
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
         Debug.msg (2, "DigitToolbar.OnAddBoundary()")
@@ -361,7 +360,7 @@ class DigitToolbar(AbstractToolbar):
             self.StopEditing(self.layers[self.layerSelectedID])
         except:
             pass
-
+        
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
@@ -386,7 +385,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnSplitLine():")
         self.action = "splitLine"
         self.parent.MapWindow.mouse['box'] = 'point'
-
+        
     def OnEditLine(self, event):
         pass
 
@@ -394,7 +393,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnMoveLine():")
         self.action = "moveLine"
         self.parent.MapWindow.mouse['box'] = 'box'
-
+        
     def OnDeleteLine(self, event):
         Debug.msg(2, "Digittoolbar.OnDeleteLine():")
         self.action = "deleteLine"
@@ -414,7 +413,7 @@ class DigitToolbar(AbstractToolbar):
         """Show settings dialog"""
         DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
                             style=wx.DEFAULT_DIALOG_STYLE).Show()
-
+        
     def OnSelectMap (self, event):
         """
         Select vector map layer for editing
@@ -452,7 +451,7 @@ class DigitToolbar(AbstractToolbar):
 
         self.parent.digit.SetMapName(mapLayer.name)
 
-        # deactive layer
+        # deactive layer 
         self.mapcontent.ChangeLayerActive(mapLayer, False)
 
         # change cursor
@@ -460,7 +459,7 @@ class DigitToolbar(AbstractToolbar):
 
         # create pseudoDC for drawing the map
         self.parent.pdcVector = wx.PseudoDC()
-
+        
         return True
 
     def StopEditing (self, layerSelected):
@@ -473,22 +472,22 @@ class DigitToolbar(AbstractToolbar):
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
                        (layerSelected.name))
             self.combo.SetValue ('Select vector map')
-
+            
             # re-active layer
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
-
+            
             # change cursor
             self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
 
-            # destroy pseudodc
-            del self.parent.pdcVector
+            # disable pseudodc for vector map layer
+            self.parent.MapWindow.pdcVector = None
             
             return True
 
         return False
-
+            
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.

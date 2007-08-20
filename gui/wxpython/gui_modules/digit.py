@@ -91,7 +91,7 @@ class AbstractDigit:
             self.settings["symbolCentroidDup"] = (True, (156, 62, 206, 255)) # violet
             self.settings["symbolNodeOne"] = (True, (255, 0, 0, 255)) # red
             self.settings["symbolNodeTwo"] = (True, (0, 86, 45, 255)) # dark green
-            self.settings["symbolVertex"] = (True, (255, 20, 147, 255)) # deep pink
+            self.settings["symbolVertex"] = (False, (255, 20, 147, 255)) # deep pink
             
             # display
             self.settings["lineWidth"] = (2, "screen pixels")
@@ -243,23 +243,25 @@ class VEdit(AbstractDigit):
     def DeleteSelectedLines(self):
         """Delete selected vector features from the vector map"""
 
-        if not self.driver.selected:
+        selected = self.driver.GetSelected()
+
+        if len(selected) <= 0:
             return False
 
         Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
-                      self.driver.selected)
+                      selected)
 
-        ids = ",".join(["%d" % v for v in self.driver.selected])
-        command = ["v.edit", "--q",
-                   "map=%s" % self.map,
-                   "tool=delete",
-                   "ids=%s" % ids]
+        ids = ",".join(["%d" % v for v in selected])
+        command = [ "v.edit", "--q",
+                    "map=%s" % self.map,
+                    "tool=delete",
+                    "ids=%s" % ids]
 
         # run the command
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        #self.driver.ReDrawMap(self.map)
+        self.driver.display.ReOpenMap()
 
         return True
 
@@ -386,47 +388,6 @@ class AbstractDisplayDriver:
         
         return threshold
 
-    def SetPen(self, line, symbol):
-        """Set Pen for PseudoDC according vector feature status"""
-        
-        if line in self.selected:
-            symbol = "symbolHighlight"
-        
-        width = self.parent.settings["lineWidth"][0]
-        
-        if self.parent.settings[symbol][0] in [True, None]:
-            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=self.parent.settings[symbol][1],
-                                                                 width=width, style=wx.SOLID)
-        else:
-            self.mapwindow.pen = self.mapwindow.polypen = None
-
-    def SetSelected(self, pdcId):
-        """Set selected objects (their ids) in PseudoDC
-
-        For deseleids=[]
-        """
-        # reset
-        self.selected = []
-        
-        for line in pdcId:
-            self.selected.append(line)
-
-        Debug.msg(4, "DisplayDriver.SetSelected(): pdcId=%s, grassId=%s" % \
-                      (pdcId, self.selected))
-
-    def GetSelected(self, grassId=True):
-        """Get ids of selected objects in PseudoDC
-
-        If grassId=True return GRASS line id otherwise PseudoDC id"""
-        if grassId:
-            return self.selected
-        else:
-            pdcId = []
-            for line in self.selected:
-                for id in self.ids[line]:
-                    pdcId.append(id)
-            return pdcId
-
 class CDisplayDriver(AbstractDisplayDriver):
     """
     Display driver using grass6_wxdriver module
@@ -468,10 +429,25 @@ class CDisplayDriver(AbstractDisplayDriver):
         ('None' for no types)
         """
 
-        nselected = self.display.SelectLinesByBox()
+        x1, y1 = rect[0]
+        x2, y2 = rect[1]
+
+        nselected = self.display.SelectLinesByBox(x1, y1, x2, y2)
         Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
                   nselected)
+
+        return nselected
+
+    def GetSelected(self):
+        """Get ids (grass) of selected vector features"""
         
+        return self.display.GetSelected()
+        
+    def Unselect(self):
+        """Unselect selected vector features"""
+        
+        self.display.Unselect()
+
     def SetRegion(self, reg):
         """Set geographical region
         
@@ -494,7 +470,10 @@ class CDisplayDriver(AbstractDisplayDriver):
         if not self.display:
             return
         
-        self.display.SetSettings (0,
+        self.display.SetSettings (wx.Color(settings['symbolHighlight'][1][0],
+                                           settings['symbolHighlight'][1][1],
+                                           settings['symbolHighlight'][1][2],
+                                           255).GetRGB(),
                                   settings['symbolPoint'][0],
                                   wx.Color(settings['symbolPoint'][1][0],
                                            settings['symbolPoint'][1][1],
@@ -834,6 +813,47 @@ class PyDisplayDriver(AbstractDisplayDriver):
             else:
                 self.SetPen(line, "symbolPoint")
             self.ids[line].append(self.mapwindow.DrawCross(coords[0], size=5))
+
+    def SetPen(self, line, symbol):
+        """Set Pen for PseudoDC according vector feature status"""
+        
+        if line in self.selected:
+            symbol = "symbolHighlight"
+        
+        width = self.parent.settings["lineWidth"][0]
+        
+        if self.parent.settings[symbol][0] in [True, None]:
+            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=self.parent.settings[symbol][1],
+                                                                 width=width, style=wx.SOLID)
+        else:
+            self.mapwindow.pen = self.mapwindow.polypen = None
+
+    def SetSelected(self, pdcId):
+        """Set selected objects (their ids) in PseudoDC
+
+        For deseleids=[]
+        """
+        # reset
+        self.selected = []
+        
+        for line in pdcId:
+            self.selected.append(line)
+
+        Debug.msg(4, "DisplayDriver.SetSelected(): pdcId=%s, grassId=%s" % \
+                      (pdcId, self.selected))
+
+    def GetSelected(self, grassId=True):
+        """Get ids of selected objects in PseudoDC
+
+        If grassId=True return GRASS line id otherwise PseudoDC id"""
+        if grassId:
+            return self.selected
+        else:
+            pdcId = []
+            for line in self.selected:
+                for id in self.ids[line]:
+                    pdcId.append(id)
+            return pdcId
 
 class DigitSettingsDialog(wx.Dialog):
     """
