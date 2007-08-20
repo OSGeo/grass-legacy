@@ -191,7 +191,7 @@ int main (int argc, char *argv[])
 	ncols = G_window_cols();
 
 	/* process the data */
-        G_important_message (_("Percent complete..."));
+        G_verbose_message (_("Percent complete..."));
 
 	for (row = 0; row < nrows; row++)
 	{
