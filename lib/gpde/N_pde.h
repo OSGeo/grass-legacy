@@ -63,6 +63,10 @@
 #define N_ARRAY_MUL 2		/* multiply two arrays */
 #define N_ARRAY_DIV 3		/* array division, if div with 0 the NULL value is set */
 
+#define N_UPWIND_FULL 0		/*full upwinding stabilization*/
+#define N_UPWIND_EXP  1		/*exponential upwinding stabilization*/
+#define N_UPWIND_WEIGHT 2	/*weighted upwinding stabilization*/
+
 
 
 /* *************************************************************** */
@@ -244,11 +248,11 @@ extern void N_calc_array_3d_stats(N_array_3d * a, double *min, double *max, doub
  * right side vector b of Ax = b. This system is typically used in 2d.
  
  \verbatim
- N
- |
+     N
+     |
  W-- C --E
- |
- S
+     |
+     S
  \endverbatim
  
  * Matrix entries for the mass balance of a 7 star system

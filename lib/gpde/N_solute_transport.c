@@ -199,7 +199,7 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     double z_xe, z_ys;
     double cin = 0, cg, cg_start;
     double R, nf, cs, q;
-    double C, W, E, N, S, V;
+    double C, W, E, N, S, V, NE, NW, SW, SE;
     double vw = 0, ve = 0, vn = 0, vs = 0;
     double Ds_w = 0, Ds_e = 0, Ds_n = 0, Ds_s = 0;
     double Dw = 0, De = 0, Dn = 0, Ds = 0;
@@ -297,23 +297,39 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     Ds = ((Df_s + Ds_s)) / dy;
     Dn = ((Df_n + Ds_n)) / dy;
 
-    vw = grad.WC;
-    rw = N_exp_upwinding(-1 * vw, dx, Dw);
+    vw = -1.0 * grad.WC;
     ve = grad.EC;
-    re = N_exp_upwinding(ve, dx, De);
-    vs = grad.SC;
-    rs = N_exp_upwinding(-1 * vs, dy, Ds);
+    vs = -1.0 * grad.SC;
     vn = grad.NC;
-    rn = N_exp_upwinding(vn, dy, Dn);
+
+    if(data->stab == N_UPWIND_FULL)
+      {
+      rw = N_full_upwinding(vw, dx, Dw);
+      re = N_full_upwinding(ve, dx, De);
+      rs = N_full_upwinding(vs, dy, Ds);
+      rn = N_full_upwinding(vn, dy, Dn);
+      }
+    else if(data->stab == N_UPWIND_EXP)
+      {
+      rw = N_exp_upwinding(vw, dx, Dw);
+      re = N_exp_upwinding(ve, dx, De);
+      rs = N_exp_upwinding(vs, dy, Ds);
+      rn = N_exp_upwinding(vn, dy, Dn);
+      }
 
     /*mass balance center cell to western cell */
-    W = -1 * (Dw) * dy * z_w - vw * (1 - rw) * dy * z_w;
+    W = -1 * (Dw) * dy * z_w + vw * (1 - rw) * dy * z_w;
     /*mass balance center cell to eastern cell */
     E = -1 * (De) * dy * z_e + ve * (1 - re) * dy * z_e;
     /*mass balance center cell to southern cell */
-    S = -1 * (Ds) * dx * z_s - vs * (1 - rs) * dx * z_s;
+    S = -1 * (Ds) * dx * z_s + vs * (1 - rs) * dx * z_s;
     /*mass balance center cell to northern cell */
     N = -1 * (Dn) * dx * z_n + vn * (1 - rn) * dx * z_n;
+
+    NW = 0.0;
+    SW = 0.0;
+    NE = 0.0;
+    SE = 0.0;
 
     /* Retardation */
     R = N_get_array_2d_d_value(data->R, col, row);
@@ -327,9 +343,9 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
     cin = N_get_array_2d_d_value(data->cin, col, row);
 
     /*the diagonal entry of the matrix */
-    C = (Dw - vw * rw) * dy * z_w +
+    C = (Dw + vw * rw) * dy * z_w +
 	(De + ve * re) * dy * z_e +
-	(Ds - vs * rs) * dx * z_s +
+	(Ds + vs * rs) * dx * z_s +
 	(Dn + vn * rn) * dx * z_n + Az * z * R / data->dt - q / nf;
 
     /*the entry in the right side b of Ax = b */
@@ -350,8 +366,8 @@ N_data_star *N_callback_solute_transport_2d(void *solutedata,
      
     G_debug(6, "N_callback_solute_transport_2d: called [%i][%i]", row, col);
 
-    /*create the 5 point star entries */
-    mat_pos = N_create_5star(C, W, E, N, S, V);
+    /*create the 9 point star entries */
+    mat_pos = N_create_9star(C, W, E, N, S, NW, SW, NE, SE, V);
 
     return mat_pos;
 }
@@ -406,6 +422,7 @@ N_solute_transport_data3d *N_alloc_solute_transport_data3d(int cols, int rows,
 
 
     data->grad = N_alloc_gradient_field_3d(cols, rows, depths);
+    data->stab = N_UPWIND_EXP;
 
     return data;
 }
@@ -456,6 +473,7 @@ N_solute_transport_data2d *N_alloc_solute_transport_data2d(int cols, int rows)
     data->disp_xy = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
 
     data->grad = N_alloc_gradient_field_2d(cols, rows);
+    data->stab = N_UPWIND_EXP;
 
     return data;
 }
