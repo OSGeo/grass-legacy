@@ -29,7 +29,8 @@
 typedef struct
 {
     struct Option *output, *phead, *status, *hc_x, *hc_y, *q, *s, *r, *top,
-	*bottom, *vector, *type, *dt, *maxit, *error, *solver, *sor;
+	*bottom, *vector, *type, *dt, *maxit, *error, *solver, *sor,
+	*river_head, *river_bed, *river_leak, *drain_bed, *drain_leak;
     struct Flag *sparse;
 } paramType;
 
@@ -40,7 +41,7 @@ void set_params(void);		/*Fill the paramType structure */
 void copy_result(N_array_2d * status, N_array_2d * phead_start, double *result,
 		 struct Cell_head *region, N_array_2d * target);
 N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
-			N_les_callback_2d * call, const char * solver, int maxit,
+			N_les_callback_2d * call, const char *solver, int maxit,
 			double error, double sor);
 
 /* ************************************************************************* */
@@ -97,7 +98,8 @@ void set_params(void)
     param.r->type = TYPE_STRING;
     param.r->required = NO;
     param.r->gisprompt = "old,raster,raster";
-    param.r->description = _("Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
+    param.r->description =
+	_("Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
 
     param.top = G_define_option();
     param.top->key = "top";
@@ -136,6 +138,45 @@ void set_params(void)
     param.type->options = "confined,unconfined";
     param.type->description = _("The type of groundwater flow");
 
+    /*Variants of the cauchy boundary condition */
+    param.river_bed = G_define_option();
+    param.river_bed->key = "river_bed";
+    param.river_bed->type = TYPE_STRING;
+    param.river_bed->required = NO;
+    param.river_bed->gisprompt = "old,raster,raster";
+    param.river_bed->description = _("The hight of the river bed in [m]");
+
+    param.river_head = G_define_option();
+    param.river_head->key = "river_head";
+    param.river_head->type = TYPE_STRING;
+    param.river_head->required = NO;
+    param.river_head->gisprompt = "old,raster,raster";
+    param.river_head->description =
+	_("Water level (head) of the river with leakge connection in [m]");
+
+    param.river_leak = G_define_option();
+    param.river_leak->key = "river_leak";
+    param.river_leak->type = TYPE_STRING;
+    param.river_leak->required = NO;
+    param.river_leak->gisprompt = "old,raster,raster";
+    param.river_leak->description =
+	_("The leakage coefficient of the river bed in [1/s].");
+
+    param.drain_bed = G_define_option();
+    param.drain_bed->key = "drain_bed";
+    param.drain_bed->type = TYPE_STRING;
+    param.drain_bed->required = NO;
+    param.drain_bed->gisprompt = "old,raster,raster";
+    param.drain_bed->description = _("The hight of the drainage bed in [m]");
+
+    param.drain_leak = G_define_option();
+    param.drain_leak->key = "drain_leak";
+    param.drain_leak->type = TYPE_STRING;
+    param.drain_leak->required = NO;
+    param.drain_leak->gisprompt = "old,raster,raster";
+    param.drain_leak->description =
+	_("The leakage coefficient of the drainage bed in [1/s].");
+ 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
     param.maxit = N_define_standard_option(N_OPT_MAX_ITERATIONS);
     param.error = N_define_standard_option(N_OPT_ITERATION_ERROR);
@@ -162,12 +203,13 @@ int main(int argc, char *argv[])
     struct Cell_head region;
     double error, sor, max_norm = 0, tmp;
     int maxit, i, inner_count = 0;
-    char * solver;
+    char *solver;
     int x, y, stat;
     N_gradient_field_2d *field = NULL;
     N_array_2d *xcomp = NULL;
     N_array_2d *ycomp = NULL;
     char *buff = NULL;
+    int with_river = 0, with_drain = 0;
 
 
     /* Initialize GRASS */
@@ -183,34 +225,66 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+
+    /*Check the river  parameters */
+    if (param.river_leak->answer == NULL && param.river_bed->answer == NULL &&
+	param.river_head->answer == NULL) {
+	with_river = 0;
+    }
+    else if (param.river_leak->answer != NULL && param.river_bed->answer != NULL
+	     && param.river_head->answer != NULL) {
+	with_river = 1;
+    }
+    else {
+	G_fatal_error
+	    ("Please provide river_head, river_leak and river_bed maps.");
+    }
+
+    /*Check the drainage parameters */
+    if (param.drain_leak->answer == NULL && param.drain_bed->answer == NULL) {
+	with_drain = 0;
+    }
+    else if (param.drain_leak->answer != NULL &&
+	     param.drain_bed->answer != NULL) {
+	with_drain = 1;
+    }
+    else {
+	G_fatal_error("Please provide drain_head and drain_leak maps.");
+    }
+
+
     /*Set the maximum iterations */
     sscanf(param.maxit->answer, "%i", &(maxit));
     /*Set the calculation error break criteria */
     sscanf(param.error->answer, "%lf", &(error));
     sscanf(param.sor->answer, "%lf", &(sor));
-    /*set the solver*/
+    /*set the solver */
     solver = param.solver->answer;
 
     if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0 && param.sparse->answer)
-	G_fatal_error(_ ("The direct LU solver do not work with sparse matrices"));
+	G_fatal_error(_
+		      ("The direct LU solver do not work with sparse matrices"));
     if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0 && param.sparse->answer)
-	G_fatal_error(_ ("The direct Gauss solver do not work with sparse matrices"));
+	G_fatal_error(_
+		      ("The direct Gauss solver do not work with sparse matrices"));
     if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0 && param.sparse->answer)
-        G_fatal_error(_ ("The direct cholesky solver do not work with sparse matrices"));
+	G_fatal_error(_
+		      ("The direct cholesky solver do not work with sparse matrices"));
 
 
     /*get the current region */
     G_get_set_window(&region);
 
-    /*allocate the geometry structure  for geometry and area calculation*/
+    /*allocate the geometry structure  for geometry and area calculation */
     geom = N_init_geom_data_2d(&region, geom);
-  
+
     /*Set the function callback to the groundwater flow function */
     call = N_alloc_les_callback_2d();
     N_set_les_callback_2d_func(call, (*N_callback_gwflow_2d));	/*gwflow 2d */
 
     /*Allocate the groundwater flow data structure */
-    data = N_alloc_gwflow_data2d(geom->cols, geom->rows);
+    data =
+	N_alloc_gwflow_data2d(geom->cols, geom->rows, with_river, with_drain);
 
     /* set the groundwater type */
     if (param.type->answer) {
@@ -247,6 +321,24 @@ int main(int argc, char *argv[])
     N_read_rast_to_array_2d(param.bottom->answer, data->bottom);
     N_convert_array_2d_null_to_zero(data->bottom);
 
+    /*river is optional */
+    if (with_river) {
+	N_read_rast_to_array_2d(param.river_bed->answer, data->river_bed);
+	N_read_rast_to_array_2d(param.river_head->answer, data->river_head);
+	N_read_rast_to_array_2d(param.river_leak->answer, data->river_leak);
+	N_convert_array_2d_null_to_zero(data->river_bed);
+	N_convert_array_2d_null_to_zero(data->river_head);
+	N_convert_array_2d_null_to_zero(data->river_leak);
+    }
+
+    /*drainage is optional */
+    if (with_drain) {
+	N_read_rast_to_array_2d(param.drain_bed->answer, data->drain_bed);
+	N_read_rast_to_array_2d(param.drain_leak->answer, data->drain_leak);
+	N_convert_array_2d_null_to_zero(data->drain_bed);
+	N_convert_array_2d_null_to_zero(data->drain_leak);
+    }
+
     /*Recharge is optional */
     if (param.r->answer) {
 	N_read_rast_to_array_2d(param.r->answer, data->r);
@@ -275,7 +367,8 @@ int main(int argc, char *argv[])
     N_convert_array_2d_null_to_zero(data->phead);
 
   /****************************************************/
-  /*explicite calculation of free groundwater surface */
+    /*explicite calculation of free groundwater surface */
+
   /****************************************************/
     if (data->gwtype == N_GW_UNCONFINED) {
 	/* allocate memory and copy the result into a new temporal vector */
@@ -318,10 +411,10 @@ int main(int argc, char *argv[])
 	    /* copy the result into the phead array */
 	    copy_result(data->status, data->phead_start, les->x, &region,
 			data->phead);
-            N_convert_array_2d_null_to_zero(data->phead);
+	    N_convert_array_2d_null_to_zero(data->phead);
 	     /**/ inner_count++;
 	}
-	while (max_norm > 0.01 && inner_count < 100);
+	while (max_norm > 0.01 && inner_count < 50);
 
 	if (tmp_vect)
 	    free(tmp_vect);
@@ -425,38 +518,38 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
     /*assemble the linear equation system */
     if (param.sparse->answer)
 	les =
-	    N_assemble_les_2d_dirichlet(N_SPARSE_LES, geom, data->status, data->phead,
-			      (void *)data, call);
+	    N_assemble_les_2d_dirichlet(N_SPARSE_LES, geom, data->status,
+					data->phead, (void *)data, call);
     else
 	les =
-	    N_assemble_les_2d_dirichlet(N_NORMAL_LES, geom, data->status, data->phead,
-			      (void *)data, call);
+	    N_assemble_les_2d_dirichlet(N_NORMAL_LES, geom, data->status,
+					data->phead, (void *)data, call);
 
-    N_les_integrate_dirichlet_2d(les, geom, data->status, data->phead);			
+    N_les_integrate_dirichlet_2d(les, geom, data->status, data->phead);
 
     /*solve the equation system */
-    if (strcmp(solver, N_SOLVER_ITERATIVE_JACOBI) == 0) 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_JACOBI) == 0)
 	N_solver_jacobi(les, maxit, sor, error);
 
-    if (strcmp(solver, N_SOLVER_ITERATIVE_SOR) == 0) 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_SOR) == 0)
 	N_solver_SOR(les, maxit, sor, error);
 
-    if (strcmp(solver, N_SOLVER_ITERATIVE_CG) == 0) 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_CG) == 0)
 	N_solver_cg(les, maxit, error);
 
-    if (strcmp(solver, N_SOLVER_ITERATIVE_PCG) == 0) 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_PCG) == 0)
 	N_solver_pcg(les, maxit, error, N_DIAGONAL_PRECONDITION);
 
-    if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0) 
+    if (strcmp(solver, N_SOLVER_ITERATIVE_BICGSTAB) == 0)
 	N_solver_bicgstab(les, maxit, error);
 
-    if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0) 
+    if (strcmp(solver, N_SOLVER_DIRECT_LU) == 0)
 	N_solver_lu(les);
 
-    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0) 
+    if (strcmp(solver, N_SOLVER_DIRECT_CHOLESKY) == 0)
 	N_solver_cholesky(les);
 
-    if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0) 
+    if (strcmp(solver, N_SOLVER_DIRECT_GAUSS) == 0)
 	N_solver_gauss(les);
 
     if (les == NULL)
@@ -464,4 +557,3 @@ N_les *create_solve_les(N_geom_data * geom, N_gwflow_data2d * data,
 
     return les;
 }
-
