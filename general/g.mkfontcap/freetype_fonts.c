@@ -139,7 +139,7 @@ static void find_fonts(const char *dirpath)
 		        if (strchr(buf_ptr, '.'))
 		            *(strrchr(buf_ptr, '.')) = '\0';
 		        if (index > 0)
-		            G_asprintf(&fontcap[totalfonts].name, "%s%d", buf_ptr, index);
+		            G_asprintf(&fontcap[totalfonts].name, "%s%d", buf_ptr, (int)index);
 		        else
 			    fontcap[totalfonts].name = G_store(buf_ptr);
 		        /* There might not be a style name but there will always be a
