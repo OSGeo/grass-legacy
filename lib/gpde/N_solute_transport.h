@@ -48,6 +48,7 @@ typedef struct
 
   double dt;			/*calculation time */
   double al, at;		/*dispersivity length longditudinal and transversal*/
+  int stab;			/*stabilization criteria*/
 
 } N_solute_transport_data3d;
 
@@ -76,6 +77,7 @@ typedef struct
 
   double dt;			/*calculation time */
   double al, at;		/*dispersivity length longditudinal and transversal*/
+  int stab;			/*stabilization criteria*/
 
 } N_solute_transport_data2d;
 

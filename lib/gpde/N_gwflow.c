@@ -35,7 +35,8 @@
  * \param depths int
  * \return N_gwflow_data3d *
  * */
-N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
+N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths,
+				       int river, int drain)
 {
     N_gwflow_data3d *data;
 
@@ -52,6 +53,26 @@ N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
     data->nf = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
     data->r = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
 
+    if (river) {
+	data->river_head = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+	data->river_leak = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+	data->river_bed = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    }
+    else {
+	data->river_head = NULL;
+	data->river_leak = NULL;
+	data->river_bed = NULL;
+    }
+
+    if (drain) {
+	data->drain_leak = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+	data->drain_bed = N_alloc_array_3d(cols, rows, depths, 1, DCELL_TYPE);
+    }
+    else {
+	data->drain_leak = NULL;
+	data->drain_bed = NULL;
+    }
+
     return data;
 }
 
@@ -67,16 +88,36 @@ N_gwflow_data3d *N_alloc_gwflow_data3d(int cols, int rows, int depths)
 
 void N_free_gwflow_data3d(N_gwflow_data3d * data)
 {
-    N_free_array_3d(data->phead);
-    N_free_array_3d(data->phead_start);
-    N_free_array_3d(data->status);
-    N_free_array_3d(data->hc_x);
-    N_free_array_3d(data->hc_y);
-    N_free_array_3d(data->hc_z);
-    N_free_array_3d(data->q);
-    N_free_array_3d(data->s);
-    N_free_array_3d(data->nf);
-    N_free_array_2d(data->r);
+    if (data->phead)
+	N_free_array_3d(data->phead);
+    if (data->phead_start)
+	N_free_array_3d(data->phead_start);
+    if (data->status)
+	N_free_array_3d(data->status);
+    if (data->hc_x)
+	N_free_array_3d(data->hc_x);
+    if (data->hc_y)
+	N_free_array_3d(data->hc_y);
+    if (data->hc_z)
+	N_free_array_3d(data->hc_z);
+    if (data->q)
+	N_free_array_3d(data->q);
+    if (data->s)
+	N_free_array_3d(data->s);
+    if (data->nf)
+	N_free_array_3d(data->nf);
+    if (data->r)
+	N_free_array_2d(data->r);
+    if (data->river_head)
+	N_free_array_3d(data->river_head);
+    if (data->river_leak)
+	N_free_array_3d(data->river_leak);
+    if (data->river_bed)
+	N_free_array_3d(data->river_bed);
+    if (data->drain_leak)
+	N_free_array_3d(data->drain_leak);
+    if (data->drain_bed)
+	N_free_array_3d(data->drain_bed);
 
     G_free(data);
 
@@ -101,7 +142,7 @@ void N_free_gwflow_data3d(N_gwflow_data3d * data)
  * \param rows int
  * \return N_gwflow_data2d *
  * */
-N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows)
+N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows, int river, int drain)
 {
     N_gwflow_data2d *data;
 
@@ -119,6 +160,27 @@ N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows)
     data->top = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
     data->bottom = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
 
+    if (river) {
+	data->river_head = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+	data->river_leak = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+	data->river_bed = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+    }
+    else {
+	data->river_head = NULL;
+	data->river_leak = NULL;
+	data->river_bed = NULL;
+    }
+
+    if (drain) {
+	data->drain_leak = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+	data->drain_bed = N_alloc_array_2d(cols, rows, 1, DCELL_TYPE);
+    }
+    else {
+	data->drain_leak = NULL;
+	data->drain_bed = NULL;
+    }
+
+
     return data;
 }
 
@@ -133,17 +195,38 @@ N_gwflow_data2d *N_alloc_gwflow_data2d(int cols, int rows)
  * */
 void N_free_gwflow_data2d(N_gwflow_data2d * data)
 {
-    N_free_array_2d(data->phead);
-    N_free_array_2d(data->phead_start);
-    N_free_array_2d(data->status);
-    N_free_array_2d(data->hc_x);
-    N_free_array_2d(data->hc_y);
-    N_free_array_2d(data->q);
-    N_free_array_2d(data->s);
-    N_free_array_2d(data->nf);
-    N_free_array_2d(data->r);
-    N_free_array_2d(data->top);
-    N_free_array_2d(data->bottom);
+    if (data->phead)
+	N_free_array_2d(data->phead);
+    if (data->phead_start)
+	N_free_array_2d(data->phead_start);
+    if (data->status)
+	N_free_array_2d(data->status);
+    if (data->hc_x)
+	N_free_array_2d(data->hc_x);
+    if (data->hc_y)
+	N_free_array_2d(data->hc_y);
+    if (data->q)
+	N_free_array_2d(data->q);
+    if (data->s)
+	N_free_array_2d(data->s);
+    if (data->nf)
+	N_free_array_2d(data->nf);
+    if (data->r)
+	N_free_array_2d(data->r);
+    if (data->top)
+	N_free_array_2d(data->top);
+    if (data->bottom)
+	N_free_array_2d(data->bottom);
+    if (data->river_head)
+	N_free_array_2d(data->river_head);
+    if (data->river_leak)
+	N_free_array_2d(data->river_leak);
+    if (data->river_bed)
+	N_free_array_2d(data->river_bed);
+    if (data->drain_leak)
+	N_free_array_2d(data->drain_leak);
+    if (data->drain_bed)
+	N_free_array_2d(data->drain_bed);
 
     G_free(data);
 
@@ -217,7 +300,7 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     hc_s = N_calc_harmonic_mean(hc_ys, hc_y);
     hc_t = N_calc_harmonic_mean(hc_zt, hc_z);
     hc_b = N_calc_harmonic_mean(hc_zb, hc_z);
-  
+
     /*inner sources */
     q = N_get_array_3d_d_value(data->q, col, row, depth);
     /*specific yield */
@@ -242,10 +325,10 @@ N_data_star *N_callback_gwflow_3d(void *gwdata, N_geom_data * geom, int col,
     Ss = Az * dz * Ss;
 
     /*the diagonal entry of the matrix */
-    C = -1 * (W + E + N + S + T + B - Ss / data->dt);
+    C = -1 * (W + E + N + S + T + B - Ss / data->dt * Az);
 
     /*the entry in the right side b of Ax = b */
-    V = (q + hc_start * Ss / data->dt);
+    V = (q + hc_start * Ss / data->dt * Az);
 
     /*only the top cells will have recharge */
     if (depth == geom->depths - 2) {
@@ -297,6 +380,10 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     double C, W, E, N, S, V;
     N_gwflow_data2d *data;
     N_data_star *mat_pos;
+    double river_vect = 0;	/*entry in vector */
+    double river_mat = 0;	/*entry in matrix */
+    double drain_vect = 0;	/*entry in vector */
+    double drain_mat = 0;	/*entry in matrix */
 
     /*cast the void pointer to the right data structure */
     data = (N_gwflow_data2d *) gwdata;
@@ -331,7 +418,7 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 	    N_get_array_2d_d_value(data->top, col,
 				   row + 1) -
 	    N_get_array_2d_d_value(data->bottom, col, row + 1);
-       }
+    }
     else {			/* the aquifer is unconfined */
 
 	/* If the aquifer is unconfied use an explicite scheme to solve
@@ -348,32 +435,32 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
 	    N_get_array_2d_d_value(data->bottom, col, row + 1);
     }
 
-    /*geometrical mean of cell height*/
-    if(z_w > 0 || z_w < 0 || z_w == 0)
-      z_w = N_calc_arith_mean(z_xw, z);
+    /*geometrical mean of cell height */
+    if (z_w > 0 || z_w < 0 || z_w == 0)
+	z_w = N_calc_arith_mean(z_xw, z);
     else
-      z_w = z;
-    if(z_e > 0 || z_e < 0 || z_e == 0)
-      z_e = N_calc_arith_mean(z_xe, z);
+	z_w = z;
+    if (z_e > 0 || z_e < 0 || z_e == 0)
+	z_e = N_calc_arith_mean(z_xe, z);
     else
-      z_e = z;
-    if(z_n > 0 || z_n < 0 || z_n == 0 )
-      z_n = N_calc_arith_mean(z_yn, z);
+	z_e = z;
+    if (z_n > 0 || z_n < 0 || z_n == 0)
+	z_n = N_calc_arith_mean(z_yn, z);
     else
-      z_n = z;
-    if(z_s > 0 || z_s < 0 || z_s == 0)
-      z_s = N_calc_arith_mean(z_ys, z);
+	z_n = z;
+    if (z_s > 0 || z_s < 0 || z_s == 0)
+	z_s = N_calc_arith_mean(z_ys, z);
     else
-      z_s = z;
+	z_s = z;
 
     /* Inner sources */
     q = N_get_array_2d_d_value(data->q, col, row);
     nf = N_get_array_2d_d_value(data->nf, col, row);
 
-    /* specific yield */
+    /* specific yield  of current cell face */
     Ss = N_get_array_2d_d_value(data->s, col, row) * Az;
     /* recharge */
-    r = N_get_array_2d_d_value(data->r, col, row);
+    r = N_get_array_2d_d_value(data->r, col, row) * Az;
 
     /*get the surrounding permeabilities */
     hc_x = N_get_array_2d_d_value(data->hc_x, col, row);
@@ -389,6 +476,36 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     T_n = N_calc_harmonic_mean(hc_yn, hc_y) * z_n;
     T_s = N_calc_harmonic_mean(hc_ys, hc_y) * z_s;
 
+    /*compute the river leakage, this is an explicit method */
+    if (data->river_leak &&
+	(N_get_array_2d_d_value(data->river_leak, col, row) != 0)) {
+	if (hc > N_get_array_2d_d_value(data->river_bed, col, row)) {
+	    river_vect = N_get_array_2d_d_value(data->river_head, col, row) *
+		N_get_array_2d_d_value(data->river_leak, col, row);
+	    river_mat = N_get_array_2d_d_value(data->river_leak, col, row);
+	}
+	else if (hc < N_get_array_2d_d_value(data->river_bed, col, row)) {
+	    river_vect = (N_get_array_2d_d_value(data->river_head, col, row) -
+			  N_get_array_2d_d_value(data->river_bed, col, row))
+		* N_get_array_2d_d_value(data->river_leak, col, row);
+	    river_mat = 0;
+	}
+    }
+
+    /*compute the drainage, this is an explicit method */
+    if (data->drain_leak &&
+	(N_get_array_2d_d_value(data->drain_leak, col, row) != 0)) {
+	if (hc > N_get_array_2d_d_value(data->drain_bed, col, row)) {
+	    drain_vect = N_get_array_2d_d_value(data->drain_bed, col, row) *
+		N_get_array_2d_d_value(data->drain_leak, col, row);
+	    drain_mat = N_get_array_2d_d_value(data->drain_leak, col, row);
+	}
+	else if (hc <= N_get_array_2d_d_value(data->drain_bed, col, row)) {
+	    drain_vect = 0;
+	    drain_mat = 0;
+	}
+    }
+
     /*mass balance center cell to western cell */
     W = -1 * T_w * dy / dx;
     /*mass balance center cell to eastern cell */
@@ -399,10 +516,10 @@ N_data_star *N_callback_gwflow_2d(void *gwdata, N_geom_data * geom, int col,
     S = -1 * T_s * dx / dy;
 
     /*the diagonal entry of the matrix */
-    C = -1 * (W + E + N + S - Ss / data->dt);
+    C = -1 * (W + E + N + S - Ss / data->dt - river_mat * Az - drain_mat * Az);
 
     /*the entry in the right side b of Ax = b */
-    V = (q + hc_start * Ss / data->dt) + r * Az;
+    V = (q + hc_start * Ss / data->dt) + r + river_vect * Az + drain_vect * Az;
 
     G_debug(5, "N_callback_gwflow_2d: called [%i][%i]", row, col);
 

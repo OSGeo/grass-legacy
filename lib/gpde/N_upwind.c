@@ -50,7 +50,6 @@ double N_full_upwinding(double sprod, double distance, double D)
     return 0;
 }
 
-
 /*! \brief exponential upwinding stabilization algorithm
  *
  * The arguments are values to compute the local peclet number
@@ -76,3 +75,4 @@ double N_exp_upwinding(double sprod, double distance, double D)
 
     return 0.5;
 }
+
