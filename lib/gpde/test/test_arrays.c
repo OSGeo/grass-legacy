@@ -32,6 +32,8 @@ static int fill_array_3d_null(N_array_3d * a);
 static int compare_array_3d(N_array_3d * a, N_array_3d * b);
 static int test_array_2d(void);
 static int test_array_3d(void);
+static int io_bench_2d(void);
+static int io_bench_3d(void);
 
 /* ************************************************************************* */
 /* Performe the array unit tests ******************************************* */
@@ -39,6 +41,9 @@ static int test_array_3d(void);
 int unit_test_arrays(void)
 {
     int sum = 0;
+
+    io_bench_2d();
+    return sum;
 
     G_message(_("\n++ Running array unit tests ++"));
 
@@ -250,6 +255,56 @@ int compare_array_3d(N_array_3d * a, N_array_3d * b)
     return res;
 }
 
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
+int io_bench_2d(void)
+{
+    int sum = 0, res = 0;
+    char buff[1024];
+
+    struct Cell_head region;
+    N_array_2d *data1;
+    N_array_2d *data2;
+    N_array_2d *data3;
+    N_array_2d *tmp;
+
+    G_get_set_window(&region);
+
+    data1 = N_alloc_array_2d(region.cols, region.rows, 0, CELL_TYPE);
+    data2 = N_alloc_array_2d(region.cols, region.rows, 0, FCELL_TYPE);
+    data3 = N_alloc_array_2d(region.cols, region.rows, 0, DCELL_TYPE);
+
+    fill_array_2d(data1);
+    fill_array_2d(data2);
+    fill_array_2d(data3);
+
+    /*raster IO methods */
+    N_write_array_2d_to_rast(data1, "gpde_lib_test_raster_1");
+    N_write_array_2d_to_rast(data2, "gpde_lib_test_raster_2");
+    N_write_array_2d_to_rast(data2, "gpde_lib_test_raster_3");
+    tmp = N_read_rast_to_array_2d("gpde_lib_test_raster_1", NULL);
+    N_read_rast_to_array_2d("gpde_lib_test_raster_1", tmp);
+    N_free_array_2d(tmp);
+    tmp = N_read_rast_to_array_2d("gpde_lib_test_raster_2", NULL);
+    N_read_rast_to_array_2d("gpde_lib_test_raster_2", tmp);
+    N_free_array_2d(tmp);
+    tmp = N_read_rast_to_array_2d("gpde_lib_test_raster_3", NULL);
+    N_read_rast_to_array_2d("gpde_lib_test_raster_3", tmp);
+    N_free_array_2d(tmp);
+
+
+    sprintf(buff,
+	    "g.remove rast=gpde_lib_test_raster_1,gpde_lib_test_raster_2,gpde_lib_test_raster_3");
+    system(buff);
+
+    N_free_array_2d(data1);
+    N_free_array_2d(data2);
+    N_free_array_2d(data3);
+
+    return sum;
+}
+
 
 /* *************************************************************** */
 /* *************************************************************** */
@@ -316,50 +371,50 @@ int test_array_2d(void)
 	G_warning("test_array_2d: error in  N_copy_array_2d");
     sum += res;
 
-    /*compute statistics*/
+    /*compute statistics */
     N_calc_array_2d_stats(data1, &min, &max, &ssum, &nonzero, 0);
-    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
-    {
+    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 100) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
     N_calc_array_2d_stats(data1, &min, &max, &ssum, &nonzero, 1);
-    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
-    {
+    G_message("CELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 144) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
 
     N_calc_array_2d_stats(data2, &min, &max, &ssum, &nonzero, 0);
-    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
-    {
+    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 100) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
 
     N_calc_array_2d_stats(data2, &min, &max, &ssum, &nonzero, 1);
-    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
-    {
+    G_message("FCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 144) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
 
     N_calc_array_2d_stats(data3, &min, &max, &ssum, &nonzero, 0);
-    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 100)
-    {
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 100) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
 
     N_calc_array_2d_stats(data3, &min, &max, &ssum, &nonzero, 1);
-    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 81 || ssum != 2025 || nonzero != 144)
-    {
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 81 || ssum != 2025 || nonzero != 144) {
 	G_warning("test_array_2d: error in  N_calc_array_2d_stats");
 	sum++;
     }
@@ -611,34 +666,34 @@ int test_array_3d(void)
 
 
 
-    /*compute statistics*/
+    /*compute statistics */
     N_calc_array_3d_stats(data1, &min, &max, &ssum, &nonzero, 0);
-    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 1000)
-    {
+    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 729 || ssum != 91125 || nonzero != 1000) {
 	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
 	sum++;
     }
     N_calc_array_3d_stats(data1, &min, &max, &ssum, &nonzero, 1);
-    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 2744)
-    {
+    G_message("FELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 729 || ssum != 91125 || nonzero != 2744) {
 	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
 	sum++;
     }
 
     N_calc_array_3d_stats(data2, &min, &max, &ssum, &nonzero, 0);
-    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 1000)
-    {
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 729 || ssum != 91125 || nonzero != 1000) {
 	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
 	sum++;
     }
 
     N_calc_array_3d_stats(data2, &min, &max, &ssum, &nonzero, 1);
-    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum, nonzero);
-    if(min != 0 || max != 729 || ssum != 91125 || nonzero != 2744)
-    {
+    G_message("DCELL Min %g Max %g Sum %g  nonzero %i\n", min, max, ssum,
+	      nonzero);
+    if (min != 0 || max != 729 || ssum != 91125 || nonzero != 2744) {
 	G_warning("test_array_3d: error in  N_calc_array_3d_stats");
 	sum++;
     }

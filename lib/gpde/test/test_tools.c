@@ -182,6 +182,5 @@ int test_mean_calc(void)
 	sum++;
   }
 
-
   return sum;
 }

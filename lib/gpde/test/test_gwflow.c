@@ -67,7 +67,7 @@ N_gwflow_data3d *create_gwflow_data_3d(void)
 
     data =
 	N_alloc_gwflow_data3d(TEST_N_NUM_COLS_LOCAL, TEST_N_NUM_ROWS_LOCAL,
-			      TEST_N_NUM_DEPTHS_LOCAL);
+			      TEST_N_NUM_DEPTHS_LOCAL, 1, 1);
 
 #pragma omp parallel for private (i, j, k) shared (data)
     for (k = 0; k < TEST_N_NUM_DEPTHS_LOCAL; k++)
@@ -108,7 +108,7 @@ N_gwflow_data2d *create_gwflow_data_2d(void)
     int i, j;
     N_gwflow_data2d *data;
 
-    data = N_alloc_gwflow_data2d(TEST_N_NUM_COLS_LOCAL, TEST_N_NUM_ROWS_LOCAL);
+    data = N_alloc_gwflow_data2d(TEST_N_NUM_COLS_LOCAL, TEST_N_NUM_ROWS_LOCAL, 1, 1);
 
 #pragma omp parallel for private (i, j) shared (data)
     for (j = 0; j < TEST_N_NUM_ROWS_LOCAL; j++) {
