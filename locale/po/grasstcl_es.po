@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-20 17:19+0200\n"
-"PO-Revision-Date: 2007-07-31 14:33+0200\n"
+"POT-Creation-Date: 2007-08-22 18:02+0200\n"
+"PO-Revision-Date: 2007-08-22 17:04+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
 msgid "Text color: "
@@ -3029,16 +3029,15 @@ msgstr "Rumbo/distancia a coordenadas"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:192
 msgid "3D rendering"
-msgstr ""
+msgstr "Renderizado 3D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:193
 msgid "NVIZ"
-msgstr ""
+msgstr "NVIZ"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:194
-#, fuzzy
 msgid "NVIZ fly through path"
-msgstr "Trayectoria de vuelo para NVIZ"
+msgstr "Vuelo NVIZ siguiendo la ruta"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:196
 msgid "PostScript plot"
@@ -3363,9 +3362,8 @@ msgid "Fractal surface"
 msgstr "Superficie fractal"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:373
-#, fuzzy
 msgid "Gausian kernal density surface"
-msgstr "Generar superficie de densidad"
+msgstr "Superficie de densidad kernal gausiana"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:374
 msgid "Gaussian deviates surface"
@@ -5021,9 +5019,8 @@ msgid "Name of new location"
 msgstr "Nombre de la nueva localización"
 
 #: ../lib/init/epsg_option.tcl:125
-#, fuzzy
 msgid "Enter name for location to be created"
-msgstr "Introducir nombre de la nueva localización"
+msgstr "Introducir nombre para la localización a crear"
 
 #: ../lib/init/epsg_option.tcl:129 ../lib/init/epsg_option.tcl:132
 msgid "Path to the EPSG-codes file"
@@ -5064,26 +5061,25 @@ msgstr "Definir la localización"
 
 #: ../lib/init/epsg_option.tcl:187
 msgid "Invalid EPSG Code!"
-msgstr ""
+msgstr "¡Código EPSG no válido!"
 
 #: ../lib/init/epsg_option.tcl:188
 #, tcl-format
 msgid "ERROR: Invalid EPSG code %s: should be an integer."
-msgstr ""
+msgstr "ERROR: código EPSG %s no válido: debería ser un entero."
 
 #: ../lib/init/epsg_option.tcl:198
 msgid "Location Exists!"
-msgstr ""
+msgstr "¡La localización existe!"
 
 #: ../lib/init/epsg_option.tcl:199
 #, tcl-format
 msgid "WARNING: Location '%s' already exists: please try another name."
-msgstr ""
+msgstr "AVISO: la localización '%s' ya existe: por favor, pruebe otro nombre."
 
 #: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
-#, fuzzy
 msgid "Error creating location!"
-msgstr "AVISO: Error al crear nueva localización"
+msgstr "¡Error al crear localización!"
 
 #: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
 #, tcl-format
@@ -5091,10 +5087,12 @@ msgid ""
 "g.proj returned the following message:\n"
 "%s"
 msgstr ""
+"g.proj devolvió el siguiente mensaje:\n"
+"%s"
 
 #: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
 msgid "Informational output from g.proj"
-msgstr ""
+msgstr "Salida informativa de g.proj"
 
 #: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
 #, tcl-format
@@ -5102,11 +5100,12 @@ msgid ""
 "g.proj returned the following informational message:\n"
 "%s"
 msgstr ""
+"g.proj devolvió el siguiente mensaje informativo:\n"
+"%s"
 
 #: ../lib/init/epsg_option.tcl:288
-#, fuzzy
 msgid "Select datum transformation parameters:"
-msgstr "Seleccionar transformación del datum"
+msgstr "Seleccionar parámetros de transformación del datum:"
 
 #: ../lib/init/epsg_option.tcl:292
 msgid ""
@@ -5114,6 +5113,9 @@ msgid ""
 "other GRASS modules will use the \"default\" (likely non-optimum) parameters "
 "for this datum if necessary in the future."
 msgstr ""
+"Continuar sin especificar parámetros - si se usa al crear una localización, "
+"otros módulos de GRASS usarán los parámetros \"por defecto\" (probablemente "
+"no óptimos) para este datum si es necesario en el futuro."
 
 #: ../lib/init/epsg_option.tcl:344
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
@@ -5648,27 +5650,3 @@ msgstr "Acciones de los botones del ratón (izquierda, central, derecha)"
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 msgid "Test"
 msgstr "Test"
-
-#~ msgid ""
-#~ "WARNING: Please supply a\n"
-#~ "valid EPSG code (integer)"
-#~ msgstr ""
-#~ "AVISO: Por favor, especificar un\n"
-#~ "código EPSG (entero) válido"
-
-#~ msgid ""
-#~ "Error creating new location from EPSG code.  g.proj returned following "
-#~ "message:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Error al crear nueva localización con archivo georreferenciado.  g.proj "
-#~ "devolvió el siguiente mensaje:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Datum transform number: "
-#~ msgstr "Número de transformación del datum: "
-
-#~ msgid "Enter number of datum transform selected"
-#~ msgstr "Introducir el número de la transformación del datum seleccionada"

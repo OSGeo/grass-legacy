@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-20 17:19+0200\n"
-"PO-Revision-Date: 2007-08-17 15:00+0200\n"
+"POT-Creation-Date: 2007-08-22 18:02+0200\n"
+"PO-Revision-Date: 2007-08-22 14:55+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -525,13 +525,14 @@ msgstr "Silencioso"
 #: ../doc/raster/r.example/main.c:110 ../display/d.extend/main.c:62
 #: ../display/d.his/main.c:137 ../display/d.his/main.c:177
 #: ../display/d.his/main.c:205 ../display/d.histogram/main.c:157
-#: ../display/d.legend/main.c:255 ../display/d.profile/main.c:92
-#: ../display/d.rast/main.c:111 ../display/d.rast.arrow/arrow.c:196
-#: ../display/d.rast.arrow/arrow.c:238 ../display/d.rast.arrow/arrow.c:374
-#: ../display/d.rast.num/number.c:150 ../display/d.rgb/main.c:100
-#: ../display/d.title/main.c:105 ../display/d.what.rast/main.c:150
-#: ../display/d.zoom/main.c:218 ../general/g.region/cmd/main.c:458
-#: ../general/g.region/cmd/main.c:816 ../general/g.region/cmd/main.c:825
+#: ../display/d.legend/main.c:255 ../display/d.nviz/main.c:192
+#: ../display/d.profile/main.c:92 ../display/d.rast/main.c:111
+#: ../display/d.rast.arrow/arrow.c:196 ../display/d.rast.arrow/arrow.c:238
+#: ../display/d.rast.arrow/arrow.c:374 ../display/d.rast.num/number.c:150
+#: ../display/d.rgb/main.c:100 ../display/d.title/main.c:105
+#: ../display/d.what.rast/main.c:150 ../display/d.zoom/main.c:218
+#: ../general/g.region/cmd/main.c:458 ../general/g.region/cmd/main.c:816
+#: ../general/g.region/cmd/main.c:825 ../imagery/i.class/main.c:108
 #: ../imagery/i.fft/fftmain.c:120 ../imagery/i.group/main.c:177
 #: ../imagery/i.group/main.c:215 ../imagery/i.his.rgb/openfiles.c:32
 #: ../imagery/i.his.rgb/openfiles.c:37 ../imagery/i.his.rgb/openfiles.c:42
@@ -541,16 +542,17 @@ msgstr "Silencioso"
 #: ../raster/r.bitpattern/main.c:101 ../raster/r.carve/main.c:173
 #: ../raster/r.cats/main.c:97 ../raster/r.clump/main.c:88
 #: ../raster/r.contour/main.c:156 ../raster/r.cost/main.c:319
-#: ../raster/r.covar/main.c:96 ../raster/r.his/main.c:126
-#: ../raster/r.his/main.c:167 ../raster/r.his/main.c:195
-#: ../raster/r.info/main.c:116 ../raster/r.kappa/main.c:141
-#: ../raster/r.kappa/stats.c:30 ../raster/r.kappa/stats.c:35
-#: ../raster/r.los/main.c:164 ../raster/r.los/main.c:171
-#: ../raster/r.mapcalc/map.c:380 ../raster/r.median/main.c:73
-#: ../raster/r.mfilter/main.c:117 ../raster/r.neighbors/main.c:173
-#: ../raster/r.out.bin/main.c:129 ../raster/r.out.mat/main.c:94
-#: ../raster/r.out.pov/main.c:171 ../raster/r.out.ppm/main.c:115
-#: ../raster/r.out.ppm3/main.c:117 ../raster/r.out.tiff/r.out.tiff.c:167
+#: ../raster/r.covar/main.c:96 ../raster/r.grow2/main.c:185
+#: ../raster/r.his/main.c:126 ../raster/r.his/main.c:167
+#: ../raster/r.his/main.c:195 ../raster/r.info/main.c:116
+#: ../raster/r.kappa/main.c:141 ../raster/r.kappa/stats.c:30
+#: ../raster/r.kappa/stats.c:35 ../raster/r.los/main.c:164
+#: ../raster/r.los/main.c:171 ../raster/r.mapcalc/map.c:380
+#: ../raster/r.median/main.c:73 ../raster/r.mfilter/main.c:117
+#: ../raster/r.neighbors/main.c:173 ../raster/r.out.bin/main.c:129
+#: ../raster/r.out.mat/main.c:94 ../raster/r.out.pov/main.c:171
+#: ../raster/r.out.ppm/main.c:115 ../raster/r.out.ppm3/main.c:117
+#: ../raster/r.out.tiff/r.out.tiff.c:167
 #: ../raster/r.param.scale/interface.c:165 ../raster/r.profile/main.c:142
 #: ../raster/r.random/main.c:93 ../raster/r.reclass/main.c:77
 #: ../raster/r.recode/main.c:82 ../raster/r.resamp.interp/main.c:102
@@ -561,17 +563,18 @@ msgstr "Silencioso"
 #: ../raster/r.sum/main.c:64 ../raster/r.support/front/front.c:218
 #: ../raster/r.support/modcolr/modcolr.c:43 ../raster/r.mfilter.fp/main.c:124
 #: ../raster/r.surf.area/main.c:121 ../raster/r.surf.idw/main.c:108
-#: ../raster/r.texture/main.c:224 ../raster/r.to.rast3elev/main.c:114
-#: ../raster/r.to.rast3elev/main.c:129 ../raster/r.to.vect/main.c:108
-#: ../raster/r.topidx/check_ready.c:12 ../raster/r.univar2/r.univar_main.c:93
-#: ../raster/simwe/simlib/input.c:159 ../raster/simwe/simlib/input.c:164
-#: ../raster/simwe/simlib/input.c:169 ../raster/simwe/simlib/input.c:174
-#: ../raster/simwe/simlib/input.c:180 ../raster/simwe/simlib/input.c:186
-#: ../raster/simwe/simlib/input.c:192 ../raster/simwe/simlib/input.c:198
-#: ../raster/simwe/simlib/input.c:204 ../raster/simwe/simlib/input.c:210
-#: ../raster/simwe/simlib/input.c:216 ../raster3d/base/r3.info.main.c:123
-#: ../vector/v.extrude/main.c:195 ../vector/v.sample/main.c:157
-#: ../vector/v.what.rast/main.c:129 ../visualization/xganim/main.c:340
+#: ../raster/r.texture/main.c:224 ../raster/r.thin/io.c:97
+#: ../raster/r.to.rast3elev/main.c:114 ../raster/r.to.rast3elev/main.c:129
+#: ../raster/r.to.vect/main.c:108 ../raster/r.topidx/check_ready.c:12
+#: ../raster/r.univar2/r.univar_main.c:93 ../raster/simwe/simlib/input.c:159
+#: ../raster/simwe/simlib/input.c:164 ../raster/simwe/simlib/input.c:169
+#: ../raster/simwe/simlib/input.c:174 ../raster/simwe/simlib/input.c:180
+#: ../raster/simwe/simlib/input.c:186 ../raster/simwe/simlib/input.c:192
+#: ../raster/simwe/simlib/input.c:198 ../raster/simwe/simlib/input.c:204
+#: ../raster/simwe/simlib/input.c:210 ../raster/simwe/simlib/input.c:216
+#: ../raster3d/base/r3.info.main.c:123 ../vector/v.extrude/main.c:195
+#: ../vector/v.sample/main.c:157 ../vector/v.what.rast/main.c:129
+#: ../visualization/xganim/main.c:340
 #, c-format
 msgid "Raster map <%s> not found"
 msgstr "Mapa ráster <%s> no encontrado"
@@ -579,12 +582,12 @@ msgstr "Mapa ráster <%s> no encontrado"
 #: ../doc/raster/r.example/main.c:113 ../general/manage/cmd/copy.c:92
 #: ../general/manage/cmd/rename.c:87 ../imagery/i.ifft/ifftmain.c:107
 #: ../raster/r.bitpattern/main.c:104 ../raster/r.clump/main.c:91
-#: ../raster/r.cost/main.c:324 ../raster/r.in.mat/main.c:352
-#: ../raster/r.los/main.c:176 ../raster/r.median/main.c:75
-#: ../raster/r.mode/main.c:95 ../raster/r.neighbors/main.c:178
-#: ../raster/r.random/main.c:116 ../raster/r.random/main.c:121
-#: ../raster/r.reclass/main.c:80 ../raster/r.recode/main.c:85
-#: ../raster/r.slope.aspect/opennew.c:11
+#: ../raster/r.cost/main.c:324 ../raster/r.in.ascii/main.c:207
+#: ../raster/r.in.mat/main.c:352 ../raster/r.los/main.c:176
+#: ../raster/r.median/main.c:75 ../raster/r.mode/main.c:95
+#: ../raster/r.neighbors/main.c:178 ../raster/r.random/main.c:116
+#: ../raster/r.random/main.c:121 ../raster/r.reclass/main.c:80
+#: ../raster/r.recode/main.c:85 ../raster/r.slope.aspect/opennew.c:11
 #: ../raster/r.surf.fractal/interface.c:84 ../raster/r.surf.idw/main.c:112
 #: ../raster/r.surf.idw2/main.c:83 ../raster/r.texture/main.c:227
 #: ../raster/r.to.rast3elev/main.c:474 ../raster/r.walk/main.c:531
@@ -598,28 +601,32 @@ msgid "<%s> is an illegal file name"
 msgstr "<%s> es un nombre de archivo no admitido"
 
 #: ../doc/raster/r.example/main.c:121 ../display/d.his/main.c:142
-#: ../display/d.his/main.c:167 ../display/d.rast/display.c:92
+#: ../display/d.his/main.c:167 ../display/d.nviz/main.c:194
+#: ../display/d.profile/ExtractProf.c:95 ../display/d.profile/What.c:30
+#: ../display/d.rast/display.c:92 ../display/d.rast.arrow/arrow.c:382
 #: ../display/d.rast.edit/cell.c:90 ../display/d.rast.num/number.c:154
 #: ../display/d.rgb/main.c:104 ../imagery/i.gensig/opencell.c:12
 #: ../imagery/i.smap/shapiro/opencell.c:16 ../raster/r.bilinear/main.c:92
 #: ../raster/r.bitpattern/main.c:108 ../raster/r.carve/main.c:176
 #: ../raster/r.clump/main.c:95 ../raster/r.contour/main.c:160
 #: ../raster/r.cost/main.c:337 ../raster/r.covar/main.c:99
-#: ../raster/r.his/main.c:130 ../raster/r.his/main.c:156
-#: ../raster/r.his/main.c:184 ../raster/r.los/main.c:197
-#: ../raster/r.los/main.c:209 ../raster/r.out.mat/main.c:99
-#: ../raster/r.out.pov/main.c:175 ../raster/r.out.ppm/main.c:120
-#: ../raster/r.out.ppm3/main.c:121 ../raster/r.resamp.interp/main.c:137
+#: ../raster/r.grow2/main.c:201 ../raster/r.his/main.c:130
+#: ../raster/r.his/main.c:156 ../raster/r.his/main.c:184
+#: ../raster/r.los/main.c:197 ../raster/r.los/main.c:209
+#: ../raster/r.mapcalc/map3.c:527 ../raster/r.out.bin/main.c:133
+#: ../raster/r.out.mat/main.c:99 ../raster/r.out.pov/main.c:175
+#: ../raster/r.out.ppm/main.c:120 ../raster/r.out.ppm3/main.c:121
+#: ../raster/r.profile/main.c:144 ../raster/r.resamp.interp/main.c:137
 #: ../raster/r.resamp.rst/main.c:405 ../raster/r.resamp.rst/main.c:437
 #: ../raster/r.resamp.stats/main.c:335 ../raster/r.sum/main.c:68
 #: ../raster/r.surf.area/main.c:124 ../raster/r.surf.idw/main.c:135
-#: ../raster/r.texture/main.c:230 ../raster/r.to.rast3/main.c:358
-#: ../raster/r.to.rast3elev/main.c:161 ../raster/r.to.vect/main.c:111
-#: ../raster/r.univar2/r.univar_main.c:98 ../raster/r.walk/main.c:545
-#: ../raster/r.walk/main.c:548 ../raster/r.walk/main.c:855
-#: ../vector/v.extrude/main.c:199 ../vector/v.sample/main.c:160
-#: ../vector/v.to.rast/support.c:246 ../vector/v.to.rast/support.c:393
-#: ../visualization/xganim/main.c:344
+#: ../raster/r.texture/main.c:230 ../raster/r.thin/io.c:102
+#: ../raster/r.to.rast3/main.c:358 ../raster/r.to.rast3elev/main.c:161
+#: ../raster/r.to.vect/main.c:111 ../raster/r.univar2/r.univar_main.c:98
+#: ../raster/r.walk/main.c:545 ../raster/r.walk/main.c:548
+#: ../raster/r.walk/main.c:855 ../vector/v.extrude/main.c:199
+#: ../vector/v.sample/main.c:160 ../vector/v.to.rast/support.c:246
+#: ../vector/v.to.rast/support.c:393 ../visualization/xganim/main.c:344
 #, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -631,15 +638,19 @@ msgstr "No se puede leer la cabecera del archivo <%s>"
 
 #: ../doc/raster/r.example/main.c:140 ../imagery/i.smap/shapiro/opencell.c:31
 #: ../raster/r.bilinear/main.c:103 ../raster/r.bitpattern/main.c:125
-#: ../raster/r.clump/main.c:99 ../raster/r.in.arc/main.c:151
-#: ../raster/r.in.mat/main.c:386 ../raster/r.in.xyz/main.c:327
-#: ../raster/r.los/main.c:202 ../raster/r.mapcalc/map.c:513
+#: ../raster/r.carve/main.c:182 ../raster/r.circle/dist.c:127
+#: ../raster/r.clump/main.c:99 ../raster/r.composite/main.c:200
+#: ../raster/r.grow2/main.c:207 ../raster/r.in.arc/main.c:151
+#: ../raster/r.in.ascii/main.c:210 ../raster/r.in.mat/main.c:386
+#: ../raster/r.in.xyz/main.c:327 ../raster/r.los/main.c:202
+#: ../raster/r.mapcalc/map.c:513 ../raster/r.mapcalc/map3.c:598
 #: ../raster/r.resamp.interp/main.c:147 ../raster/r.resamp.stats/main.c:346
 #: ../raster/r.series/main.c:183 ../raster/r.surf.idw/main.c:147
 #: ../raster/r.surf.idw2/main.c:110 ../raster/r.texture/main.c:303
-#: ../raster3d/r3.to.rast/main.c:183 ../vector/lidar/v.surf.bspline/main.c:256
-#: ../vector/v.kernel/main.c:236 ../vector/v.surf.idw/main.c:234
-#: ../vector/v.to.rast/vect2rast.c:118 ../vector/v.to.rast/vect2rast.c:122
+#: ../raster/r.thin/io.c:176 ../raster3d/r3.to.rast/main.c:183
+#: ../vector/lidar/v.surf.bspline/main.c:256 ../vector/v.kernel/main.c:236
+#: ../vector/v.surf.idw/main.c:234 ../vector/v.to.rast/vect2rast.c:118
+#: ../vector/v.to.rast/vect2rast.c:122
 #, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "No se puede crear el mapa ráster <%s>"
@@ -1839,7 +1850,8 @@ msgid "Error - Locking mechanism failed"
 msgstr "Error - Falló el mecanismo de bloqueo"
 
 #: ../display/d.nviz/main.c:69
-msgid "Create fly-through script to run in NVIZ"
+#, fuzzy
+msgid "Creates fly-through script to run in NVIZ."
 msgstr "Crear script de sobrevuelo para ejecutar en NVIZ"
 
 #: ../display/d.nviz/main.c:77
@@ -1907,20 +1919,13 @@ msgstr "Se debe usar la opción -i y/o el parámetro de ruta"
 msgid "Off-screen only available with full render mode"
 msgstr "Fuera de pantalla sólo disponible en modo renderizado completo"
 
-#: ../display/d.nviz/main.c:192
-#, c-format
-msgid "Cannot find mapset for %s"
-msgstr "No se puede encontrar el directorio de mapas para %s"
-
-#: ../display/d.nviz/main.c:194
-#, c-format
-msgid "Cannot open File %s"
-msgstr "No se puede abrir el archivo %s"
-
-#: ../display/d.nviz/main.c:211
-#, c-format
-msgid "Not able to open file for [%s]"
-msgstr "No se puede abrir el archivo para [%s]"
+#: ../display/d.nviz/main.c:211 ../general/g.pnmcomp/main.c:262
+#: ../general/g.pnmcomp/main.c:280 ../raster/r.out.ppm3/main.c:147
+#: ../raster/r.profile/main.c:157 ../vector/v.out.ascii/out.c:137
+#: ../vector/v.out.vtk/main.c:163
+#, fuzzy, c-format
+msgid "Unable to open file <%s>"
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../display/d.nviz/main.c:287
 msgid "You must select more than one point"
@@ -2135,22 +2140,13 @@ msgstr ""
 "  Distancia a la red = %f, distancia desde la red = %f\n"
 "\n"
 
-#: ../display/d.profile/ExtractProf.c:95
-#, c-format
-msgid "unable to open [%s] in [%s]"
-msgstr "no se puede abrir [%s] en [%s]"
-
 #: ../display/d.profile/Range.c:92
 msgid "one moment ..."
 msgstr "un momento..."
 
-#: ../display/d.profile/What.c:30
-#, c-format
-msgid "warning: unable to open [%s] in [%s]"
-msgstr "aviso: no se puede abrir [%s] en [%s]"
-
 #: ../display/d.profile/What.c:36
-msgid "error reading raster map"
+#, fuzzy
+msgid "Error reading raster map"
 msgstr "error leyendo mapa ráster"
 
 #: ../display/d.profile/main.c:62
@@ -2323,11 +2319,13 @@ msgid "Scale factor for arrows (magnitude map)"
 msgstr "Factor de escala para las flechas (mapa de magnitud)"
 
 #: ../display/d.rast.arrow/arrow.c:225
-msgid "Illegal value for scale factor."
+#, fuzzy
+msgid "Illegal value for scale factor"
 msgstr "Valor para factor de escala no admitido."
 
 #: ../display/d.rast.arrow/arrow.c:229
-msgid "Illegal value for skip factor."
+#, fuzzy
+msgid "Illegal value for skip factor"
 msgstr "Valor para saltar no admitido."
 
 #: ../display/d.rast.arrow/arrow.c:234
@@ -2336,21 +2334,18 @@ msgid "Magnitude is only supported for GRASS and compass aspect maps."
 msgstr "Magnitud sólo esta soportado para mapas GRASS y compass aspect."
 
 #: ../display/d.rast.arrow/arrow.c:241
-msgid "scale option requires magnitude_map"
+#, fuzzy
+msgid "Scale option requires magnitude_map"
 msgstr "la opción escala requiere magnitude_map"
 
 #: ../display/d.rast.arrow/arrow.c:314
-msgid "Problem reading range file."
+#, fuzzy
+msgid "Problem reading range file"
 msgstr "Problema al leer archivo de rango."
 
 #: ../display/d.rast.arrow/arrow.c:370
 msgid "No raster map exists in the current window"
 msgstr "No existe ningún mapa ráster en la ventana actual"
-
-#: ../display/d.rast.arrow/arrow.c:382
-#, c-format
-msgid "Unable to open raster map [%s] in [%s]"
-msgstr "No se puede abrir el mapa ráster [%s] en [%s]"
 
 #: ../display/d.rast.edit/cell.c:43
 msgid "Can't clear current graphics window"
@@ -3874,8 +3869,8 @@ msgid "Invalid PPM file"
 msgstr "Archivo PPM no válido"
 
 #: ../general/g.pnmcomp/main.c:101
-#, c-format
-msgid "File '%s' not found"
+#, fuzzy, c-format
+msgid "File <%s> not found"
 msgstr "Archivo '%s' no encontrado"
 
 #: ../general/g.pnmcomp/main.c:110
@@ -3894,11 +3889,6 @@ msgstr "Número mágico no válido: 'P%c'"
 #: ../general/g.pnmcomp/main.c:134 ../general/g.pnmcomp/main.c:152
 msgid "Invalid PGM file"
 msgstr "Archivo PGM no válido"
-
-#: ../general/g.pnmcomp/main.c:262 ../general/g.pnmcomp/main.c:280
-#, c-format
-msgid "Unable to open file '%s'"
-msgstr "No se puede abrir el archivo '%s'"
 
 #: ../general/g.pnmcomp/main.c:267
 msgid "Error writing PPM file"
@@ -4795,7 +4785,7 @@ msgstr "Cambiando el nombre de los mapas reclasificados"
 msgid "usage: %s file [prompt %%x %%y]\n"
 msgstr "uso: %s archivo [prompt %%x %%y]\n"
 
-#: ../imagery/i.ask/popup.c:179 ../raster/r.gwflow/main.c:283
+#: ../imagery/i.ask/popup.c:179 ../raster/r.gwflow/main.c:376
 #: ../raster/r.li/r.li.daemon/list.c:43 ../raster/r.to.rast3/main.c:228
 #: ../raster3d/r3.out.v5d/main.c:197 ../raster3d/r3.to.rast/main.c:299
 #: ../vector/v.edit/a2b.c:171 ../vector/v.in.ascii/a2b.c:154
@@ -4866,8 +4856,7 @@ msgstr "Nombre de subgrupo <%s> no admitido"
 msgid "Illegal signature file name <%s>"
 msgstr "Nombre de archivo de firmas <%s> no admitido"
 
-#: ../imagery/i.cca/main.c:116 ../raster/r.in.ascii/main.c:207
-#: ../raster/r.kappa/main.c:101
+#: ../imagery/i.cca/main.c:116 ../raster/r.kappa/main.c:101
 #, c-format
 msgid "Illegal output file name <%s>"
 msgstr "Nombre de archivo de salida <%s> no admitido"
@@ -4906,10 +4895,10 @@ msgstr ""
 #: ../imagery/i.pca/main.c:125 ../imagery/i.rgb.his/openfiles.c:22
 #: ../imagery/i.rgb.his/openfiles.c:24 ../imagery/i.rgb.his/openfiles.c:26
 #: ../raster/r.mfilter/perform.c:37 ../raster/r.out.tiff/r.out.tiff.c:188
-#: ../raster/r.param.scale/open_files.c:19 ../raster/r.profile/main.c:144
-#: ../raster/r.random/count.c:24 ../raster/r.random/random.c:39
-#: ../raster/r.support/front/front.c:221 ../raster/r.mfilter.fp/perform.c:37
-#: ../raster/r.topidx/file_io.c:17 ../vector/v.what.rast/main.c:132
+#: ../raster/r.param.scale/open_files.c:19 ../raster/r.random/count.c:24
+#: ../raster/r.random/random.c:39 ../raster/r.support/front/front.c:221
+#: ../raster/r.mfilter.fp/perform.c:37 ../raster/r.topidx/file_io.c:17
+#: ../vector/v.what.rast/main.c:132
 #, c-format
 msgid "Cannot open raster map <%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -5040,11 +5029,6 @@ msgstr "Ningún dispositivo de gráficos seleccionado."
 msgid "You have a mask set. Unset mask and run again"
 msgstr "Tiene una máscara establecida. Quite la máscara y ejecute de nuevo"
 
-#: ../imagery/i.class/main.c:108
-#, c-format
-msgid "Unable to find input cell map '%s'"
-msgstr "No se puede encontrar el mapa de celdas de entrada '%s'"
-
 #: ../imagery/i.class/main.c:193
 #, c-format
 msgid "** The following raster maps in subgroup [%s] do not exist:"
@@ -5065,7 +5049,8 @@ msgid "Subgroup [%s] only has 1 file"
 msgstr "El subgrupo [%s] sólo tiene un archivo"
 
 #: ../imagery/i.class/main.c:209
-msgid "Unable to read cell header for first band file."
+#, fuzzy
+msgid "Unable to read cell header for first band file"
 msgstr ""
 "No se puede leer la cabecera de las celdas para el archivo de la primera "
 "banda."
@@ -7546,7 +7531,7 @@ msgstr ""
 #: ../raster/r.cross/main.c:65 ../raster/r.describe/main.c:58
 #: ../raster/r.digit/main.c:44 ../raster/r.distance/main.c:38
 #: ../raster/r.drain/main.c:102 ../raster/r.fill.dir/main.c:85
-#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:177
+#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:219
 #: ../raster/r.his/main.c:63 ../raster/r.in.arc/main.c:58
 #: ../raster/r.in.gdal/main.c:69 ../raster/r.in.gridatb/main.c:43
 #: ../raster/r.in.mat/main.c:93 ../raster/r.in.xyz/main.c:76
@@ -9422,11 +9407,6 @@ msgstr "Valor de anchura '%s' no válido - se usa el predeterminado."
 msgid "Invalid depth value '%s' - using default."
 msgstr "Valor de profundidad '%s' no válido - se usa el predeterminado."
 
-#: ../raster/r.carve/main.c:182
-#, fuzzy, c-format
-msgid "Unable to open cellfile for <%s>"
-msgstr "no se puede abrir el archivo de celdas para [%s]"
-
 #: ../raster/r.carve/main.c:223
 msgid "lat/lon projection not supported at this time."
 msgstr "Proyección latitud/longitud no soportada en este momento."
@@ -9524,11 +9504,6 @@ msgid "Please specify min and/or max radius when using the binary flag"
 msgstr ""
 "Por favor, especifique el radio mínimo y/o máximo cuando utilice la opción "
 "binario"
-
-#: ../raster/r.circle/dist.c:127
-#, fuzzy, c-format
-msgid "Unable to create raster map [%s]"
-msgstr "a ráster"
 
 #: ../raster/r.clump/clump.c:100
 #, c-format
@@ -9940,11 +9915,6 @@ msgstr "Vacilar"
 #: ../raster/r.composite/main.c:136
 msgid "Use closest color"
 msgstr "Usar el color más próximo"
-
-#: ../raster/r.composite/main.c:200
-#, c-format
-msgid "Unable to create output <%s>"
-msgstr "No se puede crear la salida <%s>"
 
 #: ../raster/r.composite/main.c:221
 #, c-format
@@ -11000,134 +10970,151 @@ msgstr "Valor a escribir para celdas de entrada que no son NULAS (-1 => NULO)"
 msgid "Value to write for \"grown\" cells"
 msgstr "Valor a escribir para celdas \"incrementadas\""
 
-#: ../raster/r.grow2/main.c:185
-#, c-format
-msgid "Input file [%s] not found."
-msgstr "Archivo de entrada [%s] no encontrado."
-
 #: ../raster/r.grow2/main.c:197
 #, c-format
 msgid "Unknown metric: [%s]."
 msgstr "Métrica desconocida: [%s]."
 
-#: ../raster/r.grow2/main.c:201
-#, c-format
-msgid "Unable to open input file <%s@%s>."
-msgstr "No se puede abrir el archivo de entrada <%s@%s>.."
-
-#: ../raster/r.grow2/main.c:207
-#, c-format
-msgid "Unable to open output file <%s>."
-msgstr "No se puede abrir el archivo de salida <%s>."
-
 #: ../raster/r.grow2/main.c:211
-#, c-format
-msgid "Error in reading cats file for <%s>."
+#, fuzzy, c-format
+msgid "Error in reading cats file for <%s>"
 msgstr "Error al leer el archivo de categorías para <%s>."
 
 #: ../raster/r.grow2/main.c:217
-#, c-format
-msgid "Error in reading colr file for <%s>."
+#, fuzzy, c-format
+msgid "Error in reading colr file for <%s>"
 msgstr "Error al leer el archivo colr para <%s>."
 
 #: ../raster/r.grow2/main.c:309
-#, c-format
-msgid "Error writing cats file for <%s>."
+#, fuzzy, c-format
+msgid "Error writing cats file for <%s>"
 msgstr "Error al escribir el archivo de categorías para <%s>."
 
 #: ../raster/r.grow2/main.c:313
-#, c-format
-msgid "Error writing colr file for <%s>."
+#, fuzzy, c-format
+msgid "Error writing color file for <%s>"
 msgstr "Error al escribir el archivo de colr para <%s>."
 
-#: ../raster/r.gwflow/main.c:56 ../raster3d/r3.gwflow/main.c:55
+#: ../raster/r.gwflow/main.c:57 ../raster3d/r3.gwflow/main.c:55
 msgid "The initial piezometric head in [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:63
+#: ../raster/r.gwflow/main.c:64
 #, fuzzy
 msgid "Boundary condition status, 0-inactive, 1-active, 2-dirichlet"
 msgstr ""
 "Estado de la condición de los contornos, 0-inactiva, 1-activa, 2-dirichlet"
 
-#: ../raster/r.gwflow/main.c:71
+#: ../raster/r.gwflow/main.c:72
 msgid "X-part of the hydraulic conductivity tensor in [m/s]"
 msgstr "Parte X del tensor de conductividad hidráulica en [m/s]"
 
-#: ../raster/r.gwflow/main.c:79
+#: ../raster/r.gwflow/main.c:80
 msgid "Y-part of the hydraulic conductivity tensor in [m/s]"
 msgstr "Parte Y del tensor de conductividad hidráulica en [m/s]"
 
-#: ../raster/r.gwflow/main.c:86
+#: ../raster/r.gwflow/main.c:87
 msgid "Water sources and sinks in [m^3/s]"
 msgstr "Fuentes de agua y sumideros en [m³/s]"
 
-#: ../raster/r.gwflow/main.c:93
+#: ../raster/r.gwflow/main.c:94
 msgid "Specific yield in [1/m]"
 msgstr "Rendimiento específico en [1/m]"
 
-#: ../raster/r.gwflow/main.c:100
-msgid "Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]"
+#: ../raster/r.gwflow/main.c:102
+#, fuzzy
+msgid "Recharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]"
 msgstr "Recargar mapa; ejemplo: 6*10-? por celda en [m³/s/s*m²]"
 
-#: ../raster/r.gwflow/main.c:107
+#: ../raster/r.gwflow/main.c:109
 msgid "Top surface of the aquifer in [m]"
 msgstr "Superficie superior del acuífero en [m]"
 
-#: ../raster/r.gwflow/main.c:114
+#: ../raster/r.gwflow/main.c:116
 msgid "Bottom surface of the aquifer in [m]"
 msgstr "Superficie inferior del acuífero en [m]"
 
-#: ../raster/r.gwflow/main.c:121
+#: ../raster/r.gwflow/main.c:123
 msgid "The map storing the numerical result [m]"
 msgstr "Mapa que guarda el resultado numérico [m]"
 
-#: ../raster/r.gwflow/main.c:128
+#: ../raster/r.gwflow/main.c:130
 #, fuzzy
 msgid ""
 "Calculate the groundwater filter velocity vector field [m/s]\n"
 "and write the x, and y components to maps named name_[xy]"
 msgstr "Calcular vectorial a nombre"
 
-#: ../raster/r.gwflow/main.c:137
+#: ../raster/r.gwflow/main.c:139
 #, fuzzy
 msgid "The type of groundwater flow"
 msgstr "El tipo de flujo de "
 
 #: ../raster/r.gwflow/main.c:147
 #, fuzzy
+msgid "The hight of the river bed in [m]"
+msgstr "Superficie superior del acuífero en [m]"
+
+#: ../raster/r.gwflow/main.c:155
+msgid "Water level (head) of the river with leakage connection in [m]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:163
+msgid "The leakage coefficient of the river bed in [1/s]."
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:170
+msgid "The hight of the drainage bed in [m]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:178
+msgid "The leakage coefficient of the drainage bed in [1/s]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:188
+#, fuzzy
 msgid "Use a sparse matrix, only available with iterative solvers"
 msgstr "Usar"
 
-#: ../raster/r.gwflow/main.c:178
+#: ../raster/r.gwflow/main.c:220
 msgid ""
 "Numerical calculation program for transient, confined and unconfined "
 "groundwater flow in two dimensions."
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:195 ../raster3d/r3.gwflow/main.c:193
+#: ../raster/r.gwflow/main.c:240
+#, fuzzy
+msgid "Please provide river_head, river_leak and river_bed maps"
+msgstr "Por favor, proporciona tres mapas RGB G3D"
+
+#: ../raster/r.gwflow/main.c:252
+#, fuzzy
+msgid "Please provide drain_head and drain_leak maps"
+msgstr "Por favor, proporciona tres mapas RGB G3D"
+
+#: ../raster/r.gwflow/main.c:266 ../raster3d/r3.gwflow/main.c:193
 msgid "The direct LU solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:197 ../raster3d/r3.gwflow/main.c:195
+#: ../raster/r.gwflow/main.c:269 ../raster3d/r3.gwflow/main.c:195
 msgid "The direct Gauss solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:199 ../raster3d/r3.gwflow/main.c:197
+#: ../raster/r.gwflow/main.c:272 ../raster3d/r3.gwflow/main.c:197
 msgid "The direct cholesky solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:293
+#: ../raster/r.gwflow/main.c:386
 #, c-format
 msgid "Calculation of unconfined groundwater flow loop %i\n"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:315
+#: ../raster/r.gwflow/main.c:408
 #, c-format
 msgid "Maximum difference between this and last increment: %g"
 msgstr "Diferencia máxima entre este y el último incremento: %g"
 
-#: ../raster/r.gwflow/main.c:463 ../raster3d/r3.gwflow/main.c:300
+#: ../raster/r.gwflow/main.c:556 ../raster3d/r3.gwflow/main.c:300
 msgid "Unable to create and solve the linear equation system"
 msgstr "No se puede crear y resolver el sistema de ecuaciones lineal"
 
@@ -11354,15 +11341,6 @@ msgstr "No se puede leer la entrada desde stdin"
 msgid "Unable to read input from <%s>"
 msgstr "No se puede leer la entrada desde <%s>"
 
-#: ../raster/r.in.ascii/main.c:210 ../raster/r.in.bin/main.c:460
-#: ../raster/r.in.gdal/main.c:679 ../raster/r.in.gdal/main.c:684
-#: ../raster/r.in.gdal/main.c:700 ../raster/r.sun/main.c:699
-#: ../raster/r.sun/main.c:706 ../raster/r.sun/main.c:713
-#: ../raster/r.sun/main.c:720 ../raster/r.sun/main.c:727
-#, c-format
-msgid "Unable to create raster map %s"
-msgstr "No se puede crear el mapa ráster %s"
-
 #: ../raster/r.in.ascii/main.c:296
 msgid "Unable to write to file"
 msgstr "No se puede escribir en el archivo"
@@ -11507,6 +11485,15 @@ msgstr "Tamaño de archivo %d ... Bytes totales %d"
 #, c-format
 msgid "Try bytes=%d or adjusting input parameters"
 msgstr "Pruebe bytes=%d o ajuste los parámetros de entrada"
+
+#: ../raster/r.in.bin/main.c:460 ../raster/r.in.gdal/main.c:679
+#: ../raster/r.in.gdal/main.c:684 ../raster/r.in.gdal/main.c:700
+#: ../raster/r.sun/main.c:699 ../raster/r.sun/main.c:706
+#: ../raster/r.sun/main.c:713 ../raster/r.sun/main.c:720
+#: ../raster/r.sun/main.c:727
+#, c-format
+msgid "Unable to create raster map %s"
+msgstr "No se puede crear el mapa ráster %s"
 
 #: ../raster/r.in.bin/main.c:479
 #, c-format
@@ -12318,8 +12305,9 @@ msgid "Error opening channel %i"
 msgstr "Error al abrir el canal %i"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:113
-msgid "unable to create raster"
-msgstr "no se puede crear el ráster"
+#, fuzzy, c-format
+msgid "unable to create raster map <%s>"
+msgstr "No se puede crear el mapa ráster <%s>"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:118
 msgid "Cannot create random access file"
@@ -12796,7 +12784,7 @@ msgstr "Fallo al cerrar."
 msgid "Unable to close raster map <%s@%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
 
-#: ../raster/r.mapcalc/map.c:447 ../raster/r.mapcalc/map3.c:527
+#: ../raster/r.mapcalc/map.c:447
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "No se puede abrir el mapa ráster <%s>"
@@ -12811,7 +12799,8 @@ msgstr "No se puede leer en el mapa ráster <%s> la fila %d"
 msgid "Unable to close raster map"
 msgstr "No se puede cerrar el mapa ráster superior"
 
-#: ../raster/r.mapcalc/map3.c:151 ../raster/r.mapcalc/map3.c:165
+#: ../raster/r.mapcalc/map3.c:137 ../raster/r.mapcalc/map3.c:151
+#: ../raster/r.mapcalc/map3.c:165
 #, fuzzy
 msgid "Error writing data"
 msgstr "Error al escribir datos dobles G3D"
@@ -12820,11 +12809,6 @@ msgstr "Error al escribir datos dobles G3D"
 #, fuzzy, c-format
 msgid "unknown type: %d"
 msgstr "Tipo desconocido: %c"
-
-#: ../raster/r.mapcalc/map3.c:598
-#, fuzzy, c-format
-msgid "Unable to create output raster map <%s>"
-msgstr "No se puede crear el mapa ráster <%s>"
 
 #: ../raster/r.mapcalc/map3.c:617
 #, fuzzy
@@ -13212,15 +13196,10 @@ msgstr "Crear salida 3D"
 msgid "Invalid value for null (integers only)"
 msgstr "Valor no válido para nulos (sólo enteros)"
 
-#: ../raster/r.out.bin/main.c:133 ../raster/r.out.gdal/main.c:102
-#, c-format
-msgid "Cannot open raster map [%s]"
-msgstr "No se puede abrir el mapa ráster [%s]"
-
 #: ../raster/r.out.bin/main.c:145 ../raster/r.out.bin/main.c:231
 #: ../raster/r.out.bin/main.c:235
-#, c-format
-msgid "Unable to create file [%s]"
+#, fuzzy, c-format
+msgid "Unable to create file <%s>"
 msgstr "No se puede crear el archivo [%s]"
 
 #: ../raster/r.out.bin/main.c:181
@@ -13308,6 +13287,11 @@ msgstr "Leyendo mapa"
 #, c-format
 msgid "Supported formats:\n"
 msgstr "Formatos soportados:\n"
+
+#: ../raster/r.out.gdal/main.c:102
+#, c-format
+msgid "Cannot open raster map [%s]"
+msgstr "No se puede abrir el mapa ráster [%s]"
 
 #: ../raster/r.out.gdal/main.c:109
 msgid "Cannot get raster band."
@@ -13493,12 +13477,13 @@ msgid "Reading in map ... "
 msgstr "Leyendo en mapa ... "
 
 #: ../raster/r.out.mat/main.c:331
-msgid "Writing out map ... "
+#, fuzzy
+msgid "Writing out map..."
 msgstr "Escribiendo mapa ... "
 
 #: ../raster/r.out.mat/main.c:385
-#, c-format
-msgid "%ld bytes written to '%s'."
+#, fuzzy, c-format
+msgid "%ld bytes written to '%s'"
 msgstr "%ld bytes escritos a '%s'."
 
 #: ../raster/r.out.mpeg/main.c:87
@@ -13654,11 +13639,6 @@ msgstr "Nombre para el nuevo archivo PPM. (usar out=- para stdout)"
 #: ../raster/r.out.ppm3/main.c:90
 msgid "Add comments to describe the region"
 msgstr "Añadir comentarios para describir la región"
-
-#: ../raster/r.out.ppm3/main.c:147
-#, fuzzy, c-format
-msgid "Unable to open file <%s>"
-msgstr "No se puede abrir el archivo '%s'"
 
 #: ../raster/r.out.ppm3/main.c:176
 msgid "Converting ... "
@@ -14135,11 +14115,6 @@ msgstr "¡Resolución no admitida! [%g]"
 #, c-format
 msgid "Using resolution [%g]"
 msgstr "Usando resolución [%g]"
-
-#: ../raster/r.profile/main.c:157
-#, c-format
-msgid "Cannot open file for <%s>"
-msgstr "No se puede abrir el archivo para <%s>"
 
 #: ../raster/r.profile/main.c:176
 msgid "Output Format:"
@@ -17009,48 +16984,33 @@ msgstr "Leyendo mapa ráster..."
 msgid "Calculated measure #%d (56 measures available)"
 msgstr "Medida #%d calculada (56 medidas disponibles)"
 
-#: ../raster/r.thin/io.c:97
-#, c-format
-msgid "%s: Unable to find raster map <%s>"
-msgstr "%s: no se puede encontrar el mapa ráster <%s>"
-
-#: ../raster/r.thin/io.c:103
-#, fuzzy, c-format
-msgid "%s: Unable to open raster map <%s> in mapset <%s>"
-msgstr "a ráster directorio de mapas"
-
-#: ../raster/r.thin/io.c:109
+#: ../raster/r.thin/io.c:107
 #, c-format
 msgid "File %s -- %d rows X %d columns"
 msgstr "Archivo %s -- %d filas X %d columnas"
 
-#: ../raster/r.thin/io.c:120
+#: ../raster/r.thin/io.c:118
 #, fuzzy, c-format
 msgid "%s: Unable to create temporary file <%s> -- errno = %d"
 msgstr "a"
 
-#: ../raster/r.thin/io.c:131 ../raster/r.thin/io.c:145
-#: ../raster/r.thin/io.c:157
+#: ../raster/r.thin/io.c:129 ../raster/r.thin/io.c:143
+#: ../raster/r.thin/io.c:155
 #, fuzzy, c-format
 msgid "%s: Error writing temporary file"
 msgstr "Error de lectura en el archivo dbmscap\n"
 
-#: ../raster/r.thin/io.c:139
+#: ../raster/r.thin/io.c:137
 #, fuzzy, c-format
 msgid "%s: Error reading from raster map <%s> in mapset <%s>"
 msgstr "ráster directorio de mapas"
 
-#: ../raster/r.thin/io.c:178
-#, fuzzy, c-format
-msgid "%s:  Unable to open output raster map <%s>"
-msgstr "a ráster"
-
-#: ../raster/r.thin/io.c:184
+#: ../raster/r.thin/io.c:181
 #, c-format
 msgid "Output file %d rows X %d columns"
 msgstr "Archivo de salida %d filas X %d columnas"
 
-#: ../raster/r.thin/io.c:185
+#: ../raster/r.thin/io.c:182
 #, c-format
 msgid "Window %d rows X %d columns"
 msgstr "Ventana %d filas X %d columnas"
@@ -19406,22 +19366,23 @@ msgid "Specific yield in 1/m"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:109
-msgid "Reacharge raster map in m^3/s"
+#, fuzzy
+msgid "Recharge raster map in m^3/s"
 msgstr "Recargar mapa ráster en m^3/s"
 
 #: ../raster3d/r3.gwflow/main.c:118
 #, fuzzy
 msgid ""
 "The piezometric head result of the numerical calculation will be written to "
-"this map."
+"this map"
 msgstr "a."
 
 #: ../raster3d/r3.gwflow/main.c:127
 #, fuzzy
 msgid ""
 "Calculate the groundwater distance velocity vector field and write the x, y, "
-"and z components to maps named name_[xyz]. name is basename for the new "
-"raster3d maps."
+"and z components to maps named name_[xyz]. Name is basename for the new "
+"raster3d maps"
 msgstr "vectorial a nombre nombre."
 
 #: ../raster3d/r3.gwflow/main.c:138
@@ -19696,8 +19657,7 @@ msgstr "Error al cerrar mapa vectorial G3D."
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 msgstr "Convierte mapas ráster 3D (G3D) en formato VTK-ASCII"
 
-#: ../raster3d/r3.out.vtk/main.c:387 ../vector/v.out.ascii/out.c:120
-#: ../vector/v.out.vtk/main.c:173
+#: ../raster3d/r3.out.vtk/main.c:387 ../vector/v.out.vtk/main.c:173
 msgid "failed to interpret dp as an integer"
 msgstr "no se pudo interpretar dp como entero"
 
@@ -24536,7 +24496,8 @@ msgid "got type %d"
 msgstr "se obtuvo el tipo %d"
 
 #: ../vector/v.out.ascii/out.c:45
-msgid "Convert a GRASS binary vector map to a GRASS ASCII vector map"
+#, fuzzy
+msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
 msgstr ""
 "Convertir un mapa vectorial binario de GRASS a un mapa vectorial ASCII de "
 "GRASS"
@@ -24562,25 +24523,26 @@ msgstr ""
 "puntos)"
 
 #: ../vector/v.out.ascii/out.c:104
-msgid "format 'point' is not supported for old version"
+#, fuzzy
+msgid "Format 'point' is not supported for old version"
 msgstr "formato 'punto' no está soportado por la versión antigua"
 
 #: ../vector/v.out.ascii/out.c:108
 msgid "'output' must be given for old version"
 msgstr "se debe proporcionar 'salida' para la versión antigua"
 
-#: ../vector/v.out.ascii/out.c:137 ../vector/v.out.vtk/main.c:163
-#, c-format
-msgid "Cannot open file [%s]"
-msgstr "No se puede abrir el archivo [%s]"
+#: ../vector/v.out.ascii/out.c:120
+#, fuzzy
+msgid "Failed to interpret dp as an integer"
+msgstr "no se pudo interpretar dp como entero"
 
 #: ../vector/v.out.ascii/out.c:153
 msgid "dig_att file already exist"
 msgstr "el archivo dig_att ya existe"
 
 #: ../vector/v.out.ascii/out.c:156
-#, c-format
-msgid "Not able to open dig_att file <%s>\n"
+#, fuzzy, c-format
+msgid "Unable to open dig_att file <%s>\n"
 msgstr "No se puede abrir el archivo dig_att <%s>\n"
 
 #: ../vector/v.out.dxf/main.c:47 ../vector/v.out.ogr/main.c:85
@@ -24623,9 +24585,8 @@ msgid "%s: Cannot write dxf file."
 msgstr "%s: no se puede escribir el archivo dxf."
 
 #: ../vector/v.out.ogr/main.c:86
-#, fuzzy
 msgid "Converts to one of the supported OGR vector formats."
-msgstr "Convertir a uno de los formatos vectoriales OGR soportados."
+msgstr "Convierte a uno de los formatos vectoriales OGR soportados."
 
 #: ../vector/v.out.ogr/main.c:93
 msgid "Feature type. Combination of types is not supported by all formats."
@@ -24654,9 +24615,8 @@ msgstr ""
 "\t\tARchivo MapInfo: nombre del archivo MapInfo"
 
 #: ../vector/v.out.ogr/main.c:121
-#, fuzzy
 msgid "OGR format"
-msgstr "Formato OGR."
+msgstr "Formato OGR"
 
 #: ../vector/v.out.ogr/main.c:129
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
@@ -24686,7 +24646,6 @@ msgid "Export lines as polygons"
 msgstr "Exportar líneas como polígonos"
 
 #: ../vector/v.out.ogr/main.c:177
-#, fuzzy
 msgid "The combination of types is not supported by all formats."
 msgstr "La combinación de tipos no está soportada por todos lo formatos."
 
@@ -24796,105 +24755,99 @@ msgid "%d features written."
 msgstr "%d elementos escritos."
 
 #: ../vector/v.out.svg/main.c:68
-#, fuzzy
 msgid "Exports a GRASS vector map to SVG."
-msgstr "GRASS vectorial a."
+msgstr "Exporta un mapa vectorial de GRASS a SVG."
 
 #: ../vector/v.out.svg/main.c:74
-#, fuzzy
 msgid "Name for SVG output file"
-msgstr "Nombre para el archivo de salida"
+msgstr "Nombre para el archivo SVG de salida"
 
 #: ../vector/v.out.svg/main.c:83
-#, fuzzy
 msgid "Output type"
-msgstr "Mapa de salida"
+msgstr "Tipo de salida"
 
 #: ../vector/v.out.svg/main.c:84
-#, fuzzy
 msgid "Defines which feature-type will be extracted"
-msgstr "Salida"
+msgstr "Define qué tipo de elemento se extraerá"
 
 #: ../vector/v.out.svg/main.c:92
 msgid "Coordinate precision"
-msgstr ""
+msgstr "Precisión de coordenadas"
 
 #: ../vector/v.out.svg/main.c:99
-#, fuzzy
 msgid "Attribute(s) to include in output SVG"
-msgstr "a"
+msgstr "Atributo(s) a incluir en la salida SVG"
 
 #: ../vector/v.out.svg/main.c:113
-msgid "Precision must not be negative."
-msgstr ""
+#, fuzzy
+msgid "Precision must not be negative"
+msgstr "La precisión no debe ser negativa."
 
 #: ../vector/v.out.svg/main.c:116
-msgid "Precision must not be higher than 15."
-msgstr ""
+#, fuzzy
+msgid "Precision must not be higher than 15"
+msgstr "La precisión no debe ser superior a 15."
 
 #: ../vector/v.out.svg/main.c:185
 #, fuzzy, c-format
-msgid "SVG file <%s> cannot be opened"
-msgstr "mapa vectorial <%s> no encontrado"
+msgid "Unable to open SVG file <%s>"
+msgstr "No se puede abrir el archivo '%s'"
 
 #: ../vector/v.out.svg/main.c:200
 #, fuzzy
-msgid "No areas found, skipping type=poly."
-msgstr "áreas."
+msgid "No areas found, skipping type=poly"
+msgstr "No se encontraron áreas, se salta el tipo=polígono."
 
 #: ../vector/v.out.svg/main.c:209
 #, c-format
 msgid "Skipping area %d without centroid"
-msgstr ""
+msgstr "Se salta el área %d sin centroide"
 
 #: ../vector/v.out.svg/main.c:234
-#, fuzzy, c-format
+#, c-format
 msgid "Extracted %d areas"
-msgstr "áreas"
+msgstr "%d áreas extraídas"
 
 #: ../vector/v.out.svg/main.c:240
-#, fuzzy
 msgid "No points found, skipping type=point"
-msgstr "puntos"
+msgstr "No se encontraron puntos, se salta el tipo=punto"
 
 #: ../vector/v.out.svg/main.c:264
-#, fuzzy, c-format
+#, c-format
 msgid "Extracted %d points"
-msgstr "puntos"
+msgstr "%d puntos extraídos"
 
 #: ../vector/v.out.svg/main.c:270
-#, fuzzy
 msgid "No lines found, skipping type=line"
-msgstr "líneas"
+msgstr "No se encontraron líneas, se salta el tipo=línea"
 
 #: ../vector/v.out.svg/main.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "Extracted %d lines"
-msgstr "líneas"
+msgstr "%d líneas extraídas"
 
 #: ../vector/v.out.svg/main.c:355
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot select attributes for cat=%d"
-msgstr "Imposible seleccionar datos de la tabla"
+msgstr "No se pueden seleccionar los atributos para la categoría %d"
 
 #: ../vector/v.out.vtk/head.c:27
 msgid "writeVTKHeader: Writing VTK-Header"
-msgstr ""
+msgstr "writeVTKHeader: escribiendo la cabecera VTK"
 
 #: ../vector/v.out.vtk/main.c:47
 #, fuzzy
-msgid "Convert a GRASS binary vector map to VTK ASCII output"
+msgid "Converts a GRASS binary vector map to VTK ASCII output."
 msgstr "GRASS vectorial a"
 
 #: ../vector/v.out.vtk/main.c:57
 #, fuzzy
-msgid "Path to resulting VTK file."
+msgid "Path to resulting VTK file"
 msgstr "a."
 
 #: ../vector/v.out.vtk/main.c:175
-#, fuzzy
 msgid "dp has to be from 0 to 8"
-msgstr "a a"
+msgstr "dp tiene que ser de 0 a 8"
 
 #: ../vector/v.out.vtk/main.c:184
 #, fuzzy
@@ -24932,45 +24885,46 @@ msgid "Building partial topology ..."
 msgstr "Construyendo topología parcial ..."
 
 #: ../vector/v.parallel/main.c:40
-#, fuzzy
 msgid "Create parallel line to input lines"
-msgstr "a líneas"
+msgstr "Crear línea paralela a las líneas de entrada"
 
 #: ../vector/v.parallel/main.c:51
 msgid "Offset in map units, positive for right side, negative for left side."
 msgstr ""
+"Desplazamiento en unidades de mapa, positivo hacia la derecha, negativo "
+"hacia la izquierda."
 
 #: ../vector/v.patch/main.c:69
-#, fuzzy
 msgid "Create a new vector map layer by combining other vector map layers."
-msgstr "vectorial vectorial."
+msgstr ""
+"Crear una capa de mapa vectorial nueva combinando otras capas de mapas "
+"vectoriales."
 
 #: ../vector/v.patch/main.c:79
 #, fuzzy
 msgid ""
 "Name for output vector map where bounding boxes of input vector maps are "
 "written to"
-msgstr "Nombre vectorial a"
+msgstr "Nombre para el mapa vectorial de salida en el que "
 
 #: ../vector/v.patch/main.c:83
-#, fuzzy
 msgid ""
 "Append files to existing file (overwriting existing files must be activated)"
-msgstr "a"
+msgstr ""
+"Añadir archivos al existente (debe estar activada la sobrescritura de "
+"archivos existentes)"
 
 #: ../vector/v.patch/main.c:88
-#, fuzzy
 msgid "Copy also attribute table"
-msgstr "base de datos, tabla de atributos"
+msgstr "Copiar también la tabla de atributos"
 
 #: ../vector/v.patch/main.c:89
-#, fuzzy
 msgid "Only the table of layer 1 is currently supported"
-msgstr "Copiar"
+msgstr "Actualmente sólo está soportada la tabla de la capa 1"
 
 #: ../vector/v.patch/main.c:196
 msgid "Missing table"
-msgstr ""
+msgstr "Falta la tabla"
 
 #: ../vector/v.patch/main.c:201
 #, fuzzy
@@ -24998,34 +24952,33 @@ msgid "Length of string columns differ"
 msgstr "columnas"
 
 #: ../vector/v.patch/main.c:250
-#, fuzzy
 msgid "Key column not found"
-msgstr "mapa vectorial <%s> no encontrado"
+msgstr "Columna clave no encontrada"
 
 #: ../vector/v.patch/main.c:258
-#, fuzzy
 msgid "The output map is not 3D"
-msgstr "Mapa vectorial %s no encontrado"
+msgstr "El mapa de salida no es 3D"
 
 #: ../vector/v.patch/main.c:298 ../vector/v.sample/main.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to create table <%s>"
-msgstr "No se puede crear la salida <%s>"
+msgstr "No se puede crear la tabla <%s>"
 
 #: ../vector/v.patch/main.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Patching vector map <%s@%s>..."
-msgstr "Escribiendo mapa vectorial <%s> ..."
+msgstr "Parcheando el mapa vectorial <%s@%s>..."
 
 #: ../vector/v.patch/main.c:335
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading vector map <%s> - some data may not be correct"
-msgstr "datos"
+msgstr ""
+"Error al leer el mapa vectorial <%s> - algunos datos pueden no ser correctos"
 
 #: ../vector/v.patch/main.c:384
-#, fuzzy, c-format
+#, c-format
 msgid "Building topology for vector map <%s>..."
-msgstr "Construyendo topología para el vectorial de errores ..."
+msgstr "Construyendo topología para el mapa vectorial <%s>..."
 
 #: ../vector/v.patch/main.c:393
 #, fuzzy
@@ -25038,14 +24991,13 @@ msgid "Lines common between files will have to be edited"
 msgstr "Líneas a"
 
 #: ../vector/v.patch/main.c:395
-#, fuzzy
 msgid "The header information also may have to be edited"
-msgstr "a"
+msgstr "La información de la cabecera también puede que tenga que ser editada"
 
 #: ../vector/v.patch/main.c:397
-#, fuzzy, c-format
+#, c-format
 msgid "%d vector maps patched"
-msgstr "%d registros actualizados"
+msgstr "%d mapas vectoriales parcheados"
 
 #: ../vector/v.patch/main.c:431
 #, fuzzy
@@ -25053,14 +25005,13 @@ msgid "Cannot fetch row"
 msgstr "No se puede recuperar datos"
 
 #: ../vector/v.patch/main.c:480
-#, fuzzy
 msgid "Unknown column type"
-msgstr "Tipo desconocido"
+msgstr "Tipo de columna desconocido"
 
 #: ../vector/v.patch/main.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot insert new record: '%s'"
-msgstr "No se puede insertar nueva línea: %s"
+msgstr "No se puede insertar nuevo registro: '%s'"
 
 #: ../vector/v.perturb/main.c:74
 #, fuzzy
@@ -26955,29 +26906,73 @@ msgstr "Fichero de imagen"
 msgid "Percentage of CPU time to use"
 msgstr "a"
 
-#, fuzzy
-#~ msgid "Vector <%s> could not be opened"
-#~ msgstr "mapa vectorial <%s> no encontrado"
+#~ msgid "unable to open [%s] in [%s]"
+#~ msgstr "no se puede abrir [%s] en [%s]"
+
+#~ msgid "warning: unable to open [%s] in [%s]"
+#~ msgstr "aviso: no se puede abrir [%s] en [%s]"
+
+#~ msgid "Unable to open raster map [%s] in [%s]"
+#~ msgstr "No se puede abrir el mapa ráster [%s] en [%s]"
+
+#~ msgid "Unable to open file '%s'"
+#~ msgstr "No se puede abrir el archivo '%s'"
+
+#~ msgid "Unable to find input cell map '%s'"
+#~ msgstr "No se puede encontrar el mapa de celdas de entrada '%s'"
 
 #, fuzzy
-#~ msgid "No db connection for driver <%s> defined. Run db.connect."
-#~ msgstr ""
-#~ "No hay ninguna conexión a base de datos para el controlador <%s>. Ejecute "
-#~ "db.connect."
+#~ msgid "Unable to open cellfile for <%s>"
+#~ msgstr "no se puede abrir el archivo de celdas para [%s]"
 
 #, fuzzy
-#~ msgid "Cannot open vector map <%s>"
-#~ msgstr "vectorial"
+#~ msgid "Unable to create raster map [%s]"
+#~ msgstr "a ráster"
 
-#~ msgid "Read coordinates from standard input"
-#~ msgstr "Leer coordenadas de entrada estándar"
+#~ msgid "Unable to create output <%s>"
+#~ msgstr "No se puede crear la salida <%s>"
+
+#~ msgid "Input file [%s] not found."
+#~ msgstr "Archivo de entrada [%s] no encontrado."
+
+#~ msgid "Unable to open input file <%s@%s>."
+#~ msgstr "No se puede abrir el archivo de entrada <%s@%s>.."
+
+#~ msgid "Unable to open output file <%s>."
+#~ msgstr "No se puede abrir el archivo de salida <%s>."
+
+#~ msgid "unable to create raster"
+#~ msgstr "no se puede crear el ráster"
 
 #, fuzzy
-#~ msgid "The '-s' flag is deprecated and will be removed in future"
-#~ msgstr ""
-#~ "La opción -q está suplantada y se eliminará en el futuro. Por favor, use "
-#~ "'--quiet' en su lugar."
+#~ msgid "Unable to create output raster map <%s>"
+#~ msgstr "No se puede crear el mapa ráster <%s>"
+
+#~ msgid "%s: Unable to find raster map <%s>"
+#~ msgstr "%s: no se puede encontrar el mapa ráster <%s>"
 
 #, fuzzy
-#~ msgid "Raster map <%s>] not found"
-#~ msgstr "Mapa ráster <%s> no encontrado"
+#~ msgid "%s: Unable to open raster map <%s> in mapset <%s>"
+#~ msgstr "a ráster directorio de mapas"
+
+#, fuzzy
+#~ msgid "%s:  Unable to open output raster map <%s>"
+#~ msgstr "a ráster"
+
+#~ msgid "Cannot find mapset for %s"
+#~ msgstr "No se puede encontrar el directorio de mapas para %s"
+
+#~ msgid "Cannot open File %s"
+#~ msgstr "No se puede abrir el archivo %s"
+
+#~ msgid "Not able to open file for [%s]"
+#~ msgstr "No se puede abrir el archivo para [%s]"
+
+#~ msgid "Cannot open file for <%s>"
+#~ msgstr "No se puede abrir el archivo para <%s>"
+
+#~ msgid "Cannot open file [%s]"
+#~ msgstr "No se puede abrir el archivo [%s]"
+
+#~ msgid "SVG file <%s> cannot be opened"
+#~ msgstr "No se puede abrir el archivo SVG <%s>"
