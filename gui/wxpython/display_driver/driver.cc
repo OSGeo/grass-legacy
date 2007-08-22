@@ -168,7 +168,8 @@ int DisplayDriver::DrawLine(int line)
 	    }
 
 	    if (settings.vertex.enabled) {
-		dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
+		if (!IsSelected(line))
+		    dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
 		DrawLineVerteces(line);
 	    }
 	    DrawLineNodes(line);
@@ -198,7 +199,6 @@ int DisplayDriver::DrawLine(int line)
 	if (draw) {
 	    // highlight feature?
 	    if (IsSelected(line)) {
-		std::cout << line << " " << IsSelected(line) << std::endl;
 		dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
 	    }
 
@@ -251,10 +251,17 @@ int DisplayDriver::DrawLineNodes(int line)
 	Cell2Pixel(east, north, depth,
 		   &x, &y, &z);
 
-	if (Vect_get_node_n_lines(mapInfo, node) == 1)
-	    dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
-	else
-	    dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+	
+	// highlight feature?
+	if (IsSelected(line)) {
+	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	}
+	else {
+	    if (Vect_get_node_n_lines(mapInfo, node) == 1)
+		dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
+	    else
+		dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+	}
 
 	wxPoint point(x, y);
 	DrawCross(line, &point);
@@ -307,15 +314,15 @@ void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
 }
 
 /**
-   \brief Close and open vector map layer
+   \brief Reload vector map layer
 
-   Need for modification using v.edit
+   Close and open again. Needed for modification using v.edit.
 
    \param
    
    \return
 */
-void DisplayDriver::ReOpenMap()
+void DisplayDriver::ReloadMap()
 {
     // char* name   = G_store(Vect_get_map_name(mapInfo)); ???
     char* name   = G_store(mapInfo->name);
@@ -472,6 +479,12 @@ void DisplayDriver::PrintIds()
 	}
 	std::cout << std::endl;
     }
+
+    for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
+	 i != e; ++i)
+	std::cout << "selected: " << *i << " ";
+    std::cout << std::endl;
+
     return;
 }
 
@@ -482,7 +495,7 @@ void DisplayDriver::PrintIds()
    Number of selected features can be decreased by 'onlyType'
    ('NULL' for all types)
 
-   \param
+   \param[in] x1,y1,x2,y2 corners coordinates of bounding box
 
    \return number of selected features
    \return -1 on error
@@ -528,14 +541,37 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
     Vect_destroy_line_struct(bbox);
     Vect_destroy_list(list);
 
-#ifdef DEBUG
-    for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
-	 i != e; ++i)
-	std::cout << "selected:" << *i << " ";
-    std::cout << std::endl;
-#endif
-
     return selected.size();
+}
+
+/**
+   \brief Select vector feature by given point in given
+   threshold
+   
+   Only one vector feature can be selected.
+
+   \param[in] x,y point of searching
+   \param[in] thresh threshold value where to search
+   \param[in] onlyType select vector feature of given
+   type
+
+   \return 1 if vector feature found
+   \return 0 if no vector feature found
+*/
+int DisplayDriver::SelectLinesByPoint(double x, double y, double thresh,
+				      int onlyType)
+{
+    int line;
+
+    line = Vect_find_line(mapInfo, x, y, 0.0,
+			  -1, thresh, 0, 0);
+
+    if (line > 0) {
+	selected.push_back(line);
+	return 1;
+    }
+
+    return 0;
 }
 
 /**
@@ -576,12 +612,99 @@ void DisplayDriver::Unselect()
 /**
    \brief Return grass ids of selected vector features
 
-   \param
+   \param[in] grassId If true method returns GRASS ids of
+   vector features, if false returns ids of objects
+   drawn in PseudoDC
    
    \return list of ids of selected vector features
 */
-std::vector<int> DisplayDriver::GetSelected()
+std::vector<int> DisplayDriver::GetSelected(bool grassId)
 {
-    return selected;
+    if (grassId)
+	return selected;
+
+    std::vector<int> dc_ids;
+
+    for(std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
+	i != e; ++i) {
+	// TODO ids[*i] ...
+	for(ids_map::const_iterator ii = ids.begin(), ee = ids.end();
+	    ii != ee; ++ii) {
+	    if (*i == ii->first) {
+		for(std::vector<long int>::const_iterator iii = ii->second.begin(),
+			eee = ii->second.end(); iii != eee; ++iii) {
+		    dc_ids.push_back(*iii);
+		}
+		break;
+	    }
+	}
+    }
+    return dc_ids;
 }
 
+/**
+   \brief Set ids of selected vector features
+   
+   \param[in] list of ids to be set
+
+   \return 1
+*/
+int DisplayDriver::SetSelected(std::vector<int> id)
+{
+    selected = id;
+
+    return 1;
+}
+
+/**
+   \brief Get PseudoDC id of selected line of given coordinates
+
+   \param[in] x,y coordinates of vertex on line
+
+   \return number of line
+   \return 0 no line found
+   \return -1 on error
+*/
+long int DisplayDriver::GetSelectedVertex(double x, double y)
+{
+    int line, type, minIdx;
+    long int dcId;
+    double dist, minDist;
+    
+    std::vector<long int>* dcIds;
+
+    if (selected.size() != 1)
+	return -1;
+
+    line = selected[0];
+    
+    type = Vect_read_line (mapInfo, points, cats, line);
+        
+    for(int idx = 0; idx < points->n_points; idx++) {
+	dist = Vect_points_distance(x, y, 0.0,
+				    points->x[idx], points->y[idx], points->z[idx], 0);
+	
+	if (idx == 0) {
+	    minDist = dist;
+	    minIdx  = idx;
+	}
+	else {
+	    if (minDist > dist) {
+		minDist = dist;
+		minIdx = idx;
+	    }
+	}
+    }	
+	
+    // [line, vertex1, ..., node1, node2]
+    dcIds = &(ids[line]);
+
+    if (minIdx == 0)
+	dcId = (*dcIds)[dcIds->size()-2]; // first node
+    else if (minIdx == points->n_points - 1)
+	dcId = (*dcIds)[dcIds->size()-1]; // last node
+    else
+	dcId = (*dcIds)[minIdx]; // vertex
+
+    return dcId;
+}

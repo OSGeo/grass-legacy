@@ -19,7 +19,8 @@
 #include <wx/list.h>
 
 #include <Python.h>
-#include <wx/wxPython/pseudodc.h>
+//#include <wx/wxPython/pseudodc.h>
+#include "pseudodc.h"
 
 extern "C" {
 #include <grass/gis.h>
@@ -108,13 +109,18 @@ class DisplayDriver
 
     /* select */
     int SelectLinesByBox(double x1, double y1, double x2, double y2);
+    int SelectLinesByPoint(double x, double y, double thresh,
+			   int onlyType);
+
     void Unselect();
-    std::vector<int> GetSelected();
+    std::vector<int> GetSelected(bool grassId);
+    int SetSelected(std::vector<int> id);
+    long int GetSelectedVertex(double x, double y);
 
     /* general */
     void CloseMap();
     void OpenMap(const char *mapname, const char *mapset);
-    void ReOpenMap();
+    void ReloadMap();
 
     /* set */
     void SetRegion(double north, double south, double east, double west,

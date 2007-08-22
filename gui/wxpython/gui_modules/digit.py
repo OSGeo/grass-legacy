@@ -182,10 +182,16 @@ class VEdit(AbstractDigit):
         cat   = self.SetCategory()
         
         addstring="""%s 1 1
-                    %f %f\n%d %d""" % (key, x, y, layer, cat)
+                    %f %f""" % (key, x, y)
 
-        Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, layer=%d, cat=%d, x=%f, y=%f" % \
-                   (map, type, layer, cat, x, y))
+        if layer > 0 and cat != "None":
+            addstring += "\n%d %d" % (layer, cat)
+            Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, layer=%d, cat=%d, x=%f, y=%f" % \
+                           (map, type, layer, cat, x, y))
+        else:
+            Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, x=%f, y=%f" % \
+                           (map, type, x, y))
+
         Debug.msg (4, "Vline.AddPoint(): input=%s" % addstring)
                 
         self._AddFeature (map=map, input=addstring, flags=['-s'])
@@ -212,10 +218,14 @@ class VEdit(AbstractDigit):
             addstring += """%f %f\n""" % \
                 (float(point[0]), float(point [1]))
 
-        addstring += "%d %d" % (layer, cat)
+        if layer > 0 and cat != "None":
+            addstring += "\n%d %d" % (layer, cat)
+            Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
+                           (key, layer, cat, coords))
+        else:
+            Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
+                           (key, coords))
 
-        Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
-                   (key, layer, cat, coords))
         Debug.msg (4, "Vline.AddLine(): input=%s" % addstring)
 
         self._AddFeature (map=map, input=addstring, flags=flags)
@@ -237,21 +247,22 @@ class VEdit(AbstractDigit):
         # run the command
         vedit = cmd.Command(cmd=command, stdin=input)
 
-        # redraw map
-        #self.driver.ReDrawMap(map)
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
         
     def DeleteSelectedLines(self):
         """Delete selected vector features from the vector map"""
 
-        selected = self.driver.GetSelected()
+        selected = self.driver.GetSelected() # grassId
 
         if len(selected) <= 0:
             return False
 
-        Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
-                      selected)
-
         ids = ",".join(["%d" % v for v in selected])
+
+        Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
+                      ids)
+
         command = [ "v.edit", "--q",
                     "map=%s" % self.map,
                     "tool=delete",
@@ -260,8 +271,8 @@ class VEdit(AbstractDigit):
         # run the command
         vedit = cmd.Command(cmd=command)
 
-        # redraw map
-        self.driver.display.ReOpenMap()
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
 
         return True
 
@@ -276,13 +287,16 @@ class VEdit(AbstractDigit):
     def __MoveFeature(self, tool, coords, move):
         """Move selected vector feature or vertex"""
 
-        if not self.driver.selected:
+        selected = self.driver.GetSelected()
+
+        if len(selected) <= 0:
             return False
 
-        Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
-                      (self.driver.selected, move))
+        ids = ",".join(["%d" % v for v in selected])
 
-        ids = ",".join(["%d" % v for v in self.driver.selected])
+        Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
+                      (ids, move))
+
         command = ["v.edit", "--q", "-s", # snap
                    "map=%s" % self.map,
                    "tool=%s" % tool,
@@ -296,15 +310,16 @@ class VEdit(AbstractDigit):
         # run the command
         vedit = cmd.Command(cmd=command)
 
-        # redraw map
-        #self.driver.ReDrawMap(self.map)
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
 
         return True
 
     def SplitLine(self, coords):
         """Split selected line on position 'coords'"""
+
         try:
-            line = self.driver.selected[0]
+            line = self.driver.GetSelected()[0]
         except:
             return False
 
@@ -319,7 +334,7 @@ class VEdit(AbstractDigit):
         vedit = cmd.Command(cmd=command)
 
         # redraw map
-        #self.driver.ReDrawMap(self.map)
+        self.driver.ReloadMap()
         
         return True
 
@@ -334,7 +349,7 @@ class VEdit(AbstractDigit):
     def __ModifyVertex(self, coords, action):
         
         try:
-            line = self.driver.selected[0]
+            line = self.driver.GetSelected()[0]
         except:
             return False
 
@@ -348,8 +363,8 @@ class VEdit(AbstractDigit):
         # run the command
         vedit = cmd.Command(cmd=command)
 
-        # redraw map
-        #self.driver.ReDrawMap(self.map)
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
 
         return True
     
@@ -397,27 +412,33 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         # initialize wx display driver
         try:
-            self.display = DisplayDriver()
+            self.__display = DisplayDriver()
         except:
-            self.display = None
+            self.__display = None
             
         settings = self.parent.settings
         self.UpdateSettings()
 
     def Reset(self, map):
+        """Close map and open new one"""
         if map:
             name, mapset = map.split('@')
-            self.display.OpenMap(str(name), str(mapset))
+            self.__display.OpenMap(str(name), str(mapset))
         else:
-            self.display.CloseMap()
+            self.__display.CloseMap()
     
+    def ReloadMap(self):
+        """Reload map (close and re-open). Needed for v.edit."""
+        
+        self.__display.ReloadMap()
+
     def DrawMap(self, pdc):
         """Draw vector map layer content
 
         Return wx.Image 
         """
         
-        nlines = self.display.DrawMap(pdc)
+        nlines = self.__display.DrawMap(pdc)
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
 
         return nlines
@@ -432,21 +453,66 @@ class CDisplayDriver(AbstractDisplayDriver):
         x1, y1 = rect[0]
         x2, y2 = rect[1]
 
-        nselected = self.display.SelectLinesByBox(x1, y1, x2, y2)
+        nselected = self.__display.SelectLinesByBox(x1, y1, x2, y2)
         Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
                   nselected)
 
         return nselected
 
-    def GetSelected(self):
-        """Get ids (grass) of selected vector features"""
+    def SelectLinesByPoint(self, point, onlyType=None):
+        """Select vector features by coordinates of click point.
+        Number of selected features can be decreased by 'onlyType'
+        ('None' for all types)"""
+
+        nselected = self.__display.SelectLinesByPoint(point[0], point[1],
+                                                    float(self.parent.threshold),
+                                                    -1); 
+
+        Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): selected=%d" % \
+                  nselected)
+
+        return nselected
+
+    def GetSelected(self, grassId=True):
+        """Return ids of selected vector features
         
-        return self.display.GetSelected()
+        If grassId is True returns GRASS ids, otherwise
+        internal ids of objects drawn in PseudoDC"""
         
+        if grassId:
+            selected = self.__display.GetSelected(True)
+        else:
+            selected = self.__display.GetSelected(False)
+            
+        #Debug.msg(4, "CDisplayDriver.GetSelected(): grassId=%d, ids=%s" % \
+            #grassId, ids)
+            
+        return selected
+
+    def GetSelectedVertex(self, coords):
+        """Get PseudoDC id(s) of vertex (of selected line)
+        on position 'coords'"""
+
+        x, y = coords
+
+        id = self.__display.GetSelectedVertex(x, y)
+
+        Debug.msg(4, "CDisplayDriver.GetSelectedVertex(): id=%d" % \
+                      id)
+
+        return (id,) # return tuple
+
     def Unselect(self):
-        """Unselect selected vector features"""
-        
-        self.display.Unselect()
+        """Delesect selected vector features"""
+
+        self.__display.Unselect()
+
+    def SetSelected(self, id):
+        """Set selected vector features"""
+
+        Debug.msg(4, "CDisplayDriver.SetSelected(): id=%s" % id)
+
+        self.__display.SetSelected(id)
 
     def SetRegion(self, reg):
         """Set geographical region
@@ -455,7 +521,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         
         Debug.msg(3, "CDisplayDriver.SetRegion(): %s" % reg)
         
-        self.display.SetRegion(reg['n'],
+        self.__display.SetRegion(reg['n'],
                                reg['s'],
                                reg['e'],
                                reg['w'],
@@ -467,10 +533,10 @@ class CDisplayDriver(AbstractDisplayDriver):
         settings = self.parent.settings
         # TODO map units
 
-        if not self.display:
+        if not self.__display:
             return
         
-        self.display.SetSettings (wx.Color(settings['symbolHighlight'][1][0],
+        self.__display.SetSettings (wx.Color(settings['symbolHighlight'][1][0],
                                            settings['symbolHighlight'][1][1],
                                            settings['symbolHighlight'][1][2],
                                            255).GetRGB(),
