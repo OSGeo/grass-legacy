@@ -106,7 +106,7 @@ void set_params(void)
     param.r->type = TYPE_STRING;
     param.r->required = NO;
     param.r->gisprompt = "old,raster,raster";
-    param.r->description = _("Reacharge raster map in m^3/s");
+    param.r->description = _("Recharge raster map in m^3/s");
 
     param.output = G_define_option();
     param.output->key = "output";
@@ -115,7 +115,7 @@ void set_params(void)
     param.output->gisprompt = "new,grid3,3d-raster";
     param.output->description =
 	_
-	("The piezometric head result of the numerical calculation will be written to this map.");
+	("The piezometric head result of the numerical calculation will be written to this map");
 
     param.vector = G_define_option();
     param.vector->key = "velocity";
@@ -124,7 +124,7 @@ void set_params(void)
     param.vector->gisprompt = "new,grid3,3d-raster";
     param.vector->description =
 	_
-	("Calculate the groundwater distance velocity vector field and write the x, y, and z components to maps named name_[xyz]. name is basename for the new raster3d maps.");
+	("Calculate the groundwater distance velocity vector field and write the x, y, and z components to maps named name_[xyz]. Name is basename for the new raster3d maps");
 
 
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
