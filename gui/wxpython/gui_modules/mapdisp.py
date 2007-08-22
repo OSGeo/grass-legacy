@@ -832,7 +832,7 @@ class BufferedWindow(wx.Window):
                 if updateRecordDlg.mapInfo:
                     # highlight feature & re-draw map
                     self.parent.digit.driver.SetSelected(updateRecordDlg.selectedLines)
-                    self.UpdateMap()
+                    self.UpdateMap(render=False)
 
                     if updateRecordDlg.ShowModal() == wx.ID_OK:
                         sqlfile = tempfile.NamedTemporaryFile(mode="w")
@@ -842,8 +842,9 @@ class BufferedWindow(wx.Window):
                                                           "--q",
                                                           "input=%s" % sqlfile.name])
                     # unselect & re-draw
-                    Digit.driver.SetSelected([])
-                    self.UpdateMap()
+                    # PyDisplayDriver: Digit.driver.SetSelected([])
+                    self.parent.digit.driver.Unselect()
+                    self.UpdateMap(render=False)
         else:
             # get decoration id
             self.lastpos = self.mouse['begin']
@@ -921,8 +922,10 @@ class BufferedWindow(wx.Window):
                             # -> move vertex
                             self.moveIds = driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
                                                                                     self.mouse['begin'][1]))
+                            print "#", self.moveIds
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
-                self.parent.digit.driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]), onlyType="line")
+                east, north = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
+                self.parent.digit.driver.SelectLinesByPoint((east, north), onlyType="line")
                 self.UpdateMap(render=False)
         elif self.dragid != None:
             # end drag of overlay decoration
@@ -1050,7 +1053,7 @@ class BufferedWindow(wx.Window):
                                                                    layer=self.parent.digit.settings["layer"],
                                                                    cat=self.parent.digit.settings["category"],
                                                                    pos=posWindow,
-                                                                   action="addLine")
+                                                                   action="add")
                         if addRecordDlg.mapInfo and \
                                 addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
@@ -1066,7 +1069,7 @@ class BufferedWindow(wx.Window):
                 # -> delete selected vector features
                 self.parent.digit.DeleteSelectedLines()
             elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
-                # pixel -> cell
+                # move vector feature
                 move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
                         self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
                 # ES -> EN
@@ -1076,21 +1079,31 @@ class BufferedWindow(wx.Window):
                     move[1] *= -1.0
 
                 if digit.action == "moveLine":
+                    # move line
                     self.parent.digit.MoveSelectedLines(move)
-                else: # moveVertex
-                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0], self.moveCoords[1]),move)
+                else:
+                    # move vertex
+                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0],
+                                                                          self.moveCoords[1]),
+                                                         move)
 
                 del self.moveBegin
                 del self.moveCoords
                 del self.moveIds
             elif digit.action == "splitLine":
-                self.parent.digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                # split line
+                self.parent.digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0],
+                                                            self.mouse['begin'][1]))
             elif digit.action == "addVertex":
-                self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                # add vertex
+                self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0],
+                                                            self.mouse['begin'][1]))
             elif digit.action == "removeVertex":
-                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1]))
+                # remove vertex
+                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], 
+                                                               self.mouse['begin'][1]))
 
-            #self.parent.digit.driver.SetSelected([])
+            # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
             self.parent.digit.driver.Unselect()
             self.UpdateMap(render=False)
 
@@ -1110,7 +1123,7 @@ class BufferedWindow(wx.Window):
             elif digit.action in ["deleteLine", "moveLine", "splitLine",
                                   "addVertex", "removeVertex", "moveVertex"]:
                 # unselected selected features
-                # self.parent.digit.driver.SetSelect([])
+                # PyDisplayDriver: self.parent.digit.driver.SetSelect([])
                 self.parent.digit.driver.Unselect()
                 if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
                     del self.moveBegin
@@ -1138,7 +1151,7 @@ class BufferedWindow(wx.Window):
                 if len(self.moveIds) > 0:
                     # draw lines on new position
                     for id in self.moveIds:
-                        self.pdc.TranslateId(id, dx, dy)
+                        self.pdcVector.TranslateId(id, dx, dy)
                 self.Refresh() # TODO: use RefreshRect()
                 self.mouse['begin'] = self.mouse['end']
 
@@ -1692,11 +1705,16 @@ class MapFrame(wx.Frame):
 
     def Pointer(self, event):
         """Pointer button clicled"""
+
         self.MapWindow.mouse['use'] = "pointer"
         self.MapWindow.mouse['box'] = "point"
 
         # change the cursor
-        self.MapWindow.SetCursor(self.cursors["default"]) # default
+        if self.digittoolbar:
+            # digitization tool activated
+            self.MapWindow.SetCursor(self.cursors["cross"]) 
+        else:
+            self.MapWindow.SetCursor(self.cursors["default"])
 
     def OnZoomIn(self, event):
         """

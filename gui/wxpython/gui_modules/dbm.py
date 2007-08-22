@@ -650,9 +650,11 @@ class DisplayAttributesDialog(wx.Dialog):
             else:
                 self.SetTitle(_("Display attributes"))
 
-            if not line or \
-                    (self.action != "add" and selected == 0):
-                continue
+            if self.action == "add":
+                pass
+            else:
+                if not line and selected == 0:
+                    continue
 
             if line:
                 self.selectedLines.append(line)
@@ -729,7 +731,7 @@ class DisplayAttributesDialog(wx.Dialog):
         mainSizer.Fit(self)
 
         if notebook.GetPageCount() == 0:
-            Debug.msg(4, "DisplayAttributesDialog(): Nothing found!")
+            Debug.msg(2, "DisplayAttributesDialog(): Nothing found!")
             self.mapInfo = None
 
     def __SelectAttributes(self, layer):
