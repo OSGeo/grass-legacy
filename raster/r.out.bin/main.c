@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
     fd = G_open_cell_old(name, mapset);
     if (fd < 0)
-	G_fatal_error(_("Cannot open raster map [%s]"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     map_type = G_get_raster_map_type(fd);
     if (!flag.int_out->answer)
@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
     if (do_stdout)
 	fp = stdout;
     else if (NULL == (fp = fopen(outfile, "w")))
-	G_fatal_error(_("Unable to create file [%s]"), outfile);
+	G_fatal_error(_("Unable to create file <%s>"), outfile);
 
     /* Check Endian State of Host Computer */
     if(G_is_little_endian()) {
@@ -228,11 +228,11 @@ int main(int argc, char *argv[])
 
 	/* Open Header File */
 	if (NULL == (fp_1 = fopen(out_tmp1, "w")))
-	    G_fatal_error(_("Unable to create file [%s]"), out_tmp1);
+	    G_fatal_error(_("Unable to create file <%s>"), out_tmp1);
 
 	/* Open World File */
 	if (NULL == (fp_2 = fopen(out_tmp2, "w")))
-	    G_fatal_error(_("Unable to create file [%s]"), out_tmp2);
+	    G_fatal_error(_("Unable to create file <%s>"), out_tmp2);
 
 
 	G_message(_("Creating BIL support files..."));

@@ -110,10 +110,10 @@ int main (int argc, char *argv[]) {
     /* override coordinate precision if any */
     precision = atof (prec_opt->answer);
     if (precision < 0) {
-        G_fatal_error(_("Precision must not be negative."));
+        G_fatal_error(_("Precision must not be negative"));
     }
     if (precision > 15) {
-        G_fatal_error(_("Precision must not be higher than 15."));
+        G_fatal_error(_("Precision must not be higher than 15"));
     }
 
     /* parse field number */
@@ -182,7 +182,7 @@ int main (int argc, char *argv[]) {
 
     /* open output SVG-file and print SVG-header with viewBox and Namenspaces */
     if((fpsvg = fopen(out_opt->answer, "w")) == NULL)	{
-        G_fatal_error(_("SVG file <%s> cannot be opened"), out_opt->answer);
+        G_fatal_error(_("Unable to open SVG file <%s>"), out_opt->answer);
     }
 
     fprintf(fpsvg,"<svg xmlns=\"%s\" xmlns:xlink=\"%s\" xmlns:gg=\"%s\" ",
@@ -197,7 +197,7 @@ int main (int argc, char *argv[]) {
     /* extract areas if any or requested */
     if (G_strcasecmp(type_opt->answer, "poly") == 0) {
         if (Vect_get_num_areas(&In) == 0) {
-	    G_warning(_("No areas found, skipping type=poly."));
+	    G_warning(_("No areas found, skipping type=poly"));
         }
 	else {
 	    /* extract area as paths */

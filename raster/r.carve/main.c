@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 
     /* open new map for output */
     if ((outfd = G_open_raster_new(parm.outrast->answer,  parm.raster_type)) < 0)
-        G_fatal_error(_("Unable to open cellfile for <%s>"), parm.outrast->answer);
+        G_fatal_error(_("Unable to create raster map <%s>"), parm.outrast->answer);
 
     /* if specified, open vector for output */
     if (parm.outvect->answer)

@@ -328,7 +328,7 @@ int main(int argc, char *argv[]) {
     G_percent(row, mrows, 2);  /* finish it off */
 
     
-    G_message(_("Writing out map ... "));
+    G_message(_("Writing out map..."));
 
     /* then write it to disk */
     /* NoGood: fwrite(raster, G_raster_size(map_type), mrows*ncols, fp1); */
@@ -382,7 +382,7 @@ int main(int argc, char *argv[]) {
     filesize=ftell(fp1);
     fclose(fp1);
 
-	G_message(_("%ld bytes written to '%s'."), filesize, outfile);
+	G_message(_("%ld bytes written to '%s'"), filesize, outfile);
 
     G_done_msg("");
 

@@ -124,7 +124,7 @@ int main(
     G_get_set_window (&w); 
 
     if ((cellfile = G_open_cell_new(out_file->answer)) == -1)
-	G_fatal_error(_("Unable to create raster map [%s]"), out_file->answer);
+	G_fatal_error(_("Unable to create raster map <%s>"), out_file->answer);
 
     int_buf = (int *)G_malloc (w.cols * sizeof (int));
     {

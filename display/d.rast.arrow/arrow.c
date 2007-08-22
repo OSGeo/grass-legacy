@@ -222,11 +222,11 @@ int main (int argc, char **argv)
 
     scale = atof(opt8->answer);
     if(scale <= 0.0)
-	G_fatal_error(_("Illegal value for scale factor."));
+	G_fatal_error(_("Illegal value for scale factor"));
 
     skip = atoi(opt9->answer);
     if(skip <= 0)
-	G_fatal_error(_("Illegal value for skip factor."));
+	G_fatal_error(_("Illegal value for skip factor"));
 
 
     if(opt7->answer) {
@@ -238,7 +238,7 @@ int main (int argc, char **argv)
     	    G_fatal_error(_("Raster map <%s> not found"), mag_map);
     }
     else if(scale != 1.0)
-	G_warning(_("scale option requires magnitude_map"));
+	G_warning(_("Scale option requires magnitude_map"));
 
 
 /* Setup driver and check important information */
@@ -311,7 +311,7 @@ int main (int argc, char **argv)
     if(opt7->answer) {
 	G_init_fp_range(&range); /* really needed? */
 	if (G_read_fp_range(mag_map, mag_mapset, &range) != 1 )
-	    G_fatal_error (_("Problem reading range file."));
+	    G_fatal_error (_("Problem reading range file"));
 	G_get_fp_range_min_max(&range, &mag_min, &mag_max);
 
 	scale *= 1.5*((D_ew < D_ns) ? D_ew : D_ns) / fabs(mag_max);
@@ -379,7 +379,7 @@ int main (int argc, char **argv)
     /* open the raster map */
     layer_fd = G_open_cell_old (layer_name, mapset);
     if (layer_fd < 0)
-	G_fatal_error(_("Unable to open raster map [%s] in [%s]"), layer_name, mapset);
+	G_fatal_error(_("Unable to open raster map <%s>"), layer_name);
 
     raster_type = G_get_raster_map_type(layer_fd);
 
@@ -391,7 +391,7 @@ int main (int argc, char **argv)
 	/* open the magnitude raster map */
 	mag_fd = G_open_cell_old(mag_map, mag_mapset);
 	if(mag_fd < 0)
-            G_fatal_error("Unable to open raster map [%s] in [%s]", mag_map, mag_mapset);
+            G_fatal_error("Unable to open raster map <%s>", mag_map);
 
 	mag_raster_type = G_get_raster_map_type(mag_fd);
 

@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-	_("Convert a GRASS binary vector map to VTK ASCII output");
+	_("Converts a GRASS binary vector map to VTK ASCII output.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     output->required = NO;
     output->multiple = NO;
     output->gisprompt = "new_file,file,output";
-    output->description = _("Path to resulting VTK file.");
+    output->description = _("Path to resulting VTK file");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt->answer = "point,kernel,centroid,line,boundary,area,face";
@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
     if (output->answer) {
 	ascii = fopen(output->answer, "w");
 	if (ascii == NULL) {
-	    G_fatal_error(_("Cannot open file [%s]"), output->answer);
+	    G_fatal_error(_("Unable to open file <%s>"), output->answer);
 	}
     }
     else {

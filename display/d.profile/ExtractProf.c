@@ -92,7 +92,7 @@ fprintf (stdout,"(%d,%d)\n"                       ,row2,col2);
 fd = G_open_cell_old(name,mapset);
 if (fd < 0)
    {
-   G_warning(_("unable to open [%s] in [%s]"), name, mapset);
+   G_warning(_("Unable to open raster map <%s>"), name);
    return(-2);
    }
 theCell.type = buf.type = G_get_raster_map_type(fd);

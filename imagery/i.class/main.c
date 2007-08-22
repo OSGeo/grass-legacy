@@ -105,7 +105,7 @@ int main (int argc, char *argv[])
 
     mapset = G_find_cell (bg_map->answer, "");
         if (G_get_cellhd (bg_map->answer, mapset, &cellhd) != 0)
-            G_fatal_error (_("Unable to find input cell map '%s'"), bg_map->answer); 
+            G_fatal_error (_("Raster map <%s> not found"), bg_map->answer); 
 
   G_adjust_window_to_box (&cellhd, &VIEW_MAP1->cell.head, VIEW_MAP1->nrows, VIEW_MAP1->ncols);
     Configure_view (VIEW_MAP1, bg_map->answer, mapset, cellhd.ns_res, cellhd.ew_res);
@@ -206,7 +206,7 @@ static int check_files (char *img_group, char *img_subgroup,
     }
 
     if (G_get_cellhd(Refer.file[0].name,Refer.file[0].mapset,&Band_cellhd)!=0)
-      G_fatal_error(_("Unable to read cell header for first band file."));
+      G_fatal_error(_("Unable to read cell header for first band file"));
 
     /* allocate space for signature routines */
     init_sig_routines((size_t)Refer.nfiles);
