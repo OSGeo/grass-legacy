@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-20 17:19+0200\n"
+"POT-Creation-Date: 2007-08-22 18:02+0200\n"
 "PO-Revision-Date: 2007-08-08 17:52+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -2129,7 +2129,7 @@ msgstr "La estructura del vector no está inicializada"
 msgid "Input format error"
 msgstr "Error del formato de entrada"
 
-#: ../lib/gpde/test/test_arrays.c:43
+#: ../lib/gpde/test/test_arrays.c:48
 msgid ""
 "\n"
 "++ Running array unit tests ++"
@@ -2137,15 +2137,15 @@ msgstr ""
 "\n"
 "++ Ejecutando pruebas de la unidad de matrices ++"
 
-#: ../lib/gpde/test/test_arrays.c:45
+#: ../lib/gpde/test/test_arrays.c:50
 msgid "\t 1. testing 2d arrays"
 msgstr "\t 1. probando matrices 2D"
 
-#: ../lib/gpde/test/test_arrays.c:48
+#: ../lib/gpde/test/test_arrays.c:53
 msgid "\t 2. testing 3d arrays"
 msgstr "\t 2. probando matrices 3D"
 
-#: ../lib/gpde/test/test_arrays.c:52
+#: ../lib/gpde/test/test_arrays.c:57
 msgid ""
 "\n"
 "-- Array unit tests failure --"
@@ -2153,7 +2153,7 @@ msgstr ""
 "\n"
 "-- Las pruebas de la unidad de matrices fallaron --"
 
-#: ../lib/gpde/test/test_arrays.c:54
+#: ../lib/gpde/test/test_arrays.c:59
 msgid ""
 "\n"
 "-- Array unit tests finished successfully --"
