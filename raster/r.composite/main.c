@@ -197,7 +197,7 @@ int main(int argc, char **argv)
 		G_remove("cell", out_name);
 
 	if ((out_file = G_open_cell_new(out_name)) < 0)
-		G_fatal_error(_("Unable to create output <%s>"), out_name);
+		G_fatal_error(_("Unable to create raster map <%s>"), out_name);
 
 	out_array = G_allocate_cell_buf() ;
 

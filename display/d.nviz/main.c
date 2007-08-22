@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     /* Set description */
     module = G_define_module();
     module->keywords = _("display");
-    module->description = _("" "Create fly-through script to run in NVIZ");
+    module->description = _("" "Creates fly-through script to run in NVIZ.");
 
     parm.opt1 = G_define_option();
     parm.opt1->key = "input";
@@ -189,9 +189,9 @@ int main(int argc, char *argv[])
 
 /* Open Raster File*/
     if (NULL == (mapset = G_find_cell2(name, "")))
-	G_fatal_error( _("Cannot find mapset for %s"), name);
+	G_fatal_error( _("Raster map <%s> not found"), name);
     if (0 > (fd = G_open_cell_old(name, mapset)))
-	G_fatal_error( _("Cannot open File %s"), name);
+	G_fatal_error( _("Unable to open raster map <%s>"), name);
 
 /* Set Image name */
     if (parm.name->answer)
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
 	strcat(outfile, ".nvscr");
 
     if (NULL == (fp = fopen(outfile, "w")))
-	G_fatal_error( _("Not able to open file for [%s]"), outfile);
+	G_fatal_error( _("Unable to open file <%s>"), outfile);
 
 /* Get Raster Type */
     data_type = G_get_raster_map_type(fd);

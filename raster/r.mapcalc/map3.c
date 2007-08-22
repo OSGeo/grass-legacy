@@ -134,7 +134,7 @@ static void write_row(void *handle, const char *buf, int type, int depth, int ro
 				x = ((CELL*)buf)[i];
 
 			if (G3d_putValue(handle, i, row, depth, (char *) &x, DCELL_TYPE) < 0)
-				G_fatal_error("error writing data");
+				G_fatal_error(_("Error writing data"));
 		}
 		break;
 	case FCELL_TYPE:
@@ -524,7 +524,7 @@ int open_map(const char *name, int mod, int row, int col)
 		DCELL_TYPE, G3D_USE_CACHE_DEFAULT);
 
 	if (!m->handle)
-		G_fatal_error(_("Unable to open raster map <%s@%s>"), name, mapset);
+		G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 	return num_maps++;
 }
@@ -595,7 +595,7 @@ int open_output_map(const char *name, int res_type)
 		&current_region3);
 
 	if (!handle)
-		G_fatal_error(_("Unable to create output raster map <%s>"), name);
+		G_fatal_error(_("Unable to create raster map <%s>"), name);
 
 	fd = handle_to_fd(handle);
 

@@ -110,7 +110,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		/*creating new raster file*/
 		mv_fd = G_open_raster_new(output, DCELL_TYPE);
 		if (mv_fd < 0)
-			G_fatal_error( _("unable to create raster"));
+			G_fatal_error( _("unable to create raster map <%s>"), output);
 			
 		random_access_name= G_tempfile();
 		random_access = open(random_access_name, O_RDWR|O_CREAT, 0755);

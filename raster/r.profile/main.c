@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
     if (NULL == (mapset = G_find_cell2(name, "")))
 	G_fatal_error(_("Raster map <%s> not found"), name);
     if (0 > (fd = G_open_cell_old(name, mapset)))
-	G_fatal_error(_("Cannot open raster map <%s>"), name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     /* initialize color structure */
     if (clr)
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 	fp = stdout;
     }
     else if (NULL == (fp = fopen(outfile, "w")))
-	G_fatal_error(_("Cannot open file for <%s>"), outfile);
+	G_fatal_error(_("Unable to open file <%s>"), outfile);
 
     /* Get Raster Type */
     data_type = G_get_raster_map_type(fd);

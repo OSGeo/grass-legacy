@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-	_("Convert a GRASS binary vector map to a GRASS ASCII vector map");
+	_("Converts a GRASS binary vector map to a GRASS ASCII vector map.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	ver = 4;
 
     if (ver == 4 && format == FORMAT_POINT) {
-	G_fatal_error(_("format 'point' is not supported for old version"));
+	G_fatal_error(_("Format 'point' is not supported for old version"));
     }
 
     if (ver == 4 && output->answer == NULL) {
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     /*The precision of the output */
     if (dp_opt->answer) {
 	if (sscanf(dp_opt->answer, "%d", &dp) != 1)
-	    G_fatal_error(_("failed to interpret dp as an integer"));
+	    G_fatal_error(_("Failed to interpret dp as an integer"));
     }
 
 
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 	}
 
 	if (ascii == NULL) {
-	    G_fatal_error(_("Cannot open file [%s]"), output->answer);
+	    G_fatal_error(_("Unable to open file <%s>"), output->answer);
 	}
     }
     else {
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("dig_att file already exist"));
 
 	if ((att = G_fopen_new("dig_att", output->answer)) == NULL)
-	    G_fatal_error(_("Not able to open dig_att file <%s>\n"),
+	    G_fatal_error(_("Unable to open dig_att file <%s>\n"),
 			  output->answer);
     }
 

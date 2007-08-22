@@ -94,14 +94,12 @@ int open_file (char *name)
 	if ((mapset = G_find_cell2(cell,"")) == NULL)
 	{
 	        unlink(work_file_name);
-		G_fatal_error (_("%s: Unable to find raster map <%s>"),
-                              error_prefix, name);
+		G_fatal_error (_("Raster map <%s> not found"), name);
 	}
 	if ((cell_file = G_open_cell_old(cell,mapset)) < 0)
 	{
 	        unlink(work_file_name);
-		G_fatal_error (_("%s: Unable to open raster map <%s> in mapset <%s>"),
-                              error_prefix, cell, mapset);
+		G_fatal_error (_("Unable to open raster map <%s>"), cell);
 	}
 
 	n_rows = G_window_rows();
@@ -175,8 +173,7 @@ close_file (char *name)
 	if ((cell_file = G_open_cell_new(name)) < 0)
 	{
 	        unlink(work_file_name);
-		G_fatal_error (_("%s:  Unable to open output raster map <%s>"),
-                              error_prefix, name);
+		G_fatal_error (_("Unable to create raster map <%s>"), name);
 	}
 
 	row_count = n_rows - (PAD << 1);
