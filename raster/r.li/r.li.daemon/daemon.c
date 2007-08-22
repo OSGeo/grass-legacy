@@ -110,7 +110,7 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		/*creating new raster file*/
 		mv_fd = G_open_raster_new(output, DCELL_TYPE);
 		if (mv_fd < 0)
-			G_fatal_error( _("unable to create raster map <%s>"), output);
+			G_fatal_error( _("Unable to create raster map <%s>"), output);
 			
 		random_access_name= G_tempfile();
 		random_access = open(random_access_name, O_RDWR|O_CREAT, 0755);
@@ -123,11 +123,11 @@ int calculateIndex(char *file, int f(int, char **, area_des, double *),\
 		
 		doneDir = G_mkdir(out);
 		if (doneDir == -1 && errno != EEXIST)
-			G_fatal_error( _("Cannot create .r.li directory"));
+			G_fatal_error( _("Cannot create %s/.r.li/ directory"), getenv("HOME"));
 		sprintf(out, "%s/.r.li/output", getenv("HOME"));
 		doneDir = G_mkdir(out);
 		if (doneDir == -1 && errno != EEXIST)
-			G_fatal_error( _("Cannot create .r.li/output directory"));
+			G_fatal_error( _("Cannot create %s/.r.li/output/ directory"), getenv("HOME"));
 		sprintf(out, "%s/.r.li/output/%s", getenv("HOME"), output);
 		res = open(out, O_WRONLY|O_CREAT| O_TRUNC, 0755);
 	}
