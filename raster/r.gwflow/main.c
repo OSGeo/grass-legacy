@@ -99,7 +99,7 @@ void set_params(void)
     param.r->required = NO;
     param.r->gisprompt = "old,raster,raster";
     param.r->description =
-	_("Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
+	_("Recharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]");
 
     param.top = G_define_option();
     param.top->key = "top";
@@ -152,7 +152,7 @@ void set_params(void)
     param.river_head->required = NO;
     param.river_head->gisprompt = "old,raster,raster";
     param.river_head->description =
-	_("Water level (head) of the river with leakge connection in [m]");
+	_("Water level (head) of the river with leakage connection in [m]");
 
     param.river_leak = G_define_option();
     param.river_leak->key = "river_leak";
@@ -175,7 +175,7 @@ void set_params(void)
     param.drain_leak->required = NO;
     param.drain_leak->gisprompt = "old,raster,raster";
     param.drain_leak->description =
-	_("The leakage coefficient of the drainage bed in [1/s].");
+	_("The leakage coefficient of the drainage bed in [1/s]");
  
     param.dt = N_define_standard_option(N_OPT_CALC_TIME);
     param.maxit = N_define_standard_option(N_OPT_MAX_ITERATIONS);
@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
     }
     else {
 	G_fatal_error
-	    ("Please provide river_head, river_leak and river_bed maps.");
+	    (_("Please provide river_head, river_leak and river_bed maps"));
     }
 
     /*Check the drainage parameters */
@@ -249,7 +249,7 @@ int main(int argc, char *argv[])
 	with_drain = 1;
     }
     else {
-	G_fatal_error("Please provide drain_head and drain_leak maps.");
+	G_fatal_error(_("Please provide drain_head and drain_leak maps"));
     }
 
 
