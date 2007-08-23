@@ -60,7 +60,7 @@ proc make_fun_buttons {dlg path} {
 
 	# Set the starting window size if this is a toplevel window
 	if {[winfo toplevel $path] == $path} {
-		wm geometry $path "560x350"
+		wm geometry $path "560x400"
 	}
 }
 
@@ -68,11 +68,15 @@ proc run_ui {cmd} {
     global dlg path
 
     set program [lindex $cmd 0]
+    set code ""
 
-    set code [exec -- $program --tcltk]
+	if {[catch {set code [exec -- $program --tcltk]} error]} {
+		puts $error
+	}
 
     set path .dialog$dlg
     toplevel $path
+    if {$code == ""} { return }
     eval $code
 
     # Push the command to the dialog
@@ -150,7 +154,9 @@ proc execute {cmd} {
 ###############################################################################
 proc spawn {cmd args} {
 
-    eval [list exec -- $cmd] $args &
+	if {[catch {eval [list exec -- $cmd] $args &} error]} {
+		puts $error
+	}
 
 }
 
@@ -177,7 +183,11 @@ proc run {cmd args} {
 	# These used to go to stdout and stderr
 	# but we don't want to pollute that console.
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
-	eval [list exec -- $cmd] $args >& $devnull
+	
+	if {[catch {eval [list exec -- $cmd] $args >& $devnull} error]} {
+		puts $error
+	}
+
 	
 }
 
@@ -206,9 +216,15 @@ proc term {cmd args} {
 	global mingw
 	
 	if { $mingw == "1" } {
-	   eval [list exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd] $args &
+		if {[catch {eval [list exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd] $args &} error]} {
+			puts $error
+		}
+	   
 	} else {
-	   eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &
+		if {[catch {eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &} error]} {
+			puts $error
+		}
+	   
 	}
 }
 
@@ -218,6 +234,7 @@ proc term {cmd args} {
 
 proc guarantee_xmon {} {
 	if {![catch {open "|d.mon -L" r} input]} {
+		puts "loop 1"
 		while {[gets $input line] >= 0 } {
 			if {[regexp -nocase {(x[0-9]+).*not running} $line dummy monitor]} {
 				# $monnum is the monitor number
@@ -228,7 +245,7 @@ proc guarantee_xmon {} {
 
 	}
 	if {[catch {close $input} error]} {
-		puts $error
+		puts "$error"
 	}
 
 	set xmon  [lindex $xmonlist 0]
