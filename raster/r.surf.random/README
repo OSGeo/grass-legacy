@@ -1,7 +1,0 @@
-This program will produce a raster map layer of uniform deviates whose
-magnitude can be expressed by the user. It is essentialy the same as
-r.gauss.surf, but uses a linear random number generator instead. Both 
-random number generators are taken from Press, Flannery, Teukolsky and 
-Vetterling (1988) - Numerical Recipes in C.
-
-[J.Wood 23.10.91]
