@@ -54,6 +54,12 @@ proc MapToolBar::create { tb } {
 		-highlightbackground $bgcolor  -activebackground $bgcolor\
 		-helptext [G_msg "Start NVIZ using active layers in current region"]
 
+	$bbox1 add -image [image create photo -file "$iconpath/module-d.nviz.gif"] \
+		-command "MapCanvas::dnviz $mon" \
+		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
+		-highlightbackground $bgcolor  -activebackground $bgcolor\
+		-helptext [G_msg "Create flythough path for NVIZ"]
+
 	# erase
 	$bbox1 add -image [image create photo -file "$iconpath/gui-erase.gif"] \
 		-command "MapCanvas::erase $mon" \
@@ -384,27 +390,40 @@ proc MapToolBar::savefile { type quality } {
 	if { $path != "" } {
 		switch $type {
 			"bmp" {
-				exec gdal_translate $path.ppm $path.bmp -of BMP
+				if { [catch {exec gdal_translate $path.ppm $path.bmp -of BMP} error ]} {
+					puts $error
+				}
 				file delete $path.ppm
 			}
 			"jpg" {
 			    if { $quality == 300 } {
-					exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% 
+					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% } error ]} {
+						puts $error
+					}					
 					file delete $path.ppm
 				} else {
-					exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality 
+					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality  } error ]} {
+						puts $error
+					}					
+
 					file delete $path.ppm
 				}
 			}
 			"png" {
-				exec gdal_translate $path.ppm $path.png -of PNG
+				if { [catch {exec gdal_translate $path.ppm $path.png -of PNG} error ]} {
+					puts $error
+				}
+				
 				file delete $path.ppm
 			}
 			"ppm" {
 				return
 			}
 			"tif" {
-				exec gdal_translate $path.ppm $path.tif -of GTIFF
+				if { [catch {exec gdal_translate $path.ppm $path.tif -of GTIFF} error ]} {
+					puts $error
+				}
+				
 				file delete $path.ppm
 			}
 		}

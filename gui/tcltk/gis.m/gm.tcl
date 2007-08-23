@@ -28,13 +28,25 @@ package require -exact BWidget 1.2.1
 lappend auto_path $env(GISBASE)/etc/gm
 package require -exact GisM 1.0
 
-set env(GISDBASE) [exec g.gisenv get=GISDBASE]
-set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
-set env(MAPSET) [exec g.gisenv get=MAPSET]
+if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
+	puts $error
+}
+if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
+	puts $error
+}
+if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
+	puts $error
+}
 
-set gisdbase [exec g.gisenv get=GISDBASE]
-set location_name [exec g.gisenv get=LOCATION_NAME]
-set mapset [exec g.gisenv get=MAPSET]
+if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
+	puts $error
+}
+if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
+	puts $error
+}
+if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
+	puts $error
+}
 
 # path to GIS Manager files
 set gmpath $env(GISBASE)/etc/gm
@@ -133,52 +145,52 @@ regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
 
 ###############################################################################
 
-proc read_moncap {} {
-	global env moncap
-
-	set moncap {}
-
-	catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}
-	set data [read $file]
-	
-	if {[catch {close $file} error]} {
-		puts $error
-	}
-
-	set data [subst -nocommands -novariables $data]
-	foreach line [split $data \n] {
-		if {[string match {\#*} $line]} continue
-		if {![string match {*:*:*:*:*:*} $line]} continue
-		set fields {}
-		foreach field [split $line :] {
-			lappend fields [string trim $field]
-		}
-		lappend moncap $fields
-	}
-}
-
-###############################################################################
-
-proc monitor_menu {op} {
-	global moncap
-
-	set submenu {}
-	set last_driver {}
-	foreach mon $moncap {
-		set name [lindex $mon 0]
-		set driver [lindex $mon 1]
-		if {$last_driver != "" && $last_driver != $driver} {
-			lappend submenu {separator}
-		}
-		set last_driver $driver
-		lappend submenu [list command $name {} "" {} -command "run d.mon $op=$name"]	}
-
-	return [list $submenu]
-}
+# proc read_moncap {} {
+# 	global env moncap
+# 
+# 	set moncap {}
+# 
+# 	catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}
+# 	set data [read $file]
+# 	
+# 	if {[catch {close $file} error]} {
+# 		puts $error
+# 	}
+# 
+# 	set data [subst -nocommands -novariables $data]
+# 	foreach line [split $data \n] {
+# 		if {[string match {\#*} $line]} continue
+# 		if {![string match {*:*:*:*:*:*} $line]} continue
+# 		set fields {}
+# 		foreach field [split $line :] {
+# 			lappend fields [string trim $field]
+# 		}
+# 		lappend moncap $fields
+# 	}
+# }
 
 ###############################################################################
 
-read_moncap
+# proc monitor_menu {op} {
+# 	global moncap
+# 
+# 	set submenu {}
+# 	set last_driver {}
+# 	foreach mon $moncap {
+# 		set name [lindex $mon 0]
+# 		set driver [lindex $mon 1]
+# 		if {$last_driver != "" && $last_driver != $driver} {
+# 			lappend submenu {separator}
+# 		}
+# 		set last_driver $driver
+# 		lappend submenu [list command $name {} "" {} -command "run d.mon $op=$name"]	}
+# 
+# 	return [list $submenu]
+# }
+
+###############################################################################
+
+#read_moncap
 
 proc Gm::color { color } {
 
@@ -483,8 +495,11 @@ proc Gm:DefaultFont { source } {
 
     toplevel .dispfont
     wm title .dispfont [G_msg "Select GRASS display font"]
-
-    set fontlist [string trim [exec d.font --q -l]]
+    
+    if {[catch {set fontlist [exec d.font --q -l]} error]} {
+	    puts $error
+    }
+    set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]
     set fontlist [lsort -unique $fontlist]
    
@@ -576,11 +591,6 @@ proc Gm::cleanup { } {
 	global legfile
 	variable moncount
 	
-	# delete temporary local region files (no longer needed)
-	#for {set x 1} {$x<$moncount} {incr x} {
-	#	exec g.remove region=map_$x
-	#}
-
 	set mappid $MapCanvas::mappid
 	
 	# delete all map display ppm files
