@@ -95,10 +95,12 @@ int main (int argc, char **argv)
     parse_command(argc, argv, vfiles, &numviews, &frames);
 
     /* debug */
-    for(i=0; i<numviews; i++){
-	fprintf(stderr,"\nVIEW %d: ", i+1);
-	for(j=0; j< frames; j++){
-	    fprintf(stderr,"%s ", vfiles[i][j]);
+    if (G_verbose() > G_verbose_std() ) {
+	for(i=0; i<numviews; i++){
+	    fprintf(stderr,"\nVIEW %d: ", i+1);
+	    for(j=0; j< frames; j++){
+		fprintf(stderr,"%s ", vfiles[i][j]);
+	    }
 	}
     }
     fprintf(stderr,"\n");
