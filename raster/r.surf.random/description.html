@@ -1,9 +1,11 @@
 <H2>DESCRIPTION</H2>
 
 <B>r.surf.random</B> produces a raster map layer of uniform random deviates
-whose range can be expressed by the user. It uses the random number
-generator described in Press, Flannery, Teukolsky and Vetterling (1988) -
-Numerical Recipes in C.
+whose range can be expressed by the user. It is essentialy the same as
+<em>r.surf.gauss</em>, but uses a linear random number generator instead.
+It uses the random number generator drand48() or rand()<!-- cite? -->,
+depending on the user's platform.
+
 
 <H2>SEE ALSO</H2>
 
@@ -23,4 +25,5 @@ Numerical Recipes in C.
 
 <BR><A HREF="http://www.geog.le.ac.uk/assist/index.html">ASSIST's home</A>
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
