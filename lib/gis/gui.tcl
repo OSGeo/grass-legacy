@@ -7,9 +7,16 @@ source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/gtcltk/select.tcl
 source $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
-set env(GISDBASE) [exec g.gisenv get=GISDBASE]
-set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
-set env(MAPSET) [exec g.gisenv get=MAPSET]
+if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
+	puts $error
+}
+if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
+	puts $error
+}
+if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
+	puts $error
+}
+
 
 set dlg 0
 set path {}
@@ -296,7 +303,10 @@ proc help_cmd {dlg} {
 	global opt env
 	set pgm_name $opt($dlg,pgm_name)
 
-	exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &
+	if {[catch {exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &} error]} {
+		puts $error
+	}
+	
 }
 
 proc clear_cmd {dlg} {
