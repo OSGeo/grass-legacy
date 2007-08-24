@@ -132,6 +132,23 @@ proc GmRaster::select_drapemap { id } {
 
 ###############################################################################
 
+# show base raster info in output window
+proc GmRaster::show_info { id } {
+	variable opt
+	set mapname $opt($id,1,map)
+	set cmd "r.info map=$mapname"		
+	run_panel $cmd
+}
+
+# show drape raster info in output window
+proc GmRaster::show_info_drape { id } {
+	variable opt
+	set mapname $opt($id,1,drapemap)
+	set cmd "r.info map=$mapname"		
+	run_panel $cmd
+}
+###############################################################################
+
 # set and display raster options
 proc GmRaster::options { id frm } {
     variable opt
@@ -164,13 +181,19 @@ proc GmRaster::options { id frm } {
         -command "GmRaster::select_map $id"
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
           -textvariable GmRaster::opt($id,1,map)
-    Label $row.d -text "   "
-    Button $row.e -text [G_msg "Help"] \
+    Label $row.d -text ""
+    Button $row.e -text [G_msg "base map info"] \
+            -image [image create photo -file "$iconpath/gui-rv.info.gif"] \
+            -command "GmRaster::show_info $id" \
+            -background $bgcolor \
+            -helptext [G_msg "base map info"]
+    Label $row.f -text ""
+    Button $row.g -text [G_msg "Help"] \
             -image [image create photo -file "$iconpath/gui-help.gif"] \
             -command "spawn g.manual --q d.rast" \
             -background $bgcolor \
             -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # raster query
@@ -199,7 +222,13 @@ proc GmRaster::options { id frm } {
         -command "GmRaster::select_drapemap $id"
     Entry $row.c -width 35 -text " $opt($id,1,drapemap)" \
           -textvariable GmRaster::opt($id,1,drapemap)
-    pack $row.a $row.b $row.c -side left
+    Label $row.d -text ""
+    Button $row.e -text [G_msg "drape map info"] \
+            -image [image create photo -file "$iconpath/gui-rv.info.gif"] \
+            -command "GmRaster::show_info_drape $id" \
+            -background $bgcolor \
+            -helptext [G_msg "drape map info"] 
+    pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
 
     # overlay

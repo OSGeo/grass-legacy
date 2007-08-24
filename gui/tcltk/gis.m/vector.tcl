@@ -265,6 +265,16 @@ proc GmVector::show_data { id } {
 }
 
 ###############################################################################
+# show vector info in output window
+proc GmVector::show_info { id } {
+	variable opt
+	set mapname $opt($id,1,vect)
+	set layernum $opt($id,1,layer)
+	set cmd "v.info map=$mapname layer=$layernum"		
+	run_panel $cmd
+}
+
+###############################################################################
 # select point symbols
 proc GmVector::select_symbol { id } {
     variable opt
@@ -308,15 +318,21 @@ proc GmVector::options { id frm } {
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "vector map to display"] \
 		-command "GmVector::select_map $id"
-    Entry $row.c -width 40 -text "$opt($id,1,vect)" \
+    Entry $row.c -width 35 -text "$opt($id,1,vect)" \
 		-textvariable GmVector::opt($id,1,vect) 
-    Label $row.d -text "   "
-    Button $row.e -text [G_msg "Help"] \
+    Label $row.d -text ""
+    Button $row.e -text [G_msg "Vector Info"] \
+		-image [image create photo -file "$iconpath/gui-rv.info.gif"] \
+		-command "GmVector::show_info $id" \
+		-background $bgcolor \
+		-helptext [G_msg "Vector Info"]
+    Label $row.f -text ""
+    Button $row.g -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
 		-command "spawn g.manual --q d.vect" \
 		-background $bgcolor \
 		-helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 	
     # display
