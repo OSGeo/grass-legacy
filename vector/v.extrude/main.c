@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
 	_("Name of attribute column with object heights");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->answer = "point,line,boundary,area,face";
-    type_opt->options = "point,line,boundary,area,face";
+    type_opt->answer = "point,line,boundary,area";
+    type_opt->options = "point,line,boundary,area";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
