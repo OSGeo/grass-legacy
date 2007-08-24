@@ -43,13 +43,7 @@ int main(int argc, char *argv[])
 	_("Produces a raster map layer of uniform random "
 	  "deviates whose range can be expressed by the user.");
 
-/* still true?  it uses rand1() from the gmath library. */
-/*		"It uses the random number generator described in Press, "
-		"Flannery, Teukolsky and Vetterling (1988) - Numerical "
-		"Recipes in C.";*/
 
-
-    /****** SET PARSER OPTIONS ******/
     out = G_define_standard_option(G_OPT_R_OUTPUT);
 
     min  = G_define_option();
