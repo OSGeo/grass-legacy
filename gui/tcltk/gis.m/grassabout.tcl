@@ -89,5 +89,8 @@ proc Gm::helptext {title textopts tagopts message} {
 #grassabout.tcl
 # open g.version and print in window
 #
-set text [exec g.version -c]
+
+if {[catch {set text [exec g.version -c]} error]} {
+    puts $error
+}
 Gm::helptext {About GRASS} {-width 75} {-justify left} $text
