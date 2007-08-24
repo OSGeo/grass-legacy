@@ -2,22 +2,21 @@
  *
  * MODULE:     v.extrude
  *
- * AUTHOR(S):  Jachym Cepicky jachym.cepicky _at_ centrum _dot_ cz
+ * AUTHOR(S):  Jachym Cepicky <jachym.cepicky gmail.com>
  *             Based on v.example by Radim Blazek
  *             Inspired by d.vect and v.drape
  *             Coding help and code cleaning by Markus Neteler
+ *             Support for points added by Martin Landa (08/2007)
  *
  * PURPOSE:    "Extrudes" flat polygons and lines to 3D with defined height
  *              Useful for creating buildings for displaying with NVIZ
  *
- * COPYRIGHT:  (C) 2005 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2005-2007 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
- *
- * TODO:       - points to lines would be fine
  ****************************************************************/
 
 #include <stdio.h>
@@ -27,30 +26,30 @@
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
 
-
-static long extrude(struct Map_info Out, struct line_cats *Cats,
-	    struct line_pnts *Points, struct line_pnts *NewPoints, int fdrast,
-	    int trace, double objheight, double voffset,
-	    struct Cell_head window, int area);
-
+int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Points,
+	    int fdrast, int trace, double objheight, double voffset,
+	    struct Cell_head window, int type);
 
 int main(int argc, char *argv[])
 {
-    struct Map_info In, Out;
-    static struct line_pnts *Points;
-    static struct line_pnts *NewPoints;
     struct GModule *module;
-    struct line_cats *Cats;
-    int i, type, cat, ctype, fdrast = 0, areanum = 0;
     char *mapset;
     struct Option *old, *new, *zshift, *height, *elevation, *hcolumn, *type_opt,
 	*field_opt;
     struct Flag *t_flag;
-    double objheight, voffset;
+
+    struct Map_info In, Out;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+
     struct Cell_head window;
     struct cat_list *Clist;
+
+    int i, only_type, cat, ctype, fdrast = 0, areanum = 0;
     int nelements;
-    int line, area = 0, trace = 0, centroid = 0;
+    int line, type;
+    int area, trace, centroid;
+    double objheight, voffset;
 
     /* dbmi */
     struct field_info *Fi;
@@ -62,7 +61,6 @@ int main(int argc, char *argv[])
     dbColumn *column;
     dbValue *value;
     int more;
-
 
     module = G_define_module();
     module->keywords = _("vector");
@@ -87,12 +85,8 @@ int main(int argc, char *argv[])
     zshift->answer = "0";
 
     /* raster sampling */
-    elevation = G_define_option();
-    elevation->key = "elevation";
-    elevation->type = TYPE_STRING;
+    elevation = G_define_standard_option(G_OPT_R_ELEV);
     elevation->required = NO;
-    elevation->answer = FALSE;
-    elevation->gisprompt = "old,cell,raster";
     elevation->description = _("Elevation raster for height extraction");
 
     height = G_define_option();
@@ -102,57 +96,41 @@ int main(int argc, char *argv[])
     height->multiple = NO;
     height->description = _("Fixed height for 3D vector objects");
 
-    hcolumn = G_define_option();
+    hcolumn = G_define_standard_option(G_OPT_COLUMN);
     hcolumn->key = "hcolumn";
-    hcolumn->type = TYPE_STRING;
-    hcolumn->required = NO;
     hcolumn->multiple = NO;
     hcolumn->description =
-	_("Column of attribute table with object heights");
+	_("Name of attribute column with object heights");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->answer = "line,boundary,area,face";
-    type_opt->options = "line,boundary,area,face";
+    type_opt->answer = "point,line,boundary,area,face";
+    type_opt->options = "point,line,boundary,area,face";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     G_gisinit(argv[0]);
+
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
     if (!height->answer && !hcolumn->answer) {
-	G_fatal_error(_("One of [%s] or [%s] parameters must be set"), height->key,
+	G_fatal_error(_("One of '%s' or '%s' parameters must be set"), height->key,
 		      hcolumn->key);
     }
+
     sscanf(zshift->answer, "%lf", &voffset);
+
     if (height->answer)
 	sscanf(height->answer, "%lf", &objheight);
     else
 	objheight = 0.;
 
-    if (t_flag->answer)
-	trace = 1;
+    only_type = Vect_option_to_types(type_opt);
 
-    i = 0;
-    type = 0;
-    area = FALSE;
-    while (type_opt->answers[i]) {
-	switch (type_opt->answers[i][0]) {
-	case 'l':
-	    type |= GV_LINE;
-	    break;
-	case 'b':
-	    type |= GV_BOUNDARY;
-	    break;
-	case 'f':
-	    type |= GV_FACE;
-	    break;
-	case 'a':
-	    area = TRUE;
-	    break;
-	}
-	i++;
-    }
+    trace = (t_flag->answer)?1:0;
+    area = (only_type & GV_AREA)?1:0;
+    centroid = 0;
+
     /* set input vector map name and mapset */
     Vect_check_input_output_name(old->answer, new->answer, GV_FATAL_EXIT);
     if ((mapset = G_find_vector2(old->answer, "")) == NULL)
@@ -160,7 +138,6 @@ int main(int argc, char *argv[])
 
     /* vector setup */
     Points = Vect_new_line_struct();
-    NewPoints = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
     Vect_set_open_level(2);
@@ -186,7 +163,6 @@ int main(int argc, char *argv[])
 
     /* do we work with elevation raster? */
     if (elevation->answer) {
-
 	/* raster setup */
 	G_get_window(&window);
 
@@ -204,6 +180,8 @@ int main(int argc, char *argv[])
 	G_debug(1, "drawing areas");
 	nelements = Vect_get_num_areas(&In);
 	G_debug(2, "n_areas = %d", nelements);
+	if (nelements > 0)
+	    G_verbose_message (_("Extruding areas..."));
 	for (areanum = 1; areanum <= nelements; areanum++) {
 
 	    G_percent(areanum, nelements, 1);
@@ -214,6 +192,10 @@ int main(int argc, char *argv[])
 		continue;
 
 	    centroid = Vect_get_area_centroid(&In, areanum);
+	    if (!centroid) {
+		G_warning (_("Skipping area %d without centroid"));
+		continue;
+	    }
 
 	    /* height attribute */
 	    if (hcolumn->answer) {
@@ -225,17 +207,18 @@ int main(int argc, char *argv[])
 		db_append_string(&sql, query);
 		if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL)
 		    != DB_OK)
-		    G_fatal_error(_("Cannot select attributes for area #%d"),
+		    G_fatal_error(_("Cannot select attributes for area %d"),
 				  areanum);
 		table = db_get_cursor_table(&cursor);
 		column = db_get_table_column(table, 0);	/* first column */
 
 		if (db_fetch(&cursor, DB_NEXT, &more) != DB_OK)
 		    continue;
+
 		value = db_get_column_value(column);
-		objheight =
-		    db_get_value_as_double(value,
-					   db_get_column_host_type(column));
+
+		objheight = db_get_value_as_double(value,
+						   db_get_column_host_type(column));
 
 		/* only draw if hcolumn was defined */
 		if (objheight != 0) {
@@ -246,36 +229,36 @@ int main(int argc, char *argv[])
 	    } /* if hcolumn->answer */
 
 	    Vect_get_area_points(&In, areanum, Points);
-	    extrude(Out, Cats, Points, NewPoints, fdrast, trace, objheight,
-		    voffset, window, area);
 
-	}			/* /foreach area */
+	    extrude(Out, Cats, Points,
+		    fdrast, trace, objheight, voffset, window, GV_AREA);
+	} /* foreach area */
 
     }
-
-    if (type > 0) {
+    
+    if (only_type > 0) {
 	G_debug(1, "drawing other than areas");
 	i = 1;
 	/* loop through each line in the dataset */
 	nelements = Vect_get_num_lines(&In);
+	G_verbose_message(_("Extruding basic vector objects..."));
 	for (line = 1; line <= nelements; line++) {
-
 	    /* progress feedback */
 	    G_percent(line, nelements, 1);
 
 	    /* read line */
 	    type = Vect_read_line(&In, Points, Cats, line);
 
+	    if (!Vect_line_alive(&In, line))
+		continue;
 
-	    if (type == GV_LINE) {
-		if (Vect_cat_get(Cats, 1, &cat) == 0) {
-		    Vect_cat_set(Cats, 1, i);
-		    i++;
-		}
-	    }
-	    else if (type == GV_AREA) {
-		if (Vect_cat_get(Cats, 1, &cat) == 0) {
-		}
+	    if(!(type & only_type))
+		continue;
+
+	    /* fetch categories */
+	    if (Vect_cat_get(Cats, 1, &cat) == 0) {
+		Vect_cat_set(Cats, 1, i);
+		i++;
 	    }
 
 	    /* height attribute */
@@ -310,7 +293,7 @@ int main(int argc, char *argv[])
 		ctype = db_sqltype_to_Ctype (db_get_column_sqltype(column));
 		if (ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_STRING &&
 		    ctype != DB_C_TYPE_DOUBLE) {
-		  G_fatal_error (_("Column <%s>: invalid data type."),
+		  G_fatal_error (_("Column <%s>: invalid data type"),
 				   db_get_column_name (column));
 		}
 		objheight = 
@@ -323,113 +306,156 @@ int main(int argc, char *argv[])
 		}
 
 	    }
-	    extrude(Out, Cats, Points, NewPoints, fdrast, trace, objheight,
-		    voffset, window, area);
 
-	}			/* for each line */
-    }				/* /else if area */
+	    extrude(Out, Cats, Points,
+		    fdrast, trace, objheight, voffset, window, type);
+	} /* for each line */
+    } /* else if area */
 
     if (driver) {
 	db_close_database(driver);
 	db_shutdown_driver(driver);
     }
 
-    Vect_build(&Out, stderr);
+    if (G_verbose() > G_verbose_min())
+	Vect_build(&Out, stderr);
+    else
+	Vect_build(&Out, NULL);
+
+    /* header */
+    char *comment;
+    G_asprintf (&comment, "Generated by %s from vector map <%s>", G_program_name(),
+		G_fully_qualified_name (old->answer, mapset));
+    Vect_set_comment(&Out, comment);
+    G_free (comment);
+
     Vect_close(&In);
     Vect_close(&Out);
+
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
 
     exit(EXIT_SUCCESS);
 }
 
 
-/* for each point int struct line_pnts *Poins calculates "roof" and "walls", 
- * result is stored to struct line_pnts *NewPoints 
- */
-static long extrude(struct Map_info Out, struct line_cats *Cats,
-	    struct line_pnts *Points, struct line_pnts *NewPoints, int fdrast,
-	    int trace, double objheight, double voffset,
-	    struct Cell_head window, int area)
+/**
+  \brief Extrude vector object
+
+  point -> 3D line; line/boundary -> face
+
+  \param ...
+
+  \return number of writen objects
+*/
+int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Points,
+	    int fdrast, int trace, double objheight, double voffset,
+	    struct Cell_head window, int type)
 {
-    int k;			/* Points->n_points */
-    float estimated_elevation = 0.;
-    long result = 0;
-    double voffset_dem = 0.0;
+    int k; /* Points->n_points */
+    int nlines;
+    struct line_pnts *Points_wall, *Points_roof;
 
-    /* base */
-    /*Vect_write_line ( &Out, GV_FACE, Points, Cats ); 
-       -- has no reason to display too -- smaller files */
+    double voffset_dem;  /* minimal offset */
+    double voffset_curr; /* offset of current point */
+    double voffset_next; /* offset of next point */
 
-    /* don't generate 1 point faces (eg from degenerated input maps) */
-    if (Points->n_points > 1) {
+    nlines = 0;
+    
+    if (type != GV_POINT && Points->n_points < 2)
+	return nlines;
+    
+    Points_wall = Vect_new_line_struct();
+    Points_roof = Vect_new_line_struct();
 
-	if (area) {
-	    /* roof of building */
-	    Vect_reset_line(NewPoints);
-	    for (k = 0; k < Points->n_points; k++) {
-
-		/* should the voffset be set from the elevation? */
-		if (fdrast) {
-		    estimated_elevation =
-			G_get_raster_sample(fdrast, &window, NULL, 
-                                Points->y[k], Points->x[k], 0, NEAREST);
-		    if (trace) {
-		        voffset_dem = estimated_elevation;
-		    }
-		    else {
-
-			if (k == 0) {
-			    voffset_dem = estimated_elevation;
-			}
-			else {
-			    voffset_dem =
-			        estimated_elevation <
-			        voffset_dem ? estimated_elevation : voffset_dem;
-			}
-		    }
-		}		/* /if(fdrast) */
-
-		Vect_append_point(NewPoints, Points->x[k], Points->y[k],
-				  Points->z[k] + objheight + voffset + voffset_dem);
-
+    voffset_dem = 0.0;
+    /* do not trace -> calculate minumum dem offset */
+    if(fdrast && !trace) {
+	for (k = 0; k < Points->n_points; k++) {
+	    voffset_curr = G_get_raster_sample(fdrast, &window, NULL, 
+					       Points->y[k], Points->x[k], 0, NEAREST);
+	    if (k == 0) {
+		voffset_dem = voffset_curr;
 	    }
-	    Vect_write_line(&Out, GV_FACE, NewPoints, Cats);
-	}			/* if area */
+	    else {
+		if (voffset_curr < voffset_dem)
+		    voffset_dem = voffset_curr;
+	    }
+	}
+    }
+	    
+    k = 0;
+    /* walls */
+    while (1) {
+	/* reset */
+	Vect_reset_line(Points_wall);
+	voffset_curr = voffset_next = 0.0;
 
-	/* walls */
-	for (k = 0; k < Points->n_points - 1; k++) {
-	    float voffset_curr = 0.;	/* offset of current point */
-	    float voffset_next = 0.;	/* offset of next point */
-	    Vect_reset_line(NewPoints);
+    	if ((type == GV_POINT && k == 1) ||
+	    (type != GV_POINT && k >= Points->n_points - 1))
+	    break;
 
-            /* should the voffset be set from the elevation? */
-            if (trace && fdrast) {
-                voffset_curr =
-                    G_get_raster_sample(fdrast, &window, NULL, 
-                            Points->y[k], Points->x[k], 0, NEAREST);
-                voffset_next =
-                    G_get_raster_sample(fdrast, &window, NULL, 
-                            Points->y[k + 1], Points->x[k + 1], 0, NEAREST);
-            }
-            else {
-                voffset_curr = voffset + voffset_dem;
-                voffset_next = voffset + voffset_dem;
-            }
+	/* trace */
+	if (fdrast && trace) {
+	    voffset_curr = G_get_raster_sample(fdrast, &window, NULL, 
+					       Points->y[k], Points->x[k], 0, NEAREST);
+	    if (type != GV_POINT) {
+                voffset_next = G_get_raster_sample(fdrast, &window, NULL, 
+						   Points->y[k + 1], Points->x[k + 1], 0, NEAREST);
+	    }
+	}
 
-	    Vect_append_point(NewPoints, Points->x[k], Points->y[k],
+	if (trace) {
+	    voffset_curr += voffset;
+	    voffset_next += voffset;
+	}
+	else {
+	    voffset_curr = voffset_dem + voffset;
+	    voffset_next = voffset_dem + voffset;
+	}
+	
+	if (type == GV_POINT) {
+	    /* point -> 3d line */
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + voffset_curr);
-	    Vect_append_point(NewPoints, Points->x[k + 1], Points->y[k + 1],
-			      Points->z[k + 1] + voffset_next);
-	    Vect_append_point(NewPoints, Points->x[k + 1], Points->y[k + 1],
-			      Points->z[k + 1] + objheight + voffset_next);
-	    Vect_append_point(NewPoints, Points->x[k], Points->y[k],
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + objheight + voffset_curr);
-	    Vect_append_point(NewPoints, Points->x[k], Points->y[k],
+	    Vect_write_line(&Out, GV_LINE, Points_wall, Cats);
+	    nlines++;
+	}
+	else {
+	    /* line/boudary -> face */
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + voffset_curr);
-	    result = Vect_write_line(&Out, GV_FACE, NewPoints, Cats);
-	}			/* /walls */
+	    Vect_append_point(Points_wall, Points->x[k + 1], Points->y[k + 1],
+			      Points->z[k + 1] + voffset_next);
+	    Vect_append_point(Points_wall, Points->x[k + 1], Points->y[k + 1],
+			      Points->z[k + 1] + objheight + voffset_next);
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
+			      Points->z[k] + objheight + voffset_curr);
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
+			      Points->z[k] + voffset_curr);
 
-    }				/* npoints check */
+	    Vect_write_line(&Out, GV_FACE, Points_wall, Cats);
+	    nlines++;
 
-    return result;
+	    if(type == GV_AREA) {
+		Vect_append_point(Points_roof, Points->x[k], Points->y[k],
+				  Points->z[k] + objheight + voffset_curr);
+	    }
+	}
+	k++;
+    }
+
+    if (type == GV_AREA && Points_roof->n_points > 3) {
+	Vect_append_point(Points_roof,
+			  Points_roof->x[0], Points_roof->y[0], Points_roof->z[0]);
+	Vect_write_line(&Out, GV_FACE, Points_roof, Cats);
+	nlines++;
+    }
+
+    Vect_destroy_line_struct (Points_wall);
+    Vect_destroy_line_struct (Points_roof);
+
+    return nlines;
 }
-
