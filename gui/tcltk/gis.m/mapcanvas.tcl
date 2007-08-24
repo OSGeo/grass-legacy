@@ -208,14 +208,19 @@ proc MapCanvas::create { } {
 
 	# set tempfile for ppm output
 	set mappid [pid]
-	set mapfile($mon) [exec g.tempfile pid=$mappid]
+	if {[catch {set mapfile($mon) [exec g.tempfile pid=$mappid]}]} {
+		puts $error
+	}
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
 	append maskfile($mon) ".pgm"
 
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
-	set outfile($mon) [exec g.tempfile pid=$mappid]
+	if {[catch {set outfile($mon) [exec g.tempfile pid=$mappid]}]} {
+		puts $error
+	}
+	
 	set tmpdir [file dirname $outfile($mon)]
 	set outfile($mon) [file tail $outfile($mon)]
 	append outfile($mon) ".ppm"
@@ -711,6 +716,13 @@ proc MapCanvas::erase { mon } {
 
 }
 
+proc MapCanvas::dnviz { mon } {
+
+	variable can
+	
+	GmDnviz::main $can($mon) $mon
+
+}
 
 ###############################################################################
 
@@ -940,6 +952,7 @@ proc MapCanvas::pointer { mon } {
 	    set outfmt_coords {%.3f}
 	}
 
+	MapCanvas::restorecursor $mon
 
 	bind $can($mon) <ButtonPress-1> {
 		global b1coords mon
@@ -1167,7 +1180,11 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	if {$overwrite == 1} {
 		lappend options "--overwrite" 
 	}
-	eval [list exec -- $cmd] $args $options >& $devnull
+	
+	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull}]} {
+		puts $error
+	}
+	
 }
 
 # zoom bindings

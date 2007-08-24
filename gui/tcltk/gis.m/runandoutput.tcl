@@ -76,6 +76,7 @@ proc run_ui {cmd} {
 
     set path .dialog$dlg
     toplevel $path
+    
     if {$code == ""} { return }
     eval $code
 

@@ -91,7 +91,9 @@ proc GmLegend::create { tree parent } {
     
 	# create files in tmp diretory for layer output
 	set mappid [pid]
-	set lfile($count) [exec g.tempfile pid=$mappid]
+	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
+		puts $error
+	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
@@ -470,7 +472,9 @@ proc GmLegend::duplicate { tree parent node id } {
 	
 	# create files in tmp directory for layer output
 	set mappid [pid]
-	set lfile($count) [exec g.tempfile pid=$mappid]
+	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
+		puts $error
+	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
