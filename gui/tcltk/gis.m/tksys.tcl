@@ -5,14 +5,14 @@ exec $GRASS_WISH "$0" "$@"
 # tksys.tcl
 # get some basic system information 
 # from within tcl/tk.
-# Designed to work with tcl/tk 8.0 and above.
+# Designed to work with tcl/tk 8.4 and above.
 # Works in a terminal window and 
 # in a graphics window (X Window, MS Windows, Macintosh)
 # 
 # andreas.lange@rhein-main.de
 
 source $env(GISBASE)/etc/gtcltk/options.tcl
-
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
 array set items { 
     platform   "Platform               "
@@ -44,95 +44,86 @@ array set range {
 # tclversion is the same as patchlevel
 # 6 tclversion
 
-
 array set tcl_platform_subst { 
     unix      "Unix"
     windows   "MS Windows"
     macintosh "Apple Macintosh" }
 
-
 array set tcl_machine_subst { }
-
 
 array set tcl_os_subst { }
 
+puts [G_msg "\n***** Please wait *****"]
+puts [G_msg "Gathering information about your system"]
 
-proc sys_getinfo { } \
-{
+proc sys_getinfo { } {
     global sys tcl_platform tcl_platform_subst
 
-    if { [info exists tcl_platform(platform)] } \
-    {
-	set sys(platform) $tcl_platform_subst($tcl_platform(platform))
+    if { [info exists tcl_platform(platform)] } {
+		set sys(platform) $tcl_platform_subst($tcl_platform(platform))
     } else {
-	set sys(platform) "Unknown"
+		set sys(platform) "Unknown"
     } 
 
-    foreach name { os osVersion machine user } \
-    {
-	if { [info exists tcl_platform($name)] } \
-        {
-	    set sys($name) $tcl_platform($name)
-	} else {
-	    set sys($name) "unknown"
+    foreach name { os osVersion machine user } {
+		if { [info exists tcl_platform($name)] } {
+		    set sys($name) $tcl_platform($name)
+		} else {
+	    	set sys($name) "unknown"
+		}
 	}
-    }
 
     # fix for tcl/tk 8.0, where tcl_platform(user) is missing
     if { [string compare "$sys(user)" "unknown"] == 0 && \
-	 [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } \
-    {
-	set sys(user) [exec whoami]
+	 [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } {
+		if {[catch {set sys(user) [exec whoami]} error]} {
+			puts $error
+		}
     }
 
     set host [info hostname]
-    if { [string length $host] == 0 } \
-    {
-	set sys(hostname) "hostname not available"
+    if { [string length $host] == 0 } {
+		set sys(hostname) "hostname not available"
     } else {
-	set sys(hostname) $host
+		set sys(hostname) $host
     }
 
-    foreach name { tclversion nameofexecutable patchlevel script } \
-    {
-	set tmp [info $name]
-	if { [info exists tmp] } \
-        {
-	    set sys($name) $tmp
+    foreach name { tclversion nameofexecutable patchlevel script } {
+		set tmp [info $name]
+		if { [info exists tmp] } {
+			set sys($name) $tmp
+		} else {
+			set sys($name) "n/a"
+		}
+    }
+
+	if { [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } { 
+		if {[catch {set tmp [exec uname -srm]} error]} {
+			puts $error
+		}
+		regsub -all { } $tmp {-} tmp 
+		set sys(uname) $tmp
 	} else {
-	    set sys($name) "n/a"
+		set sys(uname) "unsupported"
 	}
-    }
-
-if { [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } \
-    { 
-	set tmp [exec uname -srm]
-	regsub -all { } $tmp {-} tmp 
-	set sys(uname) $tmp
-    } else {
-	set sys(uname) "unsupported"
-    }
     
     return
 }
 
 
-proc hline { {sign "-"} {nbr 75} } \
-{
+proc hline { {sign "-"} {nbr 75} } {
     # string repeat was added with tcl/tk 8.1
     # set string [string repeat $sign $nbr] 
     set string $sign
-    for { set i 0 } { $i < $nbr } { incr i 1 } \
-    {
-	append string $sign
+    for { set i 0 } { $i < $nbr } { incr i 1 } {	
+		append string $sign
     }
 
     return $string
 }
 
 
-proc sys_putinfo { path } \
-{
+proc sys_putinfo { path } {
     global sys range items
 
     puts $path "\n"
@@ -140,20 +131,18 @@ proc sys_putinfo { path } \
     puts $path "System Information"
     puts $path [hline "="]
     
-    foreach index [lsort -integer [array names range]] \
-    {
-	set name $range($index)
-	set string $items($name)
-	puts $path "$string $sys($name)"
-	puts $path [hline]
+    foreach index [lsort -integer [array names range]] {
+		set name $range($index)
+		set string $items($name)
+		puts $path "$string $sys($name)"
+		puts $path [hline]
     }
 
     return
 }
 
 
-proc sys_wininfo { } \
-{
+proc sys_wininfo { } {
     global sys range items
 
     frame .frame0 -borderwidth 2 -relief raised
@@ -173,8 +162,7 @@ proc sys_wininfo { } \
 
     frame .frame1 -borderwidth 2 -relief raised
 
-    foreach index [lsort -integer [array names range]] \
-    {
+    foreach index [lsort -integer [array names range]] {
 		set name $range($index)
 		set string $items($name)
 	
@@ -239,8 +227,9 @@ proc sys_save { } {
 # main program	
 sys_getinfo
 
-if { [regexp {.*tk.*} [lindex $argv 0]] } \
-{
+puts [G_msg "***** Done *****"]
+
+if { [regexp {.*tk.*} [lindex $argv 0]] } {
     sys_wininfo
 } else {
     sys_putinfo stdout
