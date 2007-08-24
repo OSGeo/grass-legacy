@@ -103,7 +103,9 @@ proc GmThematic::create { tree parent } {
     
 	# create files in tmp diretory for layer output
 	set mappid [pid]
-	set lfile($count) [exec g.tempfile pid=$mappid]
+	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
+		puts $error
+	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
@@ -601,7 +603,9 @@ proc GmThematic::duplicate { tree parent node id } {
 	
 	# create files in tmp directory for layer output
 	set mappid [pid]
-	set lfile($count) [ exec g.tempfile pid=$mappid]
+	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
+		puts $error
+	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
 	append lfilemask($count) ".pgm"
@@ -672,7 +676,10 @@ proc GmThematic::tleg_item { mon id } {
 	GmThematic::tleg_erase $mon $id
 	# get legend file created by d.vect.thematic in GRASS tmp diretory
 	set mappid [pid]
-	set tmpdir [file dirname [exec g.tempfile pid=$mappid]]
+	if {[catch {set tmpdir [file dirname [exec g.tempfile pid=$mappid]]} error]} {
+		puts $error
+	}
+
 	set legfile "$tmpdir/gismlegend.txt"
 	if {![file exists $legfile]} {return}
 	catch {set ltxt [open $legfile r]}

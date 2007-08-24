@@ -186,10 +186,16 @@ proc psprint::init_tmpfiles { } {
 
     # get temporary file for postscript printing
     set pid [ pid ]
-    set tmppsfile [ exec g.tempfile pid=$pid ]
+	if {[catch {set tmppsfile [ exec g.tempfile pid=$pid ]} error]} {
+		puts $error
+	}
+
     append tmppsfile ".ps"
     set pid [ pid ]
-    set tmppngfile [ exec g.tempfile pid=$pid ]
+    
+	if {[catch {set tmppngfile [ exec g.tempfile pid=$pid ]} error]} {
+		puts $error
+	}
     append tmppngfile ".png"
 }
 
@@ -423,8 +429,14 @@ proc psprint::print { cv } {
 			puts $error
 		}
 
-		exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile  
-		exec lpr $tmppngfile 
+		if {[catch {exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile} error]} {
+			puts $error
+		}
+
+		if {[catch {exec lpr $tmppngfile } error]} {
+			puts $error
+		}
+
     }
 
 	# postsript printing via ghostsript
@@ -447,7 +459,11 @@ proc psprint::print { cv } {
 		if {[catch {close $printmap} error]} {
 			puts $error
 		}
-		exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile 
+
+		if {[catch {exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile} error]} {
+			puts $error
+		}
+		 
 	}
 
 	# output to pdf file via ghostscript	
@@ -470,7 +486,10 @@ proc psprint::print { cv } {
 		if {[catch {close $printmap} error]} {
 			puts $error
 		}
-		exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile 
+		if {[catch {exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile} error]} {
+			puts $error
+		}
+		 
 	}
 
 	# output to eps file

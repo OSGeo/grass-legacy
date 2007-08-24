@@ -200,7 +200,10 @@ proc GmRules::process_rules { cmd w } {
     
     # make tempfile to store rules for input into command
     set rulespid [pid]
-	set rulesfile [exec g.tempfile pid=$rulespid]
+	
+	if {[catch {set rulesfile [exec g.tempfile pid=$rulespid]} error]} {
+		puts $error
+	}
 
     # get rules from text widget
     set rules [$w get 1.0 end]

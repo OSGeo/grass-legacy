@@ -400,7 +400,10 @@ proc GRMap::getmset { } {
     GRMap::setxyenv $xymset $xyloc
 
     set mappid [pid]
-    set grfile [exec g.tempfile pid=$mappid]
+	if {[catch {set grfile [exec g.tempfile pid=$mappid]} error]} {
+		puts $error
+	}
+
     append grfile ".ppm"
     set tmpdir [file dirname $grfile]
 
@@ -741,6 +744,7 @@ proc GRMap::refmap { } {
     variable xymap
     variable maptype
     variable msg
+    variable grcoords_mov
     global env
     global drawprog
     global grcoords
@@ -942,7 +946,6 @@ proc GRMap::gcpwin {} {
     variable drawform
     global xyentry
     global geoentry
-    global grcoords
     global b1coords
     
     set fwd_rmssumsq 0.0
@@ -1780,9 +1783,9 @@ proc GRMap::stoptool { } {
 # set bindings for GCP selection tool
 proc GRMap::selector { } {
     variable grcan
+    variable grcoords_mov
     global grcoords
     global xyentry
-    variable grcoords_mov
 
     GRMap::setcursor "crosshair"
 
@@ -1982,7 +1985,7 @@ proc GRMap::zoombind { zoom } {
 	variable areaY1 
 	variable areaX2 
 	variable areaY2
-    global grcoords
+	variable grcoords_mov
 
     # initialize zoom rectangle corners
 
@@ -2192,7 +2195,7 @@ proc GRMap::zoomregion { zoom } {
 proc GRMap::panbind { } {
     variable grcan
     variable msg
-    global grcoords
+    variable grcoords_mov
 
     set GRMap::msg "Drag with mouse to pan"
 
