@@ -65,12 +65,14 @@ proc make_fun_buttons {dlg path} {
 }
 
 proc run_ui {cmd} {
-    global dlg path
+    global dlg 
+    global path
+    global devnull
 
     set program [lindex $cmd 0]
     set code ""
 
-	if {[catch {set code [exec -- $program --tcltk]} error]} {
+	if {[catch {set code [exec -- $program --tcltk 2> $devnull]} error]} {
 		puts $error
 	}
 
