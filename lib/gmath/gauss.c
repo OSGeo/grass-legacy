@@ -3,40 +3,32 @@
 
 
 /*!
- * \fn float gauss (int seed)
+ * \fn double G_math_rand_gauss (int seed)
  *
  * \brief Gaussian random number generator
  *
- * Gaussian random number generator (mean = 0.0, sigma = 1.0)
+ * Gaussian random number generator (mean = 0.0)
  *
- * \param seed
- * \return float
+ * \param[in] seed
+ & \param[in] sigma
+ * \return double
  */
 
-float gauss (int seed)
+double G_math_rand_gauss (const int seed, const double sigma)
 {
-	static int 	iset;
-	static float	gset;
-	float		fac,r,v1,v2;
+    double x, y, r2;
 
-	if (iset==0)
-	{
-		do
-		{
-			v1=2.0*rand1(seed)-1.0;
-			v2=2.0*rand1(seed)-1.0;
-			r=v1*v1+v2*v2;
-		}
-		while (r>=1.0);
+    do
+    {
+        /* choose x,y in uniform square (-1,-1) to (+1,+1) */
+        x = -1 + 2 * G_math_rand (seed);
+        y = -1 + 2 * G_math_rand (seed);
 
-		fac=sqrt(-2.0*log(r)/r);
-		gset=v1*fac;
-		iset=1;
+        /* see if it is in the unit circle */
+        r2 = x * x + y * y;
+    }
+    while (r2 > 1.0 || r2 == 0);
 
-		return(v2*fac);
-	}
-
-	iset=0;
-
-	return gset;
+    /* Box-Muller transform */
+    return sigma * y * sqrt (-2.0 * log (r2) / r2);
 }

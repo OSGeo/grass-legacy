@@ -12,6 +12,8 @@
 
 #include <unistd.h>
 #include <math.h>
+#include <grass/gis.h>
+#include <grass/gmath.h>
 #include <grass/glocale.h>
 #include "frac.h"
 
@@ -20,7 +22,6 @@ int specsyn (
     double *data[2],	/* Array holding complex data to transform. */
     int nn		/* Size of array in one dimension.	    */
 )
-
 {
     /* ---------------------------------------------------------------- */
     /* ---                      Initialise			    ---	*/
@@ -31,16 +32,11 @@ int specsyn (
 	  coeff,		/* No. of Fourier coeffficents to calc.	*/
   	  seed;			/* Random number seed.			*/
 
-    float rand1(int),		/* Random number generators.		*/
-	  gauss(int);
-
-
-
     double phase,rad,		/* polar coordinates of Fourier coeff.	*/
 	   *temp[2];
 
     seed = -1*getpid();
-    rand1(seed);		/* Reset random number generator.	*/
+    G_math_rand (seed);		/* Reset random number generator.	*/
 
     temp[0] = (double *) G_malloc(nn*nn*sizeof(double));
     temp[1] = (double *) G_malloc(nn*nn*sizeof(double));
@@ -61,10 +57,10 @@ int specsyn (
 	{
 	    /* Generate random Fourier coefficients. */
 
-	    phase = TWOPI*rand1(0);
+	    phase = TWOPI * G_math_rand (0);
 	
 	    if ((row != 0) || (col != 0))
-		rad = pow(row*row + col*col,-(H+1)/2.0)*gauss(0);
+		rad = pow(row*row + col*col,-(H+1)/2.0)* G_math_rand_gauss (0, 1.);
 	    else
 	 	rad = 0.0;
 
@@ -96,17 +92,15 @@ int specsyn (
     for (row=1; row < nn/2; row++)
 	for (col=1; col< nn/2; col++)
 	{
-	    phase = TWOPI*rand1(0);
-	    rad   = pow(row*row + col*col,-(H+1)/2.0)*gauss(0);
+	    phase = TWOPI * G_math_rand (0);
+	    rad   = pow(row*row + col*col,-(H+1)/2.0)* G_math_rand_gauss (0, 1.);
 
 	    *(data[0] + row*nn + nn-col) = rad * cos(phase);
 	    *(data[1] + row*nn + nn-col) = rad * sin(phase);
 
 	    *(data[0] + (nn-row)*nn + col) =  rad * cos(phase);
 	    *(data[1] + (nn-row)*nn + col) = -rad * sin(phase);
-
 	}
-
 
     /* Transfer random coeffients to array before ifft transform */
     /* ========================================================= */
