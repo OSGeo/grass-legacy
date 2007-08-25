@@ -115,59 +115,82 @@ float **G_alloc_fmatrix (int rows, int cols)
 
 
 /**
- * \fn int G_free_vector (double *v)
+ * \fn void G_free_vector (double *v)
  *
  * \brief Vector memory deallocation.
  *
- * Deallocate a vector (array) of doubles or floats.
+ * Deallocate a vector (array) of doubles.
  *
  *  \param[in,out] v vector to free
- *  \return int returns 0
+ *  \return void
  */
 
-int G_free_vector (double *v)
+void G_free_vector (double *v)
 {
-    free (v);
+    G_free (v);
+    v = NULL;
 
-    return 0;
+    return;
 }
 
 
 /**
- * \fn int G_free_matrix (double **m)
+ * \fn void G_free_fvector (float *v)
+ *
+ * \brief Vector memory deallocation.
+ *
+ * Deallocate a vector (array) of floats.
+ *
+ *  \param[in,out] v vector to free
+ *  \return void
+ */
+
+void G_free_fvector (float *v)
+{
+    G_free (v);
+    v = NULL;
+
+    return;
+}
+
+
+/**
+ * \fn void G_free_matrix (double **m)
  *
  * \brief Matrix memory deallocation.
  *
  * Deallocate a matrix of doubles.
  *
  *  \param[in,out] m matrix to free
- *  \return int returns 0
+ *  \return void 
  */
 
-int G_free_matrix (double **m)
+void G_free_matrix (double **m)
 {
-    free (m[0]);
-    free (m);
+    G_free (m[0]);
+    G_free (m);
+    m = NULL;
 
-    return 0;
+    return;
 }
 
 
 /**
- * \fn int G_free_fmatrix (float **m)
+ * \fn void G_free_fmatrix (float **m)
  *
  * \brief Floating point matrix memory deallocation.
  *
  * Deallocate a matrix of floats.
  *
  *  \param[in,out] m matrix to free
- *  \return int returns 0
+ *  \return void
  */
 
-int G_free_fmatrix (float **m)
+void G_free_fmatrix (float **m)
 {
-    free (m[0]);
-    free (m);
+    G_free (m[0]);
+    G_free (m);
+    m = NULL;
 
-    return 0;
+    return;
 }
