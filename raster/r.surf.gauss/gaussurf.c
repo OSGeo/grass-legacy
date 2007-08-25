@@ -45,7 +45,7 @@ int gaussurf (
 	for (row_count=0;row_count<nrows;row_count++)
 	{
 	    for (col_count=0;col_count<ncols;col_count++)
-		*(row_out+col_count) = (DCELL) ((G_math_rand_gauss(2742, 1.)*sigma)+mean);
+		*(row_out+col_count) = (DCELL) (G_math_rand_gauss (2742, sigma) + mean);
 
 	    /* Write contents row by row */
 	    G_put_d_raster_row(fd_out, (DCELL *)row_out);
