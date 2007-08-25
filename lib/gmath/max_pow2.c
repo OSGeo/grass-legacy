@@ -3,17 +3,17 @@
 
 
 /*!
- * \fn long max_pow2 (long n)
+ * \fn long G_math_max_pow2 (const long n)
  *
  * \brief Finds least power of 2 >= <b>n</b>
  *
  * Finds least power of 2 >= <b>n</b>.
  *
- * \param n
+ * \param[in] n
  * \return long
  */
 
-long max_pow2 (long n)
+long G_math_max_pow2 (const long n)
 {
         long p2, n1;
 
@@ -31,18 +31,17 @@ long max_pow2 (long n)
 
 
 /*!
- * \fn long min_pow2 (long n)
+ * \fn long G_math_min_pow2 (const long n)
  *
  * \brief Finds largest power of 2 <= <b>n</b>
  *
  * Finds largest power of 2 <= <b>n</b>.
  *
- * \param n
+ * \param[in] n
  * \return long
  */
 
-long 
-min_pow2 (long n)
+long G_math_min_pow2 (const long n)
 {
         long p2, n1;
 

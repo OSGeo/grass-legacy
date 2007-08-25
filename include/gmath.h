@@ -35,12 +35,14 @@ int fft2(int, double (*)[2], int, int, int);
 /* gauss.c */
 float gauss(int);
 /* max_pow2.c */
-long max_pow2 (long n);
-long min_pow2 (long n);
+long G_math_max_pow2 (const long);
+long G_math_min_pow2 (const long);
 /* rand1.c */
 float rand1(int);
 /* del2g.c */
 int del2g(double *[2], int, double);
+/* findzc.c */
+int G_math_findzc(double [], int, double [], double, int);
 /* getg.c */
 int getg(double, double *[2], int);
 /* eigen.c */
