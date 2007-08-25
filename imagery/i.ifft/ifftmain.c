@@ -28,7 +28,7 @@ int
 main (int argc, char *argv[])
 {
         /* Global variable & function declarations */
-
+    char Cellmap_orig[50];
         FILE *realfp, *imagfp; /* the input and output file descriptors */
         int outputfd, maskfd; /* the input and output file descriptors */
         char *realmapset, *imagmapset; /* the input mapset names */
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
 
         /*call parser*/
         if(G_parser(argc, argv))
-                exit(-1);
+                exit (EXIT_FAILURE);
 
         strcpy(Cellmap_real, op1->answer) ;
         strcpy(Cellmap_imag, op2->answer) ;
@@ -92,14 +92,14 @@ main (int argc, char *argv[])
                 G_fatal_error(_("%s: %s - Unable to find the real-image map."),
                               me, Cellmap_real);
 
-        if ((realfp = G_fopen_old_misc("cell_misc", FFTREAL, Cellmap_real, realmapset)) == NULL)
+        if ((realfp = G_fopen_old_misc ("cell_misc", "fftreal", Cellmap_real, realmapset)) == NULL)
                 G_fatal_error(_("Unable to open real-image in the cell_misc directory.\nInput map probably wasn't created by i.fft"));
 
         if ((imagmapset = G_find_cell(Cellmap_imag, "")) == NULL)
                 G_fatal_error(_("%s: %s - Unable to find the imaginary-image."),
                               me, Cellmap_imag);
 
-        if ((imagfp = G_fopen_old_misc("cell_misc", FFTIMAG, Cellmap_imag, imagmapset)) == NULL)
+        if ((imagfp = G_fopen_old_misc ("cell_misc", "fftimag", Cellmap_imag, imagmapset)) == NULL)
                 G_fatal_error(_("Unable to open imaginary-image in the cell_misc directory.\nInput map probably wasn't created by i.fft"));
 
         /* check command line args for validity */
@@ -234,8 +234,7 @@ main (int argc, char *argv[])
         G_free(data[0]);
         G_free(data[1]);
 
-        G_message(_("Transform successful."));
+        G_done_msg (_("Transform successful."));
 
-        exit(0);
+        exit (EXIT_SUCCESS);
 }
-
