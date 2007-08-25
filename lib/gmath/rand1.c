@@ -4,18 +4,18 @@
 
 
 /*!
- * \fn float rand1 (int seed)
+ * \fn float G_math_rand (int seed)
  *
  * \brief Random Number Generator (Uniform)
  *
  * Random number generator (Uniform Derivatives 0.0 -> 1.0)
  *
- * \param seed
+ * \param[in] seed
  * \return float
  */
 
 float 
-rand1(int seed)
+G_math_rand (int seed)
 {
 #if defined(HAVE_DRAND48)
 	if (seed < 0)
