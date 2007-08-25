@@ -47,7 +47,8 @@ Programmer : Ali R. Vali
 int main (int argc, char *argv[])
 {
         /* Global variable & function declarations */
-
+    int Range;
+    char Cellmap_orig[50];
         int inputfd, realfd, imagfd; /* the input and output file descriptors */
         char *inmapset; /* the input mapset name */
         struct Cell_head window;
@@ -108,7 +109,7 @@ int main (int argc, char *argv[])
 
         /*call parser*/
         if(G_parser(argc, argv))
-                exit(-1);
+                exit (EXIT_FAILURE);
 
         strcpy(Cellmap_orig, op1->answer) ;
         strcpy(Cellmap_real, op2->answer) ;
@@ -116,13 +117,11 @@ int main (int argc, char *argv[])
 
         /* open input cell map */
         if ((inmapset = G_find_cell(Cellmap_orig, "")) == NULL)
-        {
                 G_fatal_error(_("Raster map <%s> not found"), Cellmap_orig);
-                exit(1);
-        }
+
         inputfd = G_open_cell_old(Cellmap_orig, inmapset);
         if(inputfd < 0)
-                exit(1);
+                exit (EXIT_FAILURE);
         
         if ((maskfd = G_maskfd()) >= 0)
         	G_warning(_("Raster MASK found, consider to remove "
@@ -131,17 +130,11 @@ int main (int argc, char *argv[])
 
         /* check command line args for validity */
         if (G_legal_filename(Cellmap_real) < 0)
-        {
-                G_fatal_error(_("%s: %s - illegal file name for real part\n"),
-					me, Cellmap_real);
-                exit(1);
-        }
+                G_fatal_error (_("Illegal file name for real part: %s"), Cellmap_real);
+
         if (G_legal_filename(Cellmap_imag) < 0)
-        {
-                G_fatal_error(_("%s: %s - illegal file name for imaginary part\n"),
-					me, Cellmap_imag);
-                exit(1);
-        }
+                G_fatal_error (_("Illegal file name for imaginary part: %s"), Cellmap_imag);
+
         sscanf(op4->answer, "%d", &Range);
         if (Range<=0)
                 G_fatal_error(_("Range less than or equal to zero not allowed."));
@@ -152,8 +145,8 @@ int main (int argc, char *argv[])
         /* get the rows and columns in the current window */
         or = G_window_rows();
         oc = G_window_cols();
-        rows = max_pow2(or);
-        cols = max_pow2(oc);
+        rows = G_math_max_pow2 (or);
+        cols = G_math_max_pow2 (oc);
         totsize = rows * cols;
 
         /*  fprintf(stderr,"Power 2 values : %d rows %d columns\n",rows,cols); */
@@ -280,7 +273,8 @@ int main (int argc, char *argv[])
 
         /* Release memory resources */
         for (i=0 ; i<2 ; i++) G_free (data[i]);
-        G_message(_("Transform successful."));
 
-exit(0);
+        G_done_msg (_("Transform successful."));
+
+    exit (EXIT_SUCCESS);
 }

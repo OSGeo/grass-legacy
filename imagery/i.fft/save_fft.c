@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include "globals.h"
@@ -12,12 +13,12 @@ int save_fft (int total, double *data[2], double *maximum, double *minimum)
         max = *maximum;
         min = *minimum;
 
-        if ((fp = G_fopen_new_misc("cell_misc",FFTREAL,Cellmap_real)) == NULL)
+        if ((fp = G_fopen_new_misc ("cell_misc", "fftreal", Cellmap_real)) == NULL)
                 G_fatal_error(_("Unable to open file in the cell_misc directory."));
         fwrite((char *) data[0], sizeof(double), (size_t)total, fp);
         fclose(fp);
 
-        if ((fp = G_fopen_new_misc("cell_misc",FFTIMAG,Cellmap_imag)) == NULL)
+        if ((fp = G_fopen_new_misc ("cell_misc", "fftimag", Cellmap_imag)) == NULL)
                 G_fatal_error(_("Unable to open file in the cell_misc directory."));
         fwrite((char *) data[1], sizeof(double), (size_t)total, fp);
         fclose(fp);
