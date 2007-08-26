@@ -18,7 +18,6 @@
 *
 *****************************************************************************/
 
-#define MAIN
 #include <stdlib.h>
 #include <string.h>
 #include <grass/glocale.h>
@@ -31,7 +30,9 @@
 #include <grass/config.h>
 #include "what.h"
 
-/* Vector map grabbing taken from d.zoom */
+char **vect;
+int nvects;
+struct Map_info *Map;
 
 int
 main(int argc, char **argv)
@@ -52,21 +53,6 @@ main(int argc, char **argv)
     /* Initialize the GIS calls */
     G_gisinit (argv[0]);
     
-    /* Conditionalize R_open_driver() so "help" works, open quiet as well */
-    R__open_quiet();
-    if (R_open_driver() == 0)
-    {
-        if (D_get_dig_list (&vect, &nvects) < 0)
-            vect = NULL;
-        else
-        {
-            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-            vect[nvects] = NULL;
-        }
-	
-        R_close_driver();
-    }
-    
     module = G_define_module();
     module->keywords = _("vector, querying");
     module->description = 
@@ -74,10 +60,7 @@ main(int argc, char **argv)
     
     opt1 = G_define_standard_option(G_OPT_V_MAP);
     opt1->multiple   = YES;
-    if (vect)
-	opt1->answers = vect;
-    if(!vect)
-        opt1->required = YES;
+    opt1->required = YES;
 
     coords_opt = G_define_option();
     coords_opt->key         = "east_north";
@@ -196,8 +179,6 @@ main(int argc, char **argv)
     
     for(i=0; i<nvects; i++)
 	Vect_close (&Map[i]);
-    
-    R_pad_freelist(vect, nvects);
     
     exit(EXIT_SUCCESS);
 }
