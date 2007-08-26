@@ -6,8 +6,8 @@
 /***                                                                     ***/
 /***************************************************************************/
 
-#include <grass/gmath.h>
 #include "frac.h"
+#include <grass/gmath.h>
 
 int 
 process (void)

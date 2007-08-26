@@ -13,9 +13,9 @@
 #include <unistd.h>
 #include <math.h>
 #include <grass/gis.h>
-#include <grass/gmath.h>
 #include <grass/glocale.h>
 #include "frac.h"
+#include <grass/gmath.h>
 
 
 int specsyn (
