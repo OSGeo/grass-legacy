@@ -35,8 +35,8 @@ int fft2(int, double (*)[2], int, int, int);
 /* gauss.c */
 double G_math_rand_gauss(int, double);
 /* max_pow2.c */
-long G_math_max_pow2 (const long);
-long G_math_min_pow2 (const long);
+long G_math_max_pow2 (long);
+long G_math_min_pow2 (long);
 /* rand1.c */
 float G_math_rand(int);
 /* del2g.c */

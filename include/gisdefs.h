@@ -375,14 +375,14 @@ int G_copy(void *, const void *, int);
 int G_copy_file(const char *infile, const char *outfile);
 
 /* dalloc.c */
-double *G_alloc_vector(size_t n);
-double **G_alloc_matrix(int rows, int cols);
-float  *G_alloc_fvector(size_t n);
-float  **G_alloc_fmatrix(int rows, int cols);
-void G_free_vector(double *v);
-void G_free_matrix(double **m);
-void G_free_fvector(float *v);
-void G_free_fmatrix(float **m);
+double *G_alloc_vector(size_t);
+double **G_alloc_matrix(int, int);
+float  *G_alloc_fvector(size_t);
+float  **G_alloc_fmatrix(int, int);
+void G_free_vector(double *);
+void G_free_matrix(double **);
+void G_free_fvector(float *);
+void G_free_fmatrix(float **);
 
 /* date.c */
 char *G_date(void);
@@ -623,10 +623,10 @@ char *G_home(void);
 char *G__home(void);
 
 /* ialloc.c */
-int *G_alloc_ivector(size_t n);
-int **G_alloc_imatrix(int rows, int cols);
-void G_free_ivector(int *v);
-void G_free_imatrix(int **m);
+int *G_alloc_ivector(size_t);
+int **G_alloc_imatrix(int, int);
+void G_free_ivector(int *);
+void G_free_imatrix(int **);
 
 /* index.c */
 char *G_index(const char *, int);
