@@ -141,7 +141,7 @@ cmp_dirent  (const void *aa, const void *bb)
 {
     const dbDirent *a = aa;
     const dbDirent *b = bb;
-    return strcmp (db_get_string(&a->name), db_get_string(&b->name));
+    return strcmp (db_get_string((dbString *)&a->name), db_get_string((dbString *)&b->name));
 }
 
 static void
