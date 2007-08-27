@@ -76,6 +76,9 @@ int load_catval_array_rgb (struct Map_info* map, int vec, dbCatValArray* cvarr_r
 
 
 
+/**** Probably merge _size and _rot fns into a single _double() fn; all that is
+ **** needed is to pass the column name from the vector struct to the fn as well.
+ */
 /**
  * \fn int load_catval_array_size (struct Map_info* map, int vec, dbCatValArray* cvarr_size)
  *
