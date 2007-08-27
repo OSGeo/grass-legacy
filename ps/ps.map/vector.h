@@ -63,17 +63,18 @@ typedef struct {
     double pwidth; /* pattern width */
 
     /* Points */
-    double size;  /* icon size */
-    char *sizecol;  /* Column used for symbol size */
-    char *rgbcol;   /* column used for symbol rgb color */
+    double size;     /* icon size */
+    char *sizecol;   /* Column used for symbol size */
+    char *rgbcol;    /* column used for symbol rgb color */
     /* already defined in Areas section above, so don't need it twice */
     /*    double scale; */  /* Scale factor for dynamic sizing */
-    double rotate;   /* rotation, supported only for eps */
-    char *symbol;   /* symbol name */
-    char *symbol_ps;   /* symbol name in PS */
-    char *epspre;   /* first part of EPS file name */
-    char *epssuf;   /* second part of EPS file name */
-    int  epstype;  /* 0 - no eps, 1 - common eps, 2 - eps for each category */
+    double rotate;   /* symbol rotation */
+    char *rotcol;    /* column used for symbol rotation */
+    char *symbol;    /* symbol name */
+    char *symbol_ps; /* symbol name in PS */
+    char *epspre;    /* first part of EPS file name */
+    char *epssuf;    /* second part of EPS file name */
+    int  epstype;    /* 0 - no eps, 1 - common eps, 2 - eps for each category */
 
     /* Points + Line */
     int ltype;  /* point/centroid or line/boundary */
@@ -84,15 +85,15 @@ typedef struct {
 } LAYER;
     
 struct vector {
-    int cur; /* currently processed vector */
-    int count; /* number of recorded layers */
-    int alloc; /* allocated space */
-    double x, y; /* legend position */
+    int cur;      /* currently processed vector */
+    int count;    /* number of recorded layers */
+    int alloc;    /* allocated space */
+    double x, y;  /* legend position */
     int fontsize; /* legend font size */
-    char *font;    /* legend font */
-    double width;  /* width of legend symbols */
-    int cols; /* number of colums  */
-    int border; /* border color number or -1 for none */
+    char *font;   /* legend font */
+    double width; /* width of legend symbols */
+    int cols;     /* number of colums  */
+    int border;   /* border color number or -1 for none */
     LAYER *layer;
 } ;
 

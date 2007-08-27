@@ -6,6 +6,8 @@ int box_draw(double, double, double, double);
 /* catval.c */
 #if defined GRASS_VECT_H && defined GRASS_DBMI_H
 int load_catval_array_rgb (struct Map_info*, int, dbCatValArray*);
+int load_catval_array_rot (struct Map_info*, int, dbCatValArray*);
+int load_catval_array_size(struct Map_info*, int, dbCatValArray*);
 #endif
 /* chk_scale.c */
 int check_scale(char *);
