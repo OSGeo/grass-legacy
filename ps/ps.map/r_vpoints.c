@@ -254,8 +254,8 @@ read_vpoints (char *name, char *mapset)
 	{
 	    if (sscanf(data, "%lf", &rotate) != 1)
 	    {
-		size = 0.0;
-		error(key, data, "illegal size request (vpoints)");
+		rotate = 0.0;
+		error(key, data, "illegal rotation request (vpoints)");
 	    }
 	    vector.layer[vec].rotate = rotate;
 	    continue;
