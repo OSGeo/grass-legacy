@@ -23,14 +23,15 @@ static char *help[]=
     "masked     [y|n]",
     "color      color",
     "fcolor     color",
+    "rgbcolumn  column",
     "icon       iconfile",
     "eps        epsfile",    
     "size       #",
     "sizecolumn column",
-    "rgbcolumn  column",
     "layer      #",
     "scale      factor",
-    "rotate     #",    
+    "rotate     #",
+    "rotatecolumn  column",
     "font       fontname",
     "label      label",
     "lpos       #",
@@ -77,16 +78,18 @@ read_vpoints (char *name, char *mapset)
     vector.layer[vec].width  = 1. ;
     set_color ( &(vector.layer[vec].color), 0, 0, 0 );
     set_color ( &(vector.layer[vec].fcolor), 255, 0, 0 );
+    vector.layer[vec].rgbcol = NULL;
+
     vector.layer[vec].label = NULL;
     vector.layer[vec].lpos = -1 ;
     vector.layer[vec].symbol = G_store("basic/diamond");
 
     vector.layer[vec].size = 6.0;
     vector.layer[vec].sizecol = NULL;
-    vector.layer[vec].rgbcol = NULL;
     vector.layer[vec].scale = 1.0;
 
     vector.layer[vec].rotate = 0.0;
+    vector.layer[vec].rotcol = NULL;
     vector.layer[vec].epstype = 0;
 
 
@@ -164,8 +167,8 @@ read_vpoints (char *name, char *mapset)
 	    continue;
 	}
 
-        if (KEY("fcolor")) /* fill color */
-        {
+	if (KEY("fcolor")) /* fill color */
+	{
 	    ret = G_str_to_color( data, &r, &g, &b);
 	    if ( ret == 1 )
 	        set_color ( &(vector.layer[vec].fcolor), r, g, b );
@@ -175,7 +178,14 @@ read_vpoints (char *name, char *mapset)
 		error (key,data,"illegal color request (vpoints)");
 
 	    continue;
-         }
+	}
+
+	if (KEY("rgbcolumn")) 
+	{
+	    G_strip(data);
+	    vector.layer[vec].rgbcol = G_store(data);
+	    continue;
+	}
 
 	if (KEY("label")) /* map legend label */
 	{
@@ -242,22 +252,15 @@ read_vpoints (char *name, char *mapset)
 	*/
 	if (KEY("sizecol"))
 	{
-	    G_warning (_("The mapping instruction <%s> will be renamed to <%s> in future versions "
-			 "of GRASS. Please use <%s> instead."),
-		       "sizecol", "sizecolumn", "sizecolumn");
+	    G_warning(
+	      _("The mapping instruction <%s> will be renamed to <%s> "
+	        "in future versions of GRASS. Please use <%s> instead."),
+		"sizecol", "sizecolumn", "sizecolumn");
 	}
-
 	if (KEY("sizecol") || KEY("sizecolumn"))
 	{
 	    G_strip(data);
 	    vector.layer[vec].sizecol = G_store(data);
-	    continue;
-	}
-
-	if (KEY("rgbcolumn")) 
-	{
-	    G_strip(data);
-	    vector.layer[vec].rgbcol = G_store(data);
 	    continue;
 	}
 
@@ -276,12 +279,19 @@ read_vpoints (char *name, char *mapset)
 	{
 	    if (sscanf(data, "%lf", &rotate) != 1)
 	    {
-		size = 0.0;
-		error(key, data, "illegal size request (vpoints)");
+		rotate = 0.0;
+		error(key, data, "illegal rotation request (vpoints)");
 	    }
 	    vector.layer[vec].rotate = rotate;
 	    continue;
-	}	
+	}
+
+	if (KEY("rotatecolumn"))
+	{
+	    G_strip(data);
+	    vector.layer[vec].rotcol = G_store(data);
+	    continue;
+	}
 
 	error(key, "", "illegal request (vpoints)");
     }

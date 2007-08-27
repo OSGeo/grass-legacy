@@ -1383,9 +1383,10 @@ USAGE:	<B>vpoints</B> vectormap
 	<B>eps</B> epsfile	
 	<B>symbol</B> symbol group/name	
 	<B>size</B> #
-	<B>rotate</B> #
 	<B>sizecolumn</B> attribute column used for symbol sizing
-	<B>scale</B> scaling factor for sizecol values
+	<B>scale</B> scaling factor for sizecolumn values
+	<B>rotate</B> #
+	<B>rotatecolumn</B> column
 	<B>label</B> legend label
 	<B>lpos</B> position in legend
 	<B>end</B>
@@ -1395,13 +1396,15 @@ the <B>color</B> of the sites (see section on <a href="#NAMED_COLORS">NAMED COLO
 either the GRASS <B>symbol</B> or
 the <B>eps</B> Encapsulated Postscript file to be used to represent the presence of a site
 (if '<B>$</B>' is used in the EPS file path it will be replaced by category number); 
-and <B>rotate</B> (in degrees) for counterclockwise rotation.
+and <B>rotate</B> (in degrees) for counter-clockwise rotation.
 <BR>
 The size of the icon (number of times larger than the size it is in
 the icon file) is typically given by the <B>size</B> option. Alternatively
 the size of the symbol or EPS graphic can be taken from an attribute column 
 by using the <B>sizecolumn</B> command. The value given by <B>sizecolumn</B> may be
 scaled by using the <B>scale</B> factor setting (default scaling is 1.0).
+In a similar manner symbol color can be read from <B>rgbcolumn</B>
+and the rotation angle read from <B>rotatecolumn</B>.
 
 <PRE>
 EXAMPLE:

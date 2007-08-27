@@ -30,12 +30,14 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
     VARRAY *Varray = NULL;
 
     /* Attributes if sizecol is used */
-    int i, nrec, ctype;
-    struct field_info *Fi;
-    dbDriver *Driver;
-    dbCatValArray cvarr;
+    dbCatValArray cvarr_size;
     int size_val_int;
     double size_val;
+
+    /* rotation column */
+    dbCatValArray cvarr_rot;
+    double rotate;
+    int rot_val_int;
 
     /* rgbcol */
     dbCatValArray cvarr_rgb;
@@ -43,8 +45,9 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
     int red, grn, blu;
     char* rgbstring = NULL;
     PSCOLOR color;
-
     cv_rgb = NULL;
+
+
 
     /* Create vector array if required */
     if ( vector.layer[vec].cats != NULL || vector.layer[vec].where != NULL ) {
@@ -92,48 +95,19 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	}
     }
 
+
     /* Load attributes if sizecol used */
-    if(vector.layer[vec].sizecol != NULL) {
-	db_CatValArray_init ( &cvarr );
+    if(vector.layer[vec].sizecol != NULL)
+	load_catval_array_size (P_map, vec, &cvarr_size);
 
-	Fi = Vect_get_field( P_map, vector.layer[vec].field );
-	if ( Fi == NULL ) {
-	    G_fatal_error(_("Cannot get layer info for vector map"));
-	}
-
-	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
-	if (Driver == NULL)
-	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
-
-	/* Note do not check if the column exists in the table because it may be expression */
-
-	/* TODO: only select values we need instead of all in column */
-	nrec = db_select_CatValArray(Driver, Fi->table, Fi->key, 
-			vector.layer[vec].sizecol, NULL, &cvarr );
-	G_debug (3, "nrec = %d", nrec );
-
-	ctype = cvarr.ctype;
-	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Column type not supported"));
-
-	if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
-	G_debug(2, "\n%d records selected from table", nrec);
-
-	db_close_database_shutdown_driver(Driver);
-
-	for ( i = 0; i < cvarr.n_values; i++ ) {
-	    if ( ctype == DB_C_TYPE_INT ) {
-		G_debug (4, "cat = %d val = %d", cvarr.value[i].cat, cvarr.value[i].val.i );
-	    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
-		G_debug (4, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].val.d );
-	    }
-	}
-    }
-    
     /* load attributes if rgbcol used */
-    if (vector.layer[vec].rgbcol != NULL) {
+    if (vector.layer[vec].rgbcol != NULL)
 	load_catval_array_rgb (P_map, vec, &cvarr_rgb);
-    }
+
+   /* Load attributes if rotatecolumn used */
+    if(vector.layer[vec].rotcol != NULL)
+	load_catval_array_rot (P_map, vec, &cvarr_rot);
+
 
     /* read and plot vectors */
     k = 0;
@@ -167,8 +141,8 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	    size = vector.layer[vec].size;
 	else {  /* get value from sizecol column */
 
-	    if( ctype == DB_C_TYPE_INT ) {
-		ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
+	    if( cvarr_size.ctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int(&cvarr_size, cat, &size_val_int);
 		if ( ret != DB_OK ) {
 		    G_warning(_("No record for category [%d]"), cat );
 		    continue;
@@ -176,8 +150,8 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		size_val = (double)size_val_int;
 	    }
 
-	    if( ctype == DB_C_TYPE_DOUBLE ) {
-		ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
+	    if( cvarr_size.ctype == DB_C_TYPE_DOUBLE ) {
+		ret = db_CatValArray_get_value_double(&cvarr_size, cat, &size_val);
 		if ( ret != DB_OK ) {
 		    G_warning(_("No record for category [%d]"), cat );
 		    continue;
@@ -233,20 +207,46 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	    }
 	}
 
+	/* symbol rotation */
+	if( vector.layer[vec].rotcol == NULL)
+	    rotate = vector.layer[vec].rotate;
+	else {  /* get value from rotcol column */
+
+	    if( cvarr_rot.ctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int(&cvarr_rot, cat, &rot_val_int);
+		if ( ret != DB_OK ) {
+		    G_warning(_("No record for category [%d]"), cat );
+		    continue;
+		}
+		rotate = (double)rot_val_int;
+	    }
+
+	    if( cvarr_rot.ctype == DB_C_TYPE_DOUBLE ) {
+		ret = db_CatValArray_get_value_double(&cvarr_rot, cat, &rotate);
+		if ( ret != DB_OK ) {
+		    G_warning(_("No record for category [%d]"), cat );
+		    continue;
+		}
+	    }
+
+	    G_debug(3, "    dynamic rotation value = %.2f", rotate);
+	}
+
+
 	if (vector.layer[vec].epstype == 1)  /* draw common eps */ 
 	{
 	    /* calculate translation */
-	    eps_trans (llx, lly, urx, ury, x, y, size, vector.layer[vec].rotate, &xt, &yt);
-	    eps_draw_saved ( PS.fp, eps, xt, yt, size, vector.layer[vec].rotate);
+	    eps_trans (llx, lly, urx, ury, x, y, size, rotate, &xt, &yt);
+	    eps_draw_saved ( PS.fp, eps, xt, yt, size, rotate);
 	}
 	else if ( vector.layer[vec].epstype == 2)  /* draw epses */ 
 	{
 	    sprintf (epsfile, "%s%d%s", vector.layer[vec].epspre, cat, vector.layer[vec].epssuf);
 	    if ( (eps_exist = eps_bbox( epsfile, &llx, &lly, &urx, &ury)) )
 	    {
-		eps_trans (llx, lly, urx, ury, x, y, size, vector.layer[vec].rotate, &xt, &yt);
+		eps_trans (llx, lly, urx, ury, x, y, size, rotate, &xt, &yt);
 
-		eps_draw ( PS.fp, epsfile, xt, yt, size, vector.layer[vec].rotate); 
+		eps_draw ( PS.fp, epsfile, xt, yt, size, rotate); 
 	    }
 	}
 
@@ -255,8 +255,7 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 		    && !eps_exist ) )   
 	{
 	    if ( Symb != NULL ) { 
-		symbol_draw ( sname, x, y, size, vector.layer[vec].rotate, 
-		    vector.layer[vec].width);
+		symbol_draw( sname, x, y, size, rotate, vector.layer[vec].width );
 	    }
 	}
     } /* for (line) */
