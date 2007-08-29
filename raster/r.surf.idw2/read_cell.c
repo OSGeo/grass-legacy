@@ -4,6 +4,7 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
+
 int read_cell (char *name)
 {
     int fd;
@@ -46,7 +47,7 @@ int read_cell (char *name)
 	if (G_get_map_row_nomask (fd, cell, row) < 0)
 	    exit(1);
 	for (col = 0; col < window.cols; col++)
-	    if (z = cell[col])
+	    if ((z = cell[col]))
 		newpoint(z,window.west+(col+.5)*window.ew_res,north);
     }
     G_percent (row, window.rows, 1);
