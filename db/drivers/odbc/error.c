@@ -8,7 +8,7 @@
  *
  * \author Radim Blazek
  *
- * \date
+ * \date 2000-2007
  */
 
 #include <stdio.h>
