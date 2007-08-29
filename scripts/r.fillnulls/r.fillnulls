@@ -166,7 +166,7 @@ r.mapcalc "MASK=if($TMP1.buf==2,1,null())"
 # now we only see the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
 VECTTMP=vecttmp_fillnulls_$$
-g.message -e  "Creating interpolation points..."
+g.message "Creating interpolation points..."
 r.to.vect input=$GIS_OPT_INPUT output=${VECTTMP} feature=point
 if [ $? -ne 0 ] ; then
     g.message -e "$0 abandoned. Removing temporary maps, restoring user mask if needed:"
