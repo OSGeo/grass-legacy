@@ -1,29 +1,39 @@
-/***********************************************************
-*
-* MODULE:       SQLite driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*               Transactions by Antonio Galea
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-* This program is free software under the GNU General Public
-* License (>=v2). Read the file COPYING that comes with GRASS
-* for details.
-*
-**************************************************************/
+/**
+ * \file execute.c
+ *
+ * \brief Low level SQLite sql execute.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ * \author Antonio Galea
+ *
+ * \date 2005-2007
+ */
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include "globals.h"
 #include "proto.h"
 
+
+/**
+ * \fn int db__driver_execute_immediate (dbString *sql)
+ *
+ * \brief Low level SQLite execute sql text.
+ *
+ * \param[in] sql SQL statement
+ * \return int DB_FAILED on error; DB_OK on success
+ */
+
 int db__driver_execute_immediate(dbString *sql)
 {
     char *s;
     int  ret;
     sqlite3_stmt *stmt;
-    char *rest = NULL;
+    const char *rest;
 
     s = db_get_string (sql);
 
@@ -34,7 +44,7 @@ int db__driver_execute_immediate(dbString *sql)
     if ( ret != SQLITE_OK )
     {
         append_error("Error in sqlite3_prepare():\n");
-	append_error ( sqlite3_errmsg(sqlite) );
+	append_error ((char *) sqlite3_errmsg (sqlite));
         report_error( );
         return DB_FAILED;
     }
@@ -44,7 +54,7 @@ int db__driver_execute_immediate(dbString *sql)
     if ( ret != SQLITE_DONE )
     {
         append_error("Error in sqlite3_step():\n");
-	append_error ( sqlite3_errmsg(sqlite) );
+	append_error ((char *) sqlite3_errmsg (sqlite));
         report_error( );
         return DB_FAILED;
     }
@@ -54,7 +64,7 @@ int db__driver_execute_immediate(dbString *sql)
      if ( ret != SQLITE_OK )
      {
 	 append_error("Error in sqlite3_finalize():\n");
-	 append_error ( sqlite3_errmsg(sqlite) );
+	 append_error ((char *) sqlite3_errmsg (sqlite));
 	 report_error( );
 	 return DB_FAILED;
      }
@@ -65,7 +75,16 @@ int db__driver_execute_immediate(dbString *sql)
      */
      
      return DB_OK;
- }
+}
+
+
+/**
+ * \fn int db__driver_begin_transaction (void)
+ *
+ * \brief Low level SQLite begin SQL transaction.
+ *
+ * \return int DB_FAILED on error; DB_OK on success
+ */
 
 int db__driver_begin_transaction(void)
 {
@@ -76,13 +95,22 @@ int db__driver_begin_transaction(void)
    if ( ret != SQLITE_OK )
    {
       append_error("Cannot 'BEGIN' transaction:\n");
-      append_error ( sqlite3_errmsg(sqlite) );
+      append_error ((char *) sqlite3_errmsg (sqlite));
       report_error( );
       return DB_FAILED;
    }
 
    return DB_OK;
 }
+
+
+/**
+ * \fn int db__driver_commit_transaction (void)
+ *
+ * \brief Low level SQLite commit transaction.
+ *
+ * \return int DB_FAILED on error; DB_OK on success
+ */
 
 int db__driver_commit_transaction(void)
 {
@@ -93,12 +121,10 @@ int db__driver_commit_transaction(void)
    if ( ret != SQLITE_OK )
    {
        append_error("Cannot 'COMMIT' transaction:\n");
-       append_error ( sqlite3_errmsg(sqlite) );
+       append_error ((char *) sqlite3_errmsg (sqlite));
        report_error( );
        return DB_FAILED;
    }
 
    return DB_OK;
 }
-
-
