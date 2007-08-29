@@ -56,7 +56,6 @@ sys.path.append(gmpath)
 
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
-import gui_modules.render as render
 import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
@@ -66,6 +65,8 @@ import gui_modules.profile as profile
 import gui_modules.rules as rules
 import gui_modules.utils as utils
 import gui_modules.cmd as cmd
+import gui_modules.georect as georect
+
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -291,7 +292,8 @@ class GMFrame(wx.Frame):
         """
         Launch georectifier module
         """
-        pass
+        print 'launch georect'
+        georect.GeorectWizard(self)
 
     def OnMapsets(self, event):
         """
