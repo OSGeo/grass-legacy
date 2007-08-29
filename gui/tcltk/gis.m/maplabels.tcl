@@ -431,7 +431,7 @@ proc GmCLabels::display { node } {
 				if { $opt($id,1,override) == 0 } {set opt($id,1,lwidth) $val}
 			}
 			"text" {
-				set opt($id,1,ltxt) $val
+				set opt($id,1,ltxt) [subst -nocommands -novariables $val]
 				# create each label when loop gets to a text line in the labels file
 				# Here should be set all font related options, that come from labelfile
 				if {[info exists opt($id,1,lfontsize)]} {
