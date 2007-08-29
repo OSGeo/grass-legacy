@@ -799,7 +799,7 @@ reduction (float **a, int n)
 	{
 	    for (i = m + 1; i <= n; i++)
 	    {
-		if (y = a[i][m - 1])
+		if ((y = a[i][m - 1]))
 		{
 		    y /= x;
 		    a[i][m - 1] = y;
@@ -920,14 +920,14 @@ hessenberg (float **a, int n, float wr[], float wi[])
 			    r = 0.0;
 			    if (k != (nn - 1))
 				r = a[k + 2][k - 1];
-			    if (x = fabs (p) + fabs (q) + fabs (r))
+			    if ((x = fabs (p) + fabs (q) + fabs (r)))
 			    {
 				p /= x;
 				q /= x;
 				r /= x;
 			    }
 			}
-			if (s = SIGN (sqrt (p * p + q * q + r * r), p))
+			if ((s = SIGN (sqrt (p * p + q * q + r * r), p)))
 			{
 			    if (k == m)
 			    {

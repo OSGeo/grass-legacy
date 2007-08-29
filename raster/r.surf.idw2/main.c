@@ -34,6 +34,7 @@ struct Point
 struct Point *points = NULL;
 struct Point *list;
 
+
 int 
 main (int argc, char *argv[])
 {
@@ -174,7 +175,7 @@ main (int argc, char *argv[])
 	    sum2 = 0.0;
 	    for (n = 0; n < nsearch; n++)
 	    {
-		if(dist = list[n].dist)
+		if ((dist = list[n].dist))
 		{
 		    sum1 += list[n].z / dist;
 		    sum2 += 1.0/dist;
@@ -188,16 +189,19 @@ main (int argc, char *argv[])
 	    }
 	    cell[col] = (CELL) (sum1/sum2 + 0.5);
 	}
+
 	G_put_raster_row (fd, cell, CELL_TYPE);
     }
+
     G_free(points);
     G_free(cell);
     G_close_cell(fd);
+
     /* writing history file */
     G_short_history(parm.output->answer, "raster", &history);
     G_command_history(&history);
     G_write_history(parm.output->answer, &history);
-    G_done_msg("");
+    G_done_msg(" ");
 
     exit(EXIT_SUCCESS);
 }
