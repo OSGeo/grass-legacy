@@ -309,7 +309,7 @@ list_mapsets (char *location_name, char *location)
 		fprintf (stderr, "\n");
 		tot_len = len;
 	    }
-	    if(ok = (mapset_permissions(mapsets[i]) == 1))
+	    if ((ok = (mapset_permissions(mapsets[i]) == 1)))
 		any_ok = 1;
 	    fprintf (stderr, "%s%-*s", ok?"(+)":"   ", len, mapsets[i]);
 	}
