@@ -303,8 +303,8 @@ int bar (
 		/* draw tick for null and for numbers at every tic step
 		   except when there is null, don't draw tic for mincat+1 */
 
-		if ((rem((long int)i,tic_every)==(float)0 || 
-		      i==dist_stats->mincat && nodata) 
+		if (((rem ((long int)i, tic_every) == 0L) || 
+		      ((i == dist_stats->mincat) && nodata)) 
 		      && !(nodata && i==dist_stats->mincat+1))
 		{
 			/* draw a numbered tic-mark */
