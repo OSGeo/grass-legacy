@@ -604,7 +604,7 @@ void save_core (double sumc2, double sume2, double mcore, double medge, double *
 
   if (choice->core[5]) {
      for(i = 0; i < ntype; i++){
-        if (tmpc = type_dens[i])
+        if ((tmpc = type_dens[i]))
            tmpc = mcore1[i] / tmpc;
         fprintf(c5, " %11.3f", tmpc);
      }
@@ -631,7 +631,7 @@ void save_core (double sumc2, double sume2, double mcore, double medge, double *
 
   if (choice->core[7]) {
      for(i = 0; i < ntype; i++){
-        if (tmpe = type_dens[i])
+        if ((tmpe = type_dens[i]))
            tmpe = medge1[i] / tmpe;
         fprintf(c7, " %11.3f", tmpe);
      }
@@ -811,7 +811,7 @@ void save_size (double sum2, double msize, double *msize1, double *sum22, int *d
 
   if (choice->size[3]) {
      for(i = 0; i < ntype; i++) {
-        if (tmp = type_dens[i])
+        if ((tmp = type_dens[i]))
            tmp = msize1[i] / tmp;
         fprintf(s3, " %11.3f", tmp);
      }
@@ -1095,7 +1095,7 @@ void save_shape (double sq1, double sq2, double sq3, double *sqr11, double *sqr2
 
   if (choice->shape[3] && choice->Mx[2]) {
      for(i = 0; i < ntype; i++) {
-        if (tmp = type_dens[i])
+        if ((tmp = type_dens[i]))
             tmp = mshape1[i] / tmp;
         fprintf(h3, "  %10.3f", tmp);
      }
@@ -1150,7 +1150,7 @@ void save_shape (double sq1, double sq2, double sq3, double *sqr11, double *sqr2
 
   if (choice->shape[3] && choice->Mx[1]) {
      for(i = 0; i < ntype; i++) {
-        if (tmp = type_dens[i])
+        if ((tmp = type_dens[i]))
            tmp = mshape1_p[i] / tmp;
         fprintf(h3, "  %10.3f", tmp);
      }
@@ -1206,7 +1206,7 @@ void save_shape (double sq1, double sq2, double sq3, double *sqr11, double *sqr2
 
   if (choice->shape[3] && choice->Mx[3]) {
      for(i = 0; i < ntype; i++) {
-        if (tmp = type_dens[i])
+        if ((tmp = type_dens[i]))
            tmp = mshape1_r[i] / tmp;
         fprintf(h3, "  %10.3f", tmp);
      }
