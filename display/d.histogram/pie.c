@@ -291,7 +291,7 @@ pie (
 
 		/* if fp map and not null and range is not empty, draw smooth 
 		   color range */
-		if(is_fp && !(i==dist_stats->mincat && nodata) & dmin != dmax)
+		if ((is_fp && !(i == dist_stats->mincat && nodata) && dmin != dmax))
 		{
 		    for(j=0; j < xscale; j++)
 		    {
@@ -328,9 +328,9 @@ pie (
 	/* draw tick for null and for numbers at every tic step
 	   except when there is null, don't draw tic for mincat+1 */
 
-	if ((rem((long int)i,tic_every)==(float)0 ||
-	     i==dist_stats->mincat && nodata)
-	    && !(nodata && i==dist_stats->mincat+1))
+	if ((rem ((long int)i, tic_every) == 0L ||
+	     ((i == dist_stats->mincat) && nodata))
+	    && !(nodata && i == dist_stats->mincat + 1))
 	{
 	    /* draw a numbered tic-mark */
 	    R_standard_color(color);
