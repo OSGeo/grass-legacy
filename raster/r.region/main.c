@@ -22,6 +22,7 @@ static int nsew(const char *,const char *,const char *,const char *);
 static void die(struct Option *);
 static char *llinfo(const char *,const char *,int);
 
+
 int main (int argc, char *argv[])
 {
 	int i;
@@ -151,7 +152,7 @@ int main (int argc, char *argv[])
 	parm.align->description = _("Raster map to align to");
 
 	if (G_parser(argc,argv))
-		exit(1);
+		exit (EXIT_FAILURE);
 
 	name = parm.map->answer;
 
@@ -169,7 +170,7 @@ int main (int argc, char *argv[])
 	if (flag.cur->answer)
 		G_get_window(&window);
 
-	if (name = parm.region->answer)	/* region= */
+	if ((name = parm.region->answer))	/* region= */
 	{
 		mapset = G_find_file("windows", name, "");
 		if (!mapset)
@@ -178,7 +179,7 @@ int main (int argc, char *argv[])
 			G_fatal_error(_("can't read region <%s> in <%s>"), name, mapset);
 	}
 
-	if (name = parm.view->answer)	/* 3dview= */
+	if ((name = parm.view->answer))	/* 3dview= */
 	{
 		struct G_3dview v;
 		FILE *fp;
@@ -210,7 +211,7 @@ int main (int argc, char *argv[])
 
 	}
 
-	if (name = parm.raster->answer)	/* raster= */
+	if ((name = parm.raster->answer))	/* raster= */
 	{
 		mapset = G_find_cell2(name, "");
 		if (!mapset)
@@ -219,7 +220,7 @@ int main (int argc, char *argv[])
 			G_fatal_error(_("can't read header for <%s> in <%s>"), name, mapset);
 	}
 
-	if (name = parm.vect->answer)	/* vect= */
+	if ((name = parm.vect->answer))	/* vect= */
 	{
 		struct Map_info Map;
 		BOUND_BOX box;
@@ -243,9 +244,9 @@ int main (int argc, char *argv[])
 		Vect_close(&Map);
 	}
 
-	if (value = parm.north->answer)	/* n= */
+	if ((value = parm.north->answer))	/* n= */
 	{
-		if (i = nsew(value, "n+", "n-", "s+"))
+		if ((i = nsew(value, "n+", "n-", "s+")))
 		{
 			if (!G_scan_resolution(value+2, &x, window.proj))
 				die(parm.north);
@@ -268,9 +269,9 @@ int main (int argc, char *argv[])
 			die(parm.north);
 	}
 
-	if (value = parm.south->answer)	/* s= */
+	if ((value = parm.south->answer))	/* s= */
 	{
-		if (i = nsew(value, "s+", "s-", "n-"))
+		if ((i = nsew(value, "s+", "s-", "n-")))
 		{
 			if (!G_scan_resolution(value+2, &x, window.proj))
 				die(parm.south);
@@ -293,9 +294,9 @@ int main (int argc, char *argv[])
 			die(parm.south);
 	}
 
-	if (value = parm.east->answer)	/* e= */
+	if ((value = parm.east->answer))	/* e= */
 	{
-		if (i = nsew(value, "e+", "e-", "w+"))
+		if ((i = nsew(value, "e+", "e-", "w+")))
 		{
 			if (!G_scan_resolution(value+2, &x, window.proj))
 				die(parm.east);
@@ -318,9 +319,9 @@ int main (int argc, char *argv[])
 			die(parm.east);
 	}
 
-	if (value = parm.west->answer)	/* w= */
+	if ((value = parm.west->answer))	/* w= */
 	{
-		if (i = nsew(value, "w+", "w-", "e-"))
+		if ((i = nsew(value, "w+", "w-", "e-")))
 		{
 			if (!G_scan_resolution(value+2, &x, window.proj))
 				die(parm.west);
@@ -343,7 +344,7 @@ int main (int argc, char *argv[])
 			die(parm.west);
 	}
 
-	if (name = parm.align->answer)	/* align= */
+	if ((name = parm.align->answer))	/* align= */
 	{
 		struct Cell_head temp_window;
 
@@ -352,14 +353,14 @@ int main (int argc, char *argv[])
 			G_fatal_error(_("raster map <%s> not found"), name);
 		if (G_get_cellhd(name, mapset, &temp_window) < 0)
 			G_fatal_error(_("can't read header for <%s> in <%s>"), name, mapset);
-		if (err = G_align_window(&window, &temp_window))
+		if ((err = G_align_window(&window, &temp_window)))
 			G_fatal_error("%s in %s: %s", name, mapset, err);
 	}
 
 	window.rows = cellhd.rows;
 	window.cols = cellhd.cols;
 
-	if (err = G_adjust_Cell_head(&window, 1, 1))
+	if ((err = G_adjust_Cell_head(&window, 1, 1)))
 		G_fatal_error(_("invalid region: %s"), err);
 
 	cellhd.north	= window.north;
@@ -370,7 +371,8 @@ int main (int argc, char *argv[])
 	if (G_put_cellhd(parm.map->answer, &cellhd) < 0)
 		G_fatal_error(_("unable to update boundaries"));
 
-	G_done_msg("");
+	G_done_msg(" ");
+
 	return 0;
 }
 
