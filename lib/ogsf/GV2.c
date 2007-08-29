@@ -153,7 +153,7 @@ int GV_load_vector(int id, char *filename)
 	strcpy(gv->filename, filename);
     }
 
-    if (gv->lines = Gv_load_vect(filename, &(gv->n_lines))) {
+    if ((gv->lines = Gv_load_vect(filename, &(gv->n_lines)))) {
 	return (1);
     }
 

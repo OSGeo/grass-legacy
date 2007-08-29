@@ -230,7 +230,7 @@ typbuff *gsds_get_typbuff(int id, IFLAG change_flag)
 {
     dataset *ds;
 
-    if (ds = get_dataset(id)) {
+    if ((ds = get_dataset(id))) {
 	ds->changed = ds->changed | change_flag;
 	ds->need_reload = 0;
 
@@ -398,7 +398,7 @@ int gsds_alloc_typbuff(int id, int *dims, int ndims, int type)
     dataset *ds;
     int i, siz = 1;
 
-    if (ds = get_dataset(id)) {
+    if ((ds = get_dataset(id))) {
 	/*
 	   free_data_buffs(ds); 
 	   careful here - allowing > 1 type to coexist (for float -> color conv.)
@@ -524,7 +524,7 @@ int gsds_get_changed(int id)
 {
     dataset *ds;
 
-    if (ds = get_dataset(id)) {
+    if ((ds = get_dataset(id))) {
 	return ((int) ds->changed);
     }
 
@@ -536,7 +536,7 @@ int gsds_set_changed(int id, IFLAG reason)
 {
     dataset *ds;
 
-    if (ds = get_dataset(id)) {
+    if ((ds = get_dataset(id))) {
 	ds->changed = reason;
     }
 

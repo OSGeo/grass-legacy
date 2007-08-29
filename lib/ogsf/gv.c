@@ -121,7 +121,7 @@ geovect *gv_get_new_vect(void)
 	return (NULL);
     }
 
-    if (lv = gv_get_last_vect()) {
+    if ((lv = gv_get_last_vect())) {
 	lv->next = nv;
 	nv->gvect_id = lv->gvect_id + 1;
     }
