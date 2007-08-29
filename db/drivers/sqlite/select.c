@@ -1,24 +1,35 @@
-/***********************************************************
-*
-* MODULE:       SQLite driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-* This program is free software under the GNU General Public
-* License (>=v2). Read the file COPYING that comes with GRASS
-* for details.
-*
-**************************************************************/
+/**
+ * \file select.c
+ *
+ * \brief Low level SQLite database functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2005-2007
+ */
+
 #include <stdlib.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
 
+/**
+ * \fn int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
+ *
+ * \brief Open SQLite cursor for select.
+ *
+ * \param[in] sel
+ * \param[in,out] dbc
+ * \param[in] mode
+ * \return int DB_FAILED on error; DB_OK on success
+ */
+
+int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
 {
     cursor   *c;
     dbTable  *table;
@@ -51,7 +62,7 @@ int db__driver_open_select_cursor (dbString *sel, dbCursor *dbc, int mode)
         append_error("Error in sqlite3_prepare():");
 	append_error(db_get_string(sel) );
 	append_error( "\n" );
-        append_error ( sqlite3_errmsg(sqlite) );
+        append_error ((char *) sqlite3_errmsg (sqlite));
         report_error( );
         return DB_FAILED;
     }
