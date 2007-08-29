@@ -500,7 +500,7 @@ void GS_draw_X(int id, float *pt)
     Point3 pos;
     float siz;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	GS_get_longdim(&siz);
 	siz /= 200.;
 	pos[X] = pt[X] - gs->ox;
@@ -533,7 +533,7 @@ void GS_draw_line_onsurf(int id, float x1, float y1, float x2, float y2)
     float p1[2], p2[2];
     geosurf *gs;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	p1[X] = x1 - gs->ox;
 	p1[Y] = y1 - gs->oy;
 	p2[X] = x2 - gs->ox;
@@ -566,7 +566,7 @@ int GS_draw_nline_onsurf(int id, float x1, float y1, float x2, float y2,
     geosurf *gs;
     int ret = 0;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	p1[X] = x1 - gs->ox;
 	p1[Y] = y1 - gs->oy;
 	p2[X] = x2 - gs->ox;
@@ -599,7 +599,7 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
     float p1[2], p2[2], next[2];
     int i = 0;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	p1[X] = x;
 	p1[Y] = y;
 	/* multiply by 1.5 resolutions to ensure a crossing ? */
@@ -662,7 +662,7 @@ void GS_draw_fringe(int id, unsigned long clr, float elev, int *where)
 {
   geosurf *gs;
 
-  if (gs = gs_get_surf(id)) 
+  if ((gs = gs_get_surf(id)))
              gsd_display_fringe(gs, clr, elev, where);
 
 }
@@ -817,7 +817,7 @@ int GS_is_masked(int id, float *pt)
     geosurf *gs;
     Point3 tmp;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	tmp[X] = pt[X] - gs->ox;
 	tmp[Y] = pt[Y] - gs->oy;
 
@@ -841,7 +841,7 @@ int GS_set_SDsurf(int id)
 {
     geosurf *gs;
 
-    if (gs = gs_get_surf(id)) {
+    if ((gs = gs_get_surf(id))) {
 	gsdiff_set_SDref(gs);
 	SDref_surf = id;
 
@@ -864,7 +864,7 @@ int GS_get_SDsurf(int *id)
 {
     geosurf *gs;
 
-    if (gs = gsdiff_get_SDref()) {
+    if ((gs = gsdiff_get_SDref())) {
 	*id = SDref_surf;
 
 	return (1);
@@ -1650,7 +1650,7 @@ void GS_alldraw_wire(void)
     int i;
 
     for (i = 0; i < Next_surf; i++) {
-	if (gs = gs_get_surf(Surf_ID[i])) {
+	if ((gs = gs_get_surf(Surf_ID[i]))) {
 	    gsd_wire_surf(gs);
 	}
     }
@@ -2031,7 +2031,7 @@ void GS_get_zrange_nz(float *min, float *max)
     geosurf *gs;
 
     for (i = 0; i < Next_surf; i++) {
-	if (gs = gs_get_surf(Surf_ID[i])) {
+	if ((gs = gs_get_surf(Surf_ID[i]))) {
 	    if (first) {
 		first = 0;
 		*min = gs->zmin_nz;

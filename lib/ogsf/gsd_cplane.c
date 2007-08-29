@@ -196,7 +196,7 @@ void gsd_draw_cplane_fence(geosurf * surf1, geosurf * surf2, int cpnum)
     float len, dir[3], bgn[2], end[2], px, py, fencenorm[3];
 
     /* temporarily turn this plane off */
-    if (was_on = Cp_ison[cpnum]) {
+    if ((was_on = Cp_ison[cpnum])) {
 	gsd_set_clipplane(cpnum, 0);
     }
 
@@ -268,7 +268,7 @@ void gsd_draw_cplane(int num)
     gsd_rot(Cp_rot[num][Y], 'y');
     gsd_rot(Cp_rot[num][X], 'x');
 
-    if (scalez = GS_global_exag()) {
+    if ((scalez = GS_global_exag())) {
 	gsd_scale(1.0, 1.0, 1. / scalez);
     }
 

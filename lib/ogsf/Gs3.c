@@ -606,7 +606,7 @@ int Gs_build_256lookup(char *filename, int *buff)
 
 	if (set[i]) {
 	    buff[i] =
-		r[i] & 0xff | ((g[i] & 0xff) << 8) | ((b[i] & 0xff) << 16);
+		(r[i] & 0xff) | ((g[i] & 0xff) << 8) | ((b[i] & 0xff) << 16);
 	}
 	else {
 	    buff[i] = NO_DATA_COL;
@@ -645,8 +645,7 @@ void Gs_pack_colors(char *filename, int *buff, int rows, int cols)
 	for (j = 0; j < cols; j++) {
 	    if (set[j]) {
 		cur[j] =
-		    r[j] & 0xff | ((g[j] & 0xff) << 8) | ((b[j] & 0xff) <<
-							  16);
+		    (r[j] & 0xff) | ((g[j] & 0xff) << 8) | ((b[j] & 0xff) << 16);
 	    }
 	    else {
 		cur[j] = NO_DATA_COL;
@@ -699,8 +698,7 @@ void Gs_pack_colors_float(char *filename, float *fbuf, int *ibuf, int rows,
 	for (j = 0; j < cols; j++) {
 	    if (set[j]) {
 		icur[j] =
-		    r[j] & 0xff | ((g[j] & 0xff) << 8) | ((b[j] & 0xff) <<
-							  16);
+		    (r[j] & 0xff) | ((g[j] & 0xff) << 8) | ((b[j] & 0xff) << 16);
 	    }
 	    else {
 		icur[j] = NO_DATA_COL;

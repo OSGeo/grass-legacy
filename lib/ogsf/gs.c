@@ -182,7 +182,7 @@ geosurf *gs_get_new_surface(void)
 	return (NULL);
     }
 
-    if (ls = gs_get_last_surface()) {
+    if ((ls = gs_get_last_surface())) {
 	ls->next = ns;
 	ns->gsurf_id = ls->gsurf_id + 1;
     }
@@ -585,7 +585,7 @@ typbuff *gs_get_att_typbuff(geosurf * gs, int desc, int to_write)
     geosurf *gsref;
 
     if (gs) {
-	if (tb = gsds_get_typbuff(gs->att[desc].hdata, to_write)) {
+	if ((tb = gsds_get_typbuff(gs->att[desc].hdata, to_write))) {
 	    tb->tfunc = NULL;
 
 	    if (desc == ATT_TOPO) {
