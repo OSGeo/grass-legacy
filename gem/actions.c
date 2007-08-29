@@ -85,10 +85,10 @@ void unpack_extension ( char *package ) {
 	int ftype;
 	
 	fprintf (stdout, "Uncompressing files...");
-	
-	strcpy (TMPDIR,"/tmp/grass.extension.XXXXXX"); /* tmpdir is a global variable */
-		
-	mktemp ( TMPDIR );
+
+    /* TODO: Do not hardcode temp paths */	
+	strcpy (TMPDIR,"/tmp/grass.extension.XXXXXX"); /* tmpdir is a global variable */	
+	mkstemp ( TMPDIR );
 	fd = open ( TMPDIR, O_CREAT );
 	if ( fd == -1 ) {
 		print_error ( ERR_UNPACK_EXT, "could not create temp directory name: %s", strerror (errno));

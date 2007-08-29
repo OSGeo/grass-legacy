@@ -257,8 +257,9 @@ void register_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	}
 		
 	/* create a temporary menu.tcl file for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	mktemp ( TMP_GISMAN );
+	mkstemp ( TMP_GISMAN );
 
 	f_out = fopen ( TMP_GISMAN, "w+");	
 	if ( f_out == NULL ) {
@@ -458,8 +459,9 @@ int deregister_entries_gisman ( char *pkg_short_name, char *gisbase ) {
 	}
 
 	/* create a temporary menu.tcl file for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	mktemp ( TMP_GISMAN );
+	mkstemp ( TMP_GISMAN );
 
 	f_out = fopen ( TMP_GISMAN, "w+");
 	if ( f_out == NULL ) {
@@ -677,8 +679,9 @@ int restore_entries_gisman ( char *gisbase ) {
 	}
 		
 	/* create a temporary menu.tcl file for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_GISMAN, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	mktemp ( TMP_GISMAN );
+	mkstemp ( TMP_GISMAN );
 
 	f_out = fopen ( TMP_GISMAN, "w+");
 	if ( f_out == NULL ) {

@@ -359,7 +359,7 @@ char *nc_fgets_html (char *s, int size, FILE *stream) {
 			}			
 			while ( *tag != '\0' ) {
 				*tag_insert = *tag;
-				*tag_insert ++;
+				(*tag_insert)++;
 				if ( *tag == '>' ) { /* OK, we got a tag */
 					*tag_insert = '\0';
 
@@ -371,30 +371,30 @@ char *nc_fgets_html (char *s, int size, FILE *stream) {
 							/* a <br> at the start of a line produce no additional linefeed! */
 							if ( insert > tmp ) {
 								*insert = '\n';
-								*insert ++;
+								(*insert)++;
 							}
 						}
 						if ( strstr ( tag_content, "<BR>" ) != NULL ) {
 							if ( insert > tmp ) {
 								*insert = '\n';
-								*insert ++;
+								(*insert)++;
 							}
 						}					
 						if ( strstr ( tag_content, "<p>" ) != NULL ) {
 							if ( insert > tmp ) {
 								*insert = '\n';
-								*insert ++;							
+								(*insert)++;
 							}
 							*insert = '\n';
-							*insert ++;							
+							(*insert)++;
 						}
 						if ( strstr ( tag_content, "<P>" ) != NULL ) {
 							if ( insert > tmp ) {
 								*insert = '\n';
-								*insert ++;
+								(*insert)++;
 							}							
 							*insert = '\n';
-							*insert ++;
+							(*insert)++;
 						}	
 					}					
 					
@@ -542,9 +542,10 @@ void dump_plain ( char *file, char *tmpfile ) {
 	FILE *f_out;
 	
 	/* create a temporary menu.tcl file for write access */
+    /* TODO: Do not hardcode temp path */
 	strcpy (tmpfile, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	mktemp ( tmpfile );
-				
+	mkstemp ( tmpfile );
+
 	f_out = fopen ( tmpfile, "w+");
 	if ( f_out == NULL ) {
 		print_error ( ERR_DUMP_PLAIN_TXT, "could not create temp file '%s': %s\n \
@@ -576,8 +577,9 @@ void dump_html ( char *file, char *tmpfile ) {
 	int fd;
 	
 	/* create a temporary menu.tcl file for write access */
+	/* TODO: Do not hardcode temp path */
 	strcpy (tmpfile, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_GISMAN is a global variable */
-	mktemp ( tmpfile );
+	mkstemp ( tmpfile );
 				
 	f_out = fopen ( tmpfile, "w+");
 	if ( f_out == NULL ) {

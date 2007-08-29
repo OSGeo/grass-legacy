@@ -114,8 +114,9 @@ void register_extension ( char *gisbase, char *bins, char *pkg_short_name,
 	
 	if ( db_exists ) {
 		/* create a temporary extensions.db file for write access */
+		/* TODO: Do not hardcode temp paths */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* TMPDB is a global variable */
-		mktemp ( TMPDB );
+		mkstemp ( TMPDB );
 
 		f_out = fopen ( TMPDB, "w+");		
 		if ( f_out == NULL ) {
@@ -188,8 +189,9 @@ void register_extension ( char *gisbase, char *bins, char *pkg_short_name,
 			
 	if ( (n_lines == 0) || (!db_exists) ) {
 		/* extensions.db file does not yet exist or is empty: just create a new one */
+		/* TODO: Do not hardcode temp paths */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* tmpdir is a global variable */
-		mktemp ( TMPDB );	
+		mkstemp ( TMPDB );	
 
 		f_out = fopen ( TMPDB, "w+");		
 		if ( f_out == NULL ) {
@@ -249,8 +251,9 @@ void deregister_extension ( char *package, char *pkg_short_name, char *gisbase )
 	if ( db_exists ) {
 		db_exists = 0;
 		/* create a temporary extensions.db file for write access */
+		/* TODO: Do not hardcode temp paths */
 		strcpy (TMPDB, "/tmp/grass.extensions.db.XXXXXX"); /* tmpdir is a global variable */
-		mktemp ( TMPDB );
+		mkstemp ( TMPDB );
 
 		f_out = fopen ( TMPDB, "w+");		
 		if ( ( f_out == NULL ) && ( !FORCE ) ) {
