@@ -1,3 +1,6 @@
+#ifndef __PNGDRIVER_H__
+#define __PNGDRIVER_H__
+
 #include <stdio.h>
 
 #include <grass/config.h>
@@ -56,3 +59,5 @@ extern void PNG_draw_bitmap(int,int,int,const unsigned char *);
 extern void PNG_draw_line(int,int,int,int);
 extern void PNG_draw_point(int,int);
 extern int PNG_lookup_color(int, int, int);
+
+#endif /* __PNGDRIVER_H__ */
