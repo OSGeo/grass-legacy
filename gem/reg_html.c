@@ -175,8 +175,9 @@ void register_html ( char *pkg_short_name, char *gisbase, int major, int minor, 
 	}
 		
 	/* create a temporary index.html copy for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */
-	mktemp ( TMP_HTML );
+	mkstemp ( TMP_HTML );
 
 	f_out = fopen ( TMP_HTML, "w+");
 	if ( f_out == NULL ) {
@@ -269,8 +270,9 @@ void deregister_html ( char *pkg_short_name, char *gisbase ) {
 	}
 		
 	/* create a temporary index.html copy for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */
-	mktemp ( TMP_HTML );
+	mkstemp ( TMP_HTML );
 	
 	f_out = fopen ( TMP_HTML, "w+");	
 	if ( f_out == NULL ) {
@@ -374,8 +376,9 @@ int restore_html ( char *gisbase ) {
 	}
 	
 	/* create a temporary index.html copy for write access */
+	/* TODO: Do not hardcode temp paths */
 	strcpy (TMP_HTML, "/tmp/grass.extensions.db.XXXXXX"); /* TMP_HTML is a global variable */	
-	mktemp ( TMP_HTML );
+	mkstemp ( TMP_HTML );
 	
 	f_out = fopen ( TMP_HTML, "w+");	
 	if ( f_out == NULL ) {

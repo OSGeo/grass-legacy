@@ -533,9 +533,9 @@ int main (int argc, char *argv[]) {
 
 	if (!VERBOSE) {
 		/* set temp file to pipe output to for silent operation */
+		/* TODO: Do not hardcode temp paths */
 		strcpy (TMP_NULL,"/tmp/grass.extension.log.XXXXXX"); /* TMP_NULL is a global variable */
-		
-		mktemp ( TMP_NULL );
+		mkstemp ( TMP_NULL );
 		fd = open ( TMP_NULL, O_CREAT );
 		if ( fd == -1 ) {
 			print_error ( ERR_TMPFILE, "could not create temp file: %s", strerror (errno));
