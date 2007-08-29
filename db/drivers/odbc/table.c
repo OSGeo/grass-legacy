@@ -1,6 +1,20 @@
-#include <grass/dbmi.h>
+/**
+ * \file table.c
+ *
+ * \brief Low level drop table function.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author CERL
+ * \author Radim Blazek
+ *
+ * \date 2000-2007
+ */
+
 #include <stdio.h>
 #include <string.h>
+#include <grass/dbmi.h>
 #include <grass/gis.h>
 #include "odbc.h"
 #include "globals.h"
@@ -96,8 +110,17 @@ dbString *cmd;
   }
 }*/
 
-int db__driver_drop_table (name)
-dbString *name;
+
+/**
+ * \fn int db__driver_drop_table (dbString *name)
+ *
+ * \brief Low level driver drop table from database.
+ *
+ * \param[in] name table name to drop
+ * \return int DB_FAILED on error; DB_OK on success
+ */
+
+int db__driver_drop_table (dbString *name)
 {
     char        cmd[200];
     cursor      *c;
@@ -117,7 +140,7 @@ dbString *name;
     tname = db_get_string(name);
 
     ret = SQLTables( c->stmt, NULL, 0, NULL, 0, tname, sizeof(tname), NULL, 0 ); 
-    if ( ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO )
+    if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         report_error("SQLTables()");
         return DB_FAILED;
@@ -125,7 +148,7 @@ dbString *name;
 
     /* Get number of rows */
     ret = SQLRowCount(c->stmt, &nrow);
-    if ( ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
+    if ((ret != SQL_SUCCESS) && (ret != SQL_SUCCESS_WITH_INFO))
     {
         report_error("SQLRowCount()");
         return DB_FAILED;
