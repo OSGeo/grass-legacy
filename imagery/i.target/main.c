@@ -37,7 +37,6 @@ int main (int argc, char *argv[])
     struct Flag *c;
     char t_mapset[GMAPSET_MAX], t_location[GMAPSET_MAX];
 
-
     G_gisinit (argv[0]);
 
     module = G_define_module();
@@ -67,24 +66,23 @@ int main (int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
-
     /* if no setting options are given, print the current target info */
     if( !c->answer && !mapset->answer && !loc->answer ) {
 
-	if( I_get_target(group->answer, t_location, t_mapset) )
-	    G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
-		group->answer, t_location, t_mapset);
-	else
-	    G_message("Group <%s> has no target.", group->answer);
+        if (I_get_target (group->answer, t_location, t_mapset))
+            G_message (_("Group <%s> targeted for location [%s], mapset [%s]"),
+                        group->answer, t_location, t_mapset);
+        else
+            G_message (_("Group <%s> has no target"), group->answer);
 
-	exit(EXIT_SUCCESS);
+        exit (EXIT_SUCCESS);
     }
 
     /* error if -c is specified with other options, or options are incomplete */
     if( ( c->answer && ( mapset->answer ||  loc->answer)) ||
 	(!c->answer && (!mapset->answer || !loc->answer)) )
-	G_fatal_error(_("You must use either the Current Mapset and "
-             "Location Flag (-c)\n OR\n manually enter the variables."));
+        G_fatal_error (_("Use either the Current Mapset and "
+             "Location Flag (-c)\n OR\n manually enter the variables"));
 
     if (c->answer) {
         /* point group target to current mapset and location */
@@ -98,6 +96,7 @@ int main (int argc, char *argv[])
                 group->answer, loc->answer, mapset->answer);
     }
 
+    G_done_msg (_("Done."));
     exit(EXIT_SUCCESS);
 }
 
