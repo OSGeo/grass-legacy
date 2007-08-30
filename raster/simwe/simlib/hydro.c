@@ -7,6 +7,7 @@
 #include <grass/site.h>
 #include <grass/bitmap.h>
 #include <grass/linkm.h>
+#include <grass/glocale.h>
 
 #define MAIN
 #include <grass/waterglobs.h>
@@ -14,20 +15,19 @@
 /* **************************************************** */
 /*       create walker representation of si */
 /* ******************************************************** */
-
 /*                       .......... iblock loop */
 
-void main_loop()
+void main_loop (void)
 {
 
     int i,ii,l,k;
     int icoub,lwout,nmult;
     int iw, iblock, lw;
-    int icount, itime, iter1;
+    int itime, iter1;
     int nfiterh,nfiterw;
     int mgen, mgen2, mgen3;
     int nblock;
-    int nflw,icfl;
+    int icfl;
     int mitfac,p;
     double x, y;
     double velx, vely, stxm, stym;
@@ -94,9 +94,8 @@ G_debug(2, " barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 		for (iw = 1; iw <= mgen+1; iw++) { /* assign walkers */
 		    ++lw;
 
-		    if (lw > MAXW) {
-			G_fatal_error(" nwalk > maxw !");
-		    }
+		    if (lw > MAXW)
+			G_fatal_error (_("nwalk > maxw!"));
 
 		    w[lw][1] = x + stepx * (ulec() - 0.5);
 		    w[lw][2] = y + stepy * (ulec() - 0.5);
@@ -307,7 +306,7 @@ G_debug(2, "main loop over the projection time... ");
 		ii=output_data (itime,conn); 
 		nstack = 0;
 	  	if (ii != 1)
-    		G_fatal_error ("Cannot write raster maps");
+    		G_fatal_error (_("Unable to write raster maps"));
 		}
 
 	    }
@@ -364,12 +363,7 @@ if (err != NULL)
       }   
               if (erdep != NULL)
                erod(gama);
-
-G_debug(2, "");
-
     } 
 /*                       ........ end of iblock loop */
 
 } 
-
-
