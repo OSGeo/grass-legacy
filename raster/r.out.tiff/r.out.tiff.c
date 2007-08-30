@@ -414,7 +414,7 @@ main (int argc, char *argv[])
 	G_free(filename);
 	G_free(basename);   
 
-	G_done_msg ("");
+	G_done_msg (" ");
 	
 	exit (EXIT_SUCCESS);
 }
