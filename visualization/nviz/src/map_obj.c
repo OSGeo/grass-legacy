@@ -1634,7 +1634,7 @@ int get_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
   END original code*/
 		{
 			geosite *gp;
-			if (gp = gp_get_site(id)) {
+			if ((gp = gp_get_site(id))) {
 				if (TCL_OK != site_attr_get(interp, gp, atoi(argv[3])))
 					return (TCL_ERROR);
 			}
@@ -1869,7 +1869,7 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
 
 		if (!strcmp(argv[2], "useatt")) {
 			geosite *gp;
-			if (gp = gp_get_site(id)) {
+			if ((gp = gp_get_site(id))) {
 
 				if (TCL_OK != site_attr_set(interp, gp, atoi(argv[3]), argv[4], atoi(argv[5]), argv[6], argv[7]))
 					return (TCL_ERROR);
@@ -1952,7 +1952,7 @@ int unset_att(int id, int type, Tcl_Interp * interp, int argc, char *argv[])
 	if (type == SITE) {
 		if (!strcmp(argv[2], "useatt") && argc == 5) {
 		    GP_get_sitemode(id, &useatt, &col, &width, &size, &marker);
-			if (gp = gp_get_site(id)) {
+			if ((gp = gp_get_site(id))) {
 				site_attr_unset(interp, gp, atoi(argv[3]), argv[4]);
 
 				if (!strcmp(argv[3], "size")) {
