@@ -153,7 +153,9 @@ double x1,x2,y1,y2;
 			y2 = s2->coord.y;
 		if(y2<pymin) return(0);
 		x2 = e -> c - e -> b * y2;
-		if ((x1> pxmax & x2>pxmax) | (x1<pxmin&x2<pxmin)) return -1;
+		if (((x1 > pxmax) & (x2 > pxmax)) | ((x1 < pxmin) & (x2 < pxmin)))
+		    return -1;
+
 		if(x1> pxmax)
 		{	x1 = pxmax; y1 = (e -> c - x1)/e -> b;};
 		if(x1<pxmin)
@@ -175,7 +177,9 @@ double x1,x2,y1,y2;
 			x2 = s2->coord.x;
 		if(x2<pxmin) return(0);
 		y2 = e -> c - e -> a * x2;
-		if ((y1> pymax & y2>pymax) | (y1<pymin&y2<pymin)) return(0);
+		if (((y1 > pymax) & (y2 > pymax)) | ((y1 < pymin) & (y2 < pymin)))
+		    return 0;
+
 		if(y1> pymax)
 		{	y1 = pymax; x1 = (e -> c - y1)/e -> a;};
 		if(y1<pymin)
