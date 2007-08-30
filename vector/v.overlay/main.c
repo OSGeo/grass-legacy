@@ -441,8 +441,9 @@ main (int argc, char *argv[])
     Vect_close ( &(In[1]) );
     Vect_close (&Out);
 
-    G_done_msg("");
-    exit (0);
+    G_done_msg(" ");
+
+    exit (EXIT_SUCCESS);
 }
 
 
