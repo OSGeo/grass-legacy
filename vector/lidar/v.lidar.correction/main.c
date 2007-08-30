@@ -313,6 +313,7 @@ main (int argc,char *argv[])
     Vect_close (&Out);
     Vect_close (&Out_Terrain);
 
-    G_done_msg("");
+    G_done_msg (" ");
+
     exit(EXIT_SUCCESS);
 }	/*! END MAIN*/
