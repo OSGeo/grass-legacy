@@ -8,13 +8,13 @@
 #include <grass/bitmap.h>
 #include <grass/glocale.h>
 #include <grass/linkm.h>
-
 #include <grass/waterglobs.h>
 
 
 /* ************************************************************** */
 /*    			   GRASS input procedures, allocations    */
 /* *************************************************************** */
+
 /*!
  * \brief allocate memory, read input rasters, assign UNDEF to NODATA
  *
@@ -22,8 +22,7 @@
  */
 
 
-int input_data()
-
+int input_data (void)
 {
 
 	FCELL	 *cell1, *cell4b,*cell5;
@@ -36,35 +35,27 @@ int input_data()
         double unitconv=0.0000002; /* mm/hr to m/s */
 	char *mapset;
 	Site *site;
-	char msg[1024];
 
         npoints = 0;
         npoints_alloc = 0;
 
-
 /* put some warning messages about diff. in resol., etc. */
 
         if (sfile != NULL) {
-
         fw=fopen("simwe_data.txt","w"); /* open ascii file for ascii output of gamma */
-
 
   mapset = G_find_sites (sfile, "");
   if (mapset == NULL)
-  {
-    sprintf (msg, "file [%s] not found", sfile);
-    G_fatal_error (msg);
-  }
+    G_fatal_error (_("File [%s] not found"), sfile);
+
   if ((fdsfile = G_fopen_sites_old (sfile, mapset)) == NULL)
-  {
-    sprintf (msg, "Cannot open %s", sfile);
-    G_fatal_error (msg);
-  }
+    G_fatal_error (_("Unable to open file [%s]"), sfile);
+
     if (G_site_describe (fdsfile, &nn, &cc, &ii, &dd)!=0)
-      G_fatal_error("failed to guess format");
+      G_fatal_error (_("Failed to guess file format"));
 
     site = G_site_new_struct (cc, nn, ii, dd);
-    G_message("Reading sites map (%s) ...", sfile);
+    G_message (_("Reading sites map (%s) ..."), sfile);
 
 /*        if (dd==0)
     {
@@ -74,7 +65,6 @@ int input_data()
 
     while (G_site_get(fdsfile, site) >= 0)
     {
-
     if (npoints_alloc <= npoints)
     {
        npoints_alloc += 128;
@@ -84,50 +74,65 @@ int input_data()
         points[npoints].east = site->east * conv;
         points[npoints].north = site->north * conv;
         points[npoints].z1 = 0.; /*site->dbl_att[0];*/
+
 /*printf("\n%f %f",points[npoints].east/conv,points[npoints].north/conv);*/
 if((points[npoints].east/conv <= cellhd.east && points[npoints].east/conv >= cellhd.west) &&
         (points[npoints].north/conv <= cellhd.north && points[npoints].north/conv >= cellhd.south))
         npoints++;
     }
-G_sites_close(fdsfile);
 
+G_sites_close(fdsfile);
 	}
 
         cell1=G_allocate_f_raster_buf();
         cell2=G_allocate_d_raster_buf();
         cell3=G_allocate_d_raster_buf();
+
 	  if(rain != NULL)
 	cell4=G_allocate_d_raster_buf();
+
           if(infil != NULL)
         cell4a=G_allocate_d_raster_buf();
+
           if(traps != NULL)
         cell4b=G_allocate_f_raster_buf();
         cell5=G_allocate_f_raster_buf();
+
 	  if(detin!=NULL)
         cell9=G_allocate_f_raster_buf();
+
           if(tranin!=NULL)
         cell10=G_allocate_f_raster_buf();
+
           if(tauin!=NULL)
         cell11=G_allocate_f_raster_buf();
+
 	  if(wdepth!=NULL)
         cell12=G_allocate_d_raster_buf();
 
         zz = (float **)G_malloc (sizeof(float *)*(my));
         v1 = (double **)G_malloc (sizeof(double *)*(my));
         v2 = (double **)G_malloc (sizeof(double *)*(my));
+
 	if(rain != NULL)
         si = (double **)G_malloc (sizeof(double *)*(my));
+
         if(infil != NULL)
         inf = (double **)G_malloc (sizeof(double *)*(my));
+
         if(traps != NULL)
         trap = (float **)G_malloc (sizeof(float *)*(my));
         cchez = (float **)G_malloc (sizeof(float *)*(my));
+
           if(detin!=NULL)
         dc = (float **)G_malloc (sizeof(float *)*(my));
+
           if(tranin!=NULL)
         ct = (float **)G_malloc (sizeof(float *)*(my));
+
           if(tauin!=NULL)
         tau = (float **)G_malloc (sizeof(float *)*(my));
+
 	  if(wdepth!=NULL)
         gama = (double **)G_malloc (sizeof(double *)*(my));
 
@@ -136,24 +141,31 @@ G_sites_close(fdsfile);
         zz[l]   = (float*)G_malloc (sizeof(float)*(mx));
         v1[l]   = (double*)G_malloc (sizeof(double)*(mx));
         v2[l]   = (double*)G_malloc (sizeof(double)*(mx));
+
         if(rain != NULL)
         si[l]   = (double*)G_malloc (sizeof(double)*(mx));
+
         if(infil != NULL)
         inf[l]   = (double*)G_malloc (sizeof(double)*(mx));
+
         if(traps != NULL)
         trap[l]   = (float*)G_malloc (sizeof(float)*(mx));
         cchez[l]   = (float*)G_malloc (sizeof(float)*(mx));
+
           if(detin!=NULL)
         dc[l]   = (float*)G_malloc (sizeof(float)*(mx));
+
           if(tranin!=NULL)
         ct[l]   = (float*)G_malloc (sizeof(float)*(mx));
+
           if(tauin!=NULL)
         tau[l]  = (float*)G_malloc (sizeof(float)*(mx));
+
           if(wdepth!=NULL)
 	gama[l]  = (double*)G_malloc (sizeof(double)*(mx));
         }
 
-   printf("Running MAY 10 version\n");
+   G_message (_("Running MAY 10 version"));
 
   if((mapset=G_find_cell(elevin,""))==NULL)
   G_fatal_error(_("Raster map <%s> not found"), elevin);
@@ -184,72 +196,87 @@ G_sites_close(fdsfile);
   if(infil != NULL){
           if((mapset=G_find_cell(infil,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), infil);
+
           fd4a = G_open_cell_old(infil,mapset);
   }
 
   if(traps != NULL){
           if((mapset=G_find_cell(traps,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), traps);
+
           fd4b = G_open_cell_old(traps,mapset);
   }
 
   if(detin != NULL){
           if((mapset=G_find_cell(detin,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), detin);
+
           fd9 = G_open_cell_old(detin,mapset);
   }
 
   if(tranin != NULL){
           if((mapset=G_find_cell(tranin,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), tranin);
+
           fd10 = G_open_cell_old(tranin,mapset);
   }
 
   if(tauin != NULL){
           if((mapset=G_find_cell(tauin,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), tauin);
+
           fd11 = G_open_cell_old(tauin,mapset);
   }
 
   if(wdepth != NULL){
           if((mapset=G_find_cell(wdepth,""))==NULL)
           G_fatal_error(_("Raster map <%s> not found"), wdepth);
+
           fd12 = G_open_cell_old(wdepth,mapset);
   }
-
 
   for (row=0; row<my; row++)
   {
           G_get_f_raster_row(fd1,cell1,row);
           G_get_d_raster_row(fd2,cell2,row);
           G_get_d_raster_row(fd3,cell3,row);
+
   	if(rain != NULL)
           G_get_d_raster_row(fd4,cell4,row);
+
         if(infil != NULL)
           G_get_d_raster_row(fd4a,cell4a,row);
+
         if(traps != NULL)
           G_get_f_raster_row(fd4b,cell4b,row);
           G_get_f_raster_row(fd5,cell5,row);
+
   	if(detin != NULL)
           G_get_f_raster_row(fd9,cell9,row);
+
   	if(tranin != NULL)
           G_get_f_raster_row(fd10,cell10,row);
+
   	if(tauin != NULL)
           G_get_f_raster_row(fd11,cell11,row);
+
         if(wdepth != NULL)
           G_get_d_raster_row(fd12,cell12,row);
 
         for (j=0; j<mx; j++)
         {
            row_rev = my - row - 1;
+
 	   if(!G_is_f_null_value(cell1+j))
            zz[row_rev][j] = (float ) (conv * cell1[j]);
 	   else
 		   zz[row_rev][j] = UNDEF;
+
 	   if(!G_is_d_null_value(cell2+j))
            v1[row_rev][j] = (double ) cell2[j];
 	   else
 		   v1[row_rev][j] = UNDEF;
+
 	   if(!G_is_d_null_value(cell3+j))
            v2[row_rev][j] = (double ) cell3[j];
 	   else
@@ -264,7 +291,8 @@ G_sites_close(fdsfile);
   * zz[row_rev][j] = UNDEF;}
   * printout warning?
   */      
-	  if(rain != NULL)
+	  if (rain != NULL)
+	  {
 		  if(!G_is_d_null_value(cell4+j))
             si[row_rev][j] = ((double ) cell4[j]) * unitconv; /*conv mm/hr to m/s*/
  /*        printf("\n INPUTrain, convert %f %f",si[row_rev][j],unitconv); */
@@ -273,7 +301,9 @@ G_sites_close(fdsfile);
 			  si[row_rev][j] = UNDEF;
 			zz[row_rev][j] = UNDEF;
 		  }
-          if(infil != NULL)
+
+          if (infil != NULL)
+          {
 		  if(!G_is_d_null_value(cell4a+j))
            inf[row_rev][j] = (double ) cell4a[j] * unitconv;  /*conv mm/hr to m/s*/
  /*        printf("\n INPUT infilt, convert %f %f",inf[row_rev][j],unitconv); */
@@ -281,75 +311,99 @@ G_sites_close(fdsfile);
 			  inf[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		  }
-          if(traps != NULL)
+		  }
+
+          if (traps != NULL)
+          {
 		  if(!G_is_f_null_value(cell4b+j))
            trap[row_rev][j] = (float) cell4b[j]; /* no conv, unitless */
 		  else {
 			  trap[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		  }
+		  }
+      }
+
 	  if(!G_is_f_null_value(cell5+j))
            cchez[row_rev][j] = (float ) cell5[j]; /* units in manual */
 	  else {
 		  cchez[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 	  }
-        if(detin != NULL)
+
+        if (detin != NULL)
+        {
 		if(!G_is_f_null_value(cell9+j))
            dc[row_rev][j] = (float ) cell9[j]; /*units in manual*/
 		else {
 			dc[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
-        if(tranin != NULL)
+		}
+
+        if (tranin != NULL)
+        {
 		if(!G_is_f_null_value(cell10+j))
            ct[row_rev][j] = (float ) cell10[j]; /*units in manual*/
 		else {
 			ct[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
-        if(tauin != NULL)
+		}
+
+        if (tauin != NULL)
+        {
 		if(!G_is_f_null_value(cell11+j))
            tau[row_rev][j] = (float ) cell11[j]; /*units in manual*/
 		else {
 			tau[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
-        if(wdepth != NULL)
+		}
+
+        if (wdepth != NULL)
+        {
 		if(!G_is_d_null_value(cell12+j))
            gama[row_rev][j] = (double ) cell12[j]; /*units in manual*/
 		else {
 			gama[row_rev][j] = UNDEF;
                         zz[row_rev][j] = UNDEF;
 		}
+		}
          }
    }
   G_close_cell(fd1);
   G_close_cell(fd2);
   G_close_cell(fd3);
+
   if(rain != NULL)
   G_close_cell(fd4);
+
   if(infil != NULL)
   G_close_cell(fd4a);
+
   if(traps != NULL)
   G_close_cell(fd4b);
   G_close_cell(fd5);
+
   if(detin != NULL)
   G_close_cell(fd9);
+
   if(tranin != NULL)
   G_close_cell(fd10);
+
   if(tauin != NULL)
   G_close_cell(fd11);
+
   if(wdepth != NULL)
   G_close_cell(fd12);
 
         return 1;
 }
 
+
 /* data preparations, sigma, shear, etc. */
-
-int grad_check ()
-
+int grad_check (void)
 {
     int k,l,i,j;
     double zx,zy,zd2,zd4,sinsl;
@@ -379,22 +433,17 @@ int grad_check ()
 	cmul2 = rhow * gacc;
 	
 /* mandatory alloc. - should be moved to main.c*/
-
         slope = (double **)G_malloc (sizeof(double *)*(my));
 
            for(l=0;l<my;l++)
-              {
                 slope[l]   = (double*)G_malloc (sizeof(double)*(mx));
-              }
+
            for (j = 0; j < my; j++)
               {
-                for (i = 0; i < mx; i++){
-
+                for (i = 0; i < mx; i++)
                    slope[j][i] = 0.;
-		}
                }
 /*** */
-
 
     for (k = 0; k < my; k++) {
         for (l = 0; l < mx; l++) {
@@ -416,7 +465,7 @@ int grad_check ()
                 cchez[k][l] = 1. / cchez[k][l]; /* 1/n */
 
             } else {
-	G_fatal_error(" Zero value in Mannings n");
+	G_fatal_error (_("Zero value in Mannings n"));
                 }
 
             if (zd2 == 0.) {
@@ -431,9 +480,9 @@ int grad_check ()
 		slope[k][l] = sqrt(v1[k][l] * v1[k][l] + v2[k][l] * v2[k][l]);
 		}
 	    
-
         if (wdepth != NULL) {
 	    sheer = (double) (cmul2 * gama[k][l] * sinsl); /* shear stress */
+
 	        if ((sheer <= tau[k][l]) || (ct[k][l] == 0.)) { /* if critical shear stress >= shear then all zero */
 		si[k][l] = 0.;
 		sigma[k][l] = 0.;
@@ -447,6 +496,7 @@ int grad_check ()
             sisum += si[k][l];
 	    smin = amin1(smin,si[k][l]);
 	    smax = amax1(smax,si[k][l]);
+
         if (inf != NULL) {
             infsum += inf[k][l];
             infmin = amin1(infmin,inf[k][l]);
@@ -458,6 +508,7 @@ int grad_check ()
 
             zmin = amin1(zmin,(double)zz[k][l]);
             zmax = amax1(zmax,(double)zz[k][l]); /* not clear were needed */
+
 	if (wdepth != NULL)	
 	    sigmax = amax1(sigmax,sigma[k][l]);
 	    cchezmax = amax1(cchezmax,cchez[k][l]);
@@ -466,28 +517,35 @@ int grad_check ()
 	} /* DEFined area */
         }
     }
-    if (inf != NULL && smax < infmax) G_warning("Infiltration exceeds the rainfall rate everywhere! No overland flow.\n");
+
+    if (inf != NULL && smax < infmax)
+        G_warning (_("Infiltration exceeds the rainfall rate everywhere! No overland flow."));
 
     cc = (double) mx * my;
     si0 = sisum / cc;
     vmean = vsum / cc;
     chmean = chsum / cc;
+
         if (inf != NULL) infmean = infsum / cc;
+
 	if (wdepth != NULL) deltaw = 0.8/(sigmax * vmax);
         deltap = 0.25 * sqrt(stepx * stepy)/vmean;
+
         if(deltaw > deltap)
                 timec = 4.;
         else
                 timec = 1.25;
 
-       printf("\n");
-       printf("\n zmin,zmax %f %f",zmin,zmax);
-       printf("\n simean,vmean,chmean,deltap,deltaw %f %f %f %f %f",si0,vmean,chmean,deltap,deltaw);
-       printf("\n MITER, timec %d %f",miter,timec);
+       fprintf (stderr, "\n");
+       G_message ("zmin,zmax %f %f", zmin, zmax);
+       G_message ("simean,vmean,chmean,deltap,deltaw %f %f %f %f %f",
+           si0, vmean, chmean, deltap, deltaw);
+       G_message ("MITER, timec %d %f", miter, timec);
 
       deltap = amin1(deltap,deltaw);
 
-       if (wdepth != NULL) printf("\n sigmax,vmax,deltapused %f %f %f",sigmax,vmax,deltaw);
+       if (wdepth != NULL)
+           G_message ("sigmax,vmax,deltapused %f %f %f", sigmax, vmax, deltaw);
 
 /*    if (wdepth != NULL) deltap = 0.1;  deltap for sediment is ar. average deltap and deltaw */
 /*    if (wdepth != NULL) deltap = (deltaw+deltap)/2.;  deltap for sediment is ar. average deltap and deltaw */
@@ -538,24 +596,23 @@ int grad_check ()
 *   \f$
 */
 	if(et!=NULL) {
-
           erod(si); /* compute divergence of t.capc */
 
-	 if (output_et() != 1) G_fatal_error ("Cannot write et file");
+	 if (output_et() != 1)
+	     G_fatal_error (_("Unable to write et file"));
 	}
 
 /*! compute the inversion operator and store it in sigma - note that after this
 *   sigma does not store the first order reaction coefficient but the operator
 *   WRITE the equation here
 */
-
 	if(wdepth != NULL) {
-
 	    for (k = 0; k < my; k++) {
         	for (l = 0; l < mx; l++) {
 			if (zz[k][l] != UNDEF) {
 
 		if(et!=NULL) si[k][l] = si[k][l] * slope[k][l] * sigma[k][l]; /* get back from temp */
+
 		if( sigma[k][l] != 0.)
 /* rate of weight loss - w=w*sigma , vaha prechadzky po n-krokoch je sigma^n */
 		sigma[k][l] = exp(-sigma[k][l] * deltap * slope[k][l]); /* not clear what's here :-\ */
@@ -565,42 +622,44 @@ int grad_check ()
 	   }
 	}
 
-return (1);
+    return 1;
 }
 
 
 double amax1 (double arg1, double arg2)
-
 {
  double res;
+
  if (arg1>=arg2) {
    res = arg1;
  }
  else  {
    res = arg2;
  }
+
  return res;
 }
 
 
 double amin1 (double arg1, double arg2)
-
 {
  double res;
+
  if (arg1<=arg2) {
    res = arg1;
  }
  else  {
    res = arg2;
  }
+
  return res;
 }
 
 
 int min (int arg1, int arg2)
-
 {
  int res;
+
  if (arg1 <= arg2)
   {
    res = arg1;
@@ -609,20 +668,21 @@ int min (int arg1, int arg2)
   {
    res = arg2;
    }
+
  return res;
 }
 
-int max (int arg1, int arg2)
 
+int max (int arg1, int arg2)
 {
  int res;
+
  if (arg1>=arg2) {
    res = arg1;
  }
  else  {
    res = arg2;
  }
+
  return res;
 }
-
-
