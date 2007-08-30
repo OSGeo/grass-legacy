@@ -1034,7 +1034,8 @@ int main (int argc, char *argv[])
        Vect_close ( Outp );
     }
 
-    G_done_msg("");
+    G_done_msg(" ");
+
     exit (EXIT_SUCCESS);
 }
 
