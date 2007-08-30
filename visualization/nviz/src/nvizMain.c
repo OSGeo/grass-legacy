@@ -51,8 +51,6 @@ int main(int argc,		/* Number of command-line arguments. */
 	 char **argv		/* Values of command-line arguments. */
     )
 {
-	int i;
-
 	Tcl_FindExecutable(argv[0]);
 	if (argc > 1) {
 		if (strstr(argv[argc-1], "-h") != NULL) 
@@ -60,5 +58,6 @@ int main(int argc,		/* Number of command-line arguments. */
 	}
 
     Tk_Main(argc, argv, NVIZ_AppInit);
+
     return 0;			/* Needed only to prevent compiler warning. */
 }

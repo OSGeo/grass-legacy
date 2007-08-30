@@ -140,7 +140,7 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     {
         if (ii == 1)
                 continue;
-        argv2[jj] = argv[ii];
+        argv2[jj] = (char *)argv[ii];
         jj++;
     }
     argc2 = argc-1;
@@ -497,7 +497,9 @@ int set_default_wirecolors(Nv_data * dc, int surfs)
 int Ninit(Tcl_Interp * interp, Tk_Window w)
 {
     static Nv_data data;
+/*
     char nviz_script[] = "source [exec g.gisenv GISBASE]/etc/nviz2.2/scripts/nviz2.2_script\n";
+*/
 
     /* compile in the home directory */
     Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);

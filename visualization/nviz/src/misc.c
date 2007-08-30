@@ -6,6 +6,8 @@ int Nlibinit_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
     )
 {
     GS_libinit();
+
+    return 0;
 }
 
 int Nget_cancel_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
