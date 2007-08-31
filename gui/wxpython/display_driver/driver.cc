@@ -63,7 +63,7 @@ DisplayDriver::~DisplayDriver()
    \brief Display content of the map in device
    
    \param[in,out] device wxDC object where to draw vector features
-   
+\   
    \return number of displayed features
    \return -1 on error
  */
@@ -113,12 +113,18 @@ int DisplayDriver::DrawLine(int line)
 
     type = Vect_read_line (mapInfo, points, cats, line);
     pointsScreen->Clear();
-    //self.ids[line] = []
+
     for (int i = 0; i < points->n_points; i++) {
 	Cell2Pixel(points->x[i], points->y[i], points->z[i],
 		   &x, &y, &z);
 	pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
     }
+
+    // add ids
+    // -> node1, line1, vertex1, line2, ..., node2
+    struct lineDesc desc = {points->n_points, dcId};
+    dcId += points->n_points * 2 - 1;
+    ids[line] = desc;
 
     // draw vector feature
     if (type & GV_LINES) {
@@ -149,31 +155,30 @@ int DisplayDriver::DrawLine(int line)
 	    break;
 	}
 
-	if (draw) {
-	    // highlight feature?
-	    if (IsSelected(line)) {
-		dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
-	    }
+	// highlight feature?
+	if (draw && IsSelected(line)) {
+	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	}
 
-	    //dc->DrawLines(pointsScreen);
-	    for (int i = 0; i < pointsScreen->GetCount() - 1;) {
-		wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
-		wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
+	long int startId = ids[line].startId + 1;
 
-		ids[line].push_back(dcId);
-		dc->SetId(dcId++);
+	for (int i = 0; i < pointsScreen->GetCount() - 1; startId += 2) {
+	    wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
+	    wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
+	    
+	    wxRect rect (*point_beg, *point_end);
+	    dc->SetIdBounds(startId, rect);
 
+	    // draw line if needed
+	    if (draw) {
+		dc->SetId(startId);
 		dc->DrawLine(point_beg->x, point_beg->y,
 			     point_end->x, point_end->y);
 	    }
-
-	    if (settings.vertex.enabled) {
-		if (!IsSelected(line))
-		    dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
-		DrawLineVerteces(line);
-	    }
-	    DrawLineNodes(line);
 	}
+
+	DrawLineVerteces(line); // draw vertices
+	DrawLineNodes(line);    // draw nodes
     }
     else if (type & GV_POINTS) {
 	if (type == GV_POINT && settings.point.enabled) {
@@ -220,8 +225,27 @@ int DisplayDriver::DrawLine(int line)
 */
 int DisplayDriver::DrawLineVerteces(int line)
 {
-    for (int i = 1; i < pointsScreen->GetCount() - 1; i++) {
-	DrawCross(line, (const wxPoint*) pointsScreen->Item(i)->GetData());
+    long int id;
+    wxPoint *point;
+
+    // set id
+    id = ids[line].startId + 2;
+    for (int i = 1; i < pointsScreen->GetCount() - 1; i++, id += 2) {
+	point = (wxPoint*) pointsScreen->Item(i)->GetData();
+	wxRect rect (*point, *point);
+	dc->SetIdBounds(id, rect);
+    }
+
+    // draw vertices if needed
+    if (settings.vertex.enabled) {
+	if (!IsSelected(line))
+	    dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
+
+	id = ids[line].startId + 2;
+	for (int i = 1; i < pointsScreen->GetCount() - 1; i++, id += 2) {
+	    dc->SetId(id);
+	    DrawCross(line, (const wxPoint*) pointsScreen->Item(i)->GetData());
+	}
     }
 
     return pointsScreen->GetCount() - 2;
@@ -237,9 +261,11 @@ int DisplayDriver::DrawLineVerteces(int line)
 int DisplayDriver::DrawLineNodes(int line)
 {
     int node;
+    long int id;
     double east, north, depth;
     int x, y, z;
     int nodes [2];
+    bool draw;
     
     Vect_get_line_nodes(mapInfo, line, &(nodes[0]), &(nodes[1]));
         
@@ -252,21 +278,35 @@ int DisplayDriver::DrawLineNodes(int line)
 		   &x, &y, &z);
 
 	
-	// highlight feature?
-	if (IsSelected(line)) {
-	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	if (Vect_get_node_n_lines(mapInfo, node) == 1) {
+	    dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
+	    draw = settings.nodeOne.enabled;
 	}
 	else {
-	    if (Vect_get_node_n_lines(mapInfo, node) == 1)
-		dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
-	    else
-		dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+	    dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+	    draw = settings.nodeTwo.enabled;
+	}
+	
+        // highlight feature?
+	if (draw && IsSelected(line)) {
+	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
 	}
 
-	wxPoint point(x, y);
-	DrawCross(line, &point);
+	// node1, line1, vertex1, line2, vertex2, ..., node2
+	if (i == 0) // first node
+	  id = dcId - points->n_points * 2 + 1;
+	else // last node
+	  id = dcId - 1;
 
-	//elf.ids[line].append(self.mapwindow.DrawCross(coords, size=5))
+	wxPoint point(x, y);
+	wxRect rect (point, point);
+	dc->SetIdBounds(id, rect);
+
+	// draw node if needed
+	if (draw) {
+	    dc->SetId(id);
+	    DrawCross(line, &point);
+	}
     }
 
     return 1;
@@ -391,9 +431,6 @@ int DisplayDriver::DrawCross(int line, const wxPoint* point, int size)
     if (!dc || !point)
 	return -1;
 
-    ids[line].push_back(dcId);
-    dc->SetId(dcId++);
-
     dc->DrawLine(point->x - size, point->y, point->x + size, point->y);
     dc->DrawLine(point->x, point->y - size, point->x, point->y + size);
 
@@ -472,12 +509,10 @@ void DisplayDriver::PrintIds()
 {
     for (ids_map::const_iterator i = ids.begin(), e = ids.end();
 	 i != e; ++i) {
-	std::cout << i->first << ":";
-	for(std::vector<long int>::const_iterator ii = i->second.begin(), ee = i->second.end();
-	    ii != ee; ++ii) {
-	    std::cout << " " << *ii;
-	}
-	std::cout << std::endl;
+	std::cout << "line=" << i->first << ": "
+		  << "npoints=" << i->second.npoints
+		  << " startId=" << i->second.startId
+		  << std::endl;
     }
 
     for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
@@ -627,18 +662,15 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 
     for(std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
 	i != e; ++i) {
-	// TODO ids[*i] ...
-	for(ids_map::const_iterator ii = ids.begin(), ee = ids.end();
-	    ii != ee; ++ii) {
-	    if (*i == ii->first) {
-		for(std::vector<long int>::const_iterator iii = ii->second.begin(),
-			eee = ii->second.end(); iii != eee; ++iii) {
-		    dc_ids.push_back(*iii);
-		}
-		break;
+	ids_map::const_iterator ii = ids.find(*i);
+	if (ii != ids.end()) { // line found
+	    long int endId = ii->second.npoints * 2 - 1 + ii->second.startId;
+	    for (long int id = ii->second.startId; id < endId; id++) {
+		dc_ids.push_back(id);
 	    }
 	}
     }
+
     return dc_ids;
 }
 
@@ -657,24 +689,24 @@ int DisplayDriver::SetSelected(std::vector<int> id)
 }
 
 /**
-   \brief Get PseudoDC id of selected line of given coordinates
+   \brief Get PseudoDC vertex id of selected line
 
    \param[in] x,y coordinates of vertex on line
 
-   \return number of line
-   \return 0 no line found
-   \return -1 on error
+   \return PseudoDC ids (vertex, left vertex, right vertex, left line, right line)
+   \return (0) no line found
+   \return (-1) on error
 */
-long int DisplayDriver::GetSelectedVertex(double x, double y)
+std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 {
-    int line, type, minIdx;
-    long int dcId;
+    struct lineDesc *desc;
+    int line, type, minIdx, lline, rline; // left, right line
     double dist, minDist;
     
-    std::vector<long int>* dcIds;
+    std::vector<int>  returnId; // TODO: long int
 
     if (selected.size() != 1)
-	return -1;
+	return returnId;
 
     line = selected[0];
     
@@ -695,16 +727,35 @@ long int DisplayDriver::GetSelectedVertex(double x, double y)
 	    }
 	}
     }	
-	
-    // [line, vertex1, ..., node1, node2]
-    dcIds = &(ids[line]);
+    
+    desc = &(ids[line]);
 
-    if (minIdx == 0)
-	dcId = (*dcIds)[dcIds->size()-2]; // first node
-    else if (minIdx == points->n_points - 1)
-	dcId = (*dcIds)[dcIds->size()-1]; // last node
-    else
-	dcId = (*dcIds)[minIdx]; // vertex
+    // translate id
+    minIdx = minIdx * 2 + desc->startId;
 
-    return dcId;
+    // add selected vertex
+    returnId.push_back(minIdx);
+    // left vertex & line
+    if (minIdx == desc->startId) {
+	returnId.push_back(-1);
+	lline = -1;
+    }
+    else {
+	returnId.push_back(minIdx - 2);
+	lline = minIdx - 1;
+    }
+    // right vertex
+    if (minIdx == (desc->npoints - 1) * 2 + desc->startId) {
+	returnId.push_back(-1);
+	rline = -1;
+    }
+    else {
+	returnId.push_back(minIdx + 2);
+	rline = minIdx + 1;
+    }
+    
+    returnId.push_back(lline);
+    returnId.push_back(rline);
+
+    return returnId;
 }

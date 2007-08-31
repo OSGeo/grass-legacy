@@ -55,6 +55,9 @@ if usePyDisplayDriver:
               "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
               "Will be replaced by C/C++ display driver."
 else:
+    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+    sys.path.append(driverPath)
+    from grass6_wxdriver import DisplayDriver
     try:
         driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
         sys.path.append(driverPath)
@@ -442,20 +445,19 @@ class CDisplayDriver(AbstractDisplayDriver):
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
 
         return nlines
-    def SelectLinesByBox(self, rect, onlyType=None):
+    def SelectLinesByBox(self, begin, end, onlyType=None):
         """Select vector features by given bounding box.
 
-        rect = ((x1, y1), (x2, y2))
         Number of selected features can be decreased by 'onlyType'
         ('None' for no types)
         """
 
-        x1, y1 = rect[0]
-        x2, y2 = rect[1]
+        x1, y1 = begin
+        x2, y2 = end
 
         nselected = self.__display.SelectLinesByBox(x1, y1, x2, y2)
         Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
-                  nselected)
+                      nselected)
 
         return nselected
 
@@ -471,7 +473,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): selected=%d" % \
                   nselected)
 
-        return nselected
+        return (nselected,) # tuple
 
     def GetSelected(self, grassId=True):
         """Return ids of selected vector features
@@ -484,8 +486,8 @@ class CDisplayDriver(AbstractDisplayDriver):
         else:
             selected = self.__display.GetSelected(False)
             
-        #Debug.msg(4, "CDisplayDriver.GetSelected(): grassId=%d, ids=%s" % \
-            #grassId, ids)
+        Debug.msg(4, "CDisplayDriver.GetSelected(): grassId=%d, ids=%s" % \
+                      (grassId, (",".join(["%d" % v for v in selected]))))
             
         return selected
 
@@ -497,10 +499,10 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         id = self.__display.GetSelectedVertex(x, y)
 
-        Debug.msg(4, "CDisplayDriver.GetSelectedVertex(): id=%d" % \
-                      id)
+        Debug.msg(4, "CDisplayDriver.GetSelectedVertex(): id=%s" % \
+                      (",".join(["%d" % v for v in id])))
 
-        return (id,) # return tuple
+        return id 
 
     def Unselect(self):
         """Delesect selected vector features"""
