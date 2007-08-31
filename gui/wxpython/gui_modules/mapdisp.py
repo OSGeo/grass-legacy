@@ -244,15 +244,17 @@ class BufferedWindow(wx.Window):
 
         pdc.BeginDrawing()
 
-        if drawid != 99 and drawid != 100:
+        if drawid != 99:
             bg = wx.TRANSPARENT_BRUSH
         else:
             bg = wx.Brush(self.GetBackgroundColour())
+
         pdc.SetBackground(bg)
         #pdc.Clear()
         self.Refresh()
 
-        Debug.msg (5, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % (drawid, pdctype, coords))
+        Debug.msg (5, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % \
+                       (drawid, pdctype, coords))
 
         if pdctype == 'clear': # erase the display
             bg = wx.WHITE_BRUSH
@@ -531,9 +533,12 @@ class BufferedWindow(wx.Window):
 
         # update statusbar
         self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Ext: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
+        self.parent.statusbar.SetStatusText("Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
+                                            "Res:%.2f(NS),%.2f(EW)" %
                                             (self.Map.region["w"], self.Map.region["e"],
-                                             self.Map.region["n"], self.Map.region["s"]), 0)
+                                             self.Map.region["n"], self.Map.region["s"],
+                                             self.Map.region["nsres"], self.Map.region["ewres"]),
+                                            0)
 
         return True
 
@@ -623,34 +628,39 @@ class BufferedWindow(wx.Window):
 
             self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=mousecoords)
 
-    def DrawLines(self, polycoords=None):
-        """Draw polyline in PseudoDC"""
-        if not polycoords: # alternative coordinates
+    def DrawLines(self, pdc=None, polycoords=None):
+        """Draw polylines in PseudoDC"""
+
+        if not pdc:
+            pdc = self.pdc
+
+        if not polycoords:
             polycoords = self.polycoords
 
-        #Debug.msg (4, "BufferedWindow.DrawLines(): coords=%s" % \
-        #               polycoords)
-
         if len(polycoords) > 0:
-            self.plineid = wx.NewId()
-            self.Draw(self.pdc, drawid=self.plineid, pdctype='polyline', coords=polycoords)
+            self.plineid = wx.ID_NEW + 1
+            self.Draw(pdc, drawid=self.plineid, pdctype='polyline', coords=polycoords)
+
+            Debug.msg (4, "BufferedWindow.DrawLines(): coords=%s, id=%s" % \
+                           (polycoords, self.plineid))
+
             return self.plineid
 
         return -1
 
-    def DrawCross(self, coords, size, rotation=0):
+    def DrawCross(self, pdc, coords, size, rotation=0):
         """Draw cross in PseudoDC
 
            TODO: implement rotation
         """
-        Debug.msg(4, "BufferedWindow.DrawCross(): coords=%s, size=%d" % \
-                  (coords, size))
+        Debug.msg(4, "BufferedWindow.DrawCross(): pdc=%s, coords=%s, size=%d" % \
+                  (pdc, coords, size))
         coordsCross = ((coords[0] - size, coords[1], coords[0] + size, coords[1]),
                        (coords[0], coords[1] - size, coords[0], coords[1] + size))
 
         self.lineid = wx.NewId()
         for lineCoords in coordsCross:
-            self.Draw(self.pdc, drawid=self.lineid, pdctype='line', coords=lineCoords)
+            self.Draw(pdc, drawid=self.lineid, pdctype='line', coords=lineCoords)
 
         return self.lineid
 
@@ -777,10 +787,11 @@ class BufferedWindow(wx.Window):
             if digitToolbar.action == "addLine":
                 if digitToolbar.type in ["point", "centroid"]:
                     # add new point
-                    #self.DrawCross(self.mouse['begin'], 5)
                     self.parent.digit.AddPoint(map=map,
                                                type=digitToolbar.type,
                                                x=east, y=north)
+
+                    self.UpdateMap(render=False) # redraw map
 
                     # add new record into atribute table
                     if self.parent.digit.settings["addRecord"]:
@@ -798,7 +809,6 @@ class BufferedWindow(wx.Window):
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",
                                                               "input=%s" % sqlfile.name])
-                    self.UpdateMap() # redraw map
 
                 elif digitToolbar.type in ["line", "boundary"]:
                     # add new point to the line
@@ -811,6 +821,11 @@ class BufferedWindow(wx.Window):
                 self.moveBegin = [0, 0]
                 self.moveCoords = self.mouse['begin']
                 self.moveIds   = []
+                if digitToolbar.action == "moveVertex":
+                    # set pen
+                    self.polypen = wx.Pen(colour=self.parent.digit.settings["symbolHighlight"][1],
+                                          width=2, style=wx.SHORT_DASH)
+                    self.pdcVector.SetPen(self.polypen)
             elif digitToolbar.action == "splitLine":
                 pass
             elif digitToolbar.action == "displayAttributes":
@@ -892,21 +907,20 @@ class BufferedWindow(wx.Window):
             # digitization tool active
             digitToolbar = self.parent.digittoolbar
             self.mouse['end'] = event.GetPositionTuple()[:]
+            pos1 = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
+            pos2 = self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])
+
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"]:
                 nselected = 0
                 driver =  self.parent.digit.driver
                 # -> delete line || move line || move vertex
                 if digitToolbar.action == "moveVertex":
                     # -> move vertex (select by point)
-                    self.moveIds = driver.SelectLinesByPoint(self.Pixel2Cell(self.mouse['begin'][0],
-                                                                    self.mouse['begin'][1]),
-                                                    onlyType="line")
-
+                    nselected = driver.SelectLinesByPoint(pos1, onlyType="line")
+                    self.moveIds = driver.GetSelectedVertex(pos1)
                 else:
                     # -> moveLine || deleteLine (select by box)
-                    x1, y1 = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
-                    x2, y2 = self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])
-                    nselected = driver.SelectLinesByBox(((x1, y1), (x2, y2)))
+                    nselected = driver.SelectLinesByBox(pos1, pos2)
                     
                 if nselected > 0:
                     # highlight selected features
@@ -920,12 +934,10 @@ class BufferedWindow(wx.Window):
                             self.moveIds = driver.GetSelected(grassId=False)
                         else:
                             # -> move vertex
-                            self.moveIds = driver.GetSelectedVertex(self.Pixel2Cell(self.mouse['begin'][0],
-                                                                                    self.mouse['begin'][1]))
-                            print "#", self.moveIds
+                            self.moveIds = driver.GetSelectedVertex(pos1)
+
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
-                east, north = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
-                self.parent.digit.driver.SelectLinesByPoint((east, north), onlyType="line")
+                self.parent.digit.driver.SelectLinesByPoint(pos1, onlyType="line")
                 self.UpdateMap(render=False)
         elif self.dragid != None:
             # end drag of overlay decoration
@@ -1042,6 +1054,8 @@ class BufferedWindow(wx.Window):
                                   type=self.parent.digittoolbar.type,
                                   coords=mapcoords)
 
+                    self.UpdateMap(render=False)
+
                     # add new record into atribute table
                     if self.parent.digit.settings["addRecord"]:
                         offset = 5
@@ -1062,7 +1076,6 @@ class BufferedWindow(wx.Window):
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",
                                                               "input=%s" % sqlfile.name])
-
                     # clean up saved positions
                     self.polycoords = []
             elif digit.action == "deleteLine":
@@ -1103,33 +1116,44 @@ class BufferedWindow(wx.Window):
                 self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], 
                                                                self.mouse['begin'][1]))
 
-            # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
-            self.parent.digit.driver.Unselect()
-            self.UpdateMap(render=False)
+            if digit.action != "addLine":
+                # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
+                self.parent.digit.driver.Unselect()
+                self.UpdateMap(render=False)
 
         event.Skip()
 
     def OnMiddleDown(self, event):
         """Middle mouse button pressed"""
         digit = self.parent.digittoolbar
+        # digitization tool
         if self.mouse["use"] == "pointer" and digit:
             if digit.action == "addLine" and \
                     digit.type in ["line", "boundary"]:
-                # remove last point from the line
-                self.polycoords.pop()
-                self.mouse['begin'] = self.polycoords[-1]
+                # add line or boundary -> remove last point from the line
+                try:
+                    removed = self.polycoords.pop()
+                    Debug.msg(4, "BufferedWindow.OnMiddleDown(): polycoords_poped=%s" % \
+                                  [removed,])
+
+                    self.mouse['begin'] = self.polycoords[-1]
+                except:
+                    pass
+
                 self.ClearLines()
+                self.UpdateMap(render=False)
                 self.DrawLines()
             elif digit.action in ["deleteLine", "moveLine", "splitLine",
                                   "addVertex", "removeVertex", "moveVertex"]:
-                # unselected selected features
+                # varios tools -> unselected selected features
                 # PyDisplayDriver: self.parent.digit.driver.SetSelect([])
                 self.parent.digit.driver.Unselect()
                 if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
+                    # move feature -> delete 'move' variables
                     del self.moveBegin
                     del self.moveCoords
                     del self.moveIds
-                self.UpdateMap()
+                self.UpdateMap(render=False) # render map
 
     def OnMouseMoving(self, event):
         """Motion event and no mouse buttons were pressed"""
@@ -1150,24 +1174,66 @@ class BufferedWindow(wx.Window):
                 self.moveBegin[1] += dy
                 if len(self.moveIds) > 0:
                     # draw lines on new position
-                    for id in self.moveIds:
-                        self.pdcVector.TranslateId(id, dx, dy)
+                    if digit.action == "moveLine":
+                        # move line
+                        for id in self.moveIds:
+                            self.pdcVector.TranslateId(id, dx, dy)
+                    else:
+                        # move vertex ->
+                        # (vertex, left vertex, left line,
+                        # right vertex, right line)
+
+                        # draw polyline
+                        self.pdcVector.TranslateId(self.moveIds[0], dx, dy)
+                        self.pdcVector.RemoveId(self.moveIds[0])
+                        self.pdcVector.RemoveId(self.moveIds[-1])
+                        self.pdcVector.RemoveId(self.moveIds[-2])
+                        self.polycoords = []
+                        if self.moveIds[-2] > 0: # left line
+                            x1, y1 = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
+                            self.polycoords.append((x1, y1))
+                        x2, y2 = self.mouse['end']
+                        self.polycoords.append((x2, y2))
+                        if self.moveIds[-1] > 0: # right line
+                            x3, y3 = self.pdcVector.GetIdBounds(self.moveIds[2])[0:2]
+                            self.polycoords.append((x3, y3))
+
+                        self.ClearLines()
+                        self.DrawLines()
+
                 self.Refresh() # TODO: use RefreshRect()
                 self.mouse['begin'] = self.mouse['end']
 
         event.Skip()
 
-    def ClearLines(self):
+    def ClearLines(self, pdc=None):
         """
-        Clears lines drawn for measurement and profiling
+        Clears temporary drawn lines from PseudoDC
         """
+
+        if not pdc:
+            pdc = self.pdc
+
+        exit = True
+        
         try:
-            self.pdc.ClearId(self.lineid)
-            self.pdc.ClearId(self.plineid)
-            self.Refresh()
-            return True
+            pdc.ClearId(self.lineid)
+            pdc.RemoveId(self.lineid)
         except:
-            return False
+            exit = False
+            
+        try:
+            pdc.ClearId(self.plineid)
+            pdc.RemoveId(self.plineid)
+        except:
+            exit = False
+
+        Debug.msg(4, "BufferedWindow.ClearLines(): lineid=%s, plineid=%s" %
+                  (self.lineid, self.plineid))
+
+        self.Refresh()
+
+        return exit
 
 
     def Pixel2Cell(self, x, y):
@@ -1500,7 +1566,7 @@ class MapFrame(wx.Frame):
         #
         # Fancy gui
         #
-#        self._mgr = auimgr
+        # self._mgr = auimgr
         self._mgr = wx.aui.AuiManager(self)
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
@@ -1518,9 +1584,11 @@ class MapFrame(wx.Frame):
         self.statusbar = self.CreateStatusBar(number=2, style=0)
         self.statusbar.SetStatusWidths([-5, -2])
         self.Map.SetRegion()
-        map_frame_statusbar_fields = ["Ext: %.2f(W)-%.2f(E), %.2f(N)-%.2f(S)" %
+        map_frame_statusbar_fields = ["Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
+                                      "Res:%.2f(NS),%.2f(EW)" %
                                       (self.Map.region["w"], self.Map.region["e"],
-                                       self.Map.region["n"], self.Map.region["s"]),
+                                       self.Map.region["n"], self.Map.region["s"],
+                                       self.Map.region["nsres"], self.Map.region["ewres"]),
                                       "%s,%s" %(None, None)]
         for i in range(len(map_frame_statusbar_fields)):
             self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)

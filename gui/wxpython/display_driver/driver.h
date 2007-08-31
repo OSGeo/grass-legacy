@@ -35,7 +35,12 @@ class DisplayDriver
     wxPseudoDC *dc;  // device content
     long int   dcId; // wxDC id starting
 
-    typedef std::map<int, std::vector<long int> > ids_map;
+    struct lineDesc {
+	int      npoints;
+	long int startId;
+    };
+
+    typedef std::map<int, lineDesc> ids_map;
 
     ids_map ids; // gId : {dcIds, ...}
 
@@ -115,7 +120,7 @@ class DisplayDriver
     void Unselect();
     std::vector<int> GetSelected(bool grassId);
     int SetSelected(std::vector<int> id);
-    long int GetSelectedVertex(double x, double y);
+    std::vector<int> GetSelectedVertex(double x, double y);
 
     /* general */
     void CloseMap();
