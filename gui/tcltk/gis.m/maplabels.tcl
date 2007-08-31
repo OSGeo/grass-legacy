@@ -73,8 +73,8 @@ proc GmCLabels::create { tree parent } {
 
     set opt($count,1,xcoord) 1.0 
     set opt($count,1,ycoord) 1.0 
-    set opt($count,1,xoffset) 1.0 
-    set opt($count,1,yoffset) 1.0 
+    set opt($count,1,xoffset) 0.0
+    set opt($count,1,yoffset) 15.0 
     set opt($count,1,labels) "" 
     set opt($count,1,lfont) [font create "labelfont$count" -family "Helvetica" -size 11 -weight "normal"]
     set opt($count,1,lfontfamily) "Helvetica"
@@ -308,12 +308,14 @@ proc GmCLabels::display { node } {
     set tree($mon) $GmTree::tree($mon)
     set id [GmTree::node_id $node]
     
+    if {$opt($id,1,labels) == "" } {return}
+    
     set can($mon) $MapCanvas::can($mon)
     if {[string match {*[@]*} $opt($id,1,labels)]} { 
-	set tmp [string range $opt($id,1,labels) 0 [expr [string first "@" $opt($id,1,labels)] - 1] ]
-	set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/PERMANENT/paint/labels/$tmp"
+		set tmp [string range $opt($id,1,labels) 0 [expr [string first "@" $opt($id,1,labels)] - 1] ]
+		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/PERMANENT/paint/labels/$tmp"
     } else {
-	set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"
+		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"
     }
 
     if { ! ( $opt($id,1,_check) ) } { return } 
@@ -432,6 +434,7 @@ proc GmCLabels::display { node } {
 			}
 			"text" {
 				set opt($id,1,ltxt) [subst -nocommands -novariables $val]
+				set newlines [expr [llength [split $opt($id,1,ltxt) "\n"]] - 1]
 				# create each label when loop gets to a text line in the labels file
 				# Here should be set all font related options, that come from labelfile
 				if {[info exists opt($id,1,lfontsize)]} {
@@ -440,11 +443,11 @@ proc GmCLabels::display { node } {
 				set linelen [font measure $opt($id,1,lfont) $opt($id,1,ltxt)]
 				if {$linelen < $opt($id,1,lwidth)} {
 					set wid [expr $linelen + 8]
-					set lineh [font metrics $opt($id,1,lfont) -linespace]
+					set lineh [expr $newlines * [font metrics $opt($id,1,lfont) -linespace] + 8]
 				} else {
 					set wid $opt($id,1,lwidth)
-					set lineh [expr (ceil($linelen/$opt($id,1,lwidth))+1)\
-					 * [font metrics $opt($id,1,lfont) -linespace]]
+					set lineh [expr $newlines * (ceil($linelen/$opt($id,1,lwidth))+1)\
+					 * [font metrics $opt($id,1,lfont) -linespace] + 8]
 				}
 				if {!$opt($id,1,lopaque)} {
 					set lbackground ""
