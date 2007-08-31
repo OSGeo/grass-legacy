@@ -1,20 +1,19 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       gproj library
- * AUTHOR(S):    Original Author unknown, probably Soil Conservation Service
- *               Eric Miller
- *               Paul Kelly
- * PURPOSE:      Functions for re-projecting point data
- * COPYRIGHT:    (C) 2003 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file get_proj.c
+
+   \brief GPROJ library
+
+   Functions for re-projecting point data
+
+   \author Original Author unknown, probably Soil Conservation Service,
+   Eric Miller, Paul Kelly
+
+   (C) 2003 by the GRASS Development Team
+ 
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -235,7 +234,7 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 	    strcat (buffa, err);
 	}
 	G_warning (buffa);
-	G_warning (_("The error message was '%s'"),
+	G_warning (_("The error message: %s"),
 		   pj_strerrno(pj_errno));
 	return -1;
     }
@@ -249,8 +248,7 @@ static void alloc_options(char *buffa)
     int nsize;
 
     nsize = strlen(buffa);
-    if (!(opt_in[nopt1++] = (char *)malloc(nsize + 1)))
-	G_fatal_error(_("Unable to allocate options"));
+    opt_in[nopt1++] = (char *) G_malloc(nsize + 1);
     sprintf(opt_in[nopt1 - 1], buffa);
     return;
 }
@@ -275,8 +273,7 @@ int pj_get_string(struct pj_info *info, char *str)
 	sprintf(info->proj, "ll");
 	sprintf(buffa, "proj=latlong ellps=WGS84");
 	nsize = strlen(buffa);
-	if (!(opt_in[nopt] = (char *)malloc(nsize + 1)))
-	    G_fatal_error(_("Option input memory failure"));
+	opt_in[nopt] = (char *) G_malloc(nsize + 1);
 	sprintf(opt_in[nopt++], buffa);
     }
     else {
@@ -315,8 +312,7 @@ int pj_get_string(struct pj_info *info, char *str)
 			sprintf(buffa, s);
 		    }
 		    nsize = strlen(buffa);
-		    if (!(opt_in[nopt] = (char *)malloc(nsize + 1)))
-			G_fatal_error(_("Option input memory failure"));
+		    opt_in[nopt] = (char *) G_malloc(nsize + 1);
 		    sprintf(opt_in[nopt++], buffa);
 		}
 	    }
@@ -403,9 +399,9 @@ int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
     if (iproj) {
 	str = pj_get_def(iproj->pj, 1);
 	if (str != NULL) {
-	    fprintf (stderr, _("Input Projection Parameters:%s\n"), str);
+	    fprintf (stderr, "%s: %s\n", _("Input Projection Parameters"), str);
 	    G_free(str);
-	    fprintf (stderr, _("Input Unit Factor: %.16g\n"), iproj->meters);
+	    fprintf (stderr, "%s: %.16g\n", _("Input Unit Factor"), iproj->meters);
 	}
 	else
 	    return -1;
@@ -414,9 +410,9 @@ int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
     if (oproj) {
 	str = pj_get_def(oproj->pj, 1);
 	if (str != NULL) {
-	    fprintf (stderr, _("Output Projection Parameters:%s\n"), str);
+	    fprintf (stderr, "%s: %s\n", _("Output Projection Parameters"), str);
 	    G_free(str);
-	    fprintf (stderr, _("Output Unit Factor: %.16g\n"), oproj->meters);
+	    fprintf (stderr, "%s: %.16g\n", _("Output Unit Factor"), oproj->meters);
 	}
 	else
 	    return -1;
