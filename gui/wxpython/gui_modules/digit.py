@@ -55,9 +55,6 @@ if usePyDisplayDriver:
               "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
               "Will be replaced by C/C++ display driver."
 else:
-    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
-    sys.path.append(driverPath)
-    from grass6_wxdriver import DisplayDriver
     try:
         driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
         sys.path.append(driverPath)
