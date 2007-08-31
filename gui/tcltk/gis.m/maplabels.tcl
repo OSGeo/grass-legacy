@@ -378,7 +378,7 @@ proc GmCLabels::display { node } {
 					"right center" 	{ set opt($id,1,anchor) "w" }
 					"upper left" 	{ set opt($id,1,anchor) "se"}
 					"left upper" 	{ set opt($id,1,anchor) "se"}
-					"center" 		{ set opt($id,1,anchor) "s" }
+					"upper" 		{ set opt($id,1,anchor) "s" }
 					"upper center" 	{ set opt($id,1,anchor) "s" }
 					"center upper" 	{ set opt($id,1,anchor) "s" }
 					"upper right" 	{ set opt($id,1,anchor) "sw"}
@@ -434,12 +434,17 @@ proc GmCLabels::display { node } {
 			}
 			"text" {
 				set opt($id,1,ltxt) [subst -nocommands -novariables $val]
+				
+				# check to see if there are line breaks in the text
 				set newlines [expr [llength [split $opt($id,1,ltxt) "\n"]] - 1]
+				
 				# create each label when loop gets to a text line in the labels file
 				# Here should be set all font related options, that come from labelfile
 				if {[info exists opt($id,1,lfontsize)]} {
 					font configure $opt($id,1,lfont) -size $opt($id,1,lfontsize)
 				}
+				
+				# set the label width and height
 				set linelen [font measure $opt($id,1,lfont) $opt($id,1,ltxt)]
 				if {$linelen < $opt($id,1,lwidth)} {
 					set wid [expr $linelen + 8]
@@ -456,16 +461,61 @@ proc GmCLabels::display { node } {
 					set wdth 0
 				} else { set wdth $opt($id,1,lbwidth) }
 
+				# create box around text
+				
+				switch $opt($id,1,anchor) {
+					"ne" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) - ($wid-4) / 2}] 
+						set boxcenter_y [expr {$opt($id,1,ycoord) + ($lineh+4) / 2}]
+						}
+					"n" { 
+						set boxcenter_x $opt($id,1,xcoord)
+						set boxcenter_y [expr {$opt($id,1,ycoord) - ($lineh+4) / 2}]
+						}
+					"nw" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) + ($wid-4) / 2}]
+						set boxcenter_y [expr {$opt($id,1,ycoord) + ($lineh+4) / 2}]
+						}
+					"e" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) - ($wid-4) / 2}]
+						set boxcenter_y $opt($id,1,ycoord)
+						}
+					"center" { 
+						set boxcenter_x $opt($id,1,xcoord)
+						set boxcenter_y $opt($id,1,ycoord)
+						}
+					"w" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) + ($wid-4) / 2}]
+						set boxcenter_y $opt($id,1,ycoord)
+						}
+					"se" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) - ($wid-4) / 2}]
+						set boxcenter_y [expr {$opt($id,1,ycoord) - ($lineh+4) / 2}]
+						}
+					"s" { 
+						set boxcenter_x $opt($id,1,xcoord)
+						set boxcenter_y [expr {$opt($id,1,ycoord) - ($lineh+4) / 2}]
+						}
+					"sw" { 
+						set boxcenter_x [expr {$opt($id,1,xcoord) + ($wid-4) / 2}]
+						set boxcenter_y [expr {$opt($id,1,ycoord) - ($lineh+4) / 2}]
+						}
+					default { 
+						set boxcenter_x $opt($id,1,xcoord)
+						set boxcenter_y $opt($id,1,ycoord)
+						}
+				}
+
 				if {$opt($id,1,lboxenable)} { 
-				# draw recangle around label
-				$can($mon) create rectangle \
-					[expr {$opt($id,1,xcoord) - $opt($id,1,lhoffset) - $wid / 2}] \
-					[expr {$opt($id,1,ycoord) -2- $opt($id,1,lvoffset) - $lineh / 2}]\
-					[expr {$opt($id,1,xcoord) + $opt($id,1,lhoffset) + $wid / 2}] \
-					[expr {$opt($id,1,ycoord) + $opt($id,1,lvoffset) + $lineh / 2}]\
-					-width  $wdth \
-					-outline $opt($id,1,lborder) \
-					-fill $lbackground
+					# draw recangle around label
+					$can($mon) create rectangle \
+						[expr {$boxcenter_x - $opt($id,1,lhoffset) - $wid / 2}] \
+						[expr {$boxcenter_y -2- $opt($id,1,lvoffset) - $lineh / 2}]\
+						[expr {$boxcenter_x + $opt($id,1,lhoffset) + $wid / 2}] \
+						[expr {$boxcenter_y + $opt($id,1,lvoffset) + $lineh / 2}]\
+						-width  $wdth \
+						-outline $opt($id,1,lborder) \
+						-fill $lbackground
 				}
 				$can($mon) create text $opt($id,1,xcoord) $opt($id,1,ycoord) \
 					-anchor $opt($id,1,anchor) \
