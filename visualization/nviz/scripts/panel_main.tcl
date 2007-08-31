@@ -301,6 +301,7 @@ proc Nviz_main_save { file_hook } {
 	# Need to make this accurate
 	# Also need to save "look here" information
 	# TODO prob. need focus indication AND realto (if focused)
+	puts $file_hook ">>>start main"
 	puts $file_hook "$width $height"
 	puts $file_hook "[$BASE.bframe.cframe.pers.f.entry get]"
 	puts $file_hook "[$BASE.midf.zexag.f.entry get]"
@@ -318,7 +319,7 @@ proc Nviz_main_load { file_hook } {
 	# window size
 	gets $file_hook data
 	set win_width [lindex $data 0]
-	set win_ -padx 3  [lindex $data 1]
+	set win_height [lindex $data 1]
 	$Nv_(TOP).canvas configure -width $win_width -height $win_height
 	pack $Nv_(TOP).canvas -side top -expand 1 -fill both
 
@@ -348,16 +349,17 @@ proc Nviz_main_load { file_hook } {
 	update_eye_position [lindex $data 0] [lindex $data 1]
 	update
 
+
 	# focus
 	gets $file_hook data
 	set data [split "$data"]
 	if {"[lindex $data 0]" == "1"} then {
-	gets $file_hook data
-	set data [split "$data"]
-	Nset_focus [lindex $data 0] [lindex $data 1] [lindex $data 2]
+	    gets $file_hook data
+	    set data [split "$data"]
+	    Nset_focus [lindex $data 0] [lindex $data 1] [lindex $data 2]
 	} else {
-	# insert code to set view_to here
-	Nset_focus_state 0
+	    # insert code to set view_to here
+	    Nset_focus_state 0
 	}
 	update
 

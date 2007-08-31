@@ -94,5 +94,6 @@ proc Nviz_color_save {file_hook} {
     global BGColor
 
     # Nothing fancy here, just save the background color
+    puts $file_hook ">>>start color"
     puts $file_hook "$BGColor"
 }

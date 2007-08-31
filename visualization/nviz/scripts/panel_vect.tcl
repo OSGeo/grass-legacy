@@ -167,6 +167,7 @@ proc Nviz_vect_save {file_hook} {
     set surf_list [Nget_surf_list]
 
     # Write out the total number of vector files
+    puts $file_hook ">>>start vect"
     puts $file_hook "[llength $vect_list]"
 
     # For each vector file write out the following:
@@ -177,33 +178,32 @@ proc Nviz_vect_save {file_hook} {
     # 5. list of logical names of surfaces displayed on
     foreach i $vect_list {
 
-	# logical name
-	puts $file_hook "[Nvect$i get_logical_name]"
-	
-	# map name
-	puts $file_hook "[Nvect$i get_att map]"
-
-	# color
-	puts $file_hook "[Nvect$i get_att color]"
-
-	# width
-	puts $file_hook "[Nvect$i get_att width]"
-
-	# logical names of surfaces displayed on
-	set draped [list]
-	foreach j $surf_list {
-	    if {[Nvect$i surf_is_selected Nsurf$j]} then {
-		lappend draped $j
-	    }
-	}
-	puts $file_hook "[llength $draped]"
-	foreach j $draped {
-	    puts $file_hook "[Nlogical_from_literal Nsurf$j]"
-	}
-
-	flush $file_hook
+        # logical name
+        puts $file_hook "[Nvect$i get_logical_name]"
+        
+        # map name
+        puts $file_hook "[Nvect$i get_att map]"
+    
+        # color
+        puts $file_hook "[Nvect$i get_att color]"
+    
+        # width
+        puts $file_hook "[Nvect$i get_att width]"
+    
+        # logical names of surfaces displayed on
+        set draped [list]
+        foreach j $surf_list {
+            if {[Nvect$i surf_is_selected Nsurf$j]} then {
+                lappend draped $j
+            }
+        }
+        puts $file_hook "[llength $draped]"
+        foreach j $draped {
+            puts $file_hook "[Nlogical_from_literal Nsurf$j]"
+        }
+    
+        flush $file_hook
     }
-
     # Done...
 }
 
