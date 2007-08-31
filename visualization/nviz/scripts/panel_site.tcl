@@ -211,6 +211,7 @@ proc Nviz_site_save {file_hook} {
     set surf_list [Nget_surf_list]
 
     # Write out the total number of site files
+    puts $file_hook ">>>start site"
     puts $file_hook "[llength $site_list]"
 
     # For each site file write out the following:
@@ -225,46 +226,45 @@ proc Nviz_site_save {file_hook} {
     # 9. display
     foreach i $site_list {
 
-	# logical name
-	puts $file_hook "[Nsite$i get_logical_name]"
-	
-	# map name
-	puts $file_hook "[Nsite$i get_att map]"
-
-	# color
-	puts $file_hook "[Nsite$i get_att color]"
-
-	# width
-	puts $file_hook "[Nsite$i get_att width]"
-
-	# logical names of surfaces displayed on
-	set draped [list]
-	foreach j $surf_list {
-	    if {[Nsite$i surf_is_selected Nsurf$j]} then {
-		lappend draped $j
-	    }
-	}
-	puts $file_hook "[llength $draped]"
-	foreach j $draped {
-	    puts $file_hook "[Nlogical_from_literal Nsurf$j]"
-	}
-
-	# marker
-	puts $file_hook "[Nsite$i get_att marker]"
-	
-	# size
-	puts $file_hook "[Nsite$i get_att size]"
-
-	# useatt
-# temporarily disabled as causing problems (bug # 4377)
-#	puts $file_hook "[Nsite$i get_att useatt]"
-
-	# display
-	puts $file_hook "[Nsite$i get_att display]"
-
-	flush $file_hook
+        # logical name
+        puts $file_hook "[Nsite$i get_logical_name]"
+        
+        # map name
+        puts $file_hook "[Nsite$i get_att map]"
+    
+        # color
+        puts $file_hook "[Nsite$i get_att color]"
+    
+        # width
+        puts $file_hook "[Nsite$i get_att width]"
+    
+        # logical names of surfaces displayed on
+        set draped [list]
+        foreach j $surf_list {
+            if {[Nsite$i surf_is_selected Nsurf$j]} then {
+                lappend draped $j
+            }
+        }
+        puts $file_hook "[llength $draped]"
+        foreach j $draped {
+            puts $file_hook "[Nlogical_from_literal Nsurf$j]"
+        }
+    
+        # marker
+        puts $file_hook "[Nsite$i get_att marker]"
+        
+        # size
+        puts $file_hook "[Nsite$i get_att size]"
+    
+        # useatt
+    # temporarily disabled as causing problems (bug # 4377)
+    #	puts $file_hook "[Nsite$i get_att useatt]"
+    
+        # display
+        puts $file_hook "[Nsite$i get_att display]"
+    
+        flush $file_hook
     }
-
     # Done...
 }
 

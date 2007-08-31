@@ -167,6 +167,7 @@ proc Nviz_vol_reset {} {
 # Save procedure for saving state of Nviz
 proc Nviz_vol_save {file_hook} {
     # Get the list of volumes
+    puts $file_hook ">>>start vol"
     set vol_list [Nget_vol_list]
 
     # Write out the total number of volumes
@@ -175,61 +176,60 @@ proc Nviz_vol_save {file_hook} {
     # Save attributes for each volume
     foreach i $vol_list {
 
-    # Logical name
-    puts $file_hook "[Nvol$i get_logical_name]"
-    
-    # Map source
-    puts $file_hook "[Nvol$i get_att map]"
-
-    # position 
-    puts $file_hook "[Nvol$i get_trans]"
-    
-    # Save attributes for all isosurfaces
-    set num_isosurf [Nvol$i isosurf num_isosurfs]
-    puts $file_hook $num_isosurf
-    
-    # Polygon resolution
-    puts $file_hook "[Nvol$i isosurf get_res]"
-    
-    # Drawing mode
-    puts $file_hook "[Nvol$i isosurf get_drawmode]"
-    
-    # Loop in isosurfaces  
-    for {set j 0} {$j < $num_isosurf} {incr j} {        
-        # Attributes
-        foreach k [list threshold color mask transp shin emi] {
-            puts $file_hook "[Nvol$i isosurf get_att $j $k]"
-        } 
+        # Logical name
+        puts $file_hook "[Nvol$i get_logical_name]"
         
-        # Mask mode
-        puts $file_hook "[Nvol$i isosurf get_mask_mode $j]"
+        # Map source
+        puts $file_hook "[Nvol$i get_att map]"
+    
+        # position 
+        puts $file_hook "[Nvol$i get_trans]"
         
-        # Flags - normal direction, etc.
-        puts $file_hook "[Nvol$i isosurf get_flags $j]"
-    }
-    
-    # Save attributes for all slices
-    set num_slices [Nvol$i slice num_slices]
-    puts $file_hook $num_slices
-    
-    # Polygon resolution
-    puts $file_hook "[Nvol$i slice get_res]"
-    
-    # Drawing mode
-    puts $file_hook "[Nvol$i slice get_drawmode]"
-    
-    # Loop in slices
-    for {set j 0} {$j < $num_slices} {incr j} {        
-        # Position
-        puts $file_hook "[Nvol$i slice get_pos $j]"
+        # Save attributes for all isosurfaces
+        set num_isosurf [Nvol$i isosurf num_isosurfs]
+        puts $file_hook $num_isosurf
         
-        # Transparency
-        puts $file_hook "[Nvol$i slice get_transp $j]"
+        # Polygon resolution
+        puts $file_hook "[Nvol$i isosurf get_res]"
+        
+        # Drawing mode
+        puts $file_hook "[Nvol$i isosurf get_drawmode]"
+        
+        # Loop in isosurfaces  
+        for {set j 0} {$j < $num_isosurf} {incr j} {        
+            # Attributes
+            foreach k [list threshold color mask transp shin emi] {
+                puts $file_hook "[Nvol$i isosurf get_att $j $k]"
+            } 
+            
+            # Mask mode
+            puts $file_hook "[Nvol$i isosurf get_mask_mode $j]"
+            
+            # Flags - normal direction, etc.
+            puts $file_hook "[Nvol$i isosurf get_flags $j]"
+        }
+        
+        # Save attributes for all slices
+        set num_slices [Nvol$i slice num_slices]
+        puts $file_hook $num_slices
+        
+        # Polygon resolution
+        puts $file_hook "[Nvol$i slice get_res]"
+        
+        # Drawing mode
+        puts $file_hook "[Nvol$i slice get_drawmode]"
+        
+        # Loop in slices
+        for {set j 0} {$j < $num_slices} {incr j} {        
+            # Position
+            puts $file_hook "[Nvol$i slice get_pos $j]"
+            
+            # Transparency
+            puts $file_hook "[Nvol$i slice get_transp $j]"
+        }
+    
+        flush $file_hook
     }
-
-    flush $file_hook
-    }
-
     # Done...
 }
 

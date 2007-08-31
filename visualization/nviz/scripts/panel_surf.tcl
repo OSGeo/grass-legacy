@@ -197,7 +197,7 @@ proc Nviz_surf_reset {} {
 	set surf_list [Nget_surf_list]
 
 	foreach i $surf_list {
-	Nsurf$i delete
+	    Nsurf$i delete
 	}
 
 	set_new_curr surf 0
@@ -214,6 +214,7 @@ proc Nviz_surf_save {file_hook} {
 	set surf_list [Nget_surf_list]
 
 	# Write out the total number of surfaces
+	puts $file_hook ">>>start surf"
 	puts $file_hook "[llength $surf_list]"
 
 	# For each surface write out the following:
@@ -232,143 +233,145 @@ proc Nviz_surf_save {file_hook} {
 	# 13. shading
 	foreach i $surf_list {
 
-	# logical name
-	puts $file_hook "[Nsurf$i get_logical_name]"
-
-	# topography source + no zero status
-	puts $file_hook "[Nsurf$i get_att topo]"
-	puts $file_hook "[Nsurf$i get_nozero topo]"
-
-	# color source + no zero status
-	puts $file_hook "[Nsurf$i get_att color]"
-	puts $file_hook "[Nsurf$i get_nozero color]"
-
-	# mask source + invert status
-	puts $file_hook "[Nsurf$i get_att mask]"
-	puts $file_hook "[Nsurf$i get_mask_mode]"
-
-	# transparency -> emission sources
-	foreach j [list transp shin emi] {
-		puts $file_hook "[Nsurf$i get_att $j]"
-	}
-
-	# wire color
-	puts $file_hook "[Nsurf$i get_wirecolor]"
-
-	# position
-	puts $file_hook "[Nsurf$i get_trans]"
-
-	# grid resolution
-	puts $file_hook "[Nsurf$i get_res wire]"
-
-	# poly resolution
-	puts $file_hook "[Nsurf$i get_res poly]"
-
-	# surface and shade style
-	set modes [Nsurf$i get_drawmode]
-	puts $file_hook "[lindex $modes 1]"
-	puts $file_hook "[lindex $modes 2]"
-	puts $file_hook "[lindex $modes 0]"
-
-	flush $file_hook
-	}
-
+        # logical name
+        puts $file_hook "[Nsurf$i get_logical_name]"
+    
+        # topography source + no zero status
+        puts $file_hook "[Nsurf$i get_att topo]"
+        puts $file_hook "[Nsurf$i get_nozero topo]"
+    
+        # color source + no zero status
+        puts $file_hook "[Nsurf$i get_att color]"
+        puts $file_hook "[Nsurf$i get_nozero color]"
+    
+        # mask source + invert status
+        puts $file_hook "[Nsurf$i get_att mask]"
+        puts $file_hook "[Nsurf$i get_mask_mode]"
+    
+        # transparency -> emission sources
+        foreach j [list transp shin emi] {
+            puts $file_hook "[Nsurf$i get_att $j]"
+        }
+    
+        # wire color
+        puts $file_hook "[Nsurf$i get_wirecolor]"
+    
+        # position
+        puts $file_hook "[Nsurf$i get_trans]"
+    
+        # grid resolution
+        puts $file_hook "[Nsurf$i get_res wire]"
+        
+        # poly resolution
+        puts $file_hook "[Nsurf$i get_res poly]"
+    
+    
+        # surface and shade style
+        set modes [Nsurf$i get_drawmode]
+        puts $file_hook "[lindex $modes 1]"
+        puts $file_hook "[lindex $modes 2]"
+        puts $file_hook "[lindex $modes 0]"
+        flush $file_hook
+	}    
 	# Done...
 }
 
 # Load procedure for loading state of Nviz
 proc Nviz_surf_load { file_hook } {
+
 	# Read the number of surfaces saved in this state file
 	gets $file_hook num_surfs
 
 	# For each surface file, create a new surface with the given logical
 	# name and fill in the attributes as appropriate
 	for {set i 0} {$i < $num_surfs} {incr i} {
-	# Read in the logical name for this new surface
-	gets $file_hook logical_name
+    	# Read in the logical name for this new surface
+	    gets $file_hook logical_name
 
-	# Now create a new surface with the given logical name
-	set new_surf [Nnew_map_obj surf "name=$logical_name"]
+    	# Now create a new surface with the given logical name
+    	set new_surf [Nnew_map_obj surf "name=$logical_name"]
 
-	# Set all attributes as appropriate (i.e. as they are read from the state file)
-	# Note that we can ignore "unset" attributes since this is the default
+    	# Set all attributes as appropriate (i.e. as they are read from the state file)
+    	# Note that we can ignore "unset" attributes since this is the default
 
-	# topography + no zero status
-	gets $file_hook att_data
-	set att_data [split "$att_data"]
-	if {"[lindex $att_data 0]" == "map"} then {
-		$new_surf set_att topo [lindex $att_data 1]
-	} elseif {"[lindex $att_data 0]" == "const"} then {
-		$new_surf set_att topo constant [lindex $att_data 1]
-	}
+	    # topography + no zero status
+        gets $file_hook att_data
+        set att_data [split "$att_data"]
+        if {"[lindex $att_data 0]" == "map"} then {
+            $new_surf set_att topo [lindex $att_data 1]
+        } elseif {"[lindex $att_data 0]" == "const"} then {
+            $new_surf set_att topo constant [lindex $att_data 1]
+        }
 
-	gets $file_hook att_data
-	$new_surf set_nozero topo $att_data
+    	gets $file_hook att_data
+    	$new_surf set_nozero topo $att_data
+    	
 
-	# color + no zero status
-	gets $file_hook att_data
-	set att_data [split "$att_data"]
-	if {"[lindex $att_data 0]" == "map"} then {
-		$new_surf set_att color [lindex $att_data 1]
-	} elseif {"[lindex $att_data 0]" == "const"} then {
-		$new_surf set_att color constant [lindex $att_data 1]
-	}
+    	# color + no zero status
+    	gets $file_hook att_data
+    	set att_data [split "$att_data"]
+        if {"[lindex $att_data 0]" == "map"} then {
+            $new_surf set_att color [lindex $att_data 1]
+        } elseif {"[lindex $att_data 0]" == "const"} then {
+            $new_surf set_att color constant [lindex $att_data 1]
+        }
 
-	gets $file_hook att_data
-	$new_surf set_nozero color $att_data
+    	gets $file_hook att_data
+    	$new_surf set_nozero color $att_data
 
-	# mask + inverted status
-	gets $file_hook att_data
-	set att_data [split "$att_data"]
-	if {"[lindex $att_data 0]" == "map"} then {
-		$new_surf set_att mask [lindex $att_data 1]
-	} elseif {"[lindex $att_data 0]" == "const"} then {
-		$new_surf set_att mask constant [lindex $att_data 1]
-	}
+        # mask + inverted status
+        gets $file_hook att_data
+        set att_data [split "$att_data"]
+        if {"[lindex $att_data 0]" == "map"} then {
+            $new_surf set_att mask [lindex $att_data 1]
+        } elseif {"[lindex $att_data 0]" == "const"} then {
+            $new_surf set_att mask constant [lindex $att_data 1]
+        }
+    
+    
+        gets $file_hook att_data
+        $new_surf set_mask_mode $att_data
 
-	gets $file_hook att_data
-	$new_surf set_mask_mode $att_data
+        # transparency, shininess, emission
+        foreach j [list transp shin emi] {
+            gets $file_hook att_data
+            set att_data [split "$att_data"]
+            if {"[lindex $att_data 0]" == "map"} then {
+                $new_surf set_att $j [lindex $att_data 1]
+            } elseif {"[lindex $att_data 0]" == "const"} then {
+                $new_surf set_att $j constant [lindex $att_data 1]
+            }
+        }
 
-	# transparency, shininess, emission
-	foreach j [list transp shin emi] {
-		gets $file_hook att_data
-		set att_data [split "$att_data"]
-		if {"[lindex $att_data 0]" == "map"} then {
-		$new_surf set_att $j [lindex $att_data 1]
-		} elseif {"[lindex $att_data 0]" == "const"} then {
-		$new_surf set_att $j constant [lindex $att_data 1]
-		}
-	}
-
-	# wire color
-	gets $file_hook att_data
-	$new_surf set_wirecolor $att_data
-
-	# position
-	gets $file_hook att_data
-	set att_data [split "$att_data"]
-	$new_surf set_trans [lindex $att_data 0] [lindex $att_data 1] [lindex $att_data 2]
-
-	# grid , polygon resolution
-	gets $file_hook att_data
-	set wire_data [split $att_data]
-	gets $file_hook att_data
-	set poly_data [split $att_data]
-	$new_surf set_res both [lindex $poly_data 0] [lindex $poly_data 1] \
-		[lindex $wire_data 0] [lindex $wire_data 1]
-
-	# surface, shading style
-	gets $file_hook surf_mode
-	#Add hook for grid_mode and check for old style
-	#state files that do not include
-	gets $file_hook grid_mode
-	if {$grid_mode == "gouraud" || $grid_mode == "flat"} {
-		set shade_mode $grid_mode
-		set grid_mode "grid_surf"
-	} else {
-	gets $file_hook shade_mode
-	}
-	$new_surf set_drawmode $surf_mode $grid_mode $shade_mode
+        # wire color
+        gets $file_hook att_data
+        $new_surf set_wirecolor $att_data
+    
+        # position
+        gets $file_hook att_data
+        set att_data [split "$att_data"]
+        $new_surf set_trans [lindex $att_data 0] [lindex $att_data 1] [lindex $att_data 2]
+    
+        # grid , polygon resolution
+        gets $file_hook att_data
+        set wire_data [split $att_data]
+        gets $file_hook att_data
+        set poly_data [split $att_data]
+        $new_surf set_res both [lindex $poly_data 0] [lindex $poly_data 1] \
+            [lindex $wire_data 0] [lindex $wire_data 1]
+    
+        # surface, shading style
+        gets $file_hook surf_mode
+        #Add hook for grid_mode and check for old style
+        #state files that do not include
+        gets $file_hook grid_mode
+        if {$grid_mode == "gouraud" || $grid_mode == "flat"} {
+            set shade_mode $grid_mode
+            set grid_mode "grid_surf"
+        } else {
+            gets $file_hook shade_mode
+        }
+    	$new_surf set_drawmode $surf_mode $grid_mode $shade_mode
 	}
 
 	# Update the interface

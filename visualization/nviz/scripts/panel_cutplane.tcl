@@ -237,42 +237,42 @@ proc Nviz_cutplane_reset {} {
 # Save routine for saving state of Nviz
 proc Nviz_cutplane_save { file_hook } {
     global Nv_
-return
+#return
+    puts $file_hook ">>>start cutplane"
     # Collect and save all the attributes from the six cutplanes
     # Plus save which one happens to be active
     puts $file_hook "$Nv_(CurrCutPlane)"
     puts $file_hook "$Nv_(CutPlaneFence)"
 
     for {set i 0} {$i < 6} {incr i} {
-	puts $file_hook "[Ncutplane$i state]"
-	puts $file_hook "[Ncutplane$i get_rot]"
-	puts $file_hook "[Ncutplane$i get_trans]"
+        puts $file_hook "[Ncutplane$i state]"
+        puts $file_hook "[Ncutplane$i get_rot]"
+        puts $file_hook "[Ncutplane$i get_trans]"
     }
-
 }
 
 # Load routine for loading state of Nviz
 proc Nviz_cutplane_load { file_hook } {
     global Nv_
-return
+#return
     gets $file_hook "$Nv_(CurrCutPlane)"
     gets $file_hook "$Nv_(CutPlaneFence)"
 
     for {set i 0} {$i < 6} {incr i} {
-	gets $file_hook cstate
-	if {"$cstate" == "on"} then {
-	    Ncutplane$i on
-	} else {
-	    Ncutplane$i off
-	}
-
-	gets $file_hook crot
-	set crot [split "$crot"]
-	Ncutplane$i set_rot [lindex $crot 0] [lindex $crot 1] [lindex $crot 2]
-
-	gets $file_hook ctrans
-	set ctrans [split "$ctrans"]
-	Ncutplane$i set_trans [lindex $ctrans 0] [lindex $ctrans 1] [lindex $ctrans 2]
+        gets $file_hook cstate
+        if {"$cstate" == "on"} then {
+            Ncutplane$i on
+        } else {
+            Ncutplane$i off
+        }
+    
+        gets $file_hook crot
+        set crot [split "$crot"]
+        Ncutplane$i set_rot [lindex $crot 0] [lindex $crot 1] [lindex $crot 2]
+    
+        gets $file_hook ctrans
+        set ctrans [split "$ctrans"]
+        Ncutplane$i set_trans [lindex $ctrans 0] [lindex $ctrans 1] [lindex $ctrans 2]
     }
 
     cutplaneSetPlane $Nv_(CutPlaneBase) $Nv_(CurrCutPlane)

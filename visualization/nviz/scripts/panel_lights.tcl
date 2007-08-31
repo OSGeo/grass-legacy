@@ -128,11 +128,12 @@ proc Nviz_lights_save {file_hook} {
 
     # Fairly straightforward, save the attributes of the two lights
     # plus the status of the panel
+    puts $file_hook ">>>start lights"
     for {set i 1} {$i < 3} {incr i} {
-	puts $file_hook "[$Light($i) get_ambient]"
-	puts $file_hook "[$Light($i) get_bright]"
-	puts $file_hook "[$Light($i) get_color]"
-	puts $file_hook "[$Light($i) get_position]"
+        puts $file_hook "[$Light($i) get_ambient]"
+        puts $file_hook "[$Light($i) get_bright]"
+        puts $file_hook "[$Light($i) get_color]"
+        puts $file_hook "[$Light($i) get_position]"
     }
     
     puts $file_hook "$Nv_(FollowView)"

@@ -131,6 +131,9 @@ foreach i $user_path {
 	}
 }
 
+# panels that have code to save status to state file
+set Nv_(panelstate) [list main  surf vect site vol cutplane color lights]
+
 set Nv_(config) [list]
 foreach i $user_path {
 	set index $i/configIndex
@@ -819,41 +822,54 @@ proc load_state { dummy	 } {
 
 #Procedure to load NVIZ HTML pages
 proc nviz_browse { URL dummy } {
-global env
-
-exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL &
+    global env
+    
+    exec -- $env(GRASS_HTML_BROWSER) file://$env(GISBASE)/docs/html/nviz/$URL &
 }
 
 proc load_state_aux { new_file} {
 	global Nv_
 
 	if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
-	display_error "While opening file: $error_code"
-	return
+        display_error "While opening file: $error_code"
+        return
 	}
 
 	# Close all panels fist
 	Nv_closeAllPanels
 
-	# First line before panel data contains the name of the panel which
-	# saved the data.  Use this name to build the command which will
-	# read in the data and call the appropriate routine.
+	# First line before panel data is marked by ">>>start [name]", where 
+	# [name] is the name of the panel which saved the data.  
+	# Use this name to build the command which will load the state. Then
+	# continue to read the state file until the next section of panel data.
+
 	while {[gets $file_hook i] != -1} {
-	set cmd_name "Nviz_$i"
-	append cmd_name "_load"
-	if {[catch {$cmd_name $file_hook} error_code] != 0} then {
-		puts "Diagnostic: $error_code --  Load procedure for panel $i may not be defined"
+	    if {[lindex [split $i] 0] == ">>>start"} {
+	        set paneltype [lindex [split $i] 1]
+	        set cmd_name "Nviz_$paneltype"
+            append cmd_name "_load"
+            if {[catch {$cmd_name $file_hook} error_code] != 0} then {
+                puts "Diagnostic: $error_code --  Load procedure for panel $i may not be defined"
+            }        
+        } else {
+            continue
+        }
 	}
-	}
+
 
 	# Finally, close the file and exit
 	close $file_hook
 
 	# Go through each of the panels one at a time and force them to open
 	# This should update them all so they display correctly
+	foreach i $Nv_(config) {
+        Nv_openPanel $i
+        update
+	}
+
 	foreach i $Nv_(panels) {
-	Nv_openPanel $i
-	update
+        Nv_openPanel $i
+        update
 	}
 
 	Nv_closeAllPanels
@@ -877,19 +893,33 @@ proc reset_Nviz { dummy } {
 	# file hook so that each panel can write out its state
 	set tmp_list $Nv_(panels)
 	lappend tmp_list main
-	foreach i $tmp_list {
-	set cmd_name "Nviz_$i"
-	append cmd_name "_reset"
-	if {[catch {$cmd_name} error_code] != 0} then {
-		puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+	foreach i $Nv_(panels) {
+        set cmd_name "Nviz_$i"
+        append cmd_name "_reset"
+        if {[catch {$cmd_name} error_code] != 0} then {
+            puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+        }
 	}
+
+	foreach i $Nv_(config) {
+        set cmd_name "Nviz_$i"
+        append cmd_name "_reset"
+        if {[catch {$cmd_name} error_code] != 0} then {
+            puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+        }
 	}
+
 
 	# Go through each of the panels one at a time and force them to open
 	# This should update them all so they display correctly
 	foreach i $Nv_(panels) {
-	Nv_openPanel $i
-	update
+        Nv_openPanel $i
+        update
+	}
+
+	foreach i $Nv_(config) {
+        Nv_openPanel $i
+        update
 	}
 
 	Nv_closeAllPanels
@@ -909,18 +939,31 @@ proc reset_nviz_aux { } {
 	set tmp_list $Nv_(panels)
 	lappend tmp_list main
 	foreach i $tmp_list {
-	set cmd_name "Nviz_$i"
-	append cmd_name "_reset"
-	if {[catch {$cmd_name} error_code] != 0} then {
-		puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+        set cmd_name "Nviz_$i"
+        append cmd_name "_reset"
+        if {[catch {$cmd_name} error_code] != 0} then {
+            puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+        }
 	}
+
+	foreach i $Nv_(config) {
+        set cmd_name "Nviz_$i"
+        append cmd_name "_reset"
+        if {[catch {$cmd_name} error_code] != 0} then {
+            puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+        }
 	}
 
 	# Go through each of the panels one at a time and force them to open
 	# This should update them all so they display correctly
 	foreach i $Nv_(panels) {
-	Nv_openPanel $i
-	update
+        Nv_openPanel $i
+        update
+	}
+
+	foreach i $Nv_(config) {
+        Nv_openPanel $i
+        update
 	}
 
 	Nv_closeAllPanels
@@ -938,12 +981,12 @@ proc save_state { dummy } {
 
 	# append ".nviz" extension to the filename if it doesn't already have one
 	if { [string compare [file extension $new_file] ".nviz"] != 0 } then {
-	append new_file ".nviz"
+        append new_file ".nviz"
 	}
 
 	if {[catch {set file_hook [open $new_file w]} error_code] != 0} then {
-	display_error "While opening file: $error_code"
-	return
+        display_error "While opening file: $error_code"
+        return
 	}
 
 	# Show that we are busy
@@ -951,15 +994,12 @@ proc save_state { dummy } {
 
 	# Now call each of the panels one at a time and pass the
 	# file hook so that each panel can write out its state
-	set tmp_list $Nv_(panels)
-	lappend tmp_list main
-	foreach i $tmp_list {
-	puts $file_hook "$i"
-	set cmd_name "Nviz_$i"
-	append cmd_name "_save"
-	if {[catch {$cmd_name $file_hook} error_code] != 0} then {
-		puts "Diagnostic: $error_code --  Save procedure for panel $i may not be defined"
-	}
+	foreach i $Nv_(panelstate) {
+        set cmd_name "Nviz_$i"
+        append cmd_name "_save"
+        if {[catch {$cmd_name $file_hook} error_code] != 0} then {
+            puts "Diagnostic: $error_code --  Save procedure for panel $i may not be defined"
+        }
 	}
 
 	# Finally, close the file and exit
