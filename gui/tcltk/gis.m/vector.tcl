@@ -191,7 +191,9 @@ proc GmVector::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -252,7 +254,7 @@ proc GmVector::show_data { id } {
 	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
 		set vdblist [split $vectdb " "]
@@ -570,7 +572,7 @@ proc GmVector::vecttype { vect } {
 	if {![catch {open "|v.info map=$vect 2> $devnull" r} rv]} {
 		set vinfo [read $rv]
 		if {[catch {close $rv} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
 		if { $vinfo == "" } {return}
@@ -816,7 +818,9 @@ proc GmVector::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

@@ -105,10 +105,10 @@ proc putGRASSRC { filename } {
 		}
 	}
 
-        if { [ catch { close $ofp } err ] } {
+        if { [ catch { close $ofp } error ] } {
                 DialogGen .wrnDlg [G_msg "WARNING: can not save"] warning \
                         [format [G_msg "Warning: unable to save data to <%s> file.\nError message: %s"] \
-                        $file $msg] \
+                        $filename $error] \
                 0 OK;
       }
 }
@@ -383,9 +383,9 @@ proc gisSetWindow {} {
             	} else {
                     cdir $database
                     cdir $location
-                    if { [ catch { file mkdir $mymapset } err ] } {
+                    if { [ catch { file mkdir $mymapset } error ] } {
                           DialogGen .wrnDlg [G_msg "WARNING: unable to mkdir"] warning \
-                                      [format [G_msg "Warning: Unable to create directory for new mapset. \nError message: %s"] $err] \
+                                      [format [G_msg "Warning: Unable to create directory for new mapset. \nError message: %s"] $error] \
                           0 OK;
                     } else {
                     #generate default DB definition, create dbf subdirectory:
@@ -396,7 +396,7 @@ proc gisSetWindow {} {
                     catch {file attributes $mymapset/VAR -permissions u+rw,go+r}
                     file mkdir $mymapset/dbf
                     #copy over the WIND definition:
-                                    catch {file copy $mymapset/../PERMANENT/DEFAULT_WIND $mymapset/WIND}
+                    catch {file copy $mymapset/../PERMANENT/DEFAULT_WIND $mymapset/WIND}
                     catch {file attributes $mymapset/WIND -permissions u+rw,go+r}
                     .frame0.frameMS.listbox insert end $mymapset
                     selFromList .frame0.frameMS.listbox $mymapset

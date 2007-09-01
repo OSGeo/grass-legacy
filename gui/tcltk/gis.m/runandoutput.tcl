@@ -73,7 +73,9 @@ proc run_ui {cmd} {
     set code ""
 
 	if {[catch {set code [exec -- $program --tcltk 2> $devnull]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Execution error: $error"]
+		return
 	}
 
     set path .dialog$dlg
@@ -93,7 +95,11 @@ proc run_ui {cmd} {
 #################################################
 
 proc run_disabled {gronsole button cmd} {
-	catch {$button configure -state disabled}
+	if {[catch {$button configure -state disabled} error]} {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Execution error: $error"]
+		return
+	}
 
 	$gronsole run $cmd {running} "catch {$button configure -state active}"
 }
@@ -158,7 +164,9 @@ proc execute {cmd} {
 proc spawn {cmd args} {
 
 	if {[catch {eval [list exec -- $cmd] $args &} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Execution error: $error"]
+		return
 	}
 
 }
@@ -188,7 +196,9 @@ proc run {cmd args} {
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
 	
 	if {[catch {eval [list exec -- $cmd] $args >& $devnull} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Execution error: $error"]
+		return
 	}
 
 	
@@ -220,12 +230,16 @@ proc term {cmd args} {
 	
 	if { $mingw == "1" } {
 		if {[catch {eval [list exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd] $args &} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+				-message [G_msg "Execution error: $error"]
+			return
 		}
 	   
 	} else {
 		if {[catch {eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+				-message [G_msg "Execution error: $error"]
+			return
 		}
 	   
 	}
@@ -237,7 +251,6 @@ proc term {cmd args} {
 
 proc guarantee_xmon {} {
 	if {![catch {open "|d.mon -L" r} input]} {
-		puts "loop 1"
 		while {[gets $input line] >= 0 } {
 			if {[regexp -nocase {(x[0-9]+).*not running} $line dummy monitor]} {
 				# $monnum is the monitor number
@@ -248,7 +261,9 @@ proc guarantee_xmon {} {
 
 	}
 	if {[catch {close $input} error]} {
-		puts "$error"
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "d.mon error: problem launching xmon, $error"]
+		return
 	}
 
 	set xmon  [lindex $xmonlist 0]

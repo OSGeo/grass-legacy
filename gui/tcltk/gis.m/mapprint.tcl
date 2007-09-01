@@ -93,7 +93,7 @@ proc psprint::init { } {
 		set cmd "gs"
 	}
 
-	if {![catch {set input [exec $cmd -help]}]} {
+	if {![catch {set input [exec $cmd -help]} error]} {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
 		set printmode "lpr"
@@ -104,6 +104,8 @@ proc psprint::init { } {
 		set gsdevices "none available"
 		set gsstate "disabled"
 		set printmode "eps"
+		tk_messageBox -icon error -type ok -title [G_msg "Error"] \
+			-message [G_msg "Ghostscript not available: $error"]
 	}
 }	
 
@@ -187,14 +189,18 @@ proc psprint::init_tmpfiles { } {
     # get temporary file for postscript printing
     set pid [ pid ]
 	if {[catch {set tmppsfile [ exec g.tempfile pid=$pid ]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 
     append tmppsfile ".ps"
     set pid [ pid ]
     
 	if {[catch {set tmppngfile [ exec g.tempfile pid=$pid ]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
     append tmppngfile ".png"
 }
@@ -426,15 +432,15 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		if {[catch {close $printmap} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
 		if {[catch {exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
 		if {[catch {exec lpr $tmppngfile } error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
     }
@@ -457,11 +463,11 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		if {[catch {close $printmap} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 
 		if {[catch {exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 		 
 	}
@@ -484,10 +490,10 @@ proc psprint::print { cv } {
 		}		
 		after 500
 		if {[catch {close $printmap} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 		if {[catch {exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 		 
 	}

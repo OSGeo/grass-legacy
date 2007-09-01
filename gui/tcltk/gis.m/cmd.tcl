@@ -72,7 +72,9 @@ proc GmCmd::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -203,7 +205,9 @@ proc GmCmd::duplicate { tree parent node id} {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

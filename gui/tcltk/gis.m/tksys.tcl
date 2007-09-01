@@ -77,7 +77,7 @@ proc sys_getinfo { } {
     if { [string compare "$sys(user)" "unknown"] == 0 && \
 	 [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } {
 		if {[catch {set sys(user) [exec whoami]} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
     }
 
@@ -99,7 +99,7 @@ proc sys_getinfo { } {
 
 	if { [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } { 
 		if {[catch {set tmp [exec uname -srm]} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
 		regsub -all { } $tmp {-} tmp 
 		set sys(uname) $tmp
@@ -210,14 +210,13 @@ proc sys_save { } {
     if {[string length $file] == 0 } {
 		return
     }
-    if [catch {open $file w} out] {
-		tk_messageBox -type ok -message $out
-		} else {
+    if [catch {open $file w} error] {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	} else {
 		sys_putinfo $out
 		if {[catch {close $out} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 		}
-
     }
 
     return

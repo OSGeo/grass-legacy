@@ -91,6 +91,6 @@ proc Gm::helptext {title textopts tagopts message} {
 #
 
 if {[catch {set text [exec g.version -c]} error]} {
-    puts $error
+    tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 }
 Gm::helptext {About GRASS} {-width 75} {-justify left} $text
