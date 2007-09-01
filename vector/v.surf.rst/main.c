@@ -749,7 +749,7 @@ int main(int argc, char *argv[])
 
     if (overfile != NULL) {
 	if (0 > Vect_open_new(&OverMap, overfile, 0)) {
-	    sprintf(msg, _("Unalbe to open vector map <%s>"), overfile);
+	    sprintf(msg, _("Unable to open vector map <%s>"), overfile);
 	    clean_fatal_error(msg);
 	}
 	Vect_hist_command(&OverMap);
