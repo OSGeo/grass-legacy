@@ -45,6 +45,12 @@ of the PNG driver.
      if set to "TRUE", the image file will be written after each 
      operation (i.e. whenever a client disconnects), rather than
      only being written out when the driver terminates.<BR><BR>
+  <LI><B>GRASS_PNG_READ</B><BR>
+     if "TRUE", the PNG driver will initialize the image from
+     the contents of $GRASS_PNGFILE.<BR><BR>
+  <LI><B>GRASS_PNG_MAPPED</B><BR>
+     if "TRUE", the PNG driver will map $GRASS_PNGFILE as its framebuffer,
+     rather than using memory. This only works with BMP files.<BR><BR>
   <LI><B>GRASS_RENDER_IMMEDIATE=[TRUE|FALSE]</B><BR>
      tells the raster library to use its built-in PNG driver rather
      than connecting to an external monitor process using sockets. If
