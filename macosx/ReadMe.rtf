@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-7-14\
+\f2\i \cf0 2007-9-1\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -65,10 +65,6 @@ To build a Mac OS X application, add this to your configure options:\
 
 \f1\b0 \cf0 \
 This builds GRASS as a Mac OS X application, more or less.\
-\
-NOTE: this GRASS.app probably 
-\f2\i won't
-\f1\i0  run from a case-sensitive file system, such as a case-sensitive HFS+.  The AppleScript startup puts its script in a folder named \ul Scripts\ulnone , while the GRASS scripts folder is \ul scripts\ulnone .  'scripts' is hardwired into init.sh, and I didn't feel like patching it since I figured someone using a case-sensitive file system would be rare (and it's generally not recommended for running OSX apps from).  'Scripts' is hardwired into the AppleScript loading mechanism of the System.\
 \
 The startup wrapper is a simple AppleScript that fires up a custom grass.sh (instead of the standard grass6x) and quits, leaving grass.sh running in a new Terminal window.  The custom grass.sh takes care of some default and required environment settings (so the user doesn't have to fiddle with .bash_profile), makes sure X11 in running, then starts init.sh.\
 \
@@ -122,7 +118,7 @@ The GRASS build system is very friendly to a Universal build (unlike libtool-bas
 \f1\i0   First, a couple things to check:\
 \
 \'a5 The Universal SDK.  
-\f2\i This is only needed when building on OSX 10.4 PPC - the Intel system is all Universal, and so is/will be 10.5 for both architechtures.
+\f2\i This is only needed when building on OSX 10.4 PPC - the Intel system is all Universal, and so is/will be 10.5 for both architectures.
 \f1\i0   Using the SDK forces GCC to use an alternate root for everything, so if a dependency is not in the SDK (/usr/local is NOT in the SDK), you will get configure, compile and link errors about missing stuff.  To fix this, create symlinks in the SDK to where you have your extra dependencies.\
 \
 For example, /usr/local:\
@@ -234,8 +230,8 @@ If there are still problems building NVIZ, add this to configure:\
 After running make, 
 \f3\fs20 make bindist
 \f1\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  There 
-\f0\b will
-\f1\b0  be some 
+\f0\b will be
+\f1\b0  some 
 \f0\b non-fatal errors
 \f1\b0  - 
 \f2\i this is normal
@@ -265,7 +261,7 @@ There is NO need to bundle
 \f2\i everything
 \f1\i0 .  Bundling readily available libraries and programs installed in standard locations is not necessary.  Some things you might want to bundle include:\
 \
-- GPSBabel\
+- GPSBabel (CLI)\
 - NetPBM programs (just what is used in GRASS)\
 - ffmpeg libraries\
 - Postgres library (libpq)\
