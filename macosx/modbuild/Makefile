@@ -8,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 ifndef MACOSX_APP_NAME
 	MACOSX_APP_NAME = GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app
 endif
-MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/Resources
+MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/MacOS
 INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
 
 default: modbuild
@@ -34,12 +34,12 @@ modbuild: ReadMe.rtf
 	-e 's,@GRASS_VERSION_DATE@,$(GRASS_VERSION_DATE),g' \
 	-e 's#^ARCH_INC[[:space:]].*#& -I$$(GISBASE)/include#g' \
 	-e 's#^ARCH_LIBPATH.*#& -L$$(GISBASE)/lib#g' \
-	-e 's#^GISBASE.*#GISBASE = $$(GRASS_APP)/Contents/Resources#g' \
+	-e 's#^GISBASE.*#GISBASE = $$(GRASS_APP)/Contents/MacOS#g' \
 	$(MODULE_TOPDIR)/include/Make/Grass.make.in > $(ARCH_DISTDIR)/modbuild/include/Make/Grass.make
 	@# until I figure out how to get sed to replace with multiple lines in a
 	@# makefile, GRASS_APP required for modbuild, ie no default to /Applications
 	@#-e 's#^GISBASE.*#ifdef GRASS_APP\
-	@#GISBASE = $$(GRASS_APP)/Contents/Resources\
+	@#GISBASE = $$(GRASS_APP)/Contents/MacOS\
 	@#else\
 	@#GISBASE = $(INST_DIR_MACOSX)\
 	@#endif#g'

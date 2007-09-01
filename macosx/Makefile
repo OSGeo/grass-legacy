@@ -3,7 +3,7 @@ MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 MACOSX_APP_NAME = GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app
-MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/Resources
+MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/MacOS
 INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
 MACOSX_SUPPDIR = /Library/GRASS/${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
 MACOSX_BUNDLE_PREFIX = ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR}
@@ -56,6 +56,10 @@ real-install-macosx:
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${MACOSX_SUPPDIR} ; tar xBf - ) 2>/dev/null
 	@# help file package - in the future files will go in /Library/Documentation/Help
 	${LN_DIR} "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
+	# TEMPORARY
+	-tar cBf - wx | (cd ${INST_DIR}/etc ; tar xBf - )
+	-mv -f ${INST_DIR}/etc/wx/wxgrass ${INST_DIR}/scripts/
+	-mv -f ${INST_DIR}/etc/wx/scripts/* ${INST_DIR}/scripts/
 
 # create a packagemaker installer package.
 # pretty much the same as install, but needs intermediate install location
@@ -81,6 +85,10 @@ bindist-macosx:
 	-chmod -R a+rX dist/${MACOSX_APPDIR} 2>/dev/null
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${MACOSX_BUNDLE_PREFIX}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL_BIN} ${GRASS_HOME}/gem/gem6 dist/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	# TEMPORARY
+	-tar cBf - wx | (cd ${MACOSX_BUNDLE_PREFIX}/etc ; tar xBf - )
+	-mv -f ${MACOSX_BUNDLE_PREFIX}/etc/wx/wxgrass ${MACOSX_BUNDLE_PREFIX}/scripts/
+	-mv -f ${MACOSX_BUNDLE_PREFIX}/etc/wx/scripts/* ${MACOSX_BUNDLE_PREFIX}/scripts/
 	@# extras to bundle
 	${MAKE} bundle-macosx
 	@# pkg resources
