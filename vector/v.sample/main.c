@@ -84,7 +84,7 @@ int main(int argc, char **argv)
 
     module = G_define_module();
     module->keywords = _("vector");
-    module->description = _("Sample a raster map at vector point locations");
+    module->description = _("Samples a raster map at vector point locations.");
 
     parm.input = G_define_standard_option(G_OPT_V_INPUT);
     parm.input->description = _("Vector map defining sample points");
@@ -241,7 +241,7 @@ int main(int argc, char **argv)
         if (ctype == DB_C_TYPE_INT) {
             ret = db_CatValArray_get_value_int(&cvarr, cat, &cval);
             if (ret != DB_OK)
-                G_warning(_("no record for cat = %d"), cat);
+                G_warning(_("No record for cat = %d"), cat);
 
             actual = cval;
         }
@@ -249,7 +249,7 @@ int main(int argc, char **argv)
         {
             ret = db_CatValArray_get_value_double(&cvarr, cat, &dval);
             if (ret != DB_OK)
-                G_warning(_("no record for cat = %d"), cat);
+                G_warning(_("No record for cat = %d"), cat);
 
             actual = dval;
         }

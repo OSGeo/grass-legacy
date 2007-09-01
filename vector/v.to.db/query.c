@@ -73,12 +73,12 @@ query (struct Map_info *Map )
     db_init_string (&value_string);
 
     if ( (Fi = Vect_get_field ( Map, options.qfield)) == NULL)
-	G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first"), options.qfield);
+	G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first."), options.qfield);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL )
-	G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
+	G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     
     /* Query the database for each category */
     G_message (_("Querying database... "));
@@ -97,7 +97,7 @@ query (struct Map_info *Map )
 	 * It would cause problems on server side and take long time. Postgres limit is 10000 */
 	if ( Values[i].cat == 0 && Values[i].nqcats > 1000 ) {
 	    G_warning (_("Query for category '0' (no category) was not executed because of too many "
-			 "(%d) query categories. All later reported values for cat 0 are not valid"), 
+			 "(%d) query categories. All later reported values for cat 0 are not valid."), 
 		Values[i].nqcats ); 
 	    continue;
 	}
@@ -136,7 +136,7 @@ query (struct Map_info *Map )
 		Values[i].null = 1;
 	    } else {
 		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-		    G_fatal_error(_("Cannot fetch record"));
+		    G_fatal_error(_("Unable to fetch record"));
 
 	        db_convert_column_value_to_string(column, &stmt);
 	        G_debug (4, "  value = %s", db_get_string(&stmt) );
