@@ -111,19 +111,25 @@ proc gronsole_history {cmdtext ci cmd} {
 
 proc command_window {where} {
 	global keycontrol
-
-	set cmdpane [frame $where.command]
-	set cmdwin [ScrolledWindow $where.win -relief sunken -borderwidth 2]
+	global bgcolor
+	set cmdpane [frame $where.command -bg $bgcolor]
+	set cmdwin [ScrolledWindow $where.win -relief flat -borderwidth 1]
 	set gronsole [Gronsole $where.gronsole -clickcmd "gronsole_history $cmdwin.text"]
-	set cmdtext [text $cmdwin.text -height 4 -width 80] 
+	set cmdtext [text $cmdwin.text -height 2 -width 80] 
 	$cmdwin setwidget $cmdtext
-	set runbutton [button $cmdpane.run -text [G_msg "Run"] -command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set run2button [button $cmdpane.run2 -text [G_msg "Run (Background)"] -command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
-	set runuibutton [button $cmdpane.runui -text [G_msg "Run UI"] -command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set runxterm [button $cmdpane.xterm -text [G_msg "Run in Xterm"] -command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
-	set outpane [frame $where.output]
-	set savebutton [button $outpane.save -text [G_msg "Save"] -command "$gronsole save"]
-	set clearbutton [button $outpane.clear -text [G_msg "Clear"] -command "$gronsole clear"]
+	set runbutton [button $cmdpane.run -text [G_msg "Run"] -width 14 -default active -bd 1 \
+		-command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
+	set run2button [button $cmdpane.run2 -text [G_msg "Run (background)"] -width 14 -bd 1 \
+		-command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
+	set runuibutton [button $cmdpane.runui -text [G_msg "Run (GUI)"] -width 14 -bd 1 \
+		-command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
+	set runxterm [button $cmdpane.xterm -text [G_msg "Run (in Xterm)"] -width 14 -bd 1 \
+		-command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
+	set outpane [frame $where.output -bg $bgcolor]
+	set savebutton [button $outpane.save -text [G_msg "Save"] -command "$gronsole save" \
+		-bd 1 -width 5]
+	set clearbutton [button $outpane.clear -text [G_msg "Clear"] -command "$gronsole clear" \
+		-bd 1 -width 5]
 
 	pack $runbutton $run2button $runuibutton $runxterm \
 		-side left -expand yes -padx 5 -pady 5
