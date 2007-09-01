@@ -45,7 +45,7 @@ end launched
 
 on launchgrass()
 	set grassLaunched to true
-	set grass_path to (posix path of (path to me as string)) & "Contents/Resources/"
+	set grass_path to (posix path of (path to me as string)) & "Contents/MacOS/"
 	set grass_startup to (quoted form of (grass_path & "grass.sh"))
 	set grassRun to grass_startup & grassGui & grassMap & "; exit"
 	

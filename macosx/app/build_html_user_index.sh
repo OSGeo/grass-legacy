@@ -21,11 +21,11 @@ GRASSVERSION=`cat "$GISBASE/etc/VERSIONNUMBER"`
 HTMLDIR="$HOME/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
 HTMLDIRG="/Library/GRASS/$GRASS_MMVER/Modules/docs/html"
 
-# $1 is current path to GRASS.app/Contents/Resources, defaults to /Applications
+# $1 is current path to GRASS.app/Contents/MacOS, defaults to /Applications
 if [ "$1" != "" ] ; then
 	GISBASE=$1
 else
-	GISBASE="/Applications/GRASS-$GRASS_MMVER.app/Contents/Resources"
+	GISBASE="/Applications/GRASS-$GRASS_MMVER.app/Contents/MacOS"
 fi
 
 write_html_header()

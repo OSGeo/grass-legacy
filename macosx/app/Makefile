@@ -39,32 +39,33 @@ macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh 
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS
 	$(CC) $(LDFLAGS) -o ${APPDIR}/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
 	-${MAKE_DIR_CMD} ${APPDIR}/Resources/Scripts
-	-${MAKE_DIR_CMD} ${APPDIR}/Resources/etc
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/scripts
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/etc
 	-${INSTALL_DATA} app.icns ${APPDIR}/Resources
 	-tar cBf - English.lproj --exclude CVS | (cd ${APPDIR}/Resources ; tar xBf - ) 2>/dev/null
 	-${INSTALL_DATA} $(OBJDIR)/Info.plist ${APPDIR}
 	-${INSTALL_DATA} PkgInfo ${APPDIR}
-	-${INSTALL_BIN} $(OBJDIR)/grass.sh ${APPDIR}/Resources
+	-${INSTALL_BIN} $(OBJDIR)/grass.sh ${APPDIR}/MacOS
 	-${INSTALL_DATA} $(OBJDIR)/GRASS.scpt ${APPDIR}/Resources/Scripts
-	-${INSTALL_BIN} build_html_user_index.sh ${APPDIR}/Resources/etc
-	-${INSTALL_BIN} build_gui_user_menu.sh ${APPDIR}/Resources/etc
+	-${INSTALL_BIN} build_html_user_index.sh ${APPDIR}/MacOS/etc
+	-${INSTALL_BIN} build_gui_user_menu.sh ${APPDIR}/MacOS/etc
 	@# TclTk embedding:
 ifdef OPENGL_X11
-	-${MAKE_DIR_CMD} ${APPDIR}/Resources/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh8.4 ${APPDIR}/Resources/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish8.4 ${APPDIR}/Resources/bin
-	-${MAKE_DIR_CMD} ${APPDIR}/Resources/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl8.4.dylib ${APPDIR}/Resources/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk8.4.dylib ${APPDIR}/Resources/lib
-	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl8.4 | (cd ${APPDIR}/Resources/lib ; tar xBf - ) 2>/dev/null
-	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk8.4 | (cd ${APPDIR}/Resources/lib ; tar xBf - ) 2>/dev/null
-	-${MAKE_DIR_CMD} ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tcl.h ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclDecls.h ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclPlatDecls.h ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tk.h ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkDecls.h ${APPDIR}/Resources/include
-	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkPlatDecls.h ${APPDIR}/Resources/include
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh8.4 ${APPDIR}/MacOS/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish8.4 ${APPDIR}/MacOS/bin
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/lib
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl8.4.dylib ${APPDIR}/MacOS/lib
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk8.4.dylib ${APPDIR}/MacOS/lib
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl8.4 | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk8.4 | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
+	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tcl.h ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclDecls.h ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclPlatDecls.h ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tk.h ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkDecls.h ${APPDIR}/MacOS/include
+	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tkPlatDecls.h ${APPDIR}/MacOS/include
 endif
 
 $(OBJDIR)/main.o: main.m
