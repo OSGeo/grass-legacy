@@ -1,101 +1,63 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<B>i.atcorr</B> does atmospheric corrections on an input raster. A detailed 
-description can be obtained at <a href=http://www.ltid.inpe.br/dsr/mauro/6s/index.html>
-http://www.ltid.inpe.br/dsr/mauro/6s/</a>. 
+<b>i.atcorr</b> performs atmospheric correction on the input raster using the
+6S algorithm (Second Simulation of Satellite Signal in the Solar Spectrum). A
+detailed algorithm description is available at
+<a href=http://www.ltid.inpe.br/dsr/mauro/6s/index.html>
+http://www.ltid.inpe.br/dsr/mauro/6s/</a>.
 
-<H3>Flags:</H3>
+<p>
+Current region settings are ignored. The region is adjusted to cover the input
+raster before the atmospheric correction is performed. This should not affect
+the user's current region settings.
 
-<DL>
+<p>
+Because using a continuous elevation <em>ialt</em> or visibility <em>ivis</em>
+map makes execution time much longer, it is advised to use categorized maps
+instead, in conjuction with flag <em>-o</em>. This flag tells
+<em>i.atcorr</em> to try and speedup calculations. However, this option under
+certain conditions can make execution time longer.
 
-<DT><B>-f</B>
+<p>
+If flag <em>-r</em> is used, the input data are treated as reflectance.
+Otherwise, the input data are treated as radiance values and are converted to
+reflectance at the <b>i.attcor</b> runtime. The output data are always
+reflectance.
 
-<DD>Force data to be output as FCELL or DCELL values. Default is CELL.
-Use this if output scale is chosen to be [0,1].
+<p>
+An example 6s parameters <em>icnd</em> file for <b>i.attcor</b>:
 
-<DT><B>-r</B>
-
-<DD>Input data converted to reflectance, otherwise data 
-will be treated as radiance values and will first be
-converted to reflectance before it is transformed. The output data
-is always reflectance values. 
-
-<DT><B>-a</B>
-
-<DD>Input raster is from an Landsat etm+ satellite image taken <EM>after July 1, 2000</EM>. The
-necesary conversions will be made. 
-
-<DT><B>-b</B>
-
-<DD>Input raster is from an etm+ satelite image taken <EM>before July 1, 2000</EM>. The
-necesary conversions will be made.
- 
-<DT><B>-o</B>
-<DD>Because using a continuous elevation or visibility map makes execution time much longer, it is advised to use categorized maps instead. This options tells <EM>i.atcorr</EM> to try and speedup calculations. It is applicable if only one of the two kinds are maps are used and not the other. NOTE: this option under certain conditions can make execution time longer.
-</DL>
- 
-
-<H3>Parameters:</H3>
-
-<DL>
-
-<DT><B>iimg=</B><EM>name</EM> 
-
-<DD>Name of the input raster to do the atmospheric correction on. 
-The input raster should contain values with in the range specified.
-
-<DT><B>icnd=</B><EM>name</EM> 
-
-<DD>Name of the ASCII file that contains input conditions used in the calculation.
-<br>Input conditions file format are explained at the end of this document (After AUTHORS).<br>
-
-<DT><B>oimg=</B><EM>name</EM> 
-
-<DD>Output raster file name. The generated output raster will be scaled to the
-values specified by the oscl field.
-
-<DT><B>ialt=</B><EM>name</EM> 
-
-<DD>Name of a raster that contains elevation data to be used in the calculation.
-This will cause the calculation to take significantly longer. The elevation values
-should be in km.
-
-<DT><B>ivis=</B><EM>name</EM> 
-
-<DD>Name of a raster that contains visibility data to be used in the calculation.
-This will cause the calculation to take significantly longer. The visibility values
-should be in km.
-
-<DT><B>iscl=</B><EM>input scale range</EM> 
-
-<DD>Range to which data is scaled. By default this range is [0,255] since data 
-used to be read from .RAW files containing unsigned chars.
- 
-<DT><B>oscl=</B><EM>output scale range</EM> 
-
-<DD>Range to which output data will be scaled. The default is [0,255] to match
-tihs input default. 
-
-</DL>
-
-<H2>NOTES</H2>
-
-<EM>i.atcorr</EM> ignores the current region setting and adjusts the region
-to the whole image before the atmospheric corrections are made. This should
-not affect the user's region setting.
-
-
-Here is an example 6s file that runs this GRASS GIS version:<br>
+<p>
 <div class="code"><pre>
-8                            (Landsat ETM+ geometrical conditions)
-2 19 13.00  -47.410 -20.234  (month,day,hh.ddd,long.,lat.) (hh.ddd=the decimal hour in universal time)
-1                            (tropical atmospheric mode)
-1                            (continental aerosols model)
-15                           (visibility in km (aerosol model concentration)
--.600                        (target at 600 m above sea level)
--1000                        (sensor on board of satellite)
-64                           (fourth band of ETM+ Landsat 7)
+8                            - geometrical conditions=Landsat ETM+
+2 19 13.00 -47.410 -20.234   - month day hh.ddd longitude lattitude ("hh.ddd" is a decimal hour GMT)
+1                            - atmospheric mode=tropical
+1                            - aerosols model=continental
+15                           - visibility [km] (aerosol model concentration)
+-.600                        - target at 600m above sea level
+-1000                        - sensor on board a satellite
+64                           - 4th band of ETM+ Landsat 7
 </pre></div>
+
+<font color="red">
+<h2>REMAINING DOCUMENTATION ISSUES</h2>
+1. Using the target elevation and visibility parameters in the <em>icnd</em>
+file overrides <em>ialt</em> and <em>ivis</em> input rasters. It is not clear
+what to do to force <b>i.attcor</b> to use the rasters instead though.
+<p>
+2. The "example 6s parameters file" explains that "-.600" in line 6 means
+"target at 600 m ASL". However, in the section E of "6S CODE PARAMETER CHOICES"
+it reads: "xps <=0. means the target is at the sea level". This is contrary.
+<p>
+3. In section E, I'm not sure if the "-100< xpp <0" shouldn't actually be
+"-1000< xpp <0". ?
+<p>
+4. It is not explained what is the "iaer" parameter that section D refers to.
+<p>
+5. Section D's "Aerosol model concentration" title could use a better wording I
+suppose. The current one seems to mean "the concentration of the model of the
+aerosol". Should it be ""Aerosol concentration model"?
+</font>
 
 <H2>AUTHORS</H2>
 
@@ -109,7 +71,7 @@ http://www.cs.sun.ac.za/~caz/index.html
 <p> Clean-up and port to GRASS GIS 6.3-cvs, 15 December 2006 <br>
     Yann Chemin ychemin_AT_gmail.com
 
-<br>
+<p>
 <a href="http://www.star.ait.ac.th/~yann/6s/6smanv2.0_P1.pdf">6s manual (part 1)</a><br>
 <a href="http://www.star.ait.ac.th/~yann/6s/6smanv2.0_P2.pdf">6s manual (part 2)</a><br>
 <a href="http://www.star.ait.ac.th/~yann/6s/6smanv2.0_P3.pdf">6s manual (part 3)</a><br>
@@ -122,82 +84,72 @@ http://www.ltid.inpe.br/dsr/mauro/6s/index.html
     the solar spectrum, 6S: An overview., IEEE Trans. Geosc. 
     and Remote Sens. 35(3):675-686. <br>
 http://loasys.univ-lille1.fr/informatique/sixs_gb.html
-<p><i>Last changed: $Date$</i>
 
 <br><br>
 <H2>6S CODE PARAMETER CHOICES</H2>
-<h3>A. Geometrical conditions:</h3>
-<table BORDER WIDTH="100%" >
+
+<br><h3>A. Geometrical conditions:</h3>
+
+<table BORDER WIDTH=AUTO CELLPADDING=3>
+
 <tr>
 <td>Code</td>
-
 <td>Description</td>
-
-<td>Particulars</td>
+<td>Details</td>
 </tr>
 
 <tr>
 <td>1</td>
-
-<td>&nbsp;<b>meteosat</b> observation&nbsp;</td>
-
-<td>enter month,day,decimal hour (universal time-hh.ddd)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<td><b>meteosat</b> observation</td>
+<td>enter month,day,decimal hour (universal time-hh.ddd)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 n. of column,n. of line.(full scale 5000*2500)&nbsp;</td>
 </tr>
 
 <tr>
 <td>2</td>
-
-<td><b>&nbsp;goes east </b>observation&nbsp;</td>
-
-<td>enter month,day,decimal hour (universal time-hh.ddd)&nbsp;
+<td><b>goes east </b>observation</td>
+<td>enter month,day,decimal hour (universal time-hh.ddd)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 n. of column,n. of line.(full scale 17000*12000)c</td>
 </tr>
 
 <tr>
 <td>3</td>
-
-<td><b>goes west</b> observation&nbsp;</td>
-
-<td>enter month,day,decimal hour (universal time-hh.ddd)&nbsp;
+<td><b>goes west</b> observation</td>
+<td>enter month,day,decimal hour (universal time-hh.ddd)
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 n. of column,n. of line.(full scale 17000*12000)</td>
 </tr>
 
 <tr>
 <td>4</td>
-
-<td><b>avhrr ( PM</b> noaa )&nbsp;</td>
-
-<td>enter month,day,decimal hour (universal time-hh.ddd)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-n. of column(1-2048),xlonan,hna&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-give long.(xlonan) and overpass hour (hna) at&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-the ascendant node at equator&nbsp;</td>
+<td><b>avhrr</b> (PM noaa)</td>
+<td>enter month,day,decimal hour (universal time-hh.ddd)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+n. of column(1-2048),xlonan,hna
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+give long.(xlonan) and overpass hour (hna) at
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the ascendant node at equator</td>
 </tr>
 
 <tr>
 <td>5</td>
-
-<td><b>avhrr ( AM</b> noaa )</td>
-
-<td>enter month,day,decimal hour (universal time-hh.ddd)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-n. of column(1-2048),xlonan,hna&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-give long.(xlonan) and overpass hour (hna) at&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-the ascendant node at equator&nbsp;</td>
+<td><b>avhrr</b> (AM noaa)</td>
+<td>enter month,day,decimal hour (universal time-hh.ddd)
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+n. of column(1-2048),xlonan,hna
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+give long.(xlonan) and overpass hour (hna) at
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the ascendant node at equator</td>
 </tr>
 
 <tr>
 <td>6</td>
 
-<td><b>hrv&nbsp;&nbsp; ( spot )</b></td>
+<td><b>hrv</b> (spot)</td>
 
 <td>enter month,day,hh.ddd,long.,lat. *</td>
 </tr>
@@ -205,7 +157,7 @@ the ascendant node at equator&nbsp;</td>
 <tr>
 <td>7</td>
 
-<td><b>tm&nbsp;&nbsp;&nbsp; ( landsat )</b></td>
+<td><b>tm</b> (landsat)</td>
 
 <td>enter month,day,hh.ddd,long.,lat. *</td>
 </tr>
@@ -213,217 +165,171 @@ the ascendant node at equator&nbsp;</td>
 <tr>
 <td>8</td>
 
-<td><b>etm+&nbsp; ( landsat7)</b></td>
+<td><b>etm+</b> (landsat7)</td>
 
 <td>enter month,day,hh.ddd,long.,lat. *</td>
 </tr>
 </table>
 
-<blockquote>
-<blockquote>* Note:&nbsp;&nbsp; <i>for hrv, tm and etm+</i> experiments, long.
-and lat. are the coordinates of the scene center. Lat. must be > 0 for
-north lat., &lt; 0 for south lat. Long. must be > 0 for east long., &lt;0
-for west long</blockquote>
+<blockquote>* NOTE: for hrv, tm and etm+ experiments, longitude and lattitude
+are the coordinates of the scene center. Lattitude must be >0 for northern
+hemisphere and &lt;0 for southern. Longitude must be >0 for eastern hemisphere
+and &lt;0 for western.</blockquote>
 </blockquote>
-<br><br>
-<h3>B. Atmospheric model</h3>
-<table BORDER WIDTH="100%" >
+
+<br><h3>B. Atmospheric model</h3>
+
+<table BORDER WIDTH=AUTO CELLPADDING=3>
+
 <tr>
 <td>Code</td>
-
 <td>Meaning</td>
 </tr>
 
 <tr>
 <td>0</td>
-
 <td>no gaseous absorption</td>
 </tr>
 
 <tr>
 <td>1</td>
-
-<td>&nbsp;tropical</td>
+<td>tropical</td>
 </tr>
 
 <tr>
 <td>2</td>
-
 <td>midlatitude summer</td>
 </tr>
 
 <tr>
 <td>3</td>
-
-<td>midlatitude winter&nbsp;</td>
+<td>midlatitude winter</td>
 </tr>
 
 <tr>
 <td>4</td>
-
 <td>subarctic summer</td>
 </tr>
 
 <tr>
 <td>5</td>
-
 <td>subarctic winter</td>
 </tr>
 
 <tr>
 <td>6</td>
-
-<td>us standard 62&nbsp;</td>
+<td>us standard 62</td>
 </tr>
 
 <tr>
 <td>7</td>
-
-<td>define your own atmospheric model
-<br>user profile&nbsp; (radiosonde data on 34 levels)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-enter altitude&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (&nbsp; in km )&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-pressure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (&nbsp; in mb )&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-temperature&nbsp;&nbsp;&nbsp; (&nbsp; in k&nbsp; )&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-h2o density&nbsp;&nbsp;&nbsp; (in&nbsp; g/m3)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-o3&nbsp; density&nbsp;&nbsp;&nbsp; (in&nbsp; g/m3)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for example,
-altitudes are&nbsp; from&nbsp; 0 to 25km step of 1km&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-from 25 to 50km step of 5km&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-and two values at 70km and 100km&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-so you have 34*5 values to input.</td>
+<td>Define your own atmospheric model as a set of the following 5 parameters
+per each measurement:<br>
+<br>altitude [km]
+<br>pressure [mb]
+<br>temperature [k]
+<br>h2o density [g/m3]
+<br>o3 density [g/m3]<br>
+<br>For example: there is one radiosonde measurement for each altitude of
+0-25km at a step of 1km, one measurment for each altitude of 25-50km at a step
+of 5km, and two single measurements for altitudes 70km and 100km. This makes 34
+measurments. In that case, there are 34*5 values to input.</td>
 </tr>
 
 <tr>
 <td>8</td>
-
-<td>define your own atmospheric model
-<br>enter water vapor and ozone contents&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-uw&nbsp; (in&nbsp; g/cm2 )&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-uo3 (in&nbsp; cm-atm)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-profil is taken from us62</td>
+<td>Define your own atmospheric model providing values of the water vapor and
+ozone content:
+<br>
+<br>uw [g/cm2]
+<br>uo3 [cm-atm]
+<br>
+<br> The profile is taken from us62.</td>
 </tr>
+
 </table>
-<br><br>
-<h3>C. Aerosols model</h3>
-<table BORDER WIDTH="100%" >
+
+<br><h3>C. Aerosols model</h3>
+
+<table BORDER WIDTH=AUTO CELLPADDING=3>
+
 <tr>
 <td>Code</td>
-
 <td>Meaning</td>
-
-<td>Particulars</td>
+<td>Details</td>
 </tr>
 
 <tr>
 <td>0</td>
-
-<td>no aerosols&nbsp;</td>
-
+<td>no aerosols</td>
 <td></td>
 </tr>
 
 <tr>
 <td>1</td>
-
-<td>continental model&nbsp;</td>
-
+<td>continental model</td>
 <td></td>
 </tr>
 
 <tr>
 <td>2</td>
-
 <td>maritime model</td>
-
 <td></td>
 </tr>
 
 <tr>
 <td>3</td>
-
 <td>urban model</td>
-
 <td></td>
 </tr>
 
 <tr>
 <td>4</td>
-
-<td>shettle model for background desert aerosol&nbsp;</td>
-
+<td>shettle model for background desert aerosol</td>
 <td></td>
 </tr>
 
 <tr>
 <td>5</td>
-
 <td>biomass burning</td>
-
 <td></td>
 </tr>
 
 <tr>
 <td>6</td>
-
 <td>stratospheric model</td>
-
 <td></td>
 </tr>
 
 <tr>
 <td>7</td>
-
-<td>define your own model&nbsp;</td>
-
-<td>enter the volumic percentage of each component&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c(1) = volumic % of dust-like&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c(2) = volumic % of water-soluble&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c(3) = volumic % of oceanic&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-c(4) = volumic % of soot&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-all values between 0 to 1&nbsp;</td>
+<td>define your own model</td>
+<td>Enter the volumic percentage of each component:
+<br>
+<br>c(1) = volumic % of dust-like
+<br>c(2) = volumic % of water-soluble
+<br>c(3) = volumic % of oceanic
+<br>c(4) = volumic % of soot
+<br>
+<br>All values between 0 and 1.</td>
 </tr>
 
 <tr>
 <td>8</td>
-
 <td>define your own model</td>
-
-<td>size distribution function:
-<br>Multimodal Log Normal distribution (up to 4 modes)</td>
+<td>Size distribution function: Multimodal Log Normal (up to 4 modes).</td>
 </tr>
 
 <tr>
 <td>9</td>
-
 <td>define your own model</td>
-
-<td>size distribution function:
-<br>Modified gamma&nbsp; distribution&nbsp;</td>
+<td>Size distribution function: Modified gamma.</td>
 </tr>
 
 <tr>
 <td>10</td>
-
 <td>define your own model</td>
-
-<td>size distribution function:
-<br>Junge Power-Law distribution</td>
+<td>Size distribution function: Junge Power-Law.</td>
 </tr>
 
 <tr>
@@ -431,547 +337,183 @@ all values between 0 to 1&nbsp;</td>
 
 <td>define your own model</td>
 
-<td>using sun-photometer measurements:
-<br>Sun Photometer&nbsp; distribution (50 values max)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-you have to enter:&nbsp; r and d V / d (logr)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-where r is the radius (in micron) and V the volume&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-and d V / d (logr) in (cm3/cm2/micron)&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-and then you have to enter: nr and ni for each wavelength
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-where nr and ni are respectively the real and&nbsp;
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-imaginary part of the refractive index&nbsp;</td>
+<td>Sun-photometer measurements, 50 values max, entered as:
+<br>
+<br>r and d V / d (logr)
+<br>
+<br>where r is the radius [micron], V is the volume, d V / d (logr) [cm3/cm2/micron].
+<br>
+<br>Followed by:
+<br>
+<br>nr and ni for each wavelength
+<br>
+<br>where nr and ni are respectively the real and imaginary part of the
+refractive index.</td>
 </tr>
 </table>
-<br><br>
-<h3>D. Aerosol model concentration: visibility</h3>
-<blockquote>if you have an estimate of the meteorological parameter visibility
-v, enter directly the value of v in km (the aerosol optical depth will
-be computed from a standard aerosol profile)
-<p>if you have an estimate of aerosol optical depth, enter v=0 for the
-visibility and enter the aerosol&nbsp; optical depth at 550
-<p>warning:&nbsp; if iaer=0, enter v=-1</blockquote>
 
+<br><h3>D. Aerosol model concentration (visibility)</h3>
 
-<br><br>
-<h3>E. Target alitude sensor platform:</h3>
-<blockquote>xps &lt;=0. means the <i>target</i> is at the sea level
-<br>xps >0. means you know the altitude of the <i>target</i> expressed
-in km and you put that value as xps
-<p>xpp is the parameter to express the <i>sensor</i> altitude
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xpp= -1000&nbsp; means
-that the sensor is a board a satellite
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xpp=&nbsp;&nbsp;&nbsp;&nbsp;
-0&nbsp; means that the sensor is at the ground level
-<p>for aircraft simulations&nbsp; (xpp is neither 0 nor -1000)
-<blockquote>-100&lt; xpp &lt;0&nbsp; means you know the altitude of the
-sensor expressed&nbsp; in kilometers; this altitude is <i>relative to the
-target</i> altitude
-<br>for aircraft simulations only, you have to give
-<blockquote>puw,po3&nbsp;&nbsp; (water vapor content,ozone content between
-the&nbsp;&nbsp; aircraft and the surface)
-<br>taerp&nbsp;&nbsp;&nbsp;&nbsp; (the aerosol optical thickness at 550nm
-between the aircraft and the surface)
-<br>if these data are not available, enter negative values for all of them,
+<blockquote>If you have an estimate of the meteorological parameter visibility
+v, enter directly the value of v [km] (the aerosol optical depth will be
+computed from a standard aerosol profile).
+<p>If you have an estimate of aerosol optical depth, enter v=0 for the
+visibility and enter the aerosol optical depth at 550nm.
+<p>NOTE: if iaer=0, enter v=-1.</blockquote>
+
+<br><h3>E. Target altitude (xps), sensor platform (xpp)</h3>
+
+<blockquote>xps &lt;=0 means the target is at the sea level.
+<br>xps >0 means you know the altitude of the target expressed
+in km, and you put that value as xps.
+<br>
+
+<br>xpp=-1000 means that the sensor is on board a satellite.
+<br>xpp=0 means that the sensor is at the ground level.
+<br>-100&lt;xpp&lt;0 means you know the altitude of the sensor
+expressed in kilometers; this altitude is <b>relative to the target</b>
+altitude.
+
+<p>For aircraft simulations only (xpp is neither 0 nor -1000):
+<blockquote>
+puw,po3 (water vapor content,ozone content between the aircraft and the surface)
+<br>taerp (the aerosol optical thickness at 550nm between the aircraft and the
+surface)
+<p>If these data are not available, enter negative values for all of them.
 puw,po3 will then be interpolated from the us62 standard profile according
-to the values at ground level. Taerp will be computed according to a 2km
+to the values at the ground level. taerp will be computed according to a 2km
 exponential profile for aerosol.</blockquote>
 </blockquote>
-</blockquote>
 
 
+<br><h3>F. Sensor band</h3>
 
-<br><br>
-<h3>F.&nbsp; Sensor band</h3>
-<p>There are two groups of possibilities: either define your own spectral
-conditions (codes -2, -1, 0, or 1) you choose a code indicating a band
-of one of the pre-defined satellites.
-<blockquote>define your own spectral conditions:</blockquote>
+<p>There are two possibilities: either define your own spectral conditions
+(codes -2, -1, 0, or 1) or choose a code indicating the band of one of the
+pre-defined satellites.
 
-<blockquote>&nbsp;
-<table BORDER COLS=2 WIDTH="100%" >
+<p>Define your own spectral conditions:
+<p>
+<table BORDER CELLPADDING=3 WIDTH=AUTO>
+
 <tr>
 <td>Code</td>
-
-<td>Means this:</td>
+<td>Meaning</td>
 </tr>
 
 <tr>
 <td>-2</td>
-
-<td>enter wlinf, wlsup
-<br>the filter function will be equal to 1 over the whole band (as iwave=0)
-but step by step output&nbsp; will be printed be&nbsp;</td>
+<td>Enter wlinf, wlsup.
+<br>The filter function will be equal to 1 over the whole band (as iwave=0)
+but step by step output will be printed.</td>
 </tr>
 
 <tr>
 <td>-1</td>
-
-<td>enter wl (monochr. cond,&nbsp; gaseous absorption is included)&nbsp;</td>
+<td>Enter wl (monochr. cond, gaseous absorption is included).</td>
 </tr>
 
 <tr>
 <td>0</td>
-
-<td>enter wlinf, wlsup.&nbsp;
-<br>the filter function will be equal to 1over the whole band.&nbsp;</td>
+<td>Enter wlinf, wlsup.
+<br>The filter function will be equal to 1over the whole band.</td>
 </tr>
 
 <tr>
 <td>1</td>
-
-<td>enter wlinf, wlsup and user's filter function s(lambda) by step of
-0.0025 micrometer.</td>
+<td>Enter wlinf, wlsup and user's filter function s(lambda) by step of 0.0025
+micrometer.</td>
 </tr>
 </table>
 
 <p>Pre-defined satellite bands:</blockquote>
-
-<center><table BORDER=3 CELLSPACING=3 CELLPADDING=3 >
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</td>
-
-<td>&nbsp; vis bandof <b>meteosat</b>&nbsp;&nbsp;&nbsp;&nbsp; ( 0.350-1.110
-)&nbsp;</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3</td>
-
-<td>&nbsp; vis bandof <b>goes east&nbsp;</b>&nbsp;&nbsp; ( 0.490-0.900
-)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4</td>
-
-<td>&nbsp; vis bandof <b>goes west</b>&nbsp;&nbsp;&nbsp; ( 0.490-0.900
-)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5</td>
-
-<td>&nbsp; 1st bandof <b>avhrr(noaa6) </b>( 0.550-0.750 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.690-1.120 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7</td>
-
-<td>&nbsp; 1st bandof <b>avhrr(noaa7)</b> ( 0.500-0.800 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.640-1.170 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9</td>
-
-<td>&nbsp; 1st bandof <b>avhrr(noaa8)</b> ( 0.540-1.010 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.680-1.120 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11</td>
-
-<td>&nbsp; 1st band of <b>avhrr(noaa9)</b>( 0.530-0.810 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.680-1.170 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13</td>
-
-<td>&nbsp; 1st band of <b>avhrr(noaa10) </b>( 0.530-0.780 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.600-1.190 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15</td>
-
-<td>&nbsp; 1st band of <b>avhrr(noaa11)</b>( 0.540-0.820 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.600-1.120 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 17</td>
-
-<td>&nbsp; 1st band of <b>hrv1(spot1)</b> ( 0.470-0.650 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 18</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.600-0.720 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 19</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.730-0.930 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20</td>
-
-<td>&nbsp; pan&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.470-0.790 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 21</td>
-
-<td>&nbsp; 1st band of <b>hrv2(spot1)</b> ( 0.470-0.650 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 22</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.590-0.730 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 23</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.740-0.940 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 24</td>
-
-<td>&nbsp; pan&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.470-0.790 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25</td>
-
-<td>&nbsp; 1st band of <b>tm(landsat5)</b>( 0.430-0.560 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.500-0.650 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 27</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.580-0.740 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 28</td>
-
-<td>&nbsp; 4th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.730-0.950 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 29</td>
-
-<td>&nbsp; 5th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.5025-1.890 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30</td>
-
-<td>&nbsp; 7th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.950-2.410 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 31</td>
-
-<td>&nbsp; 1st band of <b>mss(landsat5)</b>(0.475-0.640 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 32</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.580-0.750 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 33</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.655-0.855 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 34</td>
-
-<td>&nbsp; 4th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.785-1.100 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 35</td>
-
-<td>&nbsp; 1st band of <b>MAS(ER2)</b>&nbsp;&nbsp;&nbsp; ( 0.5025-0.5875)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 36</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.6075-0.7000)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 37</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.8300-0.9125)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 38</td>
-
-<td>&nbsp; 4th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.9000-0.9975)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 39</td>
-
-<td>&nbsp; 5th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.8200-1.9575)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 40</td>
-
-<td>&nbsp; 6th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 2.0950-2.1925)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 41</td>
-
-<td>&nbsp; 7th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 3.5800-3.8700)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 42</td>
-
-<td><b>&nbsp; MODIS</b>&nbsp; band 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.6100-0.6850)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43</td>
-
-<td>&nbsp; MODIS&nbsp; band 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.8200-0.9025)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 44</td>
-
-<td>&nbsp; MODIS&nbsp; band 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.4500-0.4825)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 45</td>
-
-<td>&nbsp; MODIS&nbsp; band 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.5400-0.5700)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 46</td>
-
-<td>&nbsp; MODIS&nbsp; band 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.2150-1.2700)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 47</td>
-
-<td>&nbsp; MODIS&nbsp; band 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.6000-1.6650)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 48</td>
-
-<td>&nbsp; MODIS&nbsp; band 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 2.0575-2.1825)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 49</td>
-
-<td>&nbsp; 1st band of <b>avhrr(noaa12) </b>( 0.500-1.000 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 50</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.650-1.120 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 51</td>
-
-<td>&nbsp; 1st band of <b>avhrr(noaa14) </b>( 0.500-1.110 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 52</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.680-1.100 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 53</td>
-
-<td>&nbsp; <b>POLDER</b>&nbsp; band1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.4125-0.4775)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 54</td>
-
-<td>&nbsp; POLDER&nbsp; band2 (non polar( 0.4100-0.5225)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 55</td>
-
-<td>&nbsp; POLDER&nbsp; band3 (non polar( 0.5325-0.5950)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 56</td>
-
-<td>&nbsp; POLDER&nbsp; band4&nbsp;&nbsp; P1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.6300-0.7025)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 57</td>
-
-<td>&nbsp; POLDER&nbsp; band5 (non polar( 0.7450-0.7800)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 58</td>
-
-<td>&nbsp; POLDER&nbsp; band6 (non polar( 0.7000-0.8300)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 59</td>
-
-<td>&nbsp; POLDER&nbsp; band7&nbsp;&nbsp; P1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.8100-0.9200)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 60</td>
-
-<td>&nbsp; POLDER&nbsp; band8 (non polar( 0.8650-0.9400)</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 61</td>
-
-<td>&nbsp; 1st band of <b>etm+(landsat7) </b>(0.435-0.520 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 62</td>
-
-<td>&nbsp; 2nd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.506-0.621 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 63</td>
-
-<td>&nbsp; 3rd&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.622-0.702 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 64</td>
-
-<td>&nbsp; 4th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.751-0.911 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 65</td>
-
-<td>&nbsp; 5th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 1.512-1.792 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 66</td>
-
-<td>&nbsp; 7th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 2.020-2.380 )</td>
-</tr>
-
-<tr>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 67</td>
-
-<td>&nbsp; 8th&nbsp;&nbsp;&nbsp;&nbsp; "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-( 0.504-0.909 )</td>
-</tr>
-</table></center>
+<p>
+<table BORDER WIDTH=AUTO CELLPADDING=3>
+
+<tr><td>Code</td><td>Meaning</td></tr>
+
+<tr><td>2</td><td><b>meteosat</b> vis band (0.350-1.110)</td></tr>
+
+<tr><td>3</td><td><b>goes east</b> band vis (0.490-0.900)</td></tr>
+<tr><td>4</td><td>goes west band vis (0.490-0.900)</td></tr>
+
+<tr><td>5</td><td><b>avhrr (noaa6)</b> band 1 (0.550-0.750)</td></tr>
+<tr><td>6</td><td>avhrr (noaa6) band 2 (0.690-1.120)</td></tr>
+
+<tr><td>7</td><td><b>avhrr (noaa7)</b> band 1 (0.500-0.800)</td></tr>
+<tr><td>8</td><td>avhrr (noaa7) band 2 (0.640-1.170)</td></tr>
+
+<tr><td>9</td><td><b>avhrr (noaa8)</b> band 1 (0.540-1.010)</td></tr>
+<tr><td>10</td><td>avhrr (noaa8) band 2 (0.680-1.120)</td></tr>
+
+<tr><td>11</td><td><b>avhrr (noaa9)</b> band 1 (0.530-0.810)</td></tr>
+<tr><td>12</td><td>avhrr (noaa9) band 1 (0.680-1.170)</td></tr>
+
+<tr><td>13</td><td><b>avhrr (noaa10)</b> band 1 (0.530-0.780)</td></tr>
+<tr><td>14</td><td>avhrr (noaa10) band 2 (0.600-1.190)</td></tr>
+
+<tr><td>15</td><td><b>avhrr (noaa11)</b> band 1 (0.540-0.820)</td></tr>
+<tr><td>16</td><td>avhrr (noaa11) band 2 (0.600-1.120)</td></tr>
+
+<tr><td>17</td><td><b>hrv1 (spot1)</b> band 1 (0.470-0.650)</td></tr>
+<tr><td>18</td><td>hrv1 (spot1) band 2 (0.600-0.720)</td></tr>
+<tr><td>19</td><td>hrv1 (spot1) band 3 (0.730-0.930)</td></tr>
+<tr><td>20</td><td>hrv1 (spot1) band pan (0.470-0.790)</td></tr>
+
+<tr><td>21</td><td><b>hrv2 (spot1)</b> band 1 (0.470-0.650)</td></tr>
+<tr><td>22</td><td>hrv2 (spot1) band 2 (0.590-0.730)</td></tr>
+<tr><td>23</td><td>hrv2 (spot1) band 3 (0.740-0.940)</td></tr>
+<tr><td>24</td><td>hrv2 (spot1) band pan (0.470-0.790)</td></tr>
+
+<tr><td>25</td><td><b>tm (landsat5)</b> band 1 (0.430-0.560)</td></tr>
+<tr><td>26</td><td>tm (landsat5) band 2 (0.500-0.650)</td></tr>
+<tr><td>27</td><td>tm (landsat5) band 3 (0.580-0.740)</td></tr>
+<tr><td>28</td><td>tm (landsat5) band 4 (0.730-0.950)</td></tr>
+<tr><td>29</td><td>tm (landsat5) band 5 (1.5025-1.890)</td></tr>
+<tr><td>30</td><td>tm (landsat5) band 7 (1.950-2.410)</td></tr>
+
+<tr><td>31</td><td><b>mss (landsat5)</b> band 1 (0.475-0.640)</td></tr>
+<tr><td>32</td><td>mss (landsat5) band 2 (0.580-0.750)</td></tr>
+<tr><td>33</td><td>mss (landsat5) band 3 (0.655-0.855)</td></tr>
+<tr><td>34</td><td>mss (landsat5) band 4 (0.785-1.100)</td></tr>
+
+<tr><td>35</td><td><b>MAS (ER2)</b> band 1 (0.5025-0.5875)</td></tr>
+<tr><td>36</td><td>MAS (ER2) band 2 (0.6075-0.7000)</td></tr>
+<tr><td>37</td><td>MAS (ER2) band 3 (0.8300-0.9125)</td></tr>
+<tr><td>38</td><td>MAS (ER2) band 4 (0.9000-0.9975)</td></tr>
+<tr><td>39</td><td>MAS (ER2) band 5 (1.8200-1.9575)</td></tr>
+<tr><td>40</td><td>MAS (ER2) band 6 (2.0950-2.1925)</td></tr>
+<tr><td>41</td><td>MAS (ER2) band 7 (3.5800-3.8700)</td></tr>
+
+<tr><td>42</td><td><b>MODIS</b> band 1 (0.6100-0.6850)</td></tr>
+<tr><td>43</td><td>MODIS band 2 (0.8200-0.9025)</td></tr>
+<tr><td>44</td><td>MODIS band 3 (0.4500-0.4825)</td></tr>
+<tr><td>45</td><td>MODIS band 4 (0.5400-0.5700)</td></tr>
+<tr><td>46</td><td>MODIS band 5 (1.2150-1.2700)</td></tr>
+<tr><td>47</td><td>MODIS band 6 (1.6000-1.6650)</td></tr>
+<tr><td>48</td><td>MODIS band 7 (2.0575-2.1825)</td></tr>
+
+<tr><td>49</td><td><b>avhrr (noaa12)</b> band 1 (0.500-1.000)</td></tr>
+<tr><td>50</td><td>avhrr (noaa12) band 2 (0.650-1.120)</td></tr>
+
+<tr><td>51</td><td><b>avhrr (noaa14)</b> band 1 (0.500-1.110)</td></tr>
+<tr><td>52</td><td>avhrr (noaa14) band 2 (0.680-1.100)</td></tr>
+
+<tr><td>53</td><td><b>POLDER</b> band 1 (0.4125-0.4775)</td></tr>
+<tr><td>54</td><td>POLDER band 2 (non polar) (0.4100-0.5225)</td></tr>
+<tr><td>55</td><td>POLDER band 3 (non polar) (0.5325-0.5950)</td></tr>
+<tr><td>56</td><td>POLDER band 4 P1 (0.6300-0.7025)</td></tr>
+<tr><td>57</td><td>POLDER band 5 (non polar) (0.7450-0.7800)</td></tr>
+<tr><td>58</td><td>POLDER band 6 (non polar) (0.7000-0.8300)</td></tr>
+<tr><td>59</td><td>POLDER band 7 P1 (0.8100-0.9200)</td></tr>
+<tr><td>60</td><td>POLDER band 8 (non polar) (0.8650-0.9400)</td></tr>
+
+<tr><td>61</td><td><b>etm+ (landsat7)</b> band 1 (0.435-0.520)</td></tr>
+<tr><td>62</td><td>etm+ (landsat7) band 2 (0.506-0.621)</td></tr>
+<tr><td>63</td><td>etm+ (landsat7) band 3 (0.622-0.702)</td></tr>
+<tr><td>64</td><td>etm+ (landsat7) band 4 (0.751-0.911)</td></tr>
+<tr><td>65</td><td>etm+ (landsat7) band 5 (1.512-1.792)</td></tr>
+<tr><td>66</td><td>etm+ (landsat7) band 7 (2.020-2.380)</td></tr>
+<tr><td>67</td><td>etm+ (landsat7) band 8 (0.504-0.909)</td></tr>
+
+</table>
