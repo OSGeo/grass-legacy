@@ -8,13 +8,16 @@ source $env(GISBASE)/etc/gtcltk/select.tcl
 source $env(GISBASE)/etc/gtcltk/gronsole.tcl
 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 
 
@@ -304,7 +307,8 @@ proc help_cmd {dlg} {
 	set pgm_name $opt($dlg,pgm_name)
 
 	if {[catch {exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		return
 	}
 	
 }

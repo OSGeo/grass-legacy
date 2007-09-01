@@ -297,13 +297,13 @@ proc GmTree::add { type } {
     }
 
     if { [catch {match string {} $new_root_node}] } {
-    set new_root_node root
+        set new_root_node root
     }
     
     # selected node
-    catch {set parent_node [ lindex [$tree($mon) selection get] 0]} errormsg
+    catch {set parent_node [ lindex [$tree($mon) selection get] 0]} error
     
-    if {[string first "invalid command name" $errormsg] != -1} {
+    if {[string first "invalid command name" $error] != -1} {
     	tk_messageBox -type ok -icon error \
     		-message [G_msg "You must open a display before adding map layers"]
     	return
@@ -634,7 +634,7 @@ proc GmTree::duplicate { } {
     }
 
     if { [catch {match string {} $new_root_node}] } {
-    set new_root_node root
+        set new_root_node root
     }
     # selected node
     set parent_node [ lindex [$tree($mon)  selection get] 0 ]
@@ -723,14 +723,15 @@ proc GmTree::save { spth } {
 
     set fpath $spth
     
-    if {[catch {set rcfile [open $fpath w]} err]} {
-	tk_messageBox -icon error -type ok -message [format [G_msg "Could not open file for writing.\n%s"] $err]
-	return
+    if {[catch {set rcfile [open $fpath w]} error]} {
+        tk_messageBox -icon error -type ok -message [format [G_msg "Could not open file for writing.\n%s"] $error]
+        return
     }
     GmGroup::save $tree($mon) 0 "root"
 
 	if {[catch {close $rcfile} error]} {
-		puts $error
+        tk_messageBox -icon error -type ok -message [G_msg $error]
+        return
 	}
 
 }
@@ -977,7 +978,7 @@ proc GmTree::load { lpth } {
 			default {
 				if {[catch {GmTree::node_type $current_node}] } {
 					tk_messageBox -type ok -message \
-					[format [G_msg "Can't open %s - bad file format"] $fpath]
+					    [format [G_msg "Can't open %s - bad file format"] $fpath]
 					break
 				} else {
 					set type [GmTree::node_type $current_node]
@@ -1046,7 +1047,7 @@ proc GmTree::load { lpth } {
 		set Gm::prgindic $prg
 	} 
 	if {[catch {close $rcfile} error]} {
-		puts $error
+	    tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 	}
 
     set Gm::prgindic $max_prgindic

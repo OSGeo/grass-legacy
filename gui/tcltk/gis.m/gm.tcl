@@ -29,23 +29,29 @@ lappend auto_path $env(GISBASE)/etc/gm
 package require -exact GisM 1.0
 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 
 if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	return
 }
 
 # path to GIS Manager files
@@ -100,7 +106,7 @@ catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
-	puts $error
+	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 }
 
 
@@ -142,51 +148,6 @@ set max_prgindic 20
 append regexp .* $env(GISBASE) {[^:]*}
 regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
 
-
-###############################################################################
-
-# proc read_moncap {} {
-# 	global env moncap
-# 
-# 	set moncap {}
-# 
-# 	catch {set file [open [file join $env(GISBASE) etc monitorcap] r]}
-# 	set data [read $file]
-# 	
-# 	if {[catch {close $file} error]} {
-# 		puts $error
-# 	}
-# 
-# 	set data [subst -nocommands -novariables $data]
-# 	foreach line [split $data \n] {
-# 		if {[string match {\#*} $line]} continue
-# 		if {![string match {*:*:*:*:*:*} $line]} continue
-# 		set fields {}
-# 		foreach field [split $line :] {
-# 			lappend fields [string trim $field]
-# 		}
-# 		lappend moncap $fields
-# 	}
-# }
-
-###############################################################################
-
-# proc monitor_menu {op} {
-# 	global moncap
-# 
-# 	set submenu {}
-# 	set last_driver {}
-# 	foreach mon $moncap {
-# 		set name [lindex $mon 0]
-# 		set driver [lindex $mon 1]
-# 		if {$last_driver != "" && $last_driver != $driver} {
-# 			lappend submenu {separator}
-# 		}
-# 		set last_driver $driver
-# 		lappend submenu [list command $name {} "" {} -command "run d.mon $op=$name"]	}
-# 
-# 	return [list $submenu]
-# }
 
 ###############################################################################
 
@@ -462,23 +423,23 @@ proc Gm::SaveFileBox { } {
     global mon
 
     catch {
-	if {[ regexp -- {^Untitled_} $filename($mon) r]} {
-		set filename($mon) ""
-	}
+        if {[ regexp -- {^Untitled_} $filename($mon) r]} {
+            set filename($mon) ""
+        }
     }
 
     if { $filename($mon) != "" } {
-	GmTree::save $filename($mon)
+    	GmTree::save $filename($mon)
     } else {
-	set types [list \
-	    [list [G_msg "Map Resource File"] {.grc}] \
-	    [list [G_msg "DM Resource File"] [list {.dm} {.dmrc}]] \
-	    [list [G_msg "All Files"] "*"] \
-	]
-	set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
-		-title [G_msg "Save File"] -defaultextension .grc]
-	if { $filename($mon) == "" } { return}
-	GmTree::save $filename($mon)
+        set types [list \
+            [list [G_msg "Map Resource File"] {.grc}] \
+            [list [G_msg "DM Resource File"] [list {.dm} {.dmrc}]] \
+            [list [G_msg "All Files"] "*"] \
+        ]
+        set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
+            -title [G_msg "Save File"] -defaultextension .grc]
+	    if { $filename($mon) == "" } { return}
+	    GmTree::save $filename($mon)
     }
 };
 
@@ -497,7 +458,9 @@ proc Gm:DefaultFont { source } {
     wm title .dispfont [G_msg "Select GRASS display font"]
     
     if {[catch {set fontlist [exec d.font --q -l]} error]} {
-	    puts $error
+	    tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+	        -message [G_msg "d.font error: $error"]
+	    return
     }
     set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]

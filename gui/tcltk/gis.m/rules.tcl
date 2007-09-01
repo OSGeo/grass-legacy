@@ -202,7 +202,9 @@ proc GmRules::process_rules { cmd w } {
     set rulespid [pid]
 	
 	if {[catch {set rulesfile [exec g.tempfile pid=$rulespid]} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Error creating tempfile: $error"]
+		return
 	}
 
     # get rules from text widget
@@ -216,7 +218,9 @@ proc GmRules::process_rules { cmd w } {
     catch {set output [open $rulesfile w ]}
         puts $output $rules
 	if {[catch {close $output} error]} {
-		puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+		    -message [G_msg "Cannot create rules file: $error"]
+		return
 	}
 	
 	set options {}
@@ -240,7 +244,7 @@ proc GmRules::process_rules { cmd w } {
 
     
     if {[catch {eval [list exec -- $cmd] $options} error]} {
-        puts $error
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 	}
     
 

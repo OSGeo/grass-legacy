@@ -208,8 +208,9 @@ proc MapCanvas::create { } {
 
 	# set tempfile for ppm output
 	set mappid [pid]
-	if {[catch {set mapfile($mon) [exec g.tempfile pid=$mappid]}]} {
-		puts $error
+	if {[catch {set mapfile($mon) [exec g.tempfile pid=$mappid]} error]} {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg $error": could not create temporary file"]
 	}
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
@@ -217,8 +218,9 @@ proc MapCanvas::create { } {
 
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
-	if {[catch {set outfile($mon) [exec g.tempfile pid=$mappid]}]} {
-		puts $error
+	if {[catch {set outfile($mon) [exec g.tempfile pid=$mappid]} error]} {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg $error": could not create temporary file"]
 	}
 	
 	set tmpdir [file dirname $outfile($mon)]
@@ -430,7 +432,8 @@ proc MapCanvas::get_mapunits {} {
 	    	set prj($key) $value	
 	    }
 	    if {[catch {close $input} error]} {
-	    	puts $error
+	    	tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+	    		-message [G_msg "g.proj or projection error: $error"]
 	    } 
 	}
 	# Length is calculated from the map canvas arrows
@@ -519,8 +522,9 @@ proc MapCanvas::driversettings { mon } {
 		set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
 		if {$mapwd == 0.0 || $mapht == 0.0} {
 			tk_messageBox -type ok -icon info -parent .mapcan($mon) \
-			-title [G_msg "Max zoom in reached"] -message [G_msg "Max zoom in reached"]
-			return 1}
+				-title [G_msg "Max zoom in reached"] -message [G_msg "Max zoom in reached"]
+			return 1
+		}
 		set mapar [expr {$mapwd / $mapht}]
 
 		# Calculate the largest box of the map's aspect ratio no larger than
@@ -587,7 +591,8 @@ proc MapCanvas::runprograms { mon mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+				-message [G_msg "Region settings error: $error"]
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -755,8 +760,10 @@ proc MapCanvas::zoom_map { mon } {
 	set sel [ GmTree::getnode ]
 	if { $sel == "" } { 
 		tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-		-message [G_msg "You have to select map layer first"] -title [G_msg "No map layer selected"]
-		return }
+			-message [G_msg "You have to select map layer first"] \
+			-title [G_msg "No map layer selected"]
+		return 
+	}
 
 	set type [GmTree::node_type $sel]
 	if { $type == "" } { return }
@@ -1129,7 +1136,8 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		
 		if {[catch {close $input} error]} {
-			puts $error
+			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+				-message [G_msg "Region settings error: $error"]
 		}
 		
 		#set start point (sw corner)
@@ -1181,8 +1189,9 @@ proc MapCanvas::set_wind {mon args overwrite} {
 		lappend options "--overwrite" 
 	}
 	
-	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull}]} {
-		puts $error
+	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull} error]} {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "Region settings error: $error"]
 	}
 	
 }
@@ -1776,8 +1785,10 @@ proc MapCanvas::query { mon x y } {
 
 	if { $sel == "" } { 
 		tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-		-message [G_msg "You have to select map layer first"] -title [G_msg "No map layer selected"]
-		return }
+			-message [G_msg "You have to select map layer first"] \
+			-title [G_msg "No map layer selected"]
+		return 
+	}
 
 	set type [GmTree::node_type $sel]
 
@@ -1813,7 +1824,8 @@ proc MapCanvas::query { mon x y } {
 		default {
 			set mapname ""
 			tk_messageBox -type ok -icon warning -parent .mapcan($mon) \
-			-message [G_msg "This layer does not suppor queries"] -title [G_msg "Not supported"]
+				-message [G_msg "This layer type does not support queries"] 
+					-title [G_msg "Query not supported"]
 			return
 		}
 	}

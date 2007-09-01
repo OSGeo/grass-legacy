@@ -391,40 +391,45 @@ proc MapToolBar::savefile { type quality } {
 		switch $type {
 			"bmp" {
 				if { [catch {exec gdal_translate $path.ppm $path.bmp -of BMP} error ]} {
-					puts $error
+					tk_messageBox -type ok -icon error -title [G_msg "GDAL error"] \
+						-message [G_msg "Could not create BMP: $error"]
 				}
-				file delete $path.ppm
+				catch {file delete $path.ppm}
 			}
 			"jpg" {
 			    if { $quality == 300 } {
 					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% } error ]} {
-						puts $error
+						tk_messageBox -type ok -icon error -title [G_msg "GDAL error"] \
+							-message [G_msg "Could not create JPG: $error"]
 					}					
-					file delete $path.ppm
+					catch {file delete $path.ppm}
 				} else {
 					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality  } error ]} {
-						puts $error
+						tk_messageBox -type ok -icon error -title [G_msg "GDAL error"] \
+							-message [G_msg "Could not create JPG: $error"]
 					}					
 
-					file delete $path.ppm
+					catch {file delete $path.ppm}
 				}
 			}
 			"png" {
 				if { [catch {exec gdal_translate $path.ppm $path.png -of PNG} error ]} {
-					puts $error
+					tk_messageBox -type ok -icon error -title [G_msg "GDAL error"] \
+						-message [G_msg "Could not create PNG: $error"]
 				}
 				
-				file delete $path.ppm
+				catch {file delete $path.ppm}
 			}
 			"ppm" {
 				return
 			}
 			"tif" {
 				if { [catch {exec gdal_translate $path.ppm $path.tif -of GTIFF} error ]} {
-					puts $error
+					tk_messageBox -type ok -icon error -title [G_msg "GDAL error"] \
+						-message [G_msg "Could not create TIF $error"]
 				}
 				
-				file delete $path.ppm
+				catch {file delete $path.ppm}
 			}
 		}
 	}

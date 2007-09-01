@@ -163,7 +163,9 @@ proc GmGroup::nvdisplay { node } {
 			lappend cmd points=$nvpoints
 		}
 		
-		catch {eval exec "$cmd 2> $devnull &"}
+		if {[catch {eval exec "$cmd 2> $devnull &"} error]} {
+		    tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		}
 	}
 
 	set nvelev ""
@@ -199,17 +201,17 @@ proc GmGroup::nviz { node } {
 			set clr [GmRaster::addcolor $node]
 
 			# test whether surf and clr are valid files
-			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} err_str]} {
+			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				puts $err_str
+				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 				return
 			}
 
-			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} err_str]} {
+			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				puts $err_str
+				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 				return
 			}
 
@@ -232,10 +234,10 @@ proc GmGroup::nviz { node } {
 			set vect [GmVector::addvect $node]	
 			# test whether vect is a valid file
 
-			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} err_str]} {
+			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} error]} {
 				if { $vinfo == "" } {set vect ""}
 			} else {
-				puts $err_str
+				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 				return
 			}
 			
