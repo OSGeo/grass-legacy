@@ -343,6 +343,7 @@ proc progress {dlg percent} {
 # Make a frame for part of the layout tree
 proc layout_make_frame {dlg guisection optn glabel} {
 	global opt
+	global bgcolor
 
 	if {$guisection == {}} {set guisection {{}}}
 		
@@ -362,7 +363,7 @@ proc layout_make_frame {dlg guisection optn glabel} {
 			return $optpane
 		}
 		# And the frames and scrollers:
-		set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]
+		set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 1]
 		set optfra [ScrollableFrame $optwin.fra -height 200 -constrainedwidth true]
 		$optwin setwidget $optfra
 		pack $optwin -fill both -expand yes
@@ -499,10 +500,10 @@ proc make_buttons {dlg path root} {
 	set pgm_name $opt($dlg,pgm_name)
 
 	set buttonframe [frame $path.buttonframe]
-	button $buttonframe.run   -text [G_msg "Run"]   -command "run_cmd $dlg"
-	button $buttonframe.help  -text [G_msg "Help"]  -command "help_cmd $dlg"
-	button $buttonframe.clear -text [G_msg "Clear"] -command "clear_cmd $dlg"
-	button $buttonframe.close -text [G_msg "Close"] -command "close_cmd $dlg"
+	button $buttonframe.run   -text [G_msg "Run"]   -command "run_cmd $dlg" -width 5 -bd 1
+	button $buttonframe.help  -text [G_msg "Help"]  -command "help_cmd $dlg" -width 5 -bd 1
+	button $buttonframe.clear -text [G_msg "Clear"] -command "clear_cmd $dlg" -width 5 -bd 1
+	button $buttonframe.close -text [G_msg "Close"] -command "close_cmd $dlg" -width 5 -bd 1
 
 	set opt($dlg,run_button) $buttonframe.run 
 
@@ -579,7 +580,7 @@ proc do_label {dlg optn suf} {
 	set typehelp "$name: $multitext $type, $reqtext"
 
 	set frame [frame $suf.lab$optn]
-	label $frame.label -text "$label:" -anchor w -justify left
+	label $frame.label -text "$label:" -anchor w -justify left 
 	label $frame.req -text "($typehelp)" -anchor e -justify right
 	DynamicHelp::register $frame.req balloon $typestring
 	pack $frame.req -side right
@@ -769,7 +770,7 @@ proc add_option {optn optlist} {
 	set suf [layout_get_frame $dlg $opt($dlg,$optn,guisection) $optn $glabel]
 
 	do_label $dlg $optn $suf
-	frame $suf.val$optn
+	frame $suf.val$optn 
 
 	if {$opts(options) != {}} {
 		set vals [split $opts(options) ,]
