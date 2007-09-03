@@ -37,7 +37,7 @@ import string
 import wx
 import wx.lib.colourselect as csel
 
-import cmd
+import gcmd as cmd
 import dbm
 from debug import Debug as Debug
 

@@ -50,7 +50,7 @@ import render
 import menuform
 import disp_print
 import select
-import cmd
+import gcmd as cmd
 import gui_modules.defaultfont as defaultfont
 from debug import Debug as Debug
 from icon import Icons as Icons

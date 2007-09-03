@@ -23,7 +23,7 @@ import os, sys
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
 sys.path.append(gmpath)
 
-import cmd
+import gcmd as cmd
 import grassenv
 from digit import Digit as Digit
 from digit import DigitSettingsDialog as DigitSettingsDialog

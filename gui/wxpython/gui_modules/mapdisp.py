@@ -58,7 +58,7 @@ import track
 import menuform
 import select
 import disp_print
-import cmd
+import gcmd as cmd
 import dbm
 import defaultfont as defaultfont
 import histogram as histogram

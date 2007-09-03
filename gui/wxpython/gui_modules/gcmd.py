@@ -1,11 +1,11 @@
 """
-PACKAGE:   cmd
+PACKAGE: gcmd
 
 CLASSES:
     * EndOfCommand
     * Command
 
-PURPOSE:   Command interface
+PURPOSE:   GRASS command interface
 
 AUTHORS:   The GRASS Development Team
            Original author: Jachym Cepicky
@@ -30,10 +30,9 @@ except:
     sys.path.append(CompatPath)
     import subprocess
 
-    GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-    sys.path.append(GuiModulePath)
+GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(GuiModulePath)
 
-import grassenv
 from debug import Debug as Debug
 
 class EndOfCommand(Exception):
