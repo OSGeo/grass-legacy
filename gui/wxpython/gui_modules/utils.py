@@ -13,23 +13,31 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
          License (>=v2). Read the file COPYING that comes with GRASS
          for details.
 """
+
 import os
 
-def GetTempfile( pref=None):
+import cmd
+
+def GetTempfile(pref=None):
     """
     Creates GRASS temporary file using defined prefix.
 
+    Parameters:
+        pref: prefer the given path
     Returns:
         Path to file name (string) or None
     """
 
-    tempfile = os.popen("g.tempfile pid=%d" %
-            os.getpid()).readlines()[0].strip()
+    tempfileCmd = cmd.Command(["g.tempfile",
+                            "pid=%d" %
+                            os.getpid()])
 
-    if not tempfile:
-        return None
-    else:
-        path,file = os.path.split(tempfile)
+    tempfile = tempfileCmd.ReadStdOutput()[0].strip()
+
+    try:
+        path, file = os.path.split(tempfile)
         if pref:
-            file = "%s%s" % (pref,file)
-        return os.path.join(path,file)
+            file = "%s%s" % (pref, file)
+        return os.path.join(path, file)
+    except:
+        return Node

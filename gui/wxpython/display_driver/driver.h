@@ -27,7 +27,7 @@ extern "C" {
 #include <grass/Vect.h>
 }
 
-#define DEBUG
+//#define DEBUG
 
 class DisplayDriver
 {
@@ -52,12 +52,22 @@ class DisplayDriver
     struct line_cats *cats;
     
     struct _region {
-	double north;
+	double north; // map units
 	double south;
 	double east;
 	double west;
 	double ns_res;
 	double ew_res;
+	double center_easting;
+	double center_northing;
+
+	double map_width;  // px
+	double map_height;
+
+	// real region
+	double west_real;
+	double north_real;
+	double res;
     } region;
 
     struct symbol {
@@ -129,7 +139,10 @@ class DisplayDriver
 
     /* set */
     void SetRegion(double north, double south, double east, double west,
-		   double ns_res, double ew_res);
+		   double ns_res, double ew_res,
+		   double center_easting, double center_northing,
+		   double map_width, double map_height);
+
     void SetSettings(unsigned long highlight,
 		     bool ePoint,       unsigned long cPoint, /* enabled, color */
 		     bool eLine,        unsigned long cLine,

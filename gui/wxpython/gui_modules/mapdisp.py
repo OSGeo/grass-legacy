@@ -403,7 +403,7 @@ class BufferedWindow(wx.Window):
         Debug.msg(3, "BufferedWindow.OnSize():")
 
         # set size of the input image
-        self.Map.width, self.Map.height = self.GetClientSize()
+        self.Map.ChangeMapSize(self.GetClientSize())
 
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
@@ -421,6 +421,9 @@ class BufferedWindow(wx.Window):
         # re-render image on idle
         self.resize = True
 
+        # reposition checkbox in statusbar
+        self.parent.StatusbarReposition()
+
     def OnIdle(self, event):
         """
         Only re-render a compsite map image from GRASS during
@@ -428,7 +431,7 @@ class BufferedWindow(wx.Window):
         """
 
         if self.resize:
-            self.UpdateMap()
+            self.UpdateMap(render=True)
 
         event.Skip()
 
@@ -482,16 +485,18 @@ class BufferedWindow(wx.Window):
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s" % \
                    (render))
 
-        if render:
+        if render or self.img == None:
             # render new map images
-            self.Map.width, self.Map.height = self.GetClientSize()
+            self.Map.ChangeMapSize(self.GetClientSize())
             self.mapfile = self.Map.Render(force=True)
             self.img = self.GetImage() # id=99
             self.resize = False
 
         if not self.img:
+            self.Draw(self.pdc, pdctype='clear')
             return False
 
+        # clear pseudodc
         self.pdc.Clear()
         self.pdc.RemoveAll()
 
@@ -500,20 +505,26 @@ class BufferedWindow(wx.Window):
         except:
             return False
 
+        # 
         # draw background map image to PseudoDC
-        self.Draw(self.pdc, self.img, drawid=id)
-
-        # render vector map layer
+        #
+        self.Draw(self.pdc, self.img, drawid=id) 
+         
+        #
+        # render vector map layer 
+        #
         digitToolbar = self.parent.digittoolbar
         if digitToolbar and \
                 digitToolbar.layerSelectedID != None:
             # set region
-            self.parent.digit.driver.SetRegion(self.Map.region)
+            self.parent.digit.driver.UpdateRegion()
             # draw map
             self.pdcVector = wx.PseudoDC()
             self.parent.digit.driver.DrawMap(self.pdcVector)
 
+        #
         # overlay
+        #
         self.ovldict = self.GetOverlay() # list of decoration overlay images
         if self.ovldict != {}: # draw scale and legend overlays
             for id in self.ovldict:
@@ -531,14 +542,24 @@ class BufferedWindow(wx.Window):
 
         self.resize = False
 
+        #
         # update statusbar
+        #
         self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
-                                            "Res:%.2f(NS),%.2f(EW)" %
-                                            (self.Map.region["w"], self.Map.region["e"],
-                                             self.Map.region["n"], self.Map.region["s"],
-                                             self.Map.region["nsres"], self.Map.region["ewres"]),
-                                            0)
+        if self.parent.statusText == "Extent":
+            self.parent.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
+                                                (self.Map.region["w"], self.Map.region["e"],
+                                                 self.Map.region["n"], self.Map.region["s"]), 1)
+        elif self.parent.statusText == "Geometry":
+            self.parent.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
+                                                (self.Map.region["rows"], self.Map.region["cols"],
+                                                 self.Map.region["nsres"], self.Map.region["ewres"]), 1)
+        #         self.parent.statusbar.SetStatusText("Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
+        #                                             "Res:%.2f(NS),%.2f(EW)" %
+        #                                             (self.Map.region["w"], self.Map.region["e"],
+        #                                              self.Map.region["n"], self.Map.region["s"],
+        #                                              self.Map.region["nsres"], self.Map.region["ewres"]),
+        #                                             0)
 
         return True
 
@@ -557,8 +578,6 @@ class BufferedWindow(wx.Window):
         dc.SetBackground(wx.Brush("White"))
 
         bitmap = wx.BitmapFromImage(self.img)
-        if self.imgVectorMap:
-            bitmap = wx.BitmapFromImage(self.imgVectorMap)
 
         self.dragimg = wx.DragImage(bitmap)
         self.dragimg.BeginDrag((0, 0), self)
@@ -761,8 +780,7 @@ class BufferedWindow(wx.Window):
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
             digitToolbar = self.parent.digittoolbar
-            east, north = self.Pixel2Cell(self.mouse['begin'][0],
-                                          self.mouse['begin'][1])
+            east, north = self.Pixel2Cell(self.mouse['begin'])
 
             try:
                 map = digitToolbar.layers[digitToolbar.layerSelectedID].name
@@ -885,7 +903,7 @@ class BufferedWindow(wx.Window):
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
             # redraw map
-            self.UpdateMap()
+            self.UpdateMap(render=True)
 
         elif self.mouse["use"] == "query":
             # querying
@@ -907,8 +925,8 @@ class BufferedWindow(wx.Window):
             # digitization tool active
             digitToolbar = self.parent.digittoolbar
             self.mouse['end'] = event.GetPositionTuple()[:]
-            pos1 = self.Pixel2Cell(self.mouse['begin'][0], self.mouse['begin'][1])
-            pos2 = self.Pixel2Cell(self.mouse['end'][0], self.mouse['end'][1])
+            pos1 = self.Pixel2Cell(self.mouse['begin'])
+            pos2 = self.Pixel2Cell(self.mouse['end'])
 
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"]:
                 nselected = 0
@@ -1048,7 +1066,7 @@ class BufferedWindow(wx.Window):
                     mapcoords = []
                     # xy -> EN
                     for coord in self.polycoords:
-                        mapcoords.append(self.Pixel2Cell (coord[0], coord[1]))
+                        mapcoords.append(self.Pixel2Cell(coord))
 
                     self.parent.digit.AddLine(map=map,
                                   type=self.parent.digittoolbar.type,
@@ -1096,8 +1114,7 @@ class BufferedWindow(wx.Window):
                     self.parent.digit.MoveSelectedLines(move)
                 else:
                     # move vertex
-                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell (self.moveCoords[0],
-                                                                          self.moveCoords[1]),
+                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell(self.moveCoords),
                                                          move)
 
                 del self.moveBegin
@@ -1105,16 +1122,13 @@ class BufferedWindow(wx.Window):
                 del self.moveIds
             elif digit.action == "splitLine":
                 # split line
-                self.parent.digit.SplitLine(self.Pixel2Cell(self.mouse['begin'][0],
-                                                            self.mouse['begin'][1]))
+                self.parent.digit.SplitLine(self.Pixel2Cell(self.mouse['begin']))
             elif digit.action == "addVertex":
                 # add vertex
-                self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin'][0],
-                                                            self.mouse['begin'][1]))
+                self.parent.digit.AddVertex(self.Pixel2Cell(self.mouse['begin']))
             elif digit.action == "removeVertex":
                 # remove vertex
-                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0],
-                                                               self.mouse['begin'][1]))
+                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin']))
 
             if digit.action != "addLine":
                 # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
@@ -1236,28 +1250,49 @@ class BufferedWindow(wx.Window):
         return exit
 
 
-    def Pixel2Cell(self, x, y):
+    def Pixel2Cell(self, (x, y)):
         """
-        Calculates real word coordinates to image coordinates
+        Convert image coordinates to real word coordinates
 
         Input : int x, int y
         Output: float x, float y
         """
-        east  = self.Map.region['w'] + x * self.Map.region["ewres"]
-        north = self.Map.region['n'] - y * self.Map.region["nsres"]
 
+        if self.Map.region["ewres"] > self.Map.region["nsres"]:
+            res = self.Map.region["ewres"]
+        else:
+            res = self.Map.region["nsres"]
+
+        w = self.Map.region["center_easting"] - (self.Map.width / 2) * res
+        n = self.Map.region["center_northing"] + (self.Map.height / 2) * res
+
+        east  = w + x * res
+        north = n - y * res
+
+        # extent does not correspond with whole map canvas area...
+        # east  = self.Map.region['w'] + x * self.Map.region["ewres"]
+        # north = self.Map.region['n'] - y * self.Map.region["nsres"]
+        
         return (east, north)
 
-    def Cell2Pixel(self, east, north):
+    def Cell2Pixel(self, (east, north)):
         """
-        Calculates image coordinates to real word coordinates
+        Convert real word coordinates to image coordinates
 
         Input : float east, float north
         Output: int x, int y
         """
 
-        x = int((east  - self.Map.region['w']) / self.Map.region["ewres"])
-        y = int((self.Map.region['n'] - north) / self.Map.region["nsres"])
+        if self.Map.region["ewres"] > self.Map.region["nsres"]:
+            res = self.Map.region["ewres"]
+        else:
+            res = self.Map.region["nsres"]
+
+        w = self.Map.region["center_easting"] - (self.Map.width / 2) * res
+        n = self.Map.region["center_northing"] + (self.Map.height / 2) * res
+
+        x = int((east  - w) / res)
+        y = int((n - north) / res)
 
         return (x, y)
 
@@ -1265,7 +1300,8 @@ class BufferedWindow(wx.Window):
         """
         Calculates new region while (un)zoom/pan-ing
         """
-        x1, y1, x2, y2 = begin[0], begin[1], end[0], end[1]
+        x1, y1 = begin
+        x2, y2 = end
         newreg = {}
 
         # threshold - too small squares do not make sense
@@ -1276,21 +1312,24 @@ class BufferedWindow(wx.Window):
                 x1, x2 = x2, x1
             if y1 > y2:
                 y1, y2 = y2, y1
+
             # zoom in
             if zoomtype > 0:
-                newreg['w'], newreg['n'] = self.Pixel2Cell(x1, y1)
-                newreg['e'], newreg['s'] = self.Pixel2Cell(x2, y2)
+                newreg['w'], newreg['n'] = self.Pixel2Cell((x1, y1))
+                newreg['e'], newreg['s'] = self.Pixel2Cell((x2, y2))
 
             # zoom out
             elif zoomtype < 0:
-                newreg['w'], newreg['n'] = self.Pixel2Cell(-x1 * 2, -y1 * 2)
-                newreg['e'], newreg['s'] = self.Pixel2Cell(self.Map.width  + 2 * (self.Map.width  - x2),
-                                                           self.Map.height + 2 * (self.Map.height - y2))
+                newreg['w'], newreg['n'] = self.Pixel2Cell((-x1 * 2, -y1 * 2))
+                newreg['e'], newreg['s'] = self.Pixel2Cell((self.Map.width  + 2 * (self.Map.width  - x2),
+                                                            self.Map.height + 2 * (self.Map.height - y2)))
         # pan
         elif zoomtype == 0:
-            newreg['w'], newreg['n'] = self.Pixel2Cell(x1 - x2, y1 - y2)
-            newreg['e'], newreg['s'] = self.Pixel2Cell(self.Map.width  + x1 - x2,
-                                                       self.Map.height + y1 - y2)
+            dx = x1 - x2
+            dy = y1 - y2
+            newreg['w'], newreg['n'] = self.Pixel2Cell((dx, dy))
+            newreg['e'], newreg['s'] = self.Pixel2Cell((self.Map.width  + dx,
+                                                        self.Map.height + dy))
 
         # if new region has been calculated, set the values
         if newreg :
@@ -1298,6 +1337,8 @@ class BufferedWindow(wx.Window):
             self.Map.region['s'] = newreg['s']
             self.Map.region['e'] = newreg['e']
             self.Map.region['w'] = newreg['w']
+            self.Map.region['center_easting'] = newreg['w'] + (newreg['e'] - newreg['w']) / 2
+            self.Map.region['center_northing'] = newreg['s'] + (newreg['n'] - newreg['s']) / 2
 
             self.ZoomHistory(newreg['n'], newreg['s'], newreg['e'], newreg['w'])
 
@@ -1318,13 +1359,26 @@ class BufferedWindow(wx.Window):
             self.Map.region['w'] = zoom[3]
             self.UpdateMap()
 
-    def ZoomHistory(self, n,s,e,w):
+    def ZoomHistory(self, n, s, e, w):
         """
         Manages a list of last 10 zoom extents
+
+        Return removed history item if exists
         """
+        removed = None
         self.zoomhistory.append((n,s,e,w))
+
         if len(self.zoomhistory) > 10:
-            self.zoomhistory.pop(0)
+            removed = self.zoomhistory.pop(0)
+
+        if removed:
+            Debug.msg(4, "BufferedWindow.ZoomHistory(): hist=%s, removed=%s" %
+                      (self.zoomhistory, removed))
+        else:
+            Debug.msg(4, "BufferedWindow.ZoomHistory(): hist=%s" %
+                      (self.zoomhistory))
+        
+        return removed
 
     def ZoomToMap(self, event):
         """
@@ -1511,7 +1565,7 @@ class MapFrame(wx.Frame):
     drawing window.
     """
 
-    def __init__(self, parent=None, id = wx.ID_ANY, title="GRASS GIS Map display",
+    def __init__(self, parent=None, id=wx.ID_ANY, title="GRASS GIS - Map display",
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
                  tree=None, notebook=None, gismgr=None, page=None,
@@ -1522,13 +1576,13 @@ class MapFrame(wx.Frame):
 
             Parameters:
                 parent  -- parent window, None, wx.Window()
-                id      -- window ID, int, wx.NewId()
+                id      -- window ID, int, wx.ID_ANY
                 title   -- window title, string
                 pos     -- where to place it, tupple, wx.Position
                 size    -- window size, tupple, wx.Size
                 style   -- window style
-                toolbars-- array of default toolbars, which should appear
-                    map, digit
+                toolbars-- array of default toolbars, which should appear,
+                           currently: ['map', 'digit']
                 notebook-- control book ID in GIS Manager
                 tree    -- associated layer tree
                 gismgr  -- GIS Manager panel
@@ -1540,13 +1594,15 @@ class MapFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
-        # most of the thime, this will be the gis manager
-        self.gismanager = gismgr # GIS Manager object
-        self.Map = Map # instance of render.Map
-        self.tree = tree # GIS Manager layer tree object
-        self.page = page # Notebook page holding the layer tree
-        self.layerbook = notebook #GIS Manager layer tree notebook
+        self.gismanager = gismgr   # GIS Manager object
+        self.Map        = Map      # instance of render.Map
+        self.tree       = tree     # GIS Manager layer tree object
+        self.page       = page     # Notebook page holding the layer tree
+        self.layerbook  = notebook # GIS Manager layer tree notebook
+
+        #
         # available cursors
+        #
         self.cursors = {
             # default: cross
             # "default" : wx.StockCursor(wx.CURSOR_DEFAULT),
@@ -1558,17 +1614,17 @@ class MapFrame(wx.Frame):
             }
 
         #
-        # Set the size & cursor
+        # set the size & system icon
         #
         self.SetClientSize(size)
         self.iconsize = (16, 16)
+        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
         #
         # Fancy gui
         #
         # self._mgr = auimgr
         self._mgr = wx.aui.AuiManager(self)
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
 
         #
         # Add toolbars
@@ -1582,39 +1638,60 @@ class MapFrame(wx.Frame):
         #
         # Add statusbar
         #
-        self.statusbar = self.CreateStatusBar(number=2, style=0)
-        self.statusbar.SetStatusWidths([-5, -2])
-        self.Map.SetRegion()
-        map_frame_statusbar_fields = ["Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
-                                      "Res:%.2f(NS),%.2f(EW)" %
-                                      (self.Map.region["w"], self.Map.region["e"],
-                                       self.Map.region["n"], self.Map.region["s"],
-                                       self.Map.region["nsres"], self.Map.region["ewres"]),
-                                      "%s,%s" %(None, None)]
-        for i in range(len(map_frame_statusbar_fields)):
-            self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
+        self.statusbar = self.CreateStatusBar(number=3, style=0)
+        self.statusbar.SetStatusWidths([-2, -5, -1])
+        self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
+                                      choices = ["Coordinates",
+                                                 "Extent",
+                                                 "Geometry"])
+        self.statusText = "Coordinates"
+        self.statusbar.Bind(wx.EVT_CHOICE, self.OnToggleStatus, self.toggleStatus)
+        # auto-rendering checkbox
+        self.autoRender = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Render"))
+        self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleRender, self.autoRender)
+        self.autoRender.SetValue(False)
+        # show region
+        self.showRegion = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Show"))
+        self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
+        self.showRegion.SetValue(False)
+        self.showRegion.Hide()
+
+        self.Map.SetRegion() # set region
+        #         map_frame_statusbar_fields = [
+        #             # field 0 -> region
+        #             "Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
+        #             "Res:%.2f(NS),%.2f(EW)" %
+        #             (self.Map.region["w"], self.Map.region["e"],
+        #              self.Map.region["n"], self.Map.region["s"],
+        #              self.Map.region["nsres"], self.Map.region["ewres"]),
+        #             # field 1 -> coordinates
+        #             "%s,%s" % (None, None)]
+        #         for i in range(len(map_frame_statusbar_fields)):
+        #             self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
+        self.statusbar.SetStatusText("None,None", 1)
+        self.StatusbarReposition() # reposition checkbox
 
         #
         # Init map display
         #
-        self.InitDisplay() # initialize region values
+        self.__InitDisplay() # initialize region values
 
-        self.totaldist = 0.0 # total length measured
-        # initialize buffered DC
-        ## self.MapWindow = DrawWindow(self)
-        self.MapWindow = BufferedWindow(self, id = wx.ID_ANY, Map=self.Map, tree=self.tree)
+        # initialize buffered DC & set default cursor
+        self.MapWindow = BufferedWindow(self, id=wx.ID_ANY, Map=self.Map, tree=self.tree)
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
-        self.MapWindow.SetCursor(self.cursors["default"]) # default
+        self.MapWindow.SetCursor(self.cursors["default"]) 
 
         #
-        # Init zoomhistory
+        # Init zoom history
         #
         self.MapWindow.ZoomHistory(self.Map.region['n'],
                                    self.Map.region['s'],
                                    self.Map.region['e'],
                                    self.Map.region['w'])
 
-        # decoration overlays
+        #
+        # Decoration overlays
+        #
         self.ovlchk = self.MapWindow.ovlchk
         self.ovlcoords = self.MapWindow.ovlcoords
         # previously set decoration options parameters to insert into options dialog
@@ -1723,14 +1800,16 @@ class MapFrame(wx.Frame):
         self.maptoolbar.combo.SetValue ("");
         self._mgr.Update()
 
-    def InitDisplay(self):
+    def __InitDisplay(self):
         """
         Initialize map display, set dimensions and map region
         """
         self.width, self.height = self.GetClientSize()
-        self.Map.geom = self.width, self.height
-        self.Map.GetRegion()
-        self.Map.SetRegion()
+
+        Debug.msg(2, "MapFrame.__InitDisplay():")
+        self.Map.ChangeMapSize(self.GetClientSize())
+        self.Map.GetRegion() # g.region -upg
+        self.Map.SetRegion() # adjust region to match display window
 
     def OnFocus(self, event):
         """
@@ -1750,12 +1829,10 @@ class MapFrame(wx.Frame):
         Mouse moved
         Track mouse motion and update status bar
         """
-        # store current mouse position
-        posx, posy = event.GetPositionTuple()
-
-        # upsdate coordinates
-        x, y = self.MapWindow.Pixel2Cell(posx, posy)
-        self.statusbar.SetStatusText("%.2f,%.2f" % (x, y), 1)
+        # update statusbar if required
+        e, n = self.MapWindow.Pixel2Cell(event.GetPositionTuple())
+        if self.statusText == "Coordinates":
+            self.statusbar.SetStatusText("%.2f,%.2f" % (e, n), 1)
 
         event.Skip()
 
@@ -1764,14 +1841,14 @@ class MapFrame(wx.Frame):
         Redraw button clicked
         """
         Debug.msg(3, "BufferedWindow.ReDraw():")
-        self.MapWindow.UpdateMap()
+        self.MapWindow.UpdateMap(render=False)
 
     def ReRender(self, event):
         """
         Rerender button clicked
         """
         Debug.msg(3, "BufferedWindow.ReRender():")
-        self.MapWindow.UpdateMap()
+        self.MapWindow.UpdateMap(render=True)
 
     def Pointer(self, event):
         """Pointer button clicled"""
@@ -1855,9 +1932,61 @@ class MapFrame(wx.Frame):
             self.Map.alignRegion = False
 #        event.Skip()
 
+    def OnToggleRender(self, event):
+        """Enable/disable auto-rendering"""
+        if self.autoRender.GetValue():
+            self.ReRender(None)
+
+    def OnToggleShowRegion(self, event):
+        """Show/Hide extent in map canvas"""
+        if self.showRegion.GetValue():
+            # show extent
+            self.regionCoords = []
+        else:
+            del self.regionCoords
+
+    def OnToggleStatus(self, event):
+        """Toggle status text"""
+        self.statusText = event.GetString()
+
+        if self.statusText == "Coordinates":
+            self.statusbar.SetStatusText("None,None", 1)
+            self.showRegion.Hide()
+        elif self.statusText == "Extent":
+            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
+                                         (self.Map.region["w"], self.Map.region["e"],
+                                          self.Map.region["n"], self.Map.region["s"]), 1)
+            self.showRegion.Show()
+        elif self.statusText == "Geometry":
+            self.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
+                                         (self.Map.region["rows"], self.Map.region["cols"],
+                                          self.Map.region["nsres"], self.Map.region["ewres"]), 1)
+            self.showRegion.Hide()
+        else:
+            self.statusbar.SetStatusText("", 1)
+
+    def StatusbarReposition(self):
+        """Reposition checkbox in statusbar"""
+        # reposition checkbox
+        widgets = {0: self.toggleStatus,
+                   1: self.showRegion,
+                   2: self.autoRender}
+        for idx, win in widgets.iteritems():
+            rect = self.statusbar.GetFieldRect(idx)
+            if idx == 1: # show region
+                wWin, hWin = win.GetBestSize()
+                x, y = rect.x + rect.width - wWin, rect.y-1
+                w, h = wWin, rect.height+2
+            else: # choice || auto-rendering
+                x, y = rect.x, rect.y-1
+                w, h = rect.width, rect.height+2
+
+            win.SetPosition((x, y))
+            win.SetSize((w, h))
+
     def SaveToFile(self, event):
         """
-        Save to file
+        Save image to file
         """
         filetype =  "PNG file (*.png)|*.png|"\
                     "TIF file (*.tif)|*.tif|"\
@@ -1954,7 +2083,7 @@ class MapFrame(wx.Frame):
         """
         #set query snap distance for v.what at mapunit equivalent of 10 pixels
         qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
-        east,north = self.MapWindow.Pixel2Cell(x, y)
+        east,north = self.MapWindow.Pixel2Cell((x, y))
 
         if self.tree.GetSelections():
             mapname = None
@@ -2042,6 +2171,8 @@ class MapFrame(wx.Frame):
         map distance along transect drawn on
         map display
         """
+
+        self.totaldist = 0.0 # total measured distance
 
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)

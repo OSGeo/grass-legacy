@@ -111,9 +111,11 @@ int DisplayDriver::DrawLine(int line)
     int x, y, z; // screen coordinates
     bool draw;   // draw object ?
 
+    // read line
     type = Vect_read_line (mapInfo, points, cats, line);
-    pointsScreen->Clear();
 
+    // clear screen points & convert EN -> xy
+    pointsScreen->Clear();
     for (int i = 0; i < points->n_points; i++) {
 	Cell2Pixel(points->x[i], points->y[i], points->z[i],
 		   &x, &y, &z);
@@ -177,8 +179,8 @@ int DisplayDriver::DrawLine(int line)
 	    }
 	}
 
-	DrawLineVerteces(line); // draw vertices
-	DrawLineNodes(line);    // draw nodes
+	//DrawLineVerteces(line); // draw vertices
+	//DrawLineNodes(line);    // draw nodes
     }
     else if (type & GV_POINTS) {
 	if (type == GV_POINT && settings.point.enabled) {
@@ -386,9 +388,9 @@ void DisplayDriver::ReloadMap()
 void DisplayDriver::Cell2Pixel(double east, double north, double depth,
 			       int *x, int *y, int *z)
 {
-    *x = int((east  - region.west) / region.ew_res);
-    *y = int((region.north - north) / region.ns_res);
-    *z = 0;
+  *x = int((east  - region.west_real) / region.res);
+  *y = int((region.north_real - north) / region.res);
+  *z = 0;
 
     return;
 }
@@ -403,7 +405,9 @@ void DisplayDriver::Cell2Pixel(double east, double north, double depth,
    \return
 */
 void DisplayDriver::SetRegion(double north, double south, double east, double west,
-			      double ns_res, double ew_res)
+			      double ns_res, double ew_res,
+			      double center_easting, double center_northing,
+			      double map_width, double map_height)
 {
     region.north  = north;
     region.south  = south;
@@ -411,6 +415,18 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.west   = west;
     region.ns_res = ns_res;
     region.ew_res = ew_res;
+
+    region.center_easting = center_easting;
+    region.center_northing = center_northing;
+
+    region.map_width  = map_width;
+    region.map_height = map_height;
+
+    // calculate real region
+    region.res = (region.ew_res > region.ns_res) ? region.ew_res : region.ns_res;
+
+    region.west_real  = region.center_easting - (region.map_width / 2) * region.res;
+    region.north_real = region.center_northing + (region.map_height / 2) * region.res;
 
     return;
 }

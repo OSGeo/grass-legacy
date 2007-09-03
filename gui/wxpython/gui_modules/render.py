@@ -170,58 +170,42 @@ class MapLayer(object):
 
 class Map(object):
     """
-    This class serves for rendering of output images.
-
-    Attributes:
-        env       - for some environment variables
-    verbosity - verbosity level
-    width     - width of the map in pixels
-    height    - height of the map in pixels
-    windfile  - content of WIND file for temporary region
-        settings
-        n-s resol: 30;
-        e-w resol: 30;
-        ...
-    region - g.region -gp output
-        'n':1000,
-        's':0,
-        'e':1000,
-        'w':0,
-        ...
-    layers - list of all available layers
-    renderRegion - dictionary:
-        'color' : 'RRR:GGG:BBB',
-        'width' : 3,
-        'render': True/False
-    mapfile   - rendered final image filename
+    The class serves for rendering of output images.
     """
 
     def __init__(self):
-        """
-        During initalization, necessary variables are set, monitor size is
-        determined and
-        """
+        """Map constructor"""
 
-        self.wind      = {}  # WIND settings
-        self.region    = {}  # region settings
+        # 
+        # region/extent settigns
+        #
+        self.wind      = {}    # WIND settings (wind file)
+        self.region    = {}    # region settings (g.region)
         self.width     = 640.0 # map width
         self.height    = 480.0 # map height
 
-        self.layers    = []  # stack of available layer
+        #
+        # list of layers
+        #
+        self.layers    = []  # stack of available GRASS layer
+
         self.overlays  = []  # stack of available overlays
         self.ovlookup  = {}  # lookup dictionary for overlay items and overlays
+
+        #
+        # environment settings
+        #
         self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
-        self.verbosity = 0
+
+        self.verbosity = 0   # --q
+
+        # 
+        # generated file for rendering the map
+        #
         self.mapfile   = utils.GetTempfile()
 
-#		self.renderRegion = {
-#			"render" : True,     # should the region be displayed?
-#			"color"	 :"255:0:0",
-#			"width"	 : 3
-#			}
-
         # setting some initial env. variables
-        self.__initEnv()
+        self.__initGisEnv() # g.gisenv
         self.__initRegion()
         os.environ["GRASS_TRANSPARENT"]     = "TRUE"
         os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
@@ -235,11 +219,12 @@ class Map(object):
 
     def __initRegion(self):
         """
-        Reads current region settings from g.region command
+        Reads current region settings from g.region command and wind file.
+        At the end region is set up.
         """
 
         #
-        # setting region
+        # setting region ('g.region -upg')
         #
         self.region = self.GetRegion()
 
@@ -247,17 +232,15 @@ class Map(object):
         # setting WIND
         #
         # FIXME: duplicated region WIND == g.region (at least some values)
-        # FIXME: cannot open WIND file -> raise exception
         windfile = os.path.join (self.env['GISDBASE'],
-               self.env['LOCATION_NAME'],
-               self.env['MAPSET'],
-               "WIND")
-
+                                 self.env['LOCATION_NAME'],
+                                 self.env['MAPSET'],
+                                 "WIND")
         try:
             windfile = open (windfile, "r")
-        except StandardError, e :
-            sys.stderr.write("Could open file <%s>: %s\n" % \
-                   (windfile,e))
+        except StandardError, e:
+            sys.stderr.write(_("Could open file <%s>: %s\n") % \
+                                 (windfile,e))
             sys.exit(1)
 
         for line in windfile.readlines():
@@ -278,39 +261,39 @@ class Map(object):
         # self.region['ewres'] = self.region['nsres'] = abs(float(self.region['e'])
         # - float(self.region['w']))/self.width
 
-# I don't think that this method is used anymore (Michael 8/6/2007
-#    def __initMonSize(self):
-#        """
-#        Reads current GRASS monitor dimensions from env or
-#        use the default values [640x480]
-#        """
-#        print 'in initmonsize'
-#
-#        try:
-#            self.width = int (os.getenv("GRASS_WIDTH"))
-#        except:
-#            self.width = 640
-#
-#        try:
-#            self.height = int(os.getenv("GRASS_HEIGHT"))
-#
-#        except:
-#            self.height = 480
-
-
-    def __initEnv(self):
+        # I don't think that this method is used anymore (Michael 8/6/2007
+        #    def __initMonSize(self):
+        #        """
+        #        Reads current GRASS monitor dimensions from env or
+        #        use the default values [640x480]
+        #        """
+        #        print 'in initmonsize'
+        #
+        #        try:
+        #            self.width = int (os.getenv("GRASS_WIDTH"))
+        #        except:
+        #            self.width = 640
+        #
+        #        try:
+        #            self.height = int(os.getenv("GRASS_HEIGHT"))
+        #
+        #        except:
+        #            self.height = 480
+        
+        
+    def __initGisEnv(self):
         """
-        Stores environment variables to self.env variable
+        Stores GRASS variables (g.gisenv) to self.env variable
         """
 
         if not os.getenv("GISBASE"):
-            sys.stderr.write("GISBASE not set, you must be "
-                 "in GRASS GIS to run this program\n")
+            sys.stderr.write(_("GISBASE not set, you must be "
+                               "in GRASS GIS to run this program\n"))
             sys.exit(1)
 
-        #os.system("d.mon --quiet stop=gism")
+        gisenvCmd = cmd.Command(["g.gisenv"])
 
-        for line in os.popen("g.gisenv").readlines():
+        for line in gisenvCmd.ReadStdOutput():
             line = line.strip()
             key, val = line.split("=")
             val = val.replace(";","")
@@ -325,15 +308,14 @@ class Map(object):
         resolution. Set computational resolution through g.region.
         """
 
-        self.width = float(self.width)
-        self.height = float(self.height)
-        mapwidth = abs(self.region["e"] - self.region["w"])
-        mapheight = abs(self.region['n'] - self.region['s'])
+        mapwidth    = abs(self.region["e"] - self.region["w"])
+        mapheight   = abs(self.region['n'] - self.region['s'])
 
-        self.region["nsres"] = mapheight / self.height
-        self.region["ewres"] =  mapwidth / self.width
-        self.region['rows'] = round(mapheight/self.region["nsres"])
-        self.region['cols'] = round(mapwidth/self.region["ewres"])
+        self.region["nsres"] =  mapheight / self.height
+        self.region["ewres"] =  mapwidth  / self.width
+        self.region['rows']  = round(mapheight / self.region["nsres"])
+        self.region['cols']  = round(mapwidth / self.region["ewres"])
+        self.region['cells'] = self.region['rows'] * self.region['cols']
 
         Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
 
@@ -376,6 +358,22 @@ class Map(object):
         new['e'] = new['w'] + (new['cols'] * ewres)
         return new
 
+    def ChangeMapSize(self, (width, height)):
+        """Change size of rendered map.
+        
+        Return:
+        True on success
+        False on failure
+        """
+        try:
+            self.width  = float(width)
+            self.height = float(height)
+            Debug.msg(2, "Map.ChangeMapSize(): width=%.1f, height=%.1f" % \
+                          (self.width, self.height))
+            return True
+        except:
+            return False
+
     def GetRegion(self):
         """
         Returns dictionary with output from g.region -gp
@@ -389,14 +387,18 @@ class Map(object):
         tmpreg = os.getenv("GRASS_REGION")
         os.unsetenv("GRASS_REGION")
 
-        for reg in os.popen("g.region -ugp").readlines():
+        # do not update & shell style output
+        cmdRegion = cmd.Command(["g.region", "-u", "-g", "-p", "-c"])
+
+        for reg in cmdRegion.ReadStdOutput():
             reg = reg.strip()
-            key, val = reg.split("=",1)
+            key, val = reg.split("=", 1)
             try:
                 region[key] = float(val)
             except ValueError:
                 region[key] = val
 
+        # restore region
         if tmpreg:
             os.environ["GRASS_REGION"] = tmpreg
 
@@ -410,21 +412,23 @@ class Map(object):
         from desired zoom level.
 
         Returns:
-        string usable for GRASS_REGION variable or None
+        String usable for GRASS_REGION variable or None
         If windres set to True, uses resolution from WIND file rather than display
         (for modules that require set resolution like d.rast.num)
         """
 
         grass_region = ""
 
+        # adjust region settigns to match monitor
         self.region = self.__adjustRegion()
 
-#        newextents = self.alignResolution()
-#        self.region['n'] = newextents['n']
-#        self.region['s'] = newextents['s']
-#        self.region['e'] = newextents['e']
-#        self.region['w'] = newextents['w']
+        #        newextents = self.alignResolution()
+        #        self.region['n'] = newextents['n']
+        #        self.region['s'] = newextents['s']
+        #        self.region['e'] = newextents['e']
+        #        self.region['w'] = newextents['w']
 
+        # read values from wind file
         try:
             for key in self.wind.keys():
                 if key == 'north':
@@ -462,7 +466,7 @@ class Map(object):
                 else:
                     grass_region += key + ": "  + self.wind[key] + "; "
 
-            Debug.msg (4, "Map.SetRegion(): %s" % grass_region)
+            Debug.msg (3, "Map.SetRegion(): %s" % grass_region)
 
             return grass_region
 
@@ -475,13 +479,11 @@ class Map(object):
         """
 
         projinfo = {}
-        cmdlist = ['g.proj', '-p']
 
-        p = cmd.Command(cmdlist)
+        p = cmd.Command(['g.proj', '-p'])
 
         if p.returncode == 0:
-            output = p.module_stdout.read().split('\n')
-            for line in output:
+            for line in p.ReadStdOutput():
                 if ':' in line:
                     key,val = line.split(':')
                     key = key.strip()
@@ -564,7 +566,6 @@ class Map(object):
         os.environ["GRASS_REGION"] = self.SetRegion()
         os.environ["GRASS_WIDTH"]  = str(self.width)
         os.environ["GRASS_HEIGHT"] = str(self.height)
-
 
         try:
             # render map layers

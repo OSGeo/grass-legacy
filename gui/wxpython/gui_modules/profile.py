@@ -252,7 +252,7 @@ class ProfileFrame(wx.Frame):
         if len(self.mapwin.polycoords) > 0:
             for point in self.mapwin.polycoords:
                 # convert screen coordinates to map coordinates for transect
-                east, north = self.mapwin.Pixel2Cell(point[0],point[1])
+                east, north = self.mapwin.Pixel2Cell(point)
 
                 # build string of coordinate points for r.profile
                 if self.coordstr == '':
@@ -343,7 +343,7 @@ class ProfileFrame(wx.Frame):
         if len(self.mapwin.polycoords) > 0 and self.rast1 != '':
             for point in self.mapwin.polycoords:
                 # convert screen coordinates to map coordinates for transect
-                east, north = self.mapwin.Pixel2Cell(point[0],point[1])
+                east, north = self.mapwin.Pixel2Cell(point)
 
                 # get value of raster cell at coordinate point
                 try:
