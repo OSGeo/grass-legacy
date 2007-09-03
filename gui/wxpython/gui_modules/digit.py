@@ -437,9 +437,12 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         Return wx.Image 
         """
-        
+        import time
+        start = time.clock()
         nlines = self.__display.DrawMap(pdc)
-        Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
+        stop = time.clock()
+        Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d, sec=%f" % \
+                      (nlines, stop-start))
 
         return nlines
     def SelectLinesByBox(self, begin, end, onlyType=None):
@@ -513,19 +516,23 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         self.__display.SetSelected(id)
 
-    def SetRegion(self, reg):
+    def UpdateRegion(self):
         """Set geographical region
         
         Needed for 'cell2pixel' conversion"""
         
-        Debug.msg(3, "CDisplayDriver.SetRegion(): %s" % reg)
+        map = self.mapwindow.Map
+        reg = map.region
         
         self.__display.SetRegion(reg['n'],
-                               reg['s'],
-                               reg['e'],
-                               reg['w'],
-                               reg['nsres'],
-                               reg['ewres'])
+                                 reg['s'],
+                                 reg['e'],
+                                 reg['w'],
+                                 reg['nsres'],
+                                 reg['ewres'],
+                                 reg['center_easting'],
+                                 reg['center_northing'],
+                                 map.width, map.height)
     
     def UpdateSettings(self):
         """Update display driver settings"""
@@ -1192,3 +1199,7 @@ class DigitSettingsDialog(wx.Dialog):
         # update driver settings
         if not usePyDisplayDriver:
             self.parent.digit.driver.UpdateSettings()
+
+        # redraw map if auto-rendering is enabled
+        if self.parent.autoRender.GetValue(): 
+            self.parent.ReRender(None)

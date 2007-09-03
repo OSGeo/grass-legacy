@@ -574,6 +574,10 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.layers.pop(item)
 
+        # redraw map if auto-rendering is enabled
+        if self.mapdisplay.autoRender.GetValue(): 
+            self.mapdisplay.ReRender(None)
+
     def OnLayerChecked(self, event):
         """Enable/disable given layer item"""
         item    = event.GetItem()
@@ -595,6 +599,10 @@ class LayerTree(CT.CustomTreeCtrl):
                     child = self.GetNextChild(item, cookie)[0]
             else:
                 self.Map.ChangeLayerActive(self.layers[item].maplayer, checked)
+
+        # redraw map if auto-rendering is enabled
+        if self.mapdisplay.autoRender.GetValue(): 
+            self.mapdisplay.ReRender(None)
 
     def OnCmdChanged(self, event):
         """Change command string"""
@@ -633,6 +641,10 @@ class LayerTree(CT.CustomTreeCtrl):
         # change opacity parameter for item in layers list in render.Map
         if maplayer and self.drag == False:
             self.Map.ChangeOpacity(maplayer, opacity)
+
+        # redraw map if auto-rendering is enabled
+        if self.mapdisplay.autoRender.GetValue(): 
+            self.mapdisplay.ReRender(None)
 
     def OnChangeSel(self, event):
         oldlayer = event.GetOldItem()
@@ -891,6 +903,10 @@ class LayerTree(CT.CustomTreeCtrl):
         # if digitization tool enabled -> update list of available vector map layers
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers(updateTool=True)
+
+        # redraw map if auto-rendering is enabled
+        if self.mapdisplay.autoRender.GetValue(): 
+            self.mapdisplay.ReRender(None)
 
     def setNotebookPage(self,pg):
         self.Parent.notebook.SetSelection(pg)

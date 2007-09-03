@@ -388,11 +388,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         """
         Gets coordinates from mouse clicking on display window
         """
-        # screen coordinates
-        posx, posy = event.GetPositionTuple()
-
         # map coordinates
-        x, y = self.mapdisp.MapWindow.Pixel2Cell(posx, posy)
+        x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple())
         #print 'coordinates =',x,y
 
         category = ""
