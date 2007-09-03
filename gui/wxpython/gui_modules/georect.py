@@ -27,6 +27,13 @@ import math
 import tempfile
 import shutil
 
+try:
+    import subprocess # Not needed if GRASS commands could actually be quiet
+except:
+    CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
+    sys.path.append(CompatPath)
+    from compat import subprocess
+
 import wx
 import wx.aui
 import wx.lib.filebrowsebutton as filebrowse
@@ -69,15 +76,15 @@ global curr_mapset
 global xy_location
 global xy_mapset
 global xy_group
-global xy_dispmap
+global xy_map
 
 global maptype
 
 xy_location = ''
 xy_mapset = ''
 xy_group = ''
-xy_dispmap = ''
-maptype = 'raster'
+xy_map = ''
+maptype = 'cell'
 
 class Georectify(object):
     """
@@ -119,7 +126,6 @@ class TitledPage(wiz.WizardPageSimple):
         self.title.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
         self.sizer = wx.BoxSizer(wx.VERTICAL)
 
-#        self.sizer = rcs.RowColSizer()
         tmpsizer = wx.BoxSizer(wx.VERTICAL)
 
         tmpsizer.Add(self.title, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
@@ -130,14 +136,6 @@ class TitledPage(wiz.WizardPageSimple):
         self.SetSizer(tmpsizer)
         self.SetAutoLayout(True)
         tmpsizer.Fit(self)
-#        self.SetSizer(self.sizer)
-#        self.sizer.Fit(tmpsizer)
-
-
-    def SwitchLocMapset(self, location, mapset):
-        cmdlst = ['g.mapset','mapset=%s' % mapset,'location=%s' % location,'--q']
-        cmd.Command(cmdlist)
-
 
 class GeorectWizard(object):
     """
@@ -164,8 +162,6 @@ class GeorectWizard(object):
         global curr_mapset
         curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
 
-        self.maptype = ''
-
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Setup for georectification")
         self.startpage = LocationPage(self.wizard, self)
@@ -182,6 +178,8 @@ class GeorectWizard(object):
 
         self.wizard.FitToPage(self.startpage)
 
+#        self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
+
         success = False
 
         if self.wizard.RunWizard(self.startpage):
@@ -193,10 +191,58 @@ class GeorectWizard(object):
         else:
             wx.MessageBox("Georectifying setup canceled.")
 
-#        self.wizard.Destroy()
+        # start display showing xymap
+        self.Map = render.Map()    # instance of render.Map to be associated with display
+
+        self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
+                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=wx.DEFAULT_FRAME_STYLE, toolbars=["georect"],
+                 Map=self.Map)
+
+        #show new display
+        self.xy_mapdisp.Show()
+        self.xy_mapdisp.Refresh()
+        self.xy_mapdisp.Update()
+
+
+        # start GCP form
+
+        self.Cleanup()
+
+    def SwitchLocMapset(self, location, mapset):
+
+        cmdlist = ['g.gisenv', 'set=LOCATION_NAME=%s' % location]
+        cmd.Command(cmdlist)
+
+        cmdlist = ['g.gisenv', 'set=MAPSET=%s' % mapset]
+        cmd.Command(cmdlist)
 
     def onWizFinished(self):
-        return success
+        global grassdatabase
+        global curr_location
+        global curr_mapset
+        global xy_location
+        global xy_mapset
+        global xy_group
+        global xy_map
+        global maptype
+
+        print 'Current global variables'
+        print 'curr_location=',curr_location
+        print 'curr_mapset=',curr_mapset
+        print 'xy_location=',xy_location
+        print 'xy_mapset=',xy_mapset
+        print 'xy_group=',xy_group
+        print 'xy_map=',xy_map
+        print 'maptype=',maptype
+
+        return True
+
+    def Cleanup(self):
+        # return to current location and mapset
+        global curr_location
+        self.SwitchLocMapset(curr_location, curr_mapset)
+        self.wizard.Destroy()
 
 class LocationPage(TitledPage):
     """
@@ -254,10 +300,20 @@ class LocationPage(TitledPage):
         box.Add(self.cb_mapset, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
+        self.Bind(wx.EVT_RADIOBOX, self.OnMaptype, self.rb_maptype)
         self.Bind(wx.EVT_COMBOBOX, self.OnLocation, self.cb_location)
         self.Bind(wx.EVT_COMBOBOX, self.OnMapset, self.cb_mapset)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChanging)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChanged)
+        self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
+
+    def OnMaptype(self,event):
+        global maptype
+
+        if event.GetInt() == 0:
+            maptype = 'cell'
+        elif event.GetInt() == 1:
+            maptype = 'vector'
 
     def OnLocation(self, event):
         global grassdatabase
@@ -326,6 +382,7 @@ class GroupPage(TitledPage):
         self.Bind(wx.EVT_COMBOBOX, self.OnGroup, self.cb_group)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChanging)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChanged)
+        self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
     def OnGroup(self, event):
         global xy_location
@@ -373,180 +430,50 @@ class DispMapPage(TitledPage):
         TitledPage.__init__(self, wizard, "Select image/map to display for ground control point (GCP) creation")
 
         self.parent = parent
+        global maptype
 
-        global curr_location
-        global curr_mapset
-        global xy_location
-        global xy_mapset
-        global xy_group
-
-        self.path = ''
+        self.parent = parent
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, 'Select display image/map:', style=wx.ALIGN_LEFT)
         box.Add(label, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
-                                              type=self.parent.maptype )
+                                              type=maptype )
         box.Add(self.selection, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
-        self.Bind(wx.EVT_TEXT, self.OnSelection, self.selection)
+        self.selection.Bind(wx.EVT_TEXT, self.OnSelection)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChanging)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChanged)
+        self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
     def OnSelection(self,event):
-        global xy_dispmap
-        xy_dispmap = event.GetString()
-        print 'map =',xy_dispmap
+        global xy_map
+
+        xy_map = event.GetString()
 
     def onPageChanging(self,event=None):
-        global xy_dispmap
-        if event.GetDirection() and xy_dispmap == '':
+        global xy_map
+
+        if event.GetDirection() and xy_map == '':
             wx.MessageBox('You must select a valid image/map in order to continue')
             event.Veto()
             return
-        else:
-            pass
-            # return to current location/mapset
 
     def OnPageChanged(self,event=None):
+        global curr_location
+        global curr_mapset
+        global xy_location
+        global xy_mapset
+        global maptype
+
         if event.GetDirection():
-            # switch to xy location
-            pass
-
-
-class GeorectStart(wx.Dialog):
-    def __init__(self, parent, id=wx.ID_ANY, title=_('Set georectification parameters'),
-                           pos=wx.DefaultPosition, size=(-1,-1),
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-
-        #set environmental variables
-        cmdlist = ['g.gisenv', 'get=GISDBASE']
-        self.grassdatabase = cmd.Command(cmdlist).module_stdout.read().strip()
-
-        cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
-        self.curr_location = cmd.Command(cmdlist).module_stdout.read().strip()
-
-        cmdlist = ['g.gisenv', 'get=MAPSET']
-        self.curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
-
-        self.StartDir = os.path.join(self.grassdatabase,self.curr_location)
-        self.grassdatabase = ''
-        self.xy_locationPath = ''
-        self.xy_location = ''
-        self.xy_mapset = ''
-        self.xy_mapsetPath = ''
-        self.xy_groupPath = ''
-        self.xy_group = ''
-
-        #select display map (entry)
-        #start and cancel (buttons)
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.rb_maptype = wx.RadioBox(self, -1, "Map type to georectify",
-                                   wx.DefaultPosition, wx.DefaultSize,
-                                   ['raster','vector'], 2, wx.RA_SPECIFY_COLS)
-        box.Add(self.rb_maptype, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.dbb_mapset = filebrowse.DirBrowseButton(
-            self, wx.ID_ANY, size=(450, -1),
-            labelText='Select mapset: ',
-            buttonText='Browse ...',
-            toolTip='Select mapset of maps to georeference',
-            dialogTitle='Mapsets',
-            startDirectory=self.StartDir,
-            changeCallback = self.On_dbb_mapset)
-        box.Add(self.dbb_mapset, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_mkgroup = wx.Button(self, wx.ID_ANY, "Make group ...")
-        box.Add(self.btn_mkgroup, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.dbb_group = filebrowse.DirBrowseButton(
-            self, wx.ID_ANY, size=(450, -1),
-            labelText='Select group: ',
-            buttonText='Browse ...',
-            toolTip='Select group of maps to georeference',
-            dialogTitle='Groups',
-            startDirectory=self.xy_groupPath,
-            changeCallback = self.On_dbb_group)
-        # Need to deactivate until xy_mapsetPath is set
-        box.Add(self.dbb_group, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        #Select the display map here...????
-        #In TclTk, first switch to xy mapset; then select map
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_selmap = wx.Button(self, wx.ID_ANY, "Select map ...")
-
-        box.Add(self.btn_selmap, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        self.sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
-
-        btnsizer = wx.StdDialogButtonSizer()
-
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        self.sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-        self.Bind(wx.EVT_BUTTON, self.OnMkgroup, self.btn_mkgroup)
-        self.Bind(wx.EVT_BUTTON, self.OnSelectMap, self.btn_selmap)
-
-    def On_dbb_mapset(self,event):
-        self.xy_mapsetPath = event.GetString()
-        self.xy_locationPath,self.xy_mapset = os.path.split(self.xy_mapsetPath)
-        self.grassdatabase, self.xy_location = os.path.split(self.xy_locationPath)
-        self.StartDir = self.xy_mapsetPath
-        self.xy_groupPath = os.path.join(self.xy_mapsetPath,'group')
-        self.Refresh()
-        print 'group start =',self.xy_groupPath
-        print 'new start dir =',self.StartDir
-
-    def On_dbb_group(self,event):
-        if self.xy_mapsetPath != '':
-            self.xy_groupPath,self.xy_group = os.path.split(event.GetString())
-            print 'group =',self.xy_group
+            # switch to xy location if coming into the page from preceding
+            self.parent.SwitchLocMapset(xy_location, xy_mapset)
+            self.selection.SetElementList(maptype)
         else:
-            wx.MessageBox('You must select a valid mapset')
-
-    def OnSelectMap(self,event):
-        dlg = select.SelectDialog(self,title="Select map",type='cell')
-        dlg.CenterOnScreen()
-        if dlg.ShowModal() == wx.ID_OK:
-            self.xy_map = dlg.selection.GetValue()
-
-        dlg.Destroy()
-        print 'selection =',self.xy_map
-
-
-    def OnMkgroup(self,event):
-        menuform.GUI().ParseCommand('i.group', parentframe=self)
-        pass
-
-    def SwitchToXY(self):
-        pass
-
-    def SwitchBack(self):
-        pass
+            # switch back to current location if leaving the page
+            self.parent.SwitchLocMapset(curr_location, curr_mapset)
 
 class GCP(wx.Frame):
     """
