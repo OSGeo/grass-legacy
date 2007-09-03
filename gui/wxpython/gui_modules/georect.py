@@ -60,7 +60,7 @@ import grassenv
 import menuform
 import select
 import disp_print
-import cmd
+import gcmd as cmd
 from debug import Debug as Debug
 from icon import Icons as Icons
 

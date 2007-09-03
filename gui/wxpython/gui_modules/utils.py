@@ -16,7 +16,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 
 import os
 
-import cmd
+import gcmd as cmd
 
 def GetTempfile(pref=None):
     """

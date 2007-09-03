@@ -24,7 +24,7 @@ import wx.combo
 GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(GuiModulePath)
 
-import cmd
+import gcmd as cmd
 
 class SelectDialog(wx.Dialog):
     def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',

@@ -19,7 +19,7 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
 import os, sys, glob, math
 import utils
 
-import cmd
+import gcmd as cmd
 from debug import Debug as Debug
 
 class MapLayer(object):

@@ -35,7 +35,7 @@ import select
 import menuform
 import mapdisp
 import render
-import cmd
+import gcmd as cmd
 import grassenv
 import histogram
 from debug import Debug as Debug
