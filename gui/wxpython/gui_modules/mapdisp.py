@@ -215,7 +215,7 @@ class BufferedWindow(wx.Window):
         self.pdc = wx.PseudoDC()
         # used for digitization tool
         self.pdcVector = None
-        
+
         # will store an off screen empty bitmap for saving to file
         self._Buffer = ''
 
@@ -390,7 +390,7 @@ class BufferedWindow(wx.Window):
         # draw to the dc using the calculated clipping rect
         self.pdc.DrawToDCClipped(dc, rgn)
 
-        # draw vector map layer 
+        # draw vector map layer
         if self.pdcVector:
             self.pdcVector.DrawToDCClipped(dc, rgn)
 
@@ -469,7 +469,7 @@ class BufferedWindow(wx.Window):
             img = None
 
         self.imagedict[img] = 99 # set image PseudoDC ID
-        
+
         return img
 
 
@@ -501,9 +501,9 @@ class BufferedWindow(wx.Window):
             return False
 
         # draw background map image to PseudoDC
-        self.Draw(self.pdc, self.img, drawid=id) 
-            
-        # render vector map layer 
+        self.Draw(self.pdc, self.img, drawid=id)
+
+        # render vector map layer
         digitToolbar = self.parent.digittoolbar
         if digitToolbar and \
                 digitToolbar.layerSelectedID != None:
@@ -921,7 +921,7 @@ class BufferedWindow(wx.Window):
                 else:
                     # -> moveLine || deleteLine (select by box)
                     nselected = driver.SelectLinesByBox(pos1, pos2)
-                    
+
                 if nselected > 0:
                     # highlight selected features
                     self.UpdateMap(render=False)
@@ -1113,7 +1113,7 @@ class BufferedWindow(wx.Window):
                                                             self.mouse['begin'][1]))
             elif digit.action == "removeVertex":
                 # remove vertex
-                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0], 
+                self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin'][0],
                                                                self.mouse['begin'][1]))
 
             if digit.action != "addLine":
@@ -1575,6 +1575,7 @@ class MapFrame(wx.Frame):
         #
         self.maptoolbar = None
         self.digittoolbar = None
+        self.grtoolbar = None
         for toolb in toolbars:
             self.AddToolbar(toolb)
 
@@ -1658,6 +1659,7 @@ class MapFrame(wx.Frame):
         Currently known toolbars are:
             * map
             * digit
+            * georect
         """
         if name == "map":
             self.maptoolbar = toolbars.MapToolbar(self, self.Map)
@@ -1682,6 +1684,12 @@ class MapFrame(wx.Frame):
                                   BottomDockable(False).TopDockable(True).
                                   CloseButton(False).Layer(2))
 
+            # change mouse to draw digitized line
+            self.MapWindow.mouse['box'] = "point"
+            self.MapWindow.zoomtype = 0
+            self.MapWindow.pen     = wx.Pen(colour='red',   width=2, style=wx.SOLID)
+            self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SOLID)
+
         elif name == "georect":
             self.grtoolbar = toolbars.GRToolbar(self, self.Map)
 
@@ -1692,12 +1700,6 @@ class MapFrame(wx.Frame):
                               LeftDockable(False).RightDockable(False).
                               BottomDockable(False).TopDockable(True).
                               CloseButton(False).Layer(2))
-
-            # change mouse to draw digitized line
-            self.MapWindow.mouse['box'] = "point"
-            self.MapWindow.zoomtype = 0
-            self.MapWindow.pen     = wx.Pen(colour='red',   width=2, style=wx.SOLID)
-            self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SOLID)
 
         self._mgr.Update()
 
@@ -1780,7 +1782,7 @@ class MapFrame(wx.Frame):
         # change the cursor
         if self.digittoolbar:
             # digitization tool activated
-            self.MapWindow.SetCursor(self.cursors["cross"]) 
+            self.MapWindow.SetCursor(self.cursors["cross"])
         else:
             self.MapWindow.SetCursor(self.cursors["default"])
 
