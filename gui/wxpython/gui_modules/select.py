@@ -64,7 +64,6 @@ class SelectDialog(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id, size, type):
         """
@@ -73,10 +72,14 @@ class Select(wx.combo.ComboCtrl):
         Elements can be selected with mouse.
         """
         wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
-        tcp = TreeCtrlComboPopup()
-        self.SetPopupControl(tcp)
+        self.tcp = TreeCtrlComboPopup()
+        self.SetPopupControl(self.tcp)
         self.SetPopupExtents(0,100)
-        tcp.GetElementList(type)
+        self.tcp.GetElementList(type)
+
+    def SetElementList(self, type):
+        self.tcp.seltree.DeleteAllItems()
+        self.tcp.GetElementList(type)
 
 class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
@@ -152,41 +155,60 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         with all relevant elements displayed beneath each mapset branch
         """
         #set environmental variables
-        cmdlist = ['g.gisenv', 'get=GISDBASE']
-        gisdbase = cmd.Command(cmdlist).module_stdout.read().strip()
-
-        cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
-        location = cmd.Command(cmdlist).module_stdout.read().strip()
-
         cmdlist = ['g.gisenv', 'get=MAPSET']
         curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
-
-        location_path = os.path.join (gisdbase,location)
-        windfile = os.path.join (location_path,'PERMANENT','WIND')
-        symbol_path = os.path.join (os.environ['GISBASE'],'etc','symbol')
-
-        #valid location test if needed
-        if windfile != None:
-            pass
 
         #mapsets in current location
         cmdlist = ['g.mapsets', '-p']
         mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
 
-        elementlist = ['cell',
-                       'grid3d',
-                       'vector',
-                       'dig',
-                       'dig_ascii',
-                       'icons',
-                       'paint/labels',
-                       'site_lists',
-                       'windows',
-                       'windows3d',
-                       'group',
-                       '3d.view']
+        # map element types to g.mlist types
+        elementdict = {'cell':'rast',
+                       'raster':'rast',
+                       'rast':'rast',
+                       'raster files':'rast',
+                       'grid3':'rast3d',
+                       'rast3d':'rast3d',
+                       'raster3D':'rast3d',
+                       'raster3D files':'rast3d',
+                       'vector':'vect',
+                       'vect':'vect',
+                       'binary vector files':'vect',
+                       'dig':'oldvect',
+                       'oldvect':'oldvect',
+                       'old vector':'oldvect',
+                       'dig_ascii':'asciivect',
+                       'asciivect':'asciivect',
+                       'asciivector':'asciivect',
+                       'ascii vector files':'asciivect',
+                       'icons':'icon',
+                       'icon':'icon',
+                       'paint icon files':'icon',
+                       'paint/labels':'labels',
+                       'labels':'labels',
+                       'label':'labels',
+                       'paint label files':'labels',
+                       'site_lists':'sites',
+                       'sites':'sites',
+                       'site list':'sites',
+                       'site list files':'sites',
+                       'windows':'region',
+                       'region':'region',
+                       'region definition':'region',
+                       'region definition files':'region',
+                       'windows3d':'region3d',
+                       'region3d':'region3d',
+                       'region3D definition':'region3d',
+                       'region3D definition files':'region3d',
+                       'group':'group',
+                       'imagery group':'group',
+                       'imagery group files':'group',
+                       '3d.view':'3dview',
+                       '3dview':'3dview',
+                       '3D viewing parameters':'3dview',
+                       '3D view parameters':'3dview'}
 
-        if element not in elementlist:
+        if element not in elementdict:
             self.AddItem('Not selectable element')
             return
 
@@ -196,20 +218,22 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.seltree.SetItemTextColour(dir_node, wx.Colour(50,50,200))
                 try:
-                    elem_list = os.listdir(os.path.join (location_path, dir, element))
+                    cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
+                    elem_list = cmd.Command(cmdlist).module_stdout.read().strip().split('\n')
                     elem_list.sort()
                     for elem in elem_list:
-                        self.AddItem(elem+'@'+dir, parent=dir_node)
+                        if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
             else:
                 dir_node = self.AddItem('Mapset: '+dir)
                 self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 try:
-                    elem_list = os.listdir(os.path.join (location_path, dir, element))
+                    cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
+                    elem_list = cmd.Command(cmdlist).module_stdout.read().strip().split('\n')
                     elem_list.sort()
                     for elem in elem_list:
-                        self.AddItem(elem+'@'+dir, parent=dir_node)
+                        if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
                 except:
                     continue
 
