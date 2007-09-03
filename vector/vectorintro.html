@@ -12,7 +12,7 @@
 
 <h2>Vector data processing in GRASS GIS</h2>
 
-<h3>Vector import and export</h3>
+<h3>Vector data import and export</h3>
 
 The <a href="v.in.ogr.html">v.in.ogr</a> module offers a common
 interface for many different vector formats. Additionally, it
@@ -30,11 +30,15 @@ the vector geometry is not imported.
 
 The <em>v.out.*</em> set of commands exports to various formats.
 
-<h3>Information</h3>
+<h3>Metadata</h3>
 
 The <a href="v.info.html">v.info</a> display general information such
 as metadata and attribute columns about a vector map including the
-history how it was generated.
+history how it was generated. Each map generating command stores the
+command history into the metadata (query with <a href="v.info.html">v.info -h mapname</a>).
+Metadata such as map title, scale, organization etc. can be updated
+with <a href="v.support.html">v.support</a>.
+
 
 <h3>Vector map operations</h3>
 
