@@ -19,7 +19,8 @@ request. This is an
 capabilities request to NASA's OnEarth server</a>.
 <P>
 Some brain-dead servers will only talk to certain web brosers. You can
-fool these by adding "<tt>--user-agent=MSIE5.5</tt>" to <b>wgetoptions</b>.
+fool these by adding "<tt>--user-agent=MSIE5.5</tt>" to <b>wgetoptions</b>
+or for curl adding "<tt>-A "MSIE5.5</tt>" to <b>curloptions</b>.
 
 
 <H2>EXAMPLES</H2>
@@ -117,7 +118,8 @@ region.
 <EM>r.in.wms</EM> requires the following programs to work:
 
 <ul>
-<li>wget: An http download program
+<li>wget: An http download program, or
+<li>curl: Alternate http download program
 <li>bc: A calculator program
 <li>sed, grep: Unix string processing and search programs
 <li><a href="http://www.gdal.org">gdalwarp</a>: A reprojection tool,
