@@ -115,8 +115,11 @@ class Command:
             self.module_stdin.write(stdin)
             self.module_stdin.close()
 
-        os.environ["GRASS_MESSAGE_FORMAT"] = message_format
-
+        if message_format:
+            os.environ["GRASS_MESSAGE_FORMAT"] = message_format
+        else:
+            os.unsetenv("GRASS_MESSAGE_FORMAT")
+        
         #
         # read stderr
         # ...
