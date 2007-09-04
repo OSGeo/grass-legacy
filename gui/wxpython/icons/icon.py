@@ -93,6 +93,11 @@ icons_default = {
     "profiledraw": 'gui-profiledraw.gif',
     "profileopt" : 'gui-profileopt.gif',
     "analyze"    : 'gui-rastanalyze.gif', # TODO: fix?
+    # georectify
+    'cleargcp'   : 'gui-gcperase.gif',
+    'gcpset'     : 'gui-gcpset.gif',
+    'georect'    : 'gui-georect.gif',
+    'rms'        : 'gui-rms.gif',
     }
 
 # merge icons dictionaries, join paths
