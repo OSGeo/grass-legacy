@@ -214,7 +214,11 @@ GetTiles() {
     rm -f ${FOLDERPLUS}*
   fi
 
-  REQUESTFILE=${FOLDERPLUS}.wget
+  if [ -x "`which wget`" ] ; then
+    REQUESTFILE=${FOLDERPLUS}.wget
+  else
+    REQUESTFILE=${FOLDERPLUS}.curl
+  fi
 
   #reset the requestfile
   echo -n "" > ${REQUESTFILE}
