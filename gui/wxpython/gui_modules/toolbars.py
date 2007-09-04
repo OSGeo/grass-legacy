@@ -178,7 +178,7 @@ class GRToolbar(AbstractToolbar):
         """Toolbar data"""
 
         self.displaymap = self.rendermap = self.erase = \
-        self.pointer = self.query = self.pan = self.zoomin = self.zoomout = \
+        self.gcpset = self.query = self.pan = self.zoomin = self.zoomout = \
         self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap =None
 
         # tool, label, bitmap, kind, shortHelp, longHelp, handler
