@@ -485,30 +485,34 @@ class BufferedWindow(wx.Window):
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s" % \
                    (render))
 
+        #
+        # render background image if needed
+        #
         if render or self.img == None:
-            # render new map images
             self.Map.ChangeMapSize(self.GetClientSize())
             self.mapfile = self.Map.Render(force=True)
             self.img = self.GetImage() # id=99
             self.resize = False
 
-        if not self.img:
-            self.Draw(self.pdc, pdctype='clear')
-            return False
-
+        #
         # clear pseudodc
+        #
         self.pdc.Clear()
         self.pdc.RemoveAll()
 
-        try:
-            id = self.imagedict[self.img]
-        except:
-            return False
 
         # 
         # draw background map image to PseudoDC
         #
-        self.Draw(self.pdc, self.img, drawid=id) 
+        if not self.img:
+            self.Draw(self.pdc, pdctype='clear')
+        else:
+            try:
+                id = self.imagedict[self.img]
+            except:
+                return False
+
+            self.Draw(self.pdc, self.img, drawid=id) 
          
         #
         # render vector map layer 
@@ -523,7 +527,7 @@ class BufferedWindow(wx.Window):
             self.parent.digit.driver.DrawMap(self.pdcVector)
 
         #
-        # overlay
+        # render overlay
         #
         self.ovldict = self.GetOverlay() # list of decoration overlay images
         if self.ovldict != {}: # draw scale and legend overlays
@@ -541,6 +545,22 @@ class BufferedWindow(wx.Window):
                           pdctype='text', coords=self.ovlcoords[id])
 
         self.resize = False
+
+        #
+        # render region border
+        #
+        if hasattr(self, "regionCoords"):
+            reg = self.Map.GetWindow()
+            self.polypen = wx.Pen(colour='red', width=2, style=wx.SOLID)
+            c2p = self.Cell2Pixel
+            self.regionCoords = []
+            self.regionCoords.append(c2p((reg['west'],reg['north'])))
+            self.regionCoords.append(c2p((reg['east'],reg['north'])))
+            self.regionCoords.append(c2p((reg['east'],reg['south'])))
+            self.regionCoords.append(c2p((reg['west'],reg['south'])))
+            self.regionCoords.append(c2p((reg['west'],reg['north'])))
+            # draw region extent
+            self.DrawLines(polycoords=self.regionCoords)
 
         #
         # update statusbar
@@ -576,17 +596,21 @@ class BufferedWindow(wx.Window):
 
         dc = wx.BufferedDC(wx.ClientDC(self))
         dc.SetBackground(wx.Brush("White"))
+        dc.Clear()
+
+        if not self.img:
+            return False
 
         bitmap = wx.BitmapFromImage(self.img)
-
         self.dragimg = wx.DragImage(bitmap)
         self.dragimg.BeginDrag((0, 0), self)
         self.dragimg.GetImageRect(moveto)
         self.dragimg.Move(moveto)
-
-        dc.Clear()
+        
         self.dragimg.DoDrawImage(dc, moveto)
         self.dragimg.EndDrag()
+
+        return True
 
     def DragItem(self, id, event):
         """
@@ -1258,6 +1282,12 @@ class BufferedWindow(wx.Window):
         Output: float x, float y
         """
 
+        try:
+            x = int(x)
+            y = int(y)
+        except:
+            return None
+
         if self.Map.region["ewres"] > self.Map.region["nsres"]:
             res = self.Map.region["ewres"]
         else:
@@ -1282,6 +1312,12 @@ class BufferedWindow(wx.Window):
         Input : float east, float north
         Output: int x, int y
         """
+
+        try:
+            east  = float(east)
+            north = float(north)
+        except:
+            return None
 
         if self.Map.region["ewres"] > self.Map.region["nsres"]:
             res = self.Map.region["ewres"]
@@ -1650,12 +1686,14 @@ class MapFrame(wx.Frame):
         self.autoRender = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Render"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleRender, self.autoRender)
         self.autoRender.SetValue(False)
+        self.autoRender.SetToolTip(wx.ToolTip (_("Enable/disable auto-rendering")))
         # show region
         self.showRegion = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Show"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
-
+        self.showRegion.SetToolTip(wx.ToolTip (_("Show/Hide computational "
+                                                 "region extent (set with g.region)")))
         self.Map.SetRegion() # set region
         #         map_frame_statusbar_fields = [
         #             # field 0 -> region
@@ -1941,9 +1979,14 @@ class MapFrame(wx.Frame):
         """Show/Hide extent in map canvas"""
         if self.showRegion.GetValue():
             # show extent
-            self.regionCoords = []
+            self.MapWindow.regionCoords = []
         else:
-            del self.regionCoords
+            del self.MapWindow.regionCoords
+
+        # redraw map if auto-rendering is enabled
+        if self.autoRender.GetValue(): 
+            self.ReRender(None)
+
 
     def OnToggleStatus(self, event):
         """Toggle status text"""
