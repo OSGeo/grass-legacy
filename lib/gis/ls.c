@@ -1,15 +1,16 @@
-/****************************************************************************
- *
- * MODULE:       GRASS GIS library - ls.c
- * AUTHOR(S):    Paul Kelly
- * PURPOSE:      Functions to list the files in a directory.
- * COPYRIGHT:    (C) 2007 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file ls.c
+
+   \brief Functions to list the files in a directory.
+
+   \author Paul Kelly
+   
+   (C) 2007 by the GRASS Development Team
+
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,7 +60,7 @@ const char **G__ls(const char *dir, int *num_files)
     int n = 0;
 
     if ((dfd = opendir(dir)) == NULL)
-       G_fatal_error(_("Can't open directory %s"), dir);
+       G_fatal_error(_("Unable too open directory %s"), dir);
 
     while ((dp = readdir(dfd)) != NULL)
     {
