@@ -1,46 +1,16 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       GRASS 5 gis library, list.c
- * AUTHOR(S):    unknown
- * PURPOSE:      list elements
- * COPYRIGHT:    (C) 2000 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
- *   	    	 for details.
- *
- *****************************************************************************/
+/**
+   \file list.c
 
-/**********************************************************************
- *  G_list_element (element, desc, mapset, lister)
- *
- *      char *element    database element (eg, "cell", "cellhd", etc)
- *      char *desc       desc for element (if NULL, element is used)
- *      char *mapset     mapset to be listed.
- *                       "" to list all mapsets in mapset search list
- *                       "." will list current mapset
- *
- *      int (*lister)()  if given will call this routine to get a list
- *                       title. NULL if no titles desired.
- *
- *                       lister (name, mapset, buf)
- *                       char *name, *mapset, *buf
- *
- *                       given file 'name', and 'mapset',
- *                       lister() should copy a string into 'buf'
- *
- *                       when called with name == "", should set buf
- *                       to general title for mapset list.
- *
- *   General purpose list function. Will list files from all mapsets
- *   in the mapset list for a specified database element.
- *
- *   note:
- *      output is to stdout piped thru the more utility
- *********************************************************************/
+   \brief List elements
+
+   \author Unknown (probably CERL)
+
+   (C) 2000 by the GRASS Development Team
+
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+*/
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -64,6 +34,28 @@ int G_set_list_hit_return(int flag)
     return 0;
 }
 
+/**
+   \brief General purpose list function.
+
+   Will list files from all mapsets
+   in the mapset list for a specified database element.
+
+   Note: output is to stdout piped thru the more utility
+
+   lister (char *name char *mapset, char* buf)
+   
+   Given file 'name', and 'mapset', lister() should copy a string into 'buf'
+   when called with name == "", should set buf to general title for mapset list.
+
+   \param element    Database element (eg, "cell", "cellhd", etc)
+   \param desc       Description for element (if NULL, element is used)
+   \param mapset     Mapset to be listed "" to list all mapsets in mapset search list 
+   "." will list current mapset
+   \param lister     If given will call this routine to get a list
+   title. NULL if no titles desired. 
+
+   \return Number of elements
+*/
 int G_list_element (
     const char *element,
     const char *desc,
@@ -259,7 +251,7 @@ char **G_list(int element, const char *gisbase, const char *location, const char
             break;
 
         case G_ELEMENT_REGION:
-            el = "window";
+            el = "windows";
             break;
 
         default:
@@ -304,6 +296,13 @@ char **G_list(int element, const char *gisbase, const char *location, const char
     return list;
 }
 
+/**
+   \brief Free list
+   
+   \param list char* array to be freed
+
+   \return
+*/
 void G_free_list(char **list)
 {
     int i = 0;
