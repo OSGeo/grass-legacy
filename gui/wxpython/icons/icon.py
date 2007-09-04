@@ -267,7 +267,12 @@ Icons = {
     "font"       : MetaIcon (img=icons_img["font"], label="Select font"),
     "color"      : MetaIcon (img=icons_img["color"], label="Select color"),
     "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options"),
-    "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze")}
+    "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze"),
+    # georectify
+    'cleargcp'   : MetaIcon (img=icons_img["cleargcp"], label="Delete unselected GCPs"),
+    'gcpset'     : MetaIcon (img=icons_img["gcpset"], label="Set GCP"),
+    'georect'    : MetaIcon (img=icons_img["georect"], label="Georectify"),
+    'rms'        : MetaIcon (img=icons_img["rms"], label="Calculate RMS error")}
 
 # testing ...
 if __name__ == "__main__":
