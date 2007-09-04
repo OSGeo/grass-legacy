@@ -205,8 +205,8 @@ class Map(object):
         self.mapfile   = utils.GetTempfile()
 
         # setting some initial env. variables
-        self.__initGisEnv() # g.gisenv
-        self.__initRegion()
+        self.InitGisEnv() # g.gisenv
+        self.InitRegion()
         os.environ["GRASS_TRANSPARENT"]     = "TRUE"
         os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
         os.environ["GRASS_HEIGHT"]          = str(self.height)
@@ -217,10 +217,14 @@ class Map(object):
         os.environ["GRASS_COMPRESSION"]     = "0"
         os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
 
-    def __initRegion(self):
+    def InitRegion(self):
         """
-        Reads current region settings from g.region command and wind file.
-        At the end region is set up.
+        Initialize current region settings.
+
+        Set up 'self.region' using g.region command and
+        self.wind according to the wind file.
+
+        At the end adjust self.region based on map window size.
         """
 
         #
@@ -229,28 +233,9 @@ class Map(object):
         self.region = self.GetRegion()
 
         #
-        # setting WIND
+        # read WIND file
         #
-        # FIXME: duplicated region WIND == g.region (at least some values)
-        windfile = os.path.join (self.env['GISDBASE'],
-                                 self.env['LOCATION_NAME'],
-                                 self.env['MAPSET'],
-                                 "WIND")
-        try:
-            windfile = open (windfile, "r")
-        except StandardError, e:
-            sys.stderr.write(_("Could open file <%s>: %s\n") % \
-                                 (windfile,e))
-            sys.exit(1)
-
-        for line in windfile.readlines():
-            line = line.strip()
-            key, value = line.split(":",1)
-            key = key.strip()
-            value = value.strip()
-            self.wind[key] = value
-
-        windfile.close()
+        self.GetWindow()
 
         #
         # setting resolution
@@ -281,7 +266,7 @@ class Map(object):
         #            self.height = 480
         
         
-    def __initGisEnv(self):
+    def InitGisEnv(self):
         """
         Stores GRASS variables (g.gisenv) to self.env variable
         """
@@ -300,6 +285,31 @@ class Map(object):
             val = val.replace("'","")
             self.env[key] = val
 
+    def GetWindow(self):
+        """Read WIND file and set up self.wind dictionary"""
+        # FIXME: duplicated region WIND == g.region (at least some values)
+        windfile = os.path.join (self.env['GISDBASE'],
+                                 self.env['LOCATION_NAME'],
+                                 self.env['MAPSET'],
+                                 "WIND")
+        try:
+            windfile = open (windfile, "r")
+        except StandardError, e:
+            sys.stderr.write(_("Could open file <%s>: %s\n") % \
+                                 (windfile,e))
+            sys.exit(1)
+
+        for line in windfile.readlines():
+            line = line.strip()
+            key, value = line.split(":",1)
+            key = key.strip()
+            value = value.strip()
+            self.wind[key] = value
+            
+        windfile.close()
+
+        return self.wind
+        
     def __adjustRegion(self):
         """
         Adjusts display resolution to match monitor size in pixels.
