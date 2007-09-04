@@ -10,7 +10,7 @@ imports it, and patches it back together.
 <H2>NOTES</H2>
 
 By default data is downloaded to $GISDBASE/wms_download. This can be changed
-by setting the folder= option when using <EM>r.in.wms</EM>.
+by setting the <EM>folder=</EM> option when using <EM>r.in.wms</EM>.
 <P>
 To understand the data you are getting it is necessary to look at the
 capabilities of the WMS server. This should be available via a capabilities
@@ -18,7 +18,7 @@ request. This is an
 <a href="http://wms.jpl.nasa.gov/wms.cgi?request=GetCapabilities">example
 capabilities request to NASA's OnEarth server</a>.
 <P>
-Some brain-dead servers will only talk to certain web brosers. You can
+Some brain-dead servers will only talk to certain web browsers. You can
 fool these by adding "<tt>--user-agent=MSIE5.5</tt>" to <b>wgetoptions</b>
 or for curl adding "<tt>-A "MSIE5.5</tt>" to <b>curloptions</b>.
 
