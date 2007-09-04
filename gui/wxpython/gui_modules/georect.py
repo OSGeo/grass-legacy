@@ -38,7 +38,8 @@ import wx
 import wx.aui
 import wx.lib.filebrowsebutton as filebrowse
 import wx.wizard as wiz
-import wx.lib.rcsizer  as rcs
+import wx.grid as gridlib
+
 from threading import Thread
 
 try:
@@ -99,6 +100,7 @@ class Georectify(object):
         dlg = GeorectStart(self.parent)
 
         dlg.CenterOnScreen()
+
         dlg.ShowModal()
 
         # If OK button pressed in decoration control dialog
@@ -220,8 +222,11 @@ class GeorectWizard(object):
         self.xy_mapdisp.Refresh()
         self.xy_mapdisp.Update()
 
-
         # start GCP form
+        self.gcpmgr = GCP(self.parent)
+        self.gcpmgr.Show()
+        self.gcpmgr.Refresh()
+        self.gcpmgr.Update()
 
         self.Cleanup()
 
@@ -497,8 +502,178 @@ class GCP(wx.Frame):
     Calls i.rectify or v.transform to georectify map.
     """
     def __init__(self,parent,id=-1,title="Create & manage ground control points"):
-        wx.Frame.__init__(self, parent, id , title, size=(50,600))
+        wx.Frame.__init__(self, parent, id , title, size=(500,400))
 
-    # Button for adding new GCP
+        toolbar = self.__createToolBar()
 
-# maybe we can use mapdisp classes to create the display???
+        p = wx.Panel(self, -1, style=0)
+
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        self.rb_grmethod = wx.RadioBox(p, -1, "Select rectification method for rasters ",
+                                   wx.DefaultPosition, wx.DefaultSize,
+                                   ['1st order','2nd order', '3rd order'], 3, wx.RA_SPECIFY_COLS)
+        box.Add(self.rb_grmethod, 0, wx.ALIGN_CENTER|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        self.grid = GCPGrid(p)
+        self.sizer.Add(self.grid, 1, wx.GROW|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        self.btn_newGCP = wx.Button(p, -1, "Add GCP")
+        self.btn_newGCP.SetDefault()
+        box.Add(self.btn_newGCP, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.btn_deleteGCP = wx.Button(p, -1, "Delete selected GCP")
+        box.Add(self.btn_deleteGCP, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box)
+
+        p.SetSizer(self.sizer)
+
+        self.Bind(wx.EVT_RADIOBOX, self.OnGRMethod, self.rb_grmethod)
+        self.Bind(wx.EVT_BUTTON, self.OnButton, self.btn_newGCP)
+        self.btn_newGCP.Bind(wx.EVT_SET_FOCUS, self.OnButtonFocus)
+
+    def OnButton(self, evt):
+        print "button selected"
+    def OnButtonFocus(self, evt):
+        print "button focus"
+
+    def __createToolBar(self):
+        """Creates toolbar"""
+
+        toolbar = self.CreateToolBar()
+        for each in self.toolbarData():
+            self.addToolbarButton(toolbar, *each)
+        toolbar.Realize()
+
+    def addToolbarButton(self, toolbar, label, icon, help, handler):
+        """Adds button to the given toolbar"""
+
+        if not label:
+            toolbar.AddSeparator()
+            return
+        tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
+        self.Bind(wx.EVT_TOOL, handler, tool)
+
+    def toolbarData(self):
+
+        return   (
+                 ('savegcp', Icons["savefile"].GetBitmap(), Icons["savefile"].GetLabel(), self.SaveGCP),
+                 ('cleargcp', Icons["cleargcp"].GetBitmap(), Icons["cleargcp"].GetLabel(), self.ClearGCP),
+                 ('rms', Icons["rms"].GetBitmap(), Icons["rms"].GetLabel(), self.OnRMS),
+                 ('georect',  Icons["georect"].GetBitmap(),  Icons["georect"].GetLabel(),  self.OnGeorect),
+                 ('quit',  Icons["quit"].GetBitmap(),  Icons["quit"].GetLabel(),  self.OnQuit)
+                  )
+
+    def SaveGCP(self, event):
+        pass
+
+    def ClearGCP(self, event):
+        pass
+
+    def OnRMS(self, event):
+        pass
+
+    def OnGeorect(self, event):
+        pass
+
+    def OnQuit(self, event):
+        pass
+
+    def OnGRMethod(self, event):
+        pass
+
+
+class GCPGrid(gridlib.Grid):
+    def __init__(self, parent):
+        gridlib.Grid.__init__(self, parent, -1)
+        table = GCPDateTable()
+        # The second parameter means that the grid is to take ownership of the
+        # table and will destroy it when done.  Otherwise you would need to keep
+        # a reference to it and call it's Destroy method later.
+        self.SetTable(table, True)
+        self.SetRowLabelSize(10)
+        self.SetMargins(0,0)
+        self.AutoSizeColumns(True)
+        gridlib.EVT_GRID_CELL_LEFT_DCLICK(self, self.OnLeftDClick)
+    # I do this because I don't like the default behaviour of not starting the
+    # cell editor on double clicks, but only a second click.
+    def OnLeftDClick(self, evt):
+        if self.CanEnableCellControl():
+            self.EnableCellEditControl()
+
+class GCPDateTable(gridlib.PyGridTableBase):
+    def __init__(self):
+        gridlib.PyGridTableBase.__init__(self)
+        self.colLabels = ['Use', 'X Coord', 'Y Coord', 'East', 'North',
+                          'Forward Error', 'Backward Error']
+        self.dataTypes = [gridlib.GRID_VALUE_BOOL,
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          gridlib.GRID_VALUE_FLOAT + ':7,2',
+                          ]
+        self.data = [
+            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00],
+            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00],
+            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00]
+            ]
+    #--------------------------------------------------
+    # required methods for the wxPyGridTableBase interface
+    def GetNumberRows(self):
+        return len(self.data) + 1
+    def GetNumberCols(self):
+        return len(self.data[0])
+    def IsEmptyCell(self, row, col):
+        try:
+            return not self.data[row][col]
+        except IndexError:
+            return True
+    # Get/Set values in the table.  The Python version of these
+    # methods can handle any data-type, (as long as the Editor and
+    # Renderer understands the type too,) not just strings as in the
+    # C++ version.
+    def GetValue(self, row, col):
+        try:
+            return self.data[row][col]
+        except IndexError:
+            return ''
+    def SetValue(self, row, col, value):
+        try:
+            self.data[row][col] = value
+        except IndexError:
+            # add a new row
+            self.data.append([''] * self.GetNumberCols())
+            self.SetValue(row, col, value)
+            # tell the grid we've added a row
+            msg = gridlib.GridTableMessage(self,            # The table
+                    gridlib.GRIDTABLE_NOTIFY_ROWS_APPENDED, # what we did to it
+                    1                                       # how many
+                    )
+            self.GetView().ProcessTableMessage(msg)
+    #--------------------------------------------------
+    # Some optional methods
+    # Called when the grid needs to display labels
+    def GetColLabelValue(self, col):
+        return self.colLabels[col]
+    # Called to determine the kind of editor/renderer to use by
+    # default, doesn't necessarily have to be the same type used
+    # natively by the editor/renderer if they know how to convert.
+    def GetTypeName(self, row, col):
+        return self.dataTypes[col]
+    # Called to determine how the data can be fetched and stored by the
+    # editor and renderer.  This allows you to enforce some type-safety
+    # in the grid.
+    def CanGetValueAs(self, row, col, typeName):
+        colType = self.dataTypes[col].split(':')[0]
+        if typeName == colType:
+            return True
+        else:
+            return False
+    def CanSetValueAs(self, row, col, typeName):
+        return self.CanGetValueAs(row, col, typeName)
+
+
