@@ -123,6 +123,7 @@ main (int argc, char *argv[])
     spat_opt->multiple = YES;
     spat_opt->required = NO;
     spat_opt->label = _("Import subregion only");
+    spat_opt->guisection = _("Subregion");
     spat_opt->description = _("Format: xmin,ymin,xmax,ymax - usually W,S,E,N");
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
@@ -133,6 +134,7 @@ main (int argc, char *argv[])
     min_area_opt->required = NO;
     min_area_opt->answer = "0.0001";
     min_area_opt->label = _("Minimum size of area to be imported (square units)");
+    min_area_opt->guisection = _("Min-area & snap");
     min_area_opt->description = _("Smaller areas and "
 				  "islands are ignored. Should be greater than snap^2");
 
@@ -151,6 +153,7 @@ main (int argc, char *argv[])
     snap_opt->required = NO;
     snap_opt->answer = "-1";
     snap_opt->label = _("Snapping threshold for boundaries");
+    snap_opt->guisection = _("Min-area & snap");
     snap_opt->description = _("'-1' for no snap");
 
     outloc_opt = G_define_option();
