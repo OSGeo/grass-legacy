@@ -194,10 +194,26 @@ class GeorectWizard(object):
         # start display showing xymap
         self.Map = render.Map()    # instance of render.Map to be associated with display
 
+        global maptype
+        global xy_map
+
+        if maptype == 'cell':
+            rendertype = 'raster'
+            cmdlist = ['d.rast', 'map=%s' % xy_map]
+        elif maptype == 'vector':
+            rendertype = 'vector'
+            cmdlist = ['d.vect', 'map=%s' % xy_map]
+
+        self.Map.AddLayer(type=rendertype, command=cmdlist,l_active=True,
+                          l_hidden=False, l_opacity=1, l_render=False)
+
         self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
-                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 pos=wx.DefaultPosition, size=(640,480),
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["georect"],
                  Map=self.Map)
+
+        # draw selected xy map
+        self.xy_mapdisp.MapWindow.UpdateMap()
 
         #show new display
         self.xy_mapdisp.Show()
