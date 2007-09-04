@@ -210,7 +210,8 @@ class GRToolbar(AbstractToolbar):
              self.mapdisplay.OnZoomBack),
             (self.zoommenu, "zoommenu", Icons["zoommenu"].GetBitmap(),
              wx.ITEM_NORMAL, Icons["zoommenu"].GetLabel(), Icons["zoommenu"].GetDesc(),
-             self.mapdisplay.OnZoomMenu)
+             self.mapdisplay.OnZoomMenu),
+            ("", "", "", "", "", "", "")
             )
 
     def OnSelect(self, event):
@@ -234,7 +235,7 @@ class DigitToolbar(AbstractToolbar):
         # selected map to digitize
         self.layerSelectedID  = None
         self.layers     = []
-        
+
         # default action (digitize new point, line, etc.)
         self.action     = "addLine"
         self.type       = "point"
@@ -336,7 +337,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
-        
+
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
         Debug.msg (2, "DigitToolbar.OnAddBoundary()")
@@ -360,7 +361,7 @@ class DigitToolbar(AbstractToolbar):
             self.StopEditing(self.layers[self.layerSelectedID])
         except:
             pass
-        
+
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
@@ -385,7 +386,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnSplitLine():")
         self.action = "splitLine"
         self.parent.MapWindow.mouse['box'] = 'point'
-        
+
     def OnEditLine(self, event):
         pass
 
@@ -393,7 +394,7 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnMoveLine():")
         self.action = "moveLine"
         self.parent.MapWindow.mouse['box'] = 'box'
-        
+
     def OnDeleteLine(self, event):
         Debug.msg(2, "Digittoolbar.OnDeleteLine():")
         self.action = "deleteLine"
@@ -413,7 +414,7 @@ class DigitToolbar(AbstractToolbar):
         """Show settings dialog"""
         DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
                             style=wx.DEFAULT_DIALOG_STYLE).Show()
-        
+
     def OnSelectMap (self, event):
         """
         Select vector map layer for editing
@@ -451,7 +452,7 @@ class DigitToolbar(AbstractToolbar):
 
         self.parent.digit.SetMapName(mapLayer.name)
 
-        # deactive layer 
+        # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)
 
         # change cursor
@@ -459,35 +460,35 @@ class DigitToolbar(AbstractToolbar):
 
         # create pseudoDC for drawing the map
         self.parent.pdcVector = wx.PseudoDC()
-        
+
         return True
 
     def StopEditing (self, layerSelected):
         """
         Stop editing of selected vector map layer.
         """
-        
+
         if self.layers[self.layerSelectedID] == layerSelected:
             self.layerSelectedID = None
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
                        (layerSelected.name))
             self.combo.SetValue ('Select vector map')
-            
+
             # re-active layer
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
-            
+
             # change cursor
             self.parent.MapWindow.SetCursor(self.parent.cursors["default"])
 
             # disable pseudodc for vector map layer
             self.parent.MapWindow.pdcVector = None
-            
+
             return True
 
         return False
-            
+
     def UpdateListOfLayers (self, updateTool=False):
         """
         Update list of available vector map layers.
@@ -498,7 +499,7 @@ class DigitToolbar(AbstractToolbar):
 
         Debug.msg (4, "DigitToolbar.UpdateListOfLayers(): updateTool=%d" % \
                    updateTool)
-        
+
         layerNameSelected = None
         if self.layerSelectedID != None: # name of currently selected layer
             layerNameSelected = self.layers[self.layerSelectedID].name
@@ -524,7 +525,7 @@ class DigitToolbar(AbstractToolbar):
                                      choices=layerNameList, size=(150, -1), style=wx.CB_READONLY)
 
             self.comboid = self.toolbar[0].InsertControl(0, self.combo)
-            
+
             # additional bindings
             self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
