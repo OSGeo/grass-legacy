@@ -192,9 +192,11 @@ if [ ! -x "`which wget`" ] ; then
         g.message -e "one of wget or curl is required, please install either first" 
         exit 1
     else
+        g.message "Using CURL for downloading data."
         USE_CURL=1
     fi
 else
+    g.message "Using WGET for downloading data."
     USE_WGET=1
 fi
 
