@@ -64,7 +64,7 @@ import gui_modules.histogram as histogram
 import gui_modules.profile as profile
 import gui_modules.rules as rules
 import gui_modules.utils as utils
-import gui_modules.cmd as cmd
+import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 
 from   icons.icon import Icons as Icons
@@ -292,7 +292,6 @@ class GMFrame(wx.Frame):
         """
         Launch georectifier module
         """
-        print 'launch georect'
         georect.GeorectWizard(self)
 
     def OnMapsets(self, event):
@@ -569,7 +568,10 @@ class GMFrame(wx.Frame):
                                               pointdata=pointdata)
 
     def NewDisplay(self, event=None):
-        """Create new map display frame"""
+        """
+        Create new layer tree, which will
+        create an associated map display frame
+        """
 
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
         self.pg_panel = wx.Panel(self.gm_cb, id=wx.ID_ANY, style= wx.EXPAND)
