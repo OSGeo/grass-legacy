@@ -147,6 +147,14 @@
 #% guisection: Download
 #%end
 #%option
+#% key: curloptions
+#% type: string
+#% description: Additional options for curl
+#% answer: -C - --retry 5 -s -S
+#% required : no
+#% guisection: Download
+#%end
+#%option
 #% key: method
 #% type: string
 #% description: Reprojection method to use
@@ -178,10 +186,16 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     exit 1
 fi
 
-# check if we have wget
+# check if we have wget or curl
 if [ ! -x "`which wget`" ] ; then
-    g.message -e "wget is required, please install it first" 
-    exit 1
+    if [ ! -x "`which curl`" ] ; then
+        g.message -e "one of wget or curl is required, please install either first" 
+        exit 1
+    else
+        USE_CURL=1
+    fi
+else
+    USE_WGET=1
 fi
 
 # check if we have bc -> used in wms.request and wms.download
@@ -285,10 +299,15 @@ listLayers() {
     
 	STRING="service=WMS&request=GetCapabilities&${GIS_OPT_WMSQUERY}";
 
-	### wget the XML and grep the lines with layer names
+	### wget or curl the XML and grep the lines with layer names
 	g.message message="List of layers for server ${GIS_OPT_MAPSERVER}:"
-	wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
-	message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	if [ "$USE_WGET" ] ; then
+	    wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	    message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	else
+	    curl ${GIS_OPT_CURLOPTIONS} -o $CAPABILITIES_FILE -d ${STRING} $GIS_OPT_MAPSERVER
+	    message 1 curl ${GIS_OPT_CURLOPTIONS} -o $CAPABILITIES_FILE -d ${STRING} $GIS_OPT_MAPSERVER
+	fi
 
 	# use xml2
 	if [ -x "`which xml2`" ] ; then
@@ -360,7 +379,11 @@ if [ -z "${GIS_OPT_FOLDER}" ] ; then
 fi
 
 PREFIX="${GIS_OPT_OUTPUT}"
-REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget"
+if [ -x "`which wget`" ] ; then
+    REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.wget"
+else
+    REQUESTFILE="${GIS_OPT_FOLDER}/${PREFIX}_${GIS_OPT_REGION}.curl"
+fi
 
 if [ ! -z "$GIS_OPT_REGION" ] ; then
    eval `g.findfile element=windows file="$GIS_OPT_REGION"`

@@ -33,6 +33,13 @@
 #% required : no
 #%end
 #%option
+#% key: curloptions
+#% type: string
+#% description: Additional options for curl
+#% answer: -C - --retry 5
+#% required : no
+#%end
+#%option
 # FIXME: Remove before GRASS 7 is released
 #% key: v
 #% type: integer
@@ -54,6 +61,18 @@ TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     g.message -e "Unable to create temporary files"
     exit 1
+fi
+
+# check if we have wget or curl
+if [ ! -x "`which wget`" ] ; then
+    if [ ! -x "`which curl`" ] ; then
+        g.message -e "one of wget or curl is required, please install either first" 
+        exit 1
+    else
+        USE_CURL=1
+    fi
+else
+    USE_WGET=1
 fi
 
 # Remember the intial field seperator
@@ -124,7 +143,11 @@ GetData() {
    g.message message="Requesting Data from ${SERVER}:"
    g.message message="$STRING"
    #download the File from the Server
-   wget ${WGET_OPTIONS} --post-data="${STRING}" "${SERVER}" -O "${OUTPUT_FILE}"
+   if [ "$USE_WGET" ] ; then
+     wget ${WGET_OPTIONS} --post-data="${STRING}" "${SERVER}" -O "${OUTPUT_FILE}"
+   else
+	 curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" -d "${STRING}" "${SERVER}"
+   fi
    if [ $? -ne 0 ]; then
      g.message -e "wget failed while downloading the data"
      return 1
@@ -141,6 +164,7 @@ GetData() {
 # Initialize variables:
 #wget has many options
 WGET_OPTIONS="${GIS_OPT_WGETOPTIONS}"
+CURL_OPTIONS="${GIS_OPT_CURLOPTIONS}"
 REQUESTFILE="${GIS_OPT_REQUESTFILE}"
 
 #Get all the data
