@@ -9,7 +9,7 @@ PURPOSE:   GRASS command interface
 
 AUTHORS:   The GRASS Development Team
            Original author: Jachym Cepicky
-           Martin Landa
+           Various updates: Martin Landa
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -21,18 +21,19 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 usePopenClass = True
 
 import os, sys
-import wx
+import wx # GUI dialogs...
 
-try:
-    import subprocess
-except:
-    CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
-    sys.path.append(CompatPath)
-    import subprocess
+if usePopenClass:
+    try:
+        import subprocess
+    except:
+        CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+        sys.path.append(CompatPath)
+        import subprocess
 
+# debugging ...
 GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(GuiModulePath)
-
 from debug import Debug as Debug
 
 class EndOfCommand(Exception):
@@ -44,12 +45,12 @@ class EndOfCommand(Exception):
 
 class Command:
     """
-    Run command on the background
+    Run (GRASS) command on the background
 
     Parameters:
     cmd     - command string (given as list)
     stdin   - standard input stream
-    verbose - verbose mode (GRASS commands '--v')
+    verbose - verbose mode (GRASS commands '--v') (default: False)
     wait    - wait for childer execution
     dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
 
@@ -63,48 +64,67 @@ class Command:
         else:
             print 'FAILURE (%d)' % cmd.returncode
 
-        for msg in cmd.module_msg:
-            if msg[0] == 'GRASS_INFO_PERCENT':
-                print 'Percent done: %d' % (int(msg[1]))
-            else:
-                print 'General message:', msg[1]
     """
-    def __init__ (self, cmd, stdin=None, verbose=False, wait=True, dlgMsg='gui'):
+    def __init__ (self, cmd, stdin=None,
+                  verbose=False, wait=True, dlgMsg='gui'):
+        #
         # input
+        #
         self.module_stdin = None
-        self.cmd    = cmd
+        self.cmd          = cmd
 
+        #
+        # GRASS module 
+        #
         self.module = None
 
+        #
         # output
+        #
         self.module_stderr = None
         self.module_msg    = [] # list of messages (msgtype, content)
 
+        #
+        # set message formatting
+        #
+        message_format = os.getenv("GRASS_MESSAGE_FORMAT")
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-        # run command
-        if not usePopenClass:
-            Debug.msg(3, "Command.__init__(): [popen3] cmd=%s" % ' '.join(cmd))
+
+        #
+        # run command ...
+        #
+        if not usePopenClass: # do not use Popen class
+            Debug.msg(4, "Command.__init__(): [popen3] cmd='%s'" % ' '.join(cmd))
+
             (self.module_stdin, self.module_stdout, self.module_stderr) = \
                                 os.popen3(' '.join(self.cmd))
-        else:
-            Debug.msg(3, "Command.__init__(): [Popen] cmd=%s" % ' '.join(cmd))
+        else: # Popen class (default)
+            Debug.msg(4, "Command.__init__(): [Popen] cmd='%s'" % ' '.join(cmd))
+
             self.module = subprocess.Popen(self.cmd,
                                            stdin=subprocess.PIPE,
                                            stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE,
                                            close_fds=True)
+            # set up streams
             self.module_stdin  = self.module.stdin
             self.module_stderr = self.module.stderr
             self.module_stdout = self.module.stdout
 
-        if stdin:
+        if stdin: # read stdin if requested ...
             self.module_stdin.write(stdin)
             self.module_stdin.close()
 
-        os.environ["GRASS_MESSAGE_FORMAT"] = "text"
+        os.environ["GRASS_MESSAGE_FORMAT"] = message_format
 
+        #
+        # read stderr
+        # ...
+        self.messages = []
+        self.errors   = []
+        self.warnings = []
         try:
-            self.Run(verbose)
+            self.__ProcessMessages() # -> messages, errors, warnings
         except EndOfCommand:
             pass
 
@@ -115,54 +135,53 @@ class Command:
 
             # failed?
             if dlgMsg and self.returncode != 0:
-                # print error messages
-                for msg in self.module_msg:
-                    print >> sys.stderr, msg[1]
-
-                if dlgMsg == "gui":
-                    dlg = wx.MessageDialog(None, ("Execution failed: '%s'") % (' '.join(self.cmd)),
+                if dlgMsg == 'gui': # GUI dialog
+                    dlg = wx.MessageDialog(None,
+                                           ("Execution failed: '%s'") % (' '.join(self.cmd)),
                                            ("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
                 else: # otherwise 'txt'
                     print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
+                    print >> sys.stderr, "Details:"
+                    for err in self.errors:
+                        print >> sys.stderr, " %s" % err
         else:
-            self.returncode = None
+            self.returncode = None # running ?
 
         if self.returncode is not None:
-            Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=%d" % \
+            Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=%d" % \
                        (' '.join(self.cmd), wait, self.returncode))
         else:
-            Debug.msg (3, "Command(): cmd=%s, wait=%d, returncode=?" % \
+            Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=?" % \
                        (' '.join(self.cmd), wait))
 
-    def Run(self, verbose=False):
+    def __ProcessMessages(self):
         """
-        Process messages read from stderr
+        Read messages/warnings/errors from stderr
         """
         msgtype = None
         content = None
         line    = None
 
-        while 1:
+        while True:
             line = self.module_stderr.readline()
-            if not line or line.find("GRASS_INFO_END") > -1:
+            if not line:
                 raise EndOfCommand
             if line.find(':') > -1:
                 msgtype, content = line.split(":", 1)
-                if verbose:
-                    self.module_msg.append((msgtype, content.strip()))
-                else: # write only fatal errors and warnigs
-                    if msgtype.find("GRASS_INFO_ERROR") > -1 or \
-                           msgtype.find("GRASS_INFO_WARNING") > -1:
-                        self.module_msg.append((msgtype, content.strip()))
-
-                        return
+                content = content.strip()
+                if msgtype.find("GRASS_INFO_ERROR"):
+                    self.errors.append(content)
+                elif msgtype.find("GRASS_INFO_WARNING") > -1:
+                    self.warnings.append(content)
+                else:
+                    self.messages.append(content)
 
     def ReadStdOutput(self):
-        """Read standard output and return list of lines
+        """Read standard output and return list
 
-        Note: Remove '\n' from the lines (TODO: '\r\n' ??)
+        Note: Remove '\n' from output (TODO: '\r\n' ??)
         """
         lineList = []
         while True:
@@ -176,7 +195,9 @@ class Command:
 
 # testing ...
 if __name__ == "__main__":
-    #print __doc__
+    SEP = "-----------------------------------------------------------------------------"
+
+    print SEP
 
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
@@ -190,11 +211,7 @@ if __name__ == "__main__":
     else:
         print "FAILURE (%d)" % cmd.returncode
 
-    for msg in cmd.module_msg:
-        if msg[0] == "GRASS_INFO_PERCENT":
-            print "Percent done: %d" % (int(msg[1]))
-        else:
-            print "General message:", msg[1]
+    print SEP
 
     # v.net.path silently, wait for process termination
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
@@ -210,6 +227,8 @@ if __name__ == "__main__":
         print "SUCCESS"
     else:
         print "FAILURE (%d)" % cmd.returncode
+
+    print SEP
 
     # d.vect silently, do not wait for process termination
     # returncode will be None
