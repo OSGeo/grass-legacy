@@ -399,7 +399,7 @@ struct Options define_options()
 	opts.iimg->required	= YES;
 	opts.iimg->gisprompt	= "old,cell,raster";
 	opts.iimg->description	= "Input raster map to be corrected";
-	opts.iimg->answer	= "ETM4_400x400.raw";
+/*	opts.iimg->answer	= "ETM4_400x400.raw"; */
 
 	opts.iscl = G_define_option();
 	opts.iscl->key          = "iscl";
@@ -414,7 +414,7 @@ struct Options define_options()
 	opts.ialt->type		= TYPE_STRING;
 	opts.ialt->required	= NO;
 	opts.ialt->gisprompt	= "old,cell,raster";
-	opts.ialt->answer	= "dem_float";
+/*	opts.ialt->answer	= "dem_float";*/
 	opts.ialt->description	= "Input altitude map in m (optional)";
 
 	opts.ivis = G_define_option();
@@ -422,7 +422,7 @@ struct Options define_options()
 	opts.ivis->type		= TYPE_STRING;
 	opts.ivis->required	= NO;
 	opts.ivis->gisprompt	= "old,cell,raster";
-	opts.ivis->answer	= "visibility";
+/*	opts.ivis->answer	= "visibility";*/
 	opts.ivis->description	= "Input visibility map in km (optional)";
     
 	opts.icnd = G_define_option();
@@ -430,7 +430,7 @@ struct Options define_options()
 	opts.icnd->type		= TYPE_STRING;
 	opts.icnd->required	= YES;
 	opts.icnd->gisprompt	= "old_file,file,file";
-	opts.icnd->answer	= "ETM4_atmospheric_input_GRASS.txt";
+/*	opts.icnd->answer	= "ETM4_atmospheric_input_GRASS.txt";*/
 	opts.icnd->description	= "6S input text file";
 
 	opts.oimg = G_define_option();
@@ -438,7 +438,7 @@ struct Options define_options()
 	opts.oimg->type		= TYPE_STRING;
 	opts.oimg->required	= NO;
 	opts.oimg->gisprompt	= "new,cell,raster";
-	opts.oimg->answer	= "6s_output_file";
+/*	opts.oimg->answer	= "6s_output_file";*/
 	opts.oimg->description	= "Output raster map";
 
 	opts.oscl = G_define_option();
