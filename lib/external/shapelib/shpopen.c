@@ -34,8 +34,19 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.6  2006-06-17 12:55:11  markus
- * updated to current SHAPElib from OGR
+ * Revision 1.7  2007-09-05 11:50:23  markus
+ * SHAPELIB copy updated
+ *
+ * Revision 1.51  2006/09/04 15:24:01  fwarmerdam
+ * Fixed up log message for 1.49.
+ *
+ * Revision 1.50  2006/09/04 15:21:39  fwarmerdam
+ * fix of last fix
+ *
+ * Revision 1.49  2006/09/04 15:21:00  fwarmerdam
+ * MLoskot: Added stronger test of Shapefile reading failures, e.g. truncated
+ * files.  The problem was discovered by Tim Sutton and reported here
+ *   https://svn.qgis.org/trac/ticket/200
  *
  * Revision 1.48  2006/01/26 15:07:32  fwarmerdam
  * add bMeasureIsUsed flag from Craig Bruce: Bug 1249
@@ -197,6 +208,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#ifdef USE_CPL
+#include <cpl_vsi.h>
+#endif
 
 SHP_CVSID("$Id$")
 
@@ -335,7 +349,7 @@ void SHPWriteHeader( SHPHandle psSHP )
     {
 #ifdef USE_CPL
         CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shp header." );
+                  "Failure writing .shp header (%s)", VSIStrerror( errno ) );
 #endif
         return;
     }
@@ -352,7 +366,7 @@ void SHPWriteHeader( SHPHandle psSHP )
     {
 #ifdef USE_CPL
         CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shx header." );
+                  "Failure writing .shx header (%s)", VSIStrerror( errno ) );
 #endif
         return;
     }
@@ -375,7 +389,7 @@ void SHPWriteHeader( SHPHandle psSHP )
     {
 #ifdef USE_CPL
         CPLError( CE_Failure, CPLE_OpenFailed, 
-                  "Failure writing .shx contents." );
+                  "Failure writing .shx contents (%s)", VSIStrerror( errno ) );
 #endif
     }
 
@@ -1455,9 +1469,13 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
         || fread( psSHP->pabyRec, psSHP->panRecSize[hEntity]+8, 1, 
                   psSHP->fpSHP ) != 1 )
     {
+        /*
+         * TODO - mloskot: Consider detailed diagnostics of shape file,
+         * for example to detect if file is truncated.
+         */
+
 #ifdef USE_CPL
-        CPLError( CE_Failure, CPLE_FileIO, 
-                "Error in fseek() or fread() reading object from .shp file." );
+        CPLDebug( "Shape", "Error in fseek() or fread() reading object from .shp file." );
 #endif
         return NULL;
     }
@@ -1918,9 +1936,16 @@ SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
 /*      first ring is outer and all others are inner, but eventually    */
 /*      we need to fix this to handle multiple island polygons and      */
 /*      unordered sets of rings.                                        */
+/*                                                                      */
 /* -------------------------------------------------------------------- */
-        dfTestX = psObject->padfX[psObject->panPartStart[iOpRing]];
-        dfTestY = psObject->padfY[psObject->panPartStart[iOpRing]];
+
+        /* Use point in the middle of segment to avoid testing
+         * common points of rings.
+         */
+        dfTestX = ( psObject->padfX[psObject->panPartStart[iOpRing]]
+                    + psObject->padfX[psObject->panPartStart[iOpRing] + 1] ) / 2;
+        dfTestY = ( psObject->padfY[psObject->panPartStart[iOpRing]]
+                    + psObject->padfY[psObject->panPartStart[iOpRing] + 1] ) / 2;
 
         bInner = FALSE;
         for( iCheckRing = 0; iCheckRing < psObject->nParts; iCheckRing++ )
@@ -1948,21 +1973,31 @@ SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
                 else
                     iNext = 0;
 
-                if( (psObject->padfY[iEdge+nVertStart] < dfTestY 
-                     && psObject->padfY[iNext+nVertStart] >= dfTestY)
-                    || (psObject->padfY[iNext+nVertStart] < dfTestY 
-                        && psObject->padfY[iEdge+nVertStart] >= dfTestY) )
+                /* Rule #1:
+                 * Test whether the edge 'straddles' the horizontal ray from the test point (dfTestY,dfTestY)
+                 * The rule #1 also excludes edges collinear with the ray.
+                 */
+                if ( ( psObject->padfY[iEdge+nVertStart] < dfTestY
+                       && dfTestY <= psObject->padfY[iNext+nVertStart] )
+                    || ( psObject->padfY[iNext+nVertStart] < dfTestY
+                         && dfTestY <= psObject->padfY[iEdge+nVertStart] ) )
                 {
-                    if( psObject->padfX[iEdge+nVertStart] 
-                        + (dfTestY - psObject->padfY[iEdge+nVertStart])
-                           / (psObject->padfY[iNext+nVertStart]
-                              - psObject->padfY[iEdge+nVertStart])
-                           * (psObject->padfX[iNext+nVertStart]
-                              - psObject->padfX[iEdge+nVertStart]) < dfTestX )
+                    /* Rule #2:
+                    * Test if edge-ray intersection is on the right from the test point (dfTestY,dfTestY)
+                    */
+                    float const intersect = 
+                        ( psObject->padfX[iEdge+nVertStart]
+                          + ( dfTestY - psObject->padfY[iEdge+nVertStart] ) 
+                          / ( psObject->padfY[iNext+nVertStart] - psObject->padfY[iEdge+nVertStart] )
+                          * ( psObject->padfX[iNext+nVertStart] - psObject->padfX[iEdge+nVertStart] ) );
+
+                    if (intersect  < dfTestX)
+                    {
                         bInner = !bInner;
-                }
+                    }
+                }    
             }
-        }
+        } /* for iCheckRing */
 
 /* -------------------------------------------------------------------- */
 /*      Determine the current order of this ring so we will know if     */

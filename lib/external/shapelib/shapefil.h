@@ -37,11 +37,14 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.5  2006-06-17 12:55:11  markus
- * updated to current SHAPElib from OGR
+ * Revision 1.6  2007-09-05 11:50:23  markus
+ * SHAPELIB copy updated
  *
- * Revision 1.17  2006/06/17 00:27:26  fwarmerdam
- * updated
+ * Revision 1.35  2007/09/03 19:48:10  fwarmerdam
+ * move DBFReadAttribute() static dDoubleField into dbfinfo
+ *
+ * Revision 1.34  2006/06/17 15:33:32  fwarmerdam
+ * added pszWorkField - bug 1202 (rso)
  *
  * Revision 1.33  2006/02/15 01:14:30  fwarmerdam
  * added DBFAddNativeFieldType
@@ -396,6 +399,8 @@ typedef	struct
     
     int		bNoHeader;
     int		bUpdated;
+
+    double      dfDoubleField;
 } DBFInfo;
 
 typedef DBFInfo * DBFHandle;
