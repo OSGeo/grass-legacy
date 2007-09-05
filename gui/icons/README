@@ -1,3 +1,8 @@
+GRASS GUI ICONS
+
+See file AUTHORS for a list of authors of these icons.
+
+NOTES
 These are gif icons. (Tcl doesn't like PNG)
 
 They are installed in $(GISBASE)/etc/gui/icons
