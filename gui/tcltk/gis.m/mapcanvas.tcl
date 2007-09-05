@@ -209,8 +209,7 @@ proc MapCanvas::create { } {
 	# set tempfile for ppm output
 	set mappid [pid]
 	if {[catch {set mapfile($mon) [exec g.tempfile pid=$mappid]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg $error": could not create temporary file"]
+		Gm::errmsg $error "Could not create temporary file"
 	}
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
@@ -219,8 +218,7 @@ proc MapCanvas::create { } {
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
 	if {[catch {set outfile($mon) [exec g.tempfile pid=$mappid]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg $error": could not create temporary file"]
+		Gm::errmsg $error "Could not create temporary file"
 	}
 	
 	set tmpdir [file dirname $outfile($mon)]
@@ -432,8 +430,7 @@ proc MapCanvas::get_mapunits {} {
 	    	set prj($key) $value	
 	    }
 	    if {[catch {close $input} error]} {
-	    	tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-	    		-message [G_msg "g.proj or projection error: $error"]
+			Gm::errmsg $error "g.proj or projection error"
 	    } 
 	}
 	# Length is calculated from the map canvas arrows
@@ -591,8 +588,7 @@ proc MapCanvas::runprograms { mon mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-				-message [G_msg "Region settings error: $error"]
+			Gm::errmsg $error "Region settings error"
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1136,8 +1132,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		
 		if {[catch {close $input} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-				-message [G_msg "Region settings error: $error"]
+			Gm::errmsg $error "Region settings error"
 		}
 		
 		#set start point (sw corner)
@@ -1190,8 +1185,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 	
 	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Region settings error: $error"]
+		Gm::errmsg $error "Region settings error"
 	}
 	
 }

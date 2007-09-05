@@ -29,29 +29,23 @@ lappend auto_path $env(GISBASE)/etc/gm
 package require -exact GisM 1.0
 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 
 if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-	return
+	Gm::errmsg $error
 }
 
 # path to GIS Manager files
@@ -106,7 +100,7 @@ catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
-	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	Gm::errmsg $error
 }
 
 
@@ -458,9 +452,7 @@ proc Gm:DefaultFont { source } {
     wm title .dispfont [G_msg "Select GRASS display font"]
     
     if {[catch {set fontlist [exec d.font --q -l]} error]} {
-	    tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-	        -message [G_msg "d.font error: $error"]
-	    return
+	    Gm::errmsg $error "d.font error"
     }
     set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]
@@ -548,6 +540,24 @@ proc Gm::SetFont { source } {
 
 ###############################################################################
 
+proc Gm::errmsg { error args } {
+    # send error report and optional message (args) to tk_messageBox
+    
+    set message ""
+    
+    if { $args != ""} { 
+        set message [G_msg [join $args]]
+        append message ": " 
+     }
+
+    tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+        -message "$message[G_msg $error]"
+    uplevel 1 return
+     
+};
+
+###############################################################################
+
 proc Gm::cleanup { } {
 	global mon
 	global tmpdir
@@ -568,7 +578,7 @@ proc Gm::cleanup { } {
 
 	unset mon
 
-}
+};
 
 ###############################################################################
 

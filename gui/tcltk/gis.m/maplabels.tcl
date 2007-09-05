@@ -533,7 +533,7 @@ proc GmCLabels::display { node } {
 	}
 	# close labels file
 	if {[catch {close $labelfile} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 }
 

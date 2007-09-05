@@ -104,9 +104,7 @@ proc GmThematic::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -177,7 +175,7 @@ proc GmThematic::show_data { id } {
 	if {![catch {open "|v.db.connect map=$mapname layer=$layer -g" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
 		set vdblist [split $vectdb " "]
 		set tbl [lindex $vdblist 1]
@@ -606,9 +604,7 @@ proc GmThematic::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -681,9 +677,7 @@ proc GmThematic::tleg_item { mon id } {
 	# get legend file created by d.vect.thematic in GRASS tmp diretory
 	set mappid [pid]
 	if {[catch {set tmpdir [file dirname [exec g.tempfile pid=$mappid]]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
 
 	set legfile "$tmpdir/gismlegend.txt"
@@ -785,7 +779,7 @@ proc GmThematic::tleg_item { mon id } {
 		}
 	}
 	if {[catch {close $ltxt} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
 	return
