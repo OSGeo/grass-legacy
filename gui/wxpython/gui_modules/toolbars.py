@@ -459,7 +459,8 @@ class DigitToolbar(AbstractToolbar):
         self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
 
         # create pseudoDC for drawing the map
-        self.parent.pdcVector = wx.PseudoDC()
+        self.parent.MapWindow.pdcVector = wx.PseudoDC()
+        self.parent.digit.driver.SetDevice(self.parent.MapWindow.pdcVector)
 
         return True
 
@@ -484,6 +485,7 @@ class DigitToolbar(AbstractToolbar):
 
             # disable pseudodc for vector map layer
             self.parent.MapWindow.pdcVector = None
+            self.parent.digit.driver.SetDevice(None)
 
             return True
 
