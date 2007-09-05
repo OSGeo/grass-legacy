@@ -523,8 +523,9 @@ class BufferedWindow(wx.Window):
             # set region
             self.parent.digit.driver.UpdateRegion()
             # draw map
-            self.pdcVector = wx.PseudoDC()
-            self.parent.digit.driver.DrawMap(self.pdcVector)
+            self.pdcVector.Clear()
+            self.pdcVector.RemoveAll()
+            self.parent.digit.driver.DrawMap()
 
         #
         # render overlay
@@ -597,12 +598,16 @@ class BufferedWindow(wx.Window):
         dc = wx.BufferedDC(wx.ClientDC(self))
         dc.SetBackground(wx.Brush("White"))
         dc.Clear()
+        
+        #if not self.img:
+        #    return False
+        
+        # bitmap = wx.BitmapFromImage(self.img)
 
-        if not self.img:
-            return False
-
-        bitmap = wx.BitmapFromImage(self.img)
-        self.dragimg = wx.DragImage(bitmap)
+        # drag not only background image
+        # FIXME: when mapdisplay window is hiden by other window,
+        # self._Buffer contains grey holes
+        self.dragimg = wx.DragImage(self._Buffer)
         self.dragimg.BeginDrag((0, 0), self)
         self.dragimg.GetImageRect(moveto)
         self.dragimg.Move(moveto)
@@ -1692,7 +1697,7 @@ class MapFrame(wx.Frame):
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
-        self.showRegion.SetToolTip(wx.ToolTip (_("Show/Hide computational "
+        self.showRegion.SetToolTip(wx.ToolTip (_("Show/hide computational "
                                                  "region extent (set with g.region)")))
         self.Map.SetRegion() # set region
         #         map_frame_statusbar_fields = [

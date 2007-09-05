@@ -3,9 +3,8 @@
    
    \brief Experimental C++ wxWidgets display driver
 
-   This driver is designed for wxPython GRASS GUI.
-   Displays vector map layers when Digitization tool is
-   activated.
+   This driver is designed for wxPython GRASS GUI (digitization tool).
+   Draw vector map layer to PseudoDC.
 
    \author Martin Landa <landa.martin gmail.com>
 
@@ -23,16 +22,18 @@
 
    Allocate given structures.
    
-   \param
+   \param[in,out] PseudoDC device where to draw vector objects
    
    \return
 */
-DisplayDriver::DisplayDriver()
+DisplayDriver::DisplayDriver(void *device)
 {
-    G_gisinit(""); /* need by other GRASS functions */
+    G_gisinit(""); /* GRASS functions */
 
     mapInfo = NULL;
     dcId    = 1;
+
+    dc = (wxPseudoDC *) device;
 
     points       = Vect_new_line_struct();
     pointsScreen = new wxList();
@@ -60,47 +61,65 @@ DisplayDriver::~DisplayDriver()
 }
 
 /**
-   \brief Display content of the map in device
+   \brief Set device for drawing
    
-   \param[in,out] device wxDC object where to draw vector features
-\   
-   \return number of displayed features
+   \param[in,out] PseudoDC device where to draw vector objects
+
+   \return
+*/
+void DisplayDriver::SetDevice(void *device)
+{
+    dc = (wxPseudoDC *) device;
+
+    return;
+}
+
+/**
+   \brief Draw content of the vector map to device
+   
+   \return number of lines which were drawn
    \return -1 on error
  */
-int DisplayDriver::DrawMap(void *device)
+int DisplayDriver::DrawMap()
 {
-    if (!mapInfo)
+    if (!mapInfo || !dc)
 	return -1;
 
-    dc   = (wxPseudoDC *) device;
-    dcId = 1;
-
-    ids.clear();
-
     int nlines;
+    struct ilist *listLines;
 
-    nlines = Vect_get_num_lines(mapInfo);
+    // initialize
+    dcId = 1;
+    ids.clear();
+    listLines = Vect_new_list();
 
-    for (int line = 1; line <= nlines; line++) {
-	DrawLine(line);
+    /* nlines = Vect_get_num_lines(mapInfo); */
+
+    // draw lines inside of current display region
+    nlines = Vect_select_lines_by_box(mapInfo,&(region.box),
+				      GV_POINTS | GV_LINES, // fixme
+				      listLines);
+
+    for (int i = 0; i < listLines->n_values; i++) {
+	DrawLine(listLines->value[i]);
     }
 
 #ifdef DEBUG
     PrintIds();
 #endif
 
-    dc = NULL;
+    Vect_destroy_list(listLines);
 
-    return nlines;
+    return listLines->n_values;
 }	
 
 /**
-   \brief Display selected vector feature
+   \brief Draw selected vector objects to the device
  
-   \param[in] id of the vector feature
+   \param[in] line id
  
    \return 1 on success
-   \return -1 on failure (vector feature is dead, etc.)
+   \return -1 on failure (vector object is dead, etc.)
 */
 int DisplayDriver::DrawLine(int line)
 {
@@ -125,91 +144,90 @@ int DisplayDriver::DrawLine(int line)
     // add ids
     // -> node1, line1, vertex1, line2, ..., node2
     struct lineDesc desc = {points->n_points, dcId};
-    dcId += points->n_points * 2 - 1;
     ids[line] = desc;
+    // update id for next line
+    dcId += points->n_points * 2 - 1;
 
-    // draw vector feature
-    if (type & GV_LINES) {
-	switch (type) {
-	case GV_LINE:
-	    dc->SetPen(wxPen(settings.line.color, settings.lineWidth, wxSOLID));
-	    draw = settings.line.enabled;
-	    break;
-	case GV_BOUNDARY:
-	    int left, right;
-	    Vect_get_line_areas(mapInfo, line,
-				&left, &right);
-	    if (left == 0 && right == 0) {
-		dc->SetPen(wxPen(settings.boundaryNo.color, settings.lineWidth, wxSOLID));
-		draw = settings.boundaryNo.enabled;
+    // determine color of vector object
+    if (IsSelected(line)) {
+	dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	draw = true;
+    }
+    else {
+	if (type & GV_LINES) {
+	    switch (type) {
+	    case GV_LINE:
+		dc->SetPen(wxPen(settings.line.color, settings.lineWidth, wxSOLID));
+		draw = settings.line.enabled;
+		break;
+	    case GV_BOUNDARY:
+		int left, right;
+		Vect_get_line_areas(mapInfo, line,
+				    &left, &right);
+		if (left == 0 && right == 0) {
+		    dc->SetPen(wxPen(settings.boundaryNo.color, settings.lineWidth, wxSOLID));
+		    draw = settings.boundaryNo.enabled;
+		}
+		else if (left > 0 && right > 0) {
+		    dc->SetPen(wxPen(settings.boundaryTwo.color, settings.lineWidth, wxSOLID));
+		    draw = settings.boundaryTwo.enabled;
+		}
+		else {
+		    dc->SetPen(wxPen(settings.boundaryOne.color, settings.lineWidth, wxSOLID));
+		    draw = settings.boundaryOne.enabled;
+		}
+		break;
+	    default:
+		draw = false;
+		break;
 	    }
-	    else if (left > 0 && right > 0) {
-		dc->SetPen(wxPen(settings.boundaryTwo.color, settings.lineWidth, wxSOLID));
-		draw = settings.boundaryTwo.enabled;
-	    }
-	    else {
-		dc->SetPen(wxPen(settings.boundaryOne.color, settings.lineWidth, wxSOLID));
-		draw = settings.boundaryOne.enabled;
-	    }
-	    break;
-	default:
-	    draw = false;
-	    break;
 	}
-
-	// highlight feature?
-	if (draw && IsSelected(line)) {
-	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	else if (type & GV_POINTS) {
+	    if (type == GV_POINT && settings.point.enabled) {
+		dc->SetPen(wxPen(settings.point.color, settings.lineWidth, wxSOLID));
+		draw = true;
+	    }
+	    else if (type == GV_CENTROID) {
+		int cret = Vect_get_centroid_area(mapInfo, line);
+		if (cret > 0) { // -> area
+		    draw = settings.centroidIn.enabled;
+		    dc->SetPen(wxPen(settings.centroidIn.color, settings.lineWidth, wxSOLID));
+		}
+		else if (cret == 0) {
+		    draw = settings.centroidOut.enabled;
+		    dc->SetPen(wxPen(settings.centroidOut.color, settings.lineWidth, wxSOLID));
+		}
+		else {
+		    draw = settings.centroidDup.enabled;
+		    dc->SetPen(wxPen(settings.centroidDup.color, settings.lineWidth, wxSOLID));
+		}
+	    }
 	}
+    }
 
-	long int startId = ids[line].startId + 1;
-
-	for (int i = 0; i < pointsScreen->GetCount() - 1; startId += 2) {
-	    wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
-	    wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
+    // draw object
+    if (draw) {
+	if (type & GV_POINTS) {
+	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
+	}
+	else {
+	    long int startId = ids[line].startId + 1;
 	    
-	    wxRect rect (*point_beg, *point_end);
-	    dc->SetIdBounds(startId, rect);
-
-	    // draw line if needed
-	    if (draw) {
+	    for (int i = 0; i < pointsScreen->GetCount() - 1; startId += 2) {
+		wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
+		wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
+	    
+		// set bounds for line
+		// wxRect rect (*point_beg, *point_end);
+		// dc->SetIdBounds(startId, rect);
+		
+		// draw line if needed
 		dc->SetId(startId);
 		dc->DrawLine(point_beg->x, point_beg->y,
 			     point_end->x, point_end->y);
 	    }
-	}
-
-	//DrawLineVerteces(line); // draw vertices
-	//DrawLineNodes(line);    // draw nodes
-    }
-    else if (type & GV_POINTS) {
-	if (type == GV_POINT && settings.point.enabled) {
-	    dc->SetPen(wxPen(settings.point.color, settings.lineWidth, wxSOLID));
-	    draw = true;
-	}
-	else if (type == GV_CENTROID) {
-	    int cret = Vect_get_centroid_area(mapInfo, line);
-	    if (cret > 0) { // -> area
-		draw = settings.centroidIn.enabled;
-		dc->SetPen(wxPen(settings.centroidIn.color, settings.lineWidth, wxSOLID));
-	    }
-	    else if (cret == 0) {
-		draw = settings.centroidOut.enabled;
-		dc->SetPen(wxPen(settings.centroidOut.color, settings.lineWidth, wxSOLID));
-	    }
-	    else {
-		draw = settings.centroidDup.enabled;
-		dc->SetPen(wxPen(settings.centroidDup.color, settings.lineWidth, wxSOLID));
-	    }
-	}
-
-	if (draw) {
-	    // highlight feature?
-	    if (IsSelected(line)) {
-		dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
-	    }
-
-	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
+	    DrawLineVerteces(line); // draw vertices
+	    DrawLineNodes(line);    // draw nodes
 	}
     }
 
@@ -217,48 +235,51 @@ int DisplayDriver::DrawLine(int line)
 }
 
 /**
-   \brief Display verteces of the line
+   \brief Draw line verteces to the device
  
-   Except of first and last vertex, see DisplayNodes().
+   Except of first and last vertex, see DrawLineNodes().
 
-   \param
+   \param line id
 
-   \return number of displayed verteces
+   \return number of verteces which were drawn
+   \return -1 if drawing vertices is disabled
 */
 int DisplayDriver::DrawLineVerteces(int line)
 {
     long int id;
     wxPoint *point;
 
+    if (!settings.vertex.enabled)
+	return -1;
+
+    // determine color
+    if (!IsSelected(line)) {
+	dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
+    }
+    else {
+	dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+    }
+
     // set id
     id = ids[line].startId + 2;
     for (int i = 1; i < pointsScreen->GetCount() - 1; i++, id += 2) {
 	point = (wxPoint*) pointsScreen->Item(i)->GetData();
-	wxRect rect (*point, *point);
-	dc->SetIdBounds(id, rect);
-    }
-
-    // draw vertices if needed
-    if (settings.vertex.enabled) {
-	if (!IsSelected(line))
-	    dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
-
-	id = ids[line].startId + 2;
-	for (int i = 1; i < pointsScreen->GetCount() - 1; i++, id += 2) {
-	    dc->SetId(id);
-	    DrawCross(line, (const wxPoint*) pointsScreen->Item(i)->GetData());
-	}
+	//wxRect rect (*point, *point);
+	//dc->SetIdBounds(id, rect);
+	dc->SetId(id);
+	DrawCross(line, (const wxPoint*) pointsScreen->Item(i)->GetData());
     }
 
     return pointsScreen->GetCount() - 2;
 }
 
 /**
-   \brief Display nodes of the line
+   \brief Draw line nodes to the device
  
-   \param
+   \param line id
 
    \return 1
+   \return -1 if no nodes were drawn
 */
 int DisplayDriver::DrawLineNodes(int line)
 {
@@ -269,31 +290,39 @@ int DisplayDriver::DrawLineNodes(int line)
     int nodes [2];
     bool draw;
     
+    // draw nodes??
+    if (!settings.nodeOne.enabled && !settings.nodeTwo.enabled)
+	return -1;
+
+    // get nodes
     Vect_get_line_nodes(mapInfo, line, &(nodes[0]), &(nodes[1]));
         
     for (int i = 0; i < sizeof(nodes) / sizeof(int); i++) {
 	node = nodes[i];
+	// get coordinates
 	Vect_get_node_coor(mapInfo, node,
 			   &east, &north, &depth);
 
+	// convert EN->xy
 	Cell2Pixel(east, north, depth,
 		   &x, &y, &z);
 
-	
-	if (Vect_get_node_n_lines(mapInfo, node) == 1) {
-	    dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
-	    draw = settings.nodeOne.enabled;
+	// determine color
+	if (IsSelected(line)) {
+	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
+	    draw = true;
 	}
 	else {
-	    dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
-	    draw = settings.nodeTwo.enabled;
+	    if (Vect_get_node_n_lines(mapInfo, node) == 1) {
+		dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
+		draw = settings.nodeOne.enabled;
+	    }
+	    else {
+		dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+		draw = settings.nodeTwo.enabled;
+	    }
 	}
 	
-        // highlight feature?
-	if (draw && IsSelected(line)) {
-	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
-	}
-
 	// node1, line1, vertex1, line2, vertex2, ..., node2
 	if (i == 0) // first node
 	  id = dcId - points->n_points * 2 + 1;
@@ -301,8 +330,8 @@ int DisplayDriver::DrawLineNodes(int line)
 	  id = dcId - 1;
 
 	wxPoint point(x, y);
-	wxRect rect (point, point);
-	dc->SetIdBounds(id, rect);
+	// wxRect rect (point, point);
+	// dc->SetIdBounds(id, rect);
 
 	// draw node if needed
 	if (draw) {
@@ -346,10 +375,10 @@ void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
     if (!mapInfo)
 	mapInfo = (struct Map_info *) G_malloc (sizeof (struct Map_info));
 
-// define open level (level 2: topology)
+    // define open level (level 2: topology)
     Vect_set_open_level(2);
 
-// open existing map
+    // open existing map
     Vect_open_old(mapInfo, (char*) mapname, (char *) mapset);
 
     return;
@@ -359,6 +388,8 @@ void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
    \brief Reload vector map layer
 
    Close and open again. Needed for modification using v.edit.
+
+   TODO: Get rid of that...
 
    \param
    
@@ -380,7 +411,9 @@ void DisplayDriver::ReloadMap()
   \brief Conversion from geographic coordinates (east, north)
   to screen (x, y)
   
-  \param[in] east,north,elev geographical coordinates
+  TODO: 3D stuff...
+
+  \param[in] east,north,depth geographical coordinates
   \param[out] x, y, z screen coordinates
   
   \return 
@@ -388,9 +421,9 @@ void DisplayDriver::ReloadMap()
 void DisplayDriver::Cell2Pixel(double east, double north, double depth,
 			       int *x, int *y, int *z)
 {
-  *x = int((east  - region.west_real) / region.res);
-  *y = int((region.north_real - north) / region.res);
-  *z = 0;
+    *x = int((east  - region.map_west) / region.map_res);
+    *y = int((region.map_north - north) / region.map_res);
+    *z = 0;
 
     return;
 }
@@ -398,7 +431,7 @@ void DisplayDriver::Cell2Pixel(double east, double north, double depth,
 /**
    \brief Set geographical region
  
-   Needed for Cell2Pixel().
+   Region must be upgraded because of Cell2Pixel().
    
    \param[in] north,south,east,west,ns_res,ew_res region settings
  
@@ -409,10 +442,10 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
 			      double center_easting, double center_northing,
 			      double map_width, double map_height)
 {
-    region.north  = north;
-    region.south  = south;
-    region.east   = east;
-    region.west   = west;
+    region.box.N  = north;
+    region.box.S  = south;
+    region.box.E  = east;
+    region.box.W  = west;
     region.ns_res = ns_res;
     region.ew_res = ew_res;
 
@@ -423,18 +456,18 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.map_height = map_height;
 
     // calculate real region
-    region.res = (region.ew_res > region.ns_res) ? region.ew_res : region.ns_res;
+    region.map_res = (region.ew_res > region.ns_res) ? region.ew_res : region.ns_res;
 
-    region.west_real  = region.center_easting - (region.map_width / 2) * region.res;
-    region.north_real = region.center_northing + (region.map_height / 2) * region.res;
+    region.map_west  = region.center_easting - (region.map_width / 2.) * region.map_res;
+    region.map_north = region.center_northing + (region.map_height / 2.) * region.map_res;
 
     return;
 }
 
 /**
-   \brief Draw cross symbol of given size in device content
+   \brief Draw cross symbol of given size to device content
    
-   Used for points, node, vertices
+   Used for points, nodes, vertices
 
    \param[in] point coordinates of center
    \param[in] size size of the cross symbol
@@ -540,12 +573,8 @@ void DisplayDriver::PrintIds()
 }
 
 /**
-   \brief Select vector features by given bounding box
+   \brief Select vector objects by given bounding box
    
-   rect = ((x1, y1), (x2, y2))
-   Number of selected features can be decreased by 'onlyType'
-   ('NULL' for all types)
-
    \param[in] x1,y1,x2,y2 corners coordinates of bounding box
 
    \return number of selected features
@@ -599,23 +628,24 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
    \brief Select vector feature by given point in given
    threshold
    
-   Only one vector feature can be selected.
+   Only one vector object can be selected.
 
    \param[in] x,y point of searching
    \param[in] thresh threshold value where to search
-   \param[in] onlyType select vector feature of given
-   type
+   \param[in] onlyType select vector object of given type
 
-   \return 1 if vector feature found
-   \return 0 if no vector feature found
+   \return 1 vector object found
+   \return 0 no vector object found
 */
 int DisplayDriver::SelectLinesByPoint(double x, double y, double thresh,
 				      int onlyType)
 {
     int line;
-
+    
     line = Vect_find_line(mapInfo, x, y, 0.0,
-			  -1, thresh, 0, 0);
+			  GV_POINTS | GV_LINES, thresh, 0, 0);
+
+    std::cout << x << " " << y << " " << thresh << "->" << line << std::endl;
 
     if (line > 0) {
 	selected.push_back(line);
@@ -626,12 +656,12 @@ int DisplayDriver::SelectLinesByPoint(double x, double y, double thresh,
 }
 
 /**
-   \brief Is vector feature selected?
+   \brief Is vector object selected?
    
-   \param[in] line vector feature id
+   \param[in] line id
 
-   \return if vector feature is selected return true
-   \return if not return false
+   \return true if vector object is selected
+   \return false if vector object is not selected
 */
 bool DisplayDriver::IsSelected(int line)
 {
@@ -647,7 +677,7 @@ bool DisplayDriver::IsSelected(int line)
 /**
    \brief Unselect selected features by user
 
-   Clear list of ids of selected vector features
+   Clear list of ids of selected vector objects
 
    \param
 
@@ -661,13 +691,12 @@ void DisplayDriver::Unselect()
 }
 
 /**
-   \brief Return grass ids of selected vector features
+   \brief Get ids of selected objects
 
-   \param[in] grassId If true method returns GRASS ids of
-   vector features, if false returns ids of objects
-   drawn in PseudoDC
+   \param[in] grassId if true return GRASS line ids
+   if false return PseudoDC ids
    
-   \return list of ids of selected vector features
+   \return list of ids of selected vector objects
 */
 std::vector<int> DisplayDriver::GetSelected(bool grassId)
 {
@@ -691,9 +720,9 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 }
 
 /**
-   \brief Set ids of selected vector features
+   \brief Set selected vector objects
    
-   \param[in] list of ids to be set
+   \param[in] list of GRASS ids to be set
 
    \return 1
 */
@@ -707,20 +736,26 @@ int DisplayDriver::SetSelected(std::vector<int> id)
 /**
    \brief Get PseudoDC vertex id of selected line
 
-   \param[in] x,y coordinates of vertex on line
+   \param[in] x,y coordinates of click
 
-   \return PseudoDC ids (vertex, left vertex, right vertex, left line, right line)
-   \return (0) no line found
-   \return (-1) on error
+   \return id of center, left and right vertex
+
+   \return 0 no line found
+   \return -1 on error
 */
 std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 {
-    struct lineDesc *desc;
-    int line, type, minIdx, lline, rline; // left, right line
-    double dist, minDist;
-    
-    std::vector<int>  returnId; // TODO: long int
+    struct lineDesc *desc; // line desription
 
+    int line, type;
+    int Gid, DCid;
+    int vx, vy, vz;      // vertex screen coordinates
+
+    double dist, minDist;
+
+    std::vector<int> returnId;
+
+    // only one object can be selected
     if (selected.size() != 1)
 	return returnId;
 
@@ -728,18 +763,19 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     
     type = Vect_read_line (mapInfo, points, cats, line);
         
+    // find the closest vertex (x, y)
     for(int idx = 0; idx < points->n_points; idx++) {
 	dist = Vect_points_distance(x, y, 0.0,
 				    points->x[idx], points->y[idx], points->z[idx], 0);
 	
 	if (idx == 0) {
 	    minDist = dist;
-	    minIdx  = idx;
+	    Gid  = idx;
 	}
 	else {
 	    if (minDist > dist) {
 		minDist = dist;
-		minIdx = idx;
+		Gid = idx;
 	    }
 	}
     }	
@@ -747,31 +783,38 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     desc = &(ids[line]);
 
     // translate id
-    minIdx = minIdx * 2 + desc->startId;
+    DCid = Gid * 2 + desc->startId;
 
     // add selected vertex
-    returnId.push_back(minIdx);
-    // left vertex & line
-    if (minIdx == desc->startId) {
+    returnId.push_back(DCid);
+    Cell2Pixel(points->x[Gid], points->y[Gid], points->z[Gid],
+	       &vx, &vy, &vz);
+    wxRect rect (vx, vy, 0, 0);
+    dc->SetIdBounds(DCid, rect);
+
+    // left vertex
+    if (DCid == desc->startId) {
 	returnId.push_back(-1);
-	lline = -1;
     }
     else {
-	returnId.push_back(minIdx - 2);
-	lline = minIdx - 1;
+	returnId.push_back(DCid - 2);
+	Cell2Pixel(points->x[Gid-2], points->y[Gid-2], points->z[Gid-2],
+		   &vx, &vy, &vz);
+	wxRect rect (x, y, 0, 0);
+	dc->SetIdBounds(DCid-2, rect);
     }
+
     // right vertex
-    if (minIdx == (desc->npoints - 1) * 2 + desc->startId) {
+    if (DCid == (desc->npoints - 1) * 2 + desc->startId) {
 	returnId.push_back(-1);
-	rline = -1;
     }
     else {
-	returnId.push_back(minIdx + 2);
-	rline = minIdx + 1;
+	returnId.push_back(DCid + 2);
+	Cell2Pixel(points->x[Gid+2], points->y[Gid+2], points->z[Gid+2],
+		   &vx, &vy, &vz);
+	wxRect rect (x, y, 0, 0);
+	dc->SetIdBounds(DCid + 2, rect);
     }
-    
-    returnId.push_back(lline);
-    returnId.push_back(rline);
 
     return returnId;
 }

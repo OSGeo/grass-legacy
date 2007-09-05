@@ -52,22 +52,19 @@ class DisplayDriver
     struct line_cats *cats;
     
     struct _region {
-	double north; // map units
-	double south;
-	double east;
-	double west;
+	// GRASS region section
+	BOUND_BOX box; // W,E,N,S,T,B
 	double ns_res;
 	double ew_res;
 	double center_easting;
 	double center_northing;
 
+	// map window section
 	double map_width;  // px
 	double map_height;
-
-	// real region
-	double west_real;
-	double north_real;
-	double res;
+	double map_west;
+	double map_north;
+	double map_res;
     } region;
 
     struct symbol {
@@ -115,12 +112,12 @@ class DisplayDriver
 
  public:
     /* constructor */
-    DisplayDriver();
+    DisplayDriver(void *device);
     /* destructor */
     ~DisplayDriver();
 
     /* display */
-    int DrawMap(void *device);
+    int DrawMap();
 
     /* select */
     int SelectLinesByBox(double x1, double y1, double x2, double y2);
@@ -136,6 +133,7 @@ class DisplayDriver
     void CloseMap();
     void OpenMap(const char *mapname, const char *mapset);
     void ReloadMap();
+    void SetDevice(void *device);
 
     /* set */
     void SetRegion(double north, double south, double east, double west,

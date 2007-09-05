@@ -614,7 +614,8 @@ class DisplayAttributesDialog(wx.Dialog):
         if self.layer > 0 and \
                self.layer not in self.mapInfo.layers.keys():
             dlg = wx.MessageDialog(None,
-                                   _("Layer %d is not available in vector map <%s>") % \
+                                   _("Attribute table not found.\n"
+                                     "Layer %d is not available in vector map <%s>") % \
                                    (layer, self.map),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()

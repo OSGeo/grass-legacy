@@ -412,13 +412,17 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         # initialize wx display driver
         try:
-            self.__display = DisplayDriver()
+            self.__display = DisplayDriver(mapwindow.pdcVector)
         except:
             self.__display = None
             
         settings = self.parent.settings
         self.UpdateSettings()
 
+    def SetDevice(self, pdc):
+        """Set device for driver"""
+        self.__display.SetDevice(pdc)
+            
     def Reset(self, map):
         """Close map and open new one"""
         if map:
@@ -432,14 +436,14 @@ class CDisplayDriver(AbstractDisplayDriver):
         
         self.__display.ReloadMap()
 
-    def DrawMap(self, pdc):
+    def DrawMap(self):
         """Draw vector map layer content
 
         Return wx.Image 
         """
         import time
         start = time.clock()
-        nlines = self.__display.DrawMap(pdc)
+        nlines = self.__display.DrawMap()
         stop = time.clock()
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d, sec=%f" % \
                       (nlines, stop-start))
@@ -471,9 +475,9 @@ class CDisplayDriver(AbstractDisplayDriver):
                                                     -1); 
 
         Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): selected=%d" % \
-                  nselected)
+                      nselected)
 
-        return (nselected,) # tuple
+        return nselected
 
     def GetSelected(self, grassId=True):
         """Return ids of selected vector features
