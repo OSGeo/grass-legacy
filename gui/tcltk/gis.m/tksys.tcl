@@ -13,6 +13,7 @@ exec $GRASS_WISH "$0" "$@"
 
 source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
+source $env(GISBASE)/etc/gm/gm.tcl
 
 array set items { 
     platform   "Platform               "
@@ -77,7 +78,7 @@ proc sys_getinfo { } {
     if { [string compare "$sys(user)" "unknown"] == 0 && \
 	 [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } {
 		if {[catch {set sys(user) [exec whoami]} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
     }
 
@@ -99,7 +100,7 @@ proc sys_getinfo { } {
 
 	if { [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } { 
 		if {[catch {set tmp [exec uname -srm]} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
 		regsub -all { } $tmp {-} tmp 
 		set sys(uname) $tmp
@@ -211,11 +212,11 @@ proc sys_save { } {
 		return
     }
     if [catch {open $file w} error] {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error 
 	} else {
 		sys_putinfo $out
 		if {[catch {close $out} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
     }
 

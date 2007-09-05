@@ -164,7 +164,7 @@ proc GmGroup::nvdisplay { node } {
 		}
 		
 		if {[catch {eval exec "$cmd 2> $devnull &"} error]} {
-		    tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		    Gm::errmsg $error
 		}
 	}
 
@@ -204,15 +204,13 @@ proc GmGroup::nviz { node } {
 			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-				return
+				Gm::errmsg $error
 			}
 
 			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-				return
+				Gm::errmsg $error
 			}
 
 			if { $surf == "" || $clr == "" } { return }
@@ -237,8 +235,7 @@ proc GmGroup::nviz { node } {
 			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} error]} {
 				if { $vinfo == "" } {set vect ""}
 			} else {
-				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-				return
+				Gm::errmsg $error
 			}
 			
 			if {$vect == ""} {return}

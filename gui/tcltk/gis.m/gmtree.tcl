@@ -480,8 +480,7 @@ proc GmTree::delete { } {
     global mon
 
     if { [array size GmTree::tree] < 1 } {
-    	tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
-        return
+    	Gm::errmsg $error "No layer selected"
     }
 
     set sel [ lindex [$tree($mon)  selection get] 0 ]
@@ -629,8 +628,7 @@ proc GmTree::duplicate { } {
     global new_root_node mon
 
     if { [array size GmTree::tree] < 1 } {
-    	tk_messageBox -type ok -icon warning -message [G_msg "No layer selected"]
-        return
+    	Gm::errmsg $error "No layer selected"
     }
 
     if { [catch {match string {} $new_root_node}] } {
@@ -724,14 +722,13 @@ proc GmTree::save { spth } {
     set fpath $spth
     
     if {[catch {set rcfile [open $fpath w]} error]} {
-        tk_messageBox -icon error -type ok -message [format [G_msg "Could not open file for writing.\n%s"] $error]
+        Gm::errmsg $error [format "Could not open file for writing.\n%s" $fpath]
         return
     }
     GmGroup::save $tree($mon) 0 "root"
 
 	if {[catch {close $rcfile} error]} {
-        tk_messageBox -icon error -type ok -message [G_msg $error]
-        return
+        Gm::errmsg $error
 	}
 
 }
@@ -976,9 +973,8 @@ proc GmTree::load { lpth } {
 				set current_node [$tree($mon) parent $current_node]
 			}
 			default {
-				if {[catch {GmTree::node_type $current_node}] } {
-					tk_messageBox -type ok -message \
-					    [format [G_msg "Can't open %s - bad file format"] $fpath]
+				if {[catch {GmTree::node_type $current_node}] error } {
+					Gm::errmsg $error [format "Can't open %s - bad file format" $fpath]
 					break
 				} else {
 					set type [GmTree::node_type $current_node]
@@ -1047,7 +1043,7 @@ proc GmTree::load { lpth } {
 		set Gm::prgindic $prg
 	} 
 	if {[catch {close $rcfile} error]} {
-	    tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+	    Gm::errmsg $error
 	}
 
     set Gm::prgindic $max_prgindic

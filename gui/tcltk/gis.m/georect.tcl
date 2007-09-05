@@ -354,7 +354,7 @@ proc GRMap::group { } {
         GRMap::setxyenv $xymset $xyloc
 		set cmd "i.group"
         if {[catch {exec -- $cmd --ui } error]} {
-        	tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]	
+        	Gm::errmsg $error
         }
 
         # Return to georectified mapset
@@ -403,9 +403,7 @@ proc GRMap::getmset { } {
 
     set mappid [pid]
 	if {[catch {set grfile [exec g.tempfile pid=$mappid]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
 
     append grfile ".ppm"
@@ -547,7 +545,7 @@ proc GRMap::read_vgroup { xygroup } {
     catch {set vlist [open $vgfile]}
     set vectnames [read $vlist]
 	if {[catch {close $vlist} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
    
     set vlines [split $vectnames "\n"]
@@ -585,7 +583,7 @@ proc GRMap::write_vgroup {xygroup xyvect} {
 			puts $output $vect
 		}
 	if {[catch {close $output} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
 }
@@ -1150,7 +1148,7 @@ proc GRMap::get_gcp { } {
         catch {set pfile [open $gcpfile]}
         set points [read $pfile]
 		if {[catch {close $pfile} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
         regsub -all {[ ]+} $points " " points
         set plines [split $points "\n"]
@@ -1215,7 +1213,7 @@ proc GRMap::savegcp {} {
     }
     
 	if {[catch {close $output} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
 }
@@ -1255,7 +1253,7 @@ proc GRMap::gcp_error { } {
     catch {set input [open "|g.transform group=$xygroup order=$rectorder"]}
     set errorlist [read $input]
 	if {[catch {close $input} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
     # Return to georectified mapset
@@ -1307,7 +1305,7 @@ proc GRMap::rectify { } {
     catch {set pfile [open $gcpfile]}
     set points [read $pfile]
 	if {[catch {close $pfile} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
     regsub -all {[ ]+} $points " " points
@@ -1559,8 +1557,7 @@ proc GRMap::runprograms { mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] 
-				-message [G_msg "Region settings error: $error"]
+			Gm::errmsg $error "Region settings error"
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1627,7 +1624,7 @@ proc GRMap::runprograms { mod } {
 			catch {set pfile [open $gcpfile]}
 			set points [read $pfile]
 			if {[catch {close $pfile} error]} {
-				tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+				Gm::errmsg $error
 			}
 
 			regsub -all {[ ]+} $points " " points
@@ -1937,8 +1934,7 @@ proc GRMap::zoom_gregion { args} {
             set parts($key) $value
         }
 		if {[catch {close $input} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-				-message [G_msg "Region setings error: $error"]
+			Gm::errmsg $error "Region setings error
 		}
 
         GRMap::zoom_new $parts(north) $parts(south) $parts(east) $parts(west) $parts(nsres) $parts(ewres)
