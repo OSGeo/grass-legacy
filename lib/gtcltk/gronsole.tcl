@@ -103,7 +103,7 @@ proc Gronsole::_destroy { path } {
     array unset _data "$path,*"
 
     if {[catch {rename $path {}} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+		Gm::errmsg $error
 	}
 
 }
@@ -155,8 +155,7 @@ proc Gronsole::destroy_command {path ci} {
 	variable _data
 
 	if {[catch {close $_data($path,$ci,fh)} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-		return
+		Gm::errmsg $error
 	}
 
 	if {[info exists _data($path,$ci,donecmd)] && $_data($path,$ci,donecmd) != {}} {
