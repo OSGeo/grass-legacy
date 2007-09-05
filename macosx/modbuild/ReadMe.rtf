@@ -12,11 +12,11 @@ Mac OS X GRASS.app\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \fs28 \cf0 \
-GEM is a nice idea, but there are a few issues.  Not many modules are setup for GEM (there are a couple in the new SVN repository, and some by the GEM author).  It puts the resulting files in the GRASS binary folder and alters the GUI menus in the application package, and this is Not a Good Thing to do with Mac OS X applications (no fault of GEM, it's just how GRASS works right now).\
+GEM is a nice idea, but there are a few issues.  Not many modules are setup for GEM (there are a couple in the new SVN repository, and some by the GEM author).  It puts the resulting files in the GRASS binary folder and alters the GUI menus in the application package, and this is Not a Good Thing to do with Mac OS X applications.\
 \
 The method is similar to GEM in that it uses a minimal template of the GRASS source and uses the needed headers and libraries from GRASS.app.  But there is less setup needed (for developers), and you don't need admin privileges to install and use the module, except in some more complex cases.  Though a user does need to do a little setup, unlike with GEM.\
 \
-It's really rough right now.  It doesn't have a module registry like GEM.  It doesn't add modules to the GUI menu, though the menu is dynamically maintained by the GRASS.app startup.\
+It's a bit rough right now.  It doesn't have a module registry like GEM.  It doesn't add modules to the GUI menu, though the menu is dynamically maintained by the GRASS.app startup.\
 \
 I haven't tried it with a module that also includes its own library.\
 \
@@ -29,7 +29,7 @@ I haven't tried it with a module that also includes its own library.\
 \f0\b Requirements\
 
 \f1\b0 \
-- Xcode - at least version 2.3.\
+- Xcode - at least version 2.3 (scripts shouldn't need this).\
 \
 - GRASS.app (you don't need the full GRASS source).\
 \
@@ -42,13 +42,17 @@ I haven't tried it with a module that also includes its own library.\
 \f0\b Setup\
 
 \f1\b0 \
+
+\f2\fs24 $VERSION
+\f1\fs28  is the major.minor GRASS version.\
+\
 - copy the modbuild folder from 
 \f2\fs24 /Library/GRASS/$VERSION/
 \f1\fs28  to a location you have read/write access to.  You could use your home 
 \f2\fs24 /Library/GRASS/$VERSION/
 \f1\fs28 , for example.\
 \
-- Unpack the module source and put the module source folder in the '
+- Unpack the module source and put that source folder in the '
 \f2\fs24 module
 \f1\fs28 ' folder in the modbuild folder.  If the module source is setup for GEM, you'll have to dig into the src/[section] subfolder to find the module's source folder (ie src/raster/module.source.folder).  You should end up with your template folder like so:\
 \
@@ -58,7 +62,7 @@ I haven't tried it with a module that also includes its own library.\
 	include\
 	License.rtf\
 	module\
-		module.source.folder\
+		module_source_folder\
 			description.html (this might have the module name instead)\
 			main.c\
 			makefile\
@@ -80,7 +84,7 @@ I haven't tried it with a module that also includes its own library.\
 \f2\fs24 g.findetc
 \f1\fs28  module (for script modules) instead of the hardwired 
 \f2\fs24 $GISBASE/etc/
-\f1\fs28 .  This will mean either asking the author to make this change or attempting it yourself.\
+\f1\fs28 .  This will mean either asking the author to make this change or attempting it yourself.  See the developer documentation for usage of G_find_etc(), and the GRASS Help for usage of g.findetc.\
 \
 - In a Terminal, 
 \f2\fs24 cd
@@ -92,14 +96,14 @@ I haven't tried it with a module that also includes its own library.\
 \f1\fs28 \
 The modbuild path is the path to the 
 \f2\fs24 modbuild
-\f1\fs28  folder, not the module source folder.  Make sure to include the GRASS.app name in the GRASS_APP path.\
+\f1\fs28  folder, not the module source folder.  Make sure to include the correct GRASS.app name in the GRASS_APP path (ie GRASS-6.3.app).\
 \
 \
 
 \f0\b Use
 \f1\b0 \
 \
-The module executable will be in the 
+The module files will be in the 
 \f2\fs24 dist
 \f1\fs28  folder in this template.  A C source module will be in 
 \f2\fs24 bin
@@ -113,7 +117,7 @@ The module executable will be in the
 \f2\fs24 ~/Library/GRASS/$VERSION/Modules
 \f1\fs28 .  The version is the Major.minor GRASS version.  Modules that should be available to all users should be installed in 
 \f2\fs24 /Library
-\f1\fs28 , and any modules in 
+\f1\fs28  (requires admin privileges), and any modules in 
 \f2\fs24 ~/Library
 \f1\fs28  will only be available to the user that installs them.  The user GRASS folder will be created the first time GRASS is run.\
 \
@@ -149,7 +153,7 @@ The module executable will be in the
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
 
 \fs24 \cf0 \'a9 2006-2007 by the GRASS Development Team\
-This program is free software under the GNU General Public License (>=v2).\
+This program is free software under the GNU General Public License (>=v2).\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
 
 \fs28 \cf0 \
