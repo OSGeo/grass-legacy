@@ -166,6 +166,7 @@ int what(double east, double north, double maxdist, int width,
             else 
             {
                 fprintf(stdout, _("Type: %s"), buf);
+		fprintf(stdout, _("Line: %d\n"), line);
                 if ( type & GV_LINES )
 		    fprintf(stdout, _("Length: %f\n"), l);
             } 

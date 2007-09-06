@@ -89,7 +89,6 @@ main(int argc, char **argv)
     if((argc > 1 || !vect) && G_parser(argc,argv))
         exit(EXIT_FAILURE);
 
-
     if (opt1->answers && opt1->answers[0])
         vect = opt1->answers;
     
@@ -139,18 +138,18 @@ main(int argc, char **argv)
             if (j > width) width = j;
 	    
             mapset = G_find_vector2(vect[i],"");
+            if (!mapset) 
+                G_fatal_error(_("Vector map <%s> not found"), vect[i]);
+
             j = strlen(mapset);
             if (j > mwidth)
                 mwidth = j;
 	    
             level = Vect_open_old (&Map[i], vect[i], mapset);
-            if (level < 0) 
-                G_fatal_error(_("Vector map <%s> not found"), vect[i]);
-    
-            if (level < 2) 
+	    if (level < 2) 
                 G_fatal_error(_("You must build topology on vector map <%s>"), vect[i]);
 
-            G_verbose_message(_("Building spatial index ..."));
+            G_verbose_message(_("Building spatial index..."));
             Vect_build_spatial_index ( &Map[i], NULL );
        }
     }
@@ -164,7 +163,7 @@ main(int argc, char **argv)
 	    if(ret == 3 && (ch == ',' || ch == ' ' || ch == '\t') ) {
 		what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer);
 	    } else {
-		G_warning ( _("Unknown input format, skipping: [%s]"), buf);
+		G_warning ( _("Unknown input format, skipping: '%s'"), buf);
 		continue;
 	    }
 	}
