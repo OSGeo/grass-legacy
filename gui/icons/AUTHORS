@@ -16,11 +16,18 @@ drawmode-explore.gif
 From BWidgets:
 file-*.gif
 edit-*.gif
-status-out.gif
+status-out.gif (except status-gism.gif by M. Barton)
+gui-rv.info.gif
 
 Hamish Bowman:
 module-d.nviz.gif
 module-nviz.gif
 
-Michael Barton (from gis.m directory):
-Everything else  [can we future proof this statement?]
+Radim Blazek:
+gui-cmd.gif
+
+GRASS development team (GRASS logo):
+gui-g.gif
+
+Michael Barton:
+Everything else
