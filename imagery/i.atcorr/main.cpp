@@ -24,6 +24,10 @@
     Testing would be welcomed. :)  
  ***************************************************************************/
 
+#include <stdlib.h>
+#include <math.h>
+#include <map>
+
 extern "C" {
 #include <grass/gis.h>
 #include <grass/glocale.h>
@@ -31,9 +35,7 @@ extern "C" {
 
 #include "Transform.h"
 #include "6s.h"
-#include <stdlib.h>
-#include <math.h>
-#include <map>
+
 
 /* Input options and flags */
 struct Options
@@ -63,40 +65,60 @@ struct ScaleRange
     int max;
 };
 
+
+int hit = 0;
+int mis = 0;
+
+/* function prototypes */
+static void adjust_region (char *);
+static CELL round_c (FCELL);
+static void write_fp_to_cell (int, FCELL *);
+static void process_raster (int, InputMask, ScaleRange, int, int, int, bool, ScaleRange, bool);
+static void copy_colors (char *, char *);
+static void define_module (void);
+static struct Options define_options (void);
+static void read_scale (Option *, ScaleRange *);
+
+
 /* 
  Adjust the region to that of the input raster.
  Atmospheric corrections should be done on the whole
  satelite image, not just portions.
  */
-void adjust_region(char *name)
+static void adjust_region (char *name)
 {
 	struct Cell_head iimg_head;	/* the input image header file */
 
 	if(G_get_cellhd(name, G_mapset(), &iimg_head) < 0) 
-		G_fatal_error("Unable to retreive header dat for input image");
+		G_fatal_error ("Unable to retreive header dat for input image");
+
 	if(G_set_window(&iimg_head) < 0) 
-		G_fatal_error("Invalid graphics region coordinates");
-}
-/* Rounds a floating point cell value */
-CELL round_c (FCELL x)
-{
-	if (x >= 0.0) return (CELL)(x + .5);
-	else return (CELL)(-(-x + .5));
+		G_fatal_error ("Invalid graphics region coordinates");
 }
 
+
+/* Rounds a floating point cell value */
+static CELL round_c (FCELL x)
+{
+	if (x >= 0.0)
+		return (CELL)(x + .5);
+
+	return (CELL)(-(-x + .5));
+}
+
+
 /* Converts the buffer to cell and write it to disk */
-void write_fp_to_cell(int ofd, FCELL* buf)
+static void write_fp_to_cell (int ofd, FCELL* buf)
 {
 	CELL* cbuf;
 	int col;
+
 	cbuf = (CELL*)G_allocate_raster_buf(CELL_TYPE);
 
 	for(col = 0; col < G_window_cols(); col++) cbuf[col] = round_c(buf[col]);
 	G_put_raster_row(ofd, cbuf, CELL_TYPE);
 }
 
-int hit = 0;
-int mis = 0;
 
 class TICache
 {
@@ -120,6 +142,7 @@ public:
 	    mis++;
 	    return -1; 
     }
+
     TransformInput get(int i) { return tis[i]; }
     void add(TransformInput ti, float alt) { 
 	    tis[p] = ti; 
@@ -128,6 +151,7 @@ public:
 	    if(p >= MAX_TIs) p = 0; 
     }
 };
+
 
 /* the transform input map, is a array of ticaches.
  The first key is the visibility which matches to a TICache for the altitudes.
@@ -163,7 +187,9 @@ public:
 			} 
 		return Position();
 	}
+
 	TransformInput get(Position pos) { return tic[pos.i].get(pos.j); }
+
 	void add(TransformInput ti, float vis, float alt) {
 		tic[p].add(ti, alt);
 		visi[p] = vis;
@@ -171,6 +197,7 @@ public:
 		if(p >= MAX_TICs) p = 0;
 	}
 };
+
 
 struct IntPair
 {
@@ -188,9 +215,11 @@ struct IntPair
 	}	
 };
 
+
 typedef std::map<IntPair, TransformInput> CacheMap;
 
-const TransformInput& optimize_va(const FCELL& vis, const FCELL& alt)
+
+const TransformInput& optimize_va (const FCELL& vis, const FCELL& alt)
 {
 	static CacheMap timap;
 	static TransformInput ti;
@@ -212,6 +241,7 @@ const TransformInput& optimize_va(const FCELL& vis, const FCELL& alt)
 	return ti;
 }	
 
+
 /* Process the raster and do atmospheric corrections.
 Params:
  * INPUT FILE
@@ -226,8 +256,9 @@ Params:
  oflt: if true use FCELL_TYPE for output
  oscale: output file's range (default is min = 0, max = 255)
 */
-void process_raster(int ifd, InputMask imask, ScaleRange iscale, int ialt_fd, int ivis_fd,
-                    int ofd, bool oflt, ScaleRange oscale, bool optimize)
+static void process_raster (int ifd, InputMask imask, ScaleRange iscale,
+                int ialt_fd, int ivis_fd, int ofd, bool oflt,
+                ScaleRange oscale, bool optimize)
 {
 	FCELL* buf;         /* buffer for the input values */
     FCELL* alt = NULL;         /* buffer for the elevation values */
@@ -246,26 +277,26 @@ void process_raster(int ifd, InputMask imask, ScaleRange iscale, int ialt_fd, in
 	buf = (FCELL*)G_allocate_raster_buf(FCELL_TYPE);
     if(ialt_fd >= 0) alt = (FCELL*)G_allocate_raster_buf(FCELL_TYPE);
     if(ivis_fd >= 0) vis = (FCELL*)G_allocate_raster_buf(FCELL_TYPE);
+
     fprintf(stderr, "Percent complete: ");
-    
+
 	for(row = 0; row < G_window_rows(); row++)
 	{
         	G_percent(row, G_window_rows(), 1);     /* keep the user informed of our progress */
 		
         /* read the next row */
 		if(G_get_raster_row(ifd, buf, row, FCELL_TYPE) < 0)
-			G_fatal_error("Unable to read from input file");
+			G_fatal_error ("Unable to read from input file");
 
         /* read the next row of elevation values */
         if(ialt_fd >= 0)
     		if(G_get_raster_row(ialt_fd, alt, row, FCELL_TYPE) < 0)
-	    		G_fatal_error("Unable to read from elevation raster");
+	    		G_fatal_error ("Unable to read from elevation raster");
 
         /* read the next row of elevation values */
         if(ivis_fd >= 0)
     		if(G_get_raster_row(ivis_fd, vis, row, FCELL_TYPE) < 0)
-	    		G_fatal_error("Unable to read from visibility raster");
-		
+	    		G_fatal_error ("Unable to read from visibility raster");
 
         /* loop over all the values in the row */
 		for(col = 0; col < G_window_cols(); col++)
@@ -338,8 +369,9 @@ void process_raster(int ifd, InputMask imask, ScaleRange iscale, int ialt_fd, in
             buf[col] = transform(ti, imask, buf[col]);
             /* transform from [0,1] to oscale.[min,max] */
             buf[col] = buf[col] * ((float)oscale.max - (float)oscale.min) + oscale.min;
+
             if(~oflt && (buf[col] > (float)oscale.max))
-              fprintf(stderr,"The output data will overflow. Reflectance > 100%\n");
+              G_warning ("The output data will overflow. Reflectance > 100%");
 		}
 
         /* write output */
@@ -356,20 +388,23 @@ void process_raster(int ifd, InputMask imask, ScaleRange iscale, int ialt_fd, in
 
 
 /* Copy the colors from map named iname to the map named oname */
-void copy_colors(char *iname, char *oname)
+static void copy_colors (char *iname, char *oname)
 {
 	struct Colors colors;
+
 	G_read_colors(iname, G_mapset(), &colors);
 	G_write_colors(oname, G_mapset(), &colors);
 }
 
+
 /* Define our module so that Grass can print it if the user wants to know more. */
-void define_module()
+static void define_module (void)
 {
 	struct GModule *module;
+
 	module = G_define_module();
 	module->description =
-	 " 6s - Second Simulation of Satellite Signal in the Solar Spectrum.\n";/*
+	 " 6s - Second Simulation of Satellite Signal in the Solar Spectrum.";/*
 	 
 	 " Incorporated into Grass by Christo A. Zietsman, January 2003.\n"
 	 " Converted from Fortran to C by Christo A. Zietsman, November 2002.\n\n"
@@ -388,70 +423,59 @@ void define_module()
 	 " and on http://www.cs.sun.ac.za/~caz/index.html\n";*/
 }
 
+
 /* Define the options and flags */
-struct Options define_options()
+static struct Options define_options (void)
 {
 	struct Options opts;
 
-	opts.iimg = G_define_option();
+	opts.iimg = G_define_standard_option (G_OPT_R_INPUT);
 	opts.iimg->key		= "iimg";
-	opts.iimg->type		= TYPE_STRING;
-	opts.iimg->required	= YES;
-	opts.iimg->gisprompt	= "old,cell,raster";
-	opts.iimg->description	= "Input raster map to be corrected";
+	opts.iimg->description	= "Input imagery map to be corrected";
 /*	opts.iimg->answer	= "ETM4_400x400.raw"; */
 
 	opts.iscl = G_define_option();
 	opts.iscl->key          = "iscl";
 	opts.iscl->type         = TYPE_INTEGER;
-	opts.iscl->key_desc     = "input scale range";
+	opts.iscl->key_desc     = "Input scale range";
 	opts.iscl->required     = NO;
-/*	opts.iscl->answer       = "0,255"; */
-	opts.iscl->description  = "Input raster's range [0,255]";
+	opts.iscl->answer       = "0,255";
+	opts.iscl->description  = "Input imagery range [0,255]";
 
-	opts.ialt = G_define_option();
+	opts.ialt = G_define_standard_option (G_OPT_R_INPUT);
 	opts.ialt->key		= "ialt";
-	opts.ialt->type		= TYPE_STRING;
 	opts.ialt->required	= NO;
-	opts.ialt->gisprompt	= "old,cell,raster";
-/*	opts.ialt->answer	= "dem_float";*/
+	opts.ialt->answer	= "dem_float";
 	opts.ialt->description	= "Input altitude map in m (optional)";
 
-	opts.ivis = G_define_option();
+	opts.ivis = G_define_standard_option (G_OPT_R_INPUT);
 	opts.ivis->key		= "ivis";
-	opts.ivis->type		= TYPE_STRING;
 	opts.ivis->required	= NO;
-	opts.ivis->gisprompt	= "old,cell,raster";
-/*	opts.ivis->answer	= "visibility";*/
+/*	opts.ivis->answer	= "visibility"; */
 	opts.ivis->description	= "Input visibility map in km (optional)";
-    
-	opts.icnd = G_define_option();
+
+	opts.icnd = G_define_standard_option (G_OPT_F_INPUT);
 	opts.icnd->key		= "icnd";
-	opts.icnd->type		= TYPE_STRING;
 	opts.icnd->required	= YES;
-	opts.icnd->gisprompt	= "old_file,file,file";
-/*	opts.icnd->answer	= "ETM4_atmospheric_input_GRASS.txt";*/
+/*	opts.icnd->answer	= "ETM4_atmospheric_input_GRASS.txt"; */
 	opts.icnd->description	= "6S input text file";
 
-	opts.oimg = G_define_option();
+	opts.oimg = G_define_standard_option (G_OPT_R_OUTPUT);
 	opts.oimg->key		= "oimg";
-	opts.oimg->type		= TYPE_STRING;
-	opts.oimg->required	= NO;
-	opts.oimg->gisprompt	= "new,cell,raster";
-/*	opts.oimg->answer	= "6s_output_file";*/
-	opts.oimg->description	= "Output raster map";
+/*	opts.oimg->answer	= "6s_output_file"; */
+	opts.oimg->description	= "6S output imagery map";
 
 	opts.oscl = G_define_option();
 	opts.oscl->key          = "oscl";
 	opts.oscl->type         = TYPE_INTEGER;
 	opts.oscl->key_desc     = "Output scale range";
-	opts.oscl->required     = NO;
-/*	opts.oscl->answer       = "0,255"; */
-	opts.oscl->description  = "Rescale output raster map [0,255]";
+	opts.oscl->required     = YES;
+	opts.oscl->answer       = "0,255";
+	opts.oscl->description  = "Rescale output imagery map [0,255]";
 
 	opts.oflt = G_define_flag();
 	opts.oflt->key = 'f';
-	opts.oflt->description = "Output is floating point";
+	opts.oflt->description = "Output raster is floating point";
 
 	opts.irad = G_define_flag();
 	opts.irad->key = 'r';
@@ -473,12 +497,12 @@ struct Options define_options()
 }
 
 /* Read the min and max values from the iscl and oscl options */
-void read_scale(Option *scl, ScaleRange &range)
+static void read_scale (Option *scl, ScaleRange &range)
 {
     /* set default values */
     range.min = 0;
     range.max = 255;
-    
+
     if(scl->answer)
     {
         sscanf(scl->answers[0], "%d", &range.min);
@@ -486,7 +510,8 @@ void read_scale(Option *scl, ScaleRange &range)
 
         if(range.min==range.max)
         {
-            fprintf(stderr, "Scale range length should be >0; Using default values: 0,255\n\n");
+            G_warning ("Scale range length should be > 0; Using default values: [0,255]");
+
             range.min = 0;
             range.max = 255;
         }
@@ -502,6 +527,7 @@ void read_scale(Option *scl, ScaleRange &range)
     }
 }
 
+
 int main(int argc, char* argv[])
 {
 	struct Options opts;        
@@ -509,8 +535,8 @@ int main(int argc, char* argv[])
     struct ScaleRange oscale;   /* output file's scale */
 	int iimg_fd;	        /* input image's file descriptor */
 	int oimg_fd;	        /* output image's file descriptor */
-	int ialt_fd;            /* input elevation map's file descriptor */
-    int ivis_fd;                /* input visibility map's file descriptor */
+	int ialt_fd = -1;       /* input elevation map's file descriptor */
+    int ivis_fd = -1;       /* input visibility map's file descriptor */
 
     
 	/* Define module */
@@ -521,34 +547,33 @@ int main(int argc, char* argv[])
 
 	/**** Start ****/
 	G_gisinit(argv[0]);
-	if (G_parser(argc, argv) < 0) exit(-1);
+	if (G_parser(argc, argv) < 0)
+		exit (EXIT_FAILURE);
 
     adjust_region(opts.iimg->answer);
 
 	/* open input raster */
 	if((iimg_fd = G_open_cell_old(opts.iimg->answer, G_mapset())) < 0)
-		G_fatal_error("Can not open input raster.");
+		G_fatal_error ("Unable to open input raster");
         
-    ialt_fd = -1;   /* initialize and assume there is no elevation map */
     if(opts.ialt->answer)
         if((ialt_fd = G_open_cell_old(opts.ialt->answer, G_mapset())) < 0)
-            G_fatal_error("Can not open elavation raster.");
+            G_warning ("Unable to open DEM raster");
 
-    ivis_fd = -1;   /* initialize and assume there is no visiblility map */
     if(opts.ivis->answer)
         if((ivis_fd = G_open_cell_old(opts.ivis->answer, G_mapset())) < 0)
-            G_fatal_error("Can not open visibility raster.");
+            G_warning ("Unable to open visibility raster");
                 
 	/* open a floating point raster or not? */
 	if(opts.oflt->answer)
 	{
 		if((oimg_fd = G_open_fp_cell_new(opts.oimg->answer)) < 0)
-			G_fatal_error("Can not create output raster.");
+			G_fatal_error ("Unable to create output raster");
 	}
 	else
 	{
 		if((oimg_fd = G_open_raster_new(opts.oimg->answer, CELL_TYPE)) < 0)
-			G_fatal_error("Can not create output raster.");
+			G_fatal_error ("Unable to create output raster");
 	}
 
     /* read the scale parameters */
@@ -564,6 +589,7 @@ int main(int argc, char* argv[])
     if(opts.irad->answer) imask = REFLECTANCE;
     if(opts.etmbefore->answer) imask = (InputMask)(imask | ETM_BEFORE);
     if(opts.etmafter->answer) imask = (InputMask)(imask | ETM_AFTER);
+
     /* process the input raster and produce our atmospheric corrected output raster. */
 	process_raster(iimg_fd, imask, iscale, ialt_fd, ivis_fd,
                    oimg_fd, opts.oflt->answer, oscale, opts.optimize->answer);
@@ -579,7 +605,5 @@ int main(int argc, char* argv[])
        Scaling is ignored and color ranges might not be correct. */
 	copy_colors(opts.iimg->answer, opts.oimg->answer);
 
-    /* we are now done, so notify the user */
-	fprintf(stderr, "Done!\n"); fflush(stderr);
-	exit(0);
+	exit (EXIT_SUCCESS);
 }
