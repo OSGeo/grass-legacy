@@ -1,10 +1,11 @@
 GUI ICONS for GRASS
 
 All icons were created especially for GRASS by Michael Barton, Cedric Shock, 
-Hamish Bowman, Radim Blazek, and others listed in .AUTHORS, except for a few from the
+Hamish Bowman, Radim Blazek, and others listed in AUTHORS, except for a few from the
 BWidgets set distributed with GRASS (see file AUTHORS for a list of icon authors) 
 
-COPYRIGHT for all icons except those from BWidget:	(C) 1999 - 2007 by the GRASS Development Team
+COPYRIGHT for all icons except those from BWidget (../../lib/external/bwidget/):
+    (C) 1999 - 2007 by the GRASS Development Team
     These icons program are free software under the GNU General Public
     License (>=v2). Read the file COPYING that comes with GRASS
     for details.
