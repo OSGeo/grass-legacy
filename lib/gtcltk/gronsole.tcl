@@ -102,10 +102,7 @@ proc Gronsole::_destroy { path } {
 
     array unset _data "$path,*"
 
-    if {[catch {rename $path {}} error]} {
-		Gm::errmsg $error
-	}
-
+    catch {rename $path {}}
 }
 
 ##########################################################################
@@ -154,9 +151,7 @@ proc Gronsole::save {path} {
 proc Gronsole::destroy_command {path ci} {
 	variable _data
 
-	if {[catch {close $_data($path,$ci,fh)} error]} {
-		Gm::errmsg $error
-	}
+	catch {close $_data($path,$ci,fh)} 
 
 	if {[info exists _data($path,$ci,donecmd)] && $_data($path,$ci,donecmd) != {}} {
 		eval $_data($path,$ci,donecmd)
