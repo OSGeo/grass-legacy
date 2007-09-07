@@ -4,9 +4,12 @@
 * AUTHOR(S):    See below also.
 *               Eric G. Miller <egm2@jps.net>
 *               Upgrade to 5.7 Radim Blazek
+*               Column support added by Martin Landa (09/2007)
+*
 * PURPOSE:      To transform a vector map's coordinates via a set of tie
 *               points.
-* COPYRIGHT:    (C) 2002 by the GRASS Development Team
+*
+* COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -38,25 +41,36 @@
 
 int main (int argc, char *argv[])
 {
-    struct file_info  Current, Trans, Coord ;
+    struct file_info  Current, Trans, Coord;
+
     struct GModule *module;
-    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift, *xscale, *yscale, *zscale, *zrot;
+    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift,
+      *xscale, *yscale, *zscale, *zrot, *columns, *field;
     struct Flag *quiet_flag, *tozero_flag, *shift_flag;
+
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
     int    day, yr; 
     BOUND_BOX box;
+
     double ztozero;
+    double trans_params[7]; // xshift, ..., xscale, ..., zrot
+
+    /* columns */
+    unsigned int i;
+    int idx, ifield;
+    char** tokens;
+    char*  columns_name[7]; /* xshift, yshift, zshift, xscale, yscale, zscale, zrot */
 
     G_gisinit(argv[0]) ;
 
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description =
-	_("Transforms a vector map via scaling parameters or a set of tie points.");
+    module->keywords = _("vector, transformation");
+    module->label = _("Transforms a vector map via scaling parameters or a set of tie points.");
+    module->description = _("Performs an affine transformation (translate and rotate).");
 
     quiet_flag = G_define_flag();
-    quiet_flag->key		= 'q';
+    quiet_flag->key	    = 'q';
     quiet_flag->description =
 	_("Suppress display of residuals or other information"); 
 
@@ -75,13 +89,13 @@ int main (int argc, char *argv[])
     
     new = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    pointsfile = G_define_option();
+    pointsfile = G_define_standard_option(G_OPT_F_INPUT);
     pointsfile->key		= "pointsfile";
-    pointsfile->type		= TYPE_STRING;
     pointsfile->required	= NO;
-    pointsfile->multiple	= NO;
-    pointsfile->description	= _("ASCII file holding transform coordinates (if not given transformation options "
-				    "[xshift, yshift, zshift, xscale, yscale, zscale, zrot] will be used instead)");
+    pointsfile->label	        = _("ASCII file holding transform coordinates");
+    pointsfile->description     = _("If not given, transformation options"
+				    "(xshift, yshift, zshift, xscale, yscale, zscale, zrot) are used instead");
+
     pointsfile->gisprompt       = "old_file,file,points";
 
     xshift = G_define_option();
@@ -147,6 +161,14 @@ int main (int argc, char *argv[])
     zrot->answer        = "0.0";
     zrot->guisection    = _("Custom");
 
+    columns = G_define_standard_option(G_OPT_COLUMNS);
+    columns->label       = _("Name of attribute column(s) used as transformation options");
+    columns->description = _("Format: option:column, e.g. xshift:xs,yshift:ys,zrot:zr");
+    columns->guisection  = _("Custom");
+
+    field = G_define_standard_option(G_OPT_V_FIELD);
+    columns->guisection = _("Custom");
+
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
     
@@ -156,9 +178,17 @@ int main (int argc, char *argv[])
     Vect_check_input_output_name ( old->answer, new->answer, GV_FATAL_EXIT );
 
     /* please remove in GRASS7 */
-    if (shift_flag -> answer)
-	G_warning (_("The '-s' flag is deprecated and will be removed in future. "
-		     "Transformation options are used automatically when no pointsfile is given."));
+    if (shift_flag->answer)
+	G_warning (_("The '%c' flag is deprecated and will be removed in future. "
+		     "Transformation options are used automatically when no pointsfile is given."),
+		   shift_flag->key);
+
+    if (quiet_flag->answer) {
+	G_warning (_("The '%c' flag is deprecated and will be removed in future. "
+		     "Please use '--quiet' instead."),
+		   quiet_flag->key);
+	G_putenv ("GRASS_VERBOSE", "0");
+    }
 
     if (pointsfile->answer != NULL && !shift_flag -> answer) {
 	G_strcpy (Coord.name, pointsfile->answer);
@@ -170,12 +200,12 @@ int main (int argc, char *argv[])
     /* open coord file */
     if ( Coord.name[0] != '\0' ){
 	if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
-	    G_fatal_error ( _("Could not open file with coordinates <%s>"), Coord.name) ;
+	    G_fatal_error ( _("Unable to open file with coordinates <%s>"), Coord.name) ;
     }
     
-    /* open vectors */
+    /* open vector maps */
     if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
-	G_fatal_error ( _("Could not find input vector map <%s>"), old->answer);
+	G_fatal_error ( _("Vector map <%s> not found"), old->answer);
     
     Vect_open_old(&Old, old->answer, mapset);
 
@@ -201,6 +231,7 @@ int main (int argc, char *argv[])
     Vect_set_zone ( &New, 0 );
     Vect_set_thresh ( &New, 0.0 );
     
+    /* points file */
     if (Coord.name[0]) { 
 	create_transform_from_file (&Coord, quiet_flag->answer);
 
@@ -208,23 +239,80 @@ int main (int argc, char *argv[])
 		fclose( Coord.fp) ;
     }
     
-    if (!quiet_flag->answer)
-       G_message ( _("Now transforming the vectors ..."));
-    
     Vect_get_map_box (&Old, &box );
+
+    /* z to zero */
     if (tozero_flag->answer)
        ztozero = 0 - box.B;
     else
        ztozero = 0;
 
-    transform_digit_file( &Old, &New, Coord.name[0] ? 0 : 1,
-	    atof(xshift->answer), atof(yshift->answer), atof(zshift->answer), ztozero,
-	    atof(zrot->answer), atof(xscale->answer), atof(yscale->answer), atof(zscale->answer)) ;
+    /* layer */
+    if (columns->answer) {
+	ifield = atoi(field->answer);
+    }
+    else {
+	ifield = -1;
+    }
+
+    /* tokenize columns names */
+    for (i = 0; i <= IDX_ZROT; i++) {
+	columns_name[i] = NULL;
+    }
+    i = 0;
+    if (columns->answer) {
+	while(columns->answers[i]) {
+	    tokens = G_tokenize (columns->answers[i], ":"); 
+	    if (G_number_of_tokens(tokens) == 2) {
+		if (strcmp(tokens[0], xshift->key) == 0)
+		    idx = IDX_XSHIFT;
+		else if (strcmp(tokens[0], yshift->key) == 0)
+		    idx = IDX_YSHIFT;
+		else if (strcmp(tokens[0], zshift->key) == 0)
+		    idx = IDX_ZSHIFT;
+		else if(strcmp(tokens[0], xscale->key) == 0)
+		    idx = IDX_XSCALE;
+		else if (strcmp(tokens[0], yscale->key) == 0)
+		    idx = IDX_YSCALE;
+		else if (strcmp(tokens[0], zscale->key) == 0)
+		    idx = IDX_ZSCALE;
+		else if (strcmp(tokens[0], zrot->key) == 0)
+		    idx = IDX_ZROT;
+		else
+		    idx = -1;
+
+		if (idx != -1)
+		    columns_name[idx] = G_store(tokens[1]);
+
+		G_free_tokens (tokens);
+	    }
+	    else {
+		G_fatal_error(_("Unable to tokenize column string: %s"), columns->answer[i]);
+	    }
+	    i++;
+	}
+    }
+
+    /* determine transformation parameters */
+    trans_params[IDX_XSHIFT] = atof(xshift->answer);
+    trans_params[IDX_YSHIFT] = atof(yshift->answer);
+    trans_params[IDX_ZSHIFT] = atof(zshift->answer);
+    trans_params[IDX_XSCALE] = atof(xscale->answer);
+    trans_params[IDX_YSCALE] = atof(yscale->answer);
+    trans_params[IDX_ZSCALE] = atof(zscale->answer);
+    trans_params[IDX_ZROT]   = atof(zrot->answer);
+
+    transform_digit_file( &Old, &New, Coord.name[0] ? 1 : 0,
+			  ztozero, trans_params,
+			  ifield, columns_name );
 
     Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
 
-    if (!quiet_flag->answer) Vect_build (&New, stderr); else Vect_build (&New, NULL);
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&New, stderr);
+    else
+	Vect_build (&New, NULL);
 
     if (!quiet_flag->answer) {
 	Vect_get_map_box (&New, &box );
@@ -236,7 +324,7 @@ int main (int argc, char *argv[])
 
     Vect_close (&New);
 
-    G_done_msg ("");
+    G_done_msg (" ");
 
     exit(EXIT_SUCCESS) ;
 }

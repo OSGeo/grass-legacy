@@ -1,9 +1,5 @@
-<h2>DESCRIPTION</h2>
-
-<em>v.transform</em> performs an affine transformation (translate and rotate) of a
-vector map.
-
 <h2>NOTES</h2>
+
 When using an ASCII table containing source and target coordinate pairs,
 in each row four coordinate values separated by white space have to be specified.
 Comments are permitted and have to be indicated by a '#' character.
@@ -18,31 +14,61 @@ Example for a points file of a linear transformation from XY to UTM coordinates
 # UR NE
 # LR SW
 # LL SE
--584 585  598000 4920770
-580  585  598020 4920770
-580  -600 598020 4920750
--584 -600 598000 4920750
+-584  585  598000 4920770
+ 580  585  598020 4920770
+ 580 -600  598020 4920750
+-584 -600  598000 4920750
 </pre></div>
 
-The ground control points may be also (ir)regularly distributed
-and can be more than four points.
+<p>The ground control points may be also (ir)regularly distributed
+and can be more than four points.</p>
 
+<p>Transformation parameters (i.e. <em>xshift</em>, <em>yshift</em>,
+etc.) can be fetched from attribute table connected to the vector
+map. In this case vector objects can be transformed with different
+parameters based on their category number. If the parameter cannot be
+fetched from the table, default value is used instead.<p>
+
+<p><em>Note that the attributes tables connected to the input vector
+map are not copied to the output vector map.</em></p>
 
 <h2>EXAMPLE</h2>
 
-<em>Most DXF/DWG drawings are done within XY coordinates. To transform 
+<h3>DXF/DWG drawings</h3>
+
+<p>Most DXF/DWG drawings are done within XY coordinates. To transform 
 them to a national grid, we can use 'v.transform' with a 4 point 
-transformation</em><br>
+transformation.</p>
+
 <div class="code"><pre>
 v.transform -t in=watertowerXY out=watertowerUTM points=wt.points zscale=0.04 zshift=1320
 </pre></div>
 
+<h3>Extrude 2D vector points to 3D based on attribute column values</h3>
+
+<div class="code"><pre>
+# create table
+echo "create table archsites_trans (cat int, zs double)" | db.execute
+# insert transformation parameters for category 1 (shifting)
+echo "insert into archsites_trans values (1, 1000)" | db.execute
+# insert transformation parameters for category 2 (scaling)
+echo "insert into archsites_trans values (2, 2000)" | db.execute
+# temporary connect table contaning transformation parameters
+v.db.connect archsites layer=1 table=archsites_trans -o
+# perform transformation
+v.transform in=archsites out=archsites_t col="zshift:zs"
+# reconnect table
+v.db.connect archsites layer=1 table=archsites -o
+# drop table contaning transformation parameters
+echo "drop table archsites_trans" | db.execute
+</pre></div>
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.in.ogr.html">v.in.ogr</a></em>
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-irst, Trento, Italy,<br>
+Column support added by Martin Landa, FBK-irst (formerly ITC-irst), Trento, Italy (2007/09)
 
 <p><i>Last changed: $Date$</i>
