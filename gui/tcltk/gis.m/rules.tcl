@@ -168,10 +168,12 @@ proc GmRules::main { cmd } {
     
     set row [ frame $rules_win.buttons ]
     Button $row.a -text [G_msg "OK"] -width 8 -bd 1 \
-    	-command "GmRules::process_rules $cmd $rules_text"
+    	-command "GmRules::process_rules $cmd $rules_text 1" 
     Button $row.b -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .rulesPopup"
-    pack $row.a $row.b -side right -padx 5
+    Button $row.c -text [G_msg "Apply"] -width 8 -bd 1 \
+    	-command "GmRules::process_rules $cmd $rules_text 0"
+    pack $row.a $row.b $row.c -side right -padx 5
     pack $row -side bottom -pady 3 -padx 5 -expand 0 -fill none -anchor e
     
     bind Text <Control-c> {tk_textCopy %W}
@@ -181,7 +183,7 @@ proc GmRules::main { cmd } {
 
 ###############################################################################
 # send rules to command
-proc GmRules::process_rules { cmd w } {
+proc GmRules::process_rules { cmd w quit } {
     variable inmap
     variable outmap
     variable overwrite
@@ -241,13 +243,16 @@ proc GmRules::process_rules { cmd w } {
 
     
     if {[catch {eval [list exec -- $cmd] $options} error]} {
-		Gm::errmsg $error 
+		tk_messageBox -type ok -icon error -message [G_msg $error]
 	}
     
 
     # delete rules file and close popup window when finished
-    file delete $rulesfile
-    destroy .rulesPopup
+    
+    if { $quit == 1 } {
+        file delete $rulesfile
+        destroy .rulesPopup
+    }
 
 
 }
