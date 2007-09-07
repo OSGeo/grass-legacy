@@ -55,6 +55,9 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
+GRASS_VERBOSE=0
+export GRASS_VERBOSE
+
 # if no output filename, output to stdout
 if  [ -z "$GIS_OPT_OUTPUT" ] || [ "$GIS_OPT_OUTPUT" = "-" ]; then
     r.stats -1gn "$GIS_OPT_INPUT" fs="$GIS_OPT_FS"
