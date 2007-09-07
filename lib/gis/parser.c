@@ -313,7 +313,7 @@ G_define_option (void)
  * If an invalid parameter was specified a empty Option structure will 
  * be returned (not NULL).
  *
- * - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS
+ * - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS, G_OPT_TABLE
  *
  * - imagery: G_OPT_I_GROUP
  *
@@ -343,6 +343,14 @@ G_define_standard_option (int opt)
 	    Opt->required     = NO;
 	    Opt->label        = _("WHERE conditions of SQL statement without 'where' keyword");
 	    Opt->description  = _("Example: income < 1000 and inhab >= 10000");
+	    break;
+	case G_OPT_TABLE:
+	    Opt->key          = "table";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->multiple     = NO;
+	    Opt->description  = _("Name of table");
 	    break;
 	case G_OPT_COLUMN:
 	    Opt->key          = "column";

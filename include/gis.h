@@ -153,6 +153,7 @@ static const char *GRASS_copyright __attribute__((unused))
 /**/
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
+    G_OPT_TABLE,    /* table name */
     G_OPT_COLUMN,   /* one attr column */
     G_OPT_COLUMNS,  /* one or more attr columns */
 
@@ -215,10 +216,18 @@ typedef enum {
 
 /* Element types */
 enum {            /* Dir */
-    G_ELEMENT_RASTER = 1, /* cell */
-    G_ELEMENT_VECTOR = 2, /* vector */ 
-    G_ELEMENT_GROUP  = 3, /* group */ 
-    G_ELEMENT_REGION = 4  /* window */
+    G_ELEMENT_RASTER      = 1,     /* cell */
+    G_ELEMENT_RASTER3D    = 2,     /* 3dcell */
+    G_ELEMENT_VECTOR      = 3,     /* vector */ 
+    G_ELEMENT_OLDVECTOR   = 4,     /* GRASS < 5.7 vector */
+    G_ELEMENT_ASCIIVECTOR = 5,     /* ASCII vector */
+    G_ELEMENT_ICON        = 6,     /* icon */
+    G_ELEMENT_LABEL       = 7,     /* labels */
+    G_ELEMENT_SITE        = 8,     /* sites */
+    G_ELEMENT_REGION      = 9,     /* region */
+    G_ELEMENT_REGION3D    = 10,    /* 3dregion */
+    G_ELEMENT_GROUP       = 11,    /* group */
+    G_ELEMENT_3DVIEW      = 12     /* 3dview */
 };
 
 /*=========================== Typedefs/Structures ==========================*/
