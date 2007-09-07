@@ -24,6 +24,14 @@
 #define  TRANS_MATRIX 0 
 #define  TRANS_SHIFT  1
 
+#define  IDX_XSHIFT 0
+#define  IDX_YSHIFT 1
+#define  IDX_ZSHIFT 2
+#define  IDX_XSCALE 3
+#define  IDX_YSCALE 4
+#define  IDX_ZSCALE 5
+#define  IDX_ZROT   6
+
 /******************
 *  GLOBALS:       *
 *******************/
