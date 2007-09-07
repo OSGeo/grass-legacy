@@ -53,19 +53,15 @@ v.transform -t in=watertowerXY out=watertowerUTM points=wt.points zscale=0.04 zs
 
 <div class="code"><pre>
 # create table containing transformation parameters
-echo "create table archsites_trans (cat int, zs double)" | db.execute
+echo "create table archsites_t (cat int, zs double)" | db.execute
 # insert transformation parameters for category 1
-echo "insert into archsites_trans values (1, 1000)" | db.execute
+echo "insert into archsites_t values (1, 1000)" | db.execute
 # insert transformation parameters for category 2
-echo "insert into archsites_trans values (2, 2000)" | db.execute
-# connect table contaning transformation parameters
-v.db.connect archsites layer=1 table=archsites_trans -o
+echo "insert into archsites_t values (2, 2000)" | db.execute
 # perform transformation
-v.transform in=archsites out=archsites_t col="zshift:zs"
-# reconnect original table
-v.db.connect archsites layer=1 table=archsites -o
+v.transform -t input=archsites output=archsites1 column="zshift:zs" table="archsites_t"
 # drop table contaning transformation parameters
-echo "drop table archsites_trans" | db.execute
+echo "drop table archsites_t" | db.execute
 </pre></div>
 <h2>SEE ALSO</h2>
 

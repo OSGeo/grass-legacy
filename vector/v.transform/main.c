@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
 
     struct GModule *module;
     struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift,
-      *xscale, *yscale, *zscale, *zrot, *columns, *field;
+      *xscale, *yscale, *zscale, *zrot, *columns, *table, *field;
     struct Flag *quiet_flag, *tozero_flag, *shift_flag;
 
     char   *mapset, mon[4], date[40], buf[1000];
@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
 
     /* columns */
     unsigned int i;
-    int idx, ifield;
+    int idx;
     char** tokens;
     char*  columns_name[7]; /* xshift, yshift, zshift, xscale, yscale, zscale, zrot */
 
@@ -66,8 +66,8 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, transformation");
-    module->label = _("Transforms a vector map via scaling parameters or a set of tie points.");
-    module->description = _("Performs an affine transformation (translate and rotate).");
+    module->description = _("Performs an affine transformation (shift, scale and rotate, "
+			    "or GPCs) on vector map.");
 
     quiet_flag = G_define_flag();
     quiet_flag->key	    = 'q';
@@ -81,7 +81,7 @@ int main (int argc, char *argv[])
     /* remove in GRASS7 */
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
-    shift_flag->description = _("Instead of points use transformation options "
+    shift_flag->description = _("Instead of points use transformation parameters "
 				"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection  = _("Custom");
 
@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
     pointsfile->key		= "pointsfile";
     pointsfile->required	= NO;
     pointsfile->label	        = _("ASCII file holding transform coordinates");
-    pointsfile->description     = _("If not given, transformation options"
+    pointsfile->description     = _("If not given, transformation parameters "
 				    "(xshift, yshift, zshift, xscale, yscale, zscale, zrot) are used instead");
 
     pointsfile->gisprompt       = "old_file,file,points";
@@ -161,13 +161,17 @@ int main (int argc, char *argv[])
     zrot->answer        = "0.0";
     zrot->guisection    = _("Custom");
 
+    table = G_define_standard_option(G_OPT_TABLE);
+    table->description = _("Name of table containing transformation parameters");
+    table->guisection  = _("Custom");
+
     columns = G_define_standard_option(G_OPT_COLUMNS);
-    columns->label       = _("Name of attribute column(s) used as transformation options");
-    columns->description = _("Format: option:column, e.g. xshift:xs,yshift:ys,zrot:zr");
+    columns->label       = _("Name of attribute column(s) used as transformation parameters");
+    columns->description = _("Format: parameter:column, e.g. xshift:xs,yshift:ys,zrot:zr");
     columns->guisection  = _("Custom");
 
     field = G_define_standard_option(G_OPT_V_FIELD);
-    columns->guisection = _("Custom");
+    field->guisection = _("Custom");
 
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
@@ -180,7 +184,7 @@ int main (int argc, char *argv[])
     /* please remove in GRASS7 */
     if (shift_flag->answer)
 	G_warning (_("The '%c' flag is deprecated and will be removed in future. "
-		     "Transformation options are used automatically when no pointsfile is given."),
+		     "Transformation parameters are used automatically when no pointsfile is given."),
 		   shift_flag->key);
 
     if (quiet_flag->answer) {
@@ -188,6 +192,15 @@ int main (int argc, char *argv[])
 		     "Please use '--quiet' instead."),
 		   quiet_flag->key);
 	G_putenv ("GRASS_VERBOSE", "0");
+    }
+
+    if (!table->answer && columns->answer) {
+	G_fatal_error(_("Table name is not defined. Please use '%s' parameter."), table->key);
+    }
+
+    if (table->answer && strcmp(new->answer, table->answer) == 0) {
+	G_fatal_error (_("Name of table and name for output vector map must be different. "
+			 "Otherwise the table is overwritten."));
     }
 
     if (pointsfile->answer != NULL && !shift_flag -> answer) {
@@ -247,14 +260,6 @@ int main (int argc, char *argv[])
     else
        ztozero = 0;
 
-    /* layer */
-    if (columns->answer) {
-	ifield = atoi(field->answer);
-    }
-    else {
-	ifield = -1;
-    }
-
     /* tokenize columns names */
     for (i = 0; i <= IDX_ZROT; i++) {
 	columns_name[i] = NULL;
@@ -304,7 +309,7 @@ int main (int argc, char *argv[])
 
     transform_digit_file( &Old, &New, Coord.name[0] ? 1 : 0,
 			  ztozero, trans_params,
-			  ifield, columns_name );
+			  table->answer, columns_name, atoi(field->answer));
 
     Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
