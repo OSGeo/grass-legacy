@@ -47,7 +47,7 @@ main(int argc, char *argv[])
         G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
         
     if(db_list_databases (driver, &locations, nlocs, &handles, &count) != DB_OK)
-	G_fatal_error(_("Cannot list databases."));
+	G_fatal_error(_("Unable to list databases"));
 
     db_shutdown_driver (driver);
 
@@ -55,7 +55,7 @@ main(int argc, char *argv[])
 	fprintf(stdout, "%s", db_get_handle_dbname(&handles[i]));
 	fprintf(stdout, "\n");
     }
-    exit(OK);
+    exit(EXIT_SUCCESS);
 }
 
 void
@@ -67,19 +67,15 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
-    driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
-    driver->description = _("driver name");
 
     location 		  = G_define_option();
     location->key 	  = "location";
     location->type 	  = TYPE_STRING;
     location->required 	  = NO;
     location->multiple 	  = YES;
-    location->description = _("database location");
+    location->description = _("Location name");
 
     
     /* Set description */
@@ -88,7 +84,7 @@ parse_command_line(int argc, char *argv[])
     module->description = _("List all databases for a given driver and location.");
 
     if(G_parser(argc, argv))
-        exit(ERROR);
+        exit(EXIT_FAILURE);
 
     parms.driver     = driver->answer;
     parms.location   = location->answer;

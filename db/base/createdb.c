@@ -35,7 +35,6 @@ main(int argc, char *argv[])
     driver = db_start_driver (parms.driver);
     if (driver == NULL) {
         G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-        exit (ERROR);
     }
         
     db_init_handle (&handle);
@@ -43,7 +42,7 @@ main(int argc, char *argv[])
     stat = db_create_database (driver, &handle);
     db_shutdown_driver (driver);
 
-    exit(stat == DB_OK ? OK : ERROR);
+    exit(stat == DB_OK ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 void
@@ -55,28 +54,20 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
     driver->required 	= YES;
-    driver->description = "driver name";
 
-    database 		= G_define_option();
-    database->key 	= "database";
-    database->type 	= TYPE_STRING;
+    database 		= G_define_standard_option(G_OPT_DATABASE);
     database->required 	= YES;
-    database->description = "database name";
 
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = ""\
-    "Create an empty database.";
-
+    module->description = _("Creates an empty database.");
 
     if(G_parser(argc, argv))
-	exit(ERROR);
+	exit(EXIT_FAILURE);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;

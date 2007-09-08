@@ -40,36 +40,28 @@ main(int argc, char *argv[])
 
     module              = G_define_module();
     module->keywords    = _("database, SQL");
-    module->description = _("Set user/password for driver/database");
+    module->description = _("Sets user/password for driver/database.");
     
-    driver = G_define_option() ;
-    driver->key        = "driver" ;
-    driver->type       = TYPE_STRING ;
+    driver             = G_define_standard_option(G_OPT_DRIVER) ;
     driver->options    = db_list_drivers();
     driver->required   = YES;
-    driver->multiple   = NO ;
-    driver->description= _("Driver name") ;
     driver->answer     = db_get_default_driver_name();
 
-    database = G_define_option() ;
-    database->key        = "database" ;
-    database->type       = TYPE_STRING ;
+    database             = G_define_standard_option(G_OPT_DATABASE) ;
     database->required   = YES ;
-    database->multiple   = NO ;
-    database->description= _("Database name") ;
     database->answer     = db_get_default_database_name();
 
-    user = G_define_option() ;
+    user             = G_define_option() ;
     user->key        = "user" ;
     user->type       = TYPE_STRING ;
     user->required   = NO  ;
     user->multiple   = NO ;
-    user->description= _("User") ;
+    user->description= _("Username") ;
 
-    password = G_define_option() ;
+    password             = G_define_option() ;
     password->key        = "password" ;
     password->type       = TYPE_STRING ;
-    password->required   = NO  ;
+    password->required   = NO ;
     password->multiple   = NO ;
     password->description= _("Password") ;
 
@@ -98,22 +90,18 @@ main(int argc, char *argv[])
 	     G_message(_("Exiting. Not changing current settings"));
 	     return -1;
 	  } else {
-	     G_message(_("New password set."));
+	     G_message(_("New password set"));
 	     password->answer = G_store(answer);
 	     break;
 	  }
 	}
     }
     if (  db_set_login ( driver->answer, database->answer, user->answer, password->answer ) == DB_FAILED ) {
-	G_fatal_error ( _("Cannot set user/password") );
+	G_fatal_error ( _("Unable to set user/password") );
     }
 
     if ( password->answer )
-        G_warning ( _("The password was stored in file.") );
+        G_warning ( _("The password was stored in file") );
 	
     exit(EXIT_SUCCESS);
 }
-
-
-
-

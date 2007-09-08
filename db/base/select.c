@@ -58,13 +58,12 @@ main (int argc, char *argv[])
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
 	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-	exit(ERROR);
     }
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-	exit(ERROR);
+      	G_fatal_error(_("Unable to open database <%s>"), parms.database);
 
     if ( parms.sql ) {
 	db_set_string ( &stmt, parms.sql );
@@ -175,26 +174,14 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    table 		= G_define_option();
-    table->key 	        = "table";
-    table->type 	= TYPE_STRING;
-    table->required 	= NO;         
-    table->description  = _("Table name, select all from this table");
+    table 		= G_define_standard_option(G_OPT_TABLE);
 
-    database 		= G_define_option();
-    database->key 	= "database";
-    database->type 	= TYPE_STRING;
-    database->required 	= NO;        
-    database->description = _("database name");
+    database 		= G_define_standard_option(G_OPT_DATABASE);
     if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
-    driver->required 	= NO;          
-    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
@@ -202,46 +189,38 @@ parse_command_line(int argc, char *argv[])
     sql->key 	        = "sql";
     sql->type 	        = TYPE_STRING;
     sql->required 	= NO;         
-    sql->description    = _("SQL select statement, for example: 'select * from rybniky where kapri = 'hodne'");
+    sql->label          = _("SQL select statement");
+    sql->description    = _("For example: 'select * from rybniky where kapri = 'hodne'");
 
-    fs 			= G_define_option();
-    fs->key 		= "fs";
-    fs->type 		= TYPE_STRING;
-    fs->required 	= NO;
-    fs->description 	= _("output field separator");
-    fs->answer		= "|";
+    fs 			= G_define_standard_option(G_OPT_F_SEP);
+    fs->description 	= _("Output field separator");
 
-    vs 			= G_define_option();
+    vs 			= G_define_standard_option(G_OPT_F_SEP);
     vs->key 		= "vs";
-    vs->type 		= TYPE_STRING;
-    vs->required 	= NO;
-    vs->description 	= _("output vertical record separator");
+    vs->description 	= _("Output vertical record separator");
+    vs->answer          = NULL;
 
     nv 			= G_define_option();
     nv->key 		= "nv";
     nv->type 		= TYPE_STRING;
     nv->required 	= NO;
-    nv->description 	= _("null value indicator");
+    nv->description 	= _("Null value indicator");
 
-    input 		= G_define_option();
-    input->key 		= "input";
-    input->key_desc 	= "filename";
-    input->type 	= TYPE_STRING;
+    input 		= G_define_standard_option(G_OPT_F_INPUT);
     input->required 	= NO;
-    input->description 	= _("filename with sql statement");
-    input->gisprompt    = "old_file,file,input";
+    input->description 	= _("Name of file with sql statement");
 
     c			= G_define_flag();
     c->key		= 'c';
-    c->description	= _("do not include column names in output");
+    c->description	= _("Do not include column names in output");
 
     d			= G_define_flag();
     d->key		= 'd';
-    d->description	= _("describe query only (don't run it)");
+    d->description	= _("Describe query only (don't run it)");
 
     v			= G_define_flag();
     v->key		= 'v';
-    v->description	= _("vertical output (instead of horizontal)");
+    v->description	= _("Vertical output (instead of horizontal)");
 
     flag_test			= G_define_flag();
     flag_test->key		= 't';
@@ -250,11 +229,10 @@ parse_command_line(int argc, char *argv[])
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = _("Select data from database.");
-
+    module->description = _("Selects data from table.");
 
     if(G_parser(argc, argv))
-	exit(ERROR);
+	exit(EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
@@ -273,7 +251,7 @@ parse_command_line(int argc, char *argv[])
     if (parms.input && *parms.input == 0)
     {
 	G_usage();
-	exit(1);
+	exit(EXIT_FAILURE);
     }
 }
 
@@ -320,4 +298,3 @@ print_column_definition(dbColumn *column)
     if (parms.vs)
 	fprintf (stdout, "%s\n", parms.vs);
 }
-

@@ -71,26 +71,15 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
         G_gisinit(argv[0]) ;
 
-    table 		= G_define_option();
-    table->key 		= "table";
-    table->type 	= TYPE_STRING;
+    table 		= G_define_standard_option(G_OPT_TABLE);
     table->required 	= YES;
-    table->description 	= _("table name");
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
-    driver->required 	= NO;
-    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
-    database 		= G_define_option();
-    database->key 	= "database";
-    database->type 	= TYPE_STRING;
-    database->required 	= NO;
-    database->description = _("database name");
+    database 		= G_define_standard_option(G_OPT_DATABASE);
     if ( (db=db_get_default_database_name()) )
          database->answer = db;
 
@@ -99,7 +88,6 @@ parse_command_line(int argc, char *argv[])
     module->keywords = _("database, SQL");
     module->description = _("List all columns for a given table.");
 
-        
     if(G_parser(argc, argv))
 	exit(ERROR);
 

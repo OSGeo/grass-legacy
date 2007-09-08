@@ -46,7 +46,7 @@ main( int argc, char *argv[] )
 	if (fd == NULL)
 	{
 	    perror (parms.input);
-	    exit(ERROR);
+	    exit(EXIT_FAILURE);
 	}
     }
     else
@@ -55,13 +55,12 @@ main( int argc, char *argv[] )
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
 	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-	exit(ERROR);
     }
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-	exit(ERROR);
+	G_fatal_error(_("Unable to open database <%s>"), parms.database);
 
     while( get_stmt(fd, &stmt) )
     {
@@ -70,11 +69,13 @@ main( int argc, char *argv[] )
             ret = db_execute_immediate (driver, &stmt);
 	    if ( ret != DB_OK ) {
 	       if (parms.i){ /* ignore SQL errors */
-		   G_warning(_("Error while executing: \"%s\""), db_get_string(&stmt));
+		   G_warning(_("Error while executing: '%s'"),
+			     db_get_string(&stmt));
 		   error++;
 	       }
 	       else
-	           G_fatal_error(_("Error while executing: \"%s\""), db_get_string(&stmt));
+	           G_fatal_error(_("Error while executing: '%s'"),
+				 db_get_string(&stmt));
 	    }
 	}
     }
@@ -82,7 +83,7 @@ main( int argc, char *argv[] )
     db_close_database(driver);
     db_shutdown_driver(driver);
 
-    exit(error);
+    exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
 void parse_command_line (int argc, char *argv[])
@@ -98,30 +99,18 @@ void parse_command_line (int argc, char *argv[])
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = _("Execute any SQL statement.");
+    module->description = _("Executes any SQL statement.");
 
-    input 		= G_define_option();
-    input->key 		= "input";
-    input->key_desc 	= "filename";
-    input->type 	= TYPE_STRING;
+    input 		= G_define_standard_option(G_OPT_F_INPUT);
     input->required 	= NO;
-    input->description 	= _("File containing SQL statements");
-    input->gisprompt    = "old_file,file,input";
+    input->description 	= _("Name of file containing SQL statements");
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
-    driver->required 	= NO;
-    driver->description = _("Driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
-    database 		= G_define_option();
-    database->key 	= "database";
-    database->type 	= TYPE_STRING;
-    database->required 	= NO;
-    database->description = _("Database name");
+    database 		= G_define_standard_option(G_OPT_DATABASE);
     if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
@@ -130,7 +119,7 @@ void parse_command_line (int argc, char *argv[])
     i->description      = _("Ignore SQL errors and continue");
     
     if(G_parser(argc, argv))
-	exit(ERROR);
+	exit(EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
@@ -174,4 +163,3 @@ int stmt_is_empty (dbString *stmt)
 
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
-
