@@ -5,7 +5,7 @@
  *               
  * PURPOSE:      Create new vector from db table.
  * 	    
- * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2000-2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -30,6 +30,7 @@ main (int argc, char *argv[])
     int    count;
     double coor[3];
     int    ncoor;
+    int    coltype;
     struct Option *driver_opt, *database_opt, *table_opt;
     struct Option *xcol_opt, *ycol_opt, *zcol_opt, *keycol_opt, *where_opt, *outvect;
     struct GModule *module;
@@ -49,52 +50,38 @@ main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector, import");
     module->description =
-	_("Create new vector (points) from database table containing coordinates.");
+	_("Creates new vector (points) map from database table containing coordinates.");
 
-    table_opt              = G_define_option();
-    table_opt->key         = "table";
-    table_opt->type        = TYPE_STRING;
+    table_opt              = G_define_standard_option(G_OPT_TABLE);
     table_opt->required    = YES;
     table_opt->description = _("Input table name");
 
-    driver_opt 		    = G_define_option();
-    driver_opt->key 	    = "driver";
-    driver_opt->type 	    = TYPE_STRING;
+    driver_opt 		    = G_define_standard_option(G_OPT_DRIVER);
     driver_opt->options     = db_list_drivers();
-    driver_opt->required    = NO;
-    driver_opt->description = _("Input driver name");
     driver_opt->answer      = db_get_default_driver_name();
 
-    database_opt 	      = G_define_option();
-    database_opt->key 	      = "database";
-    database_opt->type        = TYPE_STRING;
-    database_opt->required    = NO;
-    database_opt->description = _("Input database name");
+    database_opt 	      = G_define_standard_option(G_OPT_DATABASE);
     database_opt->answer      = db_get_default_database_name();
 
-    xcol_opt 		  = G_define_option();
+    xcol_opt 		  = G_define_standard_option(G_OPT_COLUMN);
     xcol_opt->key 	  = "x";
-    xcol_opt->type 	  = TYPE_STRING;
     xcol_opt->required    = YES;
-    xcol_opt->description = _("x column name");
+    xcol_opt->description = _("Name of column containing x coordinate");
 
-    ycol_opt 		  = G_define_option();
+    ycol_opt 		  = G_define_standard_option(G_OPT_COLUMN);
     ycol_opt->key 	  = "y";
-    ycol_opt->type 	  = TYPE_STRING;
     ycol_opt->required    = YES;
-    ycol_opt->description = _("y column name");
+    ycol_opt->description = _("Name of column containing y coordinate");
 
-    zcol_opt 		  = G_define_option();
+    zcol_opt 		  = G_define_standard_option(G_OPT_COLUMN);
     zcol_opt->key 	  = "z";
-    zcol_opt->type 	  = TYPE_STRING;
-    zcol_opt->required    = NO;
-    zcol_opt->description = _("z column name");
+    zcol_opt->description = _("Name of column containing z coordinate");
 
-    keycol_opt 		    = G_define_option();
+    keycol_opt 		    = G_define_standard_option(G_OPT_COLUMN);
     keycol_opt->key 	    = "key";
-    keycol_opt->type 	    = TYPE_STRING;
     keycol_opt->required    = YES;
-    keycol_opt->description = _("category column name");
+    keycol_opt->description = _("Name of column containing category number");
+    keycol_opt->description= _("Must refer to an integer column");
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
@@ -103,10 +90,10 @@ main (int argc, char *argv[])
     if (G_parser(argc, argv)) exit(EXIT_FAILURE);
 
     if ( zcol_opt->answer ) {
-	with_z = 1; 
+	with_z = WITH_Z; 
 	ncoor = 3;
     } else {
-        with_z = 0;
+        with_z = WITHOUT_Z;
 	ncoor = 2;
     }
 
@@ -114,9 +101,8 @@ main (int argc, char *argv[])
     Cats = Vect_new_cats_struct ();
     db_init_string (&sql);
 
-    if ( with_z ) Vect_open_new (&Map, outvect->answer, 1);
-    else  Vect_open_new (&Map, outvect->answer, 0);
-
+    Vect_open_new (&Map, outvect->answer, with_z);
+    
     Vect_hist_command ( &Map );
 
     fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
@@ -124,17 +110,28 @@ main (int argc, char *argv[])
     /* Open driver */
     driver = db_start_driver_open_database ( driver_opt->answer, database_opt->answer );
     if ( driver == NULL ) {
-	G_fatal_error ( _("Cannot open database <%s> by driver <%s>"), fi->database, fi->driver );
+	G_fatal_error ( _("Unable to open database <%s> by driver <%s>"),
+			fi->database, fi->driver );
     }
 
     /* check if target table already exists */
     G_debug(3, "Output vector table <%s>, driver: <%s>, database: <%s>", 
                 outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
+
     if( db_table_exists ( db_get_default_driver_name(), 
-        db_get_default_database_name(), outvect->answer) == 1 )
-           G_fatal_error(_("Output vector table <%s> (driver: <%s>, database: <%s>) "
-			   "already exists"),
-           outvect->answer, db_get_default_driver_name(), db_get_default_database_name());
+			  db_get_default_database_name(), outvect->answer) == 1 )
+	G_fatal_error(_("Output vector map, table <%s> (driver: <%s>, database: <%s>) "
+			"already exists"),
+		      outvect->answer, db_get_default_driver_name(),
+		      db_get_default_database_name());
+
+    coltype = db_column_Ctype(driver, table_opt->answer, keycol_opt->answer);
+
+    if (coltype == -1)
+	G_fatal_error (_("Missing column <%s> in table <%s>"),
+		       keycol_opt->answer, table_opt->answer);
+    if (coltype != DB_C_TYPE_INT)
+	G_fatal_error (_("Data type of key column must be integer"));
 
     /* Open select cursor */
     sprintf ( buf, "select %s, %s, %s", keycol_opt->answer, xcol_opt->answer, ycol_opt->answer );
@@ -155,7 +152,7 @@ main (int argc, char *argv[])
     G_debug ( 2, "SQL: %s", db_get_string(&sql) );
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
-        G_fatal_error ( _("Cannot open select cursor: '%s'"), db_get_string(&sql) );
+        G_fatal_error ( _("Unable to open select cursor: '%s'"), db_get_string(&sql) );
     }
 
     table = db_get_cursor_table (&cursor);
@@ -207,15 +204,20 @@ main (int argc, char *argv[])
 			     fi->driver, fi->database, fi->table);
 
     if ( ret == DB_FAILED ) {
-	G_warning ( _("Cannot copy table") );
+	G_warning ( _("Unable to copy table") );
     } else {
-        Vect_map_add_dblink ( &Map, 1, NULL, fi->table, keycol_opt->answer, fi->database, fi->driver);
+        Vect_map_add_dblink ( &Map, 1, NULL, fi->table, keycol_opt->answer,
+			      fi->database, fi->driver);
     }
-    
-    Vect_build (&Map, stdout);
+
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&Map, stdout);
+    else
+	Vect_build (&Map, NULL);
+
     Vect_close (&Map);
 
-    G_done_msg (""); 
+    G_done_msg (" "); 
     
     return (EXIT_SUCCESS);
 }
