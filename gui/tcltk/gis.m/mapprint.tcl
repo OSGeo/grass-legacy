@@ -189,14 +189,14 @@ proc psprint::init_tmpfiles { } {
     # get temporary file for postscript printing
     set pid [ pid ]
 	if {[catch {set tmppsfile [ exec g.tempfile pid=$pid ]} error]} {
-		Gm::errmsg $error "Error creating tempfile"
+		Gm::errmsg $error [G_msg "Error creating tempfile"]
 	}
 
     append tmppsfile ".ps"
     set pid [ pid ]
     
 	if {[catch {set tmppngfile [ exec g.tempfile pid=$pid ]} error]} {
-		Gm::errmsg $error "Error creating tempfile"
+		Gm::errmsg $error [G_msg "Error creating tempfile"]
 	}
     append tmppngfile ".png"
 }
