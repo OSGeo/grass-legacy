@@ -403,7 +403,7 @@ proc GRMap::getmset { } {
 
     set mappid [pid]
 	if {[catch {set grfile [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error "Error creating tempfile"
+		Gm::errmsg $error [G_msg "Error creating tempfile"]
 	}
 
     append grfile ".ppm"
@@ -1557,7 +1557,7 @@ proc GRMap::runprograms { mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error "Region settings error"
+			Gm::errmsg $error [G_msg "Error setting region"]
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
@@ -1934,7 +1934,7 @@ proc GRMap::zoom_gregion { args} {
             set parts($key) $value
         }
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error "Region setings error
+			Gm::errmsg $error ["Error setting region]
 		}
 
         GRMap::zoom_new $parts(north) $parts(south) $parts(east) $parts(west) $parts(nsres) $parts(ewres)
