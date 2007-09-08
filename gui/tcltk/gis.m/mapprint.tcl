@@ -104,8 +104,7 @@ proc psprint::init { } {
 		set gsdevices "none available"
 		set gsstate "disabled"
 		set printmode "eps"
-		tk_messageBox -icon error -type ok -title [G_msg "Error"] \
-			-message [G_msg "Ghostscript not available: $error"]
+		tk_messageBox -type ok -icon error -message [G_msg "Ghostscript not available"]
 	}
 }	
 
@@ -178,6 +177,7 @@ proc psprint::paper { } {
 	}
 		
 	update
+	
 }
 
 # initialize tmpfiles for poscript printing
@@ -189,18 +189,14 @@ proc psprint::init_tmpfiles { } {
     # get temporary file for postscript printing
     set pid [ pid ]
 	if {[catch {set tmppsfile [ exec g.tempfile pid=$pid ]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
 
     append tmppsfile ".ps"
     set pid [ pid ]
     
 	if {[catch {set tmppngfile [ exec g.tempfile pid=$pid ]} error]} {
-		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-			-message [G_msg "Error creating tempfile: $error"]
-		return
+		Gm::errmsg $error "Error creating tempfile"
 	}
     append tmppngfile ".png"
 }
@@ -315,9 +311,8 @@ proc psprint::window { cm cv cx cy } {
     # LPR printer
     set row [ frame $PWid(output).lpr ]
     radiobutton $row.a -variable psprint::printmode -value "lpr" \
-    	-state $psprint::gsstate -highlightthickness 0
-    Label $row.b -anchor w -text [G_msg "Send to LPR printer*"] \
-    	-state $psprint::gsstate
+    	-highlightthickness 0
+    Label $row.b -anchor w -text [G_msg "Print on LPR printer"]
     pack $row.a $row.b -side left;
     pack $row -side top -fill x -expand no -anchor n
 
@@ -325,7 +320,7 @@ proc psprint::window { cm cv cx cy } {
     set row [ frame $PWid(output).psprinter ]
     radiobutton $row.a -variable psprint::printmode -value "psprint" \
     	-state $psprint::gsstate -highlightthickness 0
-    Label $row.b -anchor w -text [G_msg "Send to postscript device* "] \
+    Label $row.b -anchor w -text [G_msg "Print on postscript device* "] \
     	-state $psprint::gsstate
     ComboBox $row.c -width 20 -textvariable psprint::printer  \
     	-values $psprint::gsdevices -editable 0 -entrybg white
@@ -388,6 +383,10 @@ proc psprint::print { cv } {
 	variable pght
 	variable docwd
 	variable docht
+	variable mright
+	variable mleft
+	variable mtop
+	variable mbottom
 	global gmpath
 	global mon
 	global mingw
@@ -413,87 +412,39 @@ proc psprint::print { cv } {
 	} else {
 		set cmd "gs"
 	}
+		
+		
+   
+	if { $orient == "portrait" } {
+		$cv postscript -pageheight $cdocht -pagewidth $cdocwd \
+			-file $tmppsfile
+	} else {
+		$cv postscript -rotate 1 -pageheight $cdocht -pagewidth $cdocwd \
+			-file $tmppsfile			
+	}	
 	
+	
+	after 500
+
 	# lpr printing		
-    if { $printmode == "lpr" } {
-		catch {set printmap [open "$tmppsfile" w]}
-		if { $orient == "portrait" } {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -pagewidth $cdocwd -channel $printmap
-			}
-		} else {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -rotate 1 -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
-			}
-		}		
-		after 500
-		if {[catch {close $printmap} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+ 	if { $printmode == "lpr" } {
+ 		if {[catch {exec lpr -o position=center $tmppsfile } error]} {
+			Gm::errmsg $error
 		}
-
-		if {[catch {exec $cmd  $format -sDEVICE#png16m -r$res -sNOPAUSE -sOutputFile#$tmppngfile -dBATCH -- $tmppsfile} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-		}
-
-		if {[catch {exec lpr $tmppngfile } error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-		}
-
     }
 
 	# postsript printing via ghostsript
     if { $printmode == "psprint" && $printer != "" } {
-		catch {set printmap [open "$tmppsfile" w]}
-		if { $orient == "portrait" } {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -pagewidth $cdocwd -channel $printmap
-			}
-		} else {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -rotate 1 -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
-			}
-		}		
-		after 500
-		if {[catch {close $printmap} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-		}
-
 		if {[catch {exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
 		 
 	}
 
 	# output to pdf file via ghostscript	
 	if { $printmode == "pdf" && $pdffile != "" } {
-		catch {set printmap [open "$tmppsfile" w]}
-		if { $orient == "portrait" } {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -pagewidth $cdocwd -channel $printmap
-			}
-		} else {
-			if { [expr $docht / $docwd] < [expr $pght / $pgwd] } {
-				$cv postscript -rotate 1 -pageheight $cdocht -channel $printmap
-			} else {
-				$cv postscript -rotate 1 -pagewidth $cdocwd -channel $printmap
-			}
-		}		
-		after 500
-		if {[catch {close $printmap} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
-		}
 		if {[catch {exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile} error]} {
-			tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
+			Gm::errmsg $error
 		}
 		 
 	}
