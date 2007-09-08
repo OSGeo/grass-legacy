@@ -39,13 +39,12 @@ main(int argc, char *argv[])
     driver = db_start_driver(parms.driver);
     if (driver == NULL) {
 	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-        exit (ERROR);
     }
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-	exit(ERROR);
+      	G_fatal_error(_("Unable to open database <%s>"), parms.database);
 
     system_tables = parms.s;
     if(db_list_tables (driver, &names, &count, system_tables) != DB_OK)
@@ -56,7 +55,7 @@ main(int argc, char *argv[])
     db_close_database(driver);
     db_shutdown_driver(driver);
 
-    exit(OK);
+    exit(EXIT_SUCCESS);
 }
 
 void
@@ -70,20 +69,12 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    driver 		= G_define_option();
-    driver->key 	= "driver";
-    driver->type 	= TYPE_STRING;
+    driver 		= G_define_standard_option(G_OPT_DRIVER);
     driver->options     = db_list_drivers();
-    driver->required 	= NO;
-    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) ) 
 	driver->answer = drv;
 
-    database 		= G_define_option();
-    database->key 	= "database";
-    database->type 	= TYPE_STRING;
-    database->required 	= NO;
-    database->description = _("database name");
+    database 		= G_define_standard_option(G_OPT_DATABASE);
     if ( (db=db_get_default_database_name()) ) 
 	database->answer = db;
 
@@ -98,14 +89,12 @@ parse_command_line(int argc, char *argv[])
     /* Set description */
     module              = G_define_module();
     module->keywords = _("database, SQL");
-    module->description = _("List all tables for a given database.");
-
+    module->description = _("Lists all tables for a given database.");
 
     if(G_parser(argc, argv))
-	exit(ERROR);
+	exit(EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.s		= s->answer;
 }
-

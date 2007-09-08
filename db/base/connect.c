@@ -47,21 +47,11 @@ main(int argc, char *argv[])
     print->key               = 'p';
     print->description       = _("Print current connection parameters and exit");
     
-    driver = G_define_option() ;
-    driver->key        = "driver" ;
-    driver->type       = TYPE_STRING ;
+    driver = G_define_standard_option(G_OPT_DRIVER);
     driver->options    = db_list_drivers();
-    driver->required   = NO  ;
-    driver->multiple   = NO ;
-    driver->description= _("Driver name") ;
     driver->answer = db_get_default_driver_name();
 
-    database = G_define_option() ;
-    database->key        = "database" ;
-    database->type       = TYPE_STRING ;
-    database->required   = NO  ;
-    database->multiple   = NO ;
-    database->description= _("Database name") ;
+    database = G_define_standard_option(G_OPT_DATABASE);
     database->answer = db_get_default_database_name();
 
     schema = G_define_option() ;
@@ -70,7 +60,8 @@ main(int argc, char *argv[])
     schema->required   = NO  ;
     schema->multiple   = NO ;
     schema->answer     = db_get_default_schema_name();
-    schema->description = _("Database schema. Do not use this option if schemas "
+    schema->label      = _("Database schema");
+    schema->description = _("Do not use this option if schemas "
 			    "are not supported by driver/database server");
 
     group = G_define_option() ;
@@ -79,7 +70,8 @@ main(int argc, char *argv[])
     group->required   = NO  ;
     group->multiple   = NO ;
     group->answer     = db_get_default_group_name();
-    group->description = _("Default group of database users to which select privilege is granted");
+    group->description = _("Default group of database users to which "
+			   "select privilege is granted");
 
 /* commented due to new mechanism:
     user = G_define_option() ;
@@ -123,13 +115,14 @@ main(int argc, char *argv[])
     else{
 	/* get and print connection */
 	if (db_get_connection( &conn ) == DB_OK){
-	    fprintf(stdout, "driver:%s\n", conn.driverName);
-	    fprintf(stdout, "database:%s\n", conn.databaseName);    
-	    fprintf(stdout, "schema:%s\n", conn.schemaName);    
-	    fprintf(stdout, "group:%s\n", conn.group);    
+	    fprintf(stdout, "driver: %s\n", conn.driverName ? conn.driverName : "");
+	    fprintf(stdout, "database: %s\n", conn.databaseName ? conn.databaseName : "");    
+	    fprintf(stdout, "schema: %s\n", conn.schemaName ? conn.schemaName : "");    
+	    fprintf(stdout, "group: %s\n", conn.group ? conn.group : "");    
 	}
 	else
-	    G_fatal_error(_("No db connection settings defined. Set with db.connect"));
+	    G_fatal_error(_("No DB connection settings defined. "
+			    "Set with db.connect"));
     }
 
     exit(EXIT_SUCCESS);
