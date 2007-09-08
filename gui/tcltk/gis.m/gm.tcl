@@ -546,7 +546,7 @@ proc Gm::errmsg { error args } {
     set message ""
     
     if { $args != ""} { 
-        set message [G_msg [join $args]]
+        set message [join $args]
         append message ": " 
      }
 
