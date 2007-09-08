@@ -154,6 +154,8 @@ static const char *GRASS_copyright __attribute__((unused))
 typedef enum {
     G_OPT_WHERE,    /* SQL where conditions */
     G_OPT_TABLE,    /* table name */
+    G_OPT_DRIVER,   /* driver name */
+    G_OPT_DATABASE, /* database name */
     G_OPT_COLUMN,   /* one attr column */
     G_OPT_COLUMNS,  /* one or more attr columns */
 

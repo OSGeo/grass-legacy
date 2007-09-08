@@ -313,7 +313,7 @@ G_define_option (void)
  * If an invalid parameter was specified a empty Option structure will 
  * be returned (not NULL).
  *
- * - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS, G_OPT_TABLE
+ * - general: G_OPT_WHERE, G_OPT_COLUMN, G_OPT_COLUMNS, G_OPT_TABLE, G_OPT_DRIVER, G_OPT_DATABASE
  *
  * - imagery: G_OPT_I_GROUP
  *
@@ -350,7 +350,23 @@ G_define_standard_option (int opt)
 	    Opt->key_desc     = "name";
 	    Opt->required     = NO;
 	    Opt->multiple     = NO;
-	    Opt->description  = _("Name of table");
+	    Opt->description  = _("Table name");
+	    break;
+	case G_OPT_DRIVER:
+	    Opt->key          = "driver";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->multiple     = NO;
+	    Opt->description  = _("Driver name");
+	    break;
+	case G_OPT_DATABASE:
+	    Opt->key          = "database";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = NO;
+	    Opt->multiple     = NO;
+	    Opt->description  = _("Database name");
 	    break;
 	case G_OPT_COLUMN:
 	    Opt->key          = "column";
