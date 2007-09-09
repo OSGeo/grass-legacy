@@ -69,7 +69,7 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 ### trap <ctrl>-<c> so that we can clean up tmp and exit
-trap 'rm -f "$TMP1" "$TMP2" ; exit 1' 2 3 15
+trap 'rm -f "$TMP1" "$TMP2" "$TMP3" "$TMP4"; exit 1' 2 3 15
 
 # setting environment, so that sort works properly in all languages
 LC_ALL=C         # according to 'man sort'
@@ -92,20 +92,32 @@ MAP=$GIS_OPT_MAP
 OPTION=$GIS_OPT_OPTION
 LAYER=$GIS_OPT_LAYER
 
-# does map exist?
+# does the input vector exist?
 eval `g.findfile element=vector file=$GIS_OPT_MAP`
 if [ ! "$file" ] ; then
    g.message -e "Vector map '$GIS_OPT_MAP' not found in mapset search path"
    exit 1
 fi
 
+#test if the input vector has a table attached in the given layer
+v.info -c map=$MAP layer=$LAYER >/dev/null 2>&1
+if [ $? -eq 0 ] ; then
+ TABLEEXISTS=1
+else
+ TABLEEXISTS=0
+fi
+
 #fetch column names
-COLNAMES="`v.info -c map=$MAP layer=$LAYER | grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
+if [ $TABLEEXISTS -eq 1 ] ; then
+ COLNAMES="`v.info -c map=$MAP layer=$LAYER | grep -v '^Displaying column type' | cut -d '|' -f2 | tr '\n' '|'`"
+else
+ COLNAMES="cat|"
+fi
 
 #special treatment for opt=coor parameter:
 if [ "$GIS_OPT_OPTION" = "coor" ] ; then
-  COLUMS="dummy1,dummy2"
-  EXTRACOLNAMES="x|y"
+  COLUMS="dummy1,dummy2,dummy3"
+  EXTRACOLNAMES="x|y|z"
 else
   COLUMS="dummy1"
   EXTRACOLNAMES="$OPTION"
@@ -122,8 +134,15 @@ fi
 
 ## NOTE: we suppress -1 cat and 0 cat
 
+
 #fetch the attributes sorted by cat:
-v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 | grep -v '^0' > "$TMP1"
+
+if [ $TABLEEXISTS -eq 1 ] ; then
+ v.db.select -c map=$MAP layer=$LAYER | sort -n -t'|' -k 1 | grep -v '^0' > "$TMP1"
+else
+ v.category input=$MAP layer=$LAYER option=print | sort -n -t'|' -k 1 | grep -v '^0' > "$TMP1"
+fi
+
 if [ `wc -l "$TMP1" | awk '{print $1}'` -eq 0 ] ; then
    #fetch the areas/line lengths sorted by cat:
    v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM \
@@ -133,7 +152,7 @@ else
    #fetch the areas/line lengths sorted by cat:
    v.to.db -p map=$MAP opt=$OPTION col=$COLUMS $UNITSPARAM \
 	   layer=$LAYER 2> /dev/null | grep -v '^cat' | grep -v '^-1' | grep -v '^0'\
-	   | sort -n -t'|' -k 1 | cut -d'|' -f2 > "$TMP2"
+	   | sort -n -t'|' -k 1 | cut -d'|' -f2-4 > "$TMP2"
 fi
 
 #make and print the table:
@@ -173,7 +192,6 @@ else
 	   cat "$TMP3"
         fi
 fi
-
 
 #cleanup:
 rm -f "$TMP1"
