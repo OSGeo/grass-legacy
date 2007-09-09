@@ -182,11 +182,11 @@ fi
 
 if [ $GIS_FLAG_S -eq 1 ] ; then
 	# sort
-	cat "$TMP3" | sort -n -t'|' -k${NUMCOLS}
+	cat "$TMP3" | sort -n -t'|' -k${NUMCOLS} -k1
 else
 	if [ $GIS_FLAG_R -eq 1 ] ; then
 	# reverse sort
-	cat "$TMP3" | sort -n -r -t'|' -k${NUMCOLS}
+	cat "$TMP3" | sort -n -r -t'|' -k${NUMCOLS} -k1
         else
 	   # no sort (order by cat)
 	   cat "$TMP3"
