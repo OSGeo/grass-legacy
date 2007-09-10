@@ -68,18 +68,9 @@ int main(int argc, char *argv[])
     module->keywords = _("display");
     module->description = _("Creates fly-through script to run in NVIZ.");
 
-    parm.opt1 = G_define_option();
-    parm.opt1->key = "input";
-    parm.opt1->type = TYPE_STRING;
-    parm.opt1->required = YES;
-    parm.opt1->multiple = NO;
-    parm.opt1->gisprompt = "old,cell,raster";
-    parm.opt1->description = _("Name of existing raster map");
+    parm.opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
-    parm.output = G_define_option();
-    parm.output->key = "output";
-    parm.output->type = TYPE_STRING;
-    parm.output->required = YES;
+    parm.output = G_define_standard_option(G_OPT_F_OUTPUT);
     parm.output->description = _("Name of output script");
 
     parm.name = G_define_option();
