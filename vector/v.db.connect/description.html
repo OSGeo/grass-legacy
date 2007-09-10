@@ -1,6 +1,8 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.db.connect</em> prints or sets database connection for a vector map.
+<em>v.db.connect</em> prints or sets database connection for a vector
+map. The user can add or remove link to attribute table on the certain
+layer.
 
 <h2>NOTE</h2>
 
@@ -9,58 +11,61 @@ If parameters for database connection are already set with
 do not need to be spcified each time.
 
 <p>
+When printing database connection (<em>p</em> or <em>g</em> flag) the parameter
+<em>layer</em> is ignored, i.e. <b>all</b> connections are printed to the
+output.
 
-<b>Attention:</b> Removing a vector map will also delete all tables linked to it! If
-you use v.db.connect to link further tables to your map, it is advisable to 
-make a copy from those tables first and connect the copied tables to 
-the vector map (see also <a HREF="v.overlay.html">v.overlay</a>).
+<p>
+<b>Attention:</b> Removing a vector map will also delete all tables
+linked to it! If you use <a HREF="db.connect.html">v.db.connect </a>to
+link further tables to your map, it is advisable to make a copy from
+those tables first and connect the copied tables to the vector map
+(see also <a HREF="v.overlay.html">v.overlay</a>).
 
 <h2>EXAMPLE</h2>
 
-<em>Print database connection</em>
-<br>
+<h3>Print database connection</h3>
+
+Print all database connection parameters for vector map.
+
 <div class="code"><pre>
-v.db.connect -p map=vectormap
+v.db.connect -p map=roads
 </pre></div>
 
 <p>
+Print column types and names of table linked to vector map.
 
-<em>Print column types and names of table linked to vector map</em>
-<br>
 <div class="code"><pre>
-v.db.connect -c map=vectormap
+v.db.connect -c map=roads
 </pre></div>
 
 <h3>Connect vector map to database (DBF driver)</h3>
 
-<em>Connect vector map to DBF table without or with variables</em><br>
+Connect vector map to DBF table without or with variables.<br>
 
-Using default DB connection:<br>
+<p>
+Using default DB connection:
 <div class="code"><pre>
 v.db.connect map=vectormap table=table
 </pre></div>
 
 <p>
-
 Using hardcoded path to DBF directory (not recommended):<br>
 <div class="code"><pre>
 v.db.connect map=vectormap table=table database=/home/user/grassdata/spearfish60/PERMANENT/dbf
 </pre></div>
 
 <p>
-
 Using variable as DBF directory definition, single quotes must be used:<br>
 <div class="code"><pre>
 v.db.connect map=vectormap table=table database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 </pre></div>
 
 <p>
-<em>Connect vector map layer 2 and key ID to database with variables</em><br>
-(note: if needed, single quotes must be used for the <em>database</em> parameter)<br>
+Connect vector map layer 2 and key ID to database with variables (note: if needed, single quotes must be used for the <em>database</em> parameter):
 <div class="code"><pre>
 v.db.connect map=vectormap table=table layer=2 key=ID
 </pre></div>
-
 
 <h3>Connect vector map to database (MySQL driver)</h3>
 
@@ -122,7 +127,7 @@ v.db.connect map=mytable driver=pg database="host=localhost,dbname=meteo" \
 </pre></div>
 
 An alternative is to create a "view" of only ID, x, y [,z] columns and
-to use <em>v.in.db</em> on this view, then connect the original
+to use <a HREF="v.in.db.html">v.in.db</a> on this view, then connect the original
 table to the geometry. This will be faster if the original table
 is very large.
 
@@ -164,15 +169,16 @@ v.db.connect map=mytable driver=pg database="host=localhost,dbname=meteo" \
 
 <h2>SEE ALSO</h2>
 
-<em>
 <a HREF="db.connect.html">db.connect</a>,
 <a HREF="db.copy.html">db.copy</a>,
 <a HREF="db.tables.html">db.tables</a>,
 <a HREF="v.db.addtable.html">v.db.addtable</a>,
+<a HREF="v.db.droptable.html">v.db.droptable</a>,
+<a HREF="v.db.addcol.html">v.db.addcol</a>,
+<a HREF="v.db.dropcol.html">v.db.dropcol</a>,
 <a HREF="v.external.html">v.external</a>,
 <a HREF="v.in.db.html">v.in.db</a>,
-<a HREF="v.overlay.html">v.overlay</a>,
-</em>
+<a HREF="v.overlay.html">v.overlay</a>
 
 <h2>AUTHOR</h2>
 
