@@ -1,15 +1,12 @@
-
-/**
- * @file main.c
- * This file contains the command line parsing and main() function. The 
- * paint label file writing funtion (print_label()) is also part of this file.
- */
 /* ****************************************************************************
  *
  * MODULE:       v.label.sa
  * AUTHOR(S):    Wolf Bergenheim
  * PURPOSE:      Create paint labels, but use a Simulated Annealing
  *               algorithm to avoid overlaping labels.
+ *               This file contains the command line parsing and main function.
+ *               The paint label file writing funtion (print_label()) is also
+ *               part of this file.
  * COPYRIGHT:    (C) 2007 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
@@ -17,6 +14,7 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <time.h>
 #include "labels.h"
 #define DEFAULT_CHARSET "UTF-8"
@@ -30,7 +28,7 @@
 static int parse_args(int argc, char *argv[], struct params *p);
 
 /**
- * The main function controls the program flow
+ * The main function controls the program flow.
  */
 int main(int argc, char *argv[])
 {
@@ -41,12 +39,13 @@ int main(int argc, char *argv[])
     FILE *labelf;
 
     srand((unsigned int)time(NULL));
+
     G_gisinit(argv[0]);
     module = G_define_module();
     module->keywords = _("vector, paint labels");
     module->description = _("Create optimally placed labels for vector map(s)");
 
-    fprintf(stderr, "Parsing options and flags\n");
+//    fprintf(stderr, "Parsing options and flags\n");
     /* parse options and flags */
     if (parse_args(argc, argv, &p))
 	exit(EXIT_FAILURE);
@@ -69,6 +68,22 @@ int main(int argc, char *argv[])
 	G_percent(i, (n_labels - 1), 1);
     }
     fclose(labelf);
+/*
+    {
+	char *f;
+	f = G_tempfile();
+	labelf = fopen(f, "w");
+	printf("Writing all labels to file %s", f);
+	for (i = 0; i < n_labels; i++) {
+		if (labels[i].n_candidates > 0) {
+			print_labels(labelf, &labels[i], &p);
+		}
+		G_percent(i, (n_labels - 1), 1);
+    	}
+	free(f);
+    	fclose(labelf);
+    }
+*/
     return EXIT_SUCCESS;
 }
 
@@ -158,3 +173,4 @@ void print_label(FILE * labelf, label_t * label, struct params *p)
 
     return;
 }
+

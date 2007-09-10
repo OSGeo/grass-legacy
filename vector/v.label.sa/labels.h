@@ -20,10 +20,13 @@
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
+#define LABEL_OVERLAP_WEIGHT 80.0
+
 typedef struct _label label_t;
 typedef struct _label_candidate label_candidate_t;
 typedef struct _label_intersection label_intersection_t;
 typedef struct _label_point label_point_t;
+typedef struct _label_score label_score_t;
 
 /**
  * A structure representing a point location */
@@ -61,6 +64,7 @@ struct _label_candidate
     label_point_t point;     /**< The point of the label position 
 			       *  (lower left corner)*/
     double score; /**< The base score of this position (sans overlap metric) */
+    double lineover;
     double rotation;	 /**< The mount the label is rotated in this position */
     label_intersection_t *intersections;  /**< A list of all label candidate 
                                             *  positions which intersect with

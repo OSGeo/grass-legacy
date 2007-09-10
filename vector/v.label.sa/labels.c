@@ -1,31 +1,24 @@
-
 /**
  * @file labels.c
  * This file contains functions for label and label candidate manipulation
 */
 #include "labels.h"
 static int label_skyline(FT_Face face, const char *charset, label_t * label);
-static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
-				       double angle);
+static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p, double angle);
 static void label_point_candidates(label_t * label);
 static void label_line_candidates(label_t * label);
 static int candidate_compare(const void *a, const void *b);
-static struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
-					   label_point_t * p, double angle);
+static struct line_pnts *skyline_trans_rot(struct line_pnts *skyline, label_point_t * p, double angle);
 static double label_avedist(label_t * label, label_candidate_t * candidate);
 static double label_flatness(label_t * label, label_candidate_t * candidate);
 static double label_pointover(label_t * label, label_candidate_t * candidate);
-static double label_lineover(label_t * label, label_candidate_t * candidate,
-			     int linetype);
-static label_point_t *lineover_intersection(struct bound_box *bb,
-					    struct line_pnts *line);
-static double min_dist_2_lines(struct line_pnts *skyline,
-			       struct line_pnts *swathline, label_point_t * p);
+static double label_lineover(label_t * label, label_candidate_t * candidate, int linetype);
+static double min_dist_2_lines(struct line_pnts *skyline, struct line_pnts *swathline, label_point_t * p);
 static int box_overlap(BOUND_BOX * a, BOUND_BOX * b);
 static int box_overlap2(struct line_pnts *a, struct line_pnts *b);
 
 /**
- * The font size in map units. A global variable because I'l lazy :P
+ * The font size in map units. A global variable because I'm lazy :P
  */
 static double font_size = 0.0;
 
@@ -66,7 +59,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
     label_sz = Vect_get_num_primitives(&Map, legal_types);
 
-    G_debug(1, "Need to allocate %ld bytes of memory",
+    G_debug(1, "Need to allocate %d bytes of memory",
 	    sizeof(label_t) * label_sz);
     labels = malloc(sizeof(label_t) * label_sz);
     G_debug(1, "labels=%p", labels);
@@ -120,7 +113,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	if (i == label_sz) {	/* we need more memory */
 	    label_sz += 100;
-	    G_debug(1, "Need to resize %p to %ld bytes of memory",
+	    G_debug(1, "Need to resize %p to %d bytes of memory",
 		    (void *)labels, sizeof(label_t) * label_sz);
 	    labels = realloc(labels, sizeof(label_t) * label_sz);
 	    if (labels == NULL) {
@@ -317,6 +310,11 @@ static int label_skyline(FT_Face face, const char *charset, label_t * label)
     return 1;
 }
 
+/**
+ * This function generates label candidates for each label.
+ * @param labels The array of labels to generate candidate places for.
+ * @param n_labels The size of the array.
+ */
 void label_candidates(label_t * labels, int n_labels)
 {
     int i;
@@ -362,7 +360,7 @@ static void label_point_candidates(label_t * label)
 
     height = label->bb.N - label->bb.S;
     width = label->bb.E - label->bb.W;
-    /* 2 upper left-hand side labels are placed so that they are 
+    /* 2 upper left-hand side labels are placed so that they are
      * 1/3 and 2/3 of label height above point, and right aligned */
     candidates[0].point.x = label->shape->x[0] - width - buffer * 0.75;
     candidates[0].point.y = label->shape->y[0] + (5.0 / 9.0) * height;
@@ -375,7 +373,7 @@ static void label_point_candidates(label_t * label)
     candidates[2].point.x = label->shape->x[0] - width - buffer * 0.95;
     candidates[2].point.y = label->shape->y[0];
     candidates[2].score = 0.07;
-    /* 3 lower left-hand side labels are placed so that they are 
+    /* 3 lower left-hand side labels are placed so that they are
      * 1/3, 2/3 and 3/3 of label height below point, and right aligned */
     candidates[3].point.x = label->shape->x[0] - width - buffer * 0.95;
     candidates[3].point.y = label->shape->y[0] - (1.0 / 3.0) * height;
@@ -389,7 +387,7 @@ static void label_point_candidates(label_t * label)
     candidates[5].point.y = label->shape->y[0] - height;
     candidates[5].score = 0.37;
 
-    /* 2 upper right-hand side labels are placed so that they are 
+    /* 2 upper right-hand side labels are placed so that they are
      * 1/3 and 2/3 of label height above point*/
     candidates[6].point.x = label->shape->x[0] + buffer * 0.85;
     candidates[6].point.y = label->shape->y[0] + (5.0 / 9.0) * height;
@@ -402,7 +400,7 @@ static void label_point_candidates(label_t * label)
     candidates[8].point.x = label->shape->x[0] + buffer;
     candidates[8].point.y = label->shape->y[0];
     candidates[8].score = 0.00;
-    /* 4 lower left-hand side labels are placed so that they are 
+    /* 4 lower left-hand side labels are placed so that they are
      * 1/4, 2/4 3/4 and 4/4 of label height below point*/
     candidates[9].point.x = label->shape->x[0] + buffer;
     candidates[9].point.y = label->shape->y[0] - 0.25 * height;
@@ -420,7 +418,7 @@ static void label_point_candidates(label_t * label)
     candidates[12].point.y = label->shape->y[0] - height;
     candidates[12].score = 0.59;
 
-    /* 3 labels above, centered, centered on left 1/3 and centered 
+    /* 3 labels above, centered, centered on left 1/3 and centered
      * on right 1/3 of the label */
     candidates[13].point.x = label->shape->x[0] - (1.0 / 3.0) * width;
     candidates[13].point.y = label->shape->y[0] + fabs(label->bb.S) + buffer;
@@ -434,7 +432,7 @@ static void label_point_candidates(label_t * label)
     candidates[15].point.y = label->shape->y[0] + fabs(label->bb.S) + buffer;
     candidates[15].score = 0.74;
 
-    /* 3 labels below, centered, centered on left 1/3 and centered 
+    /* 3 labels below, centered, centered on left 1/3 and centered
      * on right 1/3 of the label */
     candidates[16].point.x = label->shape->x[0] - (1.0 / 3.0) * width;
     candidates[16].point.y = label->shape->y[0] - height - buffer;
@@ -473,8 +471,6 @@ static void label_line_candidates(label_t * label)
     double height, width, inc, length, pos;
     label_candidate_t *above_candidates, *below_candidates, *candidates;
     int i, n, n_c;
-    FILE *sl;
-    sl = fopen("skylines.txt", "a");
 
     height = label->bb.N - label->bb.S;
     width = label->bb.E - label->bb.W;
@@ -546,7 +542,7 @@ static void label_line_candidates(label_t * label)
 	}
 
 	/* find the maximum above_distance and below_distance from the swath
-	 * "diagonal" to determine maximum deviation from a straight line 
+	 * "diagonal" to determine maximum deviation from a straight line
 	 * create the swath lines at the same time
 	 */
 	above_candidates[i].swathline = Vect_new_line_struct();
@@ -653,17 +649,19 @@ static void label_line_candidates(label_t * label)
 	    label_flatness(label, &below_candidates[i]);
 
 	/* centerdness */
-	above_candidates[i].score += 3.0 * fabs(pos / length - 1);
-	below_candidates[i].score += 3.0 * fabs(pos / length - 1);
+	above_candidates[i].score += 3.0 * fabs(2.0 * pos / length - 1.0);
+	below_candidates[i].score += 3.0 * fabs(2.0 * pos / length - 1.0);
 
 	above_candidates[i].score += 10.0 *
 	    label_pointover(label, &above_candidates[i]);
 	below_candidates[i].score += 10.0 *
 	    label_pointover(label, &below_candidates[i]);
-	above_candidates[i].score += 15.0 *
+	above_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &above_candidates[i], GV_LINE);
-	below_candidates[i].score += 15.0 *
+	above_candidates[i].score += above_candidates[i].lineover;
+	below_candidates[i].lineover = 15.0 *
 	    label_lineover(label, &below_candidates[i], GV_LINE);
+	below_candidates[i].score += below_candidates[i].lineover;
 	above_candidates[i].score += 10.0 *
 	    label_lineover(label, &above_candidates[i], GV_BOUNDARY);
 	below_candidates[i].score += 10.0 *
@@ -723,7 +721,7 @@ static void label_line_candidates(label_t * label)
 	    Vect_destroy_line_struct(above_candidates[i].swathline);
 	}
     }
-    fclose(sl);
+
     for (; i < n; i++) {
 	Vect_destroy_line_struct(above_candidates[i].baseline);
 	Vect_destroy_line_struct(above_candidates[i].swathline);
@@ -792,7 +790,7 @@ static struct line_pnts *skyline_trans_rot(struct line_pnts *skyline,
  * This function rotates and translates the label bounding box to the
  * given point, and returns it as a polygon.
  * @param bb The bounding box to translate and rotate.
- * @param p The point to translate the skyline to
+ * @param p The point to translate the bounding box to
  * @param angle The angle (in radians) to rotate the label counter-clockwise
  * @return A lint_pnts structure containing the rotated and translated
  * bounding box as a polygon.
@@ -826,7 +824,7 @@ static struct line_pnts *box_trans_rot(BOUND_BOX * bb, label_point_t * p,
     return Points;
 }
 
-/** 
+/**
  * This function calculates the AveDist metric for line label candidates
  * @param label The label to which candidate belongs to.
  * @candidate The candidate of which we are to calculate the metric.
@@ -865,7 +863,7 @@ static double label_avedist(label_t * label, label_candidate_t * candidate)
 	(ideal_distance * ideal_distance);
 }
 
-/** 
+/**
  * This function calculates the Flatness metric for line label candidates
  * @param label The label to which candidate belongs to.
  * @candidate The candidate of which we are to calculate the metric.
@@ -900,7 +898,7 @@ static double label_flatness(label_t * label, label_candidate_t * candidate)
 }
 
 /**
- * This function checks if the label candidate overlaps with a pointfeature.
+ * This function checks if the label candidate overlaps with a point feature.
  * And calculates the PointOver metric.
  * @param label The label whose candidate we are investigating.
  * @param candidate The label candidate we are investigating.
@@ -943,10 +941,9 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
 {
     double lineover = 0.0;
     struct ilist *il;
-    struct line_pnts *trsk;
+    struct line_pnts *trsk, *trbb;
     label_point_t b;
-    int i;
-    BOUND_BOX bb;
+    int i, n;
 
     il = Vect_new_list();
     G_debug(3, "Candidate point is: (%lf,%lf)",
@@ -956,114 +953,60 @@ static double label_lineover(label_t * label, label_candidate_t * candidate,
     b.x = (label->bb.E - label->bb.W) * cos(candidate->rotation);
     b.y = (label->bb.E - label->bb.W) * sin(candidate->rotation);
 
-    Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, linetype, il);
+    n = Vect_select_lines_by_polygon(&Map, trsk, 0, NULL, linetype, il);
 
-    bb.N = label->bb.N + candidate->point.y;
-    bb.E = label->bb.E + candidate->point.x;
-    bb.W = label->bb.W + candidate->point.x;
-    bb.S = label->bb.S + candidate->point.y;
-    bb.T = label->bb.T;
-    bb.B = label->bb.B;
+    if(n == 0) {
+	return 0.0;
+    }
+
+    trbb = box_trans_rot(&label->bb, &candidate->point, candidate->rotation);
 
     for (i = 0; i < il->n_values; i++) {
+	int j, found=0;
 	struct line_pnts *line;
-	label_point_t *v;
+	label_point_t v, v1, v2;
 
 	line = Vect_new_line_struct();
 	Vect_read_line(&Map, line, NULL, il->value[i]);
-	v = lineover_intersection(&bb, line);
-	if (v == NULL) {
-	    continue;		/* no overlap */
-	}
-	else {
-	    lineover += 1.0 + 9.0 * fabs((v->x * b.x + v->y * b.y))
-		/ (sqrt(v->x * v->x + v->y * v->y) *
-		   sqrt(b.x * b.x + b.y * b.y));
-	}
-	free(v);
-    }
 
-    Vect_destroy_list(il);
-
-    return lineover;
-}
-
-/**
- * This function checks a line and a box intersect.
- * @param bb The box to check
- * @param line The polyline to check.
- * @return The vector of the overlap. NULL if there is no overlap.
- */
-static label_point_t *lineover_intersection(BOUND_BOX * bb,
-					    struct line_pnts *line)
-{
-    int i, found = 0;
-    label_point_t *ret;
-    double dx1[4], dy1[4], dx2[4], dy2[4];
-
-    ret = malloc(sizeof(label_point_t));
-    ret->x = 0.0;
-    ret->y = 0.0;
-
-    dy1[0] = bb->N;
-    dx1[0] = bb->W;
-    dy2[0] = bb->N;
-    dx2[0] = bb->E;
-
-    dy1[1] = bb->S;
-    dx1[1] = bb->E;
-    dy2[1] = bb->N;
-    dx2[1] = bb->E;
-
-    dy1[2] = bb->S;
-    dx1[2] = bb->W;
-    dy2[2] = bb->S;
-    dx2[2] = bb->E;
-
-    dy1[3] = bb->S;
-    dx1[3] = bb->W;
-    dy2[3] = bb->N;
-    dx2[3] = bb->W;
-
-    /* simply check each segment for intersection with each edge of the bb */
-    for (i = 1; i < line->n_points; i++) {
-	double x1, x2, y1, y2, z1, z2;
-	int r, j;
-	for (j = 0; j < 4; j++) {
-	    r = Vect_segment_intersection(dx1[j], dy1[j], 0, dx2[j], dy2[j], 0,
-					  line->x[i - 1], line->y[i - 1], 0,
-					  line->x[i], line->y[i], 0,
-					  &x1, &y1, &z1, &x2, &y2, &z2, 0);
-	    if (r == 1) {	/* intersection at one point */
-		if (!found) {
-		    found++;
-		    ret->x = x1;
-		    ret->y = y1;
-		}
-		else {
-		    found++;
-		    ret->x -= x1;
-		    ret->y -= y1;
-		    break;
+	for(j=1; j < line->n_points; j++) {
+	    int k;
+	    for(k=1; k < trbb->n_points; k++) {
+		int r;
+		double x1, x2, y1, y2, z1, z2;
+		r = Vect_segment_intersection(trbb->x[k-1],trbb->y[k-1],0,
+					      trbb->x[k],trbb->y[k],0,
+					      line->x[j-1],line->y[j-1],0,
+					      line->x[j],line->y[j],0,
+					      &x1, &y1, &z1, &x2, &y2, &z2, 0);
+		if (r > 0) { /* intersection at one point */
+		    if (!found) {
+			found++;
+			v1.x = x1;
+			v1.y = y1;
+		    }
+		    else {
+			found++;
+			if(r > 1) {
+			   v2.x = x2;
+			   v2.y = y2;
+			}
+			else {
+			   v2.x = x1;
+			   v2.y = y1;
+			}
+		    }
 		}
 	    }
 	}
-	if (found)
-	    break;
+	v.x = v2.x - v1.x;
+	v.y = v2.y - v1.y;
+	lineover += 1.0 + 9.0 * fabs(v.x * b.x + v.y * b.y)
+		/ (sqrt(v.x * v.x + v.y * v.y) * sqrt(b.x * b.x + b.y * b.y));
     }
-    if (!found) {
-	free(ret);
-	return NULL;
-    }
-    if (found == 1) {
-	ret->x = fabs(ret->x - (line->x[line->n_points - 1]));
-	ret->y = fabs(ret->y - (line->y[line->n_points - 1]));
-    }
-    else {
-	ret->x = fabs(ret->x);
-	ret->y = fabs(ret->y);
-    }
-    return ret;
+
+    Vect_destroy_list(il);
+    return lineover;
 }
 
 /**
@@ -1104,6 +1047,11 @@ static double min_dist_2_lines(struct line_pnts *skyline,
     return dist;
 }
 
+/**
+ * This function finds label -label overlaps.
+ * @param labels The array of labels
+ * @param n_labels The size of the array
+ */
 void label_candidate_overlap(label_t * labels, int n_labels)
 {
     int i;
@@ -1155,8 +1103,8 @@ void label_candidate_overlap(label_t * labels, int n_labels)
 			li[n - 1].candidate = l;
 			if ((labels[k].current_candidate == l) &&
 			    (labels[i].current_candidate == j)) {
-			    labels[i].current_score += 80.0;
-			    labels[k].current_score += 80.0;
+			    labels[i].current_score += LABEL_OVERLAP_WEIGHT;
+			    labels[k].current_score += LABEL_OVERLAP_WEIGHT;
 			}
 			labels[i].candidates[j].intersections = li;
 			n = ++(labels[k].candidates[l].n_intersections);
@@ -1201,19 +1149,19 @@ static int box_overlap(BOUND_BOX * a, BOUND_BOX * b)
 
 /**
  * This function checks if two rotated boxes overlap. The boxes are stored
- * as polygons and the function assumes that each box has exactly 4 sides. 
+ * as polygons and the function assumes that each box has exactly 4 sides.
  * @param a Bounding box A
  * @param b Bounding box B
  * @return returns 1 if the given boxes overlap. 0 if not.
  */
 static int box_overlap2(struct line_pnts *a, struct line_pnts *b)
 {
-    int i;
+    int i, r=0;
     for (i = 0; i < (a->n_points - 1); i++) {
 	int j;
 	for (j = 0; j < (b->n_points - 1); j++) {
 	    double d[6];
-	    return Vect_segment_intersection(a->x[i], a->y[i], 0,
+	    r += Vect_segment_intersection(a->x[i], a->y[i], 0,
 					     a->x[i + 1], a->y[i + 1], 0,
 					     b->x[j], b->y[j], 0,
 					     b->x[j + 1], a->y[j + 1], 0,
@@ -1221,5 +1169,6 @@ static int box_overlap2(struct line_pnts *a, struct line_pnts *b)
 					     &d[3], &d[4], &d[5], 0);
 	}
     }
-    return 0;
+    if(r > 1) return 1;
+    else return 0;
 }
