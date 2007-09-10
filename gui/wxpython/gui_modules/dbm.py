@@ -19,7 +19,7 @@ PURPOSE:   GRASS attribute table manager
 
 AUTHOR(S): GRASS Development Team
            Original author: Jachym Cepicky <jachym.cepicky gmail.com>
-           Martin Landa <landa.martin gmail.com>
+           Various updates: Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
 
@@ -589,14 +589,14 @@ class AttributeManager(wx.Frame):
 
 class DisplayAttributesDialog(wx.Dialog):
     """
-    Standard dialog used for adding new/updating existing or
-    displaying (read-only mode) attributes of vector map layers.
+    Standard dialog used to add/update/display attributes linked
+    to the vector map.
 
     Attribute data can be selected based on layer and category number
-    or coordinates. If layer=-1 all layer are queried.
-    """
+    or coordinates"""
     def __init__(self, parent, map,
-                 layer=1, cat=1, queryCoords=None, qdist=1,
+                 layer=-1, cat=-1, # select by layer/cat
+                 queryCoords=None, qdist=-1, # select by point
                  style=wx.DEFAULT_DIALOG_STYLE, pos=wx.DefaultPosition,
                  action="add"):
 
@@ -607,16 +607,26 @@ class DisplayAttributesDialog(wx.Dialog):
         self.qdist       = qdist
         self.action      = action
 
-        self.selectedLines = [] # id of selected feature
+        # id of selected line
+        self.line = None
 
-        self.mapInfo = VectorAttributesInfo(self.map)
+        # get layer/table/column information
+        self.mapInfo = VectorAttributeInfo(self.map)
 
-        if self.layer > 0 and \
-               self.layer not in self.mapInfo.layers.keys():
+        layers = self.mapInfo.layers.keys() # get available layers
+
+        # check if db connection / layer exists
+        if (self.layer == -1 and len(layers) <= 0) or \
+                (self.layer > 0 and self.layer not in layers):
+            if self.layer == -1:
+                label = "Database connection for vector map <%s> "
+                "is not defined in DB file" % self.map
+            else:
+                label = "Layer <%d> is not available for vector map <%s>" % self.map
+
             dlg = wx.MessageDialog(None,
-                                   _("Attribute table not found.\n"
-                                     "Layer %d is not available in vector map <%s>") % \
-                                   (layer, self.map),
+                                   _("No attribute table found.\n"
+                                     "%s") % (label),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -629,81 +639,82 @@ class DisplayAttributesDialog(wx.Dialog):
         # dialog body
         mainSizer = wx.BoxSizer(wx.VERTICAL)
 
+        if self.queryCoords: # select by point
+            self.line, nselected = self.mapInfo.SelectByPoint(self.queryCoords,
+                                                         self.qdist)
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
-        for layer in self.mapInfo.layers.keys():
+        for layer in layers: # for each layer
             if self.layer > 0 and \
                     self.layer != layer:
                 continue
 
-            # line detected, number of selected records
-            line, selected = self.mapInfo.SelectFromTable(layer, self.cat,
-                                                          self.queryCoords, self.qdist)
-
-            if (self.action == "add" and selected > 0) or \
-                   self.action == "update":
-                self.SetTitle(_("Update attributes"))
-            elif self.action == "add":
-                self.SetTitle(_("Add attributes"))
-            else:
-                self.SetTitle(_("Display attributes"))
-
-            if self.action == "add":
-                pass
-            else:
-                if not line and selected == 0:
-                    continue
-
-            if line:
-                self.selectedLines.append(line)
+            if not self.queryCoords:
+                nselected = self.mapInfo.SelectFromTable(layer, self.cat)
 
             panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
             notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
             # notebook body
             border = wx.BoxSizer(wx.VERTICAL)
-            box    = wx.StaticBox (parent=panel, id=wx.ID_ANY,
-                                   label="")
-            boxFont = self.GetFont()
-            boxFont.SetWeight(wx.FONTWEIGHT_BOLD)
-            box.SetFont(boxFont)
-            sizer  = wx.StaticBoxSizer(box, wx.VERTICAL)
-            flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
-            flexSizer.AddGrowableCol(0)
 
-            table = self.mapInfo.layers[layer]["table"]
+            table   = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
-            # columns
-            for name in columns.keys():
-                type  = columns[name][0]
-                value = columns[name][1]
-                if name.lower() == "cat":
-                    box.SetLabel(" %s %s " % (_("Category"), value))
-                    colValue = box
-                else:
-                    colName = wx.StaticText(parent=panel, id=wx.ID_ANY, label=name)
-                    colType = wx.StaticText(parent=panel, id=wx.ID_ANY, label="[" + type.lower() + "]")
-                    delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
+            # value
+            for idx in range(len(columns["cat"][1])):
+                flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
+                flexSizer.AddGrowableCol(0)
+                # columns
+                for name in columns.keys():
+                    type  = columns[name][0]
+                    value = columns[name][1][idx]
+                    if name.lower() == "cat":
+                        box    = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+                                               label=" %s %s " % (_("Category"), value))
+                        boxFont = self.GetFont()
+                        boxFont.SetWeight(wx.FONTWEIGHT_BOLD)
+                        box.SetFont(boxFont)
+                        sizer  = wx.StaticBoxSizer(box, wx.VERTICAL)
+                        colValue = box
+                    else:
+                        colName = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label=name)
+                        colType = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label="[" + type.lower() + "]")
+                        delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
 
-                    colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value, size=(250, -1)) # TODO: validator
-                    colValue.SetName(name)
-                    self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
+                        colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value,
+                                               size=(250, -1)) # TODO: validator
+                        colValue.SetName(name)
+                        self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
 
-                    flexSizer.Add(colName, proportion=0,
-                                  flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                    flexSizer.Add(colType, proportion=0,
-                                  flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                    flexSizer.Add(delimiter, proportion=0,
-                                  flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                    flexSizer.Add(colValue, proportion=0,
-                                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(colName, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(colType, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(delimiter, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(colValue, proportion=0,
+                                      flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
+                    # add widget reference to self.columns
+                    columns[name][2].append(colValue.GetId()) # name, type, values, id
 
-                    sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-                    border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-                    panel.SetSizer(border)
+                # for each attribute (including category) END
+                sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+                border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+            # for each category END
 
-                # add widget reference to self.columns
-                columns[name].append(colValue.GetId())
+            panel.SetSizer(border)
+        # for each layer END
+
+        # set title
+        if (self.action == "add" and selected > 0) or \
+                self.action == "update":
+            self.SetTitle(_("Update attributes"))
+        elif self.action == "add":
+            self.SetTitle(_("Add attributes"))
+        else:
+            self.SetTitle(_("Display attributes"))
 
         # buttons
         btnSizer = wx.StdDialogButtonSizer()
@@ -741,76 +752,88 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def GetSQLString(self):
         """Create SQL statement string based on self.sqlStatement"""
-        for layer in self.mapInfo.layers.keys():
+        sqlCommands = []
+        # find updated values for each layer/category
+        for layer in self.mapInfo.layers.keys(): # for each layer
             table = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
-            cat = columns["cat"][1]
-            # find updated values
-            updatedColumns = []
-            updatedValues = []
-            for name in columns.keys():
-                if name == "cat":
+            for idx in range(len(columns["cat"][1])): # for each category
+                updatedColumns = []
+                updatedValues = []
+                for name in columns.keys():
+                    if name == "cat":
+                        cat = columns[name][1][idx]
+                        continue
+                    type  = columns[name][0]
+                    value = columns[name][1][idx]
+                    id    = columns[name][2][idx]
+                    try:
+                        newvalue = self.FindWindowById(id).GetValue()
+                    except:
+                        newvalue = self.FindWindowById(id).GetLabel()
+                
+                    if newvalue != value:
+                        updatedColumns.append(name)
+                        if type != 'character':
+                            updatedValues.append(newvalue)
+                        else:
+                            updatedValues.append("'" + newvalue + "'")
+
+                if self.action != "add" and len(updatedValues) == 0:
                     continue
-                type, value, id  = columns[name]
-                try:
-                    newvalue = self.FindWindowById(id).GetValue()
-                except:
-                    newvalue = self.FindWindowById(id).GetLabel()
-                if newvalue != value:
-                    updatedColumns.append(name)
-                    if type != 'character':
-                        updatedValues.append(newvalue)
-                    else:
-                        updatedValues.append("'" + newvalue + "'")
 
-            if self.action != "add" and len(updatedValues) == 0:
-                sqlString = ""
-                Debug.msg(3, "DisplayAttributesDialog.GetSQLString(): %s" % sqlString)
-                return sqlString
-
-            if self.action == "add":
-                sqlString = "INSERT INTO %s (cat," % table
-            else:
-                sqlString = "UPDATE %s SET " % table
-
-            for idx in range(len(updatedColumns)):
-                name = updatedColumns[idx]
                 if self.action == "add":
-                    sqlString += name + ","
+                    sqlString = "INSERT INTO %s (cat," % table
                 else:
-                    sqlString += name + "=" + updatedValues[idx] + ","
+                    sqlString = "UPDATE %s SET " % table
 
-            sqlString = sqlString[:-1] # remove last comma
+                for idx in range(len(updatedColumns)):
+                    name = updatedColumns[idx]
+                    if self.action == "add":
+                        sqlString += name + ","
+                    else:
+                        sqlString += name + "=" + updatedValues[idx] + ","
 
-            if self.action == "add":
-                sqlString += ") VALUES (%s," % cat
-                for value in updatedValues:
-                    sqlString += str(value) + ","
                 sqlString = sqlString[:-1] # remove last comma
-                sqlString += ")"
-            else:
-                sqlString += " WHERE cat=%s" % cat
 
-        Debug.msg(3, "DisplayAttributesDialog.GetSQLString(): %s" % sqlString)
-        return sqlString
+                if self.action == "add":
+                    sqlString += ") VALUES (%s," % cat
+                    for value in updatedValues:
+                        sqlString += str(value) + ","
+                    sqlString = sqlString[:-1] # remove last comma
+                    sqlString += ")"
+                else:
+                    sqlString += " WHERE cat=%s" % cat
+                sqlCommands.append(sqlString)
+            # for each category
+        # for each layer END
+
+        Debug.msg(3, "DisplayAttributesDialog.GetSQLString(): %s" % sqlCommands)
+        return sqlCommands
 
     def OnReset(self, event):
         """Reset form"""
         for layer in self.mapInfo.layers.keys():
             table = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
-        for name in columns.keys():
-            type, value, id = columns[name]
-            if name.lower() != "cat":
-                self.FindWindowById(id).SetValue(value)
+            for idx in range(len(columns["cat"][1])):
+                for name in columns.keys():
+                    type  = columns[name][0]
+                    value = columns[name][1][idx]
+                    id    = columns[name][2][idx]
+                    if name.lower() != "cat":
+                        self.FindWindowById(id).SetValue(value)
 
     def OnSubmit(self, event):
         """Submit record"""
-
         self.Close()
 
-class VectorAttributesInfo:
-    """Class providing information about attributes
+    def GetLine(self):
+        """Get id of selected line or 'None' if no line is selected"""
+        return self.line
+
+class VectorAttributeInfo:
+    """Class providing information about attribute tables
     linked to the vector map"""
     def __init__(self, map):
         self.map = map
@@ -818,6 +841,7 @@ class VectorAttributesInfo:
         self.layers = {}
         # {table : [(column name, type, value)]}
         self.tables = {}
+
         if not self.__CheckDBConnection(): # -> self.layers
             return
 
@@ -853,64 +877,78 @@ class VectorAttributesInfo:
                                                "layer=%d" % layer])
             table = self.layers[layer]["table"]
 
-            columns = {} # {name: [type, value]}
+            columns = {} # {name: type, [values], [ids]}
 
             if columnsCommand.returncode == 0:
                 for line in columnsCommand.ReadStdOutput():
                     columnType, columnName = line.split('|')
                     columnType = columnType.lower().strip()
-                    columns[columnName] = [columnType, ""] # default value ("")
+                    columns[columnName] = [columnType, [], []]
             else:
                 pass
 
             self.tables[table] = columns
 
-    def SelectFromTable(self, layer=1, cat=1, queryCoords=None, qdist=1):
+    def SelectByPoint(self, queryCoords, qdist):
+        """Get attributes by coordinates (all available layers)
+
+        Return line id or None if no line is found"""
+        line = None
+        nselected = 0
+        cmdWhat = cmd.Command(cmd=['v.what',
+                                   '-a', '--q',
+                                   'map=%s' % self.map,
+                                   'east_north=%f,%f' % \
+                                       (float(queryCoords[0]), float(queryCoords[1])),
+                                   'distance=%f' % qdist])
+
+        if cmdWhat.returncode == 0:
+            read = False
+            for item in cmdWhat.ReadStdOutput():
+                litem = item.lower()
+                if read:
+                    name, value = item.split(':')
+                    name = name.strip()
+                    # append value to the column
+                    try:
+                        self.tables[table][name][1].append(value.strip())
+                    except:
+                        read = False
+                            
+                if "line:" in litem: # get line id
+                    line = int(item.split(':')[1].strip())
+                elif "key column:" in litem: # start reading attributes
+                    read = True
+                    nselected = nselected + 1
+                elif "layer:" in litem: # get layer id
+                    layer = int(item.split(':')[1].strip())
+                    table = self.layers[layer]["table"] # get table desc
+                    read = False
+
+        return (line, nselected)
+
+    def SelectFromTable(self, layer, cat):
         """Select records from the table
 
-        Based on coordinates or category
+        Return True on success False on error
         """
-        table = self.layers[layer]["table"]
-        selected = 0
-        line = None
-        if queryCoords:
-            # snapping distance
-            cmdWhat = cmd.Command(cmd=['v.what',
-                                       '-a', '-d', '--q',
-                                       'map=%s' % self.map,
-                                       'east_north=%f,%f' % \
-                                       (float(queryCoords[0]), float(queryCoords[1])),
-                                       'distance=%f' % qdist])
+        if layer <= 0:
+            return False
 
-            if cmdWhat.returncode == 0:
-                read = False
-                for item in cmdWhat.ReadStdOutput():
-                    found = True
-                    if read:
-                        name, value = item.split(':')
-                        name = name.strip()
-                        self.tables[table][name][1] = value.strip()
-                        selected+=1;
-                    if "line:" in item.lower():
-                        line = int(item.split(':')[1].strip())
-                    elif "category:" in item.lower():
-                        self.tables[table]["cat"][1] = item.split(':')[1].strip()
-                    elif "key column:" in item.lower():
-                        read = True
-        else:
-            # select values
-            selectCommand = cmd.Command(cmd=["v.db.select", "-v", "--q",
-                                             "map=%s" % self.map,
-                                             "layer=%d" % layer,
-                                             "where=cat=%d" % cat])
-            self.tables[table]["cat"][1] = str(cat)
-            if selectCommand.returncode == 0:
-                for line in selectCommand.ReadStdOutput():
-                    name, value = line.split('|')
-                    self.tables[table][name][1] = value
-                    selected+=1
+        table = self.layers[layer]["table"] # get table desc
+        # select values (only one record)
+        selectCommand = cmd.Command(cmd=["v.db.select", "-v", "--q",
+                                         "map=%s" % self.map,
+                                         "layer=%d" % layer,
+                                         "where=cat=%d" % cat])
 
-        return (line, selected)
+        self.tables[table]["cat"][1] = str(cat)
+        if selectCommand.returncode == 0:
+            for line in selectCommand.ReadStdOutput():
+                name, value = line.split('|')
+                self.tables[table][name][1].append(value)
+
+        return True
 
 def main(argv=None):
     if argv is None:

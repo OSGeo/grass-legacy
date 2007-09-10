@@ -798,9 +798,9 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     }
     else {
 	returnId.push_back(DCid - 2);
-	Cell2Pixel(points->x[Gid-2], points->y[Gid-2], points->z[Gid-2],
+	Cell2Pixel(points->x[Gid-1], points->y[Gid-1], points->z[Gid-1],
 		   &vx, &vy, &vz);
-	wxRect rect (x, y, 0, 0);
+	wxRect rect (vx, vy, 0, 0);
 	dc->SetIdBounds(DCid-2, rect);
     }
 
@@ -810,9 +810,9 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     }
     else {
 	returnId.push_back(DCid + 2);
-	Cell2Pixel(points->x[Gid+2], points->y[Gid+2], points->z[Gid+2],
+	Cell2Pixel(points->x[Gid+1], points->y[Gid+1], points->z[Gid+1],
 		   &vx, &vy, &vz);
-	wxRect rect (x, y, 0, 0);
+	wxRect rect (vx, vy, 0, 0);
 	dc->SetIdBounds(DCid + 2, rect);
     }
 

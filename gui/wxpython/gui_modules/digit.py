@@ -8,8 +8,9 @@ CLASSES:
  * AbstractDisplayDriver
  * PyDisplayDriver
  * CDisplayDriver
- * SettingsDialog
- 
+ * DigitSettingsDialog
+ * DigitCategoryDialog
+
 PURPOSE: Digitization tool wxPython GUI prototype
 
          Note: Initial version under development
@@ -36,6 +37,7 @@ import string
 
 import wx
 import wx.lib.colourselect as csel
+import wx.lib.mixins.listctrl as listmix
 
 import gcmd as cmd
 import dbm
@@ -97,7 +99,7 @@ class AbstractDigit:
             self.settings["lineWidth"] = (2, "screen pixels")
 
             # snapping
-            self.settings["snapping"] = (10, "screen pixels") # value, unit
+            self.settings["snapping"] = (20, "screen pixels") # value, unit
             self.settings["snapToVertex"] = False
 
             # digitize new record
@@ -390,14 +392,25 @@ class AbstractDisplayDriver:
         self.ids         = {}   # dict[g6id] = [pdcId]
         self.selected    = []   # list of selected objects (grassId!)
 
-    def GetThreshold(self):
+    def GetThreshold(self, value=None, units=None):
         """Return threshold in map units"""
-        if self.parent.settings["snapping"][1] == "screen pixels":
+        if not value:
+            value = self.parent.settings["snapping"][0]
+
+        if not units:
+            units = self.parent.settings["snapping"][1]
+
+        if units == "screen pixels":
             # pixel -> cell
-            threshold = self.mapwindow.Distance(beginpt=(0,0),
-                                                endpt=(self.parent.settings["snapping"][0],0))[0]
+            reg = self.mapwindow.Map.region
+            if reg['nsres'] > reg['ewres']:
+                res = reg['nsres']
+            else:
+                res = reg['ewres']
+                
+            threshold = value * res
         else:
-            threshold = Digit.settings["snapping"][0]
+            threshold = value
 
         Debug.msg(4, "AbstractDisplayDriver.GetThreshold(): thresh=%f" % threshold)
         
@@ -1047,9 +1060,11 @@ class DigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
                                          value=str(self.parent.digit.settings["snapping"][0]), min=1, max=1e6)
+        self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
         self.snappingUnit.SetValue(self.parent.digit.settings["snapping"][1])
+        self.snappingUnit.Bind(wx.EVT_COMBOBOX, self.OnChangeSnappingUnits)
         flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
@@ -1058,6 +1073,12 @@ class DigitSettingsDialog(wx.Dialog):
                                       label=_("Snap also to vertex"))
         self.snapVertex.SetValue(self.parent.digit.settings["snapToVertex"])
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
+        self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                          label=_("Snapping threshold is %.1f %s") % \
+                                              (self.parent.digit.threshold,
+                                               self.mapUnits))
+        vertexSizer.Add(item=self.snappingInfo, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
 
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
         sizer.Add(item=vertexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
@@ -1159,6 +1180,33 @@ class DigitSettingsDialog(wx.Dialog):
         """Checkbox 'Add new record' status changed"""
         self.category.SetValue(str(self.parent.digit.SetCategory()))
             
+    def OnChangeSnappingValue(self, event):
+        """Change snapping value - update static text"""
+        value = self.snappingValue.GetValue()
+        threshold = self.parent.digit.driver.GetThreshold(value)
+        self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
+                                       (threshold,
+                                        self.mapUnits))
+
+        event.Skip()
+
+    def OnChangeSnappingUnits(self, event):
+        """Snapping units change -> update static text"""
+        value = self.snappingValue.GetValue()
+        units = self.snappingUnit.GetValue()
+        threshold = self.parent.digit.driver.GetThreshold(value, units)
+
+        if units == "map units":
+            self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
+                                           (value,
+                                            self.mapUnits))
+        else:
+            self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
+                                           (threshold,
+                                            self.mapUnits))
+            
+        event.Skip()
+
     def OnOK(self, event):
         """Button 'OK' clicked"""
         self.UpdateSettings()
@@ -1207,3 +1255,131 @@ class DigitSettingsDialog(wx.Dialog):
         # redraw map if auto-rendering is enabled
         if self.parent.autoRender.GetValue(): 
             self.parent.ReRender(None)
+
+class DigitCategoryDialog(wx.Dialog):
+    """
+    Dialog used to display/modify categories of vector objects
+    """
+    def __init__(self, parent, title,
+                 map, queryCoords, qdist,
+                 pos=wx.DefaultPosition,
+                 style=wx.DEFAULT_DIALOG_STYLE):
+        # map name
+        self.map = map
+
+        # line id (if not found remains 'None')
+        self.line = None
+
+        # {layer: [categories]}
+        self.cats = {}
+
+        # do not display dialog if no line is found
+        if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
+            Debug.msg(3, "DigitCategoryDialog(): nothing found!")
+            return
+
+        Debug.msg(3, "DigitCategoryDialog(): line=%d, cats=%s" % \
+                      (self.line, self.cats))
+
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+
+        self.parent = parent # mapdisplay.BufferedWindow class instance
+
+        # list
+        listSizer = wx.BoxSizer(wx.VERTICAL)
+        self.list = CategoryListCtrl(parent=self, id=wx.ID_ANY,
+                                     style=wx.LC_REPORT |
+                                     wx.BORDER_NONE |
+                                     wx.LC_SORT_ASCENDING)
+        listSizer.Add(item=self.list, proportion=1, flag=wx.EXPAND)
+
+        # buttons
+        btnApply = wx.Button(self, wx.ID_APPLY, _("Apply") )
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnOk = wx.Button(self, wx.ID_OK, _("OK") )
+        btnOk.SetDefault()
+
+        # bindigs
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+
+        # sizers
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(btnCancel)
+        btnSizer.AddButton(btnApply)
+        btnSizer.AddButton(btnOk)
+        btnSizer.Realize()
+        
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        mainSizer.Add(item=listSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+
+    def __GetCategories(self, coords, qdist):
+        """Get layer/category pairs for all available
+        layers
+
+        Return True line found or False if not found"""
+        
+        cmdWhat = cmd.Command(cmd=['v.what',
+                                   '--q',
+                                   'map=%s' % self.map,
+                                   'east_north=%f,%f' % \
+                                       (float(coords[0]), float(coords[1])),
+                                   'distance=%f' % qdist])
+
+        if cmdWhat.returncode != 0:
+            return False
+
+        for item in cmdWhat.ReadStdOutput():
+            litem = item.lower()
+            if "line:" in litem: # get line id
+                self.line = int(item.split(':')[1].strip())
+            elif "layer:" in litem: # add layer
+                layer = int(item.split(':')[1].strip())
+                if layer not in self.cats.keys():
+                    self.cats[layer] = []
+            elif "category:" in litem: # add category
+                self.cats[layer].append(int(item.split(':')[1].strip()))
+
+        return True
+
+    def OnApply(self, event):
+        """Apply button clicked"""
+        self.Close()
+
+    def OnOK(self, event):
+        """OK button clicked"""
+        self.Close()
+
+    def GetLine(self):
+        """Get id of selected line of 'None' if no line is selected"""
+        return self.line
+
+class CategoryListCtrl(wx.ListCtrl,
+                       listmix.ListCtrlAutoWidthMixin,
+                       listmix.TextEditMixin):
+    """List of layers/categories"""
+
+    def __init__(self, parent, id, pos=wx.DefaultPosition,
+                 size=wx.DefaultSize, style=0):
+
+        wx.ListCtrl.__init__(self, parent, id, pos, size, style)
+
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        self.Populate()
+        listmix.TextEditMixin.__init__(self)
+
+    def Populate(self):
+        """Populate the list"""
+        self.InsertColumn(0, _("Layer"))
+        self.InsertColumn(1, _("Category"))
+
+        self.SetColumnWidth(0, 100)
+        self.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+
+        self.currentItem = 0
