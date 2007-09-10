@@ -64,6 +64,7 @@ import defaultfont as defaultfont
 import histogram as histogram
 import profile as profile
 from digit import Digit as Digit
+from digit import DigitCategoryDialog as DigitCategoryDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -476,7 +477,7 @@ class BufferedWindow(wx.Window):
         return img
 
 
-    def UpdateMap(self, render=True):
+    def UpdateMap(self, render=True, renderVector=True):
         """
         Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
@@ -518,7 +519,7 @@ class BufferedWindow(wx.Window):
         # render vector map layer 
         #
         digitToolbar = self.parent.digittoolbar
-        if digitToolbar and \
+        if renderVector and digitToolbar and \
                 digitToolbar.layerSelectedID != None:
             # set region
             self.parent.digit.driver.UpdateRegion()
@@ -575,12 +576,6 @@ class BufferedWindow(wx.Window):
             self.parent.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
                                                 (self.Map.region["rows"], self.Map.region["cols"],
                                                  self.Map.region["nsres"], self.Map.region["ewres"]), 1)
-        #         self.parent.statusbar.SetStatusText("Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
-        #                                             "Res:%.2f(NS),%.2f(EW)" %
-        #                                             (self.Map.region["w"], self.Map.region["e"],
-        #                                              self.Map.region["n"], self.Map.region["s"],
-        #                                              self.Map.region["nsres"], self.Map.region["ewres"]),
-        #                                             0)
 
         return True
 
@@ -875,38 +870,54 @@ class BufferedWindow(wx.Window):
                     self.pdcVector.SetPen(self.polypen)
             elif digitToolbar.action == "splitLine":
                 pass
-            elif digitToolbar.action == "displayAttributes":
+            elif digitToolbar.action in ["displayAttributes", "displayCategories"]:
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
-                # select attributes based on coordinates (all layers)
-                updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                              layer=-1, queryCoords=(east, north),
-                                                              qdist=qdist,
-                                                              pos=posWindow,
-                                                              action="update")
-                if not updateRecordDlg.mapInfo and \
-                       self.parent.digit.settings["addRecord"]:
+                redraw = False
+                if digitToolbar.action == "displayAttributes":
+                    # select attributes based on coordinates (all layers)
                     updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                  layer=-1,
                                                                   queryCoords=(east, north),
                                                                   qdist=qdist,
                                                                   pos=posWindow,
-                                                                  action="add")
-                if updateRecordDlg.mapInfo:
-                    # highlight feature & re-draw map
-                    self.parent.digit.driver.SetSelected(updateRecordDlg.selectedLines)
-                    self.UpdateMap(render=False)
+                                                                  action="update")
+                    if updateRecordDlg.mapInfo and \
+                            updateRecordDlg.GetLine():
+                        # highlight feature & re-draw map
+                        self.parent.digit.driver.SetSelected([updateRecordDlg.GetLine()])
+                        self.UpdateMap(render=False)
+                        redraw = True
+                        if updateRecordDlg.ShowModal() == wx.ID_OK:
+                            sqlCommands = updateRecordDlg.GetSQLString()
+                            if len(sqlCommands) > 0:
+                                sqlfile = tempfile.NamedTemporaryFile(mode="w")
+                                for sql in sqlCommands:
+                                    sqlfile.file.write(sql + ";\n")
+                                sqlfile.file.flush()
+                                executeCommand = cmd.Command(cmd=["db.execute",
+                                                                  "--q",
+                                                                  "input=%s" % sqlfile.name])
+                else: # displayCategories
+                    categoryDlg = DigitCategoryDialog(parent=self,
+                                                      map=map,
+                                                      queryCoords=(east, north),
+                                                      qdist=qdist,
+                                                      pos=posWindow,
+                                                      title=_("Display categories"))
 
-                    if updateRecordDlg.ShowModal() == wx.ID_OK:
-                        sqlfile = tempfile.NamedTemporaryFile(mode="w")
-                        sqlfile.file.write(updateRecordDlg.GetSQLString())
-                        sqlfile.file.flush()
-                        executeCommand = cmd.Command(cmd=["db.execute",
-                                                          "--q",
-                                                          "input=%s" % sqlfile.name])
-                    # unselect & re-draw
+                    if categoryDlg.GetLine():
+                        # highlight feature & re-draw map
+                        self.parent.digit.driver.SetSelected([categoryDlg.GetLine()])
+                        self.UpdateMap(render=False)
+                        redraw = True
+
+                        if categoryDlg.ShowModal() == wx.ID_OK:
+                            pass
+                # unselect & re-draw
+                if redraw:
                     # PyDisplayDriver: Digit.driver.SetSelected([])
                     self.parent.digit.driver.Unselect()
                     self.UpdateMap(render=False)
+
         else:
             # get decoration id
             self.lastpos = self.mouse['begin']
@@ -982,7 +993,8 @@ class BufferedWindow(wx.Window):
                         else:
                             # -> move vertex
                             self.moveIds = driver.GetSelectedVertex(pos1)
-
+                else:
+                    self.UpdateMap(render=False, renderVector=False)
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
                 self.parent.digit.driver.SelectLinesByPoint(pos1, onlyType="line")
                 self.UpdateMap(render=False)
@@ -1228,16 +1240,16 @@ class BufferedWindow(wx.Window):
 
                         # draw polyline
                         self.pdcVector.TranslateId(self.moveIds[0], dx, dy)
-                        self.pdcVector.RemoveId(self.moveIds[0])
-                        self.pdcVector.RemoveId(self.moveIds[-1])
-                        self.pdcVector.RemoveId(self.moveIds[-2])
+                        #self.pdcVector.RemoveId(self.moveIds[0])
+                        #self.pdcVector.RemoveId(self.moveIds[-1])
+                        #self.pdcVector.RemoveId(self.moveIds[-2])
                         self.polycoords = []
-                        if self.moveIds[-2] > 0: # left line
+                        if self.moveIds[1] > 0: # left vertex
                             x1, y1 = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
                             self.polycoords.append((x1, y1))
                         x2, y2 = self.mouse['end']
                         self.polycoords.append((x2, y2))
-                        if self.moveIds[-1] > 0: # right line
+                        if self.moveIds[2] > 0: # right line
                             x3, y3 = self.pdcVector.GetIdBounds(self.moveIds[2])[0:2]
                             self.polycoords.append((x3, y3))
 

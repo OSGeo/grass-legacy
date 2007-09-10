@@ -54,8 +54,8 @@ class AbstractToolbar:
 
         if label:
             tool = toolbar.AddLabelTool(wx.ID_ANY, label, bitmap,
-                                             bmpDisabled, kind,
-                                             shortHelp, longHelp)
+                                        bmpDisabled, kind,
+                                        shortHelp, longHelp)
             parent.Bind(wx.EVT_TOOL, handler, tool)
         else: # add separator
             toolbar.AddSeparator()
@@ -353,9 +353,7 @@ class DigitToolbar(AbstractToolbar):
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnExit (self, event):
-        """
-        Quit digitization tool
-        """
+        """Quit digitization tool"""
         # stop editing of the currently selected map layer
         try:
             self.StopEditing(self.layers[self.layerSelectedID])
@@ -366,48 +364,61 @@ class DigitToolbar(AbstractToolbar):
         self.parent.RemoveToolbar ("digit")
 
     def OnMoveVertex(self, event):
+        """Move line vertex"""
         Debug.msg(2, "Digittoolbar.OnMoveVertex():")
         self.action = "moveVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnAddVertex(self, event):
+        """Add line vertex"""
         Debug.msg(2, "Digittoolbar.OnAddVertex():")
         self.action = "addVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
 
     def OnRemoveVertex(self, event):
+        """Remove line vertex"""
         Debug.msg(2, "Digittoolbar.OnRemoveVertex():")
         self.action = "removeVertex"
         self.parent.MapWindow.mouse['box'] = 'point'
 
 
     def OnSplitLine(self, event):
+        """Split line"""
         Debug.msg(2, "Digittoolbar.OnSplitLine():")
         self.action = "splitLine"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnEditLine(self, event):
+        """Edit line"""
         pass
 
     def OnMoveLine(self, event):
+        """Move line"""
         Debug.msg(2, "Digittoolbar.OnMoveLine():")
         self.action = "moveLine"
         self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnDeleteLine(self, event):
+        """Delete line"""
         Debug.msg(2, "Digittoolbar.OnDeleteLine():")
         self.action = "deleteLine"
         self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnDisplayCats(self, event):
-        pass
+        """Display/update categories"""
+        Debug.msg(2, "Digittoolbar.OnDisplayCats():")
+        self.action="displayCategories"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnDisplayAttr(self, event):
-        self.action="displayAttributes"
+        """Display/update attributes"""
         Debug.msg(2, "Digittoolbar.OnDisplayAttr():")
+        self.action="displayAttributes"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnCopyCats(self, event):
+        """Copy categories"""
         pass
 
     def OnSettings(self, event):
