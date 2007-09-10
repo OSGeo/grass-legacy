@@ -343,7 +343,7 @@ proc GmDnviz::makescript { w } {
     if { $outfile == ""} {
         tk_messageBox -type ok -icon warning -parent $w \
 		    -message [G_msg "You must specify an output file"] \
-		    -title [G_msg "No output file specified"]
+		    -title [G_msg "No output file speci fied"]
         return
     }    
     
@@ -357,8 +357,8 @@ proc GmDnviz::makescript { w } {
     }    
         
     
-    set cmd [list "d.nviz" " input=$inmap" " output=$outfile" " name=$prefix" " route=$pathcoords" \
-        " dist=$layback" " ht=$height" " frames=$frames" " start=$startframe"]    
+    set cmd "d.nviz input=$inmap output=$outfile name=$prefix route=$pathcoords \
+         dist=$layback ht=$height frames=$frames start=$startframe"   
 
 
     if { $vrender == 1 } { lappend cmd " -e" }
@@ -368,11 +368,11 @@ proc GmDnviz::makescript { w } {
     if { $keyframe == 1 } { lappend cmd " -k" }
     if { $overwrite == 1 } { lappend cmd " --o" }
 	
-
+    run_panel $cmd
     
-    if {[catch {eval [list exec -- $cmd]} error]} {
-        Gm::errmsg $error
-	}
+#     if {[catch {eval [list exec -- $cmd]} error]} {
+#         Gm::errmsg $error
+# 	}
     
 
     # delete rules file and close popup window when finished
