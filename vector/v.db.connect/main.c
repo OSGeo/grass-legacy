@@ -72,12 +72,12 @@ int main (int argc, char **argv)
 
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = _("Print current map connection parameters and exit");
+    print->description       = _("Print all map connection parameters and exit");
 
     shell_print = G_define_flag();
     shell_print->key               = 'g';
-    shell_print->label       = _("Print current map connection parameters and exit "
-				 "(shell script style)");
+    shell_print->label       = _("Print all map connection parameters and exit "
+				 "in shell script style");
     shell_print->description = _("Format: layer[/layer name] table key database driver");
 
     columns = G_define_flag();
