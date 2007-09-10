@@ -187,6 +187,8 @@ set descmenu [subst  {
 	{separator}
 	{command {[G_msg "Georectify"]} {} "Georectify raster map in XY location" {} -command { GRMap::startup }}
 	{separator}
+	{command {[G_msg "Animate raster maps"]} {} "Display a series of raster maps as an animation" {} -command { GmAnim::main }}
+	{separator}
 	{command {[G_msg "Bearing/distance to coordinates"]} {} "m.cogo: Convert between bearing/distance and coordinates" {} -command { execute m.cogo }}
 	{separator}
 	{cascad {[G_msg "3D rendering"]} {} "" $tmenu {
