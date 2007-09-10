@@ -29,5 +29,6 @@ package ifneeded GisM 1.0 [list tclPkgSetup $dir GisM 1.0 {
 	{georect.tcl source {GRMap::startup}}
 	{georecttool.tcl source {GRToolBar::create}}
 	{rules.tcl source {GmRules::main}}
-
+	{dnviz.tcl source {GmDnviz::main}}
+	{animate.tcl source {GmAnim::main}}
 }]
