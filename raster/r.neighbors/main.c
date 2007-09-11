@@ -130,7 +130,6 @@ int main (int argc, char *argv[])
 	parm.size->key        = "size" ;
 	parm.size->type       = TYPE_INTEGER ;
 	parm.size->required   = NO ;
-	parm.size->options    = "1,3,5,7,9,11,13,15,17,19,21,23,25" ;
 	parm.size->description= _("Neighborhood size") ;
 	parm.size->answer     = "3";
 
@@ -163,6 +162,13 @@ int main (int argc, char *argv[])
 
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
+
+	sscanf(parm.size->answer, "%d", &ncb.nsize);
+	if (ncb.nsize <= 0)
+		G_fatal_error(_("neighborhood size must be positive"));
+	if (ncb.nsize % 2 == 0)
+		G_fatal_error(_("neighborhood size must be odd"));
+	ncb.dist = ncb.nsize/2;
 
 	if (parm.weight->answer && flag.circle->answer)
 		G_fatal_error(_("weight= and -c are mutually exclusive"));
@@ -224,10 +230,6 @@ int main (int argc, char *argv[])
 		copycolr = (G_read_colors (ncb.oldcell.name, ncb.oldcell.mapset, &colr) > 0);
 		G_suppress_warnings (0);
 	}
-
-	/* get the neighborhood size */
-	sscanf (parm.size->answer, "%d", &ncb.nsize);
-	ncb.dist = ncb.nsize/2;
 
 	/* read the weights */
 	if (parm.weight->answer)
