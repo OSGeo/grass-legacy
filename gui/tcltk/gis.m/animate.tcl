@@ -42,6 +42,7 @@ namespace eval GmAnim {
     variable nframes
     global loop
     global swing
+    global anim_prog; # increments progress bar
     variable shownames
      
     variable ncols 
@@ -51,6 +52,9 @@ namespace eval GmAnim {
     variable vcols 
     variable vrows 
     variable vscale
+    variable vres
+    variable oldres1
+    variable oldres2
     variable pic_array 
     variable vfiles 
     variable label_pos
@@ -102,6 +106,7 @@ proc GmAnim::cmd_rewind {} {
     set step 0
     set stop 1
     set rewind 1
+    GmAnim::do_run
 }
 
 proc GmAnim::cmd_rplay {} {
@@ -110,7 +115,9 @@ proc GmAnim::cmd_rplay {} {
     variable direction 
     variable currframe 
     variable prevframe
+    global anim_prog
     
+    set anim_prog 0
     set step 0
     set stop 0
     set direction -1
@@ -122,10 +129,14 @@ proc GmAnim::cmd_stepb {} {
     variable direction 
     variable currframe 
     variable prevframe
+    variable nframes
+    variable anim_prog
     
+    if {$currframe == $nframes } {set anim_prog 0}
     set step 1
     set direction -1
     set currframe [expr $prevframe + $direction]
+    GmAnim::do_run
 }
 
 proc GmAnim::cmd_stop {} {
@@ -138,10 +149,13 @@ proc GmAnim::cmd_stepf {} {
     variable direction 
     variable currframe 
     variable prevframe
+    variable anim_prog    
     
+    if {$currframe == 1 } {set anim_prog 0}
     set step 1
     set direction 1
     set currframe [expr $prevframe + $direction]
+    GmAnim::do_run
 }
 
 proc GmAnim::cmd_play {} {
@@ -150,7 +164,9 @@ proc GmAnim::cmd_play {} {
     variable direction 
     variable currframe 
     variable prevframe
+    global anim_prog
     
+    set anim_prog 0
     set step 0
     set stop 0
     set direction 1
@@ -207,6 +223,7 @@ proc GmAnim::cmd_exit {} {
     variable numframes
     variable vfiles
     variable pic_array
+    global anim_prog
     
     # close all windows and delete temporary image file
     catch {if { [winfo exists .animwin] } { destroy .animwin }}
@@ -216,6 +233,7 @@ proc GmAnim::cmd_exit {} {
     set numframes 0
     if {[array exists vfiles]} {array unset vfiles}
     if {[array exists pic_array]} {array unset pic_array }
+    set anim_prog 0
 
 }
 
@@ -479,7 +497,7 @@ proc GmAnim::sel_maps {} {
 
     set row [ frame $mapswin.buttons ]
     Button $row.a -text [G_msg "OK"] -width 8 -bd 1 \
-    	-command "GmAnim::create_viewlist 1" 
+    	-command "GmAnim::create_viewlist 1" -default active
     Button $row.b -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .animmaps_win"
     Button $row.c -text [G_msg "Apply"] -width 8 -bd 1 \
@@ -538,14 +556,17 @@ proc GmAnim::parse_viewmaps {viewlist} {
     variable numframes
     variable first
     variable pic_array
+    global anim_prog
 
     # Reset variables
     set numviews 1
     set numframes 0
     if {[array exists vfiles]} {array unset vfiles}
     if {[array exists pic_array]} {array unset pic_array }
+    set anim_prog 0
 
-    set allmaps [exec g.list rast | grep -v {^raster files available} | grep -v {^---}]    
+    set allmaps [exec g.list rast | grep -v {^raster files available} | grep -v {^---}]  
+    incr anim_prog
 
     foreach view $viewlist {
         if {![regexp -- {^view([1-4])=(.*)$} $view dummy num val]} {
@@ -566,10 +587,12 @@ proc GmAnim::parse_viewmaps {viewlist} {
         set numframes [llength $maps]
         
         incr numviews
+        incr anim_prog
         update
     }
     
     set first 1
+    GmAnim::do_run
         
 }
 
@@ -594,6 +617,7 @@ proc GmAnim::do_run {} {
     variable flabel 
     variable anim_can
     variable cnt
+    global anim_prog
     
 
     if {$first} {
@@ -608,6 +632,7 @@ proc GmAnim::do_run {} {
         set currframe  1
         set direction 1
         set step      1
+        set anim_prog 0
     }
 
     if {$stop == 1 && $step == 0} {
@@ -616,16 +641,24 @@ proc GmAnim::do_run {} {
 
     if {$swing} {
         if {$currframe == $nframes } {
+            set anim_prog 100
             set direction -1
+            set anim_prog 0
         } elseif { $currframe == 1} {
+            set anim_prog 100
             set direction 1
+            set anim_prog 0
         }
         #incr currframe $direction
     } elseif {$loop} {
         if {$currframe == $nframes} {
+            set anim_prog 100
             set currframe 1
+            set anim_prog 0
         } 
     } elseif {$currframe == $nframes || $currframe == 1} {
+        if {$currframe == $nframes && $direction == 1} {set anim_prog 100}
+        if {$currframe == 1 && $direction == -1} {set anim_prog 100}
     	set stop 1
     }
 
@@ -656,6 +689,7 @@ proc GmAnim::do_run {} {
     }
 
     incr currframe $direction
+    incr anim_prog
 
     if {$step} {
         set step 0
@@ -683,6 +717,8 @@ proc GmAnim::load_files {} {
     variable border
     variable anim_can
     variable cnt
+    global anim_prog
+    global devnull
     
     for {set cnt 0} {$cnt < $numframes} {incr cnt} {
         set img [image create photo -width $ncols -height $nrows]
@@ -708,7 +744,7 @@ proc GmAnim::load_files {} {
             set name [lindex $vfiles($vnum) $cnt]
     
 #            catch {exec r.out.ppm input=$name output=- 2>@stderr | pnmscale $vscale >$tmpfile 2>@stderr}
-            catch {exec r.out.ppm input=$name output=- 2>@stderr >$tmpfile 2>@stderr}
+            catch {exec r.out.ppm input=$name output=- >$tmpfile 2> $devnull}
             set subimg [image create photo -file $tmpfile]
             file delete $tmpfile
     
@@ -716,12 +752,14 @@ proc GmAnim::load_files {} {
                 -to $vxoff $vyoff [expr $vxoff + $vcols] [expr $vyoff + $vrows]
     
             image delete $subimg
+            incr anim_prog
         }
     
         $anim_can delete all
         $anim_can create image 0 0 -anchor nw -image $img
         set flabel [expr $cnt + 1]
         update
+        incr anim_prog
     }
 
     return $cnt
@@ -729,14 +767,41 @@ proc GmAnim::load_files {} {
 
 ########################################################
 proc GmAnim::cmd_idle {} {
+    # timer - iterates through animation if stop=0 at 
+    # intervals set by "speed"
+    variable stop
     variable speed
+    variable step
     
-    GmAnim::do_run
+    if { !$stop && !$step } {GmAnim::do_run}
     after $speed GmAnim::cmd_idle
 }
 
 ########################################################
+proc GmAnim::set_res { switch } {
+    # set region to new temp resolution for pnm scaling if switch=1
+    # reset region to original resolution if switch = 0
+    
+    variable vres
+    variable oldres1
+    variable oldres2
+    
+    if { $switch == 0 } {
+        if {[catch [exec g.region nsres=$oldres1 ewres=$oldres2] error]} {
+            Gm::errmsg $error
+        }
+    } elseif { $switch == 1 } {
+        if {[catch [exec g.region res=$vres] error]} {
+            Gm::errmsg $error
+        }    
+    }
+
+}
+
+########################################################
 proc GmAnim::main {} {
+    # main window for displaying and controling animation
+    
     variable numframes 
     variable numviews
     variable ncols 
@@ -746,37 +811,34 @@ proc GmAnim::main {} {
     variable vcols 
     variable vrows 
     variable vscale
+    variable vres
+    variable oldres1
+    variable oldres2
     variable border
     variable speed 
     variable direction 
     variable shownames
     variable anim_can
+    global anim_prog
 
-    set region [exec g.region -p]
-
-    regexp {rows: *([0-9]+)} $region dummy vrows
-    regexp {cols: *([0-9]+)} $region dummy vcols
-    regexp {nsres: *([0-9]+)} $region dummy vres1
-    regexp {ewres: *([0-9]+)} $region dummy vres2
+    # set initial canvas geometry to match region
     
-    set vres [expr $vres1 > $vres2 ? $vres1 : $vres2]
-   # puts "vres = $vres"
-   # puts "numviews = $numviews"
+    if {[catch {set region [exec g.region -ugp]} error]} {
+        Gm::errmsg $error
+    }
 
+    regexp {nsres= *([0-9]+)} $region dummy oldres1
+    regexp {ewres= *([0-9]+)} $region dummy oldres2
+    regexp {rows= *([0-9]+)} $region dummy vrows
+    regexp {cols= *([0-9]+)} $region dummy vcols
+    
+    set vres [expr $oldres1 > $oldres2 ? $oldres1 : $oldres2]
     set nrows $vrows
     set ncols $vcols
 
     # short dimension
-    upvar 0 [expr {$nrows > $ncols ? "ncols" : "nrows"}] sdim
+    set sdim [expr {$nrows > $ncols ? "ncols" : "nrows"}] 
 
-    # these proportions should work fine for 1 or 4 views, but for
-    # 2 views, want to double the narrow dim & for 3 views triple it
-
-    if {$numviews == 2} {
-    	set sdim [expr $sdim * 2]
-    } elseif {$numviews == 3} {
-    	set sdim [expr $sdim * 3]
-    }
 
     set longdim [expr $nrows > $ncols ? $nrows : $ncols]
     set scale 1.0
@@ -795,18 +857,31 @@ proc GmAnim::main {} {
     	set scale [expr 1.0 * $min / $longdim]
     }
 
-    set vscale $scale
+    set res_scale [expr 1.0/ $scale]
 
-    if {$numviews == 4} {
-    	set vscale [expr $scale / 2.0]
-    }
-
+    # set nrows & ncols to the size of the combined - views image
     set nrows [expr int($nrows * $scale)]
     set ncols [expr int($ncols * $scale)]
-    # now nrows & ncols are the size of the combined - views image
-    set vrows [expr int($vrows * $vscale)]
-    set vcols [expr int($vcols * $vscale)]
-    # now vrows & vcols are the size for each sub-image
+
+
+    # these proportions should work fine for 1 or 4 views, but for
+    # 2 views, want to double the narrow dim & for 3 views triple it
+
+#     if {$numviews == 2} {
+#     	set sdim [expr $sdim * 2]
+#     } elseif {$numviews == 3} {
+#     	set sdim [expr $sdim * 3]
+#     }
+# 
+# 
+#     if {$numviews == 4} {
+#     	set vscale [expr $scale / 2.0]
+#     }
+# 
+#     # set vrows & vcols to the size for each sub-image   
+#     set vrows [expr int($vrows * $vscale)]
+#     set vcols [expr int($vcols * $vscale)]
+    
 
     # add to nrows & ncols for borders
     # irows, icols used for vert/horizontal determination in loop below
@@ -816,13 +891,13 @@ proc GmAnim::main {} {
     set nrows [expr int($nrows + (1 + ($nrows/$vrows)) * $border)]
     set ncols [expr int($ncols + (1 + ($ncols/$vcols)) * $border)]
 
-    if {$ncols > $nrows} {
-        set w $ncols
-        set h [expr $nrows + 60]
-    } else {
-        set w [expr $ncols + 80]
-        set h $nrows
-    }
+#     if {$ncols > $nrows} {
+#         set w $ncols
+#         set h [expr $nrows + 60]
+#     } else {
+#         set w [expr $ncols + 80]
+#         set h $nrows
+#     }
 
     #puts "nrows, ncols, vrows, vcols = $nrows, $ncols, $vrows, $vcols"
 
@@ -832,7 +907,9 @@ proc GmAnim::main {} {
 
 	set anim_fr [MainFrame .animwin.mf \
 			-textvariable GmAnim::msg \
-			-progressvar drawprog -progressmax 100 -progresstype incremental]
+			-progressvar anim_prog -progressmax 100 -progresstype incremental]
+			
+	$anim_fr showstatusbar progression
 
 	set mf_frame [$anim_fr getframe]
 
@@ -849,9 +926,9 @@ proc GmAnim::main {} {
 	place $anim_can -in $mf_frame -x 0 -y 0 -anchor nw
 	pack $anim_can -fill both -expand yes
 
-	# indicator creation
-	set anim_ind [$anim_fr addindicator -textvariable animstatus \
-		-width 33 -justify left -padx 5 -bg white]
+#   indicator creation
+# 	set anim_ind [$anim_fr addindicator -textvariable animstatus \
+# 		-width 33 -justify left -padx 5 -bg white]
 
 	pack $anim_fr -fill both -expand yes
 	
