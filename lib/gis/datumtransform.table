@@ -52,6 +52,7 @@ hermannskogel "towgs84=426.9,142.6,460.1,4.91,4.49,-12.42,17.1" "Slovenia" " "
 S-42    "towgs84=24.9,-126.4,-93.2,-0.063,-0.247,-0.041,1.01" "Germany (Mecklenburg-Vorpommern & Sachsen-Anhalt)" "Accuracy <1m"
 S-42    "towgs84=33.4,-146.6,-76.3,-0.359,-0.053,0.844,-0.84" "Poland" " "
 # NIMA document TR8350.2
+# http://earth-info.nga.mil/GandG/publications/tr8350.2/tr8350_2.html
 S-42    "towgs84=24,-130,-92" "Albania" " "
 S-42    "towgs84=28,-121,-77" "Hungary" " "
 S-42    "towgs84=15,-130,-84" "Kazakhstan" " "
