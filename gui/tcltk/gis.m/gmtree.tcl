@@ -973,7 +973,7 @@ proc GmTree::load { lpth } {
 				set current_node [$tree($mon) parent $current_node]
 			}
 			default {
-				if {[catch {GmTree::node_type $current_node}] error } {
+				if {[catch {GmTree::node_type $current_node} error]} {
 					Gm::errmsg $error [G_msg [format "Could not open %s - bad file format" $fpath]]
 					break
 				} else {
