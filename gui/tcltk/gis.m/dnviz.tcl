@@ -221,12 +221,18 @@ proc GmDnviz::main { mapcan mon } {
     pack $row -side top -fill x -expand no
     
     set row [ frame $dnviz_win.buttons ]
+    Button $row.d -text [G_msg "Reset"] -width 8 -bd 1 \
+    	-command "GmDnviz::reset_points $mon %W" \
+    	-helptext [G_msg "Clear all path coordinates"]
+    pack $row.d -side left -padx 5 -fill none -expand no -anchor w
     Button $row.a -text [G_msg "OK"] -width 8 -bd 1 \
-    	-command "GmDnviz::makescript %W"
+    	-command "GmDnviz::makescript %W 1" -default active
     Button $row.b -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .dnvizPopup"
-    pack $row.a $row.b -side right -padx 5
-    pack $row -side bottom -pady 3 -padx 5 -expand 0 -fill none -anchor e
+    Button $row.c -text [G_msg "Apply"] -width 8 -bd 1 \
+    	-command "GmDnviz::makescript %W 0"
+    pack $row.a $row.b $row.c -side right -padx 5 -expand no -anchor e
+    pack $row -side bottom -pady 3 -padx 5 -expand yes -fill none
 
 	bind .dnvizPopup <Destroy> "GmDnviz::cleanup $mon %W"    
 
@@ -313,8 +319,22 @@ proc GmDnviz::cleanup { mon w } {
 
 ###############################################################################
 
+# cleanup procedure when window closed
+proc GmDnviz::reset_points { mon w } {
+    variable pathcoords
+    variable coord_entry
+
+	set pathcoords ""
+    $coord_entry delete 0 end
+
+    MapCanvas::request_redraw $mon 0
+
+}
+
+###############################################################################
+
 # Run d.nviz to create flythrough path script
-proc GmDnviz::makescript { w } {
+proc GmDnviz::makescript { w quit } {
     variable inmap
     variable outfile
     variable pathcoords
@@ -370,13 +390,10 @@ proc GmDnviz::makescript { w } {
 	
     run_panel $cmd
     
-#     if {[catch {eval [list exec -- $cmd]} error]} {
-#         Gm::errmsg $error
-# 	}
-    
-
-    # delete rules file and close popup window when finished
-    destroy .dnvizPopup
+    # delete rules file and close popup window if OK pressed
+    if { $quit == 1 } {
+        destroy .dnvizPopup
+    }
 
 }
 
