@@ -56,29 +56,25 @@
 #%end
 
 do_list() {
-    list=""
-    for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -vi "mapset"`
-    do
-        if [ ! "$search" ] ; then
-    	list="$list $i"
-        else
-    	list="$list `echo $i | grep \"$search\"`"
-        fi
-    done
-
-    if [ ! "$list" ] ; then
-	return
+    if [ ! "$search" ] ; then
+	search="."
     fi
-
-    sorted_list=`echo "$list" | tr ' ' '\n' | sort | tr '\n' ' '`
 
     if [ $GIS_FLAG_M -eq 1 ] ; then
 	MAPSET="@$mapset"
     else
 	MAPSET=""
     fi
-    i=""
-    for i in $sorted_list
+
+    g.list type=$type mapset=$mapset \
+	| grep -v '^-\+$' \
+	| grep -v "files available" \
+	| grep -vi "mapset" \
+	| sed 's/  */\n/g' \
+	| grep -v '^$' \
+	| grep "$search" \
+	| sort \
+	| while read i
     do
         if [ "$start" ] ; then
 	    if [ -z "$sep" ] ; then
