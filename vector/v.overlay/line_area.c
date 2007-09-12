@@ -61,9 +61,11 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     OCats = Vect_new_cats_struct();
     db_init_string (&stmt);
 
-    G_message(SEP );
-    G_message(_("Breaking lines ...") );
-    Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
+    G_message(_("Breaking lines...") );
+    if (G_verbose() > G_verbose_min())
+	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
+    else
+	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, NULL );
 
     /* Basic topology needed only */
     Vect_build_partial ( Out, GV_BUILD_BASE, NULL );
@@ -113,13 +115,15 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	
 	G_debug (3, "line = %d", line );
 
-	point_area(&(In[1]), field[1], (Points->x[0]+Points->x[1])/2, (Points->y[0]+Points->y[1])/2, ACats);
+	point_area(&(In[1]), field[1], (Points->x[0]+Points->x[1])/2,
+		   (Points->y[0]+Points->y[1])/2, ACats);
 
 	if ( (ACats->n_cats > 0 && operator == OP_AND) || (ACats->n_cats == 0 && operator == OP_NOT)  ) {
 	    int i;
 	    
 	    /* Point is inside */
-	    G_debug (3, "  OK, write line, line ncats = %d area ncats = %d", Cats->n_cats, ACats->n_cats );
+	    G_debug (3, "OK, write line, line ncats = %d area ncats = %d",
+		     Cats->n_cats, ACats->n_cats );
 	    
 	    Vect_reset_cats ( OCats );
 
@@ -147,7 +151,7 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			    if (  attr[0].columns ) {
 				at = find_attr( &(attr[0]), Cats->cat[i] );
 				if ( !at )
-				    G_fatal_error ("Attribute not found");
+				    G_fatal_error (_("Attribute not found"));
 
 				if ( at->values )
 				    db_append_string ( &stmt, at->values );
@@ -171,7 +175,7 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			    if (  attr[1].columns ) {
 				at = find_attr( &(attr[1]), ACats->cat[j] );
 				if ( !at )
-				    G_fatal_error ("Attribute not found");
+				    G_fatal_error (_("Attribute not found"));
 
 				if ( at->values )
 				    db_append_string ( &stmt, at->values );
@@ -195,7 +199,8 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			G_debug ( 3, db_get_string ( &stmt ) );
 
 			if (db_execute_immediate (driver, &stmt) != DB_OK )
-			    G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+			    G_warning (_("Unable to insert new record: '%s'"),
+				       db_get_string ( &stmt ) );
 		    }
 
 		    ncat++;
@@ -223,4 +228,3 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 
     return 0;
 }
-

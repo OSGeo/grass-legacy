@@ -28,6 +28,13 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     dbString stmt;
     int    nmodif;
 
+    FILE *output;
+
+    if (G_verbose() > G_verbose_min())
+	output = stderr;
+    else
+	output = NULL;
+
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
@@ -35,27 +42,23 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
      * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
      * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
     do {
-	G_message(SEP );
-	G_message(_( "Breaking lines ...") );
-	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
+	G_message(_( "Breaking lines...") );
+	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, output );
 
 	/* Probably not necessary for LINE x AREA */
-	G_message(SEP );
-	G_message(_("Removing duplicates ...") );
-	Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, stderr );
+	G_message(_("Removing duplicates...") );
+	Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, output );
 
-	G_message(SEP );
-	G_message(_("Cleaning boundaries at nodes ...") );
-	nmodif = Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, stderr );
+	G_message(_("Cleaning boundaries at nodes...") );
+	nmodif = Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, output );
     } while ( nmodif > 0 );
 
     /* ?: May be result of Vect_break_lines() + Vect_remove_duplicates() any dangle or bridge?
      * In that case, calls to Vect_remove_dangles() and Vect_remove_bridges() would be also necessary */
     
     /* Attach islands */
-    G_message(SEP );
-    G_message(_("Attaching islands ...") );
-    Vect_build_partial ( Out, GV_BUILD_ATTACH_ISLES, stderr );
+    G_message(_("Attaching islands...") );
+    Vect_build_partial ( Out, GV_BUILD_ATTACH_ISLES, output );
 
 
     /* Calculate new centroids for all areas */
@@ -65,7 +68,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     for ( area = 1; area <= nareas; area++ ) { 
 	ret = Vect_get_point_in_area ( Out, area, &(Centr[area].x), &(Centr[area].y) );
 	if ( ret < 0 ) {
-	    G_warning ("Cannot calculate area centroid" );
+	    G_warning (_("Cannot calculate area centroid"));
 	    Centr[area].valid = 0;
 	} else {
 	    Centr[area].valid = 1;
@@ -74,8 +77,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     
     /* Query input maps */
     for ( input = 0; input < 2; input++ ) {
-        G_message(SEP );
-	G_message(_("Querying input '%s' ... "), Vect_get_full_name(&(In[input])) );
+	G_message(_("Querying vector map <%s>..."),
+		  Vect_get_full_name(&(In[input])) );
 
 	for ( area = 1; area <= nareas; area++ ) {
 	    Centr[area].cat[input] = Vect_new_cats_struct();
@@ -96,7 +99,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			    /* Mark as used */
 			    at = find_attr( &(attr[input]), Cats->cat[i] );
 			    if ( !at )
-				G_fatal_error ("Attribute not found");
+				G_fatal_error (_("Attribute not found"));
 				
 			    at->used = 1;
 			}
@@ -107,8 +110,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	}
     }
 
-    G_message(SEP );
-    G_message(_("Writing centroids ...") );
+    G_message(_("Writing centroids...") );
     
     db_init_string (&stmt);
     out_cat = 1;
@@ -118,17 +120,21 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	/* check the condition */
         switch (operator) {
 	    case OP_AND:
-		if ( !( Centr[area].cat[0]->n_cats > 0 && Centr[area].cat[1]->n_cats > 0 ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 && Centr[area].cat[1]->n_cats > 0 ) )
+		    continue;
 		break;
 	    case OP_OR:
-		if ( !( Centr[area].cat[0]->n_cats > 0 || Centr[area].cat[1]->n_cats > 0 ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 || Centr[area].cat[1]->n_cats > 0 ) )
+		    continue;
 		break;
 	    case OP_NOT:
-		if ( !( Centr[area].cat[0]->n_cats > 0 && !(Centr[area].cat[1]->n_cats > 0) ) ) continue;
+		if ( !( Centr[area].cat[0]->n_cats > 0 && !(Centr[area].cat[1]->n_cats > 0) ) )
+		    continue;
 		break;
 	    case OP_XOR:
 		if ( (Centr[area].cat[0]->n_cats > 0 && Centr[area].cat[1]->n_cats > 0) ||
-		     ( !(Centr[area].cat[0]->n_cats > 0) && !(Centr[area].cat[1]->n_cats > 0) ) ) continue;
+		     ( !(Centr[area].cat[0]->n_cats > 0) && !(Centr[area].cat[1]->n_cats > 0) ) ) 
+		    continue;
 		break;
 	}
 	
@@ -141,10 +147,12 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	for ( i = -1; i < Centr[area].cat[0]->n_cats; i++ ) {
 	    int j;
 	    
-	    if ( i == -1 && Centr[area].cat[0]->n_cats > 0 ) continue; /* no need to make null */
+	    if ( i == -1 && Centr[area].cat[0]->n_cats > 0 )
+		continue; /* no need to make null */
 
 	    for ( j = -1; j < Centr[area].cat[1]->n_cats; j++ ) {
-		if ( j == -1 && Centr[area].cat[1]->n_cats > 0 ) continue; /* no need to make null */
+		if ( j == -1 && Centr[area].cat[1]->n_cats > 0 )
+		    continue; /* no need to make null */
 
 		if ( ofield[0] > 0 ) 
 		    Vect_cat_set (Cats, ofield[0], out_cat);
@@ -161,7 +169,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			if (  attr[0].columns ) {
 			    at = find_attr( &(attr[0]), Centr[area].cat[0]->cat[i] );
 			    if ( !at )
-				G_fatal_error ("Attribute not found");
+				G_fatal_error (_("Attribute not found"));
 
 			    if ( at->values )
 				db_append_string ( &stmt, at->values );
@@ -185,7 +193,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			if (  attr[1].columns ) {
 			    at = find_attr( &(attr[1]), Centr[area].cat[1]->cat[j] );
 			    if ( !at )
-				G_fatal_error ("Attribute not found");
+				G_fatal_error (_("Attribute not found"));
 
 			    if ( at->values )
 				db_append_string ( &stmt, at->values );
@@ -209,7 +217,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 		    G_debug ( 3, db_get_string ( &stmt ) );
 
 		    if (db_execute_immediate (driver, &stmt) != DB_OK )
-		    	G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+		    	G_warning (_("Unable to insert new record: '%s'"),
+				   db_get_string ( &stmt ) );
 		}
 		out_cat++;
 	    }
@@ -234,9 +243,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     }
 
     /* Build topology and remove boundaries with area without centroid on both sides */
-    G_message( SEP );
-    G_message(_("Attaching centroids ...") );
-    Vect_build_partial ( Out, GV_BUILD_ALL, stderr );
+    G_message(_("Attaching centroids...") );
+    Vect_build_partial ( Out, GV_BUILD_ALL, output );
 
     /* Create a list of lines to be deleted */
     nlines = Vect_get_num_lines ( Out );
@@ -283,4 +291,3 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 
     return 0;
 }
-
