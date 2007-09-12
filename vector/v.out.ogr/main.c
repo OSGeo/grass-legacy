@@ -49,6 +49,7 @@ main (int argc, char *argv[])
     char   key1[200], key2[200];
     struct Key_Value *projinfo, *projunits;
     struct Cell_head cellhd;
+    char   **tokens;
 
     /* Vector */
     struct Map_info In;
@@ -97,17 +98,15 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->description = _("OGR output datasource name. For example:\n"
-			   "\t\tESRI Shapefile: filename or directory for storage\n"
-			   "\t\tMapInfo File: filename or directory for storage");
+    dsn_opt->label = _("OGR output datasource name");
+    dsn_opt->description = _("For example: ESRI Shapefile: filename or directory for storage");
 
     layer_opt = G_define_option();
     layer_opt->key = "olayer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
-    layer_opt->description = _("OGR layer name. If not specified, input name is used.\n"
-			   "\t\tESRI Shapefile: shapefile name\n"
-			   "\t\tMapInfo File: mapinfo file name");
+    layer_opt->label = _("OGR layer name. If not specified, input name is used.");
+    layer_opt->description = _("For example: ESRI Shapefile: shapefile name");
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -124,7 +123,7 @@ main (int argc, char *argv[])
     dsco->key         = "dsco";
     dsco->type        = TYPE_STRING;
     dsco->required    = NO;
-    dsco->multiple    = NO;
+    dsco->multiple    = YES;
     dsco->answer      = "";
     dsco->description = _("OGR dataset creation option (format specific, NAME=VALUE)");
     
@@ -132,7 +131,7 @@ main (int argc, char *argv[])
     lco->key          = "lco";
     lco->type         = TYPE_STRING;
     lco->required     = NO;
-    lco->multiple     = NO;
+    lco->multiple     = YES;
     lco->answer       = "";
     lco->description  = _("OGR layer creation option (format specific, NAME=VALUE)");
     
@@ -143,7 +142,8 @@ main (int argc, char *argv[])
 
     esristyle = G_define_flag();
     esristyle->key = 'e';
-    esristyle->description = _("Use ESRI-style .prj file format (applies to SHAPE output only)");
+    esristyle->description = _("Use ESRI-style .prj file format "
+			       "(applies to Shapefile output only)");
 
     poly_flag = G_define_flag();
     poly_flag->key = 'p';
@@ -193,6 +193,13 @@ main (int argc, char *argv[])
     Vect_set_open_level (2); 
     Vect_open_old (&In, in_opt->answer, mapset); 
 
+    /* check if the map is 3d */
+    if (Vect_is_3d(&In)) {
+	G_warning (_("Vector map <%s> is 3D. "
+		     "Please check layer creation options (parameter 'lco')."),
+		   in_opt->answer);
+    }
+
     /* fetch PROJ info */
     G_get_default_window(&cellhd);
     if( cellhd.proj == PROJECTION_XY )
@@ -223,12 +230,32 @@ main (int argc, char *argv[])
     }
     if ( drn == -1 ) G_fatal_error ( _("Driver %s not found"), frmt_opt->answer ); 
     Ogr_driver = OGRGetDriver( drn );
-    papszDSCO = CSLSetNameValue( papszDSCO, dsco->answer,"YES");
+
+    /* parse dataset creation options */
+    i = 0;
+    while (dsco->answers[i]) {
+	tokens = G_tokenize(dsco->answers[i], "=");
+	if (G_number_of_tokens(tokens))
+	    papszLCO = CSLSetNameValue(papszDSCO, tokens[0], tokens[1]);
+	G_free_tokens(tokens);
+	i++;
+    }
+
+    papszDSCO = dsco->answers;
     Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, papszDSCO );
     CSLDestroy( papszDSCO );
     if ( Ogr_ds == NULL ) G_fatal_error (_("Cannot open OGR data source '%s'"), dsn_opt->answer);
-    
-    papszLCO = CSLSetNameValue( papszLCO, lco->answer,"YES");
+
+    /* parse layer creation options */
+    i = 0;
+    while (lco->answers[i]) {
+	tokens = G_tokenize(lco->answers[i], "=");
+	if (G_number_of_tokens(tokens))
+	    papszLCO = CSLSetNameValue(papszLCO, tokens[0], tokens[1]);
+	G_free_tokens(tokens);
+	i++;
+    }
+
     Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, papszLCO );
     CSLDestroy( papszLCO );
     if ( Ogr_layer == NULL ) G_fatal_error (_("Cannot create layer"));
