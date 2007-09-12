@@ -74,18 +74,7 @@ do_list() {
 	| grep -v '^$' \
 	| grep "$search" \
 	| sort \
-	| while read i
-    do
-        if [ "$start" ] ; then
-	    if [ -z "$sep" ] ; then
-		echo
-	    else
-		echo -n "$sep"
-	    fi
-        fi
-        start=1
-        echo -n "$i$MAPSET"
-    done
+	| sed -e "s/$/$MAPSET/"
 }
 
 
@@ -140,10 +129,14 @@ fi
 for mapset in $mapsets
 do
     do_list
-done
-
-# print newline
-echo ""
+done | (
+	    if [ "$sep" != "" ] ; then
+		tr '\n' "$sep" | sed 's/.$//'
+		echo ""
+	    else
+		cat
+	    fi
+	)
 
 exit 0
 
