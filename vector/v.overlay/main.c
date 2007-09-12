@@ -32,7 +32,8 @@ main (int argc, char *argv[])
     char   *mapset[2];
     char   *pre[2];
     struct GModule *module;
-    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *ofield_opt, *operator_opt;
+    struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2],
+      *ofield_opt, *operator_opt;
     struct Flag *table_flag;
     struct Map_info In[2], Out;
     struct line_pnts *Points;
@@ -52,7 +53,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, geometry");
-    module->description = "Overlay 2 vector maps.";
+    module->description = _("Overlays two vector maps.");
 
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
     in_opt[0]->key = "ainput";
@@ -85,30 +86,37 @@ main (int argc, char *argv[])
     operator_opt->multiple = NO;
     operator_opt->options = "and,or,not,xor";
     operator_opt->answer = "or";
-    operator_opt->description = "Operator defines features written to output vector. "
-	"Feature is written to output if the result of operation 'ainput operator binput' is true. "
-	"Input feature is considered to be true, if category of given layer is defined.\n"
-	"\t and : also known as 'intersection' in GIS\n"
-	"\t or  : also known as 'union' in GIS (only for atype=area)\n"
-	"\t not : features from ainput not overlayed by features from binput\n"
-	"\t xor : features from either ainput or binput but not those from ainput overlayed by binput "
-	"\t       (only for atype=area)";
+    operator_opt->label = _("Operator defines features written to "
+			    "output vector map");
+    operator_opt->description = _("Feature is written to output if the result "
+				  "of operation 'ainput operator binput' is true. "
+				  "Input feature is considered to be true, if "
+				  "category of given layer is defined.");
+    operator_opt->descriptions = _("and;also known as 'intersection' in GIS;"
+				   "or;also known as 'union' in GIS (only for atype=area);"
+				   "not;features from ainput not overlayed by features "
+				   "from binput;"
+				   "xor;features from either ainput or binput but "
+				   "not those from ainput overlayed by binput (only "
+				   "for atype=area)");
     
     ofield_opt = G_define_standard_option(G_OPT_V_FIELD);
     ofield_opt->key = "olayer";
     ofield_opt->multiple = YES;
     ofield_opt->answer = "1,0,0";
-    ofield_opt->description = "Output layer for new category, ainput and binput. If 0 or not given, "
-	                      "the category is not written.";
+    ofield_opt->label  = _("Output layer for new category, ainput and binput");
+    ofield_opt->description = _("If 0 or not given, "
+				"the category is not written");
 
     table_flag = G_define_flag ();
     table_flag->key             = 't';
-    table_flag->description     = "Do not create attribute table.";
+    table_flag->description     = _("Do not create attribute table");
 
-    if (G_parser (argc, argv)) exit(EXIT_FAILURE);
+    if (G_parser (argc, argv))
+      exit(EXIT_FAILURE);
 
     for ( input = 0; input < 2; input++ ) {
-        type[input] = Vect_option_to_types ( type_opt[input] );
+	type[input] = Vect_option_to_types ( type_opt[input] );
 	field[input] = atoi(field_opt[input]->answer);
     }
 
@@ -124,9 +132,11 @@ main (int argc, char *argv[])
     else if ( operator_opt->answer[0] == 'n' ) operator = OP_NOT;
     else if ( operator_opt->answer[0] == 'x' ) operator = OP_XOR;
 
-    /* OP_OR, OP_XOR is not supported for lines, mostly because I'am not sure if they make enouhg sense */
+    /* OP_OR, OP_XOR is not supported for lines,
+       mostly because I'am not sure if they make enouhg sense */
     if ( type[0] == GV_LINE && (operator == OP_OR || operator == OP_XOR) )
-	G_fatal_error ( "Operator '%s' is not supported for type line.",  operator_opt->answer );
+	G_fatal_error (_("Operator '%s' is not supported for type line"), 
+		       operator_opt->answer );
 
     Vect_check_input_output_name ( in_opt[0]->answer, out_opt->answer, GV_FATAL_EXIT );
     Vect_check_input_output_name ( in_opt[1]->answer, out_opt->answer, GV_FATAL_EXIT );
@@ -135,7 +145,7 @@ main (int argc, char *argv[])
     Cats = Vect_new_cats_struct();
 
     /* Open output */
-    Vect_open_new (&Out, out_opt->answer, 0);
+    Vect_open_new (&Out, out_opt->answer, WITHOUT_Z);
     Vect_set_map_name ( &Out, "Output from v.overlay");
     Vect_set_person ( &Out, G_whoami ());
     Vect_hist_command ( &Out );
@@ -151,13 +161,12 @@ main (int argc, char *argv[])
 
     /* Open database */
     if ( ofield[0] > 0 && !(table_flag->answer) ) {
-	G_message(SEP );
-	
 	db_init_string (&stmt);
 	driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database, &Out) );
 	if ( driver == NULL ) {
 	    Vect_close (&Out);
-	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	    G_fatal_error (_("Unable to open database <%s> by driver <%s>"),
+			   Fi->database, Fi->driver );
 	}
 	db_begin_transaction ( driver );
     } else {
@@ -168,10 +177,12 @@ main (int argc, char *argv[])
     for ( input = 0; input < 2; input++ ) {
 	int ncats, index;
 	
-	G_message(_("Copying %s input lines ... "), pre[input]);
+	G_message(_("Copying vector objects from vector map <%s>..."),
+		  in_opt[input]->answer);
 
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
-	    G_fatal_error ("Could not find vector '%s'", in_opt[input]->answer);
+	    G_fatal_error (_("Vector map <%s> not found"),
+			   in_opt[input]->answer);
 	}
 
 	Vect_set_open_level (2);
@@ -197,8 +208,11 @@ main (int argc, char *argv[])
 
 	/* Allocate attributes */
 	attr[input].n = 0;
+	/* this may be more than necessary */
 	attr[input].attr = (ATTR *) G_calloc ( Vect_cidx_get_type_count( &(In[input]), 
-		            field[input], type[input]) , sizeof(ATTR) ); /* this may be more than necessary */
+									 field[input],
+									 type[input]),
+					       sizeof(ATTR) ); 
 
 	index = Vect_cidx_get_field_index (  &(In[input]), field[input] );
 
@@ -219,7 +233,7 @@ main (int argc, char *argv[])
 
 	G_debug ( 3, "%d cats read from index", attr[input].n );
 
-        G_message(_("Collecting input attributes ..."));
+        G_message(_("Collecting input attributes..."));
 
 	attr[input].null_values = NULL;
 	attr[input].columns = NULL;
@@ -237,20 +251,22 @@ main (int argc, char *argv[])
 
 	    inFi = Vect_get_field ( &(In[input]), field[input] );
 	    if (!inFi ) {
-		G_warning ( "Database connection not defined for layer %d", field[input]);
+		G_warning (_("Database connection not defined for layer %d"),
+			   field[input]);
 		continue;
 	    }
 
 	    in_driver = db_start_driver_open_database ( inFi->driver, inFi->database );
 	    if ( in_driver == NULL ) {
-		G_fatal_error ( "Cannot open database %s by driver %s", inFi->database, inFi->driver );
+		G_fatal_error (_("Unable to open database <%s> by driver <%s>"),
+				 inFi->database, inFi->driver );
 	    }
 
 	    sprintf ( buf, "select * from %s", inFi->table );
 	    db_set_string( &sql, buf );
 
 	    if ( db_open_select_cursor( in_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK )
-		G_fatal_error ( "Cannot select attributes");
+		G_fatal_error (_("Unable to select attributes"));
 
 	    Table = db_get_cursor_table (&cursor);
 	    ncol = db_get_table_number_of_columns(Table);
@@ -298,7 +314,8 @@ main (int argc, char *argv[])
 			db_append_string ( &col_defs, "datetime");
 			break;
 		    default:
-			G_warning ( "Unknown column type (%s)", db_get_column_name (Column));
+			G_warning (_("Unknown column type '%s'"),
+				   db_get_column_name (Column));
 			sprintf (buf, "varchar(250)" );
 		}
 	    }
@@ -310,7 +327,7 @@ main (int argc, char *argv[])
 	       ATTR *at;
 
 	       if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-		   G_fatal_error ("Cannot fetch data");
+		   G_fatal_error (_("Unable to fetch data from table"));
 
 	       if (!more) break;
 
@@ -333,7 +350,8 @@ main (int argc, char *argv[])
 
 		   db_convert_value_to_string( Value, sqltype, &value_string);
 		   
-		   G_debug ( 3, "%d: %s : %s", i, db_get_column_name (Column), db_get_string(&value_string));
+		   G_debug ( 3, "%d: %s : %s", i, db_get_column_name (Column),
+			     db_get_string(&value_string));
 
 		   switch ( ctype ) {
 			case DB_C_TYPE_STRING:
@@ -355,7 +373,8 @@ main (int argc, char *argv[])
 			    }
 			    break;
 			default:
-			    G_warning ( "Unknown column type (%s), values lost", db_get_column_name (Column) );
+			    G_warning (_("Unknown column type '%s' values lost"),
+				       db_get_column_name (Column) );
 			    db_append_string ( &sql, "null" );
 		   }
 	       }
@@ -373,8 +392,6 @@ main (int argc, char *argv[])
 	
 	    db_close_database_shutdown_driver ( in_driver );
 	}
-	
-        G_message(SEP );
     }
 
     if ( driver ) {
@@ -402,20 +419,21 @@ main (int argc, char *argv[])
 	if (db_execute_immediate (driver, &stmt) != DB_OK ) { 
 	    Vect_close (&Out);
 	    db_close_database_shutdown_driver ( driver );
-	    G_fatal_error ( "Cannot create table: %s", db_get_string (&stmt) );
+	    G_fatal_error (_("Unable to create table: '%s'"),
+			     db_get_string (&stmt) );
 	}
 
 	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	    G_warning ( "Cannot create index" );
+	    G_warning (_("Unable to create index"));
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+	    G_fatal_error (_("Unable to grant privileges on table <%s>"), Fi->table );
 
 	/* Table created, now we can write dblink */
 	Vect_map_add_dblink ( &Out, ofield[0], NULL, Fi->table, "cat", Fi->database, Fi->driver);
     }
 
-    G_message(_("Building partial topology ...") );
+    G_message(_("Building partial topology...") );
     /* do not print output, because befor cleaning it is nonsense */
     Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
@@ -426,10 +444,13 @@ main (int argc, char *argv[])
 	line_area ( In, field, &Out, Fi, driver, operator, ofield, attr );
     }
 
-    G_message(SEP );
-    G_message(_("Rebuilding topology ...") );
+    G_message(_("Rebuilding topology..."));
     Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
-    Vect_build (&Out, stderr); /* Build topology to show the final result and prepare for Vect_close() */
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&Out, stderr);
+    else
+	Vect_build (&Out, NULL);
+/* Build topology to show the final result and prepare for Vect_close() */
 
     if ( driver ) {
         /* Close table */
@@ -445,7 +466,3 @@ main (int argc, char *argv[])
 
     exit (EXIT_SUCCESS);
 }
-
-
-
-

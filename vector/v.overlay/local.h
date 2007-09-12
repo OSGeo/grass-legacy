@@ -3,8 +3,6 @@
 #define OP_NOT 2
 #define OP_XOR 3
 
-#define SEP "-----------------------------------------------------------------------------\n"
-
 /* Categories */
 typedef struct {
     double x, y;
