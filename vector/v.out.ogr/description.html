@@ -5,9 +5,6 @@
 OGR (Simple Features Library) is part of the 
 <a href="http://www.gdal.org">GDAL</a> library, so you need to
 install gdal to use <em>v.out.ogr</em>. 
-<br>
-To export areas with holes into, e.g., a SHAPE file, while keeping the 
-holes as holes, the flag <em>-c</em> has to be used.
 
 <h3>Supported OGR Vector Formats</h3>
 
@@ -24,31 +21,41 @@ holes as holes, the flag <em>-c</em> has to be used.
 For further available drivers go 
 <a href="http://www.gdal.org/ogr/ogr_formats.html">here</a>.
 
+<h2>NOTES</h2>
+
+To export areas with holes into, e.g., a Shapefile, while keeping the 
+holes as holes, the flag <em>-c</em> has to be used.
+
 
 <h2>EXAMPLES</h2>
 
-<h3>Export to SHAPE</h3>
+<h3>Export to Shapefile</h3>
 
-Export lines from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files): <br>
+Export lines from GRASS vector map to Shapefile format (generates /tmp/testogr.shp and related files):
 <div class="code"><pre>
 v.out.ogr input=multi type=line dsn=/tmp olayer=testogr 
 </pre></div>
 
-Export areas from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files): <br>
+Export areas from GRASS vector map to Shapefile format (generates /tmp/testogr.shp and related files):
 <div class="code"><pre>
 v.out.ogr input=multi type=area dsn=/tmp olayer=testogr 
 </pre></div>
 
+Export 3D lines from GRASS vector map to Shapefile format:
+<div class="code"><pre>
+v.out.ogr input=lines_3d type=line dsn=/tmp olayer=testogr lco="SHPT=ARCZ"
+</pre></div>
+
 <h3>Export to GML</h3>
 
-Export lines from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'): <br>
+Export lines from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
 <div class="code"><pre>
 v.out.ogr input=multi type=line dsn=/tmp/testogr.gml olayer=testogr format=GML 
 </pre></div>
 
 <h3>Export to PostgreSQL/PostGIS</h3>
 
-Export areas from GRASS vector map directly to PostGIS: <br>
+Export areas from GRASS vector map directly to PostGIS:
 <div class="code"><pre>
 v.out.ogr input=polygons type=area \
           dsn="PG:host=localhost dbname=postgis user=postgres" \
@@ -73,11 +80,11 @@ documentation
 
 <h2>SEE ALSO</h2>
 
-<em><A HREF="v.external.html">v.external</A></em>,
-<em><a HREF="v.in.ogr.html">v.in.ogr</a></em>
+<A HREF="v.external.html">v.external</A>,
+<a HREF="v.in.ogr.html">v.in.ogr</a>
 
 <h2>AUTHORS</h2>
 
 Radim Blazek, ITC-Irst, Trento, Italy<br>
-Some contributions: Markus Neteler
+Some contributions: Markus Neteler, Martin Landa
 <p><i>Last changed: $Date$</i></p>
