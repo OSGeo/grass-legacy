@@ -103,9 +103,9 @@ proc GmToolBar2::create { tb } {
     # 3D AND ANIMATION
     set bbox4 [ButtonBox $toolbar.bbox4 -spacing 0 ]
 
-    # xganim
+    # animate
     $bbox4 add -image [image create photo -file "$iconpath/module-xganim.gif"] \
-        -command "Gm::xganim" \
+        -command "GmAnim::main" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1\
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Animate raster map series"]
