@@ -582,11 +582,13 @@ proc GmAnim::parse_viewmaps {viewlist} {
 
         foreach group $groups {
             set series [split $group {[-]}]
-            set first [lindex $series 1]
-            set last [lindex $series 2]
+            set start [lindex $series 1]
+            set end [lindex $series 2]
+            if {$start == ""} {set first 1}
+            if {$end == ""} {set last $first}
             for {set mapnum $first} {$mapnum < [expr $last+1]} {incr mapnum} {
                 set map [lindex $series 0]
-                append map $mapnum
+                if {$start != ""} {append map $mapnum}
                 lappend maps $map
             }            
             
