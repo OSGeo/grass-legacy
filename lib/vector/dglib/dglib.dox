@@ -238,6 +238,35 @@ dglib/example folder contains some good examples which work only on
 graph (I mean graph is required to be input). They are easy and almost
 self explanatory once you know what API are for.
 
+\section functions Functions
+
+(yet incomplete, all functions need to be doxygenized...)
+
+dglNodeGet_Id()
+
+dglGet_NodeAttrSize()
+
+dglNodeGet_Attr()
+
+dglNodeSet_Attr()
+
+dglInitialize()
+
+dglFlatten()
+
+dglAddEdge()
+
+dglGetNode()
+
+dglShortestPath()
+
+dglShortestDistance()
+
+dglEdgeGet_Id()
+
+dglEdgeGet_Cost()
+
+dglFreeSPReport()
 
 \section contacts Contacts
 
