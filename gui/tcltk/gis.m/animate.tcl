@@ -20,18 +20,16 @@
 
 namespace eval GmAnim {
 
-    variable view1;     #maps to animate in frame 1
-    variable view2;     #maps to animate in frame 2
-    variable view3;     #maps to animate in frame 3
-    variable view4;     #maps to animate in frame 4
-    
+    variable view1;     # maps to animate in frame 1
+    variable view2;     # maps to animate in frame 2
+    variable view3;     # maps to animate in frame 3
+    variable view4;     # maps to animate in frame 4
     variable first;     # first time animation is run (0 1)
     variable cnt;       # number of maps to animate
     variable tmpfile;   # temp file for storing images
-    variable border
     variable numviews;  # number of animation views to show (1-4)
     variable numframes; # number of individual frames in an animation
-    variable flabel
+    variable vframes;   # array holding number of frames in each view
     variable step;      # turn frame by frame step on (step=1) or off (step=0)
     variable speed;     # set delay between display of each animation frame
     variable stop;      # stop continuous animation play (stop=1)
@@ -49,17 +47,17 @@ namespace eval GmAnim {
     variable vcols;     # columns in view window 
     variable vrows;     # rows in view window
     variable pnmres;    # resolution needed in region to create pnm file of proper size
-    variable vres;      #base region resolution; modify to change pnm image size
-    variable oldres1
-    variable oldres2
-    variable pic_array 
-    variable vfiles 
+    variable vres;      # base region resolution; modify to change pnm image size
+    variable oldres1;   # nsres for current region
+    variable oldres2;   # ewres for current region
+    variable pic_array; # array holding all rendered images 
+    variable vfiles;    # array holding list of all maps for each view 
     variable label_pos
-    variable tmpfile 
-    variable border
-    variable anim_can
+    variable border;    # border separating views in multiview window
+    variable anim_can;  # TclTk canvas where animation is drawn
     variable cb_loop;   # control button for looping
     variable cb_swing;  # control button for swing
+    variable minframes; # minimum number of frames among all views; animation must stop at this number
 
     global loop;
     global swing;
@@ -68,8 +66,6 @@ namespace eval GmAnim {
     set border    2
     set cnt       0
     set numviews  1
-    set numframes 0
-    set flabel    0
     set first     0
     set step      0
     set speed     100
@@ -244,7 +240,6 @@ proc GmAnim::make_buttons {anim_tb} {
     global iconpath
     global loop 
     global swing 
-    variable flabel
     variable cb_loop
     variable cb_swing
     
@@ -514,6 +509,7 @@ proc GmAnim::sel_maps {} {
 ########################################################
 
 proc GmAnim::create_viewlist { closeval } {
+    # Create a list of the entries for each view
     variable view1
     variable view2
     variable view3
@@ -553,9 +549,11 @@ proc GmAnim::create_viewlist { closeval } {
 ########################################################
 
 proc GmAnim::parse_viewmaps {viewlist} {
+    # create lists of maps for each view and calculate frames for each fiew
     variable vfiles 
     variable numviews 
     variable numframes
+    variable vframes
     variable first
     variable pic_array
     variable scale
@@ -572,6 +570,7 @@ proc GmAnim::parse_viewmaps {viewlist} {
     set numviews 0
     set numframes 0
     if {[array exists vfiles]} {array unset vfiles}
+    if {[array exists vframes]} {array unset vframes}
     if {[array exists pic_array]} {array unset pic_array }
     set anim_prog 0
 
@@ -585,7 +584,7 @@ proc GmAnim::parse_viewmaps {viewlist} {
             set series [split $group {[-]}]
             set first [lindex $series 1]
             set last [lindex $series 2]
-            for {set mapnum $first} {$mapnum < $last} {incr mapnum} {
+            for {set mapnum $first} {$mapnum < [expr $last+1]} {incr mapnum} {
                 set map [lindex $series 0]
                 append map $mapnum
                 lappend maps $map
@@ -594,19 +593,14 @@ proc GmAnim::parse_viewmaps {viewlist} {
         }
                 
         set vfiles($numviews) $maps
-        set numframes [llength $maps]
+        set vframes($numviews) [llength $maps]
+        if {$numframes < $vframes($numviews)} {set numframes $vframes($numviews)}
         
         incr numviews
         incr anim_prog
         update
     }
-    
-
-    # these proportions should work fine for 1 or 4 views, but for
-    # 2 views, want to double the narrow dim & for 3 views triple it
-
-    
-    
+        
     set first 1
     GmAnim::do_run
         
@@ -614,6 +608,7 @@ proc GmAnim::parse_viewmaps {viewlist} {
 
 ########################################################
 proc GmAnim::do_run {} {
+    # procedure that displays maps in an animation and controls the animation
     global loop 
     global swing 
     global anim_prog
@@ -631,11 +626,11 @@ proc GmAnim::do_run {} {
     variable prevframe 
     variable direction 
     variable speed
-    variable flabel 
     variable anim_can
     variable cnt
     
-
+    # if the animation is just starting, then first export the maps to PPM
+    # files and create img files for displaying in the canvas
     if {$first} {
         set first 0
         set step 1
@@ -670,7 +665,6 @@ proc GmAnim::do_run {} {
             set direction 1
             set anim_prog 0
         }
-        #incr currframe $direction
     } elseif {$loop} {
         if {$currframe == $nframes} {
             set anim_prog 100
@@ -678,14 +672,14 @@ proc GmAnim::do_run {} {
             set anim_prog 0
         } 
     } elseif {$currframe == $nframes || $currframe == 1} {
+        # If we've reached the beginning or the end, then stop the animation
         if {$currframe == $nframes && $direction == 1} {set anim_prog 100}
         if {$currframe == 1 && $direction == -1} {set anim_prog 100}
     	set stop 1
     }
 
-
+    # This is the main loop for displaying animation images and labels
     if {$currframe <= $nframes && $currframe >= 1} {
-        # This is the main loop for displaying animation images
         $anim_can delete all
         $anim_can create image 0 0 -anchor nw -image $pic_array($currframe)
     
@@ -703,9 +697,7 @@ proc GmAnim::do_run {} {
                 $anim_can create text $x $y -text $s -fill $fg
             }
         }
-    
-        set flabel [expr $currframe + 1]
-    
+        
         set prevframe $currframe
     }
 
@@ -720,9 +712,10 @@ proc GmAnim::do_run {} {
 
 ########################################################
 proc GmAnim::load_files {} {
-    # exports maps to ppm and displays them in a TclTk canvas
+    # exports maps to ppm and creates array of images to display in canvas
     
     variable numframes 
+    variable vframes
     variable numviews
     variable ncols 
     variable nrows 
@@ -738,6 +731,7 @@ proc GmAnim::load_files {} {
     variable border
     variable anim_can
     variable cnt
+    variable minframes
     global anim_prog
     global devnull
 
@@ -752,15 +746,23 @@ proc GmAnim::load_files {} {
         set vcols [expr int($vcols * $scale / 2.0)]
     }
     
+    # create an image or composite image for each frame (use max number of frames from all views)
     for {set cnt 0} {$cnt < $numframes} {incr cnt} {
+        # create the main image that will fill the canvas
+        
         set img [image create photo -width $ncols -height $nrows]
+        
+        # store the image in an array
         set pic_array([expr $cnt + 1]) $img
     
+        # set region resolution to control size of pnm image if needed
         if {$scale != 1.0 || $numviews > 1} {
-             # set resolution to control size of pnm image; create pnm image
             GmAnim::switch_res 1
         }
             
+        # create a subimage for each view shown. For single view animations, the subimage
+        # is the same size as the main image. For multiview animations, the subimage is
+        # 25% of the main image.
         for {set vnum 0} {$vnum < $numviews} {incr vnum} {
             if {$icols == $vcols} {
                 set vxoff $border
@@ -769,40 +771,53 @@ proc GmAnim::load_files {} {
                 set vxoff [expr $icols == $vcols ? $border : $border + $vnum * ($border + $vcols)]
                 set vyoff $border
             } else { # 4 views
+                # set offset for each subimage in multi-image view
                 set vxoff [expr $vnum % 2 ? $border : $vcols + 2 * $border]
                 set vyoff [expr $vnum > 1 ? $vrows + 2 * $border : $border]
             }
     
+            # set label positions
             if {! $cnt} {
                 set label_pos($vnum,0) $vxoff
                 set label_pos($vnum,1) [expr $vyoff + $vrows - 1]
             }
-    
-            set name [lindex $vfiles($vnum) $cnt]
-                        
+            
+            if { $cnt < $vframes($vnum)} {
+                set name [lindex $vfiles($vnum) $cnt]
+            } else { 
+                # if a view has fewer frames than the maximum, just use the 
+                # last frame over again
+                set name [lindex $vfiles($vnum) [expr $vframes($vnum) - 1]]
+            }
+            
+            # export the map to a PPM file            
             if {[catch {exec r.out.ppm input=$name output=$tmpfile --q} error]} {
                 Gm::errmsg $error
                 return -1
             }
             
+            # create the subimage for each view
             set subimg [image create photo -file $tmpfile]
             file delete $tmpfile
     
+            # copy the subimage to the main image, placing it with the offsets as needed
             $img copy $subimg \
                 -to $vxoff $vyoff [expr $vxoff + $vcols] [expr $vyoff + $vrows]
     
+            # delete the subimage
             image delete $subimg
             incr anim_prog
         }
     
+        # reset region to original resolution
         if {$scale != 1.0 || $numviews > 1 } {
-            # reset region to original resolution
             GmAnim::switch_res 0
         }
-        
+         
+        # clear the canvas and display the main image with 1-4 subimages 
         $anim_can delete all
         $anim_can create image 0 0 -anchor nw -image $img
-        set flabel [expr $cnt + 1]
+
         update
         incr anim_prog
     }
@@ -953,7 +968,7 @@ proc GmAnim::main {} {
 	
 	# create animation control buttons
 	GmAnim::make_buttons $anim_tb
-
+	
     # bindings for closing window
 	bind .animwin <Destroy> "GmAnim::cmd_exit"
 
