@@ -19,12 +19,20 @@
 #%End
 
 #%option
-#% key: input
+#% key: dsn
 #% type: string
 #% key_desc : name
 #% gisprompt: old_file,file,input
-#% description: Table to be imported
+#% description: Table file to be imported or DB connection string
 #% required : yes
+#%end
+
+#%option
+#% key: db_table
+#% type: string
+#% key_desc : name
+#% description: Table name of SQL DB table
+#% required : no
 #%end
 
 #%option
@@ -82,7 +90,10 @@ else
 fi
 
 # treat as real vector map...
-v.in.ogr --q "$GIS_OPT_INPUT" out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null
+if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
+  LAYER="layer=$GIS_OPT_DB_TABLE"
+fi
+v.in.ogr --q dsn="$GIS_OPT_DSN" $LAYER out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null
 if [ $? -ne 0 ] ;  then
    g.message -e "Input table <$GIS_OPT_INPUT> not found or not readable"
    exit 1
