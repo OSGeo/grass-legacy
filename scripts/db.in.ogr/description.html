@@ -12,9 +12,27 @@ PostgreSQL, SQLite, MySQL, ODBC, etc.).
 Import of a CSV table file:
 <p>
 <div class="code"><pre>
-db.in.ogr koeppen_gridcode.csv out=koeppen_gridcode
+db.in.ogr dsn=koeppen_gridcode.csv out=koeppen_gridcode
 db.select koeppen_gridcode
 </pre></div>
+
+<p>
+Import of a SQLite table:
+<p>
+<div class="code"><pre>
+db.in.ogr dsn=$HOME/sqlite/sqlite.db db_table=census_raleigh out=census_raleigh
+</pre></div>
+
+<p>
+Import of a PostgreSQL table:
+<p>
+<div class="code"><pre>
+db.in.ogr dsn="PG:host=localhost dbname=ecad user=neteler" \
+          db_table=ecad_verona_tmean out=ecad_verona_tmean
+db.select ecad_verona_tmean
+db.describe -c ecad_verona_tmean
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
