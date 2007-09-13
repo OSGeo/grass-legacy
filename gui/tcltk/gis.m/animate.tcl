@@ -38,7 +38,7 @@ namespace eval GmAnim {
     variable prevframe; # number of previous frame
     variable currframe; # number of currently displayed frame
     variable nframes;   # total number of frames in a view
-    variable shownames; # if shownames = 1, print file name in window
+    global shownames; # if shownames = 1, print file name in window
     variable ncols;     # columns in current region; for setting window size
     variable nrows;     # rows in current region; for setting window size 
     variable scale;     # scale value for setting size of window and animation images
@@ -205,11 +205,11 @@ proc GmAnim::cmd_faster {} {
     }
 }
 
-proc GmAnim::cmd_names {} {
-    variable shownames
-    
-    set shownames [expr (1 + $shownames) % 3]
-}
+# proc GmAnim::cmd_names {} {
+#     global shownames
+#     
+#     set shownames [expr (1 + $shownames) % 3]
+# }
 
 proc GmAnim::cmd_exit {} {
     variable numviews
@@ -240,6 +240,7 @@ proc GmAnim::make_buttons {anim_tb} {
     global iconpath
     global loop 
     global swing 
+    global shownames
     variable cb_loop
     variable cb_swing
     
@@ -340,8 +341,7 @@ proc GmAnim::make_buttons {anim_tb} {
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor ]
 	
-    DynamicHelp::register $cb_loop balloon [G_msg "Continuously loop through animation"]
-    
+    DynamicHelp::register $cb_loop balloon [G_msg "Continuously loop through animation"]   
 
 	# Swing
 	set cb_swing [checkbutton $anim_tb.swing -command "GmAnim::cmd_swing" -image img_swing \
@@ -356,13 +356,18 @@ proc GmAnim::make_buttons {anim_tb} {
 	set sep2 [Separator $anim_tb.sep2 -orient vertical ]
 	pack $sep2 -side left -fill y -padx 5 -anchor w
 
-	set bbox3 [ButtonBox $anim_tb.bbox3 -spacing 0 ]
 
 	# Show names
-	$bbox3 add -command GmAnim::cmd_names  -text Names \
-		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
-		-highlightbackground $bgcolor -activebackground $bgcolor \
-		-helptext [G_msg "Show names"]
+	set cb_names [checkbutton $anim_tb.names -text "Names" \
+	    -variable shownames -offvalue 0 -onvalue 1 -relief flat \
+		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
+		-activebackground $bgcolor -highlightbackground $bgcolor ]
+	
+    DynamicHelp::register $cb_loop balloon [G_msg "Show map names in animation window"]
+    
+    pack $cb_names -side left -anchor w
+
+	set bbox3 [ButtonBox $anim_tb.bbox3 -spacing 0 ]
 
 	# Quit
 	$bbox3 add -command GmAnim::cmd_exit   -text Exit \
@@ -371,7 +376,6 @@ proc GmAnim::make_buttons {anim_tb} {
 		-helptext [G_msg "Quit animation"]
 
     pack $bbox3 -side left -anchor w
-#    pack $buttons.rew $buttons.rplay $buttons.stepb $buttons.stop $buttons.stepf $buttons.play $buttons.loop $buttons.swing $buttons.slower $buttons.faster $buttons.shownames $buttons.exit -side left -expand 1
 }
 
 
@@ -627,6 +631,7 @@ proc GmAnim::do_run {} {
     global anim_prog
     variable first
     variable vfiles
+    variable vframes
     variable pic_array
     variable label_pos
     variable numviews 
@@ -634,7 +639,7 @@ proc GmAnim::do_run {} {
     variable step 
     variable stop 
     variable rewind 
-    variable shownames
+    global shownames
     variable currframe 
     variable prevframe 
     variable direction 
@@ -698,16 +703,16 @@ proc GmAnim::do_run {} {
     
         # draw labels
         if {$shownames > 0} {
-            for {set i 1} {$i < $numviews} {incr i} {
-                set x [expr $label_pos($i,0) + 10]
-                set y [expr $label_pos($i,1) - 5]
-                set s [lindex $vfiles($i) $currframe]
-                if {$shownames == 1} {
-                    set fg black
+            for {set i 0} {$i < $numviews} {incr i} {
+                set x [expr $label_pos($i,0) + 5]
+                set y [expr $label_pos($i,1) - 3]
+                if { $currframe > $vframes($i) } {
+                    set lblframe [expr $vframes($i) - 1]
                 } else {
-                    set fg white
+                    set lblframe [expr $currframe - 1]
                 }
-                $anim_can create text $x $y -text $s -fill $fg
+                set s [lindex $vfiles($i) $lblframe]
+                $anim_can create text $x $y -text $s -fill black -anchor sw
             }
         }
         
