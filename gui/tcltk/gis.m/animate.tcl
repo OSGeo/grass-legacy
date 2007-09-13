@@ -20,39 +20,36 @@
 
 namespace eval GmAnim {
 
-    variable view1; #maps to animate in frame 1
-    variable view2; #maps to animate in frame 2
-    variable view3; #maps to animate in frame 3
-    variable view4; #maps to animate in frame 4
+    variable view1;     #maps to animate in frame 1
+    variable view2;     #maps to animate in frame 2
+    variable view3;     #maps to animate in frame 3
+    variable view4;     #maps to animate in frame 4
     
-    variable first # first time animation is run (0 1)
-    variable cnt; # number of maps to animate
-    variable tmpfile; # temp file for storing images
+    variable first;     # first time animation is run (0 1)
+    variable cnt;       # number of maps to animate
+    variable tmpfile;   # temp file for storing images
     variable border
-    variable numviews
-    variable numframes
+    variable numviews;  # number of animation views to show (1-4)
+    variable numframes; # number of individual frames in an animation
     variable flabel
-    variable step
-    variable speed
-    variable stop
-    variable direction
-    variable rewind
-    variable prevframe
-    variable currframe
-    variable nframes
-    global loop
-    global swing
-    global anim_prog; # increments progress bar
-    variable shownames
-     
-    variable ncols 
-    variable nrows 
-    variable icols 
-    variable irows 
-    variable vcols 
-    variable vrows 
-    variable vscale
-    variable vres
+    variable step;      # turn frame by frame step on (step=1) or off (step=0)
+    variable speed;     # set delay between display of each animation frame
+    variable stop;      # stop continuous animation play (stop=1)
+    variable direction; # 1=forward, -1=backward
+    variable rewind;    # if rewind=1, return to frame 1
+    variable prevframe; # number of previous frame
+    variable currframe; # number of currently displayed frame
+    variable nframes;   # total number of frames in a view
+    variable shownames; # if shownames = 1, print file name in window
+    variable ncols;     # columns in current region; for setting window size
+    variable nrows;     # rows in current region; for setting window size 
+    variable scale;     # scale value for setting size of window and animation images
+    variable icols;     # initial columns in window 
+    variable irows;     # initial rows in window
+    variable vcols;     # columns in view window 
+    variable vrows;     # rows in view window
+    variable pnmres;    # resolution needed in region to create pnm file of proper size
+    variable vres;      #base region resolution; modify to change pnm image size
     variable oldres1
     variable oldres2
     variable pic_array 
@@ -61,13 +58,13 @@ namespace eval GmAnim {
     variable tmpfile 
     variable border
     variable anim_can
-    
-    variable cb_loop # control button for looping
-    variable cb_swing # control button for swing
+    variable cb_loop;   # control button for looping
+    variable cb_swing;  # control button for swing
 
-
-
-
+    global loop;
+    global swing;
+    global anim_prog;   # increments progress bar
+     
     set border    2
     set cnt       0
     set numviews  1
@@ -223,6 +220,8 @@ proc GmAnim::cmd_exit {} {
     variable numframes
     variable vfiles
     variable pic_array
+    variable oldres1
+    variable oldres2
     global anim_prog
     
     # close all windows and delete temporary image file
@@ -234,6 +233,9 @@ proc GmAnim::cmd_exit {} {
     if {[array exists vfiles]} {array unset vfiles}
     if {[array exists pic_array]} {array unset pic_array }
     set anim_prog 0
+    if {[catch [exec g.region nsres=$oldres1 ewres=$oldres2] error]} {
+        Gm::errmsg $error
+    }
 
 }
 
@@ -528,18 +530,18 @@ proc GmAnim::create_viewlist { closeval } {
 	}
 
     # creat list of views with maps to animate
-    set viewlist "view1=$view1"
+    set viewlist $view1
     
     if { $view2 != "" } {
-        lappend viewlist "view2=$view2"
+        lappend viewlist $view2
     }
     
     if { $view3 != "" } {
-        lappend viewlist "view3=$view3"
+        lappend viewlist $view3
     }
     
     if { $view4 != "" } {
-        lappend viewlist "view4=$view4"
+        lappend viewlist $view4
     }
         
     if { $closeval == 1 } { destroy .animmaps_win }
@@ -556,33 +558,41 @@ proc GmAnim::parse_viewmaps {viewlist} {
     variable numframes
     variable first
     variable pic_array
+    variable scale
+    variable vres 
+    variable ncols 
+    variable nrows 
+    variable icols 
+    variable irows 
+    variable vcols 
+    variable vrows 
     global anim_prog
 
     # Reset variables
-    set numviews 1
+    set numviews 0
     set numframes 0
     if {[array exists vfiles]} {array unset vfiles}
     if {[array exists pic_array]} {array unset pic_array }
     set anim_prog 0
 
-    set allmaps [exec g.list rast | grep -v {^raster files available} | grep -v {^---}]  
     incr anim_prog
 
     foreach view $viewlist {
-        if {![regexp -- {^view([1-4])=(.*)$} $view dummy num val]} {
-            error "invald argument: $view"
-        }
         set maps {}
-        set pats [split $val ,]
+        set groups [split $view ,]
 
-        foreach pat $pats {
-            foreach map $allmaps {
-                if {[string match $pat $map]} {
-                    lappend maps $map
-                }
-            }
+        foreach group $groups {
+            set series [split $group {[-]}]
+            set first [lindex $series 1]
+            set last [lindex $series 2]
+            for {set mapnum $first} {$mapnum < $last} {incr mapnum} {
+                set map [lindex $series 0]
+                append map $mapnum
+                lappend maps $map
+            }            
+            
         }
-        
+                
         set vfiles($numviews) $maps
         set numframes [llength $maps]
         
@@ -590,6 +600,12 @@ proc GmAnim::parse_viewmaps {viewlist} {
         incr anim_prog
         update
     }
+    
+
+    # these proportions should work fine for 1 or 4 views, but for
+    # 2 views, want to double the narrow dim & for 3 views triple it
+
+    
     
     set first 1
     GmAnim::do_run
@@ -600,6 +616,7 @@ proc GmAnim::parse_viewmaps {viewlist} {
 proc GmAnim::do_run {} {
     global loop 
     global swing 
+    global anim_prog
     variable first
     variable vfiles
     variable pic_array
@@ -617,12 +634,16 @@ proc GmAnim::do_run {} {
     variable flabel 
     variable anim_can
     variable cnt
-    global anim_prog
     
 
     if {$first} {
         set first 0
+        set step 1
         set nframes [GmAnim::load_files]
+        if {$nframes == -1} {
+            set stop 1
+            return
+        }
         set currframe [expr $direction > 0 ? 1 : $nframes]
         set prevframe $currframe
     }
@@ -705,11 +726,11 @@ proc GmAnim::load_files {} {
     variable numviews
     variable ncols 
     variable nrows 
+    variable scale
     variable icols 
     variable irows 
     variable vcols 
     variable vrows 
-    variable vscale
     variable pic_array 
     variable vfiles 
     variable label_pos
@@ -719,12 +740,28 @@ proc GmAnim::load_files {} {
     variable cnt
     global anim_prog
     global devnull
+
+    set vrows  $nrows
+    set vcols  $ncols
+    set irows $nrows
+    set icols $ncols
+    
+    # set vrows & vcols to the size for each sub-image   
+    if { $numviews > 1 } {
+        set vrows [expr int($vrows * $scale / 2.0)]
+        set vcols [expr int($vcols * $scale / 2.0)]
+    }
     
     for {set cnt 0} {$cnt < $numframes} {incr cnt} {
         set img [image create photo -width $ncols -height $nrows]
         set pic_array([expr $cnt + 1]) $img
     
-        for {set vnum 1} {$vnum < $numviews} {incr vnum} {
+        if {$scale != 1.0 || $numviews > 1} {
+             # set resolution to control size of pnm image; create pnm image
+            GmAnim::switch_res 1
+        }
+            
+        for {set vnum 0} {$vnum < $numviews} {incr vnum} {
             if {$icols == $vcols} {
                 set vxoff $border
                 set vyoff [expr $irows == $vrows ? $border : $border + $vnum * ($border + $vrows)]
@@ -742,9 +779,12 @@ proc GmAnim::load_files {} {
             }
     
             set name [lindex $vfiles($vnum) $cnt]
-    
-#            catch {exec r.out.ppm input=$name output=- 2>@stderr | pnmscale $vscale >$tmpfile 2>@stderr}
-            catch {exec r.out.ppm input=$name output=- >$tmpfile 2> $devnull}
+                        
+            if {[catch {exec r.out.ppm input=$name output=$tmpfile --q} error]} {
+                Gm::errmsg $error
+                return -1
+            }
+            
             set subimg [image create photo -file $tmpfile]
             file delete $tmpfile
     
@@ -755,6 +795,11 @@ proc GmAnim::load_files {} {
             incr anim_prog
         }
     
+        if {$scale != 1.0 || $numviews > 1 } {
+            # reset region to original resolution
+            GmAnim::switch_res 0
+        }
+        
         $anim_can delete all
         $anim_can create image 0 0 -anchor nw -image $img
         set flabel [expr $cnt + 1]
@@ -778,20 +823,35 @@ proc GmAnim::cmd_idle {} {
 }
 
 ########################################################
-proc GmAnim::set_res { switch } {
+proc GmAnim::switch_res { switch } {
     # set region to new temp resolution for pnm scaling if switch=1
     # reset region to original resolution if switch = 0
     
+    variable scale
     variable vres
+    variable numviews
     variable oldres1
     variable oldres2
+    
+    # calculate region resolution needed for pnm output
+    set res_scale1 [expr 1.0/ $scale]
+    set res_scale2 [expr 1.3 * $res_scale1]
+    set res_scale4 [expr 2.0 * $res_scale1]
+    
+    # either a 1 view window or a 4 view window
+    if {$numviews == 1} {
+        set pnmres [expr 1.0 * $vres * $res_scale1]
+    } else {
+        set pnmres [expr 1.0 * $vres * $res_scale4]
+    }
+    
     
     if { $switch == 0 } {
         if {[catch [exec g.region nsres=$oldres1 ewres=$oldres2] error]} {
             Gm::errmsg $error
         }
     } elseif { $switch == 1 } {
-        if {[catch [exec g.region res=$vres] error]} {
+        if {[catch [exec g.region res=$pnmres] error]} {
             Gm::errmsg $error
         }    
     }
@@ -802,22 +862,16 @@ proc GmAnim::set_res { switch } {
 proc GmAnim::main {} {
     # main window for displaying and controling animation
     
-    variable numframes 
-    variable numviews
     variable ncols 
     variable nrows 
-    variable icols 
-    variable irows 
+    variable scale
     variable vcols 
     variable vrows 
-    variable vscale
     variable vres
     variable oldres1
     variable oldres2
     variable border
     variable speed 
-    variable direction 
-    variable shownames
     variable anim_can
     global anim_prog
 
@@ -857,49 +911,14 @@ proc GmAnim::main {} {
     	set scale [expr 1.0 * $min / $longdim]
     }
 
-    set res_scale [expr 1.0/ $scale]
-
     # set nrows & ncols to the size of the combined - views image
     set nrows [expr int($nrows * $scale)]
     set ncols [expr int($ncols * $scale)]
-
-
-    # these proportions should work fine for 1 or 4 views, but for
-    # 2 views, want to double the narrow dim & for 3 views triple it
-
-#     if {$numviews == 2} {
-#     	set sdim [expr $sdim * 2]
-#     } elseif {$numviews == 3} {
-#     	set sdim [expr $sdim * 3]
-#     }
-# 
-# 
-#     if {$numviews == 4} {
-#     	set vscale [expr $scale / 2.0]
-#     }
-# 
-#     # set vrows & vcols to the size for each sub-image   
-#     set vrows [expr int($vrows * $vscale)]
-#     set vcols [expr int($vcols * $vscale)]
     
 
     # add to nrows & ncols for borders
-    # irows, icols used for vert/horizontal determination in loop below
-    set irows $nrows
-    set icols $ncols
-
     set nrows [expr int($nrows + (1 + ($nrows/$vrows)) * $border)]
     set ncols [expr int($ncols + (1 + ($ncols/$vcols)) * $border)]
-
-#     if {$ncols > $nrows} {
-#         set w $ncols
-#         set h [expr $nrows + 60]
-#     } else {
-#         set w [expr $ncols + 80]
-#         set h $nrows
-#     }
-
-    #puts "nrows, ncols, vrows, vcols = $nrows, $ncols, $vrows, $vcols"
 
     # create file viewing frame
 	toplevel .animwin
