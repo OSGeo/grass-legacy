@@ -9,9 +9,13 @@ PostgreSQL, SQLite, MySQL, ODBC, etc.).
 
 <h2>EXAMPLES</h2>
 
-Import of a CSV table file:
+Import of a CSV table file:<br>
+Limited type recognition can be done for Integer, Real, String, Date, Time and DateTime
+columns through a descriptive file with same name as the CSV file, but .csvt extension
+(see details <a href="http://www.gdal.org/ogr/drv_csv.html">here</a>).
 <p>
 <div class="code"><pre>
+# NOTE: create koeppen_gridcode.csvt first for type recognition
 db.in.ogr dsn=koeppen_gridcode.csv out=koeppen_gridcode
 db.select koeppen_gridcode
 </pre></div>
