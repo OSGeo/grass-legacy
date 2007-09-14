@@ -144,7 +144,7 @@ proc GmRules::main { cmd } {
     pack $row.a -side right -anchor e -padx 5
     if { $cmd != "r.colors" } {
         checkbutton $row.b -variable GmRules::overwrite \
-                -text [G_msg "overwrite existing file"]
+                -text [G_msg "Overwrite existing file"]
         pack $row.b -side left -anchor w -padx 5
     }
     pack $row -side top -fill x -expand no
