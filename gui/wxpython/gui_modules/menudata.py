@@ -499,7 +499,7 @@ class Data:
               ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
               ("3D map calculator", "Map calculator for volumetric map algebra", "self.OnMenuCmd", "r3.mapcalculator"),
               ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
-              ("Interpoloate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
+              ("Interpolate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
               ("","","", ""),
               ("Report and Statistics", (
                 ("Basic volume information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
