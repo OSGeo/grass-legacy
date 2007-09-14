@@ -133,7 +133,7 @@ class wxQgisGrassModule( handleQgisGrassModule ):
         self.task.description = self.description
         menuform.GrassGUIApp( self.task ).MainLoop()
 
-    def handleOption( self, opt, getit = menuform.grassTask.get_param ):
+    def handleOption( self, opt, getit = menuform.grassTask.get_param, **other ):
         a = dict(opt.attributes.items())
         p = getit( self.task, a['key'] )
         # visibility:
@@ -143,6 +143,8 @@ class wxQgisGrassModule( handleQgisGrassModule ):
         # overrides:
         if a.has_key( 'answer' ): p['value'] = a['answer']
         if a.has_key( 'label' ): p['description'] = a['label']
+        for (k,i) in other.items():
+            p[k] = i
         # exclusions:
         if a.has_key('exclude'):
             vals = p['value'].split(',')
@@ -160,7 +162,12 @@ class wxQgisGrassModule( handleQgisGrassModule ):
         if tag == 'field':
             pass
         elif tag == 'file':
-            pass
+            filters = dict(opt.attributes.items()).get('filters','(*.*)')
+            try:
+                glob = re.match(r'\((.+)\)').groups(0)
+            except KeyError:
+                glob =  '*.*'
+            self.handleOption( opt, gisprompt=True, element='file', filemask=glob  )
         elif tag == 'selection':
             pass
         
