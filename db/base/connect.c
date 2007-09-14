@@ -115,10 +115,10 @@ main(int argc, char *argv[])
     else{
 	/* get and print connection */
 	if (db_get_connection( &conn ) == DB_OK){
-	    fprintf(stdout, "driver: %s\n", conn.driverName ? conn.driverName : "");
-	    fprintf(stdout, "database: %s\n", conn.databaseName ? conn.databaseName : "");    
-	    fprintf(stdout, "schema: %s\n", conn.schemaName ? conn.schemaName : "");    
-	    fprintf(stdout, "group: %s\n", conn.group ? conn.group : "");    
+	    fprintf(stdout, "driver:%s\n", conn.driverName ? conn.driverName : "");
+	    fprintf(stdout, "database:%s\n", conn.databaseName ? conn.databaseName : "");    
+	    fprintf(stdout, "schema:%s\n", conn.schemaName ? conn.schemaName : "");    
+	    fprintf(stdout, "group:%s\n", conn.group ? conn.group : "");    
 	}
 	else
 	    G_fatal_error(_("No DB connection settings defined. "
