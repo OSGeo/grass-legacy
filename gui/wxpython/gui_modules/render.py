@@ -607,13 +607,13 @@ class Map(object):
             opacstr = repr(",".join(opacities))
 
             # compose command
-            compcmd = "g.pnmcomp in=" + mapstr + \
-                " mask=" + maskstr + \
-                " opacity=" + opacstr + \
+            compcmd = "g.pnmcomp in='" + mapstr + \
+                "' mask='" + maskstr + \
+                "' opacity=" + opacstr + \
                 " background=255:255:255" + \
                 " width=" + str(self.width) + \
                 " height=" + str(self.height) + \
-                " output=" + self.mapfile
+                " output='" + self.mapfile + "'"
 
             # render overlays
 
@@ -624,7 +624,7 @@ class Map(object):
 
             # run g.composite to get composite image
             if os.system(compcmd):
-                sys.stderr.write("Could not run g.pnmcomp\n")
+                sys.stderr.write("Could not run g.pnmcomp [%s]\n" % compcmd)
                 raise Exception (compcmd)
 
             Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
