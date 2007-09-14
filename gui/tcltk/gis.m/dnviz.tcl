@@ -185,7 +185,7 @@ proc GmDnviz::main { mapcan mon } {
     # Frame settings
     set row [ frame $dnviz_win.frames ]
     LabelEntry $row.a -textvariable GmDnviz::frames -width 10 \
-        -label [G_msg "Num. of frames "] \
+        -label [G_msg "Number of frames "] \
         -helptext [G_msg "Number of frames to create for flythrough"]
     LabelEntry $row.b -textvariable GmDnviz::startframe -width 10 \
         -label [G_msg "Start frame "] \
@@ -196,11 +196,11 @@ proc GmDnviz::main { mapcan mon } {
     
     set row [ frame $dnviz_win.options1 ]
     checkbutton $row.a -variable GmDnviz::vrender \
-                -text [G_msg "enable vector rendering"]
+                -text [G_msg "Enable vector rendering"]
     checkbutton $row.b -variable GmDnviz::fullrender \
-                -text [G_msg "full render (save images)"]
+                -text [G_msg "Full render (save images)"]
     checkbutton $row.c -variable GmDnviz::offscreen \
-                -text [G_msg "render images offscreen"]
+                -text [G_msg "Render images offscreen"]
     pack $row.a $row.b $row.c -side left -anchor w -padx 5
     pack $row -side top -fill x -expand no
     
@@ -212,11 +212,11 @@ proc GmDnviz::main { mapcan mon } {
             -helptext [G_msg "Help"]
     pack $row.a -side right -anchor e -padx 5
     checkbutton $row.b -variable GmDnviz::ht_elev \
-                -text [G_msg "height value is elevation"]
+                -text [G_msg "Height value is elevation"]
     checkbutton $row.c -variable GmDnviz::keyframe \
-                -text [G_msg "output keyframe file"]
+                -text [G_msg "Output keyframe file"]
     checkbutton $row.d -variable GmDnviz::overwrite \
-                -text [G_msg "overwrite existing file"]
+                -text [G_msg "Overwrite existing file"]
     pack $row.b $row.c $row.d -side left -anchor w -padx 5
     pack $row -side top -fill x -expand no
     
@@ -363,7 +363,7 @@ proc GmDnviz::makescript { w quit } {
     if { $outfile == ""} {
         tk_messageBox -type ok -icon warning -parent $w \
 		    -message [G_msg "You must specify an output file"] \
-		    -title [G_msg "No output file speci fied"]
+		    -title [G_msg "No output file specified"]
         return
     }    
     
