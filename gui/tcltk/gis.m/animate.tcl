@@ -27,6 +27,7 @@ namespace eval GmAnim {
     variable first;     # first time animation is run (0 1)
     variable cnt;       # number of maps to animate
     variable tmpfile;   # temp file for storing images
+    variable tmpregion; # temp region file for setting PPM resolution
     variable numviews;  # number of animation views to show (1-4)
     variable numframes; # number of individual frames in an animation
     variable vframes;   # array holding number of frames in each view
@@ -38,7 +39,6 @@ namespace eval GmAnim {
     variable prevframe; # number of previous frame
     variable currframe; # number of currently displayed frame
     variable nframes;   # total number of frames in a view
-    global shownames; # if shownames = 1, print file name in window
     variable ncols;     # columns in current region; for setting window size
     variable nrows;     # rows in current region; for setting window size 
     variable scale;     # scale value for setting size of window and animation images
@@ -59,6 +59,7 @@ namespace eval GmAnim {
     variable cb_swing;  # control button for swing
     variable minframes; # minimum number of frames among all views; animation must stop at this number
 
+    global shownames; # if shownames = 1, print file name in window
     global loop;
     global swing;
     global anim_prog;   # increments progress bar
@@ -78,13 +79,18 @@ namespace eval GmAnim {
     set loop      0
     set swing     0
     set shownames 0
+    set view1 ""
+    set view2 ""
+    set view3 ""
+    set view4 ""
+    set tmpregion ""
+
     
 	# create file for temporary image output
 	if {[catch {set tmpfile [exec g.tempfile pid=[pid]]} error]} {
 		Gm::errmsg $error [G_msg "Error creating tempfile"]
 	}
-    
-
+	
 }
 
 
@@ -205,12 +211,6 @@ proc GmAnim::cmd_faster {} {
     }
 }
 
-# proc GmAnim::cmd_names {} {
-#     global shownames
-#     
-#     set shownames [expr (1 + $shownames) % 3]
-# }
-
 proc GmAnim::cmd_exit {} {
     variable numviews
     variable numframes
@@ -218,6 +218,7 @@ proc GmAnim::cmd_exit {} {
     variable pic_array
     variable oldres1
     variable oldres2
+    variable tmpregion
     global anim_prog
     
     # close all windows and delete temporary image file
@@ -229,9 +230,8 @@ proc GmAnim::cmd_exit {} {
     if {[array exists vfiles]} {array unset vfiles}
     if {[array exists pic_array]} {array unset pic_array }
     set anim_prog 0
-    if {[catch [exec g.region nsres=$oldres1 ewres=$oldres2] error]} {
-        Gm::errmsg $error
-    }
+    catch {unset env(WIND_OVERRIDE)}
+    catch [exec g.remove region=$tmpregion --q] 
 
 }
 
@@ -358,10 +358,11 @@ proc GmAnim::make_buttons {anim_tb} {
 
 
 	# Show names
-	set cb_names [checkbutton $anim_tb.names -text "Names" \
+	set cb_names [checkbutton $anim_tb.names -text "Show names" \
 	    -variable shownames -offvalue 0 -onvalue 1 -relief flat \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
-		-activebackground $bgcolor -highlightbackground $bgcolor ]
+		-activebackground $bgcolor -highlightbackground $bgcolor \
+		-pady 4 -padx 2]
 	
     DynamicHelp::register $cb_loop balloon [G_msg "Show map names in animation window"]
     
@@ -382,7 +383,7 @@ proc GmAnim::make_buttons {anim_tb} {
 
 ########################################################
 # select maps to animate
-proc GmAnim::select_map { mapgroup } {
+proc GmAnim::select_map { view } {
 
     variable view1
     variable view2
@@ -390,16 +391,18 @@ proc GmAnim::select_map { mapgroup } {
     variable view4
     variable first
 
-    set mapvar "GmAnim::view"
-    append mapvar $mapgroup
+    append tmpvar $view
+    set mapvar [set $tmpvar]
 
     set m [GSelect cell multiple title [G_msg "Select maps"] parent "."]
     if { $m != "" } {
+        set mlist [split $m @]
+        set m0 [lindex $mlist 0]
         if {$mapvar == ""} { 
-            set $mapvar $m 
+            set GmAnim::$view $m0 
         } else { 
-            set m ", $m"
-            append $mapvar $m 
+            set m ",$m0"
+            append GmAnim::$view $m 
         }
     }
 
@@ -416,12 +419,6 @@ proc GmAnim::sel_maps {} {
     variable view2
     variable view3
     variable view4
-    
-    set view1 ""
-    set view2 ""
-    set view3 ""
-    set view4 ""
-
 
 	# Create raster map input window
 	set mapswin [toplevel .animmaps_win]
@@ -456,7 +453,7 @@ proc GmAnim::sel_maps {} {
     Label $row.a -text [G_msg "Maps for frame 1 (required): "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-		-command "GmAnim::select_map 1"
+		-command "GmAnim::select_map view1"
     Entry $row.c -width 35 -text " $view1" \
           -textvariable GmAnim::view1
     pack $row.c $row.b $row.a -side right
@@ -467,7 +464,7 @@ proc GmAnim::sel_maps {} {
     Label $row.a -text [G_msg "Maps for frame 2 (optional): "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-		-command "GmAnim::select_map 2"
+		-command "GmAnim::select_map view2"
     Entry $row.c -width 35 -text " $view2" \
           -textvariable GmAnim::view2
     pack $row.c $row.b $row.a -side right
@@ -478,7 +475,7 @@ proc GmAnim::sel_maps {} {
     Label $row.a -text [G_msg "Maps for frame 3 (optional): "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-		-command "GmAnim::select_map 3"
+		-command "GmAnim::select_map view3"
     Entry $row.c -width 35 -text " $view3" \
           -textvariable GmAnim::view3
     pack $row.c $row.b $row.a -side right
@@ -489,7 +486,7 @@ proc GmAnim::sel_maps {} {
     Label $row.a -text [G_msg "Maps for frame 4 (optional): "]
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
-		-command "GmAnim::select_map 4"
+		-command "GmAnim::select_map view4"
     Entry $row.c -width 35 -text " $view4" \
           -textvariable GmAnim::view4
     pack $row.c $row.b $row.a -side right
@@ -580,32 +577,43 @@ proc GmAnim::parse_viewmaps {viewlist} {
 
     incr anim_prog
 
+    set allmaps [exec g.mlist rast]
+
     foreach view $viewlist {
         set maps {}
         set groups [split $view ,]
 
         foreach group $groups {
-            set series [split $group {[-]}]
-            set start [lindex $series 1]
-            set end [lindex $series 2]
-            
-            if {$start == ""} {
-                set first 1
+            # parse series of maps with suffix number in range (x-y)
+            if {[string match *(* $group]} {
+                set series [split $group {(-)}]
+                set start [lindex $series 1]
+                set end [lindex $series 2]
+                
+                if {$start == ""} {
+                    set first 1
+                } else {
+                    set first $start
+                }
+                
+                if {$end == ""} {
+                    set last $first
+                } else {
+                    set last $end
+                }
+    
+                for {set mapnum $first} {$mapnum < [expr $last+1]} {incr mapnum} {
+                    set map [lindex $series 0]
+                    if {$start != ""} {append map $mapnum}
+                    lappend maps $map
+                }            
             } else {
-                set first $start
+                # parse maps as glob/regexp pattern
+                foreach map $allmaps {
+                    if {[string match $group $map]} {lappend maps $map}
+                    
+                }
             }
-            
-            if {$end == ""} {
-                set last $first
-            } else {
-                set last $end
-            }
-
-            for {set mapnum $first} {$mapnum < [expr $last+1]} {incr mapnum} {
-                set map [lindex $series 0]
-                if {$start != ""} {append map $mapnum}
-                lappend maps $map
-            }            
             
         }
                 
@@ -865,6 +873,8 @@ proc GmAnim::switch_res { switch } {
     variable numviews
     variable oldres1
     variable oldres2
+    variable tmpregion
+    global env
     
     # calculate region resolution needed for pnm output
     set res_scale1 [expr 1.0/ $scale]
@@ -878,13 +888,28 @@ proc GmAnim::switch_res { switch } {
         set pnmres [expr 1.0 * $vres * $res_scale4]
     }
     
-    
-    if { $switch == 0 } {
-        if {[catch [exec g.region nsres=$oldres1 ewres=$oldres2] error]} {
+    set tmpregion "tmpanimregion"
+    append tmpregion [pid]
+
+    if { $switch == 1 } {
+        # set temp region file for changing resolution  
+        if {[catch {set region [exec g.region -u save=$tmpregion --o --q]} error]} {
             Gm::errmsg $error
         }
-    } elseif { $switch == 1 } {
+        if {[catch {set env(WIND_OVERRIDE) $tmpregion} error]} {
+            Gm::errmsg $error
+        }
+    
+        # change resolution
         if {[catch [exec g.region res=$pnmres] error]} {
+            Gm::errmsg $error
+        }    
+    } else { 
+        # switch back to original region
+        if {[catch {unset env(WIND_OVERRIDE)} error]} {
+            Gm::errmsg $error
+        }
+        if {[catch [exec g.remove region=$tmpregion --q] error]} {
             Gm::errmsg $error
         }    
     }
@@ -908,8 +933,8 @@ proc GmAnim::main {} {
     variable anim_can
     global anim_prog
 
-    # set initial canvas geometry to match region
-    
+
+    # set initial canvas geometry to match region    
     if {[catch {set region [exec g.region -ugp]} error]} {
         Gm::errmsg $error
     }
@@ -919,7 +944,7 @@ proc GmAnim::main {} {
     regexp {rows= *([0-9]+)} $region dummy vrows
     regexp {cols= *([0-9]+)} $region dummy vcols
     
-    set vres [expr $oldres1 > $oldres2 ? $oldres1 : $oldres2]
+    set vres [expr $oldres1 > $oldres2 ? 1.0 * $oldres1 : 1.0 * $oldres2]
     set nrows $vrows
     set ncols $vcols
 
