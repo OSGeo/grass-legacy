@@ -140,33 +140,94 @@ static int parse_args(int argc, char *argv[], struct params *p)
     p->charset->description =
 	"Character encoding (default: " DEFAULT_CHARSET ")";
 
+    p->color = G_define_option();
+    p->color->key = "color";
+    p->color->description = _("Text color");
+    p->color->type = TYPE_STRING;
+    p->color->answer = "black";
+    p->color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
+    p->color->guisection = _("Colors");
+
+    p->hlcolor = G_define_option();
+    p->hlcolor->key = "hcolor";
+    p->hlcolor->description = _("Hilight color for text");
+    p->hlcolor->type = TYPE_STRING;
+    p->hlcolor->answer = "none";
+    p->hlcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
+    p->hlcolor->guisection = _("Colors");
+
+    p->hlwidth = G_define_option();
+    p->hlwidth->key = "hwidth";
+    p->hlwidth->description = _("Width of highlight coloring");
+    p->hlwidth->type = TYPE_DOUBLE;
+    p->hlwidth->answer = "0";
+    p->hlwidth->guisection = _("Colors");
+
+    p->bgcolor = G_define_option();
+    p->bgcolor->key = "background";
+    p->bgcolor->description = _("Background color");
+    p->bgcolor->type = TYPE_STRING;
+    p->bgcolor->answer = "none";
+    p->bgcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
+    p->color->guisection = _("Colors");
+
+    p->opaque = G_define_option();
+    p->opaque->key = "opaque";
+    p->opaque->description =
+	_("Opaque to vector (only relevant if background color is selected)");
+    p->opaque->type = TYPE_STRING;
+    p->opaque->answer = "yes";
+    p->opaque->options = "yes,no";
+    p->opaque->key_desc = "yes|no";
+    p->opaque->guisection = _("Colors");
+
+    p->bocolor = G_define_option();
+    p->bocolor->key = "border";
+    p->bocolor->description = _("Border color");
+    p->bocolor->type = TYPE_STRING;
+    p->bocolor->answer = "none";
+    p->bocolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
+	"magenta,orange,purple,red,violet,white,yellow";
+    p->bocolor->guisection = _("Colors");
+
+    p->bowidth = G_define_option();
+    p->bowidth->key = "width";
+    p->bowidth->description = _("Border width (only for ps.map output)");
+    p->bowidth->type = TYPE_DOUBLE;
+    p->bowidth->answer = "0";
+    p->bowidth->guisection = _("Colors");
+
     return G_parser(argc, argv);
 }
 
 void print_label(FILE * labelf, label_t * label, struct params *p)
 {
-    int cc;
-    cc = label->current_candidate;
+    int cc, hlwidth;
     double size;
+    cc = label->current_candidate;
     size = atof(p->size->answer);
+    hlwidth = atoi(p->hlwidth->answer);
 
     fprintf(labelf, "east: %lf\n", label->candidates[cc].point.x);
     fprintf(labelf, "north: %lf\n", label->candidates[cc].point.y);
-    fprintf(labelf, "xoffset: %lf\n", -0.0 * (size));
-    fprintf(labelf, "yoffset: %lf\n", -0.0 * (size));
+    fprintf(labelf, "xoffset: %lf\n", 0.0); // * (size));
+    fprintf(labelf, "yoffset: %lf\n", 0.0); // * (size));
     fprintf(labelf, "ref: %s\n", "none none");
 
     fprintf(labelf, "font: %s\n", p->font->answer);
-    fprintf(labelf, "color: %s\n", "black");
+    fprintf(labelf, "color: %s\n", p->color->answer);
 
     fprintf(labelf, "size: %lf\n", size);
 
-    fprintf(labelf, "width: %d\n", 1);
-    fprintf(labelf, "hcolor: %s\n", "none");
-    fprintf(labelf, "hwidth: %d\n", 0);
-    fprintf(labelf, "background: %s\n", "none");
-    fprintf(labelf, "border: %s\n", "none");
-    fprintf(labelf, "opaque: %s\n", "yes");
+    fprintf(labelf, "width: %d\n", p->bowidth->answer);
+    fprintf(labelf, "hcolor: %s\n", p->hlcolor->answer);
+    fprintf(labelf, "hwidth: %d\n", hlwidth);
+    fprintf(labelf, "background: %s\n", p->bgcolor->answer);
+    fprintf(labelf, "border: %s\n", p->bocolor->answer);
+    fprintf(labelf, "opaque: %s\n", p->opaque->answer);
     fprintf(labelf, "rotate: %f\n",
 	    label->candidates[cc].rotation * 180.0 / M_PI);
     fprintf(labelf, "text:%s\n\n", label->text);
