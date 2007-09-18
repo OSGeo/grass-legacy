@@ -45,6 +45,7 @@ label_t *labels_init(struct params *p, int *n_labels)
     dbDriver *driver;
     FT_Library library;
     FT_Face face;
+    struct GFONT_CAP *font_cap;
 
     fprintf(stderr, "Initialising labels ...");
     legal_types = Vect_option_to_types(p->type);
@@ -84,12 +85,18 @@ label_t *labels_init(struct params *p, int *n_labels)
     /* initialize FT 2 library */
     if (FT_Init_FreeType(&library))
 	G_fatal_error(_("Unable to initialise FreeType"));
-    error = FT_New_Face(library, p->font->answer, 0, &face);
+    font_cap = find_font_from_freetypecap(p->font->answer);
+    if(font_cap == NULL)
+	G_fatal_error(_("Cannot find font '%s'\n"), p->font->answer);
+    if(font_cap->type != GFONT_FREETYPE)
+	G_fatal_error(_("Font '%s' is not a FreeType font\n"), p->font->answer);
+    error = FT_New_Face(library, font_cap->path, 0, &face);
     if (error == FT_Err_Unknown_File_Format)
 	G_fatal_error(_("Font file format is not supported by FreeType"));
-    else if (error) {
+    else if (error)
 	G_fatal_error(_("Font file can not be loaded"));
-    }
+    p->font->answer = G_store(font_cap->name);
+    free_freetypecap(font_cap);
 
     font_size = atof(p->size->answer);
     buffer = atof(p->isize->answer);

@@ -15,6 +15,7 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
+#include <grass/freetypecap.h>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -138,4 +139,8 @@ void simulate_annealing(label_t * labels, int n_labels, struct params *p);
  * @param p The parameters
  */
 void print_label(FILE * labelf, label_t * label, struct params *p);
+
+void free_freetypecap(struct GFONT_CAP *ftcap);
+struct GFONT_CAP *find_font_from_freetypecap(const char *font);
+
 #endif /* _LABELS_H */
