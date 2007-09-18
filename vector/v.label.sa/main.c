@@ -172,7 +172,7 @@ static int parse_args(int argc, char *argv[], struct params *p)
     p->bgcolor->answer = "none";
     p->bgcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
 	"magenta,orange,purple,red,violet,white,yellow";
-    p->color->guisection = _("Colors");
+    p->bgcolor->guisection = _("Colors");
 
     p->opaque = G_define_option();
     p->opaque->key = "opaque";
