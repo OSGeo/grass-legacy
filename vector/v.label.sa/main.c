@@ -115,9 +115,9 @@ static int parse_args(int argc, char *argv[], struct params *p)
     p->font->key = "font";
     p->font->type = TYPE_STRING;
     p->font->required = YES;
-    p->font->description = _("Path to TrueType font (including file name)");
+    p->font->description = _("Name of TrueType font (as listed in the fontcap)");
     p->font->guisection = _("Font");
-    p->font->gisprompt = "old_file,file,font";
+    p->font->gisprompt = "font";
 
     p->size = G_define_option();
     p->size->key = "size";
