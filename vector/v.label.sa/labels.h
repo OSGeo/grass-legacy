@@ -99,6 +99,15 @@ struct params
     struct Option *size;
     struct Option *charset;
     struct Option *isize;
+    struct Option *color;
+    struct Option *hlcolor;
+    struct Option *hlwidth;
+    struct Option *bgcolor;
+    struct Option *opaque;
+    struct Option *bocolor;
+    struct Option *bowidth;
+
+/*    struct Option */
     /*      struct Option *where; *//* later */
 };
 
