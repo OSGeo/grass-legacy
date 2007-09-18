@@ -1,3 +1,22 @@
+##########################################################################
+#
+# select.tcl
+#
+# tree/listbox control for interactive selection of GRASS GIS elements
+#
+# Author: Unknown. Possibly Jacques Bouchard, author of tcltkgrass for
+#   GRASS 5. Subsequent modifications by members of the GRASS Development
+#   team.
+#
+# Last update: September 2007
+#
+# COPYRIGHT:	(C) 1999 - 2007 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
 # Frame scrolling that works:
 # Scroll if the window exists AND
 # the window is mapped AND
@@ -56,6 +75,7 @@ bind all <Button-5> "handle_scroll -120"
 ##############################################################
 
 proc GSelect { element args } {
+    # startup procedure 
 
     set sel [eval [linsert $args 0 GSelect_::create $element]]
     return $sel
@@ -69,6 +89,9 @@ namespace eval GSelect_ {
 }
 
 proc GSelect_::create { element args } {
+    # main procedure for creating and managing selection window, which a tree
+    # within a scrolling window.
+
     global env id
     variable selwin
     variable count
@@ -78,12 +101,13 @@ proc GSelect_::create { element args } {
     
     set selwin($id,self) selwin
     set title [G_msg "Select item"]
-    set selwin($id,selected) ""
+    set selwin($id,selected) {}
     
     if {[lsearch -exact $args "title"] > -1} {
 	append title " - [lindex $args [expr [lsearch -exact $args title]+1]]"
     }
-# Leave selection on top of caller window till it's closed
+    
+    # Leave selection on top of caller window till it's closed
     set parentwin "."
     if {[lsearch -exact $args "parent"] > -1} {
     	set parentwin [lindex $args [expr [lsearch -exact $args "parent"]+1]]
@@ -94,7 +118,7 @@ proc GSelect_::create { element args } {
     set selwin($id,self) ".$selwin($id,self)"
     set selftop "$selwin($id,self)top"
 
-# Do not create another select window, if one already exists.
+    # Do not create another select window, if one already exists.
     if {[winfo exists $selwin($id,self)]} {
     	raise $selwin($id,self) 
     	focus $selwin($id,self) 
@@ -130,48 +154,52 @@ proc GSelect_::create { element args } {
     $tree bindText  <Double-ButtonPress-1> "GSelect_::selectclose $id $tree"
     $tree bindImage <Double-ButtonPress-1> "GSelect_::selectclose $id $tree"
     if {[lsearch $args "multiple"] >= 0} {
-    	$tree bindText  <Control-ButtonPress-1> "GSelect_::select_add $id $tree"
+    	$tree bindText  <Control-ButtonPress-1> "GSelect_::select_toggle $id $tree"
+    } else {
+    	$tree bindText  <Control-ButtonPress-1> "GSelect_::select $id $tree"
     }
     
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset "$env(MAPSET)"
     set sympath "$env(GISBASE)/etc/symbol/"
     
+    # main selection subroutine
     if {$element != "symbol"} {
-	foreach dir [exec g.mapsets -p] {
-	    set windfile "$location_path/$dir/WIND"
-	    if { ! [ file exists $windfile ] } { continue }
-	    if { $dir == $current_mapset } {
-			$tree insert end root ms_$dir -text $dir -data $dir -open 1 \
-			-image [Bitmap::get openfold] -drawcross auto
-	    } else {
-			$tree insert end root ms_$dir -text $dir -data $dir -open 0 \
-			-image [Bitmap::get folder] -drawcross auto
-		}
-	    set path "$location_path/$dir/$element/"
-	    foreach fp [ lsort [glob -nocomplain $path/*] ]  {
-		set file [file tail $fp]
-		$tree insert end ms_$dir $file@$dir -text $file -data $file \
-		    -image [Bitmap::get file] -drawcross never
-	    }
-	}
+        foreach dir [exec g.mapsets -p] {
+            set windfile "$location_path/$dir/WIND"
+            if { ! [ file exists $windfile ] } { continue }
+            if { $dir == $current_mapset } {
+                $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
+                -image [Bitmap::get openfold] -drawcross auto
+            } else {
+                $tree insert end root ms_$dir -text $dir -data $dir -open 0 \
+                -image [Bitmap::get folder] -drawcross auto
+            }
+            set path "$location_path/$dir/$element/"
+            foreach fp [ lsort [glob -nocomplain $path/*] ]  {
+            set file [file tail $fp]
+            $tree insert end ms_$dir $file@$dir -text $file -data $file \
+                -image [Bitmap::get file] -drawcross never
+            }
+        }
     }
 
+    # vector symbol selection subroutine
     if {$element == "symbol"} {
-	$tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
-	    -image [Bitmap::get openfold] -drawcross auto
-	
-	foreach ic_dir [ lsort [glob -nocomplain $sympath/*] ]  {
-	    set dir_tail [file tail $ic_dir]
-	    $tree insert end ms_$sympath ms_$dir_tail  -text $dir_tail -data $dir_tail \
-		-image [Bitmap::get folder] -drawcross auto
-
-	    foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
-			set file [file tail $ic_file]
-			$tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
-				-image [Bitmap::get file] -drawcross never
-	    }
-	}
+        $tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
+            -image [Bitmap::get openfold] -drawcross auto
+        
+        foreach ic_dir [ lsort [glob -nocomplain $sympath/*] ]  {
+            set dir_tail [file tail $ic_dir]
+            $tree insert end ms_$sympath ms_$dir_tail  -text $dir_tail -data $dir_tail \
+                -image [Bitmap::get folder] -drawcross auto
+    
+            foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
+                set file [file tail $ic_file]
+                $tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
+                    -image [Bitmap::get file] -drawcross never
+            }
+        }
     }
 
     $tree configure -redraw 1
@@ -199,30 +227,17 @@ proc GSelect_::create { element args } {
 
     destroy $selftop 
 
+    # return selected elements -- separated by commas if there are > 1 elements
     if { $selwin($id,selected) != "" } {
-	set ret ""
-	set len [llength $selwin($id,selected)]
-	for {set i 0}  {$i < $len} {incr i} {
-		if {$len>0 && $i<[expr $len-1]} {
-			regexp {([^@]+)@(.+),} [lindex $selwin($id,selected) $i] x file mapset
-		} else {
-			regexp {([^@]+)@(.+)} [lindex $selwin($id,selected) $i] x file mapset
-		}
-		foreach sel [ lsort [glob -nocomplain $sympath/*] ]  {
-		    set sel [file tail $sel]
-		     if {$mapset == $sel} {
-			 return "$sel/$file"
-			 exit
-		     }  
-		}
-
-		append ret "$file@$mapset"
-
-		if {$len > 0 && $i < [expr $len-1]} {
-			append ret ","
-		}
+        set ret ""
+        foreach elem $selwin($id,selected) {
+            append ret $elem
+            if {[lsearch $selwin($id,selected) $elem] != -1  && \
+                [lsearch $selwin($id,selected) $elem] < [expr $len-1]} {
+                append ret ","
+            }
         }
-	return $ret
+        return $ret
     }
 
     return ""
@@ -230,6 +245,8 @@ proc GSelect_::create { element args } {
 
 
 proc GSelect_::select { id tree node } {
+    # Single selection (default). Clicking an item will select it and 
+    # deselect any other item selected
     variable selwin
  
     set parent [$tree parent $node]
@@ -240,26 +257,42 @@ proc GSelect_::select { id tree node } {
     set selwin($id,selected) $node
 }
 
-proc GSelect_::select_add { id tree node} {
+proc GSelect_::select_toggle { id tree node} {
+    # Multiple selections. Ctrl-1 will toggle an item as selected or not selected
+    # and add it to a list of selected items
     variable selwin
  
     set parent [$tree parent $node]
     if { $parent == "root" } { return }
  
-    $tree selection add $node
-    update
-    append selwin($id,selected) ", $node"
+    if {[lsearch -exact [$tree selection get] $node] >= 0} {
+        $tree selection remove $node
+        update
+        set nodeindex [lsearch $selwin($id,selected) $node]
+        if {$nodeindex != -1} {
+            set selwin($id,selected) [lreplace $selwin($id,selected) $nodeindex $nodeindex]
+        }
+    } else {
+        $tree selection add $node
+        update
+        lappend selwin($id,selected) $node
+    }
+     
+    #$tree selection add $node
+#     set selwin($id,selected) [string trim $selwin($id,selected) ,]
 }
 
 proc GSelect_::selectclose { id tree node } {
+    # return selection and close window (OK button)
     variable selwin
 
     GSelect_::select $id $tree $node
     destroy $selwin($id,self)
 }
 
-# Just close window
+
 proc GSelect_::terminate { id } {
+    # close window without returning selection (cancel)
 	variable selwin
 	
 	set selwin($id,selected) {}
