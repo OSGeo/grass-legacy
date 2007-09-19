@@ -216,7 +216,7 @@ int main (int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	half = menu[method].half;
+	half = (map_type == CELL_TYPE) ? menu[method].half : 0;
 
 	/* establish the newvalue routine */
 	newvalue = menu[method].method;
