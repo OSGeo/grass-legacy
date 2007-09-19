@@ -70,7 +70,8 @@ do_list() {
 	| grep -v '^-\+$' \
 	| grep -v "files available" \
 	| grep -vi "mapset" \
-	| sed 's/  */\n/g' \
+	| sed 's/  */\
+/g' \
 	| grep -v '^$' \
 	| grep "$search" \
 	| sort \
