@@ -1,39 +1,25 @@
-/* @(#)transform.c	2.1  6/26/87 */
-/****************************************************************
-This  file  contains    routines    which    perform    (affine?)
-transformations  from  one  coordinate  system  into another. The
-second system may be translated, stretched, and rotated  relative
-to  the  first.   The  input  system is system "a" and the output
-system is "b"
+/**
+ * \file transform.c
+ *
+ * \brief This file contains routines which perform (affine?)
+ * transformations from one coordinate system into another.
+ *
+ * The second system may be translated, stretched, and rotated relative
+ * to the first. The input system is system <em>a</em> and the output
+ * system is <em>b</em>.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author GRASS GIS Development Team
+ *
+ * \date 1987-2007
+ */
 
+/****************************************************************
 note: uses sqrt() from math library
 *****************************************************************
-compute_transformation_coef (ax,ay,bx,by,use,n)
-
-    double ax[], ay[];       coordinate from system a
-    double bx[], by[];       coordinate from system b
-    char   use[];            use point flags
-    int n;                   number of points in ax,ay,bx,by
-
-The first step is to compute coefficients for a set of  equations
-which  are then used to convert from the one system to the other.
-A set of x,y points from both systems is input into the  equation
-generator  which  determines the equation coefficients which most
-nearly represent the original points. These coefficients are kept
-in a static variables internal to this file.
-
-note: use[i] must be true for ax[i],ay[i],bx[i],by[i] to be used
-      in the equation
-
-      also, the total number of used points must be 4 or larger
-
-returns:
-   -2  less than 4 used points.
-   -1  couldn't solve the equation. points probably colinear
-       and need to be spread out more.
-    1  ok
-*****************************************************************
-Then points from one system may be converted into the  second  by
+Points from one system may be converted into the second by
 use of one of the two equation routines.
 
 transform_a_into_b (ax,ay,bx,by)
@@ -61,6 +47,7 @@ residuals_b_predicts_a (ax,ay,bx,by,use,n,residuals,rms)
     double *rms;             overall root mean square error
 ****************************************************************/
 
+#include <stdio.h>
 #include <math.h>
 #include <grass/libtrans.h>
 
@@ -68,12 +55,39 @@ residuals_b_predicts_a (ax,ay,bx,by,use,n,residuals,rms)
 static double A0,A1,A2,A3,A4,A5;
 static double B0,B1,B2,B3,B4,B5;
 
-static int resid(
-    double *,double *,double *,double *,int *,int,double *,double *,int);
+/* function prototypes */
+static int resid(double *,double *,double *,double *,int *,int,double *,double *,int);
+
+
+/**
+ * \fn int compute_transformation_coef (double ax[], double ay[], double bx[], double by[], char *use, int n)
+ *
+ * \brief The first step is to compute coefficients for a set of equations
+ * which are then used to convert from the one system to the other.
+ *
+ * A set of x,y points from both systems is input into the equation
+ * generator which determines the equation coefficients which most
+ * nearly represent the original points. These coefficients are kept
+ * in a static variables internal to this file.
+ *
+ * NOTE: use[i] must be true for ax[i],ay[i],bx[i],by[i] to be used
+ * in the equation.  Also, the total number of used points must be
+ * 4 or larger.
+ *
+ * \param[in] ax coordinate from system a
+ * \param[in] ay coordinate from system a
+ * \param[in] bx coordinate from system b
+ * \param[in] by coordinate from system b
+ * \param[in] use use point flags
+ * \param[in] n number of points in ax, ay, bx, by
+ * \return int 1 if successful
+ * \return int -1 if could not solve equation. Points probably colinear.
+ * \return int -2 if less than 4 points used
+ */
 
 int compute_transformation_coef(
     double ax[],double ay[],double bx[],double by[],
-    int use[],int n)
+    int *use, int n)
 {
     int i;
     int j;
@@ -125,17 +139,13 @@ int compute_transformation_coef(
     cc[2][0] = cc[0][2];
     cc[2][1] = cc[1][2];
 
-/* aa and bb are solved */
-	
+    /* aa and bb are solved */
 	if ( inverse (cc) < 0)
 		return (-1) ;
 	if ( m_mult ( cc, aa, aar) < 0  ||  m_mult ( cc, bb, bbr) < 0)
 		return (-1) ;
 
-
-
-/* the equation coefficients */
-
+    /* the equation coefficients */
     B0 = aar[0];
     B1 = aar[1];
     B2 = aar[2];
@@ -144,8 +154,7 @@ int compute_transformation_coef(
     B4 = bbr[1];
     B5 = bbr[2];
 
-/* the inverse equation */
-
+    /* the inverse equation */
     x = B2 * B4 - B1 * B5 ;
 
     if( ! x)
@@ -161,6 +170,7 @@ int compute_transformation_coef(
     return 1;
 }
 
+
 int transform_a_into_b(
     double ax,double ay,
     double *bx,double *by)
@@ -170,6 +180,7 @@ int transform_a_into_b(
 
     return 0;
 }
+
 
 int transform_b_into_a(
     double bx,double by,
@@ -207,6 +218,7 @@ int residuals_a_predicts_b (
     return 0;
 }
 
+
 int residuals_b_predicts_a(
     double ax[],double ay[],double bx[],double by[],
     int use[],
@@ -218,6 +230,29 @@ int residuals_b_predicts_a(
 
     return 0;
 }
+
+
+/**
+ * \fn int print_transform_matrix (void)
+ *
+ * \brief Prints matrix to stdout in human readable format.
+ *
+ * \return int 1
+ */
+
+int print_transform_matrix (void)
+{
+    fprintf (stdout, "\nTransformation Matrix\n");
+    fprintf (stdout, "| xoff a b |\n");
+    fprintf (stdout, "| yoff d e |\n");
+    fprintf (stdout, "-------------------------------------------\n");
+    fprintf (stdout, "%f %f %f \n", -B3, B2, -B5);
+    fprintf (stdout, "%f %f %f \n", -B0, -B1, B4);
+    fprintf (stdout, "-------------------------------------------\n");
+
+    return 1;
+}
+
 
 static int resid(
     double ax[],double ay[],double bx[],double by[],
@@ -261,3 +296,4 @@ static int resid(
 
     return 0;
 }
+
