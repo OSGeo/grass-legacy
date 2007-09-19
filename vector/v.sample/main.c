@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     flag.B = G_define_flag();
     flag.B->key = 'b';
     flag.B->description =
-        _("Bilinear interpolation [default is nearest neighbor]");
+        _("Bilinear interpolation (default is nearest neighbor)");
 
     flag.C = G_define_flag();
     flag.C->key = 'c';

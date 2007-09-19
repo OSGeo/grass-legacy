@@ -24,12 +24,12 @@ update (struct Map_info *Map)
     db_init_string (&stmt);	
 
     if ( (Fi = Vect_get_field ( Map, options.field)) == NULL)
-         G_fatal_error(_("Database connection not defined for layer [%d]. Use v.db.connect first"), options.field);
+         G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first."), options.field);
 
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-        G_fatal_error (_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
+        G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     }
     
     db_begin_transaction ( driver );
@@ -60,7 +60,7 @@ update (struct Map_info *Map)
     } 
 
     /* update */
-    G_message (_("Updating database ..."));
+    G_message (_("Updating database..."));
     for ( i = 0; i < vstat.rcat; i++ ) {
 	G_percent( i+1, vstat.rcat, 1 );
 	
