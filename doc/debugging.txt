@@ -22,8 +22,15 @@ Further hints:
      declared.
 
 ----------------------------------------------------
+Tcl/TK:
 
-To debug  TCL code, run (example):
+A) Pure Tcl code:
+
+   Typically you need to add "trace" commands to the code
+   in question.
+
+B) To debug  TCL code which uses C (including hybrid C+Tcl 
+   code, e.g. NVIZ, v.digit, run (example):
 
 GRASS:~> g.gisenv set="DEBUG=1"
 GRASS:~> d.text.freetype > dtf_tcl.txt
