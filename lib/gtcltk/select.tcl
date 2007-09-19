@@ -230,6 +230,7 @@ proc GSelect_::create { element args } {
     # return selected elements -- separated by commas if there are > 1 elements
     if { $selwin($id,selected) != "" } {
         set ret ""
+        set len [llength $selwin($id,selected)]
         foreach elem $selwin($id,selected) {
             append ret $elem
             if {[lsearch $selwin($id,selected) $elem] != -1  && \
