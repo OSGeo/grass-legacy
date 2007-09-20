@@ -525,7 +525,7 @@ proc gisSetWindow {} {
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
     	-width 10 -bd 1 -wraplength 100 \
-    	-command { exit 1 }
+    	-command { exit 2 }
 
 
     pack append .frame0.frameBUTTONS \
@@ -685,7 +685,7 @@ proc gisSetWindow {} {
 	
 	# Exit GRASS, if window gets closed.
 	wm protocol . WM_DELETE_WINDOW {
-		exit 1
+		exit 2
 	}
   
 	grab .

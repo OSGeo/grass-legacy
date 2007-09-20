@@ -559,14 +559,13 @@ if [ ! "$LOCATION" ] ; then
 			[ "$GRASS_GUI" = "gis.m" ] || \
 			[ "$GRASS_GUI" = "d.m" ] ; then
 
-			#"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"
-			#exit
-			eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
+			# eval `foo` will return subshell return code and not app foo return code!!!
+			eval '"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"'
 			thetest=$?
 		else
 			#"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"
 			#exit
-			eval `"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"`
+			eval '"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"'
 			thetest=$?
 		fi
 
@@ -628,6 +627,12 @@ if [ ! "$LOCATION" ] ; then
 
 		    ;;
 		    
+		2)
+			# User wants to exit from GRASS
+			echo "Received EXIT message from GUI."
+			echo "GRASS is not started. Bye."
+			exit 0
+			;;
 		*)
 		    echo "ERROR: Invalid return code from gis_set.tcl."
 		    echo "Please advise GRASS developers of this error."
