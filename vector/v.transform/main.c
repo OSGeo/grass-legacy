@@ -30,6 +30,7 @@
 */
 #define MAIN
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
@@ -39,14 +40,16 @@
 #include "trans.h"
 #include "local_proto.h"
 
+
 int main (int argc, char *argv[])
 {
     struct file_info  Current, Trans, Coord;
 
     struct GModule *module;
-    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift,
+
+    struct Option *vold, *vnew, *pointsfile, *xshift, *yshift, *zshift,
       *xscale, *yscale, *zscale, *zrot, *columns, *table, *field;
-    struct Flag *quiet_flag, *tozero_flag, *shift_flag;
+    struct Flag *quiet_flag, *tozero_flag, *shift_flag, *print_mat_flag;
 
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
@@ -78,6 +81,10 @@ int main (int argc, char *argv[])
     tozero_flag->key		= 't';
     tozero_flag->description = _("Shift all z values to bottom=0"); 
 
+    print_mat_flag = G_define_flag ();
+    print_mat_flag->key = 'm';
+    print_mat_flag->description = _("Print the transformation matrix to stdout");
+
     /* remove in GRASS7 */
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
@@ -85,9 +92,9 @@ int main (int argc, char *argv[])
 				"(xshift, yshift, zshift, xscale, yscale, zscale, zrot)");
     shift_flag->guisection  = _("Custom");
 
-    old = G_define_standard_option(G_OPT_V_INPUT);
+    vold = G_define_standard_option(G_OPT_V_INPUT);
     
-    new = G_define_standard_option(G_OPT_V_OUTPUT);
+    vnew = G_define_standard_option(G_OPT_V_OUTPUT);
 
     pointsfile = G_define_standard_option(G_OPT_F_INPUT);
     pointsfile->key		= "pointsfile";
@@ -176,10 +183,10 @@ int main (int argc, char *argv[])
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
     
-    G_strcpy (Current.name, old->answer);
-    G_strcpy (Trans.name, new->answer);
+    G_strcpy (Current.name, vold->answer);
+    G_strcpy (Trans.name, vnew->answer);
 
-    Vect_check_input_output_name ( old->answer, new->answer, GV_FATAL_EXIT );
+    Vect_check_input_output_name ( vold->answer, vnew->answer, GV_FATAL_EXIT );
 
     /* please remove in GRASS7 */
     if (shift_flag->answer)
@@ -198,7 +205,7 @@ int main (int argc, char *argv[])
 	G_fatal_error(_("Table name is not defined. Please use '%s' parameter."), table->key);
     }
 
-    if (table->answer && strcmp(new->answer, table->answer) == 0) {
+    if (table->answer && strcmp(vnew->answer, table->answer) == 0) {
 	G_fatal_error (_("Name of table and name for output vector map must be different. "
 			 "Otherwise the table is overwritten."));
     }
@@ -217,12 +224,12 @@ int main (int argc, char *argv[])
     }
     
     /* open vector maps */
-    if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
-	G_fatal_error ( _("Vector map <%s> not found"), old->answer);
+    if ( (mapset = G_find_vector2 ( vold->answer, "")) == NULL)
+	G_fatal_error ( _("Vector map <%s> not found"), vold->answer);
     
-    Vect_open_old(&Old, old->answer, mapset);
+    Vect_open_old(&Old, vold->answer, mapset);
 
-    Vect_open_new (&New, new->answer, Vect_is_3d(&Old) || zshift->answer );
+    Vect_open_new (&New, vnew->answer, Vect_is_3d(&Old) || zshift->answer );
 
     /* copy and set header */
     Vect_copy_head_data(&Old, &New);
@@ -237,7 +244,7 @@ int main (int argc, char *argv[])
     
     Vect_set_person ( &New, G_whoami() );
 
-    sprintf (buf, "transformed from %s", old->answer);
+    sprintf (buf, "transformed from %s", vold->answer);
     Vect_set_map_name ( &New, buf);
     
     Vect_set_scale ( &New, 1 );
@@ -321,10 +328,14 @@ int main (int argc, char *argv[])
 
     if (!quiet_flag->answer) {
 	Vect_get_map_box (&New, &box );
-	G_message ( _("New vector map <%s> boundary coordinates:"), new->answer);
+	G_message ( _("\nNew vector map <%s> boundary coordinates:"), vnew->answer);
 	G_message ( _(" N: %-10.3f    S: %-10.3f"), box.N, box.S);
 	G_message ( _(" E: %-10.3f    W: %-10.3f"), box.E, box.W);
 	G_message ( _(" B: %6.3f    T: %6.3f"), box.B, box.T);
+
+        /* print the transformation matrix if requested */
+        if (print_mat_flag->answer)
+            print_transform_matrix ();
     }
 
     Vect_close (&New);
