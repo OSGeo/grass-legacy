@@ -60,7 +60,7 @@ const char **G__ls(const char *dir, int *num_files)
     int n = 0;
 
     if ((dfd = opendir(dir)) == NULL)
-       G_fatal_error(_("Unable too open directory %s"), dir);
+       G_fatal_error(_("Unable to open directory %s"), dir);
 
     while ((dp = readdir(dfd)) != NULL)
     {
