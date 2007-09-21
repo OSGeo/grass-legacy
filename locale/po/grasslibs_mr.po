@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Grass 6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 20:17+0200\n"
+"POT-Creation-Date: 2007-09-22 00:09+0200\n"
 "PO-Revision-Date: 2005-06-02 18:00+0530\n"
 "Last-Translator: Swapnil Hajare <dreamil@gmail.com>\n"
 "Language-Team: Marathi <www.janabhaaratii.org.in>\n"
@@ -796,27 +796,27 @@ msgstr ""
 msgid "Output map '%s' is used as input"
 msgstr ""
 
-#: ../lib/gis/list.c:125
+#: ../lib/gis/list.c:116
 #, c-format
 msgid "no %s files available in current mapset\n"
 msgstr ""
 
-#: ../lib/gis/list.c:127
+#: ../lib/gis/list.c:118
 #, c-format
 msgid "no %s files available in mapset <%s>\n"
 msgstr ""
 
-#: ../lib/gis/list.c:141
+#: ../lib/gis/list.c:132
 #, c-format
 msgid "hit RETURN to continue -->"
 msgstr "पुढे जाण्यासाठी RETURN टाइप करा -->"
 
-#: ../lib/gis/list.c:193
+#: ../lib/gis/list.c:184
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
 msgstr ""
 
-#: ../lib/gis/list.c:273
+#: ../lib/gis/list.c:258
 msgid "G_list: Unknown element type"
 msgstr ""
 
@@ -825,10 +825,10 @@ msgstr ""
 msgid "LOCATION << %s >> not available"
 msgstr ""
 
-#: ../lib/gis/ls.c:62
+#: ../lib/gis/ls.c:63
 #, fuzzy, c-format
-msgid "Can't open directory %s"
-msgstr "temp फाइल उघडता आली नाही"
+msgid "Unable to open directory %s"
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/gis/make_colr.c:41
 #, c-format
@@ -1020,149 +1020,161 @@ msgid "Example: income < 1000 and inhab >= 10000"
 msgstr ""
 
 #: ../lib/gis/parser.c:353
-msgid "Name of attribute column"
+msgid "Table name"
 msgstr ""
 
 #: ../lib/gis/parser.c:361
+msgid "Driver name"
+msgstr ""
+
+#: ../lib/gis/parser.c:369
+msgid "Database name"
+msgstr ""
+
+#: ../lib/gis/parser.c:377
+msgid "Name of attribute column"
+msgstr ""
+
+#: ../lib/gis/parser.c:385
 msgid "Name of attribute column(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:370
+#: ../lib/gis/parser.c:394
 msgid "Name of input imagery group"
 msgstr ""
 
-#: ../lib/gis/parser.c:379 ../lib/gis/parser.c:404
+#: ../lib/gis/parser.c:403 ../lib/gis/parser.c:428
 msgid "Name of input raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:388 ../lib/gis/parser.c:413
+#: ../lib/gis/parser.c:412 ../lib/gis/parser.c:437
 msgid "Name of input raster map(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:396
+#: ../lib/gis/parser.c:420
 msgid "Name for output raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:421
+#: ../lib/gis/parser.c:445
 msgid "Name of base raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:429
+#: ../lib/gis/parser.c:453
 msgid "Name of cover raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:437
+#: ../lib/gis/parser.c:461
 msgid "Name of elevation raster map"
 msgstr ""
 
-#: ../lib/gis/parser.c:446
+#: ../lib/gis/parser.c:470
 msgid "Name of elevation raster map(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:456
+#: ../lib/gis/parser.c:480
 msgid "Name of input raster3d map"
 msgstr ""
 
-#: ../lib/gis/parser.c:465
+#: ../lib/gis/parser.c:489
 msgid "Name of input raster3d map(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:473
+#: ../lib/gis/parser.c:497
 msgid "Name for output raster3d map"
 msgstr ""
 
-#: ../lib/gis/parser.c:483 ../lib/gis/parser.c:508
+#: ../lib/gis/parser.c:507 ../lib/gis/parser.c:532
 msgid "Name of input vector map"
 msgstr ""
 
-#: ../lib/gis/parser.c:492
+#: ../lib/gis/parser.c:516
 msgid "Name of input vector map(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:500
+#: ../lib/gis/parser.c:524
 msgid "Name for output vector map"
 msgstr ""
 
-#: ../lib/gis/parser.c:517
+#: ../lib/gis/parser.c:541
 msgid "Type"
 msgstr ""
 
-#: ../lib/gis/parser.c:518
+#: ../lib/gis/parser.c:542
 msgid "Feature type(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:525
+#: ../lib/gis/parser.c:549
 msgid "Layer number"
 msgstr ""
 
-#: ../lib/gis/parser.c:526
+#: ../lib/gis/parser.c:550
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
 msgstr ""
 
-#: ../lib/gis/parser.c:533
+#: ../lib/gis/parser.c:557
 msgid "Category value"
 msgstr ""
 
-#: ../lib/gis/parser.c:540
+#: ../lib/gis/parser.c:564
 msgid "Category values"
 msgstr ""
 
-#: ../lib/gis/parser.c:541
+#: ../lib/gis/parser.c:565
 msgid "Example: 1,3,7-9,13"
 msgstr ""
 
-#: ../lib/gis/parser.c:551
+#: ../lib/gis/parser.c:575
 #, fuzzy
 msgid "Name of input file"
 msgstr "उघडलेल्या फाइलचे नाव %s\n"
 
-#: ../lib/gis/parser.c:559
+#: ../lib/gis/parser.c:583
 #, fuzzy
 msgid "Name for output file"
 msgstr "उघडलेल्या फाइलचे नाव %s\n"
 
-#: ../lib/gis/parser.c:567
+#: ../lib/gis/parser.c:591
 msgid "Field separator"
 msgstr ""
 
-#: ../lib/gis/parser.c:578
+#: ../lib/gis/parser.c:602
 msgid "Color"
 msgstr ""
 
-#: ../lib/gis/parser.c:579
+#: ../lib/gis/parser.c:603
 msgid "Either a standard color name or R:G:B triplet"
 msgstr ""
 
-#: ../lib/gis/parser.c:588
+#: ../lib/gis/parser.c:612
 msgid "Background color"
 msgstr ""
 
-#: ../lib/gis/parser.c:589
+#: ../lib/gis/parser.c:613
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr ""
 
-#: ../lib/gis/parser.c:890
+#: ../lib/gis/parser.c:915
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1000
+#: ../lib/gis/parser.c:1026
 #, c-format
 msgid ""
 "\n"
 "Description:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1007
+#: ../lib/gis/parser.c:1033
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1011
+#: ../lib/gis/parser.c:1037
 #, c-format
 msgid ""
 "\n"
@@ -1170,129 +1182,129 @@ msgid ""
 " "
 msgstr ""
 
-#: ../lib/gis/parser.c:1083
+#: ../lib/gis/parser.c:1109
 #, c-format
 msgid ""
 "\n"
 "Flags:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1106 ../lib/gis/parser.c:1563 ../lib/gis/parser.c:1841
+#: ../lib/gis/parser.c:1132 ../lib/gis/parser.c:1588 ../lib/gis/parser.c:1866
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1108 ../lib/gis/parser.c:1567
+#: ../lib/gis/parser.c:1134 ../lib/gis/parser.c:1592
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1109 ../lib/gis/parser.c:1570
+#: ../lib/gis/parser.c:1135 ../lib/gis/parser.c:1595
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1115
+#: ../lib/gis/parser.c:1141
 #, c-format
 msgid ""
 "\n"
 "Parameters:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1138
+#: ../lib/gis/parser.c:1164
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1446
+#: ../lib/gis/parser.c:1471
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1459
+#: ../lib/gis/parser.c:1484
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1464
+#: ../lib/gis/parser.c:1489
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1538
+#: ../lib/gis/parser.c:1563
 msgid "Flags"
 msgstr ""
 
-#: ../lib/gis/parser.c:1579
+#: ../lib/gis/parser.c:1604
 msgid "Parameters"
 msgstr ""
 
-#: ../lib/gis/parser.c:1620
+#: ../lib/gis/parser.c:1645
 msgid "Options"
 msgstr ""
 
-#: ../lib/gis/parser.c:1626
+#: ../lib/gis/parser.c:1651
 msgid "Default"
 msgstr ""
 
-#: ../lib/gis/parser.c:1843
+#: ../lib/gis/parser.c:1868
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1851
+#: ../lib/gis/parser.c:1876
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1853
+#: ../lib/gis/parser.c:1878
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1942
+#: ../lib/gis/parser.c:1967
 #, c-format
 msgid "  %*s   options: "
 msgstr ""
 
-#: ../lib/gis/parser.c:1991 ../lib/gis/parser.c:2008
+#: ../lib/gis/parser.c:2016 ../lib/gis/parser.c:2033
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2063
+#: ../lib/gis/parser.c:2088
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2070
+#: ../lib/gis/parser.c:2095
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2155
+#: ../lib/gis/parser.c:2180
 #, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2157
+#: ../lib/gis/parser.c:2182
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2160
+#: ../lib/gis/parser.c:2185
 #, c-format
 msgid ""
 "\n"
 "ERROR: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2162
+#: ../lib/gis/parser.c:2187
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2165
+#: ../lib/gis/parser.c:2190
 #, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2325
+#: ../lib/gis/parser.c:2350
 #, c-format
 msgid ""
 "\n"
@@ -1300,82 +1312,82 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2428
+#: ../lib/gis/parser.c:2453
 #, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2430
+#: ../lib/gis/parser.c:2455
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2485
+#: ../lib/gis/parser.c:2510
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2532
+#: ../lib/gis/parser.c:2557
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2546
+#: ../lib/gis/parser.c:2571
 #, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2547
+#: ../lib/gis/parser.c:2572
 #, c-format
 msgid "     key: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2549
+#: ../lib/gis/parser.c:2574
 #, c-format
 msgid "  format: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2551
+#: ../lib/gis/parser.c:2576
 #, c-format
 msgid " default: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2552
+#: ../lib/gis/parser.c:2577
 #, c-format
 msgid "required: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2554
+#: ../lib/gis/parser.c:2579
 #, c-format
 msgid "multiple: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2556
+#: ../lib/gis/parser.c:2581
 #, c-format
 msgid " options: %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2571
+#: ../lib/gis/parser.c:2596
 #, c-format
 msgid "enter option > "
 msgstr ""
 
-#: ../lib/gis/parser.c:2585 ../lib/gis/parser.c:2596
+#: ../lib/gis/parser.c:2610 ../lib/gis/parser.c:2621
 msgid "   Try again? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2594
+#: ../lib/gis/parser.c:2619
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2605
+#: ../lib/gis/parser.c:2630
 #, c-format
 msgid ""
 "\n"
@@ -1383,11 +1395,11 @@ msgid ""
 "  %s\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2606
+#: ../lib/gis/parser.c:2631
 msgid "Is this correct? "
 msgstr ""
 
-#: ../lib/gis/parser.c:2675
+#: ../lib/gis/parser.c:2700
 msgid "to accept the default"
 msgstr ""
 
@@ -1995,27 +2007,27 @@ msgstr ""
 msgid "Input format error"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:43
+#: ../lib/gpde/test/test_arrays.c:48
 msgid ""
 "\n"
 "++ Running array unit tests ++"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:45
+#: ../lib/gpde/test/test_arrays.c:50
 msgid "\t 1. testing 2d arrays"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:48
+#: ../lib/gpde/test/test_arrays.c:53
 msgid "\t 2. testing 3d arrays"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:52
+#: ../lib/gpde/test/test_arrays.c:57
 msgid ""
 "\n"
 "-- Array unit tests failure --"
 msgstr ""
 
-#: ../lib/gpde/test/test_arrays.c:54
+#: ../lib/gpde/test/test_arrays.c:59
 msgid ""
 "\n"
 "-- Array unit tests finished successfully --"
@@ -2527,56 +2539,43 @@ msgstr ""
 msgid "No ellipsoid info given in file"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:152
+#: ../lib/proj/get_proj.c:151
 #, c-format
 msgid "Invalid zone %s specified"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:231
+#: ../lib/proj/get_proj.c:230
 msgid "Unable to initialise PROJ.4 with the following parameter list:"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:238
+#: ../lib/proj/get_proj.c:237
 #, c-format
-msgid "The error message was '%s'"
+msgid "The error message: %s"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:253
-#, fuzzy
-msgid "Unable to allocate options"
-msgstr "%s उघडता आले नाही"
-
-#: ../lib/proj/get_proj.c:279 ../lib/proj/get_proj.c:319
-msgid "Option input memory failure"
-msgstr ""
-
-#: ../lib/proj/get_proj.c:299
+#: ../lib/proj/get_proj.c:296
 msgid "Option input overflowed option table"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:331
+#: ../lib/proj/get_proj.c:327
 #, fuzzy, c-format
 msgid "Unable to initialize pj cause: %s"
 msgstr "%s उघडता आले नाही"
 
-#: ../lib/proj/get_proj.c:406
-#, c-format
-msgid "Input Projection Parameters:%s\n"
+#: ../lib/proj/get_proj.c:402
+msgid "Input Projection Parameters"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:408
-#, c-format
-msgid "Input Unit Factor: %.16g\n"
+#: ../lib/proj/get_proj.c:404
+msgid "Input Unit Factor"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:417
-#, c-format
-msgid "Output Projection Parameters:%s\n"
+#: ../lib/proj/get_proj.c:413
+msgid "Output Projection Parameters"
 msgstr ""
 
-#: ../lib/proj/get_proj.c:419
-#, c-format
-msgid "Output Unit Factor: %.16g\n"
+#: ../lib/proj/get_proj.c:415
+msgid "Output Unit Factor"
 msgstr ""
 
 #: ../lib/raster/io_sock.c:65
@@ -3384,6 +3383,14 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Can't open directory %s"
+#~ msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Unable to allocate options"
+#~ msgstr "%s उघडता आले नाही"
 
 #, fuzzy
 #~ msgid "current window = %p"
