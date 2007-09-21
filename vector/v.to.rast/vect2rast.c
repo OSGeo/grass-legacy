@@ -36,7 +36,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     if ((vector_mapset = G_find_vector2 (vector_map, "")) == NULL)
 	G_fatal_error (_("Vector map <%s> not found"), vector_map);
 
-    G_debug (1, "Loading vector information ...");
+    G_debug (1, "Loading vector information...");
     Vect_set_open_level (2);
     Vect_open_old (&Map, vector_map, vector_mapset);
 
@@ -51,7 +51,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	    G_fatal_error (_("Unable to get layer info for vector map"));
 
 	if ((Driver = db_start_driver_open_database ( Fi->driver, Fi->database)) == NULL)
-	    G_fatal_error (_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
@@ -152,7 +152,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	if ( (use != USE_Z && use != USE_D) && nareas ) {
 	    if(do_areas (&Map, Points, &cvarr, ctype, field, use, value, value_type) < 0) {
-		G_warning (_("Problem processing areas from vector map <%s>...continuing..."), vector_map);
+		G_warning (_("Problem processing areas from vector map <%s>, continuing..."), vector_map);
 		stat = -1;
 		break;
 	    }
@@ -186,7 +186,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
     Vect_close ( &Map );
 
-    G_debug (1, "Creating support files for raster map ...");
+    G_debug (1, "Creating support files for raster map...");
     G_close_cell(fd);
     update_hist(raster_map, vector_map, vector_mapset, Map.head.orig_scale);
 

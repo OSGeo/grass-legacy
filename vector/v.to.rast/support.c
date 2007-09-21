@@ -126,7 +126,7 @@ int update_dbcolors(char *rast_name, char *vector_map, int field, char *rgb_colu
         G_fatal_error (_("Unable to get layer info for vector map"));
 
     if ((Driver = db_start_driver_open_database (Fi->driver, Fi->database)) == NULL)
-        G_fatal_error (_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
+        G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     /* get number of records in attr_column */
     if ((nrec = db_select_CatValArray (Driver, Fi->table, Fi->key, attr_column , NULL, &cvarr)) == -1)
@@ -260,7 +260,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
             G_fatal_error (_("Unable to get layer info for vector map"));
 
         if (!(Driver = db_start_driver_open_database (Fi->driver, Fi->database)))
-            G_fatal_error (_("Unable to open database %s by driver %s"), 
+            G_fatal_error (_("Unable to open database <%s> by driver <%s>"), 
                         Fi->database, Fi->driver);
 
         /* get number of records in label_column */
