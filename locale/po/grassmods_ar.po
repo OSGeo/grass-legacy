@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 20:17+0200\n"
+"POT-Creation-Date: 2007-09-21 23:54+0200\n"
 "PO-Revision-Date: 2005-03-09 12:50+0100\n"
 "Last-Translator: Dr. Alaa Masoud <alaamasoud@hotmail.com>\n"
 "Language-Team: Arabic <translations@grass.itc.it>\n"
@@ -19,35 +19,21 @@ msgstr ""
 #: ../db/base/columns.c:40 ../db/base/createdb.c:37 ../db/base/databases.c:47
 #: ../db/base/describe.c:45 ../db/base/dropdb.c:37 ../db/base/droptable.c:38
 #: ../db/base/execute.c:57 ../db/base/select.c:60 ../db/base/tables.c:41
-#: ../vector/v.extract/main.c:226
+#: ../vector/v.db.connect/main.c:226 ../vector/v.extract/main.c:226
 #, fuzzy, c-format
 msgid "Unable to start driver <%s>"
 msgstr "'%s'لم يمكن بدء المشغل"
 
-#: ../db/base/columns.c:78 ../db/base/describe.c:111
-msgid "table name"
-msgstr "اسم الجدول"
-
-#: ../db/base/columns.c:85 ../db/base/databases.c:75 ../db/base/describe.c:118
-#: ../db/base/select.c:197 ../db/base/tables.c:78
-msgid "driver name"
-msgstr "اسم المشغل"
-
-#: ../db/base/columns.c:93 ../db/base/describe.c:126 ../db/base/select.c:188
-#: ../db/base/tables.c:86
-msgid "database name"
-msgstr "اسم قاعدة البيانات"
-
-#: ../db/base/columns.c:99 ../db/base/connect.c:41 ../db/base/copy.c:33
-#: ../db/base/createdb.c:73 ../db/base/databases.c:87
-#: ../db/base/describe.c:132 ../db/base/drivers.c:68 ../db/base/dropdb.c:73
-#: ../db/base/droptable.c:85 ../db/base/execute.c:100 ../db/base/select.c:252
-#: ../db/base/tables.c:100 ../db/db.login/main.c:42
+#: ../db/base/columns.c:88 ../db/base/connect.c:41 ../db/base/copy.c:33
+#: ../db/base/createdb.c:66 ../db/base/databases.c:83
+#: ../db/base/describe.c:121 ../db/base/drivers.c:68 ../db/base/dropdb.c:66
+#: ../db/base/droptable.c:73 ../db/base/execute.c:101 ../db/base/select.c:231
+#: ../db/base/tables.c:91 ../db/db.login/main.c:42
 #, fuzzy
 msgid "database, SQL"
 msgstr "اسم قاعدة البيانات"
 
-#: ../db/base/columns.c:100
+#: ../db/base/columns.c:89
 #, fuzzy
 msgid "List all columns for a given table."
 msgstr "عرض كل الأعمدة لجدول معطى"
@@ -61,31 +47,24 @@ msgstr ""
 msgid "Print current connection parameters and exit"
 msgstr "طباعة إحداثيات الإتصال الحلى و الخروج"
 
-#: ../db/base/connect.c:56 ../db/base/execute.c:116 ../db/db.login/main.c:51
-#: ../vector/v.db.connect/main.c:62
+#: ../db/base/connect.c:63
 #, fuzzy
-msgid "Driver name"
-msgstr "اسم المشغل"
-
-#: ../db/base/connect.c:64 ../db/base/execute.c:124 ../db/db.login/main.c:59
-#: ../vector/v.db.connect/main.c:71
-#, fuzzy
-msgid "Database name"
+msgid "Database schema"
 msgstr ":اسم قاعدة البيانات"
 
-#: ../db/base/connect.c:73
+#: ../db/base/connect.c:64
 msgid ""
-"Database schema. Do not use this option if schemas are not supported by "
-"driver/database server"
+"Do not use this option if schemas are not supported by driver/database server"
 msgstr ""
 
-#: ../db/base/connect.c:82
+#: ../db/base/connect.c:73
 #, fuzzy
 msgid "Default group of database users to which select privilege is granted"
 msgstr "المجموعة الأساس لمستخدمى قاعدة البيانات الممنوحة حق  إختيار الإمتياز"
 
-#: ../db/base/connect.c:132
-msgid "No db connection settings defined. Set with db.connect"
+#: ../db/base/connect.c:124
+#, fuzzy
+msgid "No DB connection settings defined. Set with db.connect"
 msgstr "db.connect أضبط مستخدما<%s>لم يتم تعريف أوضاع الإتصال بقاعدة البيانات"
 
 #: ../db/base/copy.c:34
@@ -96,11 +75,11 @@ msgstr ""
 "Copia una tabella. Sia le clausole 'from table' (in opzione con 'where') che "
 "'select' posso non essere utilizzate, ma non contemporaneamente."
 
-#: ../db/base/copy.c:42 ../vector/v.in.db/main.c:65
+#: ../db/base/copy.c:42
 msgid "Input driver name"
 msgstr "اسم مشغّل الإدخال"
 
-#: ../db/base/copy.c:50 ../vector/v.in.db/main.c:72
+#: ../db/base/copy.c:50
 msgid "Input database name"
 msgstr "اسم قاعدة بيانات المدخل"
 
@@ -150,36 +129,52 @@ msgstr "لم يمكن دمج خيارات اختار و أين'"
 msgid "Copy table failed"
 msgstr "لم يتم نسخ الجدول"
 
+#: ../db/base/createdb.c:67
+#, fuzzy
+msgid "Creates an empty database."
+msgstr "%s لم يتم فتح قاعدة البيانات"
+
 #: ../db/base/databases.c:50
-msgid "Cannot list databases."
-msgstr "لم يستطع عرض قواعد البيانات"
+#, fuzzy
+msgid "Unable to list databases"
+msgstr "<%s> لم يمكن فتح"
 
-#: ../db/base/databases.c:82
-msgid "database location"
-msgstr "موقع قاعدة البيانات"
+#: ../db/base/databases.c:78
+#, fuzzy
+msgid "Location name"
+msgstr "%s لم يمكن فتح "
 
-#: ../db/base/databases.c:88
+#: ../db/base/databases.c:84
 msgid "List all databases for a given driver and location."
 msgstr "عرض جميع قواعد البيانات لمشغل وموقع معين"
 
-#: ../db/base/describe.c:58 ../vector/v.out.ogr/main.c:260
-#: ../vector/v.out.svg/main.c:150 ../vector/v.patch/main.c:140
-#: ../vector/v.patch/main.c:181
+#: ../db/base/describe.c:51 ../db/base/execute.c:63 ../db/base/select.c:66
+#: ../db/base/tables.c:47 ../display/d.vect/main.c:476
+#: ../vector/v.edit/select.c:416
+#, fuzzy, c-format
+msgid "Unable to open database <%s>"
+msgstr "<%s> لم يمكن فتح"
+
+#: ../db/base/describe.c:58 ../vector/v.db.connect/main.c:180
+#: ../vector/v.out.ogr/main.c:287 ../vector/v.out.svg/main.c:150
+#: ../vector/v.patch/main.c:140 ../vector/v.patch/main.c:181
 #, fuzzy, c-format
 msgid "Unable to describe table <%s>"
 msgstr "لم يمكن وصف الجدول"
 
-#: ../db/base/describe.c:101
-msgid "print column names only instead of full column descriptions"
+#: ../db/base/describe.c:100
+#, fuzzy
+msgid "Print column names only instead of full column descriptions"
 msgstr "طباعة أسماء الاعمدة بدلا من الوصف الكامل للاعمدة"
 
 #: ../db/base/describe.c:105
 #, fuzzy
-msgid "print table structure"
+msgid "Print table structure"
 msgstr "طباعة الجداول والخروج"
 
-#: ../db/base/describe.c:133
-msgid "Describe a table (in detail)."
+#: ../db/base/describe.c:122
+#, fuzzy
+msgid "Describes a table in detail."
 msgstr "(وصف الجدول (بالتفصيل)"
 
 #: ../db/base/drivers.c:37
@@ -199,97 +194,116 @@ msgstr "طباعة الجداول والخروج"
 msgid "List all database drivers."
 msgstr "عرض كل مشغلات قاعدة البيانات"
 
-#: ../db/base/execute.c:73 ../db/base/execute.c:77
+#: ../db/base/dropdb.c:67
+#, fuzzy
+msgid "Removes a database."
+msgstr "لم يتم حساب شبه مركز المساحة"
+
+#: ../db/base/droptable.c:74
+#, fuzzy
+msgid "Removes a table from database."
+msgstr "اختر البيانات من قاعدة البيانات"
+
+#: ../db/base/execute.c:72 ../db/base/execute.c:77
 #, fuzzy, c-format
-msgid "Error while executing: \"%s\""
+msgid "Error while executing: '%s'"
 msgstr "خطا اثناء التنفيذ: \"%s\"\n"
 
-#: ../db/base/execute.c:101
-msgid "Execute any SQL statement."
+#: ../db/base/execute.c:102
+msgid "Executes any SQL statement."
 msgstr ""
 
-#: ../db/base/execute.c:108
-msgid "File containing SQL statements"
-msgstr ""
+#: ../db/base/execute.c:106
+#, fuzzy
+msgid "Name of file containing SQL statements"
+msgstr "اسم الخريطة الراسترية الحاوية على درجات الإنحدار"
 
-#: ../db/base/execute.c:130
+#: ../db/base/execute.c:119
 #, fuzzy
 msgid "Ignore SQL errors and continue"
 msgstr "اهمال اخطاء اس.كيو.ال والاستمرار"
 
-#: ../db/base/select.c:182
-msgid "Table name, select all from this table"
-msgstr "اسم الجدول, اختر الكل من هذا الجدول"
-
-#: ../db/base/select.c:205
-msgid ""
-"SQL select statement, for example: 'select * from rybniky where kapri = "
-"'hodne'"
+#: ../db/base/select.c:192
+msgid "SQL select statement"
 msgstr ""
 
-#: ../db/base/select.c:211
-msgid "output field separator"
-msgstr "الفاصل الحقلي للمخرج"
+#: ../db/base/select.c:193
+msgid "For example: 'select * from rybniky where kapri = 'hodne'"
+msgstr ""
 
-#: ../db/base/select.c:218
-msgid "output vertical record separator"
+#: ../db/base/select.c:196 ../raster/r.distance/parse.c:50
+#: ../raster/r.stats/main.c:108 ../vector/v.db.select/main.c:65
+msgid "Output field separator"
+msgstr "الفاصل الحقلى بين بيانات المخرج"
+
+#: ../db/base/select.c:200 ../vector/v.db.select/main.c:72
+#, fuzzy
+msgid "Output vertical record separator"
 msgstr "فاصل التسجيل الراسى للمخرج "
 
-#: ../db/base/select.c:224
-msgid "null value indicator"
+#: ../db/base/select.c:207 ../vector/v.db.select/main.c:78
+#, fuzzy
+msgid "Null value indicator"
 msgstr "مؤشر القيمة المنعدمة"
 
-#: ../db/base/select.c:231
-msgid "filename with sql statement"
+#: ../db/base/select.c:211
+#, fuzzy
+msgid "Name of file with sql statement"
 msgstr "اسم الملف بتعبير اس.كيو.ال"
 
-#: ../db/base/select.c:236
-msgid "do not include column names in output"
+#: ../db/base/select.c:215 ../vector/v.db.select/main.c:82
+#, fuzzy
+msgid "Do not include column names in output"
 msgstr "لاتشمل اسماء الأعمدة في المخرج"
 
-#: ../db/base/select.c:240
-msgid "describe query only (don't run it)"
+#: ../db/base/select.c:219
+#, fuzzy
+msgid "Describe query only (don't run it)"
 msgstr "(وصف الاستفهام فقط(بدون تنفيذ"
 
-#: ../db/base/select.c:244
-msgid "vertical output (instead of horizontal)"
+#: ../db/base/select.c:223 ../vector/v.db.select/main.c:86
+#, fuzzy
+msgid "Vertical output (instead of horizontal)"
 msgstr "(مخرج راسي (بدلا من الافقي"
 
-#: ../db/base/select.c:248
+#: ../db/base/select.c:227
 msgid "Only test query, do not execute"
 msgstr ""
 
-#: ../db/base/select.c:253
-msgid "Select data from database."
+#: ../db/base/select.c:232
+#, fuzzy
+msgid "Selects data from table."
 msgstr "اختر البيانات من قاعدة البيانات"
 
-#: ../db/base/tables.c:92
+#: ../db/base/tables.c:83
 #, fuzzy
 msgid "Print tables and exit"
 msgstr "طباعة الجداول والخروج"
 
-#: ../db/base/tables.c:96
+#: ../db/base/tables.c:87
 #, fuzzy
 msgid "System tables instead of user tables"
 msgstr "جداول النظام بدلا من جداول المستخدم"
 
-#: ../db/base/tables.c:101
-msgid "List all tables for a given database."
+#: ../db/base/tables.c:92
+#, fuzzy
+msgid "Lists all tables for a given database."
 msgstr "عرض كل الجداول لقعدة بيانات معطاه"
 
 #: ../db/db.login/main.c:43
-msgid "Set user/password for driver/database"
+msgid "Sets user/password for driver/database."
 msgstr ""
 
-#: ../db/db.login/main.c:67
-msgid "User"
-msgstr ""
+#: ../db/db.login/main.c:59
+#, fuzzy
+msgid "Username"
+msgstr "اسم الجدول"
 
-#: ../db/db.login/main.c:74
+#: ../db/db.login/main.c:66
 msgid "Password"
 msgstr ""
 
-#: ../db/db.login/main.c:89
+#: ../db/db.login/main.c:81
 #, c-format
 msgid ""
 "\n"
@@ -297,25 +311,27 @@ msgid ""
 "<%s:%s:user=%s>\n"
 msgstr ""
 
-#: ../db/db.login/main.c:90
+#: ../db/db.login/main.c:82
 #, c-format
 msgid "Hit RETURN to cancel request\n"
 msgstr ""
 
-#: ../db/db.login/main.c:98
+#: ../db/db.login/main.c:90
 msgid "Exiting. Not changing current settings"
 msgstr ""
 
-#: ../db/db.login/main.c:101
-msgid "New password set."
+#: ../db/db.login/main.c:93
+msgid "New password set"
 msgstr ""
 
-#: ../db/db.login/main.c:108
-msgid "Cannot set user/password"
+#: ../db/db.login/main.c:100
+#, fuzzy
+msgid "Unable to set user/password"
 msgstr "لم يمكن ضبط المستخدمكلمة المرور"
 
-#: ../db/db.login/main.c:112
-msgid "The password was stored in file."
+#: ../db/db.login/main.c:104
+#, fuzzy
+msgid "The password was stored in file"
 msgstr "حفظت كلمة المرور فى ملف"
 
 #: ../db/drivers/mysql/cursor.c:46
@@ -486,7 +502,7 @@ msgstr "لم يتم تمييز القيمة الجبريى"
 msgid "Unknown option in database definition for PostgreSQL: "
 msgstr "PostgreSQL: خيار غير معروف فى تعريف قاعدة البيانات ل "
 
-#: ../db/drivers/sqlite/describe.c:136
+#: ../db/drivers/sqlite/describe.c:161
 #, fuzzy, c-format
 msgid "SQLite driver: column '%s', SQLite type %d  is not supported"
 msgstr "غير مدعم %d نوع,'%s' عمود :pg مشغل ال "
@@ -516,13 +532,14 @@ msgstr "خروج"
 #: ../doc/raster/r.example/main.c:110 ../display/d.extend/main.c:62
 #: ../display/d.his/main.c:137 ../display/d.his/main.c:177
 #: ../display/d.his/main.c:205 ../display/d.histogram/main.c:157
-#: ../display/d.legend/main.c:255 ../display/d.profile/main.c:92
-#: ../display/d.rast/main.c:111 ../display/d.rast.arrow/arrow.c:196
-#: ../display/d.rast.arrow/arrow.c:238 ../display/d.rast.arrow/arrow.c:374
-#: ../display/d.rast.num/number.c:150 ../display/d.rgb/main.c:100
-#: ../display/d.title/main.c:105 ../display/d.what.rast/main.c:150
-#: ../display/d.zoom/main.c:218 ../general/g.region/cmd/main.c:458
-#: ../general/g.region/cmd/main.c:816 ../general/g.region/cmd/main.c:825
+#: ../display/d.legend/main.c:255 ../display/d.nviz/main.c:183
+#: ../display/d.profile/main.c:92 ../display/d.rast/main.c:111
+#: ../display/d.rast.arrow/arrow.c:196 ../display/d.rast.arrow/arrow.c:238
+#: ../display/d.rast.arrow/arrow.c:374 ../display/d.rast.num/number.c:150
+#: ../display/d.rgb/main.c:100 ../display/d.title/main.c:105
+#: ../display/d.what.rast/main.c:150 ../display/d.zoom/main.c:218
+#: ../general/g.region/cmd/main.c:458 ../general/g.region/cmd/main.c:816
+#: ../general/g.region/cmd/main.c:825 ../imagery/i.class/main.c:108
 #: ../imagery/i.fft/fftmain.c:120 ../imagery/i.group/main.c:177
 #: ../imagery/i.group/main.c:215 ../imagery/i.his.rgb/openfiles.c:32
 #: ../imagery/i.his.rgb/openfiles.c:37 ../imagery/i.his.rgb/openfiles.c:42
@@ -532,16 +549,17 @@ msgstr "خروج"
 #: ../raster/r.bitpattern/main.c:101 ../raster/r.carve/main.c:173
 #: ../raster/r.cats/main.c:97 ../raster/r.clump/main.c:88
 #: ../raster/r.contour/main.c:156 ../raster/r.cost/main.c:319
-#: ../raster/r.covar/main.c:96 ../raster/r.his/main.c:126
-#: ../raster/r.his/main.c:167 ../raster/r.his/main.c:195
-#: ../raster/r.info/main.c:116 ../raster/r.kappa/main.c:141
-#: ../raster/r.kappa/stats.c:30 ../raster/r.kappa/stats.c:35
-#: ../raster/r.los/main.c:164 ../raster/r.los/main.c:171
-#: ../raster/r.mapcalc/map.c:380 ../raster/r.median/main.c:73
-#: ../raster/r.mfilter/main.c:117 ../raster/r.neighbors/main.c:173
-#: ../raster/r.out.bin/main.c:129 ../raster/r.out.mat/main.c:94
-#: ../raster/r.out.pov/main.c:171 ../raster/r.out.ppm/main.c:115
-#: ../raster/r.out.ppm3/main.c:117 ../raster/r.out.tiff/r.out.tiff.c:167
+#: ../raster/r.covar/main.c:96 ../raster/r.grow2/main.c:185
+#: ../raster/r.his/main.c:126 ../raster/r.his/main.c:167
+#: ../raster/r.his/main.c:195 ../raster/r.info/main.c:116
+#: ../raster/r.kappa/main.c:141 ../raster/r.kappa/stats.c:30
+#: ../raster/r.kappa/stats.c:35 ../raster/r.los/main.c:164
+#: ../raster/r.los/main.c:171 ../raster/r.mapcalc/map.c:380
+#: ../raster/r.median/main.c:73 ../raster/r.mfilter/main.c:117
+#: ../raster/r.neighbors/main.c:179 ../raster/r.out.bin/main.c:129
+#: ../raster/r.out.mat/main.c:94 ../raster/r.out.pov/main.c:171
+#: ../raster/r.out.ppm/main.c:115 ../raster/r.out.ppm3/main.c:117
+#: ../raster/r.out.tiff/r.out.tiff.c:167
 #: ../raster/r.param.scale/interface.c:165 ../raster/r.profile/main.c:142
 #: ../raster/r.random/main.c:93 ../raster/r.reclass/main.c:77
 #: ../raster/r.recode/main.c:82 ../raster/r.resamp.interp/main.c:102
@@ -552,17 +570,18 @@ msgstr "خروج"
 #: ../raster/r.sum/main.c:64 ../raster/r.support/front/front.c:218
 #: ../raster/r.support/modcolr/modcolr.c:43 ../raster/r.mfilter.fp/main.c:124
 #: ../raster/r.surf.area/main.c:121 ../raster/r.surf.idw/main.c:108
-#: ../raster/r.texture/main.c:224 ../raster/r.to.rast3elev/main.c:114
-#: ../raster/r.to.rast3elev/main.c:129 ../raster/r.to.vect/main.c:108
-#: ../raster/r.topidx/check_ready.c:12 ../raster/r.univar2/r.univar_main.c:93
-#: ../raster/simwe/simlib/input.c:159 ../raster/simwe/simlib/input.c:164
-#: ../raster/simwe/simlib/input.c:169 ../raster/simwe/simlib/input.c:174
-#: ../raster/simwe/simlib/input.c:180 ../raster/simwe/simlib/input.c:186
-#: ../raster/simwe/simlib/input.c:192 ../raster/simwe/simlib/input.c:198
-#: ../raster/simwe/simlib/input.c:204 ../raster/simwe/simlib/input.c:210
-#: ../raster/simwe/simlib/input.c:216 ../raster3d/base/r3.info.main.c:123
-#: ../vector/v.extrude/main.c:195 ../vector/v.sample/main.c:157
-#: ../vector/v.what.rast/main.c:129
+#: ../raster/r.texture/main.c:224 ../raster/r.thin/io.c:97
+#: ../raster/r.to.rast3elev/main.c:114 ../raster/r.to.rast3elev/main.c:129
+#: ../raster/r.to.vect/main.c:108 ../raster/r.topidx/check_ready.c:12
+#: ../raster/r.univar2/r.univar_main.c:93 ../raster/simwe/simlib/input.c:171
+#: ../raster/simwe/simlib/input.c:176 ../raster/simwe/simlib/input.c:181
+#: ../raster/simwe/simlib/input.c:186 ../raster/simwe/simlib/input.c:192
+#: ../raster/simwe/simlib/input.c:198 ../raster/simwe/simlib/input.c:205
+#: ../raster/simwe/simlib/input.c:212 ../raster/simwe/simlib/input.c:219
+#: ../raster/simwe/simlib/input.c:226 ../raster/simwe/simlib/input.c:233
+#: ../raster3d/base/r3.info.main.c:123 ../vector/v.extrude/main.c:171
+#: ../vector/v.sample/main.c:157 ../vector/v.what.rast/main.c:129
+#: ../visualization/xganim/main.c:342
 #, fuzzy, c-format
 msgid "Raster map <%s> not found"
 msgstr "غير موجودة <%s> الخريطة الراسترية "
@@ -570,46 +589,51 @@ msgstr "غير موجودة <%s> الخريطة الراسترية "
 #: ../doc/raster/r.example/main.c:113 ../general/manage/cmd/copy.c:92
 #: ../general/manage/cmd/rename.c:87 ../imagery/i.ifft/ifftmain.c:107
 #: ../raster/r.bitpattern/main.c:104 ../raster/r.clump/main.c:91
-#: ../raster/r.cost/main.c:324 ../raster/r.in.mat/main.c:352
-#: ../raster/r.los/main.c:176 ../raster/r.median/main.c:75
-#: ../raster/r.mode/main.c:95 ../raster/r.neighbors/main.c:178
-#: ../raster/r.random/main.c:116 ../raster/r.random/main.c:121
-#: ../raster/r.reclass/main.c:80 ../raster/r.recode/main.c:85
-#: ../raster/r.slope.aspect/opennew.c:11
+#: ../raster/r.cost/main.c:324 ../raster/r.in.ascii/main.c:207
+#: ../raster/r.in.mat/main.c:352 ../raster/r.los/main.c:176
+#: ../raster/r.median/main.c:75 ../raster/r.mode/main.c:95
+#: ../raster/r.neighbors/main.c:184 ../raster/r.random/main.c:116
+#: ../raster/r.random/main.c:121 ../raster/r.reclass/main.c:80
+#: ../raster/r.recode/main.c:85 ../raster/r.slope.aspect/opennew.c:11
 #: ../raster/r.surf.fractal/interface.c:84 ../raster/r.surf.idw/main.c:112
-#: ../raster/r.surf.idw2/main.c:83 ../raster/r.texture/main.c:227
+#: ../raster/r.surf.idw2/main.c:84 ../raster/r.texture/main.c:227
 #: ../raster/r.to.rast3elev/main.c:474 ../raster/r.walk/main.c:531
 #: ../raster/r.watershed/shed/com_line.c:194
 #: ../raster/r.watershed/shed/com_line.c:224
 #: ../swig/perl/R_slope_aspect/r_slope_aspect/opennew.c:11
-#: ../vector/v.in.ogr/main.c:290 ../vector/v.kernel/main.c:232
+#: ../vector/v.in.ogr/main.c:293 ../vector/v.kernel/main.c:232
 #: ../vector/v.surf.idw/main.c:121 ../vector/v.to.rast3/main.c:68
 #, fuzzy, c-format
 msgid "<%s> is an illegal file name"
 msgstr "اسم ااملف المخرج"
 
 #: ../doc/raster/r.example/main.c:121 ../display/d.his/main.c:142
-#: ../display/d.his/main.c:167 ../display/d.rast/display.c:92
+#: ../display/d.his/main.c:167 ../display/d.nviz/main.c:185
+#: ../display/d.profile/ExtractProf.c:95 ../display/d.profile/What.c:30
+#: ../display/d.rast/display.c:92 ../display/d.rast.arrow/arrow.c:382
 #: ../display/d.rast.edit/cell.c:90 ../display/d.rast.num/number.c:154
 #: ../display/d.rgb/main.c:104 ../imagery/i.gensig/opencell.c:12
 #: ../imagery/i.smap/shapiro/opencell.c:16 ../raster/r.bilinear/main.c:92
 #: ../raster/r.bitpattern/main.c:108 ../raster/r.carve/main.c:176
 #: ../raster/r.clump/main.c:95 ../raster/r.contour/main.c:160
 #: ../raster/r.cost/main.c:337 ../raster/r.covar/main.c:99
-#: ../raster/r.his/main.c:130 ../raster/r.his/main.c:156
-#: ../raster/r.his/main.c:184 ../raster/r.los/main.c:197
-#: ../raster/r.los/main.c:209 ../raster/r.out.mat/main.c:99
-#: ../raster/r.out.pov/main.c:175 ../raster/r.out.ppm/main.c:120
-#: ../raster/r.out.ppm3/main.c:121 ../raster/r.resamp.interp/main.c:137
+#: ../raster/r.grow2/main.c:201 ../raster/r.his/main.c:130
+#: ../raster/r.his/main.c:156 ../raster/r.his/main.c:184
+#: ../raster/r.los/main.c:197 ../raster/r.los/main.c:209
+#: ../raster/r.mapcalc/map3.c:527 ../raster/r.out.bin/main.c:133
+#: ../raster/r.out.mat/main.c:99 ../raster/r.out.pov/main.c:175
+#: ../raster/r.out.ppm/main.c:120 ../raster/r.out.ppm3/main.c:121
+#: ../raster/r.profile/main.c:144 ../raster/r.resamp.interp/main.c:137
 #: ../raster/r.resamp.rst/main.c:405 ../raster/r.resamp.rst/main.c:437
 #: ../raster/r.resamp.stats/main.c:335 ../raster/r.sum/main.c:68
 #: ../raster/r.surf.area/main.c:124 ../raster/r.surf.idw/main.c:135
-#: ../raster/r.texture/main.c:230 ../raster/r.to.rast3/main.c:358
-#: ../raster/r.to.rast3elev/main.c:161 ../raster/r.to.vect/main.c:111
-#: ../raster/r.univar2/r.univar_main.c:98 ../raster/r.walk/main.c:545
-#: ../raster/r.walk/main.c:548 ../raster/r.walk/main.c:855
-#: ../vector/v.extrude/main.c:199 ../vector/v.to.rast/support.c:246
-#: ../vector/v.to.rast/support.c:393 ../visualization/xganim/main.c:344
+#: ../raster/r.texture/main.c:230 ../raster/r.thin/io.c:102
+#: ../raster/r.to.rast3/main.c:358 ../raster/r.to.rast3elev/main.c:161
+#: ../raster/r.to.vect/main.c:111 ../raster/r.univar2/r.univar_main.c:98
+#: ../raster/r.walk/main.c:545 ../raster/r.walk/main.c:548
+#: ../raster/r.walk/main.c:855 ../vector/v.extrude/main.c:175
+#: ../vector/v.sample/main.c:160 ../vector/v.to.rast/support.c:246
+#: ../vector/v.to.rast/support.c:393 ../visualization/xganim/main.c:346
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s>"
 msgstr "<%s> لم يمكن فتح"
@@ -621,15 +645,20 @@ msgstr "لم بمكن قراءة معلومات الحقل"
 
 #: ../doc/raster/r.example/main.c:140 ../imagery/i.smap/shapiro/opencell.c:31
 #: ../raster/r.bilinear/main.c:103 ../raster/r.bitpattern/main.c:125
-#: ../raster/r.clump/main.c:99 ../raster/r.in.mat/main.c:386
-#: ../raster/r.in.xyz/main.c:327 ../raster/r.los/main.c:202
-#: ../raster/r.mapcalc/map.c:513 ../raster/r.resamp.interp/main.c:147
+#: ../raster/r.carve/main.c:182 ../raster/r.circle/dist.c:127
+#: ../raster/r.clump/main.c:99 ../raster/r.composite/main.c:200
+#: ../raster/r.grow2/main.c:207 ../raster/r.in.arc/main.c:151
+#: ../raster/r.in.ascii/main.c:210 ../raster/r.in.mat/main.c:386
+#: ../raster/r.in.xyz/main.c:327 ../raster/r.li/r.li.daemon/daemon.c:113
+#: ../raster/r.los/main.c:202 ../raster/r.mapcalc/map.c:513
+#: ../raster/r.mapcalc/map3.c:598 ../raster/r.resamp.interp/main.c:147
 #: ../raster/r.resamp.stats/main.c:346 ../raster/r.series/main.c:183
-#: ../raster/r.surf.idw/main.c:147 ../raster/r.surf.idw2/main.c:110
-#: ../raster/r.texture/main.c:303 ../raster3d/r3.to.rast/main.c:183
-#: ../vector/lidar/v.surf.bspline/main.c:256 ../vector/v.kernel/main.c:236
-#: ../vector/v.surf.idw/main.c:234 ../vector/v.to.rast/vect2rast.c:118
-#: ../vector/v.to.rast/vect2rast.c:122
+#: ../raster/r.surf.idw/main.c:147 ../raster/r.surf.idw2/main.c:111
+#: ../raster/r.surf.random/randsurf.c:29 ../raster/r.surf.random/randsurf.c:33
+#: ../raster/r.texture/main.c:303 ../raster/r.thin/io.c:176
+#: ../raster3d/r3.to.rast/main.c:183 ../vector/lidar/v.surf.bspline/main.c:256
+#: ../vector/v.kernel/main.c:236 ../vector/v.surf.idw/main.c:234
+#: ../vector/v.to.rast/vect2rast.c:118 ../vector/v.to.rast/vect2rast.c:122
 #, fuzzy, c-format
 msgid "Unable to create raster map <%s>"
 msgstr "اسم الخريطة الراسترية الناتجة"
@@ -769,7 +798,7 @@ msgstr ""
 #: ../display/d.histogram/main.c:175 ../display/d.info/main.c:68
 #: ../display/d.legend/main.c:274 ../display/d.linegraph/linegraph.c:256
 #: ../display/d.measure/main.c:86 ../display/d.menu/main.c:107
-#: ../display/d.nviz/main.c:254 ../display/d.paint.labels/main.c:87
+#: ../display/d.nviz/main.c:247 ../display/d.paint.labels/main.c:87
 #: ../display/d.path/main.c:158 ../display/d.profile/main.c:135
 #: ../display/d.rast/main.c:114 ../display/d.rast.arrow/arrow.c:246
 #: ../display/d.rast.num/number.c:129 ../display/d.rgb/main.c:87
@@ -867,17 +896,18 @@ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
 #: ../display/d.vect.chart/main.c:227 ../display/d.what.vect/main.c:149
 #: ../display/d.zoom/main.c:259 ../general/g.region/cmd/main.c:526
 #: ../raster/r.carve/main.c:167 ../raster/r.cost/main.c:298
-#: ../raster/r.region/main.c:229 ../vector/lidar/v.lidar.correction/main.c:138
+#: ../raster/r.region/main.c:230 ../vector/lidar/v.lidar.correction/main.c:138
 #: ../vector/lidar/v.lidar.edgedetection/main.c:164
 #: ../vector/lidar/v.lidar.growing/main.c:119
 #: ../vector/lidar/v.outlier/main.c:143
 #: ../vector/lidar/v.surf.bspline/main.c:196
 #: ../vector/lidar/v.surf.bspline/main.c:213 ../vector/v.clean/main.c:225
-#: ../vector/v.convert/old2new.c:27 ../vector/v.db.connect/main.c:134
-#: ../vector/v.extract/main.c:143 ../vector/v.extrude/main.c:159
-#: ../vector/v.hull/main.c:253 ../vector/v.info/main.c:96
-#: ../vector/v.kcv/main.c:132 ../vector/v.kernel/main.c:192
-#: ../vector/v.label/main.c:276 ../vector/v.lrs/v.lrs.create/main.c:220
+#: ../vector/v.convert/old2new.c:27 ../vector/v.db.connect/main.c:113
+#: ../vector/v.db.select/main.c:101 ../vector/v.extract/main.c:143
+#: ../vector/v.extrude/main.c:137 ../vector/v.hull/main.c:253
+#: ../vector/v.info/main.c:96 ../vector/v.kcv/main.c:132
+#: ../vector/v.kernel/main.c:192 ../vector/v.label/main.c:276
+#: ../vector/v.lrs/v.lrs.create/main.c:220
 #: ../vector/v.lrs/v.lrs.create/main.c:228
 #: ../vector/v.lrs/v.lrs.label/main.c:256
 #: ../vector/v.lrs/v.lrs.segment/main.c:135
@@ -887,12 +917,13 @@ msgstr "اسم الخريطة الراسترية  للعرض كخلفية"
 #: ../vector/v.net.iso/main.c:174 ../vector/v.net.path/main.c:126
 #: ../vector/v.net.salesman/main.c:159 ../vector/v.net.steiner/main.c:394
 #: ../vector/v.out.ogr/main.c:190 ../vector/v.out.svg/main.c:124
-#: ../vector/v.perturb/main.c:153 ../vector/v.sample/main.c:151
-#: ../vector/v.segment/main.c:95 ../vector/v.select/main.c:180
-#: ../vector/v.surf.rst/main.c:513 ../vector/v.to.db/parse.c:117
-#: ../vector/v.to.points/main.c:228 ../vector/v.to.rast/vect2rast.c:37
+#: ../vector/v.overlay/main.c:184 ../vector/v.perturb/main.c:153
+#: ../vector/v.sample/main.c:151 ../vector/v.segment/main.c:95
+#: ../vector/v.select/main.c:180 ../vector/v.surf.rst/main.c:513
+#: ../vector/v.to.db/parse.c:117 ../vector/v.to.points/main.c:228
+#: ../vector/v.to.rast/vect2rast.c:37 ../vector/v.transform/main.c:228
 #: ../vector/v.type/main.c:204 ../vector/v.univar/main.c:109
-#: ../vector/v.what/main.c:170 ../vector/v.what.rast/main.c:113
+#: ../vector/v.what/main.c:142 ../vector/v.what.rast/main.c:113
 #, fuzzy, c-format
 msgid "Vector map <%s> not found"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
@@ -1142,12 +1173,12 @@ msgid "Grid color"
 msgstr " nv لون\n"
 
 #: ../display/d.grid/main.c:79 ../vector/v.label/main.c:202
-#: ../vector/v.lrs/v.lrs.label/main.c:213
+#: ../vector/v.label.sa/main.c:189 ../vector/v.lrs/v.lrs.label/main.c:213
 msgid "Border color"
 msgstr ""
 
 #: ../display/d.grid/main.c:84 ../vector/v.label/main.c:151
-#: ../vector/v.lrs/v.lrs.label/main.c:172
+#: ../vector/v.label.sa/main.c:145 ../vector/v.lrs/v.lrs.label/main.c:172
 #, fuzzy
 msgid "Text color"
 msgstr " اللون الأساس\n"
@@ -1593,8 +1624,7 @@ msgstr "وصف مبسط للخريطة الراسترية الجدىدة"
 
 #: ../display/d.linegraph/linegraph.c:194
 #: ../display/d.linegraph/linegraph.c:206 ../raster/r.in.xyz/main.c:312
-#: ../vector/v.lrs/v.lrs.segment/main.c:129 ../vector/v.net.path/path.c:46
-#: ../vector/v.segment/main.c:89
+#: ../vector/v.net.path/path.c:46
 #, fuzzy, c-format
 msgid "Could not open input file <%s>."
 msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
@@ -1828,118 +1858,102 @@ msgid "Error - Locking mechanism failed"
 msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
 
 #: ../display/d.nviz/main.c:69
-msgid "Create fly-through script to run in NVIZ"
+msgid "Creates fly-through script to run in NVIZ."
 msgstr ""
 
-#: ../display/d.nviz/main.c:77
-#, fuzzy
-msgid "Name of existing raster map"
-msgstr ""
-"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
-"اسم الملف الراسترى الموجود\n"
-"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
-"اسم الخريطة الراسترية الموجودة"
-
-#: ../display/d.nviz/main.c:83
+#: ../display/d.nviz/main.c:74
 #, fuzzy
 msgid "Name of output script"
 msgstr "اسم الخريطة المخرجة"
 
-#: ../display/d.nviz/main.c:89
+#: ../display/d.nviz/main.c:80
 msgid "Prefix of output images (default = NVIZ)"
 msgstr ""
 
-#: ../display/d.nviz/main.c:97
+#: ../display/d.nviz/main.c:88
 #, fuzzy
 msgid "Route coordinates (east,north)"
 msgstr "طباعة احداثيات الشبكة - الشرق والشمال"
 
-#: ../display/d.nviz/main.c:103
+#: ../display/d.nviz/main.c:94
 msgid "Camera layback distance (in map units)"
 msgstr ""
 
-#: ../display/d.nviz/main.c:109
+#: ../display/d.nviz/main.c:100
 msgid "Camera height above terrain"
 msgstr ""
 
-#: ../display/d.nviz/main.c:115
+#: ../display/d.nviz/main.c:106
 #, fuzzy
 msgid "Number of frames"
 msgstr "عدد الصفوف"
 
-#: ../display/d.nviz/main.c:121
+#: ../display/d.nviz/main.c:112
 msgid "Start frame number (default=0)"
 msgstr ""
 
-#: ../display/d.nviz/main.c:126
+#: ../display/d.nviz/main.c:117
 #, fuzzy
 msgid "Interactively select route"
 msgstr "إختيار النقاط الطرفية تفاغليا"
 
-#: ../display/d.nviz/main.c:130
+#: ../display/d.nviz/main.c:121
 msgid "Full render -- Save images"
 msgstr ""
 
-#: ../display/d.nviz/main.c:134
+#: ../display/d.nviz/main.c:125
 #, fuzzy
 msgid "Fly at constant elevation (ht)"
 msgstr "اسم خريطة الإرتفاعات"
 
-#: ../display/d.nviz/main.c:138
+#: ../display/d.nviz/main.c:129
 msgid "Include command in the script to output a KeyFrame file"
 msgstr ""
 
-#: ../display/d.nviz/main.c:142
+#: ../display/d.nviz/main.c:133
 msgid "Render images off-screen"
 msgstr ""
 
-#: ../display/d.nviz/main.c:146
+#: ../display/d.nviz/main.c:137
 msgid "Enable vector and sites drawing"
 msgstr ""
 
-#: ../display/d.nviz/main.c:154
+#: ../display/d.nviz/main.c:145
 msgid "Either -i flag and/or route parameter must be used"
 msgstr ""
 
-#: ../display/d.nviz/main.c:176
+#: ../display/d.nviz/main.c:169
 msgid "Off-screen only available with full render mode"
 msgstr ""
 
-#: ../display/d.nviz/main.c:190
+#: ../display/d.nviz/main.c:202 ../general/g.pnmcomp/main.c:262
+#: ../general/g.pnmcomp/main.c:280 ../raster/r.out.ppm3/main.c:147
+#: ../raster/r.profile/main.c:157 ../vector/v.out.ascii/out.c:137
+#: ../vector/v.out.vtk/main.c:163
 #, fuzzy, c-format
-msgid "Cannot find mapset for %s"
-msgstr "لم يمكن حشر صف جديد: %s"
-
-#: ../display/d.nviz/main.c:192
-#, fuzzy, c-format
-msgid "Cannot open File %s"
-msgstr "%s لم يتم فتح قاعدة البيانات"
-
-#: ../display/d.nviz/main.c:209
-#, fuzzy, c-format
-msgid "Not able to open file for [%s]"
+msgid "Unable to open file <%s>"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
-#: ../display/d.nviz/main.c:285
+#: ../display/d.nviz/main.c:278
 msgid "You must select more than one point"
 msgstr ""
 
-#: ../display/d.nviz/main.c:303
+#: ../display/d.nviz/main.c:296
 #, fuzzy
 msgid "You must select at least four points"
 msgstr "نقطة %d فى حاجة لإدخال على الأقل"
 
-#: ../display/d.nviz/main.c:320
+#: ../display/d.nviz/main.c:313
 #, fuzzy, c-format
 msgid "You must provide at least four points %d"
 msgstr "نقطة %d فى حاجة لإدخال على الأقل"
 
-#: ../display/d.nviz/main.c:394
+#: ../display/d.nviz/main.c:387
 #, c-format
 msgid "Created NVIZ script <%s>."
 msgstr ""
 
-#: ../display/d.nviz/main.c:537
+#: ../display/d.nviz/main.c:530
 msgid ""
 "Skipping this point, selected point is outside region. Perhaps the camera "
 "setback distance puts it beyond the edge?"
@@ -1974,9 +1988,9 @@ msgid "Maximum region size (diagonal) when labels are displayed"
 msgstr ""
 
 #: ../display/d.paint.labels/main.c:84
-#, c-format
-msgid "Label file [%s] not available"
-msgstr ""
+#, fuzzy, c-format
+msgid "Label file <%s> not found"
+msgstr "غير موجود <%s> الراستر"
 
 #: ../display/d.paint.labels/main.c:99 ../display/d.vect/main.c:386
 #, fuzzy
@@ -1988,10 +2002,10 @@ msgstr "لن يتم عرض شيئ ,minreg حجم المنطقة اقل من أص
 msgid "Region size is greater than maxreg, nothing displayed."
 msgstr "لن يتم عرض شيئ ,maxreg حجم المنطقة اكبر من اكبرحجم مسجل\n"
 
-#: ../display/d.paint.labels/main.c:118
+#: ../display/d.paint.labels/main.c:118 ../vector/v.lrs/v.lrs.label/main.c:269
 #, fuzzy, c-format
-msgid "Can't open label file [%s]"
-msgstr "%s لم يمكن فتح ملف المدى ل"
+msgid "Unable to open label file <%s>"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../display/d.path/main.c:48
 msgid "display, networking"
@@ -2043,7 +2057,8 @@ msgid "Rendering"
 msgstr "dig قراءة ملف...\n"
 
 #: ../display/d.path/main.c:114 ../general/g.pnmcomp/main.c:356
-#: ../vector/v.label/main.c:193 ../vector/v.lrs/v.lrs.label/main.c:205
+#: ../vector/v.label/main.c:193 ../vector/v.label.sa/main.c:170
+#: ../vector/v.lrs/v.lrs.label/main.c:205
 msgid "Background color"
 msgstr ""
 
@@ -2133,23 +2148,14 @@ msgid ""
 "\n"
 msgstr "%f = المسافة من شبكة الأعمال , %f = المسافة الى شبكة الأعمال\n"
 
-#: ../display/d.profile/ExtractProf.c:95
-#, fuzzy, c-format
-msgid "unable to open [%s] in [%s]"
-msgstr "<%s> لم يمكن فتح"
-
 #: ../display/d.profile/Range.c:92
 msgid "one moment ..."
 msgstr ""
 
-#: ../display/d.profile/What.c:30
-#, fuzzy, c-format
-msgid "warning: unable to open [%s] in [%s]"
-msgstr "<%s> لم يمكن فتح"
-
 #: ../display/d.profile/What.c:36
-msgid "error reading raster map"
-msgstr ""
+#, fuzzy
+msgid "Error reading raster map"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #: ../display/d.profile/main.c:62
 msgid "Interactive profile plotting utility with optional output."
@@ -2317,32 +2323,30 @@ msgid "Scale factor for arrows (magnitude map)"
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:225
-msgid "Illegal value for scale factor."
-msgstr ""
+#, fuzzy
+msgid "Illegal value for scale factor"
+msgstr "ملف المدخل"
 
 #: ../display/d.rast.arrow/arrow.c:229
-msgid "Illegal value for skip factor."
-msgstr ""
+#, fuzzy
+msgid "Illegal value for skip factor"
+msgstr "ملف المدخل"
 
 #: ../display/d.rast.arrow/arrow.c:234
 msgid "Magnitude is only supported for GRASS and compass aspect maps."
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:241
-msgid "scale option requires magnitude_map"
+msgid "Scale option requires magnitude_map"
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:314
-msgid "Problem reading range file."
-msgstr ""
+#, fuzzy
+msgid "Problem reading range file"
+msgstr "<%s> لم يمكن فتح"
 
 #: ../display/d.rast.arrow/arrow.c:370
 msgid "No raster map exists in the current window"
-msgstr ""
-
-#: ../display/d.rast.arrow/arrow.c:382
-#, c-format
-msgid "Unable to open raster map [%s] in [%s]"
 msgstr ""
 
 #: ../display/d.rast.edit/cell.c:43
@@ -2519,14 +2523,15 @@ msgid "value [%.0f,%.0f] out of range [0-100]"
 msgstr ""
 
 #: ../display/d.text/main.c:191 ../display/d.text.new/main.c:398
-#: ../display/d.title/main.c:117 ../raster/r.in.ascii/main.c:130
-#: ../raster/r.in.ascii/main.c:160 ../raster/r.resamp.rst/main.c:616
-#: ../raster/r.resamp.rst/main.c:627 ../raster/r.resamp.rst/main.c:639
-#: ../raster/r.resamp.rst/main.c:652 ../raster/r.resamp.rst/main.c:664
-#: ../raster/r.resamp.rst/main.c:676 ../vector/v.in.ascii/in.c:237
-#: ../vector/v.surf.rst/main.c:590 ../vector/v.surf.rst/main.c:598
-#: ../vector/v.surf.rst/main.c:606 ../vector/v.surf.rst/main.c:615
-#: ../vector/v.surf.rst/main.c:623 ../vector/v.surf.rst/main.c:631
+#: ../display/d.title/main.c:117 ../raster/r.in.arc/main.c:113
+#: ../raster/r.in.ascii/main.c:130 ../raster/r.in.ascii/main.c:160
+#: ../raster/r.resamp.rst/main.c:616 ../raster/r.resamp.rst/main.c:627
+#: ../raster/r.resamp.rst/main.c:639 ../raster/r.resamp.rst/main.c:652
+#: ../raster/r.resamp.rst/main.c:664 ../raster/r.resamp.rst/main.c:676
+#: ../vector/v.in.ascii/in.c:237 ../vector/v.surf.rst/main.c:590
+#: ../vector/v.surf.rst/main.c:598 ../vector/v.surf.rst/main.c:606
+#: ../vector/v.surf.rst/main.c:615 ../vector/v.surf.rst/main.c:623
+#: ../vector/v.surf.rst/main.c:631
 #, fuzzy, c-format
 msgid "Unable to open temporary file <%s>"
 msgstr "لم يتم تحديث الحدود"
@@ -2551,7 +2556,7 @@ msgstr ""
 msgid "Font name"
 msgstr "اسم الجدول"
 
-#: ../display/d.text.freetype/main.c:177 ../vector/v.label.sa/main.c:103
+#: ../display/d.text.freetype/main.c:177
 msgid "Path to TrueType font (including file name)"
 msgstr "استخدام خط ذو نوع حقيقى بما في ذلك اسم الملف "
 
@@ -2606,7 +2611,7 @@ msgstr ""
 msgid "Invalid font: %s"
 msgstr "%s:منطقة غير صالحة"
 
-#: ../display/d.text.freetype/main.c:326 ../vector/v.label.sa/labels.c:93
+#: ../display/d.text.freetype/main.c:326 ../vector/v.label.sa/labels.c:87
 msgid "Unable to initialise FreeType"
 msgstr ""
 
@@ -2756,13 +2761,12 @@ msgid "Cannot read field info"
 msgstr "لم بمكن قراءة معلومات الحقل"
 
 #: ../display/d.vect/area.c:57 ../display/d.vect/attr.c:44
-#: ../display/d.vect/plot1.c:203 ../ps/ps.map/ps_vpoints.c:106
-#: ../raster/r.contour/main.c:179 ../vector/v.buffer/main.c:375
-#: ../vector/v.db.select/main.c:177 ../vector/v.distance/main.c:333
-#: ../vector/v.distance/main.c:364 ../vector/v.in.dxf/write_vect.c:185
-#: ../vector/v.in.ogr/main.c:669 ../vector/v.label/main.c:286
-#: ../vector/v.label.sa/labels.c:85 ../vector/v.surf.rst/main.c:553
-#: ../vector/v.to.rast/vect2rast.c:54 ../vector/v.to.rast3/main.c:85
+#: ../display/d.vect/plot1.c:203 ../ps/ps.map/catval.c:110
+#: ../ps/ps.map/catval.c:171 ../vector/v.buffer/main.c:375
+#: ../vector/v.distance/main.c:333 ../vector/v.distance/main.c:364
+#: ../vector/v.in.dxf/write_vect.c:185 ../vector/v.in.ogr/main.c:672
+#: ../vector/v.label/main.c:286 ../vector/v.label.sa/labels.c:79
+#: ../vector/v.surf.rst/main.c:553 ../vector/v.to.rast3/main.c:85
 #, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
@@ -2903,6 +2907,10 @@ msgstr " nv لون\n"
 #: ../display/d.vect/main.c:330 ../vector/v.label/main.c:156
 #: ../vector/v.label/main.c:182 ../vector/v.label/main.c:198
 #: ../vector/v.label/main.c:207 ../vector/v.label/main.c:217
+#: ../vector/v.label.sa/main.c:150 ../vector/v.label.sa/main.c:159
+#: ../vector/v.label.sa/main.c:166 ../vector/v.label.sa/main.c:175
+#: ../vector/v.label.sa/main.c:185 ../vector/v.label.sa/main.c:194
+#: ../vector/v.label.sa/main.c:201
 msgid "Colors"
 msgstr ""
 
@@ -3008,22 +3016,17 @@ msgstr "%s - لون غير معروف\n"
 msgid "'layer' must be > 0 for 'where'."
 msgstr ""
 
-#: ../display/d.vect/main.c:466 ../vector/v.db.connect/main.c:164
-#: ../vector/v.db.select/main.c:107 ../vector/v.extrude/main.c:179
+#: ../display/d.vect/main.c:466 ../vector/v.db.connect/main.c:148
+#: ../vector/v.db.select/main.c:107 ../vector/v.extrude/main.c:156
 #, fuzzy
 msgid "Database connection not defined"
 msgstr "لم يتم الإتصال بقاعدة البيانات\n"
 
-#: ../display/d.vect/main.c:471 ../vector/v.db.connect/main.c:185
-#: ../vector/v.edit/select.c:408 ../vector/v.out.ogr/main.c:251
+#: ../display/d.vect/main.c:471 ../vector/v.db.connect/main.c:171
+#: ../vector/v.edit/select.c:408 ../vector/v.out.ogr/main.c:278
 #: ../vector/v.out.svg/main.c:138
 #, fuzzy, c-format
 msgid "Unable to open driver <%s>"
-msgstr "<%s> لم يمكن فتح"
-
-#: ../display/d.vect/main.c:476 ../vector/v.edit/select.c:416
-#, fuzzy, c-format
-msgid "Unable to open database <%s>"
 msgstr "<%s> لم يمكن فتح"
 
 #: ../display/d.vect/main.c:490
@@ -3192,7 +3195,7 @@ msgstr ""
 msgid "Print information as plain text to terminal window"
 msgstr ""
 
-#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:98
+#: ../display/d.what.vect/main.c:98 ../vector/v.what/main.c:83
 msgid "Print topological information (debugging)"
 msgstr ""
 
@@ -3208,9 +3211,10 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:142
 #: ../vector/lidar/v.lidar.edgedetection/main.c:174
 #: ../vector/lidar/v.lidar.growing/main.c:125
-#: ../vector/lidar/v.lidar.growing/main.c:128 ../vector/v.net/main.c:159
-#: ../vector/v.support/main.c:126 ../vector/v.surf.rst/main.c:517
-#: ../vector/v.surf.rst/main.c:661
+#: ../vector/lidar/v.lidar.growing/main.c:128 ../vector/v.hull/main.c:260
+#: ../vector/v.net/main.c:159 ../vector/v.support/main.c:126
+#: ../vector/v.surf.rst/main.c:517 ../vector/v.surf.rst/main.c:661
+#: ../vector/v.surf.rst/main.c:752
 #, fuzzy, c-format
 msgid "Unable to open vector map <%s>"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
@@ -3220,7 +3224,7 @@ msgstr "[%s]لم يتم فتح ملف الخلية ل "
 msgid "%s: You must build topology on vector map"
 msgstr ""
 
-#: ../display/d.what.vect/main.c:154
+#: ../display/d.what.vect/main.c:154 ../vector/v.what/main.c:152
 #, fuzzy
 msgid "Building spatial index..."
 msgstr "بناء الدليل الفراغى ..."
@@ -3228,7 +3232,8 @@ msgstr "بناء الدليل الفراغى ..."
 #: ../display/d.what.vect/main.c:172 ../imagery/i.gensig/write_sig.c:20
 #: ../imagery/i.group/main.c:197 ../imagery/i.group/main.c:234
 #: ../imagery/i.group/main.c:279 ../imagery/i.group/main.c:325
-#: ../raster/r.support/front/front.c:348 ../vector/v.voronoi/vo_main.c:322
+#: ../imagery/i.target/main.c:99 ../raster/r.support/front/front.c:348
+#: ../vector/v.voronoi/vo_main.c:322
 #, fuzzy
 msgid "Done."
 msgstr "انتهى\n"
@@ -3250,7 +3255,7 @@ msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
 msgstr " %d:يمين %d:يسار %s:نوع %d: خط "
 
 #: ../display/d.what.vect/what.c:207 ../vector/v.what/what.c:137
-#: ../vector/v.what/what.c:170
+#: ../vector/v.what/what.c:171
 #, c-format
 msgid "Length: %f\n"
 msgstr "%f : الطول\n"
@@ -3270,12 +3275,12 @@ msgstr " Line: %5d  Angle: %.8f\n"
 msgid "length %f\n"
 msgstr "%f : الطول\n"
 
-#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:181
+#: ../display/d.what.vect/what.c:249 ../vector/v.what/what.c:182
 #, c-format
 msgid "Point height: %f\n"
 msgstr "%f : ارتفاع النقطة\n"
 
-#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:193
+#: ../display/d.what.vect/what.c:261 ../vector/v.what/what.c:194
 #, c-format
 msgid "Line height: %f\n"
 msgstr "%f : ارتفاع الخط\n"
@@ -3434,7 +3439,7 @@ msgid ""
 "interactively, with a mouse."
 msgstr ""
 
-#: ../display/d.zoom/main.c:102
+#: ../display/d.zoom/main.c:102 ../vector/v.mkgrid/main.c:71
 #, fuzzy
 msgid "Name of vector map"
 msgstr "اسم الخريطة الراسترية"
@@ -3834,7 +3839,7 @@ msgstr ""
 
 #: ../general/g.pnmcomp/main.c:101
 #, fuzzy, c-format
-msgid "File '%s' not found"
+msgid "File <%s> not found"
 msgstr "غير موجود <%s> الراستر"
 
 #: ../general/g.pnmcomp/main.c:110
@@ -3853,11 +3858,6 @@ msgstr "مساحة: %d  عدد الجزر: %d\n"
 #: ../general/g.pnmcomp/main.c:134 ../general/g.pnmcomp/main.c:152
 msgid "Invalid PGM file"
 msgstr ""
-
-#: ../general/g.pnmcomp/main.c:262 ../general/g.pnmcomp/main.c:280
-#, fuzzy, c-format
-msgid "Unable to open file '%s'"
-msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../general/g.pnmcomp/main.c:267
 #, fuzzy
@@ -4100,7 +4100,7 @@ msgstr "%s:منطقة غير صالحة"
 msgid "Program to manage the boundary definitions for the geographic region."
 msgstr "ضبط تعريفات الحد لخريطة راسترية"
 
-#: ../general/g.region/cmd/main.c:89 ../raster/r.region/main.c:68
+#: ../general/g.region/cmd/main.c:89 ../raster/r.region/main.c:69
 msgid "Set from default region"
 msgstr "ضبط من المنطقة االاساس"
 
@@ -4196,7 +4196,7 @@ msgstr ""
 msgid "Set current region from named region"
 msgstr "ضبط المنطقة الحالية من ابعاد الخريطة المسماه"
 
-#: ../general/g.region/cmd/main.c:167 ../raster/r.region/main.c:95
+#: ../general/g.region/cmd/main.c:167 ../raster/r.region/main.c:96
 msgid "Set region to match this raster map"
 msgstr "ضبط المنطقة الحالية من ابعاد هذه الخريطة "
 
@@ -4205,27 +4205,27 @@ msgstr "ضبط المنطقة الحالية من ابعاد هذه الخريط
 msgid "Set region to match this 3D raster map (both 2D and 3D values)"
 msgstr "ضبط المنطقة الحالية من ابعاد هذه الخريطة "
 
-#: ../general/g.region/cmd/main.c:188 ../raster/r.region/main.c:103
+#: ../general/g.region/cmd/main.c:188 ../raster/r.region/main.c:104
 msgid "Set region to match this vector map"
 msgstr "ضبط المنطقة الحالية من ابعاد هذه الخريطة الفيكتورية"
 
-#: ../general/g.region/cmd/main.c:198 ../raster/r.region/main.c:111
+#: ../general/g.region/cmd/main.c:198 ../raster/r.region/main.c:112
 msgid "Set region to match this 3dview file"
 msgstr "ضبط المنطقة الحالية من ابعاد ملف المنظر الثلاثى الابعاد"
 
-#: ../general/g.region/cmd/main.c:208 ../raster/r.region/main.c:119
+#: ../general/g.region/cmd/main.c:208 ../raster/r.region/main.c:120
 msgid "Value for the northern edge"
 msgstr "قيمة الحافة الشمالية"
 
-#: ../general/g.region/cmd/main.c:218 ../raster/r.region/main.c:127
+#: ../general/g.region/cmd/main.c:218 ../raster/r.region/main.c:128
 msgid "Value for the southern edge"
 msgstr "قيمة الحافة الجنوبية"
 
-#: ../general/g.region/cmd/main.c:228 ../raster/r.region/main.c:135
+#: ../general/g.region/cmd/main.c:228 ../raster/r.region/main.c:136
 msgid "Value for the eastern edge"
 msgstr "قيمة الحافة الغربية"
 
-#: ../general/g.region/cmd/main.c:238 ../raster/r.region/main.c:143
+#: ../general/g.region/cmd/main.c:238 ../raster/r.region/main.c:144
 msgid "Value for the western edge"
 msgstr "قيمة الحافة الشرقية"
 
@@ -4283,7 +4283,7 @@ msgstr ""
 msgid "Raster map to zoom into"
 msgstr "الخريطة الراسترية المطلوب الضبط عليها"
 
-#: ../general/g.region/cmd/main.c:341 ../raster/r.region/main.c:151
+#: ../general/g.region/cmd/main.c:341 ../raster/r.region/main.c:152
 msgid "Raster map to align to"
 msgstr "الخريطة الراسترية المطلوب الضبط عليها"
 
@@ -4302,7 +4302,7 @@ msgstr "غير موجودة <%s> المنطقة"
 msgid "Can't read region <%s> in <%s>"
 msgstr "<%s> فى <%s> لم يمكن قراءة المنطقة"
 
-#: ../general/g.region/cmd/main.c:418 ../raster/r.region/main.c:189
+#: ../general/g.region/cmd/main.c:418 ../raster/r.region/main.c:190
 #, c-format
 msgid "3dview file <%s> not found"
 msgstr "غير موجود <%s>الملف للمنظر ثلاثى الأبعاد "
@@ -4317,7 +4317,7 @@ msgstr "<%s> فى <%s>لم يمكن فتح الملف للمنظر ثلاثى ا
 msgid "Can't read 3dview file <%s> in <%s>"
 msgstr "<%s> فى <%s>لم يمكن قراءة الملف للمنظر ثلاثى الأبعاد"
 
-#: ../general/g.region/cmd/main.c:430 ../raster/r.region/main.c:201
+#: ../general/g.region/cmd/main.c:430 ../raster/r.region/main.c:202
 #, fuzzy, c-format
 msgid "Old 3dview file. Region <%s> not found in <%s>"
 msgstr "<%s> فى <%s>ملف قديم للمنظر ثلاثى الأبعاد. المنطقة لم توجد فى"
@@ -4342,8 +4342,8 @@ msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل
 msgid "Can't open vector map <%s> in <%s>"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
-#: ../general/g.region/cmd/main.c:827 ../raster/r.region/main.c:162
-#: ../raster/r.region/main.c:219 ../raster/r.region/main.c:354
+#: ../general/g.region/cmd/main.c:827 ../raster/r.region/main.c:163
+#: ../raster/r.region/main.c:220 ../raster/r.region/main.c:355
 #, c-format
 msgid "can't read header for <%s> in <%s>"
 msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
@@ -4727,7 +4727,7 @@ msgstr "خريطة الراستر االناتجة"
 msgid "usage: %s file [prompt %%x %%y]\n"
 msgstr ""
 
-#: ../imagery/i.ask/popup.c:179 ../raster/r.gwflow/main.c:283
+#: ../imagery/i.ask/popup.c:179 ../raster/r.gwflow/main.c:376
 #: ../raster/r.li/r.li.daemon/list.c:43 ../raster/r.to.rast3/main.c:228
 #: ../raster3d/r3.out.v5d/main.c:197 ../raster3d/r3.to.rast/main.c:299
 #: ../vector/v.edit/a2b.c:171 ../vector/v.in.ascii/a2b.c:154
@@ -4752,7 +4752,7 @@ msgid "fullname=%s\n"
 msgstr ""
 
 #: ../imagery/i.cca/main.c:83 ../imagery/i.class/main.c:50
-#: ../imagery/i.cluster/main.c:57 ../imagery/i.fft/fftmain.c:72
+#: ../imagery/i.cluster/main.c:57 ../imagery/i.fft/fftmain.c:73
 #: ../imagery/i.gensig/main.c:38 ../imagery/i.gensigset/main.c:39
 #: ../imagery/i.group/main.c:49 ../imagery/i.his.rgb/h2rmain.c:44
 #: ../imagery/i.ifft/ifftmain.c:53 ../imagery/i.maxlik/main.c:50
@@ -4760,8 +4760,8 @@ msgstr ""
 #: ../imagery/i.ortho.photo/photo.2target/main.c:45 ../imagery/i.pca/main.c:61
 #: ../imagery/i.points/main.c:52 ../imagery/i.rectify/main.c:57
 #: ../imagery/i.rgb.his/r2hmain.c:44 ../imagery/i.smap/shapiro/main.c:37
-#: ../imagery/i.target/main.c:44 ../imagery/i.vpoints/main.c:53
-#: ../imagery/i.zc/main.c:59
+#: ../imagery/i.target/main.c:43 ../imagery/i.vpoints/main.c:53
+#: ../imagery/i.zc/main.c:56
 msgid "imagery"
 msgstr ""
 
@@ -4798,8 +4798,7 @@ msgstr "!تم تحديد إحداثى شمال فارغ"
 msgid "Illegal signature file name <%s>"
 msgstr "اسم ااملف المخرج"
 
-#: ../imagery/i.cca/main.c:116 ../raster/r.in.ascii/main.c:207
-#: ../raster/r.kappa/main.c:101
+#: ../imagery/i.cca/main.c:116 ../raster/r.kappa/main.c:101
 #, fuzzy, c-format
 msgid "Illegal output file name <%s>"
 msgstr "اسم ااملف المخرج"
@@ -4837,10 +4836,9 @@ msgstr ""
 #: ../imagery/i.pca/main.c:125 ../imagery/i.rgb.his/openfiles.c:22
 #: ../imagery/i.rgb.his/openfiles.c:24 ../imagery/i.rgb.his/openfiles.c:26
 #: ../raster/r.mfilter/perform.c:37 ../raster/r.out.tiff/r.out.tiff.c:188
-#: ../raster/r.param.scale/open_files.c:19 ../raster/r.profile/main.c:144
-#: ../raster/r.random/count.c:24 ../raster/r.random/random.c:39
-#: ../raster/r.support/front/front.c:221 ../raster/r.mfilter.fp/perform.c:37
-#: ../raster/r.topidx/file_io.c:17 ../vector/v.sample/main.c:160
+#: ../raster/r.param.scale/open_files.c:19 ../raster/r.random/count.c:24
+#: ../raster/r.random/random.c:39 ../raster/r.support/front/front.c:221
+#: ../raster/r.mfilter.fp/perform.c:37 ../raster/r.topidx/file_io.c:17
 #: ../vector/v.what.rast/main.c:132
 #, fuzzy, c-format
 msgid "Cannot open raster map <%s>"
@@ -4973,11 +4971,6 @@ msgstr "لم يتم اختيار شاشة العرض"
 msgid "You have a mask set. Unset mask and run again"
 msgstr ""
 
-#: ../imagery/i.class/main.c:108
-#, fuzzy, c-format
-msgid "Unable to find input cell map '%s'"
-msgstr "<%s> لم يمكن فتح"
-
 #: ../imagery/i.class/main.c:193
 #, fuzzy, c-format
 msgid "** The following raster maps in subgroup [%s] do not exist:"
@@ -4998,8 +4991,9 @@ msgid "Subgroup [%s] only has 1 file"
 msgstr ""
 
 #: ../imagery/i.class/main.c:209
-msgid "Unable to read cell header for first band file."
-msgstr ""
+#, fuzzy
+msgid "Unable to read cell header for first band file"
+msgstr "بدء بالقيم فى الخريطة الراسترية"
 
 #: ../imagery/i.class/main.c:214
 msgid ""
@@ -5546,98 +5540,95 @@ msgstr ""
 msgid "class distribution"
 msgstr "متوسط التوزيع"
 
-#: ../imagery/i.fft/fftmain.c:74
+#: ../imagery/i.fft/fftmain.c:75
 msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:83
+#: ../imagery/i.fft/fftmain.c:84
 #, fuzzy
 msgid "Input raster map being fft"
 msgstr "وصف مبسط للملف الراسترى المخرج"
 
-#: ../imagery/i.fft/fftmain.c:91
+#: ../imagery/i.fft/fftmain.c:92
 #, fuzzy
 msgid "Output real part arrays stored as raster map"
 msgstr "خريطة الإرتفاعات المخرجة بعد الملىء"
 
-#: ../imagery/i.fft/fftmain.c:99
+#: ../imagery/i.fft/fftmain.c:100
 #, fuzzy
 msgid "Output imaginary part arrays stored as raster map"
 msgstr "خريطة الإرتفاعات المخرجة بعد الملىء"
 
-#: ../imagery/i.fft/fftmain.c:107
+#: ../imagery/i.fft/fftmain.c:108
 #, fuzzy
 msgid "Range of values in output display files"
 msgstr "اسم الخريطة المخرجة"
 
-#: ../imagery/i.fft/fftmain.c:128
+#: ../imagery/i.fft/fftmain.c:127
 msgid "Raster MASK found, consider to remove (see man-page). Will continue..."
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:135
-#, c-format
-msgid "%s: %s - illegal file name for real part\n"
-msgstr ""
+#: ../imagery/i.fft/fftmain.c:133
+#, fuzzy, c-format
+msgid "Illegal file name for real part: %s"
+msgstr "ملف المدخل"
 
-#: ../imagery/i.fft/fftmain.c:141
-#, c-format
-msgid "%s: %s - illegal file name for imaginary part\n"
-msgstr ""
+#: ../imagery/i.fft/fftmain.c:136
+#, fuzzy, c-format
+msgid "Illegal file name for imaginary part: %s"
+msgstr "ملف المدخل"
 
-#: ../imagery/i.fft/fftmain.c:147
+#: ../imagery/i.fft/fftmain.c:140
 msgid "Range less than or equal to zero not allowed."
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:168 ../imagery/i.ifft/ifftmain.c:133
+#: ../imagery/i.fft/fftmain.c:161 ../imagery/i.ifft/ifftmain.c:133
+#: ../imagery/i.zc/main.c:155
 msgid "Insufficent memory for allocation of data structure"
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:171
+#: ../imagery/i.fft/fftmain.c:164
 msgid "Initializing data...\n"
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:185
+#: ../imagery/i.fft/fftmain.c:178 ../imagery/i.zc/main.c:168
 #, fuzzy
 msgid "Reading the raster map..."
 msgstr "تسجيل الخرائط الراسترية "
 
-#: ../imagery/i.fft/fftmain.c:188
+#: ../imagery/i.fft/fftmain.c:181 ../imagery/i.zc/main.c:171
 #, fuzzy
 msgid "Error while reading input raster map."
 msgstr "اسم الخريطة الراسترية المدخلة"
 
-#: ../imagery/i.fft/fftmain.c:197
+#: ../imagery/i.fft/fftmain.c:190
 #, fuzzy
 msgid "Starting FFT..."
 msgstr "التوقيع ..."
 
-#: ../imagery/i.fft/fftmain.c:199
+#: ../imagery/i.fft/fftmain.c:192
 msgid "FFT completed..."
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:217
+#: ../imagery/i.fft/fftmain.c:210
 #, fuzzy
 msgid "Rotating data..."
 msgstr "التوقيع ..."
 
-#: ../imagery/i.fft/fftmain.c:239
+#: ../imagery/i.fft/fftmain.c:232 ../imagery/i.zc/main.c:189
 #, fuzzy
 msgid "Writing transformed data to file..."
 msgstr "كتابة ملف جديد...\n"
 
-#: ../imagery/i.fft/fftmain.c:245
+#: ../imagery/i.fft/fftmain.c:238
 msgid "Writing viewable versions of transformed data to files..."
 msgstr ""
 
-#: ../imagery/i.fft/fftmain.c:283 ../imagery/i.ifft/ifftmain.c:237
+#: ../imagery/i.fft/fftmain.c:277 ../imagery/i.ifft/ifftmain.c:237
 msgid "Transform successful."
 msgstr ""
 
-#: ../imagery/i.fft/orig_wind.c:30 ../imagery/i.ifft/orig_wind.c:29
-msgid "The real and imaginary original windows did not match."
-msgstr ""
-
-#: ../imagery/i.fft/save_fft.c:16 ../imagery/i.fft/save_fft.c:21
+#: ../imagery/i.fft/save_fft.c:17 ../imagery/i.fft/save_fft.c:22
 msgid "Unable to open file in the cell_misc directory."
 msgstr ""
 
@@ -5992,6 +5983,10 @@ msgstr "اسم الملف المخرج"
 msgid "Writing data to file..."
 msgstr "كتابة ملف جديد...\n"
 
+#: ../imagery/i.ifft/orig_wind.c:29
+msgid "The real and imaginary original windows did not match."
+msgstr ""
+
 #: ../imagery/i.maxlik/invert.c:30
 #, c-format
 msgid "signature %d is not valid (ill-conditioned) - ignored."
@@ -6042,7 +6037,7 @@ msgstr "اسم الخريطة الناتجة"
 #: ../raster/r.colors/main.c:192 ../raster/r.compress/main.c:82
 #: ../raster/r.contour/main.c:133 ../raster/r.covar/main.c:66
 #: ../raster/r.cross/main.c:90 ../raster/r.describe/main.c:106
-#: ../raster/r.distance/parse.c:63 ../raster/r.neighbors/main.c:158
+#: ../raster/r.distance/parse.c:63 ../raster/r.neighbors/main.c:157
 #: ../raster/r.out.ppm/main.c:68 ../raster/r.out.ppm3/main.c:86
 #: ../raster/r.series/main.c:123
 msgid "Run quietly"
@@ -6394,40 +6389,107 @@ msgstr ""
 msgid "Writing [%s] ..."
 msgstr "كتابة ملف جديد...\n"
 
-#: ../imagery/i.target/main.c:46
+#: ../imagery/i.target/main.c:45
 msgid "Targets an imagery group to a GRASS location and mapset."
 msgstr ""
 
-#: ../imagery/i.target/main.c:54
+#: ../imagery/i.target/main.c:53
 msgid "Name of imagery target location"
 msgstr ""
 
-#: ../imagery/i.target/main.c:60
+#: ../imagery/i.target/main.c:59
 #, fuzzy
 msgid "Name of target mapset"
 msgstr "اسم الخريطة الناتجة"
 
-#: ../imagery/i.target/main.c:65
+#: ../imagery/i.target/main.c:64
 msgid "Set current location and mapset as target for of imagery group"
 msgstr ""
 
-#: ../imagery/i.target/main.c:75 ../imagery/i.target/main.c:92
-#: ../imagery/i.target/main.c:97
+#: ../imagery/i.target/main.c:73 ../imagery/i.target/main.c:90
+#: ../imagery/i.target/main.c:95
 #, c-format
 msgid "Group <%s> targeted for location [%s], mapset [%s]"
 msgstr ""
 
-#: ../imagery/i.target/main.c:86
+#: ../imagery/i.target/main.c:76
+#, c-format
+msgid "Group <%s> has no target"
+msgstr ""
+
+#: ../imagery/i.target/main.c:84
 msgid ""
-"You must use either the Current Mapset and Location Flag (-c)\n"
+"Use either the Current Mapset and Location Flag (-c)\n"
 " OR\n"
-" manually enter the variables."
+" manually enter the variables"
 msgstr ""
 
 #: ../imagery/i.vpoints/main.c:55
 msgid ""
 "Set registration points for an imagery group from a vector map or keyboard "
 "entry."
+msgstr ""
+
+#: ../imagery/i.zc/main.c:58
+msgid "Zero-crossing \"edge detection\" raster function for image processing"
+msgstr ""
+
+#: ../imagery/i.zc/main.c:68
+#, fuzzy
+msgid "input raster map"
+msgstr "ادخل خريطة الراستر"
+
+#: ../imagery/i.zc/main.c:77
+#, fuzzy
+msgid "zero crossing raster map"
+msgstr "الخريطة الراسترية الغطاء"
+
+#: ../imagery/i.zc/main.c:85
+msgid "x-y extent of the Gaussian filter"
+msgstr ""
+
+#: ../imagery/i.zc/main.c:93
+msgid "sensitivity of Gaussian filter"
+msgstr ""
+
+#: ../imagery/i.zc/main.c:101
+msgid "number of azimuth directions categorized"
+msgstr ""
+
+#: ../imagery/i.zc/main.c:110
+#, fuzzy, c-format
+msgid "Unable to find raster map: %s"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#: ../imagery/i.zc/main.c:118
+#, fuzzy, c-format
+msgid "Illegal file name: %s"
+msgstr "اسم ااملف المخرج"
+
+#: ../imagery/i.zc/main.c:122
+msgid "Threshold less than or equal to zero not allowed."
+msgstr ""
+
+#: ../imagery/i.zc/main.c:128
+msgid "Width less than or equal to zero not allowed."
+msgstr ""
+
+#: ../imagery/i.zc/main.c:132
+msgid "Fewer than 1 orientation classes not allowed."
+msgstr ""
+
+#: ../imagery/i.zc/main.c:146
+#, fuzzy, c-format
+msgid "Power 2 values : %d rows %d columns"
+msgstr "%d راستر%s, %d فيكتور%s\n"
+
+#: ../imagery/i.zc/main.c:158
+#, fuzzy
+msgid "Initializing data..."
+msgstr "التوقيع ..."
+
+#: ../imagery/i.zc/main.c:209
+msgid "Transform successful"
 msgstr ""
 
 #: ../locale/scriptstrings/gis.m_to_translate.c:1
@@ -7025,11 +7087,14 @@ msgid "Imports attribute tables in various formats."
 msgstr "اسم الخريطة الراسترية الموجودة"
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:3
-#, fuzzy
-msgid "Table to be imported"
-msgstr "الملف الراسترى الطلوب إدخالة"
+msgid "Table file to be imported or DB connection string"
+msgstr ""
 
 #: ../locale/scriptstrings/db.in.ogr_to_translate.c:4
+msgid "Table name of SQL DB table"
+msgstr ""
+
+#: ../locale/scriptstrings/db.in.ogr_to_translate.c:5
 #, fuzzy
 msgid "Name for output table"
 msgstr "اسم الملف المخرج"
@@ -7459,7 +7524,7 @@ msgstr ""
 #: ../raster/r.cross/main.c:65 ../raster/r.describe/main.c:58
 #: ../raster/r.digit/main.c:44 ../raster/r.distance/main.c:38
 #: ../raster/r.drain/main.c:102 ../raster/r.fill.dir/main.c:85
-#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:177
+#: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:219
 #: ../raster/r.his/main.c:63 ../raster/r.in.arc/main.c:58
 #: ../raster/r.in.gdal/main.c:69 ../raster/r.in.gridatb/main.c:43
 #: ../raster/r.in.mat/main.c:93 ../raster/r.in.xyz/main.c:76
@@ -7477,15 +7542,15 @@ msgstr ""
 #: ../raster/r.quant/main.c:41 ../raster/r.random/main.c:46
 #: ../raster/r.random.cells/main.c:39 ../raster/r.random.surface/main.c:47
 #: ../raster/r.reclass/main.c:48 ../raster/r.recode/main.c:42
-#: ../raster/r.region/main.c:52 ../raster/r.report/main.c:27
+#: ../raster/r.region/main.c:53 ../raster/r.report/main.c:27
 #: ../raster/r.resamp.rst/main.c:155 ../raster/r.resample/main.c:53
 #: ../raster/r.rescale/main.c:48 ../raster/r.rescale.eq/main.c:51
 #: ../raster/r.slope.aspect/main.c:152 ../raster/r.stats/main.c:87
 #: ../raster/r.sum/main.c:47 ../raster/r.sun/main.c:153
 #: ../raster/r.sunmask/main.c:124 ../raster/r.support/front/front.c:54
 #: ../raster/r.surf.area/main.c:89 ../raster/r.surf.contour/main.c:50
-#: ../raster/r.surf.fractal/interface.c:32 ../raster/r.surf.gauss/main.c:44
-#: ../raster/r.surf.idw/main.c:68 ../raster/r.surf.idw2/main.c:59
+#: ../raster/r.surf.fractal/interface.c:32 ../raster/r.surf.gauss/main.c:43
+#: ../raster/r.surf.idw/main.c:68 ../raster/r.surf.idw2/main.c:60
 #: ../raster/r.surf.random/main.c:41 ../raster/r.texture/main.c:71
 #: ../raster/r.thin/main.c:54 ../raster/r.timestamp/main.c:34
 #: ../raster/r.to.vect/main.c:49 ../raster/r.topidx/main.c:37
@@ -7630,6 +7695,7 @@ msgstr ""
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:10
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:38
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:40
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
 msgid "Download"
 msgstr ""
 
@@ -7649,7 +7715,7 @@ msgstr "الإحتفاظ بأعداد الشرائح بدلا من استخدا�
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:12
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:14
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:16
-#: ../locale/scriptstrings/r.in.wms_to_translate.c:42
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:44
 msgid "Import"
 msgstr ""
 
@@ -7707,11 +7773,15 @@ msgid "Additional options for wget"
 msgstr ""
 
 #: ../locale/scriptstrings/r.in.wms_to_translate.c:41
+msgid "Additional options for curl"
+msgstr ""
+
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
 #, fuzzy
 msgid "Reprojection method to use"
 msgstr "طريقة الاستيفاء المستخدمة"
 
-#: ../locale/scriptstrings/r.in.wms_to_translate.c:43
+#: ../locale/scriptstrings/r.in.wms_to_translate.c:45
 #: ../locale/scriptstrings/r.tileset_to_translate.c:14
 msgid "Verbosity level"
 msgstr ""
@@ -8111,15 +8181,14 @@ msgstr "%s لم يتم العثور على الخريطة الراسترية"
 #: ../vector/v.buffer/main.c:245 ../vector/v.category/main.c:66
 #: ../vector/v.clean/test/topocheck.c:40 ../vector/v.db.select/main.c:46
 #: ../vector/v.drape/main.c:67 ../vector/v.external/main.c:58
-#: ../vector/v.extract/main.c:73 ../vector/v.extrude/main.c:68
+#: ../vector/v.extract/main.c:73 ../vector/v.extrude/main.c:66
 #: ../vector/v.in.region/main.c:38 ../vector/v.info/main.c:63
 #: ../vector/v.info/main.c:227 ../vector/v.mkgrid/main.c:62
 #: ../vector/v.out.ascii/out.c:43 ../vector/v.out.vtk/main.c:45
 #: ../vector/v.patch/main.c:68 ../vector/v.perturb/main.c:73
 #: ../vector/v.sample/main.c:86 ../vector/v.select/main.c:129
-#: ../vector/v.surf.rst/main.c:159 ../vector/v.transform/main.c:54
-#: ../vector/v.vol.rst/main.c:201 ../vector/v.voronoi/dt_main.c:44
-#: ../vector/v.voronoi/vo_main.c:107
+#: ../vector/v.surf.rst/main.c:159 ../vector/v.vol.rst/main.c:201
+#: ../vector/v.voronoi/dt_main.c:44 ../vector/v.voronoi/vo_main.c:107
 msgid "vector"
 msgstr ""
 
@@ -8176,7 +8245,7 @@ msgstr ""
 #: ../locale/scriptstrings/v.convert.all_to_translate.c:2
 #: ../locale/scriptstrings/v.in.e00_to_translate.c:2
 #: ../locale/scriptstrings/v.in.mapgen_to_translate.c:2
-#: ../vector/v.in.ascii/in.c:47 ../vector/v.in.db/main.c:50
+#: ../vector/v.in.ascii/in.c:47 ../vector/v.in.db/main.c:51
 #: ../vector/v.in.dwg/main.c:66 ../vector/v.in.dxf/main.c:60
 #: ../vector/v.in.ogr/main.c:93 ../vector/v.in.sites/main.c:56
 msgid "vector, import"
@@ -8202,7 +8271,7 @@ msgstr "اسم الخريطة الراسترية الموجودة"
 #: ../locale/scriptstrings/v.db.reconnect.all_to_translate.c:2
 #: ../locale/scriptstrings/v.db.update_to_translate.c:2
 #: ../locale/scriptstrings/v.what.vect_to_translate.c:2
-#: ../vector/v.db.connect/main.c:50 ../vector/v.distance/main.c:105
+#: ../vector/v.db.connect/main.c:48 ../vector/v.distance/main.c:105
 #: ../vector/v.to.db/main.c:32
 #, fuzzy
 msgid "vector, database, attribute table"
@@ -8770,34 +8839,42 @@ msgstr "استخدام احداثيات مركز الخريطة\n"
 msgid "Input parse error on line %d"
 msgstr ""
 
-#: ../ps/ps.map/catval.c:44 ../ps/ps.map/ps_vpoints.c:101
-#: ../vector/v.buffer/main.c:371 ../vector/v.label/main.c:283
-#: ../vector/v.label.sa/labels.c:82 ../vector/v.univar/main.c:131
+#: ../ps/ps.map/catval.c:47 ../ps/ps.map/catval.c:105
+#: ../ps/ps.map/catval.c:166 ../vector/v.buffer/main.c:371
+#: ../vector/v.label/main.c:283 ../vector/v.label.sa/labels.c:76
+#: ../vector/v.univar/main.c:131
 msgid "Cannot get layer info for vector map"
 msgstr ""
 
-#: ../ps/ps.map/catval.c:49 ../raster/r.random/random.c:63
-#: ../vector/v.in.ascii/in.c:300 ../vector/v.in.db/main.c:127
-#: ../vector/v.kcv/main.c:173 ../vector/v.lrs/v.lrs.create/main.c:257
-#: ../vector/v.lrs/v.lrs.create/main.c:265 ../vector/v.net.path/path.c:90
-#: ../vector/v.sample/main.c:201 ../vector/v.to.db/query.c:81
-#: ../vector/v.to.db/update.c:32 ../vector/v.to.points/main.c:266
+#: ../ps/ps.map/catval.c:52 ../raster/r.random/random.c:63
+#: ../vector/v.in.ascii/in.c:300 ../vector/v.kcv/main.c:173
+#: ../vector/v.net.path/path.c:90 ../vector/v.to.points/main.c:266
 #: ../vector/v.what.rast/main.c:124
 #, fuzzy, c-format
 msgid "Cannot open database <%s> by driver <%s>"
 msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
 
-#: ../ps/ps.map/catval.c:58
+#: ../ps/ps.map/catval.c:61
 #, fuzzy
 msgid "Column type not supported (must be string)"
 msgstr "نوع العمود غير مدعم"
 
-#: ../ps/ps.map/catval.c:61 ../ps/ps.map/ps_vpoints.c:119
-#: ../vector/lidar/v.surf.bspline/main.c:279 ../vector/v.buffer/main.c:383
-#: ../vector/v.sample/main.c:181 ../vector/v.to.rast/vect2rast.c:68
+#: ../ps/ps.map/catval.c:64 ../ps/ps.map/catval.c:125
+#: ../ps/ps.map/catval.c:187 ../vector/lidar/v.surf.bspline/main.c:279
+#: ../vector/v.buffer/main.c:383 ../vector/v.to.rast/vect2rast.c:68
 #: ../vector/v.to.rast3/main.c:93 ../vector/v.univar/main.c:147
 msgid "Cannot select data from table"
 msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#: ../ps/ps.map/catval.c:122
+#, fuzzy
+msgid "Size column type must be numeric"
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#: ../ps/ps.map/catval.c:184
+#, fuzzy
+msgid "Rotation column type must be numeric"
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
 #: ../ps/ps.map/do_labels.c:45
 #, fuzzy, c-format
@@ -8833,7 +8910,7 @@ msgstr "%s لم يمكن فتح ملف المدى ل"
 msgid "Reading point/line file ..."
 msgstr "dig قراءة ملف...\n"
 
-#: ../ps/ps.map/do_plt.c:138 ../ps/ps.map/ps_vpoints.c:75
+#: ../ps/ps.map/do_plt.c:138 ../ps/ps.map/ps_vpoints.c:78
 msgid "Cannot read symbol, using default icon"
 msgstr ""
 
@@ -9007,32 +9084,26 @@ msgid "Reading raster maps in group <%s> ..."
 msgstr "%-5d dig_att قراءة ملف...\n"
 
 #: ../ps/ps.map/ps_vareas.c:72 ../ps/ps.map/ps_vareas.c:83
-#: ../ps/ps.map/ps_vlines.c:74 ../ps/ps.map/ps_vpoints.c:144
+#: ../ps/ps.map/ps_vlines.c:74 ../ps/ps.map/ps_vpoints.c:118
 #, fuzzy
 msgid "Read error in vector map"
 msgstr "اسم الملف الفيكتورى المخرج"
 
 #: ../ps/ps.map/ps_vareas.c:105 ../ps/ps.map/ps_vlines.c:104
-#: ../ps/ps.map/ps_vpoints.c:173 ../ps/ps.map/ps_vpoints.c:182
-#: ../ps/ps.map/ps_vpoints.c:204
+#: ../ps/ps.map/ps_vpoints.c:147 ../ps/ps.map/ps_vpoints.c:156
+#: ../ps/ps.map/ps_vpoints.c:178 ../ps/ps.map/ps_vpoints.c:218
+#: ../ps/ps.map/ps_vpoints.c:227
 #, fuzzy, c-format
 msgid "No record for category [%d]"
 msgstr "cat = %d لا يوجد تسجيل للخط"
 
 #: ../ps/ps.map/ps_vareas.c:110 ../ps/ps.map/ps_vlines.c:109
-#: ../ps/ps.map/ps_vpoints.c:209
+#: ../ps/ps.map/ps_vpoints.c:183
 #, c-format
 msgid "Invalid RGB color definition in column <%s> for category [%d]"
 msgstr ""
 
-#: ../ps/ps.map/ps_vpoints.c:117 ../vector/lidar/v.surf.bspline/main.c:276
-#: ../vector/v.buffer/main.c:388 ../vector/v.sample/main.c:258
-#: ../vector/v.surf.idw/read_sites.c:46 ../vector/v.to.rast3/main.c:97
-#: ../vector/v.univar/main.c:145 ../vector/v.what.rast/main.c:148
-msgid "Column type not supported"
-msgstr "نوع العمود غير مدعم"
-
-#: ../ps/ps.map/ps_vpoints.c:188
+#: ../ps/ps.map/ps_vpoints.c:162
 #, c-format
 msgid "Attribute is of invalid size [%.3f] for category [%d]"
 msgstr ""
@@ -9042,7 +9113,7 @@ msgstr ""
 msgid "Can't get group information"
 msgstr "لم بمكن قراءة معلومات الحقل"
 
-#: ../ps/ps.map/r_vpoints.c:245
+#: ../ps/ps.map/r_vpoints.c:256
 #, c-format
 msgid ""
 "The mapping instruction <%s> will be renamed to <%s> in future versions of "
@@ -9222,7 +9293,7 @@ msgstr "إهمال خلايا البيانات الصفرية بدلا من ال
 #: ../raster/r.colors/main.c:202 ../raster/r.compress/main.c:90
 #: ../raster/r.covar/main.c:74 ../raster/r.cross/main.c:97
 #: ../raster/r.describe/main.c:114 ../raster/r.distance/parse.c:71
-#: ../raster/r.neighbors/main.c:273 ../raster/r.out.png/r.out.png.c:145
+#: ../raster/r.neighbors/main.c:275 ../raster/r.out.png/r.out.png.c:145
 #: ../raster/r.out.ppm3/main.c:98 ../raster/r.patch/main.c:95
 #: ../raster/r.random.surface/init.c:107 ../raster/r.resample/main.c:89
 #: ../raster/r.rescale/main.c:101 ../raster/r.rescale.eq/main.c:105
@@ -9356,11 +9427,6 @@ msgstr ""
 msgid "Invalid depth value '%s' - using default."
 msgstr ""
 
-#: ../raster/r.carve/main.c:182
-#, fuzzy, c-format
-msgid "Unable to open cellfile for <%s>"
-msgstr "[%s]لم يتم فتح ملف الخلية ل "
-
 #: ../raster/r.carve/main.c:223
 msgid "lat/lon projection not supported at this time."
 msgstr ""
@@ -9455,11 +9521,6 @@ msgstr ""
 #: ../raster/r.circle/dist.c:116
 msgid "Please specify min and/or max radius when using the binary flag"
 msgstr ""
-
-#: ../raster/r.circle/dist.c:127
-#, fuzzy, c-format
-msgid "Unable to create raster map [%s]"
-msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../raster/r.clump/clump.c:100
 #, c-format
@@ -9867,11 +9928,6 @@ msgstr "تهيج"
 msgid "Use closest color"
 msgstr "استخدم اقرب الألوان"
 
-#: ../raster/r.composite/main.c:200
-#, fuzzy, c-format
-msgid "Unable to create output <%s>"
-msgstr "<%s> لم يمكن فتح"
-
 #: ../raster/r.composite/main.c:221
 #, c-format
 msgid "Error reading '%s' map"
@@ -10006,32 +10062,48 @@ msgstr ""
 msgid "Could not read range file"
 msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
-#: ../raster/r.contour/main.c:188 ../vector/v.convert/att.c:74
-#: ../vector/v.in.ascii/in.c:366 ../vector/v.in.dxf/write_vect.c:204
-#: ../vector/v.in.ogr/main.c:676 ../vector/v.lrs/v.lrs.create/main.c:293
-#: ../vector/v.net.path/path.c:102 ../vector/v.surf.rst/main.c:558
-#: ../vector/v.to.points/main.c:273
-#, c-format
-msgid "Cannot create table: %s"
-msgstr "%s:لم يتم إنشاء الجدول"
+#: ../raster/r.contour/main.c:179 ../raster/r.to.vect/main.c:153
+#: ../vector/lidar/v.surf.bspline/main.c:269 ../vector/v.db.connect/main.c:176
+#: ../vector/v.db.connect/main.c:268 ../vector/v.db.select/main.c:177
+#: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:160
+#: ../vector/v.in.db/main.c:113 ../vector/v.lrs/v.lrs.create/main.c:257
+#: ../vector/v.lrs/v.lrs.create/main.c:265 ../vector/v.mkgrid/main.c:212
+#: ../vector/v.out.ogr/main.c:283 ../vector/v.out.svg/main.c:145
+#: ../vector/v.overlay/main.c:168 ../vector/v.overlay/main.c:261
+#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
+#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
+#: ../vector/v.sample/main.c:201 ../vector/v.surf.idw/read_sites.c:39
+#: ../vector/v.to.db/query.c:81 ../vector/v.to.db/update.c:32
+#: ../vector/v.to.rast/support.c:129 ../vector/v.to.rast/support.c:263
+#: ../vector/v.to.rast/vect2rast.c:54 ../vector/v.transform/trans_digit.c:58
+#, fuzzy, c-format
+msgid "Unable to open database <%s> by driver <%s>"
+msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
 
-#: ../raster/r.contour/main.c:192 ../vector/v.db.connect/main.c:258
+#: ../raster/r.contour/main.c:188 ../raster/r.to.vect/main.c:188
+#: ../vector/v.lrs/v.lrs.create/main.c:293
+#, fuzzy, c-format
+msgid "Unable to create table: %s"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#: ../raster/r.contour/main.c:192 ../vector/v.db.connect/main.c:272
 #: ../vector/v.in.ascii/in.c:456 ../vector/v.in.dxf/write_vect.c:211
-#: ../vector/v.in.ogr/main.c:680 ../vector/v.net.path/path.c:106
+#: ../vector/v.in.ogr/main.c:683 ../vector/v.net.path/path.c:106
 #: ../vector/v.sample/main.c:213 ../vector/v.to.points/main.c:277
 msgid "Cannot create index"
 msgstr "لم يتم انشاء الدليل"
 
-#: ../raster/r.contour/main.c:195 ../vector/v.db.connect/main.c:261
-#: ../vector/v.distance/main.c:710 ../vector/v.in.dxf/write_vect.c:209
-#: ../vector/v.in.ogr/main.c:683
-#, c-format
-msgid "Cannot grant privileges on table %s"
+#: ../raster/r.contour/main.c:195 ../raster/r.to.vect/main.c:194
+#: ../vector/v.mkgrid/main.c:232 ../vector/v.overlay/main.c:430
+#: ../vector/v.sample/main.c:216
+#, fuzzy, c-format
+msgid "Unable to grant privileges on table <%s>"
 msgstr "%s لم يتم منح الإمتياز على الجدول"
 
-#: ../raster/r.contour/main.c:211 ../vector/v.kcv/main.c:245
+#: ../raster/r.contour/main.c:211 ../vector/v.mkgrid/main.c:270
+#: ../vector/v.sample/main.c:278
 #, fuzzy, c-format
-msgid "Cannot insert row: %s"
+msgid "Unable to insert row: %s"
 msgstr "لم يمكن حشر صف جديد: %s"
 
 #: ../raster/r.contour/main.c:233
@@ -10518,11 +10590,6 @@ msgstr "هيجاد اقرب نقاط بين الأشياء فى خريطتين �
 msgid "Maps for computing inter-class distances"
 msgstr "خرائط حساب المسافات بين الأصناف"
 
-#: ../raster/r.distance/parse.c:50 ../raster/r.stats/main.c:108
-#: ../vector/v.db.select/main.c:65
-msgid "Output field separator"
-msgstr "الفاصل الحقلى بين بيانات المخرج"
-
 #: ../raster/r.distance/parse.c:54
 msgid "Include category labels in the output"
 msgstr "شمول عناوين الفئات فى المخرج"
@@ -10900,131 +10967,144 @@ msgstr "(-1 => NULL) القيمة للخلايا المدخلة غير المن�
 msgid "Value to write for \"grown\" cells"
 msgstr "\"grown\" القيمة للخلاايا  "
 
-#: ../raster/r.grow2/main.c:185
-#, fuzzy, c-format
-msgid "Input file [%s] not found."
-msgstr "الفيكتور المخرج  غير موجود"
-
 #: ../raster/r.grow2/main.c:197
 #, fuzzy, c-format
 msgid "Unknown metric: [%s]."
 msgstr "%c :نوع غير معروف"
 
-#: ../raster/r.grow2/main.c:201
-#, fuzzy, c-format
-msgid "Unable to open input file <%s@%s>."
-msgstr "<%s> لم يمكن فتح"
-
-#: ../raster/r.grow2/main.c:207
-#, fuzzy, c-format
-msgid "Unable to open output file <%s>."
-msgstr "<%s> لم يمكن فتح"
-
 #: ../raster/r.grow2/main.c:211
-#, c-format
-msgid "Error in reading cats file for <%s>."
-msgstr ""
+#, fuzzy, c-format
+msgid "Error in reading cats file for <%s>"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #: ../raster/r.grow2/main.c:217
-#, c-format
-msgid "Error in reading colr file for <%s>."
-msgstr ""
+#, fuzzy, c-format
+msgid "Error in reading colr file for <%s>"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #: ../raster/r.grow2/main.c:309
-#, c-format
-msgid "Error writing cats file for <%s>."
-msgstr ""
+#, fuzzy, c-format
+msgid "Error writing cats file for <%s>"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #: ../raster/r.grow2/main.c:313
-#, c-format
-msgid "Error writing colr file for <%s>."
-msgstr ""
+#, fuzzy, c-format
+msgid "Error writing color file for <%s>"
+msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
 
-#: ../raster/r.gwflow/main.c:56 ../raster3d/r3.gwflow/main.c:55
+#: ../raster/r.gwflow/main.c:57 ../raster3d/r3.gwflow/main.c:55
 msgid "The initial piezometric head in [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:63
+#: ../raster/r.gwflow/main.c:64
 msgid "Boundary condition status, 0-inactive, 1-active, 2-dirichlet"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:71
+#: ../raster/r.gwflow/main.c:72
 msgid "X-part of the hydraulic conductivity tensor in [m/s]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:79
+#: ../raster/r.gwflow/main.c:80
 msgid "Y-part of the hydraulic conductivity tensor in [m/s]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:86
+#: ../raster/r.gwflow/main.c:87
 msgid "Water sources and sinks in [m^3/s]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:93
+#: ../raster/r.gwflow/main.c:94
 msgid "Specific yield in [1/m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:100
+#: ../raster/r.gwflow/main.c:102
 #, fuzzy
-msgid "Reacharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]"
+msgid "Recharge map e.g: 6*10^-9 per cell in [m^3/s*m^2]"
 msgstr "%s لم يمكن فتح ملف المدى ل"
 
-#: ../raster/r.gwflow/main.c:107
+#: ../raster/r.gwflow/main.c:109
 msgid "Top surface of the aquifer in [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:114
+#: ../raster/r.gwflow/main.c:116
 #, fuzzy
 msgid "Bottom surface of the aquifer in [m]"
 msgstr "خريطة الراستر الاساس"
 
-#: ../raster/r.gwflow/main.c:121
+#: ../raster/r.gwflow/main.c:123
 msgid "The map storing the numerical result [m]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:128
+#: ../raster/r.gwflow/main.c:130
 msgid ""
 "Calculate the groundwater filter velocity vector field [m/s]\n"
 "and write the x, and y components to maps named name_[xy]"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:137
+#: ../raster/r.gwflow/main.c:139
 msgid "The type of groundwater flow"
 msgstr ""
 
 #: ../raster/r.gwflow/main.c:147
-msgid "Use a sparse matrix, only available with iterative solvers"
+msgid "The hight of the river bed in [m]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:155
+msgid "Water level (head) of the river with leakage connection in [m]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:163
+msgid "The leakage coefficient of the river bed in [1/s]."
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:170
+msgid "The hight of the drainage bed in [m]"
 msgstr ""
 
 #: ../raster/r.gwflow/main.c:178
+msgid "The leakage coefficient of the drainage bed in [1/s]"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:188
+msgid "Use a sparse matrix, only available with iterative solvers"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:220
 msgid ""
 "Numerical calculation program for transient, confined and unconfined "
 "groundwater flow in two dimensions."
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:195 ../raster3d/r3.gwflow/main.c:193
+#: ../raster/r.gwflow/main.c:240
+msgid "Please provide river_head, river_leak and river_bed maps"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:252
+msgid "Please provide drain_head and drain_leak maps"
+msgstr ""
+
+#: ../raster/r.gwflow/main.c:266 ../raster3d/r3.gwflow/main.c:193
 msgid "The direct LU solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:197 ../raster3d/r3.gwflow/main.c:195
+#: ../raster/r.gwflow/main.c:269 ../raster3d/r3.gwflow/main.c:195
 msgid "The direct Gauss solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:199 ../raster3d/r3.gwflow/main.c:197
+#: ../raster/r.gwflow/main.c:272 ../raster3d/r3.gwflow/main.c:197
 msgid "The direct cholesky solver do not work with sparse matrices"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:293
+#: ../raster/r.gwflow/main.c:386
 #, c-format
 msgid "Calculation of unconfined groundwater flow loop %i\n"
 msgstr ""
 
-#: ../raster/r.gwflow/main.c:315
+#: ../raster/r.gwflow/main.c:408
 #, fuzzy, c-format
 msgid "Maximum difference between this and last increment: %g"
 msgstr "المسافة العظمى بين النقاط بوحدات الخريطة"
 
-#: ../raster/r.gwflow/main.c:463 ../raster3d/r3.gwflow/main.c:300
+#: ../raster/r.gwflow/main.c:556 ../raster3d/r3.gwflow/main.c:300
 #, fuzzy
 msgid "Unable to create and solve the linear equation system"
 msgstr "اسم الخريطة الراسترية"
@@ -11085,14 +11165,14 @@ msgstr ""
 #: ../raster/r.in.arc/main.c:60
 #, fuzzy
 msgid ""
-"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
-"layer."
+"Converts an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
+"map layer."
 msgstr ""
 "(تحويل الملف الراسترى من نوع إسري آركإنفو الى خريطة راسترية ثنائية (صفر,واحد"
 
 #: ../raster/r.in.arc/main.c:67
 #, fuzzy
-msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgid "ARC/INFO ASCII raster file (GRID) to be imported"
 msgstr "ملف الأركإنفو اسكى الراسترى المطلوب ادخاله"
 
 #: ../raster/r.in.arc/main.c:78 ../raster/r.in.xyz/main.c:99
@@ -11105,19 +11185,16 @@ msgstr "نوع التخزين للخريطة الراسترية الناتجة "
 msgid "Title for resultant raster map"
 msgstr "وصف مبسط للخريطة الراسترية الناتجة"
 
-#: ../raster/r.in.arc/main.c:92
-msgid "Multiplier for ascii data"
+#: ../raster/r.in.arc/main.c:92 ../raster/r.in.ascii/main.c:91
+#, fuzzy
+msgid "Multiplier for ASCII data"
 msgstr "المضروب فيه للبيانات الأسكية"
 
-#: ../raster/r.in.arc/main.c:113
+#: ../raster/r.in.arc/main.c:123 ../raster/r.in.mat/main.c:138
+#: ../vector/v.lrs/v.lrs.segment/main.c:129 ../vector/v.segment/main.c:89
 #, fuzzy, c-format
-msgid "Could not open temporary file: [%s]"
-msgstr "%s لم يتم العثور على الخريطة الراسترية"
-
-#: ../raster/r.in.arc/main.c:123
-#, fuzzy, c-format
-msgid "Could not open input file [%s]"
-msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
+msgid "Unable to open input file <%s>"
+msgstr "<%s> لم يمكن فتح"
 
 #: ../raster/r.in.arc/main.c:126 ../raster/r.in.ascii/main.c:191
 msgid "Can't get cell header"
@@ -11138,16 +11215,6 @@ msgstr ""
 #, c-format
 msgid "OOPS: cols changed from %d to %d"
 msgstr ""
-
-#: ../raster/r.in.arc/main.c:151 ../raster/r.in.ascii/main.c:210
-#: ../raster/r.in.bin/main.c:460 ../raster/r.in.gdal/main.c:679
-#: ../raster/r.in.gdal/main.c:684 ../raster/r.in.gdal/main.c:700
-#: ../raster/r.sun/main.c:699 ../raster/r.sun/main.c:706
-#: ../raster/r.sun/main.c:713 ../raster/r.sun/main.c:720
-#: ../raster/r.sun/main.c:727
-#, fuzzy, c-format
-msgid "Unable to create raster map %s"
-msgstr "اسم الخريطة الراسترية"
 
 #: ../raster/r.in.arc/main.c:161 ../raster/r.in.ascii/main.c:219
 #, c-format
@@ -11227,11 +11294,6 @@ msgstr "(تحويل الملف الراسترى النصى الأسكى الى �
 msgid ""
 "ASCII raster file to be imported. If not given reads from standard input"
 msgstr "الملف  الأسكى الراسترى المطلوب ادخاله"
-
-#: ../raster/r.in.ascii/main.c:91
-#, fuzzy
-msgid "Multiplier for ASCII data"
-msgstr "المضروب فيه للبيانات الأسكية"
 
 #: ../raster/r.in.ascii/main.c:99
 msgid "String representing NULL value data cell"
@@ -11416,6 +11478,15 @@ msgstr ""
 msgid "Try bytes=%d or adjusting input parameters"
 msgstr ""
 
+#: ../raster/r.in.bin/main.c:460 ../raster/r.in.gdal/main.c:679
+#: ../raster/r.in.gdal/main.c:684 ../raster/r.in.gdal/main.c:700
+#: ../raster/r.sun/main.c:699 ../raster/r.sun/main.c:706
+#: ../raster/r.sun/main.c:713 ../raster/r.sun/main.c:720
+#: ../raster/r.sun/main.c:727
+#, fuzzy, c-format
+msgid "Unable to create raster map %s"
+msgstr "اسم الخريطة الراسترية"
+
 #: ../raster/r.in.bin/main.c:479
 #, c-format
 msgid "Conversion failed at row %d"
@@ -11438,7 +11509,7 @@ msgstr "band الشريحة المطلوبة والأساس كل الشرائح"
 msgid "Name of location to read projection from for GCPs transformation"
 msgstr "الموقع المستخدم لقراءة الإسقاط منه لنقاط السيطرة الأرضية "
 
-#: ../raster/r.in.gdal/main.c:108 ../vector/v.in.ogr/main.c:160
+#: ../raster/r.in.gdal/main.c:108 ../vector/v.in.ogr/main.c:163
 msgid "Name for new location to create"
 msgstr "اسم المقع الجديد"
 
@@ -11446,11 +11517,11 @@ msgstr "اسم المقع الجديد"
 msgid "Override projection (use location's projection)"
 msgstr "تغلب على الإسقاط مستخدما إسقاط الموقع"
 
-#: ../raster/r.in.gdal/main.c:116 ../vector/v.in.ogr/main.c:197
+#: ../raster/r.in.gdal/main.c:116 ../vector/v.in.ogr/main.c:200
 msgid "Extend location extents based on new dataset"
 msgstr "مد حدود الموقع معتمدا على مجموعة البيانات الجديدة"
 
-#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:176
+#: ../raster/r.in.gdal/main.c:120 ../vector/v.in.ogr/main.c:179
 #, fuzzy
 msgid "List supported formats and exit"
 msgstr "عرض الهيئات المدعمة والخروج"
@@ -11480,7 +11551,7 @@ msgid ""
 "location."
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:265 ../vector/v.in.ogr/main.c:426
+#: ../raster/r.in.gdal/main.c:265 ../vector/v.in.ogr/main.c:429
 msgid ""
 "Unable to convert input map projection information to GRASS format for "
 "checking"
@@ -11490,7 +11561,7 @@ msgstr ""
 msgid "Over-riding projection check."
 msgstr ""
 
-#: ../raster/r.in.gdal/main.c:293 ../vector/v.in.ogr/main.c:451
+#: ../raster/r.in.gdal/main.c:293 ../vector/v.in.ogr/main.c:454
 #, fuzzy
 msgid ""
 "Projection of dataset does not appear to match current location.\n"
@@ -11592,11 +11663,6 @@ msgstr "MAT-File(v4) اسم الملف"
 #: ../raster/r.in.mat/main.c:111
 msgid "Name for the output raster map (override)"
 msgstr "اسم الخريطة المخرجة"
-
-#: ../raster/r.in.mat/main.c:138
-#, fuzzy, c-format
-msgid "Unable to open input file <%s>."
-msgstr "<%s> لم يمكن فتح"
 
 #: ../raster/r.in.mat/main.c:161
 #, fuzzy
@@ -12200,24 +12266,19 @@ msgstr ""
 msgid "Error opening channel %i"
 msgstr "تسجيل الخرائط الراسترية "
 
-#: ../raster/r.li/r.li.daemon/daemon.c:113
-#, fuzzy
-msgid "unable to create raster"
-msgstr "<%s> لم يمكن فتح"
-
 #: ../raster/r.li/r.li.daemon/daemon.c:118
 #, fuzzy
 msgid "Cannot create random access file"
 msgstr "%s:لم يتم إنشاء الجدول"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:126
-#, fuzzy
-msgid "Cannot create .r.li directory"
+#, fuzzy, c-format
+msgid "Cannot create %s/.r.li/ directory"
 msgstr "لم يتم انشاء الدليل"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:130
-#, fuzzy
-msgid "Cannot create .r.li/output directory"
+#, fuzzy, c-format
+msgid "Cannot create %s/.r.li/output/ directory"
 msgstr "اسم الخريطة المخرجة"
 
 #: ../raster/r.li/r.li.daemon/daemon.c:219
@@ -12655,7 +12716,7 @@ msgstr "لم يتم نسخ الجدول"
 msgid "Unable to close raster map <%s@%s>"
 msgstr "<%s> لم يمكن فتح"
 
-#: ../raster/r.mapcalc/map.c:447 ../raster/r.mapcalc/map3.c:527
+#: ../raster/r.mapcalc/map.c:447
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s@%s>"
 msgstr "<%s> لم يمكن فتح"
@@ -12670,7 +12731,8 @@ msgstr "%-5d dig_att قراءة ملف...\n"
 msgid "Unable to close raster map"
 msgstr "اسم الخريطة الراسترية المخرجة"
 
-#: ../raster/r.mapcalc/map3.c:151 ../raster/r.mapcalc/map3.c:165
+#: ../raster/r.mapcalc/map3.c:137 ../raster/r.mapcalc/map3.c:151
+#: ../raster/r.mapcalc/map3.c:165
 #, fuzzy
 msgid "Error writing data"
 msgstr "تغلب على الخريطة المخرجة"
@@ -12679,11 +12741,6 @@ msgstr "تغلب على الخريطة المخرجة"
 #, fuzzy, c-format
 msgid "unknown type: %d"
 msgstr "%c :نوع غير معروف"
-
-#: ../raster/r.mapcalc/map3.c:598
-#, fuzzy, c-format
-msgid "Unable to create output raster map <%s>"
-msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../raster/r.mapcalc/map3.c:617
 #, fuzzy
@@ -12898,37 +12955,47 @@ msgstr ""
 msgid "Neighborhood operation"
 msgstr "عملية التجاور"
 
-#: ../raster/r.neighbors/main.c:134
+#: ../raster/r.neighbors/main.c:133
 msgid "Neighborhood size"
 msgstr "حجم التجاور"
 
-#: ../raster/r.neighbors/main.c:142
+#: ../raster/r.neighbors/main.c:141
 msgid "Title of the output raster map"
 msgstr "وصف مبسط الملف الراسترى الناتج"
 
-#: ../raster/r.neighbors/main.c:149
+#: ../raster/r.neighbors/main.c:148
 #, fuzzy
 msgid "File containing weights"
 msgstr "dig_att عطل فى فتح ملف المدخل"
 
-#: ../raster/r.neighbors/main.c:153
+#: ../raster/r.neighbors/main.c:152
 msgid "Do not align output with the input"
 msgstr "عدم ضبط المخرج بالمدخل"
 
-#: ../raster/r.neighbors/main.c:162
+#: ../raster/r.neighbors/main.c:161
 msgid "Use circular neighborhood"
 msgstr ""
 
 #: ../raster/r.neighbors/main.c:168
+#, fuzzy
+msgid "neighborhood size must be positive"
+msgstr "حجم التجاور"
+
+#: ../raster/r.neighbors/main.c:170
+#, fuzzy
+msgid "neighborhood size must be odd"
+msgstr "حجم التجاور"
+
+#: ../raster/r.neighbors/main.c:174
 msgid "weight= and -c are mutually exclusive"
 msgstr ""
 
-#: ../raster/r.neighbors/main.c:196 ../raster/r.series/main.c:173
+#: ../raster/r.neighbors/main.c:202 ../raster/r.series/main.c:173
 #, fuzzy, c-format
 msgid "Unable to open raster map <%s> in mapset <%s>"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
-#: ../raster/r.neighbors/main.c:207 ../raster/r.proj/main.c:200
+#: ../raster/r.neighbors/main.c:213 ../raster/r.proj/main.c:200
 #: ../raster/r.proj.seg/main.c:212 ../raster/r.statistics/main.c:98
 #, c-format
 msgid "<%s=%s> unknown %s"
@@ -13077,19 +13144,10 @@ msgstr "مخرج متبادل البيتات"
 msgid "Invalid value for null (integers only)"
 msgstr ""
 
-#: ../raster/r.out.bin/main.c:133 ../raster/r.out.gdal/main.c:102
-#, fuzzy, c-format
-msgid "Cannot open raster map [%s]"
-msgstr ""
-"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
-"[%s]لم يتم فتح ملف الخلية ل \n"
-"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
-"%s لم يتم فتح قاعدة البيانات"
-
 #: ../raster/r.out.bin/main.c:145 ../raster/r.out.bin/main.c:231
 #: ../raster/r.out.bin/main.c:235
 #, fuzzy, c-format
-msgid "Unable to create file [%s]"
+msgid "Unable to create file <%s>"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../raster/r.out.bin/main.c:181
@@ -13179,6 +13237,15 @@ msgstr "خريطة الإرتفاعات"
 msgid "Supported formats:\n"
 msgstr "عرض الهيئات المدعمة والخروج"
 
+#: ../raster/r.out.gdal/main.c:102
+#, fuzzy, c-format
+msgid "Cannot open raster map [%s]"
+msgstr ""
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"[%s]لم يتم فتح ملف الخلية ل \n"
+"#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+"%s لم يتم فتح قاعدة البيانات"
+
 #: ../raster/r.out.gdal/main.c:109
 #, fuzzy
 msgid "Cannot get raster band."
@@ -13238,30 +13305,35 @@ msgstr "لم يتم حساب شبه مركز المساحة"
 msgid "Driver [%s] does not support creating rasters."
 msgstr ""
 
-#: ../raster/r.out.gdal/main.c:562
+#: ../raster/r.out.gdal/main.c:557
+#, fuzzy
+msgid "Output file name not specified"
+msgstr "طبقتين يجب تحديدهم"
+
+#: ../raster/r.out.gdal/main.c:564
 #, fuzzy
 msgid "Cannot create dataset using memory raster driver."
 msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
 
-#: ../raster/r.out.gdal/main.c:570
+#: ../raster/r.out.gdal/main.c:572
 #, fuzzy, c-format
 msgid "Cannot create [%s] dataset using [%s] driver."
 msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
 
-#: ../raster/r.out.gdal/main.c:584
+#: ../raster/r.out.gdal/main.c:586
 msgid "Couldn't set geo transform."
 msgstr ""
 
-#: ../raster/r.out.gdal/main.c:591
+#: ../raster/r.out.gdal/main.c:593
 msgid "Couldn't set projection."
 msgstr ""
 
-#: ../raster/r.out.gdal/main.c:602
+#: ../raster/r.out.gdal/main.c:604
 #, fuzzy, c-format
 msgid "Cannot export [%s] raster map."
 msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
-#: ../raster/r.out.gdal/main.c:613
+#: ../raster/r.out.gdal/main.c:615
 #, fuzzy, c-format
 msgid "Cannot create [%s] raster map using [%s] driver."
 msgstr "%s لم يتم العثور على الخريطة الراسترية"
@@ -13367,12 +13439,12 @@ msgstr "dig قراءة ملف...\n"
 
 #: ../raster/r.out.mat/main.c:331
 #, fuzzy
-msgid "Writing out map ... "
+msgid "Writing out map..."
 msgstr "كتابة ملف جديد...\n"
 
 #: ../raster/r.out.mat/main.c:385
 #, fuzzy, c-format
-msgid "%ld bytes written to '%s'."
+msgid "%ld bytes written to '%s'"
 msgstr "%d نقطة كتبت للمخرج\n"
 
 #: ../raster/r.out.mpeg/main.c:87
@@ -13393,7 +13465,7 @@ msgstr "غير موجود <%s> الراستر"
 msgid "mpeg_encode ERROR"
 msgstr ""
 
-#: ../raster/r.out.mpeg/main.c:356 ../visualization/xganim/main.c:515
+#: ../raster/r.out.mpeg/main.c:356 ../visualization/xganim/main.c:517
 msgid "Error reading wildcard"
 msgstr ""
 
@@ -13401,7 +13473,7 @@ msgstr ""
 msgid "Raster File Series to MPEG Conversion Program."
 msgstr "MPEG تحويل مجموعة ملفات راسترية الى"
 
-#: ../raster/r.out.mpeg/main.c:410 ../visualization/xganim/main.c:571
+#: ../raster/r.out.mpeg/main.c:410 ../visualization/xganim/main.c:573
 #, c-format
 msgid "Raster file(s) for View%d"
 msgstr "الملفات الراسترية المطلوب رؤيتها%d"
@@ -13524,11 +13596,6 @@ msgstr "اسم  الملف المخرج"
 #: ../raster/r.out.ppm3/main.c:90
 msgid "Add comments to describe the region"
 msgstr "اضافة تعليقات لوصف المنطقة"
-
-#: ../raster/r.out.ppm3/main.c:147
-#, fuzzy, c-format
-msgid "Unable to open file <%s>"
-msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../raster/r.out.ppm3/main.c:176
 #, fuzzy
@@ -13997,11 +14064,6 @@ msgstr "اسم ااملف المخرج"
 msgid "Using resolution [%g]"
 msgstr "اسم ااملف المخرج"
 
-#: ../raster/r.profile/main.c:157
-#, fuzzy, c-format
-msgid "Cannot open file for <%s>"
-msgstr "%s لم يتم فتح قاعدة البيانات"
-
 #: ../raster/r.profile/main.c:176
 #, fuzzy
 msgid "Output Format:"
@@ -14173,7 +14235,7 @@ msgid "Checking location <%s>, mapset <%s>..."
 msgstr "خريطة الراستر االناتجة"
 
 #: ../raster/r.proj/main.c:250 ../raster/r.proj.seg/main.c:262
-#: ../vector/v.in.ogr/main.c:238 ../vector/v.in.ogr/main.c:285
+#: ../vector/v.in.ogr/main.c:241 ../vector/v.in.ogr/main.c:288
 #, fuzzy, c-format
 msgid "Required parameter <%s> not set"
 msgstr "غير موجودة <%s> الخريطة الراسترية "
@@ -14710,60 +14772,60 @@ msgstr ""
 msgid "%s is not a valid rule"
 msgstr ""
 
-#: ../raster/r.region/main.c:54
+#: ../raster/r.region/main.c:55
 msgid "Sets the boundary definitions for a raster map."
 msgstr "ضبط تعريفات الحد لخريطة راسترية"
 
-#: ../raster/r.region/main.c:64
+#: ../raster/r.region/main.c:65
 msgid "Set from current region"
 msgstr "ضبط من المنطقة الحالية"
 
-#: ../raster/r.region/main.c:79
+#: ../raster/r.region/main.c:80
 msgid "Raster map to change"
 msgstr "الخريطة الراسترية المطلوب تغييرها"
 
-#: ../raster/r.region/main.c:87
+#: ../raster/r.region/main.c:88
 #, fuzzy
 msgid "Set region from named region"
 msgstr "ضبط المنطقة الحالية من ابعاد الخريطة المسماه"
 
-#: ../raster/r.region/main.c:160 ../raster/r.region/main.c:217
-#: ../raster/r.region/main.c:352
+#: ../raster/r.region/main.c:161 ../raster/r.region/main.c:218
+#: ../raster/r.region/main.c:353
 #, c-format
 msgid "raster map <%s> not found"
 msgstr "غير موجودة <%s> الخريطة الراسترية "
 
-#: ../raster/r.region/main.c:176
+#: ../raster/r.region/main.c:177
 #, c-format
 msgid "region <%s> not found"
 msgstr "غير موجودة <%s> المنطقة"
 
-#: ../raster/r.region/main.c:178
+#: ../raster/r.region/main.c:179
 #, c-format
 msgid "can't read region <%s> in <%s>"
 msgstr "<%s> فى <%s> لم يمكن قراءة المنطقة"
 
-#: ../raster/r.region/main.c:195
+#: ../raster/r.region/main.c:196
 #, c-format
 msgid "can't open 3dview file <%s> in <%s>"
 msgstr "<%s> فى <%s>لم يمكن فتح الملف للمنظر ثلاثى الأبعاد"
 
-#: ../raster/r.region/main.c:199
+#: ../raster/r.region/main.c:200
 #, c-format
 msgid "can't read 3dview file <%s> in <%s>"
 msgstr "<%s> فى <%s>لم يمكن قراءة الملف للمنظر ثلاثى الأبعاد"
 
-#: ../raster/r.region/main.c:233
+#: ../raster/r.region/main.c:234
 #, c-format
 msgid "can't open vector map <%s> in <%s>"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
-#: ../raster/r.region/main.c:363
+#: ../raster/r.region/main.c:364
 #, c-format
 msgid "invalid region: %s"
 msgstr "%s:منطقة غير صالحة"
 
-#: ../raster/r.region/main.c:371
+#: ../raster/r.region/main.c:372
 msgid "unable to update boundaries"
 msgstr "لم يتم تحديث الحدود"
 
@@ -16597,16 +16659,16 @@ msgstr "(2 < D < 3) البعد الفراكتالى للسطح"
 msgid "ERROR: Problem opening output file."
 msgstr "dig عطل فى فتح ملف المدخل"
 
-#: ../raster/r.surf.fractal/spec_syn.c:56
+#: ../raster/r.surf.fractal/spec_syn.c:52
 msgid "Preliminary surface calculations."
 msgstr ""
 
-#: ../raster/r.surf.fractal/spec_syn.c:116
+#: ../raster/r.surf.fractal/spec_syn.c:110
 #, c-format
 msgid "Calculating surface %d (of %d)"
 msgstr ""
 
-#: ../raster/r.surf.gauss/main.c:46
+#: ../raster/r.surf.gauss/main.c:45
 msgid ""
 "GRASS module to produce a raster map layer of gaussian deviates whose mean "
 "and standard deviation can be expressed by the user. It uses a gaussian "
@@ -16615,24 +16677,37 @@ msgstr ""
 "برنامج أنشاء خريطة راسترية ذو أنحراف جاوسى متوسطة و أنحرافه المعيارى يحدده "
 "المستخدم"
 
-#: ../raster/r.surf.gauss/main.c:62 ../raster/r.surf.random/main.c:58
-msgid "Name of the random surface to be produced"
-msgstr "اسم السطح العشوائى المطلوب إنتاجه"
+#: ../raster/r.surf.gauss/main.c:52
+#, fuzzy
+msgid "Name of the output random surface"
+msgstr "اسم الخريطة المخرجة"
 
-#: ../raster/r.surf.gauss/main.c:67
+#: ../raster/r.surf.gauss/main.c:56
 msgid "Distribution mean"
 msgstr "متوسط التوزيع"
 
-#: ../raster/r.surf.gauss/main.c:72
+#: ../raster/r.surf.gauss/main.c:62
 #, fuzzy
 msgid "Standard deviation"
 msgstr "الإنحراف المعيارى"
+
+#: ../raster/r.surf.gauss/main.c:74
+#, fuzzy
+msgid "Illegal file name. Please try another."
+msgstr "اسم ااملف المخرج"
+
+#: ../raster/r.surf.gauss/main.c:77
+#, fuzzy, c-format
+msgid ""
+"Raster map [%s] already exists.\n"
+"Please try another."
+msgstr "الخريطة الراسترية المطلوب الضبط عليها"
 
 #: ../raster/r.surf.idw/main.c:70
 msgid "Surface interpolation utility for raster map layers."
 msgstr "وسيلة إستيفاء السطح لخريطة راسترية"
 
-#: ../raster/r.surf.idw/main.c:80 ../raster/r.surf.idw2/main.c:72
+#: ../raster/r.surf.idw/main.c:80 ../raster/r.surf.idw2/main.c:73
 #: ../vector/v.surf.idw/main.c:95
 msgid "Number of interpolation points"
 msgstr "عدد نقاط الإستيفاء"
@@ -16651,7 +16726,7 @@ msgstr ""
 msgid "Unable to read current region parameters"
 msgstr "طباعة إحداثيات الإتصال الحلى و الخروج"
 
-#: ../raster/r.surf.idw/main.c:232 ../raster/r.surf.idw2/main.c:112
+#: ../raster/r.surf.idw/main.c:232 ../raster/r.surf.idw2/main.c:113
 #, fuzzy, c-format
 msgid "Interpolating raster map <%s>... %d rows... "
 msgstr "خريطة الراستر االناتجة"
@@ -16661,41 +16736,41 @@ msgstr "خريطة الراستر االناتجة"
 msgid "Cannot read row"
 msgstr "لم بمكن قراءة معلومات الحقل"
 
-#: ../raster/r.surf.idw2/main.c:61
+#: ../raster/r.surf.idw2/main.c:62
 msgid "Surface generation program."
 msgstr "برنامج انشاء السطح"
 
-#: ../raster/r.surf.idw2/main.c:80
+#: ../raster/r.surf.idw2/main.c:81
 msgid ""
 "Lat/long databases not supported by r.surf.idw2. Use r.surf.idw instead!"
 msgstr ""
 
-#: ../raster/r.surf.idw2/main.c:86 ../vector/v.surf.idw/main.c:124
+#: ../raster/r.surf.idw2/main.c:87 ../vector/v.surf.idw/main.c:124
 #, fuzzy, c-format
 msgid "%s=%s - illegal number of interpolation points"
 msgstr "عدد نقاط الإستيفاء"
 
-#: ../raster/r.surf.idw2/main.c:95
+#: ../raster/r.surf.idw2/main.c:96
 #, c-format
 msgid "%s: no data points found"
 msgstr ""
 
-#: ../raster/r.surf.idw2/main.c:123
+#: ../raster/r.surf.idw2/main.c:124
 #, fuzzy
 msgid "Cannot get row"
 msgstr "لم يمكن حشر صف جديد: %s"
 
-#: ../raster/r.surf.idw2/read_cell.c:19
+#: ../raster/r.surf.idw2/read_cell.c:20
 #, fuzzy, c-format
 msgid "%s: %s - map not found"
 msgstr "غير موجود <%s> الراستر"
 
-#: ../raster/r.surf.idw2/read_cell.c:35
+#: ../raster/r.surf.idw2/read_cell.c:36
 #, fuzzy, c-format
 msgid "%s: can't open %s"
 msgstr "%s لم يمكن فتح "
 
-#: ../raster/r.surf.idw2/read_cell.c:39
+#: ../raster/r.surf.idw2/read_cell.c:40
 #, fuzzy, c-format
 msgid "Reading raster map <%s> ..."
 msgstr "%-5d dig_att قراءة ملف...\n"
@@ -16706,13 +16781,18 @@ msgid ""
 "expressed by the user."
 msgstr "إنتاج خريطة راسترية بإنحراف عشوائى موحد يحدد مداه بواسطة المستخدم"
 
-#: ../raster/r.surf.random/main.c:63
+#: ../raster/r.surf.random/main.c:51
 msgid "Minimum random value"
 msgstr "القيمة العشوائية الصغري"
 
-#: ../raster/r.surf.random/main.c:68
+#: ../raster/r.surf.random/main.c:57
 msgid "Maximum random value"
 msgstr "القيمة العشوائية الكبري"
+
+#: ../raster/r.surf.random/main.c:63
+#, fuzzy
+msgid "Create an integer map"
+msgstr "خريطة الراستر االناتجة"
 
 #: ../raster/r.texture/h_measure.c:85
 msgid ""
@@ -16841,48 +16921,33 @@ msgstr "%-5d dig_att قراءة ملف...\n"
 msgid "Calculated measure #%d (56 measures available)"
 msgstr ""
 
-#: ../raster/r.thin/io.c:97
-#, fuzzy, c-format
-msgid "%s: Unable to find raster map <%s>"
-msgstr "<%s> لم يمكن فتح"
-
-#: ../raster/r.thin/io.c:103
-#, fuzzy, c-format
-msgid "%s: Unable to open raster map <%s> in mapset <%s>"
-msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
-
-#: ../raster/r.thin/io.c:109
+#: ../raster/r.thin/io.c:107
 #, fuzzy, c-format
 msgid "File %s -- %d rows X %d columns"
 msgstr "%d راستر%s, %d فيكتور%s\n"
 
-#: ../raster/r.thin/io.c:120
+#: ../raster/r.thin/io.c:118
 #, fuzzy, c-format
 msgid "%s: Unable to create temporary file <%s> -- errno = %d"
 msgstr "لم يتم تحديث الحدود"
 
-#: ../raster/r.thin/io.c:131 ../raster/r.thin/io.c:145
-#: ../raster/r.thin/io.c:157
+#: ../raster/r.thin/io.c:129 ../raster/r.thin/io.c:143
+#: ../raster/r.thin/io.c:155
 #, fuzzy, c-format
 msgid "%s: Error writing temporary file"
 msgstr "خطا فى محاولة قراءة ملف قاعدة البيانات dbmscap\n"
 
-#: ../raster/r.thin/io.c:139
+#: ../raster/r.thin/io.c:137
 #, fuzzy, c-format
 msgid "%s: Error reading from raster map <%s> in mapset <%s>"
 msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
-#: ../raster/r.thin/io.c:178
-#, fuzzy, c-format
-msgid "%s:  Unable to open output raster map <%s>"
-msgstr "<%s> لم يمكن فتح"
-
-#: ../raster/r.thin/io.c:184
+#: ../raster/r.thin/io.c:181
 #, fuzzy, c-format
 msgid "Output file %d rows X %d columns"
 msgstr "%d راستر%s, %d فيكتور%s\n"
 
-#: ../raster/r.thin/io.c:185
+#: ../raster/r.thin/io.c:182
 #, fuzzy, c-format
 msgid "Window %d rows X %d columns"
 msgstr "%d راستر%s, %d فيكتور%s\n"
@@ -17089,7 +17154,7 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.to.vect/areas_io.c:367 ../raster/r.to.vect/util.c:164
-#: ../vector/v.in.ogr/main.c:752
+#: ../vector/v.in.ogr/main.c:755
 #, c-format
 msgid "Cannot insert new row: %s"
 msgstr "لم يمكن حشر صف جديد: %s"
@@ -17177,31 +17242,10 @@ msgid ""
 "table."
 msgstr ""
 
-#: ../raster/r.to.vect/main.c:153 ../vector/lidar/v.surf.bspline/main.c:269
-#: ../vector/v.db.connect/main.c:190 ../vector/v.db.connect/main.c:255
-#: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:183
-#: ../vector/v.out.ogr/main.c:256 ../vector/v.out.svg/main.c:145
-#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
-#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
-#: ../vector/v.surf.idw/read_sites.c:39
-#, fuzzy, c-format
-msgid "Unable to open database <%s> by driver <%s>"
-msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
-
-#: ../raster/r.to.vect/main.c:188
-#, fuzzy, c-format
-msgid "Unable to create table: %s"
-msgstr "[%s]لم يتم فتح ملف الخلية ل "
-
-#: ../raster/r.to.vect/main.c:191
+#: ../raster/r.to.vect/main.c:191 ../vector/v.overlay/main.c:427
 #, fuzzy
 msgid "Unable to create index"
 msgstr "لم يتم تحديث الحدود"
-
-#: ../raster/r.to.vect/main.c:194
-#, fuzzy, c-format
-msgid "Unable to grant privileges on table <%s>"
-msgstr "%s لم يتم منح الإمتياز على الجدول"
 
 #: ../raster/r.to.vect/main.c:257
 #, fuzzy, c-format
@@ -17584,7 +17628,7 @@ msgstr ""
 msgid "Memory allocation error on reading start points from raster map %s"
 msgstr ""
 
-#: ../raster/r.walk/main.c:868 ../raster/wildfire/r.spread/main.c:537
+#: ../raster/r.walk/main.c:868
 #, fuzzy, c-format
 msgid "Reading %s ... "
 msgstr "dig قراءة ملف...\n"
@@ -18384,7 +18428,7 @@ msgstr "اسم الخريطة الراسترية المطلوب استفهامه
 msgid "Size of point cache"
 msgstr "حجم رصيد النقط"
 
-#: ../raster/r.what/main.c:121 ../vector/v.what/main.c:86
+#: ../raster/r.what/main.c:121 ../vector/v.what/main.c:71
 msgid "Coordinates for query"
 msgstr "الإحداثيات للإستفهام"
 
@@ -18659,6 +18703,52 @@ msgstr ""
 msgid "You are not outputting any raster or vector points maps"
 msgstr "اسم الملف الفيكتورى المخرج"
 
+#: ../raster/simwe/simlib/hydro.c:98
+msgid "nwalk > maxw!"
+msgstr ""
+
+#: ../raster/simwe/simlib/hydro.c:309
+#, fuzzy
+msgid "Unable to write raster maps"
+msgstr "اسم الخريطة الراسترية"
+
+#: ../raster/simwe/simlib/input.c:49
+#, fuzzy, c-format
+msgid "File [%s] not found"
+msgstr "غير موجود <%s> الراستر"
+
+#: ../raster/simwe/simlib/input.c:52
+#, fuzzy, c-format
+msgid "Unable to open file [%s]"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#: ../raster/simwe/simlib/input.c:55
+#, fuzzy
+msgid "Failed to guess file format"
+msgstr "ملف المدخل"
+
+#: ../raster/simwe/simlib/input.c:58
+#, fuzzy, c-format
+msgid "Reading sites map (%s) ..."
+msgstr "%-5d dig_att قراءة ملف...\n"
+
+#: ../raster/simwe/simlib/input.c:168
+msgid "Running MAY 10 version"
+msgstr ""
+
+#: ../raster/simwe/simlib/input.c:468
+msgid "Zero value in Mannings n"
+msgstr ""
+
+#: ../raster/simwe/simlib/input.c:522
+msgid "Infiltration exceeds the rainfall rate everywhere! No overland flow."
+msgstr ""
+
+#: ../raster/simwe/simlib/input.c:602
+#, fuzzy
+msgid "Unable to write et file"
+msgstr "القيمة التى تعنى قيمة منعدمة"
+
 #: ../raster/wildfire/r.ros/main.c:214
 msgid ""
 "Generates three, or four raster map layers showing 1) the base "
@@ -18725,10 +18815,9 @@ msgstr "مقلوب فرق العزم"
 #: ../raster/wildfire/r.spread/main.c:104
 #, fuzzy
 msgid ""
-"Simulates elliptically anisotropic spread on a graphics window and and "
-"generates a raster map of the cumulative time of spread, given raster maps "
-"containing the rates of spread (ROS), the ROS directions and the spread "
-"origins."
+"Simulates elliptically anisotropic spread on a graphics window and generates "
+"a raster map of the cumulative time of spread, given raster maps containing "
+"the rates of spread (ROS), the ROS directions and the spread origins."
 msgstr "برنامج نمذجة أنتشار الحرائق2 "
 
 #: ../raster/wildfire/r.spread/main.c:109
@@ -18834,7 +18923,12 @@ msgstr "للحرائق الهائلة :اعتبر التأثير الكشافى"
 
 #: ../raster/wildfire/r.spread/main.c:485
 #, fuzzy
-msgid "Reading inputs ..."
+msgid "Reading inputs..."
+msgstr "dig قراءة ملف...\n"
+
+#: ../raster/wildfire/r.spread/main.c:537
+#, fuzzy, c-format
+msgid "Reading %s... "
 msgstr "dig قراءة ملف...\n"
 
 #: ../raster/wildfire/r.spreadpath/main.c:73
@@ -19145,20 +19239,20 @@ msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:109
 #, fuzzy
-msgid "Reacharge raster map in m^3/s"
+msgid "Recharge raster map in m^3/s"
 msgstr "%-5d dig_att قراءة ملف...\n"
 
 #: ../raster3d/r3.gwflow/main.c:118
 msgid ""
 "The piezometric head result of the numerical calculation will be written to "
-"this map."
+"this map"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:127
 msgid ""
 "Calculate the groundwater distance velocity vector field and write the x, y, "
-"and z components to maps named name_[xyz]. name is basename for the new "
-"raster3d maps."
+"and z components to maps named name_[xyz]. Name is basename for the new "
+"raster3d maps"
 msgstr ""
 
 #: ../raster3d/r3.gwflow/main.c:138
@@ -19444,8 +19538,7 @@ msgstr "الخريطة الفيكتورية لنقاط الإنتهاء"
 msgid "Converts 3D raster maps (G3D) into the VTK-Ascii format"
 msgstr "تحويل خريطة راسترية إلى فيكتورية"
 
-#: ../raster3d/r3.out.vtk/main.c:387 ../vector/v.out.ascii/out.c:120
-#: ../vector/v.out.vtk/main.c:173
+#: ../raster3d/r3.out.vtk/main.c:387
 msgid "failed to interpret dp as an integer"
 msgstr ""
 
@@ -19683,7 +19776,7 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:65
 msgid ""
 "Correction of the v.lidar.growing output. It is the last of the three "
-"algorithms for LIDAR filtering"
+"algorithms for LIDAR filtering."
 msgstr ""
 
 #: ../vector/lidar/v.lidar.correction/main.c:68
@@ -19729,12 +19822,18 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:147
 #: ../vector/lidar/v.lidar.correction/main.c:153
 #: ../vector/lidar/v.lidar.edgedetection/main.c:169
+#: ../vector/lidar/v.outlier/main.c:149 ../vector/lidar/v.outlier/main.c:153
+#: ../vector/lidar/v.outlier/main.c:159
+#: ../vector/lidar/v.surf.bspline/main.c:232 ../vector/v.edit/main.c:70
+#: ../vector/v.hull/main.c:273 ../vector/v.mkgrid/main.c:201
+#: ../vector/v.net.path/main.c:134
 #, fuzzy, c-format
-msgid "Vector <%s> could not be opened"
-msgstr "لم توجد<%s>الخريطة الفيكتورية"
+msgid "Unable to create vector map <%s>"
+msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../vector/lidar/v.lidar.correction/main.c:167
 #: ../vector/lidar/v.lidar.edgedetection/main.c:184
+#: ../vector/lidar/v.lidar.growing/main.c:149
 #: ../vector/lidar/v.outlier/main.c:185
 #: ../vector/lidar/v.surf.bspline/main.c:315
 #, fuzzy, c-format
@@ -19939,11 +20038,6 @@ msgstr ""
 msgid "Threshold for double pulse in region growing"
 msgstr ""
 
-#: ../vector/lidar/v.lidar.growing/main.c:149
-#, fuzzy, c-format
-msgid "No db connection for driver <%s> defined. Run db.connect."
-msgstr "db.connect إتصل مستخدما<%s>لم يتم تعريف مشغل الإتصال بقاعدة البيانات"
-
 #: ../vector/lidar/v.lidar.growing/main.c:152
 msgid "Setting regions and boxes"
 msgstr ""
@@ -19986,18 +20080,9 @@ msgstr ""
 msgid "Threshold for the outliers"
 msgstr ""
 
-#: ../vector/lidar/v.outlier/main.c:149 ../vector/lidar/v.outlier/main.c:153
-#: ../vector/lidar/v.outlier/main.c:159 ../vector/v.hull/main.c:260
-#: ../vector/v.hull/main.c:273 ../vector/v.net.path/main.c:134
-#, fuzzy, c-format
-msgid "Cannot open vector map <%s>"
-msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
-
 #: ../vector/lidar/v.outlier/main.c:165
-#: ../vector/lidar/v.surf.bspline/main.c:200
-#: ../vector/lidar/v.surf.bspline/main.c:217
 #, fuzzy, c-format
-msgid "Cannot open vector map <%s> at the topological level"
+msgid "Unable to open vector map <%s> at the topological level"
 msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
 #: ../vector/lidar/v.outlier/main.c:298
@@ -20043,6 +20128,12 @@ msgstr ""
 msgid "No raster nor vector output"
 msgstr ""
 
+#: ../vector/lidar/v.surf.bspline/main.c:200
+#: ../vector/lidar/v.surf.bspline/main.c:217
+#, fuzzy, c-format
+msgid "Cannot open vector map <%s> at the topological level"
+msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
 #: ../vector/lidar/v.surf.bspline/main.c:206
 #, c-format
 msgid ""
@@ -20061,10 +20152,12 @@ msgid ""
 "a raster output or other driver."
 msgstr ""
 
-#: ../vector/lidar/v.surf.bspline/main.c:232 ../vector/v.edit/main.c:70
-#, fuzzy, c-format
-msgid "Unable to create vector map <%s>"
-msgstr "اسم الخريطة الراسترية الناتجة"
+#: ../vector/lidar/v.surf.bspline/main.c:276 ../vector/v.buffer/main.c:388
+#: ../vector/v.sample/main.c:258 ../vector/v.surf.idw/read_sites.c:46
+#: ../vector/v.to.rast3/main.c:97 ../vector/v.univar/main.c:145
+#: ../vector/v.what.rast/main.c:148
+msgid "Column type not supported"
+msgstr "نوع العمود غير مدعم"
 
 #: ../vector/lidar/v.surf.bspline/main.c:281
 #, fuzzy, c-format
@@ -20217,7 +20310,7 @@ msgstr ""
 msgid "CrossCorrelation: No point lies into the current region"
 msgstr "%d نقاط تم تحميلها\n"
 
-#: ../vector/v.buffer/main.c:213 ../vector/v.overlay/main.c:430
+#: ../vector/v.buffer/main.c:213
 #, fuzzy
 msgid "Rebuilding topology ..."
 msgstr "dig قراءة ملف...\n"
@@ -20274,6 +20367,7 @@ msgstr ""
 
 #: ../vector/v.buffer/main.c:433 ../vector/v.buffer/main.c:442
 #: ../vector/v.buffer/main.c:501 ../vector/v.buffer/main.c:510
+#: ../vector/v.sample/main.c:244 ../vector/v.sample/main.c:252
 #, fuzzy, c-format
 msgid "No record for cat = %d"
 msgstr "cat = %d لا يوجد تسجيل للخط"
@@ -20307,12 +20401,12 @@ msgstr ""
 msgid "Breaking boundaries ..."
 msgstr "وصل الفئات...\n"
 
-#: ../vector/v.buffer/main.c:589 ../vector/v.overlay/area_area.c:44
+#: ../vector/v.buffer/main.c:589
 #, fuzzy
 msgid "Removing duplicates ..."
 msgstr "الخريطة الفيكتورية لنقاط البدء"
 
-#: ../vector/v.buffer/main.c:601 ../vector/v.overlay/area_area.c:57
+#: ../vector/v.buffer/main.c:601
 #, fuzzy
 msgid "Attaching islands ..."
 msgstr "وصل الفئات...\n"
@@ -20322,7 +20416,7 @@ msgstr "وصل الفئات...\n"
 msgid "Cannot calculate area centroid."
 msgstr "لم يتم حساب شبه مركز المساحة"
 
-#: ../vector/v.buffer/main.c:709 ../vector/v.overlay/area_area.c:238
+#: ../vector/v.buffer/main.c:709
 #, fuzzy
 msgid "Attaching centroids ..."
 msgstr "وصل الفئات...\n"
@@ -20370,8 +20464,7 @@ msgstr ""
 msgid "Do not print polyline info"
 msgstr ""
 
-#: ../vector/v.build.polylines/main.c:122 ../vector/v.db.select/main.c:101
-#: ../vector/v.transform/main.c:177
+#: ../vector/v.build.polylines/main.c:122
 #, fuzzy, c-format
 msgid "Could not find input vector map <%s>"
 msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
@@ -20435,8 +20528,8 @@ msgstr "طبقتين يجب تحديدهم"
 msgid "Output vector wasn't entered"
 msgstr "الفيكتور المخرج لم يتم إدخاله"
 
-#: ../vector/v.category/main.c:235 ../vector/v.in.ogr/main.c:869
-#: ../vector/v.voronoi/dt_main.c:121
+#: ../vector/v.category/main.c:235 ../vector/v.in.ogr/main.c:872
+#: ../vector/v.overlay/area_area.c:71 ../vector/v.voronoi/dt_main.c:121
 msgid "Cannot calculate area centroid"
 msgstr "لم يتم حساب شبه مركز المساحة"
 
@@ -20706,6 +20799,14 @@ msgstr "dig_cats لم يتم فتح ملف"
 msgid "Cannot open database %s"
 msgstr "%s لم يتم فتح قاعدة البيانات"
 
+#: ../vector/v.convert/att.c:74 ../vector/v.in.ascii/in.c:366
+#: ../vector/v.in.dxf/write_vect.c:204 ../vector/v.in.ogr/main.c:679
+#: ../vector/v.mkgrid/main.c:225 ../vector/v.net.path/path.c:102
+#: ../vector/v.surf.rst/main.c:558 ../vector/v.to.points/main.c:273
+#, c-format
+msgid "Cannot create table: %s"
+msgstr "%s:لم يتم إنشاء الجدول"
+
 #: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
@@ -20909,94 +21010,110 @@ msgstr "خطأ نظام: كود غير متوافق"
 msgid "NEW_T_OLD Got a bad type code [%x]"
 msgstr "خطأ نظام: كود غير متوافق"
 
-#: ../vector/v.db.connect/main.c:52
+#: ../vector/v.db.connect/main.c:50
 msgid "Prints/sets DB connection for a vector map to attribute table."
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:79
+#: ../vector/v.db.connect/main.c:68
 #, fuzzy
-msgid "Table name"
-msgstr "اسم الجدول"
+msgid "Key column name"
+msgstr "اسم الخريطة الراسترية"
 
-#: ../vector/v.db.connect/main.c:87
-msgid "Key name (must refer to an integer column)"
+#: ../vector/v.db.connect/main.c:69 ../vector/v.in.db/main.c:84
+msgid "Must refer to an integer column"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:93
+#: ../vector/v.db.connect/main.c:75
 #, fuzzy
-msgid "Print current map connection parameters and exit"
+msgid "Print all map connection parameters and exit"
 msgstr "طباعة إحداثيات الإتصال الحلى و الخروج"
 
-#: ../vector/v.db.connect/main.c:97
-msgid ""
-"Print current map connection parameters and exit (shell script style)\n"
-"\tformat:  layer[/layer name] table key database driver"
+#: ../vector/v.db.connect/main.c:79
+#, fuzzy
+msgid "Print all map connection parameters and exit in shell script style"
+msgstr "طباعة إحداثيات الإتصال الحلى و الخروج"
+
+#: ../vector/v.db.connect/main.c:81
+msgid "Format: layer[/layer name] table key database driver"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:102
+#: ../vector/v.db.connect/main.c:85
 msgid "Print types/names of table columns for specified layer and exit"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:106
+#: ../vector/v.db.connect/main.c:90
 #, fuzzy
 msgid "Overwrite connection parameter for certain layer"
 msgstr "طباعة إحداثيات الإتصال الحلى و الخروج"
 
-#: ../vector/v.db.connect/main.c:110
+#: ../vector/v.db.connect/main.c:94
 msgid "Delete connection for certain layer (not the table)"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:139
+#: ../vector/v.db.connect/main.c:123
 msgid "Please choose only one print style"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:146
-msgid "Cannot edit vector map stored in other mapset."
-msgstr ""
+#: ../vector/v.db.connect/main.c:130
+#, fuzzy
+msgid "Unable to modify vector map stored in other mapset"
+msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
 
-#: ../vector/v.db.connect/main.c:154 ../vector/v.info/main.c:175
+#: ../vector/v.db.connect/main.c:138 ../vector/v.info/main.c:175
 #, fuzzy, c-format
 msgid "Database connection for map <%s> is not defined in DB file"
 msgstr "لم يتم الإتصال بقاعدة البيانات\n"
 
-#: ../vector/v.db.connect/main.c:160
+#: ../vector/v.db.connect/main.c:144
 #, fuzzy, c-format
 msgid "Vector map <%s> is connected by:"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
-#: ../vector/v.db.connect/main.c:182 ../vector/v.sample/main.c:166
+#: ../vector/v.db.connect/main.c:168 ../vector/v.sample/main.c:166
 #: ../vector/v.what.rast/main.c:119
 #, fuzzy, c-format
 msgid "Database connection not defined for layer <%d>"
 msgstr "لم يتم الإتصال بقاعدة البيانات\n"
 
-#: ../vector/v.db.connect/main.c:194
-#, fuzzy, c-format
-msgid "Unable to open table <%s>"
-msgstr "<%s> لم يمكن فتح"
-
-#: ../vector/v.db.connect/main.c:227
+#: ../vector/v.db.connect/main.c:213
 #, c-format
 msgid "Use -o to overwrite existing link for layer <%d>"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:231 ../vector/v.db.connect/main.c:244
+#: ../vector/v.db.connect/main.c:220 ../vector/v.db.connect/main.c:253
 #, c-format
 msgid "Table <%s> does not exist in database <%s>"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:236 ../vector/v.db.connect/main.c:249
+#: ../vector/v.db.connect/main.c:230 ../vector/v.in.db/main.c:131
+#: ../vector/v.transform/trans_digit.c:92
+#, fuzzy, c-format
+msgid "Missing column <%s> in table <%s>"
+msgstr "غير موجودة <%s> المنطقة"
+
+#: ../vector/v.db.connect/main.c:235 ../vector/v.in.db/main.c:134
+#, fuzzy
+msgid "Data type of key column must be integer"
+msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#: ../vector/v.db.connect/main.c:242 ../vector/v.db.connect/main.c:259
 #, c-format
 msgid ""
 "The table <%s> is now part of vector map <%s> and may be deleted or "
 "overwritten by GRASS modules"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:263
+#: ../vector/v.db.connect/main.c:275 ../vector/v.distance/main.c:710
+#: ../vector/v.in.dxf/write_vect.c:209 ../vector/v.in.ogr/main.c:686
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "%s لم يتم منح الإمتياز على الجدول"
+
+#: ../vector/v.db.connect/main.c:277
 msgid "Select privileges were granted on the table"
 msgstr ""
 
-#: ../vector/v.db.connect/main.c:270
+#: ../vector/v.db.connect/main.c:284
 msgid ""
 "For defining a new connection you have to specify these parameters: driver, "
 "database, table [, key [, layer]]"
@@ -21011,36 +21128,17 @@ msgstr "طباعة عناوين الفئة"
 msgid "Attribute column(s)"
 msgstr ""
 
-#: ../vector/v.db.select/main.c:72
-#, fuzzy
-msgid "Output vertical record separator"
-msgstr "فاصل التسجيل الراسى للمخرج "
-
-#: ../vector/v.db.select/main.c:78
-#, fuzzy
-msgid "Null value indicator"
-msgstr "مؤشر القيمة المنعدمة"
-
-#: ../vector/v.db.select/main.c:82
-#, fuzzy
-msgid "Do not include column names in output"
-msgstr "لاتشمل اسماء الأعمدة في المخرج"
-
-#: ../vector/v.db.select/main.c:86
-#, fuzzy
-msgid "Vertical output (instead of horizontal)"
-msgstr "(مخرج راسي (بدلا من الافقي"
-
 #: ../vector/v.db.select/main.c:129
 #, fuzzy
 msgid "Cannot open select cursor"
 msgstr "لم يتم فتح إختيار المؤشر"
 
-#: ../vector/v.db.select/main.c:147 ../vector/v.out.ogr/main.c:584
-#: ../vector/v.out.svg/main.c:359
+#: ../vector/v.db.select/main.c:147 ../vector/v.lrs/v.lrs.label/main.c:312
+#: ../vector/v.out.ogr/main.c:611 ../vector/v.out.svg/main.c:359
+#: ../vector/v.overlay/main.c:330
 #, fuzzy
-msgid "Cannot fetch data"
-msgstr "لم يتم جلب البيانات"
+msgid "Unable to fetch data from table"
+msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.digit/centre.c:178
 msgid "Region restored to original extent."
@@ -21281,7 +21379,7 @@ msgid ""
 "sampling by nearest neighbor"
 msgstr ""
 
-#: ../vector/v.drape/main.c:82 ../vector/v.extrude/main.c:96
+#: ../vector/v.drape/main.c:82 ../vector/v.extrude/main.c:90
 msgid "Elevation raster for height extraction"
 msgstr ""
 
@@ -21673,7 +21771,7 @@ msgstr "طبقتين يجب تحديدهم"
 msgid "Cannot open data source"
 msgstr "%s لم يتم فتح قاعدة البيانات"
 
-#: ../vector/v.external/main.c:122 ../vector/v.in.ogr/main.c:321
+#: ../vector/v.external/main.c:122 ../vector/v.in.ogr/main.c:324
 #, fuzzy, c-format
 msgid "Layer <%s> not available"
 msgstr "اسم الخريطة الراسترية"
@@ -21779,7 +21877,7 @@ msgstr ""
 msgid "No table"
 msgstr "اسم الخريطة الراسترية الجديدة"
 
-#: ../vector/v.extract/main.c:334
+#: ../vector/v.extract/main.c:334 ../vector/v.in.db/main.c:207
 #, fuzzy
 msgid "Unable to copy table"
 msgstr "<%s> لم يمكن فتح"
@@ -21794,54 +21892,75 @@ msgstr "انتهى\n"
 msgid "Removing duplicate centroids..."
 msgstr "الخريطة الفيكتورية لنقاط البدء"
 
-#: ../vector/v.extrude/main.c:70
+#: ../vector/v.extrude/main.c:68
 msgid "Extrudes flat vector object to 3D with defined height."
 msgstr ""
 
-#: ../vector/v.extrude/main.c:74
+#: ../vector/v.extrude/main.c:72
 #, fuzzy
 msgid "Trace elevation"
 msgstr "الصفر قيمة حقيقية"
 
-#: ../vector/v.extrude/main.c:77
+#: ../vector/v.extrude/main.c:75
 #, fuzzy
 msgid "Name of input 2D vector map"
 msgstr "اسم الخريطة الراسترية المدخلة"
 
-#: ../vector/v.extrude/main.c:80
+#: ../vector/v.extrude/main.c:78
 #, fuzzy
 msgid "Name of resulting 3D vector map"
 msgstr "اسماء الخرائط الناتجة"
 
-#: ../vector/v.extrude/main.c:84 ../vector/v.transform/main.c:109
+#: ../vector/v.extrude/main.c:82 ../vector/v.transform/main.c:131
 #, fuzzy
 msgid "Shifting value for z coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.extrude/main.c:103
+#: ../vector/v.extrude/main.c:97
 msgid "Fixed height for 3D vector objects"
 msgstr ""
 
-#: ../vector/v.extrude/main.c:111
-msgid "Column of attribute table with object heights"
-msgstr ""
+#: ../vector/v.extrude/main.c:103
+#, fuzzy
+msgid "Name of attribute column with object heights"
+msgstr "اسم ملف التنعيم"
 
-#: ../vector/v.extrude/main.c:124
+#: ../vector/v.extrude/main.c:117
 #, c-format
-msgid "One of [%s] or [%s] parameters must be set"
+msgid "One of '%s' or '%s' parameters must be set"
 msgstr ""
 
-#: ../vector/v.extrude/main.c:228 ../vector/v.extrude/main.c:295
+#: ../vector/v.extrude/main.c:184
+#, fuzzy
+msgid "Extruding areas..."
+msgstr "وصل الفئات...\n"
+
+#: ../vector/v.extrude/main.c:196 ../vector/v.out.svg/main.c:209
+#, c-format
+msgid "Skipping area %d without centroid"
+msgstr ""
+
+#: ../vector/v.extrude/main.c:210
+#, fuzzy, c-format
+msgid "Cannot select attributes for area %d"
+msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#: ../vector/v.extrude/main.c:244
+#, fuzzy
+msgid "Extruding basic vector objects..."
+msgstr "كتابة ملف جديد...\n"
+
+#: ../vector/v.extrude/main.c:278
 #, fuzzy, c-format
 msgid "Cannot select attributes for area #%d"
 msgstr "لم يمكن اختيار البيانات من الجدول"
 
-#: ../vector/v.extrude/main.c:313
+#: ../vector/v.extrude/main.c:296
 #, c-format
-msgid "Column <%s>: invalid data type."
+msgid "Column <%s>: invalid data type"
 msgstr ""
 
-#: ../vector/v.hull/main.c:233 ../vector/v.overlay/main.c:54
+#: ../vector/v.hull/main.c:233 ../vector/v.overlay/main.c:55
 #: ../vector/v.parallel/main.c:39 ../vector/v.segment/main.c:51
 #: ../vector/v.split/main.c:40 ../vector/v.to.points/main.c:161
 #: ../vector/v.type/main.c:46
@@ -22082,7 +22201,7 @@ msgid "Category column is not of integer type"
 msgstr ""
 
 #: ../vector/v.in.ascii/in.c:372 ../vector/v.net.path/path.c:109
-#: ../vector/v.sample/main.c:216 ../vector/v.to.points/main.c:280
+#: ../vector/v.to.points/main.c:280
 #, fuzzy, c-format
 msgid "Cannot grant privileges on table <%s>"
 msgstr "%s لم يتم منح الإمتياز على الجدول"
@@ -22168,59 +22287,59 @@ msgstr "الخريطة الفيكتورية لنقاط البدء"
 msgid "Cannot insert values: %s"
 msgstr "%s:لم يتم الحشر بالجدول"
 
-#: ../vector/v.in.db/main.c:52
-msgid "Create new vector (points) from database table containing coordinates."
+#: ../vector/v.in.db/main.c:53
+msgid ""
+"Creates new vector (points) map from database table containing coordinates."
 msgstr ""
 
-#: ../vector/v.in.db/main.c:58
+#: ../vector/v.in.db/main.c:57
 #, fuzzy
 msgid "Input table name"
 msgstr "اسم قاعدة بيانات المدخل"
 
-#: ../vector/v.in.db/main.c:79
-msgid "x column name"
-msgstr ""
-
-#: ../vector/v.in.db/main.c:85
-msgid "y column name"
-msgstr ""
-
-#: ../vector/v.in.db/main.c:91
-msgid "z column name"
-msgstr ""
-
-#: ../vector/v.in.db/main.c:97
+#: ../vector/v.in.db/main.c:69
 #, fuzzy
-msgid "category column name"
-msgstr "اسم الخريطة الراسترية"
+msgid "Name of column containing x coordinate"
+msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
 
-#: ../vector/v.in.db/main.c:135
+#: ../vector/v.in.db/main.c:74
+#, fuzzy
+msgid "Name of column containing y coordinate"
+msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
+
+#: ../vector/v.in.db/main.c:78
+#, fuzzy
+msgid "Name of column containing z coordinate"
+msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
+
+#: ../vector/v.in.db/main.c:83
+#, fuzzy
+msgid "Name of column containing category number"
+msgstr "اسم الخريطة الراسترية المحتوية على معلومات التكلفة لخلية الشبكة"
+
+#: ../vector/v.in.db/main.c:123
 #, c-format
-msgid "Output vector table <%s> (driver: <%s>, database: <%s>) already exists"
+msgid ""
+"Output vector map, table <%s> (driver: <%s>, database: <%s>) already exists"
 msgstr ""
 
-#: ../vector/v.in.db/main.c:158 ../vector/v.patch/main.c:419
+#: ../vector/v.in.db/main.c:155
 #, fuzzy, c-format
-msgid "Cannot open select cursor: '%s'"
+msgid "Unable to open select cursor: '%s'"
 msgstr "لم يتم فتح إختيار المؤشر"
 
-#: ../vector/v.in.db/main.c:168
+#: ../vector/v.in.db/main.c:165
 msgid "Key column must be integer"
 msgstr ""
 
-#: ../vector/v.in.db/main.c:176
+#: ../vector/v.in.db/main.c:173
 msgid "x/y/z column must be integer or double"
 msgstr ""
 
-#: ../vector/v.in.db/main.c:197
+#: ../vector/v.in.db/main.c:194
 #, fuzzy, c-format
 msgid "%d points written to vector map"
 msgstr "%d نقطة كتبت للمخرج\n"
-
-#: ../vector/v.in.db/main.c:210 ../vector/v.select/main.c:472
-#: ../vector/v.to.points/main.c:256 ../vector/v.voronoi/vo_main.c:317
-msgid "Cannot copy table"
-msgstr "لم يتم نسخ الجدول"
 
 #: ../vector/v.in.dwg/main.c:230
 #, c-format
@@ -22412,223 +22531,232 @@ msgid "Import subregion only"
 msgstr "طباعة نوع الملف الراسترى فقط"
 
 #: ../vector/v.in.ogr/main.c:126
+msgid "Subregion"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:127
 msgid "Format: xmin,ymin,xmax,ymax - usually W,S,E,N"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:135
+#: ../vector/v.in.ogr/main.c:136
 msgid "Minimum size of area to be imported (square units)"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:136
+#: ../vector/v.in.ogr/main.c:137 ../vector/v.in.ogr/main.c:156
+msgid "Min-area & snap"
+msgstr ""
+
+#: ../vector/v.in.ogr/main.c:138
 msgid "Smaller areas and islands are ignored. Should be greater than snap^2"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:142
+#: ../vector/v.in.ogr/main.c:144
 #, fuzzy
 msgid "Optionaly change default input type"
 msgstr "اسم خريطة الراستر المخرجة"
 
-#: ../vector/v.in.ogr/main.c:143
+#: ../vector/v.in.ogr/main.c:145
 msgid ""
 "point;import area centroids as points;line;import area boundaries as lines;"
 "boundary;import lines as area boundaries;centroid;import points as centroids"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:153
+#: ../vector/v.in.ogr/main.c:155
 msgid "Snapping threshold for boundaries"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:154
+#: ../vector/v.in.ogr/main.c:157
 msgid "'-1' for no snap"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:167
+#: ../vector/v.in.ogr/main.c:170
 msgid ""
 "List of column names to be used instead of original names, first is used for "
 "category column"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:172
+#: ../vector/v.in.ogr/main.c:175
 #, fuzzy
 msgid "List available layers in data source and exit"
 msgstr "عرض ملفات الراستر للموقع والخروج"
 
-#: ../vector/v.in.ogr/main.c:181
+#: ../vector/v.in.ogr/main.c:184
 msgid "Do not clean polygons (not recommended)"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:185 ../vector/v.random/main.c:110
+#: ../vector/v.in.ogr/main.c:188 ../vector/v.random/main.c:110
 #, fuzzy
 msgid "Create 3D output"
 msgstr "مخرج متبادل البيتات"
 
-#: ../vector/v.in.ogr/main.c:189 ../vector/v.select/main.c:166
-#: ../vector/v.to.points/main.c:199 ../vector/v.voronoi/vo_main.c:126
+#: ../vector/v.in.ogr/main.c:192 ../vector/v.overlay/main.c:113
+#: ../vector/v.select/main.c:166 ../vector/v.to.points/main.c:199
+#: ../vector/v.voronoi/vo_main.c:126
 #, fuzzy
 msgid "Do not create attribute table"
 msgstr "عدم انشاء جدول الخواص"
 
-#: ../vector/v.in.ogr/main.c:193
+#: ../vector/v.in.ogr/main.c:196
 #, fuzzy
 msgid "Override dataset projection (use location's projection)"
 msgstr "تغلب على الإسقاط مستخدما إسقاط الموقع"
 
-#: ../vector/v.in.ogr/main.c:201
+#: ../vector/v.in.ogr/main.c:204
 msgid "Change column names to lowercase characters"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:221
+#: ../vector/v.in.ogr/main.c:224
 msgid "Available OGR Drivers:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:260
+#: ../vector/v.in.ogr/main.c:263
 #, fuzzy, c-format
 msgid "Unable to open data source <%s>"
 msgstr "<%s> لم يمكن فتح"
 
-#: ../vector/v.in.ogr/main.c:267
+#: ../vector/v.in.ogr/main.c:270
 #, c-format
 msgid "Data source contains %d layers:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:295
+#: ../vector/v.in.ogr/main.c:298
 #, fuzzy, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "خريطة مخرجة حيث ستكتب النقاط"
 
-#: ../vector/v.in.ogr/main.c:297
+#: ../vector/v.in.ogr/main.c:300
 #, fuzzy, c-format
 msgid "Vector map <%s> already exists"
 msgstr "dig_att لم يمكن العثور على ملف"
 
-#: ../vector/v.in.ogr/main.c:348
+#: ../vector/v.in.ogr/main.c:351
 msgid "4 parameters required for 'spatial' parameter"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:413
+#: ../vector/v.in.ogr/main.c:416
 msgid ""
 "Unable to convert input map projection to GRASS format; cannot create new "
 "location"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:442
+#: ../vector/v.in.ogr/main.c:445
 #, fuzzy
 msgid "Over-riding projection check"
 msgstr "طباعة نوع الملف الراسترى فقط"
 
-#: ../vector/v.in.ogr/main.c:459
+#: ../vector/v.in.ogr/main.c:462
 #, fuzzy
 msgid "GRASS LOCATION PROJ_INFO is:\n"
 msgstr "%s لم يمكن فتح "
 
-#: ../vector/v.in.ogr/main.c:469 ../vector/v.in.ogr/main.c:477
+#: ../vector/v.in.ogr/main.c:472 ../vector/v.in.ogr/main.c:480
 #, fuzzy
 msgid "Import dataset PROJ_INFO is:\n"
 msgstr "%s لم يمكن فتح "
 
-#: ../vector/v.in.ogr/main.c:520
+#: ../vector/v.in.ogr/main.c:523
 #, c-format
 msgid ""
 "\n"
 "You can use the -o flag to %s to override this projection check.\n"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:523
+#: ../vector/v.in.ogr/main.c:526
 msgid ""
 "Consider to generate a new location with 'location' parameter from input "
 "data set.\n"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:528
+#: ../vector/v.in.ogr/main.c:531
 #, fuzzy
 msgid "Projection of input dataset and current location appear to match"
 msgstr "إعادة توقيع خريطة راسترية من مكان إلى المكان الحالى"
 
-#: ../vector/v.in.ogr/main.c:551 ../vector/v.in.ogr/main.c:884
+#: ../vector/v.in.ogr/main.c:554 ../vector/v.in.ogr/main.c:887
 #, c-format
 msgid "Layer: %s"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:609
+#: ../vector/v.in.ogr/main.c:612
 #, c-format
 msgid "Column name changed: '%s' -> '%s'"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:632
+#: ../vector/v.in.ogr/main.c:635
 #, c-format
 msgid "Writing column <%s> with fixed length %d chars (may be truncated)"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:648
+#: ../vector/v.in.ogr/main.c:651
 #, c-format
 msgid ""
 "Width for column %s set to 255 (was not specified by OGR), some strings may "
 "be truncated!"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:656
+#: ../vector/v.in.ogr/main.c:659
 #, c-format
 msgid "Writing column %s with fixed length %d chars (may be truncated)"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:658
+#: ../vector/v.in.ogr/main.c:661
 #, fuzzy, c-format
 msgid "Column type not supported (%s)"
 msgstr "نوع العمود غير مدعم"
 
-#: ../vector/v.in.ogr/main.c:692
+#: ../vector/v.in.ogr/main.c:695
 #, c-format
 msgid "Importing map %d features..."
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:766
+#: ../vector/v.in.ogr/main.c:769
 #, c-format
 msgid "%d %s without geometry"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:788
+#: ../vector/v.in.ogr/main.c:791
 msgid "Cleaning polygons, result is not guaranteed!"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:797
+#: ../vector/v.in.ogr/main.c:800
 #, c-format
 msgid "Snap boundaries (threshold = %.3e):"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:811
+#: ../vector/v.in.ogr/main.c:814
 msgid "Break polygons:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:816 ../vector/v.in.ogr/main.c:828
+#: ../vector/v.in.ogr/main.c:819 ../vector/v.in.ogr/main.c:831
 #, fuzzy
 msgid "Remove duplicates:"
 msgstr "لم يتم حساب شبه مركز المساحة"
 
-#: ../vector/v.in.ogr/main.c:824
+#: ../vector/v.in.ogr/main.c:827
 msgid "Break boundaries:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:832
+#: ../vector/v.in.ogr/main.c:835
 msgid "Clean boundaries at nodes:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:838
+#: ../vector/v.in.ogr/main.c:841
 msgid "Change boundary dangles to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:841
+#: ../vector/v.in.ogr/main.c:844
 msgid "Change dangles to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:847
+#: ../vector/v.in.ogr/main.c:850
 msgid "Change boundary bridges to lines:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:850
+#: ../vector/v.in.ogr/main.c:853
 msgid "Remove bridges:"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:943
+#: ../vector/v.in.ogr/main.c:946
 #, c-format
 msgid ""
 "%d areas represent more (overlapping) features, because polygons overlap in "
@@ -22636,27 +22764,27 @@ msgid ""
 "The number of features for those areas is stored as category in layer %d"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:949
+#: ../vector/v.in.ogr/main.c:952
 #, c-format
 msgid "%d input polygons"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:953
+#: ../vector/v.in.ogr/main.c:956
 #, fuzzy, c-format
 msgid "Total area: %e (%d areas)"
 msgstr "وصل الفئات...\n"
 
-#: ../vector/v.in.ogr/main.c:957
+#: ../vector/v.in.ogr/main.c:960
 #, c-format
 msgid "Overlapping area: %e (%d areas)"
 msgstr ""
 
-#: ../vector/v.in.ogr/main.c:961
+#: ../vector/v.in.ogr/main.c:964
 #, fuzzy, c-format
 msgid "Area without category: %e (%d areas)"
 msgstr "%-5d تم تخطى فئات النقط الميت\n"
 
-#: ../vector/v.in.ogr/main.c:973
+#: ../vector/v.in.ogr/main.c:976
 msgid ""
 "Input data contains 3D features. Created vector is 2D only, use -z flag to "
 "import 3D vector"
@@ -22849,6 +22977,11 @@ msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 msgid "Cannot alter table: %s"
 msgstr "%s:لم يتم إنشاء الجدول"
 
+#: ../vector/v.kcv/main.c:245
+#, fuzzy, c-format
+msgid "Cannot insert row: %s"
+msgstr "لم يمكن حشر صف جديد: %s"
+
 #: ../vector/v.kernel/main.c:56
 #, c-format
 msgid "\tScore Value=%f\tsmoothing parameter (standard deviation)=%f"
@@ -22992,7 +23125,7 @@ msgstr "<%s> لم يمكن فتح"
 msgid "Maximum value in output: %e."
 msgstr "بقاء القيم المنعدمة فى الخريطة المخرجة"
 
-#: ../vector/v.label/main.c:62 ../vector/v.label.sa/main.c:46
+#: ../vector/v.label/main.c:62 ../vector/v.label.sa/main.c:45
 msgid "vector, paint labels"
 msgstr ""
 
@@ -23000,7 +23133,7 @@ msgstr ""
 msgid "Creates paint labels for GRASS vector map and attached attributes."
 msgstr ""
 
-#: ../vector/v.label/main.c:78 ../vector/v.label.sa/main.c:90
+#: ../vector/v.label/main.c:78 ../vector/v.label.sa/main.c:105
 #, fuzzy
 msgid "Name of attribute column to be used for labels"
 msgstr "<%s> اسم الملف المستخدم لل"
@@ -23015,7 +23148,7 @@ msgstr "الخريطة الراسترية المطلوب الضبط عليها"
 msgid "Curl labels along lines"
 msgstr "إنشاء نقاط على الخط المدخل"
 
-#: ../vector/v.label/main.c:92 ../vector/v.label.sa/main.c:94
+#: ../vector/v.label/main.c:92 ../vector/v.label.sa/main.c:109
 #, fuzzy
 msgid "Name for new paint-label file"
 msgstr "اسم الخريطة الراسترية الجديدة"
@@ -23039,13 +23172,13 @@ msgstr ""
 
 #: ../vector/v.label/main.c:125 ../vector/v.label/main.c:132
 #: ../vector/v.label/main.c:139 ../vector/v.label/main.c:147
-#: ../vector/v.label.sa/main.c:104 ../vector/v.label.sa/main.c:112
+#: ../vector/v.label.sa/main.c:119 ../vector/v.label.sa/main.c:127
 #: ../vector/v.lrs/v.lrs.label/main.c:159
 #, fuzzy
 msgid "Font"
 msgstr "اسم الجدول"
 
-#: ../vector/v.label/main.c:129 ../vector/v.label.sa/main.c:109
+#: ../vector/v.label/main.c:129 ../vector/v.label.sa/main.c:124
 #: ../vector/v.lrs/v.lrs.label/main.c:165
 msgid "Label size (in map-units)"
 msgstr ""
@@ -23065,7 +23198,7 @@ msgstr ""
 "اسم الخريطة الراسترية الحاوية على  درجات إتجاه الإنحدار مقاسة عكس عقارب "
 "الساعة من الشرق"
 
-#: ../vector/v.label/main.c:170
+#: ../vector/v.label/main.c:170 ../vector/v.label.sa/main.c:198
 msgid "Border width (only for ps.map output)"
 msgstr ""
 
@@ -23073,11 +23206,11 @@ msgstr ""
 msgid "Highlight color for text"
 msgstr ""
 
-#: ../vector/v.label/main.c:186
+#: ../vector/v.label/main.c:186 ../vector/v.label.sa/main.c:163
 msgid "Width of highlight coloring"
 msgstr ""
 
-#: ../vector/v.label/main.c:212
+#: ../vector/v.label/main.c:212 ../vector/v.label.sa/main.c:180
 msgid "Opaque to vector (only relevant if background color is selected)"
 msgstr ""
 
@@ -23111,21 +23244,31 @@ msgstr "cat = %d لا يوجد تسجيل للخط"
 msgid "Labeled %d lines."
 msgstr ""
 
-#: ../vector/v.label.sa/labels.c:62
+#: ../vector/v.label.sa/labels.c:56
 #, fuzzy, c-format
 msgid "Vector map [%s] not available"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
 
-#: ../vector/v.label.sa/labels.c:75
+#: ../vector/v.label.sa/labels.c:69
 #, fuzzy, c-format
 msgid "Cannot allocate %d bytes of memory"
 msgstr "لم يتم فتح إختيار المؤشر"
 
-#: ../vector/v.label.sa/labels.c:96
+#: ../vector/v.label.sa/labels.c:90
+#, fuzzy, c-format
+msgid "Cannot find font '%s'\n"
+msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#: ../vector/v.label.sa/labels.c:92
+#, c-format
+msgid "Font '%s' is not a FreeType font\n"
+msgstr ""
+
+#: ../vector/v.label.sa/labels.c:95
 msgid "Font file format is not supported by FreeType"
 msgstr ""
 
-#: ../vector/v.label.sa/labels.c:98
+#: ../vector/v.label.sa/labels.c:97
 #, fuzzy
 msgid "Font file can not be loaded"
 msgstr "لم توجد<%s>الخريطة الفيكتورية"
@@ -23145,13 +23288,32 @@ msgstr "لم يتم فتح إختيار المؤشر"
 msgid "Cannot load glyph for '%c'"
 msgstr " <%s> فى <%s>لم يمكن قراءة العنوان الرئيسى ل"
 
-#: ../vector/v.label.sa/main.c:47
+#: ../vector/v.label.sa/main.c:46
 msgid "Create optimally placed labels for vector map(s)"
 msgstr ""
 
-#: ../vector/v.label.sa/main.c:116
+#: ../vector/v.label.sa/main.c:118
+#, fuzzy
+msgid "Name of TrueType font (as listed in the fontcap)"
+msgstr "استخدام خط ذو نوع حقيقى بما في ذلك اسم الملف "
+
+#: ../vector/v.label.sa/main.c:131
 msgid "Icon size of point features (in map-units)"
 msgstr ""
+
+#: ../vector/v.label.sa/main.c:154
+msgid "Hilight color for text"
+msgstr ""
+
+#: ../vector/v.label.sa/font.c:53
+#, c-format
+msgid "%s: Unable to read font definition file; use the default"
+msgstr ""
+
+#: ../vector/v.label.sa/font.c:59
+#, fuzzy, c-format
+msgid "%s: No font definition file"
+msgstr "dig_cats لم يتم فتح ملف"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:117
 #: ../vector/v.lrs/v.lrs.label/main.c:101
@@ -23256,17 +23418,17 @@ msgstr "لم بمكن قراءة معلومات الحقل"
 #: ../vector/v.lrs/v.lrs.segment/main.c:148
 #: ../vector/v.lrs/v.lrs.where/main.c:124
 #, fuzzy
-msgid "Cannot open database for reference table"
+msgid "Unable to open database for reference table"
 msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:284
 #, fuzzy, c-format
-msgid "Cannot drop table: %s"
-msgstr "%s لم يتم فتح قاعدة البيانات"
+msgid "Unable to drop table: %s"
+msgstr "<%s> لم يمكن فتح"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:300
 #, fuzzy, c-format
-msgid "Cannot select line id values from %s.%s."
+msgid "Unable to select line id values from %s.%s."
 msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:310
@@ -23277,7 +23439,7 @@ msgstr "لم توجد<%s>الخريطة الفيكتورية"
 #: ../vector/v.lrs/v.lrs.create/main.c:321
 #: ../vector/v.lrs/v.lrs.create/main.c:418
 #, fuzzy
-msgid "Cannot fetch line id from line table"
+msgid "Unable to fetch line id from line table"
 msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:370
@@ -23292,7 +23454,7 @@ msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:409
 #, fuzzy, c-format
-msgid "Cannot select point attributes from <%s>"
+msgid "Unable to select point attributes from <%s>"
 msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:438
@@ -23341,7 +23503,7 @@ msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:694
 #, c-format
-msgid "Could not guess direction for the line (cat %d), line skip."
+msgid "Unable to guess direction for the line (cat %d), line skip."
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:698
@@ -23351,16 +23513,17 @@ msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:745
 #, fuzzy, c-format
-msgid "Cannot insert reference records: %s"
+msgid "Unable to insert reference records: %s"
 msgstr "لم يمكن حشر صف جديد: %s"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:783
-msgid "Building topology for output (out_lines) map ..."
-msgstr ""
+#, fuzzy
+msgid "Building topology for output (out_lines) map..."
+msgstr "dig قراءة ملف...\n"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:789
 #, fuzzy
-msgid "Building topology for error (err) map ..."
+msgid "Building topology for error (err) map..."
 msgstr "dig قراءة ملف...\n"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:102
@@ -23422,19 +23585,9 @@ msgstr "اسم الخريطة الراسترية"
 msgid "Only relevant if background color is selected"
 msgstr ""
 
-#: ../vector/v.lrs/v.lrs.label/main.c:269
-#, fuzzy, c-format
-msgid "Cannot open labels <%s>"
-msgstr "%s لم يتم فتح قاعدة البيانات"
-
 #: ../vector/v.lrs/v.lrs.label/main.c:304
 #, fuzzy, c-format
-msgid "Cannot select records from LRS table: %s"
-msgstr "لم يمكن اختيار البيانات من الجدول"
-
-#: ../vector/v.lrs/v.lrs.label/main.c:312
-#, fuzzy
-msgid "Cannot fetch data from table"
+msgid "Unable to select records from LRS table: %s"
 msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:387
@@ -23449,8 +23602,8 @@ msgstr ""
 #: ../vector/v.lrs/v.lrs.segment/main.c:71
 #, fuzzy
 msgid ""
-"Create points/segments from input lines, linear reference system and "
-"positions read from stdin or a file"
+"Creates points/segments from input lines, linear reference system and "
+"positions read from stdin or a file."
 msgstr "إنشاء نقاط على الخط المدخل"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:78
@@ -23470,7 +23623,7 @@ msgstr "اسم ملف الأصناف المرجعية"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:110 ../vector/v.segment/main.c:69
 #, fuzzy
-msgid "Name of file containing segment rules. If not given, read from stdin"
+msgid "Name of file containing segment rules. If not given, read from stdin."
 msgstr "الملف  الأسكى الراسترى المطلوب ادخاله"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:172
@@ -23491,9 +23644,10 @@ msgid "More than one record in LR table for: %s"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:193
-#: ../vector/v.lrs/v.lrs.segment/main.c:268
+#: ../vector/v.lrs/v.lrs.segment/main.c:268 ../vector/v.segment/main.c:137
+#: ../vector/v.segment/main.c:172
 #, fuzzy, c-format
-msgid "Cannot find line of cat [%d]"
+msgid "Unable to find line of cat [%d]"
 msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:201
@@ -23589,8 +23743,8 @@ msgstr "%d نقطة كتبت للمخرج\n"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:56
 msgid ""
-"Find line id and real km+offset for given points in vector map using linear "
-"reference system"
+"Finds line id and real km+offset for given points in vector map using linear "
+"reference system."
 msgstr ""
 
 #: ../vector/v.lrs/v.lrs.where/main.c:65
@@ -23620,7 +23774,7 @@ msgstr "%d نقاط تم تحميلها\n"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:199
 #, fuzzy, c-format
-msgid "[%d] points - to many records found"
+msgid "[%d] points - too many records found"
 msgstr "%d نقاط تم تحميلها\n"
 
 #: ../vector/v.mapcalc/any.c:126
@@ -23690,14 +23844,72 @@ msgstr "لم يتم انشاء الدليل"
 msgid "Bad arguments to pointfunc %s"
 msgstr ""
 
+#: ../vector/v.mkgrid/main.c:63
+#, fuzzy
+msgid "Creates a (binary) GRASS vector map of a user-defined grid."
+msgstr "ادخال ملف راسترى ثنائى كطبقة خريطة راسترية جراسية"
+
+#: ../vector/v.mkgrid/main.c:79
+msgid "Number of ROWS and COLUMNS in grid"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:88
+msgid ""
+"Where to place the grid:\n"
+"\tregion - current region\n"
+"\tcoor - use 'coor' and 'box' options"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:98
+msgid "Lower left EASTING and NORTHING coordinates of map"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:106
+msgid "WIDTH and HEIGHT of boxes in grid"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:112
+#, fuzzy
+msgid "Angle of rotation (in degrees counter-clockwise)"
+msgstr ""
+"اسم الخريطة الراسترية الحاوية على  درجات إتجاه الإنحدار مقاسة عكس عقارب "
+"الساعة من الشرق"
+
+#: ../vector/v.mkgrid/main.c:118
+msgid "Quiet; No chatter"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:170
+msgid "'coor' option missing"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:173
+msgid "'box' option missing"
+msgstr ""
+
+#: ../vector/v.mkgrid/main.c:176
+#, fuzzy
+msgid "Invalid easting!"
+msgstr "%s:منطقة غير صالحة"
+
+#: ../vector/v.mkgrid/main.c:178
+#, fuzzy
+msgid "Invalid northing!"
+msgstr "%s:منطقة غير صالحة"
+
+#: ../vector/v.mkgrid/main.c:181 ../vector/v.mkgrid/main.c:183
+#, fuzzy
+msgid "Invalid distance!"
+msgstr "%s:منطقة غير صالحة"
+
 #: ../vector/v.mkgrid/main.c:234
 #, fuzzy
-msgid "Creating vector grid ..."
+msgid "Creating vector grid..."
 msgstr "كتابة ملف جديد...\n"
 
 #: ../vector/v.mkgrid/main.c:239
 #, fuzzy
-msgid "Creating centroids ..."
+msgid "Creating centroids..."
 msgstr "كتابة ملف جديد...\n"
 
 #: ../vector/v.mkgrid/write_grid.c:43
@@ -23916,7 +24128,7 @@ msgid "Centre at closed node (costs = -1) ignored"
 msgstr ""
 
 #: ../vector/v.net.path/main.c:40
-msgid "Find shortest path on vector network."
+msgid "Finds shortest path on vector network."
 msgstr ""
 
 #: ../vector/v.net.path/main.c:63
@@ -24109,7 +24321,7 @@ msgstr "نوع غير معروف"
 
 #: ../vector/v.out.ascii/out.c:45
 #, fuzzy
-msgid "Convert a GRASS binary vector map to a GRASS ASCII vector map"
+msgid "Converts a GRASS binary vector map to a GRASS ASCII vector map."
 msgstr "تحويل خريطة راسترية إلى فيكتورية"
 
 #: ../vector/v.out.ascii/out.c:56
@@ -24130,17 +24342,16 @@ msgid "Only export points falling within current 3D region (points mode)"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:104
-msgid "format 'point' is not supported for old version"
+msgid "Format 'point' is not supported for old version"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:108
 msgid "'output' must be given for old version"
 msgstr ""
 
-#: ../vector/v.out.ascii/out.c:137 ../vector/v.out.vtk/main.c:163
-#, fuzzy, c-format
-msgid "Cannot open file [%s]"
-msgstr "%s لم يتم فتح قاعدة البيانات"
+#: ../vector/v.out.ascii/out.c:120 ../vector/v.out.vtk/main.c:173
+msgid "Failed to interprete 'dp' parameter as an integer"
+msgstr ""
 
 #: ../vector/v.out.ascii/out.c:153
 #, fuzzy
@@ -24149,10 +24360,10 @@ msgstr "dig_att لم يمكن العثور على ملف"
 
 #: ../vector/v.out.ascii/out.c:156
 #, fuzzy, c-format
-msgid "Not able to open dig_att file <%s>\n"
+msgid "Unable to open dig_att file <%s>\n"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
-#: ../vector/v.out.dxf/main.c:47 ../vector/v.out.ogr/main.c:85
+#: ../vector/v.out.dxf/main.c:47 ../vector/v.out.ogr/main.c:86
 #: ../vector/v.out.pov/main.c:44 ../vector/v.out.svg/main.c:69
 msgid "vector, export"
 msgstr ""
@@ -24192,49 +24403,52 @@ msgstr ""
 msgid "%s: Cannot write dxf file."
 msgstr "dig_cats لم يتم فتح ملف"
 
-#: ../vector/v.out.ogr/main.c:86
+#: ../vector/v.out.ogr/main.c:87
 msgid "Converts to one of the supported OGR vector formats."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:93
+#: ../vector/v.out.ogr/main.c:94
 msgid "Feature type. Combination of types is not supported by all formats."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:100
-msgid ""
-"OGR output datasource name. For example:\n"
-"\t\tESRI Shapefile: filename or directory for storage\n"
-"\t\tMapInfo File: filename or directory for storage"
+#: ../vector/v.out.ogr/main.c:101
+#, fuzzy
+msgid "OGR output datasource name"
+msgstr "اسم قاعدة البيانات"
+
+#: ../vector/v.out.ogr/main.c:102
+msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:108
-msgid ""
-"OGR layer name. If not specified, input name is used.\n"
-"\t\tESRI Shapefile: shapefile name\n"
-"\t\tMapInfo File: mapinfo file name"
+msgid "OGR layer name. If not specified, input name is used."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:121
+#: ../vector/v.out.ogr/main.c:109
+msgid "For example: ESRI Shapefile: shapefile name"
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:120
 #, fuzzy
 msgid "OGR format"
 msgstr "الخريطة المخرجة"
 
-#: ../vector/v.out.ogr/main.c:129
+#: ../vector/v.out.ogr/main.c:128
 msgid "OGR dataset creation option (format specific, NAME=VALUE)"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:137
+#: ../vector/v.out.ogr/main.c:136
 msgid "OGR layer creation option (format specific, NAME=VALUE)"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:141
+#: ../vector/v.out.ogr/main.c:140
 msgid ""
 "Export features with category (labeled) only. Otherwise all features are "
 "exported"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:146
-msgid "Use ESRI-style .prj file format (applies to SHAPE output only)"
+#: ../vector/v.out.ogr/main.c:145
+msgid "Use ESRI-style .prj file format (applies to Shapefile output only)"
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:150
@@ -24245,89 +24459,95 @@ msgstr ""
 msgid "The combination of types is not supported by all formats."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:224
+#: ../vector/v.out.ogr/main.c:198
+#, c-format
+msgid ""
+"Vector map <%s> is 3D. Please check layer creation options (parameter 'lco')."
+msgstr ""
+
+#: ../vector/v.out.ogr/main.c:231
 #, fuzzy, c-format
 msgid "Driver %s not found"
 msgstr "غير موجود <%s> الراستر"
 
-#: ../vector/v.out.ogr/main.c:229
+#: ../vector/v.out.ogr/main.c:247
 #, fuzzy, c-format
 msgid "Cannot open OGR data source '%s'"
 msgstr "%s لم يتم فتح قاعدة البيانات"
 
-#: ../vector/v.out.ogr/main.c:234
+#: ../vector/v.out.ogr/main.c:261
 #, fuzzy
 msgid "Cannot create layer"
 msgstr "لم يتم انشاء الدليل"
 
-#: ../vector/v.out.ogr/main.c:243
+#: ../vector/v.out.ogr/main.c:270
 msgid "No attribute table found -> using only category numbers as attributes"
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:297
+#: ../vector/v.out.ogr/main.c:324
 #, fuzzy, c-format
 msgid "Key column '%s' not found"
 msgstr "غير موجودة <%s> المنطقة"
 
-#: ../vector/v.out.ogr/main.c:309
+#: ../vector/v.out.ogr/main.c:336
 #, c-format
 msgid ""
 "%d Point(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:312
+#: ../vector/v.out.ogr/main.c:339
 #, c-format
 msgid ""
 "%d Line(s) found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:315
+#: ../vector/v.out.ogr/main.c:342
 #, c-format
 msgid ""
 "%d Boundary(ies) found, but not requested to be exported. Verify 'type' "
 "parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:318
+#: ../vector/v.out.ogr/main.c:345
 #, c-format
 msgid ""
 "%d Centroid(s) found, but not requested to be exported. Verify 'type' "
 "parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:321
+#: ../vector/v.out.ogr/main.c:348
 #, c-format
 msgid ""
 "%d Areas found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:324
+#: ../vector/v.out.ogr/main.c:351
 #, c-format
 msgid ""
 "%d Faces found, but not requested to be exported. Verify 'type' parameter."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:330
+#: ../vector/v.out.ogr/main.c:357
 #, fuzzy, c-format
 msgid "Exporting %i points/lines..."
 msgstr "الخريطة الفيكتورية لنقاط البدء"
 
-#: ../vector/v.out.ogr/main.c:405
+#: ../vector/v.out.ogr/main.c:432
 #, c-format
 msgid "Exporting %i areas (may take some time) ..."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:470
+#: ../vector/v.out.ogr/main.c:497
 #, c-format
 msgid "Exporting %i faces (may take some time) ..."
 msgstr ""
 
-#: ../vector/v.out.ogr/main.c:536
+#: ../vector/v.out.ogr/main.c:563
 #, fuzzy, c-format
 msgid "%d features written"
 msgstr "%d نقطة كتبت للمخرج\n"
 
-#: ../vector/v.out.ogr/main.c:582
+#: ../vector/v.out.ogr/main.c:609
 #, fuzzy, c-format
 msgid "Cannot select attributes for cat = %d"
 msgstr "لم يمكن اختيار البيانات من الجدول"
@@ -24367,26 +24587,22 @@ msgid "Attribute(s) to include in output SVG"
 msgstr "اسم الخريطة الراسترية الناتجة"
 
 #: ../vector/v.out.svg/main.c:113
-msgid "Precision must not be negative."
+msgid "Precision must not be negative"
 msgstr ""
 
 #: ../vector/v.out.svg/main.c:116
-msgid "Precision must not be higher than 15."
+msgid "Precision must not be higher than 15"
 msgstr ""
 
 #: ../vector/v.out.svg/main.c:185
 #, fuzzy, c-format
-msgid "SVG file <%s> cannot be opened"
-msgstr "لم توجد<%s>الخريطة الفيكتورية"
+msgid "Unable to open SVG file <%s>"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
 #: ../vector/v.out.svg/main.c:200
-msgid "No areas found, skipping type=poly."
-msgstr ""
-
-#: ../vector/v.out.svg/main.c:209
-#, c-format
-msgid "Skipping area %d without centroid"
-msgstr ""
+#, fuzzy
+msgid "No areas found, skipping type=poly"
+msgstr "%d نقاط تم تحميلها\n"
 
 #: ../vector/v.out.svg/main.c:234
 #, fuzzy, c-format
@@ -24422,12 +24638,13 @@ msgid "writeVTKHeader: Writing VTK-Header"
 msgstr ""
 
 #: ../vector/v.out.vtk/main.c:47
-msgid "Convert a GRASS binary vector map to VTK ASCII output"
-msgstr ""
+#, fuzzy
+msgid "Converts a GRASS binary vector map to VTK ASCII output."
+msgstr "تحويل خريطة راسترية إلى فيكتورية"
 
 #: ../vector/v.out.vtk/main.c:57
 #, fuzzy
-msgid "Path to resulting VTK file."
+msgid "Path to resulting VTK file"
 msgstr "اسم الخريطة الراسترية الموجودة"
 
 #: ../vector/v.out.vtk/main.c:175
@@ -24435,42 +24652,138 @@ msgid "dp has to be from 0 to 8"
 msgstr ""
 
 #: ../vector/v.out.vtk/main.c:184
-msgid "failed to interpret layer as an integer"
+msgid "Failed to interprete 'layer' parameter as an integer"
 msgstr ""
 
-#: ../vector/v.overlay/area_area.c:39 ../vector/v.overlay/line_area.c:65
+#: ../vector/v.overlay/area_area.c:45 ../vector/v.overlay/line_area.c:64
 #, fuzzy
-msgid "Breaking lines ..."
+msgid "Breaking lines..."
 msgstr "التوقيع ..."
 
-#: ../vector/v.overlay/area_area.c:48
-msgid "Cleaning boundaries at nodes ..."
-msgstr ""
-
-#: ../vector/v.overlay/area_area.c:78
-#, fuzzy, c-format
-msgid "Querying input '%s' ... "
-msgstr "dig قراءة ملف...\n"
-
-#: ../vector/v.overlay/area_area.c:111
+#: ../vector/v.overlay/area_area.c:49
 #, fuzzy
-msgid "Writing centroids ..."
+msgid "Removing duplicates..."
+msgstr "الخريطة الفيكتورية لنقاط البدء"
+
+#: ../vector/v.overlay/area_area.c:52
+#, fuzzy
+msgid "Cleaning boundaries at nodes..."
+msgstr "وصل الفئات...\n"
+
+#: ../vector/v.overlay/area_area.c:60
+#, fuzzy
+msgid "Attaching islands..."
+msgstr "وصل الفئات...\n"
+
+#: ../vector/v.overlay/area_area.c:80
+#, fuzzy, c-format
+msgid "Querying vector map <%s>..."
+msgstr "كتابة ملف جديد...\n"
+
+#: ../vector/v.overlay/area_area.c:102 ../vector/v.overlay/area_area.c:172
+#: ../vector/v.overlay/area_area.c:196 ../vector/v.overlay/line_area.c:154
+#: ../vector/v.overlay/line_area.c:178
+#, fuzzy
+msgid "Attribute not found"
+msgstr "غير موجود <%s> الراستر"
+
+#: ../vector/v.overlay/area_area.c:113
+#, fuzzy
+msgid "Writing centroids..."
 msgstr "كتابة رؤوس قمم الخطوط"
 
-#: ../vector/v.overlay/main.c:171
+#: ../vector/v.overlay/area_area.c:220 ../vector/v.overlay/line_area.c:202
 #, fuzzy, c-format
-msgid "Copying %s input lines ... "
-msgstr "إنشاء نقاط على الخط المدخل"
+msgid "Unable to insert new record: '%s'"
+msgstr "لم يمكن حشر صف جديد: %s"
 
-#: ../vector/v.overlay/main.c:222
+#: ../vector/v.overlay/area_area.c:246
 #, fuzzy
-msgid "Collecting input attributes ..."
+msgid "Attaching centroids..."
+msgstr "وصل الفئات...\n"
+
+#: ../vector/v.overlay/main.c:56
+#, fuzzy
+msgid "Overlays two vector maps."
+msgstr "اسم الخريطة الراسترية"
+
+#: ../vector/v.overlay/main.c:89
+#, fuzzy
+msgid "Operator defines features written to output vector map"
+msgstr "%d نقطة كتبت للمخرج\n"
+
+#: ../vector/v.overlay/main.c:91
+msgid ""
+"Feature is written to output if the result of operation 'ainput operator "
+"binput' is true. Input feature is considered to be true, if category of "
+"given layer is defined."
+msgstr ""
+
+#: ../vector/v.overlay/main.c:95
+msgid ""
+"and;also known as 'intersection' in GIS;or;also known as 'union' in GIS "
+"(only for atype=area);not;features from ainput not overlayed by features "
+"from binput;xor;features from either ainput or binput but not those from "
+"ainput overlayed by binput (only for atype=area)"
+msgstr ""
+
+#: ../vector/v.overlay/main.c:107
+msgid "Output layer for new category, ainput and binput"
+msgstr ""
+
+#: ../vector/v.overlay/main.c:108
+msgid "If 0 or not given, the category is not written"
+msgstr ""
+
+#: ../vector/v.overlay/main.c:138
+#, c-format
+msgid "Operator '%s' is not supported for type line"
+msgstr ""
+
+#: ../vector/v.overlay/main.c:180
+#, fuzzy, c-format
+msgid "Copying vector objects from vector map <%s>..."
+msgstr "dig قراءة ملف...\n"
+
+#: ../vector/v.overlay/main.c:236
+#, fuzzy
+msgid "Collecting input attributes..."
 msgstr "حساب الظلال من نموذج الإرتفاعت الرقمى"
 
-#: ../vector/v.overlay/main.c:418
+#: ../vector/v.overlay/main.c:254 ../vector/v.surf.idw/read_sites.c:35
+#, fuzzy, c-format
+msgid "Database connection not defined for layer %d"
+msgstr "لم يتم الإتصال بقاعدة البيانات\n"
+
+#: ../vector/v.overlay/main.c:269
 #, fuzzy
-msgid "Building partial topology ..."
+msgid "Unable to select attributes"
+msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#: ../vector/v.overlay/main.c:317
+#, fuzzy, c-format
+msgid "Unknown column type '%s'"
+msgstr "نوع غير معروف"
+
+#: ../vector/v.overlay/main.c:376
+#, fuzzy, c-format
+msgid "Unknown column type '%s' values lost"
+msgstr "نوع غير معروف"
+
+#: ../vector/v.overlay/main.c:422
+#, fuzzy, c-format
+msgid "Unable to create table: '%s'"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#: ../vector/v.overlay/main.c:436
+#, fuzzy
+msgid "Building partial topology..."
 msgstr "بناء الدليل الفراغى ..."
+
+#: ../vector/v.overlay/main.c:447
+#, fuzzy
+msgid "Rebuilding topology..."
+msgstr "dig قراءة ملف...\n"
 
 #: ../vector/v.parallel/main.c:40
 msgid "Create parallel line to input lines"
@@ -24544,7 +24857,7 @@ msgstr "غير موجودة <%s> المنطقة"
 msgid "The output map is not 3D"
 msgstr "نطاق البيانات المخرجة"
 
-#: ../vector/v.patch/main.c:298
+#: ../vector/v.patch/main.c:298 ../vector/v.sample/main.c:210
 #, fuzzy, c-format
 msgid "Unable to create table <%s>"
 msgstr "<%s> لم يمكن فتح"
@@ -24580,6 +24893,11 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%d vector maps patched"
 msgstr "%d حدثت من التسجيلات\n"
+
+#: ../vector/v.patch/main.c:419
+#, fuzzy, c-format
+msgid "Cannot open select cursor: '%s'"
+msgstr "لم يتم فتح إختيار المؤشر"
 
 #: ../vector/v.patch/main.c:431
 #, fuzzy
@@ -24800,7 +25118,7 @@ msgstr ""
 
 #: ../vector/v.sample/main.c:87
 #, fuzzy
-msgid "Sample a raster map at vector point locations"
+msgid "Samples a raster map at vector point locations."
 msgstr "عرض ملفات الراستر للموقع والخروج"
 
 #: ../vector/v.sample/main.c:90
@@ -24828,7 +25146,7 @@ msgstr ""
 
 #: ../vector/v.sample/main.c:118
 #, fuzzy
-msgid "Bilinear interpolation [default is nearest neighbor]"
+msgid "Bilinear interpolation (default is nearest neighbor)"
 msgstr "وسيلة الإستيفاء ثنائى الخط للخرائط الراسترية"
 
 #: ../vector/v.sample/main.c:123
@@ -24844,24 +25162,15 @@ msgstr ""
 msgid "Column type <%s> not supported (must be integer or double precision)"
 msgstr "نوع العمود غير مدعم"
 
-#: ../vector/v.sample/main.c:210
-#, fuzzy, c-format
-msgid "Cannot create table <%s>"
-msgstr "%s:لم يتم إنشاء الجدول"
+#: ../vector/v.sample/main.c:181 ../vector/v.surf.idw/read_sites.c:49
+#, fuzzy
+msgid "Unable to select data from table"
+msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.sample/main.c:219
-msgid "Checking vector points ..."
-msgstr ""
-
-#: ../vector/v.sample/main.c:244 ../vector/v.sample/main.c:252
-#, fuzzy, c-format
-msgid "no record for cat = %d"
-msgstr "cat = %d لا يوجد تسجيل للخط"
-
-#: ../vector/v.sample/main.c:278
-#, fuzzy, c-format
-msgid "cannot insert row: %s"
-msgstr "لم يمكن حشر صف جديد: %s"
+#, fuzzy
+msgid "Checking vector points..."
+msgstr "لم يتم نسخ الجدول"
 
 #: ../vector/v.segment/main.c:53
 #, fuzzy
@@ -24877,11 +25186,6 @@ msgstr "الخريطة المدخلة حاوية الخطوط"
 #, fuzzy
 msgid "Output map where segments will be written"
 msgstr "خريطة مخرجة حيث ستكتب النقاط"
-
-#: ../vector/v.segment/main.c:137 ../vector/v.segment/main.c:172
-#, fuzzy, c-format
-msgid "Cannot find line of cat %d"
-msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
 
 #: ../vector/v.segment/main.c:145
 #, c-format
@@ -24939,6 +25243,11 @@ msgstr ""
 #, fuzzy
 msgid "Writing attributes ..."
 msgstr "كتابة ملف جديد...\n"
+
+#: ../vector/v.select/main.c:472 ../vector/v.to.points/main.c:256
+#: ../vector/v.voronoi/vo_main.c:317
+msgid "Cannot copy table"
+msgstr "لم يتم نسخ الجدول"
 
 #: ../vector/v.support/main.c:38
 #, fuzzy
@@ -25047,16 +25356,6 @@ msgstr "لم يتم الثور على شيئ\n"
 #, fuzzy, c-format
 msgid "Interpolating raster map <%s> (%d rows, %d cols)... "
 msgstr "%-5d dig_att قراءة ملف...\n"
-
-#: ../vector/v.surf.idw/read_sites.c:35
-#, fuzzy, c-format
-msgid "Database connection not defined for layer %d"
-msgstr "لم يتم الإتصال بقاعدة البيانات\n"
-
-#: ../vector/v.surf.idw/read_sites.c:49
-#, fuzzy
-msgid "Unable to select data from table"
-msgstr "لم يمكن اختيار البيانات من الجدول"
 
 #: ../vector/v.surf.idw/read_sites.c:81
 #, fuzzy, c-format
@@ -25259,11 +25558,6 @@ msgstr ""
 msgid "Cannot write raster maps -- try to increase resolution"
 msgstr ""
 
-#: ../vector/v.surf.rst/main.c:752
-#, fuzzy, c-format
-msgid "Unalbe to open vector map <%s>"
-msgstr "[%s]لم يتم فتح ملف الخلية ل "
-
 #: ../vector/v.to.db/main.c:33
 msgid "Populate database values from vector features."
 msgstr ""
@@ -25276,8 +25570,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.to.db/main.c:51 ../vector/v.to.db/query.c:76
+#: ../vector/v.to.db/update.c:27
 #, fuzzy, c-format
-msgid "Database connection not defined for layer %d. Use v.db.connect first"
+msgid "Database connection not defined for layer %d. Use v.db.connect first."
 msgstr "لم يتم الإتصال بقاعدة البيانات\n"
 
 #: ../vector/v.to.db/parse.c:36
@@ -25358,7 +25653,7 @@ msgstr "dig قراءة ملف...\n"
 #, c-format
 msgid ""
 "Query for category '0' (no category) was not executed because of too many (%"
-"d) query categories. All later reported values for cat 0 are not valid"
+"d) query categories. All later reported values for cat 0 are not valid."
 msgstr ""
 
 #: ../vector/v.to.db/query.c:133
@@ -25368,7 +25663,7 @@ msgstr ""
 
 #: ../vector/v.to.db/query.c:139
 #, fuzzy
-msgid "Cannot fetch record"
+msgid "Unable to fetch record"
 msgstr "لم يتم جلب البيانات"
 
 #: ../vector/v.to.db/report.c:159
@@ -25401,14 +25696,9 @@ msgstr "%d تحديث الخطا\n"
 msgid "%d categories with more points (coordinates not loaded)"
 msgstr "%d فئات محملة من الفيكتور\n"
 
-#: ../vector/v.to.db/update.c:27
-#, fuzzy, c-format
-msgid "Database connection not defined for layer [%d]. Use v.db.connect first"
-msgstr "لم يتم الإتصال بقاعدة البيانات\n"
-
 #: ../vector/v.to.db/update.c:63
 #, fuzzy
-msgid "Updating database ..."
+msgid "Updating database..."
 msgstr "لم يتم نسخ الجدول"
 
 #: ../vector/v.to.db/update.c:90
@@ -25569,11 +25859,6 @@ msgstr "نوع غير معروف"
 msgid "Unable to get layer info for vector map"
 msgstr " 2-%d اسماء الخرائط المدخلة"
 
-#: ../vector/v.to.rast/support.c:129 ../vector/v.to.rast/support.c:263
-#, fuzzy, c-format
-msgid "Unable to open database %s by driver %s"
-msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
-
 #: ../vector/v.to.rast/support.c:133 ../vector/v.to.rast/support.c:268
 #, fuzzy, c-format
 msgid "Unknown column '%s' in table '%s'"
@@ -25659,9 +25944,9 @@ msgid "Pass %d of %d:"
 msgstr ""
 
 #: ../vector/v.to.rast/vect2rast.c:155
-#, c-format
-msgid "Problem processing areas from vector map <%s>...continuing..."
-msgstr ""
+#, fuzzy, c-format
+msgid "Problem processing areas from vector map <%s>, continuing..."
+msgstr "<%s> لم يمكن فتح"
 
 #: ../vector/v.to.rast/vect2rast.c:163
 #, c-format
@@ -25735,103 +26020,153 @@ msgstr "%d: عدد النقاط التى أدخلت\n"
 msgid "Reading coordinates from file."
 msgstr "إحداثيات الشرق والشمال لنقطة البدء"
 
-#: ../vector/v.transform/main.c:55
+#: ../vector/v.transform/main.c:71
 #, fuzzy
-msgid "Transforms a vector map via a set of tie points."
-msgstr "تحويل راستر جراسى الى بينرى"
+msgid "vector, transformation"
+msgstr "عدد نقاط الإستيفاء"
 
-#: ../vector/v.transform/main.c:60
+#: ../vector/v.transform/main.c:72
+msgid ""
+"Performs an affine transformation (shift, scale and rotate, or GPCs) on "
+"vector map."
+msgstr ""
+
+#: ../vector/v.transform/main.c:78
 #, fuzzy
 msgid "Suppress display of residuals or other information"
 msgstr "header تخطى طباعة معلومات عن العنوان الرئيسى بأول الملف"
 
-#: ../vector/v.transform/main.c:64
+#: ../vector/v.transform/main.c:82
 msgid "Shift all z values to bottom=0"
 msgstr ""
 
-#: ../vector/v.transform/main.c:69
+#: ../vector/v.transform/main.c:86
+#, fuzzy
+msgid "Print the transformation matrix to stdout"
+msgstr "طباعة مصفوفة المضاهاه"
+
+#: ../vector/v.transform/main.c:91
 msgid ""
-"Instead of points use transformation options (xshift, yshift, zshift, "
+"Instead of points use transformation parameters (xshift, yshift, zshift, "
 "xscale, yscale, zscale, zrot)"
 msgstr ""
 
-#: ../vector/v.transform/main.c:71 ../vector/v.transform/main.c:93
-#: ../vector/v.transform/main.c:102 ../vector/v.transform/main.c:111
-#: ../vector/v.transform/main.c:120 ../vector/v.transform/main.c:129
-#: ../vector/v.transform/main.c:138 ../vector/v.transform/main.c:147
+#: ../vector/v.transform/main.c:93 ../vector/v.transform/main.c:115
+#: ../vector/v.transform/main.c:124 ../vector/v.transform/main.c:133
+#: ../vector/v.transform/main.c:142 ../vector/v.transform/main.c:151
+#: ../vector/v.transform/main.c:160 ../vector/v.transform/main.c:169
+#: ../vector/v.transform/main.c:173 ../vector/v.transform/main.c:178
+#: ../vector/v.transform/main.c:181
 msgid "Custom"
 msgstr ""
 
-#: ../vector/v.transform/main.c:82
+#: ../vector/v.transform/main.c:102
+#, fuzzy
+msgid "ASCII file holding transform coordinates"
+msgstr "استخدام احداثيات مركز الخريطة\n"
+
+#: ../vector/v.transform/main.c:103
 msgid ""
-"ASCII file holding transform coordinates (if not given transformation "
-"options [xshift, yshift, zshift, xscale, yscale, zscale, zrot] will be used "
-"instead)"
+"If not given, transformation parameters (xshift, yshift, zshift, xscale, "
+"yscale, zscale, zrot) are used instead"
 msgstr ""
 
-#: ../vector/v.transform/main.c:91
+#: ../vector/v.transform/main.c:113
 #, fuzzy
 msgid "Shifting value for x coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.transform/main.c:100
+#: ../vector/v.transform/main.c:122
 #, fuzzy
 msgid "Shifting value for y coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.transform/main.c:118
+#: ../vector/v.transform/main.c:140
 #, fuzzy
 msgid "Scaling factor for x coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.transform/main.c:127
+#: ../vector/v.transform/main.c:149
 #, fuzzy
 msgid "Scaling factor for y coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.transform/main.c:136
+#: ../vector/v.transform/main.c:158
 #, fuzzy
 msgid "Scaling factor for z coordinates"
 msgstr "استخدام احداثيات مركز الخريطة\n"
 
-#: ../vector/v.transform/main.c:145
+#: ../vector/v.transform/main.c:167
 msgid "Rotation around z axis in degrees counterclockwise"
 msgstr ""
 
-#: ../vector/v.transform/main.c:159
-msgid ""
-"The '-s' flag is deprecated and will be removed in future. Transformation "
-"options are used automatically when no pointsfile is given."
+#: ../vector/v.transform/main.c:172
+#, fuzzy
+msgid "Name of table containing transformation parameters"
+msgstr "اسم ملف التنعيم"
+
+#: ../vector/v.transform/main.c:176
+#, fuzzy
+msgid "Name of attribute column(s) used as transformation parameters"
+msgstr "اسم ملف التنعيم"
+
+#: ../vector/v.transform/main.c:177
+msgid "Format: parameter:column, e.g. xshift:xs,yshift:ys,zrot:zr"
 msgstr ""
 
-#: ../vector/v.transform/main.c:172
+#: ../vector/v.transform/main.c:193
+#, c-format
+msgid ""
+"The '%c' flag is deprecated and will be removed in future. Transformation "
+"parameters are used automatically when no pointsfile is given."
+msgstr ""
+
+#: ../vector/v.transform/main.c:198
+#, c-format
+msgid ""
+"The '%c' flag is deprecated and will be removed in future. Please use '--"
+"quiet' instead."
+msgstr ""
+
+#: ../vector/v.transform/main.c:205
+#, c-format
+msgid "Table name is not defined. Please use '%s' parameter."
+msgstr ""
+
+#: ../vector/v.transform/main.c:209
+msgid ""
+"Name of table and name for output vector map must be different. Otherwise "
+"the table is overwritten."
+msgstr ""
+
+#: ../vector/v.transform/main.c:223
 #, fuzzy, c-format
-msgid "Could not open file with coordinates <%s>"
+msgid "Unable to open file with coordinates <%s>"
 msgstr "%s:لم يتم فتح ملف بإحداثيات\n"
 
-#: ../vector/v.transform/main.c:211
-#, fuzzy
-msgid "Now transforming the vectors ..."
-msgstr ""
-"\n"
-"يتم الآن تحويل الفيكتورات ...\n"
-
-#: ../vector/v.transform/main.c:230
+#: ../vector/v.transform/main.c:302
 #, fuzzy, c-format
-msgid "New vector map <%s> boundary coordinates:"
+msgid "Unable to tokenize column string: %s"
+msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#: ../vector/v.transform/main.c:331
+#, fuzzy, c-format
+msgid ""
+"\n"
+"New vector map <%s> boundary coordinates:"
 msgstr "إحداثيات الحدود <%s> خريط فيكتورية جديدة:\n"
 
-#: ../vector/v.transform/main.c:231
+#: ../vector/v.transform/main.c:332
 #, fuzzy, c-format
 msgid " N: %-10.3f    S: %-10.3f"
 msgstr "N: %-10.3f    S: %-10.3f\n"
 
-#: ../vector/v.transform/main.c:232
+#: ../vector/v.transform/main.c:333
 #, fuzzy, c-format
 msgid " E: %-10.3f    W: %-10.3f"
 msgstr "E: %-10.3f    W: %-10.3f\n"
 
-#: ../vector/v.transform/main.c:233
+#: ../vector/v.transform/main.c:334
 #, fuzzy, c-format
 msgid " B: %6.3f    T: %6.3f"
 msgstr "B: %6.3f    T: %6.3f\n"
@@ -25844,6 +26179,22 @@ msgstr "النقاط لم تنتشر بطريقة كافية"
 #, c-format
 msgid "You need to enter at least %d points."
 msgstr "نقطة %d فى حاجة لإدخال على الأقل"
+
+#: ../vector/v.transform/trans_digit.c:94
+#, fuzzy, c-format
+msgid "Unsupported column type of <%s>"
+msgstr "نوع غير معروف"
+
+#: ../vector/v.transform/trans_digit.c:100
+#, c-format
+msgid ""
+"Unable to select value from table <%s>, column <%s>. For category %d using "
+"default transformation parameter %.3f."
+msgstr ""
+
+#: ../vector/v.transform/trans_digit.c:110
+msgid "No category number defined. Using default transformation parameters."
+msgstr ""
 
 #: ../vector/v.type/main.c:47
 msgid "Change the type of geometry elements."
@@ -26073,46 +26424,37 @@ msgstr ""
 msgid "No table."
 msgstr ""
 
-#: ../vector/v.what/main.c:71
+#: ../vector/v.what/main.c:57
 #, fuzzy
 msgid "vector, querying"
 msgstr "عدد نقاط الإستيفاء"
 
-#: ../vector/v.what/main.c:73
+#: ../vector/v.what/main.c:59
 #, fuzzy
 msgid "Queries a vector map layer at given locations."
 msgstr "تحويل راستر جراسى الى بينرى"
 
-#: ../vector/v.what/main.c:87
+#: ../vector/v.what/main.c:72
 #, fuzzy
 msgid "If not given reads from standard input"
 msgstr "الملف  الأسكى الراسترى المطلوب ادخاله"
 
-#: ../vector/v.what/main.c:94
+#: ../vector/v.what/main.c:79
 msgid "Query threshold distance"
 msgstr ""
 
-#: ../vector/v.what/main.c:102
+#: ../vector/v.what/main.c:87
 msgid "Print attribute information"
 msgstr ""
 
-#: ../vector/v.what/main.c:106
-#, fuzzy
-msgid "Read coordinates from standard input"
-msgstr "إحداثيات الشرق والشمال لنقطة البدء"
-
-#: ../vector/v.what/main.c:173
+#: ../vector/v.what/main.c:150
 #, fuzzy, c-format
 msgid "You must build topology on vector map <%s>"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
-#: ../vector/v.what/main.c:181
-msgid "The '-s' flag is deprecated and will be removed in future"
-msgstr ""
-
-#: ../vector/v.what/main.c:192
+#: ../vector/v.what/main.c:166
 #, fuzzy, c-format
-msgid "Unknown input format, skipping: %s"
+msgid "Unknown input format, skipping: '%s'"
 msgstr "%c :نوع غير معروف"
 
 #: ../vector/v.what/what.c:133
@@ -26144,64 +26486,69 @@ msgstr " Line: %5d  Angle: %.8f\n"
 msgid "Type: %s"
 msgstr "%c :نوع غير معروف"
 
-#: ../vector/v.what/what.c:197
+#: ../vector/v.what/what.c:169
+#, fuzzy, c-format
+msgid "Line: %d\n"
+msgstr "%f : ارتفاع الخط\n"
+
+#: ../vector/v.what/what.c:198
 #, fuzzy, c-format
 msgid ""
 "Line height min: %f \n"
 "Line height max: %f\n"
 msgstr "%f:قيمة عظمى %f:ارتفاع الخط قيمة صغرى\n"
 
-#: ../vector/v.what/what.c:208
+#: ../vector/v.what/what.c:209
 #, fuzzy, c-format
 msgid ""
 "Object type: Area \n"
 "Area height: %f\n"
 msgstr "%f : ارتفاع المساحة\n"
 
-#: ../vector/v.what/what.c:212
+#: ../vector/v.what/what.c:213
 #, fuzzy, c-format
 msgid "Object type: Area\n"
 msgstr " خط أم مساحة"
 
-#: ../vector/v.what/what.c:220
+#: ../vector/v.what/what.c:221
 #, fuzzy, c-format
 msgid ""
 "Area: %d  \n"
 "Number of isles: %d\n"
 msgstr "مساحة: %d  عدد الجزر: %d\n"
 
-#: ../vector/v.what/what.c:225
+#: ../vector/v.what/what.c:226
 #, fuzzy, c-format
 msgid "Isle[%d]: %d\n"
 msgstr "  جزيرة[%d]: %d\n"
 
-#: ../vector/v.what/what.c:233
+#: ../vector/v.what/what.c:234
 #, fuzzy, c-format
 msgid "Island: %d In area: %d\n"
 msgstr "جزيرة: %d  مساحة تحتوى على: %d\n"
 
-#: ../vector/v.what/what.c:238 ../vector/v.what/what.c:246
+#: ../vector/v.what/what.c:239 ../vector/v.what/what.c:247
 #, c-format
 msgid ""
 "Sq Meters: %.3f \n"
 "Hectares: %.3f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:240 ../vector/v.what/what.c:249
+#: ../vector/v.what/what.c:241 ../vector/v.what/what.c:250
 #, c-format
 msgid ""
 "Acres: %.3f \n"
 "Sq Miles: %.4f\n"
 msgstr ""
 
-#: ../vector/v.what/what.c:268
+#: ../vector/v.what/what.c:269
 #, c-format
 msgid ""
 "Layer: %d\n"
 "Category: %d \n"
 msgstr ""
 
-#: ../vector/v.what/what.c:273
+#: ../vector/v.what/what.c:274
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -26376,27 +26723,22 @@ msgstr ""
 msgid "Using private colormap for DirectColor visual."
 msgstr ""
 
-#: ../visualization/xganim/main.c:336
+#: ../visualization/xganim/main.c:338
 #, fuzzy, c-format
 msgid "Reading file [%s]..."
 msgstr "dig قراءة ملف...\n"
 
-#: ../visualization/xganim/main.c:340
-#, fuzzy, c-format
-msgid "Raster map <%s>] not found"
-msgstr "غير موجودة <%s> الخريطة الراسترية "
-
-#: ../visualization/xganim/main.c:358
+#: ../visualization/xganim/main.c:360
 #, fuzzy
 msgid "Unable to determine raster cell type"
 msgstr "اسم الخريطة الراسترية الموجودة"
 
-#: ../visualization/xganim/main.c:362
+#: ../visualization/xganim/main.c:364
 #, fuzzy
 msgid "Unable to read color file"
 msgstr "[%s]لم يتم فتح ملف الخلية ل "
 
-#: ../visualization/xganim/main.c:366
+#: ../visualization/xganim/main.c:368
 #, fuzzy
 msgid "Unable to read raster row"
 msgstr "اسم الخريطة الراسترية"
@@ -26442,6 +26784,245 @@ msgstr "ملف المدخل"
 #: ../visualization/ximgview/main.c:288
 msgid "Percentage of CPU time to use"
 msgstr ""
+
+#~ msgid "table name"
+#~ msgstr "اسم الجدول"
+
+#~ msgid "driver name"
+#~ msgstr "اسم المشغل"
+
+#~ msgid "database name"
+#~ msgstr "اسم قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Driver name"
+#~ msgstr "اسم المشغل"
+
+#~ msgid "Cannot list databases."
+#~ msgstr "لم يستطع عرض قواعد البيانات"
+
+#~ msgid "database location"
+#~ msgstr "موقع قاعدة البيانات"
+
+#~ msgid "Table name, select all from this table"
+#~ msgstr "اسم الجدول, اختر الكل من هذا الجدول"
+
+#~ msgid "output field separator"
+#~ msgstr "الفاصل الحقلي للمخرج"
+
+#~ msgid "output vertical record separator"
+#~ msgstr "فاصل التسجيل الراسى للمخرج "
+
+#~ msgid "null value indicator"
+#~ msgstr "مؤشر القيمة المنعدمة"
+
+#~ msgid "do not include column names in output"
+#~ msgstr "لاتشمل اسماء الأعمدة في المخرج"
+
+#~ msgid "vertical output (instead of horizontal)"
+#~ msgstr "(مخرج راسي (بدلا من الافقي"
+
+#, fuzzy
+#~ msgid "Name of existing raster map"
+#~ msgstr ""
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الملف الراسترى الموجود\n"
+#~ "#-#-#-#-#  grassmods_ar.po (grassmods_ar)  #-#-#-#-#\n"
+#~ "اسم الخريطة الراسترية الموجودة"
+
+#, fuzzy
+#~ msgid "Cannot find mapset for %s"
+#~ msgstr "لم يمكن حشر صف جديد: %s"
+
+#, fuzzy
+#~ msgid "Cannot open File %s"
+#~ msgstr "%s لم يتم فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Not able to open file for [%s]"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Can't open label file [%s]"
+#~ msgstr "%s لم يمكن فتح ملف المدى ل"
+
+#, fuzzy
+#~ msgid "unable to open [%s] in [%s]"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "warning: unable to open [%s] in [%s]"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Unable to find input cell map '%s'"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Table to be imported"
+#~ msgstr "الملف الراسترى الطلوب إدخالة"
+
+#, fuzzy
+#~ msgid "Unable to open cellfile for <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid "Unable to create raster map [%s]"
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Unable to create output <%s>"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Input file [%s] not found."
+#~ msgstr "الفيكتور المخرج  غير موجود"
+
+#, fuzzy
+#~ msgid "Unable to open input file <%s@%s>."
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Unable to open output file <%s>."
+#~ msgstr "<%s> لم يمكن فتح"
+
+#~ msgid "Multiplier for ascii data"
+#~ msgstr "المضروب فيه للبيانات الأسكية"
+
+#, fuzzy
+#~ msgid "Could not open temporary file: [%s]"
+#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Could not open input file [%s]"
+#~ msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
+
+#, fuzzy
+#~ msgid "unable to create raster"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Unable to create output raster map <%s>"
+#~ msgstr "اسم الخريطة الراسترية الناتجة"
+
+#, fuzzy
+#~ msgid "Cannot open file for <%s>"
+#~ msgstr "%s لم يتم فتح قاعدة البيانات"
+
+#~ msgid "Name of the random surface to be produced"
+#~ msgstr "اسم السطح العشوائى المطلوب إنتاجه"
+
+#, fuzzy
+#~ msgid "%s: Unable to find raster map <%s>"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "%s: Unable to open raster map <%s> in mapset <%s>"
+#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
+#, fuzzy
+#~ msgid "%s:  Unable to open output raster map <%s>"
+#~ msgstr "<%s> لم يمكن فتح"
+
+#, fuzzy
+#~ msgid "Vector <%s> could not be opened"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "No db connection for driver <%s> defined. Run db.connect."
+#~ msgstr ""
+#~ "db.connect إتصل مستخدما<%s>لم يتم تعريف مشغل الإتصال بقاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Cannot open vector map <%s>"
+#~ msgstr "<%s>فى<%s>لم يمكن فتح الملف الفيكتورى"
+
+#, fuzzy
+#~ msgid "Table name"
+#~ msgstr "اسم الجدول"
+
+#, fuzzy
+#~ msgid "Cannot fetch data"
+#~ msgstr "لم يتم جلب البيانات"
+
+#, fuzzy
+#~ msgid "category column name"
+#~ msgstr "اسم الخريطة الراسترية"
+
+#, fuzzy
+#~ msgid "Cannot drop table: %s"
+#~ msgstr "%s لم يتم فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Cannot open labels <%s>"
+#~ msgstr "%s لم يتم فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Cannot fetch data from table"
+#~ msgstr "لم يمكن اختيار البيانات من الجدول"
+
+#, fuzzy
+#~ msgid "Cannot open file [%s]"
+#~ msgstr "%s لم يتم فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "SVG file <%s> cannot be opened"
+#~ msgstr "لم توجد<%s>الخريطة الفيكتورية"
+
+#, fuzzy
+#~ msgid "Querying input '%s' ... "
+#~ msgstr "dig قراءة ملف...\n"
+
+#, fuzzy
+#~ msgid "Copying %s input lines ... "
+#~ msgstr "إنشاء نقاط على الخط المدخل"
+
+#, fuzzy
+#~ msgid "Cannot create table <%s>"
+#~ msgstr "%s:لم يتم إنشاء الجدول"
+
+#, fuzzy
+#~ msgid "no record for cat = %d"
+#~ msgstr "cat = %d لا يوجد تسجيل للخط"
+
+#, fuzzy
+#~ msgid "cannot insert row: %s"
+#~ msgstr "لم يمكن حشر صف جديد: %s"
+
+#, fuzzy
+#~ msgid "Cannot find line of cat %d"
+#~ msgstr "<%s>لم يتم العثور على الخريطة المدخلة\n"
+
+#, fuzzy
+#~ msgid "Unalbe to open vector map <%s>"
+#~ msgstr "[%s]لم يتم فتح ملف الخلية ل "
+
+#, fuzzy
+#~ msgid ""
+#~ "Database connection not defined for layer [%d]. Use v.db.connect first"
+#~ msgstr "لم يتم الإتصال بقاعدة البيانات\n"
+
+#, fuzzy
+#~ msgid "Unable to open database %s by driver %s"
+#~ msgstr "%s بالمشغل %s لم يمكن فتح قاعدة البيانات"
+
+#, fuzzy
+#~ msgid "Transforms a vector map via a set of tie points."
+#~ msgstr "تحويل راستر جراسى الى بينرى"
+
+#, fuzzy
+#~ msgid "Now transforming the vectors ..."
+#~ msgstr ""
+#~ "\n"
+#~ "يتم الآن تحويل الفيكتورات ...\n"
+
+#, fuzzy
+#~ msgid "Read coordinates from standard input"
+#~ msgstr "إحداثيات الشرق والشمال لنقطة البدء"
+
+#, fuzzy
+#~ msgid "Raster map <%s>] not found"
+#~ msgstr "غير موجودة <%s> الخريطة الراسترية "
 
 #~ msgid "Cannot start driver '%s'."
 #~ msgstr "'%s'لم يمكن بدء المشغل"
@@ -26540,20 +27121,12 @@ msgstr ""
 #~ "اسم الخريطة الراسترية المدخلة"
 
 #, fuzzy
-#~ msgid "Name for the output raster map"
-#~ msgstr "اسم الخريطة المخرجة"
-
-#, fuzzy
 #~ msgid "Filtering [%s] in [%s]"
 #~ msgstr "<%s> لم يمكن فتح"
 
 #, fuzzy
 #~ msgid "Open raster map %s in %s = %d"
 #~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Closing raster map"
-#~ msgstr "الخريطة الراسترية الغطاء"
 
 #, fuzzy
 #~ msgid "Swap temp files"
@@ -26586,10 +27159,6 @@ msgstr ""
 #~ msgid "Raster input map"
 #~ msgstr "اسم الراستر المدخل"
 
-#, fuzzy
-#~ msgid "Input raster map"
-#~ msgstr "ادخل خريطة الراستر"
-
 #~ msgid "Mapset of input map"
 #~ msgstr "اسم مجموعة الخرائط للخريطة المدخلة"
 
@@ -26621,10 +27190,6 @@ msgstr ""
 #~ msgstr "اسماء الملفات الراسترية الموجودة"
 
 #, fuzzy
-#~ msgid "Raster file <%s> not found"
-#~ msgstr "غير موجود <%s> الراستر"
-
-#, fuzzy
 #~ msgid "%s - illegal name "
 #~ msgstr "اسم ااملف المخرج"
 
@@ -26635,10 +27200,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Couldn't find raster map [%s]"
 #~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Illegal output file name. Please try another."
-#~ msgstr "اسم ااملف المخرج"
 
 #, fuzzy
 #~ msgid "%s in %s -can't open raster map"
@@ -26848,10 +27409,6 @@ msgstr ""
 
 #~ msgid "string representing no data cell value"
 #~ msgstr "الرمز الممثل لقيم خلية بدون بيانات"
-
-#, fuzzy
-#~ msgid "Unable to find raster map [%s]"
-#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #, fuzzy
 #~ msgid "Unable to open temp file"
@@ -27225,10 +27782,6 @@ msgstr ""
 #~ msgstr "اسم الخريطة الراسترية الناتجة"
 
 #, fuzzy
-#~ msgid "Unable to insert new row: %s"
-#~ msgstr "لم يمكن حشر صف جديد: %s"
-
-#, fuzzy
 #~ msgid "%s: unable to open raster map <%s>"
 #~ msgstr "<%s> لم يمكن فتح"
 
@@ -27269,14 +27822,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "No record for category for [%d]"
 #~ msgstr "cat = %d لا يوجد تسجيل للخط"
-
-#, fuzzy
-#~ msgid "Error reading ASCII file <%s>"
-#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
-
-#, fuzzy
-#~ msgid "Error reading categories: <%s>"
-#~ msgstr "%s لم يتم العثور على الخريطة الراسترية"
 
 #, fuzzy
 #~ msgid "List of point coordinates. Required for add and move actions."
@@ -27417,10 +27962,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "vector map to be created"
 #~ msgstr "الملف الراسترى الطلوب إدخالة"
-
-#, fuzzy
-#~ msgid "%s: Cannot open dxf file"
-#~ msgstr "dig_cats لم يتم فتح ملف"
 
 #, fuzzy
 #~ msgid "Conversion of [%s] to vector map ..."
@@ -27615,10 +28156,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Report only selected statistics"
 #~ msgstr "طريقة احصائيات ااشئ الموجة "
-
-#, fuzzy
-#~ msgid "Query column name"
-#~ msgstr "اسم الخريطة الراسترية"
 
 #, fuzzy
 #~ msgid "name for new binary vector map (omit for display to stdout)"
