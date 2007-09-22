@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-21 23:54+0200\n"
-"PO-Revision-Date: 2007-08-08 20:20+0100\n"
+"POT-Creation-Date: 2007-09-22 00:09+0200\n"
+"PO-Revision-Date: 2007-09-19 22:10+0100\n"
 "Last-Translator: Monika Tylus <monikatylus_gmail.com>\n"
 "Language-Team: Polska <translation@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -270,8 +270,9 @@ msgid "draw geodesic line"
 msgstr "rysuj liniê geodezyjn±"
 
 #: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:218
+#, fuzzy
 msgid "Help for geodesic lines"
-msgstr ""
+msgstr "Pomoc dla linii geodezyjnych"
 
 #: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:240
 msgid "draw rhumbline"
@@ -286,7 +287,6 @@ msgid "Labels name:"
 msgstr "Nazwa pliku etykiet:"
 
 #: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:146
-#, fuzzy
 msgid "Display constraints:"
 msgstr "Poka¿ ograniczenia:"
 
@@ -349,8 +349,9 @@ msgid "Multiple formats using GDAL"
 msgstr "Ró¿norodne formaty poprzez sterownik GDAL"
 
 #: ../gui/tcltk/d.m/menu.tcl:80
+#, fuzzy
 msgid "Aggregate ASCII xyz data into raster grid"
-msgstr ""
+msgstr "Zagreguj warto¶ci ASCII xyz do siatki rastra "
 
 #: ../gui/tcltk/d.m/menu.tcl:81
 msgid "ASCII GRID (includes GRASS ASCII)"
@@ -370,11 +371,11 @@ msgstr "ESRI Arc/Info ASCII grid"
 
 #: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
 msgid "GRIDATB.FOR map file (TOPMODEL)"
-msgstr ""
+msgstr "Plik mapy GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/tcltk/d.m/menu.tcl:87 ../gui/tcltk/d.m/menu.tcl:121
 msgid "MAT-File (v.4) array (Matlab or Octave)"
-msgstr ""
+msgstr "Tablica MAT-File (v.4)  Matlab lub Octave"
 
 #: ../gui/tcltk/d.m/menu.tcl:88
 msgid "SPOT vegetation NDVI data sets"
@@ -402,7 +403,6 @@ msgid "Various formats using OGR"
 msgstr "Ró¿norodne formaty poprzez sterownik OGR"
 
 #: ../gui/tcltk/d.m/menu.tcl:97
-#, fuzzy
 msgid "ASCII points file or GRASS ASCII vector file"
 msgstr "Plik punktów ASCII albo pliki wektorowe GRASS ASCII"
 
@@ -1139,8 +1139,9 @@ msgid "Generate fractal surface"
 msgstr "Utwórz powierzchniê fraktaln±"
 
 #: ../gui/tcltk/d.m/menu.tcl:337
+#, fuzzy
 msgid "Generate gaussian deviates surface"
-msgstr ""
+msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
 
 #: ../gui/tcltk/d.m/menu.tcl:338
 msgid "Generate plane"
@@ -1649,14 +1650,13 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:510
 msgid "Principal component"
-msgstr ""
+msgstr "G³ówny sk³adnik"
 
 #: ../gui/tcltk/d.m/menu.tcl:511
 msgid "Fast Fourier Transform"
 msgstr "Transformacja Fast Fourier"
 
 #: ../gui/tcltk/d.m/menu.tcl:512
-#, fuzzy
 msgid "Inverse Fast Fourier Transform"
 msgstr "Odwróæ szybk± transformatê Fouriera"
 
@@ -1674,7 +1674,7 @@ msgstr "Ocena dok³adno¶ci klafyfikacji kappa"
 
 #: ../gui/tcltk/d.m/menu.tcl:521
 msgid "Optimum index factor for LandSat TM"
-msgstr ""
+msgstr "Optymalny wska¼nik indeksu dla LandSat TM"
 
 #: ../gui/tcltk/d.m/menu.tcl:524
 msgid "&Grid3D"
@@ -2841,8 +2841,9 @@ msgid "Import raster map"
 msgstr "Próbkowanie map rastrowych"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:97
+#, fuzzy
 msgid "Aggregate ASCII xyz"
-msgstr ""
+msgstr "Zagreguj warto¶ci ASCII xyz do siatki rastra "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:98 ../gui/tcltk/gis.m/gmmenu.tcl:132
 #, fuzzy
@@ -3466,13 +3467,14 @@ msgid "Fractal surface"
 msgstr "Utwórz powierzchniê fraktaln±"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:375
+#, fuzzy
 msgid "Gausian kernal density surface"
-msgstr ""
+msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:376
 #, fuzzy
 msgid "Gaussian deviates surface"
-msgstr "Utwórz powierzchniê"
+msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:378
 #, fuzzy
@@ -3482,7 +3484,7 @@ msgstr "Przesuñ"
 #: ../gui/tcltk/gis.m/gmmenu.tcl:380
 #, fuzzy
 msgid "Random deviates surface"
-msgstr "Utwórz powierzchniê"
+msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:381
 msgid "Random surface with spatial dependence"
@@ -3861,8 +3863,9 @@ msgid "Canonical correlation"
 msgstr "Kowariancja/korelacja"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:559
+#, fuzzy
 msgid "Principal components"
-msgstr ""
+msgstr "G³ówny sk³adnik"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:560
 #, fuzzy
@@ -3884,8 +3887,9 @@ msgid "Kappa analysis"
 msgstr "Analizy terenu"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:567
+#, fuzzy
 msgid "OIF for LandSat TM"
-msgstr ""
+msgstr "Optymalny wska¼nik indeksu dla LandSat TM"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:570
 #, fuzzy
@@ -3992,7 +3996,7 @@ msgstr "Dodaj warstwê postskryptow± etykiet (u¿ywaj±c pliku v.labels)"
 #: ../gui/tcltk/gis.m/gmtool1.tcl:142
 #, fuzzy
 msgid "Add postscript text layer"
-msgstr "Dodaj warstwê tekstu postskryptowego"
+msgstr "Dodaj warstwê tekstu postskrypt"
 
 #: ../gui/tcltk/gis.m/gmtree.tcl:69
 #, fuzzy, tcl-format
@@ -4486,9 +4490,8 @@ msgid "size:"
 msgstr " rozmiar"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:107
-#, fuzzy
 msgid "Ghostscript not available"
-msgstr "Dodaj warstwê tekstu postskryptowego"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:248
 msgid "Postscript and LPR printing of map display"
@@ -4847,9 +4850,8 @@ msgid "raster map to drape over base map"
 msgstr "mapa rastrowa która ma byæ rozpiêta ponad map± podk³adow±"
 
 #: ../gui/tcltk/gis.m/raster.tcl:226 ../gui/tcltk/gis.m/raster.tcl:230
-#, fuzzy
 msgid "drape map info"
-msgstr "Mapa rastrowa"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/raster.tcl:243
 msgid " Set background color (colored null value cells)"
@@ -4996,9 +4998,8 @@ msgid "No output map specified"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/rules.tcl:221
-#, fuzzy
 msgid "Error creating rules file"
-msgstr "Zmieñ klasyfikacjê kategorii za pomoc± pliku regu³y"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:44
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116 ../lib/gis/gui.tcl:503
@@ -5314,7 +5315,7 @@ msgstr "Animacja MPEG-1"
 #: ../gui/tcltk/gis.m/animate.tcl:328
 #, fuzzy
 msgid "Slower animation"
-msgstr "Akumulacja sp³ywu dla masywnych gridów"
+msgstr "Animacja MPEG-1"
 
 #: ../gui/tcltk/gis.m/animate.tcl:334
 #, fuzzy
@@ -5336,12 +5337,12 @@ msgstr ""
 #: ../gui/tcltk/gis.m/animate.tcl:377
 #, fuzzy
 msgid "Quit animation"
-msgstr " justowanie"
+msgstr "Animacja MPEG-1"
 
 #: ../gui/tcltk/gis.m/animate.tcl:397
 #, fuzzy
 msgid "Select maps"
-msgstr "4. Wybierz mapê ref."
+msgstr "1. Wybierz mapset"
 
 #: ../gui/tcltk/gis.m/animate.tcl:425
 #, fuzzy
@@ -5373,9 +5374,8 @@ msgid "You must select maps to animate for frame 1"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/animate.tcl:525
-#, fuzzy
 msgid "No maps selected"
-msgstr "Bry³y 3D do serii map rastrowych"
+msgstr ""
 
 #: ../gui/tcltk/gis.m/animate.tcl:983
 msgid "Animation Window"
@@ -5486,7 +5486,7 @@ msgstr "Test"
 #: ../gui/tcltk/gis.m/dnviz.tcl:226
 #, fuzzy
 msgid "Clear all path coordinates"
-msgstr "wspó³rzêdne xy"
+msgstr "wspó³rzêdne geograficzne"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:365
 #, fuzzy
@@ -5628,7 +5628,7 @@ msgstr ""
 #: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
 #, fuzzy
 msgid "Error creating location!"
-msgstr "UWAGA: niew³a¶ciwa lokacja"
+msgstr "Zdefiniuj lokacjê"
 
 #: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
 #, tcl-format
@@ -5649,9 +5649,8 @@ msgid ""
 msgstr ""
 
 #: ../lib/init/epsg_option.tcl:288
-#, fuzzy
 msgid "Select datum transformation parameters:"
-msgstr "Wybierz domy¶ln± czcionkê tekstu"
+msgstr ""
 
 #: ../lib/init/epsg_option.tcl:292
 msgid ""
@@ -6195,7 +6194,7 @@ msgstr "Zapisz i wyjd¼"
 #: ../vector/v.digit/toolbox.tcl:252
 #, fuzzy
 msgid "mouse button actions (left, middle, right)"
-msgstr "akcje przycisków myszy (lewy, ¶rodkowy, prawy)"
+msgstr "dzia³anie przycisków myszy (lewy, prawy, ¶rodkowy)"
 
 #: ../visualization/nviz/scripts/panel_animation.tcl:275
 msgid "Test"
@@ -6219,7 +6218,6 @@ msgstr "Test"
 #~ msgid "Path to new location"
 #~ msgstr "¦cie¿ka do nowej lokacji"
 
-#, fuzzy
 #~ msgid ""
 #~ " \n"
 #~ "CREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n"
@@ -6340,16 +6338,14 @@ msgstr "Test"
 #~ msgid "Save as HTML files..."
 #~ msgstr "Zapisz jako pliki HTML..."
 
-#, fuzzy
 #~ msgid "Topic not found!"
-#~ msgstr "nie znaleziono ¶cie¿ki:"
+#~ msgstr "Tematu nie znaleziono!"
 
 #~ msgid "Displaying..."
 #~ msgstr "Wy¶wietlanie..."
 
-#, fuzzy
 #~ msgid "Done."
-#~ msgstr "Zrobione"
+#~ msgstr "Wykonano."
 
 #~ msgid "Select directory to Save HTML files"
 #~ msgstr "Wybierz katalog,aby zapisaæ pliki HTML"
@@ -6360,12 +6356,21 @@ msgstr "Test"
 #~ msgid "Generating HTMLs...."
 #~ msgstr "Generowanie HTML..."
 
+#, fuzzy
+#~ msgid "Generating HTMLs...  %i of %i  \"%s\""
+#~ msgstr "Generowanie HTML...  %i z %i  \"%s\""
+
+#~ msgid "Search in all topics"
+#~ msgstr "Wyszukaj we wszystkich tematach"
+
 #~ msgid "Direction"
 #~ msgstr "Kierunek"
 
-#, fuzzy
+#~ msgid "Up"
+#~ msgstr "Góra"
+
 #~ msgid "Down"
-#~ msgstr "Zrobione"
+#~ msgstr "Dó³"
 
 #, fuzzy
 #~ msgid "Match case"

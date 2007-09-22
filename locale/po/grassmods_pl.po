@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmodes_pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-21 23:54+0200\n"
-"PO-Revision-Date: 2007-08-08 20:10+0100\n"
+"POT-Creation-Date: 2007-09-22 00:09+0200\n"
+"PO-Revision-Date: 2007-09-19 21:58+0100\n"
 "Last-Translator: Monika Tylus <monikatylus_gmail.com>\n"
 "Language-Team: Polska <translation@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,6 @@ msgid "List all columns for a given table."
 msgstr "lista kolumn danej tabeli."
 
 #: ../db/base/connect.c:43
-#, fuzzy
 msgid "Prints/sets general DB connection for current mapset and exits."
 msgstr "Wy¶wietla/ustawia ogólne po³±czenie DB dla bie¿±cego mapsetu"
 
@@ -145,7 +144,7 @@ msgstr "<%s> utworzono w bazie danych."
 #: ../db/base/databases.c:50
 #, fuzzy
 msgid "Unable to list databases"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej <%s>"
+msgstr "Nie mo¿na utworzyæ listy baz danych."
 
 #: ../db/base/databases.c:78
 #, fuzzy
@@ -176,9 +175,8 @@ msgid "Print column names only instead of full column descriptions"
 msgstr "wy¶wietl nazwy kolumn zamiast pe³nych opisów kolumn"
 
 #: ../db/base/describe.c:105
-#, fuzzy
 msgid "Print table structure"
-msgstr "wy¶wietl tabelê i wyjd¼"
+msgstr ""
 
 #: ../db/base/describe.c:122
 #, fuzzy
@@ -303,7 +301,7 @@ msgstr ""
 #: ../db/db.login/main.c:59
 #, fuzzy
 msgid "Username"
-msgstr "raster"
+msgstr "nazwa sterownika"
 
 #: ../db/db.login/main.c:66
 msgid "Password"
@@ -723,9 +721,8 @@ msgstr "Nie mo¿na otworzyæ pliku wyj¶ciowego"
 #: ../locale/scriptstrings/d.rast.leg_to_translate.c:2
 #: ../locale/scriptstrings/d.redraw_to_translate.c:2
 #: ../visualization/ximgview/main.c:271
-#, fuzzy
 msgid "display"
-msgstr "Wy¶wietl"
+msgstr "wy¶wietl"
 
 #: ../display/d.barscale/main.c:55 ../display/d.graph/main.c:53
 #: ../display/d.grid/main.c:51
@@ -859,7 +856,7 @@ msgstr "B³±d w obliczeniach konwersji"
 #: ../locale/scriptstrings/d.split_to_translate.c:2
 #, fuzzy
 msgid "display, setup"
-msgstr "wy¶wietl indeks"
+msgstr "wy¶wietl, ustaw"
 
 #: ../display/d.erase/main.c:34
 msgid "Erase the contents of the active display frame with user defined color"
@@ -946,9 +943,8 @@ msgid " - R: quit and save selected vectors to new map\n"
 msgstr " - R: wyj¶cie i zapisanie zaznaczonych wektorów do nowej mapy\n"
 
 #: ../display/d.extract/extract.c:47
-#, fuzzy
 msgid "L: add  M: remove  R: quit and save\n"
-msgstr "L: od M: do R: wyj¶cie\n"
+msgstr "L: dodaj M: usuñ R: wyjdz i zapisz\n"
 
 #: ../display/d.extract/main.c:50
 #, fuzzy
@@ -956,9 +952,8 @@ msgid "Select and extract vectors with mouse into new vector map"
 msgstr "Wybierz myszk± i extract wektory do nowej mapy wktorowej"
 
 #: ../display/d.extract/main.c:63 ../display/d.path/main.c:98
-#, fuzzy
 msgid "Original line color"
-msgstr "Kolor konturu"
+msgstr "Kolor linii"
 
 #: ../display/d.extract/main.c:69 ../display/d.path/main.c:106
 msgid "Highlight color"
@@ -1087,7 +1082,7 @@ msgstr ""
 #: ../display/d.frame/select.c:53
 #, fuzzy, c-format
 msgid "Left:   Select frame\n"
-msgstr "%s menu Powiêkszenie\n"
+msgstr "Lewy:   Menu powiêkszenia\n"
 
 #: ../display/d.frame/select.c:54
 #, c-format
@@ -1097,7 +1092,7 @@ msgstr ""
 #: ../display/d.frame/select.c:55
 #, fuzzy, c-format
 msgid "Right:  Accept frame\n"
-msgstr "Prawy: wyjd¼\n"
+msgstr "Prawy: Wyjd¼\n"
 
 #: ../display/d.graph/do_graph.c:56 ../display/d.graph/do_graph.c:84
 #, c-format
@@ -1278,8 +1273,8 @@ msgid ""
 "WGS84 grid output not possible as this location does not contain\n"
 "datum transformation parameters. Try running g.setproj."
 msgstr ""
-"Utworzenie projekcji WGS84 nie by³o mo¿liwe, lokalizacjanie posiada "
-"parametrów transformacji uk³adu. Spróbuj uruchomiæ g.setproj."
+"WGS84 grid output not possible as this location does not contain\n"
+"datum transformation parameters. Try running g.setproj."
 
 #: ../display/d.grid/plot.c:457
 msgid "Error in pj_do_proj1"
@@ -1725,7 +1720,7 @@ msgstr "Podaj wynik tylko w metrach"
 
 #: ../display/d.measure/main.c:80
 msgid "Output in kilometers as well"
-msgstr ""
+msgstr "Wynik równie¿ w kilometrach"
 
 #: ../display/d.menu/main.c:67
 msgid ""
@@ -2007,7 +2002,7 @@ msgstr "Maksymalny rozmiar obszaru (przek±tna) kiedy etykiety s± wy¶wietlane"
 #: ../display/d.paint.labels/main.c:84
 #, fuzzy, c-format
 msgid "Label file <%s> not found"
-msgstr "pliku rastra [%s] nie znaleziono"
+msgstr "Plik rastrowy <%s> nie zosta³ znaleziony"
 
 #: ../display/d.paint.labels/main.c:99 ../display/d.vect/main.c:386
 msgid "Region size is lower than minreg, nothing displayed."
@@ -2389,7 +2384,7 @@ msgstr "Nie mo¿na ustawiæ bie¿±cego okna graficznego"
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:2
 #, fuzzy
 msgid "display, raster"
-msgstr "wy¶wietl indeks"
+msgstr "wy¶wietl, ustaw"
 
 #: ../display/d.rast.edit/main.c:60
 #: ../locale/scriptstrings/d.rast.edit_to_translate.c:1
@@ -2443,11 +2438,15 @@ msgid "columns: %d"
 msgstr "kolumny: %d"
 
 #: ../display/d.rast.num/number.c:211
+#, fuzzy
 msgid ""
 "\n"
 "Your current window setting may be too large. Cells displayed on your "
 "graphics window may be too small for cell category number to be visible."
 msgstr ""
+"\n"
+"Bie¿±ce ustawienia okna mog± byæ zbyt d³ugie. Wy¶wietlane komórki mog± byæ "
+"za ma³e dla kategorii  "
 
 #: ../display/d.rast.num/number.c:217
 #, fuzzy
@@ -3576,9 +3575,9 @@ msgid "Right:  Quit\n"
 msgstr "Prawy: wyjd¼\n"
 
 #: ../display/d.zoom/zoom.c:16
-#, fuzzy, c-format
+#, c-format
 msgid "Left:   Zoom menu\n"
-msgstr "%s menu Powiêkszenie\n"
+msgstr "Lewy:   Menu powiêkszenia\n"
 
 #: ../display/d.zoom/zoom.c:17
 #, c-format
@@ -3586,9 +3585,9 @@ msgid "Middle: Pan\n"
 msgstr ""
 
 #: ../display/d.zoom/zoom.c:18
-#, fuzzy, c-format
+#, c-format
 msgid "Right:  Quit menu\n"
-msgstr "Prawy: wyjd¼\n"
+msgstr "Prawy: Wyjd¼\n"
 
 #: ../display/d.zoom/zoom.c:41
 #, c-format
@@ -3889,7 +3888,7 @@ msgstr "Niew³a¶ciwy przedzia³ czasowy"
 #: ../general/g.pnmcomp/main.c:101
 #, fuzzy, c-format
 msgid "File <%s> not found"
-msgstr "Nie znaleziono rastra '%s'"
+msgstr "<%s> nie znaleziono\n"
 
 #: ../general/g.pnmcomp/main.c:110
 msgid "Expecting PPM but got PGM"
@@ -4098,7 +4097,7 @@ msgstr "Lokacja %s zosta³a utworzona!"
 #: ../general/g.proj/output.c:156
 #, fuzzy, c-format
 msgid "Unable to create location: %s"
-msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgstr "Nie mo¿na utworzyæ lokacji: %s"
 
 #: ../general/g.proj/output.c:158
 #, fuzzy, c-format
@@ -4687,7 +4686,7 @@ msgstr "Format wyj¶ciowy"
 #: ../general/g.transform/main.c:265
 #, fuzzy
 msgid "Display summary information"
-msgstr "Wy¶wietl iformacje podsumowania"
+msgstr "Wy¶wietl informacje podsumowania"
 
 #: ../general/g.version/main.c:34
 msgid "Displays version and copyright information"
@@ -4809,7 +4808,7 @@ msgstr "%s=%s,%s: pliki s± identycznie, nie jest potrzebna zmiana nazwy\n"
 #: ../general/manage/cmd/rename.c:103
 #, fuzzy
 msgid "Renaming reclass maps"
-msgstr "Wej¶ciowa mapa rastrowa"
+msgstr "Wczytywanie mapy hipsometrycznej:"
 
 #: ../imagery/i.ask/main.c:25
 #, c-format
@@ -6600,7 +6599,7 @@ msgstr "Wej¶ciowa mapa rastrowa"
 #: ../imagery/i.zc/main.c:77
 #, fuzzy
 msgid "zero crossing raster map"
-msgstr "B³±d podczas wczytywania mapy '%s'"
+msgstr "Nazwa mapy rastrowej"
 
 #: ../imagery/i.zc/main.c:85
 msgid "x-y extent of the Gaussian filter"
@@ -6617,12 +6616,12 @@ msgstr ""
 #: ../imagery/i.zc/main.c:110
 #, fuzzy, c-format
 msgid "Unable to find raster map: %s"
-msgstr "Nie mo¿na otworzyæ mapy rastrowej <%s>"
+msgstr "Nie mo¿na odnale¼æ rastra [%s]."
 
 #: ../imagery/i.zc/main.c:118
 #, fuzzy, c-format
 msgid "Illegal file name: %s"
-msgstr "Poprawna nazwa pliku wyj¶ciowego <%s>"
+msgstr "Uwaga: niedozwolona nazwa pliku wyj¶ciowego <%s>."
 
 #: ../imagery/i.zc/main.c:122
 #, fuzzy
@@ -6739,7 +6738,7 @@ msgstr ""
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:2
 #, fuzzy
 msgid "display, export, GPS"
-msgstr "wy¶wietl indeks"
+msgstr "wy¶wietl, ustaw"
 
 #: ../locale/scriptstrings/d.out.gpsdrive_to_translate.c:3
 msgid "name for new map image (lives in ~/.gpsdrive)"
@@ -6757,7 +6756,7 @@ msgstr "Zapisuje zawarto¶æ aktywnego monitora do pliku PNG w katalogu domowym"
 #: ../locale/scriptstrings/d.out.file_to_translate.c:2
 #, fuzzy
 msgid "display, export"
-msgstr "wy¶wietl indeks"
+msgstr "wy¶wietl, ustaw"
 
 #: ../locale/scriptstrings/d.out.png_to_translate.c:3
 msgid "Name of PNG file"
@@ -6975,7 +6974,7 @@ msgstr "Pokaz slajdów map rastrowych/wektorowych GRASS'a"
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:2
 #, fuzzy
 msgid "display, slideshow"
-msgstr "wy¶wietl indeks"
+msgstr "wy¶wietl, ustaw"
 
 #: ../locale/scriptstrings/d.slide.show_to_translate.c:3
 #, fuzzy
@@ -9380,7 +9379,6 @@ msgid "Finding buffer zones ... "
 msgstr "Odszukiwanie æwiczebnych klas ..."
 
 #: ../raster/r.buffer/main.c:58
-#, fuzzy
 msgid "raster, buffer"
 msgstr "raster, bufor"
 
@@ -10241,7 +10239,7 @@ msgstr "%s: Czcionka nie mo¿ by¶ czytana"
 #: ../vector/v.sample/main.c:278
 #, fuzzy, c-format
 msgid "Unable to insert row: %s"
-msgstr "Nie mo¿na wstawiæ do tabeli: %s"
+msgstr "Nie mo¿na wstawiæ wiersza: %s"
 
 #: ../raster/r.contour/main.c:233
 #, fuzzy
@@ -11941,7 +11939,7 @@ msgstr "klasa %d (%d)\n"
 #: ../raster/r.in.poly/poly2rast.c:67
 #, fuzzy
 msgid "Writing raster map..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../raster/r.in.xyz/main.c:78
 msgid ""
@@ -12026,9 +12024,8 @@ msgid "Bad z-coordinate line %d column %d. <%s>"
 msgstr ""
 
 #: ../raster/r.in.xyz/main.c:498
-#, fuzzy
 msgid "Writing to map ..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../raster/r.in.xyz/main.c:590
 #, fuzzy, c-format
@@ -12361,9 +12358,8 @@ msgid "Error writing color file for <%s@%s>!"
 msgstr "B³±d podczas zapisu pliku colr dla <%s>."
 
 #: ../raster/r.lake/main.c:420
-#, fuzzy
 msgid "All done."
-msgstr "Zrobione."
+msgstr ""
 
 #: ../raster/r.le/r.le.patch/main.c:49
 msgid ""
@@ -13610,12 +13606,12 @@ msgstr "Odczytywanie obrazu ..."
 #: ../raster/r.out.mat/main.c:331
 #, fuzzy
 msgid "Writing out map..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../raster/r.out.mat/main.c:385
-#, fuzzy, c-format
+#, c-format
 msgid "%ld bytes written to '%s'"
-msgstr "Nie mo¿na zapisaæ do pliku"
+msgstr ""
 
 #: ../raster/r.out.mpeg/main.c:87
 msgid "either mpeg_encode or ppmtompeg must be installed"
@@ -14709,7 +14705,7 @@ msgstr "yj¶ciowa mapa rastrowa"
 #: ../raster/r.random/random.c:95
 #, fuzzy, c-format
 msgid "Writing vector map <%s> ..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../raster/r.random/random.c:107
 #, fuzzy, c-format
@@ -17005,9 +17001,8 @@ msgid "%s: no data points found"
 msgstr "%s: nie znaleziono ¿adnych danych"
 
 #: ../raster/r.surf.idw2/main.c:124
-#, fuzzy
 msgid "Cannot get row"
-msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgstr "Nie mo¿na pobraæ wiersza"
 
 #: ../raster/r.surf.idw2/read_cell.c:20
 #, fuzzy, c-format
@@ -17041,7 +17036,7 @@ msgstr ""
 #: ../raster/r.surf.random/main.c:63
 #, fuzzy
 msgid "Create an integer map"
-msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgstr "wej¶ciowa mapa rastrowa"
 
 #: ../raster/r.texture/h_measure.c:85
 msgid ""
@@ -17083,7 +17078,6 @@ msgstr ""
 "Wielko¶æ okna przetwarzanego obrazu (tylko liczba nieparzysta, max: %i)"
 
 #: ../raster/r.texture/main.c:101
-#, fuzzy
 msgid "The distance between two samples (>= 1)"
 msgstr "Odleg³o¶æ pomiêdzy dwoma próbkami (>=1)"
 
@@ -17143,7 +17137,6 @@ msgid "Difference Entropy"
 msgstr ""
 
 #: ../raster/r.texture/main.c:174
-#, fuzzy
 msgid "Measure of Correlation-1"
 msgstr "Miara korelacji-1"
 
@@ -17511,7 +17504,7 @@ msgstr "Zapiywanie %s ..."
 #: ../raster/r.topidx/file_io.c:31
 #, fuzzy
 msgid "Reading elevation map..."
-msgstr "Wej¶ciowa mapa rastrowa"
+msgstr "Wczytywanie mapy hipsometrycznej:"
 
 #: ../raster/r.topidx/file_io.c:86
 #, fuzzy
@@ -17687,9 +17680,8 @@ msgid "Generate unformatted report"
 msgstr "brak nag³ówka w raporcie"
 
 #: ../raster/r.volume/main.c:116
-#, fuzzy
 msgid "No data map specified"
-msgstr "Nie okre¶lono wej¶ciowych(ej) map(y)"
+msgstr "Nie okre¶lono danych mapy"
 
 #: ../raster/r.volume/main.c:127
 msgid "No clump map specified and MASK not set."
@@ -17698,7 +17690,7 @@ msgstr ""
 #: ../raster/r.volume/main.c:132
 #, fuzzy
 msgid "Can't find data map."
-msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgstr "Nie mo¿na znale¼æ danych mapy."
 
 #: ../raster/r.volume/main.c:140
 #, fuzzy
@@ -18966,17 +18958,17 @@ msgstr "Nie mo¿na utworzyæ mapy rastrowej %s"
 #: ../raster/simwe/simlib/input.c:49
 #, fuzzy, c-format
 msgid "File [%s] not found"
-msgstr "Nie znaleziono rastra '%s'"
+msgstr "%s plik [%s] nie zosta³ znaleziony!"
 
 #: ../raster/simwe/simlib/input.c:52
 #, fuzzy, c-format
 msgid "Unable to open file [%s]"
-msgstr "Nie mo¿na otworzyæ plików pasm."
+msgstr "Nie mo¿na otworzyæ [%s]"
 
 #: ../raster/simwe/simlib/input.c:55
 #, fuzzy
 msgid "Failed to guess file format"
-msgstr "Plik(i) rastra do wy¶wietlenia%d"
+msgstr "Format pliku graficznego"
 
 #: ../raster/simwe/simlib/input.c:58
 #, fuzzy, c-format
@@ -21347,14 +21339,13 @@ msgstr "W bazie danych <%s> nie istnieje tabela <%s>"
 
 #: ../vector/v.db.connect/main.c:230 ../vector/v.in.db/main.c:131
 #: ../vector/v.transform/trans_digit.c:92
-#, fuzzy, c-format
+#, c-format
 msgid "Missing column <%s> in table <%s>"
-msgstr "Kolumna <%s> nie zosta³a znaleziona"
+msgstr ""
 
 #: ../vector/v.db.connect/main.c:235 ../vector/v.in.db/main.c:134
-#, fuzzy
 msgid "Data type of key column must be integer"
-msgstr "Nie okre¶lono kolumny szeroko¶ci linii."
+msgstr ""
 
 #: ../vector/v.db.connect/main.c:242 ../vector/v.db.connect/main.c:259
 #, c-format
@@ -22131,9 +22122,8 @@ msgid "Unable to copy table"
 msgstr "Nie mo¿na otworzyæ pliku wyj¶ciowego"
 
 #: ../vector/v.extract/main.c:339
-#, fuzzy
 msgid "Done"
-msgstr "Zrobione."
+msgstr "Zakoñczono."
 
 #: ../vector/v.extract/main.c:350
 #, fuzzy
@@ -22190,9 +22180,8 @@ msgid "Cannot select attributes for area %d"
 msgstr "Nir mo¿na wybraæ atrybutów dla pola #%d"
 
 #: ../vector/v.extrude/main.c:244
-#, fuzzy
 msgid "Extruding basic vector objects..."
-msgstr "Zapiywanie %s ..."
+msgstr ""
 
 #: ../vector/v.extrude/main.c:278
 #, fuzzy, c-format
@@ -22564,7 +22553,7 @@ msgstr ""
 #: ../vector/v.in.db/main.c:155
 #, fuzzy, c-format
 msgid "Unable to open select cursor: '%s'"
-msgstr "Nie mo¿na otworzyæ plików pasm."
+msgstr "Nie mo¿na otworzyæ mapy wektorowej [%s]"
 
 #: ../vector/v.in.db/main.c:165
 msgid "Key column must be integer"
@@ -23642,17 +23631,17 @@ msgstr "Nie mo¿na pobraæ informacji o warstwie dla mapy wektorowej"
 #: ../vector/v.lrs/v.lrs.where/main.c:124
 #, fuzzy
 msgid "Unable to open database for reference table"
-msgstr "Nie mo¿na otworzyæ bazy danych %s przez sterownik %s"
+msgstr "Nie mo¿na otworzyæ pliku tymczasowego"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:284
 #, fuzzy, c-format
 msgid "Unable to drop table: %s"
-msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
+msgstr "Nie mo¿na otworzyæ [%s]"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:300
 #, fuzzy, c-format
 msgid "Unable to select line id values from %s.%s."
-msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:310
 #, fuzzy
@@ -23663,7 +23652,7 @@ msgstr "Nie okre¶lono kolumny szeroko¶ci linii."
 #: ../vector/v.lrs/v.lrs.create/main.c:418
 #, fuzzy
 msgid "Unable to fetch line id from line table"
-msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:370
 #, c-format
@@ -23678,7 +23667,7 @@ msgstr ""
 #: ../vector/v.lrs/v.lrs.create/main.c:409
 #, fuzzy, c-format
 msgid "Unable to select point attributes from <%s>"
-msgstr "Dla punktu #%d nie mo¿na wybraæ atrybutów"
+msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
 
 #: ../vector/v.lrs/v.lrs.create/main.c:438
 #, c-format
@@ -23740,14 +23729,12 @@ msgid "Unable to insert reference records: %s"
 msgstr "Nie mo¿na wstawiæ nowego rekordu: '%s'"
 
 #: ../vector/v.lrs/v.lrs.create/main.c:783
-#, fuzzy
 msgid "Building topology for output (out_lines) map..."
-msgstr "Nazwa wej¶ciowego pliku wektorowego"
+msgstr ""
 
 #: ../vector/v.lrs/v.lrs.create/main.c:789
-#, fuzzy
 msgid "Building topology for error (err) map..."
-msgstr "Nie mo¿na otworzyæ mapy wektorowej <%s>"
+msgstr ""
 
 #: ../vector/v.lrs/v.lrs.label/main.c:102
 msgid "Create stationing from input lines, and linear reference system"
@@ -23810,7 +23797,7 @@ msgstr ""
 #: ../vector/v.lrs/v.lrs.label/main.c:304
 #, fuzzy, c-format
 msgid "Unable to select records from LRS table: %s"
-msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+msgstr "%s: Czcionka nie mo¿ by¶ czytana"
 
 #: ../vector/v.lrs/v.lrs.label/main.c:387
 #, fuzzy
@@ -23870,7 +23857,7 @@ msgstr "%s: Czcionka nie mo¿ by¶ czytana"
 #: ../vector/v.segment/main.c:172
 #, fuzzy, c-format
 msgid "Unable to find line of cat [%d]"
-msgstr "Nie mo¿na odnale¼æ mapy wektorowej [%s]"
+msgstr "Nie mo¿na odnale¼æ pliku [%s]."
 
 #: ../vector/v.lrs/v.lrs.segment/main.c:201
 #, c-format
@@ -23995,9 +23982,9 @@ msgid "[%d] points - no record found"
 msgstr "Wy¶wietl ustawienia bie¿±cego regionu"
 
 #: ../vector/v.lrs/v.lrs.where/main.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "[%d] points - too many records found"
-msgstr "Wy¶wietl ustawienia bie¿±cego regionu"
+msgstr ""
 
 #: ../vector/v.mapcalc/any.c:126
 msgid "Can't call bad any-function"
@@ -24115,7 +24102,7 @@ msgstr "Niew³a¶ciwy przedzia³ czasowy"
 #: ../vector/v.mkgrid/main.c:178
 #, fuzzy
 msgid "Invalid northing!"
-msgstr "Niew³a¶ciwe wspó³rzêdne %s %s"
+msgstr "Nieprawid³owy region: %s"
 
 #: ../vector/v.mkgrid/main.c:181 ../vector/v.mkgrid/main.c:183
 #, fuzzy
@@ -24139,12 +24126,12 @@ msgstr ""
 #: ../vector/v.mkgrid/write_grid.c:43
 #, fuzzy
 msgid "Writing out vector rows ..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../vector/v.mkgrid/write_grid.c:80
 #, fuzzy
 msgid "Writing out vector columns ..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../vector/v.neighbors/main.c:47
 msgid "vector, raster, aggregation"
@@ -24642,16 +24629,15 @@ msgstr ""
 #: ../vector/v.out.ogr/main.c:101
 #, fuzzy
 msgid "OGR output datasource name"
-msgstr "nazwa bazy danych"
+msgstr "Wprowad¼ docelow± nazwê bazy danych"
 
 #: ../vector/v.out.ogr/main.c:102
 msgid "For example: ESRI Shapefile: filename or directory for storage"
 msgstr ""
 
 #: ../vector/v.out.ogr/main.c:108
-#, fuzzy
 msgid "OGR layer name. If not specified, input name is used."
-msgstr "Numer warstwy. Jesli -l, wszystkie warstwy s± wy¶wietlane."
+msgstr ""
 
 #: ../vector/v.out.ogr/main.c:109
 msgid "For example: ESRI Shapefile: shapefile name"
@@ -24828,9 +24814,8 @@ msgid "Unable to open SVG file <%s>"
 msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
 
 #: ../vector/v.out.svg/main.c:200
-#, fuzzy
 msgid "No areas found, skipping type=poly"
-msgstr "Wy¶wietl ustawienia bie¿±cego regionu"
+msgstr ""
 
 #: ../vector/v.out.svg/main.c:234
 #, fuzzy, c-format
@@ -24888,17 +24873,16 @@ msgstr ""
 #: ../vector/v.overlay/area_area.c:45 ../vector/v.overlay/line_area.c:64
 #, fuzzy
 msgid "Breaking lines..."
-msgstr "Zapiywanie %s ..."
+msgstr "Obracanie porz±dku danych..."
 
 #: ../vector/v.overlay/area_area.c:49
 #, fuzzy
 msgid "Removing duplicates..."
-msgstr "Odczytywanie obrazu ..."
+msgstr "Usuwanie pliku warto¶ci zerowych dla [%s]...\n"
 
 #: ../vector/v.overlay/area_area.c:52
-#, fuzzy
 msgid "Cleaning boundaries at nodes..."
-msgstr "Zapiywanie %s ..."
+msgstr ""
 
 #: ../vector/v.overlay/area_area.c:60
 #, fuzzy
@@ -24908,7 +24892,7 @@ msgstr "Zapiywanie %s ..."
 #: ../vector/v.overlay/area_area.c:80
 #, fuzzy, c-format
 msgid "Querying vector map <%s>..."
-msgstr "Zapiywanie %s ..."
+msgstr "Zapis do mapy ..."
 
 #: ../vector/v.overlay/area_area.c:102 ../vector/v.overlay/area_area.c:172
 #: ../vector/v.overlay/area_area.c:196 ../vector/v.overlay/line_area.c:154
@@ -24928,9 +24912,8 @@ msgid "Unable to insert new record: '%s'"
 msgstr "Nie mo¿na wstawiæ nowego rekordu: '%s'"
 
 #: ../vector/v.overlay/area_area.c:246
-#, fuzzy
 msgid "Attaching centroids..."
-msgstr "Zapiywanie %s ..."
+msgstr ""
 
 #: ../vector/v.overlay/main.c:56
 #, fuzzy
@@ -24938,9 +24921,8 @@ msgid "Overlays two vector maps."
 msgstr "Nazwa mapy wektorowej"
 
 #: ../vector/v.overlay/main.c:89
-#, fuzzy
 msgid "Operator defines features written to output vector map"
-msgstr "Nazwa wej¶ciowego pliku wektorowego"
+msgstr ""
 
 #: ../vector/v.overlay/main.c:91
 msgid ""
@@ -24988,7 +24970,7 @@ msgstr "Po³±czenie z baz± danych nie zosta³o zdefiniowane dla warstwy <%d>"
 #: ../vector/v.overlay/main.c:269
 #, fuzzy
 msgid "Unable to select attributes"
-msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
+msgstr "Nie mo¿na ustawiæ rozmiaru"
 
 #: ../vector/v.overlay/main.c:317
 #, fuzzy, c-format
@@ -25011,9 +24993,8 @@ msgid "Building partial topology..."
 msgstr "Budowanie indeksu przestrzennego ..."
 
 #: ../vector/v.overlay/main.c:447
-#, fuzzy
 msgid "Rebuilding topology..."
-msgstr "Wczytywanie plika wektorowego..."
+msgstr ""
 
 #: ../vector/v.parallel/main.c:40
 msgid "Create parallel line to input lines"
@@ -25351,7 +25332,7 @@ msgstr ""
 #: ../vector/v.sample/main.c:87
 #, fuzzy
 msgid "Samples a raster map at vector point locations."
-msgstr "Nazwa mapy zawieraj±cej rezultaty"
+msgstr "Konwertuje mapê rastrow± do warstwy wektorowej."
 
 #: ../vector/v.sample/main.c:90
 msgid "Vector map defining sample points"
@@ -25877,7 +25858,7 @@ msgstr ""
 #: ../vector/v.to.db/query.c:139
 #, fuzzy
 msgid "Unable to fetch record"
-msgstr "Nie mogê znale¼æ mapsetu dla %s"
+msgstr "Nie mo¿na odczytaæ koloru"
 
 #: ../vector/v.to.db/report.c:159
 #, fuzzy, c-format
@@ -26155,9 +26136,9 @@ msgid "Pass %d of %d:"
 msgstr "klasa %d (%d)\n"
 
 #: ../vector/v.to.rast/vect2rast.c:155
-#, fuzzy, c-format
+#, c-format
 msgid "Problem processing areas from vector map <%s>, continuing..."
-msgstr "Nie mo¿na otworzyæ mapy rastrowej <%s>"
+msgstr ""
 
 #: ../vector/v.to.rast/vect2rast.c:163
 #, c-format
@@ -26272,9 +26253,8 @@ msgid "Custom"
 msgstr ""
 
 #: ../vector/v.transform/main.c:102
-#, fuzzy
 msgid "ASCII file holding transform coordinates"
-msgstr "Wspó³rzêdne mapy"
+msgstr ""
 
 #: ../vector/v.transform/main.c:103
 msgid ""
@@ -26310,7 +26290,9 @@ msgstr "K±t obrotu w stopniach (kierunek przeciwny do ruchu wskazówek zegara)"
 #: ../vector/v.transform/main.c:172
 #, fuzzy
 msgid "Name of table containing transformation parameters"
-msgstr "Mapa rastrowa zawieraj±ca warto¶ci u¿yte dla d³ugo¶ci strza³ek"
+msgstr ""
+"Weryfikuj informacje o uk³adzie odniesienia i wy¶wietl parametry "
+"transformacji"
 
 #: ../vector/v.transform/main.c:176
 #, fuzzy
@@ -26331,11 +26313,11 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.transform/main.c:198
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The '%c' flag is deprecated and will be removed in future. Please use '--"
 "quiet' instead."
-msgstr "Plik '%s' ju¿ istnieje i zostanie nadpisany."
+msgstr ""
 
 #: ../vector/v.transform/main.c:205
 #, c-format
@@ -26359,11 +26341,11 @@ msgid "Unable to tokenize column string: %s"
 msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
 
 #: ../vector/v.transform/main.c:331
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "New vector map <%s> boundary coordinates:"
-msgstr "nie znaleziono mapy wektorowej <%s>"
+msgstr ""
 
 #: ../vector/v.transform/main.c:332
 #, fuzzy, c-format
@@ -27006,20 +26988,23 @@ msgstr ""
 #~ msgid "table name"
 #~ msgstr "nazwa tabeli"
 
-#~ msgid "driver name"
-#~ msgstr "nazwa sterownika"
+#~ msgid "driver name:"
+#~ msgstr "nazwa sterownika:"
 
-#~ msgid "database name"
-#~ msgstr "nazwa bazy danych"
+#~ msgid "Database name:"
+#~ msgstr "Nazwa bazy danych:"
+
+#~ msgid "Cannot start driver '%s'."
+#~ msgstr "Nie mo¿na uruchomiæ sterownika '%s'."
+
+#~ msgid "Cannot describe table"
+#~ msgstr "Nie mo¿na opisaæ tabeli"
+
+#~ msgid "Cannot start driver <%s>."
+#~ msgstr "Nie mo¿na uruchomiæ sterownika <%s>."
 
 #~ msgid "Driver name"
 #~ msgstr "Nazwa sterownika"
-
-#~ msgid "Cannot list databases."
-#~ msgstr "Nie mo¿na utworzyæ listy baz danych."
-
-#~ msgid "database location"
-#~ msgstr "lokalizacja bazy danych"
 
 #~ msgid "Table name, select all from this table"
 #~ msgstr "Nazwa tabeli, wybierz wszystko z tej tabeli"
@@ -27038,196 +27023,6 @@ msgstr ""
 
 #~ msgid "vertical output (instead of horizontal)"
 #~ msgstr "wynik pionowy (zamiast poziomego)"
-
-#~ msgid "Name of existing raster map"
-#~ msgstr "Nazwa mapy rastrowej"
-
-#~ msgid "Cannot find mapset for %s"
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
-
-#~ msgid "Cannot open File %s"
-#~ msgstr "Nie mogê otworzyæ Pliku %s"
-
-#~ msgid "Not able to open file for [%s]"
-#~ msgstr "Nie mo¿na otworzyæ pliku dla %s"
-
-#~ msgid "Label file [%s] not available"
-#~ msgstr "Plik etykiety %s nie jest dostêpny"
-
-#~ msgid "Can't open label file [%s]"
-#~ msgstr "Nie mogê otworzyæ pliku etykiety [%s]"
-
-#~ msgid "unable to open [%s] in [%s]"
-#~ msgstr "nie mo¿na otworzyæ [%s] w [%s]"
-
-#~ msgid "warning: unable to open [%s] in [%s]"
-#~ msgstr "ostrze¿enie: nie mo¿na otworzyæ [%s] w [%s]"
-
-#~ msgid "Unable to open raster map [%s] in [%s]"
-#~ msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s] w [%s]"
-
-#, fuzzy
-#~ msgid "Unable to find input cell map '%s'"
-#~ msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
-
-#, fuzzy
-#~ msgid "Table to be imported"
-#~ msgstr "Plik rastrowy który ma byæ importowany"
-
-#, fuzzy
-#~ msgid "Unable to open cellfile for <%s>"
-#~ msgstr "Nie mo¿na otworzyæ pliku rastra dla [%s]"
-
-#, fuzzy
-#~ msgid "Unable to create raster map [%s]"
-#~ msgstr "Nie mo¿na utworzyæ mapy rastrowej [%s]."
-
-#~ msgid "Unable to create output <%s>"
-#~ msgstr "Nie mo¿na utworzyæ pliku wyj¶ciowego <%s>"
-
-#~ msgid "Input file [%s] not found."
-#~ msgstr "Pliku wej¶ciowego [%s] nie znaleziono."
-
-#~ msgid "Unable to open input file <%s@%s>."
-#~ msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
-
-#~ msgid "Unable to open output file <%s>."
-#~ msgstr "Nie mo¿na otworzyæ pliku wyj¶ciowego <%s>."
-
-#~ msgid "Multiplier for ascii data"
-#~ msgstr "Mno¿nik dla danych ascii"
-
-#, fuzzy
-#~ msgid "Could not open temporary file: [%s]"
-#~ msgstr "Nie mo¿na otworzyæ pliku ASCII [%s]"
-
-#, fuzzy
-#~ msgid "Could not open input file [%s]"
-#~ msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
-
-#, fuzzy
-#~ msgid "unable to create raster"
-#~ msgstr "nie mo¿na utworzyæ %s"
-
-#, fuzzy
-#~ msgid "Unable to create output raster map <%s>"
-#~ msgstr "Nie mo¿na utworzyæ mapy rastrowej <%s>"
-
-#, fuzzy
-#~ msgid "Cannot open file for <%s>"
-#~ msgstr "Nie mo¿na otworzyæ pliku [%s]"
-
-#, fuzzy
-#~ msgid "%s: Unable to open raster map <%s> in mapset <%s>"
-#~ msgstr "Nie mo¿na otworzyæ mapy rastrowej <%s> w <%s>"
-
-#, fuzzy
-#~ msgid "%s:  Unable to open output raster map <%s>"
-#~ msgstr "Nie mo¿na otworzyæ mapy rastrowej <%s>"
-
-#, fuzzy
-#~ msgid "Vector <%s> could not be opened"
-#~ msgstr "nie znaleziono mapy wektorowej <%s>"
-
-#, fuzzy
-#~ msgid "No db connection for driver <%s> defined. Run db.connect."
-#~ msgstr ""
-#~ "Nie zdefiniowano po³±czenia z baz± danych dla sterownika <%s>. Uruchom db."
-#~ "conect"
-
-#, fuzzy
-#~ msgid "Cannot open vector map <%s>"
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
-
-#~ msgid "Table name"
-#~ msgstr "Nazwa tabeli"
-
-#~ msgid "x column name"
-#~ msgstr "Nazwa kolumny x"
-
-#~ msgid "z column name"
-#~ msgstr "Nazwa kolumny z"
-
-#, fuzzy
-#~ msgid "category column name"
-#~ msgstr "Nazwa kolumny kategorii"
-
-#, fuzzy
-#~ msgid "Cannot drop table: %s"
-#~ msgstr "Nie mo¿na otworzyæ tabeli %s"
-
-#, fuzzy
-#~ msgid "Cannot open labels <%s>"
-#~ msgstr "Nie mo¿na otworzyæ tabeli %s"
-
-#, fuzzy
-#~ msgid "Cannot fetch data from table"
-#~ msgstr "Nie mo¿na zaznaczyæ danych z tabeli"
-
-#~ msgid "Cannot open file [%s]"
-#~ msgstr "Nie mo¿na otworzyæ pliku [%s]"
-
-#, fuzzy
-#~ msgid "SVG file <%s> cannot be opened"
-#~ msgstr "nie znaleziono mapy wektorowej <%s>"
-
-#, fuzzy
-#~ msgid "Querying input '%s' ... "
-#~ msgstr "Obracanie porz±dku danych..."
-
-#, fuzzy
-#~ msgid "Copying %s input lines ... "
-#~ msgstr "Nie mogê znale¼æ mapsetu dla %s"
-
-#, fuzzy
-#~ msgid "Cannot create table <%s>"
-#~ msgstr "Nie mo¿na stworzyæ tabeli: '%s'"
-
-#~ msgid "no record for cat = %d"
-#~ msgstr "Brak rekordu dla cat = %d"
-
-#~ msgid "cannot insert row: %s"
-#~ msgstr "Nie mo¿na wstawiæ wiersza: %s"
-
-#, fuzzy
-#~ msgid "Cannot find line of cat %d"
-#~ msgstr "Nie mozna odnale¼æ pliku %s"
-
-#, fuzzy
-#~ msgid "Unalbe to open vector map <%s>"
-#~ msgstr "Nie mo¿na otworzyæ mapy wektorowej [%s]"
-
-#, fuzzy
-#~ msgid ""
-#~ "Database connection not defined for layer [%d]. Use v.db.connect first"
-#~ msgstr "Po³±czenie z baz± danych nie zosta³o zdefiniowane dla warstwy <%d>"
-
-#, fuzzy
-#~ msgid "Unable to open database %s by driver %s"
-#~ msgstr "Nie mo¿na otworzyæ bazy danych %s przez sterownik %s"
-
-#, fuzzy
-#~ msgid "Read coordinates from standard input"
-#~ msgstr "Wspó³rzêdne E i N punktu(ów) pocz±tkowego(wych)"
-
-#, fuzzy
-#~ msgid "Raster map <%s>] not found"
-#~ msgstr "Mapy rastrowa <%s> nie zosta³a znaleziona"
-
-#~ msgid "driver name:"
-#~ msgstr "nazwa sterownika:"
-
-#~ msgid "Database name:"
-#~ msgstr "Nazwa bazy danych:"
-
-#~ msgid "Cannot start driver '%s'."
-#~ msgstr "Nie mo¿na uruchomiæ sterownika '%s'."
-
-#~ msgid "Cannot describe table"
-#~ msgstr "Nie mo¿na opisaæ tabeli"
-
-#~ msgid "Cannot start driver <%s>."
-#~ msgstr "Nie mo¿na uruchomiæ sterownika <%s>."
 
 #~ msgid ""
 #~ "Font name (not supported interactively, see also -l flag) or path to "
@@ -27264,14 +27059,26 @@ msgstr ""
 #~ msgid "Raster file [%s] not available"
 #~ msgstr "Plik rastra [%s] nie jest dostêpny"
 
+#~ msgid "Not able to open file for [%s]"
+#~ msgstr "Nie mo¿na otworzyæ pliku dla %s"
+
+#~ msgid "Label file [%s] not available"
+#~ msgstr "Plik etykiety %s nie jest dostêpny"
+
+#~ msgid "Can't open label file [%s]"
+#~ msgstr "Nie mogê otworzyæ pliku etykiety [%s]"
+
 #~ msgid "L: from  M: to R: quit\n"
 #~ msgstr "L: od M: do R: wyj¶cie\n"
 
+#~ msgid "unable to open [%s] in [%s]"
+#~ msgstr "nie mo¿na otworzyæ [%s] w [%s]"
+
+#~ msgid "warning: unable to open [%s] in [%s]"
+#~ msgstr "ostrze¿enie: nie mo¿na otworzyæ [%s] w [%s]"
+
 #~ msgid "Not able to open cellfile for [%s]"
 #~ msgstr "Nie mo¿na otworzyæ pliku rastra dla [%s]"
-
-#~ msgid "Unable to open [%s]"
-#~ msgstr "Nie mo¿na otworzyæ [%s]"
 
 #~ msgid "Unable to open the temporary file."
 #~ msgstr "Nie mo¿na otworzyæ pliku tymczasowego"
@@ -27390,14 +27197,14 @@ msgstr ""
 #~ msgid "#%s"
 #~ msgstr "#%s"
 
-#~ msgid "Unable to find raster [%s]."
-#~ msgstr "Nie mo¿na odnale¼æ rastra [%s]."
-
 #~ msgid "%s: %s - illegal name for output raster file."
 #~ msgstr "%s: %s - niedozwolona nazwa dla wyj¶ciowego pliku rastrowego."
 
 #~ msgid "Unable to allocate memory."
 #~ msgstr "Nie mo¿na ulokowaæ pamiêci."
+
+#~ msgid "Unable to create raster map [%s]."
+#~ msgstr "Nie mo¿na utworzyæ mapy rastrowej [%s]."
 
 #~ msgid "%s: ERROR can't open tempfile"
 #~ msgstr "%s: B£¡D nie mo¿na otworzyæ pliku tymczasowego"
@@ -27413,6 +27220,10 @@ msgstr ""
 
 #~ msgid "unable to find raster file [%s]"
 #~ msgstr "Nie mo¿na odnale¼æ rastra [%s]"
+
+#, fuzzy
+#~ msgid "unable to open cellfile for [%s]"
+#~ msgstr "Nie mo¿na otworzyæ pliku rastra dla [%s]"
 
 #~ msgid "%s: %s in %s - can't read category file"
 #~ msgstr "%s: %s  %s - nie mo¿na odczytaæ pliku kategrii"
@@ -27495,6 +27306,12 @@ msgstr ""
 
 #~ msgid "Display Reference Information"
 #~ msgstr "Wy¶wietl informacje o odniesieniu."
+
+#~ msgid "Unable to open input file <%s@%s>."
+#~ msgstr "Nie mozna otworzyæ pliku wej¶ciowego <%s@%s>."
+
+#~ msgid "Unable to open output file <%s>."
+#~ msgstr "Nie mo¿na otworzyæ pliku wyj¶ciowego <%s>."
 
 #~ msgid "%s: <%s> cell file not found"
 #~ msgstr "%s: <%s> pliku rastra nie znaleziono"
@@ -27619,7 +27436,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "aspin cell file <%s> not found"
-#~ msgstr "pliku rastra [%s] nie znaleziono"
+#~ msgstr "nie znaleziono pliku rastra aspin <%s> "
 
 #, fuzzy
 #~ msgid "slopein cell file <%s> not found"
@@ -27627,6 +27444,10 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "linkein cell file <%s> not found"
+#~ msgstr "pliku rastra [%s] nie znaleziono"
+
+#, fuzzy
+#~ msgid "albedo cell file <%s> not found"
 #~ msgstr "pliku rastra [%s] nie znaleziono"
 
 #, fuzzy
@@ -27650,9 +27471,6 @@ msgstr ""
 #~ msgid "History line too long: truncating to %d characters"
 #~ msgstr "Linia historii zbyt d³uga: przycinanie do %d znaków"
 
-#~ msgid "Unable to find file [%s]."
-#~ msgstr "Nie mo¿na odnale¼æ pliku [%s]."
-
 #~ msgid "%s in %s -can't open raster file"
 #~ msgstr "%s w %s - nie mo¿na otworzyæ pliku rastrowego"
 
@@ -27672,9 +27490,8 @@ msgstr ""
 #~ msgid "Could not open raster '%s'"
 #~ msgstr "Nie mo¿na otworzyæ rastra %s"
 
-#, fuzzy
 #~ msgid "Unable to read row %d in raster map [%s]"
-#~ msgstr "Nie mo¿na otworzyæ mapy rastrowej [%s]"
+#~ msgstr "Nie mo¿na odczytaæ wiersza %d w mapie rastrowej [%s]"
 
 #, fuzzy
 #~ msgid "Elevation map"
@@ -27748,6 +27565,11 @@ msgstr ""
 #~ msgid "Cannot find input map <%s>"
 #~ msgstr "Nie mo¿na odnale¿æ mapy wej¶ciowego <%s>"
 
+#~ msgid "No db connection for driver <%s> defined. Run db.connect"
+#~ msgstr ""
+#~ "Nie zdefiniowano po³±czenia z baz± danych dla sterownika <%s>. Uruchom db."
+#~ "conect"
+
 #~ msgid "+---------------------------------+---------------+"
 #~ msgstr "+---------------------------------+---------------+"
 
@@ -27756,6 +27578,9 @@ msgstr ""
 
 #~ msgid "--------------------------------------------------"
 #~ msgstr "--------------------------------------------------"
+
+#~ msgid "Table name"
+#~ msgstr "Nazwa tabeli"
 
 #, fuzzy
 #~ msgid "Vector file [%s] not available in search list"
@@ -27794,8 +27619,21 @@ msgstr ""
 #~ msgid "Writing attributes ...\n"
 #~ msgstr "Zapisywanie atrybutów ...\n"
 
+#~ msgid "Could not open ascii file [%s]"
+#~ msgstr "Nie mo¿na otworzyæ pliku ASCII [%s]"
+
 #~ msgid "Can't open temp file %s"
 #~ msgstr "Nie mo¿na otworzyæ pliku tymczasowego %s"
+
+#~ msgid "x column name"
+#~ msgstr "Nazwa kolumny x"
+
+#~ msgid "z column name"
+#~ msgstr "Nazwa kolumny z"
+
+#, fuzzy
+#~ msgid "category column name"
+#~ msgstr "Nazwa kolumny kategorii"
 
 #~ msgid "%s: Cannot open dxf file"
 #~ msgstr "%s: Nie mo¿na otworzyæ pliku dxf"
@@ -27855,8 +27693,14 @@ msgstr ""
 #~ msgid "cannot create index"
 #~ msgstr "Brak bie¿±cego okna"
 
+#~ msgid "no record for cat = %d"
+#~ msgstr "Brak rekordu dla cat = %d"
+
 #~ msgid "column type  not supported"
 #~ msgstr "Ten typ kolumny nie jest ob³ugiwany"
+
+#~ msgid "cannot insert row: %s"
+#~ msgstr "Nie mo¿na wstawiæ wiersza: %s"
 
 #~ msgid "Could not find vector '%s'"
 #~ msgstr "Nie mo¿na odnale¼æ pliku wektorowego '%s'"
