@@ -571,7 +571,7 @@ class BufferedWindow(wx.Window):
         if self.parent.statusText == "Extent":
             self.parent.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
                                                 (self.Map.region["w"], self.Map.region["e"],
-                                                 self.Map.region["n"], self.Map.region["s"]), 1)
+                                                 self.Map.region["s"], self.Map.region["n"]), 1)
         elif self.parent.statusText == "Geometry":
             self.parent.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
                                                 (self.Map.region["rows"], self.Map.region["cols"],
