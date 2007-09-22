@@ -37,7 +37,7 @@ import wx
 import wx.lib.mixins.listctrl as listmix
 
 import grassenv
-import cmd
+import gcmd as cmd
 from debug import Debug as Debug
 
 class Log:
@@ -619,10 +619,11 @@ class DisplayAttributesDialog(wx.Dialog):
         if (self.layer == -1 and len(layers) <= 0) or \
                 (self.layer > 0 and self.layer not in layers):
             if self.layer == -1:
-                label = "Database connection for vector map <%s> "
-                "is not defined in DB file" % self.map
+                label = "Database connection for vector map <%s> " \
+                    "is not defined in DB file." % (self.map)
             else:
-                label = "Layer <%d> is not available for vector map <%s>" % self.map
+                label = "Layer <%d> is not available for vector map <%s>." % \
+                    (self.layer, self.map)
 
             dlg = wx.MessageDialog(None,
                                    _("No attribute table found.\n"

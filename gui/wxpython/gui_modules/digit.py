@@ -34,6 +34,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import os
 import sys
 import string
+import copy
 
 import wx
 import wx.lib.colourselect as csel
@@ -1263,7 +1264,11 @@ class DigitCategoryDialog(wx.Dialog):
     def __init__(self, parent, title,
                  map, queryCoords, qdist,
                  pos=wx.DefaultPosition,
-                 style=wx.DEFAULT_DIALOG_STYLE):
+                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+
+        # parent
+        self.parent = parent # mapdisplay.BufferedWindow class instance
+
         # map name
         self.map = map
 
@@ -1272,52 +1277,197 @@ class DigitCategoryDialog(wx.Dialog):
 
         # {layer: [categories]}
         self.cats = {}
-
-        # do not display dialog if no line is found
+        # do not display dialog if no line is found (-> self.cats)
         if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
             Debug.msg(3, "DigitCategoryDialog(): nothing found!")
             return
+        
+        # make copy of cats (used for 'reload')
+        self.cats_orig = copy.deepcopy(self.cats)
 
         Debug.msg(3, "DigitCategoryDialog(): line=%d, cats=%s" % \
                       (self.line, self.cats))
 
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title, style=style)
 
-        self.parent = parent # mapdisplay.BufferedWindow class instance
-
-        # list
-        listSizer = wx.BoxSizer(wx.VERTICAL)
+        # list of categories
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("List of categories"))
+        listSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
         self.list = CategoryListCtrl(parent=self, id=wx.ID_ANY,
                                      style=wx.LC_REPORT |
                                      wx.BORDER_NONE |
-                                     wx.LC_SORT_ASCENDING)
+                                     wx.LC_SORT_ASCENDING |
+                                     wx.LC_HRULES |
+                                     wx.LC_VRULES)
         listSizer.Add(item=self.list, proportion=1, flag=wx.EXPAND)
 
-        # buttons
-        btnApply = wx.Button(self, wx.ID_APPLY, _("Apply") )
-        btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnOk = wx.Button(self, wx.ID_OK, _("OK") )
-        btnOk.SetDefault()
+        # add new category
+        box = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                           label=" %s " % _("Add new category"))
+        addSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        flexSizer = wx.FlexGridSizer (cols=5, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(3)
 
-        # bindigs
-        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        layerNewTxt = wx.StaticText(parent=self, id=wx.ID_ANY,
+                                 label="%s:" % _("Layer"))
+        self.layerNew = wx.TextCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
+                                    value="1")
+        catNewTxt = wx.StaticText(parent=self, id=wx.ID_ANY,
+                               label="%s:" % _("Category"))
+        try:
+            newCat = max(self.cats[1]) + 1
+        except:
+            newCat = 1
+        self.catNew = wx.TextCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
+                             value=str(newCat))
+        btnAddCat = wx.Button(self, wx.ID_ADD)
+        flexSizer.Add(item=layerNewTxt, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.layerNew, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=catNewTxt, proportion=0,
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.LEFT,
+                      border=10)
+        flexSizer.Add(item=self.catNew, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=btnAddCat, proportion=0,
+                      flag=wx.EXPAND | wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        addSizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+
+        # buttons
+        btnApply = wx.Button(self, wx.ID_APPLY)
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnReload = wx.Button(self, wx.ID_UNDO, _("Reload"))
+        btnOk = wx.Button(self, wx.ID_OK)
+        btnOk.SetDefault()
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
+        btnSizer.AddButton(btnReload)
+        btnSizer.SetNegativeButton(btnReload)
         btnSizer.AddButton(btnApply)
         btnSizer.AddButton(btnOk)
         btnSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
-        mainSizer.Add(item=listSizer, proportion=0,
+        mainSizer.Add(item=listSizer, proportion=1,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        mainSizer.Add(item=addSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALIGN_CENTER |
+                      wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
         mainSizer.Add(item=btnSizer, proportion=0,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
+        self.SetAutoLayout(True)
+
+        # set min size for dialog
+        self.SetMinSize(self.GetMinSize())
+
+        # bindings
+        # buttons
+        btnReload.Bind(wx.EVT_BUTTON, self.OnReload)
+        btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        btnAddCat.Bind(wx.EVT_BUTTON, self.OnAddCat)
+
+        # list
+        # self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
+
+        # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+        self.list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnRightUp) #wxMSW
+        self.list.Bind(wx.EVT_RIGHT_UP, self.OnRightUp) #wxGTK
+        self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
+        self.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.OnEndEdit, self.list)
+
+    def OnBeginEdit(self, event):
+        """Editing of item started"""
+        event.Allow()
+
+    def OnEndEdit(self, event):
+        """Finish editing of item"""
+        itemIndex = event.GetIndex()
+        layerOld = int (self.list.GetItem(itemIndex, 0).GetText())
+        catOld = int (self.list.GetItem(itemIndex, 1).GetText())
+
+        if event.GetColumn() == 0:
+            layerNew = int(event.GetLabel())
+            catNew = catOld
+        else:
+            layerNew = layerOld
+            catNew = int(event.GetLabel())
+
+        try:
+            if layerNew not in self.cats.keys():
+                self.cats[layerNew] = []
+            self.cats[layerNew].append(catNew)
+            self.cats[layerOld].remove(catOld)
+        except:
+            event.Veto()
+            self.list.SetStringItem(itemIndex, 0, str(layerNew))
+            self.list.SetStringItem(itemIndex, 1, str(catNew))
+            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%s/%s>.\n"
+                                           "Layer and category number must be integer.\n"
+                                           "Layer number must be greater then zero.") %
+                                   (str(self.layerNew.GetValue()), str(self.catNew.GetValue())),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+    def OnRightDown(self, event):
+        """Mouse right button down"""
+        x = event.GetX()
+        y = event.GetY()
+        item, flags = self.list.HitTest((x, y))
+
+        if item !=  wx.NOT_FOUND and \
+                flags & wx.LIST_HITTEST_ONITEM:
+            self.list.Select(item)
+
+        event.Skip()
+
+    def OnRightUp(self, event):
+        """Mouse right button up"""
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.popupID2 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnItemDelete, id=self.popupID1)
+            self.Bind(wx.EVT_MENU, self.OnItemDeleteAll, id=self.popupID2)
+
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupID1, _("Delete selected"))
+        menu.Append(self.popupID2, _("Delete all"))
+
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def OnItemSelected(self, event):
+        """Item selected"""
+        event.Skip()
+
+    def OnItemDelete(self, event):
+        """Delete selected item(s) from the list (layer/category pair)"""
+        item = self.list.GetFirstSelected()
+        while item != -1:
+            layer = int (self.list.GetItem(item, 0).GetText())
+            cat = int (self.list.GetItem(item, 1).GetText())
+            self.list.DeleteItem(item)
+            self.cats[layer].remove(cat)
+
+            item = self.list.GetFirstSelected()
+            
+        event.Skip()
+        
+    def OnItemDeleteAll(self, event):
+        """Delete all items from the list"""
+        self.list.DeleteAllItems()
+        self.cats = []
+
+        event.Skip()
 
     def __GetCategories(self, coords, qdist):
         """Get layer/category pairs for all available
@@ -1348,13 +1498,82 @@ class DigitCategoryDialog(wx.Dialog):
 
         return True
 
+    def OnReload(self, event):
+        """Reload button clicked"""
+        # restore original list
+        self.cats = copy.deepcopy(self.cats_orig)
+
+        # polulate list
+        self.list.Populate(update=True)
+
+        event.Skip()
+
     def OnApply(self, event):
         """Apply button clicked"""
-        self.Close()
+
+        # action : (catsFrom, catsTo)
+        check = {'catadd': (self.cats,      self.cats_orig),
+                 'catdel': (self.cats_orig, self.cats)}
+
+        # add/delete new category
+        for action, cats in check.iteritems():
+            for layer in cats[0].keys():
+                catList = ""
+                for cat in cats[0][layer]:
+                    if layer not in cats[1].keys() or \
+                            cat not in cats[1][layer]:
+                        catList += "%s," % cat
+                if catList != "":
+                    catList = catList[:-1] # remove last comma
+                    vEditCmd = ['v.edit', '--q',
+                                'map=%s' % self.map,
+                                'layer=%d' % layer,
+                                'tool=%s' % action,
+                                'cats=%s' % catList,
+                                'id=%d' % self.line]
+            
+                    cmd.Command(vEditCmd)
+        
+        self.cats_orig = copy.deepcopy(self.cats)
+
+        event.Skip()
 
     def OnOK(self, event):
         """OK button clicked"""
+        self.OnApply(event)
         self.Close()
+
+    def OnAddCat(self, event):
+        """Button 'Add' new category clicked"""
+        try:
+            layer = int(self.layerNew.GetValue())
+            cat   = int(self.catNew.GetValue())
+            if layer <= 0:
+                raise ValueError
+        except ValueError:
+            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%s/%s>.\n"
+                                           "Layer and category number must be integer.\n"
+                                           "Layer number must be greater then zero.") %
+                                   (str(self.layerNew.GetValue()), str(self.catNew.GetValue())),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
+        if layer not in self.cats.keys():
+            self.cats[layer] = []
+
+        self.cats[layer].append(cat)
+
+        # reload list
+        self.list.Populate(update=True)
+
+        # update category number for add
+        self.catNew.SetValue(str(cat + 1))
+
+        event.Skip()
+
+        return True
 
     def GetLine(self):
         """Get id of selected line of 'None' if no line is selected"""
@@ -1367,19 +1586,36 @@ class CategoryListCtrl(wx.ListCtrl,
 
     def __init__(self, parent, id, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=0):
-
+        
+        self.parent = parent
+        
         wx.ListCtrl.__init__(self, parent, id, pos, size, style)
 
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         self.Populate()
         listmix.TextEditMixin.__init__(self)
 
-    def Populate(self):
+    def Populate(self, update=False):
         """Populate the list"""
-        self.InsertColumn(0, _("Layer"))
-        self.InsertColumn(1, _("Category"))
+        if not update:
+            self.InsertColumn(0, _("Layer"))
+            self.InsertColumn(1, _("Category"))
+        else:
+            self.DeleteAllItems()
 
-        self.SetColumnWidth(0, 100)
-        self.SetColumnWidth(1, wx.LIST_AUTOSIZE)
+        i = 0
+        for layer in self.parent.cats.keys():
+            catsList = self.parent.cats[layer]
+            for cat in catsList:
+                index = self.InsertStringItem(sys.maxint, str(catsList[0]))
+                self.SetStringItem(index, 0, str(layer))
+                self.SetStringItem(index, 1, str(cat))
+                self.SetItemData(index, i)
+                i = i + 1
+
+        if not update:
+            self.SetColumnWidth(0, 100)
+            self.SetColumnWidth(1, wx.LIST_AUTOSIZE)
 
         self.currentItem = 0
+
