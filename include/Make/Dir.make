@@ -9,7 +9,7 @@ subdirs:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 	    echo $$subdir ; \
-	    $(MAKE) -C $$subdir || echo $(CURDIR)/$$subdir >> $(GRASS_HOME)/error.log; \
+	    $(MAKE) -C $$subdir || echo $(CURDIR)/$$subdir >> $(ERRORLOG) ; \
 	done
 
 cleansubdirs:

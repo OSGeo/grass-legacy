@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/odbc$(EXE)
-EXTRA_INC = $(ODBCINC) -I$(GRASS_LIBDIR)/db/dbmi_driver
+EXTRA_INC = $(ODBCINC) -I$(MODULE_TOPDIR)/lib/db/dbmi_driver
 DEPENDENCIES = $(GISDEP)
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
@@ -25,7 +25,7 @@ OBJS 	=  \
 	select.o \
 	table.o \
 	create_table.o
-	
+
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 DRVDOC=$(GISBASE)/docs/html/grass-odbc.html

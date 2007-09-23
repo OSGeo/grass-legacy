@@ -4,7 +4,6 @@ MODULE_TOPDIR = ../..
 EXTRA_LIBS=$(GISLIB)
 
 LIB_NAME = $(STATS_LIBNAME)
-DEPENDENCIES = $(GRASS_INCDIR)/stats.h
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 

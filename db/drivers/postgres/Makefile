@@ -12,10 +12,10 @@ LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(DBSTUBSLIB)
 	$(GISLIB) $(DATETIMELIB) $(PQLIB)
 
 EXTRA_CFLAGS = $(PQINCPATH)
-EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
+EXTRA_INC = -I$(MODULE_TOPDIR)/lib/db/dbmi_driver
 
 OBJS = $(subst .c,.o,$(wildcard *.c))
-	
+
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 DRVDOC=$(GISBASE)/docs/html/grass-pg.html

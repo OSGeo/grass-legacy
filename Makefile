@@ -423,14 +423,12 @@ changelog:
 	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -F trunk -f ./ChangeLog
 
 
-GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
-
 builddemolocation:
 	test -d ${ARCH_DISTDIR} || ${MAKE_DIR_CMD} ${ARCH_DISTDIR}
 	-tar cBf - demolocation | (cd ${ARCH_DISTDIR}/ ; tar xBfo - ) 2>/dev/null
-	@ echo "GISDBASE: ${RUN_GISBASE}" > ${GISRCFILE}
-	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
-	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}
-	@ echo "GRASS_DB_ENCODING: utf-8" >> ${GISRCFILE}
-	@ echo "DEBUG: 0" >> ${GISRCFILE}
-	@ echo "GRASS_GUI: text" >> ${GISRCFILE}
+	@ echo "GISDBASE: ${RUN_GISBASE}" > ${RUN_GISRC}
+	@ echo "LOCATION_NAME: demolocation" >> ${RUN_GISRC}
+	@ echo "MAPSET: PERMANENT" >> ${RUN_GISRC}
+	@ echo "GRASS_DB_ENCODING: utf-8" >> ${RUN_GISRC}
+	@ echo "DEBUG: 0" >> ${RUN_GISRC}
+	@ echo "GRASS_GUI: text" >> ${RUN_GISRC}
