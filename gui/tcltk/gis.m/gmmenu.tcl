@@ -29,54 +29,47 @@ global env
 
 
 
-# if extensions dir exists: create an "Xtns" menu item
-# and read all menu descriptions from .gem files
-set dirName [set env(GISBASE)]/etc/gm/Xtns
+#set dirName [set env(GISBASE)]/etc/gm/Xtns
 set XtnsMenu "False"
-set splitError "False"
-set XtnsMenuList ""
+#set splitError "False"
+set menulist {}
 
-if { [file exists $dirName] && [file isdirectory $dirName] } {	
-	lappend listNames "Dummy"; # we need this to check for num of elements later
-	foreach fileName [glob -nocomplain [file join $dirName *.gem]] {
-		lappend listNames $fileName
-	}
-	if { [llength $listNames] > 1 } { #only do this, if there is at least one menu file
-		set listNames [lreplace $listNames 0 0]; # let's get rid of the dummy element
-		set listNames [lsort $listNames]
-		#now read each menu file and append to list
-		foreach fileName $listNames {
-			set inputFile [open $fileName "r"]
-			set line [read $inputFile]
-			set splitLines [split $line "\n"]
-			if { [llength $splitLines] == 1 } {
-				# splitting didn't work.
-				# maybe we have Mac style newlines, let's split again!
-				set splitLines [split $line "\r"]
-			}
-			# split up into individual lines for processing
-			foreach line $splitLines {
-				# strip off comments
-				set commentPos [string first "#" $line]
-				# 1.: leading comment
-				if { $commentPos == 0 } {
-					set line ""
-				}
-				if { $commentPos > 0 } {
-					set line [string range $line 0 [expr $commentPos-1]]
-				}					
-				set line [subst $line]; # substitute variables like $tmenu
-				lappend splitLinesDone $line
-			}
-			# now join individual lines back into one string ...
-			set line [join $splitLinesDone]
-			# ... and append to list of submenus
-			lappend XtnsMenuList [subst {$line}]
-			set splitLinesDone ""
-			close $inputFile
-		}
-		set XtnsMenu "True"
-	}
+# Check for existence of xtnmenu.dat file and parse it
+# into an extensions menu
+
+if {[info exists env(GRASS_ETC_PATH)]} {
+    set menudat "$env(GRASS_ETC_PATH)/xtnmenu.dat"
+}
+
+if {[file exists $menudat]} {	
+    if {![catch {open $menudat r} menudef]} {
+        while {[gets $menudef menuline] >= 0} {
+            set menuline [string trim $menuline]
+            if {[string first # $menuline] == 0 } {
+                continue}
+            set menuline [split $menuline ":"]
+            set menulevel [lindex $menuline 0]
+            set menuitem [G_msg [lindex $menuline 1]]
+            set menucmd "execute "
+            append menucmd [lindex $menuline 2]
+            set menuhelp [G_msg [lindex $menuline 3]]
+            # add if statement to read comments here
+            if {$menuitem == "separator"} {
+                lappend menulist "separator"
+            } else { 
+                set line [list command $menuitem {} \
+                    $menuhelp {} -command $menucmd]
+
+                lappend menulist $line
+            }
+        }
+        if {[catch {close $menudef} error]} {
+            Gm::errmsg $error ["Error reading xtnmenu.dat file"]
+        }
+    }
+    
+    
+    set XtnsMenu "True"
 }
 		
 
@@ -629,5 +622,5 @@ if { $XtnsMenu == "True" } {
 	lappend descmenu all
 	lappend descmenu options
 	lappend descmenu $tmenu
-	lappend descmenu $XtnsMenuList
+	lappend descmenu $menulist
 }
