@@ -38,38 +38,43 @@ set menulist {}
 # into an extensions menu
 
 if {[info exists env(GRASS_ETC_PATH)]} {
-    set menudat "$env(GRASS_ETC_PATH)/xtnmenu.dat"
+    set pathlist [split $env(GRASS_ETC_PATH) ":"]
+    foreach path $pathlist {
+        lappend menudatlist "$path/xtnmenu.dat"
+    }
 }
 
-if {[file exists $menudat]} {	
-    if {![catch {open $menudat r} menudef]} {
-        while {[gets $menudef menuline] >= 0} {
-            set menuline [string trim $menuline]
-            if {[string first # $menuline] == 0 } {
-                continue}
-            set menuline [split $menuline ":"]
-            set menulevel [lindex $menuline 0]
-            set menuitem [G_msg [lindex $menuline 1]]
-            set menucmd "execute "
-            append menucmd [lindex $menuline 2]
-            set menuhelp [G_msg [lindex $menuline 3]]
-            # add if statement to read comments here
-            if {$menuitem == "separator"} {
-                lappend menulist "separator"
-            } else { 
-                set line [list command $menuitem {} \
-                    $menuhelp {} -command $menucmd]
-
-                lappend menulist $line
+foreach menudat $menudatlist {
+    if {[file exists $menudat]} {	
+        if {![catch {open $menudat r} menudef]} {
+            while {[gets $menudef menuline] >= 0} {
+                set menuline [string trim $menuline]
+                if {[string first # $menuline] == 0 } {
+                    continue}
+                set menuline [split $menuline ":"]
+                set menulevel [lindex $menuline 0]
+                set menuitem [G_msg [lindex $menuline 1]]
+                set menucmd "execute "
+                append menucmd [lindex $menuline 2]
+                set menuhelp [G_msg [lindex $menuline 3]]
+                # add if statement to read comments here
+                if {$menuitem == "separator"} {
+                    lappend menulist "separator"
+                } else { 
+                    set line [list command $menuitem {} \
+                        $menuhelp {} -command $menucmd]
+    
+                    lappend menulist $line
+                }
+            }
+            if {[catch {close $menudef} error]} {
+                Gm::errmsg $error ["Error reading xtnmenu.dat file"]
             }
         }
-        if {[catch {close $menudef} error]} {
-            Gm::errmsg $error ["Error reading xtnmenu.dat file"]
-        }
+        
+        
+        set XtnsMenu "True"
     }
-    
-    
-    set XtnsMenu "True"
 }
 		
 
