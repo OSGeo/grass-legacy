@@ -66,6 +66,7 @@ EXE                 = @EXEEXT@
 # GRASS dirs
 GRASS_HOME          = @GRASS_HOME@
 RUN_GISBASE         = @GISBASE@
+RUN_GISRC           = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =

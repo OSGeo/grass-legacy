@@ -12,7 +12,7 @@ LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	 $(GISLIB) $(DATETIMELIB) 
 
 EXTRA_CFLAGS = $(MYSQLINCPATH) $(TCLINCDIR) $(TKINCDIR)
-EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
+EXTRA_INC = -I$(MODULE_TOPDIR)/lib/db/dbmi_driver
 
 DEPENDENCIES = $(GISDEP)
 
@@ -44,7 +44,7 @@ ifneq ($(strip $(CXX)),)
     EDRIVER = $(EMBEDED_DRIVER)
 endif
 endif
-    
+
 default: $(CLIENT_DRIVER) $(EDRIVER) $(DRVDOC) $(EDRVDOC)
 
 $(CLIENT_DRIVER): $(CLIENT_ARCH_OBJS)
@@ -59,7 +59,7 @@ $(OBJDIR)/dbe.o : db.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
 	$(CC) -DMESQL=1 $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $@ -c db.c
-					
+
 $(DRVDOC): grass-mysql.html
 	$(INSTALL) -m 644 grass-mysql.html $(DRVDOC)
 

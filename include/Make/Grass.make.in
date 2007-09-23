@@ -36,18 +36,15 @@ GRASS_LIBRARY_TYPE=@GRASS_LIBRARY_TYPE@
 # platform specific dirs
 ARCH_DISTDIR	= $(GRASS_HOME)/dist.$(ARCH)
 ARCH_BINDIR     = $(GRASS_HOME)/bin.$(ARCH)
-
+ERRORLOG        = $(GRASS_HOME)/error.log
 # include dirs
-GRASS_INCDIR    = $(GRASS_HOME)/include
 ARCH_INCDIR     = $(ARCH_DISTDIR)/include/grass
 
-GRASS_INC	= -I$(GRASS_INCDIR)
 ARCH_INC	= -I$(ARCH_DISTDIR)/include
 INC		= $(ARCH_INC)
 VECT_INC        = 
 
 # libraries
-GRASS_LIBDIR    = $(GRASS_HOME)/lib
 ARCH_LIBDIR     = $(ARCH_DISTDIR)/lib
 
 ARCH_LIBPATH	= -L$(ARCH_LIBDIR)
@@ -86,7 +83,7 @@ VECT_CFLAGS =  $(GDALCFLAGS)
 
 # Object with _fmode which must be linked to each executable on Windows
 ifdef MINGW
-  FMODE_OBJ = $(GRASS_LIBDIR)/gis/$(OBJDIR)/fmode.o
+  FMODE_OBJ = $(MODULE_TOPDIR)/lib/gis/$(OBJDIR)/fmode.o
 endif
 
 ##################### library names #####################################

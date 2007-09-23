@@ -37,9 +37,6 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
-DEPENDENCIES =  $(GRASS_INCDIR)/vect/dig_defines.h \
-                $(GRASS_INCDIR)/vect/dig_macros.h $(GRASS_INCDIR)/vect/dig_structs.h \
-                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h $(GISDEP)
 
 TEST = $(OBJDIR)/test
 

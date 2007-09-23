@@ -40,7 +40,7 @@ htmlgen:
 		done 2> /dev/null ; true
 
 htmldesc = \
-	GISRC=$(RUN_GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
+	GISRC=$(RUN_GISRC) \
 	GISBASE=$(RUN_GISBASE) \
 	PATH="$(BIN):$$PATH" \
 	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
