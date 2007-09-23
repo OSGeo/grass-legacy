@@ -26,7 +26,7 @@ $2
 ])
 
 AC_INIT(configure.in)
-AC_PREREQ(2.1)
+AC_PREREQ(2.13)
 AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(include/config.h)
 AC_CANONICAL_HOST
@@ -170,6 +170,8 @@ AC_ARG_ENABLE(w11,
 # With options
 
 LOC_ARG_WITH(cxx, C++, no)
+LOC_ARG_WITH(g77, GNU Fortran 77, no)
+LOC_ARG_WITH(gfortran, GNU Fortran 95, yes)
 LOC_ARG_WITH(jpeg, JPEG)
 LOC_ARG_WITH(tiff, TIFF)
 LOC_ARG_WITH(png, PNG)
@@ -243,8 +245,10 @@ LOC_ARG_WITH_LIB(odbc, ODBC)
 LOC_ARG_WITH_INC(fftw, FFTW)
 LOC_ARG_WITH_LIB(fftw, FFTW)
 
+LOC_ARG_WITH_INC(blas, BLAS)
 LOC_ARG_WITH_LIB(blas, BLAS)
 
+LOC_ARG_WITH_INC(lapack, LAPACK)
 LOC_ARG_WITH_LIB(lapack, LAPACK)
 
 LOC_ARG_WITH_INC(motif, Motif)
@@ -266,6 +270,36 @@ LOC_ARG_WITH_LIB(opendwg, openDWG)
 # Put this early on so CPPFLAGS and LDFLAGS have any additional dirs
 
 # With includes option
+
+# Handle Fortran compiler choice
+LOC_CHECK_USE(g77, GNU Fortran 77, USE_G77)
+LOC_CHECK_USE(gfortran, GNU Fortran 95, USE_GFORTRAN)
+
+if test -n "$USE_G77" -a "$USE_GFORTRAN"; then
+	AC_MSG_ERROR([Conflicting options: Choose only one fortran compiler])
+fi
+
+if test -n "$USE_G77"; then
+	AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
+	AC_CHECK_HEADERS(f2c.h g2c.h)
+
+	AC_PROG_F77(g77 f77)
+fi
+
+if test -n "$USE_GFORTRAN"; then
+	F77="gfortran"
+	AC_PROG_F77(gfortran)
+fi
+
+# Only check if using a fortran compiler
+if test -n "$USE_G77" -a "$USE_GFORTRAN"; then
+	# Error if G77 is not defined by AC_PROG_F77
+	if test "$G77" != yes; then
+		AC_MSG_ERROR([Unable to configure: Fortran compiler not found])
+	fi
+fi
+
+# Done checking fortran
 
 AC_MSG_CHECKING(for additional include dirs)
 case "$with_includes" in
@@ -332,11 +366,10 @@ fi
 AC_PROG_RANLIB
 AC_CHECK_PROGS(AR, ar)
 AC_CHECK_PROGS(ENV, env)
-#AC_CHECK_PROGS(F77, g77 f77)
 AC_PATH_PROG(PERL, perl, no)  
 AC_HEADER_STDC
-#AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
-AC_CHECK_HEADERS(limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
+#AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
+AC_CHECK_HEADERS(limits.h termio.h termios.h unistd.h values.h)
 AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
 AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_CHECK_HEADERS(libintl.h iconv.h)
@@ -1227,24 +1260,87 @@ AC_SUBST(FFTWLIB)
 LOC_CHECK_USE(blas,BLAS,USE_BLAS)
 
 BLASLIB=
+BLASINC=
 
 if test -n "$USE_BLAS"; then
 
 # With BLAS includes directory
-
 # BLAS doesn't have includes (FORTRAN library)
-
 # With BLAS library directory
 
-LOC_CHECK_LIB_PATH(blas,BLAS,BLASLIB)
+LOC_CHECK_INC_PATH(blas, BLAS, BLASINC)
+LOC_CHECK_LIB_PATH(blas, BLAS, BLASLIB)
+LOC_CHECK_INCLUDES(cblas.h, cblas, $BLASINC)
 
 LOC_CHECK_LIBS(blas,dnrm2_,BLAS,$BLASLIB,BLASLIB,$MATHLIB,,,-lg2c)
 
+blas_ok=no
+
+# Check for ATLAS
+save_LDFLAGS="$LDFLAGS"
+LDFLAGS="$BLASLIB $LDFLAGS"
+AC_CHECK_LIB(atlas, ATL_xerbla,
+		[AC_CHECK_LIB(f77blas, sgemm_,
+		[AC_CHECK_LIB(cblas, cblas_dgemm, 
+			[blas_ok=yes; BLASLIB="-lcblas -lf77blas -latlas"],
+			[],[-lf77blas -latlas])],
+		[],[-latlas])]
+)
+LDFLAGS="$save_LDFLAGS"
+
+# Do we have ATLAS?
+if test $blas_ok = yes; then
+	AC_DEFINE(HAVE_LIBATLAS)
+fi
+
+# BLAS in Apple vecLib framework? (Mac OS-X)
+if test -n "$MACOSX_APP"; then
+if test $blas_ok = no; then
+	vlib_flags="-framework vecLib"
+	save_LIBS="$LIBS"
+	LIBS="$vlib_flags $LIBS"
+	AC_MSG_CHECKING([for sgemm in $vlib_flags])
+	AC_TRY_LINK([], [sgemm], [blas_ok=yes; BLASLIB="$vlib_flags"], [BLASLIB=""])
+	AC_MSG_RESULT($blas_ok)
+	LIBS="$save_LIBS"
+fi
+fi # $MACOSX_APP
+
+# BLAS in PhiPACK libraries? (requires generic BLAS, too)
+if test $blas_ok = no; then
+	AC_CHECK_LIB(blas, sgemm_,
+		[AC_CHECK_LIB(dgemm, dgemm_,
+		[AC_CHECK_LIB(sgemm, sgemm_,
+			[blas_ok=yes; BLASLIB="-lsgemm -ldgemm -lblas"],
+			[], [-lblas])],
+			[], [-lblas])]
+	)
+fi
+
+# BLAS in Sun Performance library?
+if test $blas_ok = no; then
+	if test "x$GCC" != xyes; then # only works with Sun CC
+		AC_CHECK_LIB(sunmath, acosp,
+			[AC_CHECK_LIB(sunperf, sgemm_,
+				[blas_ok=yes; BLASLIB="-xlic_lib=sunperf -lsunmath"],
+			[], [-lsunmath])]
+		)
+	fi
+fi
+
+# Generic BLAS library
+if test $blas_ok = no; then
+	AC_CHECK_LIB(blas, sgemm_, [blas_ok=yes; BLASLIB="-lblas"])
+fi
+
+if test $blas_ok = yes; then
 AC_DEFINE(HAVE_LIBBLAS)
+fi
 
 fi # $USE_BLAS
 
 AC_SUBST(BLASLIB)
+AC_SUBST(BLASINC)
 
 # Done checking BLAS
 
@@ -1253,24 +1349,52 @@ AC_SUBST(BLASLIB)
 LOC_CHECK_USE(lapack,LAPACK,USE_LAPACK)
 
 LAPACKLIB=
+LAPACKINC=
 
+# LAPACK is useless without BLAS
+if test -n "$USE_BLAS"; then
 if test -n "$USE_LAPACK"; then
 
 # With LAPACK includes directory
-
 # LAPACK doesn't have includes (FORTRAN library)
-
 # With LAPACK library directory
 
-LOC_CHECK_LIB_PATH(lapack,LAPACK,LAPACKLIB)
+lapack_ok=no
 
-LOC_CHECK_LIBS(lapack,dgesv_,LAPACK,$LAPACKLIB,LAPACKLIB,$BLASLIB $MATHLIB,,,-lg2c)
+LOC_CHECK_INC_PATH(lapack, LAPACK, LAPACKINC)
+LOC_CHECK_LIB_PATH(lapack, LAPACK, LAPACKLIB)
+LOC_CHECK_INCLUDES(clapack.h, clapack, $LAPACKINC)
+
+# LAPACK linked to by default?
+if test lapack_ok=no; then
+	save_LIBS="$LIBS"; LIBS="$LIBS $BLASLIB $MATHLIB $FLIBS"
+	save_LDFLAGS="$LDFLAGS"; LDFLAGS="$LAPACKLIB $LDFLAGS"
+	AC_CHECK_FUNC(dsegv_, [lapack_ok=yes])
+	LIBS="$save_LIBS"
+	LDFLAGS="$save_LDFLAGS"
+fi
+
+# Generic LAPACK library?
+if test $lapack_ok = no; then
+	save_libs="$LIBS"; LIBS="$BLASLIB $MATHLIB $LIBS"
+	save_LDFLAGS="$LDFLAGS"; LDFLAGS="$LAPACKLIB $LDFLAGS"
+	AC_CHECK_LIB(lapack, desgv_,
+		[lapack_ok=yes; LAPACKLIB="-llapack"], [], [$FLIBS])
+	LIBS="$save_LIBS"
+	LDFLAGS="$save_LDFLAGS"
+fi
+
+if test $lapack_ok = no; then
+	LOC_CHECK_LIBS(lapack,dgesv_,LAPACK,$LAPACKLIB,LAPACKLIB,$BLASLIB $MATHLIB,,,-lg2c)
+fi
 
 AC_DEFINE(HAVE_LIBLAPACK)
 
 fi # $USE_LAPACK
+fi # $USE_BLAS
 
 AC_SUBST(LAPACKLIB)
+AC_SUBST(LAPACKINC)
 
 # Done checking LAPACK
 
@@ -1550,7 +1674,7 @@ LOC_MSG([ Installation directory:      ${INSTDIR}])
 LOC_MSG([ Startup script in directory: ${bindir}])
 LOC_MSG([ C compiler:                  ${CC} ${CFLAGS}])
 LOC_MSG([ C++ compiler:                ${CXX} ${CXXFLAGS}])
-LOC_MSG([ FORTRAN compiler:            ${F77}])
+LOC_MSG([ FORTRAN compiler:            ${F77} ${FFLAGS}])
 LOC_MSG([ Building shared libraries:   ${shared_ok}])
 LOC_MSG([ 64bit support:               ${do64bit}])
 LOC_MSG([ OpenGL platform:             ${OPENGL_TYPE}])

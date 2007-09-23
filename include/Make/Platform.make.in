@@ -177,7 +177,9 @@ FFTWLIB             = @FFTWLIB@
 
 #LAPACK/BLAS stuff for gmath lib:
 BLASLIB             = @BLASLIB@
+BLASINC				= @BLASINC@
 LAPACKLIB           = @LAPACKLIB@
+LAPACKINC			= @LAPACKINC@
 
 #GDAL/OGR
 GDALLIBS            = @GDAL_LIBS@
