@@ -640,9 +640,9 @@ class DisplayAttributesDialog(wx.Dialog):
         # dialog body
         mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-        if self.queryCoords: # select by point
+        if self.queryCoords: # select by position
             self.line, nselected = self.mapInfo.SelectByPoint(self.queryCoords,
-                                                         self.qdist)
+                                                              self.qdist)
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
         for layer in layers: # for each layer
@@ -650,8 +650,23 @@ class DisplayAttributesDialog(wx.Dialog):
                     self.layer != layer:
                 continue
 
-            if not self.queryCoords:
+            if not self.queryCoords: # select using layer/cat
                 nselected = self.mapInfo.SelectFromTable(layer, self.cat)
+
+            if nselected <= 0 and self.action != "add":
+                continue # nothing selected ...
+
+            if self.action == "add":
+                if nselected <= 0:
+                    table = self.mapInfo.layers[layer]["table"]
+                    columns = self.mapInfo.tables[table]
+                    for name in columns.keys():
+                        if name == "cat":
+                            self.mapInfo.tables[table][name][1].append(self.cat)
+                        else:
+                            self.mapInfo.tables[table][name][1].append('')
+                else: # change status 'add' -> 'update'
+                    self.action = "update"
 
             panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
             notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
@@ -709,8 +724,7 @@ class DisplayAttributesDialog(wx.Dialog):
         # for each layer END
 
         # set title
-        if (self.action == "add" and selected > 0) or \
-                self.action == "update":
+        if self.action == "update":
             self.SetTitle(_("Update attributes"))
         elif self.action == "add":
             self.SetTitle(_("Add attributes"))
@@ -931,10 +945,12 @@ class VectorAttributeInfo:
     def SelectFromTable(self, layer, cat):
         """Select records from the table
 
-        Return True on success False on error
+        Return number of selected records, -1 on error
         """
         if layer <= 0:
-            return False
+            return -1
+
+        nselected = 0
 
         table = self.layers[layer]["table"] # get table desc
         # select values (only one record)
@@ -943,13 +959,14 @@ class VectorAttributeInfo:
                                          "layer=%d" % layer,
                                          "where=cat=%d" % cat])
 
-        self.tables[table]["cat"][1] = str(cat)
+        #self.tables[table]["cat"][1] = str(cat)
         if selectCommand.returncode == 0:
             for line in selectCommand.ReadStdOutput():
                 name, value = line.split('|')
                 self.tables[table][name][1].append(value)
+                nselected = 1
 
-        return True
+        return nselected
 
 def main(argv=None):
     if argv is None:

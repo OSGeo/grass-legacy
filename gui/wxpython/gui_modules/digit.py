@@ -124,6 +124,9 @@ class AbstractDigit:
 
         Returns 'True' on success, 'False' on failure
         """
+        # vector map layer without categories, reset to '1'
+        self.settings['category'] = 1
+
         if self.map:
             categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
                                            "input=%s" % self.map, 
@@ -141,9 +144,7 @@ class AbstractDigit:
                     except:
                         return False
                     return True
-        else:
-            self.settings["category"] = 1
-
+    
     def SetCategory(self):
         """Return category number to use (according Settings)"""
         if self.settings["categoryMode"] == "No category":
@@ -266,7 +267,7 @@ class VEdit(AbstractDigit):
         Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
                       ids)
 
-        command = [ "v.edit", "--q",
+        command = [ "v.edit",
                     "map=%s" % self.map,
                     "tool=delete",
                     "ids=%s" % ids]
@@ -446,8 +447,11 @@ class CDisplayDriver(AbstractDisplayDriver):
             self.__display.CloseMap()
     
     def ReloadMap(self):
-        """Reload map (close and re-open). Needed for v.edit."""
+        """Reload map (close and re-open).
+
+        Needed for v.edit, TODO: get rid of that..."""
         
+        Debug.msg(4, "CDisplayDriver.ReloadMap():")
         self.__display.ReloadMap()
 
     def DrawMap(self):
@@ -1038,7 +1042,7 @@ class DigitSettingsDialog(wx.Dialog):
         # line width
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width"))
         self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                          value=str(self.parent.digit.settings["lineWidth"][0]),
+                                          initial=self.parent.digit.settings["lineWidth"][0],
                                           min=1, max=1e6)
         self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
@@ -1060,7 +1064,8 @@ class DigitSettingsDialog(wx.Dialog):
         # snapping
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                         value=str(self.parent.digit.settings["snapping"][0]), min=1, max=1e6)
+                                         initial=self.parent.digit.settings["snapping"][0],
+                                         min=1, max=1e6)
         self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
@@ -1227,7 +1232,7 @@ class DigitSettingsDialog(wx.Dialog):
                 self.parent.digit.settings[key] = (None, color.GetColour())
         # display
         self.parent.digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
-                                       self.lineWidthUnit.GetValue())
+                                                   self.lineWidthUnit.GetValue())
 
         # snapping
         self.parent.digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
@@ -1257,7 +1262,7 @@ class DigitSettingsDialog(wx.Dialog):
         if self.parent.autoRender.GetValue(): 
             self.parent.ReRender(None)
 
-class DigitCategoryDialog(wx.Dialog):
+class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     """
     Dialog used to display/modify categories of vector objects
     """
@@ -1300,6 +1305,10 @@ class DigitCategoryDialog(wx.Dialog):
                                      wx.LC_SORT_ASCENDING |
                                      wx.LC_HRULES |
                                      wx.LC_VRULES)
+        # sorter
+        self.itemDataMap = self.list.Populate()
+        listmix.ColumnSorterMixin.__init__(self, 2)
+
         listSizer.Add(item=self.list, proportion=1, flag=wx.EXPAND)
 
         # add new category
@@ -1365,7 +1374,7 @@ class DigitCategoryDialog(wx.Dialog):
         self.SetAutoLayout(True)
 
         # set min size for dialog
-        self.SetMinSize(self.GetMinSize())
+        self.SetMinSize(self.GetBestSize())
 
         # bindings
         # buttons
@@ -1376,13 +1385,21 @@ class DigitCategoryDialog(wx.Dialog):
 
         # list
         # self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
-
         # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
         self.list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnRightUp) #wxMSW
         self.list.Bind(wx.EVT_RIGHT_UP, self.OnRightUp) #wxGTK
         self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
         self.Bind(wx.EVT_LIST_END_LABEL_EDIT, self.OnEndEdit, self.list)
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self.list)
 
+    def GetListCtrl(self):
+        """Used by ColumnSorterMixin"""
+        return self.list
+
+    def OnColClick(self, event):
+        """Click on column header (order by)"""
+        event.Skip()
+        
     def OnBeginEdit(self, event):
         """Editing of item started"""
         event.Allow()
@@ -1465,7 +1482,7 @@ class DigitCategoryDialog(wx.Dialog):
     def OnItemDeleteAll(self, event):
         """Delete all items from the list"""
         self.list.DeleteAllItems()
-        self.cats = []
+        self.cats = {}
 
         event.Skip()
 
@@ -1504,7 +1521,7 @@ class DigitCategoryDialog(wx.Dialog):
         self.cats = copy.deepcopy(self.cats_orig)
 
         # polulate list
-        self.list.Populate(update=True)
+        self.itemDataMap = self.list.Populate(update=True)
 
         event.Skip()
 
@@ -1566,7 +1583,7 @@ class DigitCategoryDialog(wx.Dialog):
         self.cats[layer].append(cat)
 
         # reload list
-        self.list.Populate(update=True)
+        self.itemDataMap = self.list.Populate(update=True)
 
         # update category number for add
         self.catNew.SetValue(str(cat + 1))
@@ -1592,18 +1609,20 @@ class CategoryListCtrl(wx.ListCtrl,
         wx.ListCtrl.__init__(self, parent, id, pos, size, style)
 
         listmix.ListCtrlAutoWidthMixin.__init__(self)
-        self.Populate()
         listmix.TextEditMixin.__init__(self)
 
     def Populate(self, update=False):
         """Populate the list"""
+
+        itemData = {} # requested by sorter
+
         if not update:
             self.InsertColumn(0, _("Layer"))
             self.InsertColumn(1, _("Category"))
         else:
             self.DeleteAllItems()
 
-        i = 0
+        i = 1
         for layer in self.parent.cats.keys():
             catsList = self.parent.cats[layer]
             for cat in catsList:
@@ -1611,6 +1630,7 @@ class CategoryListCtrl(wx.ListCtrl,
                 self.SetStringItem(index, 0, str(layer))
                 self.SetStringItem(index, 1, str(cat))
                 self.SetItemData(index, i)
+                itemData[i] = (str(layer), str(cat))
                 i = i + 1
 
         if not update:
@@ -1619,3 +1639,4 @@ class CategoryListCtrl(wx.ListCtrl,
 
         self.currentItem = 0
 
+        return itemData

@@ -846,7 +846,8 @@ class BufferedWindow(wx.Window):
                         if addRecordDlg.mapInfo and \
                                addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
-                            sqlfile.file.write(addRecordDlg.GetSQLString())
+                            for sql in addRecordDlg.GetSQLString():
+                                sqlfile.file.write(sql)
                             sqlfile.file.flush()
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",

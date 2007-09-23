@@ -96,18 +96,18 @@ int DisplayDriver::DrawMap()
 
     /* nlines = Vect_get_num_lines(mapInfo); */
 
-    Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
-    Vect_build(mapInfo, stderr);
+    //Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
+    //Vect_build(mapInfo, stderr);
 
     // draw lines inside of current display region
-    nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
-				      GV_POINTS | GV_LINES, // fixme
-				      listLines);
+    //     nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
+    // 				      GV_POINTS | GV_LINES, // fixme
+    // 				      listLines);
 
     Vect_get_map_box(mapInfo, &mapBox);
     nlines = Vect_select_lines_by_box(mapInfo, &mapBox,
 				      GV_POINTS | GV_LINES, // fixme
-				      listLines);
+ 				      listLines);
 
     for (int i = 0; i < listLines->n_values; i++) {
 	DrawLine(listLines->value[i]);
@@ -428,7 +428,11 @@ void DisplayDriver::ReloadMap()
     Vect_close(mapInfo);
     mapInfo = NULL;
 
-    return OpenMap(name, mapset);
+    OpenMap(name, mapset);
+    //Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
+    //Vect_build(mapInfo, stderr);
+
+    return;
 }
 
 /*
