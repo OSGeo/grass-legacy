@@ -29,16 +29,16 @@ global env
 
 
 
-#set dirName [set env(GISBASE)]/etc/gm/Xtns
 set XtnsMenu "False"
-#set splitError "False"
+set pathlist {}
 set menulist {}
+set menudatlist {}
 
 # Check for existence of xtnmenu.dat file and parse it
 # into an extensions menu
 
-if {[info exists env(GRASS_ETC_PATH)]} {
-    set pathlist [split $env(GRASS_ETC_PATH) ":"]
+if {[info exists env(GRASS_ADDON_ETC)]} {
+    set pathlist [split $env(GRASS_ADDON_ETC) ":"]
     foreach path $pathlist {
         lappend menudatlist "$path/xtnmenu.dat"
     }
@@ -46,6 +46,7 @@ if {[info exists env(GRASS_ETC_PATH)]} {
 
 foreach menudat $menudatlist {
     if {[file exists $menudat]} {	
+        if { [lsearch $menudatlist $menudat] > 0} {lappend menulist "separator"}
         if {![catch {open $menudat r} menudef]} {
             while {[gets $menudef menuline] >= 0} {
                 set menuline [string trim $menuline]
@@ -71,10 +72,9 @@ foreach menudat $menudatlist {
                 Gm::errmsg $error ["Error reading xtnmenu.dat file"]
             }
         }
-        
-        
         set XtnsMenu "True"
     }
+    
 }
 		
 
