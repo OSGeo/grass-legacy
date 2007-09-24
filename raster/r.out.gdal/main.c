@@ -15,7 +15,7 @@
 *
 *****************************************************************************/
 
-/* Undefine this if you do not want any extra funtion calls before G_parser() */
+/* Undefine this if you do not want any extra funtion calls before G_parse() */
 #define __ALLOW_DYNAMIC_OPTIONS__
 
 #include <stdlib.h>
@@ -99,14 +99,14 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     /* Open GRASS raster */
     fd = G_open_cell_old(name, mapset);
     if (fd < 0) {
-	G_warning(_("Cannot open raster map [%s]"), name);
+	G_warning(_("Unable to open raster map <%s>"), name);
 	return -1;
     }
 
     /* Get raster band  */
     GDALRasterBandH hBand = GDALGetRasterBand(hMEMDS, band);
     if (hBand == NULL) {
-	G_warning(_("Cannot get raster band."));
+	G_warning(_("Unable to get raster band"));
 	return -1;
     }
 
@@ -142,14 +142,14 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
 	    if ( maxcolor > GRASS_MAX_COLORS ) { 
 		maxcolor = GRASS_MAX_COLORS;
-                G_warning("Too many values, color table cut to %d entries.", maxcolor );
+                G_warning("Too many values, color table cut to %d entries", maxcolor );
 	    }
 	} else {
 	    if ( max < GRASS_MAX_COLORS ) {
 	       maxcolor = max;
             } else {
 	       maxcolor = GRASS_MAX_COLORS;
-               G_warning("Too many values, color table set to %d entries.", maxcolor );
+               G_warning("Too many values, color table set to %d entries", maxcolor );
 	    }
         }
 	
@@ -214,12 +214,12 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     /* Create GRASS raster buffer */
     void *bufer = G_allocate_raster_buf(maptype);
     if (bufer == NULL) {
-	G_warning(_("Cannot allocate buffer for reading GRASS raster."));
+	G_warning(_("Unable to allocate buffer for reading raster map"));
 	return -1;
     }
     char *nulls = (char *)G_malloc(cols);
     if (nulls == NULL) {
-	G_warning(_("Cannot allocate buffer for reading null values."));
+	G_warning(_("Unable to allocate buffer for reading raster map"));
 	return -1;
     }
 
@@ -234,7 +234,8 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
-		G_warning(_("Cannot read GRASS raster."));
+		G_warning(_("Unable to read raster map <%s> row %d"),
+			  name, row);
 		return -1;
 	    }
 	    G_get_null_value_row(fd, nulls, row);
@@ -245,7 +246,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
 		 0) >= CE_Failure) {
-		G_warning(_("Cannot write GDAL raster."));
+		G_warning(_("Unable to write GDAL raster file"));
 		return -1;
 	    }
 	    G_percent(row + 1, rows, 2);
@@ -259,7 +260,8 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
-		G_warning(_("Cannot read GRASS raster."));
+		G_warning(_("Unable to read raster map <%s> row %d"),
+			  name, row);
 		return -1;
 	    }
 	    G_get_null_value_row(fd, nulls, row);
@@ -270,7 +272,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
 		 0) >= CE_Failure) {
-		G_warning(_("Cannot write GDAL raster."));
+		G_warning(_("Unable to write GDAL raster file"));
 		return -1;
 	    }
 	    G_percent(row + 1, rows, 2);
@@ -284,7 +286,8 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
-		G_warning(_("Cannot read GRASS raster."));
+		G_warning(_("Unable to read raster map <%s> row %d"),
+			  name, row);
 		return -1;
 	    }
 	    G_get_null_value_row(fd, nulls, row);
@@ -295,7 +298,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
 		 0) >= CE_Failure) {
-		G_warning(_("Cannot write GDAL raster."));
+		G_warning(_("Unable to write GDAL raster file"));
 		return -1;
 	    }
 	    G_percent(row + 1, rows, 2);
@@ -339,7 +342,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->description = _("Exports GRASS raster into GDAL supported formats.");
+    module->description = _("Exports GRASS raster map into GDAL supported formats.");
     module->keywords = _("raster, export");
 
     flag_l = G_define_flag();
@@ -386,17 +389,16 @@ int main(int argc, char *argv[])
     createopt = G_define_option();
     createopt->key = "createopt";
     createopt->type = TYPE_STRING;
-    createopt->description =
-	_
-	("Creation option to the output format driver. Multiple options may be listed");
+    createopt->description = _("Creation option to the output format driver. "
+			       "Multiple options may be listed.");
     createopt->multiple = YES;
     createopt->required = NO;
 
     metaopt = G_define_option();
     metaopt->key = "metaopt";
     metaopt->type = TYPE_STRING;
-    metaopt->description =
-	_("Metadata key passed on the output dataset if possible");
+    metaopt->description = _("Metadata key passed on the output dataset "
+			     "if possible");
     metaopt->multiple = YES;
     metaopt->required = NO;
 
@@ -425,11 +427,11 @@ int main(int argc, char *argv[])
     else {
 	/* Maybe input is group. Try to read group file */
 	if (I_get_group_ref(input->answer, &ref) != 1)
-	    G_fatal_error(_("Raster map or group [%s] not found"),
+	    G_fatal_error(_("Raster map or group <%s> not found"),
 			  input->answer);
     }
     if (ref.nfiles == 0)
-	G_fatal_error(_("No raster maps in group [%s]"), input->answer);
+	G_fatal_error(_("No raster maps in group <%s>"), input->answer);
 
     /* Read project and region data */
     struct Key_Value *projinfo = G_get_projinfo();
@@ -441,23 +443,22 @@ int main(int argc, char *argv[])
     GDALDriverH hDriver = NULL, hMEMDriver = NULL;
     hDriver = GDALGetDriverByName(format->answer);
     if (hDriver == NULL)
-	G_fatal_error(_("Cannot get [%s] driver"), format->answer);
+	G_fatal_error(_("Unable to get <%s> driver"), format->answer);
     /* Does driver support GDALCreate ? */
     if (GDALGetMetadataItem(hDriver, GDAL_DCAP_CREATE, NULL) == NULL) {
 	/* If not - create MEM driver for intermediate dataset. 
 	 * Check if raster can be created at all (with GDALCreateCopy) */
 	if (GDALGetMetadataItem(hDriver, GDAL_DCAP_CREATECOPY, NULL)) {
-
-	    G_message(_
-		      ("Driver [%s] does not support direct writing. Using MEM driver for intermediate dataset"),
+	    G_message(_("Driver <%s> does not support direct writing. "
+			"Using MEM driver for intermediate dataset."),
 		      format->answer);
 	    hMEMDriver = GDALGetDriverByName("MEM");
 	    if (hMEMDriver == NULL)
-		G_fatal_error(_("Cannot get in-memory raster driver"));
+		G_fatal_error(_("Unable to get in-memory raster driver"));
 
 	}
 	else
-	    G_fatal_error(_("Driver [%s] does not support creating rasters."),
+	    G_fatal_error(_("Driver <%s> does not support creating rasters"),
 			  format->answer);
     }
 
@@ -550,18 +551,27 @@ int main(int argc, char *argv[])
     }
 
     /* Create dataset for output with target driver or, if needed, with in-memory driver */
-    char **papszOptions;
-    papszOptions = createopt->answers;
+    char **papszOptions = NULL;
+    /* parse dataset creation options */
+    if (createopt->answer) {
+	int i;
+	i = 0;
+	while (createopt->answers[i]) {
+	    papszOptions = CSLAddString(papszOptions, createopt->answers[i]);
+	    i++;
+	}
+    }
+
     GDALDatasetH hCurrDS = NULL, hMEMDS = NULL, hDstDS = NULL;
     if(!output->answer)
 	G_fatal_error(_("Output file name not specified"));
     if (hMEMDriver) {
 	hMEMDS =
 	    GDALCreate(hMEMDriver, "", cellhead.cols, cellhead.rows, ref.nfiles,
-		       datatype, NULL);
+		       datatype, papszOptions);
 	if (hMEMDS == NULL)
-	    G_fatal_error(_
-			  ("Cannot create dataset using memory raster driver."));
+	    G_fatal_error(_("Unable to create dataset using "
+			    "memory raster driver"));
 	hCurrDS = hMEMDS;
     }
     else {
@@ -569,7 +579,7 @@ int main(int argc, char *argv[])
 	    GDALCreate(hDriver, output->answer, cellhead.cols, cellhead.rows,
 		       ref.nfiles, datatype, papszOptions);
 	if (hDstDS == NULL)
-	    G_fatal_error(_("Cannot create [%s] dataset using [%s] driver."),
+	    G_fatal_error(_("Unable to create <%s> dataset using <%s> driver"),
 			  output->answer, format->answer);
 	hCurrDS = hDstDS;
     }
@@ -583,14 +593,14 @@ int main(int argc, char *argv[])
     adfGeoTransform[4] = 0.0;
     adfGeoTransform[5] = -1 * cellhead.ns_res;
     if (GDALSetGeoTransform(hCurrDS, adfGeoTransform) >= CE_Failure)
-	G_warning(_("Couldn't set geo transform."));
+	G_warning(_("Unable to set geo transform"));
 
     /* Set Projection  */
     CPLErr ret;
     if (srswkt)
 	ret = GDALSetProjection(hCurrDS, srswkt);
     if (!srswkt || ret == CE_Failure)
-	G_warning(_("Couldn't set projection."));
+	G_warning(_("Unable to set projection"));
 
     /* Add metadata */
     AttachMetadata(hCurrDS, metaopt->answers);
@@ -601,7 +611,7 @@ int main(int argc, char *argv[])
 	if (import_band
 	    (hCurrDS, band + 1, ref.file[band].name, ref.file[band].mapset,
 	     &cellhead, maptype, nodataval) < 0)
-	    G_warning(_("Cannot export [%s] raster map."),
+	    G_warning(_("Unable to export raster map <%s>"),
 		      ref.file[band].name);
     }
 
@@ -611,8 +621,7 @@ int main(int argc, char *argv[])
 	    GDALCreateCopy(hDriver, output->answer, hMEMDS, FALSE, papszOptions,
 			   NULL, NULL);
 	if (hDstDS == NULL)
-	    G_fatal_error(_
-			  ("Cannot create [%s] raster map using [%s] driver."),
+	    G_fatal_error(_("Unable to create raster map <%s> using driver <%s>"),
 			  output->answer, format->answer);
     }
 
@@ -620,7 +629,9 @@ int main(int argc, char *argv[])
     if (hMEMDS)
 	GDALClose(hMEMDS);
 
-    G_done_msg ("");
+    CSLDestroy(papszOptions);
+
+    G_done_msg (" ");
 
     exit(EXIT_SUCCESS);
 }
