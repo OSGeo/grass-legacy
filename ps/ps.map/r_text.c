@@ -6,6 +6,7 @@
 */
 
 #include <string.h>
+#include "clr.h"
 #include "labels.h"
 #include "ps_info.h"
 #include "local_proto.h"
@@ -33,6 +34,7 @@ static char *help[]=
     "hcolor      color|none",
     "hwidth      #",
     "ref         upper|lower|center left|right|center",
+    "rotate      deg CCW",
     "xoffset     #",
     "yoffset     #",
     "opaque      [y|n]",
@@ -41,35 +43,36 @@ static char *help[]=
 
 int read_text (char *east, char *north, char *text)
 {
-    int color;
-    int hcolor;
-    int background;
-    int border;
+    PSCOLOR color, hcolor, background, border;
+    int r, g, b;
+    int ret;
     int xoffset;
     int yoffset;
     float size;
     int fontsize;
     double width;
     double hwidth;
+    double rotate;
     int xref, yref;
     int opaque;
-    char t1[128], t2[128];
+    char t1[128];
     char buf[1024];
     char *key, *data;
     FILE *fd;
     char fontname[128];
 
-    color = BLACK;
-    hcolor = -1;
-    background = -1;
-    border = -1;
-    opaque = 1;
+    set_color(&color, 0, 0, 0); /* black */
+    unset_color(&hcolor);
+    unset_color(&background);
+    unset_color(&border);
+    opaque = TRUE;
     size = 0.0;
     fontsize = 0;
     xoffset = 0;
     yoffset = 0;
     width = 1.;
     hwidth = 0.;
+    rotate = 0.0;
     xref = CENTER;
     yref = CENTER;
     G_strcpy(fontname, "Helvetica");
@@ -96,64 +99,57 @@ int read_text (char *east, char *north, char *text)
 
 	if (KEY("color"))
 	{
-	    color = get_color_number(data);
-	    if (color < 0)
-	    {
-		color = BLACK;
-		error(key, data, "illegal color request");
-	    }
-	    continue;
+            ret = G_str_to_color(data, &r, &g, &b);
+            if ( ret == 1 )
+                set_color(&color, r, g, b);
+            else if ( ret == 2 )
+                error (key, data, "primary color cannot be \"none\"");
+            else
+                error (key, data, "illegal color request");
+
+            continue;
 	}
 
 	if (KEY("hcolor"))
 	{
-	    if (sscanf(data, "%s %s", t1, t2) == 1 && EQ(t1, "none"))
-		hcolor = -1;
-	    else
-	    {
-	    	hcolor = get_color_number(data);
-		if (hcolor < 0)
-	    	{
-		    hcolor = -1;
-		    error(key, data, "illegal hcolor request");
-	    	}
-	    }
-	    if (hcolor <= 0 || hwidth <= 0.) hwidth = 0.;
+            ret = G_str_to_color(data, &r, &g, &b);
+            if ( ret == 1 )
+                set_color(&hcolor, r, g, b);
+            else if ( ret == 2 )
+                unset_color(&hcolor);
+            else
+                error (key, data, "illegal hcolor request");
+
+	    if (color_none(&hcolor) || hwidth <= 0.) hwidth = 0.;
 	    continue;
 	}
 
 	if (KEY("background"))
 	{
-	    if (sscanf(data, "%s %s", t1, t2) == 1 && EQ(t1, "none"))
+            ret = G_str_to_color(data, &r, &g, &b);
+            if ( ret == 1 )
+                set_color(&background, r, g, b);
+            else if ( ret == 2 )
 	    {
-		opaque = 0;
-		background = -1;
-            }
-	    else
-	    {
-	    	background = get_color_number(data);
-		if (background < 0)
-	    	{
-		    background = -1;
-		    error(key, data, "illegal background request");
-	    	}
+		unset_color(&background);
+		opaque = FALSE;
 	    }
+            else
+                error (key, data, "illegal background color request");
+
 	    continue;
 	}
 
 	if (KEY("border"))
 	{
-	    if (sscanf(data, "%s %s", t1, t2) == 1 && EQ(t1, "none"))
-		border = -1;
-	    else
-	    {
-	    	border = get_color_number(data);
-		if (border < 0)
-	    	{
-		    border = -1;
-		    error(key, data, "illegal border request");
-	    	}
-	    }
+            ret = G_str_to_color(data, &r, &g, &b);
+            if ( ret == 1 )
+                set_color(&border, r, g, b);
+            else if ( ret == 2 )
+                unset_color(&border);
+            else
+                error (key, data, "illegal border color request");
+
 	    continue;
 	}
 
@@ -233,6 +229,16 @@ int read_text (char *east, char *north, char *text)
 	    continue;
 	}
 
+	if (KEY("rotate"))
+	{
+	    if (sscanf(data, "%lf", &rotate) != 1 )
+	    {
+		rotate = 0.0;
+		error(key, data, "illegal rotate request");
+	    }
+	    continue;
+	}
+
 	if (KEY("ref"))
 	{
 	    if (!scan_ref(data, &xref, &yref))
@@ -273,18 +279,34 @@ int read_text (char *east, char *north, char *text)
     fprintf(fd, "size: %f\n", size);
     fprintf(fd, "fontsize: %d\n", fontsize);
     fprintf(fd, "opaque: %s\n", opaque?"yes":"no");
+    if ( rotate != 0 ) 
+	fprintf(fd, "rotate: %f\n", rotate);
+
     fprintf(fd, "color: ");
-    if (color >= 0)      fprintf(fd, "%s\n", get_color_name(color));
-    else fprintf(fd, "black\n");
+    if(!color_none(&color))
+	fprintf(fd, "%d:%d:%d\n", color.r, color.g, color.b);
+    else
+	fprintf(fd, "black\n");
+
     fprintf(fd, "hcolor: ");
-    if (hcolor >= 0)     fprintf(fd, "%s\n", get_color_name(hcolor));
-    else fprintf(fd, "none\n");
+    if(!color_none(&hcolor))
+	fprintf(fd, "%d:%d:%d\n", hcolor.r, hcolor.g, hcolor.b);
+    else
+	fprintf(fd, "none\n");
+
     fprintf(fd, "background: ");
-    if (background >= 0) fprintf(fd, "%s\n", get_color_name(background));
-    else fprintf(fd, "none\n");
+    if(!color_none(&background))
+	fprintf(fd, "%d:%d:%d\n", background.r, background.g, background.b);
+    else
+	fprintf(fd, "none\n");
+
+
     fprintf(fd, "border: ");
-    if (border >= 0)     fprintf(fd, "%s\n", get_color_name(border));
-    else fprintf(fd, "none\n");
+    if(!color_none(&border))
+	fprintf(fd, "%d:%d:%d\n", border.r, border.g, border.b);
+    else
+	fprintf(fd, "none\n");
+
     fprintf(fd, "ref: ");
     switch (yref)
     {
@@ -299,7 +321,7 @@ int read_text (char *east, char *north, char *text)
     	case CENTER: fprintf(fd, "%s", (xref==CENTER) ? "" : " center"); break;
     }
     fprintf(fd, "\n");
-    fprintf(fd, "text:%s\n", text);
+    fprintf(fd, "text:%s\n\n", text);
     fclose (fd);
 
     return 0;

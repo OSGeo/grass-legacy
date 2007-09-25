@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <grass/glocale.h>
-
+#include "clr.h"
 #include "ps_info.h"
 #include "labels.h"
 #include "local_proto.h"
@@ -85,7 +85,9 @@ do_label (FILE *fd, int font_override)
     double east, north, dtmp, x, y;
     float size, rotate, margin;
     int xoffset, yoffset, xref, yref;
-    int background, border, color, hcolor;
+    PSCOLOR background, border, color, hcolor;
+    int r, g, b;
+    int ret;
     double width, hwidth;
     int opaque, fontsize, multi_text, x_int, y_int;
     int itmp;
@@ -101,11 +103,11 @@ do_label (FILE *fd, int font_override)
     opaque = 0;
     xoffset = 0;
     yoffset = 0;
-    color = BLACK;
     width = 1.;
-    background = WHITE;
-    border = BLACK;
-    hcolor = -1;
+    set_color(&color, 0, 0, 0); /* black */
+    set_color(&background, 255, 255, 255); /* white */
+    set_color(&border, 0, 0, 0); /* black */
+    unset_color(&hcolor);
     hwidth = 0.;
     xref = CENTER;
     yref = CENTER;
@@ -177,12 +179,13 @@ do_label (FILE *fd, int font_override)
     	    set_font_size(fontsize);
 
 	    /* set margin to 20% of font size */
-	    if (opaque || border >= 0)
+	    if (opaque || !color_none(&border))
 	    {	
 		margin = 0.2 * (double)fontsize + 0.5;
 	     	/*if (margin < 2) margin = 2;*/ /* commented because
 		    too big box was created for little font; RB March 2000 */			    
-		if (hcolor >= 0) margin += hwidth;
+		if(!color_none(&hcolor))
+		   margin += hwidth;
 	    }
 	    else margin = 0;
 	    fprintf(PS.fp, "/mg %.2f def\n", margin);
@@ -200,37 +203,37 @@ do_label (FILE *fd, int font_override)
 	    	text_box_path(x, y, xref, yref, value, fontsize, rotate);
 	    }
 
-	    if (opaque && background >= 0)
+	    if (opaque && !color_none(&background))
 	    {
 		/* fill the box */
-		set_rgb_color(background);
+		set_ps_color(&background);
 		fprintf(PS.fp, "F ");
 		opaque = 0;
 	    }
 
-	    if (border >= 0)
+	    if (!color_none(&border))
 	    {
 		/* draw the border */
-		set_line_width(width ); /* added by RB, ? add bwidth option */
-		set_rgb_color(border);
+		set_line_width(width); /* added by RB, ? add bwidth option */
+		set_ps_color(&border);
 		fprintf(PS.fp, "D ");
-		border = -1;
+		unset_color(&border);
 	    }
 
 	    /* draw the text */
-	    if (hcolor >= 0)
+	    if (!color_none(&hcolor))
 	    {   
-		set_rgb_color(hcolor);
+		set_ps_color(&hcolor);
 		set_line_width(width + 2 * hwidth);
 		if (multi_text) fprintf(PS.fp, "DMH ");
 		else fprintf(PS.fp, "HC ");
 	    }
-	    set_rgb_color(color);
+	    set_ps_color(&color);
 	    if (multi_text) fprintf(PS.fp, "DMT ");
 	    else fprintf(PS.fp, "TIB ");
 
 	    /* done; clear the decks for the next round */
-	    hcolor = -1;
+	    unset_color(&hcolor);
 	    hwidth = 0.;
 	    width = 1.;
 	    fontsize = 0;
@@ -240,14 +243,23 @@ do_label (FILE *fd, int font_override)
 
         if (FIELD("color"))
         {
-	    color = get_color_number(value);
-            if (color < 0) color = BLACK;
+	    ret = G_str_to_color(value, &r, &g, &b);
+	    if ( ret == 1 )
+		set_color(&color, r, g, b);
+	    else
+		set_color(&color, 0, 0, 0); /* black */
+
             continue;
         }
 
         if (FIELD("hcolor"))
         {
-	    hcolor = get_color_number(value);
+	    ret = G_str_to_color(value, &r, &g, &b);
+	    if ( ret == 1 )
+		set_color(&hcolor, r, g, b);
+	    else if ( ret == 2 )
+		unset_color(&hcolor);
+
             continue;
         }
 
@@ -278,13 +290,23 @@ do_label (FILE *fd, int font_override)
 	    /*
 	    if(strncmp(value, "none", 4)==0) opaque = 0;
 	    */
-	    background = get_color_number(value);
+	    ret = G_str_to_color(value, &r, &g, &b);
+	    if ( ret == 1 )
+		set_color(&background, r, g, b);
+	    else if ( ret == 2 )
+		unset_color(&background);
+
             continue;
         }
 
         if (FIELD("border"))
         {
-	    border = get_color_number(value);
+	    ret = G_str_to_color(value, &r, &g, &b);
+	    if ( ret == 1 )
+		set_color(&border, r, g, b);
+	    else if ( ret == 2 )
+		unset_color(&border);
+
             continue;
         }
 
@@ -301,7 +323,7 @@ do_label (FILE *fd, int font_override)
  	    sscanf(value, "%lf%c", &width, &ch);
 	    if(ch=='i') width = width/72.0;
 	    if (width < 0.) width = 1.;
-	    if (width > 5.) width = 5.;
+	    if (width > 25.) width = 25.;
             continue;
         }
 
@@ -311,7 +333,7 @@ do_label (FILE *fd, int font_override)
  	    sscanf(value, "%lf%c", &hwidth, &ch);
 	    if(ch=='i') hwidth = hwidth/72.0;
 	    if (hwidth < 0.) hwidth = 0.;
-	    if (hwidth  > 5.) hwidth = 5.;
+	    if (hwidth > 5.) hwidth = 5.;
             continue;
         }
 
