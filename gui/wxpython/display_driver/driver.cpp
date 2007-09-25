@@ -1,5 +1,5 @@
 /**
-   \file driver.cc
+   \file driver.cpp
    
    \brief Experimental C++ wxWidgets display driver
 
@@ -100,10 +100,11 @@ int DisplayDriver::DrawMap()
     //Vect_build(mapInfo, stderr);
 
     // draw lines inside of current display region
-    //     nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
-    // 				      GV_POINTS | GV_LINES, // fixme
-    // 				      listLines);
-
+    /*
+    nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
+     				      GV_POINTS | GV_LINES, // fixme
+				      listLines);
+    */
     Vect_get_map_box(mapInfo, &mapBox);
     nlines = Vect_select_lines_by_box(mapInfo, &mapBox,
 				      GV_POINTS | GV_LINES, // fixme
@@ -128,6 +129,7 @@ int DisplayDriver::DrawMap()
 	DrawLine(line);
     }
     */
+
 #ifdef DEBUG
     PrintIds();
 #endif
@@ -662,14 +664,16 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
    \param[in] thresh threshold value where to search
    \param[in] onlyType select vector object of given type
 
-   \return 1 vector object found
-   \return 0 no vector object found
+   \return point on line if line found
 */
-int DisplayDriver::SelectLinesByPoint(double x, double y, double thresh,
-				      int onlyType)
+std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double thresh,
+						     int onlyType)
 {
-    int line;
-    
+    long int line;
+    int type;
+    double px, py, pz;
+
+    std::vector<double> p;
     line = Vect_find_line(mapInfo, x, y, 0.0,
 			  GV_POINTS | GV_LINES, thresh, 0, 0);
 
@@ -677,10 +681,15 @@ int DisplayDriver::SelectLinesByPoint(double x, double y, double thresh,
 
     if (line > 0) {
 	selected.push_back(line);
-	return 1;
+	type = Vect_read_line (mapInfo, points, cats, line);
+	Vect_line_distance (points, x, y, 0.0, WITHOUT_Z,
+			    &px, &py, &pz,
+			    NULL, NULL, NULL);
+	p.push_back(px);
+	p.push_back(py);
     }
 
-    return 0;
+    return p;
 }
 
 /**

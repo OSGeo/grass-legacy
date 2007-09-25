@@ -121,8 +121,8 @@ class DisplayDriver
 
     /* select */
     int SelectLinesByBox(double x1, double y1, double x2, double y2);
-    int SelectLinesByPoint(double x, double y, double thresh,
-			   int onlyType);
+    std::vector<double> SelectLineByPoint(double x, double y, double thresh,
+					  int onlyType);
 
     void Unselect();
     std::vector<int> GetSelected(bool grassId);

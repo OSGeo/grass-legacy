@@ -677,6 +677,17 @@ class DisplayAttributesDialog(wx.Dialog):
             table   = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
             # value
+            if len(columns["cat"][1]) == 0: # no cats
+                sizer  = wx.BoxSizer(wx.VERTICAL)
+                txt = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                    label=_("No categories available."))
+                sizer.Add(txt, proportion=1,
+                          flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.EXPAND)
+                border.Add(item=sizer, proportion=1,
+                           flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                           border=10)
+                panel.SetSizer(border)
+                continue
             for idx in range(len(columns["cat"][1])):
                 flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
                 flexSizer.AddGrowableCol(0)

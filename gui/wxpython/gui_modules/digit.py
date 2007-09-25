@@ -483,20 +483,22 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         return nselected
 
-    def SelectLinesByPoint(self, point, onlyType=None):
-        """Select vector features by coordinates of click point.
+    def SelectLineByPoint(self, point, onlyType=None):
+        """Select vector feature by coordinates of click point.
         Number of selected features can be decreased by 'onlyType'
         ('None' for all types)"""
 
-        nselected = self.__display.SelectLinesByPoint(point[0], point[1],
-                                                    float(self.parent.threshold),
-                                                    -1); 
+        pointOnLine = self.__display.SelectLineByPoint(point[0], point[1],
+                                                       float(self.parent.threshold),
+                                                       -1); 
 
-        Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): selected=%d" % \
-                      nselected)
-
-        return nselected
-
+        if len(pointOnLine) > 0:
+            Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): pointOnLine=%s")
+            return pointOnLine
+        else:
+            Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): no line found")
+            return None
+        
     def GetSelected(self, grassId=True):
         """Return ids of selected vector features
         

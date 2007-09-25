@@ -822,11 +822,11 @@ class BufferedWindow(wx.Window):
             posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
                                              self.mouse['begin'][1] + offset))
 
-            # set pen
-            self.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
-            self.polypen = wx.Pen(colour='dark green', width=2, style=wx.SOLID)
-
             if digitToolbar.action == "addLine":
+                # set pen
+                self.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
+                self.polypen = wx.Pen(colour='dark green', width=2, style=wx.SOLID)
+            
                 if digitToolbar.type in ["point", "centroid"]:
                     # add new point
                     self.parent.digit.AddPoint(map=map,
@@ -847,7 +847,7 @@ class BufferedWindow(wx.Window):
                                addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
                             for sql in addRecordDlg.GetSQLString():
-                                sqlfile.file.write(sql)
+                                sqlfile.file.write(sql + ";\n")
                             sqlfile.file.flush()
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",
@@ -860,7 +860,8 @@ class BufferedWindow(wx.Window):
                     self.DrawLines()
             elif digitToolbar.action == "deleteLine":
                 pass
-            elif digitToolbar.action in ["moveLine", "moveVertex"]:
+            elif digitToolbar.action in ["moveLine", "moveVertex"] and \
+                    not hasattr(self, "moveBegin"):
                 self.moveBegin = [0, 0]
                 self.moveCoords = self.mouse['begin']
                 self.moveIds   = []
@@ -969,13 +970,14 @@ class BufferedWindow(wx.Window):
             pos1 = self.Pixel2Cell(self.mouse['begin'])
             pos2 = self.Pixel2Cell(self.mouse['end'])
 
-            if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"]:
+            if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"] and \
+                    len(self.parent.digit.driver.GetSelected()) == 0:
                 nselected = 0
                 driver =  self.parent.digit.driver
                 # -> delete line || move line || move vertex
                 if digitToolbar.action == "moveVertex":
                     # -> move vertex (select by point)
-                    nselected = driver.SelectLinesByPoint(pos1, onlyType="line")
+                    nselected = driver.SelectLineByPoint(pos1, onlyType="line")
                     self.moveIds = driver.GetSelectedVertex(pos1)
                 else:
                     # -> moveLine || deleteLine (select by box)
@@ -997,8 +999,13 @@ class BufferedWindow(wx.Window):
                 else:
                     self.UpdateMap(render=False, renderVector=False)
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
-                self.parent.digit.driver.SelectLinesByPoint(pos1, onlyType="line")
-                self.UpdateMap(render=False)
+                pointOnLine = self.parent.digit.driver.SelectLineByPoint(pos1,
+                                                                         onlyType="line")
+                if pointOnLine:
+                    self.UpdateMap(render=False) # highlight object
+                    self.DrawCross(pdc=self.pdcVector, coords=self.Cell2Pixel(pointOnLine),
+                                   size=5)
+                
         elif self.dragid != None:
             # end drag of overlay decoration
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
@@ -1131,7 +1138,8 @@ class BufferedWindow(wx.Window):
                         if addRecordDlg.mapInfo and \
                                 addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
-                            sqlfile.file.write(addRecordDlg.GetSQLString())
+                            for sql in addRecordDlg.GetSQLString():
+                                sqlfile.file.write(sql + ";\n")
                             sqlfile.file.flush()
                             executeCommand = cmd.Command(cmd=["db.execute",
                                                               "--q",
@@ -1241,19 +1249,20 @@ class BufferedWindow(wx.Window):
 
                         # draw polyline
                         self.pdcVector.TranslateId(self.moveIds[0], dx, dy)
-                        #self.pdcVector.RemoveId(self.moveIds[0])
-                        #self.pdcVector.RemoveId(self.moveIds[-1])
-                        #self.pdcVector.RemoveId(self.moveIds[-2])
+                        # self.pdcVector.RemoveId(self.moveIds[0])
+                        # do not draw static lines
                         self.polycoords = []
                         if self.moveIds[1] > 0: # left vertex
                             x1, y1 = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
+                            self.pdcVector.RemoveId(self.moveIds[1]+1)
                             self.polycoords.append((x1, y1))
                         x2, y2 = self.mouse['end']
                         self.polycoords.append((x2, y2))
                         if self.moveIds[2] > 0: # right line
                             x3, y3 = self.pdcVector.GetIdBounds(self.moveIds[2])[0:2]
+                            self.pdcVector.RemoveId(self.moveIds[2]-1)
                             self.polycoords.append((x3, y3))
-
+                        
                         self.ClearLines()
                         self.DrawLines()
 
