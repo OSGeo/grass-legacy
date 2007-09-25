@@ -37,6 +37,7 @@ except:
 import wx
 import wx.aui
 import wx.lib.filebrowsebutton as filebrowse
+from wx.lib.mixins.listctrl import CheckListCtrlMixin, ListCtrlAutoWidthMixin
 import wx.wizard as wiz
 import wx.grid as gridlib
 
@@ -505,6 +506,7 @@ class GCP(wx.Frame):
         wx.Frame.__init__(self, parent, id , title, size=(500,400))
 
         toolbar = self.__createToolBar()
+        self.selected = 0
 
         p = wx.Panel(self, -1, style=0)
 
@@ -517,27 +519,34 @@ class GCP(wx.Frame):
         box.Add(self.rb_grmethod, 0, wx.ALIGN_CENTER|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
-        self.grid = GCPGrid(p)
-        self.sizer.Add(self.grid, 1, wx.GROW|wx.ALL, 5)
+#        self.grid = GCPGrid(p)
+        self.list = CheckListCtrl(p)
+        self.sizer.Add(self.list, 1, wx.GROW|wx.ALL, 5)
+        self.list.InsertColumn(0, 'use| X coord', width=120)
+        self.list.InsertColumn(1, 'Y coord')
+        self.list.InsertColumn(2, 'N coord')
+        self.list.InsertColumn(3, 'E coord')
+        self.list.InsertColumn(4, 'Forward error')
+        self.list.InsertColumn(5, 'Backward error')
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_newGCP = wx.Button(p, -1, "Add GCP")
-        self.btn_newGCP.SetDefault()
-        box.Add(self.btn_newGCP, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.btn_deleteGCP = wx.Button(p, -1, "Delete selected GCP")
-        box.Add(self.btn_deleteGCP, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.sizer.Add(box)
+        initlist = [('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
+                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
+                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
+                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00')]
+
+        for i in initlist:
+            index = self.list.InsertStringItem(4, i[0])
+            self.list.SetStringItem(index, 1, i[1])
+            self.list.SetStringItem(index, 2, i[2])
+            self.list.SetStringItem(index, 3, i[3])
+            self.list.SetStringItem(index, 4, i[4])
+            self.list.SetStringItem(index, 5, i[5])
+
 
         p.SetSizer(self.sizer)
 
         self.Bind(wx.EVT_RADIOBOX, self.OnGRMethod, self.rb_grmethod)
-        self.Bind(wx.EVT_BUTTON, self.OnButton, self.btn_newGCP)
-        self.btn_newGCP.Bind(wx.EVT_SET_FOCUS, self.OnButtonFocus)
-
-    def OnButton(self, evt):
-        print "button selected"
-    def OnButtonFocus(self, evt):
-        print "button focus"
+        self.list.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
 
     def __createToolBar(self):
         """Creates toolbar"""
@@ -560,14 +569,23 @@ class GCP(wx.Frame):
 
         return   (
                  ('savegcp', Icons["savefile"].GetBitmap(), Icons["savefile"].GetLabel(), self.SaveGCP),
+                 ('addgcp',  wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_TOOLBAR, (16,16)), 'Add new GCP', self.AddGCP),
+                 ('deletegcp',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected GCP', self.DeleteGCP),
                  ('cleargcp', Icons["cleargcp"].GetBitmap(), Icons["cleargcp"].GetLabel(), self.ClearGCP),
                  ('rms', Icons["rms"].GetBitmap(), Icons["rms"].GetLabel(), self.OnRMS),
                  ('georect',  Icons["georect"].GetBitmap(),  Icons["georect"].GetLabel(),  self.OnGeorect),
-                 ('quit',  Icons["quit"].GetBitmap(),  Icons["quit"].GetLabel(),  self.OnQuit)
+                 ('quit',  wx.ArtProvider.GetBitmap(wx.ART_QUIT, wx.ART_TOOLBAR, (16,16)), 'Quit georectification module', self.OnQuit)
                   )
 
     def SaveGCP(self, event):
         pass
+
+    def DeleteGCP(self, event):
+        self.list.DeleteItem(self.selected)
+        pass
+
+    def AddGCP(self, event):
+        self.list.Append(['0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'])
 
     def ClearGCP(self, event):
         pass
@@ -583,6 +601,16 @@ class GCP(wx.Frame):
 
     def OnGRMethod(self, event):
         pass
+
+    def OnItemSelected(self, event):
+        self.selected = event.GetIndex()
+
+
+class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
+    def __init__(self, parent):
+        wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
+        CheckListCtrlMixin.__init__(self)
+        ListCtrlAutoWidthMixin.__init__(self)
 
 
 class GCPGrid(gridlib.Grid):
@@ -617,9 +645,9 @@ class GCPDateTable(gridlib.PyGridTableBase):
                           gridlib.GRID_VALUE_FLOAT + ':7,2',
                           ]
         self.data = [
-            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00],
-            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00],
-            [1, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00, 0000000.00]
+            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00'],
+            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00'],
+            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00']
             ]
     #--------------------------------------------------
     # required methods for the wxPyGridTableBase interface
