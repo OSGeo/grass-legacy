@@ -29,9 +29,9 @@ static int yref ;
 static RGBA_Color color, highlight_color, background, border;
 static double size ;
 static int fontsize;
-static int width, highlight_width ;
+static int highlight_width;
 static int opaque ;
-static double rotation;
+static double width, rotation;
 static char text[MTEXT] ;
 static char font[256];
 static const char *std_font;
@@ -54,7 +54,7 @@ int initialize_options (void)
     set_RGBA_from_str(&border, "black");
     size = 1000. ;
     fontsize = 0;
-    width = 1 ;
+    width = 1. ;
     highlight_width = 0;
     opaque = YES ;
     rotation = 0.0;
@@ -95,7 +95,7 @@ int do_labels (FILE *infile, int do_rotation)
 	else if (! strncmp(text, "fontsize", 8))
 		sscanf(text,"%*s %d",&fontsize) ;
 	else if (! strncmp(text, "wid", 3))
-		sscanf(text,"%*s %d",&width) ;
+		sscanf(text, "%*s %lf", &width);
 	else if (! strncmp(text, "bac", 3))
 	{
 		sscanf(text,"%*s %s", buff) ;
@@ -259,6 +259,10 @@ int show_it (void)
     }
     G_debug(3, "nlines=%d", n_lines);
 
+    /* enforce min/max width */
+    if (width > 25.) width = 25.;
+    if (width < 0.) width = 0.;
+
     /* Expand border 1/2 of text size */
     T = T - (text_size * 0.2) - .5;
     B = B + (text_size * 0.2) + .5;
@@ -332,7 +336,9 @@ int show_it (void)
     }
     if(RGBA_has_color(&border)) {
 	set_color_from_RGBA(&border);
+	R_line_width((int)(width + 0.5));
 	R_polyline_abs(xarr, yarr, 5) ;
+	R_line_width(1); /* reset to default. note a value of 0 is valid and slightly thinner and 1 can be ugly */
     }
 
     /* Set font rotation */
