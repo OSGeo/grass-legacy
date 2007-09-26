@@ -26,12 +26,10 @@ static int xoffset ;
 static int yoffset ;
 static int xref ;
 static int yref ;
-static int color, highlight_color ;
+static RGBA_Color color, highlight_color, background, border;
 static double size ;
 static int fontsize;
 static int width, highlight_width ;
-static int background ;
-static int border ;
 static int opaque ;
 static double rotation;
 static char text[MTEXT] ;
@@ -50,14 +48,14 @@ int initialize_options (void)
     yoffset = 0 ;
     xref = CENT ;
     yref = CENT ;
-    color = D_translate_color("black") ;
-    highlight_color = D_translate_color("white") ;
+    set_RGBA_from_str(&color, "black");
+    set_RGBA_from_str(&highlight_color, "white");
+    set_RGBA_from_str(&background, "white");
+    set_RGBA_from_str(&border, "black");
     size = 1000. ;
     fontsize = 0;
     width = 1 ;
     highlight_width = 0;
-    background = D_translate_color("white") ;
-    border = D_translate_color("black") ;
     opaque = YES ;
     rotation = 0.0;
     std_font = getenv("GRASS_FONT");
@@ -68,8 +66,8 @@ int initialize_options (void)
     return 0;
 }
 
-int 
-do_labels (FILE *infile, int do_rotation)
+
+int do_labels (FILE *infile, int do_rotation)
 {
     char buff[128];
 
@@ -90,7 +88,7 @@ do_labels (FILE *infile, int do_rotation)
 	else if (! strncmp(text, "col", 3))
 	{
 		sscanf(text,"%*s %s", buff) ;
-		color = D_translate_color(buff) ;
+		set_RGBA_from_str(&color, buff);
 	}
 	else if (! strncmp(text, "siz", 3))
 		sscanf(text,"%*s %lf",&size) ;
@@ -101,12 +99,12 @@ do_labels (FILE *infile, int do_rotation)
 	else if (! strncmp(text, "bac", 3))
 	{
 		sscanf(text,"%*s %s", buff) ;
-		background = D_translate_color(buff) ;
+		set_RGBA_from_str(&background, buff);
 	}
 	else if (! strncmp(text, "bor", 3))
 	{
 		sscanf(text,"%*s %s", buff) ;
-		border = D_translate_color(buff) ;
+		set_RGBA_from_str(&border, buff);
 	}
 	else if (! strncmp(text, "opa", 3))
 	{
@@ -139,7 +137,7 @@ do_labels (FILE *infile, int do_rotation)
 	else if (! strncmp(text, "hco", 3))
 	{
 		sscanf(text,"%*s %s", buff) ;
-		highlight_color = D_translate_color(buff) ;
+		set_RGBA_from_str(&highlight_color, buff);
 	}
 	else if (! strncmp(text, "hwi", 3))
 	    sscanf(text,"%*s %d", &highlight_width) ;
@@ -328,12 +326,12 @@ int show_it (void)
 #endif
 
     /* draw boxes */
-    if(background) {
-	R_standard_color(background) ;
+    if(RGBA_has_color(&background)) {
+	set_color_from_RGBA(&background);
 	R_polygon_abs(xarr, yarr, 5) ;
     }
-    if(border) {
-	R_standard_color(border) ;
+    if(RGBA_has_color(&border)) {
+	set_color_from_RGBA(&border);
 	R_polyline_abs(xarr, yarr, 5) ;
     }
 
@@ -342,8 +340,8 @@ int show_it (void)
     G_debug(3, "  rotation = %.2f", rotation);
 
     /**** draw highlighted text background ****/
-    if(highlight_width && highlight_color) {
-	R_standard_color(highlight_color);
+    if(highlight_width && RGBA_has_color(&highlight_color)) {
+	set_color_from_RGBA(&highlight_color);
 
 	/* Scan to beginning of text string */
 	for(tptr=text; *tptr != ':'; tptr++) ;
@@ -398,7 +396,7 @@ int show_it (void)
 
 
     /**** place the text ****/
-    R_standard_color(color);
+    set_color_from_RGBA(&color);
 
     /* Scan to beginning of text string */
     for(tptr=text; *tptr != ':'; tptr++) ;
