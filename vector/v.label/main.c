@@ -61,21 +61,28 @@ main (int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, paint labels");
     module->description =
-	_("Creates paint labels for GRASS vector map and attached attributes.");
+	_("Creates paint labels for a vector map from attached attributes.");
+
+
+    Labelfile = G_define_option();
+    Labelfile->key = "labels";
+    Labelfile->label = _("Name for new paint-label file");
+    Labelfile->description = _("If not given the name of the input map is used");
+    Labelfile->type = TYPE_STRING;
+    Labelfile->required = NO;
+    Labelfile->key_desc = "name";
 
     Vectfile = G_define_standard_option(G_OPT_V_MAP);
+
+    Colopt = G_define_standard_option(G_OPT_COLUMN);
+    Colopt->required    = YES;
+    Colopt->description = _("Name of attribute column to be used for labels");
 
     Typopt = G_define_standard_option(G_OPT_V_TYPE);
     Typopt->options = "point,line,boundary,centroid";
     Typopt->answer  = "point,line,boundary,centroid";
     
     Fieldopt = G_define_standard_option(G_OPT_V_FIELD) ; 
-
-    Colopt = G_define_option() ;
-    Colopt->key         = "column" ;
-    Colopt->type        = TYPE_STRING ;
-    Colopt->required    = YES;
-    Colopt->description = _("Name of attribute column to be used for labels");
 
     Along_flag = G_define_flag();
     Along_flag->key            = 'a';
@@ -86,13 +93,6 @@ main (int argc, char **argv)
     Curl_flag->key             = 'c';
     Curl_flag->description     = _("Curl labels along lines");
     Curl_flag->guisection = _("Effects");
-
-    Labelfile = G_define_option();
-    Labelfile->key = "labels";
-    Labelfile->description = _("Name for new paint-label file");
-    Labelfile->type = TYPE_STRING;
-    Labelfile->required = YES;
-    Labelfile->key_desc = "name";
 
     Xoffset = G_define_option();
     Xoffset->key = "xoffset";
@@ -146,18 +146,13 @@ main (int argc, char **argv)
     FontSize->options = "1-1000";
     FontSize->guisection = _("Font");
 
-    Color = G_define_option();
-    Color->key = "color";
-    Color->description = _("Text color");
-    Color->type = TYPE_STRING;
-    Color->answer = "black";
-    Color->options = "aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
-	"magenta,orange,purple,red,violet,white,yellow";
+    Color = G_define_standard_option(G_OPT_C_FG);
+    Color->label = _("Text color");
     Color->guisection = _("Colors");
 
     Rotation = G_define_option();
     Rotation->key = "rotation";
-    Rotation->description = _("Rotation angle (degrees counter-clockwise from East)");
+    Rotation->description = _("Rotation angle (degrees counter-clockwise)");
     Rotation->type = TYPE_DOUBLE;
     Rotation->required = NO;
     Rotation->options = "0-360";
@@ -167,18 +162,16 @@ main (int argc, char **argv)
 
     Width = G_define_option();
     Width->key = "width";
-    Width->description = _("Border width (only for ps.map output)");
+    Width->description = _("Border width");
     Width->type = TYPE_DOUBLE;
     Width->answer = "1";
+    Width->options = "0-25";
     Width->guisection = _("Effects");
 
-    Hcolor = G_define_option();
+    Hcolor = G_define_standard_option(G_OPT_C_BG);
     Hcolor->key = "hcolor";
-    Hcolor->description = _("Highlight color for text");
-    Hcolor->type = TYPE_STRING;
+    Hcolor->label = _("Highlight color for text");
     Hcolor->answer = "none";
-    Hcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
-	"magenta,orange,purple,red,violet,white,yellow";
     Hcolor->guisection = _("Colors");
 
     Hwidth = G_define_option();
@@ -188,22 +181,16 @@ main (int argc, char **argv)
     Hwidth->answer = "0";
     Hwidth->guisection = _("Effects");
 
-    Bcolor = G_define_option();
+    Bcolor = G_define_standard_option(G_OPT_C_BG);
     Bcolor->key = "background";
-    Bcolor->description = _("Background color");
-    Bcolor->type = TYPE_STRING;
+    Bcolor->label = _("Background color");
     Bcolor->answer = "none";
-    Bcolor->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,"
-	"indigo,magenta,orange,purple,red,violet,white,yellow";
     Bcolor->guisection = _("Colors");
 
-    Border = G_define_option();
+    Border = G_define_standard_option(G_OPT_C_BG);
     Border->key = "border";
-    Border->description = _("Border color");
-    Border->type = TYPE_STRING;
+    Border->label = _("Border color");
     Border->answer = "none";
-    Border->options = "none,aqua,black,blue,brown,cyan,gray,green,grey,indigo,"
-	"magenta,orange,purple,red,violet,white,yellow";
     Border->guisection = _("Colors");
 
     Opaque = G_define_option();
@@ -218,6 +205,7 @@ main (int argc, char **argv)
 
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
+
 
     if(Curl_flag->answer) Along_flag->answer = 1;
 
@@ -286,7 +274,10 @@ main (int argc, char **argv)
 	G_fatal_error(_("Cannot open database %s by driver %s"), 
 	    fi->database, fi->driver);
 
-    /* open labels */	
+    /* open labels */
+    if(!Labelfile->answer)
+	Labelfile->answer = Vectfile->answer;
+
     labels = G_fopen_new ("paint/labels", Labelfile->answer);
 
     /* write label */
