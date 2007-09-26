@@ -2,6 +2,8 @@
 
 <EM>v.label</EM> makes a label-file from a GRASS vector map
 with labels created from attributes in the attached table.
+If no label file name is given, the name of the source map is used.
+
 
 <H2>NOTES</H2>
 
@@ -10,6 +12,7 @@ is determined automatically <em>from the current display window</em>,
 otherwise the <em>space</em> option should be set roughly the same
 as the <em>size</em> option.
 <P>
+
 <BR>
 A description of the labels file follows.<P> 
 The file is located in <tt>$MAPSET/paint/labels/</tt>.
@@ -107,42 +110,39 @@ Alternatively <em>fontsize</em> can set the font size in normal font points.
 
 <DD>This selects the text color.  If unspecified, the
 label's text is drawn in <EM>black</EM>, by default.  The
-text color can be specified in one of four ways:
-
+text color can be specified in one of several ways:
 
 <OL>
 <LI>By color name:
 
 <BR>
+<tt>aqua black blue brown cyan gray green grey indigo
+magenta orange purple red violet white yellow</tt>
 
-aqua black blue brown cyan gray green grey indigo
-magenta orange purple red violet white yellow
+<LI>As red, green, blue component values. (0-255)<BR>
+for example: <tt>128:100:200</tt>
 
+<!-- eh?
 <LI>As red, green, blue percentages.
 for example: .5 .4 .7
-
 <BR>
-
 (This form is not supported by 
 <EM><A HREF="d.labels.html">d.labels</A></EM>.)
 
 <LI>By printer color number to get the exact printer color.
-
 <BR>
-
 (This form is not supported by 
 <EM><A HREF="d.labels.html">d.labels</A></EM>.)
+-->
 
-<LI>Specify <EM>none</EM> to suppress the lettering.
+<LI>Specify "<tt>none</tt>" to suppress the lettering.
 </OL>
+
 
 <DT><B>WIDTH</B>:
 
-
 <DD>This determines the line thickness of the border box.<BR>
-(<EM><A HREF="d.labels.html">d.labels</A></EM> ignores
-this value and always uses 1.)
-
+The maximum value is 25.0.
 
 <DT><B>HIGHLIGHT COLOR</B>:
 
@@ -150,11 +150,10 @@ this value and always uses 1.)
 appears to be in two colors. The text is drawn first in
 this color at a wider line width, and then redrawn in the
 text color at the regular line width.  No highlight color
-(<EM>none</EM>) is used, by default, if unspecified by the
+("<tt>none</tt>") is used by default, if unspecified by the
 user.  To specify use of no highlight color, specify
-<EM>none</EM>.  
+"<tt>none</tt>".
 (See <A HREF="#textcolor">TEXT COLOR</A>
-
 above for a list of permissible color names.)
 
 
@@ -169,17 +168,16 @@ color).
 <DT><B>BACKGROUND COLOR</B>:
 
 <DD>Text may be boxed in a solid color by specifying a background color.
-Specify <EM>none</EM> for no background.  The default background color
+Specify "<tt>none</tt>" for no background.  The default background color
 setting, if unspecified by the user, is <EM>white</EM>.
 (See <A HREF="#textcolor">TEXT COLOR</A>
-
 above for a list of permissible color names.)
 
 
 <DT><B>BORDER COLOR</B>:
 
 <DD>Select a color for the border around the background.
-Specify <EM>none</EM> to suppress the border.
+Specify "<tt>none</tt>" to suppress the border.
 The default border color used, if unspecified, is <EM>black</EM>.
 (See <A HREF="#textcolor">TEXT COLOR</A>
 above for a list of permissible color names.)
@@ -190,12 +188,13 @@ above for a list of permissible color names.)
 <DD><EM>yes|no</EM>.  This field only has meaning if a
 background color is selected.  <EM>yes</EM> will prevent
 vector lines from entering the background.  <EM>no</EM>
-
 will allow vector lines to enter the background.  The
 default setting, if unspecified by the user, is
 <EM>yes</EM>.
+
 </DL>
 <BR>
+
 
 <H2>EXAMPLE</H2>
 
@@ -208,15 +207,20 @@ d.vect roads
 d.labels lroads
 </pre></div>
 
+
 <H2>SEE ALSO</H2>
 <EM>
 <A HREF="d.labels.html">d.labels</A><br>
 <A HREF="ps.map.html">ps.map</A>
-</EM><br>
+</EM>
+<br>
 
-<H2>AUTHOR</H2>
+
+<H2>AUTHORS</H2>
 
 Philip Verhagen (original s.label)<br>
-Radim Blazek <br>
+Radim Blazek (GRASS 6 port)<br>
+Hamish Bowman (enhancements)<BR>
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
