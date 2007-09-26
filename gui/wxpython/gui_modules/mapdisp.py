@@ -822,11 +822,12 @@ class BufferedWindow(wx.Window):
             posWindow = self.ClientToScreen((self.mouse['begin'][0] + offset,
                                              self.mouse['begin'][1] + offset))
 
-            if digitToolbar.action == "addLine":
+            if digitToolbar.action not in ["moveVertex", "addVertex", "removeVertex"]:
                 # set pen
                 self.pen = wx.Pen(colour='Red', width=2, style=wx.SHORT_DASH)
                 self.polypen = wx.Pen(colour='dark green', width=2, style=wx.SOLID)
-            
+
+            if digitToolbar.action == "addLine":
                 if digitToolbar.type in ["point", "centroid"]:
                     # add new point
                     self.parent.digit.AddPoint(map=map,
@@ -860,7 +861,7 @@ class BufferedWindow(wx.Window):
                     self.DrawLines()
             elif digitToolbar.action == "deleteLine":
                 pass
-            elif digitToolbar.action in ["moveLine", "moveVertex"] and \
+            elif digitToolbar.action in ["moveLine", "moveVertex", "editLine"] and \
                     not hasattr(self, "moveBegin"):
                 self.moveBegin = [0, 0]
                 self.moveCoords = self.mouse['begin']
@@ -904,7 +905,7 @@ class BufferedWindow(wx.Window):
                                                       queryCoords=(east, north),
                                                       qdist=qdist,
                                                       pos=posWindow,
-                                                      title=_("Display categories"))
+                                                      title=_("Update categories"))
 
                     if categoryDlg.GetLine():
                         # highlight feature & re-draw map
@@ -919,7 +920,12 @@ class BufferedWindow(wx.Window):
                     # PyDisplayDriver: Digit.driver.SetSelected([])
                     self.parent.digit.driver.Unselect()
                     self.UpdateMap(render=False)
-
+            elif digitToolbar.action == "copyCats":
+                if not hasattr(self, "copyCatsList"):
+                    self.copyCatsList = []
+                else:
+                    self.copyCatsIds = []
+                    self.mouse['box'] = 'box'
         else:
             # get decoration id
             self.lastpos = self.mouse['begin']
@@ -966,19 +972,48 @@ class BufferedWindow(wx.Window):
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization tool active
             digitToolbar = self.parent.digittoolbar
+            driver = self.parent.digit.driver
             self.mouse['end'] = event.GetPositionTuple()[:]
             pos1 = self.Pixel2Cell(self.mouse['begin'])
             pos2 = self.Pixel2Cell(self.mouse['end'])
 
-            if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex"] and \
-                    len(self.parent.digit.driver.GetSelected()) == 0:
+            if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex",
+                                       "copyCats", "editLine"]:
                 nselected = 0
-                driver =  self.parent.digit.driver
                 # -> delete line || move line || move vertex
-                if digitToolbar.action == "moveVertex":
-                    # -> move vertex (select by point)
-                    nselected = driver.SelectLineByPoint(pos1, onlyType="line")
-                    self.moveIds = driver.GetSelectedVertex(pos1)
+                if digitToolbar.action in ["moveVertex", "editLine"]:
+                    if len(driver.GetSelected()) == 0:
+                        # -> move vertex (select by point)
+                        nselected = driver.SelectLineByPoint(pos1, onlyType="line")
+                        ids = driver.GetSelected(grassId=False)
+                        print "#", self.pdcVector.GetIdBounds(ids[-1]), self.pdcVector.GetIdBounds(ids[-3])
+                        self.moveIds.append(ids[-1]) # last vertex
+                        self.moveIds.append(ids[-3]) # previous vertex
+                elif digitToolbar.action == "copyCats":
+                    if not hasattr(self, "copyCatsIds"):
+                        # collect categories
+                        nselected = driver.SelectLineByPoint(pos1, onlyType="line")
+                        if nselected:
+                            qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / \
+                                                self.Map.width)
+                            vWhat = cmd.Command(['v.what',
+                                                 '--q',
+                                                 'map=%s' % self.parent.digit.map, 
+                                                 'east_north=%f,%f' % \
+                                                     (float(pos1[0]), float(pos1[1])),
+                                                 'distance=%f' % qdist])
+
+                            for line in vWhat.ReadStdOutput():
+                                if "Category:" in line:
+                                    cat = int(line.split(':')[1].strip())
+                                    self.copyCatsList.append(cat)
+                    else:
+                        # collect ids
+                        driver.Unselect()
+                        nselected = driver.SelectLinesByBox(pos1, pos2)
+                        if nselected > 0:
+                            self.copyCatsIds = driver.GetSelected()
+
                 else:
                     # -> moveLine || deleteLine (select by box)
                     nselected = driver.SelectLinesByBox(pos1, pos2)
@@ -986,26 +1021,39 @@ class BufferedWindow(wx.Window):
                 if nselected > 0:
                     # highlight selected features
                     self.UpdateMap(render=False)
-                    if digitToolbar.action in ["moveLine", "moveVertex"]:
+                    if digitToolbar.action in ["moveLine", "moveVertex", "copyCats"]:
                         # -> move line || move vertex
                         self.UpdateMap(render=False)
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             # -> move line
                             self.moveIds = driver.GetSelected(grassId=False)
-                        else:
+                        elif digitToolbar.action == "moveVertex":
                             # -> move vertex
                             self.moveIds = driver.GetSelectedVertex(pos1)
                 else:
                     self.UpdateMap(render=False, renderVector=False)
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
-                pointOnLine = self.parent.digit.driver.SelectLineByPoint(pos1,
+                pointOnLine = driver.SelectLineByPoint(pos1,
                                                                          onlyType="line")
                 if pointOnLine:
                     self.UpdateMap(render=False) # highlight object
-                    self.DrawCross(pdc=self.pdcVector, coords=self.Cell2Pixel(pointOnLine),
-                                   size=5)
-                
+                    if digitToolbar.action in ["splitLine", "addVertex"]:
+                        self.DrawCross(pdc=self.pdcVector, coords=self.Cell2Pixel(pointOnLine),
+                                       size=5)
+                    elif digitToolbar.action == "removeVertex":
+                        # get only id of vertex
+                        id = driver.GetSelectedVertex(pos1)[0] 
+                        x, y = self.pdcVector.GetIdBounds(id)[0:2]
+                        self.pdcVector.RemoveId(id)
+                        self.DrawCross(pdc=self.pdcVector, coords=(x, y),
+                                       size=5)
+            elif digitToolbar.action == "editLine":
+                if len(self.moveIds) > 0:
+                    #self.pdcVector.RemoveId(ids[-1])
+                    #self.pdcVector.RemoveId(ids[-2])
+                    self.UpdateMap(render=False, renderVector=False)
+
         elif self.dragid != None:
             # end drag of overlay decoration
             self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
@@ -1149,7 +1197,8 @@ class BufferedWindow(wx.Window):
             elif digit.action == "deleteLine":
                 # -> delete selected vector features
                 self.parent.digit.DeleteSelectedLines()
-            elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
+            elif digit.action in ["moveLine", "moveVertex", "editLine"] and \
+                    hasattr(self, "moveBegin"):
                 # move vector feature
                 move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
                         self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
@@ -1162,10 +1211,12 @@ class BufferedWindow(wx.Window):
                 if digit.action == "moveLine":
                     # move line
                     self.parent.digit.MoveSelectedLines(move)
-                else:
+                elif digit.action == "moveVertex":
                     # move vertex
                     self.parent.digit.MoveSelectedVertex(self.Pixel2Cell(self.moveCoords),
                                                          move)
+                else: # edit line
+                    pass
 
                 del self.moveBegin
                 del self.moveCoords
@@ -1179,7 +1230,14 @@ class BufferedWindow(wx.Window):
             elif digit.action == "removeVertex":
                 # remove vertex
                 self.parent.digit.RemoveVertex(self.Pixel2Cell(self.mouse['begin']))
-
+            elif digit.action == "copyCats":
+                try:
+                    self.parent.digit.CopyCats(self.copyCatsList,
+                                               self.copyCatsIds)
+                    del self.copyCatsList
+                    del self.copyCatsIds
+                except:
+                    pass
             if digit.action != "addLine":
                 # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
                 self.parent.digit.driver.Unselect()
@@ -1208,15 +1266,23 @@ class BufferedWindow(wx.Window):
                 self.UpdateMap(render=False)
                 self.DrawLines()
             elif digit.action in ["deleteLine", "moveLine", "splitLine",
-                                  "addVertex", "removeVertex", "moveVertex"]:
+                                  "addVertex", "removeVertex", "moveVertex",
+                                  "copyCats"]:
                 # varios tools -> unselected selected features
                 # PyDisplayDriver: self.parent.digit.driver.SetSelect([])
                 self.parent.digit.driver.Unselect()
-                if digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
+                if digit.action in ["moveLine", "moveVertex", "editLine"] and \
+                        hasattr(self, "moveBegin"):
                     # move feature -> delete 'move' variables
                     del self.moveBegin
                     del self.moveCoords
                     del self.moveIds
+                elif digit.action == "copyCats":
+                    try:
+                        del self.copyCatsList
+                        del self.copyCatsIds
+                    except:
+                        pass
                 self.UpdateMap(render=False) # render map
 
     def OnMouseMoving(self, event):
@@ -1231,7 +1297,8 @@ class BufferedWindow(wx.Window):
                 if len(self.polycoords) > 0:
                     # draw mouse moving
                     self.MouseDraw()
-            elif digit.action in ["moveLine", "moveVertex"] and hasattr(self, "moveBegin"):
+            elif digit.action in ["moveLine", "moveVertex", "editLine"] \
+                    and hasattr(self, "moveBegin"):
                 dx = self.mouse['end'][0] - self.mouse['begin'][0]
                 dy = self.mouse['end'][1] - self.mouse['begin'][1]
                 self.moveBegin[0] += dx
@@ -1242,26 +1309,32 @@ class BufferedWindow(wx.Window):
                         # move line
                         for id in self.moveIds:
                             self.pdcVector.TranslateId(id, dx, dy)
-                    else:
+                    elif digit.action in ["moveVertex", "editLine"]:
                         # move vertex ->
                         # (vertex, left vertex, left line,
                         # right vertex, right line)
 
-                        # draw polyline
                         self.pdcVector.TranslateId(self.moveIds[0], dx, dy)
                         # self.pdcVector.RemoveId(self.moveIds[0])
-                        # do not draw static lines
                         self.polycoords = []
-                        if self.moveIds[1] > 0: # left vertex
-                            x1, y1 = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
-                            self.pdcVector.RemoveId(self.moveIds[1]+1)
-                            self.polycoords.append((x1, y1))
-                        x2, y2 = self.mouse['end']
-                        self.polycoords.append((x2, y2))
-                        if self.moveIds[2] > 0: # right line
-                            x3, y3 = self.pdcVector.GetIdBounds(self.moveIds[2])[0:2]
-                            self.pdcVector.RemoveId(self.moveIds[2]-1)
-                            self.polycoords.append((x3, y3))
+                        # do not draw static lines
+                        if digit.action == "moveVertex":
+                            if self.moveIds[1] > 0: # left vertex
+                                x, y = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
+                                self.pdcVector.RemoveId(self.moveIds[1]+1)
+                                self.polycoords.append((x, y))
+                            self.polycoords.append(self.mouse['end'])
+                            if self.moveIds[2] > 0: # right vertex
+                                x, y = self.pdcVector.GetIdBounds(self.moveIds[2])[0:2]
+                                self.pdcVector.RemoveId(self.moveIds[2]-1)
+                                self.polycoords.append((x, y))
+                        else: # edit line
+                            print "@", self.moveIds, self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
+                            if self.moveIds[1] > 0: # left vertex
+                                x, y = self.pdcVector.GetIdBounds(self.moveIds[1])[0:2]
+                                #self.pdcVector.RemoveId(self.moveIds[1]+1)
+                                self.polycoords.append((x, y))
+                                self.polycoords.append(self.mouse['end'])
                         
                         self.ClearLines()
                         self.DrawLines()

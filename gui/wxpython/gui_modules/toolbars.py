@@ -391,7 +391,9 @@ class DigitToolbar(AbstractToolbar):
 
     def OnEditLine(self, event):
         """Edit line"""
-        pass
+        Debug.msg(2, "Digittoolbar.OnEditLine():")
+        self.action="editLine"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnMoveLine(self, event):
         """Move line"""
@@ -419,7 +421,9 @@ class DigitToolbar(AbstractToolbar):
 
     def OnCopyCats(self, event):
         """Copy categories"""
-        pass
+        Debug.msg(2, "Digittoolbar.OnCopyCats():")
+        self.action="copyCats"
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnSettings(self, event):
         """Show settings dialog"""
