@@ -371,7 +371,21 @@ class VEdit(AbstractDigit):
         self.driver.ReloadMap()
 
         return True
-    
+
+    def CopyCats(self, cats, ids):
+        """Copy given categories to objects with id listed in ids"""
+        if len(cats) == 0 or len(ids) == 0:
+            return False
+
+        # collect cats
+        cmd.Command(['v.edit',
+                     '--q',
+                     'map=%s' % self.map,
+                     'tool=catadd',
+                     'cats=%s' % ",".join(["%d" % v for v in cats]),
+                     'ids=%s' % ",".join(["%d" % v for v in ids])])
+        
+        return True
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -493,10 +507,11 @@ class CDisplayDriver(AbstractDisplayDriver):
                                                        -1); 
 
         if len(pointOnLine) > 0:
-            Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): pointOnLine=%s")
+            Debug.msg(4, "CDisplayDriver.SelectLineByPoint(): pointOnLine=%f,%f" % \
+                          (pointOnLine[0], pointOnLine[1]))
             return pointOnLine
         else:
-            Debug.msg(4, "CDisplayDriver.SelectLinesByPoint(): no line found")
+            Debug.msg(4, "CDisplayDriver.SelectLineByPoint(): no line found")
             return None
         
     def GetSelected(self, grassId=True):

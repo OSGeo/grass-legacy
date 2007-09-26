@@ -99,22 +99,27 @@ int DisplayDriver::DrawMap()
     //Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
     //Vect_build(mapInfo, stderr);
 
+    Vect_get_map_box(mapInfo, &mapBox);
+
     // draw lines inside of current display region
-    /*
     nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
      				      GV_POINTS | GV_LINES, // fixme
 				      listLines);
-    */
-    Vect_get_map_box(mapInfo, &mapBox);
+    /*
     nlines = Vect_select_lines_by_box(mapInfo, &mapBox,
 				      GV_POINTS | GV_LINES, // fixme
  				      listLines);
-
+    */
     for (int i = 0; i < listLines->n_values; i++) {
 	DrawLine(listLines->value[i]);
     }
 
 #ifdef DEBUG
+    std::cout.flags(std::ios_base::fixed);
+    std::cout << "region: W=" << mapBox.W
+	      << "; E=" << mapBox.E
+	      << "; S=" << mapBox.S
+	      << "; N=" << mapBox.N << std::endl;
     std::cout << "region: W=" << region.box.W
 	      << "; E=" << region.box.E
 	      << "; S=" << region.box.S
@@ -476,6 +481,8 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.box.S  = south;
     region.box.E  = east;
     region.box.W  = west;
+    region.box.T  = PORT_DOUBLE_MAX;
+    region.box.B  = -PORT_DOUBLE_MAX;
     region.ns_res = ns_res;
     region.ew_res = ew_res;
 
@@ -658,7 +665,8 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
    \brief Select vector feature by given point in given
    threshold
    
-   Only one vector object can be selected.
+   Only one vector object can be selected. Bounding boxes of
+   all segments are stores.
 
    \param[in] x,y point of searching
    \param[in] thresh threshold value where to search
@@ -677,8 +685,6 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
     line = Vect_find_line(mapInfo, x, y, 0.0,
 			  GV_POINTS | GV_LINES, thresh, 0, 0);
 
-    std::cout << x << " " << y << " " << thresh << "->" << line << std::endl;
-
     if (line > 0) {
 	selected.push_back(line);
 	type = Vect_read_line (mapInfo, points, cats, line);
@@ -687,6 +693,16 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 			    NULL, NULL, NULL);
 	p.push_back(px);
 	p.push_back(py);
+
+	// set bounding boxes for all segments
+	long int id = ids[line].startId;
+	int vx, vy, vz;
+	for (int i = 0; i < points->n_points; i++, id += 2) {
+	    Cell2Pixel(points->x[i], points->y[i], points->z[i],
+		       &vx, &vy, &vz);
+	    wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
+	    dc->SetIdBounds(id, rect);
+	}
     }
 
     return p;
@@ -826,7 +842,7 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     returnId.push_back(DCid);
     Cell2Pixel(points->x[Gid], points->y[Gid], points->z[Gid],
 	       &vx, &vy, &vz);
-    wxRect rect (vx, vy, 0, 0);
+    wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
     dc->SetIdBounds(DCid, rect);
 
     // left vertex
@@ -837,7 +853,7 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 	returnId.push_back(DCid - 2);
 	Cell2Pixel(points->x[Gid-1], points->y[Gid-1], points->z[Gid-1],
 		   &vx, &vy, &vz);
-	wxRect rect (vx, vy, 0, 0);
+	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
 	dc->SetIdBounds(DCid-2, rect);
     }
 
@@ -849,7 +865,7 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 	returnId.push_back(DCid + 2);
 	Cell2Pixel(points->x[Gid+1], points->y[Gid+1], points->z[Gid+1],
 		   &vx, &vy, &vz);
-	wxRect rect (vx, vy, 0, 0);
+	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
 	dc->SetIdBounds(DCid + 2, rect);
     }
 
