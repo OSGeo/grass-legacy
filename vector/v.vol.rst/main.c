@@ -201,7 +201,7 @@ int main (int argc, char *argv[])
     module->keywords = _("vector");
     module->description =
       _("Interpolates point data to a G3D grid volume using "
-      "regularized spline with tension (RST) algorithm");
+      "regularized spline with tension (RST) algorithm.");
 
     if (G_get_set_window (&cellhd) == -1)
       G_fatal_error("G_get_set_window() failed"); 
@@ -558,12 +558,12 @@ int main (int argc, char *argv[])
       G_debug ( 1, db_get_string ( &sql ) );
       driver = db_start_driver_open_database ( f->driver, f->database );
       if ( driver == NULL )
-      G_fatal_error ( "Cannot open database %s by driver %s", f->database,f->driver );
+      G_fatal_error (_( "Unable to open database <%s> by driver <%s>"), f->database,f->driver );
 
       if (db_execute_immediate (driver, &sql) != DB_OK ) {
               db_close_database(driver);
               db_shutdown_driver(driver);
-              G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+              G_fatal_error ("Cannot create table: %s", db_get_string ( &sql )  );
       }
       count = 1;
   }
@@ -574,10 +574,10 @@ int main (int argc, char *argv[])
         mapset = NULL;
         mapset = G_find_cell2 (cellinp, "");
         if (mapset == NULL)
-          G_fatal_error (_("<%s> cellfile not found"),cellinp);
+          G_fatal_error (_("Raster map <%s> not found"),cellinp);
         fdcell = G_open_cell_old(cellinp, mapset);
         if(fdcell < 0)
-          G_fatal_error (_("Cannot open %s"), cellinp);
+          G_fatal_error (_("Unable to open raster map <%s>"), cellinp);
         fdcout = G_open_fp_cell_new(cellout);
         if(fdcout < 0)
           G_fatal_error (_("Cannot open %s"), cellout);
