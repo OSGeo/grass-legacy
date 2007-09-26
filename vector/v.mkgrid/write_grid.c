@@ -40,7 +40,7 @@ int write_grid (struct grid_description *grid_info,
   x_cols = cols*3.;
 
   /* write out all the vector lengths (x vectors) of the entire grid  */
-  G_message (_("Writing out vector rows ..."));
+  G_verbose_message (_("Writing out vector rows..."));
 
   y = grid_info->origin_y;
   for (i = 0; i < num_v_rows; ++i)
@@ -77,7 +77,7 @@ int write_grid (struct grid_description *grid_info,
   }
 
   /* write out all the vector widths (y vectors) of the entire grid  */
-  G_message (_("Writing out vector columns ..."));
+  G_verbose_message (_("Writing out vector columns..."));
   x = grid_info->origin_x;
   for (k = 0; k < num_v_cols; ++k)
   {
@@ -137,7 +137,7 @@ write_vect (
   yarray[1] = y2;
 
   if (0 > Vect_copy_xyz_to_pnts (Points, xarray, yarray, NULL, NUM_POINTS))
-    G_fatal_error ("Out of memory");
+    G_fatal_error (_("Out of memory"));
   
   Vect_write_line (Map, GV_BOUNDARY, Points, Cats);
 
