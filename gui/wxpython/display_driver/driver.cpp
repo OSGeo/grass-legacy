@@ -693,16 +693,6 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 			    NULL, NULL, NULL);
 	p.push_back(px);
 	p.push_back(py);
-
-	// set bounding boxes for all segments
-	long int id = ids[line].startId;
-	int vx, vy, vz;
-	for (int i = 0; i < points->n_points; i++, id += 2) {
-	    Cell2Pixel(points->x[i], points->y[i], points->z[i],
-		       &vx, &vy, &vz);
-	    wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
-	    dc->SetIdBounds(id, rect);
-	}
     }
 
     return p;
@@ -757,14 +747,29 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 	return selected;
 
     std::vector<int> dc_ids;
-
+    long int line;
     for(std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
 	i != e; ++i) {
-	ids_map::const_iterator ii = ids.find(*i);
+	line = *i;
+	ids_map::const_iterator ii = ids.find(line);
 	if (ii != ids.end()) { // line found
 	    long int endId = ii->second.npoints * 2 - 1 + ii->second.startId;
-	    for (long int id = ii->second.startId; id < endId; id++) {
+	    int type, i;
+	    int vx, vy, vz;
+	    type = Vect_read_line (mapInfo, points, cats, line);
+	    i = 0;
+ 	    for (long int id = ii->second.startId; id < endId; id++) {
 		dc_ids.push_back(id);
+                // set bounding boxes for all selected objects (only nodes)
+		if (id % 2) {
+		    Cell2Pixel(points->x[i], points->y[i], points->z[i],
+			       &vx, &vy, &vz);
+		    wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
+		    dc->SetIdBounds(id, rect);
+
+		    i++;
+		}
+
 	    }
 	}
     }

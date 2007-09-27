@@ -386,6 +386,19 @@ class VEdit(AbstractDigit):
                      'ids=%s' % ",".join(["%d" % v for v in ids])])
         
         return True
+
+    def EditLine(self, line, coords):
+        """Edit existing line"""
+        # remove line
+        vEditDelete = cmd.Command(['v.edit',
+                                   '--q',
+                                   'map=%s' % self.map,
+                                   'tool=delete',
+                                   'ids=%s' % line])
+
+        # add line
+        self.AddLine(self.map, "line", coords)
+
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
