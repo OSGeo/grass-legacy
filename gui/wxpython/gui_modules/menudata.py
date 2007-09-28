@@ -334,7 +334,7 @@ class Data:
                 ("Linear regression", "Linear regression between 2 maps", "self.OnMenuCmd", "r.regression.line"),
                 ("Mutual category occurrences", "Mutual category occurrences (coincidence)", "self.OnMenuCmd", "r.coin"),
                 )),
-              ("","","", "")
+#              ("","","", "")
               )),
           ("Vector", (
               ("Develop map", (
@@ -437,7 +437,7 @@ class Data:
                 ("Quadrat indices", "Indices of point counts in quadrats", "self.OnMenuCmd", "v.qcount"),
                 ("Test normality", "Test normality of point distribution", "self.OnMenuCmd", "v.normal"),
                 )),
-              ("","","", "")
+#              ("","","", "")
               )),
           ("Imagery", (
               ("Develop images and groups", (
@@ -488,7 +488,7 @@ class Data:
                 ("Kappa analysis", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
                 ("OIF for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
                 )),
-              ("","","", "")
+#              ("","","", "")
               )),
           ("Volumes", (
               ("Develop grid3D volumes", (
@@ -504,7 +504,7 @@ class Data:
               ("Report and Statistics", (
                 ("Basic volume information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
                 )),
-              ("","","", "")
+#              ("","","", "")
               )),
           ("Database", (
               ("Database information", (
@@ -539,12 +539,12 @@ class Data:
                 ("Reconnect vector to database", "Reconnect vector map to attribute database", "self.OnMenuCmd", "v.db.reconnect.all"),
                 ("Set vector - database connection", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
                 )),
-              ("","","", "")
+#              ("","","", "")
               )),
           ("Help", (
               ("GRASS help", "GRASS help", "self.RunMenuCmd", ['g.manual', '-i']),
               ("GIS Manager help", "GIS Manager help", "self.RunMenuCmd", ['g.manual', 'gis.m']),
-              ("About GRASS (not functional)", "About GRASS", "self.OnMenuCmd", ""),
-              ("About system (not functional)", "About system", "self.OnMenuCmd", ""),
-              ("","","", "")
+              ("About GRASS", "About GRASS", "self.OnAboutGRASS", ""),
+#              ("About system (not functional)", "About system", "self.OnMenuCmd", ""),
+#              ("","","", "")
               )))]

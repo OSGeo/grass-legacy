@@ -13,7 +13,7 @@ PURPOSE:    Main Python app for GRASS wxPython GUI. Main menu, layer management
             command console.
 
 AUTHORS:    The GRASS Development Team
-            Michael Barton (Arizona State University) &
+            Michael Barton (Arizona State University)
             Jachym Cepicky (Mendel University of Agriculture)
             Martin Landa
 
@@ -37,6 +37,7 @@ import wx.html
 import wx.stc
 import wx.lib.customtreectrl as CT
 import wx.lib.flatnotebook as FN
+from wx.lib.wordwrap import wordwrap
 try:
     import subprocess
 except:
@@ -317,7 +318,7 @@ class GMFrame(wx.Frame):
 
             # run g.mapsets with string of accessible mapsets
             cmdlist = ['g.mapsets', 'mapset=%s' % ms_string]
-            cmd.Command(cmdlist)
+            gcmd.Command(cmdlist)
 
     def OnRDigit(self, event):
         """
@@ -375,6 +376,34 @@ class GMFrame(wx.Frame):
         global gmpath
         menuform.GUI().ParseCommand(cmd, parentframe=self)
 
+    def OnAboutGRASS(self, event):
+        """Display 'About GRASS' dialog"""
+        info = wx.AboutDialogInfo()
+        # name
+        info.SetName("GRASS GIS")
+        # version
+        versionCmd = gcmd.Command(['g.version'])
+        info.SetVersion(versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip())
+        # description
+        copyrightFile = open(os.path.join(os.getenv("GISBASE"), "COPYING"), 'r')
+        copyrightOut = []
+        copyright = copyrightFile.readlines()
+        info.SetCopyright(wordwrap(''.join(copyright[:11] + copyright[26:-3]),
+                                   550, wx.ClientDC(self)))
+        copyrightFile.close()
+        # website
+        info.SetWebSite(("http://grass.itc.it", "The official GRASS site"))
+        # licence
+        licenceFile = open(os.path.join(os.getenv("GISBASE"), "GPL.TXT"), 'r')
+        info.SetLicence(''.join(licenceFile.readlines()))
+        licenceFile.close()
+        # credits
+        authorsFile = open(os.path.join(os.getenv("GISBASE"), "AUTHORS"), 'r')
+        info.SetDevelopers([''.join(authorsFile.readlines())])
+        authorsFile.close()
+
+        wx.AboutBox(info)
+
     def RulesCmd(self, event):
         """
         Launches dialog for commands that need rules
@@ -398,7 +427,7 @@ class GMFrame(wx.Frame):
 
             cmdlist.append('--verbose')
 
-            cmd.Command(cmdlist)
+            gcmd.Command(cmdlist)
 
         dlg.Destroy()
 
@@ -417,7 +446,7 @@ class GMFrame(wx.Frame):
 
         # make list of xmons that are not running
         cmdlist = ['d.mon', '-L']
-        p = cmd.Command(cmdlist)
+        p = gcmd.Command(cmdlist)
         output = p.module_stdout.read().split('\n')
         for outline in output:
             outline = outline.strip()
@@ -435,7 +464,7 @@ class GMFrame(wx.Frame):
             cmdlist = ['cmd.exe', '/c', 'start', os.path.join(gisbase,'etc','grass-run.bat'), command]
         else:
             cmdlist = [os.path.join(gisbase,'etc','grass-xterm-wrapper'), '-name', 'xterm-grass', '-e', os.path.join(gisbase,'etc','grass-run.sh'), command]
-        cmd.Command(cmdlist)
+        gcmd.Command(cmdlist)
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
@@ -837,19 +866,19 @@ class MapsetAccess(wx.Dialog):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
         cmdlist = ['g.mapsets', '-l']
-        self.all_mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
+        self.all_mapsets = gcmd.Command(cmdlist).module_stdout.read().strip().split(' ')
         for mset in self.all_mapsets:
             indx = self.all_mapsets.index(mset)
             self.all_mapsets[indx] = mset.strip('\n')
 
         cmdlist = ['g.mapsets', '-p']
-        self.accessible_mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
+        self.accessible_mapsets = gcmd.Command(cmdlist).module_stdout.read().strip().split(' ')
         for mset in self.accessible_mapsets:
             indx = self.accessible_mapsets.index(mset)
             self.accessible_mapsets[indx] = mset.strip('\n')
 
         cmdlist = ['g.gisenv', 'get=MAPSET']
-        self.curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
+        self.curr_mapset = gcmd.Command(cmdlist).module_stdout.read().strip()
 
 
         # remove PERMANENT and current mapset from list because they are always accessible
