@@ -27,7 +27,7 @@ grass6_wxdriver_wrap.cxx: grass6_wxdriver.i
 grass6_wxdriver_wrap.o: grass6_wxdriver_wrap.cxx
 	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
 
-driver.o: driver.cpp
+driver.o: driver.cpp driver.h
 	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
 
 pseudodc.o: pseudodc.cpp

@@ -488,12 +488,13 @@ class CDisplayDriver(AbstractDisplayDriver):
         """
         import time
         start = time.clock()
-        nlines = self.__display.DrawMap()
+        nlines = self.__display.DrawMap(True) # force
         stop = time.clock()
         Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d, sec=%f" % \
                       (nlines, stop-start))
 
         return nlines
+
     def SelectLinesByBox(self, begin, end, onlyType=None):
         """Select vector features by given bounding box.
 

@@ -27,7 +27,7 @@ extern "C" {
 #include <grass/Vect.h>
 }
 
-//#define DEBUG
+#define DEBUG
 
 class DisplayDriver
 {
@@ -95,12 +95,32 @@ class DisplayDriver
 
     } settings;
 
+    struct _topology {
+	std::vector<int> point;
+	std::vector<int> line;
+
+	std::vector<int> boundaryNo;
+	std::vector<int> boundaryOne;
+	std::vector<int> boundaryTwo;
+
+	std::vector<int> centroidIn;
+	std::vector<int> centroidOut;
+	std::vector<int> centroidDup;
+
+	std::vector<int> nodeOne;
+	std::vector<int> nodeTwo;
+
+	std::vector<int> vertex;
+
+	bool recorded; // topology already recorded
+    } topology;
+
     void Cell2Pixel (double east, double north, double depth,
 		     int *x, int *y, int *z);
     
     int DrawCross(int line, const wxPoint *point, int size=5);
 
-    int DrawLine(int line);
+    int DrawLine(int line, bool inBox);
     int DrawLineVerteces(int line);
     int DrawLineNodes(int line);
 
@@ -110,6 +130,8 @@ class DisplayDriver
     /* select feature */
     bool IsSelected(int line);
 
+    void ResetTopology();
+
  public:
     /* constructor */
     DisplayDriver(void *device);
@@ -117,7 +139,7 @@ class DisplayDriver
     ~DisplayDriver();
 
     /* display */
-    int DrawMap();
+    int DrawMap(bool force);
 
     /* select */
     int SelectLinesByBox(double x1, double y1, double x2, double y2);
