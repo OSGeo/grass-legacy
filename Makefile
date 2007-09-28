@@ -36,6 +36,7 @@ GRASS_PDFDIR=		$(GISBASE)/docs/pdf
 
 
 SUBDIRS = \
+	lib \
 	db \
 	display \
 	doc \
@@ -76,16 +77,13 @@ BIN_DIST_FILES = $(FILES) \
 	man \
 	scripts
 
-lib: builddemolocation 
+default: builddemolocation
 	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
 	@echo "-------------------------"    >> $(GRASS_HOME)/error.log
 	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
 	@echo "--"                           >> $(GRASS_HOME)/error.log
 	@echo "Errors in:"                   >> $(GRASS_HOME)/error.log
 	chmod 744 install-sh
-	@$(MAKE) -C lib
-
-default: lib
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 		$(MAKE) -C $$subdir; \
