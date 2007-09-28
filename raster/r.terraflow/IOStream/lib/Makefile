@@ -6,11 +6,11 @@ RANLIB = ranlib
 
 export
 
-all: build $(LIBRARY)
+all: $(LIBRARY)
 
 
-build:
-	(cd src ; $(MAKE) )
+$(LIBSRCPATH)/$(LIBRARY):
+	$(MAKE) -C $(LIBSRCPATH)
 
 $(LIBRARY): $(LIBSRCPATH)/$(LIBRARY)
 	cp $< $@
@@ -19,5 +19,4 @@ $(LIBRARY): $(LIBSRCPATH)/$(LIBRARY)
 clean:
 	-rm $(LIBRARY)
 	-rm $(LIBSRCPATH)/$(LIBRARY)
-#	$(MAKE) -C $(LIBSRCPATH) $@
-	-rm $(LIBSRCPATH)/*.d $(LIBSRCPATH)/*.o
+	-rm $(LIBSRCPATH)/*.o

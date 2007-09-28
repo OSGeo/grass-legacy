@@ -17,18 +17,17 @@ HEADERS = common.h stats.h streamutils.h types.h \
 
 OBJARCH=OBJ.$(ARCH)
 
-OBJ := $(patsubst %.cc,%.o,$(SOURCES))
-FLOAT_OBJ = $(patsubst %.cc, $(OBJARCH)/FLOAT/%.o, $(SOURCES))
-SHORT_OBJ = $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
+FLOAT_OBJ := $(patsubst %.cc, $(OBJARCH)/FLOAT/%.o, $(SOURCES))
+SHORT_OBJ := $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
 
 
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
-$(OBJARCH)/FLOAT/%.o:%.cc
+$(OBJARCH)/FLOAT/%.o: %.cc $(OBJARCH)/FLOAT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
 
-$(OBJARCH)/SHORT/%.o:%.cc
+$(OBJARCH)/SHORT/%.o: %.cc $(OBJARCH)/SHORT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
 
@@ -36,7 +35,7 @@ IOSTREAM_DIR =  ./IOStream
 IOSTREAM_INC = $(IOSTREAM_DIR)/include
 IOSTREAM_LIBDIR = $(IOSTREAM_DIR)/lib
 IOSTREAM_LIB =  -liostream
-
+IOSTREAM_DEPLIB = $(IOSTREAM_LIBDIR)/libiostream.a
 
 WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
   -Wimplicit-int -Wimplicit-function-declaration -Wreturn-type	\
@@ -54,28 +53,27 @@ DEPLIBS = $(DEPGISLIB)
 
 PGM = r.terraflow
 
-default: dofirst $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlcmd
+default: $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlcmd
 
-dofirst:
-	$(MKDIR) $(OBJARCH)/FLOAT ; true
-	$(MKDIR) $(OBJARCH)/SHORT ; true
+$(OBJARCH)/FLOAT:
+	$(MKDIR) $@
 
-$(BIN)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; $(MAKE) )
+$(OBJARCH)/SHORT:
+	$(MKDIR) $@
+
+$(BIN)/$(PGM): $(FLOAT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
-$(BIN)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; $(MAKE) )
+$(BIN)/$(PGM).short: $(SHORT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
-
-$(GISLIB):	#
-$(DEPGISLIB):	#
+$(IOSTREAM_DEPLIB):
+	$(MAKE) -C $(IOSTREAM_LIBDIR)
 
 clean: 
-	(cd IOStream/lib ; $(MAKE) clean )
+	$(MAKE) -C $(IOSTREAM_LIBDIR) clean
 	-rm $(OBJARCH)/FLOAT/*
 	-rm $(OBJARCH)/SHORT/*
 	-rmdir $(OBJARCH)/FLOAT

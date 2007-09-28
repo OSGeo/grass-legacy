@@ -22,16 +22,10 @@ LIB_COMPONENTS = $(patsubst %.cc,$(LIBRARY)(%.o),$(SRC))
 (%): %
 	$(AR) $(ARFLAGS) $@ $<
 
-%.d: %.cc
-	$(SHELL) -ec '$(CXX) -M $(CPPFLAGS) $< | sed '\''s/$*.o/& $@/g'\'' > $@'
-
 default: $(LIBRARY)
-
-include $(SRC:.cc=.d)
 
 $(LIBRARY): $(LIB_COMPONENTS)
 
 
 clean:
-	-rm $(SRC:.cc=.d) $(OBJ)
 	-rm $(LIBRARY)

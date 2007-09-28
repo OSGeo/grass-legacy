@@ -14,7 +14,10 @@ LIBES = $(PNGDRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(PNGDRIVERDEP) $(DRIVERDEP) $(GISLIBDEP)
 PGM=pngdriver
 
-default: $(DRIVERDIR)/PNG htmlgen moncap
+default: $(DRIVERDIR)/PNG html moncap
+
+html:	$(DRIVERDIR)/PNG
+	$(call htmlgen)
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
