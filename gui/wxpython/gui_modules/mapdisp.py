@@ -931,7 +931,6 @@ class BufferedWindow(wx.Window):
                             pass
                 # unselect & re-draw
                 if redraw:
-                    # PyDisplayDriver: Digit.driver.SetSelected([])
                     self.parent.digit.driver.Unselect()
                     self.UpdateMap(render=False)
             elif digitToolbar.action == "copyCats":
@@ -1264,7 +1263,6 @@ class BufferedWindow(wx.Window):
                 del self.moveIds
 
             if digit.action != "addLine":
-                # PyDisplayDriver: self.parent.digit.driver.SetSelected([])
                 self.parent.digit.driver.Unselect()
                 self.UpdateMap(render=False)
 
@@ -1300,7 +1298,6 @@ class BufferedWindow(wx.Window):
                                   "addVertex", "removeVertex", "moveVertex",
                                   "copyCats"]:
                 # varios tools -> unselected selected features
-                # PyDisplayDriver: self.parent.digit.driver.SetSelect([])
                 self.parent.digit.driver.Unselect()
                 if digit.action in ["moveLine", "moveVertex", "editLine"] and \
                         hasattr(self, "moveBegin"):

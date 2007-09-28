@@ -6,7 +6,6 @@ CLASSES:
  * VEdit
  * VDigit
  * AbstractDisplayDriver
- * PyDisplayDriver
  * CDisplayDriver
  * DigitSettingsDialog
  * DigitCategoryDialog
@@ -44,27 +43,13 @@ import gcmd as cmd
 import dbm
 from debug import Debug as Debug
 
-usePyDisplayDriver = False
-
-if usePyDisplayDriver:
-    try:
-        # replace with the path to the GRASS SWIG-Python interface
-        g6libPath = "/hardmnt/schiele0/ssi/landa/src/grass6/swig/python"
-        # g6libPath = "/usr/src/gis/grass6/swig/python"
-        sys.path.append(g6libPath)
-        import python_grass6 as g6lib
-    except:
-        print >> sys.stderr, "For running digitization tool you need to enable GRASS SWIG-Python interface.\n" \
-              "This only TEMPORARY solution (display driver based on SWIG-Python interface is EXTREMELY SLOW!\n" \
-              "Will be replaced by C/C++ display driver."
-else:
-    try:
-        driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
-        sys.path.append(driverPath)
-        from grass6_wxdriver import DisplayDriver
-    except:
-        print >> sys.stderr, "Digitization tool is disabled.\n" \
-              "Under development..."
+try:
+    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+    sys.path.append(driverPath)
+    from grass6_wxdriver import DisplayDriver
+except:
+    print >> sys.stderr, "Digitization tool is disabled.\n" \
+        "Under development..."
     
 class AbstractDigit:
     """
@@ -111,10 +96,7 @@ class AbstractDigit:
         else:
             self.settings = settings
 
-        if usePyDisplayDriver:
-            self.driver = PyDisplayDriver(self, mapwindow)
-        else:
-            self.driver = CDisplayDriver(self, mapwindow)
+        self.driver = CDisplayDriver(self, mapwindow)
 
         self.threshold = self.driver.GetThreshold()
 
@@ -656,330 +638,6 @@ class CDisplayDriver(AbstractDisplayDriver):
                                            255).GetRGB(),
                                   settings['lineWidth'][0])
 
-
-class PyDisplayDriver(AbstractDisplayDriver):
-    """
-    Experimental display driver implemented in Python using
-    GRASS-Python SWIG interface
-
-    Note: This will be in the future rewritten in C/C++
-    """
-    def __init__(self, parent, mapwindow):
-        AbstractDisplayDriver.__init__(self, parent, mapwindow)
-        self.mapInfo     = None
-
-    def __del__(self):
-        if self.points:
-            g6lib.Vect_destroy_line_struct(self.points)
-        if self.cats:
-            g6lib.Vect_destroy_cats_struct(self.cats)
-
-    def Reset(self, map):
-        g6lib.G_gisinit('')
-
-        if map == None:
-            if self.mapInfo:
-                g6lib.Vect_close(self.mapInfo)
-
-            self.mapInfo = None
-            return
-        
-        name, mapset = map.split('@')
-
-        Debug.msg(4, "DisplayDriver.__init__(): name=%s, mapset=%s" % \
-                      (name, mapset))
-        
-        # define map structure
-        self.mapInfo = g6lib.Map_info()
-        # define open level (level 2: topology)
-        g6lib.Vect_set_open_level(2)
-
-        # open existing map
-        # python 2.5 (unicode) -> str()
-        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
-
-        # auxilary structures
-        self.points = g6lib.Vect_new_line_struct();
-        self.cats = g6lib.Vect_new_cats_struct();
-
-    def GetSelectedVertex(self, coords):
-        """Return PseudoDC id(s) of vertex (of selected line)
-        on position 'coords'"""
-
-        selectedId = []
-
-        try:
-            line = self.selected[0]
-        except:
-            return selectedId
-
-        idx = 0
-
-        type = g6lib.Vect_read_line (self.mapInfo, self.points, self.cats, line)
-
-        npoints = self.points.n_points
-        
-        for idx in range(npoints):
-            x = g6lib.doubleArray_getitem(self.points.x, idx)
-            y = g6lib.doubleArray_getitem(self.points.y, idx)
-            z = g6lib.doubleArray_getitem(self.points.z, idx)
-
-            dist = g6lib.Vect_points_distance(coords[0], coords[1], 0,
-                                              x, y, z, 0)
-
-            if idx == 0:
-                minDist = dist
-                minIdx  = idx
-            else:
-                if minDist > dist:
-                    minDist = dist
-                    minIdx = idx
-
-        # [line, vertex1, ..., node1, node2]
-        if minIdx == 0:
-            selectedId.append(self.ids[line][-2])
-        elif minIdx == npoints - 1:
-            selectedId.append(self.ids[line][-1])
-        else:
-            selectedId.append(self.ids[line][minIdx])
-
-        return selectedId
-        
-    def SelectLinesByBox(self, rect, onlyType=None):
-        """Select vector features by given bounding box.
-
-        rect = ((x1, y1), (x2, y2))
-        Number of selected features can be decreased by 'onlyType'
-        ('None' for no types)
-        """
-
-        type = 0
-        if not onlyType:
-            type = -1 # all types (see include/vect/dig_defines.h)
-        elif onlyType == "line":
-            type = g6lib.GV_LINES
-        elif onlyType == "point":
-            type = g6lib.GV_POINTS
-                    
-        list = g6lib.Vect_new_list()
-        bbox = g6lib.Vect_new_line_struct()
-
-        x1, y1 = rect[0]
-        x2, y2 = rect[1]
-        dx = abs(x2 - x1)
-        dy = abs(y2 - y1)
-        
-        g6lib.Vect_append_point(bbox, x1, y1, 0)
-        g6lib.Vect_append_point(bbox, x2, y1, 0)
-        g6lib.Vect_append_point(bbox, x2, y2, 0)
-        g6lib.Vect_append_point(bbox, x1, y2, 0)
-        g6lib.Vect_append_point(bbox, x1, y1, 0)
-        
-        g6lib.Vect_select_lines_by_polygon(self.mapInfo, bbox,
-                                           0, None,
-                                           type, list)
-
-        for idx in range(list.n_values):
-            line = g6lib.intArray_getitem(list.value, idx)
-            if line not in self.selected:
-                self.selected.append(line)
-
-        Debug.msg(4, "DisplayDriver.SelectLinesByBox(%s): n=%d, ids=%s" % \
-                  (rect, list.n_values, self.selected))
-        
-        g6lib.Vect_destroy_line_struct(bbox)
-        g6lib.Vect_destroy_list(list)
-
-        return self.selected
-
-    def SelectLinesByPoint(self, point, onlyType=""):
-        """Select vector features by the box given by its center and thresh (size/2)
-        Number of selected features can be decreased by 'onlyType'
-        ('None' for all types)"""
-                           
-        type = 0
-        if not onlyType:
-            type = -1 # all types (see include/vect/dig_defines.h)
-        elif onlyType == "line":
-            type = g6lib.GV_LINES
-        elif onlyType == "point":
-            type = g6lib.GV_POINTS
-
-
-        line = g6lib.Vect_find_line(self.mapInfo, point[0], point[1], 0,
-                                    type, self.parent.threshold, 0, 0)
-
-        self.selected = []
-        if line > 0:
-            self.selected.append(line)
-
-        return self.selected
-
-    def ReDrawMap(self, map):
-        """Reopen map and draw its content in PseudoDC"""
-        # close map
-        if self.mapInfo:
-            g6lib.Vect_close(self.mapInfo)
-        
-        # re-open map
-        name, mapset = map.split('@')
-        g6lib.Vect_open_old(self.mapInfo, str(name), str(mapset))
-
-        self.DrawMap()
-        
-    def DrawMap(self):
-        """Display content of the map in PseudoDC"""
-        if not self.mapInfo:
-            return
-        nlines = g6lib.Vect_get_num_lines(self.mapInfo)
-        Debug.msg(4, "PyDisplayDriver.DrawMap(): nlines=%d" % nlines)
-
-        for line in range(1, nlines + 1):
-            self.DisplayLine(line)
-
-        return nlines
-    
-    def DisplayLine(self, line):
-        """Display line (defined by id) in PseudoDC"""
-        Debug.msg(4, "DisplayDriver.DisplayLine(): line=%d" % line)
-        
-        if not g6lib.Vect_line_alive (self.mapInfo, line):
-            return
-        
-        type = g6lib.Vect_read_line (self.mapInfo, self.points, self.cats, line)
-
-        Debug.msg (4, "DisplayDriver.DisplayLine(): line=%d type=%d" % \
-                   (line, type))
-
-        # add id
-        self.ids[line] = []
-        self.DisplayPoints(line, type, self.points)
-
-    def DisplayNodes(self, line):
-        """Display nodes of the given line"""
-        Debug.msg(4, "DisplayDriver.DisplayNodes(): line=%d" % line)
-
-        n1 = g6lib.new_intp()
-        n2 = g6lib.new_intp()
-        x = g6lib.new_doublep()
-        y = g6lib.new_doublep()
-        z = g6lib.new_doublep()
-
-        nodes = [n1, n2]
-        g6lib.Vect_get_line_nodes(self.mapInfo, line, n1, n2)
-        
-        for nodep in nodes:
-            node = g6lib.intp_value(nodep)
-            g6lib.Vect_get_node_coor(self.mapInfo, node,
-                                     x, y, z)
-            coords = (self.mapwindow.Cell2Pixel(g6lib.doublep_value(x),
-                                                g6lib.doublep_value(y)))
-
-            if g6lib.Vect_get_node_n_lines(self.mapInfo, node) == 1:
-                self.SetPen(line, "symbolNodeOne") # one line
-            else:
-                self.SetPen(line, "symbolNodeTwo") # two lines
-
-            self.ids[line].append(self.mapwindow.DrawCross(coords, size=5))
-
-        g6lib.delete_doublep(x)
-        g6lib.delete_doublep(y)
-        g6lib.delete_doublep(z)
-        g6lib.delete_intp(n1)
-        g6lib.delete_intp(n2)
-
-    def DisplayPoints(self, line, type, points):
-        """Draw points in PseudoDC"""
-
-        coords = []
-        npoints = points.n_points
-        Debug.msg(4, "DisplayDriver.DisplayPoints() npoints=%d" % npoints);
-
-        for idx in range(npoints):
-            x = g6lib.doubleArray_getitem(self.points.x, idx)
-            y = g6lib.doubleArray_getitem(self.points.y, idx)
-            z = g6lib.doubleArray_getitem(self.points.z, idx)
-            coords.append(self.mapwindow.Cell2Pixel(x, y))
-
-        if len(coords) > 1: # -> line
-            # draw line
-            if type == g6lib.GV_BOUNDARY:
-                leftp = g6lib.new_intp()
-                rightp = g6lib.new_intp()
-                g6lib.Vect_get_line_areas(self.mapInfo, line,
-                                          leftp, rightp)
-                left, right = g6lib.intp_value(leftp), g6lib.intp_value(rightp)
-                if left == 0 and right == 0:
-                    self.SetPen(line, "symbolBoundaryNo")
-                elif left > 0 and right > 0:
-                    self.SetPen(line, "symbolBoundaryTwo")
-                else:
-                    self.SetPen(line, "symbolBoundaryOne")
-                g6lib.delete_intp(leftp)
-                g6lib.delete_intp(rightp)
-            else: # GV_LINE
-                self.SetPen(line, "symbolLine")
-            self.ids[line].append(self.mapwindow.DrawLines(coords))
-            # draw verteces
-            self.SetPen(line, "symbolVertex")
-            for idx in range(1, npoints-1):
-                self.ids[line].append(self.mapwindow.DrawCross(coords[idx], size=4))
-            # draw nodes
-            self.DisplayNodes(line)
-        else:
-            if type == g6lib.GV_CENTROID:
-                cret = g6lib.Vect_get_centroid_area(self.mapInfo, line)
-                if cret > 0: # -> area
-                    self.SetPen(line, "symbolCentroidIn")
-                elif cret == 0:
-                    self.SetPen(line, "symbolCentroidOut")
-                else:
-                    self.SetPen(line, "symbolCentroidDup")
-            else:
-                self.SetPen(line, "symbolPoint")
-            self.ids[line].append(self.mapwindow.DrawCross(coords[0], size=5))
-
-    def SetPen(self, line, symbol):
-        """Set Pen for PseudoDC according vector feature status"""
-        
-        if line in self.selected:
-            symbol = "symbolHighlight"
-        
-        width = self.parent.settings["lineWidth"][0]
-        
-        if self.parent.settings[symbol][0] in [True, None]:
-            self.mapwindow.pen = self.mapwindow.polypen = wx.Pen(colour=self.parent.settings[symbol][1],
-                                                                 width=width, style=wx.SOLID)
-        else:
-            self.mapwindow.pen = self.mapwindow.polypen = None
-
-    def SetSelected(self, pdcId):
-        """Set selected objects (their ids) in PseudoDC
-
-        For deseleids=[]
-        """
-        # reset
-        self.selected = []
-        
-        for line in pdcId:
-            self.selected.append(line)
-
-        Debug.msg(4, "DisplayDriver.SetSelected(): pdcId=%s, grassId=%s" % \
-                      (pdcId, self.selected))
-
-    def GetSelected(self, grassId=True):
-        """Get ids of selected objects in PseudoDC
-
-        If grassId=True return GRASS line id otherwise PseudoDC id"""
-        if grassId:
-            return self.selected
-        else:
-            pdcId = []
-            for line in self.selected:
-                for id in self.ids[line]:
-                    pdcId.append(id)
-            return pdcId
-
 class DigitSettingsDialog(wx.Dialog):
     """
     Standard settings dialog for digitization purposes
@@ -1286,8 +944,7 @@ class DigitSettingsDialog(wx.Dialog):
             pass
 
         # update driver settings
-        if not usePyDisplayDriver:
-            self.parent.digit.driver.UpdateSettings()
+        self.parent.digit.driver.UpdateSettings()
 
         # redraw map if auto-rendering is enabled
         if self.parent.autoRender.GetValue(): 
