@@ -39,6 +39,7 @@ DisplayDriver::DisplayDriver(void *device)
     pointsScreen = new wxList();
     cats         = Vect_new_cats_struct();
 
+    topology.recorded = true;
 }
 
 /**
@@ -80,7 +81,7 @@ void DisplayDriver::SetDevice(void *device)
    \return number of lines which were drawn
    \return -1 on error
  */
-int DisplayDriver::DrawMap()
+int DisplayDriver::DrawMap(bool force)
 {
     if (!mapInfo || !dc)
 	return -1;
@@ -93,6 +94,10 @@ int DisplayDriver::DrawMap()
     dcId = 1;
     ids.clear();
     listLines = Vect_new_list();
+
+    if (force) {
+	ResetTopology();
+    }
 
     /* nlines = Vect_get_num_lines(mapInfo); */
 
@@ -109,35 +114,38 @@ int DisplayDriver::DrawMap()
     nlines = Vect_select_lines_by_box(mapInfo, &mapBox,
 				      GV_POINTS | GV_LINES, // fixme
  				      listLines);
-    */
+
     for (int i = 0; i < listLines->n_values; i++) {
 	DrawLine(listLines->value[i]);
     }
+    */
 
 #ifdef DEBUG
-    std::cout.flags(std::ios_base::fixed);
-    std::cout << "region: W=" << mapBox.W
-	      << "; E=" << mapBox.E
-	      << "; S=" << mapBox.S
-	      << "; N=" << mapBox.N << std::endl;
-    std::cout << "region: W=" << region.box.W
+    std::cerr.flags(std::ios_base::fixed);
+    std::cerr << "region: W=" << region.box.W
 	      << "; E=" << region.box.E
 	      << "; S=" << region.box.S
 	      << "; N=" << region.box.N << std::endl;
 
-    std::cout << "-> nlines=" << nlines << std::endl;
+    std::cerr << "-> nlines=" << nlines << std::endl;
 #endif
 
-    /*
-    nlines = Vect_get_num_lines(mapInfo);
-    for (int line = 1; line <= nlines; line++) {
-	DrawLine(line);
+    bool inBox;
+    for (int line = 1; line <= Vect_get_num_lines(mapInfo); line++) {
+	if (Vect_val_in_list(listLines, line))
+	    inBox = true;
+	else
+	    inBox = false;
+	DrawLine(line, inBox);
     }
-    */
 
 #ifdef DEBUG
     PrintIds();
 #endif
+
+    if (force) {
+	topology.recorded = true;
+    }
 
     Vect_destroy_list(listLines);
 
@@ -148,11 +156,11 @@ int DisplayDriver::DrawMap()
    \brief Draw selected vector objects to the device
  
    \param[in] line id
- 
+   \param[in] inBox line inside of current region?
    \return 1 on success
    \return -1 on failure (vector object is dead, etc.)
 */
-int DisplayDriver::DrawLine(int line)
+int DisplayDriver::DrawLine(int line, bool inBox)
 {
     if (!dc || !Vect_line_alive (mapInfo, line))
 	return -1;
@@ -164,14 +172,6 @@ int DisplayDriver::DrawLine(int line)
     // read line
     type = Vect_read_line (mapInfo, points, cats, line);
 
-    // clear screen points & convert EN -> xy
-    pointsScreen->Clear();
-    for (int i = 0; i < points->n_points; i++) {
-	Cell2Pixel(points->x[i], points->y[i], points->z[i],
-		   &x, &y, &z);
-	pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
-    }
-
     // add ids
     // -> node1, line1, vertex1, line2, ..., node2
     struct lineDesc desc = {points->n_points, dcId};
@@ -179,16 +179,16 @@ int DisplayDriver::DrawLine(int line)
     // update id for next line
     dcId += points->n_points * 2 - 1;
 
-    // determine color of vector object
-    if (IsSelected(line)) {
+    if (IsSelected(line)) { // line selected ?
 	dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
 	draw = true;
     }
-    else {
+    else if (!topology.recorded) { // determine color of vector object
 	if (type & GV_LINES) {
 	    switch (type) {
 	    case GV_LINE:
 		dc->SetPen(wxPen(settings.line.color, settings.lineWidth, wxSOLID));
+		topology.line.push_back(line);
 		draw = settings.line.enabled;
 		break;
 	    case GV_BOUNDARY:
@@ -197,14 +197,17 @@ int DisplayDriver::DrawLine(int line)
 				    &left, &right);
 		if (left == 0 && right == 0) {
 		    dc->SetPen(wxPen(settings.boundaryNo.color, settings.lineWidth, wxSOLID));
+		    topology.boundaryNo.push_back(line);
 		    draw = settings.boundaryNo.enabled;
 		}
 		else if (left > 0 && right > 0) {
 		    dc->SetPen(wxPen(settings.boundaryTwo.color, settings.lineWidth, wxSOLID));
+		    topology.boundaryTwo.push_back(line);
 		    draw = settings.boundaryTwo.enabled;
 		}
 		else {
 		    dc->SetPen(wxPen(settings.boundaryOne.color, settings.lineWidth, wxSOLID));
+		    topology.boundaryOne.push_back(line);
 		    draw = settings.boundaryOne.enabled;
 		}
 		break;
@@ -216,28 +219,40 @@ int DisplayDriver::DrawLine(int line)
 	else if (type & GV_POINTS) {
 	    if (type == GV_POINT && settings.point.enabled) {
 		dc->SetPen(wxPen(settings.point.color, settings.lineWidth, wxSOLID));
-		draw = true;
+		topology.point.push_back(line);
+		draw = settings.point.enabled;
 	    }
 	    else if (type == GV_CENTROID) {
 		int cret = Vect_get_centroid_area(mapInfo, line);
 		if (cret > 0) { // -> area
 		    draw = settings.centroidIn.enabled;
 		    dc->SetPen(wxPen(settings.centroidIn.color, settings.lineWidth, wxSOLID));
+		    topology.centroidIn.push_back(line);
 		}
 		else if (cret == 0) {
 		    draw = settings.centroidOut.enabled;
 		    dc->SetPen(wxPen(settings.centroidOut.color, settings.lineWidth, wxSOLID));
+		    topology.centroidOut.push_back(line);
 		}
 		else {
 		    draw = settings.centroidDup.enabled;
 		    dc->SetPen(wxPen(settings.centroidDup.color, settings.lineWidth, wxSOLID));
+		    topology.centroidDup.push_back(line);
 		}
 	    }
 	}
     }
 
     // draw object
-    if (draw) {
+    if (inBox && draw) {
+	// clear screen points & convert EN -> xy
+	pointsScreen->Clear();
+	for (int i = 0; i < points->n_points; i++) {
+	    Cell2Pixel(points->x[i], points->y[i], points->z[i],
+		       &x, &y, &z);
+	    pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
+	}
+
 	if (type & GV_POINTS) {
 	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
 	}
@@ -286,6 +301,7 @@ int DisplayDriver::DrawLineVerteces(int line)
     // determine color
     if (!IsSelected(line)) {
 	dc->SetPen(wxPen(settings.vertex.color, settings.lineWidth, wxSOLID));
+	topology.vertex.push_back(line);
     }
     else {
 	dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
@@ -343,13 +359,15 @@ int DisplayDriver::DrawLineNodes(int line)
 	    dc->SetPen(wxPen(settings.highlight, settings.lineWidth, wxSOLID));
 	    draw = true;
 	}
-	else {
+	else if (!topology.recorded) {
 	    if (Vect_get_node_n_lines(mapInfo, node) == 1) {
 		dc->SetPen(wxPen(settings.nodeOne.color, settings.lineWidth, wxSOLID));
+		topology.nodeOne.push_back(line);
 		draw = settings.nodeOne.enabled;
 	    }
 	    else {
 		dc->SetPen(wxPen(settings.nodeTwo.color, settings.lineWidth, wxSOLID));
+		topology.nodeTwo.push_back(line);
 		draw = settings.nodeTwo.enabled;
 	    }
 	}
@@ -595,16 +613,46 @@ void DisplayDriver::PrintIds()
 {
     for (ids_map::const_iterator i = ids.begin(), e = ids.end();
 	 i != e; ++i) {
-	std::cout << "line=" << i->first << ": "
+	std::cerr << "line=" << i->first << ": "
 		  << "npoints=" << i->second.npoints
 		  << " startId=" << i->second.startId
 		  << std::endl;
     }
 
+    std::cerr << std::endl << "topology.recorded: " << topology.recorded << std::endl;
+    std::cerr << "topology.point: " << topology.point.size() << std::endl;
+    std::cerr << "topology.line: " << topology.line.size() << std::endl;
+
+    std::cerr << "topology.boundaryNo: " << topology.boundaryNo.size() << std::endl;
+    std::cerr << "topology.boundaryOne: " << topology.boundaryOne.size() << std::endl;
+    std::cerr << "topology.boundaryTwo: " << topology.boundaryTwo.size() << std::endl;
+
+    std::cerr << "topology.centroidIn: " << topology.centroidIn.size() << std::endl;
+    std::cerr << "topology.centroidOut: " << topology.centroidOut.size() << std::endl;
+    std::cerr << "topology.centroidDup: " << topology.centroidDup.size() << std::endl;
+
+    std::cerr << "topology.nodeOne: " << topology.nodeOne.size() << std::endl;
+    std::cerr << "topology.nodeTwo: " << topology.nodeTwo.size() << std::endl;
+
+    std::cerr << "topology.vertex: " << topology.vertex.size() << std::endl;
+
+    std::cerr << std::endl << "nprimitives: "
+	      << topology.point.size() + 
+	topology.line.size() + 
+	topology.boundaryNo.size() +
+	topology.boundaryOne.size() +
+	topology.boundaryTwo.size() +
+	topology.centroidIn.size() * 2 +
+	topology.centroidOut.size() * 2 +
+	topology.centroidDup.size() * 2 +
+	topology.nodeOne.size() * 2 +
+	topology.nodeTwo.size() * 2 +
+	topology.vertex.size() * 2 << std::endl;
+
     for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
 	 i != e; ++i)
-	std::cout << "selected: " << *i << " ";
-    std::cout << std::endl;
+	std::cerr << "selected: " << *i << " ";
+    std::cerr << std::endl;
 
     return;
 }
@@ -875,4 +923,32 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
     }
 
     return returnId;
+}
+
+/**
+   \brief Reset topology structure.
+
+   \return
+*/
+void DisplayDriver::ResetTopology()
+{
+    topology.recorded = false;
+
+    topology.point.clear();
+    topology.line.clear();
+    
+    topology.boundaryNo.clear();
+    topology.boundaryOne.clear();
+    topology.boundaryTwo.clear();
+    
+    topology.centroidIn.clear();
+    topology.centroidOut.clear();
+    topology.centroidDup.clear();
+    
+    topology.nodeOne.clear();
+    topology.nodeTwo.clear();
+    
+    topology.vertex.clear();
+
+    return;
 }
