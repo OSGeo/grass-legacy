@@ -9,5 +9,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
 
-htmletc1:
+htmletc:
 	@echo no docs needed for $(PGM)

@@ -11,6 +11,6 @@ default: etc
 	$(MKDIR) $(ETC)/support
 	mv $(ETC)/$(PGM)$(EXE) $(ETC)/support
 
-htmletc1:
+htmletc:
 	@echo "No docs to generate."
 

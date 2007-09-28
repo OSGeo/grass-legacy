@@ -1,11 +1,11 @@
 
 # common dependencies and rules for building scripts
 
+PROGDIR =  $(ARCH_DISTDIR)/scripts
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
-
-PROGDIR =  $(ARCH_DISTDIR)/scripts
 
 SCRIPT_ACTIONS = $(PROGDIR)/$(PGM) htmlscript scriptstrings
 ifdef MINGW

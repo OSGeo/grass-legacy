@@ -14,7 +14,10 @@ LIBES = $(PSDRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(PSDRIVERDEP) $(DRIVERDEP) $(GISDEP)
 PGM=psdriver
 
-default: $(DRIVERDIR)/PS htmlgen moncap
+default: $(DRIVERDIR)/PS html moncap
+
+html:	$(DRIVERDIR)/PS
+	$(call htmlgen)
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^PS' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

@@ -69,7 +69,10 @@ PGM=xdriver
 #    OBJS += $(FREETYPEBASED)
 #endif
 
-default: $(DRIVERDIR)/XDRIVER htmlgen moncap
+default: $(DRIVERDIR)/XDRIVER html moncap
+
+html:	$(DRIVERDIR)/XDRIVER
+	$(call htmlgen)
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^x0' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

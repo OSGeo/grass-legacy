@@ -13,9 +13,11 @@ PACKAGE ="grassmods"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
+$(OBJDIR):
+	-@test -d $(OBJDIR) || mkdir $(OBJDIR)	
+
 # default cc rules
-$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) 
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)	
+$(OBJDIR)/%.o : %.c $(OBJDIR) $(LOCAL_HEADERS) 
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $(OBJDIR)/$*.o -c $*.c
 

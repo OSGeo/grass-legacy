@@ -20,8 +20,13 @@ LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(DRIVERLIBDEP) $(DRIVERDEP) $(DISPLAYDEP) $(RASTERDEP) $(GISLIBDEP)
 PGM=htmlmapdriver
 
-default: $(DRIVERDIR)/HTMLMAP htmlgen
-	@if egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+default: $(DRIVERDIR)/HTMLMAP html moncap
+
+html:	$(DRIVERDIR)/HTMLMAP
+	$(call htmlgen)
+
+moncap:
+	@if [ -f $(ETC)/monitorcap ] && egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo HTMLMAP already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding HTMLMAP driver to $(ETC)/monitorcap ; \
