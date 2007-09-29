@@ -526,7 +526,8 @@ class mainFrame(wx.Frame):
                                     bitmap=wx.Bitmap(name=os.path.join(imagepath,
                                                                        'grass-tiny-logo.png'),
                                                      type=wx.BITMAP_TYPE_PNG))
-        topsizer.Add (item=self.logo, proportion=0, border=3, flag=wx.ALL)
+        topsizer.Add (item=self.logo, proportion=0, border=3,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
         guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM | wx.EXPAND)
 
         # notebooks
