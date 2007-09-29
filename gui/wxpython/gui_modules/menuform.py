@@ -52,7 +52,6 @@ import sys
 import re
 import string
 import textwrap
-import select
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
@@ -69,7 +68,6 @@ from os import system
 import gettext
 gettext.install("wxgrass")
 
-
 gisbase = os.getenv("GISBASE")
 if gisbase is None:
     print >>sys.stderr, "We don't seem to be properly installed, or we are being run outside GRASS. Expect glitches."
@@ -82,11 +80,11 @@ sys.path.append( wxbase)
 imagepath = os.path.join(wxbase,"images")
 sys.path.append(imagepath)
 
+import select
 try:
     import subprocess
 except:
     from compat import subprocess
-
 
 def reexec_with_pythonw():
     if sys.platform == 'darwin' and\
@@ -100,9 +98,9 @@ ID_ABOUT_COMMAND = 102
 
 VSPACE = 4
 HSPACE = 4
-MENU_HEIGHT = 30
+MENU_HEIGHT = 25
 STATUSBAR_HEIGHT = 30
-ENTRY_HEIGHT = 20
+ENTRY_HEIGHT = 25
 STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
@@ -495,7 +493,7 @@ class mainFrame(wx.Frame):
         # statusbar
         self.CreateStatusBar()
         # icon
-        self.SetIcon(wx.Icon(os.path.join(imagepath, 'grass.form.gif'), wx.BITMAP_TYPE_ANY))
+        self.SetIcon(wx.Icon(os.path.join(imagepath, 'grass.form.gif'), wx.BITMAP_TYPE_GIF))
 
         # menu
         #         menu = wx.Menu()
@@ -522,13 +520,14 @@ class mainFrame(wx.Frame):
 
         # logo+description
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
+
         # GRASS logo
-        self.logo = wx.StaticBitmap (parent=self, bitmap=wx.Bitmap(name=os.path.join(imagepath, 'grass-tiny-logo.png'), type=wx.BITMAP_TYPE_ANY))
-        topsizer.Add (item=self.logo, proportion=0, border=1, flag=wx.ALL)
-        # module description
-        self.description = wx.StaticText (parent=self, label=self.task.description)
-        topsizer.Add (item=self.description, proportion=0, border=5, flag=wx.ALL)
-        guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM)
+        self.logo = wx.StaticBitmap(parent=self,
+                                    bitmap=wx.Bitmap(name=os.path.join(imagepath,
+                                                                       'grass-tiny-logo.png'),
+                                                     type=wx.BITMAP_TYPE_PNG))
+        topsizer.Add (item=self.logo, proportion=0, border=3, flag=wx.ALL)
+        guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM | wx.EXPAND)
 
         # notebooks
         self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=standalone)
@@ -584,6 +583,11 @@ class mainFrame(wx.Frame):
         constrained_size = self.notebookpanel.GetSize()
         self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
         self.notebookpanel.Layout()
+
+        # for too long descriptions
+        self.description = StaticWrapText (parent=self, label=self.task.description)
+        topsizer.Add (item=self.description, proportion=1, border=5,
+                      flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
 
         guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
@@ -685,7 +689,6 @@ class mainFrame(wx.Frame):
     def createCmd(self, ignoreErrors = False):
         """Create command string (python list)"""
         return self.notebookpanel.createCmd(ignoreErrors=ignoreErrors)
-
 
 class cmdPanel(wx.Panel):
     """
@@ -865,7 +868,8 @@ class cmdPanel(wx.Panel):
 
             if p.get('type','string') == 'string' and p.get('gisprompt',False) == True:
                 txt = wx.StaticText(parent=which_panel, label = title + ':')
-                which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                which_sizer.Add(item=txt, proportion=0,
+                                flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p.get('prompt','') != 'color' and p.get('element', '') != 'file':
                     selection = select.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
@@ -915,14 +919,19 @@ class cmdPanel(wx.Panel):
                         p['wxId'].append(None)
                 # file selector
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
-                    fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, size=(350, -1), labelText='',
-                                                      dialogTitle=_( 'Choose %s' ) % p.get('description',_('File')), buttonText=_( 'Browse' ),
+                    fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, 
+                                                      size=(350, -1), labelText='',
+                                                      dialogTitle=_( 'Choose %s' ) % \
+                                                          p.get('description',_('File')),
+                                                      buttonText=_( 'Browse' ),
                                                       startDirectory=os.getcwd(), fileMode=0,
                                                       changeCallback=self.OnSetValue)
                     if p.get('value','') != '':
                         fbb.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add(item=fbb, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
-                    # A file browse button is a combobox with two children: a textctl and a button;
+                    which_sizer.Add(item=fbb, proportion=0,
+                                    flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.TOP, border=-3)
+                    # A file browse button is a combobox with two children:
+                    # a textctl and a button;
                     # we have to target the button here
                     p['wxId'] = fbb.GetChildren()[1].GetId()
 
@@ -1121,6 +1130,33 @@ class GUI:
             self.mf.MakeModal(modal)
 
 
+class StaticWrapText(wx.StaticText):
+    """
+    A Static Text field that wraps its text to fit its width, enlarging its height if necessary.
+    """
+    def __init__(self, parent, id=wx.ID_ANY, label=u'', *args, **kwds):
+        self.originalLabel = label
+        wx.StaticText.__init__(self, parent, id, u'', *args, **kwds)
+        self.SetLabel(label)
+        self.Bind(wx.EVT_SIZE, self.onResize)
+    
+    def SetLabel(self, label):
+        self.originalLabel = label
+        self.wrappedSize = None
+        #self.onResize(None)
+        
+    def onResize(self, event):
+        if not getattr(self, "resizing", False):
+            self.resizing = True
+            newSize = self.GetSize()
+            if self.wrappedSize != newSize:
+                wx.StaticText.SetLabel(self, self.originalLabel)
+                self.Wrap(newSize.width)
+                self.wrappedSize = self.GetMinSize()
+
+                self.SetSize(self.wrappedSize)
+            del self.resizing
+
 if __name__ == "__main__":
 
     if len(sys.argv) == 1:
@@ -1218,3 +1254,4 @@ if __name__ == "__main__":
             }
             ]
         GrassGUIApp( task ).MainLoop()
+
