@@ -14,14 +14,14 @@ endif
 
 ARCH_CMD_OBJS := $(foreach obj,$(CMD_OBJS),OBJ.$(ARCH)/$(obj))
 
-include $(MODULE_TOPDIR)/include/Make/Rules.make
-
 #for i18N support
 PACKAGE ="grassmods"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
 PROG=$(BIN)/$(PGM)$(EXE)
+
+include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 cmd: $(PROG) htmlcmd
 

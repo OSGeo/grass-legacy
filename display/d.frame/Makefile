@@ -3,9 +3,9 @@ MODULE_TOPDIR = ../..
 LIBES   = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 DEPLIBS = $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
-
 PGM=d.frame
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: \
 	$(ETC)/frame.create \
