@@ -417,45 +417,61 @@ class helpPanel(wx.html.HtmlWindow):
     The SYNOPSIS section is skipped, since this Panel is supposed to
     be integrated into the cmdPanel and options are obvious there.
     """
-    def __init__(self, grass_command = "index", text = None, skip_description=False, *args, **kwargs):
-        """
-        If grass_command is given, the corresponding HTML help file will be presented, with all links
-        pointing to absolute paths of local files.
+    def __init__(self, grass_command = "index", text = None,
+                 skip_description=False, *args, **kwargs):
+        """ If grass_command is given, the corresponding HTML help file will
+        be presented, with all links pointing to absolute paths of
+        local files.
 
-        If 'skip_description' is True, the HTML corresponding to SYNOPSIS will be skipped, thus only
-        presenting the help file from the DESCRIPTION section onwards.
+        If 'skip_description' is True, the HTML corresponding to
+        SYNOPSIS will be skipped, thus only presenting the help file
+        from the DESCRIPTION section onwards.
 
         If 'text' is given, it must be the HTML text to be presented in the Panel.
         """
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = gisbase + "/docs/html/"
         self.SetStandardFonts ( size = 10 )
+        self.SetBorders(10)
+        wx.InitAllImageHandlers()
+
         if text is None:
-            self.fillContentsFromFile ( self.fspath + grass_command + ".html", skip_description=skip_description )
+            self.fillContentsFromFile ( self.fspath + grass_command + ".html",
+                                        skip_description=skip_description )
         else:
             self.SetPage( text )
             self.Ok = True
 
     def fillContentsFromFile( self, htmlFile, skip_description=True ):
         aLink = re.compile( r'(<a href="?)(.+\.html?["\s]*>)', re.IGNORECASE )
+        imgLink = re.compile( r'(<img src="?)(.+\.[png|gif])', re.IGNORECASE )
         try:
-            contents = [ '<head><base href="%s"></head>' % self.fspath ]
+            # contents = [ '<head><base href="%s"></head>' % self.fspath ]
+            contents = []
             skip = False
             for l in file( htmlFile, "rb" ).readlines():
-                if "DESCRIPTION" in l: skip = False
+                if "DESCRIPTION" in l:
+                    skip = False
                 if not skip:
-                    if "SYNOPSIS" in l: skip = skip_description # do skip the options description if requested
+                    # do skip the options description if requested
+                    if "SYNOPSIS" in l:
+                        skip = skip_description
                     else:
-                        findLink = aLink.search( l )
-                        if findLink is not None: # change URLs to file paths
-                            contents.append( aLink.sub(findLink.group(1)+self.fspath+findLink.group(2),l) )
-                        else:
+                        findALink = aLink.search( l )
+                        if findALink is not None: 
+                            contents.append( aLink.sub(findALink.group(1)+
+                                                       self.fspath+findALink.group(2),l) )
+                        findImgLink = imgLink.search( l )
+                        if findImgLink is not None: 
+                            contents.append( imgLink.sub(findImgLink.group(1)+
+                                                         self.fspath+findImgLink.group(2),l) )
+        
+                        if findALink is None and findImgLink is None:
                             contents.append( l )
             self.SetPage( "".join( contents ) )
             self.Ok = True
         except: # The Manual file was not found
             self.Ok = False
-
 
 class mainFrame(wx.Frame):
     """
