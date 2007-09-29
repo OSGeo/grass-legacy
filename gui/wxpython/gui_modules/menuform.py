@@ -436,8 +436,12 @@ class helpPanel(wx.html.HtmlWindow):
         wx.InitAllImageHandlers()
 
         if text is None:
-            self.fillContentsFromFile ( self.fspath + grass_command + ".html",
-                                        skip_description=skip_description )
+            if skip_description:
+                self.fillContentsFromFile ( self.fspath + grass_command + ".html",
+                                            skip_description=skip_description )
+            else:
+                self.LoadPage(self.fspath + grass_command + ".html")
+                self.Ok = True
         else:
             self.SetPage( text )
             self.Ok = True
@@ -457,10 +461,11 @@ class helpPanel(wx.html.HtmlWindow):
                     if "SYNOPSIS" in l:
                         skip = skip_description
                     else:
+                        # FIXME: find only first item
                         findALink = aLink.search( l )
                         if findALink is not None: 
                             contents.append( aLink.sub(findALink.group(1)+
-                                                       self.fspath+findALink.group(2),l) )
+                                                           self.fspath+findALink.group(2),l) )
                         findImgLink = imgLink.search( l )
                         if findImgLink is not None: 
                             contents.append( imgLink.sub(findImgLink.group(1)+
@@ -469,6 +474,7 @@ class helpPanel(wx.html.HtmlWindow):
                         if findALink is None and findImgLink is None:
                             contents.append( l )
             self.SetPage( "".join( contents ) )
+            print "#", contents
             self.Ok = True
         except: # The Manual file was not found
             self.Ok = False
