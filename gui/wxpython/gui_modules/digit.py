@@ -42,14 +42,14 @@ import wx.lib.mixins.listctrl as listmix
 import gcmd as cmd
 import dbm
 from debug import Debug as Debug
-
+import select 
 try:
     driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
     sys.path.append(driverPath)
     from grass6_wxdriver import DisplayDriver
 except:
     print >> sys.stderr, "Digitization tool is disabled.\n" \
-        "Under development..."
+        "Under development...\n"
     
 class AbstractDigit:
     """
@@ -748,8 +748,10 @@ class DigitSettingsDialog(wx.Dialog):
         #
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Snapping"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
-        flexSizer.AddGrowableCol(0)
+        flexSizer1 = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+        flexSizer1.AddGrowableCol(0)
+        flexSizer2 = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
+        flexSizer2.AddGrowableCol(0)
         # snapping
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
@@ -760,23 +762,33 @@ class DigitSettingsDialog(wx.Dialog):
                                          choices=["screen pixels", "map units"])
         self.snappingUnit.SetValue(self.parent.digit.settings["snapping"][1])
         self.snappingUnit.Bind(wx.EVT_COMBOBOX, self.OnChangeSnappingUnits)
-        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
-        flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        flexSizer1.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer1.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer1.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        # background map
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Backgroud vector map"))
+        self.backgroundMap = select.Select(parent=panel, id=wx.ID_ANY, size=(200,-1),
+                                      type="vector")
+        flexSizer2.Add(text, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer2.Add(self.backgroundMap, proportion=1, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        #flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+
         vertexSizer = wx.BoxSizer(wx.VERTICAL)
         self.snapVertex = wx.CheckBox(parent=panel, id=wx.ID_ANY,
                                       label=_("Snap also to vertex"))
         self.snapVertex.SetValue(self.parent.digit.settings["snapToVertex"])
-        vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.EXPAND)
         self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
         self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                          label=_("Snapping threshold is %.1f %s") % \
+                                          label=_("Note: snapping threshold is %.1f %s") % \
                                               (self.parent.digit.threshold,
                                                self.mapUnits))
-        vertexSizer.Add(item=self.snappingInfo, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        vertexSizer.Add(item=self.snappingInfo, proportion=0,
+                        flag=wx.ALL | wx.EXPAND, border=1)
 
-        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
-        sizer.Add(item=vertexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        sizer.Add(item=flexSizer1, proportion=1, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=1)
+        sizer.Add(item=flexSizer2, proportion=1, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=1)
+        sizer.Add(item=vertexSizer, proportion=1, flag=wx.BOTTOM | wx.LEFT | wx.EXPAND, border=1)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
 
         #

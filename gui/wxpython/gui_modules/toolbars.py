@@ -476,6 +476,10 @@ class DigitToolbar(AbstractToolbar):
         # create pseudoDC for drawing the map
         self.parent.MapWindow.pdcVector = wx.PseudoDC()
         self.parent.digit.driver.SetDevice(self.parent.MapWindow.pdcVector)
+        # self.parent.MapWindow.UpdateMap()
+        if not self.parent.MapWindow.resize:
+            self.parent.MapWindow.UpdateMap(render=True)
+
 
         return True
 

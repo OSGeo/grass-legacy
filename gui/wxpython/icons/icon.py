@@ -40,21 +40,27 @@ icons_default = {
     "printmap"   : 'file-print.gif',
     "overlay"    : 'gui-overlay.gif',
     # digit
+    ## add feature
     "digAddPoint": 'new.point.gif',
     "digAddLine" : 'new.line.gif',
     "digAddBoundary": 'new.boundary.gif',
     "digAddCentroid": 'new.centroid.gif',
+    ## vertex
     "digAddVertex" : 'add.vertex.gif',
-    "digCopyCats" : 'copy.cats.gif',
-    "digDeleteLine" : 'delete.line.gif',
-    "digDispAttr" : 'display.attributes.gif',
-    "digDispCats" : 'display.cats.gif',
-    "digEditLine" : 'edit.line.gif',
-    "digMoveLine" : 'move.line.gif',
     "digMoveVertex" : 'move.vertex.gif',
     "digRemoveVertex" : 'rm.vertex.gif',
-    "digSettings" : 'settings.gif',
     "digSplitLine" : 'split.line.gif',
+    ## edit feature
+    "digEditLine" : 'edit.line.gif',
+    "digMoveLine" : 'move.line.gif',
+    "digDeleteLine" : 'delete.line.gif',
+    ## cats
+    "digCopyCats" : 'copy.cats.gif',
+    "digDispCats" : 'display.cats.gif',
+    ## attributes
+    "digDispAttr" : 'display.attributes.gif',
+    ## general
+    "digSettings" : 'settings.gif',
     "digExit"    : 'exit.gif',
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
