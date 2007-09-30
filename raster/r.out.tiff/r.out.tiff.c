@@ -109,7 +109,7 @@ main (int argc, char *argv[])
 	outopt->type            =  TYPE_STRING;
 	outopt->required        =  YES;
 	outopt->gisprompt	= "new_file,tiff,tiff";
-	outopt->description     = _("Name for new TIFF file.");
+	outopt->description     = _("Name for new TIFF file");
 
 	compopt = G_define_option();
 	compopt->key		= "compression";
@@ -167,7 +167,7 @@ main (int argc, char *argv[])
 		G_fatal_error(_("Raster map <%s> not found"), inopt->answer);
 
 	if ((G_get_cellhd(inopt->answer, mapset, &cellhd) < 0))
-		G_fatal_error(_("Cannot read header of raster map <%s>"), inopt->answer);
+		G_fatal_error(_("Unable to read header of raster map <%s>"), inopt->answer);
 
 	if ((G_get_window(&cellhd) < 0))
 		G_fatal_error(_("Can't set window"));
@@ -185,7 +185,7 @@ main (int argc, char *argv[])
 
 	cell = G_allocate_cell_buf();
 	if ((in = G_open_cell_old (inopt->answer, mapset)) < 0)
-		G_fatal_error(_("Cannot open raster map <%s>"), inopt->answer);
+		G_fatal_error(_("Unable to open raster map <%s>"), inopt->answer);
 
 	basename = G_store(outopt->answer);
 	G_basename(basename, "tif");
@@ -194,7 +194,7 @@ main (int argc, char *argv[])
    
 	out = TIFFOpen(filename, "w");
 	if (out == NULL)
-	    G_fatal_error (_("Cannot open TIFF file <%s>"), filename);
+	    G_fatal_error (_("Unable to open TIFF file <%s>"), filename);
 
 	h.ras_width = cellhd.cols;
 	h.ras_height = cellhd.rows;
@@ -282,7 +282,7 @@ main (int argc, char *argv[])
 		    for (i = 0; i < nrow; i++)
                     {
 			if (G_get_c_raster_row (in, cells[i], row + i) < 0)
-			    G_fatal_error(_("Reading raster map"));
+			    G_fatal_error(_("Reading raster map..."));
 		    }
 
                     for (col = 0; col < imagewidth; col += tilewidth)
@@ -434,7 +434,7 @@ write_tfw(const char *fname, const struct Cell_head *win)
 		G_fatal_error(_("Got null region struct"));
 	
 	if ((outfile = fopen(fname, "w")) == NULL)
-		G_fatal_error(_("Couldn't open TIFF world file for writing"));
+		G_fatal_error(_("Unable to open TIFF world file for writing"));
 	
 	fprintf (outfile, "%36.*f \n", width, win->ew_res);
 	fprintf (outfile, "%36.*f \n", width, 0.0);

@@ -56,7 +56,7 @@ int main( int argc, char *argv[])
 	module->keywords = _("imagery");
 	module->description =
 			_("Zero-crossing \"edge detection\" raster "
-			"function for image processing");
+			"function for image processing.");
 
         /* define options */
         input_map = G_define_option();
@@ -65,7 +65,7 @@ int main( int argc, char *argv[])
         input_map->required             = YES;
         input_map->multiple             = NO;
         input_map->gisprompt  = "old,cell,raster" ;
-        input_map->description  = _("input raster map");
+        input_map->description  = _("Name of input raster map");
 #define INPUT_MAP input_map->answer
 
         output_map = G_define_option();
@@ -74,7 +74,7 @@ int main( int argc, char *argv[])
         output_map->required            = YES;
         output_map->multiple            = NO;
         output_map->gisprompt           = "new,cell,raster" ;
-        output_map->description         = _("zero crossing raster map");
+        output_map->description         = _("Zero crossing raster map");
 #define OUTPUT_MAP output_map->answer
 
         width = G_define_option();
@@ -90,7 +90,7 @@ int main( int argc, char *argv[])
         threshold->type         = TYPE_DOUBLE;
         threshold->required     = NO;
         threshold->multiple     = NO;
-        threshold->description = _("sensitivity of Gaussian filter");
+        threshold->description = _("Sensitivity of Gaussian filter");
         threshold->answer      = "10";
 
         orientations = G_define_option();
@@ -98,7 +98,7 @@ int main( int argc, char *argv[])
         orientations->type              = TYPE_INTEGER;
         orientations->required  = NO;
         orientations->multiple  = NO;
-        orientations->description = _("number of azimuth directions categorized");
+        orientations->description = _("Number of azimuth directions categorized");
         orientations->answer    = "1";
 
         /* call parser */
@@ -107,7 +107,7 @@ int main( int argc, char *argv[])
 
         /* open input cell map */
         if ((inmapset = G_find_cell(INPUT_MAP,"")) == NULL )
-            G_fatal_error (_("Unable to find raster map: %s"), INPUT_MAP);
+            G_fatal_error (_("Raster map <%s> not found"), INPUT_MAP);
 
         inputfd = G_open_cell_old(INPUT_MAP, inmapset );
         if (inputfd < 0)
@@ -115,21 +115,21 @@ int main( int argc, char *argv[])
 
         /* check command line args for validity */
         if(G_legal_filename(OUTPUT_MAP) < 0)
-            G_fatal_error (_("Illegal file name: %s"), OUTPUT_MAP);
+            G_fatal_error (_("<%s> is an illegal file name"), OUTPUT_MAP);
 
         sscanf(threshold -> answer, "%1lf", &Thresh);
         if (Thresh<=0.0)
-                G_fatal_error (_("Threshold less than or equal to zero not allowed."));
+                G_fatal_error (_("Threshold less than or equal to zero not allowed"));
         Thresh /= 100.0;
 
         sscanf(width -> answer, "%f", &Width);
 
         if (Width<=0.0)
-                G_fatal_error (_("Width less than or equal to zero not allowed."));
+                G_fatal_error (_("Width less than or equal to zero not allowed"));
 
         sscanf(orientations -> answer, "%d", &NumOrients);
         if(NumOrients<1)
-                G_fatal_error (_("Fewer than 1 orientation classes not allowed."));
+                G_fatal_error (_("Fewer than 1 orientation classes not allowed"));
 
 
         /* get the current window for later */
@@ -165,7 +165,7 @@ int main( int argc, char *argv[])
         cell_row = G_allocate_cell_buf();
 
         /* Read in cell map values */
-        G_message (_("Reading the raster map..."));
+        G_message (_("Reading raster map..."));
         for (i=0; i<or; i++) {
                 if (G_get_map_row(inputfd, cell_row, i)<0)
                         G_fatal_error (_("Error while reading input raster map."));
