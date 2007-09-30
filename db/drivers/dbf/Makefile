@@ -38,4 +38,4 @@ $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): grass-dbf.html
-	$(INSTALL) -m 644 grass-dbf.html $(DRVDOC)
+	$(INSTALL_DATA) grass-dbf.html $(DRVDOC)

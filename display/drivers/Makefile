@@ -3,7 +3,7 @@ MODULE_TOPDIR = ../..
 
 SUBDIRS = 
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 # compile PNGdriver if lib available:
 ifneq ($(HAVE_SOCKET),)
@@ -13,9 +13,11 @@ ifneq ($(USE_X11),)
 endif
 endif
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: subdirs $(ETC)/monitorcap
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/displaydrivers.html
+	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/displaydrivers.html
 
 # Touch an empty monitorcap if none exists (e.g. native Windows)
 $(ETC)/monitorcap:

@@ -1,22 +1,25 @@
 
 # common dependencies and rules for building scripts
 
-PROGDIR =  $(ARCH_DISTDIR)/scripts
+SCRIPTDIR = $(ARCH_DISTDIR)/scripts
+STRINGDIR = $(MODULE_TOPDIR)/locale/scriptstrings
+
+SCRIPT = $(SCRIPTDIR)/$(PGM)
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-SCRIPT_ACTIONS = $(PROGDIR)/$(PGM) htmlscript scriptstrings
+SCRIPT_ACTIONS = $(SCRIPT) htmlscript scriptstrings
 ifdef MINGW
 SCRIPT_ACTIONS += $(BIN)/$(PGM).bat
 endif
 
 script: $(SCRIPT_ACTIONS)
 
-$(PROGDIR)/$(PGM): $(PGM)
-	if [ ! -d $(PROGDIR) ]; then mkdir $(PROGDIR); fi
-	$(INSTALL) $(PGM) $(PROGDIR)/$(PGM)
+$(SCRIPT): $(PGM)
+	if [ ! -d $(SCRIPTDIR) ]; then $(MKDIR) $(SCRIPTDIR); fi
+	$(INSTALL) $(PGM) $(SCRIPT)
 
 $(BIN)/$(PGM).bat: $(MODULE_TOPDIR)/scripts/windows_launch.bat
 	sed -e "s#SCRIPT_NAME#$(PGM)#" $(MODULE_TOPDIR)/scripts/windows_launch.bat > $@
@@ -31,8 +34,10 @@ scriptstrings = \
 	PATH=$(BIN):$$PATH \
 	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	g.parser -t $(1) | sed s/\"/\\\\\"/g | sed 's/.*/_("&")/' > \
-	$(MODULE_TOPDIR)/locale/scriptstrings/$(PGM)_to_translate.c ; true
+	$(STRINGDIR)/$(PGM)_to_translate.c ; true
 
-scriptstrings:
+$(STRINGDIR)/$(PGM)_to_translate.c: $(PGM)
 	$(call scriptstrings,$(PGM))
+
+scriptstrings: $(STRINGDIR)/$(PGM)_to_translate.c
 

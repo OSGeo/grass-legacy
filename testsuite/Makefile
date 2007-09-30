@@ -1,9 +1,9 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	raster
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
 

@@ -12,4 +12,4 @@ default: inter $(ETC)/proj-desc.table $(ETC)/proj-parms.table $(ETC)/proj-units.
 
 $(ETC)/%.table: %.table
 	rm -f $@
-	$(INSTALL) -m 644 $? $@
+	$(INSTALL_DATA) $? $@

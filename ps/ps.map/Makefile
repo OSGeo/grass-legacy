@@ -17,9 +17,9 @@ default: cmd $(PROLOG) patt
 
 $(PROLOG): prolog.ps
 	$(MKDIR) $(ETC)/paint
-	$(INSTALL) -m 644 prolog.ps $(PROLOG)
+	$(INSTALL_DATA) prolog.ps $(PROLOG)
 
 patt:
 	$(MKDIR) $(ETC)/paint/patterns/
-	$(INSTALL) -m 644 patterns/*.eps $(ETC)/paint/patterns/
+	$(INSTALL_DATA) patterns/*.eps $(ETC)/paint/patterns/
 

@@ -12,5 +12,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd $(ETC)/$(CAPFILE)
 
 $(ETC)/$(CAPFILE): $(CAPFILE)
-	$(INSTALL) -m 644 $< $@
+	$(INSTALL_DATA) $< $@
 

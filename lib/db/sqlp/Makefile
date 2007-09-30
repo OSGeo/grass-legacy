@@ -15,7 +15,7 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/sql.html
+	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/sql.html
 
 y.tab.c y.tab.h: yac.y
 	$(YACC) -d -v yac.y

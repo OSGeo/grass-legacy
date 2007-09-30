@@ -1,11 +1,11 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS =
 
 OPENGLBASED = nviz
 MOTIFBASED = xganim
+
+include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 #compile if OPENGLBASED present:
 ifneq ($(strip $(OPENGLLIB)),)
@@ -16,6 +16,8 @@ endif
 ifneq ($(strip $(XMLIB)),)
     SUBDIRS += $(MOTIFBASED)
 endif
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: htmldir
 

@@ -35,7 +35,7 @@ HTML2PDF=		htmldoc --footer d.1
 GRASS_PDFDIR=		$(GISBASE)/docs/pdf
 
 
-SUBDIRS = \
+DIRS = \
 	lib \
 	db \
 	display \
@@ -55,6 +55,8 @@ SUBDIRS = \
 	visualization \
 	man \
 	macosx
+
+SUBDIRS = $(DIRS)
 
 ifneq ($(strip $(HAVE_NLS)),)
 	LOCALE=1

@@ -16,7 +16,7 @@ default: script
 	$(INSTALL) -m 755 ./sample_area_vector.sh $(TARGET)/sample_area_vector.sh
 	$(INSTALL) -m 755 ./square_mouse_selection.sh $(TARGET)/square_mouse_selection.sh
 	$(INSTALL) -m 755 ./square_query $(TARGET)/square_query
-	$(INSTALL) -m 644 ./circle.txt $(TARGET)/circle.txt
-	$(INSTALL) -m 644 ./polygon.txt $(TARGET)/polygon.txt
+	$(INSTALL_DATA) ./circle.txt $(TARGET)/circle.txt
+	$(INSTALL_DATA) ./polygon.txt $(TARGET)/polygon.txt
 
 

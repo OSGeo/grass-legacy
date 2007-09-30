@@ -27,10 +27,10 @@ $(ETC)/colors:
 	$(MKDIR) $@
 
 $(ETC)/colors/%: colors/% $(ETC)/colors
-	$(INSTALL) -m 644 $< $@
+	$(INSTALL_DATA) $< $@
 
 $(ETC)/%: %
-	$(INSTALL) -m 644 $< $@
+	$(INSTALL_DATA) $< $@
 
 #doxygen:
 DOXNAME=gis

@@ -68,7 +68,7 @@ SUBDIRS = \
 	v.vol.rst \
 	lidar
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 OGRBASED = v.out.ogr v.in.ogr v.external
 
@@ -92,10 +92,12 @@ ifneq ($(USE_OPENDWG),)
     SUBDIRS += $(OPENDWGBASED)
 endif
 
+PGM = vectorintro
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs
-
-PGM = vectorintro

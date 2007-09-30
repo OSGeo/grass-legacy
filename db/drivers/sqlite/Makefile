@@ -27,4 +27,4 @@ $(DRIVER): $(ARCH_OBJS)
 		$(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): grass-sqlite.html
-	$(INSTALL) -m 644 grass-sqlite.html $(DRVDOC)
+	$(INSTALL_DATA) grass-sqlite.html $(DRVDOC)

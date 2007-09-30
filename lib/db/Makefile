@@ -9,12 +9,12 @@ SUBDIRS = \
 	dbmi_driver \
 	sqlp
 
+#doxygen:
+DOXNAME=dbmi
+
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 default: subdirs
 
 clean: cleansubdirs
-
-#doxygen:
-DOXNAME=dbmi

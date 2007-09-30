@@ -5,7 +5,7 @@ PGM2=d.m.tcl
 
 include $(MODULE_TOPDIR)/include/Make/Script.make
 
-PROG1 =  $(PROGDIR)/$(PGM)
+PROG1 =  $(SCRIPTDIR)/$(PGM)
 PROG2 =  $(ETC)/dm/$(PGM2)
 
 default: $(PROG1) $(PROG2) htmlscript
@@ -14,7 +14,7 @@ TCL = cmd.tcl grassabout.tcl group.tcl labels.tcl menu.tcl print.tcl raster.tcl 
 
 $(PROG2): *.gif *.tcl 
 	if [ ! -d $(ETC)/dm ]; then $(MKDIR) $(ETC)/dm; fi
-	$(INSTALL) -m 644 *.gif $(ETC)/dm/
+	$(INSTALL_DATA) *.gif $(ETC)/dm/
 	for tcl in $(TCL); do \
 	    $(INSTALL) $$tcl $(ETC)/dm/ ; \
 	done

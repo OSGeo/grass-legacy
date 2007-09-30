@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 # some definitions
 SECT = 1
 MANDIR  = $(GISBASE)/man/man$(SECT)
@@ -10,13 +8,13 @@ HTML2MAN = GRASS_PERL=${PERL} VERSION_NUMBER=${GRASS_VERSION_NUMBER} sh $(GRASS_
 
 MANPAGES := $(patsubst $(HTMLDIR)/%.html,$(MANDIR)/%.$(SECT),$(wildcard $(HTMLDIR)/*.html))
 
-default: $(MANPAGES)
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-$(MANPAGES): $(MANDIR)
+default: $(MANPAGES)
 
 $(MANDIR):
 	$(MKDIR) $(MANDIR)
 
-$(MANDIR)/%.$(SECT): $(HTMLDIR)/%.html
+$(MANDIR)/%.$(SECT): $(HTMLDIR)/%.html | $(MANDIR)
 	$(HTML2MAN) $< $@ $(SECT)
 

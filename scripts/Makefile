@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	d.correlate \
 	d.font.freetype \
@@ -75,8 +73,10 @@ SUBDIRS = \
 	v.univar.sh \
 	v.what.vect
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs

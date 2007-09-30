@@ -20,4 +20,4 @@ default: stlib $(ETC)/element_list
 
 $(ETC)/element_list: Element_List
 	if [ ! -d $(ETC) ]; then $(MKDIR) $(ETC); fi
-	$(INSTALL) -m 644 $? $@
+	$(INSTALL_DATA) $? $@

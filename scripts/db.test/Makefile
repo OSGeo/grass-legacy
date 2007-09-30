@@ -8,4 +8,4 @@ default: script tests
 
 tests:
 	if [ ! -d $(ETC)/db.test ]; then $(MKDIR) $(ETC)/db.test; fi
-	$(INSTALL) -m 644 test* $(ETC)/db.test/
+	$(INSTALL_DATA) test* $(ETC)/db.test/

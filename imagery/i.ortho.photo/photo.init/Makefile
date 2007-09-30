@@ -10,3 +10,7 @@ DEPENDENCIES= $(IMAGERYDEP) $(DISPLAYDEP) $(RASTERDEP) $(IORTHODEP) $(GISDEP) $(
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
+
+$(PGM).tmp.html: description.html
+	$(INSTALL_DATA) $< $@
+

@@ -27,4 +27,4 @@ $(DRIVER): $(ARCH_OBJS)
 		$(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): grass-pg.html
-	$(INSTALL) -m 644 grass-pg.html $(DRVDOC)
+	$(INSTALL_DATA) grass-pg.html $(DRVDOC)

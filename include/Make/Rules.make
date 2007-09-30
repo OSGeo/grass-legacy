@@ -14,10 +14,10 @@ DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
 $(OBJDIR):
-	-@test -d $(OBJDIR) || mkdir $(OBJDIR)	
+	-test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
 
 # default cc rules
-$(OBJDIR)/%.o : %.c $(OBJDIR) $(LOCAL_HEADERS) 
+$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $(OBJDIR)/$*.o -c $*.c
 
@@ -33,7 +33,8 @@ $(OBJDIR)/%.o : %.c $(OBJDIR) $(LOCAL_HEADERS)
 
 # default clean rules
 clean:
-	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
+	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS)
+	-rm -f $(EXTRA_CLEAN_FILES) $(PGM).tmp.html
 
 # HTML page rules:
 include $(MODULE_TOPDIR)/include/Make/Html.make

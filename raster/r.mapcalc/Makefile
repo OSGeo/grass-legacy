@@ -101,5 +101,5 @@ lex.yy.c: mapcalc.l y.tab.h
 
 html:
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 $(NAME2).html $(GISBASE)/docs/html/
-	$(INSTALL) -m 644 $(NAME3).html $(GISBASE)/docs/html/
+	$(INSTALL_DATA) $(NAME2).html $(GISBASE)/docs/html/
+	$(INSTALL_DATA) $(NAME3).html $(GISBASE)/docs/html/

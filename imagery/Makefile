@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS1 = \
 	i.ask \
 	i.atcorr \
@@ -23,6 +21,8 @@ SUBDIRS1 = \
 	i.pca \
 	i.cca
 
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
 FFTWBASED = i.fft i.ifft i.zc
 
 #compile if FFTW present:
@@ -34,10 +34,12 @@ endif
 
 SUBDIRS = $(SUBDIRS2)
 
+PGM = imageryintro
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs
-
-PGM = imageryintro

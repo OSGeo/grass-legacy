@@ -1,8 +1,6 @@
 
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	drivers \
 	d.ask \
@@ -46,9 +44,11 @@ SUBDIRS = \
 	d.where \
 	d.zoom
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs
 

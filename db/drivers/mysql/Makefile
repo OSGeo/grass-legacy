@@ -61,7 +61,7 @@ $(OBJDIR)/dbe.o : db.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 		-o $@ -c db.c
 
 $(DRVDOC): grass-mysql.html
-	$(INSTALL) -m 644 grass-mysql.html $(DRVDOC)
+	$(INSTALL_DATA) grass-mysql.html $(DRVDOC)
 
 $(EDRVDOC): grass-mesql.html
-	$(INSTALL) -m 644 grass-mesql.html $(EDRVDOC)
+	$(INSTALL_DATA) grass-mesql.html $(EDRVDOC)

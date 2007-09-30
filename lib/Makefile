@@ -35,8 +35,7 @@ SUBDIRS = \
 	cdhc \
 	stats
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-include $(MODULE_TOPDIR)/include/Make/Doxygen.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 OPENGLBASED = ogsf
 
@@ -44,6 +43,12 @@ OPENGLBASED = ogsf
 ifneq ($(strip $(OPENGLLIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
+
+#doxygen:
+DOXNAME=grass
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 default: subdirs
 
@@ -58,6 +63,3 @@ headers:
 	for file in ../include/Make/*.make ; do $(INSTALL_DATA) $$file $(GISBASE)/include/Make/ ; done
 
 clean: cleansubdirs
-
-#doxygen:
-DOXNAME=grass
