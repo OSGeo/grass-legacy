@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 
   /* must have a graphics terminal selected */
   if (R_open_driver() != 0)
-      G_fatal_error (_("No graphics device selected."));
+      G_fatal_error (_("No graphics device selected"));
 
   /* check to see if a MASK is set */
   if (G_maskfd() >= 0)
