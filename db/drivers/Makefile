@@ -1,10 +1,10 @@
 
 MODULE_TOPDIR = ../..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 #always compile dialog lib and dbf driver:
 SUBDIRS1 = dbf
+
+include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 # add odbc:
 ifneq ($(strip $(ODBCLIB)),)
@@ -32,6 +32,8 @@ ifneq ($(strip $(USE_OGR)),)
 endif
 
 SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4) $(SUBDIRS5) $(SUBDIRS6)
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
 

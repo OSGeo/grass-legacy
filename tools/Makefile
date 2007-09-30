@@ -1,8 +1,8 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = timer mkftcap
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
 

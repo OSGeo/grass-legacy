@@ -2,8 +2,6 @@ MODULE_TOPDIR =../..
 
 PGM = r.li
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 #insert all subdirs AFTER r.li.daemon
 
 SUBDIRS = \
@@ -24,7 +22,9 @@ SUBDIRS = \
 	r.li.richness\
 	r.li.dominance\
 
-default: subdirs htmldir
-	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/r.li.html
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+default: subdirs
+	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/r.li.html
 
 clean: cleansubdirs

@@ -36,4 +36,4 @@ $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
 
 $(DRVDOC): grass-odbc.html
-	$(INSTALL) -m 644 grass-odbc.html $(DRVDOC)
+	$(INSTALL_DATA) grass-odbc.html $(DRVDOC)

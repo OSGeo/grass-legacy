@@ -1,5 +1,7 @@
 MODULE_TOPDIR = ../..
 
+PGM = r.terraflow
+
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 SOURCES = main.cc common.cc stats.cc fill.cc types.cc ccforest.cc \
@@ -19,17 +21,6 @@ OBJARCH=OBJ.$(ARCH)
 
 FLOAT_OBJ := $(patsubst %.cc, $(OBJARCH)/FLOAT/%.o, $(SOURCES))
 SHORT_OBJ := $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
-
-
-#Note: 	if a header file is modified, the .o files do not get rebuilt..
-#		header files should be included as prerequisites, but does not work 
-#		because of GRASS scripts 
-$(OBJARCH)/FLOAT/%.o: %.cc $(OBJARCH)/FLOAT
-	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
-
-$(OBJARCH)/SHORT/%.o: %.cc $(OBJARCH)/SHORT
-	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
-
 
 IOSTREAM_DIR =  ./IOStream
 IOSTREAM_INC = $(IOSTREAM_DIR)/include
@@ -51,7 +42,14 @@ LDFLAGS += -L$(IOSTREAM_LIBDIR)
 LIBS = $(GISLIB) 
 DEPLIBS = $(DEPGISLIB)
 
-PGM = r.terraflow
+#Note: 	if a header file is modified, the .o files do not get rebuilt..
+#		header files should be included as prerequisites, but does not work 
+#		because of GRASS scripts 
+$(OBJARCH)/FLOAT/%.o: %.cc | $(OBJARCH)/FLOAT
+	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
+
+$(OBJARCH)/SHORT/%.o: %.cc | $(OBJARCH)/SHORT
+	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
 default: $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlcmd
 

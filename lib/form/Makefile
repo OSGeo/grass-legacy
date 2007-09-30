@@ -4,9 +4,11 @@ EXTRA_LIBS=$(GISLIB) $(DBMILIB)
 
 LIB_NAME = $(FORM_LIBNAME)
 
-HTMLLIB=$(GISBASE)/etc/form/html_library.tcl
-FORM=$(GISBASE)/etc/form/form.tcl
-FORMPROG=$(GISBASE)/etc/form/form
+FORMDIR=$(GISBASE)/etc/form
+
+HTMLLIB=$(FORMDIR)/html_library.tcl
+FORM=$(FORMDIR)/form.tcl
+FORMPROG=$(FORMDIR)/form
 EXTRA_CFLAGS = $(XCFLAGS) $(TCLINCDIR) $(TKINCDIR)
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
@@ -20,15 +22,15 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib $(GTCLTKFORM)
 
-$(HTMLLIB): html_library_grass.tcl
-	if [ ! -d $(GISBASE)/etc ]; then $(MKDIR) $(GISBASE)/etc; fi
-	if [ ! -d $(GISBASE)/etc/form ]; then $(MKDIR) $(GISBASE)/etc/form; fi
-	$(INSTALL) -m 644 html_library_grass.tcl $(HTMLLIB)
+$(FORMDIR):
+	if [ ! -d $@ ]; then $(MKDIR) $@; fi
 
-$(FORM): form.tcl
-	$(INSTALL) -m 644 form.tcl $(FORM)
+$(HTMLLIB): html_library_grass.tcl | $(FORMDIR)
+	$(INSTALL_DATA) $< $@
 
-$(FORMPROG): $(OBJDIR)/form.o
+$(FORM): form.tcl | $(FORMDIR)
+	$(INSTALL_DATA) $< $@
+
+$(FORMPROG): $(OBJDIR)/form.o | $(FORMDIR)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/form.o $(DBMILIB) $(GISLIB) $(DATETIMELIB) \
 				$(TCLTKLIBPATH) $(TCLTKLIBS) $(MATHLIB) $(XDRLIB)
-

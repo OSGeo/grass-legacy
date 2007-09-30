@@ -1,11 +1,11 @@
 
 MODULE_TOPDIR = ../..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	bouman \
 	shapiro
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
 

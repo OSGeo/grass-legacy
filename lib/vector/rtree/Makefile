@@ -18,17 +18,17 @@ default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_q.h \
 
 $(RTLINC)/card.h: card.h
 	$(MKDIR) $(RTLINC)
-	$(INSTALL) -m 644 card.h $(RTLINC)/card.h
+	$(INSTALL_DATA) card.h $(RTLINC)/card.h
 
 $(RTLINC)/index.h: index.h
-	$(INSTALL) -m 644 index.h $(RTLINC)/index.h
+	$(INSTALL_DATA) index.h $(RTLINC)/index.h
 
 # not used
 $(RTLINC)/split_q.h: split_q.h
-	$(INSTALL) -m 644 split_q.h $(RTLINC)/split_q.h
+	$(INSTALL_DATA) split_q.h $(RTLINC)/split_q.h
 
 $(ARCH_INCDIR)/rtree.h: rtree.h
-	$(INSTALL) -m 644 rtree.h $(ARCH_INCDIR)/rtree.h
+	$(INSTALL_DATA) rtree.h $(ARCH_INCDIR)/rtree.h
 
 $(OBJDIR)/test: test.c
 	$(CC) $(LDFLAGS) $(INC) -o $@ test.c $(RTREELIB) -lm

@@ -17,4 +17,4 @@ chck:
 
 #a bit ugly:
 $(ADINIT):
-	$(INSTALL) -m 644 `echo $(OPENDWGINCPATH) | cut -b3-`/adinit/adinit.dat $(ADINIT)
+	$(INSTALL_DATA) `echo $(OPENDWGINCPATH) | cut -b3-`/adinit/adinit.dat $(ADINIT)

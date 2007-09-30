@@ -8,5 +8,5 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 
 default: script
 
-$(CAPFILE): $(PROGDIR)/$(PGM)
+$(CAPFILE): $(SCRIPTDIR)/$(PGM)
 	$< > $@

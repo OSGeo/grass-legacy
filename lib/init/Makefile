@@ -56,9 +56,9 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/grass-xterm-wrapper \
 	$(ETC)/html_browser_mac.sh
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
-	$(INSTALL) -m 644 grass6.html $(GISBASE)/docs/html/grass6.html
-	$(INSTALL) -m 644 helptext.html $(GISBASE)/docs/html/helptext.html
+	$(INSTALL_DATA) variables.html $(GISBASE)/docs/html/variables.html
+	$(INSTALL_DATA) grass6.html $(GISBASE)/docs/html/grass6.html
+	$(INSTALL_DATA) helptext.html $(GISBASE)/docs/html/helptext.html
 
 
 $(ARCH_BINDIR)/$(START_UP): init.sh grass.src
@@ -143,11 +143,11 @@ $(ETC)/welcome: welcome.txt version.sed
 $(ETC)/msgs: msgs
 	rm -rf $@
 	$(MKDIR) $@
-	$(INSTALL) -m 644 msgs/*.msg $@	
+	$(INSTALL_DATA) msgs/*.msg $@	
 
 $(ETC)/gintro.gif: gintro.gif
 	rm -f $@
-	$(INSTALL) -m 644 gintro.gif $@
+	$(INSTALL_DATA) gintro.gif $@
 
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@

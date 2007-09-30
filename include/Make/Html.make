@@ -1,8 +1,12 @@
 #NOTE: parts of the header are generated in ../../lib/gis/parser.c
 
+HTMLDIR = $(ARCH_DISTDIR)/docs/html
+
 # generic html rules for all commands
 
 ifdef CROSS_COMPILING
+
+html:
 
 htmlcmd:
 
@@ -20,12 +24,12 @@ else
 
 htmlgen = \
 	$(MODULE_TOPDIR)/tools/mkhtml.sh $(PGM) ; \
-	$(MKDIR) $(ARCH_DISTDIR)/docs/html ; \
-	mv -f $(PGM).tmp.html $(ARCH_DISTDIR)/docs/html/$(PGM).html ; \
+	$(MKDIR) $(HTMLDIR) ; \
+	$(INSTALL_DATA) $(PGM).tmp.html $(HTMLDIR)/$(PGM).html ; \
 	for file in  *.png *.jpg ; do \
 		head -n 1 $$file | grep '^\#!' > /dev/null ; \
 		if [ $$? -ne 0 ] ; then \
-		   $(INSTALL_DATA) $$file $(ARCH_DISTDIR)/docs/html ; \
+		   $(INSTALL_DATA) $$file $(HTMLDIR) ; \
 		fi \
 		done 2> /dev/null ; true
 
@@ -34,32 +38,45 @@ htmldesc = \
 	GISBASE=$(RUN_GISBASE) \
 	PATH="$(BIN):$$PATH" \
 	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
-	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
+	LC_ALL=C $(1) --html-description < /dev/null | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
+
+%.tmp.html: $(BIN)/%$(EXE)
+	$(call htmldesc,$<)
+
+%.tmp.html: $(ETC)/%$(EXE)
+	$(call htmldesc,$<)
+
+%.tmp.html: $(SCRIPTDIR)/%
+	$(call htmldesc,$<)
+
+%.tmp.html: %.html
+	$(INSTALL_DATA) $< $@
+
+$(HTMLDIR)/%.html: %.tmp.html
+	$(call htmlgen)
+
+$(HTMLDIR)/.html:
+
+
+html: $(HTMLDIR)/$(PGM).html
 
 # html rules for cmd commands
-htmlcmd: $(PROG)
-	$(call htmldesc,$(BIN)/$(PGM))
-	$(call htmlgen)
+htmlcmd: html
 
 # html rules for scripts
-htmlscript: $(PROGDIR)/$(PGM)
-	$(call htmldesc,$(ARCH_DISTDIR)/scripts/$(PGM))
-	$(call htmlgen)
+htmlscript: html
 
 # html rules for inter commands
 # note that fakestart doesn't work here
-htmlinter: $(PROG)
-	$(call htmlgen)
+htmlinter: html
 
 # html rules for ETC commands
-htmletc: $(ETC)/$(PGM)$(EXE)
-	$(call htmldesc,$(ETC)/$(PGM))
-	$(call htmlgen)
+# does not have "html" as a dependency so that it can be overridden in Makefiles
+htmletc:
+	$(MAKE) html
 
 # html rules for intro pages in directories
-htmldir:
-	$(call htmldesc,$(PGM))
-	$(call htmlgen)
+htmldir: html
 
 # html rules for multiple commands
 htmlmulti:

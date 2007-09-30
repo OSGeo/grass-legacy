@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	r.average \
 	r.basins.fill \
@@ -123,6 +121,8 @@ CXXBASED = r.terraflow
 
 TIFFBASED = r.out.tiff
 
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
 #compile if GDAL present:
 ifneq ($(USE_GDAL),)
     SUBDIRS += $(GDALBASED)
@@ -148,10 +148,12 @@ ifneq ($(strip $(TIFFLIB)),)
     SUBDIRS += $(TIFFBASED)
 endif
 
+PGM = rasterintro
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs 
+htmldir: parsubdirs 
 
 clean: cleansubdirs
-
-PGM = rasterintro

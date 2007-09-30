@@ -12,6 +12,6 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib $(ARCH_INCDIR)/lrs.h
 
 $(ARCH_INCDIR)/lrs.h: lrs.h
-	$(INSTALL) -m 644 lrs.h $(ARCH_INCDIR)/lrs.h
+	$(INSTALL_DATA) lrs.h $(ARCH_INCDIR)/lrs.h
 
 

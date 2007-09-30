@@ -18,3 +18,11 @@ cleansubdirs:
 	    echo $$subdir ; \
 	    $(MAKE) -C $$subdir clean; \
 	done
+
+.PHONY: subdirs cleansubdirs parsubdirs $(SUBDIRS)
+
+parsubdirs: $(SUBDIRS)
+
+$(SUBDIRS):
+	$(MAKE) -C $@ || echo $(CURDIR)/$@ >> $(ERRORLOG)
+

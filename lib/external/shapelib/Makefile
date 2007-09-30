@@ -11,4 +11,4 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: $(ARCH_INCDIR)/shapefil.h lib
 
 $(ARCH_INCDIR)/shapefil.h: shapefil.h
-	$(INSTALL) -m 644 shapefil.h $(ARCH_INCDIR)/shapefil.h
+	$(INSTALL_DATA) shapefil.h $(ARCH_INCDIR)/shapefil.h

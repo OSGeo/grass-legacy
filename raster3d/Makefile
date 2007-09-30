@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 SUBDIRS = \
 	r3.cross.rast \
 	r3.in.ascii \
@@ -16,15 +14,19 @@ SUBDIRS = \
 
 OPENGLBASED = r3.mkdspf
 
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
 #compile if OPENGLU present:
 ifneq ($(strip $(OPENGLULIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
+PGM = raster3dintro
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs
-
-PGM = raster3dintro

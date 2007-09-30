@@ -30,12 +30,12 @@ default: lib $(NAD_DIR) $(CSV_DIR)
 $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES)
 	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
 	for i in $(NAD_TABLES) ; do $(NAD2BIN) < $$i $@/`echo $$i | sed 's/.lla//'`; done
-	$(INSTALL) -m 644 $(NT_TABLES) $@
+	$(INSTALL_DATA) $(NT_TABLES) $@
 	@ touch $@
 
 $(CSV_DIR): $(CSV_FILES)
 	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
-	$(INSTALL) -m 644 $(CSV_FILES) $@
+	$(INSTALL_DATA) $(CSV_FILES) $@
 	@ touch $@
 
 # Note for future improvement:

@@ -6,6 +6,8 @@ SUBDIRS = \
 	base \
 	db.login
 
+PGM = databaseintro
+
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: htmldir
@@ -13,5 +15,3 @@ default: htmldir
 htmldir: subdirs
 
 clean: cleansubdirs
-
-PGM = databaseintro

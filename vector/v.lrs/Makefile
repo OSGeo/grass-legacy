@@ -8,12 +8,12 @@ SUBDIRS = \
 	v.lrs.label \
 	v.lrs.where
 
+#to install documentation:
+PGM = lrs
+
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs htmldir
-
-#to install documentation:
-PGM = lrs
 
 clean: cleansubdirs
 

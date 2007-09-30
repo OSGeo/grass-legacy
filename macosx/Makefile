@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ..
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
-
 MACOSX_APP_NAME = GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.app
 MACOSX_APPDIR = ${MACOSX_APP_NAME}/Contents/MacOS
 INST_DIR_MACOSX = ${prefix}/${MACOSX_APPDIR}
@@ -18,6 +16,8 @@ SUBDIRS =
 ifeq ($(MACOSX_APP),1)
 SUBDIRS = app modbuild
 endif
+
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: subdirs
 
