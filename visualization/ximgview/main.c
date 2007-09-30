@@ -57,7 +57,7 @@ static void create_window(void)
 
 	dpy = XOpenDisplay(NULL);
 	if (!dpy)
-		G_fatal_error(_("unable to open display"));
+		G_fatal_error(_("Unable to open display"));
 
 	scrn = DefaultScreen(dpy);
 
@@ -79,7 +79,7 @@ static void create_window(void)
 	XMapWindow(dpy, grwin);
 
 	if (!XGetWindowAttributes(dpy, grwin, &xwa))
-		G_fatal_error(_("cannot get window attributes"));
+		G_fatal_error(_("Unable to get window attributes"));
 
 	fixedcmap = InitColorTableFixed(DefaultColormap(dpy, scrn));
 
@@ -237,19 +237,19 @@ static void map_file(const char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		G_fatal_error(_("unable to open image file"));
+		G_fatal_error(_("Unable to open image file"));
 
 	if (read(fd, header, sizeof(header)) != sizeof(header))
-		G_fatal_error(_("unable to read BMP header"));
+		G_fatal_error(_("Unable to read BMP header"));
 
 	if (!read_bmp_header(header))
-		G_fatal_error(_("invalid BMP header"));
+		G_fatal_error(_("Invalid BMP header"));
 
 	size = HEADER_SIZE + i_width * i_height * 4;
 
 	ptr = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, (off_t ) 0);
 	if (ptr == MAP_FAILED)
-		G_fatal_error(_("unable to map image file"));
+		G_fatal_error(_("Unable to map image file"));
 
 	imgbuf = (char *) ptr + HEADER_SIZE;
 
