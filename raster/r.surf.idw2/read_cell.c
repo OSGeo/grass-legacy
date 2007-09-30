@@ -33,11 +33,11 @@ int read_cell (char *name)
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
     {
-	G_fatal_error (_("%s: can't open %s"), G_program_name(), name);
+	G_fatal_error (_("%s: unable to open %s"), G_program_name(), name);
 	exit(EXIT_FAILURE);
     }
 
-    G_message (_("Reading raster map <%s> ..."), name);
+    G_message (_("Reading raster map <%s>..."), name);
 
     north = window.north - window.ns_res/2.0;
     for (row = 0; row < window.rows; row++)

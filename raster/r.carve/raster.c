@@ -9,7 +9,7 @@ void *read_raster(void *buf, const int fd, const RASTER_MAP_TYPE rtype)
     int rows = G_window_rows();
     int i;
 
-    G_message( _("Reading raster map... "));
+    G_message( _("Reading raster map..."));
 
     for (i = 0; i < rows; i++) {
         G_percent(i + 1, rows, 10);
@@ -28,7 +28,7 @@ void *write_raster(void *buf, const int fd, const RASTER_MAP_TYPE rtype)
     int rows = G_window_rows();
     int i;
 
-    G_message( _("Writing raster map... "));
+    G_message( _("Writing raster map..."));
 
     for (i = 0; i < rows; i++) {
         G_percent(i, rows, 10);
