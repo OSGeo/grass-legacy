@@ -42,7 +42,7 @@ main (int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector");
-    module->description = _("Create a Delaunay triangulation from an input "
+    module->description = _("Creates a Delaunay triangulation from an input "
 	"vector map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -71,14 +71,14 @@ main (int argc, char **argv)
 
   /* open files */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-      G_fatal_error(_("Could not find input map <%s>"), in_opt->answer);
+      G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
   }
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
   
   if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
-    G_fatal_error(_("Not able to open vector map <%s>"), out_opt->answer);
+    G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
   }
 
   Vect_hist_copy (&In, &Out);

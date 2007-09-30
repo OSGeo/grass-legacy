@@ -105,7 +105,7 @@ main (int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector");
-    module->description = _("Create a Voronoi diagram from an input vector "
+    module->description = _("Creates a Voronoi diagram from an input vector "
 	"map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -140,14 +140,14 @@ main (int argc, char **argv)
 
   /* open files */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-      G_fatal_error(_("Could not find input map <%s>"), in_opt->answer);
+      G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
   }
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
   
   if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
-    G_fatal_error(_("Not able to open vector map <%s>"), out_opt->answer);
+    G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
   }
 
   Vect_hist_copy (&In, &Out);
@@ -303,7 +303,7 @@ main (int argc, char **argv)
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( _("No table.") );
+		G_message ( _("No table") );
 		continue;
 	    }
 	    
@@ -319,7 +319,7 @@ main (int argc, char **argv)
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( _("Done.") );
+	    G_message ( _("Done") );
 	}
   }
 	  
