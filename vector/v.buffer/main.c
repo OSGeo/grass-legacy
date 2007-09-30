@@ -210,7 +210,7 @@ void stop (  struct Map_info *In,  struct Map_info *Out )
 {
     Vect_close (In);
 
-    G_message ( _("Rebuilding topology ...") );
+    G_message ( _("Rebuilding topology...") );
     Vect_build_partial ( Out, GV_BUILD_NONE, NULL );
     Vect_build (Out, stderr);
     Vect_close (Out);
@@ -412,7 +412,7 @@ main (int argc, char *argv[])
 
 	nlines = Vect_get_num_lines ( &In );
 	
-        G_message ( _("Lines buffers ... "));
+        G_message ( _("Lines buffers... "));
 	for ( line = 1; line <= nlines; line++ ) {
 	    int cat;
 	    
@@ -480,7 +480,7 @@ main (int argc, char *argv[])
 	
 	nareas = Vect_get_num_areas ( &In );
 
-        G_message ( _("Areas buffers ... "));
+        G_message ( _("Areas buffers... "));
 	for ( area = 1; area <= nareas; area++ ) {
 	    int cat;
 
@@ -568,7 +568,7 @@ main (int argc, char *argv[])
     /* Create areas */
     
     /* Break lines */
-    G_message (_("Building parts of topology ...") );
+    G_message (_("Building parts of topology...") );
     Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
 
     /* Warning: snapping must be done, otherwise colinear boundaries are not broken and 
@@ -580,25 +580,25 @@ main (int argc, char *argv[])
     /* TODO: look at snapping threshold better, calculate some theoretical value to avoid
      * the same angles of lines at nodes, don't forget about LongLat data, probably
      * calculate different threshold for each map, depending on map's bounding box */
-    G_message(_("Snapping boundaries ...") );
+    G_message(_("Snapping boundaries...") );
     Vect_snap_lines ( &Out, GV_BOUNDARY, 1e-7, NULL, stderr );
 
-    G_message(_( "Breaking boundaries ...") );
+    G_message(_( "Breaking boundaries...") );
     Vect_break_lines ( &Out, GV_BOUNDARY, NULL, stderr );
 
-    G_message(_( "Removing duplicates ...") );
+    G_message(_( "Removing duplicates...") );
     Vect_remove_duplicates ( &Out, GV_BOUNDARY, NULL, stderr );
 
     /* Dangles and bridges don't seem to be necessary if snapping is small enough. */
     /*
-    G_message (  "Removing dangles ..." );
+    G_message (  "Removing dangles..." );
     Vect_remove_dangles ( &Out, GV_BOUNDARY, -1, NULL, stderr );
 
-    G_message (  "Removing bridges ..." );
+    G_message (  "Removing bridges..." );
     Vect_remove_bridges ( &Out, NULL, stderr );
     */
 
-    G_message(_( "Attaching islands ...") );
+    G_message(_( "Attaching islands...") );
     Vect_build_partial ( &Out, GV_BUILD_ATTACH_ISLES, stderr );
 
     /* Calculate new centroids for all areas */
@@ -621,7 +621,7 @@ main (int argc, char *argv[])
             double x, y;
 	    ret = Vect_get_point_in_area ( &Out, area, &x, &y );
 	    if ( ret < 0 ) {
-		G_warning (_("Cannot calculate area centroid."));
+		G_warning (_("Cannot calculate area centroid"));
 		continue;
 	    }
 	    Vect_reset_cats ( Cats );
@@ -696,7 +696,7 @@ main (int argc, char *argv[])
 	if ( ret ) {
 	    ret = Vect_get_point_in_area ( &Out, area, &x, &y );
 	    if ( ret < 0 ) {
-		G_warning (_("Cannot calculate area centroid."));
+		G_warning (_("Cannot calculate area centroid"));
 		continue;
 	    }
 
@@ -706,7 +706,7 @@ main (int argc, char *argv[])
 	}
     }
 
-    G_message(_("Attaching centroids ...") );
+    G_message(_("Attaching centroids...") );
     Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
     
     stop ( &In, &Out );
