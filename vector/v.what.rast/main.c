@@ -76,7 +76,7 @@ int main(int argc,char *argv[])
 
     module              = G_define_module();
     module->keywords = _("vector, raster, attribute table");
-    module->description = _("Uploads raster values at positions of vector points to the table");
+    module->description = _("Uploads raster values at positions of vector points to the table.");
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
     vect_opt->key        = "vector" ;
@@ -121,7 +121,7 @@ int main(int argc,char *argv[])
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-        G_fatal_error ( _("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver );
+        G_fatal_error ( _("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver );
     }
     
     /* Open raster */
@@ -129,7 +129,7 @@ int main(int argc,char *argv[])
 	G_fatal_error ( _("Raster map <%s> not found"), rast_opt->answer);
     
     if( (fd = G_open_cell_old (rast_opt->answer, mapset)) < 0 )
-	G_fatal_error ( _("Cannot open raster map <%s>"), rast_opt->answer);
+	G_fatal_error ( _("Unable to open raster map <%s>"), rast_opt->answer);
 
     out_type = G_get_raster_map_type(fd);
 
@@ -253,10 +253,10 @@ int main(int argc,char *argv[])
         if (cur_row != cache[point].row) {
 	    if ( out_type == CELL_TYPE ) {
 		if ( G_get_c_raster_row ( fd, cell, cache[point].row) < 0 )
-		    G_fatal_error ( _("Can't read raster") );
+		    G_fatal_error ( _("Unable to read raster") );
 	    } else {
 		if (G_get_d_raster_row (fd, dcell, cache[point].row) < 0)
-		    G_fatal_error ( _("Can't read raster") );
+		    G_fatal_error ( _("Unable to read raster") );
 	    }
 	}
 	cur_row = cache[point].row;
