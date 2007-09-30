@@ -43,7 +43,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("imagery");
-    module->description = _("Create control points on an image "
+    module->description = _("Creates control points on an image "
                             "to be ortho-rectified.");
 
     group_opt = G_define_option();
@@ -86,7 +86,7 @@ int main (int argc, char *argv[])
     digit_points = G_tempfile();
 
     if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected!!!");
+	G_fatal_error (_("No graphics device selected"));
 
     /* get group ref */
     strcpy (group.name, group_opt->answer );
@@ -199,13 +199,13 @@ int main (int argc, char *argv[])
         char *ms;
         ms = G_find_cell ( map_opt->answer, "");
         if (ms == NULL) {
-           G_fatal_error(_("%s map not found"), map_opt->answer);
+           G_fatal_error(_("Raster map <%s> not found"), map_opt->answer);
         }
         strcpy ( name, map_opt->answer );
         strcpy ( mapset, ms );
         if ( G_get_cellhd (name, mapset, &cellhd) < 0 )
         {
-           G_fatal_error(_("cannot read head of %s"), map_opt->answer);
+           G_fatal_error(_("Unable to read head of %s"), map_opt->answer);
         }
     }
     else
@@ -233,13 +233,13 @@ int main (int argc, char *argv[])
         select_target_env();
         ms = G_find_cell ( target_map_opt->answer, "");
         if (ms == NULL) {
-           G_fatal_error(_("%s map not found"), target_map_opt->answer);
+           G_fatal_error(_("Raster map <%s> not found"), target_map_opt->answer);
         }
         strcpy ( name, target_map_opt->answer );
         strcpy ( mapset, ms );
         if ( G_get_cellhd (name, mapset, &cellhd) < 0 )
         {
-           G_fatal_error(_("cannot read head of %s"), target_map_opt->answer);
+           G_fatal_error(_("Unable to read head of %s"), target_map_opt->answer);
         }
 
 	G_adjust_window_to_box (&cellhd, &VIEW_MAP2->cell.head, VIEW_MAP2->nrows, 
