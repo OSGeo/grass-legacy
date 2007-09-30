@@ -63,9 +63,7 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->keywords = _("display, setup");
-	module->description =
-		"To display the color table associated with a raster "
-		"map layer.";
+	module->description =_("Displays the color table associated with a raster map layer.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -100,7 +98,7 @@ int main(int argc, char **argv)
 	map_name = opt1->answer;
 	mapset = G_find_cell2 (map_name, "") ;
 	if (mapset == NULL)
-		G_fatal_error("Cellfile [%s] not available", map_name) ;
+		G_fatal_error(_("Raster map <%s> not found"), map_name) ;
 	fp = G_raster_map_is_fp(map_name, mapset);
 
 	if (opt2->answer != NULL)
