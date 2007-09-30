@@ -31,7 +31,6 @@ int parse_command_line (int argc, char *argv[])
 				      i.e. read it as int */
 	        struct Flag *C ;   /*  report for fp ranges in Cats file 
 				       (fp maps only) */
-
 	} flags;
 
 	parms.cell = G_define_standard_option(G_OPT_R_MAPS);
@@ -121,7 +120,6 @@ int parse_command_line (int argc, char *argv[])
         flags.i->key = 'i';
 	flags.i->description = _("Read fp map as integer (use map's quant rules)");
 
-
 /* hidden feature.
  * if first arg is >file just run r.stats into this file and quit
  * if first arg is <file, run report from stats in file
@@ -167,17 +165,15 @@ int parse_command_line (int argc, char *argv[])
 	sscanf(parms.nsteps->answer, "%d", &nsteps);
 	if(nsteps <= 0)
 	{
-	     G_warning("nsteps has to be > 0; using nsteps=255");
-	     nsteps = 255;
+	    G_warning(_("nsteps has to be > 0; using nsteps=255"));
+	    nsteps = 255;
         }
 
 	if (parms.pl->answer)
 	{
 		if (sscanf (parms.pl->answer, "%d", &page_length) != 1 || page_length < 0)
 		{
-			G_warning (_("Illegal page length"));
-			G_usage();
-			exit(EXIT_FAILURE);
+			G_fatal_error (_("Illegal page length"));
 		}
 	}
 
@@ -185,9 +181,7 @@ int parse_command_line (int argc, char *argv[])
 	{
 		if (sscanf (parms.pw->answer, "%d", &page_width) != 1 || page_width < 1)
 		{
-			G_warning (_("Illegal page width"));
-			G_usage();
-			exit(EXIT_FAILURE);
+			G_fatal_error (_("Illegal page width"));
 		}
 	}
 	if (parms.outfile->answer)
@@ -230,9 +224,8 @@ int parse_units (char *s)
 	}
 	if (nunits >= MAX_UNITS)
 	{
-		G_fatal_error (_("%s: only %d unit%s allowed"),
-		    G_program_name(), MAX_UNITS, MAX_UNITS==1?"":"s");
-		exit(EXIT_FAILURE);
+		G_fatal_error (_("Only %d unit%s allowed"),
+			       MAX_UNITS, MAX_UNITS==1?"":"s");
 	}
 	unit[nunits].type  = x;
 	nunits++;
@@ -253,9 +246,7 @@ int parse_layer (char *s)
 
 	if (mapset == NULL)
 	{
-		sprintf (msg, "%s: <%s> raster map not found\n", G_program_name(), s);
-		G_fatal_error (msg);
-		exit(EXIT_FAILURE);
+	    G_fatal_error (_("Raster map <%s> not found"), s);
 	}
 
 	n = nlayers++ ;
@@ -271,9 +262,8 @@ int parse_layer (char *s)
 	{
            if(G_read_fp_range (name, mapset, &fp_range) < 0)
            {
-	     sprintf (msg,"%s: can't read fp range for [%s]",G_program_name(),
-		     name);
-             G_fatal_error (msg);
+             G_fatal_error (_("Unable to read fp range for raster map <%s>"),
+			    name);
            }
  	   G_get_fp_range_min_max (&fp_range, &DMIN[n], &DMAX[n]);
         }
@@ -281,8 +271,8 @@ int parse_layer (char *s)
 	layers[n].name = G_store (name);
 	layers[n].mapset = mapset;
 	if (G_read_cats (name, mapset, &layers[n].labels) < 0)
-	   G_fatal_error ( "%s: %s in %s - can't read category file",
-                     G_program_name(), name, mapset);
+	    G_fatal_error (_("Unable to read category file for raster map <%s>"),
+			   name);
 
     return 0;
 }

@@ -322,14 +322,16 @@ char *construct_cat_label( int nl, CELL cat)
 	 return G_store("no data");
       if(cat_ranges)
 	 return G_get_ith_d_raster_cat(&layers[nl].labels, cat,
-					  &dLow, &dHigh);
+				       &dLow, &dHigh);
       else
       {
          dLow = (DMAX[nl] - DMIN[nl])/(double) nsteps * 
                 (double) (cat - 1) + DMIN[nl];
          dHigh= (DMAX[nl] - DMIN[nl])/(double) nsteps * 
                 (double) cat + DMIN[nl];
-         sprintf(str, "from %s to %s", G_get_d_raster_cat(&dLow, &layers[nl].labels), G_get_d_raster_cat(&dHigh, &layers[nl].labels));
+         sprintf(str, "from %s to %s",
+		 G_get_d_raster_cat(&dLow, &layers[nl].labels),
+		 G_get_d_raster_cat(&dHigh, &layers[nl].labels));
          return str;
       }
     } /* fp label */
