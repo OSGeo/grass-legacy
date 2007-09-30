@@ -59,9 +59,8 @@ get_stats (void)
     {
 	if (stats_flag == EVERYTHING)
 	    unlink (stats_file);
-	sprintf (buf, "%s: unable to open result file <%s>\n",	
-		G_program_name(), stats_file);
-	G_fatal_error (buf);
+	G_fatal_error (_("Unable to open result file <%s>"),	
+			 stats_file);
     }
     while (G_getl(buf, sizeof buf, fd))
     {
@@ -98,6 +97,6 @@ static int die (void)
 {
     if (stats_flag == EVERYTHING)
 	unlink (stats_file);
-    G_fatal_error ("OOPS - problem reading r.stats output\n");
+    G_fatal_error (_("Problem reading r.stats output"));
 }
 
