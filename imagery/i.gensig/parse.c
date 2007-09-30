@@ -12,27 +12,27 @@ parse (int argc, char *argv[], struct parms *parms)
 
     trainingmap = G_define_option();
     trainingmap->key = "trainingmap";
-    trainingmap->description = _("ground truth training map");
+    trainingmap->description = _("Ground truth training map");
     trainingmap->required = YES;
     trainingmap->type = TYPE_STRING;
     trainingmap->gisprompt = "old,cell,raster";
 
     group = G_define_option();
     group->key = "group";
-    group->description = _("imagery group");
+    group->description = _("Imagery group");
     group->required = YES;
     group->type = TYPE_STRING;
     group->gisprompt = "old,group,group";
 
     subgroup = G_define_option();
     subgroup->key = "subgroup";
-    subgroup->description = _("subgroup containing image files");
+    subgroup->description = _("Subgroup containing image files");
     subgroup->required = YES;
     subgroup->type = TYPE_STRING;
 
     sigfile = G_define_option();
     sigfile->key = "signaturefile";
-    sigfile->description = _("resultant signature file");
+    sigfile->description = _("Resultant signature file");
     sigfile->required = YES;
     sigfile->type = TYPE_STRING;
 
@@ -45,13 +45,13 @@ parse (int argc, char *argv[], struct parms *parms)
 
     /* check all the inputs */
     if(G_find_cell(parms->training_map, "") == NULL)
-        G_fatal_error(_("Training map [%s] not found."), parms->training_map);
+        G_fatal_error(_("Raster map <%s> not found"), parms->training_map);
 
     if (!I_find_group(parms->group))
-        G_fatal_error(_("Group [%s] not found."), parms->group);
+        G_fatal_error(_("Group <%s> not found"), parms->group);
 
     if (!I_find_subgroup(parms->group, parms->subgroup))
-        G_fatal_error(_("Subgroup [%s] not found."), parms->subgroup);
+        G_fatal_error(_("Subgroup <%s> not found"), parms->subgroup);
 
     return 0;
 }
