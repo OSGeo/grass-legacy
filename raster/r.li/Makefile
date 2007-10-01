@@ -2,10 +2,7 @@ MODULE_TOPDIR =../..
 
 PGM = r.li
 
-#insert all subdirs AFTER r.li.daemon
-
 SUBDIRS = \
-	r.li.daemon\
 	r.li.edgedensity\
 	r.li.patchdensity\
 	r.li.patchnum\
@@ -24,7 +21,15 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: parsubdirs
 	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/r.li.html
 
 clean: cleansubdirs
+
+$(SUBDIRS): r.li.daemon
+
+r.li.daemon:
+	$(MAKE) -C $@
+
+.PHONY: r.li.daemon
+

@@ -1,13 +1,20 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = simlib \
+SUBDIRS = \
 	r.sim.water \
 	r.sim.sediment
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: parsubdirs
 
 clean: cleansubdirs
+
+$(SUBDIRS): simlib
+
+simlib:
+	$(MAKE) -C $@
+
+.PHONY: simlib
 

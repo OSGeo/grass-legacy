@@ -2,7 +2,6 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	lib \
 	v.lrs.create \
 	v.lrs.segment \
 	v.lrs.label \
@@ -13,7 +12,14 @@ PGM = lrs
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs htmldir
+default: parsubdirs htmldir
 
 clean: cleansubdirs
+
+$(SUBDIRS): lrslib
+
+lrslib:
+	$(MAKE) -C lib
+
+.PHONY: lrslib
 

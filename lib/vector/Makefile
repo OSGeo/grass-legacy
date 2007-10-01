@@ -12,6 +12,11 @@ DOXNAME=vector
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: subdirs
+default: parsubdirs
 
 clean: cleansubdirs
+
+diglib: rtree
+
+Vlib: rtree dglib diglib
+

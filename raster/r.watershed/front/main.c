@@ -212,7 +212,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Build command line */
-	sprintf (command, "%s/etc/water/", G_gisbase()) ;
+	sprintf (command, "%s/etc/", G_gisbase()) ;
 
 	if (flag1->answer)
 	    strcat(command,"r.watershed.seg");
