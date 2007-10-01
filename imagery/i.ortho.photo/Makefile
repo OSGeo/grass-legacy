@@ -2,7 +2,6 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	libes \
 	menu \
 	photo.2image \
 	photo.2target \
@@ -14,6 +13,14 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+$(SUBDIRS): libes
+
+default: parsubdirs
 
 clean: cleansubdirs
+
+libes:
+	$(MAKE) -C $@
+
+.PHONY: libes
+

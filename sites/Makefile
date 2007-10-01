@@ -10,7 +10,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: htmldir
 
-htmldir: subdirs
+htmldir: parsubdirs
 
 clean: cleansubdirs
 

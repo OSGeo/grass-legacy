@@ -35,6 +35,6 @@ SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4) $(SUBDIRS5) $(SUBDIRS
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: parsubdirs
 
 clean: cleansubdirs

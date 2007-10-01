@@ -7,7 +7,9 @@ SUBDIRS = data \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: parsubdirs
 
 clean: cleansubdirs
+
+interp_float: data qtree
 

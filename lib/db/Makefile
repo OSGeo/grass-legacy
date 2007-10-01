@@ -15,6 +15,12 @@ DOXNAME=dbmi
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: subdirs
+default: parsubdirs
 
 clean: cleansubdirs
+
+stubs: dbmi_base
+
+dbmi_client: dbmi_base
+
+dbmi_driver: dbmi_base stubs

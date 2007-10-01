@@ -14,7 +14,7 @@ int run_etc_support(char *pgm, char *rast)
     char path[GPATH_MAX];
     int stat;
 
-    sprintf(path, "%s/etc/support/%s", G_gisbase(), pgm);
+    sprintf(path, "%s/etc/%s", G_gisbase(), pgm);
 
     if ((stat = G_spawn(path, pgm, rast, NULL)))
 	G_sleep(3);

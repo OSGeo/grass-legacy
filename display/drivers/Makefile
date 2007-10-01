@@ -15,7 +15,7 @@ endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs $(ETC)/monitorcap
+default: parsubdirs $(ETC)/monitorcap
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL_DATA) description.html $(GISBASE)/docs/html/displaydrivers.html
 
