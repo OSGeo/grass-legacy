@@ -324,7 +324,7 @@ CREATE TABLE prog_imp (
 
 CREATE TABLE prog_exp (
 	program VARCHAR(80) NOT NULL,
-	symbol VARCHAR(150) NOT NULL
+	symbol VARCHAR(180) NOT NULL
 	) ;
 
 \copy prog_exp FROM '$tmpdir/prog_exp.lst'
