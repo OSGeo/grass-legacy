@@ -24,10 +24,6 @@
 	<string>@PKG_INST_DIR@</string>
 	<key>IFPkgFlagFollowLinks</key>
 	<false/>
-	<key>IFPkgFlagInstallFat</key>
-	<false/>
-	<key>IFPkgFlagInstalledSize</key>
-	<integer>61900</integer>
 	<key>IFPkgFlagIsRequired</key>
 	<false/>
 	<key>IFPkgFlagOverwritePermissions</key>
@@ -40,7 +36,5 @@
 	<true/>
 	<key>IFPkgFlagUpdateInstalledLanguages</key>
 	<false/>
-	<key>IFPkgFormatVersion</key>
-	<real>0.10000000149011612</real>
 </dict>
 </plist>
