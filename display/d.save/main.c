@@ -79,7 +79,7 @@ int main (int argc, char **argv)
         module = G_define_module();
         module->keywords = _("display");
     module->description = 
-	  _("Create a list of commands for recreating screen graphics.");
+	  _("Creates a list of commands for recreating screen graphics.");
 	
 
 	opt1 = G_define_option();
@@ -521,7 +521,7 @@ process_list (char *item, char **list, int count)
 	case 11:
 		break;
 	default: /* otherwise */
-		G_warning(_("Unkown item type in pad: %s"), item);
+		G_warning(_("Unknown item type in pad: %s"), item);
 		break;
 	}
 

@@ -393,19 +393,19 @@ int sel_by_where (struct Map_info *Map,
     cat_list = Vect_new_cat_list();
 
     if (layer < 1) {
-	G_fatal_error (_("Layer must be > 0 for 'where'."));
+	G_fatal_error (_("Layer must be > 0 for 'where'"));
     }
 
     Fi = Vect_get_field (Map, layer);
 
     if (!Fi) {
-	G_fatal_error (_("No layer database connection."));
+	G_fatal_error (_("No layer database connection"));
     }
 
     driver = db_start_driver (Fi -> driver);
 
     if (!driver)
-	G_fatal_error(_("Unable to open driver <%s>"),
+	G_fatal_error(_("Unable to start driver <%s>"),
 		      Fi->driver) ;
     
     db_init_handle (&handle);
@@ -413,8 +413,8 @@ int sel_by_where (struct Map_info *Map,
     db_set_handle (&handle, Fi -> database, NULL);
 
     if (db_open_database(driver, &handle) != DB_OK)
-	G_fatal_error(_("Unable to open database <%s>"),
-		      Fi->database);
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+		      Fi->database, Fi->driver);
     
     ncats = db_select_int (driver, Fi -> table, Fi -> key,
 			   where, &cats);
