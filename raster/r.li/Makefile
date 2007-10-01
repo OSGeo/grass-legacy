@@ -2,7 +2,7 @@ MODULE_TOPDIR =../..
 
 PGM = r.li
 
-SUBDIRS = \
+SUBDIRS1 = \
 	r.li.edgedensity\
 	r.li.patchdensity\
 	r.li.patchnum\
@@ -19,6 +19,8 @@ SUBDIRS = \
 	r.li.richness\
 	r.li.dominance\
 
+SUBDIRS = r.li.daemon $(SUBDIRS1)
+
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: parsubdirs
@@ -26,10 +28,5 @@ default: parsubdirs
 
 clean: cleansubdirs
 
-$(SUBDIRS): r.li.daemon
-
-r.li.daemon:
-	$(MAKE) -C $@
-
-.PHONY: r.li.daemon
+$(SUBDIRS1): r.li.daemon
 

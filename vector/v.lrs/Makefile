@@ -1,11 +1,13 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = \
+SUBDIRS1 = \
 	v.lrs.create \
 	v.lrs.segment \
 	v.lrs.label \
 	v.lrs.where
+
+SUBDIRS = lib $(SUBDIRS1)
 
 #to install documentation:
 PGM = lrs
@@ -16,10 +18,5 @@ default: parsubdirs htmldir
 
 clean: cleansubdirs
 
-$(SUBDIRS): lrslib
-
-lrslib:
-	$(MAKE) -C lib
-
-.PHONY: lrslib
+$(SUBDIRS1): lib
 
