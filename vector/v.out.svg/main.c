@@ -135,7 +135,7 @@ int main (int argc, char *argv[]) {
     if ( Fi != NULL ) {
         Driver = db_start_driver(Fi->driver);
         if (Driver == NULL) {
-            G_fatal_error(_("Unable to open driver <%s>"), Fi->driver);
+            G_fatal_error(_("Unable to start driver <%s>"), Fi->driver);
         }
 
         /* open db */

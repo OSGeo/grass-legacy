@@ -275,7 +275,7 @@ main (int argc, char *argv[])
 	     doatt = 0;
 	 } else {  
 	     Driver = db_start_driver(Fi->driver);
-	     if (Driver == NULL) G_fatal_error(_("Unable to open driver <%s>"), Fi->driver);
+	     if (Driver == NULL) G_fatal_error(_("Unable to start driver <%s>"), Fi->driver);
 
 	     db_init_handle (&handle);
 	     db_set_handle (&handle, Fi->database, NULL);
