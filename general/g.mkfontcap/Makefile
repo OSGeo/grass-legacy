@@ -14,7 +14,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd $(CAPFILE)
 
-$(CAPFILE): $(PROG)
+$(CAPFILE): $(BIN)/$(PGM)$(EXE)
 	GISRC=junk GISBASE=$(RUN_GISBASE) \
 	$(LD_LIBRARY_PATH_VAR)="$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	$< ; true
