@@ -79,6 +79,7 @@ int main (int argc, char *argv[])
 	struct Colors colr;
 	struct Cell_head cellhd;
 	struct Cell_head window;
+	struct History history;
 	struct GModule *module;
 	struct
 	{
@@ -165,9 +166,9 @@ int main (int argc, char *argv[])
 
 	sscanf(parm.size->answer, "%d", &ncb.nsize);
 	if (ncb.nsize <= 0)
-		G_fatal_error(_("neighborhood size must be positive"));
+		G_fatal_error(_("Neighborhood size must be positive"));
 	if (ncb.nsize % 2 == 0)
-		G_fatal_error(_("neighborhood size must be odd"));
+		G_fatal_error(_("Neighborhood size must be odd"));
 	ncb.dist = ncb.nsize/2;
 
 	if (parm.weight->answer && flag.circle->answer)
@@ -326,6 +327,11 @@ int main (int argc, char *argv[])
 
 	if(copycolr)
 		G_write_colors (ncb.newcell.name, ncb.newcell.mapset, &colr);
+
+	G_short_history(ncb.newcell.name, "raster", &history);
+	G_command_history(&history);
+	G_write_history(ncb.newcell.name, &history);
+
 
 	exit(EXIT_SUCCESS);
 }
