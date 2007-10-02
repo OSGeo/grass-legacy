@@ -8,7 +8,7 @@ DEPENDENCIES = $(GPROJDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: inter $(ETC)/proj-desc.table $(ETC)/proj-parms.table $(ETC)/proj-units.table
+default: cmd $(ETC)/proj-desc.table $(ETC)/proj-parms.table $(ETC)/proj-units.table
 
 $(ETC)/%.table: %.table
 	rm -f $@

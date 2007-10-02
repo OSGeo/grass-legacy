@@ -23,8 +23,6 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 cmd: $(BIN)/$(PGM)$(EXE) htmlcmd
 
-inter: $(BIN)/$(PGM)$(EXE) htmlinter
-
 $(BIN)/$(PGM)$(EXE): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) -o $@ $(ARCH_CMD_OBJS) $(FMODE_OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 

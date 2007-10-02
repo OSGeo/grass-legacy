@@ -42,6 +42,8 @@ LDFLAGS += -L$(IOSTREAM_LIBDIR)
 LIBS = $(GISLIB) 
 DEPLIBS = $(DEPGISLIB)
 
+CLEAN_SUBDIRS = $(IOSTREAM_LIBDIR)
+
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
@@ -70,10 +72,3 @@ $(BIN)/$(PGM).short: $(SHORT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 $(IOSTREAM_DEPLIB):
 	$(MAKE) -C $(IOSTREAM_LIBDIR)
 
-clean: 
-	$(MAKE) -C $(IOSTREAM_LIBDIR) clean
-	-rm $(OBJARCH)/FLOAT/*
-	-rm $(OBJARCH)/SHORT/*
-	-rmdir $(OBJARCH)/FLOAT
-	-rmdir $(OBJARCH)/SHORT
-	-rmdir $(OBJARCH)
