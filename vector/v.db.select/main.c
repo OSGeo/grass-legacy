@@ -43,32 +43,21 @@ int main (int argc, char **argv)
     char query[1024];
 
     module = G_define_module();
-    module->keywords = _("vector");
-    module->description = _("Print vector attributes");
+    module->keywords = _("vector, database, attribute table");
+    module->description = _("Prints vector map attributes.");
 
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
-    col_opt 		= G_define_option();
-    col_opt->key 	= "column";
-    col_opt->type 	= TYPE_STRING;
-    col_opt->required 	= NO;
-    col_opt->multiple 	= YES;
-    col_opt->description = _("Attribute column(s)");
+    col_opt 		= G_define_standard_option(G_OPT_COLUMN);
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
 
-    fs_opt 		= G_define_option();
-    fs_opt->key 	= "fs";
-    fs_opt->type 	= TYPE_STRING;
-    fs_opt->required 	= NO;
+    fs_opt 		= G_define_standard_option(G_OPT_F_SEP);
     fs_opt->description = _("Output field separator");
-    fs_opt->answer	= "|";
 
-    vs_opt 		= G_define_option();
+    vs_opt 		= G_define_standard_option(G_OPT_F_SEP);
     vs_opt->key 	= "vs";
-    vs_opt->type 	= TYPE_STRING;
-    vs_opt->required 	= NO;
     vs_opt->description = _("Output vertical record separator");
 
     nv_opt 		= G_define_option();
@@ -104,9 +93,14 @@ int main (int argc, char **argv)
     Vect_open_old_head ( &Map, map_opt->answer, mapset);
 
     if ( (Fi = Vect_get_field ( &Map, field)) == NULL ) 
-	G_fatal_error(_("Database connection not defined"));
+	G_fatal_error(_("Database connection not defined for layer %d"),
+		      field);
 
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+    
+    if (!driver)
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+		      Fi->database, Fi->driver);
 
     if ( col_opt->answer )
       sprintf(query, "SELECT %s FROM ", col_opt->answer);
@@ -126,7 +120,7 @@ int main (int argc, char **argv)
     }
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
-	G_fatal_error(_("Cannot open select cursor"));
+	G_fatal_error(_("Unable to open select cursor"));
 
     table = db_get_cursor_table (&cursor);
     ncols = db_get_table_number_of_columns (table);
@@ -144,7 +138,8 @@ int main (int argc, char **argv)
     /* fetch the data */
     while(1) {
 	if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-	    G_fatal_error(_("Unable to fetch data from table"));
+	    G_fatal_error(_("Unable to fetch data from table <%s>"),
+			  Fi->table);
 
 	if (!more) break;
 
