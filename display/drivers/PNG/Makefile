@@ -1,5 +1,7 @@
 MODULE_TOPDIR = ../../..
 
+PGM=pngdriver
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
@@ -12,12 +14,8 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(PNGDRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(PNGDRIVERDEP) $(DRIVERDEP) $(GISLIBDEP)
-PGM=pngdriver
 
-default: $(DRIVERDIR)/PNG html moncap
-
-html:	$(DRIVERDIR)/PNG
-	$(call htmlgen)
+default: $(DRIVERDIR)/PNG $(HTMLDIR)/$(PGM).html moncap
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

@@ -1,5 +1,7 @@
 MODULE_TOPDIR = ../../..
 
+PGM=psdriver
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
@@ -12,12 +14,8 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(PSDRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(PSDRIVERDEP) $(DRIVERDEP) $(GISDEP)
-PGM=psdriver
 
-default: $(DRIVERDIR)/PS html moncap
-
-html:	$(DRIVERDIR)/PS
-	$(call htmlgen)
+default: $(DRIVERDIR)/PS $(HTMLDIR)/$(PGM).html moncap
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^PS' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

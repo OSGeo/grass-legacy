@@ -1,6 +1,8 @@
 
 MODULE_TOPDIR = ../../..
 
+PGM=xdriver
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
@@ -61,18 +63,13 @@ OBJS =  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-PGM=xdriver
-
 #FREETYPEBASED = Draw_point.o
 #compile if FreeType Lib present:
 #ifneq ($(strip $(FTLIB)),)
 #    OBJS += $(FREETYPEBASED)
 #endif
 
-default: $(DRIVERDIR)/XDRIVER html moncap
-
-html:	$(DRIVERDIR)/XDRIVER
-	$(call htmlgen)
+default: $(DRIVERDIR)/XDRIVER $(HTMLDIR)/$(PGM).html moncap
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^x0' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

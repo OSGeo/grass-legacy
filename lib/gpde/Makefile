@@ -11,5 +11,7 @@ default: headers lib
 headers:
 	for file in ./N_*.h ; do $(INSTALL_DATA) $$file $(GISBASE)/include/grass/ ; done
 
+lib: headers
+
 #doxygen:
 DOXNAME=gpde

@@ -6,13 +6,9 @@ HTMLDIR = $(ARCH_DISTDIR)/docs/html
 
 ifdef CROSS_COMPILING
 
-html:
-
 htmlcmd:
 
 htmlscript:
-
-htmlinter:
 
 htmletc:
 
@@ -40,43 +36,25 @@ htmldesc = \
 	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
 	LC_ALL=C $(1) --html-description < /dev/null | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
 
-%.tmp.html: $(BIN)/%$(EXE)
-	$(call htmldesc,$<)
-
-%.tmp.html: $(ETC)/%$(EXE)
-	$(call htmldesc,$<)
-
-%.tmp.html: $(SCRIPTDIR)/%
-	$(call htmldesc,$<)
-
-%.tmp.html: %.html
-	$(INSTALL_DATA) $< $@
-
-$(HTMLDIR)/%.html: %.tmp.html
+$(HTMLDIR)/$(PGM).html: $(HTMLSRC)
+	if [ "$(HTMLSRC)" != "" ] ; then $(call htmldesc,$<) ; fi
 	$(call htmlgen)
 
-$(HTMLDIR)/.html:
-
-
-html: $(HTMLDIR)/$(PGM).html
-
 # html rules for cmd commands
-htmlcmd: html
+htmlcmd:
+	$(MAKE) $(HTMLDIR)/$(PGM).html HTMLSRC=$(BIN)/$(PGM)$(EXE)
 
 # html rules for scripts
-htmlscript: html
-
-# html rules for inter commands
-# note that fakestart doesn't work here
-htmlinter: html
+htmlscript:
+	$(MAKE) $(HTMLDIR)/$(PGM).html HTMLSRC=$(SCRIPTDIR)/$(PGM)
 
 # html rules for ETC commands
-# does not have "html" as a dependency so that it can be overridden in Makefiles
 htmletc:
-	$(MAKE) html
+	$(MAKE) $(HTMLDIR)/$(PGM).html HTMLSRC=$(ETC)/$(PGM)$(EXE)
 
 # html rules for intro pages in directories
-htmldir: html
+htmldir:
+	$(MAKE) $(HTMLDIR)/$(PGM).html
 
 # html rules for multiple commands
 htmlmulti:

@@ -1,5 +1,6 @@
-
 MODULE_TOPDIR = ../../..
+
+PGM=htmlmapdriver
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
@@ -18,12 +19,8 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(DRIVERLIBDEP) $(DRIVERDEP) $(DISPLAYDEP) $(RASTERDEP) $(GISLIBDEP)
-PGM=htmlmapdriver
 
-default: $(DRIVERDIR)/HTMLMAP html moncap
-
-html:	$(DRIVERDIR)/HTMLMAP
-	$(call htmlgen)
+default: $(DRIVERDIR)/HTMLMAP $(HTMLDIR)/$(PGM).html moncap
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \

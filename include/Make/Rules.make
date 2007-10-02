@@ -34,7 +34,12 @@ $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) | $(OBJDIR)
 # default clean rules
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS)
-	-rm -f $(EXTRA_CLEAN_FILES) $(PGM).tmp.html
+	-rm -f $(EXTRA_CLEAN_FILES) *.tmp.html
+	-if [ "$(CLEAN_SUBDIRS)" != "" ] ; then \
+		for dir in $(CLEAN_SUBDIRS) ; do \
+			$(MAKE) -C $$dir clean ; \
+		done ; \
+	fi
 
 # HTML page rules:
 include $(MODULE_TOPDIR)/include/Make/Html.make
