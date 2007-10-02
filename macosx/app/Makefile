@@ -35,9 +35,7 @@ endif
 
 default: macosxapp
 
-macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh $(ARCH_OBJS)
-	-${MAKE_DIR_CMD} ${APPDIR}/MacOS
-	$(CC) $(LDFLAGS) -o ${APPDIR}/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
+macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh build_gui_user_menu.sh $(ARCH_OBJS) $(APPDIR)/MacOS/GRASS
 	-${MAKE_DIR_CMD} ${APPDIR}/Resources/Scripts
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/scripts
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/etc
@@ -69,22 +67,26 @@ ifdef OPENGL_X11
 endif
 
 $(OBJDIR)/main.o: main.m
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	$(MAKE_DIR_CMD) $(OBJDIR)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(EXTRA_INC) -o $(OBJDIR)/main.o -c main.m
 
+$(APPDIR)/MacOS/GRASS: $(OBJDIR)/main.o
+	-$(MAKE_DIR_CMD) ${APPDIR}/MacOS
+	$(CC) $(LDFLAGS) -o ${APPDIR}/MacOS/GRASS $(OBJDIR)/main.o $(XTRA_LDFLAGS)
+
 $(OBJDIR)/Info.plist: Info.plist.in
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	$(MAKE_DIR_CMD) $(OBJDIR)
 	sed -e "s,@GRASS_VERSION_MAJOR@,$(GRASS_VERSION_MAJOR),g" \
 	-e "s,@GRASS_VERSION_MINOR@,$(GRASS_VERSION_MINOR),g" \
 	-e "s,@GRASS_VERSION_RELEASE@,$(GRASS_VERSION_RELEASE),g" \
 	Info.plist.in > $(OBJDIR)/Info.plist
 
 $(OBJDIR)/GRASS.scpt: GRASS.applescript
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	$(MAKE_DIR_CMD) $(OBJDIR)
 	osacompile -d -x -i /System/Library/Frameworks/AppleScriptKit.framework -o $(OBJDIR)/GRASS.scpt GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
-	@test -d $(OBJDIR) || mkdir $(OBJDIR)
+	$(MAKE_DIR_CMD) $(OBJDIR)
 	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:
