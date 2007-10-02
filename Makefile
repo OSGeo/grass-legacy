@@ -28,7 +28,6 @@ BINDIR=			${UNIX_BIN}
 
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
-INSTALL=    	    	cp
 
 # Extra commands
 HTML2PDF=		htmldoc --footer d.1
