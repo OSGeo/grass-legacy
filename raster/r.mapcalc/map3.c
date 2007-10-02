@@ -359,7 +359,7 @@ static void read_map(
 				SET_NULL_D(&dbuf[i]);
 			break;
 		default:
-			G_fatal_error(_("unknown type: %d"), res_type);
+			G_fatal_error(_("Unknown type: %d"), res_type);
 			break;
 		}
 
