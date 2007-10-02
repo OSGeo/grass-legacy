@@ -35,6 +35,7 @@ int main (int argc, char *argv[])
     int i, type, stat;
     int day, yr, Out_proj;
     int out_zone = 0;
+    int overwrite; /* overwrite output map */
     char *mapset;
     char *omap_name, *map_name, *iset_name, *oset_name, *iloc_name;
     struct pj_info info_in;
@@ -97,14 +98,23 @@ int main (int argc, char *argv[])
     flag.transformz->description = _("Assume z co-ordinate is ellipsoidal height and "
 				     "transform if possible");
    
+    /* The parser checks if the map already exists in current mapset,
+       we switch out the check and do it
+       * in the module after the parser */
+    overwrite = G_check_overwrite(argc, argv);
+
     if (G_parser (argc, argv)) exit (EXIT_FAILURE);
 		 
     /* start checking options and flags */
     /* set input vector map name and mapset */
     map_name = mapopt->answer;
-    if (omapopt->answer) omap_name = omapopt->answer;
-    else omap_name = map_name;
-
+    if (omapopt->answer)
+      omap_name = omapopt->answer;
+    else
+      omap_name = map_name;
+    if (omap_name && !flag.list->answer && !overwrite && G_find_vector2(omap_name, G_mapset()))
+	    G_fatal_error(_("option <%s>: <%s> exists."),
+			  "output", omap_name);
     if (isetopt->answer) iset_name = isetopt->answer;
     else iset_name = G_store (G_mapset());
 
@@ -141,7 +151,7 @@ int main (int argc, char *argv[])
 	}
 
 	if (mapopt -> answer == NULL) {
-	    G_fatal_error (_("Parameter <%s> not set"),
+	    G_fatal_error (_("Required parameter <%s> not set"),
 			   mapopt -> key);
 	}
 
