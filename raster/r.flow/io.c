@@ -62,10 +62,10 @@ open_existing_cell_file (char *fname, struct Cell_head *chd)
     char   *mapset = G_find_cell(fname, "");
 
     if (mapset == NULL)
-        G_fatal_error(_("Cannot find file %s"), fname);
+        G_fatal_error(_("Unable to find file %s"), fname);
 
     if (chd && (G_get_cellhd(fname, mapset, chd) < 0))
-        G_fatal_error(_("Cannot get header for %s"), fname);
+        G_fatal_error(_("Unable to get header for %s"), fname);
 
     return G_open_cell_old(fname, mapset);
 }
@@ -176,10 +176,10 @@ open_output_files (void)
     }
 
     if (parm.lgout && ((lgfd = G_open_raster_new(parm.lgout, FCELL_TYPE)) < 0))
-	G_fatal_error(_("Cannot create raster map %s"), parm.lgout);
+	G_fatal_error(_("Unable to create raster map <%s>"), parm.lgout);
 
     if (parm.flout && (Vect_open_new(&fl, parm.flout, 0) < 0))
-	G_fatal_error(_("Cannot create vector map %s"),	parm.flout);
+	G_fatal_error(_("Unable to create vector map <%s>"),	parm.flout);
 }
 
 void
@@ -214,7 +214,7 @@ write_density_file (void)
     G_message(_("Writing density file"));
     dsfd = G_open_raster_new(parm.dsout, DCELL_TYPE);
     if (dsfd < 0)
-	G_fatal_error(_("Cannot create raster map '%s'"),	parm.dsout);
+	G_fatal_error(_("Unable to create raster map <%s>"),	parm.dsout);
 
     for (row = 0; row < region.rows; row++)
     {
@@ -235,7 +235,7 @@ write_density_file (void)
     G_add_color_rule(1000, 0,0,255,     (CELL) dsmax, 0,0,0,	 &colors);
     
     if ((mapset = G_find_file("cell", parm.dsout, "")) == NULL)
-	G_fatal_error(_("Cannot find file %s"), parm.dsout);
+	G_fatal_error(_("Unable to find file %s"), parm.dsout);
 
     G_write_colors(parm.dsout, mapset, &colors);
     G_free_colors(&colors);

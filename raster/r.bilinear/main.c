@@ -49,13 +49,13 @@ int main( int argc, char *argv[])
     northoff = G_define_option();
     northoff->key                    = "north";
     northoff->type                   = TYPE_DOUBLE;
-    northoff->description            = _("specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
+    northoff->description            = _("Specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
     northoff->required               = NO;
 
     eastoff = G_define_option();
     eastoff->key                    = "east";
     eastoff->type                   = TYPE_DOUBLE;
-    eastoff->description            = _("specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
+    eastoff->description            = _("Specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
     eastoff->required               = NO;
 
     if (G_parser (argc, argv))
