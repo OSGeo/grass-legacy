@@ -74,7 +74,7 @@ RASTER_MAP_TYPE o_open_file (char *cell)
 
     sscanf(cell,"%s",cell_name);
     if ((in_file_d = G_open_cell_old(cell_name,mapset)) < 0)
-	G_fatal_error (_("Cannot open raster map <%s> in <%s>"),
+	G_fatal_error (_("Unable to open raster map <%s> in mapset <%s>"),
 		       cell_name, mapset);
 
     map_type = G_get_raster_map_type(in_file_d);
