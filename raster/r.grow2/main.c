@@ -208,13 +208,13 @@ int main(int argc, char **argv)
 
 	if (G_read_cats(in_name, mapset, &cats) == -1)
 	{
-		G_warning(_("Error in reading cats file for <%s>"), in_name);
+		G_warning(_("Error reading category file for <%s>"), in_name);
 		G_init_cats(0, "", &cats);
 	}
 
 	if (G_read_colors(in_name, mapset, &colr) == -1)
 	{
-		G_warning(_("Error in reading colr file for <%s>"), in_name);
+		G_warning(_("Error in reading color file for <%s>"), in_name);
 		colrfile = 0;
 	}
 	else
@@ -306,7 +306,7 @@ int main(int argc, char **argv)
 	G_close_cell(out_fd);
 
 	if (G_write_cats(out_name, &cats) == -1)
-		G_warning(_("Error writing cats file for <%s>"), out_name);
+		G_warning(_("Error writing category file for <%s>"), out_name);
 
 	if (colrfile)
 		if (G_write_colors(out_name, G_mapset(), &colr) == -1)

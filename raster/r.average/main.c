@@ -62,28 +62,24 @@ main (int argc, char *argv[])
 
     flag_c = G_define_flag();
     flag_c->key = 'c';
-    flag_c->description = _("cover values extracted from the category labels of the cover map");
+    flag_c->description = _("Cover values extracted from the category labels of the cover map");
 
     if (G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
     if (!G_find_cell(basemap->answer,""))
-	G_fatal_error(_("%s: %s - raster map not found"), 
-                     G_program_name(), basemap->answer);
+	G_fatal_error(_("Raster map <%s> not found"), basemap->answer);
 
     if (!(mapset = G_find_cell(covermap->answer,"")))
-	G_fatal_error(_("%s: %s - raster map not found"), 
-                     G_program_name(), covermap->answer);
+	G_fatal_error(_("Raster map <%s> not found"), covermap->answer);
 
     if (G_legal_filename(outputmap->answer) < 0)
-	G_fatal_error(_("%s: %s - illegal name"), G_program_name(), 
-                     outputmap->answer);
+	G_fatal_error(_("<%s> is an illegal file name"), outputmap->answer);
 
     if ((usecats = flag_c->answer))
     {
 	if (G_read_cats (covermap->answer, mapset, &cats) < 0)
-	    G_fatal_error(_("%s: ERROR reading category file for %s"),
-		        G_program_name(), covermap->answer);
+	    G_fatal_error(_("Error reading category file for <%s>"), covermap->answer);
     }
 
     tempfile1 = G_convert_dirseps_to_host(G_tempfile());
