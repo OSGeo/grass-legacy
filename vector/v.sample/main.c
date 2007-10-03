@@ -241,7 +241,7 @@ int main(int argc, char **argv)
         if (ctype == DB_C_TYPE_INT) {
             ret = db_CatValArray_get_value_int(&cvarr, cat, &cval);
             if (ret != DB_OK)
-                G_warning(_("No record for cat = %d"), cat);
+                G_warning(_("No record for category %d in table <%s>"), cat, Fi->table);
 
             actual = cval;
         }
@@ -249,7 +249,7 @@ int main(int argc, char **argv)
         {
             ret = db_CatValArray_get_value_double(&cvarr, cat, &dval);
             if (ret != DB_OK)
-                G_warning(_("No record for cat = %d"), cat);
+                G_warning(_("No record for category %d in table <%s>"), cat, Fi->table);
 
             actual = dval;
         }
