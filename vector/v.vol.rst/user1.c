@@ -93,7 +93,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
 
   Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
   if (Driver == NULL) 
-      G_fatal_error(_("Cannot open database %s"), Fi->database);
+      G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
   nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, column, wheresql, &cvarr );
   ctype = cvarr.ctype;
@@ -154,7 +154,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
         /* do nothing in this case to not confuse user. Or implement second cat list */
         ;
       else
-        G_warning(_("Database record for cat %d not found"), cat);
+        G_warning(_("No record for category %d in table <%s>"), cat, Fi->table);
         continue;
     }
 

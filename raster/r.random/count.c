@@ -21,7 +21,7 @@ void get_stats (struct rr_state *theState)
 
     theState->fd_old = G_open_cell_old (theState->inraster, theState->mapset);
     if (theState->fd_old < 0)
-        G_fatal_error (_("Cannot open raster map <%s>"),
+        G_fatal_error (_("Unable to open raster map <%s>"),
 		       theState->inraster);
 
     theState->buf.type = G_get_raster_map_type (theState->fd_old);
@@ -42,7 +42,7 @@ void get_stats (struct rr_state *theState)
     set_min (NULL, 0, &theState->min);
     set_max (NULL, 0, &theState->max);
 
-    G_message(_("Collecting Stats ..."));
+    G_message(_("Collecting Stats..."));
     for (row = 0; row < nrows; row++)
     {
         if (G_get_raster_row(theState->fd_old, theState->buf.data.v, 
