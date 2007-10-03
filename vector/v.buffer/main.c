@@ -244,7 +244,7 @@ main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-	_("Create a buffer around features of given type (areas must contain centroid).");
+	_("Creates a buffer around features of given type (areas must contain centroid).");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -316,7 +316,7 @@ main (int argc, char *argv[])
 
     scale = atof( scale_opt->answer );
     if ( scale <= 0.0 )
-	G_fatal_error("Illegal scale value.");
+	G_fatal_error("Illegal scale value");
 
     if(buffer_opt->answer) {
 	buffer = fabs ( atof( buffer_opt->answer ) );
@@ -350,7 +350,7 @@ main (int argc, char *argv[])
 
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error (_("Could not find input map <%s>"), in_opt->answer);
+	 G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
 
     Vect_set_open_level (2); 
@@ -372,7 +372,7 @@ main (int argc, char *argv[])
 
 	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (Driver == NULL)
-	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
@@ -430,7 +430,7 @@ main (int argc, char *argv[])
 		if( ctype == DB_C_TYPE_INT ) {
 		    ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
 		    if ( ret != DB_OK ) {
-			G_warning(_("No record for cat = %d"), cat );
+			G_warning(_("No record for category %d in table <%s>"), cat, Fi->table );
 			continue;
 		    }
 		    size_val = (double)size_val_int;
@@ -439,13 +439,13 @@ main (int argc, char *argv[])
 		if( ctype == DB_C_TYPE_DOUBLE ) {
 		    ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
 		    if ( ret != DB_OK ) {
-			G_warning(_("No record for cat = %d"), cat );
+			G_warning(_("No record for category %d in table <%s>"), cat, Fi->table );
 			continue;
 		    }
 		}
 
 		if (size_val < 0.0) {
-		    G_warning(_("Attribute is of invalid size (%.3f) for category %d."), 
+		    G_warning(_("Attribute is of invalid size (%.3f) for category %d"), 
 					size_val, cat);
 		    continue;
 		}
@@ -498,7 +498,7 @@ main (int argc, char *argv[])
 		if( ctype == DB_C_TYPE_INT ) {
 		    ret = db_CatValArray_get_value_int(&cvarr, cat, &size_val_int);
 		    if ( ret != DB_OK ) {
-			G_warning(_("No record for cat = %d"), cat );
+			G_warning(_("No record for category %d in table <%s>"), cat, Fi->table );
 			continue;
 		    }
 		    size_val = (double)size_val_int;
@@ -507,13 +507,13 @@ main (int argc, char *argv[])
 		if( ctype == DB_C_TYPE_DOUBLE ) {
 		    ret = db_CatValArray_get_value_double(&cvarr, cat, &size_val);
 		    if ( ret != DB_OK ) {
-			G_warning(_("No record for cat = %d"), cat );
+			G_warning(_("No record for category %d in table <%s>"), cat, Fi->table );
 			continue;
 		    }
 		}
 
 		if (size_val < 0.0) {
-		    G_warning(_("Attribute is of invalid size (%.3f) for category %d."), 
+		    G_warning(_("Attribute is of invalid size (%.3f) for category %d"), 
 					size_val, cat);
 		    continue;
 		}
