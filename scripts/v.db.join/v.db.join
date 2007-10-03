@@ -93,7 +93,7 @@ if [ -z "$maptable" ] ; then
 fi
 v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${GIS_OPT_column}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
-	g.message -e "Column <$GIS_OPT_column> not found in table"
+	g.message -e "Column <$GIS_OPT_column> not found in table <$GIS_OPT_MAP> at layer $GIS_OPT_LAYER"
 	exit 1
 fi
 
