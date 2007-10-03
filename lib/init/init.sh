@@ -686,6 +686,11 @@ if [ "$GRASS_FONT_CAP" ] && [ ! -f "$GRASS_FONT_CAP" ] ; then
 	g.mkfontcap
 fi
 
+# predefine DBF driver if DB connection not defined
+echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
+echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
+mkdir "$LOCATION"/dbf
+
 trap "" 2 3 15
 
 # cygwin has many problems with the shell setup
