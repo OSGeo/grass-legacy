@@ -287,7 +287,7 @@ int main(int argc,char *argv[])
 	cex = (int *) bsearch((void *) &(cache[point].cat), catexst, select, sizeof(int), srch_cat);
 	if ( cex == NULL ) { /* cat does not exist in DB */ 
 	    norec_cnt++;
-	    G_warning ( _("No record for category '%d' in the table"), cache[point].cat );
+	    G_warning ( _("No record for category %d in table <%s>"), cache[point].cat, Fi->table );
 	    continue;
 	}
 

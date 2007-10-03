@@ -271,7 +271,7 @@ main (int argc, char **argv)
     if ( fi == NULL ) G_fatal_error (_("Cannot get layer info for vector map"));
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL ) 
-	G_fatal_error(_("Cannot open database %s by driver %s"), 
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), 
 	    fi->database, fi->driver);
 
     /* open labels */
@@ -304,7 +304,7 @@ main (int argc, char **argv)
 
 	nrows = db_get_num_rows ( &cursor );
 	if ( nrows < 1 ) {
-	    G_warning (_("No database record for category %d"), cat);
+	    G_warning (_("No record for category %d in table <%s>"), cat, fi->table);
 	    continue;
 	}
 

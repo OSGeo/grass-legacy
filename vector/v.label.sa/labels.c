@@ -47,13 +47,13 @@ label_t *labels_init(struct params *p, int *n_labels)
     FT_Face face;
     struct GFONT_CAP *font_cap;
 
-    fprintf(stderr, "Initialising labels ...");
+    fprintf(stderr, "Initialising labels...");
     legal_types = Vect_option_to_types(p->type);
 
     /* open vector */
     mapset = G_find_vector2(p->map->answer, NULL);
     if (mapset == NULL)
-	G_fatal_error(_("Vector map [%s] not available"), p->map->answer);
+	G_fatal_error(_("Vector map <%s> not found"), p->map->answer);
 
     /* open vector for read only */
     Vect_open_old(&Map, p->map->answer, mapset);
@@ -76,7 +76,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	G_fatal_error(_("Cannot get layer info for vector map"));
     driver = db_start_driver_open_database(fi->driver, fi->database);
     if (driver == NULL)
-	G_fatal_error(_("Cannot open database %s by driver %s"),
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 		      fi->database, fi->driver);
 
     sql_len = strlen(p->column->answer) + strlen(fi->table) +
@@ -162,7 +162,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	db_free_string(&query);
 	nrows = db_get_num_rows(&cursor);
 	if (nrows < 1) {
-	    G_warning(_("No database record for category %d"), cat);
+	    G_warning(_("No record for category %d in table <%s>"), cat, fi->table);
 	    continue;
 	}
 
