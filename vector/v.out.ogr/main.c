@@ -196,7 +196,7 @@ main (int argc, char *argv[])
     /* check if the map is 3d */
     if (Vect_is_3d(&In)) {
 	G_warning (_("Vector map <%s> is 3D. "
-		     "Please check layer creation options (parameter 'lco')."),
+		     "Use format specific layer creation options (parameter 'lco') to export in 3D rather than 2D (default)"),
 		   in_opt->answer);
     }
 
