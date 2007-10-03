@@ -73,9 +73,16 @@ trap "exitprocedure" 2 3 15
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
+# check if we want to connect to real DB
+if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
+  INPUT=$GIS_OPT_DB_TABLE
+else
+  INPUT=$GIS_OPT_DSN
+fi
+
 if [ -z "$GIS_OPT_OUTPUT" ] ; then
   # file name laundery
-  TMPNAME="`echo $GIS_OPT_INPUT | tr -s '.' '_'`"
+  TMPNAME="`echo $INPUT | tr -s '.' '_'`"
   GIS_OPT_OUTPUT="`basename $TMPNAME`"
 fi
 
@@ -89,13 +96,17 @@ else
   echo "DROP TABLE ${GIS_OPT_OUTPUT}" | db.execute
 fi
 
-# treat as real vector map...
+# treat DB as real vector map...
 if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
   LAYER="layer=$GIS_OPT_DB_TABLE"
 fi
 v.in.ogr --q dsn="$GIS_OPT_DSN" $LAYER out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null
 if [ $? -ne 0 ] ;  then
-   g.message -e "Input table <$GIS_OPT_INPUT> not found or not readable"
+   if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
+      g.message -e "Input DSN <$INPUT> not found or not readable"
+   else
+      g.message -e "Input table <$INPUT> not found or not readable"
+   fi
    exit 1
 fi
 # ... and immediately drop the empty geometry
@@ -111,6 +122,6 @@ fi
 # get rid of superfluous auto-added cat column
 db.dropcol --q -f $GIS_OPT_OUTPUT colum=cat >/dev/null 2>/dev/null 
 
-
+g.message "Imported table <$GIS_OPT_OUTPUT>"
 exit 0
 
