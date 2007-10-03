@@ -44,7 +44,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
 	cell = G_allocate_c_raster_buf();
 
 	if ( !outofbounds && G_get_c_raster_row(fd, cell, row) < 0 )
-	    G_fatal_error(_("Cannot read raster row [%d]"), row);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), cell, row);
 
 	if ( outofbounds || G_is_c_null_value(&cell[col]) )
 	    sprintf(buf, null_string);
@@ -70,7 +70,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
     if (data_type == FCELL_TYPE) {
 	fcell = G_allocate_f_raster_buf();
 	if ( !outofbounds && G_get_f_raster_row(fd, fcell, row) < 0 )
-	    G_fatal_error(_("Cannot read raster row [%d]"), row);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), fcell, row);
 
 	if ( outofbounds || G_is_f_null_value(&fcell[col]) )
 	    sprintf(buf, null_string);
@@ -96,7 +96,7 @@ int read_rast(double east, double north, double dist, int fd, int coords,
     if (data_type == DCELL_TYPE) {
 	dcell = G_allocate_d_raster_buf();
 	if ( !outofbounds && G_get_d_raster_row(fd, dcell, row) < 0 )
-	    G_fatal_error(_("Cannot read raster row [%d]"), row);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), dcell, row);
     
 	if ( outofbounds || G_is_d_null_value(&dcell[col]) )
 	    sprintf(buf, null_string);

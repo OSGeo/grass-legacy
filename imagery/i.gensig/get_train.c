@@ -30,7 +30,7 @@ int get_training_classes (struct files *files, struct Signature *S)
     {
 	G_percent (row, nrows, 2);
 	if (G_get_c_raster_row(fd, cell, row) < 0)
-            G_fatal_error(_("Unable to read raster row."));
+            G_fatal_error(_("Unable to read raster map <%s> row %d"), cell, row);
 	G_update_cell_stats (cell, ncols, &cell_stats);
     }
     G_percent (row, nrows, 2);

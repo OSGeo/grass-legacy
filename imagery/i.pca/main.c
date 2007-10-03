@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("imagery");
     module->description = _("Principal components analysis (pca) program"
-			    "for image processing");
+			    "for image processing.");
 
     /* Define options */
     opt_in  = G_define_standard_option (G_OPT_R_INPUTS);
@@ -122,7 +122,7 @@ int main (int argc, char *argv[])
             G_fatal_error (_("Raster map <%s> not found"), opt_in->answers[i]);
 
         if ((inp_fd[i] = G_open_cell_old (opt_in->answers[i], mapset)) < 0)
-            G_fatal_error (_("Cannot open raster map <%s>"), opt_in->answers[i]);
+            G_fatal_error (_("Unable to open raster map <%s>"), opt_in->answers[i]);
     }
 
     G_message (_("Calculating covariance matrix:"));
