@@ -17,9 +17,16 @@ $(OBJDIR):
 	-test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
 
 # default cc rules
-$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) | $(OBJDIR)
+ifeq ($(MAKE_VERSION),3.81)
+$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
 		-o $(OBJDIR)/$*.o -c $*.c
+else
+$(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS)
+	$(MAKE) $(OBJDIR)
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
+		-o $(OBJDIR)/$*.o -c $*.c
+endif
 
 # default parser generation rules, include prefix for files/vars
 %.yy.c: %.l
