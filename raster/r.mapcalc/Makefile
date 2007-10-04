@@ -1,11 +1,12 @@
 MODULE_TOPDIR = ../..
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+PGM2 = r.mapcalc
+PGM3 = r3.mapcalc
 
-NAME2 = r.mapcalc
-NAME3 = r3.mapcalc
-PGM2 = $(NAME2)$(EXE)
-PGM3 = $(NAME3)$(EXE)
+EXTRA_HEADERS = y.tab.h
+EXTRA_CLEAN_FILES = y.tab.c y.tab.h lex.yy.c y.output lex.backup
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
 
 COMMON = \
 	$(OBJDIR)/y.tab.o \
@@ -83,14 +84,12 @@ EXTRA_CFLAGS = $(READLINEINCPATH)
 LIBES2 = $(GISLIB) $(BTREELIB) $(ROWIOLIB) $(READLINELIBPATH) $(READLINELIB) $(HISTORYLIB)
 LIBES3 = $(G3DLIB) $(GISLIB) $(BTREELIB) $(READLINELIBPATH) $(READLINELIB) $(HISTORYLIB)
 
-EXTRA_CLEAN_FILES = y.tab.c y.tab.h lex.yy.c y.output lex.backup
+default: $(BIN)/$(PGM2)$(EXE) $(BIN)/$(PGM3)$(EXE) html
 
-default: $(BIN)/$(PGM2) $(BIN)/$(PGM3) html
-
-$(BIN)/$(PGM2): $(LIST2) $(DEPLIBS2)
+$(BIN)/$(PGM2)$(EXE): $(LIST2) $(DEPLIBS2)
 	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(FMODE_OBJ) $(LIBES2) $(MATHLIB) $(XDRLIB)
 
-$(BIN)/$(PGM3): $(LIST3) $(DEPLIBS3)
+$(BIN)/$(PGM3)$(EXE): $(LIST3) $(DEPLIBS3)
 	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(FMODE_OBJ) $(LIBES3) $(MATHLIB) $(XDRLIB)
 
 y.tab.c y.tab.h: mapcalc.y
@@ -101,5 +100,5 @@ lex.yy.c: mapcalc.l y.tab.h
 
 html:
 	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL_DATA) $(NAME2).html $(GISBASE)/docs/html/
-	$(INSTALL_DATA) $(NAME3).html $(GISBASE)/docs/html/
+	$(INSTALL_DATA) $(PGM2).html $(GISBASE)/docs/html/
+	$(INSTALL_DATA) $(PGM3).html $(GISBASE)/docs/html/

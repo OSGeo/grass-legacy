@@ -10,6 +10,7 @@ LIB_OBJS = \
 	y.tab.o
 
 EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h
+EXTRA_HEADERS = y.tab.h
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
