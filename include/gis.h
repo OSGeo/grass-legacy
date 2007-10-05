@@ -178,6 +178,7 @@ typedef enum {
     G_OPT_V_INPUTS, /* old input vector maps */
     G_OPT_V_OUTPUT, /* new output vector map */
     G_OPT_V_MAP,    /* old input vector map */
+    G_OPT_V_MAPS,    /* old input vector maps */
     G_OPT_V_TYPE,   /* primitive type */
     G_OPT_V_FIELD,  /* field number */
     G_OPT_V_CAT,    /* one category */
