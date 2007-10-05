@@ -321,7 +321,7 @@ G_define_option (void)
  *
  * - raster3d: G_OPT_R3_INPUT, G_OPT_R3_INPUTS, G_OPT_R3_OUTPUT
  *
- * - vector: G_OPT_V_INPUT, G_OPT_V_INPUTS, G_OPT_V_OUTPUT, G_OPT_V_MAP, G_OPT_V_TYPE, G_OPT_V_FIELD, G_OPT_V_CAT, G_OPT_V_CATS
+ * - vector: G_OPT_V_INPUT, G_OPT_V_INPUTS, G_OPT_V_OUTPUT, G_OPT_V_MAP, G_OPT_V_MAPS, G_OPT_V_TYPE, G_OPT_V_FIELD, G_OPT_V_CAT, G_OPT_V_CATS
  *
  * \param[in] opt Type of Option struct to create
  *
@@ -530,6 +530,15 @@ G_define_standard_option (int opt)
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,vector,vector";
 	    Opt->description  = _("Name of input vector map");
+	    break;
+	case G_OPT_V_MAPS:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,vector,vector";
+	    Opt->description  = _("Name of input vector map(s)");
 	    break;
 	case G_OPT_V_TYPE:
 	    Opt->key          = "type";
