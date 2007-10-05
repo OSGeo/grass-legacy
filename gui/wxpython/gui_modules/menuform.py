@@ -81,6 +81,7 @@ imagepath = os.path.join(wxbase,"images")
 sys.path.append(imagepath)
 
 import select
+import gcmd
 try:
     import subprocess
 except:
@@ -228,10 +229,13 @@ class grassTask:
                 cmd += [ '-' + flag['name'] ]
         for p in self.params:
             if p.get('value','') == '' and p.get('required','no') != 'no':
-                cmd += [ '%s=%s' % ( p['name'], _('<required>') ) ]
-                errStr += _("Parameter %s (%s) is missing\n") % ( p['name'], p['description'] )
-                errors += 1
-            if p.get('value','') != '' and p['value'] != p.get('default','') :
+                if p.get('default', '') != '':
+                    cmd += [ '%s=%s' % ( p['name'], p['default'] ) ]
+                else:
+                    cmd += [ '%s=%s' % ( p['name'], _('<required>') ) ]
+                    errStr += _("Parameter %s (%s) is missing.\n") % ( p['name'], p['description'] )
+                    errors += 1
+            elif p.get('value','') != '' and p['value'] != p.get('default','') :
                 # Output only values that have been set, and different from defaults
                 cmd += [ '%s=%s' % ( p['name'], p['value'] ) ]
         if errors and not ignoreErrors:
@@ -474,7 +478,6 @@ class helpPanel(wx.html.HtmlWindow):
                         if findALink is None and findImgLink is None:
                             contents.append( l )
             self.SetPage( "".join( contents ) )
-            print "#", contents
             self.Ok = True
         except: # The Manual file was not found
             self.Ok = False
@@ -606,7 +609,7 @@ class mainFrame(wx.Frame):
         constrained_size = self.notebookpanel.GetSize()
         self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
         self.notebookpanel.Layout()
-
+        
         # for too long descriptions
         self.description = StaticWrapText (parent=self, label=self.task.description)
         topsizer.Add (item=self.description, proportion=1, border=5,
@@ -642,7 +645,7 @@ class mainFrame(wx.Frame):
         """Run the command"""
         cmd = self.createCmd()
 
-        if cmd == []:
+        if cmd == [] or cmd == None:
             return
 
         # change page if needed
@@ -659,14 +662,15 @@ class mainFrame(wx.Frame):
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
         else:
-            try:
-                retcode = subprocess.call(cmd, shell=True)
-                if retcode < 0:
-                    print >>sys.stderr, "Child was terminated by signal", -retcode
-                elif retcode > 0:
-                    print >>sys.stderr, "Child returned", retcode
-            except OSError, e:
-                print >>sys.stderr, "Execution failed:", e
+            runCmd = gcmd.Command(cmd)
+            #             try:
+            #                 retcode = subprocess.call(cmd, shell=True)
+            #                 if retcode < 0:
+            #                     print >>sys.stderr, "Child was terminated by signal", -retcode
+            #                 elif retcode > 0:
+            #                     print >>sys.stderr, "Child returned", retcode
+            #             except OSError, e:
+            #                 print >>sys.stderr, "Execution failed:", e
 
     def OnCopy(self, event):
         """Copy the command"""

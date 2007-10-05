@@ -172,7 +172,7 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = Icons["addrnum"].GetBitmap(bmpsize)
         self.rnum_icon = il.Add(trgif)
 
-        trgif = Icons["elvect"].GetBitmap(bmpsize)
+        trgif = Icons["addvect"].GetBitmap(bmpsize)
         self.vect_icon = il.Add(trgif)
 
         trgif = Icons["addthematic"].GetBitmap(bmpsize)

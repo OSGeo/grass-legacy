@@ -88,8 +88,9 @@ class Command:
         # set message formatting
         #
         message_format = os.getenv("GRASS_MESSAGE_FORMAT")
-        os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-
+        # os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+        os.environ["GRASS_MESSAGE_FORMAT"] = "txt"
+        
         #
         # run command ...
         #
@@ -123,13 +124,14 @@ class Command:
         #
         # read stderr
         # ...
-        self.messages = []
-        self.errors   = []
-        self.warnings = []
-        try:
-            self.__ProcessMessages() # -> messages, errors, warnings
-        except EndOfCommand:
-            pass
+        #         self.messages = []
+        #         self.errors   = []
+        #         self.warnings = []
+
+        # try:
+        #    self.__ProcessMessages() # -> messages, errors, warnings
+        # except EndOfCommand:
+        #    pass
 
         if self.module:
             if wait:
@@ -138,9 +140,10 @@ class Command:
 
             # failed?
             if dlgMsg and self.returncode != 0:
+                errs = self.ReadErrOutput()
                 if dlgMsg == 'gui': # GUI dialog
                     dlg = wx.MessageDialog(None,
-                                           ("Execution failed: '%s'") % (' '.join(self.cmd)),
+                                           ("Execution failed: '%s'\n\nDetails:\n%s") % (' '.join(self.cmd), '\n'.join(errs)),
                                            ("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
@@ -181,21 +184,32 @@ class Command:
                 else:
                     self.messages.append(content)
 
-    def ReadStdOutput(self):
-        """Read standard output and return list
+    def __ReadOutput(self, stream):
+        """Read stream and return list of lines
 
         Note: Remove '\n' from output (TODO: '\r\n' ??)
         """
         lineList = []
         while True:
-            line = self.module_stdout.readline()
+            line = stream.readline()
             if not line:
                 break
             line = line.replace('\n', '')
             lineList.append(line)
 
         return lineList
+                    
+    def ReadStdOutput(self):
+        """Read standard output and return list"""
 
+        return self.__ReadOutput(self.module_stdout)
+    
+    def ReadErrOutput(self):
+        """Read standard error output and return list"""
+        
+        return self.__ReadOutput(self.module_stderr)
+        
+    
 # testing ...
 if __name__ == "__main__":
     SEP = "-----------------------------------------------------------------------------"
