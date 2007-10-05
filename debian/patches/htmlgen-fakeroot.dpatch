@@ -8,16 +8,14 @@
 
 @DPATCH@
 diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Html.make /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Html.make
---- grass-5.7.0+6.0.0beta2/include/Make/Html.make	2004-12-17 05:57:28.000000000 -0500
-+++ /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/HTML.make	2005-03-01 12:48:12.000000000 -0500
-@@ -92,7 +92,7 @@
+--- Html.make	2007-10-05 13:14:23.000000000 +0200
++++ Html.make.new	2007-10-05 13:13:00.000000000 +0200
+@@ -34,7 +34,7 @@
  	GISBASE=$(RUN_GISBASE) \
  	PATH="$(BIN):$$PATH" \
  	$(LD_LIBRARY_PATH_VAR)="$(BIN):$(ARCH_LIBDIR):$($(LD_LIBRARY_PATH_VAR))" \
--	LC_ALL=C $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
-+	LC_ALL=C fakeroot $(1) --html-description | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
+-	LC_ALL=C $(1) --html-description < /dev/null | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
++	LC_ALL=C fakeroot $(1) --html-description < /dev/null | grep -v '</body>\|</html>' > $(PGM).tmp.html ; true
  
- # html rules for cmd commands
- htmlcmd: htmlcmd1 htmlgen
- # html rules for cmd commands
- htmlcmd: htmlcmd1 htmlgen
+ $(HTMLDIR)/$(PGM).html: $(HTMLSRC)
+ 	if [ "$(HTMLSRC)" != "" ] ; then $(call htmldesc,$<) ; fi
