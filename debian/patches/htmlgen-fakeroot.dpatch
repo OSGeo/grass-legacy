@@ -8,8 +8,8 @@
 
 @DPATCH@
 diff -urNad grass-5.7.0+6.0.0beta2/include/Make/Html.make /tmp/dpep.bOaT9i/grass-5.7.0+6.0.0beta2/include/Make/Html.make
---- Html.make	2007-10-05 13:14:23.000000000 +0200
-+++ Html.make.new	2007-10-05 13:13:00.000000000 +0200
+--- grass6/include/Make/Html.make	2007-10-05 13:14:23.000000000 +0200
++++ grass6/include/Make/Html.make.new	2007-10-05 13:13:00.000000000 +0200
 @@ -34,7 +34,7 @@
  	GISBASE=$(RUN_GISBASE) \
  	PATH="$(BIN):$$PATH" \
