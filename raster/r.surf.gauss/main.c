@@ -71,7 +71,7 @@ main (int argc, char *argv[])
 
     /****** CHECK THE CELL FILE (OUT) DOES NOT ALREADY EXIST******/
     if (G_legal_filename(out->answer)=='\0')
-        G_fatal_error (_("Illegal file name. Please try another."));
+        G_fatal_error (_("<%s> in an illegal file name"), out->answer);
     else
         if (G_find_cell(out->answer,"") !=NULL)
 	        G_fatal_error (_("Raster map [%s] already exists.\nPlease try another."), out->answer);
