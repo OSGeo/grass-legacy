@@ -153,7 +153,7 @@ int main (int argc, char *argv[])
     rname = opt2->answer;
     outfd = G_open_raster_new (new_name = rname, out_type);
     if (outfd < 0)
-	G_fatal_error(_("Cannot open output map."));
+	G_fatal_error(_("Unable to create raster map <%s>"), new_name);
     
     presult = G_allocate_raster_buf(out_type);
     patch  = G_allocate_raster_buf(out_type);
@@ -166,14 +166,14 @@ int main (int argc, char *argv[])
     {
 	G_percent (row, nrows, 2);
 	if(G_get_raster_row (infd[0], presult, row, out_type) < 0)
-	    G_fatal_error("Cannot get raster raster of input map");
+	    G_fatal_error("Cannot get raster row of input map");
 
         if(out_type == CELL_TYPE)
             G_update_cell_stats ((CELL *) presult, ncols, &statf[0]);
 	for (i = 1; i < nfiles; i++)
 	{
 	    if(G_get_raster_row (infd[i], patch, row, out_type) < 0)
-		G_fatal_error("Cannot raster raster of input map");
+		G_fatal_error("Cannot raster row of input map");
 	    if(!do_patch (presult, patch, &statf[i], ncols, out_type, ZEROFLAG))
 		break;
 	}
