@@ -90,7 +90,7 @@ indigo {0 128 255 255}
 violet {128 0 255 255}
 purple {128 0 255 255}
 brown {180 75 25 255}
-none {0 0 0 0}
+none {255 255 255 255}
 }
 
 # This procedure takes a string like yellow, none, or 124:36:98 and
