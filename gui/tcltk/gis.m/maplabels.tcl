@@ -329,7 +329,8 @@ proc GmCLabels::display { node } {
 		set val ""
         set in [string trim $in " "] 
 		if { $in == "" } { continue }
-		regexp {^([^:]+):\s*(.*)$} $in -> key val ;# regexp from dkf_, mjanssen #tcl @ freenode
+		set key [string trim [lindex [split $in ":"] 0]]
+		set val [string trim [lindex [split $in ":"] 1]]
 
 		# Label options	
 		switch $key {
@@ -414,12 +415,20 @@ proc GmCLabels::display { node } {
 			}
 			"background" {
 				if { $opt($id,1,override) == 0 } {
-					set opt($id,1,lbackground) [color_grass_to_tcltk $val]
+				    if {$val != "none"} {
+    					set opt($id,1,lbackground) [color_grass_to_tcltk $val]
+    				} else {
+    				    set opt($id,1,lbackground) ""
+    				}
 				}
 			}
 			"border" {
 				if { $opt($id,1,override) == 0 } {
-					set opt($id,1,lborder) [color_grass_to_tcltk $val]
+				    if {$val != "none"} {
+    					set opt($id,1,lborder) [color_grass_to_tcltk $val]
+    				} else {
+    				    set opt($id,1,lborder) ""
+    				}
 				}
 			}
 			"opaque" {
@@ -454,7 +463,7 @@ proc GmCLabels::display { node } {
 					set lineh [expr $newlines * (ceil($linelen/$opt($id,1,lwidth))+1)\
 					 * [font metrics $opt($id,1,lfont) -linespace] + 8]
 				}
-				if {!$opt($id,1,lopaque)} {
+				if {$opt($id,1,lopaque) != "yes"} {
 					set lbackground ""
 				} else { set lbackground $opt($id,1,lbackground) }
 				if {!$opt($id,1,lboxbenable)} {
