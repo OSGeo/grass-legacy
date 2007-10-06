@@ -211,7 +211,7 @@ proc GmAnim::cmd_faster {} {
     }
 }
 
-proc GmAnim::cmd_exit {} {
+proc GmAnim::cleanup {} {
     variable numviews
     variable numframes
     variable vfiles
@@ -219,20 +219,48 @@ proc GmAnim::cmd_exit {} {
     variable oldres1
     variable oldres2
     variable tmpregion
+    variable view1
+    variable view2
+    variable view3
+    variable view4
+
     global anim_prog
+    global devnull
     
     # close all windows and delete temporary image file
-    catch {if { [winfo exists .animwin] } { destroy .animwin }}
-    catch {if { [winfo exists .animmaps_win] } { destroy .animmaps_win }}
-    catch {if { [file exists $tmpfile] } {file delete -force $tmpfile }}
+    catch {if { [winfo exists .animwin] } { 
+        destroy .animwin 
+        }}
+    
+    catch {if { [winfo exists .animmaps_win] } { 
+        destroy .animmaps_win 
+        }}
+    
+    catch {if { [file exists $tmpfile] } {
+        file delete -force $tmpfile 
+        }}
+    
     set numviews 1
     set numframes 0
-    if {[array exists vfiles]} {array unset vfiles}
-    if {[array exists pic_array]} {array unset pic_array }
+    
+    catch {set view1 ""}
+    catch {set view2 ""}
+    catch {set view3 ""}
+    catch {set view4 ""}
+    
+    if {[array exists vfiles]} {
+        array unset vfiles
+        }
+    
+    if {[array exists pic_array]} {
+        array unset pic_array
+        }
+    
     set anim_prog 0
     catch {unset env(WIND_OVERRIDE)}
-    catch [exec g.remove region=$tmpregion --q] 
-
+    if {[file exists $tmpregion]} {
+        catch [exec g.remove region=$tmpregion --q 2> $devnull]
+    }
 }
 
 proc GmAnim::make_buttons {anim_tb} {
@@ -371,7 +399,7 @@ proc GmAnim::make_buttons {anim_tb} {
 	set bbox3 [ButtonBox $anim_tb.bbox3 -spacing 0 ]
 
 	# Quit
-	$bbox3 add -command GmAnim::cmd_exit   -text Exit \
+	$bbox3 add -command "destroy .animwin"   -text Exit \
 		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
 		-highlightbackground $bgcolor -activebackground $bgcolor \
 		-helptext [G_msg "Quit animation"]
@@ -454,7 +482,7 @@ proc GmAnim::sel_maps {} {
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmAnim::select_map view1"
-    Entry $row.c -width 35 -text " $view1" \
+    Entry $row.c -width 35 -text $view1 \
           -textvariable GmAnim::view1
     pack $row.c $row.b $row.a -side right
     pack $row -side top -fill both -expand yes
@@ -465,7 +493,7 @@ proc GmAnim::sel_maps {} {
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmAnim::select_map view2"
-    Entry $row.c -width 35 -text " $view2" \
+    Entry $row.c -width 35 -text $view2 \
           -textvariable GmAnim::view2
     pack $row.c $row.b $row.a -side right
     pack $row -side top -fill both -expand yes
@@ -476,7 +504,7 @@ proc GmAnim::sel_maps {} {
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmAnim::select_map view3"
-    Entry $row.c -width 35 -text " $view3" \
+    Entry $row.c -width 35 -text $view3 \
           -textvariable GmAnim::view3
     pack $row.c $row.b $row.a -side right
     pack $row -side top -fill both -expand yes
@@ -487,7 +515,7 @@ proc GmAnim::sel_maps {} {
     Button $row.b -image [image create photo -file "$iconpath/element-cell.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmAnim::select_map view4"
-    Entry $row.c -width 35 -text " $view4" \
+    Entry $row.c -width 35 -text $view4 \
           -textvariable GmAnim::view4
     pack $row.c $row.b $row.a -side right
     pack $row -side top -fill both -expand yes
@@ -637,6 +665,7 @@ proc GmAnim::do_run {} {
     global loop 
     global swing 
     global anim_prog
+    global shownames
     variable first
     variable vfiles
     variable vframes
@@ -647,7 +676,6 @@ proc GmAnim::do_run {} {
     variable step 
     variable stop 
     variable rewind 
-    global shownames
     variable currframe 
     variable prevframe 
     variable direction 
@@ -759,7 +787,6 @@ proc GmAnim::load_files {} {
     variable cnt
     variable minframes
     global anim_prog
-    global devnull
 
     set vrows  $nrows
     set vcols  $ncols
@@ -875,6 +902,7 @@ proc GmAnim::switch_res { switch } {
     variable oldres2
     variable tmpregion
     global env
+    global devnull
     
     # calculate region resolution needed for pnm output
     set res_scale1 [expr 1.0/ $scale]
@@ -909,9 +937,9 @@ proc GmAnim::switch_res { switch } {
         if {[catch {unset env(WIND_OVERRIDE)} error]} {
             Gm::errmsg $error
         }
-        if {[catch [exec g.remove region=$tmpregion --q] error]} {
-            Gm::errmsg $error
-        }    
+        if {[file exists $tmpregion]} {
+            catch [exec g.remove region=$tmpregion --q 2> $devnull]
+        }
     }
 
 }
@@ -939,11 +967,20 @@ proc GmAnim::main {} {
         Gm::errmsg $error
     }
 
-    regexp {nsres= *([0-9]+)} $region dummy oldres1
-    regexp {ewres= *([0-9]+)} $region dummy oldres2
-    regexp {rows= *([0-9]+)} $region dummy vrows
-    regexp {cols= *([0-9]+)} $region dummy vcols
+    set reglist [split $region "\n"]
     
+    foreach line $reglist {
+        set line [string trim $line]
+        set key [lindex [split $line "="] 0]
+        switch $key { 
+            nsres    {set oldres1 [lindex [split $line "="] 1]}
+            ewres   {set oldres2 [lindex [split $line "="] 1]}
+            rows    {set vrows [lindex [split $line "="] 1]}
+            cols    {set vcols [lindex [split $line "="] 1]}
+        }
+    
+    }
+        
     set vres [expr $oldres1 > $oldres2 ? 1.0 * $oldres1 : 1.0 * $oldres2]
     set nrows $vrows
     set ncols $vcols
@@ -1013,7 +1050,7 @@ proc GmAnim::main {} {
 	GmAnim::make_buttons $anim_tb
 	
     # bindings for closing window
-	bind .animwin <Destroy> "GmAnim::cmd_exit"
+	bind .animwin <Destroy> "GmAnim::cleanup"
 
     update
 
