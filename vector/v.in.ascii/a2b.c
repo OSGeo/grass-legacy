@@ -144,7 +144,7 @@ int asc_to_bin(
 		    }
 
 		    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 )
-			G_fatal_error(_("Error reading categories: %s"), buff);
+			G_fatal_error(_("Error reading categories: [%s]"), buff);
 
 		    Vect_cat_set ( Cats, catn, cat );
 	    }
