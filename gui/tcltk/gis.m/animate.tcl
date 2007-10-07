@@ -286,7 +286,7 @@ proc GmAnim::make_buttons {anim_tb} {
     image create photo img_swing  -file "$iconpath/gui-swing.gif" 
     image create photo img_snail  -file "$iconpath/gui-snail.gif" 
     image create photo img_rabbit -file "$iconpath/gui-rabbit.gif"
-
+    image create photo img_exit   -file "$iconpath/gui-exit.gif"
 
     #Create button bars
 
@@ -381,25 +381,24 @@ proc GmAnim::make_buttons {anim_tb} {
 
     pack $cb_loop $cb_swing -side left -anchor w
     
-	set sep2 [Separator $anim_tb.sep2 -orient vertical ]
-	pack $sep2 -side left -fill y -padx 5 -anchor w
-
-
 	# Show names
-	set cb_names [checkbutton $anim_tb.names -text "Show names" \
+	set cb_names [checkbutton $anim_tb.names -text "Names" \
 	    -variable shownames -offvalue 0 -onvalue 1 -relief flat \
 		-borderwidth 1 -indicatoron false -bg $bgcolor -selectcolor $selclr \
 		-activebackground $bgcolor -highlightbackground $bgcolor \
 		-pady 4 -padx 2]
 	
-    DynamicHelp::register $cb_loop balloon [G_msg "Show map names in animation window"]
+    DynamicHelp::register $cb_names balloon [G_msg "Show map names in animation window"]
     
     pack $cb_names -side left -anchor w
+
+	set sep2 [Separator $anim_tb.sep2 -orient vertical ]
+	pack $sep2 -side left -fill y -padx 5 -anchor w
 
 	set bbox3 [ButtonBox $anim_tb.bbox3 -spacing 0 ]
 
 	# Quit
-	$bbox3 add -command "destroy .animwin"   -text Exit \
+	$bbox3 add -command "destroy .animwin"   -image img_exit \
 		-highlightthickness 0 -takefocus 0 -relief link -borderwidth 1	\
 		-highlightbackground $bgcolor -activebackground $bgcolor \
 		-helptext [G_msg "Quit animation"]
