@@ -149,9 +149,8 @@ class Command:
                     dlg.Destroy()
                 else: # otherwise 'txt'
                     print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
-                    print >> sys.stderr, "Details:"
-                    for err in self.errors:
-                        print >> sys.stderr, " %s" % err
+                    print >> sys.stderr, "Details:\n%s" % '\n'.join(errs)
+
         else:
             self.returncode = None # running ?
 

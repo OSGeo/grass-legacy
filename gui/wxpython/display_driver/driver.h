@@ -33,18 +33,29 @@ class DisplayDriver
 {
  private:
     wxPseudoDC *dc;  // device content
-    long int   dcId; // wxDC id starting
 
+    /* disabled due to expensive calling dc->SetId()
+     *
+     * currently all objects are drawn without id
+     *
+     * only selected lines with id '1'
+     *
+     * segments with unique id (starting with '1')
+     * are drawn only when line was selected using SelectLineByPoint()
+     */
+    /*
     struct lineDesc {
 	int      npoints;
 	long int startId;
     };
-
+    
     typedef std::map<int, lineDesc> ids_map;
-
+    
     ids_map ids; // gId : {dcIds, ...}
+    */
 
     std::vector<int> selected; // list of selected features (gId)
+    bool drawSegments;         // draw segments of selected line
 
     struct Map_info  *mapInfo;
     struct line_pnts *points;       // east, north, depth
@@ -74,7 +85,7 @@ class DisplayDriver
 
     struct _settings {
 	wxColor highlight;
-	
+
 	symbol point;
 	symbol line;
 	
@@ -96,31 +107,31 @@ class DisplayDriver
     } settings;
 
     struct _topology {
-	std::vector<int> point;
-	std::vector<int> line;
+	long int highlight;
 
-	std::vector<int> boundaryNo;
-	std::vector<int> boundaryOne;
-	std::vector<int> boundaryTwo;
+	long int point;
+	long int line;
 
-	std::vector<int> centroidIn;
-	std::vector<int> centroidOut;
-	std::vector<int> centroidDup;
+	long int boundaryNo;
+	long int boundaryOne;
+	long int boundaryTwo;
 
-	std::vector<int> nodeOne;
-	std::vector<int> nodeTwo;
+	long int centroidIn;
+	long int centroidOut;
+	long int centroidDup;
 
-	std::vector<int> vertex;
+	long int nodeOne;
+	long int nodeTwo;
 
-	bool recorded; // topology already recorded
+	long int vertex;
     } topology;
 
     void Cell2Pixel (double east, double north, double depth,
-		     int *x, int *y, int *z);
+		     double *x, double *y, double *z);
     
     int DrawCross(int line, const wxPoint *point, int size=5);
 
-    int DrawLine(int line, bool inBox);
+    int DrawLine(int line);
     int DrawLineVerteces(int line);
     int DrawLineNodes(int line);
 
@@ -144,7 +155,7 @@ class DisplayDriver
     /* select */
     int SelectLinesByBox(double x1, double y1, double x2, double y2);
     std::vector<double> SelectLineByPoint(double x, double y, double thresh,
-					  int onlyType);
+					  int type);
 
     void Unselect();
     std::vector<int> GetSelected(bool grassId);

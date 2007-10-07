@@ -50,6 +50,8 @@ try:
 except:
     print >> sys.stderr, "Digitization tool is disabled.\n" \
         "Under development...\n"
+
+USEVEDIT = True
     
 class AbstractDigit:
     """
@@ -72,8 +74,8 @@ class AbstractDigit:
             self.settings["symbolPoint"] = (True, (0, 0, 0, 255)) # black
             self.settings["symbolLine"] = (True, (0, 0, 0, 255)) # black
             self.settings["symbolBoundaryNo"] = (True, (126, 126, 126, 255)) # grey
-            self.settings["symbolBoundaryOne"] = (True, (255, 135, 0, 255)) # orange
-            self.settings["symbolBoundaryTwo"] = (True, (0, 255, 0, 255)) # green
+            self.settings["symbolBoundaryOne"] = (True, (0, 255, 0, 255)) # green
+            self.settings["symbolBoundaryTwo"] = (True, (255, 135, 0, 255)) # orange
             self.settings["symbolCentroidIn"] = (True, (0, 0, 255, 255)) # blue
             self.settings["symbolCentroidOut"] = (True, (165, 42, 42, 255)) # brown
             self.settings["symbolCentroidDup"] = (True, (156, 62, 206, 255)) # violet
@@ -85,7 +87,7 @@ class AbstractDigit:
             self.settings["lineWidth"] = (2, "screen pixels")
 
             # snapping
-            self.settings["snapping"] = (20, "screen pixels") # value, unit
+            self.settings["snapping"] = (10, "screen pixels") # value, unit
             self.settings["snapToVertex"] = False
 
             # digitize new record
@@ -97,8 +99,6 @@ class AbstractDigit:
             self.settings = settings
 
         self.driver = CDisplayDriver(self, mapwindow)
-
-        self.threshold = self.driver.GetThreshold()
 
     def SetCategoryNextToUse(self):
         """Find maximum category number in the map layer
@@ -180,7 +180,7 @@ class VEdit(AbstractDigit):
 
         Debug.msg (4, "Vline.AddPoint(): input=%s" % addstring)
                 
-        self._AddFeature (map=map, input=addstring, flags=['-s'])
+        self._AddFeature (map=map, input=addstring)
 
     def AddLine (self, map, type, coords):
         """
@@ -194,10 +194,10 @@ class VEdit(AbstractDigit):
         
         if type == "boundary":
             key = "B"
-            flags = ['-c', '-s'] # close boundaries
+            flags = ['-c'] # close boundaries
         else:
             key = "L"
-            flags = ['-s']
+            flags = []
             
         addstring="""%s %d 1\n""" % (key, len(coords))
         for point in coords:
@@ -216,7 +216,7 @@ class VEdit(AbstractDigit):
 
         self._AddFeature (map=map, input=addstring, flags=flags)
 
-    def _AddFeature (self, map, input, flags):
+    def _AddFeature (self, map, input, flags=[]):
         """
         General method which adds feature to the vector map
         """
@@ -224,7 +224,8 @@ class VEdit(AbstractDigit):
         command = ["v.edit", "-n", "--q", 
                    "map=%s" % map,
                    "tool=add",
-                   "thresh=%f" % self.threshold]
+                   "thresh=%f" % self.driver.GetThreshold(),
+                   "snap=node"]
 
         # additional flags
         for flag in flags:
@@ -283,15 +284,17 @@ class VEdit(AbstractDigit):
         Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
                       (ids, move))
 
-        command = ["v.edit", "--q", "-s", # snap
+        command = ["v.edit", "--q", 
                    "map=%s" % self.map,
                    "tool=%s" % tool,
                    "ids=%s" % ids,
                    "move=%f,%f" % (float(move[0]),float(move[1])),
-                   "thresh=%f" % self.threshold]
+                   "thresh=%f" % self.driver.GetThreshold(),
+                   "snap=node"]
 
         if tool == "vertexmove":
             command.append("coords=%f,%f" % (float(coords[0]), float(coords[1])))
+            command.append("-1") # modify only first selected
                                              
         # run the command
         vedit = cmd.Command(cmd=command)
@@ -314,7 +317,7 @@ class VEdit(AbstractDigit):
                    "tool=break",
                    "ids=%s" % line,
                    "coords=%f,%f" % (float(coords[0]),float(coords[1])),
-                   "thresh=%f" % self.threshold]
+                   "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
         vedit = cmd.Command(cmd=command)
@@ -344,7 +347,7 @@ class VEdit(AbstractDigit):
                    "tool=%s" % action,
                    "ids=%s" % line,
                    "coords=%f,%f" % (float(coords[0]),float(coords[1])),
-                   "thresh=%f" % self.threshold]
+                   "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
         vedit = cmd.Command(cmd=command)
@@ -379,7 +382,11 @@ class VEdit(AbstractDigit):
                                    'ids=%s' % line])
 
         # add line
-        self.AddLine(self.map, "line", coords)
+        if len(coords) > 0:
+            self.AddLine(self.map, "line", coords)
+
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
 
 class VDigit(AbstractDigit):
     """
@@ -387,12 +394,43 @@ class VDigit(AbstractDigit):
 
     Under development (wxWidgets C/C++ background)
     """
-    pass
+    def __init__(self, mapwindow, settings=None):
+        AbstractDigit.__init__(self, mapwindow, settings)
 
-class Digit(VEdit):
-    """Default digit class"""
-    def __init__(self, mapwindow):
-        VEdit.__init__(self, mapwindow)
+        try:
+            from grass6_wxdriver import DigitClass
+            self.digit = DigitClass()
+        except:
+            self.digit = None
+
+    def DeleteSelectedLines(self):
+        """Delete selected vector features from the vector map"""
+
+        selected = self.driver.GetSelected() # grassId
+
+        if len(selected) <= 0:
+            return False
+
+        ids = ",".join(["%d" % v for v in selected])
+
+        Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
+                      ids)
+
+        self.digit.DeleteSelectedLines()
+        #self.driver.DrawUpdatedLines()
+
+        return True
+
+if USEVEDIT:
+    class Digit(VEdit):
+        """Default digit class"""
+        def __init__(self, mapwindow):
+            VEdit.__init__(self, mapwindow)
+else:
+    class Digit(VDigit):
+        """Default digit class"""
+        def __init__(self, mapwindow):
+            VDigit.__init__(self, mapwindow)
 
 class AbstractDisplayDriver:
     """Abstract classs for display driver"""
@@ -433,6 +471,8 @@ class CDisplayDriver(AbstractDisplayDriver):
     """
     def __init__(self, parent, mapwindow):
         AbstractDisplayDriver.__init__(self, parent, mapwindow)
+
+        self.mapWindow = mapwindow
 
         # initialize wx display driver
         try:
@@ -477,11 +517,10 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         return nlines
 
-    def SelectLinesByBox(self, begin, end, onlyType=None):
+    def SelectLinesByBox(self, begin, end, type=None):
         """Select vector features by given bounding box.
 
-        Number of selected features can be decreased by 'onlyType'
-        ('None' for no types)
+        If type is given, only vector features of given type are selected.
         """
 
         x1, y1 = begin
@@ -493,14 +532,22 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         return nselected
 
-    def SelectLineByPoint(self, point, onlyType=None):
-        """Select vector feature by coordinates of click point.
-        Number of selected features can be decreased by 'onlyType'
-        ('None' for all types)"""
+    def SelectLineByPoint(self, point, type=None):
+        """Select vector feature by coordinates of click point (in given threshold).
 
+        If type is given, only vector features of given type are selected.
+        """
+
+        ftype = -1 # all types
+        if type:
+            if type == "point":
+                ftype = 0
+            else:
+                ftype = 1 # line
+            
         pointOnLine = self.__display.SelectLineByPoint(point[0], point[1],
-                                                       float(self.parent.threshold),
-                                                       -1); 
+                                                       self.GetThreshold(),
+                                                       ftype); 
 
         if len(pointOnLine) > 0:
             Debug.msg(4, "CDisplayDriver.SelectLineByPoint(): pointOnLine=%f,%f" % \
@@ -780,8 +827,8 @@ class DigitSettingsDialog(wx.Dialog):
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.EXPAND)
         self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
         self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                          label=_("Note: snapping threshold is %.1f %s") % \
-                                              (self.parent.digit.threshold,
+                                          label=_("Snapping threshold is currently %.1f %s") % \
+                                              (self.parent.digit.driver.GetThreshold(),
                                                self.mapUnits))
         vertexSizer.Add(item=self.snappingInfo, proportion=0,
                         flag=wx.ALL | wx.EXPAND, border=1)
@@ -891,7 +938,7 @@ class DigitSettingsDialog(wx.Dialog):
         """Change snapping value - update static text"""
         value = self.snappingValue.GetValue()
         threshold = self.parent.digit.driver.GetThreshold(value)
-        self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
+        self.snappingInfo.SetLabel(_("Snapping threshold is currently %.1f %s") % \
                                        (threshold,
                                         self.mapUnits))
 

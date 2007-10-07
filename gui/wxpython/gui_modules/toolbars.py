@@ -337,6 +337,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "addLine"
         self.type   = "line"
         self.parent.MapWindow.mouse['box'] = 'line'
+        self.parent.MapWindow.polycoords = [] # reset temp line
 
     def OnAddBoundary(self, event):
         """Add boundary to the vector map layer"""
@@ -344,6 +345,7 @@ class DigitToolbar(AbstractToolbar):
         self.action = "addLine"
         self.type   = "boundary"
         self.parent.MapWindow.mouse['box'] = 'line'
+        self.parent.MapWindow.polycoords = [] # reset temp line
 
     def OnAddCentroid(self, event):
         """Add centroid to the vector map layer"""
