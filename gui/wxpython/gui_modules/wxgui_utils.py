@@ -11,9 +11,9 @@ PURPOSE:    Utility classes for GRASS wxPython GUI. Main functions include tree 
             for GIS map layer management, command console, and command parsing.
 
 AUTHORS:    The GRASS Development Team
-            Michael Barton (Arizona State University) &
+            Michael Barton (Arizona State University)
             Jachym Cepicky (Mendel University of Agriculture)
-            Martin Landa
+            Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT:  (C) 2007 by the GRASS Development Team
             This program is free software under the GNU General Public
@@ -283,7 +283,8 @@ class LayerTree(CT.CustomTreeCtrl):
                (digit and digit.layerSelectedID != None and \
                 digit.layers[digit.layerSelectedID] == layer):
                 self.popupMenu.Enable (self.popupID5, False)
-                self.popupMenu.Enable (self.popupID6, True)
+                if layer.GetMapset() == grassenv.env["MAPSET"]:
+                    self.popupMenu.Enable (self.popupID6, True)
 
         # raster
         elif mltype and mltype == "raster":

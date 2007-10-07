@@ -523,6 +523,8 @@ class BufferedWindow(wx.Window):
                 digitToolbar.layerSelectedID != None:
             # set region
             self.parent.digit.driver.UpdateRegion()
+            # re-calculate threshold for digitization tool
+            self.parent.digit.driver.GetThreshold()
             # draw map
             self.pdcVector.Clear()
             self.pdcVector.RemoveAll()
@@ -997,12 +999,12 @@ class BufferedWindow(wx.Window):
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     if len(driver.GetSelected()) == 0:
                         # -> move vertex (select by point)
-                        nselected = driver.SelectLineByPoint(pos1, onlyType="line")
+                        nselected = driver.SelectLineByPoint(pos1, type="line")
                         
                 elif digitToolbar.action == "copyCats":
                     if not hasattr(self, "copyCatsIds"):
                         # collect categories
-                        nselected = driver.SelectLineByPoint(pos1, onlyType="line")
+                        nselected = driver.SelectLineByPoint(pos1, type="line")
                         if nselected:
                             qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / \
                                                 self.Map.width)
@@ -1035,25 +1037,28 @@ class BufferedWindow(wx.Window):
                                                "copyCats", "editLine"]:
                         # -> move line || move vertex
                         self.UpdateMap(render=False)
+
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             # -> move line
                             self.moveIds = driver.GetSelected(grassId=False)
+
                         elif digitToolbar.action == "moveVertex":
                             # -> move vertex
                             self.moveIds = driver.GetSelectedVertex(pos1)
+
                         elif digitToolbar.action == "editLine":
                             # -> edit line
                             ids = driver.GetSelected(grassId=False)
                             for id in ids:
-                                if id % 2: # only verteces
-                                    self.moveIds.append(id)
+                                if id % 2: # vertex
+                                    self.moveIds.append(id) 
 
                 else:
                     self.UpdateMap(render=False, renderVector=False)
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
                 pointOnLine = driver.SelectLineByPoint(pos1,
-                                                                         onlyType="line")
+                                                       type="line")
                 if pointOnLine:
                     self.UpdateMap(render=False) # highlight object
                     if digitToolbar.action in ["splitLine", "addVertex"]:
@@ -1213,20 +1218,24 @@ class BufferedWindow(wx.Window):
             elif digit.action in ["moveLine", "moveVertex"] and \
                     hasattr(self, "moveBegin"):
                 # move vector feature
-                move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
-                        self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
+                # move = [self.Distance((0,0), (self.moveBegin[0], 0))[0],
+                #        self.Distance((0,0), (0, self.moveBegin[1]))[0]] # TODO d.measure
                 # ES -> EN
-                if self.moveBegin[0] < 0.0:
-                    move[0] *= -1.0
-                if self.moveBegin[1] > 0.0:
-                    move[1] *= -1.0
+                # if self.moveBegin[0] < 0.0:
+                #    move[0] *= -1.0
+                # if self.moveBegin[1] > 0.0:
+                #    move[1] *= -1.0
+
+                pTo = self.Pixel2Cell(event.GetPositionTuple())
+                pFrom = self.Pixel2Cell(self.moveCoords)
+                move = (pTo[0]-pFrom[0], pTo[1]-pFrom[1])
 
                 if digit.action == "moveLine":
                     # move line
                     self.parent.digit.MoveSelectedLines(move)
                 elif digit.action == "moveVertex":
                     # move vertex
-                    self.parent.digit.MoveSelectedVertex(self.Pixel2Cell(self.moveCoords),
+                    self.parent.digit.MoveSelectedVertex(pFrom,
                                                          move)
                 else: # edit line
                     pass
@@ -1441,9 +1450,6 @@ class BufferedWindow(wx.Window):
     def Cell2Pixel(self, (east, north)):
         """
         Convert real word coordinates to image coordinates
-
-        Input : float east, float north
-        Output: int x, int y
         """
 
         try:
@@ -1460,8 +1466,11 @@ class BufferedWindow(wx.Window):
         w = self.Map.region["center_easting"] - (self.Map.width / 2) * res
         n = self.Map.region["center_northing"] + (self.Map.height / 2) * res
 
-        x = int((east  - w) / res)
-        y = int((n - north) / res)
+        # x = int((east  - w) / res)
+        # y = int((n - north) / res)
+
+        x = (east  - w) / res
+        y = (n - north) / res
 
         return (x, y)
 
