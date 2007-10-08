@@ -12,7 +12,7 @@
 
 <h2>Vector data processing in GRASS GIS</h2>
 
-<h3>Vector import and export</h3>
+<h3>Vector data import and export</h3>
 
 The <a href="v.in.ogr.html">v.in.ogr</a> module offers a common
 interface for many different vector formats. Additionally, it
@@ -30,11 +30,12 @@ the vector geometry is not imported.
 
 The <em>v.out.*</em> set of commands exports to various formats.
 
-<h3>Information</h3>
+<h3>Metadata</h3>
 
 The <a href="v.info.html">v.info</a> display general information such
 as metadata and attribute columns about a vector map including the
-history how it was generated.
+history how it was generated. Each map generating command stores the
+command history into the metadata (query with <a href="v.info.html">v.info -h mapname</a>).
 
 <h3>Vector map operations</h3>
 
@@ -143,7 +144,11 @@ executed with <a href="db.execute.html">db.execute</a>,
 When creating vector maps from scratch, in general an attribute table must be created and
 the table must be populated with one row per category (using <a href="v.to.db.html">v.to.db</a>).
 However, this can be performed in a single step using <a href="v.db.addtable.html">v.db.addtable</a>
-along with the definition of table column types.
+along with the definition of table column types. Column adding
+can be done with <a HREF="v.db.addcol.html">v.db.addcol</a>. To drop a table from a map, use
+<a HREF="v.db.droptable.html">v.db.droptable</a>. Values in a table can be updated
+with <a HREF="v.db.update.html">v.db.update</a>.
+
 
 <h3>Editing vector attributes</h3>
 
