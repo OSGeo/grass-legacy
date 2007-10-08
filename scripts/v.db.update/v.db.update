@@ -16,7 +16,7 @@
 
 
 #%Module
-#%  description: Allows to assign a new value to a column in the attribute table connected to a given map.
+#%  description: Allows to update a column in the attribute table connected to a vector map.
 #%  keywords: vector, database, attribute table
 #%End
 
@@ -24,14 +24,14 @@
 #% key: map
 #% type: string
 #% gisprompt: old,vector,vector
-#% description: Vector map for which to edit attribute table
+#% description: Vector map to edit the attribute table for
 #% required : yes
 #%end
 
 #%option
 #% key: layer
 #% type: integer
-#% description: Layer where to add column
+#% description: Layer to which the table to be changed is connected
 #% answer: 1
 #% required : no
 #%end
@@ -46,7 +46,7 @@
 #%option
 #% key: value
 #% type: string
-#% description: New value to assign to the column (varchar values have to be in single quotes, ex: 'grass')
+#% description: Value to update the column with (varchar values have to be in single quotes, e.g. 'grass')
 #% required : no
 #%end
 
@@ -60,7 +60,7 @@
 #%option
 #% key: where
 #% type: string
-#% description: Condition for update (everything after the 'where' sql statement; ex: cat=1 or col1/col2>1) 
+#% description: WHERE conditions for update, without 'where' keyword (e.g. cat=1 or col1/col2>1)
 #% required : no
 #%end
 
