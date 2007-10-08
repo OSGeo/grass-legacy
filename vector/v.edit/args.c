@@ -132,7 +132,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> where->guisection  = _("Query");
 
     params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);
-    params -> bmaps -> key = "bmap";
+    params -> bmaps -> key = "bgmap";
     params -> bmaps -> required = NO;
     params -> bmaps -> description = _("Name of background vector map(s) snap to");
 
