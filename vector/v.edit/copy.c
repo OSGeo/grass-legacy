@@ -4,9 +4,9 @@
  * 
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa
+ *             Martin Landa <landa.martin gmail.com>
  *               
- * PURPOSE:    This module edits vector maps.
+ * PURPOSE:    This module edits vector map.
  *             Copy selected features.
  *
  * COPYRIGHT:  (C) 2007 by the GRASS Development Team
@@ -20,12 +20,16 @@
 
 #include "global.h"
 
-/*
- * copy selected features
- * return number of copied features
- * return -1 on error 
+/**
+   \brief Copy selected features
+
+   \param[in] Map vector map
+   \param[in] List list of selected features (to be copied)
+
+   \return number of copied features
+   \return -1 on error 
  */
-int do_copy (struct Map_info *Map, struct ilist *List, int print)
+int do_copy (struct Map_info *Map, struct ilist *List)
 {
     struct line_cats *Cats;
     struct line_pnts *Points;
@@ -50,21 +54,12 @@ int do_copy (struct Map_info *Map, struct ilist *List, int print)
 
         /* copy */
         if (Vect_write_line (Map, type, Points, Cats) < 0) {
-            G_warning (_("Cannot copy line %d, editing terminated"), line);
+            G_warning (_("Unable to write line %d"), line);
 	    return -1;
 	}
         
-	if (print) {
-	    fprintf(stdout, "%d%s",
-		    line,
-		    i < List->n_values -1 ? "," : "");
-	    fflush (stdout);
-	}
-
 	nlines_copied++;
     }
-
-    G_message (_("%d features copied"), nlines_copied);
 
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);

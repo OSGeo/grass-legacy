@@ -1,8 +1,19 @@
 #include "global.h"
 
-int parser(int argc, char*argv[], struct GParams *params,
+/**
+   \brief Parser stuff
+
+   \param[in] argc number of arguments
+   \param[in] argv arguments array
+   \param[in] params GRASS paramenters
+   \param[out] action mode selected tool
+
+   \return 1
+*/
+int parser(int argc, char* argv[], struct GParams *params,
 	   enum mode *action_mode)
 {
+    /* parameters */
     params -> map = G_define_standard_option(G_OPT_V_MAP);
     params -> map -> description = _("Name of vector map to edit");
 
@@ -17,7 +28,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> tool->type        = TYPE_STRING;
     params -> tool->required    = YES;
     params -> tool->multiple    = NO;
-    params -> tool->description = _("Editing tool");
+    params -> tool->description = _("Tool");
     params -> tool->descriptions = _("create;"
 				     "Create new (empty) vector map;"
 				     "add;"
@@ -120,23 +131,31 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> where = G_define_standard_option(G_OPT_WHERE);
     params -> where->guisection  = _("Query");
 
+    params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);
+    params -> bmaps -> key = "bmap";
+    params -> bmaps -> required = NO;
+    params -> bmaps -> description = _("Name of background vector map(s) snap to");
+
+    params -> snap = G_define_option();
+    params -> snap -> key          = "snap";
+    params -> snap ->type          = TYPE_STRING;
+    params -> snap -> options      = "no,node,vertex";
+    params -> snap -> description  = _("Snap added or modified features in the given threshold to the nearest existing feature");
+    params -> snap -> descriptions = _("no;Not apply snapping;"
+				       "node;Snap only to node;"
+				       "vertex;Allow snapping also to vertex");
+    params -> snap -> answer       = "no";
+
+    /* flags */
     params -> reverse = G_define_flag();
     params -> reverse -> key = 'r';
     params -> reverse -> description = _("Reverse selection");
 
+    /*
     params -> print = G_define_flag();
     params -> print -> key = 'i';
     params -> print -> description = _("Print ID's of edited features");
-
-    params -> snap = G_define_flag();
-    params -> snap -> key = 's';
-    params -> snap -> label = _("Snap added features to the nearest existing feature");
-    params -> snap -> description = _("For tool 'add', see also 'thresh' parameter");
-
-    params -> snap2vertex = G_define_flag();
-    params -> snap2vertex -> key = 'v';
-    params -> snap2vertex -> label = _("Snap also to vertex (not implemented yet)");
-    params -> snap2vertex -> description = _("For tool 'add', see also 'thresh' parameter");
+    */
 
     params -> close = G_define_flag();
     params -> close -> key = 'c';
@@ -150,6 +169,10 @@ int parser(int argc, char*argv[], struct GParams *params,
     params -> topo = G_define_flag();
     params -> topo -> key = 't';
     params -> topo -> description = _("Do not build topology");
+
+    params -> move_first = G_define_flag();
+    params -> move_first -> key = '1';
+    params -> move_first -> description = _("Modify only first found feature in bounding box");
 
     /*
     params -> boundary = G_define_flag();
@@ -233,7 +256,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     }
     else
     {
-	G_fatal_error (_("Operation <%s> not implemented."),
+	G_fatal_error (_("Operation %s not implemented."),
 		       params -> tool -> answer);
     }
 
@@ -244,7 +267,7 @@ int parser(int argc, char*argv[], struct GParams *params,
        (params -> id    -> answers  == NULL) &&
        (params -> bbox  -> answers  == NULL) &&
        (params -> where -> answer   == NULL)) {
-	G_fatal_error (_("At least one option from <%s> must be specified"),
+	G_fatal_error (_("At least one option from %s must be specified"),
 		       "cats, ids, coords, bbox, polygon, where");
     }
     
@@ -252,7 +275,7 @@ int parser(int argc, char*argv[], struct GParams *params,
 	*action_mode == MODE_VERTEX_MOVE)
     {
 	if(params -> move -> answers == NULL) { 
-            G_fatal_error (_("Tool <%s> requires option <%s>"),
+            G_fatal_error (_("Tool %s requires option %s"),
 			   params -> tool -> answer,
 			   params -> move -> key);
         }
@@ -264,7 +287,7 @@ int parser(int argc, char*argv[], struct GParams *params,
 	*action_mode == MODE_VERTEX_MOVE)
     {
 	if(params -> coord -> answers == NULL) {
-	    G_fatal_error (_("Tool <%s> requires option <%s>"),
+	    G_fatal_error (_("Tool %s requires option %s"),
 			   params -> tool -> answer,
 			   params -> coord -> key);
 	}
@@ -275,7 +298,7 @@ int parser(int argc, char*argv[], struct GParams *params,
     {
         if (params -> cat -> answers == NULL)
 	  {
-	      G_fatal_error (_("Tool <%s> requires option <%s>"),
+	      G_fatal_error (_("Tool %s requires option %s"),
 			     params -> tool -> answer,
 			     params -> cat -> key);
 	  }

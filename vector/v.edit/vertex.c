@@ -20,17 +20,28 @@
 
 #include "global.h"
 
-/* 
- * move all vertices in the given thresh
- *
- * return number of modified lines
- * return -1 on error
+/**
+   \brief Move all vertices in bounding box(es)
+
+   \param[in] Map vector map
+   \param[in] BgMap, nbgmaps list of background vector maps for snapping
+   \param[in] List list of selected features
+   \param[in] coord points location
+   \param[in] thresh threshold value (also size of bounding boxes)
+   \param[in] move_x,move_y X,Y direction for moving
+   \param[in] move_first move only first vertex found in the bounding box
+   \param[in] snap allow snapping (see global.h)
+
+   \return number of moved verteces
+   \return -1 on error
  */
-int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
-		   struct Option *coord, double thresh,
-		   double move_x, double move_y)
+int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
+		   struct ilist *List,
+		   struct line_pnts* coord, double thresh,
+		   double move_x, double move_y,
+		   int move_first, int snap)
 {
-    int nvertices_moved, nlines_modified;
+    int nvertices_moved, nlines_modified, nvertices_snapped;
 
     int i, j, k;
     int line, type, rewrite;
@@ -38,14 +49,15 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
     double *x, *y, *z;
     char *moved;
 
-    struct line_pnts *Points;
+    struct line_pnts *Points, *Points_snap;
     struct line_cats *Cats;
     
     nlines_modified = 0;
-    nvertices_moved = 0;
+    nvertices_moved = nvertices_snapped = 0;
     moved = NULL;
 
     Points = Vect_new_line_struct();
+    Points_snap = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
     for (i = 0; i < List -> n_values; i++) {
@@ -65,12 +77,12 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
 
 	/* vertex moved ? */
 	moved = (char *) G_realloc ((void *) moved, Points -> n_points * sizeof (char));
-	G_zero ((void *) moved, sizeof (char));
+	G_zero ((void *) moved, Points -> n_points * sizeof (char));
 	
 	rewrite = 0;
-	for (j = 0; coord -> answers[j]; j += 2) {
-	    east  = atof (coord -> answers[j]);
-	    north = atof (coord -> answers[j+1]);
+	for (j = 0; j < coord -> n_points; j++) {
+	    east  = coord->x[j];
+	    north = coord->y[j];
 	    
 	    /* move all vertices in the bounding box */
 	    for (k = 0; k < Points -> n_points; k++) {
@@ -83,10 +95,26 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
 				 line, x[k], y[k], x[k] + move_x, y[k] + move_y);
 			x[k] += move_x;
 			y[k] += move_y;
+			G_debug (3, "line=%d, point=%d moved", line, k);
+			
+			if (snap != NO_SNAP) {
+			  if (do_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
+					    (snap == SNAPVERTEX) ? 1 : 0) == 0) {
+			      /* check also background maps */
+			      int bgi;
+			      for (bgi = 0; bgi < nbgmaps; bgi++) {
+				  if (do_snap_point(BgMap[i], line, &x[k], &y[k], &z[k], thresh,
+						    (snap == SNAPVERTEX) ? 1 : 0))
+				      break; /* snapped, don't continue */
+			      }
+			  }
+			}
 			
 			moved[k] = 1;
 			rewrite = 1;
 			nvertices_moved++;
+			if (move_first)
+			    break;
 		    }
 		}
 	    } /* for each point */
@@ -94,40 +122,38 @@ int do_move_vertex(struct Map_info *Map, struct ilist *List, int print,
 	
 	if (rewrite) {
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_warning(_("Cannot rewrite line %d"), line);
+		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
-	    }
 	    nlines_modified++;
 	}
     } /* for each selected line */
 
     /* destroy structures */
     Vect_destroy_line_struct(Points);
+    Vect_destroy_line_struct(Points_snap);
     Vect_destroy_cats_struct(Cats);
 /*     G_free ((void *) moved); */
 
-    G_message(_("%d vertices moved"), nvertices_moved);
-    G_message(_("%d lines modified"), nlines_modified);
-    
-    return nlines_modified;
+    return nvertices_moved;
 }
 
-/* 
- * add new verteces to the line on location given by coords (check for threshold)
- * shape of line is not changed
- *
- * return number of modified lines
- * return -1 on error
- */
-int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
-		   struct Option* coord, double thresh)
+/**
+   \brief Add new vertex to line.
+
+   Shape of line is not changed.
+ 
+   \param[in] Map vector map
+   \param[in] List list of features
+   \param[in] coord points location
+   \param[in] thresh find line in given threshold
+
+   \return number of add verteces
+   \return -1 on error
+*/
+int do_add_vertex (struct Map_info *Map, struct ilist *List,
+		   struct line_pnts* coord, double thresh)
 {
     int i, j;
     int type, line, seg;
@@ -159,9 +185,9 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
 	y = Points -> y;
 	z = Points -> z;
 	rewrite = 0;
-	for (j = 0; coord -> answers[j]; j += 2) {
-	    east  = atof (coord -> answers[j]);
-	    north = atof (coord -> answers[j+1]);
+	for (j = 0; j < coord -> n_points; j++) {
+	    east  = coord->x[j];
+	    north = coord->y[j];
 
 	    seg = Vect_line_distance (Points,
 				      east, north, 0.0,    /* standpoint */
@@ -185,16 +211,10 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
 	if (rewrite) {
 	    Vect_line_prune (Points);
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning(_("Cannot rewrite line %d"), line);
+		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 		
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
-	    }
 	    nlines_modified++;
 	}
     } /* for each line */
@@ -203,20 +223,22 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 
-    G_message(_("%d vertices added"), nvertices_added);    
-    G_message(_("%d lines modified"), nlines_modified);
-
-    return nlines_modified;
+    return nvertices_added;
 }
 
-/*
- * remove vertex from line in the given bounading box(es)
- *
- * return number of removed vertices
- * return -1 on error
- */
-int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
-		     struct Option *coord, double thresh)
+/**
+   \brief Remove vertex from line
+   
+   \param[in] Map vector map
+   \param[in] List list of selected features
+   \param[in] coord points location
+   \param[in] thresh threshold value to find a line
+
+   \return number of removed vertices
+   \return -1 on error
+*/
+int do_remove_vertex(struct Map_info *Map, struct ilist *List,
+		     struct line_pnts *coord, double thresh)
 {
     int i, j, k;
     int type, line;
@@ -248,9 +270,9 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
 	y = Points -> y;
 	z = Points -> z;
 	rewrite = 0;
-	for (j = 0; coord -> answers[j]; j += 2) {
-	    east  = atof (coord -> answers[j]);
-	    north = atof (coord -> answers[j+1]);
+	for (j = 0; j < coord -> n_points; j++) {
+	    east  = coord->x[j];
+	    north = coord->y[j];
 	    
 	    for (k = 0; k < Points -> n_points; k++) {
 		dist = Vect_points_distance (east, north, 0.0,
@@ -270,16 +292,10 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
 	if (rewrite) {
 	    /* rewrite the line */
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning (_("Cannot rewrite line %d"), line);
+		G_warning (_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
-	    }
 	    nlines_modified++;
 	}
     } /* for each line */
@@ -288,8 +304,5 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List, int print,
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
     
-    G_message(_("%d vertices removed"), nvertices_removed);
-    G_message(_("%d lines modified"), nlines_modified);
-
-    return nlines_modified;
+    return nvertices_removed;
 }

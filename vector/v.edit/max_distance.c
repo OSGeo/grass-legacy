@@ -4,9 +4,9 @@
  *
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa
+ *             Martin Landa <landa.martin gmail.com>
  *
- * PURPOSE:    This module edits vector maps. 
+ * PURPOSE:    This module edits vector map.
  *
  * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
  *
@@ -19,11 +19,15 @@
 
 #include "global.h"
 
-/* 
- * set maxdistance based on the current resolution
- *
- * this code comes from v.what/main.c
- */
+/**
+   \brief Set maxdistance based on the current resolution
+
+   This code comes from v.what/main.c
+ 
+   \param[in] maxdistance max distance
+
+   \return result max distance
+*/
 double max_distance(double maxdistance)
 {
     struct Cell_head window;
@@ -32,7 +36,7 @@ double max_distance(double maxdistance)
     double xres, yres, maxd;
 
     if (maxdistance < 0.0) {
-	G_warning ("Threshold distance must be >= 0.0, using value 0.0");
+	G_warning (_("Threshold distance must be >= 0.0, using value 0.0"));
     }
 
     if (maxdistance <= 0.0) {
@@ -54,7 +58,7 @@ double max_distance(double maxdistance)
 	else
 	    maxd = yres;
 
-	G_message ("Threshold distance set to [%g] (based on 2D resolution)", maxd);
+	G_message (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
     }
     else {
         maxd = maxdistance;
@@ -65,17 +69,21 @@ double max_distance(double maxdistance)
     return maxd;
 }
 
-/* 
- * calculate distances between two lines
- *
- * array distances hold distances between first and last point of both lines:
- * distances[0] = first-first
- * distances[1] = first-last
- * distances[2] = last-first
- * distances[3] = last-last
- *
- * return minimal distance (its index stored in mindistidx variable)
- */
+/**
+   \brief Calculate distances between two lines
+ 
+   array distances hold distances between first and last point of both lines:
+   distances[0] = first-first
+   distances[1] = first-last
+   distances[2] = last-first
+   distances[3] = last-last
+   
+   \param[in] Points1 first line
+   \param[in] Points2 second line
+   \param[out] index of minimal distance
+
+   \return minimal distance 
+*/
 double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
 			  int* mindistidx)
 {
@@ -112,9 +120,17 @@ double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
     return distances [*mindistidx];
 }
 
-/* 
- * creates bounding box (polygon) based on center point; size (2 * maxdist)
- */
+/**
+   \brief Creates bounding box (polygon)
+
+   Based on center point; size (2 * maxdist)
+
+   \param[in] east,north coordinates of center
+   \param[in] maxdist size of bounding box
+   \param[out] result bounding box
+
+   \return
+*/
 void coord2bbox (double east, double north, double maxdist,
 		struct line_pnts *box)
 {

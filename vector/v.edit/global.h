@@ -34,12 +34,15 @@ enum mode {
     MODE_NONE,
 };
 
+#define NO_SNAP    0 /* snapping disabled */
+#define SNAP       1 /* snapping enabled for nodes */
+#define SNAPVERTEX 2 /* snapping enabled for vertex also */
+
 struct GParams { 
     struct Option *map, *in, *maxdist, *tool,
 	*coord, *cat, *move, *bbox, *fld,
-	*poly, *type, *id, *where;
-    struct Flag *header, *topo, *print, *close, *reverse,
-	*snap, *snap2vertex;
+      *poly, *type, *id, *where, *bmaps, *snap;
+    struct Flag *header, *topo, *close, *reverse, *move_first;
 };
 
 # include "proto.h"

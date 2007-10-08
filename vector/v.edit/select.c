@@ -4,9 +4,9 @@
  *
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa
+ *             Martin Landa <landa.martin gmail.com>
  *
- * PURPOSE:    This module edits vector maps. 
+ * PURPOSE:    This module edits vector map.
  *             Select vector features.
  *
  * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
@@ -23,6 +23,16 @@
 
 static char first_selection = 1;
 
+/**
+   \brief Select vector features
+
+   \param[in] Map vector map
+   \param[in] action_mode tool
+   \param[in] params GRASS parameters
+   \param[in] List list of selected features
+   
+   \return list of newly selected features
+*/
 struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 			   struct GParams *params,
 			   struct ilist *List)
@@ -37,7 +47,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     /* select by id's */
     if (params -> id -> answer != NULL) {
 	sel_by_id(Map,
-		  layer, type, params -> id -> answer,
+		  params -> id -> answer,
 		  List);
     }
 
@@ -52,21 +62,21 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     /* select by coordinates (+threshold) */
     if (params -> coord -> answer != NULL) {
         sel_by_coordinates(Map,
-			   layer, type, params -> coord, thresh,
+			   type, params -> coord, thresh,
 			   List);
     }
     
     /* select by bbox (TODO: threshold) */
     if (params -> bbox -> answer != NULL) {
         sel_by_bbox(Map,
-		    layer, type, params -> bbox,
+		    type, params -> bbox,
 		    List);
     }
     
     /* select by polygon (TODO: threshold) */
     if (params -> poly -> answer != NULL) {
         sel_by_polygon(Map,
-		       layer, type, params -> poly,
+		       type, params -> poly,
 		       List);
     }
     
@@ -88,12 +98,14 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     return List;
 }
 
-/* 
- * print selected vector features
- *
- * return number of selected features
- * return -1 on error
- */
+/**
+   \brief Print selected vector features
+ 
+   \param[in] List list of selected features
+
+   \return number of selected features
+   \return -1 on error
+*/
 int do_print_selected(struct ilist *List)
 {
     int i;
@@ -108,11 +120,18 @@ int do_print_selected(struct ilist *List)
     return List -> n_values;
 }
 
-/*
- * select lines by category
- *
- * return number of selected lines
- */
+/**
+   \brief Select features by category
+ 
+   \param[in] Map vector map
+   \param[in] cl_orig original list of categories (previously selected)
+   \param[in] layer layer number
+   \param[in] type feature type
+   \param[in] cat category string
+   \param[in,out] List list of selected features
+
+   \return number of selected lines
+*/
 int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
 	       int layer, int type, char *cats,
 	       struct ilist* List)
@@ -161,13 +180,19 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
     return List -> n_values;
 }
 
-/*
- * select lines by coordinates
- *
- * return number of selected lines
- */
+/**
+   \brief Select features by coordinates
+ 
+   \param[in] Map vector map
+   \param[in] type feature type
+   \param[in] coords coordinates GRASS parameters
+   \param[in] thresh threshold value for searching
+   \param[in,out] List list of selected features
+
+   \return number of selected lines
+*/
 int sel_by_coordinates(struct Map_info *Map,
-		       int layer, int type, struct Option *coords, double thresh,
+		       int type, struct Option *coords, double thresh,
 		       struct ilist* List)
 {
     int i;
@@ -215,13 +240,18 @@ int sel_by_coordinates(struct Map_info *Map,
     return List -> n_values;
 }
 
-/*
- * select lines by bbox
- *
- * return number of selected lines
- */
+/**
+   \brief Select features by bbox
+   
+   \param[in] Map vector map
+   \param[in] type feature type
+   \param[in] bbox_opt bounding boxes
+   \param[in,out] List list of selected features
+
+   \return number of selected lines
+*/
 int sel_by_bbox(struct Map_info *Map,
-		int layer, int type, struct Option *bbox_opt,
+		int type, struct Option *bbox_opt,
 		struct ilist* List)
 {
     BOUND_BOX bbox;
@@ -262,13 +292,18 @@ int sel_by_bbox(struct Map_info *Map,
     return List -> n_values;
 }
 
-/*
- * select lines by polygon
- *
- * return number of selected lines
- */
+/**
+   \brief Select features by polygon
+
+   \param[in] Map vector map
+   \param[in] type feature type
+   \param[in] poly polygon coordinates
+   \param[in,out] List list of selected features
+   
+   \return number of selected lines
+*/
 int sel_by_polygon(struct Map_info *Map,
-		   int layer, int type, struct Option *poly,
+		   int type, struct Option *poly,
 		   struct ilist* List)
 {
     struct ilist *List_tmp;
@@ -315,13 +350,17 @@ int sel_by_polygon(struct Map_info *Map,
     return List -> n_values;
 }
 
-/*
- * select lines by id
- *
- * return number of selected lines
- */
+/**
+   \brief Select features by id
+
+   \param[in] Map vector map
+   \param[in] ids ids list
+   \param[in,out] List list of selected features
+ 
+   \return number of selected lines
+*/
 int sel_by_id(struct Map_info *Map,
-	      int layer, int type, char *ids,
+	      char *ids,
 	      struct ilist* List)
 {
     int i, j;
@@ -365,11 +404,17 @@ int sel_by_id(struct Map_info *Map,
     return List -> n_values; 
 }
 
-/*
- * select lines according to SQL where statement
- *
- * return number of selected lines
- */
+/**
+   \brief Select features according to SQL where statement
+
+   \param[in] Map vector map
+   \param[in] layer layer number
+   \param[in] type feature type
+   \param[in] where 'where' statement
+   \param[in,out] List list of selected features
+ 
+   \return number of selected lines
+*/
 int sel_by_where (struct Map_info *Map,
 		  int layer, int type, char *where,
 		  struct ilist* List)
@@ -399,7 +444,8 @@ int sel_by_where (struct Map_info *Map,
     Fi = Vect_get_field (Map, layer);
 
     if (!Fi) {
-	G_fatal_error (_("No layer database connection"));
+      G_fatal_error (_("Database connection not defined for layer %d"),
+		     layer);
     }
 
     driver = db_start_driver (Fi -> driver);
@@ -445,7 +491,13 @@ int sel_by_where (struct Map_info *Map,
     return List -> n_values;
 }
 
-/* merge two list, i.e. store only duplicate items */
+/**
+   \brief merge two list, i.e. store only duplicate items
+
+   \param[in] alist,blist list to be merged
+
+   \return result number of items
+*/
 int merge_lists (struct ilist* alist, struct ilist* blist)
 {
     int i;
@@ -466,7 +518,14 @@ int merge_lists (struct ilist* alist, struct ilist* blist)
     return alist -> n_values;
 } 
 
-/* reverse selection */
+/**
+   \brief Reverse list selection
+   
+   \param[in] Map vector map
+   \param[in,out] reversed list
+
+   \return 1
+*/
 int reverse_selection (struct Map_info *Map, struct ilist** List) {
 
     struct ilist* list_reverse;
