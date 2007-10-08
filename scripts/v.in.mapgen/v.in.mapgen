@@ -28,6 +28,10 @@
 #%  key: f
 #%  description: Input map is in Matlab format
 #%end
+#%flag
+#%  key: z
+#%  description: Create a 3D vector points map from 3 column Matlab data 
+#%end
 #%option
 #% key: input
 #% type: string
@@ -60,21 +64,20 @@ if [ ! -x "`which awk`" ] ; then
     exit 1
 fi
 
+# set environment so that awk works properly in all languages
+unset LC_ALL
+LC_NUMERIC=C
+export LC_NUMERIC
+
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 OPTS=""
 
-# set environment so that awk works properly in all languages
-unset LC_ALL
-LC_NUMERIC=C
-export LC_NUMERIC
-
-
 FILE="$GIS_OPT_INPUT"
 if [ ! -e "$FILE" ] ; then
-   g.message -e "input file [$FILE] not found."
+   g.message -e "Input file <$FILE> not found."
    exit 1
 fi
 
@@ -84,6 +87,18 @@ else
     unset NAME
 fi
 
+
+# -z implies -f
+if [ $GIS_FLAG_Z -eq 1 ] && [ $GIS_FLAG_F -eq 0 ] ; then
+   GIS_FLAG_F=1
+fi
+
+if [ $GIS_FLAG_Z -eq 1 ] ; then
+  # make a 3D vector file
+  do3D="-z"
+else
+  do3D=""
+fi
 
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
@@ -95,9 +110,8 @@ fi
 #### trap ctrl-c so that we can clean up tmp
 trap 'rm -f "$TMP"' 2 3 15
 
-
 #### create ascii vector file
-if [ $GIS_FLAG_F  -eq 1 ] ; then
+if [ $GIS_FLAG_F -eq 1 ] ; then
   ## HB:  OLD v.in.mapgen.sh Matlab import command follows.
   ##    I have no idea what it's all about, so "new" matlab format will be
   ##    a series of x y with "nan nan" breaking lines. (as NOAA provides)
@@ -108,11 +122,15 @@ if [ $GIS_FLAG_F  -eq 1 ] ; then
   #    $1~/END/   { }' | tac > $TMP
 
   ## matlab format. Cleanse with NaN->nan and spaces to tabs
-  tac "$FILE" | awk '{print $1 "\t" $2}' | tr 'N' 'n' | awk '
+  tac "$FILE" | awk '{print $1 "\t" $2 "\t" $3}
+    END {if ($3~/[0-9Nna]/) print "NaN\tNaN\tNaN"
+         else print "NaN\tNaN"}' | \
+   tr 'N' 'n' | awk '
     BEGIN { FS="\t" ; R=0 }
     $1~/nan.*/ { printf("L %d\n", R) ; R=0 }
-    $1~/\d*\.\d*/ { printf(" %.8f %.8f\n", $1, $2) ; ++R }
-    END {;}' | grep -v "^L 0$" | tac > "$TMP"
+    $1~/\d*\.\d*/ { printf(" %.8f %.8f %.8f\n", $1, $2, $3) ; ++R }
+    END {;}' | \
+   grep -v "^L 0$" | tac > "$TMP"
 
 else
   ## mapgen format.
@@ -147,7 +165,7 @@ if [ "$NAME" = "" ] ; then
 else
     #### import to binary vector file
     g.message "Importing with v.in.ascii ..." 
-    v.in.ascii input="${TMP}.dig" output="$NAME" format=standard
+    v.in.ascii $do3D input="${TMP}.dig" output="$NAME" format=standard
 
     #### check success/failure
     if [ $? -eq 0 ] ; then
