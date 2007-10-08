@@ -5,7 +5,7 @@
  * AUTHOR(S):  GRASS Development Team
  *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector maps. 
+ * PURPOSE:    This module edits vector map.
  *
  * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
  *
@@ -24,28 +24,32 @@ int main (int argc, char *argv[])
     struct GModule *module;
     struct GParams params;
     struct Map_info Map;
+    struct Map_info **BgMap; /* backgroud vector maps */
+    int nbgmaps;             /* number of registrated background maps */
     char *mapset;
     enum mode action_mode;
     FILE *ascii;
 
+    int i;
+    int move_first, snap;
     int ret, print, layer;
     double move_x, move_y, thresh;
     
-    int coords_npoints;
-    double* coords_x, *coords_y, *coords_z;
+    struct line_pnts *coord;
 
     struct ilist *List;
 
     ascii  = NULL;
     List   = NULL;
-    coords_npoints = 0;
-    coords_x = coords_y = coords_z = NULL;
+    BgMap  = NULL;
+    nbgmaps = 0;
+    coord  = NULL;
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
     module->keywords = _("vector, editing, geometry");
-    module->description = _("Edits a vector map layer. Allows adding, deleting "
+    module->description = _("Edits a vector map, allows adding, deleting "
 			    "and modifying selected vector features.");
 
     if(!parser(argc, argv, &params, &action_mode))
@@ -97,11 +101,45 @@ int main (int argc, char *argv[])
     }
     
     G_debug (1, "Map opened");
-    
-    print = params.print -> answer ? 1 : 0;
+
+    /* open backgroud maps */
+    if (params.bmaps->answer) {
+	i = 0;
+	char *bmap;
+	while (params.bmaps->answers[i]) {
+	    bmap = params.bmaps->answers[i];
+	    mapset = G_find_vector2 (bmap, ""); 
+	    if (mapset == NULL) {
+		G_fatal_error (_("Vector map <%s> not found"),
+			       bmap);
+	    }
+
+	    if (strcmp(G_fully_qualified_name((const char*) params.map -> answer, (const char*) G_mapset()),
+		       G_fully_qualified_name((const char*) bmap, (const char*) mapset)) == 0) {
+		G_fatal_error (_("Unable to open vector map <%s> as the backround map. "
+				 "It is given as vector map to be edited."),
+			       bmap);
+	    }
+	    nbgmaps++;
+	    BgMap = (struct Map_info**) G_realloc ((void *) BgMap, nbgmaps * sizeof(struct Map_info*));
+	    BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
+	    if (Vect_open_old(BgMap[nbgmaps-1], bmap, mapset) == -1) {
+		G_fatal_error (_("Unable to open vector map <%s>"),
+			       bmap);
+	    }
+	    i++;
+	}
+    }
+
     layer = atoi (params.fld -> answer);
     thresh = atof (params.maxdist -> answer);
-    
+    move_first = params.move_first->answer ? 1 : 0;
+    snap = NO_SNAP;
+    if (strcmp(params.snap->answer, "node") == 0)
+	snap = SNAP;
+    else if (strcmp(params.snap->answer, "vertex") == 0)
+	snap = SNAPVERTEX;
+
     if (action_mode != MODE_CREATE && action_mode != MODE_ADD) {
 	/* select lines */
 	List = Vect_new_list();
@@ -126,17 +164,14 @@ int main (int argc, char *argv[])
 
     /* coords option -> array */
     if (params.coord -> answers) {
-	int i, j;
-	for (i = 0; params.coord -> answers[i]; i += 2)
-	    coords_npoints++;
-	 
-	coords_x = (double *) G_calloc (coords_npoints, sizeof (double));
-	coords_y = (double *) G_calloc (coords_npoints, sizeof (double));
-	/* coords_z = (double *) G_calloc (coords_npoints, sizeof (double)); */
-
-	for (i = 0, j = 0; params.coord -> answers[i]; i += 2, j++) {
-	    coords_x[j] = atof (params.coord -> answers[i]);
-	    coords_y[j] = atof (params.coord -> answers[i+1]);
+	coord = Vect_new_line_struct();
+	int i = 0;
+	double east, north;
+	while (params.coord -> answers[i]) {
+	    east = atof (params.coord -> answers[i]);
+	    north = atof (params.coord -> answers[i+1]);
+	    Vect_append_point(coord, east, north, 0.0);
+	    i+=2;
 	}
     }
 
@@ -152,74 +187,91 @@ int main (int argc, char *argv[])
 	struct ilist *List_added;
 	List_added = Vect_new_list();
 	ret = asc_to_bin(ascii, &Map, List_added);
+	G_message(_("%d features added"), ret);
 	if (ret > 0) {
-	    if (params.snap -> answer) { /* apply snapping */
-		do_snapping (&Map, List_added, layer,
-			     thresh, 0);
+	    if (snap != NO_SNAP) { /* apply snapping */
+		do_snapping (&Map, BgMap, nbgmaps,
+			     List_added,
+			     thresh,
+			     snap == SNAP ? 0 : 1); /* snap to vertex ? */
 	    }
 	    if (params.close -> answer) { /* close boundaries */
-		do_close (&Map, GV_BOUNDARY, thresh);
+		int nclosed;
+		nclosed = do_close (&Map, GV_BOUNDARY, thresh);
+		G_message (_("%d lines closed"), nclosed);
 	    }
 	}
 	Vect_destroy_list (List_added);
 	break;
     case MODE_DEL:
-	ret = do_del(&Map, List, print);
+	ret = do_delete(&Map, List);
+	G_message(_("%d features deleted"), ret);
 	break;
     case MODE_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
-	ret = do_move(&Map, List, print,
-		      move_x, move_y);
+	ret = do_move(&Map, List,
+		      move_x, move_y, snap, thresh);
+	G_message(_("%d features moved"), ret);
 	break;
     case MODE_VERTEX_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
-	ret = do_move_vertex (&Map, List, print,
-			      params.coord, thresh,
-			      move_x, move_y);
+	ret = do_move_vertex (&Map, BgMap, nbgmaps,
+			      List,
+			      coord, thresh,
+			      move_x, move_y,
+			      move_first, snap);
+	G_message(_("%d vertices moved"), ret);
 	break;
     case MODE_VERTEX_ADD:
-	ret = do_add_vertex (&Map, List, print,
-			     params.coord, thresh);
+	ret = do_add_vertex (&Map, List,
+			     coord, thresh);
+	G_message(_("%d vertices added"), ret);    
 	break;
     case MODE_VERTEX_DELETE:
-	ret = do_remove_vertex(&Map, List, print,
-			       params.coord, thresh);
+	ret = do_remove_vertex(&Map, List,
+			       coord, thresh);
+	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
-	ret = do_break(&Map, List, print,
-		       coords_npoints, coords_x, coords_y, coords_z, thresh,
-		       NULL); /* do not use list of updated lines */
+	ret = do_break(&Map, List,
+		       coord, thresh, NULL);
+	G_message(_("%d lines broken"), ret);
 	break;
     case MODE_CONNECT:
-	ret = do_connect(&Map, List, print,
+	ret = do_connect(&Map, List,
 			 thresh);
+	G_message(_("%d lines connected"), ret);
       	break;
     case MODE_MERGE:
-	ret = do_merge(&Map, List, print);
-	break;
+	ret = do_merge(&Map, List);
+	G_message (_("%d lines merged"), ret);
+    	break;
     case MODE_SELECT:
 	print = 1;
 	ret = do_print_selected(List);
 	break;
     case MODE_CATADD:
-	ret = cats(&Map, List, print,
+	ret = cats(&Map, List,
 		   layer, 0, params.cat -> answer);
-	break;
+	G_message(_("%d features modified"), ret);
+    	break;
     case MODE_CATDEL:
-	ret = cats(&Map, List, print,
+	ret = cats(&Map, List,
 		   layer, 1, params.cat -> answer);
+	G_message(_("%d features modified"), ret);
 	break;
     case MODE_COPY:
-	ret = do_copy(&Map, List, print);
+	ret = do_copy(&Map, List);
+	G_message (_("%d features copied"), ret);
 	break;
     case MODE_SNAP:
-	ret = do_snap(&Map, List, thresh, layer,
-		      print, NULL);
+	ret = do_snap(&Map, List, thresh);
 	break;
     case MODE_FLIP:
-	ret = do_flip(&Map, List, print);
+	ret = do_flip(&Map, List);
+	G_message(_("%d lines flipped"), ret);
 	break;
     case MODE_NONE:
 	print = 0;
@@ -231,7 +283,13 @@ int main (int argc, char *argv[])
     }
 
     if (print && ret > 0) {
-	fprintf (stdout, "\n");
+	for (i = 0; i < Vect_get_num_updated_lines(&Map); i++) {
+	    if (i > 0)
+		fprintf (stdout, ",");
+	    fprintf (stdout, "%d", Vect_get_updated_line(&Map, i));
+	}
+	if (Vect_get_num_updated_lines(&Map) > 0)
+	    fprintf (stdout, "\n");
 	fflush (stdout);
     }
 
@@ -253,7 +311,17 @@ int main (int argc, char *argv[])
     
     G_debug(1, "Map closed");
 
-    G_done_msg ("");
+    /* close background maps */
+    for (i = 0; i < nbgmaps; i++) {
+	Vect_close(BgMap[i]);
+	G_free ((void *) BgMap[i]);
+    }
+    G_free ((void *) BgMap);
+
+    if (coord)
+	Vect_destroy_line_struct(coord);
+
+    G_done_msg (" ");
 
     if (ret > -1) {
 	exit (EXIT_SUCCESS);

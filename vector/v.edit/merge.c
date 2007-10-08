@@ -4,43 +4,51 @@
  *
  * AUTHOR(S):  GRASS Development Team
  *             Original author Jachym Cepicky <jachym  les-ejk cz>
- *             Updated by Martin Landa <landa.martin@gmail.com> (2007/03)
+ *             Updated by Martin Landa <landa.martin gmail.com> (2007/03)
  *
- * PURPOSE:    This module edits vector maps. It is inteded to be mainly
- * 	       used by the the new v.digit GUI.
+ * PURPOSE:    This module edits vector map.
+ *             Merge lines.
  *
- * COPYRIGHT:  (C) 2002-2006 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2002-2008 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
- * TODO:       
  ****************************************************************/
 
 #include "global.h"
 
-/*
- * merge two given lines a,b
- * a : Points1/Cats1
- * b : Points2/Cats2
- * merged line : Points/Cats
- *
- * return 1 on success
- * return 0 on error
- */
+/**
+   \brief Merge two given lines a, b
+   
+   a : Points1/Cats1
+   b : Points2/Cats2
+   merged line : Points/Cats
+   
+   \param[in] Points1,Cats1 first line
+   \param[in] Points2,Cats2 second line
+   \param[in] thresh threshold value
+   \param[out] Points result line
+
+   \return 1 on success
+   \return 0 on error
+*/
 static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1, 
 			struct line_pnts *Points2, struct line_cats *Cats2,
 			double thresh, struct line_pnts **Points);
 
-/*
- * merge lines in vector map
- *
- * return number of merged lines
- * return -1 on error
- */
-int do_merge(struct Map_info *Map, struct ilist *List, int print)
+/**
+   \brief Merge lines/boundaries
+ 
+   \param[in] Map vector map
+   \param[in] List list of selected features
+
+   \return number of merged lines
+   \return -1 on error
+*/
+int do_merge(struct Map_info *Map, struct ilist *List)
 {
     struct ilist *List_in_box;
     
@@ -145,16 +153,9 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
 		
 		if (Points -> n_points > 0) {
 		    if (Vect_delete_line(Map, line2) == -1) {
-			G_warning (_("Cannot delete line %d"),
+			G_warning (_("Unable to delete line %d"),
 				   line2);
 			return -1;
-		    }
-		    
-		    if (print) {
-			fprintf(stdout, "%d,",
-				line2);
-
-			fflush (stdout);
 		    }
 		    
 		    if (line2 <= nlines)
@@ -166,16 +167,9 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
 	if (Points -> n_points > 0) {
 	    line = Vect_rewrite_line (Map, line1, type1, Points, Cats1);
 	    if (line < 0) {
-		G_warning (_("Cannot rewrite line %d"),
+		G_warning (_("Unable to rewrite line %d"),
 			   line1);
 		return -1;
-	    }
-	    
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line1,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
 	    }
 	    
 	    if (line1 <= nlines)
@@ -193,9 +187,6 @@ int do_merge(struct Map_info *Map, struct ilist *List, int print)
     
     Vect_destroy_cats_struct(Cats1);
     Vect_destroy_cats_struct(Cats2);
-    
-    G_message (_("%d lines merged"),
-	       nlines_merged);
     
     return nlines_merged;
 }

@@ -3,7 +3,7 @@
  * MODULE:     v.edit
  * 
  * AUTHOR(S):  GRASS Development Team
- *             Martin Landa
+ *             Martin Landa <landa.martin gmail.com>
  *               
  * PURPOSE:    This module edits vector maps.
  *             Flip direction of selected vector lines.
@@ -20,12 +20,16 @@
 
 #include "global.h"
 
-/* 
- * flip direction of selected vector lines (i.e. GV_LINES)
- * return number of modified lines
- * return -1 on error
+/**
+   \brief Flip direction of selected vector lines
+
+   \param[in] Map vector map
+   \param[in] List list of selected lines
+
+   \return number of modified lines
+   \return -1 on error
  */
-int do_flip (struct Map_info *Map, struct ilist *List, int print)
+int do_flip (struct Map_info *Map, struct ilist *List)
 {
     struct line_cats *Cats;
     struct line_pnts *Points;
@@ -51,26 +55,17 @@ int do_flip (struct Map_info *Map, struct ilist *List, int print)
 	Vect_line_reverse (Points);
 
 	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    G_warning (_("Cannot rewrite line %d"),
+	    G_warning (_("Unable to rewrite line %d"),
 		       line);
 	    return -1;
 	}
 
-	if (print) {
-	    fprintf(stdout, "%d%s",
-		    List -> value[i],
-		    i < List->n_values -1 ? "," : "");
-	    fflush (stdout);
-	}
-	    
 	nlines_flipped++;
     }
 
     /* destroy structures */
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
-
-    G_message(_("%d lines flipped"), nlines_flipped);
 
     return nlines_flipped;
 }

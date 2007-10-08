@@ -21,20 +21,25 @@
 #include <math.h>
 #include "global.h"
 
-/*
- * breaks (split) selected vector line on position(s) given by coord
- *
- * return number of modified lines
- * return -1 on error
+/**
+   \brief Breaks (split) selected vector line/boundary
+   
+   \param[in] Map vector map
+   \param[in] List list of selected lines
+   \param[in] coord points location
+   \param[in] List_updated list of rewritten features (if given)
+
+   \return number of modified lines
+   \return -1 on error
  */
-int do_break (struct Map_info *Map, struct ilist *List, int print,
-	      int opt_npoints, double opt_x[], double opt_y[], double opt_z[], double thresh,
+int do_break (struct Map_info *Map, struct ilist *List,
+	      struct line_pnts *coord, double thresh,
 	      struct ilist *List_updated)
 {
     int i, j, l;
     int type, line, seg, newline;
     int nlines_modified;
-    double px, py, spdist, lpdist, dist, opt_z_i;
+    double px, py, spdist, lpdist, dist;
     double *x, *y, *z;
 
     struct line_pnts *Points, *Points2;
@@ -63,19 +68,22 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
 	y = Points -> y;
 	z = Points -> z;
 
-	for (j = 0; j < opt_npoints; j++) {
-	    if (opt_z == NULL)
-		opt_z_i = 0.0;
-	    else
-		opt_z_i = opt_z[i];
-
-	    seg = Vect_line_distance (Points, opt_x[i], opt_y[i], opt_z_i,
+	for (j = 0; j < coord -> n_points; j++) {
+	    seg = Vect_line_distance (Points, coord->x[j], coord->y[j], coord->z[j],
 				      WITHOUT_Z,
 				      &px, &py, NULL,
 				      &dist, &spdist, &lpdist);
-	    
+
+	    if (dist > thresh) {
+		Vect_destroy_line_struct(Points);
+		Vect_destroy_line_struct(Points2);
+		Vect_destroy_cats_struct(Cats);
+		Vect_destroy_list (List_in_box);
+		return -1;
+	    }
+
 	    G_debug (3, "do_break: line=%d, x=%f, y=%f, px=%f, py=%f, seg=%d, dist=%f, spdist=%f, lpdist=%f",
-		     line, opt_x[i], opt_y[i], px, py, seg, dist, spdist, lpdist);
+		     line, coord->x[j], coord->y[j], px, py, seg, dist, spdist, lpdist);
 
 	    if (spdist <= 0.0 ||
 		spdist >= Vect_line_length(Points))
@@ -97,7 +105,7 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line %d"), line);
+		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -117,21 +125,13 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    if (newline  < 0)  {
-		G_warning(_("Cannot rewrite line %d"), line);
+		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
-	    }
 	    nlines_modified++;
 	} /* for each bounding box */
     } /* for each selected line */
-
-    G_message(_("%d lines broken"), nlines_modified);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_line_struct(Points2);
@@ -141,21 +141,25 @@ int do_break (struct Map_info *Map, struct ilist *List, int print,
     return nlines_modified;
 }
 
-/*
- * connect *two* lines
- *
- * the first line from the list is connected to the second one
- * if necessary the second line is broken
- *
- *     \                    \
- * id1  \           ->       \
- *                            \
- * id2 ---------           ---------
- * 
- * return  number of modified lines
- * return -1 on error
+/**
+   \brief Connect *two* lines
+ 
+   The first line from the list is connected to the second one
+   if necessary the second line is broken
+ 
+   \			     \
+   id1  \           ->	      \
+                               \
+   id2 ---------           ---------
+ 
+   \param[in] Map vector map
+   \param[in] List list of selected lines
+   \param[in] thresh threshold value for connect
+
+   \return  number of modified lines
+   \return -1 on error
  */
-int do_connect (struct Map_info *Map, struct ilist *List, int print,
+int do_connect (struct Map_info *Map, struct ilist *List,
 		double thresh)
 {
     int nlines_modified, newline, intersection, linep, nlines_to_modify;
@@ -229,7 +233,8 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 
 	angle =
 	    M_PI / 2 -
-	    acos (fabs (Points[0] -> x[0] - Points[0] -> x[Points[0] -> n_points - 1]) / Vect_line_length (Points[0])) -
+	    acos (fabs (Points[0] -> x[0] - Points[0] -> x[Points[0] -> n_points - 1]) /
+		  Vect_line_length (Points[0])) -
 	    asin (fabs (Points[1] -> y[seg[idx] - 1] - py[idx]) / spdist[idx]);
 	
 	dseg = dist[idx] * tan (angle);
@@ -246,7 +251,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	}
     
 	if (!n_on_line[0] || !n_on_line[1]) {
-	    G_warning (_("Cannot connect line id %d to line %d"), line[0], line[1]);
+	    G_warning (_("Unable connect line id %d to line %d"), line[0], line[1]);
 	    continue;
 	}
 
@@ -257,24 +262,27 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	    pnt_idx[1] = 0;
 	
 	if (Vect_points_distance (nx[0], ny[0], nz[0],
-				  Points[0] -> x[pnt_idx[1]], Points[0] -> y[pnt_idx[1]], Points[0] -> z[pnt_idx[1]],
+				  Points[0] -> x[pnt_idx[1]], Points[0] -> y[pnt_idx[1]],
+				  Points[0] -> z[pnt_idx[1]],
 				  WITHOUT_Z) >
 	    Vect_points_distance (nx[1], ny[1], nz[1],
-				  Points[0] -> x[pnt_idx[1]], Points[0] -> y[pnt_idx[1]], Points[0] -> z[pnt_idx[1]],
+				  Points[0] -> x[pnt_idx[1]], Points[0] -> y[pnt_idx[1]],
+				  Points[0] -> z[pnt_idx[1]],
 				  WITHOUT_Z))
 	    pnt_idx[1] = 0;
 	else
 	    pnt_idx[1] = 1;
 	
 	dist_connect = Vect_points_distance (nx[pnt_idx[1]], ny[pnt_idx[1]], nz[pnt_idx[1]],
-					     Points[0] -> x[pnt_idx[0]], Points[0] -> y[pnt_idx[0]], Points[0] -> z[pnt_idx[0]],
+					     Points[0] -> x[pnt_idx[0]], Points[0] -> y[pnt_idx[0]],
+					     Points[0] -> z[pnt_idx[0]],
 					     WITHOUT_Z);
 
 	G_debug (3, "do_connect: dist=%f/%f -> pnt_idx=%d -> x=%f, y=%f / dist_connect=%f (thresh=%f)",
 		 dist[0], dist[1], pnt_idx[0], nx[pnt_idx[1]], ny[pnt_idx[1]], dist_connect, thresh);
 
 	if (thresh >= 0.0 && dist_connect > thresh) {
-	    G_warning (_("Cannot connect line id %d to line %d because of threshold distance, "
+	    G_warning (_("Unable to connect line id %d to line %d because of threshold distance, "
 			 "run v.edit with other threshold distance value"),
 		       line[0], line[1]);
 	    continue;
@@ -293,7 +301,7 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	    /* rewrite the first line */
 	    newline = Vect_rewrite_line (Map, line[0], type[0], Points[0], Cats[0]);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line %d"), line[0]);
+		G_warning(_("Unable to rewrite line %d"), line[0]);
 		return -1;
 	    }
 	    Vect_list_append (List_updated, newline);
@@ -307,29 +315,25 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
 	if (!intersection ||
 	    (intersection &&
 	     Vect_points_distance (nx[pnt_idx[1]], ny[pnt_idx[1]], nz[pnt_idx[1]],
-				   Points[0] -> x[pnt_idx[0]], Points[0] -> y[pnt_idx[0]], Points[0] -> z[pnt_idx[0]],
+				   Points[0] -> x[pnt_idx[0]], Points[0] -> y[pnt_idx[0]],
+				   Points[0] -> z[pnt_idx[0]],
 				   WITHOUT_Z) <= 0.0)) {
 	    Vect_list_append (List_break, line[1]);
-	    do_break (Map, List_break, 0, 
-		      1, &nx[pnt_idx[1]], &ny[pnt_idx[1]], &nz[pnt_idx[1]], 
-		      1e-1, 
+	    struct line_pnts *coord = Vect_new_line_struct();
+	    Vect_append_point(coord, nx[pnt_idx[1]], ny[pnt_idx[1]], nz[pnt_idx[1]]);
+	    do_break (Map, List_break, 
+		      coord, 1e-1, 
 		      List_updated);
-	    	    
+	    Vect_destroy_line_struct(coord);
 	    /* snap lines */
 	    Vect_snap_lines_list (Map, List_updated, 1e-1, NULL, NULL);
 	    connected = 1;
 	}
 	
-	if (print && connected) {
-	    fprintf(stdout, "%d,%d%s",
-		    line[0], line[1],
-		    linep + 1 < List -> n_values -1 ? "," : "");
-	    fflush (stdout);
-	}
 	if (connected)
 	    nlines_modified += 2;
 	else
-	    G_warning (_("Cannot connect line id %d to line %d"), line[0], line[1]);
+	    G_warning (_("Unable to connect line id %d to line %d"), line[0], line[1]);
     } /* for each line pair */
 
     /* destroy structures */
@@ -341,8 +345,6 @@ int do_connect (struct Map_info *Map, struct ilist *List, int print,
     }
     Vect_destroy_list (List_break);
     Vect_destroy_list (List_updated);
-
-    G_message(_("%d lines connected"), nlines_modified);
 
     return nlines_modified;
 }

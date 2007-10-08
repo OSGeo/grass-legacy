@@ -20,19 +20,26 @@
 
 #include "global.h"
 
-/* 
- * move selected features
- * return number of selected features
- * return -1
- */
-int do_move(struct Map_info *Map, struct ilist *List, int print,
-	    double move_x, double move_y)
+/**
+   \brief Move selected features
+   
+   \param[in] Map vector map
+   \param[in] List list of features to be moved
+   \param[in] move_x,move_y X,Y values
+   \param[in] snap enable snapping (see globals.h)
+
+   \return number of modified features
+   \return -1 on error
+*/
+int do_move(struct Map_info *Map, struct ilist *List, 
+	    double move_x, double move_y, int snap, double thresh)
 {
     struct line_pnts *Points;
     struct line_cats *Cats;
     int i, j;
     int type, newline, line;
     int nlines_moved;
+    double *x, *y, *z;
 
     nlines_moved = 0;
 
@@ -49,36 +56,36 @@ int do_move(struct Map_info *Map, struct ilist *List, int print,
 
         G_debug(3, "Moving type %d number %d", type, line);
 
+	x = Points->x;
+	y = Points->y;
+	z = Points->z;
+
         /* move */
         for (j = 0; j < Points -> n_points; j++) {
+	    x[j] += move_x;
+            y[j] += move_y;
 
-            Points->x[j] += move_x;
-            Points->y[j] += move_y;
-
+	    if (snap != NO_SNAP) {
+		if (do_snap_point(Map, line, &x[j], &y[j], &z[j], thresh,
+				  (snap == SNAPVERTEX) ? 1 : 0) == 0) {
+		    /* check also background maps */
+		}
+	    }
         } /* for each point at line */
 
 	newline = Vect_rewrite_line (Map, line, type, Points, Cats);
 
         if (newline < 0)  {
-	  G_warning(_("Cannot rewrite line %d"),
-		    line);
+	    G_warning(_("Unable to rewrite line %d"),
+		      line);
             return -1;
         }
 
         nlines_moved++;
-	
-        if (print) {
-	    fprintf(stdout, "%d%s",
-		    line,
-		    i < List->n_values -1 ? "," : "");
-	    fflush (stdout);
-	}
     }
         
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
-
-    G_message(_("%d features moved"), nlines_moved);
 
     return nlines_moved;
 }

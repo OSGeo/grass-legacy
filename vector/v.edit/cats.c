@@ -19,12 +19,19 @@
 
 #include "global.h"
 
-/* cats 
- * edit category numbers of selected vector features
- * return number of modified features
- * return -1 on error
- */
-int cats (struct Map_info *Map, struct ilist *List, int print,
+/**
+   \brief Edit category numbers of selected vector features
+
+   \param[in] Map vector map
+   \param[in] List list of selected features
+   \param[in] layer layer number
+   \param[in] del action (add/delete)
+   \param[in] cats_list list of category numbers
+
+   \return number of modified features
+   \return -1 on error
+*/
+int cats (struct Map_info *Map, struct ilist *List,
 	  int layer, int del, char *cats_list)
 {
     int i, j;
@@ -39,7 +46,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
     /* get list of categories */
     Clist = Vect_new_cat_list();
     if (Vect_str_to_cat_list(cats_list, Clist)) {
-	G_warning (_("Could not get cat list <%s>, editing terminated"), cats_list);
+	G_warning (_("Unable to get category list <%s>, editing terminated"), cats_list);
 	return -1;
     }
     
@@ -62,7 +69,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		    /* add new category */
 		    if (!del) {
 			if(Vect_cat_set (Cats, layer, cat) < 1) {
-			    G_warning (_("Cannot set category %d line %d"),
+			    G_warning (_("Unable to set category %d line %d"),
 				       cat, line);
 			}
 			else {
@@ -71,7 +78,7 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		    }
 		    else { /* delete old category */
 			if(Vect_field_cat_del (Cats, layer, cat) == 0) {
-			    G_warning (_("Cannot delete layer/category [%d/%d] line %d"), 
+			    G_warning (_("Unable to delete layer/category [%d/%d] line %d"), 
 				       layer, cat, line);
 			}
 			else {
@@ -85,26 +92,18 @@ int cats (struct Map_info *Map, struct ilist *List, int print,
 		continue;
 
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_warning (_("Cannot rewrite line %d"), line);
+		G_warning (_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 
 	    nlines_modified++;
 
-	    if (print) {
-		fprintf(stdout, "%d%s",
-			line,
-			i < List->n_values -1 ? "," : "");
-		fflush (stdout);
-	    }
 	}
 
 	/* destroy structures */
 	Vect_destroy_line_struct(Points);
 	Vect_destroy_cats_struct(Cats);
     }
-
-    G_message(_("%d features modified"), nlines_modified);
 
     return nlines_modified;
 }

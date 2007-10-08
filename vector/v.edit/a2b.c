@@ -3,16 +3,17 @@
 
 #define BUFFSIZE 128
 
-/* 
- * adopted from v.in.ascii code!
- *
- * add vector features to the map (input in
- * GRASS ASCII vector format)
- *
- * return number of added features
- *
- * id's of added features can be stored in List (if given)
- */
+/**
+   \brief Add new vector features to the vector map
+   
+   Input format is GRASS ASCII vector, the code adopted from v.in.ascii
+
+   \param[in] ascii file containing definition of new vector features
+   \param[in] Map vector map
+   \param[out] List list of added features (if given)
+
+   \return number of added features
+*/
 int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 {
     char ctype;
@@ -61,7 +62,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 		G_debug(2, "a2b: skipping commented line");
 		continue;
 	    }
-	    G_warning (_("Error reading ASCII file: %s"), buff);
+	    G_warning (_("Error reading ASCII file: '%s'"), buff);
 	    return -1;
 	}
 	if (ctype == '#') {
@@ -99,7 +100,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 	    type = 0; /* dead -> ignore */
 	    break;
 	default:
-	    G_warning (_("Error reading ASCII file: %s"), buff) ;
+	    G_warning (_("Error reading ASCII file: '%s'"), buff) ;
 	    return -1;
 	}
 	G_debug(5, "feature type = %d", type);
@@ -124,7 +125,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 	    
 	    *z=0;
 	    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
-		G_warning (_("Error reading ASCII file: %s"), buff) ;
+		G_warning (_("Error reading ASCII file: '%s'"), buff) ;
 		return -1;
 	    }    
 	    G_debug( 5, "coor in: %s -> x = %f y = %f z = %f", G_chop(buff), *x, *y, *z);
@@ -150,7 +151,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 	for( i=0; i<n_cats; i++)
 	{
 	    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
-		G_warning (_("End of ascii file reached before end of categories.")) ;
+		G_warning (_("End of ascii file reached before end of categories")) ;
 		return -1;
 	    }
 	    if (buff[0] == '\0') {
@@ -160,7 +161,7 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 	    }
 	    
 	    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
-		G_warning (_("Error reading categories: %s"), buff) ;
+		G_warning (_("Error reading categories: '%s'"), buff) ;
 		return -1;
 	    }
 	    Vect_cat_set ( Cats, catn, cat );
@@ -181,11 +182,17 @@ int asc_to_bin(FILE *ascii , struct Map_info *Map, struct ilist *List)
 	}
     }
 
-    G_message(_("%d features added"), nlines);
-
     return nlines;	
 }
 
+/**
+   \brief Read header of input file
+   
+   \param[in] dascii file containing definition of vector features to be added
+   \param[in] Map vector map
+   
+   \return 0
+*/
 int 
 read_head ( FILE * dascii, struct Map_info *Map )
 {
@@ -202,7 +209,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	    return 0;
 	
 	if (!(ptr = G_index (buff, ':')))
-	    G_fatal_error(_("Unexpected data in vector head: %s"), buff);
+	    G_fatal_error(_("Unexpected data in vector head: '%s'"), buff);
 	
 	ptr++;			/* Search for the start of text */
 	while (*ptr == ' ')
@@ -232,20 +239,24 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	    Vect_set_thresh ( Map, atof (ptr) );  
 	else
         {
-	  G_warning(_("Unknown keyword <%s> in vector head"), buff);
+	  G_warning(_("Unknown keyword '%s' in vector head"), buff);
 	}
     }
     /* NOTREACHED */
 }
 
-/* 
- * close lines (boudaries) with regard to threshold distance
- * if threshold distance < 0.0 -> no limit
- *
- * return number of modified lines
- */
-int do_close(struct Map_info *Map, int ltype,
-	     double thresh)
+/**
+   \brief Close lines (boudaries)
+   
+   Using threshold distance (-1 for no limit)
+   
+   \param[in] Map vector map
+   \param[in] ltype vector feature type (line | boundary)
+   \param[in] thresh threshold distance
+
+   \return number of modified features
+*/
+int do_close(struct Map_info *Map, int ltype, double thresh)
 {
     int nlines, line, type, nlines_modified, newline;
     int npoints;
@@ -286,77 +297,12 @@ int do_close(struct Map_info *Map, int ltype,
 	    
 	    newline = Vect_rewrite_line (Map, line, type, Points, Cats);
 	    if (newline < 0)  {
-		G_warning(_("Cannot rewrite line %d"), line);
+		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    nlines_modified++;
 	}
     }
-
-    G_message (_("%d lines closed"), nlines_modified);
-
-    Vect_destroy_line_struct(Points);
-    Vect_destroy_cats_struct(Cats);
-
-    return nlines_modified;
-}
-
-/*
- * snap lines given in List to the nearest feature
- *
- * return number of snapped lines
- */
-int do_snapping(struct Map_info *Map, struct ilist* List, int layer,
-		double thresh, int to_vertex)
-{
-    int i, line, type, npoints, node;
-    int line_to_snap;
-    int nlines_modified;
-
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-    struct ilist *List_snap, *List_updated;
-
-    nlines_modified = 0;
-
-    Points = Vect_new_line_struct();
-    Cats   = Vect_new_cats_struct();
-
-    List_snap = Vect_new_list();
-    List_updated = Vect_new_list();
-
-    for(i = 0; i < List -> n_values; i++) {
-	line = List -> value[i];
-
-	if (!Vect_line_alive (Map, line))
-	    continue;
-
-        type = Vect_read_line(Map, Points, Cats, line);
-	npoints = Points -> n_points;
-
-	for (node = 0; node < npoints; node += npoints - 1) {
-
-	    line_to_snap = Vect_find_line(Map, Points -> x[node],
-					  Points -> y[node], Points -> z[node],
-					  -1, thresh, WITHOUT_Z, line);
-
-	    if(line_to_snap > 0 && Vect_line_alive(Map, line_to_snap)) {
-		Vect_list_append(List_snap, line_to_snap);
-		Vect_list_append(List_snap, line); /* add line which should be snapped */
-		if (do_snap2(Map, List_snap, layer, 0, List_updated)) {
-		    line = List_updated->value[0];
-		    nlines_modified++;
-		}
-		Vect_reset_list(List_snap);
-	    }
-	    if (npoints == 1) {
-		break;
-	    }
-	}
-    }
-
-    Vect_destroy_list (List_snap);
-    Vect_destroy_list (List_updated);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);

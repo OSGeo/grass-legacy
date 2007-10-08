@@ -4,9 +4,9 @@
  * 
  * AUTHOR(S):  GRASS Development Team
  *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa
+ *             Martin Landa <landa.martin gmail.com>
  *               
- * PURPOSE:    This module edits vector maps.
+ * PURPOSE:    This module edits vector map.
  *             Delete selected features.
  *
  * COPYRIGHT:  (C) 2007 by the GRASS Development Team
@@ -20,12 +20,16 @@
 
 #include "global.h"
 
-/*
- * delete selected features
- * return number of deleted features
- * return -1 on error
+/**
+   \brief Delete selected features
+
+   \param[in] Map vector map
+   \param[in] List list of features to be deleted
+
+   \return number of deleted features
+   \return -1 on on error
  */
-int do_del(struct Map_info *Map, struct ilist *List, int print)
+int do_delete(struct Map_info *Map, struct ilist *List)
 {
     int i, line;
     int nlines_removed;
@@ -37,23 +41,15 @@ int do_del(struct Map_info *Map, struct ilist *List, int print)
 	line = List -> value[i];
 
 	if (Vect_line_alive(Map, line)) {
-	    G_debug (3, "Line %d deleted", List->value[i] );
-	    if (-1 == Vect_delete_line(Map, List->value[i])) { 
-		G_warning (_("Cannot delete line %d"), line);
+	    if (-1 == Vect_delete_line(Map, line)) { 
+		G_warning (_("Unable to delete line %d"), line);
 		return -1;
 	    }
 
-	    if (print) {
-	      fprintf(stdout, "%d%s",
-		      line,
-		      i < List->n_values -1 ? "," : "");
-	      fflush (stdout);
-	    }
+	    G_debug (3, "Line %d deleted", line);
 	    nlines_removed++;
 	}
     }
-
-    G_message(_("%d features deleted"), nlines_removed);
 
     return nlines_removed;
 }
