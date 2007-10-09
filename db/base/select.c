@@ -17,21 +17,24 @@
 #include <grass/dbmi.h>
 #include <grass/codes.h>
 #include <grass/glocale.h>
+#include "local_proto.h"
+
 
 struct {
 	char *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
 	int c,d,h, test_only;
 } parms;
 
-void parse_command_line();
 
-int sel ( dbDriver *driver, dbString *stmt);
-int get_stmt( FILE *fd, dbString *stmt );
-int stmt_is_empty ( dbString *stmt );
-void print_column_definition ( dbColumn *column );
-    
+/* function prototypes */
+static void parse_command_line (int, char **);
+static int sel (dbDriver *, dbString *);
+static int get_stmt (FILE *, dbString *);
+static int stmt_is_empty (dbString *);
+
+
 int
-main (int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbString stmt;
     dbDriver *driver;
@@ -87,9 +90,9 @@ main (int argc, char *argv[])
     exit(stat);
 }
 
-int
-sel (dbDriver *driver,
-    dbString *stmt)
+
+static int
+sel (dbDriver *driver, dbString *stmt)
 {
     dbCursor cursor;
     dbTable *table;
@@ -100,10 +103,10 @@ sel (dbDriver *driver,
     int more;
 
     if (db_open_select_cursor(driver, stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-	return ERROR;
-    if (parms.test_only) {
+        return ERROR;
+    if (parms.test_only)
         return OK;
-    }
+
     table = db_get_cursor_table (&cursor);
     ncols = db_get_table_number_of_columns (table);
     if(parms.d)
@@ -113,12 +116,13 @@ sel (dbDriver *driver,
 	    column = db_get_table_column(table, col);
 	    print_column_definition(column);
 	}
+
 	return OK;
     }
 
     db_init_string (&value_string);
 
-/* column names if horizontal output */
+    /* column names if horizontal output */
     if (parms.h && parms.c)
     {
 	for (col = 0; col < ncols; col++)
@@ -130,7 +134,7 @@ sel (dbDriver *driver,
 	fprintf (stdout, "\n");
     }
 
-/* fetch the data */
+    /* fetch the data */
     while(1)
     {
 	if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
@@ -163,8 +167,9 @@ sel (dbDriver *driver,
     return OK;
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*v, *flag_test;
@@ -232,7 +237,7 @@ parse_command_line(int argc, char *argv[])
     module->description = _("Selects data from table.");
 
     if(G_parser(argc, argv))
-	exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
@@ -255,9 +260,9 @@ parse_command_line(int argc, char *argv[])
     }
 }
 
-int
-get_stmt(FILE *fd,
-    dbString *stmt)
+
+static int
+get_stmt (FILE *fd, dbString *stmt)
 {
     char buf[1024];
     int n;
@@ -265,7 +270,7 @@ get_stmt(FILE *fd,
 
     db_zero_string (stmt);
 
-/* this is until get_stmt is smart enough to handle multiple stmts */
+    /* this is until get_stmt is smart enough to handle multiple stmts */
     if (!first)
 	return 0;
     first = 0;
@@ -279,22 +284,11 @@ get_stmt(FILE *fd,
     return 1;
 }
 
-int
-stmt_is_empty(dbString *stmt)
+
+static int
+stmt_is_empty (dbString *stmt)
 {
     char dummy[2];
 
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
-}
-
-void
-print_column_definition(dbColumn *column)
-{
-    fprintf (stdout, "column%s%s\n", parms.fs, db_get_column_name(column));
-    fprintf (stdout, "type%s%s\n", parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
-    fprintf (stdout, "len%s%d\n", parms.fs, db_get_column_length(column));
-    fprintf (stdout, "scale%s%d\n", parms.fs, db_get_column_scale(column));
-    fprintf (stdout, "precision%s%d\n", parms.fs, db_get_column_precision(column));
-    if (parms.vs)
-	fprintf (stdout, "%s\n", parms.vs);
 }

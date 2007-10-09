@@ -45,8 +45,8 @@ $(BIN)/db.drivers$(EXE): $(OBJDIR)/drivers.o
 $(BIN)/db.execute$(EXE): $(OBJDIR)/execute.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/execute.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(BIN)/db.select$(EXE): $(OBJDIR)/select.o
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
+$(BIN)/db.select$(EXE): $(OBJDIR)/select.o $(OBJDIR)/printtab.o
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(FMODE_OBJ) $(OBJDIR)/printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(BIN)/db.tables$(EXE): $(OBJDIR)/tables.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/tables.o $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
