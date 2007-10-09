@@ -29,7 +29,7 @@ class MapLayer(object):
     Common layer attributes:
     type     - layer type (raster, vector, overlay, command, etc.)
     name     - layer name, e.g. map name ('elevation@PERMANENT')
-    cmdlist  - GRASS command (e.g. 'd.rast map=elevation@PERMANENT')
+    cmdlist  - GRASS command (e.g. ['d.rast', 'map=elevation@PERMANENT'])
 
     active   - layer is active, will be rendered only if True
     hidden   - layer is hidden, won't be listed in GIS Manager if True
