@@ -116,7 +116,9 @@ int do_print_selected(struct ilist *List)
 		List -> value[i],
 		i < List->n_values -1 ? "," : "");
     }
-    
+    fprintf(stdout, "\n");
+    fflush(stdout);
+
     return List -> n_values;
 }
 
