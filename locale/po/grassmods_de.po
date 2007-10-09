@@ -4052,7 +4052,7 @@ msgstr ""
 
 #: ../general/g.proj/main.c:121
 msgid "PROJ.4 projection description (- for stdin)"
-msgstr "PPROJ.4 Projektionsdefinition (- für Standardeinbabe)."
+msgstr "PPROJ.4 Projektionsdefinition (- für Standardeingabe)."
 
 #: ../general/g.proj/main.c:129
 msgid "EPSG projection code"
