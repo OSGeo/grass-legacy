@@ -18,8 +18,9 @@
 #include <grass/codes.h>
 #include <grass/glocale.h>
 
+
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     int    ret;
     struct Option *from_driver, *from_database, *from_table;
@@ -94,7 +95,8 @@ main(int argc, char *argv[])
     select->description	= _("Full select statement (only, if 'from_table' and 'where' is not used), e.g.:\n"
 			  "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'");
 
-    if(G_parser(argc, argv)) exit(ERROR);
+    if (G_parser(argc, argv))
+        exit (EXIT_FAILURE);
 
     /* Check options and copy tables */
     if ( from_table->answer ) {
@@ -123,9 +125,8 @@ main(int argc, char *argv[])
 
     if ( ret == DB_FAILED ) {
 	G_warning ( _("Copy table failed") );
-	exit(1);
+	exit (EXIT_FAILURE);
     }
 
-    exit(0);
+    exit (EXIT_SUCCESS);
 }
-

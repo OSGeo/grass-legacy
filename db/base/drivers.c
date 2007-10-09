@@ -11,6 +11,7 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <stdlib.h>
 #include <grass/codes.h>
 #include <grass/dbmi.h>
@@ -18,15 +19,17 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
-void parse_command_line();
 
 struct {
 	int f;
 } parms;
 
+/* function prototypes */
+static void parse_command_line (int, char **);
+
 
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDbmscap *list, *p;
 
@@ -35,7 +38,7 @@ main(int argc, char *argv[])
     list = db_read_dbmscap();
     if (list == NULL) {
       G_message ( _("Error trying to read dbmscap file\n"));
-      exit(ERROR);
+      exit (EXIT_FAILURE);
     }
 
     for (p = list; p; p = p->next) {
@@ -43,11 +46,13 @@ main(int argc, char *argv[])
       if (parms.f) fprintf(stdout, ":%s", p->comment);
       fprintf(stdout, "\n");
     }
-    exit(OK);
+
+    exit (EXIT_SUCCESS);
 }
 
-void
-parse_command_line (int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Flag *full, *print;
     struct GModule *module;
@@ -69,8 +74,7 @@ parse_command_line (int argc, char *argv[])
     module->description = _("List all database drivers.");
 
     if (G_parser(argc, argv))
-	exit(ERROR);
+        exit (EXIT_FAILURE);
 
     parms.f = full->answer;
 }
-

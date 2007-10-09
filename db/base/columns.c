@@ -18,14 +18,18 @@
 #include <stdlib.h>
 #include <grass/glocale.h>
 
+
 struct {
 	char *driver, *database, *table;
 } parms;
 
-void parse_command_line();
+
+/* function prototypes */
+static void parse_command_line (int, char **);
+
 
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDriver *driver;
     dbHandle handle;
@@ -36,21 +40,18 @@ main(int argc, char *argv[])
     parse_command_line (argc, argv);
 
     driver = db_start_driver(parms.driver);
-    if (driver == NULL) {
+    if (driver == NULL)
         G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-        exit(ERROR);
-    }
        
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
-    {
-	exit(ERROR);
-    }
+        exit (EXIT_FAILURE);
+
     db_init_string(&table_name);
     db_set_string(&table_name, parms.table);
     if(db_describe_table (driver, &table_name, &table) != DB_OK)
-	exit(ERROR);
+        exit (EXIT_FAILURE);
 
     db_close_database(driver);
     db_shutdown_driver(driver);
@@ -58,11 +59,13 @@ main(int argc, char *argv[])
     ncols = db_get_table_number_of_columns(table);
     for (col = 0; col < ncols; col++)
 	fprintf(stdout, "%s\n", db_get_column_name(db_get_table_column(table, col)));
-    exit(OK);
+
+    exit (EXIT_SUCCESS);
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *database, *table;
     struct GModule *module;
@@ -89,10 +92,9 @@ parse_command_line(int argc, char *argv[])
     module->description = _("List all columns for a given table.");
 
     if(G_parser(argc, argv))
-	exit(ERROR);
+        exit (EXIT_FAILURE);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.table		= table->answer;
 }
-

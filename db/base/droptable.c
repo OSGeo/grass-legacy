@@ -11,20 +11,25 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <stdlib.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include <grass/codes.h>
 #include <grass/glocale.h>
 
+
 struct {
 	char *driver, *database, *table;
 } parms;
 
-void parse_command_line();
+
+/* function prototypes */
+static void parse_command_line (int, char **);
+
 
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDriver *driver;
     dbHandle handle;
@@ -34,9 +39,8 @@ main(int argc, char *argv[])
     parse_command_line (argc, argv);
 
     driver = db_start_driver (parms.driver);
-    if (driver == NULL) {
+    if (driver == NULL)
         G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-    }
         
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
@@ -51,8 +55,9 @@ main(int argc, char *argv[])
     exit(stat == DB_OK ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *database, *table;
     struct GModule *module;
@@ -74,10 +79,9 @@ parse_command_line(int argc, char *argv[])
     module->description = _("Removes a table from database.");
 
     if(G_parser(argc, argv))
-	exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.table		= table->answer;
 }
-
