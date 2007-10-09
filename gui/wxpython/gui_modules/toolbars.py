@@ -280,6 +280,7 @@ class DigitToolbar(AbstractToolbar):
             self.addPoint = self.addLine = self.addBoundary = self.addCentroid = None
             self.moveVertex = self.addVertex = self.removeVertex = None
             self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
+            self.additioanlTools = None
 
             return ((self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
@@ -322,7 +323,11 @@ class DigitToolbar(AbstractToolbar):
                      self.OnCopyCats),
                     (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
-                     self.OnDisplayAttr))
+                     self.OnDisplayAttr),
+                    (self.additioanlTools, "digAdditionalTools", Icons["digAdditionalTools"].GetBitmap(),
+                     wx.ITEM_NORMAL, Icons["digAdditionalTools"].GetLabel(),
+                     Icons["digAdditionalTools"].GetDesc(),
+                     self.OnAdditionalToolMenu))
 
     def OnAddPoint(self, event):
         """Add point to the vector map Laier"""
@@ -432,6 +437,66 @@ class DigitToolbar(AbstractToolbar):
         DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
                             style=wx.DEFAULT_DIALOG_STYLE).Show()
 
+    def OnAdditionalToolMenu(self, event):
+        """Menu for additional tools"""
+        point = wx.GetMousePosition()
+        toolMenu = wx.Menu()
+        # Add items to the menu
+        copy = wx.MenuItem(toolMenu, wx.ID_ANY, 'Copy features from (background) vector map')
+        toolMenu.AppendItem(copy)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnCopy, copy)
+
+        flip = wx.MenuItem(toolMenu, wx.ID_ANY, 'Flip selected lines/boudaries')
+        toolMenu.AppendItem(flip)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnFlip, flip)
+
+        merge = wx.MenuItem(toolMenu, wx.ID_ANY, 'Merge selected lines/boundaries')
+        toolMenu.AppendItem(merge)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnMerge, merge)
+
+        snap = wx.MenuItem(toolMenu, wx.ID_ANY, 'Snap selected lines/boundaries')
+        toolMenu.AppendItem(snap)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnSnap, snap)
+
+        connect = wx.MenuItem(toolMenu, wx.ID_ANY, 'Connect selected two lines/boundaries')
+        toolMenu.AppendItem(connect)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnConnect, connect)
+
+        # Popup the menu.  If an item is selected then its handler
+        # will be called before PopupMenu returns.
+        self.parent.MapWindow.PopupMenu(toolMenu)
+        toolMenu.Destroy()
+
+    def OnCopy(self, event):
+        """Copy selected features from (background) vector map"""
+        Debug.msg(2, "Digittoolbar.OnCopy():")
+        self.action="copyLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnFlip(self, event):
+        """Flip selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnFlip():")
+        self.action="flipLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnMerge(self, event):
+        """Merge selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnMerge():")
+        self.action="mergeLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnSnap(self, event):
+        """Snap selected features"""
+        Debug.msg(2, "Digittoolbar.OnSnap():")
+        self.action="snapLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnConnect(self, event):
+        """Connect selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnConnect():")
+        self.action="connectLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
     def OnSelectMap (self, event):
         """
         Select vector map layer for editing
@@ -473,7 +538,8 @@ class DigitToolbar(AbstractToolbar):
         self.mapcontent.ChangeLayerActive(mapLayer, False)
 
         # change cursor
-        self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
+        if self.parent.MapWindow.mouse['use'] == 'pointer':
+            self.parent.MapWindow.SetCursor(self.parent.cursors["cross"])
 
         # create pseudoDC for drawing the map
         self.parent.MapWindow.pdcVector = wx.PseudoDC()

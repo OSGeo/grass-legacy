@@ -27,7 +27,7 @@ extern "C" {
 #include <grass/Vect.h>
 }
 
-#define DEBUG
+// #define DEBUG
 
 class DisplayDriver
 {
