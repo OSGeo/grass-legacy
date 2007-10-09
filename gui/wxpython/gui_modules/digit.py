@@ -39,7 +39,7 @@ import wx
 import wx.lib.colourselect as csel
 import wx.lib.mixins.listctrl as listmix
 
-import gcmd as cmd
+import gcmd
 import dbm
 from debug import Debug as Debug
 import select 
@@ -69,7 +69,7 @@ class AbstractDigit:
         if not settings:
             self.settings = {}
             # symbology
-            self.settings["symbolBackground"] = (None, (255,255,255, 255)) # white
+#            self.settings["symbolBackground"] = (None, (255,255,255, 255)) # white
             self.settings["symbolHighlight"] = (None, (255, 255, 0, 255)) #yellow
             self.settings["symbolPoint"] = (True, (0, 0, 0, 255)) # black
             self.settings["symbolLine"] = (True, (0, 0, 0, 255)) # black
@@ -89,6 +89,7 @@ class AbstractDigit:
             # snapping
             self.settings["snapping"] = (10, "screen pixels") # value, unit
             self.settings["snapToVertex"] = False
+            self.settings["backgroundMap"] = 'a1@martin'
 
             # digitize new record
             self.settings["addRecord"] = True
@@ -110,7 +111,7 @@ class AbstractDigit:
         self.settings['category'] = 1
 
         if self.map:
-            categoryCmd = cmd.Command(cmd=["v.category", "-g", "--q",
+            categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
                                            "input=%s" % self.map, 
                                            "option=report",
                                            "layer=%d" % self.settings["layer"]])
@@ -212,7 +213,7 @@ class VEdit(AbstractDigit):
             Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
                            (key, coords))
 
-        Debug.msg (4, "Vline.AddLine(): input=%s" % addstring)
+        Debug.msg (4, "VEdit.AddLine(): input=%s" % addstring)
 
         self._AddFeature (map=map, input=addstring, flags=flags)
 
@@ -220,19 +221,31 @@ class VEdit(AbstractDigit):
         """
         General method which adds feature to the vector map
         """
-                                                     
+                        
+        if self.settings['snapping'][0] <= 0:
+            snap = "no"
+        else:
+            if self.settings['snapToVertex']:
+                snap = "vertex"
+            else:
+                snap = "node"
+
         command = ["v.edit", "-n", "--q", 
                    "map=%s" % map,
                    "tool=add",
                    "thresh=%f" % self.driver.GetThreshold(),
-                   "snap=node"]
+                   "snap=%s" % snap]
+
+        if self.settings['backgroundMap'] != '':
+            command.append("bgmap=%s" % self.settings['backgroundMap'])
 
         # additional flags
         for flag in flags:
             command.append(flag)
 
         # run the command
-        vedit = cmd.Command(cmd=command, stdin=input)
+        Debug.msg(4, "VEdit._AddFeature(): input=%s" % input)
+        vedit = gcmd.Command(cmd=command, stdin=input)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -256,7 +269,7 @@ class VEdit(AbstractDigit):
                     "ids=%s" % ids]
 
         # run the command
-        vedit = cmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -284,20 +297,29 @@ class VEdit(AbstractDigit):
         Debug.msg(4, "Digit.MoveSelectedLines(): ids=%s, move=%s" % \
                       (ids, move))
 
+        if self.settings['snapping'][0] <= 0:
+            snap = "no"
+        else:
+            if self.settings['snapToVertex']:
+                snap = "vertex"
+            else:
+                snap = "node"
+
+
         command = ["v.edit", "--q", 
                    "map=%s" % self.map,
                    "tool=%s" % tool,
                    "ids=%s" % ids,
                    "move=%f,%f" % (float(move[0]),float(move[1])),
                    "thresh=%f" % self.driver.GetThreshold(),
-                   "snap=node"]
+                   "snap=%s" % snap]
 
         if tool == "vertexmove":
             command.append("coords=%f,%f" % (float(coords[0]), float(coords[1])))
             command.append("-1") # modify only first selected
                                              
         # run the command
-        vedit = cmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -320,7 +342,7 @@ class VEdit(AbstractDigit):
                    "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
-        vedit = cmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command)
 
         # redraw map
         self.driver.ReloadMap()
@@ -350,7 +372,7 @@ class VEdit(AbstractDigit):
                    "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
-        vedit = cmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -363,7 +385,7 @@ class VEdit(AbstractDigit):
             return False
 
         # collect cats
-        cmd.Command(['v.edit',
+        gcmd.Command(['v.edit',
                      '--q',
                      'map=%s' % self.map,
                      'tool=catadd',
@@ -375,7 +397,7 @@ class VEdit(AbstractDigit):
     def EditLine(self, line, coords):
         """Edit existing line"""
         # remove line
-        vEditDelete = cmd.Command(['v.edit',
+        vEditDelete = gcmd.Command(['v.edit',
                                    '--q',
                                    'map=%s' % self.map,
                                    'tool=delete',
@@ -387,6 +409,110 @@ class VEdit(AbstractDigit):
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
+
+    def __ModifyLines(self, tool):
+        """General method to modify selected lines"""
+
+        ids = self.driver.GetSelected()
+
+        if len(ids) <= 0:
+            return False
+
+        vEdit = ['v.edit',
+                 '--q',
+                 'map=%s' % self.map,
+                 'tool=%s' % tool,
+                 'ids=%s' % ",".join(["%d" % v for v in ids])]
+
+        if tool in ['snap', 'connect']:
+            vEdit.append("thresh=%f" % self.driver.GetThreshold())
+
+        runCmd = gcmd.Command(vEdit)
+
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
+                        
+        return True
+
+    def FlipLine(self):
+        """Flip selected lines"""
+
+        return self.__ModifyLines('flip')
+
+    def MergeLine(self):
+        """Merge selected lines"""
+
+        return self.__ModifyLines('merge')
+
+    def SnapLine(self):
+        """Snap selected lines"""
+
+        return self.__ModifyLines('snap')
+
+    def ConnectLine(self):
+        """Connect selected lines"""
+
+        return self.__ModifyLines('connect')
+
+    def CopyLine(self, ids=None):
+        """Copy features from (background) vector map"""
+        
+        if not ids:
+            ids = self.driver.GetSelected()
+
+        if len(ids) <= 0:
+            return False
+
+        vEdit = ['v.edit',
+                 '--q',
+                 'map=%s' % self.map,
+                 'tool=copy',
+                 'ids=%s' % ",".join(["%d" % v for v in ids])]
+
+        if self.settings['backgroundMap'] != '':
+            vEdit.append('bgmap=%s' % self.settings['backgroundMap'])
+
+        runCmd = gcmd.Command(vEdit)
+
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
+                        
+        return True
+
+    def SelectLinesFromBackgroundMap(self, pos1, pos2):
+        """Select features from background map
+
+        pos1, pos2: bounding box defifinition
+        """
+
+        if self.settings['backgroundMap'] == '':
+            Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): []")
+            return []
+
+        print "#", pos1, pos2
+        x1, y1 = pos1
+        x2, y2 = pos2
+
+        vEditCmd = gcmd.Command(['v.edit',
+                                 '--q',
+                                 'map=%s' % self.map,
+                                 'tool=select',
+                                 # 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
+                                 'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
+                                     (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
+                                     
+        try:
+            output = vEditCmd.ReadStdOutput()[0][0]
+            print "#", output
+            ids = output.split(',') #first line & item in list
+            ids = map(int, ids) # str -> int
+        except:
+            return []
+
+        Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): %s" % \
+                      ",".join(["%d" % v for v in ids]))
+        
+        return ids
 
 class VDigit(AbstractDigit):
     """
@@ -803,7 +929,7 @@ class DigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
                                          initial=self.parent.digit.settings["snapping"][0],
-                                         min=1, max=1e6)
+                                         min=0, max=1e6)
         self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
@@ -815,7 +941,9 @@ class DigitSettingsDialog(wx.Dialog):
         # background map
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Backgroud vector map"))
         self.backgroundMap = select.Select(parent=panel, id=wx.ID_ANY, size=(200,-1),
-                                      type="vector")
+                                           type="vector")
+        self.backgroundMap.SetValue(self.parent.digit.settings["backgroundMap"])
+        self.backgroundMap.Bind(wx.EVT_TEXT, self.OnChangeBackgroundMap)
         flexSizer2.Add(text, proportion=1, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer2.Add(self.backgroundMap, proportion=1, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         #flexSizer.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
@@ -899,7 +1027,7 @@ class DigitSettingsDialog(wx.Dialog):
         """
 
         return (
-            ("Background", "symbolBackground"),
+            #            ("Background", "symbolBackground"),
             ("Highlight", "symbolHighlight"),
             ("Point", "symbolPoint"),
             ("Line", "symbolLine"),
@@ -961,6 +1089,12 @@ class DigitSettingsDialog(wx.Dialog):
             
         event.Skip()
 
+    def OnChangeBackgroundMap(self, event):
+        """Change background map"""
+        map = self.backgroundMap.GetValue()
+        
+        self.parent.digit.settings['backgroundMap'] = map
+        
     def OnOK(self, event):
         """Button 'OK' clicked"""
         self.UpdateSettings()
@@ -1239,7 +1373,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         Return True line found or False if not found"""
         
-        cmdWhat = cmd.Command(cmd=['v.what',
+        cmdWhat = gcmd.Command(cmd=['v.what',
                                    '--q',
                                    'map=%s' % self.map,
                                    'east_north=%f,%f' % \
@@ -1296,7 +1430,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                                 'cats=%s' % catList,
                                 'id=%d' % self.line]
             
-                    cmd.Command(vEditCmd)
+                    gcmd.Command(vEditCmd)
         
         self.cats_orig = copy.deepcopy(self.cats)
 

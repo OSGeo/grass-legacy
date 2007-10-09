@@ -53,6 +53,7 @@ IconsSilk = {
     "digDispAttr" : 'table.png',
     ## general
     "digSettings" : 'color_swatch.png',
+    "digAdditionalTools" : 'plugin.png',
     "digExit"     : 'door_in.png',
     # gis manager
     "newdisplay" : 'application_add.png',

@@ -61,6 +61,7 @@ icons_default = {
     "digDispAttr" : 'display.attributes.gif',
     ## general
     "digSettings" : 'settings.gif',
+    "digAdditionalTools" : wx.ART_ERROR,
     "digExit"    : 'exit.gif',
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
@@ -242,15 +243,15 @@ Icons = {
     "digAddVertex": MetaIcon (img=icons_img["digAddVertex"], label="Add new vertex",
                               desc="Left: Select; Middle: Unselect; Right: Confirm"),
     "digCopyCats": MetaIcon (img=icons_img["digCopyCats"], label="Copy categories",
-                              desc="Not implemented yet"),
+                              desc="Left: Select; Middle: Unselect; Right: Confirm"),
     "digDeleteLine": MetaIcon (img=icons_img["digDeleteLine"], label="Delete line",
                               desc="Left: Select; Middle: Unselect; Right: Confirm"),
     "digDispAttr": MetaIcon (img=icons_img["digDispAttr"], label="Display/update attributes",
-                              desc="Display attributes of given feature"),
+                              desc="Left: Select"),
     "digDispCats": MetaIcon (img=icons_img["digDispCats"], label="Display/update categories",
-                              desc="Not implemented yet"),
+                              desc="Left: Select"),
     "digEditLine": MetaIcon (img=icons_img["digEditLine"], label="Edit line",
-                              desc="Not implemented yet"),
+                              desc="Left: new point; Middle: undo last point; Right: close line"),
     "digMoveLine": MetaIcon (img=icons_img["digMoveLine"], label="Move line",
                               desc="Left: Select; Middle: Unselect; Right: Confirm"),
     "digMoveVertex": MetaIcon (img=icons_img["digMoveVertex"], label="Move vertex",
@@ -262,6 +263,9 @@ Icons = {
     "digSplitLine": MetaIcon (img=icons_img["digSplitLine"], label="Split line",
                               desc="Left: Select; Middle: Unselect; Right: Confirm"),
     "digExit"    : MetaIcon (img=icons_img["digExit"], label="Quit digitization tool"),
+    "digAdditionalTools" : MetaIcon (img=icons_img["digAdditionalTools"], label="Additional tools " \
+                                         "(copy, flip, connect, etc.)",
+                                     desc="Left: Select; Middle: Unselect; Right: Confirm"),
     # analyze raster
     "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze map"),
     "measure"    : MetaIcon (img=icons_img["measure"], label="Measure distance"),
