@@ -276,8 +276,8 @@ int sel_by_bbox(struct Map_info *Map,
     bbox.S = y1 < y2 ? y1 : y2;
     bbox.W = x1 < x2 ? x1 : x2;
     bbox.E = x1 < x2 ? x2 : x1;
-    bbox.T = 0.0;
-    bbox.B = 0.0;
+    bbox.T  = PORT_DOUBLE_MAX;
+    bbox.B  = -PORT_DOUBLE_MAX;
 
     Vect_select_lines_by_box (Map, &bbox, type, List_tmp);
 
