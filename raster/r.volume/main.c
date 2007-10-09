@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
     curr_mapset = G_mapset();
     data_mapset = G_find_cell2(datamap, "");
     if (!data_mapset)
-	G_fatal_error(_("Can't find data map."));
+	G_fatal_error(_("Unable to find data map"));
 
     fd_data = G_open_cell_old(datamap, data_mapset);
     if (use_MASK)
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
     else
 	clump_mapset = G_find_cell2(clumpmap, "");
     if (!clump_mapset)
-	G_fatal_error(_("Can't find clump map."));
+	G_fatal_error(_("Unable to find clump map"));
 
     fd_clump = G_open_cell_old(clumpmap, clump_mapset);
 
@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
     if (*site_list) {
 	fd_sites = G_fopen_sites_new(site_list);
 	if (fd_sites == NULL)
-	    G_fatal_error(_("Can't open centroids vector points map."));
+	    G_fatal_error(_("Unable to open centroids vector points map"));
     }
 
     /* initialize data accumulation arrays */
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
     cols = window.cols;
 
     if (fd_data < 0 || fd_clump < 0)
-	G_fatal_error(_("Data or Clump file not open."));
+	G_fatal_error(_("Data or Clump file not open"));
 
     /* now get the data -- first pass */
     G_message("Complete ...");
