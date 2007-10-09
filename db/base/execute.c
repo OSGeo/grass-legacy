@@ -19,17 +19,21 @@
 #include <grass/codes.h>
 #include <grass/glocale.h>
 
+
 struct {
 	char *driver, *database, *input;
 	int i;
 } parms;
 
-void parse_command_line();
-int get_stmt( FILE *fd, dbString *stmt);
-int stmt_is_empty( dbString *stmt );
-    
+
+/* function prototypes */
+static void parse_command_line(int, char **);
+static int get_stmt (FILE *, dbString *);
+static int stmt_is_empty (dbString *);
+
+
 int
-main( int argc, char *argv[] )
+main (int argc, char **argv)
 {
     dbString stmt;
     dbDriver *driver;
@@ -66,7 +70,9 @@ main( int argc, char *argv[] )
     {
 	if(!stmt_is_empty(&stmt)) {
 	    G_debug (3, "sql: %s", db_get_string(&stmt) );
-            ret = db_execute_immediate (driver, &stmt);
+
+        ret = db_execute_immediate (driver, &stmt);
+
 	    if ( ret != DB_OK ) {
 	       if (parms.i){ /* ignore SQL errors */
 		   G_warning(_("Error while executing: '%s'"),
@@ -86,7 +92,8 @@ main( int argc, char *argv[] )
     exit(error ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
-void parse_command_line (int argc, char *argv[])
+
+static void parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *database, *input;
     struct Flag *i;
@@ -128,7 +135,7 @@ void parse_command_line (int argc, char *argv[])
 }
 
 
-int get_stmt (FILE *fd, dbString *stmt)
+static int get_stmt (FILE *fd, dbString *stmt)
 {
     char buf[4000], buf2[4000];
     int len, row = 0;
@@ -139,6 +146,9 @@ int get_stmt (FILE *fd, dbString *stmt)
         strcpy ( buf2, buf );
         G_chop (buf2);
         len = strlen (buf2);
+
+        if (strcasecmp (buf2, "select"))
+            G_fatal_error (_("Use db.select for SELECT SQL statements"));
 
 	len = strlen (buf2);
 	if ( buf2[ len - 1 ] == ';' ) {  /* end of statement */
@@ -157,7 +167,7 @@ int get_stmt (FILE *fd, dbString *stmt)
 }
 
 
-int stmt_is_empty (dbString *stmt)
+static int stmt_is_empty (dbString *stmt)
 {
     char dummy[2];
 
