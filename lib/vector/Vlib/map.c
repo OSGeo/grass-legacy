@@ -1,19 +1,20 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+ * \file map.c
+ *
+ * \brief Vector library - Manipulate with vector map
+ *
+ * Higher level functions for reading/writing/manipulating vectors.
+ *
+ * \author Original author CERL, probably Dave Gerdes or Mike
+ * Higgins. Update to GRASS 5.7 Radim Blazek and David D. Gray.
+ *
+ * (C) 2001 by the GRASS Development Team
+ *
+ * This program is free software under the 
+ * GNU General Public License (>=v2). 
+ * Read the file COPYING that comes with GRASS
+ * for details.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
@@ -26,12 +27,16 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
-
+#include <grass/glocale.h>
 /*!
- \fn int Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
- \brief copy all alive elements of opened vector map to another opened vector map
- \return 0 on success, 1 on error
- \param  in Map_info structure, out Map_info structure
+  \fn int Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
+  \brief Copy all alive elements of opened vector map to another opened vector map
+
+  \param[in] In input vector map
+  \param[out] Out output vector map
+
+  \return 0 on success
+  \return 1 on error
 */
 int 
 Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
@@ -44,7 +49,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
     Cats = Vect_new_cats_struct ();
    
     if ( Vect_level ( In ) < 1 )
-	G_fatal_error ("Vect_copy_map_lines(): input vector is not open");
+	G_fatal_error ("Vect_copy_map_lines(): input vector map is not open");
     
     ret = 0;
     /* Note: sometimes is important to copy on level 2 (pseudotopo centroids) 
@@ -54,7 +59,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	for ( i = 1; i <= nlines; i++ ) {
 	    type =  Vect_read_line (In, Points, Cats, i);
 	    if ( type == -1 ) {
-		G_warning ("Cannot read vector map\n" );
+		G_warning (_("Unable to read vector map <%s%s>"), In->name, In->mapset);
 		ret = 1;
 		break;
 	    } 
@@ -67,7 +72,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	while ( 1 ) {
 	    type =  Vect_read_next_line (In, Points, Cats);
 	    if ( type == -1 ) {
-		G_warning ("Cannot read vector map\n" );
+		G_warning (_("Unable to read vector map <%s%s>"), In->name, In->mapset);
 		ret = 1;
 		break;
 	    } else if ( type == -2 ) { /* EOF */ 
@@ -84,17 +89,22 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
     return ret;
 }
 
-/* Copy file
- * returns 0 OK
- *         1 error
- */
-int
+/*
+  \brief Copy file
+
+  \param[in] src source file
+  \param[out] dst destination file
+  
+  \return 0 OK
+  \return 1 error
+*/
+static int
 copy_file(const char *src, const char *dst)
 {
     char buf[1024];
     int fd, fd2;
     FILE *f2; 
-    unsigned int len, len2;
+    int len, len2;
 
     if((fd = open(src, O_RDONLY)) < 0) return 1;
     
@@ -123,13 +133,18 @@ copy_file(const char *src, const char *dst)
 }
 
 /*!
- \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
- \brief copy a map including attribute tables
-        Old vector is deleted
- \return -1 error, 0 success
- \param in input vector
- \param out output vector
- \param msgout output file for messages or NULL 
+  \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
+  \brief Copy a map including attribute tables
+  
+  Old vector is deleted
+
+  \param[in] in input vector map name
+  \param[in] mapset mapset name
+  \param[in] out output vector map name
+  \param[in] msgout output file for messages or NULL 
+
+  \return -1 error
+  \return 0 success
 */
 int 
 Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
@@ -149,14 +164,14 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     G_debug (2, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
     /* check for [A-Za-z][A-Za-z0-9_]* in name */
     if (Vect_legal_filename(out) < 0 )
-       G_fatal_error ( _("Map name is not SQL compliant.") );
+       G_fatal_error ( _("Vector map name is not SQL compliant") );
 
     /* Delete old vector if it exists */
     if ( G_find_vector2(out, G_mapset()) ) {
-	G_warning (_("The vector '%s' already exists and will be overwritten."), out);
+	G_warning (_("The vector map <%s> already exists and will be overwritten"), out);
 	ret = Vect_delete ( out );
 	if ( ret != 0 ) {
-	    G_warning ( "Cannot copy vector" );
+            G_warning (_("Unable to delete vector map <%s>"), in); 
             return -1;
 	}
     }
@@ -179,7 +194,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
            G_debug (2, "copy %s to %s", old_path, new_path );
             if ( copy_file ( old_path, new_path ) )
             {
-	        G_warning ( "Cannot copy vector map '%s' to '%s'", old_path, new_path );
+	        G_warning (_("Unable to copy vector map <%s> to <%s>"), old_path, new_path );
             }
         }
         i++;
@@ -207,7 +222,8 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     for ( i = 0; i < n; i++ ) {
 	Fi = Vect_get_dblink ( &In, i );
 	if ( Fi == NULL ) {
-	    G_warning ( "Cannot get db link info" );
+	    G_warning (_("Database connection not defined for layer %d"),
+		       In.dblnk->field[i].number);
 	    Vect_close ( &In );
 	    Vect_close ( &Out );
 	    return -1;
@@ -220,7 +236,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
 		    Fin->driver, Vect_subst_var(Fin->database,&Out), Fin->table );
 	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot copy table" );
+	    G_warning (_("Unable to copy table <%s>"), Fin->table);
 	    Vect_close ( &In );
 	    Vect_close ( &Out );
 	    return -1;
@@ -228,10 +244,12 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 
 	driver = db_start_driver_open_database ( Fin->driver, Vect_subst_var(Fin->database,&Out) );
 	if ( driver == NULL ) {
-	    G_warning ( "Cannot open database -> create index" );
+	    G_warning (_("Unable to open database <%s> by driver <%s>"),
+		       Fin->database, Fin->driver);
 	} else {
 	    if ( db_create_index2(driver, Fin->table, Fi->key ) != DB_OK )
-		G_warning ( "Cannot create index" );
+		G_warning (_("Unable to create index for table <%s>, key <%s>"),
+			     Fi->table, Fi->key);
 
 	    db_close_database_shutdown_driver ( driver );
 	}
@@ -245,13 +263,17 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 
 /*!
  \fn int Vect_rename ( char *in, char *out, FILE *msgout )
- \brief rename a map, attribute tables are created in the same database where input tables were stored.
-        The original format (native/OGR) is used.
-	Old map ('out') is deleted!!!
- \return -1 error, 0 success
- \param in input vector
- \param out output vector
- \param msgout output file for messages or NULL 
+ \brief Rename a map, attribute tables are created in the same database where input tables were stored.
+
+ The original format (native/OGR) is used.
+ Old map ('out') is deleted!!!
+
+ \param[in] in input vector map name
+ \param[in] out output vector map name
+ \param[in] msgout output file for messages or NULL 
+
+ \return -1 error
+ \return 0 success
 */
 int 
 Vect_rename ( char *in, char *out, FILE *msgout )
@@ -265,11 +287,11 @@ Vect_rename ( char *in, char *out, FILE *msgout )
     G_debug (2, "Rename vector '%s' to '%s'", in, out );
     /* check for [A-Za-z][A-Za-z0-9_]* in name */
     if (Vect_legal_filename(out) < 0 )
-       G_fatal_error ( _("Map name is not SQL compliant.") );
+       G_fatal_error ( _("Vector map name is not SQL compliant") );
 
     /* Delete old vector if it exists */
     if ( G_find_vector2(out, G_mapset()) ) {
-	G_warning (_("The vector '%s' already exists and will be overwritten."), out);
+	G_warning (_("Vector map <%s> already exists and will be overwritten"), out);
 	Vect_delete ( out );
     }
 
@@ -277,10 +299,10 @@ Vect_rename ( char *in, char *out, FILE *msgout )
     ret = G_rename ( GRASS_VECT_DIRECTORY, in, out );
 
     if ( ret == 0 ) {
-	G_warning (_("Input vector '%s' not found"), in );
+	G_warning (_("Vector map <%s> not found"), in );
 	return -1;
     } else if ( ret == -1 ) {
-	G_warning (_("Cannot copy vector '%s' to '%s'"), in, out );
+	G_warning (_("Unable to copy vector map <%s> to <%s>"), in, out );
 	return -1;
     }
 
@@ -312,7 +334,8 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	
 	Fin = Vect_get_field ( &Map, fields[i] );
 	if ( Fin == NULL ) {
-	    G_warning ( "Cannot get db link info" );
+	    G_warning (_("Database connection not defined for layer %d"),
+		       fields[i]);
 	    Vect_close ( &Map );
 	    return -1;
 	}
@@ -326,7 +349,7 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 		    Fout->driver, Vect_subst_var(Fout->database,&Map), Fout->table );
 
 	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot copy table" );
+	    G_warning (_("Unable to copy table <%s>"), Fin->table);
 	    Vect_close ( &Map );
 	    return -1;
 	}
@@ -340,17 +363,19 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 	/* Delete old table */
 	ret = db_delete_table ( Fin->driver, Fin->database, Fin->table );
 	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot delete table" );
+	    G_warning (_("Unable to delete table <%s>"), Fin->table );
 	    Vect_close ( &Map );
 	    return -1;
 	}
 
 	driver = db_start_driver_open_database ( Fout->driver, Vect_subst_var(Fout->database, &Map) );
 	if ( driver == NULL ) {
-	    G_warning ( "Cannot open database -> create index" );
+	    G_warning (_("Unable to open database <%s> by driver <%s>"),
+		       Fout->database, Fout->driver);
 	} else {
 	    if ( db_create_index2(driver, Fout->table, Fin->key ) != DB_OK )
-		G_warning ( "Cannot create index" );
+		G_warning (_("Unable to create index for table <%s>, key <%s>"),
+			   Fout->table, Fout->key);
 
 	    db_close_database_shutdown_driver ( driver );
 	}
@@ -364,9 +389,12 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 
 /*!
  \fn int Vect_delete ( char *map )
- \brief delete a map including attribute tables
- \return -1 error, 0 success
- \param  map name
+ \brief Delete vector map including attribute tables
+
+ \param[in] map vector map name
+
+ \return -1 error
+ \return 0 success
 */
 int 
 Vect_delete ( char *map )
@@ -384,7 +412,7 @@ Vect_delete ( char *map )
     G_chop ( map );
 
     if ( map == NULL || strlen ( map ) == 0 ) {
-	G_warning ( "Wrong map name '%s'", map );
+	G_warning ( "Invalid vector map name <%s>", map ? map : "null");
 	return -1;
     }
 
@@ -400,7 +428,7 @@ Vect_delete ( char *map )
 	Vect_set_open_level (1); /* Topo not needed */
 	ret = Vect_open_old_head (&Map, map, G_mapset());
 	if ( ret < 1 ) {
-	    G_warning ( "Cannot open vector %s", map );
+	    G_warning ( "Unable to open header file for vector map <%s>", map );
 	    return -1;
 	}
 
@@ -411,7 +439,8 @@ Vect_delete ( char *map )
 	    for ( i = 0; i < n; i++ ) {
 		Fi = Vect_get_dblink ( &Map, i );
 		if ( Fi == NULL ) {
-		    G_warning ( "Cannot get db link info" );
+		    G_warning (_("Database connection not defined for layer %d"),
+			       Map.dblnk->field[i].number);
 		    Vect_close ( &Map );
 		    return -1;
 		}
@@ -419,7 +448,8 @@ Vect_delete ( char *map )
 		
 		ret = db_table_exists ( Fi->driver, Fi->database, Fi->table );
 		if ( ret == -1 ) {
-		    G_warning ( "Cannot get info if table '%s' linked to vector exists.", Fi->table );
+		    G_warning (_("Unable to find table <%s> linked to vector map <%s>"),
+				Fi->table, map );
 		    Vect_close ( &Map );
 		    return -1;
 		}
@@ -427,12 +457,13 @@ Vect_delete ( char *map )
 		if ( ret == 1 ) {
 		    ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
 		    if ( ret == DB_FAILED ) {
-			G_warning ( "Cannot delete table" );
+			G_warning (_("Unable to delete table <%s>"));
 			Vect_close ( &Map );
 			return -1;
 		    }
 		} else {
-		    G_warning ( "Table '%s' linked to vector did not exist.", Fi->table );
+		    G_warning ( "Table <%s> linked to vector map <%s> does not exist",
+				Fi->table, map);
 		}
 	    }
 	}
@@ -445,7 +476,7 @@ Vect_delete ( char *map )
     G_debug (3, "opendir '%s'", buf ); 
     dir = opendir( buf );
     if (dir == NULL) {
-	G_warning ( "Cannot open directory '%s'", buf );
+	G_warning (_("Unable to open directory '%s'"), buf );
 	return -1;
     }
 
@@ -456,7 +487,7 @@ Vect_delete ( char *map )
 	G_debug (3, "delete file '%s'", buf );
 	ret = unlink ( buf );
 	if ( ret == -1 ) { 
-	    G_warning ( "Cannot delete file '%s'", buf );
+	    G_warning (_("Unable to delete file '%s'"), buf );
 	    closedir (dir);
 	    return -1;
 	}
@@ -473,7 +504,7 @@ Vect_delete ( char *map )
     ret = rename ( buf, tmp );
 
     if ( ret == -1 ) {
-	G_warning ( "Cannot rename directory '%s' to '%s'", buf, tmp );
+	G_warning (_("Unable to rename directory '%s' to '%s'"), buf, tmp );
 	return -1;
     }
 
@@ -481,7 +512,7 @@ Vect_delete ( char *map )
     /* Warning: remove() fails on Windows */
     ret = rmdir ( tmp );
     if ( ret == -1 ) { 
-	G_warning ( "Cannot remove directory '%s'", tmp );
+	G_warning (_("Unable to remove directory '%s'"), tmp );
 	return -1;
     }
 
@@ -490,9 +521,16 @@ Vect_delete ( char *map )
 
 /*!
  \fn int Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
- \brief Copy map tables. All if field = 0, or table defined by given field if field > 0
- \return 0 on success, -1 on error
- \param  in Map_info structure, out Map_info structure, field number 
+ \brief Copy tables linked to vector map.
+
+ All if field = 0, or table defined by given field if field > 0
+
+ \param[in] In input vector map
+ \param[out] Out output vector map
+ \param[in] field layer number
+
+ \return 0 on success
+ \return -1 on error
 */
 int 
 Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
@@ -510,7 +548,8 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
     for ( i = 0; i < n; i++ ) {
 	Fi = Vect_get_dblink ( In, i );
 	if ( Fi == NULL ) {
-	    G_warning ( "Cannot get db link info" );
+	    G_warning (_("Database connection not defined for layer %d"),
+		       In->dblnk->field[i].number);
 	    return -1;
 	}
 	if ( field > 0 && Fi->number != field ) continue;
@@ -521,23 +560,26 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 	
 	ret = Vect_map_add_dblink ( Out, Fi->number, Fi->name, Fin->table, Fi->key, Fin->database, Fin->driver);
 	if ( ret == -1 ) {
-	    G_warning ( "Cannot add database link" );
+	    G_warning (_("Unable to add database link for vector map <%s>"),
+			 Out->name);
 	    return -1;
 	}
         
 	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
 		    Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table );
 	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot copy table" );
+	    G_warning (_("Unable to copy table <%s>"), Fin->table);
 	    return -1;
 	}
 
 	driver = db_start_driver_open_database ( Fin->driver, Vect_subst_var(Fin->database,Out) );
 	if ( driver == NULL ) {
-	    G_warning ( "Cannot open database -> create index" );
+	    G_warning (_("Unable to open database <%s> by driver <%s>"),
+		       Fin->database, Fin->driver);
 	} else {
 	    if ( db_create_index2(driver, Fin->table, Fi->key ) != DB_OK )
-		G_warning ( "Cannot create index" );
+		G_warning (_("Unable to create index for table <%s>, key <%s>"),
+			   Fin->table, Fin->key);
 
 	    db_close_database_shutdown_driver ( driver );
 	}
@@ -549,14 +591,17 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 /*!
  \fn int Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in, 
                            int field_out, char *field_name, int type )
- \brief Copy map table.
- \return 0 on success, -1 on error
- \param In 
- \param Out
- \param field_in
- \param field_out
- \param field_name 
- \param type
+ \brief Copy table linked to vector map based on type.
+
+ \param[in] In input vector map
+ \param[out] Out output vector map
+ \param[in] field_in input layer number
+ \param[in] field_out output layer number
+ \param[in] field_name layer name
+ \param[in] type feature type
+
+ \return 0 on success
+ \return -1 on error
 */
 int 
 Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in, 
@@ -568,16 +613,19 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
 /*!
  \fn int Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 
                            int field_out, char *field_name, int type, int *cats, int ncats )
- \brief Copy map table.
- \return 0 on success, -1 on error
- \param In 
- \param Out
- \param field_in
- \param field_out
- \param field_name 
- \param type
- \param cats pointer to array of cats or NULL
- \param ncats number of cats in 'cats'
+ \brief Copy table linked to vector map based on category numbers.
+
+ \param[in] In input vector map
+ \param[out] Out output vector map
+ \param[in] field_in input layer number
+ \param[in] field_out output layer number
+ \param[in] field_name layer name
+ \param[in] type feature type
+ \param[in] cats pointer to array of cats or NULL
+ \param[in] ncats number of cats in 'cats'
+
+ \return 0 on success
+ \return -1 on error
 */
 int 
 Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 
@@ -591,7 +639,8 @@ Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_i
 
     Fi = Vect_get_field ( In, field_in );
     if ( Fi == NULL ) {
-	G_warning ( "Cannot get db link info" );
+	G_warning (_("Database connection not defined for layer %d"),
+		   field_in);
 	return -1;
     }
 
@@ -604,7 +653,7 @@ Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_i
     
     ret = Vect_map_add_dblink ( Out, Fin->number, Fin->name, Fin->table, Fi->key, Fin->database, Fin->driver);
     if ( ret == -1 ) {
-	G_warning ( "Cannot add database link" );
+	G_warning (_("Unable to add database link for vector map <%s>"), Out->name);
 	return -1;
     }
     
@@ -616,7 +665,7 @@ Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_i
     ret = db_copy_table_by_ints ( Fi->driver, Fi->database, Fi->table, 
 		Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table, key, cats, ncats );
     if ( ret == DB_FAILED ) {
-	G_warning ( "Cannot copy table" );
+	G_warning (_("Unable to copy table <%s>"), Fin->table);
 	return -1;
     }
 
@@ -624,9 +673,13 @@ Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_i
 }
 
 /*!
-  \brief Set spatial index to be realease when vector is closed, by default, the memory
-         occupied by spatial index is not released.
-  \param Map pointer to map
+  \brief Set spatial index to be realease when vector is closed.
+
+  By default, the memory occupied by spatial index is not released.
+
+  \param Map vector map
+
+  \return
 */
 void
 Vect_set_release_support ( struct Map_info * Map )
@@ -635,11 +688,14 @@ Vect_set_release_support ( struct Map_info * Map )
 }
 
 /*!
-  \brief By default, category index is not updated if vector is changed, 
-         this function sets category index update.
-	 WARNING: currently only category for elements is updated 
-	 not for areas
-  \param Map pointer to map
+  \brief By default, category index is not updated if vector is changed, this function sets category index update.
+  
+  WARNING: currently only category for elements is updated 
+  not for areas
+
+  \param Map vector map
+
+  \return
 */
 void
 Vect_set_category_index_update ( struct Map_info * Map )
