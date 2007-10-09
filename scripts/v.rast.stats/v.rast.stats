@@ -205,7 +205,12 @@ for i in n min max range mean stddev variance cf_var sum ; do
     if [ -n "$ADDCOLS" ] ; then
        ADDCOLS="$ADDCOLS,"
     fi
-    ADDCOLS="$ADDCOLS $CURRCOLUMN DOUBLE PRECISION"
+    if [ "$i" = "n" ] ; then
+       COLTYPE="INTEGER"
+    else
+       COLTYPE="DOUBLE PRECISION"
+    fi
+    ADDCOLS="$ADDCOLS $CURRCOLUMN $COLTYPE"
   fi
 done
 
