@@ -325,7 +325,7 @@ class DigitToolbar(AbstractToolbar):
                      wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
                      self.OnDisplayAttr),
                     (self.additioanlTools, "digAdditionalTools", Icons["digAdditionalTools"].GetBitmap(),
-                     wx.ITEM_NORMAL, Icons["digAdditionalTools"].GetLabel(),
+                     wx.ITEM_RADIO, Icons["digAdditionalTools"].GetLabel(),
                      Icons["digAdditionalTools"].GetDesc(),
                      self.OnAdditionalToolMenu))
 

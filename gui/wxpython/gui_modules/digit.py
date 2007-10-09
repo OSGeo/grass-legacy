@@ -69,7 +69,7 @@ class AbstractDigit:
         if not settings:
             self.settings = {}
             # symbology
-#            self.settings["symbolBackground"] = (None, (255,255,255, 255)) # white
+            # self.settings["symbolBackground"] = (None, (255,255,255, 255)) # white
             self.settings["symbolHighlight"] = (None, (255, 255, 0, 255)) #yellow
             self.settings["symbolPoint"] = (True, (0, 0, 0, 255)) # black
             self.settings["symbolLine"] = (True, (0, 0, 0, 255)) # black
@@ -89,7 +89,7 @@ class AbstractDigit:
             # snapping
             self.settings["snapping"] = (10, "screen pixels") # value, unit
             self.settings["snapToVertex"] = False
-            self.settings["backgroundMap"] = 'a1@martin'
+            self.settings["backgroundMap"] = ''
 
             # digitize new record
             self.settings["addRecord"] = True
@@ -181,7 +181,7 @@ class VEdit(AbstractDigit):
 
         Debug.msg (4, "Vline.AddPoint(): input=%s" % addstring)
                 
-        self._AddFeature (map=map, input=addstring)
+        self.__AddFeature (map=map, input=addstring)
 
     def AddLine (self, map, type, coords):
         """
@@ -215,9 +215,9 @@ class VEdit(AbstractDigit):
 
         Debug.msg (4, "VEdit.AddLine(): input=%s" % addstring)
 
-        self._AddFeature (map=map, input=addstring, flags=flags)
+        self.__AddFeature (map=map, input=addstring, flags=flags)
 
-    def _AddFeature (self, map, input, flags=[]):
+    def __AddFeature (self, map, input, flags=[]):
         """
         General method which adds feature to the vector map
         """
@@ -244,7 +244,7 @@ class VEdit(AbstractDigit):
             command.append(flag)
 
         # run the command
-        Debug.msg(4, "VEdit._AddFeature(): input=%s" % input)
+        Debug.msg(4, "VEdit.AddFeature(): input=%s" % input)
         vedit = gcmd.Command(cmd=command, stdin=input)
 
         # reload map (needed for v.edit)
@@ -489,22 +489,20 @@ class VEdit(AbstractDigit):
             Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): []")
             return []
 
-        print "#", pos1, pos2
         x1, y1 = pos1
         x2, y2 = pos2
 
         vEditCmd = gcmd.Command(['v.edit',
                                  '--q',
-                                 'map=%s' % self.map,
+                                 'map=%s' % self.settings['backgroundMap'],
                                  'tool=select',
                                  # 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
                                  'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
                                      (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
-                                     
+                                             
         try:
-            output = vEditCmd.ReadStdOutput()[0][0]
-            print "#", output
-            ids = output.split(',') #first line & item in list
+            output = vEditCmd.ReadStdOutput()[0] # first line
+            ids = output.split(',') 
             ids = map(int, ids) # str -> int
         except:
             return []

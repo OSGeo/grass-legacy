@@ -46,10 +46,9 @@ except:
     sys.path.append(CompatPath)
     from compat import subprocess
 
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
-sys.path.append(gmpath)
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons" )
-sys.path.append(gmpath)
+for gmpath in [os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" ),
+             os.path.join( os.getenv("GISBASE"),"etc","wx","icons" )]:
+    sys.path.append(gmpath)
 
 import render
 import toolbars
@@ -60,9 +59,9 @@ import select
 import disp_print
 import gcmd
 import dbm
-import defaultfont as defaultfont
-import histogram as histogram
-import profile as profile
+import defaultfont
+import histogram
+import profile
 from digit import Digit as Digit
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from debug import Debug as Debug
@@ -953,6 +952,7 @@ class BufferedWindow(wx.Window):
                     self.mouse['box'] = 'box'
             elif digitToolbar.action == "copyLine":
                 self.copyIds = None
+                self.layerTmp = None
         else:
             # get decoration id
             self.lastpos = self.mouse['begin']
@@ -1099,10 +1099,22 @@ class BufferedWindow(wx.Window):
                     if nselected > 0:
                         # highlight selected features
                         self.UpdateMap(render=False)
+                    else:
+                        self.UpdateMap(render=False, renderVector=False)
                 else:
                     # copy features from background map
                     self.copyIds = self.parent.digit.SelectLinesFromBackgroundMap(pos1, pos2)
-                    self.UpdateMap(render=False, renderVector=False)
+                    if len(self.copyIds) > 0:
+                        dVectTmp = ['d.vect',
+                                    'map=%s' % self.parent.digit.settings['backgroundMap'],
+                                    'cats=%s' % ",".join(["%d" % v for v in self.copyIds]),
+                                    '-i',
+                                    'color=yellow']
+                        self.layerTmp = self.Map.AddLayer(type='vector',
+                                                          command=dVectTmp)
+                        self.UpdateMap(render=True, renderVector=False)
+                    else:
+                        self.UpdateMap(render=False, renderVector=False)
 
         elif self.dragid != None:
             # end drag of overlay decoration
@@ -1313,6 +1325,10 @@ class BufferedWindow(wx.Window):
             elif digit.action == "copyLine":
                 self.parent.digit.CopyLine(self.copyIds)
                 del self.copyIds
+                if self.layerTmp:
+                    self.Map.DeleteLayer(self.layerTmp)
+                    self.UpdateMap(render=True, renderVector=False)
+                del self.layerTmp
 
             if digit.action != "addLine":
                 self.parent.digit.driver.Unselect()
@@ -1369,6 +1385,10 @@ class BufferedWindow(wx.Window):
                         pass
                 elif digit.action == "copyLine":
                     del self.copyIds
+                    if self.layerTmp:
+                        self.Map.DeleteLayer(self.layerTmp)
+                        self.UpdateMap(render=True, renderVector=False)
+                    del self.layerTmp
 
                 self.UpdateMap(render=False) # render map
 
