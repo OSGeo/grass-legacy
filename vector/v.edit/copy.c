@@ -23,13 +23,14 @@
 /**
    \brief Copy selected features
 
-   \param[in] Map vector map
+   \param[in] Map vector map copy to
+   \param[in] FromMap vector map copy from (if not given use Map)
    \param[in] List list of selected features (to be copied)
 
    \return number of copied features
    \return -1 on error 
  */
-int do_copy (struct Map_info *Map, struct ilist *List)
+int do_copy (struct Map_info *Map, struct Map_info *FromMap, struct ilist *List)
 {
     struct line_cats *Cats;
     struct line_pnts *Points;
@@ -41,14 +42,18 @@ int do_copy (struct Map_info *Map, struct ilist *List)
     Cats = Vect_new_cats_struct(); 
     Points = Vect_new_line_struct();
 
+    if (!FromMap) {
+	FromMap = Map;
+    }
+
     /* for each line, make a copy */
     for (i = 0; i < List->n_values; i++) {
 	line = List -> value[i];
 
-	if (!Vect_line_alive(Map, line))
+	if (!Vect_line_alive(FromMap, line))
 	    continue;
 
-        type = Vect_read_line(Map, Points, Cats, line);
+        type = Vect_read_line(FromMap, Points, Cats, line);
 
         G_debug(3, "Copying line type %d number %d", type, line);
 

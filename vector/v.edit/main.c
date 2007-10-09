@@ -263,7 +263,10 @@ int main (int argc, char *argv[])
 	G_message(_("%d features modified"), ret);
 	break;
     case MODE_COPY:
-	ret = do_copy(&Map, List);
+	if (BgMap && BgMap[0])
+	    ret = do_copy(&Map, BgMap[0], List);
+	else
+	    ret = do_copy(&Map, NULL, List);
 	G_message (_("%d features copied"), ret);
 	break;
     case MODE_SNAP:
@@ -282,6 +285,7 @@ int main (int argc, char *argv[])
 	break;
     }
 
+    /*
     if (print && ret > 0) {
 	for (i = 0; i < Vect_get_num_updated_lines(&Map); i++) {
 	    if (i > 0)
@@ -292,6 +296,7 @@ int main (int argc, char *argv[])
 	    fprintf (stdout, "\n");
 	fflush (stdout);
     }
+    */
 
     Vect_hist_command(&Map);
     
