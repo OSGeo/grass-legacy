@@ -253,8 +253,8 @@ int do_snapping(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	      for (bgi = 0; bgi < nbgmaps; bgi++) {
 		if (do_snap_point(BgMap[i], line, &x[node], &y[node], &z[node], thresh,
 				  to_vertex)) {
-		  break; /* snapped, don't continue */
 		  rewrite = 1;
+		  break; /* snapped, don't continue */
 		}
 	      }
 	    }

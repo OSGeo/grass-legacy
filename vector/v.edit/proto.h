@@ -87,7 +87,7 @@ int cats (struct Map_info *, struct ilist *,
 	  int, int, char *);
 
 /* copy.c */
-int do_copy (struct Map_info *, struct ilist *);
+int do_copy (struct Map_info *, struct Map_info *, struct ilist *);
 
 /* flip.c */
 int do_flip (struct Map_info *, struct ilist *);
