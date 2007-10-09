@@ -18,15 +18,19 @@
 #include <grass/codes.h>
 #include <grass/glocale.h>
 
+
 struct {
 	char *driver, *database;
 	int s;
 } parms;
 
-void parse_command_line();
+
+/* function prototypes */
+static void parse_command_line (int, char **);
+
 
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDriver *driver;
     dbHandle handle;
@@ -37,9 +41,8 @@ main(int argc, char *argv[])
     parse_command_line (argc, argv);
 
     driver = db_start_driver(parms.driver);
-    if (driver == NULL) {
+    if (driver == NULL)
 	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-    }
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
@@ -58,8 +61,9 @@ main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *database;
     struct Flag *p, *s;
@@ -92,7 +96,7 @@ parse_command_line(int argc, char *argv[])
     module->description = _("Lists all tables for a given database.");
 
     if(G_parser(argc, argv))
-	exit(EXIT_SUCCESS);
+        exit(EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;

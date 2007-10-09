@@ -18,17 +18,21 @@
 #include <grass/dbmi.h>
 #include <grass/codes.h>
 #include <grass/glocale.h>
+#include "local_proto.h"
+
 
 struct {
 	char *driver, *database, *table;
 	int printcolnames;
 } parms;
 
-void parse_command_line();
-int print_table_definition(dbDriver *, dbTable *);
-	    
+
+/* function prototypes */
+static void parse_command_line (int, char **);
+
+
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDriver *driver;
     dbHandle handle;
@@ -41,9 +45,8 @@ main(int argc, char *argv[])
 
     parse_command_line (argc, argv);
     driver = db_start_driver(parms.driver);
-    if (driver == NULL) {
-	G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
-    }
+    if (driver == NULL)
+        G_fatal_error(_("Unable to start driver <%s>"), parms.driver);
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL );
@@ -54,9 +57,8 @@ main(int argc, char *argv[])
     db_init_string(&table_name);
     db_set_string(&table_name, parms.table);
 
-    if(db_describe_table (driver, &table_name, &table) != DB_OK) {
-	G_fatal_error (_("Unable to describe table <%s>"), table_name); 
-    }
+    if(db_describe_table (driver, &table_name, &table) != DB_OK)
+        G_fatal_error (_("Unable to describe table <%s>"), table_name); 
 
     if(!parms.printcolnames)
         print_table_definition(driver, table);
@@ -84,8 +86,9 @@ main(int argc, char *argv[])
     exit(EXIT_SUCCESS);
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line(int argc, char **argv)
 {
     struct Option *driver, *database, *table;
     struct Flag *cols, *tdesc;
@@ -122,11 +125,10 @@ parse_command_line(int argc, char *argv[])
     module->description = _("Describes a table in detail.");
 
     if(G_parser(argc, argv))
-	exit(EXIT_SUCCESS);
+        exit (EXIT_SUCCESS);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.table		= table->answer;
     parms.printcolnames = cols->answer;
 }
-

@@ -11,13 +11,13 @@
  *               for details.
  *
  *****************************************************************************/
+
 #include <stdlib.h>
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include <grass/codes.h>
 #include <grass/glocale.h>
 
-void parse_command_line();
 
 struct {
 	char *driver;
@@ -25,8 +25,12 @@ struct {
 } parms;
 
 
+/* function prototypes */
+static void parse_command_line (int, char **);
+
+
 int
-main(int argc, char *argv[])
+main (int argc, char **argv)
 {
     dbDriver *driver;
     dbHandle *handles;
@@ -55,11 +59,13 @@ main(int argc, char *argv[])
 	fprintf(stdout, "%s", db_get_handle_dbname(&handles[i]));
 	fprintf(stdout, "\n");
     }
+
     exit(EXIT_SUCCESS);
 }
 
-void
-parse_command_line(int argc, char *argv[])
+
+static void
+parse_command_line (int argc, char **argv)
 {
     struct Option *driver, *location;
     struct GModule *module;
@@ -89,4 +95,3 @@ parse_command_line(int argc, char *argv[])
     parms.driver     = driver->answer;
     parms.location   = location->answer;
 }
-
