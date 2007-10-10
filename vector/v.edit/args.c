@@ -131,6 +131,16 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> where = G_define_standard_option(G_OPT_WHERE);
     params -> where->guisection  = _("Query");
 
+    params -> query = G_define_option();
+    params -> query -> key          = "query";
+    params -> query ->type          = TYPE_STRING;
+    params -> query -> options      = "length,dangle";
+    params -> query -> description  = _("Query tool");
+    params -> query -> descriptions = _("length;Select only lines or boudaries shorter "
+					"than threshold distance;"
+					"dangle;Select dangles shorter than threshold distance");
+    params -> where->guisection  = _("Query");
+
     params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);
     params -> bmaps -> key = "bgmap";
     params -> bmaps -> required = NO;
@@ -266,9 +276,10 @@ int parser(int argc, char* argv[], struct GParams *params,
        (params -> poly  -> answers  == NULL) &&
        (params -> id    -> answers  == NULL) &&
        (params -> bbox  -> answers  == NULL) &&
-       (params -> where -> answer   == NULL)) {
+       (params -> where -> answer   == NULL) &&
+       (params -> query -> answer   == NULL)) {
 	G_fatal_error (_("At least one option from %s must be specified"),
-		       "cats, ids, coords, bbox, polygon, where");
+		       "cats, ids, coords, bbox, polygon, where, query");
     }
     
     if (*action_mode == MODE_MOVE ||

@@ -41,7 +41,7 @@ enum mode {
 struct GParams { 
     struct Option *map, *in, *maxdist, *tool,
 	*coord, *cat, *move, *bbox, *fld,
-      *poly, *type, *id, *where, *bmaps, *snap;
+      *poly, *type, *id, *where, *bmaps, *snap, *query;
     struct Flag *header, *topo, *close, *reverse, *move_first;
 };
 

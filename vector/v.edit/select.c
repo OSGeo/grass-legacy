@@ -22,6 +22,7 @@
 #include "global.h"
 
 static char first_selection = 1;
+static int merge_lists (struct ilist*, struct ilist*);
 
 /**
    \brief Select vector features
@@ -87,8 +88,15 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 		     List);
     }
 
+    /* selecy by query */
+    if (params -> query -> answer != NULL) {
+	sel_by_query(Map,
+		     type, layer, thresh, params -> query -> answer,
+		     List);
+    }
+
     if (params -> reverse -> answer) {
-	reverse_selection(Map, &List);
+	reverse_selection(Map, type, &List);
     }
 
     G_message (_("%d of %d features selected"),
@@ -116,7 +124,9 @@ int do_print_selected(struct ilist *List)
 		List -> value[i],
 		i < List->n_values -1 ? "," : "");
     }
-    fprintf(stdout, "\n");
+    if (List->n_values > 0) {
+	fprintf(stdout, "\n");
+    }
     fflush(stdout);
 
     return List -> n_values;
@@ -500,7 +510,7 @@ int sel_by_where (struct Map_info *Map,
 
    \return result number of items
 */
-int merge_lists (struct ilist* alist, struct ilist* blist)
+static int merge_lists (struct ilist* alist, struct ilist* blist)
 {
     int i;
 
@@ -524,20 +534,26 @@ int merge_lists (struct ilist* alist, struct ilist* blist)
    \brief Reverse list selection
    
    \param[in] Map vector map
+   \param[in] type feature type
    \param[in,out] reversed list
 
    \return 1
 */
-int reverse_selection (struct Map_info *Map, struct ilist** List) {
+int reverse_selection (struct Map_info *Map, int type, struct ilist** List) {
 
     struct ilist* list_reverse;
-    int line, nlines;
+    int line, nlines, ltype;
 
     list_reverse = Vect_new_list();
 
     nlines = Vect_get_num_lines(Map);
 
     for (line = 1; line <= nlines; line++) {
+	ltype = Vect_read_line(Map, NULL, NULL, line);
+
+	if (!(ltype & type))
+	    continue;
+
 	if (!Vect_val_in_list (*List, line))
 	    Vect_list_append (list_reverse, line);
     }
@@ -546,4 +562,131 @@ int reverse_selection (struct Map_info *Map, struct ilist** List) {
     *List = list_reverse;
 
     return 1;
+}
+
+/**
+   \brief Select features by query (based on geometry)
+
+   \param[in] Map vector map
+   \param[in] type feature type
+   \param[in] query query (length, dangle, ...)
+   \param[in,out] List list of selected features
+ 
+   \return number of selected lines
+*/
+int sel_by_query(struct Map_info *Map,
+		 int type, int layer, double thresh, const char *query,
+		 struct ilist* List)
+{
+    int num, line, ltype, cat;
+    struct ilist *List_tmp;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+
+    if (first_selection) {
+	List_tmp = List;
+	first_selection = 0;
+    }
+    else {
+	List_tmp = Vect_new_list();
+    }
+
+    Points = Vect_new_line_struct();
+    Cats   = Vect_new_cats_struct();
+
+    num = Vect_get_num_lines (Map);
+
+    for (line = 1; line <= num; line++) {
+	if (!Vect_line_alive(Map, line))
+	    continue;
+	
+	ltype = Vect_read_line(Map, Points, Cats, line);
+	Vect_cat_get(Cats, layer, &cat); /* get first category from layer */
+
+	if (!(ltype & type))
+	    continue;
+
+	if (strcmp(query, "length") == 0) {
+	    if (thresh < 0.0) {
+		Vect_list_append(List_tmp, line);
+	    }
+	    else {
+		if (Vect_line_length(Points) <= thresh)
+		    Vect_list_append(List_tmp, line);
+	    }
+	}
+	else if (strcmp(query, "dangle") == 0) {
+	    if (!(type & GV_LINES))
+		continue;
+	    /* check if line is dangle */
+
+	    int i, cat_curr;
+	    int node1, node2, node;        /* nodes */
+	    int nnode1, nnode2;            /* number of line in node */
+	    double nx, ny, nz;             /* node coordinates */
+	    struct ilist *exclude, *found; /* line id of nearest lines */
+	    struct line_cats *Cats_curr;   
+
+	    Vect_get_line_nodes(Map, line, &node1, &node2);
+	    
+	    node = -1;
+	    nnode1 = Vect_get_node_n_lines(Map, node1);
+	    nnode2 = Vect_get_node_n_lines(Map, node2);
+
+	    if ((nnode1 == 4 && nnode2 == 1) ||
+		(nnode1 == 1 && nnode2 == 4)) {
+		if (nnode1 == 4)
+		    node = node1;
+		else
+		    node = node2;
+	    }
+
+	    if (node == -1 ||
+		(thresh > 0.0 && Vect_line_length(Points) > thresh)) {
+		continue; /* no dangle */
+	    }
+	    
+	    /* at least one of the lines need to have same category number */
+	    exclude = Vect_new_list();
+	    found   = Vect_new_list();
+
+	    Vect_get_node_coor(Map, node, &nx, &ny, &nz);
+
+	    Vect_list_append(exclude, line);
+	    Vect_find_line_list(Map, nx, ny, nz,
+				GV_LINES, 0.0, WITHOUT_Z,
+				exclude, found);
+
+	    Cats_curr = Vect_new_cats_struct();
+
+	    for (i = 0; i < found->n_values; i++) {
+		Vect_read_line(Map, NULL, Cats_curr, found->value[i]);
+		if (Vect_cat_get(Cats_curr, layer, &cat_curr) > -1) {
+		    if (cat == cat_curr)
+			Vect_list_append(List_tmp, line);
+		}
+	    }
+
+	    Vect_destroy_cats_struct(Cats_curr);
+	    Vect_destroy_list(exclude);
+	    Vect_destroy_list(found);
+	}
+	else {
+	    /* this shouldn't happen */
+	    G_fatal_error (_("Unknown query tool '%s'"), query);
+	}
+    }
+
+    G_debug (1, "  %d lines selected (by query '%s')", List_tmp -> n_values, query);
+
+    /* merge lists (only duplicate items) */
+    if (List_tmp != List) {
+	merge_lists (List, List_tmp);
+	Vect_destroy_list (List_tmp);
+    }
+
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
+
+    return List -> n_values; 
 }
