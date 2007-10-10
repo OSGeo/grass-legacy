@@ -137,7 +137,7 @@ static void parse_command_line (int argc, char **argv)
 
 static int get_stmt (FILE *fd, dbString *stmt)
 {
-    char buf[4000], buf2[4000];
+    char buf[4000], buf2[4000], buf3[7];
     int len, row = 0;
 
     db_init_string (stmt);
@@ -147,7 +147,8 @@ static int get_stmt (FILE *fd, dbString *stmt)
         G_chop (buf2);
         len = strlen (buf2);
 
-        if (strcasecmp (buf2, "select"))
+	G_strncpy(buf3, buf2, 6);
+        if (G_strcasecmp(buf3, "select") == 0)
             G_fatal_error (_("Use db.select for SELECT SQL statements"));
 
 	len = strlen (buf2);
