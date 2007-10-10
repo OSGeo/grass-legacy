@@ -23,6 +23,10 @@
 #%  key: c
 #%  description: Continue if upload column(s) already exist
 #%END
+#%flag
+#%  key: e
+#%  description: Calculate extended statistics
+#%END
 #%option
 #% key: vector
 #% type: string
@@ -45,7 +49,14 @@
 #% description: Column prefix for new attribute columns
 #% required : yes
 #%end
-
+#%option
+#% key: percentile
+#% type: integer
+#% description: Percentile to calculate (requires extended statistics flag)
+#% options: 0-100
+#% answer: 90
+#% required : no
+#%end
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
@@ -170,6 +181,7 @@ if [ $NUMBER -lt 1 ] ; then
    exit 1
 fi
 
+
 #check if DBF driver used, in this case cut to 10 chars col names:
 DBFDRIVER=0
 v.db.connect -g "$VECTOR" | cut -d' ' -f5 | grep -i dbf --quiet
@@ -184,8 +196,25 @@ DB_SQLDRIVER=`v.db.connect -g "$VECTOR" | cut -d' ' -f5`
 DB_DATABASE="`v.db.connect -g "$VECTOR" | cut -d' ' -f4`"
 
 
+
+BASECOLS="n min max range mean stddev variance cf_var sum"
+
+# do extended stats?
+if [ $GIS_FLAG_E -eq 1 ] ; then
+   # namespace is limited in DBF but the % value is important
+   if [ $DBFDRIVER -eq 1 ] ; then
+      PERCCOL="per$GIS_OPT_PERCENTILE"
+   else
+      PERCCOL="percentile_$GIS_OPT_PERCENTILE"
+   fi
+   EXTRACOLS="first_quartile median third_quartile $PERCCOL"
+else
+   EXTRACOLS=""
+fi
+
+
 unset ADDCOLS
-for i in n min max range mean stddev variance cf_var sum ; do
+for i in $BASECOLS $EXTRACOLS ; do
   #check if column already present
   if [ $DBFDRIVER -eq 1 ] ; then
      CURRCOLUMN="`echo "${COLPREFIX}_${i}" | cut -b1-10`"
@@ -229,6 +258,13 @@ CURRNUM=1
 # get rid of any earlier attempts
 rm -f "$SQLTMP"
 
+# do extended stats?
+if [ $GIS_FLAG_E -eq 1 ] ; then
+   EXTSTAT="-e"
+else
+   EXTSTAT=""
+fi
+
 for i in `cat "$TMP.cats"` ; do
    g.message -v message="Processing category $i ($CURRNUM/$NUMBER)"
    g.remove MASK --quiet 2>/dev/null
@@ -237,10 +273,16 @@ for i in `cat "$TMP.cats"` ; do
      r.mapcalc "MASK=if(${VECTOR}_${TMPNAME} == $i, 1, null())"
 
    #n, min, max, range, mean, stddev, variance, coeff_var, sum
-   eval `r.univar -g "$RASTER" | sed 's+nan+NULL+g'`
-   cf_var="$coeff_var"
+   unset $BASECOLS $EXTRACOLS
+   eval `r.univar -g $EXTSTAT map="$RASTER" percentile="$GIS_OPT_PERCENTILE" | sed 's+nan+NULL+g'`
+   # How to test r.univar $? exit status? using -e creates the real possibility of out-of-memory errors
 
-   for var in n min max range mean stddev variance cf_var sum ; do
+   cf_var="$coeff_var"
+   if [ $GIS_FLAG_E -eq 1 ] && [ $DBFDRIVER -eq 1 ] ; then
+      eval "$PERCCOL=\$percentile_$GIS_OPT_PERCENTILE"
+   fi
+
+   for var in $BASECOLS $EXTRACOLS ; do
       eval value=\${$var}
 
       if [ $DBFDRIVER -eq 1 ] ; then
