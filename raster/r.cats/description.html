@@ -1,7 +1,7 @@
 <H2>DESCRIPTION</H2>
 
 
-<EM>r.cats</EM> prints the category values and labels for the raster map
+<EM>r.category</EM> prints the category values and labels for the raster map
 layer specified by <B>map=</B><EM>name</EM> to standard output.
 
 <P>
@@ -34,7 +34,7 @@ parameter), then the label for the category.
 
 Any ASCII TAB characters which may be in the label are replaced by spaces. 
 <P>
-The output from <EM>r.cats</EM> can be redirected into a file, or piped into
+The output from <EM>r.category</EM> can be redirected into a file, or piped into
 another program.
 
 <H3>Input from a file</H3>
@@ -120,21 +120,21 @@ avoid unwanted shell substitution.
 <P>
 <DL>
 <DT><div class="code"><pre>
-r.cats map=soils
+r.category map=soils
 </pre></div>
 <DD>
 prints the values and labels associated with all of the categories in the
 <EM>soils</EM> raster map layer;
 
 <DT><div class="code"><pre>
-r.cats map=soils cats=10,12,15-20 
+r.category map=soils cats=10,12,15-20 
 </pre></div>
 <DD>
 prints only the category values and labels for <EM>soils</EM> map layer
 categories <tt>10, 12</tt>, and <tt>15</tt> through <tt>20</tt>; and
 
 <DT><div class="code"><pre>
-r.cats map=soils cats=10,20 fs=':'
+r.category map=soils cats=10,20 fs=':'
 </pre></div>
 <DD>
 prints the values and labels for <EM>soils</EM> map layer categories
