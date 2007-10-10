@@ -51,7 +51,6 @@ int do_snapping(struct Map_info *, struct Map_info **, int,
 
 /* select.c */
 int do_print_selected(struct ilist *);
-int merge_lists (struct ilist*, struct ilist*);
 struct ilist* select_lines(struct Map_info *, enum mode,
 			   struct GParams *,
 			   struct ilist *);
@@ -73,7 +72,10 @@ int sel_by_id(struct Map_info *,
 int sel_by_where(struct Map_info *,
 		 int, int, char *,
 		 struct ilist *);
-int reverse_selection(struct Map_info *, struct ilist **);
+int reverse_selection(struct Map_info *, int, struct ilist **);
+int sel_by_query(struct Map_info *,
+		 int, int, double, const char *,
+		 struct ilist*);
 
 /* max_distance.c */
 double max_distance (double);
