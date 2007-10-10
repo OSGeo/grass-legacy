@@ -315,8 +315,12 @@ int main(int argc, char *argv[])
     if(scan_flag->answer) {
 	if( zrange_opt->answer )
 	    G_warning(_("zrange will not be taken into account during scan"));
+
 	scan_bounds(in_fp, xcol, ycol, zcol, fs, shell_style->answer);
-	fclose(in_fp);
+
+	if(!from_stdin)
+	    fclose(in_fp);
+
 	exit(EXIT_SUCCESS);
     }
 
