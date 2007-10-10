@@ -2,7 +2,6 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include "walk.h"
-#include "global.h"
 
 /* find next line for given line and node 
 *  return: next line (may be input line if it is loop)
@@ -72,7 +71,7 @@ int walk_back ( struct Map_info *map, int start_line)
       if ( n2 == start_node ) start_node = n1;
       else start_node = n2;
   }
-  
+
   return (line);
 }
 
@@ -82,21 +81,34 @@ int walk_forward_and_pick_up_coords (
      struct Map_info *map,
      int start_line,
      struct line_pnts *points,
-     int *lines_visited
+     int *lines_visited,
+     struct line_cats* Cats, int write_cats
 )
 {
+  int cat_idx;
   int line, next_line, n1, n2;
   int type, node, next_node;
   struct line_pnts *pnts;
+  struct line_cats *cats_tmp;
 
   G_debug (2, "  walk_forward() start = %d", start_line);
   line = start_line;
   pnts = Vect_new_line_struct ();
+  if (write_cats != NO_CATS) {
+      cats_tmp = Vect_new_cats_struct();
+  }
+  else {
+      cats_tmp = NULL;
+  }
+
   Vect_reset_line ( points );
 
   /* Pick up first set of coordinates */
   lines_visited [line] = 1;
-  type = Vect_read_line (map, pnts, NULL, line);
+  if (cats_tmp)
+      type = Vect_read_line (map, pnts, Cats, line);
+  else
+      type = Vect_read_line (map, pnts, NULL, line);
   
   Vect_get_line_nodes ( map, line, &n1, &n2 );
   next_line = find_next_line ( map, line, n1 );
@@ -121,7 +133,12 @@ int walk_forward_and_pick_up_coords (
   node = next_node;
   while ( line != 0 && line != start_line ) {
       G_debug (2, "  line = %d", line);
-      type = Vect_read_line (map, pnts, NULL, line);
+      type = Vect_read_line (map, pnts, cats_tmp, line);
+      if (cats_tmp && write_cats == MULTI_CATS) {
+	  for(cat_idx = 0; cat_idx < cats_tmp->n_cats; cat_idx++) {
+	      Vect_cat_set(Cats, cats_tmp->field[cat_idx], cats_tmp->cat[cat_idx]);
+	  }
+      }
       Vect_get_line_nodes ( map, line, &n1, &n2 );
 
       if ( node == n1 ) {
@@ -143,6 +160,9 @@ int walk_forward_and_pick_up_coords (
       node = next_node;
   }
  
+  if (cats_tmp)
+      Vect_destroy_cats_struct(cats_tmp);
+
   return 1;
 }
 
