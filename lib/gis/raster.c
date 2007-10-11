@@ -1,10 +1,11 @@
+#include <stdlib.h>
 #include <grass/gis.h>
 
 
 /*!
  * \brief  Advance void pointer
  *
- * Advances void pointer by n bytes
+ * Advances void pointer by <em>size</em> bytes
  * Returns new pointer value.
  *
  * Useful in raster row processing loops, substitutes
@@ -29,10 +30,8 @@
  *  \return void * 
  */
 
-void *G_incr_void_ptr(
-/* advances ptr by size bytes returns new position */
-   const void *ptr,
-   int size)
+void *
+G_incr_void_ptr (const void *ptr, const size_t size)
 {
    /* assuming that the size of unsigned char is 1 */
    return (void *) ((const unsigned char *) ptr + size);
