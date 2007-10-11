@@ -48,8 +48,10 @@ local GDAL installation. Available may be (incomplete list):<P>
 
 When writing out GeoTIFF format for users of ESRI software or ImageMagick,
 the band interleaving should be switched to pixel interleaving using
-<em>createopt="INTERLEAVE=PIXEL"</em>. Multiple options have to be
-specified as comma separated list (<em>createopt=TFW=YES,COMPRESS=DEFLATE</em>).
+<em>createopt="INTERLEAVE=PIXEL"</em>.
+<P>
+To specify multiple options use a comma separated list
+(<em>createopt="TFW=YES,COMPRESS=DEFLATE"</em>).
 <p>
 Out of the GDAL data types, the closest match for GRASS CELL, FCELL and DCELL
 rasters are respectively Int32, Float32 and Float64. These are not exact
@@ -67,13 +69,19 @@ for details.
 
 <H2>EXAMPLES</H2>
 
-Export the integer raster roads map to GeoTIFF format:
+<h4>Export the integer raster roads map to GeoTIFF format:</h4>
 <div class="code"><pre>
 r.out.gdal input=roads output=roads.tif type=UInt16
 </pre></div>
 <p>
 
-Export the floating point raster elevation map to ERDAS/IMG format:
+<h4>Export a DCELL raster map in GeoTIFF format suitable for ESRI software:</h4>
+<div class="code"><pre>
+r.out.gdal in=elevation.10m out=ned_elev10m.tif type=Float64 createopt="INTERLEAVE=PIXEL,TFW=YES"
+</pre></div>
+<p>
+
+<h4>Export the floating point raster elevation map to ERDAS/IMG format:</h4>
 <div class="code"><pre>
 r.out.gdal input=elevation.10m output=elev_dem10.img format=HFA type=Float32
 </pre></div>
@@ -92,18 +100,31 @@ r.out.gdal input=elevation.10m output=elev_dem10.img format=HFA type=Float32
 
 
 <H2>SEE ALSO</H2>
+
+The <a href="http://www.gdal.org/formats_list.html">GDAL supported formats</a>
+page.
+<BR>
 <EM>
 <A HREF="r.out.ascii.html">r.out.ascii</A>,
 <A HREF="r.out.arc.html">r.out.arc</A>,
-<A HREF="r.out.bin.html">r.out.bin</A>
-</EM>
+<A HREF="r.out.bin.html">r.out.bin</A>,
+<A HREF="r.out.mat.html">r.out.mat</A>,
+<A HREF="r.out.png.html">r.out.png</A>,
+<A HREF="r.out.ppm.html">r.out.ppm</A>,
+<A HREF="r.out.tiff.html">r.out.tiff</A>
+<BR>
+<A HREF="r.out.gdal.sh.html">r.out.gdal.sh</A></EM>
+ (old shell script version using <tt>gdal_translate</tt>)
+
 
 <H2>REFERENCES</H2>
 
-GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a>
+GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org</a>
+
 
 <H2>AUTHOR</H2>
 
 Vytautas Vebra (oliver4grass at gmail.com)
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
