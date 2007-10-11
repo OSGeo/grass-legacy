@@ -1,49 +1,36 @@
 <h2>DESCRIPTION</h2>
 
-<p><em>v.extrude</em> creates 3D faces or lines based on 2D vector
-objects, i.e. points become 3D lines; lines, boundaries or areas become
-faces.</p>
+<p><em>v.extrude</em> creates 3D faces, kernels or lines based on 2D
+vector objects, i.e. points become 3D vertical lines, lines to 3D
+lines, boundaries to faces and areas to faces and kernel.
 
-<p>If the flag <tt>-t</tt> is used then faces (&quot;walls&quot; and
-&quot;roofs&quot;) follow the elevation model by using individual
-elevation values for the vertices and nodes. This can be useful for
-models of large objects (forest stands).</p>
-
-<!--
-    <dt><strong>zshift</strong></dt>
-    <dd>Vertical shift of vector data on top of values extracted from elevation
-	model/defined fixed height.</dd>
-
-    <dt><strong>elevation</strong><dt>
-    <dd>Raster elevation map to put on the vector 3D objects.</dd>
-
-    <dt><strong>height</strong><dt>
-    <dd>Global height of vector 3D objects. If not specified, the module
-	expects the <strong>hcolumn</strong> parameter.</dd>
-
-    <dt><strong>hcolumn</strong><dt>
-    <dd>Column from attribute table, in which the attribute of object
-	height is stored (must be of int, double, or varchar type).</dd>
-</dl>
--->
+<p>If the flag <b>-t</b> is used then 3D vector objects follow the
+elevation model by using individual elevation values for the vertices
+and nodes. This can be useful for models of large objects (forest
+stands).
 
 <h2>EXAMPLES</h2>
 
 <h3>3D houses with fixed height</h3>
 
 <div class="code"><pre>
-v.extrude input=houses output=houses3D height=5
+v.extrude input=houses output=houses3D height=5 type=area
 </pre></div>
 
 <h3>3D houses with individual height</h3>
 
 <div class="code"><pre>
-v.extrude input=houses output=houses3D elevation=dem hcolumn=height
+v.extrude input=houses output=houses3D elevation=dem hcolumn=height type=area
+</pre></div>
+
+<h3>Convert 2D lines to 3D with fixed height</h3>
+<div class="code"><pre>
+v.extrude input=lines output=lines3D elevation=dem height=0 type=line
 </pre></div>
 
 <h2>AUTHOR</h2>
 
 Jachym Cepicky,<br>
-Support for points added by Martin Landa, FBK-irst, Italy
+Updated by Martin Landa, FBK-irst, Italy
 
 <p><i>Last changed: $Date$</i>
