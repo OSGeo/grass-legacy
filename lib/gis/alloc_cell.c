@@ -22,7 +22,7 @@ static int type_size[3] = {sizeof(CELL), sizeof(FCELL), sizeof(DCELL)};
 
 
 /**
- * \fn int G_raster_size (RASTER_MAP_TYPE data_type)
+ * \fn size_t G_raster_size (RASTER_MAP_TYPE data_type)
  *
  * \brief Returns size of a raster CELL in bytes.
  *
@@ -34,7 +34,7 @@ static int type_size[3] = {sizeof(CELL), sizeof(FCELL), sizeof(DCELL)};
  * \return int
  */
 
-int G_raster_size (RASTER_MAP_TYPE data_type)
+size_t G_raster_size (RASTER_MAP_TYPE data_type)
 
 {
     return (type_size[F2I(data_type)]);

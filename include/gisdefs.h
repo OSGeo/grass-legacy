@@ -45,7 +45,7 @@ void *G_realloc(void *, size_t);
 void G_free(void *);
 
 /* alloc_cell.c */
-int G_raster_size(RASTER_MAP_TYPE);
+size_t G_raster_size(RASTER_MAP_TYPE);
 CELL *G_allocate_cell_buf(void);
 void *G_allocate_raster_buf(RASTER_MAP_TYPE);
 CELL *G_allocate_c_raster_buf(void);
@@ -1012,7 +1012,7 @@ int G_init_fp_range(struct FPRange *);
 int G_get_fp_range_min_max(const struct FPRange *, DCELL *, DCELL *);
 
 /* raster.c */
-void *G_incr_void_ptr(const void *, int);
+void *G_incr_void_ptr(const void *, const size_t);
 int G_raster_cmp(const void *, const void *, RASTER_MAP_TYPE);
 int G_raster_cpy(void *, const void *, int, RASTER_MAP_TYPE);
 int G_set_raster_value_c(void *, CELL, RASTER_MAP_TYPE);
