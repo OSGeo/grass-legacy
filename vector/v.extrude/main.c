@@ -26,9 +26,10 @@
 #include <grass/glocale.h>
 #include <grass/dbmi.h>
 
-int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Points,
-	    int fdrast, int trace, double objheight, double voffset,
-	    struct Cell_head window, int type);
+static int extrude(struct Map_info *, struct Map_info *,
+		   struct line_cats *, struct line_pnts *,
+		   int, int, double, double,
+		   struct Cell_head, int, int);
 
 int main(int argc, char *argv[])
 {
@@ -63,7 +64,7 @@ int main(int argc, char *argv[])
     int more;
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, geometry, 3D");
     module->description =
 	_("Extrudes flat vector object to 3D with defined height.");
 
@@ -127,8 +128,13 @@ int main(int argc, char *argv[])
 
     only_type = Vect_option_to_types(type_opt);
 
-    trace = (t_flag->answer)?1:0;
-    area = (only_type & GV_AREA)?1:0;
+    trace = (t_flag->answer) ? 1 : 0;
+    area = (only_type & GV_AREA) ? 1 : 0;
+    if (area && (only_type & GV_BOUNDARY)) {
+	/* do not wrire wall twice -> disable boundary type */
+	only_type &= ~GV_BOUNDARY;
+    }
+
     centroid = 0;
 
     /* set input vector map name and mapset */
@@ -153,7 +159,8 @@ int main(int argc, char *argv[])
 	Clist = Vect_new_cat_list();
 	Clist->field = atoi(field_opt->answer);
 	if ((Fi = Vect_get_field(&In, Clist->field)) == NULL)
-	    G_fatal_error(_("Database connection not defined"));
+	    G_fatal_error(_("Database connection not defined for layer %d"),
+			  Clist->field);
 
 	if ((driver =
 	     db_start_driver_open_database(Fi->driver, Fi->database)) == NULL)
@@ -230,8 +237,10 @@ int main(int argc, char *argv[])
 
 	    Vect_get_area_points(&In, areanum, Points);
 
-	    extrude(Out, Cats, Points,
-		    fdrast, trace, objheight, voffset, window, GV_AREA);
+	    extrude(&In, &Out, Cats, Points,
+		    fdrast, trace, objheight, voffset, window, GV_AREA,
+		    centroid);
+
 	} /* foreach area */
 
     }
@@ -307,8 +316,8 @@ int main(int argc, char *argv[])
 
 	    }
 
-	    extrude(Out, Cats, Points,
-		    fdrast, trace, objheight, voffset, window, type);
+	    extrude(&In, &Out, Cats, Points,
+		    fdrast, trace, objheight, voffset, window, type, -1);
 	} /* for each line */
     } /* else if area */
 
@@ -342,15 +351,28 @@ int main(int argc, char *argv[])
 /**
   \brief Extrude vector object
 
-  point -> 3D line; line/boundary -> face
+  - point -> 3d line (vertical)
+  - line  -> 3d line
+  - boundary -> face
+  - area -> face + kernel
 
-  \param ...
-
+  \param[in] In input vector map
+  \param[out] Out output vector map
+  \param[in] Cats categories
+  \param[in] Points points
+  \param[in] fdrast background raster map
+  \param[in] trace trace raster map values
+  \param[in] objheight object height
+  \param[in] voffset vertical offset
+  \param[in] window raster region
+  \param[in] type feature type
+  \param[in] centroid number of centroid for area
   \return number of writen objects
 */
-int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Points,
-	    int fdrast, int trace, double objheight, double voffset,
-	    struct Cell_head window, int type)
+static int extrude(struct Map_info *In, struct Map_info *Out,
+		   struct line_cats *Cats, struct line_pnts *Points,
+		   int fdrast, int trace, double objheight, double voffset,
+		   struct Cell_head window, int type, int centroid)
 {
     int k; /* Points->n_points */
     int nlines;
@@ -387,13 +409,7 @@ int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Point
     k = 0;
     /* walls */
     while (1) {
-	/* reset */
-	Vect_reset_line(Points_wall);
 	voffset_curr = voffset_next = 0.0;
-
-    	if ((type == GV_POINT && k == 1) ||
-	    (type != GV_POINT && k >= Points->n_points - 1))
-	    break;
 
 	/* trace */
 	if (fdrast && trace) {
@@ -415,16 +431,25 @@ int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Point
 	}
 	
 	if (type == GV_POINT) {
-	    /* point -> 3d line */
+	    /* point -> 3d line (vertical) */
 	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + voffset_curr);
 	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + objheight + voffset_curr);
-	    Vect_write_line(&Out, GV_LINE, Points_wall, Cats);
-	    nlines++;
+	    break;
 	}
-	else {
-	    /* line/boudary -> face */
+	else if (type == GV_LINE) {
+	    /* line -> 3d line */
+	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
+			      Points->z[k] + objheight + voffset_curr);
+	    if (k >= Points->n_points - 1)
+		break;
+	}
+	else if (type & (GV_BOUNDARY | GV_AREA)) {
+	    /* reset */
+	    Vect_reset_line(Points_wall);
+
+	    /* boudary -> face */
 	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + voffset_curr);
 	    Vect_append_point(Points_wall, Points->x[k + 1], Points->y[k + 1],
@@ -436,22 +461,36 @@ int extrude(struct Map_info Out, struct line_cats *Cats, struct line_pnts *Point
 	    Vect_append_point(Points_wall, Points->x[k], Points->y[k],
 			      Points->z[k] + voffset_curr);
 
-	    Vect_write_line(&Out, GV_FACE, Points_wall, Cats);
+	    Vect_write_line(Out, GV_FACE, Points_wall, Cats);
 	    nlines++;
 
 	    if(type == GV_AREA) {
 		Vect_append_point(Points_roof, Points->x[k], Points->y[k],
 				  Points->z[k] + objheight + voffset_curr);
 	    }
+	    
+	    if (k >= Points->n_points - 2)
+		break;
 	}
 	k++;
     }
 
-    if (type == GV_AREA && Points_roof->n_points > 3) {
+    if (type & (GV_POINT | GV_LINE)) {
+	Vect_write_line(Out, GV_LINE, Points_wall, Cats);
+	nlines++;
+    } else if (type == GV_AREA && Points_roof->n_points > 3) {
 	Vect_append_point(Points_roof,
 			  Points_roof->x[0], Points_roof->y[0], Points_roof->z[0]);
-	Vect_write_line(&Out, GV_FACE, Points_roof, Cats);
+	Vect_write_line(Out, GV_FACE, Points_roof, Cats);
 	nlines++;
+
+	if (centroid > 0) {
+	    /* centroid -> kernel */
+	    Vect_read_line(In, Points, Cats, centroid);
+	    Points->z[0] = Points_roof->z[0] / 2.0;
+	    Vect_write_line(Out, GV_KERNEL, Points, Cats);
+	    nlines++;
+	}
     }
 
     Vect_destroy_line_struct (Points_wall);
