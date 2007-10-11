@@ -1,18 +1,19 @@
-/*****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+ * \file Vlib/cindex.c
+ *
+ * \brief Vector library - Category index.
+ *
+ * Higher level functions for reading/writing/manipulating vectors.
+ *
+ * \author Radim Blazek
+ *
+ * (C) 2001-2007 by the GRASS Development Team
+ *
+ * This program is free software under the GNU General Public
+ *   	    	License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	for details.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -20,21 +21,21 @@
 #include <unistd.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
-
+#include <grass/glocale.h>
 
 static int cmp_cat(const void *pa, const void *pb);
 
-
 static void check_status ( struct Map_info *Map ){
     if ( !Map->plus.cidx_up_to_date ) 
-	G_fatal_error("Category index is not up to date");
+	G_fatal_error(_("Category index is not up to date"));
 }
 
 /*!
- \fn int Vect_cidx_get_num_fields ( struct Map_info *Map )
- \brief get nuber of field in category index
- \return number of fields 
- \param Map_info structure
+  \brief Get number of layer in category index
+  
+  \param[in] Map vector map
+
+  \return number of layers
 */
 int 
 Vect_cidx_get_num_fields ( struct Map_info *Map ) 
@@ -45,11 +46,12 @@ Vect_cidx_get_num_fields ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_cidx_get_field_number ( struct Map_info *Map, int index )
- \brief get field number for given index 
- \return field number 
- \param Map_info structure
- \param index field index: from 0 to Vect_cidx_get_num_fields()-1
+  \brief Get layer number for given index 
+
+  \param[in] Map vector map
+  \param[in] index layer index: from 0 to Vect_cidx_get_num_fields() - 1
+
+  \return layer number 
 */
 int 
 Vect_cidx_get_field_number ( struct Map_info *Map, int index ) 
@@ -57,17 +59,19 @@ Vect_cidx_get_field_number ( struct Map_info *Map, int index )
     check_status ( Map );
 
     if ( index >= Map->plus.n_cidx )
-	G_fatal_error("Field index >= number of fields");
+	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
     
     return ( Map->plus.cidx[index].field );
 }
 
 /*!
- \fn int Vect_cidx_get_field_index ( struct Map_info *Map, int field )
- \brief get field index for given field number
- \return field index or -1 if not found 
- \param Map_info structure
- \param field field number 
+  \brief Get layer index for given layer number
+  
+  \param[in] Map vector map
+  \param[in] field layer number 
+
+  \return layer index
+  \return -1 if not found 
 */
 int 
 Vect_cidx_get_field_index ( struct Map_info *Map, int field ) 
@@ -89,71 +93,81 @@ Vect_cidx_get_field_index ( struct Map_info *Map, int field )
 }
 
 /*!
- \fn int Vect_cidx_get_num_unique_cats_by_index ( struct Map_info *Map, int index )
- \brief get nuber of unique categories for given field index 
- \return number of unique categories or -1 on error
- \param Map_info structure
- \param field 
+  \brief Get number of unique categories for given layer index 
+  
+  \param[in] Map vector map
+  \param[in] index layer number
+  
+  \return number of unique categories
+  \return -1 on error
 */
 int 
 Vect_cidx_get_num_unique_cats_by_index ( struct Map_info *Map, int index ) 
 {
     check_status ( Map );
     if ( index >= Map->plus.n_cidx )
-	G_fatal_error("Field index >= number of fields");
+	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
 
     return ( Map->plus.cidx[index].n_ucats );
 }
 
 /*!
- \fn int Vect_cidx_get_num_cats_by_index ( struct Map_info *Map, int index )
- \brief get nuber of categories for given field index 
- \return number of categories or -1 on error
- \param Map_info structure
- \param index 
+  \brief Get number of categories for given layer index 
+  
+  \param[in] Map vector map
+  \param[in] index layer index
+  
+  \return number of categories
+  \return -1 on error
 */
 int 
 Vect_cidx_get_num_cats_by_index ( struct Map_info *Map, int index ) 
 {
     check_status ( Map );
     if ( index >= Map->plus.n_cidx )
-	G_fatal_error("Field index >= number of fields");
+	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
 
     return ( Map->plus.cidx[index].n_cats );
 }
 
 /*!
- \fn int Vect_cidx_get_num_types_by_index ( struct Map_info *Map, int field_index )
- \brief get nuber of types for given field index 
- \return number of types or -1 on error
- \param Map_info structure
- \param index 
+  \brief Get number of types for given layer index 
+  
+  \param[in] Map vector map
+  \param[in] field_index layer index
+
+  \return number of types
+  \return -1 on error
 */
 int 
 Vect_cidx_get_num_types_by_index ( struct Map_info *Map, int field_index ) 
 {
     check_status ( Map );
     if ( field_index >= Map->plus.n_cidx )
-	G_fatal_error("Field index >= number of fields");
+	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
 
     return ( Map->plus.cidx[field_index].n_types );
 }
 
 /*!
- \fn int Vect_cidx_get_type_count_by_index ( struct Map_info *Map, int field_index, int type_index, 
-                                    int *type, int *count )
- \brief get type count field index and type index
- \return 1 OK
- \return 0 on error
- \param Map_info structure
- \param index 
+  \brief Get type count field index and type index
+
+  \param[in] Map vector map
+  \param[in] field_index layer index
+  \param[in] type_index type index
+  \param[out] type feature type
+  \param[out] count number of items
+
+  \return 1 OK
+  \return 0 on error
 */
 int 
-Vect_cidx_get_type_count_by_index ( struct Map_info *Map, int field_index, int type_index, int *type, int *count) 
+Vect_cidx_get_type_count_by_index ( struct Map_info *Map, int field_index, int type_index,
+				    int *type, int *count) 
 {
     check_status ( Map );
     if ( field_index >= Map->plus.n_cidx )
-	G_fatal_error("Field index >= number of fields");
+	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
 
     *type = Map->plus.cidx[field_index].type[type_index][0];
     *count = Map->plus.cidx[field_index].type[type_index][1];
@@ -162,12 +176,14 @@ Vect_cidx_get_type_count_by_index ( struct Map_info *Map, int field_index, int t
 }
 
 /*!
- \fn int Vect_cidx_get_type_count ( struct Map_info *Map, int field, int type )
- \brief get count of features of certain type by field and type
- \return feature count, 0 if no features, no such field or no such type in cidx
- \param Map_info structure
- \param field 
- \param type 
+  \brief Get count of features of certain type by layer and type
+  
+  \param[in] Map vector map
+  \param[in] field layer number
+  \param[in] type feature type
+  
+  \return feature count
+  \return 0 if no features, no such field or no such type in cidx
 */
 int 
 Vect_cidx_get_type_count ( struct Map_info *Map, int field, int type) 
@@ -195,17 +211,17 @@ Vect_cidx_get_type_count ( struct Map_info *Map, int field, int type)
 }
 
 /*!
- \fn int Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_index, 
-	                     int *cat, int *type, int * id)
- \brief get nuber of categories for given field and category index 
- \return 1 OK
- \return 0 on error
- \param Map
- \param field_index
- \param cat_index
- \param cat
- \param type
- \param id
+  \brief Get number of categories for given field and category index 
+
+  \param[in] Map vector map
+  \param[in] field_index layer index
+  \param[in] cat_index category index
+  \param[out] cat category number
+  \param[out] type feature type
+  \param[out] id feature id
+
+  \return 1 OK
+  \return 0 on error
 */
 int 
 Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_index, 
@@ -213,8 +229,9 @@ Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_inde
 {
     check_status ( Map ); /* This check is slow ? */
 
-    if ( field_index >= Map->plus.n_cidx || field_index < 0 ||  cat_index >= Map->plus.cidx[field_index].n_cats )
-	G_fatal_error("Field/cat index out of range");
+    if ( field_index >= Map->plus.n_cidx || field_index < 0 || 
+	 cat_index >= Map->plus.cidx[field_index].n_cats )
+	G_fatal_error(_("Layer or category index out of range"));
 
     *cat = Map->plus.cidx[field_index].cat[cat_index][0];
     *type = Map->plus.cidx[field_index].cat[cat_index][1];
@@ -235,18 +252,18 @@ static int cmp_cat ( const void *pa, const void *pb )
 }   
 
 /*!
- \fn int Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_mask,
-                                  int start_index, int *type, int *id )
- \brief find next line/area id for given category, start_index and type_mask 
- \return index to array
- \return -1 not found
- \param Map
- \param field_index
- \param cat category
- \param type_mask requested type
- \param start_index start search at this index (0 - whole category index)
- \param type returned type
- \param id returned line/area id
+  \brief Find next line/area id for given category, start_index and type_mask 
+  
+  \param[in] Map vector map
+  \param[in] field_index layer index
+  \param[in] cat category number
+  \param[in] type_mask requested type
+  \param[in] start_index start search at this index (0 - whole category index)
+  \param[out] type returned type
+  \param[out] id returned line/area id
+  
+  \return index to array
+  \return -1 not found
 */
 int 
 Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_mask,
@@ -255,13 +272,14 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
     int    *catp, cat_index;
     struct Cat_index *ci;
 
-    G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d", cat, type_mask, start_index);
+    G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d",
+	     cat, type_mask, start_index);
 
     check_status ( Map ); /* This check is slow ? */
     *type = *id = 0;
 
     if ( field_index >= Map->plus.n_cidx )
-	G_fatal_error("Field index out of range");
+	G_fatal_error(_("Layer index out of range"));
 
     if ( start_index < 0 ) start_index = 0;
     if ( start_index >= Map->plus.cidx[field_index].n_cats ) return -1; /* outside range */
@@ -307,15 +325,16 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
 
 
 /*!
- 
- \fn  void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int cat, struct ilist *lines )
- \brief find all line/area id's for given category
- \param Map
- \param layer
- \param type_mask type of objects to search for
- \param cat category
- \param lines array of ids of found lines/points */
+  \brief Gind all line/area id's for given category
 
+  \param[in] Map vector map
+  \param[in] layer layer number
+  \param[in] type_mask type of objects to search for
+  \param[in] cat category number
+  \param[out] lines array of ids of found lines/points
+
+  \return 
+*/
 void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int cat, struct ilist *lines )
 {
       int type, line;
@@ -323,6 +342,11 @@ void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int ca
 
       Vect_reset_list ( lines );
       int field_index = Vect_cidx_get_field_index ( Map, layer );
+
+      if (field_index == -1) {
+	  /* not found */
+	  return;
+      }
       ci = &(Map->plus.cidx[field_index]);
 
       int idx = Vect_cidx_find_next ( Map, field_index, cat,
@@ -349,11 +373,13 @@ void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int ca
 #define SEP "------------------------------------------------------------------------------------------\n"
 
 /*!
- \fn int Vect_cidx_dump ( struct Map_info *Map, FILE *out )
- \brief write category index in text form to file
- \return 1 on success, 0 on error
- \param Map_info structure
- \param out output file
+ \brief Write category index in text form to file
+
+ \param[in] Map vector map
+ \param[out] out output file
+
+ \return 1 on success
+ \return 0 on error
 */
 int 
 Vect_cidx_dump ( struct Map_info *Map, FILE *out ) 
@@ -366,7 +392,7 @@ Vect_cidx_dump ( struct Map_info *Map, FILE *out )
 
     nfields = Vect_cidx_get_num_fields ( Map );
     fprintf (out, "---------- CATEGORY INDEX DUMP: Number of layers: %d "
-	          "--------------------------------------\n", nfields );
+	     "--------------------------------------\n", nfields );
     
     for (i = 0; i < nfields; i++ ) {
 	int j, nucats, ncats; 
@@ -376,8 +402,8 @@ Vect_cidx_dump ( struct Map_info *Map, FILE *out )
 	ncats = Vect_cidx_get_num_cats_by_index ( Map, i );
         ntypes = Vect_cidx_get_num_types_by_index ( Map, i );
 
-        fprintf (out, "Field %6d  number of unique cats: %7d  number of cats: %7d  number of types: %d\n", 
-		               field, nucats, ncats, ntypes ); 
+        fprintf (out, "Layer %6d  number of unique cats: %7d  number of cats: %7d  number of types: %d\n", 
+		 field, nucats, ncats, ntypes ); 
 	fprintf (out, SEP);
 	
         fprintf (out, "            type |     count\n" );
@@ -401,11 +427,12 @@ Vect_cidx_dump ( struct Map_info *Map, FILE *out )
 }
 
 /*!
- \fn int Vect_cidx_save ( struct Map_info *Map )
- \brief write category index to file
+ \brief Save category index
+
+ \param[in] Map vector map
+
  \return 0 on success
  \return 1 on error
- \param Map_info structure
 */
 int 
 Vect_cidx_save ( struct Map_info *Map ) 
@@ -425,7 +452,7 @@ Vect_cidx_save ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning("Can't open cidx file for write: %s\n", fname);
+        G_warning(_("Unable to open cidx file <%s> for write"), fname);
 	return 1;
     }
 
@@ -433,7 +460,7 @@ Vect_cidx_save ( struct Map_info *Map )
     dig_init_portable ( &(plus->cidx_port), dig__byte_order_out ());
 
     if ( 0 > dig_write_cidx (&fp, plus) ) {
-        G_warning ("Error writing out category index file.\n");
+        G_warning (_("Error writing out category index file <%s>"), fname);
 	return 1;
     }
     
@@ -443,12 +470,14 @@ Vect_cidx_save ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_cidx_open ( struct Map_info *Map )
- \brief read category index from file if exists
- \return 0 on success 
- \return 1 if file does not exist
- \return -1 error, file exists but cannot be read
- \param Map_info structure
+  \brief Read category index from file if exists
+  
+  \param[in] Map vector map
+  \param[in] head_only Read only header
+
+  \return 0 on success 
+  \return 1 if file does not exist
+  \return -1 error, file exists but cannot be read
 */
 int 
 Vect_cidx_open ( struct Map_info *Map, int head_only ) 
@@ -474,7 +503,8 @@ Vect_cidx_open ( struct Map_info *Map, int head_only )
     fp.file = G_fopen_old (buf, GV_CIDX_ELEMENT, Map->mapset);
 
     if ( fp.file == NULL ) { /* category index file is not available */
-	G_warning( "Cannot open category index file for vector '%s@%s'.", Map->name, Map->mapset);
+	G_warning(_("Unable to open category index file for vector map <%s@%s>"),
+		    Map->name, Map->mapset);
 	return -1;
     }
   
@@ -491,4 +521,3 @@ Vect_cidx_open ( struct Map_info *Map, int head_only )
 
     return 0;
 }
-
