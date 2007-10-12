@@ -243,6 +243,9 @@ class DigitToolbar(AbstractToolbar):
 
         self.comboid    = None
 
+        # only one dialog settings can be one
+        self.settingsDialog = None
+
         # create toolbars (two rows)
         self.toolbar = []
         numOfRows = 2
@@ -434,8 +437,10 @@ class DigitToolbar(AbstractToolbar):
 
     def OnSettings(self, event):
         """Show settings dialog"""
-        DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
-                            style=wx.DEFAULT_DIALOG_STYLE).Show()
+
+        if not self.settingsDialog:
+            self.settingsDialog = DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
+                                                      style=wx.DEFAULT_DIALOG_STYLE).Show()
 
     def OnAdditionalToolMenu(self, event):
         """Menu for additional tools"""
@@ -461,6 +466,14 @@ class DigitToolbar(AbstractToolbar):
         connect = wx.MenuItem(toolMenu, wx.ID_ANY, 'Connect selected two lines/boundaries')
         toolMenu.AppendItem(connect)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnConnect, connect)
+
+        query = wx.MenuItem(toolMenu, wx.ID_ANY, 'Query tool')
+        toolMenu.AppendItem(query)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnQuery, query)
+
+        zbulk = wx.MenuItem(toolMenu, wx.ID_ANY, 'Z bulk-labeling 3D lines')
+        toolMenu.AppendItem(zbulk)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnZBulk, zbulk)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
@@ -495,6 +508,18 @@ class DigitToolbar(AbstractToolbar):
         """Connect selected lines/boundaries"""
         Debug.msg(2, "Digittoolbar.OnConnect():")
         self.action="connectLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnQuery(self, event):
+        """Query selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnQuery(): %s" % self.parent.digit.settings["query"])
+        self.action="queryLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnZBulk(self, event):
+        """Z bulk-labeling selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnZBulk():")
+        self.action="zbulkLine"
         self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnSelectMap (self, event):

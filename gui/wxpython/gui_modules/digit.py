@@ -96,6 +96,11 @@ class AbstractDigit:
             self.settings["layer"] = 1
             self.settings["category"] = 1
             self.settings["categoryMode"] = "Next to use"
+
+            # query tool
+            self.settings["query"] = "length"
+            self.settings["queryLength"] = ("shorter than", 0)
+            self.settings["queryDangle"] = (0,)
         else:
             self.settings = settings
 
@@ -496,9 +501,9 @@ class VEdit(AbstractDigit):
                                  '--q',
                                  'map=%s' % self.settings['backgroundMap'],
                                  'tool=select',
-                                 # 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
-                                 'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
-                                     (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
+                                 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
+                                 #'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
+                                 #    (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
                                              
         try:
             output = vEditCmd.ReadStdOutput()[0] # first line
@@ -508,6 +513,34 @@ class VEdit(AbstractDigit):
             return []
 
         Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): %s" % \
+                      ",".join(["%d" % v for v in ids]))
+        
+        return ids
+
+    def SelectLinesByQuery(self, pos1, pos2, query="length"):
+        """Select features by query"""
+
+        vEdit = (['v.edit',
+                  '--q',
+                  'map=%s' % self.map,
+                  'tool=select',
+                  'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1]),
+                  'query=%s' % self.settings['query'],
+                  'thresh=%f' % self.settings['queryLength'][1]])
+
+        if self.settings['queryLength'][0] == "longer than":
+            vEdit.append('-r')
+
+        vEditCmd = gcmd.Command(vEdit)
+        
+        try:
+            output = vEditCmd.ReadStdOutput()[0] # first line
+            ids = output.split(',') 
+            ids = map(int, ids) # str -> int
+        except:
+            return []
+
+        Debug.msg(4, "VEdit.SelectLinesByQuery(): %s" % \
                       ",".join(["%d" % v for v in ids]))
         
         return ids
@@ -823,7 +856,8 @@ class DigitSettingsDialog(wx.Dialog):
         self.__CreateSymbologyPage(notebook)
         parent.digit.SetCategory() # update category number (next to use)
         self.__CreateSettingsPage(notebook)
-        
+        self.__CreateQueryPage(notebook)
+
         # buttons
         btnApply = wx.Button(self, wx.ID_APPLY, _("Apply") )
         btnCancel = wx.Button(self, wx.ID_CANCEL)
@@ -833,6 +867,7 @@ class DigitSettingsDialog(wx.Dialog):
         # bindigs
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
         btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
@@ -1017,6 +1052,75 @@ class DigitSettingsDialog(wx.Dialog):
         
         return panel
 
+    def __CreateQueryPage(self, notebook):
+        """Create notebook page for query tool"""
+
+        settings = self.parent.digit.settings
+
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Query tool"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+        
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Choose query tool"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        #
+        # length
+        #
+        self.queryLength = wx.RadioButton(parent=panel, id=wx.ID_ANY, label=_("length"))
+        self.queryLength.Bind(wx.EVT_RADIOBUTTON, self.OnChangeQuery)
+        sizer.Add(item=self.queryLength, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        flexSizer = wx.FlexGridSizer (cols=4, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select lines"))
+        self.queryLengthSL = wx.Choice (parent=panel, id=wx.ID_ANY, 
+                                        choices = [_("shorter than"), _("longer than")])
+        self.queryLengthSL.SetStringSelection(settings["queryLength"][0])
+        self.queryLengthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1),
+                                            initial=1,
+                                            min=0, max=1e6)
+        self.queryLengthValue.SetValue(settings["queryLength"][1])
+        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("map units"))
+        flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.queryLengthSL, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(self.queryLengthValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(units, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(item=flexSizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+
+        #
+        # dangle
+        #
+        self.queryDangle = wx.RadioButton(parent=panel, id=wx.ID_ANY, label=_("dangle"))
+        self.queryDangle.Bind(wx.EVT_RADIOBUTTON, self.OnChangeQuery)
+        sizer.Add(item=self.queryDangle, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select dangles shorter than"))
+        self.queryDangleValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1),
+                                       initial=1,
+                                       min=0, max=1e6)
+        self.queryDangleValue.SetValue(settings["queryDangle"][0])
+        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("map units"))
+        flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.queryDangleValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(units, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        sizer.Add(item=flexSizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+
+        if settings["query"] == "length":
+            self.queryLength.SetValue(True)
+        else:
+            self.queryDangle.SetValue(True)
+        # enable & disable items
+        self.OnChangeQuery(None)
+
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+
+        panel.SetSizer(border)
+        
+        return panel
+
+
     def __SymbologyData(self):
         """
         Data for __CreateSymbologyPage()
@@ -1093,17 +1197,37 @@ class DigitSettingsDialog(wx.Dialog):
         
         self.parent.digit.settings['backgroundMap'] = map
         
+    def OnChangeQuery(self, event):
+        """Change query"""
+        if self.queryLength.GetValue():
+            # length
+            self.queryLengthSL.Enable(True)
+            self.queryLengthValue.Enable(True)
+            self.queryDangleValue.Enable(False)
+        else:
+            # dangle
+            self.queryLengthSL.Enable(False)
+            self.queryLengthValue.Enable(False)
+            self.queryDangleValue.Enable(True)
+
     def OnOK(self, event):
         """Button 'OK' clicked"""
         self.UpdateSettings()
+        self.parent.digittoolbar.settingsDialog = None
         self.Close()
 
     def OnApply(self, event):
         """Button 'Apply' clicked"""
         self.UpdateSettings()
 
+    def OnCancel(self, event):
+        """Button 'Cancel' clicked"""
+        self.parent.digittoolbar.settingsDialog = None
+        self.Close()
+
     def UpdateSettings(self):
         """Update self.parent.digit.settings"""
+
         # symbology
         for key, (enabled, color) in self.symbology.iteritems():
             if enabled:
@@ -1133,6 +1257,15 @@ class DigitSettingsDialog(wx.Dialog):
             self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
         except:
             pass
+
+        # query tool
+        if self.queryLength.GetValue():
+            self.parent.digit.settings["query"] = "length"
+        else:
+            self.parent.digit.settings["query"] = "dangle"
+        self.parent.digit.settings["queryLength"] = (self.queryLengthSL.GetStringSelection(),
+                                                     int(self.queryLengthValue.GetValue()))
+        self.parent.digit.settings["queryDangle"] = (int(self.queryDangleValue.GetValue()),)
 
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
