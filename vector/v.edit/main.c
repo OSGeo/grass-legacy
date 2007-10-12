@@ -70,7 +70,8 @@ int main (int argc, char *argv[])
 
     if (action_mode == MODE_CREATE) {
 	/* 3D vector maps? */
-	if (-1 == Vect_open_new (&Map, params.map -> answer, 0)) { /* new */
+	ret = Vect_open_new (&Map, params.map -> answer, WITHOUT_Z);
+	if (ret == -1) {
 	    G_fatal_error (_("Unable to create vector map <%s>"),
 			   params.map -> answer);
 	}
