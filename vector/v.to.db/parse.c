@@ -133,19 +133,22 @@ parse_command_line (int argc, char *argv[])
 	ncols++;
     }
     
-    if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
-	 || options.option == O_QUERY || options.option == O_COMPACT || options.option == O_PERIMETER || options.option == O_SLOPE ) /* one column required */
-    {
-	if ( ncols != 1 ) {
-	    G_fatal_error ( _("This option requires one column") );
-	}
-    }  else if ( options.option == O_SIDES ) {
-	if ( ncols != 2 ) {
-	    G_fatal_error ( _("This option requires 2 columns") );
-	}
-    }  else if ( options.option == O_COOR ) {
-	if ( ncols < 2 ) {
-	    G_fatal_error ( _("This option requires at least 2 columns") );
+    if (!options.print) {
+	if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
+	     || options.option == O_QUERY || options.option == O_COMPACT
+	     || options.option == O_PERIMETER || options.option == O_SLOPE ) /* one column required */
+	{
+	    if ( ncols != 1) {
+		G_fatal_error ( _("This option requires one column") );
+	    }
+	}  else if ( options.option == O_SIDES ) {
+	    if ( ncols != 2 ) {
+		G_fatal_error ( _("This option requires two columns") );
+	    }
+	}  else if ( options.option == O_COOR ) {
+	    if ( ncols < 2 ) {
+		G_fatal_error ( _("This option requires at least two columns") );
+	    }
 	}
     }
 

@@ -112,7 +112,12 @@ read_lines(struct Map_info *Map )
 		    Values[idx].count1++;
 		} else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
 		    /* Calculate line length */
-		    len = length (Points->n_points, Points->x, Points->y);
+		    if (!Vect_is_3d(Map)) {
+			len = length (Points->n_points, Points->x, Points->y);
+		    }
+		    else {
+			len = Vect_line_length(Points);
+		    }
 		    Values[idx].d1 += len;
 		} else if ( options.option == O_COOR && (type & GV_POINTS) ) {
 		    /* overwrite by last one, count is used in update */ 
@@ -138,7 +143,12 @@ read_lines(struct Map_info *Map )
                     read_side_cats ( RCats, &(Values[idx].i2), &(Values[idx].count2) );
 		} else if ( options.option == O_SLOPE && (type & GV_LINES) ) {
 		    /* Calculate line slope */
-		    len = length (Points->n_points, Points->x, Points->y);
+		    if (!Vect_is_3d(Map)) {
+			len = length (Points->n_points, Points->x, Points->y);
+		    }
+		    else {
+			len = Vect_line_length(Points);
+		    }
                     slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
 		    Values[idx].d1 += slope;
 		}
@@ -152,7 +162,12 @@ read_lines(struct Map_info *Map )
 	    if (  options.option == O_COUNT ) {
 		Values[idx].count1++;
 	    } else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
-		len = length (Points->n_points, Points->x, Points->y);
+		if (!Vect_is_3d(Map)) {
+		    len = length (Points->n_points, Points->x, Points->y);
+		}
+		else {
+		    len = Vect_line_length(Points);
+		}
 		Values[idx].d1 += len;
 	    } else if ( options.option == O_COOR && (type & GV_POINTS) ) {
 		Values[idx].d1 = Points->x[0];
@@ -174,7 +189,12 @@ read_lines(struct Map_info *Map )
 		read_side_cats ( RCats, &(Values[idx].i2), &(Values[idx].count2) );
             } else if ( options.option == O_SLOPE && (type & GV_LINES) ) {
                 /* Calculate line slope */
-                len = length (Points->n_points, Points->x, Points->y);
+		if (!Vect_is_3d(Map)) {
+		    len = length (Points->n_points, Points->x, Points->y);
+		}
+		else {
+		    len = Vect_line_length(Points);
+		}
                 slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
                 Values[idx].d1 += slope;
             }
