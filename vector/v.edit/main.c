@@ -143,9 +143,16 @@ int main (int argc, char *argv[])
     if (action_mode != MODE_CREATE && action_mode != MODE_ADD) {
 	/* select lines */
 	List = Vect_new_list();
-	List = select_lines(&Map, action_mode,
-			    &params,
-			    List);
+	if (action_mode == MODE_COPY && BgMap && BgMap[0]) {
+	    List = select_lines(BgMap[0], action_mode,
+				&params,
+				List);
+	}
+	else {
+	    List = select_lines(&Map, action_mode,
+				&params,
+				List);
+	}
     }
 
     if ((action_mode != MODE_CREATE && action_mode != MODE_ADD &&
@@ -157,7 +164,15 @@ int main (int argc, char *argv[])
 	}
 	else {
 	    /* reopen the map for updating */
+	    if (action_mode == MODE_ZBULK && !Vect_is_3d(&Map)) {
+		Vect_close(&Map);
+		G_fatal_error(_("Vector map <%s> is not 3D. Tool '%s' requires 3D vector map. "
+				"Please convert the vector map "
+				"to 3D using e.g. %s."),
+			      params.map->answer, params.tool->answer, "v.extrude");
+	    }
 	    Vect_close (&Map);
+
 	    Vect_open_update (&Map, params.map -> answer, mapset); 
 	}
     }
@@ -235,6 +250,7 @@ int main (int argc, char *argv[])
 	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
+	thresh = max_distance (thresh);
 	ret = do_break(&Map, List,
 		       coord, thresh, NULL);
 	G_message(_("%d lines broken"), ret);
@@ -263,10 +279,18 @@ int main (int argc, char *argv[])
 	G_message(_("%d features modified"), ret);
 	break;
     case MODE_COPY:
-	if (BgMap && BgMap[0])
+	if (BgMap && BgMap[0]) {
+	    if (nbgmaps > 1) 
+		G_warning(_("Multiple background maps were given. "
+			    "Selected features will copied only from "
+			    "vector map <%s>."),
+			  Vect_get_full_name(BgMap[0]));
+	    
 	    ret = do_copy(&Map, BgMap[0], List);
-	else
+	}
+	else {
 	    ret = do_copy(&Map, NULL, List);
+	}
 	G_message (_("%d features copied"), ret);
 	break;
     case MODE_SNAP:
@@ -279,6 +303,25 @@ int main (int argc, char *argv[])
     case MODE_NONE:
 	print = 0;
 	break;
+    case MODE_ZBULK: {
+	double start, step;
+	double x1, y1, x2, y2;
+
+	start = atof(params.zbulk->answers[0]);
+	step  = atof(params.zbulk->answers[1]);
+
+	x1    = atof(params.bbox->answers[0]);
+	y1    = atof(params.bbox->answers[1]);
+	x2    = atof(params.bbox->answers[2]);
+	y2    = atof(params.bbox->answers[3]);
+
+	ret = bulk_labeling (&Map, List,
+			     x1, y1, x2, y2,
+			     start, step);
+
+	G_message(_("%d lines labeled"), ret);
+	break;
+    }
     default:
 	G_warning(_("Operation not implemented"));
 	ret = -1;

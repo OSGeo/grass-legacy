@@ -58,13 +58,13 @@ int sel_by_cat(struct Map_info *, struct cat_list*,
 	       int, int, char *,
 	       struct ilist *);
 int sel_by_coordinates(struct Map_info *,
-		       int, struct Option *, double,
+		       int, struct line_pnts *, double,
 		       struct ilist *);
 int sel_by_bbox(struct Map_info *,
-		int, struct Option *,
+		int, double, double, double, double,
 		struct ilist *);
 int sel_by_polygon(struct Map_info *,
-		   int, struct Option *,
+		   int, struct line_pnts *,
 		   struct ilist *);
 int sel_by_id(struct Map_info *,
 	      char *,
@@ -93,5 +93,10 @@ int do_copy (struct Map_info *, struct Map_info *, struct ilist *);
 
 /* flip.c */
 int do_flip (struct Map_info *, struct ilist *);
+
+/* bulk.c */
+int bulk_labeling (struct Map_info *, struct ilist *,
+		   double, double, double, double,
+		   double, double);
 
 #endif

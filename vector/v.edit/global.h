@@ -32,6 +32,8 @@ enum mode {
     MODE_SELECT,
     /* */
     MODE_NONE,
+    /* z bulk-labeling */
+    MODE_ZBULK,
 };
 
 #define NO_SNAP    0 /* snapping disabled */
@@ -41,7 +43,7 @@ enum mode {
 struct GParams { 
     struct Option *map, *in, *maxdist, *tool,
 	*coord, *cat, *move, *bbox, *fld,
-      *poly, *type, *id, *where, *bmaps, *snap, *query;
+      *poly, *type, *id, *where, *bmaps, *snap, *query, *zbulk;
     struct Flag *header, *topo, *close, *reverse, *move_first;
 };
 

@@ -74,7 +74,7 @@ int do_break (struct Map_info *Map, struct ilist *List,
 				      &px, &py, NULL,
 				      &dist, &spdist, &lpdist);
 
-	    if (dist > thresh) {
+	    if (thresh > 0.0 && dist > thresh) {
 		Vect_destroy_line_struct(Points);
 		Vect_destroy_line_struct(Points2);
 		Vect_destroy_cats_struct(Cats);

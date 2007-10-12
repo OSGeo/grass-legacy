@@ -1,29 +1,29 @@
 <h2>DESCRIPTION</h2>
 
 <p>
-The module <em>v.edit</em> allows the user to edit a vector map layer
-via <em>Command Line Interface</em> (CLI). Very useful feature for scripts.
+The module <em>v.edit</em> allows the user to edit a vector map
+via command line interface. 
 </p>
 
 <p>
-<em>v.edit</em> works only with "simple" vector features: points,
-centroids, lines, boundaries. Currently, only 2D region is supported.
+<em>v.edit</em> supports only "simple" vector features: points,
+centroids, lines and boundaries. Currently, only 2D vector features
+(except of tool <b>zbulk</b>) are supported.
 
 <p>
-Provides editing features' geometry. Attribute data connected
-to the vector map layer are not modified. For this
-purpose, use <code>db.*</code> commands.
+Provides editing features' geometry. Attribute data connected to the
+vector map are not modified at all.
 </p>
 
 <p>
-Vector features can be selected either by internal id's <code>id</code>,
-category number <code>cats</code>, coordinates <code>coords</code>,
-bounding box <code>bbox</code> (x1,y1,x2,y2), polygon <code>polygon</code> or
-'where' statement (attribute data) <code>where</code>. Selecting
-features by coordinates is affected by the current 2D resolution. It
-can be changed using threshold distance <code>thresh</code>. These
-options are <em>orthogonal</em>, i.e. can be used in various
-combinations. For example:
+Vector features can be selected either by internal <b>id</b>,
+category number <b>cats</b>, coordinates <b>coords</b>, bounding
+box <b>bbox</b>, <b>polygon</b>, <b>where</b> statement (attribute
+data) or by <b>query</b>. Selecting features by
+coordinates is affected by the current 2D resolution. It can be
+changed using threshold distance <b>thresh</b>. The options
+are <em>orthogonal</em>, i.e. can be used in various combinations. For
+example:
 </p>
 
 <div class="code"><pre>
@@ -39,14 +39,8 @@ label='interstate'.
 
 <h2>NOTES</h2>
 <p>
-If no vector features are selected or the flag <code>-t</code> is
-used, topology is not build.
-</p>
-
-<p>
-This module can be &quot;buggy&quot;, still under development. So please feel free
-to report all bugs or wanted features. Also this manual page should be
-updated.
+If no vector features are selected or the flag <b>-t</b> is
+used, topology is not build at the end.
 </p>
 
 <h2>USAGE</h2>
@@ -54,107 +48,125 @@ updated.
 <h3>Feature selection</h3>
 
 <p>
-Vector features can be selected in several
-ways:
+Vector features can be selected in several ways:
 </p>
 <ul>
-    <li><code>ids</code> - using internal (unique) line id's</li>
-    <li><code>cats</code> - using category numbers</li>
-    <li><code>coords</code> - using x,y coordinate pairs (center of bounding box, size defined by <code>thresh</code>)</li>
-    <li><code>bbox</code> - using bounding box</li>
-    <li><code>polygon</code> - using polygon (at least 3 coordinate pairs have to be set)</li>
-    <li><code>where</code> - using 'where' statement (attribute data)
+    <li><b>ids</b> - using internal (unique) feature id's</li>
+    <li><b>cats</b> - using category numbers</li>
+    <li><b>coords</b> - using x,y coordinate pairs (center of bounding
+    box, size defined by <b>thresh</b>)</li>
+    <li><b>bbox</b> - using bounding box</li>
+    <li><b>polygon</b> - using polygon (at least 3 coordinate pairs have to be set)</li>
+    <li><b>where</b> - using 'where' statement (attribute data)
+    <li><b>query</b> - special query (e.g. minimal vector line length)
 </ul>
 
 <p>
 Additional parameters for vector feature specification are:
 </p>
 <ul>
-    <li><code>layer</code> - layer number (used only with <code>cats</code> or <code>where</code> option)</li>
-    <li><code>thresh</code> - threshold distance used for selecting vector features by coordinates</li>
+    <li><b>layer</b> - layer number (currently used only
+    with <b>cats</b> or <b>where</b> option)</li>
+    <li><b>thresh</b> - threshold distance used for selecting vector
+    features by coordinates</li>
 </ul>
 
 <h3>Tool description</h3>
 
 <ul>
-    <li><code>create</code> - Create new (empty) vector map layer
-    (see <code><a href="v.in.ascii.html">v.in.ascii</a>
-    -e</code>). Optionally vector features (in GRASS ASCII standard format) can
-    be read from standard input (<code>input=-</code>) or from the
-    text file given by the <code>input</code> option.</li>
+    <li><b>create</b> - Create new (empty) vector map
+    (see <a href="v.in.ascii.html">v.in.ascii</a>). Optionally vector
+    features (in GRASS ASCII standard format) can be read from
+    standard input (<b>input=-</b>) or from the text file given by
+    the <b>input</b> option.</li>
 
-    <li><code>add</code> - Add new vector features (stored in GRASS
-    ASCII standard format) to existing vector map layer. Features can be read
-    from standard input or from the given text file
-    (<code>input</code> option). If no header is given, the <code>-n</code>
-    flag must be used.
+    <li><b>add</b> - Add new vector features (defined in GRASS ASCII
+    standard format) to existing vector map. Features can be read from
+    standard input or from the given text file (<b>input</b>
+    option). If no header is given, the <b>-n</b> flag must be
+    used. Added features can be snapped (based on <b>snap</b>
+    parameter) using threshold distance <b>thresh</b>.</li>
 
-    <li><code>delete</code> - Delete selected vector features from
-    existing vector map layer.</li>
+    <li><b>delete</b> - Delete selected vector features from existing
+    vector map.</li>
    
-    <li><code>copy</code> - Make identical copy of
-    selected vector features.</li>
+    <li><b>copy</b> - Make identical copy of selected vector
+    features. If background map <b>bgmap</b> is given copy features
+    from background map, not from currently modified vector map.</li>
 
-    <li><code>move</code> - Move selected features of existing vector
-    map layer relatively to their current location. This tool requires
-    <code>move</code> option. The option defines coordinates of the
-    movement direction.</li>
+    <li><b>move</b> - Move selected features of existing vector map
+    relatively to their current location. This tool requires
+    <b>move</b> option. The option defines coordinates of the movement
+    direction. Moved features can be snapped (based on <b>snap</b>
+    parameter) using threshold distance <b>thresh</b>.</li>
 
-    <li><code>flip</code> - Flip direction of selected vector lines
+    <li><b>flip</b> - Flip direction of selected vector lines
     (lines or boundaries).</li>
 
-    <li><code>catadd</code> - Add new layer category(ies) to selected vector
+    <li><b>catadd</b> - Add new layer category(ies) to selected vector
     feature(s). Category can be later used for new database
     entry.</li>
 
-    <li><code>catdel</code> - Delete layer category(ies) of selected vector
+    <li><b>catdel</b> - Delete layer category(ies) of selected vector
     feature(s).</li>
 
-    <li><code>merge</code> - Merges all (at least two) selected vector lines
-    (lines or boundaries). The nearest distance between start and end
-    nodes of both lines is found. The geometry of the merged vector lines
-    can be changed. If the second line from two selected lines is in
-    opposite direction to the first, it will be flipped.</li>
+    <li><b>merge</b> - Merge (at least two) selected vector lines or
+    boundaries. The geometry of the merged vector lines can be
+    changed. If the second line from two selected lines is in opposite
+    direction to the first, it will be flipped. See also
+    module <a href="v.build.polylines.html">v.build.polylines</a>.</li>
 
-    <li><code>break</code> - Split (break) given vector line(s) into
-    two lines on location given by <code>coords</code>. Shape of the
+    <li><b>break</b> - Split (break) given vector line or boundary
+    into two lines on location given by <b>coords</b>. Shape of the
     line is not changed.</li>
     
-    <li><code>snap</code> - Snap line or boundary to vertex in threshold.</li>
+    <li><b>snap</b> - Snap vector features in given threshold. See
+    also module <a href="v.clean.html">v.clean</a>.</li>
 
-    <li><code>connect</code> - Connect selected lines, the first given
-    line is connected to the second one. The second line is broken if
-    necessary. The lines are connected regarding threshold distance
-    (<code>thresh</code>).</li>
+    <li><b>connect</b> - Connect selected lines or boundaries, the
+    first given line is connected to the second one. The second line
+    is broken if necessary. The lines are connected regarding
+    threshold distance <b>thresh</b>.</li>
 
-    <li><code>vertexadd</code> - Add vertex(ces) to the given vector
-    line(s). Location of the new vertex is given by <code>coord</code>
-    option.</li>
+    <li><b>vertexadd</b> - Add vertex(ces) to the given vector lines
+    or boundaries. Location of the new vertex is given by <b>coord</b>
+    option. If <b>-1</b> is given only first found line or boundary in bounding
+    box is modified.</li>
 
-    <li><code>vertexdel</code> - Remove vertex(ces) specified by
-    <code>coords</code> option.</li>
+    <li><b>vertexdel</b> - Remove vertex(ces) specified by
+    <b>coords</b> option. If <b>-1</b> is given only first found line or
+    boundary in bounding box is modified.</li>
 
-    <li><code>vertexmove</code> - Move vertex(ces) specified
-    by <code>coords</code> option. Direction of the movement is
-    specified by the <code>move</code> option.</li>
+    <li><b>vertexmove</b> - Move vertex(ces) specified
+    by <b>coords</b> option. Direction of the movement is specified by
+    the <b>move</b> option. If <b>-1</b> is given only first found line or
+    boundary in bounding box is modified. Moved vertex can be snapped
+    (based on <b>snap</b> parameter) using threshold
+    distance <b>thresh</b>.</li>
     
-    <li><code>select</code> - Print comma separated list of selected
-      line ID's. No editing is done.
+    <li><b>zbulk</b> - Assign z coordinate to 3D vector lines in given
+    bounding box. The first found line will get z coordinate based on
+    value given by <b>zbulk</b> parameter. Z coordinate of other
+    selected lines will be increased by step given by <b>zbulk</b>
+    parameter. This tool strictly requires <b>bbox</b>
+    and <b>zbulk</b> parameter. Also input vector map must be 3D.</li>
+
+    <li><b>select</b> - Print comma separated list of selected line
+      id's. No editing is done.
 </ul>
 
 <h2>EXAMPLES</h2>
 
-<h3>Create new vector map layer</h3>
+<h3>Create new vector map</h3>
 <p>
-Create new <em>empty</em> vector map layer:
+Create new (empty) vector map:
 </p>
 <div class="code"><pre>
 v.edit tool=create map=vectmap
 </pre></div>
 
 <p>
-Create new vector map layer and read data from file 'roads.txt' (i.e. create
-a copy of vector map layer 'roads'):
+Create new vector map and read data from file 'roads.txt':
 </p>
 <div class="code"><pre>
 v.out.ascii in=roads format=standard > roads.txt;
@@ -166,10 +178,10 @@ or alternatively
 cat roads.txt | v.edit tool=create map=vectmap input=-
 </pre></div>
 
-<h3>Add new features to existing vector map layer</h3>
+<h3>Add new features to existing vector map</h3>
 
 <p>
-Add point to the vector map layer (without header):
+Add point to the vector map (without header):
 </p>
 <div class="code"><pre>
 echo "P 1 1
@@ -184,27 +196,6 @@ Add new features read from standard input:
 v.out.ascii in=railroads format=standard | v.edit tool=add map=vectmap
 </pre></div>
 
-<h3>Select features and print their ID's</h3>
-
-<p>
-Print ID's of selected features, e.g.:
-</p>
-
-<div class="code"><pre>
-v.edit map=soils@PERMANENT tool=select \
-  bbox=595733.8125,4919781.75,598536.1875,4917396.75
-</pre></div>
-
-Example with <em>d.vect</em>:
-
-<div class="code"><pre>
-d.erase;
-d.vect roads;
-d.vect -i map=roads cats=`v.edit map=roads tool=select \
-  coord=592542.89243878,4924766.99622811,603389.0625,4918292.1875 \
-  thresh=1000 --q` col=red
-</pre></div>
-
 <h3>Delete selected features from vector map layer</h3>
 
 <p>
@@ -215,8 +206,8 @@ v.edit tool=delete map=roads cats=1,2
 </pre></div>
 
 <p>
-Remove all vector features except for those with category number 1 or 2
-(reverse deletion):
+Remove all vector features except of those with category number 1 or 2
+(reverse selection):
 </p>
 <div class="code"><pre>
 v.edit -r tool=delete map=roads cats=1,2
@@ -242,6 +233,14 @@ v.edit map=roads tool=delete \
   thresh=1000 cat=1,2
 </pre></div>
 
+<h3>Copy selected features from background map</h3>
+
+Copy all features with category number 1 from background map:
+
+<div class="code"><pre>
+v.edit map=roads tool=copy bgmap=archsites cat=1
+
+</pre></div>
 
 <h3>Move features</h3>
 
@@ -256,11 +255,12 @@ v.edit tool=move map=archsites coord=602580,4918480 th=1e-2 move=1000,1000
 
 <p>
 Move all features with category 1 1000 map units to the west and 1000
-map units to the south.
+map units to the south. Moved features snap to nodes in threshold
+distance 10 map units:
 </p>
 
 <div class="code"><pre>
-v.edit tool=move map=roads cat=1 move=1000,-1000
+v.edit tool=move map=roads cat=1 move=1000,-1000 snap=node thresh=10
 </pre></div>
 
 <p>
@@ -285,7 +285,7 @@ v.edit tool=flip map=streams cats=1-9999 type=line
 
 <h3>Add / delete layer category number</h3>
 
-Add new layer/category 2/1,2/3,2/4,2/5 to features covered by given polygon:
+Add new layer/category 2/1, 2/3, 2/4, 2/5 to features covered by given polygon:
 
 <div class="code"><pre>
 v.edit tool=catadd map=roads \
@@ -300,37 +300,11 @@ v.edit tool=catdel map=roads id=1 cats=5
 
 <h3>Merge lines</h3>
 
-TODO
-
-<!--
-<p>
-Merge first line defined by coordinates 606853.875,4921332 with second
-line defined by coordinates 603216.75,4922763. Define nearest
-distance between line first and last points and move first (last)
-point of second line to first line - first line will remain untouched.
-</p>
+Merge two lines with given category number:
 
 <div class="code"><pre>
-v.edit tool=merge map=vectmap coords=606853.875,4921332,603216.75,4922763 
+v.edit map=roads tool=merge cat=4
 </pre></div>
-
-<p>
-Merge all lines defined by the given bounding box
-</p>
-
-<div class="code"><pre>
-v.edit tool=merge map=vectmap bbox=344556.23,23445.2345
-</pre></div>
-
-<p>
-Merge two lines defined by category
-</p>
-
-<div class="code"><pre>
-v.edit tool=merge map=vectmap cat=43,45
-</pre></div>
-
--->
 
 <h3>Break (split) lines</h3>
 
@@ -342,10 +316,10 @@ v.edit map=roads tool=break coords=604268,4923570 id=810
 
 <h3>Snap lines</h3>
 
-Snap all lines in given bounding box (in threshold 20 map units):
+Snap all lines using threshold distance 20 map units:
 
 <div class="code"><pre>
-v.edit map=mapa bbox=4342289,2341033,4422296,2641319 tool=snap thresh=20 type=line
+v.edit map=roads id=1-9999 tool=snap thresh=20 type=line
 </pre></div>
 
 <h3>Connect lines</h3>
@@ -356,17 +330,17 @@ Connect line id 48 to line id 565:
 v.edit map=roads tool=connect id=48,565
 </pre></div>
 
-Connect line id 48 to line id 565 and line id 60 to line id
+Connect line id 48 to line id 565; line id 60 to line id
 50. Maximum threshold distance is 700 map units:
 
 <div class="code"><pre>
-v.edit map=roads tool=connect id=48,565,60,50 thresh=700
+v.edit map=roads tool=connect id=48,565,60,50 thresh=1000
 </pre></div>
 
 <h3>Add vertex</h3>
 
 Add new vertex to the line located at 600952,4926107, threshold is
-set to 1 map unit. Shape of modified line is not changed:
+set to 1 map unit:
 
 <div class="code"><pre>
 v.edit tool=vertexadd map=roads coords=600952,4926107 thresh=1
@@ -392,17 +366,57 @@ v.edit tool=vertexmove map=roads cats=1-10 coord=604441,4921088 \
   thresh=100 move=1000,1000
 </pre></div>
 
+<h3>Select features and print their id's</h3>
+
+<p>
+Print id's of selected features, e.g.:
+</p>
+
+<div class="code"><pre>
+v.edit map=soils@PERMANENT tool=select \
+  bbox=595733.8125,4919781.75,598536.1875,4917396.75 --q
+</pre></div>
+
+Example with <em>d.vect</em>:
+
+<div class="code"><pre>
+d.erase;
+d.vect roads;
+d.vect -i map=roads cats=`v.edit map=roads tool=select \
+  coord=592542.89243878,4924766.99622811,603389.0625,4918292.1875 \
+  thresh=1000 --q` col=red
+</pre></div>
+
+<h3>Fix height of contours</h3>
+
+Intput vector map contains 2D lines representing contours. Height can
+be assign to the contours using tool <b>zbulk</b>. First of all 2D
+lines need to be converted to 3D lines:
+
+<div class="code"><pre>
+v.extrude input=line2 output=line3 height=0 type=line
+</pre></div>
+
+All lines which intersect with the line given by coordinates will be
+modified. First found line will get height 1000 map units, height of
+other selected lines will be increased by 10 map units.
+
+<div class="code"><pre>
+v.edit a2 tool=zbulk bbox=586121.25049368,4911970.21547109,603092.60466035,4927071.25713776 \
+   zbulk=1000,10
+</pre></div>
+
 
 <h2>SEE ALSO</h2>
 
 <em>
-<a HREF="databaseintro.html">Database editing tools</a><BR>
-<a HREF="v.in.ascii.html">v.in.ascii</a><BR>
-<a HREF="v.info.html">v.info</a><BR>
-<a HREF="v.build.html">v.build</a><BR>
-<a HREF="v.clean.html">v.clean</a><BR>
-<a HREF="v.digit.html">v.digit</a><BR>
-</em>
+<a HREF="v.in.ascii.html">v.in.ascii</a>,
+<a HREF="v.info.html">v.info</a>,
+<a HREF="v.build.html">v.build</a>,
+<a HREF="v.clean.html">v.clean</a>,
+<a HREF="v.digit.html">v.digit</a>,
+<a HREF="v.extrude.html">v.extrude</a>
+</em><br><br>
 <a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
 
 <h2>AUTHOR</h2>
