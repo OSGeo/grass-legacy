@@ -48,12 +48,19 @@ main (int argc, char *argv[])
     Fi = Vect_get_field ( &Map, options.field);
 
     if ( !options.print && Fi == NULL ) {
-         G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first."), options.field);
+         G_fatal_error(_("Database connection not defined for layer %d. Use v.db.connect first."),
+		       options.field);
     }
 
     /* allocate array for values */
     /* (+ 1 is for cat -1 (no category) reported at the end ) */
-    n = Vect_cidx_get_num_unique_cats_by_index ( &Map, Vect_cidx_get_field_index(&Map, options.field ) );
+    if (Vect_cidx_get_field_index(&Map, options.field) > -1) {
+	n = Vect_cidx_get_num_unique_cats_by_index (&Map,
+						    Vect_cidx_get_field_index(&Map, options.field));
+    }
+    else {
+	n = 0;
+    }
     G_debug ( 2, "%d unique cats", n );
     Values = (VALUE *) G_calloc ( n + 1, sizeof ( VALUE ) );
     vstat.rcat = 0;
@@ -61,7 +68,8 @@ main (int argc, char *argv[])
     /* Read values from map */
     if ( options.option == O_QUERY ){
 	query(&Map);
-    } else if ( ( options.option == O_AREA ) || ( options.option == O_COMPACT ) || ( options.option == O_PERIMETER ) ){
+    } else if ( ( options.option == O_AREA ) || ( options.option == O_COMPACT ) ||
+		( options.option == O_PERIMETER ) ){
 	read_areas(&Map);
     } else { 
         read_lines(&Map); 
