@@ -35,10 +35,6 @@ double max_distance(double maxdistance)
     double ew_dist1, ew_dist2, ns_dist1, ns_dist2;
     double xres, yres, maxd;
 
-    if (maxdistance < 0.0) {
-	G_warning (_("Threshold distance must be >= 0.0, using value 0.0"));
-    }
-
     if (maxdistance <= 0.0) {
         G_get_window (&window);
 
@@ -58,7 +54,7 @@ double max_distance(double maxdistance)
 	else
 	    maxd = yres;
 
-	G_message (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
+	G_warning (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
     }
     else {
         maxd = maxdistance;

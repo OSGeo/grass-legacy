@@ -62,23 +62,84 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     
     /* select by coordinates (+threshold) */
     if (params -> coord -> answer != NULL) {
+	int i;
+	double east, north;
+	struct line_pnts *coords;
+
+	coords = Vect_new_line_struct();
+	i = 0;
+	while (params->coord->answers[i]) {
+	    east = atof(params->coord->answers[i]);
+	    north = atof(params->coord->answers[i+1]);
+	    Vect_append_point(coords, east, north, 0.0);
+	    i += 2;
+	}
+
         sel_by_coordinates(Map,
-			   type, params -> coord, thresh,
+			   type, coords, thresh,
 			   List);
+
+	Vect_destroy_line_struct(coords);
     }
     
-    /* select by bbox (TODO: threshold) */
+    /* select by bbox */
     if (params -> bbox -> answer != NULL) {
-        sel_by_bbox(Map,
-		    type, params -> bbox,
+	struct line_pnts *bbox;
+	double x1, y1, x2, y2;
+
+	bbox = Vect_new_line_struct();
+
+	x1 = atof(params->bbox->answers[0]);
+	y1 = atof(params->bbox->answers[1]);
+	x2 = atof(params->bbox->answers[2]);
+	y2 = atof(params->bbox->answers[3]);
+
+	Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
+	Vect_append_point(bbox, x2, y1, PORT_DOUBLE_MAX);
+	Vect_append_point(bbox, x2, y2, -PORT_DOUBLE_MAX);
+	Vect_append_point(bbox, x1, y2, PORT_DOUBLE_MAX);
+	Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
+
+	/* sel_by_bbox not used */
+	/*
+	sel_by_bbox(Map,
+		    type, x1, y1, x2, y2,
 		    List);
+	*/ 
+        sel_by_polygon(Map,
+		       type, bbox,
+		       List);
+
+	Vect_destroy_line_struct(bbox);
     }
     
-    /* select by polygon (TODO: threshold) */
+    /* select by polygon  */
     if (params -> poly -> answer != NULL) {
+	int i;
+	struct line_pnts *Polygon;
+
+	Polygon = Vect_new_line_struct();
+    
+	for (i = 0; params -> poly -> answers[i]; i+=2){
+	    Vect_append_point(Polygon,
+			      atof(params -> poly -> answers[i]),
+			      atof(params -> poly -> answers[i+1]),
+			      0.0);
+	}
+    
+	/* if first and last point of polygon does not match */
+	if (atof(params -> poly -> answers[i-1]) != atof(params -> poly -> answers[0])) {
+	    Vect_append_point(Polygon,
+			      atof(params -> poly -> answers[0]),
+			      atof(params -> poly -> answers[1]),
+			      0.0);
+	}
+
         sel_by_polygon(Map,
-		       type, params -> poly,
+		       type, Polygon,
 		       List);
+	
+	Vect_destroy_line_struct(Polygon);
     }
     
     /* select by where statement */
@@ -204,7 +265,7 @@ int sel_by_cat(struct Map_info *Map, struct cat_list *cl_orig,
    \return number of selected lines
 */
 int sel_by_coordinates(struct Map_info *Map,
-		       int type, struct Option *coords, double thresh,
+		       int type, struct line_pnts *coords, double thresh,
 		       struct ilist* List)
 {
     int i;
@@ -226,9 +287,9 @@ int sel_by_coordinates(struct Map_info *Map,
 
     maxdist = max_distance (thresh);
 
-    for (i = 0; coords -> answers[i]; i+=2) {
-        east  = atof(coords -> answers[i]);
-        north = atof(coords -> answers[i+1]);
+    for (i = 0; i < coords -> n_points; i++) {
+	east  = coords->x[i];
+        north = coords->y[i];
 
 	coord2bbox (east, north, maxdist, box);
 
@@ -263,11 +324,10 @@ int sel_by_coordinates(struct Map_info *Map,
    \return number of selected lines
 */
 int sel_by_bbox(struct Map_info *Map,
-		int type, struct Option *bbox_opt,
+		int type, double x1, double y1, double x2, double y2,
 		struct ilist* List)
 {
     BOUND_BOX bbox;
-    double x1, x2, y1, y2;
 
     struct ilist* List_tmp;
 
@@ -280,10 +340,6 @@ int sel_by_bbox(struct Map_info *Map,
     }
     
     /* bounding box */
-    x1 = atof(bbox_opt -> answers[0]);
-    y1 = atof(bbox_opt -> answers[1]);
-    x2 = atof(bbox_opt -> answers[2]);
-    y2 = atof(bbox_opt -> answers[3]);
     bbox.N = y1 < y2 ? y2 : y1;
     bbox.S = y1 < y2 ? y1 : y2;
     bbox.W = x1 < x2 ? x1 : x2;
@@ -315,37 +371,17 @@ int sel_by_bbox(struct Map_info *Map,
    \return number of selected lines
 */
 int sel_by_polygon(struct Map_info *Map,
-		   int type, struct Option *poly,
+		   int type, struct line_pnts *Polygon,
 		   struct ilist* List)
 {
     struct ilist *List_tmp;
-    struct line_pnts *Polygon;
-
-    int i;
-
+    
     if (first_selection) {
 	List_tmp = List;
 	first_selection = 0;
     }
     else {
 	List_tmp = Vect_new_list();
-    }
-
-    Polygon = Vect_new_line_struct();
-    
-    for (i = 0; poly -> answers[i]; i+=2){
-        Vect_append_point(Polygon,
-			  atof(poly -> answers[i]),
-			  atof(poly -> answers[i+1]),
-			  0.0);
-    }
-    
-    /* if first and last point of polygon does not match */
-    if (atof(poly -> answers[i-1]) != atof(poly -> answers[0])) {
-        Vect_append_point(Polygon,
-			  atof(poly -> answers[0]),
-			  atof(poly -> answers[1]),
-			  0.0);
     }
 
     /* no isles */

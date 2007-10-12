@@ -18,10 +18,12 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> map -> description = _("Name of vector map to edit");
 
     params -> fld = G_define_standard_option(G_OPT_V_FIELD);
+    params -> fld->guisection  = _("Query");
 
     params -> type = G_define_standard_option(G_OPT_V_TYPE);
     params -> type->answer           = "point,line,boundary,centroid";
     params -> type->options          = "point,line,boundary,centroid";
+    params -> type->guisection  = _("Query");
 
     params -> tool = G_define_option();
     params -> tool->key         = "tool";
@@ -32,11 +34,11 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> tool->descriptions = _("create;"
 				     "Create new (empty) vector map;"
 				     "add;"
-				     "Add new feature(s) to existing vector map;"
+				     "Add new features to existing vector map;"
 				     "delete;"
-				     "Delete selected feature(s) from vector map;"
+				     "Delete selected features from vector map;"
 				     "move;"
-				     "Move selected feature(s) in vector map;"
+				     "Move selected features in vector map;"
 				     "vertexmove;"
 				     "Move vertex of selected vector lines;"
 				     "vertexdel;"
@@ -50,22 +52,25 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "select;"
 				     "Select lines and print their ID's;"
 				     "catadd;"
-				     "Set new category(ies) to selected vector feature(s) "
+				     "Set new categories to selected vector featurs "
 				     "for defined layer;"
 				     "catdel;"
-				     "Delete category(ies) from selected vector feature(s) "
+				     "Delete categories from selected vector features "
 				     "for defined layer;"
 				     "copy;"
 				     "Copy selected features;"
 				     "snap;"
-				     "Snap line or boundary to vertex in threshold;"
+				     "Snap vector features in given threshold;"
 				     "flip;"
 				     "Flip direction of selected vector lines;"
 				     "connect;"
-				     "Connect two lines");
+				     "Connect two lines;"
+				     "zbulk;"
+				     "Z bulk-labeling (automated assignment of z coordinate to "
+				     "vector lines)");
     params -> tool->options     = "create,add,delete,copy,move,flip,catadd,catdel,"
       "merge,break,snap,connect,"
-      "vertexadd,vertexdel,vertexmove,select";
+      "vertexadd,vertexdel,vertexmove,zbulk,select";
 
     params -> in = G_define_standard_option (G_OPT_F_INPUT);
     params -> in -> required    = NO;
@@ -115,8 +120,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> bbox->type        = TYPE_DOUBLE;
     params -> bbox->required    = NO;
     params -> bbox->multiple    = NO;
-    params -> bbox->label = _("Bounding box for selecting features");
-    params -> bbox->description = _("Usually W,S,E,N");
+    params -> bbox->description = _("Bounding box for selecting features");
     params -> bbox->guisection  = _("Query");
 
     params -> poly =  G_define_option();
@@ -139,7 +143,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> query -> descriptions = _("length;Select only lines or boudaries shorter "
 					"than threshold distance;"
 					"dangle;Select dangles shorter than threshold distance");
-    params -> where->guisection  = _("Query");
+    params -> query->guisection  = _("Query");
 
     params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);
     params -> bmaps -> key = "bgmap";
@@ -156,6 +160,13 @@ int parser(int argc, char* argv[], struct GParams *params,
 				       "vertex;Allow snapping also to vertex");
     params -> snap -> answer       = "no";
 
+    params -> zbulk = G_define_option();
+    params -> zbulk -> key          = "zbulk";
+    params -> zbulk ->type          = TYPE_DOUBLE;
+    params -> zbulk -> key_desc     = "value,step";
+    params -> zbulk -> label        = _("Starting value and step for z bulk-labeling");
+    params -> zbulk -> description  = _("Pair: value,step (e.g. 1100,10)");
+
     /* flags */
     params -> reverse = G_define_flag();
     params -> reverse -> key = 'r';
@@ -169,8 +180,7 @@ int parser(int argc, char* argv[], struct GParams *params,
 
     params -> close = G_define_flag();
     params -> close -> key = 'c';
-    params -> close -> label = _("Close boundaries");
-    params -> close -> description = _("For tool 'add', see also 'thresh' parameter");
+    params -> close -> label = _("Close added boundaries (using threshold distance)");
 
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
@@ -264,13 +274,17 @@ int parser(int argc, char* argv[], struct GParams *params,
 	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_FLIP;
     }
+    else if(G_strcasecmp (params -> tool -> answer, "zbulk") == 0) {
+	/* del requires a cats or or bbox or coords */ 
+	*action_mode = MODE_ZBULK;
+    }
     else
     {
-	G_fatal_error (_("Operation %s not implemented."),
+	G_fatal_error (_("Operation '%s' not implemented."),
 		       params -> tool -> answer);
     }
 
-    if((*action_mode != MODE_CREATE && *action_mode != MODE_ADD) &&
+    if((*action_mode != MODE_CREATE && *action_mode != MODE_ADD && *action_mode != MODE_ZBULK) &&
        (params -> cat   -> answers  == NULL) && 
        (params -> coord -> answers  == NULL) &&
        (params -> poly  -> answers  == NULL) &&
@@ -313,6 +327,19 @@ int parser(int argc, char* argv[], struct GParams *params,
 			     params -> tool -> answer,
 			     params -> cat -> key);
 	  }
+    }
+
+    if (*action_mode == MODE_ZBULK) {
+	if (params -> bbox -> answers == NULL) {
+	    G_fatal_error (_("Tool %s requires option %s"),
+			   params -> tool -> answer,
+			   params -> bbox -> key);
+	}
+	if (params -> zbulk -> answers == NULL) {
+	    G_fatal_error (_("Tool %s requires option %s"),
+			   params -> tool -> answer,
+			   params -> zbulk -> key);
+	}
     }
 
     return 1;
