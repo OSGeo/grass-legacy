@@ -1006,7 +1006,8 @@ class BufferedWindow(wx.Window):
 
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex",
                                        "copyCats", "editLine", "flipLine",
-                                       "mergeLine", "snapLine", "connectLine"]:
+                                       "mergeLine", "snapLine", "connectLine",
+                                       "queryLine"]:
                 nselected = 0
                 # -> delete line || move line || move vertex
                 if digitToolbar.action in ["moveVertex", "editLine"]:
@@ -1040,6 +1041,12 @@ class BufferedWindow(wx.Window):
                         nselected = driver.SelectLinesByBox(pos1, pos2)
                         if nselected > 0:
                             self.copyCatsIds = driver.GetSelected()
+
+                elif digitToolbar.action == "queryLine":
+                    selected = self.parent.digit.SelectLinesByQuery(pos1, pos2)
+                    nselected = len(selected)
+                    if nselected > 0:
+                        driver.SetSelected(selected)
 
                 else:
                     # -> moveLine || deleteLine, etc. (select by box)
@@ -1368,7 +1375,8 @@ class BufferedWindow(wx.Window):
             elif digit.action in ["deleteLine", "moveLine", "splitLine",
                                   "addVertex", "removeVertex", "moveVertex",
                                   "copyCats", "flipLine", "mergeLine",
-                                  "snapLine", "connectLine", "copyLine"]:
+                                  "snapLine", "connectLine", "copyLine",
+                                  "queryLine"]:
                 # varios tools -> unselected selected features
                 self.parent.digit.driver.Unselect()
                 if digit.action in ["moveLine", "moveVertex", "editLine"] and \
