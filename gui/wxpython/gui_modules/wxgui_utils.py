@@ -245,7 +245,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         self.popupMenu = wx.Menu()
         # general item
-        self.popupMenu.Append(self.popupID1, text=_("Delete"))
+        self.popupMenu.Append(self.popupID1, text=_("Remove"))
         self.Bind(wx.EVT_MENU, self.gismgr.DeleteLayer, id=self.popupID1)
 
         if ltype != "command": # rename
@@ -279,12 +279,19 @@ class LayerTree(CT.CustomTreeCtrl):
             layer = self.layers[self.layer_selected].maplayer
             # enable editing only for vector map layers available in the current mapset
             digit = self.mapdisplay.digittoolbar
-            if layer.GetMapset() != grassenv.env["MAPSET"] or \
-               (digit and digit.layerSelectedID != None and \
-                digit.layers[digit.layerSelectedID] == layer):
+            if layer.GetMapset() != grassenv.env["MAPSET"]:
+                # only vector map in current mapset can be edited
                 self.popupMenu.Enable (self.popupID5, False)
-                if layer.GetMapset() == grassenv.env["MAPSET"]:
-                    self.popupMenu.Enable (self.popupID6, True)
+                self.popupMenu.Enable (self.popupID6, False)
+            elif digit and digit.layerSelectedID != None:
+                # vector map already edited
+                if digit.layers[digit.layerSelectedID] == layer:
+                    self.popupMenu.Enable (self.popupID5, False)
+                    self.popupMenu.Enable(self.popupID6, True)
+                    self.popupMenu.Enable(self.popupID1, False)
+                else:
+                    self.popupMenu.Enable(self.popupID5, False)
+                    self.popupMenu.Enable(self.popupID6, False)
 
         # raster
         elif mltype and mltype == "raster":
@@ -578,6 +585,9 @@ class LayerTree(CT.CustomTreeCtrl):
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
             self.mapdisplay.ReRender(None)
+
+        if self.mapdisplay.digittoolbar:
+            self.mapdisplay.digittoolbar.UpdateListOfLayers (updateTool=True)
 
     def OnLayerChecked(self, event):
         """Enable/disable given layer item"""

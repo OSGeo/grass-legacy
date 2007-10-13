@@ -108,7 +108,7 @@ class MapToolbar(AbstractToolbar):
             ("", "", "", "", "", "", ""),
             (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
-             self.mapdisplay.Pointer),
+             self.mapdisplay.OnPointer),
             (self.query, "query", Icons["query"].GetBitmap(),
              wx.ITEM_RADIO, Icons["query"].GetLabel(), Icons["query"].GetDesc(),
              self.mapdisplay.OnQuery),
@@ -195,7 +195,7 @@ class GRToolbar(AbstractToolbar):
             ("", "", "", "", "", "", ""),
             (self.gcpset, "gcpset", Icons["gcpset"].GetBitmap(),
              wx.ITEM_RADIO, Icons["gcpset"].GetLabel(), Icons["gcpset"].GetDesc(),
-             self.mapdisplay.Pointer),
+             self.mapdisplay.OnPointer),
             (self.pan, "pan", Icons["pan"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),
              self.mapdisplay.OnPan),
@@ -420,13 +420,13 @@ class DigitToolbar(AbstractToolbar):
     def OnDisplayCats(self, event):
         """Display/update categories"""
         Debug.msg(2, "Digittoolbar.OnDisplayCats():")
-        self.action="displayCategories"
+        self.action="displayCats"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnDisplayAttr(self, event):
         """Display/update attributes"""
         Debug.msg(2, "Digittoolbar.OnDisplayAttr():")
-        self.action="displayAttributes"
+        self.action="displayAttrs"
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnCopyCats(self, event):
@@ -508,7 +508,7 @@ class DigitToolbar(AbstractToolbar):
         """Connect selected lines/boundaries"""
         Debug.msg(2, "Digittoolbar.OnConnect():")
         self.action="connectLine"
-        self.parent.MapWindow.mouse['box'] = 'box'
+        self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnQuery(self, event):
         """Query selected lines/boundaries"""
@@ -520,7 +520,7 @@ class DigitToolbar(AbstractToolbar):
         """Z bulk-labeling selected lines/boundaries"""
         Debug.msg(2, "Digittoolbar.OnZBulk():")
         self.action="zbulkLine"
-        self.parent.MapWindow.mouse['box'] = 'box'
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnSelectMap (self, event):
         """
@@ -530,13 +530,20 @@ class DigitToolbar(AbstractToolbar):
         firstly terminated. The map layer is closed. After this the
         selected map layer activated for editing.
         """
-        if self.layerSelectedID: # deactive map layer for editing
+
+        if self.layerSelectedID == event.GetSelection():
+            return False
+
+        if self.layerSelectedID != None: # deactive map layer for editing
             self.StopEditing(self.layers[self.layerSelectedID])
 
         # select the given map layer for editing
-        self.layerSelectedID = self.combo.GetCurrentSelection()
+        self.layerSelectedID = event.GetSelection()
         self.StartEditing(self.layers[self.layerSelectedID])
 
+        event.Skip()
+
+        return True
     def StartEditing (self, layerSelected):
         """
         Start editing of selected vector map layer.
@@ -587,7 +594,8 @@ class DigitToolbar(AbstractToolbar):
                        (layerSelected.name))
             self.combo.SetValue ('Select vector map')
 
-            # re-active layer
+            # re-active layer 
+            # TODO: if status doesn't change in layer tree...
             self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
@@ -637,6 +645,12 @@ class DigitToolbar(AbstractToolbar):
 
             self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
                                      choices=layerNameList, size=(150, -1), style=wx.CB_READONLY)
+            
+            # update layer index
+            try:
+                self.layerSelectedID = layerNameList.index(value)
+            except ValueError:
+                self.layerSelectedID = None
 
             self.comboid = self.toolbar[0].InsertControl(0, self.combo)
 

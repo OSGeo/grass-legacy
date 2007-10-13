@@ -9,6 +9,7 @@ CLASSES:
  * CDisplayDriver
  * DigitSettingsDialog
  * DigitCategoryDialog
+ * DigitZBulkDialog
 
 PURPOSE: Digitization tool wxPython GUI prototype
 
@@ -517,7 +518,7 @@ class VEdit(AbstractDigit):
         
         return ids
 
-    def SelectLinesByQuery(self, pos1, pos2, query="length"):
+    def SelectLinesByQuery(self, pos1, pos2):
         """Select features by query"""
 
         vEdit = (['v.edit',
@@ -528,8 +529,9 @@ class VEdit(AbstractDigit):
                   'query=%s' % self.settings['query'],
                   'thresh=%f' % self.settings['queryLength'][1]])
 
-        if self.settings['queryLength'][0] == "longer than":
-            vEdit.append('-r')
+        if self.settings['query'] == "length" and \
+                self.settings['queryLength'][0] == "longer than":
+            vEdit.append('-r') # FIXBUG: reverse selection regardless of bbox
 
         vEditCmd = gcmd.Command(vEdit)
         
@@ -544,6 +546,17 @@ class VEdit(AbstractDigit):
                       ",".join(["%d" % v for v in ids]))
         
         return ids
+
+    def ZBulkLine(self, pos1, pos2, value, step):
+        """Provide z bulk-labeling (automated assigment of z coordinate
+        to 3d lines"""
+        
+        gcmd.Command(['v.edit',
+                      '--q',
+                      'map=%s' % self.map,
+                      'tool=zbulk',
+                      'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1]),
+                      'zbulk=%f,%f' % (value, step)])
 
 class VDigit(AbstractDigit):
     """
@@ -742,11 +755,6 @@ class CDisplayDriver(AbstractDisplayDriver):
                       (",".join(["%d" % v for v in id])))
 
         return id 
-
-    def Unselect(self):
-        """Delesect selected vector features"""
-
-        self.__display.Unselect()
 
     def SetSelected(self, id):
         """Set selected vector features"""
@@ -1065,6 +1073,7 @@ class DigitSettingsDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Choose query tool"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
+        LocUnits = self.parent.MapWindow.Map.ProjInfo()['units']
         #
         # length
         #
@@ -1081,7 +1090,7 @@ class DigitSettingsDialog(wx.Dialog):
                                             initial=1,
                                             min=0, max=1e6)
         self.queryLengthValue.SetValue(settings["queryLength"][1])
-        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("map units"))
+        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label="%s" % LocUnits)
         flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.queryLengthSL, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.queryLengthValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
@@ -1101,7 +1110,7 @@ class DigitSettingsDialog(wx.Dialog):
                                        initial=1,
                                        min=0, max=1e6)
         self.queryDangleValue.SetValue(settings["queryDangle"][0])
-        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("map units"))
+        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label="%s" % LocUnits)
         flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.queryDangleValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(units, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -1305,7 +1314,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         Debug.msg(3, "DigitCategoryDialog(): line=%d, cats=%s" % \
                       (self.line, self.cats))
 
-        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title, style=style)
+        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title, style=style, pos=pos)
 
         # list of categories
         box = wx.StaticBox(parent=self, id=wx.ID_ANY,
@@ -1652,3 +1661,65 @@ class CategoryListCtrl(wx.ListCtrl,
         self.currentItem = 0
 
         return itemData
+
+class DigitZBulkDialog(wx.Dialog):
+    """
+    Dialog used for Z bulk-labeling tool
+    """
+    def __init__(self, parent, title, nselected, style=wx.DEFAULT_DIALOG_STYLE):
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+
+        self.parent = parent # mapdisplay.BufferedWindow class instance
+
+        # panel  = wx.Panel(parent=self, id=wx.ID_ANY)
+
+        border = wx.BoxSizer(wx.VERTICAL)
+        
+        txt = wx.StaticText(parent=self,
+                            label=_("%d lines selected for z bulk-labeling") % nselected);
+        border.Add(item=txt, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+
+        box   = wx.StaticBox (parent=self, id=wx.ID_ANY, label=" %s " % _("Set value"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+
+        # starting value
+        txt = wx.StaticText(parent=self,
+                            label=_("Starting value"));
+        self.value = wx.SpinCtrl(parent=self, id=wx.ID_ANY, size=(150, -1),
+                                 initial=0,
+                                 min=-1e6, max=1e6)
+        flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.value, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+
+        # step
+        txt = wx.StaticText(parent=self,
+                            label=_("Step"))
+        self.step  = wx.SpinCtrl(parent=self, id=wx.ID_ANY, size=(150, -1),
+                                 initial=0,
+                                 min=0, max=1e6)
+        flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.step, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+
+        # buttons
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnOk = wx.Button(self, wx.ID_OK)
+        btnOk.SetDefault()
+
+        # sizers
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(btnCancel)
+        btnSizer.AddButton(btnOk)
+        btnSizer.Realize()
+        
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        mainSizer.Add(item=border, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
