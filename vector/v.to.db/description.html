@@ -11,24 +11,24 @@ The units <em>miles</em>, <em>feet</em>, <em>meters</em> and
 When using <em>option=coor</em> on a vector area map, 
 only coordinates of centroids with unique category will be reported.
 <p>
-When calculating perimeters in Latitude-Longitude locations, the
-geodesic distance between the vertices is used.
+When calculating perimeters in Latitude-Longitude locations, the geodesic
+distance between the vertices is used.
 <p>
-If the module is apparently slow <b>and</b> the map attributes are stored 
-in an external DBMS such as PostgreSQL, it is highly recommended to
-create an index on the key (category) column.
+If the module is apparently slow <em>and</em> the map attributes are stored in
+an external DBMS such as PostgreSQL, it is highly recommended to create an index
+on the key (category) column.
 <p>
 Uploading the vector map attributes to a database requires a table attached to
-a given input vector <em>layer</em>. The <em>print only </em>(<em>-p</em>)
-mode doesn't require a table. Use
-<em><a href=db.execute.html>db.execute</a></em> or
-<em><a href=v.db.addtable.html>v.db.addtable</a></em> to create a table if
-needed. 
+a given input vector <em>layer</em>. The <b>print only</b> (<b>-p</b>) mode
+doesn't require a table. Use <em><a href=db.execute.html>db.execute</a></em>
+or <em><a href=v.db.addtable.html>v.db.addtable</a></em> to create a table if
+needed.
 <p>
-Updating the table has to be done column-wise. The <em>column</em> must be present in
-the table, except when using the <em>print only </em>(<em>-p</em>) mode. Use
-<em><a href=db.execute.html>db.execute</a></em> or
-<em><a href=v.db.addcol.html>v.db.addcol</a></em> to add new columns if needed.
+Updating the table has to be done column-wise. The <em>column</em> must be
+present in the table, except when using the <b>print only</b> (<b>-p</b>)
+mode. Use <em><a href=db.execute.html>db.execute</a></em> or
+<em><a href=v.db.addcol.html>v.db.addcol</a></em> to add new columns if
+needed.
 
 <H2>EXAMPLES</H2>
 
@@ -65,7 +65,7 @@ v.to.db map=pointsmap option=coor col=x,y,z
 </pre></div>
 
 <p>
-Transfer of attributes from character column (with numeric contents) to new
+Transfer attributes from a character column (with numeric contents) to a new
 integer column:<br>
 <div class="code"><pre>
 v.db.addcol usa_income_employment2002 col="FIPS_NUM integer"
@@ -73,13 +73,15 @@ v.to.db usa_income_employment2002 option=query col=FIPS_NUM qcol=STATE_FIPS
 </pre></div>
 
 <P>
-Upload category numbers of left/right polygons neighboring boundaries to attribute table:<br>
+Upload category numbers of left and right area, to an attribute table of
+boundaries common for the areas:<br>
 <div class="code"><pre>
-# add boundary categories into geometry at layer 2:
+# add categories for boundaries of the input vector map, in layer 2:
 v.category soils out=mysoils layer=2 type=boundary option=add
-# add table with left/right column to layer 2:
+# add a table with columns named "left" and "right" to layer 2 of the input
+# vector map:
 v.db.addtable mysoils layer=2 col="left integer,right integer"
-# upload categories of left/right polygons:
+# upload categories of left and right areas:
 v.to.db mysoils option=sides col=left,right layer=2
 # display the result:
 v.db.select mysoils layer=2
@@ -87,33 +89,31 @@ v.db.select mysoils layer=2
 
 <h3>Printing reports</h3>
 
-Print x,y,z coordinates using dummy columns. The columns don't
-have to exist in the table for the features to be reported. Even
-a table is not required:
-
+Report x,y,z coordinates of points in the input vector map:<br>
 <div class="code"><pre>
-v.to.db -p bugsites option=coor type=point column=dummy1,dummy2
+v.to.db -p bugsites option=coor type=point
 </pre></div>
 
-Report all area sizes of a map:<br>
+Report all area sizes of the input vector map:<br>
 <div class="code"><pre>
 v.to.db -p soils option=area type=boundary units=h
 </pre></div>
 
 <p>
-Report all area sizes of a map, sorted by category number:<br>
+Report all area sizes of the input vector map, in hectares, sorted by category
+number (requires GNU <em>sort</em> utility installed):<br>
 <div class="code"><pre>
 v.to.db -p soils option=area type=boundary units=h | sort -n
 </pre></div>
 
 <p>
-Report all line lengths of a map:<br>
+Report all line lengths of the input vector map, in kilometers:<br>
 <div class="code"><pre>
 v.to.db -p roads option=length type=line units=k
 </pre></div>
 
 <p>
-Report number of features for each category in map:<br>
+Report number of features for each category in the input vector map:<br>
 <div class="code"><pre>
 v.to.db -p roads option=count type=line
 </pre></div>
