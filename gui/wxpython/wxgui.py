@@ -141,7 +141,7 @@ class GMFrame(wx.Frame):
 #        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # do layout
-        self.SetTitle(_("GRASS Layer Manager"))
+        self.SetTitle(_("GRASS GIS Layer Manager"))
         self.SetMinSize((500, 400))
         self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
@@ -813,12 +813,12 @@ class GMFrame(wx.Frame):
 
         layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
         if layerName:
-            message = _("Are you sure you want delete layer <" + layerName + ">?")
+            message = _("Are you sure you want remove layer <" + layerName + ">?")
         else:
-            message = _("Are you sure you want delete this layer?")
+            message = _("Are you sure you want remove selected layer?")
 
         dlg = wx.MessageDialog (parent=self, message=message,
-                                caption=_("Delete layer"),
+                                caption=_("Remove layer from layer tree"),
                                 style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
         if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:

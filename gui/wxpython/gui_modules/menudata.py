@@ -542,9 +542,9 @@ class Data:
 #              ("","","", "")
               )),
           ("Help", (
-              ("GRASS help", "GRASS help", "self.RunMenuCmd", ['g.manual', '-i']),
-              ("GIS Manager help", "GIS Manager help", "self.RunMenuCmd", ['g.manual', 'gis.m']),
-              ("About GRASS", "About GRASS", "self.OnAboutGRASS", ""),
+              ("GRASS GIS help", "GRASS GIS help", "self.RunMenuCmd", ['g.manual', '-i']),
+              ("GRASS GIS Layer Manager help", "GRASS GIS Layer Manager help", "self.RunMenuCmd", ['g.manual', 'gis.m']),
+              ("About GRASS GIS", "About GRASS GIS", "self.OnAboutGRASS", ""),
 #              ("About system (not functional)", "About system", "self.OnMenuCmd", ""),
 #              ("","","", "")
               )))]

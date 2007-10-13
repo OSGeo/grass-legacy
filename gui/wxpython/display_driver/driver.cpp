@@ -742,11 +742,11 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
     dx = std::fabs(x2 - x1);
     dy = std::fabs(y2 - y1);
         
-    Vect_append_point(bbox, x1, y1, 0.0);
-    Vect_append_point(bbox, x2, y1, 0.0);
-    Vect_append_point(bbox, x2, y2, 0.0);
-    Vect_append_point(bbox, x1, y2, 0.0);
-    Vect_append_point(bbox, x1, y1, 0.0);
+    Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
+    Vect_append_point(bbox, x2, y1,  PORT_DOUBLE_MAX);
+    Vect_append_point(bbox, x2, y2, -PORT_DOUBLE_MAX);
+    Vect_append_point(bbox, x1, y2,  PORT_DOUBLE_MAX);
+    Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
         
     Vect_select_lines_by_polygon(mapInfo, bbox,
 				 0, NULL,
@@ -837,23 +837,6 @@ bool DisplayDriver::IsSelected(int line)
 }
 
 /**
-   \brief Unselect selected features by user
-
-   Clear list of ids of selected vector objects
-
-   \param
-
-   \return
-*/
-void DisplayDriver::Unselect()
-{
-    selected.clear();
-    drawSegments = false;
-
-    return;
-}
-
-/**
    \brief Get ids of selected objects
 
    \param[in] grassId if true return GRASS line ids
@@ -922,6 +905,9 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 int DisplayDriver::SetSelected(std::vector<int> id)
 {
     selected = id;
+
+    if (selected.size() <= 0)
+	drawSegments = false;
 
     return 1;
 }
