@@ -16,7 +16,7 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 
 import os
 
-import gcmd as cmd
+import gcmd
 
 def GetTempfile(pref=None):
     """
@@ -28,7 +28,7 @@ def GetTempfile(pref=None):
         Path to file name (string) or None
     """
 
-    tempfileCmd = cmd.Command(["g.tempfile",
+    tempfileCmd = gcmd.Command(["g.tempfile",
                             "pid=%d" %
                             os.getpid()])
 

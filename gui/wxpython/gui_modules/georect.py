@@ -62,7 +62,7 @@ import grassenv
 import menuform
 import select
 import disp_print
-import gcmd as cmd
+import gcmd
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -155,15 +155,15 @@ class GeorectWizard(object):
         #set environmental variables
         cmdlist = ['g.gisenv', 'get=GISDBASE']
         global grassdatabase
-        grassdatabase = cmd.Command(cmdlist).module_stdout.read().strip()
+        grassdatabase = gcmd.Command(cmdlist).module_stdout.read().strip()
 
         cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
         global curr_location
-        curr_location = cmd.Command(cmdlist).module_stdout.read().strip()
+        curr_location = gcmd.Command(cmdlist).module_stdout.read().strip()
 
         cmdlist = ['g.gisenv', 'get=MAPSET']
         global curr_mapset
-        curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
+        curr_mapset = gcmd.Command(cmdlist).module_stdout.read().strip()
 
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Setup for georectification")
@@ -234,10 +234,10 @@ class GeorectWizard(object):
     def SwitchLocMapset(self, location, mapset):
 
         cmdlist = ['g.gisenv', 'set=LOCATION_NAME=%s' % location]
-        cmd.Command(cmdlist)
+        gcmd.Command(cmdlist)
 
         cmdlist = ['g.gisenv', 'set=MAPSET=%s' % mapset]
-        cmd.Command(cmdlist)
+        gcmd.Command(cmdlist)
 
     def onWizFinished(self):
         global grassdatabase

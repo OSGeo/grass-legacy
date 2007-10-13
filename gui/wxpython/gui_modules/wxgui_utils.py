@@ -35,7 +35,7 @@ import select
 import menuform
 import mapdisp
 import render
-import gcmd as cmd
+import gcmd
 import grassenv
 import histogram
 from debug import Debug as Debug
@@ -1101,7 +1101,7 @@ class GMConsole(wx.Panel):
                 else:
                     # process GRASS command with argument
                     cmdlist.append('--verbose')
-                    p = cmd.Command(cmdlist)
+                    p = gcmd.Command(cmdlist)
 
 
                 # deactivate computational region and return to display settings

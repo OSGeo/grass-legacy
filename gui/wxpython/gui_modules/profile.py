@@ -50,7 +50,7 @@ import render
 import menuform
 import disp_print
 import select
-import gcmd as cmd
+import gcmd
 import gui_modules.defaultfont as defaultfont
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -288,7 +288,7 @@ class ProfileFrame(wx.Frame):
 
         # set self.ylabel to match units if they exist
         cmdlist = ['r.info', 'map=%s' % self.rast1, '-u', '--quiet']
-        p = cmd.Command(cmdlist)
+        p = gcmd.Command(cmdlist)
         try:
             units1 = p.module_stdout.read().strip().split('=')[1]
         except:
@@ -305,7 +305,7 @@ class ProfileFrame(wx.Frame):
         if self.rast2 != '':
             self.datalist2 = self.CreateDatalist(self.rast2, self.coordstr)
             cmdlist = ['r.info', 'map=%s' % self.rast2, '-u', '--quiet']
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             try:
                 units2 = p.module_stdout.read().strip().split('=')[1]
             except:
@@ -324,7 +324,7 @@ class ProfileFrame(wx.Frame):
         if self.rast3 != '':
             self.datalist3 = self.CreateDatalist(self.rast3, self.coordstr)
             cmdlist = ['r.info', 'map=%s' % self.rast3, '-u', '--quiet']
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             try:
                 units3 = p.module_stdout.read().strip().split('=')[1]
             except:
@@ -348,7 +348,7 @@ class ProfileFrame(wx.Frame):
                 # get value of raster cell at coordinate point
                 try:
                     cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (east,north)]
-                    p = cmd.Command(cmdlist)
+                    p = gcmd.Command(cmdlist)
                     if p.returncode == 0:
                         output = p.module_stdout.read().strip().split('|')
                         val = output[3]
@@ -427,7 +427,7 @@ class ProfileFrame(wx.Frame):
         datalist = []
         try:
 #            cmdlist = ['r.profile', 'input=%s' % raster, 'profile=%s' % coords, 'null=nan', '--quiet']
-#            p = cmd.Command(cmdlist, wait=False)
+#            p = gcmd.Command(cmdlist, wait=False)
 #            output = p.module_stdout.read().strip().split('\n')
 #            if p.returncode == 0:
 #                for outline in output:

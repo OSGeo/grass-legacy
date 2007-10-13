@@ -37,7 +37,7 @@ import wx
 import wx.lib.mixins.listctrl as listmix
 
 import grassenv
-import gcmd as cmd
+import gcmd
 from debug import Debug as Debug
 
 class Log:
@@ -94,7 +94,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # building the columns
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
-        dbDescribe = cmd.Command (cmd = ["db.describe", "-c",
+        dbDescribe = gcmd.Command (cmd = ["db.describe", "-c",
            "table=%s" % self.parent.tablename,
            "driver=%s" % self.parent.driver,
            "database=%s" % self.parent.database])
@@ -171,7 +171,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                     "driver=%s" % self.parent.driver]
 
         # run command
-        vDbSelect = cmd.Command (cmd=cmdv)
+        vDbSelect = gcmd.Command (cmd=cmdv)
 
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
@@ -271,9 +271,9 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                    "width=3"]
             #print cmd
             if self.icon:
-                cmd.append("icon=%s" % (self.icon))
+                gcmd.append("icon=%s" % (self.icon))
             if self.pointsize:
-                cmd.append("size=%s" % (self.pointsize))
+                gcmd.append("size=%s" % (self.pointsize))
 
             self.qlayer = self.map.AddLayer(type="vector", name='qlayer', command=cmd,
                                             l_active=True, l_hidden=True, l_opacity=1, l_render=False)
@@ -492,7 +492,7 @@ class AttributeManager(wx.Frame):
                  pointdata=None):
 
         # get list of attribute tables (TODO: open more tables)
-        vDbConnect = cmd.Command (cmd=["v.db.connect", "-g", "map=%s" % vectmap])
+        vDbConnect = gcmd.Command (cmd=["v.db.connect", "-g", "map=%s" % vectmap])
 
         try:
             if vDbConnect.returncode == 0:
@@ -875,7 +875,7 @@ class VectorAttributeInfo:
 
     def __CheckDBConnection(self):
         """Check DB connection"""
-        layerCommand = cmd.Command(cmd=["v.db.connect",
+        layerCommand = gcmd.Command(cmd=["v.db.connect",
                                         "-g", "--q",
                                         "map=%s" % self.map,],
                                    dlgMsg='txt')
@@ -898,7 +898,7 @@ class VectorAttributeInfo:
         """Describe linked tables"""
         for layer in self.layers.keys():
             # determine column names and types
-            columnsCommand = cmd.Command (cmd=["v.db.connect", "-c", "--q",
+            columnsCommand = gcmd.Command (cmd=["v.db.connect", "-c", "--q",
                                                "map=%s" % self.map,
                                                "layer=%d" % layer])
             table = self.layers[layer]["table"]
@@ -921,7 +921,7 @@ class VectorAttributeInfo:
         Return line id or None if no line is found"""
         line = None
         nselected = 0
-        cmdWhat = cmd.Command(cmd=['v.what',
+        cmdWhat = gcmd.Command(cmd=['v.what',
                                    '-a', '--q',
                                    'map=%s' % self.map,
                                    'east_north=%f,%f' % \
@@ -965,7 +965,7 @@ class VectorAttributeInfo:
 
         table = self.layers[layer]["table"] # get table desc
         # select values (only one record)
-        selectCommand = cmd.Command(cmd=["v.db.select", "-v", "--q",
+        selectCommand = gcmd.Command(cmd=["v.db.select", "-v", "--q",
                                          "map=%s" % self.map,
                                          "layer=%d" % layer,
                                          "where=cat=%d" % cat])
