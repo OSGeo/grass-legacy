@@ -9,7 +9,7 @@
  *               
  * PURPOSE:      Calculates distance from a point to nearest line or point in vector layer. 
  *               
- * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -48,7 +48,7 @@ typedef struct {
     int    from_cat;     /* category (from) */
     int    count;    /* number of features already found */ 
     int    to_cat;  /* category (to) */
-    double from_x, from_y, to_x, to_y;    /* coordinates of nearest point */
+    double from_x, from_y, from_z, to_x, to_y, to_z;    /* coordinates of nearest point */
     double from_along, to_along;    /* distance along a linear feature to the nearest point */
     double to_angle; /* angle of linear feature in nearest point */
     double dist;  /* distance to nearest feature */
@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
     UPLOAD *Upload; /* zero terminated */
     int ftype, fcat, tcat, count;
     int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
-    double tx, ty, dist, talong, tmp_tx, tmp_ty, tmp_dist, tmp_talong;
+    double tx, ty, tz, dist, talong, tmp_tx, tmp_ty, tmp_tz, tmp_dist, tmp_talong;
     struct field_info *Fi, *toFi;
     dbString stmt, dbstr;
     dbDriver *driver, *to_driver;
@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector, database, attribute table");
     module->description =
-	_("Find the nearest element in vector 'to' for elements in vector 'from'. "
+	_("Finds the nearest element in vector 'to' for elements in vector 'from'. "
 	  "Various information about this relation may be uploaded to the "
 	  "attribute table of input vector 'from' or printed to stdout.");
 
@@ -145,7 +145,7 @@ int main (int argc, char *argv[])
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
     out_opt->required    = NO;
-    out_opt->description = _("New vector map containing lines connecting nearest elements");
+    out_opt->description = _("Name for output vector map containing lines connecting nearest elements");
     
     max_opt = G_define_option();
     max_opt->key = "dmax";
@@ -163,54 +163,46 @@ int main (int argc, char *argv[])
     upload_opt->description = _("Values describing the relation between two nearest features");
     upload_opt->descriptions =
 	 _("cat;category of the nearest feature;"
-	"dist;minimum distance to nearest feature;"
-	"to_x;x coordinate of the nearest point on 'to' feature;"
-	"to_y;y coordinate of the nearest point on 'to' feature;"
-	"to_along;distance to the nearest point on 'from' feature along linear feature;"
-	"to_angle;angle of linear feature in nearest point, counterclockwise from positive " 
-	    "x axis, in radians, which is between -PI and PI inclusive;"
-	"to_attr;attribute of nearest feature given by to_column option");
-     /*	"from_x - x coordinate of the nearest point on 'from' feature;" */
-     /*	"from_y - y coordinate of the nearest point on 'from' feature;" */
-     /* "from_along - distance to the nearest point on 'from' feature along linear feature;" */
+	   "dist;minimum distance to nearest feature;"
+	   "to_x;x coordinate of the nearest point on 'to' feature;"
+	   "to_y;y coordinate of the nearest point on 'to' feature;"
+	   "to_along;distance to the nearest point on 'from' feature along linear feature;"
+	   "to_angle;angle of linear feature in nearest point, counterclockwise from positive " 
+	   "x axis, in radians, which is between -PI and PI inclusive;"
+	   "to_attr;attribute of nearest feature given by to_column option");
+    /*	"from_x - x coordinate of the nearest point on 'from' feature;" */
+    /*	"from_y - y coordinate of the nearest point on 'from' feature;" */
+    /* "from_along - distance to the nearest point on 'from' feature along linear feature;" */
     
-    column_opt = G_define_option();
-    column_opt->key = "column";
-    column_opt->type = TYPE_STRING;
+    column_opt = G_define_standard_option(G_OPT_COLUMN);
     column_opt->required = YES;
     column_opt->multiple = YES;
     column_opt->description =
 	_("Column name(s) where values specified by 'upload' option will be uploaded");
     column_opt->guisection  = _("From_map");
 
-    to_column_opt = G_define_option();
+    to_column_opt = G_define_standard_option(G_OPT_COLUMN);
     to_column_opt->key = "to_column";
-    to_column_opt->type = TYPE_STRING;
-    to_column_opt->required = NO;
-    to_column_opt->multiple = NO;
     to_column_opt->description =
 	_("Column name of nearest feature (used with upload=to_attr)");
     to_column_opt->guisection  = _("To_map");
 
-    table_opt = G_define_option();
-    table_opt->key = "table";
-    table_opt->type = TYPE_STRING;
-    table_opt->required = NO;
-    table_opt->multiple = NO;
+    table_opt = G_define_standard_option(G_OPT_TABLE);
     table_opt->description =
-	_("The name of the table created for output when the distance to all flag is used");
+      _("Name of table created for output when the distance to all flag is used");
 
     print_flag = G_define_flag();
     print_flag->key = 'p';
     print_flag->label = _("Print output to stdout, don't update attribute table");
     print_flag->description =
-	_("First column is always category of 'from' feature called from_cat");
+      _("First column is always category of 'from' feature called from_cat");
     
     all_flag = G_define_flag();
     all_flag->key = 'a';
     all_flag->label =  _("Calculate distances to all features within the threshold");
     all_flag->description = _("The output is written to stdout but may be uploaded "
-	"to a new table created by this module. From categories are may be multiple."); /* huh? */
+			      "to a new table created by this module. "
+			      "From categories are may be multiple."); /* huh? */
     
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
@@ -277,10 +269,11 @@ int main (int argc, char *argv[])
 
     /* Open 'from' vector */
     if ((mapset = G_find_vector2 (from_opt->answer, "")) == NULL )
-	G_fatal_error(_("Could not find input map <%s>"), from_opt->answer);
+	G_fatal_error(_("Vector map <%s> not found"), from_opt->answer);
 
     if ( !print_flag->answer && strcmp(mapset,G_mapset()) != 0 )
-       G_fatal_error(_("Vector <%s> is not in user mapset and cannot be updated") , from_opt->answer);
+	G_fatal_error(_("Vector map <%s> is not in user mapset and cannot be updated") ,
+		      from_opt->answer);
 
     Vect_set_open_level (2);
     Vect_open_old (&From, from_opt->answer, mapset);
@@ -303,7 +296,7 @@ int main (int argc, char *argv[])
     /* Calc maxdist */
     if ( max < 0 ) {
         BOUND_BOX fbox, tbox;
-	double dx, dy;
+	double dx, dy, dz;
 
 	Vect_get_map_box ( &From, &fbox );
 	Vect_get_map_box ( &To, &tbox );
@@ -312,8 +305,12 @@ int main (int argc, char *argv[])
 
 	dx = fbox.E - fbox.W;
 	dy = fbox.N - fbox.S;
+	if (Vect_is_3d(&From))
+	    dz = fbox.T - fbox.B;
+	else
+	    dz = 0.0;
 
-	max = sqrt ( dx*dx + dy*dy );
+	max = sqrt ( dx*dx + dy*dy + dz*dz);
 
 	G_debug ( 2, "max = %f", max );
     }
@@ -326,11 +323,13 @@ int main (int argc, char *argv[])
 
 	if (!all) {
 	    Fi = Vect_get_field ( &From, from_field);
-	    if ( Fi == NULL ) G_fatal_error(_("Cannot get layer info"));
+	    if ( Fi == NULL ) G_fatal_error(_("Database connection not defined for layer %d"),
+					    from_field);
 	    
 	    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	    if ( driver == NULL ) 
-		G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+		G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+			      Fi->database, Fi->driver);
 
 	    /* check if column exists */
 	    i = 0;
@@ -350,18 +349,21 @@ int main (int argc, char *argv[])
 	} else {
 	    driver = db_start_driver_open_database ( NULL, NULL );
 	    if ( driver == NULL ) 
-		G_fatal_error(_("Cannot open default database"));
+		G_fatal_error(_("Unable to open default database"));
 	}
     } 
 
     to_driver = NULL;
     if ( to_column_opt->answer ) { 
 	toFi = Vect_get_field ( &To, to_field);
-	if ( toFi == NULL ) G_fatal_error(_("Cannot get layer info"));
+	if ( toFi == NULL )
+	    G_fatal_error(_("Database connection not defined for layer %d "),
+			  to_field);
 	
 	to_driver = db_start_driver_open_database ( toFi->driver, toFi->database );
 	if ( to_driver == NULL ) 
-	    G_fatal_error(_("Cannot open database %s by driver %s"), toFi->database, toFi->driver);
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
+			  toFi->database, toFi->driver);
 
 	/* check if to_column exists */
 	db_get_column (to_driver, toFi-> table, to_column_opt -> answer, &column);
@@ -480,8 +482,9 @@ int main (int argc, char *argv[])
 	    for (i = 0; i < List->n_values; i++) {
 		Vect_read_line ( &To, TPoints, TCats, List->value[i] );
 
-		tseg = Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, &tmp_talong);
+		tseg = Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], FPoints->z[0],
+					    (Vect_is_3d(&From) && Vect_is_3d(&To)) ? WITH_Z : WITHOUT_Z, 
+					    &tmp_tx, &tmp_ty, &tmp_tz, &tmp_dist, NULL, &tmp_talong);
 
 		Vect_point_on_line ( TPoints, tmp_talong, NULL, NULL, NULL, &tmp_tangle, NULL );
 
@@ -504,8 +507,10 @@ int main (int argc, char *argv[])
 		    near->dist = tmp_dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
+		    near->from_z = FPoints->z[0];
 		    near->to_x = tmp_tx;
 		    near->to_y = tmp_ty;    
+		    near->to_z = tmp_tz;
 		    near->to_along = tmp_talong; /* 0 for points */
 		    near->to_angle = tmp_tangle;
 		    near->count++;
@@ -517,6 +522,7 @@ int main (int argc, char *argv[])
 			dist = tmp_dist;
 			tx = tmp_tx;
 			ty = tmp_ty;
+			tz = tmp_tz;
 			talong = tmp_talong;
 			tangle = tmp_tangle;
 		    }
@@ -535,8 +541,10 @@ int main (int argc, char *argv[])
 		    near->dist = dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
+		    near->from_z = FPoints->z[0];
 		    near->to_x = tx;
 		    near->to_y = ty;    
+		    near->to_z = tz;
 		    near->to_along = talong; /* 0 for points */
 		    near->to_angle = tangle;
 		}
@@ -581,12 +589,13 @@ int main (int argc, char *argv[])
 		} else if (  Vect_point_in_poly (FPoints->x[0], FPoints->y[0], TPoints) > 0) { /* in isle */
 		    nisles = Vect_get_area_num_isles ( &To, area );
 		    for ( j = 0; j < nisles; j++ ) {
-			double tmp2_dist, tmp2_tx, tmp2_ty; 
+			double tmp2_dist, tmp2_tx, tmp2_ty;
 
 			isle = Vect_get_area_isle ( &To, area, j );
 			Vect_get_isle_points ( &To, isle, TPoints);
-			Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-				   &tmp2_tx, &tmp2_ty, NULL, &tmp2_dist, NULL, NULL);
+			Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], FPoints->z[0],
+					     WITHOUT_Z,
+					     &tmp2_tx, &tmp2_ty, NULL, &tmp2_dist, NULL, NULL);
 
 			if ( j == 0 || tmp2_dist < tmp_dist ) {
 			    tmp_dist = tmp2_dist;
@@ -595,8 +604,9 @@ int main (int argc, char *argv[])
 			}
 		    }
 		} else { /* outside area */
-		    Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-			       &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, NULL);
+		    Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], FPoints->z[0],
+					 WITHOUT_Z,
+					 &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, NULL);
 
 		}
 	        if ( tmp_dist > max ) continue; /* not in threshold */
@@ -606,7 +616,7 @@ int main (int argc, char *argv[])
 		for ( j = 0; j < TCats->n_cats; j++) {
 		    if ( TCats->field[j] == to_field ) {
 			if ( tmp_tcat >= 0 ) 
-			    G_warning ( "more cats of to_layer" );
+			    G_warning (_("More cats of to_layer"));
 			tmp_tcat = TCats->cat[j];
 		    }
 		}
@@ -707,7 +717,7 @@ int main (int argc, char *argv[])
 	    G_fatal_error(_("Cannot create table: '%s'"), db_get_string(&stmt));
 
 	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error(_("Cannot grant privileges on table %s"), table_opt->answer);
+	    G_fatal_error(_("Unable to grant privileges on table <%s>"), table_opt->answer);
 		
     } else if (!all) { /* read existing cats from table */
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
@@ -1000,8 +1010,8 @@ int main (int argc, char *argv[])
         db_commit_transaction ( driver );
     
     /* print stats */
-    G_message(_("Statistics:"));
-    G_message(_("%d categories with more than 1 feature in <%s>"), update_dupl, from_opt -> answer);
+    G_message(_("%d categories with more than 1 feature in vector map <%s>"),
+	      update_dupl, from_opt -> answer);
     G_message(_("%d categories - no nearest feature found"), update_notfound);
 
     if ( !print_flag->answer ) { 
@@ -1029,8 +1039,10 @@ int main (int argc, char *argv[])
 
     Vect_close (&From);
     if ( Outp != NULL ) {
-       G_message(_("\nBuilding topology for %s ..."), Vect_get_name(Outp));
-       Vect_build ( Outp, stderr );	
+	if (G_verbose() > G_verbose_min())
+	    Vect_build ( Outp, stderr );
+	else
+	    Vect_build (Outp, NULL);
        Vect_close ( Outp );
     }
 
