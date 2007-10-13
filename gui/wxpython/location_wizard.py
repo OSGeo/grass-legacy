@@ -27,18 +27,19 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
 """
-import gui_modules
-import gui_modules.cmd as cmd
 import os
 import shutil
 import re
 import string
 import sys
+
 import wx
 import wx.lib.mixins.listctrl  as  listmix
 import wx.lib.rcsizer  as rcs
 import wx.wizard as wiz
 
+import gui_modules
+import gui_modules.gcmd as gcmd
 try:
     import subprocess
 except:
@@ -1186,7 +1187,7 @@ class RegionDef(wx.Frame):
         #Set current working environment to PERMANENT mapset in selected location in order to set default region (WIND)
         envval = {}
         cmdlist = ['g.gisenv']
-        p = cmd.Command(cmdlist)
+        p = gcmd.Command(cmdlist)
         if p.returncode == 0:
             output = p.module_stdout.read().strip("'").split(';\n')
             for line in output:
@@ -1199,7 +1200,7 @@ class RegionDef(wx.Frame):
                 pass
             else:
                 cmdlist = ['g.mapset', 'location=%s' % self.location, 'mapset=PERMANENT']
-                cmd.Command(cmdlist)
+                gcmd.Command(cmdlist)
         else:
             wx.MessageBox('A valid location must be selected')
             return
@@ -1207,7 +1208,7 @@ class RegionDef(wx.Frame):
         #Get current region settings
         region = {}
         cmdlist = ['g.region', '-gp']
-        p = cmd.Command(cmdlist)
+        p = gcmd.Command(cmdlist)
         if p.returncode == 0:
             output = p.module_stdout.read().split('\n')
             for line in output:
@@ -1355,7 +1356,7 @@ class RegionDef(wx.Frame):
     def OnSetButton(self,event=None):
         cmdlist = ['g.region', '-sgpa', 'n=%s' % self.north, 's=%s' % self.south, \
                    'e=%s' % self.east, 'w=%s' % self.west, 'res=%s' % self.res]
-        p = cmd.Command(cmdlist)
+        p = gcmd.Command(cmdlist)
         if p.returncode == 0:
             output = p.module_stdout.read()
             wx.MessageBox('New default region:\n%s' % output)
@@ -1695,7 +1696,7 @@ class GWizard:
         # Creating location from PROJ.4 string passed to g.proj
         try:
             cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             if p.module.returncode == 0:
                 return True
             else:
@@ -1724,7 +1725,7 @@ class GWizard:
 
         try:
             cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             if p.module.returncode == 0:
                 return True
             else:
@@ -1767,7 +1768,7 @@ class GWizard:
         # creating location
         try:
             cmdlist = ['g.proj','epsg=%s' % epsgcode,'datumtrans=-1']
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             dtoptions = p.module_stdout.read()
             if dtoptions != None:
                 dtrans = ''
@@ -1794,7 +1795,7 @@ class GWizard:
             else:
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
 
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             if p.module.returncode == 0:
                 return True
             else:
@@ -1842,7 +1843,7 @@ class GWizard:
         # creating location
         try:
             cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
-            p = cmd.Command(cmdlist)
+            p = gcmd.Command(cmdlist)
             if p.module.returncode == 0:
                 return True
             else:

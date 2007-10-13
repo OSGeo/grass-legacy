@@ -62,8 +62,8 @@ Debug = DebugMsg()
 
 # testing
 if __name__ == "__main__":
-    import cmd
-    cmd.Command (cmd=["g.gisenv", "set=DEBUG=3"])
+    import gcmd
+    gcmd.Command (cmd=["g.gisenv", "set=DEBUG=3"])
     reload (grassenv) # reload GRASS environments !
                 
     for level in range (4):

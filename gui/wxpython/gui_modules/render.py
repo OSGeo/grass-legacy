@@ -19,7 +19,7 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
 import os, sys, glob, math
 import utils
 
-import gcmd as cmd
+import gcmd
 from debug import Debug as Debug
 
 class MapLayer(object):
@@ -127,7 +127,7 @@ class MapLayer(object):
                              (self.name, self.cmdlist))
             return None
 
-        runcmd = cmd.Command(cmd=self.cmdlist + ['--q']) # run quiet
+        runcmd = gcmd.Command(cmd=self.cmdlist + ['--q']) # run quiet
         if runcmd.returncode != 0:
             print "Could not execute '%s'" % (self.cmdlist)
             for msg in runcmd.msg:
@@ -276,7 +276,7 @@ class Map(object):
                                "in GRASS GIS to run this program\n"))
             sys.exit(1)
 
-        gisenvCmd = cmd.Command(["g.gisenv"])
+        gisenvCmd = gcmd.Command(["g.gisenv"])
 
         for line in gisenvCmd.ReadStdOutput():
             line = line.strip()
@@ -398,7 +398,7 @@ class Map(object):
         os.unsetenv("GRASS_REGION")
 
         # do not update & shell style output
-        cmdRegion = cmd.Command(["g.region", "-u", "-g", "-p", "-c"])
+        cmdRegion = gcmd.Command(["g.region", "-u", "-g", "-p", "-c"])
 
         for reg in cmdRegion.ReadStdOutput():
             reg = reg.strip()
@@ -490,7 +490,7 @@ class Map(object):
 
         projinfo = {}
 
-        p = cmd.Command(['g.proj', '-p'])
+        p = gcmd.Command(['g.proj', '-p'])
 
         if p.returncode == 0:
             for line in p.ReadStdOutput():

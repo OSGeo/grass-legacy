@@ -24,7 +24,7 @@ import wx.combo
 GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(GuiModulePath)
 
-import gcmd as cmd
+import gcmd
 
 class SelectDialog(wx.Dialog):
     def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',
@@ -156,11 +156,11 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         """
         #set environmental variables
         cmdlist = ['g.gisenv', 'get=MAPSET']
-        curr_mapset = cmd.Command(cmdlist).module_stdout.read().strip()
+        curr_mapset = gcmd.Command(cmdlist).module_stdout.read().strip()
 
         #mapsets in current location
         cmdlist = ['g.mapsets', '-p']
-        mapsets = cmd.Command(cmdlist).module_stdout.read().strip().split(' ')
+        mapsets = gcmd.Command(cmdlist).module_stdout.read().strip().split(' ')
 
         # map element types to g.mlist types
         elementdict = {'cell':'rast',
@@ -219,7 +219,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 self.seltree.SetItemTextColour(dir_node, wx.Colour(50,50,200))
                 try:
                     cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
-                    elem_list = cmd.Command(cmdlist).module_stdout.read().strip().split('\n')
+                    elem_list = gcmd.Command(cmdlist).module_stdout.read().strip().split('\n')
                     elem_list.sort()
                     for elem in elem_list:
                         if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
@@ -230,7 +230,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                 self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
                 try:
                     cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
-                    elem_list = cmd.Command(cmdlist).module_stdout.read().strip().split('\n')
+                    elem_list = gcmd.Command(cmdlist).module_stdout.read().strip().split('\n')
                     elem_list.sort()
                     for elem in elem_list:
                         if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
