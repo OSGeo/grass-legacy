@@ -7,7 +7,7 @@
  *               
  * PURPOSE:      Generate segments or points from input map and segments read from stdin 
  *               
- * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -50,24 +50,24 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("vector, geometry");
     module->description =
-	_("Create points/segments from input lines and positions.");
+	_("Creates points/segments from input vector lines and positions.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt->description = _("Input map containing lines");
+    in_opt->description = _("Name of input vector map containing lines");
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = _("Output map where segments will be written");
+    out_opt->description = _("Name for output vector map where segments will be written");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = _("Line layer");
+    lfield_opt->label = _("Line layer");
 
     file_opt = G_define_standard_option(G_OPT_F_INPUT);
     file_opt->key = "file";
     file_opt->required = NO;
     file_opt->description = _("Name of file containing segment rules. "
-	"If not given, read from stdin.");
+			      "If not given, read from stdin.");
 
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 		side_offset = 0;
 		ret = sscanf ( buf, "%c %d %d %lf %lf", &stype, &id, &lcat, &offset1, &side_offset);
 		if ( ret < 4 ) { 
-		    G_warning ( _("Cannot read input: %s"), buf);
+		    G_warning ( _("Unable to read input: %s"), buf);
 		    break;
 		}
 		points_read++;
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 		/* OK, write point */
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( _("Unable to find line of cat [%d]"), lcat);
+		    G_warning ( _("Unable to find line of cat %d"), lcat);
 		    break;
 		}
 
@@ -142,8 +142,9 @@ int main(int argc, char **argv)
 		ret = Vect_point_on_line ( LPoints, offset1, &x, &y, &z, &angle, NULL);
                 if ( ret == 0 ) {
 		    len = Vect_line_length ( LPoints );
-		    G_warning ( _("Cannot get point on line: cat = %d offset = %f (line length = %f)\n%s"),
-			         lcat, offset1, len, buf);
+		    G_warning ( _("Unable to get point on line: cat = %d offset = %f "
+				  "(line length = %.15g)\n%s"),
+				lcat, offset1, len, buf);
 		    break;
 		}
 
@@ -161,7 +162,7 @@ int main(int argc, char **argv)
 		ret = sscanf ( buf, "%c %d %d %lf %lf %lf", &stype, &id, &lcat, 
 			             &offset1, &offset2, &side_offset);
 		if ( ret < 5 ) { 
-		    G_warning ( _("Cannot read input: %s"), buf);
+		    G_warning ( _("Unable to read input: %s"), buf);
 		    break;
 		}
 		lines_read++;
@@ -169,7 +170,7 @@ int main(int argc, char **argv)
 		
                 line = find_line ( &In, lfield, lcat );
 		if ( line == 0 ) {
-		    G_warning ( _("Unable to find line of cat [%d]"), lcat);
+		    G_warning ( _("Unable to find line of cat %d"), lcat);
 		    break;
 		}
 
@@ -183,8 +184,9 @@ int main(int argc, char **argv)
 		    
 		ret = Vect_line_segment ( LPoints, offset1, offset2, SPoints );
                 if ( ret == 0 ) {
-		    G_warning ( _("Cannot make line segment: cat = %d : %f - %f (line length = %f)\n%s"), 
-			                      lcat, offset1, offset2, len, buf);
+		    G_warning ( _("Unable to make line segment: "
+				  "cat = %d : %f - %f (line length = %.15g)\n%s"), 
+				lcat, offset1, offset2, len, buf);
 		    break;
 		}
 
@@ -208,7 +210,19 @@ int main(int argc, char **argv)
 
     }
 
-    Vect_build (&Out, stderr);
+    G_message(_("%d points read from input"), points_read);
+    G_message(_("%d points written to output map (%d lost)"), 
+	      points_written, points_read-points_written);
+    G_message(_("%d lines read from input"), lines_read);
+    G_message(_("%d lines written to output map (%d lost)"), 
+	      lines_written, lines_read-lines_written);
+
+    if (G_verbose() > G_verbose_min()) {
+	Vect_build (&Out, stderr);
+    }
+    else {
+	Vect_build (&Out, NULL);
+    }
 
     /* Free, close ... */
     Vect_close(&In);
@@ -216,13 +230,6 @@ int main(int argc, char **argv)
 
     if(file_opt->answer)
 	fclose(in_file);
-
-    fprintf ( stdout, _("%d points read from input\n"), points_read);
-    fprintf ( stdout, _("%d points written to output map (%d lost)\n"), 
-	                    points_written, points_read-points_written);
-    fprintf ( stdout, _("%d lines read from input\n"), lines_read);
-    fprintf ( stdout, _("%d lines written to output map (%d lost)\n"), 
-	                   lines_written, lines_read-lines_written);
 
     exit(EXIT_SUCCESS);
 }
