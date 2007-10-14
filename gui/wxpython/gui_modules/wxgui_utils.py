@@ -1131,16 +1131,17 @@ class GMConsole(wx.Panel):
         #Use a standard dialog for this
         wildcard = "Text file (*.txt)|*.txt"
         dlg = wx.FileDialog(
-            self, message="Save file as ...", defaultDir=os.getcwd(),
-            defaultFile="grass_cmd_history.txt", wildcard=wildcard, style=wx.SAVE|wx.FD_OVERWRITE_PROMPT
-            )
+            self, message=_("Save file as ..."), defaultDir=os.getcwd(),
+            defaultFile="grass_cmd_history.txt", wildcard=wildcard,
+            style=wx.SAVE|wx.FD_OVERWRITE_PROMPT)
 
         # Show the dialog and retrieve the user response. If it is the OK response,
         # process the data.
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
 
-        output = open(path,"w")
-        output.write(self.history)
-        output.close()
+            output = open(path,"w")
+            output.write(self.history)
+            output.close()
+
         dlg.Destroy()
