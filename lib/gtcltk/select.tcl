@@ -196,7 +196,7 @@ proc GSelect_::create { element args } {
     
             foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
                 set file [file tail $ic_file]
-                $tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
+                $tree insert end ms_$dir_tail $dir_tail/$file -text $file -data $file \
                     -image [Bitmap::get file] -drawcross never
             }
         }
