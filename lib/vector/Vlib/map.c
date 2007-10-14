@@ -168,7 +168,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 
     /* Delete old vector if it exists */
     if ( G_find_vector2(out, G_mapset()) ) {
-	G_warning (_("The vector map <%s> already exists and will be overwritten"), out);
+	G_warning (_("Vector map <%s> already exists and will be overwritten"), out);
 	ret = Vect_delete ( out );
 	if ( ret != 0 ) {
             G_warning (_("Unable to delete vector map <%s>"), in); 
