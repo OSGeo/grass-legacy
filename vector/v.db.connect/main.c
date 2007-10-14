@@ -156,8 +156,8 @@ int main (int argc, char **argv)
 			                               fi->database, fi->driver);
 		}
 	    } else { 
-		fprintf(stdout,"layer <%d> table <%s> in database <%s> through driver "
-			"<%s> with key <%s>\n",
+		fprintf(stdout,_("layer <%d> table <%s> in database <%s> through driver "
+			"<%s> with key <%s>\n"),
 			fi->number, fi->table, fi->database, fi->driver, fi->key);
 	    }
           }
