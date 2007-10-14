@@ -197,7 +197,7 @@ main (int argc,char *argv[])
 
     Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
     if (1 > Vect_open_old (&In, in_opt->answer, mapset)) 
-	G_fatal_error (_("Cannot open vector map <%s> at the topological level"),
+	G_fatal_error (_("Unable to open vector map <%s> at the topological level"),
 		       in_opt->answer);
 
     /* Open input ext vector */
@@ -214,7 +214,7 @@ main (int argc,char *argv[])
 
 	Vect_set_open_level (1); 		/* WITHOUT TOPOLOGY */
 	if (1 > Vect_open_old (&In_ext, in_ext_opt->answer, mapset)) 
-	    G_fatal_error (_("Cannot open vector map <%s> at the topological level"),
+	    G_fatal_error (_("Unable to open vector map <%s> at the topological level"),
 			   in_opt->answer);
     }
 
@@ -276,7 +276,7 @@ main (int argc,char *argv[])
 	    G_fatal_error ( _("Column type not supported") );
     
         if ( nrec < 0 )
-	    G_fatal_error (_("Cannot select data from table"));
+	    G_fatal_error (_("Unable to select data from table"));
     
         G_message ( _("[%d] records selected from table"), nrec);
 
