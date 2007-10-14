@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-02 17:25+0200\n"
+"POT-Creation-Date: 2007-10-14 18:41+0200\n"
 "PO-Revision-Date: 2007-10-02 17:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -65,8 +65,8 @@ msgstr " "
 #: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:241
 #: ../gui/tcltk/gis.m/thematic.tcl:245 ../gui/tcltk/gis.m/vector.tcl:330
-#: ../gui/tcltk/gis.m/vector.tcl:334 ../gui/tcltk/gis.m/animate.tcl:444
-#: ../gui/tcltk/gis.m/animate.tcl:447 ../gui/tcltk/gis.m/dnviz.tcl:208
+#: ../gui/tcltk/gis.m/vector.tcl:334 ../gui/tcltk/gis.m/animate.tcl:471
+#: ../gui/tcltk/gis.m/animate.tcl:474 ../gui/tcltk/gis.m/dnviz.tcl:208
 #: ../gui/tcltk/gis.m/dnviz.tcl:212 ../lib/gis/gui.tcl:504
 #: ../lib/init/gis_set.tcl:508
 msgid "Help"
@@ -2668,7 +2668,7 @@ msgstr "Empezar goerrectificado"
 
 #: ../gui/tcltk/gis.m/georect.tcl:699 ../gui/tcltk/gis.m/gm.tcl:507
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:854 ../gui/tcltk/gis.m/rules.tcl:172
-#: ../gui/tcltk/gis.m/animate.tcl:499 ../gui/tcltk/gis.m/dnviz.tcl:230
+#: ../gui/tcltk/gis.m/animate.tcl:526 ../gui/tcltk/gis.m/dnviz.tcl:230
 #: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
 msgid "Cancel"
@@ -2835,7 +2835,7 @@ msgid "Character encoding: "
 msgstr "Codificación de caracteres: "
 
 #: ../gui/tcltk/gis.m/gm.tcl:504 ../gui/tcltk/gis.m/rules.tcl:170
-#: ../gui/tcltk/gis.m/animate.tcl:497 ../gui/tcltk/gis.m/dnviz.tcl:228
+#: ../gui/tcltk/gis.m/animate.tcl:524 ../gui/tcltk/gis.m/dnviz.tcl:228
 #: ../lib/init/epsg_option.tcl:311 ../vector/v.digit/settings.tcl:160
 msgid "OK"
 msgstr "OK"
@@ -4779,7 +4779,7 @@ msgstr "Entrada de reglas interactiva"
 msgid "Overwrite existing file"
 msgstr "Sobrescribir archivo existente"
 
-#: ../gui/tcltk/gis.m/rules.tcl:174 ../gui/tcltk/gis.m/animate.tcl:501
+#: ../gui/tcltk/gis.m/rules.tcl:174 ../gui/tcltk/gis.m/animate.tcl:528
 #: ../gui/tcltk/gis.m/dnviz.tcl:232
 msgid "Apply"
 msgstr "Aplicar"
@@ -5070,96 +5070,96 @@ msgstr "seleccionar vectorial existente para guardar objetos consultados"
 msgid " or <"
 msgstr " o <"
 
-#: ../gui/tcltk/gis.m/animate.tcl:271
+#: ../gui/tcltk/gis.m/animate.tcl:299
 msgid "Select maps to animate"
 msgstr "Seleccionar mapas a animar"
 
-#: ../gui/tcltk/gis.m/animate.tcl:285
+#: ../gui/tcltk/gis.m/animate.tcl:313
 msgid "Rewind animation"
 msgstr "Retroceder animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:291
+#: ../gui/tcltk/gis.m/animate.tcl:319
 msgid "Replay animation"
 msgstr "Repetir animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:297
+#: ../gui/tcltk/gis.m/animate.tcl:325
 msgid "Step backwards through animation"
 msgstr "Ir hacia atrás por la animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:303
+#: ../gui/tcltk/gis.m/animate.tcl:331
 msgid "Stop animation"
 msgstr "Detener animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:309
+#: ../gui/tcltk/gis.m/animate.tcl:337
 msgid "Step forwards through animation"
 msgstr "Ir hacia delante por la animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:315
+#: ../gui/tcltk/gis.m/animate.tcl:343
 msgid "Play animation"
 msgstr "Reproducir animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:328
+#: ../gui/tcltk/gis.m/animate.tcl:356
 msgid "Slower animation"
 msgstr "Animación más lenta"
 
-#: ../gui/tcltk/gis.m/animate.tcl:334
+#: ../gui/tcltk/gis.m/animate.tcl:362
 msgid "Faster animation"
 msgstr "Animación más rápida"
 
-#: ../gui/tcltk/gis.m/animate.tcl:344
+#: ../gui/tcltk/gis.m/animate.tcl:372
 msgid "Continuously loop through animation"
 msgstr "Avanzar en bucle por la animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:352
+#: ../gui/tcltk/gis.m/animate.tcl:380
 msgid "Run animation alternately forward and backward"
 msgstr "Ejecutar animación alternativamente hacia delante y hacia atrás"
 
-#: ../gui/tcltk/gis.m/animate.tcl:367
+#: ../gui/tcltk/gis.m/animate.tcl:391
 msgid "Show map names in animation window"
 msgstr "Mostrar nombres de mapas en la ventana de animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:377
+#: ../gui/tcltk/gis.m/animate.tcl:404
 msgid "Quit animation"
 msgstr "Salir de la animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:397
+#: ../gui/tcltk/gis.m/animate.tcl:424
 msgid "Select maps"
 msgstr "Seleccionar mapas"
 
-#: ../gui/tcltk/gis.m/animate.tcl:425
+#: ../gui/tcltk/gis.m/animate.tcl:452
 msgid "Maps for Animation"
 msgstr "Mapas para animación"
 
-#: ../gui/tcltk/gis.m/animate.tcl:441
+#: ../gui/tcltk/gis.m/animate.tcl:468
 msgid "Select maps to animate in one or more frames (1 frame required)"
 msgstr ""
 "Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
 
-#: ../gui/tcltk/gis.m/animate.tcl:453
+#: ../gui/tcltk/gis.m/animate.tcl:480
 msgid "Maps for frame 1 (required): "
 msgstr "Mapas para el marco 1 (requerido): "
 
-#: ../gui/tcltk/gis.m/animate.tcl:464
+#: ../gui/tcltk/gis.m/animate.tcl:491
 msgid "Maps for frame 2 (optional): "
 msgstr "Mapas para el marco 2 (opcional): "
 
-#: ../gui/tcltk/gis.m/animate.tcl:475
+#: ../gui/tcltk/gis.m/animate.tcl:502
 msgid "Maps for frame 3 (optional): "
 msgstr "Mapas para el marco 3 (opcional): "
 
-#: ../gui/tcltk/gis.m/animate.tcl:486
+#: ../gui/tcltk/gis.m/animate.tcl:513
 msgid "Maps for frame 4 (optional): "
 msgstr "Mapas para el marco 4 (opcional): "
 
-#: ../gui/tcltk/gis.m/animate.tcl:524
+#: ../gui/tcltk/gis.m/animate.tcl:551
 msgid "You must select maps to animate for frame 1"
 msgstr "Debe seleccionar mapas a animar para el marco 1"
 
-#: ../gui/tcltk/gis.m/animate.tcl:525
+#: ../gui/tcltk/gis.m/animate.tcl:552
 msgid "No maps selected"
 msgstr "Ningún mapa seleccionado"
 
-#: ../gui/tcltk/gis.m/animate.tcl:983
+#: ../gui/tcltk/gis.m/animate.tcl:1019
 msgid "Animation Window"
 msgstr "Ventana de animación"
 
