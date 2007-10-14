@@ -196,7 +196,7 @@ main (int argc, char *argv[])
 	if ( old->answer != NULL ) {
 	    if ( (ascii = fopen ( old->answer, "r" ) ) == NULL )
 	    {
-	        G_fatal_error(_("Could not open ASCII file <%s>"), old->answer);
+	        G_fatal_error(_("Unable to open ASCII file <%s>"), old->answer);
 	    }
         } else {
 	    ascii = stdin;
