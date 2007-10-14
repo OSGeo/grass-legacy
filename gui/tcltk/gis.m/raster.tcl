@@ -65,6 +65,7 @@ proc GmRaster::create { tree parent } {
     set opt($count,1,opacity) 1.0
     set opt($count,1,map) ""
     set opt($count,1,drapemap) ""
+    set opt($count,1,brighten) 0
     set opt($count,1,querytype) "cat"
     set opt($count,1,rastquery) ""
     set opt($count,1,rasttype) ""
@@ -72,7 +73,7 @@ proc GmRaster::create { tree parent } {
     set opt($count,1,overlay) 1
     set opt($count,1,mod) 1
 
-    set optlist {_check opacity map drapemap querytype rastquery rasttype bkcolor \
+    set optlist {_check opacity map drapemap brighten querytype rastquery rasttype bkcolor \
         overlay}
 
     foreach key $optlist {
@@ -230,6 +231,15 @@ proc GmRaster::options { id frm } {
             -helptext [G_msg "drape map info"] 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
+    
+    # HIS brightness for drape map
+    set row [ frame $frm.bright ]
+    Label $row.a -text [G_msg "\tdrape map brightness adjustment\t "]
+    SpinBox $row.b -range {-99 99 1} -textvariable GmRaster::opt($id,1,brighten) \
+		-width 3 -helptext [G_msg "Adjust brightness of drape map"] \
+		-entrybg white
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
     # overlay
     set row [ frame $frm.over ]
@@ -359,7 +369,7 @@ proc GmRaster::display { node mod } {
         append cmd " bg=$opt($id,1,bkcolor)"
     }
 
-    set cmd2 "d.his h_map=$opt($id,1,drapemap) i_map=$opt($id,1,map)"
+    set cmd2 "d.his h_map=$opt($id,1,drapemap) i_map=$opt($id,1,map) brighten=$opt($id,1,brighten)"
 
     if { $opt($id,1,drapemap) == "" } {
         # set cmd $cmd
@@ -437,7 +447,7 @@ proc GmRaster::duplicate { tree parent node id } {
 
     set opt($count,1,opacity) $opt($id,1,opacity)
 
-    set optlist {_check map drapemap querytype rastquery rasttype bkcolor \
+    set optlist {_check map drapemap brighten querytype rastquery rasttype bkcolor \
         overlay}
 
     foreach key $optlist {
