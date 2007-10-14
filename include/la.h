@@ -1,31 +1,20 @@
-/******************************************************************************
- * la.h
- * wrapper modules for linear algebra problems
- * Structures, definitions and prototypes.
- * linking to BLAS / LAPACK (and others?)
-
- * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
- * 26th. Sep. 2000
- * Last updated 28th. Sep. 2000
+/**
+ * \file la.h
  *
-
- * This file is part of GRASS GIS. It is free software. You can 
- * redistribute it and/or modify it under the terms of 
- * the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option)
- * any later version.
- 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
-
- ******************************************************************************/
+ * \brief Wrapper headers for BLAS/LAPACK.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author David D. Gray <ddgray AT armacde demon co uk>
+ * \author GRASS GIS Development Team
+ *
+ * \date 2000-2007
+ */
 
 #ifndef LA_H_
 #define LA_H_
 
-#include <g2c.h>
 /* QUESTION: On some systems there appears to be no default link
    to this. Do we create a symlink to
    /usr/lib/gcc-lib/<platform>/<vers_num>/include/g2c.h
@@ -37,15 +26,58 @@
    [Also a consideration for -lg2c]
 */
 
+#include <grass/config.h>
 #include <stdio.h>
+
+#ifdef HAVE_G2C_H
+#include <g2c.h>
+#else /* for gcc4+ */
+typedef int                       integer;
+typedef unsigned int              uinteger;
+typedef char *                    address;
+typedef short                     shortint;
+typedef float                     real;
+typedef double                    doublereal;
+typedef struct {real r, i;}       complex;
+typedef struct {doublereal r, i;} doublecomplex;
+typedef int                       logical;
+typedef short                     shortlogical;
+typedef char                      logical1;
+typedef char                      integer1;
+typedef long                      longint;
+typedef unsigned long             ulongint;
+
+/* IO stuff */
+typedef int ftnlen;
+
+/* procedure parameter types for -A */
+typedef int          (*U_fp)();
+typedef shortint     (*J_fp)();
+typedef integer      (*I_fp)();
+typedef real         (*R_fp)();
+typedef doublereal   (*D_fp)(), (*E_fp)();
+typedef void         (*C_fp)();
+typedef void         (*Z_fp)();
+typedef logical      (*L_fp)();
+typedef shortlogical (*K_fp)();
+typedef void         (*H_fp)();
+typedef int          (*S_fp)();
+
+/* E_fp is for real functions when -R is not specified */
+typedef void       C_f;   /* complex function                    */
+typedef void       H_f;   /* character function                  */
+typedef void       Z_f;   /* double complex function             */
+typedef doublereal E_f;   /* real function with -R not specified */
+#endif /* HAVE_G2C_H */
 
 /* The following may have to be selectively installed according
    to platform, at least partly
 */
 
+if defined(HAVE_BLAS) && defined(HAVE_LAPACK)
 #include <grass/blas.h>
 #include <grass/lapack.h>
-
+#endif
 
 
 /* Useful defines */
@@ -62,9 +94,11 @@
    of platform invariance on fortran->C symbol translations
 */
 
+if defined(HAVE_BLAS) && defined(HAVE_LAPACK)
 #define f77_dgesv                   dgesv_
 #define f77_dgemm                   dgemm_
 #define f77_dnrm2                   dnrm2_
+#endif
 
 /* Operations should know type of coefficient matrix, so that
    they can call the right driver
@@ -73,7 +107,6 @@
 typedef enum { NONSYM, SYM, HERMITIAN } mat_type;
 typedef enum { MATRIX_, ROWVEC_, COLVEC_ } mat_spec;
 typedef enum { RVEC, CVEC }             vtype;
-
 
 
 /************************************************************
@@ -85,31 +118,19 @@ typedef enum { RVEC, CVEC }             vtype;
 
 typedef struct matrix_ {
 
-  mat_spec type;      /* Is it doing duty as a matrix, row vector or
-			 column vector?
-		      */
-
-  int v_indx;         /* In the event this is serving as a vector, which
-			 row(column) is active?  If a matrix this is ignored.
-			 If the value is <0, the first row(column) is
-			 assumed, ie. index 0.
-		      */
-
-  int rows, cols;    /* Rows and columns of matrix */
-  int ldim;          /* Lead dimension of matrix.
-			How many `rows' are alloc'ed? May exceed
-			the real number of rows `rows'
-		     */
-  doublereal *vals;  /* The values (should be dimensioned to
-			lda * cols
-		     */
-  int is_init;       /* Is this matrix initialised: values array
-			is allocated and parameters set ?
-		     */
+  mat_spec type;    /* matrix, row vector or column vector? */
+  int v_indx;       /* If a vector, which row(column) is active?
+                     * If a matrix this is ignored. If value is < 0,
+                     * the first row(column) is assumed, ie. index 0.  */
+  int rows, cols;   /* Rows and columns of matrix */
+  int ldim;         /* Lead dimension of matrix. How many `rows' are
+                     * alloc'ed? May exceed real number of rows `rows' */
+  doublereal *vals; /* The values (should be dimensioned to lda * cols */
+  int is_init;      /* Is  matrix initialised: values array
+                     * is allocated and parameters set ?               */
 }  mat_struct;
 
 typedef mat_struct vec_struct;
-
 
 
 /* Prototypes */
@@ -160,5 +181,3 @@ int G_matrix_stdin(mat_struct *);
 int G_matrix_eigen_sort(vec_struct *, mat_struct *);
 
 #endif /* LA_H_ */
-
-
