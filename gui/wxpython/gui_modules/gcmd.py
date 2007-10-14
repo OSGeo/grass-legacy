@@ -1,5 +1,5 @@
 """
-PACKAGE: gcmd
+MODULE: gcmd
 
 CLASSES:
     * EndOfCommand
@@ -9,7 +9,7 @@ PURPOSE:   GRASS command interface
 
 AUTHORS:   The GRASS Development Team
            Original author: Jachym Cepicky
-           Various updates: Martin Landa
+           Various updates: Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT: (C) 2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -50,7 +50,7 @@ class Command:
     Parameters:
     cmd     - command string (given as list)
     stdin   - standard input stream
-    verbose - verbose mode (GRASS commands '--v') (default: False)
+    verbose - verbose mode [0; 3]
     wait    - wait for childer execution
     dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
 
@@ -66,12 +66,21 @@ class Command:
 
     """
     def __init__ (self, cmd, stdin=None,
-                  verbose=False, wait=True, dlgMsg='gui'):
+                  verbose=0, wait=True, dlgMsg='gui'):
         #
         # input
         #
         self.module_stdin = None
         self.cmd          = cmd
+        self.dlgMsg       = dlgMsg
+
+        #
+        # set verbosity level
+        #
+        if verbose == 0 and '--q' not in self.cmd:
+            self.cmd.append('--q')
+        elif verbose == 3 and '--v' not in self.cmd:
+            self.cmd.append('--v')
 
         #
         # GRASS module 
@@ -82,14 +91,13 @@ class Command:
         # output
         #
         self.module_stderr = None
-        self.module_msg    = [] # list of messages (msgtype, content)
 
         #
         # set message formatting
         #
         message_format = os.getenv("GRASS_MESSAGE_FORMAT")
-        # os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-        os.environ["GRASS_MESSAGE_FORMAT"] = "txt"
+        os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+        # os.environ["GRASS_MESSAGE_FORMAT"] = "txt"
         
         #
         # run command ...
@@ -121,17 +129,9 @@ class Command:
         else:
             os.unsetenv("GRASS_MESSAGE_FORMAT")
         
-        #
-        # read stderr
-        # ...
-        #         self.messages = []
-        #         self.errors   = []
-        #         self.warnings = []
-
-        # try:
-        #    self.__ProcessMessages() # -> messages, errors, warnings
-        # except EndOfCommand:
-        #    pass
+        # list of messages (<- stderr)
+        # -> [(type, content)] type = (error, warning, message)
+        self.module_msg = self.__ProcessStdErr() # -> self.module_msg
 
         if self.module:
             if wait:
@@ -139,17 +139,18 @@ class Command:
             self.returncode = self.module.returncode
 
             # failed?
-            if dlgMsg and self.returncode != 0:
-                errs = self.ReadErrOutput()
-                if dlgMsg == 'gui': # GUI dialog
+            if self.dlgMsg and self.returncode != 0:
+                if self.dlgMsg == 'gui': # GUI dialog
                     dlg = wx.MessageDialog(None,
-                                           ("Execution failed: '%s'\n\nDetails:\n%s") % (' '.join(self.cmd), '\n'.join(errs)),
+                                           ("Execution failed: '%s'\n\n" 
+                                            "Details:\n%s") % (' '.join(self.cmd),
+                                                               self.PrintModuleOutput()),
                                            ("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
                 else: # otherwise 'txt'
                     print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
-                    print >> sys.stderr, "Details:\n%s" % '\n'.join(errs)
+                    print >> sys.stderr, "\nDetails:\n%s" % self.PrintModuleOutput()
 
         else:
             self.returncode = None # running ?
@@ -161,27 +162,35 @@ class Command:
             Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=?" % \
                        (' '.join(self.cmd), wait))
 
-    def __ProcessMessages(self):
+    def __ProcessStdErr(self):
         """
         Read messages/warnings/errors from stderr
         """
-        msgtype = None
-        content = None
-        line    = None
+        lines = self.ReadErrOutput()
 
-        while True:
-            line = self.module_stderr.readline()
-            if not line:
-                raise EndOfCommand
-            if line.find(':') > -1:
-                msgtype, content = line.split(":", 1)
-                content = content.strip()
-                if msgtype.find("GRASS_INFO_ERROR"):
-                    self.errors.append(content)
-                elif msgtype.find("GRASS_INFO_WARNING") > -1:
-                    self.warnings.append(content)
-                else:
-                    self.messages.append(content)
+        msg = []
+
+        type    = None
+        content = ""
+        for line in lines:
+            if len(line) == 0:
+                continue
+            if 'GRASS_' in line: # error or warning
+                if 'GRASS_INFO_WARNING' in line: # warning
+                    type = "WARNING"
+                elif 'GRASS_INFO_ERROR' in line: # error
+                    type = "ERROR"
+                elif 'GRASS_INFO_END': # end of message
+                    msg.append((type, content))
+                    type = None
+                    content = ""
+                
+                if type:
+                    content += line.split(':')[1].strip()
+            else: # stderr
+                msg.append((None, line.strip()))
+
+        return msg
 
     def __ReadOutput(self, stream):
         """Read stream and return list of lines
@@ -207,8 +216,22 @@ class Command:
         """Read standard error output and return list"""
         
         return self.__ReadOutput(self.module_stderr)
+
+    def PrintModuleOutput(self, error=True, warning=True, message=True, rest=False):
+        """Print module errors, warnings, messages..."""
         
-    
+        msgString = ""
+        for type, msg in self.module_msg:
+            if type:
+                if (type == 'ERROR' and error) or \
+                        (type == 'WARNING' and warning) or \
+                        (type == 'MESSAGE' and message):
+                    msgString += " " + type + ": " + msg + "\n"
+            else:
+                msgString += " " + msg + "\n"
+
+        return msgString
+
 # testing ...
 if __name__ == "__main__":
     SEP = "-----------------------------------------------------------------------------"
@@ -232,7 +255,7 @@ if __name__ == "__main__":
     # v.net.path silently, wait for process termination
     print "Running v.net.path for 0 593527.6875 4925297.0625 602083.875 4917545.8125..."
 
-    cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp dmax=100000", "--o"],
+    cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp", "dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
                   wait=True, dlgMsg='txt')
