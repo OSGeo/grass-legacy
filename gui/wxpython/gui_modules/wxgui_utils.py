@@ -858,11 +858,6 @@ class LayerTree(CT.CustomTreeCtrl):
         self.layers[layer].AddProperties (propwin)
 
 
-    def writeDCommand(self, dcmd):
-        # echos d.* command to output console
-        global goutput
-        goutput.write(dcmd+"\n----------\n")
-
     def ReorderLayers(self):
         """Add commands from data associated with
         any valid layers (checked or not) to layer list in order to
@@ -920,7 +915,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.mapdisplay.ReRender(None)
 
     def setNotebookPage(self,pg):
-        self.Parent.notebook.SetSelection(pg)
+        self.parent.notebook.SetSelection(pg)
 
     def OnCloseWindow(self, event):
         pass
@@ -931,53 +926,55 @@ class GMConsole(wx.Panel):
     Create and manage output console for commands entered on the
     GIS Manager command line.
     """
-    def __init__(self, parent, id=-1,
-                     pos=wx.DefaultPosition, size=wx.DefaultSize,
-                     style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
+    def __init__(self, parent, id=wx.ID_ANY,
+                 pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
-        #initialize variables
-        self.Map = ''
-        self.parent = parent
-        self.cmd_output = ""
-        self.console_command = ""
-        self.console_clear = ""
-        self.console_save = ""
-        self.gcmdlst = [] #list of commands in bin and scripts
 
-        #text control for command output
-        self.cmd_output = wx.TextCtrl(self, -1, "",
-                                                  style=wx.TE_MULTILINE|
-                                                  wx.TE_READONLY)
+        # initialize variables
+        self.Map             = None
+        self.parent          = parent # GMFrame
+        self.cmd_output      = ""
+        self.console_command = ""
+        self.console_clear   = ""
+        self.console_save    = ""
+        self.gcmdlst         = [] # list of commands in bin and scripts
+
+        # text control for command output
+        self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
+                                      style=wx.TE_MULTILINE| wx.TE_READONLY)
         self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
-        global goutput
-        goutput = self.cmd_output
-        self.console_clear = wx.Button(self, -1, "Clear")
-        self.console_save = wx.Button(self, -1, "Save")
-
-        self.console_progressbar = wx.Gauge(self, -1, 100, (110, 50), (250, 25))
-
+        # buttons
+        self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
+        self.console_save  = wx.Button(parent=self, id=wx.ID_SAVE)
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory, self.console_save)
 
+        # progress bar
+        self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
+                                            range=100, pos=(110, 50), size=(-1, 25))
+
         # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
-        gridsizer1 = wx.GridSizer(1, 2, 0, 0)
-        boxsizer1.Add(self.cmd_output, 1,
-                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
-        gridsizer1.Add(self.console_clear, 0,
-                               wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
-        gridsizer1.Add(self.console_save, 0,
-                               wx.ALIGN_CENTER_HORIZONTAL|wx.ADJUST_MINSIZE, 0)
+        gridsizer1 = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
+        boxsizer1.Add(item=self.cmd_output, proportion=1,
+                      flag=wx.EXPAND | wx.ADJUST_MINSIZE, border=0)
+        gridsizer1.Add(item=self.console_clear, proportion=0,
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ADJUST_MINSIZE, border=0)
+        gridsizer1.Add(item=self.console_save, proportion=0,
+                       flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ADJUST_MINSIZE, border=0)
 
 
-        boxsizer1.Add((0,5))
-        boxsizer1.Add(gridsizer1, 0, wx.EXPAND|wx.ALIGN_CENTRE_VERTICAL)
-        boxsizer1.Add((0,5))
-        boxsizer1.Add(self.console_progressbar, 0,
-                              wx.EXPAND|wx.ADJUST_MINSIZE, 0)
+        boxsizer1.Add(item=gridsizer1, proportion=0,
+                      flag=wx.EXPAND | wx.ALIGN_CENTRE_VERTICAL | wx.TOP | wx.BOTTOM,
+                      border=5)
+        boxsizer1.Add(item=self.console_progressbar, proportion=0,
+                      flag=wx.EXPAND | wx.ADJUST_MINSIZE, border=0)
+
         boxsizer1.Fit(self)
         boxsizer1.SetSizeHints(self)
+
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
@@ -997,11 +994,10 @@ class GMConsole(wx.Panel):
     def RunCmd(self, command):
         """
         Run in GUI or shell GRASS (or other) commands typed into
-        console command text widget, echo command to
-        output text widget, and send stdout output to output
+        console command text widget, and send stdout output to output
         text widget.
 
-        Command is transformed into a list for processing
+        Command is transformed into a list for processing.
 
         TODO: Display commands (*.d) are captured and
         processed separately by mapdisp.py. Display commands are
@@ -1011,12 +1007,12 @@ class GMConsole(wx.Panel):
 
         # create list of available GRASS commands
         gcmdlst = self.GetGRASSCmds()
-        # cmd = self.console_command.GetLineText(0)
+
+        # map display window available ?
         try:
-            curr_disp = self.Parent.Parent.curr_page.maptree.mapdisplay
+            curr_disp = self.parent.curr_page.maptree.mapdisplay
             self.Map = curr_disp.GetRender()
         except:
-            ## disp_idx = None
             curr_disp = None
 
         try:
@@ -1028,7 +1024,6 @@ class GMConsole(wx.Panel):
         if len(cmdlist) == 1 and cmdlist[0] in gcmdlst:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
-            global gmpath
             if command[0:2] == "d.":
                 try:
                     layertype = {'d.rast'         : 'raster',
@@ -1047,22 +1042,20 @@ class GMConsole(wx.Panel):
                                  'd.labels'       : 'labels'}[command]
                 except KeyError:
                     print _('Command type not yet implemented')
-                    return
+                    return False
 
                 # add layer
-                self.Parent.Parent.curr_page.maptree.AddLayer(layertype)
+                self.parent.curr_page.maptree.AddLayer(layertype)
 
             else:
                 menuform.GUI().ParseCommand(string.join(cmdlist), parentframe=None)
-                self.cmd_output.write(string.join(cmdlist) + "\n----------\n")
+                #self.cmd_output.write(string.join(cmdlist) + "\n----------\n")
 
         elif command[0:2] == "d." and len(cmdlist) > 1:
-            """
-            Send GRASS display command(s)with arguments
-            to the display processor and echo to command output console.
-            Accepts a list of d.* commands separated by semi-colons.
-            Display with focus receives display command(s).
-            """
+            # Send GRASS display command(s)with arguments
+            # to the display processor and echo to command output console.
+            # Accepts a list of d.* commands separated by semi-colons.
+            # Display with focus receives display command(s).
 
             self.cmd_output.write("$" + ' '.join(cmdlist))
 
@@ -1083,71 +1076,45 @@ class GMConsole(wx.Panel):
         else:
             # Send any other command to the shell. Send output to
             # console output window.
-            try:
-                os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-                #self.cmd_output.write(command+"\n----------\n")
-                self.cmd_output.write("$ " + ' '.join(cmdlist) + "\n")
+
+            if self.parent.notebook.GetSelection() != 1:
+                # select 'Command output' tab
+                self.parent.notebook.SetSelection(1)
+
+            self.cmd_output.write("$ " + ' '.join(cmdlist) + "\n")
+            
+            if cmdlist[0] not in gcmdlst:
+                # if command is not a GRASS command, treat it like a shell command
+                generalCmd = subprocess.Popen(cmdlist,
+                                          stdout=subprocess.PIPE,
+                                          stderr=subprocess.PIPE,
+                                          close_fds=True)
+                
+                for outline in runCmd.stdout:
+                    self.cmd_output.write(outline)
+            else:
                 # activate compuational region (set with g.region) for all non-display commands.
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
+                # process GRASS command with argument
+                grassCmd = gcmd.Command(cmdlist, verbose=3)
 
-                if cmdlist[0] not in gcmdlst:
-                    # if command is not a GRASS command, treat it like a shell command
-                    output = os.popen(command, "r").read().strip().split('\n')
-                    for outline in output:
-                        self.cmd_output.write(outline+'\n')
-                    return
-                else:
-                    # process GRASS command with argument
-                    cmdlist.append('--verbose')
-                    p = gcmd.Command(cmdlist)
-
-
+                
                 # deactivate computational region and return to display settings
                 if tmpreg:
                     os.environ["GRASS_REGION"] = tmpreg
 
-                oline = p.module_stderr.readline()
-                while oline:
-                    oline = oline.strip()
-                    oline = p.module_stderr.readline()
-                    # make some progress
-                    #GRASS_INFO_PERCENT: 100
-                    if oline.find("GRASS_INFO_PERCENT")>-1:
-                        self.console_progressbar.SetValue(int(oline.split()[1]))
-                    elif oline.find("GRASS_INFO_MESSAGE")>-1:
-                        self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
-                    elif oline.find("GRASS_INFO_WARNING")>-1:
-                        self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
-                    elif oline.find("GRASS_INFO_ERROR")>-1:
-                        self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+                if grassCmd.returncode != 0:
+                    return False
 
-                oline = p.module_stdout.readline()
-                while oline:
-                    oline = oline.strip()
-                    if command[0] == 'r.what':
-                        rastqlist = oline.split('|')
-                        self.cmd_output.write('East: '+rastqlist[0]+"\n")
-                        self.cmd_output.write('North: '+rastqlist[1]+"\n")
-                        self.cmd_output.write(rastqlist[2]+"\n")
-                        data = rastqlist[3:]
-                        for x in range(0,len(data),2):
-                            self.cmd_output.write('Category: '+data[x]+"\n")
-                            self.cmd_output.write('Label: '+data[x+1]+"\n")
-                    else:
-                        self.cmd_output.write(oline+"\n")
-                    print >> sys.stderr, oline
-                    oline = p.module_stdout.readline()
-                #self.cmd_output.write("\n==========\n")
-                self.cmd_output.write("\n")
-                if p.module_stdout < 0:
-                    print >> sys.stderr, "Child was terminated by signal", p.module_stdout
-                elif p.module_stdout > 0:
-                    #print >> sys.stderr, p.module_stdout
-                    pass
-            except OSError, e:
-                print >> sys.stderr, "Execution failed:", e
+                # if oline.find("GRASS_INFO_PERCENT")>-1:
+                #    self.console_progressbar.SetValue(int(oline.split()[1]))
+
+                for line in grassCmd.ReadStdOutput():
+                    self.cmd_output.write(line + '\n')
+                    
+        return True
 
     def ClearHistory(self, event):
         """Clear history of commands"""
