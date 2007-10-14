@@ -68,9 +68,10 @@ proc GmRgbhis::create { tree parent } {
     set opt($count,1,rgb) 1 
     set opt($count,1,his) 0 
     set opt($count,1,mod) 1
+    set opt($count,1,brighten) 0
 
 
-	set optlist { _check map1 map2 map3 opacity rgb his overlay}
+	set optlist { _check map1 map2 map3 brighten opacity rgb his overlay}
 
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -208,7 +209,6 @@ proc GmRgbhis::options { id frm } {
     # HIS brightness
     set row [ frame $frm.bright ]
     Label $row.a -anchor w -text [G_msg "HIS brightness adjustment\t "]
-    set GmRgbhis::opt($id,1,brighten) "0"
     SpinBox $row.b -range {-99 99 1} -textvariable GmRgbhis::opt($id,1,brighten) \
 		-width 3 -helptext [G_msg "Adjusts the HIS intensity channel brightness"] \
 		-entrybg white
@@ -347,7 +347,7 @@ proc GmRgbhis::duplicate { tree parent node id } {
 
 	set opt($count,1,opacity) $opt($id,1,opacity)
 
-	set optlist { _check map1 map2 map3 rgb his overlay}
+	set optlist { _check map1 map2 map3 rgb his overlay brighten}
 
     foreach key $optlist {
     	set opt($count,1,$key) $opt($id,1,$key)
