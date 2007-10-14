@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector");
     module->description =
-      _("Convert 2D vector to 3D vector by sampling of elevation raster. Default sampling by nearest neighbor");
+      _("Converts 2D vector to 3D vector by sampling of elevation raster. Default sampling by nearest neighbor.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -116,12 +116,12 @@ int main(int argc, char *argv[])
 
     /* check for the elev raster, and check for error condition */
     if ((mapset = G_find_cell(rast_opt->answer, "")) == NULL) {
-	G_fatal_error(_("cell file [%s] not found"), rast_opt->answer);
+	G_fatal_error(_("Raster map <%s> not found"), rast_opt->answer);
     }
 
     /* open the elev raster, and check for error condition */
     if ((fdrast = G_open_cell_old(rast_opt->answer, mapset)) < 0) {
-	G_fatal_error(_("can't open raster map [%s]"), rast_opt->answer);
+	G_fatal_error(_("Unable to open raster map <%s>"), rast_opt->answer);
     }
 
     /* used to scale sampled raster values: will need to add an option to modify this later */
