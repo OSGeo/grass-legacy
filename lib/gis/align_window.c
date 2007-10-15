@@ -49,9 +49,9 @@ G_align_window  (struct Cell_head *window, const struct Cell_head *ref)
 
     preserve = window->proj == PROJECTION_LL && window->east == (window->west+360);
     window->south =
-	G_row_to_northing (ceil(G_northing_to_row (window->south, ref)), ref);
+	G_row_to_northing (floor(G_northing_to_row (window->south, ref)), ref);
     window->north =
-	G_row_to_northing (floor(G_northing_to_row (window->north, ref)), ref);
+	G_row_to_northing (ceil(G_northing_to_row (window->north, ref)), ref);
     window->east =
 	G_col_to_easting (ceil(G_easting_to_col (window->east, ref)), ref);
     window->west =
