@@ -56,6 +56,18 @@ the areas of interest in which the line of sight analysis
 is required.  Such a measure will reduce the time taken by
 the program to run.
 
+<H2>EXAMPLE</H2>
+
+Spearfish example - calculation of viewshed from 5m tower
+on top of a mountain:
+
+<div class="code"><pre>
+r.los elevation.dem out=los coord=598869,4916642 obs_elev=5 max_dist=99999
+d.rast aspect
+d.rast -o los
+</pre></div>
+
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.region.html">g.region</A></EM>
