@@ -35,15 +35,10 @@ db__start_procedure_call (int procnum)
 int
 db__recv_procnum (int *n)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-
-    xdr_begin_recv (&xdrs);
-    if(!xdr_int (&xdrs, n))
+    if (!db__recv(n, sizeof(*n)))
 	stat = DB_EOF;
-    xdr_end_recv (&xdrs);
 
     return stat;
 }

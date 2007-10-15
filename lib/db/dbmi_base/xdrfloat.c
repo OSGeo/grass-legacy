@@ -1,113 +1,74 @@
-#include <stdlib.h>
 #include "xdr.h"
 
-int db__send_float(float d)
+
+int
+db__send_float(float d)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-
-    xdr_begin_send (&xdrs);
-    if(!xdr_float (&xdrs, &d))
+    if (!db__send(&d, sizeof(d)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_send (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-int db__recv_float (float *d)
+int
+db__recv_float (float *d)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if(!xdr_float (&xdrs, d))
+    if (!db__recv(d, sizeof(*d)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_recv (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
-int db__send_float_array (float *x, int n)
+
+int
+db__send_float_array (const float *x, int n)
 {
-    XDR xdrs;
-    int i;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-
-    xdr_begin_send (&xdrs);
-
-    if(!xdr_int (&xdrs, &n))
+    if (!db__send(&n, sizeof(n)))
 	stat = DB_PROTOCOL_ERR;
-    for (i = 0; stat == DB_OK && i < n; i++)
-    {
-	if(!xdr_float (&xdrs, x))
-	    stat = DB_PROTOCOL_ERR;
-	x++;
-    }
 
-    xdr_end_send (&xdrs);
+    if (!db__send(x, n * sizeof(*x)))
+	stat = DB_PROTOCOL_ERR;
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
+
     return stat;
 }
 
 /* returns an allocated array of floats */
 /* caller is responsible for free() */
-
-int db__recv_float_array (float **x, int *n)
+int
+db__recv_float_array (float **x, int *n)
 {
-    XDR xdrs;
-    int i, count, stat;
-    float y, *a;
+    int stat = DB_OK;
+    int count = 0;
+    float *a = NULL;
 
-    *x = NULL;
-    *n = 0;
-
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if (xdr_int (&xdrs, &count))
-    {
-	if (count <= 0)
-	    stat = DB_PROTOCOL_ERR;
-	a = (float *)db_calloc (count, sizeof (float));
-	if (a == NULL && stat == DB_OK)
-	    stat = DB_MEMORY_ERR;
-
-	for (i = 0; i < count; i++)
-	{
-	    if (!xdr_float (&xdrs, &y))
-	    {
-		stat = DB_PROTOCOL_ERR;
-		break;
-	    }
-	    if (a) a[i] = y;
-	}
-	if (stat != DB_OK)
-	{
-	    if (a != NULL) free(a);
-	    a = NULL;
-	}
-    }
-    else
+    if (!db__recv(&count, sizeof(count)))
 	stat = DB_PROTOCOL_ERR;
 
-    if (stat == DB_OK)
-    {
-	*x = a;
-	*n = count;
-    }
-    else if (stat == DB_PROTOCOL_ERR)
+    *n = count;
+
+    *x = a = (float *) db_calloc(count, sizeof(*a));
+
+    if (!db__recv(a, count * sizeof(*a)))
+	stat = DB_PROTOCOL_ERR;
+
+    if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
 
-    xdr_end_recv (&xdrs);
     return stat;
 }
+

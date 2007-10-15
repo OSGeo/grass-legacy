@@ -1,20 +1,13 @@
-#include <stdlib.h>
 #include "xdr.h"
 
 
 int
-db__send_double(d)
-    double d;
+db__send_double(double d)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-
-    xdr_begin_send (&xdrs);
-    if(!xdr_double (&xdrs, &d))
+    if (!db__send(&d, sizeof(d)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_send (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
@@ -25,14 +18,10 @@ db__send_double(d)
 int
 db__recv_double (double *d)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if(!xdr_double (&xdrs, d))
+    if (!db__recv(d, sizeof(*d)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_recv (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
@@ -42,27 +31,15 @@ db__recv_double (double *d)
 
 
 int
-db__send_double_array (double *x, int n)
+db__send_double_array (const double *x, int n)
 {
-    XDR xdrs;
-    int i;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-
-    xdr_begin_send (&xdrs);
-
-    if(!xdr_int (&xdrs, &n))
+    if (!db__send(&n, sizeof(n)))
 	stat = DB_PROTOCOL_ERR;
 
-    for (i = 0; stat == DB_OK && i < n; i++)
-    {
-	if(!xdr_double (&xdrs, x))
-	    stat = DB_PROTOCOL_ERR;
-	x++;
-    }
-
-    xdr_end_send (&xdrs);
+    if (!db__send(x, n * sizeof(*x)))
+	stat = DB_PROTOCOL_ERR;
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
@@ -75,50 +52,22 @@ db__send_double_array (double *x, int n)
 int
 db__recv_double_array (double **x, int *n)
 {
-    XDR xdrs;
-    int i, count, stat;
-    double y, *a;
+    int stat = DB_OK;
+    int count = 0;
+    double *a = NULL;
 
-    *x = NULL;
-    *n = 0;
-
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if (xdr_int (&xdrs, &count))
-    {
-	if (count <= 0)
-	    stat = DB_PROTOCOL_ERR;
-	a = (double *)db_calloc (count, sizeof (double));
-	if (a == NULL && stat == DB_OK)
-	    stat = DB_MEMORY_ERR;
-
-	for (i = 0; i < count; i++)
-	{
-	    if (!xdr_double (&xdrs, &y))
-	    {
-		stat = DB_PROTOCOL_ERR;
-		break;
-	    }
-	    if (a) a[i] = y;
-	}
-	if (stat != DB_OK)
-	{
-	    if (a != NULL) free(a);
-	    a = NULL;
-	}
-    }
-    else
+    if (!db__recv(&count, sizeof(count)))
 	stat = DB_PROTOCOL_ERR;
 
-    if (stat == DB_OK)
-    {
-	*x = a;
-	*n = count;
-    }
-    else if (stat == DB_PROTOCOL_ERR)
-	db_protocol_error();
+    *n = count;
 
-    xdr_end_recv (&xdrs);
+    *x = a = (double *) db_calloc(count, sizeof(*a));
+
+    if (!db__recv(a, count * sizeof(*a)))
+	stat = DB_PROTOCOL_ERR;
+
+    if (stat == DB_PROTOCOL_ERR)
+	db_protocol_error();
 
     return stat;
 }

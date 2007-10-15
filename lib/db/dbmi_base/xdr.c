@@ -15,7 +15,57 @@
  *****************************************************************************/
 #include "xdr.h"
 
+#ifdef __MINGW32__
+#define USE_STDIO 0
+#define USE_READN 1
+#else
+#define USE_STDIO 1
+#define USE_READN 0
+#endif
+
+#ifndef USE_STDIO
+#include <unistd.h>
+#endif
+
 static FILE *_send, *_recv;
+
+#if USE_READN
+
+static ssize_t readn(int fd, void *buf, size_t count)
+{
+	ssize_t total = 0;
+
+	while (total < count)
+	{
+		ssize_t n = read(fd, (char *) buf + total, count - total);
+		if (n < 0)
+			return n;
+		if (n == 0)
+			break;
+		total += n;
+	}
+
+	return total;
+}
+
+static ssize_t writen(int fd, const void *buf, size_t count)
+{
+	ssize_t total = 0;
+
+	while (total < count)
+	{
+		ssize_t n = write(fd, (const char *) buf + total, count - total);
+		if (n < 0)
+			return n;
+		if (n == 0)
+			break;
+		total += n;
+	}
+
+	return total;
+}
+
+#endif
 
 void
 db__set_protocol_fds (FILE *send, FILE *recv)
@@ -24,38 +74,25 @@ db__set_protocol_fds (FILE *send, FILE *recv)
     _recv = recv;
 }
 
-int
-xdr_begin_send(XDR *xdrs)
+int db__send(const void *buf, size_t size)
 {
-    xdrstdio_create (xdrs, _send, XDR_ENCODE);
-
-    return 0;
+#if USE_STDIO
+    return fwrite(buf, 1, size, _send) == size;
+#elif USE_READN
+    return writen(fileno(_send), buf, size) == size;
+#else
+    return write(fileno(_send), buf, size) == size;
+#endif
 }
 
-int
-xdr_begin_recv(XDR *xdrs)
+int db__recv(void *buf, size_t size)
 {
-    xdrstdio_create (xdrs, _recv, XDR_DECODE);
-
-    return 0;
+#if USE_STDIO
+    return fread(buf, 1, size, _recv) == size;
+#elif USE_READN
+    return readn(fileno(_recv), buf, size) == size;
+#else
+    return read(fileno(_recv), buf, size) == size;
+#endif
 }
-
-int
-xdr_end_send(XDR *xdrs)
-{
-    fflush(_send);
-    xdr_destroy (xdrs);
-
-    return 0;
-}
-
-int
-xdr_end_recv(XDR *xdrs)
-{
-    xdr_destroy (xdrs);
-
-    return 0;
-}
-
-
 
