@@ -1,5 +1,4 @@
 #include <string.h>
-#include <stdlib.h>
 #include "xdr.h"
 
 
@@ -57,24 +56,18 @@ db__recv_string_array (dbString **a, int *n)
 int
 db__send_string(dbString *x)
 {
-    XDR xdrs;
-    int len;
-    int stat;
-    char *s;
+    int stat = DB_OK;
+    const char *s = db_get_string(x);
+    int len = s ? strlen(s) + 1 : 1;
 
+    if (!s)
+	s = "";		/* don't send a NULL string */
 
-    stat = DB_OK;
-
-    s = db_get_string (x);
-    if (s == NULL) s = "";  /* can't send a NULL string */
-    len = strlen(s)+1;
-
-    xdr_begin_send (&xdrs);
-    if(!xdr_int (&xdrs, &len))
+    if (!db__send(&len, sizeof(len)))
 	stat = DB_PROTOCOL_ERR;
-    else if(!xdr_string (&xdrs, &s, len))
+
+    if (!db__send(s, len))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_send (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
@@ -94,27 +87,24 @@ db__send_string(dbString *x)
 int
 db__recv_string(dbString *x)
 {
-    XDR xdrs;
+    int stat = DB_OK;
     int len;
-    int stat;
     char *s;
 
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if(!xdr_int (&xdrs, &len) || len <= 0)  /* len will include the null byte */
-    {
+    if (!db__recv(&len, sizeof(len)))
 	stat = DB_PROTOCOL_ERR;
-    }
-    else
-    {
-	stat = db_enlarge_string (x, len);
-    }
+
+    if (len <= 0)  /* len will include the null byte */
+	stat = DB_PROTOCOL_ERR;
+
+    if (db_enlarge_string(x, len) != DB_OK)
+	stat = DB_PROTOCOL_ERR;
 
     s = db_get_string(x);
-    if(stat == DB_OK && !xdr_string (&xdrs, &s, len))
+
+    if (!db__recv(s, len))
 	stat = DB_PROTOCOL_ERR;
 
-    xdr_end_recv (&xdrs);
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
 

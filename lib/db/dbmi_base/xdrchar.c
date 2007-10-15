@@ -4,17 +4,11 @@
 int
 db__send_char(int d)
 {
-    XDR xdrs;
-    int stat;
-    char c;
+    int stat = DB_OK;
+    char c = (char) d;
 
-    stat = DB_OK;
-    c = d;
-
-    xdr_begin_send (&xdrs);
-    if(!xdr_char (&xdrs, &c))
+    if (!db__send(&c, sizeof(c)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_send (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
@@ -26,14 +20,10 @@ db__send_char(int d)
 int
 db__recv_char (char *d)
 {
-    XDR xdrs;
-    int stat;
+    int stat = DB_OK;
 
-    stat = DB_OK;
-    xdr_begin_recv (&xdrs);
-    if(!xdr_char (&xdrs, d))
+    if (!db__recv(d, sizeof(*d)))
 	stat = DB_PROTOCOL_ERR;
-    xdr_end_recv (&xdrs);
 
     if (stat == DB_PROTOCOL_ERR)
 	db_protocol_error();
