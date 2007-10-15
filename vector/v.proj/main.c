@@ -125,7 +125,7 @@ int main (int argc, char *argv[])
     if (ibaseopt->answer) gbase = ibaseopt->answer;
     else gbase = G_store (G_gisdbase());
 
-    if (strcmp(iloc_name,G_location()) == 0)
+    if (!ibaseopt->answer && strcmp(iloc_name,G_location()) == 0)
 	 G_fatal_error(_("Input and output locations can not be the same"));
 
     /* Change the location here and then come back */
