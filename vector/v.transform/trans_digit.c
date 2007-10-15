@@ -97,9 +97,9 @@ transform_digit_file (struct Map_info *Old, struct Map_info *New, int shift_file
 			db_test_value_isnull(&val)) {
 			trans_params[j] = trans_params_def[j];
 
-			G_warning(_("Unable to select value from table <%s>, column <%s>. "
+			G_warning(_("Unable to select value for category %d from table <%s>, column <%s>. "
 				    "For category %d using default transformation parameter %.3f."),
-				  table, columns[j], cat, trans_params[j]);
+				  cat, table, columns[j], cat, trans_params[j]);
 		    }
 		    else {
 			trans_params[j] = db_get_value_as_double(&val, ctype);
