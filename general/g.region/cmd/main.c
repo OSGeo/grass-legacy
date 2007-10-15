@@ -553,13 +553,9 @@ int main (int argc, char *argv[])
         	              window.east = window.east + 0.5 * temp_window.ew_res;
 	                }
 
-			/*
-			 * 2007/10/15 
-			 * http://grass.itc.it/pipermail/grass-dev/2007-October/033463.html
-			 * 
-			 * if(flag.res_set->answer)
-			 * G_align_window (&window, &temp_window);
-			 */
+			if(flag.res_set->answer)
+			    G_align_window (&window, &temp_window);
+
 			Vect_close (&Map);
 		}
 	}
