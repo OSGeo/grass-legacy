@@ -1,6 +1,0 @@
-# Stuff for mkdspf
-DSPLIB = /home/stimpy/terry/3d/libes/libdsp3.a
-DSPINC = /home/stimpy/terry/3d/libes
-
-EXTRA_CFLAGS= -xansi -g -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-	-D__STDC__ $(TKGLX_INCLUDES) -I$(DSPINC)
