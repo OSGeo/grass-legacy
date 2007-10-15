@@ -53,7 +53,9 @@ $(OBJARCH)/FLOAT/%.o: %.cc | $(OBJARCH)/FLOAT
 $(OBJARCH)/SHORT/%.o: %.cc | $(OBJARCH)/SHORT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
-default: $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlcmd
+default: htmlcmd
+
+htmlcmd: $(BIN)/$(PGM) $(BIN)/$(PGM).short
 
 $(OBJARCH)/FLOAT:
 	$(MKDIR) $@

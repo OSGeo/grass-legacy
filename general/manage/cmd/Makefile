@@ -13,12 +13,9 @@ LIST_MOD = $(BIN)/g.list$(EXE)
 REMOVE_MOD = $(BIN)/g.remove$(EXE)
 RENAME_MOD = $(BIN)/g.rename$(EXE)
 
-default: \
-	$(COPY_MOD) \
-	$(LIST_MOD) \
-	$(REMOVE_MOD) \
-	$(RENAME_MOD) \
-	htmlmulti
+default: htmlmulti
+
+htmlmulti: $(COPY_MOD) $(LIST_MOD) $(REMOVE_MOD) $(RENAME_MOD)
 
 $(COPY_MOD): $(OBJDIR)/copy.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(FMODE_OBJ) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
