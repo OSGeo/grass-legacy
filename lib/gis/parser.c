@@ -319,7 +319,7 @@ G_define_option (void)
  *
  * - raster: G_OPT_R_INPUT, G_OPT_R_INPUTS, G_OPT_R_OUTPUT, G_OPT_R_MAP, G_OPT_R_MAPS, G_OPT_R_BASE, G_OPT_R_COVER, G_OPT_R_ELEV, G_OPT_R_ELEVS
  *
- * - raster3d: G_OPT_R3_INPUT, G_OPT_R3_INPUTS, G_OPT_R3_OUTPUT
+ * - raster3d: G_OPT_R3_INPUT, G_OPT_R3_INPUTS, G_OPT_R3_OUTPUT, G_OPT_R3_MAP, G_OPT_R3_MAPS
  *
  * - vector: G_OPT_V_INPUT, G_OPT_V_INPUTS, G_OPT_V_OUTPUT, G_OPT_V_MAP, G_OPT_V_MAPS, G_OPT_V_TYPE, G_OPT_V_FIELD, G_OPT_V_CAT, G_OPT_V_CATS
  *
@@ -495,6 +495,23 @@ G_define_standard_option (int opt)
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "new,grid3,3d-raster";
 	    Opt->description  = _("Name for output raster3d map");
+	    break;
+	case G_OPT_R3_MAP:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,grid3,3d-raster";
+	    Opt->description  = _("Name of input raster3d map");
+	    break;
+	case G_OPT_R3_MAPS:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->key_desc     = "name";
+	    Opt->required     = YES;
+	    Opt->multiple     = YES;
+	    Opt->gisprompt    = "old,grid3,3d-raster";
+	    Opt->description  = _("Name of input raster3d map(s)");
 	    break;
 
 	/*vector maps*/    

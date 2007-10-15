@@ -173,6 +173,8 @@ typedef enum {
     G_OPT_R3_INPUT,  /* old input raster3d map */
     G_OPT_R3_INPUTS, /* old input raster3d maps */
     G_OPT_R3_OUTPUT, /* new output raster3d map */
+    G_OPT_R3_MAP,    /* old input raster3d map */
+    G_OPT_R3_MAPS,   /* old input raster3d maps */
 
     G_OPT_V_INPUT,  /* old input vector map */
     G_OPT_V_INPUTS, /* old input vector maps */
