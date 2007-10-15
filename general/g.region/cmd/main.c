@@ -165,13 +165,12 @@ int main (int argc, char *argv[])
 	parm.raster->description = _("Set region to match this raster map");
 	parm.raster->guisection  = _("Existing");
 
-	parm.raster3d = G_define_standard_option(G_OPT_R_MAP);
+	parm.raster3d = G_define_standard_option(G_OPT_R3_MAP);
 	parm.raster3d->key         = "rast3d";
 	parm.raster3d->required    = NO;
 	parm.raster3d->multiple    = NO;
 	parm.raster3d->description = _("Set region to match this 3D raster map (both 2D and 3D "
 				       "values)");
-	parm.raster3d->gisprompt   = "old,grid3,3d-raster";
 	parm.raster3d->guisection  = _("Existing");
 
 	parm.vect = G_define_standard_option(G_OPT_V_MAP);
