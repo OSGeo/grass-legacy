@@ -404,6 +404,81 @@ class GMFrame(wx.Frame):
 
         wx.AboutBox(info)
 
+    def OnWorkspaceNew(self, event):
+        """Create new workspace file
+
+        Erase current workspace settings first"""
+        pass
+
+    def OnWorkspaceOpen(self, event):
+        """Open file with workspace definition"""
+        dlg = wx.FileDialog(parent=self, message=_("Choose workspace file"),
+                            defaultDir=os.getcwd(), wildcard="*.grc")
+
+        filename = ''
+        if dlg.ShowModal() == wx.ID_OK:
+            filename = dlg.GetFilename()
+        
+        Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
+
+    def OnWorkspaceSave(self, event):
+        """Save file with workspace definition"""
+        
+        filename = "test-out.grc"
+
+        self.SaveLayerTreeToGrcXml(filename)
+
+    def SaveLayerTreeToGrcXml(self, filename):
+        """Save layer tree layout to workspace file"""
+
+        file = open(filename, "w")
+        #file = sys.stderr
+        try:
+            # write header
+            file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            file.write('<!DOCTYPE grc SYSTEM "grass-grc.dtd">\n')
+            file.write('<grc>\n')
+            # list of layers
+            mapTree = self.curr_page.maptree
+            root = mapTree.GetRootItem()
+            childitem = mapTree.GetFirstChild(root)
+            item = childitem[0]
+            cookie = childitem[1]
+            for n in range(0, mapTree.GetChildrenCount(root)):
+                layer = mapTree.layers[item]
+                type = layer.type
+                name = mapTree.GetItemText(item)
+                checked = int(item.IsChecked())
+                opacity = layer.maplayer.GetOpacity(float=True)
+                file.write('    <layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
+                               (type, name, checked, opacity));
+                # layer properties
+                cmd = mapTree.GetPyData(item)[0]
+                file.write('        <task name="%s">\n' % cmd[0])
+                for option in cmd[1:]:
+                    if option[0] == '-': # flag
+                        file.write('            <flag name="%s" />\n' % option[1])
+                    else: # parameter
+                        key, value = option.split('=')
+                        file.write('            <parameter name="%s">\n' % key)
+                        file.write('                <value>%s</value>\n' % value)
+                        file.write('            </parameter>\n');
+                file.write('        </task>\n');
+                file.write('    </layer>\n');
+                item = mapTree.GetNextChild(item, cookie)[0]
+            file.write('</grc>\n')
+        finally:
+            pass
+            #file.close()
+
+    def OnWorkspaceClose(self, event):
+        """Close file with workspace definition
+
+        If workspace has been modified ask user to save the changes.
+        """
+        pass
+
+
     def RulesCmd(self, event):
         """
         Launches dialog for commands that need rules
@@ -414,8 +489,10 @@ class GMFrame(wx.Frame):
         if dlg.ShowModal() == wx.ID_OK:
             gtemp = utils.GetTempfile()
             output = open(gtemp,"w")
-            output.write(dlg.rules)
-            output.close()
+            try:
+                output.write(dlg.rules)
+            finally:
+                output.close()
 
             if command == 'r.colors':
                 cmdlist = [command,'map=%s' % dlg.inmap,'rules=%s' % gtemp,'--verbose']
@@ -425,9 +502,7 @@ class GMFrame(wx.Frame):
             if dlg.overwrite == True:
                 cmdlist.append('--o')
 
-            cmdlist.append('--verbose')
-
-            gcmd.Command(cmdlist)
+            gcmd.Command(cmdlist, verbose=3)
 
         dlg.Destroy()
 
@@ -523,11 +598,11 @@ class GMFrame(wx.Frame):
         """Creates toolbar"""
 
         toolbar = self.CreateToolBar()
-        for each in self.toolbarData():
-            self.addToolbarButton(toolbar, *each)
+        for each in self.ToolbarData():
+            self.AddToolbarButton(toolbar, *each)
         toolbar.Realize()
 
-    def addToolbarButton(self, toolbar, label, icon, help, handler):
+    def AddToolbarButton(self, toolbar, label, icon, help, handler):
         """Adds button to the given toolbar"""
 
         if not label:
@@ -536,10 +611,14 @@ class GMFrame(wx.Frame):
         tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
         self.Bind(wx.EVT_TOOL, handler, tool)
 
-    def toolbarData(self):
+    def ToolbarData(self):
 
         return   (
                  ('newdisplay', Icons["newdisplay"].GetBitmap(), Icons["newdisplay"].GetLabel(), self.NewDisplay),
+                 ('', '', '', ''),
+                 ('workspaceNew', Icons["workspaceNew"].GetBitmap(), Icons["workspaceNew"].GetLabel(), self.OnWorkspaceNew),
+                 ('workspaceOpen', Icons["workspaceOpen"].GetBitmap(), Icons["workspaceOpen"].GetLabel(), self.OnWorkspaceOpen),
+                 ('workspaceSave', Icons["workspaceSave"].GetBitmap(), Icons["workspaceSave"].GetLabel(), self.OnWorkspaceSave),
                  ('', '', '', ''),
                  ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.OnRaster),
                  ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.OnVector),
@@ -841,14 +920,9 @@ class GMFrame(wx.Frame):
             self.DeleteAllPages()
         except:
             pass
-#            self.DestroyChildren()
+        # self.DestroyChildren()
         self._auimgr.UnInit()
         self.Destroy()
-
-    def Nomethod(self, event):
-        '''Stub for testing'''
-        pass
-        event.Skip()
 
     def MsgNoLayerSelected(self):
         """Show dialog message 'No layer selected'"""

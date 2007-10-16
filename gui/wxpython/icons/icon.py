@@ -65,6 +65,9 @@ icons_default = {
     "digExit"    : 'exit.gif',
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
+    "workspaceNew" : 'file-new.gif',
+    "workspaceOpen" : 'file-open.gif',
+    "workspaceSave" : 'file-save.gif',
     "addrast"    : 'element-cell.gif',
     "addvect"    : 'element-vector.gif',
     "addcmd"     : 'gui-cmd.gif',
@@ -210,6 +213,9 @@ Icons = {
     "printmap"   : MetaIcon (img=icons_img["printmap"], label="Print display"),
     # gis manager
     "newdisplay" : MetaIcon (img=icons_img["newdisplay"], label="Start new display"),
+    "workspaceNew" : MetaIcon (img=icons_img["workspaceNew"], label="Create new workspace file"),
+    "workspaceOpen" : MetaIcon (img=icons_img["workspaceOpen"], label="Open existing workspace file"),
+    "workspaceSave" : MetaIcon (img=icons_img["workspaceSave"], label="Save current workspace to file"),
     "addrast"    : MetaIcon (img=icons_img["addrast"], label="Add raster map layer"),
     "addvect"    : MetaIcon (img=icons_img["addvect"], label="Add vector map layer"),
     "addcmd"     : MetaIcon (img=icons_img["addcmd"], label="Add command layer"),

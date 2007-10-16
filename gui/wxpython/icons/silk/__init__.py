@@ -57,6 +57,9 @@ IconsSilk = {
     "digExit"     : 'door_in.png',
     # gis manager
     "newdisplay" : 'application_add.png',
+    "workspaceNew" : 'page_white.png',
+    "workspaceOpen" : 'folder.png',
+    "workspaceSave" : 'page_save.png',
     "addrast"    : 'image_add.png',
     "addshaded"  : 'picture_empty.png',
     "addrarrow"  : 'arrow_inout.png',
