@@ -32,10 +32,9 @@ else
 SET_DATA_PROG =
 endif
 
-default: $(ARCH_BINDIR)/$(START_UP) \
-	$(ARCH_BINDIR)/$(START_UP).bat \
+FILES = \
+	$(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/Init.sh \
-	$(ETC)/Init.bat \
 	$(ETC)/prompt.sh \
 	$(SET_DATA_PROG) \
 	$(ETC)/clean_temp$(EXE) \
@@ -52,14 +51,21 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/file_option.tcl \
 	$(ETC)/gintro.gif \
 	$(ETC)/grass-run.sh \
-	$(ETC)/grass-run.bat \
 	$(ETC)/grass-xterm-wrapper \
 	$(ETC)/html_browser_mac.sh
+
+ifneq ($(strip $(MINGW32)),)
+	FILES += \
+		$(ARCH_BINDIR)/$(START_UP).bat \
+		$(ETC)/Init.bat \
+		$(ETC)/grass-run.bat
+endif
+
+default: $(FILES)
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL_DATA) variables.html $(GISBASE)/docs/html/variables.html
 	$(INSTALL_DATA) grass6.html $(GISBASE)/docs/html/grass6.html
 	$(INSTALL_DATA) helptext.html $(GISBASE)/docs/html/helptext.html
-
 
 $(ARCH_BINDIR)/$(START_UP): init.sh grass.src
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
