@@ -44,6 +44,10 @@ ifneq ($(strip $(OPENGLLIB)),)
     SUBDIRS += $(OPENGLBASED)
 endif
 
+ifneq ($(USE_CAIRO),)
+    SUBDIRS += cairodriver
+endif
+
 #doxygen:
 DOXNAME=grass
 

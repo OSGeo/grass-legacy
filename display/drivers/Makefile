@@ -11,6 +11,9 @@ ifneq ($(HAVE_SOCKET),)
 ifneq ($(USE_X11),)
   SUBDIRS += XDRIVER
 endif
+ifneq ($(USE_CAIRO),)
+  SUBDIRS += cairo
+endif
 endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
