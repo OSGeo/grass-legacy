@@ -60,6 +60,8 @@ const struct driver *PS_Driver(void)
 	drv.draw_bitmap		= PS_draw_bitmap;
 	drv.draw_text		= NULL;
 
+	initialized = 1;
+
 	return &drv;
 }
 
