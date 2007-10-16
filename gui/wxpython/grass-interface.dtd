@@ -1,9 +1,18 @@
 <!--	grass-interface.dtd
 
-	Copyright (C) 2000 by the GRASS Development Team
-	Author: Jan-Oliver Wagner <jan@intevation.de>
+	Copyright (C) 2000-2007 by the GRASS Development Team
+	Author: Jan-Oliver Wagner <jan intevation.de>
+	
+	Changes: 
+	2007-10 by Martin Landa <landa.martin gmail.com>
+	   * added keywords element
+	   * added name element (fix for value element)
 
-	Changes: 2001-06-07 by Eric G. Miller <egm2@jps.net>
+	2007-04 by Daniel Calvelo <dca.gis gmail.com>
+	   * added guisection element
+	   * added name-description pair for value sets
+
+	2001-06-07 by Eric G. Miller <egm2 jps.net>
 	   * make <parameter-group> optional
 	   * move descriptions first, always optional
 	   * make <default> optional  // Should it reference <value> ?
@@ -34,7 +43,7 @@
 	for the GRASS command and is used
 	to execute the task.
 -->
-<!ELEMENT task	        (description?, parameter*, flag*, parameter-group*)>
+<!ELEMENT task	        (description?, keywords?, parameter*, flag*, parameter-group*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
 
 
@@ -63,7 +72,7 @@
 	If multiple is "yes", then many values for the
 	parameter may be given in a comma-seperated list
 -->
-<!ELEMENT parameter     (description?, keydesc?, gisprompt?, default?, values?)>
+<!ELEMENT parameter     (description?, keydesc?, gisprompt?, default?, values?, guisection?)>
 <!ATTLIST parameter	name		CDATA #REQUIRED
 			type		(string | integer | float) "string"
 			required	(yes | no) "no"
@@ -111,20 +120,23 @@
 -->
 <!ELEMENT default    (#PCDATA)>
 
+<!--	the GUI section where the parameter would appear
+-->
+<!ELEMENT guisection	(#PCDATA)>
 
-
-<!--	contains a number of single values.
+<!--	contains a number of single values. Values may have name and description.
 -->
 <!ELEMENT values     (value+)>
 
 
 
 <!--	a potential value for a parameter. Hopefully
-	it does correposnd to the parameter type.
+	it does correpond to the parameter type.
 	How to set up rules for that (same problem for
 	<default>)?
 -->
-<!ELEMENT value	    (#PCDATA)>
+<!ELEMENT value	    (name, description?)>
+<!ELEMENT name          (#PCDATA)>
 
 
 
@@ -139,4 +151,6 @@
 
 
 
-
+<!--	list of keywords that describes a task
+-->
+<!ELEMENT keywords   (#PCDATA)>
