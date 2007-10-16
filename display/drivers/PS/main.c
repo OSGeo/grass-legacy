@@ -13,7 +13,6 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
 #include "psdriver.h"
 
 int main(int argc, char **argv)

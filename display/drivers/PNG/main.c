@@ -18,7 +18,6 @@
  *
  *****************************************************************************/
 
-#include <stdio.h>
 #include "pngdriver.h"
 
 int main(int argc, char **argv)
