@@ -174,7 +174,8 @@ Reproject external raster map to current GRASS projection (does not always make 
 using the GDAL 'gdalwarp' tool. We recommend to use the ERDAS/Img format and not
 to use the ESRI style of WKT:<br>
 <div class="code"><pre>
-gdalwarp -of HFA -t_srs "`g.proj -wf`" aster.img aster_tmerc.img
+# example for 30x30 pixel resolution (enforce with -tr to avoid odd values)
+gdalwarp -of HFA -tr 30 30 -t_srs "`g.proj -wf`" aster.img aster_tmerc.img
 </pre></div>
 
 <p>
