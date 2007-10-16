@@ -74,7 +74,7 @@ typedef doublereal E_f;   /* real function with -R not specified */
    to platform, at least partly
 */
 
-if defined(HAVE_BLAS) && defined(HAVE_LAPACK)
+#if defined(HAVE_LIBBLAS) && defined(HAVE_LIBLAPACK)
 #include <grass/blas.h>
 #include <grass/lapack.h>
 #endif
@@ -94,7 +94,7 @@ if defined(HAVE_BLAS) && defined(HAVE_LAPACK)
    of platform invariance on fortran->C symbol translations
 */
 
-if defined(HAVE_BLAS) && defined(HAVE_LAPACK)
+#if defined(HAVE_LIBBLAS) && defined(HAVE_LIBLAPACK)
 #define f77_dgesv                   dgesv_
 #define f77_dgemm                   dgemm_
 #define f77_dnrm2                   dnrm2_
