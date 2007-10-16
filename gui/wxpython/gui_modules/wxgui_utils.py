@@ -50,7 +50,7 @@ class AbstractLayer:
     Abstract layer in LayerTree
 
     Attributes:
-    * type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer()
+    *  type - layer type ('cmdlayer', 'group', etc) -- see LayerTree.AddLayer()
     """
 
     def __init__(self, type):
@@ -499,45 +499,45 @@ class LayerTree(CT.CustomTreeCtrl):
                    ltype)
 
         if ltype == 'raster':
-            menuform.GUI().ParseCommand('d.rast', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.rast', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rgb':
-            menuform.GUI().ParseCommand('d.rgb', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.rgb', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'his':
-            menuform.GUI().ParseCommand('d.his', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.his', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'shaded':
-            menuform.GUI().ParseCommand('d.shadedmap', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.shadedmap', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rastarrow':
-            menuform.GUI().ParseCommand('d.rast.arrow', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.rast.arrow', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rastnum':
-            menuform.GUI().ParseCommand('d.rast.num', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.rast.num', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'vector':
-            menuform.GUI().ParseCommand('d.vect', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.vect', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'thememap':
             menuform.GUI().ParseCommand('d.vect.thematic',
-                                        completed=(self.getOptData,layer,params),
+                                        completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'themechart':
             menuform.GUI().ParseCommand('d.vect.chart',
-                                        completed=(self.getOptData,layer,params),
+                                        completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'grid':
-            menuform.GUI().ParseCommand('d.grid', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.grid', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'geodesic':
-            menuform.GUI().ParseCommand('d.geodesic', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.geodesic', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rhumb':
-            menuform.GUI().ParseCommand('d.rhumbline', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.rhumbline', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'labels':
-            menuform.GUI().ParseCommand('d.labels', completed=(self.getOptData,layer,params),
+            menuform.GUI().ParseCommand('d.labels', completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'cmdlayer':
             pass
@@ -823,7 +823,8 @@ class LayerTree(CT.CustomTreeCtrl):
         # completed drag and drop
         self.drag = False
 
-    def getOptData(self, dcmd, layer, params, propwin):
+    def GetOptData(self, dcmd, layer, params, propwin):
+        """Process layer data"""
         for item in dcmd:
             if 'map=' in item:
                 mapname = item.split('=')[1]

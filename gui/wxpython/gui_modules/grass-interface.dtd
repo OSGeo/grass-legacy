@@ -1,14 +1,18 @@
 <!--	grass-interface.dtd
 
 	Copyright (C) 2000-2007 by the GRASS Development Team
-	Author: Jan-Oliver Wagner <jan@intevation.de>
+	Author: Jan-Oliver Wagner <jan intevation.de>
 	
 	Changes: 
-	2007-04 by Daniel Calvelo <dca.gis@gmail.com>
+	2007-10 by Martin Landa <landa.martin gmail.com>
+	   * added keywords element
+	   * added name element (fix for value element)
+
+	2007-04 by Daniel Calvelo <dca.gis gmail.com>
 	   * added guisection element
 	   * added name-description pair for value sets
 
-	2001-06-07 by Eric G. Miller <egm2@jps.net>
+	2001-06-07 by Eric G. Miller <egm2 jps.net>
 	   * make <parameter-group> optional
 	   * move descriptions first, always optional
 	   * make <default> optional  // Should it reference <value> ?
@@ -39,7 +43,7 @@
 	for the GRASS command and is used
 	to execute the task.
 -->
-<!ELEMENT task	        (description?, parameter*, flag*, parameter-group*)>
+<!ELEMENT task	        (description?, keywords?, parameter*, flag*, parameter-group*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
 
 
@@ -132,6 +136,7 @@
 	<default>)?
 -->
 <!ELEMENT value	    (name, description?)>
+<!ELEMENT name          (#PCDATA)>
 
 
 
@@ -146,4 +151,6 @@
 
 
 
-
+<!--	list of keywords that describes a task
+-->
+<!ELEMENT keywords   (#PCDATA)>
