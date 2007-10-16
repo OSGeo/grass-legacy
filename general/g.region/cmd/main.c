@@ -503,18 +503,21 @@ int main (int argc, char *argv[])
 	/* vect= */
 	if (parm.vect->answer)
 	{
-               int first = 0;
-                vect_ptr = parm.vect->answers;
-                for (; *vect_ptr != NULL; vect_ptr++)
-                {
+		int first = 0;
+		vect_ptr = parm.vect->answers;
+		for (; *vect_ptr != NULL; vect_ptr++)
+		{
 			struct Map_info Map;
 			BOUND_BOX box;
-                        char vect_name[GNAME_MAX];
+			char vect_name[GNAME_MAX];
+			struct Cell_head map_window;
 
-                        strcpy (vect_name, *vect_ptr);		
+			strcpy (vect_name, *vect_ptr);		
 			mapset = G_find_vector2 (vect_name, "");
 			if (!mapset)
 				G_fatal_error (_("Vector map <%s> not found"), vect_name);
+
+			G_copy (&temp_window, &window, sizeof(window));
 	
 			Vect_set_open_level (2);
 			if (2 != Vect_open_old (&Map, vect_name, mapset))
@@ -522,36 +525,39 @@ int main (int argc, char *argv[])
 					       vect_name, mapset);
 
 			Vect_get_map_box (&Map, &box );
-			G_copy (&temp_window, &window, sizeof(window));
-			temp_window.north = box.N;
-			temp_window.south = box.S;
-			temp_window.west  = box.W;
-			temp_window.east  = box.E;
+			map_window = window;
+			map_window.north = box.N;
+			map_window.south = box.S;
+			map_window.west	 = box.W;
+			map_window.east	 = box.E;
 
-                        if (!first) {
-                                G_copy (&window, &temp_window, sizeof(window));
-                                first = 1;
-                        } else {
-				window.north = (window.north > temp_window.north) ?
-					window.north : temp_window.north;
-				window.south = (window.south < temp_window.south) ?
-					window.south : temp_window.south;
-				window.east = (window.east > temp_window.east) ?
-					window.east : temp_window.east;
-				window.west = (window.west < temp_window.west) ?
-					window.west : temp_window.west;
-                        }
+			if (!first)
+			{
+				G_copy (&window, &map_window, sizeof(window));
+				first = 1;
+			}
+			else
+			{
+				window.north = (window.north > map_window.north) ?
+					window.north : map_window.north;
+				window.south = (window.south < map_window.south) ?
+					window.south : map_window.south;
+				window.east = (window.east > map_window.east) ?
+					window.east : map_window.east;
+				window.west = (window.west < map_window.west) ?
+					window.west : map_window.west;
+			}
 
-	       	        if(window.north == window.south)
-       		        {
-       	        	      window.north = window.north + 0.5 * temp_window.ns_res;
-	                      window.south = window.south - 0.5 * temp_window.ns_res;
-        	        }
-	                if(window.east==window.west)
-        	        {
-	                      window.west = window.west - 0.5 * temp_window.ew_res;
-        	              window.east = window.east + 0.5 * temp_window.ew_res;
-	                }
+			if(window.north == window.south)
+			{
+			      window.north = window.north + 0.5 * temp_window.ns_res;
+			      window.south = window.south - 0.5 * temp_window.ns_res;
+			}
+			if(window.east==window.west)
+			{
+			      window.west = window.west - 0.5 * temp_window.ew_res;
+			      window.east = window.east + 0.5 * temp_window.ew_res;
+			}
 
 			if(flag.res_set->answer)
 			    G_align_window (&window, &temp_window);
