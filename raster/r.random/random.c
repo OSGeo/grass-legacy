@@ -18,7 +18,7 @@ int execute_random (struct rr_state *theState)
     long nc;
     struct Cell_head window;
     int nrows, ncols, row, col;
-    int infd, outfd;
+    int infd, cinfd, outfd;
     struct Map_info Out;
     struct field_info *fi;
     dbTable *table;
@@ -38,18 +38,20 @@ int execute_random (struct rr_state *theState)
     if ((infd = theState->fd_old) < 0)
         G_fatal_error (_("Cannot open raster map <%s>"), 
 		       theState->inraster);
+    if (theState->docover == 1) {
+	if ((cinfd = theState->fd_cold) < 0)
+            G_fatal_error (_("Cannot open cover raster map <%s>"),
+                           theState->inrcover);
+    }
 
-    if (theState->outraster != NULL)
-    {
+    if (theState->outraster != NULL) {
         if ((outfd = G_open_raster_new (theState->outraster, theState->buf.type)) < 0)
             G_fatal_error (_("Cannot create raster map <%s>"), 
 			   theState->outraster);
-
         theState->fd_new = outfd;
     }
 
-    if (theState->outvector)
-    {
+    if (theState->outvector) {
         if (theState->z_geometry)
 	  Vect_open_new (&Out, theState->outvector, 1);
 	else
@@ -65,7 +67,10 @@ int execute_random (struct rr_state *theState)
 
         Vect_map_add_dblink ( &Out, 1, NULL, fi->table, "cat", fi->database, fi->driver);
 
-        table = db_alloc_table ( 2 );
+        if (theState->docover == 1)
+           table = db_alloc_table ( 3 );
+        else
+           table = db_alloc_table ( 2 );
         db_set_table_name ( table, fi->table );
         
         column = db_get_table_column (table, 0);
@@ -76,6 +81,11 @@ int execute_random (struct rr_state *theState)
         db_set_column_name ( column,  "value" );
         db_set_column_sqltype ( column, DB_SQL_TYPE_DOUBLE_PRECISION ); 
 
+        if (theState->docover == 1) {
+           column = db_get_table_column (table, 2);
+           db_set_column_name ( column,  "covervalue" );
+           db_set_column_sqltype ( column, DB_SQL_TYPE_DOUBLE_PRECISION ); 
+        }
         if ( db_create_table ( driver, table ) != DB_OK )
 	    G_warning (_("Cannot create new table"));
 
@@ -106,21 +116,33 @@ int execute_random (struct rr_state *theState)
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
             G_fatal_error (_("Cannot read raster row [%d] from raster map <%s>"),
 			   row, theState->inraster);
-
+        if (theState->docover == 1) {
+	    if (G_get_raster_row (cinfd, theState->cover.data.v, row, theState->cover.type) < 0)
+                G_fatal_error (_("Cannot read raster row [%d] from cover raster map <%s>"),
+		    	       row, theState->inrcover);
+        }
         for (col = 0; col < ncols && nt ; col++)
         {
-            if (!theState->use_nulls && is_null_value(theState->buf, col))
+	    if (!theState->use_nulls && is_null_value(theState->buf, col) )
                 continue;
+            if (theState->docover == 1) {  /* skip no data cover points */
+                if (!theState->use_nulls && is_null_value(theState->cover, col) )
+                    continue;
+            }
 
             if (make_rand() % nc < nt)
             {
                 nt--;
                 if (is_null_value(theState->buf, col))
                         cpvalue(&theState->nulls, 0, &theState->buf, col);
+                if (theState->docover == 1) {
+		    if (is_null_value(theState->cover, col))
+                        cpvalue(&theState->cnulls, 0, &theState->cover, col);
+		}
 
                 if (theState->outvector)
                 {
-                    double x, y, val;
+                    double x, y, val, coverval;
                     char buf[500];
 
                     Vect_reset_line ( Points );
@@ -130,6 +152,8 @@ int execute_random (struct rr_state *theState)
                     y = window.north - (row + .5) * window.ns_res;
                     
                     val = cell_as_dbl(&theState->buf, col);
+                    if (theState->docover == 1)
+			    coverval = cell_as_dbl(&theState->cover, col);
 
                     if (theState->z_geometry)
 		      Vect_append_point ( Points, x, y, val );
@@ -139,7 +163,13 @@ int execute_random (struct rr_state *theState)
 
                     Vect_write_line ( &Out, GV_POINT, Points, Cats );
 
-                    sprintf (buf, "insert into %s values ( %d, %f )", fi->table, cat, val );
+                    if (theState->docover == 1)
+			if (is_null_value(theState->cover, col))
+                            sprintf (buf, "insert into %s values ( %d, %f, NULL )", fi->table, cat, val);
+                        else
+                            sprintf (buf, "insert into %s values ( %d, %f, %f )", fi->table, cat, val, coverval);
+		    else
+			sprintf (buf, "insert into %s values ( %d, %f )", fi->table, cat, val);
                     db_set_string ( &sql, buf );
                     
                     if (db_execute_immediate (driver, &sql) != DB_OK )
@@ -149,22 +179,27 @@ int execute_random (struct rr_state *theState)
                 }
                 G_percent ((theState->nRand - nt), theState->nRand, 2);
             }
-            else
+            else {
                 set_to_null(&theState->buf, col);
+                if (theState->docover == 1)
+		    set_to_null(&theState->cover, col);
+	    }
 
             nc-- ;
         }
 
-        while (col < ncols)
+        while (col < ncols) {
                 set_to_null(&theState->buf, col++);
+                if (theState->docover == 1)
+		    set_to_null(&theState->cover, col++);
+	}
 
-        if (theState->outraster)
+        if (theState->outraster) /* nothing to do in case of cover map */
             G_put_raster_row(outfd, theState->buf.data.v, theState->buf.type);
     }
 
     /* Catch any remaining rows in the window*/
-    if (theState->outraster && row < nrows)
-    {
+    if (theState->outraster && row < nrows) {
         for ( col = 0 ; col < ncols; col++)
             set_to_null(&theState->buf, col);
         
@@ -178,6 +213,8 @@ int execute_random (struct rr_state *theState)
 
     /* close files */
     G_close_cell(infd);
+    if (theState->docover == 1)
+	G_close_cell(cinfd);
     if (theState->outvector) {
         db_commit_transaction ( driver );
         db_close_database_shutdown_driver ( driver );

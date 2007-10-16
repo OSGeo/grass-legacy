@@ -29,7 +29,12 @@ contains a listing of the sites' coordinates;
 these coordinates are the <EM>center points</EM> of the
 randomly selected cells.  A double attribute contains the cell value
 of the <EM>input</EM> raster (or the assigned value
-when <B>-z</B> is used.
+when <B>-z</B> is used. The values a stored in the <EM>value</EM>
+column in the attached attribute table. <br>
+If a <EM>cover</EM> map is additionally specified, a second
+column  <EM>covervalue</EM> is populated with raster values from
+the <EM>cover</EM> map.
+
 
 <H2>OPTIONS</H2>
 
@@ -45,8 +50,9 @@ one percent may be stated as decimals.
 
 <EM>r.random</EM> can be run interactively or
 non-interactively.  The user may provide program arguments
-on the command line, specifying an input map layer name
-(<B>input=</B><EM>name</EM>), output raster map layer name
+on the command line, specifying an input raster map layer name
+(<B>input=</B><EM>name</EM>), optionally a cover raster map layer name
+(<B>cover=</B><EM>name</EM>), output raster map layer name
 (<B>raster_output=</B><EM>name</EM>), output vector points map
 name (<B>vector_output=</B><EM>name</EM>), and 
 the number of sites to be randomly generated as a
@@ -60,15 +66,6 @@ containing NULL values (using the <B>-z</B> option).  The
 <B>-i</B> can be used to get a count of the total cells and
 NULL cells given the current region settings.
 
-<P>
-
-Alternately, the user can simply type <B>r.random</B> on the command line 
-without program arguments. In this case, the user will be prompted for 
-needed inputs and option choices using the standard GRASS 
-<EM><A HREF="parser.html">parser</A></EM>
-interface.
-
-<P>
 
 <H3>Flags:</H3>
 
@@ -102,6 +99,11 @@ The z values correspond to the raster map values.
 <EM>r.random</EM> will randomly generate sites on a user-specified portion 
 of the cells in this <EM>input</EM> raster map. 
 
+<DT><B>cover=</B><EM>name</EM>
+<DD>An existing raster map layer in the user's current mapset search path.
+<EM>r.random</EM> will extract raster values at the generates random sites
+from this <EM>cover</EM> raster map. The cover map only generates output
+for the <EM>vector_output</EM> map.
 
 <DT><B>n=</B><EM>number</EM>
 <DD>Specify the quantity of sites to be randomly generated as 
@@ -152,19 +154,41 @@ of the original raster map layer (e.g., using the GRASS
 program <EM><A HREF="r.reclass.html">r.reclass</A></EM>) 
 that contains only the desired categories, 
 and then use the reclassed raster map layer as input to <EM>r.random</EM>.
-
+<P>
+If a <EM>cover</EM> raster map is specified and the <EM>cover</EM> map
+contains NULL (no data) values, these sites are suppressed in the
+resulting <EM>vector_output</EM> map.
 
 <H2>EXAMPLES</H2>
 
 Random vector elevation points sampled from elevation map in the
-Spearfish region:
+Spearfish region, result stored in 2D vector map:
 
 <div class="code"><pre>
+g.region rast=elevation.10m -p
 r.random elevation.10m vector_output=elevrand n=100
 v.db.select elevrand
 v.univar elevrand col=value type=point
 </pre></div>
 
+
+<p>
+Random vector elevation points sampled from elevation map in the
+Spearfish region with collocated values sampled from landuse map,
+result stored in 3D vector map:
+
+<div class="code"><pre>
+g.region rast=elevation.10m -p
+r.random -d elevation.10m cover=landcover.30m vector_output=luserand3d n=100
+
+# data output (value: elevation, covervalue: landuse class):
+v.db.select luserand3d
+cat|value|covervalue
+1|1151.406616|81
+2|1172.121216|71
+3|1183.219604|71
+...
+</pre></div>
 
 <H2>BUGS</H2>
 
@@ -184,9 +208,10 @@ parameter.
 Dr. James Hinthorne,
 GIS Laboratory, 
 Central Washington University
-
 <P>
 Modified for GRASS 5.0 by Eric G. Miller
+<p>
+Cover map support by Markus Neteler, 2007
 
 <p>
 <i>Last changed: $Date$</i>
