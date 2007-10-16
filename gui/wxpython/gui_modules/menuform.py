@@ -1152,7 +1152,10 @@ class GUI:
                 if 'flags' in dcmd_params:
                     self.grass_task.flags = dcmd_params['flags']
 
-            self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY, task_description=self.grass_task, get_dcmd=get_dcmd, layer=layer)
+            self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
+                                task_description=self.grass_task,
+                                get_dcmd=get_dcmd, layer=layer)
+
             self.mf.Show(True)
             self.mf.MakeModal(modal)
 

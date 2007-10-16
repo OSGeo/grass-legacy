@@ -7,6 +7,7 @@ CLASSES:
     * GRasterDialog
     * GMFrame
     * GMApp
+    * ProcessGrcXml
 
 PURPOSE:    Main Python app for GRASS wxPython GUI. Main menu, layer management
             toolbar, notebook control for display management and access to
@@ -15,7 +16,7 @@ PURPOSE:    Main Python app for GRASS wxPython GUI. Main menu, layer management
 AUTHORS:    The GRASS Development Team
             Michael Barton (Arizona State University)
             Jachym Cepicky (Mendel University of Agriculture)
-            Martin Landa
+            Martin Landa <landa.martin gmail.com>
 
 COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
             This program is free software under the GNU General Public
@@ -29,6 +30,15 @@ import os
 import time
 import traceback
 import types
+import re
+# for GRC (workspace file) parsering
+from xml.parsers.xmlproc import xmlproc
+from xml.parsers.xmlproc import xmlval
+from xml.parsers.xmlproc import xmldtd
+import xml.sax
+import xml.sax.handler
+HandlerBase=xml.sax.handler.ContentHandler
+from xml.sax import make_parser
 
 import wx
 import wx.aui
@@ -408,7 +418,14 @@ class GMFrame(wx.Frame):
         """Create new workspace file
 
         Erase current workspace settings first"""
-        pass
+
+        # TODO: ask user to save current settings
+
+        maptree = self.curr_page.maptree
+        maptree.DeleteAllItems()
+        # add new root element
+        maptree.root = maptree.AddRoot("Map Layers")
+        self.curr_page.maptree.SetPyData(maptree.root, (None,None))
 
     def OnWorkspaceOpen(self, event):
         """Open file with workspace definition"""
@@ -421,18 +438,107 @@ class GMFrame(wx.Frame):
         
         Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
 
-    def OnWorkspaceSave(self, event):
-        """Save file with workspace definition"""
+        self.LoadGrcXmlToLayerTree(filename)
+
+    def LoadGrcXmlToLayerTree(self, filename):
+        """Load layer tree definition stored in GRC XML file
+
+        Return True on success
+        Return False on error"""
+
+        # dtd
+        gisbase = os.getenv("GISBASE")
+        dtdFilename = os.path.join(gisbase, "etc", "wx", "gui_modules", "grass-grc.dtd")
+
+        # parse xml agains dtd
+        dtd = xmldtd.load_dtd(dtdFilename)
+        parser = xmlproc.XMLProcessor()
+        parser.set_application(xmlval.ValidatingApp(dtd, parser))
+        parser.dtd = dtd
+        parser.ent = dtd
+        try:
+            # TODO: set_error_handler(self,err)
+            parser.parse_resource(filename)
+        except:
+            dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s>. "
+                                           "It is not valid GRC XML file.") % filename,
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
+        # delete current layer tree content
+        self.OnWorkspaceNew(None)
+
+        # read file and fix patch to dtd
+
+        file = open(filename, "r")
         
-        filename = "test-out.grc"
+        fileStream = ''.join(file.readlines())
+        p = re.compile( '(grass-grc.dtd)')
+        p.search(fileStream)
+        fileStream = p.sub(dtdFilename, fileStream)
+            
+            # sax
+        grcXml = ProcessGrcXml()
+        xml.sax.parseString(fileStream, grcXml)
+
+        maptree = self.curr_page.maptree
+        for layer in grcXml.layers:
+            newItem = maptree.AddLayer(ltype=layer['type'],
+                                                      lname=layer['name'],
+                                                      lchecked=layer['checked'],
+                                                      lopacity=layer['opacity'],
+                                                      lproperties=layer['cmd'])
+
+        file.close()
+#         except:
+#             dlg = wx.MessageDialog(self, _("Unable to read workspace file <%s>.") % filename,
+#                                    _("Error"), wx.OK | wx.ICON_ERROR)
+#             dlg.ShowModal()
+#             dlg.Destroy()
+#             return False
+            
+        return True
+        
+    def OnWorkspaceSave(self, event):
+        """Save file with workspace definition
+
+        Return True on success
+        Return False on error"""
+        
+        dlg = wx.FileDialog(parent=self, message=_("Choose file to save current workspace"),
+                            defaultDir=os.getcwd(), wildcard="*.grc", style=wx.FD_SAVE)
+
+        filename = ''
+        if dlg.ShowModal() == wx.ID_OK:
+            filename = dlg.GetFilename()
+            
+        if filename == '':
+            return False
+
+        # check for extension
+        if filename[-4:] != ".grc":
+            filename += ".grc"
+
+        # TODO: overwrite / save as...
+
+        Debug.msg(4, "GMFrame.OnWorkspaceSave(): filename=%s" % filename)
 
         self.SaveLayerTreeToGrcXml(filename)
 
     def SaveLayerTreeToGrcXml(self, filename):
         """Save layer tree layout to workspace file"""
 
-        file = open(filename, "w")
-        #file = sys.stderr
+        try:
+            file = open(filename, "w")
+        except IOError:
+            dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s> for writing.") % filename,
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
         try:
             # write header
             file.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -468,8 +574,10 @@ class GMFrame(wx.Frame):
                 item = mapTree.GetNextChild(item, cookie)[0]
             file.write('</grc>\n')
         finally:
-            pass
-            #file.close()
+            file.close()
+            return True
+
+        return False
 
     def OnWorkspaceClose(self, event):
         """Close file with workspace definition
@@ -1035,6 +1143,89 @@ class GMApp(wx.App):
         self.SetTopWindow(mainframe)
 
         return True
+
+class ProcessGrcXml(HandlerBase):
+    """
+    A SAX handler for the GRC XML file, as
+    defined in grass-grc.dtd.
+    """
+    def __init__(self):
+        self.inGrc       = False
+        self.inLayer     = False
+        self.inTask      = False
+        self.inParameter = False
+        self.inFlag      = False
+        self.inValue     = False
+
+        # list of layers
+        self.layers = []
+        self.cmd    = []
+
+    def startElement(self, name, attrs):
+        if name == 'grc':
+            self.inGrc = True
+
+        elif name == 'layer':
+            self.inLayer = True
+            self.layerType    = attrs.get('type', None)
+            self.layerName    = attrs.get('name', None)
+            self.layerChecked = attrs.get('checked', None)
+            self.layerOpacity = attrs.get('opacity', None)
+
+        elif name == 'task':
+            self.inTask = True;
+            name = attrs.get('name', None)
+            self.cmd.append(name)
+
+        elif name == 'parameter':
+            self.inParameter = True;
+            self.parameterName = attrs.get('name', None)
+
+        elif name == 'value':
+            self.inValue = True
+            self.value = ''
+
+        elif name == 'flag':
+            self.inFlag = True;
+            name = attrs.get('name', None)
+            self.cmd.append('-' + name)
+
+    def endElement(self, name):
+        if name == 'grc':
+            self.inGrc = False
+        
+        elif name == 'layer':
+            self.inLayer = False
+            self.layers.append({
+                    "type"    : self.layerType,
+                    "name"    : self.layerName,
+                    "checked" : int(self.layerChecked),
+                    "opacity" : float(self.layerOpacity),
+                    "cmd"     : self.cmd})
+
+            self.layerType = self.layerName = self.Checked = \
+                self.Opacity = self.cmd = None
+
+        elif name == 'task':
+            self.inTask = False
+
+        elif name == 'parameter':
+            self.inParameter = False
+            self.cmd.append('%s=%s' % (self.parameterName, self.value))
+            self.parameterName = self.value = None
+
+        elif name == 'value':
+            self.inValue = False
+
+        elif name == 'flag':
+            self.inFlag = False
+
+    def characters(self, ch):
+        self.my_characters(ch)
+
+    def my_characters(self, ch):
+        if self.inValue:
+            self.value += ch
 
 def reexec_with_pythonw():
   if sys.platform == 'darwin' and\

@@ -373,7 +373,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """Rename layer"""
         self.EditLabel(self.layer_selected)
 
-    def AddLayer(self, ltype):
+    def AddLayer(self, ltype, lname=None, lchecked=None, lopacity=None, lproperties=None):
         """Add new item to the layer tree, create corresponding MapLayer instance.
         Launch property dialog if needed (raster, vector, etc.)"""
         self.first = True
@@ -427,13 +427,13 @@ class LayerTree(CT.CustomTreeCtrl):
         newlayer = self.layers[layer] = Layer(type=ltype, wxCtrl=ctrl)
 
         # layer is initially unchecked as inactive (beside 'command')
+        # use predefined value if given
+        if lchecked:
+            checked = lchecked
         self.CheckItem(layer, checked=checked)
 
         # select item
         self.SelectItem(layer)
-
-        # add a data object to hold the layer's command (does not apply to generic command layers)
-        self.SetPyData(layer, (None,None))
 
         # add text and icons for each layer ltype
         if ltype == 'raster':
@@ -481,12 +481,35 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemImage(layer, self.folder)
             self.SetItemText(layer, grouptext)
 
+        # use predefined layer name if given
+        if lname:            self.SetItemText(layer, lname)
+
         self.first = False
 
         if ltype != 'group':
-            newlayer.AddMapLayer(self.Map.AddLayer(type=ltype, command=[],
-                                                   l_active=checked, l_hidden=False, l_opacity=1, l_render=False))
-            self.PropertiesDialog(layer)
+            if lopacity:
+                opacity = lopacity
+            else:
+                opacity = 1.0
+            if lproperties:
+                cmd = lproperties
+                render = True
+                name = self.GetLayerNameFromCmd(cmd)
+            else:
+                cmd = []
+                render = False
+                name = None
+
+            newlayer.AddMapLayer(self.Map.AddLayer(type=ltype, command=cmd, name=name,
+                                                   l_active=checked, l_hidden=False,
+                                                   l_opacity=opacity, l_render=render))
+            if lproperties:
+                self.SetPyData(layer, (cmd,None))
+            else:
+                # add a data object to hold the layer's command (does not apply to generic command layers)
+                self.SetPyData(layer, (None,None))
+                # run properties dialog if no properties given
+                self.PropertiesDialog(layer)
 
     def PropertiesDialog (self, layer):
         """Launch the properties dialog"""
@@ -569,18 +592,24 @@ class LayerTree(CT.CustomTreeCtrl):
         except:
             pass
 
-        Debug.msg (3, "LayerTree.OnDeleteLayer(): name=%s" % \
-                   (self.GetItemText(item)))
+        if item != self.root:
+            Debug.msg (3, "LayerTree.OnDeleteLayer(): name=%s" % \
+                           (self.GetItemText(item)))
+        else:
+            self.root = None
 
         # unselect item
         self.Unselect()
         self.layer_selected = None
 
-        layer = self.layers[item]
-        if layer.type != 'group':
-            self.Map.DeleteLayer(layer.maplayer)
-
-        self.layers.pop(item)
+        try:
+            layer = self.layers[item]
+            if layer.type != 'group':
+                self.Map.DeleteLayer(layer.maplayer)
+                
+            self.layers.pop(item)
+        except:
+            pass
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
@@ -588,6 +617,8 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers (updateTool=True)
+
+        event.Skip()
 
     def OnLayerChecked(self, event):
         """Enable/disable given layer item"""
@@ -823,8 +854,9 @@ class LayerTree(CT.CustomTreeCtrl):
         # completed drag and drop
         self.drag = False
 
-    def GetOptData(self, dcmd, layer, params, propwin):
-        """Process layer data"""
+    def GetLayerNameFromCmd(self, dcmd):
+        """Get layer name from GRASS command"""
+        mapname = ''
         for item in dcmd:
             if 'map=' in item:
                 mapname = item.split('=')[1]
@@ -842,8 +874,14 @@ class LayerTree(CT.CustomTreeCtrl):
                 mapname = 'rhumb'
             elif 'labels=' in item:
                 mapname = item.split('=')[1]+' labels'
+        
+        return mapname
+
+    def GetOptData(self, dcmd, layer, params, propwin):
+        """Process layer data"""
 
         # set layer text to map name
+        mapname = self.GetLayerNameFromCmd(dcmd)
         self.SetItemText(layer, mapname)
 
         # add command to layer's data
