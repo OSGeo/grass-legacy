@@ -37,7 +37,7 @@ main (int argc, char *argv[])
     struct rr_state  myState;
 
     struct GModule *module;
-    struct { struct Option *input, *raster, *sites, *npoints; } parm;
+    struct { struct Option *input, *cover, *raster, *sites, *npoints; } parm;
     struct { struct Flag *zero, *info, *z_geometry; } flag;
 
     G_gisinit (argv[0]);
@@ -50,6 +50,11 @@ main (int argc, char *argv[])
 
     parm.input = G_define_standard_option(G_OPT_R_INPUT) ;
     parm.input->description= _("Name of input raster map") ;
+
+    parm.cover = G_define_standard_option(G_OPT_R_INPUT) ;
+    parm.cover->key          = "cover" ;
+    parm.cover->required     = NO ;
+    parm.cover->description  = _("Name of cover raster map") ;
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "n" ;
@@ -84,6 +89,14 @@ main (int argc, char *argv[])
     /* Set some state variables */
     myState.use_nulls  = flag.zero->answer;
     myState.inraster   = parm.input->answer;
+    if (parm.cover->answer) {
+      myState.docover = 1;
+      myState.inrcover   = parm.cover->answer;
+    } else {
+      myState.docover  = 0;
+      myState.cmapset  = NULL;
+      myState.inrcover = NULL;
+    }
     myState.outraster  = parm.raster->answer;
     myState.outvector  = parm.sites->answer;
     myState.z_geometry = flag.z_geometry->answer;
@@ -92,6 +105,12 @@ main (int argc, char *argv[])
     if (myState.mapset == NULL)
 	G_fatal_error (_("Raster map <%s> not found"), myState.inraster);
 
+    if (parm.cover->answer) {
+	myState.cmapset = G_find_cell (myState.inrcover, "");
+	if (myState.cmapset == NULL)
+	    G_fatal_error (_("Raster map <%s> not found"), myState.inrcover);
+    }
+
     /* If they only want info we ignore the rest */
     get_stats(&myState);
 
@@ -99,9 +118,10 @@ main (int argc, char *argv[])
     {
         fprintf (stderr,
                 "Raster:      %s@%s\n"
+                "Cover:       %s@%s\n"
                 "Cell Count:  %d\n"
                 "Null Cells:  %d\n\n",
-                myState.inraster, myState.mapset,
+                myState.inraster, myState.mapset, myState.inrcover, myState.cmapset, 
                 (int)myState.nCells, (int)myState.nNulls);
 
         exit (EXIT_SUCCESS);
@@ -168,7 +188,7 @@ main (int argc, char *argv[])
     if (myState.outraster)
 	make_support (&myState, percent, percentage);
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 

@@ -23,9 +23,18 @@ void get_stats (struct rr_state *theState)
     if (theState->fd_old < 0)
         G_fatal_error (_("Unable to open raster map <%s>"),
 		       theState->inraster);
-
+    if (theState->docover == 1) {
+	theState->fd_cold = G_open_cell_old (theState->inrcover, theState->cmapset);
+	if (theState->fd_cold < 0)
+	   G_fatal_error (_("Unable to open raster map <%s>"),
+                          theState->inrcover);
+    }
     theState->buf.type = G_get_raster_map_type (theState->fd_old);
     theState->buf.data.v = G_allocate_raster_buf (theState->buf.type);
+    if (theState->docover == 1) {
+	theState->cover.type = G_get_raster_map_type (theState->fd_cold);
+	theState->cover.data.v = G_allocate_raster_buf (theState->cover.type);
+    }
 
     theState->nulls.type   = theState->buf.type;
     theState->min.type    = theState->buf.type;
@@ -33,7 +42,15 @@ void get_stats (struct rr_state *theState)
     theState->nulls.data.v = (void *) G_malloc (G_raster_size (theState->nulls.type));
     theState->min.data.v  = (void *) G_malloc (G_raster_size (theState->min.type));
     theState->max.data.v  = (void *) G_malloc (G_raster_size (theState->max.type));
-    
+
+    if (theState->docover == 1) {
+       theState->cnulls.type   = theState->cover.type;
+       theState->cmin.type    = theState->cover.type;
+       theState->cmax.type    = theState->cover.type;
+       theState->cnulls.data.v = (void *) G_malloc (G_raster_size (theState->cnulls.type));
+       theState->cmin.data.v  = (void *) G_malloc (G_raster_size (theState->cmin.type));
+       theState->cmax.data.v  = (void *) G_malloc (G_raster_size (theState->cmax.type));
+    }
     nrows = G_window_rows();
     ncols = G_window_cols();
 
@@ -41,7 +58,12 @@ void get_stats (struct rr_state *theState)
     theState->nNulls = 0;
     set_min (NULL, 0, &theState->min);
     set_max (NULL, 0, &theState->max);
-
+    if (theState->docover == 1) {
+        theState->cnCells = nrows * ncols;
+        theState->cnNulls = 0;
+        set_min (NULL, 0, &theState->cmin);
+        set_max (NULL, 0, &theState->cmax);
+    }
     G_message(_("Collecting Stats..."));
     for (row = 0; row < nrows; row++)
     {
@@ -49,16 +71,25 @@ void get_stats (struct rr_state *theState)
                             row, theState->buf.type) < 0)
             G_fatal_error (_("Cannot read raster row [%d]"), 
 			   row);
-
+        if (theState->docover == 1) {
+		if (G_get_raster_row(theState->fd_cold, theState->cover.data.v,
+                                     row, theState->cover.type) < 0)
+                    G_fatal_error (_("Cannot read cover raster row [%d]"),
+                                  row);
+        }
         for (col = 0; col < ncols; col++)
         {
             if (is_null_value(theState->buf, col)) {
                 theState->nNulls++;
-            }
-            else
-            {
+            } else {
                 set_min(&theState->buf, col, &theState->min);
                 set_max(&theState->buf, col, &theState->max);
+            }
+            if (is_null_value(theState->cover, col)) {
+                theState->cnNulls++;
+            } else {
+                set_min(&theState->cover, col, &theState->cmin);
+                set_max(&theState->cover, col, &theState->cmax);
             }
         }
         
@@ -69,16 +100,27 @@ void get_stats (struct rr_state *theState)
 
     /* rewind the in raster map descriptor for later use */
     lseek(theState->fd_old, 0, SEEK_SET);
+    if (theState->docover == 1)
+       lseek(theState->fd_cold, 0, SEEK_SET);
 
     /* Set the NULL value replacement */
     switch (theState->nulls.type)
     {
         case CELL_TYPE:
-            *theState->nulls.data.c = *theState->min.data.c - 1; break;
+            *theState->nulls.data.c = *theState->min.data.c - 1;
+            if (theState->docover == 1)
+                *theState->cnulls.data.c = *theState->cmin.data.c - 1;
+            break;
         case FCELL_TYPE:
-            *theState->nulls.data.f = floor(*theState->min.data.f - 1); break;
+            *theState->nulls.data.f = floor(*theState->min.data.f - 1);
+            if (theState->docover == 1)
+            *theState->cnulls.data.f = floor(*theState->cmin.data.f - 1);
+            break;
         case DCELL_TYPE:
-            *theState->nulls.data.d = floor(*theState->min.data.d - 1); break;
+            *theState->nulls.data.d = floor(*theState->min.data.d - 1);
+            if (theState->docover == 1)
+            *theState->cnulls.data.d = floor(*theState->cmin.data.d - 1);
+            break;
         default: /* Huh? */
             G_fatal_error (_("Programmer error in get_stats/switch"));
     }
