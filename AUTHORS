@@ -119,14 +119,14 @@ NEW DOCUMENTATION:
  - existing documentation: see 5.4 authors below + individual modules
  - Markus Neteler <neteler itc it>
  - Otto Dassau <dassau gdf-hannover de>
- - M. Hamish Bowman <hbowman albers otago ac nz>
+ - M. Hamish Bowman <hamish.bowman otago ac nz>
  - Radim Blazek <blazek itc it>
 
 WEB SITE
  - Markus Neteler <neteler itc it>: setup and maintenance since 1998,
      cron jobs for auto-update, PHP migration, mailing lists, etc
  - Scott Mitchell <smitch mac com>: contributions
- - M. Hamish Bowman <hbowman albers otago ac nz>: contributions
+ - M. Hamish Bowman <hamish.bowman otago ac nz>: contributions
 
 
 GRASS 6.0 - 6.2 major project contributers
@@ -135,7 +135,7 @@ GRASS 6.0 - 6.2 major project contributers
 PROJECT INTEGRATION
  - Markus Neteler <neteler itc it>: GRASS project coordination
  - Radim Blazek <blazek itc it>: driving force for vector enhancements
- - M. Hamish Bowman <hbowman albers otago ac nz>: General sanitation
+ - M. Hamish Bowman <hamish.bowman otago ac nz>: General sanitation
  - Bernhard Reiter <bernhard intevation de>: Maintain CVS, Bug-tracker
 
 BUILD SYSTEM
@@ -222,7 +222,7 @@ GRASS 5 Core Team (most have CVS write access):
  Roger Bivand    <Roger.Bivand nhh.no>         ("R" statistical language 
                                                 support)
  Radim Blazek    <blazek itc.it>               (DBMS support, ps.map, d.dm)
- Hamish Bowman   <hamish_nospam yahoo.com>     (ps.map,display,rasters, ...)
+ Hamish Bowman   <hamish.bowman otago.ac.nz>   (ps.map,display,rasters, ...)
  Huidae Cho      <grass4u gmail.com>           (FreeType,r.topmodel,r.topidx, ..)
  Glynn Clements  <glynn gclements.plus.com>    (Code portability, ...)
  Bob Covill      <bcovill tekmap.ns.ca>        (NVIZ export formats, 
