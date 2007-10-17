@@ -182,7 +182,7 @@ typedef enum {
     G_OPT_V_MAP,    /* old input vector map */
     G_OPT_V_MAPS,    /* old input vector maps */
     G_OPT_V_TYPE,   /* primitive type */
-    G_OPT_V_FIELD,  /* field number */
+    G_OPT_V_FIELD,  /* layer number (layers used to be called fields) */
     G_OPT_V_CAT,    /* one category */
     G_OPT_V_CATS,   /* more categories */
 
