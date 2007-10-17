@@ -74,13 +74,15 @@ int main(int argc,char *argv[])
 
     G_gisinit (argv[0]);
 
-    module              = G_define_module();
-    module->keywords = _("vector, raster, attribute table");
-    module->description = _("Uploads raster values at positions of vector points to the table.");
+    module = G_define_module();
+    module->keywords    = _("vector, raster, attribute table");
+    module->description =
+	_("Uploads raster values at positions of vector points to the table.");
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
     vect_opt->key        = "vector" ;
-    vect_opt->description= _("Name of input vector points map for which to edit attribute table");
+    vect_opt->description=
+	_("Name of input vector points map for which to edit attribute table");
 
     rast_opt = G_define_standard_option(G_OPT_R_INPUT);
     rast_opt->key        = "raster" ;
@@ -98,6 +100,7 @@ int main(int argc,char *argv[])
 
     if (G_parser(argc, argv))
       exit(EXIT_FAILURE);
+
 
     field = atoi( field_opt->answer );
 
@@ -163,6 +166,8 @@ int main(int argc,char *argv[])
 
     nlines = Vect_get_num_lines ( &Map );
 
+    G_debug(1, "Reading %d vector features fom map", nlines);
+
     for ( i = 1; i <= nlines; i++ ) {
         type = Vect_read_line (&Map, Points, Cats, i);
 	G_debug ( 4, "line = %d type = %d", i, type );
@@ -207,10 +212,12 @@ int main(int argc,char *argv[])
     Vect_hist_command ( &Map );
     Vect_close ( &Map );
 
+    G_debug(1, "Read %d vector points", point_cnt);
     /* Cache may contain duplicate categories, sort by cat, find and remove duplicates 
      * and recalc count and decrease point_cnt  */
     qsort (cache, point_cnt, sizeof (struct order), by_cat);
 
+    G_debug(1, "Points are sorted, starting duplicate removal loop");
     i = 1;
     while ( i < point_cnt ) {
         if ( cache[i].cat == cache[i-1].cat ) {
@@ -226,6 +233,7 @@ int main(int argc,char *argv[])
 	}
         i++;
     }
+    G_debug(1, "%d vector points left after removal of duplicates", point_cnt);
 
     /* Report number of points not used */
     if ( outside_cnt )
@@ -244,6 +252,7 @@ int main(int argc,char *argv[])
 	dcell = G_allocate_d_raster_buf();
 
     /* Extract raster values from file and store in cache */
+    G_debug(1, "Extracting raster values");
 
     cur_row = -1;
 
@@ -269,13 +278,15 @@ int main(int argc,char *argv[])
     } /* point loop */
 
     /* Update table from cache */
-    
+    G_debug(1, "Updating db table");
+
     /* select existing categories to array (array is sorted) */
     select = db_select_int( driver, Fi->table, Fi->key, NULL, &catexst);
     
     db_begin_transaction ( driver );
     
     norec_cnt = update_cnt = upderr_cnt = dupl_cnt = 0;
+
     for (point = 0 ; point < point_cnt ; point++) {
 	if ( cache[point].count > 1 ) {
 	    G_warning ( _("More points (%d) of category %d, value set to 'NULL'"), 
@@ -287,7 +298,8 @@ int main(int argc,char *argv[])
 	cex = (int *) bsearch((void *) &(cache[point].cat), catexst, select, sizeof(int), srch_cat);
 	if ( cex == NULL ) { /* cat does not exist in DB */ 
 	    norec_cnt++;
-	    G_warning ( _("No record for category %d in table <%s>"), cache[point].cat, Fi->table );
+	    G_warning(_("No record for category %d in table <%s>"),
+		      cache[point].cat, Fi->table );
 	    continue;
 	}
 
@@ -327,6 +339,7 @@ int main(int argc,char *argv[])
 	}
     }
 
+    G_debug(1, "Committing DB transaction");
     db_commit_transaction ( driver );
     G_free (catexst);	
     db_close_database_shutdown_driver ( driver );
