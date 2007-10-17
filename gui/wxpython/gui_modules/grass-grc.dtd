@@ -14,51 +14,39 @@
 
 <!ELEMENT grass-grc (grc)>
 
-<!ELEMENT grc (layer*)>
+<!ELEMENT grc (group*, layer*)>
 
-<!ELEMENT layer (task)>
+<!--    group of map layers
+-->
+<!ELEMENT group (layer*)>
+<!ATTLIST group	name	CDATA #REQUIRED>
+<!ATTLIST group	checked CDATA #REQUIRED>
+
+<!--    map layer
+-->
+<!ELEMENT layer (task?)>
 <!ATTLIST layer	type	CDATA #REQUIRED>
 <!ATTLIST layer	name	CDATA #REQUIRED>
 <!ATTLIST layer	checked CDATA #REQUIRED>
-<!ATTLIST layer	opacity	CDATA #REQUIRED>
+<!ATTLIST layer	opacity	CDATA #IMPLIED>
 
-<!--	a task describes the interface of a single
-	GRASS command. It may consist of several
-	groups of parameters. Grouping is only for
-	semantic purposes in the (G)UI.
-	The task may optionally have a description.
-	The name of the task is the identifier
-	for the GRASS command and is used
-	to execute the task.
+<!--	task describes the interface of a single
+	GRASS command. 
 -->
 <!ELEMENT task	        (parameter*, flag*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
 
-<!--	a parameter must have a name and a description.
-	the name is the parameter identifier when calling
-	the command.
-	A default may be provided. values can be given
-	as parameter options.
-	Parameters can be optional and in that case can be
-	ignored executing the task when not entered in the (G)UI.
-	Any parameter has one of these (default is string):
-	string		: a string parameter.
-	integer		: a numeric integer parameter.
-	float		: a numeric float parameter.
-	If multiple is "yes", then many values for the
-	parameter may be given in a comma-seperated list
+<!--	a parameter must have a name and a value
 -->
 <!ELEMENT parameter     (value)>
 <!ATTLIST parameter	name		CDATA #REQUIRED>
 
-<!--    An "item" is a value for a tuple of keydesc.
-        It must have an "order" attribute, to insure sort ordering
+<!--    value of parameter
 -->
 <!ELEMENT value         (#PCDATA)>
 
 
-<!--    A flag must have a name and should have a description.
-        It's a toggle that is off by default
+<!--    enabled flag
 -->
 <!ELEMENT flag         EMPTY>
 <!ATTLIST flag         name            CDATA #REQUIRED>

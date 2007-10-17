@@ -25,12 +25,11 @@ class Data:
     def GetMenu(self):
         return [(
           ("File", (
-              ("Workspace (not functional)", (
-                 ("New", "Create new workspace file (erase current workspace settings first", "self.OnWorkspaceNew", ""),
+              ("Workspace", (
+                 ("New", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
                  ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
                  ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
-                 ("Save as", "Save current workspace as...", "self.OnWorkspaceSave", ""),
-#                 ("Close", "Close workspace file", "self.OnWorkspaceClose", ""),
+                 ("Save as", "Save current workspace as", "self.OnWorkspaceSave", ""),
                  )),
               ("","","", ""),
               ("Import raster map", (
