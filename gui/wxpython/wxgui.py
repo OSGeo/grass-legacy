@@ -148,7 +148,7 @@ class GMFrame(wx.Frame):
         toolbar = self.__createToolBar()
         #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
         self.sizer= wx.BoxSizer(wx.VERTICAL)
-#        self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
+        # self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # do layout
         self.SetTitle(_("GRASS GIS Layer Manager"))
@@ -159,13 +159,14 @@ class GMFrame(wx.Frame):
         os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
         # initialize variables
-        self.mapdisplays = {} #dictionary to index open map displays
-        self.disp_idx = 0 #index value for map displays and layer trees
-        self.maptree = {} #dictionary to index a layer tree to accompanying a map display
-        self.mapfocus = 0 #track which display currently has focus
-        self.curr_page   = '' # currently selected page for layer tree notebook
-        self.curr_pagenum = '' # currently selected page number for layer tree notebook
+        self.mapdisplays = {}        # dictionary to index open map displays
+        self.disp_idx = 0            # index value for map displays and layer trees
+        self.maptree = {}            # dictionary to index a layer tree to accompanying a map display
+        self.mapfocus = 0            # track which display currently has focus
+        self.curr_page   = ''        # currently selected page for layer tree notebook
+        self.curr_pagenum = ''       # currently selected page number for layer tree notebook
         self.encoding = 'ISO-8859-1' # default encoding for display fonts
+        self.workspaceFile = None    # workspace file
 
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster)
@@ -371,19 +372,25 @@ class GMFrame(wx.Frame):
         self.goutput.RunCmd(cmd)
 
     def GetMenuCmd(self, event):
+        """Get GRASS command from menu item
+
+
+        Return command as a list"""
         menuitem = self.menubar.FindItemById(event.GetId())
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
-        return cmd
+        cmdlist = cmd.split(' ')
+
+        return cmdlist
 
     def RunMenuCmd(self, event):
+        """Run command selected from menu"""
         cmd = self.GetMenuCmd(event)
         self.goutput.RunCmd(cmd)
 
     def OnMenuCmd(self, event):
-        """Run menu command"""
+        """Parse command selected from menu"""
         cmd = self.GetMenuCmd(event)
-        global gmpath
         menuform.GUI().ParseCommand(cmd, parentframe=self)
 
     def OnAboutGRASS(self, event):
@@ -419,10 +426,22 @@ class GMFrame(wx.Frame):
 
         Erase current workspace settings first"""
 
-        # TODO: ask user to save current settings
-
         maptree = self.curr_page.maptree
+
+        # ask user to save current settings
+        if maptree.GetCount() > 0:
+             dlg = wx.MessageDialog(self, message=_("Workspace is not empty. "
+                                                    "Do you want to store current settings "
+                                                    "to workspace file?"),
+                                    caption=_("Save current settings?"),
+                                    style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
+             if dlg.ShowModal() == wx.ID_OK:
+                 self.OnWorkspaceSave(None)
+             dlg.Destroy()
+            
+        # delete all items
         maptree.DeleteAllItems()
+
         # add new root element
         maptree.root = maptree.AddRoot("Map Layers")
         self.curr_page.maptree.SetPyData(maptree.root, (None,None))
@@ -439,6 +458,8 @@ class GMFrame(wx.Frame):
         Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
 
         self.LoadGrcXmlToLayerTree(filename)
+
+        self.workspaceFile = filename
 
     def LoadGrcXmlToLayerTree(self, filename):
         """Load layer tree definition stored in GRC XML file
@@ -471,28 +492,29 @@ class GMFrame(wx.Frame):
         self.OnWorkspaceNew(None)
 
         # read file and fix patch to dtd
-
+#        try:
         file = open(filename, "r")
         
         fileStream = ''.join(file.readlines())
         p = re.compile( '(grass-grc.dtd)')
         p.search(fileStream)
         fileStream = p.sub(dtdFilename, fileStream)
-            
-            # sax
+        
+        # sax
         grcXml = ProcessGrcXml()
         xml.sax.parseString(fileStream, grcXml)
-
         maptree = self.curr_page.maptree
         for layer in grcXml.layers:
             newItem = maptree.AddLayer(ltype=layer['type'],
-                                                      lname=layer['name'],
-                                                      lchecked=layer['checked'],
-                                                      lopacity=layer['opacity'],
-                                                      lproperties=layer['cmd'])
-
+                                       lname=layer['name'],
+                                       lchecked=layer['checked'],
+                                       lopacity=layer['opacity'],
+                                       lcmd=layer['cmd'],
+                                       lgroup=layer['group'])
+            maptree.PropertiesDialog(newItem, show=False)
+            
         file.close()
-#         except:
+        # except:
 #             dlg = wx.MessageDialog(self, _("Unable to read workspace file <%s>.") % filename,
 #                                    _("Error"), wx.OK | wx.ICON_ERROR)
 #             dlg.ShowModal()
@@ -500,13 +522,10 @@ class GMFrame(wx.Frame):
 #             return False
             
         return True
-        
-    def OnWorkspaceSave(self, event):
-        """Save file with workspace definition
 
-        Return True on success
-        Return False on error"""
-        
+    def OnWorkspaceSaveAs(self, event):
+        """Save workspace definition to selected file"""
+
         dlg = wx.FileDialog(parent=self, message=_("Choose file to save current workspace"),
                             defaultDir=os.getcwd(), wildcard="*.grc", style=wx.FD_SAVE)
 
@@ -521,14 +540,72 @@ class GMFrame(wx.Frame):
         if filename[-4:] != ".grc":
             filename += ".grc"
 
-        # TODO: overwrite / save as...
-
-        Debug.msg(4, "GMFrame.OnWorkspaceSave(): filename=%s" % filename)
+        if os.path.exists(filename):
+            dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
+                                                   "Do you want to overwrite this file?") % filename,
+                                   caption=_("File exits"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
+            if dlg.ShowModal() != wx.ID_OK:
+                dlg.Destroy()
+                return False
+        
+        Debug.msg(4, "GMFrame.OnWorkspaceSaveAs(): filename=%s" % filename)
 
         self.SaveLayerTreeToGrcXml(filename)
+        
+    def OnWorkspaceSave(self, event):
+        """Save file with workspace definition"""
+
+        if self.workspaceFile:
+            Debug.msg(4, "GMFrame.OnWorkspaceSave(): filename=%s" % self.workspaceFile)
+            self.SaveLayerTreeToGrcXml(self.workspaceFile)
+        else:
+            self.OnWorkspaceSaveAs(None)
+
+    def WriteLayersToGrcXml(self, file, mapTree, item):
+        """Write bunch of layers to GRC XML file"""
+        while item and item.IsOk():
+            type = mapTree.GetPyData(item)[0]['type']
+            if type != 'group':
+                maplayer = mapTree.GetPyData(item)[0]['maplayer']
+            else:
+                maplayer = None
+
+            checked = int(item.IsChecked())
+            cmd = mapTree.GetPyData(item)[0]['cmd']
+            if type == 'command':
+                file.write('    <layer type="%s" name="%s" checked="%d">\n' % \
+                               (type, ' '.join(cmd), checked));
+            elif type == 'group':
+                name = mapTree.GetItemText(item)
+                file.write('    <group name="%s" checked="%d">\n' % \
+                               (name, checked));
+                subItem = mapTree.GetFirstChild(item)[0]
+                self.WriteLayersToGrcXml(file, mapTree, subItem)
+                file.write('    </group>\n');
+            else:
+                name = mapTree.GetItemText(item)
+                opacity = maplayer.GetOpacity(float=True)
+                file.write('    <layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
+                               (type, name, checked, opacity));
+                # layer properties
+                file.write('        <task name="%s">\n' % cmd[0])
+                for option in cmd[1:]:
+                    if option[0] == '-': # flag
+                        file.write('            <flag name="%s" />\n' % option[1])
+                    else: # parameter
+                        key, value = option.split('=')
+                        file.write('            <parameter name="%s">\n' % key)
+                        file.write('                <value>%s</value>\n' % value)
+                        file.write('            </parameter>\n');
+                        file.write('        </task>\n');
+                file.write('    </layer>\n');
+            item = mapTree.GetNextSibling(item)
 
     def SaveLayerTreeToGrcXml(self, filename):
-        """Save layer tree layout to workspace file"""
+        """Save layer tree layout to workspace file
+
+        Return True on success, False on error
+        """
 
         try:
             file = open(filename, "w")
@@ -546,38 +623,19 @@ class GMFrame(wx.Frame):
             file.write('<grc>\n')
             # list of layers
             mapTree = self.curr_page.maptree
-            root = mapTree.GetRootItem()
-            childitem = mapTree.GetFirstChild(root)
-            item = childitem[0]
-            cookie = childitem[1]
-            for n in range(0, mapTree.GetChildrenCount(root)):
-                layer = mapTree.layers[item]
-                type = layer.type
-                name = mapTree.GetItemText(item)
-                checked = int(item.IsChecked())
-                opacity = layer.maplayer.GetOpacity(float=True)
-                file.write('    <layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
-                               (type, name, checked, opacity));
-                # layer properties
-                cmd = mapTree.GetPyData(item)[0]
-                file.write('        <task name="%s">\n' % cmd[0])
-                for option in cmd[1:]:
-                    if option[0] == '-': # flag
-                        file.write('            <flag name="%s" />\n' % option[1])
-                    else: # parameter
-                        key, value = option.split('=')
-                        file.write('            <parameter name="%s">\n' % key)
-                        file.write('                <value>%s</value>\n' % value)
-                        file.write('            </parameter>\n');
-                file.write('        </task>\n');
-                file.write('    </layer>\n');
-                item = mapTree.GetNextChild(item, cookie)[0]
+            item = mapTree.GetFirstChild(mapTree.root)[0]
+            self.WriteLayersToGrcXml(file, mapTree, item)
             file.write('</grc>\n')
-        finally:
-            file.close()
-            return True
+        except:
+            dlg = wx.MessageDialog(self, _("Writing current settings to workspace file failed."),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
 
-        return False
+        file.close()
+
+        return True
 
     def OnWorkspaceClose(self, event):
         """Close file with workspace definition
@@ -751,7 +809,7 @@ class GMFrame(wx.Frame):
 
         # available only for vector map layers
         try:
-            maptype = self.curr_page.maptree.layers[layer].maplayer.type
+            maptype = self.curr_page.maptree.GetPyData(layer)['maplayer'].type
         except:
             maptype = None
         if not maptype or maptype != 'vector':
@@ -1015,7 +1073,7 @@ class GMFrame(wx.Frame):
         dlg.Destroy()
 
         for layer in self.curr_page.maptree.GetSelections():
-            if self.curr_page.maptree.layers[layer].type == 'group':
+            if self.curr_page.maptree.GetPyData(layer)[0]['type'] == 'group':
                 self.curr_page.maptree.DeleteChildren(layer)
             self.curr_page.maptree.Delete(layer)
 
@@ -1156,6 +1214,7 @@ class ProcessGrcXml(HandlerBase):
         self.inParameter = False
         self.inFlag      = False
         self.inValue     = False
+        self.inGroup     = False
 
         # list of layers
         self.layers = []
@@ -1164,13 +1223,26 @@ class ProcessGrcXml(HandlerBase):
     def startElement(self, name, attrs):
         if name == 'grc':
             self.inGrc = True
-
+        
+        elif name == 'group':
+            self.inGroup = True
+            self.groupName    = attrs.get('name', None)
+            self.groupChecked = attrs.get('checked', None)
+            self.layers.append({
+                    "type"    : 'group',
+                    "name"    : self.groupName,
+                    "checked" : int(self.groupChecked),
+                    "opacity" : None,
+                    "cmd"     : None,
+                    "group"   : None})
+            
         elif name == 'layer':
             self.inLayer = True
             self.layerType    = attrs.get('type', None)
             self.layerName    = attrs.get('name', None)
             self.layerChecked = attrs.get('checked', None)
             self.layerOpacity = attrs.get('opacity', None)
+            self.cmd = []
 
         elif name == 'task':
             self.inTask = True;
@@ -1194,15 +1266,24 @@ class ProcessGrcXml(HandlerBase):
         if name == 'grc':
             self.inGrc = False
         
+        elif name == 'group':
+            self.inGroup = False
+            self.groupName = self.groupChecked = None
+
         elif name == 'layer':
             self.inLayer = False
             self.layers.append({
                     "type"    : self.layerType,
                     "name"    : self.layerName,
                     "checked" : int(self.layerChecked),
-                    "opacity" : float(self.layerOpacity),
-                    "cmd"     : self.cmd})
-
+                    "opacity" : None,
+                    "cmd"     : None,
+                    "group"   : self.inGroup})
+            if self.layerOpacity:
+                self.layers[-1]["opacity"] = float(self.layerOpacity)
+            if self.cmd:
+                self.layers[-1]["cmd"] = self.cmd
+            
             self.layerType = self.layerName = self.Checked = \
                 self.Opacity = self.cmd = None
 
@@ -1230,7 +1311,7 @@ class ProcessGrcXml(HandlerBase):
 def reexec_with_pythonw():
   if sys.platform == 'darwin' and\
     not sys.executable.endswith('MacOS/Python'):
-    print >>sys.stderr,'re-executing using pythonw'
+    print >> sys.stderr, _('re-executing using pythonw')
     os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
 
 if __name__ == "__main__":

@@ -129,9 +129,6 @@ class MapLayer(object):
 
         runcmd = gcmd.Command(cmd=self.cmdlist + ['--q']) # run quiet
         if runcmd.returncode != 0:
-            print "Could not execute '%s'" % (self.cmdlist)
-            for msg in runcmd.msg:
-                print msg[1]
             self.mapfile = None
             self.maskfile = None
             return None
@@ -647,7 +644,7 @@ class Map(object):
         item - gis manager layer tree item
         type - layer type
         name - layer name
-        cmd  - GRASS command string
+        cmd  - GRASS command given as list
 
         l_active   - checked/not checked for display in layer tree
         l_hidden   - not used here

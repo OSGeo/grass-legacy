@@ -80,6 +80,7 @@ sys.path.append( wxbase)
 imagepath = os.path.join(wxbase,"images")
 sys.path.append(imagepath)
 
+import grassenv
 import select
 import gcmd
 try:
@@ -198,10 +199,19 @@ class grassTask:
         Find and return a param by name.
         """
         for p in self.params:
-            if p['name'] == aParam:
+            lparam = len(aParam)
+            if p['name'] == aParam or \
+                    p['name'][:lparam] == aParam:
                 return p
-        raise ValueError, "Parameter not found : %s" % aParam
+        raise ValueError, _("Parameter not found : %s") % aParam
 
+    def set_param(self, aParam, aValue):
+        """
+        Set param value/values.
+        """
+        param = self.get_param(aParam)
+        param['value'] = aValue
+            
     def get_flag( self, aFlag ):
         """
         Find and return a flag by name.
@@ -209,7 +219,15 @@ class grassTask:
         for f in self.flags:
             if f['name'] == aFlag:
                 return f
-        raise ValueError, "Flag not found : %s" % aFlag
+        raise ValueError, _("Flag not found : %s") % aFlag
+
+    def set_flag(self, aFlag, aValue):
+        """
+        Enable / disable flag.
+        """
+        param = self.get_flag(aFlag)
+        param['value'] = aValue
+            
 
     def getCmd(self, ignoreErrors = False):
         """
@@ -243,7 +261,6 @@ class grassTask:
 
         return cmd
 
-
 class processTask(HandlerBase):
     """
     A SAX handler for the --interface-description output, as
@@ -260,6 +277,7 @@ class processTask(HandlerBase):
         self.inGispromptContent = False
         self.inGuisection = False
         self.inKeywordsContent = False
+        self.inFirstParameter = True
         self.task = task_description
 
     def startElement(self, name, attrs):
@@ -376,6 +394,10 @@ class processTask(HandlerBase):
                 "default" : self.param_default,
                 "values" : self.param_values,
                 "value" : ''})
+
+            if self.inFirstParameter:
+                self.task.firstParam = self.param_name # store name of first parameter
+            self.inFirstParameter = False;
 
         if name == 'flag':
             self.inFlag = False;
@@ -636,9 +658,12 @@ class mainFrame(wx.Frame):
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer, {"params":self.task.params,"flags":self.task.flags}, self )
+            self.get_dcmd(cmd, self.layer, {"params": self.task.params, 
+                                            "flags" :self.task.flags},
+                          self)
             # echo d.* command to output console
             # self.parent.writeDCommand(cmd)
+
         return cmd
 
     def OnRun(self, event):
@@ -1112,16 +1137,20 @@ class GrassGUIApp(wx.App):
 class GUI:
     """
     Parses GRASS commands when module is imported and used
-    from wxgui.py
+    from Layer Manager.
     """
     def __init__(self, parent=-1):
         self.parent = parent
 
-    def ParseCommand(self, cmd, gmpath=None, completed=None, parentframe=-1, modal=False):
+    def ParseCommand(self, cmd, gmpath=None, completed=None, parentframe=-1, show=True, modal=False):
         """
         Parse command
 
-        Note: cmd is given as string
+        Note: cmd is given as list
+
+        If command is given with options, return validated cmd list:
+        * add key name for first parameter if not given
+        * change mapname to mapname@mapset
         """
         dcmd_params = {}
         if completed == None:
@@ -1136,29 +1165,61 @@ class GUI:
 
         if parentframe != -1:
             self.parent = parentframe
-
-        if ' ' in cmd:
-            raise ValueError, _("usage: %s <grass command> ") % cmd
         else:
-            # parse the interface decription
-            self.grass_task = grassTask()
-            handler = processTask(self.grass_task)
-            xml.sax.parseString( getInterfaceDescription( cmd ) , handler )
+            self.parent = None
 
-            # if layer parameters previously set, re-insert them into dialog
-            if completed is not None:
-                if 'params' in dcmd_params:
-                    self.grass_task.params = dcmd_params['params']
-                if 'flags' in dcmd_params:
-                    self.grass_task.flags = dcmd_params['flags']
+        # parse the interface decription
+        self.grass_task = grassTask()
+        handler = processTask(self.grass_task)
+        xml.sax.parseString( getInterfaceDescription(cmd[0]), handler )
+            
+        # if layer parameters previously set, re-insert them into dialog
+        if completed is not None:
+            if 'params' in dcmd_params:
+                self.grass_task.params = dcmd_params['params']
+            if 'flags' in dcmd_params:
+                self.grass_task.flags = dcmd_params['flags']
 
-            self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
-                                task_description=self.grass_task,
-                                get_dcmd=get_dcmd, layer=layer)
+        # update parameters if needed && validate command
+        if len(cmd) > 1:
+            i = 0
+            cmd_validated = [cmd[0]]
+            for option in cmd[1:]:
+                if option[0] == '-': # flag
+                    self.grass_task.set_flag(option[1], True)
+                    cmd_validated.append(option)
+                else: # parameter
+                    try:
+                        key, value = option.split('=')
+                    except:
+                        if i == 0: # add key name of first parameter if not given
+                            key = self.grass_task.firstParam
+                            value = option
+                        else:
+                            raise ValueError, _("Unable to parse command %s") % ''.join(cmd)
 
-            self.mf.Show(True)
+                    if self.grass_task.get_param(key)['element'] in ['cell', 'vector']:
+                        # mapname -> mapname@mapset
+                        if '@' not in value:
+                            value = value + '@' + grassenv.GetGRASSVariable('MAPSET')
+                    self.grass_task.set_param(key, value)
+                    cmd_validated.append(key + '=' + value)
+                    i = i + 1
+
+            # update original command list
+            cmd = cmd_validated
+
+        self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
+                            task_description=self.grass_task,
+                            get_dcmd=get_dcmd, layer=layer)
+
+        if show:
+            self.mf.Show(show)
             self.mf.MakeModal(modal)
+        else:
+            self.mf.OnApply(None)
 
+        return cmd
 
 class StaticWrapText(wx.StaticText):
     """
