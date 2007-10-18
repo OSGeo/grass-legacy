@@ -18,14 +18,18 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
-import grassenv
+import os
+import sys
+
+gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(gmpath)
 
 class DebugMsg:
     """
     GRASS Debugging
 
     Usage:
-         import cmd
+    import cmd
 
          cmd.Command (cmd=["g.gisenv", "set=DEBUG=3"]) # only GUI debug messages DEBUG=GUI:3
 
@@ -41,8 +45,8 @@ class DebugMsg:
         self._update_level()
 
     def _update_level(self):
-        if grassenv.env.has_key ("DEBUG"):
-            debug = grassenv.env["DEBUG"].strip()
+        debug = os.getenv("GRASS_WX_DEBUG")
+        if debug is not None:
             try:
                 # only GUI debug messages [GUI:level]
                 level = int (debug[-1])
@@ -64,7 +68,6 @@ Debug = DebugMsg()
 if __name__ == "__main__":
     import gcmd
     gcmd.Command (cmd=["g.gisenv", "set=DEBUG=3"])
-    reload (grassenv) # reload GRASS environments !
                 
     for level in range (4):
         Debug.msg (level, "message level=%d" % level)

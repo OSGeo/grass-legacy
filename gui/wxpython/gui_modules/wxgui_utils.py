@@ -101,7 +101,7 @@ class LayerTree(CT.CustomTreeCtrl):
         # title
         self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + \
                                        str(self.disp_idx) + \
-                                       " - Location: " + grassenv.env["LOCATION_NAME"]))
+                                       " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
 
         #show new display
         self.mapdisplay.Show()
@@ -245,7 +245,7 @@ class LayerTree(CT.CustomTreeCtrl):
             layer = self.GetPyData(self.layer_selected)[0]['maplayer']
             # enable editing only for vector map layers available in the current mapset
             digit = self.mapdisplay.digittoolbar
-            if layer.GetMapset() != grassenv.env["MAPSET"]:
+            if layer.GetMapset() != grassenv.GetGRASSVariable("MAPSET"):
                 # only vector map in current mapset can be edited
                 self.popupMenu.Enable (self.popupID5, False)
                 self.popupMenu.Enable (self.popupID6, False)
@@ -898,6 +898,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # update layer data
         self.SetPyData(layer, (self.GetPyData(layer)[0], params))
+        self.GetPyData(layer)[0]['cmd'] = dcmd
         self.GetPyData(layer)[0]['propwin'] = propwin
 
         # check layer as active
@@ -950,12 +951,11 @@ class LayerTree(CT.CustomTreeCtrl):
                 chk = self.IsItemChecked(item)
                 hidden = not self.IsVisible(item)
         elif type != 'group':
-            if self.GetPyData(item)[0] != None:
+            if self.GetPyData(item)[0] is not None:
                 cmdlist = self.GetPyData(item)[0]['cmd']
                 opac = float(self.GetItemWindow(item).GetValue())/100
                 chk = self.IsItemChecked(item)
                 hidden = not self.IsVisible(item)
-
         maplayer = self.Map.ChangeLayer(layer=self.GetPyData(item)[0]['maplayer'], type=type,
                                         command=cmdlist, name=self.GetItemText(item),
                                         l_active=chk, l_hidden=hidden, l_opacity=opac, l_render=False)

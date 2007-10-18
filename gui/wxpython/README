@@ -121,18 +121,10 @@ clear the display and start from scratch.
 
 5 - DEBUGGING
 
-To enable debugging messages use "GRASS standard way", e.g.
+To enable GUI debugging messages on given level set GRASS_DEBUG_WX
+environment variables, e.g.
 
-$ g.gisenv set=DEBUG=3
-
-This enables all debug messages (GRASS modules + GUI). GUI debug
-messages starts with 'GUI', e.g.
-
-    GUI D1/1: MapFrame.__init__()
-
-If you want to enable *only* GUI debug messages set DEBUG variable to 'GUI:level', e.g.
-
-$ g.gisenv set=DEBUG=GUI:3
+$ export GRASS_WX_DEBUG=3
 
 6 - ICON THEMES
 

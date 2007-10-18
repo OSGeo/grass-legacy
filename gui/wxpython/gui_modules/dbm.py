@@ -61,7 +61,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
         self.vectmap = vectmap
         if not "@" in self.vectmap:
-            self.vectmap = self.vectmap+"@"+grassenv.env["MAPSET"]
+            self.vectmap = self.vectmap + "@" + grassenv.GetGRASSVariable("MAPSET")
         self.mapname, self.mapset = self.vectmap.split("@")
 
         self.icon = ''

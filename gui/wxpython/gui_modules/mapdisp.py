@@ -3201,11 +3201,12 @@ if __name__ == "__main__":
 
     gm_map = MapApp(0)
     # set title
-    gm_map.mapFrm.SetTitle ("GRASS GIS - Map Display: " + title + " - Location: " + grassenv.env["LOCATION_NAME"])
+    gm_map.mapFrm.SetTitle ("GRASS GIS - Map Display: " + title + " - Location: " + \
+                                grassenv.GetGRASSVariable("LOCATION_NAME"))
     gm_map.MainLoop()
 
     if grassenv.env.has_key("MONITOR"):
-        os.system("d.mon sel=%s" % grassenv.env["MONITOR"])
+        os.system("d.mon sel=%s" % grassenv.GetGRASSVariable("MONITOR"))
 
     os.remove(cmdfilename)
     os.system("""g.gisenv set="GRASS_PYCMDFILE" """)
