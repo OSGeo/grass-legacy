@@ -628,7 +628,8 @@ class DigitToolbar(AbstractToolbar):
 
         # select vector map layer in the current mapset
         layerNameList = []
-        self.layers = self.mapcontent.GetListOfLayers(l_type="vector", l_mapset=grassenv.env["MAPSET"])
+        self.layers = self.mapcontent.GetListOfLayers(l_type="vector",
+                                                      l_mapset=grassenv.GetGRASSVariable('MAPSET'))
         for layer in self.layers:
             if not layer.name in layerNameList: # do not duplicate layer
                 layerNameList.append (layer.name)

@@ -41,3 +41,14 @@ def GetTempfile(pref=None):
         return os.path.join(path, file)
     except:
         return Node
+
+def GetGRASSVariable(var):
+    """Return GRASS environment variable"""
+
+    gisEnv = gcmd.Command(['g.gisenv'])
+
+    for item in gisEnv.ReadStdOutput():
+        if var in item:
+            return item.split('=')[1].replace("'",'').replace(';','').strip()
+
+    return ''

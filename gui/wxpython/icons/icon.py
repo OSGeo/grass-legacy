@@ -18,6 +18,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import os
+import sys
+
 import wx
 
 iconpath_default = os.path.join(os.getenv("GISBASE"), "etc", "gui", "icons")
@@ -111,23 +113,30 @@ icons_default = {
     }
 
 # merge icons dictionaries, join paths
-if iconpath and iconpath.find('silk') > -1: # silk icon theme
-    from silk import IconsSilk as icons_img
-    # use default icons if needed
-    for key, img in icons_default.iteritems():
-        if not icons_img.has_key(key): # add key
-            icons_img[key] = img
-            if key[0:3] == 'dig':
-                iconpath_tmp = iconpath_vdigit
+try:
+    if not os.path.exists(iconpath):
+        raise OSError
+    if iconpath is not None and iconpath.find('silk') > -1: # silk icon theme
+        from silk import IconsSilk as icons_img
+        # use default icons if needed
+        for key, img in icons_default.iteritems():
+            if not icons_img.has_key(key): # add key
+                icons_img[key] = img
+                if key[0:3] == 'dig':
+                    iconpath_tmp = iconpath_vdigit
+                else:
+                    iconpath_tmp = iconpath_default
             else:
-                iconpath_tmp = iconpath_default
-        else:
-            iconpath_tmp = iconpath
+                iconpath_tmp = iconpath
 
-        if icons_img[key]: # join paths
-            if type (icons_img[key]) == type(''):
-                icons_img[key] = os.path.join(iconpath_tmp, icons_img[key])
-else: # default icons
+            if icons_img[key]: # join paths
+                if type (icons_img[key]) == type(''):
+                    icons_img[key] = os.path.join(iconpath_tmp, icons_img[key])
+except:
+    print >> sys.stderr, _("Unable to load icon theme, using default icon theme...")
+    iconpath = None
+
+if iconpath is None: # default icons
     icons_img = icons_default
     for key, img in icons_img.iteritems():
         if img and type (icons_img[key]) == type(''):

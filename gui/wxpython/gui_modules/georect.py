@@ -58,7 +58,6 @@ sys.path.append(gmpath)
 import mapdisp
 import render
 import toolbars
-import grassenv
 import menuform
 import select
 import disp_print
