@@ -66,9 +66,9 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->label = _("Split net by cost isolines");
     module->keywords = _("vector, networking");
-    module->description = _("Split net to bands between cost isolines (direction from centre). "
+    module->description = _("Splits net to bands between cost isolines (direction from centre). "
 			    "Centre node must be opened (costs >= 0). "
-			    "Costs of centre node are used in calculation");
+			    "Costs of centre node are used in calculation.");
 
     map = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT); 
@@ -109,8 +109,8 @@ int main(int argc, char **argv)
     term_opt->key         = "ccats";
     term_opt->required    = YES;
     term_opt->description = _("Categories of centres (points on nodes) to which net "
-			      "will be allocated, "
-			      "layer for this categories is given by nlayer option");
+			      "will be allocated. "
+			      "Layer for this categories is given by nlayer option.");
     
     cost_opt = G_define_option() ;
     cost_opt->key         = "costs" ;
@@ -226,7 +226,7 @@ int main(int argc, char **argv)
     pnts2 = (ISOPOINT *) G_malloc ( apnts2*sizeof(ISOPOINT));
 
     /* Fill Nodes by neares centre and costs from that centre */
-    G_message (_("Calculating costs from centres ..." ));
+    G_message (_("Calculating costs from centres..." ));
     for ( centre = 0; centre < ncentres;  centre++ ) {
 	G_percent ( centre, ncentres, 1 );
 	node1 = Centers[centre].node;
