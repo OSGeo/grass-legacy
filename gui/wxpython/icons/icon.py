@@ -114,7 +114,7 @@ icons_default = {
 
 # merge icons dictionaries, join paths
 try:
-    if not os.path.exists(iconpath):
+    if iconpath and not os.path.exists(iconpath):
         raise OSError
     if iconpath is not None and iconpath.find('silk') > -1: # silk icon theme
         from silk import IconsSilk as icons_img
