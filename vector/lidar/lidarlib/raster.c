@@ -49,12 +49,12 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		    
 	        db_init_string (&sql);
     
-		sprintf (buf, "INSERT INTO %s (ID, Interp)", tab_name);
+		sprintf (buf, "INSERT INTO %s (ID, X, Y, Interp)", tab_name);
 		db_append_string (&sql, buf);
 		
 		sprintf (buf, " VALUES (");
 		db_append_string (&sql, buf);
-		sprintf (buf, "%d, ", line_num[i]);
+		sprintf (buf, "%d, %f, %f, ", line_num[i], obs[i][0], obs[i][1]);
 		db_append_string (&sql, buf);
 
 		if ((point->x[0] > Overlap.E)) {
