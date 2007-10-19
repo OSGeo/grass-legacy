@@ -52,9 +52,9 @@ int edge_detection (struct Cell_head elaboration_reg, BOUND_BOX Overlap_Box, dou
     
     Elaboration = elaboration_reg;
 
-    if ((gradPto > gradHigh) && (residual > 0)) return PRE_EDGE;
+    if ((gradPto > gradHigh) && (residual > 0)) return PRE_EDGE;  /* Strong condition for 'edge' points */
     
-    else if ((gradPto > gradLow) && (residual > 0)) {
+    else if ((gradPto > gradLow) && (residual > 0)) {		/* Soft condition for 'edge' points */	
 
 	if (Vect_point_in_box (obsX, obsY, 0.0, &Overlap_Box)) {
 	    gradient = Get_Gradient (Elaboration, obsX + passoE * cos(dirPto), obsY + passoN * sin(dirPto), parBilin);
