@@ -84,7 +84,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
     /*Cats = Vect_new_cats_struct ();*/
 
     /* Current region is read and points recorded into observ */
-    observ = P_Read_Vector_Region_Map (Map, &region, &ndata, 1024);
+    observ = P_Read_Vector_Region_Map (Map, &region, &ndata, 1024, 1);
     G_debug (5, "CrossCorrelation: %d points read in region. ", ndata);
     fprintf (stdout, _("CrossCorrelation: %d points read in region.\n"), ndata);
     
@@ -111,7 +111,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
 	if (bspline_field > 0) {
 	    db_CatValArray_init ( &cvarr );
 
-	    Fi = Vect_get_field( Map, bspline_field);
+	    Fi = Vect_get_field (Map, bspline_field);
 	    if ( Fi == NULL )
 		G_fatal_error (_("CrossCorrelation: Cannot read field info"));	
 
@@ -406,3 +406,4 @@ swap (struct Point *point, int a, int b) {
 
     return point;
 }
+

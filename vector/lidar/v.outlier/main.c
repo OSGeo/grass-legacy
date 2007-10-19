@@ -253,7 +253,7 @@ main (int argc,char *argv[])
 
 	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
-	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
+	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect, 1);
 
 	    if (npoints > 0) {				/* If there is any point falling into elaboration_reg... */
 		int i;

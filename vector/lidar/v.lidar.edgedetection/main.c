@@ -256,7 +256,7 @@ main (int argc,char *argv[])
 	/*Setting the active region*/
 	    dim_vect = nsplx * nsply;
 	    G_debug (1, _("read vector region map"));
-	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
+	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect, 1);
 
 	    if (npoints > 0) {				/* If there is any point falling into elaboration_reg... */
 	        int i, tn;
@@ -268,7 +268,7 @@ main (int argc,char *argv[])
 
 	/* Least Squares system */
 		G_debug (1, _("Allocation memory for bilinear interpolation"));
-		BW = P_get_BandWidth (BILINEAR, nsply);		/* Bilinear interpolation */
+		BW = P_get_BandWidth (P_BILINEAR, nsply);		/* Bilinear interpolation */
 		N = G_alloc_matrix (nparameters, BW);		/* Normal matrix */
 		TN = G_alloc_vector (nparameters);		/* vector */
 		parVect_bilin = G_alloc_vector (nparameters);	/* Bicubic parameters vector */
