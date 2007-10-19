@@ -368,7 +368,7 @@ main (int argc, char *argv[])
 
 	Fi = Vect_get_field( &In, field );
 	if ( Fi == NULL )
-	    G_fatal_error(_("Cannot get layer info for vector map"));
+	    G_fatal_error(_("Unable to get layer info for vector map"));
 
 	Driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (Driver == NULL)
@@ -380,7 +380,7 @@ main (int argc, char *argv[])
 	nrec = db_select_CatValArray(Driver, Fi->table, Fi->key,
 		bufcol_opt->answer, NULL, &cvarr );
 
-	if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
+	if ( nrec < 0 ) G_fatal_error (_("Unable to select data from table"));
 	G_debug(2, "%d records selected from table", nrec);
 
 	ctype = cvarr.ctype;

@@ -268,7 +268,7 @@ main (int argc, char **argv)
     /* open database */	
     field = atoi ( Fieldopt->answer );
     fi = Vect_get_field(&Map, field);
-    if ( fi == NULL ) G_fatal_error (_("Cannot get layer info for vector map"));
+    if ( fi == NULL ) G_fatal_error (_("Unable to get layer info for vector map"));
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL ) 
 	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), 
@@ -285,7 +285,7 @@ main (int argc, char **argv)
 
     while (1) {
         ltype =  Vect_read_next_line (&Map, Points, Cats);
-        if ( ltype == -1 ) G_fatal_error (_("Cannot read vector"));
+        if ( ltype == -1 ) G_fatal_error (_("Unable to read vector map"));
         if ( ltype == -2 ) break;  /* EOF */
 	if ( !( type & ltype) ) continue;
 
@@ -300,7 +300,7 @@ main (int argc, char **argv)
 	db_set_string ( &stmt, buf);
 	
         if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-            G_fatal_error (_("Cannot select attribute."));
+            G_fatal_error (_("Unable to select attributes"));
 
 	nrows = db_get_num_rows ( &cursor );
 	if ( nrows < 1 ) {

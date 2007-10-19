@@ -52,7 +52,7 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "select;"
 				     "Select lines and print their ID's;"
 				     "catadd;"
-				     "Set new categories to selected vector featurs "
+				     "Set new categories to selected vector features "
 				     "for defined layer;"
 				     "catdel;"
 				     "Delete categories from selected vector features "
@@ -280,7 +280,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     }
     else
     {
-	G_fatal_error (_("Operation '%s' not implemented."),
+	G_fatal_error (_("Operation '%s' not implemented"),
 		       params -> tool -> answer);
     }
 

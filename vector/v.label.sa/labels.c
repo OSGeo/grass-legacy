@@ -73,7 +73,7 @@ label_t *labels_init(struct params *p, int *n_labels)
     layer = atoi(p->layer->answer);
     fi = Vect_get_field(&Map, layer);
     if (fi == NULL)
-	G_fatal_error(_("Cannot get layer info for vector map"));
+	G_fatal_error(_("Unable to get layer info for vector map"));
     driver = db_start_driver_open_database(fi->driver, fi->database);
     if (driver == NULL)
 	G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
@@ -87,7 +87,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 	G_fatal_error(_("Unable to initialise FreeType"));
     font_cap = find_font_from_freetypecap(p->font->answer);
     if(font_cap == NULL)
-	G_fatal_error(_("Cannot find font '%s'\n"), p->font->answer);
+	G_fatal_error(_("Unable to find font '%s'\n"), p->font->answer);
     if(font_cap->type != GFONT_FREETYPE)
 	G_fatal_error(_("Font '%s' is not a FreeType font\n"), p->font->answer);
     error = FT_New_Face(library, font_cap->path, 0, &face);
@@ -137,7 +137,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	type = Vect_read_next_line(&Map, Points, Cats);
 	if (type == -1)
-	    G_fatal_error(_("Cannot read vector"));
+	    G_fatal_error(_("Unable to read vector map"));
 	if (type == -2)
 	    break;		/* EOF */
 	if (!(legal_types & type))
@@ -158,7 +158,7 @@ label_t *labels_init(struct params *p, int *n_labels)
 
 	if (db_open_select_cursor(driver, &query, &cursor, DB_SEQUENTIAL) !=
 	    DB_OK)
-	    G_fatal_error(_("Cannot select attribute."));
+	    G_fatal_error(_("Unable to select attributes"));
 	db_free_string(&query);
 	nrows = db_get_num_rows(&cursor);
 	if (nrows < 1) {

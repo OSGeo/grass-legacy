@@ -44,12 +44,12 @@ int load_catval_array_rgb (struct Map_info* map, int vec, dbCatValArray* cvarr_r
     
     Fi = Vect_get_field (map, vector.layer[vec].field);
     if (Fi == NULL) {
-	G_fatal_error(_("Cannot get layer info for vector map"));
+	G_fatal_error(_("Unable to get layer info for vector map"));
     }
     
     driver = db_start_driver_open_database (Fi->driver, Fi->database);
     if (driver == NULL)
-	G_fatal_error(_("Cannot open database <%s> by driver <%s>"), Fi->database, Fi->driver);
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
     
     nrec = db_select_CatValArray (driver, Fi->table, Fi->key, 
 				  vector.layer[vec].rgbcol, NULL, cvarr_rgb);
@@ -61,7 +61,7 @@ int load_catval_array_rgb (struct Map_info* map, int vec, dbCatValArray* cvarr_r
 	G_fatal_error (_("Column type not supported (must be string)"));
     
     if ( nrec < 0 )
-	    G_fatal_error (_("Cannot select data from table"));
+	    G_fatal_error (_("Unable to select data from table"));
     
     G_debug(2, "\nRGB column: %d records selected from table", nrec);
     
@@ -102,12 +102,12 @@ int load_catval_array_size (struct Map_info* map, int vec, dbCatValArray* cvarr_
 
 	Fi = Vect_get_field( map, vector.layer[vec].field );
 	if ( Fi == NULL ) {
-	    G_fatal_error(_("Cannot get layer info for vector map"));
+	    G_fatal_error(_("Unable to get layer info for vector map"));
 	}
 
 	driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (driver == NULL)
-	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
@@ -122,7 +122,7 @@ int load_catval_array_size (struct Map_info* map, int vec, dbCatValArray* cvarr_
 	    G_fatal_error (_("Size column type must be numeric"));
 
 	if ( nrec < 0 )
-	    G_fatal_error (_("Cannot select data from table"));
+	    G_fatal_error (_("Unable to select data from table"));
 	G_debug(2, "\nSize column: %d records selected from table", nrec);
 
 	db_close_database_shutdown_driver(driver);
@@ -163,12 +163,12 @@ int load_catval_array_rot (struct Map_info* map, int vec, dbCatValArray* cvarr_r
 
 	Fi = Vect_get_field( map, vector.layer[vec].field );
 	if ( Fi == NULL ) {
-	    G_fatal_error(_("Cannot get layer info for vector map"));
+	    G_fatal_error(_("Unable to get layer info for vector map"));
 	}
 
 	driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (driver == NULL)
-	    G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
@@ -184,7 +184,7 @@ int load_catval_array_rot (struct Map_info* map, int vec, dbCatValArray* cvarr_r
 	    G_fatal_error(_("Rotation column type must be numeric"));
 
 	if ( nrec < 0 )
-	    G_fatal_error(_("Cannot select data from table"));
+	    G_fatal_error(_("Unable to select data from table"));
 
 	G_debug(2, "\nRotate column: %d records selected from table", nrec);
 

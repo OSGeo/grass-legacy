@@ -134,7 +134,7 @@ main (int argc, char *argv[])
     
     Vect_set_open_level (2);
     if (Vect_open_old (&In, in_opt->answer, mapset) < 2) {
-	G_fatal_error (_("Cannot open vector map <%s> at topo level [%d]"),
+	G_fatal_error (_("Unable to open vector map <%s> at topological level %d"),
 		       in_opt->answer, 2);
     }
 
@@ -164,13 +164,13 @@ main (int argc, char *argv[])
 
     Fi = Vect_get_field( &Out, 1);
     if ( Fi == NULL ) {
-	G_fatal_error (_("Cannot get layer info for vector map <%s>"),
+	G_fatal_error (_("Unable to get layer info for vector map <%s>"),
 		       in_opt -> answer);
     }
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-        G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+        G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			Fi->database, Fi->driver);
 
     sprintf ( buf, "alter table %s add column %s integer", Fi->table, col_opt->answer );
@@ -242,7 +242,7 @@ main (int argc, char *argv[])
 	      G_debug ( 3, "SQL: %s", db_get_string ( &sql ) );
 
 	      if (db_execute_immediate (Driver, &sql) != DB_OK ) {
-	          G_fatal_error (_("Cannot insert row: %s"), db_get_string ( &sql ) );
+	          G_fatal_error (_("Unable to insert row: %s"), db_get_string ( &sql ) );
               }
 	      pnt_part[nearest] = i+1;
 

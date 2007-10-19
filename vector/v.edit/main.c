@@ -283,7 +283,7 @@ int main (int argc, char *argv[])
 	if (BgMap && BgMap[0]) {
 	    if (nbgmaps > 1) 
 		G_warning(_("Multiple background maps were given. "
-			    "Selected features will copied only from "
+			    "Selected features will be copied only from "
 			    "vector map <%s>."),
 			  Vect_get_full_name(BgMap[0]));
 	    
