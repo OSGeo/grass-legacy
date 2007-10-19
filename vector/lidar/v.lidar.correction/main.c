@@ -45,7 +45,7 @@ main (int argc,char *argv[])
     double *TN, *Q, *parVect;			/* Interpolating and least-square vectors */
     double **N, **obsVect;			/* Interpolation and least-square matrix */
 
-    struct Map_info In, Out, Out_Terrain;
+    struct Map_info In, Out, Terrain;
     struct Option *in_opt, *out_opt, *out_terrain_opt, *passoE_opt, *passoN_opt, \
     	*lambda_f_opt, *Thresh_A_opt, *Thresh_B_opt; 
     struct GModule *module;
@@ -76,8 +76,8 @@ main (int argc,char *argv[])
     	out_terrain_opt->key_desc     = "name";
 	out_terrain_opt->required     = YES;
 	out_terrain_opt->gisprompt    = "new,vector,vector";
-	out_terrain_opt->description = _("Output terrain only vector map name");
-
+	out_terrain_opt->description = _("Only 'terrain' points output vector map");
+	
     passoE_opt = G_define_option ();
     	passoE_opt->key = "sce";
     	passoE_opt->type = TYPE_DOUBLE;
@@ -147,7 +147,7 @@ main (int argc,char *argv[])
 	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
     }
 
-    if (0 > Vect_open_new (&Out_Terrain, out_terrain_opt->answer, WITH_Z)) {
+    if (0 > Vect_open_new (&Terrain, out_terrain_opt->answer, WITH_Z)) {
 	Vect_close (&In);
 	Vect_close (&Out);
 	G_fatal_error (_("Unable to create vector map <%s>"), out_opt->answer);
@@ -157,9 +157,9 @@ main (int argc,char *argv[])
     Vect_copy_head_data (&In, &Out);
     Vect_hist_copy (&In, &Out);
     Vect_hist_command (&Out);
-    Vect_copy_head_data (&In, &Out_Terrain);
-    Vect_hist_copy (&In, &Out_Terrain);
-    Vect_hist_command (&Out_Terrain);
+    Vect_copy_head_data (&In, &Terrain);
+    Vect_hist_copy (&In, &Terrain);
+    Vect_hist_command (&Terrain);
 
 /* Start driver and open db*/
     driver = db_start_driver_open_database (dvr, db);
@@ -282,13 +282,13 @@ main (int argc,char *argv[])
 		    if ((flag_auxiliar = P_Create_Aux_Table (driver, table_name)) == FALSE) {
 			Vect_close (&In);
 			Vect_close (&Out);
-			Vect_close (&Out_Terrain);
+			Vect_close (&Terrain);
 			exit (EXIT_FAILURE);
 		    }
 		}
 
 		G_debug (3, _("Correction and creation of terrain vector"));
-		P_Sparse_Correction (&In, &Out, &Out_Terrain, &elaboration_reg, general_box, overlap_box, obsVect, parVect, lineVect,\
+		P_Sparse_Correction (&In, &Out, &Terrain, &elaboration_reg, general_box, overlap_box, obsVect, parVect, lineVect,\
 				passoN, passoE, dims.overlap, HighThresh, LowThresh, nsplx, nsply, npoints, driver, mean);	
 
 		G_free_matrix (obsVect);
@@ -311,7 +311,7 @@ main (int argc,char *argv[])
 
     Vect_close (&In);
     Vect_close (&Out);
-    Vect_close (&Out_Terrain);
+    Vect_close (&Terrain);
 
     G_done_msg (" ");
 
