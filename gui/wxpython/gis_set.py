@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 MODULE:    gis_set.py
 
@@ -584,6 +582,7 @@ class StartUp(wx.App):
     def OnInit(self):
         wx.InitAllImageHandlers()
         StartUp = GRASSStartup()
+        StartUp.CenterOnScreen()
         self.SetTopWindow(StartUp)
         StartUp.Show()
         return 1
