@@ -1,13 +1,9 @@
-GRASS graphical user interface
-==============================
+wxPython GRASS graphical user interface
+=======================================
 
-AUTHORS: Michael Barton, Jachym Cepicky, Martin Landa
+0 - REQUIREMENTS
 
-$LastChangedDate$
-
----------------------------------------------------------------------
-Requirements:
- Python >=2.4 and wxPython >=2.8.1.1
+ Python >= 2.4 and wxPython >= 2.8.1.1
 
  Get wxPython 2.8.x packages from:
  * Source: http://www.wxpython.org/download.php
@@ -29,50 +25,47 @@ Requirements:
  Get Python from:
  * Python.org for Source, MS-Windows, OS X: http://www.python.org/download/
  * ActiveStates for AIX, HP-UX, Linux (x86), Linux 64-bit (x86_64 AMD64), Mac OS X,
-     Solaris (SPARC), Windows: http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
----------------------------------------------------------------------
-
-How to start:
-
-Download fresh source code from subversion:
-$~ svn co https://grasssvn.itc.it/svn/grassaddons/trunk/grassaddons/gui grassaddons/gui
-
-Or update your local repository
-
-$~ svn up grassaddons/gui
-
-Change to GUI devel directory:
-
-$~ cd grassaddons/gui
-
+     Solaris (SPARC), Windows:
+     http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
 
 1 - INSTALLATION
 
-1.a) Put everything from gui into a new directory $GISBASE/etc/wx.
-     Or, easier, in GRASS:
-         cd /path/to/grassaddons/gui
-         ln -s `pwd` $GISBASE/etc/wx
+Download fresh source code from Subversion repository:
 
-1.b) Move the script "wxgrass" into $GISBASE/scripts.
-     Or, easier, in GRASS:
+$ svn co https://grasssvn.itc.it/svn/grassaddons/trunk/grassaddons/gui grassaddons/gui
+
+Or update your local repository
+
+$ svn up grassaddons/gui
+
+Change to GUI devel directory:
+
+$ cd grassaddons/gui
+
+1) Copy everything from gui directory into a new directory $GISBASE/etc/wx.
+     Or easier, create symlink (in running GRASS session):
+         cd /path/to/grassaddons/gui
+	 ln -s `pwd` $GISBASE/etc/wx
+
+2) Move the script "wxgrass" into $GISBASE/scripts.
+     Or easier, create symlink (in running GRASS session):
          cd /path/to/grassaddons/gui
          ln -s `pwd`/wxgrass $GISBASE/scripts
 
 2 - STARTUP WITH GRASS INITIALIZATION
 
-If you want to start the wxgrass GUI automatically when you start
+If you want to run wxPython GUI automatically when you start
 GRASS, edit your .grassrc6 file to replace...
 
 GRASS_GUI: tcktk (or whatever you have here)
 
-...with...
+with
 
 GRASS_GUI: wx
 
 3 - STARTUP FROM GRASS TERMINAL
 
-Simply type wxgrass& from the GRASS terminal to start the GUI using the wxgrass script.
-
+Simply type wxgrass from the GRASS terminal.
 
 4 - CLI Display scripts
 
