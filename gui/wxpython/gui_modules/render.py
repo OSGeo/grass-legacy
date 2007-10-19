@@ -905,6 +905,10 @@ class Map(object):
             return 1
         self.layers = []
 
+    def ReverseListOfLayers(self):
+        """Reverse list of layers"""
+
+        return self.layers.reverse()
 
 if __name__ == "__main__":
     """

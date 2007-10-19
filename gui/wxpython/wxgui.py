@@ -161,7 +161,6 @@ class GMFrame(wx.Frame):
         # initialize variables
         self.mapdisplays = {}        # dictionary to index open map displays
         self.disp_idx = 0            # index value for map displays and layer trees
-        self.maptree = {}            # dictionary to index a layer tree to accompanying a map display
         self.mapfocus = 0            # track which display currently has focus
         self.curr_page   = ''        # currently selected page for layer tree notebook
         self.curr_pagenum = ''       # currently selected page number for layer tree notebook
@@ -506,7 +505,6 @@ class GMFrame(wx.Frame):
             # sax
             grcXml = ProcessGrcXml()
             xml.sax.parseString(fileStream, grcXml)
-
             maptree = self.curr_page.maptree
             for layer in grcXml.layers:
                 newItem = maptree.AddLayer(ltype=layer['type'],
@@ -516,7 +514,10 @@ class GMFrame(wx.Frame):
                                            lcmd=layer['cmd'],
                                            lgroup=layer['group'])
                 maptree.PropertiesDialog(newItem, show=False)
-            
+
+            # reverse list of map layers
+            maptree.Map.ReverseListOfLayers()
+
             file.close()
         except:
             dlg = wx.MessageDialog(self, _("Unable to read workspace file <%s>.") % filename,
