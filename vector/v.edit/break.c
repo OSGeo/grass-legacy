@@ -251,7 +251,7 @@ int do_connect (struct Map_info *Map, struct ilist *List,
 	}
     
 	if (!n_on_line[0] || !n_on_line[1]) {
-	    G_warning (_("Unable connect line id %d to line %d"), line[0], line[1]);
+	    G_warning (_("Unable to connect line id %d to line %d"), line[0], line[1]);
 	    continue;
 	}
 
@@ -282,8 +282,8 @@ int do_connect (struct Map_info *Map, struct ilist *List,
 		 dist[0], dist[1], pnt_idx[0], nx[pnt_idx[1]], ny[pnt_idx[1]], dist_connect, thresh);
 
 	if (thresh >= 0.0 && dist_connect > thresh) {
-	    G_warning (_("Unable to connect line id %d to line %d because of threshold distance, "
-			 "run v.edit with other threshold distance value"),
+	    G_warning (_("Unable to connect line id %d to line %d because of threshold distance. "
+			 "Run v.edit with other threshold distance value."),
 		       line[0], line[1]);
 	    continue;
 	}

@@ -128,12 +128,12 @@ main (int argc, char *argv[])
     db_CatValArray_init ( &Cvarr );
     Fi = Vect_get_field( &Map, ofield);
     if ( Fi == NULL ) {
-	G_fatal_error (_("Cannot get layer info for vector map"));
+	G_fatal_error (_("Unable to get layer info for vector map"));
     }
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-	G_fatal_error("Cannot open database <%s> by driver <%s>", Fi->database, Fi->driver);
+	G_fatal_error("Unable to open database <%s> by driver <%s>", Fi->database, Fi->driver);
     
     /* Note do not check if the column exists in the table because it may be an expression */
 
@@ -144,7 +144,7 @@ main (int argc, char *argv[])
     if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
 	G_fatal_error ( _("Column type not supported") );
 
-    if ( nrec < 0 ) G_fatal_error (_("Cannot select data from table"));
+    if ( nrec < 0 ) G_fatal_error (_("Unable to select data from table"));
 
     db_close_database_shutdown_driver(Driver);
 

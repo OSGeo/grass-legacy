@@ -89,7 +89,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
   if (scol != NULL)
   db_CatValArray_init ( &sarray );
   Fi = Vect_get_field( In, 1);
-  if ( Fi == NULL ) G_fatal_error (_("Cannot get layer info"));
+  if ( Fi == NULL ) G_fatal_error (_("Unable to get layer info for vector map"));
 
   Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
   if (Driver == NULL) 
@@ -102,7 +102,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
   if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
       G_fatal_error ( _("Column type of wcolumn is not supported (must be integer or double)") );
 
-  if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
+  if ( nrec < 0 ) G_fatal_error ("Unable to select data from table");
   G_message ( "%d records selected from table", nrec);
 
   if (scol != NULL) {
@@ -125,7 +125,7 @@ int INPUT ( struct Map_info *In, char *column, char *scol, char *wheresql)
     int ival, type, ret;
     
     if (-1 == (type = Vect_read_next_line (In, Points, Cats)))
-      G_fatal_error ( "Cannot read vector" );
+      G_fatal_error ( "Unable to read vector map" );
 
     if (type == -2) break; /* EOF */
 
