@@ -12,25 +12,23 @@ LIB_OBJS = card.o \
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 RTLINC = $(ARCH_INCDIR)/rtree
+HEADERS := $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_q.h \
+	$(ARCH_INCDIR)/rtree.h
 
-default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_q.h \
-	$(ARCH_INCDIR)/rtree.h lib
+default: lib
 
-$(RTLINC)/card.h: card.h
-	$(MKDIR) $(RTLINC)
-	$(INSTALL_DATA) card.h $(RTLINC)/card.h
+lib: $(HEADERS)
 
-$(RTLINC)/index.h: index.h
-	$(INSTALL_DATA) index.h $(RTLINC)/index.h
+$(RTLINC):
+	$(MKDIR) $@
 
-# not used
-$(RTLINC)/split_q.h: split_q.h
-	$(INSTALL_DATA) split_q.h $(RTLINC)/split_q.h
+$(RTLINC)/%.h: %.h | $(RTLINC)
+	$(INSTALL_DATA) $< $@
 
 $(ARCH_INCDIR)/rtree.h: rtree.h
-	$(INSTALL_DATA) rtree.h $(ARCH_INCDIR)/rtree.h
+	$(INSTALL_DATA) $< $@
 
 $(OBJDIR)/test: test.c
 	$(CC) $(LDFLAGS) $(INC) -o $@ test.c $(RTREELIB) -lm
-	cd $(OBJDIR); ./test
+	cd $(OBJDIR) && ./test
 

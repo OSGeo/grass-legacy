@@ -12,7 +12,7 @@ default: \
 	$(ETC)/frame.select \
 	$(ETC)/frame.dumper \
 	$(ETC)/frame.list \
-	$(BIN)/$(PGM) \
+	$(BIN)/$(PGM)$(EXE) \
 	htmlcmd
 
 $(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
@@ -27,5 +27,5 @@ $(ETC)/frame.dumper: $(OBJDIR)/dumper.o $(DEPLIBS)
 $(ETC)/frame.list: $(OBJDIR)/list.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
+$(BIN)/$(PGM)$(EXE): $(OBJDIR)/frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
