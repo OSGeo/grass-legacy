@@ -379,17 +379,21 @@ class LayerTree(CT.CustomTreeCtrl):
         # add layer to the layer tree
         if self.layer_selected and self.layer_selected != self.GetRootItem():
             if self.GetPyData(self.layer_selected)[0]['type'] != 'group':
-                if lgroup is None or lgroup is True:
+                if lgroup is False:
+                    # last child of root
+                    layer = self.AppendItem(parentId=self.root,
+                                            text='', ct_type=1, wnd=ctrl)
+                elif lgroup is None or lgroup is True:
+                    # insert item on given position
                     parent = self.GetItemParent(self.layer_selected)
-                else:
-                    parent = self.root
-                layer = self.InsertItem(parent, self.GetPrevSibling(self.layer_selected),
-                                        text='', ct_type=1, wnd=ctrl)
-            else: # group
+                    layer = self.InsertItem(parentId=parent, input=self.GetPrevSibling(self.layer_selected),
+                                            text='', ct_type=1, wnd=ctrl)
+
+            else: # group (first child of self.layer_selected)
                 layer = self.PrependItem(parent=self.layer_selected,
                                          text='', ct_type=1, wnd=ctrl)
                 self.Expand(self.layer_selected)
-        else: # add first layer to the layer tree
+        else: # add first layer to the layer tree (first child of root)
             layer = self.PrependItem(parent=self.root, text='', ct_type=1, wnd=ctrl)
 
         # layer is initially unchecked as inactive (beside 'command')
@@ -398,8 +402,8 @@ class LayerTree(CT.CustomTreeCtrl):
             checked = lchecked
         self.CheckItem(layer, checked=checked)
 
-        # select item
-        self.SelectItem(layer)
+        # select new item
+        self.SelectItem(layer, select=True)
         self.layer_selected = layer
 
         # add text and icons for each layer ltype
@@ -448,13 +452,6 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetItemImage(layer, self.folder)
             self.SetItemText(layer, grouptext)
 
-        # use predefined layer name if given
-        if lname:
-            if ltype != 'command':
-                self.SetItemText(layer, lname)
-            else:
-                ctrl.SetValue(lname)
-
         self.first = False
 
         if ltype != 'group':
@@ -497,7 +494,14 @@ class LayerTree(CT.CustomTreeCtrl):
                                     'maplayer' : None,
                                     'prowin' : None}, 
                                    None))
-        
+
+        # use predefined layer name if given
+        if lname:
+            if ltype != 'command':
+                self.SetItemText(layer, lname)
+            else:
+                ctrl.SetValue(lname)
+
         return layer
 
     def PropertiesDialog (self, layer, show=True):
@@ -642,16 +646,13 @@ class LayerTree(CT.CustomTreeCtrl):
         cmd = event.GetString()
         layer = None
 
-        vislayer = self.GetFirstVisibleItem()
+        layer = self.GetFirstVisibleItem()
 
-        for item in range(0, self.GetCount()):
-            if self.GetPyData(vislayer)[0]['ctrl'] == ctrl:
-                layer = vislayer
-
-            if not self.GetNextVisible(vislayer):
+        while layer and layer.IsOk():
+            if self.GetPyData(layer)[0]['ctrl'] == ctrl:
                 break
-            else:
-                vislayer = self.GetNextVisible(vislayer)
+            
+            layer = self.GetNextVisible(layer)
 
         # change parameters for item in layers list in render.Map
         if layer and self.drag == False:
