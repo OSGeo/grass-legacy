@@ -54,9 +54,8 @@ DOXNAME=grass
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
-default: subdirs
-
-subdirs: headers
+default: headers
+	$(MAKE) subdirs
 
 headers: 
 	if [ ! -d $(GISBASE)/include/grass ]; then $(MKDIR) $(GISBASE)/include/grass; fi
