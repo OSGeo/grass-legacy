@@ -14,25 +14,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-14 18:41+0200\n"
-"PO-Revision-Date: 2007-10-14 19:55+0200\n"
+"POT-Creation-Date: 2007-10-19 17:29+0200\n"
+"PO-Revision-Date: 2007-10-19 12:32+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:24
 #, c-format
 msgid "Illegal table map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Nombre de tabla de mapa <%s> no admitido. No puede contener '.' o 'NULO'.\n"
+msgstr ""
+"Nombre de tabla de mapa <%s> no admitido. No puede contener '.' o 'NULO'.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:30
 #, c-format
 msgid "Illegal table map name <%s>. Must start with a letter.\n"
-msgstr "Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
+msgstr ""
+"Nombre de tabla de mapa <%s> no admitido. Debe empezar con una letra.\n"
 
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
@@ -110,7 +112,8 @@ msgstr "G3d_openCellOld: error en G3d_readHeader"
 
 #: ../lib/g3d/g3dopen.c:126
 msgid "G3d_openCellOld: projection does not match window projection"
-msgstr "G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
+msgstr ""
+"G3d_openCellOld: la proyección no coincide con la proyección de la ventana"
 
 #: ../lib/g3d/g3dopen.c:130
 msgid "G3d_openCellOld: zone does not match window zone"
@@ -158,7 +161,8 @@ msgstr "Tipo de datos empleados en el archivo de salida"
 
 #: ../lib/g3d/g3dparam.c:63
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr "La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
+msgstr ""
+"La precisión usada en el archivo de salida (por defecto, máximo o de 0 a 52)"
 
 #: ../lib/g3d/g3dparam.c:73
 msgid "The compression method used in the output file"
@@ -700,7 +704,8 @@ msgstr ""
 #: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
 #, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
-msgstr "[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
+msgstr ""
+"[%s en %s] - el criterio de lectura para la fila %d está fuera de la región"
 
 #: ../lib/gis/get_row.c:378
 #, c-format
@@ -715,7 +720,8 @@ msgstr "cell_values_double: falló xdr_double para el índice %d."
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
+msgstr ""
+"error al leer el mapa comprimido [%s] en el directorio de mapas [%s], fila %d"
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -780,7 +786,8 @@ msgstr "directorio de mapas %s no encontrado"
 
 #: ../lib/gis/gisinit.c:101
 #, c-format
-msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgid ""
+"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 "\aERROR: Sistema no iniciado. EL programador no incluyo la llamada a "
 "G_gisinit()\n"
@@ -788,7 +795,8 @@ msgstr ""
 #: ../lib/gis/histogram.c:60
 #, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
-msgstr "El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
+msgstr ""
+"El histograma para [%s en %s] no ha sido encontrado (ejecute r.support)"
 
 #: ../lib/gis/histogram.c:68
 #, c-format
@@ -832,7 +840,8 @@ msgstr "El nombre del archivo no está permitido. No puede ser '.' o 'NULL'\n"
 #: ../lib/gis/legal_name.c:45
 #, c-format
 msgid "Illegal filename. Character <%c> not allowed.\n"
-msgstr "El nombre del archivo no es admitido. El carácter <%c> no está permitido.\n"
+msgstr ""
+"El nombre del archivo no es admitido. El carácter <%c> no está permitido.\n"
 
 #: ../lib/gis/legal_name.c:75 ../lib/gis/legal_name.c:77
 #, c-format
@@ -1003,7 +1012,8 @@ msgstr "G_gisinit() debe ser llamado primero. "
 
 #: ../lib/gis/null_val.c:117
 msgid "Please advise GRASS developers of this error.\n"
-msgstr "Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
+msgstr ""
+"Por favor notifique a los desarrolladores de GRASS acerca de este error.\n"
 
 #: ../lib/gis/null_val.c:231
 msgid "G_set_null_value: wrong data type!"
@@ -1059,7 +1069,8 @@ msgstr "opencell: %s - nombre de archivo no admitido"
 
 #: ../lib/gis/opencell.c:718
 msgid "Can't write embedded null values for map open for random access"
-msgstr "No se puede escribir valores nulos en un mapa abierto por acceso aleatorio"
+msgstr ""
+"No se puede escribir valores nulos en un mapa abierto por acceso aleatorio"
 
 #: ../lib/gis/opencell.c:936 ../lib/gis/opencell.c:991
 #, c-format
@@ -1141,11 +1152,11 @@ msgstr "Nombre del archivo ráster de elevaciones"
 msgid "Name of elevation raster map(s)"
 msgstr "Nombre del mapa (o mapas) ráster de elevaciones"
 
-#: ../lib/gis/parser.c:480
+#: ../lib/gis/parser.c:480 ../lib/gis/parser.c:505
 msgid "Name of input raster3d map"
 msgstr "Nombre del mapa de entrada ráster3d"
 
-#: ../lib/gis/parser.c:489
+#: ../lib/gis/parser.c:489 ../lib/gis/parser.c:514
 msgid "Name of input raster3d map(s)"
 msgstr "Nombre del mapa(s) ráster 3D de entrada"
 
@@ -1153,32 +1164,32 @@ msgstr "Nombre del mapa(s) ráster 3D de entrada"
 msgid "Name for output raster3d map"
 msgstr "Nombre para el mapa ráster 3D de salida"
 
-#: ../lib/gis/parser.c:507 ../lib/gis/parser.c:532
+#: ../lib/gis/parser.c:524 ../lib/gis/parser.c:549
 msgid "Name of input vector map"
 msgstr "Nombre del mapa vectorial de entrada"
 
-#: ../lib/gis/parser.c:516 ../lib/gis/parser.c:541
+#: ../lib/gis/parser.c:533 ../lib/gis/parser.c:558
 msgid "Name of input vector map(s)"
 msgstr "Nombre del mapa(s) vectorial de entrada"
 
-#: ../lib/gis/parser.c:524
+#: ../lib/gis/parser.c:541
 msgid "Name for output vector map"
 msgstr "Nombre para el mapa vectorial de salida"
 
-#: ../lib/gis/parser.c:550
+#: ../lib/gis/parser.c:567
 msgid "Type"
 msgstr "Tipo"
 
-#: ../lib/gis/parser.c:551
+#: ../lib/gis/parser.c:568
 msgid "Feature type(s)"
 msgstr "Tipo(s) de elemento"
 
-#: ../lib/gis/parser.c:558
+#: ../lib/gis/parser.c:575
 msgid "Layer number"
 msgstr "Número de capa"
 
 #
-#: ../lib/gis/parser.c:559
+#: ../lib/gis/parser.c:576
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
@@ -1186,54 +1197,54 @@ msgstr ""
 "Un solo mapa vectorial puede conectarse a más de una tabla. Este número "
 "determina que tabla usar."
 
-#: ../lib/gis/parser.c:566
+#: ../lib/gis/parser.c:583
 msgid "Category value"
 msgstr "Valor de la categoría"
 
-#: ../lib/gis/parser.c:573
+#: ../lib/gis/parser.c:590
 msgid "Category values"
 msgstr "Valores de categoría"
 
-#: ../lib/gis/parser.c:574
+#: ../lib/gis/parser.c:591
 msgid "Example: 1,3,7-9,13"
 msgstr "Ejemplo: 1,3,7-9,13"
 
 #
-#: ../lib/gis/parser.c:584
+#: ../lib/gis/parser.c:601
 msgid "Name of input file"
 msgstr "Nombre del archivo de entrada"
 
 #
-#: ../lib/gis/parser.c:592
+#: ../lib/gis/parser.c:609
 msgid "Name for output file"
 msgstr "Nombre del archivo de salida"
 
-#: ../lib/gis/parser.c:600
+#: ../lib/gis/parser.c:617
 msgid "Field separator"
 msgstr "Separador de campos"
 
-#: ../lib/gis/parser.c:611
+#: ../lib/gis/parser.c:628
 msgid "Color"
 msgstr "Color"
 
-#: ../lib/gis/parser.c:612
+#: ../lib/gis/parser.c:629
 msgid "Either a standard color name or R:G:B triplet"
 msgstr "Un nombre de color estándar o un triplete R:G:B"
 
-#: ../lib/gis/parser.c:621
+#: ../lib/gis/parser.c:638
 msgid "Background color"
 msgstr "Color de fondo"
 
-#: ../lib/gis/parser.c:622
+#: ../lib/gis/parser.c:639
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr "Un color estándar de GRASS, un triplete R:G:B o \"ninguno\""
 
-#: ../lib/gis/parser.c:924
+#: ../lib/gis/parser.c:941
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Lo siento <%s> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:1035
+#: ../lib/gis/parser.c:1052
 #, c-format
 msgid ""
 "\n"
@@ -1242,7 +1253,7 @@ msgstr ""
 "\n"
 "Descripción:\n"
 
-#: ../lib/gis/parser.c:1042
+#: ../lib/gis/parser.c:1059
 #, c-format
 msgid ""
 "\n"
@@ -1251,7 +1262,7 @@ msgstr ""
 "\n"
 "Palabras clave:\n"
 
-#: ../lib/gis/parser.c:1046
+#: ../lib/gis/parser.c:1063
 #, c-format
 msgid ""
 "\n"
@@ -1262,7 +1273,7 @@ msgstr ""
 "Uso:\n"
 " "
 
-#: ../lib/gis/parser.c:1118
+#: ../lib/gis/parser.c:1135
 #, c-format
 msgid ""
 "\n"
@@ -1271,19 +1282,19 @@ msgstr ""
 "\n"
 "Opciones:\n"
 
-#: ../lib/gis/parser.c:1141 ../lib/gis/parser.c:1597 ../lib/gis/parser.c:1875
+#: ../lib/gis/parser.c:1158 ../lib/gis/parser.c:1614 ../lib/gis/parser.c:1892
 msgid "Allow output files to overwrite existing files"
 msgstr "Permitir a los archivos de salida sobrescribir los archivos existentes"
 
-#: ../lib/gis/parser.c:1143 ../lib/gis/parser.c:1601
+#: ../lib/gis/parser.c:1160 ../lib/gis/parser.c:1618
 msgid "Verbose module output"
 msgstr "Salida verbosa del módulo"
 
-#: ../lib/gis/parser.c:1144 ../lib/gis/parser.c:1604
+#: ../lib/gis/parser.c:1161 ../lib/gis/parser.c:1621
 msgid "Quiet module output"
 msgstr "Salida silenciosa del módulo"
 
-#: ../lib/gis/parser.c:1150
+#: ../lib/gis/parser.c:1167
 #, c-format
 msgid ""
 "\n"
@@ -1292,72 +1303,72 @@ msgstr ""
 "\n"
 "Parámetros:\n"
 
-#: ../lib/gis/parser.c:1173
+#: ../lib/gis/parser.c:1190
 #, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   por defecto: %s\n"
 
-#: ../lib/gis/parser.c:1480
+#: ../lib/gis/parser.c:1497
 msgid "NAME"
 msgstr "NOMBRE"
 
-#: ../lib/gis/parser.c:1493
+#: ../lib/gis/parser.c:1510
 msgid "KEYWORDS"
 msgstr "PALABRAS CLAVE"
 
-#: ../lib/gis/parser.c:1498
+#: ../lib/gis/parser.c:1515
 msgid "SYNOPSIS"
 msgstr "SINOPSIS"
 
-#: ../lib/gis/parser.c:1572
+#: ../lib/gis/parser.c:1589
 msgid "Flags"
 msgstr "Opciones"
 
-#: ../lib/gis/parser.c:1613
+#: ../lib/gis/parser.c:1630
 msgid "Parameters"
 msgstr "Parámetros"
 
-#: ../lib/gis/parser.c:1654
+#: ../lib/gis/parser.c:1671
 msgid "Options"
 msgstr "Opciones"
 
-#: ../lib/gis/parser.c:1660
+#: ../lib/gis/parser.c:1677
 msgid "Default"
 msgstr "Por defecto"
 
-#: ../lib/gis/parser.c:1877
+#: ../lib/gis/parser.c:1894
 msgid "Allow overwrite"
 msgstr "Permitir sobrescribir"
 
-#: ../lib/gis/parser.c:1885
+#: ../lib/gis/parser.c:1902
 msgid "Run with minimal output messages"
 msgstr "Ejecutar con el mínimo de mensajes de salida"
 
-#: ../lib/gis/parser.c:1887
+#: ../lib/gis/parser.c:1904
 msgid "Run quietly"
 msgstr "Ejecutar en modo silencioso"
 
-#: ../lib/gis/parser.c:1976
+#: ../lib/gis/parser.c:1993
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opciones: "
 
-#: ../lib/gis/parser.c:2025 ../lib/gis/parser.c:2042
+#: ../lib/gis/parser.c:2042 ../lib/gis/parser.c:2059
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Lo sentimos, <%c> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:2097
+#: ../lib/gis/parser.c:2114
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Lo sentimos, <%s=> es ambiguo\n"
 
-#: ../lib/gis/parser.c:2104
+#: ../lib/gis/parser.c:2121
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Lo sentimos, <%s> no es un parámetro válido\n"
 
-#: ../lib/gis/parser.c:2189
+#: ../lib/gis/parser.c:2206
 #, c-format
 msgid ""
 "\n"
@@ -1366,12 +1377,12 @@ msgstr ""
 "\n"
 "ERROR: sintaxis del rango no admitida para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2191
+#: ../lib/gis/parser.c:2208
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentado como: %s\n"
 
-#: ../lib/gis/parser.c:2194
+#: ../lib/gis/parser.c:2211
 #, c-format
 msgid ""
 "\n"
@@ -1380,12 +1391,12 @@ msgstr ""
 "\n"
 "ERROR: valor <%s> fuera del rango para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2196
+#: ../lib/gis/parser.c:2213
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2199
+#: ../lib/gis/parser.c:2216
 #, c-format
 msgid ""
 "\n"
@@ -1394,7 +1405,7 @@ msgstr ""
 "\n"
 "ERROR: falta el valor del parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2359
+#: ../lib/gis/parser.c:2376
 #, c-format
 msgid ""
 "\n"
@@ -1405,7 +1416,7 @@ msgstr ""
 "ERROR: el parámetro requerido  <%s> no se ha establecido:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2462
+#: ../lib/gis/parser.c:2479
 #, c-format
 msgid ""
 "\n"
@@ -1414,17 +1425,17 @@ msgstr ""
 "\n"
 "ERROR: la opción <%s> debe proporcionarse en múltiplos de %d\n"
 
-#: ../lib/gis/parser.c:2464
+#: ../lib/gis/parser.c:2481
 #, c-format
 msgid "       You provided %d items:\n"
-msgstr "       Tu proporcionaste %d elementos:\n"
+msgstr "       Proporcionó %d elementos:\n"
 
-#: ../lib/gis/parser.c:2519
+#: ../lib/gis/parser.c:2536
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERROR: la opción <%s>: <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2566
+#: ../lib/gis/parser.c:2583
 #, c-format
 msgid ""
 "\n"
@@ -1433,7 +1444,7 @@ msgstr ""
 "\n"
 "OPCIÓN: ¿Definir la siguiente opción?\n"
 
-#: ../lib/gis/parser.c:2580
+#: ../lib/gis/parser.c:2597
 #, c-format
 msgid ""
 "\n"
@@ -1442,51 +1453,51 @@ msgstr ""
 "\n"
 "OPCIÓN:   %s\n"
 
-#: ../lib/gis/parser.c:2581
+#: ../lib/gis/parser.c:2598
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clave: %s\n"
 
-#: ../lib/gis/parser.c:2583
+#: ../lib/gis/parser.c:2600
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2585
+#: ../lib/gis/parser.c:2602
 #, c-format
 msgid " default: %s\n"
 msgstr " por defecto: %s\n"
 
-#: ../lib/gis/parser.c:2586
+#: ../lib/gis/parser.c:2603
 #, c-format
 msgid "required: %s\n"
 msgstr "se requiere: %s\n"
 
-#: ../lib/gis/parser.c:2588
+#: ../lib/gis/parser.c:2605
 #, c-format
 msgid "multiple: %s\n"
 msgstr "múltiple: %s\n"
 
-#: ../lib/gis/parser.c:2590
+#: ../lib/gis/parser.c:2607
 #, c-format
 msgid " options: %s\n"
 msgstr " opciones: %s\n"
 
-#: ../lib/gis/parser.c:2605
+#: ../lib/gis/parser.c:2622
 #, c-format
 msgid "enter option > "
 msgstr "introduce una opción > "
 
-#: ../lib/gis/parser.c:2619 ../lib/gis/parser.c:2630
+#: ../lib/gis/parser.c:2636 ../lib/gis/parser.c:2647
 msgid "   Try again? "
 msgstr "   ¿Intentar de nuevo? "
 
-#: ../lib/gis/parser.c:2628
+#: ../lib/gis/parser.c:2645
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Lo siento, %s no se acepta.\n"
 
-#: ../lib/gis/parser.c:2639
+#: ../lib/gis/parser.c:2656
 #, c-format
 msgid ""
 "\n"
@@ -1497,11 +1508,11 @@ msgstr ""
 "Usted ha seleccionado:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2640
+#: ../lib/gis/parser.c:2657
 msgid "Is this correct? "
 msgstr "¿Es correcto? "
 
-#: ../lib/gis/parser.c:2709
+#: ../lib/gis/parser.c:2726
 msgid "to accept the default"
 msgstr "para aceptar los valores por defecto"
 
@@ -1535,7 +1546,8 @@ msgstr "%s: el mapa [%s] no está abierto para escritura - petición ignorada"
 #: ../lib/gis/put_row.c:256
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr "%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
+msgstr ""
+"%s: el mapa [%s] no está abierto para escritura aleatoria - petición ignorada"
 
 #: ../lib/gis/put_row.c:263
 #, c-format
@@ -1637,7 +1649,8 @@ msgstr "no es posible leer el archivo conteniendo los rangos para [%s en %s]"
 #: ../lib/gis/range.c:365 ../lib/gis/range.c:416
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr "no es posible escribir el archivo conteniendo los rangos para [%s en %s]"
+msgstr ""
+"no es posible escribir el archivo conteniendo los rangos para [%s en %s]"
 
 #: ../lib/gis/raster_metadata.c:111
 #, c-format
@@ -1828,7 +1841,8 @@ msgstr "problema leyendo archivo ráster de celdas"
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "maps"
-msgstr "G_set_window(): la proyección/zona difiere en los archivos ráster abiertos"
+msgstr ""
+"G_set_window(): la proyección/zona difiere en los archivos ráster abiertos"
 
 #: ../lib/gis/spawn.c:77 ../lib/gis/spawn.c:110
 msgid "Too many arguments"
@@ -1938,7 +1952,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Sólo el  %d%% de la ventana grabada en \"%s\" se superpone a la ventana "
 "actual de GRASS."
@@ -2519,8 +2534,10 @@ msgid "Write 3d array to g3d map <%s>"
 msgstr "Escribir matriz 3D en el mapa g3D <%s>"
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid "The type of solver which should solve the symmetric linear equation system"
-msgstr "El método que debería resolver el sistema de ecuaciones lineal simétrico"
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
+msgstr ""
+"El método que debería resolver el sistema de ecuaciones lineal simétrico"
 
 #: ../lib/gpde/N_parse_options.c:71
 msgid "The type of solver which should solve the linear equation system"
@@ -2531,8 +2548,10 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr "Número máximo de iteraciones usado para resolver el sistema lineal"
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
-msgstr "Error en los criterios de métodos iterativos (jacobi, sor, cg or bicgstab)"
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgstr ""
+"Error en los criterios de métodos iterativos (jacobi, sor, cg or bicgstab)"
 
 #: ../lib/gpde/N_parse_options.c:98
 msgid ""
@@ -2616,7 +2635,8 @@ msgstr "Resolviendo sistemas no lineales (SOR) -- iteración %5i error %g\n"
 #: ../lib/gpde/N_solvers_krylov.c:198
 #, fuzzy, c-format
 msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
+msgstr ""
+"Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:200
 #, c-format
@@ -2626,12 +2646,14 @@ msgstr "PCG -- iteración %i error %g\n"
 #: ../lib/gpde/N_solvers_krylov.c:365
 #, fuzzy, c-format
 msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr "Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
+msgstr ""
+"Método no lineal de gradientes conjugados (CG)-- iteración %i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:367
 #, c-format
 msgid "CG -- iteration %i error  %g\n"
-msgstr "Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g\n"
+msgstr ""
+"Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, fuzzy, c-format
@@ -2643,7 +2665,8 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
 msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr "gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %g\n"
+msgstr ""
+"gradientes biconjugados estabilizados (BiCGStab)-- iteración %5i error %g\n"
 
 #: ../lib/imagery/fopen.c:28
 #, c-format
@@ -2664,22 +2687,20 @@ msgstr "No se puede encontrar el archivo [%s] del grupo [%s en %s]"
 #, c-format
 msgid "Unable to create file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"No se puede crear el archivo [%s] para el subgrupo [%s] del grupo [%s en %"
-"s]"
+"No se puede crear el archivo [%s] para el subgrupo [%s] del grupo [%s en %s]"
 
 #: ../lib/imagery/fopen.c:115 ../lib/imagery/fopen.c:145
 #, c-format
 msgid "Unable to open file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"No se puede abrir el archivo [%s] para el subgrupo [%s] del grupo [%s en %"
-"s]"
+"No se puede abrir el archivo [%s] para el subgrupo [%s] del grupo [%s en %s]"
 
 #: ../lib/imagery/fopen.c:134
 #, c-format
 msgid "Unable to find file [%s] for subgroup [%s] of group [%s in %s]"
 msgstr ""
-"No se puede encontrar el archivo [%s] para el subgrupo [%s] del grupo [%s "
-"en %s]"
+"No se puede encontrar el archivo [%s] para el subgrupo [%s] del grupo [%s en "
+"%s]"
 
 #: ../lib/proj/convert.c:110
 msgid "Can't parse GRASS PROJ_INFO file"
@@ -2718,7 +2739,8 @@ msgstr ""
 #: ../lib/proj/convert.c:431
 #, c-format
 msgid "Datum <%s> not recognised by GRASS and no parameters found."
-msgstr "El datum <%s> no es reconocido por GRASS y no se han encontrado parámetos."
+msgstr ""
+"El datum <%s> no es reconocido por GRASS y no se han encontrado parámetos."
 
 #: ../lib/proj/convert.c:448
 #, c-format
@@ -2934,7 +2956,8 @@ msgstr "La franja no tiene suficientes datos"
 #: ../lib/rst/interp_float/vinput2d.c:302
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr "Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
+msgstr ""
+"Hay puntos fuera de la región 2D/3D especificada -- se ignoraron %d puntos"
 
 #: ../lib/rst/interp_float/vinput2d.c:304
 #, c-format
@@ -2971,7 +2994,8 @@ msgstr "No se pueden leer los símbolos de líneas de las coordenadas: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
 msgstr ""
 "Nombre de símbolo incorrecto: %s (debe ser: grupo/nombre o grupo/"
 "nombre@mapset)"
@@ -3165,12 +3189,15 @@ msgstr "Vect_new_cats_struct(): sin memoria"
 #: ../lib/vector/Vlib/cats.c:138
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
-msgstr "Demasiadas categorías (%d), no se puede establecer la categoría %d (capa %d)"
+msgstr ""
+"Demasiadas categorías (%d), no se puede establecer la categoría %d (capa %d)"
 
 #: ../lib/vector/Vlib/cats.c:408
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
-msgstr "No se puede convertir la cadena de categoría '%s? (desde '%s') a intervalo de categorías"
+msgstr ""
+"No se puede convertir la cadena de categoría '%s? (desde '%s') a intervalo "
+"de categorías"
 
 #: ../lib/vector/Vlib/cindex.c:30
 msgid "Category index is not up to date"
@@ -3205,8 +3232,8 @@ msgstr "Error al escribir el archivo de índices de categoría <%s>"
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr ""
-"No se puede abrir el archivo del índice de categorías para el mapa "
-"vectorial <%s@%s>"
+"No se puede abrir el archivo del índice de categorías para el mapa vectorial "
+"<%s@%s>"
 
 #: ../lib/vector/Vlib/field.c:76
 msgid "Field number must be 1 or greater."
@@ -3290,8 +3317,8 @@ msgstr "Vect_segment_intersection() ERROR (segmentos no verticales colineales)"
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
 msgstr ""
-"El nombre <%s> del mapa vectorial no está permitido. No puede contener '.' "
-"o 'NULO'."
+"El nombre <%s> del mapa vectorial no está permitido. No puede contener '.' o "
+"'NULO'."
 
 #: ../lib/vector/Vlib/legal_vname.c:45
 #, c-format
@@ -3304,13 +3331,14 @@ msgstr ""
 #, c-format
 msgid "Illegal vector map name <%s>. Character '%c' not allowed."
 msgstr ""
-"El nombre <%s> del mapa vectorial no está permitido. El carácter '%c' no está "
-"permitido."
+"El nombre <%s> del mapa vectorial no está permitido. El carácter '%c' no "
+"está permitido."
 
 #: ../lib/vector/Vlib/legal_vname.c:81 ../lib/vector/Vlib/legal_vname.c:83
 #, c-format
 msgid "Output vector map name <%s> is not valid map name"
-msgstr "El nombre del mapa vectorial de salida <%s> no es un nombre de mapa válido"
+msgstr ""
+"El nombre del mapa vectorial de salida <%s> no es un nombre de mapa válido"
 
 #: ../lib/vector/Vlib/legal_vname.c:94 ../lib/vector/Vlib/legal_vname.c:96
 #: ../lib/vector/Vlib/map.c:302 ../lib/vector/Vlib/open.c:158
@@ -3334,9 +3362,10 @@ msgstr "No se puede leer el mapa vectorial <%s%s>"
 msgid "Vector map name is not SQL compliant"
 msgstr "El nombre del mapa vectorial no se ajusta a SQL"
 
-#: ../lib/vector/Vlib/map.c:171
+#: ../lib/vector/Vlib/map.c:171 ../lib/vector/Vlib/map.c:294
+#: ../lib/vector/Vlib/open.c:515
 #, c-format
-msgid "The vector map <%s> already exists and will be overwritten"
+msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "El mapa vectorial <%s> ya existe y será sobrescrito"
 
 #: ../lib/vector/Vlib/map.c:174 ../lib/vector/Vlib/open.c:519
@@ -3374,11 +3403,6 @@ msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
 msgid "Unable to create index for table <%s>, key <%s>"
 msgstr "No se puede crear el índice para la tabla <%s>, clave <%s>"
 
-#: ../lib/vector/Vlib/map.c:294 ../lib/vector/Vlib/open.c:515
-#, c-format
-msgid "Vector map <%s> already exists and will be overwritten"
-msgstr "El mapa vectorial <%s> ya existe y será sobrescrito"
-
 #: ../lib/vector/Vlib/map.c:366 ../lib/vector/Vlib/map.c:460
 #, c-format
 msgid "Unable to delete table <%s>"
@@ -3388,7 +3412,8 @@ msgstr "No se puede borrar la tabla <%s>"
 #: ../lib/vector/Vlib/map.c:451
 #, c-format
 msgid "Unable to find table <%s> linked to vector map <%s>"
-msgstr "No se puede encontrar la tabla <%s> enlazada con el mapa vectorial <%s>"
+msgstr ""
+"No se puede encontrar la tabla <%s> enlazada con el mapa vectorial <%s>"
 
 #: ../lib/vector/Vlib/map.c:479
 #, c-format
@@ -3414,7 +3439,8 @@ msgstr "No se puede eliminar el directorio '%s'"
 #: ../lib/vector/Vlib/map.c:563 ../lib/vector/Vlib/map.c:656
 #, c-format
 msgid "Unable to add database link for vector map <%s>"
-msgstr "No se puede añadir el enlace a la base de datos para el mapa vectorial <%s>"
+msgstr ""
+"No se puede añadir el enlace a la base de datos para el mapa vectorial <%s>"
 
 #: ../lib/vector/Vlib/net.c:120
 msgid "Building graph ..."
@@ -3511,7 +3537,8 @@ msgid "Programmer requested unknown open level %d"
 msgstr "El programador solicitó el nivel abierto %d desconocido"
 
 #: ../lib/vector/Vlib/open.c:168
-msgid "Vector map which is not in the current mapset cannot be opened for update"
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
 msgstr ""
 "Un mapa que no está en el directorio de mapas actual no se puede abrir para "
 "actualizar"
@@ -3543,8 +3570,8 @@ msgstr "No se puede abrir el archivo de topología para el mapa vectorial <%s>"
 #, c-format
 msgid "Unable to open category index file for vector map <%s>"
 msgstr ""
-"No se puede abrir el archivo de índice de categorías para el mapa "
-"vectorial <%s>"
+"No se puede abrir el archivo de índice de categorías para el mapa vectorial <"
+"%s>"
 
 #
 #: ../lib/vector/Vlib/open.c:321 ../lib/vector/Vlib/open.c:542
@@ -3564,7 +3591,9 @@ msgstr "No se puede abrir el archivo %s "
 
 #: ../lib/vector/Vlib/open.c:701
 msgid "Size of 'coor' file differs from value saved in topology file"
-msgstr "El tamaño del archivo 'coor' difiere del valor guardado en el archivo de topología."
+msgstr ""
+"El tamaño del archivo 'coor' difiere del valor guardado en el archivo de "
+"topología."
 
 #: ../lib/vector/Vlib/open.c:712
 #, c-format
@@ -3739,7 +3768,8 @@ msgstr "Intento de borrar un área inexistente"
 #: ../lib/vector/diglib/plus_area.c:392
 #, c-format
 msgid "Dead centroid [%d] registered for area (bug in the library)."
-msgstr "Centroide inexistente [%d] registrado para el área (bug en la biblioteca)."
+msgstr ""
+"Centroide inexistente [%d] registrado para el área (bug en la biblioteca)."
 
 #: ../lib/vector/diglib/plus_area.c:413
 #, c-format
@@ -3760,3 +3790,5 @@ msgstr ""
 "Intento de leer el ángulo para la línea que no está conectada al nodo: nodo "
 "= [%d] línea = [%d]"
 
+#~ msgid "The vector map <%s> already exists and will be overwritten"
+#~ msgstr "El mapa vectorial <%s> ya existe y será sobrescrito"

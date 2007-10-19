@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-14 18:41+0200\n"
+"POT-Creation-Date: 2007-10-19 17:29+0200\n"
 "PO-Revision-Date: 2007-10-02 17:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -59,9 +59,9 @@ msgstr " "
 #: ../gui/tcltk/gis.m/labels.tcl:136 ../gui/tcltk/gis.m/labels.tcl:140
 #: ../gui/tcltk/gis.m/legend.tcl:189 ../gui/tcltk/gis.m/legend.tcl:192
 #: ../gui/tcltk/gis.m/rastarrows.tcl:164 ../gui/tcltk/gis.m/rastarrows.tcl:167
-#: ../gui/tcltk/gis.m/raster.tcl:191 ../gui/tcltk/gis.m/raster.tcl:195
+#: ../gui/tcltk/gis.m/raster.tcl:192 ../gui/tcltk/gis.m/raster.tcl:196
 #: ../gui/tcltk/gis.m/rastnums.tcl:163 ../gui/tcltk/gis.m/rastnums.tcl:166
-#: ../gui/tcltk/gis.m/rgbhis.tcl:155 ../gui/tcltk/gis.m/rgbhis.tcl:164
+#: ../gui/tcltk/gis.m/rgbhis.tcl:156 ../gui/tcltk/gis.m/rgbhis.tcl:165
 #: ../gui/tcltk/gis.m/rules.tcl:139 ../gui/tcltk/gis.m/rules.tcl:143
 #: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:241
 #: ../gui/tcltk/gis.m/thematic.tcl:245 ../gui/tcltk/gis.m/vector.tcl:330
@@ -346,7 +346,7 @@ msgid "Import"
 msgstr "Importar"
 
 #: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
-#: ../gui/tcltk/gis.m/raster.tcl:113 ../gui/tcltk/gis.m/rastnums.tcl:103
+#: ../gui/tcltk/gis.m/raster.tcl:114 ../gui/tcltk/gis.m/rastnums.tcl:103
 msgid "Raster map"
 msgstr "Mapa ráster"
 
@@ -1997,7 +1997,7 @@ msgid "show legend for drape map in monitor"
 msgstr "Mostrar la leyenda del mapa superpuesto en el monitor"
 
 #: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
-#: ../gui/tcltk/gis.m/raster.tcl:236 ../gui/tcltk/gis.m/rgbhis.tcl:220
+#: ../gui/tcltk/gis.m/raster.tcl:246 ../gui/tcltk/gis.m/rgbhis.tcl:220
 msgid "overlay maps from other layers (transparent null value cells)"
 msgstr "Superponer mapas de otras capas (los valores nulos son transparentes)"
 
@@ -2013,19 +2013,19 @@ msgstr "verde (RGB) o intensidad (HIS):"
 msgid "blue (RGB) or saturation (HIS):"
 msgstr "azul (RGB) o saturación (HIS):"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:154
+#: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:155
 msgid "display maps as RGB"
 msgstr "Visualizar mapas como RGB"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:159
+#: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:160
 msgid "Help for RGB"
 msgstr "Ayuda para RGB"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:163
+#: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:164
 msgid "display maps as HIS"
 msgstr "Visualizar mapas como HIS"
 
-#: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:168
+#: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:169
 msgid "Help for HIS"
 msgstr "Ayuda para HIS"
 
@@ -2386,9 +2386,9 @@ msgstr "Ancho de línea para imprimir"
 #: ../gui/tcltk/gis.m/legend.tcl:476 ../gui/tcltk/gis.m/mapcanvas.tcl:212
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:221 ../gui/tcltk/gis.m/mapprint.tcl:192
 #: ../gui/tcltk/gis.m/mapprint.tcl:199 ../gui/tcltk/gis.m/rastarrows.tcl:83
-#: ../gui/tcltk/gis.m/rastarrows.tcl:357 ../gui/tcltk/gis.m/raster.tcl:85
-#: ../gui/tcltk/gis.m/raster.tcl:453 ../gui/tcltk/gis.m/rastnums.tcl:79
-#: ../gui/tcltk/gis.m/rastnums.tcl:360 ../gui/tcltk/gis.m/rgbhis.tcl:82
+#: ../gui/tcltk/gis.m/rastarrows.tcl:357 ../gui/tcltk/gis.m/raster.tcl:86
+#: ../gui/tcltk/gis.m/raster.tcl:463 ../gui/tcltk/gis.m/rastnums.tcl:79
+#: ../gui/tcltk/gis.m/rastnums.tcl:360 ../gui/tcltk/gis.m/rgbhis.tcl:83
 #: ../gui/tcltk/gis.m/rgbhis.tcl:362 ../gui/tcltk/gis.m/rules.tcl:207
 #: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:607
 #: ../gui/tcltk/gis.m/thematic.tcl:680 ../gui/tcltk/gis.m/vector.tcl:194
@@ -2404,8 +2404,8 @@ msgstr "Mostrar escala y flecha de Norte"
 #: ../gui/tcltk/gis.m/cmd.tcl:105 ../gui/tcltk/gis.m/dtext.tcl:166
 #: ../gui/tcltk/gis.m/gridline.tcl:147 ../gui/tcltk/gis.m/histogram.tcl:145
 #: ../gui/tcltk/gis.m/labels.tcl:118 ../gui/tcltk/gis.m/legend.tcl:172
-#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/raster.tcl:167
-#: ../gui/tcltk/gis.m/rastnums.tcl:146 ../gui/tcltk/gis.m/rgbhis.tcl:142
+#: ../gui/tcltk/gis.m/rastarrows.tcl:147 ../gui/tcltk/gis.m/raster.tcl:168
+#: ../gui/tcltk/gis.m/rastnums.tcl:146 ../gui/tcltk/gis.m/rgbhis.tcl:143
 #: ../gui/tcltk/gis.m/thematic.tcl:223 ../gui/tcltk/gis.m/vector.tcl:306
 msgid "Opaque "
 msgstr "Opaco"
@@ -2414,8 +2414,8 @@ msgstr "Opaco"
 #: ../gui/tcltk/gis.m/cmd.tcl:109 ../gui/tcltk/gis.m/dtext.tcl:170
 #: ../gui/tcltk/gis.m/gridline.tcl:151 ../gui/tcltk/gis.m/histogram.tcl:149
 #: ../gui/tcltk/gis.m/labels.tcl:122 ../gui/tcltk/gis.m/legend.tcl:176
-#: ../gui/tcltk/gis.m/rastarrows.tcl:151 ../gui/tcltk/gis.m/raster.tcl:171
-#: ../gui/tcltk/gis.m/rastnums.tcl:150 ../gui/tcltk/gis.m/rgbhis.tcl:146
+#: ../gui/tcltk/gis.m/rastarrows.tcl:151 ../gui/tcltk/gis.m/raster.tcl:172
+#: ../gui/tcltk/gis.m/rastnums.tcl:150 ../gui/tcltk/gis.m/rgbhis.tcl:147
 #: ../gui/tcltk/gis.m/thematic.tcl:227 ../gui/tcltk/gis.m/vector.tcl:310
 msgid " Transparent"
 msgstr " Transparente"
@@ -4621,52 +4621,61 @@ msgstr "Mapa de pendiente/intensidad: "
 msgid "    scale factor for computing arrow length"
 msgstr "Factor de escala para calcular la longitud del norte. "
 
-#: ../gui/tcltk/gis.m/raster.tcl:126
+#: ../gui/tcltk/gis.m/raster.tcl:127
 msgid "Raster drape map"
 msgstr "Mapa de cobertura ráster"
 
-#: ../gui/tcltk/gis.m/raster.tcl:160
+#: ../gui/tcltk/gis.m/raster.tcl:161
 msgid "Display raster maps"
 msgstr "Mostrar mapas ráster"
 
-#: ../gui/tcltk/gis.m/raster.tcl:177
+#: ../gui/tcltk/gis.m/raster.tcl:178
 msgid "Base map:\t"
 msgstr "Mapa base:\t"
 
-#: ../gui/tcltk/gis.m/raster.tcl:180
+#: ../gui/tcltk/gis.m/raster.tcl:181
 msgid "base raster map to display"
 msgstr "Base ráster para mostrar"
 
-#: ../gui/tcltk/gis.m/raster.tcl:185 ../gui/tcltk/gis.m/raster.tcl:189
+#: ../gui/tcltk/gis.m/raster.tcl:186 ../gui/tcltk/gis.m/raster.tcl:190
 msgid "base map info"
 msgstr "Información del mapa base"
 
-#: ../gui/tcltk/gis.m/raster.tcl:201
+#: ../gui/tcltk/gis.m/raster.tcl:202
 msgid "\tvalues to display"
 msgstr "\tvalores a mostrar"
 
-#: ../gui/tcltk/gis.m/raster.tcl:208
+#: ../gui/tcltk/gis.m/raster.tcl:209
 msgid "\tOptional color draping. Use base map for shading,"
 msgstr "\tCobertura de color opcional. Usar mapa base para sombrear."
 
-#: ../gui/tcltk/gis.m/raster.tcl:213
+#: ../gui/tcltk/gis.m/raster.tcl:214
 msgid "\tdrape map for color in color relief map or data fusion"
 msgstr ""
 "\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
 
-#: ../gui/tcltk/gis.m/raster.tcl:218
+#: ../gui/tcltk/gis.m/raster.tcl:219
 msgid "\tdrape map:  "
 msgstr "\tmapa de cobertura:  "
 
-#: ../gui/tcltk/gis.m/raster.tcl:221
+#: ../gui/tcltk/gis.m/raster.tcl:222
 msgid "raster map to drape over base map"
 msgstr "Mapa ráster para sobreponer al mapa base"
 
-#: ../gui/tcltk/gis.m/raster.tcl:226 ../gui/tcltk/gis.m/raster.tcl:230
+#: ../gui/tcltk/gis.m/raster.tcl:227 ../gui/tcltk/gis.m/raster.tcl:231
 msgid "drape map info"
 msgstr "Información de mapa de cobertura"
 
-#: ../gui/tcltk/gis.m/raster.tcl:243
+#: ../gui/tcltk/gis.m/raster.tcl:237
+#, fuzzy
+msgid "\tdrape map brightness adjustment\t "
+msgstr "Ajuste de brillo HIS\t "
+
+#: ../gui/tcltk/gis.m/raster.tcl:239
+msgid "Adjust brightness of drape map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:253
 msgid " Set background color (colored null value cells)"
 msgstr " Establecer color de fondo (celdas con valor nulo coloreadas)"
 
@@ -4711,55 +4720,55 @@ msgstr ""
 "Los valores de celda sólo se pueden mostrar\n"
 "para regiones de menos de 10.000 celdas"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:103
+#: ../gui/tcltk/gis.m/rgbhis.tcl:104
 msgid "Raster map for red or hue channel"
 msgstr "Mapa ráster para el canal rojo o de tonalidad"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:106
+#: ../gui/tcltk/gis.m/rgbhis.tcl:107
 #, tcl-format
 msgid "RGB-HIS %s"
 msgstr "RGB-HIS %s"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:113
+#: ../gui/tcltk/gis.m/rgbhis.tcl:114
 msgid "Raster map for green or intensity channel"
 msgstr "Mapa ráster para el canal verde o de intensidad"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:121
+#: ../gui/tcltk/gis.m/rgbhis.tcl:122
 msgid "Raster map for blue or saturation channel"
 msgstr "Mapa ráster para el canal azul o de saturación"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:135
+#: ../gui/tcltk/gis.m/rgbhis.tcl:136
 msgid ""
 "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr ""
 "Mostrar 3 mapas ráster como canales Rojo/Verde/Azul o de Tonalidad/"
 "Intensidad/Saturación"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:174
+#: ../gui/tcltk/gis.m/rgbhis.tcl:175
 msgid "red (RGB) or hue (HIS): "
 msgstr "rojo (RGB) o tonalidad (HIS): "
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:177
+#: ../gui/tcltk/gis.m/rgbhis.tcl:178
 msgid "raster map for red or hue channel (HIS drape)"
 msgstr "mapa ráster para el canal rojo o de tonalidad (cobertura HIS)"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:186
+#: ../gui/tcltk/gis.m/rgbhis.tcl:187
 msgid "green (RGB) or intensity (HIS): "
 msgstr "verde (RGB) o intensidad (HIS): "
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:189
+#: ../gui/tcltk/gis.m/rgbhis.tcl:190
 msgid "raster map for green or intensity channel (HIS relief)"
 msgstr "mapa ráster para el canal verde o de intensidad (relieve HIS)"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:198
+#: ../gui/tcltk/gis.m/rgbhis.tcl:199
 msgid "blue (RGB) or saturation (HIS): "
 msgstr "azul (RGB) o saturación (HIS): "
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:201
+#: ../gui/tcltk/gis.m/rgbhis.tcl:202
 msgid "raster map for blue or saturation channel"
 msgstr "mapa ráster para el canal azul o de saturación"
 
-#: ../gui/tcltk/gis.m/rgbhis.tcl:210
+#: ../gui/tcltk/gis.m/rgbhis.tcl:211
 msgid "HIS brightness adjustment\t "
 msgstr "Ajuste de brillo HIS\t "
 
