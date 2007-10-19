@@ -13,12 +13,12 @@
 /*----------------------------------------------------------------------------------------*/
 void 
 P_zero_dim (struct Reg_dimens *dim) {
-	dim->orlo_h = 0.0;
-	dim->orlo_v = 0.0;
-	dim->overlap = 0.0;
-	dim->latoN = 0.0;
-	dim->latoE = 0.0;
-	return;
+    dim->orlo_h = 0.0;
+    dim->orlo_v = 0.0;
+    dim->overlap = 0.0;
+    dim->latoN = 0.0;
+    dim->latoE = 0.0;
+    return;
 }
 
 /*----------------------------------------------------------------------------------------*/
@@ -118,33 +118,32 @@ P_get_BandWidth (int interpolator, int nsplines ) {
 /*----------------------------------------------------------------------------------------*/
 double 
 P_Mean_Calc (struct Cell_head *Elaboration, struct Point *obs, int npoints) {
-	int i, mean_count = 0;
-	double mean = 0.0;
-	BOUND_BOX mean_box;
-	
-	Vect_region_box (Elaboration, &mean_box);
-	mean_box.W -= CONTOUR;
-	mean_box.E += CONTOUR;
-	mean_box.N += CONTOUR;
-	mean_box.S -= CONTOUR;
-	
-	for (i=0; i<npoints; i++) {			/*  */
-	    if (Vect_point_in_box (obs[i].coordX, obs[i].coordY, obs[i].coordZ, &mean_box)) {
-		mean_count++;
-		mean += obs[i].coordZ;
-	    }
+    int i, mean_count = 0;
+    double mean = 0.0;
+    BOUND_BOX mean_box;
+
+    Vect_region_box (Elaboration, &mean_box);
+    mean_box.W -= CONTOUR;
+    mean_box.E += CONTOUR;
+    mean_box.N += CONTOUR;
+    mean_box.S -= CONTOUR;
+
+    for (i=0; i<npoints; i++) {			/*  */
+	if (Vect_point_in_box (obs[i].coordX, obs[i].coordY, obs[i].coordZ, &mean_box)) {
+	    mean_count++;
+	    mean += obs[i].coordZ;
 	}
-	if (mean_count == 0)
-	    mean = .0;
-	else
-	    mean /= (double) mean_count;
+    }
+    if (mean_count == 0)
+	mean = .0;
+    else
+	mean /= (double) mean_count;
 
-	return mean;
+    return mean;
 }
-
-/*------------------------------------------------------------------------------------------------*/
 struct Point* 
-P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, int *num_points, int dim_vect) {
+P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, 
+	int *num_points, int dim_vect, int layer) {
     int line_num, pippo, npoints, cat;
     double x, y, z;
     struct Point *obs;
@@ -157,7 +156,7 @@ P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, i
 
     points = Vect_new_line_struct ();
     categories = Vect_new_cats_struct ();
-
+    
 /* Reading the elaboration zone points */
     Vect_region_box (Elaboration, &elaboration_box);
 
@@ -187,9 +186,9 @@ P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, i
 	   obs[npoints-1].coordY = y;
 	   obs[npoints-1].coordZ = z;
 	   obs[npoints-1].lineID = line_num;		/* Storing also the line's number */
-	   Vect_cat_get ( categories, 1, &cat );
-	   obs[npoints-1].cat = cat;
 
+	   Vect_cat_get ( categories, layer, &cat );
+	   obs[npoints-1].cat = cat;
 	}
     }
     Vect_destroy_line_struct(points);
@@ -202,30 +201,38 @@ P_Read_Vector_Region_Map (struct Map_info *Map, struct Cell_head *Elaboration, i
 /*------------------------------------------------------------------------------------------------*/
 int 
 P_Create_Aux_Table (dbDriver *driver, char *tab_name){
-	dbTable *auxiliar_tab;
-	dbColumn *ID_column, *Interp_column;
-	int created = FALSE;
+    dbTable *auxiliar_tab;
+    dbColumn *column;
+    int created = FALSE;
 
-	auxiliar_tab = db_alloc_table (2);		
-	db_set_table_name (auxiliar_tab, tab_name);
-	db_set_table_description (auxiliar_tab, "It is used for the intermediate interpolated values");
-			    
-	ID_column = db_get_table_column (auxiliar_tab,0);
-	db_set_column_name (ID_column, "ID");
-	db_set_column_sqltype (ID_column, DB_SQL_TYPE_INTEGER);
-			    
-	Interp_column = db_get_table_column (auxiliar_tab,1);
-	db_set_column_name (Interp_column, "Interp");
-	db_set_column_sqltype (Interp_column, DB_SQL_TYPE_REAL);
-			    
-	if (db_create_table (driver, auxiliar_tab) == DB_OK) {
-	    G_debug (1, _("<%s> created in database."), tab_name);
-	    created = TRUE;
-	    return created;
-	} 
-	else G_fatal_error(_("<%s> has not been created in database."), tab_name);
-	
+    auxiliar_tab = db_alloc_table (4);
+    db_set_table_name (auxiliar_tab, tab_name);
+    db_set_table_description (auxiliar_tab, "Intermediate interpolated values");
+
+    column = db_get_table_column (auxiliar_tab,2);
+    db_set_column_name (column, "Y");
+    db_set_column_sqltype (column, DB_SQL_TYPE_DOUBLE_PRECISION);
+
+    column = db_get_table_column (auxiliar_tab,1);
+    db_set_column_name (column, "X");
+    db_set_column_sqltype (column, DB_SQL_TYPE_DOUBLE_PRECISION);
+
+    column = db_get_table_column (auxiliar_tab,0);
+    db_set_column_name (column, "ID");
+    db_set_column_sqltype (column, DB_SQL_TYPE_INTEGER);
+
+    column = db_get_table_column (auxiliar_tab,3);
+    db_set_column_name (column, "Interp");
+    db_set_column_sqltype (column, DB_SQL_TYPE_REAL);
+
+    if (db_create_table (driver, auxiliar_tab) == DB_OK) {
+	G_debug (1, _("<%s> created in database."), tab_name);
+	created = TRUE;
 	return created;
+    } 
+    else G_fatal_error(_("<%s> has not been created in database."), tab_name);
+
+    return created;
 }
 
 /*------------------------------------------------------------------------------------------------*/
@@ -266,60 +273,69 @@ void P_Aux_to_Raster (double **matrix, int fd) {
 /*------------------------------------------------------------------------------------------------*/
 void 
 P_Aux_to_Vector (struct Map_info *Map, struct Map_info *Out, dbDriver *driver, char *tab_name) {
-	
-	int more, ltype, line_num, ID_type, Interp_type, count=0;
-	double coordZ;
-	
-	struct line_pnts *point;
-	struct line_cats *cat;
-	dbTable *table;
-	dbColumn *ID_column, *Interp_column;
-	dbValue *ID_value, *Interp_value;
-	dbCursor cursor;
-	dbString sql;
 
-	char buf[1024];
+    int more, ltype, line_num, type, count=0;
+    double coordX, coordY, coordZ;
 
-	point = Vect_new_line_struct ();
-	cat = Vect_new_cats_struct ();
+    struct line_pnts *point;
+    struct line_cats *cat;
+    dbTable *table;
+    dbColumn *column;
+    dbValue *value;
+    dbCursor cursor;
+    dbString sql;
 
-	db_init_string (&sql);
-	db_zero_string (&sql);	
+    char buf[1024];
 
-	sprintf (buf, "select ID, sum(Interp) from %s group by ID", tab_name);
+    point = Vect_new_line_struct ();
+    cat = Vect_new_cats_struct ();
 
-	db_append_string (&sql, buf);
-	db_open_select_cursor (driver, &sql, &cursor, DB_SEQUENTIAL);
+    db_init_string (&sql);
+    db_zero_string (&sql);	
 
-	while ( db_fetch (&cursor, DB_NEXT, &more) == DB_OK && more ) { 
-	    count ++;
-	    table = db_get_cursor_table (&cursor);
+    sprintf (buf, "select ID, X, Y, sum(Interp) from %s group by ID, X, Y", tab_name);
 
-	    ID_column = db_get_table_column (table,0);
-	    Interp_column = db_get_table_column (table,1);
+    db_append_string (&sql, buf);
+    db_open_select_cursor (driver, &sql, &cursor, DB_SEQUENTIAL);
 
-	    ID_type = db_sqltype_to_Ctype (db_get_column_sqltype (ID_column));
-	    Interp_type = db_sqltype_to_Ctype (db_get_column_sqltype (Interp_column));
-	    
-	    if (ID_type == DB_C_TYPE_INT)
-		ID_value = db_get_column_value (ID_column);
-	    else continue;
-	    
-	    if ( Interp_type == DB_C_TYPE_DOUBLE ) 
-		Interp_value = db_get_column_value (Interp_column);
-	    else continue;
-	    
-	    line_num = db_get_value_int (ID_value);
-	    coordZ = db_get_value_double (Interp_value);
-	    
-	    ltype = Vect_read_line (Map, point, cat, line_num);
-	    
-	    *point->z = coordZ;
-	    
-	    Vect_write_line (Out, ltype, point, cat);
-	}
-	
-	return;
+    while ( db_fetch (&cursor, DB_NEXT, &more) == DB_OK && more ) { 
+	count ++;
+	table = db_get_cursor_table (&cursor);
+
+	column = db_get_table_column (table,0);
+	type = db_sqltype_to_Ctype (db_get_column_sqltype (column));
+	if (type == DB_C_TYPE_INT)
+	    value = db_get_column_value (column);
+	else continue;
+	line_num = db_get_value_int (value);
+
+	column = db_get_table_column (table,1);
+	type = db_sqltype_to_Ctype (db_get_column_sqltype (column));
+	if ( type == DB_C_TYPE_DOUBLE ) 
+	    value = db_get_column_value (column);
+	else continue;
+	coordX = db_get_value_double (value);
+
+	column = db_get_table_column (table,2);
+	type = db_sqltype_to_Ctype (db_get_column_sqltype (column));
+	if ( type == DB_C_TYPE_DOUBLE ) 
+	    value = db_get_column_value (column);
+	else continue;
+	coordY = db_get_value_double (value);
+
+	column = db_get_table_column (table,3);
+	type = db_sqltype_to_Ctype (db_get_column_sqltype (column));
+	if ( type == DB_C_TYPE_DOUBLE ) 
+	    value = db_get_column_value (column);
+	else continue;
+	coordZ = db_get_value_double (value);
+
+	Vect_copy_xyz_to_pnts (point, &coordX, &coordY, &coordZ, 1);
+	Vect_reset_cats (cat);
+	Vect_cat_set (cat, 1, 1);
+	Vect_write_line (Out, GV_POINT, point, cat);
+    }
+    return;
 }
 
 /*------------------------------------------------------------------------------------------------*/

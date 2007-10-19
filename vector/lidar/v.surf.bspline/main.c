@@ -154,9 +154,10 @@ main (int argc,char *argv[])
 	col_opt->type       = TYPE_STRING ;
 	col_opt->required   = NO ;
 	col_opt->description= _("Attribute table column with values to interpolate (if layer>0)");
-	dfield_opt->guisection = _("Settings") ;
+	col_opt->guisection = _("Settings") ;
     }
 
+/*-------------------------------------------------------------------------------------------*/
     /* Parsing */	
     G_gisinit(argv[0]);
     if (G_parser (argc, argv))
@@ -184,6 +185,33 @@ main (int argc,char *argv[])
 
     if ( !(dvr = G__getenv2("DB_DRIVER",G_VAR_MAPSET)) )
 	G_fatal_error (_("Unable to read name of driver"));
+
+    /* Setting auxiliar table's name */
+    if (vector)
+	sprintf (table_name, "%s_aux", out_opt->answer);
+ 
+    /* Open driver and database */
+    if (db_table_exists (dvr, db, &table_name)){  /*Something went wrong in a 
+						    previous v.surf.bspline execution*/
+	dbString sql;
+	char buf[1024];
+
+
+	driver = db_start_driver_open_database (dvr, db);
+	if (driver == NULL)
+	    G_fatal_error( _("No database connection for driver <%s> is defined. " 
+			"Try to run db.connect."), dvr);
+
+	db_init_string (&sql);
+	db_zero_string (&sql);	
+	sprintf (buf, "drop table %s", table_name);
+	db_append_string (&sql, buf);
+	if (db_execute_immediate (driver, &sql) != DB_OK) 
+	    G_fatal_error (_("It was not possible to drop <%s> table. "
+			"Nothing will be done. Try to drop it manually."), table_name);
+
+	db_close_database_shutdown_driver (driver);
+    }
 
     if (vector && map) 
 	G_fatal_error (_("Choose either vector or raster output, not both"));
@@ -258,7 +286,7 @@ main (int argc,char *argv[])
 
     if (bspline_field > 0) {
         db_CatValArray_init ( &cvarr );
-	Fi = Vect_get_field( &In, bspline_field);
+	Fi = Vect_get_field (&In, bspline_field);
 	if ( Fi == NULL )
 	    G_fatal_error (_("Cannot read field info"));	
 
@@ -283,6 +311,8 @@ main (int argc,char *argv[])
 	db_close_database_shutdown_driver (driver_cats);
     }
 
+/*-------------------------------------------------------------------------------------------*/
+    /*Cross-correlation begins*/
     if (cross_corr_flag->answer) {		/* CROSS-CORRELATION WILL BE DONE*/
 	G_debug (1, "CrossCorrelation()");
 	/*cross = cross_correlation (&In, &passoE, &passoN, &lambda);*/
@@ -306,17 +336,15 @@ main (int argc,char *argv[])
 	/*G_debug (0, _("passoE = %f, passoN=%f, lambda_i=%f"), passoE, passoN, lambda);*/
     }
 
+/*-------------------------------------------------------------------------------------------*/
     /* Interpolation begins */
     G_debug (1, "Interpolation()");
 
     /* Open driver and database */
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
-	G_fatal_error( _("No database connection for driver <%s> is defined. Run db.connect."), dvr);
-
-    /* Setting auxiliar table's name */
-    if (vector)
-	sprintf (table_name, "%s_aux", out_opt->answer);
+	G_fatal_error( _("No database connection for driver <%s> is defined. "
+		    "Try to run db.connect."), dvr);
 
     /* Setting regions and boxes */    
     G_debug (1, "Interpolation: Setting regions and boxes");
@@ -426,7 +454,7 @@ main (int argc,char *argv[])
 
 	    /*Setting the active region*/
 	    dim_vect = nsplx * nsply;
-	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect);
+	    observ = P_Read_Vector_Region_Map (&In, &elaboration_reg, &npoints, dim_vect, bspline_field);
 	    G_debug (1, "Interpolation: (%d,%d): Number of points in <elaboration_box> is %d", 
 		     subregion_row, subregion_col, npoints);
 	
@@ -459,12 +487,7 @@ main (int argc,char *argv[])
 		    if (bspline_field > 0) {
 			int cat, ival, ret, type;
 			
-			/*type = Vect_read_line (&In, points, Cats, observ[i].lineID);*/
-			if ( !(type & GV_POINTS ) ) continue;
-
-			/*Vect_cat_get ( Cats, bspline_field, &cat );*/
 			cat = observ[i].cat;
-
 			if ( cat < 0 ) continue;
 
 			if ( ctype == DB_C_TYPE_INT ) {
@@ -550,7 +573,7 @@ main (int argc,char *argv[])
 			double **obsVect_ext; /*, mean_ext = .0;*/
 			struct Point *observ_ext;
 
-			observ_ext = P_Read_Vector_Region_Map (&In_ext, &elaboration_reg, &npoints_ext, dim_vect);
+			observ_ext = P_Read_Vector_Region_Map (&In_ext, &elaboration_reg, &npoints_ext, dim_vect, 1);
 
 			obsVect_ext = G_alloc_matrix (npoints_ext, 3);	/* Observation vector_ext */
 			lineVect_ext = G_alloc_ivector (npoints_ext);
@@ -569,7 +592,7 @@ main (int argc,char *argv[])
 			P_Sparse_Points (&Out, &elaboration_reg, general_box, overlap_box, obsVect_ext, 
 				parVect, lineVect_ext, passoE, passoN, dims.overlap, nsplx, nsply, npoints_ext, 
 				bilin, Cats, driver, mean, table_name);
-
+ 
 			G_free_matrix (obsVect_ext);
 			G_free_vector (parVect);
 			G_free_ivector (lineVect_ext);
@@ -590,7 +613,7 @@ main (int argc,char *argv[])
 	} /*! END WHILE; last_column = TRUE*/
     } /*! END WHILE; last_row = TRUE*/	
 
-    /* Dropping auxiliar table */
+    /* Writing into the output vector map the points from the overlaping zones */
     if (flag_auxiliar == TRUE) {
 	if (grid == FALSE) {
 	    if (ext == FALSE)
@@ -632,3 +655,4 @@ main (int argc,char *argv[])
 
     exit (EXIT_SUCCESS);
 }	/*END MAIN*/
+
