@@ -8,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 DATAFILES := $(patsubst %,$(ETC)/%,$(DATASRC))
-COLORSRC := $(wildcard colors/[a-z]*)
+COLORSRC := $(wildcard colors/[abcdefghijklmnopqrstuvwxyz]*)
 COLORFILES := $(patsubst colors/%,$(ETC)/colors/%,$(COLORSRC))
 
 #compile if LFS Large File Support present:
