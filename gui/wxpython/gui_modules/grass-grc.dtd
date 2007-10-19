@@ -14,7 +14,12 @@
 
 <!ELEMENT grass-grc (grc)>
 
-<!ELEMENT grc (group*, layer*)>
+<!ELEMENT grc (display*)>
+
+<!--    a display element defines map layer connected to given
+	map display widnow
+-->
+<!ELEMENT display (group*, layer*)>
 
 <!--    group of map layers
 -->

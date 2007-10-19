@@ -30,6 +30,7 @@ class Data:
                  ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
                  ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
                  ("Save as", "Save current workspace as", "self.OnWorkspaceSaveAs", ""),
+                 ("Close", "Close selected workspace file", "self.OnWorkspaceClose", ""),
                  )),
               ("","","", ""),
               ("Import raster map", (
