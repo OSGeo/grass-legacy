@@ -6,6 +6,9 @@ CLASSES:
     * Layer
     * LayerTree
     * GMConsole
+    * GMStdout
+    * GMStrerr
+    * GMStc
 
 PURPOSE:    Utility classes for GRASS wxPython GUI. Main functions include tree control
             for GIS map layer management, command console, and command parsing.
@@ -22,11 +25,15 @@ COPYRIGHT:  (C) 2007 by the GRASS Development Team
 
 """
 
-import os,sys
+import os
+import sys
+import string
+import tempfile
+
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
-import string
+import wx.stc
 
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
@@ -346,7 +353,6 @@ class LayerTree(CT.CustomTreeCtrl):
         Note: lcmd is given as a list
         """
         self.first = True
-        checked    = False
         params = {} # no initial options parameters
 
         # deselect active item
@@ -360,7 +366,6 @@ class LayerTree(CT.CustomTreeCtrl):
             ctrl = wx.TextCtrl(self, id=wx.ID_ANY, value='',
                                pos=wx.DefaultPosition, size=(250,25),
                                style=wx.TE_MULTILINE|wx.TE_WORDWRAP)
-            checked = True
             ctrl.Bind(wx.EVT_TEXT_ENTER, self.OnCmdChanged)
             ctrl.Bind(wx.EVT_TEXT,       self.OnCmdChanged)
         elif ltype == 'group':
@@ -368,7 +373,6 @@ class LayerTree(CT.CustomTreeCtrl):
             ctrl = None
             grouptext = 'Layer group:' + str(self.groupnode)
             self.groupnode += 1
-            checked = True
         else:
             # all other items (raster, vector, ...)
             ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
@@ -398,8 +402,11 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # layer is initially unchecked as inactive (beside 'command')
         # use predefined value if given
-        if lchecked:
+        if lchecked is not None:
             checked = lchecked
+        else:
+            checked = True
+
         self.CheckItem(layer, checked=checked)
 
         # select new item
@@ -903,7 +910,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.GetPyData(layer)[0]['propwin'] = propwin
 
         # check layer as active
-        self.CheckItem(layer, checked=True)
+        # self.CheckItem(layer, checked=True)
 
         # change parameters for item in layers list in render.Map
         self.ChangeLayer(layer)
@@ -976,7 +983,27 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def OnCloseWindow(self, event):
         pass
-    # self.Map.Clean()
+        # self.Map.Clean()
+
+    def FindItemByData(self, key, value):
+        """Find item based on key and value (see PyData[0])"""
+        item = self.GetFirstChild(self.root)[0]
+        return self.__FindSubItemByData(item, key, value)
+
+    def __FindSubItemByData(self, item, key, value):
+        """Support method for FindItemByValue"""
+        while item and item.IsOk():
+            itemValue = self.GetPyData(item)[0][key]
+            if value == itemValue:
+                return item
+            if self.GetPyData(item)[0]['type'] == 'group':
+                subItem = self.GetFirstChild(item)[0]
+                found = self.__FindSubItemByData(subItem, key, value)
+                if found:
+                    return found
+            item = self.GetNextSibling(item)
+
+        return None
 
 class GMConsole(wx.Panel):
     """
@@ -998,9 +1025,14 @@ class GMConsole(wx.Panel):
         self.gcmdlst         = [] # list of commands in bin and scripts
 
         # text control for command output
-        self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
-                                      style=wx.TE_MULTILINE| wx.TE_READONLY)
-        self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        # self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
+        # style=wx.TE_MULTILINE| wx.TE_READONLY)
+        # self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        self.cmd_output = GMStc(parent=self, id=wx.ID_ANY)
+
+        # redirect
+        # sys.stdout = GMStdout(self.cmd_output)
+        # sys.stderr = GMStderr(self.cmd_output)
 
         # buttons
         self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
@@ -1081,7 +1113,7 @@ class GMConsole(wx.Panel):
         if cmdlist[0] in gcmdlst:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
-            if cmdlist[0][0:2] == "d.":
+            if cmdlist[0][0:2] == "d.": # display GRASS commands
                 try:
                     layertype = {'d.rast'         : 'raster',
                                  'd.rgb'          : 'rgb',
@@ -1098,46 +1130,27 @@ class GMConsole(wx.Panel):
                                  'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[cmdlist[0]]
                 except KeyError:
-                    print _('Command type not yet implemented')
+                    wx.MessageBox(message=_("Command '%s' not yet implemented") % cmdlist[0])
                     return False
 
                 # add layer
                 self.parent.curr_page.maptree.AddLayer(ltype=layertype,
                                                        lcmd=cmdlist)
 
-            else:
-                if len(cmdlist) > 1:
-                    menuform.GUI().ParseCommand(cmdlist, parentframe=self, show=False)
-                else:
-                    menuform.GUI().ParseCommand(cmdlist, parentframe=self, show=True)
-
-        else:
-            # Send any other command to the shell. Send output to
-            # console output window.
-
-            if self.parent.notebook.GetSelection() != 1:
-                # select 'Command output' tab
-                self.parent.notebook.SetSelection(1)
-
-            self.cmd_output.write("$ " + ' '.join(cmdlist) + "\n")
-            
-            if cmdlist[0] not in gcmdlst:
-                # if command is not a GRASS command, treat it like a shell command
-                generalCmd = subprocess.Popen(cmdlist,
-                                          stdout=subprocess.PIPE,
-                                          stderr=subprocess.PIPE,
-                                          close_fds=True)
+            else: # other GRASS commands
+                if self.parent.notebook.GetSelection() != 1:
+                    # select 'Command output' tab
+                    self.parent.notebook.SetSelection(1)
                 
-                for outline in runCmd.stdout:
-                    self.cmd_output.write(outline)
-            else:
                 # activate compuational region (set with g.region) for all non-display commands.
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
 
                 # process GRASS command with argument
-                grassCmd = gcmd.Command(cmdlist, verbose=3)
-
+                self.cmd_output.AddText('$ %s' % ' '.join(cmdlist))
+                grassCmd = gcmd.Command(cmdlist, verbose=3,
+                                        stdout=GMStdout(self.cmd_output),
+                                        stderr=GMStderr(self.cmd_output))
                 
                 # deactivate computational region and return to display settings
                 if tmpreg:
@@ -1149,9 +1162,25 @@ class GMConsole(wx.Panel):
                 # if oline.find("GRASS_INFO_PERCENT")>-1:
                 #    self.console_progressbar.SetValue(int(oline.split()[1]))
 
-                for line in grassCmd.ReadStdOutput():
-                    self.cmd_output.write(line + '\n')
-                    
+        else:
+            # Send any other command to the shell. Send output to
+            # console output window.
+
+            if self.parent.notebook.GetSelection() != 1:
+                # select 'Command output' tab
+                self.parent.notebook.SetSelection(1)
+
+            print "$ " + ' '.join(cmdlist)
+            
+            # if command is not a GRASS command, treat it like a shell command
+            generalCmd = subprocess.Popen(cmdlist,
+                                          stdout=subprocess.PIPE,
+                                          stderr=subprocess.PIPE,
+                                          close_fds=True)
+            
+            for outline in generalCmd.stdout:
+                print outline
+                   
         return True
 
     def ClearHistory(self, event):
@@ -1183,3 +1212,119 @@ class GMConsole(wx.Panel):
             output.close()
 
         dlg.Destroy()
+
+class GMStdout:
+    """GMConsole standard output
+
+    Based on FrameOutErr.py
+
+    Name:      FrameOutErr.py
+    Purpose:   Redirecting stdout / stderr
+    Author:    Jean-Michel Fauth, Switzerland
+    Copyright: (c) 2005-2007 Jean-Michel Fauth
+    Licence:   GPL
+    """
+    def __init__(self, gmstc):
+        self.gmstc  = gmstc
+        self.buffer = tempfile.TemporaryFile(mode="w")
+
+    def write(self, s):
+        # if not self.gmstc.GetParent().IsShown():
+        #    self.mystc.GetParent().Show()
+
+        s = s.replace('\n', os.linesep)
+        p1 = self.gmstc.GetCurrentPos() # get caret position
+        self.gmstc.AddText(s)
+        self.gmstc.EnsureCaretVisible()
+        p2 = self.gmstc.GetCurrentPos()
+        self.gmstc.StartStyling(p1, 0xff)
+        self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleOutput)
+
+    def fileno(self):
+        return self.buffer.fileno()
+
+    def __del__(self):
+        self.buffer.flush()
+        self.buffer.seek(0,0)
+        for line in self.buffer.readlines():
+            self.write(line)
+
+class GMStderr:
+    """GMConsole standard error output
+
+    Based on FrameOutErr.py
+
+    Name:      FrameOutErr.py
+    Purpose:   Redirecting stdout / stderr
+    Author:    Jean-Michel Fauth, Switzerland
+    Copyright: (c) 2005-2007 Jean-Michel Fauth
+    Licence:   GPL
+    """
+    def __init__(self, gmstc):
+        self.gmstc = gmstc
+        self.buffer = tempfile.TemporaryFile(mode="w")
+
+    def write(self, s):
+        # if self.gmstc.GetParent().IsShown() == False:
+        #    self.gmstc.GetParent().Show()
+            
+        s = s.replace('\n', os.linesep)
+        p1 = self.gmstc.GetCurrentPos()
+        self.gmstc.AddText(s)
+        self.gmstc.EnsureCaretVisible()
+        p2 = self.gmstc.GetCurrentPos()
+        self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
+
+    def fileno(self):
+        return self.buffer.fileno()
+
+    def __del__(self):
+        self.buffer.flush()
+        self.buffer.seek(0,0)
+        for line in self.buffer.readlines():
+            self.write(line)
+
+class GMStc(wx.stc.StyledTextCtrl):
+    """Styled GMConsole
+
+    Based on FrameOutErr.py
+
+    Name:      FrameOutErr.py
+    Purpose:   Redirecting stdout / stderr
+    Author:    Jean-Michel Fauth, Switzerland
+    Copyright: (c) 2005-2007 Jean-Michel Fauth
+    Licence:   GPL
+    """    
+    def __init__(self, parent, id):
+        wx.stc.StyledTextCtrl.__init__(self, parent, id)
+        self.parent = parent
+        
+        # styles
+        self.StyleDefault = 0
+        self.StyleDefaultSpec = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
+        self.StyleOutput = 1
+        self.StyleOutputSpec = "face:Courier New,size:10,fore:#0000FF,back:#FFFFFF"
+        self.StyleError = 2
+        self.StyleErrorSpec = "face:Courier New,size:10,fore:#7F0000,back:#FFFFFF"
+        
+        # default and clear => init
+        self.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT, self.StyleDefaultSpec)
+        self.StyleClearAll()
+        self.StyleSetSpec(self.StyleOutput, self.StyleOutputSpec)
+        self.StyleSetSpec(self.StyleError, self.StyleErrorSpec)
+        
+        # margin widths
+        self.SetMarginWidth(0, 0)
+        self.SetMarginWidth(1, 0)
+        self.SetMarginWidth(2, 0)
+
+        # miscellaneous, a few parameters
+        self.SetMarginLeft(2)
+        self.SetViewWhiteSpace(True)
+        self.SetTabWidth(4)
+        self.SetUseTabs(False)
+        #~ self.SetEOLMode(wx.stc.STC_EOL_CRLF)
+        #~ self.SetViewEOL(True)
+        self.UsePopUp(True)
+        self.SetSelBackground(True, "#FFFF00")
+        self.SetUseHorizontalScrollBar(True)

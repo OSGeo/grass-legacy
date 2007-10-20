@@ -450,7 +450,7 @@ class GMFrame(wx.Frame):
 
         filename = ''
         if dlg.ShowModal() == wx.ID_OK:
-            filename = dlg.GetFilename()
+            filename = dlg.GetPath()
         
         if filename == '':
             return
@@ -537,7 +537,7 @@ class GMFrame(wx.Frame):
 
         filename = ''
         if dlg.ShowModal() == wx.ID_OK:
-            filename = dlg.GetFilename()
+            filename = dlg.GetPath()
             
         if filename == '':
             return False
