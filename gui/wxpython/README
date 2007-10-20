@@ -125,10 +125,10 @@ Currently only two icon themes are available:
     * default (based on TCL/TK GUI prototype)
      * Silk
 
-To enable 'Silk' icon theme set environment variable:
+To enable 'Silk' icon theme set GRASS variable:
 
-$ export GRASS_ICONPATH=$GISBASE/etc/wx/icons/silk
+$ g.gisenv set=GRASS_ICONPATH=$GISBASE/etc/wx/icons/silk
 
 To re-enable default icons (TCL/TK theme)
 
-$ unset GRASS_ICONPATH
+$ g.gisenv set=GRASS_ICONPATH=
