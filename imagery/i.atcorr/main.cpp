@@ -371,7 +371,7 @@ static void process_raster (int ifd, InputMask imask, ScaleRange iscale,
             buf[col] = buf[col] * ((float)oscale.max - (float)oscale.min) + oscale.min;
 
             if(~oflt && (buf[col] > (float)oscale.max))
-              G_warning ("The output data will overflow. Reflectance > 100%");
+              G_warning ("The output data will overflow. Reflectance > 100%%");
 		}
 
         /* write output */
