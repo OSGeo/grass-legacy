@@ -57,8 +57,8 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster, buffer");
     module->description =
-		_("Creates a raster map layer showing buffer zones "
-		"surrounding cells that contain non-NULL category values.");
+	_("Creates a raster map layer showing buffer zones "
+	  "surrounding cells that contain non-NULL category values.");
 
     opt1 = G_define_standard_option(G_OPT_R_INPUT);
 
@@ -110,12 +110,12 @@ int main (int argc, char *argv[])
     ZEROFLAG = 0; /* default: use NULL for non-data cells */
     ZEROFLAG = (flag2->answer);                                               
         
-    mapset = G_find_cell (input, "");
+    mapset = G_find_cell2 (input, "");
     if (mapset == NULL)
-	G_fatal_error(_("%s: %s - not found"), pgm_name, input);
+	G_fatal_error(_("Raster map <%s> not found"), input);
 
     if (G_legal_filename(output) < 0)
-	G_fatal_error(_("%s: %s - illegal name"), pgm_name, output);
+	G_fatal_error(_("<%s> is an illegal file name "), output);
 
         /* parse units */
     if (opt4->answer == NULL)
@@ -131,12 +131,10 @@ int main (int argc, char *argv[])
 	to_meters = MILES_TO_METERS;
     else if (strcmp(units, "nautmiles") == 0)
 	to_meters = NAUT_MILES_TO_METERS;
-    else
-	G_fatal_error(_("%s: %s - illegal units"), pgm_name, units);
 
-	/* parse distances */
+    /* parse distances */
     if(!(count = parse_distances (zone_list, to_meters)))
-        G_fatal_error(_("parse distances error"));
+        G_fatal_error(_("Parse distances error"));
 
 
 	/* need to keep track of distance zones - in memory.

@@ -30,7 +30,7 @@ int execute_distance (void)
 
 	/* find the first 1 in each row, and process that row */
 
-    G_message (_("Finding buffer zones ... "));
+    G_message (_("Finding buffer zones..."));
 
     nrows = 0;
     for (row = minrow; row <= maxrow; row++)
