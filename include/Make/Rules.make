@@ -9,9 +9,20 @@ LOCAL_HEADERS = $(wildcard *.h)
 endif
 
 # for i18N support
-PACKAGE ="grassmods"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
-NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
+NLS_CFLAGS=$(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
+
+ifndef MOD_OBJS
+MOD_OBJS := $(subst .c,.o,$(wildcard *.c))
+endif
+
+ifndef CMD_OBJS
+CMD_OBJS := $(MOD_OBJS)
+endif
+
+ifndef ARCH_CMD_OBJS
+ARCH_CMD_OBJS := $(foreach obj,$(CMD_OBJS),OBJ.$(ARCH)/$(obj))
+endif
 
 $(OBJDIR):
 	-test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
@@ -19,12 +30,26 @@ $(OBJDIR):
 # default cc rules
 ifeq ($(MAKE_VERSION),3.81)
 $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
-		-o $(OBJDIR)/$*.o -c $*.c
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
+
+$(OBJDIR)/%.o : %.cc $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
+
+$(OBJDIR)/%.o : %.cpp $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
 else
 $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS)
 	$(MAKE) $(OBJDIR)
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) \
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
+
+$(OBJDIR)/%.o : %.cc $(LOCAL_HEADERS) $(EXTRA_HEADERS)
+	$(MAKE) $(OBJDIR)
+	$(CC) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
+		-o $(OBJDIR)/$*.o -c $*.c
+
+$(OBJDIR)/%.o : %.cpp $(LOCAL_HEADERS) $(EXTRA_HEADERS)
+	$(MAKE) $(OBJDIR)
+	$(CC) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
 		-o $(OBJDIR)/$*.o -c $*.c
 endif
 

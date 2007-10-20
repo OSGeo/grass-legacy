@@ -8,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 PROG1 =  $(SCRIPTDIR)/$(PGM)
 PROG2 =  $(ETC)/dm/$(PGM2)
 
-default: $(PROG1) $(PROG2) htmlscript
+default: $(PROG1) $(PROG2) script
 
 TCL = cmd.tcl grassabout.tcl group.tcl labels.tcl menu.tcl print.tcl raster.tcl tksys.tcl tool1.tcl tool2.tcl tree.tcl vector.tcl  barscale.tcl chart.tcl dtext.tcl frames.tcl fttext.tcl gridline.tcl legend.tcl rgbhis.tcl thematic.tcl
 

@@ -1,6 +1,9 @@
 
 # common dependencies and rules for building libraries
 
+#for i18N support
+PACKAGE ="grasslibs"
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 

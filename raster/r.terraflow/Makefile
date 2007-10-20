@@ -2,7 +2,7 @@ MODULE_TOPDIR = ../..
 
 PGM = r.terraflow
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+include $(MODULE_TOPDIR)/include/Make/Multi.make
 
 SOURCES = main.cc common.cc stats.cc fill.cc types.cc ccforest.cc \
 	nodata.cc plateau.cc direction.cc water.cc  \
@@ -53,9 +53,8 @@ $(OBJARCH)/FLOAT/%.o: %.cc | $(OBJARCH)/FLOAT
 $(OBJARCH)/SHORT/%.o: %.cc | $(OBJARCH)/SHORT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
-default: htmlcmd
-
-htmlcmd: $(BIN)/$(PGM) $(BIN)/$(PGM).short
+default: $(BIN)/$(PGM)$(EXE) $(BIN)/$(PGM).short$(EXE)
+	$(MAKE) htmlcmd
 
 $(OBJARCH)/FLOAT:
 	$(MKDIR) $@
@@ -63,11 +62,11 @@ $(OBJARCH)/FLOAT:
 $(OBJARCH)/SHORT:
 	$(MKDIR) $@
 
-$(BIN)/$(PGM): $(FLOAT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
+$(BIN)/$(PGM)$(EXE): $(FLOAT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
-$(BIN)/$(PGM).short: $(SHORT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
+$(BIN)/$(PGM).short$(EXE): $(SHORT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
