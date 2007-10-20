@@ -38,7 +38,7 @@ int read_input_map (char *input, char *mapset, int ZEROFLAG)
 
     fd = G_open_cell_old (input, mapset);
     if (fd < 0)
-	G_fatal_error(_("%s: %s - can't open"), pgm_name, input);
+	G_fatal_error(_("Unable to open raster map <%s>"), input);
 
     cell = G_allocate_cell_buf();
 
@@ -47,7 +47,7 @@ int read_input_map (char *input, char *mapset, int ZEROFLAG)
     minrow = -1; maxrow = -1;
     mincol = window.cols; maxcol = 0;
 
-    G_message(_("Reading input map (%s)    ... "), input);
+    G_message(_("Reading input raster map <%s>..."), G_fully_qualified_name(input, mapset));
 
     count_rows_with_data = 0;
 
@@ -57,7 +57,8 @@ int read_input_map (char *input, char *mapset, int ZEROFLAG)
         G_percent (row, window.rows, 2);
 
 	if (G_get_c_raster_row (fd, cell, row) < 0)
-	    G_fatal_error(_("%s - ERROR reading %s"), pgm_name, input);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"),
+			  G_fully_qualified_name(input, mapset), row);
 
 	for (col = 0; col < window.cols; col++)
 	{
