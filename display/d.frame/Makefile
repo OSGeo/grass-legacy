@@ -13,7 +13,7 @@ default: \
 	$(ETC)/frame.dumper \
 	$(ETC)/frame.list \
 	$(BIN)/$(PGM)$(EXE) \
-	htmlcmd
+	cmd
 
 $(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/create.o $(LIBES) $(MATHLIB) $(XDRLIB)

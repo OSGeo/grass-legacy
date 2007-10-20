@@ -10,7 +10,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-SCRIPT_ACTIONS = $(SCRIPT) htmlscript scriptstrings
+SCRIPT_ACTIONS = $(SCRIPT)
 ifdef MINGW
 SCRIPT_ACTIONS += $(BIN)/$(PGM).bat
 endif
@@ -20,6 +20,7 @@ script: $(SCRIPT_ACTIONS)
 $(SCRIPT): $(PGM)
 	if [ ! -d $(SCRIPTDIR) ]; then $(MKDIR) $(SCRIPTDIR); fi
 	$(INSTALL) $(PGM) $(SCRIPT)
+	$(MAKE) htmlscript scriptstrings
 
 $(BIN)/$(PGM).bat: $(MODULE_TOPDIR)/scripts/windows_launch.bat
 	sed -e "s#SCRIPT_NAME#$(PGM)#" $(MODULE_TOPDIR)/scripts/windows_launch.bat > $@

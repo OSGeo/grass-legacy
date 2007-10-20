@@ -61,3 +61,5 @@ htmlmulti:
 	for prog in $(PROGRAMS) ; do $(MAKE) htmlcmd PGM=$$prog ; done
 
 endif
+
+.PHONY: htmlcmd htmletc htmlscript htmldir htmlmulti
