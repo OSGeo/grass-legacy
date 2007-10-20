@@ -3,6 +3,7 @@ MODULE:    gis_set.py
 
 CLASSES:
     * GRASSStartup
+    * HelpWindow
     * StartUp
 
 PURPOSE:   Initialization module for wxPython GRASS GUI.
@@ -25,8 +26,11 @@ import glob
 import shutil
 
 import wx
+import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
+
+from gui_modules import location_wizard
 
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""
@@ -354,7 +358,6 @@ class GRASSStartup(wx.Frame):
 
     def OnWizard(self,event):
         """Location wizard started"""
-        import location_wizard
         reload(location_wizard)
         gWizard = location_wizard.GWizard(self, self.tgisdbase.GetValue())
         if gWizard.location != None:
@@ -383,21 +386,23 @@ class GRASSStartup(wx.Frame):
         Rename selected mapset
         """
 
-        location = location=self.listOfLocations[self.lblocations.GetSelection()]
-        mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
-        dlg = wx.TextEntryDialog(
-                self, 'Current name: %s\nEnter new name:' % mapset,
-                'Rename selected mapset')
+        location = self.listOfLocations[self.lblocations.GetSelection()]
+        mapset   = self.listOfMapsets[self.lbmapsets.GetSelection()]
+
+        dlg = wx.TextEntryDialog(parent=self,
+                                 message=_('Current name: %s\nEnter new name:') % mapset,
+                                 caption=_('Rename selected mapset'))
 
         if dlg.ShowModal() == wx.ID_OK:
             newmapset = dlg.GetValue()
-            try:
-                os.rename(os.path.join(self.gisdbase,location,mapset),\
-                            os.path.join(self.gisdbase,location,newmapset))
-                self.OnSelectLocation(None)
-                self.lbmapsets.SetSelection(self.listOfMapsets.index(newmapset))
-            except:
-                wx.MessageBox('Mapset could not be renamed')
+            if newmapset != mapset:
+                try:
+                    os.rename(os.path.join(self.gisdbase, location, mapset),
+                              os.path.join(self.gisdbase, location, newmapset))
+                    self.OnSelectLocation(None)
+                    self.lbmapsets.SetSelection(self.listOfMapsets.index(newmapset))
+                except:
+                    wx.MessageBox(message=_('Unable to rename mapset'))
 
         dlg.Destroy()
 
@@ -406,22 +411,24 @@ class GRASSStartup(wx.Frame):
         Rename selected location
         """
 
-        location = location=self.listOfLocations[self.lblocations.GetSelection()]
-        dlg = wx.TextEntryDialog(
-                self, 'Current name: %s\nEnter new name:' % location,
-                'Rename selected location')
+        location = self.listOfLocations[self.lblocations.GetSelection()]
+
+        dlg = wx.TextEntryDialog(parent=self,
+                                 message=_('Current name: %s\nEnter new name:') % location,
+                                 caption=_('Rename selected location'))
 
         if dlg.ShowModal() == wx.ID_OK:
             newlocation = dlg.GetValue()
-            mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
-            try:
-                os.rename(os.path.join(self.gisdbase,location),\
-                            os.path.join(self.gisdbase,newlocation))
-                self.UpdateLocations(self.gisdbase)
-                self.lblocations.SetSelection(self.listOfLocations.index(newlocation))
-
-            except:
-                wx.MessageBox('Location could not be renamed')
+            if newlocation != location:
+                mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
+                try:
+                    os.rename(os.path.join(self.gisdbase, location),
+                              os.path.join(self.gisdbase, newlocation))
+                    self.UpdateLocations(self.gisdbase)
+                    self.lblocations.SetSelection(self.listOfLocations.index(newlocation))
+                    self.UpdateMapsets(newlocation)
+                except:
+                    wx.MessageBox(message=_('Unable to rename location'))
 
         dlg.Destroy()
 
@@ -430,18 +437,23 @@ class GRASSStartup(wx.Frame):
         Delete selected mapset
         """
 
-        location = location=self.listOfLocations[self.lblocations.GetSelection()]
-        mapset = self.listOfMapsets[self.lbmapsets.GetSelection()]
-        dlg = wx.MessageDialog(self, "Do you want to continue with deleting the mapset?",
-                               "WARNING! Mapset '%s', and ALL MAPS it contains will be PERMANENTLY DELETED!"
-                               % mapset,wx.YES_NO|wx.NO_DEFAULT|wx.ICON_EXCLAMATION)
+        location = self.listOfLocations[self.lblocations.GetSelection()]
+        mapset   = self.listOfMapsets[self.lbmapsets.GetSelection()]
+
+        dlg = wx.MessageDialog(parent=self, message=_("Do you want to continue with deleting mapset <%s> "
+                                                      "from location <%s>?\n\n"
+                                                      "ALL MAPS included in this mapset will be "
+                                                      "PERMANENTLY DELETED!") % (mapset, location),
+                               caption=_("Delete selected mapset"),
+                               style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+
         if dlg.ShowModal() == wx.ID_YES:
             try:
-                shutil.rmtree(os.path.join(self.gisdbase,location,mapset))
+                shutil.rmtree(os.path.join(self.gisdbase, location, mapset))
                 self.OnSelectLocation(None)
                 self.lbmapsets.SetSelection(0)
             except:
-                wx.MessageBox('Mapset could not be deleted')
+                wx.MessageBox(message=_('Unable to delete mapset'))
 
         dlg.Destroy()
 
@@ -450,64 +462,84 @@ class GRASSStartup(wx.Frame):
         Delete selected location
         """
 
-        location = location=self.listOfLocations[self.lblocations.GetSelection()]
-        dlg = wx.MessageDialog(self, "Do you want to continue with deleting the location?",
-                               "WARNING! Location '%s', and ALL MAPSETS and MAPS it contains will be PERMANENTLY DELETED!"
-                               % location,wx.YES_NO|wx.NO_DEFAULT|wx.ICON_EXCLAMATION)
+        location = self.listOfLocations[self.lblocations.GetSelection()]
+
+        dlg = wx.MessageDialog(parent=self, message=_("Do you want to continue with deleting "
+                                                      "location <%s>?\n\n"
+                                                      "ALL MAPS included in this location will be "
+                                                      "PERMANENTLY DELETED!") % (location),
+                               caption=_("Delete selected location"),
+                               style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+
         if dlg.ShowModal() == wx.ID_YES:
             try:
-                shutil.rmtree(os.path.join(self.gisdbase,location))
+                shutil.rmtree(os.path.join(self.gisdbase, location))
                 self.UpdateLocations(self.gisdbase)
+                self.lblocations.SetSelection(0)
+                self.OnSelectLocation(None)
+                self.lbmapsets.SetSelection(0)
             except:
-                wx.MessageBox('Location could not be deleted')
+                wx.MessageBox(message=_('Unable to delete location'))
 
         dlg.Destroy()
 
-    def UpdateLocations(self,dbase):
+    def UpdateLocations(self, dbase):
         """Update list of locations"""
         self.listOfLocations = []
-        for location in glob.glob(os.path.join(dbase,"*")):
+
+        for location in glob.glob(os.path.join(dbase, "*")):
             try:
-                if os.path.join(location,"PERMANENT") in glob.glob(os.path.join(location,"*")):
+                if os.path.join(location, "PERMANENT") in glob.glob(os.path.join(location, "*")):
                     self.listOfLocations.append(os.path.basename(location))
             except:
                 pass
+
         self.lblocations.Clear()
-        self.lblocations.InsertItems(self.listOfLocations,0)
+        self.lblocations.InsertItems(self.listOfLocations, 0)
+
         return self.listOfLocations
 
-    def UpdateMapsets(self,location):
+    def UpdateMapsets(self, location):
         """Update list of mapsets"""
         self.listOfMapsets = []
-        for mapset in glob.glob(os.path.join(location,"*")):
+
+        for mapset in glob.glob(os.path.join(self.gisdbase, location, "*")):
             if os.path.isdir(mapset):
                 self.listOfMapsets.append(os.path.basename(mapset))
+
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets,0)
+
         return self.listOfMapsets
 
-    def OnSelectLocation(self,event):
+    def OnSelectLocation(self, event):
         """Location selected"""
         if self.lblocations.GetSelection() > -1:
-            self.UpdateMapsets(os.path.join(
-                    self.gisdbase,self.listOfLocations[self.lblocations.GetSelection()]))
+            self.UpdateMapsets(os.path.join(self.gisdbase,
+                                            self.listOfLocations[self.lblocations.GetSelection()]))
         else:
             self.listOfMapsets = []
-        self.lbmapsets.Clear()
-        self.lbmapsets.InsertItems(self.listOfMapsets,0)
 
+        self.lbmapsets.Clear()
+        self.lbmapsets.InsertItems(self.listOfMapsets, 0)
+        self.lbmapsets.SetSelection(0)
+        
     def OnSelectMapset(self,event):
         """Mapset selected"""
-        #self.bstart.Enable(True)
-        pass
+        # self.bstart.Enable(True)
+        event.Skip()
 
     def OnSetDatabase(self,event):
         """Database set"""
         self.gisdbase = self.tgisdbase.GetValue()
+
         self.UpdateLocations(self.gisdbase)
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations,0)
-        if self.listOfLocations != []: self.lblocations.SetSelection(0)
+
+        if self.listOfLocations != []:
+            self.lblocations.SetSelection(0)
+
         self.OnSelectLocation(event)
 
     def OnBrowse(self, event):
@@ -515,7 +547,7 @@ class GRASSStartup(wx.Frame):
         grassdata = None
 
         dlg = wx.DirDialog(self, "Choose a GRASS directory:",
-                style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
+                           style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dlg.ShowModal() == wx.ID_OK:
             self.gisdbase = dlg.GetPath()
             self.tgisdbase.SetValue(self.gisdbase)
@@ -524,6 +556,7 @@ class GRASSStartup(wx.Frame):
         self.OnSetDatabase(event)
 
     def OnKeyPressedInDbase(self,event):
+        """GIS data directory changed"""
         if wx.WXK_RETURN == event.KeyCode:
             self.OnSetDatabase(event)
         else:
@@ -558,23 +591,63 @@ class GRASSStartup(wx.Frame):
         return True
 
     def OnStart(self, event):
-        print "g.gisenv set=GISDBASE='%s';" % self.tgisdbase.GetValue()
-        print "g.gisenv set=LOCATION_NAME='%s';" % self.listOfLocations[self.lblocations.GetSelection()]
-        print "g.gisenv set=MAPSET='%s';" % self.listOfMapsets[self.lbmapsets.GetSelection()]
+        """'Start GRASS' button clicked"""
+        gcmd.Command(["g.gisenv",
+                      "set=GISDBASE=%s" % self.tgisdbase.GetValue()])
+        gcmd.Command(["g.gisenv",
+                      "set=LOCATION_NAME=%s" % self.listOfLocations[self.lblocations.GetSelection()]])
+        gcmd.Command(["g.gisenv",
+                      "set=MAPSET=%s" % self.listOfMapsets[self.lbmapsets.GetSelection()]])
+
         self.Destroy()
+        sys.exit(0)
 
     def OnExit(self, event):
         """'Exit' button clicked"""
         self.Destroy()
+        sys.exit (2)
 
     def OnHelp(self, event):
         """'Help' button clicked"""
-        wx.MessageBox("Help not yet implemented")
+        file=os.path.join(self.gisbase, "docs", "html", "helptext.html")
+
+        helpFrame = HelpWindow(parent=self, id=wx.ID_ANY,
+                               title=_("GRASS Quickstart"),
+                               size=(640, 480),
+                               file=file)
+        helpFrame.Show(True)
+
         event.Skip()
 
     def OnCloseWindow(self, event):
         """Close window event"""
         event.Skip()
+        sys.exit(2)
+
+class HelpWindow(wx.Frame):
+    """GRASS Quickstart help window"""
+    def __init__(self, parent, id, title, size, file):
+
+        wx.Frame.__init__(self, parent=parent, id=id, title=title, size=size)
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        # text
+        helpFrame = wx.html.HtmlWindow(parent=self, id=wx.ID_ANY)
+        helpFrame.SetStandardFonts (size = 10)
+        helpFrame.SetBorders(10)
+        wx.InitAllImageHandlers()
+
+        helpFrame.LoadFile(file)
+        self.Ok = True
+
+        sizer.Add(item=helpFrame, proportion=1, flag=wx.EXPAND)
+
+        self.SetAutoLayout(True)
+        self.SetSizer(sizer)
+        #        sizer.Fit(self)
+        #        sizer.SetSizeHints(self)
+        self.Layout()
 
 class StartUp(wx.App):
     """Start-up application"""
