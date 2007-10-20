@@ -595,8 +595,9 @@ class DigitToolbar(AbstractToolbar):
             self.combo.SetValue ('Select vector map')
 
             # re-active layer 
-            # TODO: if status doesn't change in layer tree...
-            self.mapcontent.ChangeLayerActive(layerSelected, True)
+            item = self.parent.tree.FindItemByData('maplayer', layerSelected)
+            if item and self.parent.tree.IsItemChecked(item):
+                self.mapcontent.ChangeLayerActive(layerSelected, True)
 
             self.parent.digit.SetMapName(None)
 

@@ -59,7 +59,7 @@ class DebugMsg:
     def msg (self, level, message):
         self._update_level()
         if self.debuglevel > 0 and level > 0 and level <= self.debuglevel:
-            print "GUI D%d/%d: %s" % (level, level, message)
+            print >> sys.stderr, "GUI D%d/%d: %s" % (level, level, message)
 
 # Debug instance
 Debug = DebugMsg()

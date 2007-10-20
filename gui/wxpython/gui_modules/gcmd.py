@@ -31,9 +31,11 @@ if usePopenClass:
         sys.path.append(CompatPath)
         import subprocess
 
-# debugging ...
+# debugging & log window
 GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(GuiModulePath)
+
+import wxgui_utils
 from debug import Debug as Debug
 
 class EndOfCommand(Exception):
@@ -53,6 +55,7 @@ class Command:
     verbose - verbose mode [0; 3]
     wait    - wait for childer execution
     dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
+    log     - log window or None
 
     Usage:
         cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=True, wait=True)
@@ -66,7 +69,8 @@ class Command:
 
     """
     def __init__ (self, cmd, stdin=None,
-                  verbose=0, wait=True, dlgMsg='gui'):
+                  verbose=0, wait=True, dlgMsg='gui',
+                  stdout=None, stderr=None):
         #
         # input
         #
@@ -81,7 +85,11 @@ class Command:
             self.cmd.append('--q')
         elif verbose == 3 and '--v' not in self.cmd:
             self.cmd.append('--v')
-
+        else:
+            verbosity = os.getenv("GRASS_VERBOSE")
+            os.environ["GRASS_VERBOSE"] = str(verbose)
+            if verbosity:
+                os.environ["GRASS_VERBOSE"] = verbosity
         #
         # GRASS module 
         #
@@ -97,7 +105,6 @@ class Command:
         #
         message_format = os.getenv("GRASS_MESSAGE_FORMAT")
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-        # os.environ["GRASS_MESSAGE_FORMAT"] = "txt"
         
         #
         # run command ...
@@ -110,11 +117,25 @@ class Command:
         else: # Popen class (default)
             Debug.msg(4, "Command.__init__(): [Popen] cmd='%s'" % ' '.join(cmd))
 
+            if stdout is None:
+                out = subprocess.PIPE
+            elif stdout == sys.stdout:
+                out = None
+            else:
+                out = stdout
+
+            if stderr is None:
+                err = subprocess.PIPE
+            elif stderr == sys.stderr:
+                err = None
+            else:
+                err = stderr
+
             self.module = subprocess.Popen(self.cmd,
                                            stdin=subprocess.PIPE,
-                                           stdout=subprocess.PIPE,
-                                           stderr=subprocess.PIPE,
-                                           close_fds=True)
+                                           stdout=out,
+                                           stderr=err,
+                                           close_fds=False)
             # set up streams
             self.module_stdin  = self.module.stdin
             self.module_stderr = self.module.stderr
@@ -124,20 +145,16 @@ class Command:
             self.module_stdin.write(stdin)
             self.module_stdin.close()
 
-        if message_format:
-            os.environ["GRASS_MESSAGE_FORMAT"] = message_format
-        else:
-            os.unsetenv("GRASS_MESSAGE_FORMAT")
-        
-        # list of messages (<- stderr)
-        # -> [(type, content)] type = (error, warning, message)
-        self.module_msg = self.__ProcessStdErr() # -> self.module_msg
-
         if self.module:
             if wait:
                 self.module.wait()
-            self.returncode = self.module.returncode
 
+            if stderr is None:
+                # list of messages (<- stderr)
+                # -> [(type, content)] type = (error, warning, message)
+                self.module_msg = self.__ProcessStdErr() # -> self.module_msg
+
+            self.returncode = self.module.returncode
             # failed?
             if self.dlgMsg and self.returncode != 0:
                 if self.dlgMsg == 'gui': # GUI dialog
@@ -162,6 +179,11 @@ class Command:
             Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=?" % \
                        (' '.join(self.cmd), wait))
 
+        if message_format:
+            os.environ["GRASS_MESSAGE_FORMAT"] = message_format
+        else:
+            os.unsetenv("GRASS_MESSAGE_FORMAT")
+        
     def __ProcessStdErr(self):
         """
         Read messages/warnings/errors from stderr
@@ -198,6 +220,10 @@ class Command:
         Note: Remove '\n' from output (TODO: '\r\n' ??)
         """
         lineList = []
+
+        if stream is None:
+            return lineList
+
         while True:
             line = stream.readline()
             if not line:
