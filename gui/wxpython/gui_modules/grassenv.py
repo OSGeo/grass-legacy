@@ -17,16 +17,29 @@ COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
 import os
 import sys
 
-gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(gmpath)
-import gcmd
+try:
+    import subprocess
+except:
+    CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+    sys.path.append(CompatPath)
+    import subprocess
+    
+# gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+# sys.path.append(gmpath)
+# import gcmd
 
 def GetGRASSVariable(var):
     """Return GRASS variable or '' if variable is not defined"""
-    gisEnv = gcmd.Command(['g.gisenv'])
+    # gisEnv = gcmd.Command(['g.gisenv'])
 
-    for item in gisEnv.ReadStdOutput():
+    gisEnv = subprocess.Popen(['g.gisenv'],
+                              stdin=None,
+                              stdout=subprocess.PIPE,
+                              stderr=None,
+                              close_fds=True)
+
+    for item in gisEnv.stdout.readlines():
         if var in item:
             return item.split('=')[1].replace("'",'').replace(';','').strip()
 
-    return ''
+    return None

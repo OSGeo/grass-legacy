@@ -22,9 +22,16 @@ import sys
 
 import wx
 
+gmPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(gmPath)
+import grassenv
+
+iconpath = grassenv.GetGRASSVariable('GRASS_ICONPATH')
+if not iconpath:
+    iconpath = os.getenv("GRASS_ICONPATH")
+
 iconpath_default = os.path.join(os.getenv("GISBASE"), "etc", "gui", "icons")
 iconpath_vdigit  = os.path.join(os.getenv("GISBASE"), "etc", "v.digit")
-iconpath = os.getenv("GRASS_ICONPATH")
 
 icons_default = {
     # map display
