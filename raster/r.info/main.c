@@ -14,6 +14,8 @@
 *               for details.
 *
 *****************************************************************************/
+
+#include <grass/config.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
@@ -28,13 +30,13 @@
         fprintf(out,"-");\
     fprintf (out,"%c\n",x)
 
+
 /* local prototypes */
-void format_double(double value, char *buf);
-void compose_line(FILE *,const char *, ...);
+void format_double (double, char *);
+void compose_line (FILE *, const char *, ...);
 
-/**************************************************************************/
 
-int main(int argc, char *argv[])
+int main (int argc, char **argv)
 {
     char *name, *mapset;
     char tmp1[100], tmp2[100], tmp3[100];
@@ -193,8 +195,13 @@ int main(int argc, char *argv[])
 	if (head_ok) {
 	    compose_line(out, "  Rows:         %d", cellhd.rows);
 	    compose_line(out, "  Columns:      %d", cellhd.cols);
+#ifdef HAVE_LONG_LONG
 	    compose_line(out, "  Total Cells:  %ld",
 			(unsigned long long)cellhd.rows * cellhd.cols);
+#else
+	    compose_line(out, "  Total Cells:  %ld (accuracy - see r.info manual)",
+			(unsigned long)cellhd.rows * cellhd.cols);
+#endif
 
 	    /* This is printed as a guide to what the following eastings and
 	       * northings are printed in. This data is NOT from the values
