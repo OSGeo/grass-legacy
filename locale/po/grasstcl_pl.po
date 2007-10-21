@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: grasstcl_pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-27 15:45+0200\n"
-"PO-Revision-Date: 2007-02-09 10:46+0100\n"
-"Last-Translator: Artur Nie¶cior <nieart@interia.pl>\n"
+"PO-Revision-Date: 2007-09-19 22:10+0100\n"
+"Last-Translator: Monika Tylus <monikatylus_gmail.com>\n"
 "Language-Team: Polska <translation@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -230,7 +230,7 @@ msgstr "rysuj siatkê"
 
 #: ../gui/tcltk/d.m/gridline.tcl:78
 msgid "geodetic grid"
-msgstr ""
+msgstr "siatka geodezyjna"
 
 #: ../gui/tcltk/d.m/gridline.tcl:80
 msgid " grid color "
@@ -262,11 +262,12 @@ msgstr " kolor granicy i tekstu"
 
 #: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:175
 msgid "draw geodesic line"
-msgstr ""
+msgstr "rysuj liniê geodezyjn±"
 
 #: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:180
+#, fuzzy
 msgid "Help for geodesic lines"
-msgstr ""
+msgstr "Pomoc dla linii geodezyjnych"
 
 #: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:202
 msgid "draw rhumbline"
@@ -282,7 +283,7 @@ msgstr "Nazwa pliku etykiet:"
 
 #: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:142
 msgid "Display constraints:"
-msgstr ""
+msgstr "Poka¿ ograniczenia:"
 
 #: ../gui/tcltk/d.m/labels.tcl:85 ../gui/tcltk/gis.m/labels.tcl:147
 msgid "region size"
@@ -990,6 +991,7 @@ msgid "   "
 msgstr "   "
 
 #: ../gui/tcltk/gis.m/barscale.tcl:141
+#, fuzzy
 msgid "    background color "
 msgstr "    kolor t³a"
 
@@ -1088,10 +1090,12 @@ msgid "Select existing group to georectify"
 msgstr "Wybierz istniej±c± grupê do georektyfikacji"
 
 #: ../gui/tcltk/gis.m/georect.tcl:644
+#, fuzzy
 msgid "4. Select ref. map"
 msgstr "4. Wybierz mapê ref."
 
 #: ../gui/tcltk/gis.m/georect.tcl:646
+#, fuzzy
 msgid "Select raster or vector to display for marking ground control points"
 msgstr ""
 "Wybierz mapê rastrow± lub wektorow± do wy¶wietlenia aby oznaczyæ terenowe "
@@ -1270,7 +1274,7 @@ msgstr "Dodaj warstwê postskryptow± etykiet (u¿ywaj±c pliku v.labels)"
 #: ../gui/tcltk/gis.m/gmtool1.tcl:135
 #, fuzzy
 msgid "Add posttscript text layer"
-msgstr "Dodaj warstwê tekstu postskryptowego"
+msgstr "Dodaj warstwê tekstu postskrypt"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:136
 msgid "geodetic grid  "
@@ -1281,10 +1285,12 @@ msgid " grid & text color   "
 msgstr " kolor siatki i tekstu   "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:152
+#, fuzzy
 msgid "draw border text  "
-msgstr ""
+msgstr "rysuj granicê"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:154
+#, fuzzy
 msgid " border color"
 msgstr " kolor granicy"
 
@@ -1401,10 +1407,12 @@ msgid "Resolution (dpi) for printing and PDF "
 msgstr "Rozdzielczo¶æ (dpi) dla druku i PDF "
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:299
+#, fuzzy
 msgid "Send to LPR printer*"
 msgstr "Wy¶lij do drukarki LPR*"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:308
+#, fuzzy
 msgid "Send to postscript device* "
 msgstr "Wy¶lij do urz±dzenia postskryptowego* "
 
@@ -1527,10 +1535,12 @@ msgid "use raster colors for cell values"
 msgstr "u¿yj kolorów rastra dla warto¶ci komórek"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:151
+#, fuzzy
 msgid "raster map for red or hue channel"
 msgstr "mapa rastrowa dla kana³u 'czerwieñ' lub 'odcieñ'"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:163
+#, fuzzy
 msgid "raster map for green or intensity channel"
 msgstr "mapa rastrowa dla kana³u 'zieleñ' lub 'intensywno¶æ'"
 
@@ -1544,14 +1554,17 @@ msgid "Run"
 msgstr "Uruchom"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:114
+#, fuzzy
 msgid "Run (Background)"
 msgstr "Uruchom (W tle)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:115
+#, fuzzy
 msgid "Run UI"
 msgstr "Uruchom UI"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116
+#, fuzzy
 msgid "Run in Xterm"
 msgstr "Uruchom w Xterm"
 
@@ -1676,8 +1689,9 @@ msgid "Multiple formats using GDAL"
 msgstr "Ró¿norodne formaty poprzez sterownik GDAL"
 
 #: ../gui/tcltk/menus/menu.tcl:107
+#, fuzzy
 msgid "Aggregate ASCII xyz data into raster grid"
-msgstr ""
+msgstr "Zagreguj warto¶ci ASCII xyz do siatki rastra "
 
 #: ../gui/tcltk/menus/menu.tcl:108
 msgid "ASCII GRID (includes GRASS ASCII)"
@@ -1697,11 +1711,11 @@ msgstr "ESRI Arc/Info ASCII grid"
 
 #: ../gui/tcltk/menus/menu.tcl:113 ../gui/tcltk/menus/menu.tcl:146
 msgid "GRIDATB.FOR map file (TOPMODEL)"
-msgstr ""
+msgstr "Plik mapy GRIDATB.FOR (TOPMODEL)"
 
 #: ../gui/tcltk/menus/menu.tcl:114 ../gui/tcltk/menus/menu.tcl:147
 msgid "MAT-File (v.4) array (Matlab or Octave)"
-msgstr ""
+msgstr "Tablica MAT-File (v.4)  Matlab lub Octave"
 
 #: ../gui/tcltk/menus/menu.tcl:115
 msgid "SPOT vegetation NDVI data sets"
@@ -1728,7 +1742,6 @@ msgid "Various formats using OGR"
 msgstr "Ró¿norodne formaty poprzez sterownik OGR"
 
 #: ../gui/tcltk/menus/menu.tcl:124
-#, fuzzy
 msgid "ASCII points file or GRASS ASCII vector file"
 msgstr "Plik punktów ASCII albo pliki wektorowe GRASS ASCII"
 
@@ -2359,8 +2372,9 @@ msgid "Generate fractal surface"
 msgstr "Utwórz powierzchniê fraktaln±"
 
 #: ../gui/tcltk/menus/menu.tcl:340
+#, fuzzy
 msgid "Generate gaussian deviates surface"
-msgstr ""
+msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
 
 #: ../gui/tcltk/menus/menu.tcl:341
 msgid "Generate plane"
@@ -2435,7 +2449,7 @@ msgstr "Suma warto¶ci kategorii wszystkich komórek"
 
 #: ../gui/tcltk/menus/menu.tcl:364
 msgid "Sum area by map and category"
-msgstr ""
+msgstr "Zsumuj powierzchniê mapy wed³ug kategorii"
 
 #: ../gui/tcltk/menus/menu.tcl:365
 msgid "Summary statistics for clumped cells (works with r.clump)"
@@ -2865,7 +2879,7 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:513
 msgid "Principal component"
-msgstr ""
+msgstr "G³ówny sk³adnik"
 
 #: ../gui/tcltk/menus/menu.tcl:514
 msgid "Fast Fourier Transform"
@@ -2873,7 +2887,7 @@ msgstr "Transformacja Fast Fourier"
 
 #: ../gui/tcltk/menus/menu.tcl:515
 msgid "Inverse Fast Fourier Transform"
-msgstr ""
+msgstr "Odwróæ szybk± transformatê Fouriera"
 
 #: ../gui/tcltk/menus/menu.tcl:520
 msgid "Range of image values"
@@ -2885,11 +2899,11 @@ msgstr ""
 
 #: ../gui/tcltk/menus/menu.tcl:523
 msgid "Kappa classification accuracy assessment"
-msgstr ""
+msgstr "Ocena dok³adno¶ci klafyfikacji kappa"
 
 #: ../gui/tcltk/menus/menu.tcl:524
 msgid "Optimum index factor for LandSat TM"
-msgstr ""
+msgstr "Optymalny wska¼nik indeksu dla LandSat TM"
 
 #: ../gui/tcltk/menus/menu.tcl:527
 msgid "&Grid3D"
@@ -2909,7 +2923,7 @@ msgstr "Zarz±dzaj znacznikami czasu dla bry³ grid3D"
 
 #: ../gui/tcltk/menus/menu.tcl:532
 msgid "Create 3D mask for grid3D operations"
-msgstr ""
+msgstr "Utwórz maskê 3D dla operacji grid3D"
 
 #: ../gui/tcltk/menus/menu.tcl:533
 msgid "Create 2D raster cross section from grid3d volume"
@@ -3037,19 +3051,21 @@ msgid "Define location"
 msgstr "Zdefiniuj lokacjê"
 
 #: ../lib/init/file_option.tcl:105
+#, fuzzy
 msgid "WARNING: location exists"
-msgstr "UWAGA: lokacja ju¿ istnieje"
+msgstr "UWAGA: niew³a¶ciwa lokacja"
 
 #: ../lib/init/file_option.tcl:110
+#, fuzzy
 msgid "WARNING: file not found"
 msgstr "UWAGA: pliku nie odnaleziono"
 
 #: ../lib/init/file_option.tcl:111
+#, fuzzy
 msgid "WARNING: The file was not found!"
 msgstr "UWAGA: Pliku nie odnaleziono!"
 
 #: ../lib/init/file_option.tcl:185
-#, fuzzy
 msgid ""
 " \n"
 "CREATING A NEW GRASS LOCATION USING GEOREFERENCED FILE\n"
@@ -3083,6 +3099,7 @@ msgstr ""
 "\n"
 
 #: ../lib/init/file_option.tcl:189
+#, fuzzy
 msgid ""
 "\n"
 "Requires as input the name of the new location to be created\n"
@@ -3235,7 +3252,6 @@ msgid "Help already opened"
 msgstr "Okno pomocy ju¿ otwarte"
 
 #: ../lib/init/gis_set.tcl:587
-#, fuzzy
 msgid "GRASS Help"
 msgstr "Pomoc GRASS"
 
@@ -3255,52 +3271,49 @@ msgstr ""
 
 #: ../lib/init/help.tcl:115 ../lib/init/help.tcl:1566
 msgid "Back"
-msgstr ""
+msgstr "Cofnij"
 
 #: ../lib/init/help.tcl:116
 msgid "Contents"
-msgstr ""
+msgstr "Zawarto¶æ"
 
 #: ../lib/init/help.tcl:117
-#, fuzzy
 msgid "Decrease"
-msgstr "Opisz tabelê"
+msgstr "Zmniejsz"
 
 #: ../lib/init/help.tcl:118 ../lib/init/help.tcl:2942
 #: ../lib/init/help.tcl:2943 ../lib/init/help.tcl:2946
 msgid "Find"
-msgstr ""
+msgstr "Znajd¼"
 
 #: ../lib/init/help.tcl:119 ../lib/init/help.tcl:1567
+#, fuzzy
 msgid "Forward"
-msgstr ""
+msgstr "nastepny b³±d"
 
 #: ../lib/init/help.tcl:120
-#, fuzzy
 msgid "Increase"
-msgstr "obszary"
+msgstr "Zwiêksz"
 
 #: ../lib/init/help.tcl:121
 msgid "Index"
 msgstr ""
 
 #: ../lib/init/help.tcl:122
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
+msgstr "Nastêpny"
 
 #: ../lib/init/help.tcl:123
 msgid "Open"
 msgstr "Otwórz"
 
 #: ../lib/init/help.tcl:124
-#, fuzzy
 msgid "Previous"
-msgstr "Podgl±d"
+msgstr "Poprzedni"
 
 #: ../lib/init/help.tcl:125 ../lib/init/help.tcl:1580
 msgid "Refresh"
-msgstr ""
+msgstr "Od¶wie¿"
 
 #: ../lib/init/help.tcl:126 ../lib/init/help.tcl:1581
 msgid "Reload"
@@ -3308,57 +3321,53 @@ msgstr ""
 
 #: ../lib/init/help.tcl:127
 msgid "Search"
-msgstr ""
+msgstr "Szukaj"
 
 #: ../lib/init/help.tcl:128 ../lib/init/help.tcl:1568
+#, fuzzy
 msgid "Stop"
-msgstr "Zatrzymaj"
+msgstr "góra"
 
 #: ../lib/init/help.tcl:129
 msgid "UpLevel"
 msgstr ""
 
 #: ../lib/init/help.tcl:1570
-#, fuzzy
 msgid "Copy"
-msgstr "Kopiuj mapê"
+msgstr "Kopiuj"
 
 #: ../lib/init/help.tcl:1572
 msgid "Find..."
-msgstr ""
+msgstr "Znajd¼..."
 
 #: ../lib/init/help.tcl:1573
 msgid "Search in topics..."
-msgstr ""
+msgstr "Wyszykaj w..."
 
 #: ../lib/init/help.tcl:1575
+#, fuzzy
 msgid "Open file..."
 msgstr "Otwórz plik..."
 
 #: ../lib/init/help.tcl:1577
-#, fuzzy
 msgid "Increase font size"
-msgstr "rozmiar regionu"
+msgstr "Zwiêksz rozmiar czcionki"
 
 #: ../lib/init/help.tcl:1578
-#, fuzzy
 msgid "Decrease font size"
-msgstr "rozmiar regionu"
+msgstr "Zmniejsz rozmiar czcionki"
 
 #: ../lib/init/help.tcl:1585
-#, fuzzy
 msgid "About"
 msgstr "O programie"
 
 #: ../lib/init/help.tcl:1586 ../lib/init/help.tcl:2568
-#, fuzzy
 msgid "Save as HTML files..."
-msgstr "Zapisz jako..."
+msgstr "Zapisz jako pliki HTML..."
 
 #: ../lib/init/help.tcl:1913
-#, fuzzy
 msgid "Topic not found!"
-msgstr "nie znaleziono ¶cie¿ki:"
+msgstr "Tematu nie znaleziono!"
 
 #: ../lib/init/help.tcl:1978
 #, fuzzy
@@ -3366,26 +3375,24 @@ msgid "Creating title..."
 msgstr "Tworzenie G³ównejRamki..."
 
 #: ../lib/init/help.tcl:2051
-#, fuzzy
 msgid "Displaying..."
-msgstr "Wy¶wietl:"
+msgstr "Wy¶wietlanie..."
 
 #: ../lib/init/help.tcl:2170
-#, fuzzy
 msgid "Done."
-msgstr "Zrobione"
+msgstr "Wykonano."
 
 #: ../lib/init/help.tcl:2708
 msgid "Select directory to Save HTML files"
-msgstr ""
+msgstr "Wybierz katalog,aby zapisaæ pliki HTML"
 
 #: ../lib/init/help.tcl:2709
 msgid "Filename will be ignored"
-msgstr ""
+msgstr "Nazwa pliku zostanie zignorowana"
 
 #: ../lib/init/help.tcl:2715
 msgid "Generating HTMLs...."
-msgstr ""
+msgstr "Generowanie HTML..."
 
 #: ../lib/init/help.tcl:2724
 #, fuzzy
@@ -3393,31 +3400,29 @@ msgid "Can't open output file:"
 msgstr "Utwórz now± grupê"
 
 #: ../lib/init/help.tcl:2727
-#, tcl-format
+#, fuzzy, tcl-format
 msgid "Generating HTMLs...  %i of %i  \"%s\""
-msgstr ""
+msgstr "Generowanie HTML...  %i z %i  \"%s\""
 
 #: ../lib/init/help.tcl:2945
 msgid "Search in all topics"
-msgstr ""
+msgstr "Wyszukaj we wszystkich tematach"
 
 #: ../lib/init/help.tcl:2954
 msgid "Find what: "
 msgstr ""
 
 #: ../lib/init/help.tcl:2965
-#, fuzzy
 msgid "Direction"
-msgstr "kierunki linii"
+msgstr "Kierunek"
 
 #: ../lib/init/help.tcl:2979
 msgid "Up"
-msgstr ""
+msgstr "Góra"
 
 #: ../lib/init/help.tcl:2980
-#, fuzzy
 msgid "Down"
-msgstr "Zrobione"
+msgstr "Dó³"
 
 #: ../lib/init/help.tcl:2983
 #, fuzzy
@@ -3429,13 +3434,14 @@ msgid "Regexp expression"
 msgstr ""
 
 #: ../lib/init/help.tcl:3095
+#, fuzzy
 msgid "Search results"
-msgstr ""
+msgstr "Przeszukaj wyniki"
 
 #: ../lib/init/help.tcl:3114
 #, tcl-format
 msgid "Searching in %s..."
-msgstr ""
+msgstr "Wyszukiwanie w %s..."
 
 #: ../lib/init/help.tcl:3203
 #, tcl-format
@@ -3443,6 +3449,8 @@ msgid ""
 "Error in regular expression:\n"
 "\"%s\""
 msgstr ""
+"B³±d w wyra¿eniu:\n"
+"\"%s\""
 
 #: ../vector/v.digit/cats.tcl:20
 msgid "Delete"
@@ -3530,11 +3538,11 @@ msgstr "Centroid ("
 
 #: ../vector/v.digit/settings.tcl:238
 msgid "Node (1 line)"
-msgstr ""
+msgstr "Wêze³ (1 linia )"
 
 #: ../vector/v.digit/settings.tcl:246
 msgid "Node (2 lines)"
-msgstr ""
+msgstr "Wêze³ (2 linie)"
 
 #: ../vector/v.digit/settings.tcl:256
 msgid "Settings"
@@ -3561,14 +3569,17 @@ msgid "Welcome to v.digit"
 msgstr "Witaj w v.digit"
 
 #: ../vector/v.digit/toolbox.tcl:23
+#, fuzzy
 msgid "Left mouse button"
 msgstr "Lewy klawisz myszy"
 
 #: ../vector/v.digit/toolbox.tcl:24
+#, fuzzy
 msgid "Middle mouse button"
 msgstr "¦rodkowy klawisz myszy"
 
 #: ../vector/v.digit/toolbox.tcl:25
+#, fuzzy
 msgid "Right mouse button"
 msgstr "Prawy klawisz myszy"
 
@@ -3649,6 +3660,7 @@ msgid "Zoom to default region"
 msgstr "Powiêksz do domy¶lnego regionu"
 
 #: ../vector/v.digit/toolbox.tcl:179
+#, fuzzy
 msgid "Zoom to region"
 msgstr "Powiêksz do regionu"
 
@@ -3675,13 +3687,14 @@ msgstr "Zapisz i wyjd¼"
 #: ../vector/v.digit/toolbox.tcl:223
 #, fuzzy
 msgid "mouse button actions (left, right, center)"
-msgstr "akcje przycisków myszy (lewy, ¶rodkowy, prawy)"
+msgstr "dzia³anie przycisków myszy (lewy, prawy, ¶rodkowy)"
 
 msgid "html-browser"
 msgstr "przegl±darka html"
 
+#, fuzzy
 msgid "System Information\n"
-msgstr "Informacje systemowe\n"
+msgstr "Podstawowe informacje"
 
 msgid "Quit"
 msgstr "Wyjd¼"
@@ -3695,6 +3708,7 @@ msgstr "Rozmiar:"
 msgid "Weight:"
 msgstr "Szeroko¶æ:"
 
+#, fuzzy
 msgid "normal"
 msgstr "normalna"
 
@@ -3749,12 +3763,14 @@ msgstr "nie jest to prawid³owy skrypt tcltkgrass:"
 msgid "invalid script file:"
 msgstr "nieprawid³owy plik skryptu:"
 
+#, fuzzy
 msgid "Error executing script"
 msgstr "B³±d podczas wykonywania skryptu"
 
 msgid "Script"
 msgstr "Skrypt"
 
+#, fuzzy
 msgid "executed"
 msgstr "wykonany"
 
@@ -3785,15 +3801,19 @@ msgstr "postfix dla plików html (.html)"
 msgid "Database : "
 msgstr "Baza danych : "
 
+#, fuzzy
 msgid "Location"
 msgstr "Lokacja"
 
+#, fuzzy
 msgid "Mapset"
 msgstr "Mapset"
 
+#, fuzzy
 msgid "Use Selection"
 msgstr "U¿yj Zaznaczenia"
 
+#, fuzzy
 msgid "Create New Location"
 msgstr "Utwórz Now± Lokacjê"
 
@@ -3803,6 +3823,7 @@ msgstr "Panel Wektorów"
 msgid "Current:"
 msgstr "Bie¿±cy:"
 
+#, fuzzy
 msgid "Line Width"
 msgstr "Grubo¶æ Linii"
 
@@ -3824,9 +3845,11 @@ msgstr "Panel Mkdspf"
 msgid "Input File:"
 msgstr "Wprowad¼ Plik:"
 
+#, fuzzy
 msgid "Output File:"
-msgstr "Plik Wyj¶ciowy"
+msgstr "Wprowad¼ Plik:"
 
+#, fuzzy
 msgid "Color File:"
 msgstr "Plik Koloru"
 
@@ -3863,6 +3886,7 @@ msgstr "Powierzchnie"
 msgid "Surface Panel"
 msgstr "Panel Powierzchni"
 
+#, fuzzy
 msgid "Grid Resolution"
 msgstr "Rozdzielczo¶æ Grida"
 
@@ -3956,9 +3980,8 @@ msgstr "Zatrzymano ..."
 msgid "Manage region"
 msgstr "Zarz±dzaj regionem"
 
-#, fuzzy
 msgid "DXF file"
-msgstr "Plik Vis5D"
+msgstr "Plik DXF"
 
 msgid "Resample (change resolution)"
 msgstr "Przepróbkowanie (zmiana rozdzielczo¶ci)"
@@ -3978,6 +4001,7 @@ msgstr "Umiejscowienie tekstu: wspó³rzêdne x,y (od górnego lewego rogu) "
 msgid "     text rotation (degrees)"
 msgstr "     obrucenie tekstu (stopnie)"
 
+#, fuzzy
 msgid "Text options: font type"
 msgstr "Opcje tekstu: rodzaj czcionki"
 
@@ -3999,6 +4023,7 @@ msgstr "Inna"
 msgid "Custom font path"
 msgstr "¦cie¿ka do czcionki klienta"
 
+#, fuzzy
 msgid "     font "
 msgstr "     czcionka "
 
@@ -4065,11 +4090,1195 @@ msgstr "Uwaga: <%%s> nie jest w³a¶ciwym mapsetem"
 msgid "Test"
 msgstr "Test"
 
-#~ msgid "Raster 2.5D map to volume"
+msgid "Raster 2.5D map to volume"
+msgstr "Mapa rastrowa do bry³y 3D"
+
+msgid "Resample using aggregate statistics"
+msgstr "Przepróbkowanie z u¿yciem agregacji statystyk"
+
+msgid "Exit georectifier"
+msgstr "Wyjd¼ z programu georektyfikacji"
+
+#, fuzzy
+#~ msgid "Error creating tempfile"
+#~ msgstr "Tworzenie tytu³u..."
+
+#, fuzzy
+#~ msgid "Display scale and north arrow"
+#~ msgstr "Podzia³ka liniowa i strza³ka pó³nocy"
+
+#, fuzzy
+#~ msgid "\t "
+#~ msgstr " "
+
+#, fuzzy
+#~ msgid "Vector map for chart"
+#~ msgstr "Wykresy dla mapy wektorowej:"
+
+#, fuzzy
+#~ msgid "\tchart outline color:"
+#~ msgstr "    kolor obwódki wykresu:"
+
+#, fuzzy
+#~ msgid "Display text"
+#~ msgstr "Wy¶wietl: "
+
+#, fuzzy
+#~ msgid "Map Display %d"
+#~ msgstr "Wy¶wietl: "
+
+#, fuzzy
+#~ msgid "All Files"
+#~ msgstr "Plik Koloru"
+
+#, fuzzy
+#~ msgid "Save File"
+#~ msgstr "Zapisz grupê"
+
+#, fuzzy
+#~ msgid "Select GRASS display font"
+#~ msgstr "Uruchom/wybierz monitor wy¶wietlania x0"
+
+#, fuzzy
+#~ msgid "Font: "
+#~ msgstr "Czcionka:"
+
+#, fuzzy
+#~ msgid "Import raster map"
+#~ msgstr "Próbkowanie map rastrowych"
+
+#, fuzzy
+#~ msgid "Aggregate ASCII xyz"
+#~ msgstr "Zagreguj warto¶ci ASCII xyz do siatki rastra "
+
+#, fuzzy
+#~ msgid "ASCII grid"
+#~ msgstr "Plik ASCII 3D"
+
+#, fuzzy
+#~ msgid "Binary"
+#~ msgstr "Plik binarny"
+
+#, fuzzy
+#~ msgid "SRTM hgt"
+#~ msgstr "Pliki SRTM hgt"
+
+#, fuzzy
+#~ msgid "Terra ASTER"
+#~ msgstr "Pliki Terra ASTER HDF"
+
+#, fuzzy
+#~ msgid "Import vector map"
+#~ msgstr "Mapa rastrowa do mapy wektorowej"
+
+#, fuzzy
+#~ msgid "Multiple formats using OGR"
+#~ msgstr "Ró¿norodne formaty poprzez sterownik GDAL"
+
+#, fuzzy
+#~ msgid "ASCII points or GRASS ASCII vector"
+#~ msgstr "Plik punktów ASCII albo pliki wektorowe GRASS ASCII"
+
+#, fuzzy
+#~ msgid "Old GRASS vector"
+#~ msgstr "Importuj stary format wektorowy GRASS"
+
+#, fuzzy
+#~ msgid "ESRI e00"
+#~ msgstr "Format ESRI e00"
+
+#, fuzzy
+#~ msgid "Matlab and MapGen"
+#~ msgstr "Pliki Matlab i MapGen"
+
+#, fuzzy
+#~ msgid "Import grid 3D volume"
+#~ msgstr "Zarz±dzaj znacznikami czasu dla bry³ grid3D"
+
+#, fuzzy
+#~ msgid "ASCII 3D"
+#~ msgstr "Plik ASCII 3D"
+
+#, fuzzy
+#~ msgid "Vis5D"
+#~ msgstr "Plik Vis5D"
+
+#, fuzzy
+#~ msgid "Export raster map"
+#~ msgstr "Próbkowanie map rastrowych"
+
+#, fuzzy
+#~ msgid "ESRI ASCII grid"
+#~ msgstr "ESRI Arc/Info ASCII grid"
+
+#, fuzzy
+#~ msgid "POV-Ray"
+#~ msgstr "Format POV-Ray"
+
+#, fuzzy
+#~ msgid "VRML"
+#~ msgstr "Plik VRML"
+
+#, fuzzy
+#~ msgid "Export vector map"
+#~ msgstr "Mapa rastrowa do mapy wektorowej"
+
+#, fuzzy
+#~ msgid "Export grid 3D volume"
+#~ msgstr "Zarz±dzaj znacznikami czasu dla bry³ grid3D"
+
+#, fuzzy
+#~ msgid "List"
+#~ msgstr "Lista map"
+
+#, fuzzy
+#~ msgid "List filtered"
+#~ msgstr "Wy¶wietl listê sterowników"
+
+#, fuzzy
+#~ msgid "Rename"
+#~ msgstr "Zmieñ nazwê mapy"
+
+#, fuzzy
+#~ msgid "Delete filtered"
+#~ msgstr "Usuñ warstwê"
+
+#, fuzzy
+#~ msgid "Raster to vector"
+#~ msgstr "Mapa rastrowa do mapy wektorowej"
+
+#, fuzzy
+#~ msgid "Raster series to volume"
+#~ msgstr "Seria map rastrowych do bry³y 3D"
+
+#, fuzzy
+#~ msgid "Raster 2.5D to volume"
 #~ msgstr "Mapa rastrowa do bry³y 3D"
 
-#~ msgid "Resample using aggregate statistics"
-#~ msgstr "Przepróbkowanie z u¿yciem agregacji statystyk"
+#, fuzzy
+#~ msgid "Vector to volume"
+#~ msgstr "Wektor do wektora"
 
-#~ msgid "Exit georectifier"
-#~ msgstr "Wyjd¼ z programu georektyfikacji"
+#, fuzzy
+#~ msgid "Sites to vector"
+#~ msgstr "Stary format punktowy Sites (GRASS 5.x) do wektora"
+
+#, fuzzy
+#~ msgid "Volume to raster series"
+#~ msgstr "Bry³y 3D do serii map rastrowych"
+
+#, fuzzy
+#~ msgid "Animate raster maps"
+#~ msgstr "Animuj serie map rastrowych"
+
+#, fuzzy
+#~ msgid "Bearing/distance to coordinates"
+#~ msgstr "wspó³rzêdne geograficzne"
+
+#, fuzzy
+#~ msgid "NVIZ fly through path"
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Change working environment"
+#~ msgstr "¦rodowisko pracy GRASS"
+
+#, fuzzy
+#~ msgid "Show settings"
+#~ msgstr "Ustawienia"
+
+#, fuzzy
+#~ msgid "Change settings"
+#~ msgstr "Zmieñ ustawienia regionu"
+
+#, fuzzy
+#~ msgid "Projection for current location"
+#~ msgstr "Utwórz/edytuj informacje o projekcji dla bie¿±cej lokacji"
+
+#, fuzzy
+#~ msgid "Convert coordinates"
+#~ msgstr "wspó³rzêdne xy"
+
+#, fuzzy
+#~ msgid "Display font"
+#~ msgstr "Wy¶wietl: "
+
+#, fuzzy
+#~ msgid "Compress/decompress"
+#~ msgstr "Kompresuj/dekompresuj plik rastrowy"
+
+#, fuzzy
+#~ msgid "Boundaries"
+#~ msgstr "granice"
+
+#, fuzzy
+#~ msgid "Null values"
+#~ msgstr "Zarz±dzaj warto¶ciami null"
+
+#, fuzzy
+#~ msgid "Quantization"
+#~ msgstr " justowanie"
+
+#, fuzzy
+#~ msgid "Timestamps"
+#~ msgstr "Lista map"
+
+#, fuzzy
+#~ msgid "Resample using multiple methods"
+#~ msgstr "Przepróbkowanie z u¿yciem ró¿nych metod interpolacji"
+
+#, fuzzy
+#~ msgid "Resample using nearest neighbor"
+#~ msgstr "Przepróbkowanie z u¿yciem metody najbli¿szego s±siedztwa"
+
+#, fuzzy
+#~ msgid "Resample using spline tension"
+#~ msgstr "Przepróbkowanie z u¿yciem metody rst"
+
+#, fuzzy
+#~ msgid "Support file maintenance"
+#~ msgstr "Tworzenie pliku wsparcia"
+
+#, fuzzy
+#~ msgid "Update map statistics"
+#~ msgstr "Raporty i statystyki"
+
+#, fuzzy
+#~ msgid "Color tables"
+#~ msgstr "Kopiuj tabelê"
+
+#, fuzzy
+#~ msgid "Create RGB"
+#~ msgstr "Utwórz tabelê"
+
+#, fuzzy
+#~ msgid "HIS to RGB"
+#~ msgstr "Pomoc dla RGB"
+
+#, fuzzy
+#~ msgid "Closest points"
+#~ msgstr "Utwórz punkty"
+
+#, fuzzy
+#~ msgid "Moving window"
+#~ msgstr "Powiêksz za pomoc± okna"
+
+#, fuzzy
+#~ msgid "Neighborhood points"
+#~ msgstr "Analizy s±siedztwa"
+
+#, fuzzy
+#~ msgid "Map series"
+#~ msgstr "Mapset"
+
+#, fuzzy
+#~ msgid "Solar irradiance irradiation"
+#~ msgstr "Promieniowanie s³oneczne i dzienne napromienienie"
+
+#, fuzzy
+#~ msgid "Shadows map"
+#~ msgstr "Poka¿ dane"
+
+#, fuzzy
+#~ msgid "Cumulative movement costs"
+#~ msgstr ""
+#~ "Oblicz skumulowany koszt przemieszczenia pomiêdzy dwoma lokalizacjami"
+
+#, fuzzy
+#~ msgid "Shaded relief"
+#~ msgstr "Cieniowanie rze¼by terenu"
+
+#, fuzzy
+#~ msgid "Grow"
+#~ msgstr "Grupy"
+
+#, fuzzy
+#~ msgid "Fill lake"
+#~ msgstr "Wype³nij obszary:"
+
+#, fuzzy
+#~ msgid "Depressionless map and flowlines"
+#~ msgstr "Mapa powierzchni pozbawionej depresji i mapa linii sp³ywu"
+
+#, fuzzy
+#~ msgid "Flow accumulation"
+#~ msgstr "Akumulacja sp³ywu dla masywnych gridów"
+
+#, fuzzy
+#~ msgid "Flow lines"
+#~ msgstr "linie"
+
+#, fuzzy
+#~ msgid "SIMWE sediment flux modeling"
+#~ msgstr "Modelowanie sp³ywu powierzchniowego SIMWE"
+
+#, fuzzy
+#~ msgid "Set up"
+#~ msgstr "Zatrzymaj"
+
+#, fuzzy
+#~ msgid "Analyze landscape"
+#~ msgstr "Analiza charakterystyk krajobrazu"
+
+#, fuzzy
+#~ msgid "Landscape patch analysis"
+#~ msgstr "Analiza charakterystyk kompleksów krajobrazu"
+
+#, fuzzy
+#~ msgid "Patch size mean"
+#~ msgstr "Uzupe³niaj (³ataj) mapy sob± nawzajem"
+
+#, fuzzy
+#~ msgid "Patch density"
+#~ msgstr "Uzupe³niaj (³ataj) mapy sob± nawzajem"
+
+#, fuzzy
+#~ msgid "Patch number"
+#~ msgstr "Uzupe³niaj (³ataj) mapy sob± nawzajem"
+
+#, fuzzy
+#~ msgid "Ricness"
+#~ msgstr "linie"
+
+#, fuzzy
+#~ msgid "Shape index"
+#~ msgstr "Zapisz i wyjd¼"
+
+#, fuzzy
+#~ msgid "Interactively edit category values"
+#~ msgstr "Zakres wszystkich warto¶ci kategorii"
+
+#, fuzzy
+#~ msgid "Reclassify by size"
+#~ msgstr "Klasyfikuj obraz"
+
+#, fuzzy
+#~ msgid "Reclassify using rules file"
+#~ msgstr "Przeklasyfikuj obiekty przy u¿yciu pliku regu³"
+
+#, fuzzy
+#~ msgid "Recode using rules file"
+#~ msgstr "Zmieñ klasyfikacjê kategorii za pomoc± pliku regu³y"
+
+#, fuzzy
+#~ msgid "Random cells"
+#~ msgstr "przypadkowe kolory"
+
+#, fuzzy
+#~ msgid "Random cells and vector points"
+#~ msgstr ""
+#~ "Utwórz przypadkowo rozmieszczone komórki i punkty wektorowe z mapy "
+#~ "rastrowej"
+
+#, fuzzy
+#~ msgid "Fractal surface"
+#~ msgstr "Utwórz powierzchniê fraktaln±"
+
+#, fuzzy
+#~ msgid "Gausian kernal density surface"
+#~ msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
+
+#, fuzzy
+#~ msgid "Gaussian deviates surface"
+#~ msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
+
+#, fuzzy
+#~ msgid "Plane"
+#~ msgstr "Przesuñ"
+
+#, fuzzy
+#~ msgid "Random deviates surface"
+#~ msgstr "Wygeneruj krzywiznê Gaussa powierzchni."
+
+#, fuzzy
+#~ msgid "Contour lines"
+#~ msgstr "Kategorie"
+
+#, fuzzy
+#~ msgid "Bilinear from raster points"
+#~ msgstr "Interpolacja dwuliniowa z punktów rastrowych"
+
+#, fuzzy
+#~ msgid "Bilinear and bicubic from vector points"
+#~ msgstr "Interpolacja dwuliniowa z punktów rastrowych"
+
+#, fuzzy
+#~ msgid "IDW from raster points"
+#~ msgstr "Interpolacja z poziomic rastrowych"
+
+#, fuzzy
+#~ msgid "IDW from vector points"
+#~ msgstr "Praca na punktach wektorowych"
+
+#, fuzzy
+#~ msgid "Raster contours"
+#~ msgstr "Mapa rastrowa do mapy wektorowej"
+
+#, fuzzy
+#~ msgid "Report category information"
+#~ msgstr "Raport podstawowych informacji o pliku"
+
+#, fuzzy
+#~ msgid "Range of category values"
+#~ msgstr "Zakres wszystkich warto¶ci kategorii"
+
+#, fuzzy
+#~ msgid "Sum cell category values"
+#~ msgstr "Suma warto¶ci kategorii wszystkich komórek"
+
+#, fuzzy
+#~ msgid "Sample transects"
+#~ msgstr "Próbkuj warto¶ci wzd³u¿ przeciêæ"
+
+#, fuzzy
+#~ msgid "Sample transects (bearing/distance)"
+#~ msgstr "Próbkuj warto¶ci wzd³u¿ przeciêæ (u¿yj azymutu, odleg³o¶ci)"
+
+#, fuzzy
+#~ msgid "Linear regression"
+#~ msgstr "Regresja liniowa pomiêdzy dwoma mapami"
+
+#, fuzzy
+#~ msgid "Mutual category occurences"
+#~ msgstr "Wzajemne wystêpowanie kategorii (koincydencja)"
+
+#, fuzzy
+#~ msgid "Create/rebuild topology: "
+#~ msgstr "Utwórz/przebuduj topologiê"
+
+#, fuzzy
+#~ msgid "Clean vector"
+#~ msgstr "Czyszczenie plików wektorowych (procedury clean)"
+
+#, fuzzy
+#~ msgid "Convert object types"
+#~ msgstr "Konwertuj rodzaje obiektów wektorowych"
+
+#, fuzzy
+#~ msgid "Add centroids"
+#~ msgstr "centroidy"
+
+#, fuzzy
+#~ msgid "Split polylines"
+#~ msgstr "Rozdziel liniê"
+
+#, fuzzy
+#~ msgid "Parallel lines"
+#~ msgstr "Rysuj linie:"
+
+#, fuzzy
+#~ msgid "Dissolve boundaries"
+#~ msgstr "granice"
+
+#, fuzzy
+#~ msgid "Create 3D vector over raster"
+#~ msgstr "Utwórz wektorowe strefy buforowe"
+
+#, fuzzy
+#~ msgid "Extrude 3D vector"
+#~ msgstr "Wektor do wektora"
+
+#, fuzzy
+#~ msgid "Create labels"
+#~ msgstr "Utwórz tabelê"
+
+#, fuzzy
+#~ msgid "Reposition vector"
+#~ msgstr "Wektor do wektora"
+
+#, fuzzy
+#~ msgid "Reproject vector"
+#~ msgstr "Wspó³rzêdne geograficzne wektora"
+
+#, fuzzy
+#~ msgid "Query with attributes"
+#~ msgstr "Utwórz zapytanie za pomoc± atrybutów"
+
+#, fuzzy
+#~ msgid "Query with coordinate(s)"
+#~ msgstr "Zapytanie wed³ug wspó³rzêdnych"
+
+#, fuzzy
+#~ msgid "Buffer vectors"
+#~ msgstr "Zapytanie do mapy wektorowej: "
+
+#, fuzzy
+#~ msgid "Lidar analysis"
+#~ msgstr "Analizy dzia³ów wodnych"
+
+#, fuzzy
+#~ msgid "Linear referencing"
+#~ msgstr "Lokalizacja liniowa dla wektorów"
+
+#, fuzzy
+#~ msgid "Create LRS"
+#~ msgstr "Utwórz tabelê"
+
+#, fuzzy
+#~ msgid "Create points/segments"
+#~ msgstr "Utwórz nowy mapset"
+
+#, fuzzy
+#~ msgid "Nearest features"
+#~ msgstr "Obiekty teksturalne"
+
+#, fuzzy
+#~ msgid "Display shortest route"
+#~ msgstr "Najkrótsza droga"
+
+#, fuzzy
+#~ msgid "Split net"
+#~ msgstr "Rozdziel liniê"
+
+#, fuzzy
+#~ msgid "Overlay"
+#~ msgstr "Nak³adanie map"
+
+#, fuzzy
+#~ msgid "Patch (combine)"
+#~ msgstr "Zbijanie/nak³adanie wielu map wektorowych"
+
+#, fuzzy
+#~ msgid "Manage or report categories"
+#~ msgstr "Do³±cz, usuñ, lub sprawd¼ kategorie"
+
+#, fuzzy
+#~ msgid "Generate area for current region"
+#~ msgstr "Tworzenie obiektów poligonowych dla zasiêgu bie¿±cego regionu"
+
+#, fuzzy
+#~ msgid "Delaunay triangles"
+#~ msgstr "Utwórz trójk±ty Delaunaya dla zbioru punktów"
+
+#, fuzzy
+#~ msgid "Voronoi diagram/Thiessen polygons"
+#~ msgstr "Utwórz diagram Voronoi/poligony Thiessena dla zbioru punktów"
+
+#, fuzzy
+#~ msgid "Generate grid"
+#~ msgstr "Utwórz punkty"
+
+#, fuzzy
+#~ msgid "Generate points from database"
+#~ msgstr "Utwórz punkty z bazy danych ze wspó³rzêdnymi x/y"
+
+#, fuzzy
+#~ msgid "Generate points along lines"
+#~ msgstr "Utwórz punkty"
+
+#, fuzzy
+#~ msgid "Perturb points"
+#~ msgstr "Utwórz punkty"
+
+#, fuzzy
+#~ msgid "Update area attributes from raster"
+#~ msgstr "edytuj atrybuty (form mode)"
+
+#, fuzzy
+#~ msgid "Update point attributes from areas"
+#~ msgstr "edytuj atrybuty (form mode)"
+
+#, fuzzy
+#~ msgid "Update point attributes from raster"
+#~ msgstr "edytuj atrybuty (form mode)"
+
+#, fuzzy
+#~ msgid "Create/edit group"
+#~ msgstr "2. Utwórz/edytuj grupê"
+
+#, fuzzy
+#~ msgid "Target group"
+#~ msgstr "Docelowa grupa obrazów"
+
+#, fuzzy
+#~ msgid "RGB to HIS"
+#~ msgstr "Dodaj warstwê RGB lub HIS"
+
+#, fuzzy
+#~ msgid "Canonical correlation"
+#~ msgstr "Kowariancja/korelacja"
+
+#, fuzzy
+#~ msgid "Principal components"
+#~ msgstr "G³ówny sk³adnik"
+
+#, fuzzy
+#~ msgid "Fast Fourier"
+#~ msgstr "Transformacja Fast Fourier"
+
+#, fuzzy
+#~ msgid "Inverse Fast Fourier"
+#~ msgstr "Odwróæ szybk± transformatê Fouriera"
+
+#, fuzzy
+#~ msgid "Kappa analysis"
+#~ msgstr "Analizy terenu"
+
+#, fuzzy
+#~ msgid "OIF for LandSat TM"
+#~ msgstr "Optymalny wska¼nik indeksu dla LandSat TM"
+
+#, fuzzy
+#~ msgid "&Volumes"
+#~ msgstr "kolumny"
+
+#, fuzzy
+#~ msgid "3D Map calculator"
+#~ msgstr "Kalkulator rastrów"
+
+#, fuzzy
+#~ msgid "Cross section from volume"
+#~ msgstr "Warto¶ci projekcji"
+
+#, fuzzy
+#~ msgid "Interpolate volume from vector points"
+#~ msgstr "Interpoluj bry³ê 3D z punktów z u¿yciem splajnów"
+
+#, fuzzy
+#~ msgid "New table"
+#~ msgstr "Utwórz tabelê"
+
+#, fuzzy
+#~ msgid "Remove table"
+#~ msgstr "Usuñ werteks"
+
+#, fuzzy
+#~ msgid "Add columns"
+#~ msgstr "Dodaj now± kolumnê"
+
+#, fuzzy
+#~ msgid "Change values"
+#~ msgstr "Zmiana atrybutów"
+
+#, fuzzy
+#~ msgid "Rename a column"
+#~ msgstr "Dodaj now± kolumnê"
+
+#, fuzzy
+#~ msgid "Query any table"
+#~ msgstr "Utwórz zapytanie za pomoc± atrybutów"
+
+#, fuzzy
+#~ msgid "Query vector attribute table"
+#~ msgstr "Utwórz zapytanie za pomoc± atrybutów"
+
+#, fuzzy
+#~ msgid "SQL statement"
+#~ msgstr "Wykonaj wyra¿enie SQL"
+
+#, fuzzy
+#~ msgid "Reconnect vector to database"
+#~ msgstr "Po³±cz z baz± danych"
+
+#, fuzzy
+#~ msgid "Set vector - database connection"
+#~ msgstr "Po³±czenia wektor<->baza danych"
+
+#, fuzzy
+#~ msgid "Map Layers for Display %s"
+#~ msgstr "Wektory z zapytania do wy¶wietlenia"
+
+#, fuzzy
+#~ msgid "Loading layers..."
+#~ msgstr "£adowanie Menad¿era GIS"
+
+#, fuzzy
+#~ msgid "You can digitize raster or vector maps only"
+#~ msgstr "Drukuj mapy restrowe i wektorowe do pliku eps"
+
+#, fuzzy
+#~ msgid "grid color "
+#~ msgstr " kolor siatki"
+
+#, fuzzy
+#~ msgid "text color "
+#~ msgstr "kolor tekstu"
+
+#, fuzzy
+#~ msgid "text font "
+#~ msgstr "kolor tekstu"
+
+#, fuzzy
+#~ msgid "  text size"
+#~ msgstr " rozmiar tekstu"
+
+#, fuzzy
+#~ msgid "Grid text size in points"
+#~ msgstr "Wektoryzuj nowy punkt"
+
+#, fuzzy
+#~ msgid "draw grid border "
+#~ msgstr "rysuj granicê siatki"
+
+#, fuzzy
+#~ msgid " line color"
+#~ msgstr "kolor linii"
+
+#, fuzzy
+#~ msgid " text color"
+#~ msgstr "kolor tekstu"
+
+#, fuzzy
+#~ msgid "Raster map for histogram"
+#~ msgstr "Legenda dla mapy rastrowej:"
+
+#, fuzzy
+#~ msgid "Raster to histogram: "
+#~ msgstr "Mapa rastrowa do mapy wektorowej"
+
+#, fuzzy
+#~ msgid "  background"
+#~ msgstr "T³o"
+
+#, fuzzy
+#~ msgid "r.info error"
+#~ msgstr "nastepny b³±d"
+
+#, fuzzy
+#~ msgid "Labels for vectors"
+#~ msgstr "Etykietuj wektory:"
+
+#, fuzzy
+#~ msgid "Raster map for legend"
+#~ msgstr "Legenda dla mapy rastrowej:"
+
+#, fuzzy
+#~ msgid "Raster map: "
+#~ msgstr "Mapa rastrowa"
+
+#, fuzzy
+#~ msgid "%  width"
+#~ msgstr "szeroko¶æ"
+
+#, fuzzy
+#~ msgid "  legend text font "
+#~ msgstr "Legenda: czcionka tytu³u"
+
+#, fuzzy
+#~ msgid "Lines to display"
+#~ msgstr "Tekst do wy¶wietlenia: "
+
+#, fuzzy
+#~ msgid "    interval between categories (integer maps)"
+#~ msgstr "Przeskaluj kategorie (utwórz now± mapê)"
+
+#, fuzzy
+#~ msgid "You have to select map layer first"
+#~ msgstr "Zapytanie do mapy (zaznacz najpierw mapê)"
+
+#, fuzzy
+#~ msgid "Save Region"
+#~ msgstr "Region"
+
+#, fuzzy
+#~ msgid "Drag with mouse to pan"
+#~ msgstr "umie¶æ za pomoc± myszy"
+
+#, fuzzy
+#~ msgid "Measurement"
+#~ msgstr "Miara"
+
+#, fuzzy
+#~ msgid "Select label font"
+#~ msgstr "Wybierz domy¶ln± czcionkê tekstu"
+
+#, fuzzy
+#~ msgid "Create postscript labels for vector objects from v.labels file"
+#~ msgstr "Dodaj warstwê postskryptow± etykiet (u¿ywaj±c pliku v.labels)"
+
+#, fuzzy
+#~ msgid "Draw label background: "
+#~ msgstr "prze¼roczyste t³o"
+
+#, fuzzy
+#~ msgid "Background color:"
+#~ msgstr " Kolor t³a: "
+
+#, fuzzy
+#~ msgid "Draw box outline: "
+#~ msgstr "Rysuj linie:"
+
+#, fuzzy
+#~ msgid "Border width:"
+#~ msgstr "szeroko¶æ"
+
+#, fuzzy
+#~ msgid "Border color:"
+#~ msgstr " kolor granicy"
+
+#, fuzzy
+#~ msgid "Font"
+#~ msgstr "Czcionka:"
+
+#, fuzzy
+#~ msgid "size:"
+#~ msgstr " rozmiar"
+
+#, fuzzy
+#~ msgid "Text to display:"
+#~ msgstr "Tekst do wy¶wietlenia: "
+
+#, fuzzy
+#~ msgid "  line width"
+#~ msgstr "Grubo¶æ Linii"
+
+#, fuzzy
+#~ msgid "Create flythough path for NVIZ"
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Zoom to selected map"
+#~ msgstr "Powiêksz do zasiêgu mapy"
+
+#, fuzzy
+#~ msgid "Save display geometry to named region"
+#~ msgstr "Zapisz geometriê bierz±cego wy¶wietlania jako region"
+
+#, fuzzy
+#~ msgid "(* requires gdal)"
+#~ msgstr "wymagane"
+
+#, fuzzy
+#~ msgid "r.univar error"
+#~ msgstr "nastepny b³±d"
+
+#, fuzzy
+#~ msgid "No raster map selected"
+#~ msgstr "Bry³y 3D do serii map rastrowych"
+
+#, fuzzy
+#~ msgid "Aspect map"
+#~ msgstr "Mapa wektorowa"
+
+#, fuzzy
+#~ msgid "Aspect map: "
+#~ msgstr "Mapa wektorowa:"
+
+#, fuzzy
+#~ msgid "    aspect value type"
+#~ msgstr "    rodzaj wektora"
+
+#, fuzzy
+#~ msgid "    arrow color      "
+#~ msgstr "            "
+
+#, fuzzy
+#~ msgid "     cell grid color"
+#~ msgstr " kolor siatki"
+
+#, fuzzy
+#~ msgid "    null value color"
+#~ msgstr "     nowy wektor"
+
+#, fuzzy
+#~ msgid "Raster drape map"
+#~ msgstr "Mapa rastrowa"
+
+#, fuzzy
+#~ msgid "Display raster maps"
+#~ msgstr "Próbkowanie map rastrowych"
+
+#, fuzzy
+#~ msgid "Base map:\t"
+#~ msgstr "Mapa rastrowa"
+
+#, fuzzy
+#~ msgid "base map info"
+#~ msgstr "Mapa rastrowa"
+
+#, fuzzy
+#~ msgid "\tvalues to display"
+#~ msgstr "plik etykiet do wy¶wietlenia"
+
+#, fuzzy
+#~ msgid "cell values for %s"
+#~ msgstr "Dodaj warstwê warto¶ci komórek"
+
+#, fuzzy
+#~ msgid "Raster to display: "
+#~ msgstr "Tekst do wy¶wietlenia: "
+
+#, fuzzy
+#~ msgid "  cell values font "
+#~ msgstr "Dodaj warstwê warto¶ci komórek"
+
+#, fuzzy
+#~ msgid "Color for cell values:   "
+#~ msgstr "u¿yj kolorów rastra dla warto¶ci komórek"
+
+#, fuzzy
+#~ msgid "Raster map for blue or saturation channel"
+#~ msgstr "mapa rastrowa dla kana³u 'b³êkit' lub 'nasycenie'"
+
+#, fuzzy
+#~ msgid ""
+#~ "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation "
+#~ "channels"
+#~ msgstr "Transformuj obraz o kolorach RGB do kolorów HIS"
+
+#, fuzzy
+#~ msgid "red (RGB) or hue (HIS): "
+#~ msgstr "czerwieñ (RGB) lub odcieñ (HIS):"
+
+#, fuzzy
+#~ msgid "raster map for red or hue channel (HIS drape)"
+#~ msgstr "mapa rastrowa dla kana³u 'czerwieñ' lub 'odcieñ'"
+
+#, fuzzy
+#~ msgid "green (RGB) or intensity (HIS): "
+#~ msgstr "zieleñ (RGB) lub intensywno¶æ (HIS):"
+
+#, fuzzy
+#~ msgid "raster map for green or intensity channel (HIS relief)"
+#~ msgstr "mapa rastrowa dla kana³u 'zieleñ' lub 'intensywno¶æ'"
+
+#, fuzzy
+#~ msgid "blue (RGB) or saturation (HIS): "
+#~ msgstr "b³êkit (RGB) lub nasycenie (HIS):"
+
+#, fuzzy
+#~ msgid "Select input map"
+#~ msgstr "4. Wybierz mapê ref."
+
+#, fuzzy
+#~ msgid "Overwrite existing file"
+#~ msgstr "nadpisz istniej±cy"
+
+#, fuzzy
+#~ msgid "thematic map for %s"
+#~ msgstr "Dodaj warstwê mapy tematycznej"
+
+#, fuzzy
+#~ msgid "Select font"
+#~ msgstr "U¿yj Zaznaczenia"
+
+#, fuzzy
+#~ msgid "Vector point symbol"
+#~ msgstr "Wektorowe linie do punktów"
+
+#, fuzzy
+#~ msgid " attribute layer"
+#~ msgstr " kolumna atrybutów dla etykiet"
+
+#, fuzzy
+#~ msgid " end color"
+#~ msgstr "  kolor"
+
+#, fuzzy
+#~ msgid " font color"
+#~ msgstr "kolor punktu"
+
+#, fuzzy
+#~ msgid "clear"
+#~ msgstr "Wyczy¶æ"
+
+#, fuzzy
+#~ msgid "save"
+#~ msgstr "Zapisz"
+
+#, fuzzy
+#~ msgid "Vector output map"
+#~ msgstr "Mapa wektorowa"
+
+#, fuzzy
+#~ msgid "Display vector maps"
+#~ msgstr "Wy¶wietl kategorie"
+
+#, fuzzy
+#~ msgid "Vector Info"
+#~ msgstr "Nazwa pliku wektorowego:"
+
+#, fuzzy
+#~ msgid "Icon size"
+#~ msgstr " rozmiar"
+
+#, fuzzy
+#~ msgid " width"
+#~ msgstr "szeroko¶æ"
+
+#, fuzzy
+#~ msgid "Select maps to animate"
+#~ msgstr "utwórz wykresy ko³owe z mapy wektorowej"
+
+#, fuzzy
+#~ msgid "Rewind animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Replay animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Stop animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Play animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Slower animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Faster animation"
+#~ msgstr "Informacje systemowe\n"
+
+#, fuzzy
+#~ msgid "Quit animation"
+#~ msgstr "Animacja MPEG-1"
+
+#, fuzzy
+#~ msgid "Select maps"
+#~ msgstr "1. Wybierz mapset"
+
+#, fuzzy
+#~ msgid "Maps for Animation"
+#~ msgstr "Podstawowe informacje"
+
+#, fuzzy
+#~ msgid "NVIZ flythrough path"
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Create flythough path for NVIZ display"
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Raster surface map "
+#~ msgstr "Mapa rastrowa"
+
+#, fuzzy
+#~ msgid "Output script file "
+#~ msgstr "Plik skryptu:"
+
+#, fuzzy
+#~ msgid "Flythrough path "
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Create path with mouse in map display"
+#~ msgstr "Rysuj przeciêcie profilem w wy¶wietlanej mapie"
+
+#, fuzzy
+#~ msgid "Flythrough images prefix "
+#~ msgstr "¦cie¿ka przelotu dla NVIZ"
+
+#, fuzzy
+#~ msgid "Camera height "
+#~ msgstr "  wysoko¶æ:"
+
+#, fuzzy
+#~ msgid "Output keyframe file"
+#~ msgstr "Plik Wyj¶ciowy"
+
+#, fuzzy
+#~ msgid "Reset"
+#~ msgstr "Test"
+
+#, fuzzy
+#~ msgid "Clear all path coordinates"
+#~ msgstr "wspó³rzêdne geograficzne"
+
+#, fuzzy
+#~ msgid "You must specify an output file"
+#~ msgstr "Nie mo¿na otworzyæ pliku wyj¶ciowego:"
+
+#, fuzzy
+#~ msgid "Load File"
+#~ msgstr "Plik Koloru"
+
+#, fuzzy
+#~ msgid "Select item"
+#~ msgstr "4. Wybierz mapê ref."
+
+#, fuzzy
+#~ msgid "Define location using EPSG projection codes"
+#~ msgstr ""
+#~ "Zdefiniuj lokacjê prze u¿yciu informacji o projekcji w pliku "
+#~ "georeferencyjnym"
+
+#, fuzzy
+#~ msgid "Enter name for location to be created"
+#~ msgstr ""
+#~ "\n"
+#~ "Wymagana jest nazwa dla utworzenia nowej lokacji\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Path to the EPSG-codes file"
+#~ msgstr "¦cie¿ka do pliku georeferencyjnego"
+
+#, fuzzy
+#~ msgid "Browse to locate EPSG file"
+#~ msgstr "Zapisz profil do pliku EPS"
+
+#, fuzzy
+#~ msgid "Error creating location!"
+#~ msgstr "Zdefiniuj lokacjê"
+
+#, fuzzy
+#~ msgid "Grab code"
+#~ msgstr "Kody EPSG"
+
+#, fuzzy
+#~ msgid "forward search"
+#~ msgstr "nastepny b³±d"
+
+#, fuzzy
+#~ msgid "backward search"
+#~ msgstr "poprzedni b³±d"
+
+#, fuzzy
+#~ msgid "Browse to locate georeferenced file"
+#~ msgstr "Wybierz plik georeferencyjny"
+
+#, fuzzy
+#~ msgid "WARNING: Error creating new location"
+#~ msgstr "UWAGA: niew³a¶ciwa lokacja"
+
+#, fuzzy
+#~ msgid "WARNING: can not save"
+#~ msgstr "UWAGA: lokacja ju¿ istnieje"
+
+#, fuzzy
+#~ msgid "Welcome to GRASS GIS Version"
+#~ msgstr "Witaj w GRASS GIS"
+
+#, fuzzy
+#~ msgid "WARNING: invalid mapset name"
+#~ msgstr "UWAGA: niew³a¶ciwy mapset"
+
+#, fuzzy
+#~ msgid ""
+#~ "Warning: Mapset with name <%s> already exists. \n"
+#~ "New mapset is NOT created. \n"
+#~ "Choose different mapset name and try again."
+#~ msgstr ""
+#~ "Uwaga: wybrana lokacja <%s> jest niew³a¶ciwa. \n"
+#~ " Nie utworzono nowego mapsetu. \n"
+#~ " Wybierz w³a¶ciw± lokacjê i spróbuj ponownie"
+
+#, fuzzy
+#~ msgid "WARNING: unable to mkdir"
+#~ msgstr "UWAGA: pliku nie odnaleziono"
+
+#, fuzzy
+#~ msgid "Categories already opened"
+#~ msgstr "Okno pomocy ju¿ otwarte"
+
+#, fuzzy
+#~ msgid "   Category:"
+#~ msgstr "  Kategoria"
+
+#, fuzzy
+#~ msgid "Settings already opened"
+#~ msgstr "Okno pomocy ju¿ otwarte"
+
+#, fuzzy
+#~ msgid "Line width in screen pixels"
+#~ msgstr "Próg przyci±gania w pikselach ekranowych"
+
+#, fuzzy
+#~ msgid "Set line width in pixels"
+#~ msgstr "     wysoko¶æ tekstu w pikselach "

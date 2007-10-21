@@ -1290,8 +1290,9 @@ msgid "geodetic grid  "
 msgstr ""
 
 #: ../gui/tcltk/gis.m/gridline.tcl:138
+#, fuzzy
 msgid " grid & text color   "
-msgstr ""
+msgstr "вектор"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:152
 msgid "draw border text  "
@@ -3062,7 +3063,7 @@ msgstr ""
 #: ../lib/init/file_option.tcl:78
 #, fuzzy
 msgid "Path to new location"
-msgstr "Задать новый район"
+msgstr "или задайте новый район\n"
 
 #: ../lib/init/file_option.tcl:80
 msgid "Path to georeferenced file"
@@ -3708,250 +3709,382 @@ msgstr "Создать..."
 
 #, fuzzy
 msgid "Create New Location"
-msgstr "Задать новый район"
+msgstr "Район"
 
 #, fuzzy
 msgid "Create Location From EPSG"
 msgstr "Район"
 
 #, fuzzy
-#~ msgid "Resample (change resolution)"
-#~ msgstr "Кривизна сплайна"
+msgid "Resample (change resolution)"
+msgstr "Кривизна сплайна"
 
 #, fuzzy
-#~ msgid "Vector map for chart"
+msgid "Vector map for chart"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Text to display: "
+msgstr "вектор"
+
+#, fuzzy
+msgid "Import raster map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Import vector map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "ASCII points or GRASS ASCII vector"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Old GRASS vector"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Export raster map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Export vector map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster to vector"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster series to volume"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster 2.5D to volume"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Vector to volume"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Sites to vector"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Bearing/distance to coordinates"
+msgstr " "
+
+#, fuzzy
+msgid "Projection for current location"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Convert coordinates"
+msgstr " "
+
+#, fuzzy
+msgid "Resample using multiple methods"
+msgstr "Кривизна сплайна"
+
+#, fuzzy
+msgid "Resample using spline tension"
+msgstr "Кривизна сплайна"
+
+#, fuzzy
+msgid "Rate of spread"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Rescale with histogram"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Random cells and vector points"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Bilinear and bicubic from vector points"
+msgstr "вектор"
+
+#, fuzzy
+msgid "IDW from vector points"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster contours"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Regularized spline tension"
+msgstr "Кривизна сплайна"
+
+#, fuzzy
+msgid "Report category information"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Sample transects"
+msgstr "Склоны Экспозиция"
+
+#, fuzzy
+msgid "Convert vector lines to points"
+msgstr "вектор"
+
+#, fuzzy
+msgid ""
+"Find line ID and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Remove outliers from vector point set"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Cross section from volume"
+msgstr "Район"
+
+#, fuzzy
+msgid "Interpolate volume from vector points"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Query vector attribute table"
+msgstr "вектор"
+
+#, fuzzy
+msgid "You can digitize raster or vector maps only"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster to histogram: "
+msgstr "вектор"
+
+#, fuzzy
+msgid "\ttext font "
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster map: "
+msgstr "вектор"
+
+#, fuzzy
+msgid "Lines to display"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Select label font"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Create postscript labels for vector objects from v.labels file"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Text to display:"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Zoom to selected map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Save display geometry to named region"
+msgstr "вектор "
+
+#, fuzzy
+msgid "Aspect map"
+msgstr "Векторная карта:"
+
+#, fuzzy
+msgid "Aspect map: "
+msgstr "Векторная карта:"
+
+#, fuzzy
+msgid "    aspect value type"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster drape map"
+msgstr "вектор"
+
+#, fuzzy
+msgid "\tvalues to display"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Raster to display: "
+msgstr "вектор"
+
+#, fuzzy
+msgid "  cell values font "
+msgstr "вектор"
+
+#, fuzzy
+msgid "Select font"
+msgstr "вектор"
+
+#, fuzzy
+msgid "Vector output map"
+msgstr "Векторная карта:"
+
+#, fuzzy
+msgid "Display vector maps"
+msgstr "вектор"
+
+#, fuzzy
+msgid "WARNING: Error creating new location"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#, fuzzy
+msgid "WARNING: can not save"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#, fuzzy
+msgid "WARNING: invalid mapset name"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#, fuzzy
+msgid "WARNING: unable to mkdir"
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
+
+#, fuzzy
+msgid "Warning: <%%s> is not a valid mapset"
+msgstr "   "
+
+#, fuzzy
+msgid "Remove existing attribute table for vector map"
+msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Select GRASS display font"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Text to display: "
+#~ msgid "Animate raster maps"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Import raster map"
+#~ msgid "Clean vector"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Import vector map"
+#~ msgid "Convert object types"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "ASCII points or GRASS ASCII vector"
+#~ msgid "Create 3D vector over raster"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Old GRASS vector"
+#~ msgid "Extrude 3D vector"
+#~ msgstr "вектор вектор"
+
+#, fuzzy
+#~ msgid "Create labels"
+#~ msgstr "Создать..."
+
+#, fuzzy
+#~ msgid "Reposition vector"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Export raster map"
+#~ msgid "Reproject vector"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Export vector map"
+#~ msgid "Query with attributes"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Raster to vector"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster series to volume"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster 2.5D to volume"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Vector to volume"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Sites to vector"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Bearing/distance to coordinates"
+#~ msgid "Query with coordinate(s)"
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "Projection for current location"
+#~ msgid "Buffer vectors"
 #~ msgstr "вектор"
 
 #, fuzzy
-#~ msgid "Convert coordinates"
+#~ msgid "Create LRS"
+#~ msgstr "Создать..."
+
+#, fuzzy
+#~ msgid "Create stationing"
+#~ msgstr "Задать новый район"
+
+#, fuzzy
+#~ msgid "Split net"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Generate area for current region"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Generate points along lines"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Create/edit group"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Target group"
+#~ msgstr "Векторная карта:"
+
+#, fuzzy
+#~ msgid "text font "
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "base map info"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "drape map info"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Select input map"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "No output map specified"
+#~ msgstr "Векторная карта:"
+
+#, fuzzy
+#~ msgid "Vector Info"
+#~ msgstr "Векторная карта:"
+
+#, fuzzy
+#~ msgid "Select maps to animate"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Replay animation"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Select maps"
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "No maps selected"
+#~ msgstr "Векторная карта:"
+
+#, fuzzy
+#~ msgid "Raster surface map "
+#~ msgstr "вектор"
+
+#, fuzzy
+#~ msgid "Clear all path coordinates"
 #~ msgstr " "
 
 #, fuzzy
-#~ msgid "Resample using multiple methods"
-#~ msgstr "Кривизна сплайна"
-
-#, fuzzy
-#~ msgid "Resample using spline tension"
-#~ msgstr "Кривизна сплайна"
-
-#, fuzzy
-#~ msgid "Rate of spread"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Rescale with histogram"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Random cells and vector points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Bilinear and bicubic from vector points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "IDW from vector points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster contours"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Regularized spline tension"
-#~ msgstr "Кривизна сплайна"
-
-#, fuzzy
-#~ msgid "Report category information"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Sample transects"
-#~ msgstr "Склоны Экспозиция"
-
-#, fuzzy
-#~ msgid "Convert vector lines to points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Remove outliers from vector point set"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Cross section from volume"
-#~ msgstr "Район"
-
-#, fuzzy
-#~ msgid "Interpolate volume from vector points"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Query vector attribute table"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "You can digitize raster or vector maps only"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster to histogram: "
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "\ttext font "
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster map: "
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Lines to display"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Select label font"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Create postscript labels for vector objects from v.labels file"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Text to display:"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Zoom to selected map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Save display geometry to named region"
-#~ msgstr "вектор "
-
-#, fuzzy
-#~ msgid "Aspect map"
+#~ msgid "No output file specified"
 #~ msgstr "Векторная карта:"
 
 #, fuzzy
-#~ msgid "Aspect map: "
-#~ msgstr "Векторная карта:"
-
-#, fuzzy
-#~ msgid "    aspect value type"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster drape map"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "\tvalues to display"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Raster to display: "
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "  cell values font "
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Select font"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "Vector output map"
-#~ msgstr "Векторная карта:"
-
-#, fuzzy
-#~ msgid "Display vector maps"
-#~ msgstr "вектор"
-
-#, fuzzy
-#~ msgid "WARNING: Error creating new location"
+#~ msgid "Error creating location!"
 #~ msgstr "ПРЕДУПРЕЖДЕНИЕ"
-
-#, fuzzy
-#~ msgid "WARNING: can not save"
-#~ msgstr "ПРЕДУПРЕЖДЕНИЕ"
-
-#, fuzzy
-#~ msgid "WARNING: invalid mapset name"
-#~ msgstr "ПРЕДУПРЕЖДЕНИЕ"
-
-#, fuzzy
-#~ msgid "WARNING: unable to mkdir"
-#~ msgstr "ПРЕДУПРЕЖДЕНИЕ"
-
-#, fuzzy
-#~ msgid "Warning: <%%s> is not a valid mapset"
-#~ msgstr "   "
-
-#, fuzzy
-#~ msgid "Remove existing attribute table for vector map"
-#~ msgstr "вектор"

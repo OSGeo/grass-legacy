@@ -1750,8 +1750,9 @@ msgid "too many arguments"
 msgstr ""
 
 #: ../lib/gis/spawn.c:87 ../lib/gis/spawn.c:399
+#, fuzzy
 msgid "unable to create a new process"
-msgstr ""
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/gis/spawn.c:97 ../lib/gis/spawn.c:422
 #, fuzzy
@@ -1796,7 +1797,7 @@ msgstr ""
 #: ../lib/gis/spawn.c:414
 #, fuzzy, c-format
 msgid "unable to change directory to %s"
-msgstr "temp फाइल उघडता आली नाही"
+msgstr "%s उघडता आले नाही"
 
 #: ../lib/gis/system.c:83
 msgid "Can not create a new process!"
@@ -2447,85 +2448,89 @@ msgid "Cannot delete line"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Cannot describe table <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
+msgid "Cannot describe table <%s>"
+msgstr "temp फाइल उघडता आली नाही"
 
 #, fuzzy
-#~ msgid "invalid color name"
-#~ msgstr "अवैध निर्देशक"
+msgid "invalid color name"
+msgstr "अवैध निर्देशक"
 
 #, fuzzy
-#~ msgid "Name of input file"
-#~ msgstr "उघडलेल्या फाइलचे नाव %s\n"
+msgid "Name of input file"
+msgstr "उघडलेल्या फाइलचे नाव %s\n"
 
 #, fuzzy
-#~ msgid "Can't read %s for [%s in %s]"
-#~ msgstr "temp फाइल उघडता आली नाही"
+msgid "Can't read %s for [%s in %s]"
+msgstr "temp फाइल उघडता आली नाही"
 
 #, fuzzy
-#~ msgid "Reading raster map <%s> into memory"
-#~ msgstr "%s@%s हा रास्टर नकाशा रिक्त आहे"
+msgid "Reading raster map <%s> into memory"
+msgstr "%s@%s हा रास्टर नकाशा रिक्त आहे"
 
 #, fuzzy
-#~ msgid "Unable to open file [%s] of group [%s in %s]"
-#~ msgstr "उघडलेल्या फाइलचे नाव %s\n"
+msgid "Unable to open file [%s] of group [%s in %s]"
+msgstr "उघडलेल्या फाइलचे नाव %s\n"
 
 #, fuzzy
-#~ msgid "Unable to open file %s"
+msgid "Unable to open file %s"
+msgstr "%s उघडता आले नाही"
+
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot open database <%s> by driver <%s>"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot add network arc"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Vector map <%s> not found"
+msgstr "%s मिळाले नाही"
+
+#, fuzzy
+msgid "Cannot read head file"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot open topo file for vector map <%s>"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot open category index file for vector map <%s>"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot open history file for vector map <%s>"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for lines"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for line [%d]"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for areas"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for area [%d]"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for isles"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+msgid "Cannot read topo for isle [%d]"
+msgstr "temp फाइल उघडता आली नाही"
+
+#, fuzzy
+#~ msgid "Unable to initialize pj cause: %s"
 #~ msgstr "%s उघडता आले नाही"
-
-#, fuzzy
-#~ msgid "Cannot get field info"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot open database <%s> by driver <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot add network arc"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Vector map <%s> not found"
-#~ msgstr "%s मिळाले नाही"
-
-#, fuzzy
-#~ msgid "Cannot read head file"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot open topo file for vector map <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot open category index file for vector map <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot open history file for vector map <%s>"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for lines"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for line [%d]"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for areas"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for area [%d]"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for isles"
-#~ msgstr "temp फाइल उघडता आली नाही"
-
-#, fuzzy
-#~ msgid "Cannot read topo for isle [%d]"
-#~ msgstr "temp फाइल उघडता आली नाही"

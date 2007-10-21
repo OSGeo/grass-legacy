@@ -19,9 +19,9 @@ msgstr ""
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
 #: ../db/base/droptable.c:25 ../db/base/execute.c:52 ../db/base/select.c:63
 #: ../db/base/tables.c:34
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot start driver <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/columns.c:71 ../db/base/describe.c:89
 msgid "table name"
@@ -140,13 +140,14 @@ msgid "Copy table failed"
 msgstr ""
 
 #: ../db/base/databases.c:34
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot start driver '%s'."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/databases.c:37
+#, fuzzy
 msgid "Cannot list databases."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/databases.c:69
 msgid "database location"
@@ -157,8 +158,9 @@ msgid "List all databases for a given driver and location."
 msgstr ""
 
 #: ../db/base/describe.c:47
+#, fuzzy
 msgid "Cannot describe table"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/describe.c:83
 msgid "print column names only instead of full column descriptions"
@@ -185,9 +187,9 @@ msgid "List all database drivers."
 msgstr ""
 
 #: ../db/base/dropdb.c:24
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot start driver <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/execute.c:68 ../db/base/execute.c:72
 #, c-format
@@ -221,8 +223,9 @@ msgid "Ignore SQL errors and continue"
 msgstr ""
 
 #: ../db/base/select.c:182
+#, fuzzy
 msgid "Table name, select all from this table"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/select.c:205
 msgid ""
@@ -243,8 +246,9 @@ msgid "null value indicator"
 msgstr ""
 
 #: ../db/base/select.c:231
+#, fuzzy
 msgid "filename with sql statement"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/select.c:236
 msgid "do not include column names in output"
@@ -259,8 +263,9 @@ msgid "vertical output (instead of horizontal)"
 msgstr ""
 
 #: ../db/base/select.c:249
+#, fuzzy
 msgid "Select data from database."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/base/tables.c:85
 msgid "print tables and exit"
@@ -271,12 +276,14 @@ msgid "system tables instead of user tables"
 msgstr ""
 
 #: ../db/base/tables.c:94
+#, fuzzy
 msgid "List all tables for a given database."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/db.login/main.c:57
+#, fuzzy
 msgid "Cannot set user/password"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../db/db.login/main.c:61
 msgid "The password was stored in file."
@@ -894,14 +901,14 @@ msgstr ""
 #: ../display/d.histogram/main.c:159 ../display/d.profile/main.c:81
 #: ../display/d.rast/main.c:92 ../display/d.what.rast/main.c:131
 #: ../display/d.zoom/main.c:203
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.histogram/main.c:162
-#, c-format
+#, fuzzy, c-format
 msgid "color file for [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.histogram/main.c:165 ../display/d.legend/main.c:235
 #: ../ps/ps.map/ps_clrtbl.c:40
@@ -910,9 +917,9 @@ msgid "Category file for [%s] not available"
 msgstr ""
 
 #: ../display/d.histogram/main.c:168 ../display/d.legend/main.c:473
-#, c-format
+#, fuzzy, c-format
 msgid "Range information for [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.info/main.c:35
 msgid "Display information about the active display monitor"
@@ -1007,17 +1014,17 @@ msgid "Don't know the color %s"
 msgstr ""
 
 #: ../display/d.legend/main.c:221
-#, c-format
+#, fuzzy, c-format
 msgid "Raster file [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.legend/main.c:224 ../display/d.rast/display.c:23
 #: ../display/d.rast.num/number.c:277 ../display/d.rgb/main.c:91
 #: ../raster/r.his/main.c:144 ../raster/r.his/main.c:167
 #: ../raster/r.his/main.c:196
-#, c-format
+#, fuzzy, c-format
 msgid "Color file for [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.legend/main.c:306
 msgid "Legend box lies outside of frame. Text may not display properly."
@@ -1184,8 +1191,9 @@ msgid "Create fly-through script to run in NVIZ"
 msgstr ""
 
 #: ../display/d.nviz/main.c:77 ../raster/r.random/main.c:41
+#, fuzzy
 msgid "Name of existing raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.nviz/main.c:83
 msgid "Name of output script"
@@ -1248,19 +1256,19 @@ msgid "Off-screen only available with full render mode"
 msgstr ""
 
 #: ../display/d.nviz/main.c:190
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot find mapset for %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.nviz/main.c:192
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open File %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.nviz/main.c:209 ../raster/r.profile/main.c:157
-#, c-format
+#, fuzzy, c-format
 msgid "Not able to open file for [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.nviz/main.c:285
 msgid "You must select more than one point"
@@ -1309,9 +1317,9 @@ msgid "Maximum region size (diagonal) when labels are displayed"
 msgstr ""
 
 #: ../display/d.paint.labels/main.c:67
-#, c-format
+#, fuzzy, c-format
 msgid "Label file [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.paint.labels/main.c:82
 msgid "Region size is lower than minreg, nothing displayed."
@@ -1322,9 +1330,9 @@ msgid "Region size is greater than maxreg, nothing displayed."
 msgstr ""
 
 #: ../display/d.paint.labels/main.c:101
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open label file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.path/main.c:48
 msgid "display, networking"
@@ -1356,18 +1364,18 @@ msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr ""
 
 #: ../display/d.profile/ExtractProf.c:95
-#, c-format
+#, fuzzy, c-format
 msgid "unable to open [%s] in [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.profile/Range.c:92
 msgid "one moment ..."
 msgstr ""
 
 #: ../display/d.profile/What.c:31
-#, c-format
+#, fuzzy, c-format
 msgid "warning: unable to open [%s] in [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.profile/What.c:37
 #, fuzzy
@@ -1452,9 +1460,9 @@ msgstr ""
 #: ../raster/r.bilinear/main.c:88 ../raster/r.his/main.c:132
 #: ../raster/r.his/main.c:159 ../raster/r.his/main.c:188
 #: ../raster/r.sum/main.c:51
-#, c-format
+#, fuzzy, c-format
 msgid "Not able to open cellfile for [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rast/main.c:35
 msgid ""
@@ -1545,9 +1553,9 @@ msgstr ""
 #: ../raster/r.los/main.c:155 ../raster/r.out.bin/main.c:135
 #: ../raster/r.param.scale/interface.c:167 ../raster/r.resamp.rst/main.c:393
 #: ../raster/r.resamp.rst/main.c:419
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map [%s] not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rast.arrow/arrow.c:225
 msgid "Illegal value for scale factor."
@@ -1566,8 +1574,9 @@ msgid "scale option requires magnitude_map"
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:314
+#, fuzzy
 msgid "Problem reading range file."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rast.arrow/arrow.c:370
 msgid "No raster map exists in the current window"
@@ -1579,9 +1588,9 @@ msgid "[%s] not found"
 msgstr ""
 
 #: ../display/d.rast.arrow/arrow.c:384
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open raster map [%s] in [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rast.num/number.c:87
 msgid ""
@@ -1607,9 +1616,9 @@ msgid "No raster map exists in current window"
 msgstr ""
 
 #: ../display/d.rast.num/number.c:151
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rast.num/number.c:204
 msgid "Current window size:"
@@ -1648,15 +1657,15 @@ msgid "Name of raster map to be used for <%s>"
 msgstr ""
 
 #: ../display/d.rgb/main.c:81
-#, c-format
+#, fuzzy, c-format
 msgid "Raster map [%s] does not exist"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rgb/main.c:85 ../raster/r.los/main.c:181
 #: ../raster/r.los/main.c:193 ../raster/r.topidx/file_io.c:20
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open raster map [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.rgb/main.c:109
 msgid "Error reading row of data"
@@ -1746,8 +1755,9 @@ msgid "value [%.0f,%.0f] out of range [0-100]"
 msgstr ""
 
 #: ../display/d.text/main.c:192
+#, fuzzy
 msgid "Unable to open the temporary file."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.text.freetype/main.c:149
 msgid ""
@@ -2079,9 +2089,9 @@ msgstr ""
 #: ../display/d.vect/main.c:399 ../display/d.vect.chart/main.c:208
 #: ../display/d.what.vect/main.c:131 ../vector/v.label/main.c:259
 #: ../vector/v.what/main.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Vector file [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.vect/main.c:412 ../vector/v.extract/main.c:205
 msgid "'layer' must be > 0 for 'where'."
@@ -2095,9 +2105,9 @@ msgstr ""
 #: ../display/d.vect/main.c:420 ../vector/v.db.connect/main.c:185
 #: ../vector/v.extract/main.c:215 ../vector/v.extrude/main.c:194
 #: ../vector/v.out.ogr/main.c:249
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open driver %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.vect/main.c:425 ../vector/v.convert/att.c:68
 #: ../vector/v.extract/main.c:220 ../vector/v.out.ogr/main.c:254
@@ -2115,9 +2125,9 @@ msgid "%d errors in cat option"
 msgstr ""
 
 #: ../display/d.vect/main.c:557
-#, c-format
+#, fuzzy, c-format
 msgid "Plotting ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.vect/main.c:566
 #, c-format
@@ -2279,18 +2289,19 @@ msgid "Open form in edit mode"
 msgstr ""
 
 #: ../display/d.what.vect/main.c:110
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open vector map [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.what.vect/main.c:134 ../vector/v.what/main.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "%s: You must build topology on vector file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.what.vect/main.c:136
+#, fuzzy
 msgid "Building spatial index ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../display/d.what.vect/main.c:154 ../imagery/i.gensig/write_sig.c:20
 #: ../imagery/i.group/main.c:165 ../imagery/i.group/main.c:202
@@ -2684,14 +2695,14 @@ msgid "Cannot open cell file [%s]"
 msgstr "출력할 래스터맵"
 
 #: ../doc/raster/r.example/main.c:125 ../raster/r.bitpattern/main.c:113
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot read file header of [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../doc/raster/r.example/main.c:139 ../raster/r.bitpattern/main.c:124
-#, c-format
+#, fuzzy, c-format
 msgid "Could not open <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../doc/raster/r.example/main.c:152 ../general/g.region/cmd/zoom.c:38
 #: ../raster/r.bitpattern/main.c:134
@@ -2700,9 +2711,9 @@ msgid "Could not read from <%s>"
 msgstr ""
 
 #: ../doc/raster/r.example/main.c:178 ../raster/r.bitpattern/main.c:149
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot write to <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../doc/vector/v.example/main.c:57
 msgid "Could not open input"
@@ -2867,14 +2878,14 @@ msgid "Location %s created!"
 msgstr ""
 
 #: ../general/g.proj/main.c:399
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot create location: %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/g.proj/main.c:401
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot create projection files: %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/g.proj/main.c:414
 #, c-format
@@ -3111,9 +3122,9 @@ msgstr "출력할 래스터맵"
 
 #: ../general/g.region/cmd/main.c:472 ../raster/r.carve/main.c:141
 #: ../raster/r.region/main.c:229
-#, c-format
+#, fuzzy, c-format
 msgid "vector map <%s> not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/g.region/cmd/main.c:478 ../raster/r.region/main.c:233
 #, fuzzy, c-format
@@ -3131,13 +3142,14 @@ msgid "<%s> - illegal region name"
 msgstr ""
 
 #: ../general/g.region/cmd/main.c:753
-#, c-format
+#, fuzzy, c-format
 msgid "can't write region <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/g.region/cmd/main.c:760
+#, fuzzy
 msgid "unable to update current region"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/g.region/cmd/main.c:774
 #, c-format
@@ -3223,9 +3235,9 @@ msgid "<%s> not found\n"
 msgstr "출력할 래스터맵"
 
 #: ../general/manage/cmd/copy.c:79
-#, c-format
+#, fuzzy, c-format
 msgid "ERROR: <%s> already exists\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../general/manage/cmd/copy.c:84 ../general/manage/cmd/rename.c:84
 #, c-format
@@ -3477,8 +3489,9 @@ msgid "The subgroup must have at least 2 files to run %s."
 msgstr ""
 
 #: ../imagery/i.class/ask_files.c:71
+#, fuzzy
 msgid "Unable to read cell header for first band file."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.class/ask_files.c:76
 msgid ""
@@ -3587,8 +3600,9 @@ msgid "Outlined area is too large."
 msgstr ""
 
 #: ../imagery/i.class/readbands.c:13
+#, fuzzy
 msgid "Error reading cell file in function readbands."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.class/redisplay.c:66
 msgid "No zoom window is defined."
@@ -4083,25 +4097,28 @@ msgid "Fast Fourier Transform (FFT) for image processing."
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:65
+#, fuzzy
 msgid "input raster file being fft"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.fft/fftmain.c:73
+#, fuzzy
 msgid "output real part arrays stored as raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.fft/fftmain.c:81
+#, fuzzy
 msgid "output imaginary part arrays stored as raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.fft/fftmain.c:89
 msgid "Range of values in output display files"
 msgstr ""
 
 #: ../imagery/i.fft/fftmain.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "%s: %s - Unable to open the input raster map\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.fft/fftmain.c:111
 msgid "Raster MASK found, consider to remove (see man-page). Will continue..."
@@ -4240,9 +4257,9 @@ msgid "Calculating class means ..."
 msgstr ""
 
 #: ../imagery/i.gensig/opencell.c:14 ../imagery/i.smap/shapiro/opencell.c:16
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open raster map [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.gensig/openfiles.c:17 ../imagery/i.smap/shapiro/openfiles.c:15
 #: ../imagery/i.smap/shapiro/read_sig.c:13
@@ -4354,9 +4371,9 @@ msgid "Adding files to subgroup [%s]"
 msgstr ""
 
 #: ../imagery/i.group/main.c:145 ../imagery/i.group/main.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to find raster [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.group/main.c:147 ../imagery/i.group/main.c:185
 #, c-format
@@ -4404,8 +4421,9 @@ msgid "input raster file (image fft, imaginary part"
 msgstr ""
 
 #: ../imagery/i.ifft/ifftmain.c:82
+#, fuzzy
 msgid "output inverse raster file after ifft"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.ifft/ifftmain.c:94
 #, c-format
@@ -4642,8 +4660,9 @@ msgid "pyramid constructed."
 msgstr ""
 
 #: ../imagery/i.smap/bouman/interp.c:71
+#, fuzzy
 msgid "Unable to allocate memory."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.smap/bouman/interp.c:104
 #, c-format
@@ -4702,9 +4721,9 @@ msgid ""
 msgstr ""
 
 #: ../imagery/i.smap/shapiro/opencell.c:31 ../raster/r.los/main.c:186
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create raster map [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../imagery/i.smap/shapiro/parse.c:24
 msgid "imagery subgroup"
@@ -5007,9 +5026,9 @@ msgid "%s: ERROR running %s command"
 msgstr ""
 
 #: ../raster/r.average/main.c:87
-#, c-format
+#, fuzzy, c-format
 msgid "%s: ERROR can't open tempfile"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.basins.fill/main.c:35
 msgid "Generates a raster map layer showing watershed subbasins."
@@ -5076,8 +5095,9 @@ msgid "Couldn't find raster file %s"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.bitpattern/main.c:63
+#, fuzzy
 msgid "Compares bit patterns with a raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.bitpattern/main.c:75
 msgid "Bit pattern position(s)"
@@ -5161,8 +5181,9 @@ msgid "Name of vector input map containing stream(s)"
 msgstr ""
 
 #: ../raster/r.carve/main.c:75
+#, fuzzy
 msgid "Name of output vector map for adjusted stream points"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.carve/main.c:80
 msgid "Stream width (in meters). Default is raster cell width"
@@ -5196,9 +5217,9 @@ msgid "unable to find raster file [%s]"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.carve/main.c:150 ../raster/r.carve/main.c:155
-#, c-format
+#, fuzzy, c-format
 msgid "unable to open cellfile for [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.carve/main.c:199
 msgid "lat/lon projection not supported at this time."
@@ -5237,9 +5258,9 @@ msgid "Output separator character (default: tab)"
 msgstr ""
 
 #: ../raster/r.cats/main.c:82
-#, c-format
+#, fuzzy, c-format
 msgid "%s: %s in %s - can't read category file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cats/main.c:100
 msgid "The map is floating point! Ignoring cats list, using vals list"
@@ -5284,9 +5305,9 @@ msgid "Title, in quotes"
 msgstr ""
 
 #: ../raster/r.clump/main.c:65
-#, c-format
+#, fuzzy, c-format
 msgid "%s: <%s> not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.clump/main.c:68
 #, c-format
@@ -5294,9 +5315,9 @@ msgid "%s: <%s> illegal name"
 msgstr ""
 
 #: ../raster/r.clump/main.c:72 ../raster/r.clump/main.c:76
-#, c-format
+#, fuzzy, c-format
 msgid "%s: Cannot open <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.clump/main.c:81
 msgid "CREATING SUPPORT FILES ..."
@@ -5326,8 +5347,9 @@ msgid "Raster map name from which to copy color table"
 msgstr ""
 
 #: ../raster/r.colors/main.c:172
+#, fuzzy
 msgid "Name of predefined rules file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.colors/main.c:177
 msgid "Keep existing color table"
@@ -5532,9 +5554,9 @@ msgid "Use closest color"
 msgstr ""
 
 #: ../raster/r.composite/main.c:200
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create output <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.composite/main.c:221
 #, c-format
@@ -5650,8 +5672,9 @@ msgid "Stop points vector map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:133
+#, fuzzy
 msgid "Starting points raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cost/main.c:141 ../raster/r.walk/main.c:186
 msgid "The map E and N grid coordinates of a starting point (E,N)"
@@ -5718,9 +5741,9 @@ msgid "Input null cell will be retained into output map"
 msgstr ""
 
 #: ../raster/r.cost/main.c:270
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot find vector map [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cost/main.c:275 ../raster/r.walk/main.c:463
 msgid "Warning: assigning negative cost to null cell. Null cells excluded."
@@ -5739,9 +5762,9 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:309 ../raster/r.walk/main.c:513
 #: ../raster/r.walk/main.c:516
-#, c-format
+#, fuzzy, c-format
 msgid "%s - can't open raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cost/main.c:319
 msgid "Source map is: Integer cell type"
@@ -5773,9 +5796,9 @@ msgstr ""
 
 #: ../raster/r.cost/main.c:376 ../raster/r.walk/main.c:668
 #: ../raster/r.walk/main.c:727 ../raster/r.walk/main.c:843
-#, c-format
+#, fuzzy, c-format
 msgid "Can't get row %d from raster map %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cost/main.c:430 ../raster/r.walk/main.c:783
 msgid "Initializing output "
@@ -5800,9 +5823,9 @@ msgid "Reading %s ... "
 msgstr ""
 
 #: ../raster/r.cost/main.c:588
-#, c-format
+#, fuzzy, c-format
 msgid "Error reading map %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.cost/main.c:631 ../raster/r.walk/main.c:884
 msgid "specified starting location outside database window"
@@ -5883,14 +5906,14 @@ msgid "Print correlation matrix"
 msgstr ""
 
 #: ../raster/r.covar/main.c:70 ../raster/r.out.tiff/r.out.tiff.c:147
-#, c-format
+#, fuzzy, c-format
 msgid "%s - raster map not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.covar/main.c:73 ../raster/r.out.tiff/r.out.tiff.c:168
-#, c-format
+#, fuzzy, c-format
 msgid "%s - can't open raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.covar/main.c:110
 msgid "No non-null values"
@@ -6200,8 +6223,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.elev.to.rast3/main.c:319
+#, fuzzy
 msgid "raster, raster3d, voxel"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.elev.to.rast3/main.c:322
 msgid "Creates a 3D volume map based on a 2D elevation and value raster map"
@@ -6243,8 +6267,9 @@ msgid "Creating 3D raster map\n"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.elev.to.rast3/main.c:422 ../raster/r.to.rast3/main.c:302
+#, fuzzy
 msgid "error opening g3d file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.elev.to.rast3/main.c:434 ../raster/r.to.rast3/main.c:316
 #: ../raster3d/base/r3.info.main.c:422 ../raster3d/r3.to.rast/main.c:338
@@ -6420,9 +6445,9 @@ msgid "Value to write for \"grown\" cells"
 msgstr ""
 
 #: ../raster/r.grow2/main.c:167
-#, c-format
+#, fuzzy, c-format
 msgid "Input file [%s] not found."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:179
 #, c-format
@@ -6430,34 +6455,34 @@ msgid "Unknown metric: [%s]."
 msgstr ""
 
 #: ../raster/r.grow2/main.c:183
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open input file <%s@%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:189
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open output file <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:193
-#, c-format
+#, fuzzy, c-format
 msgid "Error in reading cats file for <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:199
-#, c-format
+#, fuzzy, c-format
 msgid "Error in reading colr file for <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:291
-#, c-format
+#, fuzzy, c-format
 msgid "Error writing cats file for <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.grow2/main.c:295
-#, c-format
+#, fuzzy, c-format
 msgid "Error writing colr file for <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.his/main.c:65
 msgid ""
@@ -6499,9 +6524,9 @@ msgid "%s: <%s> cell file not found"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.his/main.c:171 ../raster/r.his/main.c:200
-#, c-format
+#, fuzzy, c-format
 msgid "Not able to find cellfile [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.his/main.c:257
 msgid "Error reading 'hue' map"
@@ -6655,8 +6680,9 @@ msgid "SURFER (Golden Software) ascii grid file will be imported"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:110
+#, fuzzy
 msgid "Unable to open temporary file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.in.ascii/main.c:118
 #, c-format
@@ -6664,17 +6690,18 @@ msgid "Wrong entry for multiplier: %s"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:139
+#, fuzzy
 msgid "Unable to open temp file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.in.ascii/main.c:142
 msgid "Unable to read input from stdin"
 msgstr ""
 
 #: ../raster/r.in.ascii/main.c:150
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to read input from '%s'"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.in.ascii/main.c:188
 #, c-format
@@ -6811,9 +6838,9 @@ msgid "Verbose mode"
 msgstr ""
 
 #: ../raster/r.in.mat/main.c:134
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open input file <%s>."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.in.mat/main.c:183
 msgid "Array contains no data"
@@ -7054,13 +7081,14 @@ msgid "Print raster map timestamp (day.month.year hour:minute:seconds) only"
 msgstr ""
 
 #: ../raster/r.info/main.c:107 ../raster3d/base/r3.info.main.c:123
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot find %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.info/main.c:126
+#, fuzzy
 msgid "could not read range file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.info/main.c:140 ../raster/r.info/main.c:147
 #: ../raster/r.info/main.c:152 ../raster/r.info/main.c:157
@@ -7095,16 +7123,19 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.kappa/main.c:40
+#, fuzzy
 msgid "File name of classification result"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.kappa/main.c:46
+#, fuzzy
 msgid "File name of reference classes"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.kappa/main.c:52
+#, fuzzy
 msgid "Name of an output file containing of error matrix and kappa"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.kappa/main.c:58
 msgid "Title for error matrix and kappa"
@@ -7127,9 +7158,9 @@ msgid "Problem reading r.stats output"
 msgstr ""
 
 #: ../raster/r.kappa/stats.c:35
-#, c-format
+#, fuzzy, c-format
 msgid "%s: <%s> reference map not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.lake/main.c:46
 msgid "Saving new map"
@@ -7341,20 +7372,24 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.median/main.c:37 ../raster/r.statistics/main.c:51
+#, fuzzy
 msgid "Base raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.median/main.c:44 ../raster/r.statistics/main.c:58
+#, fuzzy
 msgid "Cover raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.median/main.c:51
+#, fuzzy
 msgid "Resultant raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.mfilter/main.c:35
+#, fuzzy
 msgid "Raster file matrix filter."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.mfilter/main.c:45 ../raster/r.resamp.rst/main.c:167
 #, fuzzy
@@ -7367,8 +7402,9 @@ msgid "Name of the output raster file"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.mfilter/main.c:60
+#, fuzzy
 msgid "Name of the filter file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.mfilter/main.c:68
 msgid "Number of times to repeat the filter"
@@ -7530,9 +7566,9 @@ msgstr ""
 
 #: ../raster/r.out.bin/main.c:145 ../raster/r.out.bin/main.c:231
 #: ../raster/r.out.bin/main.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.out.bin/main.c:339 ../vector/v.surf.rst/main.c:565
 #: ../vector/v.surf.rst/main.c:712
@@ -7691,8 +7727,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.out.ppm/main.c:52
+#, fuzzy
 msgid "Raster input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.out.ppm/main.c:61 ../raster/r.out.ppm3/main.c:73
 msgid "Name for new PPM file. (use out=- for stdout)"
@@ -7771,8 +7808,9 @@ msgid "error reading cell data"
 msgstr "출력할 래스터맵"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:420
+#, fuzzy
 msgid "Writing TIFF World file ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.out.tiff/r.out.tiff.c:423
 msgid "Got null file name"
@@ -8010,24 +8048,24 @@ msgid "Inappropriate window size (too big or even)"
 msgstr ""
 
 #: ../raster/r.param.scale/open_files.c:19
-#, c-format
+#, fuzzy, c-format
 msgid "Problem opening input file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.param.scale/open_files.c:26
 #: ../raster/r.param.scale/open_files.c:29
-#, c-format
+#, fuzzy, c-format
 msgid "Problem opening output file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.param.scale/process.c:67
 msgid "E-W and N-S grid resolutions are different. Taking average."
 msgstr ""
 
 #: ../raster/r.param.scale/write_cats.c:37
-#, c-format
+#, fuzzy, c-format
 msgid "can't write category file for <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.patch/main.c:42
 msgid ""
@@ -8126,20 +8164,24 @@ msgid "Invalid coordinates %s %s"
 msgstr ""
 
 #: ../raster/r.proj/main.c:133
+#, fuzzy
 msgid "Re-project a raster map from one location to the current location."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:139
+#, fuzzy
 msgid "Input raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:145
+#, fuzzy
 msgid "Location of input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:151
+#, fuzzy
 msgid "Mapset of input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:157 ../vector/v.proj/main.c:66
 msgid "Path to GRASS database of input location"
@@ -8154,8 +8196,9 @@ msgid "Resolution of output map"
 msgstr ""
 
 #: ../raster/r.proj/main.c:180
+#, fuzzy
 msgid "List raster files in input location and exit"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:184
 msgid "Do not perform region cropping optimization"
@@ -8171,41 +8214,48 @@ msgid "You have to use a different location for input than the current"
 msgstr ""
 
 #: ../raster/r.proj/main.c:209
+#, fuzzy
 msgid "Can't get projection info of output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:212
+#, fuzzy
 msgid "Can't get projection units of output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:215
+#, fuzzy
 msgid "Can't get projection key values of output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:241
-#, c-format
+#, fuzzy, c-format
 msgid "Input map [%s] in location [%s] in mapset [%s] not found."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:249
+#, fuzzy
 msgid "Can't get projection info of input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:252
+#, fuzzy
 msgid "Can't get projection units of input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:255
+#, fuzzy
 msgid "Can't get projection key values of input map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.proj/main.c:270
 msgid "Can't work with xy data"
 msgstr ""
 
 #: ../raster/r.proj/main.c:416
+#, fuzzy
 msgid "Error writing output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.quant/main.c:28
 msgid "This routine produces the quantization file for a floating-point map."
@@ -8596,9 +8646,9 @@ msgstr ""
 #: ../vector/v.surf.rst/main.c:589 ../vector/v.surf.rst/main.c:597
 #: ../vector/v.surf.rst/main.c:605 ../vector/v.surf.rst/main.c:614
 #: ../vector/v.surf.rst/main.c:622 ../vector/v.surf.rst/main.c:630
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open temp file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.resamp.rst/main.c:615 ../raster/r.resamp.rst/main.c:627
 #: ../raster/r.resamp.rst/main.c:639 ../raster/r.resamp.rst/main.c:652
@@ -8627,8 +8677,9 @@ msgid "Creating support files for %s..."
 msgstr ""
 
 #: ../raster/r.resample/main.c:143
+#, fuzzy
 msgid "creating new cats file..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.rescale/main.c:36
 msgid "Rescales the range of category values in a raster map layer."
@@ -8689,19 +8740,19 @@ msgid "Raster map not found."
 msgstr ""
 
 #: ../raster/r.series/main.c:159
-#, c-format
+#, fuzzy, c-format
 msgid "Raster file <%s> not found"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.series/main.c:162
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open input map <%s> in mapset <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.series/main.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to create output map <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.series/main.c:184
 #, c-format
@@ -9413,9 +9464,9 @@ msgid "Text to append to the next line of the map's metadata file"
 msgstr ""
 
 #: ../raster/r.support/front/front.c:84
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to find [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.support/front/front.c:104
 msgid "Not enough room in history file."
@@ -9538,9 +9589,9 @@ msgid "Which raster file needs a color table"
 msgstr ""
 
 #: ../raster/r.support/modcolr/modcolr.c:43
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to find file [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.support/modcolr/modcolr.c:51
 #, c-format
@@ -9779,8 +9830,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.surf.gauss/main.c:55 ../raster/r.surf.random/main.c:50
+#, fuzzy
 msgid "Name of the random surface to be produced"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.surf.gauss/main.c:60
 msgid "Distribution mean"
@@ -9813,9 +9865,9 @@ msgid "Can't read current region parameters"
 msgstr ""
 
 #: ../raster/r.surf.idw/main.c:118
-#, c-format
+#, fuzzy, c-format
 msgid "%s in %s -can't open raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.surf.idw/main.c:131
 #, c-format
@@ -9851,9 +9903,9 @@ msgid "%s: no data points found"
 msgstr ""
 
 #: ../raster/r.surf.idw2/main.c:94 ../vector/v.surf.idw/main.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "%s: can't create %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.surf.idw2/main.c:107
 msgid "Cannot get row"
@@ -9891,8 +9943,9 @@ msgid "Generate images with textural features from a raster map"
 msgstr ""
 
 #: ../raster/r.texture/main.c:82
+#, fuzzy
 msgid "Name of the input raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.texture/main.c:89
 #, fuzzy
@@ -9996,9 +10049,9 @@ msgid "output 3dcell map which will be filled with the 2D raster slices"
 msgstr ""
 
 #: ../raster/r.to.rast3/main.c:111
-#, c-format
+#, fuzzy, c-format
 msgid "RasterToG3D: Writing %i raster maps with rows %i cols."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.to.rast3/main.c:116
 #, c-format
@@ -10037,9 +10090,9 @@ msgid "Input maps have to be from the same type. CELL, FCELL or DCELL!"
 msgstr ""
 
 #: ../raster/r.to.vect/areas.c:122
-#, c-format
+#, fuzzy, c-format
 msgid "Extracting areas ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.to.vect/areas.c:737
 #, c-format
@@ -10054,9 +10107,9 @@ msgid ""
 msgstr ""
 
 #: ../raster/r.to.vect/lines.c:69
-#, c-format
+#, fuzzy, c-format
 msgid "Extracting lines ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.to.vect/lines.c:218
 #, c-format
@@ -10197,9 +10250,9 @@ msgid "Cannot insert into table: %s"
 msgstr ""
 
 #: ../raster/r.to.vect/points.c:36
-#, c-format
+#, fuzzy, c-format
 msgid "Extracting points ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.to.vect/points.c:118 ../vector/v.in.ogr/main.c:740
 #: ../vector/v.to.points/main.c:54
@@ -10208,31 +10261,33 @@ msgid "Cannot insert new row: %s"
 msgstr ""
 
 #: ../raster/r.topidx/file_io.c:32
-#, c-format
+#, fuzzy, c-format
 msgid "Reading elevation map:"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.topidx/file_io.c:65
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to read row %d in raster map [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.topidx/file_io.c:87
-#, c-format
+#, fuzzy, c-format
 msgid "Writing topographic index map:"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.topidx/main.c:42
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
 msgstr ""
 
 #: ../raster/r.topidx/main.c:46
+#, fuzzy
 msgid "Elevation map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.topidx/main.c:53
+#, fuzzy
 msgid "Topographic index ln(a/tanB) map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.topidx/main.c:60
 msgid "Output verbosely"
@@ -10451,14 +10506,14 @@ msgid "Nseg is %d"
 msgstr ""
 
 #: ../raster/r.walk/main.c:377
-#, c-format
+#, fuzzy, c-format
 msgid "Can't find starting vector %s "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.walk/main.c:423
-#, c-format
+#, fuzzy, c-format
 msgid "Can't find stop vector %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.walk/main.c:524 ../raster/r.walk/main.c:526
 #, c-format
@@ -10536,9 +10591,9 @@ msgid "Memory allocation error on reading start points from raster map %s"
 msgstr ""
 
 #: ../raster/r.walk/main.c:1366
-#, c-format
+#, fuzzy, c-format
 msgid "Writing output raster map %s ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/r.walk/main.c:1384 ../raster/r.walk/main.c:1420
 #, c-format
@@ -11396,20 +11451,24 @@ msgid "Name of the elevation raster file"
 msgstr "출력할 래스터맵"
 
 #: ../raster/simwe/r.sim.water/main.c:143
+#, fuzzy
 msgid "Name of the x-derivatives raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/simwe/r.sim.water/main.c:150
+#, fuzzy
 msgid "Name of the y-derivatives raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/simwe/r.sim.water/main.c:157
+#, fuzzy
 msgid "Name of the rainfall excess raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/simwe/r.sim.water/main.c:164
+#, fuzzy
 msgid "Name of the infiltration excess raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster/simwe/r.sim.water/main.c:171
 #, fuzzy
@@ -11889,12 +11948,14 @@ msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.cross.rast/main.c:378 ../raster3d/r3.cross.rast/main.c:402
 #: ../raster3d/r3.to.rast/main.c:367
+#, fuzzy
 msgid "unable to close output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.cross.rast/main.c:380
+#, fuzzy
 msgid "unable to close elevation map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.cross.rast/main.c:385
 msgid "Wrong G3D Datatype! Cannot create raster map."
@@ -12003,8 +12064,9 @@ msgid "Converts a 3D raster map layer into an ASCII text file"
 msgstr ""
 
 #: ../raster3d/r3.out.ascii/main.c:282
+#, fuzzy
 msgid "Error opening g3d file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.out.v5d/main.c:68
 msgid "3dcell map to be converted to Vis5d (v5d) file"
@@ -12100,9 +12162,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:197
-#, c-format
+#, fuzzy, c-format
 msgid "Open rgb g3d raster file %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.out.vtk/main.c:210
 msgid "No RGB Data will be created."
@@ -12117,9 +12179,9 @@ msgid "Error closing g3d rgb map."
 msgstr ""
 
 #: ../raster3d/r3.out.vtk/main.c:280
-#, c-format
+#, fuzzy, c-format
 msgid "Open vector g3d raster file %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.out.vtk/main.c:293
 msgid "No vector data will be created."
@@ -12263,9 +12325,9 @@ msgid ""
 msgstr ""
 
 #: ../raster3d/r3.to.rast/main.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "G3dToRaster: Writing %i raster maps with rows %i cols."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../raster3d/r3.to.rast/main.c:133
 #, fuzzy, c-format
@@ -12367,8 +12429,9 @@ msgid "Name of output vector map"
 msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.bspline/main.c:102 ../vector/v.surf.idw/main.c:84
+#, fuzzy
 msgid "Name of output raster map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.bspline/main.c:128
 #: ../vector/lidar/v.lidar.correction/main.c:115
@@ -12409,9 +12472,9 @@ msgstr ""
 
 #: ../vector/lidar/v.bspline/main.c:183 ../vector/lidar/v.bspline/main.c:200
 #: ../vector/lidar/v.outlier/main.c:182
-#, c-format
+#, fuzzy, c-format
 msgid "Vector <%s> could not be open at the topological level"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.bspline/main.c:189
 #, c-format
@@ -12438,9 +12501,9 @@ msgid "Vector <%s> could not be open"
 msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.bspline/main.c:233
-#, c-format
+#, fuzzy, c-format
 msgid "Raster <%s> already exist."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.bspline/main.c:236
 #, fuzzy, c-format
@@ -12599,9 +12662,9 @@ msgstr ""
 #: ../vector/lidar/v.lidar.correction/main.c:180
 #: ../vector/lidar/v.lidar.edgedetection/main.c:171
 #: ../vector/lidar/v.lidar.edgedetection/main.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Vector <%s> could not be opened"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.lidar.correction/main.c:194
 #: ../vector/lidar/v.lidar.edgedetection/main.c:186
@@ -12748,15 +12811,15 @@ msgid "Threshold for double pulse in region growing"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.growing/main.c:138
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot find input map <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.lidar.growing/main.c:144
 #: ../vector/lidar/v.lidar.growing/main.c:147
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open vector points map <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.lidar.growing/main.c:164
 #, c-format
@@ -12778,8 +12841,9 @@ msgid "Columns = %d"
 msgstr ""
 
 #: ../vector/lidar/v.lidar.growing/main.c:344
+#, fuzzy
 msgid "Region Growing"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.outlier/main.c:68 ../vector/v.kcv/main.c:76
 #: ../vector/v.normal/main.c:78 ../vector/v.qcount/main.c:67
@@ -12788,16 +12852,18 @@ msgid "vector, statistics"
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:69
+#, fuzzy
 msgid "Removes outliers from vector point data"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.outlier/main.c:81
 msgid "Name of output outlier vector map"
 msgstr ""
 
 #: ../vector/lidar/v.outlier/main.c:89
+#, fuzzy
 msgid "Name of vector map for visualization in qgis"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/lidar/v.outlier/main.c:135
 msgid "Threshold for the outliers"
@@ -12874,12 +12940,14 @@ msgid "2 layers must be specified"
 msgstr ""
 
 #: ../vector/v.category/main.c:183
+#, fuzzy
 msgid "Output vector wasn't entered."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/main.c:50
+#, fuzzy
 msgid "Toolset to clean vector topology"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/main.c:58
 msgid "Name of output map where errors are written"
@@ -13005,8 +13073,9 @@ msgid " %13e |"
 msgstr ""
 
 #: ../vector/v.clean/main.c:254
+#, fuzzy
 msgid "Copying vector lines ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/main.c:267 ../vector/v.clean/main.c:275
 #: ../vector/v.clean/main.c:283 ../vector/v.clean/main.c:340
@@ -13015,8 +13084,9 @@ msgid "--------------------------------------------------"
 msgstr ""
 
 #: ../vector/v.clean/main.c:273 ../vector/v.clean/main.c:281
+#, fuzzy
 msgid "Rebuilding parts of topology ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/main.c:289
 msgid "Tool: Break lines at intersections"
@@ -13077,12 +13147,14 @@ msgid "%d modifications done"
 msgstr ""
 
 #: ../vector/v.clean/main.c:344
+#, fuzzy
 msgid "Rebuilding topology for output vector ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/main.c:354
+#, fuzzy
 msgid "Building topology for error vector ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.clean/prune.c:57
 #, c-format
@@ -13146,8 +13218,9 @@ msgid "Failed opening input dig_att file."
 msgstr ""
 
 #: ../vector/v.convert/old2new.c:71
+#, fuzzy
 msgid "Attaching categories...\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/old2new.c:89
 #, c-format
@@ -13198,9 +13271,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.convert/read.c:161
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d points read to memory\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/read.c:162
 #, c-format
@@ -13218,9 +13291,9 @@ msgid "%-5d lines read and written to output\n"
 msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/read.c:167
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d area boundaries read and written to output\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/read.c:168
 #, c-format
@@ -13228,14 +13301,14 @@ msgid "%-5d dead points skipped\n"
 msgstr ""
 
 #: ../vector/v.convert/read.c:169
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead lines skipped\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/read.c:170
-#, c-format
+#, fuzzy, c-format
 msgid "%-5d dead area boundaries skipped\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.convert/read.c:171
 #, c-format
@@ -13360,8 +13433,9 @@ msgid "Please choose only one print style"
 msgstr ""
 
 #: ../vector/v.db.connect/main.c:146
+#, fuzzy
 msgid "Cannot edit vector map stored in other mapset."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.db.connect/main.c:154
 #, c-format
@@ -13374,14 +13448,14 @@ msgid "Database connection not defined for layer <%d>"
 msgstr ""
 
 #: ../vector/v.db.connect/main.c:190
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open database <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.db.connect/main.c:194
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open table <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.db.connect/main.c:227
 #, c-format
@@ -13444,8 +13518,9 @@ msgid "Cannot open select cursor"
 msgstr ""
 
 #: ../vector/v.db.select/main.c:144 ../vector/v.out.ogr/main.c:582
+#, fuzzy
 msgid "Cannot fetch data"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.digit/main.c:81
 #, fuzzy, c-format
@@ -13682,8 +13757,9 @@ msgid "points"
 msgstr ""
 
 #: ../vector/v.edit/add.c:60
+#, fuzzy
 msgid "centroids"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.edit/add.c:78
 msgid "point"
@@ -13838,9 +13914,9 @@ msgid "process file <%s> for category numbers\n"
 msgstr ""
 
 #: ../vector/v.extract/main.c:189
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open specified file <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.extract/main.c:195
 #, c-format
@@ -13857,13 +13933,14 @@ msgid "Load cats from the database (table = %s, db = %s).\n"
 msgstr ""
 
 #: ../vector/v.extract/main.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "%d cats loaded from the database\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.extract/main.c:278
+#, fuzzy
 msgid "Writing attributes ...\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.extract/main.c:307 ../vector/v.select/main.c:456
 #: ../vector/v.voronoi/vo_main.c:284
@@ -13882,9 +13959,9 @@ msgid "Cannot copy table"
 msgstr ""
 
 #: ../vector/v.extract/main.c:339
-#, c-format
+#, fuzzy, c-format
 msgid "Removing duplicate centroids ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.extrude/main.c:70
 msgid "Extrudes flat vector object to 3D with defined height"
@@ -13920,9 +13997,9 @@ msgid "One of [%s] or [%s] parameters must be set"
 msgstr ""
 
 #: ../vector/v.extrude/main.c:170
-#, c-format
+#, fuzzy, c-format
 msgid "Could not find input vector map %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.extrude/main.c:239 ../vector/v.extrude/main.c:307
 #, c-format
@@ -14071,9 +14148,9 @@ msgstr ""
 
 #: ../vector/v.in.ascii/in.c:353 ../vector/v.out.ogr/main.c:258
 #: ../vector/v.patch/main.c:134 ../vector/v.patch/main.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot describe table %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.in.ascii/in.c:360
 #, c-format
@@ -14360,19 +14437,19 @@ msgid "The vector '%s' already exists and will be overwritten."
 msgstr ""
 
 #: ../vector/v.in.ogr/main.c:232
-#, c-format
+#, fuzzy, c-format
 msgid "The vector '%s' already exists."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.in.ogr/main.c:270
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open data source: %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.in.ogr/main.c:315
-#, c-format
+#, fuzzy, c-format
 msgid "Layer '%s' not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.in.ogr/main.c:341
 msgid " 4 parameters required for 'spatial' parameter."
@@ -14549,14 +14626,14 @@ msgid "Only calculate optimal standard deviation and exit (no map is written)"
 msgstr ""
 
 #: ../vector/v.kernel/main.c:185
-#, c-format
+#, fuzzy, c-format
 msgid "Could not find input map '%s'."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:200
-#, c-format
+#, fuzzy, c-format
 msgid "Could not find network input map '%s'."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:220
 #, c-format
@@ -14564,14 +14641,14 @@ msgid "%d points outside threshold"
 msgstr ""
 
 #: ../vector/v.kernel/main.c:225
-#, c-format
+#, fuzzy, c-format
 msgid "illegal file name [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:229
-#, c-format
+#, fuzzy, c-format
 msgid "error opening raster map [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:245
 #, c-format
@@ -14622,15 +14699,16 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.kernel/main.c:364
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Writing output raster file using smooth parameter=%f."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:372
+#, fuzzy
 msgid "unable to read MASK"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.kernel/main.c:396
 #, c-format
@@ -14844,9 +14922,9 @@ msgid "'output' must be given for old version"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:109 ../vector/v.out.vtk/main.c:142
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot open file [%s]"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.out.ascii/out.c:126 ../vector/v.out.vtk/main.c:154
 msgid "dp has to be from 0 to 8"
@@ -14857,9 +14935,9 @@ msgid "dig_att file already exist"
 msgstr ""
 
 #: ../vector/v.out.ascii/out.c:139
-#, c-format
+#, fuzzy, c-format
 msgid "Not able to open dig_att file <%s>\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.out.dxf/main.c:48
 msgid "Exports GRASS vector files to DXF file format."
@@ -15093,9 +15171,9 @@ msgid "Cannot create new table"
 msgstr ""
 
 #: ../vector/v.patch/main.c:301
-#, c-format
+#, fuzzy, c-format
 msgid "    Patching file %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.patch/main.c:321
 #, c-format
@@ -15172,9 +15250,9 @@ msgid "Standard deviation of normal distribution must be >= zero"
 msgstr ""
 
 #: ../vector/v.perturb/main.c:153
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot not find input vector map <%s>"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.perturb/main.c:226
 msgid "Cannot get db link info"
@@ -15214,9 +15292,9 @@ msgid "Checking location %s, mapset %s:\n"
 msgstr ""
 
 #: ../vector/v.proj/main.c:125
-#, c-format
+#, fuzzy, c-format
 msgid "Vector file [%s] in location [%s] in mapset [%s] not available"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.proj/main.c:144
 #, fuzzy, c-format
@@ -15370,8 +15448,9 @@ msgid "cannot grant privileges on table %s"
 msgstr "출력할 래스터맵"
 
 #: ../vector/v.sample/main.c:229
+#, fuzzy
 msgid "Checking vector points ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.sample/main.c:254 ../vector/v.sample/main.c:262
 #, c-format
@@ -15383,9 +15462,9 @@ msgid "column type  not supported"
 msgstr ""
 
 #: ../vector/v.sample/main.c:288
-#, c-format
+#, fuzzy, c-format
 msgid "cannot insert row: %s"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.select/main.c:130
 msgid "Select features from ainput by features from binput"
@@ -15400,9 +15479,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.select/main.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "Could not find vector '%s'"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.select/main.c:213
 msgid "Processing ainput lines ..."
@@ -15441,9 +15520,9 @@ msgid "No attribute column specified"
 msgstr ""
 
 #: ../vector/v.surf.idw/main.c:241
-#, c-format
+#, fuzzy, c-format
 msgid "Interpolating raster map <%s> ... %d rows ... "
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.surf.idw/main.c:378
 msgid "Done          "
@@ -15455,9 +15534,9 @@ msgid "No record for line (cat = %d)"
 msgstr ""
 
 #: ../vector/v.surf.idw/read_sites.c:101
-#, c-format
+#, fuzzy, c-format
 msgid "%d points loaded\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.surf.rst/main.c:160
 msgid ""
@@ -15518,8 +15597,9 @@ msgid "Output aspect raster file"
 msgstr "출력할 래스터맵"
 
 #: ../vector/v.surf.rst/main.c:270
+#, fuzzy
 msgid "Output profile curvature raster file"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.surf.rst/main.c:277
 #, fuzzy
@@ -15689,8 +15769,9 @@ msgid "print only"
 msgstr "출력할 래스터맵"
 
 #: ../vector/v.to.db/parse.c:99
+#, fuzzy
 msgid "only print sql statements"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.to.db/parse.c:103
 msgid "In print mode prints totals for options: length,area,count"
@@ -15735,8 +15816,9 @@ msgid "Output map where points will be written"
 msgstr ""
 
 #: ../vector/v.to.points/main.c:171
+#, fuzzy
 msgid "Write line vertices."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.to.points/main.c:175
 msgid "Interpolate points between line vertices."
@@ -15824,12 +15906,14 @@ msgid "Cannot get layer information for vector map"
 msgstr ""
 
 #: ../vector/v.to.rast3/main.c:103
+#, fuzzy
 msgid "Can't create output map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.to.rast3/main.c:154
+#, fuzzy
 msgid "Could not close new g3d map"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.transform/ask_trans.c:84
 msgid "ask_transform_coor():  Leaving session.. \n"
@@ -15914,9 +15998,9 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.transform/main.c:213
-#, c-format
+#, fuzzy, c-format
 msgid "New vector map <%s> boundary coordinates:\n"
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../vector/v.transform/main.c:214
 #, c-format
@@ -16385,31 +16469,34 @@ msgid "Using private colormap for DirectColor visual."
 msgstr ""
 
 #: ../visualization/xganim/main.c:337
-#, c-format
+#, fuzzy, c-format
 msgid "Reading file [%s] ..."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../visualization/xganim/main.c:341
-#, c-format
+#, fuzzy, c-format
 msgid "%s: cellfile [%s] not found."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../visualization/xganim/main.c:346
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open cellfile [%s]."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../visualization/xganim/main.c:360
+#, fuzzy
 msgid "Unable to determine raster cell type."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../visualization/xganim/main.c:364
+#, fuzzy
 msgid "Unable to read color file."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #: ../visualization/xganim/main.c:517
+#, fuzzy
 msgid "Error reading wildcard."
-msgstr ""
+msgstr "출력할 래스터맵"
 
 #, fuzzy
 msgid "manual entry to be displayed"
@@ -16436,313 +16523,875 @@ msgid "Enter raster map to display in 2nd frame"
 msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Text of the message to be printed"
+msgid "Text of the message to be printed"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot read row from raster map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot write row to raster map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot write color table of raster map <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Red input raster map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Green input raster map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Blue input raster map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Number of seconds to pause between slides"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Enter command to execute in 1st frame"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Enter command to execute in 2nd frame"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Type of thematic display"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster to remove"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "3d raster to remove"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster, imagery"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Name of second raster map for blending"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Raster map in which to fill nulls"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster, mask"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster, elevation"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map for which to add new attribute table"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map for which to drop attribute column"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map for which to rename attribute column"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "vector, area, dissolve"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Name of raster map to calculate statistics from"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Column prefix for new attribute columns"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Name of data table"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Points vector map to modify"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Layer in the vector to be modified"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map to be queried"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Layer of the query vector containg data"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading vector map <%s in %s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Outlining areas in raster map <%s in %s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading raster map <%s in %s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading raster maps in group <%s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot open cell file of raster map <%s> in <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading <%s> in <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot read category file of raster map <%s> in <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading data: "
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Print raster map title only"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Raster map to use to setup sampling"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map to overlay"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "One or more input maps not found"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Writing raster map <%s> and vector map <%s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Writing raster map <%s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Writing vector map <%s> ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot insert new record: %s"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot read header file of <%s@%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot create reclass file of <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot create category file of <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster, resample"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot read category file of raster map <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Raster map from which to copy category table"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "raster3d, statistics"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Number of sub-ranges to collect stats from"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Action to be done"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Input vector map <%s> not found."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map <%s> is connected by:"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map <%s> not found in the current mapset"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "[%d] vertices removed"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Name of input vector points map"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Error loading vector points map <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot describe table <%s>"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Input vector map containing lines"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Output vector map of errors"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Input vector map containing reference points"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Cannot drop table: %s"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Input vector map containing points"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Operation to be performed"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Output vector map must be specified"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map <%s> not fould"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "3D vector maps only"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map title"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map projection zone"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading data trom the map ..."
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector map is not 3D"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Nothing to do"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Vector is not 3D"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "Reading raster map row %d"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+msgid "%s: o_open_file: raster map %s not found"
+msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open database <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to describe table <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read raster map <%s> row %d"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Failed writing raster map <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "No raster or vector map displayed"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open temporary file <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Draw title on current display"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open driver <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Renaming reclass maps"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Cannot read raster row [%d]"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "zero crossing raster map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name of shaded relief or aspect map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name of raster to drape over relief map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Drops a column from selected attribute table"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Table from which to drop attribute column"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name for output table"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Vector to remove"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Icon to remove"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Label to remove"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Group to remove"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name of raster plane to be created"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Rebuilds topology on all vector maps in the current mapset."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Vector map for which to edit attribute table"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Vector map to which to join other table"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Vector map from which to remove attribute table"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name of input file in Mapgen/Matlab format"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to create table: %s"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to insert row: %s"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Reading MAT-File..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Writing new raster map..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Failed writing raster map <%s> row %d"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Cannot open file <%s> to write header"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read color file for raster map <%s@%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read category file for raster map <%s@%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to create btree for raster map <%s@%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read raster map row %d"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to close raster map <%s@%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Failed writing raster map row"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read category labels of raster map <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "raster, map algebra"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Raster map too small for the size of the filter"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open weights file %s"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "%ld bytes written to '%s'"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "raster, geomorphology"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Cannot write category file for raster map <%s>"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "raster, projection"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name of input raster map to re-project"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Name for output raster map (default: input)"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "not found"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Recodes categorical raster maps."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to read f_range for map %s"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Reading raster map <%s>..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Raster map <%s> not found in current mapset"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Create an integer map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Prefix for ouput raster map(s)"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to insert into table: %s"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open drainage pointer map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to open new basin map"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to close new basin map layer"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Reading sites map (%s) ..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Unable to write et file"
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Reading inputs..."
+#~ msgstr "출력할 래스터맵"
+
+#, fuzzy
+#~ msgid "Reading %s... "
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot read row from raster map"
+#~ msgid "Recharge raster map in m^3/s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot write row to raster map"
+#~ msgid "Unable to write raster row"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot write color table of raster map <%s>"
+#~ msgid "Unable to create vector map <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Red input raster map"
+#~ msgid "Unable to read name of database"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Green input raster map"
+#~ msgid "Unable to read name of driver"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Blue input raster map"
+#~ msgid "Vector map <%s> not found in current mapset"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Number of seconds to pause between slides"
+#~ msgid "Missing column <%s> in table <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Enter command to execute in 1st frame"
+#~ msgid "Unable to fetch data from table"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Enter command to execute in 2nd frame"
+#~ msgid "Cannot rewrite line %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Type of thematic display"
+#~ msgid "%d lines broken"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster to remove"
+#~ msgid "Cannot connect line id %d to line %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "3d raster to remove"
+#~ msgid "%d lines connected"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster, imagery"
+#~ msgid "Cannot set category %d line %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Name of second raster map for blending"
+#~ msgid "Cannot delete layer/category [%d/%d] line %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Raster map in which to fill nulls"
+#~ msgid "Cannot delete line %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster, mask"
+#~ msgid "Unable to open ASCII file <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster, elevation"
+#~ msgid "Unable to open vector map <%s> at topological level %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map for which to add new attribute table"
+#~ msgid "%d lines merged"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map for which to drop attribute column"
+#~ msgid "%d features moved"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map for which to rename attribute column"
+#~ msgid "Cannot snap lines %d,%d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "vector, area, dissolve"
+#~ msgid "%d vertices moved"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Name of raster map to calculate statistics from"
+#~ msgid "%d lines modified"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Column prefix for new attribute columns"
+#~ msgid "%d vertices added"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Name of data table"
+#~ msgid "Output vector name was not specified"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Points vector map to modify"
+#~ msgid "No table"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Layer in the vector to be modified"
+#~ msgid "Unable to copy table"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map to be queried"
+#~ msgid "Extruding areas..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Layer of the query vector containg data"
+#~ msgid "Cannot select attributes for area %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading vector map <%s in %s> ..."
+#~ msgid "Unable to open select cursor: '%s'"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Outlining areas in raster map <%s in %s> ..."
+#~ msgid "Unable to open data source <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading raster map <%s in %s> ..."
+#~ msgid "Over-riding projection check"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading raster maps in group <%s> ..."
+#~ msgid "Name of creator: %s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot open cell file of raster map <%s> in <%s>"
+#~ msgid "Network input map <%s> not found"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading <%s> in <%s>"
+#~ msgid "Unable to open database for reference table"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot read category file of raster map <%s> in <%s>"
+#~ msgid "Unable to drop table: %s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading data: "
+#~ msgid "Unable to select line id values from %s.%s."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Print raster map title only"
+#~ msgid "Unable to fetch line id from line table"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Raster map to use to setup sampling"
+#~ msgid "Unable to select point attributes from <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map to overlay"
+#~ msgid "Unable to insert reference records: %s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "One or more input maps not found"
+#~ msgid "Building topology for output (out_lines) map..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Writing raster map <%s> and vector map <%s> ..."
+#~ msgid "Building topology for error (err) map..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Writing raster map <%s> ..."
+#~ msgid "Unable to select records from LRS table: %s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Writing vector map <%s> ..."
+#~ msgid "Unable to find line of cat [%d]"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot insert new record: %s"
+#~ msgid "Creating centroids..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot read header file of <%s@%s>"
+#~ msgid "Name of input point vector map"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot create reclass file of <%s>"
+#~ msgid "Point vector map must be specified"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot create category file of <%s>"
+#~ msgid "Threshold value must be specified"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster, resample"
+#~ msgid "Unable to open vector map <%s> at topology level %d"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot read category file of raster map <%s>"
+#~ msgid "Unable to open SVG file <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Raster map from which to copy category table"
+#~ msgid "Breaking lines..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "raster3d, statistics"
+#~ msgid "Cleaning boundaries at nodes..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Number of sub-ranges to collect stats from"
+#~ msgid "Querying vector map <%s>..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Action to be done"
+#~ msgid "Attribute not found"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Input vector map <%s> not found."
+#~ msgid "Unable to insert new record: '%s'"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map <%s> is connected by:"
+#~ msgid "Overlays two vector maps."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map <%s> not found in the current mapset"
+#~ msgid "Operator defines features written to output vector map"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "[%d] vertices removed"
+#~ msgid "Copying vector objects from vector map <%s>..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Name of input vector points map"
+#~ msgid "Collecting input attributes..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Error loading vector points map <%s>"
+#~ msgid "Unable to select attributes"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot describe table <%s>"
+#~ msgid "Unable to create table: '%s'"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Input vector map containing lines"
+#~ msgid ""
+#~ "Name for output vector map where bounding boxes of input vector maps are "
+#~ "written to"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Output vector map of errors"
+#~ msgid "Patching vector map <%s@%s>..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Input vector map containing reference points"
+#~ msgid "Building topology for vector map <%s>..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Cannot drop table: %s"
+#~ msgid "%d vector maps patched"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Input vector map containing points"
+#~ msgid "vector, projection"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Operation to be performed"
+#~ msgid "Re-projecting vector map..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Output vector map must be specified"
+#~ msgid "%d lines written to output map (%d lost)\n"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map <%s> not fould"
+#~ msgid "Unable to open history file for vector map <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "3D vector maps only"
+#~ msgid "Unable to fetch record"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map title"
+#~ msgid "Updating database..."
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map projection zone"
+#~ msgid "vector, transformation"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading data trom the map ..."
+#~ msgid "Name of table containing transformation parameters"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector map is not 3D"
+#~ msgid "Unable to tokenize column string: %s"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Nothing to do"
+#~ msgid "unable to open display"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Vector is not 3D"
+#~ msgid "unable to open image file"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "Reading raster map row %d"
+#~ msgid "Unable to create output raster map <%s>"
 #~ msgstr "출력할 래스터맵"
 
 #, fuzzy
-#~ msgid "%s: o_open_file: raster map %s not found"
+#~ msgid "Unalbe to open vector map <%s>"
 #~ msgstr "출력할 래스터맵"

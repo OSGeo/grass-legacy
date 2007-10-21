@@ -1294,10 +1294,12 @@ msgid " grid & text color   "
 msgstr "   cor da quadrícula e texto "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:152
+#, fuzzy
 msgid "draw border text  "
 msgstr "desenhar texto da borda"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:154
+#, fuzzy
 msgid " border color"
 msgstr " cor da borda"
 
@@ -1416,10 +1418,12 @@ msgid "Resolution (dpi) for printing and PDF "
 msgstr "Resolução (dpi) para impressão e PDF"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:299
+#, fuzzy
 msgid "Send to LPR printer*"
 msgstr "Enviar para impressora LPR*"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:308
+#, fuzzy
 msgid "Send to postscript device* "
 msgstr "Enviar para dispositivo postscript"
 
@@ -1560,14 +1564,17 @@ msgid "Run"
 msgstr "Executar"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:114
+#, fuzzy
 msgid "Run (Background)"
 msgstr "Executar (Segundo Plano)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:115
+#, fuzzy
 msgid "Run UI"
 msgstr "Executar interface de usuário"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116
+#, fuzzy
 msgid "Run in Xterm"
 msgstr "Executar em Xterm"
 
@@ -3769,1404 +3776,1817 @@ msgstr "Mapsets (acessíveis)"
 msgid "Use EPSG values"
 msgstr "Usar valores EPSG"
 
-#~ msgid "ASCII x,y,z values of cell centers"
-#~ msgstr "Valores ASCII x,y,z dos centros de célula"
+msgid "ASCII x,y,z values of cell centers"
+msgstr "Valores ASCII x,y,z dos centros de célula"
 
-#~ msgid "Raster 2.5D map to volume"
-#~ msgstr "Mapa raster 2,5D para volume"
+msgid "Raster 2.5D map to volume"
+msgstr "Mapa raster 2,5D para volume"
 
-#~ msgid "Resample (change resolution)"
-#~ msgstr "Reamostrar (mudar resoluç?o)"
+msgid "Resample (change resolution)"
+msgstr "Reamostrar (mudar resoluç?o)"
 
-#~ msgid "Resample using various interpolation methods"
-#~ msgstr "Reamostrar usando vários métodos de interpolaç?o"
+msgid "Resample using various interpolation methods"
+msgstr "Reamostrar usando vários métodos de interpolaç?o"
 
-#~ msgid "Resample using aggregate statistics"
-#~ msgstr "Reamostrar usando estatísticas agregadas"
+msgid "Resample using aggregate statistics"
+msgstr "Reamostrar usando estatísticas agregadas"
 
-#~ msgid "Display scale and north arrow"
-#~ msgstr "Exibir escala e norte"
+msgid "Display scale and north arrow"
+msgstr "Exibir escala e norte"
 
-#~ msgid "Scale placement: 0-100% from top left of display"
-#~ msgstr ""
-#~ "Posiç?o da escala: 0-100% a partir do canto superior esquerdo da tela"
+msgid "Scale placement: 0-100% from top left of display"
+msgstr "Posiç?o da escala: 0-100% a partir do canto superior esquerdo da tela"
 
-#~ msgid "\t enter x,y of scale/arrow upper left corner"
-#~ msgstr "\tdigite x,y da escala/seta canto superior esquerdo"
+msgid "\t enter x,y of scale/arrow upper left corner"
+msgstr "\tdigite x,y da escala/seta canto superior esquerdo"
 
-#~ msgid "\t "
-#~ msgstr "\t "
+msgid "\t "
+msgstr "\t "
 
-#~ msgid "place with mouse"
-#~ msgstr "posicionar com o mouse"
+msgid "place with mouse"
+msgstr "posicionar com o mouse"
 
-#~ msgid "  font "
-#~ msgstr "  fonte "
+msgid "  font "
+msgstr "  fonte "
 
-#~ msgid "Vector map for chart"
-#~ msgstr "Mapa vetorial para graficar:"
+msgid "Vector map for chart"
+msgstr "Mapa vetorial para graficar:"
 
-#~ msgid "chart for %s"
-#~ msgstr "gráficos para %s"
+msgid "chart for %s"
+msgstr "gráficos para %s"
 
-#~ msgid ""
-#~ "Display pie and bar charts of attribute values at vector object locations"
-#~ msgstr ""
-#~ "Exibir gráficos circulares e de barras dos valores de atributos nas posiç?"
-#~ "es do objeto vetorial"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
+msgstr ""
+"Exibir gráficos circulares e de barras dos valores de atributos nas posiç?es "
+"do objeto vetorial"
 
-#~ msgid "Attributes to chart: attribute layer"
-#~ msgstr "Atributo para gráfico: camada de atributos"
+msgid "Attributes to chart: attribute layer"
+msgstr "Atributo para gráfico: camada de atributos"
 
-#~ msgid "\tcolumns to chart (col1,col2,...)  "
-#~ msgstr "\tcolunas para gráfico (col1,col2,...)  "
+msgid "\tcolumns to chart (col1,col2,...)  "
+msgstr "\tcolunas para gráfico (col1,col2,...)  "
 
-#~ msgid "\tcolors for columns (clr1,clr2,...)"
-#~ msgstr "\tcores para colunas (cor1,cor2,...)"
+msgid "\tcolors for columns (clr1,clr2,...)"
+msgstr "\tcores para colunas (cor1,cor2,...)"
 
-#~ msgid "\tcolumn for variable chart size"
-#~ msgstr "\t coluna para a variável tamanho do gráfico"
+msgid "\tcolumn for variable chart size"
+msgstr "\t coluna para a variável tamanho do gráfico"
 
-#~ msgid "  scale factor"
-#~ msgstr "  fator de escala"
+msgid "  scale factor"
+msgstr "  fator de escala"
 
-#~ msgid "\tfixed chart size (if size column not used)"
-#~ msgstr "\ttamnho do gráfico(se coluna tamanho n?o for usada)"
+msgid "\tfixed chart size (if size column not used)"
+msgstr "\ttamnho do gráfico(se coluna tamanho n?o for usada)"
 
-#~ msgid "\tchart outline color:"
-#~ msgstr "\tcor da borda do gráfico:"
+msgid "\tchart outline color:"
+msgstr "\tcor da borda do gráfico:"
 
-#~ msgid "Display text"
-#~ msgstr "Exibir texto"
+msgid "Display text"
+msgstr "Exibir texto"
 
-#~ msgid "Text to display: "
-#~ msgstr "Texto a exibir: "
+msgid "Text to display: "
+msgstr "Texto a exibir: "
 
-#~ msgid "Text placement: x,y coordinates (from upper left) "
-#~ msgstr ""
-#~ "Posicionamento do texto: coordenadas x,y (a partir do canto superior "
-#~ "esquerdo) "
+msgid "Text placement: x,y coordinates (from upper left) "
+msgstr ""
+"Posicionamento do texto: coordenadas x,y (a partir do canto superior "
+"esquerdo) "
 
-#~ msgid "     text rotation (degrees)"
-#~ msgstr "     rotaç?o do texto (graus)"
+msgid "     text rotation (degrees)"
+msgstr "     rotaç?o do texto (graus)"
 
-#~ msgid "Text options: font "
-#~ msgstr "Opç?es do texto: fonte"
+msgid "Text options: font "
+msgstr "Opç?es do texto: fonte"
 
-#~ msgid "     text height in pixels "
-#~ msgstr "     altura do texto em pixels "
+msgid "     text height in pixels "
+msgstr "     altura do texto em pixels "
 
-#~ msgid "  line spacing"
-#~ msgstr "  espaçamento entre linhas"
+msgid "  line spacing"
+msgstr "  espaçamento entre linhas"
 
-#~ msgid "Divide map display into frames for displaying multiple maps"
-#~ msgstr "Dividir exibiç?o de mapas em quadros para exibir múltiplos mapas"
+msgid "Divide map display into frames for displaying multiple maps"
+msgstr "Dividir exibiç?o de mapas em quadros para exibir múltiplos mapas"
 
-#~ msgid "Frame name (optional): "
-#~ msgstr "Nome do quadro (opcional)"
+msgid "Frame name (optional): "
+msgstr "Nome do quadro (opcional)"
 
-#~ msgid "Set frame borders at 0-100% from lower left corner of display "
-#~ msgstr ""
-#~ "Configurar bordas do quadro a 0-100% do canto inferior esquerdo da tela "
+msgid "Set frame borders at 0-100% from lower left corner of display "
+msgstr ""
+"Configurar bordas do quadro a 0-100% do canto inferior esquerdo da tela "
 
-#~ msgid "     set borders (bottom,top,left,right): "
-#~ msgstr "    configurar bordas (baixo,cima,esquerda,direita): "
+msgid "     set borders (bottom,top,left,right): "
+msgstr "    configurar bordas (baixo,cima,esquerda,direita): "
 
-#~ msgid "Quit"
-#~ msgstr "Sair"
+msgid "Quit"
+msgstr "Sair"
 
-#~ msgid "Exit georectifier"
-#~ msgstr "Sair do Georretificador"
+msgid "Exit georectifier"
+msgstr "Sair do Georretificador"
 
-#~ msgid "Map Display %d"
-#~ msgstr "Tela de Mapa %d"
+msgid "Map Display %d"
+msgstr "Tela de Mapa %d"
 
-#~ msgid "Map Resource File"
-#~ msgstr "Arquivo de Recursos de Mapa"
+msgid "Map Resource File"
+msgstr "Arquivo de Recursos de Mapa"
 
-#~ msgid "All Files"
-#~ msgstr "Todos os arquivos"
+msgid "All Files"
+msgstr "Todos os arquivos"
 
-#~ msgid "DM Resource File"
-#~ msgstr "Arquivo de Recursos DM"
+msgid "DM Resource File"
+msgstr "Arquivo de Recursos DM"
 
-#~ msgid "Save File"
-#~ msgstr "Salvar arquivo"
+msgid "Save File"
+msgstr "Salvar arquivo"
 
-#~ msgid "Select default font for GRASS displays"
-#~ msgstr "Selecionar fonte de texto padrão"
+msgid "Select default font for GRASS displays"
+msgstr "Selecionar fonte de texto padrão"
 
-#~ msgid "Font: "
-#~ msgstr "Fonte:"
+msgid "Font: "
+msgstr "Fonte:"
 
-#~ msgid "Character encoding: "
-#~ msgstr "Codificaç?o de caracteres: "
+msgid "Character encoding: "
+msgstr "Codificaç?o de caracteres: "
 
-#~ msgid "Import raster map"
-#~ msgstr "Importar mapa raster"
+msgid "Import raster map"
+msgstr "Importar mapa raster"
 
-#~ msgid "Aggregate ASCII xyz"
-#~ msgstr "Agregar dados xyz ASCII"
+msgid "Aggregate ASCII xyz"
+msgstr "Agregar dados xyz ASCII"
 
-#~ msgid "ASCII grid"
-#~ msgstr "Malha ASCII"
+msgid "ASCII grid"
+msgstr "Malha ASCII"
 
-#~ msgid "ASCII polygons and lines"
-#~ msgstr "Polígonos e linhas ASCII"
+msgid "ASCII polygons and lines"
+msgstr "Polígonos e linhas ASCII"
 
-#~ msgid "Binary"
-#~ msgstr "Binário"
+msgid "Binary"
+msgstr "Binário"
 
-#~ msgid "ESRI grid"
-#~ msgstr "Malha ESRI"
+msgid "ESRI grid"
+msgstr "Malha ESRI"
 
-#~ msgid "GRIDATB.FOR"
-#~ msgstr "GRIDATB.FOR"
+msgid "GRIDATB.FOR"
+msgstr "GRIDATB.FOR"
 
-#~ msgid "MAT-File (v.4)"
-#~ msgstr "Arquivo MAT (v.4)"
+msgid "MAT-File (v.4)"
+msgstr "Arquivo MAT (v.4)"
 
-#~ msgid "SPOT NDVI"
-#~ msgstr "SPOT NDVI"
+msgid "SPOT NDVI"
+msgstr "SPOT NDVI"
 
-#~ msgid "SRTM hgt"
-#~ msgstr "hgt SRTM"
+msgid "SRTM hgt"
+msgstr "hgt SRTM"
 
-#~ msgid "Terra ASTER"
-#~ msgstr "Terra ASTER"
+msgid "Terra ASTER"
+msgstr "Terra ASTER"
 
-#~ msgid "Import vector map"
-#~ msgstr "Importar mapa vetorial"
+msgid "Import vector map"
+msgstr "Importar mapa vetorial"
 
-#~ msgid "Multiple formats using OGR"
-#~ msgstr "Múltiplos formatos usando OGR"
+msgid "Multiple formats using OGR"
+msgstr "Múltiplos formatos usando OGR"
 
-#~ msgid "ASCII points or GRASS ASCII vector"
-#~ msgstr "Pontos ASCII ou vetor ASCII do GRASS"
+msgid "ASCII points or GRASS ASCII vector"
+msgstr "Pontos ASCII ou vetor ASCII do GRASS"
 
-#~ msgid "Old GRASS vector"
-#~ msgstr "Formato vetorial antigo do GRASS"
+msgid "Old GRASS vector"
+msgstr "Formato vetorial antigo do GRASS"
 
-#~ msgid "DXF"
-#~ msgstr "DXF"
+msgid "DXF"
+msgstr "DXF"
 
-#~ msgid "ESRI e00"
-#~ msgstr "E00 ESRI"
+msgid "ESRI e00"
+msgstr "E00 ESRI"
 
-#~ msgid "Garmin GPS"
-#~ msgstr "GPS Garmin"
+msgid "Garmin GPS"
+msgstr "GPS Garmin"
 
-#~ msgid "GPSBabel GPS"
-#~ msgstr "GPSBabel GPS"
+msgid "GPSBabel GPS"
+msgstr "GPSBabel GPS"
 
-#~ msgid "GEOnet"
-#~ msgstr "GEOnet"
+msgid "GEOnet"
+msgstr "GEOnet"
 
-#~ msgid "Matlab and MapGen"
-#~ msgstr "Matlab e MapGen"
+msgid "Matlab and MapGen"
+msgstr "Matlab e MapGen"
 
-#~ msgid "Import grid 3D volume"
-#~ msgstr "Importar volumes 3D"
+msgid "Import grid 3D volume"
+msgstr "Importar volumes 3D"
 
-#~ msgid "ASCII 3D"
-#~ msgstr "ASCII 3D"
+msgid "ASCII 3D"
+msgstr "ASCII 3D"
 
-#~ msgid "Vis5D"
-#~ msgstr "Vis5D"
+msgid "Vis5D"
+msgstr "Vis5D"
 
-#~ msgid "Export raster map"
-#~ msgstr "Exportar mapa raster"
+msgid "Export raster map"
+msgstr "Exportar mapa raster"
 
-#~ msgid "ASCII x,y,z"
-#~ msgstr "ASCII x,y,z"
+msgid "ASCII x,y,z"
+msgstr "ASCII x,y,z"
 
-#~ msgid "ESRI ASCII grid"
-#~ msgstr "Grid ASCII ESRI"
+msgid "ESRI ASCII grid"
+msgstr "Grid ASCII ESRI"
 
-#~ msgid "MPEG-1"
-#~ msgstr "MPEG-1"
+msgid "MPEG-1"
+msgstr "MPEG-1"
 
-#~ msgid "PNG"
-#~ msgstr "PNG"
+msgid "PNG"
+msgstr "PNG"
 
-#~ msgid "PPM"
-#~ msgstr "PPM"
+msgid "PPM"
+msgstr "PPM"
 
-#~ msgid "PPM from RGB"
-#~ msgstr "PPM a partir do RGB"
+msgid "PPM from RGB"
+msgstr "PPM a partir do RGB"
 
-#~ msgid "POV-Ray"
-#~ msgstr "POV-Ray"
+msgid "POV-Ray"
+msgstr "POV-Ray"
 
-#~ msgid "TIFF"
-#~ msgstr "TIFF"
+msgid "TIFF"
+msgstr "TIFF"
 
-#~ msgid "VRML"
-#~ msgstr "VRML"
+msgid "VRML"
+msgstr "VRML"
 
-#~ msgid "VTK"
-#~ msgstr "VTK"
+msgid "VTK"
+msgstr "VTK"
 
-#~ msgid "Export vector map"
-#~ msgstr "Exportar mapa vetorial"
+msgid "Export vector map"
+msgstr "Exportar mapa vetorial"
 
-#~ msgid "SVG"
-#~ msgstr "SVG"
+msgid "SVG"
+msgstr "SVG"
 
-#~ msgid "Export grid 3D volume"
-#~ msgstr "Exportar volumes 3D"
+msgid "Export grid 3D volume"
+msgstr "Exportar volumes 3D"
 
-#~ msgid "List"
-#~ msgstr "Lista"
+msgid "List"
+msgstr "Lista"
 
-#~ msgid "List filtered"
-#~ msgstr "Lista filtrada"
+msgid "List filtered"
+msgstr "Lista filtrada"
 
-#~ msgid "Rename"
-#~ msgstr "Renomear"
+msgid "Rename"
+msgstr "Renomear"
 
-#~ msgid "Delete filtered"
-#~ msgstr "Excluir filtrado"
+msgid "Delete filtered"
+msgstr "Excluir filtrado"
 
-#~ msgid "Raster to vector"
-#~ msgstr "raster para vetor"
+msgid "Raster to vector"
+msgstr "raster para vetor"
 
-#~ msgid "Raster series to volume"
-#~ msgstr "Série de mapas raster para volume"
+msgid "Raster series to volume"
+msgstr "Série de mapas raster para volume"
 
-#~ msgid "Raster 2.5D to volume"
-#~ msgstr "Raster 2,5D para volume"
+msgid "Raster 2.5D to volume"
+msgstr "Raster 2,5D para volume"
 
-#~ msgid "Vector to volume"
-#~ msgstr "Vetor para volume"
+msgid "Vector to volume"
+msgstr "Vetor para volume"
 
-#~ msgid "Sites to vector"
-#~ msgstr "Sítios (GRASS 5.x) para vetor"
+msgid "Sites to vector"
+msgstr "Sítios (GRASS 5.x) para vetor"
 
-#~ msgid "Volume to raster series"
-#~ msgstr "Volumes para séries de raster"
+msgid "Volume to raster series"
+msgstr "Volumes para séries de raster"
 
-#~ msgid "Bearing/distance to coordinates"
-#~ msgstr "Azimute/distância para coordenadas"
+msgid "Bearing/distance to coordinates"
+msgstr "Azimute/distância para coordenadas"
 
-#~ msgid "PostScript plot"
-#~ msgstr "Gráfico PostScript"
+msgid "PostScript plot"
+msgstr "Gráfico PostScript"
 
-#~ msgid "Mapset access"
-#~ msgstr "Acesso ao mapset"
+msgid "Mapset access"
+msgstr "Acesso ao mapset"
 
-#~ msgid "Change working environment"
-#~ msgstr "Alterar ambiente de trabalho"
+msgid "Change working environment"
+msgstr "Alterar ambiente de trabalho"
 
-#~ msgid "User access"
-#~ msgstr "Acesso do usuário"
+msgid "User access"
+msgstr "Acesso do usuário"
 
-#~ msgid "Show settings"
-#~ msgstr "Exibir configurações"
+msgid "Show settings"
+msgstr "Exibir configurações"
 
-#~ msgid "Change settings"
-#~ msgstr "Alterar configurações"
+msgid "Change settings"
+msgstr "Alterar configurações"
 
-#~ msgid "Convert coordinates"
-#~ msgstr "Converter coordenadas"
+msgid "Convert coordinates"
+msgstr "Converter coordenadas"
 
-#~ msgid "Display font"
-#~ msgstr "Exibir fonte"
+msgid "Display font"
+msgstr "Exibir fonte"
 
-#~ msgid "Compress/decompress"
-#~ msgstr "Comprimir/descomprimir"
+msgid "Compress/decompress"
+msgstr "Comprimir/descomprimir"
 
-#~ msgid "Boundaries"
-#~ msgstr "Contornos"
+msgid "Boundaries"
+msgstr "Contornos"
 
-#~ msgid "Null values"
-#~ msgstr "Valores nulos"
+msgid "Null values"
+msgstr "Valores nulos"
 
-#~ msgid "Quantization"
-#~ msgstr "Quantizaç?o"
+msgid "Quantization"
+msgstr "Quantizaç?o"
 
-#~ msgid "Timestamps"
-#~ msgstr "Marcas de tempo"
+msgid "Timestamps"
+msgstr "Marcas de tempo"
 
-#~ msgid "Resample using multiple methods"
-#~ msgstr "Reamostrar usando mútliplos métodos"
+msgid "Resample using multiple methods"
+msgstr "Reamostrar usando mútliplos métodos"
 
-#~ msgid "Resample using nearest neighbor"
-#~ msgstr "Reamostrar usando método dos vizinhos mais próximos"
+msgid "Resample using nearest neighbor"
+msgstr "Reamostrar usando método dos vizinhos mais próximos"
 
-#~ msgid "Resample using spline tension"
-#~ msgstr "Reamostrar usando método da tens?o regularizada da spline"
+msgid "Resample using spline tension"
+msgstr "Reamostrar usando método da tens?o regularizada da spline"
 
-#~ msgid "Support file maintenance"
-#~ msgstr "Manutenç?o do arquivo de suporte"
+msgid "Support file maintenance"
+msgstr "Manutenç?o do arquivo de suporte"
 
-#~ msgid "Update map statistics"
-#~ msgstr "Atualizar estatísticas de mapa"
+msgid "Update map statistics"
+msgstr "Atualizar estatísticas de mapa"
 
-#~ msgid "Reproject"
-#~ msgstr "Reprojetar"
+msgid "Reproject"
+msgstr "Reprojetar"
 
-#~ msgid "Tiling"
-#~ msgstr "Mosaicagem"
+msgid "Tiling"
+msgstr "Mosaicagem"
 
-#~ msgid "Color tables"
-#~ msgstr "Tabela de cores"
+msgid "Color tables"
+msgstr "Tabela de cores"
 
-#~ msgid "Color rules"
-#~ msgstr "Regras de cor"
+msgid "Color rules"
+msgstr "Regras de cor"
 
-#~ msgid "Blend"
-#~ msgstr "Mistura"
+msgid "Blend"
+msgstr "Mistura"
 
-#~ msgid "Create RGB"
-#~ msgstr "Criar RGB"
+msgid "Create RGB"
+msgstr "Criar RGB"
 
-#~ msgid "HIS to RGB"
-#~ msgstr "HIS para RGB"
+msgid "HIS to RGB"
+msgstr "HIS para RGB"
 
-#~ msgid "Buffers"
-#~ msgstr "Buffers"
+msgid "Buffers"
+msgstr "Buffers"
 
-#~ msgid "Closest points"
-#~ msgstr "Pontos próximos"
+msgid "Closest points"
+msgstr "Pontos próximos"
 
-#~ msgid "MASK"
-#~ msgstr "MASK"
+msgid "MASK"
+msgstr "MASK"
 
-#~ msgid "Moving window"
-#~ msgstr "Janela móvel"
+msgid "Moving window"
+msgstr "Janela móvel"
 
-#~ msgid "Neighborhood points"
-#~ msgstr "Pontos da vizinhança"
+msgid "Neighborhood points"
+msgstr "Pontos da vizinhança"
 
-#~ msgid "Map series"
-#~ msgstr "Séries de mapas"
+msgid "Map series"
+msgstr "Séries de mapas"
 
-#~ msgid "Statistical overlay"
-#~ msgstr "Sobreposiç?o estatítica"
+msgid "Statistical overlay"
+msgstr "Sobreposiç?o estatítica"
 
-#~ msgid "Solar irradiance irradiation"
-#~ msgstr "Radiância solar e irradiaç?o"
+msgid "Solar irradiance irradiation"
+msgstr "Radiância solar e irradiaç?o"
 
-#~ msgid "Shadows map"
-#~ msgstr "Mapa de sombras"
+msgid "Shadows map"
+msgstr "Mapa de sombras"
 
-#~ msgid "Cumulative movement costs"
-#~ msgstr "Custo cumulativos de movimento"
+msgid "Cumulative movement costs"
+msgstr "Custo cumulativos de movimento"
 
-#~ msgid "Shaded relief"
-#~ msgstr "Relevo sombreado"
+msgid "Shaded relief"
+msgstr "Relevo sombreado"
 
-#~ msgid "Visibility"
-#~ msgstr "Visibilidade"
+msgid "Visibility"
+msgstr "Visibilidade"
 
-#~ msgid "Clump"
-#~ msgstr "Agrupar"
+msgid "Clump"
+msgstr "Agrupar"
 
-#~ msgid "Grow"
-#~ msgstr "Incrementar"
+msgid "Grow"
+msgstr "Incrementar"
 
-#~ msgid "Thin"
-#~ msgstr "Afina"
+msgid "Thin"
+msgstr "Afina"
 
-#~ msgid "Carve stream channels"
-#~ msgstr "Escavar canais de escoamento"
+msgid "Carve stream channels"
+msgstr "Escavar canais de escoamento"
 
-#~ msgid "Fill lake"
-#~ msgstr "Preencher lago"
+msgid "Fill lake"
+msgstr "Preencher lago"
 
-#~ msgid "Depressionless map and flowlines"
-#~ msgstr "Mapa de elevaç?o sem depress?es e linhas de fluxo"
+msgid "Depressionless map and flowlines"
+msgstr "Mapa de elevaç?o sem depress?es e linhas de fluxo"
 
-#~ msgid "Flow accumulation"
-#~ msgstr "Acumulaç?o de fluxo"
+msgid "Flow accumulation"
+msgstr "Acumulaç?o de fluxo"
 
-#~ msgid "Flow lines"
-#~ msgstr "Linhas de fluxo"
+msgid "Flow lines"
+msgstr "Linhas de fluxo"
 
-#~ msgid "SIMWE sediment flux modeling"
-#~ msgstr "Modelagem de fluxo de sedimentos SIMWE"
+msgid "SIMWE sediment flux modeling"
+msgstr "Modelagem de fluxo de sedimentos SIMWE"
 
-#~ msgid "Set up"
-#~ msgstr "Configuraç?o"
+msgid "Set up"
+msgstr "Configuraç?o"
 
-#~ msgid "Analyze landscape"
-#~ msgstr "Analisar relevo"
+msgid "Analyze landscape"
+msgstr "Analisar relevo"
 
-#~ msgid "Analyze patches"
-#~ msgstr "Analisar trechos"
+msgid "Analyze patches"
+msgstr "Analisar trechos"
 
-#~ msgid "Landscape patch analysis"
-#~ msgstr "Analisar parcelas da paisagem"
+msgid "Landscape patch analysis"
+msgstr "Analisar parcelas da paisagem"
 
-#~ msgid "Edge density"
-#~ msgstr "Densidade da fronteira"
+msgid "Edge density"
+msgstr "Densidade da fronteira"
 
-#~ msgid "Contrast weighted edge density"
-#~ msgstr "Densidade ponderada (contraste) da fronteira "
+msgid "Contrast weighted edge density"
+msgstr "Densidade ponderada (contraste) da fronteira "
 
-#~ msgid "Patch size mean"
-#~ msgstr "Tamanho médio da parcela"
+msgid "Patch size mean"
+msgstr "Tamanho médio da parcela"
 
-#~ msgid "Patch area range"
-#~ msgstr "Limite da superfície da parcela"
+msgid "Patch area range"
+msgstr "Limite da superfície da parcela"
 
-#~ msgid "Patch area Std Dev"
-#~ msgstr "Desvio padr?o de superficie de parcela"
+msgid "Patch area Std Dev"
+msgstr "Desvio padr?o de superficie de parcela"
 
-#~ msgid "Patch area Coeff Var"
-#~ msgstr "Variância da área das parcelas"
+msgid "Patch area Coeff Var"
+msgstr "Variância da área das parcelas"
 
-#~ msgid "Patch density"
-#~ msgstr "Densidade de parcelas"
+msgid "Patch density"
+msgstr "Densidade de parcelas"
 
-#~ msgid "Patch number"
-#~ msgstr "Número de parcelas"
+msgid "Patch number"
+msgstr "Número de parcelas"
 
-#~ msgid "Dominance's diversity"
-#~ msgstr "Diversidade de dominância"
+msgid "Dominance's diversity"
+msgstr "Diversidade de dominância"
 
-#~ msgid "Shannon's diversity"
-#~ msgstr "Diversidade de Shannon"
+msgid "Shannon's diversity"
+msgstr "Diversidade de Shannon"
 
-#~ msgid "Simpson's diversity"
-#~ msgstr "Diversidade de Simpson"
+msgid "Simpson's diversity"
+msgstr "Diversidade de Simpson"
 
-#~ msgid "Ricness"
-#~ msgstr "Ricness"
+msgid "Ricness"
+msgstr "Ricness"
 
-#~ msgid "Shape index"
-#~ msgstr "Índice de forma"
+msgid "Shape index"
+msgstr "Índice de forma"
 
-#~ msgid "Rate of spread"
-#~ msgstr "Raz?o de propagaç?o"
+msgid "Rate of spread"
+msgstr "Raz?o de propagaç?o"
 
-#~ msgid "Least-cost spread paths"
-#~ msgstr "Caminhos de espalhamento de custo mínimo"
+msgid "Least-cost spread paths"
+msgstr "Caminhos de espalhamento de custo mínimo"
 
-#~ msgid "Anisotropic spread simulation"
-#~ msgstr "Simulaç?o de espalhamento anisotrópico"
+msgid "Anisotropic spread simulation"
+msgstr "Simulaç?o de espalhamento anisotrópico"
 
-#~ msgid "Interactively edit category values"
-#~ msgstr "Editar valores de categorias interativamente"
+msgid "Interactively edit category values"
+msgstr "Editar valores de categorias interativamente"
 
-#~ msgid "Reclassify by size"
-#~ msgstr "Reclassificar por tamanho"
+msgid "Reclassify by size"
+msgstr "Reclassificar por tamanho"
 
-#~ msgid "Reclassify using rules"
-#~ msgstr "Reclassificar usando regras"
+#, fuzzy
+msgid "Reclassify using rules"
+msgstr "Reclassificar usando arquivo de regras"
 
-#~ msgid "Reclassify using rules file"
-#~ msgstr "Reclassificar usando arquivo de regras"
+msgid "Reclassify using rules file"
+msgstr "Reclassificar usando arquivo de regras"
 
-#~ msgid "Recode using rules"
-#~ msgstr "Recodificar usando regras"
+msgid "Recode using rules"
+msgstr "Recodificar usando regras"
 
-#~ msgid "Recode using rules file"
-#~ msgstr "Recodificar usando arquivo de regras"
+msgid "Recode using rules file"
+msgstr "Recodificar usando arquivo de regras"
 
-#~ msgid "Rescale"
-#~ msgstr "Escalonar"
+msgid "Rescale"
+msgstr "Escalonar"
 
-#~ msgid "Rescale with histogram"
-#~ msgstr "Rescalar com histograma"
+msgid "Rescale with histogram"
+msgstr "Rescalar com histograma"
 
-#~ msgid "Concentric circles"
-#~ msgstr "Círculos conc?ntricos"
+msgid "Concentric circles"
+msgstr "Círculos conc?ntricos"
 
-#~ msgid "Random cells"
-#~ msgstr "Células aleatórias"
+msgid "Random cells"
+msgstr "Células aleatórias"
 
-#~ msgid "Random cells and vector points"
-#~ msgstr "Células aleatórias e pontos vetoriais"
+msgid "Random cells and vector points"
+msgstr "Células aleatórias e pontos vetoriais"
 
-#~ msgid "Fractal surface"
-#~ msgstr "Superfície fractal"
+msgid "Fractal surface"
+msgstr "Superfície fractal"
 
-#~ msgid "Gausian kernal density surface"
-#~ msgstr "Superfície de desvios gaussianos"
+msgid "Gausian kernal density surface"
+msgstr "Superfície de desvios gaussianos"
 
-#~ msgid "Gaussian deviates surface"
-#~ msgstr "Superfície de desvios gaussianos"
+msgid "Gaussian deviates surface"
+msgstr "Superfície de desvios gaussianos"
 
-#~ msgid "Plane"
-#~ msgstr "Plano"
+msgid "Plane"
+msgstr "Plano"
 
-#~ msgid "Random deviates surface"
-#~ msgstr "Superfície de desvios aleatórios"
+msgid "Random deviates surface"
+msgstr "Superfície de desvios aleatórios"
 
-#~ msgid "Random surface with spatial dependence"
-#~ msgstr "Superfície aleatória com depend?ncia espacial"
+msgid "Random surface with spatial dependence"
+msgstr "Superfície aleatória com depend?ncia espacial"
 
-#~ msgid "Contour lines"
-#~ msgstr "Isolinhas"
+msgid "Contour lines"
+msgstr "Isolinhas"
 
-#~ msgid "Bilinear from raster points"
-#~ msgstr "Bilinear a partir dos pontos raster"
+msgid "Bilinear from raster points"
+msgstr "Bilinear a partir dos pontos raster"
 
-#~ msgid "Bilinear and bicubic from vector points"
-#~ msgstr "Bilinear e bicúbica a partir dos pontos vetoriais"
+msgid "Bilinear and bicubic from vector points"
+msgstr "Bilinear e bicúbica a partir dos pontos vetoriais"
 
-#~ msgid "IDW from raster points"
-#~ msgstr "IDW a partir dos pontos raster"
+msgid "IDW from raster points"
+msgstr "IDW a partir dos pontos raster"
 
-#~ msgid "IDW from vector points"
-#~ msgstr "IDW a partir dos pontos vetoriais"
+msgid "IDW from vector points"
+msgstr "IDW a partir dos pontos vetoriais"
 
-#~ msgid "Raster contours"
-#~ msgstr "Isolinhas raster"
+msgid "Raster contours"
+msgstr "Isolinhas raster"
 
-#~ msgid "Regularized spline tension"
-#~ msgstr "Tens?o regularizada da spline"
+msgid "Regularized spline tension"
+msgstr "Tens?o regularizada da spline"
 
-#~ msgid "Fill NULL cells"
-#~ msgstr "Preencher células NULAS"
+msgid "Fill NULL cells"
+msgstr "Preencher células NULAS"
 
-#~ msgid "Report category information"
-#~ msgstr "Relatar informaç?es de categoria"
+msgid "Report category information"
+msgstr "Relatar informaç?es de categoria"
 
-#~ msgid "Range of category values"
-#~ msgstr "Intervalo de valores de categorias"
+msgid "Range of category values"
+msgstr "Intervalo de valores de categorias"
 
-#~ msgid "Sum cell category values"
-#~ msgstr "Somar valores de categoria das células"
+msgid "Sum cell category values"
+msgstr "Somar valores de categoria das células"
 
-#~ msgid "Statistics for clumped cells (works with r.clump)"
-#~ msgstr "Estatísticas para células agrupadas (funciona com r.clump)"
+msgid "Statistics for clumped cells (works with r.clump)"
+msgstr "Estatísticas para células agrupadas (funciona com r.clump)"
 
-#~ msgid "Sample transects"
-#~ msgstr "Amostrar perfis"
+msgid "Sample transects"
+msgstr "Amostrar perfis"
 
-#~ msgid "Sample transects (bearing/distance)"
-#~ msgstr "Amostrar perfis (usa azimute, distância)"
+msgid "Sample transects (bearing/distance)"
+msgstr "Amostrar perfis (usa azimute, distância)"
 
-#~ msgid "Linear regression"
-#~ msgstr "Regress?o linear"
+msgid "Linear regression"
+msgstr "Regress?o linear"
 
-#~ msgid "Mutual category occurences"
-#~ msgstr "Ocorr?ncias mútuas de categoria"
+msgid "Mutual category occurences"
+msgstr "Ocorr?ncias mútuas de categoria"
 
-#~ msgid "Create points and line segments along a vector line"
-#~ msgstr "Criar pontos e segmentos ao longo de uma linha"
+msgid "Create points and line segments along a vector line"
+msgstr "Criar pontos e segmentos ao longo de uma linha"
 
-#~ msgid "Convert vector lines to points"
-#~ msgstr "Converter linhas vetoriais para pontos"
+msgid "Convert vector lines to points"
+msgstr "Converter linhas vetoriais para pontos"
 
-#~ msgid "Lidar object filtering and detection"
-#~ msgstr "Filtragem e detecç?o de objetos LIDAR"
+msgid "Lidar object filtering and detection"
+msgstr "Filtragem e detecç?o de objetos LIDAR"
 
-#~ msgid "Detect object edges in Lidar data"
-#~ msgstr "Detectar bordas de objetos em dados LIDAR"
+msgid "Detect object edges in Lidar data"
+msgstr "Detectar bordas de objetos em dados LIDAR"
 
-#~ msgid "Detect interior of objects in Lidar data"
-#~ msgstr "Detectar interior dos objetos no dado LIDAR"
+msgid "Detect interior of objects in Lidar data"
+msgstr "Detectar interior dos objetos no dado LIDAR"
 
-#~ msgid "Correct and reclassify objects detected in Lidar data"
-#~ msgstr "Corrigir e reclassificar objetos detectados no dado LIDAR"
+#, fuzzy
+msgid "Correct and reclassify objects detected in Lidar data"
+msgstr "Corrigir e reclassificar objetos detectados no dado LIDAR"
 
-#~ msgid "Create stationing from input lines and a linear reference system"
-#~ msgstr ""
-#~ "Criar estaç?es a partir das linhas de entrada e sistema de refer?ncia "
-#~ "linear"
+msgid "Create stationing from input lines and a linear reference system"
+msgstr ""
+"Criar estaç?es a partir das linhas de entrada e sistema de refer?ncia linear"
 
-#~ msgid "Create points and line segments along a linear reference system"
-#~ msgstr "Criar pontos e segmentos em um sistema de refer?ncia linear"
+msgid "Create points and line segments along a linear reference system"
+msgstr "Criar pontos e segmentos em um sistema de refer?ncia linear"
 
-#~ msgid ""
-#~ "Find line ID and real km+offset for given points in vector map using "
-#~ "linear reference system"
-#~ msgstr ""
-#~ "Encontra ID da linha e km+afastamento reais para pontos dados em mapa "
-#~ "vetorial usando sistema de refer?ncia linear"
+msgid ""
+"Find line ID and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr ""
+"Encontra ID da linha e km+afastamento reais para pontos dados em mapa "
+"vetorial usando sistema de refer?ncia linear"
 
-#~ msgid "Remove outliers from vector point set"
-#~ msgstr "Eliminar outliers do conjunto de pontos vetoriais"
+#, fuzzy
+msgid "Remove outliers from vector point set"
+msgstr "Eliminar outliers do conjunto de pontos vetoriais"
 
-#~ msgid "&Volumes"
-#~ msgstr "&Volumes"
+msgid "&Volumes"
+msgstr "&Volumes"
 
-#~ msgid "3D MASK"
-#~ msgstr "MÁSCARA 3D"
+msgid "3D MASK"
+msgstr "MÁSCARA 3D"
 
-#~ msgid "3D Map calculator"
-#~ msgstr "Calculadora de mapas 3D"
+msgid "3D Map calculator"
+msgstr "Calculadora de mapas 3D"
 
-#~ msgid "Cross section from volume"
-#~ msgstr "Seç?o transversal a partir do volume"
+msgid "Cross section from volume"
+msgstr "Seç?o transversal a partir do volume"
 
-#~ msgid "Interpolate volume from vector points"
-#~ msgstr "Interpolar volumes a partir dos pontos vetoriais"
+msgid "Interpolate volume from vector points"
+msgstr "Interpolar volumes a partir dos pontos vetoriais"
 
-#~ msgid "New table"
-#~ msgstr "Nova tabela"
+msgid "New table"
+msgstr "Nova tabela"
 
-#~ msgid "Remove table"
-#~ msgstr "Remover tabela"
+msgid "Remove table"
+msgstr "Remover tabela"
 
-#~ msgid "Add columns"
-#~ msgstr "Adicionar colunas"
+msgid "Add columns"
+msgstr "Adicionar colunas"
 
-#~ msgid "Change values"
-#~ msgstr "Alterar valores"
+msgid "Change values"
+msgstr "Alterar valores"
 
-#~ msgid "Rename a column"
-#~ msgstr "Renomear coluna"
+msgid "Rename a column"
+msgstr "Renomear coluna"
 
-#~ msgid "Query any table"
-#~ msgstr "Consultar qualquer tabela"
+msgid "Query any table"
+msgstr "Consultar qualquer tabela"
 
-#~ msgid "Query vector attribute table"
-#~ msgstr "Pesquisar tabela de atributos dos vetores"
+msgid "Query vector attribute table"
+msgstr "Pesquisar tabela de atributos dos vetores"
 
-#~ msgid "SQL statement"
-#~ msgstr "Instruç?o SQL"
+msgid "SQL statement"
+msgstr "Instruç?o SQL"
 
-#~ msgid "Reconnect vector to database"
-#~ msgstr "Reconectar mapa vetor a base de dados"
+msgid "Reconnect vector to database"
+msgstr "Reconectar mapa vetor a base de dados"
 
-#~ msgid "Set vector - database connection"
-#~ msgstr "Configurar conex?o vetor - base de dados"
+msgid "Set vector - database connection"
+msgstr "Configurar conex?o vetor - base de dados"
 
-#~ msgid "Map Layers for Display %s"
-#~ msgstr "Camada de mapas para exibir %s"
+msgid "Map Layers for Display %s"
+msgstr "Camada de mapas para exibir %s"
 
-#~ msgid "You must open a display before adding map layers"
-#~ msgstr "Voc? deve abrir um display antes de adicionar camadas de mapa"
+msgid "You must open a display before adding map layers"
+msgstr "Voc? deve abrir um display antes de adicionar camadas de mapa"
 
-#~ msgid "No layer selected"
-#~ msgstr "Nenhuma camada selecionada"
+msgid "No layer selected"
+msgstr "Nenhuma camada selecionada"
 
-#~ msgid ""
-#~ "Could not open file for writing.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossível abrir arquivo para escrita.\n"
-#~ "%s"
+msgid ""
+"Could not open file for writing.\n"
+"%s"
+msgstr ""
+"Impossível abrir arquivo para escrita.\n"
+"%s"
 
-#~ msgid "Loading layers..."
-#~ msgstr "Carregando camadas..."
+msgid "Loading layers..."
+msgstr "Carregando camadas..."
 
-#~ msgid "Can't open %s - bad file format"
-#~ msgstr "Impossível abrir %s - formato de arquivo incorreto"
+msgid "Can't open %s - bad file format"
+msgstr "Impossível abrir %s - formato de arquivo incorreto"
 
-#~ msgid "Layers loaded"
-#~ msgstr "Camadas carregadas"
+msgid "Layers loaded"
+msgstr "Camadas carregadas"
 
-#~ msgid "You can digitize raster or vector maps only"
-#~ msgstr "Só é possível digitalizar mapas raster ou vetor"
+msgid "You can digitize raster or vector maps only"
+msgstr "Só é possível digitalizar mapas raster ou vetor"
 
-#~ msgid "Display grid lines, and geodesic lines or rhumblines"
-#~ msgstr "Exibir quadrícula e linhas geodésicas ou rumo"
+msgid "Display grid lines, and geodesic lines or rhumblines"
+msgstr "Exibir quadrícula e linhas geodésicas ou rumo"
 
-#~ msgid "Grid options: "
-#~ msgstr "Opç?es de quadrícula: "
+msgid "Grid options: "
+msgstr "Opç?es de quadrícula: "
 
-#~ msgid "  grid text font "
-#~ msgstr "  fonte do texto da quadrícula"
+msgid "  grid text font "
+msgstr "  fonte do texto da quadrícula"
 
-#~ msgid "    grid size (map units)"
-#~ msgstr "    tamanho da malha (unidades de mapa)"
+msgid "    grid size (map units)"
+msgstr "    tamanho da malha (unidades de mapa)"
 
-#~ msgid " grid origin (east, north)"
-#~ msgstr "Origem da malha (leste, norte)"
+msgid " grid origin (east, north)"
+msgstr "Origem da malha (leste, norte)"
 
-#~ msgid "Geodesic and rhumblines for latlong locations only"
-#~ msgstr "Linhas geodésicas e rumos apenas para locaç?es latlong"
+msgid "Geodesic and rhumblines for latlong locations only"
+msgstr "Linhas geodésicas e rumos apenas para locaç?es latlong"
 
-#~ msgid " line color"
-#~ msgstr "Cor da Linha"
+msgid " line color"
+msgstr "Cor da Linha"
 
-#~ msgid " text color"
-#~ msgstr "Cor do Texto"
+msgid " text color"
+msgstr "Cor do Texto"
 
-#~ msgid "     line endpoints (x1,y1,x2,y2)"
-#~ msgstr "     finais de linha (x1,y1,x2,y2)"
+msgid "     line endpoints (x1,y1,x2,y2)"
+msgstr "     finais de linha (x1,y1,x2,y2)"
 
-#~ msgid "Raster map for histogram"
-#~ msgstr "Mapa raster para histograma"
+msgid "Raster map for histogram"
+msgstr "Mapa raster para histograma"
 
-#~ msgid "histogram of %s"
-#~ msgstr "histograma de %s"
+msgid "histogram of %s"
+msgstr "histograma de %s"
 
-#~ msgid "Draw histogram of values from raster map or image"
-#~ msgstr "Mostra histograma dos valores em mapa raster ou imagem"
+msgid "Draw histogram of values from raster map or image"
+msgstr "Mostra histograma dos valores em mapa raster ou imagem"
 
-#~ msgid "Raster to histogram: "
-#~ msgstr "Raster para histograma: "
+msgid "Raster to histogram: "
+msgstr "Raster para histograma: "
 
-#~ msgid "Graph style"
-#~ msgstr "Estilo de gráfico"
+msgid "Graph style"
+msgstr "Estilo de gráfico"
 
-#~ msgid "\ttext font "
-#~ msgstr "\tfonte para texto"
+msgid "\ttext font "
+msgstr "\tfonte para texto"
 
-#~ msgid "Histogram color: text & frame"
-#~ msgstr "Cor do histograma: texto e borda"
+msgid "Histogram color: text & frame"
+msgstr "Cor do histograma: texto e borda"
 
-#~ msgid "  background"
-#~ msgstr "  Plano de Fundo"
+msgid "  background"
+msgstr "  Plano de Fundo"
 
-#~ msgid "Steps/bins for values (fp maps only)"
-#~ msgstr "Passos/classes de valores (apenas mapas fp)"
+msgid "Steps/bins for values (fp maps only)"
+msgstr "Passos/classes de valores (apenas mapas fp)"
 
-#~ msgid "Labels for vectors"
-#~ msgstr "Rótulos para vetores"
+msgid "Labels for vectors"
+msgstr "Rótulos para vetores"
 
-#~ msgid "Display labels for vector objects (created with v.label)"
-#~ msgstr "Exibir rótulos para objetos vetoriais (criado com v.label)"
+msgid "Display labels for vector objects (created with v.label)"
+msgstr "Exibir rótulos para objetos vetoriais (criado com v.label)"
 
-#~ msgid "min"
-#~ msgstr "mín."
+msgid "min"
+msgstr "mín."
 
-#~ msgid "max"
-#~ msgstr "máx."
+msgid "max"
+msgstr "máx."
 
-#~ msgid "Launch v.label to create labels file"
-#~ msgstr "Lanças v.label para crias arquivo de rótulos"
+msgid "Launch v.label to create labels file"
+msgstr "Lanças v.label para crias arquivo de rótulos"
 
-#~ msgid "Raster map for legend"
-#~ msgstr "Mapa raster para legendar"
+msgid "Raster map for legend"
+msgstr "Mapa raster para legendar"
 
-#~ msgid "legend for %s"
-#~ msgstr "legenda para %s"
+msgid "legend for %s"
+msgstr "legenda para %s"
 
-#~ msgid "Display legend for raster map using cat values and labels"
-#~ msgstr ""
-#~ "Exibir legendas para mapa raster usando valores de categoria e rótulos"
+msgid "Display legend for raster map using cat values and labels"
+msgstr "Exibir legendas para mapa raster usando valores de categoria e rótulos"
 
-#~ msgid "Raster map: "
-#~ msgstr "Mapa raster: "
+msgid "Raster map: "
+msgstr "Mapa raster: "
 
-#~ msgid "Legend placement and size as 0-100% of display"
-#~ msgstr "Posiç?o da legenda e tamanho de 0-100% da tela"
+msgid "Legend placement and size as 0-100% of display"
+msgstr "Posiç?o da legenda e tamanho de 0-100% da tela"
 
-#~ msgid "    x,y of lower left corner (in % from display top left)"
-#~ msgstr ""
-#~ "    x,y a partir do canto inferior esquerdo (% do canto superior esquerdo "
-#~ "da tela)"
+msgid "    x,y of lower left corner (in % from display top left)"
+msgstr ""
+"    x,y a partir do canto inferior esquerdo (% do canto superior esquerdo da "
+"tela)"
 
-#~ msgid "    legend height "
-#~ msgstr "    altura da legenda "
+msgid "    legend height "
+msgstr "    altura da legenda "
 
-#~ msgid "Legend height (% of display)"
-#~ msgstr "Altura da legenda (% da tela)"
+msgid "Legend height (% of display)"
+msgstr "Altura da legenda (% da tela)"
 
-#~ msgid "%  width"
-#~ msgstr "Largura %"
+msgid "%  width"
+msgstr "Largura %"
 
-#~ msgid "Legend width (% of display)"
-#~ msgstr "Largura da legenda(% da tela)"
+msgid "Legend width (% of display)"
+msgstr "Largura da legenda(% da tela)"
 
-#~ msgid "  legend text font "
-#~ msgstr "Legenda: fonte do título"
+msgid "  legend text font "
+msgstr "Legenda: fonte do título"
 
-#~ msgid "    number of lines (0=display all):"
-#~ msgstr "    número de linhas (0= mostra tudo):"
+msgid "    number of lines (0=display all):"
+msgstr "    número de linhas (0= mostra tudo):"
 
-#~ msgid "Lines to display"
-#~ msgstr "Linhas para exibir"
+msgid "Lines to display"
+msgstr "Linhas para exibir"
 
-#~ msgid "    interval between categories (integer maps)"
-#~ msgstr "    intervalos de categorias (mapas de inteiros)"
+msgid "    interval between categories (integer maps)"
+msgstr "    intervalos de categorias (mapas de inteiros)"
 
-#~ msgid "Thinning interval"
-#~ msgstr "Intervalo de afinamento"
+msgid "Thinning interval"
+msgstr "Intervalo de afinamento"
 
-#~ msgid "with maximum of"
-#~ msgstr "com máximo de "
+msgid "with maximum of"
+msgstr "com máximo de "
 
-#~ msgid "Maximum lines to display for gradient"
-#~ msgstr "Máximo número de linhas gradiente a exibir"
+msgid "Maximum lines to display for gradient"
+msgstr "Máximo número de linhas gradiente a exibir"
 
-#~ msgid "Display legend for subset of raster values"
-#~ msgstr "Exibir legenda para o subconjunto dos valores do raster"
+msgid "Display legend for subset of raster values"
+msgstr "Exibir legenda para o subconjunto dos valores do raster"
 
-#~ msgid "    legend for only these categories     "
-#~ msgstr "    Legenda apenas para essas categorias    "
+msgid "    legend for only these categories     "
+msgstr "    Legenda apenas para essas categorias    "
 
-#~ msgid "    legend for only this range of values"
-#~ msgstr "    Legenda apenas para este limite de valores"
+msgid "    legend for only this range of values"
+msgstr "    Legenda apenas para este limite de valores"
 
-#~ msgid "Max zoom in reached"
-#~ msgstr "Máximo zoom alcançado"
+msgid "Max zoom in reached"
+msgstr "Máximo zoom alcançado"
 
-#~ msgid "please wait..."
-#~ msgstr "aguarde..."
+msgid "please wait..."
+msgstr "aguarde..."
 
-#~ msgid "You have to select map layer first"
-#~ msgstr "Voc? deve selecionar um mapa antes"
+msgid "You have to select map layer first"
+msgstr "Voc? deve selecionar um mapa antes"
 
-#~ msgid "No map layer selected"
-#~ msgstr "Nenhuma camada de mapa selecionada"
+msgid "No map layer selected"
+msgstr "Nenhuma camada de mapa selecionada"
 
-#~ msgid "Save Region"
-#~ msgstr "Salvar Região"
+msgid "Save Region"
+msgstr "Salvar Região"
 
-#~ msgid ""
-#~ "Region file %s already exists. \n"
-#~ "Do you want to overwrite it?"
-#~ msgstr ""
-#~ "Arquivo de regi?o %s já existe. \n"
-#~ "Deseja sobrescrever?"
+msgid ""
+"Region file %s already exists. \n"
+"Do you want to overwrite it?"
+msgstr ""
+"Arquivo de regi?o %s já existe. \n"
+"Deseja sobrescrever?"
 
-#~ msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
-#~ msgstr "Tela: linhas=%d cols=%d  res N-S=%g  res E-W=%g"
+msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
+msgstr "Tela: linhas=%d cols=%d  res N-S=%g  res E-W=%g"
 
-#~ msgid "Drag or click mouse to zoom"
-#~ msgstr "Arraste ou clique para aproximar"
+msgid "Drag or click mouse to zoom"
+msgstr "Arraste ou clique para aproximar"
 
-#~ msgid "Drag or click mouse to unzoom"
-#~ msgstr "Arraste ou clique para afastar"
+msgid "Drag or click mouse to unzoom"
+msgstr "Arraste ou clique para afastar"
 
-#~ msgid "Drag with mouse to pan"
-#~ msgstr "Arraste com o mouse para panorâmica"
+msgid "Drag with mouse to pan"
+msgstr "Arraste com o mouse para panorâmica"
 
-#~ msgid "Measurement"
-#~ msgstr "Medir"
+msgid "Measurement"
+msgstr "Medir"
 
-#~ msgid "Draw measure line with mouse"
-#~ msgstr "Desenhar linha de medida com o mouse"
+msgid "Draw measure line with mouse"
+msgstr "Desenhar linha de medida com o mouse"
 
-#~ msgid "Click to query feature"
-#~ msgstr "Clique para pesquisar feiç?o"
+msgid "Click to query feature"
+msgstr "Clique para pesquisar feiç?o"
 
-#~ msgid "This layer does not suppor queries"
-#~ msgstr "Esta camada n?o suporta buscas"
+#, fuzzy
+msgid "This layer does not suppor queries"
+msgstr "Esta camada n?o suporta buscas"
 
-#~ msgid "Not supported"
-#~ msgstr "N?o Suportado"
+#, fuzzy
+msgid "Not supported"
+msgstr "N?o Suportado"
 
-#~ msgid "You must select a map to query\n"
-#~ msgstr "Voc? deve selecionar um mapa para pesquisar\n"
+msgid "You must select a map to query\n"
+msgstr "Voc? deve selecionar um mapa para pesquisar\n"
 
-#~ msgid "This is font sample text."
-#~ msgstr "Um exemplo de texto"
+msgid "This is font sample text."
+msgstr "Um exemplo de texto"
 
-#~ msgid "Select label font"
+msgid "Select label font"
+msgstr "Selecionar fonte para rótulos"
+
+msgid "Create postscript labels for vector objects from v.labels file"
+msgstr "Criar camada de rótulos PostScript do arquivo de v.labels"
+
+msgid "  (for postscript eps, pdf, and print output only)"
+msgstr "  (apenas para saída impressa, PostScript EPS e PDF)"
+
+msgid " Label line max length: "
+msgstr "Comprimento máximo do rótulo"
+
+msgid "Enclose label in box: "
+msgstr "Caixa para o rótulo: "
+
+msgid "Draw label background: "
+msgstr "Desenhar segundo plano dos rótulos"
+
+msgid "Background color:"
+msgstr "Plano de Fundo "
+
+msgid "Draw box outline: "
+msgstr "Desenhar caixa:"
+
+msgid "Border width:"
+msgstr "Largura da borda:"
+
+msgid "Border color:"
+msgstr "Cor da borda"
+
+msgid "Distance between label and enclosing box. Horizontal: "
+msgstr "Distância entre rótulo e borda. Horizontal: "
+
+msgid " Vertical: "
+msgstr " Vertical: "
+
+msgid "Font"
+msgstr "Fonte"
+
+msgid "family:"
+msgstr "família"
+
+msgid "size:"
+msgstr "tamanho:"
+
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+"Criar objeto de texto PostScript (apenas para saída impressa, PostScript EPS "
+"e PDF)"
+
+msgid "Text to display:"
+msgstr "Texto a exibir: "
+
+msgid "  line width"
+msgstr "  Espessura da linha"
+
+msgid "Zoom to selected map"
+msgstr "Zoom para mapa selecionado"
+
+msgid "Save display geometry to named region"
+msgstr "Salvar geometria da tela para regi?o nomeada"
+
+msgid "Zoom to current region (set with g.region)"
+msgstr "Aproximar para regi?o atual (configure com g.region)"
+
+msgid "Set current region (WIND file) to match display"
+msgstr "Fazer regi?o atual (arquivo WIND) coincidir com display"
+
+msgid "low quality (50)"
+msgstr "baixa qualidade (50)"
+
+msgid "mid quality (75)"
+msgstr "qualidade média (75)"
+
+msgid "high quality (95)"
+msgstr "alta qualidade (95)"
+
+msgid "very high resolution (300% your current resolution)"
+msgstr "resoluç?o muito alta (300% da resoluç?o atual)"
+
+msgid "(* requires gdal)"
+msgstr "(* requer gdal)"
+
+msgid "No raster map selected"
+msgstr "Nenhum mapa raster selecionado"
+
+msgid "You must draw a transect to profile"
+msgstr "Voc? deve desenhar uma linha para o perfil"
+
+msgid "No transect drawn"
+msgstr "Nenhum perfil desenhado"
+
+msgid ""
+"Elevation range for selected raster is zero.\n"
+"No profile can be created."
+msgstr ""
+"Elevaç?o do raster é zero.\n"
+"Impossível criar perfil."
+
+msgid "Zero elevation range"
+msgstr "Limite para elevaç?o zero"
+
+msgid "Aspect map"
+msgstr "Mapa de aspecto (azimute)"
+
+msgid "arrows for %s"
+msgstr "setas para %s"
+
+msgid "Slope/intensity map"
+msgstr "Mapa de declividade/intensidade"
+
+msgid "Display arrows whose orientations are based on raster aspect map"
+msgstr ""
+"Exibis setas com orientaç?o baseada no mapa raster de orientaç?o (aspecto)"
+
+msgid "  (optionally, arrow lengths are based on slope or intensity map)"
+msgstr ""
+"  (opcionalmente, comprimento das setas baseado no mapa de declividade ou "
+"intensidade)"
+
+msgid "Aspect map: "
+msgstr "Mapa de aspecto (azimute)"
+
+msgid "    aspect value type"
+msgstr "    tipo do valor do aspecto"
+
+msgid "    draw arrows every Nth grid cell"
+msgstr "    desenhar setas a cada N-ésima célula da malha"
+
+msgid "    arrow color      "
+msgstr "    cor da seta      "
+
+msgid "     cell grid color"
+msgstr "    cor da célula"
+
+msgid "    null value color"
+msgstr "     cor para valor NULO"
+
+msgid "Slope/intensity map: "
+msgstr "Mapa de declividade/intensidade:"
+
+msgid "Raster drape map"
+msgstr "Mapa raster para sobrepor"
+
+msgid "Display raster maps"
+msgstr "Exibir mapas raster"
+
+msgid "Base map:\t"
+msgstr "Mapa map:\t"
+
+msgid "\tvalues to display"
+msgstr "\tvalores para exibir"
+
+msgid "\tOptional color draping. Use base map for shading,"
+msgstr "\tCor de cobertura opcional. Usar mapa base para sombrear."
+
+msgid "\tdrape map for color in color relief map or data fusion"
+msgstr ""
+"\tmapa de cobertura para cor em mapa de relevo colorido ou fus?o de dados"
+
+msgid "\tdrape map:  "
+msgstr "\tmapa de cobertura:  "
+
+msgid " Set background color (colored null value cells)"
+msgstr " Configurar cor de fundo (cor para células nulas)"
+
+msgid "cell values for %s"
+msgstr "valores de célula para %s"
+
+msgid "Display cell values from raster map or image"
+msgstr "Exibir valores de célula do mapa raster ou imagem"
+
+msgid "  (resolution must be 100x100 or less)"
+msgstr "..(resoluç?o deve ser 100x100 ou menos)"
+
+msgid "Raster to display: "
+msgstr "Raster para exibir: "
+
+msgid "Color for cell grid:       "
+msgstr "Cor para célula da malha:       "
+
+msgid "  cell values font "
+msgstr "  fonte para valores de célula"
+
+msgid "Color for cell values:   "
+msgstr "Cor para os valores de célula:   "
+
+msgid ""
+"Cell values can only be displayed\n"
+"for regions of < 10,000 cells"
+msgstr ""
+"Valores das células só podem ser exibidos\n"
+"para regi?es com < 10.000 células"
+
+msgid "RGB-HIS %s"
+msgstr "RGB-HIS %s"
+
+msgid "Raster map for blue or saturation channel"
+msgstr "Mapa raster para o canal azul ou saturaç?o"
+
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgstr "Exibir 3 mapas raster como canais RGB ou HIS."
+
+msgid "red (RGB) or hue (HIS): "
+msgstr "vermelho (RGB) ou matiz (HIS):"
+
+msgid "raster map for red or hue channel (HIS drape)"
+msgstr "mapa raster para o canal vermelho ou matiz (hue)"
+
+msgid "green (RGB) or intensity (HIS): "
+msgstr "verde (RGB) ou intensidade (HIS): "
+
+msgid "raster map for green or intensity channel (HIS relief)"
+msgstr "mapa raster para o canal verde ou intensidade (HIS)"
+
+msgid "blue (RGB) or saturation (HIS): "
+msgstr "azul (RGB) ou saturaç?o (HIS): "
+
+msgid "HIS brightness adjustment\t "
+msgstr "Ajuste de brillo HIS\t "
+
+msgid "Adjusts the HIS intensity channel brightness"
+msgstr "Ajusta o brihlo do canal de intensidade HIS"
+
+msgid "thematic map for %s"
+msgstr "mapa temático para %s"
+
+msgid "Select font"
+msgstr "Selecione a fonte"
+
+msgid "Vector point symbol"
+msgstr "Símbolo para pontos"
+
+msgid "Display vector maps thematically by graduate colors (all types)"
+msgstr "Exibir mapas vetor tematicamente por cor graduada (todos os tipos)"
+
+msgid "  or by graduated sizes (points and lines)"
+msgstr "  ou por tamanhos (pontos e linhas)"
+
+msgid " attribute layer"
+msgstr " camada de atributos"
+
+msgid "    NUMERIC attribute column to use for thematic map"
+msgstr "    Coluna de atributo NUMÉRICO para mapa temático"
+
+msgid "    number of intervals to map (interval themes):"
+msgstr "    número de intervalos para mapa (intervalo de temas)"
+
+msgid "    custom breakpoints (val val ...)  "
+msgstr "   pontos personalizados (val val ...)  "
+
+msgid "    query with SQL where clause   "
+msgstr "    busca com cláusula SQL where   "
+
+msgid "Graduated points & lines: "
+msgstr "Pontos e linhas graduados"
+
+msgid "    size/min size (graduated pts/lines)"
+msgstr "    tamanho/tamanho mínimo (pontos e linhas graduados)"
+
+msgid "icon size/min size (graduated pts/lines)"
+msgstr "tamanho/tamanho mínimo do ícone (pontos/linhas graduados)"
+
+msgid "max size (graduated pts)"
+msgstr "tamanho máximo (pontos graduados)"
+
+msgid " max size (graduated pts/lines)"
+msgstr " tamanho máx. (pontos/linhas graduados)"
+
+msgid "    custom color scheme - start color"
+msgstr "    esquema de cor personalizado - cor inicial"
+
+msgid " end color"
+msgstr "cor final"
+
+msgid " font color"
+msgstr " cor da fonte"
+
+msgid "Name for ps.map instruction files"
+msgstr "Nome para arquivo de instruç?es para ps.map"
+
+msgid "Legend for Map %d, %s"
+msgstr "Legenda para o mapa %d, %s"
+
+msgid "clear"
+msgstr "Limpar"
+
+msgid "save"
+msgstr "Salvar"
+
+msgid "Vector output map"
+msgstr "Mapa vetorial de saída"
+
+msgid "Display vector maps"
+msgstr "Exibir mapas vetoriais"
+
+msgid "Point symbols:"
+msgstr "Símbolos para pontos:"
+
+msgid " width"
+msgstr "largura"
+
+msgid "Line width"
+msgstr "Espessura da linha"
+
+msgid "(pixels) "
+msgstr "(pixels) "
+
+msgid " or <"
+msgstr "ou <"
+
+msgid "Load File"
+msgstr "Carregar arquivo"
+
+msgid "Select item"
+msgstr "Selecionar ítem"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "WARNING: cant get enviromental variable"
+msgstr "ATENÇ?O: impossível achar variável de ambiente"
+
+msgid ""
+"Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
+"This is a GRASS installation error. \n"
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
+msgstr ""
+"ATENÇ?O: Impossível obter variável de ambiente GRASS_PROJSHARE.\n"
+"Este é um erro de instalaç?o do GRASS.\n"
+"Configure a variável de ambiente GRASS_PROJSHARE ou aponte para o diretório "
+"com arquivo EPSG do Proj4."
+
+msgid "Define location using EPSG projection codes"
+msgstr "Mostra informaç?o da projeç?o e cria arquivos de projeç?o"
+
+msgid "Path to the EPSG-codes file"
+msgstr "Caminho para arquivo de códigos EPSG"
+
+msgid "Browse to locate EPSG file"
+msgstr "Procurar arquivo EPSG"
+
+msgid "EPSG code number of projection"
+msgstr "Código EPSG da projeç?o"
+
+msgid "Enter EPSG code for selected projection"
+msgstr "Digite um código EPSG para a projeç?o selecionada"
+
+msgid "View EPSG codes and projection information."
+msgstr "Ver códigos EPSG e informaç?es de projeç?o."
+
+msgid ""
+"WARNING: Please supply a\n"
+"valid EPSG code (integer)"
+msgstr ""
+"ATENÇ?O: Fornecer um código\n"
+"EPSG válido (inteiro)"
+
+msgid "WARNING: Error creating new location"
+msgstr "ATENÇ?O: Erro criando nova locaç?o"
+
+msgid ""
+"Error creating new location from EPSG code.  g.proj returned following "
+"message:\n"
+"\n"
+"%s"
+msgstr ""
+"Erro criando nova locaç?o do código EPSG.  g.proj retornou a seguinte "
+"mensagem:\n"
+"\n"
+"%s"
+
+#, fuzzy
+msgid "Select datum transform"
+msgstr "Selecione transformaç?o de datum"
+
+msgid "Datum transform number: "
+msgstr "Número de transformaç?o de Datum"
+
+msgid "Enter number of datum transform selected"
+msgstr "Digite o número da transformaç?o selecionada"
+
+msgid "You can select EPSG code (in <braces>) and copy it for later use."
+msgstr ""
+"Voc? pode selecionar o código EPSG (em <colchetes>) e copie para uso "
+"posterior."
+
+msgid "GUESS THAT IS NOT THE EPSG FILE"
+msgstr "ESTE N?O É O ARQUIVO EPSG"
+
+msgid "Grab code"
+msgstr "Usar Código"
+
+msgid "Search for entered text in EPSG file"
+msgstr "Procurar por texto no arquivo EPSG"
+
+msgid "forward search"
+msgstr "busca"
+
+msgid "backward search"
+msgstr "buscar para trás"
+
+msgid "Define location using projection information in georeferenced file"
+msgstr ""
+"Define locaç?o usando as informaç?es de projeç?o no arquivo georreferenciado"
+
+msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
+msgstr ""
+"Caminho para o arquivo georreferenciado (formato deve ser legível pela GDAL/"
+"OGR)"
+
+msgid "Browse to locate georeferenced file"
+msgstr "Procurar arquivo georreferenciado"
+
+msgid "Choose georeferenced file"
+msgstr "Caminho para arquivo georreferenciado"
+
+msgid ""
+"WARNING: Please supply a\n"
+"valid georeferenced file"
+msgstr ""
+"ATENÇ?O: Favor fornecer um\n"
+"arquivo georreferenciado válido"
+
+msgid ""
+"Error creating new location from georeferenced file.  g.proj returned "
+"following message:\n"
+"\n"
+"%s"
+msgstr ""
+"Erro criando nova locaç?o do arquivo georreferenciado.  g.proj retornou a "
+"seguinte mensagem:\n"
+"\n"
+"%s"
+
+msgid "WARNING: can not save"
+msgstr "ATENÇ?O: impossível salvar"
+
+msgid ""
+"Warning: unable to save data to <%s> file.\n"
+"Error message: %s"
+msgstr ""
+"ATENÇ?O: impossível salvar dados no arquivo <%s>.\n"
+"Mensagem de erro: %s"
+
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr ""
+"ATENÇ?O: locaç?o <%s> em GISDBASE <%s> n?o é um diretório ou n?o existe."
+
+msgid "Welcome to GRASS GIS Version"
+msgstr "Bem-vindo ao GRASS GIS Vers?o"
+
+msgid "WARNING: invalid mapset name"
+msgstr "ATENÇ?O: nome de mapset inválido"
+
+msgid ""
+"Warning: Mapset with name <%s> already exists. \n"
+"New mapset is NOT created. \n"
+"Choose different mapset name and try again."
+msgstr ""
+"ATENÇ?O: Mapset <%s> já existe. \n"
+"Novo mapset N?O foi criado.\n"
+"Escolha um nome de mapset diferente e tente novamente."
+
+msgid ""
+"Warning: selected location <%s> is not valid. \n"
+" New mapset is NOT created. \n"
+" Select valid location and try again."
+msgstr ""
+"ATENÇ?O: locaç?o selecionada <%s> é inválida.\n"
+"Novo mapset N?O foi criado.\n"
+"Selecione um locaç?o válida e tente novamente."
+
+msgid "WARNING: unable to mkdir"
+msgstr "ATENÇ?O: impossível criar diretório"
+
+msgid ""
+"Warning: Unable to create directory for new mapset. \n"
+"Error message: %s"
+msgstr ""
+"ATENÇ?O: Impossível criar diretório para novo mapset.\n"
+"Mensagem de erro: %s"
+
+msgid ""
+"Warning: selected location <%s> is not valid. \n"
+" Select valid location and try again."
+msgstr ""
+"ATENÇ?O: locaç?o selecionada <%s> é inválida.\n"
+"Selecione um locaç?o válida e tente novamente."
+
+msgid ""
+"Warning: selected location <%%s> is not valid. \n"
+" Select valid location and try again."
+msgstr ""
+"ATENÇ?O: locaç?o selecionada <%%s> é inválida.\n"
+"Selecione um locaç?o válida e tente novamente."
+
+msgid "Warning: <%%s> is not a valid mapset"
+msgstr "Atenção: <%%s> não é um mapset válido"
+
+msgid "WARNING: change directory failed"
+msgstr "ATENÇ?O: mudança de diretório falhou"
+
+msgid ""
+"Warning: could not change directory to <%s>.\n"
+"Check directory permissions."
+msgstr ""
+"ATENÇ?O: impossível mudar para diretório <%s>.\n"
+"Verifique permiss?es de diretório."
+
+msgid "Categories already opened"
+msgstr "Categorias já est?o abertas"
+
+msgid "Settings already opened"
+msgstr "Configuraç?es já est?o abertas"
+
+msgid "Set line width in pixels"
+msgstr "Ajustar a espessura da linha em pixels"
+
+msgid "Test"
+msgstr "Teste"
+
+#, fuzzy
+#~ msgid "Select GRASS display font"
 #~ msgstr "Selecionar fonte para rótulos"
 
-#~ msgid "Create postscript labels for vector objects from v.labels file"
-#~ msgstr "Criar camada de rótulos PostScript do arquivo de v.labels"
+#, fuzzy
+#~ msgid "Animate raster maps"
+#~ msgstr "Animar série de mapas raster"
 
-#~ msgid "  (for postscript eps, pdf, and print output only)"
-#~ msgstr "  (apenas para saída impressa, PostScript EPS e PDF)"
+#, fuzzy
+#~ msgid "NVIZ fly through path"
+#~ msgstr "Caminho de vôo para o NVIZ"
 
-#~ msgid " Label line max length: "
-#~ msgstr "Comprimento máximo do rótulo"
+#, fuzzy
+#~ msgid "Reclassify interactively"
+#~ msgstr "Reclassificar usando regras"
 
-#~ msgid "Enclose label in box: "
-#~ msgstr "Caixa para o rótulo: "
+#, fuzzy
+#~ msgid "Create/rebuild topology: "
+#~ msgstr "Criar/reconstruir topologia"
 
-#~ msgid "Draw label background: "
-#~ msgstr "Desenhar segundo plano dos rótulos"
+#, fuzzy
+#~ msgid "Clean vector"
+#~ msgstr "Limpar arquivos vetoriais"
 
-#~ msgid "Background color:"
-#~ msgstr "Plano de Fundo "
+#, fuzzy
+#~ msgid "Convert object types"
+#~ msgstr "Converter tipos de feiç?es vetoriais"
 
-#~ msgid "Draw box outline: "
-#~ msgstr "Desenhar caixa:"
+#, fuzzy
+#~ msgid "Add centroids"
+#~ msgstr "centróides"
 
-#~ msgid "Border width:"
-#~ msgstr "Largura da borda:"
+#, fuzzy
+#~ msgid "Split polylines"
+#~ msgstr "Separar linha"
 
-#~ msgid "Border color:"
-#~ msgstr "Cor da borda"
+#, fuzzy
+#~ msgid "Parallel lines"
+#~ msgstr "Desenhar linhas:"
 
-#~ msgid "Distance between label and enclosing box. Horizontal: "
-#~ msgstr "Distância entre rótulo e borda. Horizontal: "
+#, fuzzy
+#~ msgid "Dissolve boundaries"
+#~ msgstr "Dissolver fronteiras comuns"
 
-#~ msgid " Vertical: "
-#~ msgstr " Vertical: "
+#, fuzzy
+#~ msgid "Create 3D vector over raster"
+#~ msgstr "Criar buffers vetoriais"
 
-#~ msgid "Font"
-#~ msgstr "Fonte"
+#, fuzzy
+#~ msgid "Extrude 3D vector"
+#~ msgstr "Extrudar vetor 2D para vetor 3D"
 
-#~ msgid "family:"
-#~ msgstr "família"
+#, fuzzy
+#~ msgid "Create labels"
+#~ msgstr "Criar tabela"
 
-#~ msgid "size:"
-#~ msgstr "tamanho:"
+#, fuzzy
+#~ msgid "Reposition vector"
+#~ msgstr "Sítios (GRASS 5.x) para vetor"
 
-#~ msgid ""
-#~ "Create postscript text object (for postscript eps, pdf, and print output "
-#~ "only)"
+#, fuzzy
+#~ msgid "Reproject vector"
+#~ msgstr "Reprojetar"
+
+#, fuzzy
+#~ msgid "Query with attributes"
+#~ msgstr "Pesquisar por atributos"
+
+#, fuzzy
+#~ msgid "Query with coordinate(s)"
+#~ msgstr "Pesquisar por coordenada(s)"
+
+#, fuzzy
+#~ msgid "Buffer vectors"
+#~ msgstr "Consultar "
+
+#, fuzzy
+#~ msgid "Lidar analysis"
+#~ msgstr "Análise de bacias de drenagem"
+
+#, fuzzy
+#~ msgid "Linear referencing"
+#~ msgstr "Referenciamento linear para vetores"
+
+#, fuzzy
+#~ msgid "Create LRS"
+#~ msgstr "Criar RGB"
+
+#, fuzzy
+#~ msgid "Create stationing"
+#~ msgstr "Alterar configurações"
+
+#, fuzzy
+#~ msgid "Create points/segments"
+#~ msgstr "Criar novo mapset"
+
+#, fuzzy
+#~ msgid "Nearest features"
+#~ msgstr "Feiç?es texturais"
+
+#, fuzzy
+#~ msgid "Display shortest route"
+#~ msgstr "Caminho mais curto"
+
+#, fuzzy
+#~ msgid "Split net"
+#~ msgstr "Separar linha"
+
+#, fuzzy
+#~ msgid "Overlay"
+#~ msgstr "Sobrepor mapas"
+
+#, fuzzy
+#~ msgid "Patch (combine)"
+#~ msgstr "Remendar múltiplos mapas (combinar)"
+
+#, fuzzy
+#~ msgid "Manage or report categories"
+#~ msgstr "Anexar, apagar ou relatar categorias"
+
+#, fuzzy
+#~ msgid "Reclassify objects interactively"
+#~ msgstr "Reclassificar por tamanho"
+
+#, fuzzy
+#~ msgid "Generate area for current region"
+#~ msgstr "Gerar feiç?o de área para a extens?o da regi?o atual"
+
+#, fuzzy
+#~ msgid "Delaunay triangles"
+#~ msgstr "Gerar triângulos de Delaunay para o conjunto de pontos"
+
+#, fuzzy
+#~ msgid "Voronoi diagram/Thiessen polygons"
 #~ msgstr ""
-#~ "Criar objeto de texto PostScript (apenas para saída impressa, PostScript "
-#~ "EPS e PDF)"
+#~ "Gerar diagrama de Voronoi/polígonos de Thiessen para o conjunto de pontos"
 
-#~ msgid "Text to display:"
-#~ msgstr "Texto a exibir: "
+#, fuzzy
+#~ msgid "Generate grid"
+#~ msgstr "Gerar pontos"
 
-#~ msgid "  line width"
-#~ msgstr "  Espessura da linha"
+#, fuzzy
+#~ msgid "Generate points from database"
+#~ msgstr "Gerar pontos a partir de banco de dados com coordenadas x/y"
 
-#~ msgid "Zoom to selected map"
-#~ msgstr "Zoom para mapa selecionado"
-
-#~ msgid "Save display geometry to named region"
-#~ msgstr "Salvar geometria da tela para regi?o nomeada"
-
-#~ msgid "Zoom to current region (set with g.region)"
-#~ msgstr "Aproximar para regi?o atual (configure com g.region)"
-
-#~ msgid "Set current region (WIND file) to match display"
-#~ msgstr "Fazer regi?o atual (arquivo WIND) coincidir com display"
-
-#~ msgid "low quality (50)"
-#~ msgstr "baixa qualidade (50)"
-
-#~ msgid "mid quality (75)"
-#~ msgstr "qualidade média (75)"
-
-#~ msgid "high quality (95)"
-#~ msgstr "alta qualidade (95)"
-
-#~ msgid "very high resolution (300% your current resolution)"
-#~ msgstr "resoluç?o muito alta (300% da resoluç?o atual)"
-
-#~ msgid "(* requires gdal)"
-#~ msgstr "(* requer gdal)"
-
-#~ msgid "No raster map selected"
-#~ msgstr "Nenhum mapa raster selecionado"
-
-#~ msgid "You must draw a transect to profile"
-#~ msgstr "Voc? deve desenhar uma linha para o perfil"
-
-#~ msgid "No transect drawn"
-#~ msgstr "Nenhum perfil desenhado"
-
-#~ msgid ""
-#~ "Elevation range for selected raster is zero.\n"
-#~ "No profile can be created."
-#~ msgstr ""
-#~ "Elevaç?o do raster é zero.\n"
-#~ "Impossível criar perfil."
-
-#~ msgid "Zero elevation range"
-#~ msgstr "Limite para elevaç?o zero"
-
-#~ msgid "Aspect map"
-#~ msgstr "Mapa de aspecto (azimute)"
-
-#~ msgid "arrows for %s"
-#~ msgstr "setas para %s"
-
-#~ msgid "Slope/intensity map"
-#~ msgstr "Mapa de declividade/intensidade"
-
-#~ msgid "Display arrows whose orientations are based on raster aspect map"
-#~ msgstr ""
-#~ "Exibis setas com orientaç?o baseada no mapa raster de orientaç?o (aspecto)"
-
-#~ msgid "  (optionally, arrow lengths are based on slope or intensity map)"
-#~ msgstr ""
-#~ "  (opcionalmente, comprimento das setas baseado no mapa de declividade ou "
-#~ "intensidade)"
-
-#~ msgid "Aspect map: "
-#~ msgstr "Mapa de aspecto (azimute)"
-
-#~ msgid "    aspect value type"
-#~ msgstr "    tipo do valor do aspecto"
-
-#~ msgid "    draw arrows every Nth grid cell"
-#~ msgstr "    desenhar setas a cada N-ésima célula da malha"
-
-#~ msgid "    arrow color      "
-#~ msgstr "    cor da seta      "
-
-#~ msgid "     cell grid color"
-#~ msgstr "    cor da célula"
-
-#~ msgid "    null value color"
-#~ msgstr "     cor para valor NULO"
-
-#~ msgid "Slope/intensity map: "
-#~ msgstr "Mapa de declividade/intensidade:"
-
-#~ msgid "Raster drape map"
-#~ msgstr "Mapa raster para sobrepor"
-
-#~ msgid "Display raster maps"
-#~ msgstr "Exibir mapas raster"
-
-#~ msgid "Base map:\t"
-#~ msgstr "Mapa map:\t"
-
-#~ msgid "\tvalues to display"
-#~ msgstr "\tvalores para exibir"
-
-#~ msgid "\tOptional color draping. Use base map for shading,"
-#~ msgstr "\tCor de cobertura opcional. Usar mapa base para sombrear."
-
-#~ msgid "\tdrape map for color in color relief map or data fusion"
-#~ msgstr ""
-#~ "\tmapa de cobertura para cor em mapa de relevo colorido ou fus?o de dados"
-
-#~ msgid "\tdrape map:  "
-#~ msgstr "\tmapa de cobertura:  "
-
-#~ msgid " Set background color (colored null value cells)"
-#~ msgstr " Configurar cor de fundo (cor para células nulas)"
-
-#~ msgid "cell values for %s"
-#~ msgstr "valores de célula para %s"
-
-#~ msgid "Display cell values from raster map or image"
-#~ msgstr "Exibir valores de célula do mapa raster ou imagem"
-
-#~ msgid "  (resolution must be 100x100 or less)"
-#~ msgstr "..(resoluç?o deve ser 100x100 ou menos)"
-
-#~ msgid "Raster to display: "
-#~ msgstr "Raster para exibir: "
-
-#~ msgid "Color for cell grid:       "
-#~ msgstr "Cor para célula da malha:       "
-
-#~ msgid "  cell values font "
-#~ msgstr "  fonte para valores de célula"
-
-#~ msgid "Color for cell values:   "
-#~ msgstr "Cor para os valores de célula:   "
-
-#~ msgid ""
-#~ "Cell values can only be displayed\n"
-#~ "for regions of < 10,000 cells"
-#~ msgstr ""
-#~ "Valores das células só podem ser exibidos\n"
-#~ "para regi?es com < 10.000 células"
-
-#~ msgid "RGB-HIS %s"
-#~ msgstr "RGB-HIS %s"
-
-#~ msgid "Raster map for blue or saturation channel"
-#~ msgstr "Mapa raster para o canal azul ou saturaç?o"
-
-#~ msgid ""
-#~ "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation "
-#~ "channels"
-#~ msgstr "Exibir 3 mapas raster como canais RGB ou HIS."
-
-#~ msgid "red (RGB) or hue (HIS): "
-#~ msgstr "vermelho (RGB) ou matiz (HIS):"
-
-#~ msgid "raster map for red or hue channel (HIS drape)"
-#~ msgstr "mapa raster para o canal vermelho ou matiz (hue)"
-
-#~ msgid "green (RGB) or intensity (HIS): "
-#~ msgstr "verde (RGB) ou intensidade (HIS): "
-
-#~ msgid "raster map for green or intensity channel (HIS relief)"
-#~ msgstr "mapa raster para o canal verde ou intensidade (HIS)"
-
-#~ msgid "blue (RGB) or saturation (HIS): "
-#~ msgstr "azul (RGB) ou saturaç?o (HIS): "
-
-#~ msgid "HIS brightness adjustment\t "
-#~ msgstr "Ajuste de brillo HIS\t "
-
-#~ msgid "Adjusts the HIS intensity channel brightness"
-#~ msgstr "Ajusta o brihlo do canal de intensidade HIS"
-
-#~ msgid "thematic map for %s"
-#~ msgstr "mapa temático para %s"
-
-#~ msgid "Select font"
-#~ msgstr "Selecione a fonte"
-
-#~ msgid "Vector point symbol"
-#~ msgstr "Símbolo para pontos"
-
-#~ msgid "Display vector maps thematically by graduate colors (all types)"
-#~ msgstr "Exibir mapas vetor tematicamente por cor graduada (todos os tipos)"
-
-#~ msgid "  or by graduated sizes (points and lines)"
-#~ msgstr "  ou por tamanhos (pontos e linhas)"
-
-#~ msgid " attribute layer"
-#~ msgstr " camada de atributos"
-
-#~ msgid "    NUMERIC attribute column to use for thematic map"
-#~ msgstr "    Coluna de atributo NUMÉRICO para mapa temático"
-
-#~ msgid "    number of intervals to map (interval themes):"
-#~ msgstr "    número de intervalos para mapa (intervalo de temas)"
-
-#~ msgid "    custom breakpoints (val val ...)  "
-#~ msgstr "   pontos personalizados (val val ...)  "
-
-#~ msgid "    query with SQL where clause   "
-#~ msgstr "    busca com cláusula SQL where   "
-
-#~ msgid "Graduated points & lines: "
+#, fuzzy
+#~ msgid "Generate points along lines"
 #~ msgstr "Pontos e linhas graduados"
 
-#~ msgid "    size/min size (graduated pts/lines)"
-#~ msgstr "    tamanho/tamanho mínimo (pontos e linhas graduados)"
+#, fuzzy
+#~ msgid "Perturb points"
+#~ msgstr "Gerar pontos"
 
-#~ msgid "icon size/min size (graduated pts/lines)"
-#~ msgstr "tamanho/tamanho mínimo do ícone (pontos/linhas graduados)"
+#, fuzzy
+#~ msgid "Update area attributes from raster"
+#~ msgstr "atributos "
 
-#~ msgid "max size (graduated pts)"
-#~ msgstr "tamanho máximo (pontos graduados)"
+#, fuzzy
+#~ msgid "Update point attributes from areas"
+#~ msgstr "atributos "
 
-#~ msgid " max size (graduated pts/lines)"
-#~ msgstr " tamanho máx. (pontos/linhas graduados)"
+#, fuzzy
+#~ msgid "Update point attributes from raster"
+#~ msgstr "atributos "
 
-#~ msgid "    custom color scheme - start color"
-#~ msgstr "    esquema de cor personalizado - cor inicial"
+#, fuzzy
+#~ msgid "Univariate attribute statistics"
+#~ msgstr "Estatísticas univariadas"
 
-#~ msgid " end color"
-#~ msgstr "cor final"
+#, fuzzy
+#~ msgid "Create/edit group"
+#~ msgstr "2. Criar/editar grupo"
 
-#~ msgid " font color"
-#~ msgstr " cor da fonte"
+#, fuzzy
+#~ msgid "Target group"
+#~ msgstr "Grupo de imagens alvo"
 
-#~ msgid "Name for ps.map instruction files"
-#~ msgstr "Nome para arquivo de instruç?es para ps.map"
+#, fuzzy
+#~ msgid "Mosaic images"
+#~ msgstr "acima para adjacente"
 
-#~ msgid "Legend for Map %d, %s"
-#~ msgstr "Legenda para o mapa %d, %s"
+#, fuzzy
+#~ msgid "RGB to HIS"
+#~ msgstr "Adicionar camada RGB ou HIS"
 
-#~ msgid "clear"
-#~ msgstr "Limpar"
+#, fuzzy
+#~ msgid "Edge detection"
+#~ msgstr "direções das linhas"
 
-#~ msgid "save"
-#~ msgstr "Salvar"
+#, fuzzy
+#~ msgid "Matrix/convolving filter"
+#~ msgstr "Usuário"
 
-#~ msgid "Vector output map"
-#~ msgstr "Mapa vetorial de saída"
+#, fuzzy
+#~ msgid "Canonical correlation"
+#~ msgstr "Componente canônico"
 
-#~ msgid "Display vector maps"
-#~ msgstr "Exibir mapas vetoriais"
+#, fuzzy
+#~ msgid "Principal components"
+#~ msgstr "Principal"
 
-#~ msgid "Point symbols:"
-#~ msgstr "Símbolos para pontos:"
+#, fuzzy
+#~ msgid "Fast Fourier"
+#~ msgstr "Rápido"
 
-#~ msgid " width"
-#~ msgstr "largura"
+#, fuzzy
+#~ msgid "Inverse Fast Fourier"
+#~ msgstr "Rápido"
 
-#~ msgid "Line width"
-#~ msgstr "Espessura da linha"
+#, fuzzy
+#~ msgid "Bit pattern comparison"
+#~ msgstr "ID de"
 
-#~ msgid "(pixels) "
-#~ msgstr "(pixels) "
+#, fuzzy
+#~ msgid "Kappa analysis"
+#~ msgstr "Analisar parcelas da paisagem"
 
-#~ msgid " or <"
-#~ msgstr "ou <"
+#, fuzzy
+#~ msgid "OIF for LandSat TM"
+#~ msgstr "Fator índice ótimo para Landsat TM"
 
-#~ msgid "Load File"
-#~ msgstr "Carregar arquivo"
+#, fuzzy
+#~ msgid "grid color "
+#~ msgstr "cor da malha"
 
-#~ msgid "Select item"
+#, fuzzy
+#~ msgid "text color "
+#~ msgstr "Cor do Texto"
+
+#, fuzzy
+#~ msgid "text font "
+#~ msgstr "\tfonte para texto"
+
+#, fuzzy
+#~ msgid "  text size"
+#~ msgstr " tamanho do texto"
+
+#, fuzzy
+#~ msgid "Grid text size in points"
+#~ msgstr "Digitalizar novo ponto"
+
+#, fuzzy
+#~ msgid "draw grid border "
+#~ msgstr "desenhar borda da malha"
+
+#, fuzzy
+#~ msgid "r.info error"
+#~ msgstr "erro seguinte"
+
+#, fuzzy
+#~ msgid "Ghostscript not available"
+#~ msgstr "Adicionar camada de texto PostScript"
+
+#, fuzzy
+#~ msgid "Create flythough path for NVIZ"
+#~ msgstr "Caminho de vôo para o NVIZ"
+
+#, fuzzy
+#~ msgid "r.univar error"
+#~ msgstr "erro seguinte"
+
+#, fuzzy
+#~ msgid "base map info"
+#~ msgstr "Mapa raster: "
+
+#, fuzzy
+#~ msgid "drape map info"
+#~ msgstr "\tmapa de cobertura:  "
+
+#, fuzzy
+#~ msgid "Select input map"
 #~ msgstr "Selecionar ítem"
 
-#~ msgid "Ok"
-#~ msgstr "Ok"
+#, fuzzy
+#~ msgid "Overwrite existing file"
+#~ msgstr "sobrescrever existente"
 
-#~ msgid "WARNING: cant get enviromental variable"
-#~ msgstr "ATENÇ?O: impossível achar variável de ambiente"
+#, fuzzy
+#~ msgid "You must select an input map"
+#~ msgstr "Voc? deve selecionar um mapa para pesquisar\n"
 
-#~ msgid ""
-#~ "Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
-#~ "This is a GRASS installation error. \n"
-#~ "Set enviromental variable GRASS_PROJSHARE to point to directory with "
-#~ "Proj4 EPSG file. "
-#~ msgstr ""
-#~ "ATENÇ?O: Impossível obter variável de ambiente GRASS_PROJSHARE.\n"
-#~ "Este é um erro de instalaç?o do GRASS.\n"
-#~ "Configure a variável de ambiente GRASS_PROJSHARE ou aponte para o "
-#~ "diretório com arquivo EPSG do Proj4."
+#, fuzzy
+#~ msgid "No input map selected"
+#~ msgstr "Nenhum mapa raster selecionado"
 
-#~ msgid "Define location using EPSG projection codes"
-#~ msgstr "Mostra informaç?o da projeç?o e cria arquivos de projeç?o"
+#, fuzzy
+#~ msgid "No output map specified"
+#~ msgstr "Nenhum mapa raster selecionado"
 
-#~ msgid "Path to the EPSG-codes file"
-#~ msgstr "Caminho para arquivo de códigos EPSG"
+#, fuzzy
+#~ msgid "Error creating rules file"
+#~ msgstr "Recodificar usando arquivo de regras"
 
-#~ msgid "Browse to locate EPSG file"
-#~ msgstr "Procurar arquivo EPSG"
+#, fuzzy
+#~ msgid "Vector Info"
+#~ msgstr "Vetor:"
 
-#~ msgid "EPSG code number of projection"
-#~ msgstr "Código EPSG da projeç?o"
+#, fuzzy
+#~ msgid "Select maps to animate"
+#~ msgstr "mapa vetorial para graficar"
 
-#~ msgid "Enter EPSG code for selected projection"
-#~ msgstr "Digite um código EPSG para a projeç?o selecionada"
+#, fuzzy
+#~ msgid "Rewind animation"
+#~ msgstr "animações MPEG-1"
 
-#~ msgid "View EPSG codes and projection information."
-#~ msgstr "Ver códigos EPSG e informaç?es de projeç?o."
+#, fuzzy
+#~ msgid "Replay animation"
+#~ msgstr "animações MPEG-1"
 
-#~ msgid ""
-#~ "WARNING: Please supply a\n"
-#~ "valid EPSG code (integer)"
-#~ msgstr ""
-#~ "ATENÇ?O: Fornecer um código\n"
-#~ "EPSG válido (inteiro)"
+#, fuzzy
+#~ msgid "Stop animation"
+#~ msgstr "animações MPEG-1"
 
-#~ msgid "WARNING: Error creating new location"
+#, fuzzy
+#~ msgid "Play animation"
+#~ msgstr "animações MPEG-1"
+
+#, fuzzy
+#~ msgid "Slower animation"
+#~ msgstr "Acumulaç?o de fluxo"
+
+#, fuzzy
+#~ msgid "Faster animation"
+#~ msgstr "Mapa raster"
+
+#, fuzzy
+#~ msgid "Quit animation"
+#~ msgstr "Quantizaç?o"
+
+#, fuzzy
+#~ msgid "Select maps"
+#~ msgstr "4. Selecionar mapa"
+
+#, fuzzy
+#~ msgid "Maps for Animation"
+#~ msgstr "Básico"
+
+#, fuzzy
+#~ msgid "Maps for frame 2 (optional): "
+#~ msgstr "Nome do quadro (opcional)"
+
+#, fuzzy
+#~ msgid "Maps for frame 3 (optional): "
+#~ msgstr "Nome do quadro (opcional)"
+
+#, fuzzy
+#~ msgid "Maps for frame 4 (optional): "
+#~ msgstr "Nome do quadro (opcional)"
+
+#, fuzzy
+#~ msgid "You must select maps to animate for frame 1"
+#~ msgstr "Voc? deve selecionar um mapa para pesquisar\n"
+
+#, fuzzy
+#~ msgid "No maps selected"
+#~ msgstr "Nenhuma camada de mapa selecionada"
+
+#, fuzzy
+#~ msgid "NVIZ flythrough path"
+#~ msgstr "Caminho de vôo para o NVIZ"
+
+#, fuzzy
+#~ msgid "Create flythough path for NVIZ display"
+#~ msgstr "Caminho de vôo para o NVIZ"
+
+#, fuzzy
+#~ msgid "Raster surface map "
+#~ msgstr "Mapa raster para sobrepor"
+
+#, fuzzy
+#~ msgid "Output script file "
+#~ msgstr "Arquivo de script:"
+
+#, fuzzy
+#~ msgid "Flythrough path "
+#~ msgstr "Caminho de vôo para o NVIZ"
+
+#, fuzzy
+#~ msgid "Create path with mouse in map display"
+#~ msgstr "Desenha perfil na tela de mapas"
+
+#, fuzzy
+#~ msgid "Flythrough images prefix "
+#~ msgstr "Caminho de vôo para o NVIZ"
+
+#, fuzzy
+#~ msgid "Camera height "
+#~ msgstr "  altura:"
+
+#, fuzzy
+#~ msgid "Reset"
+#~ msgstr "Escalonar"
+
+#, fuzzy
+#~ msgid "Clear all path coordinates"
+#~ msgstr "Converter coordenadas"
+
+#, fuzzy
+#~ msgid "You must specify an output file"
+#~ msgstr "Voc? deve selecionar um mapa para pesquisar\n"
+
+#, fuzzy
+#~ msgid "No output file specified"
+#~ msgstr "Nenhum mapa raster selecionado"
+
+#, fuzzy
+#~ msgid "Enter name for location to be created"
+#~ msgstr "Nome da nova locação para ser criada"
+
+#, fuzzy
+#~ msgid "Error creating location!"
 #~ msgstr "ATENÇ?O: Erro criando nova locaç?o"
-
-#~ msgid ""
-#~ "Error creating new location from EPSG code.  g.proj returned following "
-#~ "message:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erro criando nova locaç?o do código EPSG.  g.proj retornou a seguinte "
-#~ "mensagem:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Select datum transform"
-#~ msgstr "Selecione transformaç?o de datum"
-
-#~ msgid "Datum transform number: "
-#~ msgstr "Número de transformaç?o de Datum"
-
-#~ msgid "Enter number of datum transform selected"
-#~ msgstr "Digite o número da transformaç?o selecionada"
-
-#~ msgid "You can select EPSG code (in <braces>) and copy it for later use."
-#~ msgstr ""
-#~ "Voc? pode selecionar o código EPSG (em <colchetes>) e copie para uso "
-#~ "posterior."
-
-#~ msgid "GUESS THAT IS NOT THE EPSG FILE"
-#~ msgstr "ESTE N?O É O ARQUIVO EPSG"
-
-#~ msgid "Grab code"
-#~ msgstr "Usar Código"
-
-#~ msgid "Search for entered text in EPSG file"
-#~ msgstr "Procurar por texto no arquivo EPSG"
-
-#~ msgid "forward search"
-#~ msgstr "busca"
-
-#~ msgid "backward search"
-#~ msgstr "buscar para trás"
-
-#~ msgid "Define location using projection information in georeferenced file"
-#~ msgstr ""
-#~ "Define locaç?o usando as informaç?es de projeç?o no arquivo "
-#~ "georreferenciado"
-
-#~ msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-#~ msgstr ""
-#~ "Caminho para o arquivo georreferenciado (formato deve ser legível pela "
-#~ "GDAL/OGR)"
-
-#~ msgid "Browse to locate georeferenced file"
-#~ msgstr "Procurar arquivo georreferenciado"
-
-#~ msgid "Choose georeferenced file"
-#~ msgstr "Caminho para arquivo georreferenciado"
-
-#~ msgid ""
-#~ "WARNING: Please supply a\n"
-#~ "valid georeferenced file"
-#~ msgstr ""
-#~ "ATENÇ?O: Favor fornecer um\n"
-#~ "arquivo georreferenciado válido"
-
-#~ msgid ""
-#~ "Error creating new location from georeferenced file.  g.proj returned "
-#~ "following message:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erro criando nova locaç?o do arquivo georreferenciado.  g.proj retornou a "
-#~ "seguinte mensagem:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "WARNING: can not save"
-#~ msgstr "ATENÇ?O: impossível salvar"
-
-#~ msgid ""
-#~ "Warning: unable to save data to <%s> file.\n"
-#~ "Error message: %s"
-#~ msgstr ""
-#~ "ATENÇ?O: impossível salvar dados no arquivo <%s>.\n"
-#~ "Mensagem de erro: %s"
-
-#~ msgid ""
-#~ "Warning: location <%s> at GISDBASE <%s> is not a directory or does not "
-#~ "exist."
-#~ msgstr ""
-#~ "ATENÇ?O: locaç?o <%s> em GISDBASE <%s> n?o é um diretório ou n?o existe."
-
-#~ msgid "Welcome to GRASS GIS Version"
-#~ msgstr "Bem-vindo ao GRASS GIS Vers?o"
-
-#~ msgid "WARNING: invalid mapset name"
-#~ msgstr "ATENÇ?O: nome de mapset inválido"
-
-#~ msgid ""
-#~ "Warning: Mapset with name <%s> already exists. \n"
-#~ "New mapset is NOT created. \n"
-#~ "Choose different mapset name and try again."
-#~ msgstr ""
-#~ "ATENÇ?O: Mapset <%s> já existe. \n"
-#~ "Novo mapset N?O foi criado.\n"
-#~ "Escolha um nome de mapset diferente e tente novamente."
-
-#~ msgid ""
-#~ "Warning: selected location <%s> is not valid. \n"
-#~ " New mapset is NOT created. \n"
-#~ " Select valid location and try again."
-#~ msgstr ""
-#~ "ATENÇ?O: locaç?o selecionada <%s> é inválida.\n"
-#~ "Novo mapset N?O foi criado.\n"
-#~ "Selecione um locaç?o válida e tente novamente."
-
-#~ msgid "WARNING: unable to mkdir"
-#~ msgstr "ATENÇ?O: impossível criar diretório"
-
-#~ msgid ""
-#~ "Warning: Unable to create directory for new mapset. \n"
-#~ "Error message: %s"
-#~ msgstr ""
-#~ "ATENÇ?O: Impossível criar diretório para novo mapset.\n"
-#~ "Mensagem de erro: %s"
-
-#~ msgid ""
-#~ "Warning: selected location <%s> is not valid. \n"
-#~ " Select valid location and try again."
-#~ msgstr ""
-#~ "ATENÇ?O: locaç?o selecionada <%s> é inválida.\n"
-#~ "Selecione um locaç?o válida e tente novamente."
-
-#~ msgid ""
-#~ "Warning: selected location <%%s> is not valid. \n"
-#~ " Select valid location and try again."
-#~ msgstr ""
-#~ "ATENÇ?O: locaç?o selecionada <%%s> é inválida.\n"
-#~ "Selecione um locaç?o válida e tente novamente."
-
-#~ msgid "Warning: <%%s> is not a valid mapset"
-#~ msgstr "Atenção: <%%s> não é um mapset válido"
-
-#~ msgid "WARNING: change directory failed"
-#~ msgstr "ATENÇ?O: mudança de diretório falhou"
-
-#~ msgid ""
-#~ "Warning: could not change directory to <%s>.\n"
-#~ "Check directory permissions."
-#~ msgstr ""
-#~ "ATENÇ?O: impossível mudar para diretório <%s>.\n"
-#~ "Verifique permiss?es de diretório."
-
-#~ msgid "Categories already opened"
-#~ msgstr "Categorias já est?o abertas"
-
-#~ msgid "Settings already opened"
-#~ msgstr "Configuraç?es já est?o abertas"
-
-#~ msgid "Set line width in pixels"
-#~ msgstr "Ajustar a espessura da linha em pixels"
-
-#~ msgid "Test"
-#~ msgstr "Teste"

@@ -1,4 +1,4 @@
-# translation of grasstcl_es.po to español
+# translation of grasstcl_es.po to Español
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2006, GRASS Development Team
 #
@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-27 15:45+0200\n"
-"PO-Revision-Date: 2007-07-05 10:33+0200\n"
+"PO-Revision-Date: 2007-10-02 17:00+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: español <grass-es@itc.it.org>\n"
+"Language-Team: Español <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -102,7 +102,7 @@ msgstr "Ayuda"
 
 #: ../gui/tcltk/gis.m/raster.tcl:194
 msgid "raster map to drape over base map"
-msgstr "Ráster para sobreponer al mapa base"
+msgstr "Mapa ráster para sobreponer al mapa base"
 
 #: ../gui/tcltk/gis.m/raster.tcl:203 ../gui/tcltk/gis.m/rgbhis.tcl:203
 #: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
@@ -637,16 +637,19 @@ msgid "Close"
 msgstr "Cerrar"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:114
+#, fuzzy
 msgid "Run (Background)"
-msgstr "Ejecutar (segundo plano)"
+msgstr "Ejecutar (2º plano)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:115
+#, fuzzy
 msgid "Run UI"
-msgstr "Ejecutar UI"
+msgstr "Ejecutar (GUI)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:116
+#, fuzzy
 msgid "Run in Xterm"
-msgstr "Ejecutar en Xterm"
+msgstr "Ejecutar (en Xterm)"
 
 #: ../gui/tcltk/gis.m/runandoutput.tcl:119 ../lib/gis/gui.tcl:480
 msgid "Clear"
@@ -721,12 +724,14 @@ msgid "Resolution (dpi) for printing and PDF "
 msgstr "Resolución (dpi) para imprimir y PDF"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:299
+#, fuzzy
 msgid "Send to LPR printer*"
-msgstr "Enviar a impresora LPR"
+msgstr "Imprimir en impresora LPR"
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:308
+#, fuzzy
 msgid "Send to postscript device* "
-msgstr "Enviar a dispositivo PostScript* "
+msgstr "Imprimir en dispositivo PostScript* "
 
 #: ../gui/tcltk/gis.m/mapprint.tcl:319
 msgid "Save to PDF file*              "
@@ -847,7 +852,7 @@ msgstr "cuadrícula geodésica"
 #: ../gui/tcltk/gis.m/gridline.tcl:138
 #, fuzzy
 msgid " grid & text color   "
-msgstr "   color de texto y cuadrícula "
+msgstr "color del borde y del texto"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:143 ../gui/tcltk/d.m/gridline.tcl:85
 msgid "Help for grids"
@@ -868,12 +873,14 @@ msgid "draw grid border"
 msgstr "dibujar borde de la cuadrícula"
 
 #: ../gui/tcltk/gis.m/gridline.tcl:152
+#, fuzzy
 msgid "draw border text  "
-msgstr "dibujar borde del texto"
+msgstr "dibujar texto del borde "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:154
+#, fuzzy
 msgid " border color"
-msgstr "color de borde"
+msgstr "color de borde "
 
 #: ../gui/tcltk/gis.m/gridline.tcl:175 ../gui/tcltk/d.m/gridline.tcl:119
 msgid "draw geodesic line"
@@ -3897,13 +3904,13 @@ msgstr "Introducir código EPSG para la proyección seleccionada"
 msgid "View EPSG codes and projection information."
 msgstr "Ver códigos EPSG e información de la proyección."
 
+#, fuzzy
 msgid ""
 "WARNING: Please supply a\n"
 "valid EPSG code (integer)"
-msgstr ""
-"AVISO: Por favor, especificar un\n"
-"código EPSG (entero) válido"
+msgstr "AVISO: Por favor, especificar un archivo georreferenciado válido"
 
+#, fuzzy
 msgid ""
 "Error creating new location from EPSG code.  g.proj returned following "
 "message:\n"
@@ -3915,14 +3922,17 @@ msgstr ""
 "\n"
 "%s"
 
+#, fuzzy
 msgid "Select datum transform"
-msgstr "Seleccionar transformación del datum"
+msgstr "Seleccionar parámetros de transformación del datum:"
 
+#, fuzzy
 msgid "Datum transform number: "
-msgstr "Número de transformación del datum: "
+msgstr "Seleccionar parámetros de transformación del datum:"
 
+#, fuzzy
 msgid "Enter number of datum transform selected"
-msgstr "Introducir el número de la transformación del datum seleccionada"
+msgstr "Introducir nombre de la nueva localización"
 
 msgid "You can select EPSG code (in <braces>) and copy it for later use."
 msgstr ""
@@ -4441,11 +4451,13 @@ msgstr "longitud acumulada = %f\n"
 msgid "Click to query feature"
 msgstr "Hacer clic para consultar elemento"
 
+#, fuzzy
 msgid "This layer does not suppor queries"
-msgstr "Esta capa no soporta consultas"
+msgstr "Este tipo de capa no soporta consultas"
 
+#, fuzzy
 msgid "Not supported"
-msgstr "No soportado"
+msgstr "Consulta no soportada"
 
 msgid "You must select a map to query\n"
 msgstr "Se debe seleccionar un mapa a consultar\n"
@@ -4727,733 +4739,1029 @@ msgstr "precisión doble"
 msgid "varchar"
 msgstr "Buscar"
 
-#~ msgid "\t "
-#~ msgstr "\t "
-
-#~ msgid "Select default font for GRASS displays"
-#~ msgstr ""
-#~ "Seleccionar fuente de texto por defecto para las visualizaciones de GRASS"
-
-#~ msgid "Font: "
-#~ msgstr "Fuente: "
-
-#~ msgid "Character encoding: "
-#~ msgstr "Codificación de caracteres: "
-
-#~ msgid "Import raster map"
-#~ msgstr "Importar mapa ráster"
-
-#~ msgid "Aggregate ASCII xyz"
-#~ msgstr "Agregar ASCII XYZ"
-
-#~ msgid "ASCII grid"
-#~ msgstr "Cuadrícula ASCII"
-
-#~ msgid "ASCII polygons and lines"
-#~ msgstr "Polígonos y líneas ASCII"
-
-#~ msgid "Binary"
-#~ msgstr "Binario"
-
-#~ msgid "ESRI grid"
-#~ msgstr "Cuadrícula ESRI"
-
-#~ msgid "GRIDATB.FOR"
-#~ msgstr "GRIDATB.FOR"
-
-#~ msgid "MAT-File (v.4)"
-#~ msgstr "Archivo MAT (v.4)"
-
-#~ msgid "SPOT NDVI"
-#~ msgstr "SPOT NDVI"
-
-#~ msgid "SRTM hgt"
-#~ msgstr "HGT de SRTM"
-
-#~ msgid "Terra ASTER"
-#~ msgstr "Terra ASTER"
-
-#~ msgid "Import vector map"
-#~ msgstr "Importar mapa vectorial"
-
-#~ msgid "Multiple formats using OGR"
-#~ msgstr "Varios formatos que usan OGR"
-
-#~ msgid "ASCII points or GRASS ASCII vector"
-#~ msgstr "Puntos ASCII o vectorial ASCII de GRASS"
-
-#~ msgid "Old GRASS vector"
-#~ msgstr "Vectorial del antiguo GRASS"
-
-#~ msgid "DXF"
-#~ msgstr "DXF"
-
-#~ msgid "ESRI e00"
-#~ msgstr "ESRI e00"
-
-#~ msgid "Garmin GPS"
-#~ msgstr "GPS de Garmin"
-
-#~ msgid "GPSBabel GPS"
-#~ msgstr "GPS de GPSBabel"
-
-#~ msgid "GEOnet"
-#~ msgstr "GEOnet"
-
-#~ msgid "Matlab and MapGen"
-#~ msgstr "Matlab y MapGen"
-
-#~ msgid "Import grid 3D volume"
-#~ msgstr "Importar volúmenes grid3D"
-
-#~ msgid "ASCII 3D"
-#~ msgstr "ASCII 3D"
-
-#~ msgid "Vis5D"
-#~ msgstr "Vis5D"
-
-#~ msgid "Export raster map"
-#~ msgstr "Exportar mapa ráster"
-
-#~ msgid "ASCII x,y,z"
-#~ msgstr "ASCII X,Y,Z"
-
-#~ msgid "ESRI ASCII grid"
-#~ msgstr "Cuadrícula ASCII de ESRI"
-
-#~ msgid "MPEG-1"
-#~ msgstr "MPEG-1"
-
-#~ msgid "PNG"
-#~ msgstr "PNG"
-
-#~ msgid "PPM"
-#~ msgstr "PPM"
-
-#~ msgid "PPM from RGB"
-#~ msgstr "PPM a partir de RGB"
-
-#~ msgid "POV-Ray"
-#~ msgstr "POV-Ray"
-
-#~ msgid "TIFF"
-#~ msgstr "TIFF"
-
-#~ msgid "VRML"
-#~ msgstr "VRML"
-
-#~ msgid "VTK"
-#~ msgstr "VTK"
-
-#~ msgid "Export vector map"
-#~ msgstr "Exportar mapa vectorial"
-
-#~ msgid "SVG"
-#~ msgstr "SVG"
+msgid "\t "
+msgstr "\t "
 
 #, fuzzy
-#~ msgid "Exort grid 3D volume"
-#~ msgstr "Exportar volúmenes grid 3D"
+msgid "Select default font for GRASS displays"
+msgstr "Seleccionar fuente de visualización de GRASS"
 
-#~ msgid "List"
-#~ msgstr "Listar"
+msgid "Font: "
+msgstr "Fuente: "
 
-#~ msgid "List filtered"
-#~ msgstr "Listar filtrado"
+msgid "Character encoding: "
+msgstr "Codificación de caracteres: "
 
-#~ msgid "Rename"
-#~ msgstr "Cambiar nombre"
+msgid "Import raster map"
+msgstr "Importar mapa ráster"
 
-#~ msgid "Delete filtered"
-#~ msgstr "Borrar filtrado"
+msgid "Aggregate ASCII xyz"
+msgstr "Agregar ASCII XYZ"
 
-#~ msgid "Raster to vector"
-#~ msgstr "Ráster a vectorial"
+msgid "ASCII grid"
+msgstr "Cuadrícula ASCII"
 
-#~ msgid "Raster series to volume"
-#~ msgstr "Series ráster a volúmenes"
+msgid "ASCII polygons and lines"
+msgstr "Polígonos y líneas ASCII"
 
-#~ msgid "Raster 2.5D to volume"
-#~ msgstr "Ráster 2.5D a volumen"
+msgid "Binary"
+msgstr "Binario"
 
-#~ msgid "Vector to volume"
-#~ msgstr "Vectorial a volumen"
+msgid "ESRI grid"
+msgstr "Cuadrícula ESRI"
 
-#~ msgid "Sites to vector"
-#~ msgstr "Puntos ('sites' de GRASS 5.x) a vectores"
+msgid "GRIDATB.FOR"
+msgstr "GRIDATB.FOR"
 
-#~ msgid "Volume to raster series"
-#~ msgstr "Volumen a series ráster"
+msgid "MAT-File (v.4)"
+msgstr "Archivo MAT (v.4)"
 
-#~ msgid "Mapset access"
-#~ msgstr "Acceso a directorio de mapas"
+msgid "SPOT NDVI"
+msgstr "SPOT NDVI"
 
-#~ msgid "Change working environment"
-#~ msgstr "Cambiar entorno de trabajo"
+msgid "SRTM hgt"
+msgstr "HGT de SRTM"
 
-#~ msgid "User access"
-#~ msgstr "Acceso de usuario"
+msgid "Terra ASTER"
+msgstr "Terra ASTER"
 
-#~ msgid "Show settings"
-#~ msgstr "Mostrar configuración"
+msgid "Import vector map"
+msgstr "Importar mapa vectorial"
 
-#~ msgid "Change settings"
-#~ msgstr "Cambiar configuración"
+msgid "Multiple formats using OGR"
+msgstr "Varios formatos que usan OGR"
 
-#~ msgid "Projection for current location"
-#~ msgstr "Proyección para la localización actual"
+msgid "ASCII points or GRASS ASCII vector"
+msgstr "Puntos ASCII o vectorial ASCII de GRASS"
 
-#~ msgid "Convert coordinates"
-#~ msgstr "Convertir coordenadas"
+msgid "Old GRASS vector"
+msgstr "Vectorial del antiguo GRASS"
 
-#~ msgid "Display font"
-#~ msgstr "Visualizar fuentes"
+msgid "DXF"
+msgstr "DXF"
 
-#~ msgid "Compress/decompress"
-#~ msgstr "Comprimir/descomprimir"
+msgid "ESRI e00"
+msgstr "ESRI e00"
 
-#~ msgid "Boundaries"
-#~ msgstr "Contornos"
+msgid "Garmin GPS"
+msgstr "GPS de Garmin"
 
-#~ msgid "Null values"
-#~ msgstr "Valores nulos"
+msgid "GPSBabel GPS"
+msgstr "GPS de GPSBabel"
 
-#~ msgid "Quantization"
-#~ msgstr "Quantización"
+msgid "GEOnet"
+msgstr "GEOnet"
 
-#~ msgid "Timestamps"
-#~ msgstr "Marcas de tiempo"
+msgid "Matlab and MapGen"
+msgstr "Matlab y MapGen"
 
-#~ msgid "Resample using multiple methods"
-#~ msgstr "Volver a muestrear utilizando varios métodos"
+msgid "Import grid 3D volume"
+msgstr "Importar volúmenes grid3D"
 
-#~ msgid "Resample using nearest neighbor"
-#~ msgstr "Volver a muestrear utilizando el vecino más próximo"
+msgid "ASCII 3D"
+msgstr "ASCII 3D"
 
-#~ msgid "Resample using spline tension"
-#~ msgstr "Volver a muestrear usando tensión spline"
+msgid "Vis5D"
+msgstr "Vis5D"
 
-#~ msgid "Support file maintenance"
-#~ msgstr "Soportar mantenimiento de archivos"
+msgid "Export raster map"
+msgstr "Exportar mapa ráster"
 
-#~ msgid "Reproject"
-#~ msgstr "Reproyectar"
+msgid "ASCII x,y,z"
+msgstr "ASCII X,Y,Z"
 
-#~ msgid "Tiling"
-#~ msgstr "Teselado"
+msgid "ESRI ASCII grid"
+msgstr "Cuadrícula ASCII de ESRI"
 
-#~ msgid "Color tables"
-#~ msgstr "Tablas de color"
+msgid "MPEG-1"
+msgstr "MPEG-1"
 
-#~ msgid "Color rules"
-#~ msgstr "Reglas de color"
+msgid "PNG"
+msgstr "PNG"
 
-#~ msgid "Blend"
-#~ msgstr "Mezclar"
+msgid "PPM"
+msgstr "PPM"
 
-#~ msgid "Create RGB"
-#~ msgstr "Crear RGB"
+msgid "PPM from RGB"
+msgstr "PPM a partir de RGB"
 
-#~ msgid "HIS to RGB"
-#~ msgstr "HIS a RGB"
+msgid "POV-Ray"
+msgstr "POV-Ray"
 
-#~ msgid "Buffers"
-#~ msgstr "Buffers"
+msgid "TIFF"
+msgstr "TIFF"
 
-#~ msgid "Closest points"
-#~ msgstr "Puntos más cercanos"
+msgid "VRML"
+msgstr "VRML"
 
-#~ msgid "MASK"
-#~ msgstr "MÁSCARA"
+msgid "VTK"
+msgstr "VTK"
 
-#~ msgid "Moving window"
-#~ msgstr "Moviendo la ventana"
+msgid "Export vector map"
+msgstr "Exportar mapa vectorial"
 
-#~ msgid "Neighborhood points"
-#~ msgstr "Puntos de vecindario"
-
-#~ msgid "Map series"
-#~ msgstr "Series de mapas"
-
-#~ msgid "Statistical overlay"
-#~ msgstr "Superposición estadística"
-
-#~ msgid "Solar irradiance irradiation"
-#~ msgstr "Irradiación solar e irradiación"
-
-#~ msgid "Shadows map"
-#~ msgstr "Mapa de sombras"
-
-#~ msgid "Cumulative movement costs"
-#~ msgstr "Costes acumulados de movimientos"
-
-#~ msgid "Shaded relief"
-#~ msgstr "Relieve sombreado"
-
-#~ msgid "Visibility"
-#~ msgstr "Visibilidad"
-
-#~ msgid "Clump"
-#~ msgstr "Agrupar"
-
-#~ msgid "Grow"
-#~ msgstr "Incrementar"
-
-#~ msgid "Thin"
-#~ msgstr "Adelgazar"
-
-#~ msgid "Carve stream channels"
-#~ msgstr "Canales de corrientes de excavación"
-
-#~ msgid "Fill lake"
-#~ msgstr "Rellenar lago"
+msgid "SVG"
+msgstr "SVG"
 
 #, fuzzy
-#~ msgid "Depressionless  map and flowlines"
-#~ msgstr "Mapa sin depresiones y líneas de flujos"
+msgid "Exort grid 3D volume"
+msgstr "Exportar volúmenes grid 3D"
 
-#~ msgid "Flow accumulation"
-#~ msgstr "Acumulación de flujos"
+msgid "List"
+msgstr "Listar"
 
-#~ msgid "Flow lines"
-#~ msgstr "Líneas de flujo"
+msgid "List filtered"
+msgstr "Listar filtrado"
 
-#~ msgid "SIMWE sediment flux modeling"
-#~ msgstr "Modelos de flujo de sedimentos SIMWE"
+msgid "Rename"
+msgstr "Cambiar nombre"
 
-#~ msgid "Set up"
-#~ msgstr "Configuración"
+msgid "Delete filtered"
+msgstr "Borrar filtrado"
 
-#~ msgid "Analyze landscape"
-#~ msgstr "Analizar paisaje"
+msgid "Raster to vector"
+msgstr "Ráster a vectorial"
 
-#~ msgid "Analyze patches"
-#~ msgstr "Analizar parcelas"
+msgid "Raster series to volume"
+msgstr "Series ráster a volúmenes"
 
-#~ msgid "Edge density"
-#~ msgstr "Densidad de borde"
+msgid "Raster 2.5D to volume"
+msgstr "Ráster 2.5D a volumen"
 
-#~ msgid "Patch size mean"
-#~ msgstr "Tamaño medio de parcela"
+msgid "Vector to volume"
+msgstr "Vectorial a volumen"
 
-#~ msgid "Patch area range"
-#~ msgstr "Rango de superficie de parcela"
+msgid "Sites to vector"
+msgstr "Puntos ('sites' de GRASS 5.x) a vectores"
 
-#~ msgid "Patch area Std Dev"
-#~ msgstr "Desviación estándar de superficie de parcela"
+msgid "Volume to raster series"
+msgstr "Volumen a series ráster"
 
-#~ msgid "Patch area Coeff Var"
-#~ msgstr "Coeficiente de varianza de superficie de parcela"
+msgid "Mapset access"
+msgstr "Acceso a directorio de mapas"
 
-#~ msgid "Patch density"
-#~ msgstr "Densidad de parcela"
+msgid "Change working environment"
+msgstr "Cambiar entorno de trabajo"
 
-#~ msgid "Patch number"
-#~ msgstr "Número de parcelas"
+msgid "User access"
+msgstr "Acceso de usuario"
 
-#~ msgid "Rate of spread"
-#~ msgstr "Relación de propagación"
+msgid "Show settings"
+msgstr "Mostrar configuración"
 
-#~ msgid "Least-cost spread paths"
-#~ msgstr "Rutas de propagación de menor coste"
+msgid "Change settings"
+msgstr "Cambiar configuración"
 
-#~ msgid "Anisotropic spread simulation"
-#~ msgstr "Simulación de propagación anisotrópica"
+msgid "Projection for current location"
+msgstr "Proyección para la localización actual"
 
-#~ msgid "Interactively edit category values"
-#~ msgstr "Editar valores de categoría de forma interactiva"
+msgid "Convert coordinates"
+msgstr "Convertir coordenadas"
 
-#~ msgid "Reclassify by size"
-#~ msgstr "Reclasificar por tamaño"
+msgid "Display font"
+msgstr "Visualizar fuentes"
 
-#~ msgid "Reclassify interactively"
-#~ msgstr "Reclasificar de forma interactiva"
+msgid "Compress/decompress"
+msgstr "Comprimir/descomprimir"
 
-#~ msgid "Reclassify using rules file"
-#~ msgstr "Reclasificar usando archivo de reglas"
+msgid "Boundaries"
+msgstr "Contornos"
 
-#~ msgid "Recode interactively"
-#~ msgstr "Recodificar de forma interactiva"
+msgid "Null values"
+msgstr "Valores nulos"
 
-#~ msgid "Recode using rules file"
-#~ msgstr "Volver a codificar usando archivo de reglas"
+msgid "Quantization"
+msgstr "Quantización"
 
-#~ msgid "Rescale"
-#~ msgstr "Rescalar"
+msgid "Timestamps"
+msgstr "Marcas de tiempo"
 
-#~ msgid "Rescale with histogram"
-#~ msgstr "Rescalar con histograma"
+msgid "Resample using multiple methods"
+msgstr "Volver a muestrear utilizando varios métodos"
 
-#~ msgid "Concentric circles"
-#~ msgstr "Círculos concéntricos"
+msgid "Resample using nearest neighbor"
+msgstr "Volver a muestrear utilizando el vecino más próximo"
 
-#~ msgid "Random cells"
-#~ msgstr "Celdas aleatorias"
+msgid "Resample using spline tension"
+msgstr "Volver a muestrear usando tensión spline"
 
-#~ msgid "Random cells and vector points"
-#~ msgstr "Celdas aleatorias y puntos vectoriales"
+msgid "Support file maintenance"
+msgstr "Soportar mantenimiento de archivos"
 
-#~ msgid "Fractal surface"
-#~ msgstr "Superficie fractal"
+msgid "Reproject"
+msgstr "Reproyectar"
+
+msgid "Tiling"
+msgstr "Teselado"
+
+msgid "Color tables"
+msgstr "Tablas de color"
+
+msgid "Color rules"
+msgstr "Reglas de color"
+
+msgid "Blend"
+msgstr "Mezclar"
+
+msgid "Create RGB"
+msgstr "Crear RGB"
+
+msgid "HIS to RGB"
+msgstr "HIS a RGB"
+
+msgid "Buffers"
+msgstr "Buffers"
+
+msgid "Closest points"
+msgstr "Puntos más cercanos"
+
+msgid "MASK"
+msgstr "MÁSCARA"
+
+msgid "Moving window"
+msgstr "Moviendo la ventana"
+
+msgid "Neighborhood points"
+msgstr "Puntos de vecindario"
+
+msgid "Map series"
+msgstr "Series de mapas"
+
+msgid "Statistical overlay"
+msgstr "Superposición estadística"
+
+msgid "Solar irradiance irradiation"
+msgstr "Irradiación solar e irradiación"
+
+msgid "Shadows map"
+msgstr "Mapa de sombras"
+
+msgid "Cumulative movement costs"
+msgstr "Costes acumulados de movimientos"
+
+msgid "Shaded relief"
+msgstr "Relieve sombreado"
+
+msgid "Visibility"
+msgstr "Visibilidad"
+
+msgid "Clump"
+msgstr "Agrupar"
+
+msgid "Grow"
+msgstr "Incrementar"
+
+msgid "Thin"
+msgstr "Adelgazar"
+
+msgid "Carve stream channels"
+msgstr "Canales de corrientes de excavación"
+
+msgid "Fill lake"
+msgstr "Rellenar lago"
 
 #, fuzzy
-#~ msgid "Gausian kernal density surface"
-#~ msgstr "Generar superficie de densidad"
+msgid "Depressionless  map and flowlines"
+msgstr "Mapa sin depresiones y líneas de flujos"
 
-#~ msgid "Gaussian deviates surface"
-#~ msgstr "Superficie gaussiana derivada"
+msgid "Flow accumulation"
+msgstr "Acumulación de flujos"
 
-#~ msgid "Plane"
-#~ msgstr "Plano"
+msgid "Flow lines"
+msgstr "Líneas de flujo"
 
-#~ msgid "Random deviates surface"
-#~ msgstr "Superficie derivada aleatoria"
+msgid "SIMWE sediment flux modeling"
+msgstr "Modelos de flujo de sedimentos SIMWE"
 
-#~ msgid "Random surface with spatial dependence"
-#~ msgstr "Superficie aleatoria con dependencia espacial"
+msgid "Set up"
+msgstr "Configuración"
 
-#~ msgid "Contour lines"
-#~ msgstr "Líneas de contornos"
+msgid "Analyze landscape"
+msgstr "Analizar paisaje"
 
-#~ msgid "Bilinear from raster points"
-#~ msgstr "Bilineal a partir de puntos ráster"
+msgid "Analyze patches"
+msgstr "Analizar parcelas"
 
-#~ msgid "Bilinear and bicubic from vector points"
-#~ msgstr "Bilineal y bicúbica a partir de puntos vectoriales"
+msgid "Edge density"
+msgstr "Densidad de borde"
 
-#~ msgid "IDW from raster points"
-#~ msgstr "IDW a partir de puntos ráster"
+msgid "Patch size mean"
+msgstr "Tamaño medio de parcela"
 
-#~ msgid "IDW from vector points"
-#~ msgstr "IDW a partir de puntos vectoriales"
+msgid "Patch area range"
+msgstr "Rango de superficie de parcela"
 
-#~ msgid "Raster contours"
-#~ msgstr "Contornos ráster"
+msgid "Patch area Std Dev"
+msgstr "Desviación estándar de superficie de parcela"
 
-#~ msgid "Regularized spline tension"
-#~ msgstr "Tensión spline regularizada"
+msgid "Patch area Coeff Var"
+msgstr "Coeficiente de varianza de superficie de parcela"
 
-#~ msgid "Fill NULL cells"
-#~ msgstr "Rellenas celdas NULAS"
+msgid "Patch density"
+msgstr "Densidad de parcela"
 
-#~ msgid "Report category information"
-#~ msgstr "Información de categoría"
+msgid "Patch number"
+msgstr "Número de parcelas"
 
-#~ msgid "Range of category values"
-#~ msgstr "Rango de valores de categoría"
+msgid "Rate of spread"
+msgstr "Relación de propagación"
 
-#~ msgid "Sum cell category values"
-#~ msgstr "Sumar valores de categoría de celdas"
+msgid "Least-cost spread paths"
+msgstr "Rutas de propagación de menor coste"
 
-#~ msgid "Statistics for clumped cells (works with r.clump)"
-#~ msgstr "Estadísticas de celdas reunidas (funciona con r.clump)"
+msgid "Anisotropic spread simulation"
+msgstr "Simulación de propagación anisotrópica"
 
-#~ msgid "Sample transects"
-#~ msgstr "Muestrear transectos"
+msgid "Interactively edit category values"
+msgstr "Editar valores de categoría de forma interactiva"
 
-#~ msgid "Sample transects (bearing/distance)"
-#~ msgstr "Muestrear transectos (rumbo/distancia)"
+msgid "Reclassify by size"
+msgstr "Reclasificar por tamaño"
 
-#~ msgid "Linear regression"
-#~ msgstr "Regresión lineal"
+msgid "Reclassify interactively"
+msgstr "Reclasificar de forma interactiva"
 
-#~ msgid "Mutual category occurences"
-#~ msgstr "Ocurrencias de categorías mutuas"
+msgid "Reclassify using rules file"
+msgstr "Reclasificar usando archivo de reglas"
 
-#~ msgid "Create/rebuild topology: "
-#~ msgstr "Crear/reconstruir topología: "
+msgid "Recode interactively"
+msgstr "Recodificar de forma interactiva"
 
-#~ msgid "Clean vector"
-#~ msgstr "Limpiar vectorial"
+msgid "Recode using rules file"
+msgstr "Volver a codificar usando archivo de reglas"
 
-#~ msgid "Convert object types"
-#~ msgstr "Convertir tipos objetos"
+msgid "Rescale"
+msgstr "Rescalar"
 
-#~ msgid "Add centroids"
-#~ msgstr "Añadir centroides"
+msgid "Rescale with histogram"
+msgstr "Rescalar con histograma"
 
-#~ msgid "Build polylines"
-#~ msgstr "Construir polilíneas"
+msgid "Concentric circles"
+msgstr "Círculos concéntricos"
 
-#~ msgid "Split polylines"
-#~ msgstr "Dividir polilíneas"
+msgid "Random cells"
+msgstr "Celdas aleatorias"
 
-#~ msgid "Parallel lines"
-#~ msgstr "Líneas parelelas"
+msgid "Random cells and vector points"
+msgstr "Celdas aleatorias y puntos vectoriales"
 
-#~ msgid "Dissolve boundaries"
-#~ msgstr "Disolver contornos"
+msgid "Fractal surface"
+msgstr "Superficie fractal"
 
-#~ msgid "Create 3D vector over raster"
-#~ msgstr "Crear vectorial 3D sobre ráster"
+msgid "Gausian kernal density surface"
+msgstr "Superficie de densidad kernal gausiana"
 
-#~ msgid "Extrude 3D vector"
-#~ msgstr "Extrudir vectorial 3D"
+msgid "Gaussian deviates surface"
+msgstr "Superficie gaussiana derivada"
 
-#~ msgid "Link to OGR"
-#~ msgstr "Enlazar a OGR"
+msgid "Plane"
+msgstr "Plano"
 
-#~ msgid "Create labels"
-#~ msgstr "Crear etiquetas"
+msgid "Random deviates surface"
+msgstr "Superficie derivada aleatoria"
 
-#~ msgid "Reposition vector"
-#~ msgstr "Reposicionar vectorial"
+msgid "Random surface with spatial dependence"
+msgstr "Superficie aleatoria con dependencia espacial"
 
-#~ msgid "Reproject vector"
-#~ msgstr "Reproyectar vectorial"
+msgid "Contour lines"
+msgstr "Líneas de contornos"
 
-#~ msgid "Query with attributes"
-#~ msgstr "Consultar con atributos"
+msgid "Bilinear from raster points"
+msgstr "Bilineal a partir de puntos ráster"
 
-#~ msgid "Query with coordinate(s)"
-#~ msgstr "Consultar con coordenada(s)"
+msgid "Bilinear and bicubic from vector points"
+msgstr "Bilineal y bicúbica a partir de puntos vectoriales"
 
-#~ msgid "Query with another map"
-#~ msgstr "Consultar con otro mapa"
+msgid "IDW from raster points"
+msgstr "IDW a partir de puntos ráster"
 
-#~ msgid "Buffer vectors"
-#~ msgstr "Crear áreas de influencia de vectoriales"
+msgid "IDW from vector points"
+msgstr "IDW a partir de puntos vectoriales"
 
-#~ msgid "Lidar analysis"
-#~ msgstr "Análisis lidar"
+msgid "Raster contours"
+msgstr "Contornos ráster"
 
-#~ msgid "Detect edges"
-#~ msgstr "Detectar bordes"
+msgid "Regularized spline tension"
+msgstr "Tensión spline regularizada"
 
-#~ msgid "Detect interiors"
-#~ msgstr "Detectar interiores"
+msgid "Fill NULL cells"
+msgstr "Rellenas celdas NULAS"
 
-#~ msgid "Linear referencing"
-#~ msgstr "Referencia lineal"
+msgid "Report category information"
+msgstr "Información de categoría"
 
-#~ msgid "Create LRS"
-#~ msgstr "Crear LRS"
+msgid "Range of category values"
+msgstr "Rango de valores de categoría"
 
-#~ msgid "Create stationing"
-#~ msgstr "Crear estacionamiento"
+msgid "Sum cell category values"
+msgstr "Sumar valores de categoría de celdas"
 
-#~ msgid "Create points/segments"
-#~ msgstr "Crear puntos/segmentos"
+msgid "Statistics for clumped cells (works with r.clump)"
+msgstr "Estadísticas de celdas reunidas (funciona con r.clump)"
 
-#~ msgid "Find ID and offset"
-#~ msgstr "Encontrar ID y ordendas"
+msgid "Sample transects"
+msgstr "Muestrear transectos"
 
-#~ msgid "Nearest features"
-#~ msgstr "Elementos más próximos"
+msgid "Sample transects (bearing/distance)"
+msgstr "Muestrear transectos (rumbo/distancia)"
 
-#~ msgid "Display shortest route"
-#~ msgstr "Mostrar la ruta más corta"
+msgid "Linear regression"
+msgstr "Regresión lineal"
 
-#~ msgid "Split net"
-#~ msgstr "Dividir red"
+msgid "Mutual category occurences"
+msgstr "Ocurrencias de categorías mutuas"
 
-#~ msgid "Overlay"
-#~ msgstr "Superponer"
+msgid "Create/rebuild topology: "
+msgstr "Crear/reconstruir topología: "
 
-#~ msgid "Patch (combine)"
-#~ msgstr "Parchear (combinar)"
+msgid "Clean vector"
+msgstr "Limpiar vectorial"
 
-#~ msgid "Manage or report categories"
-#~ msgstr "Gestionar o informar de categorías"
+msgid "Convert object types"
+msgstr "Convertir tipos objetos"
 
-#~ msgid "Reclassify objects interactively"
-#~ msgstr "Reclasificar objetos de forma interactiva"
+msgid "Add centroids"
+msgstr "Añadir centroides"
 
-#~ msgid "Generate area for current region"
-#~ msgstr "Generar área para la región actual"
+msgid "Build polylines"
+msgstr "Construir polilíneas"
 
-#~ msgid "Convex hull"
-#~ msgstr "Casco convexo"
+msgid "Split polylines"
+msgstr "Dividir polilíneas"
 
-#~ msgid "Delaunay triangles"
-#~ msgstr "Triángulos de Delaunay"
+msgid "Parallel lines"
+msgstr "Líneas parelelas"
 
-#~ msgid "Voronoi diagram/Thiessen polygons"
-#~ msgstr "Diagrama de Voronoi/polígonos de Thiessen"
+msgid "Dissolve boundaries"
+msgstr "Disolver contornos"
 
-#~ msgid "Generate grid"
-#~ msgstr "Generar cuadrícula"
+msgid "Create 3D vector over raster"
+msgstr "Crear vectorial 3D sobre ráster"
 
-#~ msgid "Generate points from database"
-#~ msgstr "Generar puntos a partir de una base de datos"
+msgid "Extrude 3D vector"
+msgstr "Extrudir vectorial 3D"
 
-#~ msgid "Generate points along lines"
-#~ msgstr "Generar puntos a lo largo de líneas"
+msgid "Link to OGR"
+msgstr "Enlazar a OGR"
 
-#~ msgid "Perturb points"
-#~ msgstr "Perturbar puntos"
+msgid "Create labels"
+msgstr "Crear etiquetas"
 
-#~ msgid "Test/training sets"
-#~ msgstr "Conjuntos de texto/entrenamiento"
+msgid "Reposition vector"
+msgstr "Reposicionar vectorial"
 
-#~ msgid "Update area attributes from raster"
-#~ msgstr "Actualizar atributos de área a partir de ráster"
+msgid "Reproject vector"
+msgstr "Reproyectar vectorial"
 
-#~ msgid "Update point attributes from areas"
-#~ msgstr "Actualizar atributos de puntos a partir de áreas"
+msgid "Query with attributes"
+msgstr "Consultar con atributos"
 
-#~ msgid "Update point attributes from raster"
-#~ msgstr "Actualizar atributos de puntos a partir de ráster"
+msgid "Query with coordinate(s)"
+msgstr "Consultar con coordenada(s)"
 
-#~ msgid "Report topology by category"
-#~ msgstr "Informar topología por categoría"
+msgid "Query with another map"
+msgstr "Consultar con otro mapa"
 
-#~ msgid "Upload or report topology"
-#~ msgstr "Cargar o informar topología"
+msgid "Buffer vectors"
+msgstr "Crear áreas de influencia de vectoriales"
 
-#~ msgid "Univariate attribute statistics"
-#~ msgstr "Estadísticas de atributos univariante"
+msgid "Lidar analysis"
+msgstr "Análisis lidar"
 
-#~ msgid "Quadrat indices"
-#~ msgstr "Índices cuadráticos"
+msgid "Detect edges"
+msgstr "Detectar bordes"
 
-#~ msgid "Test normality"
-#~ msgstr "Probar normalidad"
+msgid "Detect interiors"
+msgstr "Detectar interiores"
 
-#~ msgid "Create/edit group"
-#~ msgstr "Crear/editar grupo"
+msgid "Linear referencing"
+msgstr "Referencia lineal"
 
-#~ msgid "Target group"
-#~ msgstr "Grupo objetivo"
+msgid "Create LRS"
+msgstr "Crear LRS"
 
-#~ msgid "Mosaic images"
-#~ msgstr "Hacer mosaico de imágenes"
+msgid "Create stationing"
+msgstr "Crear estacionamiento"
 
-#~ msgid "Color balance for RGB"
-#~ msgstr "Equilibrio de color para RGB"
+msgid "Create points/segments"
+msgstr "Crear puntos/segmentos"
 
-#~ msgid "RGB to HIS"
-#~ msgstr "RGB a HIS"
+msgid "Find ID and offset"
+msgstr "Encontrar ID y ordendas"
 
-#~ msgid "Input for supervised MLC"
-#~ msgstr "Entrada para MLC supervisado"
+msgid "Nearest features"
+msgstr "Elementos más próximos"
 
-#~ msgid "Input for supervised SMAP"
-#~ msgstr "Entrada para SMAP supervisado"
+msgid "Display shortest route"
+msgstr "Mostrar la ruta más corta"
 
-#~ msgid "Edge detection"
-#~ msgstr "Detección de bordes"
+msgid "Split net"
+msgstr "Dividir red"
+
+msgid "Overlay"
+msgstr "Superponer"
+
+msgid "Patch (combine)"
+msgstr "Parchear (combinar)"
+
+msgid "Manage or report categories"
+msgstr "Gestionar o informar de categorías"
+
+msgid "Reclassify objects interactively"
+msgstr "Reclasificar objetos de forma interactiva"
+
+msgid "Generate area for current region"
+msgstr "Generar área para la región actual"
+
+msgid "Convex hull"
+msgstr "Casco convexo"
+
+msgid "Delaunay triangles"
+msgstr "Triángulos de Delaunay"
+
+msgid "Voronoi diagram/Thiessen polygons"
+msgstr "Diagrama de Voronoi/polígonos de Thiessen"
+
+msgid "Generate grid"
+msgstr "Generar cuadrícula"
+
+msgid "Generate points from database"
+msgstr "Generar puntos a partir de una base de datos"
+
+msgid "Generate points along lines"
+msgstr "Generar puntos a lo largo de líneas"
+
+msgid "Perturb points"
+msgstr "Perturbar puntos"
+
+msgid "Test/training sets"
+msgstr "Conjuntos de texto/entrenamiento"
+
+msgid "Update area attributes from raster"
+msgstr "Actualizar atributos de área a partir de ráster"
+
+msgid "Update point attributes from areas"
+msgstr "Actualizar atributos de puntos a partir de áreas"
+
+msgid "Update point attributes from raster"
+msgstr "Actualizar atributos de puntos a partir de ráster"
+
+msgid "Report topology by category"
+msgstr "Informar topología por categoría"
+
+msgid "Upload or report topology"
+msgstr "Cargar o informar topología"
+
+msgid "Univariate attribute statistics"
+msgstr "Estadísticas de atributos univariante"
+
+msgid "Quadrat indices"
+msgstr "Índices cuadráticos"
+
+msgid "Test normality"
+msgstr "Probar normalidad"
+
+msgid "Create/edit group"
+msgstr "Crear/editar grupo"
+
+msgid "Target group"
+msgstr "Grupo objetivo"
+
+msgid "Mosaic images"
+msgstr "Hacer mosaico de imágenes"
+
+msgid "Color balance for RGB"
+msgstr "Equilibrio de color para RGB"
+
+msgid "RGB to HIS"
+msgstr "RGB a HIS"
+
+msgid "Input for supervised MLC"
+msgstr "Entrada para MLC supervisado"
+
+msgid "Input for supervised SMAP"
+msgstr "Entrada para SMAP supervisado"
+
+msgid "Edge detection"
+msgstr "Detección de bordes"
 
 #, fuzzy
-#~ msgid "Matrix/convolving filter"
-#~ msgstr "Filtro de matriz/"
+msgid "Matrix/convolving filter"
+msgstr "Filtro de matriz/"
 
-#~ msgid "Canonical correlation"
-#~ msgstr "Correlación canónica"
+msgid "Canonical correlation"
+msgstr "Correlación canónica"
 
-#~ msgid "Principal components"
-#~ msgstr "Componentes principales"
+msgid "Principal components"
+msgstr "Componentes principales"
 
-#~ msgid "Fast Fourier"
-#~ msgstr "Fast Fourier"
+msgid "Fast Fourier"
+msgstr "Fast Fourier"
 
-#~ msgid "Inverse Fast Fourier"
-#~ msgstr "Fast Fourier inversa"
+msgid "Inverse Fast Fourier"
+msgstr "Fast Fourier inversa"
 
-#~ msgid "Bit pattern comparison"
-#~ msgstr "Comparación de patrón de bit"
+msgid "Bit pattern comparison"
+msgstr "Comparación de patrón de bit"
 
-#~ msgid "Kappa analysis"
-#~ msgstr "Análisis kappa"
+msgid "Kappa analysis"
+msgstr "Análisis kappa"
 
-#~ msgid "OIF for LandSat TM"
-#~ msgstr "OIF para LandSat TM"
+msgid "OIF for LandSat TM"
+msgstr "OIF para LandSat TM"
 
-#~ msgid "&Volumes"
-#~ msgstr "&Volúmenes"
+msgid "&Volumes"
+msgstr "&Volúmenes"
 
-#~ msgid "3D MASK"
-#~ msgstr "MÁSCARA 3D"
+msgid "3D MASK"
+msgstr "MÁSCARA 3D"
 
-#~ msgid "3D Map calculator"
-#~ msgstr "Calculadora de mapas 3D"
+msgid "3D Map calculator"
+msgstr "Calculadora de mapas 3D"
 
-#~ msgid "Cross section from volume"
-#~ msgstr "Sección transversal a partir de volumen"
+msgid "Cross section from volume"
+msgstr "Sección transversal a partir de volumen"
 
-#~ msgid "Interpolate volume from vector points"
-#~ msgstr "Interpolar volúmenes a partir de puntos vectoriales"
+msgid "Interpolate volume from vector points"
+msgstr "Interpolar volúmenes a partir de puntos vectoriales"
 
-#~ msgid "New table"
-#~ msgstr "Nueva tabla"
+msgid "New table"
+msgstr "Nueva tabla"
 
-#~ msgid "Remove table"
-#~ msgstr "Eliminar tabla"
+msgid "Remove table"
+msgstr "Eliminar tabla"
 
-#~ msgid "Add columns"
-#~ msgstr "Añadir columnas"
+msgid "Add columns"
+msgstr "Añadir columnas"
 
-#~ msgid "Change values"
-#~ msgstr "Cambiar valores"
+msgid "Change values"
+msgstr "Cambiar valores"
 
-#~ msgid "Rename a column"
-#~ msgstr "Cambiar nombre de una columna"
+msgid "Rename a column"
+msgstr "Cambiar nombre de una columna"
 
-#~ msgid "Query any table"
-#~ msgstr "Consultar cualquier tabla"
+msgid "Query any table"
+msgstr "Consultar cualquier tabla"
 
-#~ msgid "Query vector attribute table"
-#~ msgstr "Consultar tabla de atributos de un vectorial"
+msgid "Query vector attribute table"
+msgstr "Consultar tabla de atributos de un vectorial"
 
-#~ msgid "SQL statement"
-#~ msgstr "Sentencia SQL"
+msgid "SQL statement"
+msgstr "Sentencia SQL"
 
-#~ msgid "Set vector - database connection"
-#~ msgstr "Configurar conexión vectorial - base de datos"
+msgid "Set vector - database connection"
+msgstr "Configurar conexión vectorial - base de datos"
 
-#~ msgid "  grid text font "
-#~ msgstr "  fuente de texto de la cuadrícula "
+#, fuzzy
+msgid "  grid text font "
+msgstr "  fuente de texto de la leyenda "
 
-#~ msgid "\ttext font "
-#~ msgstr "\tfuente de texto "
+msgid "\ttext font "
+msgstr "\tfuente de texto "
 
-#~ msgid "  background"
-#~ msgstr "  Fondo"
+msgid "  background"
+msgstr "  Fondo"
 
-#~ msgid "  legend text font "
-#~ msgstr "  fuente de texto de la leyenda "
+msgid "  legend text font "
+msgstr "  fuente de texto de la leyenda "
 
-#~ msgid "  cell values font "
-#~ msgstr "  fuente de valores de celda "
+msgid "  cell values font "
+msgstr "  fuente de valores de celda "
 
-#~ msgid "red (RGB) or hue (HIS): "
-#~ msgstr "rojo (RGB) o tonalidad (HIS): "
+msgid "red (RGB) or hue (HIS): "
+msgstr "rojo (RGB) o tonalidad (HIS): "
 
-#~ msgid "raster map for red or hue channel (HIS drape)"
-#~ msgstr "mapa ráster para el canal rojo o de tonalidad (cobertura HIS)"
+msgid "raster map for red or hue channel (HIS drape)"
+msgstr "mapa ráster para el canal rojo o de tonalidad (cobertura HIS)"
 
-#~ msgid "green (RGB) or intensity (HIS): "
-#~ msgstr "verde (RGB) o intensidad (HIS): "
+msgid "green (RGB) or intensity (HIS): "
+msgstr "verde (RGB) o intensidad (HIS): "
 
-#~ msgid "raster map for green or intensity channel (HIS relief)"
-#~ msgstr "mapa ráster para el canal verde o de intensidad (relieve HIS)"
+msgid "raster map for green or intensity channel (HIS relief)"
+msgstr "mapa ráster para el canal verde o de intensidad (relieve HIS)"
 
-#~ msgid "blue (RGB) or saturation (HIS): "
-#~ msgstr "azul (RGB) o saturación (HIS): "
+msgid "blue (RGB) or saturation (HIS): "
+msgstr "azul (RGB) o saturación (HIS): "
 
-#~ msgid "HIS brightness adjustment\t "
+msgid "HIS brightness adjustment\t "
+msgstr "Ajuste de brillo HIS\t "
+
+msgid "Adjusts the HIS intensity channel brightness"
+msgstr "Ajusta el brillo del canal de intensidad HIS"
+
+msgid "Select input map"
+msgstr "Seleccionar mapa de entrada"
+
+msgid "Interactive rules entry"
+msgstr "Entrada de reglas interactiva"
+
+#, fuzzy
+msgid "overwrite existing file"
+msgstr "Sobrescribir archivo existente"
+
+msgid "You must select an input map"
+msgstr "Debe seleccionar un mapa de entrada"
+
+msgid "No input map selected"
+msgstr "Ningún mapa de entrada seleccionado"
+
+msgid "You must specify an output map"
+msgstr "Debe especificar un mapa de salida"
+
+msgid "No output map specified"
+msgstr "Ningún mapa de salida seleccionado"
+
+#~ msgid "Error creating tempfile"
+#~ msgstr "Error al crear archivo temporal"
+
+#~ msgid "Error setting region"
+#~ msgstr "Error al establecer la región"
+
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#~ msgid "Animate raster maps"
+#~ msgstr "Animar mapas ráster"
+
+#~ msgid "3D rendering"
+#~ msgstr "Renderizado 3D"
+
+#~ msgid "NVIZ"
+#~ msgstr "NVIZ"
+
+#~ msgid "NVIZ fly through path"
+#~ msgstr "Vuelo NVIZ siguiendo la ruta"
+
+#~ msgid "grid color "
+#~ msgstr "color de cuadrícula "
+
+#~ msgid "text color "
+#~ msgstr "color de texto "
+
+#~ msgid "text font "
+#~ msgstr "fuente de texto "
+
+#~ msgid "  text size"
+#~ msgstr "  tamaño de texto"
+
+#~ msgid "Grid text size in points"
+#~ msgstr "Tamaño del texto de la cuadrícula en puntos"
+
+#~ msgid "draw grid border "
+#~ msgstr "dibujar borde de la cuadrícula "
+
+#~ msgid "r.info error"
+#~ msgstr "error de r.info"
+
+#~ msgid "g.proj or projection error"
+#~ msgstr "error de g.prog o de proyección"
+
+#~ msgid "Ghostscript not available"
+#~ msgstr "GhostScript no disponible"
+
+#~ msgid "Create flythough path for NVIZ"
+#~ msgstr "Crear trayectoria de vuelo para NVIZ"
+
+#~ msgid "Could not create BMP"
+#~ msgstr "No se pudo crear BMP"
+
+#~ msgid "Could not create JPG"
+#~ msgstr "No se pudo crear JPG"
+
+#~ msgid "Could not create PNG"
+#~ msgstr "No se pudo crear PNG"
+
+#~ msgid "Could not create TIF"
+#~ msgstr "No se pudo crear TIF"
+
+#~ msgid "r.univar error"
+#~ msgstr "error de r.univar"
+
+#~ msgid "r.profile error"
+#~ msgstr "error de r.profile"
+
+#~ msgid "base map info"
+#~ msgstr "Información del mapa base"
+
+#~ msgid "drape map info"
+#~ msgstr "Información de mapa de cobertura"
+
+#, fuzzy
+#~ msgid "\tdrape map brightness adjustment\t "
 #~ msgstr "Ajuste de brillo HIS\t "
 
-#~ msgid "Adjusts the HIS intensity channel brightness"
-#~ msgstr "Ajusta el brillo del canal de intensidad HIS"
+#~ msgid "Apply"
+#~ msgstr "Aplicar"
 
-#~ msgid "Select input map"
-#~ msgstr "Seleccionar mapa de entrada"
+#~ msgid "Error creating rules file"
+#~ msgstr "Error al crear archivo de reglas"
 
-#~ msgid "Interactive rules entry"
-#~ msgstr "Entrada de reglas interactiva"
+#~ msgid ""
+#~ "\n"
+#~ "***** Please wait *****"
+#~ msgstr ""
+#~ "\n"
+#~ "***** Espere por favor *****"
 
-#~ msgid "overwrite existing file"
-#~ msgstr "Sobrescribir archivo existente"
+#~ msgid "Gathering information about your system"
+#~ msgstr "Recogiendo información sobre su sistema"
 
-#~ msgid "You must select an input map"
-#~ msgstr "Debe seleccionar un mapa de entrada"
+#~ msgid "***** Done *****"
+#~ msgstr "***** Hecho *****"
 
-#~ msgid "No input map selected"
-#~ msgstr "Ningún mapa de entrada seleccionado"
+#~ msgid "Vector Info"
+#~ msgstr "Información del vectorial"
 
-#~ msgid "You must specify an output map"
-#~ msgstr "Debe especificar un mapa de salida"
+#~ msgid "Select maps to animate"
+#~ msgstr "Seleccionar mapas a animar"
 
-#~ msgid "No output map specified"
-#~ msgstr "Ningún mapa de salida seleccionado"
+#~ msgid "Rewind animation"
+#~ msgstr "Retroceder animación"
+
+#~ msgid "Replay animation"
+#~ msgstr "Repetir animación"
+
+#~ msgid "Step backwards through animation"
+#~ msgstr "Ir hacia atrás por la animación"
+
+#~ msgid "Stop animation"
+#~ msgstr "Detener animación"
+
+#~ msgid "Step forwards through animation"
+#~ msgstr "Ir hacia delante por la animación"
+
+#~ msgid "Play animation"
+#~ msgstr "Reproducir animación"
+
+#~ msgid "Slower animation"
+#~ msgstr "Animación más lenta"
+
+#~ msgid "Faster animation"
+#~ msgstr "Animación más rápida"
+
+#~ msgid "Continuously loop through animation"
+#~ msgstr "Avanzar en bucle por la animación"
+
+#~ msgid "Run animation alternately forward and backward"
+#~ msgstr "Ejecutar animación alternativamente hacia delante y hacia atrás"
+
+#~ msgid "Show map names in animation window"
+#~ msgstr "Mostrar nombres de mapas en la ventana de animación"
+
+#~ msgid "Quit animation"
+#~ msgstr "Salir de la animación"
+
+#~ msgid "Select maps"
+#~ msgstr "Seleccionar mapas"
+
+#~ msgid "Maps for Animation"
+#~ msgstr "Mapas para animación"
+
+#~ msgid "Select maps to animate in one or more frames (1 frame required)"
+#~ msgstr ""
+#~ "Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
+
+#~ msgid "Maps for frame 1 (required): "
+#~ msgstr "Mapas para el marco 1 (requerido): "
+
+#~ msgid "Maps for frame 2 (optional): "
+#~ msgstr "Mapas para el marco 2 (opcional): "
+
+#~ msgid "Maps for frame 3 (optional): "
+#~ msgstr "Mapas para el marco 3 (opcional): "
+
+#~ msgid "Maps for frame 4 (optional): "
+#~ msgstr "Mapas para el marco 4 (opcional): "
+
+#~ msgid "You must select maps to animate for frame 1"
+#~ msgstr "Debe seleccionar mapas a animar para el marco 1"
+
+#~ msgid "No maps selected"
+#~ msgstr "Ningún mapa seleccionado"
+
+#~ msgid "Animation Window"
+#~ msgstr "Ventana de animación"
+
+#~ msgid "NVIZ flythrough path"
+#~ msgstr "Ruta de sobrevuelo de NVIZ"
+
+#~ msgid "Create flythough path for NVIZ display"
+#~ msgstr "Crear ruta de sobrevuelo para visualización de NVIZ"
+
+#~ msgid "Raster surface map "
+#~ msgstr "Mapa de superficie ráster "
+
+#~ msgid "Output script file "
+#~ msgstr "Archivo de scripts de salida "
+
+#~ msgid "Flythrough path "
+#~ msgstr "Ruta de sobrevuelo "
+
+#~ msgid "Create path with mouse in map display"
+#~ msgstr "Crear ruta con el ratón en la visualización del mapa"
+
+#~ msgid "Coordinate pairs for flythrough path (x1,y1,x2,y2,...)"
+#~ msgstr "Pares de coordenadas para ruta de sobrevuelo (x1,y1,x2,y2,...)"
+
+#~ msgid "Flythrough images prefix "
+#~ msgstr "Prefijo de imágenes de sobrevuelo"
+
+#~ msgid "Prefix for image series created by flythough"
+#~ msgstr "Prefijo para series de imágenes creadas por sobrevuelo"
+
+#~ msgid "Camera height "
+#~ msgstr "Altura de cámara "
+
+#~ msgid "Camera height above terrain"
+#~ msgstr "Altura de cámara sobre el terreno"
+
+#~ msgid "Number of frames "
+#~ msgstr "Número de marcos "
+
+#~ msgid "Number of frames to create for flythrough"
+#~ msgstr "Número de marcos a crear para sobrevuelo"
+
+#~ msgid "Start frame "
+#~ msgstr "Marco inicial "
+
+#~ msgid "Starting frame number..."
+#~ msgstr "Número de marco inicial..."
+
+#~ msgid "Enable vector rendering"
+#~ msgstr "Activar renderizado vectorial"
+
+#~ msgid "Full render (save images)"
+#~ msgstr "Rederizado completo (guardar imágenes)"
+
+#~ msgid "Render images offscreen"
+#~ msgstr "Renderizar imágenes fuera de pantalla"
+
+#~ msgid "Height value is elevation"
+#~ msgstr "El valor de altura es la elevación"
+
+#~ msgid "Output keyframe file"
+#~ msgstr "Pproducir archivo de marco clave"
+
+#~ msgid "Reset"
+#~ msgstr "Restablecer"
+
+#~ msgid "Clear all path coordinates"
+#~ msgstr "Borrar todas las coordenadas de la ruta"
+
+#~ msgid "You must specify an output file"
+#~ msgstr "Debe especificar un archivo de salida"
+
+#~ msgid "No output file specified"
+#~ msgstr "Ningún archivo de salida seleccionado"
+
+#~ msgid "You must specify at least 4 points (x,y coordinate pairs)"
+#~ msgstr "Debe especificar al menos 4 puntos (pares de coordenadas X, Y)"
+
+#~ msgid "Insufficient coordinates specified"
+#~ msgstr "Coordenadas especificadas insuficientes"
+
+#~ msgid "Enter name for location to be created"
+#~ msgstr "Introducir nombre para la localización a crear"
+
+#~ msgid "Invalid EPSG Code!"
+#~ msgstr "¡Código EPSG no válido!"
+
+#~ msgid "ERROR: Invalid EPSG code %s: should be an integer."
+#~ msgstr "ERROR: código EPSG %s no válido: debería ser un entero."
+
+#~ msgid "Location Exists!"
+#~ msgstr "¡La localización existe!"
+
+#~ msgid "WARNING: Location '%s' already exists: please try another name."
+#~ msgstr ""
+#~ "AVISO: la localización '%s' ya existe: por favor, pruebe otro nombre."
+
+#~ msgid "Error creating location!"
+#~ msgstr "¡Error al crear localización!"
+
+#~ msgid ""
+#~ "g.proj returned the following message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "g.proj devolvió el siguiente mensaje:\n"
+#~ "%s"
+
+#~ msgid "Informational output from g.proj"
+#~ msgstr "Salida informativa de g.proj"
+
+#~ msgid ""
+#~ "g.proj returned the following informational message:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "g.proj devolvió el siguiente mensaje informativo:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Continue without specifying parameters - if used when creating a "
+#~ "location, other GRASS modules will use the \"default\" (likely non-"
+#~ "optimum) parameters for this datum if necessary in the future."
+#~ msgstr ""
+#~ "Continuar sin especificar parámetros - si se usa al crear una "
+#~ "localización, otros módulos de GRASS usarán los parámetros \"por defecto"
+#~ "\" (probablemente no óptimos) para este datum si es necesario en el "
+#~ "futuro."
