@@ -217,7 +217,7 @@ int main(int argc, char *argv[])
 
 	    if (G_asprintf
 		(&line, "  Total Cells:  %ld",
-		 (long)cellhd.rows * cellhd.cols) > 0)
+		 (unsigned long long)cellhd.rows * cellhd.cols) > 0)
 		printline(line);
 	    else
 		G_fatal_error(_("Cannot allocate memory for string"));
