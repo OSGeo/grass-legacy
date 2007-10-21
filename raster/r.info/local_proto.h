@@ -1,3 +1,3 @@
 /* reclas_txt.c */
-int reclass_text(char *, CELL, struct Reclass *, int);
-int do_text(char *, long, long);
+int reclass_text(char *, const CELL, struct Reclass *, const int);
+int do_text(char *, const long, const long);

@@ -2,7 +2,8 @@
 #include <grass/gis.h>
 #include "local_proto.h"
 
-int reclass_text(char *text, CELL cat, struct Reclass *reclass, int next)
+
+int reclass_text (char *text, const CELL cat, struct Reclass *reclass, const int next)
 {
     int i;
     int n;
@@ -29,10 +30,12 @@ int reclass_text(char *text, CELL cat, struct Reclass *reclass, int next)
     }
     if (first >= 0)
 	do_text(text, (long)first + min, (long)i - 1 + min);
+
     return -1;
 }
 
-int do_text(char *text, long first, long last)
+
+int do_text (char *text, const long first, const long last)
 {
     char work[40];
 

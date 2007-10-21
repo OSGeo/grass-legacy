@@ -1,4 +1,3 @@
-
 /***************************************************************************
 *
 * MODULE:       r.info
@@ -32,8 +31,8 @@
 
 
 /* local prototypes */
-void format_double (double, char *);
-void compose_line (FILE *, const char *, ...);
+static void format_double (const double, char *);
+static void compose_line (FILE *, const char *, ...);
 
 
 int main (int argc, char **argv)
@@ -62,7 +61,7 @@ int main (int argc, char **argv)
     struct Flag *rflag, *sflag, *tflag, *gflag, *hflag, *mflag;
     struct Flag *uflag, *dflag, *timestampflag;
 
-
+    /* Initialize GIS Engine */
     G_gisinit(argv[0]);
 
     module = G_define_module();
@@ -110,8 +109,7 @@ int main (int argc, char **argv)
 	_("Print raster map timestamp (day.month.year hour:minute:seconds) only");
 
     if (G_parser(argc, argv))
-	exit(EXIT_FAILURE);
-
+        exit(EXIT_FAILURE);
 
     name = G_store(opt1->answer);
     if ((mapset = G_find_cell2(name, "")) == NULL)
@@ -132,14 +130,14 @@ int main (int argc, char **argv)
     time_ok = G_read_raster_timestamp(name, mapset, &ts) > 0;
     /*Check for valid entries, show none if no timestamp available */
     if (time_ok) {
-	if (ts.count > 0)
-	    first_time_ok = 1;
-	if (ts.count > 1)
-	    second_time_ok = 1;
+        if (ts.count > 0)
+            first_time_ok = 1;
+        if (ts.count > 1)
+            second_time_ok = 1;
     }
 
     if (G_read_fp_range(name, mapset, &range) < 0)
-	G_fatal_error(_("Unable to read range file"));
+        G_fatal_error (_("Unable to read range file"));
     G_get_fp_range_min_max(&range, &zmin, &zmax);
 
     out = stdout;
@@ -172,9 +170,8 @@ int main (int argc, char **argv)
 	divider('|');
 	printline("");
 
-	if (cats_ok) {
+	if (cats_ok)
 	    format_double((double)cats.num, tmp1);
-	}
 
 	compose_line(out, "  Type of Map:  %-20.20s Number of Categories: %-9s",
 	     hist_ok ? hist.maptype : "??", cats_ok ? tmp1 : "??");
@@ -332,6 +329,7 @@ int main (int argc, char **argv)
 		fprintf(out, "max=%f\n", zmax);
 	    }
 	}
+
 	if (gflag->answer) {
 	    G_format_northing(cellhd.north, tmp1, cellhd.proj);
 	    G_format_northing(cellhd.south, tmp2, cellhd.proj);
@@ -343,6 +341,7 @@ int main (int argc, char **argv)
 	    fprintf(out, "east=%s\n", tmp1);
 	    fprintf(out, "west=%s\n", tmp2);
 	}
+
 	if (sflag->answer) {
 	    G_format_resolution(cellhd.ns_res, tmp3, cellhd.proj);
 	    fprintf(out, "nsres=%s\n", tmp3);
@@ -350,16 +349,19 @@ int main (int argc, char **argv)
 	    G_format_resolution(cellhd.ew_res, tmp3, cellhd.proj);
 	    fprintf(out, "ewres=%s\n", tmp3);
 	}
+
 	if (tflag->answer) {
 	    fprintf(out, "datatype=%s\n",
 		    (data_type == CELL_TYPE ? "CELL" :
 		     (data_type == DCELL_TYPE ? "DCELL" :
 		      (data_type == FCELL_TYPE ? "FCELL" : "??"))));
 	}
+
 	if (mflag->answer) {
 	    fprintf(out, "title=%s (%s)\n", cats_ok ? cats.title :
 				"??", hist_ok ? hist.title : "??");
 	}
+
 	if (timestampflag->answer) {
 	    if (time_ok && (first_time_ok || second_time_ok)) {
 
@@ -373,6 +375,7 @@ int main (int argc, char **argv)
 		fprintf(out, "timestamp=\"none\"\n");
 	    }
 	}
+
 	if (uflag->answer)
 	    fprintf(out, "units=%s\n", units);
 	if (dflag->answer)
@@ -398,27 +401,25 @@ int main (int argc, char **argv)
 }
 
 
-/**************************************************************************/
-void format_double(double value, char *buf)
+static void format_double (const double value, char *buf)
 {
     sprintf(buf, "%.8lf", value);
     G_trim_decimal(buf);
 }
 
 
-void compose_line(FILE *out, const char *fmt, ...)
+static void compose_line(FILE *out, const char *fmt, ...)
 {
     char *line = NULL;
     va_list ap;
 
     va_start(ap, fmt);
 
-    if( G_vasprintf(&line, fmt, ap) <= 0 )
-	G_fatal_error(_("Cannot allocate memory for string"));
+    if (G_vasprintf (&line, fmt, ap) <= 0)
+        G_fatal_error(_("Cannot allocate memory for string"));
 
     va_end(ap);
 
     printline(line);
     G_free(line);
-
 }
