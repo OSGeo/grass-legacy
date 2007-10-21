@@ -20,10 +20,6 @@
 /* define for Windows static build */
 #undef STATIC_BUILD
 
-
-/* define if standard C headers exist:  headers are
- * stdlib.h, stdarg.h, string.h, and float.h */
-
 /* define if curses.h exists */
 #undef HAVE_CURSES_H
 
@@ -92,6 +88,9 @@
 
 /* define uid_t type */
 #undef uid_t
+
+/* define if "long long" is available */
+#undef HAVE_LONG_LONG_INT
 
 /* Define the return type of signal handlers */
 #define RETSIGTYPE int
