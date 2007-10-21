@@ -27,7 +27,7 @@
    \param[in] BgMap, nbgmaps list of background vector maps for snapping
    \param[in] List list of selected features
    \param[in] coord points location
-   \param[in] thresh threshold value (also size of bounding boxes)
+   \param[in] thresh threshold value (also size of bounding boxes) (>0)
    \param[in] move_x,move_y X,Y direction for moving
    \param[in] move_first move only first vertex found in the bounding box
    \param[in] snap allow snapping (see global.h)
@@ -45,6 +45,7 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 
     int i, j, k;
     int line, type, rewrite;
+    int npoints;
     double east, north, dist;
     double *x, *y, *z;
     char *moved;
@@ -71,11 +72,16 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	if (!(type & GV_LINES))
 	    continue;
 
+	npoints = Points -> n_points;
 	x = Points -> x;
 	y = Points -> y;
 	z = Points -> z;
 
-	/* vertex moved ? */
+	/* vertex moved 
+	   0 not moved
+	   1 moved
+	   2 moved and snapped
+	 */
 	moved = (char *) G_realloc ((void *) moved, Points -> n_points * sizeof (char));
 	G_zero ((void *) moved, Points -> n_points * sizeof (char));
 	
@@ -86,7 +92,7 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	    
 	    /* move all vertices in the bounding box */
 	    for (k = 0; k < Points -> n_points; k++) {
-		if (!moved[k]) {
+		if (moved[k] == 0) {
 		    dist = Vect_points_distance (east, north, 0.0,
 						 x[k], y[k], z[k],
 						 WITHOUT_Z);
@@ -95,29 +101,53 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 				 line, x[k], y[k], x[k] + move_x, y[k] + move_y);
 			x[k] += move_x;
 			y[k] += move_y;
+			moved[k] = 1;
+
 			G_debug (3, "line=%d, point=%d moved", line, k);
 			
 			if (snap != NO_SNAP) {
-			  if (do_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
-					    (snap == SNAPVERTEX) ? 1 : 0) == 0) {
-			      /* check also background maps */
-			      int bgi;
-			      for (bgi = 0; bgi < nbgmaps; bgi++) {
-				  if (do_snap_point(BgMap[i], line, &x[k], &y[k], &z[k], thresh,
-						    (snap == SNAPVERTEX) ? 1 : 0))
-				      break; /* snapped, don't continue */
-			      }
-			  }
+			    if (do_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
+					      (snap == SNAPVERTEX) ? 1 : 0) == 0) {
+				/* check also background maps */
+				int bgi;
+				for (bgi = 0; bgi < nbgmaps; bgi++) {
+				    if (do_snap_point(BgMap[i], line, &x[k], &y[k], &z[k], thresh,
+						      (snap == SNAPVERTEX) ? 1 : 0))
+					moved[k] = 2;
+					break; /* snapped, don't continue */
+				}
+			    }
+			    else {
+				moved[k] = 2;
+			    }
 			}
 			
-			moved[k] = 1;
 			rewrite = 1;
 			nvertices_moved++;
+
 			if (move_first)
 			    break;
 		    }
 		}
-	    } /* for each point */
+	    } /* for each line vertex */
+
+	    /* close line or boundary */
+	    if ((type & GV_LINES) &&
+		Vect_points_distance(x[0], y[0], z[0],
+				     x[npoints-1], y[npoints-1], z[npoints-1],
+				     WITHOUT_Z) <= thresh) {
+
+		if (moved[0] == 1) { /* first node moved */
+		    x[0] = x[npoints-1];
+		    y[0] = y[npoints-1];
+		    z[0] = z[npoints-1];
+		}
+		else if (moved[npoints-1] == 1) { /* last node moved */
+		    x[npoints-1] = x[0];
+		    y[npoints-1] = y[0];
+		    z[npoints-1] = z[0];
+		}
+	    }
 	} /* for each coord */
 	
 	if (rewrite) {

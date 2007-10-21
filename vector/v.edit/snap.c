@@ -204,7 +204,7 @@ int do_snap_point(struct Map_info *Map,
    \param[in] BgMap,nbgmaps List of background maps
    \param[in] List list of lines to be snapped
    \param[in] layer layer number
-   \param[in] thresh threshold value used for snapping
+   \param[in] thresh threshold value used for snapping (>0)
    \param[in] to_vertex allow snapping also to vertex
 
    \return number of snapped lines
@@ -258,8 +258,20 @@ int do_snapping(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 		}
 	      }
 	    }
-	} /* for each point */
-	
+	} /* for each line vertex */
+
+	/* close boundaries or lines */
+	if (!rewrite && (type & GV_LINES) &&
+	    Vect_points_distance(x[0], y[0], z[0],
+				 x[npoints-1], y[npoints-1], z[npoints-1],
+				 WITHOUT_Z) <= thresh) {
+	    x[npoints-1] = x[0];
+	    y[npoints-1] = y[0];
+	    z[npoints-1] = z[0];
+
+	    rewrite = 1;
+	}
+
 	if (rewrite) {
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
 		G_warning(_("Unable to rewrite line %d"), line);

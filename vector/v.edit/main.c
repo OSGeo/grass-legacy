@@ -126,14 +126,21 @@ int main (int argc, char *argv[])
 	    BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
 	    if (Vect_open_old(BgMap[nbgmaps-1], bmap, mapset) == -1) {
 		G_fatal_error (_("Unable to open vector map <%s>"),
-			       bmap);
+			       G_fully_qualified_name(bmap, mapset));
 	    }
+	    G_verbose_message(_("Background vector map <%s> registered"),
+			      G_fully_qualified_name(bmap, mapset));
 	    i++;
 	}
     }
 
     layer = atoi (params.fld -> answer);
-    thresh = atof (params.maxdist -> answer);
+    if (params.query->answer) { /* allow negative threshold value (shorter / longer) */
+	thresh = atof (params.maxdist -> answer);
+    }
+    else {
+	thresh = max_distance(atof (params.maxdist -> answer));
+    }
     move_first = params.move_first->answer ? 1 : 0;
     snap = NO_SNAP;
     if (strcmp(params.snap->answer, "node") == 0)
@@ -174,7 +181,7 @@ int main (int argc, char *argv[])
 	    }
 	    Vect_close (&Map);
 
-	    Vect_open_update (&Map, params.map -> answer, mapset); 
+	    Vect_open_update (&Map, params.map -> answer, G_mapset()); 
 	}
     }
 
@@ -251,7 +258,6 @@ int main (int argc, char *argv[])
 	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
-	thresh = max_distance (thresh);
 	ret = do_break(&Map, List,
 		       coord, thresh, NULL);
 	G_message(_("%d lines broken"), ret);

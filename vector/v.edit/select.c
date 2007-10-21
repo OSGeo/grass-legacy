@@ -160,9 +160,10 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 	reverse_selection(Map, type, &List);
     }
 
-    G_message (_("%d of %d features selected"),
+    G_message (_("%d of %d features selected from vector map <%s>"),
 	       List -> n_values,
-	       Vect_get_num_lines (Map));
+	       Vect_get_num_lines (Map),
+	       Vect_get_full_name(Map));
 
     return List;
 }
@@ -285,7 +286,10 @@ int sel_by_coordinates(struct Map_info *Map,
     box = Vect_new_line_struct();
     List_in_box = Vect_new_list();
 
-    maxdist = max_distance (thresh);
+    if (thresh < 0)
+	maxdist = max_distance (thresh);
+    else
+	maxdist = thresh;
 
     for (i = 0; i < coords -> n_points; i++) {
 	east  = coords->x[i];
@@ -605,6 +609,8 @@ int reverse_selection (struct Map_info *Map, int type, struct ilist** List) {
 
    \param[in] Map vector map
    \param[in] type feature type
+   \param[in] layer layer number
+   \param[in] thresh threshold value (< 0 for 'shorter', > 0 for 'longer')
    \param[in] query query (length, dangle, ...)
    \param[in,out] List list of selected features
  
@@ -615,6 +621,7 @@ int sel_by_query(struct Map_info *Map,
 		 struct ilist* List)
 {
     int num, line, ltype, cat;
+    double length;
     struct ilist *List_tmp;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -643,11 +650,13 @@ int sel_by_query(struct Map_info *Map,
 	    continue;
 
 	if (strcmp(query, "length") == 0) {
-	    if (thresh < 0.0) {
-		Vect_list_append(List_tmp, line);
+	    length = Vect_line_length(Points);
+	    if (thresh <= 0.0) { /* shorter then */
+		if (length <= fabs(thresh))
+		    Vect_list_append(List_tmp, line);
 	    }
-	    else {
-		if (Vect_line_length(Points) <= thresh)
+	    else { /* longer then */
+		if (length > thresh)
 		    Vect_list_append(List_tmp, line);
 	    }
 	}
@@ -677,9 +686,18 @@ int sel_by_query(struct Map_info *Map,
 		    node = node2;
 	    }
 
-	    if (node == -1 ||
-		(thresh > 0.0 && Vect_line_length(Points) > thresh)) {
-		continue; /* no dangle */
+	    /* no dangle ? */
+	    if (node == -1)
+		continue;
+
+	    length = Vect_line_length(Points);
+	    if (thresh <= 0.0) { /* shorter then */
+		if (length > fabs(thresh))
+		    continue;
+	    }
+	    else { /* longer then */
+		if (length <= thresh)
+		    continue;
 	    }
 	    
 	    /* at least one of the lines need to have same category number */

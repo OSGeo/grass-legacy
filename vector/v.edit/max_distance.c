@@ -20,7 +20,7 @@
 #include "global.h"
 
 /**
-   \brief Set maxdistance based on the current resolution
+   \brief Set distance based on the current resolution
 
    This code comes from v.what/main.c
  
@@ -35,7 +35,7 @@ double max_distance(double maxdistance)
     double ew_dist1, ew_dist2, ns_dist1, ns_dist2;
     double xres, yres, maxd;
 
-    if (maxdistance <= 0.0) {
+    if (maxdistance < 0.0) {
         G_get_window (&window);
 
         ew_dist1 = G_distance(window.east, window.north, window.west, window.north);
@@ -54,7 +54,7 @@ double max_distance(double maxdistance)
 	else
 	    maxd = yres;
 
-	G_warning (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
+	G_important_message (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
     }
     else {
         maxd = maxdistance;
