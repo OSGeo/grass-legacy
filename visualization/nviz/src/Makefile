@@ -53,22 +53,18 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj)) 
 
-#PGM = nviz
+EXTRA_CLEAN_FILES = nvwish$(EXE)
+
 #default: $(BIN)/$(PGM) htmlcmd
-default: nvwish
+default: nvwish$(EXE)
 
-
-#gsf: 
-#	cd $(SURF_INCDIR) ; $(GMAKE)
-#	touch nviz_init.c
-
-nvwish: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
+nvwish$(EXE): $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SURFLIB) \
-	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
-	$(G3DLIB) $(GISLIB) $(XDRLIB) \
-	$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) \
-	$(FFMPEGLIBPATH) $(FFMPEGLIB) $(MATHLIB)
+		$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
+		$(G3DLIB) $(GISLIB) $(XDRLIB) \
+		$(DATETIMELIB) $(XTRA_LDFLAGS) $(TIFFLIBPATH) $(TIFFLIB) \
+		$(FFMPEGLIBPATH) $(FFMPEGLIB) $(MATHLIB)
 	-$(MKDIR) $(GISBASE)/docs/html
-	-cp -f description.html $(GISBASE)/docs/html/$(PGM).html
+	-$(INSTALL_DATA) description.html $(GISBASE)/docs/html/nviz.html
 	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
 
