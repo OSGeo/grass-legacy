@@ -20,6 +20,8 @@
 /* define for Windows static build */
 #undef STATIC_BUILD
 
+/* define if 'long long' type exists */
+#undef HAVE_LONG_LONG
 
 /* define if standard C headers exist:  headers are
  * stdlib.h, stdarg.h, string.h, and float.h */
