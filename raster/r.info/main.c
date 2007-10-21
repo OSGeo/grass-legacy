@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 	    compose_line(out, "  Rows:         %d", cellhd.rows);
 	    compose_line(out, "  Columns:      %d", cellhd.cols);
 	    compose_line(out, "  Total Cells:  %ld",
-			(long)cellhd.rows * cellhd.cols);
+			(unsigned long long)cellhd.rows * cellhd.cols);
 
 	    /* This is printed as a guide to what the following eastings and
 	       * northings are printed in. This data is NOT from the values
