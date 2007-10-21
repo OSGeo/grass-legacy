@@ -91,7 +91,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> maxdist->required    = NO;
     params -> maxdist->multiple    = NO;
     params -> maxdist->label       = _("Threshold distance");
-    params -> maxdist->description = _("'-1' for no limit");
+    params -> maxdist->description = _("'-1' for threshold based on the current resolution settings");
     params -> maxdist->answer      = "-1";
 
     params -> id = G_define_standard_option(G_OPT_V_CATS);
@@ -139,10 +139,13 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> query -> key          = "query";
     params -> query ->type          = TYPE_STRING;
     params -> query -> options      = "length,dangle";
-    params -> query -> description  = _("Query tool");
-    params -> query -> descriptions = _("length;Select only lines or boudaries shorter "
-					"than threshold distance;"
-					"dangle;Select dangles shorter than threshold distance");
+    params -> query -> label        = _("Query tool");
+    params -> query -> description  = _("For 'shorter' use negative threshold value, "
+					"positive value for 'longer'");
+    params -> query -> descriptions = _("length;Select only lines or boudaries shorter"
+					"/longer than threshold distance;"
+					"dangle;Select dangles shorter/longer than "
+					"threshold distance");
     params -> query->guisection  = _("Query");
 
     params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);

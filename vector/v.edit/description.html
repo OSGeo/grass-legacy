@@ -239,7 +239,6 @@ Copy all features with category number 1 from background map:
 
 <div class="code"><pre>
 v.edit map=roads tool=copy bgmap=archsites cat=1
-
 </pre></div>
 
 <h3>Move features</h3>
@@ -311,7 +310,7 @@ v.edit map=roads tool=merge cat=4
 Break line id 810 on coordinates 604268,4923570:
 
 <div class="code"><pre>
-v.edit map=roads tool=break coords=604268,4923570 id=810
+v.edit map=roads tool=break coords=604268,4923570 id=810 thresh=50
 </pre></div>
 
 <h3>Snap lines</h3>
@@ -385,6 +384,18 @@ d.vect roads;
 d.vect -i map=roads cats=`v.edit map=roads tool=select \
   coord=592542.89243878,4924766.99622811,603389.0625,4918292.1875 \
   thresh=1000 --q` col=red
+</pre></div>
+
+Select all lines shorter (or equal) than 10 map units:
+
+<div class="code"><pre>
+v.edit map=roads tool=select query=length thresh=-10
+</pre></div>
+
+Select from given bounding box all lines longer then 200 map units:
+
+<div class="code"><pre>
+v.edit map=roads tool=select bbox=598260,4919730,605100,4926240 query=length thresh=1000
 </pre></div>
 
 <h3>Fix height of contours</h3>
