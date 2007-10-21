@@ -364,6 +364,24 @@ CROSS_COMPILING=1
 AC_SUBST(CROSS_COMPILING)
 fi
 
+# Detect if compiler supports 'long long' type
+AC_CACHE_CHECK(for long long, ac_long_long,
+  [if test "$GCC" = yes; then
+    ac_long_long=yes
+  else
+    AC_TRY_RUN([int main() {
+      long long foo = 0;
+      exit(sizeof(long long) < sizeof(long)); }],
+    ac_long_long=yes,
+    ac_long_long=no, echo "TODO: Cross compiling")
+  fi]
+)
+
+if test $ac_long_long = yes; then
+    AC_DEFINE(HAVE_LONG_LONG)
+fi
+
+
 AC_MSG_CHECKING(for W11)
 case "$enable_w11" in
 	yes|no)	AC_MSG_RESULT("$enable_w11")	;;
