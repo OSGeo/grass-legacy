@@ -192,11 +192,11 @@ int main (int argc, char **argv)
 	if (head_ok) {
 	    compose_line(out, "  Rows:         %d", cellhd.rows);
 	    compose_line(out, "  Columns:      %d", cellhd.cols);
-#ifdef HAVE_LONG_LONG
-	    compose_line(out, "  Total Cells:  %ld",
+#ifdef HAVE_LONG_LONG_INT
+	    compose_line(out, "  Total Cells:  %llu",
 			(unsigned long long)cellhd.rows * cellhd.cols);
 #else
-	    compose_line(out, "  Total Cells:  %ld (accuracy - see r.info manual)",
+	    compose_line(out, "  Total Cells:  %lu (accuracy - see r.info manual)",
 			(unsigned long)cellhd.rows * cellhd.cols);
 #endif
 
