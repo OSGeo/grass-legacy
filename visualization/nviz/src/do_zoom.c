@@ -230,7 +230,7 @@ void swap_os(void)
 ********************************************/
 int Create_OS_Ctx(int width, int height)
 {
-#ifdef OPENGL_X11
+#if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
     int scr;
 
 #ifdef HAVE_PBUFFERS
@@ -269,7 +269,7 @@ int Create_OS_Ctx(int width, int height)
 
 #ifdef HAVE_PBUFFERS
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
-    if (!getenv("GRASS_NO_GLX_PBUFFERS"))
+    if (getenv("GRASS_GLX_PBUFFERS"))
     {
 	fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
@@ -281,6 +281,7 @@ int Create_OS_Ctx(int width, int height)
 	    pbuf_attrib[pbuf_cnt++] = width + 1;
 	    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
 	    pbuf_attrib[pbuf_cnt++] = height + 1;
+	    pbuf_attrib[pbuf_cnt++] = None;
 
 	    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
 	    if (pbuffer)
@@ -294,7 +295,7 @@ int Create_OS_Ctx(int width, int height)
 #ifdef HAVE_PBUFFERS
     if (!pbuffer)
 #endif
-    if (!getenv("GRASS_NO_GLX_PIXMAPS"))
+    if (getenv("GRASS_GLX_PIXMAPS"))
     {
 	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
 
@@ -325,6 +326,9 @@ int Create_OS_Ctx(int width, int height)
     }
 #endif
 
+    if (!pbuffer && !glxpixmap)
+	    return 1;
+
     /* hide togl canvas before init_ctx 
      * This prevents bindings from re-initializing
      * togl */
@@ -351,7 +355,7 @@ int Create_OS_Ctx(int width, int height)
 
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
-#endif /* OPENGL_X11 */
+#endif /* defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)) */
 }
 
 
@@ -388,7 +392,10 @@ int Destroy_OS_Ctx(void)
     }
 
 #endif
+    XCloseDisplay(dpy);
+    dpy = NULL;
 #endif /* OPENGL_X11 */
+
     return (1);
 }
 

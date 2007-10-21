@@ -79,6 +79,7 @@ int main (int argc, char *argv[])
   G_gisinit (argv[0]);
   
   module = G_define_module();
+  module->keywords = _("vector, statistics");
   module->description =        
                   _("Randomly generate a 2D/3D GRASS vector points map.");
                   

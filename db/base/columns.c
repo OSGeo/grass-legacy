@@ -1,9 +1,16 @@
-/**************************************************************
- * db.columns driver=name database=name table=name
+/****************************************************************************
  *
+ * MODULE:       db.columns
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      list the column names for a table
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
  *
- *   list the column names for a table
- ****************************************************************/
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <grass/gis.h>
 #include <grass/dbmi.h>
@@ -89,6 +96,7 @@ parse_command_line(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = _("list all columns for a given table.");
 
         
@@ -99,3 +107,4 @@ parse_command_line(int argc, char *argv[])
     parms.database	= database->answer;
     parms.table		= table->answer;
 }
+

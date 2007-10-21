@@ -15,6 +15,13 @@ The input is read from a file specified by <B>input</B> option or from standard 
 <P>
 Field separator may be a character, the word 'tab' (or '\t') for tab,
 or 'space' (or '&nbsp;') for blank.
+
+<P>
+Attribute table is only created if it is needed, i.e. when at
+least one attribute column is present in the input file besides
+geometry columns. The attribute column types have to be declared
+along with the geometry columns using the <em>columns</em> parameter.
+
 <P>
 In special cases of data import, such as the import of large points map from LIDAR, it will
 be desired to disable topology support (GRASS vector level 1). This can be done by setting

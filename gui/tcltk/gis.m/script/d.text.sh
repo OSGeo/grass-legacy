@@ -83,5 +83,5 @@ fi
 
 echo $cmd
 
-exec xterm -e "$GISBASE/etc/grass-run.sh" $cmd
+exec "$GISBASE/etc/grass-xterm-wrapper" -e "$GISBASE/etc/grass-run.sh" $cmd
 

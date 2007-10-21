@@ -2,7 +2,7 @@
 
 <EM>r.in.gdal</EM> allows a user to create a (binary) GRASS raster map layer,
 or imagery group,
-from any GDAL supported raster file format, with an optional title.  The
+from any GDAL supported raster map format, with an optional title.  The
 imported file may also be optionally used to create a new location.
 
 <!--<H2>OPTIONS</H2>
@@ -702,10 +702,50 @@ the points with i.rectify.<BR>
 
 <H2>EXAMPLES</H2>
 
+<h3>GTOPO30 DEM</h3>
+
+To avoid that the GTOPO30 data are read incorrectly, you can add a new line
+"PIXELTYPE SIGNEDINT" in the .HDR to force interpretation of the file as
+signed rather than unsigned integers. Then the .DEM file can be imported.
+Finally, e.g. the 'terrain' color table can be assigned to the imported map
+with <em>r.colors</em>.
+
+
+<h3>GLOBE DEM</h3>
+
 To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
 (approx 1km resolution, better than GTOPO30 DEM data), the user has to download
 additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
 Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
+
+<h3>Worldclim.org</h3>
+To import <a href="http://www.worldclim.org">Worldclim</a> data, the following
+line has to be added to each .hdr file:
+<div class="code"><pre>
+PIXELTYPE SIGNEDINT
+</pre></div>
+
+<h3>HDF</h3>
+
+The import of HDF bands requires the specification of the individual bands
+as seen by GDAL:
+<div class="code"><pre>
+# Example MODIS FPAR
+gdalinfo MOD15A2.A2003153.h18v04.004.2003171141042.hdf
+...
+Subdatasets:
+  SUBDATASET_1_NAME=HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Fpar_1km
+  SUBDATASET_1_DESC=[1200x1200] Fpar_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+  SUBDATASET_2_NAME=HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Lai_1km
+  SUBDATASET_2_DESC=[1200x1200] Lai_1km MOD_Grid_MOD15A2 (8-bit unsigned integer)
+...
+
+# import of first band, here FPAR 1km:
+r.in.gdal HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_Grid_MOD15A2:Fpar_1km \
+          out=fpar_1km_2003_06_02
+# ... likewise for other HDF bands in the file.
+</pre></div>
+
 
 <H2>NOTES</H2>
 
@@ -713,7 +753,13 @@ Finally, e.g. the 'terrain' color table can be assigned to the imported map with
 In this case the image must be first externally rotated, applying the rotation info stored in 
 the metadata field of the raster image file. For example, the 
 <a href="http://www.gdal.org/gdal_utilities.html">gdalwarp</a>  software can be used 
-to transform the map to North-up.
+to transform the map to North-up (note, there are several gdalwarp parameters to select the
+resampling algorithm):
+
+<div class="code"><pre>
+gdalwarp rotated.tif northup.tif
+</pre></div>
+
 
 <H2>SEE ALSO</H2>
 <EM>

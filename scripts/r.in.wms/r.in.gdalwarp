@@ -18,6 +18,7 @@
 
 #%Module
 #%  description: Warps and imports GDAL supported raster file complete with correct NULL values
+#%  keywords: raster, rotate, reproject
 #%End
 #%flag
 #% key: p
@@ -70,7 +71,7 @@
 #%end
 
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi
@@ -106,7 +107,7 @@ if [ $GIS_FLAG_P -ne 1 ] ; then
     fi
 fi
 
-defaultIFS=$IFS
+defaultIFS="$IFS"
 
 # warpimport file map
 # Warps and imports a single file as a named map
@@ -119,11 +120,22 @@ warpimport () {
 	TMPMAPNAME=${2}_tmp
 
 	# Warp it and convert it to geotiff with alpha band to be sure we get nulls:
-	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" -co \"ALPHA=yes\" -dstalpha" $GIS_OPT_WARPOPTIONS $METHOD 1>&2
-	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" -co "ALPHA=yes" -dstalpha $GIS_OPT_WARPOPTIONS $METHOD
+	echo "gdalwarp -s_srs \"$GIS_OPT_S_SRS\" -t_srs \"`g.proj -wf`\" \"$FILE\" \"$WARPFILE\" " $GIS_OPT_WARPOPTIONS $METHOD 1>&2
+	gdalwarp -s_srs "$GIS_OPT_S_SRS" -t_srs "`g.proj -wf`" "$FILE" "$WARPFILE" $GIS_OPT_WARPOPTIONS $METHOD
+
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: gdalwarp failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	#Import it into a temporary map:
 	r.in.gdal $FLAGS input="$WARPFILE" output="$TMPMAPNAME"
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: r.in.gdal failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	# Remove temporary file
 	rm -f "$WARPFILE"
@@ -154,9 +166,16 @@ $CHANNEL_SUFFIXES" | sort -u`
 	# Calculate the new maps:
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
-		# Use alpha channel for nulls:
-		r.mapcalculator amap=$ALPHALAYER bmap=${TMPMAPNAME}${sfx} formula="if(A,B,null())" outfile=${MAP}${sfx}
 
+		# if no suffix, processing is simple (e.g. elevation has only 1 band)
+		if [ -z "$sfx" ] ; then
+		    # run r.mapcalc to crop to region
+		    r.mapcalc "${MAP}${sfx} = ${TMPMAPNAME}${sfx}"
+		    continue
+		fi
+
+		# Use alpha channel for nulls:
+		r.mapcalc "${MAP}${sfx} = if( $ALPHALAYER, ${TMPMAPNAME}${sfx}, null() )"
 		# Copy the color tables:
 		r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx}
 
@@ -175,10 +194,15 @@ $CHANNEL_SUFFIXES" | sort -u`
 }
 
 nowarpimport () {
-	FILE=$1
+	FILE="$1"
 	MAP=$2
 
 	r.in.gdal -o $FLAGS input="$FILE" output="$MAP"
+	if [ $? -ne 0 ] ; then
+	    echo "ERROR: `basename $0`: r.in.gdal failure." 1>&2
+	    rm -f "${TMP}"*
+	    exit 1
+	fi
 
 	#Get a list of channels:
 	PATTERN="$MAP*"
@@ -190,9 +214,15 @@ nowarpimport () {
 	SUFFIXES=`echo "$SUFFIXES
 $CHANNEL_SUFFIXES" | sort -u`
 
-	IFS=$defaultIFS
+	IFS="$defaultIFS"
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
+
+		# skip if only one band ($sfx is empty)
+		if [ -z "$sfx" ] ; then
+		    continue
+		fi
+
 		# Make patch lists:
 		sfx2=`echo $sfx | sed "s/\./_/"`
 		# This is a hack to make the patch lists empty:
@@ -240,7 +270,7 @@ for input in $GIS_OPT_INPUT ; do
 		else
 			warpimport $input $TMPTILENAME
 		fi
-		((TITER++))
+		TITER="`expr $TITER + 1`"
 	else
 		echo "Missing input $input" 1>&2
 	fi
@@ -252,7 +282,8 @@ if [ $NUM_TILES -eq 1 ] ; then
 	for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
-		g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
+		GRASS_VERBOSE=1 \
+		  g.rename rast=${GIS_OPT_OUTPUT}_tile_0${sfx},${GIS_OPT_OUTPUT}${sfx}
 	done
 else
 	# Patch together each channel:
@@ -276,12 +307,12 @@ IFS=$defaultIFS
 for SUFFIX in $SUFFIXES ; do
 	eval "$SUFFIX"
 	# Keep track of colors
-	if [ -z $sfx ] ; then
+	if [ -z "$sfx" ] ; then
 		# There's already a no suffix, can't make colors
 		COLORS=4 # Can only go up from here ;)
 	fi
 	if [ "$sfx" = ".red" ] || [ "$sfx" = ".green" ] || [ "$sfx" = ".blue" ]; then
-		((COLORS++))
+	    COLORS="`expr $COLORS + 1`"
 	fi
 done
 
@@ -289,6 +320,7 @@ done
 if [ $COLORS -eq 3 ] && [ $GIS_FLAG_C -eq 1 ] ; then
 	echo "Building Color Image" 1>&2
 	r.composite red=${GIS_OPT_OUTPUT}.red green=${GIS_OPT_OUTPUT}.green blue=${GIS_OPT_OUTPUT}.blue output=${GIS_OPT_OUTPUT}
+	echo "Written: ${GIS_OPT_OUTPUT}"
 fi
 
 # Clean up:

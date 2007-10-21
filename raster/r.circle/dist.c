@@ -38,7 +38,8 @@ int main(
     G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Creates a raster map containing concentric "
 		"rings around a given point");
 

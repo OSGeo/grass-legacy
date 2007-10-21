@@ -35,7 +35,8 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("imagery");
+    module->description =
 		_("An imagery function that generates spectral signatures for "
 		"land cover types in an image using a clustering algorithm. "
 		"The resulting signature file is used as input for i.maxlik, "

@@ -184,11 +184,11 @@ int LR_get_milepost( dbDriver *driver, char *table_name,
     *lid = rseg[0].lid;
 
     /* Real world length of segment in offset units */
-    length = (multip * rseg[0].end_mp + rseg[0].end_off) - (multip * rseg[0].start_mp + rseg[0].start_off);
+    length = (rseg[0].end_map + rseg[0].end_off) - (rseg[0].start_map + rseg[0].start_off);
     map_length = rseg[0].end_map - rseg[0].start_map;
     k = map_length / length;
-
-    G_debug(4, " seg length = %f seg map_length = %f k = %f", length, map_length, k);
+    G_debug(4, " rseg[0].end_mp=%f, rseg[0].end_off=%f, rseg[0].start_mp=%f, rseg[0].start_off=%f, multip=%f", rseg[0].end_mp, rseg[0].end_off, rseg[0].start_mp, rseg[0].start_off, multip );
+    G_debug(4, " seg length=%f, seg map_length=%f, k=%f", length, map_length, k);
 
     /* Milepost and offset */
     /* Offset from start milepost measured in map in map units */

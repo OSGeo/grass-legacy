@@ -290,10 +290,11 @@ int plot1 (
 
         if ( (ltype & GV_POINTS) && Symb != NULL ) {
 	    /* Note: this should go to some library function */
-	  if ((color != -1 || fcolor != -1) || rgb) {
+	  if( !(color != -1 || fcolor != -1 || rgb) )
+		continue;
+
 	    G_plot_where_xy(x[0], y[0], &x0, &y0);
-	  }  
- 
+
             for ( i = 0; i < Symb->count; i++ ) {
                 part = Symb->part[i];
 

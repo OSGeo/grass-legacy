@@ -92,7 +92,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs,
 	    continue;
 	}
 
-	if(buf[0] == '#') {
+	if( (buf[0] == '#') || (buf[0] == '\0') ) {
 	    G_debug (3, "skipping comment row %d : %d chars", row, strlen(buf));
 	    continue;
 	}

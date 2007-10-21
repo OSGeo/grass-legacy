@@ -1,3 +1,8 @@
+DBMI Library
+
+Original author: Joel Jones (jjones * zorro.cecer.army.mil | jjones * uiuc.edu )
+                 http://grass.itc.it/pipermail/grass-dev/1995-February/002006.html
+
 Directory contents:
 
 dbmi: DataBase Management Interface (db_*() functions)

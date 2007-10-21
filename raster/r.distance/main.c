@@ -1,3 +1,20 @@
+/****************************************************************************
+ *
+ * MODULE:       r.distance
+ *
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *
+ * PURPOSE:      Locates the closest points between objects in two 
+ *               raster maps.
+ *
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "defs.h"
@@ -18,6 +35,7 @@ main (int argc, char *argv[])
     
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("raster");
     module->description = 
     _("Locates the closest points between objects in two raster maps.");
 

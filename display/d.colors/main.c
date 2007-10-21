@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/display.h>
 #include <grass/raster.h>
 #include "colors.h"
@@ -20,7 +21,10 @@ main (int argc, char **argv)
     char *mapset;
     char buff[500];
 
-/* Initialize the GIS calls */
+    /* must run in a term window */
+    G_putenv("GRASS_UI_TERM","1");
+
+    /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
     /* Try to get default raster name, don't fail so --interface-description works */
@@ -34,6 +38,7 @@ main (int argc, char **argv)
     }
 
     module = G_define_module();
+    module->keywords = _("display");
     module->description =
 	"Allows the user to interactively change the color table "
 	"of a raster map layer displayed on the graphics monitor.";

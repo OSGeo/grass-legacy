@@ -17,6 +17,7 @@
 
 #%Module
 #%  description: Calculates linear regression from two raster maps: y = a + b*x
+#%  keywords: raster, statistics
 #%End
 #%option
 #% key: map1
@@ -59,7 +60,8 @@ fi
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
-export LC_NUMERIC=C
+LC_NUMERIC=C
+export LC_NUMERIC
 
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then

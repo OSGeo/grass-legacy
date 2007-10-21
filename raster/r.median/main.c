@@ -26,7 +26,8 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("raster");
+    module->description =
 		_("Finds the median of values in a cover map within "
 		"areas assigned the same category value in a "
 		"user-specified base map.");
@@ -89,7 +90,7 @@ int main (int argc, char *argv[])
 	exit(1);
     }
 
-    strcpy (command, "r.stats -a '");
+    strcpy (command, "r.stats -an '");
     strcat (command, G_fully_qualified_name (basemap, base_mapset));
     strcat (command, ",");
     strcat (command, G_fully_qualified_name (covermap, cover_mapset));

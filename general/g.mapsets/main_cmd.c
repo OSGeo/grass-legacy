@@ -2,11 +2,12 @@
  *
  */
 #define MAIN
-#include <grass/gis.h>
-#include "local_proto.h"
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
+#include "local_proto.h"
 #include "externs.h"
 
 static char Path[4096];
@@ -33,7 +34,8 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("general");
+    module->description =
 		"Modifies the user's current mapset "
 		"search path, affecting the user's access to data existing "
 		"under the other GRASS mapsets in the current location.";

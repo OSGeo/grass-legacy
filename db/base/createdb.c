@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       db.createdb
+ * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
+ *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>
+ * PURPOSE:      create a new empty database
+ * COPYRIGHT:    (C) 2002-2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <grass/dbmi.h>
 #include <grass/gis.h>
 #include <grass/codes.h>
@@ -57,6 +70,7 @@ parse_command_line(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
+    module->keywords = _("database, SQL");
     module->description = ""\
     "Create an empty database.";
 
@@ -67,3 +81,4 @@ parse_command_line(int argc, char *argv[])
     parms.driver	= driver->answer;
     parms.database	= database->answer;
 }
+

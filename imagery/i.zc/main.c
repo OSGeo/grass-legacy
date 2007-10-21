@@ -14,6 +14,7 @@ Zero Crossings for GRASS
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/gmath.h>
+#include <grass/glocale.h>
 #include "globals.h"
 
 
@@ -43,8 +44,9 @@ int main( int argc, char *argv[])
         G_gisinit(argv[0]);
         me = G_program_name();
 
-		module = G_define_module();
-		module->description =
+	module = G_define_module();
+	module->keywords = _("imagery");
+	module->description =
 			"Zero-crossing \"edge detection\" raster "
 			"function for image processing.";
 

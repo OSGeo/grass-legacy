@@ -18,7 +18,8 @@
 #############################################################################
 
 #%Module
-#% description: Draws polar diagram of angle map such as aspect or flow directions
+#%  description: Draws polar diagram of angle map such as aspect or flow directions
+#%  keywords: display, diagram
 #%End
 #%option
 #% key: map
@@ -123,7 +124,7 @@ echo "Calculating statistics for polar diagram... (be patient)" 1>&2
 #wipe out NULL data and undef data if defined by user
 # - generate degree binned to integer, eliminate NO DATA (NULL):
 # change 360 to 0 to close polar diagram:
-cat ${TMP}_raw | grep -v '^*$' | grep -v "^${GIS_OPT_UNDEF}$" | \
+cat ${TMP}_raw | grep -v '^\*$' | grep -v "^${GIS_OPT_UNDEF}$" | \
     awk '{printf "%d\n", int($1 + .5)}' | sed 's+^360+0+g'  > ${TMP}_binned
 
 # make radians
@@ -133,7 +134,7 @@ cat ${TMP}_binned | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > ${TMP}_b
 # generate numbers for max circle
 TOTALVALIDNUMBER=`wc -l ${TMP}_binned_radians | awk '{print $1}'`
 
-if [ $TOTALVALIDNUMBER == 0 ] ; then
+if [ "$TOTALVALIDNUMBER" -eq 0 ] ; then
    echo "No data pixel found" 1>&2
    cleanup
    exit 1
@@ -141,12 +142,12 @@ fi
 
 #################################
 # unit vector on raw data converted to radians without no data:
-cat ${TMP}_raw | grep -v '^*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
+cat ${TMP}_raw | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += cos(3.14159265 * $1 / 180.)}
 END{print sum}' > ${TMP}_cos_sums
 
-cat ${TMP}_raw | grep -v '^*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
+cat ${TMP}_raw | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += sin(3.14159265 * $1 / 180.)}
 END{print sum}' > ${TMP}_sin_sums

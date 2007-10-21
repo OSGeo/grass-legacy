@@ -3,13 +3,28 @@
 generates a table showing the area present in each of the categories
 of a user-selected data layer.  Area is	given in hectares, square meters,
 and square kilometers.  If the units option is used, area is given in acres,
-square feet, and square miles.  <EM>v.report</EM> works on the map data;
-therefore, the current region and mask are ignored.
+square feet, and square miles.  <EM>v.report</EM> works on the full map data;
+therefore, the current region is ignored. If statistics shall be limited,
+a spatial map subset has to be created with <EM>v.in.region</EM> and 
+<EM>v.overlay</EM> and <EM>v.report</EM> run on the new map.
+
+<h2>EXAMPLE</h2>
+
+Spearfish example:
+<div class="code"><pre>
+v.report fields option=area units=hectares
+</pre></div>
+
+<h2>SEE ALSO</h2>
+
+<em>
+<a HREF="v.in.region.html">v.in.region</a>,
+<a HREF="v.overlay.html">v.overlay</a>
+</em>
+
 
 <H2>AUTHOR</H2>
 
 Markus Neteler, GDF Hannover
 
 <p><i>Last changed: $Date$</i>
-</body>
-</html>

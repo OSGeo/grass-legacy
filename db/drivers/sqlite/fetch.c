@@ -26,6 +26,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
     dbToken    token;    
     dbTable    *table;
     int        i, ret;
+    int        ns;
 
     /* get cursor token */
     token = db_get_cursor_token(cn);
@@ -46,10 +47,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	case DB_FIRST:
 
             if ( position == DB_FIRST ) 
-	    {
-		sqlite3_reset ( c->statement );
 	        c->row = -1;
-	    }
 
 	    ret = sqlite3_step ( c->statement );
 	    if ( ret != SQLITE_ROW )
@@ -61,6 +59,7 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 		    report_error();
 		    return DB_FAILED;
 		}
+		sqlite3_reset ( c->statement );
 		*more = 0;
 		return DB_OK;
 	    }
@@ -97,8 +96,11 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	col = c->kcols[i]; /* known cols */
  		
 	column = db_get_table_column (table, i);
-	litetype  = db_get_column_host_type(column);
 	sqltype = db_get_column_sqltype(column);
+/*	fails for dates: 
+        litetype  = db_get_column_host_type(column); 
+*/
+	litetype = sqlite3_column_type ( c->statement, col );
 
 	value  = db_get_column_value (column);
 	db_zero_string (&value->s);
@@ -114,11 +116,38 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	G_debug (3, "col %d, litetype %d, sqltype %d: val = '%s'", 
 		    col, litetype, sqltype, 
 		    sqlite3_column_text ( c->statement, col) );
-	
+
+       /* http://www.sqlite.org/capi3ref.html#sqlite3_column_type
+           SQLITE_INTEGER  1
+           SQLITE_FLOAT    2
+           SQLITE_TEXT     3
+           SQLITE_BLOB     4
+           SQLITE_NULL     5
+        */
+
+	/* Note: we have set DATESTYLE TO ISO in db_driver_open_select_cursor() so datetime
+	 *       format should be ISO */
+
 	switch ( litetype ) {
 	    case SQLITE_TEXT:
-		db_set_string ( &(value->s), 
+		if (sqltype == 6 ) { /* date string */
+		   /* Example: '1999-01-25' */
+		   G_debug(3, "sqlite fetched date: %s",sqlite3_column_text ( c->statement, col));
+		   ns = sscanf( sqlite3_column_text ( c->statement, col), "%4d-%2d-%2d",
+                             &(value->t.year), &(value->t.month), &(value->t.day) );
+		   if ( ns != 3 ) {
+			append_error ( "Cannot scan date:");
+			append_error ( sqlite3_column_text ( c->statement, col) );
+			report_error();
+			return DB_FAILED;
+                   }
+                   value->t.hour = 0;
+                   value->t.minute = 0;
+                   value->t.seconds = 0.0;
+		} else { /* other string */
+		    db_set_string ( &(value->s),
 				sqlite3_column_text ( c->statement, col) );
+		}
 		break;
 
 	    case SQLITE_INTEGER:
@@ -128,7 +157,10 @@ db__driver_fetch (dbCursor *cn, int position, int *more)
 	    case SQLITE_FLOAT:
 	    	value->d = sqlite3_column_double ( c->statement, col);
 		break;
-		
+
+	    case SQLITE_NULL:
+		/* do nothing  ? */
+		break;
 	}
     }
 

@@ -108,6 +108,10 @@ int print_window(struct Cell_head *window, int print_flag, int dist_flag,
 	    fprintf(stdout, "%-11s %d\n", "cols3:", window->cols3);
 	    fprintf(stdout, "%-11s %d\n", "depths:", window->depths);
 	}
+	fprintf(stdout, "%-11s %lld\n", "cells:", (long long) window->rows * window->cols);
+	if (z_flag)
+	  fprintf(stdout, "%-11s %lld\n", "3dcells:",
+		  (long long) window->rows3 * window->cols3 * window -> depths);
     }
     else if (print_flag == 3) {	/* flag.lprint: show boundaries in lat/long  MN 2001 */
 	/* if coordinates are not in lat/long format, transform them: */

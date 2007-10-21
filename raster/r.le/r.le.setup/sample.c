@@ -28,13 +28,28 @@
 #include <grass/display.h>
 
 
+static int calc_unit_loc (double radius, int top, int bot, int left, int right,
+	double ratio, int u_w, int u_l, int method, double intv,
+	int num, int h_d, int v_d, double *ux, double *uy,
+	int *sites, double startx, int starty, int fmask,
+	double nx, double x, double y);
+static void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
+	int startx, double colratio, double rowratio);
+static void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
+	double *mx, int fmask);
+static void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t);
+static int overlap (int x1, int y1, int x2, int y2, int dx, int dy);
+static int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
+	double intv, int startx, int starty, int size, int count);
+static void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask);
+
 int  tag = 0;
 
+static RETSIGTYPE f(int);
 
-				/* SAMPLING UNIT SETUP DRIVER */
-
-void sample (int t0, int b0, int l0, int r0, char *name, char *name1, char *name2, double *msc)
-
+/* SAMPLING UNIT SETUP DRIVER */
+void sample (int t0, int b0, int l0, int r0, char *name, char *name1,
+		char *name2, double *msc)
 {
   int    btn, d, fmask;
   double tmp;
@@ -93,28 +108,25 @@ keyboard:
 
      G_close_cell(fmask);
   }
+  /* if neither, then exit */
+  else exit(0);
 
-				/* if neither, then exit */
-
-  else
-     exit(0);
   return;
 }
 
 
 
 
-
-				/* DEFINE SAMPLING UNITS MANUALLY */
-
-void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
-
+/* DEFINE SAMPLING UNITS MANUALLY */
+static void man_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3,
+	double *mx, int fmask)
 {
   int      i, j, dx, dy, w_w, w_l, u_w, u_l,
 	   method, l0, t0, randflag=0, unit_num, num=0, scales,
-	   h_d=1, v_d=1, *ux, *uy, itmp, thick, sites, *row_buf, fr, k,
+	   h_d=1, v_d=1, itmp, thick, sites, *row_buf, fr, k,
 	   count=0, maxsize=0, nx=0, ny=0, numx=0, numy=0,
 	   al=0, ar=0, at=0, ab=0, au_w=0, au_l=0;
+  double   *ux, *uy;
   FILE     *fp ;
   double   dtmp, ratio, size, intv=0.0, start[2], cnt=0, radius=0.0;
   char     *sites_mapset;
@@ -551,21 +563,21 @@ tryagain:
 				   units */
 
 	if (method != 5) {
-	   ux = (int *)G_calloc(num+1, sizeof(int));
-           uy = (int *)G_calloc(num+1, sizeof(int));
+	    ux = G_calloc(num+1, sizeof(double));
+	    uy = G_calloc(num+1, sizeof(double));
 	}
 
 	else {
-	   ux = (int *)G_calloc(250, sizeof(int));
-           uy = (int *)G_calloc(250, sizeof(int));
+	    ux = G_calloc(250, sizeof(double));
+	    uy = G_calloc(250, sizeof(double));
 	}
 
 				/* calculate the upper left corner of sampling
 				   units and store them in arrays ux and uy */
 
-        if (!calc_unit_loc(radius, t, b, l, r, ratio, u_w, u_l, method, intv, num, h_d,
-	   v_d, ux, uy, &sites, (int)(start[1]), (int)(start[0]), fmask, nx,
-           mx[0], mx[1]))
+        if (!calc_unit_loc(radius, t, b, l, r, ratio, u_w, u_l, method, intv,
+		num, h_d, v_d, ux, uy, &sites, (int)(start[1]), (int)(start[0]),
+		fmask, nx, mx[0], mx[1]))
 	   goto last;
 
         signal (SIGINT, SIG_DFL);
@@ -619,7 +631,7 @@ last:
         radius, (i+1));
 
      for(j = 0; j < num; j++)
-	fprintf(fp, "%10d%10d   left, top of unit[%d]\n", ux[j], uy[j], j+1);
+	fprintf(fp, "%10d%10d   left, top of unit[%d]\n", (int)ux[j], (int)uy[j], j+1);
 
      if (i < scales - 1 && G_yes("\n\n    Refresh the screen?   ", 1)) {
 	paint_map(n1, n2, n3);
@@ -641,14 +653,9 @@ last:
 
 
 
-
-
-
-				/* FOR STRATIFIED RANDOM DISTRIBUTION,
-				   DRAW THE STRATA ON THE SCREEN */
-
-void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty, int startx, double colratio, double rowratio)
-
+/* FOR STRATIFIED RANDOM DISTRIBUTION, DRAW THE STRATA ON THE SCREEN */
+static void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty,
+	int startx, double colratio, double rowratio)
 {
    int j, k, l0, t0, itmp, dx, dy, initl, tmp;
 
@@ -712,15 +719,13 @@ void draw_grid (int l, int t, int w_w, int w_l, int h_d, int v_d, int starty, in
 
 
 
-
-
-
-
-				/* CALCULATE THE COORDINATES OF THE
-				   TOP LEFT CORNER OF THE SAMPLING
-				   UNITS */
-
-int calc_unit_loc (double radius, int top, int bot, int left, int right, double ratio, int u_w, int u_l, int method, double intv, int num, int h_d, int v_d, double *ux, double *uy, int *sites, double startx, int starty, int fmask, double nx, double x, double y)
+/* CALCULATE THE COORDINATES OF THE TOP LEFT CORNER OF THE SAMPLING UNITS */
+static int calc_unit_loc (
+	double radius, int top, int bot, int left, int right,
+	double ratio, int u_w, int u_l, int method, double intv,
+	int num, int h_d, int v_d, double *ux, double *uy,
+	int *sites, double startx, int starty, int fmask,
+	double nx, double x, double y)
 {
   char	  *sites_mapset, sites_file_name[GNAME_MAX], *desc, *cmd;
   FILE	  *sites_fp;
@@ -862,7 +867,7 @@ back:
 
 	   lap = 0;
            for (j = 0; j < cnt; j++) {
-	      if (overlap(l+left1, t+top1, ux[j], uy[j], u_w, u_l))
+	      if (overlap(l+left1, t+top1, (int)ux[j], (int)uy[j], u_w, u_l))
 	         lap = 1;
 	   }
            if (lap)
@@ -955,10 +960,8 @@ back:
 
 
 
-
-				/* FIND THE CORRECT RANDOM NUMBER */
-
-void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t)
+/* FIND THE CORRECT RANDOM NUMBER */
+static void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *t)
 {
    int  rdl,rdt;
 
@@ -974,23 +977,18 @@ void get_rd (int exp1, int exp2, int dx, int dy, int u_w, int u_l, int *l, int *
 
 
 
-				/* */
-
-void  f()
- {
+/* */
+static RETSIGTYPE f(int sig)
+{
   tag = 1;
   longjmp(jmp, 1);
   return;
- }
+}
 
 
 
-
-
-				/* CHECK IF 2 SAMPLING UNITS OVERLAP */
-
-int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
-
+/* CHECK IF 2 SAMPLING UNITS OVERLAP */
+static int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 {
   if (x1 >= x2+dx || x2 >= x1+dx || y1 >= y2+dy || y2 >= y1+dy)
      return 0;
@@ -1000,20 +998,13 @@ int overlap (int x1, int y1, int x2, int y2, int dx, int dy)
 
 
 
-
-
-
-
-				/* CALCULATE MAXIMUM POSSIBLE NUMBER
-				   OF SAMPLING UNITS */
-
-int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method, double intv, int startx, int starty, int size, int count)
-
+/* CALCULATE MAXIMUM POSSIBLE NUMBER OF SAMPLING UNITS */
+static int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method,
+	double intv, int startx, int starty, int size, int count)
 {
   int        nx, ny, max;
 
 				/* for random nonoverlapping */
-
   if (method == 1) {
      max = count/size;
   }
@@ -1039,12 +1030,10 @@ int calc_num (int w_w, int w_l, double ratio, int u_w, int u_l, int method, doub
 
 
 
-
-
 				/* USE THE MOUSE TO DEFINE SAMPLING
 				   UNITS GRAPHICALLY */
 
-void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
+static void graph_unit (int t, int b, int l, int r, char *n1, char *n2, char *n3, double *mx, int fmask)
 
 {
   int  		 x0=0, y0=0, xp, yp, ux[250], uy[250], u_w, u_l, btn=0, k=0,
@@ -1324,7 +1313,7 @@ back1:
 
      fprintf(stderr, "\n    Outline more sampling units of scale %d?\n", i+1);
      fprintf(stderr, "       Left button:     Exit\n");
-     fprintf(stderr, "       Middle button:   Not used\n");
+     fprintf(stderr, "       Middle button:   Check unit position\n");
      fprintf(stderr, "       Right button:    Lower right corner of next unit here\n");
 
      R_open_driver();
@@ -1443,13 +1432,8 @@ back2:
 
 
 
-
-
-				/* DRAW A RECTANGULAR BOX WITH 
-				   THICKNESS OF "THICK" */
-
+/* DRAW A RECTANGULAR BOX WITH THICKNESS OF "THICK" */
 void draw_box (int x0, int y0, int xp, int yp, int thick)
-
 {
   int i;
 
@@ -1475,14 +1459,15 @@ void draw_box (int x0, int y0, int xp, int yp, int thick)
      R_cont_abs(xp + i, y0 - i);
      R_cont_abs(x0 - i, y0 - i);
    }
+   R_flush();
+
    return;
 }	
- 
 
-				/* DRAW A CIRCLE WITH THICKNESS OF "THICK" */
 
+
+/* DRAW A CIRCLE WITH THICKNESS OF "THICK" */
 void draw_circle (int x0, int y0, int xp, int yp, int thick)
-
 {
   int i, j, xstart, ystart, x2, yr;
   double ang, xinc, yinc;
@@ -1519,19 +1504,15 @@ void draw_circle (int x0, int y0, int xp, int yp, int thick)
         R_cont_abs(xstart + (int)xinc, ystart + (int)yinc);
      }
   }
+  R_flush();
+
   return;
 }
 
 
 
-
-
-
-
-				/* READ USER DIGITAL INPUT FROM THE SCREEN */
-
+/* READ USER DIGITAL INPUT FROM THE SCREEN */
 void numtrap (int n, double *a)
-
 {
   char   num[31], *s;
   int    i = 0, j, k = 1, c;
@@ -1600,4 +1581,3 @@ void numtrap (int n, double *a)
   }
   return;
 }
-

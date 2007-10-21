@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("imagery");
     module->description =
 	_("Creates and edits groups and subgroups of imagery files.");
 
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
 
 	    if (sgrp->answer) {
                 /* list subgroup files */
-                I_get_group_ref(grp->answer, &ref);
+                I_get_subgroup_ref(grp->answer, sgrp->answer, &ref);
                 I_list_subgroup(grp->answer, sgrp->answer, &ref, stdout);
 	    } else {
                 /* list group files */

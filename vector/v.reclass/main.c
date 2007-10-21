@@ -3,6 +3,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
+#include <grass/glocale.h>
 
 #define KEY(x) (G_strcasecmp(key,x)==0)
 
@@ -39,6 +40,7 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector, attribute table");
     module->description = "Changes vector category values for an existing vector map "
 	    "according to results of SQL queries or a value in attribute table column.";
 

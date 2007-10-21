@@ -16,9 +16,12 @@
  *
  * TODO:       
  ****************************************************************/
+#include <grass/gis.h>
+#include <grass/glocale.h>
+
 #define MAIN
 #include "global.h"
-//static int error_routine(const char*msg, int fatal);
+/* static int error_routine(const char*msg, int fatal); */
 
 int main (int argc, char *argv[])
 {
@@ -27,12 +30,13 @@ int main (int argc, char *argv[])
     FILE *output=stdout;
 
     module = G_define_module();
-    module->description = _("Edits a vector map; allows adding, deleteing and modifying objects in a vector map.");
+    module->keywords = _("vector, editing");
+    module->description = _("Edits a vector map; allows adding, deleting and modifying objects in a vector map.");
 
     if(!parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-//    G_set_error_routine(error_routine);
+/*     G_set_error_routine(error_routine); */
     mapset = G_find_vector2 (map_opt->answer, G_mapset()); 
 
     if ( mapset == NULL ) {
@@ -51,11 +55,11 @@ int main (int argc, char *argv[])
 	}
     }
     else {
-//	Vect_set_open_level(2);
+/* 	Vect_set_open_level(2); */
 	G_message(_("Reading vector file ..."));
 	Vect_open_update (&Map, map_opt->answer, mapset);
     }
-//    Vect_set_category_index_update ( &Map );
+/*     Vect_set_category_index_update ( &Map ); */
 
     G_debug (1, "Map opened");
     cat_init(&Map);
@@ -85,7 +89,7 @@ int main (int argc, char *argv[])
     Vect_close(&Map);
     G_debug(1, "Map closed");
 
-//    G_unset_error_routine();
+/*     G_unset_error_routine(); */
     
     if(ret)
 	exit(EXIT_SUCCESS);

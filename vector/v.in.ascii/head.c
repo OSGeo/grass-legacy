@@ -21,7 +21,8 @@ read_head ( FILE * dascii, struct Map_info *Map )
 	return (0);
 	
       if (!(ptr = G_index (buff, ':')))
-	return (-1);
+	G_fatal_error(_("Unexpected data in vector head.\n[%s]"), buff);
+
       ptr++;			/* Search for the start of text */
       while (*ptr == ' ')
 	ptr++;

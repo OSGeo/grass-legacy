@@ -1,10 +1,12 @@
-#include <grass/gis.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 #include <grass/raster.h>
+
 int main(int argc,char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *element, *prompt;
     struct Flag *quiet;
     char *tempfile;
@@ -13,8 +15,9 @@ int main(int argc,char *argv[])
 
     G_gisinit(argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->keywords = _("display");
+    module->description =
 		"Prompts the user to select a GRASS data base file from among "
 		"files displayed in a menu on the graphics monitor.";
 

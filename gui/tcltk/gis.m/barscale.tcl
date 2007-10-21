@@ -31,7 +31,6 @@ proc GmBarscale::create { tree parent } {
     variable first
 	variable dup
     global mon
-    global gmpath
     global iconpath
 
     set node "barscale:$count"
@@ -43,7 +42,9 @@ proc GmBarscale::create { tree parent } {
 
     image create photo scaleico -file "$iconpath/module-d.barscale.gif"
     set ico [label $frm.ico -image scaleico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
     
 	#insert new layer
@@ -74,7 +75,7 @@ proc GmBarscale::create { tree parent } {
     set opt($count,1,mod) 1
     set first 1
     
-    set optlist { _check bcolor bcolor_none tcolor at feet line top arrow scale}
+    set optlist { _check opacity bcolor bcolor_none tcolor at feet line top arrow scale}
     
     foreach key $optlist {
 		set opt($count,0,$key) $opt($count,1,$key)
@@ -103,8 +104,7 @@ proc GmBarscale::set_option { node key value } {
 ###############################################################################
 # barscale options
 proc GmBarscale::options { id frm } {
-    variable opt
-    global gmpath
+    variable opt    
     global bgcolor
     global iconpath
 
@@ -211,13 +211,7 @@ proc GmBarscale::save { tree depth node } {
 # render and composite barscale layer
 
 proc GmBarscale::display { node mod } {
-    global mon
-    global mapfile
-    global maskfile
-    global complist
-    global opclist
-    global masklist
-    global gmpath
+    global mon    
     variable optlist
     variable lfile 
     variable lfilemask
@@ -289,8 +283,8 @@ proc GmBarscale::duplicate { tree parent node id } {
     variable opt
     variable count
 	variable dup
+	variable first
 	global iconpath
-	global first
 
     set node "barscale:$count"
 	set dup($count) 1
@@ -302,7 +296,9 @@ proc GmBarscale::duplicate { tree parent node id } {
 
     image create photo scaleico -file "$iconpath/module-d.barscale.gif"
     set ico [label $frm.ico -image scaleico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer

@@ -13,6 +13,7 @@
 /* to be used to improve the dlg labelling process */
 
 
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <grass/gis.h>

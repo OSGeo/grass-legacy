@@ -1,36 +1,39 @@
 <H2>DESCRIPTION</H2>
 
-<em>v.to.db</em> is used to load vector map features or metrics
-into database fields.
+<em>v.to.db</em> loads vector map features or metrics into a database table,
+or prints them (or the SQL queries used to obtain them) in a form of a
+human-readable report.
 
 <H2>NOTES</H2>
-The units 'miles', 'feet', 'meters' and 'kilometers' are square 
-for <b>option=area</b>.
-<P>
-When using <b>option=coor</b> on a vector area map, 
+The units <em>miles</em>, <em>feet</em>, <em>meters</em> and
+<em>kilometers</em> are square for <em>option=area</em>.
+<p>
+When using <em>option=coor</em> on a vector area map, 
 only coordinates of centroids with unique category will be reported.
 <p>
 When calculating perimeters in Latitude-Longitude locations, the
 geodesic distance between the vertices is used.
 <p>
-The column(s) given by the <b>column</b> option must already exist.
-Create one with <a href="v.db.addcol.html">v.db.addcol</a>.
-<p>
 If the module is apparently slow <b>and</b> the map attributes are stored 
 in an external DBMS such as PostgreSQL, it is highly recommended to
 create an index on the key (category) column.
-
-
+<p>
+Uploading the vector map attributes to a database requires a table attached to
+a given input vector <em>layer</em>. The <em>print only </em>(<em>-p</em>)
+mode doesn't require a table. Use
+<em><a href=db.execute.html>db.execute</a></em> or
+<em><a href=v.db.addtable.html>v.db.addtable</a></em> to create a table if
+needed. 
+<p>
+Updating the table has to be done column-wise. The <em>column</em> must be present in
+the table, except when using the <em>print only </em>(<em>-p</em>) mode. Use
+<em><a href=db.execute.html>db.execute</a></em> or
+<em><a href=v.db.addcol.html>v.db.addcol</a></em> to add new columns if needed.
 
 <H2>EXAMPLES</H2>
 
 <h3>Updating attribute tables</h3>
 
-Note: Uploading of the attributes of a vector map to the DBMS has to be done 
-column-wise. The column must be present in the table 
-(use <a href=db.execute.html>db.execute</a> to add a new column if needed).
-
-<P>
 Upload category numbers to attribute table (used for new map):<br>
 <div class="code"><pre>
 v.to.db map=soils type=area option=cat
@@ -84,6 +87,14 @@ v.db.select mysoils layer=2
 
 <h3>Printing reports</h3>
 
+Print x,y,z coordinates using dummy columns. The columns don't
+have to exist in the table for the features to be reported. Even
+a table is not required:
+
+<div class="code"><pre>
+v.to.db -p bugsites option=coor type=point column=dummy1,dummy2
+</pre></div>
+
 Report all area sizes of a map:<br>
 <div class="code"><pre>
 v.to.db -p soils option=area type=boundary units=h
@@ -110,11 +121,14 @@ v.to.db -p roads option=count type=line
 <h2>SEE ALSO</h2>
 
 <em>
-<a href="v.category.html">v.category</a>,
-<a href="v.db.addtable.html">v.db.addtable</a>,
-<a href="v.db.addcol.html">v.db.addcol</a>,
-<a href="v.distance.html">v.distance</a>,
-<a href="v.what.vect.html">v.what.vect</a>
+<a href="v.category.html">v.category</a>
+<a href="v.db.addtable.html">v.db.addtable</a>
+<a href="v.db.addcol.html">v.db.addcol</a>
+<a href="v.db.connect">v.db.connect</a>
+<a href="v.distance.html">v.distance</a>
+<a href="db.execute.html">db.execute</a>
+<a href="v.what.html">v.what</a>
+<a href="d.what.vect.html">d.what.vect</a>
 </em>
 
 <H2>AUTHOR</H2>

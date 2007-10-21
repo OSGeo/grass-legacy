@@ -1,0 +1,4627 @@
+# translation of grasstcl_lv.po to Latvian
+# Maris Nartiss <maris.gis@gmail.com>, 2007.
+# Maris Nartiss <maris.kde@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: grasstcl_lv\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-02-20 17:24+0200\n"
+"PO-Revision-Date: 2007-07-05 12:26+0300\n"
+"Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
+"Language-Team: Latvian <translations@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+#: ../gui/tcltk/d.m/barscale.tcl:67 ../gui/tcltk/d.m/legend.tcl:106
+msgid "Text color: "
+msgstr "Teksta krāsa: "
+
+#: ../gui/tcltk/d.m/barscale.tcl:69
+msgid " Background color: "
+msgstr " Fona krāsa: "
+
+#: ../gui/tcltk/d.m/barscale.tcl:71
+msgid "no background color"
+msgstr "nav fona krāsas"
+
+#: ../gui/tcltk/d.m/barscale.tcl:73
+msgid " "
+msgstr " "
+
+#: ../gui/tcltk/d.m/barscale.tcl:74 ../gui/tcltk/d.m/barscale.tcl:78
+#: ../gui/tcltk/d.m/chart.tcl:96 ../gui/tcltk/d.m/chart.tcl:100
+#: ../gui/tcltk/d.m/dtext.tcl:75 ../gui/tcltk/d.m/dtext.tcl:79
+#: ../gui/tcltk/d.m/frames.tcl:66 ../gui/tcltk/d.m/frames.tcl:70
+#: ../gui/tcltk/d.m/fttext.tcl:83 ../gui/tcltk/d.m/fttext.tcl:87
+#: ../gui/tcltk/d.m/gridline.tcl:81 ../gui/tcltk/d.m/gridline.tcl:120
+#: ../gui/tcltk/d.m/gridline.tcl:150 ../gui/tcltk/d.m/labels.tcl:70
+#: ../gui/tcltk/d.m/labels.tcl:74 ../gui/tcltk/d.m/legend.tcl:86
+#: ../gui/tcltk/d.m/legend.tcl:90 ../gui/tcltk/d.m/raster.tcl:90
+#: ../gui/tcltk/d.m/raster.tcl:94 ../gui/tcltk/d.m/rgbhis.tcl:130
+#: ../gui/tcltk/d.m/rgbhis.tcl:137 ../gui/tcltk/d.m/thematic.tcl:121
+#: ../gui/tcltk/d.m/thematic.tcl:125 ../gui/tcltk/d.m/vector.tcl:202
+#: ../gui/tcltk/d.m/vector.tcl:206 ../gui/tcltk/gis.m/barscale.tcl:171
+#: ../gui/tcltk/gis.m/barscale.tcl:175 ../gui/tcltk/gis.m/chart.tcl:180
+#: ../gui/tcltk/gis.m/chart.tcl:184 ../gui/tcltk/gis.m/dtext.tcl:207
+#: ../gui/tcltk/gis.m/dtext.tcl:211 ../gui/tcltk/gis.m/frames.tcl:115
+#: ../gui/tcltk/gis.m/frames.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:141
+#: ../gui/tcltk/gis.m/gridline.tcl:178 ../gui/tcltk/gis.m/gridline.tcl:205
+#: ../gui/tcltk/gis.m/histogram.tcl:140 ../gui/tcltk/gis.m/histogram.tcl:143
+#: ../gui/tcltk/gis.m/labels.tcl:134 ../gui/tcltk/gis.m/labels.tcl:138
+#: ../gui/tcltk/gis.m/legend.tcl:171 ../gui/tcltk/gis.m/legend.tcl:174
+#: ../gui/tcltk/gis.m/rastarrows.tcl:162 ../gui/tcltk/gis.m/rastarrows.tcl:165
+#: ../gui/tcltk/gis.m/raster.tcl:166 ../gui/tcltk/gis.m/raster.tcl:170
+#: ../gui/tcltk/gis.m/rastnums.tcl:144 ../gui/tcltk/gis.m/rastnums.tcl:147
+#: ../gui/tcltk/gis.m/rgbhis.tcl:188 ../gui/tcltk/gis.m/rgbhis.tcl:195
+#: ../gui/tcltk/gis.m/runandoutput.tcl:47 ../gui/tcltk/gis.m/thematic.tcl:237
+#: ../gui/tcltk/gis.m/thematic.tcl:241 ../gui/tcltk/gis.m/vector.tcl:307
+#: ../gui/tcltk/gis.m/vector.tcl:311 ../lib/gis/gui.tcl:487
+#: ../lib/init/gis_set.tcl:507
+msgid "Help"
+msgstr "Palīdzība"
+
+#: ../gui/tcltk/d.m/barscale.tcl:92
+msgid "display N. arrow only "
+msgstr ""
+
+#: ../gui/tcltk/d.m/barscale.tcl:94 ../gui/tcltk/gis.m/barscale.tcl:194
+msgid "display scale only"
+msgstr ""
+
+#: ../gui/tcltk/d.m/barscale.tcl:101
+msgid "line scale instead of bar scale "
+msgstr ""
+
+#: ../gui/tcltk/d.m/barscale.tcl:103 ../gui/tcltk/gis.m/barscale.tcl:202
+msgid "text on top of scale, instead of to right"
+msgstr ""
+
+#: ../gui/tcltk/d.m/barscale.tcl:110 ../gui/tcltk/gis.m/barscale.tcl:212
+msgid "use feet/miles instead of meters"
+msgstr ""
+
+#: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
+msgid "place with mouse (cannot save placement with group)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/chart.tcl:91 ../gui/tcltk/gis.m/chart.tcl:172
+#, fuzzy
+msgid "Vector map to chart:"
+msgstr "Vektoru karte:"
+
+#: ../gui/tcltk/d.m/chart.tcl:106 ../gui/tcltk/gis.m/chart.tcl:190
+#, fuzzy
+msgid "Vector type:"
+msgstr "Vektoru karte:"
+
+#: ../gui/tcltk/d.m/chart.tcl:107 ../gui/tcltk/d.m/vector.tcl:227
+#: ../gui/tcltk/gis.m/chart.tcl:191 ../gui/tcltk/gis.m/vector.tcl:332
+msgid "points"
+msgstr "punkti"
+
+#: ../gui/tcltk/d.m/chart.tcl:108 ../gui/tcltk/d.m/vector.tcl:229
+#: ../gui/tcltk/gis.m/chart.tcl:192 ../gui/tcltk/gis.m/legend.tcl:254
+#: ../gui/tcltk/gis.m/vector.tcl:334
+msgid "lines"
+msgstr "līnijas"
+
+#: ../gui/tcltk/d.m/chart.tcl:109 ../gui/tcltk/d.m/vector.tcl:231
+#: ../gui/tcltk/gis.m/chart.tcl:193 ../gui/tcltk/gis.m/vector.tcl:336
+msgid "boundaries"
+msgstr "robežas"
+
+#: ../gui/tcltk/d.m/chart.tcl:110 ../gui/tcltk/d.m/vector.tcl:233
+#: ../gui/tcltk/gis.m/chart.tcl:194 ../gui/tcltk/gis.m/vector.tcl:340
+msgid "centroids"
+msgstr "centroīdi"
+
+#: ../gui/tcltk/d.m/chart.tcl:111 ../gui/tcltk/d.m/vector.tcl:235
+#: ../gui/tcltk/gis.m/chart.tcl:195 ../gui/tcltk/gis.m/vector.tcl:338
+msgid "areas"
+msgstr "laukumi"
+
+#: ../gui/tcltk/d.m/chart.tcl:120
+msgid "  show attribute columns"
+msgstr ""
+
+#: ../gui/tcltk/d.m/chart.tcl:121 ../gui/tcltk/d.m/thematic.tcl:151
+#: ../gui/tcltk/d.m/vector.tcl:349 ../gui/tcltk/gis.m/chart.tcl:209
+#: ../gui/tcltk/gis.m/thematic.tcl:265 ../gui/tcltk/gis.m/vector.tcl:461
+msgid "columns"
+msgstr ""
+
+#: ../gui/tcltk/d.m/chart.tcl:125 ../gui/tcltk/d.m/thematic.tcl:155
+#: ../gui/tcltk/d.m/vector.tcl:353 ../gui/tcltk/gis.m/chart.tcl:213
+#: ../gui/tcltk/gis.m/thematic.tcl:269 ../gui/tcltk/gis.m/vector.tcl:465
+msgid "Show columns"
+msgstr ""
+
+#: ../gui/tcltk/d.m/chart.tcl:158 ../gui/tcltk/gis.m/chart.tcl:248
+msgid "Chart type:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/chart.tcl:169
+#, fuzzy
+msgid "    chart outline color:"
+msgstr " līnijas krāsa"
+
+#: ../gui/tcltk/d.m/cmd.tcl:52 ../gui/tcltk/gis.m/cmd.tcl:113
+msgid "Command:"
+msgstr "Komanda:"
+
+#: ../gui/tcltk/d.m/d.m.tcl:314 ../gui/tcltk/gis.m/gm.tcl:234
+msgid "Loading GIS Manager"
+msgstr "ĢIS menedžera ielāde"
+
+#: ../gui/tcltk/d.m/d.m.tcl:404 ../gui/tcltk/gis.m/gm.tcl:281
+msgid "Done"
+msgstr "Pabeigts"
+
+#: ../gui/tcltk/d.m/d.m.tcl:406
+msgid "Welcome to the GRASS GIS manager"
+msgstr "Laipni lūdzam GRASS ĢIS menedžerī"
+
+#: ../gui/tcltk/d.m/dtext.tcl:101
+msgid "Text options: color"
+msgstr "Teksta opcijas: krāsa"
+
+#: ../gui/tcltk/d.m/dtext.tcl:106 ../gui/tcltk/d.m/fttext.tcl:151
+#: ../gui/tcltk/gis.m/dtext.tcl:278
+msgid "bold text"
+msgstr "treknraksts"
+
+#: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:109
+msgid "create and select frame"
+msgstr ""
+
+#: ../gui/tcltk/d.m/frames.tcl:62 ../gui/tcltk/gis.m/frames.tcl:111
+msgid "select frame"
+msgstr ""
+
+#: ../gui/tcltk/d.m/frames.tcl:64
+msgid "remove all frames"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:102
+msgid "     (leave blank to place with mouse; position will not save)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:108
+msgid "     coordinate type"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:111
+msgid "  align text with coordinate point"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:120
+#, tcl-format
+msgid ""
+"     (for coordinates, % is from bottom left of display, pixels from top "
+"left)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:126
+msgid "     text rotation (degrees counterclockwise)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:129
+msgid "rotation in radians"
+msgstr ""
+
+#: ../gui/tcltk/d.m/fttext.tcl:144 ../gui/tcltk/gis.m/maptext.tcl:175
+msgid "Font:"
+msgstr "Fonts:"
+
+#: ../gui/tcltk/d.m/fttext.tcl:149 ../gui/tcltk/gis.m/dtext.tcl:276
+#: ../gui/tcltk/gis.m/maplabels.tcl:262 ../gui/tcltk/gis.m/maptext.tcl:182
+msgid "  color"
+msgstr "  krāsa"
+
+#: ../gui/tcltk/d.m/fttext.tcl:164
+msgid "height in pixels instead of %"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:77 ../gui/tcltk/gis.m/gridline.tcl:137
+msgid "draw grid"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:78
+msgid "geodetic grid"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:80
+msgid " grid color "
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:85 ../gui/tcltk/gis.m/gridline.tcl:145
+msgid "Help for grids"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:86 ../gui/tcltk/gis.m/gridline.tcl:146
+msgid " grid color"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:92
+msgid "     "
+msgstr "     "
+
+#: ../gui/tcltk/d.m/gridline.tcl:93 ../gui/tcltk/gis.m/gridline.tcl:153
+msgid "draw grid border"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:94
+msgid "draw border text"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:95
+msgid " border & text color"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:119 ../gui/tcltk/gis.m/gridline.tcl:177
+msgid "draw geodesic line"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:124 ../gui/tcltk/gis.m/gridline.tcl:182
+msgid "Help for geodesic lines"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:149 ../gui/tcltk/gis.m/gridline.tcl:204
+msgid "draw rhumbline"
+msgstr ""
+
+#: ../gui/tcltk/d.m/gridline.tcl:154 ../gui/tcltk/gis.m/gridline.tcl:209
+msgid "Help for rhumblines"
+msgstr ""
+
+#: ../gui/tcltk/d.m/labels.tcl:65
+msgid "Labels name:"
+msgstr "Birkas nosaukums:"
+
+#: ../gui/tcltk/d.m/labels.tcl:80 ../gui/tcltk/gis.m/labels.tcl:144
+msgid "Display constraints:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/labels.tcl:85 ../gui/tcltk/gis.m/labels.tcl:149
+msgid "region size"
+msgstr "reģiona izmērs"
+
+#: ../gui/tcltk/d.m/labels.tcl:91 ../gui/tcltk/gis.m/labels.tcl:155
+msgid " ignore rotation setting and draw horizontally"
+msgstr ""
+
+#: ../gui/tcltk/d.m/legend.tcl:81
+msgid "Raster map for legend:"
+msgstr "Leģendas rastra karte:"
+
+#: ../gui/tcltk/d.m/legend.tcl:96
+msgid "Display legend in monitor: "
+msgstr "Attēlot leģendu monitorā: "
+
+#: ../gui/tcltk/d.m/legend.tcl:99
+msgid " erase monitor before drawing legend"
+msgstr "notīrīt monitoru pirms leģendas zīmēšanas"
+
+#: ../gui/tcltk/d.m/legend.tcl:164
+msgid "do not show cat labels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/legend.tcl:166
+msgid "do not show cat numbers"
+msgstr ""
+
+#: ../gui/tcltk/d.m/legend.tcl:173
+msgid "skip cats with no labels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/legend.tcl:175
+msgid "draw smooth gradient"
+msgstr ""
+
+#: ../gui/tcltk/d.m/legend.tcl:177
+msgid "flip legend"
+msgstr "apgriezt leģendu"
+
+#: ../gui/tcltk/d.m/menu.tcl:75 ../gui/tcltk/gis.m/gmmenu.tcl:84
+msgid "&File"
+msgstr "&Fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:76 ../gui/tcltk/gis.m/gmmenu.tcl:91
+msgid "Import"
+msgstr "Importēt"
+
+#: ../gui/tcltk/d.m/menu.tcl:77 ../gui/tcltk/d.m/menu.tcl:113
+#: ../gui/tcltk/gis.m/gmmenu.tcl:92 ../gui/tcltk/gis.m/gmmenu.tcl:128
+#: ../gui/tcltk/gis.m/raster.tcl:111 ../gui/tcltk/gis.m/rastnums.tcl:99
+msgid "Raster map"
+msgstr "Rastra karte"
+
+#: ../gui/tcltk/d.m/menu.tcl:78 ../gui/tcltk/d.m/menu.tcl:114
+#: ../gui/tcltk/gis.m/gmmenu.tcl:93 ../gui/tcltk/gis.m/gmmenu.tcl:129
+msgid "Multiple formats using GDAL"
+msgstr "Dažādi formāti izmantojot GDAL"
+
+#: ../gui/tcltk/d.m/menu.tcl:80 ../gui/tcltk/gis.m/gmmenu.tcl:95
+msgid "Aggregate ASCII xyz data into raster grid"
+msgstr "Pārvērst ASCII xyz datus par rastra karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:81 ../gui/tcltk/gis.m/gmmenu.tcl:96
+msgid "ASCII GRID (includes GRASS ASCII)"
+msgstr "ASCII GRID (ieskaitot GRASS ASCII)"
+
+#: ../gui/tcltk/d.m/menu.tcl:82 ../gui/tcltk/gis.m/gmmenu.tcl:97
+msgid "Polygons and lines from ASCII file"
+msgstr "Poligoni un līnijas no ASCII faila"
+
+#: ../gui/tcltk/d.m/menu.tcl:84 ../gui/tcltk/gis.m/gmmenu.tcl:99
+msgid "Binary file (includes GTOPO30 format)"
+msgstr "Bināro failu (ieskaitot GTOPO30 formātu)"
+
+#: ../gui/tcltk/d.m/menu.tcl:85 ../gui/tcltk/gis.m/gmmenu.tcl:100
+#: ../gui/tcltk/gis.m/gmmenu.tcl:134
+msgid "ESRI Arc/Info ASCII grid"
+msgstr "ESRI Arc/Info ASCII režģi"
+
+#: ../gui/tcltk/d.m/menu.tcl:86 ../gui/tcltk/d.m/menu.tcl:120
+#: ../gui/tcltk/gis.m/gmmenu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:135
+msgid "GRIDATB.FOR map file (TOPMODEL)"
+msgstr "GRIDATB.FOR kartes fails (TOPMODEL)"
+
+#: ../gui/tcltk/d.m/menu.tcl:87 ../gui/tcltk/d.m/menu.tcl:121
+#: ../gui/tcltk/gis.m/gmmenu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:136
+msgid "MAT-File (v.4) array (Matlab or Octave)"
+msgstr "MAT-File (v.4) masīvu (Matlab vai Octave)"
+
+#: ../gui/tcltk/d.m/menu.tcl:88 ../gui/tcltk/gis.m/gmmenu.tcl:103
+msgid "SPOT vegetation NDVI data sets"
+msgstr "SPOT veģetācijas NDVI datu kopas"
+
+#: ../gui/tcltk/d.m/menu.tcl:89 ../gui/tcltk/gis.m/gmmenu.tcl:104
+msgid "SRTM hgt files"
+msgstr "SRTM hgt faili"
+
+#: ../gui/tcltk/d.m/menu.tcl:90 ../gui/tcltk/gis.m/gmmenu.tcl:105
+msgid "Terra ASTER HDF files"
+msgstr "Terra ASTER HDF faili"
+
+#: ../gui/tcltk/d.m/menu.tcl:92 ../gui/tcltk/gis.m/gmmenu.tcl:107
+msgid "Web Mapping Server"
+msgstr "WMS serviss"
+
+#: ../gui/tcltk/d.m/menu.tcl:94 ../gui/tcltk/d.m/menu.tcl:134
+#: ../gui/tcltk/gis.m/gmmenu.tcl:109 ../gui/tcltk/gis.m/gmmenu.tcl:149
+#: ../gui/tcltk/gis.m/thematic.tcl:127 ../gui/tcltk/gis.m/vector.tcl:216
+msgid "Vector map"
+msgstr "Vektoru karte"
+
+#: ../gui/tcltk/d.m/menu.tcl:95 ../gui/tcltk/gis.m/gmmenu.tcl:110
+msgid "Various formats using OGR"
+msgstr "Dažādi formāti izmantojot OGR"
+
+#: ../gui/tcltk/d.m/menu.tcl:97 ../gui/tcltk/gis.m/gmmenu.tcl:112
+msgid "ASCII points file or GRASS ASCII vector file"
+msgstr "ASCII punktu fails vai GRASS ASCII vektoru fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:98 ../gui/tcltk/gis.m/gmmenu.tcl:113
+msgid "Import old GRASS vector format"
+msgstr "Importēt veco GRASS vektoru formātu"
+
+#: ../gui/tcltk/d.m/menu.tcl:100 ../gui/tcltk/gis.m/gmmenu.tcl:115
+msgid "DXF file"
+msgstr "DXF fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:101 ../gui/tcltk/gis.m/gmmenu.tcl:116
+msgid "ESRI e00 format"
+msgstr "ESRI e00 formāts"
+
+#: ../gui/tcltk/d.m/menu.tcl:102 ../gui/tcltk/gis.m/gmmenu.tcl:117
+msgid "Garmin GPS Waypoints/Routes/Tracks"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:103 ../gui/tcltk/gis.m/gmmenu.tcl:118
+msgid "GPS Waypoints/Routes/Tracks using GPSBabel"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:104 ../gui/tcltk/gis.m/gmmenu.tcl:119
+msgid "GEOnet Name server country files (US-NGA GNS)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:105 ../gui/tcltk/gis.m/gmmenu.tcl:120
+msgid "Matlab and MapGen files"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:107 ../gui/tcltk/d.m/menu.tcl:142
+#: ../gui/tcltk/gis.m/gmmenu.tcl:122 ../gui/tcltk/gis.m/gmmenu.tcl:158
+msgid "Grid 3D"
+msgstr "3D rastrs"
+
+#: ../gui/tcltk/d.m/menu.tcl:108 ../gui/tcltk/d.m/menu.tcl:143
+#: ../gui/tcltk/gis.m/gmmenu.tcl:123 ../gui/tcltk/gis.m/gmmenu.tcl:159
+msgid "ASCII 3D file"
+msgstr "ASCII 3D fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:109 ../gui/tcltk/d.m/menu.tcl:144
+#: ../gui/tcltk/gis.m/gmmenu.tcl:124 ../gui/tcltk/gis.m/gmmenu.tcl:160
+msgid "Vis5D file"
+msgstr "Vis5D fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:112 ../gui/tcltk/gis.m/gmmenu.tcl:127
+msgid "Export"
+msgstr "Eksportēt"
+
+#: ../gui/tcltk/d.m/menu.tcl:116 ../gui/tcltk/gis.m/gmmenu.tcl:131
+msgid "ASCII grid (for GRASS, Surfer, Modflow, etc)"
+msgstr "ASCII režģis (priekš GRASS, Surfer, Modflow u.c.)"
+
+#: ../gui/tcltk/d.m/menu.tcl:117 ../gui/tcltk/gis.m/gmmenu.tcl:132
+msgid "ASCII x,y,z values of cell centers"
+msgstr "ASCII x,y,z vērtības rastra šūnu centram"
+
+#: ../gui/tcltk/d.m/menu.tcl:119
+msgid "ESRI ARC/INFO ASCII grid"
+msgstr "ESRI ARC/INFO ASCII režģis"
+
+#: ../gui/tcltk/d.m/menu.tcl:123 ../gui/tcltk/gis.m/gmmenu.tcl:138
+msgid "Binary file"
+msgstr "Binārais fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:125 ../gui/tcltk/gis.m/gmmenu.tcl:140
+msgid "MPEG-1 animations"
+msgstr "MPEG-1 animācija"
+
+#: ../gui/tcltk/d.m/menu.tcl:126 ../gui/tcltk/gis.m/gmmenu.tcl:141
+msgid "PNG image (not georeferenced)"
+msgstr "PNG attēls (nepiesaistīts koordinātēm)"
+
+#: ../gui/tcltk/d.m/menu.tcl:127 ../gui/tcltk/gis.m/gmmenu.tcl:142
+msgid "PPM image (24bit)"
+msgstr "PPM attēls (24bit)"
+
+#: ../gui/tcltk/d.m/menu.tcl:128 ../gui/tcltk/gis.m/gmmenu.tcl:143
+msgid "PPM image from red, green, blue raster maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:129 ../gui/tcltk/gis.m/gmmenu.tcl:144
+msgid "POVray height-field"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:130 ../gui/tcltk/gis.m/gmmenu.tcl:145
+msgid "TIFF image (8/24bit)"
+msgstr "TIFF attēls (8/24bit)"
+
+#: ../gui/tcltk/d.m/menu.tcl:131 ../gui/tcltk/gis.m/gmmenu.tcl:146
+msgid "VRML file"
+msgstr "VRML fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:132 ../gui/tcltk/d.m/menu.tcl:140
+#: ../gui/tcltk/d.m/menu.tcl:145 ../gui/tcltk/gis.m/gmmenu.tcl:147
+#: ../gui/tcltk/gis.m/gmmenu.tcl:156 ../gui/tcltk/gis.m/gmmenu.tcl:161
+msgid "VTK ASCII file"
+msgstr "VTK ASCII fails"
+
+#: ../gui/tcltk/d.m/menu.tcl:135 ../gui/tcltk/gis.m/gmmenu.tcl:150
+msgid "Various formats using OGR (SHAPE, MapInfo etc)"
+msgstr "Dažādi formāti izmantojot OGR (Shapefile, MapInfo u.c.)"
+
+#: ../gui/tcltk/d.m/menu.tcl:137 ../gui/tcltk/gis.m/gmmenu.tcl:152
+msgid "DXF file (ASCII)"
+msgstr "DXF fails (ASCII)"
+
+#: ../gui/tcltk/d.m/menu.tcl:138 ../gui/tcltk/gis.m/gmmenu.tcl:153
+msgid "ASCII vector or point file/old GRASS ASCII vector file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:139 ../gui/tcltk/gis.m/gmmenu.tcl:154
+msgid "POV-Ray format"
+msgstr "POV-Ray formāts"
+
+#: ../gui/tcltk/d.m/menu.tcl:149 ../gui/tcltk/gis.m/gmmenu.tcl:165
+msgid "Manage maps and volumes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:150 ../gui/tcltk/gis.m/gmmenu.tcl:166
+msgid "Copy maps"
+msgstr "Kopēt kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:151 ../gui/tcltk/gis.m/gmmenu.tcl:167
+msgid "List maps"
+msgstr "Parādīt kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:152 ../gui/tcltk/gis.m/gmmenu.tcl:168
+msgid "List maps using expressions and 'wildcards'"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:153 ../gui/tcltk/gis.m/gmmenu.tcl:169
+msgid "Rename maps"
+msgstr "Pārsaukt kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:154 ../gui/tcltk/gis.m/gmmenu.tcl:170
+msgid "Remove maps"
+msgstr "Dzēst kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:155 ../gui/tcltk/gis.m/gmmenu.tcl:171
+msgid "Remove maps using expressions and 'wildcards'"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:157 ../gui/tcltk/gis.m/gmmenu.tcl:173
+msgid "Map type conversions"
+msgstr "Kartes tipa pārveidošana"
+
+#: ../gui/tcltk/d.m/menu.tcl:158 ../gui/tcltk/gis.m/gmmenu.tcl:174
+msgid "Raster to vector map"
+msgstr "No rastra uz vektoru karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:159 ../gui/tcltk/gis.m/gmmenu.tcl:175
+msgid "Raster map series to volume"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:160 ../gui/tcltk/gis.m/gmmenu.tcl:176
+msgid "Raster 2.5D map to volume"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:161 ../gui/tcltk/gis.m/gmmenu.tcl:177
+msgid "Vector to raster"
+msgstr "No vektoru uz rastra karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:162 ../gui/tcltk/gis.m/gmmenu.tcl:178
+msgid "Vector to vector"
+msgstr "Vektoru uz vektoru karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:163 ../gui/tcltk/gis.m/gmmenu.tcl:179
+msgid "Vector lines to points"
+msgstr "Vektoru līnijas uz punktiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:164 ../gui/tcltk/gis.m/gmmenu.tcl:180
+msgid "Vector 3D points to volume voxels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:165
+msgid "Sites (GRASS 5.x) to vector"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:166 ../gui/tcltk/gis.m/gmmenu.tcl:182
+#, fuzzy
+msgid "Volumes to raster map series"
+msgstr "Paraugot rastra karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:169
+msgid "Groups"
+msgstr "Grupas"
+
+#: ../gui/tcltk/d.m/menu.tcl:170
+msgid "New"
+msgstr "Jauna"
+
+#: ../gui/tcltk/d.m/menu.tcl:170
+msgid "Create new group file"
+msgstr "Izveidot jaunu grupas failu"
+
+#: ../gui/tcltk/d.m/menu.tcl:171 ../gui/tcltk/gis.m/gmmenu.tcl:86
+msgid "Open..."
+msgstr "Atvērt..."
+
+#: ../gui/tcltk/d.m/menu.tcl:171
+msgid "Open group file"
+msgstr "Atvērt grupas failu"
+
+#: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:87
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:814
+#: ../gui/tcltk/gis.m/runandoutput.tcl:112
+msgid "Save"
+msgstr "Saglabāt"
+
+#: ../gui/tcltk/d.m/menu.tcl:172
+msgid "Save group file"
+msgstr "Saglabāt grupas failu"
+
+#: ../gui/tcltk/d.m/menu.tcl:173 ../gui/tcltk/gis.m/gmmenu.tcl:88
+msgid "Save as..."
+msgstr "Saglabāt kā..."
+
+#: ../gui/tcltk/d.m/menu.tcl:173
+msgid "Save group file as name"
+msgstr "Saglabāt grupas failu ar nosaukumu"
+
+#: ../gui/tcltk/d.m/menu.tcl:174 ../gui/tcltk/d.m/print.tcl:281
+#: ../gui/tcltk/gis.m/gmmenu.tcl:89 ../gui/tcltk/gis.m/mapprint.tcl:357
+#: ../gui/tcltk/gis.m/runandoutput.tcl:48 ../lib/gis/gui.tcl:489
+#: ../lib/init/epsg_option.tcl:450 ../lib/init/epsg_option.tcl:494
+msgid "Close"
+msgstr "Aizvērt"
+
+#: ../gui/tcltk/d.m/menu.tcl:174
+msgid "Close group"
+msgstr "Aizvērt grupu"
+
+#: ../gui/tcltk/d.m/menu.tcl:177
+#, fuzzy
+msgid "Save display to image file"
+msgstr "Saglabāt profilu EPS failā"
+
+#: ../gui/tcltk/d.m/menu.tcl:178
+msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:179
+msgid "Save displays to multiple graphic file formats"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:181
+msgid "Save map to Postscript file"
+msgstr "Saglabāt karti Postscript failā"
+
+#: ../gui/tcltk/d.m/menu.tcl:182
+msgid "Print to default printer"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:182
+msgid "print"
+msgstr "drukāt"
+
+#: ../gui/tcltk/d.m/menu.tcl:184 ../gui/tcltk/gis.m/gmmenu.tcl:191
+msgid "E&xit"
+msgstr "&Iziet"
+
+#: ../gui/tcltk/d.m/menu.tcl:184
+msgid "Exit Display Manager"
+msgstr "Iziet no displeja menedžera"
+
+#: ../gui/tcltk/d.m/menu.tcl:186 ../gui/tcltk/gis.m/gmmenu.tcl:193
+msgid "&Config"
+msgstr "&Konfigurēt"
+
+#: ../gui/tcltk/d.m/menu.tcl:187 ../gui/tcltk/gis.m/gmmenu.tcl:194
+msgid "Region"
+msgstr "Reģions"
+
+#: ../gui/tcltk/d.m/menu.tcl:188 ../gui/tcltk/gis.m/gmmenu.tcl:195
+msgid "Display region settings"
+msgstr "Parādīt reģiona parametrus"
+
+#: ../gui/tcltk/d.m/menu.tcl:189 ../gui/tcltk/gis.m/gmmenu.tcl:196
+msgid "Change region settings"
+msgstr "Mainīt reģiona parametrus"
+
+#: ../gui/tcltk/d.m/menu.tcl:190 ../gui/tcltk/gis.m/gmmenu.tcl:197
+msgid "Zoom to maximum extent of all displayed maps"
+msgstr "Tuvināt līdz visu attēloto karšu kopskatam"
+
+#: ../gui/tcltk/d.m/menu.tcl:192 ../gui/tcltk/gis.m/gmmenu.tcl:199
+msgid "GRASS working environment"
+msgstr "GRASS darba vide"
+
+#: ../gui/tcltk/d.m/menu.tcl:193 ../gui/tcltk/gis.m/gmmenu.tcl:200
+msgid "Access other mapsets in current location"
+msgstr "Piekļūt citām karšu kopām pašreizējā novietojumā"
+
+#: ../gui/tcltk/d.m/menu.tcl:194 ../gui/tcltk/gis.m/gmmenu.tcl:201
+msgid "Change current working session to new mapset, location, or GISDBASE"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:195 ../gui/tcltk/gis.m/gmmenu.tcl:202
+msgid "Modify access by other users to current mapset"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:196 ../gui/tcltk/gis.m/gmmenu.tcl:203
+msgid "Show current GRASS environment settings"
+msgstr "Parādīt pašreizējos GRASS darba vides parametrus"
+
+#: ../gui/tcltk/d.m/menu.tcl:197 ../gui/tcltk/gis.m/gmmenu.tcl:204
+msgid "Set GRASS environment settings"
+msgstr "Uzstādīt GRASS vides parametrus"
+
+#: ../gui/tcltk/d.m/menu.tcl:198 ../gui/tcltk/gis.m/gmmenu.tcl:205
+msgid "Show current GRASS version"
+msgstr "Rādīt pašreizējo GRASS versiju"
+
+#: ../gui/tcltk/d.m/menu.tcl:200 ../gui/tcltk/gis.m/gmmenu.tcl:207
+msgid "Manage projections"
+msgstr "Pārvaldīt projekcijas"
+
+#: ../gui/tcltk/d.m/menu.tcl:201 ../gui/tcltk/gis.m/gmmenu.tcl:208
+msgid "Create/edit projection information for current location"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:202 ../gui/tcltk/gis.m/gmmenu.tcl:209
+msgid "Show projection information and create projection files"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:204 ../gui/tcltk/gis.m/gmmenu.tcl:211
+msgid "Convert coordinates from one projection to another"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:206
+msgid "Text"
+msgstr "Teksts"
+
+#: ../gui/tcltk/d.m/menu.tcl:207
+msgid "Select default text font"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:208
+msgid "Select default freetype text font"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:210 ../gui/tcltk/gis.m/gmmenu.tcl:213
+msgid "X-monitor displays"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:211 ../gui/tcltk/gis.m/gmmenu.tcl:214
+msgid "Configure xmonitor displays"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:212 ../gui/tcltk/gis.m/gmmenu.tcl:215
+msgid "Configure frames for xmonitors"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:213 ../gui/tcltk/gis.m/gmmenu.tcl:216
+msgid "Start/restart xmonitor at specified window size"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:214 ../gui/tcltk/gis.m/gmmenu.tcl:217
+msgid "Set active xmonitor to specified size"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:215 ../gui/tcltk/gis.m/gmmenu.tcl:218
+msgid "Display information about active xmonitor"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:218 ../gui/tcltk/gis.m/gmmenu.tcl:221
+msgid "&Raster"
+msgstr "&Rastrs"
+
+#: ../gui/tcltk/d.m/menu.tcl:219 ../gui/tcltk/d.m/menu.tcl:376
+#: ../gui/tcltk/gis.m/gmmenu.tcl:222 ../gui/tcltk/gis.m/gmmenu.tcl:396
+msgid "Develop map"
+msgstr "Izveidot karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:220 ../gui/tcltk/gis.m/gmmenu.tcl:223
+msgid "Digitize raster"
+msgstr "Digitizēt rastru"
+
+#: ../gui/tcltk/d.m/menu.tcl:222 ../gui/tcltk/gis.m/gmmenu.tcl:225
+msgid "Compress/decompress raster file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:223 ../gui/tcltk/gis.m/gmmenu.tcl:226
+msgid "Manage boundary definitions"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:224 ../gui/tcltk/gis.m/gmmenu.tcl:227
+msgid "Manage null values"
+msgstr "Pārvaldīt NULL vērtības"
+
+#: ../gui/tcltk/d.m/menu.tcl:225 ../gui/tcltk/gis.m/gmmenu.tcl:228
+msgid "Manage timestamps for files"
+msgstr "Pārvaldīt karšu laika zīmogus"
+
+#: ../gui/tcltk/d.m/menu.tcl:226 ../gui/tcltk/gis.m/gmmenu.tcl:229
+msgid "Quantization for floating-point maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:230
+msgid "Resample (change resolution)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:229 ../gui/tcltk/gis.m/gmmenu.tcl:231
+msgid "Resample using nearest neighbor method"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:230 ../gui/tcltk/gis.m/gmmenu.tcl:232
+msgid "Resample using various interpolation methods"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:231 ../gui/tcltk/gis.m/gmmenu.tcl:233
+msgid "Resample using aggregate statistics"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:232 ../gui/tcltk/gis.m/gmmenu.tcl:234
+msgid "Resample using regularized spline with tension method"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:235 ../gui/tcltk/gis.m/gmmenu.tcl:236
+msgid "Support file creation and maintenance"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:237 ../gui/tcltk/gis.m/gmmenu.tcl:239
+msgid "Reproject raster from other location"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:238 ../gui/tcltk/gis.m/gmmenu.tcl:240
+msgid "Generate tiling for other projection"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:240 ../gui/tcltk/gis.m/gmmenu.tcl:242
+msgid "Manage map colors"
+msgstr "Pārvaldīt kartes krāsas"
+
+#: ../gui/tcltk/d.m/menu.tcl:241 ../gui/tcltk/gis.m/gmmenu.tcl:243
+msgid "Set colors to predefined color tables"
+msgstr "Uzstādīt krāsas no esošām krāsu tabulām"
+
+#: ../gui/tcltk/d.m/menu.tcl:242 ../gui/tcltk/gis.m/gmmenu.tcl:244
+#, fuzzy
+msgid "Set colors using color rules"
+msgstr "Uzstādīt krāsas no esošām krāsu tabulām"
+
+#: ../gui/tcltk/d.m/menu.tcl:244 ../gui/tcltk/gis.m/gmmenu.tcl:246
+msgid "Blend 2 color maps to produce 3 RGB files"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:245 ../gui/tcltk/gis.m/gmmenu.tcl:247
+msgid "Create color image from RGB files"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:246 ../gui/tcltk/gis.m/gmmenu.tcl:248
+msgid ""
+"Create 3 RGB (red, green, blue) maps from 3 HIS (hue, intensity, saturation) "
+"maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:249 ../gui/tcltk/d.m/menu.tcl:403
+#: ../gui/tcltk/gis.m/gmmenu.tcl:251 ../gui/tcltk/gis.m/gmmenu.tcl:426
+msgid "Query by coordinate(s)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:251 ../gui/tcltk/gis.m/gmmenu.tcl:253
+msgid "Create raster buffers"
+msgstr "Izveidot rastra buferus"
+
+#: ../gui/tcltk/d.m/menu.tcl:252 ../gui/tcltk/gis.m/gmmenu.tcl:254
+msgid "Create raster MASK"
+msgstr "Izveidot rastra MASKu"
+
+#: ../gui/tcltk/d.m/menu.tcl:253 ../gui/tcltk/gis.m/gmmenu.tcl:255
+msgid "Locate closest points between areas in 2 raster maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:254 ../gui/tcltk/gis.m/gmmenu.tcl:256
+msgid "Map calculator"
+msgstr "Karšu kalkulators"
+
+#: ../gui/tcltk/d.m/menu.tcl:255 ../gui/tcltk/d.m/menu.tcl:413
+#: ../gui/tcltk/gis.m/gmmenu.tcl:257 ../gui/tcltk/gis.m/gmmenu.tcl:441
+#, fuzzy
+msgid "Neighborhood analysis"
+msgstr "Tīkla analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:256 ../gui/tcltk/gis.m/gmmenu.tcl:258
+msgid "Moving window analysis of raster cells"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:257 ../gui/tcltk/gis.m/gmmenu.tcl:259
+msgid "Analyze vector points in neighborhood of raster cells"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:259 ../gui/tcltk/d.m/menu.tcl:427
+#: ../gui/tcltk/gis.m/gmmenu.tcl:261 ../gui/tcltk/gis.m/gmmenu.tcl:455
+#, fuzzy
+msgid "Overlay maps"
+msgstr "Pārsaukt kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:260 ../gui/tcltk/gis.m/gmmenu.tcl:262
+msgid "Cross product"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:261 ../gui/tcltk/gis.m/gmmenu.tcl:263
+msgid "Function of map series (time series)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:262 ../gui/tcltk/gis.m/gmmenu.tcl:264
+#, fuzzy
+msgid "Patch maps"
+msgstr "Rastra karte"
+
+#: ../gui/tcltk/d.m/menu.tcl:264 ../gui/tcltk/gis.m/gmmenu.tcl:266
+msgid "Statistical calculations for cover map over base map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:266 ../gui/tcltk/gis.m/gmmenu.tcl:268
+msgid "Solar radiance and shadows"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:267 ../gui/tcltk/gis.m/gmmenu.tcl:269
+msgid "Solar irradiance and daily irradiation"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:268 ../gui/tcltk/gis.m/gmmenu.tcl:270
+msgid "Shadows map for sun position or date/time"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:270 ../gui/tcltk/gis.m/gmmenu.tcl:272
+msgid "Terrain analysis"
+msgstr "Reljefa analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:271 ../gui/tcltk/gis.m/gmmenu.tcl:273
+msgid "Calculate cumulative movement costs between locales"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:272 ../gui/tcltk/gis.m/gmmenu.tcl:274
+#, fuzzy
+msgid "Cost surface"
+msgstr "Virsmu interpolēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:273 ../gui/tcltk/gis.m/gmmenu.tcl:275
+msgid "Least cost route or flow"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:274 ../gui/tcltk/gis.m/gmmenu.tcl:276
+msgid "Profile analysis"
+msgstr "Profila analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:275 ../gui/tcltk/gis.m/gmmenu.tcl:277
+msgid "Shaded relief map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:276 ../gui/tcltk/gis.m/gmmenu.tcl:278
+msgid "Slope and aspect"
+msgstr "Slīpums un vērsums"
+
+#: ../gui/tcltk/d.m/menu.tcl:277 ../gui/tcltk/gis.m/gmmenu.tcl:279
+#, fuzzy
+msgid "Terrain parameters"
+msgstr "Reljefa analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:278 ../gui/tcltk/gis.m/gmmenu.tcl:280
+msgid "Textural features"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:279 ../gui/tcltk/gis.m/gmmenu.tcl:281
+msgid "Visibility/line of sight"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:281 ../gui/tcltk/gis.m/gmmenu.tcl:283
+msgid "Transform features"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:282 ../gui/tcltk/gis.m/gmmenu.tcl:284
+msgid "Clump small areas (statistics calculated by r.volume)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:283 ../gui/tcltk/gis.m/gmmenu.tcl:285
+#, fuzzy
+msgid "Grow areas"
+msgstr "laukumi"
+
+#: ../gui/tcltk/d.m/menu.tcl:284 ../gui/tcltk/gis.m/gmmenu.tcl:286
+msgid "Thin linear features"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:287 ../gui/tcltk/gis.m/gmmenu.tcl:289
+msgid "Hydrologic modeling"
+msgstr "Hidroloģiskā modelēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:288 ../gui/tcltk/gis.m/gmmenu.tcl:290
+msgid "Carve stream channels into elevation map using vector streams map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:289 ../gui/tcltk/gis.m/gmmenu.tcl:291
+msgid "Depressionless elevation map and flowline map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:290 ../gui/tcltk/gis.m/gmmenu.tcl:292
+msgid "Fill lake from seed point to specified level"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:291 ../gui/tcltk/gis.m/gmmenu.tcl:293
+msgid "Flow accumulation for massive grids"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:292 ../gui/tcltk/gis.m/gmmenu.tcl:294
+msgid "Generate flow lines for raster map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:293 ../gui/tcltk/gis.m/gmmenu.tcl:295
+msgid "SIMWE overland flow modeling"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:294 ../gui/tcltk/gis.m/gmmenu.tcl:296
+msgid "SIMWE sediment erosion, transport, & deposition modeling"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:295 ../gui/tcltk/gis.m/gmmenu.tcl:297
+msgid "Topographic index map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:296 ../gui/tcltk/gis.m/gmmenu.tcl:298
+msgid "TOPMODEL simulation"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:297 ../gui/tcltk/gis.m/gmmenu.tcl:299
+#, fuzzy
+msgid "Watershed subbasins"
+msgstr "Sateces baseinu analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:298 ../gui/tcltk/gis.m/gmmenu.tcl:300
+msgid "Watershed analysis"
+msgstr "Sateces baseinu analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:299 ../gui/tcltk/gis.m/gmmenu.tcl:301
+#, fuzzy
+msgid "Watershed basin creation"
+msgstr "Sateces baseinu analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:301 ../gui/tcltk/gis.m/gmmenu.tcl:303
+msgid "Landscape structure modeling"
+msgstr "Ainavas struktūras modelēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:302 ../gui/tcltk/gis.m/gmmenu.tcl:304
+msgid "Set up sampling and analysis framework"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:304 ../gui/tcltk/gis.m/gmmenu.tcl:306
+msgid "Analyze landscape characteristics"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:305 ../gui/tcltk/gis.m/gmmenu.tcl:307
+msgid "Analyze landscape patch characteristics"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:306 ../gui/tcltk/gis.m/gmmenu.tcl:308
+#, fuzzy
+msgid "Output landscape patch information"
+msgstr "Parādīt faila pamatinformāciju"
+
+#: ../gui/tcltk/d.m/menu.tcl:308 ../gui/tcltk/gis.m/gmmenu.tcl:327
+#, fuzzy
+msgid "Wildfire modeling"
+msgstr "Hidroloģiskā modelēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:309 ../gui/tcltk/gis.m/gmmenu.tcl:328
+msgid "Generate rate of spread (ROS) maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:310 ../gui/tcltk/gis.m/gmmenu.tcl:329
+msgid "Generate least-cost spread paths"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:311 ../gui/tcltk/gis.m/gmmenu.tcl:330
+msgid "Simulate anisotropic spread phenomena"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:333
+msgid "Change category values and labels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:315 ../gui/tcltk/gis.m/gmmenu.tcl:334
+msgid "Edit category values of individual cells for displayed raster map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:318 ../gui/tcltk/gis.m/gmmenu.tcl:337
+msgid "Reclassify categories for areas of specified sizes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:319 ../gui/tcltk/gis.m/gmmenu.tcl:338
+msgid "Reclassify categories using rules"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:320 ../gui/tcltk/gis.m/gmmenu.tcl:339
+msgid "Reclassify categories using rules file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:322 ../gui/tcltk/gis.m/gmmenu.tcl:341
+msgid "Recode categories using rules (create new map)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:323 ../gui/tcltk/gis.m/gmmenu.tcl:342
+msgid "Recode categories using rules file (create new map)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:325 ../gui/tcltk/gis.m/gmmenu.tcl:344
+msgid "Rescale categories (create new map)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:326 ../gui/tcltk/gis.m/gmmenu.tcl:345
+msgid "Rescale categories with equalized histogram (create new map)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:329 ../gui/tcltk/gis.m/gmmenu.tcl:348
+msgid "Generate concentric circles around points"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:330 ../gui/tcltk/gis.m/gmmenu.tcl:349
+#, fuzzy
+msgid "Generate random raster cells"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:331 ../gui/tcltk/gis.m/gmmenu.tcl:350
+#, fuzzy
+msgid "Generate random cells"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:332 ../gui/tcltk/gis.m/gmmenu.tcl:351
+msgid "Generate random cells and vector points from raster map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:334 ../gui/tcltk/gis.m/gmmenu.tcl:353
+msgid "Generate surfaces"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:335 ../gui/tcltk/gis.m/gmmenu.tcl:354
+msgid "Generate density surface using moving Gausian kernal"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:336 ../gui/tcltk/gis.m/gmmenu.tcl:355
+#, fuzzy
+msgid "Generate fractal surface"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:337 ../gui/tcltk/gis.m/gmmenu.tcl:356
+#, fuzzy
+msgid "Generate gaussian deviates surface"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:338 ../gui/tcltk/gis.m/gmmenu.tcl:357
+#, fuzzy
+msgid "Generate plane"
+msgstr "Ģenerēt punktus"
+
+#: ../gui/tcltk/d.m/menu.tcl:339 ../gui/tcltk/gis.m/gmmenu.tcl:358
+#, fuzzy
+msgid "Generate random deviates surface"
+msgstr "Virsmu ģenerēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:340 ../gui/tcltk/gis.m/gmmenu.tcl:359
+msgid "Generate random surface with spatial dependence"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:342 ../gui/tcltk/gis.m/gmmenu.tcl:361
+#, fuzzy
+msgid "Generate vector contour lines"
+msgstr "Konvertēt vektoru objektu tipus"
+
+#: ../gui/tcltk/d.m/menu.tcl:343 ../gui/tcltk/gis.m/gmmenu.tcl:362
+msgid "Interpolate surfaces"
+msgstr "Virsmu interpolēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:344 ../gui/tcltk/gis.m/gmmenu.tcl:364
+msgid "Bilinear interpolation from raster points"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:345 ../gui/tcltk/gis.m/gmmenu.tcl:365
+msgid "Inverse distance weighted interpolation from raster points"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:346 ../gui/tcltk/gis.m/gmmenu.tcl:366
+msgid "Interpolation from raster contours"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:348 ../gui/tcltk/gis.m/gmmenu.tcl:368
+msgid "Inverse distance weighted interpolation from vector points"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:349 ../gui/tcltk/gis.m/gmmenu.tcl:369
+msgid "Regularized spline tension interpolation from vector points or contours"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:351 ../gui/tcltk/gis.m/gmmenu.tcl:371
+msgid "Fill NULL cells by interpolation using regularized spline tension"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:354 ../gui/tcltk/d.m/menu.tcl:459
+#: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:374
+#: ../gui/tcltk/gis.m/gmmenu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:544
+msgid "Reports and statistics"
+msgstr "Atskaites un statistika"
+
+#: ../gui/tcltk/d.m/menu.tcl:355 ../gui/tcltk/d.m/menu.tcl:516
+#: ../gui/tcltk/gis.m/gmmenu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:545
+msgid "Report basic file information"
+msgstr "Parādīt faila pamatinformāciju"
+
+#: ../gui/tcltk/d.m/menu.tcl:356 ../gui/tcltk/gis.m/gmmenu.tcl:376
+msgid "Report category labels and values"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:358 ../gui/tcltk/gis.m/gmmenu.tcl:378
+msgid "General statistics"
+msgstr "Vispārējā statistika"
+
+#: ../gui/tcltk/d.m/menu.tcl:359 ../gui/tcltk/gis.m/gmmenu.tcl:379
+#, fuzzy
+msgid "Range of all category values"
+msgstr "Pārvaldīt NULL vērtības"
+
+#: ../gui/tcltk/d.m/menu.tcl:360 ../gui/tcltk/gis.m/gmmenu.tcl:380
+msgid "Sum all cell category values"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:361 ../gui/tcltk/gis.m/gmmenu.tcl:381
+msgid "Sum area by map and category"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:362 ../gui/tcltk/gis.m/gmmenu.tcl:382
+msgid "Summary statistics for clumped cells (works with r.clump)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:363 ../gui/tcltk/gis.m/gmmenu.tcl:383
+msgid "Total surface area corrected for topography"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:364 ../gui/tcltk/d.m/menu.tcl:463
+#: ../gui/tcltk/gis.m/gmmenu.tcl:384 ../gui/tcltk/gis.m/gmmenu.tcl:492
+#, fuzzy
+msgid "Univariate statistics"
+msgstr "Vispārējā statistika"
+
+#: ../gui/tcltk/d.m/menu.tcl:365 ../gui/tcltk/gis.m/gmmenu.tcl:385
+msgid "Univariate statistics (script version)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:367 ../gui/tcltk/gis.m/gmmenu.tcl:387
+msgid "Sample values along transects"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:368 ../gui/tcltk/gis.m/gmmenu.tcl:388
+msgid "Sample values along transects (use azimuth, distance)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:370 ../gui/tcltk/gis.m/gmmenu.tcl:390
+msgid "Covariance/correlation"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:371 ../gui/tcltk/gis.m/gmmenu.tcl:391
+msgid "Linear regression between 2 maps"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:372 ../gui/tcltk/gis.m/gmmenu.tcl:392
+msgid "Mutual category occurences (coincidence)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:375 ../gui/tcltk/gis.m/gmmenu.tcl:395
+msgid "&Vector"
+msgstr "&Vektori"
+
+#: ../gui/tcltk/d.m/menu.tcl:377 ../gui/tcltk/gis.m/gmmenu.tcl:397
+msgid "Digitize"
+msgstr "Digitizēt"
+
+#: ../gui/tcltk/d.m/menu.tcl:379 ../gui/tcltk/gis.m/gmmenu.tcl:399
+msgid "Create/rebuild topology"
+msgstr "Izveidot/atjaunot topoloģiju"
+
+#: ../gui/tcltk/d.m/menu.tcl:380 ../gui/tcltk/gis.m/gmmenu.tcl:400
+msgid "Clean vector files"
+msgstr "Attīrīt vektorus"
+
+#: ../gui/tcltk/d.m/menu.tcl:381 ../gui/tcltk/gis.m/gmmenu.tcl:401
+msgid "Add missing centroids"
+msgstr "Pievienot trūkstošos centroīdus"
+
+#: ../gui/tcltk/d.m/menu.tcl:383 ../gui/tcltk/gis.m/gmmenu.tcl:403
+msgid "Build polylines from adjacent segments"
+msgstr "Veidot polilīnijas no atsevišķiem segmentiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:384 ../gui/tcltk/gis.m/gmmenu.tcl:404
+msgid "Split polylines into segments"
+msgstr "Sadalīt polilīnijas segmentos"
+
+#: ../gui/tcltk/d.m/menu.tcl:385 ../gui/tcltk/gis.m/gmmenu.tcl:405
+msgid "Create lines parallel to existing lines"
+msgstr "Izveidot esošām paralēlas līnijas"
+
+#: ../gui/tcltk/d.m/menu.tcl:386 ../gui/tcltk/gis.m/gmmenu.tcl:406
+msgid "Dissolve common boundaries"
+msgstr "Aizvākt kopīgās robežas"
+
+#: ../gui/tcltk/d.m/menu.tcl:388 ../gui/tcltk/gis.m/gmmenu.tcl:408
+msgid "Convert vector feature types"
+msgstr "Konvertēt vektoru objektu tipus"
+
+#: ../gui/tcltk/d.m/menu.tcl:389 ../gui/tcltk/gis.m/gmmenu.tcl:409
+msgid "Convert 2D vector to 3D by sampling raster"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:390 ../gui/tcltk/gis.m/gmmenu.tcl:410
+msgid "Extrude 2D vector into 3D vector"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:392 ../gui/tcltk/gis.m/gmmenu.tcl:412
+msgid "Create text label file for vector features"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:394 ../gui/tcltk/gis.m/gmmenu.tcl:414
+msgid "Reproject vector from other location"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:396 ../gui/tcltk/gis.m/gmmenu.tcl:416
+msgid "Vector<->database connections"
+msgstr "Vektoru <-> datu bāzes savienojumi"
+
+#: ../gui/tcltk/d.m/menu.tcl:397 ../gui/tcltk/gis.m/gmmenu.tcl:418
+msgid "Create new vector as link to external OGR layer"
+msgstr "Izveidot jaunu vektoru karti kā saiti uz ārēju OGR slāni"
+
+#: ../gui/tcltk/d.m/menu.tcl:398 ../gui/tcltk/gis.m/gmmenu.tcl:421
+msgid "Set database connection for vector attributes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:400 ../gui/tcltk/gis.m/gmmenu.tcl:423
+msgid "Rectify and georeference vector map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:402 ../gui/tcltk/gis.m/gmmenu.tcl:425
+msgid "Query by attributes"
+msgstr "Vaicājums pēc atribūtiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:404 ../gui/tcltk/gis.m/gmmenu.tcl:427
+msgid "Query by map features"
+msgstr "Vaicājums pēc kartes objektiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:406 ../gui/tcltk/gis.m/gmmenu.tcl:429
+msgid "Create vector buffers"
+msgstr "Veidot vektoru buferus"
+
+#: ../gui/tcltk/d.m/menu.tcl:407 ../gui/tcltk/gis.m/gmmenu.tcl:435
+msgid "Linear referencing for vectors"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:408 ../gui/tcltk/gis.m/gmmenu.tcl:436
+msgid "Create linear reference system"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:409 ../gui/tcltk/gis.m/gmmenu.tcl:437
+msgid "Create stationing from imput lines, and linear reference system"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:410 ../gui/tcltk/gis.m/gmmenu.tcl:438
+msgid ""
+"Create points/segments from input lines, linear reference system and "
+"positions read from stdin"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:411 ../gui/tcltk/gis.m/gmmenu.tcl:439
+msgid ""
+"Find line id and real km+offset for given points in vector map using linear "
+"reference system"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:414 ../gui/tcltk/gis.m/gmmenu.tcl:442
+msgid "Locate nearest features to points or centroids"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:415 ../gui/tcltk/gis.m/gmmenu.tcl:443
+msgid "Generate Thiessen polygons around points (Voronoi diagram)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:416 ../gui/tcltk/gis.m/gmmenu.tcl:444
+msgid "Connect points to create Delaunay triangles"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:418 ../gui/tcltk/gis.m/gmmenu.tcl:446
+msgid "Network analysis"
+msgstr "Tīkla analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:419 ../gui/tcltk/gis.m/gmmenu.tcl:447
+msgid "Allocate subnets"
+msgstr "Veidot apakštīklus"
+
+#: ../gui/tcltk/d.m/menu.tcl:420 ../gui/tcltk/gis.m/gmmenu.tcl:448
+msgid "Network maintenance"
+msgstr "Tīkla uzturēšana"
+
+#: ../gui/tcltk/d.m/menu.tcl:421 ../gui/tcltk/gis.m/gmmenu.tcl:449
+msgid "Shortest route"
+msgstr "Īsākais ceļš"
+
+#: ../gui/tcltk/d.m/menu.tcl:422 ../gui/tcltk/gis.m/gmmenu.tcl:450
+msgid "Shortest route (visualization only)"
+msgstr "Īsākais ceļš (tikai vizualizācijai)"
+
+#: ../gui/tcltk/d.m/menu.tcl:423 ../gui/tcltk/gis.m/gmmenu.tcl:451
+msgid "Split net to bands between cost isolines"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:424 ../gui/tcltk/gis.m/gmmenu.tcl:452
+msgid "Steiner tree"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:425 ../gui/tcltk/gis.m/gmmenu.tcl:453
+msgid "Traveling salesman analysis"
+msgstr "Ceļojošā tirgotāja analīze"
+
+#: ../gui/tcltk/d.m/menu.tcl:428 ../gui/tcltk/gis.m/gmmenu.tcl:456
+msgid "Overlay/combine 2 vector maps"
+msgstr "Pārklāt/kombinēt divas vektoru kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:429 ../gui/tcltk/gis.m/gmmenu.tcl:457
+msgid "Patch multiple maps (combine)"
+msgstr "Apvienot vairākas kartes"
+
+#: ../gui/tcltk/d.m/menu.tcl:431 ../gui/tcltk/gis.m/gmmenu.tcl:459
+msgid "Generate area feature for extent of current region"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:432 ../gui/tcltk/gis.m/gmmenu.tcl:460
+msgid "Generate rectangular vector grid"
+msgstr "Ģenerēt taisnstūrveida vektoru režģi"
+
+#: ../gui/tcltk/d.m/menu.tcl:434 ../gui/tcltk/gis.m/gmmenu.tcl:462
+msgid "Change attributes"
+msgstr "Mainīt atribūtus"
+
+#: ../gui/tcltk/d.m/menu.tcl:435 ../gui/tcltk/gis.m/gmmenu.tcl:463
+msgid "Attach, delete, or report categories"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:436 ../gui/tcltk/gis.m/gmmenu.tcl:464
+msgid "Reclassify features using rules file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:439 ../gui/tcltk/gis.m/gmmenu.tcl:467
+msgid "Work with vector points"
+msgstr "Strādāt ar vektoru punktiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:440 ../gui/tcltk/gis.m/gmmenu.tcl:468
+msgid "Generate points"
+msgstr "Ģenerēt punktus"
+
+#: ../gui/tcltk/d.m/menu.tcl:441 ../gui/tcltk/gis.m/gmmenu.tcl:469
+msgid "Generate points from database with x/y coordinates"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:442 ../gui/tcltk/gis.m/gmmenu.tcl:470
+msgid "Generate random points"
+msgstr "Ģenerēt gadījuma punktus"
+
+#: ../gui/tcltk/d.m/menu.tcl:443 ../gui/tcltk/gis.m/gmmenu.tcl:471
+msgid "Random location perturbations of points"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:445 ../gui/tcltk/gis.m/gmmenu.tcl:473
+msgid "Generate areas from points"
+msgstr "Ģenerēt laukumus no punktiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:446 ../gui/tcltk/gis.m/gmmenu.tcl:474
+msgid "Generate convex hull for point set"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:447 ../gui/tcltk/gis.m/gmmenu.tcl:475
+msgid "Generate Delaunay triangles for point set"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:448 ../gui/tcltk/gis.m/gmmenu.tcl:476
+msgid "Generate Voronoi diagram/Thiessen polygons for point set"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:450 ../gui/tcltk/gis.m/gmmenu.tcl:478
+msgid "Sample raster maps"
+msgstr "Paraugot rastra karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:451 ../gui/tcltk/gis.m/gmmenu.tcl:479
+msgid "Calculate statistics for raster map overlain by vector map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:452 ../gui/tcltk/gis.m/gmmenu.tcl:480
+msgid "Sample raster map at point locations"
+msgstr "Paraugot rastra karti punktu vietās"
+
+#: ../gui/tcltk/d.m/menu.tcl:453 ../gui/tcltk/gis.m/gmmenu.tcl:481
+msgid "Sample raster neighborhood around points"
+msgstr "Paraugot rastra karti ap punktiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:455 ../gui/tcltk/gis.m/gmmenu.tcl:483
+msgid "Partition points into test/training sets for k-fold cross validatation"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:456 ../gui/tcltk/gis.m/gmmenu.tcl:485
+msgid "Transfer attribute data from queried vector map to points"
+msgstr "Pārnest atribūtu datus no paraugotās vektoru kartes uz punktiem"
+
+#: ../gui/tcltk/d.m/menu.tcl:460 ../gui/tcltk/gis.m/gmmenu.tcl:489
+msgid "Basic information"
+msgstr "Vispārēja informācija"
+
+#: ../gui/tcltk/d.m/menu.tcl:461 ../gui/tcltk/gis.m/gmmenu.tcl:490
+msgid "Load vector attributes to database or create reports"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:462 ../gui/tcltk/gis.m/gmmenu.tcl:491
+msgid "Report areas for vector attribute categories"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:465 ../gui/tcltk/gis.m/gmmenu.tcl:494
+msgid "Test normality of point distribution"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:466 ../gui/tcltk/gis.m/gmmenu.tcl:495
+msgid "Calculate stats for raster map underlying vector objects"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:467 ../gui/tcltk/gis.m/gmmenu.tcl:496
+msgid "Indices of point counts in quadrats"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:470 ../gui/tcltk/gis.m/gmmenu.tcl:499
+msgid "&Imagery"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:471 ../gui/tcltk/gis.m/gmmenu.tcl:500
+#, fuzzy
+msgid "Develop images and groups"
+msgstr "Izveidot karti"
+
+#: ../gui/tcltk/d.m/menu.tcl:472 ../gui/tcltk/gis.m/gmmenu.tcl:501
+msgid "Create/edit imagery group"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:473 ../gui/tcltk/gis.m/gmmenu.tcl:502
+msgid "Target imagery group"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:475 ../gui/tcltk/gis.m/gmmenu.tcl:504
+msgid "Mosaic up to 4 adjacent images"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:477 ../gui/tcltk/gis.m/gmmenu.tcl:506
+#, fuzzy
+msgid "Manage image colors"
+msgstr "Pārvaldīt kartes krāsas"
+
+#: ../gui/tcltk/d.m/menu.tcl:478 ../gui/tcltk/gis.m/gmmenu.tcl:507
+msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:479 ../gui/tcltk/gis.m/gmmenu.tcl:508
+msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:480 ../gui/tcltk/gis.m/gmmenu.tcl:509
+msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:482 ../gui/tcltk/gis.m/gmmenu.tcl:511
+msgid "Rectify and georeference image group"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:483 ../gui/tcltk/gis.m/gmmenu.tcl:512
+msgid "Set ground control points (GCP's) from raster map or keyboard entry"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:485 ../gui/tcltk/gis.m/gmmenu.tcl:514
+msgid "Set ground control points (GCP's) from vector map or keyboard entry"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:487 ../gui/tcltk/gis.m/gmmenu.tcl:516
+msgid "Affine and Polynomial rectification (rubber sheet)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:517
+msgid "Ortho photo rectification"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:491 ../gui/tcltk/gis.m/gmmenu.tcl:520
+msgid "Brovey transformation and pan sharpening"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:492 ../gui/tcltk/gis.m/gmmenu.tcl:521
+msgid "Classify image"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:493 ../gui/tcltk/gis.m/gmmenu.tcl:522
+msgid "Clustering input for unsupervised classification"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:495 ../gui/tcltk/gis.m/gmmenu.tcl:524
+msgid "Maximum likelyhood classification (MLC)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:496 ../gui/tcltk/gis.m/gmmenu.tcl:525
+msgid "Sequential maximum a posteriory classification (SMAP)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:498 ../gui/tcltk/gis.m/gmmenu.tcl:527
+msgid "Interactive input for supervised classification"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:499 ../gui/tcltk/gis.m/gmmenu.tcl:528
+msgid "Non-interactive input for supervised classification (MLC)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:500 ../gui/tcltk/gis.m/gmmenu.tcl:529
+msgid "Non-interactive input for supervised classification (SMAP)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:502 ../gui/tcltk/gis.m/gmmenu.tcl:531
+msgid "Filter image"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:503 ../gui/tcltk/gis.m/gmmenu.tcl:532
+msgid "Zero edge crossing detection"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:504 ../gui/tcltk/gis.m/gmmenu.tcl:533
+msgid "User defined matrix/convolving filter"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:506 ../gui/tcltk/gis.m/gmmenu.tcl:535
+msgid "Spectral response"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:507 ../gui/tcltk/gis.m/gmmenu.tcl:536
+msgid "Tassled cap vegetation index"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:508 ../gui/tcltk/gis.m/gmmenu.tcl:537
+msgid "Transform image"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:509 ../gui/tcltk/gis.m/gmmenu.tcl:538
+msgid "Canonical component"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:510 ../gui/tcltk/gis.m/gmmenu.tcl:539
+msgid "Principal component"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:511 ../gui/tcltk/gis.m/gmmenu.tcl:540
+msgid "Fast Fourier Transform"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:512 ../gui/tcltk/gis.m/gmmenu.tcl:541
+msgid "Inverse Fast Fourier Transform"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:517 ../gui/tcltk/gis.m/gmmenu.tcl:546
+#, fuzzy
+msgid "Range of image values"
+msgstr "Pārvaldīt NULL vērtības"
+
+#: ../gui/tcltk/d.m/menu.tcl:519 ../gui/tcltk/gis.m/gmmenu.tcl:548
+msgid "Bit pattern comparison for ID of low quality pixels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:520 ../gui/tcltk/gis.m/gmmenu.tcl:549
+msgid "Kappa classification accuracy assessment"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:521 ../gui/tcltk/gis.m/gmmenu.tcl:550
+msgid "Optimum index factor for LandSat TM"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:524 ../gui/tcltk/gis.m/gmmenu.tcl:553
+msgid "&Grid3D"
+msgstr "&3D rastrs"
+
+#: ../gui/tcltk/d.m/menu.tcl:525 ../gui/tcltk/gis.m/gmmenu.tcl:554
+msgid "Develop grid3D volumes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:526 ../gui/tcltk/gis.m/gmmenu.tcl:555
+#, fuzzy
+msgid "Manage nulls for grid3D volume"
+msgstr "Pārvaldīt NULL vērtības"
+
+#: ../gui/tcltk/d.m/menu.tcl:527 ../gui/tcltk/gis.m/gmmenu.tcl:556
+#, fuzzy
+msgid "Manage timestamp for grid3D volume"
+msgstr "Pārvaldīt karšu laika zīmogus"
+
+#: ../gui/tcltk/d.m/menu.tcl:529 ../gui/tcltk/gis.m/gmmenu.tcl:558
+msgid "Create 3D mask for grid3D operations"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:530 ../gui/tcltk/gis.m/gmmenu.tcl:559
+msgid "Create 2D raster cross section from grid3d volume"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:531 ../gui/tcltk/gis.m/gmmenu.tcl:560
+msgid "Map calculator for grid3D operations"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:532 ../gui/tcltk/gis.m/gmmenu.tcl:561
+msgid "Interpolate volume from vector points using splines"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:533 ../gui/tcltk/gis.m/gmmenu.tcl:562
+#, fuzzy
+msgid "Report and Statistics"
+msgstr "Atskaites un statistika"
+
+#: ../gui/tcltk/d.m/menu.tcl:534 ../gui/tcltk/gis.m/gmmenu.tcl:563
+msgid "Display information about grid3D volume"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:537 ../gui/tcltk/gis.m/gmmenu.tcl:566
+msgid "&Databases"
+msgstr "&Datubāzes"
+
+#: ../gui/tcltk/d.m/menu.tcl:538 ../gui/tcltk/gis.m/gmmenu.tcl:567
+msgid "Manage database"
+msgstr "Pārvaldīt datu bāzi"
+
+#: ../gui/tcltk/d.m/menu.tcl:539 ../gui/tcltk/gis.m/gmmenu.tcl:568
+msgid "Connect to database"
+msgstr "Pieslēgties datu bāzei"
+
+#: ../gui/tcltk/d.m/menu.tcl:540 ../gui/tcltk/gis.m/gmmenu.tcl:569
+msgid "Login to database"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:542 ../gui/tcltk/gis.m/gmmenu.tcl:571
+msgid "Copy table"
+msgstr "Kopēt tabulu"
+
+#: ../gui/tcltk/d.m/menu.tcl:543 ../gui/tcltk/gis.m/gmmenu.tcl:572
+msgid "Add columns to table"
+msgstr "Pievienot kolonas tabulai"
+
+#: ../gui/tcltk/d.m/menu.tcl:544 ../gui/tcltk/gis.m/gmmenu.tcl:573
+msgid "Change values in a column"
+msgstr "Mainīt vērtības kolonā"
+
+#: ../gui/tcltk/d.m/menu.tcl:545 ../gui/tcltk/gis.m/gmmenu.tcl:574
+msgid "Test database"
+msgstr "Testēt datu bāzi"
+
+#: ../gui/tcltk/d.m/menu.tcl:547 ../gui/tcltk/gis.m/gmmenu.tcl:576
+msgid "Database information"
+msgstr "Datu bāzes informācija"
+
+#: ../gui/tcltk/d.m/menu.tcl:548 ../gui/tcltk/gis.m/gmmenu.tcl:577
+msgid "Describe table"
+msgstr "Aprakstīt tabulu"
+
+#: ../gui/tcltk/d.m/menu.tcl:549 ../gui/tcltk/gis.m/gmmenu.tcl:578
+msgid "List columns"
+msgstr "Parādīt kolonas"
+
+#: ../gui/tcltk/d.m/menu.tcl:550 ../gui/tcltk/gis.m/gmmenu.tcl:579
+msgid "List drivers"
+msgstr "Parādīt draiverus"
+
+#: ../gui/tcltk/d.m/menu.tcl:551 ../gui/tcltk/gis.m/gmmenu.tcl:580
+msgid "List tables"
+msgstr "Parādīt tabulas"
+
+#: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:583
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1698 ../gui/tcltk/gis.m/maptool.tcl:222
+msgid "Query"
+msgstr "Vaicājumi"
+
+#: ../gui/tcltk/d.m/menu.tcl:555 ../gui/tcltk/gis.m/gmmenu.tcl:584
+msgid "Query data (SQL select)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/menu.tcl:556 ../gui/tcltk/gis.m/gmmenu.tcl:585
+msgid "Execute SQL statement"
+msgstr "Izpildīt SQL izteiksmi"
+
+#: ../gui/tcltk/d.m/menu.tcl:559 ../gui/tcltk/gis.m/gmmenu.tcl:588
+msgid "&Help"
+msgstr "&Palīdzība"
+
+#: ../gui/tcltk/d.m/menu.tcl:560 ../gui/tcltk/gis.m/gmmenu.tcl:589
+msgid "GRASS help"
+msgstr "GRASS palīdzība"
+
+#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:590
+msgid "GIS Manager &help"
+msgstr "GIS menedžera &palīdzība"
+
+#: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:590
+msgid "GIS Manager help"
+msgstr "GIS menedžera palīdzība"
+
+#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:591
+msgid "About &GRASS"
+msgstr "Par &GRASS"
+
+#: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:591
+msgid "About GRASS"
+msgstr "Par GRASS"
+
+#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:592
+msgid "About &System"
+msgstr "Par &sistēmu"
+
+#: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:592
+msgid "About System"
+msgstr "Par sistēmu"
+
+#: ../gui/tcltk/d.m/menu.tcl:571 ../gui/tcltk/gis.m/gmmenu.tcl:600
+msgid "&Xtns"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:33
+msgid "x0"
+msgstr "x0"
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:35
+msgid "Start/select display monitor x0"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:38
+msgid "x1"
+msgstr "x1"
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:40
+msgid "Start/select display monitor x1"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:43
+msgid "x2"
+msgstr "x2"
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:45
+msgid "Start/select display monitor x2"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:48
+msgid "x3"
+msgstr "x3"
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:50
+msgid "Start/select display monitor x3"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:53
+msgid "x4"
+msgstr "x4"
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:55
+msgid "Start/select display monitor x4"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:58
+msgid "x5"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:60
+msgid "Start/select display monitor x5"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:63
+msgid "x6"
+msgstr ""
+
+#: ../gui/tcltk/d.m/monitorsel.tcl:65
+msgid "Start/select display monitor x6"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:169
+msgid "Paper format"
+msgstr "Papīra formāts"
+
+#: ../gui/tcltk/d.m/print.tcl:180
+msgid "Custom"
+msgstr "Pielāgots"
+
+#: ../gui/tcltk/d.m/print.tcl:181 ../gui/tcltk/gis.m/mapprint.tcl:266
+msgid "width:"
+msgstr "platums:"
+
+#: ../gui/tcltk/d.m/print.tcl:184
+msgid "height:"
+msgstr "augstums:"
+
+#: ../gui/tcltk/d.m/print.tcl:191
+msgid "left:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:193
+#, fuzzy
+msgid "right:"
+msgstr "augstums:"
+
+#: ../gui/tcltk/d.m/print.tcl:195
+msgid "top:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:197
+msgid "bottom:"
+msgstr "apakša:"
+
+#: ../gui/tcltk/d.m/print.tcl:210
+msgid "PS file:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:212 ../gui/tcltk/d.m/print.tcl:223
+#: ../gui/tcltk/d.m/print.tcl:234 ../gui/tcltk/d.m/print.tcl:261
+#: ../gui/tcltk/gis.m/mapprint.tcl:330 ../gui/tcltk/gis.m/mapprint.tcl:342
+msgid "Browse"
+msgstr "Pārlūkot"
+
+#: ../gui/tcltk/d.m/print.tcl:221
+msgid "PDF file:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:232
+msgid "PNG file:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:241
+msgid "PNG file resolution (points/inch):"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:250
+msgid "Printer:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:259
+msgid "Script file:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:279 ../gui/tcltk/gis.m/mapprint.tcl:356
+msgid "Print"
+msgstr ""
+
+#: ../gui/tcltk/d.m/print.tcl:280
+msgid "Preview"
+msgstr ""
+
+#: ../gui/tcltk/d.m/raster.tcl:85
+msgid "Raster name:"
+msgstr "Rastra nosaukums:"
+
+#: ../gui/tcltk/d.m/raster.tcl:108
+msgid "show legend in selected display monitor"
+msgstr ""
+
+#: ../gui/tcltk/d.m/raster.tcl:111 ../gui/tcltk/d.m/raster.tcl:136
+msgid " thin legend by "
+msgstr ""
+
+#: ../gui/tcltk/d.m/raster.tcl:118
+msgid "Raster to drape over 1st map:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/raster.tcl:132
+msgid "show legend for drape map in monitor"
+msgstr ""
+
+#: ../gui/tcltk/d.m/raster.tcl:143 ../gui/tcltk/d.m/rgbhis.tcl:147
+#: ../gui/tcltk/gis.m/raster.tcl:205 ../gui/tcltk/gis.m/rgbhis.tcl:205
+msgid "overlay maps from other layers (transparent null value cells)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:96
+msgid "red (RGB) or hue (HIS):"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:107
+msgid "green (RGB) or intensity (HIS):"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:118
+msgid "blue (RGB) or saturation (HIS):"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:128 ../gui/tcltk/gis.m/rgbhis.tcl:186
+msgid "display maps as RGB"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:134 ../gui/tcltk/gis.m/rgbhis.tcl:192
+msgid "Help for RGB"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:135 ../gui/tcltk/gis.m/rgbhis.tcl:193
+msgid "display maps as HIS"
+msgstr ""
+
+#: ../gui/tcltk/d.m/rgbhis.tcl:141 ../gui/tcltk/gis.m/rgbhis.tcl:199
+msgid "Help for HIS"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:116 ../gui/tcltk/gis.m/thematic.tcl:229
+#: ../gui/tcltk/gis.m/vector.tcl:299
+msgid "Vector map:"
+msgstr "Vektoru karte:"
+
+#: ../gui/tcltk/d.m/thematic.tcl:131 ../gui/tcltk/gis.m/thematic.tcl:247
+msgid "    vector type"
+msgstr " vektoru tips"
+
+#: ../gui/tcltk/d.m/thematic.tcl:150 ../gui/tcltk/d.m/vector.tcl:348
+#: ../gui/tcltk/gis.m/thematic.tcl:264 ../gui/tcltk/gis.m/vector.tcl:460
+msgid "    show attribute columns"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:156 ../gui/tcltk/d.m/vector.tcl:354
+msgid "     show data"
+msgstr " parādīt datus"
+
+#: ../gui/tcltk/d.m/thematic.tcl:157 ../gui/tcltk/d.m/vector.tcl:355
+#: ../gui/tcltk/gis.m/chart.tcl:215 ../gui/tcltk/gis.m/thematic.tcl:271
+#: ../gui/tcltk/gis.m/vector.tcl:467
+msgid "data"
+msgstr "dati"
+
+#: ../gui/tcltk/d.m/thematic.tcl:161 ../gui/tcltk/d.m/vector.tcl:359
+#: ../gui/tcltk/gis.m/chart.tcl:219 ../gui/tcltk/gis.m/thematic.tcl:275
+#: ../gui/tcltk/gis.m/vector.tcl:471
+msgid "Show data"
+msgstr "Parādīt datus"
+
+#: ../gui/tcltk/d.m/thematic.tcl:168 ../gui/tcltk/gis.m/thematic.tcl:281
+msgid "Thematic map: type"
+msgstr "Tematiska karte: tips"
+
+#: ../gui/tcltk/d.m/thematic.tcl:171 ../gui/tcltk/gis.m/thematic.tcl:284
+msgid " map by"
+msgstr " karti pēc"
+
+#: ../gui/tcltk/d.m/thematic.tcl:205 ../gui/tcltk/d.m/vector.tcl:245
+#: ../gui/tcltk/gis.m/thematic.tcl:316 ../gui/tcltk/gis.m/vector.tcl:350
+msgid "icon"
+msgstr "ikona"
+
+#: ../gui/tcltk/d.m/thematic.tcl:210 ../gui/tcltk/gis.m/thematic.tcl:320
+msgid "point color"
+msgstr "punktu krāsa"
+
+#: ../gui/tcltk/d.m/thematic.tcl:212 ../gui/tcltk/gis.m/thematic.tcl:322
+msgid "line color"
+msgstr "līnijas krāsa"
+
+#: ../gui/tcltk/d.m/thematic.tcl:230
+msgid "Graduate colors: preset color schemes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:243 ../gui/tcltk/gis.m/thematic.tcl:354
+msgid "draw border"
+msgstr "zīmēt robežas"
+
+#: ../gui/tcltk/d.m/thematic.tcl:250 ../gui/tcltk/gis.m/thematic.tcl:361
+msgid "save thematic colors to GRASSRGB column of vector file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:258
+msgid "create graphic legend"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:260 ../gui/tcltk/gis.m/thematic.tcl:409
+msgid "use math notation in legend"
+msgstr ""
+
+#: ../gui/tcltk/d.m/thematic.tcl:267
+msgid "    select monitor for legend"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:22
+msgid "Display active layers in current region"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:28
+msgid "Display active layers in default region"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:34
+#, fuzzy
+msgid "Display active layers in saved region setting"
+msgstr "Parādīt reģiona parametrus"
+
+#: ../gui/tcltk/d.m/tool1.tcl:40 ../gui/tcltk/gis.m/georecttool.tcl:47
+#: ../gui/tcltk/gis.m/maptool.tcl:62
+msgid "Erase to white"
+msgstr "Dzēst uz baltu"
+
+#: ../gui/tcltk/d.m/tool1.tcl:54 ../gui/tcltk/gis.m/gmtool2.tcl:111
+msgid "NVIZ - n dimensional visualization"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:60 ../gui/tcltk/gis.m/gmtool2.tcl:118
+msgid "Fly through path for NVIZ"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:66 ../gui/tcltk/gis.m/gmtool2.tcl:125
+msgid "Animate raster map series"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:81
+msgid "Zoom"
+msgstr "Tuvināt"
+
+#: ../gui/tcltk/d.m/tool1.tcl:87 ../gui/tcltk/gis.m/georecttool.tcl:144
+#: ../gui/tcltk/gis.m/maptool.tcl:159
+msgid "Return to previous zoom"
+msgstr "Atgriezties uz iepriekšējo tuvinājumu"
+
+#: ../gui/tcltk/d.m/tool1.tcl:93
+msgid "Pan and recenter"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:99
+msgid "Query map (select map first)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:104
+msgid "Measure lengths and areas"
+msgstr "Mērīt attālumus un laukumus"
+
+#: ../gui/tcltk/d.m/tool1.tcl:109
+msgid "Geographical position"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:121 ../gui/tcltk/gis.m/gmtool2.tcl:84
+msgid "Create new workspace file (erase current workspace settings first)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:124 ../gui/tcltk/gis.m/gmtool2.tcl:90
+msgid "Open existing workspace file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:127 ../gui/tcltk/gis.m/gmtool2.tcl:96
+msgid "Save workspace file"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool1.tcl:130
+msgid "Print raster & vector maps using ps.map"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:22 ../gui/tcltk/gis.m/gmtool1.tcl:42
+msgid "Add raster layer"
+msgstr "Pievienot rastra slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:28 ../gui/tcltk/gis.m/gmtool1.tcl:49
+msgid "Add RGB or HIS layer"
+msgstr "Pievienot RGB vai HIS slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:33
+msgid "Add legend"
+msgstr "Pievienot leģendu"
+
+#: ../gui/tcltk/d.m/tool2.tcl:48 ../gui/tcltk/gis.m/gmtool1.tcl:92
+msgid "Add vector layer"
+msgstr "Pievienot vektoru slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:54 ../gui/tcltk/gis.m/gmtool1.tcl:108
+msgid "Add thematic charts layer"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:62 ../gui/tcltk/gis.m/gmtool1.tcl:99
+msgid "Add thematic map layer"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:76
+msgid "Add paint labels layer (from directory paint/labels)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:82
+msgid "Add freetype text layer"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:88 ../gui/tcltk/gis.m/gmtool1.tcl:128
+msgid "Add text layer"
+msgstr "Pievienot teksta slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:100 ../gui/tcltk/gis.m/gmtool2.tcl:26
+msgid "Scalebar and north arrow"
+msgstr "Mērogjosla un ziemeļu bulta"
+
+#: ../gui/tcltk/d.m/tool2.tcl:105 ../gui/tcltk/gis.m/gmtool2.tcl:32
+msgid "Overlay grids and lines"
+msgstr "Pārklāt režģus un līnijas"
+
+#: ../gui/tcltk/d.m/tool2.tcl:110
+msgid "Create or select display frame"
+msgstr ""
+
+#: ../gui/tcltk/d.m/tool2.tcl:116 ../gui/tcltk/gis.m/gmtool2.tcl:39
+msgid "Add command layer"
+msgstr "Pievienot komandu slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:130 ../gui/tcltk/gis.m/gmtool2.tcl:59
+msgid "Add group"
+msgstr "Pievienot grupu"
+
+#: ../gui/tcltk/d.m/tool2.tcl:135 ../gui/tcltk/gis.m/gmtool2.tcl:65
+msgid "Duplicate Layer"
+msgstr "Duplicēt slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:139 ../gui/tcltk/gis.m/gmtool2.tcl:70
+msgid "Delete layer"
+msgstr "Dzēst slāni"
+
+#: ../gui/tcltk/d.m/tool2.tcl:153 ../gui/tcltk/gis.m/gmtool2.tcl:141
+msgid "Digitize map (select or create new map first)"
+msgstr "Digitizēt karti (izvēlieties vai izveidojiet jaunu vispirms)"
+
+#: ../gui/tcltk/d.m/vector.tcl:197
+msgid "Vector name:"
+msgstr "Vektora nosaukums:"
+
+#: ../gui/tcltk/d.m/vector.tcl:212
+msgid "Display:"
+msgstr "Attēlot:"
+
+#: ../gui/tcltk/d.m/vector.tcl:213 ../gui/tcltk/gis.m/vector.tcl:318
+msgid "shapes"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:215 ../gui/tcltk/gis.m/vector.tcl:320
+msgid "categories"
+msgstr "kategorijas"
+
+#: ../gui/tcltk/d.m/vector.tcl:217 ../gui/tcltk/gis.m/vector.tcl:322
+msgid "topology"
+msgstr "topoloģija"
+
+#: ../gui/tcltk/d.m/vector.tcl:219 ../gui/tcltk/gis.m/vector.tcl:324
+msgid "line directions"
+msgstr "līniju virziens"
+
+#: ../gui/tcltk/d.m/vector.tcl:226
+msgid "            "
+msgstr "            "
+
+#: ../gui/tcltk/d.m/vector.tcl:237 ../gui/tcltk/gis.m/vector.tcl:342
+msgid "faces"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:259 ../gui/tcltk/gis.m/vector.tcl:362
+msgid "Draw lines:"
+msgstr "Zīmēt līnijas: "
+
+#: ../gui/tcltk/d.m/vector.tcl:262 ../gui/tcltk/d.m/vector.tcl:278
+#: ../gui/tcltk/d.m/vector.tcl:294 ../gui/tcltk/gis.m/vector.tcl:365
+#: ../gui/tcltk/gis.m/vector.tcl:381
+msgid "color"
+msgstr "krāsa"
+
+#: ../gui/tcltk/d.m/vector.tcl:275 ../gui/tcltk/gis.m/vector.tcl:378
+msgid "Fill areas:"
+msgstr "Aizpildīt laukumus:"
+
+#: ../gui/tcltk/d.m/vector.tcl:281
+msgid "  "
+msgstr "  "
+
+#: ../gui/tcltk/d.m/vector.tcl:282 ../gui/tcltk/gis.m/vector.tcl:385
+msgid "random colors"
+msgstr "gadījuma krāsas"
+
+#: ../gui/tcltk/d.m/vector.tcl:284 ../gui/tcltk/gis.m/vector.tcl:387
+msgid "GRASSRGB column colors"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:291 ../gui/tcltk/gis.m/vector.tcl:394
+msgid "Label vectors:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:292 ../gui/tcltk/gis.m/vector.tcl:395
+msgid "label"
+msgstr "birka"
+
+#: ../gui/tcltk/d.m/vector.tcl:297 ../gui/tcltk/gis.m/vector.tcl:354
+msgid " size"
+msgstr " izmērs"
+
+#: ../gui/tcltk/d.m/vector.tcl:299 ../gui/tcltk/gis.m/vector.tcl:402
+msgid "text size"
+msgstr "teksta izmērs"
+
+#: ../gui/tcltk/d.m/vector.tcl:301
+msgid " align with pt"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:315 ../gui/tcltk/gis.m/vector.tcl:423
+msgid "     layer for labels"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:318 ../gui/tcltk/gis.m/vector.tcl:425
+msgid " attribute col for labels"
+msgstr " atribūtu kolona priekš birkām"
+
+#: ../gui/tcltk/d.m/vector.tcl:326
+msgid "Query vectors: "
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:327 ../gui/tcltk/gis.m/vector.tcl:433
+msgid "layer for query"
+msgstr "slānis vaicājumam"
+
+#: ../gui/tcltk/d.m/vector.tcl:330
+msgid " query cat values"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:333
+msgid "SQL query"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:340
+msgid "     SQL where statement"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:366
+msgid "Mouse query setup:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:367
+msgid "edit attributes (form mode)"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:369
+msgid "results as text in terminal"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:376 ../gui/tcltk/gis.m/vector.tcl:499
+#, fuzzy
+msgid "Display when avg. region dimension is"
+msgstr "Parādīt reģiona parametrus"
+
+#: ../gui/tcltk/d.m/vector.tcl:386
+msgid "Line width for ps.map print output:"
+msgstr ""
+
+#: ../gui/tcltk/d.m/vector.tcl:388
+msgid "Line width used for printing"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/barscale.tcl:134
+msgid "Display scale and north arrow"
+msgstr "Attēlot mērogu un ziemeļu bultu"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:141 ../gui/tcltk/gis.m/chart.tcl:162
+#: ../gui/tcltk/gis.m/cmd.tcl:103 ../gui/tcltk/gis.m/dtext.tcl:196
+#: ../gui/tcltk/gis.m/gridline.tcl:126 ../gui/tcltk/gis.m/histogram.tcl:123
+#: ../gui/tcltk/gis.m/labels.tcl:116 ../gui/tcltk/gis.m/legend.tcl:154
+#: ../gui/tcltk/gis.m/rastarrows.tcl:145 ../gui/tcltk/gis.m/raster.tcl:148
+#: ../gui/tcltk/gis.m/rastnums.tcl:127 ../gui/tcltk/gis.m/rgbhis.tcl:140
+#: ../gui/tcltk/gis.m/thematic.tcl:219 ../gui/tcltk/gis.m/vector.tcl:289
+msgid "Opaque "
+msgstr "Necaurspīdīgs"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:145 ../gui/tcltk/gis.m/chart.tcl:166
+#: ../gui/tcltk/gis.m/cmd.tcl:107 ../gui/tcltk/gis.m/dtext.tcl:200
+#: ../gui/tcltk/gis.m/gridline.tcl:130 ../gui/tcltk/gis.m/histogram.tcl:127
+#: ../gui/tcltk/gis.m/labels.tcl:120 ../gui/tcltk/gis.m/legend.tcl:158
+#: ../gui/tcltk/gis.m/rastarrows.tcl:149 ../gui/tcltk/gis.m/raster.tcl:152
+#: ../gui/tcltk/gis.m/rastnums.tcl:131 ../gui/tcltk/gis.m/rgbhis.tcl:144
+#: ../gui/tcltk/gis.m/thematic.tcl:223 ../gui/tcltk/gis.m/vector.tcl:293
+msgid " Transparent"
+msgstr " Caurspīdīgs"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:151
+#, tcl-format
+msgid "Scale placement: 0-100% from top left of display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/barscale.tcl:157
+msgid "\tenter x,y of scale/arrow upper left corner"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/barscale.tcl:160 ../gui/tcltk/gis.m/dtext.tcl:227
+#: ../gui/tcltk/gis.m/legend.tcl:190 ../gui/tcltk/gis.m/maptext.tcl:148
+msgid "place with mouse"
+msgstr "novietot ar peli"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:168
+msgid "Scale appearance:  text color"
+msgstr "Mēroga izskats: teksta krāsa"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:181
+msgid "\tbackground color "
+msgstr "\tfona krāsa "
+
+#: ../gui/tcltk/gis.m/barscale.tcl:184
+msgid "transparent background"
+msgstr "caurspīdīgs fons"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:192
+msgid "display N. arrow only"
+msgstr "attēlot tikai Z bultu"
+
+#: ../gui/tcltk/gis.m/barscale.tcl:210
+msgid "line scale instead of bar"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:109
+msgid "Vector map for chart"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:112
+#, tcl-format
+msgid "chart for %s"
+msgstr "grafiks priekš %s"
+
+#: ../gui/tcltk/gis.m/chart.tcl:155
+msgid "Display pie and bar charts of attribute values at vector object locations"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:175
+msgid "vector map to chart"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:201
+msgid "Attributes to chart: attribute layer"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:208
+msgid "     show attribute columns"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:214 ../gui/tcltk/gis.m/vector.tcl:466
+msgid "   show attribute data"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:225
+msgid "\tcolumns to chart (col1,col2,...)  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:232
+msgid "\tcolors for columns (clr1,clr2,...)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:239
+msgid "\tcolumn for variable chart size"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:241
+msgid "  scale factor"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:251
+msgid "\tfixed chart size (if size column not used)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/chart.tcl:258
+#, fuzzy
+msgid "\tchart outline color:"
+msgstr " līnijas krāsa"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:133 ../gui/tcltk/gis.m/dtext.tcl:136
+msgid "Select font file"
+msgstr "Izvēlieties fontu failu"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:189
+msgid "Display text"
+msgstr "Attēlot tekstu"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:206
+msgid "Text to display: "
+msgstr "Attēlojamais teksts: "
+
+#: ../gui/tcltk/gis.m/dtext.tcl:218 ../gui/tcltk/gis.m/maptext.tcl:138
+msgid "Text placement: x,y coordinates (from upper left) "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:224 ../gui/tcltk/gis.m/maptext.tcl:145
+msgid "     coordinate type for text placement "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:235 ../gui/tcltk/gis.m/maptext.tcl:156
+msgid "     align text with coordinate point  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:244
+msgid "     text rotation (degrees)"
+msgstr "  teksta rotācija (grādos)"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:253
+msgid "Text options: font type"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:255
+msgid "GRASS"
+msgstr "GRASS"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:256
+msgid "GRASS stroke fonts"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:259
+msgid "X11 TrueType"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:260
+msgid "TrueType fonts from x11 directory"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:262
+msgid "Other"
+msgstr "Cits"
+
+#: ../gui/tcltk/gis.m/dtext.tcl:263
+msgid "Custom font path"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:269
+msgid "     font "
+msgstr "    fonts "
+
+#: ../gui/tcltk/gis.m/dtext.tcl:272
+msgid "select font for text (default is GRASS romans)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/dtext.tcl:286
+msgid "     text height in pixels "
+msgstr " teksta augstums pikseļos "
+
+#: ../gui/tcltk/gis.m/dtext.tcl:288
+msgid "  line spacing"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/frames.tcl:102
+msgid "Divide map display into frames for displaying multiple maps"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/frames.tcl:113
+msgid "remove all frames   "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/frames.tcl:125
+msgid "Frame name (optional): "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/frames.tcl:132
+#, tcl-format
+msgid "Set frame borders at 0-100% from lower left corner of display "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/frames.tcl:138
+msgid "     set borders (bottom,top,left,right): "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:427
+msgid "Create/replace vector group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:453
+msgid "group name"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:455
+msgid "Select existing vector group or name new group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:465
+msgid "vector"
+msgstr "vektors"
+
+#: ../gui/tcltk/gis.m/georect.tcl:467
+msgid "Select xy vector(s) for group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:477
+#, fuzzy
+msgid "Vector group"
+msgstr "Vektoru karte"
+
+#: ../gui/tcltk/gis.m/georect.tcl:607
+msgid "Georeference raster"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:611
+msgid "Georeference vector"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:618
+msgid "1. Select mapset"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:620
+msgid "Mapset of xy raster group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:630
+msgid "2. Create/edit group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:632
+msgid "Create/edit group (rasters or vectors to georectify)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:640
+msgid "3. Select group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:642
+msgid "Select existing group to georectify"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:652
+#, fuzzy
+msgid "4. Select map"
+msgstr "Vektoru karte"
+
+#: ../gui/tcltk/gis.m/georect.tcl:654
+msgid ""
+"Select non-georectified raster or vector to display for marking ground "
+"control points"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:664
+msgid "5. Start georectifying"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:666
+msgid "Start georectifying"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:674 ../gui/tcltk/gis.m/mapcanvas.tcl:810
+#: ../lib/gtcltk/select.tcl:178 ../lib/init/epsg_option.tcl:167
+#: ../lib/init/epsg_option.tcl:369 ../lib/init/file_option.tcl:114
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: ../gui/tcltk/gis.m/georect.tcl:676
+msgid "Cancel georectification"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:973
+msgid "Select rectification method for rasters"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:976
+msgid "1st order"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:977
+msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:982
+msgid "2nd order"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:983
+msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:987
+msgid "3rd order"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:988
+msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:995
+msgid "Use"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:997
+msgid "xy coordinates"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:999
+msgid "geographic coordinates"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1001
+msgid "forward error"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1003
+msgid "backward error"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1044
+msgid "Manage ground control points (GCPs)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1069
+#, fuzzy
+msgid "save GCPs to POINTS file"
+msgstr "Saglabāt profilu EPS failā"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1076
+msgid "clear all unchecked GCP entries"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1083
+#, fuzzy
+msgid "calculate RMS error"
+msgstr "Karšu kalkulators"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1090
+msgid "Rectify maps in group"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georect.tcl:1093
+msgid "Quit"
+msgstr "Iziet"
+
+#: ../gui/tcltk/gis.m/georect.tcl:1097
+msgid "Exit georectifier"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:40 ../gui/tcltk/gis.m/maptool.tcl:41
+msgid "Display active layers"
+msgstr "Attēlot aktīvos slāņus"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:73
+msgid "Set ground control points"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:92 ../gui/tcltk/gis.m/maptool.tcl:107
+msgid "Zoom In"
+msgstr "Tuvināt"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:111 ../gui/tcltk/gis.m/maptool.tcl:126
+msgid "Zoom Out"
+msgstr "Tālināt"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:130 ../gui/tcltk/gis.m/maptool.tcl:145
+#: ../vector/v.digit/toolbox.tcl:161
+msgid "Pan"
+msgstr "Pārvietot"
+
+#: ../gui/tcltk/gis.m/georecttool.tcl:151
+msgid "Zoom to map"
+msgstr "Tuvināt līdz kartei"
+
+#: ../gui/tcltk/gis.m/gm.tcl:241
+msgid "Creating MainFrame..."
+msgstr "Galvenā rāmja veidošana..."
+
+#: ../gui/tcltk/gis.m/gm.tcl:283
+msgid "Welcome to GRASS GIS"
+msgstr "Laipni lūdzam GRASS GIS"
+
+#: ../gui/tcltk/gis.m/gm.tcl:316
+#, tcl-format
+msgid "Map Display %d"
+msgstr "Kartes displejs %d"
+
+#: ../gui/tcltk/gis.m/gm.tcl:341
+#, tcl-format
+msgid "GRASS%s GIS Manager - %s"
+msgstr "GRASS%s GIS menedžeris - %s"
+
+#: ../gui/tcltk/gis.m/gm.tcl:412 ../gui/tcltk/gis.m/gm.tcl:442
+msgid "Map Resource File"
+msgstr "Kartes resursu fails"
+
+#: ../gui/tcltk/gis.m/gm.tcl:413 ../gui/tcltk/gis.m/gm.tcl:444
+msgid "All Files"
+msgstr "Visi faili"
+
+#: ../gui/tcltk/gis.m/gm.tcl:417
+msgid "Open File"
+msgstr "Atvērt failu"
+
+#: ../gui/tcltk/gis.m/gm.tcl:443
+msgid "DM Resource File"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gm.tcl:447 ../lib/gis/gui.tcl:219
+msgid "Save File"
+msgstr "Saglabāt failu"
+
+#: ../gui/tcltk/gis.m/gm.tcl:495
+#, tcl-format
+msgid "GRASS%s GIS Manager - %s %s"
+msgstr "GRASS%s GIS menedžeris - %s %s"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:85
+msgid "Workspace"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:155
+msgid "SVG file"
+msgstr "SVG fails"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:181
+msgid "Sites (GRASS 5) to vector"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:185
+msgid "Georectify"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:187
+msgid "Convert between bearing/distance and coordinates"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:189
+msgid "Create cartographic PostScript plot"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:237
+msgid "Update raster map statistics"
+msgstr "Atjaunot rastra kartes statistiku"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:310
+msgid "Landscape patch analysis"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:311
+msgid "Configure and create patch map for analysis"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:313
+msgid "Calculate contrast weighted edge density index"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:314 ../gui/tcltk/gis.m/gmmenu.tcl:322
+msgid "Calculate dominance's diversity index"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:315
+msgid "Calculate edge density index using a 4 neighbour algorithm"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:316
+msgid "Calculate mean patch size index using a 4 neighbour algorithm"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:317
+msgid "Calculate coefficient of variation of patch area"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:318
+msgid "Calculate range of patch area size"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:319
+msgid "Calculate standard deviation of patch area"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:320
+msgid "Calculate patch density index using a 4 neighbour algorithm"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:321
+msgid "Calculate patch number index using a 4 neighbour algorithm"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:323
+msgid "Calculate Shannon's diversity index"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:324
+msgid "Calculate shape index"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:325
+msgid "Calculate Simpson's diversity index"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:363
+msgid ""
+"Bicubic and bilinear interpolation with Tykhonov regularization from vector "
+"points"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:417
+msgid "Create and add new attribute table to vector map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:419
+msgid "Reconnect vector map to attribute database"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:420
+msgid "Remove existing table for vector map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:430
+msgid "Lidar object filtering and detection"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:431
+msgid "Detect object edges in LIdar data"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:432
+msgid "Detect interior of objects in Lidar data"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:433
+msgid "Correct and reclassify objects detected in Lidar data"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:484
+msgid "Remove outliers from vector point set"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:28
+msgid "Start new map display monitor"
+msgstr "Startēt jaunu kartes displeja monitoru"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:56
+msgid "Add histogram layer"
+msgstr "Pievienot histogrammu slāni"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:63
+msgid "Add cell values layer"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:70
+msgid "Add directional arrows layer"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:76
+msgid "Add raster legend layer"
+msgstr "Pievienot rastra leģendas slāni"
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:121
+msgid "Add raster labels layer (using v.labels file)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:135
+msgid "Add postscript labels layer (using v.labels file)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtool1.tcl:142
+msgid "Add postscript text layer"
+msgstr "Pievienot PostScript teksta slāni"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:69
+#, tcl-format
+msgid "Map Layers for Display %s"
+msgstr "Kartes slāņi displejam %s"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:305
+msgid "You must open a display before adding map layers"
+msgstr "Jums ir jāstartē displejs pirms kartes slāņu pievienošanas"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:480 ../gui/tcltk/gis.m/gmtree.tcl:629
+#: ../gui/tcltk/gis.m/gmtree.tcl:1144 ../gui/tcltk/gis.m/gmtree.tcl:1150
+msgid "No layer selected"
+msgstr "Neviens slānis nav izvēlēts"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:724
+#, tcl-format
+msgid ""
+"Could not open file for writing.\n"
+"%s"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:861
+msgid "Loading layers..."
+msgstr "Slāņu ielāde..."
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:974
+#, tcl-format
+msgid "Can't open %s - bad file format"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1044
+msgid "Layers loaded"
+msgstr "Slāņi ielādēti"
+
+#: ../gui/tcltk/gis.m/gmtree.tcl:1165
+msgid "You can digitize raster or vector maps only"
+msgstr "Jūs varat digitizēt tikai rastra un vektoru kartes"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:119
+msgid "Display grid lines, and geodesic lines or rhumblines"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:136
+msgid "Grid options: "
+msgstr "Režģa opcijas: "
+
+#: ../gui/tcltk/gis.m/gridline.tcl:138
+msgid "geodetic grid  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:140
+#, fuzzy
+msgid " grid & text color   "
+msgstr " teksta krāsa"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:154
+msgid "draw border text  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:156
+#, fuzzy
+msgid " border color"
+msgstr "  krāsa"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:162
+msgid "    grid size (map units)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:164
+msgid " grid origin (east, north)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:170
+msgid "Geodesic and rhumblines for latlong locations only"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/gridline.tcl:183 ../gui/tcltk/gis.m/gridline.tcl:210
+msgid " line color"
+msgstr " līnijas krāsa"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:187
+msgid " text color"
+msgstr " teksta krāsa"
+
+#: ../gui/tcltk/gis.m/gridline.tcl:196 ../gui/tcltk/gis.m/gridline.tcl:219
+msgid "     line endpoints (x1,y1,x2,y2)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/histogram.tcl:101
+msgid "Raster map for histogram"
+msgstr "Rastra karte priekš histogrammas "
+
+#: ../gui/tcltk/gis.m/histogram.tcl:104
+#, tcl-format
+msgid "histogram of %s"
+msgstr "%s histogramma"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:116
+msgid "Draw histogram of values from raster map or image"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/histogram.tcl:133
+msgid "Raster to histogram: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/histogram.tcl:149
+msgid "Graph style"
+msgstr "Grafika stils"
+
+#: ../gui/tcltk/gis.m/histogram.tcl:153
+msgid "Histogram frame and text color"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/histogram.tcl:163
+msgid "Steps/bins for values (fp maps only)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/histogram.tcl:167
+msgid "include null values"
+msgstr "iekļaut NULL vērtības"
+
+#: ../gui/tcltk/gis.m/labels.tcl:94
+msgid "Labels for vectors"
+msgstr "Vektoru birkas"
+
+#: ../gui/tcltk/gis.m/labels.tcl:109
+msgid "Display labels for vector objects (created with v.label)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/labels.tcl:126 ../gui/tcltk/gis.m/maplabels.tcl:162
+msgid "Labels file:"
+msgstr "Birku fails:"
+
+#: ../gui/tcltk/gis.m/labels.tcl:129 ../gui/tcltk/gis.m/maplabels.tcl:165
+msgid "labels file to display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/labels.tcl:145
+msgid "min"
+msgstr "min"
+
+#: ../gui/tcltk/gis.m/labels.tcl:147
+msgid "max"
+msgstr "maks"
+
+#: ../gui/tcltk/gis.m/labels.tcl:162 ../gui/tcltk/gis.m/maplabels.tcl:269
+msgid "Launch v.label to create labels file"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/labels.tcl:163 ../gui/tcltk/gis.m/maplabels.tcl:270
+msgid "v.label"
+msgstr "v.label"
+
+#: ../gui/tcltk/gis.m/legend.tcl:131
+msgid "Raster map for legend"
+msgstr "Rastra karte priekš leģendas "
+
+#: ../gui/tcltk/gis.m/legend.tcl:134
+#, tcl-format
+msgid "legend for %s"
+msgstr "leģenda priekš %s"
+
+#: ../gui/tcltk/gis.m/legend.tcl:147
+msgid "Display legend for raster map using cat values and labels"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:164
+msgid "Raster map: "
+msgstr "Rastra karte: "
+
+#: ../gui/tcltk/gis.m/legend.tcl:181
+#, tcl-format
+msgid "Legend placement and size as 0-100% of display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:187
+#, tcl-format
+msgid "    x,y of lower left corner (in % from display top left)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:198
+msgid "    legend height "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:200
+#, tcl-format
+msgid "Legend height (% of display)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:201
+msgid "%  width"
+msgstr "% platums"
+
+#: ../gui/tcltk/gis.m/legend.tcl:203
+#, tcl-format
+msgid "Legend width (% of display)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:210
+msgid "Legend appearance: text color"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:220
+msgid "do not display labels"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:222
+msgid "do not display values"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:229
+msgid "    number of lines (0=display all):"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:231
+#, fuzzy
+msgid "Lines to display"
+msgstr "Attēlojamais teksts:"
+
+#: ../gui/tcltk/gis.m/legend.tcl:233
+msgid "invert legend"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:240
+msgid "    interval between categories (integer maps)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:242
+msgid "Thinning interval"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:249
+msgid "draw smooth gradient (fp maps)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:251
+msgid "with maximum of"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:253
+msgid "Maximum lines to display for gradient"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:260
+msgid "Display legend for subset of raster values"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:267
+msgid "skip categories with no labels"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:274
+msgid "    legend for only these categories     "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/legend.tcl:281
+msgid "    legend for only this range of values"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:486
+msgid "Max zoom in reached"
+msgstr "Sasniegts maksimālais tuvinājums"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:564
+msgid "please wait..."
+msgstr "lūdzu gaidīt..."
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:717 ../gui/tcltk/gis.m/mapcanvas.tcl:1655
+msgid "You have to select map layer first"
+msgstr "Jums vispirms ir jāizvēlas kartes slānis"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:717 ../gui/tcltk/gis.m/mapcanvas.tcl:1655
+msgid "No map layer selected"
+msgstr "Kartes slānis nav izvēlēts"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:788
+msgid "Save Region"
+msgstr "Saglabāt reģionu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:791
+msgid "Save current display geometry to named region"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:797
+msgid "Enter region name"
+msgstr "Ievadiet reģiona nosaukumu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:832
+#, tcl-format
+msgid ""
+"Region file %s already exists. \n"
+"Do you want to overwrite it?"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1002
+#, tcl-format
+msgid "Display: rows=%d cols=%d N-S res=%f E-W res=%f"
+msgstr "Displejs: rindas=%d kolonas=%d N-S izšķ=%f E-W izšķ=%f"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1146
+msgid "Drag or click mouse to zoom"
+msgstr "Velciet vai klikšķiniet ar peli lai tuvinātu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1148
+msgid "Drag or click mouse to unzoom"
+msgstr "Velciet vai klikšķiniet ar peli lai tālinātu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1382
+msgid "Drag with mouse to pan"
+msgstr "Velciet ar peli lai pārvietotu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1506
+msgid "Measurement"
+msgstr "Mērīšana"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1525
+msgid "Draw measure line with mouse"
+msgstr "Zīmējiet mērāmo līniju ar peli"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1610
+#, tcl-format
+msgid " --segment length = %f\n"
+msgstr " --segmenta garums = %f\n"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1611
+#, tcl-format
+msgid "cumulative length = %f\n"
+msgstr "kopējais garums = %f\n"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1626
+msgid "Click to query feature"
+msgstr "Klikšķiniet lai veiktu vaicājumu"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1692
+msgid "This layer does not suppor queries"
+msgstr "Šis slānis neatbalsta vaicājumus"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1692
+msgid "Not supported"
+msgstr "Nav atbalstīts"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1699
+msgid "You must select a map to query\n"
+msgstr "Jums ir jāizvēlas slānis kuru vaicāt\n"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:125 ../gui/tcltk/gis.m/maptext.tcl:78
+#: ../gui/tcltk/gis.m/thematic.tcl:139 ../gui/tcltk/gis.m/thematic.tcl:146
+#: ../gui/tcltk/gis.m/thematic.tcl:152
+msgid "This is font sample text."
+msgstr "Glāžšķūņa ŗūķeļi griež šķiņķi ar šķērēm."
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:125 ../gui/tcltk/gis.m/maptext.tcl:78
+msgid "Select label font"
+msgstr "Izvēlieties birku fontu"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:148
+msgid "Create postscript labels for vector objects from v.labels file"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:155
+msgid "  (for postscript eps, pdf, and print output only)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:174
+msgid "Override offset, alignment, and color settings in v.labels file: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:181
+msgid "Align label with vector object: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:190
+msgid "Offset label from vector object: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:191
+msgid "x offset"
+msgstr "x nobīde"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:194
+msgid "y offset"
+msgstr "y nobīde"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:202
+msgid "Justification: "
+msgstr "Izlīdzināšana: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:205
+msgid " Label line max length: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:212
+msgid "Enclose label in box: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:215
+msgid "Draw label background: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:219
+msgid "Background color:"
+msgstr "Fona krāsa: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:226
+#, fuzzy
+msgid "Draw box outline: "
+msgstr "Zīmēt līnijas: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:230
+msgid "Border width:"
+msgstr "Robežas platums: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:233
+msgid "Border color:"
+msgstr "Robežas krāsa: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:240
+msgid "Distance between label and enclosing box. Horizontal: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:243
+msgid " Vertical: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:251
+msgid "Font"
+msgstr "Fonts"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:254
+#, fuzzy
+msgid "select font for label"
+msgstr "Izvēlieties fontu failu"
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:256
+msgid "family:"
+msgstr "saime: "
+
+#: ../gui/tcltk/gis.m/maplabels.tcl:259
+msgid "size:"
+msgstr "izmērs: "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:240
+msgid "Postscript and LPR printing of map display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:254
+msgid "Preset paper type"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:265
+msgid "Custom paper size"
+msgstr "Pielāgots papīra izmērs"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:268
+msgid "  height:"
+msgstr "  augstums:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:275
+msgid "Margins  left:"
+msgstr "Maliņas  kreisā:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:277
+msgid " right:"
+msgstr " labā:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:279
+msgid " top:"
+msgstr " augšējā:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:281
+msgid " bottom:"
+msgstr " apakšējā:"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:289
+msgid "Resolution (dpi) for printing and PDF "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:307
+msgid "Send to LPR printer*"
+msgstr "Sūtīt uz LPR printeri*"
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:316
+msgid "Send to postscript device* "
+msgstr "Sūtīt uz PostScript iekārtu* "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:327
+msgid "Save to PDF file*              "
+msgstr "Saglabāt PDF failā * "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:340
+msgid "Save to EPS file               "
+msgstr "Saglabāt EPS failā "
+
+#: ../gui/tcltk/gis.m/mapprint.tcl:348
+msgid "*requires ghostscript to be installed and in path"
+msgstr "* nepieciešams ghostscript"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:124
+msgid ""
+"Create postscript text object (for postscript eps, pdf, and print output "
+"only)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptext.tcl:131
+msgid "Text to display:"
+msgstr "Attēlojamais teksts:"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:165
+msgid "     justification"
+msgstr "  izlīdzināšana"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:168
+msgid "  line width"
+msgstr " līnijas platums"
+
+#: ../gui/tcltk/gis.m/maptext.tcl:178
+msgid "select font for text"
+msgstr "izvēlieties teksta fontu"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:48
+msgid "Redraw all layers"
+msgstr "Pārzīmēt visus slāņus"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:55
+msgid "Start NVIZ using active layers in current region"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:88
+msgid "Pointer"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:166
+msgid "Zoom to..."
+msgstr "Tuvināt līdz..."
+
+#: ../gui/tcltk/gis.m/maptool.tcl:241
+msgid "Measure"
+msgstr "Mērīt"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:248
+msgid "Create profile of raster map"
+msgstr "Profilēt rastra karti"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:265
+msgid "Print raster & vector maps to eps file"
+msgstr "Drukāt rastra un vektoru kartes uz EPS failu"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:272
+msgid "Export display to graphics file"
+msgstr "Eksportēt displeja saturu uz attēla failu"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:319
+msgid "Constrain map to region geometry"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/maptool.tcl:338
+msgid "Map fills display window"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/profile.tcl:108
+msgid ""
+"Select raster map to profile.\n"
+"Currently selected raster is default."
+msgstr ""
+"Izvēlieties profilējamo rastru. \n"
+"Šobrīd izvēlētais rastrs ir noklusējuma."
+
+#: ../gui/tcltk/gis.m/profile.tcl:113
+msgid "Draw profile transect in map display"
+msgstr "Uzzīmēt profila līniju kartes logā"
+
+#: ../gui/tcltk/gis.m/profile.tcl:118
+msgid "Draw profile"
+msgstr "Zīmēt profilu"
+
+#: ../gui/tcltk/gis.m/profile.tcl:123
+msgid "Clear profile"
+msgstr "Notīrīt profilu"
+
+#: ../gui/tcltk/gis.m/profile.tcl:128
+msgid "Save profile to EPS file"
+msgstr "Saglabāt profilu EPS failā"
+
+#: ../gui/tcltk/gis.m/profile.tcl:421
+msgid "You must select a raster to profile"
+msgstr "Jums ir jāizvēlas profilējamā rastra karte"
+
+#: ../gui/tcltk/gis.m/profile.tcl:422
+msgid "No raster map selected"
+msgstr "Nav izvēlēta rastra karte"
+
+#: ../gui/tcltk/gis.m/profile.tcl:428
+msgid "You must draw a transect to profile"
+msgstr "Jums ir jāuzzīmē profila līnija"
+
+#: ../gui/tcltk/gis.m/profile.tcl:429
+msgid "No transect drawn"
+msgstr "Nav uzzīmēta profila līnija"
+
+#: ../gui/tcltk/gis.m/profile.tcl:434
+msgid "Please wait while profile elevations are calculated"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/profile.tcl:439
+msgid ""
+"Elevation range for selected raster is zero.\n"
+"No profile can be created."
+msgstr ""
+
+#: ../gui/tcltk/gis.m/profile.tcl:440
+msgid "Zero elevation range"
+msgstr "Augstumu starpība ir nulle"
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:104
+msgid "Aspect map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:107 ../gui/tcltk/gis.m/rastarrows.tcl:119
+#, tcl-format
+msgid "arrows for %s"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:116
+msgid "Slope/intensity map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:132
+msgid "Display arrows whose orientations are based on raster aspect map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:138
+msgid "  (optionally, arrow lengths are based on slope or intensity map)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:155
+msgid "Aspect map: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:171
+msgid "    aspect value type"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:179
+msgid "    draw arrows every Nth grid cell"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:187
+#, fuzzy
+msgid "    arrow color      "
+msgstr "            "
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:192
+msgid "     cell grid color"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:202
+msgid "    null value color"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:217
+msgid "Slope/intensity map: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastarrows.tcl:228
+msgid "    scale factor for computing arrow length"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:124
+msgid "Raster drape map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:141
+msgid "Display raster maps"
+msgstr "Attēlot rastra kartes"
+
+#: ../gui/tcltk/gis.m/raster.tcl:158
+msgid "Base map:\t"
+msgstr "Pamata karte: \t"
+
+#: ../gui/tcltk/gis.m/raster.tcl:161
+msgid "base raster map to display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:176
+msgid "\tvalues to display"
+msgstr "\t attēlojamās vērtības"
+
+#: ../gui/tcltk/gis.m/raster.tcl:183
+msgid "\tOptional color draping. Use base map for shading,"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:188
+msgid "\tdrape map for color in color relief map or data fusion"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:193
+msgid "\tdrape map:  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:196
+msgid "raster map to drape over base map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/raster.tcl:212
+msgid " Set background color (colored null value cells)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:102
+#, tcl-format
+msgid "cell values for %s"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:115
+msgid "Display cell values from raster map or image"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:121
+msgid "  (resolution must be 100x100 or less)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:137
+msgid "Raster to display: "
+msgstr "Attēlojamais rastrs: "
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:153
+msgid "Color for cell grid:       "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:163
+msgid "Color for cell values:   "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:168
+msgid "use raster colors for cell values"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rastnums.tcl:236
+msgid ""
+"Cell values can only be displayed\n"
+"for regions of < 10,000 cells"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:101
+msgid "Raster map for red or hue channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:104
+#, tcl-format
+msgid "RGB-HIS %s"
+msgstr "RGB-HIS %s"
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:111
+msgid "Raster map for green or intensity channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:119
+msgid "Raster map for blue or saturation channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:133
+msgid "Display 3 raster maps as red/green/blue or hue/intensity/saturation channels"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:150
+msgid "\tred (RGB) or hue (HIS):\t"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:153
+msgid "raster map for red or hue channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:162
+msgid "\tgreen (RGB) or intensity (HIS):"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:165
+msgid "raster map for green or intensity channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:174
+msgid "\tblue (RGB) or saturation (HIS):"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/rgbhis.tcl:177
+msgid "raster map for blue or saturation channel"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:44
+#: ../gui/tcltk/gis.m/runandoutput.tcl:107 ../lib/gis/gui.tcl:486
+msgid "Run"
+msgstr "Darbināt"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:108
+msgid "Run (Background)"
+msgstr "Darbināt (fonā)"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:109
+msgid "Run UI"
+msgstr "Darbināt UI"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:110
+msgid "Run in Xterm"
+msgstr "Darbināt iekš Xterm"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:113 ../lib/gis/gui.tcl:488
+msgid "Clear"
+msgstr "Notīrīt"
+
+#: ../gui/tcltk/gis.m/runandoutput.tcl:133
+msgid "Output - GIS.m"
+msgstr "Izvade - GIS.m"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:130
+#, tcl-format
+msgid "thematic map for %s"
+msgstr "tematiskā karte priekš %s"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:139 ../gui/tcltk/gis.m/thematic.tcl:146
+#: ../gui/tcltk/gis.m/thematic.tcl:152
+msgid "Select font"
+msgstr "Izvēlieties fontu"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:190 ../gui/tcltk/gis.m/vector.tcl:264
+msgid "Vector point symbol"
+msgstr "Vektoru punktu simbols"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:206
+msgid "Display vector maps thematically by graduate colors (all types)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:212
+msgid "  or by graduated sizes (points and lines)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:232
+msgid "vector for thematic mapping"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:250
+msgid " attribute layer"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:257
+msgid "    NUMERIC attribute column to use for thematic map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:270
+msgid "   show data"
+msgstr " parādīt datus"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:293
+msgid "    number of intervals to map (interval themes):"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:301
+msgid "    custom breakpoints (val val ...)  "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:308
+msgid "    query with SQL where clause   "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:315
+msgid "Graduated points & lines: "
+msgstr "Graduēti punkti un līnijas: "
+
+#: ../gui/tcltk/gis.m/thematic.tcl:329
+msgid "    size/min size (graduated pts/lines)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:331
+msgid "icon size/min size (graduated pts/lines)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:332
+msgid "max size (graduated pts)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:334
+msgid " max size (graduated pts/lines)"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:340
+msgid "Graduated colors: preset color schemes"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:350
+msgid "    custom color scheme - start color"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:352
+msgid " end color"
+msgstr " beigu krāsa"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:368
+msgid "Legend: title font "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:371
+msgid "title font for legend"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:375 ../gui/tcltk/gis.m/thematic.tcl:401
+msgid " font color"
+msgstr " fonta krāsa"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:382
+#, fuzzy
+msgid "    subtitle font    "
+msgstr "    fonts "
+
+#: ../gui/tcltk/gis.m/thematic.tcl:385
+msgid "subtitle font for legend"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:394
+msgid "    label font       "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:397
+msgid "label font for legend"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:416
+msgid "Name for ps.map instruction files"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/thematic.tcl:622
+#, tcl-format
+msgid "Legend for Map %d, %s"
+msgstr "Leģenda kartei %d, %s"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:645
+msgid "clear"
+msgstr "notīrīt"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:647
+msgid "Clear legend"
+msgstr "Notīrīt leģendu"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:648
+msgid "save"
+msgstr "saglabāt"
+
+#: ../gui/tcltk/gis.m/thematic.tcl:650
+msgid "Save legend to EPS file"
+msgstr "Saglabāt leģendu EPS failā"
+
+#: ../gui/tcltk/gis.m/vector.tcl:225
+msgid "Vector output map"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:282
+msgid "Display vector maps"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:302
+msgid "vector map to display"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:317
+msgid "Display: "
+msgstr "Attēlot:"
+
+#: ../gui/tcltk/gis.m/vector.tcl:349
+msgid "Point symbols:"
+msgstr "Punktu simbols:"
+
+#: ../gui/tcltk/gis.m/vector.tcl:356
+msgid "Icon size"
+msgstr "Ikonas izmērs"
+
+#: ../gui/tcltk/gis.m/vector.tcl:368
+msgid " width"
+msgstr " platums"
+
+#: ../gui/tcltk/gis.m/vector.tcl:370
+msgid "Line width"
+msgstr "Līnijas platums"
+
+#: ../gui/tcltk/gis.m/vector.tcl:372
+msgid "(pixels) "
+msgstr "(pikseļi) "
+
+#: ../gui/tcltk/gis.m/vector.tcl:397
+msgid "text color"
+msgstr "teksta krāsa"
+
+#: ../gui/tcltk/gis.m/vector.tcl:400
+msgid " text size"
+msgstr " teksta izmērs"
+
+#: ../gui/tcltk/gis.m/vector.tcl:410
+msgid "label part to align with vector point"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:414
+msgid " justification"
+msgstr " izlīdzināšana"
+
+#: ../gui/tcltk/gis.m/vector.tcl:432
+msgid "Query vectors for display: "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:441
+msgid "query cat values    "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:452
+msgid "use SQL query"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:478
+msgid "save displayed objects to new vector file "
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:480
+msgid "overwrite existing"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:487
+msgid "     new vector"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:491
+msgid "select existing vector for saving queried objects"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/vector.tcl:502
+msgid " or <"
+msgstr " vai <"
+
+#: ../lib/gis/gui.tcl:221
+msgid "Load File"
+msgstr "Ielādēt failu"
+
+#: ../lib/gis/gui.tcl:285 ../lib/gis/gui.tcl:463
+msgid "Output"
+msgstr "Izvade"
+
+#: ../lib/gis/gui.tcl:340 ../lib/gis/gui.tcl:397
+msgid "Options"
+msgstr "Opcijas"
+
+#: ../lib/gis/gui.tcl:447
+msgid "Copy"
+msgstr "Kopēt"
+
+#: ../lib/gis/gui.tcl:560
+msgid "required"
+msgstr "obligāts"
+
+#: ../lib/gis/gui.tcl:560
+msgid "optional"
+msgstr "neobligāts"
+
+#: ../lib/gis/gui.tcl:561
+msgid "multiple"
+msgstr "vairāki"
+
+#: ../lib/gtcltk/select.tcl:77
+msgid "Select item"
+msgstr "Izvēlieties vienību"
+
+#: ../lib/gtcltk/select.tcl:177
+msgid "Ok"
+msgstr "Labi"
+
+#: ../lib/init/epsg_option.tcl:93
+msgid "WARNING: cant get enviromental variable"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:94
+msgid ""
+"Warning: Unable to get enviromental variable GRASS_PROJSHARE. \n"
+"This is a GRASS installation error. \n"
+"Set enviromental variable GRASS_PROJSHARE to point to directory with Proj4 "
+"EPSG file. "
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:103
+msgid "Define location using EPSG projection codes"
+msgstr "Definē novietojumu izmantojot EPSG projekciju kodus"
+
+#: ../lib/init/epsg_option.tcl:122 ../lib/init/file_option.tcl:92
+msgid "Name of new location"
+msgstr "Jaunā novietojuma nosaukums"
+
+#: ../lib/init/epsg_option.tcl:125 ../lib/init/file_option.tcl:95
+msgid "Enter name of location to be created"
+msgstr "Ievadiet jaunā novietojuma nosaukumu"
+
+#: ../lib/init/epsg_option.tcl:129
+msgid "Path to the EPSG-codes file"
+msgstr "Ceļš uz EPSG kodu failu"
+
+#: ../lib/init/epsg_option.tcl:132
+msgid "Path to EPSG codes file"
+msgstr "Ceļš uz EPSG kodu failu"
+
+#: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
+#: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:244
+msgid "Browse..."
+msgstr "Pārlūkot..."
+
+#: ../lib/init/epsg_option.tcl:136
+msgid "Browse to locate EPSG file"
+msgstr "Parlūkot lai sameklētu EPSG kodu failu"
+
+#: ../lib/init/epsg_option.tcl:143
+msgid "EPSG code number of projection"
+msgstr "Projekcijas EPSG kods"
+
+#: ../lib/init/epsg_option.tcl:146
+msgid "Enter EPSG code for selected projection"
+msgstr "Ieadiet projekcijas EPSG kodu"
+
+#: ../lib/init/epsg_option.tcl:149
+msgid "View EPSG codes and projection information."
+msgstr "Aplūkot EPSG kodus un projekcijas informāciju."
+
+#: ../lib/init/epsg_option.tcl:155
+msgid "WARNING: epsg-codes file not found"
+msgstr "BRĪDINĀJUMS: EPSG kodu fails nav atrasts"
+
+#: ../lib/init/epsg_option.tcl:156
+msgid "WARNING: The epsg-codes file was not found!"
+msgstr "BRĪDINĀJUMS: EPSG kodu fails netika atrasts!"
+
+#: ../lib/init/epsg_option.tcl:164 ../lib/init/file_option.tcl:111
+msgid "Define location"
+msgstr "Izveidot novietojumu"
+
+#: ../lib/init/epsg_option.tcl:187
+msgid ""
+"WARNING: Please supply a\n"
+"valid EPSG code (integer)"
+msgstr ""
+"BRĪDINĀJUMS: Ierakstiet derīgu\n"
+"EPSG kodu (skaitli)"
+
+#: ../lib/init/epsg_option.tcl:320 ../lib/init/file_option.tcl:241
+#: ../lib/init/file_option.tcl:262
+msgid "WARNING: Error creating new location"
+msgstr "BRĪDINĀJUMS: Kļūda veidojot jaunu novietojumu"
+
+#: ../lib/init/epsg_option.tcl:321
+#, tcl-format
+msgid ""
+"Error creating new location from EPSG code.  g.proj returned following "
+"message:\n"
+"\n"
+"%s"
+msgstr ""
+"Kļūda veidojot jaunu novietojumu no EPSG koda. g.proj atbildēja:\n"
+"\n"
+"%s"
+
+#: ../lib/init/epsg_option.tcl:342
+msgid "Select datum transform"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:359
+msgid "Datum transform number: "
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:362
+msgid "Enter number of datum transform selected"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:366
+msgid "OK"
+msgstr "Labi"
+
+#: ../lib/init/epsg_option.tcl:399
+msgid "You can select EPSG code (in <braces>) and copy it for later use."
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:436
+msgid "GUESS THAT IS NOT THE EPSG FILE"
+msgstr "Tas neizskatās pēc EPSG kodu faila"
+
+#: ../lib/init/epsg_option.tcl:442 ../lib/init/epsg_option.tcl:472
+#: ../lib/init/epsg_option.tcl:491
+msgid "Search"
+msgstr "Meklēt"
+
+#: ../lib/init/epsg_option.tcl:445
+msgid "Grab code"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:478
+msgid "Search text: "
+msgstr "Meklēt tekstu: "
+
+#: ../lib/init/epsg_option.tcl:479
+msgid "Search for entered text in EPSG file"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:484
+msgid "forward search"
+msgstr ""
+
+#: ../lib/init/epsg_option.tcl:485
+msgid "backward search"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:72
+msgid "Define location using projection information in georeferenced file"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:99
+msgid "Path to georeferenced file"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:102
+msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:106
+msgid "Browse to locate georeferenced file"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:131 ../lib/init/file_option.tcl:134
+msgid "Choose georeferenced file"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:152
+msgid ""
+"WARNING: Please supply a\n"
+"valid georeferenced file"
+msgstr ""
+
+#: ../lib/init/file_option.tcl:242 ../lib/init/file_option.tcl:263
+#, tcl-format
+msgid ""
+"Error creating new location from georeferenced file.  g.proj returned "
+"following message:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../lib/init/gis_set.tcl:110
+msgid "WARNING: can not save"
+msgstr "BRĪDINĀJUMS: nevar saglabāt"
+
+#: ../lib/init/gis_set.tcl:111
+#, tcl-format
+msgid ""
+"Warning: unable to save data to <%s> file.\n"
+"Error message: %s"
+msgstr ""
+
+#: ../lib/init/gis_set.tcl:132 ../lib/init/gis_set.tcl:380
+#: ../lib/init/gis_set.tcl:484 ../lib/init/gis_set.tcl:608
+#: ../lib/init/gis_set.tcl:629 ../lib/init/gis_set.tcl:647
+#: ../lib/init/gis_set.tcl:676
+msgid "WARNING: invalid location"
+msgstr "BRĪDINĀJUMS: nederīgs novietojums"
+
+#: ../lib/init/gis_set.tcl:133
+#, tcl-format
+msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr "BRĪDINĀJUMS: novietojums <%s> iekš GISDBASE <%s> nav mape vai neeksistē."
+
+#: ../lib/init/gis_set.tcl:178
+#, tcl-format
+msgid "GRASS %s Startup"
+msgstr "GRASS %s startēšana"
+
+#: ../lib/init/gis_set.tcl:201
+msgid "Welcome to GRASS GIS Version"
+msgstr "Laipni lūdzam GRASS GIS versijā"
+
+#: ../lib/init/gis_set.tcl:203
+msgid ""
+"The world's leading open source GIS\n"
+"\n"
+msgstr ""
+"Pasaules lielākā atvērtā pirmkoda ĢIS programma\n"
+"\n"
+
+#: ../lib/init/gis_set.tcl:204
+msgid "Select an existing project location and mapset\n"
+msgstr "Izvēlieties eksistējošu novietojumu un karšu kopu\n"
+
+#: ../lib/init/gis_set.tcl:205
+msgid "or define a new location\n"
+msgstr "vai izveidojiet jaunu novietojumu\n"
+
+#: ../lib/init/gis_set.tcl:229
+msgid "GIS Data Directory: "
+msgstr "ĢIS datu mape: "
+
+#: ../lib/init/gis_set.tcl:246
+msgid "New GIS data directory"
+msgstr "Jauna ĢIS datu mape"
+
+#: ../lib/init/gis_set.tcl:270
+msgid ""
+"Project Location\n"
+"(projection/coordinate system)"
+msgstr ""
+"Projekta novietojums \n"
+"(projekcija/koordinātu sistēma)"
+
+#: ../lib/init/gis_set.tcl:304
+msgid ""
+"Accessible Mapsets\n"
+"(directories of GIS files)"
+msgstr ""
+"Pieejamās karšu kopas\n"
+"(mapes ar ĢIS failiem)"
+
+#: ../lib/init/gis_set.tcl:359
+msgid ""
+"Create new mapset\n"
+"in selected location"
+msgstr ""
+"Izveidot jaunu karšu kopu\n"
+"izvēlētajā novietojumā"
+
+#: ../lib/init/gis_set.tcl:367
+msgid "Create new mapset"
+msgstr "Jauna karšu kopa"
+
+#: ../lib/init/gis_set.tcl:372
+msgid "WARNING: invalid mapset name"
+msgstr "BRĪDINĀJUMS: nederīgs karšu kopas nosaukums"
+
+#: ../lib/init/gis_set.tcl:373
+#, tcl-format
+msgid ""
+"Warning: Mapset with name <%s> already exists. \n"
+"New mapset is NOT created. \n"
+"Choose different mapset name and try again."
+msgstr ""
+"BRĪDINĀJUMS: Karšu kopa ar nosaukumu <%s> jau eksistē. \n"
+"Jauna karšu kopa NAV izveidota. \n"
+"Izvēlieties citu nosaukumu un mēģiniet vēlreiz."
+
+#: ../lib/init/gis_set.tcl:381
+#, tcl-format
+msgid ""
+"Warning: selected location <%s> is not valid. \n"
+" New mapset is NOT created. \n"
+" Select valid location and try again."
+msgstr ""
+"BRĪDINĀJUMS: Izvēlētais novietojums <%s> nav derīgs. \n"
+" Jauna karšu kopa NAV izveidota. \n"
+" Izvēlieties derīgu novietojumu un mēģiniet vēlreiz."
+
+#: ../lib/init/gis_set.tcl:388
+msgid "WARNING: unable to mkdir"
+msgstr "BRĪDINĀJUMS: nebija iespējams izveidot mapi"
+
+#: ../lib/init/gis_set.tcl:389
+#, tcl-format
+msgid ""
+"Warning: Unable to create directory for new mapset. \n"
+"Error message: %s"
+msgstr ""
+"BRĪDINĀJUMS: Nebija iespējams izveidot mapi jaunajai karšu kopai. \n"
+"Kļūdas paziņojums: %s"
+
+#: ../lib/init/gis_set.tcl:415
+msgid "Define new location with..."
+msgstr "Izveidot jaunu novietojumu izmantojot..."
+
+#: ../lib/init/gis_set.tcl:419
+msgid "Georeferenced file"
+msgstr "Ģeoreferencētu failu"
+
+#: ../lib/init/gis_set.tcl:431
+msgid "EPSG codes"
+msgstr "EPSG kodu"
+
+#: ../lib/init/gis_set.tcl:443
+msgid "Projection values"
+msgstr "Projekcijas vērtības"
+
+#: ../lib/init/gis_set.tcl:480
+msgid "Enter GRASS"
+msgstr "Startēt GRASS"
+
+#: ../lib/init/gis_set.tcl:485
+#, tcl-format
+msgid ""
+"Warning: selected location <%s> is not valid. \n"
+" Select valid location and try again."
+msgstr ""
+"BRĪDINĀJUMS: Izvēlētais novietojums <%s> nav derīgs. \n"
+" Izvēlieties derīgu novietojumu un mēģiniet vēlreiz."
+
+#: ../lib/init/gis_set.tcl:490 ../lib/init/gis_set.tcl:653
+msgid "WARNING: invalid mapset"
+msgstr "BRĪDINĀJUMS: nederīga karšu kopa"
+
+#: ../lib/init/gis_set.tcl:491
+#, tcl-format
+msgid "Warning: <%s> is not a valid mapset"
+msgstr "BRĪDINĀJUMS: <%s> ir nederīga karšu kopa"
+
+#: ../lib/init/gis_set.tcl:512
+msgid "Help already opened"
+msgstr "Palīdzība jau ir atvēra"
+
+#: ../lib/init/gis_set.tcl:525
+msgid "Exit"
+msgstr "Iziet"
+
+#: ../lib/init/gis_set.tcl:560
+msgid "WARNING: Invalid Database"
+msgstr "BRĪDINĀJUMS: Nederīga datu bāze"
+
+#: ../lib/init/gis_set.tcl:561
+msgid "WARNING: Invalid database. Finding first valid directory in parent tree"
+msgstr "BRĪDINĀJUMS: Datu bāze nav derīga. Tiek meklēta pirmā derīgā mape kokā"
+
+#: ../lib/init/gis_set.tcl:609 ../lib/init/gis_set.tcl:630
+#: ../lib/init/gis_set.tcl:648 ../lib/init/gis_set.tcl:677
+#, tcl-format
+msgid ""
+"Warning: selected location <%%s> is not valid. \n"
+" Select valid location and try again."
+msgstr ""
+"BRĪDINĀJUMS: Izvēlētais novietojums <%%s> nav derīgs. \n"
+" Izvēlieties derīgu novietojumu un mēģiniet vēlreiz."
+
+#: ../lib/init/gis_set.tcl:654
+#, tcl-format
+msgid "Warning: <%%s> is not a valid mapset"
+msgstr "BRĪDINĀJUMS: <%%s> nav derīga karšu kopa"
+
+#: ../lib/init/gis_set.tcl:742
+msgid "WARNING: change directory failed"
+msgstr "BRĪDINĀJUMS: mapes nomainīšana neizdevās"
+
+#: ../lib/init/gis_set.tcl:743
+#, tcl-format
+msgid ""
+"Warning: could not change directory to <%s>.\n"
+"Check directory permissions."
+msgstr ""
+"BRĪDINĀJUMS: Neizdevās nomainīt darba mapi uz <%s>.\n"
+"Pārbaudiet piekļuves tiesības."
+
+#: ../vector/v.digit/cats.tcl:20
+msgid "Delete"
+msgstr "Dzēst"
+
+#: ../vector/v.digit/cats.tcl:40
+msgid "Categories"
+msgstr "Kategorijas"
+
+#: ../vector/v.digit/cats.tcl:50
+msgid "Layer:"
+msgstr "Slānis:"
+
+#: ../vector/v.digit/cats.tcl:52
+msgid "Category:"
+msgstr "Kategorija:"
+
+#: ../vector/v.digit/cats.tcl:59
+msgid "Insert new record to table"
+msgstr "Ievietot jaunu ierakstu tabulā"
+
+#: ../vector/v.digit/cats.tcl:60
+msgid "Add new"
+msgstr "Pievienot jaunu"
+
+#: ../vector/v.digit/settings.tcl:59
+msgid "Add new column"
+msgstr "Pievienot jaunu kolonu"
+
+#: ../vector/v.digit/settings.tcl:61
+msgid "Create table"
+msgstr "Izveidot tabulu"
+
+#: ../vector/v.digit/settings.tcl:92
+msgid "Add command"
+msgstr "Pievienot komandu"
+
+#: ../vector/v.digit/settings.tcl:127
+msgid "Table successfully created"
+msgstr "Tabula veiksmīgi izveidota"
+
+#: ../vector/v.digit/settings.tcl:152
+msgid "Symbology"
+msgstr "Simboloģija"
+
+#: ../vector/v.digit/settings.tcl:156 ../vector/v.digit/settings.tcl:308
+msgid "Background"
+msgstr "Fons"
+
+#: ../vector/v.digit/settings.tcl:163
+msgid "Highlight"
+msgstr "Izgaismot"
+
+#: ../vector/v.digit/settings.tcl:170
+msgid "Point"
+msgstr "Punkts"
+
+#: ../vector/v.digit/settings.tcl:179
+msgid "Line"
+msgstr "Līnija"
+
+#: ../vector/v.digit/settings.tcl:188
+msgid "Boundary (no area)"
+msgstr "Robeža (bez laukuma)"
+
+#: ../vector/v.digit/settings.tcl:196
+msgid "Boundary (1 area)"
+msgstr "Robeža (1 laukums)"
+
+#: ../vector/v.digit/settings.tcl:204
+msgid "Boundary (2 areas)"
+msgstr "Robeža (2 laukumi)"
+
+#: ../vector/v.digit/settings.tcl:213
+msgid "Centroid (in area)"
+msgstr "Centroīds (laukumā)"
+
+#: ../vector/v.digit/settings.tcl:221
+msgid "Centroid (outside area)"
+msgstr "Centroīds (ārpus laukuma)"
+
+#: ../vector/v.digit/settings.tcl:229
+msgid "Centroid (duplicate in area)"
+msgstr "Centroīds (dubults laukumā)"
+
+#: ../vector/v.digit/settings.tcl:238
+msgid "Node (1 line)"
+msgstr ""
+
+#: ../vector/v.digit/settings.tcl:246
+msgid "Node (2 lines)"
+msgstr ""
+
+#: ../vector/v.digit/settings.tcl:256
+msgid "Settings"
+msgstr "Uzstādījumi"
+
+#: ../vector/v.digit/settings.tcl:261
+msgid "Snapping threshold in screen pixels"
+msgstr ""
+
+#: ../vector/v.digit/settings.tcl:271
+msgid "Snapping threshold in map units"
+msgstr ""
+
+#: ../vector/v.digit/settings.tcl:288
+msgid "Line width (pixels; 0 is finest)"
+msgstr ""
+
+#: ../vector/v.digit/settings.tcl:297
+msgid "Table"
+msgstr "Tabula"
+
+#: ../vector/v.digit/toolbox.tcl:22
+msgid "Welcome to v.digit"
+msgstr "Laipni lūgti iekš v.digit"
+
+#: ../vector/v.digit/toolbox.tcl:23
+msgid "Left mouse button"
+msgstr "Kreisā peles poga"
+
+#: ../vector/v.digit/toolbox.tcl:24
+msgid "Middle mouse button"
+msgstr "Vidējā peles poga"
+
+#: ../vector/v.digit/toolbox.tcl:25
+msgid "Right mouse button"
+msgstr "Labā peles poga"
+
+#: ../vector/v.digit/toolbox.tcl:47
+msgid "  Layer"
+msgstr "  Slānis"
+
+#: ../vector/v.digit/toolbox.tcl:51
+msgid "  Category"
+msgstr "  Kategorija"
+
+#: ../vector/v.digit/toolbox.tcl:55
+msgid "  Mode "
+msgstr "  Režīms "
+
+#: ../vector/v.digit/toolbox.tcl:67
+msgid "Insert new record into table"
+msgstr ""
+
+#: ../vector/v.digit/toolbox.tcl:84
+msgid "Digitize new point"
+msgstr "Digitizēt jaunu punktu"
+
+#: ../vector/v.digit/toolbox.tcl:89
+msgid "Digitize new line"
+msgstr "Digitizēt jaunu līniju"
+
+#: ../vector/v.digit/toolbox.tcl:94
+msgid "Digitize new boundary"
+msgstr "Digitizēt jaunu robežu"
+
+#: ../vector/v.digit/toolbox.tcl:99
+msgid "Digitize new centroid"
+msgstr "Digitizēt jaunu centroīdu"
+
+#: ../vector/v.digit/toolbox.tcl:105
+msgid "Move vertex"
+msgstr "Pārvietot virsotni"
+
+#: ../vector/v.digit/toolbox.tcl:110
+msgid "Add vertex"
+msgstr "Pievienot virsotni"
+
+#: ../vector/v.digit/toolbox.tcl:115
+msgid "Remove vertex"
+msgstr "Dzēst virsotni"
+
+#: ../vector/v.digit/toolbox.tcl:120
+msgid "Split line"
+msgstr "Sadalīt līniju"
+
+#: ../vector/v.digit/toolbox.tcl:125
+msgid "Edit line/boundary"
+msgstr "Rediģēt līniju/robežu"
+
+#: ../vector/v.digit/toolbox.tcl:130
+msgid "Move point, line, boundary, or centroid"
+msgstr "Pārvietot punktu, līniju, robežu vai centroīdu"
+
+#: ../vector/v.digit/toolbox.tcl:135
+msgid "Delete point, line, boundary, or centroid"
+msgstr "Dzēst punktu, līniju, robežu vai centroīdu"
+
+#: ../vector/v.digit/toolbox.tcl:146
+msgid "Redraw"
+msgstr "Pārzīmēt"
+
+#: ../vector/v.digit/toolbox.tcl:151
+msgid "Zoom in by window"
+msgstr ""
+
+#: ../vector/v.digit/toolbox.tcl:156
+msgid "Zoom out"
+msgstr "Tālināt"
+
+#: ../vector/v.digit/toolbox.tcl:166
+msgid "Zoom to default region"
+msgstr "Tuvināt līdz noklusējuma reģionam"
+
+#: ../vector/v.digit/toolbox.tcl:179
+msgid "Zoom to region"
+msgstr "Tuvināt līdz reģionam"
+
+#: ../vector/v.digit/toolbox.tcl:185
+msgid "Display categories"
+msgstr "Attēlot kategorijas"
+
+#: ../vector/v.digit/toolbox.tcl:190
+msgid "Copy categories"
+msgstr "Kopēt kategorijas"
+
+#: ../vector/v.digit/toolbox.tcl:195
+msgid "Display attributes"
+msgstr "Attēlot atribūtus"
+
+#: ../vector/v.digit/toolbox.tcl:207
+msgid "Open settings"
+msgstr ""
+
+#: ../vector/v.digit/toolbox.tcl:212
+msgid "Save and exit"
+msgstr "Saglabāt un iziet"
+
+#: ../vector/v.digit/toolbox.tcl:223
+msgid "mouse button actions (left, middle, right)"
+msgstr "peles pogu darbības (kreisā, vidējā un labā)"
+
+#: ../visualization/nviz/scripts/panel_animation.tcl:275
+msgid "Test"
+msgstr "Testēt"
+

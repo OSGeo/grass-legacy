@@ -8,6 +8,7 @@
  **********************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <grass/gis.h>
@@ -99,7 +100,6 @@ static int gisinit(void)
     G__init_null_patterns();
 
     initialized = 1;
-    umask(022);
 
     return 0;
 }

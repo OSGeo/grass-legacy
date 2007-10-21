@@ -65,11 +65,21 @@ main(int argc, char **argv)
         R_close_driver();
    }
 
+    module = G_define_module();
+    module->keywords = _("vector");
+    module->description = 
+	_("Queries a vector map layer at given locations");
+
+    opt1 = G_define_standard_option(G_OPT_V_MAP);
+    opt1->multiple   = YES;
+    if (vect)
+          opt1->answers = vect;
+
     opt4 = G_define_option() ;
     opt4->key        = "east_north";
     opt4->type       = TYPE_DOUBLE;
     opt4->key_desc   = "east,north";
-    opt4->required   = NO;
+    opt4->required   = YES;
     opt4->multiple   = YES;
     opt4->description= _("Coordinates for query");
    
@@ -78,17 +88,7 @@ main(int argc, char **argv)
     maxdistance->key = "distance";
     maxdistance->answer = "0";
     maxdistance->multiple = NO;
-    maxdistance->description = _("Maximum distance");
-
-    opt1 = G_define_option() ;
-    opt1->key        = "map" ;
-    opt1->type       = TYPE_STRING ;
-    opt1->multiple   = YES;
-    if (vect)
-          opt1->answers = vect;
-    opt1->required   = YES;
-    opt1->gisprompt  = "old,vector,vector" ;
-    opt1->description= _("Name of existing vector map") ;
+    maxdistance->description = _("Query threshold distance");
   
     topo_flag = G_define_flag();
     topo_flag->key = 'd';
@@ -98,11 +98,6 @@ main(int argc, char **argv)
     printattributes->key = 'a';
     printattributes->description = _("Print attribute information");
   
-    module = G_define_module();
-    module->description = 
-    _("Allows the user to interactively query a vector map layer "
-      "at user-selected locations within the current geographic region");
-
     if(!vect)
         opt1->required = YES;
     	  	      
@@ -112,19 +107,8 @@ main(int argc, char **argv)
     if (opt1->answers && opt1->answers[0])
         vect = opt1->answers;
 
-   maxd = atof(maxdistance->answer);
-   xval = atof(opt4->answers[0]);
-   yval = atof(opt4->answers[1]);
+    maxd = atof(maxdistance->answer);
 
-/*  
-*  fprintf(stdout, maxdistance->answer);
-*  fprintf(stdout, "Maxd is %f", maxd);
-*  fprintf(stdout, xcoord->answer);
-*  fprintf(stdout, "xval is %f", xval);
-*  fprintf(stdout, ycoord->answer);
-*  fprintf(stdout, "yval is %f", yval);
-*/
-  
     if (maxd == 0.0) 
     {
         G_get_window (&window);
@@ -178,7 +162,16 @@ main(int argc, char **argv)
        }
     }
 
-  what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+
+   if(opt4->answer) {
+	for(i=0; opt4->answers[i] != NULL; i+=2) {
+	    xval = atof(opt4->answers[i]);
+	    yval = atof(opt4->answers[i+1]);
+	    what(xval, yval, maxd, width, mwidth, topo_flag->answer,printattributes->answer); 
+	}
+   } else {
+	G_fatal_error(_("No input coordinates provided"));
+   }
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);

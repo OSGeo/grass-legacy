@@ -48,6 +48,7 @@
 #define SQLP_INTEGER 2 
 #define SQLP_DOUBLE  3 
 #define SQLP_DATE    4
+#define SQLP_TIME    5
 
 #define SQLP_MAX_TABLE  200  
 #define SQLP_MAX_ERR    500  

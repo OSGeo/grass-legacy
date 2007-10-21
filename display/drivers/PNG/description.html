@@ -15,7 +15,9 @@
 <H2>DESCRIPTION</H2>
 
 The PNG driver generates PNG and PPM images from GRASS display commands.
-Per default PNG files are written.
+Per default PNG files are written with this driver. It is started as 'pseudo' monitor
+(image file instead) and when stopped, all output from previously used
+display commands are written to the PNG image file.
 
 <H2>USAGE</H2>
 <H3>Environment variables</H3>
@@ -38,7 +40,7 @@ of the PNG driver.
   <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>
     sets true-color support<BR><BR>
   <LI><B>GRASS_PNG_COMPRESSION=[0|1|9]</B><BR>
-    compression level of PNG files (0 = none, 1 = fastest, 9 = best)<BR><BR>
+    compression level of PNG files (0 = none, 1 = fastest, 9 = best; default is 6)<BR><BR>
   <LI><B>GRASS_PNG_AUTO_WRITE=[TRUE|FALSE]</B><BR>
      if set to "TRUE", the image file will be written after each 
      operation (i.e. whenever a client disconnects), rather than
@@ -47,21 +49,23 @@ of the PNG driver.
 
 <H3>Example</H3>
 <OL>
+<LI>Define driver settings (here: bash shell syntax)<BR><PRE>
+         export GRASS_RENDER_IMMEDIATE=TRUE
+         export GRASS_TRUECOLOR=TRUE
+</PRE></LI>
 <LI>Start up the driver<BR><PRE>
          d.mon start=PNG
-         d.mon select=PNG
-</PRE>
+</PRE></LI>
 <LI>Display raster map and vector polygons<BR>
 <PRE>
          d.rast <i>somerastermap</i>
-         d.vect map=<i>somevectormap</i> color=red
-</PRE>
+         d.vect <i>somevectormap</i> color=red
+</PRE></LI>
 <LI> Stop the driver subsequently. This will write a 
 file named <i>map.png</i> to be created in your current directory:
 <PRE>
          d.mon stop=PNG
 </PRE></LI>
-
 </OL>
 
 <H2>NOTES</H2> 

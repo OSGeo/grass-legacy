@@ -99,6 +99,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = "Find the nearest element in vector 'to' for elements in vector 'from'. "
             "Various information about this relation may be uploaded to the attribute table of "
 	    "input vector 'from' or printed to stdout";
@@ -255,12 +256,13 @@ int main (int argc, char *argv[])
     }
     if ( Upload[i].upload != END ) 
 	G_fatal_error(_("Not enough column names"));
-    
+
     if ( all_flag->answer ) all = 1;
 
     /* Open 'from' vector */
-    mapset = G_find_vector2 (from_opt->answer, "");
-    
+    if ((mapset = G_find_vector2 (from_opt->answer, "")) == NULL )
+	G_fatal_error(_("Could not find input map <%s>"), from_opt->answer);
+
     if ( !print_flag->answer && strcmp(mapset,G_mapset()) != 0 )
        G_fatal_error(_("Vector 'from' is not in user mapset and cannot be updated"));
 

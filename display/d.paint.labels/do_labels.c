@@ -73,6 +73,8 @@ do_labels (FILE *infile, int do_rotation)
 
     while (G_getl2(text, MTEXT, infile))
     {
+	if(text[0] == '#') continue;
+
 	if (! strncmp(text, "eas", 3))
 		sscanf(text,"%*s %lf",&east) ;
 	else if (! strncmp(text, "nor", 3))
@@ -140,8 +142,8 @@ do_labels (FILE *infile, int do_rotation)
 
 	else if (! strncmp(text, "tex", 3))
 		show_it() ;
-	
-	  
+
+
 	else
 	{
 		if (sscanf (text, "%1s", buff) == 1)
@@ -154,24 +156,38 @@ do_labels (FILE *infile, int do_rotation)
 
 int show_it (void)
 {
-    int i;
+/*
+ * The border+background box coords given by R_get_text_box() expand to
+ * cover the area of the rotated text, but the bottom left corner of that
+ * box is not always the ref=lower,left spot (rot>90), and middle|upper
+ * left of the text do not match the middle|upper left of the expanded 
+ * text box when rotated.
+ * 
+ * The solution is to calculate the position and dimensions of the text
+ * without rotation, then rotate those points about the point's coord,
+ * and replot. For text we must calculate the starting coord of the text
+ * independent of the text box, once for each line of text (if multiline).
+ *
+ */
+    int i, j;
     int n_lines ;
     int n_chars ;
     char line[256] ;
     char *lptr, *tptr ;
     double line_size ;
     int text_size ;
-    int X, Y ;
+    int X, Y, Y0 ;
     int T, B, L, R ;
-    int scrT, scrB, scrL, scrR ;
     int t, b, l, r ;
     int xarr[5] ;
     int yarr[5] ;
-    int Xoffset ;
-    int Yoffset ;
+    int Xoffset, Yoffset ; /* in XY plane */
+    int X_just_offset, Y_just_offset ; /* in rotated label plane */
+    int ll_x, ll_y, ul_x, ul_y, lr_x, lr_y, ur_x, ur_y, text_x, text_y;
 
     G_debug ( 3, "Doing '%s'", text) ;
     X = (int)(D_u_to_d_col(east)) ;
+    Y0= (int)(D_u_to_d_row(north));
 
 /* Set font */
     R_font (font);
@@ -188,10 +204,6 @@ int show_it (void)
 
     R_text_size(text_size, text_size);
 
-/* Set font rotation */
-    R_text_rotation((float)rotation);
-    G_debug(3, "  rotation = %.2f", rotation);
-
 /* Find extent of all text (assume ref point is upper left) */
     T = 999999 ;
     B = 0 ;
@@ -202,27 +214,38 @@ int show_it (void)
     for(tptr=text; *tptr != ':'; tptr++) ;
     tptr++ ;
 
+    /* get the box size for each line of text and expand the bounding box as needed */
     n_lines = 0 ;
     for(;;)
     {
 	n_chars = 0 ;
+
 	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++)
 	{
-		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
-			break ;
-		n_chars++ ;
+	    /* R_get_text_box() seems to skip leading spaces?, so for
+	       multiline we need to append a space to secondary lines
+	       to get the placement right (??) */
+	    if( (lptr == line) && (n_lines > 0) )
+		*lptr++ = ' ';
+
+	    if ((*tptr == BACK) && (*(tptr+1) == 'n'))
+		break ;
+	    n_chars++ ;
 	}
 	n_lines++ ;
 
 	if (n_chars == 0)
-		break ;
+	    break ;
 
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
+	G_debug(3, "line %d ='%s'", n_lines, line);
 
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
 	R_move_abs(X, Y) ;
+	R_text_rotation(0.0); /* reset */
 	R_get_text_box(line, &t, &b, &l, &r) ;
+
 	if (t < T) T = t ;
 	if (b > B) B = b ;
 	if (l < L) L = l ;
@@ -232,6 +255,7 @@ int show_it (void)
 		break ;
 	tptr++ ; tptr++ ;
     }
+    G_debug(3, "nlines=%d", n_lines);
 
     /* Expand border 1/2 of text size */
     T = T - (text_size * 0.2) - .5;
@@ -239,106 +263,126 @@ int show_it (void)
     L = L - (text_size * 0.2) - .5;
     R = R + (text_size * 0.2) + .5;
 
-    Xoffset = xoffset ;
-    Yoffset = -yoffset ;
+    Xoffset = xoffset;
+    Yoffset = -yoffset;
+    X_just_offset = 0;
+    Y_just_offset = 0;
 
+    /* shift to match justification */
     if (xref == CENT)
-	    Xoffset -= (R - L) / 2 ;
+	X_just_offset -= (R - L + text_size) / 2 ;
     if (xref == RITE)
-	    Xoffset -= R - L ;
+	X_just_offset -= R - L + text_size ;
     if (yref == CENT)
-	    Yoffset -= (B - T) / 2 ;
+	Y_just_offset -= ((B - Y0) / 2) - (Y0 - T) ;
     if (yref == BOT)
-	    Yoffset -= B - T ;
+	Y_just_offset -= (B - Y0) - (Y0 - T) ;
 
-/* Draw box */
-    scrL = L + Xoffset ;
-    scrR = R + Xoffset ;
-    scrT = T + Yoffset ;
-    scrB = B + Yoffset ;
+    /* get unrotated corners of text box, and rotate them */
+    ul_y = ur_y = T + Y_just_offset;
+    ll_y = lr_y = B + Y_just_offset;
+    ll_x = ul_x = L + X_just_offset;
+    lr_x = ur_x = R + X_just_offset;
+    rotate_around_pt(X, Y0, &ll_x, &ll_y, rotation);
+    rotate_around_pt(X, Y0, &ul_x, &ul_y, rotation);
+    rotate_around_pt(X, Y0, &ur_x, &ur_y, rotation);
+    rotate_around_pt(X, Y0, &lr_x, &lr_y, rotation);
 
-    /* If the window is outside of current map window, ignore */;
-    if (scrR < (int)D_get_d_west())   return 0;
-    if (scrL > (int)D_get_d_east())   return 0;
-    if (scrB < (int)D_get_d_north())  return 0;
-    if (scrT > (int)D_get_d_south())  return 0;
-    if (scrT < 0)  return 0;
-    if (scrL < 0)  return 0;
+    /* rotate lower starting corner of text */
+    text_x = X + X_just_offset;
+    text_y = Y + Y_just_offset;
+    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
-    /* Clip parts of label to inside map window */
-    if (scrL < (int)D_get_d_west()) scrL = (int)D_get_d_west() ;
-    if (scrR > (int)D_get_d_east()) scrR = (int)D_get_d_east() ;
-    if (scrT < (int)D_get_d_north())  scrT = (int)D_get_d_north()  ;
-    if (scrB > (int)D_get_d_south())  scrB = (int)D_get_d_south()  ;
+    /* define rotated bounding box */
+    xarr[0] = ll_x + Xoffset;
+    xarr[1] = ul_x + Xoffset;
+    xarr[2] = ur_x + Xoffset;
+    xarr[3] = lr_x + Xoffset;
+    xarr[4] = ll_x + Xoffset;
+    yarr[0] = ll_y + Yoffset;
+    yarr[1] = ul_y + Yoffset;
+    yarr[2] = ur_y + Yoffset;
+    yarr[3] = lr_y + Yoffset;
+    yarr[4] = ll_y + Yoffset;
 
-    xarr[0] = scrL ;
-    xarr[1] = scrL ;
-    xarr[2] = scrR ;
-    xarr[3] = scrR ;
-    xarr[4] = scrL ;
-    yarr[0] = scrB ;
-    yarr[1] = scrT ;
-    yarr[2] = scrT ;
-    yarr[3] = scrB ;
-    yarr[4] = scrB ;
-    if(background)
-    {
-	    R_standard_color(background) ;
-	    R_polygon_abs(xarr, yarr, 5) ;
+    /* skip labels which will go offscreen (even partially) */
+    for (i = 0; i < 5; i++) {
+	if( (xarr[i] > D_get_d_east()) || (xarr[i] < D_get_d_west()) )
+	    return 0;
+	if( (yarr[i] < D_get_d_north()) || (yarr[i] > D_get_d_south()) )
+	    return 0;
+	if( (xarr[i] < 0) || (yarr[i] < 0) )
+	    return 0;
     }
 
-/* Draw border */
-    if(border)
-    {
-	    R_standard_color(border) ;
-	    R_polyline_abs(xarr, yarr, 5) ;
+#ifdef OUTPUT_ASCII
+    fprintf(stdout, "L 5\n");
+    for (i = 0; i < 5; i++) {
+	fprintf(stdout, " %f %f\n", D_d_to_u_col(xarr[i]), D_d_to_u_row(yarr[i]));
+    }
+    /* d.labels labfile | v.in.ascii -n out=labbox format=standard */
+#endif
+
+    /* draw boxes */
+    if(background) {
+	R_standard_color(background) ;
+	R_polygon_abs(xarr, yarr, 5) ;
+    }
+    if(border) {
+	R_standard_color(border) ;
+	R_polyline_abs(xarr, yarr, 5) ;
     }
 
-    for(tptr=text; *tptr != ':'; tptr++) ;
-    tptr++ ;
+    /* Set font rotation */
+    R_text_rotation((float)rotation);
+    G_debug(3, "  rotation = %.2f", rotation);
 
-/* Draw text */
-
-    /* draw highlighted text background */
+    /**** draw highlighted text background ****/
     if(highlight_width && highlight_color) {
 	R_standard_color(highlight_color);
 
-	n_lines = 0 ;
-	for(;;) {
+	/* Scan to beginning of text string */
+	for(tptr=text; *tptr != ':'; tptr++) ;
+	tptr++;
+
+	for( i=1; i <= n_lines; i++ ) {
+	    /* get line of text from full label text string */
 	    n_chars = 0 ;
 	    for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
+		if( (lptr == line) && (i > 1) ) /* see comment above */
+		    *lptr++ = ' ';
 		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
 		    break ;
 		n_chars++ ;
 	    }
-
-	    n_lines++ ;
 	    if (n_chars == 0)
 		break ;
-
 	    *lptr = '\0' ;
 
-	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
-	    R_set_window(scrT, scrB, scrL, scrR) ;
+	    /* figure out text placement */
+	    Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
+	    text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	    text_y = Y + Y_just_offset;
+	    rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
 
-	    for(i = 1; i <= highlight_width; i++) {
+	    for(j = 1; j <= highlight_width; j++) {
 		/* smear it around. probably a better way (knight's move? rand?) */
-		R_move_abs(X + Xoffset, Y + Yoffset + i);
+		R_move_abs(text_x + Xoffset, text_y + Yoffset + j);
 		R_text(line);
-		R_move_abs(X + Xoffset, Y + Yoffset - i);
+		R_move_abs(text_x + Xoffset, text_y + Yoffset - j);
 		R_text(line);
-		R_move_abs(X + Xoffset + i, Y + Yoffset);
+		R_move_abs(text_x + Xoffset + j, text_y + Yoffset);
 		R_text(line);
-		R_move_abs(X + Xoffset - i, Y + Yoffset);
+		R_move_abs(text_x + Xoffset - j, text_y + Yoffset);
 		R_text(line);
 
-		R_move_abs(X + Xoffset +i, Y + Yoffset +i);
+		R_move_abs(text_x + Xoffset +j, text_y + Yoffset +j);
 		R_text(line);
-		R_move_abs(X + Xoffset -i, Y + Yoffset -i);
+		R_move_abs(text_x + Xoffset -j, text_y + Yoffset -j);
 		R_text(line);
-		R_move_abs(X + Xoffset +i, Y + Yoffset -i);
+		R_move_abs(text_x + Xoffset +j, text_y + Yoffset -j);
 		R_text(line);
-		R_move_abs(X + Xoffset -i, Y + Yoffset +i);
+		R_move_abs(text_x + Xoffset -j, text_y + Yoffset +j);
 		R_text(line);
 	    }
 
@@ -348,38 +392,42 @@ int show_it (void)
 	}
     }
 
-    /* reset pointer for main text draw */
+
+    /**** place the text ****/
+    R_standard_color(color);
+
+    /* Scan to beginning of text string */
     for(tptr=text; *tptr != ':'; tptr++) ;
-    tptr++ ;
+    tptr++;
 
-    R_standard_color(color) ;
-
-    n_lines = 0 ;
-    for(;;)
-    {
+    for( i=1; i <= n_lines; i++ ) {
+	/* get line of text from full label text string */
 	n_chars = 0 ;
-	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++)
-	{
-		if ((*tptr == BACK) && (*(tptr+1) == 'n'))
-			break ;
-		n_chars++ ;
-	}
-
-	n_lines++ ;
-	if (n_chars == 0)
+	for(lptr = line; *tptr && *tptr != NL; *lptr++ = *tptr++) {
+	    if( (lptr == line) && (i > 1) ) /* see comment above */
+		*lptr++ = ' ';
+	    if ((*tptr == BACK) && (*(tptr+1) == 'n'))
 		break ;
-
+	    n_chars++ ;
+	}
+	if (n_chars == 0)
+	    break ;
 	*lptr = '\0' ;
 
-	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((n_lines-1)*line_size) ));
-	R_set_window(scrT, scrB, scrL, scrR) ;
-	R_move_abs(X + Xoffset, Y + Yoffset) ;
-	R_text(line) ;
+	/* figure out text placement */
+	Y = (int)(D_u_to_d_row(north - (line_size*1.2) - ((i-1)*line_size) ));
+	text_x = X + X_just_offset; /* reset after rotate_around_pt() */
+	text_y = Y + Y_just_offset;
+	rotate_around_pt(X, Y0, &text_x, &text_y, rotation);
+
+	R_move_abs(text_x + Xoffset, text_y + Yoffset);
+	R_text(line);
 
 	if ( (*tptr == '\0') || (*tptr == NL) )
-		break ;
+	    break ;
 	tptr++ ; tptr++ ;
     }
+
 
     return 0;
 }

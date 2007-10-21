@@ -86,23 +86,50 @@ Univariate statistics (<a href="r.univar.html">r.univar</a>) and
 reports are also available (<a href="r.report.html">r.report</a>,<a
 href="r.stats.html">r.stats</a>, <a href="r.volume.html">r.volume</a>).
 
-<h3>Raster map algebra</h3>
+<h3>Raster map algebra and aggregation</h3>
 
 The <a href="r.mapcalc.html">r.mapcalc</a> command provides raster map
 algebra methods.
+The <a href="r.average.html">r.average</a> command aggregates one map based on a second map.
 
-<h3>Raster map interpolation methods</h3>
+<h3>Raster map resampling and interpolation methods</h3>
 
-GRASS offers various raster interpolation methods:
+GRASS offers various raster resampling and interpolation methods:
 
 <ul>
-<li> Inverse distance weighted average (IDW) interpolation</li>
-<li> Regularized spline with tension (RST) interpolation 2D</li>
-<li> Bilinear interpolation</li>
-<li> Cubic convolution interpolation</li>
-<li> Resampling</li>
-<li> Interpolating from contour lines</li>
+<li> Resampling with nearest neighbor and bilinear method 
+ (<a href="r.resample.html">r.resample</a>, <a href="r.bilinear.html">r.bilinear</a>)
+<li> Inverse distance weighted average (IDW) interpolation
+ (<a href="r.surf.idw.html">r.surf.idw</a> and <a href="r.surf.idw2.html">r.surf.idw2</a>)</li>
+<li> Regularized spline with tension (RST) interpolation 2D
+ (<a href="r.resamp.rst.html">r.resamp.rst</a>)</li>
+<li> Interpolating from contour lines (<a href="r.contour.html">r.contour</a>)</li>
 </ul>
+
+
+<h3>Hydrologic modeling toolbox</h3>
+
+Watershed modeling related modules are
+<a href="r.basins.fill.html">r.basins.fill</a>,
+<a href="r.water.outlet.html">r.water.outlet</a>,
+<a href="r.watershed.html">r.watershed</a>, and
+<a href="r.terraflow.html">r.terraflow</a>.
+
+Water flow related modules are
+<a href="r.carve.html">r.carve</a>,
+<a href="r.drain.html">r.drain</a>,
+<a href="r.fill.dir.html">r.fill.dir</a>,
+<a href="r.fillnulls.html">r.fillnulls</a>,
+<a href="r.flow.html">r.flow</a>, and
+<a href="r.topidx.html">r.topidx</a>.
+
+Flooding can be simulated with <a href="r.lake.html">r.lake</a>.
+
+Hydrologic simulation model are available as
+<a href="r.sim.sediment.html">r.sim.sediment</a>,
+<a href="r.sim.water.html">r.sim.water</a>, and
+<a href="r.topmodel.html">r.topmodel</a>.
+
 
 <h3>See also</h3>
 

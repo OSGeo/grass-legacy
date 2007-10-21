@@ -24,8 +24,6 @@ proc GmCLabels::create { tree parent } {
     variable optlist
 	variable dup
     global mon
-    global frm
-    global gmpath
     global iconpath
 
     set node "clabels:$count"
@@ -37,7 +35,9 @@ proc GmCLabels::create { tree parent } {
 
     image create photo clabels_ico -file "$iconpath/gui-maplabels.gif"
     set ico [label $frm.ico -image clabels_ico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 
 	#insert new layer
@@ -60,7 +60,7 @@ proc GmCLabels::create { tree parent } {
     set opt($count,1,xoffset) 1.0 
     set opt($count,1,yoffset) 1.0 
     set opt($count,1,labels) "" 
-    set opt($count,1,lfont) "times 10" 
+    set opt($count,1,lfont) default 
     set opt($count,1,lfill) \#000000 
     set opt($count,1,lwidth)  100
     set opt($count,1,lanchor) "center_left" 
@@ -94,9 +94,8 @@ proc GmCLabels::select_labels { id } {
     }
 }
 
-proc GmCLabels::select_font { id } {
+proc GmCLabels::select_font { id frm } {
 	global mon
-	global frm
 	variable opt
     
     set fon [SelectFont $frm.lfont -type dialog -sampletext 1 -title "Select label font"]
@@ -106,7 +105,6 @@ proc GmCLabels::select_font { id } {
 # display labels options
 proc GmCLabels::options { id frm } {
     variable opt
-    global gmpath
     global iconpath
 
     # Panel heading1
@@ -179,7 +177,7 @@ proc GmCLabels::options { id frm } {
     Button $row.b -image [image create photo -file "$iconpath/gui-font.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
         -helptext [G_msg "select font for label"] \
-	    -command "GmCLabels::select_font $id"
+	    -command "GmCLabels::select_font $id $frm"
     Entry $row.c -width 15 -text "$opt($id,1,lfont)" \
 	    -textvariable GmCLabels::opt($id,1,lfont)  
     Label $row.d -text [G_msg "  color"] 
@@ -228,7 +226,7 @@ proc GmCLabels::display { node } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
-	set labelfile [open $labelpath r]
+	catch {set labelfile [open $labelpath r]}
 	
 	#loop through coordinates and options for each label
     while { [gets $labelfile in] > -1 } {
@@ -242,11 +240,11 @@ proc GmCLabels::display { node } {
 		switch $key {
 			"east:" {
 				set east $val
-				set opt($id,1,xcoord) [MapCanvas::mape2scrx $east]
+				set opt($id,1,xcoord) [MapCanvas::mape2scrx $mon $east]
 			}
 			"north:" {
 				set north $val
-				set opt($id,1,ycoord) [MapCanvas::mapn2scry $north]
+				set opt($id,1,ycoord) [MapCanvas::mapn2scry $mon $north]
 			}
 			"xoffset:" {
 				if { $opt($id,1,override) == 0 } {
@@ -346,7 +344,10 @@ proc GmCLabels::display { node } {
 		}
 	}
 	# close labels file
-	close $labelfile
+	if {[catch {close $labelfile} error]} {
+		puts $error
+	}
+
 }
 
 
@@ -371,7 +372,9 @@ proc GmCLabels::duplicate { tree parent node id } {
 
     image create photo clabels_ico -file "$iconpath/gui-maplabels.gif"
     set ico [label $frm.ico -image clabels_ico -bd 1 -relief raised]
-    
+
+    bind $ico <ButtonPress-1> "GmTree::selectn $tree $node"
+
     pack $check $ico -side left
 	
 	#insert new layer

@@ -59,7 +59,7 @@ proc fileLocCom args {
 	
 	# creation of the parameter window
 	toplevel .fileloc
-	wm title .fileloc {Define location using projection information in georeferenced file}
+	wm title .fileloc [G_msg "Define location using projection information in georeferenced file"]
 	
 	# put it in the middle of the screen
 	update idletasks
@@ -82,7 +82,8 @@ proc fileLocCom args {
 	
 	#browse for database path
 	set dbbrowse [button .fileloc.dbbrow -justify center -width 12 \
-		-text [G_msg "Browse..."] -command "set locpath \[tk_getOpenFile\]" ]
+		-text [G_msg "Browse..."] -command "set locpath \[tk_chooseDirectory -initialdir locpath -parent .fileloc \
+		-title \[G_msg \"Choose path to new location\"\] -mustexist true\]" ]
 
         bind $dbpath <Leave> {
              if {$locpath == ""} {
@@ -91,7 +92,7 @@ proc fileLocCom args {
         }
 
 																									
-	set helpbutton [button .fileloc.help -justify center -bg honeydew2 -text "Help" \
+	set helpbutton [button .fileloc.help -justify center -bg honeydew2 -text [G_msg "Help"] \
 		-command {infofileloc}]
 
 	pack $helpbutton -side left -fill both -expand 0
@@ -114,8 +115,12 @@ proc fileLocCom args {
 			if {[file exists $filepath]== 1} {
 				if {[file exists $thelocation ]==0} {  
 					destroy .fileloc; 
-					exec -- g.proj -c georef=$filepath location=$fileLocation >@stdout 2>@stderr; 
-					destroy .fileloc
+					exec -- $env(GISBASE)/etc/grass-xterm-wrapper -T g.proj -n g.proj -e $env(GISBASE)/etc/grass-run.sh g.proj -c georef=$filepath location=$fileLocation
+					DialogGen .wrnDlg [G_msg "WARNING: restart GRASS please"] warning \
+					[G_msg "WARNING: Please restart GRASS in order find the created location in the list (closing it for you now)"] \
+						0 OK; 
+					puts stdout "exit";
+					destroy . 
 				}
 			}
 			set thelocation ""
@@ -128,7 +133,7 @@ proc fileLocCom args {
 	#browse for georeferenced file
 	set filebrowse [button .fileloc.fbrow -justify center -width 12 \
 		-text [G_msg "Browse..."] -command {
-				set filepath [tk_getOpenFile]
+				set filepath [tk_getOpenFile -parent .fileloc -title [G_msg "Choose georeferenced file"]]
 				if {$filepath != ""} {
 					.fileloc.def configure -state active
 				}

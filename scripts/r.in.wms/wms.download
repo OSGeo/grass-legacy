@@ -17,6 +17,7 @@
 
 #%Module
 #%  description: Downloads data from servers.
+#%  keywords: wms
 #%End
 #%option
 #% key: requestfile
@@ -38,7 +39,7 @@
 #% answer: 1
 #%end
 
-if  [ -z $GISBASE ] ; then
+if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
  exit 1
 fi

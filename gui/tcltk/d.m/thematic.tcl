@@ -83,7 +83,7 @@ proc DmThematic::show_columns { id } {
 	global bgcolor
 	set mapname $opt($id,map)
 	set layernum $opt($id,layer)
-	exec xterm -bg $bgcolor -title "$mapname columns" \
+	exec $env(GISBASE)/etc/grass-xterm-wrapper -bg $bgcolor -title "$mapname columns" \
 		-geometry 40x25-10+30 -sb -hold -e v.info -c map=$mapname \
 		layer=$layernum &		
 }
@@ -92,7 +92,7 @@ proc DmThematic::show_data { id } {
 	variable opt
 	global bgcolor
 	set mapname $opt($id,map)
-	exec xterm -bg $bgcolor -title "$mapname data" \
+	exec $env(GISBASE)/etc/grass-xterm-wrapper -bg $bgcolor -title "$mapname data" \
 		-geometry 60x40-10+30 -sb -hold -e db.select table=$mapname &
 }
 
