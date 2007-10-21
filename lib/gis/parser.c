@@ -750,6 +750,14 @@ int G_parser (int argc, char **argv)
 			    overwrite = 1;
 			}
 
+			/* Verbose option for forward compatibility with GRASS 6.3+ */
+			else if ( strcmp(ptr,"--v") == 0 || strcmp(ptr,"--verbose") == 0 )
+			    G_debug(1, "Verbose mode requested but not used in GRASS 6.2");
+
+			/* Quiet option for forward compatibility with GRASS 6.3+ */
+			else if ( strcmp(ptr,"--q") == 0 || strcmp(ptr,"--quiet") == 0 )
+			    G_debug(1, "Quiet mode requested but not used in GRASS 6.2");
+
 			/* Force gui to come up */
 			else if ( strcmp(ptr,"--ui") == 0 )
 			{
