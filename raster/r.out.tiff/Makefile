@@ -4,9 +4,9 @@ PGM = r.out.tiff
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-EXTRA_CFLAGS = $(TIFFINCPATH) $(TIFFLIBPATH)
+EXTRA_CFLAGS = $(TIFFINCPATH)
 
-LIBES = $(GISLIB) $(TIFFLIB)
+LIBES = $(GISLIB) $(TIFFLIBPATH) $(TIFFLIB)
 DEPENDENCIES = $(GISDEP)
 
 default: cmd
