@@ -159,7 +159,7 @@ class DisplayDriver
 
     std::vector<int> GetSelected(bool grassId);
     int SetSelected(std::vector<int> id);
-    std::vector<int> GetSelectedVertex(double x, double y);
+    std::vector<int> GetSelectedVertex(double x, double y, double thresh);
 
     /* general */
     void CloseMap();

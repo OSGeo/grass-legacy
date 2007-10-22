@@ -565,6 +565,20 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.map_width  = map_width;
     region.map_height = map_height;
 
+#ifdef DEBUG:
+    std::cerr << "region: n=" << north
+	      << "; s=" << south
+	      << "; e=" << east
+	      << "; w=" << west
+	      << "; ns_res=" << ns_res
+	      << "; ew_res=" << ew_res
+	      << "; center_easting=" << center_easting
+	      << "; center_northing=" << center_northing
+	      << "; map_width=" << map_width
+	      << "; map_height=" << map_height
+	      << std::endl;
+#endif
+
     // calculate real region
     region.map_res = (region.ew_res > region.ns_res) ? region.ew_res : region.ns_res;
 
@@ -916,13 +930,14 @@ int DisplayDriver::SetSelected(std::vector<int> id)
    \brief Get PseudoDC vertex id of selected line
 
    \param[in] x,y coordinates of click
+   \param[in] thresh threshold value
 
    \return id of center, left and right vertex
 
    \return 0 no line found
    \return -1 on error
 */
-std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
+std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thresh)
 {
     int startId;
     int line, type;
@@ -939,8 +954,6 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 
     startId = 1;
     line = selected[0];
-
-    std::cerr << line << std::endl;
 
     type = Vect_read_line (mapInfo, points, cats, line);
         
@@ -960,7 +973,10 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y)
 	    }
 	}
     }	
-    
+
+    if (minDist > thresh)
+	return returnId;
+
     // desc = &(ids[line]);
 
     // translate id

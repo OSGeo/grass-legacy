@@ -99,9 +99,9 @@ class AbstractDigit:
             self.settings["categoryMode"] = "Next to use"
 
             # query tool
-            self.settings["query"] = "length"
-            self.settings["queryLength"] = ("shorter than", 0)
-            self.settings["queryDangle"] = (0,)
+            self.settings["query"]       = ("length", False)   # name, select by box
+            self.settings["queryLength"] = ("shorter than", 0) # gt or lt, threshold
+            self.settings["queryDangle"] = ("shorter than", 0)
         else:
             self.settings = settings
 
@@ -382,7 +382,7 @@ class VEdit(AbstractDigit):
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
-
+        
         return True
 
     def CopyCats(self, cats, ids):
@@ -749,7 +749,7 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         x, y = coords
 
-        id = self.__display.GetSelectedVertex(x, y)
+        id = self.__display.GetSelectedVertex(x, y, self.GetThreshold())
 
         Debug.msg(4, "CDisplayDriver.GetSelectedVertex(): id=%s" % \
                       (",".join(["%d" % v for v in id])))
@@ -1074,6 +1074,13 @@ class DigitSettingsDialog(wx.Dialog):
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         LocUnits = self.parent.MapWindow.Map.ProjInfo()['units']
+
+        self.queryBox = wx.CheckBox(parent=panel, id=wx.ID_ANY, label=_("Select by box"))
+        self.queryBox.SetValue(settings["query"][1])
+
+        sizer.Add(item=self.queryBox, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        sizer.Add((0, 5))
+
         #
         # length
         #
@@ -1103,23 +1110,28 @@ class DigitSettingsDialog(wx.Dialog):
         self.queryDangle = wx.RadioButton(parent=panel, id=wx.ID_ANY, label=_("dangle"))
         self.queryDangle.Bind(wx.EVT_RADIOBUTTON, self.OnChangeQuery)
         sizer.Add(item=self.queryDangle, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
-        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+        flexSizer = wx.FlexGridSizer (cols=4, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select dangles shorter than"))
+        txt = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select dangles"))
+        self.queryDangleSL = wx.Choice (parent=panel, id=wx.ID_ANY, 
+                                        choices = [_("shorter than"), _("longer than")])
+        self.queryDangleSL.SetStringSelection(settings["queryDangle"][0])
         self.queryDangleValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(100, -1),
                                        initial=1,
                                        min=0, max=1e6)
-        self.queryDangleValue.SetValue(settings["queryDangle"][0])
+        self.queryDangleValue.SetValue(settings["queryDangle"][1])
         units = wx.StaticText(parent=panel, id=wx.ID_ANY, label="%s" % LocUnits)
         flexSizer.Add(txt, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.queryDangleSL, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.queryDangleValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(units, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         sizer.Add(item=flexSizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
 
-        if settings["query"] == "length":
+        if settings["query"][0] == "length":
             self.queryLength.SetValue(True)
         else:
             self.queryDangle.SetValue(True)
+
         # enable & disable items
         self.OnChangeQuery(None)
 
@@ -1212,11 +1224,13 @@ class DigitSettingsDialog(wx.Dialog):
             # length
             self.queryLengthSL.Enable(True)
             self.queryLengthValue.Enable(True)
+            self.queryDangleSL.Enable(False)
             self.queryDangleValue.Enable(False)
         else:
             # dangle
             self.queryLengthSL.Enable(False)
             self.queryLengthValue.Enable(False)
+            self.queryDangleSL.Enable(True)
             self.queryDangleValue.Enable(True)
 
     def OnOK(self, event):
@@ -1269,12 +1283,13 @@ class DigitSettingsDialog(wx.Dialog):
 
         # query tool
         if self.queryLength.GetValue():
-            self.parent.digit.settings["query"] = "length"
+            self.parent.digit.settings["query"] = ("length", self.queryBox.IsChecked())
         else:
-            self.parent.digit.settings["query"] = "dangle"
+            self.parent.digit.settings["query"] = ("dangle", self.queryBox.IsChecked())
         self.parent.digit.settings["queryLength"] = (self.queryLengthSL.GetStringSelection(),
                                                      int(self.queryLengthValue.GetValue()))
-        self.parent.digit.settings["queryDangle"] = (int(self.queryDangleValue.GetValue()),)
+        self.parent.digit.settings["queryDangle"] = (self.queryDangleSL.GetStringSelection(),
+                                                     int(self.queryDangleValue.GetValue()),)
 
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
