@@ -5,7 +5,7 @@
 \margl1440\margr1440\vieww8840\viewh11560\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qc\pardirnatural
 
-\f0\b\fs36 \cf0 GRASS Mac OS X Application Build\
+\f0\b\fs36 \cf0 GRASS Mac OS X Build\
 
 \f1\b0 (and other Mac notes)\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -13,7 +13,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f2\i \cf0 2007-9-1\
+\f2\i \cf0 2007-10-22\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\i0 \cf0 \
@@ -38,7 +38,10 @@ Dependency Build Notes\
 	Universal X11 Tcl/Tk*\
 	Universal GPSBabel*\
 	Universal NetPBM*\
-\
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 	Universal FFMPEG*\
+\pard\tx360\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
 (* apply to any OSX build, not just an application package build)\
 \
 \
@@ -223,6 +226,13 @@ If there are still problems building NVIZ, add this to configure:\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs24 \cf0 \
+If you want ffmpeg support (see build instructions below), add this:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 --with-ffmpeg --with-ffmpeg-includes=/usr/local/include/ffmpeg --with-ffmpeg-libs=/usr/local/lib
+\f1\fs24 \
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Building an Installer Package\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -291,19 +301,19 @@ Tcl/Tk Aqua has some cosmetic issues in general - widgets displayed from OSX are
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Developer Notes\
+\f0\b\fs28 \cf0 Developer Notes\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 The applescript startup and grass.sh can be customized if desired, ie for a more complex startup that might give the user a dialog for startup options.  They just provide the basic core to build upon.\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Help Files\
+\f0\b\fs28 \cf0 Help Files\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 Help files are linked into the OSX help system.  Independent of what browser you choose to open help files (
 \f3\fs20 GRASS_HTML_BROWSER
 \f1\fs24 ), you can open Help Viewer from almost any application's Help menu (it's best to use Mac Help from the Finder Help menu), and GRASS Help will be available in the Library menu.\
@@ -313,10 +323,10 @@ Since they are linked to the help system, if GRASS.app is moved or renamed, the 
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Addon Modules\
+\f0\b\fs28 \cf0 Addon Modules\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 Do not use GEM (at this time) for building and installing addon modules.  It installs in the app dir, which is not the right thing to do in OSX.  It is still installed - the gem executable is in 
 \f3\fs20 Contents/MacOS
 \f1\fs24  - and may work, but it's untested.\
@@ -346,10 +356,10 @@ The
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Universal X11 Tcl/Tk\
+\f0\b\fs28 \cf0 Universal X11 Tcl/Tk\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 Building a universal X11 Tcl/Tk is easy, and not worth the time to make an Xcode sub-project for.  First, you need the latest 
 \f0\b 8.4.x
 \f1\b0  source for both Tcl and Tk (they are separate packages).\
@@ -380,10 +390,10 @@ With this method, if built on Tiger, the Tcl library will only work on Tiger.  T
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Universal GPSBabel\
+\f0\b\fs28 \cf0 Universal GPSBabel\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 A universal GPSBabel is also possible to build without too much fuss.  First, you need the GPSBabel source from {\field{\*\fldinst{HYPERLINK "http://www.gpsbabel.org/"}}{\fldrslt www.gpsbabel.org}}.  If you need support for USB GPS units, get the libusb source from {\field{\*\fldinst{HYPERLINK "http://libusb.sourceforge.net/"}}{\fldrslt libusb.sourceforge.net}}.\
 \
 For libusb, unzip the source and cd to the source folder in a Terminal.  Then:\
@@ -413,10 +423,10 @@ If you installed libusb, it will be found and built into gpsbabel.  The gpsbabel
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f0\b \cf0 Universal NetPBM\
+\f0\b\fs28 \cf0 Universal NetPBM\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\b0 \cf0 \
+\f1\b0\fs24 \cf0 \
 NetPBM is not too hard to build, it's just weird.  These instructions use my UnixImageIO framework for the tiff, jpeg, png and jasper libraries.\
 \
 First, grab the {\field{\*\fldinst{HYPERLINK "http://netpbm.sourceforge.net/"}}{\fldrslt NetPBM}} source and unzip it.  Now it gets strange - it's an interactive configuration, and the various stages don't communicate with each other.  Cd to the source folder in a Terminal and:\
@@ -593,6 +603,97 @@ For the rest, use the defaults\
 don't create the manweb.conf file\
 \
 And that's it.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs28 \cf0 Universal FFMPEG
+\f1\b0\fs24 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul revision: 10837\ulnone \
+\
+FFMPEG is constantly changing, there is no released version, it's all in SVN.  These instructions are work on the SVN revision listed above, so if a current SVN version doesn't work, try checking out that revision.  You need 
+\f0\b SVN
+\f1\b0  installed to download the FFMPEG source.\
+\
+This will build a basic FFMPEG as static libraries for use with GRASS.  No extra formats are included, such as mp3lame and xvid.  Note that by default debug symbols are included, so you will get a large binary out of this.  Stripping the libraries doesn't seem to work.\
+\
+First, create a folder for your ffmpeg source and cd into it.  Now:\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f3\fs20 \cf0 svn checkout svn://svn.mplayerhq.hu/ffmpeg/trunk ffmpeg\
+cd ffmpeg\
+mkdir build-ppc\
+mkdir build-i386\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+For a specific revision, use this instead for the checkout command:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\pardeftab720\ql\qnatural
+
+\f3\fs20 \cf0 svn checkout -r \ul revision#\ulnone  svn://svn.mplayerhq.hu/ffmpeg/trunk ffmpeg\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+It's a two-step build, 1 for each architecture, and I'm being explicit for each arch.  The -fno-common extra cflag is needed or there will be link errors in GRASS, and OSX Intel has MMX issues, so it is disabled.  For the Intel build:\
+\
+\pard\pardeftab720\ql\qnatural
+
+\f3\fs20 \cf0 cd build-i386\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 ../configure --disable-ffserver --enable-gpl --enable-pthreads --disable-ffplay --disable-mmx --disable-vhook --arch=i386 --extra-cflags="-fno-common -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" --extra-ldflags="-arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+If you want to remove the debug symbols, edit config.mak at this point and remove "-g" from OPTFLAGS.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 make\
+sudo make install\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Install at this point installs all the headers.  We don't care about the installed libraries at this point.\
+\
+Now, the PPC build:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 cd ../build-ppc\
+../configure --disable-ffserver --enable-gpl --enable-pthreads --disable-ffplay --enable-altivec --disable-vhook --arch=ppc --extra-cflags="-fno-common -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" --extra-ldflags="-arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Again, if you want to remove the debug symbols, edit config.mak at this point and remove "-g" from OPTFLAGS.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 make\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Don't install this one, there is no need.  Now use lipo to merge them together:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f3\fs20 \cf0 cd ..\
+sudo lipo -create build-ppc/libavcodec/libavcodec.a build-i386/libavcodec/libavcodec.a -output /usr/local/lib/libavcodec.a\
+sudo lipo -create build-ppc/libavformat/libavformat.a build-i386/libavformat/libavformat.a -output /usr/local/lib/libavformat.a\
+sudo lipo -create build-ppc/libavutil/libavutil.a build-i386/libavutil/libavutil.a -output /usr/local/lib/libavutil.a\
+sudo ranlib /usr/local/lib/libavcodec.a\
+sudo ranlib /usr/local/lib/libavformat.a\
+sudo ranlib /usr/local/lib/libavutil.a\
+sudo lipo -create build-ppc/ffmpeg build-i386/ffmpeg -output /usr/local/bin/ffmpeg\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs24 \cf0 \
+Done.\
 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural
