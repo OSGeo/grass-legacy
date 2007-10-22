@@ -163,7 +163,7 @@ int main(int argc, char **argv)
     field=1;
     Fi = Vect_get_field(&In, field);
     if (Fi == NULL)
-        G_fatal_error(_("Database connection not defined for layer <%d>"), field);
+        G_fatal_error(_("Database connection not defined for layer %d"), field);
 
     Driver = db_start_driver_open_database(Fi->driver, Fi->database);
     if (Driver == NULL)

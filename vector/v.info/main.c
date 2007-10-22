@@ -78,7 +78,7 @@ int main (int argc, char *argv[])
 
   gflag = G_define_flag();
   gflag->key            = 'g';
-  gflag->description    = _("Print vector map region only");
+  gflag->description    = _("Print map region only");
   
   mflag = G_define_flag();
   mflag->key            = 'm';
