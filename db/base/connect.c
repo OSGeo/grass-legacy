@@ -121,8 +121,8 @@ main(int argc, char *argv[])
 	    fprintf(stdout, "group:%s\n", conn.group ? conn.group : "");    
 	}
 	else
-	    G_fatal_error(_("No DB connection settings defined. "
-			    "Set with db.connect"));
+	    G_fatal_error(_("Database connection not defined. "
+			    "Run db.connect."));
     }
 
     exit(EXIT_SUCCESS);
