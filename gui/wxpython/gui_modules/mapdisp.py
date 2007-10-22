@@ -450,6 +450,9 @@ class BufferedWindow(wx.Window):
         # reposition checkbox in statusbar
         self.parent.StatusbarReposition()
 
+        # update statusbar
+        self.parent.StatusbarUpdate()
+
     def OnIdle(self, event):
         """
         Only re-render a compsite map image from GRASS during
@@ -763,6 +766,8 @@ class BufferedWindow(wx.Window):
             self.Zoom(begin, end, zoomtype)
             # redraw map
             self.UpdateMap()
+            # update statusbar
+            self.parent.StatusbarUpdate()
             return
 
         # left mouse button pressed
@@ -836,7 +841,6 @@ class BufferedWindow(wx.Window):
             else:
                 self.mouse['begin'] = self.mouse['end']
         elif self.mouse['use'] == 'zoom':
-            print "#", self.mouse['begin']
             self.redrawAll = False
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization
@@ -1022,13 +1026,15 @@ class BufferedWindow(wx.Window):
 
         if self.mouse['use'] in ["zoom", "pan"]:
             if self.mouse['use'] == 'zoom':
-                print "#", self.mouse['end']
                 self.redrawAll = True
             # set region in zoom or pan
             self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
 
             # redraw map
             self.UpdateMap(render=True)
+
+            # update statusbar
+            self.parent.StatusbarUpdate()
 
         elif self.mouse["use"] == "query":
             # querying
@@ -1658,8 +1664,6 @@ class BufferedWindow(wx.Window):
         x2, y2 = end
         newreg = {}
 
-        print "#", begin, end, self.Pixel2Cell(begin), self.Pixel2Cell(end)
-
         # threshold - too small squares do not make sense
         # can only zoom to windows of > 10x10 screen pixels
         if x2 > 10 and y2 > 10 and zoomtype != 0:
@@ -1689,16 +1693,29 @@ class BufferedWindow(wx.Window):
 
         # if new region has been calculated, set the values
         if newreg :
-            self.Map.region['n'] = newreg['n']
-            self.Map.region['s'] = newreg['s']
-            self.Map.region['e'] = newreg['e']
-            self.Map.region['w'] = newreg['w']
-            self.Map.region['center_easting'] = self.Map.region['w'] + \
-                (self.Map.region['e'] - self.Map.region['w']) / 2
-            self.Map.region['center_northing'] = self.Map.region['s'] + \
-                (self.Map.region['n'] - self.Map.region['s']) / 2
+            self.Map.region['center_easting'] = newreg['w'] + \
+                (newreg['e'] - newreg['w']) / 2
+            self.Map.region['center_northing'] = newreg['s'] + \
+                (newreg['n'] - newreg['s']) / 2
+            self.Map.region["ewres"] = (newreg['e'] - newreg['w']) / self.Map.width
+            self.Map.region["nsres"] = (newreg['n'] - newreg['s']) / self.Map.height
+            
+            # calculete bounding box from center coordinates
+            if self.Map.region["ewres"] > self.Map.region["nsres"]:
+                res = self.Map.region["ewres"]
+            else:
+                res = self.Map.region["nsres"]
 
-            self.ZoomHistory(newreg['n'], newreg['s'], newreg['e'], newreg['w'])
+            ew = (self.Map.width / 2) * res
+            ns = (self.Map.height / 2) * res
+
+            self.Map.region['n'] = self.Map.region['center_northing'] + ns
+            self.Map.region['s'] = self.Map.region['center_northing'] - ns
+            self.Map.region['e'] = self.Map.region['center_easting'] + ew
+            self.Map.region['w'] = self.Map.region['center_easting'] - ew
+
+            self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
+                             self.Map.region['e'], self.Map.region['w'])
 
     def ZoomBack(self):
         """
@@ -1709,19 +1726,34 @@ class BufferedWindow(wx.Window):
         if len(self.zoomhistory) > 1:
             self.zoomhistory.pop()
             zoom = self.zoomhistory[len(self.zoomhistory)-1]
-
+            # (n, s, e, w)
         if zoom:
-            self.Map.region['n'] = zoom[0]
-            self.Map.region['s'] = zoom[1]
-            self.Map.region['e'] = zoom[2]
-            self.Map.region['w'] = zoom[3]
-            self.Map.region['center_easting'] = self.Map.region['w'] + \
-                (self.Map.region['e'] - self.Map.region['w']) / 2
-            self.Map.region['center_northing'] = self.Map.region['s'] + \
-                (self.Map.region['n'] - self.Map.region['s']) / 2
+            # zoom to selected region
+            self.Map.region['center_easting'] = zoom[3] + \
+                (zoom[2] - zoom[3]) / 2
+            self.Map.region['center_northing'] = zoom[1] + \
+                (zoom[0] - zoom[1]) / 2
+            self.Map.region["ewres"] = (zoom[2] - zoom[3]) / self.Map.width
+            self.Map.region["nsres"] = (zoom[0] - zoom[1]) / self.Map.height
+            
+            # calculete bounding box from center coordinates
+            if self.Map.region["ewres"] > self.Map.region["nsres"]:
+                res = self.Map.region["ewres"]
+            else:
+                res = self.Map.region["nsres"]
 
+            ew = (self.Map.width / 2) * res
+            ns = (self.Map.height / 2) * res
+
+            self.Map.region['n'] = self.Map.region['center_northing'] + ns
+            self.Map.region['s'] = self.Map.region['center_northing'] - ns
+            self.Map.region['e'] = self.Map.region['center_easting'] + ew
+            self.Map.region['w'] = self.Map.region['center_easting'] - ew
+
+            # update map
             self.UpdateMap()
 
+            # update statusbar
             self.parent.StatusbarUpdate()
 
     def ZoomHistory(self, n, s, e, w):
