@@ -228,7 +228,7 @@ class Command:
             line = stream.readline()
             if not line:
                 break
-            line = line.replace('\n', '')
+            line = line.replace('\n', '').strip()
             lineList.append(line)
 
         return lineList

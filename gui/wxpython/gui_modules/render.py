@@ -381,11 +381,13 @@ class Map(object):
         except:
             return False
 
-    def GetRegion(self):
+    def GetRegion(self, rast=None, vect=None):
         """
-        Returns dictionary with output from g.region -gp
+        Returns dictionary with output from g.region -ugpc
 
-        Example:
+        Optionaly raster or vector map layer can be given.
+
+        Return e.g.:
             {"n":"4928010", "s":"4913700", "w":"589980",...}
         """
 
@@ -395,10 +397,16 @@ class Map(object):
         os.unsetenv("GRASS_REGION")
 
         # do not update & shell style output
-        cmdRegion = gcmd.Command(["g.region", "-u", "-g", "-p", "-c"])
+        cmdList = ["g.region", "-u", "-g", "-p", "-c"]
+
+        if rast:
+            cmdList.append('rast=%s' % rast)
+        elif vect:
+            cmdList.append('vect=%s' % vect)
+
+        cmdRegion = gcmd.Command(cmdList)
 
         for reg in cmdRegion.ReadStdOutput():
-            reg = reg.strip()
             key, val = reg.split("=", 1)
             try:
                 region[key] = float(val)
