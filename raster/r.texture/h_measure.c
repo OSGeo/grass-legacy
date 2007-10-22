@@ -672,7 +672,7 @@ vector (int nl, int nh)
 
     v = (float *) G_malloc ((unsigned) (nh - nl + 1) * sizeof (float));
     if (!v)
-	G_fatal_error(_("memory allocation failure")), exit (EXIT_FAILURE);
+	G_fatal_error(_("Unable to allocate memory")), exit (EXIT_FAILURE);
     return v - nl;
 }
 

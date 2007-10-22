@@ -85,7 +85,7 @@ int main (int argc, char **argv)
 
     gflag = G_define_flag();
     gflag->key = 'g';
-    gflag->description = _("Print raster map region only");
+    gflag->description = _("Print map region only");
 
     hflag = G_define_flag();
     hflag->key = 'h';
@@ -101,7 +101,7 @@ int main (int argc, char **argv)
 
     mflag = G_define_flag();
     mflag->key = 'm';
-    mflag->description = _("Print raster map title only");
+    mflag->description = _("Print map title only");
 
     timestampflag = G_define_flag();
     timestampflag->key = 'p';

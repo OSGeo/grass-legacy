@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster, import");
     module->description =
-	_("Create raster maps from ASCII polygon/line/point data files.");
+	_("Creates raster maps from ASCII polygon/line/point data files.");
 
 
     input = G_define_standard_option(G_OPT_F_INPUT);
@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
     rows->key              = "rows";
     rows->type             = TYPE_INTEGER;
     rows->required         = NO;
-    rows->description      = _("Number of raster rows to hold in memory");
+    rows->description      = _("Number of rows to hold in memory");
     rows->answer           = "4096";
 
     if (G_parser (argc, argv))
