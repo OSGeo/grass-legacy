@@ -493,7 +493,7 @@ main (int argc,char *argv[])
 			if ( ctype == DB_C_TYPE_INT ) {
 			    ret = db_CatValArray_get_value_int ( &cvarr, cat, &ival );
 			    obsVect[i][2] = ival;
-			    obs_mean [i] = dval;
+			    obs_mean [i] = ival;
 			} else {		 /* DB_C_TYPE_DOUBLE */
 			    ret = db_CatValArray_get_value_double ( &cvarr, cat, &dval );
 			    obsVect[i][2] = dval;
