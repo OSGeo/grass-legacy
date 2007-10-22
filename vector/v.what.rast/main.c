@@ -119,7 +119,7 @@ int main(int argc,char *argv[])
     Vect_open_old (&Map, vect_opt->answer, mapset);
 
     Fi = Vect_get_field ( &Map, field);
-    if ( Fi == NULL ) G_fatal_error(_("Database connection not defined for layer <%d>"), field);
+    if ( Fi == NULL ) G_fatal_error(_("Database connection not defined for layer %d"), field);
     
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -255,10 +255,10 @@ int main(int argc,char *argv[])
         if (cur_row != cache[point].row) {
 	    if ( out_type == CELL_TYPE ) {
 		if ( G_get_c_raster_row ( fd, cell, cache[point].row) < 0 )
-		    G_fatal_error ( _("Unable to read raster") );
+		    G_fatal_error ( _("Unable to read raster map <%s> row %d"), cell, cache[point].row );
 	    } else {
 		if (G_get_d_raster_row (fd, dcell, cache[point].row) < 0)
-		    G_fatal_error ( _("Unable to read raster") );
+		    G_fatal_error ( _("Unable to read raster map <%s> row %d"), dcell, cache[point].row );
 	    }
 	}
 	cur_row = cache[point].row;

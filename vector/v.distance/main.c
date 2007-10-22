@@ -357,7 +357,7 @@ int main (int argc, char *argv[])
     if ( to_column_opt->answer ) { 
 	toFi = Vect_get_field ( &To, to_field);
 	if ( toFi == NULL )
-	    G_fatal_error(_("Database connection not defined for layer %d "),
+	    G_fatal_error(_("Database connection not defined for layer %d"),
 			  to_field);
 	
 	to_driver = db_start_driver_open_database ( toFi->driver, toFi->database );

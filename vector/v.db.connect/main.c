@@ -165,7 +165,7 @@ int main (int argc, char **argv)
         else /* columns */
         {
           if ( (fi = Vect_get_field( &Map, field)) == NULL)
-               G_fatal_error(_("Database connection not defined for layer <%d>"), field);
+               G_fatal_error(_("Database connection not defined for layer %d"), field);
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
                 G_fatal_error (_("Unable to start driver <%s>"), fi->driver) ; 

@@ -200,7 +200,7 @@ main (int argc,char *argv[])
 	driver = db_start_driver_open_database (dvr, db);
 	if (driver == NULL)
 	    G_fatal_error( _("No database connection for driver <%s> is defined. " 
-			"Try to run db.connect."), dvr);
+			"Run db.connect."), dvr);
 
 	db_init_string (&sql);
 	db_zero_string (&sql);	
@@ -344,7 +344,7 @@ main (int argc,char *argv[])
     driver = db_start_driver_open_database (dvr, db);
     if (driver == NULL)
 	G_fatal_error( _("No database connection for driver <%s> is defined. "
-		    "Try to run db.connect."), dvr);
+		    "Run db.connect."), dvr);
 
     /* Setting regions and boxes */    
     G_debug (1, "Interpolation: Setting regions and boxes");

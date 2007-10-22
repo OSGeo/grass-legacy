@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
 
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-        G_fatal_error ( _("Could not find vector map <%s> in current mapset"), in_opt->answer);
+        G_fatal_error ( _("Vector map <%s> not found in the current mapset"), in_opt->answer);
     }
 
     Vect_set_open_level (2);
@@ -91,7 +91,7 @@ int main (int argc, char *argv[])
     /*open the new cellfile */
     out_fd = G_open_raster_new ( out_opt->answer, CELL_TYPE );
     if ( out_fd < 0 )
-	G_fatal_error ( "Cannot open output map." );
+	G_fatal_error (_("Unable to create raster map <%s>"), out_opt->answer );
 
     box.T = PORT_DOUBLE_MAX;      
     box.B = -PORT_DOUBLE_MAX;
