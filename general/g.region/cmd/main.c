@@ -850,7 +850,8 @@ int main (int argc, char *argv[])
                 G__put_window( &window, "", "DEFAULT_WIND" );
             }
             else {
-                G_fatal_error(_("You are not in mapset PERMANENT, default region remains untached"));
+                G_fatal_error(_("Unable to change default region. "
+				"The current mapset is not <PERMANENT>."));
             }
         } /* / flag.savedefault->answer */
         
