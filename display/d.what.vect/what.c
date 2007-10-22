@@ -363,7 +363,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    Fi = Vect_get_field( &(Map[i]), Cats->field[j]);
 		    if (Fi == NULL) {
 			if ( txt ) {
-			    fprintf( stdout, _("Database connection not defined\n" ));
+			    fprintf( stdout, _("Database connection not defined" ));
 			} else { 
 			    db_append_string (&html, "Database connection not defined<BR>" );
 			}
