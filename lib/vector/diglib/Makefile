@@ -40,7 +40,8 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 TEST = $(OBJDIR)/test
 
-default: lib $(TEST)
+default: lib
+	$(MAKE) $(TEST)
 
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) $(ARCH_LIB_OBJS)
