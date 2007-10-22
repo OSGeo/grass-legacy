@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("imagery");
-    module->description = _("Principal components analysis (pca) program"
+    module->description = _("Principal components analysis (pca) program "
 			    "for image processing.");
 
     /* Define options */
@@ -392,7 +392,7 @@ write_pca (double **eigmat, int *inp_fd, char *out_basename,
         }
 
         if (out_fd < 0)
-            G_fatal_error (_("Cannot create raster map <%s>"),
+            G_fatal_error (_("Unable to create raster map <%s>"),
 			   G_fully_qualified_name (name, G_mapset ()));
 
         for (pass = 1; pass <= PASSES; pass++)
