@@ -218,21 +218,14 @@ int main(int argc,char *argv[])
     qsort (cache, point_cnt, sizeof (struct order), by_cat);
 
     G_debug(1, "Points are sorted, starting duplicate removal loop");
-    i = 1;
-    while ( i < point_cnt ) {
-        if ( cache[i].cat == cache[i-1].cat ) {
-	    cache[i-1].count++;
-	    for ( j = i; j < point_cnt - 1; j++ ) {
-		cache[j].row = cache[j+1].row; 
-		cache[j].col = cache[j+1].col; 
-		cache[j].cat = cache[j+1].cat; 
-		cache[j].count = cache[j+1].count; 
-	    }
-	    point_cnt--;
-	    continue;
-	}
-        i++;
-    }
+
+    for (i = j = 0; j < point_cnt; j++)
+        if (cache[i].cat != cache[j].cat)
+	    cache[++i] = cache[j];
+        else
+            cache[i].count++;
+    point_cnt = i + 1;
+
     G_debug(1, "%d vector points left after removal of duplicates", point_cnt);
 
     /* Report number of points not used */
