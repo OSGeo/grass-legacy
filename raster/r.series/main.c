@@ -41,6 +41,7 @@ struct menu
 	{c_divr,   "diversity", "number of different values"},
 	{c_reg_m,  "slope",     "linear regression slope"},
 	{c_reg_c,  "offset",    "linear regression offset"},
+	{c_reg_r2, "detcoeff",  "linear regression coefficient of determination"},
 	{c_quart1, "quart1",    "first quartile"},
 	{c_quart3, "quart3",    "third quartile"},
 	{c_perc90, "perc90",    "ninetieth percentile"},
