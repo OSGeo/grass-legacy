@@ -109,7 +109,7 @@ if [ "$col" = "cat" ] ; then
    #exit 1
 fi
 
-db.describe -c $GIS_OPT_TABLE | grep '^Column ' | cut -d':' -f2 | grep "^${col}" 2>&1 >/dev/null
+db.describe -c $GIS_OPT_TABLE | grep '^Column ' | cut -d':' -f2 | grep "^ ${col}" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	g.message -e "Column <$col> not found in table"
 	cleanup
