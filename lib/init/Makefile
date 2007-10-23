@@ -54,7 +54,7 @@ FILES = \
 	$(ETC)/grass-xterm-wrapper \
 	$(ETC)/html_browser_mac.sh
 
-ifneq ($(strip $(MINGW32)),)
+ifneq ($(strip $(MINGW)),)
 	FILES += \
 		$(ARCH_BINDIR)/$(START_UP).bat \
 		$(ETC)/Init.bat \
