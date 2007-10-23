@@ -328,24 +328,20 @@ class Map(object):
 
         return self.region
 
-    def alignResolution(self):
+    def AlignResolution(self):
         """
         Sets display extents to even multiple of
-        current resolution in WIND file from SW corner.
+        current resolution defined in WIND file from SW corner.
         This must be done manually as using the -a flag
         can produce incorrect extents.
-
-        Used for saving current display settings to WIND file
         """
 
         # new values to use for saving to region file
         new = {}
-#        windreg = {}
         n = s = e = w = 0.0
         nwres = ewres = 0.0
 
         # Get current values for region and display
-#        windreg = self.GetRegion()
         nsres = self.GetRegion()['nsres']
         ewres = self.GetRegion()['ewres']
 
@@ -363,7 +359,30 @@ class Map(object):
         new['w'] = ewres * round(w/ewres)
         new['n'] = new['s'] + (new['rows'] * nsres)
         new['e'] = new['w'] + (new['cols'] * ewres)
+
         return new
+
+    def AlignExtentFromDisplay(self):
+        """Sets display extents (n,s,e,w) to even multiple of
+        current display resolution from center point"""
+
+        # calculate new bounding box based on center of display
+        if self.region["ewres"] > self.region["nsres"]:
+            res = self.region["ewres"]
+        else:
+            res = self.region["nsres"]
+
+        Debug.msg(3, "Map.AlignExtentFromDisplay(): width=%d, height=%d, res=%f, center=%f,%f" % \
+                      (self.width, self.height, res, self.region['center_easting'],
+                       self.region['center_northing']))
+            
+        ew = (self.width / 2) * res
+        ns = (self.height / 2) * res
+
+        self.region['n'] = self.region['center_northing'] + ns
+        self.region['s'] = self.region['center_northing'] - ns
+        self.region['e'] = self.region['center_easting'] + ew
+        self.region['w'] = self.region['center_easting'] - ew
 
     def ChangeMapSize(self, (width, height)):
         """Change size of rendered map.
@@ -437,7 +456,7 @@ class Map(object):
         # adjust region settigns to match monitor
         self.region = self.__adjustRegion()
 
-        #        newextents = self.alignResolution()
+        #        newextents = self.AlignResolution()
         #        self.region['n'] = newextents['n']
         #        self.region['s'] = newextents['s']
         #        self.region['e'] = newextents['e']
