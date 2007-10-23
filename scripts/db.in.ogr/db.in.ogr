@@ -100,7 +100,8 @@ fi
 if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
   LAYER="layer=$GIS_OPT_DB_TABLE"
 fi
-v.in.ogr --q dsn="$GIS_OPT_DSN" $LAYER out=$GIS_OPT_OUTPUT -o >/dev/null 2>/dev/null
+
+WARNING=`v.in.ogr --q dsn="$GIS_OPT_DSN" $LAYER out=$GIS_OPT_OUTPUT -o 2>&1 | grep cat`
 if [ $? -ne 0 ] ;  then
    if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
       g.message -e "Input DSN <$INPUT> not found or not readable"
@@ -119,8 +120,11 @@ else
    rm -rf "$file"
 fi
 
-# get rid of superfluous auto-added cat column
+# get rid of superfluous auto-added cat column (and cat_ if present)
 db.dropcol --q -f $GIS_OPT_OUTPUT colum=cat >/dev/null 2>/dev/null 
+if [ ! -z "$WARNING" ] ; then
+   db.dropcol --q -f $GIS_OPT_OUTPUT colum=cat_ >/dev/null 2>/dev/null
+fi
 
 g.message "Imported table <$GIS_OPT_OUTPUT>"
 exit 0
