@@ -27,5 +27,5 @@ $(R3TIMESTAMP): $(OBJDIR)/r3.timestamp.main.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(R3INFO): $(OBJDIR)/r3.info.main.o 
-	$(CC) $(LDFLAGS) -o $@ $^$(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $^ $(FMODE_OBJ) $(LIBES) $(XDRLIB) $(MATHLIB)
 
