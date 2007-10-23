@@ -88,6 +88,9 @@ int db__send(const void *buf, size_t size)
 int db__recv(void *buf, size_t size)
 {
 #if USE_STDIO
+#ifdef USE_BUFFERED_IO
+    fflush(_send);
+#endif
     return fread(buf, 1, size, _recv) == size;
 #elif USE_READN
     return readn(fileno(_recv), buf, size) == size;
