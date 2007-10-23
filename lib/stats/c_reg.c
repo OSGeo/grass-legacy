@@ -70,6 +70,10 @@ static void regression(DCELL *result, DCELL *values, int n, int which)
 		G_set_d_null_value(result, 1);
 		break;
 	}
+
+	/* Check for NaN */
+	if (*result != *result)
+		G_set_d_null_value(result, 1);
 }
 
 void c_reg_m(DCELL *result, DCELL *values, int n)
@@ -153,6 +157,10 @@ static void regression_w(DCELL *result, DCELL (*values)[2], int n, int which)
 		G_set_d_null_value(result, 1);
 		break;
 	}
+
+	/* Check for NaN */
+	if (*result != *result)
+		G_set_d_null_value(result, 1);
 }
 
 void w_reg_m(DCELL *result, DCELL (*values)[2], int n)
