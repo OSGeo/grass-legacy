@@ -30,9 +30,10 @@ import traceback
 import types
 import re
 # for GRC (workspace file) parsering
-from xml.parsers.xmlproc import xmlproc
-from xml.parsers.xmlproc import xmlval
-from xml.parsers.xmlproc import xmldtd
+# xmlproc not available on Mac OS
+# from xml.parsers.xmlproc import xmlproc
+# from xml.parsers.xmlproc import xmlval
+# from xml.parsers.xmlproc import xmldtd
 import xml.sax
 import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
@@ -471,22 +472,22 @@ class GMFrame(wx.Frame):
         gisbase = os.getenv("GISBASE")
         dtdFilename = os.path.join(gisbase, "etc", "wx", "gui_modules", "grass-grc.dtd")
 
-        # parse xml agains dtd
-        dtd = xmldtd.load_dtd(dtdFilename)
-        parser = xmlproc.XMLProcessor()
-        parser.set_application(xmlval.ValidatingApp(dtd, parser))
-        parser.dtd = dtd
-        parser.ent = dtd
-        try:
-            # TODO: set_error_handler(self,err)
-            parser.parse_resource(filename)
-        except:
-            dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s>. "
-                                           "It is not valid GRC XML file.") % filename,
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
+        # validate xml agains dtd
+        #         dtd = xmldtd.load_dtd(dtdFilename)
+        #         parser = xmlproc.XMLProcessor()
+        #         parser.set_application(xmlval.ValidatingApp(dtd, parser))
+        #         parser.dtd = dtd
+        #         parser.ent = dtd
+        #         try:
+        #             # TODO: set_error_handler(self,err)
+        #             parser.parse_resource(filename)
+        #         except:
+        #             dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s>. "
+        #                                            "It is not valid GRC XML file.") % filename,
+        #                                    _("Error"), wx.OK | wx.ICON_ERROR)
+        #             dlg.ShowModal()
+        #             dlg.Destroy()
+        #             return False
 
         # delete current layer tree content
         self.OnWorkspaceNew()
