@@ -189,33 +189,33 @@ fi
 # check if we have wget or curl
 if [ ! -x "`which wget`" ] ; then
     if [ ! -x "`which curl`" ] ; then
-        g.message -e "one of wget or curl is required, please install either first" 
+        g.message -e "Either 'wget' or 'curl' is required, please install one first" 
         exit 1
     else
-        g.message "Using CURL for downloading data."
+        g.message -v "Using CURL for downloading data."
         USE_CURL=1
     fi
 else
-    g.message "Using WGET for downloading data."
+    g.message -v "Using WGET for downloading data."
     USE_WGET=1
 fi
 
 # check if we have bc -> used in wms.request and wms.download
 if [ ! -x "`which bc`" ] ; then
-    g.message -e "bc is required, please install it first"
+    g.message -e "'bc' is required, please install it first"
     exit 1
 fi
 
 # check if we have sed
 if [ ! -x "`which sed`" ] ; then
-    g.message -e "sed is required, please install it first" 
+    g.message -e "'sed' is required, please install it first" 
     exit 1
 fi
 
 # check if we have gdalwarp -> used in r.in.gdalwarp
 if [ $GIS_FLAG_P -ne 1 ] ; then
     if [ ! -x "`which gdalwarp`" ] ; then
-        g.message -e "gdalwarp is required, please install it first" 
+        g.message -e "'gdalwarp' is required, please install it first" 
         exit 1
     fi
 fi
