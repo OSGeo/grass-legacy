@@ -17,8 +17,8 @@ Contents
 1. Local work (basically at ITC-irst)
 
    - check if
-        doc/raster/r.example/
-        doc/vector/v.example/
+        ( cd doc/raster/r.example/ ; make )
+        ( cd doc/vector/v.example/ ; make )
       still compile; fix otherwise
 
    - cleanup rubbish:
@@ -176,9 +176,14 @@ Contents
 
 1. update from CVS into clean directory
 
+yourcvsid=markus
+export CVSROOT=:ext:$yourcvsid@grasscvs:/grassrepository
+cvs -z3 checkout grass6
+mv grass6 grass6_tmp
+
 2. create the branch:
 
-BRANCH="releasebranch_6_1"
+BRANCH="releasebranch_6_3"
 cvs tag -b $BRANCH
 
 3. checkout the branch into new directory:
@@ -186,7 +191,7 @@ cvs tag -b $BRANCH
 yourcvsid=markus
 export CVSROOT=:ext:$yourcvsid@grasscvs:/grassrepository
 cvs -z3 checkout -r $BRANCH grass6
-
+mv grass6 clean_$BRANCH
 
 4. Take care that relevant HEAD changes are backported.
 
