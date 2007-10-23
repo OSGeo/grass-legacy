@@ -430,6 +430,7 @@ class BufferedWindow(wx.Window):
 
         # set size of the input image
         self.Map.ChangeMapSize(self.GetClientSize())
+        self.Map.AlignExtentFromDisplay() # align extent based on center point and display resolution
 
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
@@ -602,14 +603,7 @@ class BufferedWindow(wx.Window):
         # update statusbar
         #
         self.Map.SetRegion()
-        if self.parent.statusText == "Extent":
-            self.parent.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
-                                                (self.Map.region["w"], self.Map.region["e"],
-                                                 self.Map.region["s"], self.Map.region["n"]), 1)
-        elif self.parent.statusText == "Geometry":
-            self.parent.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
-                                                (self.Map.region["rows"], self.Map.region["cols"],
-                                                 self.Map.region["nsres"], self.Map.region["ewres"]), 1)
+        self.parent.StatusbarUpdate()
 
         return True
 
@@ -1137,8 +1131,8 @@ class BufferedWindow(wx.Window):
                                 # choose first or last node of line
                                 self.moveIds.reverse()
 
-                        # -> move line || move vertex
-                        self.UpdateMap(render=False)
+                    # -> move line || move vertex
+                    self.UpdateMap(render=False)
                 else: # no vector object found
                     self.UpdateMap(render=False, renderVector=False)
 
@@ -1693,26 +1687,14 @@ class BufferedWindow(wx.Window):
 
         # if new region has been calculated, set the values
         if newreg :
+            # calculate new center point and display resolution
             self.Map.region['center_easting'] = newreg['w'] + \
                 (newreg['e'] - newreg['w']) / 2
             self.Map.region['center_northing'] = newreg['s'] + \
                 (newreg['n'] - newreg['s']) / 2
             self.Map.region["ewres"] = (newreg['e'] - newreg['w']) / self.Map.width
             self.Map.region["nsres"] = (newreg['n'] - newreg['s']) / self.Map.height
-            
-            # calculete bounding box from center coordinates
-            if self.Map.region["ewres"] > self.Map.region["nsres"]:
-                res = self.Map.region["ewres"]
-            else:
-                res = self.Map.region["nsres"]
-
-            ew = (self.Map.width / 2) * res
-            ns = (self.Map.height / 2) * res
-
-            self.Map.region['n'] = self.Map.region['center_northing'] + ns
-            self.Map.region['s'] = self.Map.region['center_northing'] - ns
-            self.Map.region['e'] = self.Map.region['center_easting'] + ew
-            self.Map.region['w'] = self.Map.region['center_easting'] - ew
+            self.Map.AlignExtentFromDisplay()
 
             self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
                              self.Map.region['e'], self.Map.region['w'])
@@ -1735,20 +1717,7 @@ class BufferedWindow(wx.Window):
                 (zoom[0] - zoom[1]) / 2
             self.Map.region["ewres"] = (zoom[2] - zoom[3]) / self.Map.width
             self.Map.region["nsres"] = (zoom[0] - zoom[1]) / self.Map.height
-            
-            # calculete bounding box from center coordinates
-            if self.Map.region["ewres"] > self.Map.region["nsres"]:
-                res = self.Map.region["ewres"]
-            else:
-                res = self.Map.region["nsres"]
-
-            ew = (self.Map.width / 2) * res
-            ns = (self.Map.height / 2) * res
-
-            self.Map.region['n'] = self.Map.region['center_northing'] + ns
-            self.Map.region['s'] = self.Map.region['center_northing'] - ns
-            self.Map.region['e'] = self.Map.region['center_easting'] + ew
-            self.Map.region['w'] = self.Map.region['center_easting'] - ew
+            self.Map.AlignExtentFromDisplay()
 
             # update map
             self.UpdateMap()
@@ -1809,6 +1778,7 @@ class BufferedWindow(wx.Window):
             return
 
         self.Map.SetRegion()
+        self.Map.AlignExtentFromDisplay()
 
         self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
                          self.Map.region['e'], self.Map.region['w'])
@@ -1843,7 +1813,7 @@ class BufferedWindow(wx.Window):
 
         # We ONLY want to set extents here. Don't mess with resolution. Leave that
         # for user to set explicitly with g.region
-        new = self.Map.alignResolution()
+        new = self.Map.AlignResolution()
 
         cmdRegion = ["g.region", "--o",
                      "n=%f"    % new['n'],
@@ -1927,7 +1897,7 @@ class BufferedWindow(wx.Window):
 
     def SaveRegion(self, wind):
         """Save region settings"""
-        new = self.Map.alignResolution()
+        new = self.Map.AlignResolution()
 
         cmdRegion = ["g.region",
                      "-u",
@@ -2041,35 +2011,34 @@ class MapFrame(wx.Frame):
         self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
                                       choices = ["Coordinates",
                                                  "Extent",
-                                                 "Geometry"])
+                                                 "Geometry",
+                                                 "Map scale"])
         self.statusText = "Coordinates"
         self.statusbar.Bind(wx.EVT_CHOICE, self.OnToggleStatus, self.toggleStatus)
         # auto-rendering checkbox
-        self.autoRender = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Render"))
+        self.autoRender = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
+                                      label=_("Render"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleRender, self.autoRender)
         self.autoRender.SetValue(False)
         self.autoRender.SetToolTip(wx.ToolTip (_("Enable/disable auto-rendering")))
         # show region
-        self.showRegion = wx.CheckBox(self.statusbar, wx.ID_ANY, _("Show"))
+        self.showRegion = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
+                                      label=_("Show"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
         self.showRegion.SetToolTip(wx.ToolTip (_("Show/hide computational "
                                                  "region extent (set with g.region)")))
+        # map scale
+        self.mapScale = wx.TextCtrl(parent=self.statusbar, id=wx.ID_ANY,
+                                    value="", style=wx.TE_PROCESS_ENTER,
+                                    size=(150, -1))
+        self.mapScale.Hide()
+        self.statusbar.Bind(wx.EVT_TEXT_ENTER, self.OnChangeMapScale, self.mapScale)
+
         self.Map.SetRegion() # set region
-        #         map_frame_statusbar_fields = [
-        #             # field 0 -> region
-        #             "Ext:%.2f(W)-%.2f(E),%.2f(N)-%.2f(S); "
-        #             "Res:%.2f(NS),%.2f(EW)" %
-        #             (self.Map.region["w"], self.Map.region["e"],
-        #              self.Map.region["n"], self.Map.region["s"],
-        #              self.Map.region["nsres"], self.Map.region["ewres"]),
-        #             # field 1 -> coordinates
-        #             "%s,%s" % (None, None)]
-        #         for i in range(len(map_frame_statusbar_fields)):
-        #             self.statusbar.SetStatusText(map_frame_statusbar_fields[i], i)
-        self.statusbar.SetStatusText("None,None", 0)
-        self.StatusbarReposition() # reposition checkbox
+
+        self.StatusbarReposition() # reposition statusbar
 
         #
         # Init map display
@@ -2080,14 +2049,6 @@ class MapFrame(wx.Frame):
         self.MapWindow = BufferedWindow(self, id=wx.ID_ANY, Map=self.Map, tree=self.tree)
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor(self.cursors["default"]) 
-
-        #
-        # Init zoom history
-        #
-        self.MapWindow.ZoomHistory(self.Map.region['n'],
-                                   self.Map.region['s'],
-                                   self.Map.region['e'],
-                                   self.Map.region['w'])
 
         #
         # Decoration overlays
@@ -2128,6 +2089,14 @@ class MapFrame(wx.Frame):
         # Initialization of digitization tool
         #
         self.digit = Digit(mapwindow=self.MapWindow)
+
+        #
+        # Init zoom history
+        #
+        self.MapWindow.ZoomHistory(self.Map.region['n'],
+                                   self.Map.region['s'],
+                                   self.Map.region['e'],
+                                   self.Map.region['w'])
 
     def AddToolbar(self, name):
         """
@@ -2368,36 +2337,112 @@ class MapFrame(wx.Frame):
         self.statusText = event.GetString()
         self.StatusbarUpdate()
 
+    def OnChangeMapScale(self, event):
+        """Map scale changed by user"""
+        scale = event.GetString()
+        
+        try:
+            if scale[:2] != '1:':
+                raise ValueError
+            value = int(scale[2:])
+        except ValueError:
+            self.mapScale.SetValue('1:' + str(int(self.mapScaleValue)))
+            return 
+
+        dEW = value * (self.Map.region['cols'] / self.ppm[0])
+        dNS = value * (self.Map.region['rows'] / self.ppm[1])
+        self.Map.region['n'] = self.Map.region['center_northing'] + dNS / 2
+        self.Map.region['s'] = self.Map.region['center_northing'] - dNS / 2
+        self.Map.region['w'] = self.Map.region['center_easting']  - dEW / 2
+        self.Map.region['e'] = self.Map.region['center_easting']  + dEW / 2
+
+        # add to zoom history
+        self.MapWindow.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
+                                   self.Map.region['e'], self.Map.region['w'])
+
+        # redraw a map
+        self.MapWindow.UpdateMap()
+
     def StatusbarUpdate(self):
         """Update statusbar content"""
 
+        self.showRegion.Hide()
+        self.mapScale.Hide()
+        self.mapScaleValue = self.ppm = None
+
         if self.statusText == "Coordinates":
             self.statusbar.SetStatusText("", 0)
-            self.showRegion.Hide()
+
         elif self.statusText == "Extent":
             self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
                                          (self.Map.region["w"], self.Map.region["e"],
-                                          self.Map.region["n"], self.Map.region["s"]), 0)
+                                          self.Map.region["s"], self.Map.region["n"]), 0)
             self.showRegion.Show()
+
         elif self.statusText == "Geometry":
             self.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
                                           self.Map.region["nsres"], self.Map.region["ewres"]), 0)
-            self.showRegion.Hide()
+        elif self.statusText == "Map scale":
+            # TODO: need to be fixed...
+            ### screen X region problem
+            ### user should specify ppm
+            dc = wx.ScreenDC()
+            dpSizePx = wx.DisplaySize()   # display size in pixels
+            dpSizeMM = wx.DisplaySizeMM() # display size in mm (system)
+            dpSizeIn = (dpSizeMM[0] / 25.4, dpSizeMM[1] / 25.4) # inches
+            sysPpi  = dc.GetPPI()
+            comPpi = (dpSizePx[0] / dpSizeIn[0],
+                      dpSizePx[1] / dpSizeIn[1])
+
+            ppi = comPpi                  # pixel per inch
+            self.ppm = ((ppi[0] / 2.54) * 100, # pixel per meter
+                        (ppi[1] / 2.54) * 100)
+            
+            Debug.msg(4, "MapFrame.StatusbarUpdate(mapscale): size: px=%d,%d mm=%f,%f "
+                      "in=%f,%f ppi: sys=%d,%d com=%d,%d; ppm=%f,%f" % \
+                          (dpSizePx[0], dpSizePx[1], dpSizeMM[0], dpSizeMM[1],
+                           dpSizeIn[0], dpSizeIn[1],
+                           sysPpi[0], sysPpi[1], comPpi[0], comPpi[1],
+                           self.ppm[0], self.ppm[1]))
+
+            region = self.Map.region
+
+            heightCm = region['rows'] / self.ppm[1] * 100
+	    widthCm  = region['cols'] / self.ppm[0] * 100
+
+            Debug.msg(4, "MapFrame.StatusbarUpdate(mapscale): width_cm=%f, height_cm=%f" %
+                      (widthCm, heightCm))
+
+            xscale = (region['e'] - region['w']) / (region['cols'] / self.ppm[0])
+            yscale = (region['n'] - region['s']) / (region['rows'] / self.ppm[1])
+            scale = (xscale + yscale) / 2
+            Debug.msg(3, "MapFrame.StatusbarUpdate(mapscale): xscale=%f, yscale=%f -> scale=%f" % \
+                          (xscale, yscale, scale))
+
+            self.statusbar.SetStatusText("")
+            self.mapScale.SetValue("1:%ld" % scale)
+            self.mapScaleValue = scale
+            self.mapScale.Show()
+
         else:
             self.statusbar.SetStatusText("", 1)
 
     def StatusbarReposition(self):
         """Reposition checkbox in statusbar"""
         # reposition checkbox
-        widgets = {0: self.showRegion,
-                   1: self.toggleStatus,
-                   2: self.autoRender}
-        for idx, win in widgets.iteritems():
+        widgets = [(0, self.showRegion),
+                   (0, self.mapScale),
+                   (1, self.toggleStatus),
+                   (2, self.autoRender)]
+        for idx, win in widgets:
             rect = self.statusbar.GetFieldRect(idx)
-            if idx == 0: # show region
+            if idx == 0: # show region / mapscale
                 wWin, hWin = win.GetBestSize()
-                x, y = rect.x + rect.width - wWin, rect.y-1
+                if win == self.showRegion:
+                    x, y = rect.x + rect.width - wWin, rect.y-1
+                else:
+                    x, y = rect.x + 3, rect.y-1
                 w, h = wWin, rect.height+2
             else: # choice || auto-rendering
                 x, y = rect.x, rect.y-1

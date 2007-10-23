@@ -99,7 +99,7 @@ class AbstractDigit:
             self.settings["categoryMode"] = "Next to use"
 
             # query tool
-            self.settings["query"]       = ("length", False)   # name, select by box
+            self.settings["query"]       = ("length", True)   # name, select by box
             self.settings["queryLength"] = ("shorter than", 0) # gt or lt, threshold
             self.settings["queryDangle"] = ("shorter than", 0)
         else:
@@ -520,14 +520,38 @@ class VEdit(AbstractDigit):
 
     def SelectLinesByQuery(self, pos1, pos2):
         """Select features by query"""
+        thresh = self.settings['queryLength'][1]
+        if self.settings['query'][0] == "length":
+            if self.settings["queryLength"][0] == "shorter than":
+                thresh = -1 * thresh
+        else:
+            if self.settings["queryDangle"][0] == "shorter than":
+                thresh = -1 * thresh
+
+        w, n = pos1
+        e, s = pos2
+
+        if self.settings['query'][1] == False: # select globaly
+            vInfo = gcmd.Command(['v.info',
+                                  'map=%s' % self.map,
+                                  '-g'])
+            for item in vInfo.ReadStdOutput():
+                if 'north' in item:
+                    n = float(item.split('=')[1])
+                elif 'south' in item:
+                    s = float(item.split('=')[1])
+                elif 'east' in item:
+                    e = float(item.split('=')[1])
+                elif 'west' in item:
+                    w = float(item.split('=')[1])
 
         vEdit = (['v.edit',
                   '--q',
                   'map=%s' % self.map,
                   'tool=select',
-                  'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1]),
-                  'query=%s' % self.settings['query'],
-                  'thresh=%f' % self.settings['queryLength'][1]])
+                  'bbox=%f,%f,%f,%f' % (w, n, e, s),
+                  'query=%s' % self.settings['query'][0],
+                  'thresh=%f' % thresh])
 
         if self.settings['query'] == "length" and \
                 self.settings['queryLength'][0] == "longer than":
