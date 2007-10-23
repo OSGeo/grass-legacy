@@ -30,7 +30,7 @@ install:
 	-$(MKDIR) $(INSTALL_DIR)
 	$(INSTALL) src/nvwish$(EXE) $(INSTALL_DIR)/$(PROG)$(EXE)
 	$(INSTALL) scripts/$(PROG) $(GISBASE)/bin
-ifneq ($(strip $(MINGW32)),)
+ifneq ($(strip $(MINGW)),)
 	$(INSTALL) scripts/nviz.bat $(GISBASE)/bin
 endif
 	-$(MKDIR) $(INSTALL_DIR)/scripts
