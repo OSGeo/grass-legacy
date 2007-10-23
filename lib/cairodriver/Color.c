@@ -11,10 +11,9 @@ void Cairo_color(int color)
 	if (color != previous_color)
 	{
 		int r = (color >> 16) & 0xFF;
-		int g = (color >> 8) & 0xFF;
-		int b = color & 0xFF;
+		int g = (color >>  8) & 0xFF;
+		int b = (color >>  0) & 0xFF;
 
-		finish_drawing_op();
 		cairo_set_source_rgba(cairo, CAIROCOLOR(r), CAIROCOLOR(g), CAIROCOLOR(b), 1.0);
 		previous_color = color;
 
@@ -26,5 +25,5 @@ int Cairo_lookup_color(int r, int g, int b)
 {
 	G_debug(3, "Cairo_lookup_color: %d %d %d", r, g, b);
 
-	return (r << 16) + (g << 8) + b;
+	return (r << 16) + (g << 8) + (b << 0);
 }

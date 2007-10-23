@@ -3,8 +3,11 @@
 void write_image(void)
 {
 	G_debug(1, "write_image");
-	finish_drawing_op();
-	if (cairo && surface && modified)
+
+	if (!modified)
+		return;
+
+	if (cairo && surface)
 	{
 		if (file_type == FTYPE_PNG)
 		{
@@ -13,5 +16,6 @@ void write_image(void)
 		}
 		/* vector format files are written directly to file */
 	}
+
 	modified = 0;
 }

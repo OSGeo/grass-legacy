@@ -8,6 +8,7 @@ char *file_name;
 int file_type;
 int width, height;
 int modified;
+int auto_write;
 
 /* background color */
 double bgcolor_r, bgcolor_g, bgcolor_b, bgcolor_a;
@@ -20,8 +21,8 @@ int Cairo_Graph_set(int argc, char **argv)
 {
 	char *c;
 
-	G_debug(1, "Cairo_Graph_set");
 	G_gisinit("Cairo driver");
+	G_debug(1, "Cairo_Graph_set");
 
 	/* set image properties */
 	width = screen_right - screen_left;
@@ -40,15 +41,24 @@ int Cairo_Graph_set(int argc, char **argv)
 	/* get file type (from extension) */
 	if (ends_with(c, ".png"))
 		file_type = FTYPE_PNG;
+#if CAIRO_HAS_PDF_SURFACE
 	else if (ends_with(c, ".pdf"))
 		file_type = FTYPE_PDF;
+#endif
+#if CAIRO_HAS_PS_SURFACE
 	else if (ends_with(c, ".ps"))
 		file_type = FTYPE_PS;
+#endif
+#if CAIRO_HAS_SVG_SURFACE
 	else if (ends_with(c, ".svg"))
 		file_type = FTYPE_SVG;
+#endif
 	else
 		G_fatal_error("Unknown file extension: %s", c);
 	G_debug(1, "File type: %s (%d)", c, file_type);
+
+	c = getenv("GRASS_AUTO_WRITE");
+	auto_write = c && strcmp(c, "TRUE") == 0;
 
 	/* get background color */
 	c = getenv("GRASS_BACKGROUNDCOLOR");
@@ -83,7 +93,6 @@ void Cairo_Graph_close(void)
 {
 	G_debug(1, "Cairo_Graph_close");
 
-	finish_drawing_op();
 	write_image();
 
 	if (cairo)
@@ -108,15 +117,21 @@ void init_cairo(void)
 	case FTYPE_PNG:
 		surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 		break;
+#if CAIRO_HAS_PDF_SURFACE
 	case FTYPE_PDF:
 		surface = (cairo_surface_t *) cairo_pdf_surface_create(file_name, (double) width, (double) height);
 		break;
+#endif
+#if CAIRO_HAS_PS_SURFACE
 	case FTYPE_PS:
 		surface = (cairo_surface_t *) cairo_ps_surface_create(file_name, (double) width, (double) height);
 		break;
+#endif
+#if CAIRO_HAS_SVG_SURFACE
 	case FTYPE_SVG:
 		surface = (cairo_surface_t *) cairo_svg_surface_create(file_name, (double) width, (double) height);
 		break;
+#endif
 	default:
 		G_fatal_error("Unknown Cairo surface type");
 		break;
@@ -125,27 +140,8 @@ void init_cairo(void)
 	if (cairo_surface_status(surface) != CAIRO_STATUS_SUCCESS)
 		G_fatal_error("Failed to initialize Cairo surface");
 
-	/* create cairo context */
 	cairo = cairo_create(surface);
 
-	/*
-	   Translate drawing operations 1/2 pixel for pixel-based formats.
-	   This is because in cairo, the center coordinates of the top left
-	   pixel are (0.5, 0.5), not (0, 0). Since grass monitors receive
-	   integer coordinates, if we didn't do this all points would
-	   fall between two screen pixels, creating a blurry look
-	   when antialiasing is turned on.
-	 */
-	if (cairo_surface_get_type(surface) == CAIRO_SURFACE_TYPE_IMAGE)
-		cairo_translate(cairo, 0.5, 0.5);
-
-	/* TODO: set up line join and line cap style. Example: */
-	/*
-	   cairo_set_line_join(cairo, CAIRO_LINE_JOIN_ROUND);
-	   cairo_set_line_cap(cairo, CAIRO_LINE_CAP_ROUND);
-	 */
-
-	/* clear background */
 	Cairo_Erase();
 }
 
@@ -155,5 +151,5 @@ int ends_with(const char *string, const char *suffix)
 	if (strlen(string) < strlen(suffix))
 		return FALSE;
 
-	return !strcasecmp(suffix, string + strlen(string) - strlen(suffix));
+	return G_strcasecmp(suffix, string + strlen(string) - strlen(suffix)) == 0;
 }
