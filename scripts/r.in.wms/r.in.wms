@@ -324,7 +324,7 @@ listLayers() {
 		  > "${TMP}capabilities.txt"
 
 	else : # xml2 is not available
-		g.message -w "xml2 NOT avaliable"
+		g.message -w "The 'xml2' program was not found. Proceeding with internal XML parsing which may not be as reliable."
 		grep "Name\|Title\|Style\|Layer" "$CAPABILITIES_FILE" | \
 		  sed -e "s/<Layer .*>/LAYER:/" \
 		      -e "s/<\/Layer.*>//" \
