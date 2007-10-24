@@ -182,14 +182,14 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     case of boundary watersheds; */
     if (done[ur] || done[vr]) {
       if (done[ur]) {
-	FLOOD_DEBUG printf("%d is done, %d raised to %d and done\n", 
-			   (int)ur, (int)vr, (int)h);
+	FLOOD_DEBUG printf("%d is done, %d raised to %f and done\n", 
+			   ur, vr, (double)h);
 	done[vr] = 1;
 	raise[vr] = h;
       } else {
 	assert(done[vr]);
-	FLOOD_DEBUG printf("%d is done, %d raised to %d and done\n", 
-			   vr, ur, h);
+	FLOOD_DEBUG printf("%d is done, %d raised to %f and done\n", 
+			   vr, ur, (double)h);
 	done[ur] = 1;
 	raise[ur] = h;
       }
@@ -198,7 +198,7 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     
     /* if none of the  watersheds is done: union and raise them */
     assert(!done[ur] && !done[vr] && ur>0 && vr>0);
-    FLOOD_DEBUG printf("union %d and %d,  raised to %d\n", ur, vr, h);
+    FLOOD_DEBUG printf("union %d and %d,  raised to %f\n", ur, vr, (double)h);
     raise[ur] = raise[vr] = h;
     unionf.makeUnion(ur,vr);
   }
