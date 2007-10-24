@@ -113,7 +113,6 @@ class Command(Thread):
 
                 except Exception, e:
                     print "Command Thread: ",e
-                    pass
 
             time.sleep(0.1)
 
@@ -1058,14 +1057,13 @@ class BufferedWindow(wx.Window):
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex",
                                        "copyCats", "editLine", "flipLine",
                                        "mergeLine", "snapLine",
-                                       "queryLine"]:
+                                       "queryLine", "breakLine"]:
                 nselected = 0
                 # -> delete line || move line || move vertex
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     if len(digitClass.driver.GetSelected()) == 0:
-                        # -> move vertex (select by point)
-                        # return vertex coordinates (tuple)
                         nselected = digitClass.driver.SelectLineByPoint(pos1, type="line")
+                        # return point on the line
                         
                 elif digitToolbar.action == "copyCats":
                     if not hasattr(self, "copyCatsIds"):
@@ -1104,8 +1102,6 @@ class BufferedWindow(wx.Window):
                     nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
 
                 if nselected > 0:
-                    # highlight selected features
-                    # self.UpdateMap(render=False)
                     if digitToolbar.action in ["moveLine", "moveVertex",
                                                "copyCats", "editLine"]:
                         # get pseudoDC id of objects which should be redrawn
@@ -1133,6 +1129,8 @@ class BufferedWindow(wx.Window):
 
                     # -> move line || move vertex
                     self.UpdateMap(render=False)
+                    if digitToolbar.action != "copyCats":
+                        redrawAll = False
                 else: # no vector object found
                     self.UpdateMap(render=False, renderVector=False)
 
@@ -1169,7 +1167,9 @@ class BufferedWindow(wx.Window):
                                     'map=%s' % digitClass.settings['backgroundMap'],
                                     'cats=%s' % ",".join(["%d" % v for v in self.copyIds]),
                                     '-i',
-                                    'color=yellow']
+                                    'color=yellow',
+                                    'fcolor=yellow',
+                                    'type=point,line,boundary,centroid']
                         self.layerTmp = self.Map.AddLayer(type='vector',
                                                           command=dVectTmp)
                         self.UpdateMap(render=True, renderVector=False)
@@ -1359,8 +1359,8 @@ class BufferedWindow(wx.Window):
                     # move vertex
                     digitClass.MoveSelectedVertex(pFrom,
                                                   move)
-                else: # edit line
-                    pass
+
+                redrawAll = True
 
                 del self.moveBegin
                 del self.moveCoords
@@ -1389,6 +1389,9 @@ class BufferedWindow(wx.Window):
                     x, y = self.pdcVector.GetIdBounds(id)[0:2]
                     coords.append(self.Pixel2Cell((x, y)))
                 digitClass.EditLine(line, coords)
+
+                redrawAll = True
+
                 del self.moveBegin
                 del self.moveCoords
                 del self.moveIds
@@ -1396,6 +1399,8 @@ class BufferedWindow(wx.Window):
                 digitClass.FlipLine()
             elif digitToolbar.action == "mergeLine":
                 digitClass.MergeLine()
+            elif digitToolbar.action == "breakLine":
+                digitClass.BreakLine()
             elif digitToolbar.action == "snapLine":
                 digitClass.SnapLine()
             elif digitToolbar.action == "connectLine":
@@ -1462,12 +1467,14 @@ class BufferedWindow(wx.Window):
                                   "addVertex", "removeVertex", "moveVertex",
                                   "copyCats", "flipLine", "mergeLine",
                                   "snapLine", "connectLine", "copyLine",
-                                  "queryLine"]:
+                                  "queryLine", "breakLine"]:
                 # varios tools -> unselected selected features
                 digitClass.driver.SetSelected([])
                 if digitToolbar.action in ["moveLine", "moveVertex", "editLine"] and \
                         hasattr(self, "moveBegin"):
-                    # move feature -> delete 'move' variables
+                    
+                    redrawAll = True
+
                     del self.moveBegin
                     del self.moveCoords
                     del self.moveIds
@@ -1522,7 +1529,7 @@ class BufferedWindow(wx.Window):
                         # (vertex, left vertex, left line,
                         # right vertex, right line)
 
-                        # self.pdcVector.RemoveId(self.moveIds[0])
+                        ## self.pdcVector.RemoveId(self.moveIds[0])
                         # do not draw static lines
                         self.polycoords = []
                         if digitToolbar.action == "moveVertex":
@@ -1537,9 +1544,9 @@ class BufferedWindow(wx.Window):
                                 self.pdcVector.RemoveId(self.moveIds[2]-1)
                                 self.polycoords.append((x, y))
                         else: # edit line
-                            # self.pdcVector.TranslateId(self.moveIds[-1], dx, dy)
-                            # self.pdcVector.RemoveId(self.moveIds[-1]) # last vertex
-                            # self.pdcVector.RemoveId(self.moveIds[-1] - 1) # line
+                            ## self.pdcVector.TranslateId(self.moveIds[-1], dx, dy)
+                            ## self.pdcVector.RemoveId(self.moveIds[-1]) # last vertex
+                            ## self.pdcVector.RemoveId(self.moveIds[-1] - 1) # line
                             try:
                                 if self.moveIds[-1] > 0: # previous vertex
                                     x, y = self.pdcVector.GetIdBounds(self.moveIds[-1])[0:2]
@@ -2232,7 +2239,7 @@ class MapFrame(wx.Frame):
 
             # reset mouse['box'] if needed
             if self.digittoolbar.action in ['addLine']:
-                if digittoolbar.type in ['point', 'centroid']:
+                if self.digittoolbar.type in ['point', 'centroid']:
                     self.MapWindow.mouse['box'] = 'point'
                 else: # line, boundary
                     self.MapWindow.mouse['box'] = 'line'
