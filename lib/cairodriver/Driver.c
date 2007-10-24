@@ -30,7 +30,7 @@ const struct driver *Cairo_Driver(void)
 	drv.Box_rel		= NULL;
 	drv.Client_Open		= NULL;
 	drv.Client_Close	= Cairo_Client_Close;
-	drv.Erase		= NULL;
+	drv.Erase		= Cairo_Erase;
 	drv.Get_with_box	= NULL;
 	drv.Get_with_line	= NULL;
 	drv.Get_with_pointer	= NULL;
@@ -50,7 +50,7 @@ const struct driver *Cairo_Driver(void)
 	drv.Begin_scaled_raster	= Cairo_begin_scaled_raster;
 	drv.Scaled_raster	= Cairo_scaled_raster;
 	drv.End_scaled_raster	= Cairo_end_scaled_raster;
-	drv.Respond		= NULL;
+	drv.Respond		= Cairo_Respond;
 	drv.Work_stream		= NULL;
 	drv.Do_work		= NULL;
 	drv.lookup_color	= Cairo_lookup_color;

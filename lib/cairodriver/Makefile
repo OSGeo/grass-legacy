@@ -27,9 +27,9 @@ LIB_OBJS = \
 	Draw_point.o	\
 	Poly.o		\
 	Raster.o	\
+	Respond.o	\
 	Color.o		\
-	write.o		\
-	drawing.o
+	write.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
