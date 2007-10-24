@@ -117,7 +117,7 @@ if [ $? -ne 0 ] ; then
        exit 1
    fi
    driver=`db.connect -p | grep driver | cut -d':' -f2`
-   if [ "$driver" = "(null)" ] || [ "$database" = "(null)" ] ; then
+   if [ -z "$driver" ] || [ -z "$database" ] ; then
       g.message "Setting default database driver to DBF."
       database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
       driver=dbf
