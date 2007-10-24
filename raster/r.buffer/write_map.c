@@ -42,7 +42,7 @@ int write_output_map (char *output, int offset)
     {
 	fd_in = G_open_cell_old (output, G_mapset());
 	if (fd_in < 0)
-	    G_fatal_error(_("Unable to open raster map <%s> "), output);
+	    G_fatal_error(_("Unable to open raster map <%s>"), output);
     }
     cell = G_allocate_cell_buf();
     G_message( _("Writing output raster map <%s>..."),

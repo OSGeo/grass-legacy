@@ -58,16 +58,16 @@ int main(int argc, char *argv[])
     Vect_check_input_output_name(new->answer, old->answer, GV_FATAL_EXIT);
 
     if ((mapset = G_find_vector2(old->answer, "")) == NULL)
-	G_fatal_error(_("Could not find input %s"), old->answer);
+	G_fatal_error(_("Vector map <%s> not found"), old->answer);
 
     Vect_set_open_level(2);
 
     if (1 > Vect_open_old(&In, old->answer, mapset))
-	G_fatal_error(_("Could not open input"));
+	G_fatal_error(_("Unable to open vector map <%s>"), old->answer);
 
     if (0 > Vect_open_new(&Out, new->answer, WITHOUT_Z)) {
 	Vect_close(&In);
-	G_fatal_error(_("Could not open output"));
+	G_fatal_error(_("Unable to create vector map <%s>"), new->answer);
     }
 
     Vect_copy_head_data(&In, &Out);

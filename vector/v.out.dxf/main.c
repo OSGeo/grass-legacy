@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
     /* open input vector */
     if ((mapset = G_find_vector2(input->answer, "")) == NULL)
-	G_fatal_error(_("Could not find input map <%s>."), input->answer);
+	G_fatal_error(_("Vector map <%s> not found"), input->answer);
 
     if (output->answer)
 	dxf_file = G_store(output->answer);
@@ -189,7 +189,7 @@ int add_plines(struct Map_info *Map, double textsize)
 	}
     }
 
-    G_message (_("[%d] features written"), nlines);
+    G_message (_("%d features written"), nlines);
 
     return 0;
 }
