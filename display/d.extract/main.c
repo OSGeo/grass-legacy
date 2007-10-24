@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("display");
     module->description =
-	_("Select and extract vectors with mouse into new vector map");
+	_("Selects and extracts vectors with mouse into new vector map.");
 
     input = G_define_standard_option(G_OPT_V_INPUT);
     output = G_define_standard_option(G_OPT_V_OUTPUT);
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     mapset = G_find_vector2(input->answer, NULL);
 
     if (mapset == NULL)
-	G_fatal_error(_("Could not find input %s"), input->answer);
+	G_fatal_error(_("Vector map <%s> not found"), input->answer);
 
     Vect_set_open_level(2);
     Vect_open_old(&In, input->answer, mapset);
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
     R_close_driver();
 
     /* Copy tables */
-    G_message(_("Copying tables ..."));
+    G_message(_("Copying tables..."));
     n = Vect_get_num_dblinks(&In);
     tbtype = GV_1TABLE;
     if (n > 1)
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 			    Fin->driver, Vect_subst_var(Fin->database, &Out),
 			    Fin->table);
 	if (ret == DB_FAILED) {
-	    G_warning("Cannot copy table");
+	    G_warning("Unable to copy table");
 	    continue;
 	}
     }				/* for of copy table */

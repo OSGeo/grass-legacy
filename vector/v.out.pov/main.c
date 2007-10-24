@@ -42,7 +42,7 @@ main (int argc, char *argv[])
     /* Module options */
     module = G_define_module();
     module->keywords = _("vector, export");
-    module->description = "Convert to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y";
+    module->description = "Converts to POV-Ray format, GRASS x,y,z -> POV-Ray x,z,y";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
     
     /* open input vector */
     if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	 G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
+	 G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     }
     
     Vect_set_open_level (2); 
@@ -194,7 +194,7 @@ main (int argc, char *argv[])
     Vect_close (&In);
 
     /* Summary */
-    G_message (_( "%d features written."), count);
+    G_message (_( "%d features written"), count);
 
     exit(EXIT_SUCCESS) ;
 }
