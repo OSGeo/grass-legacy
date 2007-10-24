@@ -301,6 +301,8 @@ set descmenu [subst  {
 		{command {[G_msg "Flow accumulation"]} {} "r.terraflow: Flow accumulation for massive grids" {} -command {execute r.terraflow }}
 		{command {[G_msg "Flow lines"]} {} "r.flow: " {} -command {execute r.flow }}
 		{separator}
+	    {command {[G_msg "Groundwater flow model"]} {} "r.gwflow: 2D groundwater flow model" {} -command {execute r.gwflow }}
+		{separator}
 		{command {[G_msg "SIMWE overland flow modeling"]} {} "r.sim.water: SIMWE overland flow modeling" {} -command {execute r.sim.water }}
 		{command {[G_msg "SIMWE sediment flux modeling"]} {} "r.sim.sediment: SIMWE sediment erosion, transport, & deposition modeling" {} -command {execute r.sim.sediment }}
 		{separator}
@@ -415,6 +417,7 @@ set descmenu [subst  {
  {[G_msg "&Vector"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			
 		{command {[G_msg "Digitize"]} {} "v.digit: Digitize/edit vector map" {} -command {execute v.digit }}
+		{command {[G_msg "Edit features"]} {} "v.edit: Edit vector features" {} -command {execute v.edit }}
 		{separator}
 		{command {[G_msg "Create/rebuild topology: "]} {} "v.build: Create or rebuild topology of vector objects" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector"]} {} "v.clean: Clean vector objects" {} -command {execute v.clean }}
@@ -438,6 +441,8 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Reposition vector"]} {} "v.transform: Reposition (shift, rotate, skew) vector file in coordinate space" {} -command {execute v.transform }}
 		{command {[G_msg "Reproject vector"]} {} "v.proj: Reproject vector from other location" {} -command {execute v.proj }}
+		{separator}
+		{command {[G_msg "Metadata support"]} {} "v.support: Edit metadata for vector map" {} -command {execute v.support }}
 	}}
 	{separator}
 	{command {[G_msg "Query with attributes"]} {} "v.extract: Query vector objects by attribute values" {} -command {execute v.extract }}
@@ -573,6 +578,7 @@ set descmenu [subst  {
 	{command {[G_msg "3D MASK"]} {} "r3.mask: " {} -command {execute r3.mask }}
 	{command {[G_msg "3D Map calculator"]} {} "r3.mapcalculator: Map calculator for grid3D operations" {} -command {execute r3.mapcalculator }}
 	{command {[G_msg "Cross section from volume"]} {} "r3.cross.rast: Create 2D raster cross section from grid3D volume" {} -command { execute r3.cross.rast }}
+	{command {[G_msg "Groundwater flow model"]} {} "r3.gwflow: 3D groundwater flow model" {} -command {execute r3.gwflow }}
 	{command {[G_msg "Interpolate volume from vector points"]} {} "v.vol.rst: Interpolate volume from vector points using splines" {} -command {execute v.vol.rst }}
 	{cascad {[G_msg "Report and Statistics"]} {} "" $tmenu {			
 		{command {[G_msg "Basic information"]} {} "r3.info: Display information about grid3D volume" {} -command {execute r3.info }}
@@ -596,6 +602,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Add columns"]} {} "v.db.addcol: Add columns to table" {} -command {execute v.db.addcol }}
 		{command {[G_msg "Change values"]} {} "v.db.update: Change values in a column" {} -command {execute v.db.update }}
+		{command {[G_msg "Drop column"]} {} "v.db.dropcol: Drop column from a table" {} -command {execute v.db.dropcol }}
 		{command {[G_msg "Rename a column"]} {} "v.db.renamecol: Rename a column" {} -command {execute v.db.renamecol }}
 		{separator}
 		{command {[G_msg "Test database"]} {} "db.test: Test database" {} -command {execute db.test }}
