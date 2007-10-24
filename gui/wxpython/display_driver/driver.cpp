@@ -307,7 +307,7 @@ int DisplayDriver::DrawLineVerteces(int line)
     wxPoint *point;
     wxPen *pen;
 
-    if (!IsSelected(line) && !drawSegments && !settings.vertex.enabled)
+    if (!IsSelected(line) && !settings.vertex.enabled)
 	return -1;
 
     // determine color
@@ -322,7 +322,6 @@ int DisplayDriver::DrawLineVerteces(int line)
 	}
 	else {
 	    dcId = 1;
-	    dc->SetId(dcId);
 	}
     }
 
@@ -332,7 +331,7 @@ int DisplayDriver::DrawLineVerteces(int line)
     for (int i = 1; i < pointsScreen->GetCount() - 1; i++, dcId += 2) {
 	point = (wxPoint*) pointsScreen->Item(i)->GetData();
 
-	if (drawSegments) {
+	if (IsSelected(line) && drawSegments) {
 	    dc->SetId(dcId);
 	    dc->SetPen(*pen);
 	    wxRect rect (*point, *point);
@@ -565,7 +564,7 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.map_width  = map_width;
     region.map_height = map_height;
 
-#ifdef DEBUG:
+#ifdef DEBUG
     std::cerr << "region: n=" << north
 	      << "; s=" << south
 	      << "; e=" << east

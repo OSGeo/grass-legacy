@@ -450,6 +450,11 @@ class VEdit(AbstractDigit):
 
         return self.__ModifyLines('merge')
 
+    def BreakLine(self):
+        """Break selected lines"""
+
+        return self.__ModifyLines('break')
+
     def SnapLine(self):
         """Snap selected lines"""
 
@@ -520,11 +525,12 @@ class VEdit(AbstractDigit):
 
     def SelectLinesByQuery(self, pos1, pos2):
         """Select features by query"""
-        thresh = self.settings['queryLength'][1]
         if self.settings['query'][0] == "length":
+            thresh = self.settings['queryLength'][1]
             if self.settings["queryLength"][0] == "shorter than":
                 thresh = -1 * thresh
         else:
+            thresh = self.settings['queryDangle'][1]
             if self.settings["queryDangle"][0] == "shorter than":
                 thresh = -1 * thresh
 
@@ -1313,7 +1319,7 @@ class DigitSettingsDialog(wx.Dialog):
         self.parent.digit.settings["queryLength"] = (self.queryLengthSL.GetStringSelection(),
                                                      int(self.queryLengthValue.GetValue()))
         self.parent.digit.settings["queryDangle"] = (self.queryDangleSL.GetStringSelection(),
-                                                     int(self.queryDangleValue.GetValue()),)
+                                                     int(self.queryDangleValue.GetValue()))
 
         # update driver settings
         self.parent.digit.driver.UpdateSettings()

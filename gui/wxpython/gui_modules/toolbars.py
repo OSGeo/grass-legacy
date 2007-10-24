@@ -370,6 +370,10 @@ class DigitToolbar(AbstractToolbar):
         except:
             pass
 
+        # close settings dialog if still open
+        if self.settingsDialog:
+            self.settingsDialog.OnCancel(None)
+
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
 
@@ -440,7 +444,8 @@ class DigitToolbar(AbstractToolbar):
 
         if not self.settingsDialog:
             self.settingsDialog = DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
-                                                      style=wx.DEFAULT_DIALOG_STYLE).Show()
+                                                      style=wx.DEFAULT_DIALOG_STYLE)
+            self.settingsDialog.Show()
 
     def OnAdditionalToolMenu(self, event):
         """Menu for additional tools"""
@@ -451,19 +456,23 @@ class DigitToolbar(AbstractToolbar):
         toolMenu.AppendItem(copy)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnCopy, copy)
 
-        flip = wx.MenuItem(toolMenu, wx.ID_ANY, 'Flip selected lines/boudaries')
+        flip = wx.MenuItem(toolMenu, wx.ID_ANY, 'Flip selected lines')
         toolMenu.AppendItem(flip)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnFlip, flip)
 
-        merge = wx.MenuItem(toolMenu, wx.ID_ANY, 'Merge selected lines/boundaries')
+        merge = wx.MenuItem(toolMenu, wx.ID_ANY, 'Merge selected lines')
         toolMenu.AppendItem(merge)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnMerge, merge)
 
-        snap = wx.MenuItem(toolMenu, wx.ID_ANY, 'Snap selected lines/boundaries')
+        breakL = wx.MenuItem(toolMenu, wx.ID_ANY, 'Break selected lines at intersection')
+        toolMenu.AppendItem(breakL)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnBreak, breakL)
+
+        snap = wx.MenuItem(toolMenu, wx.ID_ANY, 'Snap selected lines (only to nodes)')
         toolMenu.AppendItem(snap)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnSnap, snap)
 
-        connect = wx.MenuItem(toolMenu, wx.ID_ANY, 'Connect selected two lines/boundaries')
+        connect = wx.MenuItem(toolMenu, wx.ID_ANY, 'Connect two selected lines')
         toolMenu.AppendItem(connect)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnConnect, connect)
 
@@ -471,7 +480,7 @@ class DigitToolbar(AbstractToolbar):
         toolMenu.AppendItem(query)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnQuery, query)
 
-        zbulk = wx.MenuItem(toolMenu, wx.ID_ANY, 'Z bulk-labeling 3D lines')
+        zbulk = wx.MenuItem(toolMenu, wx.ID_ANY, 'Z bulk-labeling of 3D lines')
         toolMenu.AppendItem(zbulk)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnZBulk, zbulk)
 
@@ -496,6 +505,12 @@ class DigitToolbar(AbstractToolbar):
         """Merge selected lines/boundaries"""
         Debug.msg(2, "Digittoolbar.OnMerge():")
         self.action="mergeLine"
+        self.parent.MapWindow.mouse['box'] = 'box'
+
+    def OnBreak(self, event):
+        """Break selected lines/boundaries"""
+        Debug.msg(2, "Digittoolbar.OnBreak():")
+        self.action="breakLine"
         self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnSnap(self, event):
