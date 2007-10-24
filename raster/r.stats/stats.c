@@ -242,7 +242,7 @@ print_cell_stats (char *fmt, int with_percents, int with_counts, int with_areas,
 		nulls_found = 0;
 		for (i = 0; i < nfiles; i++)
 		/*
-		    if (node->values[i] || (!raw && is_fp[i]))
+		    if (node->values[i] || (!raw_output && is_fp[i]))
 			break;
                 */
 		if(node->values[i] == NULL_CELL)
@@ -259,11 +259,11 @@ print_cell_stats (char *fmt, int with_percents, int with_counts, int with_areas,
                 if (node->values[i] == NULL_CELL)
 		{
 		   fprintf (stdout,"%s%s", i?fs:"", no_data_str);
-		   if (with_labels && !(raw && is_fp[i]))
+		   if (with_labels && !(raw_output && is_fp[i]))
 		       fprintf (stdout,"%s%s", fs,
 		  	   G_get_cat (null_cell, &labels[i]));
                 }
-		else if(raw || !is_fp[i] || as_int)
+		else if(raw_output || !is_fp[i] || as_int)
 		{
 		   fprintf (stdout,"%s%ld", i?fs:"", (long) node->values[i]);
 		   if (with_labels && !is_fp[i])

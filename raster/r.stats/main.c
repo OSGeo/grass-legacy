@@ -208,7 +208,7 @@ int main (int argc, char *argv[])
     cat_ranges = flag.C->answer;
 
     averaged = flag.A->answer;
-    raw = flag.r->answer;
+    raw_output = flag.r->answer;
     as_int = flag.i->answer;
     nrows = G_window_rows();
     ncols = G_window_cols();
