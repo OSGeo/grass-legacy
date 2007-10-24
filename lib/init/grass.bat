@@ -21,7 +21,7 @@ rem Path to your web browser
 rem set GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EX
 
 rem Path to the proj files (notably the epsg projection list)
-rem set GRASS_PROJSHARE=/c/grass/share/proj
+rem set GRASS_PROJSHARE=c:/grass/share/proj
 
 set WINGISBASE=GISBASE_VALUE
 "%WINGISBASE%\etc\init.bat" %*
