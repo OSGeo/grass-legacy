@@ -1,6 +1,6 @@
-MODULE_TOPDIR = ../../../..
+MODULE_TOPDIR = ../../..
 
-SUBDIRS = src
+SUBDIRS = lib
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
