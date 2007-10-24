@@ -3,5 +3,6 @@
 void Cairo_Client_Close(void)
 {
 	G_debug(1, "Cairo_Client_Close");
-	write_image();
+	if (auto_write)
+		write_image();
 }
