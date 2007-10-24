@@ -22,7 +22,7 @@ raw_stats (int fd[], int with_coordinates, int with_xy, int with_labels)
     for (i = 0; i < nfiles; i++)
     {
 	/* if fp map and report real data, not cat indexes, set type to DCELL */
-	if(is_fp[i] && !raw && !as_int) map_type[i] = DCELL_TYPE;
+	if(is_fp[i] && !raw_output && !as_int) map_type[i] = DCELL_TYPE;
 	else                            map_type[i] = CELL_TYPE;
 	rast[i] = G_allocate_raster_buf(map_type[i]);
     }
