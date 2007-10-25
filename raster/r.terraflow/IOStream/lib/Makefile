@@ -1,22 +1,10 @@
-LIBRARY = libiostream.a
+MODULE_TOPDIR = ../../../..
 
-LIBSRCPATH = ./src
+SUBDIRS = src
 
-RANLIB = ranlib
+include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-export
+default: parsubdirs
 
-all: $(LIBRARY)
+clean: cleansubdirs
 
-
-$(LIBSRCPATH)/$(LIBRARY):
-	$(MAKE) -C $(LIBSRCPATH)
-
-$(LIBRARY): $(LIBSRCPATH)/$(LIBRARY)
-	cp $< $@
-	$(RANLIB) $@
-
-clean:
-	-rm $(LIBRARY)
-	-rm $(LIBSRCPATH)/$(LIBRARY)
-	-rm $(LIBSRCPATH)/*.o

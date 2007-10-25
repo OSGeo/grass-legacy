@@ -9,48 +9,33 @@ SOURCES = main.cc common.cc stats.cc fill.cc types.cc ccforest.cc \
 	filldepr.cc grid.cc genericWindow.cc \
 	flow.cc sweep.cc weightWindow.cc
 
-HEADERS = common.h stats.h streamutils.h types.h \
-	option.h fill.h main.h \
-	nodata.h ccforest.h	sortutils.h 3scan.h\
-	plateau.h direction.h genericWindow.h \
-	water.h grass2str.h filldepr.h unionFind.h \
-	grid.h genericWindow.h flow.h sweep.h \
-	weightWindow.h
-
 OBJARCH=OBJ.$(ARCH)
 
 FLOAT_OBJ := $(patsubst %.cc, $(OBJARCH)/FLOAT/%.o, $(SOURCES))
 SHORT_OBJ := $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
 
-IOSTREAM_DIR =  ./IOStream
+IOSTREAM_LIBNAME = iostream
+IOSTREAM_DIR = IOStream
 IOSTREAM_INC = $(IOSTREAM_DIR)/include
-IOSTREAM_LIBDIR = $(IOSTREAM_DIR)/lib
-IOSTREAM_LIB =  -liostream
-IOSTREAM_DEPLIB = $(IOSTREAM_LIBDIR)/libiostream.a
-
-WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
-  -Wimplicit-int -Wimplicit-function-declaration -Wreturn-type	\
-  -Wcomment  -Wno-sign-compare
-
+IOSTREAM_LIB =  -l$(IOSTREAM_LIBNAME)
+IOSTREAM_DEPLIB = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(IOSTREAM_LIBNAME)$(STLIB_SUFFIX)
 
 CXXFLAGS += -I$(IOSTREAM_INC) \
 		-DUSER=\"$(USER)\" \
 		-DNODATA_FIX -D_FILE_OFFSET_BITS=64
 
-LDFLAGS += -L$(IOSTREAM_LIBDIR)
-
 LIBS = $(GISLIB) 
 DEPLIBS = $(DEPGISLIB)
 
-CLEAN_SUBDIRS = $(IOSTREAM_LIBDIR)
+CLEAN_SUBDIRS = $(IOSTREAM_DIR)
 
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
-$(OBJARCH)/FLOAT/%.o: %.cc | $(OBJARCH)/FLOAT
+$(OBJARCH)/FLOAT/%.o: %.cc $(LOCAL_HEADERS) | $(OBJARCH)/FLOAT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
 
-$(OBJARCH)/SHORT/%.o: %.cc | $(OBJARCH)/SHORT
+$(OBJARCH)/SHORT/%.o: %.cc $(LOCAL_HEADERS) | $(OBJARCH)/SHORT
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
 default: $(BIN)/$(PGM)$(EXE) $(BIN)/$(PGM).short$(EXE)
@@ -71,5 +56,5 @@ $(BIN)/$(PGM).short$(EXE): $(SHORT_OBJ) $(DEPLIBS) $(IOSTREAM_DEPLIB)
 	$(XDRLIB) $(IOSTREAM_LIB)
 
 $(IOSTREAM_DEPLIB):
-	$(MAKE) -C $(IOSTREAM_LIBDIR)
+	$(MAKE) -C $(IOSTREAM_DIR)
 
