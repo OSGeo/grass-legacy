@@ -116,9 +116,10 @@ Additional parameters for vector feature specification are:
     direction to the first, it will be flipped. See also
     module <a href="v.build.polylines.html">v.build.polylines</a>.</li>
 
-    <li><b>break</b> - Split (break) given vector line or boundary
-    into two lines on location given by <b>coords</b>. Shape of the
-    line is not changed.</li>
+    <li><b>break</b> - Split given vector line or boundary into two
+    lines on location given by <b>coords</b>. If <b>coords</b> not
+    given, breaks all selected lines at each intersection (based
+    on <a href="v.clean.html">v.clean</a>, tool=break).</li>
     
     <li><b>snap</b> - Snap vector features in given threshold. See
     also module <a href="v.clean.html">v.clean</a>.</li>
@@ -305,12 +306,20 @@ Merge two lines with given category number:
 v.edit map=roads tool=merge cat=4
 </pre></div>
 
-<h3>Break (split) lines</h3>
+<h3>Split line on given point</h3>
 
-Break line id 810 on coordinates 604268,4923570:
+Split line id 810 on coordinates 604268,4923570 in threshold 50 map units:
 
 <div class="code"><pre>
 v.edit map=roads tool=break coords=604268,4923570 id=810 thresh=50
+</pre></div>
+
+<h3>Break selected lines at each intersection</h3>
+
+Break selected lines (with category number 1) at each intersection:
+
+<div class="code"><pre>
+v.edit map=roads tool=break cat=1
 </pre></div>
 
 <h3>Snap lines</h3>

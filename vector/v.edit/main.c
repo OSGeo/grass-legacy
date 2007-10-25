@@ -258,8 +258,13 @@ int main (int argc, char *argv[])
 	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
-	ret = do_break(&Map, List,
-		       coord, thresh, NULL);
+	if (params.coord->answer) {
+	    ret = do_split(&Map, List,
+			   coord, thresh, NULL);
+	}
+	else {
+	    ret = do_break(&Map, List);
+	}
 	G_message(_("%d lines broken"), ret);
 	break;
     case MODE_CONNECT:

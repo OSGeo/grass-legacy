@@ -22,7 +22,23 @@
 #include "global.h"
 
 /**
-   \brief Breaks (split) selected vector line/boundary
+   \brief Break selected lines
+
+   \param[in] Map vector map
+   \param[in] List list of selected lines
+
+   \return number of modified lines
+   \return -1 on error
+ */
+
+int do_break (struct Map_info *Map, struct ilist *List) {
+
+    return Vect_break_lines_list(Map, List,
+				 GV_LINES, NULL, NULL);
+}
+
+/**
+   \brief Split selected lines on given position
    
    \param[in] Map vector map
    \param[in] List list of selected lines
@@ -32,7 +48,7 @@
    \return number of modified lines
    \return -1 on error
  */
-int do_break (struct Map_info *Map, struct ilist *List,
+int do_split (struct Map_info *Map, struct ilist *List,
 	      struct line_pnts *coord, double thresh,
 	      struct ilist *List_updated)
 {
@@ -74,12 +90,8 @@ int do_break (struct Map_info *Map, struct ilist *List,
 				      &px, &py, NULL,
 				      &dist, &spdist, &lpdist);
 
-	    if (thresh > 0.0 && dist > thresh) {
-		Vect_destroy_line_struct(Points);
-		Vect_destroy_line_struct(Points2);
-		Vect_destroy_cats_struct(Cats);
-		Vect_destroy_list (List_in_box);
-		return -1;
+	    if (dist > thresh) {
+		continue;
 	    }
 
 	    G_debug (3, "do_break: line=%d, x=%f, y=%f, px=%f, py=%f, seg=%d, dist=%f, spdist=%f, lpdist=%f",
@@ -104,11 +116,6 @@ int do_break (struct Map_info *Map, struct ilist *List,
 	    newline = Vect_rewrite_line (Map, line, type, Points2, Cats);
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
-	    if (newline < 0)  {
-		G_warning(_("Unable to rewrite line %d"), line);
-		return -1;
-	    }
-	    
 	    Vect_reset_line (Points2);
 	    
 	    /* add given vertex */
@@ -124,10 +131,6 @@ int do_break (struct Map_info *Map, struct ilist *List,
 	    newline = Vect_write_line (Map, type, Points2, Cats);
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
-	    if (newline  < 0)  {
-		G_warning(_("Unable to rewrite line %d"), line);
-		return -1;
-	    }
 	    
 	    nlines_modified++;
 	} /* for each bounding box */
@@ -300,10 +303,6 @@ int do_connect (struct Map_info *Map, struct ilist *List,
 	    
 	    /* rewrite the first line */
 	    newline = Vect_rewrite_line (Map, line[0], type[0], Points[0], Cats[0]);
-	    if (newline < 0)  {
-		G_warning(_("Unable to rewrite line %d"), line[0]);
-		return -1;
-	    }
 	    Vect_list_append (List_updated, newline);
 	    connected = 1;
 	}
@@ -321,7 +320,7 @@ int do_connect (struct Map_info *Map, struct ilist *List,
 	    Vect_list_append (List_break, line[1]);
 	    struct line_pnts *coord = Vect_new_line_struct();
 	    Vect_append_point(coord, nx[pnt_idx[1]], ny[pnt_idx[1]], nz[pnt_idx[1]]);
-	    do_break (Map, List_break, 
+	    do_split (Map, List_break, 
 		      coord, 1e-1, 
 		      List_updated);
 	    Vect_destroy_line_struct(coord);
