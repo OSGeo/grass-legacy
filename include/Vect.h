@@ -270,6 +270,7 @@ int Vect_point_in_island ( double, double, struct Map_info *, int);
 
     /* Cleaning */
 void Vect_break_lines ( struct Map_info *, int, struct Map_info *, FILE * );
+int Vect_break_lines_list (struct Map_info *, struct ilist *, int, struct Map_info *, FILE *);
 void Vect_break_polygons ( struct Map_info *, int, struct Map_info *, FILE * );
 void Vect_remove_duplicates ( struct Map_info *, int, struct Map_info *, FILE * );
 void Vect_snap_lines ( struct Map_info *, int, double, struct Map_info *, FILE * );

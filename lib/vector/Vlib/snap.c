@@ -1,31 +1,7 @@
-/**************************************************************
- *
- * MODULE:       Vector library
- *  
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean lines
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
-#include <stdlib.h> 
-#include <math.h> 
-#include <grass/gis.h>
-#include <grass/Vect.h>
-#include <grass/glocale.h>
-
 /*!
  * \file snap.c
  *
- * \brief Vector library 
- *
- * Clean lines
+ * \brief Vector library - Clean vector map (snap lines)
  *
  * \author Radim Blazek
  *
@@ -36,6 +12,10 @@
  * Read the file COPYING that comes with GRASS
  * for details.
  */
+#include <math.h> 
+#include <grass/gis.h>
+#include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /* function prototypes */
 static int sort_new(const void *pa, const void *pb);
@@ -56,8 +36,8 @@ typedef struct {
 /* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
 int add_item(int id, struct ilist *list)
 {
-        dig_list_add ( list, id );
-	    return 1;
+    dig_list_add ( list, id );
+    return 1;
 }
 
 
@@ -416,9 +396,9 @@ static int sort_new(const void *pa, const void *pb)
 /*!
  * \fn void Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
  *
- * \brief Snap all lines to existing vertex in threshold.
+ * \brief Snap lines in vector map to existing vertex in threshold.
  *
- * See Vect_snap_lines_list()
+ * For details see Vect_snap_lines_list()
  *
  * \param[in] Map input map where vertices will be snapped
  * \param[in] type type of lines to snap
@@ -434,12 +414,7 @@ Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info 
     
     struct ilist* List;
     
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-    
     List   = Vect_new_list();
-    Points = Vect_new_line_struct();
-    Cats   = Vect_new_cats_struct();
     
     nlines = Vect_get_num_lines (Map);
     
@@ -449,7 +424,7 @@ Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info 
 	if (!Vect_line_alive (Map, line))
 	    continue;
 	
-	ltype = Vect_read_line (Map, Points, Cats, line);
+	ltype = Vect_read_line (Map, NULL, NULL, line);
 	
 	if (!(ltype & type))
 	    continue;
@@ -459,8 +434,6 @@ Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info 
     
     Vect_snap_lines_list (Map, List, thresh, Err, msgout);
 
-    Vect_destroy_cats_struct (Cats);
-    Vect_destroy_line_struct (Points);
     Vect_destroy_list (List);
 
     return;

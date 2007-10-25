@@ -105,8 +105,9 @@ int
 Vect_cidx_get_num_unique_cats_by_index ( struct Map_info *Map, int index ) 
 {
     check_status ( Map );
-    if ( index >= Map->plus.n_cidx )
-	G_fatal_error(_("Invalid layer index (index >= number of layers)"));
+    
+    if ( index < 0 || index >= Map->plus.n_cidx )
+	G_fatal_error(_("Invalid layer index (index < 0 or index >= number of layers)"));
 
     return ( Map->plus.cidx[index].n_ucats );
 }
