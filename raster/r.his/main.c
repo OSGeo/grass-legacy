@@ -52,6 +52,7 @@ main (int argc, char **argv)
 	struct Colors int_colors ;
 	struct Colors sat_colors ;
 	struct Colors gray_colors ;
+	struct History history;
 	struct GModule *module;
 	struct Option *opt_h, *opt_i, *opt_s;
 	struct Option *opt_r, *opt_g, *opt_b;
@@ -61,10 +62,10 @@ main (int argc, char **argv)
 
 	module = G_define_module();
 	module->keywords = _("raster");
-    module->description =
-		_("Generates red, green and blue raster map layers "
-		"combining hue, intensity and saturation (HIS) "
-		"values from user-specified input raster map layers.");
+	module->description =
+	    _("Generates red, green and blue raster map layers "
+	    "combining hue, intensity and saturation (HIS) "
+	    "values from user-specified input raster map layers.");
 
 	opt_h = G_define_option() ;
 	opt_h->key        = "h_map" ;
@@ -114,6 +115,7 @@ main (int argc, char **argv)
 
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
+
 
 	/* read in current window */
 	G_get_window(&window) ;
@@ -301,20 +303,33 @@ main (int argc, char **argv)
 		G_close_cell(int_file) ;
 	if (sat_used)
 		G_close_cell(sat_file) ;
+
 	if (r_used)
 	{
 		G_close_cell(r_file);
 		G_write_colors (name_r, G_mapset(), &gray_colors);
+		G_short_history(name_r, "raster", &history);
+		G_command_history(&history);
+		G_write_history(name_r, &history);
+		G_put_cell_title(name_r, "Red extracted from HIS");
 	}
 	if (g_used)
 	{
 		G_close_cell(g_file);
 		G_write_colors (name_g, G_mapset(), &gray_colors);
+		G_short_history(name_g, "raster", &history);
+		G_command_history(&history);
+		G_write_history(name_g, &history);
+		G_put_cell_title(name_g, "Green extracted from HIS");
 	}
 	if (b_used)
 	{
 		G_close_cell(b_file);
 		G_write_colors (name_b, G_mapset(), &gray_colors);
+		G_short_history(name_b, "raster", &history);
+		G_command_history(&history);
+		G_write_history(name_b, &history);
+		G_put_cell_title(name_b, "Blue extracted from HIS");
 	}
 
 	return EXIT_SUCCESS;

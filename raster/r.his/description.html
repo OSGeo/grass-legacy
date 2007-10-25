@@ -90,6 +90,23 @@ Users wishing to simply display an <EM>his</EM> composite
 image without actually generating any layers should use the
 program <EM><A HREF="d.his.html">d.his</A></EM>.
 
+
+<H2>EXAMPLE</H2>
+
+Recreate the following <em>d.his</em> command using <em>r.his</em>:
+<div class="code"><pre>
+  r.shaded.relief map=elevation.dem shad=elev.shad_relf
+  d.his h=elevation.dem i=elev.shad_relf brighten=50
+</pre></div>
+
+<div class="code"><pre>
+  r.mapcalc 'elev.shad_relf_bright50 = #elev.shad_relf * 1.5'
+  r.colors elev.shad_relf_bright50 color=grey255
+  r.his h=elevation.dem i=elev.shad_relf_bright50 r=esr.r g=esr.g b=esr.b
+  d.rgb r=esr.r g=esr.g b=esr.b
+</pre></div>
+
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="d.his.html">d.his</A></EM>,
