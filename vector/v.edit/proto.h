@@ -28,7 +28,8 @@ int do_add_vertex(struct Map_info *, struct ilist *,
 		  struct line_pnts *, double);
 
 /* break.c */
-int do_break (struct Map_info *, struct ilist *,
+int do_break (struct Map_info *, struct ilist *);
+int do_split (struct Map_info *, struct ilist *,
 	      struct line_pnts *, double,
 	      struct ilist *);
 int do_connect (struct Map_info *, struct ilist *,

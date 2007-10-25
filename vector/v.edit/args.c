@@ -48,7 +48,7 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "merge;"
 				     "Merge selected vector lines;"
 				     "break;"
-				     "Break (split) vector line into two separate lines;"
+				     "Break/split vector lines;"
 				     "select;"
 				     "Select lines and print their ID's;"
 				     "catadd;"
@@ -309,8 +309,7 @@ int parser(int argc, char* argv[], struct GParams *params,
         }
     }
     
-    if (*action_mode == MODE_BREAK ||
-	*action_mode == MODE_VERTEX_ADD ||
+    if (*action_mode == MODE_VERTEX_ADD ||
 	*action_mode == MODE_VERTEX_DELETE ||
 	*action_mode == MODE_VERTEX_MOVE)
     {
