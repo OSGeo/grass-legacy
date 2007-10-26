@@ -97,7 +97,7 @@ main (int argc, char *argv[])
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
     
     mapset = G_find_vector2 (in_opt->answer, NULL);
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);
+    if(mapset == NULL) G_fatal_error (_("Vector map <%s> not found"), in_opt->answer);
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset);
     
@@ -111,11 +111,11 @@ main (int argc, char *argv[])
 
     Fi = Vect_get_field( &In, field);
     if ( Fi == NULL )
-	G_fatal_error ("Cannot get layer info for vector map");
+	G_fatal_error (_("Unable to get layer info for vector map"));
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-	G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>", Fi->database, Fi->driver);
 
     if ( col_opt->answer ) {
 	int ctype;
@@ -260,7 +260,7 @@ main (int argc, char *argv[])
 	} 
         else 
         {	    
-	    G_fatal_error ( "Column type must be integer or string." );
+	    G_fatal_error ( "Column type must be integer or string" );
 	}
 
     } else {
@@ -305,7 +305,7 @@ main (int argc, char *argv[])
 		if ( !label ) label = where;
 
 		ncats = db_select_int ( Driver, Fi->table, Fi->key, where, &cats);
-		if ( ncats == -1 ) G_fatal_error("Cannot select values from database.");
+		if ( ncats == -1 ) G_fatal_error("Cannot select values from database");
 		G_debug (3, "  ncats = %d", ncats);
 		
 

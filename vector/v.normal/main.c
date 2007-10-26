@@ -125,7 +125,7 @@ int main (int argc, char **argv)
 
   /* Open input */
   if ((mapset = G_find_vector2 (parm.input->answer, "")) == NULL) {
-     G_fatal_error ( "Could not find input map <%s>\n", parm.input->answer);
+     G_fatal_error ( _("Vector map <%s> not found"), parm.input->answer);
   }
   Vect_set_open_level (2);
   Vect_open_old ( &Map, parm.input->answer, mapset );
@@ -138,7 +138,7 @@ int main (int argc, char **argv)
 
   Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
   if (Driver == NULL)
-    G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
   
   nrecords = db_select_CatValArray ( Driver, Fi->table, Fi->key, parm.dfield->answer, NULL, &cvarr );
   G_debug (1, "nrecords = %d", nrecords );
@@ -147,7 +147,7 @@ int main (int argc, char **argv)
   if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
       G_fatal_error ( "Column type not supported" );
 
-  if ( nrecords < 0 ) G_fatal_error ("Cannot select data from table");
+  if ( nrecords < 0 ) G_fatal_error (_("Unable to select data from table"));
   G_message (_( "%d records selected from table"), nrecords);
 
   db_close_database_shutdown_driver(Driver);
