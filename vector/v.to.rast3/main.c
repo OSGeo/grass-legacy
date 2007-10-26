@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-	G_fatal_error(_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     /* Note: do not check if the column exists in the table because it may be expression */
 

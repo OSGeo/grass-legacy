@@ -107,7 +107,7 @@ int load_catval_array_size (struct Map_info* map, int vec, dbCatValArray* cvarr_
 
 	driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (driver == NULL)
-	    G_fatal_error(_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
@@ -168,7 +168,7 @@ int load_catval_array_rot (struct Map_info* map, int vec, dbCatValArray* cvarr_r
 
 	driver = db_start_driver_open_database(Fi->driver, Fi->database);
 	if (driver == NULL)
-	    G_fatal_error(_("Unable to open database %s by driver %s"), Fi->database, Fi->driver);
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
 	/* Note do not check if the column exists in the table because it may be expression */
 
