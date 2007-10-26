@@ -115,7 +115,7 @@ main (int argc, char *argv[])
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if (Driver == NULL)
-	G_fatal_error(_("Unable to open database <%s> by driver <%s>", Fi->database, Fi->driver);
+	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     if ( col_opt->answer ) {
 	int ctype;
