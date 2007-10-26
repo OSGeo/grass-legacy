@@ -1000,7 +1000,7 @@ class DigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Snapping threshold"))
         self.snappingValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
                                          initial=self.parent.digit.settings["snapping"][0],
-                                         min=0, max=1e6)
+                                         min=1, max=1e6)
         self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                          choices=["screen pixels", "map units"])
@@ -1348,6 +1348,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         # {layer: [categories]}
         self.cats = {}
+
         # do not display dialog if no line is found (-> self.cats)
         if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
             Debug.msg(3, "DigitCategoryDialog(): nothing found!")
@@ -1395,7 +1396,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         except:
             newCat = 1
         self.catNew = wx.TextCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
-                             value=str(newCat))
+                                  value=str(newCat))
         btnAddCat = wx.Button(self, wx.ID_ADD)
         flexSizer.Add(item=layerNewTxt, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
@@ -1448,6 +1449,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
         btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
         btnAddCat.Bind(wx.EVT_BUTTON, self.OnAddCat)
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
 
         # list
         # self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
@@ -1500,6 +1502,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
             dlg.ShowModal()
             dlg.Destroy()
             return False
+
     def OnRightDown(self, event):
         """Mouse right button down"""
         x = event.GetX()
@@ -1591,6 +1594,10 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         event.Skip()
 
+    def OnCancel(self, event):
+        """Cancel button clicked"""
+        self.Close()
+
     def OnApply(self, event):
         """Apply button clicked"""
 
@@ -1616,7 +1623,10 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                                 'id=%d' % self.line]
             
                     gcmd.Command(vEditCmd)
-        
+
+        # reload map (needed for v.edit)
+        self.parent.parent.digit.driver.ReloadMap()
+
         self.cats_orig = copy.deepcopy(self.cats)
 
         event.Skip()
@@ -1661,6 +1671,34 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     def GetLine(self):
         """Get id of selected line of 'None' if no line is selected"""
         return self.line
+
+    def UpdateDialog(self, queryCoords, qdist):
+        """Update dialog
+        
+        Return True if updated otherwise False
+        """
+
+        # {layer: [categories]}
+        self.cats = {}
+
+        # do not display dialog if no line is found (-> self.cats)
+        if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
+            Debug.msg(3, "DigitCategoryDialog(): nothing found!")
+            return False
+        
+        # make copy of cats (used for 'reload')
+        self.cats_orig = copy.deepcopy(self.cats)
+
+        # polulate list
+        self.itemDataMap = self.list.Populate(update=True)
+
+        try:
+            newCat = max(self.cats[1]) + 1
+        except:
+            newCat = 1
+        self.catNew.SetValue(str(newCat))
+
+        return True
 
 class CategoryListCtrl(wx.ListCtrl,
                        listmix.ListCtrlAutoWidthMixin,

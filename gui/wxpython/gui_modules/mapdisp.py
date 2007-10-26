@@ -389,8 +389,8 @@ class BufferedWindow(wx.Window):
         dc = wx.BufferedPaintDC(self, self._buffer)
 
         # we need to clear the dc BEFORE calling PrepareDC
-        bg = wx.Brush(self.GetBackgroundColour())
-        dc.SetBackground(bg)
+        #bg = wx.Brush(self.GetBackgroundColour())
+        dc.SetBackground(wx.Brush("White"))
         dc.Clear()
 
         # use PrepareDC to set position correctly
@@ -976,26 +976,34 @@ class BufferedWindow(wx.Window):
                                 executeCommand = gcmd.Command(cmd=["db.execute",
                                                                   "--q",
                                                                   "input=%s" % sqlfile.name])
-                else: # displayCats
-                    categoryDlg = DigitCategoryDialog(parent=self,
-                                                      map=map,
-                                                      queryCoords=(east, north),
-                                                      qdist=qdist,
-                                                      pos=posWindow,
-                                                      title=_("Update categories"))
 
-                    if categoryDlg.GetLine():
-                        # highlight feature & re-draw map
-                        digitClass.driver.SetSelected([categoryDlg.GetLine()])
+                    # unselect & re-draw
+                    if redraw:
+                        digitClass.driver.SetSelected([])
                         self.UpdateMap(render=False)
-                        redraw = True
 
-                        if categoryDlg.ShowModal() == wx.ID_OK:
-                            pass
-                # unselect & re-draw
-                if redraw:
-                    digitClass.driver.SetSelected([])
-                    self.UpdateMap(render=False)
+                else: # displayCats
+                    if digitToolbar.categoryDialog is None:
+                        # open new dialog
+                        digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
+                                                                          map=map,
+                                                                          queryCoords=(east, north),
+                                                                          qdist=qdist,
+                                                                          pos=posWindow,
+                                                                          title=_("Update categories"))
+                    else:
+                        # update currently open dialog
+                        digitToolbar.categoryDialog.UpdateDialog(queryCoords=(east, north),
+                                                                 qdist=qdist)
+                    
+                    line = digitToolbar.categoryDialog.GetLine()
+                    if line:
+                        # highlight feature & re-draw map
+                        digitClass.driver.SetSelected([line])
+                        self.UpdateMap(render=False)
+                        redraw = False
+
+                        digitToolbar.categoryDialog.Show()
 
             elif digitToolbar.action == "copyCats":
                 if not hasattr(self, "copyCatsList"):
