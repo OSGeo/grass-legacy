@@ -731,6 +731,9 @@ void DisplayDriver::PrintIds()
 /**
    \brief Select vector objects by given bounding box
    
+   If line id is already in the list of selected lines, then it will
+   be excluded from this list.
+
    \param[in] x1,y1,x2,y2 corners coordinates of bounding box
 
    \return number of selected features
@@ -767,7 +770,12 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
 	
     for (int i = 0; i < list->n_values; i++) {
 	line = list->value[i];
-	selected.push_back(line);
+	if (!IsSelected(line)) {
+	    selected.push_back(line);
+	}
+	else {
+	    selected.erase(GetSelectedIter(line));
+	}
     }
 
     // remove all duplicate ids
@@ -840,13 +848,29 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 */
 bool DisplayDriver::IsSelected(int line)
 {
-    for(std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
-	i != e; ++i) {
-	if (line == *i)
-	    return true;
-    }
+    if (GetSelectedIter(line) != selected.end())
+	return true;
 
     return false;
+}
+
+/**
+   \brief Is vector object selected?
+   
+   \param[in] line id
+
+   \return item iterator
+   \return selected.end() if object is not selected
+*/
+std::vector<int>::iterator DisplayDriver::GetSelectedIter(int line)
+{
+    for(std::vector<int>::iterator i = selected.begin(), e = selected.end();
+	i != e; ++i) {
+	if (line == *i)
+	    return i;
+    }
+
+    return selected.end();
 }
 
 /**
@@ -928,6 +952,8 @@ int DisplayDriver::SetSelected(std::vector<int> id)
 /**
    \brief Get PseudoDC vertex id of selected line
 
+   Set bounding box for vertices of line.
+
    \param[in] x,y coordinates of click
    \param[in] thresh threshold value
 
@@ -957,6 +983,7 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
     type = Vect_read_line (mapInfo, points, cats, line);
         
     // find the closest vertex (x, y)
+    DCid = 1;
     for(int idx = 0; idx < points->n_points; idx++) {
 	dist = Vect_points_distance(x, y, 0.0,
 				    points->x[idx], points->y[idx], points->z[idx], 0);
@@ -971,6 +998,12 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
 		Gid = idx;
 	    }
 	}
+
+	Cell2Pixel(points->x[idx], points->y[idx], points->z[idx],
+		   &vx, &vy, &vz);
+	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
+	dc->SetIdBounds(DCid, rect);
+	DCid+=2;
     }	
 
     if (minDist > thresh)
@@ -979,25 +1012,16 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
     // desc = &(ids[line]);
 
     // translate id
-    // DCid = Gid * 2 + desc->startId;
     DCid = Gid * 2 + 1;
 
     // add selected vertex
     returnId.push_back(DCid);
-    Cell2Pixel(points->x[Gid], points->y[Gid], points->z[Gid],
-	       &vx, &vy, &vz);
-    wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
-    dc->SetIdBounds(DCid, rect);
     // left vertex
     if (DCid == startId) {
 	returnId.push_back(-1);
     }
     else {
 	returnId.push_back(DCid - 2);
-	Cell2Pixel(points->x[Gid-1], points->y[Gid-1], points->z[Gid-1],
-		   &vx, &vy, &vz);
-	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
-	dc->SetIdBounds(DCid-2, rect);
     }
 
     // right vertex
@@ -1006,10 +1030,6 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
     }
     else {
 	returnId.push_back(DCid + 2);
-	Cell2Pixel(points->x[Gid+1], points->y[Gid+1], points->z[Gid+1],
-		   &vx, &vy, &vz);
-	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
-	dc->SetIdBounds(DCid + 2, rect);
     }
 
     return returnId;

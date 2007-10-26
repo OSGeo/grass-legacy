@@ -1,6 +1,6 @@
 #include <iostream> // debug
 #include <vector>
-#include <map>
+//#include <map>
 #include <cmath>
 
 // For compilers that support precompilation, includes "wx.h".
@@ -140,6 +140,7 @@ class DisplayDriver
 
     /* select feature */
     bool IsSelected(int line);
+    std::vector<int>::iterator GetSelectedIter(int line);
 
     void ResetTopology();
 
