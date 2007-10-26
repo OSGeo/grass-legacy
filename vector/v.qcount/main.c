@@ -66,7 +66,7 @@ int main ( int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector, statistics");
-  module->description = _("Indices for quadrat counts of sites lists");
+  module->description = _("Indices for quadrat counts of sites lists.");
                   
   parm.input = G_define_option ();
   parm.input->key = "input";
@@ -123,18 +123,18 @@ int main ( int argc, char **argv)
 
   /* Open input */
   if ((mapset = G_find_vector2 (parm.input->answer, "")) == NULL) {
-    G_fatal_error ( "Could not find input map <%s>\n", parm.input->answer);
+    G_fatal_error (_("Vector map <%s> not found"), parm.input->answer);
   }
   Vect_set_open_level (2);
   Vect_open_old (&Map, parm.input->answer, mapset);
 
   /* Get the quadrats */
-  G_message(_("Finding quadrats ..."));
+  G_message(_("Finding quadrats..."));
   
   quads = find_quadrats (nquads, radius, window);
 
   /* Get the counts per quadrat */
-  G_message(_("Counting sites in quadrats ..."));
+  G_message(_("Counting sites in quadrats..."));
 
   counts = (int *) G_malloc (nquads * (sizeof(int)));
   count_sites (quads, nquads, counts, radius, &Map);
