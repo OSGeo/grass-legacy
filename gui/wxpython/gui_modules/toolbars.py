@@ -407,7 +407,7 @@ class DigitToolbar(AbstractToolbar):
         """Edit line"""
         Debug.msg(2, "Digittoolbar.OnEditLine():")
         self.action="editLine"
-        self.parent.MapWindow.mouse['box'] = 'point'
+        self.parent.MapWindow.mouse['box'] = 'line'
 
     def OnMoveLine(self, event):
         """Move line"""
