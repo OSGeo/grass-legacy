@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-22 17:52+0200\n"
+"POT-Creation-Date: 2007-10-26 21:10+0200\n"
 "PO-Revision-Date: 2007-10-19 12:32+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <translations@grass.itc.it>\n"
@@ -3203,32 +3203,36 @@ msgstr ""
 msgid "Category index is not up to date"
 msgstr "El índice de categorías no está actualizado"
 
-#: ../lib/vector/Vlib/cindex.c:62 ../lib/vector/Vlib/cindex.c:109
-#: ../lib/vector/Vlib/cindex.c:128 ../lib/vector/Vlib/cindex.c:147
-#: ../lib/vector/Vlib/cindex.c:170
+#: ../lib/vector/Vlib/cindex.c:62 ../lib/vector/Vlib/cindex.c:129
+#: ../lib/vector/Vlib/cindex.c:148 ../lib/vector/Vlib/cindex.c:171
 msgid "Invalid layer index (index >= number of layers)"
 msgstr "Índice de capa no válido (índice >= número de capas)"
 
-#: ../lib/vector/Vlib/cindex.c:234
+#: ../lib/vector/Vlib/cindex.c:110
+#, fuzzy
+msgid "Invalid layer index (index < 0 or index >= number of layers)"
+msgstr "Índice de capa no válido (índice >= número de capas)"
+
+#: ../lib/vector/Vlib/cindex.c:235
 msgid "Layer or category index out of range"
 msgstr "Índice de capa o de categoría fuera de intervalo"
 
-#: ../lib/vector/Vlib/cindex.c:282
+#: ../lib/vector/Vlib/cindex.c:283
 msgid "Layer index out of range"
 msgstr "Índice de capa fuera del intervalo"
 
-#: ../lib/vector/Vlib/cindex.c:455
+#: ../lib/vector/Vlib/cindex.c:456
 #, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "No se puede abrir el archivo cidx <%s> para escritura"
 
-#: ../lib/vector/Vlib/cindex.c:463
+#: ../lib/vector/Vlib/cindex.c:464
 #, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Error al escribir el archivo de índices de categoría <%s>"
 
 #
-#: ../lib/vector/Vlib/cindex.c:506
+#: ../lib/vector/Vlib/cindex.c:507
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr ""
@@ -3621,35 +3625,35 @@ msgstr "Elemento OGR sin ID."
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "No se puede adquirir la geometría, FID [%ld]"
 
-#: ../lib/vector/Vlib/snap.c:139 ../lib/vector/Vlib/snap.c:179
+#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
 msgid "Registering points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:188
+#: ../lib/vector/Vlib/snap.c:168
 msgid "All vertices"
 msgstr "Todos los vértices"
 
-#: ../lib/vector/Vlib/snap.c:189
+#: ../lib/vector/Vlib/snap.c:169
 msgid "Registered points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:234
+#: ../lib/vector/Vlib/snap.c:214
 msgid "Nodes marked as anchor"
 msgstr "Nodos marcados como fijos"
 
-#: ../lib/vector/Vlib/snap.c:235
+#: ../lib/vector/Vlib/snap.c:215
 msgid "Nodes marked to be snapped"
 msgstr "Nodos marcados para eliminar"
 
-#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:384
+#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:392
+#: ../lib/vector/Vlib/snap.c:372
 msgid "Snapped vertices"
 msgstr "Vértices eliminados"
 
-#: ../lib/vector/Vlib/snap.c:393
+#: ../lib/vector/Vlib/snap.c:373
 msgid "New vertices"
 msgstr "Nuevos vértices"
 
