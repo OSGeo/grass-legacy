@@ -188,6 +188,7 @@ main (int argc, char *argv[])
 		G_fatal_error(_("Unable to open raster map <%s>"), inopt->answer);
 
 	basename = G_store(outopt->answer);
+	G_basename(basename, "tiff");
 	G_basename(basename, "tif");
 	filename = G_malloc(strlen(basename) + 5);
 	sprintf(filename, "%s.tif", basename);
