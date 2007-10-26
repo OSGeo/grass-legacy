@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-22 00:09+0200\n"
+"POT-Creation-Date: 2007-10-26 21:10+0200\n"
 "PO-Revision-Date: 2006-07-07 11:52+0200\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Russian <translations@grass.itc.it>\n"
@@ -805,13 +805,11 @@ msgid "Output name '%s' is not valid rast name."
 msgstr "   ."
 
 #: ../lib/gis/legal_name.c:88 ../lib/gis/legal_name.c:90
-#: ../lib/vector/Vlib/legal_vname.c:73 ../lib/vector/Vlib/legal_vname.c:75
 #, fuzzy, c-format
 msgid "Cannot find input map '%s'"
 msgstr " "
 
 #: ../lib/gis/legal_name.c:109 ../lib/gis/legal_name.c:111
-#: ../lib/vector/Vlib/legal_vname.c:93 ../lib/vector/Vlib/legal_vname.c:95
 #, fuzzy, c-format
 msgid "Output map '%s' is used as input"
 msgstr "   "
@@ -1109,12 +1107,12 @@ msgstr " "
 msgid "Name of elevation raster map(s)"
 msgstr " "
 
-#: ../lib/gis/parser.c:480
+#: ../lib/gis/parser.c:480 ../lib/gis/parser.c:505
 #, fuzzy
 msgid "Name of input raster3d map"
 msgstr " "
 
-#: ../lib/gis/parser.c:489
+#: ../lib/gis/parser.c:489 ../lib/gis/parser.c:514
 #, fuzzy
 msgid "Name of input raster3d map(s)"
 msgstr " "
@@ -1124,101 +1122,101 @@ msgstr " "
 msgid "Name for output raster3d map"
 msgstr "вектор"
 
-#: ../lib/gis/parser.c:507 ../lib/gis/parser.c:532
+#: ../lib/gis/parser.c:524 ../lib/gis/parser.c:549
 #, fuzzy
 msgid "Name of input vector map"
 msgstr "вектор"
 
-#: ../lib/gis/parser.c:516
+#: ../lib/gis/parser.c:533 ../lib/gis/parser.c:558
 #, fuzzy
 msgid "Name of input vector map(s)"
 msgstr "вектор"
 
-#: ../lib/gis/parser.c:524
+#: ../lib/gis/parser.c:541
 #, fuzzy
 msgid "Name for output vector map"
 msgstr "вектор"
 
-#: ../lib/gis/parser.c:541
+#: ../lib/gis/parser.c:567
 msgid "Type"
 msgstr ""
 
-#: ../lib/gis/parser.c:542
+#: ../lib/gis/parser.c:568
 msgid "Feature type(s)"
 msgstr ""
 
-#: ../lib/gis/parser.c:549
+#: ../lib/gis/parser.c:575
 msgid "Layer number"
 msgstr ""
 
-#: ../lib/gis/parser.c:550
+#: ../lib/gis/parser.c:576
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
 msgstr ""
 
-#: ../lib/gis/parser.c:557
+#: ../lib/gis/parser.c:583
 msgid "Category value"
 msgstr ""
 
-#: ../lib/gis/parser.c:564
+#: ../lib/gis/parser.c:590
 msgid "Category values"
 msgstr ""
 
-#: ../lib/gis/parser.c:565
+#: ../lib/gis/parser.c:591
 msgid "Example: 1,3,7-9,13"
 msgstr ""
 
-#: ../lib/gis/parser.c:575
+#: ../lib/gis/parser.c:601
 #, fuzzy
 msgid "Name of input file"
 msgstr " "
 
-#: ../lib/gis/parser.c:583
+#: ../lib/gis/parser.c:609
 #, fuzzy
 msgid "Name for output file"
 msgstr "вектор"
 
-#: ../lib/gis/parser.c:591
+#: ../lib/gis/parser.c:617
 msgid "Field separator"
 msgstr ""
 
-#: ../lib/gis/parser.c:602
+#: ../lib/gis/parser.c:628
 msgid "Color"
 msgstr ""
 
-#: ../lib/gis/parser.c:603
+#: ../lib/gis/parser.c:629
 msgid "Either a standard color name or R:G:B triplet"
 msgstr ""
 
-#: ../lib/gis/parser.c:612
+#: ../lib/gis/parser.c:638
 msgid "Background color"
 msgstr ""
 
-#: ../lib/gis/parser.c:613
+#: ../lib/gis/parser.c:639
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
 msgstr ""
 
-#: ../lib/gis/parser.c:915
+#: ../lib/gis/parser.c:941
 #, fuzzy, c-format
 msgid "Sorry <%s> is not a valid option\n"
 msgstr "Извините <%s> невозможная опция\n"
 
-#: ../lib/gis/parser.c:1026
+#: ../lib/gis/parser.c:1052
 #, c-format
 msgid ""
 "\n"
 "Description:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1033
+#: ../lib/gis/parser.c:1059
 #, c-format
 msgid ""
 "\n"
 "Keywords:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1037
+#: ../lib/gis/parser.c:1063
 #, c-format
 msgid ""
 "\n"
@@ -1226,131 +1224,131 @@ msgid ""
 " "
 msgstr ""
 
-#: ../lib/gis/parser.c:1109
+#: ../lib/gis/parser.c:1135
 #, c-format
 msgid ""
 "\n"
 "Flags:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1132 ../lib/gis/parser.c:1588 ../lib/gis/parser.c:1866
+#: ../lib/gis/parser.c:1158 ../lib/gis/parser.c:1614 ../lib/gis/parser.c:1892
 msgid "Allow output files to overwrite existing files"
 msgstr ""
 
-#: ../lib/gis/parser.c:1134 ../lib/gis/parser.c:1592
+#: ../lib/gis/parser.c:1160 ../lib/gis/parser.c:1618
 msgid "Verbose module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1135 ../lib/gis/parser.c:1595
+#: ../lib/gis/parser.c:1161 ../lib/gis/parser.c:1621
 msgid "Quiet module output"
 msgstr ""
 
-#: ../lib/gis/parser.c:1141
+#: ../lib/gis/parser.c:1167
 #, c-format
 msgid ""
 "\n"
 "Parameters:\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:1164
+#: ../lib/gis/parser.c:1190
 #, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   по умолчанию: %s\n"
 
-#: ../lib/gis/parser.c:1471
+#: ../lib/gis/parser.c:1497
 msgid "NAME"
 msgstr ""
 
-#: ../lib/gis/parser.c:1484
+#: ../lib/gis/parser.c:1510
 msgid "KEYWORDS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1489
+#: ../lib/gis/parser.c:1515
 msgid "SYNOPSIS"
 msgstr ""
 
-#: ../lib/gis/parser.c:1563
+#: ../lib/gis/parser.c:1589
 msgid "Flags"
 msgstr ""
 
-#: ../lib/gis/parser.c:1604
+#: ../lib/gis/parser.c:1630
 msgid "Parameters"
 msgstr ""
 
-#: ../lib/gis/parser.c:1645
+#: ../lib/gis/parser.c:1671
 #, fuzzy
 msgid "Options"
 msgstr " опции: %s\n"
 
-#: ../lib/gis/parser.c:1651
+#: ../lib/gis/parser.c:1677
 #, fuzzy
 msgid "Default"
 msgstr " по умол.: %s\n"
 
-#: ../lib/gis/parser.c:1868
+#: ../lib/gis/parser.c:1894
 msgid "Allow overwrite"
 msgstr ""
 
-#: ../lib/gis/parser.c:1876
+#: ../lib/gis/parser.c:1902
 msgid "Run with minimal output messages"
 msgstr ""
 
-#: ../lib/gis/parser.c:1878
+#: ../lib/gis/parser.c:1904
 msgid "Run quietly"
 msgstr ""
 
-#: ../lib/gis/parser.c:1967
+#: ../lib/gis/parser.c:1993
 #, fuzzy, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   опции: "
 
-#: ../lib/gis/parser.c:2016 ../lib/gis/parser.c:2033
+#: ../lib/gis/parser.c:2042 ../lib/gis/parser.c:2059
 #, fuzzy, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Извините, <%c> невозможный флаг\n"
 
-#: ../lib/gis/parser.c:2088
+#: ../lib/gis/parser.c:2114
 #, fuzzy, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Извините, <%s=> неоднозначный параметр\n"
 
-#: ../lib/gis/parser.c:2095
+#: ../lib/gis/parser.c:2121
 #, fuzzy, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Извините, <%s> невозможный параметр\n"
 
-#: ../lib/gis/parser.c:2180
+#: ../lib/gis/parser.c:2206
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:2182
+#: ../lib/gis/parser.c:2208
 #, fuzzy, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Представленного как: %s\n"
 
-#: ../lib/gis/parser.c:2185
+#: ../lib/gis/parser.c:2211
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: value <%s> out of range for parameter <%s>\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:2187
+#: ../lib/gis/parser.c:2213
 #, fuzzy, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Возможный диапазон: %s\n"
 
-#: ../lib/gis/parser.c:2190
+#: ../lib/gis/parser.c:2216
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:2350
+#: ../lib/gis/parser.c:2376
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1360,83 +1358,83 @@ msgstr ""
 " \n"
 "  "
 
-#: ../lib/gis/parser.c:2453
+#: ../lib/gis/parser.c:2479
 #, fuzzy, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:2455
+#: ../lib/gis/parser.c:2481
 #, fuzzy, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Вы задали %d раз:\n"
 
-#: ../lib/gis/parser.c:2510
+#: ../lib/gis/parser.c:2536
 #, fuzzy, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "   "
 
-#: ../lib/gis/parser.c:2557
+#: ../lib/gis/parser.c:2583
 #, c-format
 msgid ""
 "\n"
 "FLAG: Set the following flag?\n"
 msgstr ""
 
-#: ../lib/gis/parser.c:2571
+#: ../lib/gis/parser.c:2597
 #, fuzzy, c-format
 msgid ""
 "\n"
 "OPTION:   %s\n"
 msgstr " "
 
-#: ../lib/gis/parser.c:2572
+#: ../lib/gis/parser.c:2598
 #, fuzzy, c-format
 msgid "     key: %s\n"
 msgstr "     ключ: %s\n"
 
-#: ../lib/gis/parser.c:2574
+#: ../lib/gis/parser.c:2600
 #, fuzzy, c-format
 msgid "  format: %s\n"
 msgstr "  формат: %s\n"
 
-#: ../lib/gis/parser.c:2576
+#: ../lib/gis/parser.c:2602
 #, fuzzy, c-format
 msgid " default: %s\n"
 msgstr " по умол.: %s\n"
 
-#: ../lib/gis/parser.c:2577
+#: ../lib/gis/parser.c:2603
 #, fuzzy, c-format
 msgid "required: %s\n"
 msgstr "необх.: %s\n"
 
-#: ../lib/gis/parser.c:2579
+#: ../lib/gis/parser.c:2605
 #, fuzzy, c-format
 msgid "multiple: %s\n"
 msgstr "множ.: %s\n"
 
-#: ../lib/gis/parser.c:2581
+#: ../lib/gis/parser.c:2607
 #, fuzzy, c-format
 msgid " options: %s\n"
 msgstr " опции: %s\n"
 
-#: ../lib/gis/parser.c:2596
+#: ../lib/gis/parser.c:2622
 #, fuzzy, c-format
 msgid "enter option > "
 msgstr "задайте опцию > "
 
-#: ../lib/gis/parser.c:2610 ../lib/gis/parser.c:2621
+#: ../lib/gis/parser.c:2636 ../lib/gis/parser.c:2647
 #, fuzzy
 msgid "   Try again? "
 msgstr "   Попробовать снова? "
 
-#: ../lib/gis/parser.c:2619
+#: ../lib/gis/parser.c:2645
 #, fuzzy, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Извините, %s не приемлемо.\n"
 
-#: ../lib/gis/parser.c:2630
+#: ../lib/gis/parser.c:2656
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1446,12 +1444,12 @@ msgstr ""
 "\n"
 "  "
 
-#: ../lib/gis/parser.c:2631
+#: ../lib/gis/parser.c:2657
 #, fuzzy
 msgid "Is this correct? "
 msgstr "Правильно?"
 
-#: ../lib/gis/parser.c:2700
+#: ../lib/gis/parser.c:2726
 #, fuzzy
 msgid "to accept the default"
 msgstr "чтобы установить по умолчанию"
@@ -2875,7 +2873,7 @@ msgstr " ."
 msgid "Unable to open file %s"
 msgstr "Невозможно открыть файл %s в %s"
 
-#: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:53
+#: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
 #, fuzzy
 msgid "Requested format is not compiled in this version"
@@ -3041,6 +3039,56 @@ msgstr ""
 msgid "OGR feature without ID ignored."
 msgstr ""
 
+#: ../lib/vector/Vlib/cats.c:45
+msgid "Vect_new_cats_struct(): Out of memory"
+msgstr ""
+
+#: ../lib/vector/Vlib/cats.c:138
+#, c-format
+msgid "Too many categories (%d), unable to set cat %d (layer %d)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cats.c:408
+#, c-format
+msgid "Unable to convert category string '%s' (from '%s') to category range"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:30
+msgid "Category index is not up to date"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:62 ../lib/vector/Vlib/cindex.c:129
+#: ../lib/vector/Vlib/cindex.c:148 ../lib/vector/Vlib/cindex.c:171
+msgid "Invalid layer index (index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:110
+msgid "Invalid layer index (index < 0 or index >= number of layers)"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:235
+msgid "Layer or category index out of range"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:283
+msgid "Layer index out of range"
+msgstr ""
+
+#: ../lib/vector/Vlib/cindex.c:456
+#, fuzzy, c-format
+msgid "Unable to open cidx file <%s> for write"
+msgstr "Невозможно открыть %s для записи"
+
+#: ../lib/vector/Vlib/cindex.c:464
+#, fuzzy, c-format
+msgid "Error writing out category index file <%s>"
+msgstr "Ошибка записи в файл с плавающей точкой для карты %s"
+
+#: ../lib/vector/Vlib/cindex.c:507
+#, fuzzy, c-format
+msgid "Unable to open category index file for vector map <%s@%s>"
+msgstr "вектор  "
+
 #: ../lib/vector/Vlib/field.c:76
 msgid "Field number must be 1 or greater."
 msgstr ""
@@ -3116,47 +3164,123 @@ msgstr ""
 msgid "Vect_segment_intersection() ERROR (collinear non vertical segments)"
 msgstr ""
 
-#: ../lib/vector/Vlib/legal_vname.c:23
+#: ../lib/vector/Vlib/legal_vname.c:39
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
+msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
 msgstr "вектор  "
 
-#: ../lib/vector/Vlib/legal_vname.c:29
+#: ../lib/vector/Vlib/legal_vname.c:45
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. Must start with a letter.\n"
+msgid "Illegal vector map name <%s>. Must start with a letter."
 msgstr "вектор  "
 
-#: ../lib/vector/Vlib/legal_vname.c:35
+#: ../lib/vector/Vlib/legal_vname.c:51
 #, fuzzy, c-format
-msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
+msgid "Illegal vector map name <%s>. Character '%c' not allowed."
 msgstr "вектор  "
 
-#: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
+#: ../lib/vector/Vlib/legal_vname.c:81 ../lib/vector/Vlib/legal_vname.c:83
 #, fuzzy, c-format
-msgid "Output name '%s' is not valid vector name."
-msgstr "    вектор."
+msgid "Output vector map name <%s> is not valid map name"
+msgstr "   ."
 
-#: ../lib/vector/Vlib/map.c:152 ../lib/vector/Vlib/map.c:268
-#: ../lib/vector/Vlib/open.c:526
+#: ../lib/vector/Vlib/legal_vname.c:94 ../lib/vector/Vlib/legal_vname.c:96
+#: ../lib/vector/Vlib/map.c:302 ../lib/vector/Vlib/open.c:158
 #, fuzzy, c-format
-msgid "Map name is not SQL compliant."
+msgid "Vector map <%s> not found"
+msgstr "вектор  "
+
+#: ../lib/vector/Vlib/legal_vname.c:114 ../lib/vector/Vlib/legal_vname.c:116
+#, fuzzy, c-format
+msgid "Output vector map <%s> is used as input"
+msgstr "   "
+
+#: ../lib/vector/Vlib/map.c:62 ../lib/vector/Vlib/map.c:75
+#, fuzzy, c-format
+msgid "Unable to read vector map <%s%s>"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:167 ../lib/vector/Vlib/map.c:290
+#: ../lib/vector/Vlib/open.c:508
+#, fuzzy, c-format
+msgid "Vector map name is not SQL compliant"
 msgstr " ."
 
-#: ../lib/vector/Vlib/map.c:156 ../lib/vector/Vlib/map.c:272
-#: ../lib/vector/Vlib/open.c:533
+#: ../lib/vector/Vlib/map.c:171 ../lib/vector/Vlib/map.c:294
+#: ../lib/vector/Vlib/open.c:515
 #, fuzzy, c-format
-msgid "The vector '%s' already exists and will be overwritten."
+msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "вектор  ."
 
-#: ../lib/vector/Vlib/map.c:280
+#: ../lib/vector/Vlib/map.c:174 ../lib/vector/Vlib/open.c:519
 #, fuzzy, c-format
-msgid "Input vector '%s' not found"
+msgid "Unable to delete vector map <%s>"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:197 ../lib/vector/Vlib/map.c:305
+#, fuzzy, c-format
+msgid "Unable to copy vector map <%s> to <%s>"
+msgstr "невозможно открыть растровую карту [%s в %s]"
+
+#: ../lib/vector/Vlib/map.c:225 ../lib/vector/Vlib/map.c:337
+#: ../lib/vector/Vlib/map.c:442 ../lib/vector/Vlib/map.c:551
+#: ../lib/vector/Vlib/map.c:642
+#, c-format
+msgid "Database connection not defined for layer %d"
+msgstr ""
+
+#: ../lib/vector/Vlib/map.c:239 ../lib/vector/Vlib/map.c:352
+#: ../lib/vector/Vlib/map.c:571 ../lib/vector/Vlib/map.c:668
+#, fuzzy, c-format
+msgid "Unable to copy table <%s>"
+msgstr "Невозможно открыть файл %s в %s"
+
+#: ../lib/vector/Vlib/map.c:247 ../lib/vector/Vlib/map.c:373
+#: ../lib/vector/Vlib/map.c:577
+#, fuzzy, c-format
+msgid "Unable to open database <%s> by driver <%s>"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:251 ../lib/vector/Vlib/map.c:377
+#: ../lib/vector/Vlib/map.c:581
+#, fuzzy, c-format
+msgid "Unable to create index for table <%s>, key <%s>"
+msgstr "Невозможно создать файл заголовка для [%s в %s]"
+
+#: ../lib/vector/Vlib/map.c:366 ../lib/vector/Vlib/map.c:460
+#, fuzzy, c-format
+msgid "Unable to delete table <%s>"
+msgstr "Невозможно открыть файл %s в %s"
+
+#: ../lib/vector/Vlib/map.c:451
+#, fuzzy, c-format
+msgid "Unable to find table <%s> linked to vector map <%s>"
 msgstr "вектор  "
 
-#: ../lib/vector/Vlib/map.c:283
+#: ../lib/vector/Vlib/map.c:479
 #, fuzzy, c-format
-msgid "Cannot copy vector '%s' to '%s'"
-msgstr "вектор    "
+msgid "Unable to open directory '%s'"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:490
+#, fuzzy, c-format
+msgid "Unable to delete file '%s'"
+msgstr "Невозможно открыть файл %s в %s"
+
+#: ../lib/vector/Vlib/map.c:507
+#, fuzzy, c-format
+msgid "Unable to rename directory '%s' to '%s'"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:515
+#, fuzzy, c-format
+msgid "Unable to remove directory '%s'"
+msgstr " "
+
+#: ../lib/vector/Vlib/map.c:563 ../lib/vector/Vlib/map.c:656
+#, fuzzy, c-format
+msgid "Unable to add database link for vector map <%s>"
+msgstr "вектор  "
 
 #: ../lib/vector/Vlib/net.c:120
 msgid "Building graph ..."
@@ -3244,78 +3368,65 @@ msgstr ""
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:114
-msgid "Programmer requested unknown open_level"
+#: ../lib/vector/Vlib/open.c:93
+#, c-format
+msgid "Programmer requested unknown open level %d"
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:179
-#, fuzzy, c-format
-msgid "Vector map <%s> not found"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:189
+#: ../lib/vector/Vlib/open.c:168
 #, fuzzy
-msgid "A map which is not in the current mapset cannot be opened for update."
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
 msgstr " ."
 
-#: ../lib/vector/Vlib/open.c:207
+#: ../lib/vector/Vlib/open.c:186
 #, fuzzy, c-format
-msgid "Cannot open existing vector map <%s>"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:217 ../lib/vector/Vlib/open.c:277
-#: ../lib/vector/Vlib/open.c:293
-#, fuzzy, c-format
-msgid "Cannot open existing vector <%s> on level [%d]"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:218
-#, fuzzy
-msgid "Cannot read head file"
-msgstr "Не могу открыть врем. файл"
-
-#: ../lib/vector/Vlib/open.c:238
-#, fuzzy, c-format
-msgid "Cannot open topo file for vector map <%s>"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:261
-#, fuzzy, c-format
-msgid "Cannot open category index file for vector map <%s>"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:340
-#, fuzzy, c-format
-msgid "Cannot open history file for vector map <%s>"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:537
-#, fuzzy, c-format
-msgid "Cannot delete existing vector <%s>"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:551
-#, fuzzy, c-format
-msgid "Cannot open new vector %s"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:560
-#, fuzzy, c-format
-msgid "Cannot open history file for vector '%s'"
-msgstr "вектор  "
-
-#: ../lib/vector/Vlib/open.c:608
-#, fuzzy, c-format
-msgid "Could not stat file '%s'"
+msgid "Unable to open vector map <%s>"
 msgstr " "
 
-#: ../lib/vector/Vlib/open.c:719
-msgid "Size of 'coor' file differs from value saved in topo file."
+#: ../lib/vector/Vlib/open.c:196 ../lib/vector/Vlib/open.c:256
+#: ../lib/vector/Vlib/open.c:273
+#, fuzzy, c-format
+msgid "Unable to open vector map <%s> on topology level %d"
+msgstr "вектор  "
+
+#: ../lib/vector/Vlib/open.c:197
+#, fuzzy
+msgid "Unable to read head file"
+msgstr "Не могу открыть врем. файл"
+
+#: ../lib/vector/Vlib/open.c:217
+#, fuzzy, c-format
+msgid "Unable to open topology file for vector map <%s>"
+msgstr "вектор  "
+
+#: ../lib/vector/Vlib/open.c:240
+#, fuzzy, c-format
+msgid "Unable to open category index file for vector map <%s>"
+msgstr "вектор  "
+
+#: ../lib/vector/Vlib/open.c:321 ../lib/vector/Vlib/open.c:542
+#, fuzzy, c-format
+msgid "Unable to open history file for vector map <%s>"
+msgstr "вектор  "
+
+#: ../lib/vector/Vlib/open.c:533
+#, fuzzy, c-format
+msgid "Unable to create vector map <%s>"
+msgstr " "
+
+#: ../lib/vector/Vlib/open.c:590
+#, fuzzy, c-format
+msgid "Unable to stat file <%s>"
+msgstr "Невозможно открыть файл %s в %s"
+
+#: ../lib/vector/Vlib/open.c:701
+msgid "Size of 'coor' file differs from value saved in topology file"
 msgstr ""
 
-#: ../lib/vector/Vlib/open.c:730
+#: ../lib/vector/Vlib/open.c:712
 #, fuzzy, c-format
-msgid "Please rebuild topology for vector '%s@%s'"
+msgid "Please rebuild topology for vector map <%s@%s>"
 msgstr "вектор    "
 
 #: ../lib/vector/Vlib/read_nat.c:160
@@ -3337,35 +3448,35 @@ msgstr ""
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:139 ../lib/vector/Vlib/snap.c:179
+#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
 msgid "Registering points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:188
+#: ../lib/vector/Vlib/snap.c:168
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:189
+#: ../lib/vector/Vlib/snap.c:169
 msgid "Registered points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:234
+#: ../lib/vector/Vlib/snap.c:214
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:235
+#: ../lib/vector/Vlib/snap.c:215
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:244 ../lib/vector/Vlib/snap.c:384
+#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:392
+#: ../lib/vector/Vlib/snap.c:372
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:393
+#: ../lib/vector/Vlib/snap.c:373
 msgid "New vertices"
 msgstr ""
 
@@ -3498,6 +3609,38 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Output name '%s' is not valid vector name."
+#~ msgstr "    вектор."
+
+#, fuzzy
+#~ msgid "Input vector '%s' not found"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot copy vector '%s' to '%s'"
+#~ msgstr "вектор    "
+
+#, fuzzy
+#~ msgid "Cannot open existing vector map <%s>"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot delete existing vector <%s>"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot open new vector %s"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Cannot open history file for vector '%s'"
+#~ msgstr "вектор  "
+
+#, fuzzy
+#~ msgid "Could not stat file '%s'"
+#~ msgstr " "
 
 #, fuzzy
 #~ msgid "Can't open directory %s"
