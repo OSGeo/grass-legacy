@@ -243,8 +243,9 @@ class DigitToolbar(AbstractToolbar):
 
         self.comboid    = None
 
-        # only one dialog settings can be one
+        # only one dialog can be open
         self.settingsDialog = None
+        self.categoryDialog = None
 
         # create toolbars (two rows)
         self.toolbar = []
@@ -370,9 +371,12 @@ class DigitToolbar(AbstractToolbar):
         except:
             pass
 
-        # close settings dialog if still open
+        # close dialogs if still open
         if self.settingsDialog:
             self.settingsDialog.OnCancel(None)
+
+        if self.categoryDialog:
+            self.categoryDialog.OnCancel(None)
 
         # disable the toolbar
         self.parent.RemoveToolbar ("digit")
