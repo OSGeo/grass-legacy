@@ -6,7 +6,7 @@
  *               
  * PURPOSE:      Print vector attributes
  *               
- * COPYRIGHT:    (C) 2005 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2005-2007 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -59,6 +59,7 @@ int main (int argc, char **argv)
     vs_opt 		= G_define_standard_option(G_OPT_F_SEP);
     vs_opt->key 	= "vs";
     vs_opt->description = _("Output vertical record separator");
+    vs_opt->answer      = NULL;
 
     nv_opt 		= G_define_option();
     nv_opt->key 	= "nv";
