@@ -1,5 +1,5 @@
 """
-MODULE: select
+MODULE: gselect
 
 CLASSES:
  * Select
