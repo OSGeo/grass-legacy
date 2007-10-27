@@ -685,7 +685,7 @@ class BufferedWindow(wx.Window):
         if end is None:
             end   = self.mouse['end']
 
-        Debug.msg (4, "BufferedWindow.MouseDraw(): use=%s, box=%s, begin=%f,%f, end=%f,%f" % \
+        Debug.msg (5, "BufferedWindow.MouseDraw(): use=%s, box=%s, begin=%f,%f, end=%f,%f" % \
                        (self.mouse['use'], self.mouse['box'],
                         begin[0], begin[1], end[0], end[1]))
 
@@ -955,33 +955,29 @@ class BufferedWindow(wx.Window):
                 redraw = False
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)
-                    updateRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                  queryCoords=(east, north),
-                                                                  qdist=qdist,
-                                                                  pos=posWindow,
-                                                                  action="update")
-                    if updateRecordDlg.mapInfo and \
-                            updateRecordDlg.GetLine():
+                    if digitToolbar.attributesDialog is None:
+                        digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                                    queryCoords=(east,
+                                                                                                 north),
+                                                                                    qdist=qdist,
+                                                                                    pos=posWindow,
+                                                                                    action="update")
+                    else:
+                        # update currently open dialog
+                        digitToolbar.attributesDialog.UpdateDialog(queryCoords=(east, north),
+                                                                   qdist=qdist)
+
+                    line = digitToolbar.attributesDialog.GetLine()
+                    if digitToolbar.attributesDialog.mapInfo and line:
                         # highlight feature & re-draw map
-                        digitClass.driver.SetSelected([updateRecordDlg.GetLine()])
-                        self.UpdateMap(render=False)
-                        redraw = True
-                        if updateRecordDlg.ShowModal() == wx.ID_OK:
-                            sqlCommands = updateRecordDlg.GetSQLString()
-                            if len(sqlCommands) > 0:
-                                sqlfile = tempfile.NamedTemporaryFile(mode="w")
-                                for sql in sqlCommands:
-                                    sqlfile.file.write(sql + ";\n")
-                                sqlfile.file.flush()
-                                executeCommand = gcmd.Command(cmd=["db.execute",
-                                                                  "--q",
-                                                                  "input=%s" % sqlfile.name])
-
-                    # unselect & re-draw
-                    if redraw:
+                        digitClass.driver.SetSelected([line])
+                        if not digitToolbar.attributesDialog.IsShown():
+                            digitToolbar.attributesDialog.Show()
+                    else:
                         digitClass.driver.SetSelected([])
-                        self.UpdateMap(render=False)
-
+                        if digitToolbar.attributesDialog.IsShown():
+                            digitToolbar.attributesDialog.Hide()
+                        
                 else: # displayCats
                     if digitToolbar.categoryDialog is None:
                         # open new dialog
@@ -997,13 +993,18 @@ class BufferedWindow(wx.Window):
                                                                  qdist=qdist)
                     
                     line = digitToolbar.categoryDialog.GetLine()
+                    redraw = False
                     if line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
-                        self.UpdateMap(render=False)
-                        redraw = False
-
-                        digitToolbar.categoryDialog.Show()
+                        if not digitToolbar.categoryDialog.IsShown():
+                            digitToolbar.categoryDialog.Show()
+                    else:
+                        digitClass.driver.SetSelected([])
+                        if digitToolbar.categoryDialog.IsShown():
+                            digitToolbar.categoryDialog.Hide()
+                    
+                self.UpdateMap(render=False)
 
             elif digitToolbar.action == "copyCats":
                 if not hasattr(self, "copyCatsList"):
@@ -1152,9 +1153,7 @@ class BufferedWindow(wx.Window):
                     nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
 
                 if nselected > 0:
-                    if digitToolbar.action in ["moveLine", "moveVertex",
-                                               "copyCats"] and \
-                                               len(self.moveIds) == 0:
+                    if digitToolbar.action in ["moveLine", "moveVertex"]:
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             # -> move line
@@ -1169,8 +1168,7 @@ class BufferedWindow(wx.Window):
                     if digitToolbar.action != "editLine":
                         # -> move line || move vertex
                         self.UpdateMap(render=False)
-                    if digitToolbar.action != "copyCats":
-                        pass
+
                 else: # no vector object found
                     #self.UpdateMap(render=False)
                     pass
@@ -1408,8 +1406,10 @@ class BufferedWindow(wx.Window):
                 digitClass.RemoveVertex(self.Pixel2Cell(self.mouse['begin']))
             elif digitToolbar.action == "copyCats":
                 try:
+                    print "#", self.copyCatsList
+                    print "#", self.copyCatsIds
                     digitClass.CopyCats(self.copyCatsList,
-                                               self.copyCatsIds)
+                                        self.copyCatsIds)
                     del self.copyCatsList
                     del self.copyCatsIds
                 except:
