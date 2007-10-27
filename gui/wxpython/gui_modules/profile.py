@@ -49,7 +49,7 @@ sys.path.append(gmpath)
 import render
 import menuform
 import disp_print
-import select
+import gselect
 import gcmd
 import gui_modules.defaultfont as defaultfont
 from debug import Debug as Debug
@@ -815,7 +815,7 @@ class SetRaster(wx.Dialog):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, "Select raster 1 (required):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection1 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        selection1 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
         try:
             selection1.SetValue(self.rast1)
         except:
@@ -826,7 +826,7 @@ class SetRaster(wx.Dialog):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, "Select raster 2 (optional):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection2 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        selection2 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
         try:
             selection2.SetValue(self.rast2)
         except:
@@ -838,7 +838,7 @@ class SetRaster(wx.Dialog):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, "Select raster 3 (optional):")
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        selection3 = select.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
+        selection3 = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),type='cell')
         try:
             selection3.SetValue(self.rast3)
         except:

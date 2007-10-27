@@ -81,7 +81,7 @@ imagepath = os.path.join(wxbase,"images")
 sys.path.append(imagepath)
 
 import grassenv
-import select
+import gselect
 import gcmd
 try:
     import subprocess
@@ -924,7 +924,7 @@ class cmdPanel(wx.Panel):
                                 flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p.get('prompt','') != 'color' and p.get('element', '') != 'file':
-                    selection = select.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
+                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
                                               type=p.get('element','') )
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set

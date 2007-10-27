@@ -29,6 +29,8 @@ import os
 import sys
 import string
 import tempfile
+import time
+from threading import Thread
 
 import wx
 import wx.lib.customtreectrl as CT
@@ -1151,7 +1153,7 @@ class GMConsole(wx.Panel):
                 grassCmd = gcmd.Command(cmdlist, verbose=3,
                                         stdout=GMStdout(self.cmd_output),
                                         stderr=GMStderr(self.cmd_output))
-                
+
                 # deactivate computational region and return to display settings
                 if tmpreg:
                     os.environ["GRASS_REGION"] = tmpreg
@@ -1244,10 +1246,11 @@ class GMStdout:
         return self.buffer.fileno()
 
     def __del__(self):
-        self.buffer.flush()
-        self.buffer.seek(0,0)
-        for line in self.buffer.readlines():
-            self.write(line)
+        pass
+    #         self.buffer.flush()
+    #         self.buffer.seek(0,0)
+    #         for line in self.buffer.readlines():
+    #             self.write(line)
 
 class GMStderr:
     """GMConsole standard error output
@@ -1264,6 +1267,8 @@ class GMStderr:
         self.gmstc = gmstc
         self.buffer = tempfile.TemporaryFile(mode="w")
 
+        self.timer = GMStcTimer(self.buffer)
+
     def write(self, s):
         # if self.gmstc.GetParent().IsShown() == False:
         #    self.gmstc.GetParent().Show()
@@ -1279,10 +1284,15 @@ class GMStderr:
         return self.buffer.fileno()
 
     def __del__(self):
-        self.buffer.flush()
-        self.buffer.seek(0,0)
-        for line in self.buffer.readlines():
-            self.write(line)
+        pass
+        #         self.buffer.flush()
+        #         self.buffer.seek(0,0)
+        #         for line in self.buffer.readlines():
+        #             self.write(line)
+
+    def GetTimer(self):
+        """Return timer object"""
+        return self.timer
 
 class GMStc(wx.stc.StyledTextCtrl):
     """Styled GMConsole
@@ -1328,3 +1338,24 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.UsePopUp(True)
         self.SetSelBackground(True, "#FFFF00")
         self.SetUseHorizontalScrollBar(True)
+
+class GMStcTimer(Thread):
+    """Timer for console output"""
+    def __init__(self, file):
+        print "#", file
+        self.file = file
+        self.read   = False
+
+    def Read(self):
+        """Check streams"""
+        self.read = True
+#         while self.read:
+#             line = self.file.read().strip()
+#             if line:
+#                 print "#", line
+
+#             time.sleep(0.1)
+
+    def Stop(self):
+        """Stop checking streams"""
+        self.read = False

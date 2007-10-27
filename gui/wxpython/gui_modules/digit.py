@@ -43,7 +43,7 @@ import wx.lib.mixins.listctrl as listmix
 import gcmd
 import dbm
 from debug import Debug as Debug
-import select 
+import gselect 
 try:
     driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
     sys.path.append(driverPath)
@@ -1022,7 +1022,7 @@ class DigitSettingsDialog(wx.Dialog):
         flexSizer1.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
         # background map
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Backgroud vector map"))
-        self.backgroundMap = select.Select(parent=panel, id=wx.ID_ANY, size=(200,-1),
+        self.backgroundMap = gselect.Select(parent=panel, id=wx.ID_ANY, size=(200,-1),
                                            type="vector")
         self.backgroundMap.SetValue(self.parent.digit.settings["backgroundMap"])
         self.backgroundMap.Bind(wx.EVT_TEXT, self.OnChangeBackgroundMap)

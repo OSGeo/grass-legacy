@@ -20,7 +20,8 @@ COPYRIGHT:  (C) 2007 by the GRASS Development Team
 import wx
 import os
 import sys
-import select
+
+import gselect
 
 class RulesText(wx.Dialog):
     def __init__(self, parent, id=wx.ID_ANY, title="Enter rules",
@@ -77,8 +78,8 @@ class RulesText(wx.Dialog):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, wx.ID_ANY, label2)
         box.Add(label, 0, wx.ALIGN_RIGHT|wx.ALL, 5)
-        self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
-                                          type=seltype)
+        self.selection = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),
+                                        type=seltype)
         box.Add(self.selection, 0, wx.ALIGN_RIGHT|wx.ALL, 5)
         sizer.Add(item=box, proportion=0,
                   flag=wx.ALIGN_CENTER_VERTICAL|

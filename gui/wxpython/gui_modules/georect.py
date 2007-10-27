@@ -59,7 +59,7 @@ import mapdisp
 import render
 import toolbars
 import menuform
-import select
+import gselect
 import disp_print
 import gcmd
 from debug import Debug as Debug
@@ -458,7 +458,7 @@ class DispMapPage(TitledPage):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, 'Select display image/map:', style=wx.ALIGN_LEFT)
         box.Add(label, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.selection = select.Select(self, id=wx.ID_ANY, size=(300,-1),
+        self.selection = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),
                                               type=maptype )
         box.Add(self.selection, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
