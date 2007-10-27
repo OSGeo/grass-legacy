@@ -32,6 +32,7 @@ import sys
 import os
 import locale
 import string
+import tempfile
 
 import wx
 import wx.lib.mixins.listctrl as listmix
@@ -597,15 +598,17 @@ class DisplayAttributesDialog(wx.Dialog):
     def __init__(self, parent, map,
                  layer=-1, cat=-1, # select by layer/cat
                  queryCoords=None, qdist=-1, # select by point
-                 style=wx.DEFAULT_DIALOG_STYLE, pos=wx.DefaultPosition,
+                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+                 pos=wx.DefaultPosition,
                  action="add"):
 
+        self.parent      = parent # mapdisplay.BufferedWindow
         self.map         = map
         self.layer       = layer
+        self.action      = action
         self.cat         = cat
         self.queryCoords = queryCoords
         self.qdist       = qdist
-        self.action      = action
 
         # id of selected line
         self.line = None
@@ -619,13 +622,13 @@ class DisplayAttributesDialog(wx.Dialog):
         if (self.layer == -1 and len(layers) <= 0) or \
                 (self.layer > 0 and self.layer not in layers):
             if self.layer == -1:
-                label = "Database connection for vector map <%s> " \
-                    "is not defined in DB file." % (self.map)
+                label = _("Database connection for vector map <%s> " 
+                          "is not defined in DB file.") % (self.map)
             else:
-                label = "Layer <%d> is not available for vector map <%s>." % \
+                label = _("Layer <%d> is not available for vector map <%s>.") % \
                     (self.layer, self.map)
 
-            dlg = wx.MessageDialog(None,
+            dlg = wx.MessageDialog(self.parent,
                                    _("No attribute table found.\n"
                                      "%s") % (label),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
@@ -634,7 +637,7 @@ class DisplayAttributesDialog(wx.Dialog):
             self.mapInfo = None
             return
 
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY,
+        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY,
                            title="", style=style, pos=pos)
 
         # dialog body
@@ -643,96 +646,15 @@ class DisplayAttributesDialog(wx.Dialog):
         if self.queryCoords: # select by position
             self.line, nselected = self.mapInfo.SelectByPoint(self.queryCoords,
                                                               self.qdist)
+
         # notebook
-        notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
-        for layer in layers: # for each layer
-            if self.layer > 0 and \
-                    self.layer != layer:
-                continue
+        self.notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
-            if not self.queryCoords: # select using layer/cat
-                nselected = self.mapInfo.SelectFromTable(layer, self.cat)
+        self.closeDialog = wx.CheckBox(parent=self, id=wx.ID_ANY,
+                                       label=_("Close dialog on submit"))
+        self.closeDialog.SetValue(True)
 
-            if nselected <= 0 and self.action != "add":
-                continue # nothing selected ...
-
-            if self.action == "add":
-                if nselected <= 0:
-                    table = self.mapInfo.layers[layer]["table"]
-                    columns = self.mapInfo.tables[table]
-                    for name in columns.keys():
-                        if name == "cat":
-                            self.mapInfo.tables[table][name][1].append(self.cat)
-                        else:
-                            self.mapInfo.tables[table][name][1].append('')
-                else: # change status 'add' -> 'update'
-                    self.action = "update"
-
-            panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
-            notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
-
-            # notebook body
-            border = wx.BoxSizer(wx.VERTICAL)
-
-            table   = self.mapInfo.layers[layer]["table"]
-            columns = self.mapInfo.tables[table]
-            # value
-            if len(columns["cat"][1]) == 0: # no cats
-                sizer  = wx.BoxSizer(wx.VERTICAL)
-                txt = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                    label=_("No categories available."))
-                sizer.Add(txt, proportion=1,
-                          flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.EXPAND)
-                border.Add(item=sizer, proportion=1,
-                           flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
-                           border=10)
-                panel.SetSizer(border)
-                continue
-            for idx in range(len(columns["cat"][1])):
-                flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
-                flexSizer.AddGrowableCol(0)
-                # columns
-                for name in columns.keys():
-                    type  = columns[name][0]
-                    value = columns[name][1][idx]
-                    if name.lower() == "cat":
-                        box    = wx.StaticBox (parent=panel, id=wx.ID_ANY,
-                                               label=" %s %s " % (_("Category"), value))
-                        boxFont = self.GetFont()
-                        boxFont.SetWeight(wx.FONTWEIGHT_BOLD)
-                        box.SetFont(boxFont)
-                        sizer  = wx.StaticBoxSizer(box, wx.VERTICAL)
-                        colValue = box
-                    else:
-                        colName = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                label=name)
-                        colType = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                label="[" + type.lower() + "]")
-                        delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
-
-                        colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value,
-                                               size=(250, -1)) # TODO: validator
-                        colValue.SetName(name)
-                        self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
-
-                        flexSizer.Add(colName, proportion=0,
-                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                        flexSizer.Add(colType, proportion=0,
-                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                        flexSizer.Add(delimiter, proportion=0,
-                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-                        flexSizer.Add(colValue, proportion=0,
-                                      flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
-                    # add widget reference to self.columns
-                    columns[name][2].append(colValue.GetId()) # name, type, values, id
-
-                # for each attribute (including category) END
-                sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
-                border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-            # for each category END
-
-            panel.SetSizer(border)
-        # for each layer END
+        self.UpdateDialog(cat, queryCoords, qdist)
 
         # set title
         if self.action == "update":
@@ -743,56 +665,68 @@ class DisplayAttributesDialog(wx.Dialog):
             self.SetTitle(_("Display attributes"))
 
         # buttons
-        btnSizer = wx.StdDialogButtonSizer()
         btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnReset  = wx.Button(self, wx.ID_UNDO, _("&Reload"))
+        btnSubmit = wx.Button(self, wx.ID_OK, _("&Submit"))
+
+        btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
-        btnReset  = wx.Button(self, wx.ID_APPLY, _("&Reset"))
         btnSizer.AddButton(btnReset)
-        btnSubmit = wx.Button(self, wx.ID_OK, _("Submit"))
+        btnSizer.SetNegativeButton(btnReset)
         btnSubmit.SetDefault()
         btnSizer.AddButton(btnSubmit)
         btnSizer.Realize()
 
-        mainSizer.Add(item=notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
-        #mainSizer.Add(item=border, proportion=1,
-        #flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
+        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=self.closeDialog, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT,
+                      border=5)
         mainSizer.Add(item=btnSizer, proportion=0,
                       flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         # bindigs
         btnReset.Bind(wx.EVT_BUTTON, self.OnReset)
+        btnSubmit.Bind(wx.EVT_BUTTON, self.OnSubmit)
+        btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
 
-        if notebook.GetPageCount() == 0:
+        # set min size for dialog
+        self.SetMinSize(self.GetBestSize())
+
+        if self.notebook.GetPageCount() == 0:
             Debug.msg(2, "DisplayAttributesDialog(): Nothing found!")
             self.mapInfo = None
 
     def __SelectAttributes(self, layer):
         """Select attributes"""
+        pass
 
     def OnSQLStatement(self, event):
         """Update SQL statement"""
         pass
 
-    def GetSQLString(self):
-        """Create SQL statement string based on self.sqlStatement"""
+    def GetSQLString(self, updateValues=False):
+        """Create SQL statement string based on self.sqlStatement
+
+        If updateValues is True, update dataFrame according to values
+        in textfields.
+        """
         sqlCommands = []
         # find updated values for each layer/category
         for layer in self.mapInfo.layers.keys(): # for each layer
             table = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
-            for idx in range(len(columns["cat"][1])): # for each category
+            for idx in range(len(columns["cat"]['values'])): # for each category
                 updatedColumns = []
                 updatedValues = []
                 for name in columns.keys():
                     if name == "cat":
-                        cat = columns[name][1][idx]
+                        cat = columns[name]['values'][idx]
                         continue
-                    type  = columns[name][0]
-                    value = columns[name][1][idx]
-                    id    = columns[name][2][idx]
+                    type  = columns[name]['type']
+                    value = columns[name]['values'][idx]
+                    id    = columns[name]['ids'][idx]
                     try:
                         newvalue = self.FindWindowById(id).GetValue()
                     except:
@@ -804,6 +738,8 @@ class DisplayAttributesDialog(wx.Dialog):
                             updatedValues.append(newvalue)
                         else:
                             updatedValues.append("'" + newvalue + "'")
+                        if updateValues:
+                            columns[name]['values'][idx] = newvalue
 
                 if self.action != "add" and len(updatedValues) == 0:
                     continue
@@ -835,6 +771,7 @@ class DisplayAttributesDialog(wx.Dialog):
         # for each layer END
 
         Debug.msg(3, "DisplayAttributesDialog.GetSQLString(): %s" % sqlCommands)
+
         return sqlCommands
 
     def OnReset(self, event):
@@ -842,21 +779,155 @@ class DisplayAttributesDialog(wx.Dialog):
         for layer in self.mapInfo.layers.keys():
             table = self.mapInfo.layers[layer]["table"]
             columns = self.mapInfo.tables[table]
-            for idx in range(len(columns["cat"][1])):
+            for idx in range(len(columns["cat"]['values'])):
                 for name in columns.keys():
-                    type  = columns[name][0]
-                    value = columns[name][1][idx]
-                    id    = columns[name][2][idx]
+                    type  = columns[name]['type']
+                    value = columns[name]['values'][idx]
+                    id    = columns[name]['ids'][idx]
                     if name.lower() != "cat":
                         self.FindWindowById(id).SetValue(value)
 
-    def OnSubmit(self, event):
-        """Submit record"""
+    def OnCancel(self, event):
+        """Cancel button pressed"""
+        self.parent.parent.digittoolbar.attributesDialog = None
+        self.parent.parent.digit.driver.SetSelected([])
+        self.parent.UpdateMap(render=False)
+
         self.Close()
+
+    def OnSubmit(self, event):
+        """Submit records"""
+        sqlCommands = self.GetSQLString(updateValues=True)
+        if len(sqlCommands) > 0:
+            sqlfile = tempfile.NamedTemporaryFile(mode="w")
+            for sql in sqlCommands:
+                sqlfile.file.write(sql + ";\n")
+                sqlfile.file.flush()
+                gcmd.Command(cmd=["db.execute",
+                                  "--q",
+                                  "input=%s" % sqlfile.name])
+
+        if self.closeDialog.IsChecked():
+            self.OnCancel(event)
 
     def GetLine(self):
         """Get id of selected line or 'None' if no line is selected"""
         return self.line
+
+    def UpdateDialog(self, cat=-1, queryCoords=None, qdist=-1):
+        """Update dialog
+        
+        Return True if updated otherwise False
+        """
+        self.cat         = cat
+        self.queryCoords = queryCoords
+        self.qdist       = qdist
+
+        if not self.mapInfo:
+            return False
+
+        self.mapInfo.Reset()
+
+        layers = self.mapInfo.layers.keys() # get available layers
+
+        # id of selected line
+        if self.queryCoords: # select by position
+            self.line, nselected = self.mapInfo.SelectByPoint(queryCoords,
+                                                              qdist)
+        # reset notebook
+        self.notebook.DeleteAllPages()
+
+        for layer in layers: # for each layer
+            if self.layer > 0 and \
+                    self.layer != layer:
+                continue
+
+            if not self.queryCoords: # select using layer/cat
+                nselected = self.mapInfo.SelectFromTable(layer, self.cat)
+
+            if nselected <= 0 and self.action != "add":
+                continue # nothing selected ...
+
+            if self.action == "add":
+                if nselected <= 0:
+                    table = self.mapInfo.layers[layer]["table"]
+                    columns = self.mapInfo.tables[table]
+                    for name in columns.keys():
+                        if name == "cat":
+                            self.mapInfo.tables[table][name]['values'].append(self.cat)
+                        else:
+                            self.mapInfo.tables[table][name]['values'].append('')
+                else: # change status 'add' -> 'update'
+                    self.action = "update"
+
+            panel = wx.Panel(parent=self.notebook, id=wx.ID_ANY)
+            self.notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+
+            # notebook body
+            border = wx.BoxSizer(wx.VERTICAL)
+
+            table   = self.mapInfo.layers[layer]["table"]
+            columns = self.mapInfo.tables[table]
+
+            # value
+            if len(columns["cat"]['values']) == 0: # no cats
+                sizer  = wx.BoxSizer(wx.VERTICAL)
+                txt = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                    label=_("No categories available."))
+                sizer.Add(txt, proportion=1,
+                          flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.EXPAND)
+                border.Add(item=sizer, proportion=1,
+                           flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                           border=10)
+                panel.SetSizer(border)
+                continue
+            for idx in range(len(columns["cat"]['values'])):
+                flexSizer = wx.FlexGridSizer (cols=4, hgap=3, vgap=3)
+                flexSizer.AddGrowableCol(3)
+                # columns
+                for name in columns.keys():
+                    type  = columns[name]['type']
+                    value = columns[name]['values'][idx]
+                    if name.lower() == "cat":
+                        box    = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+                                               label=" %s %s " % (_("Category"), value))
+                        boxFont = self.GetFont()
+                        boxFont.SetWeight(wx.FONTWEIGHT_BOLD)
+                        box.SetFont(boxFont)
+                        sizer  = wx.StaticBoxSizer(box, wx.VERTICAL)
+                        colValue = box
+                    else:
+                        colName = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label=name)
+                        colType = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label="[" + type.lower() + "]")
+                        delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
+
+                        colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value,
+                                               size=(250, -1)) # TODO: validator
+                        colValue.SetName(name)
+                        self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
+
+                        flexSizer.Add(colName, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(colType, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(delimiter, proportion=0,
+                                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+                        flexSizer.Add(colValue, proportion=1,
+                                      flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
+                    # add widget reference to self.columns
+                    columns[name]['ids'].append(colValue.GetId()) # name, type, values, id
+
+                # for each attribute (including category) END
+                sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+                border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+            # for each category END
+
+            panel.SetSizer(border)
+        # for each layer END
+
+        return True
 
 class VectorAttributeInfo:
     """Class providing information about attribute tables
@@ -865,7 +936,7 @@ class VectorAttributeInfo:
         self.map = map
         # {layer number : {table, database, driver})
         self.layers = {}
-        # {table : [(column name, type, value)]}
+        # {table : {column name : type, values, ids}}
         self.tables = {}
 
         if not self.__CheckDBConnection(): # -> self.layers
@@ -903,13 +974,15 @@ class VectorAttributeInfo:
                                                "layer=%d" % layer])
             table = self.layers[layer]["table"]
 
-            columns = {} # {name: type, [values], [ids]}
+            columns = {} # {name: {type, [values], [ids]}}
 
             if columnsCommand.returncode == 0:
                 for line in columnsCommand.ReadStdOutput():
                     columnType, columnName = line.split('|')
                     columnType = columnType.lower().strip()
-                    columns[columnName] = [columnType, [], []]
+                    columns[columnName] = { 'type'   : columnType,
+                                            'values' : [],
+                                            'ids'    : []}
             else:
                 pass
 
@@ -937,7 +1010,7 @@ class VectorAttributeInfo:
                     name = name.strip()
                     # append value to the column
                     try:
-                        self.tables[table][name][1].append(value.strip())
+                        self.tables[table][name]['values'].append(value.strip())
                     except:
                         read = False
                             
@@ -974,10 +1047,19 @@ class VectorAttributeInfo:
         if selectCommand.returncode == 0:
             for line in selectCommand.ReadStdOutput():
                 name, value = line.split('|')
-                self.tables[table][name][1].append(value)
+                self.tables[table][name]['values'].append(value)
                 nselected = 1
 
         return nselected
+
+    def Reset(self):
+        """Reset"""
+        for layer in self.layers:
+            table = self.layers[layer]["table"] # get table desc
+            columns = self.tables[table]
+            for name in self.tables[table].keys():
+                self.tables[table][name]['values'] = [] 
+                self.tables[table][name]['ids']    = [] 
 
 def main(argv=None):
     if argv is None:

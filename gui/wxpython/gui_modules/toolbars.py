@@ -244,8 +244,9 @@ class DigitToolbar(AbstractToolbar):
         self.comboid    = None
 
         # only one dialog can be open
-        self.settingsDialog = None
-        self.categoryDialog = None
+        self.settingsDialog   = None
+        self.categoryDialog   = None
+        self.attributesDialog = None
 
         # create toolbars (two rows)
         self.toolbar = []

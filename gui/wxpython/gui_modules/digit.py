@@ -174,11 +174,15 @@ class VEdit(AbstractDigit):
         layer = self.settings["layer"]
         cat   = self.SetCategory()
         
-        addstring="""%s 1 1
-                    %f %f""" % (key, x, y)
+        if layer > 0 and cat != "None":
+            addstring =  "%s 1 1\n" % (key)
+        else:
+            addstring =  "%s 1\n" % (key)
+
+        addstring += "%f %f\n" % (x, y)
 
         if layer > 0 and cat != "None":
-            addstring += "\n%d %d" % (layer, cat)
+            addstring += "%d %d\n" % (layer, cat)
             Debug.msg (3, "VEdit.AddPoint(): map=%s, type=%s, layer=%d, cat=%d, x=%f, y=%f" % \
                            (map, type, layer, cat, x, y))
         else:
@@ -206,17 +210,21 @@ class VEdit(AbstractDigit):
             key = "L"
             flags = []
             
-        addstring="""%s %d 1\n""" % (key, len(coords))
+        if layer > 0 and cat != "None":
+            addstring = "%s %d 1\n" % (key, len(coords))
+        else:
+            addstring = "%s %d\n" % (key, len(coords))
+
         for point in coords:
-            addstring += """%f %f\n""" % \
+            addstring += "%f %f\n" % \
                 (float(point[0]), float(point [1]))
 
         if layer > 0 and cat != "None":
-            addstring += "\n%d %d" % (layer, cat)
+            addstring += "%d %d\n" % (layer, cat)
             Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
                            (key, layer, cat, coords))
         else:
-            Debug.msg (3, "Vline.AddLine(): type=%s, layer=%d, cat=%d coords=%s" % \
+            Debug.msg (3, "Vline.AddLine(): type=%s, coords=%s" % \
                            (key, coords))
 
         Debug.msg (4, "VEdit.AddLine(): input=%s" % addstring)
@@ -398,6 +406,9 @@ class VEdit(AbstractDigit):
                      'cats=%s' % ",".join(["%d" % v for v in cats]),
                      'ids=%s' % ",".join(["%d" % v for v in ids])])
         
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
+
         return True
 
     def EditLine(self, line, coords):
@@ -1414,7 +1425,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         # buttons
         btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnReload = wx.Button(self, wx.ID_UNDO, _("Reload"))
+        btnReload = wx.Button(self, wx.ID_UNDO, _("&Reload"))
         btnOk = wx.Button(self, wx.ID_OK)
         btnOk.SetDefault()
 
@@ -1585,7 +1596,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         return True
 
     def OnReload(self, event):
-        """Reload button clicked"""
+        """Reload button pressed"""
         # restore original list
         self.cats = copy.deepcopy(self.cats_orig)
 
@@ -1595,11 +1606,14 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         event.Skip()
 
     def OnCancel(self, event):
-        """Cancel button clicked"""
+        """Cancel button pressed"""
+        self.parent.parent.digittoolbar.categoryDialog = None
+        self.parent.parent.digit.driver.SetSelected([])
+        self.parent.UpdateMap(render=False)
         self.Close()
 
     def OnApply(self, event):
-        """Apply button clicked"""
+        """Apply button pressed"""
 
         # action : (catsFrom, catsTo)
         check = {'catadd': (self.cats,      self.cats_orig),
@@ -1632,12 +1646,12 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         event.Skip()
 
     def OnOK(self, event):
-        """OK button clicked"""
+        """OK button pressed"""
         self.OnApply(event)
-        self.Close()
+        self.OnCancel(event)
 
     def OnAddCat(self, event):
-        """Button 'Add' new category clicked"""
+        """Button 'Add' new category pressed"""
         try:
             layer = int(self.layerNew.GetValue())
             cat   = int(self.catNew.GetValue())
@@ -1677,6 +1691,9 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         
         Return True if updated otherwise False
         """
+
+        # line id (if not found remains 'None')
+        self.line = None
 
         # {layer: [categories]}
         self.cats = {}
