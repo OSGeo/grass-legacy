@@ -1,4 +1,3 @@
-
 /****************************************************************************
  *
  * MODULE:       r.los
@@ -55,7 +54,7 @@ int main(int argc, char *argv[])
     int segment_no, flip, xmax, ymax, sign_on_y, sign_on_x;
     int submatrix_rows, submatrix_cols, lenth_data_item;
     int patt = 0, in_fd, out_fd, patt_fd = 0;
-    double old, new;
+    int old, new;
     double slope_1, slope_2, max_vert_angle = 0.0, color_factor;
     char *old_mapset, *patt_mapset = NULL;
     FCELL *value;
@@ -70,6 +69,7 @@ int main(int argc, char *argv[])
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt5, *opt6, *opt7;
     struct History history;
+    char title[128];
 
     G_gisinit(argv[0]);
 
@@ -79,48 +79,37 @@ int main(int argc, char *argv[])
 
     /* Define the different options */
 
-    opt1 = G_define_option();
+    opt1 = G_define_standard_option(G_OPT_R_ELEV);
     opt1->key = "input";
-    opt1->type = TYPE_STRING;
-    opt1->required = YES;
-    opt1->gisprompt = "old,cell,raster";
-    opt1->description = _("Raster map containing elevation data");
 
-    opt7 = G_define_option();
-    opt7->key = "output";
-    opt7->type = TYPE_STRING;
-    opt7->required = YES;
-    opt7->gisprompt = "new,cell,raster";
-    opt7->description = _("Raster map name for storing results");
+    opt7 = G_define_standard_option(G_OPT_R_OUTPUT);
 
     opt3 = G_define_option();
     opt3->key = "coordinate";
     opt3->type = TYPE_STRING;
     opt3->required = YES;
     opt3->key_desc = "x,y";
-    opt3->description = _("Coordinate identifying the viewing location");
+    opt3->description = _("Coordinate identifying the viewing position");
 
-    opt2 = G_define_option();
+    opt2 = G_define_standard_option(G_OPT_R_COVER);
     opt2->key = "patt_map";
-    opt2->type = TYPE_STRING;
     opt2->required = NO;
-    opt2->description = _("Binary (1/0) raster map");
-    opt2->gisprompt = "old,cell,raster";
+    opt2->description = _("Binary (1/0) raster map to use as a mask");
 
     opt5 = G_define_option();
     opt5->key = "obs_elev";
     opt5->type = TYPE_DOUBLE;
     opt5->required = NO;
     opt5->answer = "1.75";
-    opt5->description = _("Height of the viewing location");
+    opt5->description = _("Viewing position height above the ground");
 
     opt6 = G_define_option();
     opt6->key = "max_dist";
     opt6->type = TYPE_DOUBLE;
     opt6->required = NO;
-    opt6->answer = "1000";
-    opt6->options = "0-99999";
-    opt6->description = _("Max distance from the viewing point (meters)");
+    opt6->answer = "10000";
+    opt6->options = "0-999999";
+    opt6->description = _("Maximum distance from the viewing point (meters)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -144,17 +133,15 @@ int main(int argc, char *argv[])
     else
 	patt_flag = 1;
 
-
     if ((G_projection() == PROJECTION_LL))
-	G_fatal_error(_
-		      ("Lat/Long support is not (yet) implemented for this module."));
+	G_fatal_error(
+	    _("Lat/Long support is not (yet) implemented for this module."));
 
     /* check if specified observer location inside window   */
     if (east < window.west || east > window.east
 	|| north > window.north || north < window.south)
-	G_fatal_error(_
-		      ("Specified observer coordinate is outside current region bounds."));
-
+	G_fatal_error(
+	    _("Specified observer coordinate is outside current region bounds."));
 
     search_mapset = "";
     old_mapset = G_find_cell2(elev_layer, search_mapset);
@@ -187,8 +174,10 @@ int main(int argc, char *argv[])
     /*  find number of rows and columns in elevation map    */
     nrows = G_window_rows();
     ncols = G_window_cols();
+
     /*  allocate buffer space for row-io to layer           */
     cell = G_allocate_raster_buf(FCELL_TYPE);
+
     /*      open elevation overlay file for reading         */
     old = G_open_cell_old(elev_layer, old_mapset);
     if (old < 0)
@@ -210,6 +199,7 @@ int main(int argc, char *argv[])
     lenth_data_item = sizeof(FCELL);
     submatrix_rows = nrows / 4 + 1;
     submatrix_cols = ncols / 4 + 1;
+
     /* create segmented format files for elevation layer,   */
     /* output layer and pattern layer (if present)          */
     in_name = G_tempfile();
@@ -222,6 +212,7 @@ int main(int argc, char *argv[])
     segment_format(out_fd, nrows, ncols,
 		   submatrix_rows, submatrix_cols, lenth_data_item);
     close(out_fd);
+
     if (patt_flag == 1) {
 	patt_name = G_tempfile();
 	patt_fd = creat(patt_name, 0666);
@@ -229,40 +220,48 @@ int main(int argc, char *argv[])
 		       submatrix_rows, submatrix_cols, lenth_data_item);
 	close(patt_fd);
     }
+
     /*      open, initialize and segment all files          */
     in_fd = open(in_name, 2);
     segment_init(&seg_in, in_fd, 4);
     out_fd = open(out_name, 2);
     segment_init(&seg_out, out_fd, 4);
+
     if (patt_flag == 1) {
 	patt_fd = open(patt_name, 2);
 	segment_init(&seg_patt, patt_fd, 4);
 	for (row = 0; row < nrows; row++) {
 	    if (G_get_raster_row(patt, cell, row, FCELL_TYPE) < 0)
-		exit(1);
+		G_fatal_error(_("Unable to read raster map <%s> row %d"), patt_layer, row);
 	    segment_put_row(&seg_patt, cell, row);
 	}
     }
+
     for (row = 0; row < nrows; row++) {
 	if (G_get_raster_row(old, cell, row, FCELL_TYPE) < 0)
-	    exit(1);
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"), elev_layer, row);
 	segment_put_row(&seg_in, cell, row);
     }
+
     /* calc map array coordinates for viewing point         */
     row_viewpt = (window.north - north) / window.ns_res;
     col_viewpt = (east - window.west) / window.ew_res;
+
     /*       read elevation of viewing point                */
     value = &viewpt_elev;
     segment_get(&seg_in, value, row_viewpt, col_viewpt);
     viewpt_elev += obs_elev;
+
     /*      DO LOS ANALYSIS FOR SIXTEEN SEGMENTS            */
     for (segment_no = 1; segment_no <= 16; segment_no++) {
 	G_percent(segment_no, 16, 5);
 	sign_on_y = 1 - (segment_no - 1) / 8 * 2;
+
 	if (segment_no > 4 && segment_no < 13)
 	    sign_on_x = -1;
 	else
 	    sign_on_x = 1;
+
 	/*      calc slopes for bounding rays of a segment      */
 	if (segment_no == 1 || segment_no == 4 || segment_no == 5 ||
 	    segment_no == 8 || segment_no == 9 || segment_no == 12 ||
@@ -274,15 +273,18 @@ int main(int argc, char *argv[])
 	    slope_1 = 0.5;
 	    slope_2 = 1.0;
 	}
+
 	if (segment_no == 1 || segment_no == 2 || segment_no == 7 ||
 	    segment_no == 8 || segment_no == 9 || segment_no == 10 ||
 	    segment_no == 15 || segment_no == 16)
 	    flip = 0;
 	else
 	    flip = 1;
+
 	/*      calculate max and min 'x' and 'y'               */
 	a = ((ncols - 1) * (sign_on_x + 1) / 2 - sign_on_x * col_viewpt);
 	b = (1 - sign_on_y) / 2 * (nrows - 1) + sign_on_y * row_viewpt;
+
 	if (flip == 0) {
 	    xmax = a;
 	    ymax = b;
@@ -291,13 +293,15 @@ int main(int argc, char *argv[])
 	    xmax = b;
 	    ymax = a;
 	}
+
 	/*      perform analysis for every segment              */
 	heads[segment_no - 1] = segment(segment_no, xmax, ymax,
 					slope_1, slope_2, flip, sign_on_y,
 					sign_on_x, viewpt_elev, &seg_in,
 					&seg_out, &seg_patt, row_viewpt,
 					col_viewpt, patt_flag);
-    }				/*      end of for-loop over segments           */
+    }	/*      end of for-loop over segments           */
+
     /* loop over all segment lists to find maximum vertical */
     /* angle of any point when viewed from observer location */
     for (segment_no = 1; segment_no <= 16; segment_no++) {
@@ -308,22 +312,27 @@ int main(int argc, char *argv[])
 	    SEARCH_PT = NEXT_SEARCH_PT;
 	}
     }
+
     /* calculate factor to be multiplied to every vertical  */
     /* angle for suitable color variation on output map     */
-    color_factor = decide_color_range(max_vert_angle * 57.3,
-				      COLOR_SHIFT, COLOR_MAX);
+/*    color_factor = decide_color_range(max_vert_angle * 57.3,
+				      COLOR_SHIFT, COLOR_MAX);   */
     color_factor = 1.0;		/* to give true angle? */
+
     /* mark visible points for all segments on outputmap    */
     for (segment_no = 1; segment_no <= 16; segment_no++) {
 	mark_visible_points(heads[segment_no - 1], &seg_out,
 			    row_viewpt, col_viewpt, color_factor, COLOR_SHIFT);
     }
+
     /*      mark viewpt on output map                       */
     data = 180;
     value = &data;
     segment_put(&seg_out, value, row_viewpt, col_viewpt);
+
     /* write pending updates by segment_put() to outputmap  */
     segment_flush(&seg_out);
+
     /* convert output submatrices to full cell overlay      */
     for (row = 0; row < nrows; row++) {
 	int col;
@@ -332,26 +341,35 @@ int main(int argc, char *argv[])
 	    if (cell[col] == 1)
 		G_set_null_value(&cell[col], 1, FCELL_TYPE);
 	if (G_put_raster_row(new, cell, FCELL_TYPE) < 0)
-	    exit(1);
+	    G_fatal_error(_("Failed writing raster map <%s> row %d"), out_layer, row);
     }
+
     segment_release(&seg_in);	/* release memory       */
     segment_release(&seg_out);
+
     if (patt_flag == 1)
 	segment_release(&seg_patt);
+
     close(in_fd);		/* close all files      */
     close(out_fd);
     unlink(in_name);		/* remove temp files as well */
     unlink(out_name);
     G_close_cell(old);
     G_close_cell(new);
+
     if (patt_flag == 1) {
 	close(patt_fd);
 	G_close_cell(patt);
     }
+
     /*      create category file for output map             */
     G_read_cats(out_layer, current_mapset, &cats);
     G_set_cats_fmt("$1 degree$?s", 1.0, 0.0, 0.0, 0.0, &cats);
     G_write_cats(out_layer, &cats);
+
+    sprintf(title, "Line of sight %.2fm above %s", obs_elev, opt3->answer);
+    G_put_cell_title(out_layer, title);
+    G_write_raster_units(out_layer, "degrees");
 
     G_short_history(out_layer, "raster", &history);
     G_command_history(&history);
