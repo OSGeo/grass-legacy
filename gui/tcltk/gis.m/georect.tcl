@@ -608,6 +608,7 @@ proc GRMap::startup { } {
     variable initht
     global env
     global bgcolor
+    global iconpath
     
     set grstarttitle "GRASS Georectifier"
     toplevel .grstart
@@ -701,7 +702,13 @@ proc GRMap::startup { } {
         -helptext [G_msg "Cancel georectification"]\
         -width 16 -anchor w -highlightthickness 0 \
         -command "destroy .grstart"
+	Button $row.b -text [G_msg "Help"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
+		-command "spawn g.manual --q gm_georect" \
+		-background $bgcolor \
+		-helptext [G_msg "Help"]
     pack $row.a -side left
+    pack $row.b -side right
     pack $row -side top -fill both -expand yes -padx 5 -pady 1
 
 
@@ -982,6 +989,7 @@ proc GRMap::gcpwin {} {
 
 
     pack $gcp_mf -side top -expand yes -fill both -anchor n
+    pack $gcp_tb -side left -expand yes -fill x
 
 
     # Scroll the options window with the mouse
@@ -1120,8 +1128,16 @@ proc GRMap::gcptb { gcptb } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Exit georectifier"]
-
+        
+	set helpbtn [Button $gcptb.help -text [G_msg "Help"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
+		-command "spawn g.manual --q gm_georect" \
+		-background $bgcolor -borderwidth 1 \
+		-helptext [G_msg "Help"]]
+		
+	    pack $helpbtn -side right -anchor e
         pack $bbox -side left -anchor w -expand no -fill y
+        
 }
 
 
