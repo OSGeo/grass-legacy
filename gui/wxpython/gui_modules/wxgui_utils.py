@@ -29,8 +29,6 @@ import os
 import sys
 import string
 import tempfile
-import time
-from threading import Thread
 
 import wx
 import wx.lib.customtreectrl as CT
@@ -1044,7 +1042,8 @@ class GMConsole(wx.Panel):
 
         # progress bar
         self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
-                                            range=100, pos=(110, 50), size=(-1, 25))
+                                            range=100, pos=(110, 50), size=(-1, 25),
+                                            style=wx.GA_HORIZONTAL)
 
         # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
@@ -1149,20 +1148,19 @@ class GMConsole(wx.Panel):
                 os.unsetenv("GRASS_REGION")
 
                 # process GRASS command with argument
-                self.cmd_output.AddText('$ %s' % ' '.join(cmdlist))
-                grassCmd = gcmd.Command(cmdlist, verbose=3,
+                self.cmd_output.AddText('$ %s' % ' '.join(cmdlist) + os.linesep)
+                
+                grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
                                         stdout=GMStdout(self.cmd_output),
-                                        stderr=GMStderr(self.cmd_output))
-
+                                        stderr=GMStderr(self.cmd_output,
+                                                        self.console_progressbar))
+                
                 # deactivate computational region and return to display settings
                 if tmpreg:
                     os.environ["GRASS_REGION"] = tmpreg
 
                 if grassCmd.returncode != 0:
                     return False
-
-                # if oline.find("GRASS_INFO_PERCENT")>-1:
-                #    self.console_progressbar.SetValue(int(oline.split()[1]))
 
         else:
             # Send any other command to the shell. Send output to
@@ -1187,7 +1185,7 @@ class GMConsole(wx.Panel):
 
     def ClearHistory(self, event):
         """Clear history of commands"""
-        self.cmd_output.Clear()
+        self.cmd_output.ClearAll()
         self.console_progressbar.SetValue(0)
 
     def SaveHistory(self, event):
@@ -1228,7 +1226,6 @@ class GMStdout:
     """
     def __init__(self, gmstc):
         self.gmstc  = gmstc
-        self.buffer = tempfile.TemporaryFile(mode="w")
 
     def write(self, s):
         # if not self.gmstc.GetParent().IsShown():
@@ -1242,16 +1239,6 @@ class GMStdout:
         self.gmstc.StartStyling(p1, 0xff)
         self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleOutput)
 
-    def fileno(self):
-        return self.buffer.fileno()
-
-    def __del__(self):
-        pass
-    #         self.buffer.flush()
-    #         self.buffer.seek(0,0)
-    #         for line in self.buffer.readlines():
-    #             self.write(line)
-
 class GMStderr:
     """GMConsole standard error output
 
@@ -1263,36 +1250,52 @@ class GMStderr:
     Copyright: (c) 2005-2007 Jean-Michel Fauth
     Licence:   GPL
     """
-    def __init__(self, gmstc):
+    def __init__(self, gmstc, gmgauge):
         self.gmstc = gmstc
-        self.buffer = tempfile.TemporaryFile(mode="w")
-
-        self.timer = GMStcTimer(self.buffer)
+        self.gmgauge = gmgauge
 
     def write(self, s):
         # if self.gmstc.GetParent().IsShown() == False:
         #    self.gmstc.GetParent().Show()
-            
+        
         s = s.replace('\n', os.linesep)
-        p1 = self.gmstc.GetCurrentPos()
-        self.gmstc.AddText(s)
-        self.gmstc.EnsureCaretVisible()
-        p2 = self.gmstc.GetCurrentPos()
-        self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
 
-    def fileno(self):
-        return self.buffer.fileno()
+        message = ''
+        for line in s.split(os.linesep):
+            if len(line) == 0:
+                continue
 
-    def __del__(self):
-        pass
-        #         self.buffer.flush()
-        #         self.buffer.seek(0,0)
-        #         for line in self.buffer.readlines():
-        #             self.write(line)
+            if 'GRASS_INFO_PERCENT:' in line:
+                # 'GRASS_INFO_PERCENT: 10' -> value=10
+                value = int(line.split(':')[1].strip())
+                if value < 100:
+                    self.gmgauge.SetValue(value)
+                else:
+                    self.gmgauge.SetValue(0) # reset progress bar on '100%'
+            elif 'GRASS_INFO_MESSAGE' in line:
+                type = 'message'
+                message += line.split(':')[1].strip()
+            elif 'GRASS_INFO_WARNING' in line:
+                type = 'warning'
+                message += line.split(':')[1].strip()
+            elif 'GRASS_INFO_ERROR' in line:
+                type = 'error'
+                message += line.split(':')[1].strip()
+            elif 'GRASS_INFO_END' in line:
+                message = ''
+            else:
+                p1 = self.gmstc.GetCurrentPos()
+                self.gmstc.AddText(line + os.linesep)
+                self.gmstc.EnsureCaretVisible()
+                p2 = self.gmstc.GetCurrentPos()
+                #self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
 
-    def GetTimer(self):
-        """Return timer object"""
-        return self.timer
+            if message != '':
+                p1 = self.gmstc.GetCurrentPos()
+                self.gmstc.AddText(message + os.linesep)
+                self.gmstc.EnsureCaretVisible()
+                p2 = self.gmstc.GetCurrentPos()
+                #self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
 
 class GMStc(wx.stc.StyledTextCtrl):
     """Styled GMConsole
@@ -1339,23 +1342,3 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.SetSelBackground(True, "#FFFF00")
         self.SetUseHorizontalScrollBar(True)
 
-class GMStcTimer(Thread):
-    """Timer for console output"""
-    def __init__(self, file):
-        print "#", file
-        self.file = file
-        self.read   = False
-
-    def Read(self):
-        """Check streams"""
-        self.read = True
-#         while self.read:
-#             line = self.file.read().strip()
-#             if line:
-#                 print "#", line
-
-#             time.sleep(0.1)
-
-    def Stop(self):
-        """Stop checking streams"""
-        self.read = False

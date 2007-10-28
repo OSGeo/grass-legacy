@@ -2,8 +2,8 @@
 MODULE: gcmd
 
 CLASSES:
-    * EndOfCommand
     * Command
+    * RunCommand
 
 PURPOSE:   GRASS command interface
 
@@ -17,19 +17,19 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
-# use Popen class or os.popen3 method
-usePopenClass = True
-
 import os, sys
+import time
+import fcntl
+from threading import Thread
+
 import wx # GUI dialogs...
 
-if usePopenClass:
-    try:
-        import subprocess
-    except:
-        CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
-        sys.path.append(CompatPath)
-        import subprocess
+try:
+    import subprocess
+except:
+    CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+    sys.path.append(CompatPath)
+    import subprocess
 
 # debugging & log window
 GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
@@ -38,30 +38,26 @@ sys.path.append(GuiModulePath)
 import wxgui_utils
 from debug import Debug as Debug
 
-class EndOfCommand(Exception):
-    """
-    End of command indicator
-    """
-    def __str__(self):
-        return "End of command"
-
 class Command:
     """
-    Run (GRASS) command on the background
+    Run GRASS command
 
     Parameters:
-    cmd     - command string (given as list)
+    cmd     - command given as list
     stdin   - standard input stream
-    verbose - verbose mode [0; 3]
-    wait    - wait for childer execution
-    dlgMsg  - type of error message (None, gui, txt) [only if wait=True]
-    log     - log window or None
+    verbose - verbose mode [0, 3]
+    wait    - wait for child execution terminated
+    dlgMsg  - type of error message (None, gui, txt), only if wait is True
+    stdout  - redirect standard output or None
+    stderr  - redirect standard error output or None
+
+    If stdout/err is redirected, write() method is required for the given classes.
 
     Usage:
-        cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=True, wait=True)
+        cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=3, wait=True)
 
         if cmd.returncode == None:
-            print 'RUNNING'
+            print 'RUNNING?'
         elif cmd.returncode == 0:
             print 'SUCCESS'
         else:
@@ -71,12 +67,8 @@ class Command:
     def __init__ (self, cmd, stdin=None,
                   verbose=0, wait=True, dlgMsg='gui',
                   stdout=None, stderr=None):
-        #
-        # input
-        #
-        self.module_stdin = None
-        self.cmd          = cmd
-        self.dlgMsg       = dlgMsg
+
+        self.cmd = cmd
 
         #
         # set verbosity level
@@ -90,74 +82,37 @@ class Command:
             os.environ["GRASS_VERBOSE"] = str(verbose)
             if verbosity:
                 os.environ["GRASS_VERBOSE"] = verbosity
-        #
-        # GRASS module 
-        #
-        self.module = None
-
-        #
-        # output
-        #
-        self.module_stderr = None
 
         #
         # set message formatting
         #
         message_format = os.getenv("GRASS_MESSAGE_FORMAT")
         os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+
+        #
+        # run command
+        #
+        self.cmdThread = RunCommand(cmd, stdin,
+                                    stdout, stderr)
         
         #
-        # run command ...
+        # start thread
         #
-        if not usePopenClass: # do not use Popen class
-            Debug.msg(4, "Command.__init__(): [popen3] cmd='%s'" % ' '.join(cmd))
+        self.cmdThread.start()
 
-            (self.module_stdin, self.module_stdout, self.module_stderr) = \
-                                os.popen3(' '.join(self.cmd))
-        else: # Popen class (default)
-            Debug.msg(4, "Command.__init__(): [Popen] cmd='%s'" % ' '.join(cmd))
+        if wait:
+            self.cmdThread.join()
+            self.cmdThread.module.wait()
+            self.returncode = self.cmdThread.module.returncode
+        else:
+            self.cmdThread.join(0.1)
+            self.returncode = None
 
-            if stdout is None:
-                out = subprocess.PIPE
-            elif stdout == sys.stdout:
-                out = None
-            else:
-                out = stdout
-
-            if stderr is None:
-                err = subprocess.PIPE
-            elif stderr == sys.stderr:
-                err = None
-            else:
-                err = stderr
-
-            self.module = subprocess.Popen(self.cmd,
-                                           stdin=subprocess.PIPE,
-                                           stdout=out,
-                                           stderr=err,
-                                           close_fds=False)
-            # set up streams
-            self.module_stdin  = self.module.stdin
-            self.module_stderr = self.module.stderr
-            self.module_stdout = self.module.stdout
-
-        if stdin: # read stdin if requested ...
-            self.module_stdin.write(stdin)
-            self.module_stdin.close()
-
-        if self.module:
-            if wait:
-                self.module.wait()
-
-            if stderr is None:
-                # list of messages (<- stderr)
-                # -> [(type, content)] type = (error, warning, message)
-                self.module_msg = self.__ProcessStdErr() # -> self.module_msg
-
-            self.returncode = self.module.returncode
-            # failed?
-            if self.dlgMsg and self.returncode != 0:
-                if self.dlgMsg == 'gui': # GUI dialog
+        if self.returncode is not None:
+            Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=%d, alive=%s" % \
+                           (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
+            if dlgMsg and self.returncode != 0:
+                if dlgMsg == 'gui': # GUI dialog
                     dlg = wx.MessageDialog(None,
                                            ("Execution failed: '%s'\n\n" 
                                             "Details:\n%s") % (' '.join(self.cmd),
@@ -168,22 +123,45 @@ class Command:
                 else: # otherwise 'txt'
                     print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
                     print >> sys.stderr, "\nDetails:\n%s" % self.PrintModuleOutput()
-
         else:
-            self.returncode = None # running ?
+            Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=?, alive=%s" % \
+                           (' '.join(cmd), wait, self.cmdThread.isAlive()))
 
-        if self.returncode is not None:
-            Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=%d" % \
-                       (' '.join(self.cmd), wait, self.returncode))
-        else:
-            Debug.msg (3, "Command(): cmd='%s', wait=%d, returncode=?" % \
-                       (' '.join(self.cmd), wait))
 
         if message_format:
             os.environ["GRASS_MESSAGE_FORMAT"] = message_format
         else:
             os.unsetenv("GRASS_MESSAGE_FORMAT")
+
+    def __ReadOutput(self, stream):
+        """Read stream and return list of lines
+
+        Note: Remove '\n' from output (TODO: '\r\n' ??)
+        """
+        lineList = []
+
+        if stream is None:
+            return lineList
+
+        while True:
+            line = stream.readline()
+            if not line:
+                break
+            line = line.replace('\n', '').strip()
+            lineList.append(line)
+
+        return lineList
+                    
+    def ReadStdOutput(self):
+        """Read standard output and return list"""
+
+        return self.__ReadOutput(self.cmdThread.module.stdout)
+    
+    def ReadErrOutput(self):
+        """Read standard error output and return list"""
         
+        return self.__ReadOutput(self.cmdThread.module.stderr)
+
     def __ProcessStdErr(self):
         """
         Read messages/warnings/errors from stderr
@@ -214,40 +192,11 @@ class Command:
 
         return msg
 
-    def __ReadOutput(self, stream):
-        """Read stream and return list of lines
+    def PrintModuleOutput(self, error=True, warning=True, message=True):
+        """Store module errors, warnings, messages to output string"""
 
-        Note: Remove '\n' from output (TODO: '\r\n' ??)
-        """
-        lineList = []
-
-        if stream is None:
-            return lineList
-
-        while True:
-            line = stream.readline()
-            if not line:
-                break
-            line = line.replace('\n', '').strip()
-            lineList.append(line)
-
-        return lineList
-                    
-    def ReadStdOutput(self):
-        """Read standard output and return list"""
-
-        return self.__ReadOutput(self.module_stdout)
-    
-    def ReadErrOutput(self):
-        """Read standard error output and return list"""
-        
-        return self.__ReadOutput(self.module_stderr)
-
-    def PrintModuleOutput(self, error=True, warning=True, message=True, rest=False):
-        """Print module errors, warnings, messages..."""
-        
         msgString = ""
-        for type, msg in self.module_msg:
+        for type, msg in self.__ProcessStdErr():
             if type:
                 if (type == 'ERROR' and error) or \
                         (type == 'WARNING' and warning) or \
@@ -257,6 +206,75 @@ class Command:
                 msgString += " " + msg + "\n"
 
         return msgString
+
+
+class RunCommand(Thread):
+    """See Command class"""
+    def __init__ (self, cmd, stdin=None,
+                  stdout=None, stderr=None):
+
+        Thread.__init__(self)
+
+        self.cmd          = cmd
+        self.stdin        = stdin
+        self.stdout       = stdout
+        self.stderr       = stderr
+
+        self.module       = None
+
+    def run(self):
+        """Run command"""
+        self.module = subprocess.Popen(self.cmd,
+                                       stdin=subprocess.PIPE,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       close_fds=False)
+
+        if self.stdin: # read stdin if requested ...
+            self.module.stdin.write(self.stdin)
+            self.module.stdin.close()
+
+        if not self.module:
+            return
+
+        if self.stdout and self.stderr:
+            # make stdout/stderr non-blocking
+            stdout_fileno = self.module.stdout.fileno()
+            stderr_fileno = self.module.stderr.fileno()
+            
+            flags = fcntl.fcntl(stdout_fileno, fcntl.F_GETFL)
+            fcntl.fcntl(stdout_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+            
+            flags = fcntl.fcntl(stderr_fileno, fcntl.F_GETFL)
+            fcntl.fcntl(stderr_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+            
+            # wait for the process to end, sucking in stuff until it does end
+            while self.module.poll() is None:
+                try:
+                    self.stdout.write(self.module.stdout.read())
+                except IOError:
+                    pass
+                
+                try:
+                    self.stderr.write(self.module.stderr.read())
+                except IOError:
+                    pass
+                
+                time.sleep(0.1)
+            
+            # get the last output
+                    
+            try:
+                self.stdout.write(self.module.stdout.read())
+                pass
+            except IOError:
+                pass
+            
+            try:
+                self.stderr.write(self.module.stderr.read())
+            except IOError:
+                pass
+
 
 # testing ...
 if __name__ == "__main__":
