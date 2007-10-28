@@ -338,7 +338,8 @@ int main(int argc, char *argv[])
 	int col;
 	segment_get_row(&seg_out, cell, row);
 	for (col = 0; col < ncols; col++)
-	    if (cell[col] == 1)
+	    /* set to NULL if beyond max_dist (0) or blocked view (1) */
+	    if (cell[col] == 0 || cell[col] == 1)
 		G_set_null_value(&cell[col], 1, FCELL_TYPE);
 	if (G_put_raster_row(new, cell, FCELL_TYPE) < 0)
 	    G_fatal_error(_("Failed writing raster map <%s> row %d"), out_layer, row);
