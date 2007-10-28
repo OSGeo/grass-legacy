@@ -112,7 +112,7 @@ struct point *hidden_point_elimination (
 				segment_get(seg_patt_p,&mask,
 				    row_viewpt-CHECKED_PT_Y,col_viewpt+CHECKED_PT_X);
 
-				if(mask == 0)
+				if(mask == 0 || G_is_null_value(&mask, CELL_TYPE))
 				{
 					head=delete(CHECKED_PT,head,seg_out_p,
 					    row_viewpt,col_viewpt);
@@ -205,7 +205,7 @@ next_iter:
 		{
 			segment_get(seg_patt_p, &mask,row_viewpt- BLOCKING_PT_Y,
 			    col_viewpt+BLOCKING_PT_X);
-			if(mask == 0)
+			if(mask == 0 || G_is_null_value(&mask, CELL_TYPE))
 			{
 				if (NEXT_BLOCKING_PT != NULL)
 					head = delete(BLOCKING_PT, head, seg_out_p,
