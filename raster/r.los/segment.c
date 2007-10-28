@@ -1,13 +1,11 @@
-
-/****************************************************************/
-/*                                                              */
-/*      segment.c       in      ~/src/Glos                      */
-/*                                                              */
-/*      This function picks up all the points in one segment    */
-/*      and performs los analysis on them.                      */
-/*                                                              */
-
-/****************************************************************/
+/****************************************************************
+ *								*
+ *	segment.c	in	~/src/Glos			*
+ *								*
+ *	This function picks up all the points in one segment	*
+ *	and performs los analysis on them.			*
+ *								*
+ ****************************************************************/
 
 #include <grass/segment.h>
 #include "point.h"
@@ -65,7 +63,7 @@ struct point *segment(int segment_no, int xmax, int ymax,
 			     viewpt_elev, quadrant, row_viewpt, col_viewpt);
 
 	}
-    }				/* end of outer loop */
+    }	/* end of outer loop */
 
 
     if (head != NULL) {
@@ -87,5 +85,3 @@ struct point *segment(int segment_no, int xmax, int ymax,
     return (head);
 
 }
-
-/**************** END OF FUNCTION "SEGMENT" *********************/

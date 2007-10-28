@@ -1,13 +1,11 @@
-
-/****************************************************************/
-/*                                                              */
-/*      make_list.c     in      ~/src/Glos                      */
-/*                                                              */
-/*      This function adds a new point to the point list        */
-/*      for any segment of the map.                             */
-/*                                                              */
-
-/****************************************************************/
+/****************************************************************
+ *								*
+ *	make_list.c	in	~/src/Glos			*
+ *								*
+ *	This function adds a new point to the point list	*
+ *	for any segment of the map.				*
+ *								*
+ ****************************************************************/
 
 #include <stdlib.h>
 #include <math.h>
@@ -33,7 +31,7 @@ struct point *make_list(struct point *head, int y, int x,
     dist = sqrt(del_x * del_x + del_y * del_y) * window.ns_res;
 
     /* if distance from viewpt is greater than the max      */
-    /* range specified, neglect that point                  */
+    /*   range specified, neglect that point                */
     if (dist > max_dist)
 	return (head);
 
@@ -54,5 +52,3 @@ struct point *make_list(struct point *head, int y, int x,
     return (head);
 
 }
-
-/********** END OF FUNCTION "MAKE_LIST" *************************/
