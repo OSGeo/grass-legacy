@@ -80,7 +80,7 @@ class Command(Thread):
     Creates thread which will observe the command file and see, if
     there is new command to be executed
     """
-    def __init__ (self,parent, Map):
+    def __init__ (self, parent, Map):
         Thread.__init__(self)
 
         global cmdfilename

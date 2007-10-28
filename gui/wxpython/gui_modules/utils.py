@@ -29,8 +29,8 @@ def GetTempfile(pref=None):
     """
 
     tempfileCmd = gcmd.Command(["g.tempfile",
-                            "pid=%d" %
-                            os.getpid()])
+                                "pid=%d" %
+                                os.getpid()])
 
     tempfile = tempfileCmd.ReadStdOutput()[0].strip()
 
