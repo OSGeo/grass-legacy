@@ -63,7 +63,8 @@ int main(int argc, char *argv[])
     struct Categories cats;
     struct Cell_head cellhd_elev, cellhd_patt;
     extern struct Cell_head window;
-    FCELL *cell, data, viewpt_elev;
+    CELL *cell;
+    FCELL *fcell, data, viewpt_elev;
     SEGMENT seg_in, seg_out, seg_patt;
     struct point *heads[16], *SEARCH_PT;
     struct GModule *module;
@@ -129,9 +130,9 @@ int main(int argc, char *argv[])
     current_mapset = G_mapset();
     /* set flag to indicate presence of areas of interest   */
     if (patt_layer == NULL)
-	patt_flag = 0;
+	patt_flag = FALSE;
     else
-	patt_flag = 1;
+	patt_flag = TRUE;
 
     if ((G_projection() == PROJECTION_LL))
 	G_fatal_error(
@@ -151,7 +152,7 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Raster map <%s> not found"), elev_layer);
 
     /* if pattern layer used, check if present in database  */
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	patt_mapset = G_find_cell(patt_layer, search_mapset);
 	if (patt_mapset == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), patt_layer);
@@ -166,17 +167,20 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("[%s]: Cannot read map header"), elev_layer);
 
     /*  if pattern layer present, read in its header info   */
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	if (G_get_cellhd(patt_layer, patt_mapset, &cellhd_patt) < 0)
 	    G_fatal_error(_("[%s]: Cannot read map header"), patt_layer);
+
+	/*  allocate buffer space for row-io to layer		*/
+	cell = G_allocate_raster_buf(CELL_TYPE);
     }
+
+    /*  allocate buffer space for row-io to layer           */
+    fcell = G_allocate_raster_buf(FCELL_TYPE);
 
     /*  find number of rows and columns in elevation map    */
     nrows = G_window_rows();
     ncols = G_window_cols();
-
-    /*  allocate buffer space for row-io to layer           */
-    cell = G_allocate_raster_buf(FCELL_TYPE);
 
     /*      open elevation overlay file for reading         */
     old = G_open_cell_old(elev_layer, old_mapset);
@@ -189,10 +193,12 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to create raster map <%s>"), out_layer);
 
     /* if pattern layer specified, open it for reading      */
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	patt = G_open_cell_old(patt_layer, patt_mapset);
 	if (patt < 0)
 	    G_fatal_error(_("Unable to open raster map <%s>"), patt_layer);
+	if(G_get_raster_map_type(patt) != CELL_TYPE)
+	    G_fatal_error(_("Pattern map should be a binary 0/1 CELL map"));
     }
 
     /*      parameters for map submatrices                  */
@@ -213,11 +219,11 @@ int main(int argc, char *argv[])
 		   submatrix_rows, submatrix_cols, lenth_data_item);
     close(out_fd);
 
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	patt_name = G_tempfile();
 	patt_fd = creat(patt_name, 0666);
 	segment_format(patt_fd, nrows, ncols,
-		       submatrix_rows, submatrix_cols, lenth_data_item);
+		       submatrix_rows, submatrix_cols, sizeof(CELL));
 	close(patt_fd);
     }
 
@@ -227,20 +233,20 @@ int main(int argc, char *argv[])
     out_fd = open(out_name, 2);
     segment_init(&seg_out, out_fd, 4);
 
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	patt_fd = open(patt_name, 2);
 	segment_init(&seg_patt, patt_fd, 4);
 	for (row = 0; row < nrows; row++) {
-	    if (G_get_raster_row(patt, cell, row, FCELL_TYPE) < 0)
+	    if (G_get_raster_row(patt, cell, row, CELL_TYPE) < 0)
 		G_fatal_error(_("Unable to read raster map <%s> row %d"), patt_layer, row);
 	    segment_put_row(&seg_patt, cell, row);
 	}
     }
 
     for (row = 0; row < nrows; row++) {
-	if (G_get_raster_row(old, cell, row, FCELL_TYPE) < 0)
+	if (G_get_raster_row(old, fcell, row, FCELL_TYPE) < 0)
 	    G_fatal_error(_("Unable to read raster map <%s> row %d"), elev_layer, row);
-	segment_put_row(&seg_in, cell, row);
+	segment_put_row(&seg_in, fcell, row);
     }
 
     /* calc map array coordinates for viewing point         */
@@ -337,19 +343,19 @@ int main(int argc, char *argv[])
     /* convert output submatrices to full cell overlay      */
     for (row = 0; row < nrows; row++) {
 	int col;
-	segment_get_row(&seg_out, cell, row);
+	segment_get_row(&seg_out, fcell, row);
 	for (col = 0; col < ncols; col++)
 	    /* set to NULL if beyond max_dist (0) or blocked view (1) */
-	    if (cell[col] == 0 || cell[col] == 1)
-		G_set_null_value(&cell[col], 1, FCELL_TYPE);
-	if (G_put_raster_row(new, cell, FCELL_TYPE) < 0)
+	    if (fcell[col] == 0 || fcell[col] == 1)
+		G_set_null_value(&fcell[col], 1, FCELL_TYPE);
+	if (G_put_raster_row(new, fcell, FCELL_TYPE) < 0)
 	    G_fatal_error(_("Failed writing raster map <%s> row %d"), out_layer, row);
     }
 
     segment_release(&seg_in);	/* release memory       */
     segment_release(&seg_out);
 
-    if (patt_flag == 1)
+    if (patt_flag == TRUE)
 	segment_release(&seg_patt);
 
     close(in_fd);		/* close all files      */
@@ -359,7 +365,7 @@ int main(int argc, char *argv[])
     G_close_cell(old);
     G_close_cell(new);
 
-    if (patt_flag == 1) {
+    if (patt_flag == TRUE) {
 	close(patt_fd);
 	G_close_cell(patt);
     }
