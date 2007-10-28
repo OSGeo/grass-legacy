@@ -1,47 +1,41 @@
 <H2>DESCRIPTION</H2>
 
 
-<EM>r.los</EM> generates a raster map output in which the
-cells that are visible from a user-specified observer
-location are marked with integer values that represent the
+<EM>r.los</EM> generates a raster output map in which the cells that are
+visible from a user-specified observer position are marked with the
 vertical angle (in degrees) required to see those cells (viewshed).
+A value of 0 is directly below the specified viewing position,
+90 is due horizontal, and 180 is directly above the observer.
+The angle to the cell containing the viewing position is undefined
+and set to 180.
 
 <P>
-The program can be run either non-interactively or interactively. 
-To run <EM>r.los</EM> non-interactively, the user must specify at least 
-an <B>input</B> file name, <B>output</B> file name, and the geographic 
-<B>coordinate</B>s of the user's viewing location on the command line; 
-any remaining parameters whose values are unspecified on the command line 
+To run <EM>r.los</EM>, the user must specify at least 
+an <B>input</B> map name, <B>output</B> map name, and the geographic 
+<B>coordinate</B>s of the user's viewing location; 
+any remaining parameters whose values are unspecified 
 will be set to their default values (see below). 
 
 <P>
-
 The <B>patt_map</B> is the name of a binary (1/0) raster map layer in which
 cells within the areas of interest are assigned the category value '1', and
 all other cells are assigned the category value '0'. If this parameter is
 omitted, the analysis will be performed for the whole area within a certain
 distance of the viewing point inside the geographic region boundaries.
-
+(<i>See BUGS section below.</I>)
 <BR>
+Default: assign all cells that are within the <B>max_dist</B> and within
+the user's current geographic region boundaries a value of 1.
 
-Default: assign all cells that are within the
-<B>max_dist</B> and within the user's current geographic
-region boundaries a value of 1.
 <P>
-The <B>obs_elev=</B> parameter defines the height of the observer (in
+The <B>obs_elev</B> parameter defines the height of the observer (in
 meters) above the viewing point's elevation.
-<BR>
-Default: 1.75 (meters) 
 <P>
 
-The <B>max_dist=</B> parameter is the maximum distance (in meters) from the
+The <B>max_dist</B> parameter is the maximum distance (in meters) from the
 viewing point inside of which the line of sight analysis will be performed.
-The cells outside this distance range are assigned the category value '0'.
+The cells outside this distance range are assigned the value '0'.
 
-<BR>
-Options: 0-99999 (stated in map units) 
-<BR>
-Default: 1000 
 
 <H2>NOTES</H2>
 
@@ -50,22 +44,40 @@ geographic region set equal to the resolution of the data
 (see <EM><A HREF="g.region.html">g.region</A></EM>).
 
 <P>
+The time to complete the calculation increases dramatically with the region size.
+Try to keep the columns and rows under 1000.
 
+<P>
 It is advisable to use a 'pattern layer' which identifies
 the areas of interest in which the line of sight analysis
 is required.  Such a measure will reduce the time taken by
 the program to run.
 
+<P>
+The curvature of the Earth is not taken into account for these calculations.
+However, for interest's sake, a handy calculation for distance to the true horizon
+is approximated by <i>d = sqrt(13*h)</i> where <i>h</i> is the height of the observer
+in meters (above sea level) and <i>d</i> is the distance to the horizon in km.
+This may be useful for setting the <B>max_dist</B> value.
+
+
 <H2>EXAMPLE</H2>
 
-Spearfish example - calculation of viewshed from 5m tower
+Spearfish example - calculation of viewshed from 50m tower
 on top of a mountain:
 
 <div class="code"><pre>
-r.los elevation.dem out=los coord=598869,4916642 obs_elev=5 max_dist=99999
-d.rast aspect
-d.rast -o los
+r.los elevation.dem out=los coord=598869,4916642 obs_elev=50 max_dist=20000
+r.colors -e los color=bgyr
+d.shadedmap relief=aspect drape=los bright=10
+echo "symbol extra/target 25 598869 4916642 red" | d.graph -m
 </pre></div>
+
+
+<H2>BUGS</H2>
+
+The <B>patt_map</B> option is likely broken. Besides not working it may actually
+slow down the calculation.
 
 
 <H2>SEE ALSO</H2>
@@ -76,4 +88,5 @@ d.rast -o los
 
 Kewan Q. Khawaja, Intelligent Engineering Systems Laboratory, M.I.T.
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
