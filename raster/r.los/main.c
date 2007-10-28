@@ -254,7 +254,6 @@ int main(int argc, char *argv[])
 
     /*      DO LOS ANALYSIS FOR SIXTEEN SEGMENTS            */
     for (segment_no = 1; segment_no <= 16; segment_no++) {
-	G_percent(segment_no, 16, 5);
 	sign_on_y = 1 - (segment_no - 1) / 8 * 2;
 
 	if (segment_no > 4 && segment_no < 13)
@@ -300,6 +299,8 @@ int main(int argc, char *argv[])
 					sign_on_x, viewpt_elev, &seg_in,
 					&seg_out, &seg_patt, row_viewpt,
 					col_viewpt, patt_flag);
+
+	G_percent(segment_no, 16, 5);
     }	/*      end of for-loop over segments           */
 
     /* loop over all segment lists to find maximum vertical */
