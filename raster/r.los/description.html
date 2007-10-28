@@ -19,10 +19,9 @@ will be set to their default values (see below).
 <P>
 The <B>patt_map</B> is the name of a binary (1/0) raster map layer in which
 cells within the areas of interest are assigned the category value '1', and
-all other cells are assigned the category value '0'. If this parameter is
+all other cells are assigned the category value '0' or NULL. If this parameter is
 omitted, the analysis will be performed for the whole area within a certain
 distance of the viewing point inside the geographic region boundaries.
-(<i>See BUGS section below.</I>)
 <BR>
 Default: assign all cells that are within the <B>max_dist</B> and within
 the user's current geographic region boundaries a value of 1.
@@ -72,12 +71,6 @@ r.colors -e los color=bgyr
 d.shadedmap relief=aspect drape=los bright=10
 echo "symbol extra/target 25 598869 4916642 red" | d.graph -m
 </pre></div>
-
-
-<H2>BUGS</H2>
-
-The <B>patt_map</B> option is likely broken. Besides not working it may actually
-slow down the calculation.
 
 
 <H2>SEE ALSO</H2>
