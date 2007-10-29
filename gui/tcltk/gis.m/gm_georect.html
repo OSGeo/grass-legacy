@@ -1,8 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head>
-
-<title>gis.m</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" href="grassdocs.css" type="text/css"></head>
+<html>
+<head>
+<title>gis.m: GEORECTIFY TOOL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="grassdocs.css" type="text/css">
+</head>
 <body bgcolor="white">
 
 <h2>GEORECTIFY TOOL (gis.m)</h2>
@@ -12,7 +14,7 @@ GIS, they must use the same coordinate systems and be projected
 identically. The Georectify Tool uses multiple GRASS modules to <i>georectify</i>
 spatial
 data (map or image) that is not originally coded in an earth-based
-coordinate system (e.g., latitude/longitude or UTM).&nbsp;The
+coordinate system (e.g., latitude/longitude or UTM). The
 Georectify Tool can transform the simple x/y coordinates of the
 original data by shifting, rotating, and warping them as needed for the
 original data to match other georectified data from the same location
@@ -33,9 +35,9 @@ polynomial transformation. The georectified coordinates of GCPs can be
 entered by typing or can be extracted by clicking the equivalent
 locations with a mouse in a displayed georectified map.<br>
 <h3>Using the Georectify Tool</h3>
-<h4><i>Map Preparation</i>&nbsp;</h4>
+<h4><i>Map Preparation</i> </h4>
 The unrectified map or image (e.g., scanned image or CAD drawing) must
-be&nbsp;imported into a GRASS XY location. <br>
+be imported into a GRASS XY location. <br>
 <br>
 In order to be georectified, the unrectified map or image must be added
 to a <i>imagery group</i>.
@@ -58,18 +60,18 @@ with a mouse. Make sure that the computational region extents and
 resolution are set to the values you want for the newly georectified
 map.
 <p>Select <i><b>Georectify</b></i> from
-the <i><b>File</b></i> menu.&nbsp;</p>
+the <i><b>File</b></i> menu. </p>
 <p>The Georectify Tool startup lets you select the type of map to
-georectify, the location/mapset of the map to georectify, the&nbsp;<i>image group</i> of the map to georectify, and a map to use for marking GCPs.</p><p align="center"><img src="gm_georectstart.png" alt="" height="214" width="350"></p><ol>
+georectify, the location/mapset of the map to georectify, the <i>image group</i> of the map to georectify, and a map to use for marking GCPs.</p><p align="center"><img src="gm_georectstart.png" alt="" height="214" width="350"></p><ol>
 <li> click the radio button to georectify either raster or
-vector maps (you can only georectify&nbsp;raster <b>OR</b>&nbsp;vector
+vector maps (you can only georectify raster <b>OR</b> vector
 maps in a single georectification session),
 </li>
 <li> select the source (XY) location/mapset of the map to be
 georectified,
 </li>
 <li>if needed, create an <i>imagery group</i> for
-the map to&nbsp;georectify. (the <i>imagery group</i> <i><b>target</b></i>
+the map to georectify. (the <i>imagery group</i> <i><b>target</b></i>
 is automatically set
 to the current location and mapset),
 </li>
@@ -86,7 +88,7 @@ to begin marking GCPs.</li>
 <h4><i>GCP Marking</i></h4>This opens a special map display with an
 ungeorectified map to use for marking GCPs, and a GCP manager window.
 The GCP map display can be zoomed and panned like a normal map display.
-<br><br><div align="center"><img src="gm_georectdisp.png" alt="" height="439" width="500"> &nbsp;&nbsp;&nbsp;&nbsp; <br><br></div>The GCP manager window holds the x/y coordinates and geographic
+<br><br><div align="center"><img src="gm_georectdisp.png" alt="" height="439" width="500">   <br><br></div>The GCP manager window holds the x/y coordinates and geographic
 coordinates of each
 GCP, and displays the <i>error</i> for each GCP (i.e., the distance
 that the actual GCP marked deviates from its expected placement using a
@@ -138,5 +140,5 @@ Michael Barton, Arizona State University, Tempe, Arizona, USA
 
 <p><i>Last changed: $Date$</i></p>
 <hr>
-<p><a href="index.html">Main index</a> - <a href="gis.html">gis index</a> - <a href="full_index.html">Full index</a></p>
+<p><a href="index.html">Main index</a> - <a href="full_index.html">Full index</a></p>
 </body></html>
