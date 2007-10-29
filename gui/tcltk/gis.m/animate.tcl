@@ -404,6 +404,17 @@ proc GmAnim::make_buttons {anim_tb} {
 		-helptext [G_msg "Quit animation"]
 
     pack $bbox3 -side left -anchor w
+    
+    set helpbtn [Button $anim_tb.help -text [G_msg "Help"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
+		-command "spawn g.manual --q gm_animate" \
+		-background $bgcolor -borderwidth 1 \
+		-helptext [G_msg "Help"]]
+
+	pack $anim_tb -side left -anchor w -expand yes -fill x
+	pack $helpbtn -side right -anchor e
+
+
 }
 
 
@@ -467,12 +478,13 @@ proc GmAnim::sel_maps {} {
     set row [ frame $mapswin.heading ]
     Label $row.a -text [G_msg "Select maps to animate in one or more frames (1 frame required)"] \
     	-fg MediumBlue
-    Label $row.b -text "   "
-    Button $row.c -text [G_msg "Help"] \
+    Button $row.b -text [G_msg "Help"] \
 		-image [image create photo -file "$iconpath/gui-help.gif"] \
-		-command "spawn g.manual --q xganim" \
+		-command "spawn g.manual --q gm_animate" \
 		-background $bgcolor -helptext [G_msg "Help"]
-    pack $row.a $row.b $row.c -side left
+		
+    pack $row.a -side left
+    pack $row.b -side right -anchor e
     pack $row -side top -fill both -expand yes
 	
     # Frame 1
