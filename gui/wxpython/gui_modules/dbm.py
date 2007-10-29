@@ -37,6 +37,7 @@ import tempfile
 import wx
 import wx.lib.mixins.listctrl as listmix
 
+import sqlbuilder
 import grassenv
 import gcmd
 from debug import Debug as Debug
@@ -45,139 +46,157 @@ class Log:
     """
     The log output is redirected to the status bar of the containing frame.
     """
-    def __init__(self,parent):
+    def __init__(self, parent):
         self.parent = parent
 
-    def write(self,text_string):
+    def write(self, text_string):
+        """Update status bar"""
         self.parent.SetStatusText(text_string.strip())
 
 class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
     """
-    The panel you want to test (VirtualAttributeList)
+    Support virtual attribute list class
     """
     def __init__(self, parent, log, vectmap, pointdata=None):
-        wx.ListCtrl.__init__( self, parent, -1, style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
+        wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
+                              style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
 
-        self.log=log
-
+        #
+        # initialize variables
+        self.log     = log
         self.vectmap = vectmap
+        self.parent  = parent
+        self.qlayer  = None
+        self.icon      = ''
+        self.pointsize = ''
+
         if not "@" in self.vectmap:
             self.vectmap = self.vectmap + "@" + grassenv.GetGRASSVariable("MAPSET")
         self.mapname, self.mapset = self.vectmap.split("@")
 
-        self.icon = ''
-        self.pointsize = ''
-
         if pointdata:
-            self.icon = pointdata[0]
+            self.icon      = pointdata[0]
             self.pointsize = pointdata[1]
 
-        self.columns = []
-        self.selectedCats  = []
+        self.columns              = []
+        self.selectedCats         = []
         self.lastTurnSelectedCats = [] # just temporary, for comparation
-        self.parent = parent
-        self.qlayer = None
 
-        #adding some attributes (colourful background for each item rows)
+        #
+        # add some attributes (colourful background for each item rows)
+        #
         self.attr1 = wx.ListItemAttr()
         self.attr1.SetBackgroundColour("light blue")
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("white")
         self.il = wx.ImageList(16, 16)
-        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,wx.ART_TOOLBAR,(16,16)))
-        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN,wx.ART_TOOLBAR,(16,16)))
+        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,   wx.ART_TOOLBAR, (16,16)))
+        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN, wx.ART_TOOLBAR, (16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        if self.parent.gismgr: # GIS Manager is running?
+        if self.parent.gismgr: # Layer Manager is running?
             self.mapdisp = self.parent.gismgr.curr_page.maptree.mapdisplay
             self.map     = self.parent.gismgr.curr_page.maptree.Map
+        else:
+            self.mapdisp = self.map = None
 
         # building the columns
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
-        dbDescribe = gcmd.Command (cmd = ["db.describe", "-c",
+        dbDescribe = gcmd.Command (cmd = ["db.describe", "-c", "--q",
                                           "table=%s" % self.parent.tablename,
                                           "driver=%s" % self.parent.driver,
                                           "database=%s" % self.parent.database])
 
-        for line in dbDescribe.ReadStdOutput()[2:]:
-            print "#", line
+        # structure (e.g.)
+        #
+        # ncols: 2
+        # nrows: 11
+        # Column 1: cat:INTEGER:11
+        # Column 2: label:CHARACTER:43
+
+        for line in dbDescribe.ReadStdOutput()[2:]: # skip ncols and nrows
             colnum, column, type, length = line.strip().split(":")
+            column.strip()
+
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
-                self.columns.append({"name":column,"type":int})
+                self.columns.append({"name": column, "type": int})
             elif type.lower().find("double") > -1:
-                self.columns.append({"name":column,"type":float})
+                self.columns.append({"name": column, "type": float})
             elif type.lower().find("float") > -1:
-                self.columns.append({"name":column,"type":float})
+                self.columns.append({"name": column, "type": float})
             else:
-                self.columns.append({"name":column,"type":str})
+                self.columns.append({"name": column, "type": str})
 
-            self.InsertColumn(i, column)
-            self.SetColumnWidth(i,  wx.LIST_AUTOSIZE_USEHEADER)
+            self.InsertColumn(col=i, heading=column)
+            self.SetColumnWidth(col=i, width=wx.LIST_AUTOSIZE_USEHEADER)
             i += 1
             if i >= 256:
-                self.log.write("Can display only 256 columns")
+                self.log.write(_("Can display only 256 columns"))
                 break
 
-        #These two should probably be passed to init more cleanly
-        #setting the numbers of items = number of elements in the dictionary
-        self.itemDataMap = {}
+        # These two should probably be passed to init more cleanly
+        # setting the numbers of items = number of elements in the dictionary
+        self.itemDataMap  = {}
         self.itemIndexMap = []
 
         self.LoadData()
-        #self.SetItemCount(len(self.itemDataMap))
+        # self.SetItemCount(len(self.itemDataMap))
 
-        #mixins
+        # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, len(self.columns))
 
-        #sort by genre (column 2), A->Z ascending order (1)
-        self.SortListItems(0, 1)
+        # sort by cat by default
+        self.SortListItems(col=0, ascending=1) # FIXME category column can be different
 
-        #events
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self)
+        #
+        # events
+        #
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected,   self)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, self)
-        #self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
-        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self)
-        #self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
-        #self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
-        #self.Bind(wx.EVT_LIST_COL_DRAGGING, self.OnColDragging, self.list)
-        #self.Bind(wx.EVT_LIST_COL_END_DRAG, self.OnColEndDrag, self.list)
-        #self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
-
-        #self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
-        #self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.OnItemActivated,  self)
+        # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
+        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColClick,       self)
+        # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
+        # self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
+        # self.Bind(wx.EVT_LIST_COL_DRAGGING, self.OnColDragging, self.list)
+        # self.Bind(wx.EVT_LIST_COL_END_DRAG, self.OnColEndDrag, self.list)
+        # self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
+        # self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
+        # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
         if self.parent.gismgr:
-            self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.onMapClick)
+            self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.OnMapClick)
 
             self.timer = wx.PyTimer(self.RedrawMap)
             # check each 0.1s
             self.timer.Start(100)
 
     def LoadData(self,where=None):
-
-        # prepare command string
-        cmdv = ["db.select", "-c",
-                "table=%s" % self.parent.tablename,
-                "database=%s" % self.parent.database,
-                "driver=%s" % self.parent.driver]
+        """Load data into list"""
 
         if where:
             self.ClearAll()
-            cmdv = ["db.select", "-c",
+            cmdv = ["db.select", "-c", "--q",
                     "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
+                    "database=%s"                   % self.parent.database,
+                    "driver=%s"                     % self.parent.driver]
+        else:
+            cmdv = ["db.select", "-c", "--q",
+                    "table=%s"    % self.parent.tablename,
                     "database=%s" % self.parent.database,
-                    "driver=%s" % self.parent.driver]
+                    "driver=%s"   % self.parent.driver]
 
         # run command
-        vDbSelect = gcmd.Command (cmd=cmdv)
+        vDbSelect = gcmd.Command(cmd=cmdv)
 
+        # 
+        # read data
+        #
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
-        # read data
         for line in vDbSelect.ReadStdOutput():
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
@@ -190,13 +209,13 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                     pass
 
             # insert to table
-            index = self.InsertStringItem(sys.maxint, str(attributes[0]))
+            index = self.InsertStringItem(index=sys.maxint, label=str(attributes[0]))
             self.itemDataMap[i].append(attributes[0])
             for j in range(len(attributes[1:])):
-                self.SetStringItem(index, j+1, str(attributes[j+1]))
+                self.SetStringItem(index=index, col=j+1, label=str(attributes[j+1]))
                 self.itemDataMap[i].append(attributes[j+1])
 
-            self.SetItemData(index, i)
+            self.SetItemData(item=index, data=i)
             self.itemIndexMap.append(i)
 
             i += 1
@@ -205,21 +224,21 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                 break
 
     def OnCloseWindow(self, event):
+        """Close attreibute manager window"""
         if self.qlayer:
-            self.map.delLayer(item='qlayer')
+            self.map.DeleteLayer(self.qlayer)
 
-    def OnColClick(self,event):
-        self._col = event.GetColumn()
+    def OnColClick(self, event):
+        """Column heading clicked"""
+        # self._col = event.GetColumn()
         event.Skip()
 
     def OnItemSelected(self, event):
+        """Item selected"""
         self.currentItem = event.m_itemIndex
-        #self.log.write('OnItemSelected: "%s", "%s"\n' %
+        # self.log.write('OnItemSelected: "%s", "%s"\n' %
         #                   (self.currentItem,
         #                    self.GetItemText(self.currentItem)))
-
-        # now the funny part:
-        # make 1,2,3,4 to 1-4
 
         self.selectedCats.append(int(self.GetItemText(self.currentItem)))
         self.selectedCats.sort()
@@ -227,6 +246,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         event.Skip()
 
     def RedrawMap(self):
+        """Redraw a map"""
         if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
             if self.qlayer:
                 self.map.DeleteLayer(self.qlayer)
@@ -277,27 +297,29 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             if self.pointsize:
                 gcmd.append("size=%s" % (self.pointsize))
 
-            self.qlayer = self.map.AddLayer(type="vector", name='qlayer', command=cmd,
-                                            l_active=True, l_hidden=True, l_opacity=1, l_render=False)
+                self.qlayer = self.map.AddLayer(type="vector", name='qlayer', command=cmd,
+                                                l_active=True, l_hidden=True, l_opacity=1, l_render=False)
             self.mapdisp.ReDraw(None)
             self.lastTurnSelectedCats = self.selectedCats[:]
 
     def OnItemActivated(self, event):
+        """Item activated"""
         self.currentItem = event.m_itemIndex
         self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
-                           (self.GetItemText(self.currentItem), self.GetTopItem()))
+                       (self.GetItemText(self.currentItem), self.GetTopItem()))
         event.Skip()
 
-    def getColumnText(self, index, col):
+    def GetColumnText(self, index, col):
+        """Return column text"""
         item = self.GetItem(index, col)
         return item.GetText()
 
     def OnItemDeselected(self, event):
+        """Item deselected"""
         #self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
         self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
         self.selectedCats.sort()
         event.Skip()
-
 
         # ---------------------------------------------------
         # These methods are callbacks for implementing the
@@ -312,10 +334,12 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #     index=self.itemIndexMap[item]
         #     if ( index % 2) == 0:
 
-    def OnGetItemAttr(self, item):
-        index=self.itemIndexMap[item]
+        #     def OnGetItemAttr(self, item):
+        #         """Get item attributes"""
+        #         index=self.itemIndexMap[item]
+        
+        #         return self.attr2
 
-        return self.attr2
         # if ( index % 2) == 0:
         #    return self.attr2
         # else:
@@ -341,58 +365,59 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #     self.Refresh()
 
         # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+
     def GetListCtrl(self):
+        """Get list, required by VirtualAttributeList class"""
         return self
 
-    # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
-    # def Sorter(self, key1,key2):
-    #     col = self._col
-    #     ascending = self._colSortFlag[col]
-    #     # convert, because the it is allways string
-    #     try:
-    #         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
-    #     except:
-    #         item1 = ''
-    #     try:
-    #         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
-    #     except:
-    #         item2 = ''
+        # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
+        # def Sorter(self, key1,key2):
+        #     col = self._col
+        #     ascending = self._colSortFlag[col]
+        #     # convert, because the it is allways string
+        #     try:
+        #         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
+        #     except:
+        #         item1 = ''
+        #     try:
+        #         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+        #     except:
+        #         item2 = ''
+        
+        #     #--- Internationalization of string sorting with locale module
+        #     if type(item1) == type('') or type(item2) == type(''):
+        #         cmpVal = locale.strcoll(str(item1), str(item2))
+        #     else:
+        #         cmpVal = cmp(item1, item2)
+        #     #---
+        
+        #     # If the items are equal then pick something else to make the sort v    ->alue unique
+        #     if cmpVal == 0:
+        #         cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
+        
+        #     if ascending:
+        #         return cmpVal
+        #     else:
+        #         return -cmpVal
+        
+        # return cmp(self.columns[self.columnNumber]["type"](a),
+        #           self.columns[self.columnNumber]["type"](b))
+        
+        #     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+        #     def GetSortImages(self):
+        #         return (self.sm_dn, self.sm_up)
 
-    #     #--- Internationalization of string sorting with locale module
-    #     if type(item1) == type('') or type(item2) == type(''):
-    #         cmpVal = locale.strcoll(str(item1), str(item2))
-    #     else:
-    #         cmpVal = cmp(item1, item2)
-    #     #---
+        # XXX Looks okay to remove this one (was present in the original demo)
+        # def getColumnText(self, index, col):
+        #    item = self.GetItem(index, col)
+        #    return item.GetText()
 
-    #     # If the items are equal then pick something else to make the sort v    ->alue unique
-    #     if cmpVal == 0:
-    #         cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
-
-    #     if ascending:
-    #         return cmpVal
-    #     else:
-    #         return -cmpVal
-
-    #return cmp(self.columns[self.columnNumber]["type"](a),
-    #           self.columns[self.columnNumber]["type"](b))
-
-    # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
-    def GetSortImages(self):
-        return (self.sm_dn, self.sm_up)
-
-    # XXX Looks okay to remove this one (was present in the original demo)
-    # def getColumnText(self, index, col):
-    #    item = self.GetItem(index, col)
-    #    return item.GetText()
-
-    def onMapClick(self, event):
+    def OnMapClick(self, event):
         """
         Gets coordinates from mouse clicking on display window
         """
         # map coordinates
-        x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple())
-        #print 'coordinates =',x,y
+        x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple()[:])
 
         category = ""
         for line in os.popen("v.what east_north=%f,%f map=%s" %\
@@ -406,11 +431,11 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             item = self.GetItem(idx, 0)
             if item.GetText() == category:
                 #print idx
-                #self.Select(idx,True)
+                # self.Select(idx,True)
                 self.EnsureVisible( idx )
                 self.SetItemState(idx, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
             else:
-                #self.SetItemState(idx, wx.LIST_STATE_DESELECTED, wx.LIST_STATE_DESELECTED)
+                # self.SetItemState(idx, wx.LIST_STATE_DESELECTED, wx.LIST_STATE_DESELECTED)
                 self.Select(idx,False)
 
 
@@ -482,19 +507,22 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
 class AttributeManager(wx.Frame):
     """
-    The main window
-
-    This is where you populate the frame with a panel from the demo.
-    original line in runTest (in the demo source):
-    win = TestPanel(nb, log)
-    this is changed to:
-    self.win=TestPanel(self,log)
+    GRASS Attribute manager main window
     """
     def __init__(self, parent, id, title, vectmap, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
                  pointdata=None):
 
+        self.vectmap = vectmap
+        self.parent  = parent
+        self.gismgr  = parent
+
+        # status bar log class
+        log = Log(self)
+
         # get list of attribute tables (TODO: open more tables)
-        vDbConnect = gcmd.Command (cmd=["v.db.connect", "-g", "map=%s" % vectmap])
+        vDbConnect = gcmd.Command (cmd=["v.db.connect",
+                                        "-g",
+                                        "map=%s" % self.vectmap])
 
         if vDbConnect.returncode == 0:
             (self.layer, self.tablename, self.column, self.database, self.driver) = \
@@ -503,56 +531,78 @@ class AttributeManager(wx.Frame):
             self.layer = None
 
         if not self.layer:
-            dlg = wx.MessageDialog(parent, _("No attribute table linked to vector map <%s>") % vectmap,
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg = wx.MessageDialog(patent=parent,
+                                   message=_("No attribute table linked to vector map <%s>") % vectmap,
+                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
-        self.CreateStatusBar(1)
+        self.CreateStatusBar(number=1)
 
-        self.vectmap = vectmap
-        self.parent  = parent
-        self.gismgr  = parent
+        # set up virtual list
+        self.win = VirtualAttributeList(parent=self, log=log, vectmap=vectmap, pointdata=pointdata)
 
-        log=Log(self)
-
-        # most important part
-        self.win = VirtualAttributeList(self, log, vectmap=vectmap, pointdata=pointdata)
-
+        #
         # buttons
-        self.btn_apply = wx.Button(self, -1, "Apply")
+        #
+        self.btnApply      = wx.Button(parent=self, id=wx.ID_APPLY)
+        self.btnQuit       = wx.Button(parent=self, id=wx.ID_CANCEL)
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
-        self.btn_sqlbuilder = wx.Button(self, -1, "SQL Builder")
+        self.btnSqlBuilder = wx.Button(parent=self, id=wx.ID_ANY, label=_("SQL Builder"))
 
-        # check
-        # self.check_add_to_selection = wx.CheckBox(self, -1, "Add to selection")
+        # radiobuttons
+        self.sqlSimple   = wx.RadioButton(parent=self, id=wx.ID_ANY,
+                                          label=_("Simple"))
+        self.sqlAdvanced = wx.RadioButton(parent=self, id=wx.ID_ANY,
+                                          label=_("Advanced"))
 
         # textarea
-        self.text_query = wx.TextCtrl(self,-1,"")
+        self.sqlWhere     = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="")
+        self.sqlStatement = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="")
 
-        # label
-        self.sqlabel=wx.StaticText(self,-1,"SELECT * FROM %s WHERE " % self.tablename)
-        self.label_query = wx.StaticText(self,-1,"")
+        # labels
+        self.sqlLabel    = wx.StaticText(parent=self, id=wx.ID_ANY,
+                                                label="SELECT * FROM %s WHERE " % self.tablename)
+        self.label_query = wx.StaticText(parent=self, id=wx.ID_ANY,
+                                         label="")
 
-        # box
-        self.sqlbox = wx.StaticBox(self, -1, "SQL Query:")
+        # boxes
+        self.sqlBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                                   label=" %s " % _("SQL Query"))
+        self.connectionInfoBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                                              label=" %s " % _("Database connection"))
+        self.listBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
+                                    label=" %s " % _("Attribute data"))
 
-        self.btn_sqlbuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
+        # bindings
+        self.btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
+        self.btnQuit.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
 
+        # do layer
         self.__layout()
+
+        self.SetMinSize((640, 480))
+
         self.Show()
 
+    def OnCloseWindow(self, event):
+        """Cancel button pressed"""
+        self.win.OnCloseWindow(event)
+        self.Close()
+
     def OnBuilder(self,event):
-        import sqlbuilder
-        self.builder = sqlbuilder.SQLFrame(self,-1,"SQL Builder",self.vectmap)
+        """SQL Builder button pressed"""
+        self.builder = sqlbuilder.SQLFrame(parent=self, id=wx.ID_ANY,
+                                           title=_("SQL Builder"),
+                                           vectmap=self.vectmap)
 
 
     def OnApply(self,event):
+        """Apply button pressed"""
         self.win.LoadData(where=self.text_query.GetValue().strip())
-
 
     def OnTextEnter(self, event):
         pass
@@ -561,31 +611,92 @@ class AttributeManager(wx.Frame):
         pass
 
     def __layout(self):
+        """Do layout"""
         #self.panel = wx.Panel(self,-1, style=wx.SUNKEN_BORDER)
 
-        self.label_query.SetMinSize((500,50))
-        self.text_query.SetMinSize((500,-1))
+        #self.label_query.SetMinSize((500,50))
+        self.sqlWhere.SetMinSize((250,-1))
 
-        bsizer = wx.StaticBoxSizer(self.sqlbox, wx.VERTICAL)
-        bsizer.Add(self.label_query, flag=wx.EXPAND)
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
 
+        # connection info
+        infoSizer = wx.StaticBoxSizer(self.connectionInfoBox, wx.VERTICAL)
+        infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
+        infoFlexSizer.AddGrowableCol(1)
 
-        pagesizer= wx.BoxSizer(wx.VERTICAL)
-        toolsizer1 = wx.BoxSizer(wx.HORIZONTAL)
-        #toolsizer2 = wx.BoxSizer(wx.HORIZONTAL)
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="Database:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="%s" % self.database))
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="Driver:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="%s" % self.driver))
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="Table:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
+                                             label="%s" % self.tablename))
+        infoSizer.Add(item=infoFlexSizer, proportion=0,
+                      flag=wx.ALL,
+                      border=1)
 
-        toolsizer1.Add(self.sqlabel, flag=wx.ALIGN_CENTER_VERTICAL,
-                proportion=1)
-        toolsizer1.Add(self.text_query,flag=wx.SHAPED|wx.GROW, proportion=2,)
-        toolsizer1.Add(self.btn_sqlbuilder,flag=wx.ALIGN_RIGHT,proportion=0)
-        toolsizer1.Add(self.btn_apply,flag=wx.ALIGN_RIGHT,proportion=0)
+        # attribute data
+        listSizer = wx.StaticBoxSizer(self.listBox, wx.VERTICAL)
+        listSizer.Add(item=self.win, proportion=1,
+                      flag=wx.EXPAND | wx.ALL,
+                      border=3)
 
-        pagesizer.Add(bsizer,flag=wx.EXPAND)
-        pagesizer.Add(self.win, proportion=1, flag=wx.EXPAND, border=1)
-        pagesizer.Add(toolsizer1)
+        # sql query
+        sqlSizer = wx.StaticBoxSizer(self.sqlBox, wx.VERTICAL)
+        sqlFlexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+        sqlFlexSizer.AddGrowableCol(1)
 
-        self.SetSizer(pagesizer)
-        pagesizer.Fit(self)
+        sqlFlexSizer.Add(item=self.sqlSimple,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+        sqlSimpleSizer = wx.BoxSizer(wx.HORIZONTAL)
+        sqlSimpleSizer.Add(item=self.sqlLabel,
+                           flag=wx.ALIGN_CENTER_VERTICAL)
+        sqlSimpleSizer.Add(item=self.sqlWhere,
+                           flag=wx.SHAPED | wx.GROW)
+        sqlFlexSizer.Add(item=sqlSimpleSizer,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+        sqlFlexSizer.Add((0,0))
+        sqlFlexSizer.Add(item=self.sqlAdvanced,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+        sqlFlexSizer.Add(item=self.sqlStatement,
+                         flag=wx.EXPAND)
+        sqlFlexSizer.Add(item=self.btnSqlBuilder,
+                         flag=wx.ALIGN_RIGHT)
+
+        sqlSizer.Add(item=sqlFlexSizer,
+                     flag=wx.ALL | wx.EXPAND,
+                     border=0)
+
+        # buttons
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(self.btnQuit)
+        btnSizer.AddButton(self.btnApply)
+        btnSizer.Realize()
+
+        pageSizer.Add(item=infoSizer,
+                      flag=wx.EXPAND | wx.ALL,
+                      proportion=0,
+                      border=3)
+        pageSizer.Add(item=listSizer,
+                      proportion=1,
+                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                      border=3)
+        pageSizer.Add(item=sqlSizer,
+                      proportion=0,
+                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                      border=3)
+        pageSizer.Add(item=btnSizer,
+                      proportion=0,
+                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                      border=3)
+
+        self.SetSizer(pageSizer)
+        pageSizer.Fit(self)
         self.Layout()
 
 class DisplayAttributesDialog(wx.Dialog):
@@ -1078,7 +1189,9 @@ def main(argv=None):
     #wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
-    f = AttributeManager(parent=None, id=wx.ID_ANY, title=_("GRASS Attribute Table Manager"), size=(700,600), vectmap=argv[1])
+    f = AttributeManager(parent=None, id=wx.ID_ANY,
+                         title=_("GRASS Attribute Table Manager: vector map <%s>") % argv[1],
+                         size=(700,600), vectmap=argv[1])
     app.MainLoop()
 
 if __name__ == '__main__':
