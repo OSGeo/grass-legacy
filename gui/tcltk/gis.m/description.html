@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head></head>
-<body><h2>DESCRIPTION</h2>
-
+<html><head>
+</head>
+<body>
+<h2>DESCRIPTION</h2>
 The <b>GRASS GIS Manager</b>
 provides an interactive graphical interface to GRASS commands. By
 default, it is started automatically with each GRASS session. The GIS
@@ -13,26 +14,32 @@ The GIS Manager includes a set of pull-down menus for all GRASS GIS
 functions (analysis, file I/O, GIS configuration and management), two
 rows of buttons that manage display layers, an upper window in
 which layers to display are organized, and a lower
-window which contains options panels for layers in the layer tree. <br><br><div align="center"><img src="gm_gismgr.png" alt="" align="top" height="551" width="480"><br></div>
+window which contains options panels for layers in the layer tree. <br>
+<br>
+<div align="center"><img src="gm_gismgr.png" alt="" align="top" height="551" width="480"><br>
+</div>
 <br>
 The top left button opens a new map display window. Each map display
 has a unique set of layers to display and region setting (zoom). Other
 buttons add layers of different types for display in the selected map
 display window. There are additional buttons for saving or opening
 group display file, starting XGANIM (display animator) display
-interfaces (requires motif), and digitizing. <em><b>Mouse-over help</b></em>
+interfaces (requires motif), and digitizing. <em><b>Mouse-over
+help</b></em>
 is available for all buttons.<br>
 <br>
 Map layers are listed in the window below the
 buttons. Layers can include raster and vector maps, text, map
 enhancements (scale and north arrow, and grids), and commands
-(where any GRASS command be written). Layers are displayed in as arranged
+(where any GRASS command be written). Layers are displayed in as
+arranged
 in the layer tree: the bottom layer
 is displayed first and the top is displayed last, as if
 layers are a series of stacked overlays. Any layer can be
 renamed by double clicking on its name and typing a new name.<br>
 <br>
-The check box to the left of each layer makes it active or inactive for display.
+The check box to the left of each layer makes it active or inactive for
+display.
 Only active layers are displayed/redisplayed when the display button is
 pressed. Layers can be organized into groups; entire groups can be
 activated or deactivated for display. Groups can be saved to a file and
@@ -47,67 +54,77 @@ Each map display has a unique layer tree and region setting (zoom).
 Buttons on each map display manage the map in the display (zoom and
 pan), provide tools for query and distance measurement, and exporting
 or printing the display. The geographic coordinates under the cursor
-are displayed in the indicator window (lower right window frame). It is 
-important to note that zooming in any display will have NO effect on 
-the 'computational region' setting (set with g.region). Only by selecting
+are displayed in the indicator window (lower right window frame). It is
+important to note that zooming in any display will have NO effect on
+the 'computational region' setting (set with g.region). Only by
+selecting
 the "Set current region to match display" item in the zoom menu (in the
 map display tool bar) will the current display extents be copied to
-the computational region extents.<br><br>
-<div align="center"><img src="gm_mapdisp.png" alt="" align="top" height="422" width="480"><br></div><br>
+the computational region extents.<br>
+<br>
+<div align="center"><img src="gm_mapdisp.png" alt="" align="top" height="422" width="480"><br>
+</div>
+<br>
 A separate console window shows all commands issued and all command
 output (upper window). GRASS commands (and any other unix/linux
-commands) can be run from the console (lower window).<br><br><div align="center"><img src="gm_gronsole.png" alt="" align="top" height="231" width="480"><br>
-
-</div><h2>GIS MANAGER BUTTON FUNCTIONS</h2>
-<div align="left"><img src="gm_gismgrtools.png" alt=""><br></div><big><big><span style="font-weight: bold;"><br>Top Row</span></big></big>
-
+commands) can be run from the console (lower window).<br>
+<br>
+<div align="center"><img src="gm_gronsole.png" alt="" align="top" height="231" width="480"><br>
+</div>
+<h2>GIS MANAGER BUTTON FUNCTIONS</h2>
+<div align="left"><img src="gm_gismgrtools.png" alt=""><br>
+</div>
+<big><big><span style="font-weight: bold;"><br>
+Top Row</span></big></big>
 <h3>Open new map display</h3>
-
-<img src="icons/gui-startmon.gif">Open a new map display and resets layer tree.<span style="font-style: italic;"></span>
-
+<img src="icons/gui-startmon.gif"> Opens a new map display
+and resets layer tree.<span style="font-style: italic;"></span>
 <h3>Add raster layer</h3>
-
-<img src="icons/element-cell.gif">Adds a raster map to the layer tree. Raster display options include:
+<img src="icons/element-cell.gif"> Adds a raster map to
+the layer tree. Raster display options include:
 displaying a selected subset of raster cells, defined by their cat
-values; &nbsp;draping (or "fusing") a second map over the base map; and
-displaying legends for the base map and draped map.&nbsp;<span style="font-style: italic;">See <a href="d.rast.html">d.rast</a> and <a href="d.his.html">d.his</a> (for draping/fusing).</span>
-
+values; &nbsp;draping (or "fusing") a second map over the base map;
+and
+displaying legends for the base map and draped map.&nbsp;<span style="font-style: italic;">See <a href="d.rast.html">d.rast</a>
+and <a href="d.his.html">d.his</a> (for
+draping/fusing).</span>
 <h3>Add RGB or HIS raster layer</h3>
-
-<img src="icons/channel-rgb.gif">Combines and displays three raster maps defined as red, green, and blue
+<img src="icons/channel-rgb.gif"> Combines and displays
+three raster maps defined as red, green, and blue
 channels; or combines and displays two or three raster maps defined as
-hue, intensity, and (optionally) saturation channels. <span style="font-style: italic;">See <a href="d.rgb.html">d.rgb</a> and&nbsp;</span><span style="font-style: italic;"><a href="d.his.html">d.his</a></span><span style="font-style: italic;">.</span>
-
+hue, intensity, and (optionally) saturation channels. <span style="font-style: italic;">See <a href="d.rgb.html">d.rgb</a>
+and&nbsp;</span><span style="font-style: italic;"><a href="d.his.html">d.his</a></span><span style="font-style: italic;">.</span>
 <h3>Add histogram layer</h3>
-
-<img src="icons/module-d.histogram.gif">Adds a layer to display histogram of a raster map or image.&nbsp;<span style="font-style: italic;">See <a href="d.histogram.html">d.histogram</a>.</span>
-
+<img src="icons/module-d.histogram.gif"> Adds a layer to
+display histogram of a raster map or image.&nbsp;<span style="font-style: italic;">See <a href="d.histogram.html">d.histogram</a>.</span>
 <h3>Add cell values layer</h3>
-
-<img src="icons/module-d.rast.num.gif">Adds map of raster cells with cell values printed inside. Only works when &lt;10,000 cells are displayed.&nbsp;<span style="font-style: italic;">See <a href="d.rast.num.html">d.rast.num</a>.</span>
-
+<img src="icons/module-d.rast.num.gif"> Adds map of raster
+cells with cell values printed inside. Only works when &lt;10,000
+cells are displayed.&nbsp;<span style="font-style: italic;">See
+<a href="d.rast.num.html">d.rast.num</a>.</span>
 <h3>Add raster arrows layer</h3>
-
-<img src="icons/module-d.rast.arrow.gif">Adds map of raster cells with directional arrows drawn. arrow direction
+<img src="icons/module-d.rast.arrow.gif"> Adds map of
+raster cells with directional arrows drawn. arrow direction
 and length determined by separate aspect/directional map and
-slope/intensity map.&nbsp;<span style="font-style: italic;">See <a href="d.rast.arrow.html">d.rast.arrow</a>.</span>
-
+slope/intensity map.&nbsp;<span style="font-style: italic;">See
+<a href="d.rast.arrow.html">d.rast.arrow</a>.</span>
 <h3>Add raster legend</h3>
-
-<img src="icons/module-d.legend.gif">Adds a legend for a single raster map to the layer tree. Multiple options for formatting the legend are available. <span style="font-style: italic;">See <a href="d.legend.html">d.legend</a>.</span>
-
+<img src="icons/module-d.legend.gif"> Adds a legend for a
+single raster map to the layer tree. Multiple options for formatting
+the legend are available. <span style="font-style: italic;">See
+<a href="d.legend.html">d.legend</a>.</span>
 <h3>Add vector layer</h3>
-
-<img src="icons/element-vector.gif">Adds a vector map to the layer tree. A large number of options are
+<img src="icons/element-vector.gif"> Adds a vector map to
+the layer tree. A large number of options are
 available for displaying the vector map, including: outline and fill
 color, icon type and size for points, line widths for all vector types,
 automatic labeling using an attribute column, querying cats or
 attributes to limit vectors displayed, and restricting vector display
-depending on region size. <span style="font-style: italic;">See <a href="d.vect.html">d.vect</a>.</span><br>
-
+depending on region size. <span style="font-style: italic;">See
+<a href="d.vect.html">d.vect</a>.</span><br>
 <h3>Add thematic map layer (for all vector types) </h3>
-
-<img src="icons/module-d.vect.thematic.gif">Adds layer for thematic display values from a numeric attribute column
+<img src="icons/module-d.vect.thematic.gif"> Adds layer
+for thematic display values from a numeric attribute column
 associated with a vector map. Options include: thematic display type
 (graduated colors or point sizes), methods for creating display
 intervals, SQL query of attribute column to limit vector objects to
@@ -115,263 +132,245 @@ display, control of point icon types and sizes, control of thematic
 color schemes, creation of legend for thematic map, and saving the
 results of thematic mapping to a ps.map instructions file for later
 printing. <span style="font-style: italic;">See <a href="d.vect.thematic.html">d.vect.thematic</a>.</span>
-
 <h3>Add thematic charts layer (for vector points)</h3>
-
-<img src="icons/module-d.vect.chart.gif">Adds layer in which pie or bar charts can be automatically created at
+<img src="icons/module-d.vect.chart.gif"> Adds layer in
+which pie or bar charts can be automatically created at
 vector point locations. Charts display values from&nbsp;selected
 columns in the associated attribute table. Options include: chart type,
 layer and attributes to chart, chart colors, and chart size (fixed or
-based on attribute column). <span style="font-style: italic;">See <a href="d.vect.chart.html">d.vect.chart</a>.</span>
-
-<h3>Add raster labels layer for vector objects (from existing labels file)</h3>
-
-<img src="icons/module-d.labels.gif">Add raster text layer from a labels file for vector objects created with <a href="v.label.html">v.label</a>
-command (accessed from button in options panel). A labels file can also be
+based on attribute column). <span style="font-style: italic;">See
+<a href="d.vect.chart.html">d.vect.chart</a>.</span>
+<h3>Add raster labels layer for vector objects (from existing
+labels file)</h3>
+<img src="icons/module-d.labels.gif"> Add raster text
+layer from a labels file for vector objects created with <a href="v.label.html">v.label</a>
+command (accessed from button in options panel). A labels file can also
+be
 created with a text editor.
-See <a href="d.labels.html">d.labels</a>. 
-
+See <a href="d.labels.html">d.labels</a>.
 <h3>Add text layer</h3>
-
-<img src="icons/module-d.text.gif">Adds layer to display a line of text using default GRASS font (selected with <a href="d.font.html" target="_blank">d.font</a>). Options include: text placement (screen coordinates); and text size, bolding, and color. <span style="font-style: italic;">See <a href="d.text.html">d.text</a>.</span>
-
-<h3>Add postscript labels layer for vector objects (from existing labels file)</h3>
-
-<img src="icons/gui-maptext.gif">Add postscript text layer from a labels file for vector objects created with <a href="v.label.html">v.label</a>
-command (accessed from button in options panel). A labels file can also be
+<img src="icons/module-d.text.gif"> Adds layer to display
+a line of text using default GRASS font (selected with <a href="d.font.html" target="_blank">d.font</a>).
+Options include: text placement (screen coordinates); and text size,
+bolding, and color. <span style="font-style: italic;">See
+<a href="d.text.html">d.text</a>.</span>
+<h3>Add postscript labels layer for vector objects (from existing
+labels file)</h3>
+<img src="icons/gui-maptext.gif"> Add postscript text
+layer from a labels file for vector objects created with <a href="v.label.html">v.label</a>
+command (accessed from button in options panel). A labels file can also
+be
 created with a text editor.
-See <a href="d.labels.html">d.labels</a>. 
-
+See <a href="d.labels.html">d.labels</a>.
 <h3>Add postscript text layer</h3>
-
-<img src="icons/gui-maplabels.gif">Adds layer to display a line of postscript text. Options include: text
+<img src="icons/gui-maplabels.gif"> Adds layer to display
+a line of postscript text. Options include: text
 placement by coordinates (geographic or screen); text
 alignment, font and line spacing; and text size, bolding,
 and color.<span style="font-style: italic;"></span>
-<h3><span style="font-weight: bold;">Bottom Row</span></h3>
-<h3><big><big><span style="font-weight: bold;"></span></big></big>
-
-</h3><h3>Add scalebar and north arrow layer</h3>
-
-<img src="icons/module-d.barscale.gif">Adds layer to display a combined scalebar and north arrow. Options
+<h3><span style="font-weight: bold;">Bottom Row</span></h3><h3>Add scalebar and north arrow layer</h3>&nbsp;<img src="icons/module-d.barscale.gif"> Adds layer to
+display a combined scalebar and north arrow. Options
 include scalebar placement (using screen coordinates or a mouse),
 scalebar format, and scalebar colors. <span style="font-style: italic;">See <a href="d.barscale.html">d.barscale</a>.</span>
-
 <h3>Overlay grids and lines</h3>
-
-<img src="icons/module-d.grid.gif">Adds layer to display regular grid (for all locations), or geodesic and
+<img src="icons/module-d.grid.gif"> Adds layer to display
+regular grid (for all locations), or geodesic and
 rhumblines (for latitude/longitude locations only). Grid options
 include: grid and border colors, grid origin, and grid line spacing.
 Geodesic and rhumbline options include: line color, and xy coordinates
-(geographic) of line endpoints. <span style="font-style: italic;">See <a href="d.grid.html">d.grid</a>, <a href="d.geodesic.html">d.geodesic</a>, and <a href="d.rhumbline.html">d.rhumbline</a>.</span>
-
+(geographic) of line endpoints. <span style="font-style: italic;">See
+<a href="d.grid.html">d.grid</a>, <a href="d.geodesic.html">d.geodesic</a>, and <a href="d.rhumbline.html">d.rhumbline</a>.</span>
 <h3>Add command layer</h3>
-
-<img src="icons/gui-cmd.gif">Adds a layer in which a GRASS GIS command or command list can be entered. For a command list use the pipe symbol as
+<img src="icons/gui-cmd.gif"> Adds a layer in which a
+GRASS GIS command or command list can be entered. For a command list
+use the pipe symbol as
 "|" as separator.
-
-<p>
-
-E.g.:  <em>d.rast soils | d.rast -o roads | d.vect streams col=blue</em>
-
+<p>E.g.: <em>d.rast soils | d.rast -o roads | d.vect
+streams col=blue</em>
 </p>
-
-Note that when an option of the command contains spaces, you need to escape them with the backslash ('\') character, e.g.:
-
+Note that when an option of the command contains spaces, you need to
+escape them with the backslash ('\') character, e.g.:
 <em>d.text.freetype text=Population\ density</em>
-
 <h3>Add group</h3>
-
-<img src="icons/gui-group.gif">Adds an empty layer group. Layers can then be added to the group.<br>
-
+<img src="icons/gui-group.gif"> Adds an empty layer group.
+Layers can then be added to the group.<br>
 <h3>Duplicate selected layer or group</h3>
-
-<img src="icons/edit-copy.gif">Adds a new layer that duplicates the selected layer.
-
+<img src="icons/edit-copy.gif"> Adds a new layer that
+duplicates the selected layer.
 <h3>Cut selected layer or group</h3>
-
-<img src="icons/edit-cut.gif">Deletes the selected group or layer.
-
+<img src="icons/edit-cut.gif"> Deletes the selected group
+or layer.
 <h3>Erase all layers and create a new group</h3>
-
-<img src="icons/file-new.gif">Removes all layers in the layer tree and creates a new, empty group to which new layers can be added.<br>
-
+<img src="icons/file-new.gif"> Removes all layers in the
+layer tree and creates a new, empty group to which new layers can be
+added.<br>
 <h3>Open an existing group file</h3>
-
-<img src="icons/file-open.gif">Opens an previously saved group file, containing a set of display layers and their option settings.
-
+<img src="icons/file-open.gif"> Opens an previously saved
+group file, containing a set of display layers and their option
+settings.
 <h3>Save layers to group file</h3>
-
-<img src="icons/file-save.gif">Saves current set of layers and their options to a group file. 
-
+<img src="icons/file-save.gif"> Saves current set of
+layers and their options to a group file.
 <h3>Animate raster map series<br>
-
 </h3>
-
-<img src="icons/module-xganim.gif">Starts the TclTk interactive
-interface to display a series of raster maps as an animation. Rasters
-can be added individually or as a prefix followed by a sequential
-number &nbsp;suffix. <br><br>The suffix in the prefix/suffix format
-can be specified as a range of numbers in side parentheses. For
-example, "rast(1-50)" will specified&nbsp;maps rast1 through rast 50. <br><br>The
-suffix also can be specified using Unix-style wildcard matching. For
-example "rast[0-9][0-9]" will specify maps rast00 through&nbsp;rast99
-inclusive. <br><br>Multiple specification forms can be mixed. For
-example, you can specify "rast-a,rast-b,rast-(1-50),rast[0-9][0-9]".
-This will specify rast-a, rast-b, rast-1 through rast-50, and rast00
-through rast99.<br><span style="font-style: italic;"></span>
-
+<img src="icons/module-xganim.gif"> Starts the Animation
+Tool interactive
+interface to display a series of raster maps as an animation. <i>See
+<a href="gm_animate.html">Animation Tool help page</a></i>.
+&nbsp;<br>
+<span style="font-style: italic;"></span>
 <h3>Digitize raster or vector maps</h3>
-
-<img src="icons/module-v.digit.gif">Starts the raster digitizing or vector digitizing module, depending on
+<img src="icons/module-v.digit.gif">Starts the raster
+digitizing or vector digitizing module, depending on
 whether a raster or vector map is selected. Raster digitizing always
 creates a new map. Vector digitizing will either edit an existing map
 (if an existing vector map is selected in the layer tree) or create a
 new vector map (if the name of the new vector to be created is entered
 in the 'vector name' field of the options panel for a vector map
 layer). <span style="font-style: italic;">See <a href="r.digit.html">r.digit</a> and <a href="v.digit.html">v.digit</a></span>.
-
-
 <h2>MAP DISPLAY BUTTON FUNCTIONS</h2>
-
-<h3><img src="gm_mapdisptools.png" alt=""></h3><h3>Display active layers (current region)</h3>
-
-<img src="icons/gui-display.gif"> Displays all active layers at current resolution and region extents for that map display window.&nbsp;
-
-<h3>Re-render and display all active layers and zoom to current region</h3>
-
-<img src="icons/gui-zoom_current.gif"> Resets the region to
-the resolution and extents to the values set with g.region; forces redisplay and re-rendering
+<h3><img src="gm_mapdisptools.png" alt=""></h3>
+<h3>Display active layers (current region)</h3>
+<img src="icons/gui-display.gif"> Displays all active
+layers at current resolution and region extents for that map display
+window.&nbsp;
+<h3>Re-render and display all active layers and zoom to current
+region</h3>
+<img src="icons/gui-zoom_current.gif"> Resets the region
+to
+the resolution and extents to the values set with g.region; forces
+redisplay and re-rendering
 all active layers. <i>See <a href="g.region.html">g.region</a>.</i>
-
 <h3>NVIZ</h3>
-
-<img src="icons/module-nviz.gif"> Starts the NVIZ, n-dimensional visualization module and interactive
+<img src="icons/module-nviz.gif"> Starts the NVIZ,
+n-dimensional visualization module and interactive
 graphical interface. All active raster and vector layers in the layer
-tree will be displayed in NVIZ. <span style="font-style: italic;">See <a href="nviz.html">nviz</a></span><a href="nviz.html">.</a>
-
+tree will be displayed in NVIZ. <span style="font-style: italic;">See
+<a href="nviz.html">nviz</a></span><a href="nviz.html">.</a>
 <h3>Fly through path for NVIZ</h3>
-
-<img src="icons/module-d.nviz.gif"> Starts a GRASS module for interactive creation of a fly-through path to be animated in NVIZ. <span style="font-style: italic;">See <a href="d.nviz.html">d.nviz</a></span>.
-
+<img src="icons/module-d.nviz.gif"> Starts a GRASS module
+for interactive creation of a fly-through path to be animated in NVIZ. <span style="font-style: italic;">See <a href="d.nviz.html">d.nviz</a></span>.
 <h3>Erase to white</h3>
-
-<img src="icons/gui-erase.gif"> Erases the currently selected monitor to a white background; also removes all frames. <span style="font-style: italic;">See <a href="d.erase.html">d.erase</a> and <a href="d.frame.html">d.frame</a> -e.</span>
-
+<img src="icons/gui-erase.gif"> Erases the currently
+selected monitor to a white background; also removes all frames. <span style="font-style: italic;">See <a href="d.erase.html">d.erase</a>
+and <a href="d.frame.html">d.frame</a> -e.</span>
 <h3>Arrow cursor</h3>
-
-<img src="icons/gui-pointer.gif"> Select arrow cursor for map display.&nbsp;<span style="font-style: italic;"></span>
-
+<img src="icons/gui-pointer.gif"> Select arrow cursor for
+map display.&nbsp;<span style="font-style: italic;"></span>
 <h3>Zoom in</h3>
-
-<img src="icons/gui-zoom_in.gif"> Interactive zooming with the mouse in the active display monitor.
+<img src="icons/gui-zoom_in.gif"> Interactive zooming with
+the mouse in the active display monitor.
 Drawing a box with the mouse (left button) and zoom-in cursor causes
 the display to zoom in so that the area defined by the box fills the
 display. The map resolution is not changed. Clicking with the zoom-in
 cursor causes the display to zoom in by 30%, centered on the point
-where the mouse is clicked. Zooming resets the display region extents (both
+where the mouse is clicked. Zooming resets the display region extents
+(both
 size and location of area
-displayed). It does NOT affect the computational region for other GIS processes.<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"><br>
+displayed). It does NOT affect the computational region for other GIS
+processes.<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"><br>
 </span>
-
 <h3>Zoom out</h3>
-
-<img src="icons/gui-zoom_out.gif"> Interactive zooming with the mouse in the active display monitor.
-Drawing a box with the mouse (left button) and zoom-out cursor causes the display to
-zoom in so that the area displayed shrinks to fill the area defined by the box. The map
+<img src="icons/gui-zoom_out.gif"> Interactive zooming
+with the mouse in the active display monitor.
+Drawing a box with the mouse (left button) and zoom-out cursor causes
+the display to
+zoom in so that the area displayed shrinks to fill the area defined by
+the box. The map
 resolution is not changed. Clicking with the zoom-out cursor causes the
 display to zoom out by 30%, centered on the point where the mouse is
-clicked. Zooming resets the display region extents (both size and location of
+clicked. Zooming resets the display region extents (both size and
+location of
 area
-displayed). It does NOT affect the computational region for other GIS processes.<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"></span>
-
+displayed). It does NOT affect the computational region for other GIS
+processes.<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"></span>
 <h3><span style="font-weight: bold;">Pan</span></h3>
-
-<img src="icons/gui-pan.gif"> Interactive selection of a new
+<img src="icons/gui-pan.gif"> Interactive selection of a
+new
 center of view in the active display monitor. Drag the pan cursor while
 pressing the left mouse button to pan. Panning changes the
 location of the region displayed but not the size of the area displayed
-or the resolution. Panning does NOT affect the computational region for other GIS processes.&nbsp;<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><br>
+or the resolution. Panning does NOT affect the computational region for
+other GIS processes.&nbsp;<span style="font-style: italic;">See
+<a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><br>
 <span style="font-weight: bold;"></span>
-
 <h3>Zoom back</h3>
-
-<img src="icons/gui-zoom_back.gif"> Return to previous zoom. Up to 5 levels of zoom back are maintained.
+<img src="icons/gui-zoom_back.gif"> Returns to previous
+zoom. Up to 5 levels of zoom back are maintained.
 <span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"><br>
 </span>
-
 <h3>Zoom menu</h3>
-
-<img src="icons/gui-mapzoom.gif"> Automatic zoom settings menu. Zoom to match the extents of a selected
-map or to match the extents of a saved region; save the current extents to a named region file; 
-zoom to match the computational region (set with g.region) or to match the default region;
-set computational region (WIND file) to match the current display extents (does not change
+<img src="icons/gui-mapzoom.gif"> Automatic zoom settings
+menu. Zoom to match the extents of a selected
+map or to match the extents of a saved region; save the current extents
+to a named region file; zoom to match the computational region (set
+with g.region) or to match the default region;
+set computational region (WIND file) to match the current display
+extents (does not change
 resolution).<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"><br>
 </span>
-
 <h3>Query (select map first)</h3>
-
-<img src="icons/gui-query.gif"> Query selected raster (only the base map of a draped map will be
+<img src="icons/gui-query.gif"> Query selected raster
+(only the base map of a draped map will be
 queried), RGB raster map (all three map channels will be queried), or
 vector map using the mouse. A map must be
 selected before query.
 &nbsp;Vector charts and thematic vector maps cannot be queried. The
-results of the query will be displayed in the console window.<span style="font-style: italic;"> See <a href="r.what.html">r.what</a> and <a href="v.what.html">v.what</a></span>.<br>
-
+results of the query will be displayed in the console window.<span style="font-style: italic;"> See <a href="r.what.html">r.what</a>
+and <a href="v.what.html">v.what</a></span>.<br>
 <h3>Measure lengths</h3>
-
-<img src="icons/gui-measure.gif"> Interactive measurement of lengths defined with the mouse. The length
+<img src="icons/gui-measure.gif"> Interactive measurement
+of lengths defined with the mouse. The length
 of each segment and the cumulative length of all segments measuered is
 displayed in the console window. Lengths are
 measured in the current measurement unit. <span style="font-style: italic;">See also <a href="d.measure.html">d.measure</a>.</span><br>
-
 <h3>Profile</h3>
-
-<img src="icons/gui-profile.gif"> Interactively create profile of a raster map. Profile transect
-is drawn with the mouse in map display. The profile may be of the displayed map or a different 
-map.<span style="font-style: italic;">See <a href="g.region.html"><span style="text-decoration: underline;">g.region</span></a>.</span><span style="font-weight: bold;"><br>
-
+<img src="icons/gui-profile.gif"> Interactively create
+profile of a raster map. Profile transect
+is drawn with the mouse in map display. The profile may be of the
+displayed map or a different map.<span style="font-style: italic;">
+See <a href="gm_profile.html"><span style="text-decoration: underline;">Profile Tool help page</span></a>.</span><span style="font-weight: bold;"><br>
 </span>
-
 <h3>Print map</h3>
-<img src="icons/file-print.gif"> Prints map on lpr printer or postscript device; saves visible map
+<img src="icons/file-print.gif"> Prints map on lpr printer
+or postscript device; saves visible map
 display (including postscript text and labels) to PDF or EPS file.
 Requires ghostscript for all output except EPS.
-
 <h3>Export map display</h3>
-<img src="icons/file-save.gif"> Exports visible map display to
+<img src="icons/file-save.gif"> Exports visible map
+display to
 different raster graphic formats. Exported map does not include
 postscript text or postscript labels.
 <h3>Strict draw mode</h3>
-<img src="icons/drawmode-strict.gif"> Selects strict draw mode. In
+<img src="icons/drawmode-strict.gif"> Selects strict draw
+mode. In
 strict mode the aspect ratio and resolution from the last zoom are used
 when drawing the maps. The map will show only the area and resolution
 selected. It will not usually fill the screen. Strict mode only shows
 what is asked for.
 <h3>Explore draw mode</h3>
-<img src="icons/drawmode-explore.gif"> Selects explore draw mode. In
+<img src="icons/drawmode-explore.gif"> Selects explore
+draw mode. In
 explore mode the region from the last zoom is expanded to fill the
 entire screen. The resolution is adjusted to match the screen
 resolution. Explore mode shows as much as possible.
 <h2>Configuration: changing fonts</h2>
-
 Fonts used in <em>gis.m</em> can be changed as follows:
 <ul>
-<li>Source code: edit file 'lib/gtcltk/options.tcl' and compile gtcltk
-</li><li>Runtime: edit file '$GISBASE/etc/gtcltk/options.tcl'
-</li></ul>
-
+<li>Source code: edit file 'lib/gtcltk/options.tcl' and compile
+gtcltk
+</li>
+<li>Runtime: edit file '$GISBASE/etc/gtcltk/options.tcl'
+</li>
+</ul>
 <h2>SEE ALSO</h2>
-
-<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em> <br>
-<em><a href="gm_profile.html">gis.m: PROFILE TOOL</a></em> <br>
-<em><a href="gm_animate.html">gis.m: ANIMATE TOOL</a></em>
-
-
+<em></em><em><a href="gm_animate.html">gis.m:
+ANIMATION TOOL</a><br>
+<a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em>
+<br>
+<em><a href="gm_profile.html">gis.m: PROFILE TOOL</a></em><em></em>&nbsp;
 <h2>AUTHORS</h2>
-
 Michael Barton, Arizona State University, Tempe, Arizona, USA<br>
 Cedric Shock, USA
-
 <p><i>Last changed: $Date$</i></p>
 </body></html>
