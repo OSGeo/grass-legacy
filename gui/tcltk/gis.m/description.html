@@ -1,4 +1,6 @@
-<h2>DESCRIPTION</h2>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head></head>
+<body><h2>DESCRIPTION</h2>
 
 The <b>GRASS GIS Manager</b>
 provides an interactive graphical interface to GRASS commands. By
@@ -11,7 +13,7 @@ The GIS Manager includes a set of pull-down menus for all GRASS GIS
 functions (analysis, file I/O, GIS configuration and management), two
 rows of buttons that manage display layers, an upper window in
 which layers to display are organized, and a lower
-window which contains options panels for layers in the layer tree. <br>
+window which contains options panels for layers in the layer tree. <br><br><div align="center"><img src="gm_gismgr.png" alt="" align="top" height="551" width="480"><br></div>
 <br>
 The top left button opens a new map display window. Each map display
 has a unique set of layers to display and region setting (zoom). Other
@@ -50,14 +52,14 @@ important to note that zooming in any display will have NO effect on
 the 'computational region' setting (set with g.region). Only by selecting
 the "Set current region to match display" item in the zoom menu (in the
 map display tool bar) will the current display extents be copied to
-the computational region extents.<br>
-<br>
+the computational region extents.<br><br>
+<div align="center"><img src="gm_mapdisp.png" alt="" align="top" height="422" width="480"><br></div><br>
 A separate console window shows all commands issued and all command
 output (upper window). GRASS commands (and any other unix/linux
-commands) can be run from the console (lower window).<br>
+commands) can be run from the console (lower window).<br><br><div align="center"><img src="gm_gronsole.png" alt="" align="top" height="231" width="480"><br>
 
-<h2>GIS MANAGER BUTTON FUNCTIONS</h2>
-<big><big><span style="font-weight: bold;">Top Row</span></big></big>
+</div><h2>GIS MANAGER BUTTON FUNCTIONS</h2>
+<div align="left"><img src="gm_gismgrtools.png" alt=""><br></div><big><big><span style="font-weight: bold;"><br>Top Row</span></big></big>
 
 <h3>Open new map display</h3>
 
@@ -149,7 +151,7 @@ and color.<span style="font-style: italic;"></span>
 <h3><span style="font-weight: bold;">Bottom Row</span></h3>
 <h3><big><big><span style="font-weight: bold;"></span></big></big>
 
-<h3>Add scalebar and north arrow layer</h3>
+</h3><h3>Add scalebar and north arrow layer</h3>
 
 <img src="icons/module-d.barscale.gif">Adds layer to display a combined scalebar and north arrow. Options
 include scalebar placement (using screen coordinates or a mouse),
@@ -206,8 +208,18 @@ Note that when an option of the command contains spaces, you need to escape them
 
 </h3>
 
-<img src="icons/module-xganim.gif">Starts the XGANIM interactive interface to display a series of raster maps as an animation.
- Not compiled by default and requires motif<span style="font-style: italic;">See <a href="xganim.html">xganim</a></span><a href="xganim.html">.</a>
+<img src="icons/module-xganim.gif">Starts the TclTk interactive
+interface to display a series of raster maps as an animation. Rasters
+can be added individually or as a prefix followed by a sequential
+number &nbsp;suffix. <br><br>The suffix in the prefix/suffix format
+can be specified as a range of numbers in side parentheses. For
+example, "rast(1-50)" will specified&nbsp;maps rast1 through rast 50. <br><br>The
+suffix also can be specified using Unix-style wildcard matching. For
+example "rast[0-9][0-9]" will specify maps rast00 through&nbsp;rast99
+inclusive. <br><br>Multiple specification forms can be mixed. For
+example, you can specify "rast-a,rast-b,rast-(1-50),rast[0-9][0-9]".
+This will specify rast-a, rast-b, rast-1 through rast-50, and rast00
+through rast99.<br><span style="font-style: italic;"></span>
 
 <h3>Digitize raster or vector maps</h3>
 
@@ -222,7 +234,7 @@ layer). <span style="font-style: italic;">See <a href="r.digit.html">r.digit</a>
 
 <h2>MAP DISPLAY BUTTON FUNCTIONS</h2>
 
-<h3>Display active layers (current region)</h3>
+<h3><img src="gm_mapdisptools.png" alt=""></h3><h3>Display active layers (current region)</h3>
 
 <img src="icons/gui-display.gif"> Displays all active layers at current resolution and region extents for that map display window.&nbsp;
 
@@ -327,30 +339,39 @@ display (including postscript text and labels) to PDF or EPS file.
 Requires ghostscript for all output except EPS.
 
 <h3>Export map display</h3>
-<img src="icons/file-save.gif"> Exports visible map display to different raster graphic formats. Exported map does not include postscript text or postscript labels.
-
+<img src="icons/file-save.gif"> Exports visible map display to
+different raster graphic formats. Exported map does not include
+postscript text or postscript labels.
 <h3>Strict draw mode</h3>
-<img src="icons/drawmode-strict.gif"> Selects strict draw mode. In strict mode the aspect ratio and resolution from the last zoom are used when drawing the maps. The map will show only the area and resolution selected. It will not usually fill the screen. Strict mode only shows what is asked for.
-
+<img src="icons/drawmode-strict.gif"> Selects strict draw mode. In
+strict mode the aspect ratio and resolution from the last zoom are used
+when drawing the maps. The map will show only the area and resolution
+selected. It will not usually fill the screen. Strict mode only shows
+what is asked for.
 <h3>Explore draw mode</h3>
-<img src="icons/drawmode-explore.gif"> Selects explore draw mode. In explore mode the region from the last zoom is expanded to fill the entire screen. The resolution is adjusted to match the screen resolution. Explore mode shows as much as possible.
-
+<img src="icons/drawmode-explore.gif"> Selects explore draw mode. In
+explore mode the region from the last zoom is expanded to fill the
+entire screen. The resolution is adjusted to match the screen
+resolution. Explore mode shows as much as possible.
 <h2>Configuration: changing fonts</h2>
 
 Fonts used in <em>gis.m</em> can be changed as follows:
 <ul>
 <li>Source code: edit file 'lib/gtcltk/options.tcl' and compile gtcltk
-<li>Runtime: edit file '$GISBASE/etc/gtcltk/options.tcl'
-</ul>
+</li><li>Runtime: edit file '$GISBASE/etc/gtcltk/options.tcl'
+</li></ul>
 
 <h2>SEE ALSO</h2>
 
-<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em>
+<em><a href="gm_georect.html">gis.m: GEORECTIFY TOOL</a></em> <br>
+<em><a href="gm_profile.html">gis.m: PROFILE TOOL</a></em> <br>
+<em><a href="gm_animate.html">gis.m: ANIMATE TOOL</a></em>
 
-<em><a href="d.m.html">d.m</a></em>
 
 <h2>AUTHORS</h2>
 
-Michael Barton, Arizona State University, Tempe, Arizona, USA
+Michael Barton, Arizona State University, Tempe, Arizona, USA<br>
+Cedric Shock, USA
 
 <p><i>Last changed: $Date$</i></p>
+</body></html>
