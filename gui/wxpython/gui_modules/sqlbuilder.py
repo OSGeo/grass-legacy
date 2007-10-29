@@ -1,8 +1,23 @@
-#!/usr/bin/env python
 """
- Usage:
-    sqlbuilder.py table_name
+MODULE:    sqlbuilder.py
 
+CLASSES:
+    * SQLFrame
+
+PURPOSE:   GRASS SQL Builder
+
+           Usage:
+           sqlbuilder.py table_name
+
+AUTHOR(S): GRASS Development Team
+           Original author: Jachym Cepicky <jachym.cepicky gmail.com>
+           Various updates: Martin Landa <landa.martin gmail.com>
+
+COPYRIGHT: (C) 2007 by the GRASS Development Team
+
+           This program is free software under the GNU General Public
+           License (>=v2). Read the file COPYING that comes with GRASS
+           for details.
 """
 
 import wx
@@ -10,17 +25,24 @@ import os,sys
 import time
 
 import grassenv
-#import images
-#imagepath = images.__path__[0]
-#sys.path.append(imagepath)
+import gcmd
 
+imagePath = os.path.join( os.getenv("GISBASE"), "etc", "wx")
+sys.path.append(imagePath)
+import images
+imagepath = images.__path__[0]
+sys.path.append(imagepath)
 
 class SQLFrame(wx.Frame):
+    """SQL Frame class"""
     def __init__(self, parent, id, title, vectmap, qtype="select"):
-        wx.Frame.__init__(self, parent, -1, title)
 
-        self.SetTitle("SQL Builder for GRASS GIS - %s " % (qtype.upper()))
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass_sql.png'), wx.BITMAP_TYPE_ANY))
+        wx.Frame.__init__(self, parent, id, title)
+
+        self.SetTitle(_("GRASS SQL Builder: %s") % (qtype.upper()))
+        self.SetIcon(wx.Icon(os.path.join(imagepath, 
+                                          'grass_sql.png'),
+                             wx.BITMAP_TYPE_ANY))
 
         #
         # variables
@@ -198,12 +220,18 @@ class SQLFrame(wx.Frame):
         self.Show(True)
 
     def GetColumns(self):
-        for line in os.popen("db.columns table=%s" % (self.tablename)):
-            self.column_names.append(line.strip())
-        for line in os.popen("db.describe -c table=%s" % (self.tablename)).readlines()[1:]:
-            x,name,ctype,length = line.strip().split(":")
-            self.columns[name] = {'type':ctype}
-        return
+        """Get columns"""
+        dbDescribe = gcmd.Command(['db.describe',
+                                   '-c', '--q',
+                                   'table=%s' % self.tablename])
+
+        # skip ncols and nrows lines
+        for line in dbDescribe.ReadStdOutput()[2:]:
+            num, name, ctype, length = line.strip().split(":")
+            name.strip()
+            #self.columns_names.append(name)
+            self.columns[name] = {'type' : ctype}
+
 
     def GetUniqueValues(self,event,justsample=False):
         vals = []
