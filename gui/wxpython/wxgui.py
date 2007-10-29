@@ -375,7 +375,10 @@ class GMFrame(wx.Frame):
         menuitem = self.menubar.FindItemById(event.GetId())
         itemtext = menuitem.GetText()
         cmd = menucmd[itemtext]
-        cmdlist = cmd.split(' ')
+        try:
+            cmdlist = cmd.split(' ')
+        except: # already list?
+            cmdlist = cmd
 
         return cmdlist
 
