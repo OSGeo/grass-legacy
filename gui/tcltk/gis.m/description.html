@@ -208,8 +208,18 @@ Note that when an option of the command contains spaces, you need to escape them
 
 </h3>
 
-<img src="icons/module-xganim.gif">Starts the XGANIM interactive interface to display a series of raster maps as an animation.
- Not compiled by default and requires motif<span style="font-style: italic;">See <a href="xganim.html">xganim</a></span><a href="xganim.html">.</a>
+<img src="icons/module-xganim.gif">Starts the TclTk interactive
+interface to display a series of raster maps as an animation. Rasters
+can be added individually or as a prefix followed by a sequential
+number &nbsp;suffix. <br><br>The suffix in the prefix/suffix format
+can be specified as a range of numbers in side parentheses. For
+example, "rast(1-50)" will specified&nbsp;maps rast1 through rast 50. <br><br>The
+suffix also can be specified using Unix-style wildcard matching. For
+example "rast[0-9][0-9]" will specify maps rast00 through&nbsp;rast99
+inclusive. <br><br>Multiple specification forms can be mixed. For
+example, you can specify "rast-a,rast-b,rast-(1-50),rast[0-9][0-9]".
+This will specify rast-a, rast-b, rast-1 through rast-50, and rast00
+through rast99.<br><span style="font-style: italic;"></span>
 
 <h3>Digitize raster or vector maps</h3>
 
