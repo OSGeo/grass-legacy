@@ -45,24 +45,13 @@ import render
 import gcmd
 import grassenv
 import histogram
+import utils
 from debug import Debug as Debug
 from icon import Icons as Icons
 try:
     import subprocess
 except:
     from compat import subprocess
-
-    def __del__(self):
-        Debug.msg (3, "Layer.__del__(): type=%s" % \
-                   self.type)
-
-    def AddMapLayer (self, maplayer):
-        """Add reference to MapLayer instance"""
-        self.maplayer = maplayer
-
-    def AddProperties (self, properties):
-        """Add menuform properties"""
-        self.properties = properties
 
 class LayerTree(CT.CustomTreeCtrl):
     """
@@ -469,7 +458,7 @@ class LayerTree(CT.CustomTreeCtrl):
             if lcmd and len(lcmd) > 1:
                 cmd = lcmd
                 render = True
-                name = self.GetLayerNameFromCmd(lcmd)
+                name = utils.GetLayerNameFromCmd(lcmd)
             else:
                 cmd = []
                 render = False
@@ -871,37 +860,11 @@ class LayerTree(CT.CustomTreeCtrl):
         # completed drag and drop
         self.drag = False
 
-    def GetLayerNameFromCmd(self, dcmd):
-        """Get layer name from GRASS command"""
-        mapname = ''
-        for item in dcmd:
-            if 'map=' in item:
-                mapname = item.split('=')[1]
-            elif 'red=' in item:
-                mapname = item.split('=')[1]
-            elif 'h_map=' in item:
-                mapname = item.split('=')[1]
-            elif 'reliefmap' in item:
-                mapname = item.split('=')[1]
-            elif 'd.grid' in item:
-                mapname = 'grid'
-            elif 'd.geodesic' in item:
-                mapname = 'geodesic'
-            elif 'd.rhumbline' in item:
-                mapname = 'rhumb'
-            elif 'labels=' in item:
-                mapname = item.split('=')[1]+' labels'
-        
-            if mapname != '':
-                break
-
-        return mapname
-
     def GetOptData(self, dcmd, layer, params, propwin):
         """Process layer data"""
 
         # set layer text to map name
-        mapname = self.GetLayerNameFromCmd(dcmd)
+        mapname = utils.GetLayerNameFromCmd(dcmd)
         self.SetItemText(layer, mapname)
 
         # update layer data

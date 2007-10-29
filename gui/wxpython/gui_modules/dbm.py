@@ -96,11 +96,12 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
         dbDescribe = gcmd.Command (cmd = ["db.describe", "-c",
-           "table=%s" % self.parent.tablename,
-           "driver=%s" % self.parent.driver,
-           "database=%s" % self.parent.database])
+                                          "table=%s" % self.parent.tablename,
+                                          "driver=%s" % self.parent.driver,
+                                          "database=%s" % self.parent.database])
 
-        for line in dbDescribe.module_stdout.readlines()[2:]:
+        for line in dbDescribe.ReadStdOutput()[2:]:
+            print "#", line
             colnum, column, type, length = line.strip().split(":")
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
@@ -177,7 +178,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
         # read data
-        for line in vDbSelect.module_stdout.readlines():
+        for line in vDbSelect.ReadStdOutput():
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
 
@@ -495,16 +496,15 @@ class AttributeManager(wx.Frame):
         # get list of attribute tables (TODO: open more tables)
         vDbConnect = gcmd.Command (cmd=["v.db.connect", "-g", "map=%s" % vectmap])
 
-        try:
-            if vDbConnect.returncode == 0:
-                (self.layer, self.tablename, self.column, self.database, self.driver) = vDbConnect.module_stdout.readlines()[0].strip().split()
-            else:
-                raise
-        except:
+        if vDbConnect.returncode == 0:
+            (self.layer, self.tablename, self.column, self.database, self.driver) = \
+                vDbConnect.ReadStdOutput()[0].split(' ') # TODO all layers
+        else:
             self.layer = None
 
         if not self.layer:
-            dlg = wx.MessageDialog(parent, _("No attribute table available for vector map <%s>") % vectmap, _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg = wx.MessageDialog(parent, _("No attribute table linked to vector map <%s>") % vectmap,
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
             return
@@ -954,7 +954,7 @@ class VectorAttributeInfo:
             return False
 
         # list of available layers & (table, database, driver)
-        for line in layerCommand.ReadStdOutput():
+        for line in layerCommand.ReadStdOutput()[0]:
             lineList = line.split(' ')
             self.layers[int(lineList[0])] = { "table"    : lineList[1],
                                               "database" : lineList[3],

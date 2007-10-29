@@ -42,13 +42,28 @@ def GetTempfile(pref=None):
     except:
         return Node
 
-def GetGRASSVariable(var):
-    """Return GRASS environment variable"""
-
-    gisEnv = gcmd.Command(['g.gisenv'])
-
-    for item in gisEnv.ReadStdOutput():
-        if var in item:
-            return item.split('=')[1].replace("'",'').replace(';','').strip()
-
-    return ''
+def GetLayerNameFromCmd(dcmd):
+    """Get layer name from GRASS command"""
+    mapname = ''
+    for item in dcmd:
+        if 'map=' in item:
+            mapname = item.split('=')[1]
+        elif 'red=' in item:
+            mapname = item.split('=')[1]
+        elif 'h_map=' in item:
+            mapname = item.split('=')[1]
+        elif 'reliefmap' in item:
+            mapname = item.split('=')[1]
+        elif 'd.grid' in item:
+            mapname = 'grid'
+        elif 'd.geodesic' in item:
+            mapname = 'geodesic'
+        elif 'd.rhumbline' in item:
+            mapname = 'rhumb'
+        elif 'labels=' in item:
+            mapname = item.split('=')[1]+' labels'
+            
+        if mapname != '':
+            break
+        
+    return mapname
