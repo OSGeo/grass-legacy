@@ -76,7 +76,7 @@ import gui_modules.rules as rules
 import gui_modules.utils as utils
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
-
+import gui_modules.dbm as dbm
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -851,35 +851,36 @@ class GMFrame(wx.Frame):
 
         # available only for vector map layers
         try:
-            maptype = self.curr_page.maptree.GetPyData(layer)['maplayer'].type
+            maptype = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].type
         except:
             maptype = None
+
         if not maptype or maptype != 'vector':
-            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"), _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
             return
 
-        if not self.curr_page.maptree.GetPyData(layer):
+        if not self.curr_page.maptree.GetPyData(layer)[0]:
             return
-        dcmd = self.curr_page.maptree.GetPyData(layer)[0]
+        dcmd = self.curr_page.maptree.GetPyData(layer)[0]['cmd']
         if not dcmd:
             return
 
-        mapname = map = mapset = size = icon = None
-
+        size = icon = None
+        mapname = utils.GetLayerNameFromCmd(dcmd)
+        
         for option in dcmd:
-            if option.find('map') > -1:
-                mapname = option.split('=')[1]
-            elif option.find('size') > -1:
+            if option.find('size') > -1:
                 size = option.split('=')[1]
             elif option.find('icon') > -1:
                 icon = option.split('=')[1]
 
         pointdata = (icon, size)
 
-        from gui_modules import dbm
-        self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY, title="GRASS Attribute Table Manager: %s" % mapname,
+        self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY,
+                                              title=_("GRASS Attribute Table Manager: %s") % mapname,
                                               size=wx.Size(500,300), vectmap=mapname,
                                               pointdata=pointdata)
 
