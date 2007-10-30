@@ -15,6 +15,10 @@ default: $(MANPAGES)
 $(MANDIR):
 	$(MKDIR) $(MANDIR)
 
+ifneq ($(BROKEN_MAKE),)
+$(MANDIR)/%.$(SECT): $(HTMLDIR)/%.html $(MANDIR)
+else
 $(MANDIR)/%.$(SECT): $(HTMLDIR)/%.html | $(MANDIR)
+endif
 	$(HTML2MAN) $< $@ $(SECT)
 
