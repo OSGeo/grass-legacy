@@ -59,7 +59,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
     """
     def __init__(self, parent, log, vectmap, pointdata=None):
         wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
-                              style=wx.LC_REPORT|wx.LC_HRULES|wx.LC_VRULES) #wx.VIRTUAL
+                              style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) # wx.LC_VIRTUAL
 
         #
         # initialize variables
@@ -198,6 +198,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
         for line in vDbSelect.ReadStdOutput():
+
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
 
@@ -334,16 +335,14 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         #     index=self.itemIndexMap[item]
         #     if ( index % 2) == 0:
 
-        #     def OnGetItemAttr(self, item):
-        #         """Get item attributes"""
-        #         index=self.itemIndexMap[item]
+    def OnGetItemAttr(self, item):
+        """Get item attributes"""
+        index = self.itemIndexMap[item]
         
-        #         return self.attr2
-
-        # if ( index % 2) == 0:
-        #    return self.attr2
-        # else:
-        #    return self.attr1
+        if ( index % 2) == 0:
+            return self.attr2
+        else:
+            return self.attr1
 
         # ---------------------------------------------------
         # Matt C, 2006/02/22
@@ -572,14 +571,21 @@ class AttributeManager(wx.Frame):
         # boxes
         self.sqlBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
                                    label=" %s " % _("SQL Query"))
-        self.connectionInfoBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
-                                              label=" %s " % _("Database connection"))
         self.listBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
                                     label=" %s " % _("Attribute data"))
+
+        # collapsible areas
+        self.infoCollapseLabelExp = _("Click here to show database connection information")
+        self.infoCollapseLabelCol = _("Click here to hide database connection information")
+        self.infoCollapse = wx.CollapsiblePane(parent=self,
+                                               label=self.infoCollapseLabelExp,
+                                               style=wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE | wx.EXPAND)
+        self.MakeInfoPaneContent(self.infoCollapse.GetPane())
 
         # bindings
         self.btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
         self.btnQuit.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
+        self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, self.infoCollapse)
 
         # do layer
         self.__layout()
@@ -587,6 +593,53 @@ class AttributeManager(wx.Frame):
         self.SetMinSize((640, 480))
 
         self.Show()
+
+    def OnInfoPaneChanged(self, event):
+        """Collapse database connection info box"""
+
+        if self.infoCollapse.IsExpanded():
+            self.infoCollapse.SetLabel(self.infoCollapseLabelCol)
+        else:
+            self.infoCollapse.SetLabel(self.infoCollapseLabelExp)
+
+        # redo layout
+        self.Layout()
+
+    def MakeInfoPaneContent(self, pane):
+        """Create database connection information content"""
+            # connection info
+        border = wx.BoxSizer(wx.VERTICAL)
+
+        connectionInfoBox = wx.StaticBox(parent=pane, id=wx.ID_ANY,
+                                         label=" %s " % _("Database connection"))
+        infoSizer = wx.StaticBoxSizer(connectionInfoBox, wx.VERTICAL)
+        infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
+        infoFlexSizer.AddGrowableCol(1)
+        
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="Database:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="%s" % self.database))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="Driver:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="%s" % self.driver))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="Table:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="%s" % self.tablename))
+
+        infoSizer.Add(item=infoFlexSizer,
+                      proportion=1,
+                      flag=wx.EXPAND | wx.ALL,
+                      border=3)
+
+        border.Add(item=infoSizer, 
+                   proportion=1,
+                   flag=wx.EXPAND | wx.ALL,
+                   border=3)
+
+        pane.SetSizer(border)
 
     def OnCloseWindow(self, event):
         """Cancel button pressed"""
@@ -598,7 +651,6 @@ class AttributeManager(wx.Frame):
         self.builder = sqlbuilder.SQLFrame(parent=self, id=wx.ID_ANY,
                                            title=_("SQL Builder"),
                                            vectmap=self.vectmap)
-
 
     def OnApply(self,event):
         """Apply button pressed"""
@@ -618,27 +670,6 @@ class AttributeManager(wx.Frame):
         self.sqlWhere.SetMinSize((250,-1))
 
         pageSizer = wx.BoxSizer(wx.VERTICAL)
-
-        # connection info
-        infoSizer = wx.StaticBoxSizer(self.connectionInfoBox, wx.VERTICAL)
-        infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
-        infoFlexSizer.AddGrowableCol(1)
-
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="Database:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="%s" % self.database))
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="Driver:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="%s" % self.driver))
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="Table:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=self, id=wx.ID_ANY,
-                                             label="%s" % self.tablename))
-        infoSizer.Add(item=infoFlexSizer, proportion=0,
-                      flag=wx.ALL,
-                      border=1)
 
         # attribute data
         listSizer = wx.StaticBoxSizer(self.listBox, wx.VERTICAL)
@@ -678,8 +709,8 @@ class AttributeManager(wx.Frame):
         btnSizer.AddButton(self.btnApply)
         btnSizer.Realize()
 
-        pageSizer.Add(item=infoSizer,
-                      flag=wx.EXPAND | wx.ALL,
+        pageSizer.Add(item=self.infoCollapse,
+                      flag=wx.ALL | wx.EXPAND, 
                       proportion=0,
                       border=3)
         pageSizer.Add(item=listSizer,
