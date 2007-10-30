@@ -148,8 +148,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected,   self)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.OnItemActivated,  self)
+        # self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColClick,       self)
         # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
-        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColClick,       self)
         # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
         # self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
         # self.Bind(wx.EVT_LIST_COL_DRAGGING, self.OnColDragging, self.list)
@@ -247,22 +247,20 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         if self.qlayer:
             self.map.DeleteLayer(self.qlayer)
 
-    def OnColClick(self, event):
-        """Column heading clicked"""
-        # self._col = event.GetColumn()
-        event.Skip()
-
     def OnItemSelected(self, event):
         """Item selected"""
-        self.currentItem = event.m_itemIndex
-        # self.log.write('OnItemSelected: "%s", "%s"\n' %
-        #                   (self.currentItem,
-        #                    self.GetItemText(self.currentItem)))
-
-        self.selectedCats.append(int(self.GetItemText(self.currentItem)))
+        self.selectedCats.append(int(self.GetItemText(event.m_itemIndex)))
         self.selectedCats.sort()
 
         event.Skip()
+
+    def OnItemDeselected(self, event):
+        """Item deselected"""
+        self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
+        self.selectedCats.sort()
+
+        event.Skip()
+
 
     def RedrawMap(self):
         """Redraw a map"""
@@ -332,13 +330,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         """Return column text"""
         item = self.GetItem(index, col)
         return item.GetText()
-
-    def OnItemDeselected(self, event):
-        """Item deselected"""
-        #self.log.write("OnItemDeselected: %s" % event.m_itemIndex)
-        self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
-        self.selectedCats.sort()
-        event.Skip()
 
     def GetListCtrl(self):
         """Returt list"""
@@ -1122,7 +1113,7 @@ class DisplayAttributesDialog(wx.Dialog):
                         delimiter = wx.StaticText(parent=panel, id=wx.ID_ANY, label=":")
 
                         colValue = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value=value,
-                                               size=(250, -1)) # TODO: validator
+                                               size=(-1, -1)) # TODO: validator
                         colValue.SetName(name)
                         self.Bind(wx.EVT_TEXT, self.OnSQLStatement, colValue)
 
@@ -1144,6 +1135,8 @@ class DisplayAttributesDialog(wx.Dialog):
 
             panel.SetSizer(border)
         # for each layer END
+
+        self.Layout()
 
         return True
 
@@ -1172,7 +1165,7 @@ class VectorAttributeInfo:
             return False
 
         # list of available layers & (table, database, driver)
-        for line in layerCommand.ReadStdOutput()[0]:
+        for line in layerCommand.ReadStdOutput():
             lineList = line.split(' ')
             self.layers[int(lineList[0])] = { "table"    : lineList[1],
                                               "database" : lineList[3],
