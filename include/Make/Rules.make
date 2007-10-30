@@ -27,8 +27,14 @@ endif
 $(OBJDIR):
 	-test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
 
+ifndef BROKEN_MAKE
+ifneq ($(MAKE_VERSION),3.81)
+BROKEN_MAKE=1
+endif
+endif
+
 # default cc rules
-ifeq ($(MAKE_VERSION),3.81)
+ifeq ($(BROKEN_MAKE),)
 $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
 
