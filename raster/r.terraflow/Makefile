@@ -32,10 +32,18 @@ CLEAN_SUBDIRS = $(IOSTREAM_DIR)
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
+ifneq ($(BROKEN_MAKE),)
+$(OBJARCH)/FLOAT/%.o: %.cc $(LOCAL_HEADERS) $(OBJARCH)/FLOAT
+else
 $(OBJARCH)/FLOAT/%.o: %.cc $(LOCAL_HEADERS) | $(OBJARCH)/FLOAT
+endif
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
 
+ifneq ($(BROKEN_MAKE),)
+$(OBJARCH)/SHORT/%.o: %.cc $(LOCAL_HEADERS) $(OBJARCH)/SHORT
+else
 $(OBJARCH)/SHORT/%.o: %.cc $(LOCAL_HEADERS) | $(OBJARCH)/SHORT
+endif
 	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
 default: $(BIN)/$(PGM)$(EXE) $(BIN)/$(PGM).short$(EXE)
