@@ -59,7 +59,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
     """
     def __init__(self, parent, log, vectmap, pointdata=None):
         wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
-                              style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) # wx.LC_VIRTUAL
+                              style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES) # | wx.LC_VIRTUAL)
 
         #
         # initialize variables
@@ -101,7 +101,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             self.mapdisp = self.map = None
 
         # building the columns
-        i = 0
         # FIXME: Maximal number of columns, when the GUI is still usable
         dbDescribe = gcmd.Command (cmd = ["db.describe", "-c", "--q",
                                           "table=%s" % self.parent.tablename,
@@ -114,11 +113,10 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # nrows: 11
         # Column 1: cat:INTEGER:11
         # Column 2: label:CHARACTER:43
-
+        i = 0
         for line in dbDescribe.ReadStdOutput()[2:]: # skip ncols and nrows
             colnum, column, type, length = line.strip().split(":")
             column.strip()
-
             # FIXME: here will be more types
             if type.lower().find("integer") > -1:
                 self.columns.append({"name": column, "type": int})
@@ -128,13 +126,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                 self.columns.append({"name": column, "type": float})
             else:
                 self.columns.append({"name": column, "type": str})
-
-            self.InsertColumn(col=i, heading=column)
-            self.SetColumnWidth(col=i, width=wx.LIST_AUTOSIZE_USEHEADER)
-            i += 1
-            if i >= 256:
-                self.log.write(_("Can display only 256 columns"))
-                break
 
         # These two should probably be passed to init more cleanly
         # setting the numbers of items = number of elements in the dictionary
@@ -174,20 +165,43 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             # check each 0.1s
             self.timer.Start(100)
 
-    def LoadData(self,where=None):
+    def LoadData(self, cols='*', where=''):
         """Load data into list"""
 
-        if where:
-            self.ClearAll()
-            cmdv = ["db.select", "-c", "--q",
-                    "sql=SELECT * FROM %s WHERE %s" % (self.parent.tablename, where),
-                    "database=%s"                   % self.parent.database,
-                    "driver=%s"                     % self.parent.driver]
+        self.DeleteAllItems()
+
+        # self.ClearAll()
+        for i in range(self.GetColumnCount()):
+            self.DeleteColumn(0)
+
+        i = 0
+        if cols != '*':
+            for column in cols.split(','):
+                self.InsertColumn(col=i, heading=column)
+                i += 1
+                
+                if i >= 256:
+                    self.log.write(_("Can display only 256 columns"))
+
         else:
+            for column in self.columns:
+                self.InsertColumn(col=i, heading=column["name"])
+                i += 1
+
+                if i >= 256:
+                    self.log.write(_("Can display only 256 columns"))
+
+        if where is '' or where is None:
             cmdv = ["db.select", "-c", "--q",
-                    "table=%s"    % self.parent.tablename,
+                    "sql=SELECT %s FROM %s" % (cols, self.parent.tablename),
                     "database=%s" % self.parent.database,
                     "driver=%s"   % self.parent.driver]
+        else:
+            cmdv = ["db.select", "-c", "--q",
+                    "sql=SELECT %s FROM %s WHERE %s" % (cols, self.parent.tablename, where),
+                    "database=%s"                    % self.parent.database,
+                    "driver=%s"                      % self.parent.driver]
+
 
         # run command
         vDbSelect = gcmd.Command(cmd=cmdv)
@@ -198,7 +212,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # FIXME: Max. number of rows, while the GUI is still usable
         i = 0
         for line in vDbSelect.ReadStdOutput():
-
             attributes = line.strip().split("|")
             self.itemDataMap[i] = []
 
@@ -224,8 +237,13 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                 self.log.write(_("Can display only 32000 lines"))
                 break
 
+        for i in range(self.GetColumnCount()):
+            self.SetColumnWidth(col=i, width=wx.LIST_AUTOSIZE)
+            if self.GetColumnWidth(col=i) < 20:
+                self.SetColumnWidth(col=i, width=wx.LIST_AUTOSIZE_USEHEADER)
+
     def OnCloseWindow(self, event):
-        """Close attreibute manager window"""
+        """Close attribute manager window"""
         if self.qlayer:
             self.map.DeleteLayer(self.qlayer)
 
@@ -322,94 +340,84 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         self.selectedCats.sort()
         event.Skip()
 
-        # ---------------------------------------------------
-        # These methods are callbacks for implementing the
-        # "virtualness" of the list...
-
-        # def OnGetItemText(self, item, col):
-        #     index=self.itemIndexMap[item]
-        #     s = self.itemDataMap[index][col]
-        #     return s
-
-        # def OnGetItemImage(self, item):
-        #     index=self.itemIndexMap[item]
-        #     if ( index % 2) == 0:
-
-    def OnGetItemAttr(self, item):
-        """Get item attributes"""
-        index = self.itemIndexMap[item]
-        
-        if ( index % 2) == 0:
-            return self.attr2
-        else:
-            return self.attr1
-
-        # ---------------------------------------------------
-        # Matt C, 2006/02/22
-        # Here's a better SortItems() method --
-        # the ColumnSorterMixin.__ColumnSorter() method already handles the ascending/descending,
-        # and it knows to sort on another column if the chosen columns have the same value.
-
-        # def SortItems(self,sorter=cmp):
-        #     items = list(self.itemDataMap.keys())
-        #     # for i in range(len(items)):
-        #     #     items[i] =  self.columns[self.columnNumber]["type"](items[i])
-        #     items.sort(self.Sorter)
-        #     #items.sort(sorter)
-        #     # for i in range(len(items)):
-        #     #     items[i] =  str(items[i])
-        #     self.itemIndexMap = items
-
-        #     # redraw the list
-        #     self.Refresh()
-
-        # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
-
     def GetListCtrl(self):
-        """Get list, required by VirtualAttributeList class"""
+        """Returt list"""
         return self
 
-        # stolen from python2.4/site-packages/wx-2.8-gtk2-unicode/wx/lib/mixins/listctrl.py
-        # def Sorter(self, key1,key2):
-        #     col = self._col
-        #     ascending = self._colSortFlag[col]
-        #     # convert, because the it is allways string
-        #     try:
-        #         item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
-        #     except:
-        #         item1 = ''
-        #     try:
-        #         item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
-        #     except:
-        #         item2 = ''
-        
-        #     #--- Internationalization of string sorting with locale module
-        #     if type(item1) == type('') or type(item2) == type(''):
-        #         cmpVal = locale.strcoll(str(item1), str(item2))
-        #     else:
-        #         cmpVal = cmp(item1, item2)
-        #     #---
-        
-        #     # If the items are equal then pick something else to make the sort v    ->alue unique
-        #     if cmpVal == 0:
-        #         cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
-        
-        #     if ascending:
-        #         return cmpVal
-        #     else:
-        #         return -cmpVal
-        
-        # return cmp(self.columns[self.columnNumber]["type"](a),
-        #           self.columns[self.columnNumber]["type"](b))
-        
-        #     # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
-        #     def GetSortImages(self):
-        #         return (self.sm_dn, self.sm_up)
+#     def OnGetItemText(self, item, col):
+#         """Get item text"""
+#         index=self.itemIndexMap[item]
+#         s = self.itemDataMap[index][col]
+#         return s
+    
+#     def OnGetItemImage(self, item):
+#         """Get item image"""
+#         return self.OnGetItemAttr(item)
 
-        # XXX Looks okay to remove this one (was present in the original demo)
-        # def getColumnText(self, index, col):
-        #    item = self.GetItem(index, col)
-        #    return item.GetText()
+#     def OnGetItemAttr(self, item):
+#         """Get item attributes"""
+#         index = self.itemIndexMap[item]
+        
+#         if ( index % 2) == 0:
+#             return self.attr2
+#         else:
+#             return self.attr1
+
+#     def SortItems(self, sorter=cmp):
+#         """Sort items"""
+#         items = list(self.itemDataMap.keys())
+#         for i in range(len(items)):
+#             items[i] =  self.columns[0]["type"](items[i]) # FIXME
+#         items.sort(self.Sorter)
+#         items.sort(sorter)
+#         for i in range(len(items)):
+#             items[i] =  str(items[i])
+#         self.itemIndexMap = items
+        
+#         # redraw the list
+#         self.Refresh()
+
+#         # Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py
+
+
+#     def Sorter(self, key1, key2):
+#         col = self._col
+#         ascending = self._colSortFlag[col]
+#         # convert, because the it is allways string
+#         try:
+#             item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
+#         except:
+#             item1 = ''
+#         try:
+#             item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
+#         except:
+#             item2 = ''
+        
+#         # Internationalization of string sorting with locale module
+#         if type(item1) == type('') or type(item2) == type(''):
+#             cmpVal = locale.strcoll(str(item1), str(item2))
+#         else:
+#             cmpVal = cmp(item1, item2)
+        
+#         # If the items are equal then pick something else to make the sort v    ->alue unique
+#         if cmpVal == 0:
+#             cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
+            
+#             if ascending:
+#                 return cmpVal
+#             else:
+#                 return -cmpVal
+        
+#         return cmp(self.columns[0]["type"](item1), # FIXME
+#                    self.columns[0]["type"](item2))
+        
+#     def GetSortImages(self):
+#         return (self.sm_dn, self.sm_up)
+
+#     def getColumnText(self, index, col):
+#         """Get column heading"""
+#         item = self.GetItem(index, col)
+#         return item.GetText()
 
     def OnMapClick(self, event):
         """
@@ -559,12 +567,15 @@ class AttributeManager(wx.Frame):
                                           label=_("Advanced"))
 
         # textarea
-        self.sqlWhere     = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="")
-        self.sqlStatement = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="")
+        self.sqlWhere     = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
+                                        style=wx.TE_PROCESS_ENTER)
+        self.sqlStatement = wx.TextCtrl(parent=self, id=wx.ID_ANY,
+                                        value="SELECT * FROM %s" % self.tablename,
+                                        style=wx.TE_PROCESS_ENTER)
 
         # labels
         self.sqlLabel    = wx.StaticText(parent=self, id=wx.ID_ANY,
-                                                label="SELECT * FROM %s WHERE " % self.tablename)
+                                         label="SELECT * FROM %s WHERE " % self.tablename)
         self.label_query = wx.StaticText(parent=self, id=wx.ID_ANY,
                                          label="")
 
@@ -584,15 +595,85 @@ class AttributeManager(wx.Frame):
 
         # bindings
         self.btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
+        self.btnApply.Bind(wx.EVT_BUTTON, self.OnApplySqlStatement)
         self.btnQuit.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
         self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, self.infoCollapse)
+        self.sqlSimple.Bind(wx.EVT_RADIOBUTTON,   self.OnChangeSql)
+        self.sqlAdvanced.Bind(wx.EVT_RADIOBUTTON, self.OnChangeSql)
+        self.sqlWhere.Bind(wx.EVT_TEXT_ENTER,     self.OnApplySqlStatement)
+        self.sqlStatement.Bind(wx.EVT_TEXT_ENTER, self.OnApplySqlStatement)
 
         # do layer
         self.__layout()
 
+        self.OnChangeSql(None)
+
         self.SetMinSize((640, 480))
 
         self.Show()
+
+    def OnChangeSql(self, event):
+        """Switch simple/advanced sql statement"""
+        if self.sqlSimple.GetValue():
+            self.sqlWhere.Enable(True)
+            self.sqlStatement.Enable(False)
+            self.btnSqlBuilder.Enable(False)
+        else:
+            self.sqlWhere.Enable(False)
+            self.sqlStatement.Enable(True)
+            self.btnSqlBuilder.Enable(True)
+
+    def OnApplySqlStatement(self, event):
+        """Apply simple/advanced sql statement"""
+        if self.sqlSimple.GetValue():
+            # simple sql statement
+            if len(self.sqlWhere.GetValue().strip()) > 0:
+                self.win.LoadData(where=self.sqlWhere.GetValue().strip())
+            else:
+                self.win.LoadData()
+        else:
+            # advanced sql statement
+            valid, cols, where = self.ValidateSelectStatement(self.sqlStatement.GetValue().strip())
+
+            Debug.msg(4, "AttributeManager.OnApplySqlStatament(): valid=%s, cols=%s, where=%s" %
+                      (valid, cols, where))
+
+            if valid is True:
+                self.win.LoadData(cols=cols, where=where)
+
+    def ValidateSelectStatement(self, statement):
+        """Validate Select SQL statement
+
+        TODO: check list of columns and where statement
+
+        Return True if valid, False if not
+        Return list of columns (or '*' for all columns)
+        Return where statement
+        """
+        
+        if statement[0:7].lower() != 'select ':
+            return (False, '', '')
+
+        cols = ''
+        index = 7
+        for c in statement[index:]:
+            if c == ' ':
+                break
+            cols += c
+            index += 1
+
+        tablelen = len(self.tablename)
+
+        if statement[index+1:index+6].lower() != 'from ' or \
+                statement[index+6:index+6+tablelen] != '%s' % (self.tablename):
+            return (False, '', '')
+
+        if len(statement[index+7+tablelen:]) > 0:
+            where = statement[index+7+tablelen:]
+        else:
+            where = ''
+
+        return (True, cols, where)
 
     def OnInfoPaneChanged(self, event):
         """Collapse database connection info box"""
@@ -651,11 +732,6 @@ class AttributeManager(wx.Frame):
         self.builder = sqlbuilder.SQLFrame(parent=self, id=wx.ID_ANY,
                                            title=_("SQL Builder"),
                                            vectmap=self.vectmap)
-
-    def OnApply(self,event):
-        """Apply button pressed"""
-        self.win.LoadData(where=self.text_query.GetValue().strip())
-
     def OnTextEnter(self, event):
         pass
 
