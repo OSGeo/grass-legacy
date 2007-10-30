@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
     char   *fs; /* field delim */
     off_t  filesize;
     int    linesize, estimated_lines;
-    int    from_stdin = FALSE;
+    int    from_stdin;
+    int    can_seek;
 
     RASTER_MAP_TYPE rtype;
     struct History history;
@@ -300,16 +301,19 @@ int main(int argc, char *argv[])
     if (strcmp ("-", infile) == 0) {
 	from_stdin = TRUE;
 	in_fp = stdin;
-	strcpy(infile, "stdin"); /* filename for history metadata */  /* need to realloc()?? */
-	/* can't rewind() stdin; dumping to a tmp file first is slow and prone to LFS problems */
-	if(npasses != 1) {
-	    G_warning(_("Can only perform a single pass if input is from stdin."));
-	    npasses = 1;
-	}
+	infile = G_store("stdin"); /* filename for history metadata */
     }
     else {
 	if((in_fp = fopen(infile, "r" )) == NULL )
 	    G_fatal_error(_("Could not open input file <%s>."), infile);
+    }
+
+    can_seek = fseek(in_fp, 0, SEEK_SET) == 0;
+
+    /* can't rewind() non-files */
+    if(!can_seek && npasses != 1) {
+	G_warning(_("Can only perform a single pass if input is not from a file."));
+	npasses = 1;
     }
 
     if(scan_flag->answer) {
@@ -330,7 +334,7 @@ int main(int argc, char *argv[])
     if (out_fd < 0)
 	G_fatal_error(_("Unable to create raster map <%s>"), outmap);
 
-    if(!from_stdin) {
+    if(can_seek) {
 	/* guess at number of lines in the file without actually reading it all in */
 	for(line=0; line<10; line++) {  /* arbitrarily use 10th line for guess */
 	    if( 0 == G_getl2(buff, BUFFSIZE-1, in_fp) ) break;
@@ -359,7 +363,7 @@ int main(int argc, char *argv[])
 	if(npasses > 1)
 	    G_message(_("Pass #%d (of %d) ..."), pass, npasses);
 
-	if(!from_stdin)
+	if(can_seek)
 	    rewind(in_fp);
 
 	/* figure out segmentation */
@@ -407,7 +411,7 @@ int main(int argc, char *argv[])
 	    line++;
 
 	    if(line%10000 == 0) { /* mod for speed */
-		if(from_stdin)
+		if(!can_seek)
 		    G_clicker();
 		else if(line < estimated_lines)
 		    G_percent(line, estimated_lines, 3);
