@@ -201,6 +201,11 @@ or "none". The width is specified in points, unless followed by an "i"
 in which case it is measured in inches.
 The default is a black border box of width 1 point.
 <P>
+The border can be turned off completely with the
+&quot;<tt>border&nbsp;n</tt>&quot; instruction. In this case
+the <B>end</B> command should not be given as the
+main command will be treated as a single line instruction.
+<P>
 
 This example would create a grey border 0.1&quot; wide.
 <PRE>
@@ -259,6 +264,10 @@ have a label. If there are only a few categories, you can use
 r.support to manually add labels. If there are too many categories to
 do this, you could write a script to add dummy labels to the cats file<br>
 (&lt;gisdbase&gt;/&lt;location&gt;/&lt;mapset&gt;/cats/&lt;mapname&gt;).
+<P>
+If the colortable is turned off with a &quot;<tt>colortable&nbsp;n</tt>&quot;
+instruction the <B>end</B> command should not be given as the  
+main command will be treated as a single line instruction.
 
 <P>
 
