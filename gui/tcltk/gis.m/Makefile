@@ -11,5 +11,5 @@ install_scripts:
 	$(INSTALL) description.html $(GISBASE)/docs/html/gis.m.html
 	for file in *.tcl ; do $(INSTALL) $$file $(GISBASE)/etc/gm/ ; done
 	for file in *.gif ; do $(INSTALL_DATA) $$file $(GISBASE)/etc/gm/ ; done
-	for file in gm_*.html ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
-	for file in gm_*.png ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
+	for file in docs/gm_*.html ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
+	for file in docs/gm_*.png ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
