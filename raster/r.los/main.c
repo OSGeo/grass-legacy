@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 	opt2->key        = "patt_map";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = NO;
-	opt2->description= _("Binary (1/0) raster map");
+	opt2->description= _("Binary (1/0) raster map to use as a mask");
 	opt2->gisprompt  = "old,cell,raster" ;
 
 	opt5 = G_define_option() ;
@@ -96,7 +96,7 @@ main (int argc, char *argv[])
 	opt5->type       = TYPE_DOUBLE;
 	opt5->required   = NO;
 	opt5->answer     = "1.75";
-	opt5->description= _("Height of the viewing location");
+	opt5->description= _("Height above ground of the viewing location");
 
 	opt6 = G_define_option() ;
 	opt6->key        = "max_dist";
@@ -248,7 +248,6 @@ main (int argc, char *argv[])
 	viewpt_elev += obs_elev;
 	/*	DO LOS ANALYSIS FOR SIXTEEN SEGMENTS		*/
 	for(segment_no=1;segment_no<=16;segment_no++){
-		G_percent(segment_no, 16, 5);
 		sign_on_y= 1- (segment_no-1)/8 * 2;
 		if(segment_no>4 && segment_no<13)
 			sign_on_x= -1; 
@@ -286,7 +285,12 @@ main (int argc, char *argv[])
 		    slope_1,slope_2,flip,sign_on_y,sign_on_x,
 		    viewpt_elev,&seg_in,&seg_out,&seg_patt,
 		    row_viewpt,col_viewpt,patt_flag);
+
+		G_percent(segment_no, 16, 5);
 	}	/*	end of for-loop over segments		*/
+
+
+
 	/* loop over all segment lists to find maximum vertical	*/
 	/* angle of any point when viewed from observer location*/
 	for(segment_no=1; segment_no <= 16; segment_no++)
@@ -299,11 +303,13 @@ main (int argc, char *argv[])
 			SEARCH_PT = NEXT_SEARCH_PT;
 		}
 	}
+
 	/* calculate factor to be multiplied to every vertical	*/
 	/* angle for suitable color variation on output map	*/
-	color_factor = decide_color_range(max_vert_angle*57.3,
-	    COLOR_SHIFT,COLOR_MAX);
+/*	color_factor = decide_color_range(max_vert_angle*57.3,
+	    COLOR_SHIFT,COLOR_MAX); */
 	color_factor = 1.0; /* to give true angle? */
+
 	/* mark visible points for all segments on outputmap	*/
 	for(segment_no=1; segment_no <= 16; segment_no++)
 	{
@@ -316,13 +322,15 @@ main (int argc, char *argv[])
 	segment_put(&seg_out,value,row_viewpt,col_viewpt);
 	/* write pending updates by segment_put() to outputmap  */
 	segment_flush(&seg_out);
+
 	/* convert output submatrices to full cell overlay	*/
 	for(row=0; row< nrows; row++)
 	{
 		int col ;
 		segment_get_row(&seg_out,cell,row);
 		for (col=0; col < ncols; col++)
-		    if (cell[col] == 1) G_set_null_value(&cell[col], 1, FCELL_TYPE);
+		    if (cell[col] == 0 || cell[col] == 1)
+			G_set_null_value(&cell[col], 1, FCELL_TYPE);
 		if(G_put_raster_row(new, cell, FCELL_TYPE) < 0)
 			exit(1);
 	}
