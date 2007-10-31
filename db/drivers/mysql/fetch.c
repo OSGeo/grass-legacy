@@ -100,7 +100,8 @@ db__driver_fetch(dbCursor *cn, int position, int *more)
 
 	G_debug (3, "col %d, mysqltype %d, sqltype %d, val = '%s'", 
 		    col, mysqltype, sqltype, c->row[col] );
-	
+
+	/* defined in /usr/include/mysql/mysql_com.h */	
 	switch (mysqltype) 
 	{
 	    int ns;
