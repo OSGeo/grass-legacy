@@ -15,6 +15,7 @@ SUBDIRS = \
 	v.edit \
 	v.extract \
 	v.extrude \
+    v.generalize \
 	v.hull \
 	v.info \
 	v.in.ascii \
@@ -35,6 +36,7 @@ SUBDIRS = \
 	v.net.path \
 	v.net.salesman \
 	v.net.steiner \
+    v.net.visibility \
 	v.normal \
 	v.out.ascii \
 	v.out.dxf \
