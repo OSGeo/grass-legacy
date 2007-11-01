@@ -92,23 +92,23 @@
 
 
 display_help(){
-	echo "" >&2
-	echo "BRIEF HELP" >&2
-	echo "" >&2
-	echo "Enter an r.mapcalc expression in the" >&2
-	echo "formula field using this format:" >&2
-	echo "A+C or (more complex:) exp(A+C)+(B-2)*7" >&2
-	echo "Where A, B, C are raster maps entered" >&2
-	echo "in the A field, B field, and C field." >&2
-	echo "" >&2
-	echo "Do not enter output file in the formula field:" >&2
-	echo "Correct: A+B" >&2
-	echo "Incorrect: newfile = A+B" >&2
-	echo "Use no blanks!" >&2
-	echo "" >&2
-	echo "For details on creating an r.mapcalc expression," >&2
-	echo "select 'man' in the help field to see the r.mapcalc manual page" >&2
-	echo "(or type g.manual r.mapcalc from the command line)." >&2
+	echo "" >&2
+	echo "BRIEF HELP" >&2
+	echo "" >&2
+	echo "Enter an r.mapcalc expression in the" >&2
+	echo "formula field using this format:" >&2
+	echo "A+C or (more complex:) exp(A+C)+(B-2)*7" >&2
+	echo "Where A, B, C are raster maps entered" >&2
+	echo "in the A field, B field, and C field." >&2
+	echo "" >&2
+	echo "Do not enter output file in the formula field:" >&2
+	echo "Correct: A+B" >&2
+	echo "Incorrect: newfile = A+B" >&2
+	echo "Use no blanks!" >&2
+	echo "" >&2
+	echo "For details on creating an r.mapcalc expression," >&2
+	echo "select 'man' in the help field to see the r.mapcalc manual page" >&2
+	echo "(or type g.manual r.mapcalc from the command line)." >&2
 }
 
 if  [ -z "$GISBASE" ]
