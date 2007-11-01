@@ -3,7 +3,9 @@ wxPython GRASS graphical user interface
 
 0 - REQUIREMENTS
 
- Python >= 2.4 and wxPython >= 2.8.1.1
+ GRASS GIS >= 6.3
+ Python >= 2.4
+ wxPython >= 2.8.1.1
 
  Get wxPython 2.8.x packages from:
  * Source: http://www.wxpython.org/download.php
