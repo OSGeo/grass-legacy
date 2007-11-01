@@ -307,7 +307,7 @@ int V_call(void)
 	case NL:
 	    new_answer = (at_answer+1) % num_answers ;
 	    ans_col  = 0 ;
-	    if (lastchar == ESC && newchar == CR)
+	    if (lastchar == ESC && (newchar == CR || newchar == NL))
 		done = 1;
 	    break ;
 
