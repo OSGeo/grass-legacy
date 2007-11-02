@@ -443,6 +443,8 @@ set descmenu [subst  {
 		{command {[G_msg "Reproject vector"]} {} "v.proj: Reproject vector from other location" {} -command {execute v.proj }}
 		{separator}
 		{command {[G_msg "Metadata support"]} {} "v.support: Edit metadata for vector map" {} -command {execute v.support }}
+		{separator}
+		{command {[G_msg "Generalization"]} {} "v.generalize: Generalize a vector map" {} -command {execute v.generalize }}
 	}}
 	{separator}
 	{command {[G_msg "Query with attributes"]} {} "v.extract: Query vector objects by attribute values" {} -command {execute v.extract }}
@@ -465,6 +467,7 @@ set descmenu [subst  {
 	{cascad {[G_msg "Network analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Allocate subnets"]} {} "v.net.alloc: Allocate subnets for nearest centers" {} -command {execute v.net.alloc }}
 		{command {[G_msg "Network maintenance"]} {} "v.net: Network maintenance" {} -command {execute v.net }}
+		{command {[G_msg "Visibility network"]} {} "v.net.visibility: Create and maintain a visibility network" {} -command {execute v.net.visibility }}
 		{command {[G_msg "Shortest route"]} {} "v.net.path: Calculate shortest route along network between 2 nodes" {} -command {execute v.net.path }}
 		{command {[G_msg "Display shortest route"]} {} "d.path: Display shortest route along network between 2 nodes (visualization only)" {} -command {
 			unset env(GRASS_RENDER_IMMEDIATE)
