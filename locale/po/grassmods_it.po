@@ -6119,7 +6119,7 @@ msgstr "Mappa raster con il nome dei risultati archiviati"
 #: ../raster/r.out.ppm/main.c:68 ../raster/r.out.ppm3/main.c:86
 #: ../raster/r.series/main.c:124
 msgid "Run quietly"
-msgstr "Avvia in maniera sileziosa"
+msgstr "Avvia in maniera silenziosa"
 
 #: ../imagery/i.maxlik/open.c:17
 #, fuzzy, c-format
