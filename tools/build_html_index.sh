@@ -131,8 +131,8 @@ FULLINDEX=full_index.html
 cp -f grassdocs.css $HTMLDIR/
 cp -f grassdocs.css $HTMLDIR/nviz/
 #copy over GRASS logo:
-cp -f grass.smlogo.gif $HTMLDIR/
-cp -f grass.smlogo.gif $HTMLDIR/nviz/
+cp -f grass.smlogo.gif grass_logo.png $HTMLDIR/
+cp -f grass.smlogo.gif grass_logo.png $HTMLDIR/nviz/
 #copy over GEM docs:
 mkdir -p $HTMLDIR/gem
 cp -f $GEMDIR/docs/GEM-Manual/*.html $HTMLDIR/gem/
