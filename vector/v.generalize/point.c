@@ -28,7 +28,7 @@ inline void point_subtract(POINT a, POINT b, POINT * res)
     res->y = a.y - b.y;
     res->z = a.z - b.z;
     return;
-};
+}
 
 inline void point_add(POINT a, POINT b, POINT * res)
 {
@@ -36,17 +36,17 @@ inline void point_add(POINT a, POINT b, POINT * res)
     res->y = a.y + b.y;
     res->z = a.z + b.z;
     return;
-};
+}
 
 double point_dot(POINT a, POINT b)
 {
     return a.x * b.x + a.y * b.y + a.z * b.z;
-};
+}
 
 inline double point_dist2(POINT a)
 {
     return a.x * a.x + a.y * a.y + a.z * a.z;
-};
+}
 
 inline void point_assign(struct line_pnts *Points, int index, int with_z,
 			 POINT * res)
@@ -58,9 +58,9 @@ inline void point_assign(struct line_pnts *Points, int index, int with_z,
     }
     else {
 	res->z = 0;
-    };
+    }
     return;
-};
+}
 
 inline void point_scalar(POINT a, double k, POINT * res)
 {
@@ -68,7 +68,7 @@ inline void point_scalar(POINT a, double k, POINT * res)
     res->y = a.y * k;
     res->z = a.z * k;
     return;
-};
+}
 
 inline void points_copy_last(struct line_pnts *Points, int pos)
 {
@@ -78,26 +78,26 @@ inline void points_copy_last(struct line_pnts *Points, int pos)
     Points->z[pos] = Points->z[n];
     Points->n_points = pos + 1;
     return;
-};
+}
 
 inline double point_dist(POINT a, POINT b)
 {
     return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) +
 		(a.z - b.z) * (a.z - b.z));
-};
+}
 
 inline double point_dist_square(POINT a, POINT b)
 {
     return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) +
 	(a.z - b.z) * (a.z - b.z);
-};
+}
 
 inline double point_angle_between(POINT a, POINT b, POINT c)
 {
     point_subtract(b, a, &a);
     point_subtract(c, b, &b);
     return acos(point_dot(a, b) / sqrt(point_dist2(a) * point_dist2(b)));
-};
+}
 
 inline double point_dist_segment_square(POINT a, POINT b, POINT c, int with_z)
 {
@@ -106,7 +106,7 @@ inline double point_dist_segment_square(POINT a, POINT b, POINT c, int with_z)
     return dig_distance2_point_to_line(a.x, a.y, a.z, b.x, b.y, b.z,
 				       c.x, c.y, c.z, with_z, &px, &py, &pz,
 				       &pdist, &status);
-};
+}
 
 POINT_LIST *point_list_new(POINT p)
 {
@@ -117,12 +117,12 @@ POINT_LIST *point_list_new(POINT p)
     if (!pl) {
 	G_fatal_error(_("Out of memory"));
 	exit(1);
-    };
+    }
 
     pl->next = NULL;
     pl->p = p;
     return pl;
-};
+}
 
 void point_list_add(POINT_LIST * l, POINT p)
 {
@@ -131,7 +131,7 @@ void point_list_add(POINT_LIST * l, POINT p)
     n->next = l->next;
     l->next = n;
     return;
-};
+}
 
 int point_list_copy_to_line_pnts(POINT_LIST l, struct line_pnts *Points)
 {
@@ -145,7 +145,7 @@ int point_list_copy_to_line_pnts(POINT_LIST l, struct line_pnts *Points)
     while (cur != NULL) {
 	length++;
 	cur = cur->next;
-    };
+    }
 
     if (length != Points->n_points)
 	if (0 > dig_alloc_points(Points, length))
@@ -159,10 +159,10 @@ int point_list_copy_to_line_pnts(POINT_LIST l, struct line_pnts *Points)
 	Points->y[i] = cur->p.y;
 	Points->z[i] = cur->p.z;
 	cur = cur->next;
-    };
+    }
 
     return 0;
-};
+}
 
 void point_list_free(POINT_LIST l)
 {
@@ -172,8 +172,8 @@ void point_list_free(POINT_LIST l)
 	n = p->next;
 	G_free(p);
 	p = n;
-    };
-};
+    }
+}
 
 extern void point_list_delete_next(POINT_LIST * p)
 {
@@ -181,4 +181,4 @@ extern void point_list_delete_next(POINT_LIST * p)
     p->next = p->next->next;
     G_free(t);
     return;
-};
+}

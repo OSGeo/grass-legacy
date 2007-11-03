@@ -37,10 +37,10 @@ void graph_free(NGRAPH * g)
     if (g->edge) {
 	for (i = 0; i < g->vertices; g++)
 	    G_free(g->edge[i]);
-    };
+    }
     G_free(g->edge);
     return;
-};
+}
 
 int graph_init(NGRAPH * g, int vertices)
 {
@@ -55,10 +55,10 @@ int graph_init(NGRAPH * g, int vertices)
     if (!g->edge) {
 	graph_free(g);
 	return 0;
-    };
+    }
 
     return 1;
-};
+}
 
 /* writes the most important part of the In network to Out network
  * according to the thresholds, output is bigger for smaller
@@ -91,7 +91,7 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
     if (!graph_init(&g, dglGet_EdgeCount(gr) / 2 + 1)) {
 	G_fatal_error(_("Out of memory"));
 	return 0;
-    };
+    }
 
     nnodes = dglGet_NodeCount(gr);
 
@@ -123,21 +123,21 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
 		    graph_free(&g);
 		    G_fatal_error(_("Out of memory"));
 		    return 0;
-		};
-	    };
+		}
+	    }
 
 	    for (to_edge = dglEdgeset_T_First(&to_et); to_edge;
 		 to_edge = dglEdgeset_T_Next(&to_et)) {
 		int id2 = abs(dglEdgeGet_Id(gr, to_edge));
 		g.edge[id][g.degree[id]++] = id2;
-	    };
+	    }
 
 
 	    dglEdgeset_T_Release(&to_et);
-	};
+	}
 	dglEdgeset_T_Release(&et);
 
-    };
+    }
 
     closeness = (int *)G_calloc(g.vertices, sizeof(int));
     queue = (int *)G_calloc(g.vertices, sizeof(int));
@@ -155,7 +155,7 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
     /* run BFS from each vertex and find the sum
      * of the shortest paths from each vertex */
     G_percent_reset();
-    G_message(_("Calculating centrality measures ..."));
+    G_message(_("Calculating centrality measures..."));
     for (i = 1; i < g.vertices; i++) {
 	int front, back, j;
 	G_percent(i, g.vertices - 1, 1);
@@ -195,9 +195,9 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
 		    internal[v] = 1;
 		    paths[to] += paths[v];
 		    Vect_list_append(prev[to], v);
-		};
-	    };
-	};
+		}
+	    }
+	}
 	/*finally run another BFS from the leaves in the BFS DAG
 	 * and calculate betweeness centrality measure */
 	front = 0;
@@ -206,7 +206,7 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
 	    if (!internal[j] && dist[j] <= g.vertices) {
 		queue[back] = j;
 		back = (back + 1) % g.vertices;
-	    };
+	    }
 	memset(betw, 0, sizeof(double) * g.vertices);
 	while (front != back) {
 	    int v, j;
@@ -218,13 +218,13 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
 		if (betw[to] == 0) {
 		    queue[back] = to;
 		    back = (back + 1) % g.vertices;
-		};
+		}
 		betw[to] +=
 		    (betw[v] +
 		     (double)1.0) * ((double)paths[to] / (double)paths[v]);
-	    };
-	};
-    };
+	    }
+	}
+    }
 
 
     Points = Vect_new_line_struct();
@@ -236,8 +236,8 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
 	    type = Vect_read_line(In, Points, Cats, i);
 	    output += Points->n_points;
 	    Vect_write_line(Out, type, Points, Cats);
-	};
-    };
+	}
+    }
 
     G_free(dist);
     G_free(closeness);
@@ -252,4 +252,4 @@ int graph_generalization(struct Map_info *In, struct Map_info *Out,
     G_free(prev);
     graph_free(&g);
     return output;
-};
+}

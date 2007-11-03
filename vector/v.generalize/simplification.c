@@ -32,7 +32,7 @@ int douglas_peucker(struct line_pnts *Points, double thresh, int with_z)
     if (!stack) {
 	G_fatal_error(_("Out of memory"));
 	return Points->n_points;
-    };
+    }
 
     int *index = G_malloc(sizeof(int) * Points->n_points);	/* Indices of points in output line */
 
@@ -40,7 +40,7 @@ int douglas_peucker(struct line_pnts *Points, double thresh, int with_z)
 	G_fatal_error(_("Out of memory"));
 	G_free(stack);
 	return Points->n_points;
-    };
+    }
 
     int top = 2;		/* first free slot in the stack */
     int icount = 1;		/* number of indices stored */
@@ -84,8 +84,8 @@ int douglas_peucker(struct line_pnts *Points, double thresh, int with_z)
 	    if (maxindex == -1 || dist > maxdist) {	/* update the furthermost point so far seen */
 		maxindex = i;
 		maxdist = dist;
-	    };
-	};
+	    }
+	}
 
 
 	if (maxindex == -1 || maxdist <= thresh) {	/* no points between or all point are inside the threshold */
@@ -97,10 +97,10 @@ int douglas_peucker(struct line_pnts *Points, double thresh, int with_z)
 	    stack[top++] = last;
 	    stack[top++] = first;
 	    stack[top++] = maxindex;
-	};
+	}
 
 
-    };
+    }
 
 
     Points->n_points = icount;
@@ -110,12 +110,12 @@ int douglas_peucker(struct line_pnts *Points, double thresh, int with_z)
 	Points->x[i] = Points->x[index[i]];
 	Points->y[i] = Points->y[index[i]];
 	Points->z[i] = Points->z[index[i]];
-    };
+    }
 
     G_free(stack);
     G_free(index);
     return (Points->n_points);
-};
+}
 
 int lang(struct line_pnts *Points, double thresh, int look_ahead, int with_z)
 {
@@ -137,7 +137,7 @@ int lang(struct line_pnts *Points, double thresh, int look_ahead, int with_z)
 
 	if (Points->n_points - 1 < to) {	/* check that we are always in the line */
 	    to = Points->n_points - 1;
-	};
+	}
 
 	double x2 = Points->x[to];
 	double y2 = Points->y[to];
@@ -151,8 +151,8 @@ int lang(struct line_pnts *Points, double thresh, int look_ahead, int with_z)
 		 z2, with_z, &px, &py, &pz, &pdist, &status) > thresh) {
 		found = 1;
 		break;
-	    };
-	};
+	    }
+	}
 
 	if (found) {
 	    to--;
@@ -164,12 +164,12 @@ int lang(struct line_pnts *Points, double thresh, int look_ahead, int with_z)
 	    count++;
 	    from = to;
 	    to += look_ahead;
-	};
+	}
 
-    };
+    }
     Points->n_points = count;
     return Points->n_points;
-};
+}
 
 /* Eliminates all vertices which are close(r than eps) to each other */
 int vertex_reduction(struct line_pnts *Points, double eps, int with_z)
@@ -197,7 +197,7 @@ int vertex_reduction(struct line_pnts *Points, double eps, int with_z)
 
 	if (with_z) {
 	    dst += dz * dz;
-	};
+	}
 
 	if (dst > eps) {
 	    Points->x[count] = Points->x[i];
@@ -205,9 +205,9 @@ int vertex_reduction(struct line_pnts *Points, double eps, int with_z)
 	    Points->z[count] = Points->z[i];
 	    count++;
 	    start = i;
-	};
+	}
 
-    };
+    }
 
     /* last point is also always preserved */
     Points->x[count] = Points->x[n - 1];
@@ -217,7 +217,7 @@ int vertex_reduction(struct line_pnts *Points, double eps, int with_z)
     Points->n_points = count;
 
     return Points->n_points;
-};
+}
 
 /*Reumann-Witkam algorithm 
  * Returns number of points in the output line
@@ -267,10 +267,10 @@ int reumann_witkam(struct line_pnts *Points, double thresh, int with_z)
 	    Points->y[count] = x0.y;
 	    Points->z[count] = x0.z;
 	    count++;
-	};
+	}
 
 
-    };
+    }
 
     Points->x[count] = Points->x[n - 1];
     Points->y[count] = Points->y[n - 1];
@@ -279,7 +279,7 @@ int reumann_witkam(struct line_pnts *Points, double thresh, int with_z)
 
     return Points->n_points;
 
-};
+}
 
 /* douglas-peucker algorithm which simplifies a line to a line with
  * at most reduction% of points.
@@ -305,7 +305,7 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
     if (sel == NULL) {
 	G_fatal_error(_("Out of memory"));
 	return n;
-    };
+    }
 
     /* array used for storing the indices of line segments+furthest point */
     int *index;
@@ -314,7 +314,7 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	G_fatal_error(_("Out of memory"));
 	G_free(sel);
 	return n;
-    };
+    }
 
     int indices;
     indices = 0;
@@ -337,7 +337,7 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	G_free(sel);
 	G_free(index);
 	return n;
-    };
+    }
 
 
     if (d > thresh) {
@@ -346,7 +346,7 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	index[2] = mid;
 	binary_heap_push(d, 0, &pq);
 	indices = 3;
-    };
+    }
 
     /* while we can add new points and queue is non-empty */
     while (nexp > 0) {
@@ -367,7 +367,7 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	    index[indices++] = left;
 	    index[indices++] = furt;
 	    index[indices++] = mid;
-	};
+	}
 
 	mid = get_furthest(Points, furt, right, with_z, &d);
 	if (d > thresh) {
@@ -375,9 +375,9 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	    index[indices++] = furt;
 	    index[indices++] = right;
 	    index[indices++] = mid;
-	};
+	}
 
-    };
+    }
 
     /* copy selected points */
     int selected = 0;
@@ -387,12 +387,12 @@ int douglas_peucker_reduction(struct line_pnts *Points, double thresh,
 	    Points->y[selected] = Points->y[i];
 	    Points->z[selected] = Points->z[i];
 	    selected++;
-	};
-    };
+	}
+    }
 
     G_free(sel);
     G_free(index);
     binary_heap_free(&pq);
     Points->n_points = selected;
     return Points->n_points;
-};
+}

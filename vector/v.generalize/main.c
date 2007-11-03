@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     module->keywords =
 	_
 	("vector, generalization, simplification, smoothing, displacement, network generalization");
-    module->description = _("Vector based generalization");
+    module->description = _("Vector based generalization.");
 
     /* Define the different options as defined in gis.h */
     map_in = G_define_standard_option(G_OPT_V_INPUT);
@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
     else {
 	G_fatal_error(_("Unknown method"));
 	exit(EXIT_FAILURE);
-    };
+    }
 
 
     /* simplification or smoothing? */
@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
     default:
 	simplification = 0;
 	break;
-    };
+    }
 
 
     Points = Vect_new_line_struct();
@@ -297,18 +297,20 @@ int main(int argc, char *argv[])
 				 GV_FATAL_EXIT);
 
     if ((mapset = G_find_vector2(map_in->answer, "")) == NULL)
-	G_fatal_error(_("Could not find input %s"), map_in->answer);
+	G_fatal_error(_("Vector map <%s> not found"), map_in->answer);
 
     Vect_set_open_level(2);
 
     if (1 > Vect_open_old(&In, map_in->answer, mapset))
-	G_fatal_error(_("Could not open input"));
+      G_fatal_error(_("Unable to open vector map <%s>"),
+		    G_fully_qualified_name(map_in->answer, mapset));
 
     with_z = Vect_is_3d(&In);
 
     if (0 > Vect_open_new(&Out, map_out->answer, with_z)) {
 	Vect_close(&In);
-	G_fatal_error(_("Could not open output"));
+	G_fatal_error(_("Unable to create vector map <%s>"),
+		      map_out->answer);
     }
 
 
@@ -316,7 +318,8 @@ int main(int argc, char *argv[])
     layer = atoi(field_opt->answer);
     if (where_opt->answer) {
 	if (layer < 1)
-	    G_fatal_error(_("'layer' must be > 0 for 'where'"));
+	    G_fatal_error(_("'%s' must be > 0 for '%s'"),
+			  "layer", "where");
 	if (cat_opt->answer)
 	    G_warning(_
 		      ("'where' and 'cats' parameters were supplied, cat will be ignored"));
@@ -324,23 +327,24 @@ int main(int argc, char *argv[])
 	varray = Vect_new_varray(Vect_get_num_lines(&In));
 	if (Vect_set_varray_from_db
 	    (&In, layer, where_opt->answer, mask_type, 1, varray) == -1) {
-	    G_warning(_("Cannot load data from a database"));
-	};
+	    G_warning(_("Unable to load data from database"));
+	}
     }
     else if (cat_opt->answer) {
 	if (layer < 1)
-	    G_fatal_error(_("'layer must be > 0 for 'cats'"));
+	    G_fatal_error(_("'%s' must be > 0 for '%s'"),
+			  "layer", "cat");
 	varray = Vect_new_varray(Vect_get_num_lines(&In));
 	chcat = 1;
 	if (Vect_set_varray_from_cat_string
 	    (&In, layer, cat_opt->answer, mask_type, 1, varray) == -1) {
 	    G_warning(_("Problem loading category values"));
-	};
+	}
     }
     else {
 	chcat = 0;
 	varray = NULL;
-    };
+    }
 
 
     Vect_copy_head_data(&In, &Out);
@@ -352,7 +356,7 @@ int main(int argc, char *argv[])
     if (method == DISPLACEMENT) {
 	snakes_displacement(&In, &Out, thresh, alpha, beta, 1.0, 10.0,
 			    iterations, varray);
-    };
+    }
 
     /* TODO: rearrange code below. It's really messy */
     if (method == NETWORK) {
@@ -361,9 +365,10 @@ int main(int argc, char *argv[])
 				 betweeness_thresh);
     }
     else {
-	G_message(_("Generalization ..."));
+	G_message(_("Generalization (%s)..."),
+		  method_opt->answer);
 	G_percent_reset();
-    };
+    }
     i = 0;
     n_lines = Vect_get_num_lines(&In);
     while (method < NETWORK &&
@@ -413,8 +418,8 @@ int main(int argc, char *argv[])
 		case SNAKES:
 		    snakes(Points, alpha, beta, with_z);
 		    break;
-		};
-	    };
+		}
+	    }
 
 
 	    /* remove "oversimplified" lines */
@@ -429,7 +434,7 @@ int main(int argc, char *argv[])
 	else {
 	    total_output += Points->n_points;
 	    Vect_write_line(&Out, type, Points, Cats);
-	};
+	}
     }
 
     /* remove incorrect boundaries
@@ -445,9 +450,9 @@ int main(int argc, char *argv[])
 	    if (left == 0 || right == 0) {
 		Vect_delete_line(&Out, i);
 		total_output -= Points->n_points;
-	    };
-	};
-    };
+	    }
+	}
+    }
 
 
     /* calculate new centroids 
@@ -464,29 +469,33 @@ int main(int argc, char *argv[])
 	    Vect_get_area_cats(&In, i, Cats);
 	    ret = Vect_get_point_in_area(&Out, i, &x, &y);
 	    if (ret < 0) {
-		G_warning(_("Cannot calculate area centroid"));
+		G_warning(_("Unable to calculate centroid for area %d"),
+			  i);
 		continue;
-	    };
+	    }
 	    Vect_reset_line(Points);
 	    Vect_append_point(Points, x, y, 0.0);
 	    Vect_write_line(&Out, GV_CENTROID, Points, Cats);
-	};
-    };
+	}
+    }
 
     /* remove small areas */
     if (rs_flag->answer && simplification && (mask_type & GV_AREA)) {
 	Vect_build_partial(&Out, GV_BUILD_CENTROIDS, NULL);
 	Vect_remove_small_areas(&Out, thresh, NULL, NULL, &slide);
-    };
+    }
 
-    Vect_build(&Out, stdout);
+    if (G_verbose() > G_verbose_min())
+	Vect_build(&Out, stdout);
+    else
+	Vect_build(&Out, NULL);
 
     /* finally copy tables */
     if (ca_flag->answer)
 	copy_tables_by_cats(&In, &Out);
 
     if (total_input != 0)
-	G_message(_("Number of vertices was reduced from %d to %d[%d%%]"),
+	G_message(_("Number of vertices was reduced from %d to %d [%d%%]"),
 		  total_input, total_output,
 		  (total_output * 100) / total_input);
 
