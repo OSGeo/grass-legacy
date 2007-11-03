@@ -61,7 +61,7 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 	    continue;
 	if (type & GV_LINE)
 	    n_points += Points->n_points;
-    };
+    }
 
     parray = (POINT *) G_calloc(n_points, sizeof(POINT));
     pset = (POINT *) G_calloc(n_points, sizeof(POINT));
@@ -94,19 +94,19 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 		if (point_dist_square(cur, pset[q]) < 0.5) {
 		    findex = q;
 		    break;
-		};
+		}
 
 	    point_index[index] = findex;
 	    if (findex == pindex) {
 		point_assign(Points, j, with_z, &pset[pindex]);
 		pindex++;
-	    };
+	    }
 	    first[index] = (j == 0);
 	    line_index[index] = i;
 	    point_assign(Points, j, with_z, &parray[index]);
 	    index++;
-	};
-    };
+	}
+    }
 
     threshold2 = threshold * threshold;
     /*select only the points which need to be displace */
@@ -123,8 +123,8 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 					  with_z);
 	    if (d < 4 * threshold2)
 		need[point_index[i]] = 1;
-	};
-    };
+	}
+    }
 
     /* then for each selected point ensure that the neighbours to the both
      * sides are selected as well */
@@ -136,7 +136,7 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 	for (j = -2; j <= 2; j++)
 	    if (i + j >= 0 && i + j < index && line_index[i + j] == l)
 		sel[point_index[i + j]] = 1;
-    };
+    }
 
     /* finally, recalculate indices */
     selected = 0;
@@ -180,19 +180,19 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 	    k.a[r][point_index[i - 1]] += b;
 	if (i >= 2 && line_index[i - 2] == l && point_index[i - 2] != -1)
 	    k.a[r][point_index[i - 2]] += c;
-    };
+    }
 
     matrix_add_identity(gama, &k);
     matrix_mult_scalar(0.0, &dx);
     matrix_mult_scalar(0.0, &dy);
 
     /*calculate the inverse */
-    G_message(_("Inverting matrix, be patient ..."));
+    G_message(_("Inverting matrix..."));
     if (!matrix_inverse(k, &kinv, 1))
-	G_fatal_error(_("Could not calculate the inverse matrix"));
+	G_fatal_error(_("Unable to calculate the inverse matrix"));
 
     G_percent_reset();
-    G_message(_("Resolving conflicts ..."));
+    G_message(_("Resolving conflicts..."));
     for (iter = 0; iter < iterations; iter++) {
 	int conflicts = 0;
 	G_percent(iter, iterations, 1);
@@ -248,8 +248,8 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 		fx.a[point_index[i]][0] += dir.x;
 		fy.a[point_index[i]][0] += dir.y;
 		conflicts++;
-	    };
-	};
+	    }
+	}
 
 	/* calculate new displacement */
 	matrix_mult_scalar(delta, &fx);
@@ -270,24 +270,24 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
 		dx.a[point_index[i]][0] - dx_old.a[point_index[i]][0];
 	    parray[i].y +=
 		dy.a[point_index[i]][0] - dy_old.a[point_index[i]][0];
-	};
+	}
 
 
-    };
+    }
     index = 0;
     for (i = 1; i <= n_lines; i++) {
 	int type = Vect_read_line(In, Points, Cats, i);
 	if (type != GV_LINE || (varray && !varray->c[i])) {
 	    Vect_write_line(Out, type, Points, Cats);
 	    continue;
-	};
+	}
 	for (j = 0; j < Points->n_points; j++) {
 	    Points->x[j] = parray[index].x;
 	    Points->y[j] = parray[index].y;
 	    index++;
-	};
+	}
 	Vect_write_line(Out, type, Points, Cats);
-    };
+    }
 
     G_free(parray);
     G_free(pset);
@@ -306,4 +306,4 @@ int snakes_displacement(struct Map_info *In, struct Map_info *Out,
     matrix_free(dx_old);
     matrix_free(dy_old);
     return 0;
-};
+}

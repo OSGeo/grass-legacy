@@ -37,9 +37,9 @@ int type_mask(struct Option *type_opt)
 	    break;
 	case 'a':
 	    res |= GV_AREA;
-	};
+	}
     return res;
-};
+}
 
 int get_furthest(struct line_pnts *Points, int a, int b, int with_z,
 		 double *dist)
@@ -66,11 +66,11 @@ int get_furthest(struct line_pnts *Points, int a, int b, int with_z,
 	if (di > d) {
 	    d = di;
 	    index = i;
-	};
-    };
+	}
+    }
     *dist = d;
     return index;
-};
+}
 
 /* TODO: The collection of categories is horrible in current version! 
  * Rverything repeats many times. We need some data structure
@@ -119,7 +119,7 @@ int copy_tables_by_cats(struct Map_info *In, struct Map_info *Out)
     }
 
     /* Copy tables */
-    G_message(_("Writing attributes ...\n"));
+    G_message(_("Writing attributes..."));
 
     /* Number of output tabs */
     for (i = 0; i < Vect_get_num_dblinks(In); i++) {
@@ -155,7 +155,8 @@ int copy_tables_by_cats(struct Map_info *In, struct Map_info *Out)
 	/* Make a list of categories */
 	IFi = Vect_get_field(In, fields[i]);
 	if (!IFi) {		/* no table */
-	    G_message(_("No table."));
+	  G_warning(_("Database connection not defined for layer %d"),
+		    fields[i]);
 	    continue;
 	}
 
@@ -167,13 +168,13 @@ int copy_tables_by_cats(struct Map_info *In, struct Map_info *Out)
 				    OFi->table, IFi->key, ocats[i], nocats[i]);
 
 	if (ret == DB_FAILED) {
-	    G_warning(_("Cannot copy table"));
+	  G_warning(_("Unable to copy table <%s>"),
+		    IFi->table);
 	}
 	else {
 	    Vect_map_add_dblink(Out, OFi->number, OFi->name, OFi->table,
 				IFi->key, OFi->database, OFi->driver);
 	}
-	G_message(_("Done."));
     }
 
     for (i = 0; i < nfields; i++)
@@ -182,4 +183,4 @@ int copy_tables_by_cats(struct Map_info *In, struct Map_info *Out)
     G_free(nocats);
     G_free(fields);
     return 1;
-};
+}
