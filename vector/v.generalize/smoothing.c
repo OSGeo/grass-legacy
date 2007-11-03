@@ -39,7 +39,7 @@ int boyle(struct line_pnts *Points, int look_ahead, int with_z)
      * to smooth */
     if (look_ahead < 2 || look_ahead > n) {
 	return n;
-    };
+    }
 
     point_assign(Points, 0, with_z, &last);
     c1 = (double)1 / (double)(look_ahead - 1);
@@ -59,12 +59,12 @@ int boyle(struct line_pnts *Points, int look_ahead, int with_z)
 	Points->z[next] = npoint.z;
 	next++;
 	last = npoint;
-    };
+    }
 
     points_copy_last(Points, next);
     return Points->n_points;
 
-};
+}
 
 /* mcmaster's sliding averaging algorithm. Return the number of points
  * in the output line. This equals to the number of points in the
@@ -83,7 +83,7 @@ int sliding_averaging(struct line_pnts *Points, double slide, int look_ahead,
     if (look_ahead % 2 == 0) {
 	G_fatal_error(_("Look ahead parameter must be odd"));
 	return n;
-    };
+    }
 
     if (look_ahead >= n || look_ahead == 1)
 	return n;
@@ -92,7 +92,7 @@ int sliding_averaging(struct line_pnts *Points, double slide, int look_ahead,
     if (!res) {
 	G_fatal_error(_("Out of memory"));
 	return n;
-    };
+    }
 
     sc = (double)1.0 / (double)look_ahead;
 
@@ -100,7 +100,7 @@ int sliding_averaging(struct line_pnts *Points, double slide, int look_ahead,
     for (i = 1; i < look_ahead; i++) {
 	point_assign(Points, i, with_z, &tmp);
 	point_add(p, tmp, &p);
-    };
+    }
 
     /* and calculate the average of remaining points */
     for (i = half; i + half < n; i++) {
@@ -113,20 +113,20 @@ int sliding_averaging(struct line_pnts *Points, double slide, int look_ahead,
 	    point_subtract(p, tmp, &p);
 	    point_assign(Points, i + half + 1, with_z, &tmp);
 	    point_add(p, tmp, &p);
-	};
-    };
+	}
+    }
 
 
     for (i = half; i + half < n; i++) {
 	Points->x[i] = res[i].x;
 	Points->y[i] = res[i].y;
 	Points->z[i] = res[i].z;
-    };
+    }
 
     G_free(res);
     return Points->n_points;
 
-};
+}
 
 /* mcmaster's distance weighting algorithm. Return the number
  * of points in the output line which equals to Points->n_points */
@@ -143,13 +143,13 @@ int distance_weighting(struct line_pnts *Points, double slide, int look_ahead,
     if (look_ahead % 2 == 0) {
 	G_fatal_error(_("Look ahead parameter must be odd"));
 	return n;
-    };
+    }
 
     res = (POINT *) G_malloc(sizeof(POINT) * n);
     if (!res) {
 	G_fatal_error(_("Out of memory"));
 	return n;
-    };
+    }
 
     point_assign(Points, 0, with_z, &res[0]);
 
@@ -174,21 +174,21 @@ int distance_weighting(struct line_pnts *Points, double slide, int look_ahead,
 	    s.x += tmp.x;
 	    s.y += tmp.y;
 	    s.z += tmp.z;
-	};
+	}
 	point_scalar(s, slide / dists, &tmp);
 	point_scalar(c, (double)1.0 - slide, &s);
 	point_add(s, tmp, &res[i]);
-    };
+    }
 
     for (i = half; i + half < n; i++) {
 	Points->x[i] = res[i].x;
 	Points->y[i] = res[i].y;
 	Points->z[i] = res[i].z;
-    };
+    }
 
     G_free(res);
     return Points->n_points;
-};
+}
 
 
 /* Chaiken's algorithm. Return the number of points in smoothed line 
@@ -234,25 +234,24 @@ int chaiken(struct line_pnts *Points, double thresh, int with_z)
 	    }
 	    else {
 		break;		/* good approximatin */
-	    };
-	};
+	    }
+	}
 
 	while (cur->next != NULL)
 	    cur = cur->next;
 
 	p0 = cur->p;
-    };
+    }
 
     point_assign(Points, n - 1, with_z, &p0);
     point_list_add(cur, p0);
 
     if (point_list_copy_to_line_pnts(head, Points) == -1) {
-	G_fatal_error(_("Out of Memory"));
-	exit(1);
-    };
+	G_fatal_error(_("Out of memory"));
+    }
     point_list_free(head);
     return Points->n_points;
-};
+}
 
 
 /* use for refining tangent in hermite interpolation */
@@ -261,7 +260,7 @@ void refine_tangent(POINT * p)
     double l = point_dist2(*p);
     point_scalar(*p, (double)1.0 / sqrt(sqrt(sqrt(l))), p);
     return;
-};
+}
 
 /* approximates given line using hermite cubic spline
  * interpolates by steps of length step
@@ -283,7 +282,7 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
     /* line is too short */
     if (n <= 2) {
 	return 1;
-    };
+    }
 
     /* convert degrees=>radians */
     angle_thresh *= M_PI / 180.0;
@@ -347,7 +346,7 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
 	    last = last->next;
 
 	    next += step;
-	};
+	}
 	/* if the angle between 2 vectors is less then eps, remove the
 	 * middle point */
 	if (point->next && point->next->next && point->next->next->next) {
@@ -358,8 +357,8 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
 	    }
 	    else
 		point = point->next;
-	};
-    };
+	}
+    }
 
 
     point_assign(Points, n - 1, with_z, &p0);
@@ -368,11 +367,11 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
     if (point_list_copy_to_line_pnts(head, Points) == -1) {
 	G_fatal_error(_("Out of memory"));
 	exit(1);
-    };
+    }
 
     point_list_free(head);
     return Points->n_points;
-};
+}
 
 /* snakes algorithm for line simplification/generalization 
  * returns the number of points in the output line. This is
@@ -399,7 +398,7 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
     if (!matrix_init(n + 2 * plus, n + 2 * plus, &g)) {
 	G_fatal_error(_("Out of memory"));
 	return n;
-    };
+    }
     matrix_init(n + 2 * plus, 1, &xcoord);
     matrix_init(n + 2 * plus, 1, &ycoord);
     matrix_init(n + 2 * plus, 1, &zcoord);
@@ -416,7 +415,7 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
 	xcoord.a[i + plus][0] = Points->x[i] - x0;
 	ycoord.a[i + plus][0] = Points->y[i] - y0;
 	zcoord.a[i + plus][0] = Points->z[i] - z0;
-    };
+    }
 
     /* repeat first and last point at the beginning and end
      * of each vector respectively */
@@ -424,13 +423,13 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
 	xcoord.a[i][0] = 0;
 	ycoord.a[i][0] = 0;
 	zcoord.a[i][0] = 0;
-    };
+    }
 
     for (i = n + plus; i < n + 2 * plus; i++) {
 	xcoord.a[i][0] = Points->x[n - 1] - x0;
 	ycoord.a[i][0] = Points->y[n - 1] - y0;
 	zcoord.a[i][0] = Points->z[n - 1] - z0;
-    };
+    }
 
 
     /* calculate the matrix */
@@ -447,22 +446,22 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
 		g.a[i][j] = val[index];
 	    else
 		g.a[i][j] = 0;
-	};
+	}
 
     matrix_add_identity((double)1.0, &g);
 
     /* find its inverse */
     if (!matrix_inverse(g, &ginv, 0)) {
-	G_fatal_error(_("Could not find the inverse matrix"));
+	G_fatal_error(_("Unable to find the inverse matrix"));
 	return n;
-    };
+    }
 
     if (!matrix_mult(ginv, xcoord, &xout)
 	|| !matrix_mult(ginv, ycoord, &yout)
 	|| !matrix_mult(ginv, zcoord, &zout)) {
-	G_fatal_error(_("Could not calculate the output vectors"));
+	G_fatal_error(_("Unable to calculate the output vectors"));
 	return n;
-    };
+    }
 
     /* copy the new values of coordinates, but
      * never move the last and first point */
@@ -471,7 +470,7 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
 	Points->y[i] = yout.a[i + plus][0] + y0;
 	if (with_z)
 	    Points->z[i] = zout.a[i + plus][0] + z0;
-    };
+    }
 
     matrix_free(g);
     matrix_free(ginv);
@@ -482,4 +481,4 @@ int snakes(struct line_pnts *Points, double alpha, double beta, int with_z)
     matrix_free(yout);
     matrix_free(zout);
     return Points->n_points;
-};
+}

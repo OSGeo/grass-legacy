@@ -29,16 +29,16 @@ int binary_heap_init(int size, binary_heap * bh)
     if (bh->value == NULL) {
 	G_free(bh->key);
 	return 0;
-    };
+    }
     return 1;
-};
+}
 
 void binary_heap_free(binary_heap * bh)
 {
     G_free(bh->key);
     G_free(bh->value);
     return;
-};
+}
 
 void binary_heap_push(double key, int value, binary_heap * bh)
 {
@@ -48,12 +48,12 @@ void binary_heap_push(double key, int value, binary_heap * bh)
 	bh->key[i] = bh->key[i / 2];
 	bh->value[i] = bh->value[i / 2];
 	i /= 2;
-    };
+    }
 
     bh->key[i] = key;
     bh->value[i] = value;
     return;
-};
+}
 
 int binary_heap_extract_max(binary_heap * bh, int *value)
 {
@@ -93,8 +93,8 @@ int binary_heap_extract_max(binary_heap * bh, int *value)
 	bh->value[greater] = tv;
 
 	i = greater;
-    };
+    }
 
     bh->items--;
     return 1;
-};
+}
