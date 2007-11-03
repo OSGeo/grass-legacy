@@ -1,3 +1,4 @@
+
 /****************************************************************
  * MODULE:     v.path.obstacles
  *
@@ -16,127 +17,122 @@
 #include "rotation_tree.h"
 
 
-void add_rightmost(struct Point* p, struct Point* q)
+void add_rightmost(struct Point *p, struct Point *q)
 {
-	struct Point * right;
-	
+    struct Point *right;
+
+    p->left_brother = NULL;
+    p->right_brother = NULL;
+
+    if (q->rightmost_son == NULL) {
+	q->rightmost_son = p;
+    }
+    else {
+	right = q->rightmost_son;
+
+	right->right_brother = p;
+	p->left_brother = right;
+
+	q->rightmost_son = p;
+    }
+
+    p->father = q;
+
+
+}
+
+void add_leftof(struct Point *p, struct Point *q)
+{
+    struct Point *left;
+
+    if (q->left_brother == NULL) {
 	p->left_brother = NULL;
-	p->right_brother = NULL;
-	
-	if ( q->rightmost_son == NULL )
-	{
-		q->rightmost_son = p;
-	}
-	else
-	{
-		right = q->rightmost_son;
-		
-		right->right_brother = p;
-		p->left_brother = right;
-		
-		q->rightmost_son = p;
-	}
-	
-	p->father = q;
-	
+	q->left_brother = p;
+	p->right_brother = q;
+    }
+    else {
+	left = q->left_brother;
 
+	p->left_brother = left;
+	left->right_brother = p;
+
+	p->right_brother = q;
+	q->left_brother = p;
+    }
+
+
+    p->father = q->father;
 }
 
-void add_leftof(struct Point* p, struct Point* q)
+void remove_point(struct Point *p)
 {
-	struct Point * left;
+    struct Point *f = p->father;
+    struct Point *l = p->left_brother;
+    struct Point *r = p->right_brother;
 
-	if ( q->left_brother == NULL )
-	{
-		p->left_brother = NULL;
-		q->left_brother = p;
-		p->right_brother = q;
-	}
-	else
-	{
-		left = q->left_brother;
-		
-		p->left_brother = left;
-		left->right_brother = p;
-		
-		p->right_brother = q;
-		q->left_brother = p;
-	}
+    if (l != NULL)
+	l->right_brother = r;
+    if (r != NULL)
+	r->left_brother = l;
 
-	
-	p->father = q->father;
+    if (f->rightmost_son == p)
+	f->rightmost_son = NULL;
+
+    p->father = NULL;
+    p->left_brother = NULL;
+    p->right_brother = NULL;
+
 }
 
-void remove_point(struct Point* p)
+struct Point *right_brother(struct Point *p)
 {
-	struct Point * f = p->father;
-	struct Point * l = p->left_brother;
-	struct Point * r = p->right_brother;
-
-	if ( l != NULL )
-		l->right_brother = r;
-	if ( r != NULL )
-		r->left_brother = l;
-	
-	if ( f->rightmost_son == p )
-		f->rightmost_son = NULL;
-		
-	p->father = NULL;
-	p->left_brother = NULL;
-	p->right_brother = NULL;
-
+    return p->right_brother;
 }
 
-struct Point* right_brother(struct Point* p)
+struct Point *left_brother(struct Point *p)
 {
-	return p->right_brother;
+    return p->left_brother;
 }
 
-struct Point* left_brother(struct Point* p)
+struct Point *father(struct Point *p)
 {
-	return p->left_brother;
+    return p->father;
 }
 
-struct Point* father( struct Point* p)
+struct Point *rightmost_son(struct Point *p)
 {
-	return p->father;
+    return p->rightmost_son;
 }
 
-struct Point* rightmost_son( struct Point * p )
+struct Line *segment1(struct Point *p)
 {
-	return p->rightmost_son;
+    return p->line1;
 }
 
-struct Line * segment1( struct Point * p )
+
+struct Line *segment2(struct Point *p)
 {
-	return p->line1;
+    return p->line2;
 }
 
-
-struct Line * segment2( struct Point * p )
+struct Point *other1(struct Point *p)
 {
-	return p->line2;
+    if (p->line1 == NULL)
+	return NULL;
+
+    if (p->line1->p1 == p)
+	return p->line1->p2;
+    else
+	return p->line1->p1;
 }
 
-struct Point * other1( struct Point * p )
-{	
-	if ( p->line1 == NULL)
-		return NULL;
+struct Point *other2(struct Point *p)
+{
+    if (p->line2 == NULL)
+	return NULL;
 
-	if ( p->line1->p1 == p )
-		return p->line1->p2;
-	else
-		return p->line1->p1;
+    if (p->line2->p1 == p)
+	return p->line2->p2;
+    else
+	return p->line2->p1;
 }
-
-struct Point * other2( struct Point * p )
-{	
-	if( p->line2 == NULL )
-		return NULL;
-
-	if ( p->line2->p1 == p )
-		return p->line2->p2;
-	else
-		return p->line2->p1;
-}
-
