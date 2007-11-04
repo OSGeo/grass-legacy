@@ -3112,7 +3112,7 @@ class DecDialog(wx.Dialog):
         """
 
         # display properties dialog (modal mode)
-        menuform.GUI().ParseCommand(self.ovlcmd, gmpath,
+        menuform.GUI().ParseCommand([self.ovlcmd], gmpath,
                                     completed=(self.parent.GetOptData, self.ovltype, self.params),
                                     parentframe=self, modal=True)
 
