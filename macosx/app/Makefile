@@ -20,6 +20,10 @@ OBJS = Info.plist GRASS.scpt grass.sh main.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj)) 
 
+# if building on Leopard with TclTk 8.5, set this version to match
+ifndef TCLTKVER
+TCLTKVER = 8.4
+endif
 # ugly hack - assume tcl and tk in same prefix, and same as TCLTKLIBPATH minus 'lib'
 ifndef TCLTKPREFIX
 TCLTKPREFIX = `echo "${TCLTKLIBPATH}" | sed -e "s,-L,," -e "s,/lib *$$,,"`
@@ -50,13 +54,13 @@ macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh 
 	@# TclTk embedding:
 ifdef OPENGL_X11
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh8.4 ${APPDIR}/MacOS/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish8.4 ${APPDIR}/MacOS/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh${TCLTKVER} ${APPDIR}/MacOS/bin
+	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish${TCLTKVER} ${APPDIR}/MacOS/bin
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl8.4.dylib ${APPDIR}/MacOS/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk8.4.dylib ${APPDIR}/MacOS/lib
-	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl8.4 | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
-	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk8.4 | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
+	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl${TCLTKVER} | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
+	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk${TCLTKVER} | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/include
 	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tcl.h ${APPDIR}/MacOS/include
 	-${INSTALL_DATA} ${TCLTKPREFIX}/include/tclDecls.h ${APPDIR}/MacOS/include
@@ -87,7 +91,7 @@ $(OBJDIR)/GRASS.scpt: GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
 	$(MAKE_DIR_CMD) $(OBJDIR)
-	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," grass.sh.in > $(OBJDIR)/grass.sh
+	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," -e "s,@TCLTKVER@,$(@TCLTKVER@)," grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
