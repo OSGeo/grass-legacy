@@ -755,11 +755,11 @@ int main (int argc, char *argv[])
 		  G_short_history (cellout,"raster", &hist);
 		  /* TODO: next lines need to be verified! */
 		  sprintf (hist.edhist[0], "tension=%f, smoothing=%f", fi, rsm);
-		  sprintf (hist.edhist[1], "dnorm=%f, dmin=%f, wmult=%f, zmult=%f", dnorm, dmin, wmult, zmult);
+		  sprintf (hist.edhist[1], "dnorm=%f, dmin=%f, wmult=%f, zmult=%f", dnorm, atof(parm.dmin1->answer), wmult, zmult);
 		  sprintf (hist.edhist[2], "segmax=%d, npmin=%d, rmsdevi=%f", KMAX, npmin, sqrt (ertot / KMAX2));
-		  sprintf (hist.edhist[3], "zmin_data=%f, zmax_data=%f", zmin, zmax);
-		  sprintf (hist.edhist[4], "zmin_int=%f, zmax_int=%f", zminac, zmaxac);
-		  hist.edlinecnt = 6;
+		  sprintf (hist.edhist[3], "wmin_data=%f, wmax_data=%f", wmin, wmax);
+		  /* ? sprintf (hist.edhist[4], "wmin_int=%f, wmax_int=%f", wminac, wmaxac); */
+		  hist.edlinecnt = 5;
 
 		  G_command_history(&hist);
 		  G_write_history (cellout, &hist);
