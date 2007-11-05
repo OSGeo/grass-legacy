@@ -33,8 +33,8 @@
 
 int main(int argc, char *argv[])
 {
-    char *rname   = NULL;	/* Reclassed map name */
-    char *rmapset = NULL;	/* Reclassed mapset   */
+    char rname[GNAME_MAX];      /* Reclassed map name */
+    char rmapset[GMAPSET_MAX];  /* Reclassed mapset   */
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
