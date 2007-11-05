@@ -83,24 +83,28 @@ if [ -d "/Applications/Utilities/X11.app" ] ; then
 fi
 
 # xterm - make sure X11 is in PATH
-pathX11=`echo "$PATH" | grep '/usr/X11R6/bin'`
+pathX11=`echo "$PATH" | grep '/usr/X11\(R6\)\?/bin'`
 if [ ! "$pathX11" ] ; then
-	PATH="$PATH:/usr/X11R6/bin"
+	if [ -d "/usr/X11" ] ; then
+		PATH="$PATH:/usr/X11/bin"
+	else
+		PATH="$PATH:/usr/X11R6/bin"
+	fi
 fi
 export PATH
 
 # default to internal X11 Tcl/Tk
 @TCLTK_INTERNAL@if [ ! "$GRASS_TCLSH" ] ; then
-	GRASS_TCLSH="$GISBASE/bin/tclsh8.4"
+	GRASS_TCLSH="$GISBASE/bin/tclsh@TCLTKVER@"
 	export GRASS_TCLSH
-	GRASS_WISH="$GISBASE/bin/wish8.4"
+	GRASS_WISH="$GISBASE/bin/wish@TCLTKVER@"
 	export GRASS_WISH
 	# internal - force osxaqua off
 	unset osxaqua
 	# override TCL_LIBRARY to internal
-	TCL_LIBRARY="$GISBASE/lib/tcl8.4"
+	TCL_LIBRARY="$GISBASE/lib/tcl@TCLTKVER@"
 	export TCL_LIBRARY
-	TK_LIBRARY="$GISBASE/lib/tk8.4"
+	TK_LIBRARY="$GISBASE/lib/tk@TCLTKVER@"
 	export TK_LIBRARY
 @TCLTK_INTERNAL@fi
 
@@ -120,7 +124,7 @@ fi
 if [ ! "$GRASS_GUI" ] ; then
 	GRASS_GUI="tcltk"
 fi
-if [ "$GRASS_GUI" != "tcltk" ] ; then
+if [ "$GRASS_GUI" = "text" ] ; then
 	osascript -e 'tell application "Terminal" to activate'
 fi
 
