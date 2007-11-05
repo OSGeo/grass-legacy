@@ -44,13 +44,13 @@ main (int argc, char *argv[])
     double min_area, snap;
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *where_opt, *min_area_opt;
     struct Option *snap_opt, *type_opt, *outloc_opt, *cnames_opt;
-    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
+    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag, *region_flag;
     struct Flag *over_flag, *extend_flag, *formats_flag, *tolower_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
     struct Key_Value *loc_proj_info = NULL, *loc_proj_units = NULL;
     struct Key_Value *proj_info, *proj_units;
-    struct Cell_head cellhd, loc_wind;
+    struct Cell_head cellhd, loc_wind, cur_wind;
     char   error_msg[8192];
 
     /* Vector */
@@ -101,8 +101,8 @@ main (int argc, char *argv[])
     dsn_opt->gisprompt = "old_file,file,dsn";
     dsn_opt->label = _("OGR datasource name");
     dsn_opt->description = _("Examples:\n"
-			     "\t\tESRI Shapefile: directory containing shapefiles\n"
-			     "\t\tMapInfo File: directory containing mapinfo files");
+	"\t\tESRI Shapefile: directory containing shapefiles\n"
+	"\t\tMapInfo File: directory containing mapinfo files");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = NO;
@@ -114,14 +114,15 @@ main (int argc, char *argv[])
     layer_opt->multiple = YES;
     layer_opt->label = _("OGR layer name. If not given, all available layers are imported");
     layer_opt->description = _("Examples:\n"
-			       "\t\tESRI Shapefile: shapefile name\n"
-			       "\t\tMapInfo File: mapinfo file name");
+	"\t\tESRI Shapefile: shapefile name\n"
+	"\t\tMapInfo File: mapinfo file name");
 
     spat_opt = G_define_option();
     spat_opt->key = "spatial";
     spat_opt->type = TYPE_DOUBLE;
     spat_opt->multiple = YES;
     spat_opt->required = NO;
+    spat_opt->key_desc = "xmin,ymin,xmax,ymax";
     spat_opt->label = _("Import subregion only");
     spat_opt->guisection = _("Subregion");
     spat_opt->description = _("Format: xmin,ymin,xmax,ymax - usually W,S,E,N");
@@ -136,17 +137,18 @@ main (int argc, char *argv[])
     min_area_opt->label = _("Minimum size of area to be imported (square units)");
     min_area_opt->guisection = _("Min-area & snap");
     min_area_opt->description = _("Smaller areas and "
-				  "islands are ignored. Should be greater than snap^2");
+	"islands are ignored. Should be greater than snap^2");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->options = "point,line,boundary,centroid";
     type_opt->answer = "";
     type_opt->description = _("Optionaly change default input type");
-    type_opt->descriptions = _("point;import area centroids as points;"
-			       "line;import area boundaries as lines;"
-			       "boundary;import lines as area boundaries;"
-			       "centroid;import points as centroids");
-    
+    type_opt->descriptions =
+      _("point;import area centroids as points;"
+	"line;import area boundaries as lines;"
+	"boundary;import lines as area boundaries;"
+	"centroid;import points as centroids");
+
     snap_opt = G_define_option();
     snap_opt->key = "snap";
     snap_opt->type = TYPE_DOUBLE;
@@ -167,8 +169,9 @@ main (int argc, char *argv[])
     cnames_opt->type = TYPE_STRING;
     cnames_opt->required = NO;
     cnames_opt->multiple = YES;
-    cnames_opt->description = _("List of column names to be used instead of original names, "
-	                      "first is used for category column");
+    cnames_opt->description =
+	_("List of column names to be used instead of original names, "
+	  "first is used for category column");
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
@@ -194,6 +197,11 @@ main (int argc, char *argv[])
     over_flag = G_define_flag();
     over_flag->key = 'o';
     over_flag->description = _("Override dataset projection (use location's projection)");
+
+    region_flag = G_define_flag();
+    region_flag->key = 'r';
+    region_flag->guisection = _("Subregion");
+    region_flag->description = _("Limit import to the current region");
 
     extend_flag = G_define_flag();
     extend_flag->key = 'e';
@@ -336,6 +344,16 @@ main (int argc, char *argv[])
     /* Get first imported layer to use for extents and projection check */
     Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layers[0] );
 
+    if ( region_flag->answer ) {
+	if ( spat_opt->answer )
+	    G_fatal_error(_("Select either the current region flag or the spatial option, not both"));
+
+	G_get_window (&cur_wind);
+	xmin=cur_wind.west;
+	xmax=cur_wind.east;
+	ymin=cur_wind.south;
+	ymax=cur_wind.north;
+    }
     if ( spat_opt->answer ) {
         /* See as reference: gdal/ogr/ogr_capi_test.c */
 
@@ -351,6 +369,8 @@ main (int argc, char *argv[])
         }
         if ( arg_s_num != 4 )
 	    G_fatal_error ( _("4 parameters required for 'spatial' parameter"));
+    }
+    if ( spat_opt->answer || region_flag->answer) {
 	G_debug( 2, "cut out with boundaries: xmin:%f ymin:%f xmax:%f ymax:%f",xmin,ymin,xmax,ymax);
 
 	/* in theory this could be an irregular polygon */

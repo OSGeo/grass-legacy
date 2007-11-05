@@ -10,9 +10,11 @@ If the <b>layer</b> parameter is not given, all available layers
 are imported.
 <P>
 The optional <b>spatial</b> parameter defines spatial query extents.
-This parameter allows to restrict the region to a spatial subset while
-importing the data. All vector completely or partially falling into
-this rectangle subregion are imported.
+This parameter allows the user to restrict the region to a spatial subset
+while importing the data. All vector features completely or partially
+falling into this rectangle subregion are imported.
+The <b>-r</b> current region flag is identical, but uses the current region
+settings as the spatial bounds (see <em><a href="g.region.html">g.region</a></em>).
 <P>
 Topology cleaning on areas is automatically performed, but may fail in
 special cases (then use <a href="v.clean.html">v.clean</a>).
