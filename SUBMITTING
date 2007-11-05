@@ -9,6 +9,7 @@ care of following rules:
 
 [ see SUBMITTING_SCRIPTS for shell script hints ]
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
+[ see SUBMITTING_DOCS for documentation ]
 
 
 1.  Get and read the GRASS 6 Programmer's Manual here:
@@ -290,43 +291,20 @@ care of following rules:
     See lib/gis/parser.c for details of the function definition.
 
 
-23. Module manual page:
-    Place the documentation in HTML format into 'description.html'.
-    The easiest way to do this is to study an existing HTML page
-    (to get the page style, e.g. vector/v.to.db/description.html).
-    With a few exceptions header and footer are NOT allowed.
-    You can add figures (PNG format), the figure name prefix should be the 
-    module name. See raster/r.terraflow/description.html for an example.
-
-    Note that the parameter information is auto-generated upon
-    compilation. This is done by running module in a virtual session
-    after compilation (see the output of 'make'). To subsequently
-    verify the final HTML page, check the resulting HTML pages which
-    will be stored with the name of the module.
-
-    Examples (please add some) should be coded like this:
-
-    <div class="code"><pre>
-    v.to.db map=soils type=area option=area col=area_size unit=h
-    </pre></div>
- 
-    The online WWW man pages will be updated every Saturday by CVS.
-
-
-24. Add/update, if required the related GUI menus:
+23. Add/update, if required the related GUI menus:
      gui/tcltk/gis.m/gmmenu.tcl
 
 
-25. For consistency, use README rather than README.txt for any README files.
+24. For consistency, use README rather than README.txt for any README files.
 
 
-26. GRASS/Environment variables:
+25. GRASS/Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     lib/init/variables.html
 
 
-27. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+26. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain" diffs (the default
@@ -337,7 +315,7 @@ care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-28. Try to use module names which describe shortly the intended purpose of the module.
+27. Try to use module names which describe shortly the intended purpose of the module.
 
     The first letters for module name should be:
 	d. 	- display commands

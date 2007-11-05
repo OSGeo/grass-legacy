@@ -7,6 +7,7 @@ please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
 [ see SUBMITTING_SCRIPTS for shell script hints ]
+[ see SUBMITTING_DOCS for documentation ]
 
 1.  Use the directory structure to place your program appropriately into
     the source tree

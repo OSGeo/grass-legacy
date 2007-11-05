@@ -9,6 +9,7 @@ please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
+[ see SUBMITTING_DOCS for documentation ]
 
 0.  Instructions for the GRASS script parser can be found in the g.parser 
     module's help page.
