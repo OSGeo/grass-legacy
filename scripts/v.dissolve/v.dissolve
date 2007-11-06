@@ -66,15 +66,15 @@ TMP=$$
 
 cleanup()
 {
- \rm -f "$GIS_OPT_INPUT"_${TMP}
+   g.remove vect="$GIS_OPT_OUTPUT"_${TMP}
 }
 
 # what to do in case of user break:
 exitprocedure()
 {
- echo "User break!"
- cleanup
- exit 1
+   echo "User break!" 1>&2
+   cleanup
+   exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
@@ -100,9 +100,8 @@ else
              column="$GIS_OPT_COLUMN"
    v.extract -d input="$GIS_OPT_OUTPUT"_${TMP} output="$GIS_OPT_OUTPUT" type=area \
              layer="$GIS_OPT_LAYER"
+   cleanup
+
 fi
 
-cleanup
-
-exit 0
-
+exit
