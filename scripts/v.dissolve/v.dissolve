@@ -106,6 +106,8 @@ else
              column="$GIS_OPT_COLUMN"
    v.extract -d input="$GIS_OPT_OUTPUT"_${TMP} output="$GIS_OPT_OUTPUT" type=area \
              layer="$GIS_OPT_LAYER"
+
+   g.remove vect="${GIS_OPT_OUTPUT}_${TMP}" --quiet
 fi
 
 cleanup
