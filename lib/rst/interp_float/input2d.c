@@ -20,8 +20,8 @@
 #include <grass/site.h>
 #include <grass/bitmap.h>
 #include <grass/linkm.h>
-
 #include <grass/interpf.h>
+#include <grass/glocale.h>
 
 struct BM * 
 IL_create_bitmask (struct interp_params *params)
@@ -46,7 +46,7 @@ IL_create_bitmask (struct interp_params *params)
     {
       mapsetm = G_find_cell2 (params->maskmap, "");
       if (!mapsetm)
-        G_fatal_error ("Mask raster map <%s> not found", params->maskmap);
+        G_fatal_error (_("Mask raster map <%s> not found"), params->maskmap);
 
       cellmask = G_allocate_cell_buf ();
       cfmask = G_open_cell_old (params->maskmap, mapsetm);
@@ -69,8 +69,7 @@ IL_create_bitmask (struct interp_params *params)
 	  BM_set (bitmask, j, irev, 1);
       }
     }
-    fprintf (stdout, "bitmap mask created\n");
-    fflush(stdout);
+    G_message (_("Bitmap mask created"));
   }
   else
     bitmask = NULL;
