@@ -1,6 +1,6 @@
 <h2>DESCRIPTION</h2>
 
-<p><em>v.path.obstacles</em> Computes the visibility graph of a vector map containing lines, areas ( boundaries ) and points. The visibility graph is the graph where the nodes are the end point of the lines, boundaries or simply the points. There is an edge between two nodes if they are 'visible'. Two nodes are visibible if there is no segments in between them, i.e. the edge doesn't intersect any line or boundary in the vector map. This is useful to compute the sortest path in a vector map from any two points. To do this, first you need to compute the visibility graph and from it compute the shortest path using v.net.path or d.path.
+<p><em>v.net.visibility</em> Computes the visibility graph of a vector map containing lines, areas ( boundaries ) and points. The visibility graph is the graph where the nodes are the end point of the lines, boundaries or simply the points. There is an edge between two nodes if they are 'visible'. Two nodes are visibible if there is no segments in between them, i.e. the edge doesn't intersect any line or boundary in the vector map. This is useful to compute the sortest path in a vector map from any two points. To do this, first you need to compute the visibility graph and from it compute the shortest path using v.net.path or d.path.
 </p>
 
 <b>IMPORTANT : the algorithm doesn't work well with intersecting lines ( that includes overlapping )</b>
@@ -39,7 +39,7 @@ v.net.visibility input=map vis=vis_map output=new_vis_map coordinate=25556200,66
 <h2>EXAMPLE 1</h2>
 A simple example showing how to use the module
 <div class="code"><pre>
-v.path.obstacles input=lines output=graph <br>
+v.net.visibility input=lines output=graph <br>
 d.vect graph <br>
 d.vect lines col=red <br>
 </pre></div>
@@ -48,7 +48,7 @@ d.vect lines col=red <br>
 An example on how to use <em>v.buffer</em> with the module 
 <div class="code"><pre>
 v.buffer input=lines output=buffered_lines buffer=1
-v.path.obstacles input=buffered_lines output=graph <br>
+v.net.visibility input=buffered_lines output=graph <br>
 d.vect graph <br>
 d.vect lines col=red <br>
 </pre></div>
@@ -57,7 +57,7 @@ d.vect lines col=red <br>
 <h2>EXAMPLE 3</h2>
 An example on how to use the coordinate parameter. This will compute the visibility graph of the vector map lines with the point 2555678,6686343
 <div class="code"><pre>
-v.path.obstacles input=lines output=graph coordinate=2555678,6686343<br>
+v.net.visibility input=lines output=graph coordinate=2555678,6686343<br>
 d.vect graph <br>
 d.vect lines col=red <br>
 </pre></div>
@@ -65,10 +65,10 @@ d.vect lines col=red <br>
 <h2>EXAMPLE 4</h2>
 An example on how to use the coordinate parameter with the vis parameter. Here the vector map graph is computed then a new visibility graph is computed from it with the point 2555678,6686343 extra
 <div class="code"><pre>
-v.path.obstacles input=lines output=graph <br>
+v.net.visibility input=lines output=graph <br>
 d.vect graph <br>
 d.vect lines col=red <br>
-v.path.obstacles input=lines vis=graph output=new_graph coordinate=2555678,6686343<br>
+v.net.visibility input=lines vis=graph output=new_graph coordinate=2555678,6686343<br>
 d.erase
 d.vect new_graph
 d.vect lines col=red
@@ -89,7 +89,7 @@ When two points have the exact same x coordinate and are visible, some wrong edg
 <em><a HREF="v.to.db.html">v.to.db</a></em>
 
 <h2>AUTHOR</h2>
-Maximilian Maldacker
+Maximilian Maldacker<br>
 Mentor : Wolf Bergenheim
 
-<p><i>Last changed: Date: 31/08/2007 </i>
+<p><i>Last changed: $Date$ </i>
