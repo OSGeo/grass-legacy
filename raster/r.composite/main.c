@@ -159,11 +159,11 @@ int main(int argc, char **argv)
 
 		mapset = G_find_cell2(b->name, "");
 		if (mapset == NULL)
-			G_fatal_error("Cell layer [%s] does not exist", b->name);
+			G_fatal_error(_("Raster map <%s> not found"), b->name);
 
 		/* Make sure map is available */
 		if ((b->file = G_open_cell_old(b->name, mapset)) == -1)
-			G_fatal_error("Unable to open cellfile for [%s]", b->name);
+			G_fatal_error(_("Unable to open raster map <%s>"), b->name);
 
 		b->type = G_get_raster_map_type(b->file);
 
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
 
 		/* Reading color lookup table */
 		if (G_read_colors(b->name, mapset, &b->colors) == -1)
-			G_fatal_error("Color file for [%s] not available", b->name);
+			G_fatal_error(_("Color file for <%s> not available"), b->name);
 
 		for (j = 0; j < 3; j++)
 			b->array[j] = (i == j)

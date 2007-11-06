@@ -113,11 +113,11 @@ main (int argc, char *argv[])
             G_fatal_error (_("%s: more than %d files not allowed"), G_program_name(), NFILES);
         mapset = G_find_cell2 (name, "");
         if (!mapset)
-            G_fatal_error (_("%s: [%s] not found"), G_program_name(), name);
+            G_fatal_error (_("Raster map <%s> not found"), name);
         names[nfiles] = name;
         fd[nfiles] = G_open_cell_old (name, mapset);
         if (fd[nfiles] < 0)
-            G_fatal_error (_("%s: Cannot open [%s]"), G_program_name(), name);
+            G_fatal_error (_("Unable to open raster map <%s>"), name);
         G_read_range (name, mapset, &range);
         ncats = range.max - range.min;
 
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
     outfd = G_open_cell_new (output);
 
     if (outfd < 0)
-	G_fatal_error (_("%s: Cannot open [%s]"), G_program_name(), parm.output->answer);
+	G_fatal_error (_("Unable to create raster map <%s>"), parm.output->answer);
 
     sprintf (buf, "Cross of %s", names[0]);
     for (i = 1; i < nfiles-1; i++)
