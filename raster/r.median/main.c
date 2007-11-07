@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
 
     base_mapset = G_find_cell2 (basemap, "");
     if (base_mapset == NULL)
-	G_fatal_error(_("%s: base raster map not found"), basemap);
+	G_fatal_error(_("Base raster map <%s> not found"), basemap);
 
     cover_mapset = G_find_cell2 (covermap, "");
     if (cover_mapset == NULL)
