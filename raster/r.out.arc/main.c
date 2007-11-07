@@ -107,13 +107,11 @@ int main(int argc, char *argv[])
 
     mapset = G_find_cell (parm.map->answer, "");
     if (mapset == NULL)
-	G_fatal_error ("%s: <%s> cellfile not found", 
-                    G_program_name(), parm.map->answer);
+	G_fatal_error (_("Raster map <%s> not found"), parm.map->answer);
 
     fd = G_open_cell_old (parm.map->answer, mapset);
     if (fd < 0)
-	G_fatal_error ("%s: <%s> couldn't open cellfile", 
-                    G_program_name(), parm.map->answer);
+	G_fatal_error (_("Unable to open raster map <%s>"), parm.map->answer);
 
     map_type = G_get_raster_map_type(fd);
     out_type = map_type;
@@ -131,7 +129,7 @@ int main(int argc, char *argv[])
        fp = stdout;
     else
        if(NULL == (fp = fopen(outfile, "w")))
-          G_fatal_error("Not able to open file for [%s]", outfile );
+          G_fatal_error("Unable to open file for [%s]", outfile );
 
     if (!flag.noheader->answer)
     {
