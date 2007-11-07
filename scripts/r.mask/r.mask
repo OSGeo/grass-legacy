@@ -4,8 +4,9 @@
 #
 # MODULE:       r.mask
 # AUTHOR(S):	Michael Barton, Arizona State University
+#               Markus Neteler
 # PURPOSE:	    Facilitates creation of raster MASK using r.reclass
-# COPYRIGHT:	(C) 2005 by the GRASS Development Team
+# COPYRIGHT:	(C) 2005, 2007 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
 #		License (>=v2). Read the file COPYING that comes with GRASS
@@ -32,6 +33,10 @@
 #% answer: *
 #%END
 #%flag
+#% key: i
+#% description: Create inverse MASK from specified 'maskcats' list
+#%END
+#%flag
 #% key: o
 #% description: Overwrite existing MASK
 #%END
@@ -50,6 +55,25 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+# temp file
+TMP="r_mask_$$"
+
+cleanup()
+{
+ \rm -f $TMP
+}
+
+# what to do in case of user break:
+exitprocedure()
+{
+ g.message -e 'User break!'
+ cleanup
+ exit 1
+}
+
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 15
+
 if [ "$GIS_FLAG_R" -eq 1 ]; then
 	if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then
  		g.remove rast=MASK
@@ -59,14 +83,28 @@ if [ "$GIS_FLAG_R" -eq 1 ]; then
 	fi
 else
 
-	g.message "MASK created. All subsequent raster operations" 
-	g.message "will be limited to MASK area"
-	g.message "Removing or renaming raster file named MASK will"
-	g.message "restore raster operations to normal"
-
 	if [ "$GIS_FLAG_O" -eq 1 ]; then
 		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK --o
+		g.message "MASK created. All subsequent raster operations"
 	else 
+		# does map exist in CURRENT mapset?
+		eval `g.findfile element=cell file=MASK mapset=$MAPSET`
+		if [ "$file" ] ; then
+		   g.message -e "MASK already found in current mapset. Delete first or overwrite"
+		   exit 1
+		fi
+
 		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK
+		g.message "MASK created. All subsequent raster operations"
 	fi
+
+        if [ "$GIS_FLAG_I" -eq 1 ]; then
+		g.rename --q rast=MASK,$TMP
+		r.mapcalc "MASK=if(isnull($TMP),1,null())"
+		g.remove --q rast=$TMP
+		g.message "Inverted MASK created. All subsequent raster operations"
+	fi
+        g.message "will be limited to MASK area"
+        g.message "Removing or renaming raster file named MASK will"
+        g.message "restore raster operations to normal"
 fi
