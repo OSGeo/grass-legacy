@@ -31,6 +31,11 @@
 #include "ogr_api.h"
 #include "global.h"
 
+#ifndef MAX
+#  define MIN(a,b)      ((a<b) ? a : b)
+#  define MAX(a,b)      ((a>b) ? a : b)
+#endif
+
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
 
@@ -993,6 +998,30 @@ main (int argc, char *argv[])
     */
 
     Vect_close ( &Map );
+
+
+/* -------------------------------------------------------------------- */
+/*      Extend current window based on dataset.                         */
+/* -------------------------------------------------------------------- */
+    if( extend_flag->answer )
+    {
+	G_get_default_window( &loc_wind );
+
+	loc_wind.north = MAX(loc_wind.north,cellhd.north);
+	loc_wind.south = MIN(loc_wind.south,cellhd.south);
+	loc_wind.west  = MIN(loc_wind.west, cellhd.west);
+	loc_wind.east  = MAX(loc_wind.east, cellhd.east);
+
+	loc_wind.rows = (int) ceil((loc_wind.north - loc_wind.south) 
+					/ loc_wind.ns_res);
+	loc_wind.south = loc_wind.north - loc_wind.rows * loc_wind.ns_res;
+
+	loc_wind.cols = (int) ceil((loc_wind.east - loc_wind.west) 
+					/ loc_wind.ew_res);
+	loc_wind.east = loc_wind.west + loc_wind.cols * loc_wind.ew_res;
+
+	G__put_window(&loc_wind, "../PERMANENT", "DEFAULT_WIND");
+    }
 
     if (with_z && !z_flag->answer )
 	G_warning (_("Input data contains 3D features. Created vector is 2D only, "
