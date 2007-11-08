@@ -23,15 +23,19 @@
 
 #define BUFFSIZE 256
 
-#define METHOD_N         1
-#define METHOD_MIN       2
-#define METHOD_MAX       3
-#define METHOD_RANGE     4
-#define METHOD_SUM       5
-#define METHOD_MEAN      6
-#define METHOD_STDDEV    7
-#define METHOD_VARIANCE  8
-#define METHOD_COEFF_VAR 9
+#define METHOD_N           1
+#define METHOD_MIN         2
+#define METHOD_MAX         3
+#define METHOD_RANGE       4
+#define METHOD_SUM         5
+#define METHOD_MEAN        6
+#define METHOD_STDDEV      7
+#define METHOD_VARIANCE    8
+#define METHOD_COEFF_VAR   9
+#define METHOD_MEDIAN     10
+#define METHOD_PERCENTILE 11
+#define METHOD_SKEWNESS   12
+#define METHOD_TRIMMEAN   13
 
 /* main.c */
 int scan_bounds(FILE*, int, int, int, char*, int);
