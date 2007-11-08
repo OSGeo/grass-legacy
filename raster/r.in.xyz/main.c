@@ -312,7 +312,7 @@ int main(int argc, char *argv[])
 
     /* can't rewind() non-files */
     if(!can_seek && npasses != 1) {
-	G_warning(_("Can only perform a single pass if input is not from a file."));
+	G_warning(_("If input is not from a file it is only possible to perform a single pass."));
 	npasses = 1;
     }
 
