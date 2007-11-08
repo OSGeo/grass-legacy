@@ -6,6 +6,9 @@
  *   Copyright 2006 by M. Hamish Bowman, and The GRASS Development Team
  *   Author: M. Hamish Bowman, University of Otago, Dunedin, New Zealand
  *
+ *   Extended 2007 by Volker Wichmann to support the aggregate functions
+ *   median, percentile, skewness and trimmed mean
+ *
  *   This program is free software licensed under the GPL (>=v2).
  *   Read the COPYING file that comes with GRASS for details.
  *
@@ -22,6 +25,70 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
+struct node {
+    int     next;
+    double  z;
+};
+
+#define	SIZE_INCREMENT 10
+int	num_nodes = 0;
+int	max_nodes = 0;
+struct	node *nodes;
+
+
+int new_node(void)
+{
+    int n = num_nodes++;
+
+    if (num_nodes >= max_nodes ) {
+	max_nodes += SIZE_INCREMENT;
+	nodes = G_realloc(nodes, max_nodes * sizeof(struct node));
+    }
+
+    return n;
+}
+
+
+/* add node to sorted, single linked list 
+ * returns id if head has to be saved to index array, otherwise -1 */
+int add_node(int head, double z)
+{
+    int node_id, last_id, newnode_id, head_id;
+
+    head_id = head;
+    node_id = head_id;
+    last_id = head_id;
+
+    while (node_id != -1 && nodes[node_id].z < z) {
+	last_id = node_id;
+	node_id = nodes[node_id].next;
+    }
+
+    /* end of list, simply append */
+    if (node_id == -1) {
+	newnode_id = new_node();
+	nodes[newnode_id].next = -1;
+	nodes[newnode_id].z = z;
+	nodes[last_id].next = newnode_id;
+	return -1;
+    }
+    else if (node_id == head_id) {    /* pole position, insert as head */
+	newnode_id = new_node();
+	nodes[newnode_id].next = head_id;
+	head_id = newnode_id;
+	nodes[newnode_id].z = z;
+	return (head_id);
+    }
+    else {    /* somewhere in the middle, insert */
+	newnode_id = new_node();
+	nodes[newnode_id].z = z;
+	nodes[newnode_id].next = node_id;
+	nodes[last_id].next = newnode_id;
+	return -1;
+    }
+}
+
+
 
 int main(int argc, char *argv[])
 {
@@ -32,7 +99,7 @@ int main(int argc, char *argv[])
     int    xcol, ycol, zcol, max_col, percent;
     int    do_zfilter;
     int    method = -1;
-    int    bin_n, bin_min, bin_max, bin_sum, bin_sumsq;
+    int    bin_n, bin_min, bin_max, bin_sum, bin_sumsq, bin_index;
     double zrange_min, zrange_max, d_tmp;
     char   *fs; /* field delim */
     off_t  filesize;
@@ -43,7 +110,7 @@ int main(int argc, char *argv[])
     RASTER_MAP_TYPE rtype;
     struct History history;
     char   title[64];
-    void   *n_array, *min_array, *max_array, *sum_array, *sumsq_array;
+    void   *n_array, *min_array, *max_array, *sum_array, *sumsq_array, *index_array;
     void   *raster_row, *ptr;
     struct Cell_head region;
     int    rows, cols; /* scan box size */
@@ -63,11 +130,18 @@ int main(int argc, char *argv[])
     int    n = 0;
     double sum = 0.;
     double sumsq = 0.;
-    double variance;
+    double variance, mean, skew, sumdev;
+    int	   pth = 0;
+    double trim = 0.0;
+
+    int	   j, k;
+    int	   head_id, node_id;
+    int	   r_low, r_up;
 
     struct GModule *module;
     struct Option *input_opt, *output_opt, *delim_opt, *percent_opt, *type_opt;
     struct Option *method_opt, *xcol_opt, *ycol_opt, *zcol_opt, *zrange_opt;
+    struct Option *trim_opt, *pth_opt;
     struct Flag *scan_flag, *shell_style;
 
 
@@ -88,7 +162,7 @@ int main(int argc, char *argv[])
     method_opt->type = TYPE_STRING;
     method_opt->required = NO;
     method_opt->description = _("Statistic to use for raster values");
-    method_opt->options = "n,min,max,range,sum,mean,stddev,variance,coeff_var";
+    method_opt->options = "n,min,max,range,sum,mean,stddev,variance,coeff_var,median,percentile,skewness,trimmean";
     method_opt->answer = "mean";
 
     type_opt = G_define_option();
@@ -139,6 +213,21 @@ int main(int argc, char *argv[])
     percent_opt->answer = "100";
     percent_opt->options = "1-100";
     percent_opt->description = _("Percent of map to keep in memory");
+
+    pth_opt = G_define_option();
+    pth_opt->key = "pth";
+    pth_opt->type = TYPE_INTEGER;
+    pth_opt->required = NO;
+    pth_opt->options = "1-100";
+    pth_opt->description = _("pth percentile of the values");
+
+    trim_opt = G_define_option();
+    trim_opt->key = "trim";
+    trim_opt->type = TYPE_DOUBLE;
+    trim_opt->required = NO;
+    trim_opt->options = "0-50";
+    trim_opt->description =
+	_("Discard <trim> percent of the smallest and <trim> percent of the largest observations");
 
     scan_flag = G_define_flag();
     scan_flag->key = 's';
@@ -191,21 +280,26 @@ int main(int argc, char *argv[])
     }
 
    /* figure out what maps we need in memory */
-    /*  n         n
-        min       min
-        max       max
-        range     min max        max - min
-        sum       sum
-        mean      sum n          sum/n
-        stddev    sum sumsq n    sqrt((sumsq - sum*sum/n)/n)
-        variance  sum sumsq n    (sumsq - sum*sum/n)/n
-        coeff_var sum sumsq n    sqrt((sumsq - sum*sum/n)/n) / (sum/n)
+    /*  n         	n
+	min       	min
+	max       	max
+	range     	min max    	max - min
+	sum       	sum
+	mean      	sum n      	sum/n
+	stddev    	sum sumsq n	sqrt((sumsq - sum*sum/n)/n)
+	variance  	sum sumsq n	(sumsq - sum*sum/n)/n
+	coeff_var 	sum sumsq n	sqrt((sumsq - sum*sum/n)/n) / (sum/n)
+	median	  	n		array index to linked list
+	percentile	n		array index to linked list
+	skewness  	n		array index to linked list
+	trimmean  	n		array index to linked list
     */
     bin_n   = FALSE;
     bin_min = FALSE;
     bin_max = FALSE;
     bin_sum = FALSE;
     bin_sumsq = FALSE;
+    bin_index = FALSE;
 
     if( strcmp(method_opt->answer, "n") == 0 ) {
 	method = METHOD_N;
@@ -251,6 +345,32 @@ int main(int argc, char *argv[])
 	bin_sumsq = TRUE;
 	bin_n = TRUE;
     }
+    if( strcmp(method_opt->answer, "median") == 0 ) {
+	method = METHOD_MEDIAN;
+	bin_index  = TRUE;
+    }
+    if( strcmp(method_opt->answer, "percentile") == 0 )	{
+	if (pth_opt->answer != NULL)
+	    pth = atoi(pth_opt->answer);
+	else
+	    G_fatal_error(
+		_("Unable to calculate percentile without the pth option specified!"));
+	method = METHOD_PERCENTILE;
+	bin_index  = TRUE;
+    }
+    if( strcmp(method_opt->answer, "skewness") == 0 ) {
+	method = METHOD_SKEWNESS;
+	bin_index  = TRUE;
+    }
+    if( strcmp(method_opt->answer, "trimmean") == 0 ) {
+	if (trim_opt->answer != NULL)
+	    trim = atof(trim_opt->answer) / 100.0;
+	else
+	    G_fatal_error(
+		_("Unable to calculate trimmed mean without the trim option specified!"));
+	method = METHOD_TRIMMEAN;
+	bin_index  = TRUE;
+    }
 
     if(strcmp("CELL", type_opt->answer) == 0)
 	rtype = CELL_TYPE;
@@ -286,6 +406,8 @@ int main(int argc, char *argv[])
 	    sum_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	if(bin_sumsq)
 	    sumsq_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
+	if(bin_index)
+	    index_array = G_calloc(rows*(cols+1), G_raster_size(CELL_TYPE));
 
 	/* and then free it again */
 	if(bin_n) G_free(n_array);
@@ -293,6 +415,7 @@ int main(int argc, char *argv[])
 	if(bin_max) G_free(max_array);
 	if(bin_sum) G_free(sum_array);
 	if(bin_sumsq) G_free(sumsq_array);
+	if(bin_index) G_free(index_array);
 	/** end memory test **/
     }
 
@@ -401,7 +524,11 @@ int main(int argc, char *argv[])
 	    sumsq_array = G_calloc(rows*(cols+1), G_raster_size(rtype));
 	    blank_array(sumsq_array, rows, cols, rtype, 0);
 	}
-
+	if(bin_index) {
+	    G_debug(2, "allocating index_array");
+	    index_array = G_calloc(rows*(cols+1), G_raster_size(CELL_TYPE));
+	    blank_array(index_array, rows, cols, CELL_TYPE, -1); /* fill with NULLs */
+	}
 
 	line = 0;
 	count = 0;
@@ -497,8 +624,28 @@ int main(int argc, char *argv[])
 		update_sum(sum_array, cols, arr_row, arr_col, rtype, z);
 	    if(bin_sumsq)
 		update_sumsq(sumsq_array, cols, arr_row, arr_col, rtype, z);
-
+	    if(bin_index)
+	    {				
+		ptr = index_array;
+    		ptr = G_incr_void_ptr(ptr, ((arr_row*cols)+arr_col)*G_raster_size(CELL_TYPE));
+			
+		if( G_is_null_value(ptr, CELL_TYPE) )  /* first node */
+		{
+		    head_id = new_node();
+		    nodes[head_id].next = -1;
+		    nodes[head_id].z = z;
+		    G_set_raster_value_c(ptr, head_id, CELL_TYPE);  /* store index to head */
+		}
+		else  /* head is already there */
+		{
+		    head_id = G_get_raster_value_c(ptr, CELL_TYPE);  /* get index to head */
+		    head_id = add_node(head_id, z);
+		    if (head_id != -1)
+		        G_set_raster_value_c(ptr, head_id, CELL_TYPE);  /* store index to head */
+		}
+	    }
 	} /* while !EOF */
+
 	G_debug(2, "pass %d finished, %d coordinates in box", pass, count);
 	count_total += count;
 
@@ -587,6 +734,205 @@ int main(int argc, char *argv[])
 		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
 		}
 		break;
+	    case METHOD_MEDIAN:   	/* median, if only one point in cell we will use that */
+		ptr = raster_row;
+		for(col=0; col<cols; col++) {
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    if( G_is_null_value(index_array + n_offset, CELL_TYPE) )	/* no points in cell */
+			G_set_null_value(ptr, 1, rtype);
+		    else							/* one or more points in cell */
+		    {
+			head_id = G_get_raster_value_c(index_array + n_offset, CELL_TYPE);
+			node_id = head_id;
+	
+			n = 0;
+
+			while (node_id != -1)					/* count number of points in cell */
+			{
+			    n++;
+			    node_id = nodes[node_id].next;
+			}
+
+			if( n == 1 )						/* only one point, use that */
+			    G_set_raster_value_d(ptr, nodes[head_id].z, rtype);
+			else if( n%2 != 0 )					/* odd number of points: median_i = (n + 1) / 2 */
+			{
+			    n = (n + 1) / 2;
+			    node_id = head_id;
+			    for(j=1; j<n; j++)					/* get "median element" */
+				node_id = nodes[node_id].next;
+
+			    G_set_raster_value_d(ptr, nodes[node_id].z, rtype);
+			}
+			else							/* even number of points: median = (val_below + val_above) / 2 */
+			{
+			    z = (n + 1) / 2.0;
+			    n = floor(z);
+			    node_id = head_id;
+			    for(j=1; j<n; j++)					/* get element "below" */
+				node_id = nodes[node_id].next;
+
+			    z = (nodes[node_id].z + nodes[nodes[node_id].next].z) / 2;
+			    G_set_raster_value_d(ptr, z, rtype);
+			}
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+	    case METHOD_PERCENTILE:  	/* rank = (pth*(n+1))/100; interpolate linearly */
+		ptr = raster_row;
+		for(col=0; col<cols; col++) {
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    if( G_is_null_value(index_array + n_offset, CELL_TYPE) )	/* no points in cell */
+			G_set_null_value(ptr, 1, rtype);
+		    else										
+		    {
+			head_id = G_get_raster_value_c(index_array + n_offset, CELL_TYPE);
+			node_id = head_id;
+			n = 0;
+
+			while (node_id != -1)					/* count number of points in cell */
+			{
+			    n++;
+			    node_id = nodes[node_id].next;
+			}
+
+			z = (pth * (n+1))/100.0;
+			r_low = floor(z);					/* lower rank */
+			if (r_low < 1)
+			    r_low = 1;
+			else if (r_low > n)
+			    r_low = n;
+
+			r_up = ceil(z);						/* upper rank */
+			if (r_up > n)
+			    r_up = n;
+
+			node_id = head_id;
+			for (j=1; j<r_low; j++)					/* search lower value */
+			    node_id = nodes[node_id].next;
+
+			z = nodes[node_id].z;					/* save lower value */
+			node_id = head_id;
+			for (j=1; j<r_up; j++)					/* search upper value */
+			    node_id = nodes[node_id].next;
+
+			z = (z + nodes[node_id].z) / 2;
+			G_set_raster_value_d(ptr, z, rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));
+		}
+		break;
+	    case METHOD_SKEWNESS:  	/* skewness = sum(xi-mean)^3/(N-1)*s^3 */
+		ptr = raster_row;
+		for(col=0; col<cols; col++) {
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    if( G_is_null_value(index_array + n_offset, CELL_TYPE) )	/* no points in cell */
+			G_set_null_value(ptr, 1, rtype);
+		    else										
+		    {
+			head_id = G_get_raster_value_c(index_array + n_offset, CELL_TYPE);
+			node_id = head_id;
+
+			n = 0;		/* count */
+			sum = 0.0;	/* sum */
+			sumsq = 0.0;	/* sum of squares */
+			sumdev = 0.0;	/* sum of (xi - mean)^3 */
+			skew = 0.0;	/* skewness */
+
+			while (node_id != -1)		
+			{
+			    z = nodes[node_id].z;
+			    n++;
+			    sum += z;
+			    sumsq += (z*z);
+			    node_id = nodes[node_id].next;
+			}
+
+			if (n > 1)	/* if n == 1, skew is "0.0" */
+			{
+			    mean = sum / n;
+			    node_id = head_id;
+			    while (node_id != -1)
+			    {
+				z = nodes[node_id].z;
+				sumdev += pow((z-mean),3);
+				node_id = nodes[node_id].next;
+			    }
+
+			    variance = (sumsq - sum*sum/n)/n;
+			    if( variance < GRASS_EPSILON )
+			    	skew = 0.0;
+			    else
+				skew = sumdev / ((n-1)*pow(sqrt(variance),3));
+			}
+			G_set_raster_value_d(ptr, skew, rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));	
+		}
+		break;
+	    case METHOD_TRIMMEAN:
+		ptr = raster_row;
+		for(col=0; col<cols; col++) {
+		    n_offset = (row*cols + col) * G_raster_size(CELL_TYPE);
+		    if( G_is_null_value(index_array + n_offset, CELL_TYPE) )	/* no points in cell */
+			G_set_null_value(ptr, 1, rtype);
+		    else										
+		    {
+			head_id = G_get_raster_value_c(index_array + n_offset, CELL_TYPE);
+							
+			node_id = head_id;
+			n = 0;
+			while (node_id != -1)					/* count number of points in cell */
+			{
+			    n++;
+			    node_id = nodes[node_id].next;
+			}
+
+			if (1 == n)
+			    mean = nodes[head_id].z;
+			else
+			{
+			    k = floor(trim * n + 0.5);				/* number of ranks to discard on each tail */
+						
+			    if (k > 0 && (n - 2*k) > 0)				/* enough elements to discard */
+			    {
+				node_id = head_id;
+				for (j=0; j<k; j++)				/* move to first rank to consider */
+				    node_id = nodes[node_id].next;
+
+				j = k + 1;
+				k = n - k;
+				n = 0;
+				sum = 0.0;
+			
+				while (j <= k)					/* get values in interval */
+				{
+				    n++;
+				    sum += nodes[node_id].z;
+				    node_id = nodes[node_id].next;
+				    j++;
+				}
+			    }
+			    else
+			    {
+				node_id = head_id;
+				n = 0;
+				sum = 0.0;
+				while (node_id != -1)		
+				{
+				    n++;
+				    sum += nodes[node_id].z;
+				    node_id = nodes[node_id].next;
+				}
+			    }
+			    mean = sum / n;
+			}
+			G_set_raster_value_d(ptr, mean, rtype);
+		    }
+		    ptr = G_incr_void_ptr(ptr, G_raster_size(rtype));	
+		}
+		break;
 
 	    default:
 		G_fatal_error("?");
@@ -605,6 +951,14 @@ int main(int argc, char *argv[])
 	if(bin_max) G_free(max_array);
 	if(bin_sum) G_free(sum_array);
 	if(bin_sumsq) G_free(sumsq_array);
+	if(bin_index)
+	{
+	    G_free(index_array);
+	    G_free(nodes);
+	    num_nodes = 0;
+	    max_nodes = 0;
+	    nodes = NULL;
+	}
 
     } /* passes loop */
 
@@ -652,6 +1006,8 @@ int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_styl
 
     line = 0;
     first = TRUE;
+
+    G_verbose_message(_("Scanning data ..."));
 
     while( 0 != G_getl2(buff, BUFFSIZE-1, fp) ) {
 	line++;

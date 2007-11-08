@@ -18,7 +18,12 @@ Available statistics for populating the raster are:<BR>
 <tr><td><em>mean</em></td>     <td>average value of points in cell</td></tr>
 <tr><td><em>stddev</em></td>   <td>standard deviation of points in cell</td></tr>
 <tr><td><em>variance</em></td> <td>variance of points in cell</td></tr>
-<tr><td><em>coeff_var</em>&nbsp;</td><td>coefficient of variance of points in cell</td></tr>
+<tr><td><em>coeff_var</em></td><td>coefficient of variance of points in cell</td></tr>
+<tr><td><em>median</em></td>   <td>median value of points in cell</td></tr>
+<tr valign="baseline"><td><em>percentile</em>&nbsp;</td>
+   <td>p<sup><i>th</i></sup> percentile of points in cell</td></tr>
+<tr><td><em>skewness</em></td> <td>skewness of points in cell</td></tr>
+<tr><td><em>trimmean</em></td> <td>trimmed mean of points in cell</td></tr>
 </table><BR>
 
 <li><em>Variance</em> and derivatives use the biased estimator (n). [subject to change]
@@ -40,9 +45,13 @@ In addition using a less precise map format (<tt>CELL</tt> [integer] or
 <tt>FCELL</tt> [floating point]) will use less memory than a <tt>DCELL</tt>
 [double precision floating point] <b>output</b> map. Methods such as <em>n,
 min, max, sum</em> will also use less memory, while <em>stddev, variance,
-and coeff_var</em> will use more. The default map <b>type</b>=<tt>FCELL</tt>
-is intended as compromise between preserving data precision and limiting
-system resource consumption.
+and coeff_var</em> will use more.
+
+The aggregate functions <em>median, percentile, skewness</em> and
+<em>trimmed mean</em> will also use more memory.
+<P>
+The default map <b>type</b>=<tt>FCELL</tt> is intended as compromise between
+preserving data precision and limiting system resource consumption.
 If reading data from a <tt>stdin</tt> stream, the program can only run using
 a single pass.
 
@@ -164,10 +173,6 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 <H2>TODO</H2>
 
 <ul>
-<li> Support for advanced statistics (as from <em>r.univar</em>).
-     Especially useful for dealing with outliers would be median and
-     5-10% trimmed means.
-
 <li> Support for multiple map output from a single run.<BR>
      <tt>method=string[,string,...] output=name[,name,...]</tt>
 </ul>
@@ -188,6 +193,7 @@ Ridge, NC, LIDAR dataset</a>, and process into a clean DEM:
 <li> "<tt>nan</tt>" can leak into <em>coeff_var</em> maps.
   <BR>Cause unknown. Possible work-around: "<tt>r.null setnull=nan</tt>"
 <!-- HB: "possible" when someone fixes r.null to allow it ;) -->
+<!-- Another method:  r.mapcalc 'No_nan = if(map == map, map, null() )' -->
 </ul>
 
 If you encounter any problems (or solutions!) please contact the GRASS
@@ -196,27 +202,32 @@ Development Team.
 <H2>SEE ALSO</H2>
 
 <i>
-<a href="g.region.html">g.region</a>,
-<a href="m.proj.html">m.proj</a>,
-<a href="r.fillnulls.html">r.fillnulls</a>,
-<a href="r.in.ascii.html">r.in.ascii</a>,
-<a href="r.mapcalc.html">r.mapcalc</a>,
-<a href="r.neighbors.html">r.neighbors</a>,
-<a href="r.to.rast3.html">r.to.rast3</a>,
-<a href="r.to.vect.html">r.to.vect</a>,
-<a href="r.univar.html">r.univar</a>,
-<a href="r.univar2.html">r.univar2</a>,
-<a href="v.in.ascii.html">v.in.ascii</a>,
+<a href="g.region.html">g.region</a><BR>
+<a href="m.proj.html">m.proj</a><BR>
+<a href="r.fillnulls.html">r.fillnulls</a><BR>
+<a href="r.in.ascii.html">r.in.ascii</a><BR>
+<a href="r.mapcalc.html">r.mapcalc</a><BR>
+<a href="r.neighbors.html">r.neighbors</a><BR>
+<a href="r.out.xyz.html">r.out.xyz</a><BR>
+<a href="r.to.rast3.html">r.to.rast3</a><BR>
+<a href="r.to.vect.html">r.to.vect</a><BR>
+<a href="r.univar.html">r.univar</a><BR>
+<a href="r.univar.sh.html">r.univar.sh</a><BR>
+<a href="v.in.ascii.html">v.in.ascii</a><BR>
+<a href="v.out.ascii.html">v.out.ascii</a><BR>
 <a href="v.surf.rst.html">v.surf.rst</a>
 </i>
 
 
-<H2>AUTHOR</H2>
+<H2>AUTHORS</H2>
 
 Hamish Bowman<BR> <i>
 Department of Marine Science<BR>
 University of Otago<BR>
 New Zealand</i><BR>
+<BR>
+Extended by Volker Wichmann to support the aggregate functions
+<i>median, percentile, skewness</i> and <i>trimmed mean</i>.
 
 <BR>
 <p>
