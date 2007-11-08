@@ -233,7 +233,7 @@ msgid ""
 "ERROR: Required parameter <%s> not set:\n"
 "    (%s).\n"
 msgstr ""
-"\""
+"\n"
 "CHYBA: Po¾adovaný parametr <%s> nebyl nastaven:\n"
 "    (%s).\n"
 
