@@ -288,6 +288,11 @@ proc GmTree::add { type } {
     global new_root_node
     global mon
 
+    # Create new tree, if none exists
+    if { [array size GmTree::tree] < 1 } {
+	Gm::startmon
+    }
+
     if { [catch {match string {} $new_root_node}] } {
     set new_root_node root
     }
