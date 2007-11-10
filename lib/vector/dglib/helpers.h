@@ -33,5 +33,4 @@ extern int             dgl_edge_prioritizer_del(dglGraph_s * pG, dglInt32_t nId,
 extern int             dgl_edge_prioritizer_add(dglGraph_s * pG, dglInt32_t nId, dglInt32_t nPriId);
 extern void *          dgl_reduce_edgeset(void * pvSet, int * pc, dglInt32_t nKey);
 
-__END_DECLS
 #endif

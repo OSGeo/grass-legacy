@@ -22,8 +22,6 @@
 #ifndef _DGL_HEAP_H_
 #define _DGL_HEAP_H_
 
-__BEGIN_DECLS
-
 typedef union _dglHeapData
 {
 	void * 			pv;
@@ -87,5 +85,4 @@ extern int	dglHeapExtractMin(
 							dglHeapNode_s *	pnoderet
 							);
 
-__END_DECLS
 #endif

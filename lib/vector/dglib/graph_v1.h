@@ -27,8 +27,6 @@
 #include <time.h>
 #endif
 
-__BEGIN_DECLS
-
 /*
  * Node macros - addresses in a flat node
  */
@@ -268,5 +266,4 @@ dglInt32_t * dgl_edge_t_next_V1		( dglEdgeTraverser_s * pT );
 
 
 
-__END_DECLS
 #endif
