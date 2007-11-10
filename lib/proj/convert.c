@@ -169,7 +169,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 	char *paramkey, *paramvalue;
 	paramkey = strtok(params, "=");
 	paramvalue = params + strlen(paramkey) + 1;
-	if (strcasecmp(paramkey, "towgs84") == 0)
+	if (G_strcasecmp(paramkey, "towgs84") == 0)
 	    G_asprintf(&towgs84, ",TOWGS84[%s]", paramvalue);
 	else
 	    towgs84 = "";
@@ -194,7 +194,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 	osrunit = OSRGetAttrValue(hSRS, "UNIT", 0);
 	osrunfact = OSRGetAttrValue(hSRS, "UNIT", 1);
 
-	if ((unfact == NULL) || (strcasecmp(osrunit, "unknown") != 0))
+	if ((unfact == NULL) || (G_strcasecmp(osrunit, "unknown") != 0))
 	    end = "";
 	else {
 	    double unfactf = atof(unfact);
@@ -416,7 +416,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
             list = listhead = read_datum_table();
  
             while (list != NULL) {
-    	        if (strcasecmp(pszDatumName, list->longname) == 0) {
+    	        if (G_strcasecmp(pszDatumName, list->longname) == 0) {
     	            datum = G_store(list->name);
 	            break;
 	        }
@@ -608,7 +608,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         dfToMeters = OSRGetLinearUnits( hSRS, &pszUnitsName );
         
         /* Workaround for the most obvious case when unit name is unknown */
-        if( (strcasecmp(pszUnitsName, "unknown") == 0) && (dfToMeters == 1.) )
+        if( (G_strcasecmp(pszUnitsName, "unknown") == 0) && (dfToMeters == 1.) )
 	    G_asprintf( &pszUnitsName, "meter" );
        
         G_set_key_value( "unit", pszUnitsName, *projunits );
@@ -618,13 +618,13 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         pszUnitsPlural = G_malloc( strlen(pszUnitsName) + 3 );
         strcpy(pszUnitsPlural, pszUnitsName);
         pszStringEnd = pszUnitsPlural + strlen(pszUnitsPlural) - 4;
-        if( strcasecmp(pszStringEnd, "foot") == 0 )
+        if( G_strcasecmp(pszStringEnd, "foot") == 0 )
         {
             /* Special case for foot - change two o's to e's */
             pszStringEnd[1] = 'e';
             pszStringEnd[2] = 'e';
         }
-        else if( strcasecmp(pszStringEnd, "inch") == 0 )
+        else if( G_strcasecmp(pszStringEnd, "inch") == 0 )
         {
             /* Special case for inch - add es */
             pszStringEnd[4] = 'e';
