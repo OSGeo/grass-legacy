@@ -136,6 +136,7 @@ FULLINDEX=full_index.html
 
 #copy over CSS:
 cp -f grassdocs.css $HTMLDIR/
+mkdir -p $HTMLDIR/nviz/
 cp -f grassdocs.css $HTMLDIR/nviz/
 chmod a+r $HTMLDIR/grassdocs.css $HTMLDIR/nviz/grassdocs.css
 #copy over GRASS logo:
