@@ -29,7 +29,12 @@ LIB_OBJS = \
 	Raster.o	\
 	Respond.o	\
 	Color.o		\
-	write.o
+	read.o		\
+	read_bmp.o	\
+	read_ppm.o	\
+	write.o		\
+	write_bmp.o	\
+	write_ppm.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
