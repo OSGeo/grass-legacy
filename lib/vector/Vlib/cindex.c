@@ -340,9 +340,10 @@ void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int ca
 {
       int type, line;
       struct Cat_index *ci;
+      int field_index, idx;
 
       Vect_reset_list ( lines );
-      int field_index = Vect_cidx_get_field_index ( Map, layer );
+      field_index = Vect_cidx_get_field_index ( Map, layer );
 
       if (field_index == -1) {
 	  /* not found */
@@ -350,7 +351,7 @@ void Vect_cidx_find_all ( struct Map_info *Map, int layer, int type_mask, int ca
       }
       ci = &(Map->plus.cidx[field_index]);
 
-      int idx = Vect_cidx_find_next ( Map, field_index, cat,
+      idx = Vect_cidx_find_next ( Map, field_index, cat,
                                   type_mask, 0, &type, &line );
 
       if ( idx == -1 ) 
