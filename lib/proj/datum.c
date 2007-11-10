@@ -44,7 +44,7 @@ int GPJ_get_datum_by_name(const char *name, struct gpj_datum *dstruct)
     list = listhead = read_datum_table();
 
     while (list != NULL) {
-	if (strcasecmp(name, list->name) == 0) {
+	if (G_strcasecmp(name, list->name) == 0) {
 	    dstruct->name = G_store(list->name);
 	    dstruct->longname = G_store(list->longname);
 	    dstruct->ellps = G_store(list->ellps);
@@ -426,7 +426,7 @@ struct gpj_datum_transform_list *GPJ_get_datum_transform_by_name(const char
 	    continue;
 	}
 
-	if (strcasecmp(inputname, name) == 0) {
+	if (G_strcasecmp(inputname, name) == 0) {
 	    /* If the datum name in this line matches the one we are 
 	     * looking for, add an entry to the linked list */
 	    if (current == NULL)
