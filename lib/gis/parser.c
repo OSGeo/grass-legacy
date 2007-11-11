@@ -1921,14 +1921,14 @@ static void G_gui_tcltk (void)
 
 #ifdef __MINGW32__
 	if (getenv("GRASS_DEBUG_GUI"))
-		fp = popen("tee gui_dump.tcl | %GRASS_WISH%", "w");
+		fp = G_popen("tee gui_dump.tcl | %GRASS_WISH%", "w");
 	else
-		fp = popen("%GRASS_WISH%", "w");
+		fp = G_popen("%GRASS_WISH%", "w");
 #else
 	if (getenv("GRASS_DEBUG_GUI"))
-		fp = popen("tee gui_dump.tcl | $GRASS_WISH", "w");
+		fp = G_popen("tee gui_dump.tcl | $GRASS_WISH", "w");
 	else
-		fp = popen("$GRASS_WISH", "w");
+		fp = G_popen("$GRASS_WISH", "w");
 #endif
 
 	if (!fp)
@@ -1938,7 +1938,7 @@ static void G_gui_tcltk (void)
 
 	generate_tcl(fp);
 
-	pclose(fp);
+	G_pclose(fp);
 }
 
 /* Build wxPython gui */
