@@ -134,8 +134,7 @@ main (int argc, char **argv)
 
 	mapset = G_find_cell2(name_h, "");
 	if (mapset == NULL)
-	    G_fatal_error(_("Raster map <%s> not found"),
-				G_program_name(), opt_h->answer);
+	    G_fatal_error(_("Raster map <%s> not found"), opt_h->answer);
 
 	/* Make sure map is available */
 	if ((hue_file = G_open_cell_old(name_h, mapset)) == -1)
