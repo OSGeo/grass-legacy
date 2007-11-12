@@ -1,4 +1,5 @@
 #include <time.h>	/*  For time()	*/
+#include <stdio.h>	/*  For NULL */
 #include <stdlib.h>	/*  For rand() and srand() */
 #include <grass/gis.h>
 
@@ -27,7 +28,7 @@ int G_make_random_colors ( struct Colors *colors , CELL min,CELL max)
     G_init_colors (colors);
     if (min > max) return -1;
 
-    srand(time ((long *)0));
+    srand(time(NULL));
 
     count = MAX_COLORS-DEVIATION + rand() % DEVIATION;
     if (count > max-min+1)

@@ -49,12 +49,14 @@
 
 int G_system (const char *command)
 {
-    int status, pid, w;
-    void (*sigint)()
-#ifdef SIGQUIT
-        , (*sigquit)()
+    int status;
+#ifndef __MINGW32__
+    int pid, w;
 #endif
-            ;
+    RETSIGTYPE (*sigint)();
+#ifdef SIGQUIT
+    RETSIGTYPE (*sigquit)();
+#endif
 
     sigint  = signal (SIGINT,  SIG_IGN);
 #ifdef SIGQUIT
@@ -72,6 +74,7 @@ int G_system (const char *command)
               "/c",
               command,
               NULL );
+    status = 0;
 #else    
     if ( (pid = fork()) == 0)
     {

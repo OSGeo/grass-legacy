@@ -87,7 +87,7 @@ void
 datetime_get_local_time (DateTime *dt)
 
 {
-    long clock;
+    time_t clock;
     struct tm *local;
 
 /* first set dt to absolute full date */
