@@ -39,8 +39,8 @@ int G_gets (char *buf)
   {
 #ifdef SIGTSTP
   	RETSIGTYPE (*sigtstp)();
-#endif
   	int tty;
+#endif
 	char p[128];
 	char *eof;
   
