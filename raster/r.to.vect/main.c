@@ -64,11 +64,12 @@ int main (int argc, char *argv[])
 
     smooth_flg = G_define_flag();
     smooth_flg->key = 's';
-    smooth_flg->description = _("Smooth corners");
+    smooth_flg->description = _("Smooth corners of area features");
 
     value_flg = G_define_flag();
     value_flg->key = 'v';
-    value_flg->description = _("Use raster values as categories instead of unique sequence (CELL only)");
+    value_flg->description =
+	_("Use raster values as categories instead of unique sequence (CELL only)");
     
     z_flg = G_define_flag();
     z_flg->key = 'z';
