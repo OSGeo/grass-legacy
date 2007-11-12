@@ -114,8 +114,7 @@ int main (int argc, char *argv[])
     mapset = G_find_cell(name,"");
 
     if (mapset == NULL)
-	G_fatal_error ( _("%s: <%s> raster map not found"),
-		G_program_name(), name);
+	G_fatal_error ( _("Raster map <%s> not found"), name);
 
     if(coord->answer)  
 	strcpy(coord_str, "-g");

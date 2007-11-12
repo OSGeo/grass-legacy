@@ -167,7 +167,7 @@ do_points = nrows * ncols;
 if (NULL != G_find_file ("cell", "MASK", G_mapset())) {
 	MASK_flag = 1;
 	if ((fd = G_open_cell_old ("MASK", G_mapset())) < 0) {
-		G_fatal_error (_("unable to open MASK"));
+		G_fatal_error (_("Unable to open MASK"));
 	} else {
 		buf = G_allocate_cell_buf ();
 		for (r = 0; r < nrows; r++) {
@@ -357,7 +357,7 @@ int
 do_legal (char *file_name)
 {
 	if (G_legal_filename (file_name) == -1)
-		G_fatal_error(_("map layer [%s] not legal for GRASS"), file_name);
+		G_fatal_error(_("<%s> is an illegal file name"), file_name);
 
     return 0;
 }
@@ -368,7 +368,7 @@ do_exist (char *file_name)
 	char *file_mapset = G_find_cell2 (file_name, "");
 
 	if (file_mapset == NULL)
-		G_fatal_error(_("[%s] map not found"), file_name);
+		G_fatal_error(_("Raster map <%s> not found"), file_name);
 
 	return (file_mapset);
 }

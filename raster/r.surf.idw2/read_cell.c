@@ -17,7 +17,7 @@ int read_cell (char *name)
     mapset = G_find_cell (name,"");
     if (mapset == NULL)
     {
-	G_fatal_error (_("%s: %s - map not found"), G_program_name(), name);
+	G_fatal_error (_("Raster map <%s> not found"), name);
 	exit(EXIT_FAILURE);
     }
 
@@ -33,7 +33,7 @@ int read_cell (char *name)
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
     {
-	G_fatal_error (_("%s: unable to open %s"), G_program_name(), name);
+	G_fatal_error (_("Unable to open raster map <%s>"), name);
 	exit(EXIT_FAILURE);
     }
 
