@@ -26,7 +26,9 @@ int
 db_shutdown_driver  (dbDriver *driver)
 
 {
+#ifndef __MINGW32__
     int pid;
+#endif
     int status;
 
 #ifdef __MINGW32__

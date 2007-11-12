@@ -366,7 +366,7 @@ const char *set_proj_lib(const char *name)
 {
     const char *gisbase = G_gisbase();
     static char *buf = NULL;
-    static int buf_len;
+    static size_t buf_len;
     size_t len = strlen(gisbase) + sizeof(GRIDDIR) + strlen(name) + 1;
 
     if (buf_len < len) {

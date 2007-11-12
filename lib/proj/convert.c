@@ -221,7 +221,7 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     OSRDestroySpatialReference(hSRS);
     G_free(modwkt);
-    G_free(wkt);
+    CPLFree(wkt);
     if (proj4 != proj4mod)
 	G_free(proj4);
     G_free(proj4mod);

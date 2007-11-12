@@ -30,8 +30,8 @@
 
 static int cmp_names(const void *aa, const void *bb)
 {
-   char * const *a = aa;
-   char * const *b = bb;
+   char * const *a = (char * const *) aa;
+   char * const *b = (char * const *) bb;
    
    return strcmp(*a, *b);
 }
