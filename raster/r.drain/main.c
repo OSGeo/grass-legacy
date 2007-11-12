@@ -151,7 +151,7 @@ int main(int argc, char **argv)
     /* get the name of the elevation map layer for filling */
     map_mapset = G_find_cell(map_name, "");
     if (!map_mapset)
-	G_fatal_error(_("Could not access %s layer"), map_name);
+	G_fatal_error(_("Raster map <%s> not found"), map_name);
 
     /*      allocate cell buf for the map layer */
     in_type = G_raster_map_type(map_name, map_mapset);
@@ -197,7 +197,7 @@ int main(int argc, char **argv)
 	    points_row[npoints] = start_row;
 	    points_col[npoints] = start_col;
 	    npoints++;
-	    if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points."));
+	    if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points"));
 	    have_points = 1;
 	}
     }
@@ -211,7 +211,7 @@ int main(int argc, char **argv)
 
 	    search_mapset = G_find_sites(vpointopt->answers[i], "");
 	    if (search_mapset == NULL)
-		G_fatal_error(_("Vector map %s - not found"),
+		G_fatal_error(_("Vector map <%s> not found"),
 			      vpointopt->answers[i]);
 
 	    fp = G_fopen_sites_old(vpointopt->answers[i], search_mapset);
@@ -235,13 +235,13 @@ int main(int argc, char **argv)
 		points_row[npoints] = start_row;
 		points_col[npoints] = start_col;
 		npoints++;
-		if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points."));
+		if(npoints >= MAX_POINTS) G_fatal_error(_("Too many start points"));
 		have_points = 1;
 	    }
 
 	    /* only catches maps out of range until something is found, not after */
 	    if(!have_points) {
-		G_warning(_("Starting vector map <%s> contains no points in the current region."),
+		G_warning(_("Starting vector map <%s> contains no points in the current region"),
 		      vpointopt->answers[i]);
 	    }
 	}

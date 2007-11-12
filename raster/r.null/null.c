@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     name = parms.map->answer;
     mapset = G_find_cell2 (name, "");
     if (mapset == NULL)
-	G_fatal_error ("%s - not found", name);
+	G_fatal_error (_("Raster map <%s> not found"), name);
 
     is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
     if (is_reclass)
@@ -304,12 +304,12 @@ doit (char *name, char *mapset, int change_null, RASTER_MAP_TYPE map_type)
 
     old = G_open_cell_old (name, mapset);
     if (old < 0)
-	G_fatal_error("Can't open %s (old)", name);
+	G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     new = G_open_raster_new(name, map_type);
 
     if (new < 0)
-	G_fatal_error("Can't open %s (new)", name);
+	G_fatal_error(_("Unable to create raster map <%s>"), name);
 
     rast = G_allocate_raster_buf(map_type);
 

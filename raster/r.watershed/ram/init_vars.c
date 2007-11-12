@@ -327,7 +327,7 @@ int
 do_legal (char *file_name)
 {
 	if (G_legal_filename (file_name) == -1)
-		G_fatal_error(_("map layer [%s] not legal for GRASS"), file_name);
+		G_fatal_error(_("<%s> is an illegal file name"), file_name);
 
 	return 0;
 }
@@ -338,7 +338,7 @@ do_exist (char *file_name)
 	char *file_mapset = G_find_cell2 (file_name, "");
 
 	if (file_mapset == NULL)
-		G_fatal_error(_("[%s] map not found."), file_name);
+		G_fatal_error(_("Raster map <%s> not found"), file_name);
 
 	return (file_mapset);
 }
