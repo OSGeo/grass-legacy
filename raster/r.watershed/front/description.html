@@ -215,8 +215,9 @@ memory, additional disk space needs to be freed up for the program to run.
 
 <P>
 Both versions use the A<sup>T</sup> least-cost search algorithm to determine
-the flow of water over the landscape (see SEE ALSO section).  The algorithm
-produces results similar to those obtained when running
+the flow of water over the landscape (see <a href="#seealso">SEE ALSO</a>
+section).
+The algorithm produces results similar to those obtained when running
 <EM><A HREF="r.cost.html">r.cost</A></EM> and
 <EM><A HREF="r.drain.html">r.drain</A></EM> on every cell on the map.
 
@@ -260,8 +261,26 @@ of interest occupy a small percentage of the overall area.
 <P>
 Zero data values will be treated as elevation data (not no_data).
 
+<P>
+To isolate a river network using the output of this module, a number of
+approaches may be considered.
+<OL>
+<LI>Use a resample of the basins catchment raster map as a MASK.<BR>
+  The equivalent vector map method is similar using <em>v.select</em> or
+  <em>v.overlay</em>.
+<LI>Use the <em>r.cost</em> module with a point in the river as a starting
+  point.
+<LI>Use the <em>v.net.iso</em> module with a node in the river as a
+  starting point.
+</OL>
 
-<H2>EXAMPLE</H2>
+
+<P>
+To create <i>river mile</i> segmentation from a vectorized streams map,
+try the <em>v.net.iso</em> or <em>v.lrs.segment</em> modules.
+
+
+<H2>EXAMPLES</H2>
 
 Convert <em>r.watershed</em> streams map output to a vector layer.
 <div class="code"><pre>
@@ -297,7 +316,58 @@ Set a nice color table for the accumulation map:
 <BR>
 
 
+<P>
+Create a more detailed stream map using the accumulation map and convert
+it to a vector output map. The accumulation cut-off, and therefore fractal
+dimension, is arbitrary; in this example we use the map's mean number of
+upstream catchment cells (calculated in the above example by <em>r.univar</em>)
+as the cut-off value.
+<div class="code"><pre>
+  r.watershed elev=elevation.dem accum=rwater.accum
+
+  r.mapcalc 'MASK = if(!isnull(elevation.dem))'
+  r.mapcalc "rwater.course = \
+   if( abs(rwater.accum) > $mean_of_abs, \
+       abs(rwater.accum), \
+       null() )"
+  r.colors -g rwater.course col=bcyr
+  g.remove MASK
+
+  # <i>Thinning is required before converting raster lines to vector</i>
+  r.thin in=rwater.course out=rwater.course.Thin
+  r.colors -gn rwater.course.Thin color=grey
+  r.to.vect in=rwater.course.Thin out=rwater_course feature=line
+  v.db.dropcol map=rwater_course column=label
+</pre></div>
+<!-- can't set line attribute to catchment it is in as v.what.rast and 
+  v.distance only work for point features. Could create endpoint node
+  points map and upload to that ?? -->
+<!-- Note value column containing accumulation cells in output vector
+  may not necessarily reference the downstream end of the line! drop it? -->
+<BR>
+
+<P>
+Create watershed basins map and convert to a vector polygon map
+<div class="code"><pre>
+  r.watershed elev=elevation.dem basin=rwater.basin thresh=15000
+  r.to.vect -s in=rwater.basin out=rwater_basins feature=area
+  v.db.dropcol map=rwater_basins column=label
+  v.db.renamecol map=rwater_basins column=value,catchment
+</pre></div>
+<BR>
+
+<P>
+Display output in a nice way
+<div class="code"><pre>
+  r.shaded.relief map=elevation.dem
+  d.shadedmap rel=elevation.dem.shade drape=rwater.basin bright=40
+  d.vect rwater_course color=orange
+</pre></div>
+<BR>
+
+<a name="seealso"></a>
 <H2>SEE ALSO</H2>
+
 
 Ehlschlaeger, C. (1989). <i>Using the A<sup>T</sup> Search Algorithm
 to Develop Hydrologic Models from Digital Elevation Data</i>,
