@@ -78,7 +78,7 @@ Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thr
 {
     struct line_pnts *Points, *NPoints;
     struct line_cats *Cats;
-    int    nlines, line, ltype, line_idx;
+    int    line, ltype, line_idx;
     double thresh2;
     int    printed;
 
@@ -106,8 +106,6 @@ Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thr
     RTree = RTreeNewIndex();
     
     thresh2 = thresh * thresh;
- 
-    G_debug (3, "nlines =  %d", nlines );
     
     /* Go through all lines in vector, and add each point to structure of points */
     apoints = 0;
