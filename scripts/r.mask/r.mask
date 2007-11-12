@@ -60,7 +60,7 @@ TMP="r_mask_$$"
 
 cleanup()
 {
- \rm -f $TMP
+ g.remove --q rast=$TMP
 }
 
 # what to do in case of user break:
