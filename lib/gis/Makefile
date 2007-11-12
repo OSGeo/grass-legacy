@@ -26,7 +26,11 @@ $(FMODE_OBJ): fmode.dat
 $(ETC)/colors:
 	$(MKDIR) $@
 
+ifneq ($(BROKEN_MAKE),)
 $(ETC)/colors/%: colors/% $(ETC)/colors
+else
+$(ETC)/colors/%: colors/% | $(ETC)/colors
+endif
 	$(INSTALL_DATA) $< $@
 
 $(ETC)/%: %
