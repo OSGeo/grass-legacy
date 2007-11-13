@@ -159,6 +159,8 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 	                 vector.layer[vec].where, GV_AREA, 1, Varray );
 	}
 	G_debug ( 3, "%d items selected for vector %d", ret, vec );
+	if(ret == -1)
+	    G_fatal_error(_("Cannot load data from table"));
     }
 
     /* load attributes if rgbcol used */
