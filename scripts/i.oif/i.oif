@@ -68,6 +68,10 @@
 #% description: LANDSAT TM band 7.
 #% required : yes
 #% end
+#% Flag
+#% key: g
+#% description: Print in shell script style
+#% End
 
 if  [ -z "$GISBASE" ]
 then
@@ -201,7 +205,12 @@ paste -d' ' "$temp_bands" "$temp_result" > "$temp_result2"
 g.message "Ready."
 g.message "The Optimum Index Factor analysis result:"
 g.message "    (Best combination comes first.)"
-sort -k 2 -n -r "$temp_result2" | tee ./i.oif.result
+
+if [ $GIS_FLAG_G -eq 1 ] ; then
+   sort -k 2 -n -r "$temp_result2" | tee ./i.oif.result | sed 's+:  +:+g'
+else
+   sort -k 2 -n -r "$temp_result2" | tee ./i.oif.result
+fi
 
 rm -f "$temp_stddev"
 rm -f "$temp_correlation"
