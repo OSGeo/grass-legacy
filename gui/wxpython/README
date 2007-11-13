@@ -30,6 +30,19 @@ wxPython GRASS graphical user interface
      Solaris (SPARC), Windows:
      http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
 
+ E.g. On Debian GNU/Linux install these packages:
+ * libwxbase2.8-0
+ * libwxbase2.8-dbg
+ * libwxbase2.8-dev
+ * libwxgtk2.8-0
+ * libwxgtk2.8-dbg
+ * libwxgtk2.8-dev
+ * python-wxgtk2.8
+ * wx2.8-doc
+ * wx2.8-examples
+ * wx2.8-headers
+ * wx2.8-i18n
+
 1 - INSTALLATION
 
 Download fresh source code from Subversion repository:
@@ -134,3 +147,27 @@ $ g.gisenv set=GRASS_ICONPATH=$GISBASE/etc/wx/icons/silk
 To re-enable default icons (TCL/TK theme)
 
 $ g.gisenv set=GRASS_ICONPATH=
+
+7 - DIGITIZATION TOOL
+
+To enable digitization tool you need to compile display driver located
+in directory 'display_driver'.
+
+Before compiling the driver go to the wxPython directory, e.g.
+
+$ cd /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx
+
+Make symlink
+
+sudo ln -s _gdi_.so libgdi.so
+
+Add /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx to
+LIBRARY_PATH or edit /etc/ld.so.conf file.
+
+Then you can compile the driver
+
+$ cd $GISBASE/etc/wx/display_driver
+$ make
+
+Note: You probably will need to modify the Makefile. This need to be
+fixed in the future.

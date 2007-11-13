@@ -19,8 +19,8 @@
 #include <wx/list.h>
 
 #include <Python.h>
-//#include <wx/wxPython/pseudodc.h>
-#include "pseudodc.h"
+#include <wx/wxPython/pseudodc.h>
+//#include "pseudodc.h"
 
 extern "C" {
 #include <grass/gis.h>
