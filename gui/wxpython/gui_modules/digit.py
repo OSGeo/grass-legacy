@@ -1371,7 +1371,8 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         Debug.msg(3, "DigitCategoryDialog(): line=%d, cats=%s" % \
                       (self.line, self.cats))
 
-        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title, style=style, pos=pos)
+        wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY, title=title,
+                           style=style, pos=pos)
 
         # list of categories
         box = wx.StaticBox(parent=self, id=wx.ID_ANY,

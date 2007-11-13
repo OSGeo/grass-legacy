@@ -525,7 +525,7 @@ class mainFrame(wx.Frame):
         self.task = task_description
         self.parent = parent
 
-        standalone = True
+        self.standalone = True
 
         # module name + keywords
         title = self.task.name
@@ -560,10 +560,12 @@ class mainFrame(wx.Frame):
         guisizer = wx.BoxSizer(wx.VERTICAL)
 
         # set apropriate output window
-        #        if self.parent:
-        #            standalone=False
-        #            self.goutput = self.parent.goutput
-        #        else:
+        if self.parent:
+            self.standalone   = False
+            try:
+                self.goutput  = self.parent.GetLogWindow()
+            except:
+                self.goutput  = None
 
         # logo+description
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -578,8 +580,8 @@ class mainFrame(wx.Frame):
         guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM | wx.EXPAND)
 
         # notebooks
-        self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=standalone)
-        if standalone:
+        self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=self.standalone)
+        if self.standalone:
             self.goutput = self.notebookpanel.goutput
         self.notebookpanel.OnUpdateValues = self.updateValuesHook
         guisizer.Add (item=self.notebookpanel, proportion=1, flag=wx.EXPAND)
@@ -604,12 +606,19 @@ class mainFrame(wx.Frame):
         btn_cancel = wx.Button(parent=self, id=wx.ID_CANCEL)
         btn_cancel.SetToolTipString(_("Cancel the command settings and ignore changes"))
         btnsizer.Add(item=btn_cancel, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
+        btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         if self.get_dcmd is not None: # A callback has been set up
-            btn_apply = wx.Button(self, wx.ID_APPLY, _("Apply") )
-            btnsizer.Add( btn_apply, 0, wx.ALL| wx.ALIGN_CENTER, 10)
-            btn_ok = wx.Button(self, wx.ID_OK, _("OK") )
-            btnsizer.Add( btn_ok, 0, wx.ALL| wx.ALIGN_CENTER, 10)
+            btn_apply = wx.Button(parent=self, id=wx.ID_APPLY)
+            btn_ok = wx.Button(parent=self, id=wx.ID_OK)
             btn_ok.SetDefault()
+
+            btnsizer.Add(item=btn_apply, proportion=0,
+                         flag=wx.ALL | wx.ALIGN_CENTER,
+                         border=10)
+            btnsizer.Add(item=btn_ok, proportion=0,
+                         flag=wx.ALL | wx.ALIGN_CENTER,
+                         border=10)
+
             btn_apply.Bind(wx.EVT_BUTTON, self.OnApply)
             btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
@@ -617,19 +626,28 @@ class mainFrame(wx.Frame):
             btn_run = wx.Button(parent=self, id=wx.ID_OK, label= _("&Run"))
             btn_run.SetToolTipString(_("Run the command"))
             btn_run.SetDefault()
-            btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
-            btnsizer.Add( item=btn_run, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
             # copy
-            btn_clipboard = wx.Button(parent=self, id=wx.ID_OK, label=_("C&opy") )
+            btn_clipboard = wx.Button(parent=self, id=wx.ID_COPY, label=_("C&opy"))
             btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard"))
+
+            btnsizer.Add(item=btn_run, proportion=0,
+                         flag=wx.ALL | wx.ALIGN_CENTER,
+                         border=10)
+
+            btnsizer.Add(item=btn_clipboard, proportion=0,
+                         flag=wx.ALL | wx.ALIGN_CENTER,
+                         border=10)
+
+            btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
             btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
-            btnsizer.Add(item=btn_clipboard, proportion=0, flag=wx.ALL| wx.ALIGN_CENTER, border=10)
+
         guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
-        btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
         constrained_size = self.notebookpanel.GetSize()
-        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) # 80 takes the tabbar into account
+        # 80 takes the tabbar into account
+        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) 
         self.notebookpanel.Layout()
         
         # for too long descriptions
@@ -673,10 +691,11 @@ class mainFrame(wx.Frame):
         if cmd == [] or cmd == None:
             return
 
-        # change page if needed
-        if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
-            self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
-
+        if self.standalone:
+            # change page if needed
+            if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
+                self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
+        
         if cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
@@ -688,14 +707,6 @@ class mainFrame(wx.Frame):
             # Send any other command to the shell.
         else:
             runCmd = gcmd.Command(cmd)
-            #             try:
-            #                 retcode = subprocess.call(cmd, shell=True)
-            #                 if retcode < 0:
-            #                     print >>sys.stderr, "Child was terminated by signal", -retcode
-            #                 elif retcode > 0:
-            #                     print >>sys.stderr, "Child returned", retcode
-            #             except OSError, e:
-            #                 print >>sys.stderr, "Execution failed:", e
 
     def OnCopy(self, event):
         """Copy the command"""

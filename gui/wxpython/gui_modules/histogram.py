@@ -256,9 +256,9 @@ class BufferedWindow(wx.Window):
         self.resize = False
 
         # update statusbar
-        #Debug.msg (3, "BufferedWindow.UpdateHist(%s): region=%s" % self.Map.region)
+        # Debug.msg (3, "BufferedWindow.UpdateHist(%s): region=%s" % self.Map.region)
         self.Map.SetRegion()
-        self.parent.statusbar.SetStatusText("Histogramming <%s>" % self.parent.mapname)
+        self.parent.statusbar.SetStatusText("Raster/Image map layer <%s>" % self.parent.mapname)
 
         # set default font and encoding environmental variables
         if oldfont != "":
@@ -305,8 +305,8 @@ class HistFrame(wx.Frame):
         # Add statusbar
         #
         self.mapname = ''
-        self.statusbar = self.CreateStatusBar(number=2, style=0)
-        self.statusbar.SetStatusWidths([-2, -1])
+        self.statusbar = self.CreateStatusBar(number=1, style=0)
+        # self.statusbar.SetStatusWidths([-2, -1])
         hist_frame_statusbar_fields = ["Histogramming %s" % self.mapname]
         for i in range(len(hist_frame_statusbar_fields)):
             self.statusbar.SetStatusText(hist_frame_statusbar_fields[i], i)
@@ -375,7 +375,7 @@ class HistFrame(wx.Frame):
         global gmpath
         completed = ''
 
-        menuform.GUI().ParseCommand('d.histogram', gmpath,
+        menuform.GUI().ParseCommand(['d.histogram'], gmpath,
                                     completed=(self.GetOptData, "hist", self.params),
                                     parentframe=None)
 
@@ -404,8 +404,9 @@ class HistFrame(wx.Frame):
             if 'map=' in item:
                 self.mapname = item.split('=')[1]
 
-        self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='', command=cmd,
-                                          l_active=True, l_hidden=False, l_opacity=1, l_render=False)
+        self.layer = self.Map.ChangeLayer(layer=self.layer, type="command", name='histogram',
+                                          command=cmd,
+                                          l_active=True, l_hidden=False, l_opacity=1.0)
 
         return self.layer
 

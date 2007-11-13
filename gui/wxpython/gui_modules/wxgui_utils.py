@@ -22,18 +22,19 @@ COPYRIGHT:  (C) 2007 by the GRASS Development Team
             This program is free software under the GNU General Public
             License (>=v2). Read the file COPYING that comes with GRASS
             for details.
-
 """
 
 import os
 import sys
 import string
 import tempfile
+import time
 
 import wx
 import wx.lib.customtreectrl as CT
 import wx.combo
 import wx.stc
+import wx.lib.newevent
 
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
@@ -52,6 +53,9 @@ try:
     import subprocess
 except:
     from compat import subprocess
+
+# define event for GRASS console (running GRASS command in separate thread)
+(UpdateGMConsoleEvent, EVT_UPDATE_GMCONSOLE) = wx.lib.newevent.NewEvent()
 
 class LayerTree(CT.CustomTreeCtrl):
     """
@@ -95,9 +99,9 @@ class LayerTree(CT.CustomTreeCtrl):
                                            Map=self.Map, auimgr=self.auimgr)
 
         # title
-        self.mapdisplay.SetTitle(_("GRASS GIS - Map Display: " + \
-                                       str(self.disp_idx) + \
-                                       " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
+        self.mapdisplay.SetTitle(_("GRASS GIS Map Display: " +
+                                   str(self.disp_idx) + 
+                                   " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
 
         #show new display
         self.mapdisplay.Show()
@@ -269,7 +273,14 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         Plot histogram for given raster map layer
         """
-        rastName = self.GetPyData(self.layer_selected)[0]['maplayer'].name
+        mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
+        if not mapLayer.name:
+            dlg = wx.MessageDialog(self, _("Unable to display histogram for "
+                                           "raster map layer"),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
 
         if not hasattr (self, "histogramFrame"):
             self.histogramFrame = None
@@ -279,15 +290,18 @@ class LayerTree(CT.CustomTreeCtrl):
 
         if not self.histogramFrame:
             self.histogramFrame = histogram.HistFrame(self,
-                                                      id=wx.ID_ANY, pos=wx.DefaultPosition, size=(400,300),
+                                                      id=wx.ID_ANY,
+                                                      pos=wx.DefaultPosition, size=(400, 300),
                                                       style=wx.DEFAULT_FRAME_STYLE)
             # show new display
             self.histogramFrame.Show()
 
-        self.histogramFrame.SetHistLayer(['d.histogram', 'map=%s' % rastName])
+        self.histogramFrame.SetHistLayer(['d.histogram', 'map=%s' % mapLayer.name])
         self.histogramFrame.HistWindow.UpdateHist()
         self.histogramFrame.Refresh()
         self.histogramFrame.Update()
+
+        return True
 
     def OnStartEditing (self, event):
         """
@@ -453,6 +467,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if ltype != 'group':
             if lopacity:
                 opacity = lopacity
+                ctrl.SetValue(int(lopacity * 100))
             else:
                 opacity = 1.0
             if lcmd and len(lcmd) > 1:
@@ -980,22 +995,25 @@ class GMConsole(wx.Panel):
 
         # initialize variables
         self.Map             = None
-        self.parent          = parent # GMFrame
-        self.cmd_output      = ""
-        self.console_command = ""
-        self.console_clear   = ""
-        self.console_save    = ""
-        self.gcmdlst         = [] # list of commands in bin and scripts
+        self.parent          = parent              # GMFrame
+        self.gcmdlst         = self.GetGRASSCmds() # list of commands in bin and scripts
+        self.cmdThreads      = []                  # list of command threads (alive or dead)
+
+        # progress bar
+        self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
+                                            range=100, pos=(110, 50), size=(-1, 25),
+                                            style=wx.GA_HORIZONTAL)
 
         # text control for command output
-        # self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
-        # style=wx.TE_MULTILINE| wx.TE_READONLY)
-        # self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        ### self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
+        ### style=wx.TE_MULTILINE| wx.TE_READONLY)
+        ### self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN,
+        ### wx.NORMAL, wx.NORMAL, 0, ''))
         self.cmd_output = GMStc(parent=self, id=wx.ID_ANY)
-
         # redirect
-        # sys.stdout = GMStdout(self.cmd_output)
-        # sys.stderr = GMStderr(self.cmd_output)
+        self.cmd_stdout = GMStdout(self.cmd_output)
+        self.cmd_stderr = GMStderr(self.cmd_output,
+                                   self.console_progressbar)
 
         # buttons
         self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
@@ -1003,12 +1021,7 @@ class GMConsole(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory, self.console_save)
 
-        # progress bar
-        self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
-                                            range=100, pos=(110, 50), size=(-1, 25),
-                                            style=wx.GA_HORIZONTAL)
-
-        # output control layout
+         # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
         gridsizer1 = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
         boxsizer1.Add(item=self.cmd_output, proportion=1,
@@ -1036,13 +1049,13 @@ class GMConsole(wx.Panel):
         Create list of all available GRASS commands to use when
         parsing string from the command line
         """
-        self.gcmdlst = []
+        gcmdlst = []
         gisbase = os.environ['GISBASE']
-        self.gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
-        self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
+        gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
+        gcmdlst = gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
         #self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
 
-        return self.gcmdlst
+        return gcmdlst
 
     def RunCmd(self, command):
         """
@@ -1058,9 +1071,6 @@ class GMConsole(wx.Panel):
         the focus (as indicted by mdidx).
         """
 
-        # create list of available GRASS commands
-        gcmdlst = self.GetGRASSCmds()
-
         # map display window available ?
         try:
             curr_disp = self.parent.curr_page.maptree.mapdisplay
@@ -1074,7 +1084,7 @@ class GMConsole(wx.Panel):
         except:
             cmdlist = command
 
-        if cmdlist[0] in gcmdlst:
+        if cmdlist[0] in self.gcmdlst:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             if cmdlist[0][0:2] == "d.": # display GRASS commands
@@ -1106,24 +1116,41 @@ class GMConsole(wx.Panel):
                     # select 'Command output' tab
                     self.parent.notebook.SetSelection(1)
                 
-                # activate compuational region (set with g.region) for all non-display commands.
-                tmpreg = os.getenv("GRASS_REGION")
-                os.unsetenv("GRASS_REGION")
+                if len(self.GetListOfCmdThreads(onlyAlive=True)) > 0:
+                    busy = wx.BusyInfo(message=_("Please wait, there is another command "
+                                                 "currently running"),
+                                       parent=self.parent)
+                    # wx.Yield()
+                    time.sleep(3)
+                    busy.Destroy()
+                else:
+                    # activate computational region (set with g.region)
+                    # for all non-display commands.
+                    tmpreg = os.getenv("GRASS_REGION")
+                    os.unsetenv("GRASS_REGION")
 
-                # process GRASS command with argument
-                self.cmd_output.AddText('$ %s' % ' '.join(cmdlist) + os.linesep)
-                
-                grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
-                                        stdout=GMStdout(self.cmd_output),
-                                        stderr=GMStderr(self.cmd_output,
-                                                        self.console_progressbar))
-                
-                # deactivate computational region and return to display settings
-                if tmpreg:
-                    os.environ["GRASS_REGION"] = tmpreg
+                    # process GRASS command with argument
+                    p1 = self.cmd_output.GetCurrentPos()
+                    self.cmd_output.AddText('$ %s' % ' '.join(cmdlist) + os.linesep)
+                    self.cmd_output.EnsureCaretVisible()
+                    p2 = self.cmd_output.GetCurrentPos()
+                    self.cmd_output.StartStyling(p1, 0xff)
+                    self.cmd_output.SetStyling(p2 - p1 + 1, self.cmd_output.StyleCommand)
 
-                if grassCmd.returncode != 0:
-                    return False
+                    
+#                     grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
+#                                             stdout=GMStdout(self.cmd_output),
+#                                             stderr=GMStderr(self.cmd_output,
+#                                                             self.console_progressbar))
+                    grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
+                                            stdout=self.cmd_stdout,
+                                            stderr=self.cmd_stderr)
+
+                    self.cmdThreads.append(grassCmd.cmdThread)
+
+                    # deactivate computational region and return to display settings
+                    if tmpreg:
+                        os.environ["GRASS_REGION"] = tmpreg
 
         else:
             # Send any other command to the shell. Send output to
@@ -1176,6 +1203,18 @@ class GMConsole(wx.Panel):
 
         dlg.Destroy()
 
+    def GetListOfCmdThreads(self, onlyAlive=False):
+        """Return list of command threads)"""
+        list = []
+        for t in self.cmdThreads:
+            Debug.msg (4, "GMConsole.GetListOfCmdThreads(): name=%s, alive=%s" %
+                       (t.getName(), t.isAlive()))
+            if onlyAlive and not t.isAlive():
+                continue
+            list.append(t)
+
+        return list
+
 class GMStdout:
     """GMConsole standard output
 
@@ -1214,7 +1253,7 @@ class GMStderr:
     Licence:   GPL
     """
     def __init__(self, gmstc, gmgauge):
-        self.gmstc = gmstc
+        self.gmstc   = gmstc
         self.gmgauge = gmgauge
 
     def write(self, s):
@@ -1222,7 +1261,6 @@ class GMStderr:
         #    self.gmstc.GetParent().Show()
         
         s = s.replace('\n', os.linesep)
-
         message = ''
         for line in s.split(os.linesep):
             if len(line) == 0:
@@ -1251,14 +1289,21 @@ class GMStderr:
                 self.gmstc.AddText(line + os.linesep)
                 self.gmstc.EnsureCaretVisible()
                 p2 = self.gmstc.GetCurrentPos()
-                #self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
+                self.gmstc.StartStyling(p1, 0xff)
+                self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleUnknown)
 
             if message != '':
                 p1 = self.gmstc.GetCurrentPos()
                 self.gmstc.AddText(message + os.linesep)
                 self.gmstc.EnsureCaretVisible()
                 p2 = self.gmstc.GetCurrentPos()
-                #self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
+                self.gmstc.StartStyling(p1, 0xff)
+                if type == 'error':
+                    self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleError)
+                elif type == 'warning':
+                    self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleWarning)
+                elif type == 'message':
+                    self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleMessage)
 
 class GMStc(wx.stc.StyledTextCtrl):
     """Styled GMConsole
@@ -1275,33 +1320,67 @@ class GMStc(wx.stc.StyledTextCtrl):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
         
+        #
         # styles
-        self.StyleDefault = 0
+        #
+        self.StyleDefault     = 0
         self.StyleDefaultSpec = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
-        self.StyleOutput = 1
-        self.StyleOutputSpec = "face:Courier New,size:10,fore:#0000FF,back:#FFFFFF"
-        self.StyleError = 2
-        self.StyleErrorSpec = "face:Courier New,size:10,fore:#7F0000,back:#FFFFFF"
+        self.StyleCommand     = 1
+        self.StyleCommandSpec = "face:Courier New,size:10,fore:#000000,back:#bcbcbc"
+        self.StyleOutput      = 2
+        self.StyleOutputSpec  = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
+        # fatal error
+        self.StyleError       = 3
+        self.StyleErrorSpec   = "face:Courier New,size:10,fore:#7F0000,back:#FFFFFF"
+        # warning
+        self.StyleWarning     = 4
+        self.StyleWarningSpec = "face:Courier New,size:10,fore:#0000FF,back:#FFFFFF"
+        # message
+        self.StyleMessage     = 5
+        self.StyleMessageSpec = "face:Courier New,size:10,fore:#000000,back:#FFFFFF"
+        # unknown
+        self.StyleUnknown     = 6
+        self.StyleUnknownSpec = "face:Courier New,size:10,fore:#7F0000,back:#FFFFFF"
         
         # default and clear => init
         self.StyleSetSpec(wx.stc.STC_STYLE_DEFAULT, self.StyleDefaultSpec)
         self.StyleClearAll()
-        self.StyleSetSpec(self.StyleOutput, self.StyleOutputSpec)
-        self.StyleSetSpec(self.StyleError, self.StyleErrorSpec)
+        self.StyleSetSpec(self.StyleCommand, self.StyleCommandSpec)
+        self.StyleSetSpec(self.StyleOutput,  self.StyleOutputSpec)
+        self.StyleSetSpec(self.StyleError,   self.StyleErrorSpec)
+        self.StyleSetSpec(self.StyleWarning, self.StyleWarningSpec)
+        self.StyleSetSpec(self.StyleMessage, self.StyleMessageSpec)
+        self.StyleSetSpec(self.StyleUnknown, self.StyleUnknownSpec)
         
+        #
         # margin widths
+        #
         self.SetMarginWidth(0, 0)
         self.SetMarginWidth(1, 0)
         self.SetMarginWidth(2, 0)
 
-        # miscellaneous, a few parameters
+        #
+        # miscellaneous
+        #
         self.SetMarginLeft(2)
-        self.SetViewWhiteSpace(True)
+        self.SetViewWhiteSpace(False)
         self.SetTabWidth(4)
         self.SetUseTabs(False)
-        #~ self.SetEOLMode(wx.stc.STC_EOL_CRLF)
-        #~ self.SetViewEOL(True)
+        # self.SetEOLMode(wx.stc.STC_EOL_CRLF)
+        # self.SetViewEOL(True)
         self.UsePopUp(True)
         self.SetSelBackground(True, "#FFFF00")
-        self.SetUseHorizontalScrollBar(True)
+        self.SetUseHorizontalScrollBar(False)
 
+        #
+        # bindins
+        #
+        self.Bind(wx.EVT_WINDOW_DESTROY, self.OnDestroy)
+
+    def OnDestroy(self, evt):
+        """The clipboard contents can be preserved after
+        the app has exited"""
+        
+        wx.TheClipboard.Flush()
+        evt.Skip()
+        
