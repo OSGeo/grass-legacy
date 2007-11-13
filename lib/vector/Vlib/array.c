@@ -247,6 +247,11 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 
     db_close_database_shutdown_driver ( driver );
 
+    if(ncats == -1) {
+	G_warning("Could not select from table/column");
+	return -1;
+    }
+
     if ( type & GV_AREA ) { /* Areas */
 	n = Vect_get_num_areas (Map);
 	

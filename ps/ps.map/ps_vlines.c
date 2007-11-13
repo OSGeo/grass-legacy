@@ -31,6 +31,8 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	                 vector.layer[vec].where, vector.layer[vec].ltype, 1, Varray );
 	}
 	G_debug ( 3, "%d items selected for vector %d", ret, vec );
+	if(ret == -1)
+	    G_fatal_error("Cannot load data from table");
     }
 
     /* allocate memory for coordinates */
@@ -49,7 +51,6 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
     k = 0;
     nlines = Vect_get_num_lines ( P_map );
     for ( line = 1; line <= nlines; line++ ) {
-	int ret;
 	double d;
 	if (0 > (ret = Vect_read_line(P_map, Points, Cats, line))) {
 	    if (ret == -1) G_warning("Read error in vector file\n");
