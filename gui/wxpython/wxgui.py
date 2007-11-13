@@ -860,8 +860,10 @@ class GMFrame(wx.Frame):
             maptype = None
 
         if not maptype or maptype != 'vector':
-            dlg = wx.MessageDialog(self, _("Attribute management is available only for vector map layers"),
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg = wx.MessageDialog(parent=self,
+                                   message=_("Attribute management is available only "
+                                             "for vector map layers"),
+                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
             return
@@ -888,6 +890,7 @@ class GMFrame(wx.Frame):
                                                       "vector map layer <%s>") % mapname,
                                               size=wx.Size(500,300), vectmap=mapname,
                                               pointdata=pointdata)
+        self.dbmanager.Show()
 
     def NewDisplay(self, event=None):
         """

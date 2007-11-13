@@ -50,7 +50,7 @@ try:
     from grass6_wxdriver import DisplayDriver
 except:
     print >> sys.stderr, "Digitization tool is disabled.\n" \
-        "Under development...\n"
+        "Detailed information in README file."
 
 USEVEDIT = True
     

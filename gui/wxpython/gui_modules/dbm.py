@@ -99,7 +99,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
         if self.gismgr: # Layer Manager is running?
-            self.mapdisp = self.curr_page.maptree.mapdisplay
+            self.mapdisp = self.gismgr.curr_page.maptree.mapdisplay
             self.map     = self.gismgr.curr_page.maptree.Map
         else:
             self.mapdisp = self.map = None
@@ -512,13 +512,21 @@ class AttributeManager(wx.Frame):
         # flatnotebook (browse, create, alter)
         self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
                                         style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON | 
-                                        FN.FNB_NO_NAV_BUTTONS)
+                                        FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_NO_X_BUTTON)
+                                          style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                          FN.FNB_BACKGROUND_GRADIENT |
+                                          FN.FNB_TABS_BORDER_SIMPLE)
         self.notebook.AddPage(self.browsePage, text=_("Browse data"))
+        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
+
         self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                         style=FN.FNB_NO_X_BUTTON)
+                                          style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                          FN.FNB_BACKGROUND_GRADIENT |
+                                          FN.FNB_TABS_BORDER_SIMPLE)
         self.notebook.AddPage(self.managePage, text=_("Manage tables"))
+        self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
+
         self.notebook.SetSelection(0) # select browse tab
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
@@ -543,9 +551,7 @@ class AttributeManager(wx.Frame):
         # do layout
         self.__layout()
 
-        self.SetMinSize((640, 480))
-
-        self.Show()
+        self.SetMinSize(self.GetBestSize())
 
     def __createBrowsePage(self):
         """Create browse tab page"""
@@ -877,7 +883,7 @@ class AttributeManager(wx.Frame):
         btnSizer.AddButton(self.btnApply)
         btnSizer.Realize()
 
-        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
 
         self.SetSizer(mainSizer)
@@ -1458,6 +1464,8 @@ def main(argv=None):
                          title=_("GRASS GIS Attribute Table Manager - vector map layer <%s>") % \
                              argv[1],
                          size=(700,600), vectmap=argv[1])
+    f.Show()
+
     app.MainLoop()
 
 if __name__ == '__main__':

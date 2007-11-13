@@ -1,3 +1,6 @@
+### Note: This is working file, to compile on your machine you need
+### probably modify this Makefile...
+
 PYTHONVERSION=2.4
 
 MODULE_TOPDIR = ../../..
@@ -7,14 +10,14 @@ include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 SWIG=swig
 
-CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` `gdal-config --cflags`
+CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags`
 
-LDFLAGS=-shared -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs`
+LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs` -L/usr/lib/python$(PYTHONVERSION)/site-packages/wx-2.8-gtk2-unicode/wx -lgdi
 
 default: grass6_wxdriver.so
 
 clean:
-	-rm -f *.o *.so grass6_wxdriver_wrap.cxx grass6_wxdriver.py grass6_wxdriver.i grass6_wxdriver.pyc	 
+	-rm -f *.o _grass6_wxdriver.so grass6_wxdriver_wrap.cxx grass6_wxdriver.py grass6_wxdriver.i grass6_wxdriver.pyc	 
 
 grass6_wxdriver.i:
 	cat ./driver.i > grass6_wxdriver.i
@@ -30,8 +33,5 @@ grass6_wxdriver_wrap.o: grass6_wxdriver_wrap.cxx
 driver.o: driver.cpp driver.h
 	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
 
-pseudodc.o: pseudodc.cpp
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
-
-grass6_wxdriver.so: grass6_wxdriver_wrap.o driver.o pseudodc.o
-	$(CXX) $(LDFLAGS) grass6_wxdriver_wrap.o driver.o pseudodc.o -o _grass6_wxdriver.so
+grass6_wxdriver.so: grass6_wxdriver_wrap.o driver.o # pseudodc.o
+	$(CXX) $(LDFLAGS) grass6_wxdriver_wrap.o driver.o -o _grass6_wxdriver.so
