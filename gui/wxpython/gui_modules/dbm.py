@@ -6,6 +6,7 @@ CLASSES:
     * VirtualAttributeList
     * AttributeManager
     * DisplayAttributesDialog
+    * VectorDBInfo
 
 PURPOSE:   GRASS attribute table manager
 
@@ -36,6 +37,7 @@ import tempfile
 
 import wx
 import wx.lib.mixins.listctrl as listmix
+import wx.lib.flatnotebook as FN
 
 import sqlbuilder
 import grassenv
@@ -53,32 +55,31 @@ class Log:
         """Update status bar"""
         self.parent.SetStatusText(text_string.strip())
 
-class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.ColumnSorterMixin):
+class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
+                           listmix.ColumnSorterMixin):
     """
     Support virtual attribute list class
     """
-    def __init__(self, parent, log, vectmap, pointdata=None):
+    def __init__(self, parent, log, mapInfo, layer, gismgr=None, pointdata=None):
         wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
                               style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES | wx.LC_VIRTUAL)
 
         #
         # initialize variables
+        #
         self.log     = log
-        self.vectmap = vectmap
-        self.parent  = parent
+        self.mapInfo = mapInfo
+        self.gismgr  = gismgr # Layer Manager instance or None
+        self.layer   = layer
         self.qlayer  = None
-        self.icon      = ''
-        self.pointsize = ''
-
-        if not "@" in self.vectmap:
-            self.vectmap = self.vectmap + "@" + grassenv.GetGRASSVariable("MAPSET")
-        self.mapname, self.mapset = self.vectmap.split("@")
-
         if pointdata:
             self.icon      = pointdata[0]
             self.pointsize = pointdata[1]
+        else:
+            self.icon      = ''
+            self.pointsize = ''
 
-        self.columns              = []
+        self.columns              = {} # <- LoadData()
         self.selectedCats         = []
         self.lastTurnSelectedCats = [] # just temporary, for comparation
 
@@ -86,53 +87,29 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # add some attributes (colourful background for each item rows)
         #
         self.attr1 = wx.ListItemAttr()
-        self.attr1.SetBackgroundColour("light blue")
+        #self.attr1.SetBackgroundColour("light blue")
+        self.attr1.SetBackgroundColour(wx.Colour(238,238,238))
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("white")
         self.il = wx.ImageList(16, 16)
-        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,   wx.ART_TOOLBAR, (16,16)))
-        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN, wx.ART_TOOLBAR, (16,16)))
+        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,   wx.ART_TOOLBAR,
+                                                          (16,16)))
+        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN, wx.ART_TOOLBAR,
+                                                          (16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        if self.parent.gismgr: # Layer Manager is running?
-            self.mapdisp = self.parent.gismgr.curr_page.maptree.mapdisplay
-            self.map     = self.parent.gismgr.curr_page.maptree.Map
+        if self.gismgr: # Layer Manager is running?
+            self.mapdisp = self.curr_page.maptree.mapdisplay
+            self.map     = self.gismgr.curr_page.maptree.Map
         else:
             self.mapdisp = self.map = None
-
-        # building the columns
-        # FIXME: Maximal number of columns, when the GUI is still usable
-        dbDescribe = gcmd.Command (cmd = ["db.describe", "-c", "--q",
-                                          "table=%s" % self.parent.tablename,
-                                          "driver=%s" % self.parent.driver,
-                                          "database=%s" % self.parent.database])
-
-        # structure (e.g.)
-        #
-        # ncols: 2
-        # nrows: 11
-        # Column 1: cat:INTEGER:11
-        # Column 2: label:CHARACTER:43
-        i = 0
-        for line in dbDescribe.ReadStdOutput()[2:]: # skip ncols and nrows
-            colnum, column, type, length = line.strip().split(":")
-            column.strip()
-            # FIXME: here will be more types
-            if type.lower().find("integer") > -1:
-                self.columns.append({"name": column, "type": int,   "length" : int(length)})
-            elif type.lower().find("double") > -1:
-                self.columns.append({"name": column, "type": float, "length" : int(length)})
-            elif type.lower().find("float") > -1:
-                self.columns.append({"name": column, "type": float, "length" : int(length)})
-            else:
-                self.columns.append({"name": column, "type": str,   "length" : int(length)})
 
         # These two should probably be passed to init more cleanly
         # setting the numbers of items = number of elements in the dictionary
         self.itemDataMap  = {}
         self.itemIndexMap = []
 
-        self.LoadData()
+        self.LoadData(layer)
         # self.SetItemCount(len(self.itemDataMap))
 
         # setup mixins
@@ -142,13 +119,11 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # sort by cat by default
         self.SortListItems(col=0, ascending=1) # FIXME category column can be different
 
-        #
         # events
-        #
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected,   self)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.OnItemActivated,  self)
-        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick,    self) # sorting
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.OnItemActivated)
+        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick) # sorting
         # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
         # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
         # self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
@@ -158,14 +133,14 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         # self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
-        if self.parent.gismgr:
+        if self.gismgr:
             self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.OnMapClick)
 
-            self.timer = wx.PyTimer(self.RedrawMap)
+            # self.timer = wx.PyTimer(self.RedrawMap)
             # check each 0.1s
-            self.timer.Start(100)
+            # self.timer.Start(100)
 
-    def LoadData(self, cols='*', where=''):
+    def LoadData(self, layer, cols='*', where=''):
         """Load data into list"""
 
         self.DeleteAllItems()
@@ -174,59 +149,52 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
         for i in range(self.GetColumnCount()):
             self.DeleteColumn(0)
 
-        i = 0
+        tableName    = self.mapInfo.layers[layer]['table']
+        self.columns = self.mapInfo.tables[tableName]
+
         if cols != '*':
-            for column in cols.split(','):
-                self.InsertColumn(col=i, heading=column)
-                i += 1
-                
-                if i >= 256:
-                    self.log.write(_("Can display only 256 columns"))
-
+            columnNames = cols.split(',')
         else:
-            for column in self.columns:
-                self.InsertColumn(col=i, heading=column["name"])
-                i += 1
+            columnNames = self.mapInfo.GetColumns(tableName)
 
-                if i >= 256:
-                    self.log.write(_("Can display only 256 columns"))
+        i = 0
+        for column in columnNames:
+            self.InsertColumn(col=i, heading=column)
+            i += 1
+            
+            if i >= 256:
+                self.log.write(_("Can display only 256 columns"))
 
-        if where is '' or where is None:
-            cmdv = ["db.select", "-c", "--q",
-                    "sql=SELECT %s FROM %s" % (cols, self.parent.tablename),
-                    "database=%s" % self.parent.database,
-                    "driver=%s"   % self.parent.driver]
-        else:
-            cmdv = ["db.select", "-c", "--q",
-                    "sql=SELECT %s FROM %s WHERE %s" % (cols, self.parent.tablename, where),
-                    "database=%s"                    % self.parent.database,
-                    "driver=%s"                      % self.parent.driver]
-
-        # run command
-        vDbSelect = gcmd.Command(cmd=cmdv)
+        ### self.mapInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
+        # select values (only one record)
 
         # 
         # read data
         #
         # FIXME: Max. number of rows, while the GUI is still usable
-        i = 0
-        for line in vDbSelect.ReadStdOutput():
-            attributes = line.strip().split("|")
-            self.itemDataMap[i] = []
+        if where is None or where is '':
+            sql="SELECT %s FROM %s" % (cols, tableName)
+        else:
+            sql="SELECT %s FROM %s WHERE %s" % (cols, tableName, where)
 
-            # convert to appropriate type
-            for j in range(len(attributes)):
-                try:
-                    attributes[j] = self.columns[j]["type"](attributes[j])
-                except:
-                    pass
+        selectCommand = gcmd.Command(["db.select", "-c", "--q",
+                                      "sql=%s" % sql,
+                                      "database=%s" % self.mapInfo.layers[layer]["database"],
+                                      "driver=%s"   % self.mapInfo.layers[layer]["driver"],
+                                      "fs=|"])
+        i = 0
+        for record in selectCommand.ReadStdOutput():
+            self.itemDataMap[i] = []
+            j = 0
+            for value in record.split('|'):
+                # casting ...
+                self.itemDataMap[i].append(self.columns[columnNames[j]]['ctype'] (value))
+                j += 1
 
             # insert to table
-            index = self.InsertStringItem(index=sys.maxint, label=str(attributes[0]))
-            self.itemDataMap[i].append(attributes[0])
-            for j in range(len(attributes[1:])):
-                self.SetStringItem(index=index, col=j+1, label=str(attributes[j+1]))
-                self.itemDataMap[i].append(attributes[j+1])
+            index = self.InsertStringItem(index=sys.maxint, label=str(self.itemDataMap[i][0]))
+            for j in range(len(self.itemDataMap[i][1:])):
+                self.SetStringItem(index=index, col=j+1, label=str(self.itemDataMap[i][j+1]))
 
             self.SetItemData(item=index, data=i)
             self.itemIndexMap.append(i)
@@ -238,8 +206,12 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
 
         self.SetItemCount(i)
 
-        for i in range(self.GetColumnCount()):
-            self.SetColumnWidth(col=i, width=self.columns[i]['length'] * 6) # FIXME
+        i = 0
+        for col in columnNames:
+            self.SetColumnWidth(col=i, width=self.columns[col]['length'] * 6) # FIXME
+            i += 1
+
+
 
     def OnCloseWindow(self, event):
         """Close attribute manager window"""
@@ -247,25 +219,27 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
             self.map.DeleteLayer(self.qlayer)
 
     def OnItemSelected(self, event):
-        """Item selected"""
+        """Item selected. Add item to selected cats..."""
         self.selectedCats.append(int(self.GetItemText(event.m_itemIndex)))
         self.selectedCats.sort()
 
+        print "#+", self.selectedCats
         event.Skip()
 
     def OnItemDeselected(self, event):
-
-        """Item deselected"""
+        """Item deselected. Remove item from selected cats..."""
         self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
         self.selectedCats.sort()
 
+        print "#-", self.selectedCats
         event.Skip()
 
     def OnItemActivated(self, event):
-        """Item activated"""
+        """Item activated, log purpose"""
         self.currentItem = event.m_itemIndex
-        self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
-                       (self.GetItemText(self.currentItem), self.GetTopItem()))
+        # self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
+        #                (self.GetItemText(self.currentItem), self.GetTopItem()))
+        print "#"
         event.Skip()
 
     def GetColumnText(self, index, col):
@@ -393,21 +367,22 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.
                    "fcolor=yellow",
                    "cats=%s" % catstr,
                    "width=3"]
-            #print cmd
             if self.icon:
                 gcmd.append("icon=%s" % (self.icon))
             if self.pointsize:
                 gcmd.append("size=%s" % (self.pointsize))
 
-                self.qlayer = self.map.AddLayer(type="vector", name='qlayer', command=cmd,
-                                                l_active=True, l_hidden=True, l_opacity=1, l_render=False)
-            self.mapdisp.ReDraw(None)
+                self.qlayer = self.map.AddLayer(type='vector', name='qlayer', command=cmd,
+                                                l_active=True, l_hidden=True, l_opacity=1.0)
+            self.mapdisp.ReDraw()
             self.lastTurnSelectedCats = self.selectedCats[:]
 
     def OnMapClick(self, event):
         """
         Gets coordinates from mouse clicking on display window
         """
+        Debug.msg(3, "VirtualAttributeList.OnMapClick()")
+
         # map coordinates
         x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple()[:])
 
@@ -501,30 +476,26 @@ class AttributeManager(wx.Frame):
     """
     GRASS Attribute manager main window
     """
-    def __init__(self, parent, id, title, vectmap, size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
+    def __init__(self, parent, id, title, vectmap,
+                 size = wx.DefaultSize, style = wx.DEFAULT_FRAME_STYLE,
                  pointdata=None):
 
-        self.vectmap = vectmap
-        self.parent  = parent
-        self.gismgr  = parent
+        self.vectmap   = vectmap
+        self.pointdata = pointdata
+        self.parent    = parent
+        self.gismgr    = parent
 
         # status bar log class
-        log = Log(self)
+        self.log = Log(self) # -> statusbar
 
-        # get list of attribute tables (TODO: open more tables)
-        vDbConnect = gcmd.Command (cmd=["v.db.connect",
-                                        "-g",
-                                        "map=%s" % self.vectmap])
+        # -> layers / tables description
+        self.mapInfo = VectorDBInfo(self.vectmap) 
 
-        if vDbConnect.returncode == 0:
-            (self.layer, self.tablename, self.column, self.database, self.driver) = \
-                vDbConnect.ReadStdOutput()[0].split(' ') # TODO all layers
-        else:
-            self.layer = None
-
-        if not self.layer:
+        if len(self.mapInfo.layers.keys()) == 0:
             dlg = wx.MessageDialog(patent=parent,
-                                   message=_("No attribute table linked to vector map <%s>") % vectmap,
+                                   message=_("No attribute table linked to "
+                                             "vector map <%s> found.") % \
+                                       self.vectmap,
                                    caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -534,8 +505,27 @@ class AttributeManager(wx.Frame):
 
         self.CreateStatusBar(number=1)
 
-        # set up virtual list
-        self.win = VirtualAttributeList(parent=self, log=log, vectmap=vectmap, pointdata=pointdata)
+        # set up virtual lists (each layer)
+        ### {layer: list, widgets...}
+        self.layerPage = {}
+
+        # flatnotebook (browse, create, alter)
+        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
+                                        style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON | 
+                                        FN.FNB_NO_NAV_BUTTONS)
+        self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
+                                          style=FN.FNB_NO_X_BUTTON)
+        self.notebook.AddPage(self.browsePage, text=_("Browse data"))
+        self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
+                                         style=FN.FNB_NO_X_BUTTON)
+        self.notebook.AddPage(self.managePage, text=_("Manage tables"))
+        self.notebook.SetSelection(0) # select browse tab
+
+        self.infoCollapseLabelExp = _("Click here to show database connection information")
+        self.infoCollapseLabelCol = _("Click here to hide database connection information")
+
+        self.__createBrowsePage()
+        self.__createManagePage()
 
         #
         # buttons
@@ -543,88 +533,227 @@ class AttributeManager(wx.Frame):
         self.btnApply      = wx.Button(parent=self, id=wx.ID_APPLY)
         self.btnQuit       = wx.Button(parent=self, id=wx.ID_CANCEL)
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
-        self.btnSqlBuilder = wx.Button(parent=self, id=wx.ID_ANY, label=_("SQL Builder"))
+        
+        # events
+        self.btnApply.Bind(wx.EVT_BUTTON,         self.OnApplySqlStatement)
+        self.btnQuit.Bind(wx.EVT_BUTTON,          self.OnCloseWindow)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.browsePage)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
 
-        # radiobuttons
-        self.sqlSimple   = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                          label=_("Simple"))
-        self.sqlAdvanced = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                          label=_("Advanced"))
-
-        # textarea
-        self.sqlWhere     = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
-                                        style=wx.TE_PROCESS_ENTER)
-        self.sqlStatement = wx.TextCtrl(parent=self, id=wx.ID_ANY,
-                                        value="SELECT * FROM %s" % self.tablename,
-                                        style=wx.TE_PROCESS_ENTER)
-
-        # labels
-        self.sqlLabel    = wx.StaticText(parent=self, id=wx.ID_ANY,
-                                         label="SELECT * FROM %s WHERE " % self.tablename)
-        self.label_query = wx.StaticText(parent=self, id=wx.ID_ANY,
-                                         label="")
-
-        # boxes
-        self.sqlBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
-                                   label=" %s " % _("SQL Query"))
-        self.listBox = wx.StaticBox(parent=self, id=wx.ID_ANY,
-                                    label=" %s " % _("Attribute data"))
-
-        # collapsible areas
-        self.infoCollapseLabelExp = _("Click here to show database connection information")
-        self.infoCollapseLabelCol = _("Click here to hide database connection information")
-        self.infoCollapse = wx.CollapsiblePane(parent=self,
-                                               label=self.infoCollapseLabelExp,
-                                               style=wx.CP_DEFAULT_STYLE | wx.CP_NO_TLW_RESIZE | wx.EXPAND)
-        self.MakeInfoPaneContent(self.infoCollapse.GetPane())
-
-        # bindings
-        self.btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
-        self.btnApply.Bind(wx.EVT_BUTTON, self.OnApplySqlStatement)
-        self.btnQuit.Bind(wx.EVT_BUTTON, self.OnCloseWindow)
-        self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, self.infoCollapse)
-        self.sqlSimple.Bind(wx.EVT_RADIOBUTTON,   self.OnChangeSql)
-        self.sqlAdvanced.Bind(wx.EVT_RADIOBUTTON, self.OnChangeSql)
-        self.sqlWhere.Bind(wx.EVT_TEXT_ENTER,     self.OnApplySqlStatement)
-        self.sqlStatement.Bind(wx.EVT_TEXT_ENTER, self.OnApplySqlStatement)
-
-        # do layer
+        # do layout
         self.__layout()
-
-        self.OnChangeSql(None)
 
         self.SetMinSize((640, 480))
 
         self.Show()
 
+    def __createBrowsePage(self):
+        """Create browse tab page"""
+        for layer in self.mapInfo.layers.keys():
+            panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
+            self.browsePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+
+            pageSizer = wx.BoxSizer(wx.VERTICAL)
+
+            # attribute data
+            listBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                   label=" %s " % _("Attribute data"))
+            listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
+            win = VirtualAttributeList(parent=panel, gismgr=self.parent, log=self.log,
+                                       mapInfo=self.mapInfo, layer=layer,
+                                       pointdata=self.pointdata) # layer
+            listSizer.Add(item=win, proportion=1,
+                          flag=wx.EXPAND | wx.ALL,
+                          border=3)
+            
+            # sql statement box
+            btnSqlBuilder = wx.Button(parent=panel, id=wx.ID_ANY, label=_("SQL Builder"))
+            btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
+
+            sqlSimple = wx.RadioButton(parent=panel, id=wx.ID_ANY,
+                                       label=_("Simple"))
+            sqlAdvanced = wx.RadioButton(parent=panel, id=wx.ID_ANY,
+                                         label=_("Advanced"))
+            sqlSimple.Bind(wx.EVT_RADIOBUTTON,   self.OnChangeSql)
+            sqlAdvanced.Bind(wx.EVT_RADIOBUTTON, self.OnChangeSql)
+
+            sqlWhere = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value="",
+                                   style=wx.TE_PROCESS_ENTER,
+                                   size=(200, -1))
+            sqlStatement = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                       value="SELECT * FROM %s" % \
+                                           self.mapInfo.layers[layer]['table'],
+                                       style=wx.TE_PROCESS_ENTER)
+            sqlWhere.Bind(wx.EVT_TEXT_ENTER,     self.OnApplySqlStatement)
+            sqlStatement.Bind(wx.EVT_TEXT_ENTER, self.OnApplySqlStatement)
+            
+            sqlLabel = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                     label="SELECT * FROM %s WHERE " % \
+                                         self.mapInfo.layers[layer]['table'])
+            label_query = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                        label="")
+            
+            sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                  label=" %s " % _("SQL Query"))
+            
+            sqlSizer = wx.StaticBoxSizer(sqlBox, wx.VERTICAL)
+            sqlFlexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
+            sqlFlexSizer.AddGrowableCol(1)
+            
+            sqlFlexSizer.Add(item=sqlSimple,
+                             flag=wx.ALIGN_CENTER_VERTICAL)
+            sqlSimpleSizer = wx.BoxSizer(wx.HORIZONTAL)
+            sqlSimpleSizer.Add(item=sqlLabel,
+                               flag=wx.ALIGN_CENTER_VERTICAL)
+            sqlSimpleSizer.Add(item=sqlWhere,
+                               flag=wx.SHAPED | wx.GROW)
+            sqlFlexSizer.Add(item=sqlSimpleSizer,
+                             flag=wx.ALIGN_CENTER_VERTICAL)
+            sqlFlexSizer.Add((0,0))
+            sqlFlexSizer.Add(item=sqlAdvanced,
+                             flag=wx.ALIGN_CENTER_VERTICAL)
+            sqlFlexSizer.Add(item=sqlStatement,
+                             flag=wx.EXPAND)
+            sqlFlexSizer.Add(item=btnSqlBuilder,
+                             flag=wx.ALIGN_RIGHT)
+
+            sqlSizer.Add(item=sqlFlexSizer,
+                         flag=wx.ALL | wx.EXPAND,
+                         border=0)
+
+            pageSizer.Add(item=listSizer,
+                          proportion=1,
+                          flag=wx.ALL | wx.EXPAND,
+                          border=3)
+
+            pageSizer.Add(item=sqlSizer,
+                          proportion=0,
+                          flag=wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.EXPAND,
+                          border=3)
+            
+            panel.SetSizer(pageSizer)
+
+            self.layerPage[layer]= {'list'     : win,
+                                    'simple'   : sqlSimple,
+                                    'advanced' : sqlAdvanced,
+                                    'where'    : sqlWhere,
+                                    'builder'  : btnSqlBuilder,
+                                    'statement': sqlStatement}
+                                
+
+        self.browsePage.SetSelection(0) # select first layer
+        self.layer = self.mapInfo.layers.keys()[0]
+        self.OnChangeSql(None)
+        self.log.write(_("Number of loaded records: %d") % \
+                           self.layerPage[self.layer]['list'].GetItemCount())
+
+    def __createManagePage(self):
+        """Create manage page (create/link and alter tables)"""
+        for layer in self.mapInfo.layers.keys():
+            panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
+            self.managePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+
+            pageSizer = wx.BoxSizer(wx.VERTICAL)
+
+            # dbInfo
+            infoCollapse = wx.CollapsiblePane(parent=panel,
+                                              label=self.infoCollapseLabelExp,
+                                              style=wx.CP_DEFAULT_STYLE |
+                                              wx.CP_NO_TLW_RESIZE | wx.EXPAND)
+            self.MakeInfoPaneContent(layer, infoCollapse.GetPane())
+            infoCollapse.Collapse(False)
+            self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, infoCollapse)
+            
+            # table description
+            table = self.mapInfo.layers[layer]['table']
+            tableBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                    label=" %s " % _("Table %s") % table)
+            
+            tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
+            
+            list = self.__createTableDesc(panel, table)
+            tableSizer.Add(item=list,
+                           flag=wx.ALL | wx.EXPAND, 
+                           proportion=1,
+                           border=3)
+
+            pageSizer.Add(item=infoCollapse,
+                          flag=wx.ALL | wx.EXPAND, 
+                          proportion=0,
+                          border=3)
+
+            pageSizer.Add(item=tableSizer,
+                          flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 
+                          proportion=1,
+                          border=3)
+
+            panel.SetSizer(pageSizer)
+
+            self.layerPage[layer]['dbinfo'] = infoCollapse
+
+        self.managePage.SetSelection(0) # select first layer
+        self.layer = self.mapInfo.layers.keys()[0]
+        
+    def __createTableDesc(self, parent, table):
+        """Create list with table description"""
+        list = TableListCtrl(parent=parent, id=wx.ID_ANY,
+                             table=self.mapInfo.tables[table],
+                             columns=self.mapInfo.GetColumns(table),
+                             style=wx.LC_REPORT |
+                             wx.BORDER_NONE |
+                             wx.LC_SORT_ASCENDING |
+                             wx.LC_HRULES |
+                             wx.LC_VRULES)
+        list.Populate()
+        # sorter
+        # itemDataMap = list.Populate()
+        # listmix.ColumnSorterMixin.__init__(self, 2)
+
+        return list
+
+    def OnLayerPageChanged(self, event):
+        """Layer tab changed"""
+        pageNum = event.GetSelection()
+        self.layer = self.mapInfo.layers.keys()[pageNum]
+        self.OnChangeSql(None)
+        self.log.write(_("Number of loaded records: %d") % \
+                           self.layerPage[self.layer]['list'].GetItemCount())
+
     def OnChangeSql(self, event):
         """Switch simple/advanced sql statement"""
-        if self.sqlSimple.GetValue():
-            self.sqlWhere.Enable(True)
-            self.sqlStatement.Enable(False)
-            self.btnSqlBuilder.Enable(False)
+        if self.layerPage[self.layer]['simple'].GetValue():
+            self.layerPage[self.layer]['where'].Enable(True)
+            self.layerPage[self.layer]['statement'].Enable(False)
+            self.layerPage[self.layer]['builder'].Enable(False)
         else:
-            self.sqlWhere.Enable(False)
-            self.sqlStatement.Enable(True)
-            self.btnSqlBuilder.Enable(True)
+            self.layerPage[self.layer]['where'].Enable(False)
+            self.layerPage[self.layer]['statement'].Enable(True)
+            self.layerPage[self.layer]['builder'].Enable(True)
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
-        if self.sqlSimple.GetValue():
+        if self.layerPage[self.layer]['simple'].GetValue():
             # simple sql statement
-            if len(self.sqlWhere.GetValue().strip()) > 0:
-                self.win.LoadData(where=self.sqlWhere.GetValue().strip())
+            where = self.layerPage[self.layer]['where'].GetValue().strip()
+            if len(where) > 0:
+                self.layerPage[self.layer]['list'].LoadData(self.layer, where=where)
             else:
-                self.win.LoadData()
+                self.layerPage[self.layer]['list'].LoadData(self.layer)
         else:
             # advanced sql statement
-            valid, cols, where = self.ValidateSelectStatement(self.sqlStatement.GetValue().strip())
+            valid, cols, where = \
+                self.ValidateSelectStatement( \
+                self.layerPage[self.layer]['statement'].GetValue().strip())
 
             Debug.msg(4, "AttributeManager.OnApplySqlStatament(): valid=%s, cols=%s, where=%s" %
                       (valid, cols, where))
 
             if valid is True:
-                self.win.LoadData(cols=cols, where=where)
+                self.layerPage[self.layer]['list'].LoadData(self.layer, cols=cols, where=where)
+
+        # update statusbar
+        self.log.write(_("Number of loaded records: %d") % \
+                           self.layerPage[self.layer]['list'].GetItemCount())
 
     def ValidateSelectStatement(self, statement):
         """Validate Select SQL statement
@@ -647,14 +776,19 @@ class AttributeManager(wx.Frame):
             cols += c
             index += 1
 
-        tablelen = len(self.tablename)
+        tablelen = len(self.mapInfo.layers[self.layer]['table'])
 
         if statement[index+1:index+6].lower() != 'from ' or \
-                statement[index+6:index+6+tablelen] != '%s' % (self.tablename):
+                statement[index+6:index+6+tablelen] != '%s' % \
+                (self.mapInfo.layers[self.layer]['table']):
             return (False, '', '')
 
         if len(statement[index+7+tablelen:]) > 0:
-            where = statement[index+7+tablelen:]
+            index = statement.lower().find('where ')
+            if index > -1:
+                where = statement[index+6:]
+            else:
+                where = ''
         else:
             where = ''
 
@@ -663,15 +797,15 @@ class AttributeManager(wx.Frame):
     def OnInfoPaneChanged(self, event):
         """Collapse database connection info box"""
 
-        if self.infoCollapse.IsExpanded():
-            self.infoCollapse.SetLabel(self.infoCollapseLabelCol)
+        if self.layerPage[self.layer]['dbinfo'].IsExpanded():
+            self.layerPage[self.layer]['dbinfo'].SetLabel(self.infoCollapseLabelCol)
         else:
-            self.infoCollapse.SetLabel(self.infoCollapseLabelExp)
+            self.layerPage[self.layer]['dbinfo'].SetLabel(self.infoCollapseLabelExp)
 
         # redo layout
         self.Layout()
 
-    def MakeInfoPaneContent(self, pane):
+    def MakeInfoPaneContent(self, layer, pane):
         """Create database connection information content"""
             # connection info
         border = wx.BoxSizer(wx.VERTICAL)
@@ -685,15 +819,18 @@ class AttributeManager(wx.Frame):
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Database:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % self.database))
+                                             label="%s" % \
+                                                 self.mapInfo.layers[layer]['database']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Driver:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % self.driver))
+                                             label="%s" % \
+                                                 self.mapInfo.layers[layer]['driver']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Table:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % self.tablename))
+                                             label="%s" % \
+                                                 self.mapInfo.layers[layer]['table']))
 
         infoSizer.Add(item=infoFlexSizer,
                       proportion=1,
@@ -709,7 +846,8 @@ class AttributeManager(wx.Frame):
 
     def OnCloseWindow(self, event):
         """Cancel button pressed"""
-        self.win.OnCloseWindow(event)
+        for item in self.layerPage.itervalues():
+            item['list'].OnCloseWindow(event)
         self.Close()
 
     def OnBuilder(self,event):
@@ -728,41 +866,10 @@ class AttributeManager(wx.Frame):
         #self.panel = wx.Panel(self,-1, style=wx.SUNKEN_BORDER)
 
         #self.label_query.SetMinSize((500,50))
-        self.sqlWhere.SetMinSize((250,-1))
+#         self.sqlWhere.SetMinSize((250,-1))
 
-        pageSizer = wx.BoxSizer(wx.VERTICAL)
-
-        # attribute data
-        listSizer = wx.StaticBoxSizer(self.listBox, wx.VERTICAL)
-        listSizer.Add(item=self.win, proportion=1,
-                      flag=wx.EXPAND | wx.ALL,
-                      border=3)
-
-        # sql query
-        sqlSizer = wx.StaticBoxSizer(self.sqlBox, wx.VERTICAL)
-        sqlFlexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
-        sqlFlexSizer.AddGrowableCol(1)
-
-        sqlFlexSizer.Add(item=self.sqlSimple,
-                         flag=wx.ALIGN_CENTER_VERTICAL)
-        sqlSimpleSizer = wx.BoxSizer(wx.HORIZONTAL)
-        sqlSimpleSizer.Add(item=self.sqlLabel,
-                           flag=wx.ALIGN_CENTER_VERTICAL)
-        sqlSimpleSizer.Add(item=self.sqlWhere,
-                           flag=wx.SHAPED | wx.GROW)
-        sqlFlexSizer.Add(item=sqlSimpleSizer,
-                         flag=wx.ALIGN_CENTER_VERTICAL)
-        sqlFlexSizer.Add((0,0))
-        sqlFlexSizer.Add(item=self.sqlAdvanced,
-                         flag=wx.ALIGN_CENTER_VERTICAL)
-        sqlFlexSizer.Add(item=self.sqlStatement,
-                         flag=wx.EXPAND)
-        sqlFlexSizer.Add(item=self.btnSqlBuilder,
-                         flag=wx.ALIGN_RIGHT)
-
-        sqlSizer.Add(item=sqlFlexSizer,
-                     flag=wx.ALL | wx.EXPAND,
-                     border=0)
+        # frame body
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
 
         # buttons
         btnSizer = wx.StdDialogButtonSizer()
@@ -770,26 +877,54 @@ class AttributeManager(wx.Frame):
         btnSizer.AddButton(self.btnApply)
         btnSizer.Realize()
 
-        pageSizer.Add(item=self.infoCollapse,
-                      flag=wx.ALL | wx.EXPAND, 
-                      proportion=0,
-                      border=3)
-        pageSizer.Add(item=listSizer,
-                      proportion=1,
-                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
-                      border=3)
-        pageSizer.Add(item=sqlSizer,
-                      proportion=0,
-                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
-                      border=3)
-        pageSizer.Add(item=btnSizer,
-                      proportion=0,
-                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
-                      border=3)
+        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
 
-        self.SetSizer(pageSizer)
-        pageSizer.Fit(self)
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+
         self.Layout()
+
+class TableListCtrl(wx.ListCtrl,
+                    listmix.ListCtrlAutoWidthMixin,
+                    listmix.TextEditMixin):
+    """Table description list"""
+
+    def __init__(self, parent, id, table, columns, pos=wx.DefaultPosition,
+                 size=wx.DefaultSize, style=0):
+        
+        self.parent  = parent
+        self.table   = table
+        self.columns = columns
+        wx.ListCtrl.__init__(self, parent, id, pos, size, style)
+
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        listmix.TextEditMixin.__init__(self)
+
+    def Populate(self):
+        """Populate the list"""
+        itemData = {} # requested by sorter
+
+        headings = [_("Column name"), _("Type"), _("Length")]
+        i = 0
+        for h in headings:
+            self.InsertColumn(col=i, heading=h)
+            self.SetColumnWidth(col=i, width=150)
+            i += 1
+
+        i = 0
+        for column in self.columns:
+            index = self.InsertStringItem(sys.maxint, str(column))
+            self.SetStringItem(index, 0, str(column))
+            self.SetStringItem(index, 1, str(self.table[column]['type']))
+            self.SetStringItem(index, 2, str(self.table[column]['length']))
+            self.SetItemData(index, i)
+            itemData[i] = (str(column),
+                           str(self.table[column]['type']),
+                           int(self.table[column]['length']))
+            i = i + 1
+
+        return itemData
 
 class DisplayAttributesDialog(wx.Dialog):
     """
@@ -817,7 +952,7 @@ class DisplayAttributesDialog(wx.Dialog):
         self.line = None
 
         # get layer/table/column information
-        self.mapInfo = VectorAttributeInfo(self.map)
+        self.mapInfo = VectorDBInfo(self.map)
 
         layers = self.mapInfo.layers.keys() # get available layers
 
@@ -832,8 +967,9 @@ class DisplayAttributesDialog(wx.Dialog):
                     (self.layer, self.map)
 
             dlg = wx.MessageDialog(self.parent,
-                                   _("No attribute table found.\n"
-                                     "%s") % (label),
+                                   _("No attribute table linked to "
+                                     "vector map <%s> found.\n"
+                                     "%s") % (self.map, label),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -1046,7 +1182,7 @@ class DisplayAttributesDialog(wx.Dialog):
                 continue
 
             if not self.queryCoords: # select using layer/cat
-                nselected = self.mapInfo.SelectFromTable(layer, self.cat)
+                nselected = self.mapInfo.SelectFromTable(layer, where="cat=%d" % self.cat)
 
             if nselected <= 0 and self.action != "add":
                 continue # nothing selected ...
@@ -1134,14 +1270,14 @@ class DisplayAttributesDialog(wx.Dialog):
 
         return True
 
-class VectorAttributeInfo:
+class VectorDBInfo:
     """Class providing information about attribute tables
     linked to the vector map"""
     def __init__(self, map):
         self.map = map
         # {layer number : {table, database, driver})
         self.layers = {}
-        # {table : {column name : type, values, ids}}
+        # {table : {column name : type, length, values, ids}}
         self.tables = {}
 
         if not self.__CheckDBConnection(): # -> self.layers
@@ -1154,7 +1290,7 @@ class VectorAttributeInfo:
         layerCommand = gcmd.Command(cmd=["v.db.connect",
                                         "-g", "--q",
                                         "map=%s" % self.map,],
-                                   dlgMsg='txt')
+                                    dlgMsg='txt')
         if layerCommand.returncode != 0:
             return False
 
@@ -1174,24 +1310,50 @@ class VectorAttributeInfo:
         """Describe linked tables"""
         for layer in self.layers.keys():
             # determine column names and types
-            columnsCommand = gcmd.Command (cmd=["v.db.connect", "-c", "--q",
-                                               "map=%s" % self.map,
-                                               "layer=%d" % layer])
             table = self.layers[layer]["table"]
+            columnsCommand = gcmd.Command (cmd=["db.describe",
+                                                "-c", "--q",
+                                                "table=%s" % self.layers[layer]["table"],
+                                                "driver=%s" % self.layers[layer]["driver"],
+                                                "database=%s" % self.layers[layer]["database"]])
+            
 
-            columns = {} # {name: {type, [values], [ids]}}
+            columns = {} # {name: {type, length, [values], [ids]}}
 
             if columnsCommand.returncode == 0:
-                for line in columnsCommand.ReadStdOutput():
-                    columnType, columnName = line.split('|')
-                    columnType = columnType.lower().strip()
-                    columns[columnName] = { 'type'   : columnType,
-                                            'values' : [],
-                                            'ids'    : []}
+                # get rid of nrows and ncols row...
+                i = 0
+                for line in columnsCommand.ReadStdOutput()[2:]:
+                    num, name, type, length = line.strip().split(':')
+                    # FIXME: here will be more types
+                    if type.lower() == "integer":
+                        ctype = int
+                    elif type.lower() == "double" or type.lower() == "float":
+                        ctype = float
+                    else:
+                        ctype = str
+
+                    columns[name.strip()] = { 'index'  : i,
+                                              'type'   : type.lower(),
+                                              'ctype'  : ctype,
+                                              'length' : int(length),
+                                              'values' : [],
+                                              'ids'    : []}
+                    i += 1
             else:
-                pass
+                return False
 
             self.tables[table] = columns
+
+        return True
+
+    def GetColumns(self, table):
+        """Return list of columns names (based on their index)"""
+        names = [''] * len(self.tables[table].keys())
+        for name, desc in self.tables[table].iteritems():
+            names[desc['index']] = name
+
+        return names
 
     def SelectByPoint(self, queryCoords, qdist):
         """Get attributes by coordinates (all available layers)
@@ -1201,10 +1363,10 @@ class VectorAttributeInfo:
         nselected = 0
         cmdWhat = gcmd.Command(cmd=['v.what',
                                    '-a', '--q',
-                                   'map=%s' % self.map,
-                                   'east_north=%f,%f' % \
-                                       (float(queryCoords[0]), float(queryCoords[1])),
-                                   'distance=%f' % qdist])
+                                    'map=%s' % self.map,
+                                    'east_north=%f,%f' % \
+                                        (float(queryCoords[0]), float(queryCoords[1])),
+                                    'distance=%f' % qdist])
 
         if cmdWhat.returncode == 0:
             read = False
@@ -1215,7 +1377,9 @@ class VectorAttributeInfo:
                     name = name.strip()
                     # append value to the column
                     try:
-                        self.tables[table][name]['values'].append(value.strip())
+                        # casting ...
+                        value = self.tables[table][name]['ctype'] (value.strip())
+                        self.tables[table][name]['values'].append(value)
                     except:
                         read = False
                             
@@ -1231,7 +1395,7 @@ class VectorAttributeInfo:
 
         return (line, nselected)
 
-    def SelectFromTable(self, layer, cat):
+    def SelectFromTable(self, layer, cols='*', where=None):
         """Select records from the table
 
         Return number of selected records, -1 on error
@@ -1243,15 +1407,22 @@ class VectorAttributeInfo:
 
         table = self.layers[layer]["table"] # get table desc
         # select values (only one record)
-        selectCommand = gcmd.Command(cmd=["v.db.select", "-v", "--q",
-                                         "map=%s" % self.map,
-                                         "layer=%d" % layer,
-                                         "where=cat=%d" % cat])
+        if where is None or where is '':
+            sql="SELECT %s FROM %s" % (cols, table)
+        else:
+            sql="SELECT %s FROM %s WHERE %s" % (cols, table, where)
 
-        #self.tables[table]["cat"][1] = str(cat)
+        selectCommand = gcmd.Command(["db.select", "-v", "--q",
+                                      "sql=%s" % sql,
+                                      "database=%s" % self.layers[layer]["database"],
+                                      "driver=%s"   % self.layers[layer]["driver"]])
+
+        # self.tables[table]["cat"][1] = str(cat)
         if selectCommand.returncode == 0:
             for line in selectCommand.ReadStdOutput():
                 name, value = line.split('|')
+                # casting ...
+                value = self.tables[table][name]['ctype'] (value)
                 self.tables[table][name]['values'].append(value)
                 nselected = 1
 
@@ -1284,7 +1455,8 @@ def main(argv=None):
 
     app = wx.PySimpleApp()
     f = AttributeManager(parent=None, id=wx.ID_ANY,
-                         title=_("GRASS Attribute Table Manager: vector map <%s>") % argv[1],
+                         title=_("GRASS GIS Attribute Table Manager - vector map layer <%s>") % \
+                             argv[1],
                          size=(700,600), vectmap=argv[1])
     app.MainLoop()
 

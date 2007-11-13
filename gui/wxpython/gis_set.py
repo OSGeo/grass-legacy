@@ -190,7 +190,7 @@ class GRASSStartup(wx.Frame):
         dbase_sizer     = wx.BoxSizer(wx.HORIZONTAL)
         location_sizer  = wx.FlexGridSizer(rows=1, cols=2, vgap=4, hgap=4)
         select_box      = wx.StaticBox (parent=self, id=wx.ID_ANY,
-                                        label=" %s " % _("Choose location and mapset"))
+                                        label=" %s " % _("Choose project location and mapset"))
         select_boxsizer = wx.StaticBoxSizer(select_box, wx.VERTICAL)
         select_sizer    = wx.FlexGridSizer(rows=2, cols=2, vgap=4, hgap=4)
         manage_box      = wx.StaticBox (parent=self, id=wx.ID_ANY,

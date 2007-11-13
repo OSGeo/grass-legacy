@@ -1203,13 +1203,18 @@ class BufferedWindow(wx.Window):
                     # copy features from background map
                     self.copyIds = digitClass.SelectLinesFromBackgroundMap(pos1, pos2)
                     if len(self.copyIds) > 0:
+                        color = digitClass.settings['symbolHighlight'][1]
+                        colorStr = str(color[0]) + ":" + \
+                            str(color[1]) + ":" + \
+                            str(color[2]) + ":" 
                         dVectTmp = ['d.vect',
                                     'map=%s' % digitClass.settings['backgroundMap'],
                                     'cats=%s' % ",".join(["%d" % v for v in self.copyIds]),
                                     '-i',
-                                    'color=yellow',
-                                    'fcolor=yellow',
-                                    'type=point,line,boundary,centroid']
+                                    'color=%s' % colorStr,
+                                    'fcolor=%s' % colorStr,
+                                    'type=point,line,boundary,centroid',
+                                    'width=2']
                         self.layerTmp = self.Map.AddLayer(type='vector',
                                                           command=dVectTmp)
                         self.UpdateMap(render=True, renderVector=False)

@@ -2,7 +2,6 @@
 MODULE:     wxgui.py
 
 CLASSES:
-    * GRasterDialog
     * GMFrame
     * GMApp
     * ProcessGrcXml
@@ -82,136 +81,116 @@ from   gui_modules.debug import Debug as Debug
 
 menucmd = {}
 
-class GRasterDialog(wx.Frame):
-    def __init__(self,parent,id=-1,title="Set raster layer"):
-        wx.Frame.__init__(self, parent, id , title, size=(50,600))
-
-        # sizers
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        buttsizer = wx.BoxSizer(wx.HORIZONTAL)
-
-        # labels
-        lmap = wx.StaticText(self,-1,"Map name")
-        lvalues = wx.StaticText(self,-1,"List of values to be displayed")
-        lopaque = wx.StaticText(self,-1,"Transparency")
-
-        # checkboxes
-        cboverlay = wx.CheckBox(self, -1, "Overlay (non-null values)")
-        cboverlay.SetValue(True)
-
-        # text entries
-        tmapname = wx.TextCtrl(self,-1,size=(-1,-1))
-        tvalues = wx.TextCtrl(self,-1,size=(-1,-1))
-
-        # buttons
-        bsize=(75,-1)
-        bok = wx.Button(self,-1, "OK",size=bsize)
-        bapply = wx.Button(self,-1, "Apply", size=bsize)
-        bcancel = wx.Button(self,-1, "Cancel", size=bsize)
-
-        buttsizer.Add(bok, 0, wx.ADJUST_MINSIZE, 1)
-        buttsizer.Add(bapply, 0, wx.ADJUST_MINSIZE, 1)
-        buttsizer.Add(bcancel, 0, wx.ADJUST_MINSIZE, 1)
-        sizer.Add(lopaque,1, wx.EXPAND,  1)
-        sizer.Add(lmap,0, wx.EXPAND,  1)
-        sizer.Add(tmapname,0, wx.EXPAND,  1)
-        sizer.Add(lvalues,0, wx.EXPAND,  1)
-        sizer.Add(tvalues,0, wx.EXPAND,  1)
-        sizer.Add(cboverlay,1, wx.EXPAND,  1)
-        sizer.Add(buttsizer,0, wx.ADJUST_MINSIZE, 1)
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-        self.Layout()
-
 class GMFrame(wx.Frame):
     """
     GIS Manager frame with notebook widget for controlling
     GRASS GIS. Includes command console page for typing GRASS
     (and other) commands, tree widget page for managing GIS map layers.
     """
-    def __init__(self, parent, id, title):
-        self.parent = parent
-        self.iconsize = (16, 16)
-        wx.Frame.__init__(self, parent=parent, id=-1, title=title, style=wx.DEFAULT_FRAME_STYLE)
+    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager")):
+        self.parent    = parent
+        self.baseTitle = title
+        self.iconsize  = (16, 16)
 
-        self.CreateStatusBar()
+        wx.Frame.__init__(self, parent=parent, id=id,
+                          style=wx.DEFAULT_FRAME_STYLE)
+        self.SetTitle(self.baseTitle)
+
+        self.SetIcon(wx.Icon(os.path.join(imagepath, 'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
 
         self._auimgr = wx.aui.AuiManager(self)
 
         # creating widgets
-        self.notebook = self.__createNoteBook()
-
-        self.cmdinput = self.__createCommandInput()
+        # -> self.notebook, self.goutput, self.outpage
+        self.notebook  = self.__createNoteBook()
         self.cmdprompt = self.__createCommandPrompt()
-        self.menubar = self.__createMenuBar()
-        toolbar = self.__createToolBar()
-        #self.panel = wx.Panel(self,-1, style= wx.EXPAND)
-        self.sizer= wx.BoxSizer(wx.VERTICAL)
-        # self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
-
-        # do layout
-        self.SetTitle(_("GRASS GIS Layer Manager"))
-        self.SetMinSize((500, 400))
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.smlogo.gif'), wx.BITMAP_TYPE_ANY))
+        self.menubar   = self.__createMenuBar()
+        self.toolbar   = self.__createToolBar()
+        self.statusbar = self.CreateStatusBar(number=1)
 
         # set environmental variables
         os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
         # initialize variables
-        self.disp_idx = 0            # index value for map displays and layer trees
-        self.curr_page   = ''        # currently selected page for layer tree notebook
-        self.curr_pagenum = ''       # currently selected page number for layer tree notebook
-        self.encoding = 'ISO-8859-1' # default encoding for display fonts
-        self.workspaceFile = None    # workspace file
+        self.disp_idx      = 0            # index value for map displays and layer trees
+        self.curr_page     = ''           # currently selected page for layer tree notebook
+        self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
+        self.encoding      = 'ISO-8859-1' # default encoding for display fonts
+        self.workspaceFile = None         # workspace file
 
-        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-        self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster)
+        # bindings
+        self.Bind(wx.EVT_CLOSE,     self.OnCloseWindow)
+        self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster, self.notebook)
 
-        self._auimgr.AddPane(toolbar, wx.aui.AuiPaneInfo().ToolbarPane().
-                              Top().Dockable(False).CloseButton(False).
-                              DestroyOnClose(True).Row(0).Layer(0))
+        # minimal frame size
+        self.SetMinSize((500, 400))
+
+        # AUI stuff
+        #       self._auimgr.AddPane(self.toolbar, wx.aui.AuiPaneInfo().ToolbarPane().
+        #                              Top().Dockable(False).CloseButton(False).
+        #                              DestroyOnClose(True).Row(0).Layer(0))
         self._auimgr.AddPane(self.notebook, wx.aui.AuiPaneInfo().
-                              Left().CentrePane().BestSize((-1,-1)).Dockable(False).
-                              CloseButton(False).DestroyOnClose(True).Row(1).Layer(0))
+                             Left().CentrePane().BestSize((-1,-1)).Dockable(False).
+                             CloseButton(False).DestroyOnClose(True).Row(1).Layer(0))
         self._auimgr.AddPane(self.cmdprompt, wx.aui.AuiPaneInfo().
-                              Bottom().BestSize((-1,25)).Dockable(False).
-                              CloseButton(False).DestroyOnClose(True).
-                              PaneBorder(False).Row(2).Layer(0).Position(0).
-                              Fixed().CaptionVisible(False).PinButton(False))
-        self._auimgr.AddPane(self.cmdinput, wx.aui.AuiPaneInfo().
-                              Bottom().BestSize((-1,25)).Dockable(False).
-                              CloseButton(False).DestroyOnClose(True).
-                              PaneBorder(False).Row(2).Layer(0).Position(1).
-                              CaptionVisible(False))
+                             Bottom().BestSize((-1,25)).Dockable(False).
+                             CloseButton(False).DestroyOnClose(True).
+                             PaneBorder(False).Row(1).Layer(0).Position(0).
+                             CaptionVisible(False))
+
         self._auimgr.Update()
 
-        # item, proportion, flag, border, userData
-#        self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
-#        self.sizer.Add(self.cmdinput, proportion=0, flag=wx.EXPAND, border=1)
-#        self.SetSizer(self.sizer)
-        self.sizer.Fit(self)
-        self.Layout()
         wx.CallAfter(self.notebook.SetSelection, 0)
 
         # start default initial display
         self.NewDisplay()
+    
+    def __doLayout(self):
+        """Do Layout (unused bacause of aui manager...)"""
+        # self.panel = wx.Panel(self,-1, style= wx.EXPAND)
+        # sizer= wx.BoxSizer(wx.VERTICAL)
+        # self.cmdsizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        # item, proportion, flag, border, userData
+        # self.sizer.Add(self.notebook, proportion=1, flag=wx.EXPAND, border=1)
+        # self.sizer.Add(self.cmdinput, proportion=0, flag=wx.EXPAND, border=1)
+        # self.SetSizer(self.sizer)
+
+        # self.sizer.Fit(self)
+        # self.Layout()
 
     def __createCommandPrompt(self):
-        """Creates command prompt"""
-        self.cmdprompt = wx.StaticText(self, -1, "GRASS>")
+        """Creates command-line input area"""
+        self.cmdprompt = wx.Panel(self)
+        
+        label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="GRASS>",
+                              size=(-1, 25))
+        input = wx.TextCtrl(parent=self.cmdprompt, id=wx.ID_ANY,
+                            value="",
+                            style=wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
+                            size=(-1, 25))
+
+        input.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+
+        wx.CallAfter(input.SetInsertionPoint, 0)
+
+        self.Bind(wx.EVT_TEXT_ENTER, self.OnRunCmd,        input)
+        self.Bind(wx.EVT_TEXT,       self.OnUpdateStatusBar, input)
+
+        # layout
+        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(item=label, proportion=0,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER,
+                  border=4)
+        sizer.Add(item=input, proportion=1,
+                  flag=wx.EXPAND | wx.ALL,
+                  border=1)
+
+        self.cmdprompt.SetSizer(sizer)
+        sizer.Fit(self.cmdprompt)
+        self.cmdprompt.Layout()
+
         return self.cmdprompt
-
-    def __createCommandInput(self):
-        """Creates command input area"""
-        self.cmdinput = wx.TextCtrl(self, id=wx.ID_ANY, value="", style=wx.HSCROLL | wx.TE_LINEWRAP |
-                                    wx.TE_PROCESS_ENTER)
-
-        self.cmdinput.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
-        wx.CallAfter(self.cmdinput.SetInsertionPoint, 0)
-
-        self.Bind(wx.EVT_TEXT_ENTER, self.OnRunCmd, self.cmdinput)
-
-        return self.cmdinput
 
     def __createMenuBar(self):
         """Creates menubar"""
@@ -228,7 +207,7 @@ class GMFrame(wx.Frame):
         return self.menubar
 
     def __createMenu(self, menuData):
-        """Cretes menu"""
+        """Creates menu"""
 
         menu = wx.Menu()
         for eachItem in menuData:
@@ -257,30 +236,48 @@ class GMFrame(wx.Frame):
         """Creates notebook widgets"""
 
         # create main notebook widget
-        nbStyle=FN.FNB_FANCY_TABS|FN.FNB_BOTTOM|FN.FNB_NO_X_BUTTON|FN.FNB_NO_NAV_BUTTONS
-        self.notebook = FN.FlatNotebook(self, id=wx.ID_ANY, style=nbStyle)
+        nbStyle = FN.FNB_FANCY_TABS | \
+            FN.FNB_BOTTOM | \
+            FN.FNB_NO_X_BUTTON | \
+            FN.FNB_NO_NAV_BUTTONS 
+        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
         # create displays notebook widget and add it to main notebook page
-        cbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT|FN.FNB_X_ON_TAB|FN.FNB_TABS_BORDER_SIMPLE
+        cbStyle = FN.FNB_VC8 | \
+            FN.FNB_BACKGROUND_GRADIENT | \
+            FN.FNB_X_ON_TAB | \
+            FN.FNB_TABS_BORDER_SIMPLE
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.gm_cb, text="Map layers for each display")
+        self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
         self.goutput = wxgui_utils.GMConsole(self)
-        self.outpage = self.notebook.AddPage(self.goutput, text="Command output")
+        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
 
+        # bingings
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CLOSING, self.onCBPageClosed,  self.gm_cb)
 
-        self.out_sizer = wx.BoxSizer(wx.VERTICAL)
-        self.out_sizer.Add(self.goutput, proportion=1, flag=wx.EXPAND, border=1)
-        self.SetSizer(self.out_sizer)
-        #self.out_sizer.Fit(self.outpage)
-        #self.outpage.Layout()
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(item=self.goutput, proportion=1,
+                  flag=wx.EXPAND | wx.ALL, border=1)
+        self.SetSizer(sizer)
+        # self.out_sizer.Fit(self.outpage)
+        # self.outpage.Layout()
 
         self.Centre()
         return self.notebook
+
+    def __createToolBar(self):
+        """Creates toolbar"""
+
+        self.toolbar = self.CreateToolBar()
+        for each in self.ToolbarData():
+            self.AddToolbarButton(self.toolbar, *each)
+        self.toolbar.Realize()
+
+        return self.toolbar
 
     def OnMenuHighlight(self, event):
         """
@@ -359,13 +356,24 @@ class GMFrame(wx.Frame):
         self.gm_cb.GetPage(event.GetSelection()).maptree.Close(True)
         event.Skip()
 
-    def OnRunCmd(self,event):
+    def OnRunCmd(self, event):
         """Run command"""
 
-        #global gmpath
-        cmd = self.cmdinput.GetValue()
+        cmd = event.GetString()
 
         self.goutput.RunCmd(cmd)
+
+        self.OnUpdateStatusBar(None)
+
+    def GetLogWindow(self):
+        """Get widget for command output"""
+        return self.goutput
+
+    def OnUpdateStatusBar(self, event):
+        if event is None:
+            self.statusbar.SetStatusText("")
+        else:
+            self.statusbar.SetStatusText(_("Type GRASS command and run by pressing ENTER"))
 
     def GetMenuCmd(self, event):
         """Get GRASS command from menu item
@@ -464,6 +472,7 @@ class GMFrame(wx.Frame):
         self.LoadGrcXmlToLayerTree(filename)
 
         self.workspaceFile = filename
+        self.SetTitle(self.baseTitle + " - " +  os.path.basename(self.workspaceFile))
 
     def LoadGrcXmlToLayerTree(self, filename):
         """Load layer tree definition stored in GRC XML file
@@ -524,9 +533,11 @@ class GMFrame(wx.Frame):
             maptree.Map.ReverseListOfLayers()
 
             file.close()
-        except:
-            dlg = wx.MessageDialog(self, _("Unable to read workspace file <%s>.") % filename,
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
+        except Exception, err:
+            dlg = wx.MessageDialog(parent=self,
+                                   message=_("Unable to read workspace file <%s>.\n\n%s") % \
+                                       (filename, err),
+                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
             return False
@@ -562,6 +573,7 @@ class GMFrame(wx.Frame):
 
         self.SaveLayerTreeToGrcXml(filename)
         self.workspaceFile = filename
+        self.SetTitle(self.baseTitle + " - " + os.path.basename(self.workspaceFile))
 
     def OnWorkspaceSave(self, event=None):
         """Save file with workspace definition"""
@@ -685,7 +697,7 @@ class GMFrame(wx.Frame):
 
         Debug.msg(4, "GMFrame.OnWorkspaceClose(): file=%s" % self.workspaceFile)
         self.workspaceFile = None
-
+        self.SetTitle(self.baseTitle)
 
     def RulesCmd(self, event):
         """
@@ -802,14 +814,6 @@ class GMFrame(wx.Frame):
         self.profile.Update()
 
 
-    def __createToolBar(self):
-        """Creates toolbar"""
-
-        toolbar = self.CreateToolBar()
-        for each in self.ToolbarData():
-            self.AddToolbarButton(toolbar, *each)
-        toolbar.Realize()
-
     def AddToolbarButton(self, toolbar, label, icon, help, handler):
         """Adds button to the given toolbar"""
 
@@ -880,7 +884,8 @@ class GMFrame(wx.Frame):
         pointdata = (icon, size)
 
         self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY,
-                                              title=_("GRASS Attribute Table Manager: %s") % mapname,
+                                              title=_("GRASS GIS Attribute Table Manager - "
+                                                      "vector map layer <%s>") % mapname,
                                               size=wx.Size(500,300), vectmap=mapname,
                                               pointdata=pointdata)
 
@@ -1220,7 +1225,6 @@ class MapsetAccess(wx.Dialog):
 
         sizer.Fit(self)
 
-
 class GMApp(wx.App):
     """
     GMApp class
@@ -1240,7 +1244,7 @@ class GMApp(wx.App):
         wx.Yield()
 
         # create and show main frame
-        mainframe = GMFrame(parent=None, id=wx.ID_ANY, title="")
+        mainframe = GMFrame(parent=None, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager"))
 
         mainframe.Show()
         self.SetTopWindow(mainframe)
@@ -1370,6 +1374,48 @@ def reexec_with_pythonw():
     not sys.executable.endswith('MacOS/Python'):
     print >> sys.stderr, _('re-executing using pythonw')
     os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
+
+### 2007/11 -- seems to be unused...
+# class GRasterDialog(wx.Frame):
+#     def __init__(self,parent,id=-1,title="Set raster layer"):
+#         wx.Frame.__init__(self, parent, id , title, size=(50,600))
+
+#         # sizers
+#         sizer = wx.BoxSizer(wx.VERTICAL)
+#         buttsizer = wx.BoxSizer(wx.HORIZONTAL)
+
+#         # labels
+#         lmap = wx.StaticText(self,-1,"Map name")
+#         lvalues = wx.StaticText(self,-1,"List of values to be displayed")
+#         lopaque = wx.StaticText(self,-1,"Transparency")
+
+#         # checkboxes
+#         cboverlay = wx.CheckBox(self, -1, "Overlay (non-null values)")
+#         cboverlay.SetValue(True)
+
+#         # text entries
+#         tmapname = wx.TextCtrl(self,-1,size=(-1,-1))
+#         tvalues = wx.TextCtrl(self,-1,size=(-1,-1))
+
+#         # buttons
+#         bsize=(75,-1)
+#         bok = wx.Button(self,-1, "OK",size=bsize)
+#         bapply = wx.Button(self,-1, "Apply", size=bsize)
+#         bcancel = wx.Button(self,-1, "Cancel", size=bsize)
+
+#         buttsizer.Add(bok, 0, wx.ADJUST_MINSIZE, 1)
+#         buttsizer.Add(bapply, 0, wx.ADJUST_MINSIZE, 1)
+#         buttsizer.Add(bcancel, 0, wx.ADJUST_MINSIZE, 1)
+#         sizer.Add(lopaque,1, wx.EXPAND,  1)
+#         sizer.Add(lmap,0, wx.EXPAND,  1)
+#         sizer.Add(tmapname,0, wx.EXPAND,  1)
+#         sizer.Add(lvalues,0, wx.EXPAND,  1)
+#         sizer.Add(tvalues,0, wx.EXPAND,  1)
+#         sizer.Add(cboverlay,1, wx.EXPAND,  1)
+#         sizer.Add(buttsizer,0, wx.ADJUST_MINSIZE, 1)
+#         self.SetSizer(sizer)
+#         sizer.Fit(self)
+#         self.Layout()
 
 if __name__ == "__main__":
   reexec_with_pythonw()
