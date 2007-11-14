@@ -36,6 +36,7 @@ GISBASE_SYSTEM="/Library/GRASS/$grass_ver"
 # for extra utils
 # hack - ideally user should have these in their PATH, but make sure here
 PATH="@GDAL_BIN_PATH@:@PROJ_BIN_PATH@:$PATH"
+export PATH
 
 # add some OS X style app support paths, and create user one if missing.
 mkdir -p "$GISBASE_USER/Modules/bin"
@@ -79,7 +80,10 @@ export GRASS_FONT_CAP
 # start X11 if not running - no need to check if running when using 'open'
 # some users may be annoyed by this, but X11 required for some stuff for now
 if [ -d "/Applications/Utilities/X11.app" ] ; then
-	open /Applications/Utilities/X11.app
+	# no need to start Leopard X11.app
+	if [ ! -d "/usr/X11" ] ; then
+		open /Applications/Utilities/X11.app
+	fi
 fi
 
 # xterm - make sure X11 is in PATH
@@ -87,11 +91,12 @@ pathX11=`echo "$PATH" | grep '/usr/X11\(R6\)\?/bin'`
 if [ ! "$pathX11" ] ; then
 	if [ -d "/usr/X11" ] ; then
 		PATH="$PATH:/usr/X11/bin"
-	else
+		export PATH
+	elif [ -d "/usr/X11R6" ] ; then
 		PATH="$PATH:/usr/X11R6/bin"
+		export PATH
 	fi
 fi
-export PATH
 
 # default to internal X11 Tcl/Tk
 @TCLTK_INTERNAL@if [ ! "$GRASS_TCLSH" ] ; then
