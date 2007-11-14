@@ -214,10 +214,15 @@ read_vpoints (char *name, char *mapset)
 		*cc = '\0';
 		vector.layer[vec].epssuf = G_store(cc + sizeof(char));
 		vector.layer[vec].epstype = 2;
-	    }
-	    printf ("epstype=%d, pre=%s, suf=%s\n", vector.layer[vec].epstype,
-		vector.layer[vec].epspre, vector.layer[vec].epssuf);
 
+		G_debug(2, "epstype=%d, pre=[%s], suf=[%s]", vector.layer[vec].epstype,
+		    vector.layer[vec].epspre, vector.layer[vec].epssuf);
+	    }
+	    else
+	    {
+		G_debug(2, "epstype=%d, eps file=[%s]", vector.layer[vec].epstype,
+		    vector.layer[vec].epspre);
+	    }
 	    continue;
 	}	
 
