@@ -1426,15 +1426,15 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         # buttons
         btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnReload = wx.Button(self, wx.ID_UNDO, _("&Reload"))
+        #btnReload = wx.Button(self, wx.ID_UNDO, _("&Reload"))
         btnOk = wx.Button(self, wx.ID_OK)
         btnOk.SetDefault()
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
-        btnSizer.AddButton(btnReload)
-        btnSizer.SetNegativeButton(btnReload)
+        #btnSizer.AddButton(btnReload)
+        #btnSizer.SetNegativeButton(btnReload)
         btnSizer.AddButton(btnApply)
         btnSizer.AddButton(btnOk)
         btnSizer.Realize()
@@ -1457,7 +1457,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         # bindings
         # buttons
-        btnReload.Bind(wx.EVT_BUTTON, self.OnReload)
+        #btnReload.Bind(wx.EVT_BUTTON, self.OnReload)
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
         btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
         btnAddCat.Bind(wx.EVT_BUTTON, self.OnAddCat)
@@ -1532,13 +1532,20 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         if not hasattr(self, "popupID1"):
             self.popupID1 = wx.NewId()
             self.popupID2 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.OnItemDelete, id=self.popupID1)
+            self.popupID3 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnItemDelete,    id=self.popupID1)
             self.Bind(wx.EVT_MENU, self.OnItemDeleteAll, id=self.popupID2)
+            self.Bind(wx.EVT_MENU, self.OnReload, id=self.popupID3)
 
         # generate popup-menu
         menu = wx.Menu()
         menu.Append(self.popupID1, _("Delete selected"))
+        if self.list.GetFirstSelected() == -1:
+            menu.Enable(self.popupID1, False)
+
         menu.Append(self.popupID2, _("Delete all"))
+        menu.AppendSeparator()
+        menu.Append(self.popupID3, _("Reload"))
 
         self.PopupMenu(menu)
         menu.Destroy()

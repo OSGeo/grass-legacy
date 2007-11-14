@@ -529,14 +529,17 @@ class Map(object):
         else:
             return None
 
-    def GetListOfLayers(self, l_type=None, l_mapset=None, l_active=None, l_hidden=None):
+    def GetListOfLayers(self, l_type=None, l_mapset=None, l_name=None,
+                        l_active=None, l_hidden=None):
         """
         Returns list of layers (including overlays [l_type='overlay'] of
         selected type or list of all layers. It
         is also possible to get list of active or hidden layers.
 
         Parameters:
-            l_type	 - layer type, e.g. raster/vector/wms/overlay ...
+            l_type   - layer type, e.g. raster/vector/wms/overlay ...
+            l_mapset - all layer from given mapset
+            l_name   - all layer with given name
             l_active - only layers with 'active' attribute set to True or False
             l_hidden - only layers with 'hidden' attribute set to True or False
 
@@ -554,6 +557,10 @@ class Map(object):
 
             # mapset
             if l_mapset != None and layer.GetMapset() != l_mapset:
+                continue
+
+            # name
+            if l_name != None and layer.name != l_name:
                 continue
 
             # hidden and active layers
