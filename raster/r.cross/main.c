@@ -110,7 +110,7 @@ main (int argc, char *argv[])
     for (nfiles = 0; (name = parm.input->answers[nfiles]); nfiles++)
     {
         if (nfiles >= NFILES)
-            G_fatal_error (_("%s: more than %d files not allowed"), G_program_name(), NFILES);
+            G_fatal_error (_("More than %d files not allowed"), NFILES);
         mapset = G_find_cell2 (name, "");
         if (!mapset)
             G_fatal_error (_("Raster map <%s> not found"), name);

@@ -124,7 +124,7 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	_("Creates/Modifies the color table associated with a raster map layer.");
+	_("Creates/modifies the color table associated with a raster map layer.");
 
     opt.map = G_define_standard_option(G_OPT_R_MAP);
     opt.map->required      = NO;
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 
     mapset = G_find_cell2(name, "");
     if (mapset == NULL)
-	G_fatal_error(_("%s - map not found"), name);
+	G_fatal_error(_("Raster map <%s> not found"), name);
 
     if (remove)
     {
@@ -320,7 +320,7 @@ int main(int argc, char **argv)
 	/* use color from another map (cmap) */
 	cmapset = G_find_cell2(cmap, "");
 	if (cmapset == NULL)
-	    G_fatal_error(_("%s - map not found"), cmap);
+	    G_fatal_error(_("Raster map <%s> not found"), cmap);
 
 	if (G_read_colors(cmap, cmapset, &colors) < 0)
 	    G_fatal_error(_("Unable to read color table for %s"), cmap);

@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
        fp = stdout;
     else
        if(NULL == (fp = fopen(outfile, "w")))
-          G_fatal_error("Unable to open file for [%s]", outfile );
+          G_fatal_error(_("Unable to open file <%s>"), outfile );
 
     if (!flag.noheader->answer)
     {

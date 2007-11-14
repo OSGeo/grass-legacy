@@ -187,7 +187,7 @@ void N_write_array_2d_to_rast(N_array_2d * array, char *name)
     /*Open the new map */
     map = G_open_raster_new(name, type);
     if (map < 0)
-	G_fatal_error(_("Unable to create map <%s>"), name);
+	G_fatal_error(_("Unable to create raster map <%s>"), name);
 
     if (type == CELL_TYPE)
 	rast = G_allocate_raster_buf(type);
