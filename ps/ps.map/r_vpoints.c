@@ -219,21 +219,24 @@ read_vpoints (char *name, char *mapset)
 
 	    G_chop(data);
 	    vector.layer[vec].epspre = G_store(data);
+
+	    /* epstype: 0 - no eps, 1 - common eps, 2 - eps for each category */
 	    vector.layer[vec].epstype = 1;
-	    
-	    /* find # character */ 
+
+	    /* find dynamic filename by cat number character */
+	    /* pre is filename before the $, suf is filename after the $ */
 	    cc = (char *) strchr ( vector.layer[vec].epspre, '$');
 	    if ( cc != NULL )
 	    {
 		*cc = '\0';
 		vector.layer[vec].epssuf = G_store(cc + sizeof(char));
 		vector.layer[vec].epstype = 2;
-	    }
-	    printf ("epstype=%d, pre=%s, suf=%s\n", vector.layer[vec].epstype,
-		vector.layer[vec].epspre, vector.layer[vec].epssuf);
 
+		G_debug(2, "epstype=%d, pre=%s, suf=%s", vector.layer[vec].epstype,
+		    vector.layer[vec].epspre, vector.layer[vec].epssuf);
+	    }
 	    continue;
-	}	
+	}
 
 	if (KEY("size"))
 	{
