@@ -42,6 +42,7 @@ import wx.lib.flatnotebook as FN
 import sqlbuilder
 import grassenv
 import gcmd
+import globalvar
 from debug import Debug as Debug
 
 class Log:
@@ -60,7 +61,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
     """
     Support virtual attribute list class
     """
-    def __init__(self, parent, log, mapInfo, layer, gismgr=None, pointdata=None):
+    def __init__(self, parent, log, mapInfo, layer):
         wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
                               style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES | wx.LC_VIRTUAL)
 
@@ -69,15 +70,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         #
         self.log     = log
         self.mapInfo = mapInfo
-        self.gismgr  = gismgr # Layer Manager instance or None
         self.layer   = layer
-        self.qlayer  = None
-        if pointdata:
-            self.icon      = pointdata[0]
-            self.pointsize = pointdata[1]
-        else:
-            self.icon      = ''
-            self.pointsize = ''
 
         self.columns              = {} # <- LoadData()
         self.selectedCats         = []
@@ -98,12 +91,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
                                                           (16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        if self.gismgr: # Layer Manager is running?
-            self.mapdisp = self.gismgr.curr_page.maptree.mapdisplay
-            self.map     = self.gismgr.curr_page.maptree.Map
-        else:
-            self.mapdisp = self.map = None
-
         # These two should probably be passed to init more cleanly
         # setting the numbers of items = number of elements in the dictionary
         self.itemDataMap  = {}
@@ -122,7 +109,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.OnItemActivated)
         self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick) # sorting
         # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
         # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
@@ -132,13 +118,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         # self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
         # self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
-
-        if self.gismgr:
-            self.mapdisp.MapWindow.Bind(wx.EVT_LEFT_DOWN, self.OnMapClick)
-
-            # self.timer = wx.PyTimer(self.RedrawMap)
-            # check each 0.1s
-            # self.timer.Start(100)
 
     def LoadData(self, layer, cols='*', where=''):
         """Load data into list"""
@@ -166,8 +145,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
                 self.log.write(_("Can display only 256 columns"))
 
         ### self.mapInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
-        # select values (only one record)
-
         # 
         # read data
         #
@@ -211,13 +188,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
             self.SetColumnWidth(col=i, width=self.columns[col]['length'] * 6) # FIXME
             i += 1
 
-
-
-    def OnCloseWindow(self, event):
-        """Close attribute manager window"""
-        if self.qlayer:
-            self.map.DeleteLayer(self.qlayer)
-
     def OnItemSelected(self, event):
         """Item selected. Add item to selected cats..."""
         self.selectedCats.append(int(self.GetItemText(event.m_itemIndex)))
@@ -232,14 +202,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         self.selectedCats.sort()
 
         print "#-", self.selectedCats
-        event.Skip()
-
-    def OnItemActivated(self, event):
-        """Item activated, log purpose"""
-        self.currentItem = event.m_itemIndex
-        # self.log.write("OnItemActivated: %s\nTopItem: %s\n" %
-        #                (self.GetItemText(self.currentItem), self.GetTopItem()))
-        print "#"
         event.Skip()
 
     def GetColumnText(self, index, col):
@@ -320,62 +282,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         """Get column/item"""
         item = self.GetItem(index, col)
         return item.GetText()
-
-    def RedrawMap(self):
-        """Redraw a map"""
-        if self.lastTurnSelectedCats[:] != self.selectedCats[:]:
-            if self.qlayer:
-                self.map.DeleteLayer(self.qlayer)
-
-            cats = self.selectedCats
-            catstr = ""
-            i = 0
-            while 1:
-                next = 0
-                j = 0
-                while 1:
-                    try:
-                        if cats[i+j]+1 == cats[i+j+1]:
-                            next +=1
-                        else:
-                            break
-                    except IndexError:
-                        next = 0
-                    if j+i >= len(cats)-2:
-                        break
-                    else:
-                        j += 1
-                if next > 1:
-                    catstr += "%d-%d," % (cats[i], cats[i+next])
-                    i += next
-                else:
-                    catstr += "%d," % (cats[i])
-
-                i += 1
-                if i >= len(cats):
-                    break
-
-            if catstr[-1] == ",":
-                catstr = string.join(catstr[:-1],"")
-
-
-            # FIXME: width=1, because of maybe bug in PNG driver elusion
-            # should be width=3 or something like this
-            cmd = ["d.vect",
-                   "map=%s" % self.vectmap,
-                   "color=yellow",
-                   "fcolor=yellow",
-                   "cats=%s" % catstr,
-                   "width=3"]
-            if self.icon:
-                gcmd.append("icon=%s" % (self.icon))
-            if self.pointsize:
-                gcmd.append("size=%s" % (self.pointsize))
-
-                self.qlayer = self.map.AddLayer(type='vector', name='qlayer', command=cmd,
-                                                l_active=True, l_hidden=True, l_opacity=1.0)
-            self.mapdisp.ReDraw()
-            self.lastTurnSelectedCats = self.selectedCats[:]
 
     def OnMapClick(self, event):
         """
@@ -482,17 +388,32 @@ class AttributeManager(wx.Frame):
 
         self.vectmap   = vectmap
         self.pointdata = pointdata
-        self.parent    = parent
-        self.gismgr    = parent
+        self.parent    = parent # GMFrame
+        try:
+            self.map        = self.parent.curr_page.maptree.Map
+            self.mapdisplay = self.parent.curr_page.maptree.mapdisplay
+        except:
+            self.map = self.mapdisplay = None
+
+        if pointdata:
+            self.icon      = pointdata[0]
+            self.pointsize = pointdata[1]
+        else:
+            self.icon      = None
+            self.pointsize = None
+
 
         # status bar log class
         self.log = Log(self) # -> statusbar
+
+        # query map layer (if parent (GMFrame) is given)
+        self.qlayer = None
 
         # -> layers / tables description
         self.mapInfo = VectorDBInfo(self.vectmap) 
 
         if len(self.mapInfo.layers.keys()) == 0:
-            dlg = wx.MessageDialog(patent=parent,
+            dlg = wx.MessageDialog(patent=self.parent,
                                    message=_("No attribute table linked to "
                                              "vector map <%s> found.") % \
                                        self.vectmap,
@@ -543,8 +464,8 @@ class AttributeManager(wx.Frame):
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
         
         # events
-        self.btnApply.Bind(wx.EVT_BUTTON,         self.OnApplySqlStatement)
-        self.btnQuit.Bind(wx.EVT_BUTTON,          self.OnCloseWindow)
+        self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApplySqlStatement)
+        self.btnQuit.Bind(wx.EVT_BUTTON,            self.OnCloseWindow)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.browsePage)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
 
@@ -552,6 +473,12 @@ class AttributeManager(wx.Frame):
         self.__layout()
 
         self.SetMinSize(self.GetBestSize())
+
+    def __del__(self):
+        pass
+        #         if self.qlayer and self.map:
+        #             self.map.DeleteLayer(self.qlayer)
+        #             self.mapdisplay.ReRender(None)
 
     def __createBrowsePage(self):
         """Create browse tab page"""
@@ -565,9 +492,10 @@ class AttributeManager(wx.Frame):
             listBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                    label=" %s " % _("Attribute data"))
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
-            win = VirtualAttributeList(parent=panel, gismgr=self.parent, log=self.log,
-                                       mapInfo=self.mapInfo, layer=layer,
-                                       pointdata=self.pointdata) # layer
+            win = VirtualAttributeList(panel, self.log,
+                                       self.mapInfo, layer)
+            win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
+
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
                           border=3)
@@ -639,19 +567,19 @@ class AttributeManager(wx.Frame):
             
             panel.SetSizer(pageSizer)
 
-            self.layerPage[layer]= {'list'     : win,
-                                    'simple'   : sqlSimple,
-                                    'advanced' : sqlAdvanced,
-                                    'where'    : sqlWhere,
-                                    'builder'  : btnSqlBuilder,
-                                    'statement': sqlStatement}
+            self.layerPage[layer]= {'data'     : win.GetId(),
+                                    'simple'   : sqlSimple.GetId(),
+                                    'advanced' : sqlAdvanced.GetId(),
+                                    'where'    : sqlWhere.GetId(),
+                                    'builder'  : btnSqlBuilder.GetId(),
+                                    'statement': sqlStatement.GetId()}
                                 
 
         self.browsePage.SetSelection(0) # select first layer
         self.layer = self.mapInfo.layers.keys()[0]
         self.OnChangeSql(None)
         self.log.write(_("Number of loaded records: %d") % \
-                           self.layerPage[self.layer]['list'].GetItemCount())
+                           self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
     def __createManagePage(self):
         """Create manage page (create/link and alter tables)"""
@@ -678,6 +606,10 @@ class AttributeManager(wx.Frame):
             tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
             
             list = self.__createTableDesc(panel, table)
+            list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnTableRightUp) #wxMSW
+            list.Bind(wx.EVT_RIGHT_UP,            self.OnTableRightUp) #wxGTK
+            self.layerPage[layer]['tableData'] = list.GetId()
+
             tableSizer.Add(item=list,
                            flag=wx.ALL | wx.EXPAND, 
                            proportion=1,
@@ -695,7 +627,7 @@ class AttributeManager(wx.Frame):
 
             panel.SetSizer(pageSizer)
 
-            self.layerPage[layer]['dbinfo'] = infoCollapse
+            self.layerPage[layer]['dbinfo'] = infoCollapse.GetId()
 
         self.managePage.SetSelection(0) # select first layer
         self.layer = self.mapInfo.layers.keys()[0]
@@ -717,49 +649,126 @@ class AttributeManager(wx.Frame):
 
         return list
 
+    def __layout(self):
+        """Do layout"""
+        # frame body
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+        # buttons
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(self.btnQuit)
+        btnSizer.AddButton(self.btnApply)
+        btnSizer.Realize()
+
+        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
+        mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+
+        self.Layout()
+
+    def OnTableRightUp(self, event):
+        """Table description area, context menu"""
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.popupID2 = wx.NewId()
+            self.popupID3 = wx.NewId()
+            self.popupID4 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnTableItemAdd,       id=self.popupID1)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDelete,    id=self.popupID2)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDeleteAll, id=self.popupID3)
+            self.Bind(wx.EVT_MENU, self.OnTableReload,        id=self.popupID4)
+
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupID1, _("Add new column"))
+        menu.AppendSeparator()
+        menu.Append(self.popupID2, _("Delete selected"))
+        if self.FindWindowById(self.layerPage[self.layer]['tableData']).GetFirstSelected() == -1:
+            menu.Enable(self.popupID2, False)
+        menu.Append(self.popupID3, _("Delete all"))
+        menu.AppendSeparator()
+        menu.Append(self.popupID4, _("Reload"))
+
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def OnTableItemDelete(self, event):
+        """Delete selected item(s) from the list (layer/category pair)"""
+        list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+        item = list.GetFirstSelected()
+        while item != -1:
+            # layer = int (self.list.GetItem(item, 0).GetText())
+            # cat = int (self.list.GetItem(item, 1).GetText())
+            list.DeleteItem(item)
+            # self.cats[layer].remove(cat)
+
+            item = list.GetFirstSelected()
+            
+        event.Skip()
+        
+    def OnTableItemDeleteAll(self, event):
+        """Delete all items from the list"""
+        self.FindWindowById(self.layerPage[self.layer]['tableData']).DeleteAllItems()
+        # self.cats = {}
+
+        event.Skip()
+
+    def OnTableReload(self, event):
+        """Reload table description"""
+        pass
+
+    def OnTableItemAdd(self, event):
+        """Add new column to the table"""
+        pass
+
     def OnLayerPageChanged(self, event):
         """Layer tab changed"""
         pageNum = event.GetSelection()
         self.layer = self.mapInfo.layers.keys()[pageNum]
         self.OnChangeSql(None)
         self.log.write(_("Number of loaded records: %d") % \
-                           self.layerPage[self.layer]['list'].GetItemCount())
+                           self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
     def OnChangeSql(self, event):
         """Switch simple/advanced sql statement"""
-        if self.layerPage[self.layer]['simple'].GetValue():
-            self.layerPage[self.layer]['where'].Enable(True)
-            self.layerPage[self.layer]['statement'].Enable(False)
-            self.layerPage[self.layer]['builder'].Enable(False)
+        if self.FindWindowById(self.layerPage[self.layer]['simple']).GetValue():
+            self.FindWindowById(self.layerPage[self.layer]['where']).Enable(True)
+            self.FindWindowById(self.layerPage[self.layer]['statement']).Enable(False)
+            self.FindWindowById(self.layerPage[self.layer]['builder']).Enable(False)
         else:
-            self.layerPage[self.layer]['where'].Enable(False)
-            self.layerPage[self.layer]['statement'].Enable(True)
-            self.layerPage[self.layer]['builder'].Enable(True)
+            self.FindWindowById(self.layerPage[self.layer]['where']).Enable(False)
+            self.FindWindowById(self.layerPage[self.layer]['statement']).Enable(True)
+            self.FindWindowById(self.layerPage[self.layer]['builder']).Enable(True)
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
-        if self.layerPage[self.layer]['simple'].GetValue():
+        if self.FindWindowById(self.layerPage[self.layer]['simple']).GetValue():
             # simple sql statement
-            where = self.layerPage[self.layer]['where'].GetValue().strip()
+            where = self.FindWindowById(self.layerPage[self.layer]['where']).GetValue().strip()
             if len(where) > 0:
-                self.layerPage[self.layer]['list'].LoadData(self.layer, where=where)
+                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
+                    self.layer, where=where)
             else:
-                self.layerPage[self.layer]['list'].LoadData(self.layer)
+                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
+                    self.layer)
         else:
             # advanced sql statement
             valid, cols, where = \
                 self.ValidateSelectStatement( \
-                self.layerPage[self.layer]['statement'].GetValue().strip())
+                self.FindWindowById(self.layerPage[self.layer]['statement']).GetValue().strip())
 
             Debug.msg(4, "AttributeManager.OnApplySqlStatament(): valid=%s, cols=%s, where=%s" %
                       (valid, cols, where))
 
             if valid is True:
-                self.layerPage[self.layer]['list'].LoadData(self.layer, cols=cols, where=where)
+                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
+                    self.layer, cols=cols, where=where)
 
         # update statusbar
         self.log.write(_("Number of loaded records: %d") % \
-                           self.layerPage[self.layer]['list'].GetItemCount())
+                           self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
     def ValidateSelectStatement(self, statement):
         """Validate Select SQL statement
@@ -803,10 +812,12 @@ class AttributeManager(wx.Frame):
     def OnInfoPaneChanged(self, event):
         """Collapse database connection info box"""
 
-        if self.layerPage[self.layer]['dbinfo'].IsExpanded():
-            self.layerPage[self.layer]['dbinfo'].SetLabel(self.infoCollapseLabelCol)
+        if self.FindWindowById(self.layerPage[self.layer]['dbinfo']).IsExpanded():
+            self.FindWindowById(self.layerPage[self.layer]['dbinfo']).SetLabel( \
+                self.infoCollapseLabelCol)
         else:
-            self.layerPage[self.layer]['dbinfo'].SetLabel(self.infoCollapseLabelExp)
+             self.FindWindowById(self.layerPage[self.layer]['dbinfo']).SetLabel( \
+                 self.infoCollapseLabelExp)
 
         # redo layout
         self.Layout()
@@ -852,9 +863,8 @@ class AttributeManager(wx.Frame):
 
     def OnCloseWindow(self, event):
         """Cancel button pressed"""
-        for item in self.layerPage.itervalues():
-            item['list'].OnCloseWindow(event)
         self.Close()
+        event.Skip()
 
     def OnBuilder(self,event):
         """SQL Builder button pressed"""
@@ -867,29 +877,78 @@ class AttributeManager(wx.Frame):
     def OnSQLBuilder(self, event):
         pass
 
-    def __layout(self):
-        """Do layout"""
-        #self.panel = wx.Panel(self,-1, style=wx.SUNKEN_BORDER)
+    def OnDataItemActivated(self, event):
+        """Item activated, log purpose"""
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        list.currentItem = event.m_itemIndex
 
-        #self.label_query.SetMinSize((500,50))
-#         self.sqlWhere.SetMinSize((250,-1))
+        if self.map and self.mapdisplay:
+            #                list.lastTurnSelectedCats[:] != list.selectedCats[:]:
 
-        # frame body
-        mainSizer = wx.BoxSizer(wx.VERTICAL)
+            # add map layer with higlighted vector features
+            self.AddQueryMapLayer(self.map)
+            self.mapdisplay.MapWindow.UpdateMap(render=True)
+                        
+            #list.lastTurnSelectedCats = list.selectedCats[:]
 
-        # buttons
-        btnSizer = wx.StdDialogButtonSizer()
-        btnSizer.AddButton(self.btnQuit)
-        btnSizer.AddButton(self.btnApply)
-        btnSizer.Realize()
+        event.Skip()
 
-        mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
-        mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
+    def AddQueryMapLayer(self, map):
+        """Redraw a map
 
-        self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
+        Return True if map has been redrawn, False if no map is given
+        """
+        if self.qlayer:
+            map.DeleteLayer(self.qlayer)
+            
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        cats = list.selectedCats[:]
+        
+        #         for i in range(len(cats)):
+        #             next = 0
+        #             j = 0
+        #             while True:
+        #                 try:
+        #                     if cats[i+j]+1 == cats[i+j+1]:
+        #                         next += 1
+        #                     else:
+        #                         break
+        #                 except IndexError:
+        #                     next = 0
+        #                 if j+i >= len(cats)-2:
+        #                     break
+        #                 else:
+        #                     j += 1
+        #                 if next > 1:
+        #                     catstr += "%d-%d," % (cats[i], cats[i+next])
+        #                     i += next
+        #                 else:
+        #                     catstr += "%d," % (cats[i])
+        
+        #             print "#", catstr
+        
+        #             if catstr[-1] == ",":
+        #                 catstr = string.join(catstr[:-1],"")
 
-        self.Layout()
+        digitClass = self.mapdisplay.digit
+        color = digitClass.settings['symbolHighlight'][1]
+        colorStr = str(color[0]) + ":" + \
+            str(color[1]) + ":" + \
+            str(color[2]) + ":" 
+        cmd = ["d.vect",
+               "map=%s" % self.vectmap,
+               "color=%s" % colorStr,
+               "fcolor=%s" % colorStr,
+               #               "cats=%s" % (",".join(["%d" % c for c in cats])),
+               "cats=%s" % str(int(list.GetItemText(list.currentItem))), # FIXME
+               "width=%d"  % digitClass.settings['lineWidth'][0]] # FIXME (units)
+        if self.icon:
+            gcmd.append("icon=%s" % (self.icon))
+        if self.pointsize:
+            gcmd.append("size=%s" % (self.pointsize))
+
+        self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
+                                   l_active=True, l_hidden=True, l_opacity=1.0)
 
 class TableListCtrl(wx.ListCtrl,
                     listmix.ListCtrlAutoWidthMixin,

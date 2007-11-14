@@ -62,6 +62,7 @@ import dbm
 import defaultfont
 import histogram
 import profile
+import globalvar
 from digit import Digit               as Digit
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from digit import DigitZBulkDialog    as DigitZBulkDialog
@@ -72,7 +73,10 @@ import images
 imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
-# for cmdlinef
+###
+### global variables
+###
+# for standalone app
 cmdfilename = None
 
 class Command(Thread):
@@ -2247,6 +2251,9 @@ class MapFrame(wx.Frame):
         Rerender button clicked
         """
         Debug.msg(3, "BufferedWindow.ReRender():")
+        qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)
+        for layer in qlayer:
+            self.Map.DeleteLayer(layer)
         self.MapWindow.UpdateMap(render=True)
 
     def OnPointer(self, event):
