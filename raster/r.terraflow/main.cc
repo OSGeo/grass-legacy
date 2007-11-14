@@ -224,7 +224,7 @@ void check_header(char* cellname) {
   char *mapset;
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error(_("cell file [%s] not found"), cellname);
+    G_fatal_error(_("Raster map <%s> not found"), cellname);
   }
   /* read cell header */
   struct Cell_head cell_hd;
@@ -283,24 +283,24 @@ void check_args() {
 
   /* check if filled elevation grid name is  valid */
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->filled_grid);
   }
   /* check if output grid names are valid */
   if (G_legal_filename (opt->dir_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->dir_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->dir_grid);
   }
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->filled_grid);
   }
   if (G_legal_filename (opt->flowaccu_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->flowaccu_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->flowaccu_grid);
   }
   if (G_legal_filename (opt->watershed_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->watershed_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->watershed_grid);
   }
 #ifdef OUTPU_TCI
   if (G_legal_filename (opt->tci_grid) < 0) {
-  G_fatal_error(_("[%s] is an illegal name"), opt->tci_grid);
+  G_fatal_error(_("<%s> is an illegal file name"), opt->tci_grid);
   }
 #endif
   
@@ -369,7 +369,7 @@ setFlowAccuColorTable(char* cellname) {
 
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error (_("cell file [%s] not found"), cellname);
+    G_fatal_error (_("Raster map <%s> not found"), cellname);
   }
   if (G_read_range(cellname, mapset, &r) == -1) {
     G_fatal_error(_("cannot read range"));
@@ -409,7 +409,7 @@ setSinkWatershedColorTable(char* cellname) {
 
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error (_("cell file [%s] not found"), cellname);
+    G_fatal_error (_("Raster map <%s> not found"), cellname);
   }
   if (G_read_range(cellname, mapset, &r) == -1) {
     G_fatal_error(_("cannot read range"));

@@ -85,7 +85,7 @@ main(int argc, char **argv)
    module->keywords = _("raster");
     module->description = 
        _("Filters and generates a depressionless elevation map and a flow "
-       "direction map from a given elevation layer");
+       "direction map from a given elevation layer.");
 
    opt1 = G_define_standard_option(G_OPT_R_INPUT);
    opt1->description= _("Name of existing raster map containing elevation surface") ;
@@ -123,7 +123,7 @@ main(int argc, char **argv)
 
    flag1 = G_define_flag() ;
    flag1->key        = 'f' ;
-   flag1->description= _("find unresolved areas only") ;
+   flag1->description= _("Find unresolved areas only") ;
    flag1->answer     = '0' ;
 
 
@@ -160,7 +160,7 @@ main(int argc, char **argv)
 /* get the name of the elevation map layer for filling */
    map_mapset = G_find_cell(map_name,"");
    if (!map_mapset)
-      G_fatal_error ( _("Could not access %s layer"), map_name);
+      G_fatal_error ( _("Raster map <%s> not found"), map_name);
 
 /* open the maps and get their file id  */
    map_id=G_open_cell_old(map_name, map_mapset);

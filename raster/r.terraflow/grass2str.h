@@ -57,12 +57,12 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
   char *mapset;
   mapset = G_find_cell (cellname, "");
   if (mapset == NULL)
-    G_fatal_error ("cell file [%s] not found", cellname);
+    G_fatal_error (_("Raster map <%s> not found"), cellname);
   
   /* open map */
   int infd;
   if ( (infd = G_open_cell_old (cellname, mapset)) < 0)
-    G_fatal_error ("Cannot open raster map [%s]", cellname);
+    G_fatal_error (_("Unable to open raster map <%s>"), cellname);
   
   /* determine map type (CELL/FCELL/DCELL) */
   RASTER_MAP_TYPE data_type;
@@ -82,7 +82,7 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 	
 	/* read input map */
     if (G_get_raster_row (infd, inrast, i, data_type) < 0)
-      G_fatal_error ("Could not read from <%s>, row=%d",cellname,i);
+      G_fatal_error (_("Unable to read raster map <%s>, row %d"),cellname, i);
   
 	for (int j=0; j<ncols; j++) {
 
@@ -109,7 +109,7 @@ cell2stream(char* cellname, elevation_type T_max_value, long* nodata_count) {
 		}
 		break;
 	  default:
-		G_fatal_error("raster type not implemented");		
+		G_fatal_error("Raster type not implemented");		
       }
 	  /* cout << form("(i=%d,j=%d): (%d, %f)\n",i,j,x,d); cout.flush(); */
 	  /* handle null values */
@@ -175,7 +175,7 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
   /* open output raster map */
   int outfd;
   if ( (outfd = G_open_raster_new (cellname, mtype)) < 0) {
-    G_fatal_error ("Could not open <%s>", cellname);
+    G_fatal_error (_("Unable to create raster map <%s>"), cellname);
   }
   
   /* Allocate output buffer */
