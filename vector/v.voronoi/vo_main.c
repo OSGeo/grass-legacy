@@ -105,7 +105,7 @@ main (int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector");
-    module->description = _("Creates a Voronoi diagram from an input vector "
+  module->description = _("Creates a Voronoi diagram from an input vector "
 	"map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -114,19 +114,21 @@ main (int argc, char **argv)
   /*
   all_flag = G_define_flag ();
   all_flag->key = 'a';
-  all_flag->description = _("Use all sites (do not limit to current region)");
+  all_flag->description = _("Use all points (do not limit to current region)");
   */
 
   line_flag = G_define_flag ();
   line_flag->key = 'l';
-  line_flag->description = _("Output tessellation as a graph (lines), not areas");
+  line_flag->description =
+	_("Output tessellation as a graph (lines), not areas");
 
   table_flag = G_define_flag ();
-  table_flag->key             = 't';
-  table_flag->description     = _("Do not create attribute table");
+  table_flag->key         = 't';
+  table_flag->description = _("Do not create attribute table");
 
   if (G_parser (argc, argv))
-    exit (1);
+	exit(EXIT_FAILURE);
+
 
   if ( line_flag->answer ) 
       Type = GV_LINE;
@@ -298,12 +300,12 @@ main (int argc, char **argv)
 
 	    if ( fields[i] == 0 ) continue;
 	
-	    G_message ( _("Layer %d"), fields[i] );
+	    G_message( _("Layer %d"), fields[i] );
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( _("No table") );
+		G_message( _("No table") );
 		continue;
 	    }
 	    
@@ -314,12 +316,12 @@ main (int argc, char **argv)
 				  IFi->key, cats[i], ncats[i] );
 
 	    if ( ret == DB_FAILED ) {
-		G_warning ( _("Cannot copy table") );
+		G_warning( _("Cannot copy table") );
 	    } else {
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( _("Done") );
+	    G_done_msg("");
 	}
   }
 	  
@@ -330,9 +332,5 @@ main (int argc, char **argv)
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }
-
-
-
-

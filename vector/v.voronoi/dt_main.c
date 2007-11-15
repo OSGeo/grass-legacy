@@ -42,7 +42,7 @@ main (int argc, char **argv)
 
   module = G_define_module();
   module->keywords = _("vector");
-    module->description = _("Creates a Delaunay triangulation from an input "
+  module->description = _("Creates a Delaunay triangulation from an input "
 	"vector map containing points or centroids.");
 
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
@@ -50,14 +50,15 @@ main (int argc, char **argv)
 
   reg_flag = G_define_flag ();
   reg_flag->key = 'r';
-  reg_flag->description = _("Use only sites in current region");
+  reg_flag->description = _("Use only points in current region");
 
   line_flag = G_define_flag ();
   line_flag->key = 'l';
-  line_flag->description = _("Output triangulation as a graph (lines), not areas");
+  line_flag->description =
+	_("Output triangulation as a graph (lines), not areas");
 
   if (G_parser (argc, argv))
-    exit (1);
+	exit(EXIT_FAILURE);
 
   if ( line_flag->answer ) 
       Type = GV_LINE;
@@ -76,7 +77,7 @@ main (int argc, char **argv)
 
   Vect_set_open_level (2);
   Vect_open_old (&In, in_opt->answer, mapset);
-  
+
   if (0 > Vect_open_new (&Out, out_opt->answer, 0)) {
     G_fatal_error(_("Unable to create vector map <%s>"), out_opt->answer);
   }
@@ -93,7 +94,7 @@ main (int argc, char **argv)
   freeinit(&sfl, sizeof *sites);
 
   readsites ( );
-  
+
   siteidx = 0;
   geominit ();
 
@@ -132,6 +133,6 @@ main (int argc, char **argv)
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }
 

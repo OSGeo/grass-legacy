@@ -81,7 +81,7 @@ readsites ( void )
 	if ( !All ) {
 	    if ( !Vect_point_in_box ( Points->x[0], Points->y[0], 0.0, &Box) ) continue;
 	}
-		
+	
 	sites[nsites].coord.x = Points->x[0];
 	sites[nsites].coord.y = Points->y[0];
 
