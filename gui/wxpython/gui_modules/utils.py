@@ -67,3 +67,39 @@ def GetLayerNameFromCmd(dcmd):
             break
         
     return mapname
+
+def ListOfCatsToRange(cats):
+    """Convert list of category number to range(s)
+
+    Used for example for d.vect cats=[range]
+    """
+
+    catstr = ''
+
+    try:
+        cats = map(int, cats)
+    except:
+        return catstr
+
+    i = 0
+    while i < len(cats):
+        next = 0
+        j = i + 1
+        while j < len(cats):
+            if cats[i + next] == cats[j] - 1:
+                next += 1
+            else:
+                break
+            j += 1
+
+        if next > 1:
+            catstr += '%d-%d,' % (cats[i], cats[i + next])
+            i += next + 1
+        else:
+            catstr += '%d,' % (cats[i])
+            i += 1
+        
+    if catstr[-1] == ",":
+        catstr = catstr[:-1]
+
+    return catstr

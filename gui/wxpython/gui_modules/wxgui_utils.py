@@ -1019,7 +1019,7 @@ class GMConsole(wx.Panel):
         self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
         self.console_save  = wx.Button(parent=self, id=wx.ID_SAVE)
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
-        self.Bind(wx.EVT_BUTTON, self.SaveHistory, self.console_save)
+        self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
 
          # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
@@ -1180,12 +1180,14 @@ class GMConsole(wx.Panel):
 
     def SaveHistory(self, event):
         """Save history of commands"""
-        self.history = self.cmd_output.GetStringSelection()
-        if self.history == "":
-            self.cmd_output.SetSelection(-1,-1)
-            self.history = self.cmd_output.GetStringSelection()
+        self.history = self.cmd_output.GetSelectedText()
+        if self.history == '':
+            self.history = self.cmd_output.GetText()
 
-        #Use a standard dialog for this
+        # add newline if needed
+        if len(self.history) > 0 and self.history[-1] != os.linesep:
+            self.history += os.linesep
+
         wildcard = "Text file (*.txt)|*.txt"
         dlg = wx.FileDialog(
             self, message=_("Save file as ..."), defaultDir=os.getcwd(),
@@ -1197,7 +1199,7 @@ class GMConsole(wx.Panel):
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
 
-            output = open(path,"w")
+            output = open(path, "w")
             output.write(self.history)
             output.close()
 
@@ -1370,7 +1372,7 @@ class GMStc(wx.stc.StyledTextCtrl):
         # self.SetViewEOL(True)
         self.UsePopUp(True)
         self.SetSelBackground(True, "#FFFF00")
-        self.SetUseHorizontalScrollBar(False)
+        self.SetUseHorizontalScrollBar(True)
 
         #
         # bindins

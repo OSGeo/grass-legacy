@@ -32,17 +32,18 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import sys
 import os
 import locale
-import string
 import tempfile
 
 import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
+import wx.lib.colourselect as csel
 
 import sqlbuilder
 import grassenv
 import gcmd
 import globalvar
+import utils
 from debug import Debug as Debug
 
 class Log:
@@ -108,8 +109,8 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
-        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick) # sorting
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected) 
+        self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick)     # sorting
         # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
         # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
         # self.Bind(wx.EVT_LIST_COL_BEGIN_DRAG, self.OnColBeginDrag, self.list)
@@ -190,19 +191,31 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
     def OnItemSelected(self, event):
         """Item selected. Add item to selected cats..."""
-        self.selectedCats.append(int(self.GetItemText(event.m_itemIndex)))
-        self.selectedCats.sort()
+        cat = int(self.GetItemText(event.m_itemIndex))
+        if cat not in self.selectedCats:
+            self.selectedCats.append(cat)
+            self.selectedCats.sort()
 
-        print "#+", self.selectedCats
         event.Skip()
 
     def OnItemDeselected(self, event):
         """Item deselected. Remove item from selected cats..."""
-        self.selectedCats.remove(int(self.GetItemText(event.m_itemIndex)))
-        self.selectedCats.sort()
+        cat = int(self.GetItemText(event.m_itemIndex))
+        if cat in self.selectedCats:
+            self.selectedCats.remove(cat)
+            self.selectedCats.sort()
 
-        print "#-", self.selectedCats
         event.Skip()
+
+    def GetSelectedItems(self):
+        """Return list of selected items (category numbers)"""
+        cats = []
+        item = self.GetFirstSelected()
+        while item != -1:
+            cats.append(self.GetItemText(item))
+            item = self.GetNextSelected(item)
+
+        return cats
 
     def GetColumnText(self, index, col):
         """Return column text"""
@@ -283,101 +296,6 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         item = self.GetItem(index, col)
         return item.GetText()
 
-    def OnMapClick(self, event):
-        """
-        Gets coordinates from mouse clicking on display window
-        """
-        Debug.msg(3, "VirtualAttributeList.OnMapClick()")
-
-        # map coordinates
-        x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple()[:])
-
-        category = ""
-        for line in os.popen("v.what east_north=%f,%f map=%s" %\
-                (x,y,self.vectmap)).readlines():
-            if "Category:" in line:
-                category = line.strip().split(" ")[1]
-
-        #print category
-
-        for idx in range(self.GetItemCount()):
-            item = self.GetItem(idx, 0)
-            if item.GetText() == category:
-                #print idx
-                # self.Select(idx,True)
-                self.EnsureVisible( idx )
-                self.SetItemState(idx, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-            else:
-                # self.SetItemState(idx, wx.LIST_STATE_DESELECTED, wx.LIST_STATE_DESELECTED)
-                self.Select(idx,False)
-
-
-                #        try:
-                #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-                #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
-                #            self.cmd_output.write(cmd+"\n----------\n")
-                #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-                #
-                #            oline = p.stderr.readline()
-                #            while oline:
-                #                oline = oline.strip()
-                #                oline = p.stderr.readline()
-                #                if oline.find("GRASS_INFO_MESSAGE")>-1:
-                #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
-                #                elif oline.find("GRASS_INFO_WARNING")>-1:
-                #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
-                #                elif oline.find("GRASS_INFO_ERROR")>-1:
-                #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
-                #
-                #            oline = p.stdout.readline()
-                #            while oline:
-                #                oline = oline.strip()
-                #                self.cmd_output.write(oline+"\n")
-                #                print oline+"\n"
-                #                print >> sys.stderr, oline
-                #                oline = p.stdout.readline()
-                #
-                #            if p.stdout < 0:
-                #                print >> sys.stderr, "Child was terminated by signal", p.stdout
-                #            elif p.stdout > 0:
-                #                print >> sys.stderr, p.stdout
-                #                pass
-                #        except OSError, e:
-                #            print >> sys.stderr, "Execution failed:", e
-
-                #        try:
-                #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
-                #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
-                #            self.cmd_output.write(cmd+"\n----------\n")
-                #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-                #
-                #            oline = p.stderr.readline()
-                #            while oline:
-                #                oline = oline.strip()
-                #                oline = p.stderr.readline()
-                #                if oline.find("GRASS_INFO_MESSAGE")>-1:
-                #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
-                #                elif oline.find("GRASS_INFO_WARNING")>-1:
-                #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
-                #                elif oline.find("GRASS_INFO_ERROR")>-1:
-                #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
-                #
-                #            oline = p.stdout.readline()
-                #            while oline:
-                #                oline = oline.strip()
-                #                self.cmd_output.write(oline+"\n")
-                #                print oline+"\n"
-                #                print >> sys.stderr, oline
-                #                oline = p.stdout.readline()
-                #
-                #            if p.stdout < 0:
-                #                print >> sys.stderr, "Child was terminated by signal", p.stdout
-                #            elif p.stdout > 0:
-                #                print >> sys.stderr, p.stdout
-                #                pass
-                #        except OSError, e:
-                #            print >> sys.stderr, "Execution failed:", e
-
 class AttributeManager(wx.Frame):
     """
     GRASS Attribute manager main window
@@ -422,6 +340,14 @@ class AttributeManager(wx.Frame):
             dlg.Destroy()
             return
 
+        #
+        # default settings
+        #
+        self.settings = {}
+        self.settings['highlight'] = {}
+        self.settings['highlight']['color'] = (255, 255, 0, 255) # yellow
+        self.settings['highlight']['width'] = 2
+
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(number=1)
@@ -448,6 +374,13 @@ class AttributeManager(wx.Frame):
         self.notebook.AddPage(self.managePage, text=_("Manage tables"))
         self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
+        self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
+                                            style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                            FN.FNB_BACKGROUND_GRADIENT |
+                                            FN.FNB_TABS_BORDER_SIMPLE)
+        self.notebook.AddPage(self.settingsPage, text=_("Settings"))
+        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
+
         self.notebook.SetSelection(0) # select browse tab
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
@@ -455,6 +388,7 @@ class AttributeManager(wx.Frame):
 
         self.__createBrowsePage()
         self.__createManagePage()
+        self.__createSettingsPage()
 
         #
         # buttons
@@ -464,7 +398,7 @@ class AttributeManager(wx.Frame):
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
         
         # events
-        self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApplySqlStatement)
+        self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApply)
         self.btnQuit.Bind(wx.EVT_BUTTON,            self.OnCloseWindow)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.browsePage)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
@@ -495,6 +429,8 @@ class AttributeManager(wx.Frame):
             win = VirtualAttributeList(panel, self.log,
                                        self.mapInfo, layer)
             win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
+            win.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnDataRightUp) #wxMSW
+            win.Bind(wx.EVT_RIGHT_UP,            self.OnDataRightUp) #wxGTK
 
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
@@ -631,7 +567,7 @@ class AttributeManager(wx.Frame):
 
         self.managePage.SetSelection(0) # select first layer
         self.layer = self.mapInfo.layers.keys()[0]
-        
+
     def __createTableDesc(self, parent, table):
         """Create list with table description"""
         list = TableListCtrl(parent=parent, id=wx.ID_ANY,
@@ -648,6 +584,45 @@ class AttributeManager(wx.Frame):
         # listmix.ColumnSorterMixin.__init__(self, 2)
 
         return list
+
+    def __createSettingsPage(self):
+        """Create settings page"""
+        panel = wx.Panel(parent=self.settingsPage, id=wx.ID_ANY)
+        self.settingsPage.AddPage(page=panel, text=_("General settings")) # dummy page
+
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
+        highlightBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                    label=" %s " % _("Highlighting"))
+        highlightSizer = wx.StaticBoxSizer(highlightBox, wx.VERTICAL)
+
+        flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Color")
+        self.hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
+                                          colour=self.settings['highlight']['color'],
+                                          size=(25, 25))
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE) 
+
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width (in pixels)"))
+        self.hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                   initial=self.settings['highlight']['width'],
+                                   min=1, max=1e6)
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE) 
+
+
+        highlightSizer.Add(item=flexSizer,
+                           proportion=0,
+                           flag=wx.ALL | wx.EXPAND,
+                           border=5)
+        
+        pageSizer.Add(item=highlightSizer,
+                      proportion=0,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        panel.SetSizer(pageSizer)
 
     def __layout(self):
         """Do layout"""
@@ -668,46 +643,117 @@ class AttributeManager(wx.Frame):
 
         self.Layout()
 
-    def OnTableRightUp(self, event):
+    def OnDataRightUp(self, event):
         """Table description area, context menu"""
-        if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewId()
-            self.popupID2 = wx.NewId()
-            self.popupID3 = wx.NewId()
-            self.popupID4 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.OnTableItemAdd,       id=self.popupID1)
-            self.Bind(wx.EVT_MENU, self.OnTableItemDelete,    id=self.popupID2)
-            self.Bind(wx.EVT_MENU, self.OnTableItemDeleteAll, id=self.popupID3)
-            self.Bind(wx.EVT_MENU, self.OnTableReload,        id=self.popupID4)
+        if not hasattr(self, "popupDataID1"):
+            self.popupDataID1 = wx.NewId()
+            self.popupDataID2 = wx.NewId()
+            self.popupDataID3 = wx.NewId()
+            self.popupDataID4 = wx.NewId()
+            self.popupDataID5 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID1)
+            self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID2)
+            self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID3)
+            self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID4)
+            self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID5)
 
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
         menu = wx.Menu()
-        menu.Append(self.popupID1, _("Add new column"))
+        menu.Append(self.popupDataID1, _("Insert new record"))
         menu.AppendSeparator()
-        menu.Append(self.popupID2, _("Delete selected"))
-        if self.FindWindowById(self.layerPage[self.layer]['tableData']).GetFirstSelected() == -1:
-            menu.Enable(self.popupID2, False)
-        menu.Append(self.popupID3, _("Delete all"))
+        menu.Append(self.popupDataID2, _("Delete selected"))
+        if list.GetFirstSelected() == -1:
+            menu.Enable(self.popupDataID2, False)
+        menu.Append(self.popupDataID3, _("Delete all"))
         menu.AppendSeparator()
-        menu.Append(self.popupID4, _("Reload"))
+        menu.Append(self.popupDataID4, _("Reload"))
+        menu.AppendSeparator()
+        menu.Append(self.popupDataID5, _("Highlight selected in the map"))
+        if not self.map:
+            menu.Enable(self.popupDataID5, False)
 
         self.PopupMenu(menu)
         menu.Destroy()
 
-    def OnTableItemDelete(self, event):
+    def OnDataItemDelete(self, event):
         """Delete selected item(s) from the list (layer/category pair)"""
-        list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        self.__DeleteItem(event, list)
+        # self.OnApplySqlStatement(None)
+
+        event.Skip()
+
+    def __DeleteItem(self, event, list):
+        """Delete selected item(s) from the list"""
         item = list.GetFirstSelected()
+        print "#", item, list.GetItemText(item)
         while item != -1:
             # layer = int (self.list.GetItem(item, 0).GetText())
             # cat = int (self.list.GetItem(item, 1).GetText())
             list.DeleteItem(item)
             # self.cats[layer].remove(cat)
-
             item = list.GetFirstSelected()
-            
-        event.Skip()
         
+    def OnDataItemDeleteAll(self, event):
+        """Delete all items from the list"""
+        self.FindWindowById(self.layerPage[self.layer]['data']).DeleteAllItems()
+        # self.cats = {}
+
+        event.Skip()
+
+    def OnDataDrawSelected(self, event):
+        """Reload table description"""
+        if self.map and self.mapdisplay:
+            # list.lastTurnSelectedCats[:] != list.selectedCats[:]:
+            
+            # add map layer with higlighted vector features
+            self.AddQueryMapLayer(self.map)
+            self.mapdisplay.MapWindow.UpdateMap(render=True)
+
+        event.Skip()
+
+    def OnDataItemAdd(self, event):
+        """Add new record to the attribute table"""
+        pass
+
+    def OnDataReload(self, event):
+        """Reload list of records"""
+        self.OnApplySqlStatement(None)
+
+    def OnTableRightUp(self, event):
+        """Table description area, context menu"""
+        if not hasattr(self, "popupTableID"):
+            self.popupTableID1 = wx.NewId()
+            self.popupTableID2 = wx.NewId()
+            self.popupTableID3 = wx.NewId()
+            self.popupTableID4 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnTableItemAdd,       id=self.popupTableID1)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDelete,    id=self.popupTableID2)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDeleteAll, id=self.popupTableID3)
+            self.Bind(wx.EVT_MENU, self.OnTableReload,        id=self.popupTableID4)
+
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupTableID1, _("Add new column"))
+        menu.AppendSeparator()
+        menu.Append(self.popupTableID2, _("Delete selected"))
+        if self.FindWindowById(self.layerPage[self.layer]['tableData']).GetFirstSelected() == -1:
+            menu.Enable(self.popupTableID2, False)
+        menu.Append(self.popupTableID3, _("Delete all"))
+        menu.AppendSeparator()
+        menu.Append(self.popupTableID4, _("Reload"))
+
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def OnTableItemDelete(self, event):
+        """Delete selected item(s) from the list"""
+        list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+        self.__DeleteItem(event, list)
+
+        event.Skip()
+
     def OnTableItemDeleteAll(self, event):
         """Delete all items from the list"""
         self.FindWindowById(self.layerPage[self.layer]['tableData']).DeleteAllItems()
@@ -717,7 +763,7 @@ class AttributeManager(wx.Frame):
 
     def OnTableReload(self, event):
         """Reload table description"""
-        pass
+        self.FindWindowById(self.layerPage[self.layer]['tableData']).Populate(update=True)
 
     def OnTableItemAdd(self, event):
         """Add new column to the table"""
@@ -741,6 +787,14 @@ class AttributeManager(wx.Frame):
             self.FindWindowById(self.layerPage[self.layer]['where']).Enable(False)
             self.FindWindowById(self.layerPage[self.layer]['statement']).Enable(True)
             self.FindWindowById(self.layerPage[self.layer]['builder']).Enable(True)
+
+    def OnApply(self, event):
+        """Apply button pressed"""
+        page = self.notebook.GetSelection()
+        if page == self.notebook.GetPageIndex(self.browsePage):
+            self.OnApplySqlStatement(event)
+        elif page == self.notebook.GetPageIndex(self.settingsPage):
+            self.UpdateSettings()
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
@@ -878,18 +932,8 @@ class AttributeManager(wx.Frame):
         pass
 
     def OnDataItemActivated(self, event):
-        """Item activated, log purpose"""
-        list = self.FindWindowById(self.layerPage[self.layer]['data'])
-        list.currentItem = event.m_itemIndex
-
-        if self.map and self.mapdisplay:
-            #                list.lastTurnSelectedCats[:] != list.selectedCats[:]:
-
-            # add map layer with higlighted vector features
-            self.AddQueryMapLayer(self.map)
-            self.mapdisplay.MapWindow.UpdateMap(render=True)
-                        
-            #list.lastTurnSelectedCats = list.selectedCats[:]
+        """Item activated, highlight selected item"""
+        self.OnDataDrawSelected(event)
 
         event.Skip()
 
@@ -902,36 +946,10 @@ class AttributeManager(wx.Frame):
             map.DeleteLayer(self.qlayer)
             
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
-        cats = list.selectedCats[:]
-        
-        #         for i in range(len(cats)):
-        #             next = 0
-        #             j = 0
-        #             while True:
-        #                 try:
-        #                     if cats[i+j]+1 == cats[i+j+1]:
-        #                         next += 1
-        #                     else:
-        #                         break
-        #                 except IndexError:
-        #                     next = 0
-        #                 if j+i >= len(cats)-2:
-        #                     break
-        #                 else:
-        #                     j += 1
-        #                 if next > 1:
-        #                     catstr += "%d-%d," % (cats[i], cats[i+next])
-        #                     i += next
-        #                 else:
-        #                     catstr += "%d," % (cats[i])
-        
-        #             print "#", catstr
-        
-        #             if catstr[-1] == ",":
-        #                 catstr = string.join(catstr[:-1],"")
+        # cats = list.selectedCats[:]
+        cats = list.GetSelectedItems()
 
-        digitClass = self.mapdisplay.digit
-        color = digitClass.settings['symbolHighlight'][1]
+        color = self.settings['highlight']['color']
         colorStr = str(color[0]) + ":" + \
             str(color[1]) + ":" + \
             str(color[2]) + ":" 
@@ -940,8 +958,9 @@ class AttributeManager(wx.Frame):
                "color=%s" % colorStr,
                "fcolor=%s" % colorStr,
                #               "cats=%s" % (",".join(["%d" % c for c in cats])),
-               "cats=%s" % str(int(list.GetItemText(list.currentItem))), # FIXME
-               "width=%d"  % digitClass.settings['lineWidth'][0]] # FIXME (units)
+               # FIXME
+               "cats=%s" % utils.ListOfCatsToRange(cats), 
+               "width=%d"  % self.settings['highlight']['width']] 
         if self.icon:
             gcmd.append("icon=%s" % (self.icon))
         if self.pointsize:
@@ -949,6 +968,107 @@ class AttributeManager(wx.Frame):
 
         self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
                                    l_active=True, l_hidden=True, l_opacity=1.0)
+
+    def UpdateSettings(self):
+        """Update settings dict"""
+        self.settings['highlight']['color'] = self.hlColor.GetColour()
+        self.settings['highlight']['width'] = int(self.hlWidth.GetValue())
+
+        
+#     def OnMapClick(self, event):
+#         """
+#         Gets coordinates from mouse clicking on display window
+#         """
+#         Debug.msg(3, "VirtualAttributeList.OnMapClick()")
+
+#         # map coordinates
+#         x, y = self.mapdisp.MapWindow.Pixel2Cell(event.GetPositionTuple()[:])
+
+#         category = ""
+#         for line in os.popen("v.what east_north=%f,%f map=%s" %\
+#                 (x,y,self.vectmap)).readlines():
+#             if "Category:" in line:
+#                 category = line.strip().split(" ")[1]
+
+#         #print category
+
+#         for idx in range(self.GetItemCount()):
+#             item = self.GetItem(idx, 0)
+#             if item.GetText() == category:
+#                 #print idx
+#                 # self.Select(idx,True)
+#                 self.EnsureVisible( idx )
+#                 self.SetItemState(idx, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+#             else:
+#                 # self.SetItemState(idx, wx.LIST_STATE_DESELECTED, wx.LIST_STATE_DESELECTED)
+#                 self.Select(idx,False)
+
+
+#                 #        try:
+#                 #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+#                 #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+#                 #            self.cmd_output.write(cmd+"\n----------\n")
+#                 #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+#                 #
+#                 #            oline = p.stderr.readline()
+#                 #            while oline:
+#                 #                oline = oline.strip()
+#                 #                oline = p.stderr.readline()
+#                 #                if oline.find("GRASS_INFO_MESSAGE")>-1:
+#                 #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+#                 #                elif oline.find("GRASS_INFO_WARNING")>-1:
+#                 #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                 #                elif oline.find("GRASS_INFO_ERROR")>-1:
+#                 #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                 #
+#                 #            oline = p.stdout.readline()
+#                 #            while oline:
+#                 #                oline = oline.strip()
+#                 #                self.cmd_output.write(oline+"\n")
+#                 #                print oline+"\n"
+#                 #                print >> sys.stderr, oline
+#                 #                oline = p.stdout.readline()
+#                 #
+#                 #            if p.stdout < 0:
+#                 #                print >> sys.stderr, "Child was terminated by signal", p.stdout
+#                 #            elif p.stdout > 0:
+#                 #                print >> sys.stderr, p.stdout
+#                 #                pass
+#                 #        except OSError, e:
+#                 #            print >> sys.stderr, "Execution failed:", e
+
+#                 #        try:
+#                 #            os.environ["GRASS_MESSAGE_FORMAT"] = "gui"
+#                 #            cmd = "v.what -a east_north=%d,%d distance=%d map=%@%" % (x,y,100,self.tablename, self.self.mapset)
+#                 #            self.cmd_output.write(cmd+"\n----------\n")
+#                 #            p = Popen(cmd +" --verbose", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+#                 #
+#                 #            oline = p.stderr.readline()
+#                 #            while oline:
+#                 #                oline = oline.strip()
+#                 #                oline = p.stderr.readline()
+#                 #                if oline.find("GRASS_INFO_MESSAGE")>-1:
+#                 #                    self.cmd_output.write(string.split(oline,maxsplit=1)[1]+"\n")
+#                 #                elif oline.find("GRASS_INFO_WARNING")>-1:
+#                 #                    self.cmd_output.write("WARNING: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                 #                elif oline.find("GRASS_INFO_ERROR")>-1:
+#                 #                    self.cmd_output.write("ERROR: "+string.split(oline,maxsplit=1)[1]+"\n")
+#                 #
+#                 #            oline = p.stdout.readline()
+#                 #            while oline:
+#                 #                oline = oline.strip()
+#                 #                self.cmd_output.write(oline+"\n")
+#                 #                print oline+"\n"
+#                 #                print >> sys.stderr, oline
+#                 #                oline = p.stdout.readline()
+#                 #
+#                 #            if p.stdout < 0:
+#                 #                print >> sys.stderr, "Child was terminated by signal", p.stdout
+#                 #            elif p.stdout > 0:
+#                 #                print >> sys.stderr, p.stdout
+#                 #                pass
+#                 #        except OSError, e:
+#                 #            print >> sys.stderr, "Execution failed:", e
 
 class TableListCtrl(wx.ListCtrl,
                     listmix.ListCtrlAutoWidthMixin,
@@ -966,16 +1086,19 @@ class TableListCtrl(wx.ListCtrl,
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.TextEditMixin.__init__(self)
 
-    def Populate(self):
+    def Populate(self, update=False):
         """Populate the list"""
         itemData = {} # requested by sorter
 
-        headings = [_("Column name"), _("Type"), _("Length")]
-        i = 0
-        for h in headings:
-            self.InsertColumn(col=i, heading=h)
-            self.SetColumnWidth(col=i, width=150)
-            i += 1
+        if not update:
+            headings = [_("Column name"), _("Type"), _("Length")]
+            i = 0
+            for h in headings:
+                self.InsertColumn(col=i, heading=h)
+                self.SetColumnWidth(col=i, width=150)
+                i += 1
+        else:
+            self.DeleteAllItems()
 
         i = 0
         for column in self.columns:

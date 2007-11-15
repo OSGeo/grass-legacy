@@ -237,19 +237,18 @@ int DisplayDriver::DrawLine(int line)
 	}
     }
     
-    // draw object
+    // clear screen points & convert EN -> xy
+    pointsScreen->Clear();
+    for (int i = 0; i < points->n_points; i++) {
+	Cell2Pixel(points->x[i], points->y[i], points->z[i],
+		   &x, &y, &z);
+	pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
+    }
+    
+    dc->SetId(dcId); /* 0 | 1 (selected) */
+    dc->SetPen(*pen);
+
     if (draw) {
-	// clear screen points & convert EN -> xy
-	pointsScreen->Clear();
-	for (int i = 0; i < points->n_points; i++) {
-	    Cell2Pixel(points->x[i], points->y[i], points->z[i],
-		       &x, &y, &z);
-	    pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
-	}
-
-	dc->SetId(dcId); /* 0 | 1 (selected) */
-	dc->SetPen(*pen);
-
 	if (type & GV_POINTS) {
 	    DrawCross(line, (const wxPoint *) pointsScreen->GetFirst()->GetData());
 	}
@@ -281,9 +280,12 @@ int DisplayDriver::DrawLine(int line)
 		}
 		dc->DrawLines(pointsScreen->GetCount(), points);
 	    }
-	    DrawLineVerteces(line); // draw vertices
-	    DrawLineNodes(line);    // draw nodes
 	}
+    }
+
+    if (type & GV_LINES) {
+	DrawLineVerteces(line); // draw vertices
+	DrawLineNodes(line);    // draw nodes
     }
 
     delete pen;
