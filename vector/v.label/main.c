@@ -46,7 +46,7 @@ main (int argc, char **argv)
     
     struct Map_info Map;
     struct GModule *module;
-    struct Option *Vectfile, *Typopt, *Fieldopt, *Colopt;
+    struct Option *Vectfile, *Typopt, *Fieldopt, *Colopt, *whereopt;
     struct Option *Labelfile, *Space, *FontSize, *Rotation;
     struct Flag   *Along_flag, *Curl_flag;
 
@@ -82,7 +82,8 @@ main (int argc, char **argv)
     Typopt->options = "point,line,boundary,centroid";
     Typopt->answer  = "point,line,boundary,centroid";
     
-    Fieldopt = G_define_standard_option(G_OPT_V_FIELD) ; 
+    Fieldopt = G_define_standard_option(G_OPT_V_FIELD);
+    whereopt = G_define_standard_option(G_OPT_WHERE);
 
     Along_flag = G_define_flag();
     Along_flag->key            = 'a';
@@ -268,7 +269,9 @@ main (int argc, char **argv)
     /* open database */	
     field = atoi ( Fieldopt->answer );
     fi = Vect_get_field(&Map, field);
-    if ( fi == NULL ) G_fatal_error (_("Unable to get layer info for vector map"));
+    if ( fi == NULL )
+	G_fatal_error (_("Unable to get layer info for vector map"));
+
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL ) 
 	G_fatal_error(_("Unable to open database <%s> by driver <%s>"), 
@@ -294,17 +297,27 @@ main (int argc, char **argv)
 	
 	/* Read label from database */
 
-	sprintf(buf, "select %s from %s where %s = %d", Colopt->answer, 
-	    fi->table, fi->key, cat);
+	if(whereopt->answer) {
+	    sprintf(buf, "select %s from %s where %s = %d and %s",
+		Colopt->answer, fi->table, fi->key, cat, whereopt->answer);
+	}
+	else {
+	    sprintf(buf, "select %s from %s where %s = %d",
+		Colopt->answer, fi->table, fi->key, cat);
+	}
 	G_debug (3, "SQL: %s", buf);
 	db_set_string ( &stmt, buf);
-	
+
         if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
             G_fatal_error (_("Unable to select attributes"));
 
 	nrows = db_get_num_rows ( &cursor );
 	if ( nrows < 1 ) {
-	    G_warning (_("No record for category %d in table <%s>"), cat, fi->table);
+	    /* not optimal, but the warning isn't /that/ critical. */
+	    if(!whereopt->answer) {
+		G_warning (_("No record for category %d in table <%s>"),
+			cat, fi->table);
+	    }
 	    continue;
 	}
 
