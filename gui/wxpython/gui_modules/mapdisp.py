@@ -63,6 +63,7 @@ import defaultfont
 import histogram
 import profile
 import globalvar
+import utils
 from digit import Digit               as Digit
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from digit import DigitZBulkDialog    as DigitZBulkDialog
@@ -1213,13 +1214,14 @@ class BufferedWindow(wx.Window):
                             str(color[2]) + ":" 
                         dVectTmp = ['d.vect',
                                     'map=%s' % digitClass.settings['backgroundMap'],
-                                    'cats=%s' % ",".join(["%d" % v for v in self.copyIds]),
+                                    'cats=%s' % utils.ListOfCatsToRange(self.copyIds),
                                     '-i',
                                     'color=%s' % colorStr,
                                     'fcolor=%s' % colorStr,
                                     'type=point,line,boundary,centroid',
                                     'width=2']
                         self.layerTmp = self.Map.AddLayer(type='vector',
+                                                          name=globalvar.QUERYLAYER,
                                                           command=dVectTmp)
                         self.UpdateMap(render=True, renderVector=False)
                     else:
