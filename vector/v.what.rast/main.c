@@ -219,7 +219,7 @@ int main(int argc,char *argv[])
 
     G_debug(1, "Points are sorted, starting duplicate removal loop");
 
-    for (i = j = 0; j < point_cnt; j++)
+    for (i = 0, j = 1; j < point_cnt; j++)
         if (cache[i].cat != cache[j].cat)
 	    cache[++i] = cache[j];
         else
