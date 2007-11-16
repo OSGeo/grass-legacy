@@ -38,31 +38,34 @@ command_version (int argc, char *argv[])
     /* please, remove before GRASS 7 released */
     struct Flag *q_flag;
 
-	module = G_define_module();
-	module->keywords = _("raster");
+    module = G_define_module();
+    module->keywords = _("raster");
     module->description =
-			_("Tabulates the mutual occurrence (coincidence) "
-			"of categories for two raster map layers.");
+	_("Tabulates the mutual occurrence (coincidence) "
+	  "of categories for two raster map layers.");
 
     parm.map1 = G_define_option();
-    parm.map1->key = "map1";
-    parm.map1->required = YES;
-    parm.map1->type = TYPE_STRING;
-	parm.map1->gisprompt  = "old,cell,raster" ;
+    parm.map1->key         = "map1";
+    parm.map1->required    = YES;
+    parm.map1->type        = TYPE_STRING;
+    parm.map1->gisprompt   = "old,cell,raster" ;
     parm.map1->description = _("Name of first raster map");
 
     parm.map2 = G_define_option();
-    parm.map2->key = "map2";
-    parm.map2->required = YES;
-    parm.map2->type = TYPE_STRING;
-	parm.map2->gisprompt  = "old,cell,raster" ;
+    parm.map2->key         = "map2";
+    parm.map2->required    = YES;
+    parm.map2->type        = TYPE_STRING;
+    parm.map2->gisprompt   = "old,cell,raster" ;
     parm.map2->description = _("Name of second raster map");
 
     parm.units = G_define_option();
-    parm.units->key = "units";
+    parm.units->key   = "units";
     parm.units->required = YES;
-    parm.units->type = TYPE_STRING;
-    parm.units->description = _("Unit of measure");
+    parm.units->type  = TYPE_STRING;
+    parm.units->label = _("Unit of measure");
+    parm.units->description = _("c(ells), p(ercent), x(percent of category [column]), "
+	"y(percent of category [row]), a(cres), h(ectares), "
+	"k(square kilometers), m(square miles)");
     parm.units->options = "c,p,x,y,a,h,k,m";
 
     flag.w = G_define_flag();
