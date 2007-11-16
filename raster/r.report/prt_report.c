@@ -63,7 +63,7 @@ int print_report(int unit1,int unit2)
 	case ACRES:
 	    unit[i].label[0] = "";
 	    unit[i].label[1] = "acres";
-	    unit[i].factor   = 2.4710439e-4;
+	    unit[i].factor   = 2.47105381467165e-4;  /* 640 acres in a sq mile */
 	    break;
 
 	case HECTARES:
@@ -75,7 +75,7 @@ int print_report(int unit1,int unit2)
 	case SQ_MILES:
 	    unit[i].label[0] = "square";
 	    unit[i].label[1] = " miles";
-	    unit[i].factor   = 3.8610216e-7;
+	    unit[i].factor   = 3.86102158542446e-7;  /* 1 / ( (0.0254m/in * 12in/ft * 5280ft/mi)^2 ) */
 	    break;
 
 	default:
