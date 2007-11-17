@@ -91,7 +91,7 @@ $(OBJDIR)/GRASS.scpt: GRASS.applescript
 
 $(OBJDIR)/grass.sh: grass.sh.in
 	$(MAKE_DIR_CMD) $(OBJDIR)
-	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," -e "s,@TCLTKVER@,$(@TCLTKVER@)," grass.sh.in > $(OBJDIR)/grass.sh
+	sed -e "s,@GDAL_BIN_PATH@,$(GDAL_BIN)," -e "s,@PROJ_BIN_PATH@,$(PROJ_BIN)," -e "s,@TCLTK_INTERNAL@,$(TCLTK_INTERNAL)," -e "s,@TCLTKVER@,$(TCLTKVER)," grass.sh.in > $(OBJDIR)/grass.sh
 
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
