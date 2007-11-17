@@ -1386,3 +1386,15 @@ class GMStc(wx.stc.StyledTextCtrl):
         wx.TheClipboard.Flush()
         evt.Skip()
         
+    def write(self, string, style=None):
+        """Add text to the text area"""
+        if not style:
+            style = self.StyleUnknown
+
+        p1 = self.GetCurrentPos()
+        self.AddText(string)
+        self.EnsureCaretVisible()
+        p2 = self.GetCurrentPos()
+        self.StartStyling(p1, 0xff)
+        self.SetStyling(p2 - p1 + 1, style)
+

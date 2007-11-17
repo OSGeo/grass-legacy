@@ -184,13 +184,14 @@ class Command:
         # set verbosity level
         #
         verbose_orig = None
-        if verbose == 0 and '--q' not in self.cmd:
-            self.cmd.append('--q')
-        elif verbose == 3 and '--v' not in self.cmd:
-            self.cmd.append('--v')
-        else:
-            verbose_orig = os.getenv("GRASS_VERBOSE")
-            os.environ["GRASS_VERBOSE"] = str(verbose)
+        if '--q' not in self.cmd and '--v' not in self.cmd:
+            if verbose == 0:
+                self.cmd.append('--q')
+            elif verbose == 3:
+                self.cmd.append('--v')
+            else:
+                verbose_orig = os.getenv("GRASS_VERBOSE")
+                os.environ["GRASS_VERBOSE"] = str(verbose)
 
         #
         # set message formatting

@@ -425,7 +425,7 @@ class BufferedWindow(wx.Window):
 
                 # store buffered image
                 # self._bufferLast = wx.BitmapFromImage(self._buffer.ConvertToImage())
-                self._bufferLast = dc.GetAsBitmap((0, 0, self.Map.width, self.Map.height))
+                self._bufferLast = dc.GetAsBitmap(wx.Rect(0, 0, self.Map.width, self.Map.height))
 
             pdcLast = wx.PseudoDC()
             pdcLast.DrawBitmap(bmp=self._bufferLast, x=0, y=0)
@@ -2585,61 +2585,60 @@ class MapFrame(wx.Frame):
 
     def QueryMap(self, x, y):
         """
-        Run *.what command in gis manager output window
+        Query map layer features 
+
+        Currently only raster and vector map layers are supported
         """
         #set query snap distance for v.what at mapunit equivalent of 10 pixels
         qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
-        east,north = self.MapWindow.Pixel2Cell((x, y))
+        east, north = self.MapWindow.Pixel2Cell((x, y))
 
-        if self.tree.GetSelections():
-            mapname = None
-            raststr = ''
-            vectstr = ''
-            rcmd = []
-            vcmd = []
-            for layer in self.tree.GetSelections():
-                type =   self.tree.layers[layer].type
-                dcmd = self.tree.GetPyData(layer)[0]
-                if type in ('raster', 'rgb', 'his'):
-                    for item in dcmd:
-                        if 'map=' in item:
-                            raststr += "%s," % item.split('=')[1]
-                        elif 'red=' in item:
-                            raststr += "%s," % item.split('=')[1]
-                        elif 'h_map=' in item:
-                            raststr += "%s," % item.split('=')[1]
-                elif type in ('vector', 'thememap', 'themechart'):
-                    for item in dcmd:
-                        if 'map=' in item:
-                            vectstr += "%s," % item.split('=')[1]
-
-            # build query commands for any selected rasters and vectors
-            if raststr != '':
-                raststr = raststr.rstrip(',')
-                rcmd = ['r.what',
-                        '-f',
-                        'input=%s' % (raststr),
-                        'east_north=%f,%f' % (float(east), float(north))]
-            if vectstr != '':
-                vectstr = vectstr.rstrip(',')
-                vcmd = ['v.what',
-                        '-a',
-                        'map=%s' % vectstr,
-                        'east_north=%f,%f' % (float(east), float(north)),
-                        'distance=%f' % qdist]
-        else:
-            dlg = wx.MessageDialog(self, _('You must select a map in the GIS Manager to query'),
-                                   _('Nothing to query'), wx.OK | wx.ICON_INFORMATION)
+        if not self.tree.GetSelections():
+            dlg = wx.MessageDialog(parent=self,
+                                   message=_('You must select a map layer in the '
+                                             'Layer Manager to query'),
+                                   caption=_('Nothing to query'),
+                                   style=wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
             return
+        
+        mapname = None
+        raststr = ''
+        vectstr = ''
+        rcmd = []
+        vcmd = []
+        for layer in self.tree.GetSelections():
+            type = self.tree.GetPyData(layer)[0]['maplayer'].type
+            dcmd = self.tree.GetPyData(layer)[0]['cmd']
+            name = utils.GetLayerNameFromCmd(dcmd)
+            if name == '':
+                continue
+            if type in ('raster', 'rgb', 'his'):
+                raststr += "%s," % name
+            elif type in ('vector', 'thememap', 'themechart'):
+                vectstr += "%s," % name
+
+        # build query commands for any selected rasters and vectors
+        if raststr != '':
+            rcmd = ['r.what', '--q',
+                    '-f',
+                    'input=%s' % raststr.rstrip(','),
+                    'east_north=%f,%f' % (float(east), float(north))]
+            
+        if vectstr != '':
+            vcmd = ['v.what', '--q',
+                    '-a',
+                    'map=%s' % vectstr.rstrip(','),
+                    'east_north=%f,%f' % (float(east), float(north)),
+                    'distance=%f' % qdist]
 
         # parse query command(s)
         if self.gismanager:
             if rcmd:
-                self.gismanager.goutput.RunCmd(' '.join(rcmd))
+                self.gismanager.goutput.RunCmd(rcmd)
             if vcmd:
-                self.gismanager.goutput.RunCmd(' '.join(vcmd))
+                self.gismanager.goutput.RunCmd(vcmd)
         else:
             os.system(' '.join(rcmd))
             os.system(' '.join(vcmd))
@@ -2687,7 +2686,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = "measure"
         self.MapWindow.mouse['box'] = "line"
         self.MapWindow.zoomtype = 0
-        self.MapWindow.pen = wx.Pen(colour='red', width=2, style=wx.SHORT_DASH)
+        self.MapWindow.pen     = wx.Pen(colour='red', width=2, style=wx.SHORT_DASH)
         self.MapWindow.polypen = wx.Pen(colour='green', width=2, style=wx.SHORT_DASH)
 
         # change the cursor
@@ -2696,9 +2695,13 @@ class MapFrame(wx.Frame):
         # initiating output
         if self.projinfo['proj'] != 'xy':
             units = self.projinfo['units']
-            self.gismanager.goutput.cmd_output.write('\nMeasuring distance ('+units+'):\n')
+            style = self.gismanager.goutput.cmd_output.StyleCommand
+            self.gismanager.goutput.cmd_output.write('Measuring distance ('
+                                                     + units + '):%s' % os.linesep,
+                                                     style)
         else:
-            self.gismanager.goutput.cmd_output.write('\nMeasuring distance:\n')
+            self.gismanager.goutput.cmd_output.write('Measuring distance:%s' % os.linesep,
+                                                     style)
 
     def MeasureDist(self, beginpt, endpt):
         """
