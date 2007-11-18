@@ -6,14 +6,6 @@ typedef struct _jmpbuf_wrapper {
   jmp_buf jmpbuf;
 } jmpbuf_wrapper;
 
-/* GRR 19991205:  this is used as a test for pre-1999 versions of netpbm and
- *   pbmplus vs. 1999 or later (in which pm_close was split into two) 
- */
-#ifdef PBMPLUS_RAWBITS
-#  define pm_closer pm_close
-#  define pm_closew pm_close
-#endif
-
 #ifndef TRUE
 #  define TRUE 1
 #endif
@@ -27,9 +19,7 @@ typedef struct _jmpbuf_wrapper {
 #define MAXCOMMENTS 256
 
 /* function prototypes */
-#ifdef __STDC__
 static void pnmtopng_error_handler (png_structp png_ptr, png_const_charp msg);
-#endif
 
 #if 0
 /* unused */
