@@ -85,7 +85,6 @@ static int no_warn = 0;
 static int no_sleep = 1;
 static int message_id = 1;
 
-extern char *getenv();
 static int print_word (FILE *, char **, int *, const int);
 static void print_sentence (FILE *, const int, const char *);
 static int print_error (const char *, const int);

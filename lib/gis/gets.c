@@ -37,8 +37,10 @@ static void catch_int (int);
 
 int G_gets (char *buf)
   {
-  	void (*sigtstp)();
+#ifdef SIGTSTP
+  	RETSIGTYPE (*sigtstp)();
   	int tty;
+#endif
 	char p[128];
 	char *eof;
   
@@ -47,7 +49,7 @@ int G_gets (char *buf)
   	if ((tty = isatty(0)))
   	{
 		sigtstp = signal (SIGTSTP, catch_ctrlz);
-		if (sigtstp != (void (*)()) SIG_DFL)
+		if (sigtstp != (RETSIGTYPE (*)()) SIG_DFL)
   		    signal (SIGTSTP, sigtstp);
   	}
 #endif
@@ -78,7 +80,7 @@ static void catch_ctrlz (int n)
       G_warning ( "catch_ctrlz: ignored Ctrl-z" );
 #else
       
-  	void (*sigint)();
+  	RETSIGTYPE (*sigint)();
   
   /* having caught ctrlz - effect a ctrl-z using kill */
   	ctrlz = 1;

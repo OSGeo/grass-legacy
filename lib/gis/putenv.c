@@ -11,7 +11,9 @@
  * this routine sets the UNIX environment variable name to value
  ******************************************************************/
 
+#if !defined(HAVE_PUTENV) && !defined(HAVE_SETENV)
 extern char **environ;
+#endif
 
 void G_putenv(const char *name, const char *value)
 {
