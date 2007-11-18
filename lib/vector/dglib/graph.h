@@ -30,8 +30,6 @@
 #include "heap.h"
 #include "tree.h"
 
-__BEGIN_DECLS
-
 /*
  * Graph State bitmask - returned by dglGet_State() function
  */
@@ -541,5 +539,4 @@ void 		dglEdge_T_Release		( dglEdgeTraverser_s * pTraverser );
 dglInt32_t *dglEdge_T_First			( dglEdgeTraverser_s * pTraverser );
 dglInt32_t *dglEdge_T_Next			( dglEdgeTraverser_s * pTraverser );
 
-__END_DECLS
 #endif
