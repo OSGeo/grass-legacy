@@ -166,9 +166,11 @@ int main (int argc, char *argv[])
 	   "dist;minimum distance to nearest feature;"
 	   "to_x;x coordinate of the nearest point on 'to' feature;"
 	   "to_y;y coordinate of the nearest point on 'to' feature;"
-	   "to_along;distance to the nearest point on 'from' feature along linear feature;"
-	   "to_angle;angle of linear feature in nearest point, counterclockwise from positive " 
-	   "x axis, in radians, which is between -PI and PI inclusive;"
+	   "to_along;distance between points/centroids in 'from' map and the linear feature's "
+	   "start point in 'to' map, along this linear feature;"
+	   "to_angle;angle between the linear feature in 'to' map and the positive x axis, at "
+	   "the location of point/centroid in 'from' map, counterclockwise, in radians, which "
+	   "is between -PI and PI inclusive;"
 	   "to_attr;attribute of nearest feature given by to_column option");
     /*	"from_x - x coordinate of the nearest point on 'from' feature;" */
     /*	"from_y - y coordinate of the nearest point on 'from' feature;" */
