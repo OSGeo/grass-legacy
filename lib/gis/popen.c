@@ -82,14 +82,17 @@ FILE *G_popen(
 
 int G_pclose( FILE *ptr)
 {
-    void (*sigint)();
+    RETSIGTYPE (*sigint)();
 #ifdef SIGHUP    
-    void (*sighup)();
+    RETSIGTYPE (*sighup)();
 #endif
 #ifdef SIGQUIT
-    void (*sigquit)();
+    RETSIGTYPE (*sigquit)();
 #endif
-    int f, r;
+    int f;
+#ifndef __MINGW32__
+    int r;
+#endif
     int status;
 
     f = fileno(ptr);
