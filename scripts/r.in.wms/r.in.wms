@@ -122,7 +122,6 @@
 #% type: string
 #% description: Additional options for r.tileset
 #% required : no
-#% guisection: Request
 #%end
 #%option
 #% key: region
