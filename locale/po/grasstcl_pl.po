@@ -3072,7 +3072,7 @@ msgid ""
 "\n"
 " "
 msgstr ""
-"\n"
+" \n"
 "TWORZENIE NOWEJ LOKACJI GRASS Z U¯YCIEM PLIKU GEOREFERENCYJNEGO\n"
 "\n"
 
