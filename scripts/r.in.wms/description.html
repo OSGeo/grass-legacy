@@ -65,7 +65,8 @@ easier:
 g.region res=90 -ap
 g.region save=panhandle-90ft
 
-r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi layers=us_ned styles=feet_real -o region=panhandle-90ft
+r.in.wms output=elevation_feet mapserver=http://wms.jpl.nasa.gov/wms.cgi \
+         layers=us_ned styles=feet_real -o region=panhandle-90ft
 </pre></div>
 
 Downloads real number feet elevation from OnEarth to cover the current
