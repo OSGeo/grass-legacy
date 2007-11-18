@@ -19,7 +19,6 @@
 /* PGSIZE is normally the natural page size of the machine */
 #define PGSIZE	512
 #define NUMDIMS	3	/* number of dimensions */
-#define NDEBUG
 
 /* typedef float RectReal; */
 typedef double RectReal;
