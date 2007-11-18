@@ -134,7 +134,7 @@ static int G__open (
 	if(mode == 1 || access(path,0) != 0)
 	{
 	    G__make_mapset_element (element);
-	    close (creat (path, 0666));
+	    close (open(path, O_WRONLY|O_CREAT|O_TRUNC, 0666));
 	}
 
 	return open (path, mode);
