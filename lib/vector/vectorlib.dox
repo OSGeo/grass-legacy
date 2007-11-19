@@ -2,7 +2,7 @@
 
 by GRASS Development Team
 
-http://grass.itc.it
+http://grass-gis.org
 
 <h2>Table of contents</h2>
 
@@ -207,7 +207,7 @@ This directory contains these files:
 <li><b>hist</b> - text file, vector map change history
 </ul>
 
-\subsubsection coor_file_format_specification coor file format specification
+\subsubsection coor_file_format_specification Coor file format specification
 
 <ol>
 <li> In the coor file the following is stored: 'line' (element) type,
@@ -220,16 +220,20 @@ This directory contains these files:
 <TABLE border=2>
 <TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
 
-<TR><TD>Version_Major </TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
-<TR><TD>Version_Minor </TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
-<TR><TD>Earliest_Major</TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
-<TR><TD>Earliest_Minor</TD><TD>C</TD><TD>1</TD><TD>&nbsp;</TD></TR>
+<TR><TD>Version_Major </TD><TD>C</TD><TD>1</TD><TD>file version (major)</TD></TR>
+<TR><TD>Version_Minor </TD><TD>C</TD><TD>1</TD><TD>file version (minor)</TD></TR>
+<TR><TD>Back_Major</TD><TD>C</TD><TD>1</TD><TD>supported from GRASS version (major)</TD></TR>
+<TR><TD>Back_Minor</TD><TD>C</TD><TD>1</TD><TD>supported from GRASS version (minor)</TD></TR>
 
-<TR><TD>byte_order</TD><TD>C</TD><TD>1</TD><TD>little or big endian flag;
-                  files are written in machine native order but files
-		  in both little and big endian order may be read</TD></TR>
-<TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>2D or 3D flag</TD></TR>
+<TR><TD>byte_order</TD><TD>C</TD><TD>1</TD><TD>little or big endian
+                  flag; files are written in machine native order but
+                  files in both little and big endian order may be
+                  readl; zero for little endian</TD></TR>
+
 <TR><TD>size</TD><TD>L</TD><TD>1</TD><TD>coor file size</TD></TR>
+
+<TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>2D or 3D flag; zero for 2D</TD></TR>
+
 <TR><TD>reserved</TD><TD>C</TD><TD>10</TD><TD>not used</TD></TR>
 
 </TABLE>
@@ -242,7 +246,7 @@ The body consists of line records:
 
 <TABLE border=2>
 <TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
-<TR><TD>record header</TD><TD>I</TD><TD>1</TD><TD>
+<TR><TD>record header</TD><TD>C</TD><TD>1</TD><TD>
 <UL>
   <LI><B>0. bit</B> : 1 - alive, 0 - dead line
   <LI><B>1. bit</B> : 1 - categories, 0 - no categories
@@ -251,21 +255,27 @@ The body consists of line records:
   <LI><B>4.-7. bit</B> : reserved, not used 
 </UL>
 </TD></TR>
-<TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories 
+
+<TR><TD>ncats</TD><TD>I</TD><TD>1</TD><TD>number of categories 
     (written only if categories exist) </TD></TR>
-<TR><TD>field</TD><TD>S</TD><TD>ncats</TD><TD>Category identifier, 
-    distinguishes between more categories append to one line 
-    (written only if categories exist; field is called "layer" at user level)</TD></TR>
-<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>category value 
-    (written only if categories exist)</TD></TR>
+
+<TR><TD>field</TD><TD>I</TD><TD>ncats</TD><TD>field identifier,
+    distinguishes between more categories append to one line (written
+    only if categories exist; field is called "layer" at user
+    level)</TD></TR>
+
+<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>category value (written
+    only if categories exist)</TD></TR>
+
 <TR><TD>ncoor</TD><TD>I</TD><TD>1</TD><TD>written for GV_LINES and GV_BOUNDARIES 
     only</TD></TR>
-<TR><TD>x</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp;</TD></TR>
-<TR><TD>y</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp;</TD></TR>
-<TR><TD>z</TD><TD>D</TD><TD>ncoor</TD><TD>present if with_z in head 
-    is set to 1</TD></TR>
-</TABLE>
 
+<TR><TD>x</TD><TD>D</TD><TD>ncoor</TD><TD>x coordinate</TD></TR>
+
+<TR><TD>y</TD><TD>D</TD><TD>ncoor</TD><TD>y coordinate</TD></TR>
+
+<TR><TD>z</TD><TD>D</TD><TD>ncoor</TD><TD>z coordinate; present if
+    with_z in head is set to 1</TD></TR> </TABLE>
 
 <P>
 <B>Types used in coor file</B>
@@ -279,7 +289,7 @@ The body consists of line records:
 </TABLE>
 
 
-\subsubsection head_file_format head file format
+\subsubsection head_file_format Head file format
 
 The file is an unordered list of key/value entries. The <I>key</I>
 is a string separated from <I>value</I> by a colon and optional
@@ -312,7 +322,7 @@ Topology is written for native format while pseudo-topology is written
 for OGR sources, SHAPE-link.
 
 
-\subsection topo_file_format topo file format
+\subsection topo_file_format Topo file format
 
 [detailed docs please insert!]
 
