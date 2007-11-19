@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 {
     int row_viewpt, col_viewpt, nrows, ncols, a, b, row, patt_flag;
     int segment_no, flip, xmax, ymax, sign_on_y, sign_on_x;
-    int submatrix_rows, submatrix_cols, lenth_data_item;
+    int length_data_item;
     int patt = 0, in_fd, out_fd, patt_fd = 0;
     int old, new;
     double slope_1, slope_2, max_vert_angle = 0.0, color_factor;
@@ -66,9 +66,13 @@ int main(int argc, char *argv[])
     CELL *cell;
     FCELL *fcell, data, viewpt_elev;
     SEGMENT seg_in, seg_out, seg_patt;
+    int segments_in_memory;
+    int maxmem;
+    int nseg = 4;		/* see r.walk */
+    int srows, scols;
     struct point *heads[16], *SEARCH_PT;
     struct GModule *module;
-    struct Option *opt1, *opt2, *opt3, *opt5, *opt6, *opt7;
+    struct Option *opt1, *opt2, *opt3, *opt5, *opt6, *opt7, *opt8;
     struct History history;
     char title[128];
 
@@ -111,6 +115,16 @@ int main(int argc, char *argv[])
     opt6->answer = "10000";
     opt6->options = "0-999999";
     opt6->description = _("Maximum distance from the viewing point (meters)");
+
+    opt8 = G_define_option();
+    opt8->key = "percent_memory";
+    opt8->type = TYPE_INTEGER;
+    opt8->key_desc = "percent memory";
+    opt8->required = NO;
+    opt8->multiple = NO;
+    opt8->answer = "100";
+    opt8->description = _("Percent of map to keep in memory");
+
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -202,40 +216,45 @@ int main(int argc, char *argv[])
     }
 
     /*      parameters for map submatrices                  */
-    lenth_data_item = sizeof(FCELL);
-    submatrix_rows = nrows / 4 + 1;
-    submatrix_cols = ncols / 4 + 1;
+    length_data_item = sizeof(FCELL);
+    if (sscanf(opt8->answer, "%d", &maxmem) != 1 || maxmem < 0 || maxmem > 100)
+	G_fatal_error(_("Inappropriate percent memory: %d"), maxmem);
+
+    srows = nrows / nseg + 1;
+    scols = ncols / nseg + 1;
+    if (maxmem > 0)
+	segments_in_memory =
+	    2 + maxmem * (nrows / srows) * (ncols / scols) / 100;
+    else
+	segments_in_memory = 4 * (nrows / srows + ncols / scols + 2);
 
     /* create segmented format files for elevation layer,   */
     /* output layer and pattern layer (if present)          */
     in_name = G_tempfile();
     in_fd = creat(in_name, 0666);
-    segment_format(in_fd, nrows, ncols,
-		   submatrix_rows, submatrix_cols, lenth_data_item);
+    segment_format(in_fd, nrows, ncols, srows, scols, length_data_item);
     close(in_fd);
     out_name = G_tempfile();
     out_fd = creat(out_name, 0666);
-    segment_format(out_fd, nrows, ncols,
-		   submatrix_rows, submatrix_cols, lenth_data_item);
+    segment_format(patt_fd, nrows, ncols, srows, scols, length_data_item);
     close(out_fd);
 
     if (patt_flag == TRUE) {
 	patt_name = G_tempfile();
 	patt_fd = creat(patt_name, 0666);
-	segment_format(patt_fd, nrows, ncols,
-		       submatrix_rows, submatrix_cols, sizeof(CELL));
+	segment_format(patt_fd, nrows, ncols, srows, scols, sizeof(CELL));
 	close(patt_fd);
     }
 
     /*      open, initialize and segment all files          */
     in_fd = open(in_name, 2);
-    segment_init(&seg_in, in_fd, 4);
+    segment_init(&seg_in, in_fd, segments_in_memory);
     out_fd = open(out_name, 2);
-    segment_init(&seg_out, out_fd, 4);
+    segment_init(&seg_out, out_fd, segments_in_memory);
 
     if (patt_flag == TRUE) {
 	patt_fd = open(patt_name, 2);
-	segment_init(&seg_patt, patt_fd, 4);
+	segment_init(&seg_patt, patt_fd, segments_in_memory);
 	for (row = 0; row < nrows; row++) {
 	    if (G_get_raster_row(patt, cell, row, CELL_TYPE) < 0)
 		G_fatal_error(_("Unable to read raster map <%s> row %d"), patt_layer, row);
