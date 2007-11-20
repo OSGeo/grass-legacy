@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
 	flag.gprint = G_define_flag();
 	flag.gprint->key         = 'g';
 	flag.gprint->description = _("Print in shell script style");
-	flag.gprint->guisection  = _("Print;Shell Script");
+	flag.gprint->guisection  = _("Print");
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
