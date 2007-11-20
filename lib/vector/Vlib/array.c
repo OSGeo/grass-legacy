@@ -17,6 +17,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 
 /* function prototypes */
@@ -79,7 +80,8 @@ Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring
 	
     ret = Vect_str_to_cat_list ( cstring, Clist);
 
-    if ( ret > 0 ) G_warning ( "%d errors in category string.", ret);
+    if ( ret > 0 )
+	G_warning(_("%d errors in category string."), ret);
     
     G_debug (4, "  %d ranges in clist", Clist->n_ranges);
 
@@ -116,7 +118,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
     
     /* Check type */
     if ( (type & GV_AREA) && (type & (GV_POINTS | GV_LINES)) ) {
-	G_warning ("Mixed area and other type requested for vector array.");
+	G_warning(_("Mixed area and other type requested for vector array."));
 	return 0;
     }
     
@@ -126,7 +128,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
 	n = Vect_get_num_areas (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning ("Not enough space in vector array.");
+	    G_warning(_("Not enough space in vector array."));
 	    return 0;
 	}
 	    
@@ -146,7 +148,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
 	n = Vect_get_num_lines (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning ("Not enough space in vector array.");
+	    G_warning(_("Not enough space in vector array."));
 	    return 0;
 	}
 	    
@@ -221,10 +223,10 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
     G_debug (4, "Vect_set_varray_from_db(): field = %d where = '%s'", field, where);
 
     /* Note: use category index once available */
-    
+
     /* Check type */
     if ( (type & GV_AREA) && (type & (GV_POINTS | GV_LINES)) ) {
-	G_warning ("Mixed area and other type requested for vector array.");
+	G_warning(_("Mixed area and other type requested for vector array."));
 	return 0;
     }
     
@@ -233,25 +235,30 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
     /* Select categories from DB to array */
     Fi = Vect_get_field ( Map, field);
     if ( Fi == NULL ) {
-	G_warning ( "Cannot get field info" );
+	G_warning(_("Cannot get field info"));
 	return -1;
     }
     
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-	G_warning ( "Cannot open database" );
+	G_warning(_("Cannot open database"));
 	return -1;
     }
-	
+
     ncats = db_select_int( driver, Fi->table, Fi->key, where, &cats);
 
     db_close_database_shutdown_driver ( driver );
+
+    if(ncats == -1) {
+	G_warning(_("Could not select from table/column"));
+	return -1;
+    }
 
     if ( type & GV_AREA ) { /* Areas */
 	n = Vect_get_num_areas (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning ("Not enough space in vector array.");
+	    G_warning(_("Not enough space in vector array."));
 	    return 0;
 	}
 	    
@@ -281,7 +288,7 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 	n = Vect_get_num_lines (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning ("Not enough space in vector array.");
+	    G_warning(_("Not enough space in vector array."));
 	    return 0;
 	}
 	    

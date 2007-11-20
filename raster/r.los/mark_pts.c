@@ -17,7 +17,8 @@
 #define		PT_TO_MARK_INCL		PT_TO_MARK->inclination
 
 int 
-mark_visible_points (struct point *head, SEGMENT *seg_out_p, int row_viewpt, int col_viewpt, double color_factor, double COLOR_SHIFT)
+mark_visible_points (struct point *head, SEGMENT *seg_out_p, int row_viewpt,
+		     int col_viewpt, double color_factor, double COLOR_SHIFT)
 {
         struct point *PT_TO_MARK;
         FCELL data ;

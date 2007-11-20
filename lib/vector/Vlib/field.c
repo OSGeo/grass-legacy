@@ -384,7 +384,7 @@ Vect_read_dblinks ( struct Map_info *Map )
     if ( Map->format == GV_FORMAT_OGR ) {
 
 #if GDAL_VERSION_NUM > 1320 /* seems to be fixed after 1320 release */
-	int i, layer, nLayers;
+	int layer, nLayers;
 	OGRDataSourceH Ogr_ds;
 	OGRLayerH Ogr_layer=NULL;
 	OGRFeatureDefnH Ogr_featuredefn;

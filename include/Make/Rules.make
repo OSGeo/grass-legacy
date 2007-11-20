@@ -27,8 +27,14 @@ endif
 $(OBJDIR):
 	-test -d $(OBJDIR) || $(MKDIR) $(OBJDIR)
 
+ifndef BROKEN_MAKE
+ifneq ($(MAKE_VERSION),3.81)
+BROKEN_MAKE=1
+endif
+endif
+
 # default cc rules
-ifeq ($(MAKE_VERSION),3.81)
+ifeq ($(BROKEN_MAKE),)
 $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
 
@@ -45,12 +51,10 @@ $(OBJDIR)/%.o : %.c $(LOCAL_HEADERS) $(EXTRA_HEADERS)
 $(OBJDIR)/%.o : %.cc $(LOCAL_HEADERS) $(EXTRA_HEADERS)
 	$(MAKE) $(OBJDIR)
 	$(CC) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
-		-o $(OBJDIR)/$*.o -c $*.c
 
 $(OBJDIR)/%.o : %.cpp $(LOCAL_HEADERS) $(EXTRA_HEADERS)
 	$(MAKE) $(OBJDIR)
 	$(CC) $(CXXFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) $(EXTRA_INC) $(INC) -o $@ -c $<
-		-o $(OBJDIR)/$*.o -c $*.c
 endif
 
 # default parser generation rules, include prefix for files/vars

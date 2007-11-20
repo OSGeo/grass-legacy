@@ -100,6 +100,8 @@ proc GmProfile::create { mapcan } {
 
 	# profile control buttons
 	set pcan_tb [$profilemf addtoolbar]
+	pack $pcan_tb -side left -expand yes -fill x
+	
 	set pcanbb [ButtonBox $pcan_tb.bb -orient horizontal]
 	$pcanbb add -image [image create photo -file "$iconpath/element-cell.gif"] \
 		-command "GmProfile::select_rast" \
@@ -126,11 +128,17 @@ proc GmProfile::create { mapcan } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
         -helptext [G_msg "Save profile to EPS file"] -highlightbackground $bgcolor
+	set helpbtn [Button $pcan_tb.help -text [G_msg "Help"] \
+		-image [image create photo -file "$iconpath/gui-help.gif"] \
+		-command "spawn g.manual --q gm_profile" \
+		-background $bgcolor -borderwidth 1 \
+		-helptext [G_msg "Help"]]
         
     # add a menu button to set preferences?
 
 	pack $profilemf -expand yes -fill both -padx 0 -pady 0
 	pack $pcan -fill both -expand yes
+	pack $helpbtn -side right -anchor e
 	pack $pcanbb -side left -anchor w
 			
     set GmProfile::status [G_msg "Profile for $pmap"]

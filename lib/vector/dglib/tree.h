@@ -22,9 +22,6 @@
 #ifndef _DGL_TREE_H_
 #define _DGL_TREE_H_
 
-__BEGIN_DECLS
-
-
 #include "avl.h"
 #include "tavl.h"
 
@@ -165,7 +162,5 @@ extern void dglTreeEdgePri32Cancel( void * pvEdgePri32 , void * pvParam );
 extern int dglTreeEdgePri32Compare( const void * pvEdgePri32A , const void * pvEdgePri32B , void * pvParam );
 extern dglTreeEdgePri32_s * dglTreeEdgePri32Add( void * pvAVL, dglInt32_t nKey );
 
-
-__END_DECLS
 
 #endif
