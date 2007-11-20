@@ -296,8 +296,8 @@ http://grass.itc.it/devel/index.php#prog
 
 (N) CONTRIBUTING CODE AND PATCHES
 
-Please see ./SUBMITTING and ./SUBMITTING_SCRIPTS in this
-directory.
+Please see ./SUBMITTING, ./SUBMITTING_DOCS, ./SUBMITTING_TCLTK and
+./SUBMITTING_SCRIPTS in this directory.
 
 
 (O) DRAFT TUTORIAL
