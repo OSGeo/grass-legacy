@@ -338,6 +338,10 @@ int main(int argc, char *argv[])
     struct Ref ref;
     char *mapset, *gdal_formats = NULL;
     RASTER_MAP_TYPE maptype;
+    int bHaveMinMax;
+    double dfCellMin;
+    double dfCellMax;
+    struct FPRange sRange;
 
     G_gisinit(argv[0]);
 
@@ -411,7 +415,6 @@ int main(int argc, char *argv[])
 #endif
 
     if (flag_l->answer) {
-
 	supported_formats(&gdal_formats);
 	exit(EXIT_SUCCESS);
     }
@@ -532,7 +535,17 @@ int main(int argc, char *argv[])
 	    }
 	}
     }
+
     /* If file type not set by user ... */
+    /* Get min/max values. */
+    if( G_read_fp_range(input->answer, mapset, &sRange ) == -1 ) {
+        bHaveMinMax = FALSE;
+    } else {
+        bHaveMinMax = TRUE;
+        G_get_fp_range_min_max( &sRange, &dfCellMin, &dfCellMax );
+    }
+    G_message( "Range: min: %f, max: %f", dfCellMin, dfCellMax);
+
     if (datatype == GDT_Unknown) {
 	/* ... determine raster data type from first GRASS raster in a group */
 	maptype = G_raster_map_type(ref.file[0].name, ref.file[0].mapset);
@@ -545,10 +558,25 @@ int main(int argc, char *argv[])
 	    nodataval = -1E37f;
 	}
 	else {
-	    datatype = GDT_Int32;
+	   /* Special tricks for GeoTIFF color table support and such */
+	    if (dfCellMin >= 0 && dfCellMax < 256 ) {
+		datatype = GDT_Byte;
+	    } else {
+		if (dfCellMin >= 0 && dfCellMax < 65536 ) {
+			datatype = GDT_UInt16;
+		} else {
+			datatype = GDT_Int32; /* need to furthermore fine tune this? */
+		}
+	    }
 	    nodataval = (double)(int)0x80000000;
 	}
     }
+
+    G_debug( 3, "Input map datatype=%s\n",
+                    (maptype == CELL_TYPE ? "CELL" :
+                     (maptype == DCELL_TYPE ? "DCELL" :
+                      (maptype == FCELL_TYPE ? "FCELL" : "??"))));
+    G_message(_("Exporting to GDAL data type: %s"), GDALGetDataTypeName(datatype));
 
     /* Create dataset for output with target driver or, if needed, with in-memory driver */
     char **papszOptions = NULL;
