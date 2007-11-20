@@ -544,7 +544,7 @@ int main(int argc, char *argv[])
         bHaveMinMax = TRUE;
         G_get_fp_range_min_max( &sRange, &dfCellMin, &dfCellMax );
     }
-    G_message( "Range: min: %f, max: %f", dfCellMin, dfCellMax);
+    G_debug(3, "Range: min: %f, max: %f", dfCellMin, dfCellMax);
 
     if (datatype == GDT_Unknown) {
 	/* ... determine raster data type from first GRASS raster in a group */
