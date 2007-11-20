@@ -1,8 +1,10 @@
 #include "coin.h"
 
 #define F_CTOK(C)	((double)(C))/1000000.0
-#define F_CTOM(C)	F_CTOK(C) *   0.3861
-#define F_CTOA(C)	F_CTOK(C) * 247.1000
+	/* sq km -> sq miles = 1000^2 / (0.0254 * 12 * 5280)^2 */
+#define F_CTOM(C)	F_CTOK(C) * 0.386102158542446
+	/* sq km -> acres = sq miles * 640 */
+#define F_CTOA(C)	F_CTOK(C) * 247.105381467165
 #define F_CTOH(C)	F_CTOK(C) * 100.0000
 
 #define F_CTOP(C,R) ((int)R) ? (double)C / (double)R * 100.0 : 0.0
@@ -26,7 +28,7 @@ print_entry (int Conformat, long count, double area)
 	case 'k': 
 		print_area(F_CTOK(area));
 		break;
-	case 'm': 
+	case 'm':  /* square miles */
 		print_area(F_CTOM(area));
 		break;
 	case 'p': 
@@ -40,7 +42,7 @@ print_entry (int Conformat, long count, double area)
 		row_total(Rndex,1,&total_count,&total_area);
 		print_percent(F_CTOY(area,total_area));
 		break;
-	default:  
+	default:  /* case 'c' */ 
 		fprintf(dumpfile," %9ld |", count);
 		break;
     }
