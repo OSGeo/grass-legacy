@@ -91,7 +91,7 @@ Contents
  o Store the source tarball in (use scp -p FILES grass:):
      http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
    along with associated files:
-     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
+     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
 
  o update web site to new version (HTML in Web-CVS)
       - rss.xml (for news section)
