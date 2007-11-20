@@ -309,82 +309,82 @@ main (int argc, char *argv[])
 
 	/*  Check if input layers exists in data base  */   
 	if (G_find_cell2 (parm.model->answer, "")  == NULL)
-		G_fatal_error("%s - not found", parm.model->answer);
+		G_fatal_error(_("Raster map <%s> not found"), parm.model->answer);
 	
 	if (!(parm.mois_1h->answer || parm.mois_10h->answer || parm.mois_100h->answer)) {
-		G_warning("no dead fuel moisture is given. At least one of the 1-h, 10-h, 100-h moisture layers is required.");
+		G_warning("No dead fuel moisture is given. At least one of the 1-h, 10-h, 100-h moisture layers is required.");
 		G_usage();
 		exit(EXIT_FAILURE);
         }
 
 	if (parm.mois_1h->answer) {
         	if (G_find_cell2 (parm.mois_1h->answer, "")  == NULL)
-			G_fatal_error("%s - not found", parm.mois_1h->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.mois_1h->answer);
 	}
 	if (parm.mois_10h->answer) {
         	if (G_find_cell2 (parm.mois_10h->answer, "")  == NULL)
-			G_fatal_error("%s - not found", parm.mois_10h->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.mois_10h->answer);
 	}
 	if (parm.mois_100h->answer) {
         	if (G_find_cell2 (parm.mois_100h->answer, "")  == NULL)
-			G_fatal_error("%s - not found", parm.mois_100h->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.mois_100h->answer);
 	}
 
         if (G_find_cell2 (parm.mois_live->answer, "")  == NULL)
-		G_fatal_error("%s - not found", parm.mois_live->answer);
+		G_fatal_error(_("Raster map <%s> not found"), parm.mois_live->answer);
 
 	if (parm.vel->answer && !(parm.dir->answer)) {
-		G_warning("a wind direction layer should be given if the wind velocity layer--%s-- has been given\n", parm.vel->answer);
+		G_warning("A wind direction layer should be given if the wind velocity layer--%s-- has been given\n", parm.vel->answer);
 		G_usage();
 		exit(EXIT_FAILURE);
         }
 	if (!(parm.vel->answer) && parm.dir->answer) {
-		G_warning("a wind velocity layer should be given if the wind direction layer--%s-- has been given\n", parm.dir->answer);
+		G_warning("A wind velocity layer should be given if the wind direction layer--%s-- has been given\n", parm.dir->answer);
 		G_usage();
 		exit(EXIT_FAILURE);
         }
         if (parm.vel->answer) {
 		if (G_find_cell2 (parm.vel->answer, "")  == NULL)
-			G_fatal_error("%s - not found", parm.vel->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.vel->answer);
 	}
 	if (parm.dir->answer) {	
         	if (G_find_cell2 (parm.dir->answer, "")  == NULL)
-			G_fatal_error("%s - not found", parm.dir->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.dir->answer);
 	}
 
 	if (parm.slope->answer && !(parm.aspect->answer)) {
-		G_warning("an aspect layer should be given if the slope layer--%s-- has been given\n", parm.slope->answer);
+		G_warning("An aspect layer should be given if the slope layer--%s-- has been given\n", parm.slope->answer);
 		G_usage();
 		exit(EXIT_FAILURE);
         }
 	if (!(parm.slope->answer) && parm.aspect->answer) {
-		G_warning("a slope layer should be given if the aspect layer--%s-- has been given\n", parm.aspect->answer);
+		G_warning("A slope layer should be given if the aspect layer--%s-- has been given\n", parm.aspect->answer);
 		G_usage();
 		exit(EXIT_FAILURE);
         }
         if (parm.slope->answer) {
 		if (G_find_cell2 (parm.slope->answer, "") == NULL)
-			G_fatal_error("%s - not found", parm.slope->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.slope->answer);
 	}
        if (parm.aspect->answer) {
 		if (G_find_cell2 (parm.aspect->answer, "") == NULL)
-			G_fatal_error("%s - not found", parm.aspect->answer);
+			G_fatal_error(_("Raster map <%s> not found"), parm.aspect->answer);
 	}
 
 	if (spotting) {
 		if (!(parm.elev->answer)) {
-			G_warning("an elevation layer should be given if considering spotting\n");
+			G_warning("An elevation layer should be given if considering spotting\n");
 			G_usage();
 			exit(EXIT_FAILURE);
         	} else {
 			if (G_find_cell2 (parm.elev->answer, "") == NULL)
-				G_fatal_error("%s - not found", parm.elev->answer);
+				G_fatal_error(_("Raster map <%s> not found"), parm.elev->answer);
         	}	
 	}
 
 	/*  Check if specified output layer name IS LEGAL  */
 	if (G_legal_filename (parm.output->answer) < 0)
-		G_fatal_error("%s - illegal name", parm.output->answer);
+		G_fatal_error(_("<%s> is an illegal file name"), parm.output->answer);
 
 	/*assign names of the three output ROS layers*/
 	sprintf(name_base, "%s.base", parm.output->answer); 
@@ -393,24 +393,24 @@ main (int argc, char *argv[])
 
         /*check if the output layer names EXIST*/
 	if (G_find_cell2 (name_base, G_mapset()))
-                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_base, G_mapset());
+                G_fatal_error(_("<%s> already exists in mapset <%s>, select another name"),name_base, G_mapset());
 
 	if (G_find_cell2 (name_max, G_mapset()))
-                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_max, G_mapset());
+                G_fatal_error(_("<%s> already exists in mapset <%s>, select another name"),name_max, G_mapset());
 
 	if (G_find_cell2 (name_maxdir, G_mapset()))
-                G_fatal_error("%s - exits in Mapset <%s>, select another name",name_maxdir, G_mapset());
+                G_fatal_error(_("<%s> already exists in mapset <%s>, select another name"),name_maxdir, G_mapset());
 
 	/*assign a name to output SPOTTING distance layer*/
 	if (spotting) {
 		sprintf(name_spotdist, "%s.spotdist", parm.output->answer); 
 		if (G_find_cell2 (name_spotdist, G_mapset()))
-                	G_fatal_error("%s - exits in Mapset <%s>, select another name",name_spotdist, G_mapset());
+                	G_fatal_error(_("<%s> already exists in mapset <%s>, select another name"),name_spotdist, G_mapset());
 	}
 
 	/*  Get database window parameters  */
 	if(G_get_window (&window) < 0)
-		G_fatal_error("can't read current window parameters");
+		G_fatal_error(_("Unable to read current window parameters"));
 
 	/*  find number of rows and columns in window    */
 	nrows = G_window_rows();
@@ -438,54 +438,54 @@ main (int argc, char *argv[])
 
 	fuel_fd = G_open_cell_old(parm.model->answer, G_find_cell2 (parm.model->answer,""));
 	if (fuel_fd < 0)
-		G_fatal_error("%s - can't open raster map", parm.model->answer);
+		G_fatal_error(_("Unable to open raster map <%s>"), parm.model->answer);
 
 	if (parm.mois_1h->answer) {
         	mois_1h_fd = G_open_cell_old(parm.mois_1h->answer, G_find_cell2 (parm.mois_1h->answer,""));
 		if (mois_1h_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.mois_1h->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.mois_1h->answer);
 	}
 	if (parm.mois_10h->answer) {
         	mois_10h_fd = G_open_cell_old(parm.mois_10h->answer, G_find_cell2 (parm.mois_10h->answer,""));
 		if (mois_10h_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.mois_10h->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.mois_10h->answer);
 	}
 	if (parm.mois_100h->answer) {
         	mois_100h_fd = G_open_cell_old(parm.mois_100h->answer, G_find_cell2 (parm.mois_100h->answer,""));
 		if (mois_100h_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.mois_100h->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.mois_100h->answer);
 	}
 
         mois_live_fd = G_open_cell_old(parm.mois_live->answer, G_find_cell2 (parm.mois_live->answer,""));
 	if (mois_live_fd < 0)
-		G_fatal_error("%s - can't open raster map", parm.mois_live->answer);
+		G_fatal_error(_("Unable to open raster map <%s>"), parm.mois_live->answer);
 
         if (parm.vel->answer) {
 		vel_fd = G_open_cell_old(parm.vel->answer, G_find_cell2 (parm.vel->answer,""));
 		if (vel_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.vel->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.vel->answer);
 	}
         if (parm.dir->answer) {
 		dir_fd = G_open_cell_old(parm.dir->answer, G_find_cell2 (parm.dir->answer,""));
 		if (dir_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.dir->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.dir->answer);
 	}
 
         if (parm.slope->answer) {
 		slope_fd = G_open_cell_old(parm.slope->answer, G_find_cell2 (parm.slope->answer,""));
 		if (slope_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.slope->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.slope->answer);
  	}
        if (parm.aspect->answer) {
 		 aspect_fd = G_open_cell_old(parm.aspect->answer, G_find_cell2 (parm.aspect->answer,""));
 		if (aspect_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.aspect->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.aspect->answer);
  	}
 
        if (spotting) {
 		 elev_fd = G_open_cell_old(parm.elev->answer, G_find_cell2 (parm.elev->answer,""));
 		if (elev_fd < 0)
-			G_fatal_error("%s - can't open raster map", parm.elev->answer);
+			G_fatal_error(_("Unable to open raster map <%s>"), parm.elev->answer);
  	}
 
 	base_fd = G_open_cell_new(name_base);
@@ -558,41 +558,41 @@ main (int argc, char *argv[])
 	if (spotting) 
 		for (row=0; row<nrows; row++) {
 			if (G_get_map_row(elev_fd, elev, row)<0)
-                        	G_fatal_error("cannot get map row!");
+                        	G_fatal_error(_("Unable to read raster map <%s> row %d"), elev, row);
 			for (col=0; col<ncols; col++)
                         	DATA(map_elev, row, col) = elev[col];
 		}
 
 	/*major computation: compute ROSs one cell a time*/
-        G_message (_("Percent Completed ... "));
+        G_message (_("Percent completed... "));
 
 	for ( row=0 ; row < nrows ; row++ ) {
                 G_percent (row, nrows, 2);
                 if (G_get_map_row(fuel_fd, fuel, row)<0)
-                        G_fatal_error("cannot get map row: %d!", row);
+                        G_fatal_error(_("Unable to read raster map <%s> row %d"), fuel, row);
                 if (parm.mois_1h->answer) 
                         if (G_get_map_row(mois_1h_fd, mois_1h, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), mois_1h, row);
                	if (parm.mois_10h->answer) 
                         if (G_get_map_row(mois_10h_fd, mois_10h, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), mois_10h, row);
                 if (parm.mois_100h->answer) 
                         if (G_get_map_row(mois_100h_fd, mois_100h, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), mois_100h, row);
                 if ( G_get_map_row(mois_live_fd, mois_live, row)<0)
-                        G_fatal_error("cannot get map row: %d!", row);
+                        G_fatal_error(_("Unable to read raster map <%s> row %d"), mois_live, row);
                 if (parm.vel->answer) 
                         if (G_get_map_row(vel_fd, vel, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), vel, row);
                 if (parm.dir->answer) 
                         if (G_get_map_row(dir_fd, dir, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), dir, row);
                 if (parm.slope->answer) 
                         if (G_get_map_row(slope_fd, slope, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), slope, row);
                 if (parm.aspect->answer) 
                         if (G_get_map_row(aspect_fd, aspect, row)<0)
-	                        G_fatal_error("cannot get map row: %d!", row);
+	                        G_fatal_error(_("Unable to read raster map <%s> row %d"), aspect, row);
 
 		/*initialize cell buffers for output map layers*/
 		for (col = 0; col < ncols; col++) {
