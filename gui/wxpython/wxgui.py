@@ -1111,12 +1111,13 @@ class GMFrame(wx.Frame):
 
         layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
         if layerName:
-            message = _("Are you sure you want remove layer <" + layerName + ">?")
+            message = _("Do you want to remove map layer <" + layerName + "> "
+                        "from layer tree?")
         else:
-            message = _("Are you sure you want remove selected layer?")
+            message = _("Do you want to remove selected layer from layer tree?")
 
         dlg = wx.MessageDialog (parent=self, message=message,
-                                caption=_("Remove layer from layer tree"),
+                                caption=_("Remove map layer"),
                                 style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
         if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:

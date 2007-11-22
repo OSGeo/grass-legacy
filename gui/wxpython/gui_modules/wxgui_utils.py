@@ -180,7 +180,16 @@ class LayerTree(CT.CustomTreeCtrl):
         self.Bind(wx.EVT_TREE_END_DRAG,         self.OnEndDrag)
         self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.OnContextMenu)
         self.Bind(wx.EVT_TREE_END_LABEL_EDIT,   self.OnChangeLayerName)
+        self.Bind(wx.EVT_KEY_UP,                self.OnKeyUp)
         # self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+
+    def OnKeyUp(self, event):
+        """Key pressed"""
+        key = event.GetKeyCode()
+        if key == wx.WXK_DELETE and self.gismgr:
+            self.gismgr.DeleteLayer(None)
+
+        event.Skip()
 
     def OnChangeLayerName (self, event):
         """Change layer name"""
