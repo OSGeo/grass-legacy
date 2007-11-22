@@ -99,19 +99,24 @@
 #% description: PostScript level (only limits functionality!)
 #% guisection: PostScript
 #% required : no
-#%end
+#% end
 #%flag
-#%key: b
-#%description: Set background color to black (white default)
-#%end
+#% key: b
+#% description: Set background color to black (white default)
+#% end
 #%flag
-#%key: t
-#%description: Set transparent background
+#% key: t
+#% description: Set transparent background
 #% guisection: Images
-#%end
+#% end
 #%flag
-#%key: r
-#%description: Set paper orientation to landscape (for PostScript output)
+#% key: c
+#% description: Use the Cario driver instead of the PNG driver
+#% guisection: Images
+#% end
+#%flag
+#% key: r
+#% description: Set paper orientation to landscape (for PostScript output)
 #% guisection: PostScript
 #%end
 
@@ -148,6 +153,11 @@ fi
 
 if [ `echo "$curr_mon" | grep -c '^x.$'` -ne 1 ] ; then
    g.message -e "Only X monitors are supported."
+   exit 1
+fi
+
+if [ $GIS_FLAG_C -eq 1 ] &&  [ `d.mon -l | grep -c '^cairo'` -eq 0 ] ; then
+   g.message -e "Cairo driver not present in this build of GRASS."
    exit 1
 fi
 
@@ -215,6 +225,11 @@ fi
 
 
 if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
+    if [ $GIS_FLAG_C -eq 1 ] ; then
+	g.message -e "Cairo driver is incompatible with the PostScript driver."
+	exit 1
+    fi
+
     GRAPHICS_DRIVER=PS
     GRASS_PSFILE="$output"
     export GRASS_PSFILE
@@ -244,9 +259,15 @@ if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
     fi
 
 else
-    GRAPHICS_DRIVER=PNG
-    GRASS_PNGFILE="$output"
-    export GRASS_PNGFILE
+    if [ $GIS_FLAG_C -eq 0 ] ; then
+	GRAPHICS_DRIVER=PNG
+	GRASS_PNGFILE="$output"
+	export GRASS_PNGFILE
+    else
+	GRAPHICS_DRIVER=cairo
+	GRASS_CAIROFILE="$output"
+	export GRASS_CAIROFILE
+    fi
 
     #make sure that output is 24 bit color
     GRASS_TRUECOLOR=TRUE
@@ -310,6 +331,6 @@ esac
 
 \rm "$output"
 
-g.message "Done." 
+g.message "Done."
 
 exit $EXITCODE
