@@ -18,19 +18,21 @@ void Cairo_begin_scaled_raster(int mask, int s[2][2], int d[2][2])
 
 	/* TODO: are top and left swapped? */
 
-	src_r = s[0][1];
-	src_b = s[1][1];
 	src_l = s[0][0];
+	src_r = s[0][1];
 	src_t = s[1][0];
-	dst_r = d[0][1];
-	dst_b = d[1][1];
-	dst_l = d[0][0];
-	dst_t = d[1][0];
+	src_b = s[1][1];
 
-	src_h = src_b - src_t + 1;
-	src_w = src_r - src_l + 1;
-	dst_h = dst_b - dst_t + 1;
-	dst_w = dst_r - dst_l + 1;
+	src_w = src_r - src_l;
+	src_h = src_b - src_t;
+
+	dst_l = d[0][0];
+	dst_r = d[0][1];
+	dst_t = d[1][0];
+	dst_b = d[1][1];
+
+	dst_w = dst_r - dst_l;
+	dst_h = dst_b - dst_t;
 
 	G_debug(1, " src (TBLR): %d %d %d %d, dst (TBLR) %d %d %d %d",
 		src_t, src_b, src_l, src_r, dst_t, dst_b, dst_l, dst_r);
@@ -48,7 +50,7 @@ int Cairo_scaled_raster(
 	int n, int row,
 	const unsigned char *red, const unsigned char *grn, const unsigned char *blu, const unsigned char *nul)
 {
-	unsigned int *dst = (unsigned int *) src_data + row * (src_stride >> 2);
+	unsigned int *dst = (unsigned int *) (src_data + (row - src_t) * src_stride);
 	int i;
 
 	G_debug(3, "Cairo_scaled_raster: %d %d", n, row);
@@ -74,8 +76,9 @@ void Cairo_end_scaled_raster(void)
 
 	/* paint source surface onto dstination (scaled) */
 	cairo_save(cairo);
+	cairo_translate(cairo, dst_l, dst_t);
 	cairo_scale(cairo, (double) dst_w / (double) src_w, (double) dst_h / (double) src_h);
-	cairo_set_source_surface(cairo, src_surf, dst_l, dst_t);
+	cairo_set_source_surface(cairo, src_surf, 0, 0);
 	cairo_paint(cairo);
 	cairo_restore(cairo);
 
