@@ -32,7 +32,7 @@ G_fread_key_value  (FILE *fd)
     kv = G_create_key_value();
     if (kv == NULL)
 	return NULL;
-    while (G_getl(buf, sizeof buf, fd) != 0)
+    while (G_getl2(buf, sizeof(buf)-1, fd) != 0)
     {
 	key = value = buf;
 	while (*value && *value != ':')
