@@ -341,12 +341,17 @@ class AttributeManager(wx.Frame):
             return
 
         #
-        # default settings
+        # default settings (TODO global settings file)
         #
         self.settings = {}
         self.settings['highlight'] = {}
         self.settings['highlight']['color'] = (255, 255, 0, 255) # yellow
         self.settings['highlight']['width'] = 2
+
+        #
+        # list of command to be performed
+        #
+        self.listOfCommands = []
 
         wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
@@ -546,9 +551,100 @@ class AttributeManager(wx.Frame):
             list.Bind(wx.EVT_RIGHT_UP,            self.OnTableRightUp) #wxGTK
             self.layerPage[layer]['tableData'] = list.GetId()
 
+            addSizer = wx.FlexGridSizer (cols=5, hgap=5, vgap=5)
+            addSizer.AddGrowableCol(3)
+
+            # add column
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Column name"))
+            column = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
+                                 size=(200, -1), style=wx.TE_PROCESS_ENTER)
+            column.Bind(wx.EVT_TEXT,       self.OnTableAddColumnName)
+            column.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemAdd)
+            self.layerPage[layer]['addColName'] = column.GetId()
+            addSizer.Add(item=label,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+            addSizer.Add(item=column,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+            # data type
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Data type"))
+            addSizer.Add(item=label,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+
+            subSizer = wx.BoxSizer(wx.HORIZONTAL)
+            type = wx.Choice (parent=panel, id=wx.ID_ANY, 
+                              choices = ["integer",
+                                         "double",
+                                         "varchar",
+                                         "date"]) # FIXME
+            self.layerPage[layer]['addColType'] = type.GetId()
+            subSizer.Add(item=type,
+                         flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
+                         border=3)
+            # length
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Length"))
+            length = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                 initial=1,
+                                 min=1, max=1e6)
+            self.layerPage[layer]['addColLength'] = length.GetId()
+            subSizer.Add(item=label,
+                         flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
+                         border=3)
+            subSizer.Add(item=length,
+                         flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
+                         border=3)
+
+            addSizer.Add(item=subSizer,
+                         flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
+                         border=3)
+
+            btnAddCol = wx.Button(parent=panel, id=wx.ID_ADD)
+            btnAddCol.Bind(wx.EVT_BUTTON, self.OnTableItemAdd)
+            btnAddCol.Enable(False)
+            self.layerPage[layer]['addColButton'] = btnAddCol.GetId()
+            addSizer.Add(item=btnAddCol,
+                         proportion=0,
+                         flag=wx.EXPAND | wx.ALIGN_RIGHT | wx.FIXED_MINSIZE |
+                         wx.ALIGN_CENTER_VERTICAL )
+
+            # rename col
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Rename column"))
+            column = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
+                                 size=(200, -1), style=wx.TE_PROCESS_ENTER)
+            column.Bind(wx.EVT_TEXT,       self.OnTableRenameColumnName,)
+            column.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemChange)
+            self.layerPage[layer]['renameCol'] = column.GetId()
+            addSizer.Add(item=label,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+            addSizer.Add(item=column,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("To"))
+            columnTo = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
+                                   size=(200, -1), style=wx.TE_PROCESS_ENTER)
+            columnTo.Bind(wx.EVT_TEXT,       self.OnTableRenameColumnName)
+            columnTo.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemChange)
+            self.layerPage[layer]['renameColTo'] = columnTo.GetId()
+            addSizer.Add(item=label,
+                         flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER)
+            addSizer.Add(item=columnTo,
+                         flag=wx.ALIGN_CENTER_VERTICAL)
+            btnRenameCol = wx.Button(parent=panel, id=wx.ID_ANY, label=_("&Rename"))
+            btnRenameCol.Bind(wx.EVT_BUTTON, self.OnTableItemChange)
+            btnRenameCol.Enable(False)
+            self.layerPage[layer]['renameColButton'] = btnRenameCol.GetId()
+
+            addSizer.Add(item=btnRenameCol,
+                         proportion=0,
+                         flag=wx.EXPAND | wx.ALIGN_RIGHT | wx.FIXED_MINSIZE |
+                         wx.ALIGN_CENTER_VERTICAL )
+
             tableSizer.Add(item=list,
                            flag=wx.ALL | wx.EXPAND, 
                            proportion=1,
+                           border=3)
+
+            tableSizer.Add(item=addSizer,
+                           flag=wx.ALL | wx.EXPAND, 
+                           proportion=0,
                            border=3)
 
             pageSizer.Add(item=infoCollapse,
@@ -721,28 +817,63 @@ class AttributeManager(wx.Frame):
         """Reload list of records"""
         self.OnApplySqlStatement(None)
 
+    def OnTableRenameColumnName(self, event):
+        """Editing column name to be added to the table"""
+        btn  = self.FindWindowById(self.layerPage[self.layer]['renameColButton'])
+        col  = self.FindWindowById(self.layerPage[self.layer]['renameCol'])
+        colTo = self.FindWindowById(self.layerPage[self.layer]['renameColTo'])
+        if len(col.GetValue()) > 0 and len(colTo.GetValue()) > 0:
+            btn.Enable(True)
+        else:
+            btn.Enable(False)
+
+        event.Skip()
+
+    def OnTableAddColumnName(self, event):
+        """Editing column name to be added to the table"""
+        btn = self.FindWindowById(self.layerPage[self.layer]['addColButton'])
+        if len(event.GetString()) > 0:
+            btn.Enable(True)
+        else:
+            btn.Enable(False)
+
+        event.Skip()
+
+    def OnTableItemChange(self, event):
+        """Rename column in the table"""
+        name   = self.FindWindowById(self.layerPage[self.layer]['renameCol']).GetValue()
+        nameTo = self.FindWindowById(self.layerPage[self.layer]['renameColTo']).GetValue()
+
+        if not name or not nameTo:
+            dlg = wx.MessageDialog(self.parent,
+                                   _("Unable to rename column. "
+                                     "No column name defined."),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+        else:
+            print "##"
+
+        event.Skip()
+
     def OnTableRightUp(self, event):
         """Table description area, context menu"""
         if not hasattr(self, "popupTableID"):
             self.popupTableID1 = wx.NewId()
             self.popupTableID2 = wx.NewId()
             self.popupTableID3 = wx.NewId()
-            self.popupTableID4 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.OnTableItemAdd,       id=self.popupTableID1)
-            self.Bind(wx.EVT_MENU, self.OnTableItemDelete,    id=self.popupTableID2)
-            self.Bind(wx.EVT_MENU, self.OnTableItemDeleteAll, id=self.popupTableID3)
-            self.Bind(wx.EVT_MENU, self.OnTableReload,        id=self.popupTableID4)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDelete,    id=self.popupTableID1)
+            self.Bind(wx.EVT_MENU, self.OnTableItemDeleteAll, id=self.popupTableID2)
+            self.Bind(wx.EVT_MENU, self.OnTableReload,        id=self.popupTableID3)
 
         # generate popup-menu
         menu = wx.Menu()
-        menu.Append(self.popupTableID1, _("Add new column"))
-        menu.AppendSeparator()
-        menu.Append(self.popupTableID2, _("Delete selected"))
+        menu.Append(self.popupTableID1, _("Drop selected column"))
         if self.FindWindowById(self.layerPage[self.layer]['tableData']).GetFirstSelected() == -1:
-            menu.Enable(self.popupTableID2, False)
-        menu.Append(self.popupTableID3, _("Delete all"))
+            menu.Enable(self.popupTableID1, False)
+        menu.Append(self.popupTableID2, _("Drop all columns"))
         menu.AppendSeparator()
-        menu.Append(self.popupTableID4, _("Reload"))
+        menu.Append(self.popupTableID3, _("Reload"))
 
         self.PopupMenu(menu)
         menu.Destroy()
@@ -767,7 +898,20 @@ class AttributeManager(wx.Frame):
 
     def OnTableItemAdd(self, event):
         """Add new column to the table"""
-        pass
+        name = self.FindWindowById(self.layerPage[self.layer]['addColName']).GetValue()
+        
+        if not name:
+            dlg = wx.MessageDialog(self.parent,
+                                   _("Unable to add column to the table. "
+                                     "No column name defined."),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+        else:
+            type = self.FindWindowById(self.layerPage[self.layer]['addColType']). \
+                GetStringSelection()
+            self.listOfCommands.append('v.db.addcol map=%s layer=%d columns=%s %s' % \
+                                           (self.vectmap, self.layer, name, type))
 
     def OnLayerPageChanged(self, event):
         """Layer tab changed"""
@@ -793,6 +937,8 @@ class AttributeManager(wx.Frame):
         page = self.notebook.GetSelection()
         if page == self.notebook.GetPageIndex(self.browsePage):
             self.OnApplySqlStatement(event)
+        elif page == self.notebook.GetPageIndex(self.managePage):
+            print "#", self.listOfCommands
         elif page == self.notebook.GetPageIndex(self.settingsPage):
             self.UpdateSettings()
 
@@ -1071,8 +1217,8 @@ class AttributeManager(wx.Frame):
 #                 #            print >> sys.stderr, "Execution failed:", e
 
 class TableListCtrl(wx.ListCtrl,
-                    listmix.ListCtrlAutoWidthMixin,
-                    listmix.TextEditMixin):
+                    listmix.ListCtrlAutoWidthMixin):
+    #                    listmix.TextEditMixin):
     """Table description list"""
 
     def __init__(self, parent, id, table, columns, pos=wx.DefaultPosition,
@@ -1084,7 +1230,7 @@ class TableListCtrl(wx.ListCtrl,
         wx.ListCtrl.__init__(self, parent, id, pos, size, style)
 
         listmix.ListCtrlAutoWidthMixin.__init__(self)
-        listmix.TextEditMixin.__init__(self)
+        #        listmix.TextEditMixin.__init__(self)
 
     def Populate(self, update=False):
         """Populate the list"""
