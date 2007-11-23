@@ -1046,6 +1046,7 @@ int G_remove(const char *, const char *);
 int G_remove_misc (const char *, const char *, const char *);
 
 /* rename.c */
+int G_rename_file(const char *, const char *);
 int G_rename(const char *, const char *, const char *);
 
 /* rhumbline.c */
