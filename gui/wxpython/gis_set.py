@@ -67,6 +67,11 @@ class GRASSStartup(wx.Frame):
         versionCmd = gcmd.Command(['g.version'])
         grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
 
+        self.select_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
+                                        label=" %s " % _("Choose project location and mapset"))
+
+        self.manage_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
+                                        label=" %s " % _("Manage"))
         self.lwelcome = wx.StaticText(parent=self, id=wx.ID_ANY,
                                       label=_("Welcome to GRASS GIS %s\n"
                                               "The world's leading open source GIS") % grassVersion,
@@ -189,13 +194,9 @@ class GRASSStartup(wx.Frame):
         sizer           = wx.BoxSizer(wx.VERTICAL)
         dbase_sizer     = wx.BoxSizer(wx.HORIZONTAL)
         location_sizer  = wx.FlexGridSizer(rows=1, cols=2, vgap=4, hgap=4)
-        select_box      = wx.StaticBox (parent=self, id=wx.ID_ANY,
-                                        label=" %s " % _("Choose project location and mapset"))
-        select_boxsizer = wx.StaticBoxSizer(select_box, wx.VERTICAL)
+        select_boxsizer = wx.StaticBoxSizer(self.select_box, wx.VERTICAL)
         select_sizer    = wx.FlexGridSizer(rows=2, cols=2, vgap=4, hgap=4)
-        manage_box      = wx.StaticBox (parent=self, id=wx.ID_ANY,
-                                        label=" %s " % _("Manage"))
-        manage_boxsizer = wx.StaticBoxSizer(manage_box, wx.VERTICAL)
+        manage_boxsizer = wx.StaticBoxSizer(self.manage_box, wx.VERTICAL)
         manage_sizer    = wx.BoxSizer(wx.VERTICAL)
         btns_sizer    = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -234,7 +235,7 @@ class GRASSStartup(wx.Frame):
         # define new location and mapset
         manage_sizer.Add(item=self.ldefine, proportion=0,
                          flag=label_style | wx.ALL,
-                         border=5) 
+                         border=5)
         manage_sizer.Add(item=self.bwizard, proportion=0,
                          flag=label_style | wx.BOTTOM,
                          border=8)
@@ -250,7 +251,7 @@ class GRASSStartup(wx.Frame):
         manage_sizer.Add(item=self.manageloc, proportion=0,
                          flag=label_style | wx.BOTTOM,
                          border=8)
-       
+
         manage_boxsizer.Add(item=manage_sizer, proportion=0)
 
         # location sizer
@@ -334,7 +335,7 @@ class GRASSStartup(wx.Frame):
         """
 
         grassrc = {}
-        
+
         gisrc = os.getenv("GISRC")
 
         if gisrc and os.path.isfile(gisrc):
@@ -523,7 +524,7 @@ class GRASSStartup(wx.Frame):
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets, 0)
         self.lbmapsets.SetSelection(0)
-        
+
     def OnSelectMapset(self,event):
         """Mapset selected"""
         # self.bstart.Enable(True)
@@ -661,13 +662,13 @@ class StartUp(wx.App):
         return 1
 
 if __name__ == "__main__":
-    
+
     if os.getenv("GISBASE") is None:
         print >> sys.stderr, "Failed to start GUI, GRASS GIS is not running."
     else:
         import gettext
         gettext.install("GRASSStartUp") # replace with the appropriate catalog name
-        
+
         import gui_modules.gcmd as gcmd
 
         GRASSStartUp = StartUp(0)
