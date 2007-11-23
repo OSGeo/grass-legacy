@@ -1,4 +1,4 @@
-# translation of grassmods_es.po to español
+# translation of grassmods_es.po to Español
 # Spanish translation of grassmods.pot
 # This file is distributed under the same license as the GRASS package.
 # Copyright (C) 2004 GRASS Development Team
@@ -14,17 +14,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-24 18:22+0200\n"
-"PO-Revision-Date: 2007-10-26 14:38+0200\n"
+"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"PO-Revision-Date: 2007-10-26 21:29+0200\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: español <grass-es@itc.it.org>\n"
+"Language-Team: Español <translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Spanish\n"
 "X-Poedit-Country: SPAIN\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../db/base/columns.c:44 ../db/base/createdb.c:42 ../db/base/databases.c:51
 #: ../db/base/describe.c:49 ../db/base/dropdb.c:42 ../db/base/droptable.c:43
@@ -246,7 +246,7 @@ msgstr "Separador de campos de salida"
 msgid "Output vertical record separator"
 msgstr "Separador de registros vertical de salida"
 
-#: ../db/base/select.c:212 ../vector/v.db.select/main.c:67
+#: ../db/base/select.c:212 ../vector/v.db.select/main.c:68
 msgid "Null value indicator"
 msgstr "Indicador de valores nulos"
 
@@ -254,7 +254,7 @@ msgstr "Indicador de valores nulos"
 msgid "Name of file with sql statement"
 msgstr "Nombre de archivo con sentencia SQL"
 
-#: ../db/base/select.c:220 ../vector/v.db.select/main.c:71
+#: ../db/base/select.c:220 ../vector/v.db.select/main.c:72
 msgid "Do not include column names in output"
 msgstr "No incluir nombres de columna en la salida"
 
@@ -262,7 +262,7 @@ msgstr "No incluir nombres de columna en la salida"
 msgid "Describe query only (don't run it)"
 msgstr "Sólo describir la consulta (no ejecutarla)"
 
-#: ../db/base/select.c:228 ../vector/v.db.select/main.c:75
+#: ../db/base/select.c:228 ../vector/v.db.select/main.c:76
 msgid "Vertical output (instead of horizontal)"
 msgstr "Salida vertical (en vez de horizontal)"
 
@@ -543,8 +543,8 @@ msgstr "Silencioso"
 #: ../raster/r.cats/main.c:121 ../raster/r.cats/main.c:141
 #: ../raster/r.clump/main.c:88 ../raster/r.contour/main.c:156
 #: ../raster/r.cost/main.c:319 ../raster/r.covar/main.c:96
-#: ../raster/r.grow2/main.c:185 ../raster/r.his/main.c:126
-#: ../raster/r.his/main.c:167 ../raster/r.his/main.c:195
+#: ../raster/r.grow2/main.c:185 ../raster/r.his/main.c:128
+#: ../raster/r.his/main.c:169 ../raster/r.his/main.c:197
 #: ../raster/r.info/main.c:116 ../raster/r.kappa/main.c:141
 #: ../raster/r.kappa/stats.c:30 ../raster/r.kappa/stats.c:35
 #: ../raster/r.los/main.c:164 ../raster/r.los/main.c:171
@@ -617,8 +617,8 @@ msgstr "<%s> es un nombre de archivo no admitido"
 #: ../raster/r.buffer/write_map.c:45 ../raster/r.carve/main.c:176
 #: ../raster/r.clump/main.c:95 ../raster/r.contour/main.c:160
 #: ../raster/r.cost/main.c:337 ../raster/r.covar/main.c:99
-#: ../raster/r.grow2/main.c:201 ../raster/r.his/main.c:130
-#: ../raster/r.his/main.c:156 ../raster/r.his/main.c:184
+#: ../raster/r.grow2/main.c:201 ../raster/r.his/main.c:132
+#: ../raster/r.his/main.c:158 ../raster/r.his/main.c:186
 #: ../raster/r.los/main.c:197 ../raster/r.los/main.c:209
 #: ../raster/r.mapcalc/map3.c:527 ../raster/r.out.bin/main.c:133
 #: ../raster/r.out.gdal/main.c:102 ../raster/r.out.mat/main.c:99
@@ -715,7 +715,7 @@ msgstr "Mi primer módulo vectorial"
 #: ../vector/lidar/v.surf.bspline/main.c:241 ../vector/v.buffer/main.c:353
 #: ../vector/v.build.polylines/main.c:136 ../vector/v.clean/main.c:225
 #: ../vector/v.convert/old2new.c:27 ../vector/v.db.connect/main.c:113
-#: ../vector/v.db.select/main.c:90 ../vector/v.distance/main.c:272
+#: ../vector/v.db.select/main.c:91 ../vector/v.distance/main.c:272
 #: ../vector/v.edit/main.c:114 ../vector/v.extract/main.c:143
 #: ../vector/v.extrude/main.c:143 ../vector/v.hull/main.c:253
 #: ../vector/v.info/main.c:96 ../vector/v.kcv/main.c:132
@@ -729,16 +729,18 @@ msgstr "Mi primer módulo vectorial"
 #: ../vector/v.net/main.c:153 ../vector/v.net.alloc/main.c:130
 #: ../vector/v.net.iso/main.c:174 ../vector/v.net.path/main.c:126
 #: ../vector/v.net.salesman/main.c:158 ../vector/v.net.steiner/main.c:394
-#: ../vector/v.out.dxf/main.c:67 ../vector/v.out.ogr/main.c:190
-#: ../vector/v.out.pov/main.c:93 ../vector/v.out.svg/main.c:124
-#: ../vector/v.overlay/main.c:184 ../vector/v.perturb/main.c:153
-#: ../vector/v.sample/main.c:151 ../vector/v.segment/main.c:95
-#: ../vector/v.select/main.c:180 ../vector/v.surf.rst/main.c:513
-#: ../vector/v.to.db/parse.c:117 ../vector/v.to.points/main.c:228
-#: ../vector/v.to.rast/vect2rast.c:37 ../vector/v.transform/main.c:228
-#: ../vector/v.type/main.c:204 ../vector/v.univar/main.c:109
-#: ../vector/v.voronoi/dt_main.c:74 ../vector/v.voronoi/vo_main.c:143
-#: ../vector/v.what/main.c:142 ../vector/v.what.rast/main.c:116
+#: ../vector/v.normal/main.c:128 ../vector/v.out.dxf/main.c:67
+#: ../vector/v.out.ogr/main.c:190 ../vector/v.out.pov/main.c:93
+#: ../vector/v.out.svg/main.c:124 ../vector/v.overlay/main.c:184
+#: ../vector/v.perturb/main.c:153 ../vector/v.qcount/main.c:126
+#: ../vector/v.reclass/main.c:100 ../vector/v.sample/main.c:151
+#: ../vector/v.segment/main.c:95 ../vector/v.select/main.c:180
+#: ../vector/v.surf.rst/main.c:513 ../vector/v.to.db/parse.c:117
+#: ../vector/v.to.points/main.c:228 ../vector/v.to.rast/vect2rast.c:37
+#: ../vector/v.transform/main.c:228 ../vector/v.type/main.c:204
+#: ../vector/v.univar/main.c:109 ../vector/v.voronoi/dt_main.c:74
+#: ../vector/v.voronoi/vo_main.c:143 ../vector/v.what/main.c:142
+#: ../vector/v.what.rast/main.c:116
 #, c-format
 msgid "Vector map <%s> not found"
 msgstr "Mapa vectorial <%s> no encontrado"
@@ -987,9 +989,8 @@ msgid "L: add  M: remove  R: quit and save\n"
 msgstr "L: añadir  M: eliminar  R: salir y guardar\n"
 
 #: ../display/d.extract/main.c:50
-#, fuzzy
 msgid "Selects and extracts vectors with mouse into new vector map."
-msgstr "Seleccionar y extraer vectores con el ratón en nuevo mapa vectorial"
+msgstr "Selecciona y extrae vectores con el ratón en nuevo mapa vectorial."
 
 #: ../display/d.extract/main.c:63 ../display/d.path/main.c:98
 msgid "Original line color"
@@ -1000,9 +1001,8 @@ msgid "Highlight color"
 msgstr "Color de selección"
 
 #: ../display/d.extract/main.c:115
-#, fuzzy
 msgid "Copying tables..."
-msgstr "Copiando tablas ..."
+msgstr "Copiando tablas..."
 
 #: ../display/d.extract/main.c:123
 msgid "Cannot get db link info -> cannot copy table."
@@ -1328,15 +1328,15 @@ msgstr ""
 "Muestra el resultado de combinar valores de tonalidad, intensidad y "
 "saturación (HIS) de capas de mapa ráster especificadas por el usuario."
 
-#: ../display/d.his/main.c:76 ../raster/r.his/main.c:74
+#: ../display/d.his/main.c:76 ../raster/r.his/main.c:75
 msgid "Name of layer to be used for HUE"
 msgstr "Nombre de la capa a usar para TONALIDAD"
 
-#: ../display/d.his/main.c:83 ../raster/r.his/main.c:81
+#: ../display/d.his/main.c:83 ../raster/r.his/main.c:82
 msgid "Name of layer to be used for INTENSITY"
 msgstr "Nombre de la capa a usar para INTENSIDAD"
 
-#: ../display/d.his/main.c:90 ../raster/r.his/main.c:88
+#: ../display/d.his/main.c:90 ../raster/r.his/main.c:89
 msgid "Name of layer to be used for SATURATION"
 msgstr "Nombre de la capa a usar para SATURACIÓN"
 
@@ -1344,7 +1344,7 @@ msgstr "Nombre de la capa a usar para SATURACIÓN"
 msgid "Percent to brighten intensity channel"
 msgstr "Porcentaje para incrementar el brillo del canal de intensidad"
 
-#: ../display/d.his/main.c:101 ../raster/r.his/main.c:113
+#: ../display/d.his/main.c:101 ../raster/r.his/main.c:114
 msgid "Respect NULL values while drawing"
 msgstr "Respetar valores NULOS mientras se dibuja"
 
@@ -1360,8 +1360,8 @@ msgstr "Ventana de gráficos actual no disponible"
 #: ../display/d.his/main.c:202 ../display/d.histogram/main.c:160
 #: ../display/d.legend/main.c:258 ../display/d.rast/display.c:22
 #: ../display/d.rast.edit/cell.c:51 ../display/d.rast.num/number.c:281
-#: ../display/d.rgb/main.c:110 ../raster/r.his/main.c:141
-#: ../raster/r.his/main.c:163 ../raster/r.his/main.c:191
+#: ../display/d.rgb/main.c:110 ../raster/r.his/main.c:143
+#: ../raster/r.his/main.c:165 ../raster/r.his/main.c:193
 #: ../raster/r.out.ppm3/main.c:128
 #, c-format
 msgid "Color file for <%s> not available"
@@ -2036,9 +2036,8 @@ msgid "display, networking"
 msgstr "visualización, trabajo en red"
 
 #: ../display/d.path/main.c:50
-#, fuzzy
 msgid "Finds shortest path for selected starting and ending node."
-msgstr "Encontrar la ruta más corta para los nodos inicial y final seleccionados"
+msgstr "Encuentra la ruta más corta para los nodos inicial y final seleccionados."
 
 #: ../display/d.path/main.c:57 ../vector/v.net.alloc/main.c:69
 #: ../vector/v.net.iso/main.c:79 ../vector/v.net.path/main.c:48
@@ -4606,12 +4605,12 @@ msgid "Display summary information"
 msgstr "Mostrar información de resumen"
 
 #: ../general/g.version/main.c:34
-msgid "Displays version and copyright information"
-msgstr "Muestra información de versión y copyright"
+msgid "Displays version and copyright information."
+msgstr "Muestra información de versión y copyright."
 
 #: ../general/g.version/main.c:38
-msgid "Print the copyright message as well"
-msgstr "Imprimir el mensaje de copyright también"
+msgid "Print the copyright message"
+msgstr "Imprimir el mensaje de copyright"
 
 #: ../general/g.version/main.c:42
 msgid "Print the GRASS build information"
@@ -6508,7 +6507,7 @@ msgid "Initializing data..."
 msgstr "Inicializando datos..."
 
 #: ../imagery/i.zc/main.c:168 ../raster/r.carve/raster.c:12
-#: ../raster/r.out.tiff/r.out.tiff.c:285 ../raster/r.texture/main.c:258
+#: ../raster/r.out.tiff/r.out.tiff.c:286 ../raster/r.texture/main.c:258
 msgid "Reading raster map..."
 msgstr "Leyendo mapa ráster..."
 
@@ -7502,7 +7501,7 @@ msgstr "Mezcla los componentes de color de dos mapas ráster en la proporción ind
 #: ../raster/r.digit/main.c:44 ../raster/r.distance/main.c:38
 #: ../raster/r.drain/main.c:102 ../raster/r.fill.dir/main.c:85
 #: ../raster/r.grow2/main.c:127 ../raster/r.gwflow/main.c:219
-#: ../raster/r.his/main.c:63 ../raster/r.in.arc/main.c:58
+#: ../raster/r.his/main.c:64 ../raster/r.in.arc/main.c:58
 #: ../raster/r.in.gdal/main.c:69 ../raster/r.in.gridatb/main.c:43
 #: ../raster/r.in.mat/main.c:93 ../raster/r.in.xyz/main.c:76
 #: ../raster/r.info/main.c:68 ../raster/r.kappa/main.c:49
@@ -8778,33 +8777,36 @@ msgstr "Error de análisis en la entrada en la línea %d"
 #: ../ps/ps.map/catval.c:47 ../ps/ps.map/catval.c:105
 #: ../ps/ps.map/catval.c:166 ../vector/v.buffer/main.c:371
 #: ../vector/v.label/main.c:271 ../vector/v.label.sa/labels.c:76
-#: ../vector/v.to.rast/support.c:126 ../vector/v.to.rast/support.c:260
-#: ../vector/v.to.rast/vect2rast.c:51 ../vector/v.to.rast3/main.c:81
-#: ../vector/v.univar/main.c:131 ../vector/v.vol.rst/user1.c:92
+#: ../vector/v.reclass/main.c:114 ../vector/v.to.rast/support.c:126
+#: ../vector/v.to.rast/support.c:260 ../vector/v.to.rast/vect2rast.c:51
+#: ../vector/v.to.rast3/main.c:81 ../vector/v.univar/main.c:131
+#: ../vector/v.vol.rst/user1.c:92
 msgid "Unable to get layer info for vector map"
 msgstr "No se puede obtener información de la capa para el mapa vectorial"
 
-#: ../ps/ps.map/catval.c:52 ../raster/r.contour/main.c:179
+#: ../ps/ps.map/catval.c:52 ../ps/ps.map/catval.c:110
+#: ../ps/ps.map/catval.c:171 ../raster/r.contour/main.c:179
 #: ../raster/r.to.vect/main.c:153 ../vector/lidar/v.surf.bspline/main.c:297
 #: ../vector/v.buffer/main.c:375 ../vector/v.db.connect/main.c:176
-#: ../vector/v.db.connect/main.c:268 ../vector/v.db.select/main.c:102
-#: ../vector/v.db.select/main.c:172 ../vector/v.distance/main.c:331
+#: ../vector/v.db.connect/main.c:268 ../vector/v.db.select/main.c:103
+#: ../vector/v.db.select/main.c:173 ../vector/v.distance/main.c:331
 #: ../vector/v.distance/main.c:365 ../vector/v.edit/select.c:514
 #: ../vector/v.extract/main.c:231 ../vector/v.extrude/main.c:167
 #: ../vector/v.in.db/main.c:113 ../vector/v.kcv/main.c:173
 #: ../vector/v.label/main.c:274 ../vector/v.label.sa/labels.c:79
 #: ../vector/v.lrs/v.lrs.create/main.c:257
 #: ../vector/v.lrs/v.lrs.create/main.c:265 ../vector/v.mkgrid/main.c:207
-#: ../vector/v.out.ogr/main.c:283 ../vector/v.out.svg/main.c:145
-#: ../vector/v.overlay/main.c:168 ../vector/v.overlay/main.c:261
-#: ../vector/v.patch/main.c:132 ../vector/v.patch/main.c:164
-#: ../vector/v.patch/main.c:287 ../vector/v.patch/main.c:347
+#: ../vector/v.normal/main.c:141 ../vector/v.out.ogr/main.c:283
+#: ../vector/v.out.svg/main.c:145 ../vector/v.overlay/main.c:168
+#: ../vector/v.overlay/main.c:261 ../vector/v.patch/main.c:132
+#: ../vector/v.patch/main.c:164 ../vector/v.patch/main.c:287
+#: ../vector/v.patch/main.c:347 ../vector/v.reclass/main.c:118
 #: ../vector/v.sample/main.c:201 ../vector/v.surf.idw/read_sites.c:39
 #: ../vector/v.to.db/query.c:81 ../vector/v.to.db/update.c:32
 #: ../vector/v.to.rast/support.c:129 ../vector/v.to.rast/support.c:263
-#: ../vector/v.to.rast/vect2rast.c:54 ../vector/v.transform/trans_digit.c:58
-#: ../vector/v.vol.rst/main.c:561 ../vector/v.vol.rst/user1.c:96
-#: ../vector/v.what.rast/main.c:127
+#: ../vector/v.to.rast/vect2rast.c:54 ../vector/v.to.rast3/main.c:85
+#: ../vector/v.transform/trans_digit.c:58 ../vector/v.vol.rst/main.c:561
+#: ../vector/v.vol.rst/user1.c:96 ../vector/v.what.rast/main.c:127
 #, c-format
 msgid "Unable to open database <%s> by driver <%s>"
 msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
@@ -8815,17 +8817,11 @@ msgstr "Tipo de columna no soportado (debe ser cadena)"
 
 #: ../ps/ps.map/catval.c:64 ../ps/ps.map/catval.c:125
 #: ../ps/ps.map/catval.c:187 ../vector/lidar/v.surf.bspline/main.c:307
-#: ../vector/v.buffer/main.c:383 ../vector/v.sample/main.c:181
-#: ../vector/v.surf.idw/read_sites.c:49 ../vector/v.to.rast3/main.c:93
-#: ../vector/v.univar/main.c:147
+#: ../vector/v.buffer/main.c:383 ../vector/v.normal/main.c:150
+#: ../vector/v.sample/main.c:181 ../vector/v.surf.idw/read_sites.c:49
+#: ../vector/v.to.rast3/main.c:93 ../vector/v.univar/main.c:147
 msgid "Unable to select data from table"
 msgstr "No se pueden seleccionar datos de la tabla"
-
-#: ../ps/ps.map/catval.c:110 ../ps/ps.map/catval.c:171
-#: ../vector/v.to.rast3/main.c:85
-#, fuzzy, c-format
-msgid "Unable to open database %s by driver %s"
-msgstr "No se puede abrir la base de datos <%s> por el controlador <%s>"
 
 #: ../ps/ps.map/catval.c:122
 msgid "Size column type must be numeric"
@@ -8986,9 +8982,9 @@ msgstr "Escala fijada a %s."
 
 #: ../ps/ps.map/outl_io.c:77 ../raster/r.neighbors/main.c:203
 #: ../raster/r.series/main.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open raster map <%s> in mapset <%s>"
-msgstr "a ráster directorio de mapas"
+msgstr "No se puede abrir el mapa ráster <%s> en el directorio de mapas <%s>"
 
 #: ../ps/ps.map/ps_clrtbl.c:30 ../ps/ps.map/ps_fclrtbl.c:40
 #, c-format
@@ -11046,7 +11042,7 @@ msgstr "Diferencia máxima entre este y el último incremento: %g"
 msgid "Unable to create and solve the linear equation system"
 msgstr "No se puede crear y resolver el sistema de ecuaciones lineal"
 
-#: ../raster/r.his/main.c:65
+#: ../raster/r.his/main.c:66
 msgid ""
 "Generates red, green and blue raster map layers combining hue, intensity and "
 "saturation (HIS) values from user-specified input raster map layers."
@@ -11055,27 +11051,27 @@ msgstr ""
 "intensidad y saturación (HIS) a partir de capas de mapa ráster de entrada "
 "especificadas por el usuario."
 
-#: ../raster/r.his/main.c:95
+#: ../raster/r.his/main.c:96
 msgid "Name of output layer to be used for RED"
 msgstr "Nombre de la capa de salida a usar para el ROJO"
 
-#: ../raster/r.his/main.c:102
+#: ../raster/r.his/main.c:103
 msgid "Name of output layer to be used for GREEN"
 msgstr "Nombre de la capa de salida a usar para el VERDE"
 
-#: ../raster/r.his/main.c:109
+#: ../raster/r.his/main.c:110
 msgid "Name of output layer to be used for BLUE"
 msgstr "Nombre de la capa de salida a usar para el AZUL"
 
-#: ../raster/r.his/main.c:252
+#: ../raster/r.his/main.c:254
 msgid "Error reading 'hue' map"
 msgstr "Error al leer el mapa 'matiz'"
 
-#: ../raster/r.his/main.c:254
+#: ../raster/r.his/main.c:256
 msgid "Error reading 'intensity' map"
 msgstr "Error al leer el mapa 'intensidad'"
 
-#: ../raster/r.his/main.c:256
+#: ../raster/r.his/main.c:258
 msgid "Error reading 'saturation' map"
 msgstr "Error al leer el mapa 'saturación'"
 
@@ -13552,24 +13548,24 @@ msgstr ""
 "El mapa de color para paleta debe tener menos de 256 colores para el rango "
 "disponible de datos"
 
-#: ../raster/r.out.tiff/r.out.tiff.c:197
+#: ../raster/r.out.tiff/r.out.tiff.c:198
 #, c-format
 msgid "Unable to open TIFF file <%s>"
 msgstr "No se puede abrir el archivo TIFF <%s>"
 
-#: ../raster/r.out.tiff/r.out.tiff.c:429
+#: ../raster/r.out.tiff/r.out.tiff.c:430
 msgid "Writing TIFF World file"
 msgstr "Escribiendo archivo TIFF World"
 
-#: ../raster/r.out.tiff/r.out.tiff.c:432
+#: ../raster/r.out.tiff/r.out.tiff.c:433
 msgid "Got null file name"
 msgstr "Se obtuvo un nombre de archivo nulo"
 
-#: ../raster/r.out.tiff/r.out.tiff.c:434
+#: ../raster/r.out.tiff/r.out.tiff.c:435
 msgid "Got null region struct"
 msgstr "Se obtuvo una estructura de región nula"
 
-#: ../raster/r.out.tiff/r.out.tiff.c:437
+#: ../raster/r.out.tiff/r.out.tiff.c:438
 #, fuzzy
 msgid "Unable to open TIFF world file for writing"
 msgstr "No se pudo abrir el archivo TIFF World para escritura"
@@ -15603,7 +15599,7 @@ msgstr "Nombre del mapa ráster de elevación de entrada [metros]"
 #: ../raster/simwe/r.sim.water/main.c:185
 #: ../raster/simwe/r.sim.water/main.c:194
 msgid "Input_options"
-msgstr ""
+msgstr "Opciones de entrada"
 
 #: ../raster/r.sun/main.c:193
 msgid ""
@@ -18304,6 +18300,8 @@ msgid ""
 "\n"
 "Roads, ditches, changes in ground cover, and other factors will stop"
 msgstr ""
+"\n"
+"Las carreteras, zanjas, cambios en la cobertura del terreno y otros factores detendrán"
 
 #: ../raster/r.watershed/shed/com_line.c:342
 msgid "slope length.  You may input a raster map indicating the locations of these"
@@ -18766,7 +18764,11 @@ msgid ""
 "Simulates elliptically anisotropic spread on a graphics window and generates "
 "a raster map of the cumulative time of spread, given raster maps containing "
 "the rates of spread (ROS), the ROS directions and the spread origins."
-msgstr "Simula propagación anisotrópica elípticamente en una ventana de gráficos y general un mapa ráster del tiempo acumulado de propagación, dados mapas ráster que contengan las tasas de propagación (ROS), las direcciones de ROS y los orígenes de propagación."
+msgstr ""
+"Simula propagación anisotrópica elípticamente en una ventana de gráficos y "
+"general un mapa ráster del tiempo acumulado de propagación, dados mapas "
+"ráster que contengan las tasas de propagación (ROS), las direcciones de ROS "
+"y los orígenes de propagación."
 
 #: ../raster/wildfire/r.spread/main.c:109
 msgid ""
@@ -20061,7 +20063,9 @@ msgstr "Columna de la tabla de atributos con valores a interpolar (si capa>0)"
 msgid ""
 "It was not possible to drop <%s> table. Nothing will be done. Try to drop it "
 "manually."
-msgstr "No fue posible quitar la tabla <%s>. No se hará nada. Intente quitarla manualmente."
+msgstr ""
+"No fue posible quitar la tabla <%s>. No se hará nada. Intente quitarla "
+"manualmente."
 
 #: ../vector/lidar/v.surf.bspline/main.c:217
 msgid "Choose either vector or raster output, not both"
@@ -20392,12 +20396,15 @@ msgstr ""
 msgid ""
 "build;build topology;dump;write topology to stdout;sdump;write spatial index "
 "to stdout;cdump;write category index to stdout"
-msgstr "build:construir topología;dump;escribir topología en stdout;sdump;escribir índice espacial en stdout;cdump;escribir índice de categoría en stdout"
+msgstr ""
+"build:construir topología;dump;escribir topología en stdout;sdump;escribir "
+"índice espacial en stdout;cdump;escribir índice de categoría en stdout"
 
-#: ../vector/v.build/main.c:77 ../vector/v.support/main.c:121
+#: ../vector/v.build/main.c:77 ../vector/v.edit/main.c:89
+#: ../vector/v.neighbors/main.c:76 ../vector/v.support/main.c:121
 #, c-format
-msgid "Vector map <%s> not found in current mapset"
-msgstr "No se encontró el mapa vectorial <%s> en el directorio de mapas actual"
+msgid "Vector map <%s> not found in the current mapset"
+msgstr "No se encuentra el mapa vectorial <%s> en el directorio de mapas actual"
 
 #: ../vector/v.build/main.c:150 ../vector/v.clean/main.c:366
 msgid "Building topology for error vector map..."
@@ -20541,14 +20548,14 @@ msgstr ""
 "conectan áreas e islas o 2 islas de perímetro a línea;snap;ajustar líneas a "
 "vértices en el umbral; rmdac;eliminar centroides de área duplicados (opción "
 "'tipo' ignorada);bpol;rompe (topológicamente limpios) polígonos (importados "
-"de formatos no topológicos (como shapefile). Los perímetros se rompen en cada "
-"punto compartido entre dos o más polígonos donde los ángulos de segmentos "
-"son diferentes;prune;eliminar vértices en umbral de líneas y perímetros, el "
-"perímetro sólo se recorta si no se daña la topología (nueva intersección, "
-"cambiada la vinculación de centroide), los segmentos primero y último del "
-"perímetro nunca se cambian;rmarea;eliminar pequeñas áreas, se elimina el "
-"perímetro más largo con el área adyacente;rmsa;eliminar ángulos pequeños "
-"entre líneas y nodos"
+"de formatos no topológicos (como shapefile). Los perímetros se rompen en "
+"cada punto compartido entre dos o más polígonos donde los ángulos de "
+"segmentos son diferentes;prune;eliminar vértices en umbral de líneas y "
+"perímetros, el perímetro sólo se recorta si no se daña la topología (nueva "
+"intersección, cambiada la vinculación de centroide), los segmentos primero y "
+"último del perímetro nunca se cambian;rmarea;eliminar pequeñas áreas, se "
+"elimina el perímetro más largo con el área adyacente;rmsa;eliminar ángulos "
+"pequeños entre líneas y nodos"
 
 #: ../vector/v.clean/main.c:92
 msgid "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])"
@@ -21038,7 +21045,7 @@ msgstr ""
 "capa <%d> tabla <%s> en la base de datos <%s> a través del controlador <%s> "
 "con clave <%s>\n"
 
-#: ../vector/v.db.connect/main.c:168 ../vector/v.db.select/main.c:96
+#: ../vector/v.db.connect/main.c:168 ../vector/v.db.select/main.c:97
 #: ../vector/v.distance/main.c:326 ../vector/v.distance/main.c:360
 #: ../vector/v.edit/select.c:499 ../vector/v.extrude/main.c:162
 #: ../vector/v.overlay/main.c:254 ../vector/v.sample/main.c:166
@@ -21098,11 +21105,11 @@ msgstr ""
 msgid "Prints vector map attributes."
 msgstr "Imprime atributos de mapa vectorial."
 
-#: ../vector/v.db.select/main.c:123
+#: ../vector/v.db.select/main.c:124
 msgid "Unable to open select cursor"
 msgstr "No se puede abrir el cursor de selección"
 
-#: ../vector/v.db.select/main.c:141
+#: ../vector/v.db.select/main.c:142
 #, c-format
 msgid "Unable to fetch data from table <%s>"
 msgstr "No se pueden recuperar datos de la tabla <%s>"
@@ -21391,13 +21398,11 @@ msgstr "Datos inesperados en la cabecera del vectorial: '%s'"
 msgid "Unknown keyword '%s' in vector head"
 msgstr "Palabra clave '%s' desconocida en la cabecera del vectorial"
 
-#: ../vector/v.edit/a2b.c:300 ../vector/v.edit/break.c:108
-#: ../vector/v.edit/break.c:128 ../vector/v.edit/break.c:304
-#: ../vector/v.edit/cats.c:95 ../vector/v.edit/flip.c:58
-#: ../vector/v.edit/merge.c:170 ../vector/v.edit/move.c:79
-#: ../vector/v.edit/snap.c:119 ../vector/v.edit/snap.c:277
-#: ../vector/v.edit/vertex.c:155 ../vector/v.edit/vertex.c:244
-#: ../vector/v.edit/vertex.c:325
+#: ../vector/v.edit/a2b.c:300 ../vector/v.edit/cats.c:95
+#: ../vector/v.edit/flip.c:58 ../vector/v.edit/merge.c:170
+#: ../vector/v.edit/move.c:79 ../vector/v.edit/snap.c:119
+#: ../vector/v.edit/snap.c:277 ../vector/v.edit/vertex.c:155
+#: ../vector/v.edit/vertex.c:244 ../vector/v.edit/vertex.c:325
 #, c-format
 msgid "Unable to rewrite line %d"
 msgstr "No se puede reescribir la línea %d"
@@ -21411,19 +21416,19 @@ msgid "Tool"
 msgstr "Herramienta"
 
 #: ../vector/v.edit/args.c:34
+#, fuzzy
 msgid ""
 "create;Create new (empty) vector map;add;Add new features to existing vector "
 "map;delete;Delete selected features from vector map;move;Move selected "
 "features in vector map;vertexmove;Move vertex of selected vector lines;"
 "vertexdel;Remove vertex from selected vector lines;vertexadd;Add new vertex "
-"to selected vector lines;merge;Merge selected vector lines;break;Break "
-"(split) vector line into two separate lines;select;Select lines and print "
-"their ID's;catadd;Set new categories to selected vector features for defined "
-"layer;catdel;Delete categories from selected vector features for defined "
-"layer;copy;Copy selected features;snap;Snap vector features in given "
-"threshold;flip;Flip direction of selected vector lines;connect;Connect two "
-"lines;zbulk;Z bulk-labeling (automated assignment of z coordinate to vector "
-"lines)"
+"to selected vector lines;merge;Merge selected vector lines;break;Break/split "
+"vector lines;select;Select lines and print their ID's;catadd;Set new "
+"categories to selected vector features for defined layer;catdel;Delete "
+"categories from selected vector features for defined layer;copy;Copy "
+"selected features;snap;Snap vector features in given threshold;flip;Flip "
+"direction of selected vector lines;connect;Connect two lines;zbulk;Z bulk-"
+"labeling (automated assignment of z coordinate to vector lines)"
 msgstr ""
 "create;Crear nuevo mapa vectorial (vacío);add;Añadir nuevo(s) elemento(s) a "
 "un mapa vectorial existente;delete;Borrar los elementos seleccionados del "
@@ -21431,8 +21436,7 @@ msgstr ""
 "vertexmove;Mover vértice de líneas vectoriales seleccionadas;vertexdel;"
 "Eliminar vértices de líneas vectoriales seleccionadas;vertexadd;Añadir nuevo "
 "vértice a las líneas vectoriales seleccionadas;merge;Fundir líneas "
-"vectoriales seleccionadas;break;Romper (dividir) línea vectorial en dos "
-"líneas separadas;select;Seleccionar líneas e imprimir sus ID;catadd;"
+"vectoriales seleccionadas;break;Romper/dividir líneas vectoriales;select;Seleccionar líneas e imprimir sus ID;catadd;"
 "Establecer nuevas categorías a los elementos vectoriales seleccionados para "
 "la capa definida;catdel;Borrar categorías de los elementos vectoriales "
 "seleccionados para la capa definida;copy;Copiar elementos seleccionados;snap;"
@@ -21553,19 +21557,19 @@ msgstr "Operación '%s' no implementada"
 msgid "At least one option from %s must be specified"
 msgstr "Se debe especificar al menos una opción de %s"
 
-#: ../vector/v.edit/args.c:306 ../vector/v.edit/args.c:318
-#: ../vector/v.edit/args.c:329 ../vector/v.edit/args.c:337
-#: ../vector/v.edit/args.c:342
+#: ../vector/v.edit/args.c:306 ../vector/v.edit/args.c:317
+#: ../vector/v.edit/args.c:328 ../vector/v.edit/args.c:336
+#: ../vector/v.edit/args.c:341
 #, c-format
 msgid "Tool %s requires option %s"
 msgstr "La herramienta %s requiere la opción %s"
 
-#: ../vector/v.edit/break.c:254 ../vector/v.edit/break.c:336
+#: ../vector/v.edit/break.c:257 ../vector/v.edit/break.c:335
 #, c-format
 msgid "Unable to connect line id %d to line %d"
 msgstr "No se puede conectar la línea con ID %d a la línea %d"
 
-#: ../vector/v.edit/break.c:285
+#: ../vector/v.edit/break.c:288
 #, c-format
 msgid ""
 "Unable to connect line id %d to line %d because of threshold distance. Run v."
@@ -21615,11 +21619,6 @@ msgstr ""
 #, c-format
 msgid "Unable to open ASCII file <%s>"
 msgstr "No se puede abrir el archivo ASCII <%s>"
-
-#: ../vector/v.edit/main.c:89 ../vector/v.neighbors/main.c:76
-#, c-format
-msgid "Vector map <%s> not found in the current mapset"
-msgstr "No se encuentra el mapa vectorial <%s> en el directorio de mapas actual"
 
 #: ../vector/v.edit/main.c:100 ../vector/v.kcv/main.c:137
 #, c-format
@@ -21689,27 +21688,27 @@ msgstr "%d vértices añadidos"
 msgid "%d vertices removed"
 msgstr "%d vértices eliminados"
 
-#: ../vector/v.edit/main.c:263
+#: ../vector/v.edit/main.c:268
 #, c-format
 msgid "%d lines broken"
 msgstr "%d líneas rotas"
 
-#: ../vector/v.edit/main.c:268
+#: ../vector/v.edit/main.c:273
 #, c-format
 msgid "%d lines connected"
 msgstr "%d líneas conectadas"
 
-#: ../vector/v.edit/main.c:272
+#: ../vector/v.edit/main.c:277
 #, c-format
 msgid "%d lines merged"
 msgstr "%d líneas fundidas"
 
-#: ../vector/v.edit/main.c:281 ../vector/v.edit/main.c:286
+#: ../vector/v.edit/main.c:286 ../vector/v.edit/main.c:291
 #, c-format
 msgid "%d features modified"
 msgstr "%d elementos modificados"
 
-#: ../vector/v.edit/main.c:291
+#: ../vector/v.edit/main.c:296
 #, c-format
 msgid ""
 "Multiple background maps were given. Selected features will be copied only "
@@ -21718,22 +21717,22 @@ msgstr ""
 "Se han dado múltiples mapas de fondo. Los elementos seleccionados se "
 "copiarán sólo del mapa vectorial <%s>."
 
-#: ../vector/v.edit/main.c:301
+#: ../vector/v.edit/main.c:306
 #, c-format
 msgid "%d features copied"
 msgstr "%d elementos copiados"
 
-#: ../vector/v.edit/main.c:308
+#: ../vector/v.edit/main.c:313
 #, c-format
 msgid "%d lines flipped"
 msgstr "%d líneas dadas la vuelta"
 
-#: ../vector/v.edit/main.c:329
+#: ../vector/v.edit/main.c:334
 #, c-format
 msgid "%d lines labeled"
 msgstr "%d líneas etiquetadas"
 
-#: ../vector/v.edit/main.c:333
+#: ../vector/v.edit/main.c:338
 msgid "Operation not implemented"
 msgstr "Operación no implementada"
 
@@ -25019,7 +25018,7 @@ msgstr "Error en pj_do_transform"
 
 #: ../vector/v.qcount/main.c:69
 #, fuzzy
-msgid "Indices for quadrat counts of sites lists"
+msgid "Indices for quadrat counts of sites lists."
 msgstr "lugares"
 
 #: ../vector/v.qcount/main.c:75
@@ -25046,12 +25045,12 @@ msgstr "Imprimir resultados en estilo de script de consola"
 
 #: ../vector/v.qcount/main.c:132
 #, fuzzy
-msgid "Finding quadrats ..."
+msgid "Finding quadrats..."
 msgstr "Imprimiendo ... "
 
 #: ../vector/v.qcount/main.c:137
 #, fuzzy
-msgid "Counting sites in quadrats ..."
+msgid "Counting sites in quadrats..."
 msgstr "lugares."
 
 #: ../vector/v.random/main.c:84
