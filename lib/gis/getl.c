@@ -55,7 +55,7 @@ int G_getl2 ( char *buf, int n, FILE *fd)
     int c;
     int ret = 1;
 
-    while ( i < n  ) {
+    while ( i < n - 1 ) {
 	c = fgetc(fd);
 
 	if ( c == EOF ) { 
@@ -65,11 +65,11 @@ int G_getl2 ( char *buf, int n, FILE *fd)
 	    break;
 	}
 	
-	if ( c == '\012' ) break;               /* UNIX */
+	if ( c == '\n' ) break;               /* UNIX */
 
-	if ( c == '\015' ) {                    /* DOS or MacOS9 */
+	if ( c == '\r' ) {                    /* DOS or MacOS9 */
             if ( (c = fgetc(fd) ) != EOF ) {     
-		if ( c != '\012' ) {            /* MacOS9 - we have to return the char to stream */
+		if ( c != '\n' ) {            /* MacOS9 - we have to return the char to stream */
 		    ungetc ( c, fd );
 		}
 	    }
