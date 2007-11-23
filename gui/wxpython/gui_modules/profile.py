@@ -249,6 +249,8 @@ class ProfileFrame(wx.Frame):
         cumdist = 0
         self.coordstr = ''
         units1 = ''
+        units2 = ''
+        units3 = ''
         lasteast = lastnorth = None
         if len(self.mapwin.polycoords) > 0:
             for point in self.mapwin.polycoords:
@@ -340,29 +342,26 @@ class ProfileFrame(wx.Frame):
         # create list of coordinates for transect segment markers
         if len(self.mapwin.polycoords) > 0 and self.rast1 != '':
             for point in self.mapwin.polycoords:
-                # convert screen coordinates to map coordinates for transect
-                east, north = self.mapwin.Pixel2Cell(point)
 
                 # get value of raster cell at coordinate point
                 try:
-                    cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (east,north)]
+                    cmdlist = ['r.what', 'input=%s' % self.rast1, 'east_north=%d,%d' % (point[0],point[1])]
                     p = gcmd.Command(cmdlist)
                     if p.returncode == 0:
-                        output = p.module_stdout.read().strip().split('|')
-                        val = output[3]
+                        outlist = p.ReadStdOutput()
+                        val = outlist[0].split('|')[3]
 
                         # calculate distance between coordinate points
                         if lasteast and lastnorth:
-                             dist = math.sqrt(math.pow((lasteast-east),2) + math.pow((lastnorth-north),2))
+                             dist = math.sqrt(math.pow((lasteast-point[0]),2) + math.pow((lastnorth-point[1]),2))
                         cumdist += dist
 
                         # build a list of distance,value pairs for each segment of transect
                         self.seglist.append((cumdist,val))
-                        lasteast = east
-                        lastnorth = north
+                        lasteast = point[0]
+                        lastnorth = point[1]
                 except:
                     pass
-
 
             # delete first and last segment point
             try:
