@@ -248,17 +248,15 @@ class ProfileFrame(wx.Frame):
         dist = 0
         cumdist = 0
         self.coordstr = ''
+        units1 = ''
         lasteast = lastnorth = None
         if len(self.mapwin.polycoords) > 0:
             for point in self.mapwin.polycoords:
-                # convert screen coordinates to map coordinates for transect
-                east, north = self.mapwin.Pixel2Cell(point)
-
                 # build string of coordinate points for r.profile
                 if self.coordstr == '':
-                    self.coordstr = '%d,%d' % (east,north)
+                    self.coordstr = '%d,%d' % (point[0],point[1])
                 else:
-                    self.coordstr = '%s,%d,%d' % (self.coordstr,east,north)
+                    self.coordstr = '%s,%d,%d' % (self.coordstr,point[0],point[1])
 
         else:
             dlg = wx.MessageDialog(self, 'You must draw a transect to profile in the map display window',
