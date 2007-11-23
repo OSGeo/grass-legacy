@@ -81,8 +81,14 @@ start_browser()
 start_man()
 {
   if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1 -a -n $1 ; then
-    echo "ERROR: no MAN page entry for <$1>." 1>&2
-    exit 1
+     if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1.gz -a -n $1 ; then
+        echo "ERROR: no MAN page entry for <$1>." 1>&2
+        exit 1
+     else
+        man "$GRASS_DOC_BASE"/man/man1/$1.1.gz
+     fi
+     echo "ERROR: no MAN page entry for <$1>." 1>&2
+     exit 1
   else
     man "$GRASS_DOC_BASE"/man/man1/$1.1
   fi
