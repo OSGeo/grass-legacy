@@ -240,7 +240,7 @@ export LC_NUMERIC
 MAX_LEG_ITEMS=18
 
 # check column type
-COLTYPE="`v.info -c $GIS_OPT_MAP layer=1 2> /dev/null | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
+COLTYPE="`v.info -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER 2> /dev/null | grep -w $GIS_OPT_COLUMN | cut -d'|' -f1 | tr -s '[:upper:]' '[:lower:]'`"
 
 #COLTYPE=... 
 if [ -z "$COLTYPE" ] ; then 
