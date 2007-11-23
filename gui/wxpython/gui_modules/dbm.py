@@ -57,14 +57,18 @@ class Log:
         """Update status bar"""
         self.parent.SetStatusText(text_string.strip())
 
-class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
-                           listmix.ColumnSorterMixin):
+
+class VirtualAttributeList(wx.ListCtrl,
+                           listmix.ListCtrlAutoWidthMixin,
+                           listmix.ColumnSorterMixin,
+                           listmix.TextEditMixin):
     """
-    Support virtual attribute list class
+    Support virtual list class
     """
     def __init__(self, parent, log, mapInfo, layer):
-        wx.ListCtrl.__init__( self, parent=parent, id=wx.ID_ANY,
-                              style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES | wx.LC_VIRTUAL)
+        wx.ListCtrl.__init__(self, parent=parent, id=wx.ID_ANY,
+                             style=wx.LC_REPORT | wx.LC_HRULES |
+                             wx.LC_VRULES | wx.LC_VIRTUAL)
 
         #
         # initialize variables
@@ -81,7 +85,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         # add some attributes (colourful background for each item rows)
         #
         self.attr1 = wx.ListItemAttr()
-        #self.attr1.SetBackgroundColour("light blue")
+        # self.attr1.SetBackgroundColour("light blue")
         self.attr1.SetBackgroundColour(wx.Colour(238,238,238))
         self.attr2 = wx.ListItemAttr()
         self.attr2.SetBackgroundColour("white")
@@ -103,6 +107,7 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, len(self.columns))
+        listmix.TextEditMixin.__init__(self)
 
         # sort by cat by default
         self.SortListItems(col=0, ascending=1) # FIXME category column can be different
@@ -119,6 +124,11 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         # self.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT, self.OnBeginEdit, self.list)
         # self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
+
+    def Update(self, mapInfo):
+        """Update list according new mapInfo description"""
+        self.mapInfo = mapInfo
+        self.LoadData(self.layer)
 
     def LoadData(self, layer, cols='*', where=''):
         """Load data into list"""
@@ -162,11 +172,16 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
                                       "fs=|"])
         i = 0
         for record in selectCommand.ReadStdOutput():
+            if i % 500 == 0:
+                print "#", i
             self.itemDataMap[i] = []
             j = 0
             for value in record.split('|'):
                 # casting ...
-                self.itemDataMap[i].append(self.columns[columnNames[j]]['ctype'] (value))
+                try:
+                    self.itemDataMap[i].append(self.columns[columnNames[j]]['ctype'] (value))
+                except:
+                    self.itemDataMap[i].append('')
                 j += 1
 
             # insert to table
@@ -295,6 +310,9 @@ class VirtualAttributeList(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
         """Get column/item"""
         item = self.GetItem(index, col)
         return item.GetText()
+
+    def SetVirtualData(self, row, col, data):
+        pass
 
 class AttributeManager(wx.Frame):
     """
@@ -576,15 +594,17 @@ class AttributeManager(wx.Frame):
                                          "double",
                                          "varchar",
                                          "date"]) # FIXME
+            type.Bind(wx.EVT_CHOICE, self.OnTableChangeType)
             self.layerPage[layer]['addColType'] = type.GetId()
             subSizer.Add(item=type,
                          flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
                          border=3)
             # length
             label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Length"))
-            length = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                 initial=1,
+            length = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
+                                 initial=250,
                                  min=1, max=1e6)
+            length.Enable(False)
             self.layerPage[layer]['addColLength'] = length.GetId()
             subSizer.Add(item=label,
                          flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
@@ -668,12 +688,7 @@ class AttributeManager(wx.Frame):
         """Create list with table description"""
         list = TableListCtrl(parent=parent, id=wx.ID_ANY,
                              table=self.mapInfo.tables[table],
-                             columns=self.mapInfo.GetColumns(table),
-                             style=wx.LC_REPORT |
-                             wx.BORDER_NONE |
-                             wx.LC_SORT_ASCENDING |
-                             wx.LC_HRULES |
-                             wx.LC_VRULES)
+                             columns=self.mapInfo.GetColumns(table))
         list.Populate()
         # sorter
         # itemDataMap = list.Populate()
@@ -747,7 +762,9 @@ class AttributeManager(wx.Frame):
             self.popupDataID3 = wx.NewId()
             self.popupDataID4 = wx.NewId()
             self.popupDataID5 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID1)
+            self.popupDataID6 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.OnDataItemEdit,       id=self.popupDataID1)
+            self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID2)
             self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID2)
             self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID3)
             self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID4)
@@ -756,16 +773,18 @@ class AttributeManager(wx.Frame):
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
         menu = wx.Menu()
-        menu.Append(self.popupDataID1, _("Insert new record"))
+        menu.Append(self.popupDataID1, _("Edit selected record"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID2, _("Delete selected"))
+        menu.Append(self.popupDataID2, _("Insert new record"))
+        menu.AppendSeparator()
+        menu.Append(self.popupDataID3, _("Delete selected record(s)"))
         if list.GetFirstSelected() == -1:
-            menu.Enable(self.popupDataID2, False)
-        menu.Append(self.popupDataID3, _("Delete all"))
+            menu.Enable(self.popupDataID3, False)
+        menu.Append(self.popupDataID4, _("Delete all records"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID4, _("Reload"))
+        menu.Append(self.popupDataID5, _("Reload"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID5, _("Highlight selected in the map"))
+        menu.Append(self.popupDataID6, _("Highlight selected in the map"))
         if not self.map:
             menu.Enable(self.popupDataID5, False)
 
@@ -783,7 +802,6 @@ class AttributeManager(wx.Frame):
     def __DeleteItem(self, event, list):
         """Delete selected item(s) from the list"""
         item = list.GetFirstSelected()
-        print "#", item, list.GetItemText(item)
         while item != -1:
             # layer = int (self.list.GetItem(item, 0).GetText())
             # cat = int (self.list.GetItem(item, 1).GetText())
@@ -813,9 +831,22 @@ class AttributeManager(wx.Frame):
         """Add new record to the attribute table"""
         pass
 
+    def OnDataItemEdit(self, event):
+        """Edit selected record of the attribute table"""
+        pass
+
     def OnDataReload(self, event):
         """Reload list of records"""
         self.OnApplySqlStatement(None)
+
+    def OnTableChangeType(self, event):
+        """Data type for new column changed. Enable or disable
+        data length widget"""
+        win = self.FindWindowById(self.layerPage[self.layer]['addColLength'])
+        if event.GetString() == "varchar":
+            win.Enable(True)
+        else:
+            win.Enable(False)
 
     def OnTableRenameColumnName(self, event):
         """Editing column name to be added to the table"""
@@ -841,6 +872,7 @@ class AttributeManager(wx.Frame):
 
     def OnTableItemChange(self, event):
         """Rename column in the table"""
+        list   = self.FindWindowById(self.layerPage[self.layer]['tableData'])
         name   = self.FindWindowById(self.layerPage[self.layer]['renameCol']).GetValue()
         nameTo = self.FindWindowById(self.layerPage[self.layer]['renameColTo']).GetValue()
 
@@ -852,7 +884,30 @@ class AttributeManager(wx.Frame):
             dlg.ShowModal()
             dlg.Destroy()
         else:
-            print "##"
+            item = list.FindItem(start=-1, str=name)
+            if item > -1:
+                if list.FindItem(start=-1, str=nameTo) > -1:
+                    dlg = wx.MessageDialog(self.parent,
+                                           _("Unable to rename column. "
+                                             "Column <%s> already exists in the table.") % \
+                                               nameTo,
+                                           _("Error"), wx.OK | wx.ICON_ERROR)
+                    dlg.ShowModal()
+                    dlg.Destroy()
+                else:
+                    list.SetItemText(item, nameTo)
+                    
+                    self.listOfCommands.append(['v.db.renamecol',
+                                                'map=%s' % self.vectmap,
+                                                'layer=%d' % self.layer,
+                                                'column=%s,%s' % (name, nameTo)])
+            else:
+                dlg = wx.MessageDialog(self.parent,
+                                       _("Unable to rename column. "
+                                         "Column <%s> doesn't exist in the table.") % name,
+                                       _("Error"), wx.OK | wx.ICON_ERROR)
+                dlg.ShowModal()
+                dlg.Destroy()
 
         event.Skip()
 
@@ -881,20 +936,35 @@ class AttributeManager(wx.Frame):
     def OnTableItemDelete(self, event):
         """Delete selected item(s) from the list"""
         list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+
+        item = list.GetFirstSelected()
+        while item != -1:
+            self.listOfCommands.append(['v.db.dropcol',
+                                        'map=%s' % self.vectmap,
+                                        'layer=%d' % self.layer,
+                                        'column=%s' % list.GetItemText(item)])
+            item = list.GetNextSelected(item)
+
         self.__DeleteItem(event, list)
 
         event.Skip()
 
     def OnTableItemDeleteAll(self, event):
         """Delete all items from the list"""
+        table = self.mapInfo.layers[self.layer]['table']
+        cols = self.mapInfo.GetColumns(table)
+        self.listOfCommands = [['v.db.dropcol',
+                               'map=%s' % self.vectmap,
+                               'layer=%d' % self.layer,
+                               'column=%s' % ','.join(cols)]]
         self.FindWindowById(self.layerPage[self.layer]['tableData']).DeleteAllItems()
-        # self.cats = {}
 
         event.Skip()
 
     def OnTableReload(self, event):
         """Reload table description"""
         self.FindWindowById(self.layerPage[self.layer]['tableData']).Populate(update=True)
+        self.listOfCommands = []
 
     def OnTableItemAdd(self, event):
         """Add new column to the table"""
@@ -910,8 +980,37 @@ class AttributeManager(wx.Frame):
         else:
             type = self.FindWindowById(self.layerPage[self.layer]['addColType']). \
                 GetStringSelection()
-            self.listOfCommands.append('v.db.addcol map=%s layer=%d columns=%s %s' % \
-                                           (self.vectmap, self.layer, name, type))
+            # cast type if needed
+            if type == 'double':
+                type = 'double precision'
+            if type == 'varchar':
+                length = int(self.FindWindowById(self.layerPage[self.layer]['addColLength']). \
+                    GetValue())
+            else:
+                length = '' # FIXME
+            # add item to the list of table columns
+            list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+            # check for duplicate items
+            if list.FindItem(start=-1, str=name) > -1:
+                dlg = wx.MessageDialog(self.parent,
+                                       _("Unable to add column <%s> to the table. "
+                                         "Column already exists.") % name,
+                                       _("Error"), wx.OK | wx.ICON_ERROR)
+                dlg.ShowModal()
+                dlg.Destroy()
+                return
+            index = list.InsertStringItem(sys.maxint, str(name))
+            list.SetStringItem(index, 0, str(name))
+            list.SetStringItem(index, 1, str(type))
+            list.SetStringItem(index, 2, str(length))
+
+            # add v.db.addcol command to the list
+            if type == 'varchar':
+                type += ' (%d)' % length
+            self.listOfCommands.append(['v.db.addcol',
+                                        'map=%s' % self.vectmap,
+                                        'layer=%d' % self.layer, 
+                                        'columns=%s %s' % (name, type)])
 
     def OnLayerPageChanged(self, event):
         """Layer tab changed"""
@@ -935,10 +1034,29 @@ class AttributeManager(wx.Frame):
     def OnApply(self, event):
         """Apply button pressed"""
         page = self.notebook.GetSelection()
+        # browse data
         if page == self.notebook.GetPageIndex(self.browsePage):
             self.OnApplySqlStatement(event)
+        # manage tables
         elif page == self.notebook.GetPageIndex(self.managePage):
-            print "#", self.listOfCommands
+            for cmd in self.listOfCommands:
+                Debug.msg(3, 'AttributeManager.OnApply() cmd=\'%s\'' %
+                          ' '.join(cmd))
+                gcmd.Command(cmd)
+            if len(self.listOfCommands) > 0:
+                self.mapInfo = VectorDBInfo(self.vectmap)
+                table = self.mapInfo.layers[self.layer]['table']
+                # update table description
+                list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+                list.Update(table=self.mapInfo.tables[table],
+                            columns=self.mapInfo.GetColumns(table))
+                self.OnTableReload(None)
+                # update data list
+                list = self.FindWindowById(self.layerPage[self.layer]['data'])
+                list.Update(self.mapInfo)
+                self.OnDataReload(None)
+                
+        # settings
         elif page == self.notebook.GetPageIndex(self.settingsPage):
             self.UpdateSettings()
 
@@ -1218,19 +1336,26 @@ class AttributeManager(wx.Frame):
 
 class TableListCtrl(wx.ListCtrl,
                     listmix.ListCtrlAutoWidthMixin):
-    #                    listmix.TextEditMixin):
+                    #                    listmix.TextEditMixin):
     """Table description list"""
 
     def __init__(self, parent, id, table, columns, pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, style=0):
+                 size=wx.DefaultSize):
         
         self.parent  = parent
         self.table   = table
         self.columns = columns
-        wx.ListCtrl.__init__(self, parent, id, pos, size, style)
+        wx.ListCtrl.__init__(self, parent, id, pos, size,
+                             style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES |
+                             wx.BORDER_NONE)
 
         listmix.ListCtrlAutoWidthMixin.__init__(self)
-        #        listmix.TextEditMixin.__init__(self)
+        # listmix.TextEditMixin.__init__(self)
+
+    def Update(self, table, columns):
+        """Update column description"""
+        self.table   = table
+        self.columns = columns
 
     def Populate(self, update=False):
         """Populate the list"""
