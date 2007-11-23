@@ -1693,8 +1693,8 @@ class BufferedWindow(wx.Window):
         newreg = {}
 
         # threshold - too small squares do not make sense
-        # can only zoom to windows of > 10x10 screen pixels
-        if x2 > 10 and y2 > 10 and zoomtype != 0:
+        # can only zoom to windows of > 5x5 screen pixels
+        if abs(x2-x1) > 5 and abs(y2-y1) > 5 and zoomtype != 0:
 
             if x1 > x2:
                 x1, x2 = x2, x1
@@ -1709,8 +1709,10 @@ class BufferedWindow(wx.Window):
             # zoom out
             elif zoomtype < 0:
                 newreg['w'], newreg['n'] = self.Pixel2Cell((-x1 * 2, -y1 * 2))
-                newreg['e'], newreg['s'] = self.Pixel2Cell((self.Map.width  + 2 * (self.Map.width  - x2),
-                                                            self.Map.height + 2 * (self.Map.height - y2)))
+                newreg['e'], newreg['s'] = self.Pixel2Cell((self.Map.width  + 2 * \
+                                                                (self.Map.width  - x2),
+                                                            self.Map.height + 2 * \
+                                                                (self.Map.height - y2)))
         # pan
         elif zoomtype == 0:
             dx = x1 - x2
@@ -1720,7 +1722,7 @@ class BufferedWindow(wx.Window):
                                                         self.Map.height + dy))
 
         # if new region has been calculated, set the values
-        if newreg :
+        if newreg != {}:
             # calculate new center point and display resolution
             self.Map.region['center_easting'] = newreg['w'] + \
                 (newreg['e'] - newreg['w']) / 2
