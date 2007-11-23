@@ -91,7 +91,7 @@ main (int argc, char *argv[])
          * and check for completion by looking for the file
          */
 	if (ok)
-            rename(tempfile, argv[n+1]);
+            G_rename_file(tempfile, argv[n+1]);
 
         remove(tempfile);
     }
