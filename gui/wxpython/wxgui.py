@@ -144,7 +144,7 @@ class GMFrame(wx.Frame):
 
         # start default initial display
         self.NewDisplay()
-    
+
     def __doLayout(self):
         """Do Layout (unused bacause of aui manager...)"""
         # self.panel = wx.Panel(self,-1, style= wx.EXPAND)
@@ -162,7 +162,7 @@ class GMFrame(wx.Frame):
     def __createCommandPrompt(self):
         """Creates command-line input area"""
         self.cmdprompt = wx.Panel(self)
-        
+
         label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="GRASS>",
                               size=(-1, 25))
         input = wx.TextCtrl(parent=self.cmdprompt, id=wx.ID_ANY,
@@ -236,12 +236,13 @@ class GMFrame(wx.Frame):
         """Creates notebook widgets"""
 
         # create main notebook widget
-        nbStyle = FN.FNB_FANCY_TABS | \
-            FN.FNB_BOTTOM | \
-            FN.FNB_NO_X_BUTTON | \
-            FN.FNB_NO_NAV_BUTTONS 
-        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
+#        nbStyle = FN.FNB_FANCY_TABS | \
+#            FN.FNB_BOTTOM | \
+#            FN.FNB_NO_X_BUTTON | \
+#            FN.FNB_NO_NAV_BUTTONS
+#        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
+        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
         # create displays notebook widget and add it to main notebook page
         cbStyle = FN.FNB_VC8 | \
             FN.FNB_BACKGROUND_GRADIENT | \
@@ -249,11 +250,11 @@ class GMFrame(wx.Frame):
             FN.FNB_TABS_BORDER_SIMPLE
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
+        self.notebook.AddPage(self.gm_cb, caption=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
         self.goutput = wxgui_utils.GMConsole(self)
-        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
+        self.outpage = self.notebook.AddPage(self.goutput, caption=_("Command output"))
 
         # bingings
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
@@ -447,7 +448,7 @@ class GMFrame(wx.Frame):
              if dlg.ShowModal() == wx.ID_OK:
                  self.OnWorkspaceSaveAs()
              dlg.Destroy()
-            
+
         # delete all items
         maptree.DeleteAllItems()
 
@@ -463,7 +464,7 @@ class GMFrame(wx.Frame):
         filename = ''
         if dlg.ShowModal() == wx.ID_OK:
             filename = dlg.GetPath()
-        
+
         if filename == '':
             return
 
@@ -507,12 +508,12 @@ class GMFrame(wx.Frame):
         # read file and fix patch to dtd
         try:
             file = open(filename, "r")
-        
+
             fileStream = ''.join(file.readlines())
             p = re.compile( '(grass-grc.dtd)')
             p.search(fileStream)
             fileStream = p.sub(dtdFilename, fileStream)
-        
+
             # sax
             grcXml = ProcessGrcXml()
             xml.sax.parseString(fileStream, grcXml)
@@ -541,7 +542,7 @@ class GMFrame(wx.Frame):
             dlg.ShowModal()
             dlg.Destroy()
             return False
-            
+
         return True
 
     def OnWorkspaceSaveAs(self, event=None):
@@ -553,7 +554,7 @@ class GMFrame(wx.Frame):
         filename = ''
         if dlg.ShowModal() == wx.ID_OK:
             filename = dlg.GetPath()
-            
+
         if filename == '':
             return False
 
@@ -568,7 +569,7 @@ class GMFrame(wx.Frame):
             if dlg.ShowModal() != wx.ID_OK:
                 dlg.Destroy()
                 return False
-        
+
         Debug.msg(4, "GMFrame.OnWorkspaceSaveAs(): filename=%s" % filename)
 
         self.SaveLayerTreeToGrcXml(filename)
@@ -627,14 +628,14 @@ class GMFrame(wx.Frame):
                 self.indent += 4
                 for option in cmd[1:]:
                     if option[0] == '-': # flag
-                        file.write('%s<flag name="%s" />\n' % 
+                        file.write('%s<flag name="%s" />\n' %
                                    (' ' * self.indent, option[1]))
                     else: # parameter
                         key, value = option.split('=')
-                        file.write('%s<parameter name="%s">\n' % 
+                        file.write('%s<parameter name="%s">\n' %
                                    (' ' * self.indent, key))
                         self.indent += 4
-                        file.write('%s<value>%s</value>\n' % 
+                        file.write('%s<value>%s</value>\n' %
                                    (' ' * self.indent, value))
                         self.indent -= 4
                         file.write('%s</parameter>\n' % (' ' * self.indent));
@@ -876,7 +877,7 @@ class GMFrame(wx.Frame):
 
         size = icon = None
         mapname = utils.GetLayerNameFromCmd(dcmd)
-        
+
         for option in dcmd:
             if option.find('size') > -1:
                 size = option.split('=')[1]
@@ -1295,7 +1296,7 @@ class ProcessGrcXml(HandlerBase):
                     "group"   : self.inGroup,
                     "display" : self.displayIndex})
             self.inGroup = True
-            
+
         elif name == 'layer':
             self.inLayer = True
             self.layerType    = attrs.get('type', None)
@@ -1325,7 +1326,7 @@ class ProcessGrcXml(HandlerBase):
     def endElement(self, name):
         if name == 'grc':
             self.inGrc = False
-        
+
         elif name == 'display':
             self.inDisplay = False
 
@@ -1348,7 +1349,7 @@ class ProcessGrcXml(HandlerBase):
                 self.layers[-1]["opacity"] = float(self.layerOpacity)
             if self.cmd:
                 self.layers[-1]["cmd"] = self.cmd
-            
+
             self.layerType = self.layerName = self.Checked = \
                 self.Opacity = self.cmd = None
 
