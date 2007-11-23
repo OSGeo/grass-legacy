@@ -213,14 +213,14 @@ int main(int argc, char *argv[])
     parm.east->key_desc    = "value";
     parm.east->type = TYPE_STRING;
     parm.east->required = NO;
-    parm.east->description = _("east coordinate (point of interest, default: map center)");
+    parm.east->description = _("East coordinate (point of interest, default: map center)");
 
     parm.north = G_define_option();
     parm.north->key = "north";
     parm.north->key_desc    = "value";
     parm.north->type = TYPE_STRING;
     parm.north->required = NO;
-    parm.north->description = _("north coordinate (point of interest, default: map center)");
+    parm.north->description = _("North coordinate (point of interest, default: map center)");
 
     flag1 = G_define_flag();
     flag1->key         = 'z' ;
@@ -228,11 +228,11 @@ int main(int argc, char *argv[])
 
     flag2 = G_define_flag();
     flag2->key         = 'v' ;
-    flag2->description = _("verbose output (also print out sun position etc.)") ;
+    flag2->description = _("Verbose output (also print out sun position etc.)") ;
 
     flag3 = G_define_flag();
     flag3->key         = 's' ;
-    flag3->description = _("calculate sun position only and exit") ;
+    flag3->description = _("Calculate sun position only and exit") ;
 
     flag4 = G_define_flag();
     flag4->key         = 'g' ;
@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
    - timezone: DO NOT ADJUST FOR DAYLIGHT SAVINGS TIME.
    - timezone: negative for zones west of Greenwich
    - lat/long: east and north positive
-   - the atmospheric refraction is calculated for 1013hPa, 15°C 
+   - the atmospheric refraction is calculated for 1013hPa, 15ï¿½C 
    - time: local time from your watch
 
     Order of parameters:
@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
        current_time=pdat->hour + (pdat->minute/60.) + (pdat->second/3600.);
      }
      else /* fatal error in G_calc_solar_position() */
-        G_fatal_error( _("Please correct settings."));
+        G_fatal_error( _("Please correct settings"));
   }
 
   if (use_solpos)
@@ -432,9 +432,9 @@ int main(int argc, char *argv[])
   mapset = G_find_cell2 (name, "") ;
 
    if((elev_fd = G_open_cell_old (name, mapset)) < 0)
-      G_fatal_error( _("can't open %s"), name);
+      G_fatal_error( _("Unable to open raster map <%s>"), name);
    if((output_fd = G_open_cell_new(outname)) < 0)
-      G_fatal_error( _("can't open %s"), outname);
+      G_fatal_error( _("Unable to create raster map <%s>"), outname);
 
     data_type = G_get_raster_map_type(elev_fd);
     elevbuf.v = G_allocate_raster_buf(data_type);
@@ -444,7 +444,7 @@ int main(int argc, char *argv[])
     if(data_type == CELL_TYPE)
     {
        if ((G_read_range(name, mapset,&range))<0)
-         G_fatal_error( _("can't open range file for %s"),name);
+         G_fatal_error( _("Can't open range file for %s"),name);
        G_get_range_min_max(&range,&min,&max);
        dmin = (double) min;
        dmax = (double) max;
@@ -469,7 +469,7 @@ int main(int argc, char *argv[])
 	    col1=0;
 	    drow=-1;
 	    if (G_get_raster_row(elev_fd, elevbuf.v, row1, data_type) < 0)
-	      G_fatal_error( _("can't read row in input elevation map"));
+	      G_fatal_error( _("Can't read row in input elevation map"));
 
 	    while (col1<window.cols)
 	      {
