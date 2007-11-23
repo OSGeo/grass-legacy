@@ -335,42 +335,42 @@ main (int argc, char *argv[])
 	/*  Check if input layers exists in data base  */   
 	
         if (G_find_cell2 (max_layer, "")  == NULL) {
-		sprintf(buf, "%s - not found", max_layer);
+		sprintf(buf, "Raster map <%s> not found", max_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}  
 
         if (G_find_cell2 (dir_layer, "")  == NULL) {
-		sprintf(buf, "%s - not found", dir_layer);
+		sprintf(buf, _("Raster map <%s> not found"), dir_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
         }
 
         if (G_find_cell2 (base_layer, "")  == NULL) {
-		sprintf(buf, "%s - not found", base_layer);
+		sprintf(buf, _("Raster map <%s> not found"), base_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
         }	
 
         if (G_find_cell2 (start_layer, "")  == NULL) {
-		sprintf(buf, "%s - not found", start_layer);
+		sprintf(buf, _("Raster map <%s> not found"), start_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
         }	
 
 	if (spotting) {
         	if (G_find_cell2 (spotdist_layer, "")  == NULL) {
-			sprintf(buf, "%s - not found", spotdist_layer);
+			sprintf(buf, _("Raster map <%s> not found"), spotdist_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}	
         	if (G_find_cell2 (velocity_layer, "")  == NULL) {
-			sprintf(buf, "%s - not found", velocity_layer);
+			sprintf(buf, _("Raster map <%s> not found"), velocity_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}	
         	if (G_find_cell2 (mois_layer, "")  == NULL) {
-			sprintf(buf, "%s - not found", mois_layer);
+			sprintf(buf, _("Raster map <%s> not found"), mois_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}	
@@ -380,24 +380,24 @@ main (int argc, char *argv[])
 	/*  Check if specified output layer names ARE LEGAL or EXISTS   */
 
 	if (G_legal_filename (out_layer) < 0) {
-		sprintf(buf, "%s - illegal name", out_layer);
+		sprintf(buf, _("<%s> is an illegal file name"), out_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
         if (G_find_cell2 (out_layer, G_mapset())) {
-                sprintf(buf, "%s - exits in Mapset <%s>, select another name", out_layer, G_mapset());
+                sprintf(buf, _("Raster map <%s> already exists in mapset <%s>, select another name"), out_layer, G_mapset());
                 G_fatal_error (buf);
                 exit(EXIT_FAILURE);
         }
 
 	if (x_out) {
 		if (G_legal_filename (x_out_layer) < 0) {
-			sprintf(buf, "%s - illegal name", x_out_layer);
+			sprintf(buf, _("<%s> is an illegal file name"), x_out_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	if (G_find_cell2 (x_out_layer, G_mapset())) {
-                	sprintf(buf, "%s - exits in Mapset <%s>, select another name", x_out_layer, G_mapset());
+                	sprintf(buf, _("Raster map <%s> already exists in mapset <%s>, select another name"), x_out_layer, G_mapset());
                 	G_fatal_error (buf);
                 	exit(EXIT_FAILURE);
         	}
@@ -405,12 +405,12 @@ main (int argc, char *argv[])
 
 	if (y_out) {
 		if (G_legal_filename (y_out_layer) < 0) {
-			sprintf(buf, "%s - illegal name", y_out_layer);
+			sprintf(buf, _("<%s> is an illegal file name"), y_out_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	if (G_find_cell2 (y_out_layer, G_mapset())) {
-            	    sprintf(buf, "%s - exits in Mapset <%s>, select another name", y_out_layer, G_mapset());
+            	    sprintf(buf, _("Raster map <%s> already exists in mapset <%s>, select another name"), y_out_layer, G_mapset());
              	   G_fatal_error (buf);
               	  exit(EXIT_FAILURE);
         	}
@@ -420,21 +420,21 @@ main (int argc, char *argv[])
 
 	max_fd = G_open_cell_old(max_layer, G_find_cell2 (max_layer,""));
 	if (max_fd < 0) {
-		sprintf (buf, "%s - can't open raster map", max_layer);
+		sprintf (buf, _("Unable to open raster map <%s>"), max_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
 
         dir_fd = G_open_cell_old(dir_layer, G_find_cell2 (dir_layer,""));
 	if (dir_fd < 0) {
-		sprintf (buf, "%s - can't open raster map", dir_layer);
+		sprintf (buf, _("Unable to open raster map <%s>"), dir_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
 
         base_fd = G_open_cell_old(base_layer, G_find_cell2 (base_layer,""));
 	if (base_fd < 0) {
-		sprintf (buf, "%s - can't open raster map", base_layer);
+		sprintf (buf, _("Unable to open raster map <%s>"), base_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
@@ -442,19 +442,19 @@ main (int argc, char *argv[])
 	if (spotting) {
         	spotdist_fd = G_open_cell_old(spotdist_layer, G_find_cell2 (spotdist_layer,""));
 		if (spotdist_fd < 0) {
-			sprintf (buf, "%s - can't open raster map", spotdist_layer);
+			sprintf (buf, _("Unable to open raster map <%s>"), spotdist_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	velocity_fd = G_open_cell_old(velocity_layer, G_find_cell2 (velocity_layer,""));
 		if (velocity_fd < 0) {
-			sprintf (buf, "%s - can't open raster map", velocity_layer);
+			sprintf (buf, _("Unable to open raster map <%s>"), velocity_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
         	mois_fd = G_open_cell_old(mois_layer, G_find_cell2 (mois_layer,""));
 		if (mois_fd < 0) {
-			sprintf (buf, "%s - can't open raster map", mois_layer);
+			sprintf (buf, _("Unable to open raster map <%s>"), mois_layer);
 			G_fatal_error (buf);
 			exit(EXIT_FAILURE);
 		}
@@ -522,7 +522,7 @@ main (int argc, char *argv[])
 
         start_fd = G_open_cell_old(start_layer, G_find_cell2 (start_layer,""));
 	if (start_fd < 0) {
-		sprintf (buf, "%s - can't open raster map", start_layer);
+		sprintf (buf, _("Unable to open raster map <%s>"), start_layer);
 		G_fatal_error (buf);
 		exit(EXIT_FAILURE);
 	}
@@ -534,7 +534,7 @@ main (int argc, char *argv[])
         heap = (struct costHa *) G_calloc (nrows*ncols + 1, sizeof(struct costHa));
         heap_len = 0;
 
-        G_message (_("Reading %s... "), start_layer);
+        G_message (_("Reading %s..."), start_layer);
 #ifdef DEBUG
 printf ("Collecting origins...");
 #endif
