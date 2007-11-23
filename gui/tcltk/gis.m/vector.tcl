@@ -307,7 +307,7 @@ proc GmVector::options { id frm } {
 	scale $row.b -from 1.0 -to 0.0 -showvalue 1  \
 		-orient horizontal -length 300 -resolution 0.01 -fg "#656565"\
 		-variable GmVector::opt($id,1,opacity) 
-	Label $row.c -text [G_msg " Transparent"]
+	Label $row.c -text [G_msg "Transparent"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes	
 	
@@ -338,13 +338,13 @@ proc GmVector::options { id frm } {
     # display
     set row [ frame $frm.disp ]
     Label $row.a -text [G_msg "Display: "]
-    checkbutton $row.b -text [G_msg "shapes"] -variable GmVector::opt($id,1,display_shape) \
+    checkbutton $row.b -text [G_msg "Shapes "] -variable GmVector::opt($id,1,display_shape) \
                 -command "GmVector::legend $id"  
-    checkbutton $row.c -text [G_msg "categories"] -variable GmVector::opt($id,1,display_cat) \
+    checkbutton $row.c -text [G_msg "Categories "] -variable GmVector::opt($id,1,display_cat) \
                 -command "GmVector::legend $id"  
-    checkbutton $row.d -text [G_msg "topology"] -variable GmVector::opt($id,1,display_topo) \
+    checkbutton $row.d -text [G_msg "Topology "] -variable GmVector::opt($id,1,display_topo) \
                 -command "GmVector::legend $id"  
-    checkbutton $row.e -text [G_msg "line directions"] -variable GmVector::opt($id,1,display_dir) \
+    checkbutton $row.e -text [G_msg "Line directions "] -variable GmVector::opt($id,1,display_dir) \
                 -command "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
     pack $row -side top -fill both -expand yes
@@ -352,17 +352,17 @@ proc GmVector::options { id frm } {
     # type
     set row [ frame $frm.type ]
     Label $row.a -text "            "
-    checkbutton $row.b -text [G_msg "points"] -variable GmVector::opt($id,1,type_point) \
+    checkbutton $row.b -text [G_msg "Points "] -variable GmVector::opt($id,1,type_point) \
                 -command "GmVector::legend $id"
-    checkbutton $row.c -text [G_msg "lines"] -variable GmVector::opt($id,1,type_line) \
+    checkbutton $row.c -text [G_msg "Lines "] -variable GmVector::opt($id,1,type_line) \
                 -command "GmVector::legend $id"
-    checkbutton $row.d -text [G_msg "boundaries"] -variable GmVector::opt($id,1,type_boundary) \
+    checkbutton $row.d -text [G_msg "Boundaries "] -variable GmVector::opt($id,1,type_boundary) \
                 -command "GmVector::legend $id"
-    checkbutton $row.e -text [G_msg "areas"] -variable GmVector::opt($id,1,type_area) \
+    checkbutton $row.e -text [G_msg "Areas "] -variable GmVector::opt($id,1,type_area) \
                 -command "GmVector::legend $id"
-    checkbutton $row.f -text [G_msg "centroids"] -variable GmVector::opt($id,1,type_centroid)\
+    checkbutton $row.f -text [G_msg "Centroids "] -variable GmVector::opt($id,1,type_centroid)\
                 -command "GmVector::legend $id"
-    checkbutton $row.g -text [G_msg "faces"] -variable GmVector::opt($id,1,type_face) \
+    checkbutton $row.g -text [G_msg "Faces "] -variable GmVector::opt($id,1,type_face) \
                 -command "GmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
@@ -370,11 +370,11 @@ proc GmVector::options { id frm } {
     # points
     set row [ frame $frm.icon ]  
     Label $row.a -text [G_msg "Point symbols:"]
-    Button $row.b -text [G_msg "icon"] \
+    Button $row.b -text [G_msg "Icon"] \
             -command "GmVector::select_symbol $id" 
     Entry $row.c -width 15 -text "$opt($id,1,icon)" \
         	-textvariable GmVector::opt($id,1,icon) 
-    Label $row.d -text [G_msg " size"]
+    Label $row.d -text [G_msg "   Size"]
     SpinBox $row.e -range {1 50 1} -textvariable GmVector::opt($id,1,size) \
                    -width 2 -helptext [G_msg "Icon size"] -modifycmd "GmVector::legend $id" 
     pack $row.a $row.b $row.c $row.d $row.e -side left
@@ -385,10 +385,10 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "Draw lines:"] 
     checkbutton $row.b -variable GmVector::opt($id,1,_use_color) \
                 -command "GmVector::legend $id"
-    Label $row.c -text [G_msg "color"] 
+    Label $row.c -text [G_msg "Color"] 
     SelectColor $row.d  -type menubutton -variable GmVector::opt($id,1,color) \
                -command "GmVector::legend $id"
-    Label $row.e -text [G_msg " width"]
+    Label $row.e -text [G_msg "   Width"]
     SpinBox $row.f -range {0 50 1} -textvariable GmVector::opt($id,1,lwidth) \
                    -width 2 -helptext [G_msg "Line width"] \
                    -modifycmd "GmVector::legend $id"
@@ -401,11 +401,11 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "Fill areas:"] 
     checkbutton $row.b -variable GmVector::opt($id,1,_use_fcolor) \
                 -command "GmVector::legend $id"
-    Label $row.c -text [G_msg "color"] 
+    Label $row.c -text [G_msg "Color"] 
     SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,fcolor) \
                 -command "GmVector::legend $id"
     Label $row.e -text "  " 
-    checkbutton $row.f -text [G_msg "random colors"] -variable GmVector::opt($id,1,rdmcolor) \
+    checkbutton $row.f -text [G_msg "Random colors "] -variable GmVector::opt($id,1,rdmcolor) \
                 -command "GmVector::legend $id"
     checkbutton $row.g -text [G_msg "GRASSRGB column colors"] -variable GmVector::opt($id,1,sqlcolor) \
                 -command "GmVector::legend $id"
@@ -417,10 +417,10 @@ proc GmVector::options { id frm } {
     Label $row.a -text [G_msg "Label vectors:"] 
     checkbutton $row.b -text [G_msg "label"] -variable GmVector::opt($id,1,display_attr) \
                 -command "GmVector::legend $id"
-    Label $row.c -text [G_msg "text color"] 
+    Label $row.c -text [G_msg " Text color"] 
     SelectColor $row.d -type menubutton -variable GmVector::opt($id,1,lcolor) \
                 -command "GmVector::legend $id"
-    Label $row.e -text [G_msg " text size"] 
+    Label $row.e -text [G_msg "   Text size"] 
     SpinBox $row.f -range {1 50 1} -textvariable GmVector::opt($id,1,lsize) \
                    -width 2 -helptext [G_msg "text size"] \
                    -modifycmd "GmVector::legend $id"
@@ -430,11 +430,11 @@ proc GmVector::options { id frm } {
 	# label alighment
     set row [ frame $frm.label2 ]
     Label $row.a -text "     " 
-    ComboBox $row.b -label [G_msg "label part to align with vector point"] \
+    ComboBox $row.b -label [G_msg "Label part to align with vector point"] \
 		-width 6  -textvariable GmVector::opt($id,1,xref) \
 		-values {"left" "center" "right"} \
 		-modifycmd "GmVector::legend $id"
-    ComboBox $row.c -label [G_msg " justification"] \
+    ComboBox $row.c -label [G_msg "   Justification"] \
     	-width 6  -textvariable GmVector::opt($id,1,yref) \
 		-values {"top" "center" "bottom"} \
 		-modifycmd "GmVector::legend $id"
@@ -443,9 +443,9 @@ proc GmVector::options { id frm } {
 
     # labels layer and attribute column
     set row [ frame $frm.label3 ]
-    LabelEntry $row.a -label [G_msg "     layer for labels"] \
+    LabelEntry $row.a -label [G_msg "     Layer for labels"] \
                 -textvariable GmVector::opt($id,1,lfield) -width 3 
-    LabelEntry $row.b -label [G_msg " attribute col for labels"] \
+    LabelEntry $row.b -label [G_msg "   Attribute col for labels"] \
                 -textvariable GmVector::opt($id,1,attribute) -width 23
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -461,7 +461,7 @@ proc GmVector::options { id frm } {
 	# query cat
     set row [ frame $frm.query2 ]
     Label $row.a -text "    " 
-    LabelEntry $row.b -label [G_msg "query cat values    "] \
+    LabelEntry $row.b -label [G_msg "Query cat values"] \
                 -textvariable GmVector::opt($id,1,cat) \
                -width 40
     pack $row.a $row.b -side left
@@ -472,7 +472,7 @@ proc GmVector::options { id frm } {
     Label $row.a -text "    " 
     checkbutton $row.b -variable GmVector::opt($id,1,_use_where) \
 		-command "GmVector::legend $id"
-    LabelEntry $row.c -label [G_msg "use SQL query"] \
+    LabelEntry $row.c -label [G_msg "Use SQL query"] \
 		-textvariable GmVector::opt($id,1,where) \
 		-width 40
     pack $row.a $row.b $row.c -side left
@@ -480,13 +480,13 @@ proc GmVector::options { id frm } {
     
 	#show columns and data
 	set row [ frame $frm.columns ]
-    Label $row.a -text [G_msg "    show attribute columns"] 
+    Label $row.a -text [G_msg "    Show attribute columns"] 
     Button $row.b -text [G_msg "columns"] \
             -image [image create photo -file "$iconpath/db-columns.gif"] \
             -command "GmVector::show_columns $id" \
             -background $bgcolor -borderwidth 1\
             -helptext [G_msg "Show columns"]
-    Label $row.c -text [G_msg "   show attribute data"] 
+    Label $row.c -text [G_msg "      Show attribute data"] 
     Button $row.d -text [G_msg "data"] \
             -image [image create photo -file "$iconpath/db-values.gif"] \
             -command "GmVector::show_data $id" \
@@ -498,20 +498,20 @@ proc GmVector::options { id frm } {
 	# save query to new vector file
 	set row [ frame $frm.qsave ]
     Label $row.a -text "    " 
-    checkbutton $row.b -text [G_msg "save displayed objects to new vector file "] \
+    checkbutton $row.b -text [G_msg "Save displayed objects to new vector file "] \
                 -variable GmVector::opt($id,1,qsave) 
-    checkbutton $row.c -text [G_msg "overwrite existing"] \
+    checkbutton $row.c -text [G_msg "Overwrite existing"] \
                 -variable GmVector::opt($id,1,qoverwrite) 
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # save query vector name
     set row [ frame $frm.qname ]
-    Label $row.a -text [G_msg "     new vector"] 
+    Label $row.a -text [G_msg "     New vector"] 
     Button $row.b -image [image create photo -file "$iconpath/element-vector.gif"] \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 1  \
 		-command "GmVector::select_qmap $id" \
-		-helptext [G_msg "select existing vector for saving queried objects"]
+		-helptext [G_msg "Select existing vector for saving queried objects"]
     Entry $row.c -width 40 -text "$opt($id,1,qmap)" \
           -textvariable GmVector::opt($id,1,qmap) 
     pack $row.a $row.b $row.c -side left
