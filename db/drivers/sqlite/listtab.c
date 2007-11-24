@@ -1,29 +1,40 @@
-/***********************************************************
-*
-* MODULE:       SQLite driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-* This program is free software under the GNU General Public
-* License (>=v2). Read the file COPYING that comes with GRASS
-* for details.
-*
-**************************************************************/
+/**
+ * \file listtab.c
+ *
+ * \brief Low level SQLite table functions.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2005-2007
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <grass/dbmi.h>
 #include "globals.h"
 #include "proto.h"
 
-int db__driver_list_tables (dbString **tlist, int *tcount, int system)
 
+/**
+ * \fn int db__driver_list_tables (dbString **tlist, int *tcount, int system)
+ *
+ * \brief List SQLite database tables.
+ *
+ * \param[in] tlist list of tables
+ * \param[in] tcount number of tables
+ * \param[in] system
+ * \return int DB_FAILED on error; DB_OK on success
+ */
+
+int db__driver_list_tables (dbString **tlist, int *tcount, int system)
 {
     int i, nrows;
     dbString *list;
     sqlite3_stmt *statement;
-    char  *rest;
+    const char *rest;
     int   ret;
 
     init_error();
@@ -34,7 +45,7 @@ int db__driver_list_tables (dbString **tlist, int *tcount, int system)
 
     if ( ret != SQLITE_OK ) {
         append_error( "Cannot list tables\n");
-        append_error ( sqlite3_errmsg(sqlite) );
+        append_error ((char *) sqlite3_errmsg (sqlite));
         report_error();
         sqlite3_finalize ( statement );
         return DB_FAILED;
@@ -61,8 +72,7 @@ int db__driver_list_tables (dbString **tlist, int *tcount, int system)
     while ( sqlite3_step ( statement ) == SQLITE_ROW )
     {
         G_debug ( 3, "table: %s", sqlite3_column_text ( statement, 0) );
-	db_set_string ( &list[i], 
-		sqlite3_column_text ( statement, 0) );
+	    db_set_string (&list[i], (char *) sqlite3_column_text (statement, 0));
         i++;
     }
 

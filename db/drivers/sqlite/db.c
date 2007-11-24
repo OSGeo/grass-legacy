@@ -1,22 +1,32 @@
-/***********************************************************
-*
-* MODULE:       SQLite driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-* This program is free software under the GNU General Public
-* License (>=v2). Read the file COPYING that comes with GRASS
-* for details.
-*
-**************************************************************/
+/**
+ * \file db.c
+ *
+ * \brief Low Level SQLite databse driver.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2005-2007
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include "globals.h"
 #include "proto.h"
+
+
+/**
+ * \fn int db__driver_open_database (dbHandle *handle)
+ *
+ * \brief Open SQLite database.
+ *
+ * \param[in,out] handle database handle
+ * \return int DB_FAILED on error; DB_OK on success
+ */
 
 int db__driver_open_database (dbHandle *handle)
 
@@ -77,7 +87,7 @@ int db__driver_open_database (dbHandle *handle)
 
     if ( sqlite3_open(name2,&sqlite) != SQLITE_OK ) {
 	append_error ( "Cannot open database: " );
-        append_error ( sqlite3_errmsg(sqlite) );
+        append_error ((char *) sqlite3_errmsg (sqlite));
 	report_error ();
 	return DB_FAILED;
     }
@@ -85,11 +95,21 @@ int db__driver_open_database (dbHandle *handle)
     return DB_OK;
 }
 
-int db__driver_close_database()
+
+/**
+ * \fn int db__driver_close_database (void)
+ *
+ * \brief Close SQLite database.
+ *
+ * \return int always returns DB_OK
+ */
+
+int db__driver_close_database (void)
 {
     G_debug(3, "db_close_database()" );
 
     init_error();
     sqlite3_close ( sqlite );
+
     return DB_OK;
 }
