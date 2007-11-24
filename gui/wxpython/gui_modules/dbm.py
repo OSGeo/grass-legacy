@@ -388,19 +388,21 @@ class AttributeManager(wx.Frame):
         ### {layer: list, widgets...}
         self.layerPage = {}
 
-        # auinotebook (browse, create, alter)
-        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
+        # auinotebook (browse, manage, settings)
+        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, 
+                                           style=wx.aui.AUI_NB_BOTTOM)
         self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
-        # flatnotebook (browse, create, alter)
-#        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
-#                                        style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
-#                                        FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
+        ### Mac-related problem
+        # self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
+        #                                         style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
+        #                                         FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
         self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
+        # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
         self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
@@ -408,6 +410,7 @@ class AttributeManager(wx.Frame):
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
         self.notebook.AddPage(self.managePage, caption=_("Manage tables"))
+        # self.notebook.AddPage(self.managePage, text=_("Manage tables")) # FN
         self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
@@ -415,9 +418,8 @@ class AttributeManager(wx.Frame):
                                             FN.FNB_BACKGROUND_GRADIENT |
                                             FN.FNB_TABS_BORDER_SIMPLE)
         self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
+        # self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
         self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
-
-        self.notebook.SetSelection(0) # select browse tab
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
@@ -425,6 +427,8 @@ class AttributeManager(wx.Frame):
         self.__createBrowsePage()
         self.__createManagePage()
         self.__createSettingsPage()
+
+        self.notebook.SetSelection(0) # select browse tab
 
         #
         # buttons
@@ -441,8 +445,7 @@ class AttributeManager(wx.Frame):
 
         # do layout
         self.__layout()
-
-        self.SetMinSize(self.GetBestSize())
+        # self.SetMinSize(self.GetBestSize())
 
     def __del__(self):
         pass
@@ -558,7 +561,7 @@ class AttributeManager(wx.Frame):
     def __createManagePage(self):
         """Create manage page (create/link and alter tables)"""
         for layer in self.mapInfo.layers.keys():
-            panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
+            panel = wx.Panel(parent=self.managePage, id=wx.ID_ANY)
             self.managePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
@@ -590,7 +593,7 @@ class AttributeManager(wx.Frame):
             # add column
             label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Column name"))
             column = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
-                                 size=(200, -1), style=wx.TE_PROCESS_ENTER)
+                                 size=(150, -1), style=wx.TE_PROCESS_ENTER)
             column.Bind(wx.EVT_TEXT,       self.OnTableAddColumnName)
             column.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemAdd)
             self.layerPage[layer]['addColName'] = column.GetId()
@@ -644,7 +647,7 @@ class AttributeManager(wx.Frame):
             # rename col
             label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Rename column"))
             column = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
-                                 size=(200, -1), style=wx.TE_PROCESS_ENTER)
+                                 size=(150, -1), style=wx.TE_PROCESS_ENTER)
             column.Bind(wx.EVT_TEXT,       self.OnTableRenameColumnName,)
             column.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemChange)
             self.layerPage[layer]['renameCol'] = column.GetId()
@@ -654,7 +657,7 @@ class AttributeManager(wx.Frame):
                          flag=wx.ALIGN_CENTER_VERTICAL)
             label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("To"))
             columnTo = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
-                                   size=(200, -1), style=wx.TE_PROCESS_ENTER)
+                                   size=(150, -1), style=wx.TE_PROCESS_ENTER)
             columnTo.Bind(wx.EVT_TEXT,       self.OnTableRenameColumnName)
             columnTo.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemChange)
             self.layerPage[layer]['renameColTo'] = columnTo.GetId()
@@ -760,14 +763,13 @@ class AttributeManager(wx.Frame):
         btnSizer.AddButton(self.btnQuit)
         btnSizer.AddButton(self.btnApply)
         btnSizer.Realize()
-
+        
         mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
-
+        
         self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
-
-        self.Layout()
+        # mainSizer.Fit(self) # problem connected to aui
+        # self.Layout()
 
     def OnDataRightUp(self, event):
         """Table description area, context menu"""
