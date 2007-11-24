@@ -114,7 +114,7 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected) 
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected)
         self.Bind(wx.EVT_LIST_COL_CLICK,       self.OnColumnClick)     # sorting
         # self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
         # self.Bind(wx.EVT_LIST_COL_RIGHT_CLICK, self.OnColRightClick, self.list)
@@ -151,12 +151,12 @@ class VirtualAttributeList(wx.ListCtrl,
         for column in columnNames:
             self.InsertColumn(col=i, heading=column)
             i += 1
-            
+
             if i >= 256:
                 self.log.write(_("Can display only 256 columns"))
 
         ### self.mapInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
-        # 
+        #
         # read data
         #
         # FIXME: Max. number of rows, while the GUI is still usable
@@ -255,7 +255,7 @@ class VirtualAttributeList(wx.ListCtrl,
         index = self.itemIndexMap[item]
         s = self.itemDataMap[index][col]
         return s
-    
+
     def OnGetItemAttr(self, item):
         """Get item attributes"""
         index = self.itemIndexMap[item]
@@ -279,7 +279,7 @@ class VirtualAttributeList(wx.ListCtrl,
         #         for i in range(len(items)):
         #             items[i] =  str(items[i])
         self.itemIndexMap = items
-        
+
         # redraw the list
         self.Refresh()
 
@@ -305,16 +305,16 @@ class VirtualAttributeList(wx.ListCtrl,
         # If the items are equal then pick something else to make the sort v    ->alue unique
         if cmpVal == 0:
             cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
-            
+
         if ascending:
             return cmpVal
         else:
             return -cmpVal
-        
+
     def GetSortImages(self):
         """Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py"""
         return (self.sm_dn, self.sm_up)
-    
+
     def getColumnText(self, index, col):
         """Get column/item"""
         item = self.GetItem(index, col)
@@ -355,7 +355,7 @@ class AttributeManager(wx.Frame):
         self.qlayer = None
 
         # -> layers / tables description
-        self.mapInfo = VectorDBInfo(self.vectmap) 
+        self.mapInfo = VectorDBInfo(self.vectmap)
 
         if len(self.mapInfo.layers.keys()) == 0:
             dlg = wx.MessageDialog(patent=self.parent,
@@ -388,29 +388,33 @@ class AttributeManager(wx.Frame):
         ### {layer: list, widgets...}
         self.layerPage = {}
 
+        # auinotebook (browse, create, alter)
+        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
+        self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+
         # flatnotebook (browse, create, alter)
-        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
-                                        style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON | 
-                                        FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
+#        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
+#                                        style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
+#                                        FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
-        self.notebook.AddPage(self.browsePage, text=_("Browse data"))
+        self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
-        self.notebook.AddPage(self.managePage, text=_("Manage tables"))
+        self.notebook.AddPage(self.managePage, caption=_("Manage tables"))
         self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                             style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
                                             FN.FNB_BACKGROUND_GRADIENT |
                                             FN.FNB_TABS_BORDER_SIMPLE)
-        self.notebook.AddPage(self.settingsPage, text=_("Settings"))
+        self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.notebook.SetSelection(0) # select browse tab
@@ -428,7 +432,7 @@ class AttributeManager(wx.Frame):
         self.btnApply      = wx.Button(parent=self, id=wx.ID_APPLY)
         self.btnQuit       = wx.Button(parent=self, id=wx.ID_CANCEL)
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
-        
+
         # events
         self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApply)
         self.btnQuit.Bind(wx.EVT_BUTTON,            self.OnCloseWindow)
@@ -458,6 +462,12 @@ class AttributeManager(wx.Frame):
             listBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                    label=" %s " % _("Attribute data"))
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
+
+            sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                  label=" %s " % _("SQL Query"))
+
+            sqlSizer = wx.StaticBoxSizer(sqlBox, wx.VERTICAL)
+
             win = VirtualAttributeList(panel, self.log,
                                        self.mapInfo, layer)
             win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
@@ -467,7 +477,7 @@ class AttributeManager(wx.Frame):
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
                           border=3)
-            
+
             # sql statement box
             btnSqlBuilder = wx.Button(parent=panel, id=wx.ID_ANY, label=_("SQL Builder"))
             btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
@@ -488,20 +498,16 @@ class AttributeManager(wx.Frame):
                                        style=wx.TE_PROCESS_ENTER)
             sqlWhere.Bind(wx.EVT_TEXT_ENTER,     self.OnApplySqlStatement)
             sqlStatement.Bind(wx.EVT_TEXT_ENTER, self.OnApplySqlStatement)
-            
+
             sqlLabel = wx.StaticText(parent=panel, id=wx.ID_ANY,
                                      label="SELECT * FROM %s WHERE " % \
                                          self.mapInfo.layers[layer]['table'])
             label_query = wx.StaticText(parent=panel, id=wx.ID_ANY,
                                         label="")
-            
-            sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
-                                  label=" %s " % _("SQL Query"))
-            
-            sqlSizer = wx.StaticBoxSizer(sqlBox, wx.VERTICAL)
+
             sqlFlexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
             sqlFlexSizer.AddGrowableCol(1)
-            
+
             sqlFlexSizer.Add(item=sqlSimple,
                              flag=wx.ALIGN_CENTER_VERTICAL)
             sqlSimpleSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -532,7 +538,7 @@ class AttributeManager(wx.Frame):
                           proportion=0,
                           flag=wx.BOTTOM | wx.LEFT | wx.RIGHT | wx.EXPAND,
                           border=3)
-            
+
             panel.SetSizer(pageSizer)
 
             self.layerPage[layer]= {'data'     : win.GetId(),
@@ -541,7 +547,7 @@ class AttributeManager(wx.Frame):
                                     'where'    : sqlWhere.GetId(),
                                     'builder'  : btnSqlBuilder.GetId(),
                                     'statement': sqlStatement.GetId()}
-                                
+
 
         self.browsePage.SetSelection(0) # select first layer
         self.layer = self.mapInfo.layers.keys()[0]
@@ -565,14 +571,14 @@ class AttributeManager(wx.Frame):
             self.MakeInfoPaneContent(layer, infoCollapse.GetPane())
             infoCollapse.Collapse(False)
             self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, infoCollapse)
-            
+
             # table description
             table = self.mapInfo.layers[layer]['table']
             tableBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                     label=" %s " % _("Table %s") % table)
-            
+
             tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
-            
+
             list = self.__createTableDesc(panel, table)
             list.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnTableRightUp) #wxMSW
             list.Bind(wx.EVT_RIGHT_UP,            self.OnTableRightUp) #wxGTK
@@ -598,7 +604,7 @@ class AttributeManager(wx.Frame):
                          flag=wx.ALIGN_CENTER_VERTICAL)
 
             subSizer = wx.BoxSizer(wx.HORIZONTAL)
-            type = wx.Choice (parent=panel, id=wx.ID_ANY, 
+            type = wx.Choice (parent=panel, id=wx.ID_ANY,
                               choices = ["integer",
                                          "double",
                                          "varchar",
@@ -667,22 +673,22 @@ class AttributeManager(wx.Frame):
                          wx.ALIGN_CENTER_VERTICAL )
 
             tableSizer.Add(item=list,
-                           flag=wx.ALL | wx.EXPAND, 
+                           flag=wx.ALL | wx.EXPAND,
                            proportion=1,
                            border=3)
 
             tableSizer.Add(item=addSizer,
-                           flag=wx.ALL | wx.EXPAND, 
+                           flag=wx.ALL | wx.EXPAND,
                            proportion=0,
                            border=3)
 
             pageSizer.Add(item=infoCollapse,
-                          flag=wx.ALL | wx.EXPAND, 
+                          flag=wx.ALL | wx.EXPAND,
                           proportion=0,
                           border=3)
 
             pageSizer.Add(item=tableSizer,
-                          flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, 
+                          flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
                           proportion=1,
                           border=3)
 
@@ -722,21 +728,21 @@ class AttributeManager(wx.Frame):
                                           colour=self.settings['highlight']['color'],
                                           size=(25, 25))
         flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE) 
+        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
         label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width (in pixels)"))
         self.hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
                                    initial=self.settings['highlight']['width'],
                                    min=1, max=1e6)
         flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE) 
+        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
 
         highlightSizer.Add(item=flexSizer,
                            proportion=0,
                            flag=wx.ALL | wx.EXPAND,
                            border=5)
-        
+
         pageSizer.Add(item=highlightSizer,
                       proportion=0,
                       flag=wx.ALL | wx.EXPAND,
@@ -817,7 +823,7 @@ class AttributeManager(wx.Frame):
             list.DeleteItem(item)
             # self.cats[layer].remove(cat)
             item = list.GetFirstSelected()
-        
+
     def OnDataItemDeleteAll(self, event):
         """Delete all items from the list"""
         self.FindWindowById(self.layerPage[self.layer]['data']).DeleteAllItems()
@@ -829,7 +835,7 @@ class AttributeManager(wx.Frame):
         """Reload table description"""
         if self.map and self.mapdisplay:
             # list.lastTurnSelectedCats[:] != list.selectedCats[:]:
-            
+
             # add map layer with higlighted vector features
             self.AddQueryMapLayer(self.map)
             self.mapdisplay.MapWindow.UpdateMap(render=True)
@@ -905,7 +911,7 @@ class AttributeManager(wx.Frame):
                     dlg.Destroy()
                 else:
                     list.SetItemText(item, nameTo)
-                    
+
                     self.listOfCommands.append(['v.db.renamecol',
                                                 'map=%s' % self.vectmap,
                                                 'layer=%d' % self.layer,
@@ -978,7 +984,7 @@ class AttributeManager(wx.Frame):
     def OnTableItemAdd(self, event):
         """Add new column to the table"""
         name = self.FindWindowById(self.layerPage[self.layer]['addColName']).GetValue()
-        
+
         if not name:
             dlg = wx.MessageDialog(self.parent,
                                    _("Unable to add column to the table. "
@@ -1018,7 +1024,7 @@ class AttributeManager(wx.Frame):
                 type += ' (%d)' % length
             self.listOfCommands.append(['v.db.addcol',
                                         'map=%s' % self.vectmap,
-                                        'layer=%d' % self.layer, 
+                                        'layer=%d' % self.layer,
                                         'columns=%s %s' % (name, type)])
 
     def OnLayerPageChanged(self, event):
@@ -1064,7 +1070,7 @@ class AttributeManager(wx.Frame):
                 list = self.FindWindowById(self.layerPage[self.layer]['data'])
                 list.Update(self.mapInfo)
                 self.OnDataReload(None)
-                
+
         # settings
         elif page == self.notebook.GetPageIndex(self.settingsPage):
             self.UpdateSettings()
@@ -1106,7 +1112,7 @@ class AttributeManager(wx.Frame):
         Return list of columns (or '*' for all columns)
         Return where statement
         """
-        
+
         if statement[0:7].lower() != 'select ':
             return (False, '', '')
 
@@ -1159,7 +1165,7 @@ class AttributeManager(wx.Frame):
         infoSizer = wx.StaticBoxSizer(connectionInfoBox, wx.VERTICAL)
         infoFlexSizer = wx.FlexGridSizer (cols=2, hgap=1, vgap=1)
         infoFlexSizer.AddGrowableCol(1)
-        
+
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Database:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
@@ -1181,7 +1187,7 @@ class AttributeManager(wx.Frame):
                       flag=wx.EXPAND | wx.ALL,
                       border=3)
 
-        border.Add(item=infoSizer, 
+        border.Add(item=infoSizer,
                    proportion=1,
                    flag=wx.EXPAND | wx.ALL,
                    border=3)
@@ -1217,7 +1223,7 @@ class AttributeManager(wx.Frame):
         """
         if self.qlayer:
             map.DeleteLayer(self.qlayer)
-            
+
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # cats = list.selectedCats[:]
         cats = list.GetSelectedItems()
@@ -1225,15 +1231,15 @@ class AttributeManager(wx.Frame):
         color = self.settings['highlight']['color']
         colorStr = str(color[0]) + ":" + \
             str(color[1]) + ":" + \
-            str(color[2]) + ":" 
+            str(color[2]) + ":"
         cmd = ["d.vect",
                "map=%s" % self.vectmap,
                "color=%s" % colorStr,
                "fcolor=%s" % colorStr,
                #               "cats=%s" % (",".join(["%d" % c for c in cats])),
                # FIXME
-               "cats=%s" % utils.ListOfCatsToRange(cats), 
-               "width=%d"  % self.settings['highlight']['width']] 
+               "cats=%s" % utils.ListOfCatsToRange(cats),
+               "width=%d"  % self.settings['highlight']['width']]
         if self.icon:
             gcmd.append("icon=%s" % (self.icon))
         if self.pointsize:
@@ -1247,7 +1253,7 @@ class AttributeManager(wx.Frame):
         self.settings['highlight']['color'] = self.hlColor.GetColour()
         self.settings['highlight']['width'] = int(self.hlWidth.GetValue())
 
-        
+
 #     def OnMapClick(self, event):
 #         """
 #         Gets coordinates from mouse clicking on display window
@@ -1350,7 +1356,7 @@ class TableListCtrl(wx.ListCtrl,
 
     def __init__(self, parent, id, table, columns, pos=wx.DefaultPosition,
                  size=wx.DefaultSize):
-        
+
         self.parent  = parent
         self.table   = table
         self.columns = columns
@@ -1428,7 +1434,7 @@ class DisplayAttributesDialog(wx.Dialog):
         if (self.layer == -1 and len(layers) <= 0) or \
                 (self.layer > 0 and self.layer not in layers):
             if self.layer == -1:
-                label = _("Database connection for vector map <%s> " 
+                label = _("Database connection for vector map <%s> "
                           "is not defined in DB file.") % (self.map)
             else:
                 label = _("Layer <%d> is not available for vector map <%s>.") % \
@@ -1538,7 +1544,7 @@ class DisplayAttributesDialog(wx.Dialog):
                         newvalue = self.FindWindowById(id).GetValue()
                     except:
                         newvalue = self.FindWindowById(id).GetLabel()
-                
+
                     if newvalue != value:
                         updatedColumns.append(name)
                         if type != 'character':
@@ -1623,7 +1629,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def UpdateDialog(self, cat=-1, queryCoords=None, qdist=-1):
         """Update dialog
-        
+
         Return True if updated otherwise False
         """
         self.cat         = cat
@@ -1784,7 +1790,7 @@ class VectorDBInfo:
                                                 "table=%s" % self.layers[layer]["table"],
                                                 "driver=%s" % self.layers[layer]["driver"],
                                                 "database=%s" % self.layers[layer]["database"]])
-            
+
 
             columns = {} # {name: {type, length, [values], [ids]}}
 
@@ -1850,7 +1856,7 @@ class VectorDBInfo:
                         self.tables[table][name]['values'].append(value)
                     except:
                         read = False
-                            
+
                 if "line:" in litem: # get line id
                     line = int(item.split(':')[1].strip())
                 elif "key column:" in litem: # start reading attributes
@@ -1902,8 +1908,8 @@ class VectorDBInfo:
             table = self.layers[layer]["table"] # get table desc
             columns = self.tables[table]
             for name in self.tables[table].keys():
-                self.tables[table][name]['values'] = [] 
-                self.tables[table][name]['ids']    = [] 
+                self.tables[table][name]['values'] = []
+                self.tables[table][name]['ids']    = []
 
 def main(argv=None):
     if argv is None:
