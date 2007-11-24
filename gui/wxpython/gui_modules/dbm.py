@@ -165,15 +165,21 @@ class VirtualAttributeList(wx.ListCtrl,
         else:
             sql="SELECT %s FROM %s WHERE %s" % (cols, tableName, where)
 
+        # stdout can be very large, do not use PIPE, redirect to temp file
+        # TODO: more effective way should be implemented...
+        outFile = tempfile.NamedTemporaryFile(mode='w+b')
         selectCommand = gcmd.Command(["db.select", "-c", "--q",
                                       "sql=%s" % sql,
                                       "database=%s" % self.mapInfo.layers[layer]["database"],
                                       "driver=%s"   % self.mapInfo.layers[layer]["driver"],
-                                      "fs=|"])
+                                      "fs=|"],
+                                     stdout=outFile)
         i = 0
-        for record in selectCommand.ReadStdOutput():
-            if i % 500 == 0:
-                print "#", i
+        outFile.seek(0)
+        while True:
+            record = outFile.readline()
+            if not record:
+                break
             self.itemDataMap[i] = []
             j = 0
             for value in record.split('|'):
@@ -193,15 +199,18 @@ class VirtualAttributeList(wx.ListCtrl,
             self.itemIndexMap.append(i)
 
             i += 1
-            if i >= 32000:
-                self.log.write(_("Can display only 32000 lines"))
+            if i >= 100000:
+                print >> sys.stderr, _("Limit 100000 records")
                 break
 
         self.SetItemCount(i)
 
         i = 0
         for col in columnNames:
-            self.SetColumnWidth(col=i, width=self.columns[col]['length'] * 6) # FIXME
+            width = self.columns[col]['length'] * 6 # FIXME
+            if width < 60:
+                width = 60
+            self.SetColumnWidth(col=i, width=width) 
             i += 1
 
     def OnItemSelected(self, event):

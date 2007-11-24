@@ -270,7 +270,13 @@ class Command:
     def ReadStdOutput(self):
         """Read standard output and return list"""
 
-        return self.__ReadOutput(self.cmdThread.module.stdout)
+        if self.cmdThread.stdout:
+            stream = self.cmdThread.stdout # use redirected stream instead
+            stream.seek(0)
+        else:
+            stream = self.cmdThread.module.stdout
+
+        return self.__ReadOutput(stream)
     
     def ReadErrOutput(self):
         """Read standard error output and return list"""
@@ -329,7 +335,7 @@ class CommandThread(Thread):
                   stdout=None, stderr=None):
 
         Thread.__init__(self)
-
+        
         self.cmd          = cmd
         self.stdin        = stdin
         self.stdout       = stdout
@@ -343,7 +349,7 @@ class CommandThread(Thread):
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
-        # close_fds=False) (MS Windows ?)
+        # close_fds=False) ### Unix only
 
         if self.stdin: # read stdin if requested ...
             self.module.stdin.write(self.stdin)
@@ -353,46 +359,38 @@ class CommandThread(Thread):
             return
 
         # redirect standard outputs...
-        if self.stdout and self.stderr:
-            # make stdout/stderr non-blocking
-            stdout_fileno = self.module.stdout.fileno()
-            stderr_fileno = self.module.stderr.fileno()
+        if self.stdout:
+            self.__redirect_stream(self.module.stdout, self.stdout)
+        
+        if self.stderr:
+            self.__redirect_stream(self.module.stderr, self.stderr)
+
+    def __redirect_stream(self, streamFrom, streamTo):
+        """Redirect stream"""
+        # make stdout/stderr non-blocking
+        out_fileno = streamFrom.fileno()
             
-            # FIXME (MS Windows)
-            flags = fcntl.fcntl(stdout_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(stdout_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+        # FIXME (MS Windows)
+        flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+        fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
             
-            flags = fcntl.fcntl(stderr_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(stderr_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-            
-            # wait for the process to end, sucking in stuff until it does end
-            while self.module.poll() is None:
-                evt = wxgui_utils.UpdateGMConsoleEvent()
-                #wx.PostEvent(self.stdout, evt)
-                #wx.PostEvent(self.stderr, evt)
-                try:
-                    self.stdout.write(self.module.stdout.read())
-                except IOError:
-                    pass
-                
-                try:
-                    self.stderr.write(self.module.stderr.read())
-                except IOError:
-                    pass
-                
-                time.sleep(0.1)
-            
-            # get the last output
+        # wait for the process to end, sucking in stuff until it does end
+        while self.module.poll() is None:
+            # evt = wxgui_utils.UpdateGMConsoleEvent()
+            # wx.PostEvent(self.stdout, evt)
+            # wx.PostEvent(self.stderr, evt)
             try:
-                self.stdout.write(self.module.stdout.read())
-                pass
+                streamTo.write(streamFrom.read())
             except IOError:
                 pass
+                
+            time.sleep(0.1)
             
-            try:
-                self.stderr.write(self.module.stderr.read())
-            except IOError:
-                pass
+        # get the last output
+        try:
+            streamTo.write(streamFrom.read())
+        except IOError:
+            pass
 
 # testing ...
 if __name__ == "__main__":
