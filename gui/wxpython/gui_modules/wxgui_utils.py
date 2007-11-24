@@ -27,7 +27,6 @@ COPYRIGHT:  (C) 2007 by the GRASS Development Team
 import os
 import sys
 import string
-import tempfile
 import time
 
 import wx
