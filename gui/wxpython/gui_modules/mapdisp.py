@@ -431,7 +431,7 @@ class BufferedWindow(wx.Window):
             pdcLast.DrawBitmap(bmp=self._bufferLast, x=0, y=0)
             pdcLast.DrawToDC(dc)
 
-        # draw temporal object on the foreground
+        # draw temporary object on the foreground
         # self.pdcTmp.DrawToDCClipped(dc, rgn)
         self.pdcTmp.DrawToDC(dc)
 
@@ -864,7 +864,7 @@ class BufferedWindow(wx.Window):
         self.mouse['begin'] = event.GetPositionTuple()[:]
 
         if self.mouse["use"] in ["measure", "profile"]:
-            # measure || profile
+            # measure or profile
             if len(self.polycoords) == 0:
                 self.mouse['end'] = self.mouse['begin']
                 self.polycoords.append(self.Pixel2Cell(self.mouse['begin']))
@@ -1081,7 +1081,7 @@ class BufferedWindow(wx.Window):
                 self.parent.MeasureDist(self.mouse['begin'], self.mouse['end'])
             try:
                 self.polycoords.append(self.Pixel2Cell(self.mouse['end']))
-                self.pdc.ClearId(self.lineid)
+                self.pdcTmp.ClearId(self.lineid)
                 self.DrawLines(pdc=self.pdcTmp)
             except:
                 pass
@@ -2226,7 +2226,7 @@ class MapFrame(wx.Frame):
         """
 
         # change bookcontrol page to page associted with display
-        if self.page:
+        if self.page :
             pgnum = self.layerbook.GetPageIndex(self.page)
             if pgnum > -1:
                 self.layerbook.SetSelection(pgnum)
@@ -2681,6 +2681,8 @@ class MapFrame(wx.Frame):
         """
 
         self.totaldist = 0.0 # total measured distance
+        wx.MessageBox('Click and drag with left mouse button to measure.\
+            \nDouble click with left button to clear')
 
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)
