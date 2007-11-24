@@ -6,16 +6,16 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-DRIVER=$(DBDRIVERDIR)/pg$(EXE_SUFFIX)
+DRIVER=$(DBDRIVERDIR)/pg$(EXE)
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(DBMIEXTRALIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	$(GISLIB) $(DATETIMELIB) $(PQLIB)
 
 EXTRA_CFLAGS = $(PQINCPATH)
-EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
+EXTRA_INC = -I$(MODULE_TOPDIR)/lib/db/dbmi_driver
 
 OBJS = $(subst .c,.o,$(wildcard *.c))
-	
+
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 DRVDOC=$(GISBASE)/docs/html/grass-pg.html
@@ -27,4 +27,4 @@ $(DRIVER): $(ARCH_OBJS)
 		$(MATHLIB) $(XDRLIB)
 
 $(DRVDOC): grass-pg.html
-	$(INSTALL) -m 644 grass-pg.html $(DRVDOC)
+	$(INSTALL_DATA) grass-pg.html $(DRVDOC)
