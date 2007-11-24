@@ -70,7 +70,40 @@ DBF to PostgreSQL converter.
 <h2>PostGIS: PostgreSQL with vector geometry</h2>
 
 <a href=http://postgis.refractions.net/>PostGIS</a>: 
-add geographic object support to PostgreSQL.
+adds geographic object support to PostgreSQL.
+
+<h3>Example: Import from PostGIS</h3>
+
+In an existing PostGIS database, create the following table:
+
+<div class="code"><pre>
+CREATE TABLE test
+(
+ id serial NOT NULL,
+ mytime timestamp DEFAULT now(),
+ text varchar,
+ wkb_geometry geometry,
+ CONSTRAINT test_pkey PRIMARY KEY (id)
+) WITHOUT OIDS;
+
+# insert value
+INSERT INTO test (text, wkb_geometry)
+ VALUES ('Name',geometryFromText('POLYGON((600000 200000,650000
+ 200000,650000 250000,600000 250000,600000 200000))',-1));
+
+# register geometry column
+select AddGeometryColumn ('postgis', 'test', 'geometry', -1, 'GEOMETRY', 2);
+</pre></div>
+
+GRASS can import this PostGIS polygon map as follows:
+
+<div class="code"><pre>
+v.in.ogr dsn="PG:host=localhost dbname=postgis user=neteler" layer=test \
+         output=test type=boundary,centroid
+v.db.select test
+v.info -t test
+</pre></div>
+
 
 <h4>Geometry Converters</h4>
 <ul>
