@@ -243,6 +243,8 @@ class GMFrame(wx.Frame):
 #        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
         self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
+        self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+
         # create displays notebook widget and add it to main notebook page
         cbStyle = FN.FNB_VC8 | \
             FN.FNB_BACKGROUND_GRADIENT | \
