@@ -15,7 +15,7 @@ LIBES = $(CAIRODRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(CAIRODRIVERDEP) $(DRIVERDEP) $(GISDEP)
 PGM=psdriver
 
-default: $(DRIVERDIR)/cairo moncap
+default: $(DRIVERDIR)/cairo $(HTMLDIR)/$(PGM).html moncap
 
 moncap:
 	@if [ -f $(ETC)/monitorcap ] && egrep '^cairo' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
