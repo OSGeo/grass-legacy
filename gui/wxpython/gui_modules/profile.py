@@ -80,7 +80,7 @@ class ProfileFrame(wx.Frame):
         toolbar = self.__createToolBar()
 
         self.parent = parent
-
+        self.mapwin = self.Parent.MapWindow
         self.Map = render.Map()  # instance of render.Map to be associated with display
 
         #
@@ -97,10 +97,6 @@ class ProfileFrame(wx.Frame):
 
         # Bind various events
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
-
-
-        self.mapwin = self.Parent.MapWindow
-        self.mapwin.Bind(wx.EVT_MOUSE_EVENTS, self.mapwin.MouseActions)
 
         # plot canvas settings
         self.client = plot.PlotCanvas(self)
@@ -227,7 +223,7 @@ class ProfileFrame(wx.Frame):
         """
         self.mapwin.polycoords = []
         self.seglist = []
-        self.mapwin.ClearLines()
+        self.mapwin.ClearLines(self.mapwin.pdc)
         self.ppoints = ''
         self.Parent.SetFocus()
         self.Parent.Raise()
@@ -563,12 +559,16 @@ class ProfileFrame(wx.Frame):
         Erase the profile window
         """
         self.client.Clear()
-        try:
-            self.mapwin.pdc.ClearId(self.mapwin.lineid)
-            self.mapwin.pdc.ClearId(self.mapwin.plineid)
-            self.mapwin.Refresh()
-        except:
-            pass
+        self.mapwin.ClearLines(self.mapwin.pdc)
+        self.mapwin.ClearLines(self.mapwin.pdcTmp)
+        self.mapwin.polycoords = []
+        self.mapwin.Refresh()
+#        try:
+#            self.mapwin.pdc.ClearId(self.mapwin.lineid)
+#            self.mapwin.pdc.ClearId(self.mapwin.plineid)
+#            self.mapwin.Refresh()
+#        except:
+#            pass
 
 
     def SaveToFile(self, event):
