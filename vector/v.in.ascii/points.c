@@ -150,7 +150,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 		    if (i == xcol) { 
 			if (G_scan_easting(coorbuf, &easting, window.proj)) {
 			    G_debug(4, "is_latlong east: %f", easting);
-			    sprintf(tmp_token, "%f", easting);
+			    sprintf(tmp_token, "%.12f", easting);
 			    /* replace current DMS token by decimal degree */
 			    tokens[i] = tmp_token;
 			    if (region_flag) {
@@ -165,7 +165,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 		    if (i == ycol) {
 			if (G_scan_northing(coorbuf, &northing, window.proj)) {
 			    G_debug(4, "is_latlong north: %f", northing);
-			    sprintf(tmp_token, "%f", northing);
+			    sprintf(tmp_token, "%.12f", northing);
 			    /* replace current DMS token by decimal degree */
 			    tokens[i] = tmp_token;
 			    if (region_flag) {
