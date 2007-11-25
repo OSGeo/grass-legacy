@@ -2225,7 +2225,7 @@ class MapFrame(wx.Frame):
         page to match display
         """
 
-        # change bookcontrol page to page associted with display
+        # change bookcontrol page to page associated with display
         if self.page :
             pgnum = self.layerbook.GetPageIndex(self.page)
             if pgnum > -1:
@@ -2713,6 +2713,10 @@ class MapFrame(wx.Frame):
         Calculate map distance from screen distance
         and print to output window
         """
+
+        if self.gismanager.notebook.GetSelection() != 1:
+            self.gismanager.notebook.SetSelection(1)
+
         dist, (north, east) = self.MapWindow.Distance(beginpt, endpt)
 
         dist = round(dist, 3)
@@ -2790,7 +2794,7 @@ class MapFrame(wx.Frame):
         elif (dist/divisor) > 0.0:
             outdist = round(dist/divisor,int(math.ceil(3-math.log10(dist/divisor))))
         else:
-            outdist = float('%g' % dist/divisor)
+            outdist = float(dist/divisor)
 
         return (outdist, outunits)
 
@@ -2816,20 +2820,20 @@ class MapFrame(wx.Frame):
         point = wx.GetMousePosition()
         decmenu = wx.Menu()
         # Add items to the menu
-        addscale = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addbarscale"].GetLabel())
-        addscale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
-        decmenu.AppendItem(addscale)
-        self.Bind(wx.EVT_MENU, self.AddBarscale, addscale)
+        AddScale = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addbarscale"].GetLabel())
+        AddScale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
+        decmenu.AppendItem(AddScale)
+        self.Bind(wx.EVT_MENU, self.AddBarscale, AddScale)
 
         AddLegend = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addlegend"].GetLabel())
         AddLegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddLegend)
         self.Bind(wx.EVT_MENU, self.AddLegend, AddLegend)
 
-        addtext = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addtext"].GetLabel())
-        addtext.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
-        decmenu.AppendItem(addtext)
-        self.Bind(wx.EVT_MENU, self.AddText, addtext)
+        AddText = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addtext"].GetLabel())
+        AddText.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
+        decmenu.AppendItem(AddText)
+        self.Bind(wx.EVT_MENU, self.AddText, AddText)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
