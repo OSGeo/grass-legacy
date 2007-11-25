@@ -334,6 +334,9 @@ class AttributeManager(wx.Frame):
         self.vectmap   = vectmap
         self.pointdata = pointdata
         self.parent    = parent # GMFrame
+
+        wx.Frame.__init__(self, parent, id, title, size=(900,600), style=style)
+
         try:
             self.map        = self.parent.curr_page.maptree.Map
             self.mapdisplay = self.parent.curr_page.maptree.mapdisplay
@@ -379,8 +382,6 @@ class AttributeManager(wx.Frame):
         # list of command to be performed
         #
         self.listOfCommands = []
-
-        wx.Frame.__init__(self, parent, id, title, size=size, style=style)
 
         self.CreateStatusBar(number=1)
 
@@ -444,10 +445,6 @@ class AttributeManager(wx.Frame):
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
 
         # do layout
-        self.browsePage.Layout()
-        self.settingsPage.Layout()
-        self.managePage.Layout()
-        self.notebook.Layout()
         self.__layout()
         # self.SetMinSize(self.GetBestSize())
 
@@ -771,8 +768,9 @@ class AttributeManager(wx.Frame):
         mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
 
+        self.SetAutoLayout(True)
         self.SetSizer(mainSizer)
-        mainSizer.Fit(self) # problem connected to aui
+        #mainSizer.Fit(self) # problem connected to aui
         self.Layout()
 
     def OnDataRightUp(self, event):
