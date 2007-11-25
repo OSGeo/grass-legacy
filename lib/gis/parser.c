@@ -377,7 +377,7 @@ G_define_standard_option (int opt)
 	    Opt->description  = _("Name of attribute column");
 	    break;
 	case G_OPT_COLUMNS:
-	    Opt->key          = "column";
+	    Opt->key          = "columns";
 	    Opt->type         = TYPE_STRING;
 	    Opt->key_desc     = "name";
 	    Opt->required     = NO;
