@@ -8,49 +8,39 @@
 #include <grass/glocale.h>
 #include "local_proto.h"
 
-
-/* Determine if the string is integer, e.g. 123, +123, -123
+/* Determine if the string is integer, e.g. 123, +123, -123, 
  * return 1 if integer, 0 otherwise */
 static int is_int(char *str)
 {
-    int i = -1;
+    char *tail;
 
-    while (str[++i] != '\0') {
-	if (i == 0 && (str[i] == '+' || str[i] == '-'))
-	    continue;
-
-	if (!isdigit(str[i]))
-	    return 0;
+    if (strtol (str, &tail, 10),
+	tail == str || *tail != '\0') {
+	/* doesn't look like a number,
+	   or has extra characters after what looks to be a number */
+	return 0;
     }
 
     return 1;
 }
 
 
-/* Determine if the string is double, e.g. 123.456, +123.456, -123.456
+/* Determine if the string is double, e.g. 123.456, +123.456, -123.456, 1.23456e2
  * return 1 if double, 0 otherwise */
 static int is_double(char *str)
 {
-    int i = -1, ndots = 0;
+    char *tail;
 
-    while (str[++i] != '\0') {
-	if (i == 0 && (str[i] == '+' || str[i] == '-'))
-	    continue;
-
-	if (str[i] == '.') {
-	    if (ndots > 0)
-		return 0;	/* > 1 dot */
-
-	    ndots++;
-	    continue;
-	}
-
-	if (!isdigit(str[i]))
-	    return 0;
+    if (strtod (str, &tail),
+	tail == str || *tail != '\0') {
+	/* doesn't look like a number,
+	   or has extra characters after what looks to be a number */
+	return 0;
     }
 
     return 1;
 }
+
 
 
 /* Analyse points ascii file. Determine number of columns and column types.
@@ -91,7 +81,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     tmp_token = (char *)G_malloc(256);
     sav_buf = NULL;
 
-    G_message(_("Scanning input for column types ..."));
+    G_message(_("Scanning input for column types..."));
     /* fetch projection for LatLong test */
     G_get_window(&window);
 
@@ -217,8 +207,9 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
 	    G_debug(4, "row %d col %d: '%s' is_int = %d is_double = %d",
 		    row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]));
 
-	    if (is_int(tokens[i]))
+	    if (is_int(tokens[i])) {
 		continue;	/* integer */
+	    }
 	    if (is_double(tokens[i])) {	/* double */
 		if (coltype[i] == DB_C_TYPE_INT) {
 		    coltype[i] = DB_C_TYPE_DOUBLE;
@@ -254,7 +245,7 @@ int points_analyse(FILE * ascii_in, FILE * ascii, char *fs,
     G_free(tmp_token);
 
     if (region_flag)
-	G_message(_("Skipping [%d] of [%d] rows falling outside of current region"),
+	G_message(_("Skipping %d of %d rows falling outside of current region"),
 		  skipped, row-1);
 
     return 0;
@@ -282,7 +273,7 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
     dbString sql, val;
     struct Cell_head window;
 
-    G_message(_("Importing points ..."));
+    G_message(_("Importing points..."));
     /* fetch projection for LatLong test */
     G_get_window(&window);
 
@@ -394,7 +385,8 @@ int points_to_bin(FILE * ascii, int rowlen, struct Map_info *Map,
 	    G_debug(3, db_get_string(&sql));
 
 	    if (db_execute_immediate(driver, &sql) != DB_OK) {
-		G_fatal_error(_("Cannot insert values: %s"), db_get_string(&sql));
+		G_fatal_error(_("Unable to insert new record: %s"),
+			      db_get_string(&sql));
 	    }
 	}
 
