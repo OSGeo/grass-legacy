@@ -92,7 +92,7 @@ class GMFrame(wx.Frame):
         self.baseTitle = title
         self.iconsize  = (16, 16)
 
-        wx.Frame.__init__(self, parent=parent, id=id,
+        wx.Frame.__init__(self, parent=parent, id=id, size=(500, 400),
                           style=wx.DEFAULT_FRAME_STYLE)
         self.SetTitle(self.baseTitle)
 
@@ -266,8 +266,8 @@ class GMFrame(wx.Frame):
         sizer.Add(item=self.goutput, proportion=1,
                   flag=wx.EXPAND | wx.ALL, border=1)
         self.SetSizer(sizer)
-        # self.out_sizer.Fit(self.outpage)
-        # self.outpage.Layout()
+#        self.out_sizer.Fit(self.outpage)
+        self.Layout()
 
         self.Centre()
         return self.notebook
