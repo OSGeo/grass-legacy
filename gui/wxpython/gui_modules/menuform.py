@@ -211,7 +211,7 @@ class grassTask:
         """
         param = self.get_param(aParam)
         param['value'] = aValue
-            
+
     def get_flag( self, aFlag ):
         """
         Find and return a flag by name.
@@ -227,7 +227,7 @@ class grassTask:
         """
         param = self.get_flag(aFlag)
         param['value'] = aValue
-            
+
 
     def getCmd(self, ignoreErrors = False):
         """
@@ -489,14 +489,14 @@ class helpPanel(wx.html.HtmlWindow):
                     else:
                         # FIXME: find only first item
                         findALink = aLink.search( l )
-                        if findALink is not None: 
+                        if findALink is not None:
                             contents.append( aLink.sub(findALink.group(1)+
                                                            self.fspath+findALink.group(2),l) )
                         findImgLink = imgLink.search( l )
-                        if findImgLink is not None: 
+                        if findImgLink is not None:
                             contents.append( imgLink.sub(findImgLink.group(1)+
                                                          self.fspath+findImgLink.group(2),l) )
-        
+
                         if findALink is None and findImgLink is None:
                             contents.append( l )
             self.SetPage( "".join( contents ) )
@@ -647,9 +647,9 @@ class mainFrame(wx.Frame):
 
         constrained_size = self.notebookpanel.GetSize()
         # 80 takes the tabbar into account
-        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) 
+        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) )
         self.notebookpanel.Layout()
-        
+
         # for too long descriptions
         self.description = StaticWrapText (parent=self, label=self.task.description)
         topsizer.Add (item=self.description, proportion=1, border=5,
@@ -676,7 +676,7 @@ class mainFrame(wx.Frame):
 
         if cmd is not None and self.get_dcmd is not None:
             # return d.* command to layer tree for rendering
-            self.get_dcmd(cmd, self.layer, {"params": self.task.params, 
+            self.get_dcmd(cmd, self.layer, {"params": self.task.params,
                                             "flags" :self.task.flags},
                           self)
             # echo d.* command to output console
@@ -695,7 +695,7 @@ class mainFrame(wx.Frame):
             # change page if needed
             if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
                 self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
-        
+
         if cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
@@ -793,7 +793,7 @@ class cmdPanel(wx.Panel):
         panelsizer = wx.BoxSizer(orient=wx.VERTICAL)
 
         # Build notebook
-        nbStyle=FN.FNB_NO_X_BUTTON|FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
+        nbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
@@ -982,7 +982,7 @@ class cmdPanel(wx.Panel):
                         p['wxId'].append(None)
                 # file selector
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
-                    fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, 
+                    fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY,
                                                       size=(350, -1), labelText='',
                                                       dialogTitle=_( 'Choose %s' ) % \
                                                           p.get('description',_('File')),
@@ -1183,7 +1183,7 @@ class GUI:
         self.grass_task = grassTask()
         handler = processTask(self.grass_task)
         xml.sax.parseString( getInterfaceDescription(cmd[0]), handler )
-            
+
         # if layer parameters previously set, re-insert them into dialog
         if completed is not None:
             if 'params' in dcmd_params:
@@ -1241,12 +1241,12 @@ class StaticWrapText(wx.StaticText):
         wx.StaticText.__init__(self, parent, id, u'', *args, **kwds)
         self.SetLabel(label)
         self.Bind(wx.EVT_SIZE, self.onResize)
-    
+
     def SetLabel(self, label):
         self.originalLabel = label
         self.wrappedSize = None
         #self.onResize(None)
-        
+
     def onResize(self, event):
         if not getattr(self, "resizing", False):
             self.resizing = True
