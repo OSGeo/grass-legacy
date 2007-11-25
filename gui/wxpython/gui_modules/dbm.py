@@ -210,7 +210,7 @@ class VirtualAttributeList(wx.ListCtrl,
             width = self.columns[col]['length'] * 6 # FIXME
             if width < 60:
                 width = 60
-            self.SetColumnWidth(col=i, width=width) 
+            self.SetColumnWidth(col=i, width=width)
             i += 1
 
     def OnItemSelected(self, event):
@@ -389,7 +389,7 @@ class AttributeManager(wx.Frame):
         self.layerPage = {}
 
         # auinotebook (browse, manage, settings)
-        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, 
+        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY,
                                            style=wx.aui.AUI_NB_BOTTOM)
         self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
@@ -398,28 +398,28 @@ class AttributeManager(wx.Frame):
         #                                         style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
         #                                         FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                          style=FN.FNB_VC8 |
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
+        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
-        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                          style=FN.FNB_VC8 |
                                           FN.FNB_BACKGROUND_GRADIENT |
                                           FN.FNB_TABS_BORDER_SIMPLE)
+        self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.managePage, caption=_("Manage tables"))
         # self.notebook.AddPage(self.managePage, text=_("Manage tables")) # FN
-        self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                            style=FN.FNB_NO_X_BUTTON | FN.FNB_VC8 |
+                                            style=FN.FNB_VC8 |
                                             FN.FNB_BACKGROUND_GRADIENT |
                                             FN.FNB_TABS_BORDER_SIMPLE)
+        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         # self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
-        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
@@ -444,6 +444,10 @@ class AttributeManager(wx.Frame):
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
 
         # do layout
+        self.browsePage.Layout()
+        self.settingsPage.Layout()
+        self.managePage.Layout()
+        self.notebook.Layout()
         self.__layout()
         # self.SetMinSize(self.GetBestSize())
 
@@ -763,13 +767,13 @@ class AttributeManager(wx.Frame):
         btnSizer.AddButton(self.btnQuit)
         btnSizer.AddButton(self.btnApply)
         btnSizer.Realize()
-        
+
         mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
-        
+
         self.SetSizer(mainSizer)
-        # mainSizer.Fit(self) # problem connected to aui
-        # self.Layout()
+        mainSizer.Fit(self) # problem connected to aui
+        self.Layout()
 
     def OnDataRightUp(self, event):
         """Table description area, context menu"""
@@ -1927,13 +1931,13 @@ def main(argv=None):
     #print "argv:", `argv`
 
     #some applications might require image handlers
-    #wx.InitAllImageHandlers()
+    wx.InitAllImageHandlers()
 
     app = wx.PySimpleApp()
     f = AttributeManager(parent=None, id=wx.ID_ANY,
                          title=_("GRASS GIS Attribute Table Manager - vector map layer <%s>") % \
                              argv[1],
-                         size=(700,600), vectmap=argv[1])
+                         size=(900,600), vectmap=argv[1])
     f.Show()
 
     app.MainLoop()
