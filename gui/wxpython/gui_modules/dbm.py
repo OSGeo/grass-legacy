@@ -7,6 +7,7 @@ CLASSES:
     * AttributeManager
     * DisplayAttributesDialog
     * VectorDBInfo
+    * ModifyTableRecord
 
 PURPOSE:   GRASS attribute table manager
 
@@ -78,6 +79,8 @@ class VirtualAttributeList(wx.ListCtrl,
         self.layer   = layer
 
         self.columns              = {} # <- LoadData()
+        self.itemCatsMap          = {} # <- LoadData() (first call)
+
         self.selectedCats         = []
         self.lastTurnSelectedCats = [] # just temporary, for comparation
 
@@ -96,14 +99,8 @@ class VirtualAttributeList(wx.ListCtrl,
                                                           (16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        # These two should probably be passed to init more cleanly
-        # setting the numbers of items = number of elements in the dictionary
-        self.itemDataMap  = {}
-        self.itemIndexMap = []
-
         self.LoadData(layer)
-        # self.SetItemCount(len(self.itemDataMap))
-
+        
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, len(self.columns))
@@ -133,6 +130,11 @@ class VirtualAttributeList(wx.ListCtrl,
     def LoadData(self, layer, cols='*', where=''):
         """Load data into list"""
 
+        # These two should probably be passed to init more cleanly
+        # setting the numbers of items = number of elements in the dictionary
+        self.itemDataMap  = {}
+        self.itemIndexMap = []
+
         self.DeleteAllItems()
 
         # self.ClearAll()
@@ -140,12 +142,18 @@ class VirtualAttributeList(wx.ListCtrl,
             self.DeleteColumn(0)
 
         tableName    = self.mapInfo.layers[layer]['table']
+        keyColumn    = self.mapInfo.layers[layer]['key']
         self.columns = self.mapInfo.tables[tableName]
 
         if cols != '*':
             columnNames = cols.split(',')
         else:
             columnNames = self.mapInfo.GetColumns(tableName)
+
+        if len(self.itemCatsMap) > 0:
+            keyId = -1
+        else:
+            keyId = columnNames.index(keyColumn)
 
         i = 0
         for column in columnNames:
@@ -177,7 +185,7 @@ class VirtualAttributeList(wx.ListCtrl,
         i = 0
         outFile.seek(0)
         while True:
-            record = outFile.readline()
+            record = outFile.readline().replace(os.linesep, '')
             if not record:
                 break
             self.itemDataMap[i] = []
@@ -188,15 +196,20 @@ class VirtualAttributeList(wx.ListCtrl,
                     self.itemDataMap[i].append(self.columns[columnNames[j]]['ctype'] (value))
                 except:
                     self.itemDataMap[i].append('')
+                
+                if keyId > -1 and keyId == j:
+                    cat = self.columns[columnNames[j]]['ctype'] (value)
                 j += 1
 
             # insert to table
-            index = self.InsertStringItem(index=sys.maxint, label=str(self.itemDataMap[i][0]))
-            for j in range(len(self.itemDataMap[i][1:])):
-                self.SetStringItem(index=index, col=j+1, label=str(self.itemDataMap[i][j+1]))
-
-            self.SetItemData(item=index, data=i)
+            # index = self.InsertStringItem(index=sys.maxint, label=str(self.itemDataMap[i][0]))
+            # for j in range(len(self.itemDataMap[i][1:])):
+            # self.SetStringItem(index=index, col=j+1, label=str(self.itemDataMap[i][j+1]))
+                
+            # self.SetItemData(item=index, data=i)
             self.itemIndexMap.append(i)
+            if keyId > -1: # load cats only when LoadData() is called first time
+                self.itemCatsMap[i] = cat
 
             i += 1
             if i >= 100000:
@@ -259,7 +272,6 @@ class VirtualAttributeList(wx.ListCtrl,
     def OnGetItemAttr(self, item):
         """Get item attributes"""
         index = self.itemIndexMap[item]
-
         if ( index % 2) == 0:
             return self.attr2
         else:
@@ -379,9 +391,10 @@ class AttributeManager(wx.Frame):
         self.settings['highlight']['width'] = 2
 
         #
-        # list of command to be performed
+        # list of command/SQL statements to be performed
         #
-        self.listOfCommands = []
+        self.listOfCommands      = []
+        self.listOfSQLStatements = []
 
         self.CreateStatusBar(number=1)
 
@@ -392,35 +405,36 @@ class AttributeManager(wx.Frame):
         # auinotebook (browse, manage, settings)
         self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY,
                                            style=wx.aui.AUI_NB_BOTTOM)
-        self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        # really needed (ML)
+        # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
         ### Mac-related problem
         # self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
         #                                         style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
         #                                         FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_VC8 |
-                                          FN.FNB_BACKGROUND_GRADIENT |
+                                          style=FN.FNB_NO_X_BUTTON | 
                                           FN.FNB_TABS_BORDER_SIMPLE)
-        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
+        # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
+        # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_VC8 |
-                                          FN.FNB_BACKGROUND_GRADIENT |
+                                          style=FN.FNB_NO_X_BUTTON | 
                                           FN.FNB_TABS_BORDER_SIMPLE)
-        self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
+        # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.managePage, caption=_("Manage tables"))
         # self.notebook.AddPage(self.managePage, text=_("Manage tables")) # FN
+        # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                            style=FN.FNB_VC8 |
-                                            FN.FNB_BACKGROUND_GRADIENT |
+                                            style=FN.FNB_NO_X_BUTTON | 
                                             FN.FNB_TABS_BORDER_SIMPLE)
-        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
+        # self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         # self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
+        # self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
@@ -784,15 +798,17 @@ class AttributeManager(wx.Frame):
             self.popupDataID6 = wx.NewId()
             self.Bind(wx.EVT_MENU, self.OnDataItemEdit,       id=self.popupDataID1)
             self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID2)
-            self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID2)
-            self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID3)
-            self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID4)
-            self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID5)
+            self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID3)
+            self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID4)
+            self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID5)
+            self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID6)
 
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
         menu = wx.Menu()
         menu.Append(self.popupDataID1, _("Edit selected record"))
+        if list.GetFirstSelected() == -1:
+            menu.Enable(self.popupDataID1, False)
         menu.AppendSeparator()
         menu.Append(self.popupDataID2, _("Insert new record"))
         menu.AppendSeparator()
@@ -805,33 +821,49 @@ class AttributeManager(wx.Frame):
         menu.AppendSeparator()
         menu.Append(self.popupDataID6, _("Highlight selected in the map"))
         if not self.map:
-            menu.Enable(self.popupDataID5, False)
+            menu.Enable(self.popupDataID6, False)
 
         self.PopupMenu(menu)
         menu.Destroy()
 
+        # update statusbar
+        self.log.write(_("Number of loaded records: %d") % \
+                           list.GetItemCount())
+
     def OnDataItemDelete(self, event):
         """Delete selected item(s) from the list (layer/category pair)"""
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
-        self.__DeleteItem(event, list)
-        # self.OnApplySqlStatement(None)
+        item = list.GetFirstSelected()
+
+        table    = self.mapInfo.layers[self.layer]["table"]
+        key      = self.mapInfo.layers[self.layer]["key"]
+
+        while item != -1:
+            # list.DeleteItem(item)
+            cat = int(list.GetItemText(item)) # FIXME
+            
+            self.listOfSQLStatements.append('DELETE FROM %s WHERE %s=%d' % \
+                                                (table, key, cat))
+
+            index = list.itemIndexMap[item]
+            del list.itemIndexMap[item]
+            del list.itemDataMap[index]
+            list.SetItemCount(list.GetItemCount()-1)
+            
+            item = list.GetNextSelected(item)
 
         event.Skip()
 
-    def __DeleteItem(self, event, list):
-        """Delete selected item(s) from the list"""
-        item = list.GetFirstSelected()
-        while item != -1:
-            # layer = int (self.list.GetItem(item, 0).GetText())
-            # cat = int (self.list.GetItem(item, 1).GetText())
-            list.DeleteItem(item)
-            # self.cats[layer].remove(cat)
-            item = list.GetFirstSelected()
-
     def OnDataItemDeleteAll(self, event):
         """Delete all items from the list"""
-        self.FindWindowById(self.layerPage[self.layer]['data']).DeleteAllItems()
-        # self.cats = {}
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        list.DeleteAllItems()
+        list.itemDataMap  = {}
+        list.itemIndexMap = []
+        list.SetItemCount(0)
+
+        table = self.mapInfo.layers[self.layer]["table"]
+        self.listOfSQLStatements.append('DELETE FROM %s' % table)
 
         event.Skip()
 
@@ -848,8 +880,79 @@ class AttributeManager(wx.Frame):
 
     def OnDataItemAdd(self, event):
         """Add new record to the attribute table"""
-        pass
+        list      = self.FindWindowById(self.layerPage[self.layer]['data'])
+        table     = self.mapInfo.layers[self.layer]['table']
+        keyColumn = self.mapInfo.layers[self.layer]['key']
 
+        data = []
+        columnNames = self.mapInfo.GetColumns(table)
+        for column in columnNames:
+            if column == keyColumn:
+                # set default value
+                maxCat = -1
+                for cat in list.itemCatsMap.itervalues():
+                    if cat > maxCat:
+                        maxCat = cat
+                data.append((column, str(maxCat+1)))
+            else:
+                data.append((column, ''))
+
+        dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
+                                title=_("Insert new record"),
+                                data=data)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            try:
+                cat = int(dlg.GetValues(columns=[keyColumn])[0])
+            except:
+                cat = -1
+
+            if cat in list.itemCatsMap.values():
+                dlg = wx.MessageDialog(parent=self,
+                                       message=_("Unable to insert new record. "
+                                                 "Record with category %d "
+                                                 "already exists.") % cat,
+                                       caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+                dlg.ShowModal()
+                dlg.Destroy()
+                return
+            else:
+                values = dlg.GetValues()
+                valuesString = ''
+                try:
+                    for i in range(len(values)):
+                        try:
+                            values[i] = list.columns[columnNames[i]]['ctype'] (values[i])
+                        except:
+                            raise ValueError(_('Casting value \'%s\' to %s failed.') % \
+                                                 (str(values[i]),
+                                                  list.columns[columnNames[i]]['type']))
+                        if list.columns[columnNames[i]]['ctype'] == str:
+                            valuesString += "'%s'," % values[i]
+                        else:
+                            valuesString += "%s," % values[i]
+                except ValueError, err:
+                    dlg = wx.MessageDialog(parent=self,
+                                       message=_("Unable to insert new record. "
+                                                 "%s") % err,
+                                       caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+                    dlg.ShowModal()
+                    dlg.Destroy()
+                    return
+
+                valuesString = valuesString.strip(',') # remove redundant comma
+
+                # add new item to the list
+                index = max(list.itemIndexMap) + 1
+                list.itemIndexMap.append(index)
+                list.itemDataMap[index] = values
+                list.itemCatsMap[index] = cat
+                list.SetItemCount(list.GetItemCount() + 1)
+
+                # store statement for OnApply()
+                self.listOfSQLStatements.append('INSERT INTO %s VALUES(%s)' % \
+                                                    (table, valuesString))
+            
     def OnDataItemEdit(self, event):
         """Edit selected record of the attribute table"""
         pass
@@ -962,9 +1065,8 @@ class AttributeManager(wx.Frame):
                                         'map=%s' % self.vectmap,
                                         'layer=%d' % self.layer,
                                         'column=%s' % list.GetItemText(item)])
-            item = list.GetNextSelected(item)
-
-        self.__DeleteItem(event, list)
+            list.DeleteItem(item)
+            item = list.GetFirstSelected()
 
         event.Skip()
 
@@ -1036,6 +1138,7 @@ class AttributeManager(wx.Frame):
         pageNum = event.GetSelection()
         self.layer = self.mapInfo.layers.keys()[pageNum]
         self.OnChangeSql(None)
+        # update statusbar
         self.log.write(_("Number of loaded records: %d") % \
                            self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
@@ -1052,32 +1155,49 @@ class AttributeManager(wx.Frame):
 
     def OnApply(self, event):
         """Apply button pressed"""
-        page = self.notebook.GetSelection()
-        # browse data
-        if page == self.notebook.GetPageIndex(self.browsePage):
-            self.OnApplySqlStatement(event)
-        # manage tables
-        elif page == self.notebook.GetPageIndex(self.managePage):
+        # page = self.notebook.GetSelection()
+
+        # perform GRASS commands (e.g. v.db.addcol)
+        if len(self.listOfCommands) > 0:
             for cmd in self.listOfCommands:
                 Debug.msg(3, 'AttributeManager.OnApply() cmd=\'%s\'' %
                           ' '.join(cmd))
                 gcmd.Command(cmd)
-            if len(self.listOfCommands) > 0:
-                self.mapInfo = VectorDBInfo(self.vectmap)
-                table = self.mapInfo.layers[self.layer]['table']
-                # update table description
-                list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
-                list.Update(table=self.mapInfo.tables[table],
-                            columns=self.mapInfo.GetColumns(table))
-                self.OnTableReload(None)
-                # update data list
-                list = self.FindWindowById(self.layerPage[self.layer]['data'])
-                list.Update(self.mapInfo)
-                self.OnDataReload(None)
 
-        # settings
-        elif page == self.notebook.GetPageIndex(self.settingsPage):
-            self.UpdateSettings()
+            self.mapInfo = VectorDBInfo(self.vectmap)
+            table = self.mapInfo.layers[self.layer]['table']
+            # update table description
+            list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+            list.Update(table=self.mapInfo.tables[table],
+                        columns=self.mapInfo.GetColumns(table))
+            self.OnTableReload(None)
+            # update data list
+            list = self.FindWindowById(self.layerPage[self.layer]['data'])
+            list.Update(self.mapInfo)
+            self.OnDataReload(None)
+        
+        # perform SQL non-select statements (e.g. 'delete from table where cat=1')
+        if len(self.listOfSQLStatements) > 0:
+            sqlFile = tempfile.NamedTemporaryFile(mode="w")
+            for sql in self.listOfSQLStatements:
+                sqlFile.file.write(sql + ";\n")
+                sqlFile.file.flush()
+
+            driver   = self.mapInfo.layers[self.layer]["driver"]
+            database = self.mapInfo.layers[self.layer]["database"]
+
+            cmd = ['db.execute',
+                   'input=%s' % sqlFile.name,
+                   'driver=%s' % driver,
+                   'database=%s' % database]
+
+            gcmd.Command(cmd)
+
+        # perform select statement
+        self.OnApplySqlStatement(event)
+
+        # update settings
+        self.UpdateSettings()
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
@@ -1776,6 +1896,7 @@ class VectorDBInfo:
         for line in layerCommand.ReadStdOutput():
             lineList = line.split(' ')
             self.layers[int(lineList[0])] = { "table"    : lineList[1],
+                                              "key"      : lineList[2],
                                               "database" : lineList[3],
                                               "driver"   : lineList[4] }
 
@@ -1914,6 +2035,76 @@ class VectorDBInfo:
             for name in self.tables[table].keys():
                 self.tables[table][name]['values'] = []
                 self.tables[table][name]['ids']    = []
+
+class ModifyTableRecord(wx.Dialog):
+    """Dialog for inserting/updating table record"""
+    def __init__(self, parent, id, title, data,
+                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+        """Data is list: [(column, value)]"""
+        wx.Dialog.__init__(self, parent, id, title, style=style)
+
+        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
+        self.btnCancel = wx.Button(self.panel, wx.ID_CANCEL)
+        self.btnSubmit = wx.Button(self.panel, wx.ID_OK)
+        self.btnSubmit.SetDefault()
+
+        self.widgets = []
+        for column, value in data:
+            label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
+                                  label=column + ":")
+            value = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
+                                value=value, size=(250, -1))
+            self.widgets.append((label.GetId(),
+                                 value.GetId()))
+
+        self.__Layout()
+
+    def __Layout(self):
+        """Do layout"""
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        # data area
+        dataSizer = wx.FlexGridSizer (cols=2, hgap=3, vgap=3)
+        dataSizer.AddGrowableCol(1)
+
+        for labelId, valueId in self.widgets:
+            label = self.FindWindowById(labelId)
+            value = self.FindWindowById(valueId)
+
+            dataSizer.Add(label, proportion=0,
+                          flag=wx.ALIGN_CENTER_VERTICAL)
+            dataSizer.Add(value, proportion=0,
+                          flag=wx.EXPAND)
+
+        # buttons
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(self.btnCancel)
+        btnSizer.AddButton(self.btnSubmit)
+        btnSizer.Realize()
+
+        sizer.Add(item=dataSizer, proportion=1,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        sizer.Add(item=btnSizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+       
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def GetValues(self, columns=None):
+        """Return list of values (as string).
+
+        If columns is given (list), return only values of given columns.
+        """
+        valueList = []
+        for labelId, valueId in self.widgets:
+            column = self.FindWindowById(labelId).GetLabel().replace(':', '')
+            if columns is None or column in columns:
+                value = self.FindWindowById(valueId).GetValue()
+                valueList.append(value)
+
+        return valueList
 
 def main(argv=None):
     if argv is None:

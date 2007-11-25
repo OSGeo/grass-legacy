@@ -236,22 +236,21 @@ class GMFrame(wx.Frame):
         """Creates notebook widgets"""
 
         # create main notebook widget
-#        nbStyle = FN.FNB_FANCY_TABS | \
-#            FN.FNB_BOTTOM | \
-#            FN.FNB_NO_X_BUTTON | \
-#            FN.FNB_NO_NAV_BUTTONS
-#        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
+        # Mac-related problem
+        #        nbStyle = FN.FNB_FANCY_TABS | 
+        #            FN.FNB_BOTTOM | 
+        #            FN.FNB_NO_X_BUTTON | 
+        #            FN.FNB_NO_NAV_BUTTONS
+        #        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
         self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
-        self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        # really needed> (ML)
+        # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
         # create displays notebook widget and add it to main notebook page
-        cbStyle = FN.FNB_VC8 | \
-            FN.FNB_BACKGROUND_GRADIENT | \
-            FN.FNB_X_ON_TAB | \
-            FN.FNB_TABS_BORDER_SIMPLE
+        cbStyle = FN.FNB_X_ON_TAB | FN.FNB_TABS_BORDER_SIMPLE
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
-        self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
+        # self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.gm_cb, caption=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
