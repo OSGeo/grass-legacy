@@ -2719,12 +2719,6 @@ class MapFrame(wx.Frame):
             self.gismanager.goutput.cmd_output.write('Measuring distance:%s' % os.linesep,
                                                      style)
 
-        style = self.gismanager.goutput.cmd_output.StyleWarning
-        self.gismanager.goutput.cmd_output.write('Click and drag with left mouse button '
-                                                 'to measure.%s'
-                                                 'Double click with left button to clear.%s' % \
-                                                     (os.linesep, os.linesep), style)
-
 
     def MeasureDist(self, beginpt, endpt):
         """
