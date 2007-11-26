@@ -74,7 +74,7 @@ then
   # No monitor running so start a new one....
   echo
   echo "No monitor selected"
-  echo "Starting monitor $GIS_OPT_SETMONITOR of size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
+  echo "Starting monitor $GIS_OPT_SETMONITOR of size ${GIS_OPT_SETWIDTH}X${GIS_OPT_SETHEIGHT} ..."
   d.mon start=$GIS_OPT_SETMONITOR
 else
   if [ "$GIS_OPT_SETMONITOR" = "$st3" ]
@@ -83,13 +83,13 @@ else
     d.mon stop=$GIS_OPT_SETMONITOR
     echo
     echo "Monitor already running and selected"
-    echo "Restarting monitor $GIS_OPT_SETMONITORAT size $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT ..."
+    echo "Restarting monitor $GIS_OPT_SETMONITORAT size ${GIS_OPT_SETWIDTH}X${GIS_OPT_SETHEIGHT} ..."
     sleep 4
     d.mon start=$GIS_OPT_SETMONITOR
   else
     echo
     echo "A different monitor is selected"
-    echo "Selecting and restarting monitor $GIS_OPT_SETWIDTHX$GIS_OPT_SETHEIGHT..."
+    echo "Selecting and restarting monitor ${GIS_OPT_SETWIDTH}X${GIS_OPT_SETHEIGHT} ..."
     #d.mon select=$GIS_OPT_SETMONITOR
     d.mon stop=$GIS_OPT_SETMONITOR
     sleep 4
