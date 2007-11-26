@@ -763,6 +763,14 @@ class AttributeManager(wx.Frame):
                       flag=wx.ALL | wx.EXPAND,
                       border=5)
 
+        self.manageLayerBook = LayerBook(parent=panel, id=wx.ID_ANY,
+                                         mapDBInfo=self.mapInfo)
+
+        pageSizer.Add(item=self.manageLayerBook,
+                      proportion=1,
+                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                      border=5)
+
         panel.SetSizer(pageSizer)
 
     def __createLayerDesc(self, parent):
@@ -836,7 +844,7 @@ class AttributeManager(wx.Frame):
         self.Layout()
         
         # self.SetMinSize(self.GetBestSize())
-        self.SetSize((680, 480))
+        self.SetSize((680, 520))
         self.SetMinSize(self.GetSize())
 
     def OnDataRightUp(self, event):
@@ -1707,7 +1715,8 @@ class TableListCtrl(wx.ListCtrl,
 
 class LayerListCtrl(wx.ListCtrl,
                     listmix.ListCtrlAutoWidthMixin):
-                    #                    listmix.TextEditMixin):
+                    # listmix.ColumnSorterMixin):
+                    # listmix.TextEditMixin):
     """Layer description list"""
 
     def __init__(self, parent, id, layers,
@@ -1766,6 +1775,221 @@ class LayerListCtrl(wx.ListCtrl,
 
         return itemData
 
+class LayerBook(wx.Notebook):
+    """Manage layers (add, delete, modify)"""
+    def __init__(self, parent, id,
+                 mapDBInfo,
+                 style=wx.BK_DEFAULT):
+        wx.Notebook.__init__(self, parent, id, style=style)
+
+        self.parent    = parent
+        self.mapDBInfo = mapDBInfo
+
+        self.__createAddPage()
+        self.__createDeletePage()
+        self.__createModifyPage()
+
+    def __createAddPage(self):
+        """Add new layer"""
+        panel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=panel, text=_("Add new layer"))
+
+        # drivers
+        cmdDriver = gcmd.Command(['db.drivers',
+                                  '-p',
+                                  '--q'])
+        listOfDrivers = []
+        for drv in cmdDriver.ReadStdOutput():
+            listOfDrivers.append(drv.strip())
+
+        # default values
+        cmdConnect = gcmd.Command(['db.connect',
+                                   '-p',
+                                   '--q'])
+        for line in cmdConnect.ReadStdOutput():
+            item, value = line.split(':')
+            item  = item.strip()
+            value = value.strip()
+            if item == 'driver':
+                defaultDriver = value
+            elif item == 'database':
+                defaultDatabase = value
+
+        listOfTables = self.__getTables(defaultDriver, defaultDatabase)
+        listOfColumns = self.__getColumns(defaultDriver, defaultDatabase, 'roads')
+
+        layerWidgets = {'layer': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label='%s:' % _("Layer")),
+                                  wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
+                                              initial=max(self.mapDBInfo.layers.keys())+1,
+                                              min=1, max=1e6)),
+                        'driver': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                 label='%s:' % _("Driver")),
+                                   wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                             choices=listOfDrivers)),
+                        'database': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Database")),
+                                     wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                                 value=''),),
+                        'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                label='%s:' % _("Table")),
+                                  wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                            choices=listOfTables)),
+                        'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                              label='%s:' % _("Key column")),
+                                wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                          choices=listOfColumns))}
+
+        # set default values
+        layerWidgets['driver'][1].SetStringSelection(defaultDriver)
+        layerWidgets['database'][1].SetValue(defaultDatabase)
+        
+        tableWidgets = [(wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                       label='%s:' % _("Table name")),
+                         wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                     value='')),
+                        (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                       label='%s:' % _("Key column")),
+                         wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                     value=''))]
+
+        btnTable   = wx.Button(panel, wx.ID_ANY, _("&Create table"),
+                             size=(125,-1))
+        btnLayer   = wx.Button(panel, wx.ID_ANY, _("&Add layer"),
+                             size=(125,-1))
+        btnDefault = wx.Button(panel, wx.ID_ANY, _("&Set default"),
+                               size=(125,-1))
+
+        #
+        # do layout
+        #
+        pageSizer = wx.wx.BoxSizer(wx.HORIZONTAL)
+
+        #
+        # layer description
+        #
+        layerBox = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+                                 label=" %s " % (_("Layer description")))
+        layerSizer = wx.StaticBoxSizer(layerBox, wx.VERTICAL)
+
+        # data area
+        dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
+        dataSizer.AddGrowableCol(1)
+        for key in ('layer', 'driver', 'database', 'table', 'key'):
+            label, value = layerWidgets[key]
+            dataSizer.Add(item=label,
+                          flag=wx.ALIGN_CENTER_VERTICAL)
+            if label.GetLabel() == "Layer:":
+                dataSizer.Add(item=value,
+                              flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
+            else:
+                dataSizer.Add(item=value,
+                              flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+
+        layerSizer.Add(item=dataSizer,
+                       proportion=1,
+                       flag=wx.ALL | wx.EXPAND,
+                       border=5)
+
+        btnSizer = wx.wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer.Add(item=btnDefault,
+                     proportion=0,
+                     flag=wx.ALL | wx.ALIGN_LEFT,
+                     border=5)
+
+        btnSizer.Add(item=(5,5),
+                     proportion=1,
+                     flag=wx.ALL | wx.EXPAND,
+                     border=5)
+
+        btnSizer.Add(item=btnLayer,
+                     proportion=0,
+                     flag=wx.ALL | wx.ALIGN_RIGHT,
+                     border=5)
+
+        layerSizer.Add(item=btnSizer,
+                       proportion=0,
+                       flag=wx.ALL | wx.EXPAND,
+                       border=0)
+
+        #
+        # table description
+        #
+        tableBox = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+                                 label=" %s " % (_("Table description")))
+        tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
+
+        # data area
+        dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
+        dataSizer.AddGrowableCol(1)
+        for label, value in tableWidgets:
+            dataSizer.Add(item=label,
+                          flag=wx.ALIGN_CENTER_VERTICAL)
+            dataSizer.Add(item=value,
+                          flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
+
+        tableSizer.Add(item=dataSizer,
+                       proportion=1,
+                       flag=wx.ALL | wx.EXPAND,
+                       border=5)
+
+        tableSizer.Add(item=btnTable,
+                       proportion=0,
+                       flag=wx.ALL | wx.ALIGN_BOTTOM | wx.ALIGN_RIGHT,
+                       border=5)
+
+
+        pageSizer.Add(item=layerSizer,
+                      proportion=1,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        pageSizer.Add(item=tableSizer,
+                      proportion=1,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        panel.SetSizer(pageSizer)
+
+    def __createDeletePage(self):
+        """Delete layer"""
+        self.deletePage = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=self.deletePage, text=_("Delete selected layer"))
+
+    def __createModifyPage(self):
+        """Modify layer"""
+        self.modifyPage = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=self.modifyPage, text=_("Modify selected layer"))
+
+    def __getTables(self, driver, database):
+        """Get list of tables for given driver and database"""
+        tables = []
+
+        cmdTable = gcmd.Command(['db.tables',
+                                 '-p', '--q',
+                                 'driver=%s' % driver,
+                                 'database=%s' % database])
+
+        for table in cmdTable.ReadStdOutput():
+            tables.append(table)
+
+        return tables
+
+    def __getColumns(self, driver, database, table):
+        """Get list of column of given table"""
+        columns = []
+
+        cmdColumn = gcmd.Command(['db.columns',
+                                  '--q',
+                                  'driver=%s' % driver,
+                                  'database=%s' % database,
+                                  'table=%s' % table])
+
+        for column in cmdColumn.ReadStdOutput():
+            columns.append(column)
+
+        return columns
+        
 class DisplayAttributesDialog(wx.Dialog):
     """
     Standard dialog used to add/update/display attributes linked
