@@ -2,7 +2,7 @@ MODULE_TOPDIR = ../../..
 
 EXTRA_LIBS=$(GISLIB) 
 
-LIB_NAME = libr_li
+LIB_NAME = grass_rli
 
 LIB_OBJS = daemon.o list.o ipc.o worker.o GenericCell.o	avl.o avlID.o
 
