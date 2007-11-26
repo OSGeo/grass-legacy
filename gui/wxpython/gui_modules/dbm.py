@@ -807,7 +807,8 @@ class AttributeManager(wx.Frame):
         # generate popup-menu
         menu = wx.Menu()
         menu.Append(self.popupDataID1, _("Edit selected record"))
-        if list.GetFirstSelected() == -1:
+        selected = list.GetFirstSelected()
+        if selected == -1 or list.GetNextSelected(selected) != -1:
             menu.Enable(self.popupDataID1, False)
         menu.AppendSeparator()
         menu.Append(self.popupDataID2, _("Insert new record"))
@@ -884,82 +885,190 @@ class AttributeManager(wx.Frame):
         table     = self.mapInfo.layers[self.layer]['table']
         keyColumn = self.mapInfo.layers[self.layer]['key']
 
+        # (column name, value)
         data = []
-        columnNames = self.mapInfo.GetColumns(table)
-        for column in columnNames:
-            if column == keyColumn:
-                # set default value
-                maxCat = -1
-                for cat in list.itemCatsMap.itervalues():
-                    if cat > maxCat:
-                        maxCat = cat
-                data.append((column, str(maxCat+1)))
+
+        # collect names of all visible columns
+        columnName = []
+        for i in range(list.GetColumnCount()): 
+            columnName.append(list.GetColumn(i).GetText())
+
+        # maximal category number
+        maxCat = max(list.itemCatsMap.values())
+
+        # key column must be always presented
+        if keyColumn not in columnName:
+            columnName.insert(0, keyColumn) # insert key column on first position
+            data.append((keyColumn, str(maxCat + 1)))
+            missingKey = True
+        else:
+            missingKey = False
+            
+        # add other visible columns
+        for col in columnName:
+            if col == keyColumn: # key 
+                if missingKey is False: 
+                    data.append((col, str(maxCat + 1)))
             else:
-                data.append((column, ''))
+                data.append((col, ''))
 
         dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
                                 title=_("Insert new record"),
                                 data=data)
 
         if dlg.ShowModal() == wx.ID_OK:
-            try:
+            try: # get category number
                 cat = int(dlg.GetValues(columns=[keyColumn])[0])
             except:
                 cat = -1
 
-            if cat in list.itemCatsMap.values():
+            try:
+                if cat in list.itemCatsMap.values():
+                    raise ValueError(_("Record with category number %d "
+                                       "already exists in the table.") % cat)
+
+                values = dlg.GetValues() # values (need to be casted)
+                columnsString = ''
+                valuesString   = ''
+                
+                for i in range(len(values)):
+                    if len(values[i]) == 0: # NULL
+                        if columnName[i] == keyColumn:
+                            raise ValueError(_("Category number (column %s)"
+                                               " is missing.") % keyColumn)
+                        else:
+                            continue
+
+                    try:
+                        values[i] = list.columns[columnName[i]]['ctype'] (values[i])
+                    except:
+                        raise ValueError(_("Casting value '%s' to %s failed.") % \
+                                             (str(values[i]),
+                                              list.columns[columnName[i]]['type']))
+                    columnsString += '%s,' % columnName[i]
+                    if list.columns[columnName[i]]['ctype'] == str:
+                        valuesString += "'%s'," % values[i]
+                    else:
+                        valuesString += "%s," % values[i]
+
+            except ValueError, err:
                 dlg = wx.MessageDialog(parent=self,
-                                       message=_("Unable to insert new record. "
-                                                 "Record with category %d "
-                                                 "already exists.") % cat,
+                                       message=_("Unable to insert new record.%s"
+                                                 "%s") % (os.linesep, err),
                                        caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
                 dlg.ShowModal()
                 dlg.Destroy()
                 return
-            else:
-                values = dlg.GetValues()
-                valuesString = ''
-                try:
-                    for i in range(len(values)):
-                        try:
-                            values[i] = list.columns[columnNames[i]]['ctype'] (values[i])
-                        except:
-                            raise ValueError(_('Casting value \'%s\' to %s failed.') % \
-                                                 (str(values[i]),
-                                                  list.columns[columnNames[i]]['type']))
-                        if list.columns[columnNames[i]]['ctype'] == str:
-                            valuesString += "'%s'," % values[i]
-                        else:
-                            valuesString += "%s," % values[i]
-                except ValueError, err:
-                    dlg = wx.MessageDialog(parent=self,
-                                       message=_("Unable to insert new record. "
-                                                 "%s") % err,
-                                       caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
-                    return
 
-                valuesString = valuesString.strip(',') # remove redundant comma
+            # remove category if need 
+            if missingKey is True:
+                del values[0]
+                
+            # add new item to the list
+            index = max(list.itemIndexMap) + 1
+            list.itemIndexMap.append(index)
+            list.itemDataMap[index] = values
+            list.itemCatsMap[index] = cat
+            list.SetItemCount(list.GetItemCount() + 1)
 
-                # add new item to the list
-                index = max(list.itemIndexMap) + 1
-                list.itemIndexMap.append(index)
-                list.itemDataMap[index] = values
-                list.itemCatsMap[index] = cat
-                list.SetItemCount(list.GetItemCount() + 1)
-
-                # store statement for OnApply()
-                self.listOfSQLStatements.append('INSERT INTO %s VALUES(%s)' % \
-                                                    (table, valuesString))
+            # store statement for OnApply()
+            self.listOfSQLStatements.append('INSERT INTO %s (%s) VALUES(%s)' % \
+                                                (table,
+                                                 columnsString.strip(','),
+                                                 valuesString.strip(',')))
             
     def OnDataItemEdit(self, event):
         """Edit selected record of the attribute table"""
-        pass
+        list      = self.FindWindowById(self.layerPage[self.layer]['data'])
+        item      = list.GetFirstSelected()
+        if item == -1:
+            return
 
+        table     = self.mapInfo.layers[self.layer]['table']
+        keyColumn = self.mapInfo.layers[self.layer]['key']
+        cat       = list.itemCatsMap[list.itemIndexMap[item]]
+
+        # (column name, value)
+        data = []
+
+        # collect names of all visible columns
+        columnName = []
+        for i in range(list.GetColumnCount()): 
+            columnName.append(list.GetColumn(i).GetText())
+
+
+        # key column must be always presented
+        if keyColumn not in columnName:
+            columnName.insert(0, keyColumn) # insert key column on first position
+            data.append((keyColumn, str(cat)))
+            keyId = 0
+            missingKey = True
+        else:
+            missingKey = False
+            
+        # add other visible columns
+        for i in range(len(columnName)):
+            if columnName[i] == keyColumn: # key 
+                if missingKey is False: 
+                    data.append((columnName[i], str(cat)))
+                    keyId = i
+            else:
+                if missingKey is True:
+                    value = list.GetItem(item, i-1).GetText()
+                else:
+                    value = list.GetItem(item, i).GetText()
+                data.append((columnName[i], value))
+
+        dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
+                                title=_("Update existing record"),
+                                data=data, keyEditable=(keyId, False))
+
+        if dlg.ShowModal() == wx.ID_OK:
+            values = dlg.GetValues() # string
+            updateString = ''
+            try:
+                for i in range(len(values)): 
+                    if i == keyId: # skip key column
+                        continue
+
+                    if str(list.GetItem(item, i).GetText()) != str(values[i]):
+                        if len(values[i]) > 0:
+                            try:
+                                if missingKey is True:
+                                    idx = i - 1
+                                else:
+                                    idx = i
+                                list.itemDataMap[item][idx] = \
+                                    list.columns[columnName[i]]['ctype'] (values[i])
+                            except:
+                                raise ValueError(_("Casting value '%s' to %s failed.") % \
+                                                     (str(values[i]),
+                                                      list.columns[columnName[i]]['type']))
+
+                            if list.columns[columnName[i]]['ctype'] == str:
+                                updateString += "%s='%s'," % (columnName[i], values[i])
+                            else:
+                                updateString += "%s=%s," % (columnName[i], values[i])
+                        else: # NULL
+                            updateString += "%s=NULL," % (columnName[i])
+
+            except ValueError, err:
+                dlg = wx.MessageDialog(parent=self,
+                                       message=_("Unable to update existing record.%s"
+                                                 "%s") % (os.linesep, err),
+                                       caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+                dlg.ShowModal()
+                dlg.Destroy()
+                return
+
+            if len(updateString) > 0:
+                self.listOfSQLStatements.append('UPDATE %s SET %s WHERE %s=%d' % \
+                                                     (table, updateString.strip(','),
+                                                      keyColumn, cat))
     def OnDataReload(self, event):
         """Reload list of records"""
         self.OnApplySqlStatement(None)
+        self.listOfSQLStatements = []
 
     def OnTableChangeType(self, event):
         """Data type for new column changed. Enable or disable
@@ -1166,16 +1275,21 @@ class AttributeManager(wx.Frame):
 
             self.mapInfo = VectorDBInfo(self.vectmap)
             table = self.mapInfo.layers[self.layer]['table']
+
             # update table description
             list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
             list.Update(table=self.mapInfo.tables[table],
                         columns=self.mapInfo.GetColumns(table))
             self.OnTableReload(None)
+
             # update data list
             list = self.FindWindowById(self.layerPage[self.layer]['data'])
             list.Update(self.mapInfo)
             self.OnDataReload(None)
-        
+
+            # reset list of commands
+            self.listOfCommands = []
+
         # perform SQL non-select statements (e.g. 'delete from table where cat=1')
         if len(self.listOfSQLStatements) > 0:
             sqlFile = tempfile.NamedTemporaryFile(mode="w")
@@ -1191,7 +1305,13 @@ class AttributeManager(wx.Frame):
                    'driver=%s' % driver,
                    'database=%s' % database]
 
+            Debug.msg(3, 'AttributeManger.OnApply(): %s' %
+                      ';'.join(["%s" % s for s in self.listOfSQLStatements]))
+
             gcmd.Command(cmd)
+
+            # reset list of statements
+            self.listOfSQLStatements = []
 
         # perform select statement
         self.OnApplySqlStatement(event)
@@ -2038,9 +2158,14 @@ class VectorDBInfo:
 
 class ModifyTableRecord(wx.Dialog):
     """Dialog for inserting/updating table record"""
-    def __init__(self, parent, id, title, data,
-                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
-        """Data is list: [(column, value)]"""
+    def __init__(self, parent, id, title, data, keyEditable=(-1, True),
+                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+        """
+        Notes:
+         'Data' is a list: [(column, value)]
+         'KeyEditable' (id, editable?) indicates if textarea for key column
+          is editable(True) or not.
+        """
         wx.Dialog.__init__(self, parent, id, title, style=style)
 
         self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
@@ -2050,14 +2175,19 @@ class ModifyTableRecord(wx.Dialog):
         self.btnSubmit.SetDefault()
 
         self.widgets = []
+        id = 0
         for column, value in data:
             label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                   label=column + ":")
             value = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
                                 value=value, size=(250, -1))
+            if keyEditable[0] > -1: # id given
+                if keyEditable[0] == id:
+                    value.Enable(keyEditable[1])
             self.widgets.append((label.GetId(),
                                  value.GetId()))
 
+            id += 1
         self.__Layout()
 
     def __Layout(self):
