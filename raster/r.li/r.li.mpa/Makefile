@@ -4,7 +4,7 @@ PGM = r.li.mpa
 
 EXTRA_CLEAN_DIRS=doxygenhtml
 
-LIB_NAME      = libr_li
+LIB_NAME      = grass_rli
 
 RLI_LIB = -l$(LIB_NAME)
 
