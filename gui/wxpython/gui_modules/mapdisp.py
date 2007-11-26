@@ -2415,9 +2415,10 @@ class MapFrame(wx.Frame):
             self.statusbar.SetStatusText("", 0)
 
         elif self.statusText == "Extent":
+            compregion = self.Map.GetRegion()
             self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
-                                         (self.Map.region["w"], self.Map.region["e"],
-                                          self.Map.region["s"], self.Map.region["n"]), 0)
+                                         (compregion["w"], compregion["e"],
+                                          compregion["s"], compregion["n"]), 0)
             self.showRegion.Show()
 
         elif self.statusText == "Geometry":
