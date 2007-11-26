@@ -420,17 +420,27 @@ class AttributeManager(wx.Frame):
         # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
         # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
-        self.managePage = FN.FlatNotebook(self, id=wx.ID_ANY,
+        self.manageTablePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | 
                                           FN.FNB_TABS_BORDER_SIMPLE)
+        # self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
+        self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
+        # self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
+        # self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
+
+        self.manageLayerPage = FN.FlatNotebook(self, id=wx.ID_ANY,
+                                               style=FN.FNB_NO_X_BUTTON | 
+                                               FN.FNB_TABS_BORDER_SIMPLE |
+                                               FN.FNB_NO_NAV_BUTTONS)
         # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.managePage, caption=_("Manage tables"))
+        self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
         # self.notebook.AddPage(self.managePage, text=_("Manage tables")) # FN
         # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                             style=FN.FNB_NO_X_BUTTON | 
-                                            FN.FNB_TABS_BORDER_SIMPLE)
+                                            FN.FNB_TABS_BORDER_SIMPLE |
+                                            FN.FNB_NO_NAV_BUTTONS)
         # self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         # self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
@@ -440,7 +450,8 @@ class AttributeManager(wx.Frame):
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
 
         self.__createBrowsePage()
-        self.__createManagePage()
+        self.__createManageTablePage()
+        self.__createManageLayerPage()
         self.__createSettingsPage()
 
         self.notebook.SetSelection(0) # select browse tab
@@ -456,11 +467,10 @@ class AttributeManager(wx.Frame):
         self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApply)
         self.btnQuit.Bind(wx.EVT_BUTTON,            self.OnCloseWindow)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.browsePage)
-        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.managePage)
+        self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.manageTablePage)
 
         # do layout
         self.__layout()
-        # self.SetMinSize(self.GetBestSize())
 
     def __del__(self):
         pass
@@ -573,11 +583,11 @@ class AttributeManager(wx.Frame):
         self.log.write(_("Number of loaded records: %d") % \
                            self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
-    def __createManagePage(self):
+    def __createManageTablePage(self):
         """Create manage page (create/link and alter tables)"""
         for layer in self.mapInfo.layers.keys():
-            panel = wx.Panel(parent=self.managePage, id=wx.ID_ANY)
-            self.managePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+            panel = wx.Panel(parent=self.manageTablePage, id=wx.ID_ANY)
+            self.manageTablePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -714,7 +724,7 @@ class AttributeManager(wx.Frame):
 
             self.layerPage[layer]['dbinfo'] = infoCollapse.GetId()
 
-        self.managePage.SetSelection(0) # select first layer
+        self.manageTablePage.SetSelection(0) # select first layer
         self.layer = self.mapInfo.layers.keys()[0]
 
     def __createTableDesc(self, parent, table):
@@ -722,6 +732,43 @@ class AttributeManager(wx.Frame):
         list = TableListCtrl(parent=parent, id=wx.ID_ANY,
                              table=self.mapInfo.tables[table],
                              columns=self.mapInfo.GetColumns(table))
+        list.Populate()
+        # sorter
+        # itemDataMap = list.Populate()
+        # listmix.ColumnSorterMixin.__init__(self, 2)
+
+        return list
+
+    def __createManageLayerPage(self):
+        """Create settings page"""
+        panel = wx.Panel(parent=self.manageLayerPage, id=wx.ID_ANY)
+        self.manageLayerPage.AddPage(page=panel, text=_("Layers of vector map")) # dummy page
+
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
+        layerBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                    label=" %s " % _("List of layers"))
+        layerSizer = wx.StaticBoxSizer(layerBox, wx.VERTICAL)
+
+        self.layerList = self.__createLayerDesc(panel)
+        self.layerList.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnLayerRightUp) #wxMSW
+        self.layerList.Bind(wx.EVT_RIGHT_UP,            self.OnLayerRightUp) #wxGTK
+
+        layerSizer.Add(item=self.layerList,
+                       flag=wx.ALL | wx.EXPAND,
+                       proportion=1,
+                       border=3)
+
+        pageSizer.Add(item=layerSizer,
+                      proportion=0,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        panel.SetSizer(pageSizer)
+
+    def __createLayerDesc(self, parent):
+        """Create list of linked layers"""
+        list = LayerListCtrl(parent=parent, id=wx.ID_ANY,
+                             layers=self.mapInfo.layers)
         list.Populate()
         # sorter
         # itemDataMap = list.Populate()
@@ -784,8 +831,13 @@ class AttributeManager(wx.Frame):
 
         self.SetAutoLayout(True)
         self.SetSizer(mainSizer)
-        #mainSizer.Fit(self) # problem connected to aui
+        # FIXME
+        # mainSizer.Fit(self) # problem connected to aui
         self.Layout()
+        
+        # self.SetMinSize(self.GetBestSize())
+        self.SetSize((680, 480))
+        self.SetMinSize(self.GetSize())
 
     def OnDataRightUp(self, event):
         """Table description area, context menu"""
@@ -1251,6 +1303,10 @@ class AttributeManager(wx.Frame):
         self.log.write(_("Number of loaded records: %d") % \
                            self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
+    def OnLayerRightUp(self, event):
+        """Layer description area, context menu"""
+        pass
+
     def OnChangeSql(self, event):
         """Switch simple/advanced sql statement"""
         if self.FindWindowById(self.layerPage[self.layer]['simple']).GetValue():
@@ -1411,20 +1467,25 @@ class AttributeManager(wx.Frame):
         infoFlexSizer.AddGrowableCol(1)
 
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="Database:"))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
-                                             label="%s" % \
-                                                 self.mapInfo.layers[layer]['database']))
-        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Driver:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
                                                  self.mapInfo.layers[layer]['driver']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="Database:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="%s" % \
+                                                 self.mapInfo.layers[layer]['database']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Table:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
                                                  self.mapInfo.layers[layer]['table']))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="Key:"))
+        infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
+                                             label="%s" % \
+                                                 self.mapInfo.layers[layer]['key']))
 
         infoSizer.Add(item=infoFlexSizer,
                       proportion=1,
@@ -1641,6 +1702,67 @@ class TableListCtrl(wx.ListCtrl,
                            str(self.table[column]['type']),
                            int(self.table[column]['length']))
             i = i + 1
+
+        return itemData
+
+class LayerListCtrl(wx.ListCtrl,
+                    listmix.ListCtrlAutoWidthMixin):
+                    #                    listmix.TextEditMixin):
+    """Layer description list"""
+
+    def __init__(self, parent, id, layers,
+                 pos=wx.DefaultPosition,
+                 size=wx.DefaultSize):
+
+        self.parent = parent
+        self.layers = layers
+        wx.ListCtrl.__init__(self, parent, id, pos, size,
+                             style=wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES |
+                             wx.BORDER_NONE)
+
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        # listmix.TextEditMixin.__init__(self)
+
+    def Update(self, layers):
+        """Update description"""
+        self.layers = layers
+
+    def Populate(self, update=False):
+        """Populate the list"""
+        itemData = {} # requested by sorter
+
+        if not update:
+            headings = [_("Layer"),  _("Driver"), _("Database"), _("Table"), _("Key")]
+            i = 0
+            for h in headings:
+                self.InsertColumn(col=i, heading=h)
+                i += 1
+        else:
+            self.DeleteAllItems()
+
+        for layer in self.layers.keys():
+            index = self.InsertStringItem(sys.maxint, str(layer))
+            self.SetStringItem(index, 0, str(layer))
+            database = str(self.layers[layer]['database'])
+            driver   = str(self.layers[layer]['driver'])
+            table    = str(self.layers[layer]['table'])
+            key      = str(self.layers[layer]['key'])
+            self.SetStringItem(index, 1, driver)
+            self.SetStringItem(index, 2, database)
+            self.SetStringItem(index, 3, table)
+            self.SetStringItem(index, 4, key)
+            self.SetItemData(index, i)
+            itemData[i] = (str(layer),
+                           driver,
+                           database,
+                           table,
+                           key)
+            i += 1
+
+        for i in range(self.GetColumnCount()):
+            self.SetColumnWidth(col=i, width=wx.LIST_AUTOSIZE)
+            if self.GetColumnWidth(col=i) < 60:
+                self.SetColumnWidth(col=i, width=60)
 
         return itemData
 
