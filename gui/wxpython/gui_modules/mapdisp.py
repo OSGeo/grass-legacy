@@ -445,7 +445,9 @@ class BufferedWindow(wx.Window):
 
         # set size of the input image
         self.Map.ChangeMapSize(self.GetClientSize())
-#        self.Map.AlignExtentFromDisplay() # align extent based on center point and display resolution
+        # align extent based on center point and display resolution
+        # this causes that image is not resized when display windows is resized
+        # self.Map.AlignExtentFromDisplay() 
 
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
@@ -2049,6 +2051,7 @@ class MapFrame(wx.Frame):
         self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
                                       choices = ["Coordinates",
                                                  "Extent",
+                                                 "Comp. extent",
                                                  "Geometry",
                                                  "Map scale"])
         self.statusText = "Coordinates"
@@ -2415,6 +2418,11 @@ class MapFrame(wx.Frame):
             self.statusbar.SetStatusText("", 0)
 
         elif self.statusText == "Extent":
+            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
+                                         (self.Map.region["w"], self.Map.region["e"],
+                                          self.Map.region["s"], self.Map.region["n"]), 0)
+
+        elif self.statusText == "Comp. extent":
             compregion = self.Map.GetRegion()
             self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
                                          (compregion["w"], compregion["e"],
@@ -2681,8 +2689,8 @@ class MapFrame(wx.Frame):
         """
 
         self.totaldist = 0.0 # total measured distance
-        wx.MessageBox('Click and drag with left mouse button to measure.\
-            \nDouble click with left button to clear')
+        #         wx.MessageBox('Click and drag with left mouse button to measure.\
+            #             \nDouble click with left button to clear')
 
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)
@@ -2708,6 +2716,13 @@ class MapFrame(wx.Frame):
             self.gismanager.goutput.cmd_output.write('Measuring distance:%s' % os.linesep,
                                                      style)
 
+        style = self.gismanager.goutput.cmd_output.StyleWarning
+        self.gismanager.goutput.cmd_output.write('Click and drag with left mouse button '
+                                                 'to measure.%s'
+                                                 'Double click with left button to clear.%s' % \
+                                                     (os.linesep, os.linesep), style)
+
+        
     def MeasureDist(self, beginpt, endpt):
         """
         Calculate map distance from screen distance
