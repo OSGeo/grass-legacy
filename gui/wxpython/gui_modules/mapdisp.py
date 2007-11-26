@@ -215,7 +215,7 @@ class BufferedWindow(wx.Window):
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
-        #self.OnSize(None)
+        self.OnSize(None)
 
         # create PseudoDC used for background map, map decorations like scales and legends
         self.pdc = wx.PseudoDC()
@@ -457,8 +457,8 @@ class BufferedWindow(wx.Window):
         self.img = self.GetImage()
 
         # update map display
-        if self.img and max(1, self.Map.width) + max(1,self.Map.height) > 0: # scale image during resize
-            self.img = self.img.Scale(max(1, self.Map.width), max(1,self.Map.height))
+        if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
+            self.img = self.img.Scale(self.Map.width, self.Map.height)
             self.UpdateMap()
 
         # re-render image on idle
@@ -507,7 +507,6 @@ class BufferedWindow(wx.Window):
         Debug.msg (3, "BufferedWindow.GetOverlay(): numberof=%d" % len(self.ovldict))
 
         return self.ovldict
-
 
     def GetImage(self):
         """
