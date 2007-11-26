@@ -447,7 +447,7 @@ class BufferedWindow(wx.Window):
         self.Map.ChangeMapSize(self.GetClientSize())
         # align extent based on center point and display resolution
         # this causes that image is not resized when display windows is resized
-        # self.Map.AlignExtentFromDisplay() 
+        # self.Map.AlignExtentFromDisplay()
 
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
@@ -2689,8 +2689,6 @@ class MapFrame(wx.Frame):
         """
 
         self.totaldist = 0.0 # total measured distance
-        #         wx.MessageBox('Click and drag with left mouse button to measure.\
-            #             \nDouble click with left button to clear')
 
         # switch GIS Manager to output console to show measure results
         self.gismanager.notebook.SetSelection(1)
@@ -2706,6 +2704,11 @@ class MapFrame(wx.Frame):
         self.MapWindow.SetCursor(self.cursors["pencil"])
 
         # initiating output
+        style = self.gismanager.goutput.cmd_output.StyleWarning
+        self.gismanager.goutput.cmd_output.write('Click and drag with left mouse button '
+                                                 'to measure.%s'
+                                                 'Double click with left button to clear.%s' % \
+                                                     (os.linesep, os.linesep), style)
         if self.projinfo['proj'] != 'xy':
             units = self.projinfo['units']
             style = self.gismanager.goutput.cmd_output.StyleCommand
@@ -2722,7 +2725,7 @@ class MapFrame(wx.Frame):
                                                  'Double click with left button to clear.%s' % \
                                                      (os.linesep, os.linesep), style)
 
-        
+
     def MeasureDist(self, beginpt, endpt):
         """
         Calculate map distance from screen distance
