@@ -445,7 +445,7 @@ class BufferedWindow(wx.Window):
 
         # set size of the input image
         self.Map.ChangeMapSize(self.GetClientSize())
-        self.Map.AlignExtentFromDisplay() # align extent based on center point and display resolution
+#        self.Map.AlignExtentFromDisplay() # align extent based on center point and display resolution
 
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
