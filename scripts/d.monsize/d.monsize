@@ -20,7 +20,7 @@
 
 
 #### PLEASE REMOVE "SET" FROM OPTION NAMES FOR GRASS 7
-####  (if this module is even used there)
+####  (if this module is even used there; if so merge with d.resize)
 
 #%Module
 #%  description: Selects/starts specified monitor at specified size
@@ -83,6 +83,7 @@ else
     g.message -v "Monitor already running and selected"
     g.message "Restarting monitor $GIS_OPT_SETMONITORAT at ${GIS_OPT_SETWIDTH}X${GIS_OPT_SETHEIGHT} ..."
 # d.save > tmp file then source the tmp file to restore after the new mon is opened?
+# (just use d.resize instead)
     d.mon stop=$GIS_OPT_SETMONITOR
 # why the sleep?
     sleep 4
