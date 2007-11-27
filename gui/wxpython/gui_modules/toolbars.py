@@ -661,23 +661,20 @@ class DigitToolbar(AbstractToolbar):
             else:
                 value = layerNameSelected
 
-            # ugly ...
-            if self.comboid:
-                self.toolbar[0].DeleteToolByPos(0)
-
-            self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
-                                     choices=layerNameList, size=(150, -1), style=wx.CB_READONLY)
+            if not self.comboid:
+                self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
+                                         choices=layerNameList, size=(150, -1),
+                                         style=wx.CB_READONLY)
+                self.comboid = self.toolbar[0].InsertControl(0, self.combo)
+                self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
+            else:
+                self.combo.SetItems(layerNameList)
             
             # update layer index
             try:
                 self.layerSelectedID = layerNameList.index(value)
             except ValueError:
                 self.layerSelectedID = None
-
-            self.comboid = self.toolbar[0].InsertControl(0, self.combo)
-
-            # additional bindings
-            self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
 
             self.toolbar[0].Realize()
 
