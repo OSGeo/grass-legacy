@@ -241,8 +241,14 @@ fi
 
 
 if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
-    if [ $GIS_FLAG_C -eq 1 ] && [ $GIS_FLAG_R -eq 1 ] ; then
-	g.message -w "Cairo driver doesn't know how to do landscape mode"
+    if [ $GIS_FLAG_C -eq 1 ] ; then
+	if [ $GIS_FLAG_R -eq 1 ] ; then
+	   g.message -w "Cairo driver doesn't know how to do landscape mode"
+	fi
+	if [ "$GIS_OPT_FORMAT" = "eps" ] ; then
+	   g.message -e "Cairo driver doesn't support EPS"
+	   exit 1
+	fi
     fi
 
     if [ $GIS_FLAG_C -eq 0 ] ; then
