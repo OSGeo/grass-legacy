@@ -93,10 +93,10 @@ command_version (int argc, char *argv[])
     strcpy (map2name, parm.map2->answer);
     mapset1 = G_find_cell2 (map1name, "");
     if(!mapset1)
-	G_fatal_error (_("%s: <%s> raster map not found"), argv[0], map1name);
+	G_fatal_error (_("Raster map <%s> not found"), map1name);
     mapset2 = G_find_cell2 (map2name, "");
     if(!mapset2)
-        G_fatal_error (_("%s: <%s> raster map not found"), argv[0], map2name);
+        G_fatal_error (_("Raster map <%s> not found"), map2name);
 
     make_coin();
     print_coin (*parm.units->answer, flag.w->answer?132:80, 0);

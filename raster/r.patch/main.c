@@ -121,7 +121,7 @@ int main (int argc, char *argv[])
 
         if (mapset == NULL)
         {
-            G_warning (_("%s - %s not found"), G_program_name(), name);
+            G_warning (_("Raster map <%s> not found"), name);
             G_sleep(3);
             ok = 0;
         }
@@ -189,7 +189,7 @@ int main (int argc, char *argv[])
  * build the new cats and colors. do this before closing the new
  * file, in case the new file is one of the patching files as well.
  */
-    G_message (_("Creating support files for %s"), new_name);
+    G_message (_("Creating support files for <%s>..."), new_name);
     support (names, statf, nfiles, &cats, &cats_ok, &colr, &colr_ok, out_type);
 
 /* now close (and create) the result */
