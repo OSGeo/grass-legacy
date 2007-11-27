@@ -29,7 +29,7 @@
 #%option
 #% key: format
 #% type: string
-#% options: png,ppm,tif,jpg,bmp,ps,eps
+#% options: png,ppm,tif,jpg,bmp,ps,eps,svg,pdf
 #% answer: png
 #% description: Graphics file format
 #% required : yes
@@ -111,7 +111,7 @@
 #% end
 #%flag
 #% key: c
-#% description: Use the Cario driver instead of the PNG driver
+#% description: Use the Cario driver to render images
 #% guisection: Images
 #% end
 #%flag
@@ -155,6 +155,15 @@ if [ `echo "$curr_mon" | grep -c '^x.$'` -ne 1 ] ; then
    g.message -e "Only X monitors are supported."
    exit 1
 fi
+
+case "$GIS_OPT_FORMAT" in
+   pdf | svg)
+     if [ $GIS_FLAG_C -eq 0 ] ; then
+	g.message "Using the Cairo driver."
+	GIS_FLAG_C=1
+     fi
+     ;;
+esac
 
 if [ $GIS_FLAG_C -eq 1 ] &&  [ `d.mon -l | grep -c '^cairo'` -eq 0 ] ; then
    g.message -e "Cairo driver not present in this build of GRASS."
@@ -205,11 +214,18 @@ export GRASS_TRANSPARENT
 
 #set output file name and format
 case "$GIS_OPT_FORMAT" in
-   png | ppm | ps | eps)
+   png | ppm | ps | eps | svg | pdf)
      output="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
      ;;
-   tif | jpg | bmp)
+   tif | jpg)
      output="`g.tempfile pid=$$`.ppm"
+     ;;
+   bmp)
+     if [ $GIS_FLAG_C -eq 1 ] ; then
+	output="${GIS_OPT_OUTPUT}.${GIS_OPT_FORMAT}"
+     else
+	output="`g.tempfile pid=$$`.ppm"
+     fi
      ;;
 esac
 
@@ -225,14 +241,19 @@ fi
 
 
 if [ "$GIS_OPT_FORMAT" = "ps" ] || [ "$GIS_OPT_FORMAT" = "eps" ] ; then
-    if [ $GIS_FLAG_C -eq 1 ] ; then
-	g.message -e "Cairo driver is incompatible with the PostScript driver."
-	exit 1
+    if [ $GIS_FLAG_C -eq 1 ] && [ $GIS_FLAG_R -eq 1 ] ; then
+	g.message -w "Cairo driver doesn't know how to do landscape mode"
     fi
 
-    GRAPHICS_DRIVER=PS
-    GRASS_PSFILE="$output"
-    export GRASS_PSFILE
+    if [ $GIS_FLAG_C -eq 0 ] ; then
+	GRAPHICS_DRIVER=PS
+	GRASS_PSFILE="$output"
+	export GRASS_PSFILE
+    else
+	GRAPHICS_DRIVER=cairo
+	GRASS_CAIROFILE="$output"
+	export GRASS_CAIROFILE
+    fi
 
     if [ "$GIS_OPT_FORMAT" = "ps" ] ; then
 	GRASS_PAPER="$GIS_OPT_PAPER"
@@ -279,6 +300,7 @@ fi
 
 
 g.message "Saving display from Monitor: [$curr_mon] to <$outname>."
+# what does the Cairo/PS driver do?
 if [ "$GIS_OPT_FORMAT" != "ps" ] ; then
     g.message "Image size [$out_width x $out_height]"
 else
@@ -299,14 +321,24 @@ g.message "Screen export complete. (writing the file may take a small amount of 
 d.mon select="$curr_mon"
 
 case "$GIS_OPT_FORMAT" in
-   png | ppm | ps | eps)
+   png | ppm | ps | eps | svg | pdf)
      g.message "Done."
      exit
      ;;
-   tif | jpg | bmp)
+   tif | jpg)
      # delay not needed if using GRASS_PNG_AUTO_WRITE ?
      g.message "Waiting for file to write ..."
      sleep 5
+     ;;
+   bmp)
+     if [ $GIS_FLAG_C -eq 1 ] ; then
+	g.message "Done."
+	exit
+     else
+	# delay not needed if using GRASS_PNG_AUTO_WRITE ?
+	g.message "Waiting for file to write ..."
+	sleep 5
+     fi
      ;;
 esac
 
