@@ -185,7 +185,7 @@ main (int argc, char *argv[])
 
     renumber (fd[0], outfd);
 
-    G_message (_("Creating support files for %s"), output);
+    G_message (_("Creating support files for <%s>..."), output);
     G_close_cell (fd[0]);
     G_close_cell (outfd);
     G_write_cats (output, &pcats);

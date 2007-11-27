@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
 
 	G_close_cell (infd);
 
-        G_message(_("Creating support files for %s..."), result);
+        G_message(_("Creating support files for <%s>..."), result);
 
 	G_close_cell (outfd);
 

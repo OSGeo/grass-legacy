@@ -1032,7 +1032,7 @@ int main (int argc, char *argv[])
     G_percent (row, nrows, 2);
 
     G_close_cell (elevation_fd);
-    G_message(_("Creating support files"));
+    G_message(_("Creating support files..."));
 
     G_message(_("Elevation products for mapset [%s] in [%s]"),
         G_mapset(), G_location());
@@ -1050,7 +1050,7 @@ int main (int argc, char *argv[])
            G_quantize_fp_map_range(aspect_name, G_mapset(), 0., 360., 0, 360);
 
         G_read_raster_cats (aspect_name, G_mapset(), &cats);
-        G_set_raster_cats_title ("aspect counterclockwise in degrees from east", &cats);
+        G_set_raster_cats_title ("Aspect counterclockwise in degrees from east", &cats);
 
 	G_message(_("Min computed aspect %.4f, max computed aspect %.4f"), min_asp, max_asp);
 	/* the categries quant intervals are 1.0 long, plus

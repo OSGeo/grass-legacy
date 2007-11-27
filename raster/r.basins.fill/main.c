@@ -89,8 +89,7 @@ int main (int argc, char *argv[])
     strcpy(drain_name, opt2->answer); 
     drain_mapset = G_find_cell2(drain_name, "");
     if (drain_mapset == NULL)
-        G_fatal_error(_("%s: <%s> raster map not found"), 
-                    G_program_name(), opt2->answer);
+        G_fatal_error(_("Raster map <%s> not found"), opt2->answer);
 
     /* this isn't a nice thing to do. G_align_window() should be used first */
     G_get_cellhd (drain_name, drain_mapset, &window);
@@ -102,21 +101,19 @@ int main (int argc, char *argv[])
     strcpy (ridge_name, opt3->answer);
     ridge_mapset = G_find_cell2(ridge_name, "");
     if (ridge_mapset == NULL)
-        G_fatal_error(_("%s: <%s> raster map not found"),
-                    G_program_name(), opt3->answer);
+        G_fatal_error(_("Raster map <%s> not found"), opt3->answer);
 
     strcpy (part_name, opt4->answer);
     part_mapset = G_find_cell2(part_name,"");
     if (part_mapset != NULL)
-        G_fatal_error(_("%s: <%s> raster map exists already"), 
-                    G_program_name(), opt4->answer);
+        G_fatal_error(_("Raster map <%s> already exists"), opt4->answer);
 
     drain = read_map (drain_name, drain_mapset, NOMASK, nrows, ncols);
     ridge = read_map (ridge_name, ridge_mapset, NOMASK, nrows, ncols);
 
     partfd = G_open_cell_new (part_name);
     if (partfd < 0)
-	G_fatal_error (_("unable to create %s"), part_name);
+	G_fatal_error (_("Unable to create raster map <%s>"), part_name);
 
 /* run through file and set streams to zero at locations where ridges exist*/ 
     for (row = 0; row < nrows; row++)
@@ -140,7 +137,7 @@ int main (int argc, char *argv[])
 	    }
 	  }
 	}
-        G_message(_("forward sweep complete"));
+        G_message(_("Forward sweep complete"));
 
 	for (row = nrows-3; row > 1; --row)
 	{
@@ -155,14 +152,14 @@ int main (int argc, char *argv[])
 	    }
 	   }
 	}
-        G_message(_("reverse sweep complete"));    
+        G_message(_("Reverse sweep complete"));    
      }
 
     /* write out partitioned watershed map */
     for (row = 0; row<nrows; row++)
         G_put_raster_row (partfd, drain+(row*ncols), CELL_TYPE);
 
-    G_message(_("creating support files for %s"), part_name);
+    G_message(_("Creating support files for <%s>..."), part_name);
     G_close_cell (partfd);
 
     exit(EXIT_SUCCESS);

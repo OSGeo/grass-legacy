@@ -84,7 +84,7 @@ int main (int argc, char **argv)
     else if (256 == G_system("mpeg_encode 2> /dev/null"))
 	strcpy(encoder, "mpeg_encode");
     else
-        G_fatal_error(_("either mpeg_encode or ppmtompeg must be installed"));
+        G_fatal_error(_("Either mpeg_encode or ppmtompeg must be installed"));
 
     G_debug(1, "encoder = [%s]", encoder);
 
@@ -219,8 +219,7 @@ static int load_files(void)
 
 	    mapset = G_find_cell2 (name, "");
 	    if (mapset == NULL)
-		G_fatal_error (_("%s: <%s> cellfile not found"),
-					    G_program_name(), name);
+		G_fatal_error (_("Raster map <%s> not found"), name);
 
 	    fd = G_open_cell_old (name, mapset);
 	    if (fd < 0)

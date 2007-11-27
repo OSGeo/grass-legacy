@@ -363,7 +363,7 @@ int main(int argc, char *argv[])
 
     /*   Create segmented format files for cost layer and output layer  */
 
-    G_message(_("Creating some temporary files"));
+    G_message(_("Creating some temporary files..."));
 
     in_fd = creat(in_file, 0666);
     segment_format(in_fd, nrows, ncols, srows, scols, sizeof(double));

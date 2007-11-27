@@ -406,7 +406,7 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 	search_mapset = G_find_sites(opt7->answer, "");
 	if (search_mapset == NULL)
-	    G_fatal_error(_("Unable to find starting vector %s "), opt7->answer);
+	    G_fatal_error(_("Unable to find starting vector <%s> "), opt7->answer);
 	fp = G_fopen_sites_old(opt7->answer, search_mapset);
 
 	if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
@@ -452,7 +452,7 @@ int main(int argc, char *argv[])
 	search_mapset = "";
 	search_mapset = G_find_sites(opt8->answer, "");
 	if (search_mapset == NULL)
-	    G_fatal_error(_("Unable to find stop vector %s"), opt8->answer);
+	    G_fatal_error(_("Unable to find stop vector <%s>"), opt8->answer);
 	fp = G_fopen_sites_old(opt8->answer, search_mapset);
 
 	if (G_site_describe( fp, &dims, &cat, &strs, &dbls))
@@ -520,10 +520,10 @@ int main(int argc, char *argv[])
     cost_mapset = G_find_cell2(cost_layer, search_mapset);
 
     if (dtm_mapset == NULL)
-	G_fatal_error(_("%s - not found"), dtm_layer);
+	G_fatal_error(_("Raster map <%s> not found"), dtm_layer);
 
     if (cost_mapset == NULL)
-	G_fatal_error(_("%s - not found"), cost_layer);
+	G_fatal_error(_("Raster map <%s> not found"), cost_layer);
 
     /*  Check if specified output layer name is legal   */
 
@@ -553,9 +553,9 @@ int main(int argc, char *argv[])
     /*Reading headers from maps */
 
     if (!dtm_head_ok)
-	G_fatal_error(_("Cannot read %s"), dtm_layer);
+	G_fatal_error(_("Unable to read %s"), dtm_layer);
     if (!cost_head_ok)
-	G_fatal_error(_("Cannot read %s"), cost_layer);
+	G_fatal_error(_("Unable to read %s"), cost_layer);
 
     /*Projection */
 
@@ -654,7 +654,7 @@ int main(int argc, char *argv[])
     /*   Create segmented format files for cost layer and output layer  */
 
     
-	G_message(_("Creating some temporary files ..."));
+	G_message(_("Creating some temporary files..."));
 
     dtm_in_fd = creat(dtm_in_file, 0600);
     segment_format(dtm_in_fd, nrows, ncols, srows, scols, sizeof(double));
@@ -682,7 +682,7 @@ int main(int argc, char *argv[])
     /*   Write the cost layer in the segmented file  */
 
     
-	G_message(_("Reading %s ..."), dtm_layer);
+	G_message(_("Reading %s..."), dtm_layer);
 
     start_with_raster_vals = flag4->answer;
 
@@ -847,7 +847,7 @@ int main(int argc, char *argv[])
 
 	if (cum_cost_mapset == NULL)
 	    G_fatal_error(_
-			  ("Raster output map %s - not found (no start_points given)"),
+			  ("Raster output map <%s> not found (no start_points given)"),
 			  cum_cost_layer);
 
 	cum_fd = G_open_cell_old(cum_cost_layer, cum_cost_mapset);
@@ -865,7 +865,7 @@ int main(int argc, char *argv[])
 			  ("Memory allocation error on reading start points from raster map %s"),
 			  cum_cost_layer);
 	
-	    G_message(_("Reading %s ... "), cum_cost_layer);
+	    G_message(_("Reading %s... "), cum_cost_layer);
 	for (row = 0; row < nrows; row++) {
 	    
 		G_percent(row, nrows, 2);
