@@ -1794,7 +1794,9 @@ class LayerBook(wx.Notebook):
         panel = wx.Panel(parent=self, id=wx.ID_ANY)
         self.AddPage(page=panel, text=_("Add new layer"))
 
+        #
         # drivers
+        #
         cmdDriver = gcmd.Command(['db.drivers',
                                   '-p',
                                   '--q'])
@@ -1802,7 +1804,9 @@ class LayerBook(wx.Notebook):
         for drv in cmdDriver.ReadStdOutput():
             listOfDrivers.append(drv.strip())
 
-        # default values
+        #
+        # get default values
+        #
         cmdConnect = gcmd.Command(['db.connect',
                                    '-p',
                                    '--q'])
@@ -1811,54 +1815,79 @@ class LayerBook(wx.Notebook):
             item  = item.strip()
             value = value.strip()
             if item == 'driver':
-                defaultDriver = value
+                self.defaultDriver = value
             elif item == 'database':
-                defaultDatabase = value
+                self.defaultDatabase = value
 
-        listOfTables = self.__getTables(defaultDriver, defaultDatabase)
-        listOfColumns = self.__getColumns(defaultDriver, defaultDatabase, 'roads')
+        listOfTables = self.__getTables(self.defaultDriver, self.defaultDatabase)
+        try:
+            listOfColumns = self.__getColumns(self.defaultDriver, self.defaultDatabase,
+                                              listOfTables[0])
+        except:
+            listOfColumns = []
 
-        layerWidgets = {'layer': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                label='%s:' % _("Layer")),
-                                  wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
-                                              initial=max(self.mapDBInfo.layers.keys())+1,
-                                              min=1, max=1e6)),
-                        'driver': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                 label='%s:' % _("Driver")),
-                                   wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                             choices=listOfDrivers)),
-                        'database': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                   label='%s:' % _("Database")),
+        #
+        # list of layer widgets
+        #
+        self.layerWidgets = {'layer': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                     label='%s:' % _("Layer")),
+                                       wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
+                                                   initial=max(self.mapDBInfo.layers.keys())+1,
+                                                   min=1, max=1e6)),
+                             'driver': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Driver")),
+                                        wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                                  choices=listOfDrivers)),
+                             'database': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                        label='%s:' % _("Database")),
+                                          wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                                      value='',
+                                                      style=wx.TE_PROCESS_ENTER)),
+                             'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                     label='%s:' % _("Table")),
+                                       wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                                 choices=listOfTables)),
+                             'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Key column")),
+                                     wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                               choices=listOfColumns))}
+
+        # set default values for widgets
+        self.layerWidgets['driver'][1].SetStringSelection(self.defaultDriver)
+        self.layerWidgets['database'][1].SetValue(self.defaultDatabase)
+        # events
+        self.layerWidgets['driver'][1].Bind(wx.EVT_CHOICE, self.OnDriverChanged)
+        self.layerWidgets['database'][1].Bind(wx.EVT_TEXT_ENTER, self.OnDatabaseChanged)
+        self.layerWidgets['table'][1].Bind(wx.EVT_CHOICE, self.OnTableChanged)
+
+        #
+        # list of table widgets
+        #
+        self.tableWidgets = {'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                     label='%s:' % _("Table name")),
+                                       wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                                   value='',
+                                                   style=wx.TE_PROCESS_ENTER)),
+                             'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Key column")),
                                      wx.TextCtrl(parent=panel, id=wx.ID_ANY,
-                                                 value=''),),
-                        'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                label='%s:' % _("Table")),
-                                  wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                            choices=listOfTables)),
-                        'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                              label='%s:' % _("Key column")),
-                                wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                          choices=listOfColumns))}
-
-        # set default values
-        layerWidgets['driver'][1].SetStringSelection(defaultDriver)
-        layerWidgets['database'][1].SetValue(defaultDatabase)
-        
-        tableWidgets = [(wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                       label='%s:' % _("Table name")),
-                         wx.TextCtrl(parent=panel, id=wx.ID_ANY,
-                                     value='')),
-                        (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                       label='%s:' % _("Key column")),
-                         wx.TextCtrl(parent=panel, id=wx.ID_ANY,
-                                     value=''))]
+                                                 value='',
+                                                 style=wx.TE_PROCESS_ENTER))}
+        # events
+        self.tableWidgets['table'][1].Bind(wx.EVT_TEXT_ENTER, self.OnCreateTable)
+        self.tableWidgets['key'][1].Bind(wx.EVT_TEXT_ENTER, self.OnCreateTable)
 
         btnTable   = wx.Button(panel, wx.ID_ANY, _("&Create table"),
                              size=(125,-1))
+        btnTable.Bind(wx.EVT_BUTTON, self.OnCreateTable)
+
         btnLayer   = wx.Button(panel, wx.ID_ANY, _("&Add layer"),
                              size=(125,-1))
+        btnLayer.Bind(wx.EVT_BUTTON, self.OnAddLayer)
+
         btnDefault = wx.Button(panel, wx.ID_ANY, _("&Set default"),
                                size=(125,-1))
+        btnDefault.Bind(wx.EVT_BUTTON, self.OnSetDefault)
 
         #
         # do layout
@@ -1876,7 +1905,7 @@ class LayerBook(wx.Notebook):
         dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
         dataSizer.AddGrowableCol(1)
         for key in ('layer', 'driver', 'database', 'table', 'key'):
-            label, value = layerWidgets[key]
+            label, value = self.layerWidgets[key]
             dataSizer.Add(item=label,
                           flag=wx.ALIGN_CENTER_VERTICAL)
             if label.GetLabel() == "Layer:":
@@ -1922,7 +1951,8 @@ class LayerBook(wx.Notebook):
         # data area
         dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
         dataSizer.AddGrowableCol(1)
-        for label, value in tableWidgets:
+        for key in ['table', 'key']:
+            label, value = self.tableWidgets[key]
             dataSizer.Add(item=label,
                           flag=wx.ALIGN_CENTER_VERTICAL)
             dataSizer.Add(item=value,
@@ -1989,7 +2019,119 @@ class LayerBook(wx.Notebook):
             columns.append(column)
 
         return columns
+
+    def OnDriverChanged(self, event):
+        """Driver selection changed, update list of tables"""
+        driver = event.GetString()
+        database = self.layerWidgets['database'][1].GetValue()
+
+        winTable = self.layerWidgets['table'][1]
+        winKey   = self.layerWidgets['key'][1]
+        tables   = self.__getTables(driver, database)
+
+        winTable.SetItems(tables)
+        winTable.SetSelection(0)
+
+        if len(tables) == 0:
+            winKey.SetItems([])
+
+        event.Skip()
+
+    def OnDatabaseChanged(self, event):
+        """Database selection changed, update list of tables"""
+        event.Skip()
+
+    def OnTableChanged(self, event):
+        """Table name changed, update list of columns"""
+        driver   = self.layerWidgets['driver'][1].GetStringSelection()
+        database = self.layerWidgets['database'][1].GetValue()
+        table    = event.GetString()
+
+        win  = self.layerWidgets['key'][1]
+        cols = self.__getColumns(driver, database, table)
+        win.SetItems(cols)
+        win.SetSelection(0)
+
+        event.Skip()
+
+    def OnSetDefault(self, event):
+        """Set default values"""
+        driver   = self.layerWidgets['driver'][1]
+        database = self.layerWidgets['database'][1]
+        table    = self.layerWidgets['table'][1]
+        key      = self.layerWidgets['key'][1]
+
+        driver.SetStringSelection(self.defaultDriver)
+        database.SetValue(self.defaultDatabase)
+        tables = self.__getTables(self.defaultDriver, self.defaultDatabase)
+        table.SetItems(tables)
+        table.SetSelection(0)
+        if len(tables) == 0:
+            key.SetItems([])
+        else:
+            cols = self.__getColumns(self.defaultDriver, self.defaultDatabase, tables[0])
+            key.SetItems(cols)
+            key.SetSelection(0)
+
+        event.Skip()
+
+    def OnCreateTable(self, event):
+        """Create new table (name and key column given)"""
+        driver   = self.layerWidgets['driver'][1].GetStringSelection()
+        database = self.layerWidgets['database'][1].GetValue()
+        table    = self.tableWidgets['table'][1].GetValue()
+        key      = self.tableWidgets['key'][1].GetValue()
         
+        if not table or not key:
+            dlg = wx.MessageDialog(self.parent,
+                                   _("Unable to create new table.%s"
+                                     "Table name or key column name is missing.") % \
+                                       (os.linesep),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+        
+        # create table
+        sql = 'CREATE TABLE %s (%s INTEGER)' % (table, key)
+
+        gcmd.Command(['db.execute',
+                      '--q',
+                      'driver=%s' % driver,
+                      'database=%s' % database],
+                     stdin=sql)
+
+        # update list of tables
+        tableList = self.layerWidgets['table'][1]
+        tableList.SetItems(self.__getTables(driver, database))
+        tableList.SetStringSelection(table)
+
+        # update key column selection
+        keyList = self.layerWidgets['key'][1]
+        keyList.SetItems(self.__getColumns(driver, database, table))
+        keyList.SetStringSelection(key)
+        
+        event.Skip()
+
+    def OnAddLayer(self, event):
+        """Add new layer to vector map"""
+        layer    = int(self.layerWidgets['layer'][1].GetValue())
+        driver   = self.layerWidgets['driver'][1].GetStringSelection()
+        database = self.layerWidgets['database'][1].GetValue()
+        table    = self.layerWidgets['table'][1].GetStringSelection()
+        key      = self.layerWidgets['key'][1].GetStringSelection()
+        
+        gcmd.Command(['v.db.connect',
+                      '--q',
+                      'map=%s' % self.mapDBInfo.map,
+                      'driver=%s' % driver,
+                      'database=%s' % database,
+                      'table=%s' % table,
+                      'key=%s' % key,
+                      'layer=%d' % layer])
+
+        ### TODO: update dialog
+
 class DisplayAttributesDialog(wx.Dialog):
     """
     Standard dialog used to add/update/display attributes linked
