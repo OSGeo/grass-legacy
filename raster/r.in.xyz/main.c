@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
       _("Create a raster map from an assemblage of many coordinates using univariate statistics.");
 
@@ -145,13 +146,13 @@ int main(int argc, char *argv[])
     percent_opt->options = "1-100";
     percent_opt->description = _("Percent of map to keep in memory");
 
-    shell_style = G_define_flag();
-    shell_style->key = 'g';
-    shell_style->description = _("Print the input data extent in shell script style");
-
     scan_flag = G_define_flag();
     scan_flag->key = 's';
     scan_flag->description = _("Scan data file for extent then exit");
+
+    shell_style = G_define_flag();
+    shell_style->key = 'g';
+    shell_style->description = _("In scan mode, print using shell script style");
 
 
     if (G_parser(argc,argv))
@@ -458,7 +459,6 @@ int main(int argc, char *argv[])
 		if( ((x - region.west) / region.ew_res) - cols < 10*GRASS_EPSILON)
 		    arr_col--;
 		else { /* oh well, we tried. */
-		    G_free_tokens(tokens);
 		    continue;
 		}
 	    }

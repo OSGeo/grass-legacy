@@ -70,9 +70,6 @@ proc GmGroup::display { node mod } {
     variable tree
 	global mon
 	global drawprog
-	global complist
-	global opclist
-	global masklist
 
     set tree($mon) $GmTree::tree($mon)
 	set layers ""

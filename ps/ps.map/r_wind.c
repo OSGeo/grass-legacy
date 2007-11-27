@@ -50,7 +50,7 @@ read_wind (char *name, char *mapset)
 	    if (sscanf (data, "%lf%s", &width, mapset) < 1 || width < 0.)
 	    {
 		width = 1.;
-		error (key,data,"illegal width");
+		error (key,data,"illegal width (wind)");
 	    }
 	    if(mapset[0] == 'i') width = width/72.0;
 	    continue;
@@ -68,11 +68,11 @@ read_wind (char *name, char *mapset)
 	    else if ( ret == 2 )  /* i.e. "none" */
 		color_R = color_G = color_B = -1;
 	    else
-		error (key,data,"illegal color request");
+		error (key,data,"illegal color request (wind)");
 
 	    continue;
 	}
-	error (key,"","illegal request");
+	error (key,"","illegal request (wind)");
     }
 
 /* draw horizontal lines in 3 pieces - lat-lon lines must not

@@ -24,6 +24,8 @@ close_array_seg (void)
 	}
 	G_init_colors(&colors);
 	G_make_random_colors(&colors, 1, max);
+
+      if( max < 10000 ) {
 	G_set_color((CELL)0, 0, 0, 0, &colors);
 	r = 1;
 	incr = 0;
@@ -53,6 +55,7 @@ close_array_seg (void)
 		    incr = 7;
 	    }
 	}
+      }
     }
     if (seg_flag) {
 	cellrow = (CELL *)G_malloc(ncols * sizeof(CELL));

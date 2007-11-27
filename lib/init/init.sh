@@ -94,7 +94,7 @@ export GIS_LOCK
 
 # Set the global grassrc file
 GISRCRC="$HOME/.grassrc6"
-export GISRCRC
+
 # Set the session grassrc file
 USER="`whoami`"
 
@@ -142,9 +142,6 @@ if [ ! "$GRASS_GUI" ] ; then
     fi
 fi
 
-# Export the user interface variable
-export GRASS_GUI
-
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC="$GISBASE/etc"
 
@@ -174,18 +171,14 @@ export LD_LIBRARY_PATH_VAR
 GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH_VAR"
 export GRASS_LD_LIBRARY_PATH
 
-# Once the new environment system is committed we can delete these lines
-# Export the PAGER environment variable for those who have it set
-if [ "$PAGER" ] ; then
-    export PAGER
-fi
-
 # Set some environment variables if they are not set
 if [ ! "$GRASS_PAGER" ] ; then
     if [ -x /bin/more ] || [ -x /usr/bin/more ] ; then
         GRASS_PAGER=more
-    else 
+    elif [ -x /bin/less ] || [ -x /usr/bin/less ] ; then
         GRASS_PAGER=less
+    else
+        GRASS_PAGER=cat
     fi
     export GRASS_PAGER
 fi
@@ -341,7 +334,6 @@ if [ "$DISPLAY" ] ; then
 
 	    # Set the tcltkgrass base directory
 	    TCLTKGRASSBASE="$ETC"
-	    export TCLTKGRASSBASE
 	else
 
 	    # Wish was not found - switch to text interface mode
@@ -584,7 +576,7 @@ lockfile="$LOCATION/.gislock"
 case $? in
     0) ;;
     1)
-    	echo `whoami` is currently running GRASS in selected mapset. Concurrent use not allowed.
+    	echo "`whoami` is currently running GRASS in selected mapset (file $lockfile found). Concurrent use not allowed."
     	rm -rf "$tmp"  # remove session files from tmpdir
     	exit 1 ;;
     *)
@@ -716,9 +708,8 @@ bash|msh)
     rm -f "$bashrc"
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
-    echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
-    echo "PROMPT_COMMAND='if test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK && test -f`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster and Volume MASKs present] ; elif test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo [Raster MASK present] ; elif test -d `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/grid3/G3D_MASK ; then echo [Volume MASK present] ; fi'" >> "$bashrc"
+    echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
     
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
@@ -742,7 +733,6 @@ cygwin)
     # this does not work on cygwin for unknown reasons
     # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
-    echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]

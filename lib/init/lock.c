@@ -51,7 +51,7 @@ int main (int argc, char *argv[])
     }
     if (locked)
 	exit(1);
-    umask (0);
+
     if ((lock = creat (file, 0666)) < 0)
     {
 	perror (file);

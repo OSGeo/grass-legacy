@@ -124,6 +124,7 @@ int r_slope_aspect (int argc, char *argv[])
     G_gisinit (argv[0]);
 
 	module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Generates raster map layers of slope, aspect, "
 		"curvatures and partial derivatives from a raster "
@@ -141,7 +142,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.slope->type       = TYPE_STRING ;
     parm.slope->required   = NO ;
     parm.slope->answer     = NULL ;
-    parm.slope->gisprompt  = "any,cell,raster" ;
+    parm.slope->gisprompt  = "new,cell,raster" ;
     parm.slope->description= _("Output slope filename") ;
 
     parm.slope_fmt = G_define_option() ;
@@ -165,7 +166,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.aspect->type       = TYPE_STRING ;
     parm.aspect->required   = NO ;
     parm.aspect->answer     = NULL ;
-    parm.aspect->gisprompt  = "any,cell,raster" ;
+    parm.aspect->gisprompt  = "new,cell,raster" ;
     parm.aspect->description= _("Output aspect filename") ;
 
     parm.pcurv = G_define_option() ;
@@ -173,7 +174,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.pcurv->type       = TYPE_STRING ;
     parm.pcurv->required   = NO ;
     parm.pcurv->answer     = NULL ;
-    parm.pcurv->gisprompt  = "any,cell,raster" ;
+    parm.pcurv->gisprompt  = "new,cell,raster" ;
     parm.pcurv->description= _("Output profile curvature filename" );
 
     parm.tcurv = G_define_option() ;
@@ -181,7 +182,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.tcurv->type       = TYPE_STRING ;
     parm.tcurv->required   = NO ;
     parm.tcurv->answer     = NULL ;
-    parm.tcurv->gisprompt  = "any,cell,raster" ;
+    parm.tcurv->gisprompt  = "new,cell,raster" ;
     parm.tcurv->description= _("Output tangential curvature filename") ;
 
     parm.dx = G_define_option() ;
@@ -189,7 +190,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dx->type       = TYPE_STRING ;
     parm.dx->required   = NO ;
     parm.dx->answer     = NULL ;
-    parm.dx->gisprompt  = "any,cell,raster" ;
+    parm.dx->gisprompt  = "new,cell,raster" ;
     parm.dx->description= _("Output first order partial derivative dx (E-W slope) filename") ;
 
     parm.dy = G_define_option() ;
@@ -197,7 +198,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dy->type       = TYPE_STRING ;
     parm.dy->required   = NO ;
     parm.dy->answer     = NULL ;
-    parm.dy->gisprompt  = "any,cell,raster" ;
+    parm.dy->gisprompt  = "new,cell,raster" ;
     parm.dy->description= _("Output first order partial derivative dy (N-S slope) filename") ;
 
     parm.dxx = G_define_option() ;
@@ -205,7 +206,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dxx->type       = TYPE_STRING ;
     parm.dxx->required   = NO ;
     parm.dxx->answer     = NULL ;
-    parm.dxx->gisprompt  = "any,cell,raster" ;
+    parm.dxx->gisprompt  = "new,cell,raster" ;
     parm.dxx->description= _("Output second order partial derivative dxx filename") ;
 
     parm.dyy = G_define_option() ;
@@ -213,7 +214,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dyy->type       = TYPE_STRING ;
     parm.dyy->required   = NO ;
     parm.dyy->answer     = NULL ;
-    parm.dyy->gisprompt  = "any,cell,raster" ;
+    parm.dyy->gisprompt  = "new,cell,raster" ;
     parm.dyy->description= _("Output second order partial derivative dyy filename") ;
 
     parm.dxy = G_define_option() ;
@@ -221,7 +222,7 @@ int r_slope_aspect (int argc, char *argv[])
     parm.dxy->type       = TYPE_STRING ;
     parm.dxy->required   = NO ;
     parm.dxy->answer     = NULL ;
-    parm.dxy->gisprompt  = "any,cell,raster" ;
+    parm.dxy->gisprompt  = "new,cell,raster" ;
     parm.dxy->description= _("Output second order partial derivative dxy filename") ;
 
     parm.zfactor = G_define_option();
@@ -283,6 +284,17 @@ int r_slope_aspect (int argc, char *argv[])
     dxx_name = parm.dxx->answer;
     dyy_name = parm.dyy->answer;
     dxy_name = parm.dxy->answer;
+
+    G_check_input_output_name ( elev_name, slope_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, aspect_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, pcurv_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, tcurv_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, dx_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, dy_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, dxx_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, dyy_name, GR_FATAL_EXIT );
+    G_check_input_output_name ( elev_name, dxy_name, GR_FATAL_EXIT );
+
     if (sscanf (parm.zfactor->answer, "%lf", &zfactor) != 1 || zfactor <= 0.0)
     {
         G_warning("%s=%s - must be a postive number", parm.zfactor->key,
@@ -979,22 +991,13 @@ int r_slope_aspect (int argc, char *argv[])
 
     if (aspect_fd >= 0)
     {
-        /* colortable for aspect  same as in s.surf.rst
-     G_init_colors (&colors);
-     G_add_color_rule (0, 255, 255, 255, 0, 255, 255, 255, &colors);
-     G_add_color_rule (1, 255, 255, 0, 90, 0, 255, 0, &colors);
-     G_add_color_rule (90, 0, 255, 0, 180, 0, 255, 255, &colors);
-     G_add_color_rule (180, 0, 255, 255, 270, 255, 0, 0, &colors);
-     G_add_color_rule (270, 255, 0, 0, 360, 255, 255, 0, &colors);
-       */
+        DCELL min, max;
+        struct FPRange range;
 
         G_set_null_value(asp_raster, G_window_cols(), data_type);
         G_put_raster_row (aspect_fd, asp_raster, data_type);
         G_close_cell (aspect_fd);
 
-       /* write colortable for aspect  same as in s.surf.rst
-	G_write_colors (aspect_name, G_mapset(), &colors);
-       */
         if(out_type != CELL_TYPE)
            G_quantize_fp_map_range(aspect_name, G_mapset(), 0., 360., 0, 360);
 
@@ -1038,9 +1041,12 @@ int r_slope_aspect (int argc, char *argv[])
         G_write_raster_cats (aspect_name, &cats);
         G_free_raster_cats (&cats);
 
-        sprintf(buf, "r.colors map='%s' c=aspect",
-		G_fully_qualified_name (aspect_name, G_mapset()));
-	system(buf);
+        /* write colors for aspect file */
+        G_init_colors (&colors);
+        G_read_fp_range (aspect_name, G_mapset(), &range);
+        G_get_fp_range_min_max (&range, &min, &max);
+        G_make_aspect_fp_colors (&colors, min, max);
+        G_write_colors (aspect_name, G_mapset(), &colors);
 
         /* writing history file */
         G_short_history(aspect_name, "raster", &hist);

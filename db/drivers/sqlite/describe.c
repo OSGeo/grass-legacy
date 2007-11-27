@@ -1,29 +1,42 @@
-/***********************************************************
-*
-* MODULE:       SQLite driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-* This program is free software under the GNU General Public
-* License (>=v2). Read the file COPYING that comes with GRASS
-* for details.
-*
-**************************************************************/
+/**
+ * \file describe.c
+ *
+ * \brief Low level SQLite database driver.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2005-2007
+ */
+
 #include <string.h>
 #include <grass/dbmi.h>
 #include <grass/datetime.h>
+#include <grass/glocale.h>
 #include "globals.h"
 #include "proto.h"
-#include <grass/glocale.h>
+
+/* function prototypes */
+static int affinity_type (const char *);
+
+
+/**
+ * \fn int db__driver_describe_table (dbString *table_name, dbTable **table)
+ *
+ * \brief Low level SQLite describe database table.
+ *
+ * \param[in] table_name
+ * \param[in] table
+ * \return int DB_FAILED on error; DB_OK on success
+ */
 
 int db__driver_describe_table (dbString *table_name, dbTable **table)
-
 {
     dbString sql;
     sqlite3_stmt *statement;
-    char  *rest;
+    const char *rest;
     int   ret;
 
     db_init_string ( &sql );
@@ -35,13 +48,12 @@ int db__driver_describe_table (dbString *table_name, dbTable **table)
     ret = sqlite3_prepare ( sqlite, db_get_string(&sql), -1,
                             &statement, &rest );
 
-
     if ( ret != SQLITE_OK )
     {
         append_error("Error in sqlite3_prepare():");
         append_error( db_get_string(&sql) );
         append_error( "\n" );
-        append_error ( sqlite3_errmsg(sqlite) );
+        append_error ((char *) sqlite3_errmsg (sqlite));
         report_error( );
         db_free_string ( &sql );
         return DB_FAILED;
@@ -61,7 +73,20 @@ int db__driver_describe_table (dbString *table_name, dbTable **table)
     return DB_OK;
 }
 
-/* describe table, if c is not NULL cur->cols and cur->ncols is also set */
+
+/**
+ * \fn int describe_table (sqlite3_stmt *statement, dbTable **table, cursor *c)
+ *
+ * \brief SQLite describe table.
+ *
+ * NOTE: If <b>c</b> is not NULL c->cols and c->ncols are also set.
+ *
+ * \param[in] statement
+ * \param[in] table
+ * \param[in] c SQLite cursor. See NOTE.
+ * \return int DB_FAILED on error; DB_OK on success
+ */
+
 int describe_table( sqlite3_stmt *statement, 
 			dbTable **table, cursor *c)
 {
@@ -138,8 +163,23 @@ int describe_table( sqlite3_stmt *statement,
 	    continue;
 	}
 
-        fsize = 99999; /* sqlite doesn't care, it must be long enough to
+	switch ( litetype) {
+	case SQLITE_INTEGER:
+	    fsize = 20;
+	    break;
+
+	case SQLITE_TEXT:
+	    fsize = 255;
+	    break;
+	    
+	case SQLITE_FLOAT:
+	    fsize = 20;
+	    break;
+	    
+	default:
+	    fsize = 99999; /* sqlite doesn't care, it must be long enough to
                           satisfy tests in GRASS */
+	}
 
 	column = db_get_table_column(*table, nkcols);
 
@@ -180,6 +220,18 @@ int describe_table( sqlite3_stmt *statement,
     return DB_OK;
 }
 
+
+/**
+ * \fn void get_column_info (sqlite3_stmt *statement, int col, int *litetype, int *sqltype)
+ *
+ * \brief Low level SQLite get column information.
+ *
+ * \param[in] statement
+ * \param[in] col
+ * \param[in,out] litetype
+ * \param[in,out] sqltype
+ */
+
 void get_column_info ( sqlite3_stmt *statement, int col, 
 		int *litetype, int *sqltype )
 {
@@ -188,7 +240,7 @@ void get_column_info ( sqlite3_stmt *statement, int col,
     decltype = sqlite3_column_decltype ( statement, col );
     if ( decltype ) 
     {
-	G_debug ( 4, "decltype = %s", decltype );
+	G_debug ( 4, "column: %s, decltype = %s", sqlite3_column_name ( statement, col), decltype );
 	*litetype = affinity_type ( decltype );
     }
     else
@@ -212,6 +264,10 @@ void get_column_info ( sqlite3_stmt *statement, int col,
 	    
 	case SQLITE_FLOAT:
 	    *sqltype = DB_SQL_TYPE_DOUBLE_PRECISION;
+	    break;
+
+	case SQLITE_NULL:
+	    *sqltype = DB_SQL_TYPE_TEXT; /* good choice? */
 	    break;
 	    
 	default:
@@ -238,20 +294,21 @@ void get_column_info ( sqlite3_stmt *statement, int col,
 *   4. Otherwise, the affinity is NUMERIC.
 */
 
-int affinity_type ( const char *declared )
+static int affinity_type (const char *declared)
 {
     char *lc;
     int aff = SQLITE_FLOAT;
 
     lc = strdup ( declared );
     G_tolcase ( lc );
+    G_debug(4, "affinity_type: %s", lc);
 
     if ( strstr(lc,"int") )
     {
         aff = SQLITE_INTEGER;
     }
     else if ( strstr(lc,"char") || strstr(lc,"clob")
-              || strstr(lc,"text") )
+              || strstr(lc,"text") || strstr(lc,"date") )
     {
         aff = SQLITE_TEXT;
     }

@@ -39,6 +39,7 @@ main (int argc, char **argv)
     G_gisinit(me=argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description =
 		_("Category or object oriented statistics.");
 					        

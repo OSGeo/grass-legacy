@@ -126,7 +126,25 @@ please take care of following rules:
 
 11. For consistency, use README rather than README.txt for any README files.
 
-12. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+12. Use of GRASS commands in shell wrapper.
+
+    Any GRASS program run in an xterm (those which do interactive query) needs
+    to use grass-run.sh, e.g.:
+
+    exec -- $env(GISBASE)/etc/grass-xterm-wrapper -e $env(GISBASE)/etc/grass-run.sh g.proj ...
+
+    You should probably also use "-T g.proj -n g.proj" to set the title
+    back (otherwise it will be "grass-run.sh", which isn't particularly
+    informative).
+
+    The xterm will close as soon as the command completes (whether it
+    succeeds or fails). You can use the -hold switch to retain the xterm
+    window after the command completes, but you should only do that for
+    debugging; having to manually close the xterm window each time would
+    be annoying in normal use. Alternatively, redirect stdout/stderr to a
+    file, to catch any error messages.
+
+13. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -138,17 +156,17 @@ please take care of following rules:
     "cvs diff -u display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
-13. Tell the other developers about the new code using the following e-mail:
+14. Tell the other developers about the new code using the following e-mail:
     grass-dev@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/devel/index.php
 
-14. In case of questions feel free to contact the developers at the above
+15. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
 
-15. Try to evaluate things only once. Tcl compiles the program to bytecode which
+16. Try to evaluate things only once. Tcl compiles the program to bytecode which
     can be interpreted fairly quickly. If there are strings that must still be
     evaluated tcl must parse and either compile or interpret them
     each time they are encountered. In general this means put braces around
@@ -178,7 +196,7 @@ please take care of following rules:
     multiple times store it in a variable that will not be destroyed or
     changed between reuse. Tcl stores the compiled regex with the variable.
 
-16. You might want to decompose lists in a somewhat easy way:
+17. You might want to decompose lists in a somewhat easy way:
 
     Difficult and slow:
     # Make x1 y1 x2 y2 the first four things in the list
@@ -194,7 +212,7 @@ please take care of following rules:
 
     Be sure to include a comment as to what you are doing.
 
-17. Use the Tcl list functions (list, lappend etc) for manipulating lists.
+18. Use the Tcl list functions (list, lappend etc) for manipulating lists.
 
     For example, use:
 
@@ -216,7 +234,7 @@ please take care of following rules:
     Overlooking either of these points is likely to result in code which
     fails when a command argument contains a space.
 
-18. Tcl C library:
+19. Tcl C library:
     Memory allocated with Tcl_Alloc (such as the result of Tcl_Merge)
     must be freed with Tcl_Free. This means that the ->freeProc of
     an interpreter when returning a string using Tcl_Merge should be

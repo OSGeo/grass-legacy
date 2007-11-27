@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "global.h"
 #include <grass/Vect.h>
@@ -52,7 +54,7 @@ parse_command_line (int argc, char *argv[])
 		 "cat;insert new row for each category if doesn't exist yet;"
 		 "area;area size;"
     		 "compact;compactness of an area, calculated as \n"
-		 "              compactness = perimeter / 2 * sqrt(PI * area);"
+		 "              compactness = perimeter / (2 * sqrt(PI * area));"
 		 "perimeter;perimeter length of an area;"
 		 "length;line length;"
 		 "count;number of features for each category;"
@@ -100,7 +102,7 @@ parse_command_line (int argc, char *argv[])
     flags.t->key = 'c';
     flags.t->description = _("In print mode prints totals for options: length,area,count");	
 
-    if (G_parser(argc,argv)) exit(-1);
+    if (G_parser(argc,argv)) exit(EXIT_FAILURE);
 
     options.print = flags.p->answer;
     options.sql = flags.s->answer;
@@ -144,6 +146,9 @@ parse_command_line (int argc, char *argv[])
 	    G_fatal_error ( _("This option requires at least 2 columns") );
 	}
     }
+
+    if ( options.option == O_QUERY && !parms.qcol->answers )
+            G_fatal_error ( _("Parameter 'qcolumn' must be specified for 'option=query'") );
 
     options.qcol = parms.qcol->answer;
 

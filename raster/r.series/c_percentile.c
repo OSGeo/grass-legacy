@@ -26,16 +26,16 @@ static void percentile(DCELL *result, DCELL *values, int n, double percent)
 
 void c_quart1(DCELL *result, DCELL *values, int n)
 {
-	return percentile(result, values, n, 25.0);
+	percentile(result, values, n, 25.0);
 }
 
 void c_quart3(DCELL *result, DCELL *values, int n)
 {
-	return percentile(result, values, n, 75.0);
+	percentile(result, values, n, 75.0);
 }
 
 void c_perc90(DCELL *result, DCELL *values, int n)
 {
-	return percentile(result, values, n, 90.0);
+	percentile(result, values, n, 90.0);
 }
 

@@ -39,7 +39,7 @@ main (int argc, char *argv[])
 {
     int    i, j, layer, arg_s_num, nogeom, ncnames;
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
-    int    ncols, type;
+    int    ncols = 0, type;
     struct GModule *module;
     double min_area, snap;
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *where_opt, *min_area_opt;
@@ -101,6 +101,7 @@ main (int argc, char *argv[])
 	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) );
     }
     module = G_define_module();
+    module->keywords = _("vector");
     module->description = G_store(buf);
 
     dsn_opt = G_define_option();
@@ -222,6 +223,9 @@ main (int argc, char *argv[])
     G__setenv ( "OVERWRITE", "1" );
 
     if (G_parser (argc, argv)) exit(EXIT_FAILURE);
+
+    if (G_legal_filename(out_opt->answer) < 0)
+        G_fatal_error(_("Illegal filename: %s"), out_opt->answer);
 
     if ( !outloc_opt->answer ) { /* Check if the map exists */
 	if ( G_find_vector2 (out_opt->answer, G_mapset()) ) {
@@ -393,7 +397,7 @@ main (int argc, char *argv[])
     /* Fetch input map projection in GRASS form. */
     proj_info = NULL;
     proj_units = NULL;
-    Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer);
+    Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer); /* should not be freed later */
 
     /* Do we need to create a new location? */
     if( outloc_opt->answer != NULL )
@@ -410,7 +414,7 @@ main (int argc, char *argv[])
     }
     else
     {
-	int err;
+	int err = 0;
 
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_osr_to_grass( &cellhd, &proj_info,
@@ -521,7 +525,6 @@ main (int argc, char *argv[])
 		            "appear to match.\nProceeding with import...\n"));
 
     }
-    OSRDestroySpatialReference(Ogr_projection);
 
     db_init_string (&sql);
     db_init_string (&strval);
@@ -577,10 +580,10 @@ main (int argc, char *argv[])
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
 
 		if ( i < ncnames-1 ) {
-		    Ogr_fieldname = cnames_opt->answers[i+1];
+		    Ogr_fieldname = strdup(cnames_opt->answers[i+1]);
 		} else {
 		    /* Change column names to [A-Za-z][A-Za-z0-9_]* */
-		    Ogr_fieldname = strdup ( OGR_Fld_GetNameRef( Ogr_field ) );
+		    Ogr_fieldname = strdup( OGR_Fld_GetNameRef( Ogr_field ) );
 		    G_debug(3, "Ogr_fieldname: '%s'", Ogr_fieldname);
 
 		    c = Ogr_fieldname;
@@ -621,6 +624,10 @@ main (int argc, char *argv[])
 		/** Double byte string (unsupported)         OFTWideString = 6     **/
 		/** List of wide strings (unsupported)       OFTWideStringList = 7 **/
 		/** Raw Binary data (unsupported)            OFTBinary = 8         **/
+		/**                                          OFTDate = 9           **/
+		/**                                          OFTTime = 10          **/
+		/**                                          OFTDateTime = 11      **/
+
 
 		if( Ogr_ftype == OFTInteger ) {
 		    sprintf (buf, ", %s integer", Ogr_fieldname );
@@ -633,26 +640,31 @@ main (int argc, char *argv[])
 #if GDAL_VERSION_NUM >= 1320
 		} else if( Ogr_ftype == OFTDate ) {
 		    sprintf (buf, ", %s date", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTTime ) {
+		    sprintf (buf, ", %s time", Ogr_fieldname );
+		} else if( Ogr_ftype == OFTDateTime ) {
+		    sprintf (buf, ", %s datetime", Ogr_fieldname );
 #endif
 		} else if( Ogr_ftype == OFTString ) {
 		    int fwidth;
 		    fwidth = OGR_Fld_GetWidth(Ogr_field);
 		    /* TODO: read all records first and find the longest string length */
 		    if ( fwidth == 0) {
-			G_warning (_("Width for column '%s' set to 255 (was not specified by OGR), "
-				   "some strings may be truncated!"), Ogr_fieldname );
+			G_warning (_("Width for column %s set to 255 (was not specified by OGR), "
+				     "some strings may be truncated!"), Ogr_fieldname );
 			fwidth = 255;
 		    }
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, fwidth );
 		} else if( Ogr_ftype == OFTStringList ) {
 		    /* hack: treat as string */
 		    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OFTIntegerListlength );
-		    G_warning (_("Writing column <%s> with fixed length %d chars (may be truncated)"), Ogr_fieldname, OFTIntegerListlength);
+		    G_warning (_("Writing column %s with fixed length %d chars (may be truncated)"), Ogr_fieldname, OFTIntegerListlength);
 		} else {
 		    G_warning (_("Column type not supported (%s)"), Ogr_fieldname );
 		    buf[0] = 0;
 		}
 		db_append_string ( &sql, buf);
+		G_free(Ogr_fieldname);
 	    }
 	    db_append_string ( &sql, ")" );
 	    G_debug ( 3, db_get_string ( &sql ) );
@@ -707,10 +719,16 @@ main (int argc, char *argv[])
 			if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) {
 			    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
 #if GDAL_VERSION_NUM >= 1320
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList || Ogr_ftype == OFTDate ) {
-#else
-			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
+			/* should we use OGR_F_GetFieldAsDateTime() here ? */
+			} else if( Ogr_ftype == OFTDate || Ogr_ftype == OFTTime || Ogr_ftype == OFTDateTime ) {
+			    char *newbuf;
+			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
+			    db_double_quote_string (&strval);
+			    sprintf (buf, ", '%s'", db_get_string(&strval) );
+			    newbuf = G_str_replace(buf, "/", "-"); /* fix 2001/10/21 to 2001-10-21 */
+			    sprintf (buf, "%s", newbuf);
 #endif
+			} else if( Ogr_ftype == OFTString || Ogr_ftype == OFTIntegerList ) {
 			    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
 			    db_double_quote_string (&strval);
 			    sprintf (buf, ", '%s'", db_get_string(&strval) );
@@ -916,7 +934,8 @@ main (int argc, char *argv[])
 	    if ( type & GV_POINT ) otype = GV_POINT; else otype = GV_CENTROID;
 	    Vect_write_line ( &Map, otype, Points, Centr[centr].cats);
 	}
-
+        if (Centr)
+		G_free(Centr);
         fprintf ( stderr, separator );
 	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
 

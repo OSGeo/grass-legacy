@@ -16,6 +16,7 @@
 
 #%Module
 #% description: Exports GRASS raster data into various formats (requires GDAL)
+#% keywords: raster, export
 #%End
 #%flag
 #%  key: l

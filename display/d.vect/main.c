@@ -135,7 +135,8 @@ main (int argc, char **argv)
 	SYMBOL *Symb;
 	
 	module = G_define_module();
-	module->description = _("Displays GRASS vector data in the active frame on the "
+	module->keywords = _("display");
+    module->description = _("Displays GRASS vector data in the active frame on the "
 		              "graphics monitor.");
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
@@ -562,7 +563,7 @@ main (int argc, char **argv)
 		             window.east < box.W ||
 			     window.west > G_adjust_easting(box.E, &window) ) )
 	{
-	    fprintf (stdout,_("The bounding box of the map outside current region, nothing displayed.\n"));
+	    G_message(_("The bounding box of the map is outside the current region, nothing drawn."));
 	    stat = 0;
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);

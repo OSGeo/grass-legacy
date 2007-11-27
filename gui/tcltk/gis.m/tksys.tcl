@@ -11,6 +11,8 @@ exec $GRASS_WISH "$0" "$@"
 # 
 # andreas.lange@rhein-main.de
 
+source $env(GISBASE)/etc/gtcltk/options.tcl
+
 
 array set items { 
     platform   "Platform               "
@@ -157,9 +159,9 @@ proc sys_wininfo { } \
     frame .frame0 -borderwidth 2 -relief raised
     frame .frame0.heading -borderwidth 2
 
-    set t [text .frame0.heading.text -relief ridge \
-	       -height 1 -width 50 \
-	       -font {Helvetica -12 bold} ]
+    set t [text .frame0.heading.text -relief flat \
+	       -height 1 -width 50 -bg #dddddd \
+	       -font bolddefault ]
     $t tag configure all -justify center
     $t insert end "System Information\n"
     $t tag add all 1.0 end
@@ -173,25 +175,25 @@ proc sys_wininfo { } \
 
     foreach index [lsort -integer [array names range]] \
     {
-	set name $range($index)
-	set string $items($name)
-
-	frame .frame1.$index
-	label .frame1.$index.string -anchor w \
-	    -width 20 -text "$string"
-	label .frame1.$index.name -relief sunken \
-	    -anchor w -width 30 -text "$sys($name)" \
-	    -wraplength [font measure {Helvetica} "XXXXXXXXXXXXXX" ]
-	pack .frame1.$index.string -side left -fill x
-	pack .frame1.$index.name -side left
-	pack .frame1.$index -side top -fill x
+		set name $range($index)
+		set string $items($name)
+	
+		frame .frame1.$index
+		label .frame1.$index.string -anchor w \
+			-width 20 -text "$string"
+		label .frame1.$index.name -relief sunken -bg white \
+			-anchor w -width 30 -text "$sys($name)" \
+			-wraplength [font measure textfont "XXXXXXXXXXXXXXXXXXXXXXXXXXXX" ]
+		pack .frame1.$index.string -side left -fill x
+		pack .frame1.$index.name -side left
+		pack .frame1.$index -side top -fill x
     }
 
     pack .frame1 -side top -fill x
 
     frame .frame2 -borderwidth 2 -relief raised
 
-    button .frame2.ok -text "Quit" -padx 10 -command { exit }
+    button .frame2.ok -text "Close" -padx 10 -command { exit }
     button .frame2.save -text "Save" -padx 10 -command { sys_save }
     button .frame2.clear -text "Update" -padx 10 -command { update }
 

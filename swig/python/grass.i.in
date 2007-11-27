@@ -2,7 +2,7 @@
 %{
 #include "grass/gis.h"
 %}
-%include "../dist.i686-pc-linux-gnu/include/grass/gisdefs.h"
+%include "../dist.@ARCH@/include/grass/gisdefs.h"
 
 %include typemaps.i
 

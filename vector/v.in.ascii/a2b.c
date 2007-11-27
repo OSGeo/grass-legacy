@@ -34,22 +34,27 @@ int asc_to_bin(
 	alloc_points     = 1;
 	xarray = (double *) G_calloc(alloc_points, sizeof(double)) ;
 	yarray = (double *) G_calloc(alloc_points, sizeof(double)) ;
-	zarray = (double *) G_calloc(alloc_points, sizeof(double)) ;	
+	zarray = (double *) G_calloc(alloc_points, sizeof(double)) ;
 
 
 	while( G_getl2(buff,BUFFSIZE-1,ascii) != 0 )
 	{
 	    n_cats=0;
+	    if (buff[0] == '\0') {
+		G_debug(3, "a2b: skipping blank line");
+		continue;
+	    }
+
 	    if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) {
 		if (ctype == '#') {
-		    G_debug(1, "a2b: skipping commented line");
+		    G_debug(2, "a2b: skipping commented line");
 		    continue;
 		}
 		fprintf (stderr,"Error reading ascii file:\n[%s]\n", buff) ;
 		return 0;
 	    }
 	    if (ctype == '#') {
-		G_debug(1, "a2b: Skipping commented line");
+		G_debug(2, "a2b: Skipping commented line");
 		continue;
 	    }
 
@@ -99,7 +104,13 @@ int asc_to_bin(
 		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
 			fprintf (stderr,"End of ascii file reached before end of coordinates\n") ;
 			return 0;
-		    } 
+		    }
+		    if (buff[0] == '\0') {
+			G_debug(3, "a2b: skipping blank line while reading vertices");
+			i--;
+			continue;
+		    }
+
 		    *z=0;
 		    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
 			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
@@ -117,10 +128,10 @@ int asc_to_bin(
 			    alloc_points = n_points + 1000 ;
 			    xarray = (double *) G_realloc((void *)xarray, alloc_points * sizeof(double) );
 			    yarray = (double *) G_realloc((void *)yarray, alloc_points * sizeof(double) );
-			    zarray = (double *) G_realloc((void *)zarray, alloc_points * sizeof(double) );				
+			    zarray = (double *) G_realloc((void *)zarray, alloc_points * sizeof(double) );
 			    x = xarray + n_points ;
 			    y = yarray + n_points ;
-			    z = zarray + n_points ;				
+			    z = zarray + n_points ;
 		    }
 	    }
 
@@ -130,7 +141,13 @@ int asc_to_bin(
 		    if ( G_getl2(buff,BUFFSIZE-1,ascii) == 0 ) {
 			fprintf (stderr,"End of ascii file reached before end of categories.\n") ;
 			return 0;
-		    } 
+		    }
+		    if (buff[0] == '\0') {
+			G_debug(3, "a2b: skipping blank line while reading category info");
+			i--;
+			continue;
+		    }
+
 		    if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
 			fprintf (stderr,"Error reading categories:\n%s\n", buff) ;
 			return 0;

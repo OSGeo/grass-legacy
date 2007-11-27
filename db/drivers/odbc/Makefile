@@ -28,12 +28,12 @@ OBJS 	=  \
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-DRVDOC=$(GISBASE)/docs/html/odbc.html
+DRVDOC=$(GISBASE)/docs/html/grass-odbc.html
 
 default: $(DRIVER) $(DRVDOC)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(LIBES) $(ODBCLIB) $(MATHLIB) $(XDRLIB) $(ICONVLIB)
 
-$(DRVDOC): odbc.html
-	$(INSTALL) -m 644 odbc.html $(DRVDOC)
+$(DRVDOC): grass-odbc.html
+	$(INSTALL) -m 644 grass-odbc.html $(DRVDOC)

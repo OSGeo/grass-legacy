@@ -43,7 +43,6 @@ config.status: patch configure
                     --with-motif \
                     --with-readline \
                     --with-nls \
-                    --with-glw \
                     --with-odbc \
                     --with-freetype-includes=/usr/include/freetype2 \
                     --with-tcltk-includes=/usr/include/tcl8.3 \
@@ -132,7 +131,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman -pgrass debian/grass61.1
+	dh_installman -pgrass debian/grass62.1
 	dh_link
 	dh_strip
 	dh_compress

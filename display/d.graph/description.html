@@ -170,7 +170,7 @@ the given pixel thickness.
 
 </DL>
 
-<H2>EXAMPLE</H2>
+<H2>EXAMPLES</H2>
 
 For an example use of <EM>d.graph</EM>, examine the contents of the  
 command file <EM><a href="grass_logo.txt">grass_logo.txt</a></EM>
@@ -180,10 +180,17 @@ Note that the coordinates in the <EM><a href="grass_logo.txt">grass_logo.txt</a>
 taken directly off an image drawn by hand on graph paper. 
 <!-- formerly names "grass.logo.sh" in GRASS 5 code. -->
 <P>
-An dynamic example can be found in the <em>d.polar</em> shell script.
-<P>
+A dynamic example can be found in the <em>d.polar</em> shell script.
 
-<b>Split the screen into quadrants:</b>
+
+<h4>Draw a "star" symbol at a given map coordinate</h4>
+
+<div class="code"><pre>
+echo "symbol basic/star 20 2264417 5413182 black red" | d.graph -m
+</pre></div>
+
+
+<h4>Split the screen into quadrants:</h4>
 
 <div class="code"><pre>
 d.frame -s full_screen
@@ -202,7 +209,7 @@ d.graph << EOF
    49.85 100
 EOF
 </pre></div>
-<BR>
+
 
 <H2>NOTES</H2>
 

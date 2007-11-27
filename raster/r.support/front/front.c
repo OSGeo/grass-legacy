@@ -33,8 +33,8 @@
 
 int main(int argc, char *argv[])
 {
-    char *rname   = NULL;	/* Reclassed map name */
-    char *rmapset = NULL;	/* Reclassed mapset   */
+    char rname[GNAME_MAX];      /* Reclassed map name */
+    char rmapset[GMAPSET_MAX];  /* Reclassed mapset   */
     char *mapset;		/* Raster mapset      */
     struct Cell_head cellhd;
     struct GModule *module;
@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description = _("Allows creation and/or modification of "
                           "raster map layer support files.");
 

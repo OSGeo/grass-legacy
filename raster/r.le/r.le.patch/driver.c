@@ -78,7 +78,7 @@ void  patch_fore()
      fprintf(stderr, "    The raster map you specified with the 'map=' parameter \n");
      fprintf(stderr, "    was not found in your mapset.                          \n");
      fprintf(stderr, "   ********************************************************\n");
-     exit(1);
+     exit(EXIT_FAILURE);
   }
 
                         /* determine whether the raster map is integer
@@ -454,8 +454,7 @@ FILE *fopen1 (char *name, char *flag)
      fprintf(stderr, "    First use r.le.setup to define a moving window or    \n");
      fprintf(stderr, "       sampling units to make this file                  \n"); 
      fprintf(stderr, "   ******************************************************\n");
-     exit(1);
-     exit(1);
+     exit(EXIT_FAILURE);
   }
   return fp;
 }
@@ -476,8 +475,7 @@ FILE *fopen2 (char *name, char *flag)
      fprintf(stderr, "       which defines the attribute groups or classes \n");
      fprintf(stderr, "    First use r.le.setup to create this file         \n"); 
      fprintf(stderr, "   **************************************************\n");
-     exit(1);
-     exit(1);
+     exit(EXIT_FAILURE);
   }
   return fp;
 }
@@ -489,7 +487,7 @@ FILE *fopen2 (char *name, char *flag)
 void  mv_driver()
 {
   register int i, j;
-  int          nr, nc, u_w, u_l, x0, y0, row, col, d, fmask, m, p;
+  int          nr, nc, u_w, u_l, x0, y0, d, fmask, m, p;
   double       *row_buf, *tmp_buf, *tmp_buf2, **buff=NULL;
   int          a1,a2,a3,a4,a5,a6,a7,a8,s1,s2,s3,s4,s5,s6,s7,s8,c1,c2,c3,c4,c5,
                c6,c7,c8,c9,c10,h1,h2,h3,h4,h5,h6,p1,p2,p3,p4,p5,p6,n1,n2,n3,n4,
@@ -497,7 +495,6 @@ void  mv_driver()
   long         finished_time;
   float        radius;
   struct       Cell_head wind;
-  struct       FPRange fprange;
   char         *nulltmp;
 
 /* variables:  
@@ -841,7 +838,7 @@ void  mv_driver()
      fprintf(stderr, "    move_wind is less than 1 row or column.  Check this   \n");
      fprintf(stderr, "    file or redefine the moving window using r.le.setup.  \n");
      fprintf(stderr, "   *******************************************************\n");
-     exit(1);
+     exit(EXIT_FAILURE);
   }
 
                          /* check for an unacceptable
@@ -857,7 +854,7 @@ void  mv_driver()
      fprintf(stderr, "    r.le.para/move_wind file or reset the region to match \n");
      fprintf(stderr, "    the r.le.para/move_wind file                          \n");
      fprintf(stderr, "   *******************************************************\n");
-     exit(1);
+     exit(EXIT_FAILURE);
   }
 
                          /* set the d parameter for the 
@@ -2343,7 +2340,7 @@ void  get_para()
         fprintf(stderr, "    be incorrect as no attribute groups were found.  Check \n");
         fprintf(stderr, "    this file or make it again using r.le.setup.           \n");
         fprintf(stderr, "   ********************************************************\n");
-        exit(1);
+        exit(EXIT_FAILURE);
      }
   }
 
@@ -2512,7 +2509,7 @@ void read_line (char *name, int line, int n, int *value, int *fvalue, int *numbe
         fscanf(fp, "%d", value + i);
   else {
      for(i = 1; ; i++) {
-        fscanf(fp, "%f", fvalue + i);
+        fscanf(fp, "%f", (float *)fvalue + i);
         if (fvalue[i] <= -999) {
            *number_classes = i - 1;
            break;
@@ -2542,7 +2539,6 @@ void  unit_driver()
   int              top, left, u_w, u_l, nscl, nu, fd;
   char             *buf, unitname[10], istr[3];
   register int     i, j, k, m;
-  static int       cnt = 0;
   struct Cell_head wind;
   FILE             *fp;
   CELL             **units, *unit_buf;
@@ -2616,7 +2612,7 @@ void  unit_driver()
            fprintf(stderr, "   ***************************************************\n");
            fprintf(stderr, "    You cannot choose more than 15 scales             \n");
            fprintf(stderr, "   ***************************************************\n");
-           exit(0);
+           exit(EXIT_FAILURE);
         }
      }
                          /* for each unit */
@@ -2689,7 +2685,7 @@ double dist;
      fprintf(stderr, "    from an analysis of the r.le.para/units file and the \n");
      fprintf(stderr, "    current region setting.                              \n");
      fprintf(stderr, "   ******************************************************\n");
-     exit(1);
+     exit(EXIT_FAILURE);
   }
 
   if (choice->units) {

@@ -4,6 +4,7 @@
 #include <grass/gis.h>
 #include <grass/display.h>
 #include <grass/raster.h>
+#include <grass/glocale.h>
 #include "his.h"
 
 int 
@@ -40,6 +41,7 @@ main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
+	module->keywords = _("display");
 	module->description =
 		"Displays the result obtained by combining "
 		"hue, intensity, and saturation (his) values "

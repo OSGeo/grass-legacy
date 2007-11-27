@@ -194,7 +194,7 @@ This directory contains these files:
 <ul>
 <li><b>coor</b> - binary file, coordinates [former dig/ file]
 <li><b>topo</b> - binary file, topology [former dig_plus/ file]
-<li><b>sidx</b> - binary file, spatial index 
+<li><b>cidx</b> - binary file, category index 
 <li><b>head</b> - text file, header information [former part of dig/ file]
 <li><b>dbln</b> - text file, link(s) to attribute table(s)
 <li><b>hist</b> - text file, vector map change history
@@ -437,7 +437,7 @@ spatial index without topology.
 
 \section vlib_spidx Vector library spatial index management
 
-Spatial index (based on R-tree) is calculated on the fly.
+Spatial index (based on R-tree) is generated on the fly.
 
 Spatial index occupies a lot of memory but it is necessary for 
 topology building. Also, it takes a long time to release the memory

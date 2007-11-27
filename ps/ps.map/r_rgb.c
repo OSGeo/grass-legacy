@@ -17,7 +17,7 @@ int read_rgb(char *key, char *data)
 
     if (sscanf(data, "%s %s %s", names[0], names[1], names[2]) != 3)
     {
-	error (key,data,"illegal request");
+	error (key,data,"illegal request (rgb)");
 	return 0;
     }
 

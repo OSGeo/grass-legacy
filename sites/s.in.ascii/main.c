@@ -18,10 +18,11 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
-#include <stdlib.h>
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
                   * required for s.to.vect and s.to.rast */
@@ -46,6 +47,7 @@ main (int argc, char *argv[])
     G_gisinit (me = argv[0]);
 
     module = G_define_module();
+    module->keywords = _("sites");
     module->description = 
       "Convert an ASCII listing of site locations "
       "into a GRASS site list file.";

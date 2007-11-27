@@ -1,6 +1,7 @@
 #!/bin/sh
 
-echo -e "Did you export a fresh .tex file from LyX first?\n"
+echo "Did you export a fresh .tex file from LyX first?"
+echo
 rm -rf GEM-Manual
 rm -f index.html
 latex GEM-Manual.tex

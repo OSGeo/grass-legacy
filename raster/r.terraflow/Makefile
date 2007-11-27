@@ -26,10 +26,10 @@ SHORT_OBJ = $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
 $(OBJARCH)/FLOAT/%.o:%.cc
-	$(CXX) -c $(CXXFLAGS) -DELEV_FLOAT $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_FLOAT $< -o $@
 
 $(OBJARCH)/SHORT/%.o:%.cc
-	$(CXX) -c $(CXXFLAGS) -DELEV_SHORT $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(NLS_CFLAGS) -DELEV_SHORT $< -o $@
 
 
 IOSTREAM_DIR =  ./IOStream

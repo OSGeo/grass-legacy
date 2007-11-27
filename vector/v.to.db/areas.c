@@ -8,7 +8,7 @@
  * 1) It reads the areas of the areas.
  * 2) It reads the perimeter lengths of the areas. If projection is LL, the geodesic distance is used.
  * 3) It calculates the compactness using this formula:
- *    compactness = perimeter / 2 * sqrt(M_PI * area)
+ *    compactness = perimeter / (2 * sqrt(M_PI * area))
  */
 int read_areas(struct Map_info *Map)
 {

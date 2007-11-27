@@ -1,7 +1,7 @@
 <H2>DESCRIPTION</H2>
 
 <EM>d.out.gpsdrive</EM> exports the current GRASS display monitor to a 
-<A HREF="http://gpsdrive.kraftvoll.at">GpsDrive</a> compatible backdrop 
+<A HREF="http://www.gpsdrive.de">GpsDrive</a> compatible backdrop 
 image and updates the GpsDrive image list with the appropriate geo-referencing
 information.
 
@@ -15,8 +15,12 @@ This software comes with absolutely no warranty.</em></b>
 
 Maps are saved in the user's <tt>~/.gpsdrive</tt> directory. Geo-referencing
 information is added to the user's <tt>~/.gpsdrive/map_koord.txt</tt> file.
-<P>
 
+<P>
+JPEG output requires the <tt>pngtopnm</tt> and <tt>pnmtojpeg</tt> programs
+from the <a href="http://netpbm.sourceforge.net">NetPBM tools</a>.
+
+<P>
 GpsDrive assumes northings are not rotated compared to true-geographic north.
 If you are using a projection with significant curvature away from the central
 meridian, or a map datum with a significant rotational component, then you will 
@@ -75,6 +79,11 @@ panels=3
 iter=$((panels*2-1))
 
 eval `g.region -eg`
+eval `g.region -g`
+north=$n
+south=$s
+west=$w
+east=$e
 
 unit_ns=$(echo "scale=8; $ns_extent / $panels" | bc)
 unit_ew=$(echo "scale=8; $unit_ns * 4/3" | bc)
@@ -115,7 +124,7 @@ creates overlapping tiles.
 <BR><BR>
 The GRASS <A HREF="pngdriver.html">PNG driver</A><BR>
 
-The <A HREF="http://gpsdrive.kraftvoll.at">GpsDrive</a> project<BR>
+The <A HREF="http://www.gpsdrive.de">GpsDrive</a> project<BR>
 The <A HREF="http://gpsd.berlios.de">gpsd</a> personal GPS server project
 <BR><BR>
 

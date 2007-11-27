@@ -7,6 +7,7 @@
 /***                                                                     ***/
 /***************************************************************************/
 
+#include <grass/glocale.h>
 #include "frac.h"
 
 int 
@@ -43,13 +44,11 @@ write_rast (
     if (Steps != step)
 	sprintf(file_name,"%s.%d",rast_out_name,step);
     else
-	strcpy(file_name,rast_out_name);
+	G_strcpy(file_name,rast_out_name);
 
     if ( (fd_out=G_open_raster_new(file_name, DCELL_TYPE)) <0)
     {
-        char err[256];
-        sprintf(err,"ERROR: Problem opening output file.");
-        G_fatal_error(err);
+	G_fatal_error (_("ERROR: Problem opening output file."));
     }
 
     /*------------------------------------------------------------------*/

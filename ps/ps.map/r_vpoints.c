@@ -139,7 +139,7 @@ read_vpoints (char *name, char *mapset)
 	    if (sscanf(data, "%lf%s", &width, mapset) < 1 || width < 0.)
 	    {
 		width = 1.;
-		error(key, data, "illegal width");
+		error(key, data, "illegal width (vpoints)");
 		continue;
 	    }
 	    if(mapset[0] == 'i') width = width/72.;
@@ -168,7 +168,7 @@ read_vpoints (char *name, char *mapset)
 	    else if ( ret == 2 )
 		unset_color ( &(vector.layer[vec].fcolor));
 	    else
-		error (key,data,"illegal color request");
+		error (key,data,"illegal color request (vpoints)");
 
 	    continue;
          }
@@ -214,10 +214,15 @@ read_vpoints (char *name, char *mapset)
 		*cc = '\0';
 		vector.layer[vec].epssuf = G_store(cc + sizeof(char));
 		vector.layer[vec].epstype = 2;
-	    }
-	    printf ("epstype=%d, pre=%s, suf=%s\n", vector.layer[vec].epstype,
-		vector.layer[vec].epspre, vector.layer[vec].epssuf);
 
+		G_debug(2, "epstype=%d, pre=[%s], suf=[%s]", vector.layer[vec].epstype,
+		    vector.layer[vec].epspre, vector.layer[vec].epssuf);
+	    }
+	    else
+	    {
+		G_debug(2, "epstype=%d, eps file=[%s]", vector.layer[vec].epstype,
+		    vector.layer[vec].epspre);
+	    }
 	    continue;
 	}	
 
@@ -226,7 +231,7 @@ read_vpoints (char *name, char *mapset)
 	    if (sscanf(data, "%lf", &size) != 1 || size <= 0.0)
 	    {
 		size = 1.0;
-		error(key, data, "illegal size request");
+		error(key, data, "illegal size request (vpoints)");
 	    }
 	    vector.layer[vec].size = size;
 	    continue;
@@ -244,7 +249,7 @@ read_vpoints (char *name, char *mapset)
 	    if (sscanf(data, "%lf", &scale) != 1 || scale <= 0.0)
 	    {
 		scale = 1.0;
-		error(key, data, "illegal scale request");
+		error(key, data, "illegal scale request (vpoints)");
 	    }
 	    vector.layer[vec].scale = scale;
 	    continue;
@@ -254,14 +259,14 @@ read_vpoints (char *name, char *mapset)
 	{
 	    if (sscanf(data, "%lf", &rotate) != 1)
 	    {
-		size = 0.0;
-		error(key, data, "illegal size request");
+		rotate = 0.0;
+		error(key, data, "illegal rotation request (vpoints)");
 	    }
 	    vector.layer[vec].rotate = rotate;
 	    continue;
 	}	
 
-	error(key, "", "illegal request");
+	error(key, "", "illegal request (vpoints)");
     }
 
     vector.count++;

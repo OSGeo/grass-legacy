@@ -47,12 +47,8 @@ proc GmTree::create { mon } {
     variable pg
     variable page
     variable node
-    global treefile
-	global tree_pane
 	global pgs
-	global sw
 	global options
-	global win
 	global filename
 	global keycontrol
 	
@@ -67,7 +63,14 @@ proc GmTree::create { mon } {
 	$pgs raise page_$mon
 
 	# destroy old panel with options
-    destroy $options.fr
+	destroy $options.fr
+
+	set pgtitle [label $pg($mon).title -text "Map Layers for Display $mon" \
+		-font default -fg mediumblue -bg grey95]
+	pack $pgtitle -side top -expand 0 -fill x -anchor n
+
+	Separator $pg($mon).sep -orient horizontal
+	pack $pg($mon).sep -side top -expand 0 -fill x -anchor n
 
 	set sw    [ScrolledWindow $pg($mon).sw \
 		-relief flat -borderwidth 0 ]
@@ -81,10 +84,12 @@ proc GmTree::create { mon } {
             -opencmd   "GmTree::open_node $sw.tree_$mon" \
             -closecmd  "GmTree::close_node $sw.tree_$mon" \
             -deltay $lh -padx $lw ]
-            
-	$tree($mon) configure -height $treeht
-	$pgs configure -height [expr {$treeht * $lh}]
-	
+
+    # this height setting is needed to make adding new layers look nice when they
+    # scroll off the pane at the bottom (at least in the x11 interface).
+    $tree($mon) configure -height $treeht
+    $pgs configure -height [expr {$treeht * $lh} + {$legend_height}]
+
     $sw setwidget $tree($mon)
 
     bind_scroll $tree($mon)
@@ -106,10 +111,14 @@ proc GmTree::create { mon } {
 # switch page when monitor selected
 proc GmTree::switchpage { mon } {
 	global pgs
-	global options.fr
+	global options
 	global opt
 	variable tree
 	
+	if {[info exists options]} {
+	    destroy $options.fr
+	}
+
 	$pgs raise "page_$mon"
 
     pack $tree($mon)  -side top -expand yes -fill both
@@ -278,6 +287,11 @@ proc GmTree::add { type } {
 	variable tree
     global new_root_node
     global mon
+
+    # Create new tree, if none exists
+    if { [array size GmTree::tree] < 1 } {
+	Gm::startmon
+    }
 
     if { [catch {match string {} $new_root_node}] } {
     set new_root_node root
@@ -676,11 +690,14 @@ proc GmTree::save { spth } {
 
     set fpath $spth
     
-    set rcfile [open $fpath w]
+    catch {set rcfile [open $fpath w]}
 
     GmGroup::save $tree($mon) 0 "root"
 
-    close $rcfile
+    if {[catch {close $rcfile} error]} {
+	puts $error
+    }
+
 }
 
 
@@ -815,7 +832,7 @@ proc GmTree::load { lpth } {
             return 
     }
 
-    set rcfile [open $fpath r]
+    catch {set rcfile [open $fpath r]}
     set file_size [file size $fpath]
     set nrows [expr {$file_size / 16}]
 
@@ -976,7 +993,10 @@ proc GmTree::load { lpth } {
 		if { $prg > $max_prgindic } { set prg $max_prgindic }
 		set Gm::prgindic $prg
 	} 
-    close $rcfile
+	if {[catch {close $rcfile} error]} {
+		puts $error
+	}
+
     set Gm::prgindic $max_prgindic
     set prgtext "Layers loaded"
 }

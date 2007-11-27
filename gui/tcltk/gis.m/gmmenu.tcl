@@ -19,6 +19,7 @@ global execom
 global mon
 global filename
 global env
+global devnull
 
 # Put this at the top of the file menu.
 set GuiMenu::Menu_File_Top [subst  {
@@ -49,8 +50,8 @@ lappend descmenu all
 lappend descmenu options
 lappend descmenu $tmenu
 lappend descmenu [subst {
-	{command {[G_msg "GRASS help"]} {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }
-	{command {[G_msg "GIS Manager &help"]} {} {[G_msg "GIS Manager help"]} {} -command { exec g.manual gis.m > /dev/null & } }
+	{command {[G_msg "GRASS help"]} {} "g.manual" {} -command { exec g.manual -i > $devnull & } }
+	{command {[G_msg "GIS Manager &help"]} {} {[G_msg "GIS Manager help"]} {} -command { exec g.manual gis.m > $devnull & } }
 	{command {[G_msg "About &GRASS"]} {} {[G_msg "About GRASS"]} {} -command { source $env(GISBASE)/etc/gm/grassabout.tcl} }
 	{command {[G_msg "About &System"]} {} {[G_msg "About System"]} {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/gm/tksys.tcl --tcltk & }}
  }]

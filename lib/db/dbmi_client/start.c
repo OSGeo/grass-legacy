@@ -34,6 +34,8 @@ db_start_driver (char *name)
     dbConnection connection;
     char ebuf[5];
     int stdin_orig, stdout_orig;
+    int have_stdin, have_stdout;
+    int stdin_fd, stdout_fd;
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
@@ -66,7 +68,7 @@ db_start_driver (char *name)
 	sprintf ( ebuf, "%d", G_GISRC_MODE_FILE );
 	G_putenv("GRASS_DB_DRIVER_GISRC_MODE", ebuf);
     }
-    
+     
 /* read the dbmscap file */
     if(NULL == (list = db_read_dbmscap()))
 	return (dbDriver *) NULL;
@@ -149,18 +151,53 @@ db_start_driver (char *name)
     fflush (stderr);
 
     /* Set pipes for stdin/stdout driver */
-    if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ||
-         (stdout_orig = _dup(_fileno(stdout))) == -1 ) 
+
+    have_stdin = have_stdout = 1;
+
+    if ( _fileno(stdin) == -1 ) 
     {
-        db_syserror ("can't duplicate stdin/stdout");
-	return (dbDriver *) NULL;
+        have_stdin = 0;
+        stdin_fd = 0; 
+    }
+    else
+    {
+        stdin_fd = _fileno(stdin);
+
+        if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ) 
+        {
+            db_syserror ("can't duplicate stdin");
+	    return (dbDriver *) NULL;
+	}
+    
     }
 
-    if ( _dup2(p1[0], _fileno(stdin)) != 0 ||
-         _dup2(p2[1], _fileno(stdout)) != 0 ) 
+    if ( _dup2(p1[0], stdin_fd) != 0 )
     {
-        db_syserror ("can't duplicate pipes");
-	return (dbDriver *) NULL;
+        db_syserror ("can't duplicate pipe");
+        return (dbDriver *) NULL;
+    }
+
+    if ( _fileno(stdout) == -1 ) 
+    {
+        have_stdout = 0;
+        stdout_fd = 1; 
+    }
+    else
+    {
+        stdout_fd = _fileno(stdout);
+
+        if ( (stdout_orig  = _dup(_fileno(stdout ))) == -1  ) 
+        {
+            db_syserror ("can't duplicate stdout");
+	    return (dbDriver *) NULL;
+	}
+    
+    }
+
+    if ( _dup2(p2[1], stdout_fd) != 0 ) 
+    {
+        db_syserror ("can't duplicate pipe");
+        return (dbDriver *) NULL;
     }
 
     /* Warning: the driver on Windows must have extension .exe
@@ -176,7 +213,7 @@ db_start_driver (char *name)
      */
 
      pid = _spawnl ( _P_NOWAIT, startup, "", NULL ); 
-
+    
     /* This does not help. It runs but pipe remains open when close() is 
      * called in model but caling close() on that descriptor in driver gives 
      * error. */
@@ -196,17 +233,27 @@ db_start_driver (char *name)
     }
     */
 
-    /* Reset stdin/stdout for module */
-    if ( _dup2(stdin_orig, _fileno(stdin)) != 0 ||
-         _dup2(stdout_orig, _fileno(stdout)) != 0 ) 
+    /* Reset stdin/stdout for module and close duplicates */
+    if ( have_stdin )
     {
-        db_syserror ("can't reset stdin/stdout");
-	return (dbDriver *) NULL;
+        if ( _dup2(stdin_orig, _fileno(stdin)) != 0 ) 
+        {
+            db_syserror ("can't reset stdin");
+	    return (dbDriver *) NULL;
+        }
+        close ( stdin_orig );
     }
 
-    /* close duplicates */
-    close ( stdin_orig );
-    close ( stdout_orig );
+
+    if ( have_stdout )
+    {
+        if ( _dup2(stdout_orig, _fileno(stdout)) != 0 ) 
+        {
+            db_syserror ("can't reset stdout");
+	    return (dbDriver *) NULL;
+        }
+        close ( stdout_orig );
+    }
 
     if ( pid == -1 ) {
         db_syserror ("can't _spawnl");

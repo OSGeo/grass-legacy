@@ -9,6 +9,8 @@
 
 extern int verbose;
 
+#define METERS_TO_INCHES ((double)39.37)
+
 int map_setup (void)
 {
     double w, h;
@@ -78,8 +80,12 @@ int map_setup (void)
     }
 
     /* set the scale */
-    if (!PS.scaletext[0]) sprintf(PS.scaletext, "1 : %.0f",
-	39.37 * 72.0 * (PS.w.east - PS.w.west) / PS.map_pix_wide);
+    /*   work from height not width to minimize lat/lon curvature problems?? */
+    if (!PS.scaletext[0]) {
+	sprintf(PS.scaletext, "1 : %.0f",
+	  METERS_TO_INCHES * distance(PS.w.east, PS.w.west) * 72.0 / PS.map_pix_wide);
+    }
+
     if (verbose > 1)
     {
         fprintf (stdout,"PS-PAINT: scale set to %s.\n", PS.scaletext);

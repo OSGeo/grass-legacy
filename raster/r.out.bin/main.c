@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description = _("Exports a GRASS raster to a binary array.");
 
     /* Define the different options */
@@ -217,7 +218,7 @@ int main(int argc, char *argv[])
 
     /* Write out BIL support files compatible with Arc-View */
     if (flag.BIL_hd->answer) {
-	char out_tmp1[100], out_tmp2[100];
+	char out_tmp1[GPATH_MAX], out_tmp2[GPATH_MAX];
 	FILE *fp_1, *fp_2;
 
 	strcpy(out_tmp1, outfile);

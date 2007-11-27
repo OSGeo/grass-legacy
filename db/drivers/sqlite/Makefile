@@ -18,7 +18,7 @@ OBJS = $(subst .c,.o,$(wildcard *.c))
 	
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
-DRVDOC=$(GISBASE)/docs/html/sqlite.html
+DRVDOC=$(GISBASE)/docs/html/grass-sqlite.html
 
 default: $(DRIVER) $(DRVDOC)
 
@@ -26,5 +26,5 @@ $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(FMODE_OBJ) $(SQLITELIBPATH) $(LIBES) \
 		$(MATHLIB) $(XDRLIB)
 
-$(DRVDOC): sqlite.html
-	$(INSTALL) -m 644 sqlite.html $(DRVDOC)
+$(DRVDOC): grass-sqlite.html
+	$(INSTALL) -m 644 grass-sqlite.html $(DRVDOC)

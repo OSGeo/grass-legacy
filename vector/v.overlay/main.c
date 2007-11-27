@@ -11,6 +11,7 @@
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 #include "local.h"
 
 int 
@@ -40,6 +41,7 @@ main (int argc, char *argv[])
     pre[1] ="b";
 
     module = G_define_module();
+    module->keywords = _("vector, geometry");
     module->description = "Overlay 2 vector maps.";
 
     in_opt[0] = G_define_standard_option(G_OPT_V_INPUT);
@@ -93,7 +95,7 @@ main (int argc, char *argv[])
     table_flag->key             = 't';
     table_flag->description     = "Do not create attribute table.";
 
-    if (G_parser (argc, argv)) exit(-1);
+    if (G_parser (argc, argv)) exit(EXIT_FAILURE);
 
     for ( input = 0; input < 2; input++ ) {
         type[input] = Vect_option_to_types ( type_opt[input] );

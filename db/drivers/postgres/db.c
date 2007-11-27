@@ -81,7 +81,7 @@ int db__driver_open_database (dbHandle *handle)
 		 "'float4', 'float8', 'numeric', "
 		 "'char', 'bpchar', 'varchar', 'text', "
 		 "'time', 'date', 'timestamp', "
-	   	 "'bool' ) order by oid" );
+	   	 "'bool', 'geometry' ) order by oid" );
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	append_error ( "Cannot select data types" );
@@ -98,12 +98,12 @@ int db__driver_open_database (dbHandle *handle)
 
 	pgtype = atoi ( PQgetvalue(res, row, 0) );
 
-	pg_types[row][0] = pgtype;	
+	pg_types[row][0] = pgtype;
 
 	if ( strcmp( PQgetvalue(res, row, 1), "bit" ) == 0 )
 	    type = PG_TYPE_BIT;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int2" ) == 0 )
-            type = PG_TYPE_INT2;
+	    type = PG_TYPE_INT2;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int4" ) == 0 )
 	    type = PG_TYPE_INT4;
 	else if ( strcmp( PQgetvalue(res, row, 1), "int8" ) == 0 )
@@ -134,6 +134,8 @@ int db__driver_open_database (dbHandle *handle)
 	    type = PG_TYPE_TIMESTAMP;
 	else if ( strcmp( PQgetvalue(res, row, 1), "bool" ) == 0 )
 	    type = PG_TYPE_BOOL;
+	else if ( strcmp( PQgetvalue(res, row, 1), "geometry" ) == 0 )
+	    type = PG_TYPE_POSTGIS_GEOM;
 	else 
 	    type = PG_TYPE_UNKNOWN;
 

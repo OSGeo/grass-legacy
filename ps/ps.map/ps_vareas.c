@@ -107,8 +107,10 @@ int PS_vareas_plot (struct Map_info *P_map, int vec)
 	                 vector.layer[vec].where, GV_AREA, 1, Varray );
 	}
 	G_debug ( 3, "%d items selected for vector %d", ret, vec );
+	if(ret == -1)
+	    G_fatal_error("Cannot load data from table");
     }
-    
+
     shift = 0;
     /* read and plot areas */
     na = Vect_get_num_areas(P_map); 

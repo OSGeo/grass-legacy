@@ -144,7 +144,8 @@ main(int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description =
+	module->keywords = _("display");
+    module->description =
 	    _("Draws text in the graphics monitor's active display frame using TrueType fonts.");
 
 	param.text = G_define_option();
@@ -1037,7 +1038,12 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
 		return -2;
 	if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+	{
+		/* FT_Render_Glyph fails for spaces */
+		pen->x += face->glyph->advance.x;
+		pen->y += face->glyph->advance.y;
 		return -3;
+	}
 
 	rows  = face->glyph->bitmap.rows;
 	width = face->glyph->bitmap.width;

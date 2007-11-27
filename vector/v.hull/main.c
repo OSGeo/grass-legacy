@@ -25,6 +25,7 @@
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/site.h>
+#include <grass/glocale.h>
 
 
 struct Point {
@@ -137,7 +138,7 @@ int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Ce
     {
         if(all || G_site_in_region(site, window) )
         {
-            if ((pointIdx % ALLOC_CHUNK) == 0);
+            if ((pointIdx % ALLOC_CHUNK) == 0)
                *points = (struct Point *) G_realloc(*points, (pointIdx + ALLOC_CHUNK) * sizeof(struct Point));
 
             (*points)[pointIdx].x = site->east;
@@ -221,7 +222,9 @@ int main(int argc, char **argv) {
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("vector, geometry");
     module->description = "Uses a GRASS vector points map to produce a convex hull vector map";
+
     input = G_define_option ();
     input->key = "input";
     input->type = TYPE_STRING;

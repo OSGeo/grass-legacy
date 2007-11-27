@@ -18,7 +18,7 @@
 #include <math.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
-
+#include <grass/glocale.h>
 
 /* function prototypes */
 static int sort_new(const void *pa, const void *pb);
@@ -57,7 +57,7 @@ int add_item(int id, struct ilist *list)
  Lines showing how vertices were snapped may be optionaly written to error map. 
  Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
 
- \param Map input map where verices will be snapped
+ \param Map input map where vertices will be snapped
  \param type type of line to be snap
  \param thresh threshold in which snap vertices
  \param Err vector map where lines representing snap are written or NULL
@@ -98,7 +98,8 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     struct Rect rect;
     struct ilist *List;
     int *Index = NULL;  /* indexes of anchors for vertices */
-    int aindex = 0; /* allocated Index */
+    int aindex = 0;     /* allocated Index */
+    int width  = 26;    /* fprintf width */
 
     Points = Vect_new_line_struct ();
     NPoints = Vect_new_line_struct ();
@@ -118,7 +119,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     XPnts = NULL;
     printed = 0;
 
-    if ( msgout ) fprintf (msgout, "Registering points ..."); 
+    if ( msgout ) fprintf (msgout, "%s ...", _("Registering points")); 
     
     for ( line = 1; line <= nlines; line++ ){ 
 	int v;
@@ -157,7 +158,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
             }
 	}
 	if ( msgout && printed > 1000 ) {
-	    fprintf (msgout, "\rRegistering points ... %d", point - 1); 
+	    fprintf (msgout, "\r%s ... %d", _("Registering points"), point - 1); 
 	    fflush ( msgout );
 	    printed = 0;
 	}
@@ -166,8 +167,9 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     npoints = point - 1;
     if ( msgout ) {
 	fprintf (msgout, "\r                                               \r" ); 
-	fprintf ( msgout, "All vertices: %5d\n", nvertices ); 
-	fprintf ( msgout, "Registered points (unique coordinates): %5d\n", npoints ); 
+	fprintf ( msgout, "%-*s: %4d\n", width, _("All vertices"), nvertices ); 
+	fprintf ( msgout, "%-*s: %4d\n", width, _("Registered points"),
+		  npoints ); 
     }
 
     /* Go through all registered points and if not yet marked mark it as anchor and assign this anchor
@@ -211,8 +213,8 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 	}
     }
     if ( msgout ) {
-	fprintf ( msgout, "Nodes marked as anchor     : %5d\n", nanchors ); 
-	fprintf ( msgout, "Nodes marked to be snapped : %5d\n", ntosnap ); 
+	fprintf ( msgout, "%-*s: %4d\n", width, _("Nodes marked as anchor"), nanchors ); 
+	fprintf ( msgout, "%-*s: %4d\n", width, _("Nodes marked to be snapped"), ntosnap ); 
     }
 
     /* Go through all lines and: 
@@ -221,7 +223,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
     
     printed = 0;
     nsnapped = ncreated = 0;
-    if ( msgout ) fprintf (msgout, "Snaps: %5d", nsnapped + ncreated ); 
+    if ( msgout ) fprintf (msgout, "%-*s: %4d", width, _("Snaps"), nsnapped + ncreated ); 
     
     for ( line = 1; line <= nlines; line++ ){ 
 	int v, spoint, anchor;
@@ -341,28 +343,32 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 		changed = 1;
 	    }
 	}
-	/* append end point */
+	
+        /* append end point */
 	v = Points->n_points-1; 
         Vect_append_point ( NPoints, Points->x[v], Points->y[v], Points->z[v] );
 
 	if ( changed ) { /* rewrite the line */
-	    Vect_line_prune ( Points );  /* remove duplicates */
-	    if ( Points->n_points > 1 || ltype & GV_LINES )
+	    Vect_line_prune ( NPoints );  /* remove duplicates */
+	    if ( NPoints->n_points > 1 || ltype & GV_LINES ) {
 	        Vect_rewrite_line ( Map, line, ltype, NPoints, Cats );  
-	    else
+	    }
+	    else {
 		Vect_delete_line ( Map, line);
+	    }
 	}
+
 	if ( msgout && printed > 1000 ) {
   	    fprintf (msgout, "\rSnaps: %5d  (line = %d)", nsnapped + ncreated, line ); 
 	    fflush ( msgout );
 	    printed = 0;
 	}
 	printed++;
+    } /* for each line */
 
-    }
     if ( msgout ) {
-	fprintf ( msgout, "\rSnapped vertices : %5d                             \n", nsnapped ); 
-	fprintf ( msgout, "New vertices     : %5d\n", ncreated ); 
+	fprintf ( msgout, "\r%-*s: %4d\n", width, _("Snapped vertices"), nsnapped ); 
+	fprintf ( msgout, "%-*s: %4d\n", width, _("New vertices"), ncreated ); 
     }
     
     Vect_destroy_line_struct ( Points );

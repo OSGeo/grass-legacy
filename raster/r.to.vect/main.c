@@ -28,6 +28,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
+    module->keywords = _("raster");
     module->description = _("Converts a raster map into a vector map layer.");
 
     in_opt = G_define_option();
@@ -51,7 +52,7 @@ int main (int argc, char *argv[])
 
     smooth_flg = G_define_flag();
     smooth_flg->key = 's';
-    smooth_flg->description = _("Smooth Corners");
+    smooth_flg->description = _("Smooth corners of area features");
 
     value_flg = G_define_flag();
     value_flg->key = 'v';

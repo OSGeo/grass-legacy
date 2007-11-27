@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "mask.h"
 #include "local_proto.h"
 
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
     char buf[1024];
     int is_reclass;
 
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -40,9 +41,9 @@ int main(int argc, char *argv[])
         G_gisinit (argv[0]);
 
 	module = G_define_module();
+	module->keywords = _("raster");
 	module->description =
-		"The function of r.null is to explicitly create the NULL-value "
-		"bitmap file.";
+		"Creates explicitly the NULL-value bitmap file.";
 
 	parms.map = G_define_option();
 	parms.map->key    = "map";
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
 	parms.map->required = YES ;
 	parms.map->multiple = NO ;
 	parms.map->gisprompt  = "old,cell,raster" ;
-	parms.map->description = "raster map for which to edit null file";
+	parms.map->description = "Raster map for which to edit null file";
 
 	parms.setnull = G_define_option();
 	parms.setnull->key   = "setnull";

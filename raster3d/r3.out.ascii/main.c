@@ -256,7 +256,8 @@ main (int argc, char *argv[])
   /* Initialize GRASS */
   G_gisinit (argv[0]);
   module = G_define_module ();
-  module->description = _("Converts a 3D raster map layer into an ASCII text file");
+  module->keywords = _("raster3d, voxel");
+    module->description = _("Converts a 3D raster map layer into an ASCII text file");
 
   /* Get parameters from user */
   setParams ();
