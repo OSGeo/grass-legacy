@@ -35,10 +35,6 @@ int display(
 
     D_setup(0);
 
-    /* cell maps wipe out a picture, so we clear info on the window too */
-    if (!overlay)
-	D_clear_window();
-
     /* Go draw the raster map */
     cell_draw(name, mapset, &colors, overlay, invert, data_type) ;
 
@@ -52,14 +48,6 @@ int display(
 
 	D_add_to_list(G_recreate_command());
     }
-
-    /* If overlay add it to the list instead of setting the cell name */
-/*
-    if (overlay) {
-	sprintf(buf,"d.rast -o map=%s", G_fully_qualified_name(name,mapset));
-	D_add_to_list(buf) ;
-    }
-*/
 
     return 0;
 }
