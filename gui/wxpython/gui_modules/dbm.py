@@ -66,7 +66,7 @@ class VirtualAttributeList(wx.ListCtrl,
     """
     Support virtual list class
     """
-    def __init__(self, parent, log, mapInfo, layer):
+    def __init__(self, parent, log, mapDBInfo, layer):
         wx.ListCtrl.__init__(self, parent=parent, id=wx.ID_ANY,
                              style=wx.LC_REPORT | wx.LC_HRULES |
                              wx.LC_VRULES | wx.LC_VIRTUAL)
@@ -75,7 +75,7 @@ class VirtualAttributeList(wx.ListCtrl,
         # initialize variables
         #
         self.log     = log
-        self.mapInfo = mapInfo
+        self.mapDBInfo = mapDBInfo
         self.layer   = layer
 
         self.columns              = {} # <- LoadData()
@@ -122,9 +122,9 @@ class VirtualAttributeList(wx.ListCtrl,
         # self.list.Bind(wx.EVT_LEFT_DCLICK, self.OnDoubleClick)
         # self.list.Bind(wx.EVT_RIGHT_DOWN, self.OnRightDown)
 
-    def Update(self, mapInfo):
-        """Update list according new mapInfo description"""
-        self.mapInfo = mapInfo
+    def Update(self, mapDBInfo):
+        """Update list according new mapDBInfo description"""
+        self.mapDBInfo = mapDBInfo
         self.LoadData(self.layer)
 
     def LoadData(self, layer, cols='*', where=''):
@@ -141,14 +141,14 @@ class VirtualAttributeList(wx.ListCtrl,
         for i in range(self.GetColumnCount()):
             self.DeleteColumn(0)
 
-        tableName    = self.mapInfo.layers[layer]['table']
-        keyColumn    = self.mapInfo.layers[layer]['key']
-        self.columns = self.mapInfo.tables[tableName]
+        tableName    = self.mapDBInfo.layers[layer]['table']
+        keyColumn    = self.mapDBInfo.layers[layer]['key']
+        self.columns = self.mapDBInfo.tables[tableName]
 
         if cols != '*':
             columnNames = cols.split(',')
         else:
-            columnNames = self.mapInfo.GetColumns(tableName)
+            columnNames = self.mapDBInfo.GetColumns(tableName)
 
         if len(self.itemCatsMap) > 0:
             keyId = -1
@@ -163,7 +163,7 @@ class VirtualAttributeList(wx.ListCtrl,
             if i >= 256:
                 self.log.write(_("Can display only 256 columns"))
 
-        ### self.mapInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
+        ### self.mapDBInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
         #
         # read data
         #
@@ -178,8 +178,8 @@ class VirtualAttributeList(wx.ListCtrl,
         outFile = tempfile.NamedTemporaryFile(mode='w+b')
         selectCommand = gcmd.Command(["db.select", "-c", "--q",
                                       "sql=%s" % sql,
-                                      "database=%s" % self.mapInfo.layers[layer]["database"],
-                                      "driver=%s"   % self.mapInfo.layers[layer]["driver"],
+                                      "database=%s" % self.mapDBInfo.layers[layer]["database"],
+                                      "driver=%s"   % self.mapDBInfo.layers[layer]["driver"],
                                       "fs=|"],
                                      stdout=outFile)
         i = 0
@@ -370,9 +370,9 @@ class AttributeManager(wx.Frame):
         self.qlayer = None
 
         # -> layers / tables description
-        self.mapInfo = VectorDBInfo(self.vectmap)
+        self.mapDBInfo = VectorDBInfo(self.vectmap)
 
-        if len(self.mapInfo.layers.keys()) == 0:
+        if len(self.mapDBInfo.layers.keys()) == 0:
             dlg = wx.MessageDialog(patent=self.parent,
                                    message=_("No attribute table linked to "
                                              "vector map <%s> found.") % \
@@ -414,7 +414,8 @@ class AttributeManager(wx.Frame):
         #                                         FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | 
-                                          FN.FNB_TABS_BORDER_SIMPLE)
+                                          FN.FNB_TABS_BORDER_SIMPLE |
+                                          FN.FNB_NODRAG)
         # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
@@ -422,7 +423,8 @@ class AttributeManager(wx.Frame):
 
         self.manageTablePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=FN.FNB_NO_X_BUTTON | 
-                                          FN.FNB_TABS_BORDER_SIMPLE)
+                                               FN.FNB_TABS_BORDER_SIMPLE |
+                                               FN.FNB_NODRAG)
         # self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
         # self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
@@ -478,10 +480,15 @@ class AttributeManager(wx.Frame):
         #             self.map.DeleteLayer(self.qlayer)
         #             self.mapdisplay.ReRender(None)
 
-    def __createBrowsePage(self):
+    def __createBrowsePage(self, onlyLayer=-1):
         """Create browse tab page"""
-        for layer in self.mapInfo.layers.keys():
+        for layer in self.mapDBInfo.layers.keys():
+            if onlyLayer > 0 and layer != onlyLayer:
+                continue
+
             panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
+            self.layerPage[layer] = {'browsePage': panel.GetId()}
+
             self.browsePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
@@ -497,7 +504,7 @@ class AttributeManager(wx.Frame):
             sqlSizer = wx.StaticBoxSizer(sqlBox, wx.VERTICAL)
 
             win = VirtualAttributeList(panel, self.log,
-                                       self.mapInfo, layer)
+                                       self.mapDBInfo, layer)
             win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
             win.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnDataRightUp) #wxMSW
             win.Bind(wx.EVT_RIGHT_UP,            self.OnDataRightUp) #wxGTK
@@ -522,14 +529,14 @@ class AttributeManager(wx.Frame):
                                    size=(200, -1))
             sqlStatement = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
                                        value="SELECT * FROM %s" % \
-                                           self.mapInfo.layers[layer]['table'],
+                                           self.mapDBInfo.layers[layer]['table'],
                                        style=wx.TE_PROCESS_ENTER)
             sqlWhere.Bind(wx.EVT_TEXT_ENTER,     self.OnApplySqlStatement)
             sqlStatement.Bind(wx.EVT_TEXT_ENTER, self.OnApplySqlStatement)
 
             sqlLabel = wx.StaticText(parent=panel, id=wx.ID_ANY,
                                      label="SELECT * FROM %s WHERE " % \
-                                         self.mapInfo.layers[layer]['table'])
+                                         self.mapDBInfo.layers[layer]['table'])
             label_query = wx.StaticText(parent=panel, id=wx.ID_ANY,
                                         label="")
 
@@ -569,24 +576,28 @@ class AttributeManager(wx.Frame):
 
             panel.SetSizer(pageSizer)
 
-            self.layerPage[layer]= {'data'     : win.GetId(),
-                                    'simple'   : sqlSimple.GetId(),
-                                    'advanced' : sqlAdvanced.GetId(),
-                                    'where'    : sqlWhere.GetId(),
-                                    'builder'  : btnSqlBuilder.GetId(),
-                                    'statement': sqlStatement.GetId()}
+            self.layerPage[layer]['data']      = win.GetId()
+            self.layerPage[layer]['simple']    = sqlSimple.GetId()
+            self.layerPage[layer]['advanced']  = sqlAdvanced.GetId()
+            self.layerPage[layer]['where']     = sqlWhere.GetId()
+            self.layerPage[layer]['builder']   = btnSqlBuilder.GetId()
+            self.layerPage[layer]['statement'] = sqlStatement.GetId()
 
 
         self.browsePage.SetSelection(0) # select first layer
-        self.layer = self.mapInfo.layers.keys()[0]
+        self.layer = self.mapDBInfo.layers.keys()[0]
         self.OnChangeSql(None)
         self.log.write(_("Number of loaded records: %d") % \
                            self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
 
-    def __createManageTablePage(self):
+    def __createManageTablePage(self, onlyLayer=-1):
         """Create manage page (create/link and alter tables)"""
-        for layer in self.mapInfo.layers.keys():
+        for layer in self.mapDBInfo.layers.keys():
+            if onlyLayer > 0 and layer != onlyLayer:
+                continue
+
             panel = wx.Panel(parent=self.manageTablePage, id=wx.ID_ANY)
+            self.layerPage[layer]['tablePage'] = panel.GetId()
             self.manageTablePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
@@ -601,7 +612,7 @@ class AttributeManager(wx.Frame):
             self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnInfoPaneChanged, infoCollapse)
 
             # table description
-            table = self.mapInfo.layers[layer]['table']
+            table = self.mapDBInfo.layers[layer]['table']
             tableBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                     label=" %s " % _("Table %s") % table)
 
@@ -725,13 +736,13 @@ class AttributeManager(wx.Frame):
             self.layerPage[layer]['dbinfo'] = infoCollapse.GetId()
 
         self.manageTablePage.SetSelection(0) # select first layer
-        self.layer = self.mapInfo.layers.keys()[0]
+        self.layer = self.mapDBInfo.layers.keys()[0]
 
     def __createTableDesc(self, parent, table):
         """Create list with table description"""
         list = TableListCtrl(parent=parent, id=wx.ID_ANY,
-                             table=self.mapInfo.tables[table],
-                             columns=self.mapInfo.GetColumns(table))
+                             table=self.mapDBInfo.tables[table],
+                             columns=self.mapDBInfo.GetColumns(table))
         list.Populate()
         # sorter
         # itemDataMap = list.Populate()
@@ -741,15 +752,21 @@ class AttributeManager(wx.Frame):
 
     def __createManageLayerPage(self):
         """Create settings page"""
-        panel = wx.Panel(parent=self.manageLayerPage, id=wx.ID_ANY)
-        self.manageLayerPage.AddPage(page=panel, text=_("Layers of vector map")) # dummy page
+        splitterWin = wx.SplitterWindow(parent=self.manageLayerPage, id=wx.ID_ANY)
+        self.manageLayerPage.AddPage(page=splitterWin,
+                                     text=_("Layers of vector map")) # dummy page
 
-        pageSizer = wx.BoxSizer(wx.VERTICAL)
-        layerBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
-                                    label=" %s " % _("List of layers"))
+        #
+        # list of layers
+        #
+        panelList = wx.Panel(parent=splitterWin, id=wx.ID_ANY)
+
+        panelListSizer  = wx.BoxSizer(wx.VERTICAL)
+        layerBox = wx.StaticBox(parent=panelList, id=wx.ID_ANY,
+                                label=" %s " % _("List of layers"))
         layerSizer = wx.StaticBoxSizer(layerBox, wx.VERTICAL)
 
-        self.layerList = self.__createLayerDesc(panel)
+        self.layerList = self.__createLayerDesc(panelList)
         self.layerList.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnLayerRightUp) #wxMSW
         self.layerList.Bind(wx.EVT_RIGHT_UP,            self.OnLayerRightUp) #wxGTK
 
@@ -758,25 +775,37 @@ class AttributeManager(wx.Frame):
                        proportion=1,
                        border=3)
 
-        pageSizer.Add(item=layerSizer,
-                      proportion=0,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=5)
+        panelListSizer.Add(item=layerSizer,
+                           flag=wx.ALL | wx.EXPAND,
+                           proportion=1,
+                           border=3)
 
-        self.manageLayerBook = LayerBook(parent=panel, id=wx.ID_ANY,
-                                         mapDBInfo=self.mapInfo)
+        panelList.SetSizer(panelListSizer)
 
-        pageSizer.Add(item=self.manageLayerBook,
-                      proportion=1,
-                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
-                      border=5)
+        #
+        # manage part
+        #
+        panelManage = wx.Panel(parent=splitterWin, id=wx.ID_ANY)
 
-        panel.SetSizer(pageSizer)
+        manageSizer = wx.BoxSizer(wx.VERTICAL)
+
+        self.manageLayerBook = LayerBook(parent=panelManage, id=wx.ID_ANY,
+                                         parentDialog=self)
+
+        manageSizer.Add(item=self.manageLayerBook,
+                        proportion=1,
+                        flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                        border=5)
+
+        panelManage.SetSizer(manageSizer)
+
+        #splitterWin.SetMinimumPaneSize(20)
+        splitterWin.SplitHorizontally(panelList, panelManage, 100) 
 
     def __createLayerDesc(self, parent):
         """Create list of linked layers"""
         list = LayerListCtrl(parent=parent, id=wx.ID_ANY,
-                             layers=self.mapInfo.layers)
+                             layers=self.mapDBInfo.layers)
         list.Populate()
         # sorter
         # itemDataMap = list.Populate()
@@ -896,8 +925,8 @@ class AttributeManager(wx.Frame):
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         item = list.GetFirstSelected()
 
-        table    = self.mapInfo.layers[self.layer]["table"]
-        key      = self.mapInfo.layers[self.layer]["key"]
+        table    = self.mapDBInfo.layers[self.layer]["table"]
+        key      = self.mapDBInfo.layers[self.layer]["key"]
 
         while item != -1:
             # list.DeleteItem(item)
@@ -923,7 +952,7 @@ class AttributeManager(wx.Frame):
         list.itemIndexMap = []
         list.SetItemCount(0)
 
-        table = self.mapInfo.layers[self.layer]["table"]
+        table = self.mapDBInfo.layers[self.layer]["table"]
         self.listOfSQLStatements.append('DELETE FROM %s' % table)
 
         event.Skip()
@@ -942,8 +971,8 @@ class AttributeManager(wx.Frame):
     def OnDataItemAdd(self, event):
         """Add new record to the attribute table"""
         list      = self.FindWindowById(self.layerPage[self.layer]['data'])
-        table     = self.mapInfo.layers[self.layer]['table']
-        keyColumn = self.mapInfo.layers[self.layer]['key']
+        table     = self.mapDBInfo.layers[self.layer]['table']
+        keyColumn = self.mapDBInfo.layers[self.layer]['key']
 
         # (column name, value)
         data = []
@@ -1044,8 +1073,8 @@ class AttributeManager(wx.Frame):
         if item == -1:
             return
 
-        table     = self.mapInfo.layers[self.layer]['table']
-        keyColumn = self.mapInfo.layers[self.layer]['key']
+        table     = self.mapDBInfo.layers[self.layer]['table']
+        keyColumn = self.mapDBInfo.layers[self.layer]['key']
         cat       = list.itemCatsMap[list.itemIndexMap[item]]
 
         # (column name, value)
@@ -1241,8 +1270,8 @@ class AttributeManager(wx.Frame):
 
     def OnTableItemDeleteAll(self, event):
         """Delete all items from the list"""
-        table = self.mapInfo.layers[self.layer]['table']
-        cols = self.mapInfo.GetColumns(table)
+        table = self.mapDBInfo.layers[self.layer]['table']
+        cols = self.mapDBInfo.GetColumns(table)
         self.listOfCommands = [['v.db.dropcol',
                                'map=%s' % self.vectmap,
                                'layer=%d' % self.layer,
@@ -1305,11 +1334,15 @@ class AttributeManager(wx.Frame):
     def OnLayerPageChanged(self, event):
         """Layer tab changed"""
         pageNum = event.GetSelection()
-        self.layer = self.mapInfo.layers.keys()[pageNum]
-        self.OnChangeSql(None)
-        # update statusbar
-        self.log.write(_("Number of loaded records: %d") % \
-                           self.FindWindowById(self.layerPage[self.layer]['data']).GetItemCount())
+        self.layer = self.mapDBInfo.layers.keys()[pageNum]
+        try:
+            self.OnChangeSql(None)
+            # update statusbar
+            self.log.write(_("Number of loaded records: %d") % \
+                               self.FindWindowById(self.layerPage[self.layer]['data']).\
+                               GetItemCount())
+        except:
+            pass
 
     def OnLayerRightUp(self, event):
         """Layer description area, context menu"""
@@ -1337,18 +1370,18 @@ class AttributeManager(wx.Frame):
                           ' '.join(cmd))
                 gcmd.Command(cmd)
 
-            self.mapInfo = VectorDBInfo(self.vectmap)
-            table = self.mapInfo.layers[self.layer]['table']
+            self.mapDBInfo = VectorDBInfo(self.vectmap)
+            table = self.mapDBInfo.layers[self.layer]['table']
 
             # update table description
             list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
-            list.Update(table=self.mapInfo.tables[table],
-                        columns=self.mapInfo.GetColumns(table))
+            list.Update(table=self.mapDBInfo.tables[table],
+                        columns=self.mapDBInfo.GetColumns(table))
             self.OnTableReload(None)
 
             # update data list
             list = self.FindWindowById(self.layerPage[self.layer]['data'])
-            list.Update(self.mapInfo)
+            list.Update(self.mapDBInfo)
             self.OnDataReload(None)
 
             # reset list of commands
@@ -1361,8 +1394,8 @@ class AttributeManager(wx.Frame):
                 sqlFile.file.write(sql + ";\n")
                 sqlFile.file.flush()
 
-            driver   = self.mapInfo.layers[self.layer]["driver"]
-            database = self.mapInfo.layers[self.layer]["database"]
+            driver   = self.mapDBInfo.layers[self.layer]["driver"]
+            database = self.mapDBInfo.layers[self.layer]["database"]
 
             cmd = ['db.execute',
                    'input=%s' % sqlFile.name,
@@ -1432,11 +1465,11 @@ class AttributeManager(wx.Frame):
             cols += c
             index += 1
 
-        tablelen = len(self.mapInfo.layers[self.layer]['table'])
+        tablelen = len(self.mapDBInfo.layers[self.layer]['table'])
 
         if statement[index+1:index+6].lower() != 'from ' or \
                 statement[index+6:index+6+tablelen] != '%s' % \
-                (self.mapInfo.layers[self.layer]['table']):
+                (self.mapDBInfo.layers[self.layer]['table']):
             return (False, '', '')
 
         if len(statement[index+7+tablelen:]) > 0:
@@ -1478,22 +1511,22 @@ class AttributeManager(wx.Frame):
                                              label="Driver:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
-                                                 self.mapInfo.layers[layer]['driver']))
+                                                 self.mapDBInfo.layers[layer]['driver']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Database:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
-                                                 self.mapInfo.layers[layer]['database']))
+                                                 self.mapDBInfo.layers[layer]['database']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Table:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
-                                                 self.mapInfo.layers[layer]['table']))
+                                                 self.mapDBInfo.layers[layer]['table']))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="Key:"))
         infoFlexSizer.Add(item=wx.StaticText(parent=pane, id=wx.ID_ANY,
                                              label="%s" % \
-                                                 self.mapInfo.layers[layer]['key']))
+                                                 self.mapDBInfo.layers[layer]['key']))
 
         infoSizer.Add(item=infoFlexSizer,
                       proportion=1,
@@ -1566,6 +1599,52 @@ class AttributeManager(wx.Frame):
         self.settings['highlight']['color'] = self.hlColor.GetColour()
         self.settings['highlight']['width'] = int(self.hlWidth.GetValue())
 
+    def UpdateDialog(self, layer):
+        """Updates dialog layout for given layer"""
+        #
+        # delete page
+        #
+        if layer in self.mapDBInfo.layers.keys():
+            # delete page
+            # draging pages disallowed
+            # if self.browsePage.GetPageText(page).replace('Layer ', '').strip() == str(layer):
+            # self.browsePage.DeletePage(page)
+            # break
+            self.browsePage.RemovePage(self.mapDBInfo.layers.keys().index(layer))
+            self.manageTablePage.RemovePage(self.mapDBInfo.layers.keys().index(layer))
+            # set current page selection
+            self.notebook.SetSelection(2)
+
+        # fetch fresh db info
+        self.mapDBInfo = VectorDBInfo(self.vectmap)    
+
+        #
+        # add new page
+        #
+        if layer in self.mapDBInfo.layers.keys():
+            # 'browse data' page
+            self.__createBrowsePage(layer)
+            # 'manage tables' page
+            self.__createManageTablePage(layer)
+            # set current page selection
+            self.notebook.SetSelection(2)
+            
+        #
+        # 'manage layers' page
+        #
+        # update list of layers
+        self.layerList.Update(self.mapDBInfo.layers)
+        self.layerList.Populate(update=True)
+        # update selected widgets
+        listOfLayers = map(str, self.mapDBInfo.layers.keys())
+        self.manageLayerBook.deleteLayer.SetItems(listOfLayers)
+        self.manageLayerBook.deleteLayer.SetStringSelection(listOfLayers[0])
+        tableName = self.mapDBInfo.layers[int(listOfLayers[0])]['table']
+        self.manageLayerBook.deleteTable.SetLabel( \
+            _('Drop also linked attribute table (%s)') % \
+                tableName)
+        self.manageLayerBook.layerWidgets['layer'][1].SetValue(\
+            max(self.mapDBInfo.layers.keys())+1)
 
 #     def OnMapClick(self, event):
 #         """
@@ -1749,6 +1828,7 @@ class LayerListCtrl(wx.ListCtrl,
         else:
             self.DeleteAllItems()
 
+        i = 0
         for layer in self.layers.keys():
             index = self.InsertStringItem(sys.maxint, str(layer))
             self.SetStringItem(index, 0, str(layer))
@@ -1778,12 +1858,13 @@ class LayerListCtrl(wx.ListCtrl,
 class LayerBook(wx.Notebook):
     """Manage layers (add, delete, modify)"""
     def __init__(self, parent, id,
-                 mapDBInfo,
+                 parentDialog,
                  style=wx.BK_DEFAULT):
         wx.Notebook.__init__(self, parent, id, style=style)
 
-        self.parent    = parent
-        self.mapDBInfo = mapDBInfo
+        self.parent       = parent
+        self.parentDialog = parentDialog
+        self.mapDBInfo    = self.parentDialog.mapDBInfo
 
         self.__createAddPage()
         self.__createDeletePage()
@@ -1983,8 +2064,69 @@ class LayerBook(wx.Notebook):
 
     def __createDeletePage(self):
         """Delete layer"""
-        self.deletePage = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=self.deletePage, text=_("Delete selected layer"))
+        panel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=panel, text=_("Delete selected layer"))
+
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+                              label='%s:' % _("Layer to detele"))
+
+        self.deleteLayer = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(100, -1),
+                                       style=wx.CB_SIMPLE | wx.CB_READONLY,
+                                       choices=map(str, self.mapDBInfo.layers.keys()))
+        self.deleteLayer.SetSelection(0)
+        self.deleteLayer.Bind(wx.EVT_COMBOBOX, self.OnChangeLayerToDelete)
+
+        tableName = self.mapDBInfo.layers[int(self.deleteLayer.GetStringSelection())]['table']
+
+        self.deleteTable = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_('Drop also linked attribute table (%s)') % \
+                                           tableName)
+
+        btnDelete   = wx.Button(panel, wx.ID_DELETE, _("&Delete layer"),
+                                size=(125,-1))
+        btnDelete.Bind(wx.EVT_BUTTON, self.OnDeleteLayer)
+
+        #
+        # do layout
+        #
+        pageSizer = wx.wx.BoxSizer(wx.VERTICAL)
+
+        dataSizer = wx.wx.BoxSizer(wx.VERTICAL)
+
+        flexSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(2)
+
+        flexSizer.Add(item=label,
+                      flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.deleteLayer,
+                      flag=wx.ALIGN_CENTER_VERTICAL)
+
+        dataSizer.Add(item=flexSizer,
+                      proportion=0,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        dataSizer.Add(item=self.deleteTable,
+                      proportion=0,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        pageSizer.Add(item=dataSizer,
+                      proportion=1,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        pageSizer.Add(item=btnDelete,
+                       proportion=0,
+                       flag=wx.ALL | wx.ALIGN_RIGHT,
+                       border=5)
+
+        pageSizer.Add(item=btnDelete,
+                       proportion=0,
+                       flag=wx.ALL | wx.ALIGN_RIGHT,
+                       border=5)
+
+        panel.SetSizer(pageSizer)
 
     def __createModifyPage(self):
         """Modify layer"""
@@ -2116,21 +2258,79 @@ class LayerBook(wx.Notebook):
     def OnAddLayer(self, event):
         """Add new layer to vector map"""
         layer    = int(self.layerWidgets['layer'][1].GetValue())
+        layerWin = self.layerWidgets['layer'][1]
         driver   = self.layerWidgets['driver'][1].GetStringSelection()
         database = self.layerWidgets['database'][1].GetValue()
         table    = self.layerWidgets['table'][1].GetStringSelection()
         key      = self.layerWidgets['key'][1].GetStringSelection()
         
+        if layer in self.mapDBInfo.layers.keys():
+            dlg = wx.MessageDialog(self.parent,
+                                   _("Unable to add new layer to vector map <%s>.%s"
+                                     "Layer %d already exists.") % \
+                                       (self.mapDBInfo.map, os.linesep, layer),
+                                   _("Error"), wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return
+
+        connectCmd = gcmd.Command(['v.db.connect',
+                                   '--q',
+                                   'map=%s' % self.mapDBInfo.map,
+                                   'driver=%s' % driver,
+                                   'database=%s' % database,
+                                   'table=%s' % table,
+                                   'key=%s' % key,
+                                   'layer=%d' % layer])
+
+        if connectCmd.returncode == 0:
+            # update dialog (only for new layer)
+            self.parentDialog.UpdateDialog(layer=layer) 
+            # update db info
+            self.mapDBInfo = self.parentDialog.mapDBInfo
+            # increase layer number
+            layerWin.SetValue(layer+1)
+
+    def OnDeleteLayer(self, event):
+        """Delete layer"""
+
+        try:
+            layer = int(self.deleteLayer.GetValue())
+        except:
+            return
+
         gcmd.Command(['v.db.connect',
-                      '--q',
+                      '-d', '--q',
                       'map=%s' % self.mapDBInfo.map,
-                      'driver=%s' % driver,
-                      'database=%s' % database,
-                      'table=%s' % table,
-                      'key=%s' % key,
                       'layer=%d' % layer])
 
-        ### TODO: update dialog
+        # drop also table linked to layer which is deleted
+        if self.deleteTable.IsChecked():
+            driver   = self.layerWidgets['driver'][1].GetStringSelection()
+            database = self.layerWidgets['database'][1].GetValue()
+            table    = self.mapDBInfo.layers[layer]['table']
+            sql      = 'DROP TABLE %s' % (table)
+
+            gcmd.Command(['db.execute',
+                          '--q',
+                          'driver=%s' % driver,
+                          'database=%s' % database],
+                         stdin=sql)
+
+        # update dialog
+        self.parentDialog.UpdateDialog(layer=layer) 
+        # update db info
+        self.mapDBInfo = self.parentDialog.mapDBInfo
+
+        event.Skip()
+
+    def OnChangeLayerToDelete(self, event):
+        """Layer number of layer to be deleted is changed"""
+        layer = int(event.GetString())
+        
+        self.deleteTable.SetLabel(_('Drop also linked attribute table (%s)') % \
+                                      self.mapDBInfo.layers[layer]['table'])
+        event.Skip()
 
 class DisplayAttributesDialog(wx.Dialog):
     """
@@ -2158,9 +2358,9 @@ class DisplayAttributesDialog(wx.Dialog):
         self.line = None
 
         # get layer/table/column information
-        self.mapInfo = VectorDBInfo(self.map)
+        self.mapDBInfo = VectorDBInfo(self.map)
 
-        layers = self.mapInfo.layers.keys() # get available layers
+        layers = self.mapDBInfo.layers.keys() # get available layers
 
         # check if db connection / layer exists
         if (self.layer == -1 and len(layers) <= 0) or \
@@ -2179,7 +2379,7 @@ class DisplayAttributesDialog(wx.Dialog):
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
-            self.mapInfo = None
+            self.mapDBInfo = None
             return
 
         wx.Dialog.__init__(self, parent=self.parent, id=wx.ID_ANY,
@@ -2189,7 +2389,7 @@ class DisplayAttributesDialog(wx.Dialog):
         mainSizer = wx.BoxSizer(wx.VERTICAL)
 
         if self.queryCoords: # select by position
-            self.line, nselected = self.mapInfo.SelectByPoint(self.queryCoords,
+            self.line, nselected = self.mapDBInfo.SelectByPoint(self.queryCoords,
                                                               self.qdist)
 
         # notebook
@@ -2241,7 +2441,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
         if self.notebook.GetPageCount() == 0:
             Debug.msg(2, "DisplayAttributesDialog(): Nothing found!")
-            self.mapInfo = None
+            self.mapDBInfo = None
 
     def __SelectAttributes(self, layer):
         """Select attributes"""
@@ -2259,9 +2459,9 @@ class DisplayAttributesDialog(wx.Dialog):
         """
         sqlCommands = []
         # find updated values for each layer/category
-        for layer in self.mapInfo.layers.keys(): # for each layer
-            table = self.mapInfo.layers[layer]["table"]
-            columns = self.mapInfo.tables[table]
+        for layer in self.mapDBInfo.layers.keys(): # for each layer
+            table = self.mapDBInfo.layers[layer]["table"]
+            columns = self.mapDBInfo.tables[table]
             for idx in range(len(columns["cat"]['values'])): # for each category
                 updatedColumns = []
                 updatedValues = []
@@ -2321,9 +2521,9 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnReset(self, event):
         """Reset form"""
-        for layer in self.mapInfo.layers.keys():
-            table = self.mapInfo.layers[layer]["table"]
-            columns = self.mapInfo.tables[table]
+        for layer in self.mapDBInfo.layers.keys():
+            table = self.mapDBInfo.layers[layer]["table"]
+            columns = self.mapDBInfo.tables[table]
             for idx in range(len(columns["cat"]['values'])):
                 for name in columns.keys():
                     type  = columns[name]['type']
@@ -2368,16 +2568,16 @@ class DisplayAttributesDialog(wx.Dialog):
         self.queryCoords = queryCoords
         self.qdist       = qdist
 
-        if not self.mapInfo:
+        if not self.mapDBInfo:
             return False
 
-        self.mapInfo.Reset()
+        self.mapDBInfo.Reset()
 
-        layers = self.mapInfo.layers.keys() # get available layers
+        layers = self.mapDBInfo.layers.keys() # get available layers
 
         # id of selected line
         if self.queryCoords: # select by position
-            self.line, nselected = self.mapInfo.SelectByPoint(queryCoords,
+            self.line, nselected = self.mapDBInfo.SelectByPoint(queryCoords,
                                                               qdist)
         # reset notebook
         self.notebook.DeleteAllPages()
@@ -2388,20 +2588,20 @@ class DisplayAttributesDialog(wx.Dialog):
                 continue
 
             if not self.queryCoords: # select using layer/cat
-                nselected = self.mapInfo.SelectFromTable(layer, where="cat=%d" % self.cat)
+                nselected = self.mapDBInfo.SelectFromTable(layer, where="cat=%d" % self.cat)
 
             if nselected <= 0 and self.action != "add":
                 continue # nothing selected ...
 
             if self.action == "add":
                 if nselected <= 0:
-                    table = self.mapInfo.layers[layer]["table"]
-                    columns = self.mapInfo.tables[table]
+                    table = self.mapDBInfo.layers[layer]["table"]
+                    columns = self.mapDBInfo.tables[table]
                     for name in columns.keys():
                         if name == "cat":
-                            self.mapInfo.tables[table][name]['values'].append(self.cat)
+                            self.mapDBInfo.tables[table][name]['values'].append(self.cat)
                         else:
-                            self.mapInfo.tables[table][name]['values'].append('')
+                            self.mapDBInfo.tables[table][name]['values'].append('')
                 else: # change status 'add' -> 'update'
                     self.action = "update"
 
@@ -2411,8 +2611,8 @@ class DisplayAttributesDialog(wx.Dialog):
             # notebook body
             border = wx.BoxSizer(wx.VERTICAL)
 
-            table   = self.mapInfo.layers[layer]["table"]
-            columns = self.mapInfo.tables[table]
+            table   = self.mapDBInfo.layers[layer]["table"]
+            columns = self.mapDBInfo.tables[table]
 
             # value
             if len(columns["cat"]['values']) == 0: # no cats
