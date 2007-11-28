@@ -141,13 +141,13 @@ int main(int argc, char *argv[])
 		G_fatal_error(_("Raster map <%s> not found"), parm.raster->answer);
 
 	    if((fd = G_open_cell_old(name, mapset)) < 0)
-		G_fatal_error(_("Cannot open raster map <%s>"), name);
+		G_fatal_error(_("Unable to open raster map <%s>"), name);
 
 	    G_init_raster_cats("", &cats);
 
 	    if (0 > G_read_cats(parm.raster->answer, cmapset, &cats))
-		G_fatal_error(_("Cannot read category file of raster map <%s>"),
-		    parm.raster->answer);
+		G_fatal_error(_("Unable to read category file of raster map <%s@%s>"),
+		    parm.raster->answer, cmapset);
 
 	    if (G_write_cats(name, &cats) >= 0)
 		G_message(_("Category table for <%s> set from <%s>"), name,
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
 	    G_init_raster_cats("", &cats);
 
 	    if (0 > G_read_cats(name, G_mapset(), &cats))
-		G_warning(_("Cannot read category file of raster map <%s>"), name);
+		G_warning(_("Unable to read category file of raster map <%s@%s>"), name, G_mapset());
 
 	    if(parm.fmt_str->answer) {
 		fmt_str = G_malloc(strlen(parm.fmt_str->answer) > strlen(cats.fmt)

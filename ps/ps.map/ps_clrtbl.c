@@ -27,12 +27,12 @@ int PS_colortable (void)
     double grey_color_val;
 
     /* let user know what's happenning */
-    G_message (_("Creating color table for <%s in %s> ..."),
+    G_message (_("Creating color table for <%s in %s>..."),
 	       ct.name, ct.mapset); 
 
     if (G_read_cats(ct.name, ct.mapset, &PS.cats) == -1)
     {
-	G_warning(_("Category file for [%s] not available"), ct.name);
+	G_warning(_("Category file for <%s> not available"), ct.name);
 	return 1;
     }
 
