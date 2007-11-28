@@ -989,6 +989,7 @@ class DigitSettingsDialog(wx.Dialog):
                                           initial=self.parent.digit.settings["lineWidth"][0],
                                           min=1, max=1e6)
         self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                         style=wx.CB_SIMPLE | wx.CB_READONLY,
                                          choices=["screen pixels", "map units"])
         self.lineWidthUnit.SetValue(self.parent.digit.settings["lineWidth"][1])
         flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
@@ -1014,7 +1015,8 @@ class DigitSettingsDialog(wx.Dialog):
                                          min=1, max=1e6)
         self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
         self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                         choices=["screen pixels", "map units"])
+                                        style=wx.CB_SIMPLE | wx.CB_READONLY,
+                                        choices=["screen pixels", "map units"])
         self.snappingUnit.SetValue(self.parent.digit.settings["snapping"][1])
         self.snappingUnit.Bind(wx.EVT_COMBOBOX, self.OnChangeSnappingUnits)
         flexSizer1.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
