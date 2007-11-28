@@ -218,11 +218,11 @@ int main(int argc, char *argv[])
 	    G_fatal_error(_("Raster map <%s> not found"), map_opt->answer);
 
 	if((fd = G_open_cell_old(infile,mapset)) < 0)
-		G_fatal_error(_("Cannot open raster map <%s>"), infile);
+		G_fatal_error(_("Unable to open raster map <%s>"), infile);
 	G_init_cats ((CELL)0, "", &cats);
 	if (0 > G_read_cats(map_opt->answer, cmapset, &cats))
-	    G_fatal_error(_("Cannot read category file of raster map <%s>"),
-			  map_opt->answer);
+	    G_fatal_error(_("Unable to read category file of raster map <%s@%s>"),
+			  map_opt->answer, cmapset);
 
 	if (G_write_cats(infile, &cats) >= 0)
 	    G_message(_("cats table for [%s] set to %s"), infile, map_opt->answer);

@@ -105,10 +105,10 @@ int main (int argc, char **argv)
 	    G_fatal_error(_("Raster map <%s> not found"), map_name);
 
 	if (G_get_cellhd(map_name, mapset, &window) == -1)
-	    G_fatal_error(_("Cannot read map header for <%s>"), map_name);
+	    G_fatal_error(_("Unable to read header of raster map <%s@%s>"), map_name, mapset);
 
 	if (G_read_cats(map_name, mapset, &cats) == -1)
-	    G_fatal_error(_("Cannot read category file for <%s>"), map_name);
+	    G_fatal_error(_("Unable to read category file of raster map <%s@%s>"), map_name, mapset);
 
 
 	if(draw->answer) {

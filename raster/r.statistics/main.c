@@ -85,8 +85,8 @@ main (int argc, char **argv)
 
     if (G_read_cats (covermap->answer, mapset, &cats) < 0)
     {
-       G_fatal_error (_("Cannot read category file of raster map <%s>"),
-		      covermap->answer);
+       G_fatal_error (_("Unable to read category file of raster map <%s@%s>"),
+		      covermap->answer, mapset);
     }
     
     for (o_method = 0; menu[o_method].name; o_method++)

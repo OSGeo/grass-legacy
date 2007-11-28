@@ -271,8 +271,8 @@ int parse_layer (char *s)
 	layers[n].name = G_store (name);
 	layers[n].mapset = mapset;
 	if (G_read_cats (name, mapset, &layers[n].labels) < 0)
-	    G_fatal_error (_("Unable to read category file for raster map <%s>"),
-			   name);
+	    G_fatal_error (_("Unable to read category file of raster map <%s@%s>"),
+			   name, mapset);
 
     return 0;
 }

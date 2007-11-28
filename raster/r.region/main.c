@@ -158,9 +158,9 @@ int main (int argc, char *argv[])
 
 	mapset = G_find_cell2(name, "");
 	if (!mapset)
-		G_fatal_error(_("raster map <%s> not found"), name);
+		G_fatal_error(_("Raster map <%s> not found"), name);
 	if (G_get_cellhd(name, mapset, &cellhd) < 0)
-		G_fatal_error(_("can't read header for <%s> in <%s>"), name, mapset);
+		G_fatal_error(_("Unable to read header of raster map <%s@%s>"), name, mapset);
 
 	G_copy(&window, &cellhd, sizeof(window));
 
@@ -174,9 +174,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_file("windows", name, "");
 		if (!mapset)
-			G_fatal_error(_("region <%s> not found"), name);
+			G_fatal_error(_("Region <%s> not found"), name);
 		if (G__get_window(&window, "windows", name, mapset) != NULL)
-			G_fatal_error(_("can't read region <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to read region <%s> in <%s>"), name, mapset);
 	}
 
 	if ((name = parm.view->answer))	/* 3dview= */
@@ -193,11 +193,11 @@ int main (int argc, char *argv[])
 
 		fp = G_fopen_old("3d.view",name,mapset);
 		if (!fp)
-			G_fatal_error(_("can't open 3dview file <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to open 3dview file <%s> in <%s>"), name, mapset);
 
 		ret = G_get_3dview(name, mapset, &v);
 		if (ret < 0)
-			G_fatal_error(_("can't read 3dview file <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to read 3dview file <%s> in <%s>"), name, mapset);
 		if (ret == 0)
 			G_fatal_error(_("Old 3dview file. Region <%s> not found in <%s>"), name, mapset);
 
@@ -215,9 +215,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_cell2(name, "");
 		if (!mapset)
-			G_fatal_error(_("raster map <%s> not found"), name);
+			G_fatal_error(_("Raster map <%s> not found"), name);
 		if (G_get_cellhd(name, mapset, &window) < 0)
-			G_fatal_error(_("can't read header for <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to read header of raster map <%s@%s>"), name, mapset);
 	}
 
 	if ((name = parm.vect->answer))	/* vect= */
@@ -231,7 +231,7 @@ int main (int argc, char *argv[])
 
 		Vect_set_open_level(1);
 		if (Vect_open_old(&Map, name, mapset) != 1)
-			G_fatal_error(_("can't open vector map <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to open vector map <%s> in <%s>"), name, mapset);
 
 		Vect_get_map_box (&Map, &box );
 		window.north	= box.N;
@@ -350,9 +350,9 @@ int main (int argc, char *argv[])
 
 		mapset = G_find_cell2(name, "");
 		if (!mapset)
-			G_fatal_error(_("raster map <%s> not found"), name);
+			G_fatal_error(_("Raster map <%s> not found"), name);
 		if (G_get_cellhd(name, mapset, &temp_window) < 0)
-			G_fatal_error(_("can't read header for <%s> in <%s>"), name, mapset);
+			G_fatal_error(_("Unable to read header of raster map <%s@%s>"), name, mapset);
 		if ((err = G_align_window(&window, &temp_window)))
 			G_fatal_error("%s in %s: %s", name, mapset, err);
 	}
@@ -361,7 +361,7 @@ int main (int argc, char *argv[])
 	window.cols = cellhd.cols;
 
 	if ((err = G_adjust_Cell_head(&window, 1, 1)))
-		G_fatal_error(_("invalid region: %s"), err);
+		G_fatal_error(_("Invalid region: %s"), err);
 
 	cellhd.north	= window.north;
 	cellhd.south	= window.south;
@@ -369,7 +369,7 @@ int main (int argc, char *argv[])
 	cellhd.west	= window.west;
 
 	if (G_put_cellhd(parm.map->answer, &cellhd) < 0)
-		G_fatal_error(_("unable to update boundaries"));
+		G_fatal_error(_("Unable to update boundaries"));
 
 	G_done_msg(" ");
 

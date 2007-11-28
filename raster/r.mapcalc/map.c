@@ -85,7 +85,7 @@ static void init_colors(map *m)
 static void init_cats(map *m)
 {
 	if (G_read_cats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
-		G_fatal_error(_("Unable to read category file for raster map <%s@%s>"),
+		G_fatal_error(_("Unable to read category file of raster map <%s@%s>"),
 			      m->name, m->mapset);
 
 	if (!btree_create(&m->btree, compare_ints, 1))
