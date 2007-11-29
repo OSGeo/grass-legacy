@@ -19,6 +19,30 @@
 
 
 /**
+ **\fn int G_rename_file (char *oldname, char *newname)
+ **
+ **\brief Rename a file in the filesystem.
+ **
+ **The file or directory <b>oldname</b> is renamed to <b>newname</b>.<br>
+ **
+ **
+ ** \param[in] oldname
+ ** \param[in] newname
+ ** \return 0 if successful
+ ** \return -1 on error
+ **/
+
+int G_rename_file ( const char *oldname, const char *newname )
+{
+
+    #ifdef __MINGW32__
+      remove(oldname);
+    #endif
+
+    return rename(oldname, newname); 
+}
+
+/**
  * \fn int G_rename (char *element, char *oldname, char *newname)
  *
  * \brief Rename a database file.
@@ -60,5 +84,5 @@ int G_rename ( const char *element,
     G__file_name (to, element, newname, mapset);
 
     /* return result of rename */
-    return rename(from, to) == 0 ? 1 : -1;
+    return G_rename_file(from, to) == 0 ? 1 : -1;
 }
