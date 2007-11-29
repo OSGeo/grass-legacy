@@ -330,7 +330,7 @@ int main(int argc, char *argv[])
      */
     if (exist) {
 	sprintf(buff, "%s~", path);
-	rename(path, buff);
+	G_rename_file(path, buff);
     }
     if (Out_proj == 0)
 	goto write_units;
@@ -487,7 +487,7 @@ int main(int argc, char *argv[])
      */
     if (access(path, 0) == 0) {
 	sprintf(buff, "%s~", path);
-	rename(path, buff);
+	G_rename_file(path, buff);
     }
     if (Out_proj == 0)
 	leave(0);

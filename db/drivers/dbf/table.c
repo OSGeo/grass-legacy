@@ -308,7 +308,7 @@ save_table ( int t)
     DBFClose ( dbf );
 
     /* Copy */
-    if ( rename ( name, db.tables[t].file ) ) {
+    if ( G_rename_file ( name, db.tables[t].file ) ) {
 	    append_error( "Cannot move %s\nto %s\n", 
                           name, db.tables[t].file );
             return DB_FAILED;
