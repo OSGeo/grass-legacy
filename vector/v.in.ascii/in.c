@@ -374,7 +374,7 @@ int main(int argc, char *argv[])
 	    G_debug(3, db_get_string(&sql));
 	    if (db_execute_immediate(driver, &sql) != DB_OK) {
 		Vect_delete(new->answer);
-		G_fatal_error(_("Unable create table: %s"),
+		G_fatal_error(_("Unable to create table: %s"),
 			      db_get_string(&sql));
 	    }
 
