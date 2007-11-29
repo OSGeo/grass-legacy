@@ -23,29 +23,30 @@
 struct menu
 {
 	stat_func *method;	/* routine to compute new value */
+	int is_int;		/* result is an integer */
 	char *name;		/* method name */
 	char *text;		/* menu display - full description */
 } menu[] = {
-	{c_ave,    "average",   "average value"},
-	{c_count,  "count",     "count of non-NULL cells"},
-	{c_median, "median",    "median value"},
-	{c_mode,   "mode",      "most frequently occuring value"},
-	{c_min,    "minimum",   "lowest value"},
-	{c_minx,   "min_raster","raster with lowest value"}, 
-	{c_max,    "maximum",   "highest value"},
-	{c_maxx,   "max_raster","raster with highest value"}, 
-	{c_stddev, "stddev",    "standard deviation"},
-	{c_range,  "range" ,    "range of values"},
-	{c_sum,    "sum",       "sum of values"},
-	{c_var,    "variance",  "statistical variance"},
-	{c_divr,   "diversity", "number of different values"},
-	{c_reg_m,  "slope",     "linear regression slope"},
-	{c_reg_c,  "offset",    "linear regression offset"},
-	{c_reg_r2, "detcoeff",  "linear regression coefficient of determination"},
-	{c_quart1, "quart1",    "first quartile"},
-	{c_quart3, "quart3",    "third quartile"},
-	{c_perc90, "perc90",    "ninetieth percentile"},
-	{NULL,     NULL,        NULL}
+	{c_ave,    0, "average",    "average value"},
+	{c_count,  1, "count",      "count of non-NULL cells"},
+	{c_median, 0, "median",     "median value"},
+	{c_mode,   0, "mode",       "most frequently occuring value"},
+	{c_min,    0, "minimum",    "lowest value"},
+	{c_minx,   1, "min_raster", "raster with lowest value"}, 
+	{c_max,    0, "maximum",    "highest value"},
+	{c_maxx,   1, "max_raster", "raster with highest value"}, 
+	{c_stddev, 0, "stddev",     "standard deviation"},
+	{c_range,  0, "range" ,     "range of values"},
+	{c_sum,    0, "sum",        "sum of values"},
+	{c_var,    0, "variance",   "statistical variance"},
+	{c_divr,   1, "diversity",  "number of different values"},
+	{c_reg_m,  0, "slope",      "linear regression slope"},
+	{c_reg_c,  0, "offset",     "linear regression offset"},
+	{c_reg_r2, 0, "detcoeff",   "linear regression coefficient of determination"},
+	{c_quart1, 0, "quart1",     "first quartile"},
+	{c_quart3, 0, "quart3",     "third quartile"},
+	{c_perc90, 0, "perc90",     "ninetieth percentile"},
+	{NULL,     0, NULL,         NULL}
 };
 
 struct input
@@ -179,7 +180,7 @@ int main (int argc, char *argv[])
 	/* process the output map */
 	out_name = parm.output->answer;
 
-	out_fd = G_open_raster_new(out_name, DCELL_TYPE);
+	out_fd = G_open_raster_new(out_name, menu[method].is_int ? CELL_TYPE : DCELL_TYPE);
 	if (out_fd < 0)
 		G_fatal_error(_("Unable to create raster map <%s>"), out_name);
 
