@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2007-03-23 16:35+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Greek <translations@lists.osgeo.org>\n"
@@ -462,11 +462,11 @@ msgstr ""
 msgid "%s not set"
 msgstr ""
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr ""
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr ""
 
@@ -1767,7 +1767,7 @@ msgstr ""
 msgid "Unable to change directory to %s"
 msgstr ""
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr ""
 
@@ -2264,12 +2264,12 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
 #, c-format
-msgid "Requested raster map <%s> not found"
+msgid "Raster map <%s> not found"
 msgstr ""
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:67
 #, c-format
-msgid "Error opening raster map %s"
+msgid "Unable to open raster map <%s>"
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:96
@@ -2287,6 +2287,11 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
+msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, c-format
+msgid "Unable to create raster map <%s>"
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:199
@@ -2644,6 +2649,15 @@ msgstr ""
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr ""
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, c-format
+msgid "Mask raster map <%s> not found"
+msgstr ""
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2759,6 +2773,33 @@ msgstr ""
 #: ../lib/vask/V_support.c:58
 #, c-format
 msgid "Unable to open file %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+msgid "Cannot get field info"
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:244
+msgid "Cannot open database"
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
 msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
@@ -2960,17 +3001,17 @@ msgstr ""
 msgid "Layer index out of range"
 msgstr ""
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr ""
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, c-format
 msgid "Error writing out category index file <%s>"
 msgstr ""
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr ""
@@ -3180,10 +3221,6 @@ msgstr ""
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-msgid "Cannot get field info"
-msgstr ""
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3324,35 +3361,35 @@ msgstr ""
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 msgid "Registering points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 msgid "Registered points"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2006-04-18 06:17+0300\n"
 "Last-Translator: oyy <yilmazy@istanbul.edu.tr>\n"
 "Language-Team: Turkish <translations@lists.osgeo.org>\n"
@@ -481,11 +481,11 @@ msgstr "GISRC - değişken ayarlanmadı"
 msgid "%s not set"
 msgstr "%s ayarlanmadı"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "UYARI:"
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "HATA:"
 
@@ -1853,7 +1853,7 @@ msgstr ""
 msgid "Unable to change directory to %s"
 msgstr "Dizin %s'e değiştirilemiyor"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "Yeni bir işlem oluşturulamıyor!"
 
@@ -2363,14 +2363,14 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, fuzzy, c-format
-msgid "Error opening raster map %s"
-msgstr "Çok fazla açık raster dosya"
+msgid "Raster map <%s> not found"
+msgstr "'%s' girdi vektörü bulunamadı"
+
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "Dizin %s'e değiştirilemiyor"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, fuzzy, c-format
@@ -2390,6 +2390,11 @@ msgstr "%s açılamadı"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "Dizin %s'e değiştirilemiyor"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2751,6 +2756,15 @@ msgstr "Farenin hala aktif olup olmadığını kontrol ediniz.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "HATA - <%s> grafik ekranından yanıt yok.\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "'%s' girdi vektörü bulunamadı"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2867,6 +2881,35 @@ msgstr "Doğru olmayan sembol rengi: '%s', versayılan kullanılıyor."
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "%s içindeki %s dosyası açılamadı"
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "Katman bilgisi alınamıyor"
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "%s veritabanı açılamıyor"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3069,17 +3112,17 @@ msgstr ""
 msgid "Layer index out of range"
 msgstr ""
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "%s okuma için yazılamıyor"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, fuzzy, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Mekansal indek dosyasını yazmada hata.\n"
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, fuzzy, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "'%s' vektörünün  geçmiş dosyası açılamıyor"
@@ -3291,11 +3334,6 @@ msgstr ""
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-#, fuzzy
-msgid "Cannot get field info"
-msgstr "Katman bilgisi alınamıyor"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, fuzzy, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3444,37 +3482,37 @@ msgstr "ID'si olmayan OGR objesi görmezden gelindi."
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 #, fuzzy
 msgid "Registering points"
 msgstr "çizgiler kaydediliyor: "
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 #, fuzzy
 msgid "Registered points"
 msgstr "çizgiler kaydediliyor: "
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr ""
 
@@ -3605,6 +3643,10 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Error opening raster map %s"
+#~ msgstr "Çok fazla açık raster dosya"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "'%s' çıktı adı geçerli vektör adı değil."

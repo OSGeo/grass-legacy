@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2007-03-23 16:50+0100\n"
 "Last-Translator: Stephan Holl <stephan.holl@intevation.de>\n"
 "Language-Team: deutsch <translations@lists.osgeo.org>\n"
@@ -498,11 +498,11 @@ msgstr "GISRC-Variable nicht gesetzt"
 msgid "%s not set"
 msgstr "%s nicht gesetzt"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "WARNUNG: "
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "FEHLER: "
 
@@ -1895,7 +1895,7 @@ msgstr "G_spawn: Kann den Deskriptor %d nicht zu %d dublizieren."
 msgid "Unable to change directory to %s"
 msgstr "Kann nicht zum Verzeichnis %s wechseln."
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "Kann keinen neuen Prozess erzeugen!"
 
@@ -2458,14 +2458,14 @@ msgstr ""
 "-- Solver unit Tests erfolgreich beendet --"
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr "Angefragte Rasterkarte <%s> nicht gefunden."
+#, fuzzy, c-format
+msgid "Raster map <%s> not found"
+msgstr "Eingabevektorkarte <%s> nicht gefunden."
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
-#, c-format
-msgid "Error opening raster map %s"
-msgstr "Fehler beim Öffnen der Rasterkarte %s"
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "Kann nicht zum Verzeichnis %s wechseln."
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, c-format
@@ -2483,6 +2483,11 @@ msgstr "Kann die Eingabeklasse nicht schließen"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * Array ist leer"
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "Kann nicht zum Verzeichnis %s wechseln."
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2874,6 +2879,15 @@ msgstr "Kontrollieren Sie bitte, ob die Maus noch aktiv ist.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "Fehler - keine Antwort vom Graphikmonitor <%s>.\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "Angefragte Rasterkarte <%s> nicht gefunden."
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -3007,6 +3021,35 @@ msgstr "Falsche Symbolfarbe: '%s', benutze Standardfarbe."
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Kann Datei %s nicht öffnen."
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "Kann die Layer-Informationen nicht abfragen."
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "Kann Datenbank '%s' nicht öffnen."
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3216,17 +3259,17 @@ msgstr "Vektordimension außerhalb der Reichweite"
 msgid "Layer index out of range"
 msgstr "Matrix-Dimensionen liegen außerhalb der Spanne."
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "Kann %s nicht zum Beschreiben öffnen."
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, fuzzy, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Fehler beim Schreiben des spatial index aufgetreten"
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, fuzzy, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Kann den Kategorieindex der Vektorkarte <%s> nicht öffnen."
@@ -3448,11 +3491,6 @@ msgstr ""
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-#, fuzzy
-msgid "Cannot get field info"
-msgstr "Kann die Layer-Informationen nicht abfragen."
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, fuzzy, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3603,37 +3641,37 @@ msgstr "OGR Objekt ohne ID."
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "Kann Objektgeometrie FID [%ld] nicht holen"
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 #, fuzzy
 msgid "Registering points"
 msgstr "Registriere Linien..."
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 #, fuzzy
 msgid "Registered points"
 msgstr "Registriere Linien..."
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr ""
 
@@ -3766,6 +3804,9 @@ msgid ""
 msgstr ""
 "Versuch, den Winkel einer Linie ,die nicht an den Knoten angebunden ist, zu "
 "lesen: Knoten = [%d], Linie = [%d]"
+
+#~ msgid "Error opening raster map %s"
+#~ msgstr "Fehler beim Öffnen der Rasterkarte %s"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Ergebniskarte '%s' ist kein gültiger Vektorkartenname."

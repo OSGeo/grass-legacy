@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2007-10-26 10:57+0200\n"
 "Last-Translator: Martin Landa <landa.martin gmail.com>\n"
 "Language-Team: Czech <translations@lists.osgeo.org>\n"
@@ -485,11 +485,11 @@ msgstr "GISRC - promìnná není nastavena"
 msgid "%s not set"
 msgstr "%s není nastaveno"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "UPOZORNÌNÍ: "
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "CHYBA: "
 
@@ -1856,7 +1856,7 @@ msgstr "G_spawn: nelze duplikovat popisovaè %d na %d"
 msgid "Unable to change directory to %s"
 msgstr "Nelze zmìnit adresáø na %s"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "nelze vytvoøit novı proces"
 
@@ -2412,14 +2412,14 @@ msgstr ""
 "-- Math tool test skonèil úspì¹nì --"
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr "Po¾adovaná rastrová mapa <%s> nebyla nalezena"
+#, fuzzy, c-format
+msgid "Raster map <%s> not found"
+msgstr "Vektorová mapa <%s> nebyla nalezena"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
-#, c-format
-msgid "Error opening raster map %s"
-msgstr "Chyba pøi otevøení rastrové mapy %s"
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "Nelze otevøít vektorovou mapu <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, c-format
@@ -2437,6 +2437,11 @@ msgstr "Nelze zavøít vstupní mapu"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * pole je prázdné"
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "Nelze vytvoøit vektorovou mapu <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2808,6 +2813,15 @@ msgstr "Zkontrolujte zda-li je my¹ stále aktivní.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "CHYBA - ¾ádná odezva od grafického monitoru <%s>.\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "Po¾adovaná rastrová mapa <%s> nebyla nalezena"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2932,6 +2946,34 @@ msgstr "Nesprávná barva pro symbol: '%s', pou¾ívám vıchozí"
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nelze otevøít soubor %s"
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+msgid "Cannot get field info"
+msgstr "Nelze získat informace o vrstvì"
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "Nelze navázat spojení s databází %s"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3136,17 +3178,17 @@ msgstr "Index vrstev nebo kategorií mimo rozsah"
 msgid "Layer index out of range"
 msgstr "Index vrstev je mimo rozsah"
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "Nelze otevøít soubor s indexem kategorií <%s> pro zápis"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Chyba pøi zápisu souboru s indexem kategorií <%s>"
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Nelze otevøít soubor s indexem kategorií pro vektorovou mapu <%s@%s>"
@@ -3359,10 +3401,6 @@ msgstr "Sloupec pro váhu smìr dopøedu není specifikován"
 msgid "Arc field < 1"
 msgstr "Arc vrtsva < 1"
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-msgid "Cannot get field info"
-msgstr "Nelze získat informace o vrstvì"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3510,35 +3548,35 @@ msgstr "Prvek OGR bez ID."
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "Nelze pøeèíst prvky geometrie, FID [%ld]"
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 msgid "Registering points"
 msgstr "Registrace bodù"
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr "V¹echny opìrné body"
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 msgid "Registered points"
 msgstr "Registrovanıch bodù"
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr "Uzel oznaèen jako fixní"
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr "Uzel oznaèen jako pøipojenı"
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr "Pøipojení"
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr "Pøipojenıch opìrnıch bodù"
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr "Novı opìrnı bod"
 
@@ -3667,6 +3705,9 @@ msgid ""
 msgstr ""
 "Pokus o naètení úhlu linie pro linii, která není pøipojena k uzlu: \n"
 "uzel = [%d] linie = [%d]"
+
+#~ msgid "Error opening raster map %s"
+#~ msgstr "Chyba pøi otevøení rastrové mapy %s"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "NÄ‚Ä„zev vÄ‚Ëstupu '%s' nenÄ‚Â­ platnÄ‚Ëm nÄ‚Ä„zvem vektorovÄ‚Å  mapy."
