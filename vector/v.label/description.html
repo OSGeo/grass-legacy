@@ -207,6 +207,17 @@ d.vect roads
 d.labels lroads
 </pre></div>
 
+Since the label files are simple text files, you can merge them together
+if you like. For example if you set the label colors based on database
+attributes using multiple runs with the <b>where</b> option.
+This example uses the standard UNIX <tt>cat</tt> program.
+
+<div class="code"><pre>
+cd $MAPSET/paint/labels/
+cat file1 file2 file3 file4 > file_all
+</pre></div>
+
+
 
 <H2>SEE ALSO</H2>
 <EM>
