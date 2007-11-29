@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
-"PO-Revision-Date: 2006-02-09 14:37+0800\n"
-"Last-Translator: Zhang Jun <nilarcs@gmail.com>\n"
-"Language-Team: Simplified Chinese <translations@lists.osgeo.org>\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
+"PO-Revision-Date: 2007-11-27 14:54+0800\n"
+"Last-Translator: Su Yongheng <night2008@gmail.com>\n"
+"Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,14 +34,14 @@ msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
 msgstr "非法的表格名称 <%s> 。不允许有字符 <%c> 。\n"
 
 #: ../lib/db/dbmi_client/column.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot describe table <%s>"
-msgstr "无法打开数据库 %s"
+msgstr "无法打开数据库表 <%s>"
 
 #: ../lib/display/tran_colr.c:132 ../lib/display/tran_colr.c:134
 #, c-format
 msgid "[%s]: No such color"
-msgstr ""
+msgstr "[%s]: 没有此颜色"
 
 #: ../lib/driver/command.c:517
 #, c-format
@@ -74,100 +74,99 @@ msgstr "无法得到[%s](在地图集[%s]中)的历史信息"
 
 #: ../lib/g3d/g3dopen.c:22
 msgid "G3d_openCellOldNoHeader: error in G3d_maskOpenOld"
-msgstr ""
+msgstr "G3d_openCellOldNoHeader: G3d_maskOpenOld错误"
 
 #: ../lib/g3d/g3dopen.c:28
 msgid "G3d_openCellOldNoHeader: error in G3d_malloc"
-msgstr ""
+msgstr "G3d_openCellOldNoHeader: G3d_malloc错误"
 
 #: ../lib/g3d/g3dopen.c:46
 msgid "G3d_openCellOldNoHeader: error in G_open_old"
-msgstr ""
+msgstr "G3d_openCellOldNoHeader: G_open_old错误"
 
 #: ../lib/g3d/g3dopen.c:101
 msgid "G3d_openCellOld: error in G3d_openCellOldNoHeader"
-msgstr ""
+msgstr "G3d_openCellOld: G3d_openCellOldNoHeader错误"
 
 #: ../lib/g3d/g3dopen.c:106
 msgid "G3d_openCellOld: can't rewind file"
-msgstr ""
+msgstr "G3d_openCellOld: "
 
 #: ../lib/g3d/g3dopen.c:119
 msgid "G3d_openCellOld: error in G3d_readHeader"
-msgstr ""
+msgstr "G3d_openCellOld: G3d_readHeader错误"
 
 #: ../lib/g3d/g3dopen.c:126
 msgid "G3d_openCellOld: projection does not match window projection"
-msgstr ""
+msgstr "G3d_openCellOld: 投影类型与窗口投影类型不匹配"
 
 #: ../lib/g3d/g3dopen.c:130
 msgid "G3d_openCellOld: zone does not match window zone"
-msgstr ""
+msgstr "G3d_openCellOld: 投影带与窗口投影带不匹配"
 
 #: ../lib/g3d/g3dopen.c:142 ../lib/g3d/g3dopen.c:159
 msgid "G3d_openCellOld: can't read header"
-msgstr ""
+msgstr "G3d_openCellOld: 不能读取文件头"
 
 #: ../lib/g3d/g3dopen.c:148
 msgid "G3d_openCellOld: index does not fit into long"
-msgstr ""
+msgstr "G3d_openCellOld: 索引长度有误"
 
 #: ../lib/g3d/g3dopen.c:152
 msgid "G3d_openCellOld: error in G3d_malloc"
-msgstr ""
+msgstr "G3d_openCellOld: G3d_malloc错误"
 
 #: ../lib/g3d/g3dopen.c:179
 msgid "G3d_openCellOld: error in G3d_fillHeader"
-msgstr ""
+msgstr "G3d_openCellOld: G3d_fillHeader错误"
 
 #: ../lib/g3d/g3dopen.c:227
 msgid "G3d_openCellNew: error in G3d_maskOpenOld"
-msgstr ""
+msgstr "G3d_openCellNew: G3d_maskOpenOld错误"
 
 #: ../lib/g3d/g3dopen.c:236
 msgid "G3d_openCellNew: error in G3d_malloc"
-msgstr ""
+msgstr "G3d_openCellNew: G3d_malloc错误"
 
 #: ../lib/g3d/g3dopen.c:249
 msgid "G3d_openCellNew: could not open file"
-msgstr ""
+msgstr "G3d_openCellNew: 不能打开文件"
 
 #: ../lib/g3d/g3dopen.c:291 ../lib/g3d/g3dopen.c:296
 msgid "G3d_openCellNew: can't write header"
-msgstr ""
+msgstr "G3d_openCellNew: 文件头不可写"
 
 #: ../lib/g3d/g3dopen.c:319
 msgid "G3d_openCellNew: error in G3d_fillHeader"
-msgstr ""
+msgstr "G3d_openCellNew: G3d_fillHeader错误"
 
 #: ../lib/g3d/g3dparam.c:54
 msgid "Data type used in the output file"
-msgstr ""
+msgstr "输出文件要使用的数据类型"
 
 #: ../lib/g3d/g3dparam.c:63
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr ""
+msgstr "输出文件要使用的数据精度（默认，最大，或0-52）"
 
 #: ../lib/g3d/g3dparam.c:73
 msgid "The compression method used in the output file"
-msgstr ""
+msgstr "输出文件要使用的压缩类型"
 
 #: ../lib/g3d/g3dparam.c:83
 msgid "The dimensions of the tiles used in the output file"
-msgstr ""
+msgstr "输出文件要使用的扩展维度值"
 
 #: ../lib/g3d/g3dparam.c:118
 msgid "G3d_getStandard3dParams: precision value invalid"
-msgstr ""
+msgstr "G3d_getStandard3dParams: 无效的精度值"
 
 #: ../lib/g3d/g3dparam.c:146
 msgid "G3d_getStandard3dParams: tile dimension value invalid"
-msgstr ""
+msgstr "G3d_getStandard3dParams: 无效的扩展维度值"
 
 #: ../lib/g3d/g3dparam.c:171
-#, fuzzy
 msgid "Window replacing the default"
-msgstr "接受默认值"
+msgstr "替换默认窗口"
 
 #: ../lib/gis/adj_cellhd.c:47 ../lib/gis/adj_cellhd.c:196
 msgid "Illegal n-s resolution value"
@@ -188,7 +187,7 @@ msgstr "非法的列值"
 #: ../lib/gis/adj_cellhd.c:81 ../lib/gis/adj_cellhd.c:248
 #, c-format
 msgid "Fixing subtle input data rounding error of north boundary (%g>%g)"
-msgstr ""
+msgstr "修正北边界(%g>%g)精确输入数据舍入错误"
 
 #: ../lib/gis/adj_cellhd.c:84 ../lib/gis/adj_cellhd.c:251
 msgid "Illegal latitude for North"
@@ -197,7 +196,7 @@ msgstr "非法的北纬"
 #: ../lib/gis/adj_cellhd.c:89 ../lib/gis/adj_cellhd.c:256
 #, c-format
 msgid "Fixing subtle input data rounding error of south boundary (%g>%g)"
-msgstr ""
+msgstr "修正南边界(%g>%g)精确输入数据舍入错误"
 
 #: ../lib/gis/adj_cellhd.c:92 ../lib/gis/adj_cellhd.c:259
 msgid "Illegal latitude for South"
@@ -206,12 +205,12 @@ msgstr "非法的南纬"
 #: ../lib/gis/adj_cellhd.c:103 ../lib/gis/adj_cellhd.c:270
 #, c-format
 msgid "Fixing subtle input data rounding error of west boundary (%g>%g)"
-msgstr ""
+msgstr "修正西边界(%g>%g)精确输入数据舍入错误"
 
 #: ../lib/gis/adj_cellhd.c:113 ../lib/gis/adj_cellhd.c:280
 #, c-format
 msgid "Fixing subtle input data rounding error of east boundary (%g>%g)"
-msgstr ""
+msgstr "修正东边界(%g>%g)精确输入数据舍入错误"
 
 #: ../lib/gis/adj_cellhd.c:127 ../lib/gis/adj_cellhd.c:294
 msgid "North must be north of South"
@@ -254,13 +253,12 @@ msgid "Illegal depths value"
 msgstr "非法的深度值"
 
 #: ../lib/gis/adj_cellhd.c:301
-#, fuzzy
 msgid "Top must be larger than Bottom"
-msgstr "北纬值必须比南纬值大"
+msgstr "顶部的值必须比底部的值大"
 
 #: ../lib/gis/alloc.c:42
 msgid "G_malloc: out of memory"
-msgstr ""
+msgstr "G_malloc：内存溢出"
 
 #: ../lib/gis/alloc.c:75
 #, fuzzy
@@ -269,7 +267,7 @@ msgstr "无法分配内存"
 
 #: ../lib/gis/alloc.c:111
 msgid "G_realloc: out of memory"
-msgstr ""
+msgstr "G_realloc: 内存溢出"
 
 #: ../lib/gis/ask.c:339
 msgid "to cancel request"
@@ -393,11 +391,13 @@ msgid ""
 "closecell: can't move %s\n"
 "to null file %s"
 msgstr ""
+"closecell: 无法将 %s\n"
+"移动到空文件 $s"
 
 #: ../lib/gis/closecell.c:243
 #, c-format
 msgid "Error writing floating point format file for map %s"
-msgstr ""
+msgstr "将地图 %s 写入浮点型指针类型文件错误"
 
 #: ../lib/gis/closecell.c:289
 #, c-format
@@ -405,6 +405,8 @@ msgid ""
 "closecell: can't move %s\n"
 "to cell file %s"
 msgstr ""
+"closecell: 不能将 %s\n"
+"移动到cell文件 %s"
 
 #: ../lib/gis/closecell.c:343
 #, fuzzy
@@ -412,9 +414,8 @@ msgid "unable to write quant file!"
 msgstr "不能创建新进程"
 
 #: ../lib/gis/closecell.c:391
-#, fuzzy
 msgid "unable to write f_format file for CELL maps"
-msgstr "无法为[%s]创建头文件"
+msgstr "无法将CELL地图写入f_format文件"
 
 #: ../lib/gis/color_read.c:123
 #, c-format
@@ -423,20 +424,20 @@ msgstr "[%s] 在地图集 [%s] 中的颜色 %s "
 
 #: ../lib/gis/color_rules.c:115
 msgid "syntax error"
-msgstr ""
+msgstr "格式错误"
 
 #: ../lib/gis/color_rules.c:116
 msgid "R/G/B not in range 0-255"
-msgstr ""
+msgstr "R/G/B不在0-255之间"
 
 #: ../lib/gis/color_rules.c:117
 #, fuzzy
 msgid "invalid color name"
-msgstr "无效的坐标"
+msgstr "无效的的颜色名"
 
 #: ../lib/gis/color_rules.c:118
 msgid "percentage not in range 0-100"
-msgstr ""
+msgstr "百分比不在0-100内"
 
 #: ../lib/gis/color_rules.c:119
 #, fuzzy
@@ -453,7 +454,7 @@ msgstr "未知区域"
 #: ../lib/gis/color_rules.c:151
 #, c-format
 msgid "bad rule (%s): %s"
-msgstr ""
+msgstr "错误的规则 (%s): %s"
 
 #: ../lib/gis/datum.c:172 ../lib/proj/datum.c:412 ../lib/proj/datum.c:475
 #, c-format
@@ -471,9 +472,9 @@ msgid "Cannot open debug file '%s'"
 msgstr "无法打开调试文件 '%s'"
 
 #: ../lib/gis/done_msg.c:37
-#, fuzzy, c-format
+#, c-format
 msgid "%s complete. %s"
-msgstr "%s 完成。 %s\n"
+msgstr "%s 完成。 %s"
 
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
@@ -484,11 +485,11 @@ msgstr "GISRC - 变量未设置"
 msgid "%s not set"
 msgstr "%s 未设置"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "警告："
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "错误："
 
@@ -549,7 +550,7 @@ msgstr "输入'list'，列出可用的基准面\n"
 #: ../lib/gis/get_datum_name.c:55
 #, c-format
 msgid "or 'custom' if you wish to enter custom parameters\n"
-msgstr ""
+msgstr "或输入'custom'进行自定义参数设置"
 
 #: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
 #: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:341
@@ -809,14 +810,14 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "非法的文件名。不能是'.'或'NULL'\n"
 
 #: ../lib/gis/legal_name.c:45
-#, fuzzy, c-format
+#, c-format
 msgid "Illegal filename. Character <%c> not allowed.\n"
-msgstr "非法的文件名。不允许包含字符<%c>。"
+msgstr "非法的文件名。不允许包含字符<%c>。\n"
 
 #: ../lib/gis/legal_name.c:75 ../lib/gis/legal_name.c:77
-#, fuzzy, c-format
+#, c-format
 msgid "Output name '%s' is not valid rast name."
-msgstr "输出的名称'%s'不是有效的矢量名称。"
+msgstr "输出的名称'%s'不是有效的栅格名称。"
 
 #: ../lib/gis/legal_name.c:88 ../lib/gis/legal_name.c:90
 #, c-format
@@ -834,9 +835,9 @@ msgid "no %s files available in current mapset\n"
 msgstr "当前地图集中没有 %s 文件\n"
 
 #: ../lib/gis/list.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "no %s files available in mapset <%s>\n"
-msgstr "没有 %s 文件在地图集 %s 中\n"
+msgstr "在地图集 %s 中没有可用的 %s 文件\n"
 
 #: ../lib/gis/list.c:132
 #, c-format
@@ -844,19 +845,18 @@ msgid "hit RETURN to continue -->"
 msgstr "按回车键继续 -->"
 
 #: ../lib/gis/list.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "%s files available in mapset <%s>:\n"
-msgstr "%s 文件在地图集 %s 中：\n"
+msgstr "在地图集 %s 中可用的 %s 文件：\n"
 
 #: ../lib/gis/list.c:258
-#, fuzzy
 msgid "G_list: Unknown element type"
-msgstr "未知区域"
+msgstr "G_list:未知元素类型"
 
 #: ../lib/gis/location.c:49
-#, fuzzy, c-format
+#, c-format
 msgid "LOCATION << %s >> not available"
-msgstr "区域  << %s >>  无效"
+msgstr "区域<< %s >>无效"
 
 #: ../lib/gis/ls.c:63
 #, fuzzy, c-format
@@ -1063,19 +1063,19 @@ msgstr ""
 
 #: ../lib/gis/parser.c:345
 msgid "Example: income < 1000 and inhab >= 10000"
-msgstr ""
+msgstr "例如：income < 1000 and inhab >= 10000"
 
 #: ../lib/gis/parser.c:353
 msgid "Table name"
-msgstr ""
+msgstr "表名"
 
 #: ../lib/gis/parser.c:361
 msgid "Driver name"
-msgstr ""
+msgstr "驱动名"
 
 #: ../lib/gis/parser.c:369
 msgid "Database name"
-msgstr ""
+msgstr "数据库名"
 
 #: ../lib/gis/parser.c:377
 #, fuzzy
@@ -1148,14 +1148,12 @@ msgid "Name of input vector map"
 msgstr "输入矢量的名称"
 
 #: ../lib/gis/parser.c:533 ../lib/gis/parser.c:558
-#, fuzzy
 msgid "Name of input vector map(s)"
-msgstr "输入矢量的名称"
+msgstr "输入矢量地图名"
 
 #: ../lib/gis/parser.c:541
-#, fuzzy
 msgid "Name for output vector map"
-msgstr "输出矢量的名称"
+msgstr "输出矢量地图名"
 
 #: ../lib/gis/parser.c:567
 msgid "Type"
@@ -1163,7 +1161,7 @@ msgstr "类型"
 
 #: ../lib/gis/parser.c:568
 msgid "Feature type(s)"
-msgstr ""
+msgstr "要素类型"
 
 #: ../lib/gis/parser.c:575
 msgid "Layer number"
@@ -1173,7 +1171,7 @@ msgstr "图层号"
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
-msgstr ""
+msgstr "一个矢量地图能够连接多个数据库表。这个数字决定使用那个表。"
 
 #: ../lib/gis/parser.c:583
 msgid "Category value"
@@ -1199,23 +1197,23 @@ msgstr "输出栅格的名称"
 
 #: ../lib/gis/parser.c:617
 msgid "Field separator"
-msgstr ""
+msgstr "字段分隔符"
 
 #: ../lib/gis/parser.c:628
 msgid "Color"
-msgstr ""
+msgstr "颜色"
 
 #: ../lib/gis/parser.c:629
 msgid "Either a standard color name or R:G:B triplet"
-msgstr ""
+msgstr "使用一个标准的颜色名或R:G:B三元组"
 
 #: ../lib/gis/parser.c:638
 msgid "Background color"
-msgstr ""
+msgstr "背景颜色"
 
 #: ../lib/gis/parser.c:639
 msgid "Either a standard GRASS color, R:G:B triplet, or \"none\""
-msgstr ""
+msgstr "选用标准GRASS颜色，R:G:B三元组或是\"空\""
 
 #: ../lib/gis/parser.c:941
 #, c-format
@@ -1236,7 +1234,7 @@ msgstr ""
 msgid ""
 "\n"
 "Keywords:\n"
-msgstr ""
+msgstr "关键词："
 
 #: ../lib/gis/parser.c:1063
 #, c-format
@@ -1260,15 +1258,15 @@ msgstr ""
 
 #: ../lib/gis/parser.c:1158 ../lib/gis/parser.c:1614 ../lib/gis/parser.c:1892
 msgid "Allow output files to overwrite existing files"
-msgstr ""
+msgstr "允许输出文件覆盖已存文件"
 
 #: ../lib/gis/parser.c:1160 ../lib/gis/parser.c:1618
 msgid "Verbose module output"
-msgstr ""
+msgstr "Verbose模式输出"
 
 #: ../lib/gis/parser.c:1161 ../lib/gis/parser.c:1621
 msgid "Quiet module output"
-msgstr ""
+msgstr "Quiet模式输出"
 
 #: ../lib/gis/parser.c:1167
 #, c-format
@@ -1286,51 +1284,43 @@ msgstr "  %*s   默认值： %s\n"
 
 #: ../lib/gis/parser.c:1497
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #: ../lib/gis/parser.c:1510
 msgid "KEYWORDS"
-msgstr ""
+msgstr "关键词"
 
 #: ../lib/gis/parser.c:1515
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "提要"
 
 #: ../lib/gis/parser.c:1589
-#, fuzzy
 msgid "Flags"
-msgstr ""
-"\n"
-"标记：\n"
+msgstr "标记："
 
 #: ../lib/gis/parser.c:1630
-#, fuzzy
 msgid "Parameters"
-msgstr ""
-"\n"
-"参数：\n"
+msgstr "参数："
 
 #: ../lib/gis/parser.c:1671
-#, fuzzy
 msgid "Options"
-msgstr " 选项： %s\n"
+msgstr "选项："
 
 #: ../lib/gis/parser.c:1677
-#, fuzzy
 msgid "Default"
-msgstr " 默认值： %s\n"
+msgstr "默认值："
 
 #: ../lib/gis/parser.c:1894
 msgid "Allow overwrite"
-msgstr ""
+msgstr "允许覆盖"
 
 #: ../lib/gis/parser.c:1902
 msgid "Run with minimal output messages"
-msgstr ""
+msgstr "以最少信息输出执行"
 
 #: ../lib/gis/parser.c:1904
 msgid "Run quietly"
-msgstr ""
+msgstr "后台运行"
 
 #: ../lib/gis/parser.c:1993
 #, c-format
@@ -1353,7 +1343,7 @@ msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "对不起，<%s>不是有效的参数\n"
 
 #: ../lib/gis/parser.c:2206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: illegal range syntax for parameter <%s>\n"
@@ -1367,7 +1357,7 @@ msgid "       Presented as: %s\n"
 msgstr "       应表述为： %s\n"
 
 #: ../lib/gis/parser.c:2211
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: value <%s> out of range for parameter <%s>\n"
@@ -1381,7 +1371,7 @@ msgid "       Legal range: %s\n"
 msgstr "       合法范围是： %s\n"
 
 #: ../lib/gis/parser.c:2216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: Missing value for parameter <%s>\n"
@@ -1401,7 +1391,7 @@ msgstr ""
 "    (%s)。\n"
 
 #: ../lib/gis/parser.c:2479
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "ERROR: option <%s> must be provided in multiples of %d\n"
@@ -1415,7 +1405,7 @@ msgid "       You provided %d items:\n"
 msgstr "       您提供了 %d 个条目：\n"
 
 #: ../lib/gis/parser.c:2536
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "错误：选项<%s>：<%s>已存在。\n"
 
@@ -1520,27 +1510,27 @@ msgstr "无法为[%s]创建头文件"
 #: ../lib/gis/put_row.c:212
 #, c-format
 msgid "G_put_map_row: %s is not integer! Use G_put_[f/d]_raster_row()!"
-msgstr ""
+msgstr "G_put_map_row: %s 不是整型！调用G_put_[f/d]_raster_row()！"
 
 #: ../lib/gis/put_row.c:249
 #, c-format
 msgid "%s: map [%s] not open for write - request ignored"
-msgstr ""
+msgstr "%s: 地图 [%s] 没有打开写操作──忽略请求"
 
 #: ../lib/gis/put_row.c:256
 #, c-format
 msgid "%s: map [%s] not open for random write - request ignored"
-msgstr ""
+msgstr "%s: 地图 [%s] 没有打开随机写操作──忽略请求"
 
 #: ../lib/gis/put_row.c:263
 #, c-format
 msgid "%s: map [%s] not open for sequential write - request ignored"
-msgstr ""
+msgstr "%s: 地图 [%s] 没有打开顺序写操作──忽略请求"
 
 #: ../lib/gis/put_row.c:267
 #, c-format
 msgid "%s: unopened file descriptor - request ignored"
-msgstr ""
+msgstr "%s: 无法打开文件描述符──忽略请求"
 
 #: ../lib/gis/put_row.c:308
 #, c-format
@@ -1550,17 +1540,17 @@ msgstr "地图[%s] - 无法写入行%d"
 #: ../lib/gis/put_row.c:396
 #, c-format
 msgid "xdr_float failed for index %d of row %d"
-msgstr ""
+msgstr "第 %d 行的第 %d 个xdr_floa值错误t"
 
 #: ../lib/gis/put_row.c:425
-#, fuzzy, c-format
+#, c-format
 msgid "xdr_double failed for index %d of row %d"
-msgstr "cell_values_double：第 %d 个xdr_double值错误。"
+msgstr "第 %d 行的第 %d 个xdr_double值错误。"
 
 #: ../lib/gis/put_row.c:769
-#, fuzzy, c-format
+#, c-format
 msgid "unable to find a temporary null file %s"
-msgstr "无法打开基准面表文件：%s"
+msgstr "找不到临时空文件：%s"
 
 #: ../lib/gis/put_row.c:790 ../lib/gis/put_row.c:796
 #, c-format
@@ -1633,14 +1623,14 @@ msgid "can't write range file for [%s in %s]"
 msgstr "无法为[%s在%s中]写入范围文件"
 
 #: ../lib/gis/raster_metadata.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Can't read %s for [%s in %s]"
-msgstr "无法读取[ %s 在 %s 中]的直方图"
+msgstr "无法读取[ %s 在 %s 中]的 %s "
 
 #: ../lib/gis/raster_metadata.c:143
-#, fuzzy, c-format
+#, c-format
 msgid "Can't create %s metadata file for [%s in %s]"
-msgstr "无法读取[%s在%s中]的头文件\n"
+msgstr "无法为[%s在%s中]创建 %s 元数据文件"
 
 #: ../lib/gis/rd_cellhd.c:136
 msgid "duplicate projection field"
@@ -1804,17 +1794,16 @@ msgid "Unable to create dependency file in [%s in %s]"
 msgstr "无法为[%s在%s中]创建依赖文件"
 
 #: ../lib/gis/sample.c:74
-#, fuzzy
 msgid "unknown interpolation type"
-msgstr "未知区域"
+msgstr "未知的内插类型"
 
 #: ../lib/gis/sample.c:468
 msgid "\"no data\" label found; setting to zero"
-msgstr ""
+msgstr "找到“no data”的标注;设定为零"
 
 #: ../lib/gis/sample.c:482
 msgid "problem reading raster cell file"
-msgstr ""
+msgstr "读取栅格单元文件问题"
 
 #: ../lib/gis/set_window.c:82
 #, fuzzy
@@ -1824,17 +1813,14 @@ msgid ""
 msgstr "G_set_window()：投影/区域与当前打开的栅格文件不同"
 
 #: ../lib/gis/spawn.c:77 ../lib/gis/spawn.c:110
-#, fuzzy
 msgid "Too many arguments"
 msgstr "参数太多"
 
 #: ../lib/gis/spawn.c:132 ../lib/gis/spawn.c:385
-#, fuzzy
 msgid "Unable to create a new process"
 msgstr "不能创建新进程"
 
 #: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:410
-#, fuzzy
 msgid "Unable to execute command"
 msgstr "无法执行命令"
 
@@ -1876,9 +1862,9 @@ msgstr "G_spawn：无法将描述符%d复制到%d"
 #: ../lib/gis/spawn.c:402
 #, fuzzy, c-format
 msgid "Unable to change directory to %s"
-msgstr "无法将目录改变到%s"
+msgstr "无法将进入目录%s"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "无法创建新进程!"
 
@@ -1953,13 +1939,12 @@ msgid "    taking inverse FFT..."
 msgstr ""
 
 #: ../lib/gmath/la.c:63 ../lib/gmath/la.c:120
-#, fuzzy
 msgid "Matrix dimensions out of range"
-msgstr "维度索引超出范围"
+msgstr "维度矩阵超出范围"
 
 #: ../lib/gmath/la.c:154
 msgid "Matrix is not initialised fully."
-msgstr ""
+msgstr "矩阵没有完全初始化"
 
 #: ../lib/gmath/la.c:159
 #, fuzzy
@@ -1968,15 +1953,15 @@ msgstr "无法分配内存\n"
 
 #: ../lib/gmath/la.c:251
 msgid "First scalar multiplier must be non-zero"
-msgstr ""
+msgstr "第一个标量的倍数应为非零值"
 
 #: ../lib/gmath/la.c:257 ../lib/gmath/la.c:265 ../lib/gmath/la.c:326
 msgid "One or both input matrices uninitialised"
-msgstr ""
+msgstr "一个或两个输入矩阵都没有初始化"
 
 #: ../lib/gmath/la.c:270 ../lib/gmath/la.c:331
 msgid "Matrix order does not match"
-msgstr ""
+msgstr "矩阵阶数不匹配"
 
 #: ../lib/gmath/la.c:276
 #, fuzzy
@@ -1990,7 +1975,7 @@ msgstr "无法分配内存\n"
 
 #: ../lib/gmath/la.c:448
 msgid "Input: one or both data matrices uninitialised"
-msgstr ""
+msgstr "输入：一个或两个数据矩阵都没有初始化"
 
 #: ../lib/gmath/la.c:453
 msgid "Principal matrix is not properly dimensioned"
@@ -2002,7 +1987,7 @@ msgstr ""
 
 #: ../lib/gmath/la.c:464
 msgid "Could not allocate space for solution matrix"
-msgstr ""
+msgstr "无法为矩阵的分解分配内存空间"
 
 #: ../lib/gmath/la.c:470 ../lib/gmath/la.c:478
 msgid "Could not allocate space for working matrix"
@@ -2031,7 +2016,7 @@ msgstr "无法分配内存\n"
 
 #: ../lib/gmath/la.c:597
 msgid "Matrix is singular"
-msgstr ""
+msgstr "矩阵是奇异的"
 
 #: ../lib/gmath/la.c:602
 msgid "Problem in LA procedure."
@@ -2052,40 +2037,39 @@ msgstr ""
 #: ../lib/gmath/la.c:759 ../lib/gmath/la.c:801 ../lib/gmath/la.c:1125
 #: ../lib/gmath/la.c:1178 ../lib/gmath/la.c:1252
 msgid "Matrix is not initialised"
-msgstr ""
+msgstr "矩阵没有初始化"
 
 #: ../lib/gmath/la.c:764 ../lib/gmath/la.c:806
 msgid "Could not allocate space for vector structure"
-msgstr ""
+msgstr "无法为矢量结构分配内存空间"
 
 #: ../lib/gmath/la.c:796
 msgid "Specified matrix row index is outside range"
-msgstr ""
+msgstr "指定的矩阵行索引越界"
 
 #: ../lib/gmath/la.c:837
 msgid "Specified row index is outside range"
-msgstr ""
+msgstr "指定的行索引越界"
 
 #: ../lib/gmath/la.c:842
 msgid "Specified column index is outside range"
-msgstr ""
+msgstr "指定的列索引越界"
 
 #: ../lib/gmath/la.c:862
-#, fuzzy
 msgid "Unknown vector type."
-msgstr "未知区域"
+msgstr "未知矢量类型"
 
 #: ../lib/gmath/la.c:991
 msgid "Output vector is uninitialized"
-msgstr ""
+msgstr "输出的矢量信息没有初始化"
 
 #: ../lib/gmath/la.c:996
 msgid "Vectors are not of the same type"
-msgstr ""
+msgstr "矢量信息非同种类型"
 
 #: ../lib/gmath/la.c:1001
 msgid "Output vector is of incorrect type"
-msgstr ""
+msgstr "输出的矢量信息类型不正确"
 
 #: ../lib/gmath/la.c:1006
 msgid "Matrices not allowed"
@@ -2121,283 +2105,309 @@ msgid ""
 "\n"
 "++ Running array unit tests ++"
 msgstr ""
+"\n"
+"++ 运行array单元测试 ++"
 
 #: ../lib/gpde/test/test_arrays.c:50
 msgid "\t 1. testing 2d arrays"
-msgstr ""
+msgstr "        1.测试2d array"
 
 #: ../lib/gpde/test/test_arrays.c:53
 msgid "\t 2. testing 3d arrays"
-msgstr ""
+msgstr "        2.测试3d array"
 
 #: ../lib/gpde/test/test_arrays.c:57
 msgid ""
 "\n"
 "-- Array unit tests failure --"
 msgstr ""
+"\n"
+"-- Array单元测试失败 --"
 
 #: ../lib/gpde/test/test_arrays.c:59
 msgid ""
 "\n"
 "-- Array unit tests finished successfully --"
 msgstr ""
+"\n"
+"-- Array单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_assemble.c:42
 msgid ""
 "\n"
 "++ Running assembling unit tests ++"
 msgstr ""
+"\n"
+"++ 运行汇编单元测试 ++"
 
 #: ../lib/gpde/test/test_assemble.c:44
 msgid "\t 1. testing 2d assembling"
-msgstr ""
+msgstr "        1.测试2d汇编"
 
 #: ../lib/gpde/test/test_assemble.c:47
 msgid "\t 2. testing 3d assembling"
-msgstr ""
+msgstr "        2.测试3d汇编"
 
 #: ../lib/gpde/test/test_assemble.c:51
 msgid ""
 "\n"
 "-- Assembling unit tests failure --"
 msgstr ""
+"\n"
+"-- 汇编单元测试失败 --"
 
 #: ../lib/gpde/test/test_assemble.c:53
 msgid ""
 "\n"
 "-- Assembling unit tests finished successfully --"
-msgstr ""
+msgstr "-- 汇编单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_geom.c:36
 msgid ""
 "\n"
 "++ Running geom_data unit tests ++"
 msgstr ""
+"\n"
+"++ 运行geom_data单元测试 ++"
 
 #: ../lib/gpde/test/test_geom.c:41
 msgid ""
 "\n"
 "-- geom_data unit tests failure --"
-msgstr ""
+msgstr "-- geom_data 单元测试失败 --"
 
 #: ../lib/gpde/test/test_geom.c:43
 msgid ""
 "\n"
 "-- geom_data unit tests finished successfully --"
 msgstr ""
+"\n"
+"-- geom_data单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_gradient.c:42
 msgid ""
 "\n"
 "++ Running gradient unit tests ++"
-msgstr ""
+msgstr "++ 运行坡度单元测试 ++"
 
 #: ../lib/gpde/test/test_gradient.c:44
 msgid "\t 1. testing 2d gradient"
-msgstr ""
+msgstr "        1. 测试2d坡度"
 
 #: ../lib/gpde/test/test_gradient.c:47
 msgid "\t 2. testing 3d gradient"
-msgstr ""
+msgstr "        2.测试3d坡度"
 
 #: ../lib/gpde/test/test_gradient.c:51
 msgid ""
 "\n"
 "-- Gradient unit tests failure --"
 msgstr ""
+"\n"
+"-- 坡度单元测试失败 --"
 
 #: ../lib/gpde/test/test_gradient.c:53
 msgid ""
 "\n"
 "-- Gradient unit tests finished successfully --"
 msgstr ""
+"\n"
+"-- 坡度单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_gwflow.c:43
 #, fuzzy
 msgid ""
 "\n"
 "++ Running gwflow integration tests ++"
-msgstr "未知区域"
+msgstr ""
+"\n"
+"++ 运行gwflow综合测试 ++"
 
 #: ../lib/gpde/test/test_gwflow.c:45
 msgid "\t 1. testing 2d gwflow"
-msgstr ""
+msgstr "        1.测试 2d gwflow"
 
 #: ../lib/gpde/test/test_gwflow.c:48
 msgid "\t 2. testing 3d gwflow"
-msgstr ""
+msgstr "        2.测试3d gwflow"
 
 #: ../lib/gpde/test/test_gwflow.c:52
-#, fuzzy
 msgid ""
 "\n"
 "-- gwflow integration tests failure --"
-msgstr "未知区域"
+msgstr ""
+"\n"
+"-- gwflow综合测试失败 --"
 
 #: ../lib/gpde/test/test_gwflow.c:54
 msgid ""
 "\n"
 "-- gwflow integration tests finished successfully --"
 msgstr ""
+"\n"
+"-- gwflow综合测试成功完成 --"
 
 #: ../lib/gpde/test/test_heat.c:33
-#, fuzzy
 msgid ""
 "\n"
 "++ Running heat flow integration tests ++"
-msgstr "未知区域"
+msgstr "++ 执行热流量综合测试 ++"
 
 #: ../lib/gpde/test/test_heat.c:35
 msgid "\t 1. testing 2d heat flow"
-msgstr ""
+msgstr "        1.测试2d热流量"
 
 #: ../lib/gpde/test/test_heat.c:37
 msgid "\t 2. testing 3d heat flow"
-msgstr ""
+msgstr "        2.测试3d热流量"
 
 #: ../lib/gpde/test/test_heat.c:40
-#, fuzzy
 msgid ""
 "\n"
 "-- heat flow integration tests failure --"
-msgstr "未知区域"
+msgstr "-- 热流量综合测试失败 --"
 
 #: ../lib/gpde/test/test_heat.c:42
 msgid ""
 "\n"
 "-- heat flow integration tests finished successfully --"
-msgstr ""
+msgstr "-- 热流量综合测试成功完成 --"
 
 #: ../lib/gpde/test/test_les.c:34
 msgid ""
 "\n"
 "++ Running les creation unit tests ++"
 msgstr ""
+"\n"
+"++ 运行les创建单元测试 ++"
 
 #: ../lib/gpde/test/test_les.c:39
 msgid ""
 "\n"
 "-- les creation unit tests failure --"
-msgstr ""
+msgstr "-- les创建单元测试失败 --"
 
 #: ../lib/gpde/test/test_les.c:41
 msgid ""
 "\n"
 "-- les creation unit tests finished successfully --"
-msgstr ""
+msgstr "-- les 创建单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_les.c:95
 msgid "\t * testing les creation in parallel\n"
-msgstr ""
+msgstr "         * 并行les创建测试\n"
 
 #: ../lib/gpde/test/test_les.c:126
 msgid "\t * testing les creation in serial\n"
-msgstr ""
+msgstr "        * 串行les创建测试\n"
 
 #: ../lib/gpde/test/test_main.c:49
 msgid "Choose the unit tests to run"
-msgstr ""
+msgstr "选择要启动的测试单元"
 
 #: ../lib/gpde/test/test_main.c:56
 msgid "Choose the integration tests to run"
-msgstr ""
+msgstr "选择要启动的综合测试"
 
 #: ../lib/gpde/test/test_main.c:61
 msgid "Run all unit tests"
-msgstr ""
+msgstr "运行所有的单元测试"
 
 #: ../lib/gpde/test/test_main.c:65
-#, fuzzy
 msgid "Run all integration tests"
-msgstr "未知区域"
+msgstr "运行所有的综合测试"
 
 #: ../lib/gpde/test/test_main.c:69
-#, fuzzy
 msgid "Run all unit and integration tests"
-msgstr "未知区域"
+msgstr "运行所有的单元和综合测试"
 
 #: ../lib/gpde/test/test_main.c:85
 msgid "test, gpde"
-msgstr ""
+msgstr "测试，gpde"
 
 #: ../lib/gpde/test/test_main.c:87
 msgid "Performs unit and integration tests for gpde library"
-msgstr ""
+msgstr "执行gpde库单元和综合测试"
 
 #: ../lib/gpde/test/test_solute_transport.c:43
-#, fuzzy
 msgid ""
 "\n"
 "++ Running solute_transport integration tests ++"
-msgstr "未知区域"
+msgstr ""
+"\n"
+"++ 执行solute_transport综合测试 ++"
 
 #: ../lib/gpde/test/test_solute_transport.c:45
 msgid "\t 1. testing 2d solute_transport"
-msgstr ""
+msgstr "        1.测试2d solute_tranport"
 
 #: ../lib/gpde/test/test_solute_transport.c:48
 msgid "\t 2. testing 3d solute_transport"
-msgstr ""
+msgstr "        2.测试3d solute_transport"
 
 #: ../lib/gpde/test/test_solute_transport.c:52
 msgid ""
 "\n"
 "-- solute_transport integration tests failure --"
-msgstr ""
+msgstr "-- solute_transport 综合测试失败 --"
 
 #: ../lib/gpde/test/test_solute_transport.c:55
 msgid ""
 "\n"
 "-- solute_transport integration tests finished successfully --"
 msgstr ""
+"\n"
+"-- solute_transport 综合测试成功完成 --"
 
 #: ../lib/gpde/test/test_solvers.c:37
 msgid ""
 "\n"
 "++ Running solver unit tests ++"
 msgstr ""
+"\n"
+"++ 运行解算单元测试 ++"
 
 #: ../lib/gpde/test/test_solvers.c:42
 msgid ""
 "\n"
 "-- Solver unit tests failure --"
-msgstr ""
+msgstr "-- 解算单元测试失败 --"
 
 #: ../lib/gpde/test/test_solvers.c:44
 msgid ""
 "\n"
 "-- Solver unit tests finished successfully --"
-msgstr ""
+msgstr "-- 解算单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_tools.c:34
-#, fuzzy
 msgid ""
 "\n"
 "++ Running math tool unit tests ++"
-msgstr "未知区域"
+msgstr "++ 运行数学工具单元测试 ++"
 
 #: ../lib/gpde/test/test_tools.c:39
-#, fuzzy
 msgid ""
 "\n"
 "-- math tool unit tests failure --"
-msgstr "未知区域"
+msgstr "-- 数学工具单元测试失败 --"
 
 #: ../lib/gpde/test/test_tools.c:41
 msgid ""
 "\n"
 "-- math tool unit tests finished successfully --"
 msgstr ""
+"\n"
+"-- 数学工具单元测试成功完成 --"
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, fuzzy, c-format
-msgid "Error opening raster map %s"
-msgstr "已有栅格地图 %d"
+msgid "Raster map <%s> not found"
+msgstr "输入矢量'%s'未找到"
+
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "无法将目录改变到%s"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, fuzzy, c-format
@@ -2416,12 +2426,17 @@ msgstr "无法打开%s"
 
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
-msgstr ""
+msgstr "N_array_2d * 数组为空"
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "无法将目录改变到%s"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
 msgid "Write 2d array to raster map <%s>"
-msgstr ""
+msgstr "将2d数组读入栅格地图<%s>中"
 
 #: ../lib/gpde/N_arrays_io.c:215 ../lib/gpde/N_arrays_io.c:220
 #: ../lib/gpde/N_arrays_io.c:225
@@ -2432,39 +2447,39 @@ msgstr "不能创建新进程"
 #: ../lib/gpde/N_arrays_io.c:282
 #, c-format
 msgid "Requested g3d map <%s> not found"
-msgstr ""
+msgstr "请求的g3d地图<%s>未找到"
 
 #: ../lib/gpde/N_arrays_io.c:290 ../lib/gpde/N_arrays_io.c:428
 #, c-format
 msgid "Error opening g3d map <%s>"
-msgstr ""
+msgstr "打开g3d地图 <%s>错误"
 
 #: ../lib/gpde/N_arrays_io.c:318
 #, c-format
 msgid "Read g3d map <%s> into the memory"
-msgstr ""
+msgstr "将g3d地图 <%s> 读入内存"
 
 #: ../lib/gpde/N_arrays_io.c:371 ../lib/gpde/N_arrays_io.c:469
 msgid "Error closing g3d file"
-msgstr ""
+msgstr "关闭g3d文件错误"
 
 #: ../lib/gpde/N_arrays_io.c:430
 #, c-format
 msgid "Write 3d array to g3d map <%s>"
-msgstr ""
+msgstr "将3d数组写入g3d地图 <%s>"
 
 #: ../lib/gpde/N_parse_options.c:59
 msgid ""
 "The type of solver which should solve the symmetric linear equation system"
-msgstr ""
+msgstr "应该解算线性对称方程式系统的解算类型"
 
 #: ../lib/gpde/N_parse_options.c:71
 msgid "The type of solver which should solve the linear equation system"
-msgstr ""
+msgstr "应该解算线性方程式系统的解算类型"
 
 #: ../lib/gpde/N_parse_options.c:80
 msgid "Maximum number of iteration used to solver the linear equation system"
-msgstr ""
+msgstr "解算线性方程式系统的最大迭代次数"
 
 #: ../lib/gpde/N_parse_options.c:89
 msgid ""
@@ -2483,7 +2498,7 @@ msgstr ""
 
 #: ../lib/gpde/N_solvers.c:51
 msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr ""
+msgstr "不能使用高斯消元计算稀疏矩阵"
 
 #: ../lib/gpde/N_solvers.c:56 ../lib/gpde/N_solvers.c:94
 #: ../lib/gpde/N_solvers.c:161 ../lib/gpde/N_solvers_classic_iter.c:57
@@ -2491,38 +2506,37 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:255 ../lib/gpde/N_solvers_krylov.c:423
 #: ../lib/gpde/N_solvers_krylov.c:832
 msgid "The linear equation system is not quadratic"
-msgstr ""
+msgstr "线性方程式系统不是二次方程式"
 
 #: ../lib/gpde/N_solvers.c:61
 msgid "Starting direct gauss elimination solver"
-msgstr ""
+msgstr "直接开始高斯消元解算"
 
 #: ../lib/gpde/N_solvers.c:89
 msgid "The lu solver does not work with sparse matrices"
-msgstr ""
+msgstr "不能使用逻辑单元解算稀疏矩阵"
 
 #: ../lib/gpde/N_solvers.c:99
 msgid "Starting direct lu decomposition solver"
-msgstr ""
+msgstr "直接开始逻辑分解解算"
 
 #: ../lib/gpde/N_solvers.c:156
 msgid "The cholesky solver does not work with sparse matrices"
-msgstr ""
+msgstr "不能使用cholesky解算稀疏矩阵"
 
 #: ../lib/gpde/N_solvers.c:167 ../lib/gpde/N_solvers_krylov.c:84
 #: ../lib/gpde/N_solvers_krylov.c:261
-#, fuzzy
 msgid "Matrix is not symmetric!"
-msgstr "默认驱动未设置"
+msgstr "该矩阵是非对称的"
 
 #: ../lib/gpde/N_solvers.c:171
 msgid "Starting cholesky decomposition solver"
-msgstr ""
+msgstr "开始cholesky分解解算"
 
 #: ../lib/gpde/N_solvers.c:174 ../lib/gpde/N_solvers_krylov.c:190
 #: ../lib/gpde/N_solvers_krylov.c:357 ../lib/gpde/N_solvers_krylov.c:481
 msgid "Unable to solve the linear equation system"
-msgstr ""
+msgstr "不能计算线性方程式系统"
 
 #: ../lib/gpde/N_solvers_classic_iter.c:152
 #, c-format
@@ -2547,32 +2561,32 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:198
 #, c-format
 msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr ""
+msgstr "grass不能识别基准系<%s>或找不到参数"
 
 #: ../lib/gpde/N_solvers_krylov.c:200
 #, c-format
 msgid "PCG -- iteration %i error  %g\n"
-msgstr ""
+msgstr "PCG -- 迭代 %i 错误 %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:365
 #, c-format
 msgid "Sparse CG -- iteration %i error  %g\n"
-msgstr ""
+msgstr "Sparse CG -- 跌代 %i 错误 %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:367
 #, c-format
 msgid "CG -- iteration %i error  %g\n"
-msgstr ""
+msgstr "CG -- 迭代 %i 错误 %g"
 
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, c-format
 msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr ""
+msgstr "Sparse BiCGStab -- 迭代 %i 错误 %g"
 
 #: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
 msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr ""
+msgstr "BiCGStab -- 迭代 %i 错误 %g"
 
 #: ../lib/imagery/fopen.c:28
 #, fuzzy, c-format
@@ -2606,11 +2620,11 @@ msgstr ""
 
 #: ../lib/proj/convert.c:110
 msgid "Can't parse GRASS PROJ_INFO file"
-msgstr ""
+msgstr "无法解析GRASS PROJ_INFO文件"
 
 #: ../lib/proj/convert.c:115
 msgid "Can't get PROJ.4-style parameter string"
-msgstr ""
+msgstr "无法获取PROJ.4风格的参数字符串"
 
 #: ../lib/proj/convert.c:127
 #, c-format
@@ -2619,6 +2633,9 @@ msgid ""
 "%s\n"
 "(OGR Error code was %d)"
 msgstr ""
+"OGR不能解析PROJ.4类型的参数字符串：\\n\n"
+"%s\\n\n"
+"（ORG错误代码：%d）"
 
 #: ../lib/proj/convert.c:133
 #, c-format
@@ -2626,10 +2643,12 @@ msgid ""
 "OGR can't get WKT-style parameter string\n"
 "(OGR Error code was %d)"
 msgstr ""
+"ORG不能获取WKT类型的参数字符串\\n\n"
+"（OGR错误代码：%d） "
 
 #: ../lib/proj/convert.c:394
 msgid "No projection name! Projection parameters likely to be meaningless."
-msgstr ""
+msgstr "没有投影名称！投影参数没有意义。"
 
 #: ../lib/proj/convert.c:431
 #, c-format
@@ -2666,12 +2685,12 @@ msgstr "文件中无效的椭球%s"
 
 #: ../lib/proj/get_proj.c:230
 msgid "Unable to initialise PROJ.4 with the following parameter list:"
-msgstr ""
+msgstr "无法使用以下的参数表对PROJ.4进行初始化："
 
 #: ../lib/proj/get_proj.c:237
 #, c-format
 msgid "The error message: %s"
-msgstr ""
+msgstr "错误信息： %s"
 
 #: ../lib/proj/get_proj.c:296
 msgid "Option input overflowed option table"
@@ -2684,19 +2703,19 @@ msgstr "无法打开文件 %s 在 %s 中"
 
 #: ../lib/proj/get_proj.c:402
 msgid "Input Projection Parameters"
-msgstr ""
+msgstr "输入投影参数"
 
 #: ../lib/proj/get_proj.c:404
 msgid "Input Unit Factor"
-msgstr ""
+msgstr "输入单元系数"
 
 #: ../lib/proj/get_proj.c:413
 msgid "Output Projection Parameters"
-msgstr ""
+msgstr "输出投影参数"
 
 #: ../lib/proj/get_proj.c:415
 msgid "Output Unit Factor"
-msgstr ""
+msgstr "输出单元系数"
 
 #: ../lib/raster/io_sock.c:65
 #, fuzzy
@@ -2785,6 +2804,15 @@ msgstr "请检查鼠标是否还能活动。\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "错误 - 图形监视器<%s>没有响应。\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "请求的栅格地图<%s>没有找到"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2798,7 +2826,7 @@ msgstr "矢量不是3D的"
 
 #: ../lib/rst/interp_float/vinput2d.c:84
 msgid "Loading data from attribute table ..."
-msgstr ""
+msgstr "从属性表中载入数据..."
 
 #: ../lib/rst/interp_float/vinput2d.c:87
 msgid "Cannot get layer info"
@@ -2832,7 +2860,7 @@ msgstr "s 值字段的类型不支持 (必须为整型或双精度)"
 
 #: ../lib/rst/interp_float/vinput2d.c:125
 msgid "Reading lines from vector map ... "
-msgstr ""
+msgstr "从矢量地图中读入行 ..."
 
 #: ../lib/rst/interp_float/vinput2d.c:154
 #: ../lib/rst/interp_float/vinput2d.c:250
@@ -2842,7 +2870,7 @@ msgstr "类型为 %d 的记录未找到"
 
 #: ../lib/rst/interp_float/vinput2d.c:218
 msgid "Reading nodes from vector map ... "
-msgstr ""
+msgstr "读取矢量地图上的节点..."
 
 #: ../lib/rst/interp_float/vinput2d.c:288
 msgid "strip exists with insufficient data"
@@ -2904,6 +2932,35 @@ msgstr "不正确的符号颜色：'%s'，使用默认值。"
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "无法打开文件 %s 在 %s 中"
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "无法获取图层信息"
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "无法打开数据库 %s"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3111,17 +3168,17 @@ msgstr "双精度属性索引越界"
 msgid "Layer index out of range"
 msgstr "双精度属性索引越界"
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "无法为写入打开%s"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, fuzzy, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "写空间索引文件时出错。\n"
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, fuzzy, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "无法打开矢量'%s'的历史记录"
@@ -3336,11 +3393,6 @@ msgstr ""
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-#, fuzzy
-msgid "Cannot get field info"
-msgstr "无法获取图层信息"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, fuzzy, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3490,37 +3542,37 @@ msgstr "没有 ID 的 OGR 要素被忽略。 "
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 #, fuzzy
 msgid "Registering points"
 msgstr "注册线： "
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 #, fuzzy
 msgid "Registered points"
 msgstr "注册线： "
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr ""
 
@@ -3651,6 +3703,10 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Error opening raster map %s"
+#~ msgstr "已有栅格地图 %d"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "输出的名称'%s'不是有效的矢量名称。"
