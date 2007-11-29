@@ -14,10 +14,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
-"PO-Revision-Date: 2007-10-19 12:32+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
+"PO-Revision-Date: 2007-11-29 09:26+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
-"Language-Team: Español <translations@lists.osgeo.org>\n"
+"Language-Team: Español <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -504,11 +504,11 @@ msgstr "GISRC - variable no inicializada"
 msgid "%s not set"
 msgstr "%s no inicializado"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "ATENCIÓN: "
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "ERROR: "
 
@@ -1896,7 +1896,7 @@ msgstr "G_spawn: no es posible duplicar el descriptor %d a %d"
 msgid "Unable to change directory to %s"
 msgstr "No se puede cambiar el directorio a %s"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "¡No se puede crear un proceso nuevo!"
 
@@ -2473,13 +2473,13 @@ msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
 #, c-format
-msgid "Requested raster map <%s> not found"
-msgstr "No se encontró el mapa ráster <%s> solicitado"
+msgid "Raster map <%s> not found"
+msgstr "No se encuentra el mapa ráster <%s>"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
+#: ../lib/gpde/N_arrays_io.c:67
 #, c-format
-msgid "Error opening raster map %s"
-msgstr "Error al abrir el mapa ráster %s"
+msgid "Unable to open raster map <%s>"
+msgstr "No se puede abrir el mapa ráster <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, c-format
@@ -2497,6 +2497,11 @@ msgstr "No se puede cerrar el mapa de entrada"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr "N_array_2d * la matriz está vacía"
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "No se puede crear el mapa ráster <%s>"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2884,6 +2889,15 @@ msgstr "Verifique si el mouse aun está activo.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "ERROR - el monitor de gráficos <%s> no reponde.\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "No se encuentra el mapa ráster de máscara <%s>"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr "Creada máscara de mapa de bits"
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -3015,6 +3029,33 @@ msgstr "Color del símbolo incorrecto: '%s', se usa el predeterminado."
 #, c-format
 msgid "Unable to open file %s"
 msgstr "No se puede abrir el archivo %s "
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr "%d errores en la cadena de categoría."
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr "Área mixta y otro tipo solicitado para la matriz vectorial."
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr "Espacio insuficiente en la matriz vectorial."
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+msgid "Cannot get field info"
+msgstr "No se puede obtener información de la capa"
+
+#: ../lib/vector/Vlib/array.c:244
+msgid "Cannot open database"
+msgstr "No se puede abrir la base de datos"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr "No se pudo seleccionar de la tabla/columna"
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3209,9 +3250,8 @@ msgid "Invalid layer index (index >= number of layers)"
 msgstr "Índice de capa no válido (índice >= número de capas)"
 
 #: ../lib/vector/Vlib/cindex.c:110
-#, fuzzy
 msgid "Invalid layer index (index < 0 or index >= number of layers)"
-msgstr "Índice de capa no válido (índice >= número de capas)"
+msgstr "Índice de capa no válido (índice < 0 o índice >= número de capas)"
 
 #: ../lib/vector/Vlib/cindex.c:235
 msgid "Layer or category index out of range"
@@ -3221,18 +3261,18 @@ msgstr "Índice de capa o de categoría fuera de intervalo"
 msgid "Layer index out of range"
 msgstr "Índice de capa fuera del intervalo"
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "No se puede abrir el archivo cidx <%s> para escritura"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Error al escribir el archivo de índices de categoría <%s>"
 
 #
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr ""
@@ -3462,10 +3502,6 @@ msgstr "Columna de costos no especificada"
 msgid "Arc field < 1"
 msgstr "Campo de arco < 1"
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-msgid "Cannot get field info"
-msgstr "No se puede obtener información de la capa"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3589,9 +3625,9 @@ msgid "Unable to create vector map <%s>"
 msgstr "No se puede crear el mapa vectorial <%s>"
 
 #: ../lib/vector/Vlib/open.c:590
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to stat file <%s>"
-msgstr "No se puede abrir el archivo %s "
+msgstr "No se puede abrir el archivo <%s>"
 
 #: ../lib/vector/Vlib/open.c:701
 msgid "Size of 'coor' file differs from value saved in topology file"
@@ -3625,35 +3661,35 @@ msgstr "Elemento OGR sin ID."
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "No se puede adquirir la geometría, FID [%ld]"
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 msgid "Registering points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr "Todos los vértices"
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 msgid "Registered points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr "Nodos marcados como fijos"
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr "Nodos marcados para eliminar"
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr "Vértices eliminados"
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr "Nuevos vértices"
 
@@ -3793,6 +3829,3 @@ msgid ""
 msgstr ""
 "Intento de leer el ángulo para la línea que no está conectada al nodo: nodo "
 "= [%d] línea = [%d]"
-
-#~ msgid "The vector map <%s> already exists and will be overwritten"
-#~ msgstr "El mapa vectorial <%s> ya existe y será sobrescrito"

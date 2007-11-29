@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_lv\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2006-12-09 01:00+0200\n"
 "Last-Translator: Maris Nartiss <maris.kde@gmail.com>\n"
 "Language-Team: Latvian <translations@lists.osgeo.org>\n"
@@ -485,11 +485,11 @@ msgstr "GISRC - mainīgais nav norādīts"
 msgid "%s not set"
 msgstr "%s nav norādīts"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "BRĪDINĀJUMS:"
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "KĻŪDA:"
 
@@ -1872,7 +1872,7 @@ msgstr "G_spawn: neiespējami dubultot deskriptoru %d to %d"
 msgid "Unable to change directory to %s"
 msgstr "neispējami mainīt direktoriju uz %s"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "Nevar izveidot jaunu procesu!"
 
@@ -2393,14 +2393,14 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr ""
-
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, fuzzy, c-format
-msgid "Error opening raster map %s"
-msgstr "eksistējošām rastra kartēm %d"
+msgid "Raster map <%s> not found"
+msgstr "Ieejas vektors '%s' nav atrasts"
+
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "neispējami mainīt direktoriju uz %s"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, fuzzy, c-format
@@ -2420,6 +2420,11 @@ msgstr "Neisespējami atvērt %s"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "neispējami mainīt direktoriju uz %s"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2788,6 +2793,15 @@ msgstr "Pārbīdi lai redzētu vai pele vēl ir aktīva.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "KĻŪDA - nav atbildes no grafiskā monitora <%s>\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "Ieejas vektors '%s' nav atrasts"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2904,6 +2918,35 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Unable to open file %s"
 msgstr "Neiespējami atvērt failu %s iekš %s"
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+#, fuzzy
+msgid "Cannot get field info"
+msgstr "Nevar iegūt slāņa informāciju"
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "Nevar atvērt datubāzi %s"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3111,17 +3154,17 @@ msgstr "Dubulto atribūtu indekss ārpus diapazona"
 msgid "Layer index out of range"
 msgstr "Dubulto atribūtu indekss ārpus diapazona"
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "Neiespējami atvērt %s priekš rakstīšanas"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, fuzzy, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Kļūdu rakstīšana ārpus telpisko datu index faila.\n"
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, fuzzy, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Nevar atvērt vēsturi vektoram '%s'"
@@ -3339,11 +3382,6 @@ msgstr ""
 msgid "Arc field < 1"
 msgstr ""
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-#, fuzzy
-msgid "Cannot get field info"
-msgstr "Nevar iegūt slāņa informāciju"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, fuzzy, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3495,37 +3533,37 @@ msgstr ""
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 #, fuzzy
 msgid "Registering points"
 msgstr "Saglabājam/reģistrējam līnijas"
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 #, fuzzy
 msgid "Registered points"
 msgstr "Saglabājam/reģistrējam līnijas"
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr ""
 
@@ -3658,6 +3696,10 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Error opening raster map %s"
+#~ msgstr "eksistējošām rastra kartēm %d"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Izejas vārds '%s' nav derīgs vektora nosaukums."

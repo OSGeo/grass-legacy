@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_pt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-26 21:10+0200\n"
+"POT-Creation-Date: 2007-11-29 20:51+0100\n"
 "PO-Revision-Date: 2007-06-18 22:26-0300\n"
 "Last-Translator: Paulo E. P. Marcondes <paulomarcondes at gmail dot com>\n"
 "Language-Team: Portuguese <translations@lists.osgeo.org>\n"
@@ -483,11 +483,11 @@ msgstr "GISRC - variável não incializada"
 msgid "%s not set"
 msgstr "%s não inicializado"
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:315
 msgid "WARNING: "
 msgstr "ATENÇÃO: "
 
-#: ../lib/gis/error.c:317
+#: ../lib/gis/error.c:316
 msgid "ERROR: "
 msgstr "ERRO:"
 
@@ -1859,7 +1859,7 @@ msgstr "G_spawn: não consegui duplicar o descritor %d para %d"
 msgid "Unable to change directory to %s"
 msgstr "Impossível mudar de diretório para %s"
 
-#: ../lib/gis/system.c:87
+#: ../lib/gis/system.c:90
 msgid "Can not create a new process!"
 msgstr "não consegui criar novo processo!"
 
@@ -2370,14 +2370,14 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
-msgid "Requested raster map <%s> not found"
-msgstr "Mapa raster solicitado <%s> não encontrado"
+#, fuzzy, c-format
+msgid "Raster map <%s> not found"
+msgstr "Vetor de entrada '%s' não encontrado"
 
-#: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
-#, c-format
-msgid "Error opening raster map %s"
-msgstr "ERRO abrindo mapa raster %s"
+#: ../lib/gpde/N_arrays_io.c:67
+#, fuzzy, c-format
+msgid "Unable to open raster map <%s>"
+msgstr "Impossível mudar de diretório para %s"
 
 #: ../lib/gpde/N_arrays_io.c:96
 #, c-format
@@ -2395,6 +2395,11 @@ msgstr "Impossível fechar mapa de entrada"
 #: ../lib/gpde/N_arrays_io.c:178
 msgid "N_array_2d * array is empty"
 msgstr ""
+
+#: ../lib/gpde/N_arrays_io.c:190
+#, fuzzy, c-format
+msgid "Unable to create raster map <%s>"
+msgstr "Impossível mudar de diretório para %s"
 
 #: ../lib/gpde/N_arrays_io.c:199
 #, c-format
@@ -2759,6 +2764,15 @@ msgstr "Verifique se o mouse ainda está ativo.\n"
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "ERRO - O monitor gráfico <%s> não está respondendo.\n"
 
+#: ../lib/rst/interp_float/input2d.c:49
+#, fuzzy, c-format
+msgid "Mask raster map <%s> not found"
+msgstr "Mapa raster solicitado <%s> não encontrado"
+
+#: ../lib/rst/interp_float/input2d.c:72
+msgid "Bitmap mask created"
+msgstr ""
+
 #: ../lib/rst/interp_float/segmen2d.c:123
 msgid ""
 "taking too long to find points for interpolation--please change the region "
@@ -2882,6 +2896,34 @@ msgstr "Símbolo de cor incorreto: '%s', usando padrão"
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Impossível abrir arquivo %s"
+
+#: ../lib/vector/Vlib/array.c:84
+#, c-format
+msgid "%d errors in category string."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+msgid "Mixed area and other type requested for vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
+#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+msgid "Not enough space in vector array."
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
+#: ../lib/vector/Vlib/net.c:302
+msgid "Cannot get field info"
+msgstr "Impossível obter informação do campo"
+
+#: ../lib/vector/Vlib/array.c:244
+#, fuzzy
+msgid "Cannot open database"
+msgstr "não consegui abrir banco de dados %s"
+
+#: ../lib/vector/Vlib/array.c:253
+msgid "Could not select from table/column"
+msgstr ""
 
 #: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
 #: ../lib/vector/Vlib/write.c:36
@@ -3087,17 +3129,17 @@ msgstr "Dimensões do vetor além dos limites"
 msgid "Layer index out of range"
 msgstr "Dimensões da matriz além dos limites"
 
-#: ../lib/vector/Vlib/cindex.c:456
+#: ../lib/vector/Vlib/cindex.c:457
 #, fuzzy, c-format
 msgid "Unable to open cidx file <%s> for write"
 msgstr "não consegui abrir %s para escrita"
 
-#: ../lib/vector/Vlib/cindex.c:464
+#: ../lib/vector/Vlib/cindex.c:465
 #, fuzzy, c-format
 msgid "Error writing out category index file <%s>"
 msgstr "Erro de escrita no arquivo de índices espaciais."
 
-#: ../lib/vector/Vlib/cindex.c:507
+#: ../lib/vector/Vlib/cindex.c:508
 #, fuzzy, c-format
 msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Impossível abrir índice de categoria para mapa vetorial <%s>"
@@ -3312,10 +3354,6 @@ msgstr "Coluna de custos não especificada"
 msgid "Arc field < 1"
 msgstr "Campo de arco < 1"
 
-#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:302
-msgid "Cannot get field info"
-msgstr "Impossível obter informação do campo"
-
 #: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
 #, c-format
 msgid "Cannot open database <%s> by driver <%s>"
@@ -3461,35 +3499,35 @@ msgstr "Ignorando feição OGR sem ID"
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "Impossível obter geometria do elemento, FID [%ld]"
 
-#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
 msgid "Registering points"
 msgstr "Registrando pontos"
 
-#: ../lib/vector/Vlib/snap.c:168
+#: ../lib/vector/Vlib/snap.c:166
 msgid "All vertices"
 msgstr "Todos os vértices"
 
-#: ../lib/vector/Vlib/snap.c:169
+#: ../lib/vector/Vlib/snap.c:167
 msgid "Registered points"
 msgstr "Pontos registrados"
 
-#: ../lib/vector/Vlib/snap.c:214
+#: ../lib/vector/Vlib/snap.c:212
 msgid "Nodes marked as anchor"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:215
+#: ../lib/vector/Vlib/snap.c:213
 msgid "Nodes marked to be snapped"
 msgstr "Nós marcados para encaixar"
 
-#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
+#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
 msgid "Snaps"
 msgstr "Encaixe"
 
-#: ../lib/vector/Vlib/snap.c:372
+#: ../lib/vector/Vlib/snap.c:370
 msgid "Snapped vertices"
 msgstr "Vértices encaixados"
 
-#: ../lib/vector/Vlib/snap.c:373
+#: ../lib/vector/Vlib/snap.c:371
 msgid "New vertices"
 msgstr "Novos vértices"
 
@@ -3617,6 +3655,9 @@ msgid ""
 "Attempt to read line angle for the line which is not connected to the node: "
 "node = [%d] line = [%d]"
 msgstr ""
+
+#~ msgid "Error opening raster map %s"
+#~ msgstr "ERRO abrindo mapa raster %s"
 
 #~ msgid "Output name '%s' is not valid vector name."
 #~ msgstr "Nome de arquivo de saída %s não é um nome de vetor válido."
