@@ -44,7 +44,7 @@ void check_input_maps(void)
 
 	mapset = G_find_cell2(param.elevationmap->answer, "");
 	if (mapset == NULL) {
-	    G_fatal_error(_("Raster map <%s not found"),
+	    G_fatal_error(_("Raster map <%s> not found"),
 			  param.elevationmap->answer);
 	    exit(EXIT_FAILURE);
 	}
@@ -57,7 +57,7 @@ void check_input_maps(void)
 	    mapset = NULL;
 	    mapset = G_find_cell2(param.input->answers[i], "");
 	    if (mapset == NULL) {
-		G_fatal_error(_("Raster map <%s not found"),
+		G_fatal_error(_("Raster map <%s> not found"),
 			      param.input->answers[i]);
 		exit(EXIT_FAILURE);
 	    }
