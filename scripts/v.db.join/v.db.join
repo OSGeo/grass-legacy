@@ -73,12 +73,6 @@ fi
 
 PROG=`basename $0`
 
-#### check if we have awk
-if [ ! -x "`which sqlite3`" ] ; then
-    g.message -e "sqlite3 required, please install first"
-    exit 1
-fi
-
 driver="`v.db.connect -g $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d' ' -f5`"
 database="`v.db.connect -g $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d' ' -f4`"
 if [ "$driver" = "dbf" ] ; then
