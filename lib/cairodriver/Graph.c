@@ -21,6 +21,7 @@
 /* globals */
 char *file_name;
 int file_type;
+int is_vector;
 int width, height, stride;
 unsigned char *grid;
 int modified;
@@ -138,11 +139,26 @@ static int init_file(void)
 		G_fatal_error("Unknown file extension: %s", p);
 	G_debug(1, "File type: %s (%d)", file_name, file_type);
 
+	switch (file_type)
+	{
+	case FTYPE_PDF:
+	case FTYPE_PS:
+	case FTYPE_SVG:
+		is_vector = 1;
+		break;
+	}
+
 	p = getenv("GRASS_CAIRO_MAPPED");
 	do_map = p && strcmp(p, "TRUE") == 0 && ends_with(file_name, ".bmp");
 
 	p = getenv("GRASS_CAIRO_READ");
 	do_read = p && strcmp(p, "TRUE") == 0;
+
+	if (is_vector)
+	{
+		do_read = do_map = 0;
+		bgcolor_a = 1.0;
+	}
 
 	if (do_read && access(file_name, 0) != 0)
 		do_read = 0;
@@ -153,13 +169,12 @@ static int init_file(void)
 	if (do_read && do_map)
 		map_file();
 
-	if (!mapped)
-	{
+	if (!mapped && !is_vector)
 		grid = G_malloc(height * stride);
-		init_cairo();
-	}
 
-	if (!do_read)
+	init_cairo();
+
+	if (!do_read && !is_vector)
 	{
 		Cairo_Erase();
 		modified = 1;
@@ -172,6 +187,7 @@ static int init_file(void)
 	{
 		write_image();
 		map_file();
+		init_cairo();
 	}
 
 	return 0;
@@ -307,7 +323,6 @@ static void map_file(void)
 		G_free(grid);
 	}
 	grid = (char *) ptr + HEADER_SIZE;
-	init_cairo();
 
 	close(fd);
 
