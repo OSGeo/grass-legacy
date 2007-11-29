@@ -10,7 +10,7 @@ check_ready(void)
 
 	mapset = G_find_cell(iname,"");
 	if (!mapset)
-		G_fatal_error(_("Raster map <%s> not find"), iname);
+		G_fatal_error(_("Raster map <%s> not found"), iname);
 
 	fp = fopen(file, "r");
 	if (!fp)
