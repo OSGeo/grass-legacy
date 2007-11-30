@@ -3,6 +3,9 @@
 <EM>v.voronoi</EM> uses an existing vector points map (<B>input</B>) to create
 a Voronoi diagram (Thiessen polygons) in a new vector map (<B>output</B>).
 <P>
+The bounds of the output map are limited by the current region.
+(see <em>g.region</em>)
+<P>
 
 <BR>
 Voronoi diagram and Delaunay triangulation example:
@@ -60,8 +63,9 @@ Only attribute table of field 1 is copied.
 
 <H2>SEE ALSO</H2>
 <EM>
+<A HREF="g.region.html">g.region</A>,
 <A HREF="v.delaunay.html">v.delaunay</A>, 
-<A HREF="v.hull.html">v.hull</A>,
+<A HREF="v.hull.html">v.hull</A>
 </EM>
 
 <H2>AUTHORS</H2>
@@ -69,4 +73,5 @@ James Darrell McCauley, Purdue University<br>
 GRASS 5 update, improvements: <a href=mailto:aaime@libero.it>Andrea Aime</a>, Modena, Italy<br>
 GRASS 5.7 update: Radim Blazek
 
-<p><i>Last changed: $Date$</i></p>
+<p>
+<i>Last changed: $Date$</i></p>

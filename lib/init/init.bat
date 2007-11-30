@@ -94,7 +94,7 @@ if not "%GRASS_WISH%"=="" (
 
 rem This doesn't seem to work; don't understand return codes from gis_set.tcl PK
 rem if return ok, gis.m start:
-if %errorlevel% == 1 goto exitinit
+if %errorlevel% == 2 goto exitinit
 
 if not "%GRASS_WISH%"=="" (
   "%GRASS_WISH%" "%WINGISBASE%\etc\gm\gm.tcl"

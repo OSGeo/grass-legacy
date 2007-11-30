@@ -49,6 +49,7 @@ void COM_Font_get(const char *name)
 				return;
 			}
 
+		stroke_set("romans");
 	}
 }
 

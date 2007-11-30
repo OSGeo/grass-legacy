@@ -1,31 +1,15 @@
 MODULE_TOPDIR = ../../../../..
 
-include $(MODULE_TOPDIR)/include/Make/Module.make
+LIB_OBJS = mm.o mm_utils.o ami_stream.o rtimer.o
+LIB_NAME = iostream
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 TPIEINC = ../../include
+EXTRA_INC = -I$(TPIEINC)
+ifneq ($(USE_LARGEFILES),)
+	EXTRA_CFLAGS = -D_FILE_OFFSET_BITS=64
+endif
 
-LIBRARY = libiostream.a
+default: stlib
 
-RANLIB = ranlib
-
-ARFLAGS = rv
-
-# This is library code.
-override CPPFLAGS += -I$(TPIEINC) -g -D_FILE_OFFSET_BITS=64
-
-SRC = mm.cc mm_utils.cc ami_stream.cc rtimer.cc
-
-OBJ = $(SRC:.cc=.o)
-
-LIB_COMPONENTS = $(patsubst %.cc,$(LIBRARY)(%.o),$(SRC))
-
-(%): %
-	$(AR) $(ARFLAGS) $@ $<
-
-default: $(LIBRARY)
-
-$(LIBRARY): $(LIB_COMPONENTS)
-
-
-clean:
-	-rm $(LIBRARY)

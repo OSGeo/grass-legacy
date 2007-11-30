@@ -14,32 +14,35 @@
 
 #define DEFAULT_FILE_NAME "map.png"
 
+#define HEADER_SIZE 54
+
 /* Scale for converting colors from [0..255] to cairo's [0.0..1.0] */
 #define COLORSCALE (1.0/255.0)
 #define CAIROCOLOR(a) (((double)(a))*COLORSCALE)
 
 /* File types */
 #define FTYPE_UNKNOWN 0
-#define FTYPE_PNG 1
-#define FTYPE_PDF 2
-#define FTYPE_PS  3
-#define FTYPE_SVG 4
-
-/* CAIRO drawing operations */
-#define OP_NONE 0
-#define OP_STROKE 1
-#define OP_FILL 2
+#define FTYPE_PPM 1
+#define FTYPE_BMP 2
+#define FTYPE_PNG 3
+#define FTYPE_PDF 4
+#define FTYPE_PS  5
+#define FTYPE_SVG 6
+#define FTYPE_X11 7
 
 extern cairo_surface_t *surface;
 extern cairo_t *cairo;
 
 extern char *file_name;
 extern int file_type;
-extern int width, height;
+extern int width, height, stride;
+extern unsigned char *grid;
 extern int clip_left, clip_right, clip_top, clip_bottom;
 extern int auto_write;
 extern double bgcolor_r, bgcolor_g, bgcolor_b, bgcolor_a;
 extern int modified;
+extern int auto_write;
+extern int mapped;
 
 extern const struct driver *Cairo_Driver(void);
 
@@ -62,21 +65,15 @@ extern void Cairo_end_scaled_raster(void);
 extern void Cairo_Line_width(int);
 extern void Cairo_Polygon_abs(const int*, const int*, int);
 extern void Cairo_Polyline_abs(const int*, const int*, int);
+extern void Cairo_Respond(void);
 
-/* Graph.c */
-extern void init_cairo(void);
-extern int ends_with(const char*, const char*);
-
+/* read.c */
+extern void read_image(void);
+extern void read_ppm(void);
+extern void read_bmp(void);
 /* write.c */
 extern void write_image(void);
-
-/* drawing.c */
-extern int current_drawing_op;
-extern int current_pos_x, current_pos_y;
-extern void set_drawing_op(int);
-extern void finish_drawing_op(void);
-extern void move_to(int, int);
-extern void set_pos(int, int);
-extern void reset_pos(void);
+extern void write_ppm(void);
+extern void write_bmp(void);
 
 #endif /* __CAIRODRIVER_H__ */

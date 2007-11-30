@@ -142,7 +142,7 @@ int GPJ_get_ellipsoid_by_name(const char *name, struct gpj_ellps *estruct)
     list = listhead = read_ellipsoid_table(0);
 
     while (list != NULL) {
-	if (strcasecmp(name, list->name) == 0) {
+	if (G_strcasecmp(name, list->name) == 0) {
 	    estruct->name = G_store(list->name);
 	    estruct->longname = G_store(list->longname);
 	    estruct->a = list->a;

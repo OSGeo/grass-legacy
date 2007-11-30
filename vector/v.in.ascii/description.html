@@ -2,64 +2,61 @@
 
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
 binary format. The module may import two formats:
-<DL>
-<DT><b>standard</b><DD> contains all data types, each coordinate on one row
-<DT><b>point</b><DD> (default) reads only points, each point defined on one row.
-    Values are separated by a user definable deliminator. If the 'columns' option is not defined, 
-    default names are used. It is possible to specify the column order for the 
-    x,y,z coordinates and category values.
-</DL>
+<ul>
+<li><b>standard</b> contains all data types, each coordinate on one row</li>
+<li><b>point</b> (default) reads only points, each point defined on
+  one row. Values are separated by a user definable deliminator. If
+  the <b>columns</b> option is not defined, default names are used. It
+  is possible to specify the column order for the x,y,z coordinates
+  and category values.</li>
+</ul>
 
-
-<P>
-The <em><a HREF="v.out.ascii.html">v.out.ascii</a></em> GRASS module 
-performs the function of <em>v.in.ascii</em> in reverse;
-i.e., it converts vector maps in binary format to ASCII
-format.  These two companion programs are useful both for
-importing and exporting vector maps between GRASS and
-other software, and for transferring data between
+<p>
+The <a HREF="v.out.ascii.html">v.out.ascii</a> GRASS module performs
+the function of <em>v.in.ascii</em> in reverse; i.e., it converts
+vector maps in binary format to ASCII format. These two companion
+programs are useful both for importing and exporting vector maps
+between GRASS and other software, and for transferring data between
 machines.
 
-
 <h2>NOTES</h2>
-
  
-The input is read from the file specified by the <B>input</B> option or
+The input is read from the file specified by the <b>input</b> option or
 from standard input.
 
-<P>
+<p>
 The field separator may be a character, the word '<tt>tab</tt>'
 (or '<tt>\t</tt>') for tab, or '<tt>space</tt>' (or '&nbsp;') for a blank.
 
-<P>
+<p>
 Attribute table is only created if it is needed, i.e. when at
 least one attribute column is present in the input file besides
 geometry columns. The attribute column will be auto-scanned for type, but
 may be explicitly declared along with the geometry columns using the
-<em>columns</em> parameter.
+<b>columns</b> parameter.
 
-<P>
+<p>
 Latitude/Longitude data may be given in a number of ways.
 Decimal degrees must be positive or negative instead of using a hemisphere
 letter. Mixed coordinates must use a hemisphere letter. Whole minutes and
 seconds must always contain two digits (example: use <tt>167:03:04.567</tt>;
 and not <tt>167:3:4.567</tt>). 
-<BR><BR>
-Acceptable formats:<BR>
+<br><br>
+Acceptable formats:<br>
 <i>key: D=Degrees; M=Minutes; S=Seconds; h=Hemisphere (N,S,E,W)</i>
 <ul>
-<li><tt>(+/-)DDD.DDDDD</tt>
-<li><tt>DDDh</tt>
-<li><tt>DDD:MMh</tt>
-<li><tt>DDD:MM.MMMMMh</tt>
-<li><tt>DDD:MM:SSh</tt>
-<li><tt>DDD:MM:SS.SSSSSh</tt>
+  <li><tt>(+/-)DDD.DDDDD</tt>
+  <li><tt>DDDh</tt>
+  <li><tt>DDD:MMh</tt>
+  <li><tt>DDD:MM.MMMMMh</tt>
+  <li><tt>DDD:MM:SSh</tt>
+  <li><tt>DDD:MM:SS.SSSSSh</tt>
 </ul>
 
-<P>
-Use the <b>-z</b> flag to convert ASCII data into a 3D map.
+<p>
+Use the <b>-z</b> flag to convert ASCII data into a 3D vector map.
 
-<P>
+<p>
 In special cases of data import, such as the import of large LIDAR datasets
 (millions of data points), it may be necessary to disable topology support
 (creating a GRASS vector level 1 vector map) due to memory constraints.
@@ -70,35 +67,78 @@ try to import the data without creating a database (the <b>-t</b> flag)
 or within a subregion (the <b>-r</b> flag) before resorting the to
 disabling of topology.
 
-<P>
-A GRASS ASCII vector map (in <B>standard</B> mode) may contain a mix of 
-primitives including points, lines, boundaries, centroids, areas, faces, 
-and kernels. This format is described in the
-<a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">GRASS Vector ASCII Format Specification</a>.
-On top a header can be defined (see example below).
-The header is not required if the <b>-n</b> flag is used.
+<p>
+A GRASS ASCII vector map (in <B>standard</B> mode) may contain a mix
+of primitives including points, lines, boundaries, centroids, areas,
+faces, and kernels.
+<!--This format is described in the
+<a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">GRASS
+Vector ASCII Format Specification</a>.--> On top a header can be
+defined (see example below).  The header is not required if
+the <b>-n</b> flag is used.
 
-<P>
+<p>The header is similar as the head file of vector binary format but
+contains bounding box also. Key words are:
+
+<pre>
+ORGANIZATION
+DIGIT DATE
+DIGIT NAME
+MAP NAME
+MAP DATE
+MAP SCALE
+OTHER INFO
+ZONE
+WEST EDGE
+EAST EDGE
+SOUTH EDGE
+NORTH EDGE
+MAP THRESH
+</pre>
+
+<p>The body begins with the row:
+
+<pre>
+VERTI:
+</pre>
+
+followed by records of primitives:
+
+<pre>
+TYPE NUMBER_OF_COORDINATES [NUMBER_OF_CATEGORIES]
+ X Y [Z]
+....
+ X Y [Z]
+[ LAYER CATEGORY]
+....
+[ LAYER CATEGORY]
+</pre>
+
+Everything above in <tt>[&nbsp;]</tt> is optional. 
+
+<p>
 The primitive codes are as follows:
-<UL>
-<LI>'P': point</LI>
-<LI>'L': line</LI>
-<LI>'B': boundary</LI>
-<LI>'C': centroid</LI>
-<LI>'F': face (3D boundary)</LI>
-<LI>'K': kernel (3D centroid)</LI>
-<LI>'A': area (boundary) - better use 'B'; kept only for backward compatibility</LI>
-</UL>
+<ul>
+<li>'P': point</li>
+<li>'L': line</li>
+<li>'B': boundary</li>
+<li>'C': centroid</li>
+<li>'F': face (3D boundary)</li>
+<li>'K': kernel (3D centroid)</li>
+<li>'A': area (boundary) - better use 'B'; kept only for backward
+compatibility</li>
+</ul>
 
 The coordinates are listed following the initial line containing the
 primitive code, the total number of vectors in the series, and (optionally)
 the number of categories (1 for a single layer, higher for multiple layers).
 Below that 1 or several lines follow to indicate the layer number and
 the category number (ID).
-<BR>
-The order of coordinates is <BR>
+<br>
+The order of coordinates is
+<pre>
   X Y [Z]
-
+</pre>
 
 <h3>Import of files without category ID column</h3>
 
@@ -108,7 +148,6 @@ To automatically add an additional column named 'cat', the
 <b>cat</b> parameter must be set to the virtual column number 0 
 (<tt>cat=0</tt>). This is the default action if the <b>cat</b> parameter
 is not set.
-
 
 <h3>Importing from a spreadsheet</h3>
 
@@ -124,7 +163,6 @@ Any line starting with the hash character ('<tt>#</tt>') will be treated as
 a comment and skipped completely if located in the main data file. If located
 in the header, as defined by the <b>skip</b> parameter, it will be treated as
 a header line and written to the history file.
-
 
 <h3>Import of sexagesimal degree (degree, minutes, seconds, DMS)</h3>
 
@@ -216,12 +254,12 @@ Generate a 2D points vector map 'coords.txt' as ASCII file:
 1663709|5102614
 </pre></div>
 
-<P>
+<p>
 Import into GRASS:
 <div class="code"><pre>
 v.in.ascii input=coords.txt output=mymap
 </pre></div>
-As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
+As the <b>cat</b> option is set to 0 by default, an extra column 'cat'
 containing the IDs will be auto-generated.
 
 <h3>Example 3</h3>
@@ -235,16 +273,15 @@ Generate a 2D points vector map 'points.dat' as ASCII file:
 5|1663709|5102614|mineralni pramen
 </pre></div>
 
-<P>
+<p>
 Import into GRASS:
 <div class="code"><pre>
 cat points.dat | v.in.ascii out=mypoints x=2 y=3 cat=1 \
     columns='cat int, x double precision, y double precision, label varchar(20)'
 </pre></div>
 
-<P>
+<p>
 The module is reading from standard input, using the default '|' (pipe) delimiter.
-
 
 <h3>Example 4</h3>
 
@@ -272,7 +309,7 @@ Generate a 3D points vector map 'points3d.dat' with attributes as ASCII file:
 <P>
 Import into GRASS:
 <div class="code"><pre>
-#As the <em>cat</em> option is set to 0 by default, an extra column 'cat'
+#As the 'cat' option is set to 0 by default, an extra column 'cat'
 #containing the IDs will be auto-generated (no need to define that):
 cat points3d.dat | v.in.ascii -z z=3 cat=0 out=mypoints3D \
     columns='x double precision, y double precision, z double precision, \
@@ -307,25 +344,25 @@ cat $MAPSET/group/$GROUP/POINTS | v.in.ascii out=$GROUP_gcp fs=space skip=3 \
     col='x double precision, y double precision, x_target double precision, \
     y_target double precision, ok int'
 </pre></div>
-<BR>
+
+<h2>REFERENCES</h2>
+
+<a HREF="sql.html">SQL command notes</a> for creating databases
 
 <h2>SEE ALSO</h2>
 
-<EM>
-<a HREF="db.execute.html">db.execute</a><BR>
-<a HREF="r.in.ascii.html">r.in.ascii</a><BR>
-<a HREF="r.in.xyz.html">r.in.xyz</a><BR>
-<a HREF="v.db.connect.html">v.db.connect</a><BR>
-<a HREF="v.out.ascii.html">v.out.ascii</a><BR>
-<a HREF="v.info.html">v.info</a><BR>
-<a HREF="v.build.html">v.build</a><BR>
-<a HREF="v.build.polylines.html">v.build.polylines</a><BR>
-<a HREF="v.centroids.html">v.centroids</a><BR>
-<a HREF="v.clean.html">v.clean</a><BR>
-</EM>
-<a HREF="sql.html">SQL command notes</a> for creating databases<BR>
-<a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass6/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
-
+<em>
+<a HREF="db.execute.html">db.execute</a>,
+<a HREF="r.in.ascii.html">r.in.ascii</a>,
+<a HREF="r.in.xyz.html">r.in.xyz</a>,
+<a HREF="v.db.connect.html">v.db.connect</a>,
+<a HREF="v.out.ascii.html">v.out.ascii</a>,
+<a HREF="v.info.html">v.info</a>,
+<a HREF="v.build.html">v.build</a>,
+<a HREF="v.build.polylines.html">v.build.polylines</a>,
+<a HREF="v.centroids.html">v.centroids</a>,
+<a HREF="v.clean.html">v.clean</a>
+</em>
 
 <h2>AUTHORS</h2>
 

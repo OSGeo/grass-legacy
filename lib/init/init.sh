@@ -9,7 +9,7 @@
 #   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
-#				Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
+#		Hamish Bowman - New Zealand - hamish_nospam at yahoo,com
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
@@ -786,6 +786,15 @@ else
 	fi
 fi
 
+cat <<EOF
+          __________  ___   __________    _______________
+         / ____/ __ \/   | / ___/ ___/   / ____/  _/ ___/
+        / / __/ /_/ / /| | \__ \\\\_  \\   / / __ / / \\__ \\ 
+       / /_/ / _, _/ ___ |___/ /__/ /  / /_/ // / ___/ / 
+       \____/_/ |_/_/  |_/____/____/   \____/___//____/  
+
+EOF
+
 if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
 	cat "$GISBASE/locale/$LCL/etc/welcome"
 else
@@ -810,6 +819,8 @@ case "$GRASS_GUI" in
 esac
 
 echo "When ready to quit enter:                exit"
+echo
+
 
 case "$sh" in
 

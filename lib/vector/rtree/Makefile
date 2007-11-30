@@ -15,14 +15,17 @@ RTLINC = $(ARCH_INCDIR)/rtree
 HEADERS := $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_q.h \
 	$(ARCH_INCDIR)/rtree.h
 
-default: lib
-
-lib: $(HEADERS)
+default: $(HEADERS)
+	$(MAKE) lib
 
 $(RTLINC):
 	$(MKDIR) $@
 
+ifneq ($(BROKEN_MAKE),)
+$(RTLINC)/%.h: %.h $(RTLINC)
+else
 $(RTLINC)/%.h: %.h | $(RTLINC)
+endif
 	$(INSTALL_DATA) $< $@
 
 $(ARCH_INCDIR)/rtree.h: rtree.h

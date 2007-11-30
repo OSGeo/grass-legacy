@@ -228,8 +228,8 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 
     if (!(pj = pj_init(nopt1, opt_in))) {
 	strcpy(buffa, _("Unable to initialise PROJ.4 with the following parameter list:"));
-	char err[50];
 	for (i = 0; i < nopt1; i++) {
+	    char err[50];
 	    sprintf (err, " +%s", opt_in[i]);
 	    strcat (buffa, err);
 	}
@@ -366,7 +366,7 @@ const char *set_proj_lib(const char *name)
 {
     const char *gisbase = G_gisbase();
     static char *buf = NULL;
-    static int buf_len;
+    static size_t buf_len;
     size_t len = strlen(gisbase) + sizeof(GRIDDIR) + strlen(name) + 1;
 
     if (buf_len < len) {
