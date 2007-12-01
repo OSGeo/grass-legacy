@@ -516,6 +516,7 @@ class AttributeManager(wx.Frame):
 
             sqlSimple = wx.RadioButton(parent=panel, id=wx.ID_ANY,
                                        label=_("Simple"))
+            sqlSimple.SetValue(True)
             sqlAdvanced = wx.RadioButton(parent=panel, id=wx.ID_ANY,
                                          label=_("Advanced"))
             sqlSimple.Bind(wx.EVT_RADIOBUTTON,   self.OnChangeSql)
@@ -1584,9 +1585,9 @@ class AttributeManager(wx.Frame):
                "cats=%s" % utils.ListOfCatsToRange(cats),
                "width=%d"  % self.settings['highlight']['width']]
         if self.icon:
-            gcmd.append("icon=%s" % (self.icon))
+            cmd.append("icon=%s" % (self.icon))
         if self.pointsize:
-            gcmd.append("size=%s" % (self.pointsize))
+            cmd.append("size=%s" % (self.pointsize))
 
         self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
                                    l_active=True, l_hidden=True, l_opacity=1.0)
