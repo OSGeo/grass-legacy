@@ -207,6 +207,7 @@ class VirtualAttributeList(wx.ListCtrl,
             # self.SetStringItem(index=index, col=j+1, label=str(self.itemDataMap[i][j+1]))
                 
             # self.SetItemData(item=index, data=i)
+
             self.itemIndexMap.append(i)
             if keyId > -1: # load cats only when LoadData() is called first time
                 self.itemCatsMap[i] = cat
@@ -403,50 +404,46 @@ class AttributeManager(wx.Frame):
         self.layerPage = {}
 
         # auinotebook (browse, manage, settings)
-        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY,
-                                           style=wx.aui.AUI_NB_BOTTOM)
+        #self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY,
+        #                                   style=wx.aui.AUI_NB_BOTTOM)
         # really needed (ML)
         # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
-        ### Mac-related problem
-        # self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
-        #                                         style=FN.FNB_BOTTOM | FN.FNB_NO_X_BUTTON |
-        #                                         FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
+        dbmStyle = FN.FNB_VC8 | \
+            FN.FNB_BACKGROUND_GRADIENT | \
+            FN.FNB_NODRAG | \
+            FN.FNB_TABS_BORDER_SIMPLE
+        
+        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
+                                                 style=FN.FNB_BOTTOM |
+                                                 FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_NO_X_BUTTON | 
-                                          FN.FNB_TABS_BORDER_SIMPLE |
-                                          FN.FNB_NODRAG)
-        # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
-        # self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
-        # self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
+                                          style=dbmStyle)
+        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
+        #self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
+        self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
+        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.manageTablePage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                          style=FN.FNB_NO_X_BUTTON | 
-                                               FN.FNB_TABS_BORDER_SIMPLE |
-                                               FN.FNB_NODRAG)
-        # self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
-        # self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
-        # self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
+                                          style=dbmStyle)
+        self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
+        #self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
+        self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
+        self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.manageLayerPage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                               style=FN.FNB_NO_X_BUTTON | 
-                                               FN.FNB_TABS_BORDER_SIMPLE |
-                                               FN.FNB_NO_NAV_BUTTONS)
-        # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
-        # self.notebook.AddPage(self.managePage, text=_("Manage tables")) # FN
-        # self.managePage.SetTabAreaColour(wx.Colour(125,200,175))
+                                               style=dbmStyle)
+        self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
+        #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
+        self.notebook.AddPage(self.manageLayerPage, text=_("Manage tables")) # FN
+        self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
-                                            style=FN.FNB_NO_X_BUTTON | 
-                                            FN.FNB_TABS_BORDER_SIMPLE |
-                                            FN.FNB_NO_NAV_BUTTONS)
-        # self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
-        # self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
-        # self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
+                                            style=dbmStyle)
+        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
+        #self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
+        self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
+        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
@@ -2115,11 +2112,6 @@ class LayerBook(wx.Notebook):
                       proportion=1,
                       flag=wx.ALL | wx.EXPAND,
                       border=5)
-
-        pageSizer.Add(item=btnDelete,
-                       proportion=0,
-                       flag=wx.ALL | wx.ALIGN_RIGHT,
-                       border=5)
 
         pageSizer.Add(item=btnDelete,
                        proportion=0,
