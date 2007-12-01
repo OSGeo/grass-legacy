@@ -1863,24 +1863,15 @@ class LayerBook(wx.Notebook):
         self.parentDialog = parentDialog
         self.mapDBInfo    = self.parentDialog.mapDBInfo
 
-        self.__createAddPage()
-        self.__createDeletePage()
-        self.__createModifyPage()
-
-    def __createAddPage(self):
-        """Add new layer"""
-        panel = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=panel, text=_("Add new layer"))
-
         #
         # drivers
         #
         cmdDriver = gcmd.Command(['db.drivers',
                                   '-p',
                                   '--q'])
-        listOfDrivers = []
+        self.listOfDrivers = []
         for drv in cmdDriver.ReadStdOutput():
-            listOfDrivers.append(drv.strip())
+            self.listOfDrivers.append(drv.strip())
 
         #
         # get default values
@@ -1897,85 +1888,101 @@ class LayerBook(wx.Notebook):
             elif item == 'database':
                 self.defaultDatabase = value
 
-        listOfTables = self.__getTables(self.defaultDriver, self.defaultDatabase)
+        self.defaultTables = self.__getTables(self.defaultDriver, self.defaultDatabase)
         try:
-            listOfColumns = self.__getColumns(self.defaultDriver, self.defaultDatabase,
-                                              listOfTables[0])
+            self.defaultColumns = self.__getColumns(self.defaultDriver, self.defaultDatabase,
+                                               listOfTables[0])
         except:
-            listOfColumns = []
+            self.defaultColumns = []
+
+        self.__createAddPage()
+        self.__createDeletePage()
+        self.__createModifyPage()
+
+    def __createAddPage(self):
+        """Add new layer"""
+        self.addPanel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=self.addPanel, text=_("Add new layer"))
 
         #
-        # list of layer widgets
+        # list of layer widgets (label, value)
         #
-        self.layerWidgets = {'layer': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                     label='%s:' % _("Layer")),
-                                       wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
-                                                   initial=max(self.mapDBInfo.layers.keys())+1,
-                                                   min=1, max=1e6)),
-                             'driver': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                      label='%s:' % _("Driver")),
-                                        wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                                  choices=listOfDrivers)),
-                             'database': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                        label='%s:' % _("Database")),
-                                          wx.TextCtrl(parent=panel, id=wx.ID_ANY,
-                                                      value='',
-                                                      style=wx.TE_PROCESS_ENTER)),
-                             'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                                     label='%s:' % _("Table")),
-                                       wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                                 choices=listOfTables)),
-                             'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+        self.addLayerWidgets = {'layer':
+                                    (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Layer")),
+                                     wx.SpinCtrl(parent=self.addPanel, id=wx.ID_ANY, size=(65, -1),
+                                                 initial=max(self.mapDBInfo.layers.keys())+1,
+                                                 min=1, max=1e6)),
+                                'driver':
+                                    (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Driver")),
+                                     wx.Choice(parent=self.addPanel, id=wx.ID_ANY, size=(200, -1),
+                                               choices=self.listOfDrivers)),
+                                'database':
+                                    (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Database")),
+                                     wx.TextCtrl(parent=self.addPanel, id=wx.ID_ANY,
+                                                 value='',
+                                                 style=wx.TE_PROCESS_ENTER)),
+                                'table':
+                                    (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
+                                                   label='%s:' % _("Table")),
+                                     wx.Choice(parent=self.addPanel, id=wx.ID_ANY, size=(200, -1),
+                                               choices=self.defaultTables)),
+                                'key':
+                                    (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
                                                    label='%s:' % _("Key column")),
-                                     wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                               choices=listOfColumns))}
-
+                                     wx.Choice(parent=self.addPanel, id=wx.ID_ANY, size=(200, -1),
+                                               choices=self.defaultColumns))}
+        
         # set default values for widgets
-        self.layerWidgets['driver'][1].SetStringSelection(self.defaultDriver)
-        self.layerWidgets['database'][1].SetValue(self.defaultDatabase)
+        self.addLayerWidgets['driver'][1].SetStringSelection(self.defaultDriver)
+        self.addLayerWidgets['database'][1].SetValue(self.defaultDatabase)
+        self.addLayerWidgets['table'][1].SetSelection(0)
+        self.addLayerWidgets['key'][1].SetSelection(0)
         # events
-        self.layerWidgets['driver'][1].Bind(wx.EVT_CHOICE, self.OnDriverChanged)
-        self.layerWidgets['database'][1].Bind(wx.EVT_TEXT_ENTER, self.OnDatabaseChanged)
-        self.layerWidgets['table'][1].Bind(wx.EVT_CHOICE, self.OnTableChanged)
+        self.addLayerWidgets['driver'][1].Bind(wx.EVT_CHOICE, self.OnDriverChanged)
+        self.addLayerWidgets['database'][1].Bind(wx.EVT_TEXT_ENTER, self.OnDatabaseChanged)
+        self.addLayerWidgets['table'][1].Bind(wx.EVT_CHOICE, self.OnTableChanged)
 
         #
         # list of table widgets
         #
-        self.tableWidgets = {'table': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+        self.tableWidgets = {'table': (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
                                                      label='%s:' % _("Table name")),
-                                       wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                       wx.TextCtrl(parent=self.addPanel, id=wx.ID_ANY,
                                                    value='',
                                                    style=wx.TE_PROCESS_ENTER)),
-                             'key': (wx.StaticText(parent=panel, id=wx.ID_ANY,
+                             'key': (wx.StaticText(parent=self.addPanel, id=wx.ID_ANY,
                                                    label='%s:' % _("Key column")),
-                                     wx.TextCtrl(parent=panel, id=wx.ID_ANY,
+                                     wx.TextCtrl(parent=self.addPanel, id=wx.ID_ANY,
                                                  value='',
                                                  style=wx.TE_PROCESS_ENTER))}
         # events
         self.tableWidgets['table'][1].Bind(wx.EVT_TEXT_ENTER, self.OnCreateTable)
         self.tableWidgets['key'][1].Bind(wx.EVT_TEXT_ENTER, self.OnCreateTable)
 
-        btnTable   = wx.Button(panel, wx.ID_ANY, _("&Create table"),
+        btnTable   = wx.Button(self.addPanel, wx.ID_ANY, _("&Create table"),
                              size=(125,-1))
         btnTable.Bind(wx.EVT_BUTTON, self.OnCreateTable)
 
-        btnLayer   = wx.Button(panel, wx.ID_ANY, _("&Add layer"),
+        btnLayer   = wx.Button(self.addPanel, wx.ID_ANY, _("&Add layer"),
                              size=(125,-1))
         btnLayer.Bind(wx.EVT_BUTTON, self.OnAddLayer)
 
-        btnDefault = wx.Button(panel, wx.ID_ANY, _("&Set default"),
+        btnDefault = wx.Button(self.addPanel, wx.ID_ANY, _("&Set default"),
                                size=(125,-1))
         btnDefault.Bind(wx.EVT_BUTTON, self.OnSetDefault)
 
         #
         # do layout
         #
-        pageSizer = wx.wx.BoxSizer(wx.HORIZONTAL)
+        pageSizer = wx.BoxSizer(wx.HORIZONTAL)
 
         #
         # layer description
         #
-        layerBox = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+        layerBox = wx.StaticBox (parent=self.addPanel, id=wx.ID_ANY,
                                  label=" %s " % (_("Layer description")))
         layerSizer = wx.StaticBoxSizer(layerBox, wx.VERTICAL)
 
@@ -1983,7 +1990,7 @@ class LayerBook(wx.Notebook):
         dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
         dataSizer.AddGrowableCol(1)
         for key in ('layer', 'driver', 'database', 'table', 'key'):
-            label, value = self.layerWidgets[key]
+            label, value = self.addLayerWidgets[key]
             dataSizer.Add(item=label,
                           flag=wx.ALIGN_CENTER_VERTICAL)
             if label.GetLabel() == "Layer:":
@@ -1998,7 +2005,7 @@ class LayerBook(wx.Notebook):
                        flag=wx.ALL | wx.EXPAND,
                        border=5)
 
-        btnSizer = wx.wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer.Add(item=btnDefault,
                      proportion=0,
                      flag=wx.ALL | wx.ALIGN_LEFT,
@@ -2022,7 +2029,7 @@ class LayerBook(wx.Notebook):
         #
         # table description
         #
-        tableBox = wx.StaticBox (parent=panel, id=wx.ID_ANY,
+        tableBox = wx.StaticBox (parent=self.addPanel, id=wx.ID_ANY,
                                  label=" %s " % (_("Table description")))
         tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
 
@@ -2057,38 +2064,38 @@ class LayerBook(wx.Notebook):
                       flag=wx.ALL | wx.EXPAND,
                       border=5)
 
-        panel.SetSizer(pageSizer)
+        self.addPanel.SetSizer(pageSizer)
 
     def __createDeletePage(self):
         """Delete layer"""
-        panel = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=panel, text=_("Delete selected layer"))
+        self.deletePanel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=self.deletePanel, text=_("Delete selected layer"))
 
-        label = wx.StaticText(parent=panel, id=wx.ID_ANY,
+        label = wx.StaticText(parent=self.deletePanel, id=wx.ID_ANY,
                               label='%s:' % _("Layer to detele"))
 
-        self.deleteLayer = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(100, -1),
+        self.deleteLayer = wx.ComboBox(parent=self.deletePanel, id=wx.ID_ANY, size=(100, -1),
                                        style=wx.CB_SIMPLE | wx.CB_READONLY,
                                        choices=map(str, self.mapDBInfo.layers.keys()))
         self.deleteLayer.SetSelection(0)
-        self.deleteLayer.Bind(wx.EVT_COMBOBOX, self.OnChangeLayerToDelete)
+        self.deleteLayer.Bind(wx.EVT_COMBOBOX, self.OnChangeLayer)
 
         tableName = self.mapDBInfo.layers[int(self.deleteLayer.GetStringSelection())]['table']
 
-        self.deleteTable = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+        self.deleteTable = wx.CheckBox(parent=self.deletePanel, id=wx.ID_ANY,
                                        label=_('Drop also linked attribute table (%s)') % \
                                            tableName)
 
-        btnDelete   = wx.Button(panel, wx.ID_DELETE, _("&Delete layer"),
+        btnDelete   = wx.Button(self.deletePanel, wx.ID_DELETE, _("&Delete layer"),
                                 size=(125,-1))
         btnDelete.Bind(wx.EVT_BUTTON, self.OnDeleteLayer)
 
         #
         # do layout
         #
-        pageSizer = wx.wx.BoxSizer(wx.VERTICAL)
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
 
-        dataSizer = wx.wx.BoxSizer(wx.VERTICAL)
+        dataSizer = wx.BoxSizer(wx.VERTICAL)
 
         flexSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(2)
@@ -2118,12 +2125,102 @@ class LayerBook(wx.Notebook):
                        flag=wx.ALL | wx.ALIGN_RIGHT,
                        border=5)
 
-        panel.SetSizer(pageSizer)
+        self.deletePanel.SetSizer(pageSizer)
 
     def __createModifyPage(self):
         """Modify layer"""
-        self.modifyPage = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=self.modifyPage, text=_("Modify selected layer"))
+        self.modifyPanel = wx.Panel(parent=self, id=wx.ID_ANY)
+        self.AddPage(page=self.modifyPanel, text=_("Modify selected layer"))
+
+        #
+        # list of layer widgets (label, value)
+        #
+        self.modifyLayerWidgets = {'layer':
+                                       (wx.StaticText(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Layer")),
+                                        wx.ComboBox(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                    size=(100, -1),
+                                                    style=wx.CB_SIMPLE | wx.CB_READONLY,
+                                                    choices=map(str, 
+                                                                self.mapDBInfo.layers.keys()))),
+                                   'driver':
+                                       (wx.StaticText(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Driver")),
+                                        wx.Choice(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                  size=(200, -1),
+                                                  choices=self.listOfDrivers)),
+                                   'database':
+                                       (wx.StaticText(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Database")),
+                                        wx.TextCtrl(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                    value='', size=(350, -1),
+                                                    style=wx.TE_PROCESS_ENTER)),
+                                   'table':
+                                       (wx.StaticText(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Table")),
+                                        wx.Choice(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                  size=(200, -1),
+                                                  choices=self.defaultTables)),
+                                   'key':
+                                       (wx.StaticText(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                      label='%s:' % _("Key column")),
+                                        wx.Choice(parent=self.modifyPanel, id=wx.ID_ANY,
+                                                  size=(200, -1),
+                                                  choices=self.defaultColumns))}
+        
+        # set default values for widgets
+        self.modifyLayerWidgets['layer'][1].SetSelection(0)
+        layer    = int(self.modifyLayerWidgets['layer'][1].GetStringSelection())
+        driver   = self.mapDBInfo.layers[layer]['driver']
+        database = self.mapDBInfo.layers[layer]['database']
+        table    = self.mapDBInfo.layers[layer]['table']
+        listOfColumns = self.__getColumns(driver, database, table)
+        self.modifyLayerWidgets['driver'][1].SetStringSelection(driver)
+        self.modifyLayerWidgets['database'][1].SetValue(database)
+        self.modifyLayerWidgets['table'][1].SetStringSelection(table)
+        self.modifyLayerWidgets['key'][1].SetItems(listOfColumns)
+        self.modifyLayerWidgets['key'][1].SetSelection(0)
+
+        # events
+        self.modifyLayerWidgets['layer'][1].Bind(wx.EVT_COMBOBOX, self.OnChangeLayer)
+        # self.modifyLayerWidgets['driver'][1].Bind(wx.EVT_CHOICE, self.OnDriverChanged)
+        # self.modifyLayerWidgets['database'][1].Bind(wx.EVT_TEXT_ENTER, self.OnDatabaseChanged)
+        # self.modifyLayerWidgets['table'][1].Bind(wx.EVT_CHOICE, self.OnTableChanged)
+
+        btnModify = wx.Button(self.modifyPanel, wx.ID_DELETE, _("&Modify layer"),
+                              size=(125,-1))
+        btnModify.Bind(wx.EVT_BUTTON, self.OnModifyLayer)
+
+        #
+        # do layout
+        #
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
+
+        # data area
+        dataSizer = wx.FlexGridSizer(cols=2, hgap=5, vgap=5)
+        dataSizer.AddGrowableCol(1)
+        for key in ('layer', 'driver', 'database', 'table', 'key'):
+            label, value = self.modifyLayerWidgets[key]
+            dataSizer.Add(item=label,
+                          flag=wx.ALIGN_CENTER_VERTICAL)
+            if label.GetLabel() == "Layer:":
+                dataSizer.Add(item=value,
+                              flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_LEFT)
+            else:
+                dataSizer.Add(item=value,
+                              flag=wx.ALIGN_CENTER_VERTICAL)
+
+        pageSizer.Add(item=dataSizer,
+                      proportion=1,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        pageSizer.Add(item=btnModify,
+                      proportion=0,
+                      flag=wx.ALL | wx.ALIGN_RIGHT,
+                      border=5)
+
+        self.modifyPanel.SetSizer(pageSizer)
 
     def __getTables(self, driver, database):
         """Get list of tables for given driver and database"""
@@ -2157,10 +2254,10 @@ class LayerBook(wx.Notebook):
     def OnDriverChanged(self, event):
         """Driver selection changed, update list of tables"""
         driver = event.GetString()
-        database = self.layerWidgets['database'][1].GetValue()
+        database = self.addLayerWidgets['database'][1].GetValue()
 
-        winTable = self.layerWidgets['table'][1]
-        winKey   = self.layerWidgets['key'][1]
+        winTable = self.addLayerWidgets['table'][1]
+        winKey   = self.addLayerWidgets['key'][1]
         tables   = self.__getTables(driver, database)
 
         winTable.SetItems(tables)
@@ -2177,11 +2274,11 @@ class LayerBook(wx.Notebook):
 
     def OnTableChanged(self, event):
         """Table name changed, update list of columns"""
-        driver   = self.layerWidgets['driver'][1].GetStringSelection()
-        database = self.layerWidgets['database'][1].GetValue()
+        driver   = self.addLayerWidgets['driver'][1].GetStringSelection()
+        database = self.addLayerWidgets['database'][1].GetValue()
         table    = event.GetString()
 
-        win  = self.layerWidgets['key'][1]
+        win  = self.addLayerWidgets['key'][1]
         cols = self.__getColumns(driver, database, table)
         win.SetItems(cols)
         win.SetSelection(0)
@@ -2190,10 +2287,10 @@ class LayerBook(wx.Notebook):
 
     def OnSetDefault(self, event):
         """Set default values"""
-        driver   = self.layerWidgets['driver'][1]
-        database = self.layerWidgets['database'][1]
-        table    = self.layerWidgets['table'][1]
-        key      = self.layerWidgets['key'][1]
+        driver   = self.addLayerWidgets['driver'][1]
+        database = self.addLayerWidgets['database'][1]
+        table    = self.addLayerWidgets['table'][1]
+        key      = self.addLayerWidgets['key'][1]
 
         driver.SetStringSelection(self.defaultDriver)
         database.SetValue(self.defaultDatabase)
@@ -2211,8 +2308,8 @@ class LayerBook(wx.Notebook):
 
     def OnCreateTable(self, event):
         """Create new table (name and key column given)"""
-        driver   = self.layerWidgets['driver'][1].GetStringSelection()
-        database = self.layerWidgets['database'][1].GetValue()
+        driver   = self.addLayerWidgets['driver'][1].GetStringSelection()
+        database = self.addLayerWidgets['database'][1].GetValue()
         table    = self.tableWidgets['table'][1].GetValue()
         key      = self.tableWidgets['key'][1].GetValue()
         
@@ -2236,12 +2333,12 @@ class LayerBook(wx.Notebook):
                      stdin=sql)
 
         # update list of tables
-        tableList = self.layerWidgets['table'][1]
+        tableList = self.addLayerWidgets['table'][1]
         tableList.SetItems(self.__getTables(driver, database))
         tableList.SetStringSelection(table)
 
         # update key column selection
-        keyList = self.layerWidgets['key'][1]
+        keyList = self.addLayerWidgets['key'][1]
         keyList.SetItems(self.__getColumns(driver, database, table))
         keyList.SetStringSelection(key)
         
@@ -2249,12 +2346,12 @@ class LayerBook(wx.Notebook):
 
     def OnAddLayer(self, event):
         """Add new layer to vector map"""
-        layer    = int(self.layerWidgets['layer'][1].GetValue())
-        layerWin = self.layerWidgets['layer'][1]
-        driver   = self.layerWidgets['driver'][1].GetStringSelection()
-        database = self.layerWidgets['database'][1].GetValue()
-        table    = self.layerWidgets['table'][1].GetStringSelection()
-        key      = self.layerWidgets['key'][1].GetStringSelection()
+        layer    = int(self.addLayerWidgets['layer'][1].GetValue())
+        layerWin = self.addLayerWidgets['layer'][1]
+        driver   = self.addLayerWidgets['driver'][1].GetStringSelection()
+        database = self.addLayerWidgets['database'][1].GetValue()
+        table    = self.addLayerWidgets['table'][1].GetStringSelection()
+        key      = self.addLayerWidgets['key'][1].GetStringSelection()
         
         if layer in self.mapDBInfo.layers.keys():
             dlg = wx.MessageDialog(self.parent,
@@ -2298,8 +2395,8 @@ class LayerBook(wx.Notebook):
 
         # drop also table linked to layer which is deleted
         if self.deleteTable.IsChecked():
-            driver   = self.layerWidgets['driver'][1].GetStringSelection()
-            database = self.layerWidgets['database'][1].GetValue()
+            driver   = self.addLayerWidgets['driver'][1].GetStringSelection()
+            database = self.addLayerWidgets['database'][1].GetValue()
             table    = self.mapDBInfo.layers[layer]['table']
             sql      = 'DROP TABLE %s' % (table)
 
@@ -2316,12 +2413,34 @@ class LayerBook(wx.Notebook):
 
         event.Skip()
 
-    def OnChangeLayerToDelete(self, event):
+    def OnChangeLayer(self, event):
         """Layer number of layer to be deleted is changed"""
-        layer = int(event.GetString())
-        
-        self.deleteTable.SetLabel(_('Drop also linked attribute table (%s)') % \
-                                      self.mapDBInfo.layers[layer]['table'])
+        try:
+            layer = int(event.GetString())
+        except:
+            try:
+                layer = self.mapDBInfo.layers.keys()[0]
+            except:
+                layer = 1
+
+        if self.GetCurrentPage() == self.modifyPanel:
+            driver   = self.mapDBInfo.layers[layer]['driver']
+            database = self.mapDBInfo.layers[layer]['database']
+            table    = self.mapDBInfo.layers[layer]['table']
+            listOfColumns = self.__getColumns(driver, database, table)
+            self.modifyLayerWidgets['driver'][1].SetStringSelection(driver)
+            self.modifyLayerWidgets['database'][1].SetValue(database)
+            self.modifyLayerWidgets['table'][1].SetStringSelection(table)
+            self.modifyLayerWidgets['key'][1].SetItems(listOfColumns)
+            self.modifyLayerWidgets['key'][1].SetSelection(0)
+        else:
+            self.deleteTable.SetLabel(_('Drop also linked attribute table (%s)') % \
+                                          self.mapDBInfo.layers[layer]['table'])
+        if event:
+            event.Skip()
+
+    def OnModifyLayer(self, event):
+        """Modify layer connection settings"""
         event.Skip()
 
 class DisplayAttributesDialog(wx.Dialog):
