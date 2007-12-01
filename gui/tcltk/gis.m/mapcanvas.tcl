@@ -519,7 +519,7 @@ proc MapCanvas::driversettings { mon } {
 		set mapht [expr {abs(1.0 * ($map_n - $map_s))}]
 		if {$mapwd == 0.0 || $mapht == 0.0} {
 			tk_messageBox -type ok -icon info -parent .mapcan($mon) \
-				-title [G_msg "Max zoom in reached"] -message [G_msg "Max zoom in reached"]
+				-message [G_msg "Maximum zoom-in reached"]
 			MapCanvas::zoom_back $mon
 			return 1
 		}
