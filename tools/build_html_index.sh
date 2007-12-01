@@ -88,7 +88,7 @@ write_html_footer()
 # $2: help index url
 echo "<hr>" >> $1
 echo "<p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003-2007 <a href=\"http://grass.itc.it\">GRASS Development Team</a></p>" >> $1
+echo "&copy; 2003-2007 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>" >> $1
 echo "</body>" >> $1   
 echo "</html>" >> $1
 }
@@ -163,7 +163,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 echo "Generating HTML manual pages index (help system)..."
-write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual"
+write_html_header $FULLINDEX "GRASS GIS $GRASSVERSION Reference Manual: Full index"
 echo "<BR><h3>Full command index:</h3>" >> $FULLINDEX
 echo "<table border=0>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;d.*  </td><td>display commands</td></tr>" >> $FULLINDEX
@@ -225,7 +225,7 @@ do
   MODCLASS=`expand_module_class_name $k`
   FILENAME=$MODCLASS.html
 
-  write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual"
+  write_html_header $FILENAME "GRASS GIS $GRASSVERSION Reference Manual: $MODCLASS"
   echo "<b>$MODCLASS commands:</b>" >> $FILENAME
   echo "<table>" >> $FILENAME
   #for all modules:
