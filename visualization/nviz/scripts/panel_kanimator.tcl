@@ -1756,10 +1756,11 @@ proc keyanimRunAndSave { BASE } {
 
     if {$IMG == 4} {
 	set fnameExt [file extension $keyanimBaseName]
-	if { [string compare $fnameExt ".mpg"] != 0  &&
-		[string compare $fnameExt ".mpeg"] != 0 } then {
-	    append keyanimBaseName ".mpg"
-	}
+#comment out auto-extension so that FFMPEG guess_format() can write to asf, avi, flv, swf, etc.
+#	if { [string compare $fnameExt ".mpg"] != 0  &&
+#		[string compare $fnameExt ".mpeg"] != 0 } then {
+#	    append keyanimBaseName ".mpg"
+#	}
 	Ninit_mpeg $keyanimBaseName
     }
 
