@@ -1488,7 +1488,7 @@ static void G_usage_html (void)
 
 	fprintf(stdout, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
 	fprintf(stdout, "<html>\n<head>\n");
-	fprintf(stdout, "<title>%s</title>\n", pgm_name);
+	fprintf(stdout, "<title>GRASS GIS: %s</title>\n", pgm_name);
 	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n");
 	fprintf(stdout, "<link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">\n");
 	fprintf(stdout, "</head>\n");
