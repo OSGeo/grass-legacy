@@ -1,5 +1,7 @@
 MODULE_TOPDIR = ../../..
 
+PGM=cairodriver
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
@@ -13,7 +15,6 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(CAIRODRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(CAIRODRIVERDEP) $(DRIVERDEP) $(GISDEP)
-PGM=cairodriver
 
 default: $(DRIVERDIR)/cairo $(HTMLDIR)/$(PGM).html moncap
 
