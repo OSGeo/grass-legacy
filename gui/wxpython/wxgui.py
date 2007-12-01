@@ -140,7 +140,7 @@ class GMFrame(wx.Frame):
 
         self._auimgr.Update()
 
-        #wx.CallAfter(self.notebook.SetSelection, 0)
+        wx.CallAfter(self.notebook.SetSelection, 0)
 
         # start default initial display
         self.NewDisplay()
@@ -236,16 +236,14 @@ class GMFrame(wx.Frame):
     def __createNoteBook(self):
         """Creates notebook widgets"""
 
-        # create main notebook widget
-        # Mac-related problem
-        #        nbStyle = FN.FNB_FANCY_TABS | 
-        #            FN.FNB_BOTTOM | 
-        #            FN.FNB_NO_X_BUTTON | 
-        #            FN.FNB_NO_NAV_BUTTONS
-        #        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
+        #create main notebook widget
+        nbStyle = FN.FNB_FANCY_TABS | \
+                    FN.FNB_BOTTOM | \
+                    FN.FNB_NO_NAV_BUTTONS
+        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
-        self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
-        self.notebook.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=0))
+        #self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
+        #self.notebook.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=0))
 
         # create displays notebook widget and add it to main notebook page
         cbStyle = FN.FNB_VC8 | \
@@ -254,11 +252,11 @@ class GMFrame(wx.Frame):
             FN.FNB_TABS_BORDER_SIMPLE
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
         self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
-        self.notebook.AddPage(self.gm_cb, caption=_("Map layers for each display"))
+        self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
         self.goutput = wxgui_utils.GMConsole(self)
-        self.outpage = self.notebook.AddPage(self.goutput, caption=_("Command output"))
+        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
 
         # bingings
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.onCBPageChanged, self.gm_cb)
