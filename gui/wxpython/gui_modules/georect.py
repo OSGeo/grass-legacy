@@ -154,15 +154,18 @@ class GeorectWizard(object):
         #set environmental variables
         cmdlist = ['g.gisenv', 'get=GISDBASE']
         global grassdatabase
-        grassdatabase = gcmd.Command(cmdlist).module_stdout.read().strip()
+        p = gcmd.Command(cmdlist)
+        grassdatabase = p.ReadStdOutput()[0]
 
         cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
         global curr_location
-        curr_location = gcmd.Command(cmdlist).module_stdout.read().strip()
+        p = gcmd.Command(cmdlist)
+        curr_location = p.ReadStdOutput()[0]
 
         cmdlist = ['g.gisenv', 'get=MAPSET']
         global curr_mapset
-        curr_mapset = gcmd.Command(cmdlist).module_stdout.read().strip()
+        p = gcmd.Command(cmdlist)
+        curr_mapset = p.ReadStdOutput()[0]
 
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Setup for georectification")
