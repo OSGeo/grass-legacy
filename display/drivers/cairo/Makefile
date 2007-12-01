@@ -13,7 +13,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 LIBES = $(CAIRODRIVERLIB) $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(CAIRODRIVERDEP) $(DRIVERDEP) $(GISDEP)
-PGM=psdriver
+PGM=cairodriver
 
 default: $(DRIVERDIR)/cairo $(HTMLDIR)/$(PGM).html moncap
 
