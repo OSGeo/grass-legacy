@@ -140,7 +140,7 @@ class GMFrame(wx.Frame):
 
         self._auimgr.Update()
 
-        wx.CallAfter(self.notebook.SetSelection, 0)
+        #wx.CallAfter(self.notebook.SetSelection, 0)
 
         # start default initial display
         self.NewDisplay()
@@ -163,8 +163,9 @@ class GMFrame(wx.Frame):
         """Creates command-line input area"""
         self.cmdprompt = wx.Panel(self)
 
-        label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="GRASS>",
+        label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="Command >",
                               size=(-1, 25))
+        label.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=wx.BOLD))
         input = wx.TextCtrl(parent=self.cmdprompt, id=wx.ID_ANY,
                             value="",
                             style=wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
@@ -244,13 +245,15 @@ class GMFrame(wx.Frame):
         #        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY, style=nbStyle)
 
         self.notebook = wx.aui.AuiNotebook(parent=self, id=wx.ID_ANY, style=wx.aui.AUI_NB_BOTTOM)
-        # really needed> (ML)
-        # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
+        self.notebook.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=0))
 
         # create displays notebook widget and add it to main notebook page
-        cbStyle = FN.FNB_X_ON_TAB | FN.FNB_TABS_BORDER_SIMPLE
+        cbStyle = FN.FNB_VC8 | \
+            FN.FNB_BACKGROUND_GRADIENT | \
+            FN.FNB_X_ON_TAB | \
+            FN.FNB_TABS_BORDER_SIMPLE
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
-        # self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
+        self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
         self.notebook.AddPage(self.gm_cb, caption=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
@@ -788,6 +791,7 @@ class GMFrame(wx.Frame):
 
         # set default font and encoding environmental variables
         os.environ["GRASS_FONT"] = self.font
+        print 'font=',self.font
         if self.encoding != None and self.encoding != "ISO-8859-1":
             os.environ["GRASS_ENCODING"] = self.encoding
 
