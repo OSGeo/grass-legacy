@@ -256,7 +256,7 @@ int Create_OS_Ctx(int width, int height)
 
 #ifdef HAVE_PBUFFERS
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
-    if (!getenv("GRASS_NO_GLX_PBUFFERS"))
+    if (getenv("GRASS_GLX_PBUFFERS"))
     {
 	static int ver_major, ver_minor;
 
@@ -289,7 +289,7 @@ int Create_OS_Ctx(int width, int height)
 #ifdef HAVE_PBUFFERS
     if (!pbuffer)
 #endif
-    if (!getenv("GRASS_NO_GLX_PIXMAPS"))
+    if (getenv("GRASS_GLX_PIXMAPS"))
     {
 	int att[] = {
 	    GLX_RGBA,
