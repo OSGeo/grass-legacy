@@ -1641,7 +1641,7 @@ class AttributeManager(wx.Frame):
         self.manageLayerBook.deleteTable.SetLabel( \
             _('Drop also linked attribute table (%s)') % \
                 tableName)
-        self.manageLayerBook.layerWidgets['layer'][1].SetValue(\
+        self.manageLayerBook.addLayerWidgets['layer'][1].SetValue(\
             max(self.mapDBInfo.layers.keys())+1)
 
 #     def OnMapClick(self, event):
@@ -2442,6 +2442,46 @@ class LayerBook(wx.Notebook):
 
     def OnModifyLayer(self, event):
         """Modify layer connection settings"""
+
+        layer = int(self.modifyLayerWidgets['layer'][1].GetStringSelection())
+
+        modify = False
+        if self.modifyLayerWidgets['driver'][1].GetStringSelection() != \
+                self.mapDBInfo.layers[layer]['driver'] or \
+                self.modifyLayerWidgets['database'][1].GetStringSelection() != \
+                self.mapDBInfo.layers[layer]['database'] or \
+                self.modifyLayerWidgets['table'][1].GetStringSelection() != \
+                self.mapDBInfo.layers[layer]['table'] or \
+                self.modifyLayerWidgets['key'][1].GetStringSelection() != \
+                self.mapDBInfo.layers[layer]['key']:
+            modify = True
+
+        if modify:
+            # delete layer
+            gcmd.Command(['v.db.connect',
+                          '-d', '--q',
+                          'map=%s' % self.mapDBInfo.map,
+                          'layer=%d' % layer])
+
+            # add modified layer
+            gcmd.Command(['v.db.connect',
+                          '--q',
+                          'map=%s' % self.mapDBInfo.map,
+                          'driver=%s' % \
+                              self.modifyLayerWidgets['driver'][1].GetStringSelection(),
+                          'database=%s' % \
+                              self.modifyLayerWidgets['database'][1].GetValue(),
+                          'table=%s' % \
+                              self.modifyLayerWidgets['table'][1].GetStringSelection(),
+                          'key=%s' % \
+                              self.modifyLayerWidgets['key'][1].GetStringSelection(),
+                          'layer=%d' % layer])
+
+            # update dialog (only for new layer)
+            self.parentDialog.UpdateDialog(layer=layer) 
+            # update db info
+            self.mapDBInfo = self.parentDialog.mapDBInfo
+
         event.Skip()
 
 class DisplayAttributesDialog(wx.Dialog):
