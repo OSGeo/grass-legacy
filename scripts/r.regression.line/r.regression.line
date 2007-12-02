@@ -19,6 +19,10 @@
 #%  description: Calculates linear regression from two raster maps: y = a + b*x
 #%  keywords: raster, statistics
 #%End
+#%flag
+#%  key: g
+#%  description: Print in shell script style
+#%End
 #%option
 #% key: map1
 #% type: string
@@ -81,32 +85,42 @@ mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
 mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
 A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
 print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
-#cat "$TMP"b
+
+echo "a b R N F medX sdX medY sdY" | tr -s ' ' '\n' > "$TMP"d
+cat "$TMP"b | tr -s ' ' '\n' > "$TMP"e
 
 #send output to screen or text file
 if [ -z "$GIS_OPT_OUTPUT" ] 
 then
-	RESULTADO=`cat "$TMP"b`
-	echo "y = a + b*x"
-        echo "   a: offset"
-        echo "   b: gain"
-        echo "   R: sumXY - sumX*sumY/tot"
-        echo "   N: number of elements"
-        echo "   medX, medY: Medians"
-        echo "   sdX, sdY: Standard deviations"
-        echo "a  b  R  N  F medX  sdX  medY  sdY"
-        echo ${RESULTADO}
+	if [ $GIS_FLAG_G -eq 1 ] ; then
+	   paste -d'=' "$TMP"d "$TMP"e
+	else
+	   echo "y = a + b*x"
+           echo "   a: offset"
+           echo "   b: gain"
+           echo "   R: sumXY - sumX*sumY/tot"
+           echo "   N: number of elements"
+           echo "   medX, medY: Medians"
+           echo "   sdX, sdY: Standard deviations"
+           echo "a  b  R  N  F medX  sdX  medY  sdY"
+	   RESULTADO=`cat "$TMP"b`
+           echo ${RESULTADO}
+	fi
 else
-        echo "y = a + b*x"
-        echo "   a: offset"
-        echo "   b: gain"
-        echo "   R: sumXY - sumX*sumY/tot"
-        echo "   N: number of elements"
-        echo "   medX, medY: Medians"
-        echo "   sdX, sdY: Standard deviations"
-	echo "a  b  R  N  F medX  sdX  medY  sdY" > "$TMP"c
-	cat "$TMP"b >> "$TMP"c
+	if [ $GIS_FLAG_G -eq 1 ] ; then
+	   paste -d'=' "$TMP"d "$TMP"e >> "$TMP"c
+	else
+	   echo "y = a + b*x" > "$TMP"c
+           echo "   a: offset" >> "$TMP"c
+           echo "   b: gain" >> "$TMP"c
+           echo "   R: sumXY - sumX*sumY/tot" >> "$TMP"c
+           echo "   N: number of elements" >> "$TMP"c
+           echo "   medX, medY: Medians" >> "$TMP"c
+           echo "   sdX, sdY: Standard deviations" >> "$TMP"c
+           echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TMP"c
+	   cat "$TMP"b >> "$TMP"c
+	fi
 	mv "$TMP"c "$GIS_OPT_OUTPUT"
 	cat "$GIS_OPT_OUTPUT"
 fi
-rm -f "$TMP" "$TMP"b "$TMP"c
+rm -f "$TMP" "$TMP"b "$TMP"c "$TMP"d "$TMP"e

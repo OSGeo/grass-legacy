@@ -8,14 +8,32 @@ Optionally saves regression coefficients to an ASCII file.
 <H2>EXAMPLE</H2>
 
 Comparison of the old and the new DEM in Spearfish:
-<PRE>
-g.region rast=elevation.10m
-r.regression.line elevation.dem map2=elevation.10m
-</PRE>
+<div class="code"><pre>
+g.region rast=elevation.10m -p
+r.regression.line map1=elevation.dem map2=elevation.10m
+</pre></div>
+<p>
+
+Using the script style flag AND <em>eval</em> to make results
+available in the shell:
+<div class="code"><pre>
+g.region rast=elevation.10m -p
+eval `r.regression.line -g map1=elevation.dem map2=elevation.10m`
+echo $a
+479.615
+
+echo $b
+0.645631
+
+echo $R
+0.804441
+</pre></div>
+
 
 <H2>AUTHOR</H2>
 
-Dr. Agustin Lobo - alobo@ija.csic.es<BR>
-Updated to GRASS 5.7 Michael Barton, Arizona State University
+Dr. Agustin Lobo - alobo at ija.csic.es<BR>
+Updated to GRASS 5.7 Michael Barton, Arizona State University<BR>
+Script style output Markus Neteler
 
 <p><i>Last changed: $Date$</i>
