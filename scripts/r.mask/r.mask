@@ -85,7 +85,6 @@ else
 
 	if [ "$GIS_FLAG_O" -eq 1 ]; then
 		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK --o
-		g.message "MASK created. All subsequent raster operations"
 	else 
 		# does map exist in CURRENT mapset?
 		eval `g.findfile element=cell file=MASK mapset=$MAPSET`
@@ -95,7 +94,6 @@ else
 		fi
 
 		echo "$GIS_OPT_MASKCATS = 1" | r.reclass input=$GIS_OPT_INPUT output=MASK
-		g.message "MASK created. All subsequent raster operations"
 	fi
 
         if [ "$GIS_FLAG_I" -eq 1 ]; then
@@ -103,6 +101,8 @@ else
 		r.mapcalc "MASK=if(isnull($TMP),1,null())"
 		g.remove --q rast=$TMP
 		g.message "Inverted MASK created. All subsequent raster operations"
+	else
+	  g.message "MASK created. All subsequent raster operations"
 	fi
         g.message "will be limited to MASK area"
         g.message "Removing or renaming raster file named MASK will"
