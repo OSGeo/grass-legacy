@@ -61,12 +61,14 @@ EXT VSTAT
 #define O_QUERY		6  /* Query database records linked by another field (qfield) */
 #define O_SIDES         7  /* Left and right area of boundary */
 #define O_COMPACT	8  /* Compactness of an area. Circle = 1.0 */
-#define O_PERIMETER	9  /* Compactness of an area. Circle = 1.0 */
+#define O_PERIMETER	9
 
 #define O_START        10  /* line/boundary starting point */
 #define O_END          11  /* line/boundary end point */
 
 #define O_SLOPE 	12 /* Line slope */
+
+#define O_FD		13 /* fractal dimension */
 
 #define U_ACRES		1
 #define U_HECTARES	2

@@ -70,7 +70,7 @@ main (int argc, char *argv[])
     if ( options.option == O_QUERY ){
 	query(&Map);
     } else if ( ( options.option == O_AREA ) || ( options.option == O_COMPACT ) ||
-		( options.option == O_PERIMETER ) ){
+		( options.option == O_PERIMETER ) || ( options.option == O_FD ) ){
 	read_areas(&Map);
     } else { 
         read_lines(&Map); 
