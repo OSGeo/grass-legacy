@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, import, LIDAR");
     module->description =
       _("Create a raster map from an assemblage of many coordinates using univariate statistics.");
 
