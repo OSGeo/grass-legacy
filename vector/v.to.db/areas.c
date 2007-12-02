@@ -25,10 +25,10 @@ int read_areas(struct Map_info *Map)
 	area = 0;
 	perimeter = 0;
 
-	if ((options.option == O_COMPACT) || (options.option == O_AREA)) {
+	if ((options.option == O_COMPACT) || (options.option == O_FD) || (options.option == O_AREA)) {
 	    area = Vect_get_area_area(Map, area_num);
 	}
-	if ((options.option == O_COMPACT) || (options.option == O_PERIMETER)) {
+	if ((options.option == O_COMPACT) || (options.option == O_FD) || (options.option == O_PERIMETER)) {
 	    Vect_get_area_points(Map, area_num, Ppoints);
 	    perimeter = Vect_line_geodesic_length(Ppoints);
 	}
@@ -47,6 +47,9 @@ int read_areas(struct Map_info *Map)
 			break;
 		    case O_COMPACT:
 			Values[idx].d1 = perimeter / (2.0 * sqrt(M_PI * area));
+			break;
+			case O_FD:
+			Values[idx].d1 = 2.0 * log(perimeter) / log(area) ;
 			break;
 		    }
 		    found = 1;
