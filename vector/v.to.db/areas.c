@@ -8,6 +8,9 @@
  * 2) It reads the perimeter lengths of the areas. If projection is LL, the geodesic distance is used.
  * 3) It calculates the compactness using this formula:
  *    compactness = perimeter / (2 * sqrt(M_PI * area))
+ * 4) It calculates the fractal dimension of the bounding curve:
+ *    D_L  = 2 * log(perimeter) / log(area)
+ *    (See B.B. Mandelbrot, The Fractal Geometry of Nature. 1982.)
  */
 int read_areas(struct Map_info *Map)
 {
