@@ -51,7 +51,6 @@ int D_move_rel(int, int);
 
 /* draw2.c */
 void D_set_clip(double, double, double, double);
-void D_set_clip_margin(double);
 void D_clip_to_map(void);
 void D_move_clip(double, double);
 int D_cont_clip(double, double);

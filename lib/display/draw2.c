@@ -56,7 +56,6 @@ struct plane
 static struct vector cur;
 
 static struct rectangle clip;
-static double clip_margin;
 
 static struct plane pl_left = {-1,  0, 0};
 static struct plane pl_rite = { 1,  0, 0};
@@ -115,7 +114,25 @@ static void dealloc_float(const double **x, const double **y, int release)
 	yf = NULL;
 }
 
-static void do_convert(const double *x, const double *y, int n)
+static int do_filter(int *x, int *y, int n)
+{
+	int i, j;
+
+	for (i = 0, j = 1; j < n; j++)
+	{
+		if (x[j] == x[i] && y[j] == y[i])
+			continue;
+		i++;
+		if (i == j)
+			continue;
+		x[i] = x[j];
+		y[i] = y[j];
+	}
+
+	return i + 1;
+}
+
+static void do_round(const double *x, const double *y, int n)
 {
 	int i;
 
@@ -125,6 +142,19 @@ static void do_convert(const double *x, const double *y, int n)
 	{
 		xi[i] = round(D_u_to_d_col(x[i]));
 		yi[i] = round(D_u_to_d_row(y[i]));
+	}
+}
+
+static void do_floor(const double *x, const double *y, int n)
+{
+	int i;
+
+	alloc_int(n);
+
+	for (i = 0; i < n; i++)
+	{
+		xi[i] = floor(D_u_to_d_col(x[i]));
+		yi[i] = floor(D_u_to_d_row(y[i]));
 	}
 }
 
@@ -296,27 +326,6 @@ void D_set_clip(double t, double b, double l, double r)
 }
 
 /*!
- * \brief set clip margin
- *
- * Sets the clip margin, i.e. the distance by which a line must extend
- * beyond the frame before it will be clipped.
- *
- * D_clip_to_map() enlarges the clip window beyond the frame by this
- * value.
- *
- * This function unsets the clip window, so it will be recalculated by
- * the next drawing operation.
- *
- *  \param d
- */
-
-void D_set_clip_margin(double d)
-{
-	clip_margin = d;
-	window_set = 0;
-}
-
-/*!
  * \brief set clipping window to map window
  *
  * Sets the clipping window to the pixel window that corresponds to the
@@ -327,13 +336,11 @@ void D_set_clip_margin(double d)
 
 void D_clip_to_map(void)
 {
-	double d = clip_margin;
-
 	D_set_clip(
-		D_get_u_north() - d,
-		D_get_u_south() + d,
-		D_get_u_west()  - d,
-		D_get_u_east()  + d);
+		D_get_u_north(),
+		D_get_u_south(),
+		D_get_u_west(),
+		D_get_u_east());
 }
 
 /*!
@@ -464,7 +471,8 @@ void D_polydots_clip(const double *x, const double *y, int n)
 		j++;
 	}
 
-	do_convert(xf, yf, n);
+	do_floor(xf, yf, n);
+	n = do_filter(xi, yi, n);
 
 	R_polydots_abs(xi, yi, j);
 }
@@ -540,7 +548,8 @@ static void polyline_cull(const double *x, const double *y, int n)
 
 	dealloc_float(&x, &y, 1);
 
-	do_convert(x, y, n);
+	do_floor(x, y, n);
+	n = do_filter(xi, yi, n);
 
 	R_polyline_abs(xi, yi, n);
 }
@@ -652,7 +661,8 @@ static void polygon_cull(const double *x, const double *y, int n)
 
 	dealloc_float(&x, &y, 1);
 
-	do_convert(x, y, n);
+	do_round(x, y, n);
+	n = do_filter(xi, yi, n);
 
 	R_polygon_abs(xi, yi, n);
 }
@@ -734,7 +744,8 @@ static void polygon_clip(const double *x, const double *y, int n)
 
 	dealloc_float(&x, &y, 1);
 
-	do_convert(x, y, n);
+	do_round(x, y, n);
+	n = do_filter(xi, yi, n);
 
 	R_polygon_abs(xi, yi, n);
 }
@@ -812,19 +823,22 @@ void D_cont(double x, double y)
 
 void D_polydots(const double *x, const double *y, int n)
 {
-	do_convert(x, y, n);
+	do_floor(x, y, n);
+	n = do_filter(xi, yi, n);
 	R_polydots_abs(xi, yi, n);
 }
 
 void D_polyline(const double *x, const double *y, int n)
 {
-	do_convert(x, y, n);
+	do_floor(x, y, n);
+	n = do_filter(xi, yi, n);
 	R_polyline_abs(xi, yi, n);
 }
 
 void D_polygon(const double *x, const double *y, int n)
 {
-	do_convert(x, y, n);
+	do_round(x, y, n);
+	n = do_filter(xi, yi, n);
 	R_polygon_abs(xi, yi, n);
 }
 
@@ -845,20 +859,10 @@ void D_box(double x1, double y1, double x2, double y2)
 void D_line_width(double d)
 {
 	int w = round(d);
-	double m;
 
 	if (w < 0)
 		w = 0;
 
 	R_line_width(w);
-
-	/* clip/cull margin should be >0 */
-	if (w < 1)
-		w = 1;
-
-	m = ceil(w / 2.0);
-	m /= D_get_u_to_d_xconv();
-
-	D_set_clip_margin(m);
 }
 
