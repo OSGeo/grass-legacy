@@ -435,7 +435,7 @@ class AttributeManager(wx.Frame):
                                                style=dbmStyle)
         self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
         #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
-        self.notebook.AddPage(self.manageLayerPage, text=_("Manage tables")) # FN
+        self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
         self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
