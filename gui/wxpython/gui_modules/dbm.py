@@ -104,7 +104,7 @@ class VirtualAttributeList(wx.ListCtrl,
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, len(self.columns))
-        listmix.TextEditMixin.__init__(self)
+        #listmix.TextEditMixin.__init__(self)
 
         # sort by cat by default
         self.SortListItems(col=0, ascending=1) # FIXME category column can be different
