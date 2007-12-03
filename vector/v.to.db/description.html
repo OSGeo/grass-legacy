@@ -94,7 +94,7 @@ v.db.select mysoils layer=2
 </pre></div>
 
 <p>
-Calculate polygon's Fractal Dimension D based on the formula:
+Compute D<sub>L</sub>, the Fractal Dimension (Mandelbrot, 1982), of the boundary defining a polygon based on the formula:
 <br><tt>
 D = 2 * (log perimeter) / (log area):<br>
 </tt>
@@ -159,6 +159,17 @@ v.to.db -p roads option=count type=line
 <a href="v.univar.html">v.univar</a>,
 <a href="v.what.html">v.what</a>
 </em>
+
+
+<h2>REFERENCES</h2>
+
+Mandelbrot, B. B. (1982). The fractal geometry of nature. New York: W. H. Freeman.
+
+<p>
+
+Xu, Y. F. &amp; Sun, D. A. (2005). Geotechnique 55, No. 9, 691-695
+
+
 
 <H2>AUTHOR</H2>
 Radim Blazek

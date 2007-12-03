@@ -20,8 +20,8 @@ parse_command_line (int argc, char *argv[])
 	    struct Option *field;
 	    struct Option *qfield;
 	    struct Option *col;
-	    struct Option *units;		
-	    struct Option *qcol;		
+	    struct Option *units;
+	    struct Option *qcol;
     } parms;
     struct {
 	    struct Flag *p, *s, *t;
@@ -54,7 +54,7 @@ parse_command_line (int argc, char *argv[])
 		 "area;area size;"
     	 "compact;compactness of an area, calculated as \n"
 		 "              compactness = perimeter / (2 * sqrt(PI * area));"
-		 "fd;fractal dimension of an area, calculated as \n"
+		 "fd;fractal dimension of boundary defining a polygon, calculated as \n"
 		 "              fd = 2 * (log(perimeter) / log(area));"
 		 "perimeter;perimeter length of an area;"
 		 "length;line length;"
