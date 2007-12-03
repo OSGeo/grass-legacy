@@ -1189,7 +1189,7 @@ class RegionDef(wx.Frame):
         cmdlist = ['g.gisenv']
         p = gcmd.Command(cmdlist)
         if p.returncode == 0:
-            output = p.module_stdout.read().strip("'").split(';\n')
+            output = p.ReadStdOutput()
             for line in output:
                 line = line.strip()
                 if '=' in line: key,val = line.split('=')
@@ -1210,7 +1210,7 @@ class RegionDef(wx.Frame):
         cmdlist = ['g.region', '-gp']
         p = gcmd.Command(cmdlist)
         if p.returncode == 0:
-            output = p.module_stdout.read().split('\n')
+            output = p.ReadStdOutput()
             for line in output:
                 line = line.strip()
                 if '=' in line: key,val = line.split('=')
@@ -1358,11 +1358,11 @@ class RegionDef(wx.Frame):
                    'e=%s' % self.east, 'w=%s' % self.west, 'res=%s' % self.res]
         p = gcmd.Command(cmdlist)
         if p.returncode == 0:
-            output = p.module_stdout.read()
+            output = p.ReadStdOutput()[0]
             wx.MessageBox('New default region:\n%s' % output)
         else:
             wx.MessageBox('Setting default region failed\n%s %s' % \
-                          (p.module_stderr.read(),p.module_stdout.read()))
+                          (p.ReadErrOutput()[0],p.ReadStdOutput()[0]))
         self.Destroy()
 
     def OnCancel(self, event):
@@ -1697,7 +1697,7 @@ class GWizard:
         try:
             cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
             p = gcmd.Command(cmdlist)
-            if p.module.returncode == 0:
+            if p.returncode == 0:
                 return True
             else:
                 return False
@@ -1726,7 +1726,7 @@ class GWizard:
         try:
             cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
             p = gcmd.Command(cmdlist)
-            if p.module.returncode == 0:
+            if p.returncode == 0:
                 return True
             else:
                 return False
@@ -1769,7 +1769,7 @@ class GWizard:
         try:
             cmdlist = ['g.proj','epsg=%s' % epsgcode,'datumtrans=-1']
             p = gcmd.Command(cmdlist)
-            dtoptions = p.module_stdout.read()
+            dtoptions = p.ReadStdOutput()[0]
             if dtoptions != None:
                 dtrans = ''
                 # open a dialog to select datum transform number
@@ -1796,7 +1796,7 @@ class GWizard:
                 cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
 
             p = gcmd.Command(cmdlist)
-            if p.module.returncode == 0:
+            if p.returncode == 0:
                 return True
             else:
                 return False
@@ -1844,7 +1844,7 @@ class GWizard:
         try:
             cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
             p = gcmd.Command(cmdlist)
-            if p.module.returncode == 0:
+            if p.returncode == 0:
                 return True
             else:
                 return False
