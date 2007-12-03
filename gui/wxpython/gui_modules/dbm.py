@@ -495,9 +495,20 @@ class AttributeManager(wx.Frame):
                                    label=" %s " % _("Attribute data - right-click to edit/manage records"))
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
             
-            # display button command = OnDataDrawSelected(None)
+            # display or extract selected records buttons
             btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY, label=_("Display selected"))
+            btnDisplay.SetToolTip(wx.ToolTip (_("Display selected objects in highlight color")))
+            btnDisplay.SetDefault()
             btnDisplay.Bind(wx.EVT_BUTTON, self.OnDataDrawSelected)
+            
+            btnExtract = wx.Button(parent=panel, id=wx.ID_ANY, label=_("Extract selected"))
+            btnExtract.SetToolTip(wx.ToolTip (_("Extract selected objects to new vector")))
+            btnExtract.Bind(wx.EVT_BUTTON, self.ExtractSelected)
+            
+            btnsizer = wx.BoxSizer(wx.HORIZONTAL)
+            btnsizer.Add(btnDisplay, 0, wx.ALIGN_LEFT | wx.EXPAND)
+            btnsizer.Add((10,10), 1, wx.ALIGN_CENTRE_HORIZONTAL | wx.EXPAND)
+            btnsizer.Add(btnExtract, 0, wx.ALIGN_RIGHT | wx.EXPAND)
 
             sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                   label=" %s " % _("SQL Query"))
@@ -513,8 +524,10 @@ class AttributeManager(wx.Frame):
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
                           border=3)
-            listSizer.Add(item=btnDisplay,
-                          flag=wx.ALIGN_LEFT | wx.ALL,
+            listSizer.Add(item=btnsizer,
+                          flag=wx.ALIGN_CENTRE_HORIZONTAL |
+                          wx.EXPAND |
+                          wx.ALL,
                           border=3)
 
             # sql statement box
@@ -1598,6 +1611,38 @@ class AttributeManager(wx.Frame):
 
         self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
                                    l_active=True, l_hidden=True, l_opacity=1.0)
+
+    def ExtractSelected(self, event):
+        """
+        Extract vector objects selected in attribute browse window
+        to new vector map
+        """
+        
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        # cats = list.selectedCats[:]
+        cats = list.GetSelectedItems()
+
+        # dialog to get file name
+        dlg = wx.TextEntryDialog(self, 'Name of new vector file')
+
+        if dlg.ShowModal() == wx.ID_OK:
+            outmap = dlg.GetValue()
+
+        dlg.Destroy()
+
+        #TODO - add overwrite option and vector map selector to dialog
+        
+        cmd = ["v.extract", "input=%s" % self.vectmap,
+               "output=%s" % outmap,
+               "list=%s" % utils.ListOfCatsToRange(cats),
+               "--overwrite"]
+                    
+        p = gcmd.Command(cmd)
+        
+        if p.returncode == 0:
+            return True
+        else:
+            return False
 
     def UpdateSettings(self):
         """Update settings dict"""
