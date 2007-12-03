@@ -279,8 +279,8 @@ proc GRMap::getxygroup { vgcreate } {
         set groupfile "$xygdb/$xyloc/$xymset/group/$xygroup/REF"
         if {![file exists $groupfile] } {
             set GRMap::xygroup ""
-            set msg "There is no raster group file (REF). You must select \
-                    the 'create/edit group' option to create a group file."
+            set msg [G_msg "There is no raster group file (REF). You must select\
+                    the 'create/edit group' option to create a group file."]
             tk_messageBox -message $msg -parent .grstart -type ok
             return
         }
@@ -301,8 +301,8 @@ proc GRMap::getxygroup { vgcreate } {
         puts "groupfile = $groupfile"
         if {![file exists $groupfile] } {
             set GRMap::xygroup ""
-            set msg "There is no vector group file (VREF). You must select \
-                    the 'create/edit group' option to create a group file."
+            set msg [G_msg "There is no vector group file (VREF). You must select\
+                    the 'create/edit group' option to create a group file."]
             tk_messageBox -message $msg -parent .grstart -type ok
             return
         }
@@ -382,7 +382,7 @@ proc GRMap::getmset { } {
     variable selftarget
 
     set path [tk_chooseDirectory -initialdir $currgdb \
-            -title "Select mapset of raster to georectify" \
+            -title [G_msg "Select mapset of raster to georectify"] \
             -mustexist true ]
     # try to make sure that a valid mapset has been picked
     if { $path == "" || $path == $currgdb || [file dirname $path] == $currgdb } { return }
@@ -430,7 +430,7 @@ proc GRMap::vgroup { } {
     set vg_mf [MainFrame .vgwin.mf \
             -textvariable GRMap::vgmsg]
 
-    set GRMap::vgmsg "Create a group REF file and directory for vectors"
+    set GRMap::vgmsg [G_msg "Create a group REF file and directory for vectors"]
 
     set vg_frame [$vg_mf getframe]
 
@@ -610,7 +610,7 @@ proc GRMap::startup { } {
     global bgcolor
     global iconpath
     
-    set grstarttitle "GRASS Georectifier"
+    set grstarttitle [G_msg "GRASS Georectifier"]
     toplevel .grstart
 
     wm title .grstart [G_msg $grstarttitle]
@@ -621,7 +621,7 @@ proc GRMap::startup { } {
     set grstart_mf [MainFrame .grstart.mf \
             -textvariable GRMap::grstartmsg]
 
-    set GRMap::grstartmsg "Set up environment for georectifying rasters or vectors"
+    set GRMap::grstartmsg [G_msg "Set up environment for georectifying rasters or vectors"]
 
     set grstartup [$grstart_mf getframe ]
 
@@ -796,7 +796,7 @@ proc GRMap::refmap { } {
 
     # Create canvas monitor as top level mainframe
     toplevel .mapgrcan
-    wm title .mapgrcan "Displaying xy map to be georectified"
+    wm title .mapgrcan [G_msg "Displaying xy map to be georectified"]
 
     set grmapframe [MainFrame .mapgrcan.mf \
             -textvariable GRMap::msg \
@@ -1099,21 +1099,21 @@ proc GRMap::gcptb { gcptb } {
         -command "GRMap::savegcp" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "save GCPs to POINTS file"]
+        -helptext [G_msg "Save GCPs to POINTS file"]
 
     # clear
     $bbox add -image [image create photo -file "$iconpath/gui-gcperase.gif"] \
         -command "GRMap::cleargcp" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "clear all unchecked GCP entries"]
+        -helptext [G_msg "Clear all unchecked GCP entries"]
 
     # rms
     $bbox add -image [image create photo -file "$iconpath/gui-rms.gif"] \
         -command "GRMap::gcp_error" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor  -activebackground $bgcolor\
-        -helptext [G_msg "calculate RMS error"]
+        -helptext [G_msg "Calculate RMS error"]
 
     # rectify
     $bbox add -image [image create photo -file "$iconpath/gui-georect.gif"] \
@@ -1310,8 +1310,8 @@ proc GRMap::rectify { } {
 
     set gcpfile "$xygdb/$xyloc/$xymset/group/$xygroup/POINTS"
     if {![file exists $gcpfile] } {
-            set msg "There is no POINTS file of ground control points for group. \
-                    You must create ground control points before georectifying map."
+            set msg [G_msg "There is no POINTS file of ground control points for group.\
+                    You must create ground control points before georectifying map."]
             tk_messageBox -message $msg -parent .gcpwin -type ok
             return
     }
@@ -1340,8 +1340,8 @@ proc GRMap::rectify { } {
 
     if { $maptype == "rast" } {
         if { $gcpcnt<3 || ($gcpcnt<6 && $rectorder==2) || ($gcpcnt<10 && $rectorder==3) } {
-            set msg "Insufficient ground control points for georectification method. \
-                    You need at least 3 points for 1st order, 6 points for 2nd order, and 10 points for 3rd order"
+            set msg [G_msg "Insufficient ground control points for georectification method.\
+                    You need at least 3 points for 1st order, 6 points for 2nd order and 10 points for 3rd order."]
             tk_messageBox -message $msg -parent .gcpwin -type ok
             return
         }
@@ -1370,8 +1370,8 @@ proc GRMap::rectify { } {
         GRMap::resetenv
     } elseif { $maptype == "vect" } {
         if { $gcpcnt < 1 } {
-            set msg "No valid ground control points in gcp file. \
-            You must create valid ground control points before georectifying map."
+            set msg [G_msg "No valid ground control points in GCP file.\
+            You must create valid ground control points before georectifying map."]
             tk_messageBox -message $msg -parent .gcpwin -type ok
             return
         }
@@ -1582,7 +1582,7 @@ proc GRMap::runprograms { mod } {
 		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
 	}
 
-    set GRMap::msg "please wait..."
+    set GRMap::msg [G_msg "Please wait..."]
     $grmapframe showstatusbar progression
 
     incr drawprog
@@ -1663,7 +1663,7 @@ proc GRMap::runprograms { mod } {
     set drawprog 100
 
     set drawprog 0
-    set GRMap::msg "Georectifying maps in $xygroup group"
+    set GRMap::msg [G_msg "Georectifying maps in $xygroup group"]
 
     $grmapframe showstatusbar status
 
@@ -1792,7 +1792,7 @@ proc GRMap::stoptool { } {
     bind $grcan <ButtonRelease-1> ""
 
     # reset status display to normal
-    set GRMap::msg "Georectifying maps in $xygroup group"
+    set GRMap::msg [G_msg "Georectifying maps in $xygroup group"]
 
     GRMap::restorecursor
 }
@@ -2015,9 +2015,9 @@ proc GRMap::zoombind { zoom } {
     GRMap::setcursor "plus"
 
     if {$zoom == 1} {
-        set GRMap::msg "Drag or click mouse to zoom"
+        set GRMap::msg [G_msg "Drag or click mouse to zoom"]
     } elseif {$zoom == -1} {
-        set GRMap::msg "Drag or click mouse to unzoom"
+        set GRMap::msg [G_msg "Drag or click mouse to unzoom"]
     }
 
     bind $grcan <1> {
@@ -2215,7 +2215,7 @@ proc GRMap::panbind { } {
     variable msg
     variable grcoords_mov
 
-    set GRMap::msg "Drag with mouse to pan"
+    set GRMap::msg [G_msg "Drag with mouse to pan"]
 
     GRMap::setcursor "hand2"
 

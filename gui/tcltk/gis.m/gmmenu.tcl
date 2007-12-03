@@ -37,6 +37,7 @@ set menudatlist {}
 # Check for existence of xtnmenu.dat file and parse it
 # into an extensions menu
 
+lappend menudatlist "$env(GISBASE)/etc/xtnmenu.dat"
 if {[info exists env(GRASS_ADDON_ETC)]} {
     set pathlist [split $env(GRASS_ADDON_ETC) ":"]
     foreach path $pathlist {
