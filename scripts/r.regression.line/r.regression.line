@@ -67,6 +67,21 @@ unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
 
+ok=yes
+eval `g.findfile element=cell file=$GIS_OPT_MAP1`
+if [ -z "$name" ] ; then
+      g.message -e "Raster map <$GIS_OPT_MAP1> not found"
+      ok=no
+fi
+eval `g.findfile element=cell file=$GIS_OPT_MAP2`
+if [ -z "$name" ] ; then
+      g.message -e "Raster map <$GIS_OPT_MAP2> not found"
+      ok=no
+fi
+if [ "$ok" = "no" ] ; then
+ exit 1
+fi
+
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
     g.message -e "Unable to create temporary files"
