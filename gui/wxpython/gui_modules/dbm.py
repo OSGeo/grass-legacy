@@ -492,8 +492,12 @@ class AttributeManager(wx.Frame):
 
             # attribute data
             listBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
-                                   label=" %s " % _("Attribute data"))
+                                   label=" %s " % _("Attribute data - right-click to edit/manage records"))
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
+            
+            # display button command = OnDataDrawSelected(None)
+            btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY, label=_("Display selected"))
+            btnDisplay.Bind(wx.EVT_BUTTON, self.OnDataDrawSelected)
 
             sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                   label=" %s " % _("SQL Query"))
@@ -508,6 +512,9 @@ class AttributeManager(wx.Frame):
 
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
+                          border=3)
+            listSizer.Add(item=btnDisplay,
+                          flag=wx.ALIGN_LEFT | wx.ALL,
                           border=3)
 
             # sql statement box
