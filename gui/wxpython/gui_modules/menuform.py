@@ -83,6 +83,7 @@ sys.path.append(imagepath)
 import grassenv
 import gselect
 import gcmd
+import globalvar
 try:
     import subprocess
 except:
@@ -793,9 +794,9 @@ class cmdPanel(wx.Panel):
         panelsizer = wx.BoxSizer(orient=wx.VERTICAL)
 
         # Build notebook
-        nbStyle=FN.FNB_VC8|FN.FNB_BACKGROUND_GRADIENT
+        nbStyle = globalvar.FNPageStyle
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
-        self.notebook.SetTabAreaColour(wx.Colour(125,200,175))
+        self.notebook.SetTabAreaColour(globalvar.FNPageColor)
         self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
         tab = {}
         tabsizer = {}

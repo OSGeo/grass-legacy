@@ -233,7 +233,7 @@ class VirtualAttributeList(wx.ListCtrl,
         if cat not in self.selectedCats:
             self.selectedCats.append(cat)
             self.selectedCats.sort()
-
+        
         event.Skip()
 
     def OnItemDeselected(self, event):
@@ -409,41 +409,36 @@ class AttributeManager(wx.Frame):
         # really needed (ML)
         # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
-        dbmStyle = FN.FNB_VC8 | \
-            FN.FNB_BACKGROUND_GRADIENT | \
-            FN.FNB_NODRAG | \
-            FN.FNB_TABS_BORDER_SIMPLE
-        
         self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
-                                                 style=FN.FNB_BOTTOM |
-                                                 FN.FNB_NO_NAV_BUTTONS | FN.FNB_FANCY_TABS)
+                                        style=FN.FNB_BOTTOM |
+                                        FN.FNB_NO_NAV_BUTTONS |
+                                        FN.FNB_FANCY_TABS)
+
+        dbmStyle = globalvar.FNPageStyle
+
         self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=dbmStyle)
-        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
-        #self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
+        # self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
-        self.browsePage.SetTabAreaColour(wx.Colour(125,200,175))
+        self.browsePage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.manageTablePage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                           style=dbmStyle)
-        self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
         #self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
         self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
-        self.manageTablePage.SetTabAreaColour(wx.Colour(125,200,175))
+        self.manageTablePage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.manageLayerPage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                                style=dbmStyle)
-        self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
         #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
         self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
-        self.manageLayerPage.SetTabAreaColour(wx.Colour(125,200,175))
+        self.manageLayerPage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
                                             style=dbmStyle)
-        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
         #self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
-        self.settingsPage.SetTabAreaColour(wx.Colour(125,200,175))
+        self.settingsPage.SetTabAreaColour(globalvar.FNPageColor)
 
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
@@ -496,15 +491,22 @@ class AttributeManager(wx.Frame):
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
             
             # display or extract selected records buttons
-            btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY, label=_("Display selected"))
+            btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY,
+                                   label=_("Display selected"),
+                                   size=(150, -1))
             btnDisplay.SetToolTip(wx.ToolTip (_("Display selected objects in highlight color")))
             btnDisplay.SetDefault()
             btnDisplay.Bind(wx.EVT_BUTTON, self.OnDataDrawSelected)
-            
-            btnExtract = wx.Button(parent=panel, id=wx.ID_ANY, label=_("Extract selected"))
-            btnExtract.SetToolTip(wx.ToolTip (_("Extract selected objects to new vector")))
-            btnExtract.Bind(wx.EVT_BUTTON, self.ExtractSelected)
-            
+            if not self.map:
+                btnDisplay.Enable(False)
+
+            btnExtract = wx.Button(parent=panel, id=wx.ID_ANY,
+                                   label=_("Extract selected"),
+                                   size=(150, -1))
+            btnExtract.SetToolTip(wx.ToolTip (_("Extract selected objects to "
+                                                "new vector map layer")))
+            btnExtract.Bind(wx.EVT_BUTTON, self.OnExtractSelected)
+
             btnsizer = wx.BoxSizer(wx.HORIZONTAL)
             btnsizer.Add(btnDisplay, 0, wx.ALIGN_LEFT | wx.EXPAND)
             btnsizer.Add((10,10), 1, wx.ALIGN_CENTRE_HORIZONTAL | wx.EXPAND)
@@ -903,12 +905,14 @@ class AttributeManager(wx.Frame):
             self.popupDataID4 = wx.NewId()
             self.popupDataID5 = wx.NewId()
             self.popupDataID6 = wx.NewId()
+            self.popupDataID7 = wx.NewId()
             self.Bind(wx.EVT_MENU, self.OnDataItemEdit,       id=self.popupDataID1)
             self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID2)
             self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID3)
             self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID4)
             self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID5)
             self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID6)
+            self.Bind(wx.EVT_MENU, self.OnExtractSelected,    id=self.popupDataID7)
 
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
@@ -927,7 +931,8 @@ class AttributeManager(wx.Frame):
         menu.AppendSeparator()
         menu.Append(self.popupDataID5, _("Reload"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID6, _("Highlight selected in the map"))
+        menu.Append(self.popupDataID6, _("Display selected"))
+        menu.Append(self.popupDataID7, _("Extract selected"))
         if not self.map:
             menu.Enable(self.popupDataID6, False)
 
@@ -1612,7 +1617,7 @@ class AttributeManager(wx.Frame):
         self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
                                    l_active=True, l_hidden=True, l_opacity=1.0)
 
-    def ExtractSelected(self, event):
+    def OnExtractSelected(self, event):
         """
         Extract vector objects selected in attribute browse window
         to new vector map
@@ -1621,12 +1626,26 @@ class AttributeManager(wx.Frame):
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # cats = list.selectedCats[:]
         cats = list.GetSelectedItems()
-
-        # dialog to get file name
-        dlg = wx.TextEntryDialog(self, 'Name of new vector file')
+        if len(cats) == 0:
+            wx.MessageBox(message=_('Nothing to extract.'), caption=_('Extract selected'))
+            return False
+        else:
+            # dialog to get file name
+            dlg = wx.TextEntryDialog(parent=self, caption=_('Extract selected'),
+                                     message=_('Name of new vector map layer'))
 
         if dlg.ShowModal() == wx.ID_OK:
             outmap = dlg.GetValue()
+            if outmap == '':
+                dlgErr = wx.MessageDialog(self.parent,
+                                       _("Unable to create new vector map layer.%s"
+                                         "Name for map layer is missing.") % \
+                                           (os.linesep),
+                                       _("Error"), wx.OK | wx.ICON_ERROR)
+                dlgErr.ShowModal()
+                dlgErr.Destroy()
+                dlg.Destroy()
+                return False
 
         dlg.Destroy()
 
