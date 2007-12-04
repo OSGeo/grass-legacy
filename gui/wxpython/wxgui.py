@@ -76,6 +76,7 @@ import gui_modules.utils as utils
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
+import gui_modules.globalvar as globalvar
 from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
 
@@ -246,12 +247,9 @@ class GMFrame(wx.Frame):
         #self.notebook.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=0))
 
         # create displays notebook widget and add it to main notebook page
-        cbStyle = FN.FNB_VC8 | \
-            FN.FNB_BACKGROUND_GRADIENT | \
-            FN.FNB_X_ON_TAB | \
-            FN.FNB_TABS_BORDER_SIMPLE
+        cbStyle = globalvar.FNPageStyle
         self.gm_cb = FN.FlatNotebook(self, id=wx.ID_ANY, style=cbStyle)
-        self.gm_cb.SetTabAreaColour(wx.Colour(125,200,175))
+        self.gm_cb.SetTabAreaColour(globalvar.FNPageColor)
         self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page

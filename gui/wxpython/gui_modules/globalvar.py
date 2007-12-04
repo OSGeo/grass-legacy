@@ -16,8 +16,18 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
+import wx
+import wx.lib.flatnotebook as FN
+
 """
 Query layer (generated for example by selecting item in the Attribute Table Manager)
 Deleted automatically on re-render action
 """
 QUERYLAYER = 'qlayer'
+
+"""Style definition for FlatNotebook pages"""
+FNPageStyle = FN.FNB_VC8 | \
+    FN.FNB_BACKGROUND_GRADIENT | \
+    FN.FNB_NODRAG | \
+    FN.FNB_TABS_BORDER_SIMPLE 
+FNPageColor = wx.Colour(125,200,175)
