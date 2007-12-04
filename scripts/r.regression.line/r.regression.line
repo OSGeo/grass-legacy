@@ -90,7 +90,7 @@ fi
 
 
 #calculate regression equation
-r.stats -c input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
+r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
 awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
  sumXY +=$1*$2*$3;\
 }\
