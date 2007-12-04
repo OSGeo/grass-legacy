@@ -20,6 +20,7 @@ SUBDIRS = \
 	d.vect.thematic \
 	db.dropcol \
 	db.in.ogr \
+	db.out.ogr \
 	db.test \
 	g.manual \
 	g.mlist \
