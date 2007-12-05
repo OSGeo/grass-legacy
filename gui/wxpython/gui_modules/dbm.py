@@ -491,26 +491,26 @@ class AttributeManager(wx.Frame):
             listSizer = wx.StaticBoxSizer(listBox, wx.VERTICAL)
             
             # display or extract selected records buttons
-            btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY,
-                                   label=_("Display selected"),
-                                   size=(150, -1))
-            btnDisplay.SetToolTip(wx.ToolTip (_("Display selected objects in highlight color")))
-            btnDisplay.SetDefault()
-            btnDisplay.Bind(wx.EVT_BUTTON, self.OnDataDrawSelected)
-            if not self.map:
-                btnDisplay.Enable(False)
-
-            btnExtract = wx.Button(parent=panel, id=wx.ID_ANY,
-                                   label=_("Extract selected"),
-                                   size=(150, -1))
-            btnExtract.SetToolTip(wx.ToolTip (_("Extract selected objects to "
-                                                "new vector map layer")))
-            btnExtract.Bind(wx.EVT_BUTTON, self.OnExtractSelected)
-
-            btnsizer = wx.BoxSizer(wx.HORIZONTAL)
-            btnsizer.Add(btnDisplay, 0, wx.ALIGN_LEFT | wx.EXPAND)
-            btnsizer.Add((10,10), 1, wx.ALIGN_CENTRE_HORIZONTAL | wx.EXPAND)
-            btnsizer.Add(btnExtract, 0, wx.ALIGN_RIGHT | wx.EXPAND)
+            #btnDisplay = wx.Button(parent=panel, id=wx.ID_ANY,
+            #                       label=_("Display selected"),
+            #                       size=(150, -1))
+            #btnDisplay.SetToolTip(wx.ToolTip (_("Display selected objects in highlight color")))
+            #btnDisplay.SetDefault()
+            #btnDisplay.Bind(wx.EVT_BUTTON, self.OnDataDrawSelected)
+            #if not self.map:
+            #    btnDisplay.Enable(False)
+            #
+            #btnExtract = wx.Button(parent=panel, id=wx.ID_ANY,
+            #                       label=_("Extract selected"),
+            #                       size=(150, -1))
+            #btnExtract.SetToolTip(wx.ToolTip (_("Extract selected objects to "
+            #                                    "new vector map layer")))
+            #btnExtract.Bind(wx.EVT_BUTTON, self.OnExtractSelected)
+            #
+            #btnsizer = wx.BoxSizer(wx.HORIZONTAL)
+            #btnsizer.Add(btnDisplay, 0, wx.ALIGN_LEFT | wx.EXPAND)
+            #btnsizer.Add((10,10), 1, wx.ALIGN_CENTRE_HORIZONTAL | wx.EXPAND)
+            #btnsizer.Add(btnExtract, 0, wx.ALIGN_RIGHT | wx.EXPAND)
 
             sqlBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
                                   label=" %s " % _("SQL Query"))
@@ -526,11 +526,11 @@ class AttributeManager(wx.Frame):
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
                           border=3)
-            listSizer.Add(item=btnsizer,
-                          flag=wx.ALIGN_CENTRE_HORIZONTAL |
-                          wx.EXPAND |
-                          wx.ALL,
-                          border=3)
+            #listSizer.Add(item=btnsizer,
+            #              flag=wx.ALIGN_CENTRE_HORIZONTAL |
+            #              wx.EXPAND |
+            #              wx.ALL,
+            #              border=3)
 
             # sql statement box
             btnSqlBuilder = wx.Button(parent=panel, id=wx.ID_ANY, label=_("SQL Builder"))
