@@ -716,7 +716,7 @@ int main (int argc, char *argv[])
 	G_debug (3, "SQL: %s", db_get_string ( &stmt ));
 	
         if ( db_execute_immediate (driver, &stmt) != DB_OK )
-	    G_fatal_error(_("Cannot create table: '%s'"), db_get_string(&stmt));
+	    G_fatal_error(_("Unable to create table: '%s'"), db_get_string(&stmt));
 
 	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	    G_fatal_error(_("Unable to grant privileges on table <%s>"), table_opt->answer);
