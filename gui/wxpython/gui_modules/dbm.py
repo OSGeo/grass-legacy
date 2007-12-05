@@ -907,15 +907,17 @@ class AttributeManager(wx.Frame):
             self.popupDataID6 = wx.NewId()
             self.popupDataID7 = wx.NewId()
             self.popupDataID8 = wx.NewId()
+            self.popupDataID9 = wx.NewId()
 
             self.Bind(wx.EVT_MENU, self.OnDataItemEdit,       id=self.popupDataID1)
             self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID2)
             self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID3)
             self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID4)
-            self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID5)
-            self.Bind(wx.EVT_MENU, self.OnDataSelectAll,      id=self.popupDataID6)
+            self.Bind(wx.EVT_MENU, self.OnDataSelectAll,      id=self.popupDataID5)
+            self.Bind(wx.EVT_MENU, self.OnDataSelectNone,     id=self.popupDataID6)
             self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID7)
             self.Bind(wx.EVT_MENU, self.OnExtractSelected,    id=self.popupDataID8)
+            self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID9)
 
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
@@ -928,7 +930,7 @@ class AttributeManager(wx.Frame):
         menu.Append(self.popupDataID3, _("Delete selected record(s)"))
         menu.Append(self.popupDataID4, _("Delete all records"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID6, _("Select all"))
+        menu.Append(self.popupDataID5, _("Select all"))
         menu.Append(self.popupDataID6, _("Select none"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID7, _("Display selected"))
@@ -939,7 +941,7 @@ class AttributeManager(wx.Frame):
             menu.Enable(self.popupDataID3, False)
             menu.Enable(self.popupDataID8, False)
         menu.AppendSeparator()
-        menu.Append(self.popupDataID5, _("Reload"))
+        menu.Append(self.popupDataID9, _("Reload"))
 
         self.PopupMenu(menu)
         menu.Destroy()
@@ -1189,7 +1191,30 @@ class AttributeManager(wx.Frame):
 
     def OnDataSelectAll(self, event):
         """Select all items"""
-        pass
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        item = -1
+
+        while True:
+            item = list.GetNextItem(item)
+            if item == -1:
+                break
+            list.SetItemState(item, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+
+        event.Skip()
+
+    def OnDataSelectNone(self, event):
+        """Deselect items"""
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        item = -1
+
+        while True:
+            item = list.GetNextItem(item, wx.LIST_STATE_SELECTED)
+            if item == -1:
+                break
+            list.SetItemState(item, 0, wx.LIST_STATE_SELECTED | wx.LIST_STATE_FOCUSED)
+
+        event.Skip()
+
 
     def OnTableChangeType(self, event):
         """Data type for new column changed. Enable or disable
