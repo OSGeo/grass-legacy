@@ -164,9 +164,9 @@ class GMFrame(wx.Frame):
         """Creates command-line input area"""
         self.cmdprompt = wx.Panel(self)
 
-        label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="Command >",
-                              size=(-1, 25))
-        label.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=wx.BOLD))
+        label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="Cmd >")
+        label.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT,
+                              style=wx.NORMAL, weight=wx.BOLD))
         input = wx.TextCtrl(parent=self.cmdprompt, id=wx.ID_ANY,
                             value="",
                             style=wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,

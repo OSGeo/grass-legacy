@@ -370,7 +370,6 @@ class Data:
                 ("","","", ""),
                 ("Reposition vector", "Reposition (shift, rotate, skew) vector file in coordinate space", "self.OnMenuCmd", "v.transform"),
                 ("Reproject vector", "Reproject vector from other location", "self.OnMenuCmd", "v.proj"),
-                ("","","", "")
                 )),
               ("","","", ""),
               ("Query with attributes", "Query vector objects by attribute values", "self.OnMenuCmd", "v.extract"),
