@@ -925,16 +925,17 @@ class AttributeManager(wx.Frame):
         menu.Append(self.popupDataID2, _("Insert new record"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID3, _("Delete selected record(s)"))
-        if list.GetFirstSelected() == -1:
-            menu.Enable(self.popupDataID3, False)
         menu.Append(self.popupDataID4, _("Delete all records"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID5, _("Reload"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID6, _("Display selected"))
-        menu.Append(self.popupDataID7, _("Extract selected"))
         if not self.map:
             menu.Enable(self.popupDataID6, False)
+        menu.Append(self.popupDataID7, _("Extract selected"))
+        if list.GetFirstSelected() == -1:
+            menu.Enable(self.popupDataID3, False)
+            menu.Enable(self.popupDataID7, False)
 
         self.PopupMenu(menu)
         menu.Destroy()
