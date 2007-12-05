@@ -184,11 +184,12 @@ class Command:
         # set verbosity level
         #
         verbose_orig = None
-        if '--q' not in self.cmd and '--v' not in self.cmd:
+        if ('--q' not in self.cmd or '--quiet' not in self.cmd) and \
+                ('--v' not in self.cmd or '--verbose' not in self.cmd):
             if verbose == 0:
-                self.cmd.append('--q')
+                self.cmd.append('--quiet')
             elif verbose == 3:
-                self.cmd.append('--v')
+                self.cmd.append('--verbose')
             else:
                 verbose_orig = os.getenv("GRASS_VERBOSE")
                 os.environ["GRASS_VERBOSE"] = str(verbose)

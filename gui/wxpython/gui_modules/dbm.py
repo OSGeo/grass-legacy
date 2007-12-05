@@ -8,6 +8,7 @@ CLASSES:
     * DisplayAttributesDialog
     * VectorDBInfo
     * ModifyTableRecord
+    * NewVectorDialog
 
 PURPOSE:   GRASS attribute table manager
 
@@ -1665,38 +1666,31 @@ class AttributeManager(wx.Frame):
             return False
         else:
             # dialog to get file name
-            dlg = wx.TextEntryDialog(parent=self, caption=_('Extract selected'),
-                                     message=_('Name of new vector map layer'))
+            # dlg = wx.TextEntryDialog(parent=self, caption=_('Extract selected'),
+            #                         message=_('Name of new vector map layer'))
+            dlg = NewVectorDialog(parent=self, id=wx.ID_ANY, title=_('Extract selected'))
 
-        if dlg.ShowModal() == wx.ID_OK:
-            outmap = dlg.GetValue()
-            if outmap == '':
-                dlgErr = wx.MessageDialog(self.parent,
-                                       _("Unable to create new vector map layer.%s"
-                                         "Name for map layer is missing.") % \
-                                           (os.linesep),
-                                       _("Error"), wx.OK | wx.ICON_ERROR)
-                dlgErr.ShowModal()
-                dlgErr.Destroy()
-                dlg.Destroy()
-                return False
+            if dlg.ShowModal() == wx.ID_OK:
+                outmap, overwrite = dlg.GetName()
 
-        dlg.Destroy()
+                if outmap == '': # should not happen
+                    return False
 
-        #TODO - add overwrite option and vector map selector to dialog
-        
-        cmd = ["v.extract", "input=%s" % self.vectmap,
-               "output=%s" % outmap,
-               "list=%s" % utils.ListOfCatsToRange(cats),
-               "--overwrite"]
+                cmd = ["v.extract",
+                       "input=%s" % self.vectmap,
+                       "output=%s" % outmap,
+                       "list=%s" % utils.ListOfCatsToRange(cats)]
+                
+                if overwrite is True:
+                    cmd.append('--overwrite')
                     
-        p = gcmd.Command(cmd)
+                p = gcmd.Command(cmd)
         
-        if p.returncode == 0:
-            return True
-        else:
-            return False
+                if p.returncode == 0:
+                    return True
 
+        return False
+                
     def UpdateSettings(self):
         """Update settings dict"""
         self.settings['highlight']['color'] = self.hlColor.GetColour()
@@ -3135,6 +3129,8 @@ class ModifyTableRecord(wx.Dialog):
             id += 1
         self.__Layout()
 
+        self.SetMinSize(self.GetSize())
+
     def __Layout(self):
         """Do layout"""
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -3180,6 +3176,72 @@ class ModifyTableRecord(wx.Dialog):
                 valueList.append(value)
 
         return valueList
+
+class NewVectorDialog(wx.Dialog):
+    """Create new vector map layer"""
+    def __init__(self, parent, id, title, 
+                style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+
+        wx.Dialog.__init__(self, parent, id, title, style=style)
+
+        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
+        self.btnCancel = wx.Button(self.panel, wx.ID_CANCEL)
+        self.btnOK = wx.Button(self.panel, wx.ID_OK)
+        self.btnOK.SetDefault()
+        self.btnOK.Enable(False)
+
+        self.label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
+                                   label=_("Name for new vector map layer:"))
+        self.mapName = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
+                                   value='', size=(250, -1),
+                                   style=wx.TE_PROCESS_ENTER)
+        self.mapName.Bind(wx.EVT_TEXT, self.OnMapName)
+
+        self.overwrite = wx.CheckBox(parent=self.panel, id=wx.ID_ANY,
+                                     label=_("Allow output files to overwrite existing files"))
+
+        self.__Layout()
+
+        self.SetMinSize(self.GetSize())
+
+    def OnMapName(self, event):
+        """Name for vector map layer given"""
+        if len(event.GetString()) > 0:
+            self.btnOK.Enable(True)
+        else:
+            self.btnOK.Enable(False)
+
+    def __Layout(self):
+        """Do layout"""
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        dataSizer = wx.BoxSizer(wx.VERTICAL)
+        dataSizer.Add(self.label, proportion=0,
+                      flag=wx.ALL, border=1)
+        dataSizer.Add(self.mapName, proportion=0,
+                      flag=wx.EXPAND | wx.ALL, border=1)
+        dataSizer.Add(self.overwrite, proportion=0,
+                      flag=wx.ALL, border=1)
+
+        # buttons
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(self.btnCancel)
+        btnSizer.AddButton(self.btnOK)
+        btnSizer.Realize()
+
+        sizer.Add(item=dataSizer, proportion=1,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        sizer.Add(item=btnSizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+       
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def GetName(self):
+        """Return (mapName, overwrite)"""
+        return (self.mapName.GetValue(), self.overwrite.IsChecked())
 
 def main(argv=None):
     if argv is None:
