@@ -61,8 +61,8 @@ class Log:
 
 class VirtualAttributeList(wx.ListCtrl,
                            listmix.ListCtrlAutoWidthMixin,
-                           listmix.ColumnSorterMixin,
-                           listmix.TextEditMixin):
+                           listmix.ColumnSorterMixin):
+    #                           listmix.TextEditMixin):
     """
     Support virtual list class
     """
@@ -906,13 +906,16 @@ class AttributeManager(wx.Frame):
             self.popupDataID5 = wx.NewId()
             self.popupDataID6 = wx.NewId()
             self.popupDataID7 = wx.NewId()
+            self.popupDataID8 = wx.NewId()
+
             self.Bind(wx.EVT_MENU, self.OnDataItemEdit,       id=self.popupDataID1)
             self.Bind(wx.EVT_MENU, self.OnDataItemAdd,        id=self.popupDataID2)
             self.Bind(wx.EVT_MENU, self.OnDataItemDelete,     id=self.popupDataID3)
             self.Bind(wx.EVT_MENU, self.OnDataItemDeleteAll,  id=self.popupDataID4)
             self.Bind(wx.EVT_MENU, self.OnDataReload,         id=self.popupDataID5)
-            self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID6)
-            self.Bind(wx.EVT_MENU, self.OnExtractSelected,    id=self.popupDataID7)
+            self.Bind(wx.EVT_MENU, self.OnDataSelectAll,      id=self.popupDataID6)
+            self.Bind(wx.EVT_MENU, self.OnDataDrawSelected,   id=self.popupDataID7)
+            self.Bind(wx.EVT_MENU, self.OnExtractSelected,    id=self.popupDataID8)
 
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         # generate popup-menu
@@ -921,21 +924,22 @@ class AttributeManager(wx.Frame):
         selected = list.GetFirstSelected()
         if selected == -1 or list.GetNextSelected(selected) != -1:
             menu.Enable(self.popupDataID1, False)
-        menu.AppendSeparator()
         menu.Append(self.popupDataID2, _("Insert new record"))
-        menu.AppendSeparator()
         menu.Append(self.popupDataID3, _("Delete selected record(s)"))
         menu.Append(self.popupDataID4, _("Delete all records"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID5, _("Reload"))
+        menu.Append(self.popupDataID6, _("Select all"))
+        menu.Append(self.popupDataID6, _("Select none"))
         menu.AppendSeparator()
-        menu.Append(self.popupDataID6, _("Display selected"))
+        menu.Append(self.popupDataID7, _("Display selected"))
         if not self.map:
-            menu.Enable(self.popupDataID6, False)
-        menu.Append(self.popupDataID7, _("Extract selected"))
+            menu.Enable(self.popupDataID7, False)
+        menu.Append(self.popupDataID8, _("Extract selected"))
         if list.GetFirstSelected() == -1:
             menu.Enable(self.popupDataID3, False)
-            menu.Enable(self.popupDataID7, False)
+            menu.Enable(self.popupDataID8, False)
+        menu.AppendSeparator()
+        menu.Append(self.popupDataID5, _("Reload"))
 
         self.PopupMenu(menu)
         menu.Destroy()
@@ -1182,6 +1186,10 @@ class AttributeManager(wx.Frame):
         """Reload list of records"""
         self.OnApplySqlStatement(None)
         self.listOfSQLStatements = []
+
+    def OnDataSelectAll(self, event):
+        """Select all items"""
+        pass
 
     def OnTableChangeType(self, event):
         """Data type for new column changed. Enable or disable
