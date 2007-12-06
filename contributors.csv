@@ -1,42 +1,42 @@
 cvs_id,name,email,osgeo_id,rfc2_agreed
--,Eric Patton <epatton nrcan.gc.ca>,,
-alex,Alex Shevlakov <sixote yahoo.com>,,
-andreas,Andreas Lange <andreas.c.lange gmx.de>,,
-benjamin,Benjamin Ducke <benjamin.ducke ufg.uni-kiel.de>,,
-bernhard,Bernhard Reiter <bernhard intevation.de>,,
-bob,Bob Covill <bcovill tekmap.ns.ca>,,
-brad,Brad Douglas <rez touchofmadness.com>,,
-carlos,Carlos Davila <cdavilam jemila.jazztel.es>,cdavilam,
-cedric,Cedric Shock <cedricgrass shockfamily.net>,,
-cho,Huidae Cho <grass4u gmail.com>,,
-danielc,Daniel Calvelo Aros <dca.gis gmail.com>,,
-david,David D. Gray <ddgray armadce.demon.co.uk>,,
-eric,Eric G. Miller <egm2 jps.net>,,
-florian,Florian Goessmann <florian wallweg39.de>,,
-frankw,Frank Warmerdam <warmerdam pobox.com>,warmerdam,
-glynn,Glynn Clements <glynn gclements.plus.com>,,
-hamish,Hamish Bowman <hamish_nospam yahoo.com>,,
-helena,Helena Mitasova <hmitaso unity.ncsu.edu>,helena,yes
-jachym,Jachym Cepicky <jachym les-ejk.cz>,jachym,
-jan,Jan-Oliver Wagner <jan intevation.de>,,
-john,John Huddleston <jhudd.lamar colostate.edu>,,
-justin,Justin Hickey <jhickey hpcc.nectec.or.th>,,
-markus,Markus Neteler <neteler fbk.eu>,neteler,yes
-martin,Martin Wegmann <wegmann biozentrum.uni-wuerzburg.de>,,
-martinl,Martin Landa <landa.martin gmail.com>,martinl,
-massimo,Massimo Cuomo <m.cuomo acsys.it>,,
-michael,Michael Barton <michael.barton asu.edu>,cmbarton,
-mike,Mike Thomas <miketh brisbane.paradigmgeo.com>,,
-moritz,Moritz Lennert <mlennert club.worldonline.be>,mlennert,
-paul,Paul Kelly <paul-grass stjohnspoint.co.uk>,,
-paulo,Paulo Marcondes <pmarc.debian gmail.com>,,
-pallech,Serena Pallecchi <pallecch cli.di.unipi.it>,,
-radim,Radim Blazek <radim.blazek gmail.com>,,
-roberto,Roberto Micarelli <miro iol.it>,,
-robertoa,Roberto Antolin <roberto geomatica.como.polimi.it>,,
-roger,Roger S. Miller <rgrmill rt66.com>,,
-scott,Scott Mitchell  <smitch mac.com>,,
-soeren,Soeren Gebbert <soerengebbert googlemail.com>,,
-stephan,Stephan Holl <stephan.holl intevation.de>,sholl,
-william,William Kyngesburye <kyngchaos kyngchaos.com>,kyngchaos,
-wolf,Wolf Bergenheim <wolf+grass bergenheim.net>,wolf,
+-,Eric Patton,<epatton nrcan.gc.ca>,,-
+alex,Alex Shevlakov,<sixote yahoo.com>,,-
+andreas,Andreas Lange,<andreas.c.lange gmx.de>,,-
+benjamin,Benjamin Ducke,<benjamin.ducke ufg.uni-kiel.de>,,-
+bernhard,Bernhard Reiter,<bernhard intevation.de>,,-
+bob,Bob Covill,<bcovill tekmap.ns.ca>,,-
+brad,Brad Douglas,<rez touchofmadness.com>,,-
+carlos,Carlos Davila,<cdavilam jemila.jazztel.es>,cdavilam,-
+cedric,Cedric Shock,<cedricgrass shockfamily.net>,,-
+cho,Huidae Cho,<grass4u gmail.com>,,-
+danielc,Daniel Calvelo Aros,<dca.gis gmail.com>,,-
+david,David D. Gray,<ddgray armadce.demon.co.uk>,,-
+eric,Eric G. Miller,<egm2 jps.net>,,-
+florian,Florian Goessmann,<florian wallweg39.de>,,-
+frankw,Frank Warmerdam,<warmerdam pobox.com>,warmerdam,-
+glynn,Glynn Clements,<glynn gclements.plus.com>,,-
+hamish,Hamish Bowman,<hamish_nospam yahoo.com>,,-
+helena,Helena Mitasova,<hmitaso unity.ncsu.edu>,helena,yes
+jachym,Jachym Cepicky,<jachym les-ejk.cz>,jachym,-
+jan,Jan-Oliver Wagner,<jan intevation.de>,,-
+john,John Huddleston,<jhudd.lamar colostate.edu>,,-
+justin,Justin Hickey,<jhickey hpcc.nectec.or.th>,,-
+markus,Markus Neteler,<neteler fbk.eu>,neteler,yes
+martin,Martin Wegmann,<wegmann biozentrum.uni-wuerzburg.de>,,-
+martinl,Martin Landa,<landa.martin gmail.com>,martinl,-
+massimo,Massimo Cuomo,<m.cuomo acsys.it>,,-
+michael,Michael Barton,<michael.barton asu.edu>,cmbarton,-
+mike,Mike Thomas,<miketh brisbane.paradigmgeo.com>,,-
+moritz,Moritz Lennert,<mlennert club.worldonline.be>,mlennert,yes
+paul,Paul Kelly,<paul-grass stjohnspoint.co.uk>,,-
+paulo,Paulo Marcondes,<pmarc.debian gmail.com>,,-
+pallech,Serena Pallecchi,<pallecch cli.di.unipi.it>,,-
+radim,Radim Blazek,<radim.blazek gmail.com>,,-
+roberto,Roberto Micarelli,<miro iol.it>,,-
+robertoa,Roberto Antolin,<roberto geomatica.como.polimi.it>,,-
+roger,Roger S. Miller,<rgrmill rt66.com>,,-
+scott,Scott Mitchell,<smitch mac.com>,,-
+soeren,Soeren Gebbert,<soerengebbert googlemail.com>,,-
+stephan,Stephan Holl,<stephan.holl intevation.de>,sholl,-
+william,William Kyngesburye,<kyngchaos kyngchaos.com>,kyngchaos,-
+wolf,Wolf Bergenheim,<wolf+grass bergenheim.net>,wolf,yes
