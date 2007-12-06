@@ -1,12 +1,12 @@
 cvs_id,name,email,osgeo_id,rfc2_agreed
--,Eric Patton,<epatton nrcan.gc.ca>,epatton,-
+-,Eric Patton,<epatton nrcan.gc.ca>,epatton,yes
 alex,Alex Shevlakov,<sixote yahoo.com>,,-
 andreas,Andreas Lange,<andreas.c.lange gmx.de>,,-
 benjamin,Benjamin Ducke,<benjamin.ducke ufg.uni-kiel.de>,,-
 bernhard,Bernhard Reiter,<bernhard intevation.de>,,-
 bob,Bob Covill,<bcovill tekmap.ns.ca>,,-
 brad,Brad Douglas,<rez touchofmadness.com>,,-
-carlos,Carlos Davila,<cdavilam jemila.jazztel.es>,cdavilam,-
+carlos,Carlos Davila,<cdavilam jemila.jazztel.es>,cdavilam,yes
 cedric,Cedric Shock,<cedricgrass shockfamily.net>,,-
 cho,Huidae Cho,<grass4u gmail.com>,,-
 danielc,Daniel Calvelo Aros,<dca.gis gmail.com>,,-
