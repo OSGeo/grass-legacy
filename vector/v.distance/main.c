@@ -46,29 +46,31 @@
 /* Structure where are stored infos about nearest feature for each category */
 typedef struct {
     int    from_cat;     /* category (from) */
-    int    count;    /* number of features already found */ 
-    int    to_cat;  /* category (to) */
-    double from_x, from_y, from_z, to_x, to_y, to_z;    /* coordinates of nearest point */
-    double from_along, to_along;    /* distance along a linear feature to the nearest point */
-    double to_angle; /* angle of linear feature in nearest point */
-    double dist;  /* distance to nearest feature */
+    int    count;        /* number of features already found */ 
+    int    to_cat;       /* category (to) */
+    double from_x, from_y, from_z, to_x, to_y, to_z; /* coordinates of nearest point */
+    double from_along, to_along; /* distance along a linear feature to the nearest point */
+    double to_angle;     /* angle of linear feature in nearest point */
+    double dist;         /* distance to nearest feature */
 } NEAR;
 
 /* Upload and column store */
 typedef struct {
-    int  upload;   /* code */
+    int  upload;    /* code */
     char *column;   /* column name */
 } UPLOAD;
 
 
-static int cmp_near ( const void *, const void *);
-static int cmp_exist ( const void *, const void *);
-
+static int cmp_near(const void *, const void *);
+static int cmp_near_to(const void *, const void *);
+static int cmp_exist(const void *, const void *);
+static int print_upload(NEAR *, UPLOAD *, int, dbCatValArray *, dbCatVal *);
 
 int main (int argc, char *argv[])
 {
     int    i, j;
-    int    all = 0; /* calculate from each to each within the threshold */
+    int    print_as_matrix; /* only for all */
+    int    all;             /* calculate from each to each within the threshold */
     char   *mapset;
     struct GModule *module;
     struct Option *from_opt, *to_opt, *from_type_opt, *to_type_opt, *from_field_opt, *to_field_opt;
@@ -81,7 +83,7 @@ int main (int argc, char *argv[])
     struct line_pnts *FPoints, *TPoints;
     struct line_cats *FCats, *TCats;
     NEAR   *Near, *near;
-    int    anear; /* allocated space, used only for all */
+    int    anear;   /* allocated space, used only for all */
     UPLOAD *Upload; /* zero terminated */
     int ftype, fcat, tcat, count;
     int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
@@ -97,6 +99,8 @@ int main (int argc, char *argv[])
     dbCatValArray cvarr;
     dbColumn *column;
 
+    all    = 0;
+    print_as_matrix = 0;
     column = NULL;
 
     G_gisinit (argv[0]);
@@ -104,9 +108,7 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("vector, database, attribute table");
     module->description =
-	_("Finds the nearest element in vector 'to' for elements in vector 'from'. "
-	  "Various information about this relation may be uploaded to the "
-	  "attribute table of input vector 'from' or printed to stdout.");
+      _("Finds the nearest element in vector map 'to' for elements in vector map 'from'.");
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
     from_opt->key         = "from" ;
@@ -145,7 +147,8 @@ int main (int argc, char *argv[])
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
     out_opt->required    = NO;
-    out_opt->description = _("Name for output vector map containing lines connecting nearest elements");
+    out_opt->description = _("Name for output vector map containing lines "
+			     "connecting nearest elements");
     
     max_opt = G_define_option();
     max_opt->key = "dmax";
@@ -217,10 +220,18 @@ int main (int argc, char *argv[])
     
     max = atof (max_opt->answer);
 
+    if ( all_flag->answer )
+	all = 1;
+
     /* Read upload and column options */
     /* count */
     i = 0;
-    while (upload_opt->answers[i]) i++;
+    while (upload_opt->answers[i])
+	i++;
+    if (strcmp(from_opt->answer, to_opt->answer) == 0 &&
+	all && !table_opt->answer && i == 1)
+	print_as_matrix = 1;
+
     /* alloc */
     Upload = (UPLOAD *) G_calloc ( i+1, sizeof (UPLOAD) );
     /* read upload */
@@ -266,8 +277,6 @@ int main (int argc, char *argv[])
     }
     if ( Upload[i].upload != END ) 
 	G_fatal_error(_("Not enough column names"));
-
-    if ( all_flag->answer ) all = 1;
 
     /* Open 'from' vector */
     if ((mapset = G_find_vector2 (from_opt->answer, "")) == NULL )
@@ -718,7 +727,8 @@ int main (int argc, char *argv[])
         if ( db_execute_immediate (driver, &stmt) != DB_OK )
 	    G_fatal_error(_("Unable to create table: '%s'"), db_get_string(&stmt));
 
-	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	if (db_grant_on_table (driver, table_opt->answer, DB_PRIV_SELECT,
+			       DB_GROUP|DB_PUBLIC ) != DB_OK )
 	    G_fatal_error(_("Unable to grant privileges on table <%s>"), table_opt->answer);
 		
     } else if (!all) { /* read existing cats from table */
@@ -727,8 +737,13 @@ int main (int argc, char *argv[])
     }
     update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound = 0;
 
-    if ( !all ) count = nfcats;
-    
+    if ( !all ) {
+	count = nfcats;
+    }
+    else if (print_as_matrix) {
+	qsort( (void *)Near, count, sizeof(NEAR), cmp_near_to);
+    }
+
     if ( driver ) 
         db_begin_transaction ( driver );
 
@@ -773,73 +788,34 @@ int main (int argc, char *argv[])
 	}
 	
 	if ( print_flag->answer || (all && !table_opt->answer) ) { /* print only */
-	    fprintf(stdout, "%d", Near[i].from_cat );
-	    j = 0;
-	    while ( Upload[j].upload != END ) {
-		if (  Near[i].count == 0 ) { /* no nearest found */
-		    fprintf(stdout, "|null" );
-		} else { 
-		    switch ( Upload[j].upload ) {
-			case CAT:
-			    if ( Near[i].to_cat >= 0 ) 
-			        fprintf(stdout, "|%d", Near[i].to_cat );
-			    else 
-			        fprintf(stdout, "|null" );
-
-			    break;
-			case DIST:
-			    fprintf(stdout, "|%f", Near[i].dist );
-			    break;
-			case FROM_X:
-			    fprintf(stdout, "|%f", Near[i].from_x );
-			    break;
-			case FROM_Y:
-			    fprintf(stdout, "|%f", Near[i].from_y );
-			    break;
-			case TO_X:
-			    fprintf(stdout, "|%f", Near[i].to_x );
-			    break;
-			case TO_Y:
-			    fprintf(stdout, "|%f", Near[i].to_y );
-			    break;
-			case FROM_ALONG:
-			    fprintf(stdout, "|%f", Near[i].from_along );
-			    break;
-			case TO_ALONG:
-			    fprintf(stdout, "|%f", Near[i].to_along );
-			    break;
-			case TO_ANGLE:
-			    fprintf(stdout, "|%f", Near[i].to_angle );
-			    break;
-			case TO_ATTR:
-			    if ( catval	) {
-				switch (cvarr.ctype) {
-				    case DB_C_TYPE_INT:
-			            	fprintf(stdout, "|%d", catval->val.i );
-				    	break;
-
-				    case DB_C_TYPE_DOUBLE:
-			            	fprintf(stdout, "|%.15e", catval->val.d );
-				    	break;
-
-				    case DB_C_TYPE_STRING:
-			            	fprintf(stdout, "|%s", db_get_string(catval->val.s) );
-				    	break;
-
-				    case DB_C_TYPE_DATETIME:
-					/* TODO: formating datetime */
-			            	fprintf(stdout, "|" );
-				    	break;
-				}
-			    } else {        
-				fprintf(stdout, "|null" );
-			    }
-			    break;
+	    /*
+	      input and output is the same &&
+	      calculate distances &&
+	      only one upload option given ->
+	      print as a matrix
+	    */
+	    if (print_as_matrix) {
+		if (i == 0) {
+		    for (j = 0; j < nfrom; j++) {
+			if (j == 0)
+			    fprintf(stdout, " ");
+			fprintf(stdout, "|%d", Near[j].to_cat);
 		    }
+		    fprintf(stdout, "\n");
 		}
-		j++;
+		if (i % nfrom == 0) {
+		    fprintf(stdout, "%d", Near[i].from_cat);
+		    for (j = 0; j < nfrom; j++) {
+			print_upload(Near, Upload, i + j, &cvarr, catval);
+		    }
+		    fprintf(stdout, "\n");
+		}
 	    }
-	    fprintf(stdout, "\n" );
+	    else {
+		fprintf(stdout, "%d", Near[i].from_cat );
+		print_upload(Near, Upload, i, &cvarr, catval);
+		fprintf(stdout, "\n" );
+	    }
 	} else if ( all )  { /* insert new record */
 	    sprintf (buf1, "insert into %s values ( %d ", table_opt->answer, Near[i].from_cat);
 	    db_set_string (&stmt, buf1);
@@ -915,7 +891,8 @@ int main (int argc, char *argv[])
 	    }
 	} else { /* update table */
             /* check if exists in table */
-	    cex = (int *) bsearch((void *) &(Near[i].from_cat), catexist, ncatexist, sizeof(int), cmp_exist);
+	    cex = (int *) bsearch((void *) &(Near[i].from_cat), catexist, ncatexist,
+				  sizeof(int), cmp_exist);
 	    if ( cex == NULL ){ /* cat does not exist in DB */
 		update_notexist++;
 		continue;
@@ -1021,11 +998,11 @@ int main (int argc, char *argv[])
 	db_free_string (&stmt);
 
 	/* print stats */
-	if ( all ) {
+	if ( all && table_opt->answer) {
 	    G_message(_("%d distances calculated"), count);
 	    G_message(_("%d records inserted"), update_ok);
 	    G_message(_("%d insert errors"), update_err);
-	} else {
+	} else if (!all) {
 	    G_message(_("%d categories read from the map"), nfcats);
 	    G_message(_("%d categories exist in the table"), ncatexist);
 	    G_message(_("%d categories read from the map exist in the table"), update_exist);
@@ -1063,6 +1040,25 @@ static int cmp_near ( const void *pa, const void *pb) {
     return 0;
 }
 
+static int cmp_near_to (const void *pa, const void *pb) {
+    NEAR *p1 = (NEAR *) pa;
+    NEAR *p2 = (NEAR *) pb;
+
+    if(p1->from_cat < p2->from_cat)
+	return -1;
+
+    if(p1->from_cat > p2->from_cat)
+	return 1;
+
+    if(p1->to_cat < p2->to_cat)
+	return -1;
+
+    if(p1->to_cat > p2->to_cat)
+	return 1;
+
+    return 0;
+}
+
 
 static int cmp_exist ( const void *pa, const void *pb)
 {
@@ -1071,5 +1067,81 @@ static int cmp_exist ( const void *pa, const void *pb)
 
     if( *p1 < *p2 ) return -1;
     if( *p1 > *p2) return 1;
+    return 0;
+}
+
+/*
+  print out upload values 
+*/
+static int print_upload(NEAR *Near, UPLOAD *Upload, int i,
+			dbCatValArray *cvarr, dbCatVal *catval)
+{
+    int j;
+
+    j = 0;
+    while ( Upload[j].upload != END ) {
+	if (  Near[i].count == 0 ) { /* no nearest found */
+	    fprintf(stdout, "|null" );
+	} else { 
+	    switch ( Upload[j].upload ) {
+	    case CAT:
+		if ( Near[i].to_cat >= 0 ) 
+		    fprintf(stdout, "|%d", Near[i].to_cat );
+		else 
+		    fprintf(stdout, "|null" );
+		break;
+	    case DIST:
+		fprintf(stdout, "|%f", Near[i].dist );
+		break;
+	    case FROM_X:
+		fprintf(stdout, "|%f", Near[i].from_x );
+		break;
+	    case FROM_Y:
+		fprintf(stdout, "|%f", Near[i].from_y );
+		break;
+	    case TO_X:
+		fprintf(stdout, "|%f", Near[i].to_x );
+		break;
+	    case TO_Y:
+		fprintf(stdout, "|%f", Near[i].to_y );
+		break;
+	    case FROM_ALONG:
+		fprintf(stdout, "|%f", Near[i].from_along );
+		break;
+	    case TO_ALONG:
+		fprintf(stdout, "|%f", Near[i].to_along );
+			    break;
+	    case TO_ANGLE:
+		fprintf(stdout, "|%f", Near[i].to_angle );
+		break;
+	    case TO_ATTR:
+		if ( catval	) {
+		    switch (cvarr->ctype) {
+		    case DB_C_TYPE_INT:
+			fprintf(stdout, "|%d", catval->val.i );
+			break;
+			
+		    case DB_C_TYPE_DOUBLE:
+			fprintf(stdout, "|%.15e", catval->val.d );
+			break;
+			
+		    case DB_C_TYPE_STRING:
+			fprintf(stdout, "|%s", db_get_string(catval->val.s) );
+			break;
+			
+		    case DB_C_TYPE_DATETIME:
+			/* TODO: formating datetime */
+			fprintf(stdout, "|" );
+			break;
+		    }
+			    } else {        
+		    fprintf(stdout, "|null" );
+		}
+		break;
+	    }
+	}
+	j++;
+    }
+
     return 0;
 }
