@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh +x
 
 ############################################################################
 #
@@ -35,6 +35,13 @@
 #% description: Name of vector polygon map
 #% required : yes
 #%End
+#%option
+#% key: layer
+#% type: integer
+#% description: Layer to which the table to be changed is connected
+#% answer: 1
+#% required : no
+#%end
 #%option
 #% key: raster
 #% type: string
@@ -195,6 +202,12 @@ fi
 DB_SQLDRIVER=`v.db.connect -g "$VECTOR" | cut -d' ' -f5`
 DB_DATABASE="`v.db.connect -g "$VECTOR" | cut -d' ' -f4`"
 
+#Find out which table is linked to the vector map on the given layer
+TABLE=`v.db.connect $VECTOR -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+if [ -z "$TABLE" ] ; then
+   g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
+   exit 1
+fi
 
 
 BASECOLS="n min max range mean stddev variance cf_var sum"
@@ -291,7 +304,7 @@ for i in `cat "$TMP.cats"` ; do
 	colname="${COLPREFIX}_${var}"
       fi
 
-      echo "UPDATE $VECTOR SET ${colname}=${value} WHERE cat=$i;" >> "$SQLTMP"
+      echo "UPDATE $TABLE SET ${colname}=${value} WHERE cat=$i;" >> "$SQLTMP"
    done
 
    CURRNUM=`expr $CURRNUM + 1`
