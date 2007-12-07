@@ -82,8 +82,8 @@ class VirtualAttributeList(wx.ListCtrl,
         self.columns              = {} # <- LoadData()
         self.itemCatsMap          = {} # <- LoadData() (first call)
 
-        self.selectedCats         = []
-        self.lastTurnSelectedCats = [] # just temporary, for comparation
+        # self.selectedCats         = []
+        # self.lastTurnSelectedCats = [] # just temporary, for comparation
 
         #
         # add some attributes (colourful background for each item rows)
@@ -197,7 +197,7 @@ class VirtualAttributeList(wx.ListCtrl,
                     self.itemDataMap[i].append(self.columns[columnNames[j]]['ctype'] (value))
                 except:
                     self.itemDataMap[i].append('')
-                
+
                 if keyId > -1 and keyId == j:
                     cat = self.columns[columnNames[j]]['ctype'] (value)
                 j += 1
@@ -230,19 +230,19 @@ class VirtualAttributeList(wx.ListCtrl,
 
     def OnItemSelected(self, event):
         """Item selected. Add item to selected cats..."""
-        cat = int(self.GetItemText(event.m_itemIndex))
-        if cat not in self.selectedCats:
-            self.selectedCats.append(cat)
-            self.selectedCats.sort()
+        #         cat = int(self.GetItemText(event.m_itemIndex))
+        #         if cat not in self.selectedCats:
+        #             self.selectedCats.append(cat)
+        #             self.selectedCats.sort()
         
         event.Skip()
 
     def OnItemDeselected(self, event):
         """Item deselected. Remove item from selected cats..."""
-        cat = int(self.GetItemText(event.m_itemIndex))
-        if cat in self.selectedCats:
-            self.selectedCats.remove(cat)
-            self.selectedCats.sort()
+        #         cat = int(self.GetItemText(event.m_itemIndex))
+        #         if cat in self.selectedCats:
+        #             self.selectedCats.remove(cat)
+        #             self.selectedCats.sort()
 
         event.Skip()
 
@@ -268,7 +268,7 @@ class VirtualAttributeList(wx.ListCtrl,
     def OnGetItemText(self, item, col):
         """Get item text"""
         index = self.itemIndexMap[item]
-        s = self.itemDataMap[index][col]
+        s = str(self.itemDataMap[index][col])
         return s
 
     def OnGetItemAttr(self, item):
@@ -287,28 +287,18 @@ class VirtualAttributeList(wx.ListCtrl,
     def SortItems(self, sorter=cmp):
         """Sort items"""
         items = list(self.itemDataMap.keys())
-        #         for i in range(len(items)):
-        #             items[i] =  self.columns[0]["type"](items[i]) # FIXME
         items.sort(self.Sorter)
-        #         for i in range(len(items)):
-        #             items[i] =  str(items[i])
         self.itemIndexMap = items
 
         # redraw the list
         self.Refresh()
 
     def Sorter(self, key1, key2):
-        col = self._col
-        ascending = self._colSortFlag[col]
+        colName = self.GetColumn(self._col).GetText()
+        ascending = self._colSortFlag[self._col]
         # convert always string
-        try:
-            item1 = self.columns[col]["type"](self.itemDataMap[key1][col])
-        except:
-            item1 = ''
-        try:
-            item2 = self.columns[col]["type"](self.itemDataMap[key2][col])
-        except:
-            item2 = ''
+        item1 = self.columns[colName]["ctype"](self.itemDataMap[key1][self._col])
+        item2 = self.columns[colName]["ctype"](self.itemDataMap[key2][self._col])
 
         if type(item1) == type('') or type(item2) == type(''):
             cmpVal = locale.strcoll(str(item1), str(item2))
@@ -318,7 +308,7 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # If the items are equal then pick something else to make the sort v    ->alue unique
         if cmpVal == 0:
-            cmpVal = apply(cmp, self.GetSecondarySortValues(col, key1, key2))
+            cmpVal = apply(cmp, self.GetSecondarySortValues(self._col, key1, key2))
 
         if ascending:
             return cmpVal
@@ -328,11 +318,6 @@ class VirtualAttributeList(wx.ListCtrl,
     def GetSortImages(self):
         """Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py"""
         return (self.sm_dn, self.sm_up)
-
-    def getColumnText(self, index, col):
-        """Get column/item"""
-        item = self.GetItem(index, col)
-        return item.GetText()
 
     def SetVirtualData(self, row, col, data):
         pass

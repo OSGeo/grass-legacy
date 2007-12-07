@@ -534,7 +534,6 @@ class Data:
                 ("Rename column", "Rename a column", "self.OnMenuCmd", "v.db.renamecol"),
                 ("","","", ""),
                 ("Test", "Test database", "self.OnMenuCmd", "db.test"),
-                ("","","", "")
                 )),
               ("Query", (
                 ("Query any table", "Query data in any table", "self.OnMenuCmd", "db.select"),
