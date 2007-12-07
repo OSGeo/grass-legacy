@@ -153,20 +153,14 @@ $ g.gisenv set=GRASS_ICONPATH=
 To enable digitization tool you need to compile display driver located
 in directory 'display_driver'.
 
-Before compiling the driver go to the wxPython directory, e.g.
+$ cd $GISBASE/etc/wx/display_driver
 
-$ cd /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx
+Make symlink, e.g.
 
-Make symlink
-
-sudo ln -s _gdi_.so libgdi.so
-
-Add /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx to
-LIBRARY_PATH or edit /etc/ld.so.conf file.
+$ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so libgdi.so
 
 Then you can compile the driver
 
-$ cd $GISBASE/etc/wx/display_driver
 $ make
 
 Note: You probably will need to modify the Makefile. This need to be
