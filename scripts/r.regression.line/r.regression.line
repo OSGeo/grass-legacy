@@ -115,7 +115,7 @@ then
            echo "   b: gain"
            echo "   R: sumXY - sumX*sumY/tot"
            echo "   N: number of elements"
-           echo "   medX, medY: Medians"
+           echo "   medX, medY: Means"
            echo "   sdX, sdY: Standard deviations"
            echo "a  b  R  N  F medX  sdX  medY  sdY"
 	   RESULTADO=`cat "$TMP"b`
@@ -130,7 +130,7 @@ else
            echo "   b: gain" >> "$TMP"c
            echo "   R: sumXY - sumX*sumY/tot" >> "$TMP"c
            echo "   N: number of elements" >> "$TMP"c
-           echo "   medX, medY: Medians" >> "$TMP"c
+           echo "   medX, medY: Means" >> "$TMP"c
            echo "   sdX, sdY: Standard deviations" >> "$TMP"c
            echo "a  b  R  N  F medX  sdX  medY  sdY" >> "$TMP"c
 	   cat "$TMP"b >> "$TMP"c
