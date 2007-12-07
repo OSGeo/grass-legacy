@@ -111,7 +111,6 @@ icons_default = {
     "transect"   : 'gui-profiledefine.gif',
     "profiledraw": 'gui-profiledraw.gif',
     "profileopt" : 'gui-profileopt.gif',
-    "analyze"    : 'gui-rastanalyze.gif', # TODO: fix?
     # georectify
     'cleargcp'   : 'gui-gcperase.gif',
     'gcpset'     : 'gui-gcpset.gif',

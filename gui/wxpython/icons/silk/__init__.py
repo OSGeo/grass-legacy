@@ -26,6 +26,7 @@ IconsSilk = {
     "measure"    : 'sum.png',
     "profile"    : 'wand.png',
     "histogram"  : 'chart_bar.png',
+    "font"       : 'font.png',
     # overlay (mapdisplay)
     "overlay"    : 'overlays.png',
     "addtext"    : 'textfield_add.png',
