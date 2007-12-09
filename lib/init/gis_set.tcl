@@ -141,7 +141,7 @@ proc CheckLocation {} {
         foreach filename [lsort [glob -nocomplain *]] {
             if {[string compare $filename "PERMANENT"] == 0} {
                 # All good locations have valid PERMANENT mapset.
-                if {[file exists "$dir/PERMANENT/WIND"] != 0} {
+                if {[file exists "$dir/PERMANENT/DEFAULT_WIND"] != 0} {
                     set found 1
                     .frame0.frameNMS.second.entry configure -state normal
                 }
