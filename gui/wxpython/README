@@ -151,7 +151,8 @@ $ g.gisenv set=GRASS_ICONPATH=
 7 - DIGITIZATION TOOL
 
 To enable digitization tool you need to compile display driver located
-in directory 'display_driver'.
+in directory 'display_driver'. Note that you need to compile GRASS
+with C++ support (--with-cxx).
 
 $ cd $GISBASE/etc/wx/display_driver
 
