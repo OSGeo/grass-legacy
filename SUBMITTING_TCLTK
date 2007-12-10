@@ -158,14 +158,14 @@ please take care of following rules:
     include the pathname rather than just "main.c".
 
 14. Tell the other developers about the new code using the following e-mail:
-    grass-dev@grass.itc.it
+    grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
-    http://grass.itc.it/devel/index.php
+    http://www.grass-gis.org/devel/index.php
 
 15. In case of questions feel free to contact the developers at the above
     mailing list.
-    http://grass.itc.it/devel/index.php#submission
+    http://www.grass-gis.org/devel/index.php#submission
 
 16. Try to evaluate things only once. Tcl compiles the program to bytecode which
     can be interpreted fairly quickly. If there are strings that must still be
