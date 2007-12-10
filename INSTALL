@@ -281,17 +281,17 @@ Individual programs may or may not work with large files - please report.
 
 Note that this code is still actively being developed and errors inevitably
 turn up. If you find a bug, please report it to the GRASS bug tracking system
-so we can fix it. see  http://grass.itc.it/bugtracking/bugreport.html
+so we can fix it. see  http://www.grass-gis.org/bugtracking/bugreport.html
 
 If you are interested in helping to develop GRASS, please join the GRASS
-developers mailing list. see  http://grass.itc.it/devel/index.php
+developers mailing list. see  http://www.grass-gis.org/devel/index.php
 
 
 (M) GRASS PROGRAMMER'S MANUAL
 
 The Programmer's manual is generated with doxygen from the source code.
 Please see the README file and the files at:
-http://grass.itc.it/devel/index.php#prog
+http://www.grass-gis.org/devel/index.php#prog
 
 
 (N) CONTRIBUTING CODE AND PATCHES

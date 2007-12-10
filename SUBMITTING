@@ -13,7 +13,7 @@ care of following rules:
 
 
 1.  Get and read the GRASS 6 Programmer's Manual here:
-    http://grass.itc.it/devel/index.php#prog
+    http://www.grass-gis.org/devel/index.php#prog
 
     or generate it from this source code (the programmer's manual is
     integrated in the source code in doxygen style):
@@ -351,18 +351,18 @@ care of following rules:
     Consider to subscribe to the GRASS Quality Assessment System to
     get immediate notification about the code quality:
 
-    http://grass.itc.it/mailman/listinfo/grass-qa
+    http://www.grass-gis.org/mailman/listinfo/grass-qa
 
 29. Tell the other developers about the new code using the following e-mail:
-    grass-dev@grass.itc.it
+    grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
-    http://grass.itc.it/devel/index.php
+    http://www.grass-gis.org/devel/index.php
 
 
 30. In case of questions feel free to contact the developers at the above
     mailing list.
-    http://grass.itc.it/devel/index.php#submission
+    http://www.grass-gis.org/devel/index.php#submission
 
 ...
 [please add further hints if required]
