@@ -242,7 +242,7 @@ int DisplayDriver::DrawLine(int line)
     for (int i = 0; i < points->n_points; i++) {
 	Cell2Pixel(points->x[i], points->y[i], points->z[i],
 		   &x, &y, &z);
-	pointsScreen->Append((wxObject*) new wxPoint(x, y)); /* TODO: 3D */
+	pointsScreen->Append((wxObject*) new wxPoint((int) x, (int) y)); /* TODO: 3D */
     }
     
     dc->SetId(dcId); /* 0 | 1 (selected) */
@@ -416,7 +416,7 @@ int DisplayDriver::DrawLineNodes(int line)
 	    }
 	}
 	
-	wxPoint point(x, y);
+	wxPoint point((int) x, (int) y);
 	if (IsSelected(line) && drawSegments) {
 	    wxRect rect (point, point);
 	    dc->SetIdBounds(dcId, rect);
@@ -1003,7 +1003,7 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
 
 	Cell2Pixel(points->x[idx], points->y[idx], points->z[idx],
 		   &vx, &vy, &vz);
-	wxRect rect (wxPoint (vx, vy), wxPoint (vx, vy));
+	wxRect rect (wxPoint ((int) vx, (int) vy), wxPoint ((int) vx, (int) vy));
 	dc->SetIdBounds(DCid, rect);
 	DCid+=2;
     }	
