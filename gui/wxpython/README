@@ -1,4 +1,4 @@
-wxPython GRASS graphical user interface
+wxPython GRASS Graphical User Interface
 =======================================
 
 0 - REQUIREMENTS
@@ -83,6 +83,8 @@ GRASS_GUI: wx
 Simply type wxgrass from the GRASS terminal.
 
 4 - CLI Display scripts
+
+Note: This section is out-dated.
 
 This is going to be replacement for command line tools like d.rast and
 d.vect.
