@@ -45,12 +45,13 @@ import dbm
 from debug import Debug as Debug
 import gselect 
 try:
-    driverPath = os.path.join( os.getenv("GISBASE"), "etc","wx", "display_driver")
+    driverPath = os.path.join(os.getenv("GISBASE"), "etc","wx", "display_driver")
     sys.path.append(driverPath)
     from grass6_wxdriver import DisplayDriver
-except:
-    print >> sys.stderr, "Digitization tool is disabled.\n" \
-        "Detailed information in README file."
+except ImportError, err:
+    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s).%s" \
+          "Detailed information in README file." % \
+          (os.linesep, err, os.linesep)
 
 USEVEDIT = True
     
