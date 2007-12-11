@@ -156,15 +156,12 @@ To enable digitization tool you need to compile display driver located
 in directory 'display_driver'. Note that you need to compile GRASS
 with C++ support (--with-cxx).
 
-$ cd $GISBASE/etc/wx/display_driver
+First, create symlink, e.g.
 
-Make symlink, e.g.
-
-$ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so libgdi.so
+$ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so $GISBASE/lib/libgdi.so
 
 Then you can compile the driver
 
+$ cd $GISBASE/etc/wx/display_driver
 $ make
 
-Note: You probably will need to modify the Makefile. This need to be
-fixed in the future.
