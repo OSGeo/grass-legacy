@@ -1,0 +1,38 @@
+### DEFINITIONS
+
+PYTHONVERSION=@PYVERSION@
+
+### END DEFINITIONS
+
+MODULE_TOPDIR = ../../..
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+include $(MODULE_TOPDIR)/include/Make/Doxygen.make
+
+SWIG=swig
+
+CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` `gdal-config --cflags`
+
+LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs` -L./ -lgdi
+
+default: grass6_wxdriver.so
+
+clean:
+	-rm -f *.o _grass6_wxdriver.so grass6_wxdriver_wrap.cxx grass6_wxdriver.py grass6_wxdriver.i grass6_wxdriver.pyc	 
+
+grass6_wxdriver.i:
+	cat ./driver.i > grass6_wxdriver.i
+	echo "/* auto-generate swig typedef file (with some GRASS functions removed) */" >> grass6_wxdriver.i
+	cat ./driver.h >> grass6_wxdriver.i
+
+grass6_wxdriver_wrap.cxx: grass6_wxdriver.i
+	$(SWIG) -c++ -python -shadow $<
+
+grass6_wxdriver_wrap.o: grass6_wxdriver_wrap.cxx
+	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
+
+driver.o: driver.cpp driver.h
+	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
+
+grass6_wxdriver.so: grass6_wxdriver_wrap.o driver.o
+	$(CXX) $(LDFLAGS) grass6_wxdriver_wrap.o driver.o -o _grass6_wxdriver.so
