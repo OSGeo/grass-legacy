@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->keywords = _("raster");
     module->description =
-	_("Reinterpolates and computes topographic analysis from "
+	_("Reinterpolates and optionally computes topographic analysis from "
 	  "input raster map to a new raster map (possibly with "
 	  "different resolution) using regularized spline with "
 	  "tension and smoothing.");
