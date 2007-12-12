@@ -10,10 +10,11 @@ specified by the <i>ew_res</i> and <i>ns_res</i> parameters.
 All resulting raster maps are created using the settings of the current
 region (which may be different from that of the <i>input</i> raster map).
 <p>
-Optionally, and simultaneously with interpolation, the topographic parameters
-slope, aspect, profile curvature (measured in the direction of steepest
+Optionally, and simultaneously with interpolation, topographic parameters
+are computed from an input raster map containing z-values of elevation/depth: slope, 
+aspect, profile curvature (measured in the direction of steepest
 slope), tangential curvature (measured in the direction of a tangent to
-contour line) and/or mean curvature are computed and saved as raster maps
+contour line) and/or mean curvature are computed from and saved as raster maps
 as specified by the options <i>slope, aspect, pcurv, tcurv, mcurv</i> respectively.
 <p>
 If the <i>-d</i> flag is set the program outputs partial derivatives fx, fy, 
