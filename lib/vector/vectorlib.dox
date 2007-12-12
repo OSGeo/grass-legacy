@@ -314,6 +314,7 @@ Topology general characteristics:
 <li> geometry and attributes are stored separately
    (don't read both if it is not necessary (usually it is not))</li>
 <li> the format is topological (areas build from boundaries)</li>
+<li>currently only 2D topology is supported
 </ol>
 
 <p>
@@ -343,21 +344,21 @@ for OGR sources, SHAPE-link.
 
 <TR><TD>box</TD><TD>D</TD><TD>6</TD><TD>Bounding box coordinates (N,S,E,W,T,B)</TD></TR>
 
-<TR><TD>n_nodes, n_lines, etc.</TD><TD>I</TD><TD>7</TD><TD>Number of nodes, edges, lines, areas, isles, volumes and holes</TD></TR>
+<TR><TD>n_nodes, n_lines, etc.</TD><TD>I</TD><TD>7</TD><TD>Number of
+nodes, edges, lines, areas, isles, volumes and holes</TD></TR>
 
-<TR><TD>n_plines, n_llines, etc.</TD><TD>I</TD><TD>7</TD><TD>Number of points, lines, boundaries, centroids, faces and kernels</TD></TR>
+<TR><TD>n_plines, n_llines, etc.</TD><TD>I</TD><TD>7</TD><TD>Number of
+points, lines, boundaries, centroids, faces and kernels</TD></TR>
 
-<TR><TD>Node_offset, Edge_offset, etc.</TD><TD>L</TD><TD>7</TD><TD>Offset value for nodes, edges, lines, areas, isles, volumes and holes</TD></TR>
+<TR><TD>Node_offset, Edge_offset,
+etc.</TD><TD>L</TD><TD>7</TD><TD>Offset value for nodes, edges, lines,
+areas, isles, volumes and holes</TD></TR>
 
 <TR><TD>coor_size</TD><TD>L</TD><TD>1</TD><TD>File size</TD></TR>
-
 </TABLE>
-
-<br>
 
 <b>Body</b>
 
-<br>
 For each node (n_nodes):
 
 <TABLE border=2>
@@ -365,7 +366,7 @@ For each node (n_nodes):
 <TR><TD>n_lines</TD><TD>I</TD><TD>1</TD><TD>Number of lines (0 for dead node)</TD></TR>
 <TR><TD>lines</TD><TD>I</TD><TD>n_lines</TD><TD>Line ids</TD></TR>
 <TR><TD>angles</TD><TD>D</TD><TD>n_lines</TD><TD>Angle value</TD></TR>
-<TR><TD>n_edges</TD><TD>I</TD><TD>1</TD><TD>Reserved for edges (only for with_z) ??</TD></TR>
+<TR><TD>n_edges</TD><TD>I</TD><TD>1</TD><TD>Reserved for edges (only for with_z)</TD></TR>
 <TR><TD>x,y</TD><TD>D</TD><TD>2</TD><TD>Coordinate pair</TD></TR>
 <TR><TD>z</TD><TD>D</TD><TD>1</TD><TD>Only for with_z</TD></TR>
 </TABLE>
@@ -375,14 +376,39 @@ For each line (n_lines):
 <TABLE border=2>
 <TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
 <TR><TD>feature type</TD><TD>C</TD><TD>1</TD><TD>0 for dead</TD></TR>
-<TR><TD>lines</TD><TD>I</TD><TD>n_lines</TD><TD>Line ids</TD></TR>
-<TR><TD>angles</TD><TD>D</TD><TD>n_lines</TD><TD>Angle value</TD></TR>
-<TR><TD>n_edges</TD><TD>I</TD><TD>1</TD><TD>Reserved for edges (only for with_z) ??</TD></TR>
-<TR><TD>x,y</TD><TD>D</TD><TD>2</TD><TD>Coordinate pair</TD></TR>
-<TR><TD>z</TD><TD>D</TD><TD>1</TD><TD>Only for with_z</TD></TR>
+<TR><TD>offset</TD><TD>L</TD><TD>1</TD><TD>Line offset</TD></TR>
+<TR><TD>N1</TD><TD>I</TD><TD>1</TD><TD>First node id (only if feature type is GV_POINTS, GV_LINES or GV_KERNEL)</TD></TR>
+<TR><TD>N2</TD><TD>I</TD><TD>1</TD><TD>Second node id (only if feature type is GV_LINE or GV_BOUNDARY)</TD></TR>
+<TR><TD>left</TD><TD>I</TD><TD>1</TD><TD>Left area id for feature type GV_BOUNDARY / Area id for feature type GV_CENTROID</TD></TR>
+<TR><TD>right</TD><TD>I</TD><TD>1</TD><TD>Right area id (for feature type GV_BOUNDARY)</TD></TR>
+<TR><TD>vol</TD><TD>I</TD><TD>1</TD><TD>Reserved for kernel (volume number, for feature type GV_KERNEL)</TD></TR>
+<TR><TD>N,S,E,W</TD><TD>D</TD><TD>4</TD><TD>Line bounding box (for feature type GV_LINE, GV_BOUNDARY or GV_FACE)</TD></TR>
+<TR><TD>T,B</TD><TD>D</TD><TD>2</TD><TD>Line bounding box for 3D (only if with_z=1)</TD></TR>
 </TABLE>
 
-<br>
+For each area (n_areas):
+
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+<TR><TD>n_lines</TD><TD>I</TD><TD>1</TD><TD>number of boundaries</TD></TR>
+<TR><TD>lines</TD><TD>I</TD><TD>n_lines</TD><TD>Line ids</TD></TR>
+<TR><TD>n_isles</TD><TD>I</TD><TD>1</TD><TD>Number of isles</TD></TR>
+<TR><TD>isles</TD><TD>I</TD><TD>n_isles</TD><TD>Isle ids</TD></TR>
+<TR><TD>centroid</TD><TD>I</TD><TD>1</TD><TD>Centroid id</TD></TR>
+<TR><TD>N,S,E,W</TD><TD>D</TD><TD>4</TD><TD>Area bounding box</TD></TR>
+<TR><TD>T,B</TD><TD>D</TD><TD>2</TD><TD>Area bounding box for 3D (only if with_z=1)</TD></TR>
+</TABLE>
+
+For each isle (n_isle):
+
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+<TR><TD>n_lines</TD><TD>I</TD><TD>1</TD><TD>number of boundaries</TD></TR>
+<TR><TD>lines</TD><TD>I</TD><TD>n_lines</TD><TD>Line ids</TD></TR>
+<TR><TD>area</TD><TD>I</TD><TD>1</TD><TD>Area id</TD></TR>
+<TR><TD>N,S,E,W</TD><TD>D</TD><TD>4</TD><TD>Area bounding box</TD></TR>
+<TR><TD>T,B</TD><TD>D</TD><TD>2</TD><TD>Area bounding box for 3D (only if with_z=1)</TD></TR>
+</TABLE>
 
 <b>Feature types:</b>
 
