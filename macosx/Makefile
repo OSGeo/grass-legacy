@@ -13,6 +13,11 @@ MAKE_DIR_CMD = mkdir -p -m 755
 INSTALL_BIN = ${INSTALL} -m 755
 LN = /bin/ln -sf
 LN_DIR = /bin/ln -sfh
+ifeq ($(findstring darwin9,$(ARCH)),darwin9)
+PACKAGEMAKER = /Developer/usr/bin/packagemaker
+else
+PACKAGEMAKER = /Developer/Tools/packagemaker
+endif
 
 SUBDIRS = 
 ifeq ($(MACOSX_APP),1)
@@ -103,7 +108,7 @@ bindist-macosx:
 	-${INSTALL_DATA} pkg/resources/ReadMe.rtf dist/resources
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${GRASS_HOME}/macosx/dist/resources ; tar xBf - ) 2>/dev/null
 	@# build the package
-	/Developer/Tools/packagemaker -build -ds -p "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" -f dist/${MACOSX_APP_NAME} -r dist/resources -i dist/Info.plist -d dist/Description.plist
+	${PACKAGEMAKER} -build -ds -p "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" -f dist/${MACOSX_APP_NAME} -r dist/resources -i dist/Info.plist -d dist/Description.plist
 	@# remove intermediate files
 	@# -rm -rf dist 2>/dev/null
 
