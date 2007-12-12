@@ -1,9 +1,14 @@
 <H2>DESCRIPTION</H2>
 
-<EM>r.statistics</EM> is a tool, where different class, resp. object
-oriented statistical analysis methods are possible (called "zonal statistics"
-in some GIS). As data preparation, all areas of contiguous cell category values
-can be clumped with <EM>r.clump</EM>.
+<EM>r.statistics</EM> is a tool to analyse exploratory statistics of a "cover
+layer" according to how it intersects with objects in a "base layer".  A
+variety of standard statistical measures are possible (called "zonal statistics"
+in some GIS). 
+
+All cells in the base layer are considered one object for the analysis.  For 
+some applications, one will first want to prepare the input data so that
+all areas of contiguous cell category values in the base layer are uniquely
+identified, which can be done with <EM>r.clump</EM>.
 <BR>
 
 The available methods are the following (english - german):
@@ -22,8 +27,8 @@ The available methods are the following (english - german):
 <li>sum - Summe</li>
 </ul>
 
-The calculations will be performed for areas with data of the
-covering-layers which belong in the base-layer o the same category.
+The calculations will be performed on each area of data of the
+cover layers which fall within each unique value, or category, of the base layer.
 <P>
 Setting the <EM>-c</EM> flag the category lables of the covering raster
 layer will be used.  This is nice to avoid the GRASS limitation to interger
@@ -31,17 +36,19 @@ in raster maps because using category values floating point numbers can be
 stored.
 
 <P>
-The output-layer is a reclassified version of the base-layer with identical
-category values.  The results of the calculations are stored in the category
-labels of the output-layer.
+All calculations except "distribution" create an output layer.  The output 
+layer is a reclassified version of the base layer with identical
+category values, but modified category labels - the results of the calculations
+are stored in the category labels of the output layer.
 
 <P>
-The described output is valid for all calculations with exception of
-distribution. Here the output is given to stdout. A file name eventually
-specified will be ignored. The result will be a table with three columns. 
-In the 1. column are the category values of the base-layer (a), in the 2.
-column the associated value of the cover-Layers (b) and in the 3. column the
-percentage of b from a. Example:
+For distributions, the output is printed to the user interface (stdout). 
+If an output file name was specified, it will be ignored. The result will 
+be a text table with three columns. 
+In the first column are the category values of the base layer (a), in the second
+column the associated value of the cover layers (b), and in the third column the
+percentage of area in that base layer category (a) that falls into that row's
+value in the cover layer(b). Example:
 
 <div class="code"><pre>
 1   124  23
@@ -55,6 +62,9 @@ percentage of b from a. Example:
      .
      .
 </pre></div>
+
+So for the first line in the output above, we see that 23% of the cells of the
+base layer category 1 have a value of 124 in the cover layer.
 
 To transfer the values stored as category labels into cell values,
 <em>r.mapcalc</em> can be used ('@' operator).
@@ -79,6 +89,7 @@ r.univar fieldelev
 <A HREF="r.mapcalc.html">r.mapcalc</A>,
 <A HREF="r.neighbors.html">r.neighbors</A>,
 <A HREF="r.univar.html">r.univar</A>
+<A HREF="r.cats">r.cats</A>
 </EM>
 
 <H2>AUTHOR</H2>
