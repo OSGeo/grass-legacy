@@ -6,6 +6,7 @@
 #include <errno.h>
 #include "global.h"
 
+
 int write_matrix (int row, int col)
 {
     int n;
@@ -34,6 +35,7 @@ int write_matrix (int row, int col)
     return 0;
 }
 
+
 int write_map(char *name)
 {
    int fd, row;
@@ -60,7 +62,9 @@ int write_map(char *name)
           unlink(temp_name);
        }
    }
+
    close(temp_fd);
+   temp_fd = 0;
    unlink(temp_name);
    G_close_cell(fd);
 
