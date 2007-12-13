@@ -4,16 +4,17 @@ NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
-When submitting SHELL SCRIPTS to GRASS CVS repositiory,
+When submitting SHELL scripts to GRASS SVN repositiory,
 please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
 [ see SUBMITTING_DOCS for documentation ]
+[ see SUBMITTING_PYTHON for Python code hints ]
 
 0.  Instructions for the GRASS script parser can be found in the g.parser 
     module's help page.
-    http://grass.ibiblio.org/grass63/manuals/html63_user/g.parser.html
+    http://grass.osgeo.org/grass63/manuals/html63_user/g.parser.html
 
 1.  Use the directory structure to place your script appropriately into
     the source tree
@@ -58,7 +59,7 @@ please take care of following rules:
 
 3.  - deleted.
     We don't want the $ ID $ in scripts any more as it
-    causes problems for the CVS branches.
+    causes problems for the SVN branches.
 
 4.  As a general principle, shell variables should almost always be quoted.
     Use only secure temp files, see g.tempfile and scripts/* for examples.
@@ -151,14 +152,14 @@ please take care of following rules:
 	# test for input raster map
 	g.findfile element=cell file="$INPUT" > /dev/null
 	if [ $? -eq 0 ] ; then
-	  g.message -e "Raster map '$GIS_OPT_MAP' not found in mapset search path"
+	  g.message -e "Raster map <$GIS_OPT_MAP> not found in mapset search path"
 	  exit 1
 	fi
 
 	# test for input vector map
 	eval `g.findfile element=vector file=$GIS_OPT_MAP`
 	if [ ! "$file" ] ; then
-	   g.message -e "Vector map '$GIS_OPT_MAP' not found in mapset search path"
+	   g.message -e "Vector map <$GIS_OPT_MAP> not found in mapset search path"
 	   exit 1
 	fi
 
@@ -169,7 +170,7 @@ please take care of following rules:
     debugging purposes. 
 
 	#normal message:
-	g.message "Done."
+	g.message "Done"
 
 	# warning:
         g.message -w "No input values found, using default values"
@@ -184,7 +185,7 @@ please take care of following rules:
 
 12. For consistency, use README rather than README.txt for any README files.
 
-13. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+13. Be sure to develop on top of the LATEST GRASS code (which is in SVN).
     You can re-check before submission with 'cvs diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
@@ -193,14 +194,14 @@ please take care of following rules:
     harder to read than unified.
 
     Such diffs should be made from the top-level directory, e.g.
-    "cvs diff -u display/d.vect/main.c"; that way, the diff will
+    "cvs diff display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
 14. Tell the other developers about the new code using the following e-mail:
     grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
-    http://www.grass-gis.org/devel/index.php
+    http://lists.osgeo.org/mailman/listinfo/grass-dev
 
 15. In case of questions feel free to contact the developers at the above
     mailing list.

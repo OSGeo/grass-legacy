@@ -4,16 +4,17 @@ NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
-When submitting C code to GRASS CVS repository, please take
-care of following rules:
+When submitting C code to GRASS SVN repository, please take care of
+following rules:
 
 [ see SUBMITTING_SCRIPTS for shell script hints ]
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
 [ see SUBMITTING_DOCS for documentation ]
+[ see SUBMITTING_PYTHON for Python code hints ]
 
 
 1.  Get and read the GRASS 6 Programmer's Manual here:
-    http://www.grass-gis.org/devel/index.php#prog
+    http://download.osgeo.org/grass/grass6_progman/
 
     or generate it from this source code (the programmer's manual is
     integrated in the source code in doxygen style):
@@ -66,7 +67,7 @@ care of following rules:
 
 4.  - deleted.
     We don't want the $ ID $ in source code any more as it causes problems
-    for the CVS branches.
+    for the SVN branches.
 
 
 5.  To ensure that the software system continues to work, please include
@@ -74,10 +75,10 @@ care of following rules:
 	#include <grass/config.h>
 
     in your files and make use of the various system dependencies
-    contained therein.  As one example of this, see
-    lib/gmath/fft.c .  Please refrain from declaring
-    system functions within the software; include the proper header files
-    (conditionally dependent on config.h macros if necessary) instead.
+    contained therein.  As one example of this, see lib/gmath/fft.c.
+    Please refrain from declaring system functions within the
+    software; include the proper header files (conditionally dependent
+    on config.h macros if necessary) instead.
 
 
 6. Order of include headers
@@ -86,7 +87,7 @@ care of following rules:
  
     1. Core system headers (stdio.h, ctype.h, ...)
     2. Headers for non-core system components (X11, libraries).
-    3. Headers for core systems of the package being compiled (grass/gis.h, grass/glocale.h ...)
+    3. Headers for core systems of the package being compiled (grass/gis.h, grass/glocale.h, ...)
     4. Headers for the specific library/program being compiled (geodesic.h, ...)
  
     Each class of header has an obligation to be compatible with those
@@ -126,7 +127,7 @@ care of following rules:
           exit (EXIT_FAILURE);
 
       ...
-      exit (EXIT_SUCCESS)
+      exit (EXIT_SUCCESS);
     }
 
 
@@ -141,7 +142,7 @@ care of following rules:
 
     Always use the gettext macros with _("") for user messages,
     example:
-      G_fatal_error ( _("Vector file [%s] not available"), name); 
+      G_fatal_error (_("Vector map <%s> not found"), name); 
 
 
     Pipe/file data output:
@@ -154,8 +155,8 @@ care of following rules:
       fflush(stdout) always required when using fprintf(stdout, ...).
 
 
-10. Use the GRASS library function G_asprintf() instead of the 
-    standard C functions asprintf(), vsnprintf() and snprintf().  These 
+10. Use the GRASS library function G_asprintf() instead of the
+    standard C functions asprintf(), vsnprintf() and snprintf(). These
     functions are not portable or have other issues.  Example:
 
     char *msg;
@@ -169,9 +170,9 @@ care of following rules:
 
 11. Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
-    good programming practice (eg always checking if memory was allocated)
+    good programming practice (e.g. always checking if memory was allocated)
     and/or improves portability. PLEASE refer to the programmers manual
-    for the proper use (eg determining if any casts are needed for arguments
+    for the proper use (e.g. determining if any casts are needed for arguments
     or return values) of these library functions. They may perform a task
     slightly different from their corresponding C library function, and thus,
     their use may not be the same.
@@ -227,7 +228,7 @@ care of following rules:
     will make "diff" comparisons with older versions impossible. If indent is 
     needed, do not check in any changes other than the indentation in the same 
     commit! Do add the indent switches and any indent warning messages to the 
-    CVS log. Any change or fix mixed in with an indent is very hard to track 
+    SVN log. Any change or fix mixed in with an indent is very hard to track 
     making it hard for others to follow the change or fix any new bugs.
 
 
@@ -274,12 +275,12 @@ care of following rules:
               vector/v.digit/Makefile
 
     If you are unsure, please ask on the GRASS Developers list.
-
+    
 20. Have a look at ./INSTALL
 
 
 21. Have a function included in your module which writes to the history
-    file of the map (e.g. command line, parameters etc.). See eg
+    file of the map (e.g. command line, parameters etc.). See e.g.
     raster/r.patch/main.c
 
     (the same applies to vector and g3d modules!)
@@ -304,15 +305,15 @@ care of following rules:
     lib/init/variables.html
 
 
-26. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
-    You can re-check before submission with 'cvs diff':
+26. Be sure to develop on top of the LATEST GRASS code (which is in SVN repository).
+    You can re-check before submission with 'svn diff':
 
     Be sure to create unified ("diff -u") format. "Plain" diffs (the default
     format) are risky, because they will apply without warning to code which
     has been substantially changed; they are also harder to read than unified.
 
     Such diffs should be made from the top-level directory, e.g.
-    "cvs diff -u display/d.vect/main.c"; that way, the diff will
+    "svn diff display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
 27. Try to use module names which describe shortly the intended purpose of the module.
@@ -343,10 +344,11 @@ care of following rules:
 
     You can easily write specific tests for your modules.
 
-    If your module is part of grass and you created some standard test cases, 
-    please contact the developers to add your tests to the default test suite.
-    This will automatize complex test scenarios and assure to find bugs much
-    faster, if changes were made to your modules or to the grass library.  
+    If your module is part of GRASS and you created some standard test
+    cases, please contact the developers to add your tests to the
+    default test suite.  This will automatize complex test scenarios
+    and assure to find bugs much faster, if changes were made to your
+    modules or to the grass library.
 
     Consider to subscribe to the GRASS Quality Assessment System to
     get immediate notification about the code quality:
@@ -357,7 +359,7 @@ care of following rules:
     grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
-    http://www.grass-gis.org/devel/index.php
+    http://lists.osgeo.org/mailman/listinfo/grass-dev
 
 
 30. In case of questions feel free to contact the developers at the above
@@ -366,4 +368,3 @@ care of following rules:
 
 ...
 [please add further hints if required]
-

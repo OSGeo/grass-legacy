@@ -1,13 +1,16 @@
+$Id:$
+
 NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
-When submitting TCL and TK SCRIPTS and C code to GRASS CVS repository,
+When submitting TCL and TK SCRIPTS to GRASS SVN repository,
 please take care of following rules:
 
 [ see SUBMITTING for C code hints ]
 [ see SUBMITTING_SCRIPTS for shell script hints ]
 [ see SUBMITTING_DOCS for documentation ]
+[ see SUBMITTING_PYTHON for Python code hints ]
 
 1.  Use the directory structure to place your program appropriately into
     the source tree
@@ -145,8 +148,9 @@ please take care of following rules:
     be annoying in normal use. Alternatively, redirect stdout/stderr to a
     file, to catch any error messages.
 
-13. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
-    You can re-check before submission with 'cvs diff':
+13. Be sure to develop on top of the LATEST GRASS code (which is in
+    SVN repository). You can re-check before submission with 'svn
+    diff':
 
     Be sure to create unified ("diff -u") format. "Plain"
     diffs (the default format) are risky, because they will apply without
@@ -154,14 +158,14 @@ please take care of following rules:
     harder to read than unified.
 
     Such diffs should be made from the top-level directory, e.g.
-    "cvs diff -u display/d.vect/main.c"; that way, the diff will
+    "cvs diff display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
 14. Tell the other developers about the new code using the following e-mail:
     grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
-    http://www.grass-gis.org/devel/index.php
+    http://lists.osgeo.org/mailman/listinfo/grass-dev
 
 15. In case of questions feel free to contact the developers at the above
     mailing list.
