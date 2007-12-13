@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-29 20:52+0100\n"
-"PO-Revision-Date: 2007-11-03 22:51+0800\n"
+"PO-Revision-Date: 2007-12-13 16:33+0100\n"
 "Last-Translator: Zhang Jun <nilarcs@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -303,7 +303,7 @@ msgstr ""
 #: ../db/db.login/main.c:82
 #, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr "输入“回车”取消请求"
+msgstr "输入“回车”取消请求\n"
 
 #: ../db/db.login/main.c:90
 msgid "Exiting. Not changing current settings"
