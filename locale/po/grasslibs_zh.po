@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grasslibs_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-11-29 20:51+0100\n"
-"PO-Revision-Date: 2007-11-27 14:54+0800\n"
+"PO-Revision-Date: 2007-12-13 16:42+0100\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -550,7 +550,7 @@ msgstr "输入'list'，列出可用的基准面\n"
 #: ../lib/gis/get_datum_name.c:55
 #, c-format
 msgid "or 'custom' if you wish to enter custom parameters\n"
-msgstr "或输入'custom'进行自定义参数设置"
+msgstr "或输入'custom'进行自定义参数设置\n"
 
 #: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_ell_name.c:46
 #: ../lib/gis/get_projname.c:59 ../lib/proj/datum.c:341
@@ -1234,7 +1234,9 @@ msgstr ""
 msgid ""
 "\n"
 "Keywords:\n"
-msgstr "关键词："
+msgstr ""
+"\n"
+"关键词：:\n"
 
 #: ../lib/gis/parser.c:1063
 #, c-format
@@ -2160,7 +2162,9 @@ msgstr ""
 msgid ""
 "\n"
 "-- Assembling unit tests finished successfully --"
-msgstr "-- 汇编单元测试成功完成 --"
+msgstr ""
+"\n"
+"-- 汇编单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_geom.c:36
 msgid ""
@@ -2174,7 +2178,9 @@ msgstr ""
 msgid ""
 "\n"
 "-- geom_data unit tests failure --"
-msgstr "-- geom_data 单元测试失败 --"
+msgstr ""
+"\n"
+"-- geom_data 单元测试失败 --"
 
 #: ../lib/gpde/test/test_geom.c:43
 msgid ""
@@ -2188,7 +2194,9 @@ msgstr ""
 msgid ""
 "\n"
 "++ Running gradient unit tests ++"
-msgstr "++ 运行坡度单元测试 ++"
+msgstr ""
+"\n"
+"++ 运行坡度单元测试 ++"
 
 #: ../lib/gpde/test/test_gradient.c:44
 msgid "\t 1. testing 2d gradient"
@@ -2251,7 +2259,9 @@ msgstr ""
 msgid ""
 "\n"
 "++ Running heat flow integration tests ++"
-msgstr "++ 执行热流量综合测试 ++"
+msgstr ""
+"\n"
+"++ 执行热流量综合测试 ++"
 
 #: ../lib/gpde/test/test_heat.c:35
 msgid "\t 1. testing 2d heat flow"
@@ -2265,13 +2275,17 @@ msgstr "        2.测试3d热流量"
 msgid ""
 "\n"
 "-- heat flow integration tests failure --"
-msgstr "-- 热流量综合测试失败 --"
+msgstr ""
+"\n"
+"-- 热流量综合测试失败 --"
 
 #: ../lib/gpde/test/test_heat.c:42
 msgid ""
 "\n"
 "-- heat flow integration tests finished successfully --"
-msgstr "-- 热流量综合测试成功完成 --"
+msgstr ""
+"\n"
+"-- 热流量综合测试成功完成 --"
 
 #: ../lib/gpde/test/test_les.c:34
 msgid ""
@@ -2285,13 +2299,17 @@ msgstr ""
 msgid ""
 "\n"
 "-- les creation unit tests failure --"
-msgstr "-- les创建单元测试失败 --"
+msgstr ""
+"\n"
+"-- les创建单元测试失败 --"
 
 #: ../lib/gpde/test/test_les.c:41
 msgid ""
 "\n"
 "-- les creation unit tests finished successfully --"
-msgstr "-- les 创建单元测试成功完成 --"
+msgstr ""
+"\n"
+"-- les 创建单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_les.c:95
 msgid "\t * testing les creation in parallel\n"
@@ -2349,7 +2367,9 @@ msgstr "        2.测试3d solute_transport"
 msgid ""
 "\n"
 "-- solute_transport integration tests failure --"
-msgstr "-- solute_transport 综合测试失败 --"
+msgstr ""
+"\n"
+"-- solute_transport 综合测试失败 --"
 
 #: ../lib/gpde/test/test_solute_transport.c:55
 msgid ""
@@ -2371,25 +2391,33 @@ msgstr ""
 msgid ""
 "\n"
 "-- Solver unit tests failure --"
-msgstr "-- 解算单元测试失败 --"
+msgstr ""
+"\n"
+"-- 解算单元测试失败 --"
 
 #: ../lib/gpde/test/test_solvers.c:44
 msgid ""
 "\n"
 "-- Solver unit tests finished successfully --"
-msgstr "-- 解算单元测试成功完成 --"
+msgstr ""
+"\n"
+"-- 解算单元测试成功完成 --"
 
 #: ../lib/gpde/test/test_tools.c:34
 msgid ""
 "\n"
 "++ Running math tool unit tests ++"
-msgstr "++ 运行数学工具单元测试 ++"
+msgstr ""
+"\n"
+"++ 运行数学工具单元测试 ++"
 
 #: ../lib/gpde/test/test_tools.c:39
 msgid ""
 "\n"
 "-- math tool unit tests failure --"
-msgstr "-- 数学工具单元测试失败 --"
+msgstr ""
+"\n"
+"-- 数学工具单元测试失败 --"
 
 #: ../lib/gpde/test/test_tools.c:41
 msgid ""
@@ -2561,7 +2589,7 @@ msgstr ""
 #: ../lib/gpde/N_solvers_krylov.c:198
 #, c-format
 msgid "Sparse PCG -- iteration %i error  %g\n"
-msgstr "grass不能识别基准系<%s>或找不到参数"
+msgstr "grass不能识别基准系<%s>或找不到参数\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:200
 #, c-format
@@ -2576,17 +2604,17 @@ msgstr "Sparse CG -- 跌代 %i 错误 %g\n"
 #: ../lib/gpde/N_solvers_krylov.c:367
 #, c-format
 msgid "CG -- iteration %i error  %g\n"
-msgstr "CG -- 迭代 %i 错误 %g"
+msgstr "CG -- 迭代 %i 错误 %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, c-format
 msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr "Sparse BiCGStab -- 迭代 %i 错误 %g"
+msgstr "Sparse BiCGStab -- 迭代 %i 错误 %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
 msgid "BiCGStab -- iteration %i error  %g\n"
-msgstr "BiCGStab -- 迭代 %i 错误 %g"
+msgstr "BiCGStab -- 迭代 %i 错误 %g\n"
 
 #: ../lib/imagery/fopen.c:28
 #, fuzzy, c-format
