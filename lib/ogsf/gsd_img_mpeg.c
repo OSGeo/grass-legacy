@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <grass/ogsf_proto.h>
 #include <grass/gstypes.h>
