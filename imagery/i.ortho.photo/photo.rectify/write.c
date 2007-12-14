@@ -11,11 +11,11 @@
 int write_matrix (int row, int col)
 {
     int n;
-    off_t offset;
 
     select_target_env();
 
-    if(!temp_fd) 
+    /* create temp file if it doesn't eexist */
+    if (!temp_fd || (fcntl (temp_fd, F_GETFD) == -1))
     {
         temp_name = G_tempfile();
         temp_fd = creat(temp_name,0660);
@@ -23,6 +23,8 @@ int write_matrix (int row, int col)
 
     for (n=0; n < matrix_rows; n++)
     {
+        off_t offset;
+
         offset = ((off_t) row++ * target_window.cols + col) * G_raster_size(map_type);
         lseek(temp_fd,offset,SEEK_SET);
 
@@ -30,9 +32,10 @@ int write_matrix (int row, int col)
                                 != G_raster_size(map_type)*matrix_cols)
         {
            unlink(temp_name);
-           G_fatal_error (_("error while writing to temp file: %s"), strerror(errno));
+           G_fatal_error (_("Unable to write temp file: %s"), strerror(errno));
         }
     }
+
     select_current_env();
 
     return 0;
@@ -48,17 +51,17 @@ int write_map(char *name)
 
    rast = G_allocate_raster_buf(map_type);
    close(temp_fd);
-   temp_fd = open(temp_name,0);
+   temp_fd = open (temp_name, F_DUPFD);
    fd = G_open_raster_new(name,map_type);
 
    if(fd <=0)
-       G_fatal_error (_("Can't open map %s"), name);
+       G_fatal_error (_("Unable to open map %s"), name);
 
    for(row = 0; row < target_window.rows; row++)
    {
        if(read(temp_fd,rast,target_window.cols * G_raster_size(map_type))
                     != target_window.cols * G_raster_size(map_type)) 
-          G_fatal_error (_("error writing row %d"), row);
+          G_fatal_error (_("Unable to write row %d"), row);
 
        if(G_put_raster_row(fd,rast, map_type) < 0)
        {
@@ -68,7 +71,6 @@ int write_map(char *name)
    }
 
    close(temp_fd);
-   temp_fd = NULL;
    unlink(temp_name);
    G_close_cell(fd);
 
