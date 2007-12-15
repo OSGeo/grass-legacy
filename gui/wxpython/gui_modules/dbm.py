@@ -228,6 +228,8 @@ class VirtualAttributeList(wx.ListCtrl,
             self.SetColumnWidth(col=i, width=width)
             i += 1
 
+        self.SendSizeEvent()
+
     def OnItemSelected(self, event):
         """Item selected. Add item to selected cats..."""
         #         cat = int(self.GetItemText(event.m_itemIndex))
