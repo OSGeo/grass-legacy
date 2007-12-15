@@ -37,14 +37,14 @@ The zones are identified by specifying the upper limit of each desired zone
 ("Continuous" is used in the sense that each category
 zone's lower value is the previous zone's upper value. The
 first buffer zone always has distance <tt>0</tt> as its lower
-bound.) Distances can be entered in one of five units:
-<EM>meters, kilometers, feet, miles</EM>, and <EM>nautmiles</EM>
+bound.) Buffer distances can be specified using one of five units with the <EM>
+units</EM> parameter: <EM>meters, kilometers, feet, miles</EM>, and <EM>nautmiles</EM>
 (nautical miles).
 <P>
 
 <!-- ??? is this the real method used or some ancient option ??? -->
 Distances from cells containing the user-specified category values
-are calculated using the "fromcell" method. This method goes to each
+are calculated using the "fromcell" method. This method locates each
 cell that contains a category value from which distances are to be
 calculated, and draws the requested distance rings around
 them. This method works very fast when there are few cells
@@ -65,8 +65,12 @@ distances from only selected <EM>input</EM> map layer
 category values, the user should run (for example) 
 <EM><A HREF="r.reclass.html">r.reclass</A></EM> prior to 
 <EM>r.buffer</EM>, to reclass all categories from which distance zones 
-are not desired to be calculated into category NULL.
+are not desired to be calculated into category NULL. 
+<P>
 
+The <B>-z</B> flag can be used to ignore raster values of zero instead of NULL
+values in the input raster map.
+<P>
 
 <H2>EXAMPLE</H2>
 
