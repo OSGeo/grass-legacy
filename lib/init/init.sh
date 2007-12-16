@@ -72,14 +72,18 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui | -tcltk | -wx] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
-            echo "  -text                          use text based interface and set as default"
+            echo "  -text                          use text based interface"
+            echo "                                   and set as default"
             echo "  -gui (or -tcltk)               use Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
-	    echo "  -oldgui                        use the old GUI interface and set as default"
+	    echo "  -oldgui                        use the old Tcl/Tk GUI interface "
+            echo "                                   and set as default"
+            echo "  -wx                            use wxPython based graphical user interface"
+            echo "                                   and set as default"
             echo
             echo "Parameters:"
             echo "  GISDBASE                       initial database (path to GIS data)"
@@ -576,7 +580,7 @@ if [ ! "$LOCATION" ] ; then
 
          	    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
-		    echo "Error in Tcl/Tk startup. If necessary, please"
+		    echo "Error in GUI startup. If necessary, please"
 		    echo "report this error to the GRASS developers."
 		    echo "Switching to text mode now."
 		    echo "Hit RETURN to continue..."
@@ -766,7 +770,6 @@ case "$GRASS_GUI" in
 	;;
 
     wx)
-        # coming soon, see ^
         "$GISBASE/scripts/wxgrass" &
 	;;
 
@@ -801,7 +804,7 @@ else
 	cat "$ETC/welcome"
 fi
 
-echo "GRASS homepage:                          http://grass.itc.it/"
+echo "GRASS homepage:                          http://grass.osgeo.org/"
 echo "This version running thru:               $shellname ($SHELL)"
 echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"
