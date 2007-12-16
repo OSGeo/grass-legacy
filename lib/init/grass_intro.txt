@@ -9,5 +9,5 @@ WELCOME TO GRASS              Version GRASS_VERSION_NUMBER         GRASS_VERSION
       - Current catalog of available computer maps
 
    3) Check the GRASS webpages for feedback mailinglists and more:
-      http://grass.itc.it/
-      http://grass.ibiblio.edu/
+      http://www.grass-gis.org
+      http://grass.osgeo.org
