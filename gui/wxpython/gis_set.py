@@ -64,9 +64,12 @@ class GRASSStartup(wx.Frame):
             self.hbitmap = wx.StaticBitmap(self, wx.ID_ANY, wx.EmptyBitmap(530,150))
 
         # labels
-        versionCmd = gcmd.Command(['g.version'], log=None)
-            
-        grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
+        ### crashes when LOCATION doesn't exist
+        # versionCmd = gcmd.Command(['g.version'], log=None)
+        # grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
+        versionFile = open(os.path.join(self.gisbase, "etc", "VERSIONNUMBER"))
+        grassVersion = versionFile.readline().replace('%s' % os.linesep, '').strip()
+        versionFile.close()
 
         self.select_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
                                         label=" %s " % _("Choose project location and mapset"))
@@ -175,7 +178,8 @@ class GRASSStartup(wx.Frame):
 
         self.OnSetDatabase(None)
         location = self._getRCValue("LOCATION_NAME")
-        if location == "<UNKNOWN>":
+        if location == "<UNKNOWN>" or \
+                not os.path.isdir(os.path.join(self.gisdbase, location)):
             location = None
         if location:
             # list of locations
