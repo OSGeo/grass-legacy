@@ -22,11 +22,12 @@
 
 #include <stdlib.h>
 #include <grass/gis.h>
-#include <grass/site.h>
-#include "setup.h"
+#include <grass/Vect.h>
 #include <grass/config.h>
 #include <grass/raster.h>
 #include <grass/display.h>
+#include <grass/glocale.h>
+#include "setup.h"
 
 
 static int calc_unit_loc (double radius, int top, int bot, int left, int right,
@@ -729,13 +730,16 @@ static int calc_unit_loc (
 	int *sites, double startx, int starty, int fmask,
 	double nx, double x, double y)
 {
-  char	  *sites_mapset, sites_file_name[GNAME_MAX], *desc, *cmd;
-  FILE	  *sites_fp;
+  char	  *sites_mapset, sites_file_name[GNAME_MAX], *cmd;
+  struct  Map_info Map;
   struct  Cell_head region;
   double  east_coord, north_coord, D_u_to_a_col(), D_u_to_a_row();
   int     i, j, k, cnt=0, w_w = right - left, w_l = bot - top, exp1, exp2,
           dx = w_w, dy = w_l, l, t, left1 = left, top1 = top, n, tmp,
 	  ulrow, ulcol, *row_buf, lap=0;
+  static struct line_pnts *Points;
+  struct line_cats *Cats;
+  int ltype;
 
 /*   VARIABLES:
 	UNITS FOR ALL DIMENSION VARIABLES IN THIS ROUTINE ARE IN PIXELS
@@ -914,23 +918,31 @@ back:
 				/* for centered over sites */
 
   else if (method==5){
-     sites_mapset=G_ask_sites_old("    Enter name of site map", sites_file_name) ;
+     sites_mapset = G_ask_vector_old("    Enter name of vector points map", sites_file_name);
      if (sites_mapset == NULL) {
         G_system("d.frame -e");
         exit(0);
      }
 
-     if ((sites_fp = G_fopen_sites_old(sites_file_name,sites_mapset)) == NULL) {
-        fprintf(stderr, "\n    Can't open sites file %s\n",sites_file_name);
+     Vect_open_old(&Map, sites_file_name, sites_mapset);
+/*    fprintf(stderr, "\n    Can't open vector points file %s\n", sites_file_name); */
 
-     }
      *sites = 0;
      i = 0;
      n = 0;
 
-     while( G_get_site(sites_fp,&east_coord,&north_coord,&desc) > 0) {
-	ulcol = ((int)(D_u_to_a_col(east_coord))) + 1 - u_w/2;
-	ulrow = ((int)(D_u_to_a_row(north_coord))) + 1 - u_l/2;
+     Points = Vect_new_line_struct();    /* init line_pnts struct */
+     Cats = Vect_new_cats_struct();
+
+     while (1) {
+	ltype =  Vect_read_next_line (&Map, Points, Cats);
+	if ( ltype == -1 ) G_fatal_error(_("Cannot read vector"));
+	if ( ltype == -2 ) break;  /* EOF */
+	/* point features only. (GV_POINTS is pts AND centroids, GV_POINT is just pts) */
+	if (!(ltype & GV_POINT)) continue;
+
+	ulcol = ((int)(D_u_to_a_col(Points->x[0]))) + 1 - u_w/2;
+	ulrow = ((int)(D_u_to_a_row(Points->y[0]))) + 1 - u_l/2;
 	if (ulcol <= left || ulrow <= top || ulcol+u_w-1 > right || ulrow+u_l-1 > bot) {
 	   fprintf(stderr, "    No sampling unit over site %d at east=%8.1f north=%8.1f\n",
 	      n+1,east_coord,north_coord);
@@ -953,6 +965,10 @@ back:
      sprintf(cmd, "d.vect %s color=black",sites_file_name);
      G_system(cmd);
      G_free (cmd);
+
+     Vect_close(&Map);
+     G_free(Points);
+     G_free(Cats);
 
   }
 
