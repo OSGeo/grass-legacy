@@ -454,6 +454,10 @@ class AttributeManager(wx.Frame):
         # do layout
         self.__layout()
 
+        # self.SetMinSize(self.GetBestSize())
+        self.SetSize((680, 520))
+        self.SetMinSize(self.GetSize())
+
     def __del__(self):
         pass
         #         if self.qlayer and self.map:
@@ -880,10 +884,6 @@ class AttributeManager(wx.Frame):
         # mainSizer.Fit(self) # problem connected to aui
         self.Layout()
         
-        # self.SetMinSize(self.GetBestSize())
-        self.SetSize((680, 520))
-        self.SetMinSize(self.GetSize())
-
     def OnDataRightUp(self, event):
         """Table description area, context menu"""
         if not hasattr(self, "popupDataID1"):
