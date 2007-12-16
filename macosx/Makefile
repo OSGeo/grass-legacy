@@ -13,10 +13,16 @@ MAKE_DIR_CMD = mkdir -p -m 755
 INSTALL_BIN = ${INSTALL} -m 755
 LN = /bin/ln -sf
 LN_DIR = /bin/ln -sfh
+
+# packagemaker location, options and behaviour changed in xcode 3
 ifeq ($(findstring darwin9,$(ARCH)),darwin9)
+XCODE_VER = xcode3
 PACKAGEMAKER = /Developer/usr/bin/packagemaker
+PKG_INST_DIR = ${prefix}
 else
+XCODE_VER = xcode2
 PACKAGEMAKER = /Developer/Tools/packagemaker
+PKG_INST_DIR = ${prefix}/${MACOSX_APP_NAME}
 endif
 
 SUBDIRS = 
@@ -103,12 +109,16 @@ bindist-macosx:
 	-sed -e "s#@INST_DIR@#${INST_DIR}#g" -e "s#@MACOSX_SUPPDIR@#${MACOSX_SUPPDIR}#g" -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/postflight.in > dist/resources/postflight
 	-chmod a+rx dist/resources/postflight
 	-sed -e "s#@GRASS_VER@#${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}#g" pkg/resources/Description.plist.in > dist/Description.plist
-	-sed -e "s#@GRASS_VERSION_MAJOR@#${GRASS_VERSION_MAJOR}#g" -e "s#@GRASS_VERSION_MINOR@#${GRASS_VERSION_MINOR}#g" -e "s#@GRASS_VERSION_RELEASE@#${GRASS_VERSION_RELEASE}#g" -e "s#@VER_MINOR_REL@#${VER_MINOR_REL}#g" -e "s#@VER_DATE@#${VER_DATE}#g" -e "s#@PKG_INST_DIR@#${prefix}/${MACOSX_APP_NAME}#g" pkg/resources/Info.plist.in > dist/Info.plist
+	-sed -e "s#@GRASS_VERSION_MAJOR@#${GRASS_VERSION_MAJOR}#g" -e "s#@GRASS_VERSION_MINOR@#${GRASS_VERSION_MINOR}#g" -e "s#@GRASS_VERSION_RELEASE@#${GRASS_VERSION_RELEASE}#g" -e "s#@VER_MINOR_REL@#${VER_MINOR_REL}#g" -e "s#@VER_DATE@#${VER_DATE}#g" -e "s#@PKG_INST_DIR@#${PKG_INST_DIR}#g" pkg/resources/Info.plist.in > dist/Info.plist
 	-${INSTALL_DATA} pkg/resources/License.rtf dist/resources
 	-${INSTALL_DATA} pkg/resources/ReadMe.rtf dist/resources
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${GRASS_HOME}/macosx/dist/resources ; tar xBf - ) 2>/dev/null
 	@# build the package
+ifeq ($(XCODE_VER),xcode3)
+	${PACKAGEMAKER} --target 10.4 --root-volume-only --id org.osgeo.grass --root dist/${MACOSX_APP_NAME} --info dist/Info.plist --out "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" --resources dist/resources
+else
 	${PACKAGEMAKER} -build -ds -p "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" -f dist/${MACOSX_APP_NAME} -r dist/resources -i dist/Info.plist -d dist/Description.plist
+endif
 	@# remove intermediate files
 	@# -rm -rf dist 2>/dev/null
 
