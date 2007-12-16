@@ -175,7 +175,7 @@ class Command:
 
     """
     def __init__ (self, cmd, stdin=None,
-                  verbose=0, wait=True, dlgMsg='gui',
+                  verbose=0, wait=True, log='gui',
                   stdout=None, stderr=None):
 
         self.cmd = cmd
@@ -222,8 +222,8 @@ class Command:
         if self.returncode is not None:
             Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=%d, alive=%s" % \
                            (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
-            if dlgMsg and self.returncode != 0:
-                if dlgMsg == 'gui': # GUI dialog
+            if log and self.returncode != 0:
+                if log == 'gui': # GUI dialog
                     dlg = wx.MessageDialog(None,
                                            ("Execution failed: '%s'\n\n" 
                                             "Details:\n%s") % (' '.join(self.cmd),
@@ -234,6 +234,8 @@ class Command:
                 else: # otherwise 'txt'
                     print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
                     print >> sys.stderr, "\nDetails:\n%s" % self.PrintModuleOutput()
+            else:
+                pass
         else:
             Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=?, alive=%s" % \
                            (' '.join(cmd), wait, self.cmdThread.isAlive()))
@@ -350,6 +352,7 @@ class CommandThread(Thread):
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
+            
         # close_fds=False) ### Unix only
 
         if self.stdin: # read stdin if requested ...
@@ -402,7 +405,7 @@ if __name__ == "__main__":
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
 
-    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, dlgMsg='txt')
+    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, log='txt')
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -419,7 +422,7 @@ if __name__ == "__main__":
     cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp", "dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
-                  wait=True, dlgMsg='txt')
+                  wait=True, log='txt')
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -434,7 +437,7 @@ if __name__ == "__main__":
     # returncode will be None
     print "Running d.vect tmp..."
 
-    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, dlgMsg='txt')
+    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, log='txt')
 
     if cmd.returncode == None:
         print "RUNNING"

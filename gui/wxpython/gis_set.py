@@ -64,7 +64,8 @@ class GRASSStartup(wx.Frame):
             self.hbitmap = wx.StaticBitmap(self, wx.ID_ANY, wx.EmptyBitmap(530,150))
 
         # labels
-        versionCmd = gcmd.Command(['g.version'])
+        versionCmd = gcmd.Command(['g.version'], log=None)
+            
         grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
 
         self.select_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
@@ -259,13 +260,13 @@ class GRASSStartup(wx.Frame):
                            flag=wx.ADJUST_MINSIZE |
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.RIGHT | wx.LEFT,
+                           wx.RIGHT | wx.LEFT | wx.EXPAND,
                            border=5) # GISDBASE setting
         location_sizer.Add(item=manage_boxsizer, proportion=0,
                            flag=wx.ADJUST_MINSIZE |
                            wx.ALIGN_TOP |
                            wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.RIGHT,
+                           wx.RIGHT | wx.EXPAND,
                            border=5)
 
         # buttons
@@ -360,11 +361,11 @@ class GRASSStartup(wx.Frame):
     def OnWizard(self,event):
         """Location wizard started"""
         reload(location_wizard)
-        gWizard = location_wizard.GWizard(self, self.tgisdbase.GetValue())
+        gWizard = location_wizard.LocationWizard(self, self.tgisdbase.GetValue())
         if gWizard.location != None:
             self.OnSetDatabase(event)
             self.UpdateMapsets(os.path.join(
-                    self.gisdbase,gWizard.location))
+                self.gisdbase,gWizard.location))
             self.lblocations.SetSelection(self.listOfLocations.index(gWizard.location))
             self.lbmapsets.SetSelection(0)
 

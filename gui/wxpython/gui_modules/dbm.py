@@ -2934,7 +2934,7 @@ class VectorDBInfo:
         layerCommand = gcmd.Command(cmd=["v.db.connect",
                                         "-g", "--q",
                                         "map=%s" % self.map,],
-                                    dlgMsg='txt')
+                                    log='txt')
         if layerCommand.returncode != 0:
             return False
 
