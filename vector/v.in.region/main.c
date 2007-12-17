@@ -23,8 +23,8 @@
 
 int main(int argc, char **argv)
 {
-    int    type;
-    struct Option *out_opt, *type_opt;
+    int    type, cat;
+    struct Option *out_opt, *type_opt, *cat_opt;
     struct GModule *module;
     struct Map_info Out;
     struct Cell_head window;
@@ -47,6 +47,9 @@ int main(int argc, char **argv)
     type_opt->answer = "area";
     type_opt->description  = _("Select type: line or area");
 
+    cat_opt = G_define_standard_option(G_OPT_V_CAT);
+    cat_opt->answer = "1";
+
     if(G_parser(argc,argv))
 	exit(EXIT_FAILURE);
 
@@ -54,6 +57,7 @@ int main(int argc, char **argv)
     Points = Vect_new_line_struct ();
 
     type = Vect_option_to_types ( type_opt );
+    cat = atoi( cat_opt->answer );
 
     G_get_window (&window);
     diff_long = window.east - window.west;
@@ -67,25 +71,26 @@ int main(int argc, char **argv)
 
     Vect_append_point ( Points, window.west, window.south, 0.0 );
     if (window.proj == PROJECTION_LL && diff_long >= 179)
-	    Vect_append_point ( Points, mid_long, window.south, 0.0 );
+	Vect_append_point ( Points, mid_long, window.south, 0.0 );
     Vect_append_point ( Points, window.east, window.south, 0.0 );
     Vect_append_point ( Points, window.east, window.north, 0.0 );
     if (window.proj == PROJECTION_LL && diff_long >= 179)
-	    Vect_append_point ( Points, mid_long, window.north, 0.0 );
+	Vect_append_point ( Points, mid_long, window.north, 0.0 );
     Vect_append_point ( Points, window.west, window.north, 0.0 );
     Vect_append_point ( Points, window.west, window.south, 0.0 );
 
 
     if ( type == GV_AREA ) {
-        Vect_write_line ( &Out, GV_BOUNDARY, Points, Cats );
+	Vect_write_line ( &Out, GV_BOUNDARY, Points, Cats );
 
-        Vect_reset_line ( Points );
-        Vect_append_point ( Points, (window.west+window.east)/2, (window.south+window.north)/2, 0.0 );
-        
-        Vect_cat_set (Cats, 1, 1);
+	Vect_reset_line ( Points );
+	Vect_append_point ( Points, (window.west+window.east)/2, (window.south+window.north)/2, 0.0 );
+
+	Vect_cat_set (Cats, 1, cat);
 	Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
     } else { /* GV_LINE */
-        Vect_write_line ( &Out, GV_LINE, Points, Cats );
+	Vect_cat_set (Cats, 1, cat);
+	Vect_write_line ( &Out, GV_LINE, Points, Cats );
     }
 
     Vect_build (&Out, stderr);
