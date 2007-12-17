@@ -801,7 +801,7 @@ else
 	cat "$ETC/welcome"
 fi
 
-echo "GRASS homepage:                          http://grass.itc.it/"
+echo "GRASS homepage:                          http://grass.osgeo.org/"
 echo "This version running thru:               $shellname ($SHELL)"
 echo "Help is available with the command:      g.manual -i"
 echo "See the licence terms with:              g.version -c"

@@ -277,7 +277,7 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
   if (OUTRANGE > 0)
     G_warning ("There are points outside specified 2D/3D region--ignored %d points (total points: %d)", OUTRANGE, k);
   if (NPOINT > 0)
-    G_warning ("Points are more dense than specified 'DMIN'--ignored %d points", NPOINT);
+    G_warning ("Points are more dense than specified 'DMIN'--ignored %d points (remain %d)", NPOINT, k - NPOINT);
   NPOINT = k - NPOINT - NPT - OUTRANGE;
   if(NPOINT<KMIN) {
     if (NPOINT!=0) {

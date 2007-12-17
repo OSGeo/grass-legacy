@@ -22,7 +22,7 @@
 #include <math.h>
 #include <string.h>
 
-#include <grass/PolimiFunct.h>
+#include "PolimiFunct.h"
 
 /*----------------------------------------------------------------------------*/
 /* Abscissa node index computation */

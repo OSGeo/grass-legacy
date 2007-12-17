@@ -8,7 +8,7 @@
 #include <grass/glocale.h>
 #include <grass/config.h>
 
-#include <grass/PolimiFunct.h>
+#include "PolimiFunct.h"
 
 /*------------------------------------------------------------------------------------------------*/
 void 
@@ -71,7 +71,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 
 		    } else if ((*point->y < Overlap.S)) {	/*(1)*/
 		        csi = (*point->x - Overlap.E)/overlap;
@@ -85,7 +85,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 
 		    } else {					/*(1)*/
 		        weight = (*point->x - Overlap.E)/overlap;
@@ -97,7 +97,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 		    }
 
 		} else if ((point->x[0] < Overlap.W)) {
@@ -113,7 +113,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 			
 		    } else if ((*point->y < Overlap.S)) {	/*(2)*/
 		            csi = (*point->x - General.W)/overlap;
@@ -127,7 +127,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			    db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 
 		    } else {					/*(2)*/
 		            weight = (Overlap.W - *point->x)/overlap;
@@ -139,7 +139,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 			    db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 	    	    }
 
 		} else {
@@ -153,7 +153,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		    	db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 		    } else {						/*(1)*/
 		    	weight = (Overlap.S - *point->y)/overlap;
 		    	*point->z = (1-weight)*interpolation;
@@ -164,7 +164,7 @@ P_Sparse_Points (struct Map_info *Out, struct Cell_head *Elaboration, BOUND_BOX 
 		    	db_append_string (&sql, buf);
 
 			if (db_execute_immediate (driver, &sql) != DB_OK) 
-			    G_fatal_error (_("It was not possible writing in <%s>."), tab_name);
+			    G_fatal_error (_("Unable to create table: %s"), buf);
 		    }
 		} 
 	    }

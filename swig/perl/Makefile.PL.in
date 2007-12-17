@@ -16,7 +16,7 @@ $grass_lib_dir = "$grass_dir/dist.$grass_arch/lib";
 
 WriteMakefile(
 	      NAME => 'Grass',
-	      LIBS => "-L$grass_lib_dir -lgrass_datetime -lgrass_gis -lgrass_gmath -lgrass_linkm -lgrass_raster -lgrass_bitmap -lgrass_btree -lgrass_display -lgrass_D -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbstubs -lgrass_dbmidriver -lgrass_sqlp -lgrass_vask -lgrass_edit -lgrass_shape -lgrass_form -lgrass_I -lgrass_gproj -lgrass_rowio -lgrass_segment -lgrass_rtree -lgrass_dgl -lgrass_dig2 -lgrass_vect -lgrass_trans -lgrass_sites -lgrass_interpdata -lgrass_qtree -lgrass_interpfl -lgrass_g3d -lgrass_dspf -lgrass_symb -lgrass_cdhc -lgrass_ogsf -lgrass_Iortho $xlib",
+	      LIBS => "-L$grass_lib_dir -lgrass_datetime -lgrass_gis -lgrass_gmath -lgrass_linkm -lgrass_raster -lgrass_bitmap -lgrass_btree -lgrass_display -lgrass_dbmibase -lgrass_dbmiclient -lgrass_dbstubs -lgrass_dbmidriver -lgrass_sqlp -lgrass_vask -lgrass_edit -lgrass_shape -lgrass_form -lgrass_I -lgrass_gproj -lgrass_rowio -lgrass_segment -lgrass_rtree -lgrass_dgl -lgrass_dig2 -lgrass_vect -lgrass_trans -lgrass_sites -lgrass_interpdata -lgrass_qtree -lgrass_interpfl -lgrass_g3d -lgrass_dspf -lgrass_symb -lgrass_cdhc -lgrass_ogsf -lgrass_Iortho $xlib",
 	      OBJECT => 'grass_wrap.o R_slope_aspect/r_slope_aspect/opennew.o R_slope_aspect/r_slope_aspect/r_slope_aspect.o',
 	      INC => "-I$grass_inc_dir"
 	      );

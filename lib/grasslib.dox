@@ -18,7 +18,7 @@ support libraries, system maintenance, and system enhancement are all
 presented. Standard GRASS 4.x conventions are still used in much of the
 code. This work is part of ongoing research being performed by the 
 GRASS Development Team coordinated at 
-<a href="http://mpa.itc.it/">FBK-irst</A>(formerly ITC-irst), Trento, Italy, 
+<a href="http://mpa.fbk.eu/">FBK-irst</A>(formerly ITC-irst), Trento, Italy, 
 an international team of programmers,
 GRASS module authors are cited within their module's source code and the 
 contributed manual pages.
@@ -31,7 +31,7 @@ This manual comes with ABSOLUTELY NO WARRANTY. The development of GRASS
 software and this manual is kindly supported by Intevation GmbH, 
 Osnabr&uuml;ck, Germany, who provide the GRASS CVS repository.
 
-Main web site: <a href="http://grass.itc.it">http://grass.itc.it</a>
+Main web site: <a href="http://grass.osgeo.org">http://grass.osgeo.org</a>
 
 <P>
 <I>Missing entries below are either not yet uploaded to CVS (need to be migrated
@@ -141,7 +141,7 @@ as follows:
   storage in database (DBMS).</li>
 </ul>
 
-<img src="http://grass.itc.it/images/loc_struct.png" alt="Diagram of GRASS file structure">
+<img src="http://grass.osgeo.org/images/loc_struct.png" alt="Diagram of GRASS file structure">
 
 */
 

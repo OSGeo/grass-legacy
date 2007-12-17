@@ -305,7 +305,7 @@ int main(int argc, char *argv[])
 							     &Map));
 	    if (driver == NULL) {
 		Vect_delete(new->answer);
-		G_fatal_error(_("Unavle to open database <%s> by driver <%s>"),
+		G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			      Vect_subst_var(Fi->database, &Map), Fi->driver);
 	    }
 	    db_begin_transaction(driver);
@@ -374,7 +374,7 @@ int main(int argc, char *argv[])
 	    G_debug(3, db_get_string(&sql));
 	    if (db_execute_immediate(driver, &sql) != DB_OK) {
 		Vect_delete(new->answer);
-		G_fatal_error(_("Unable create table: %s"),
+		G_fatal_error(_("Unable to create table: %s"),
 			      db_get_string(&sql));
 	    }
 
