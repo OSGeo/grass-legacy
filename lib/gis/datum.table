@@ -42,7 +42,7 @@ tokyo  "Tokyo"                       bessel        dx=-148   dy=507    dz=685
 osgb36 "OSGB_1936" airy          dx=368.0    dy=-120.0   dz=425.0
 # South American 1969 
 sam69 "South_American_Datum_1969"               sam69         dx=-57      dy=1        dz=-41
-SAD-69  "Please use sam69 instead"	  sam69         dx=-60.0    dy=-2.0     dz=-41.0
+SAD-69  "Please_use_sam69_instead"	  sam69         dx=-60.0    dy=-2.0     dz=-41.0
 # European 1950 mean
 eur50	"European_Datum_1950"	  	  international dx=-87.0    dy=-98      dz=-121
 # European 1979 mean
