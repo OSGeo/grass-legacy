@@ -77,6 +77,7 @@ int main(int argc, char **argv)
     char map_name[GNAME_MAX], *map_mapset, new_map_name[GNAME_MAX];
     char *tempfile1, *tempfile2;
     char *search_mapset;
+    struct History history;
 
     struct Cell_head window;
     struct Option *opt1, *opt2, *coordopt, *vpointopt;
@@ -433,6 +434,11 @@ int main(int argc, char **argv)
 
     /* close files and free buffers */
     G_close_cell(new_id);
+
+    G_short_history(new_map_name, "raster", &history);
+    G_command_history(&history);
+    G_write_history(new_map_name, &history);
+
     close(fe);
     close(fd);
 
