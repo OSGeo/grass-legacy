@@ -1,3 +1,7 @@
+dnorm is an average size of the segment (not window); so points that are
+farther apart than dnorm + window size are computed independently.
+
+############################################################
 This is a GRASS 5.0 version of a program
 for interpolation by regularized spline with tension.
 The original version was implemented in GRASS4.1 as

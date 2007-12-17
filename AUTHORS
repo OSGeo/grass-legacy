@@ -21,7 +21,7 @@ know your name and e-mail address so we can add your name.
 
 Active parts of the program have authors dating back to GRASS's 
 inception in 1982. Please check the GRASS 1.x - 5.0 credits list at:
- http://grass.itc.it/devel/grasscredits.html
+ http://www.grass-gis.org/devel/grasscredits.html
 
 
 GRASS 6.0 was made up of entirely new code for much of the vector and 
@@ -62,7 +62,7 @@ gis.m/tcltk module GUI:
 Source code Quality assessment system
  - SOCCER Labs at Ecole Polytechnique de Montreal, Canada
    http://web.soccerlab.polymtl.ca/grass-evolution/grass-browsers/grass-index-en.html
-   http://grass.itc.it/mailman/listinfo/grass-qa
+   http://www.grass-gis.org/mailman/listinfo/grass-qa
 
 Bugtracker maintainer:
    Maciej "Maciek" Sieczka <werchowyna at epf.pl>
@@ -205,7 +205,7 @@ GRASS GIS 5.4 Author List
 -------------------------
 
 Please check additionally the GRASS 1.x-5.0 credits list at:
- http://grass.itc.it/devel/grasscredits.html
+ http://www.grass-gis.org/devel/grasscredits.html
 
 While it is impossible for us to give credit to everyone (past 
 and present) who has contributed to GRASS, the following is the 
@@ -293,7 +293,7 @@ Former GRASS 4.2.0 development:
 Former GRASS 4 development (1984 to 1995):
    U.S. Army Construction Engineering Research Laboratories  (CERL)
    Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, ...
-   See: http://grass.itc.it/devel/grasscredits.html
+   See: http://www.grass-gis.org/devel/grasscredits.html
 
 Former Institutions
  - University of Illinois at Urbana-Champaign, USA
@@ -319,10 +319,10 @@ The official home of GRASS is:
  SSI/MPBA
  Via Sommarive, 18
  38050 Trento (Povo)
- email: neteler itc.it
+ email: neteler fbk.eu
 
-Internet:  http://grass.itc.it/      (main site)
+Internet:  http://www.grass-gis.org/      (main site)
            http://grass.ibiblio.org/ (mirror)
-           http://grass.itc.it/mirrors.php (list of mirrors)
+           http://www.grass-gis.org/mirrors.php (list of mirrors)
 
 with a worldwide distribution network.

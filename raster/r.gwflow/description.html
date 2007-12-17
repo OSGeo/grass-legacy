@@ -2,14 +2,24 @@
 This numerical program calculates transient, confined and
 unconfined groundwater flow in two dimensions based on  
 raster maps and the current region resolution.
-All initial- and boundary-conditions must be provided as 
+All initial and boundary conditions must be provided as 
 raster maps.
-<br>
-<br>
-r.gwflow calculates the piezometric head and optionally the 
+
+<p>
+<center>
+<img src=r_gwflow_concept.png border=0><BR>
+<table border=0 width=700>
+<tr><td><center>
+<i>Workflow of r.gwflow</i>
+</center></td></tr>
+</table>
+</center>
+<p>
+
+<em>r.gwflow</em> calculates the piezometric head and optionally the 
 filter velocity field, based on the hydraulic conductivity and the piezometric head. 
 The vector components can be visualized with paraview if they are exported
-with r.out.vtk.
+with <em>r.out.vtk</em>.
 <br>
 <br>
 The groundwater flow will always be calculated transient. 
@@ -56,7 +66,7 @@ Two iterative solvers with sparse and quadratic matrices support are implemented
 The conjugate gradients (cg) method and the biconjugate gradients-stabilized (bicgstab) method. 
 Aditionally a direct Gauss solver and LU solver are available. Those direct solvers
 only work with normal quadratic matrices, so be careful using them with large maps 
-(maps of size 10.000 cells will need more than one gigabyte of ram).
+(maps of size 10.000 cells will need more than one gigabyte of RAM).
 Always prefer a sparse matrix solver.
 
 <H2>EXAMPLE</H2>
@@ -97,8 +107,6 @@ r.out.vtk -p elevation=gwresult_unconf in=gwresult_unconf,status vector=gwresult
 #now load the data into paraview
 paraview --data=/tmp/gwdata_conf2d.vtk &
 paraview --data=/tmp/gwdata_unconf2d.vtk &
-
-
 </pre></div>
 
 <H2>SEE ALSO</H2>

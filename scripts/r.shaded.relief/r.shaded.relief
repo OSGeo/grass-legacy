@@ -158,13 +158,13 @@ elev_out="\"$ELEVSHADE\""
 #LatLong locations only:
 if [ "$GIS_OPT_UNITS" = "meters" ] ; then
    #scale=111120
-   scale=`echo $scale | awk '{printf("%f", $1 * 111120 )}'`
+   scale=`echo $scale | awk '{printf("%f", $1 * 1852*60 )}'`
 fi
 
 #LatLong locations only:
 if [ "$GIS_OPT_UNITS" = "feet" ] ; then
-   #scale=370400
-   scale=`echo $scale | awk '{printf("%f", $1 * 370400 )}'`
+   #scale=364567.2
+   scale=`echo $scale | awk '{printf("%f", $1 * 6076.12*60 )}'`
 fi		
 
 #correct azimuth to East (GRASS convention):
