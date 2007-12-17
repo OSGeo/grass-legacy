@@ -362,18 +362,17 @@ class GRASSStartup(wx.Frame):
         else:
             return None
 
-    def OnWizard(self,event):
+    def OnWizard(self, event):
         """Location wizard started"""
         reload(location_wizard)
         gWizard = location_wizard.LocationWizard(self, self.tgisdbase.GetValue())
         if gWizard.location != None:
             self.OnSetDatabase(event)
-            self.UpdateMapsets(os.path.join(
-                self.gisdbase,gWizard.location))
+            self.UpdateMapsets(os.path.join(self.gisdbase, gWizard.location))
             self.lblocations.SetSelection(self.listOfLocations.index(gWizard.location))
             self.lbmapsets.SetSelection(0)
 
-    def OnManageLoc(self,event):
+    def OnManageLoc(self, event):
         """
         Location management choice control handler
         """

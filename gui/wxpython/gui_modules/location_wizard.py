@@ -271,12 +271,12 @@ class CoordinateSystemPage(TitledPage):
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio3.GetId())
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio4.GetId())
         self.Bind(wx.EVT_RADIOBUTTON, self.SetVal, id=self.radio5.GetId())
-        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED,  self.OnPageChanged)
-
+        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED,  self.OnEnterPage)
+        
         # do page layout
         # self.DoLayout()
 
-    def OnPageChanged(self, event):
+    def OnEnterPage(self, event):
         global coordsys
         if event.GetDirection() and not coordsys:
             coordsys = "proj"
@@ -443,11 +443,11 @@ class ItemList(wx.ListCtrl,
             for i in range(self.GetColumnCount()):
                 self.SetColumnWidth(i, wx.LIST_AUTOSIZE_USEHEADER)
 
-    def Populate(self, data=None):
+    def Populate(self, data=None, update=False):
         """Populate list"""
         if data is None:
             data = self.sourceData
-        else:
+        elif update:
             self.sourceData = data
 
         try:
@@ -470,7 +470,7 @@ class ItemList(wx.ListCtrl,
                     self.SetColumnWidth(i, 80)
 
             self.SendSizeEvent()
-
+            
         except StandardError, e:
             dlg = wx.MessageDialog(parent=self,
                                    message=_("Unable to read list: %s ") % e,
@@ -487,7 +487,7 @@ class ItemList(wx.ListCtrl,
         data = []
         for i in range(len(self.sourceData)):
             value = self.sourceData[i][index]
-            if str in value.lower():
+            if str.lower() in value.lower():
                 data.append(self.sourceData[i])
 
         self.Populate(data)
@@ -580,6 +580,11 @@ class ProjTypePage(TitledPage):
             self.Bind(wx.EVT_CHOICE, self.OnHemisphere, self.hemisphere)
             self.Bind(wx.EVT_TEXT, self.GetUTM, self.text_utm)
 
+        if not wx.FindWindowById(wx.ID_FORWARD).IsEnabled():
+            wx.FindWindowById(wx.ID_FORWARD).Enable()
+
+        event.Skip()
+
     def SetVal(self, event):
         global coordsys
         if event.GetId() == self.radio1.GetId():
@@ -637,8 +642,10 @@ class DatumPage(TitledPage):
         for key in self.parent.transforms.keys():
             data.append([key, self.parent.transforms[key][0], self.parent.transforms[key][1]])
         self.transformlist = ItemList(self,
-                                      data=data,
+                                      data=None,
                                       columns=[_('Code'), _('Datum'), _('Description')])
+        self.transformlist.sourceData = data
+        
         # layout
         self.sizer.Add(item=self.MakeLabel(_("Datum code:")),
                        flag=wx.ALIGN_LEFT |
@@ -699,7 +706,6 @@ class DatumPage(TitledPage):
             event.Veto()
         self.GetNext().SetPrev(self)
         self.parent.ellipsepage.ellipseparams = self.parent.ellipsoids[self.ellipsoid][1]
-        self.GetNext().SetPrev(self)
 
     def OnEnterPage(self,event):
         if len(self.datum) == 0 or \
@@ -713,6 +719,12 @@ class DatumPage(TitledPage):
 
     def OnDText(self, event):
         self.datum = event.GetString()
+        self.transformlist.Search(index=1, str=self.datum)
+        if self.transformlist.GetItemCount() > 0:
+            self.hastransform = True
+        else:
+            self.hastransform = False
+
         nextButton = wx.FindWindowById(wx.ID_FORWARD)
         if len(self.datum) == 0 and nextButton.IsEnabled():
             nextButton.Enable(False)
@@ -721,10 +733,13 @@ class DatumPage(TitledPage):
             self.ellipsoid = self.parent.datums[self.datum][1]
             self.datumparams = self.parent.datums[self.datum][2]
             if self.hastransform == False or \
-                    (self.hastransform == True and self.transform == ''):
+                    (self.hastransform == True and self.transform != ''):
                 if not nextButton.IsEnabled():
-                    nextButton.Enable()
-
+                    nextButton.Enable(True)
+            else:
+                if nextButton.IsEnabled():
+                    nextButton.Enable(False)
+            
         event.Skip()
 
     def OnTText(self, event):
@@ -746,17 +761,19 @@ class DatumPage(TitledPage):
 
     def OnDSearch(self, event):
         str =  self.searchb.GetValue()
-        listItem  = self.datumlist.GetColumn(1)
+        try:
+            self.datum, self.datumdesc, self.ellipsoid = self.datumlist.Search(index=1, str=str)
+            self.transformlist.Search(index=1, str=self.datum)
+        except:
+            self.datum = self.datumdesc = self.ellipsoid = ''
 
-        for i in range(self.datumlist.GetItemCount()):
-            listItem = self.datumlist.GetItem(i,1)
-            if listItem.GetText().find(str) > -1:
-                datum = self.datumlist.GetItem(i, 0)
-                self.tdatum.SetValue(datum.GetText())
-                break
+        if str == '' or self.datum == '':
+            self.transformlist.DeleteAllItems()
+            self.transformlist.Refresh()
+        self.tdatum.SetValue(self.datum)
 
-        self._onBrowseDatums(None,str)
-
+        event.Skip()
+        
     def OnTransformSelected(self,event):
         index = event.m_itemIndex
         item = event.GetItem()
@@ -958,12 +975,12 @@ class GeoreferencedFilePage(TitledPage):
     def OnText(self, event):
         self.georeffile = event.GetString()
         nextButton = wx.FindWindowById(wx.ID_FORWARD)
-        if len(self.georeffile) == 0:
-            if nextButton.IsEnabled():
-                nextButton.Enable(False)
-        else:
+        if len(self.georeffile) > 0 and os.path.isfile(self.georeffile):
             if not nextButton.IsEnabled():
                 nextButton.Enable(True)
+        else:
+            if nextButton.IsEnabled():
+                nextButton.Enable(False)
 
         event.Skip()
 
@@ -1103,8 +1120,12 @@ class EPSGPage(TitledPage):
 
     def OnSearch(self, event):
         str =  self.searchb.GetValue()
+        if self.epsglist.GetItemCount() == 0:
+            event.Skip()
+            return
+        
         try:
-            self.epsgcode = self.epsglist.Search(index=1, str=event.GetString())[0]
+            self.epsgcode = self.epsglist.Search(index=1, str=str)[0]
         except:
             self.epsgcode = ''
 
@@ -1164,7 +1185,7 @@ class EPSGPage(TitledPage):
                 i += 1
             f.close()
 
-            self.epsglist.Populate(data)
+            self.epsglist.Populate(data, update=True)
         except StandardError, e:
             dlg = wx.MessageDialog(parent=self,
                                    message=_("Unable to read EPGS codes: %s " % e,
@@ -1245,9 +1266,19 @@ class SummaryPage(TitledPage):
         self.ldatabase  =    self.MakeLabel("")
         self.llocation  =    self.MakeLabel("")
         self.lprojection =    self.MakeLabel("")
+        self.lproj4string =    self.MakeLabel("")
+        self.lproj4stringLabel = self.MakeLabel("")
+        
+        self.lprojection.Wrap(400)
+        
+        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnEnterPage)
+        # self.Bind(wx.EVT_BUTTON, self.OnFinish, wx.ID_FINISH)
 
-        self.lprojection.Wrap(500)
-                       
+        # do sub-page layout
+        self.__DoLayout()
+        
+    def __DoLayout(self):
+        """Do page layout"""
         self.sizer.Add(item=self.MakeLabel(_("GRASS Database:")),
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(1, 0))
@@ -1272,24 +1303,24 @@ class SummaryPage(TitledPage):
         self.sizer.Add(item=self.lprojection,
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(3, 1))
+        self.sizer.Add(item=self.lproj4stringLabel,
+                       flag=wx.ALIGN_LEFT | wx.ALL,
+                       border=5, pos=(4, 0))
+        self.sizer.Add(item=self.lproj4string,
+                       flag=wx.ALIGN_LEFT | wx.ALL,
+                       border=5, pos=(4, 1))
         self.sizer.Add(item=(10,20),
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
-                       border=5, pos=(4, 0))
+                       border=5, pos=(5, 0))
         self.sizer.Add(item=self.MakeLabel(_("You can set the default extents "
                                              "and resolution after creating new location")),
                        flag=wx.ALIGN_CENTRE | wx.ALL,
-                       border=5, pos=(5, 0), span=(1, 3))
+                       border=5, pos=(6, 0), span=(1, 3))
         self.sizer.Add(item=self.MakeLabel(_("or you can set them during a working session.")),
-                       flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(6, 0),
+                       flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(7, 0),
                        span=(1, 3))
 
-        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChange)
-        # self.Bind(wx.EVT_BUTTON, self.OnFinish, wx.ID_FINISH)
-
-        # do page layout
-        # self.DoLayout()
-
-    def OnPageChange(self,event):
+    def OnEnterPage(self,event):
         """
         Insert values into text controls for summary of location creation options
         """
@@ -1298,9 +1329,20 @@ class SummaryPage(TitledPage):
         location = self.parent.startpage.location
 
         global coordsys
-        if not coordsys:
-            coordsys = 0
-
+        if coordsys not in ['proj', 'epsg']:
+            self.lproj4stringLabel.Hide()
+            self.lproj4string.Hide()
+            self.lproj4stringLabel.SetLabel('')
+            self.lproj4string.SetLabel('')
+        else:
+            self.lproj4string.Show()
+            self.lproj4stringLabel.SetLabel(_("Proj4 definition:"))
+            if coordsys == 'proj':
+                self.lproj4string.SetLabel(self.parent.CreateProj4String())
+            else:
+                self.lproj4string.SetLabel(self.parent.epsgpage.epsgCodeDict[self.parent.epsgpage.epsgcode][1])
+            self.lproj4string.Wrap(400)
+            
         projection = self.parent.projpage.proj
         projdesc = self.parent.projpage.projdesc
         utmzone = self.parent.projtypepage.utmzone
@@ -1319,7 +1361,7 @@ class SummaryPage(TitledPage):
         self.llocation.SetLabel(str(location))
         label = ''
         if coordsys == 'epsg':
-            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode,self.parent.epsgpage.epsgdesc)
+            label = 'EPSG code %s (%s)' % (self.parent.epsgpage.epsgcode, self.parent.epsgpage.epsgdesc)
             self.lprojection.SetLabel(label)
         elif coordsys == 'file':
             label = 'matches file %s' % self.parent.filepage.georeffile
@@ -1346,6 +1388,473 @@ class SummaryPage(TitledPage):
         else:
             dlg.Destroy()
             event.Skip()
+
+class LocationWizard(wx.Object):
+    """
+    Start wizard here and finish wizard here
+    """
+    def __init__(self, parent, grassdatabase):
+        global coordsys
+        self.parent = parent
+
+        #
+        # define wizard image
+        #
+        # file = "loc_wizard.png"
+        file = "loc_wizard_qgis.png"
+        imagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
+                                 file)
+        wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
+        # wizbmp.Rescale(250,600)
+        wizbmp = wizbmp.ConvertToBitmap()
+
+        #
+        # get georeferencing information from tables in $GISBASE/etc
+        #
+        self.__readData()
+
+        #
+        # define wizard pages
+        #
+        self.wizard = wiz.Wizard(parent, id=wx.ID_ANY, title=_("Define new GRASS Location"),
+                                 bitmap=wizbmp)
+        self.startpage = DatabasePage(self.wizard, self, grassdatabase)
+        self.csystemspage = CoordinateSystemPage(self.wizard, self)
+        self.projpage = ProjectionsPage(self.wizard, self)
+        self.datumpage = DatumPage(self.wizard, self)
+        self.projtypepage = ProjTypePage(self.wizard,self)
+        self.epsgpage = EPSGPage(self.wizard, self)
+        self.filepage = GeoreferencedFilePage(self.wizard, self)
+        self.ellipsepage = EllipsePage(self.wizard, self)
+        self.custompage = CustomPage(self.wizard, self)
+        self.sumpage = SummaryPage(self.wizard, self)
+
+        #
+        # set the initial order of the pages
+        # (should follow the epsg line)
+        #
+        self.startpage.SetNext(self.csystemspage)
+
+        self.csystemspage.SetPrev(self.startpage)
+        self.csystemspage.SetNext(self.sumpage)
+
+        self.projpage.SetPrev(self.csystemspage)
+        self.projpage.SetNext(self.projtypepage)
+
+        self.projtypepage.SetPrev(self.projpage)
+        self.projtypepage.SetNext(self.datumpage)
+
+        self.datumpage.SetPrev(self.projtypepage)
+        self.datumpage.SetNext(self.sumpage)
+
+        self.ellipsepage.SetPrev(self.projtypepage)
+        self.ellipsepage.SetNext(self.sumpage)
+
+        self.epsgpage.SetPrev(self.csystemspage)
+        self.epsgpage.SetNext(self.sumpage)
+
+        self.filepage.SetPrev(self.csystemspage)
+        self.filepage.SetNext(self.sumpage)
+
+        self.custompage.SetPrev(self.csystemspage)
+        self.custompage.SetNext(self.sumpage)
+
+        self.sumpage.SetPrev(self.csystemspage)
+
+        #
+        # do pages layout
+        #
+        self.startpage.DoLayout()
+        self.csystemspage.DoLayout()
+        self.projpage.DoLayout()
+        self.datumpage.DoLayout()
+        self.projtypepage.DoLayout()
+        self.epsgpage.DoLayout()
+        self.filepage.DoLayout()
+        self.ellipsepage.DoLayout()
+        self.custompage.DoLayout()
+        self.sumpage.DoLayout()
+        self.wizard.FitToPage(self.datumpage)
+
+        # new location created?
+        self.location = None 
+        success = False
+
+        #
+        # run wizard...
+        #
+        if self.wizard.RunWizard(self.startpage):
+            success = self.OnWizFinished()
+            if success == True:
+                self.wizard.Destroy()
+                self.location = self.startpage.location
+                dlg = wx.MessageDialog(parent=self.parent,
+                                       message=_("Do you want to set the default "
+                                                 "region extents and resolution now?"),
+                                       caption=_("New location '%s' created") % self.location,
+                                       style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+                dlg.CenterOnScreen()
+                if dlg.ShowModal() == wx.ID_YES:
+                    dlg.Destroy()
+                    defineRegion = RegionDef(self.parent, location=self.location)
+                    defineRegion.Centre()
+                    defineRegion.Show()
+                else:
+                    dlg.Destroy()
+
+            elif success == False:
+                dlg = wx.MessageBox(parent=self.wizard,
+                                    message=_("Unable to create new location."),
+                                    caption=_("Error"),
+                                    style=wx.OK | wx.ICON_ERROR)
+                self.Destroy()
+            else: # None
+                pass
+        else:
+            win = wx.MessageBox(parent=self.parent,
+                          message=_("Location wizard canceled.%s"
+                                    "New location not created.") % \
+                              os.linesep,
+                          caption=_("Location wizard"))
+
+    def __readData(self):
+        """Get georeferencing information from tables in $GISBASE/etc"""
+        # read projection definitions
+        f = open(os.path.join(os.getenv("GISBASE"), "etc", "projections"), "r")
+        self.projections = {}
+        for line in f.readlines():
+            line = line.expandtabs(1)
+            line = line.strip()
+            if line == '' or line[0] == "#":
+                continue
+            proj, projdesc = line.split(":", 1)
+            self.projections[proj.strip()] = projdesc.strip()
+        f.close()
+
+        # read datum definitions
+        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datum.table"), "r")
+        self.datums = {}
+        paramslist = []
+        for line in f.readlines():
+            line = line.expandtabs(1)
+            line = line.strip()
+            if line == '' or line[0] == "#":
+                continue
+            datum, info = line.split(" ", 1)
+            info = info.strip()
+            datumdesc, params = info.split(" ", 1)
+            datumdesc = datumdesc.strip('"')
+            paramlist = params.split()
+            ellipsoid = paramlist.pop(0)
+            self.datums[datum] = (datumdesc.replace('_', ' '), ellipsoid, paramlist)
+        f.close()
+
+        # read datum transforms parameters
+        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datumtransform.table"), "r")
+        self.transforms = {}
+        j = 1
+        for line in f.readlines():
+            if j < 10:
+                transcode = 'T0' + str(j)
+            else:
+               transcode = 'T' + str(j)
+            line = line.expandtabs(1)
+            line = line.strip()
+            if line == '' or line[0] == "#":
+                continue
+            datum, rest = line.split(" ", 1)
+            rest = rest.strip('" ')
+            params, rest = rest.split('"', 1)
+            params = params.strip()
+            rest = rest.strip('" ')
+            try:
+                region, info = rest.split('"', 1)
+                info = info.strip('" ')
+                info = region + ': ' + info
+            except:
+                info = rest
+            self.transforms[transcode] = (datum, info, params)
+            j += 1
+        f.close()
+
+        # read ellipsiod definitions
+        f = open(os.path.join(os.getenv("GISBASE"), "etc", "ellipse.table"), "r")
+        self.ellipsoids = {}
+        for line in f.readlines():
+            line = line.expandtabs(1)
+            line = line.strip()
+            if line == '' or line[0] == "#":
+                continue
+            ellipse, rest = line.split(" ", 1)
+            rest = rest.strip('" ')
+            desc, params = rest.split('"', 1)
+            desc = desc.strip('" ')
+            paramslist = params.split()
+            self.ellipsoids[ellipse] = (desc, paramslist)
+        f.close()
+
+    def OnWizFinished(self):
+        database = self.startpage.grassdatabase
+        location = self.startpage.location
+        global coordsys
+        success = False
+        
+        # location already exists?
+        if os.path.isdir(os.path.join(database,location)):
+            dlg = wx.MessageDialog(parent=self.wizard,
+                                   message=_("Unable to create new location: %s already exists")
+                                             % os.path.join(database, location),
+                                   caption=_("ERROR"),
+                                   style=wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
+        if coordsys == "xy":
+            success = self.XYCreate()
+        elif coordsys == "latlong":
+            rows = int(round((float(north) - float(south)) / float(resolution)))
+            cols = int(round((float(east) - float(west)) / float(resolution)))
+            cells = int(rows * cols)
+            success = self.LatlongCreate()
+        elif coordsys == "proj":
+            proj4string = self.CreateProj4String()
+            success = self.Proj4Create(proj4string)
+        elif coordsys == 'custom':
+            success = self.CustomCreate()
+        elif coordsys == "epsg":
+            success = self.EPSGCreate()
+        elif coordsys == "file":
+            success = self.FileCreate()
+
+        return success
+
+    def XYCreate(self):
+        """Create an XY location"""
+        database = self.startpage.grassdatabase
+        location = self.startpage.location
+
+        # create location directory and PERMANENT mapset
+        try:
+            os.mkdir(os.path.join(database, location))
+            os.mkdir(os.path.join(database, location, 'PERMANENT'))
+            # create DEFAULT_WIND and WIND files
+            regioninfo =   ['proj:       0',
+                            'zone:       0',
+                            'north:      1',
+                            'south:      0',
+                            'east:       1',
+                            'west:       0',
+                            'cols:       1',
+                            'rows:       1',
+                            'e-w resol:  1',
+                            'n-s resol:  1',
+                            'top:        1',
+                            'bottom:     0',
+                            'cols3:      1',
+                            'rows3:      1',
+                            'depths:     1',
+                            'e-w resol3: 1',
+                            'n-s resol3: 1',
+                            't-b resol:  1']
+            
+            defwind = open(os.path.join(database, location, 
+                                        "PERMANENT", "DEFAULT_WIND"), 'w')
+            for param in regioninfo:
+                defwind.write(param + '%s' % os.linesep)
+            defwind.close()
+
+            shutil.copy(os.path.join(database, location, "PERMANENT", "DEFAULT_WIND"),
+                        os.path.join(database, location, "PERMANENT", "WIND"))
+
+            # create MYNAME file
+            myname = open(os.path.join(database, location, "PERMANENT",
+                                       "MYNAME"), 'w')
+            myname.write('%s' % os.linesep)
+            myname.close()
+
+            return True
+
+        except OSError, e:
+            dlg = wx.MessageDialog(parent=self.wizard,
+                                   message=_("Unable to create new location: %s") % e,
+                                   caption=_("Error"),
+                                   style=wx.OK | wx.ICON_ERROR)
+            dlg.ShowModal()
+            dlg.Destroy()
+            return False
+
+    def CreateProj4String(self):
+        """Constract PROJ.4 string"""
+        location = self.startpage.location
+        proj = self.projpage.proj
+        projdesc = self.projpage.projdesc
+
+        utmzone = self.projtypepage.utmzone
+        utmhemisphere = self.projtypepage.utmhemisphere
+
+        datum = self.datumpage.datum
+        if self.datumpage.datumdesc:
+            datumdesc = self.datumpage.datumdesc +' - ' + self.datumpage.ellipsoid
+        else:
+            datumdesc = ''
+        datumparams = self.datumpage.datumparams
+        transparams = self.datumpage.transparams
+
+        ellipse = self.ellipsepage.ellipse
+        ellipsedesc = self.ellipsepage.ellipsedesc
+        ellipseparams = self.ellipsepage.ellipseparams
+
+        #
+        # creating PROJ.4 string
+        #
+        if proj == 'll':
+            proj = 'longlat'
+        elif proj == 'utm':
+            proj4string = '+proj=%s +zone=%s' % (proj, utmzone)
+            if utmhemisphere == 'south':
+                proj4string += '+south'
+        else:
+            proj4string = '+proj=%s ' % (proj)
+
+        proj4params = ''
+        # set ellipsoid parameters
+        for item in ellipseparams:
+            if item[:4] == 'f=1/':
+                item = '+rf='+item[4:]
+            else:
+                item = '+'+item
+            proj4params = '%s %s' % (proj4params, item)
+        # set datum and transform parameters if relevant
+        if datumparams:
+            for item in datumparams:
+                proj4params = '%s +%s' % (proj4params,item)
+            if transparams:
+                proj4params = '%s +no_defs +%s' % (proj4params,transparams)
+            else:
+                proj4params = '%s +no_defs' % proj4params
+        else:
+            proj4params = '%s +no_defs' % proj4params
+
+        return '%s %s' % (proj4string, proj4params)
+        
+    def Proj4Create(self, proj4string):
+        """
+        Create a new location for selected projection
+        """
+        # creating location from PROJ.4 string passed to g.proj
+        cmdlist = ['g.proj', '-c',
+                   'proj4=%s' % proj4string,
+                   'location=%s' % self.startpage.location]
+        p = gcmd.Command(cmdlist)
+        if p.returncode == 0:
+            return True
+
+        return False
+
+    def CustomCreate(self):
+        """Create a new location based on given proj4 string"""
+        proj4string = self.custompage.customstring
+        location = self.startpage.location
+
+        cmdlist = ['g.proj', '-c',
+                   'proj4=%s' % proj4string,
+                   'location=%s' % location]
+        p = gcmd.Command(cmdlist)
+        if p.returncode == 0:
+            return True
+
+        return False
+
+    def EPSGCreate(self):
+        """
+        Create a new location from an EPSG code.
+        """
+        epsgcode = self.epsgpage.epsgcode
+        epsgdesc = self.epsgpage.epsgdesc
+        location = self.startpage.location
+        cmdlist = []
+
+        # should not happend
+        if epsgcode == '':
+            wx.MessageBox(parent=self,
+                          message=_("EPSG code missing. Unable to create new location"),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+            return False
+        
+        # creating location
+        cmdlist = ['g.proj',
+                   'epsg=%s' % epsgcode,
+                   'datumtrans=-1']
+        p = gcmd.Command(cmdlist)
+
+        try:
+            dtoptions = p.ReadStdOutput()[0]
+        except:
+            dtoptions = None
+            
+        if dtoptions != None:
+            dtrans = ''
+            # open a dialog to select datum transform number
+            dlg = wx.TextEntryDialog(self.wizard, dtoptions,
+                                     caption=_('Select the number of a datum transformation to use'),
+                                     defaultValue='1',
+                                         style=wx.TE_WORDWRAP | wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX|
+                                     wx.RESIZE_BORDER |wx.VSCROLL |
+                                     wx.OK | wx.CANCEL)
+            
+            if dlg.ShowModal() == wx.ID_CANCEL:
+                dlg.Destroy()
+                return False
+            else:
+                dtrans = dlg.GetValue()
+                if dtrans != '':
+                    dlg.Destroy()
+                else:
+                    wx.MessageBox(_('You must select a datum transform'))
+                    return False
+
+            cmdlist = ['g.proj', '-c',
+                       'epsg=%s' % epsgcode,
+                       'location=%s' % location,
+                       'datumtrans=%s' % dtrans]
+        else:
+            cmdlist = ['g.proj','-c',
+                       'epsg=%s' % epsgcode,
+                       'location=%s' % location,
+                       'datumtrans=1']
+
+        p = gcmd.Command(cmdlist)
+        if p.returncode == 0:
+            return True
+
+        return False
+
+    def FileCreate(self):
+        """
+        Create a new location from a georeferenced file
+        """
+        georeffile = self.filepage.georeffile
+        location = self.startpage.location
+
+        cmdlist = []
+
+        # this should not happen
+        if not georeffile or not os.path.isfile(georeffile):
+            dlg = wx.MessageBox(parent=self.wizard,
+                                message=_("Unable to create new location: could not find file %s") % georeffile,
+                                caption=("Error"), style=wx.OK | wx.ICON_ERROR)
+            return False
+
+        # creating location
+        cmdlist = ['g.proj', '-c',
+                   'georef=%s' % georeffile,
+                   'location=%s' % location]
+        p = gcmd.Command(cmdlist)
+        if p.returncode == 0:
+            return True
+
+        return False
 
 class RegionDef(BaseClass, wx.Frame):
     """
@@ -1480,7 +1989,7 @@ class RegionDef(BaseClass, wx.Frame):
                                              style=wx.CP_DEFAULT_STYLE |
                                              wx.CP_NO_TLW_RESIZE | wx.EXPAND)
         self.MakeSettings3DPaneContent(self.settings3D.GetPane())
-        self.settings3D.Collapse(False)
+        self.settings3D.Collapse(False) # FIXME
         self.Bind(wx.EVT_COLLAPSIBLEPANE_CHANGED, self.OnSettings3DPaneChanged, self.settings3D)
 
         #
@@ -1803,529 +2312,6 @@ class RegionDef(BaseClass, wx.Frame):
 
     def OnCancel(self, event):
         self.Destroy()
-
-class LocationWizard(wx.Object):
-    """
-    Start wizard here and finish wizard here
-    """
-    def __init__(self, parent, grassdatabase):
-        global coordsys
-        self.parent = parent
-
-        #
-        # define wizard image
-        #
-        # file = "loc_wizard.png"
-        file = "loc_wizard_qgis.png"
-        imagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
-                                 file)
-        wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
-        # wizbmp.Rescale(250,600)
-        wizbmp = wizbmp.ConvertToBitmap()
-
-        #
-        # get georeferencing information from tables in $GISBASE/etc
-        #
-        self.__readData()
-
-        #
-        # define wizard pages
-        #
-        self.wizard = wiz.Wizard(parent, id=wx.ID_ANY, title=_("Define new GRASS Location"),
-                                 bitmap=wizbmp)
-        self.startpage = DatabasePage(self.wizard, self, grassdatabase)
-        self.csystemspage = CoordinateSystemPage(self.wizard, self)
-        self.projpage = ProjectionsPage(self.wizard, self)
-        self.datumpage = DatumPage(self.wizard, self)
-        self.projtypepage = ProjTypePage(self.wizard,self)
-        self.epsgpage = EPSGPage(self.wizard, self)
-        self.filepage = GeoreferencedFilePage(self.wizard, self)
-        self.ellipsepage = EllipsePage(self.wizard, self)
-        self.custompage = CustomPage(self.wizard, self)
-        self.sumpage = SummaryPage(self.wizard, self)
-
-        #
-        # set the initial order of the pages
-        # (should follow the epsg line)
-        #
-        self.startpage.SetNext(self.csystemspage)
-
-        self.csystemspage.SetPrev(self.startpage)
-        self.csystemspage.SetNext(self.sumpage)
-
-        self.projpage.SetPrev(self.csystemspage)
-        self.projpage.SetNext(self.projtypepage)
-
-        self.projtypepage.SetPrev(self.projpage)
-        self.projtypepage.SetNext(self.datumpage)
-
-        self.datumpage.SetPrev(self.projtypepage)
-        self.datumpage.SetNext(self.sumpage)
-
-        self.ellipsepage.SetPrev(self.projtypepage)
-        self.ellipsepage.SetNext(self.sumpage)
-
-        self.epsgpage.SetPrev(self.csystemspage)
-        self.epsgpage.SetNext(self.sumpage)
-
-        self.filepage.SetPrev(self.csystemspage)
-        self.filepage.SetNext(self.sumpage)
-
-        self.custompage.SetPrev(self.csystemspage)
-        self.custompage.SetNext(self.sumpage)
-
-        self.sumpage.SetPrev(self.csystemspage)
-
-        #
-        # do pages layout
-        #
-        self.startpage.DoLayout()
-        self.csystemspage.DoLayout()
-        self.projpage.DoLayout()
-        self.datumpage.DoLayout()
-        self.projtypepage.DoLayout()
-        self.epsgpage.DoLayout()
-        self.filepage.DoLayout()
-        self.ellipsepage.DoLayout()
-        self.custompage.DoLayout()
-        self.sumpage.DoLayout()
-        self.wizard.FitToPage(self.datumpage)
-
-        # new location created?
-        self.location = None 
-        success = False
-
-        #
-        # run wizard...
-        #
-        if self.wizard.RunWizard(self.startpage):
-            success = self.OnWizFinished()
-            if success == True:
-                self.wizard.Destroy()
-                self.location = self.startpage.location
-                dlg = wx.MessageDialog(parent=self.parent,
-                                       message=_("Do you want to set the default "
-                                                 "region extents and resolution now?"),
-                                       caption=_("New location '%s' created") % self.location,
-                                       style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
-                dlg.CenterOnScreen()
-                if dlg.ShowModal() == wx.ID_YES:
-                    dlg.Destroy()
-                    defineRegion = RegionDef(self.parent, location=self.location)
-                    defineRegion.Show()
-                else:
-                    dlg.Destroy()
-
-            elif success == False:
-                dlg = wx.MessageBox(parent=self.wizard,
-                                    message=_("Unable to create new location."),
-                                    caption=_("Error"),
-                                    style=wx.OK | wx.ICON_ERROR)
-            else: # None
-                pass
-        else:
-            win = wx.MessageBox(parent=self.parent,
-                          message=_("Location wizard canceled.%s"
-                                    "New location not created.") % \
-                              os.linesep,
-                          caption=_("Location wizard"))
-
-    def __readData(self):
-        """Get georeferencing information from tables in $GISBASE/etc"""
-        # read projection definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "projections"), "r")
-        self.projections = {}
-        for line in f.readlines():
-            line = line.expandtabs(1)
-            line = line.strip()
-            if line == '' or line[0] == "#":
-                continue
-            proj, projdesc = line.split(":", 1)
-            self.projections[proj.strip()] = projdesc.strip()
-        f.close()
-
-        # read datum definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datum.table"), "r")
-        self.datums = {}
-        paramslist = []
-        for line in f.readlines():
-            line = line.expandtabs(1)
-            line = line.strip()
-            if line == '' or line[0] == "#":
-                continue
-            datum, info = line.split(" ", 1)
-            info = info.strip()
-            datumdesc, params = info.split(" ", 1)
-            datumdesc = datumdesc.strip('"')
-            paramlist = params.split()
-            ellipsoid = paramlist.pop(0)
-            self.datums[datum] = (datumdesc, ellipsoid, paramlist)
-        f.close()
-
-        # read datum transforms parameters
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datumtransform.table"), "r")
-        self.transforms = {}
-        j = 1
-        for line in f.readlines():
-            if j < 10:
-                transcode = 'T0' + str(j)
-            else:
-               transcode = 'T' + str(j)
-            line = line.expandtabs(1)
-            line = line.strip()
-            if line == '' or line[0] == "#":
-                continue
-            datum, rest = line.split(" ", 1)
-            rest = rest.strip('" ')
-            params, rest = rest.split('"', 1)
-            params = params.strip()
-            rest = rest.strip('" ')
-            try:
-                region, info = rest.split('"', 1)
-                info = info.strip('" ')
-                info = region + ': ' + info
-            except:
-                info = rest
-            self.transforms[transcode] = (datum, info, params)
-            j += 1
-        f.close()
-
-        # read ellipsiod definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "ellipse.table"), "r")
-        self.ellipsoids = {}
-        for line in f.readlines():
-            line = line.expandtabs(1)
-            line = line.strip()
-            if line == '' or line[0] == "#":
-                continue
-            ellipse, rest = line.split(" ", 1)
-            rest = rest.strip('" ')
-            desc, params = rest.split('"', 1)
-            desc = desc.strip('" ')
-            paramslist = params.split()
-            self.ellipsoids[ellipse] = (desc, paramslist)
-        f.close()
-
-    def OnWizFinished(self):
-        database = self.startpage.grassdatabase
-        location = self.startpage.location
-        global coordsys
-        success = False
-
-        # location already exists?
-        if os.path.isdir(os.path.join(database,location)):
-            dlg = wx.MessageDialog(parent=self.wizard,
-                                   message=_("Unable to create new location: %s already exists")
-                                             % os.path.join(database, location),
-                                   caption=_("ERROR"),
-                                   style=wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-        if coordsys == "xy":
-            success = self.XYCreate()
-        elif coordsys == "latlong":
-            rows = int(round((float(north) - float(south)) / float(resolution)))
-            cols = int(round((float(east) - float(west)) / float(resolution)))
-            cells = int(rows * cols)
-            success = self.LatlongCreate()
-        elif coordsys == "proj":
-            success = self.Proj4Create()
-        elif coordsys == 'custom':
-            success = self.CustomCreate()
-        elif coordsys == "epsg":
-            success = self.EPSGCreate()
-        elif coordsys == "file":
-            success = self.FileCreate()
-
-        return success
-
-    def XYCreate(self):
-        """Create an XY location"""
-        database = self.startpage.grassdatabase
-        location = self.startpage.location
-
-        # create location directory and PERMANENT mapset
-        try:
-            os.mkdir(os.path.join(database, location))
-            os.mkdir(os.path.join(database, location, 'PERMANENT'))
-            # create DEFAULT_WIND and WIND files
-            regioninfo =   ['proj:       0',
-                            'zone:       0',
-                            'north:      1',
-                            'south:      0',
-                            'east:       1',
-                            'west:       0',
-                            'cols:       1',
-                            'rows:       1',
-                            'e-w resol:  1',
-                            'n-s resol:  1',
-                            'top:        1',
-                            'bottom:     0',
-                            'cols3:      1',
-                            'rows3:      1',
-                            'depths:     1',
-                            'e-w resol3: 1',
-                            'n-s resol3: 1',
-                            't-b resol:  1']
-            
-            defwind = open(os.path.join(database, location, 
-                                        "PERMANENT", "DEFAULT_WIND"), 'w')
-            for param in regioninfo:
-                defwind.write(param + '%s' % os.linesep)
-            defwind.close()
-
-            shutil.copy(os.path.join(database, location, "PERMANENT", "DEFAULT_WIND"),
-                        os.path.join(database, location, "PERMANENT", "WIND"))
-
-            # create MYNAME file
-            myname = open(os.path.join(database, location, "PERMANENT",
-                                       "MYNAME"), 'w')
-            myname.write('%s' % os.linesep)
-            myname.close()
-
-            return True
-
-        except OSError, e:
-            dlg = wx.MessageDialog(parent=self.wizard,
-                                   message=_("Unable to create new location: %s") % e,
-                                   caption=_("Error"),
-                                   style=wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-    def Proj4Create(self):
-        """
-        Create a new location for selected projection
-        """
-
-        location = self.startpage.location
-        proj = self.projpage.proj
-        projdesc = self.projpage.projdesc
-
-        utmzone = self.projtypepage.utmzone
-        utmhemisphere = self.projtypepage.utmhemisphere
-
-        datum = self.datumpage.datum
-        if self.datumpage.datumdesc:
-            datumdesc = self.datumpage.datumdesc+' - '+self.datumpage.ellipsoid
-        else: datumdesc = ''
-        datumparams = self.datumpage.datumparams
-        transparams = self.datumpage.transparams
-
-        ellipse = self.ellipsepage.ellipse
-        ellipsedesc = self.ellipsepage.ellipsedesc
-        ellipseparams = self.ellipsepage.ellipseparams
-
-        # Creating PROJ.4 string
-        if proj == 'll':
-            proj = 'longlat'
-
-        if proj == 'utm' and utmhemisphere == 'south':
-            proj4string = '+proj=%s +zone=%s +south' % (proj, utmzone)
-        elif proj == 'utm':
-            proj4string = '+proj=%s +zone=%s' % (proj, utmzone)
-        else:
-            proj4string = '+proj=%s ' % (proj)
-
-        proj4params = ''
-        # set ellipsoid parameters
-        for item in ellipseparams:
-            if item[:4] == 'f=1/':
-                item = '+rf='+item[4:]
-            else:
-                item = '+'+item
-            proj4params = '%s %s' % (proj4params, item)
-        # set datum and transform parameters if relevant
-        if datumparams:
-            for item in datumparams:
-                proj4params = '%s +%s' % (proj4params,item)
-            if transparams:
-                proj4params = '%s +no_defs +%s' % (proj4params,transparams)
-            else:
-                proj4params = '%s +no_defs' % proj4params
-        else:
-            proj4params = '%s +no_defs' % proj4params
-
-        proj4string = '%s %s' % (proj4string, proj4params)
-
-        msgtext = "New location '%s' will be created georeferenced to" % location
-        georeftext = '%s: %s%s' % (projdesc,datumdesc,ellipsedesc)
-        p4text = '(PROJ.4 string: %s)' % proj4string
-
-        dlg = wx.MessageDialog(self.wizard, msgtext+' '+georeftext+' '+p4text,
-                            "Create new location?",
-                            wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_NO:
-            dlg.Destroy()
-            return False
-        else:
-            dlg.Destroy()
-
-        # Creating location from PROJ.4 string passed to g.proj
-        try:
-            cmdlist = ['g.proj', '-c', 'proj4=%s' % proj4string, 'location=%s' % location]
-            p = gcmd.Command(cmdlist)
-            if p.returncode == 0:
-                return True
-            else:
-                return False
-
-        except StandardError, e:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
-                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-    def CustomCreate(self):
-        proj4string = self.custompage.customstring
-        location = self.startpage.location
-
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created using PROJ.4 string: %s"
-                               % (location,proj4string),
-                               "Create new location?",
-                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_NO:
-            dlg.Destroy()
-            return False
-        else:
-            dlg.Destroy()
-
-        try:
-            cmdlist = ['g.proj','-c','proj4=%s' % proj4string,'location=%s' % location]
-            p = gcmd.Command(cmdlist)
-            if p.returncode == 0:
-                return True
-            else:
-                return False
-
-        except StandardError, e:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
-                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-
-    def EPSGCreate(self):
-        """
-        Create a new location from an EPSG code.
-        """
-        epsgcode = self.epsgpage.epsgcode
-        epsgdesc = self.epsgpage.epsgdesc
-        location = self.startpage.location
-        cmdlist = []
-
-        if not epsgcode:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: EPSG Code value missing",
-                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to EPSG code %s: %s"
-                               % (location, epsgcode, epsgdesc),
-                               "Create new location from EPSG code?",
-                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_NO:
-            dlg.Destroy()
-            return False
-        else:
-            dlg.Destroy()
-
-        # creating location
-        try:
-            cmdlist = ['g.proj','epsg=%s' % epsgcode,'datumtrans=-1']
-            p = gcmd.Command(cmdlist)
-            dtoptions = p.ReadStdOutput()[0]
-            if dtoptions != None:
-                dtrans = ''
-                # open a dialog to select datum transform number
-                dlg = wx.TextEntryDialog(self.wizard, dtoptions,
-                                         caption='Select the number of a datum transformation to use',
-                                         defaultValue='1',
-                                         style=wx.TE_WORDWRAP|wx.MINIMIZE_BOX|wx.MAXIMIZE_BOX|
-                                         wx.RESIZE_BORDER|wx.VSCROLL|
-                                         wx.OK|wx.CANCEL)
-
-                if dlg.ShowModal() == wx.ID_CANCEL:
-                    dlg.Destroy()
-                    return False
-                else:
-                    dtrans = dlg.GetValue()
-                    if dtrans != '':
-                        dlg.Destroy()
-                    else:
-                        wx.MessageBox('You must select a datum transform')
-                        return False
-
-                cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=%s' % dtrans]
-            else:
-                cmdlist = ['g.proj','-c','epsg=%s' % epsgcode,'location=%s' % location,'datumtrans=1']
-
-            p = gcmd.Command(cmdlist)
-            if p.returncode == 0:
-                return True
-            else:
-                return False
-
-        except StandardError, e:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
-                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-    def FileCreate(self):
-        """
-        Create a new location from a georeferenced file
-        """
-        georeffile = self.filepage.georeffile
-        location = self.startpage.location
-
-        cmdlist = []
-
-        dlg = wx.MessageDialog(self.wizard, "New location '%s' will be created georeferenced to file '%s'"
-                               % (location, georeffile), "Create new location from georeferenced file?",
-                               wx.YES_NO|wx.YES_DEFAULT|wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_NO:
-            dlg.Destroy()
-            return False
-        else:
-            dlg.Destroy()
-
-        if not os.path.isfile(georeffile):
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: could not find file %s" % georeffile,
-                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-        if not georeffile:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: georeferenced file not set",
-                    "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
-
-        # creating location
-        try:
-            cmdlist = ['g.proj','-c','georef=%s' % georeffile,'location=%s' % location]
-            p = gcmd.Command(cmdlist)
-            if p.returncode == 0:
-                return True
-            else:
-                return False
-
-        except StandardError, e:
-            dlg = wx.MessageDialog(self.wizard, "Could not create new location: %s " % str(e),
-                                   "Could not create location",  wx.OK|wx.ICON_INFORMATION)
-            dlg.ShowModal()
-            dlg.Destroy()
-            return False
 
 if __name__ == "__main__":
     app = wx.PySimpleApp()
