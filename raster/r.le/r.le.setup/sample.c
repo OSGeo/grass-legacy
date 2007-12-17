@@ -733,7 +733,7 @@ static int calc_unit_loc (
   char	  *sites_mapset, sites_file_name[GNAME_MAX], *cmd;
   struct  Map_info Map;
   struct  Cell_head region;
-  double  east_coord, north_coord, D_u_to_a_col(), D_u_to_a_row();
+  double  D_u_to_a_col(), D_u_to_a_row();
   int     i, j, k, cnt=0, w_w = right - left, w_l = bot - top, exp1, exp2,
           dx = w_w, dy = w_l, l, t, left1 = left, top1 = top, n, tmp,
 	  ulrow, ulcol, *row_buf, lap=0;
@@ -945,7 +945,7 @@ back:
 	ulrow = ((int)(D_u_to_a_row(Points->y[0]))) + 1 - u_l/2;
 	if (ulcol <= left || ulrow <= top || ulcol+u_w-1 > right || ulrow+u_l-1 > bot) {
 	   fprintf(stderr, "    No sampling unit over site %d at east=%8.1f north=%8.1f\n",
-	      n+1,east_coord,north_coord);
+	      n+1, Points->x[0], Points->y[0]);
 	   fprintf(stderr, "       as it would extend outside the map\n");
 
 	}
