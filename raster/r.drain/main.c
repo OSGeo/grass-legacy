@@ -435,6 +435,8 @@ int main(int argc, char **argv)
     /* close files and free buffers */
     G_close_cell(new_id);
 
+    G_put_cell_title (new_map_name, "Surface flow trace");
+
     G_short_history(new_map_name, "raster", &history);
     G_command_history(&history);
     G_write_history(new_map_name, &history);
