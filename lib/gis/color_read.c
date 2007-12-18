@@ -171,6 +171,8 @@ static int read_colors( const char *element , const char *name , const char *map
  * optional lines are
  *    invert            invert color table
  *    shift:n           where n is the amount to shift the color table
+ *    nv:r:g:b          color to use for NULL values
+ *    *:r:g:b           color to use for undefined (beyond color rules)
  */
 static int read_new_colors( FILE *fd, struct Colors *colors)
 {
