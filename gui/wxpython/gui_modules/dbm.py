@@ -922,7 +922,7 @@ class AttributeManager(wx.Frame):
         menu.Append(self.popupDataID6, _("Select none"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID7, _("Display selected"))
-        if not self.map:
+        if not self.map or len(list.GetSelectedItems()) == 0:
             menu.Enable(self.popupDataID7, False)
         menu.Append(self.popupDataID8, _("Extract selected"))
         if list.GetFirstSelected() == -1:
