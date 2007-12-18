@@ -99,7 +99,4 @@ def ListOfCatsToRange(cats):
             catstr += '%d,' % (cats[i])
             i += 1
         
-    if catstr[-1] == ",":
-        catstr = catstr[:-1]
-
-    return catstr
+    return catstr.strip(',')
