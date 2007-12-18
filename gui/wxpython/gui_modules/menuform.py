@@ -117,7 +117,7 @@ str2rgb = {'aqua': (100, 128, 255),
            'cyan': (0, 255, 255),
            'gray': (128, 128, 128),
            'green': (0, 255, 0),
- 'grey': (128, 128, 128),
+           'grey': (128, 128, 128),
            'indigo': (0, 128, 255),
            'magenta': (255, 0, 255),
            'orange': (255, 128, 0),
@@ -599,8 +599,6 @@ class mainFrame(wx.Frame):
         except ValueError:
             self.SetStatusText( status_text )
 
-
-
         # buttons
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
@@ -659,6 +657,7 @@ class mainFrame(wx.Frame):
         guisizer.SetSizeHints(self)
         self.SetAutoLayout(True)
         self.SetSizer(guisizer)
+        guisizer.Fit(self)
         self.Layout()
 
     def updateValuesHook(self):
@@ -1005,23 +1004,24 @@ class cmdPanel(wx.Panel):
         maxsizes = (0,0)
         for section in sections:
             tabsizer[section].SetSizeHints( tab[section] )
-            tabsizer[section].Fit( tab[section] )
             tab[section].SetAutoLayout(True)
             tab[section].SetSizer( tabsizer[section] )
+            tabsizer[section].Fit( tab[section] )
             tab[section].Layout()
             minsecsizes = tabsizer[section].GetMinSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
         # TODO: be less arbitrary with these 600
-        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) )
+        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) + 25 )
         for section in sections:
             tab[section].SetMinSize( constrained_size )
         if manual_tab.Ok:
             manual_tab.SetMinSize( constrained_size )
 
         self.SetSizer( panelsizer )
+        panelsizer.Fit(self)
         self.hasMain = tab.has_key( _('Main') ) # publish, to enclosing Frame for instance
-
+        
     def OnPageChange(self, event):
         self.Layout()
 
