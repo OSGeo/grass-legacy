@@ -16,9 +16,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "nfiles.h"
 #include "local_proto.h"
-#include <grass/glocale.h>
 
 int main (int argc, char *argv[])
 {
@@ -53,27 +53,18 @@ int main (int argc, char *argv[])
     module->keywords = _("raster");
     module->description =
 		_("Creates a composite raster map layer by using "
-		"known category values from one (or more) map layer(s) "
-		"to fill in areas of \"no data\" in another map layer.");
+		  "known category values from one (or more) map layer(s) "
+		  "to fill in areas of \"no data\" in another map layer.");
 
-/* Define the different options */
+    /* Define the different options */
 
-    opt1 = G_define_option() ;
-    opt1->key        = "input";
-    opt1->type       = TYPE_STRING;
-    opt1->required   = YES;
-    opt1->multiple   = YES;
-    opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= _("Name of raster maps to be patched together") ;
+    opt1 = G_define_standard_option(G_OPT_R_INPUTS);
+    opt1->description= _("Name of raster maps to be patched together");
 
-    opt2 = G_define_option() ;
-    opt2->key        = "output";
-    opt2->type       = TYPE_STRING;
-    opt2->required   = YES;
-    opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= _("Name of the resultant map");
+    opt2 = G_define_standard_option(G_OPT_R_OUTPUT);
+    opt2->description= _("Name for resultant raster map");
 
-/* Define the different flags */
+    /* Define the different flags */
 
     /* please, remove before GRASS 7 released */
     flag1 = G_define_flag() ;
@@ -108,7 +99,7 @@ int main (int argc, char *argv[])
 	    ;
 
     if (nfiles < 2)
-        G_fatal_error(_("The minimum number of input maps is two."));
+        G_fatal_error(_("The minimum number of input raster maps is two"));
 
     infd = G_malloc(nfiles * sizeof(int));
     statf = G_malloc(nfiles * sizeof(struct Cell_stats));
@@ -148,7 +139,7 @@ int main (int argc, char *argv[])
     }
 
     if (!ok)
-        G_fatal_error(_("One or more input maps not found"));
+        G_fatal_error(_("One or more input raster maps not found"));
 
     rname = opt2->answer;
     outfd = G_open_raster_new (new_name = rname, out_type);
@@ -161,19 +152,21 @@ int main (int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    G_message (_("%s: percent complete: "), G_program_name());
+    G_verbose_message(_("Percent complete..."));
     for (row = 0; row < nrows; row++)
     {
 	G_percent (row, nrows, 2);
 	if(G_get_raster_row (infd[0], presult, row, out_type) < 0)
-	    G_fatal_error("Cannot get raster row of input map");
+	    G_fatal_error(_("Unable to read raster map <%s> row %d"),
+			  names[0], row);
 
         if(out_type == CELL_TYPE)
             G_update_cell_stats ((CELL *) presult, ncols, &statf[0]);
 	for (i = 1; i < nfiles; i++)
 	{
 	    if(G_get_raster_row (infd[i], patch, row, out_type) < 0)
-		G_fatal_error("Cannot raster row of input map");
+		G_fatal_error(_("Unable to read raster map <%s> row %d"),
+			      names[i], row);
 	    if(!do_patch (presult, patch, &statf[i], ncols, out_type, ZEROFLAG))
 		break;
 	}
@@ -189,7 +182,7 @@ int main (int argc, char *argv[])
  * build the new cats and colors. do this before closing the new
  * file, in case the new file is one of the patching files as well.
  */
-    G_message (_("Creating support files for <%s>..."), new_name);
+    G_message (_("Creating support files for raster map <%s>"), new_name);
     support (names, statf, nfiles, &cats, &cats_ok, &colr, &colr_ok, out_type);
 
 /* now close (and create) the result */
