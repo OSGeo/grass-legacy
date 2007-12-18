@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <grass/gis.h>
+#include <grass/glocale.h>
 #include "local_proto.h"
 
 void get_stp_proj(char string[])
@@ -35,7 +36,7 @@ void get_stp_proj(char string[])
 			fprintf(stderr, "\nInvalid Co-ordinate System Specification\n");
 	}
 	if (get_stp_code(code, string, buff) == 0)
-		G_fatal_error("This should not happen see your system admin");
+	    G_fatal_error(_("This should not happen see your system admin"));
 
 	return;
 }
@@ -91,7 +92,7 @@ int get_stp_num(void)
 
 		fipsfile = fopen(FIPSfile, "r");
 		if (fipsfile == NULL) {
-			G_fatal_error("Can not open FIPS code file");
+		    G_fatal_error(_("Unable to open FIPS code file"));
 		}
 		ask_fips(fipsfile, &SFIPS, &CFIPS, &special_case);
 		if (special_case == -1) {
@@ -116,8 +117,8 @@ int get_stp_num(void)
 		if (icode != 0)
 			break;
 		else {		/* no match */
-			fprintf(stderr, "\nNo match of fips state %d county %d \n", SFIPS, CFIPS);
-			fclose(fipsfile);
+		    G_warning(_("No match of fips state %d county %d"), SFIPS, CFIPS);
+		    fclose(fipsfile);
 		}
 	}
 
@@ -152,11 +153,12 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 	*c = 0;
 	Tmp_file1 = G_tempfile();
 	if (NULL == (Tmp_fd1 = fopen(Tmp_file1, "w")))
-		G_fatal_error("Cannot open temp file");
+	    G_fatal_error(_("Unable to open temporary file <%s>"),
+			  Tmp_file1);
 	Tmp_file2 = G_tempfile();
 	if (NULL == (Tmp_fd2 = fopen(Tmp_file2, "w")))
-		G_fatal_error("Cannot open temp file");
-
+	    G_fatal_error(_("Unable to open temporary file <%s>"),
+			  Tmp_file2);
 	while (fgets(buff, 80, fp) != NULL) {
 		sscanf(buff, "%d%d%s%s%d", &sfips, &cfips, STabbr, COname, &NUM_ZON);
 		if (strncmp(STabbr, STabbr_prev, 2) != 0) {	/* TODO CHECK THIS */
@@ -170,7 +172,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 
 	sf_keys = G_read_key_value_file(Tmp_file2, &in_stat);
 	if (in_stat != 0)
-		G_fatal_error("reading sf key_value temp file");
+	    G_fatal_error(_("Reading sf key_value temp file"));
 
 	for (;;) {
 
@@ -200,7 +202,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 			a = G_find_key_value(answer, sf_keys);
 			sprintf(buff, "You have chosen state %s, Correct", a);
 			if (a == NULL)
-				fprintf(stderr, "\nInvalid State FIPS code\n");
+			    G_warning(_("Invalid State FIPS code"));
 			else if (G_yes(buff, 1))
 				break;
 		}
@@ -267,13 +269,13 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 
 	Tmp_file1 = G_tempfile();
 	if (NULL == (Tmp_fd1 = fopen(Tmp_file1, "w"))) {
-		sprintf(buff, "Cannot open %s", Tmp_file1);
-		G_fatal_error(buff);
+	    G_fatal_error(_("Unable to open temporary file <%s>"),
+			  Tmp_file1);
 	}
 	Tmp_file2 = G_tempfile();
 	if (NULL == (Tmp_fd2 = fopen(Tmp_file2, "w"))) {
-		sprintf(buff, "Cannot open %s", Tmp_file2);
-		G_fatal_error(buff);
+	    G_fatal_error(_("Unable to open temporary file <%s>"),
+			  Tmp_file2);
 	}
 	while (fgets(buff, 80, fp) != NULL) {
 		sscanf(buff, "%d%d%s%[A-Z ]%d", &sfips, &cfips, STabbr, COname, &NUM_ZON);
@@ -288,7 +290,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 
 	cf_keys = G_read_key_value_file(Tmp_file2, &in_stat);
 	if (in_stat != 0)
-		G_fatal_error("reading cf key_value temp file");
+	    G_fatal_error(_("Reading cf key_value temp file"));
 
 	for (;;) {
 		do {
@@ -317,7 +319,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 			b = G_find_key_value(answer, cf_keys);
 			sprintf(buff, "You have chosen %s county, correct", b);
 			if (b == NULL)
-				fprintf(stderr, "\nInvalid County FIPS code\n");
+			    G_warning(_("Invalid County FIPS code"));
 			else if (G_yes(buff, 1))
 				break;
 		}
