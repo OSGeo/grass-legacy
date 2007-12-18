@@ -1,28 +1,43 @@
 <H2>DESCRIPTION</H2>
 
+This module creates an output raster map centered on the <EM>x,y</EM> values specified
+with the <EM>coordinate</EM> parameter, out to the edge of the current region.
+The output cell values increase linearly from the specified center. The <EM>min</EM> 
+and <EM>max</EM> parameters control the inner and outer output raster map radii, respectively. 
 
-This module creates a raster map containing concentric rings around a given
-point.  The cell values are increasing linear from the center point to outer
-rings. Minimum and maximum radius can be selected. Optionally a "donut" ring
-can be created to use as (binary) filter for <em>i.ifft</em> inverse Fourier
-transform (apply filter with <em>r.mask</em>).
+<p>
+
+Binary output raster values can be created with the <B>-b</B> flag. Raster maps so created
+can be used to create binary filters for use in <EM>i.ifft</EM> (inverse Fourier transformations;
+apply filter with <EM>r.mask</EM>).
 
 <H2>EXAMPLES</H2>
 
-Generate a circle at current map center with a radius of 300m:
+Generate a raster circle at current map center with a radius of 300m and outwardly
+increasing raster values:
 
-<pre>
-      EASTCENTER=`g.region -c |  awk ' /region center easting:/ { print $4 }'`
-      NORTHCENTER=`g.region -c | awk ' /region center northing:/ { print $4 }'`
-      r.circle -b out=circle coordinate=$EASTCENTER,$NORTHCENTER max=300
-</pre>
+<PRE>
+EASTCENTER=`g.region -c |  awk ' /center easting:/ { print $3 }'`
+NORTHCENTER=`g.region -c | awk ' /center northing:/ { print $3 }'`
+r.circle output=circle coordinate=${EASTCENTER},${NORTHCENTER} max=300
+</PRE>
 
+Generate a binary raster ring around current map center with an inner radius 
+of 500m and an outer radius of 1000m:
+
+<PRE>
+EASTCENTER=`g.region -c |  awk ' /center easting:/ { print $3 }'`
+NORTHCENTER=`g.region -c | awk ' /center northing:/ { print $3 }'`
+r.circle -b output=circle coordinate=${EASTCENTER},${NORTHCENTER} min=500 max=1000
+</PRE>	
 
 <H2>SEE ALSO</H2>
+<EM><A HREF="g.region.html">g.region</A></EM>,
 <EM><A HREF="g.remove.html">g.remove</A></EM>, 
 <EM><A HREF="g.rename.html">g.rename</A></EM>, 
 <EM><A HREF="i.fft.html">i.fft</A></EM>, 
-<EM><A HREF="i.ifft.html">i.ifft</A></EM>
+<EM><A HREF="i.ifft.html">i.ifft</A></EM>,
+<EM><A HREF="r.mask">r.mask</A></EM>
 
 <H2>AUTHOR</H2>
 Bill Brown, U.S. Army Construction Engineering Research Laboratory<br>
