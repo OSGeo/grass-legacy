@@ -45,26 +45,16 @@ wxPython GRASS Graphical User Interface
 
 1 - INSTALLATION
 
-Download fresh source code from Subversion repository:
+Go to directory:
 
-$ svn co https://grasssvn.itc.it/svn/grassaddons/trunk/grassaddons/gui grassaddons/gui
-
-Or update your local repository
-
-$ svn up grassaddons/gui
-
-Change to GUI devel directory:
-
-$ cd grassaddons/gui
+$ cd gui/wxpython
 
 1) Copy everything from gui directory into a new directory $GISBASE/etc/wx.
      Or easier, create symlink (in running GRASS session):
-         cd /path/to/grassaddons/gui
 	 ln -s `pwd` $GISBASE/etc/wx
 
-2) Move the script "wxgrass" into $GISBASE/scripts.
+2) Copy the script "wxgrass" into $GISBASE/scripts.
      Or easier, create symlink (in running GRASS session):
-         cd /path/to/grassaddons/gui
          ln -s `pwd`/wxgrass $GISBASE/scripts
 
 2 - STARTUP WITH GRASS INITIALIZATION
@@ -77,6 +67,10 @@ GRASS_GUI: tcktk (or whatever you have here)
 with
 
 GRASS_GUI: wx
+
+or easier start new GRASS session with -wx switch.
+
+$ grass -wx
 
 3 - STARTUP FROM GRASS TERMINAL
 
