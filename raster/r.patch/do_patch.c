@@ -70,6 +70,3 @@ int do_patch (
   }
   return more;
 }
-
-
-                                                                
