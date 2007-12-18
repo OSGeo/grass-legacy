@@ -143,8 +143,8 @@ db_start_driver (char *name)
          uses ReadFile to make more buffer space available.
          (Which does not seem to be true on NT 5.1)
     */
-    if( _pipe(p1, 250000, _O_BINARY) == -1 ||
-        _pipe(p2, 250000, _O_BINARY) == -1 ) 
+    if( _pipe(p1, 250000, _O_BINARY) < 0 ||
+        _pipe(p2, 250000, _O_BINARY) < 0 ) 
     {
         db_syserror ("can't open any pipes");
 	return (dbDriver *) NULL;
@@ -161,7 +161,7 @@ db_start_driver (char *name)
 
     have_stdin = have_stdout = 1;
 
-    if ( _fileno(stdin) == -1 ) 
+    if ( _fileno(stdin) < 0 ) 
     {
         have_stdin = 0;
         stdin_fd = 0; 
@@ -170,7 +170,7 @@ db_start_driver (char *name)
     {
         stdin_fd = _fileno(stdin);
 
-        if ( (stdin_orig  = _dup(_fileno(stdin ))) == -1  ) 
+        if ( (stdin_orig  = _dup(_fileno(stdin ))) < 0  ) 
         {
             db_syserror ("can't duplicate stdin");
 	    return (dbDriver *) NULL;
@@ -184,7 +184,7 @@ db_start_driver (char *name)
         return (dbDriver *) NULL;
     }
 
-    if ( _fileno(stdout) == -1 ) 
+    if ( _fileno(stdout) < 0 ) 
     {
         have_stdout = 0;
         stdout_fd = 1; 
@@ -193,7 +193,7 @@ db_start_driver (char *name)
     {
         stdout_fd = _fileno(stdout);
 
-        if ( (stdout_orig  = _dup(_fileno(stdout ))) == -1  ) 
+        if ( (stdout_orig  = _dup(_fileno(stdout ))) < 0 ) 
         {
             db_syserror ("can't duplicate stdout");
 	    return (dbDriver *) NULL;
@@ -219,7 +219,7 @@ db_start_driver (char *name)
      *    descriptors in driver (which is another problem)
      */
 
-     pid = _spawnl ( _P_NOWAIT, startup, "", NULL ); 
+     pid = _spawnl ( _P_NOWAIT, startup, startup, NULL ); 
     
     /* This does not help. It runs but pipe remains open when close() is 
      * called in model but caling close() on that descriptor in driver gives 
