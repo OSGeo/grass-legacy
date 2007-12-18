@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, projection");
     module->description =
 	_("Interactively reset the location's projection settings.");
 
@@ -98,11 +98,11 @@ int main(int argc, char *argv[])
     /* Check for ownership here */
     stat = G__mapset_permissions(set_name);
     if (stat == 0) {
-	G_fatal_error(_("PERMANENT: permission denied."));
+	G_fatal_error(_("PERMANENT: permission denied"));
     }
     G_get_default_window(&cellhd);
     if (-1 == G_set_window(&cellhd))
-	G_fatal_error(_("Current region cannot be set."));
+	G_fatal_error(_("Current region cannot be set"));
 
     if (G_get_set_window(&cellhd) == -1)
 	G_fatal_error(_("Retrieving and setting region failed"));
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 	fclose(FPROJ);
 	buf = G_find_key_value("name", old_proj_keys);
 	fprintf(stderr,
-	    "\nWARNING!  A projection file already exists for this location\n(Filename '%s')\n",
+	    "\nWARNING: A projection file already exists for this location\n(Filename '%s')\n",
 		path);
 	fprintf(stderr,
 	    "\nThis file contains all the parameters for the\nlocation's projection: %s\n", buf);
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 	    "    GRASS will not re-project your data automatically\n");
 
 	if (!G_yes(_("Would you still like to change some of the parameters?"), 0)) {
-	    G_message(_("The projection information will not be updated."));
+	    G_message(_("The projection information will not be updated"));
 	    leave(SP_NOCHANGE);
 	}
     }
@@ -142,8 +142,8 @@ int main(int argc, char *argv[])
 	    sscanf(buf, "%d", &zone);
 	if (zone != old_zone) {
 	    G_warning(_("Zone in default geographic region definition: %d\n"
-	    		" is different from zone in PROJ_INFO file: %d\n"),
-			    old_zone, zone);
+			" is different from zone in PROJ_INFO file: %d"),
+		      old_zone, zone);
 	    old_zone = zone;
 	}
     }
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     case 0:			/* No projection/units */
 	if (!exist) {
 	    /* leap frog over code, and just make sure we remove the file */
-	    fprintf(stderr, "XY-location cannot be projected.\n");
+	    G_warning (_("XY-location cannot be projected"));
 	    goto write_file;
 	    break;
 	}
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
 	     2)) {
 	    G_strip(lbuf);
 	    if ((i = G_get_datum_by_name(lbuf)) > 0) {
-		G_message(_("The current datum is %s (%s)."),
+		G_message(_("The current datum is %s (%s)"),
 			G_datum_name(i), G_datum_description(i));
 		if (G_yes(
 		  _("Do you wish to change the datum (or datum transformation parameters)?"), 0))
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
 		    sprintf(dat_params, lbufa);
 		    sprintf(dat_ellps, G_datum_ellipsoid(i));
 		    sph_check = 1;
-		    G_message(_("The datum information has not been changed."));
+		    G_message(_("The datum information has not been changed"));
 		}
 	    }
 	    else
@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
 			if (G_yes(_("Do you want to change ellipsoid parameter?"), 0))
 			    sph_check = G_ask_ellipse_name(spheroid);
 			else {
-			    G_message(_("The ellipse information has not been changed."));
+			    G_message(_("The ellipse information has not been changed"));
 			    sph_check = 1;
 			}
 		    }		/* the val is legal */
@@ -427,15 +427,15 @@ int main(int argc, char *argv[])
 		    if ((Out_proj == PROJECTION_UTM) && (old_zone != 0)) {
 			G_message(_("The UTM zone is now set to %d"), old_zone);
 			if (!G_yes(_("Do you want to change the UTM zone?"), 0)) {
-			    G_message(_("UTM zone information has not been updated."));
+			    G_message(_("UTM zone information has not been updated"));
 			    zone = old_zone;
 			    break;
 			}
 			else {
 			    G_message(_("But if you change zone, all the existing "
-				"data will be interpreted by projection software. "
-				"GRASS will not automatically re-project or even "
-				"change the headers for existing maps."));
+					"data will be interpreted by projection software. "
+					"GRASS will not automatically re-project or even "
+					"change the headers for existing maps."));
 			    if (!G_yes(_("Would you still like to change the UTM zone?"),
 				 0)) {
 				zone = old_zone;
@@ -454,7 +454,9 @@ int main(int argc, char *argv[])
 	    else if (parm->def_exists) {
 		/* don't ask, use the default */
 
-		if (G_strcasecmp(desc->type, "float") == 0) {
+		if (G_strcasecmp(desc->type, "float") == 0 ||
+		    G_strcasecmp(desc->type, "lat") == 0 ||
+		    G_strcasecmp(desc->type, "lon") == 0) {
 		    sprintf(tmp_buff, "%.10f", parm->deflt);
 		    G_set_key_value(desc->key, tmp_buff, out_proj_keys);
 		}
@@ -470,8 +472,7 @@ int main(int argc, char *argv[])
 
     G_write_key_value_file(path, out_proj_keys, &out_stat);
     if (out_stat != 0) {
-	sprintf(buffb, "Error writing PROJ_INFO file: %s\n", path);
-	G_fatal_error(buffb);
+	G_fatal_error(_("Error writing PROJ_INFO file <%s>"), path);
     }
 
     G_free_key_value(out_proj_keys);
@@ -608,18 +609,18 @@ int main(int argc, char *argv[])
 
 	G_write_key_value_file(path, in_unit_keys, &out_stat);
 	if (out_stat != 0)
-	    G_fatal_error(_("Error writing into UNITS output file: %s"), path);
+	    G_fatal_error(_("Error writing into UNITS output file <%s>"), path);
 
 	G_free_key_value(in_unit_keys);
     }				/* if */
 
     if (G__put_window(&cellhd, "", "DEFAULT_WIND") < 0)
-	G_fatal_error(_("Could not write to DEFAULT_WIND region file"));
+	G_fatal_error(_("Unable to write to DEFAULT_WIND region file"));
     fprintf(stderr,
 	    _("\nProjection information has been recorded for this location\n\n"));
     if ((old_zone != zone) | (old_proj != cellhd.proj)) {
-	G_message(_("The geographic region information in WIND is now obsolete."));
-	G_message(_("Run g.region -d to update it."));
+	G_message(_("The geographic region information in WIND is now obsolete"));
+	G_message(_("Run g.region -d to update it"));
     }
     leave(0);
 }

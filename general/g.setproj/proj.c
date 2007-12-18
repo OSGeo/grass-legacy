@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include <grass/gis.h>
+#include <grass/glocale.h>
 
 #include "local_proto.h"
 
@@ -172,7 +173,7 @@ struct proj_parm *get_proj_parms(const char *arg)
 		else
 		{
 			parm->ask = 1;
-			G_warning("Unrecognized 'ask' value in proj-parms.table: %s", ask);
+			G_warning(_("Unrecognized 'ask' value in proj-parms.table: %s"), ask);
 		}
 
 		if (strcmp(dfl, "nodfl") == 0)
@@ -182,7 +183,7 @@ struct proj_parm *get_proj_parms(const char *arg)
 		else
 		{
 			parm->def_exists = 0;
-			G_warning("Unrecognized default value in proj-parms.table: %s", dfl);
+			G_warning(_("Unrecognized default value in proj-parms.table: %s"), dfl);
 		}
 	}
 
