@@ -1378,8 +1378,8 @@ class BufferedWindow(wx.Window):
                                                                    cat=digitClass.settings["category"],
                                                                    pos=posWindow,
                                                                    action="add")
-                        if addRecordDlg.mapInfo and \
-                                addRecordDlg.ShowModal() == wx.ID_OK:
+                        if addRecordDlg.mapDBInfo and \
+                               addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
                             for sql in addRecordDlg.GetSQLString():
                                 sqlfile.file.write(sql + ";\n")
