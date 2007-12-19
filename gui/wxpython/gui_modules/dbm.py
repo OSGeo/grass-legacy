@@ -537,8 +537,7 @@ class AttributeManager(wx.Frame):
             sqlAdvanced.Bind(wx.EVT_RADIOBUTTON, self.OnChangeSql)
 
             sqlWhere = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value="",
-                                   style=wx.TE_PROCESS_ENTER,
-                                   size=(200, -1))
+                                   style=wx.TE_PROCESS_ENTER)
             sqlStatement = wx.TextCtrl(parent=panel, id=wx.ID_ANY,
                                        value="SELECT * FROM %s" % \
                                            self.mapDBInfo.layers[layer]['table'],
@@ -560,10 +559,10 @@ class AttributeManager(wx.Frame):
             sqlSimpleSizer = wx.BoxSizer(wx.HORIZONTAL)
             sqlSimpleSizer.Add(item=sqlLabel,
                                flag=wx.ALIGN_CENTER_VERTICAL)
-            sqlSimpleSizer.Add(item=sqlWhere,
-                               flag=wx.SHAPED | wx.GROW)
+            sqlSimpleSizer.Add(item=sqlWhere, proportion=1,
+                               flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
             sqlFlexSizer.Add(item=sqlSimpleSizer,
-                             flag=wx.ALIGN_CENTER_VERTICAL)
+                             flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
             sqlFlexSizer.Add((0,0))
             sqlFlexSizer.Add(item=sqlAdvanced,
                              flag=wx.ALIGN_CENTER_VERTICAL)
