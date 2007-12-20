@@ -84,8 +84,9 @@ proc psprint::init { } {
 	set psprint::mtop 1
 	set psprint::mbottom 1
 	
-	# check for ghostscript
-	
+	set printmode "lpr"
+
+	# check for ghostscript	
 	# switch to native windows version of ghostscript if runing wingrass
 	if { $mingw == 1 } {
 		set cmd "gswin32c"
@@ -96,14 +97,13 @@ proc psprint::init { } {
 	if {![catch {set input [exec $cmd -help]} error]} {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
-		set printmode "lpr"
 		regsub -all {   } $gsdevices { } gsdevices
 		regsub -all { } $gsdevices \n gsdevices
 		regsub -all \n\n $gsdevices \n gsdevices
 	} else {
 		set gsdevices "none available"
 		set gsstate "disabled"
-		set printmode "eps"
+	#	set printmode "eps"
 		tk_messageBox -type ok -icon error -message [G_msg "Ghostscript not available"]
 	}
 }	
@@ -431,10 +431,10 @@ proc psprint::print { cv } {
  		if {[catch {exec lpr -o position=center $tmppsfile } error]} {
 			Gm::errmsg $error
 		}
-    }
+	}
 
 	# postsript printing via ghostsript
-    if { $printmode == "psprint" && $printer != "" } {
+	if { $printmode == "psprint" && $printer != "" } {
 		if {[catch {exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile} error]} {
 			Gm::errmsg $error
 		}
