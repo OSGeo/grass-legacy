@@ -84,6 +84,7 @@ proc psprint::init { } {
 	set psprint::mtop 1
 	set psprint::mbottom 1
 	
+	# default is lpr printing
 	set printmode "lpr"
 
 	# check for ghostscript	
@@ -94,6 +95,7 @@ proc psprint::init { } {
 		set cmd "gs"
 	}
 
+    #enable additional printing options if Ghostscript available
 	if {![catch {set input [exec $cmd -help]} error]} {
 		regexp ".*Available devices:(.*)Search path:" $input string gsdevices 
 		set gsstate "normal"
