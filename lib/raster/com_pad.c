@@ -8,8 +8,8 @@
 #include "transport.h"
 
 /* PAD FUNCTIONS
-   The monitor has a very simple database management capabil­
-   ity  which supports the windowing.  There are scratch pads
+   The monitor has a very simple database management capability
+   which supports the windowing.  There are scratch pads
    to be written on. Each scratch pad can contain items,  and
    each  item can have a list of values.  These are NOT to be
    used by the programmer.  They are used indirectly  through
