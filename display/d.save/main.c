@@ -72,13 +72,14 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	char buff[1024];
 	char current_frame[64];
+	double Ftop, Fbot, Fleft, Fright;
 
 
 	G_gisinit(argv[0]);
 
         module = G_define_module();
         module->keywords = _("display");
-    module->description = 
+	module->description = 
 	  _("Creates a list of commands for recreating screen graphics.");
 	
 
@@ -90,10 +91,11 @@ int main (int argc, char **argv)
 	opt1->multiple = YES;
 	/* Conditionalize so "help" and "--interface-description" work */
 	R__open_quiet();  /* don't let library code make us die */
+
 	if (R_open_driver() == 0)
 	{
-		Sheight = R_screen_bot() - R_screen_top() + 1;
-		Swidth = R_screen_rite() - R_screen_left() + 1;
+		Sheight = R_screen_bot() - R_screen_top();
+		Swidth = R_screen_rite() - R_screen_left();
 
 		Mwind = (struct Cell_head *) G_malloc(sizeof(struct Cell_head));
 		R_pad_list (&pads, &npads);
@@ -301,23 +303,23 @@ int main (int argc, char **argv)
 
 			if (process_pad(&items, &nitems) != 0) continue;
 
-			Wtop = (100.0 * Wtop)/Sheight + 0.5;
-			Wbot = (100.0 * Wbot)/Sheight + 0.5;
-			Wleft = (100.0 * Wleft)/Swidth + 0.5;
-			Wright = (100.0 * Wright)/Swidth + 0.5;
-			if (Wtop<0) Wtop=0;
-			if (Wbot<0) Wbot=0;
-			if (Wleft<0) Wleft=0;
-			if (Wright<0) Wright=0;
+			Ftop = (100.0 * Wtop)/Sheight;
+			Fbot = (100.0 * Wbot)/Sheight;
+			Fleft = (100.0 * Wleft)/Swidth;
+			Fright = (100.0 * Wright)/Swidth;
+			if (Ftop<0) Ftop=0;
+			if (Fbot<0) Fbot=0;
+			if (Fleft<0) Fleft=0;
+			if (Fright<0) Fright=0;
 
 			if(!cur_frame->answer && !only_object->answer)
 			{
 				if (all_flag->answer && p==npads-1)
-					fprintf (stdout,"d.frame -ec frame=%s at=%d,%d,%d,%d\n", pads[p],
-						100-Wbot, 100-Wtop, Wleft, Wright);
+					fprintf (stdout,"d.frame -ec frame=%s at=%.4f,%.4f,%.4f,%.4f\n", pads[p],
+						100-Fbot, 100-Ftop, Fleft, Fright);
 				else
-					fprintf (stdout,"d.frame -c frame=%s at=%d,%d,%d,%d\n", pads[p],
-						100-Wbot, 100-Wtop, Wleft, Wright);
+					fprintf (stdout,"d.frame -c frame=%s at=%.4f,%.4f,%.4f,%.4f\n", pads[p],
+						100-Fbot, 100-Ftop, Fleft, Fright);
 			}
 
 			if(!only_object->answer) {
