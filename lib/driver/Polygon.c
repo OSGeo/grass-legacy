@@ -33,6 +33,7 @@ static void line(const struct point *p, int n, int y)
 		const struct point *p0 = &p[i];
 		const struct point *p1 = &p[i + 1];
 		const struct point *tmp;
+		double fx;
 		long x;
 
 		if (p0->y == p1->y)
@@ -47,8 +48,11 @@ static void line(const struct point *p, int n, int y)
 		if (p1->y <= y)
 			continue;
 
-		x = p1->x * (y - p0->y) + p0->x * (p1->y - y);
-		x /= p1->y - p0->y;
+		fx = (double) p1->x * (y - p0->y) + (double) p0->x * (p1->y - y);
+		fx /= p1->y - p0->y;
+		x =	fx < -0x7fffffff ? -0x7fffffff :
+			fx >  0x7fffffff ?  0x7fffffff :
+			(long) fx;
 
 		if (num_x >= max_x)
 		{
