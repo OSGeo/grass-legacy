@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
     RASTER_MAP_TYPE map_type;
     int i;
     int from_stdin = FALSE;
-    struct Categories cats;
     struct GModule *module;
 
     struct
@@ -234,8 +233,12 @@ int main(int argc, char *argv[])
 
 	G_free_cats(&cats);
 	exit(EXIT_SUCCESS);
-     }
-
+    }
+    else {
+	if (G_read_cats(name, mapset, &cats) < 0) 	 
+	    G_fatal_error(_("Unable to read category file of raster map <%s> in <%s>"),
+			     name, mapset);
+    }
 
     /* describe the category labels */
     /* if no cats requested, use r.describe to get the cats */
