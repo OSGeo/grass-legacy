@@ -72,7 +72,7 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	char buff[1024];
 	char current_frame[64];
-	double Ftop, Fbot, Fleft, Fright;
+	float Ftop, Fbot, Fleft, Fright;
 
 
 	G_gisinit(argv[0]);

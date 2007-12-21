@@ -103,11 +103,10 @@ pad_error:
 /*!
  * \brief create new graphics frame, with coordinates in percent
  *
- * Creates a new frame <b>name</b> with
- * coordinates <b>top, bottom, left</b>, and <b>right</b> as
- * percentages of the screen size. If <b>name</b>
- * is the empty string '''' (i.e., *<b>name</b> = = 0), the routine returns a
- * unique string in <b>name.</b>
+ * Creates a new frame <b>name</b> with coordinates <b>top, bottom,
+ * left</b>, and <b>right</b> as percentages of the screen size.
+ * If <b>name</b> is the empty string "" (i.e., *<b>name</b> == 0),
+ * the routine returns a unique string in <b>name.</b>
  *
  *  \param name
  *  \param bottom
@@ -124,10 +123,10 @@ int D_new_window_percent(char *name, float b, float t, float l, float r)
 	int scr_l = R_screen_left();
 	int scr_r = R_screen_rite();
 
-	int win_t = scr_t + (scr_b - scr_t) * (100. - t) / 100.0;
-	int win_b = scr_t + (scr_b - scr_t) * (100. - b) / 100.0;
-	int win_l = scr_l + (scr_r - scr_l) * l / 100.0;
-	int win_r = scr_l + (scr_r - scr_l) * r / 100.0;
+	int win_t = 0.5 + scr_t + (scr_b - scr_t) * (100. - t) / 100.0;
+	int win_b = 0.5 + scr_t + (scr_b - scr_t) * (100. - b) / 100.0;
+	int win_l = 0.5 + scr_l + (scr_r - scr_l) * l / 100.0;
+	int win_r = 0.5 + scr_l + (scr_r - scr_l) * r / 100.0;
 
 	if (win_t < scr_t) win_t = scr_t;
 	if (win_b > scr_b) win_b = scr_b;
