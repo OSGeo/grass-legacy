@@ -920,7 +920,7 @@ class BufferedWindow(wx.Window):
                                                                    cat=digitClass.settings["category"],
                                                                    pos=posWindow,
                                                                    action="add")
-                        if addRecordDlg.mapInfo and \
+                        if addRecordDlg.mapDBInfo and \
                                addRecordDlg.ShowModal() == wx.ID_OK:
                             sqlfile = tempfile.NamedTemporaryFile(mode="w")
                             for sql in addRecordDlg.GetSQLString():
@@ -975,7 +975,7 @@ class BufferedWindow(wx.Window):
                                                                    qdist=qdist)
 
                     line = digitToolbar.attributesDialog.GetLine()
-                    if digitToolbar.attributesDialog.mapInfo and line:
+                    if digitToolbar.attributesDialog.mapDBInfo and line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
                         if not digitToolbar.attributesDialog.IsShown():
