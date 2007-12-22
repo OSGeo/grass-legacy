@@ -28,7 +28,7 @@ import time
 import traceback
 import types
 import re
-# for GRC (workspace file) parsering
+### for GRC (workspace file) parsering
 # xmlproc not available on Mac OS
 # from xml.parsers.xmlproc import xmlproc
 # from xml.parsers.xmlproc import xmlval
@@ -77,8 +77,8 @@ import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
 import gui_modules.globalvar as globalvar
-from   icons.icon import Icons as Icons
 from   gui_modules.debug import Debug as Debug
+from   icons.icon import Icons as Icons
 
 menucmd = {}
 
@@ -88,7 +88,8 @@ class GMFrame(wx.Frame):
     GRASS GIS. Includes command console page for typing GRASS
     (and other) commands, tree widget page for managing GIS map layers.
     """
-    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager")):
+    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager"),
+                 workspace=None):
         self.parent    = parent
         self.baseTitle = title
         self.iconsize  = (16, 16)
@@ -117,7 +118,7 @@ class GMFrame(wx.Frame):
         self.curr_page     = ''           # currently selected page for layer tree notebook
         self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
-        self.workspaceFile = None         # workspace file
+        self.workspaceFile = workspace    # workspace file
 
         # bindings
         self.Bind(wx.EVT_CLOSE,     self.OnCloseWindow)
@@ -145,6 +146,14 @@ class GMFrame(wx.Frame):
 
         # start default initial display
         self.NewDisplay()
+        
+        # load workspace file if requested
+        if (self.workspaceFile):
+            # load given workspace file
+            if self.LoadGrcXmlToLayerTree(self.workspaceFile):
+                self.SetTitle(self.baseTitle + " - " +  os.path.basename(self.workspaceFile))
+            else:
+                self.workspaceFile = None
 
     def __doLayout(self):
         """Do Layout (unused bacause of aui manager...)"""
@@ -534,13 +543,11 @@ class GMFrame(wx.Frame):
             maptree.Map.ReverseListOfLayers()
 
             file.close()
-        except Exception, err:
-            dlg = wx.MessageDialog(parent=self,
-                                   message=_("Unable to read workspace file <%s>.\n\n%s") % \
-                                       (filename, err),
-                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+        except IOError, err:
+            wx.MessageBox(parent=self,
+                          message=_("Unable to read workspace file <%s>.%s%s") % \
+                          (filename, os.linesep, err),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         return True
@@ -1235,9 +1242,13 @@ class GMApp(wx.App):
     """
     GMApp class
     """
+    def __init__(self, workspace=None):
+        self.workspaceFile = workspace
+        
+        # call parent class initializer
+        wx.App.__init__(self)
+        
     def OnInit(self):
-        # reexec_with_pythonw()
-
         # initialize all available image handlers
         wx.InitAllImageHandlers()
 
@@ -1250,7 +1261,9 @@ class GMApp(wx.App):
         wx.Yield()
 
         # create and show main frame
-        mainframe = GMFrame(parent=None, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager"))
+        mainframe = GMFrame(parent=None, id=wx.ID_ANY,
+                            title=_("GRASS GIS Layer Manager"),
+                            workspace = self.workspaceFile)
 
         mainframe.Show()
         self.SetTopWindow(mainframe)
@@ -1376,57 +1389,73 @@ class ProcessGrcXml(HandlerBase):
             self.value += ch
 
 def reexec_with_pythonw():
-  if sys.platform == 'darwin' and\
+  if sys.platform == 'darwin' and \
     not sys.executable.endswith('MacOS/Python'):
     print >> sys.stderr, _('re-executing using pythonw')
-    os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
+    os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
 
-### 2007/11 -- seems to be unused...
-# class GRasterDialog(wx.Frame):
-#     def __init__(self,parent,id=-1,title="Set raster layer"):
-#         wx.Frame.__init__(self, parent, id , title, size=(50,600))
+class Usage(Exception):
+    def __init__(self, msg):
+        self.msg = msg
 
-#         # sizers
-#         sizer = wx.BoxSizer(wx.VERTICAL)
-#         buttsizer = wx.BoxSizer(wx.HORIZONTAL)
+def printHelp():
+    """Print program help"""
+    print >> sys.stderr, "Usage:"
+    print >> sys.stderr, " python wxgui.py [options]"
+    print >> sys.stderr, "%sOptions:" % os.linesep
+    print >> sys.stderr, " -w\t--workspace file\tWorkspace file to load"
+    sys.exit(0)
 
-#         # labels
-#         lmap = wx.StaticText(self,-1,"Map name")
-#         lvalues = wx.StaticText(self,-1,"List of values to be displayed")
-#         lopaque = wx.StaticText(self,-1,"Transparency")
+def process_opt(opts, args):
+    """Process command-line arguments"""
+    workspaceFile = None
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            printHelp()
+            
+        if o in ("-w", "--workspace"):
+            if a != '':
+                workspaceFile = str(a)
+            else:
+                workspaceFile = args.pop(0)
 
-#         # checkboxes
-#         cboverlay = wx.CheckBox(self, -1, "Overlay (non-null values)")
-#         cboverlay.SetValue(True)
+    return (workspaceFile,)
 
-#         # text entries
-#         tmapname = wx.TextCtrl(self,-1,size=(-1,-1))
-#         tvalues = wx.TextCtrl(self,-1,size=(-1,-1))
+def main(argv=None):
+    #
+    # reexec for MacOS
+    #
+    reexec_with_pythonw()
 
-#         # buttons
-#         bsize=(75,-1)
-#         bok = wx.Button(self,-1, "OK",size=bsize)
-#         bapply = wx.Button(self,-1, "Apply", size=bsize)
-#         bcancel = wx.Button(self,-1, "Cancel", size=bsize)
+    #
+    # process command-line arguments
+    #
+    if argv is None:
+        argv = sys.argv
+    try:
+        try:
+            opts, args = getopt.getopt(argv[1:], "hw:",
+                                       ["help", "workspace"])
+        except getopt.error, msg:
+            raise Usage(msg)
 
-#         buttsizer.Add(bok, 0, wx.ADJUST_MINSIZE, 1)
-#         buttsizer.Add(bapply, 0, wx.ADJUST_MINSIZE, 1)
-#         buttsizer.Add(bcancel, 0, wx.ADJUST_MINSIZE, 1)
-#         sizer.Add(lopaque,1, wx.EXPAND,  1)
-#         sizer.Add(lmap,0, wx.EXPAND,  1)
-#         sizer.Add(tmapname,0, wx.EXPAND,  1)
-#         sizer.Add(lvalues,0, wx.EXPAND,  1)
-#         sizer.Add(tvalues,0, wx.EXPAND,  1)
-#         sizer.Add(cboverlay,1, wx.EXPAND,  1)
-#         sizer.Add(buttsizer,0, wx.ADJUST_MINSIZE, 1)
-#         self.SetSizer(sizer)
-#         sizer.Fit(self)
-#         self.Layout()
+    except Usage, err:
+        print >> sys.stderr, err.msg
+        print >> sys.stderr, "for help use --help"
+        printHelp()
+
+    workspaceFile = process_opt(opts, args)[0]
+
+    # replace with the appropriate catalog name
+    gettext.install("GMApp") 
+
+    #
+    # run application
+    #
+    app = GMApp(workspaceFile)
+    app.MainLoop()
 
 if __name__ == "__main__":
-  reexec_with_pythonw()
-
-  import gettext
-  gettext.install("GMApp") # replace with the appropriate catalog name
-  app = GMApp(0)
-  app.MainLoop()
+    import getopt
+    import gettext
+    sys.exit(main())
