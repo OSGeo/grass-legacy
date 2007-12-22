@@ -10,7 +10,12 @@ fi
 #if [ "$SYSTEM" = "Darwin" ] ; then
 #	pythonw "$GISBASE/etc/wx/wxgui.py" -name wxgui_py
 #else
-    python "$GISBASE/etc/wx/wxgui.py" -name wxgui_py &
+if [ ! -z "$1" ] ; then
+    # load workspace file
+    python "$GISBASE/etc/wx/wxgui.py" "--workspace" "$1" &
+else
+    python "$GISBASE/etc/wx/wxgui.py" &
+fi
 #fi
 
 exit 0
