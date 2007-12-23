@@ -2865,27 +2865,22 @@ class MapFrame(wx.Frame):
             params = ''
 
         # If location is latlon, only display north arrow (scale won't work)
-#        proj = self.projinfo['proj']
-#        if proj == 'll':
-#            barcmd = 'd.barscale -n'
-#        else:
-#            barcmd = 'd.barscale'
+        #        proj = self.projinfo['proj']
+        #        if proj == 'll':
+        #            barcmd = 'd.barscale -n'
+        #        else:
+        #            barcmd = 'd.barscale'
 
         # decoration overlay control dialog
-        dlg = DecDialog(self, wx.ID_ANY, _('Scale and North arrow'), size=(350, 200),
-                        style=wx.DEFAULT_DIALOG_STYLE,
+        dlg = DecDialog(parent=self, id=wx.ID_ANY, title=_('Scale and North arrow'),
+                        size=(350, 200),
+                        style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
                         ovltype=ovltype,
                         cmd='d.barscale',
                         drawid=id,
                         checktxt = _("Show/hide scale and arrow"),
                         ctrltxt = _("scale object"),
                         params = params)
-
-        dlg.CenterOnScreen()
-
-#        if ovltype not in self.Map.ovlookup:
-#            self.Map.AddOverlay(ovltype, type='overlay', command=['d.barscale'], l_active=False, l_render=False)
-
 
         # if OK button pressed in decoration control dialog
         if dlg.ShowModal() == wx.ID_OK:
@@ -2931,16 +2926,15 @@ class MapFrame(wx.Frame):
             params = ''
 
         # Decoration overlay control dialog
-        dlg = DecDialog(self, wx.ID_ANY, 'Legend', size=(350, 200),
-                         style=wx.DEFAULT_DIALOG_STYLE,
-                         ovltype=ovltype,
-                         cmd='d.legend',
-                         drawid=id,
-                         checktxt = "Show/hide legend",
-                         ctrltxt = "legend object",
-                         params = params)
-
-        dlg.CenterOnScreen()
+        dlg = DecDialog(parent=self, id=wx.ID_ANY, title=('Legend'),
+                        size=(350, 200),
+                        style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
+                        ovltype=ovltype,
+                        cmd='d.legend',
+                        drawid=id,
+                        checktxt = _("Show/hide legend"),
+                        ctrltxt = _("legend object"),
+                        params = params)
 
         # If OK button pressed in decoration control dialog
         val = dlg.ShowModal()
@@ -3089,36 +3083,47 @@ class DecDialog(wx.Dialog):
         self.ovlcmd  = cmd
         self.parent  = parent
         self.ovlchk  = self.parent.MapWindow.ovlchk
-        self.params  = params #previously set decoration options to pass back to options dialog
+        # previously set decoration options to pass back to options dialog
+        self.params  = params 
 
         if self.ovltype not in self.parent.Map.ovlookup:
-            self.parent.Map.AddOverlay(self.ovltype, type='overlay', command=[self.ovlcmd], l_active=False, l_render=False)
+            self.parent.Map.AddOverlay(self.ovltype, type='overlay',
+                                       command=[self.ovlcmd], l_active=False, l_render=False)
 
-        #self.MakeModal(True)
+        # self.MakeModal(True)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        self.chkbox = wx.CheckBox(self, wx.ID_ANY, checktxt)
+        self.chkbox = wx.CheckBox(parent=self, id=wx.ID_ANY, label=checktxt)
         if not drawid in self.ovlchk:
             self.ovlchk[drawid] = True
         self.chkbox.SetValue(self.ovlchk[drawid])
-        box.Add(self.chkbox, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        box.Add(item=self.chkbox, proportion=0,
+                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        optnbtn = wx.Button(self, wx.ID_ANY, "Set options")
-        box.Add(optnbtn, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        optnbtn = wx.Button(parent=self, id=wx.ID_ANY, label=_("Set options"))
+        box.Add(item=optnbtn, proportion=0, flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, ("Drag %s with mouse in pointer mode\nto position. Double-click to change options" % ctrltxt))
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY,
+                              label=_("Drag %s with mouse in pointer mode\nto position. "
+                                      "Double-click to change options" % ctrltxt))
+        box.Add(item=label, proportion=0,
+                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
 
-        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
 
+        # buttons
         btnsizer = wx.StdDialogButtonSizer()
 
         btn = wx.Button(self, wx.ID_OK)
@@ -3129,13 +3134,16 @@ class DecDialog(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+
+
+        # bindings
+        self.Bind(wx.EVT_CHECKBOX, self.OnCheck,   self.chkbox)
+        self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
-
-        self.Bind(wx.EVT_CHECKBOX, self.OnCheck,   self.chkbox)
-        self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
 
     def OnCheck(self, event):
         """
@@ -3145,7 +3153,9 @@ class DecDialog(wx.Dialog):
         self.ovlchk[self.drawid] = check
 
     def OnOptions(self, event):
-        """
+        """        self.SetSizer(sizer)
+        sizer.Fit(self)
+
         Sets option for decoration map overlays
         """
 
