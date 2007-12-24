@@ -74,7 +74,15 @@ $ grass -wx
 
 3 - STARTUP FROM GRASS TERMINAL
 
-Simply type wxgrass from the GRASS terminal.
+Simply type
+
+$ wxgrass
+
+from the GRASS terminal.
+
+You can also specify workspace file to load on startup.
+
+$ wxgrass myworkspace.grc
 
 4 - CLI Display scripts
 
