@@ -64,14 +64,13 @@ class Log:
 class VirtualAttributeList(wx.ListCtrl,
                            listmix.ListCtrlAutoWidthMixin,
                            listmix.ColumnSorterMixin):
-    #                           listmix.TextEditMixin):
     """
     Support virtual list class
     """
     def __init__(self, parent, log, mapDBInfo, layer):
         wx.ListCtrl.__init__(self, parent=parent, id=wx.ID_ANY,
                              style=wx.LC_REPORT | wx.LC_HRULES |
-                             wx.LC_VRULES | wx.LC_VIRTUAL)
+                             wx.LC_VRULES | wx.LC_VIRTUAL | wx.LC_SORT_ASCENDING)
 
         #
         # initialize variables
@@ -101,15 +100,17 @@ class VirtualAttributeList(wx.ListCtrl,
                                                           (16,16)))
         self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
 
-        self.LoadData(layer)
-        
+        keyColumn = self.LoadData(layer)
+
         # setup mixins
         listmix.ListCtrlAutoWidthMixin.__init__(self)
         listmix.ColumnSorterMixin.__init__(self, len(self.columns))
-        #listmix.TextEditMixin.__init__(self)
 
-        # sort by cat by default
-        self.SortListItems(col=0, ascending=1) # FIXME category column can be different
+        # sort item by category (id)
+        if keyColumn > -1:
+            self.SortListItems(col=keyColumn, ascending=1) 
+        else:
+            self.SortListItems(col=0, ascending=1) 
 
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
@@ -130,7 +131,10 @@ class VirtualAttributeList(wx.ListCtrl,
         self.LoadData(self.layer)
 
     def LoadData(self, layer, cols='*', where=''):
-        """Load data into list"""
+        """Load data into list
+
+        Returns id of key column or -1 if key column is not displayed
+        """
 
         # These two should probably be passed to init more cleanly
         # setting the numbers of items = number of elements in the dictionary
@@ -158,8 +162,13 @@ class VirtualAttributeList(wx.ListCtrl,
             keyId = columnNames.index(keyColumn)
 
         i = 0
+        info = wx.ListItem()
+        info.m_mask = wx.LIST_MASK_TEXT | wx.LIST_MASK_IMAGE | wx.LIST_MASK_FORMAT
+        info.m_image = -1
+        info.m_format = 0
         for column in columnNames:
-            self.InsertColumn(col=i, heading=column)
+            info.m_text = column
+            self.InsertColumnInfo(i, info)
             i += 1
 
             if i >= 256:
@@ -231,6 +240,8 @@ class VirtualAttributeList(wx.ListCtrl,
 
         self.SendSizeEvent()
 
+        return keyId
+    
     def OnItemSelected(self, event):
         """Item selected. Add item to selected cats..."""
         #         cat = int(self.GetItemText(event.m_itemIndex))
@@ -285,6 +296,17 @@ class VirtualAttributeList(wx.ListCtrl,
     def OnColumnClick(self, event):
         """Column heading clicked -> sorting"""
         self._col = event.GetColumn()
+
+        # FIXME
+        # This artificial code removes duplicated arrow symbol from
+        # column header, should be done automatically
+        for column in range(self.GetColumnCount()):
+            name = self.GetColumn(column).GetText()
+            width = self.GetColumnWidth(column)
+            self.DeleteColumn(column)
+            self.InsertColumn(column, name)
+            self.SetColumnWidth(column, width)
+
         event.Skip()
 
     def SortItems(self, sorter=cmp):
@@ -295,7 +317,7 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # redraw the list
         self.Refresh()
-
+        
     def Sorter(self, key1, key2):
         colName = self.GetColumn(self._col).GetText()
         ascending = self._colSortFlag[self._col]
@@ -321,9 +343,6 @@ class VirtualAttributeList(wx.ListCtrl,
     def GetSortImages(self):
         """Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py"""
         return (self.sm_dn, self.sm_up)
-
-    def SetVirtualData(self, row, col, data):
-        pass
 
 class AttributeManager(wx.Frame):
     """
@@ -1454,15 +1473,15 @@ class AttributeManager(wx.Frame):
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
+        keyColumn = -1 # index of key column
+        listWin = self.FindWindowById(self.layerPage[self.layer]['data'])
         if self.FindWindowById(self.layerPage[self.layer]['simple']).GetValue():
             # simple sql statement
             where = self.FindWindowById(self.layerPage[self.layer]['where']).GetValue().strip()
             if len(where) > 0:
-                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
-                    self.layer, where=where)
+                keyColumn = listWin.LoadData(self.layer, where=where)
             else:
-                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
-                    self.layer)
+                keyColumn = listWin.LoadData(self.layer)
         else:
             # advanced sql statement
             valid, cols, where = \
@@ -1473,8 +1492,13 @@ class AttributeManager(wx.Frame):
                       (valid, cols, where))
 
             if valid is True:
-                self.FindWindowById(self.layerPage[self.layer]['data']).LoadData( \
-                    self.layer, cols=cols, where=where)
+                keyColumn = listWin.LoadData(self.layer, cols=cols, where=where)
+
+        # sort by key column
+        if keyColumn > -1:
+            listWin.SortListItems(col=keyColumn, ascending=1)
+        else:
+            listWin.SortListItems(col=0, ascending=1) 
 
         # update statusbar
         self.log.write(_("Number of loaded records: %d") % \
@@ -3132,10 +3156,11 @@ class ModifyTableRecord(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, id, title, style=style)
 
-        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
-
-        self.btnCancel = wx.Button(self.panel, wx.ID_CANCEL)
-        self.btnSubmit = wx.Button(self.panel, wx.ID_OK)
+        self.panel = scrolled.ScrolledPanel(parent=self, id=wx.ID_ANY,
+                                            style=wx.TAB_TRAVERSAL)
+        
+        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
+        self.btnSubmit = wx.Button(self, wx.ID_OK)
         self.btnSubmit.SetDefault()
 
         self.widgets = []
@@ -3143,7 +3168,7 @@ class ModifyTableRecord(wx.Dialog):
         for column, value in data:
             label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                   label=column + ":")
-            value = wx.Texttrl(parent=self.panel, id=wx.ID_ANY,
+            value = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
                                 value=value, size=(250, -1))
             if keyEditable[0] > -1: # id given
                 if keyEditable[0] == id:
@@ -3152,9 +3177,15 @@ class ModifyTableRecord(wx.Dialog):
                                  value.GetId()))
 
             id += 1
+            
         self.__Layout()
 
-        self.SetMinSize(self.GetSize())
+        winSize = self.GetSize()
+        # fix height of window frame if needed
+        if winSize[1] > 480:
+            winSize[1] = 480
+            self.SetSize(winSize)
+        self.SetMinSize(winSize)
 
     def __Layout(self):
         """Do layout"""
@@ -3173,20 +3204,24 @@ class ModifyTableRecord(wx.Dialog):
             dataSizer.Add(value, proportion=0,
                           flag=wx.EXPAND)
 
+        self.panel.SetSizer(dataSizer)
+        self.panel.SetAutoLayout(1)
+        self.panel.SetupScrolling(scroll_x=False)
+
         # buttons
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(self.btnCancel)
         btnSizer.AddButton(self.btnSubmit)
         btnSizer.Realize()
 
-        sizer.Add(item=dataSizer, proportion=1,
+        sizer.Add(item=self.panel, proportion=1,
                   flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         sizer.Add(item=btnSizer, proportion=0,
                   flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
-       
-        self.panel.SetSizer(sizer)
-        sizer.Fit(self)
+
+        self.SetSizer(sizer)
+        self.SetAutoLayout(1)
 
     def GetValues(self, columns=None):
         """Return list of values (as string).
