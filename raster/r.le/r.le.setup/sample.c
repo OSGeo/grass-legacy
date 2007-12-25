@@ -312,11 +312,11 @@ getradius:
               if (!G_yes("\n       radius (> 100 pixels)?   ",1))
                  goto getradius;
            }
-           else {
-              ratio = 1.0;
-              u_w = (int)(2 * radius);
-              u_l = (int)(2 * radius);
-           }
+
+	   ratio = 1.0;
+	   u_w = (int)(2 * radius);
+	   u_l = (int)(2 * radius);
+
 	   if (fmask > 0) {
 	      count = 0;
 	      row_buf = G_allocate_raster_buf(CELL_TYPE);
