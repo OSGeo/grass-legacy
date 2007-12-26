@@ -215,7 +215,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID4 = wx.NewId()
             self.popupID5 = wx.NewId()
             self.popupID6 = wx.NewId()
-
+            self.popupID7 = wx.NewId()
+            
         self.popupMenu = wx.Menu()
         # general item
         self.popupMenu.Append(self.popupID1, text=_("Remove"))
@@ -272,9 +273,28 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
 
+        self.popupMenu.Append(self.popupID7, _("Metadata"))
+        self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID7)
+
         ## self.PopupMenu(self.popupMenu, pos)
         self.PopupMenu(self.popupMenu)
         self.popupMenu.Destroy()
+
+    def OnMetadata(self, event):
+        """Print metadata of raster/vector map layer
+        TODO: Dialog to modify metadata
+        """
+        mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
+        mltype = self.GetPyData(self.layer_selected)[0]['type']
+
+        if mltype == 'raster':
+            cmd = ['r.info']
+        elif mltype == 'vector':
+            cmd = ['v.info']
+        cmd.append('map=%s' % mapLayer.name)
+
+        # print output to command log area
+        self.gismgr.goutput.RunCmd(cmd)
 
     def OnHistogram(self, event):
         """
