@@ -212,30 +212,24 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.AddItem('Not selectable element')
             return
 
-        #Get directory tree nodes
+        # get directory tree nodes
+        # reorder mapsets based on search path (TODO)
+        for i in range(len(mapsets)):
+            if i > 0 and mapsets[i] == curr_mapset:
+                mapsets[i] = mapsets[0]
+                mapsets[0] = curr_mapset
         for dir in mapsets:
-            if dir == curr_mapset:
-                dir_node = self.AddItem('Mapset: '+dir)
-                self.seltree.SetItemTextColour(dir_node, wx.Colour(50,50,200))
-                try:
-                    cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
-                    elem_list = gcmd.Command(cmdlist).ReadStdOutput()
-                    elem_list.sort()
-                    for elem in elem_list:
-                        if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
-                except:
-                    continue
-            else:
-                dir_node = self.AddItem('Mapset: '+dir)
-                self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
-                try:
-                    cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
-                    elem_list = gcmd.Command(cmdlist).ReadStdOutput()
-                    elem_list.sort()
-                    for elem in elem_list:
-                        if elem != '': self.AddItem(elem+'@'+dir, parent=dir_node)
-                except:
-                    continue
+            dir_node = self.AddItem('Mapset: '+dir)
+            self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
+            try:
+                cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
+                elem_list = gcmd.Command(cmdlist).ReadStdOutput()
+                elem_list.sort()
+                for elem in elem_list:
+                    if elem != '':
+                        self.AddItem(elem+'@'+dir, parent=dir_node)
+            except:
+                continue
 
             if self.seltree.ItemHasChildren(dir_node):
                 self.seltree.Expand(dir_node)
