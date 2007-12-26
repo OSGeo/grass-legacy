@@ -222,9 +222,8 @@ proc gisSetWindow {} {
     	-borderwidth {2}
 
     label .frame0.frameDB.left.label \
-    	-anchor {n} \
     	-justify right \
-	-wraplength 110 \
+    	-wraplength 200 \
     	-text [G_msg "GIS Data Directory: "]
 
     entry .frame0.frameDB.mid.entry \
@@ -236,11 +235,10 @@ proc gisSetWindow {} {
     scrollbar .frame0.frameDB.mid.hscrollbar \
     	-command { .frame0.frameDB.mid.entry xview} \
     	-relief {sunken} \
-    	-width 12 \
     	-orient {horizontal}
  
 	button .frame0.frameDB.right.button \
-		-text [G_msg "Browse..."] -bd 1 \
+		-text [G_msg "Browse..."] -padx 10 -bd 1 \
 		-command { set tmp [tk_chooseDirectory -initialdir $database \
 			-parent .frame0 -title [G_msg "New GIS data directory"] -mustexist true]
 			if {$tmp != ""} {
@@ -250,12 +248,12 @@ proc gisSetWindow {} {
 			}
 
     pack .frame0.frameDB.left.label -side top
-    pack .frame0.frameDB.mid.entry -side top -fill x
+    pack .frame0.frameDB.mid.entry -side top
     pack .frame0.frameDB.mid.hscrollbar -side bottom -fill x
-    pack .frame0.frameDB.right.button -side left -fill x
-    pack .frame0.frameDB.left -side left  -anchor n -fill x
-    pack .frame0.frameDB.mid -side left -fill x
-    pack .frame0.frameDB.right -side left -anchor n -fill x
+    pack .frame0.frameDB.right.button -side left
+    pack .frame0.frameDB.left -side left -anchor n
+    pack .frame0.frameDB.mid -side left -anchor n
+    pack .frame0.frameDB.right -side left -anchor n -padx 10
 
     # -----------------------------------
     # build .frame0.frameLOC - middle, left section for location selection listbox 
@@ -264,9 +262,8 @@ proc gisSetWindow {} {
     	-borderwidth {2}
 
     label .frame0.frameLOC.label \
-    	-anchor {w} \
 	-wraplength 170 \
-    	-text [G_msg "Project Location\n(projection/coordinate system)"] 
+    	-text [G_msg "Project Location (projection/coordinate system)"] 
 
     listbox .frame0.frameLOC.listbox \
     	-relief {sunken} \
@@ -275,11 +272,11 @@ proc gisSetWindow {} {
     	-xscrollcommand {.frame0.frameLOC.hscrollbar set} \
     	-selectmode single
 
-    scrollbar .frame0.frameLOC.vscrollbar -width 12 \
+    scrollbar .frame0.frameLOC.vscrollbar \
     	-command {.frame0.frameLOC.listbox yview} \
     	-relief {sunken}
 
-    scrollbar .frame0.frameLOC.hscrollbar -width 12 \
+    scrollbar .frame0.frameLOC.hscrollbar \
     	-command {.frame0.frameLOC.listbox xview} \
     	-orient {horizontal} \
     	-relief {sunken}
@@ -298,9 +295,8 @@ proc gisSetWindow {} {
     	-borderwidth {2}
 
     label .frame0.frameMS.label \
-    	-anchor {w} \
-	-wraplength 150 \
-    	-text [G_msg "Accessible Mapsets\n(directories of GIS files)"] 
+	-wraplength 170 \
+    	-text [G_msg "Accessible Mapsets (directories of GIS files)"] 
 
     listbox .frame0.frameMS.listbox \
     	-relief {sunken} \
@@ -309,11 +305,11 @@ proc gisSetWindow {} {
     	-xscrollcommand {.frame0.frameMS.hscrollbar set} \
     	-selectmode single
 
-    scrollbar .frame0.frameMS.vscrollbar -width 12 \
+    scrollbar .frame0.frameMS.vscrollbar \
     	-command {.frame0.frameMS.listbox yview} \
     	-relief {sunken}
 
-    scrollbar .frame0.frameMS.hscrollbar -width 12 \
+    scrollbar .frame0.frameMS.hscrollbar \
     	-command {.frame0.frameMS.listbox xview} \
     	-orient {horizontal} \
     	-relief {sunken}
@@ -340,6 +336,9 @@ proc gisSetWindow {} {
     frame .frame0.frameNMS.third \
     	-borderwidth {2}
 
+    frame .frame0.frameNMS.spacer \
+    	-borderwidth {2} -height {10}
+
     frame .frame0.frameNMS.fourth \
     	-borderwidth {2}
 
@@ -353,9 +352,8 @@ proc gisSetWindow {} {
     	-borderwidth {2}
 
     label .frame0.frameNMS.first.label \
-    	-anchor {n} \
-	-wraplength 160 \
-    	-text [G_msg "Create new mapset\nin selected location"]
+	-wraplength 200 \
+    	-text [G_msg "Create new mapset in selected location"]
 
     entry .frame0.frameNMS.second.entry \
     	-relief {sunken} \
@@ -364,7 +362,7 @@ proc gisSetWindow {} {
 	
     button .frame0.frameNMS.third.button \
     	-text [G_msg "Create new mapset"] \
-    	-width 20 -bd 1 -wraplength 160 \
+    	-padx 10 -bd 1 -wraplength 150 \
      	-command { 
      	    set mymapset [ string trim $mymapset ]
      	    if { [file exists $mymapset] } {
@@ -409,14 +407,13 @@ proc gisSetWindow {} {
 	}
 
     label .frame0.frameNMS.fourth.label \
-    	-anchor {n} \
-	-wraplength 160 \
+	-wraplength 200 \
     	-text [G_msg "Define new location with..."]
 
 
     button .frame0.frameNMS.fifth.button \
     	-text [G_msg "Georeferenced file"] \
-    	-width 20 -bd 1 -wraplength 160\
+    	-width 22 -bd 1 -wraplength 150\
     	-relief raised \
     	-command {putGRASSRC $gisrc_name
 		fileOpt::fileLocCom
@@ -429,7 +426,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameNMS.sixth.button \
     	-text [G_msg "EPSG codes"] \
-    	-width 20 -bd 1 -wraplength 160\
+    	-width 22 -bd 1 -wraplength 150\
     	-relief raised \
     	-command { putGRASSRC $gisrc_name
 		if { [epsgOpt::epsgLocCom] } {
@@ -442,7 +439,7 @@ proc gisSetWindow {} {
     	    			
     button .frame0.frameNMS.seventh.button \
     	-text [G_msg "Projection values"] \
-    	-width 20 -bd 1 -wraplength 160\
+    	-width 22 -bd 1 -wraplength 150\
     	-relief raised \
     	-command {
 			if { $mingw == "1" } {
@@ -455,20 +452,21 @@ proc gisSetWindow {} {
         }
 
     pack append .frame0.frameNMS
-    pack .frame0.frameNMS.first.label -side top
-    pack .frame0.frameNMS.second.entry -side top -fill x
-    pack .frame0.frameNMS.third.button -side top -fill x
-    pack .frame0.frameNMS.fifth.button -side bottom -fill x
-    pack .frame0.frameNMS.sixth.button -side bottom -fill x
-    pack .frame0.frameNMS.seventh.button -side bottom -fill x
-    pack .frame0.frameNMS.fourth.label -side bottom
-    pack .frame0.frameNMS.first -side top  -anchor n
-    pack .frame0.frameNMS.second -side top -expand yes
-    pack .frame0.frameNMS.third -side top -anchor n -expand yes
-    pack .frame0.frameNMS.seventh -side bottom -anchor s -expand yes
-    pack .frame0.frameNMS.sixth -side bottom -anchor s -expand yes
-    pack .frame0.frameNMS.fifth -side bottom -anchor s -expand yes
-    pack .frame0.frameNMS.fourth -side bottom -anchor s -expand yes
+    pack .frame0.frameNMS.first.label
+    pack .frame0.frameNMS.second.entry
+    pack .frame0.frameNMS.third.button
+    pack .frame0.frameNMS.fourth.label
+    pack .frame0.frameNMS.fifth.button
+    pack .frame0.frameNMS.sixth.button
+    pack .frame0.frameNMS.seventh.button
+    pack .frame0.frameNMS.first
+    pack .frame0.frameNMS.second
+    pack .frame0.frameNMS.third
+    pack .frame0.frameNMS.spacer
+    pack .frame0.frameNMS.fourth
+    pack .frame0.frameNMS.fifth
+    pack .frame0.frameNMS.sixth
+    pack .frame0.frameNMS.seventh
 
     # ----------------------------------
     # build .frame0.frameBUTTONS
@@ -479,7 +477,7 @@ proc gisSetWindow {} {
     
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Enter GRASS"] \
-    	-width 10 -bd 1 -fg green4 -default active -wraplength 100 \
+    	-padx 10 -bd 1 -fg green4 -default active -wraplength 100 \
      	-command {
             if {[CheckLocation] == 0} {
 				DialogGen .wrnDlg [G_msg "WARNING: invalid location"] warning \
@@ -506,7 +504,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.help \
     	-text [G_msg "Help"] \
-    	-width 10 -bd 1 -wraplength 100 \
+    	-padx 10 -bd 1 -wraplength 100 \
     	-bg honeydew2 \
 		-command {
 			if { [winfo exists .help] } {
@@ -524,7 +522,7 @@ proc gisSetWindow {} {
 
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Exit"] \
-    	-width 10 -bd 1 -wraplength 100 \
+    	-padx 10 -bd 1 -wraplength 100 \
     	-command { exit 2 }
 
 
@@ -539,10 +537,14 @@ proc gisSetWindow {} {
     # packed it all
     # ----------------------------------
 
+    frame .frame0.frameSpacer \
+    	-borderwidth {2} -height {5}
+
     # pack widget .frame0
     pack append .frame0 \
-    	.frame0.frameDB { top expand fill } \
+    	.frame0.frameDB { top } \
     	.frame0.frameBUTTONS { bottom expand fill } \
+    	.frame0.frameSpacer { bottom } \
     	.frame0.frameLOC { left expand  } \
     	.frame0.frameMS { left expand  } \
      	.frame0.frameNMS { left expand fill }
