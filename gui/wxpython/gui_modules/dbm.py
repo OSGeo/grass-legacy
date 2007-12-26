@@ -2825,7 +2825,7 @@ class DisplayAttributesDialog(wx.Dialog):
                     value = columns[name]['values'][idx]
                     id    = columns[name]['ids'][idx]
                     if name.lower() != "cat":
-                        self.FindWindowById(id).SetValue(value)
+                        self.FindWindowById(id).SetValue(str(value))
 
     def OnCancel(self, event):
         """Cancel button pressed"""
