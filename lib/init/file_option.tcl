@@ -102,16 +102,16 @@ proc fileOpt::fileLocCom args {
 		-helptext [G_msg "Path to georeferenced file (format must be readable by GDAL/OGR)"]
 		
 	#browse for georeferenced file
-	Button $row2.browsefile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+	Button $row2.browsefile -justify center -padx 10 -bd 1 -text [G_msg "Browse..."] \
 		-helptext [G_msg "Browse to locate georeferenced file"] \
 		-command "fileOpt::browse_file"
 		
 	pack $row2.filepath $row2.browsefile -side left -expand 0 -fill x -padx 2
 
-	Button $row3.submit -justify center -width 15 -text [G_msg "Define location"] \
+	Button $row3.submit -justify center -padx 10 -text [G_msg "Define location"] \
 		-command "fileOpt::def_loc" -bd 1
 				
-	Button $row3.cancel -justify center -width 15 -text [G_msg "Cancel"] \
+	Button $row3.cancel -justify center -padx 10 -text [G_msg "Cancel"] \
 		-command {destroy .fileloc} -bd 1
 		
 	pack $row3.submit -side left -fill x -expand 0
