@@ -394,7 +394,7 @@ int main (int argc, char *argv[])
         if( parm.band->answer != NULL )
             nBand = atoi(parm.band->answer);
         
-        hBand = GDALGetRasterBand(hDS,1);
+        hBand = GDALGetRasterBand(hDS, nBand);
         if( hBand == NULL )
         {
             G_fatal_error(_("Selected band (%d) does not exist"), 
