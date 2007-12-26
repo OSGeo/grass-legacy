@@ -266,15 +266,17 @@ class LayerTree(CT.CustomTreeCtrl):
                 else:
                     self.popupMenu.Enable(self.popupID5, False)
                     self.popupMenu.Enable(self.popupID6, False)
+            self.popupMenu.Append(self.popupID7, _("Metadata"))
+            self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID7)
+
 
         # raster
         elif mltype and mltype == "raster":
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, _("Histogram"))
             self.Bind (wx.EVT_MENU, self.OnHistogram, id=self.popupID4)
-
-        self.popupMenu.Append(self.popupID7, _("Metadata"))
-        self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID7)
+            self.popupMenu.Append(self.popupID5, _("Metadata"))
+            self.Bind (wx.EVT_MENU, self.OnMetadata, id=self.popupID5)
 
         ## self.PopupMenu(self.popupMenu, pos)
         self.PopupMenu(self.popupMenu)
@@ -661,16 +663,11 @@ class LayerTree(CT.CustomTreeCtrl):
         if self.drag == False and self.first == False:
             # change active parameter for item in layers list in render.Map
             if self.GetPyData(item)[0]['type'] == 'group':
-                childitem = self.GetFirstChild(item)
-                child = childitem[0]
-                cookie = childitem[1]
-                for n in range(0, self.GetChildrenCount(item)):
-                    if checked == False:
-                        childchecked = False
-                    else:
-                        childchecked = child.IsChecked()
-                        self.Map.ChangeLayerActive(self.GetPyData(child)[0]['maplayer'], childchecked)
-                    child = self.GetNextChild(item, cookie)[0]
+                child, cookie = self.GetFirstChild(item)
+                while child:
+                    self.CheckItem(child, checked)
+                    self.Map.ChangeLayerActive(self.GetPyData(child)[0]['maplayer'], checked)
+                    child = self.GetNextSibling(child)
             else:
                 self.Map.ChangeLayerActive(self.GetPyData(item)[0]['maplayer'], checked)
 
@@ -881,12 +878,12 @@ class LayerTree(CT.CustomTreeCtrl):
         newItem  = self.RecreateItem (event, self.dragItem)
 
         if  self.GetPyData(newItem)[0]['type'] == 'group':
-            (child, cookei) = self.GetFirstChild(self.dragItem)
+            (child, cookie) = self.GetFirstChild(self.dragItem)
             if child:
                 while child:
                     self.RecreateItem(event, child, parent=newItem)
                     self.Delete(child)
-                    child = self.GetNextChild(old, cookei)[0]
+                    child = self.GetNextChild(old, cookie)[0]
 
             self.Expand(newItem)
 
