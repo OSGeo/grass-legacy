@@ -1,16 +1,15 @@
 # translation of grasstcl_th.po to Thai
-# Markus Neteler <neteler@itc.it>, 2004, 2005, 2006.
 # Sarawut Ninsawat <sarawut.map@gmail.com>, 2007.
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, GRASS Development Team
+# Copyright (C) 2007, GRASS Development Team
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_th\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-26 21:10+0200\n"
 "PO-Revision-Date: 2007-12-07 11:33+0900\n"
-"Last-Translator: Sarawut Ninsawat <sarawut.map@gmailc.om>\n"
-"Language-Team: Thai <<translations@grass.itc.it>>\n"
+"Last-Translator: Sarawut Ninsawat <sarawut.map@gmail.com>\n"
+"Language-Team: Thai <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
