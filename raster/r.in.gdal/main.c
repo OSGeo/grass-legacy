@@ -83,8 +83,13 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
     parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description = _("Raster file to be imported");
+    parm.input->gisprompt = "old_file,file,input";
+    parm.input->required = NO; /* not required because of -f flag */
+    parm.input->guisection = _("Main");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
+    parm.output->required = NO; /* not required because of -f flag */
+    parm.output->guisection = _("Main");
 
     parm.band = G_define_option();
     parm.band->key = "band";
@@ -180,6 +185,15 @@ int main (int argc, char *argv[])
 	        GDALGetDriverLongName( hDriver ) );
 	}
 	exit(EXIT_SUCCESS);
+    }
+
+    if (!input) {
+	G_fatal_error(_("Required parameter <%s> not set"),
+		      parm.input->key);
+    }
+
+    if (!output) {
+	G_fatal_error(_("Name for output raster map not specified"));
     }
 
 /* -------------------------------------------------------------------- */
