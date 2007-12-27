@@ -249,28 +249,32 @@ static int remove_group_files(char group[INAME_LEN], char **rasters, int k)
     I_get_group_ref(group, &ref_tmp);
     I_init_group_ref(&ref);
 
-    /* Parse through supplied rasters */
-    for (m = 0; m < k; m++) {
+    /* Go through existing files to check for duplicates */
+    for (m = 0; m < ref_tmp.nfiles; m++) {
 	skip = 0;
-	strcpy(tmp_name, rasters[m]);
-	mapset = G_mapset();
+	/* Parse through supplied rasters */
+	for (n = 0; n < k; n++) {
+	    strcpy(tmp_name, rasters[n]);
+	    mapset = G_mapset();
 
-	/* Parse out mapset */
-	if (G__name_is_fully_qualified(rasters[m], xname, xmapset)) {
-	    strcpy(tmp_name, xname);
-	    strcpy(mapset, xmapset);
+	    /* Parse out mapset */
+	    if (G__name_is_fully_qualified(rasters[n], xname, xmapset)) {
+		strcpy(tmp_name, xname);
+		strcpy(mapset, xmapset);
+	    }
+
+	    if ((strcmp(tmp_name, ref_tmp.file[m].name) == 0) &&
+		(strcmp(mapset, ref_tmp.file[m].mapset) == 0)) {
+		G_message(_("Removing raster map <%s> from group"),
+			  G_fully_qualified_name(tmp_name, mapset));
+		skip = 1;
+		break;
+	    }
 	}
-
-	/* Go through existing files to check for duplicates */
-	for (n = 0; n < ref_tmp.nfiles; n++) {
-	    if ((strcmp(tmp_name, ref_tmp.file[n].name) == 0) &&
-		(strcmp(mapset, ref_tmp.file[n].mapset) == 0)) {
-		G_message(_("Found file <%s@%s> in group."), tmp_name, mapset);
-	    }
-	    else {
-		I_add_file_to_group_ref(ref_tmp.file[n].name,
-					ref_tmp.file[n].mapset, &ref);
-	    }
+	
+	if (skip == 0) {
+	    I_add_file_to_group_ref(ref_tmp.file[m].name,
+				    ref_tmp.file[m].mapset, &ref);
 	}
     }
 
@@ -295,28 +299,32 @@ static int remove_subgroup_files(char group[INAME_LEN],
     I_get_subgroup_ref(group, subgroup, &ref_tmp);
     I_init_group_ref(&ref);
 
-    /* Parse through supplied rasters */
-    for (m = 0; m < k; m++) {
+    /* Go through existing files to check for duplicates */
+    for (m = 0; m < ref_tmp.nfiles; m++) {
 	skip = 0;
-	strcpy(tmp_name, rasters[m]);
-	mapset = G_mapset();
+	/* Parse through supplied rasters */
+	for (n = 0; n < k; n++) {
+	    strcpy(tmp_name, rasters[n]);
+	    mapset = G_mapset();
 
-	/* Parse out mapset */
-	if (G__name_is_fully_qualified(rasters[m], xname, xmapset)) {
-	    strcpy(tmp_name, xname);
-	    strcpy(mapset, xmapset);
+	    /* Parse out mapset */
+	    if (G__name_is_fully_qualified(rasters[n], xname, xmapset)) {
+		strcpy(tmp_name, xname);
+		strcpy(mapset, xmapset);
+	    }
+
+	    if ((strcmp(tmp_name, ref_tmp.file[m].name) == 0) &&
+		(strcmp(mapset, ref_tmp.file[m].mapset) == 0)) {
+		G_message(_("Removing raster map <%s> from subgroup"),
+			  G_fully_qualified_name(tmp_name, mapset));
+		skip = 1;
+		break;
+	    }
 	}
-
-	/* Go through existing files to check for duplicates */
-	for (n = 0; n < ref_tmp.nfiles; n++) {
-	    if ((strcmp(tmp_name, ref_tmp.file[n].name) == 0) &&
-		(strcmp(mapset, ref_tmp.file[n].mapset) == 0)) {
-		G_message(_("Found file <%s@%s> in subgroup."), tmp_name, mapset);
-	    }
-	    else {
-		I_add_file_to_group_ref(ref_tmp.file[n].name,
-					ref_tmp.file[n].mapset, &ref);
-	    }
+	
+	if (skip == 0) {
+	    I_add_file_to_group_ref(ref_tmp.file[m].name,
+				    ref_tmp.file[m].mapset, &ref);
 	}
     }
 
