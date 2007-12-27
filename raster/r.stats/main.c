@@ -250,7 +250,7 @@ int main (int argc, char *argv[])
 
 /* open all raster maps */
     if( option.cell->answers[0] == NULL )
-	G_fatal_error(_("Raster map not found."));
+	G_fatal_error(_("Raster map not found"));
 
     names = option.cell->answers;
     ptr = option.cell->answers;
@@ -260,7 +260,7 @@ int main (int argc, char *argv[])
 	name = *ptr;
 	mapset = G_find_cell2 (name, "");
 	if (!mapset)
-	    G_fatal_error (_("%s: [%s] not found"), G_program_name(), name);
+	    G_fatal_error (_("Raster map <%s> not found"), name);
 	fd = (int *) G_realloc (fd, (nfiles+1) * sizeof(int));
         is_fp = (int *) G_realloc (is_fp, (nfiles+1) * sizeof(int));
         DMAX = (DCELL *) G_realloc (DMAX, (nfiles+1) * sizeof(DCELL));
@@ -319,7 +319,7 @@ int main (int argc, char *argv[])
 	else
 	{
 	   if(G_read_range (name, mapset, &range) < 0)
-	      G_fatal_error (_("%s: can't read range for [%s]"),G_program_name(),name);
+	      G_fatal_error (_("Unable to read range for map <%s>"),name);
 	   G_get_range_min_max (&range, &min, &max);
         }
 	if(!null_set)

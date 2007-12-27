@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 	    else {
 		fp = fopen(parm.file->answer, "r");
 		if (!fp)
-		    G_fatal_error(_("Unable to open file: <%s>"), parm.file->answer);
+		    G_fatal_error(_("Unable to open file <%s>"), parm.file->answer);
 	    }
 
 	    G_init_raster_cats("", &cats);

@@ -44,11 +44,11 @@ int main (int argc, char *argv[])
 
     mapset = G_find_cell2(parm.raster->answer, G_mapset());
     if (mapset == NULL)
-        G_fatal_error(_("Raster file [%s] not found"), parm.raster->answer);
+        G_fatal_error(_("Raster map <%s> not found"), parm.raster->answer);
 
     check_stats(parm.raster->answer, mapset);
 
-    G_message(_("Statistics for [%s] updated"), parm.raster->answer);
+    G_message(_("Statistics for <%s> updated"), parm.raster->answer);
 
     return EXIT_SUCCESS;
 }

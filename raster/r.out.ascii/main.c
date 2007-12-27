@@ -118,36 +118,36 @@ main(int argc, char *argv[])
     if(parm.dp->answer)
     {
         if(sscanf(parm.dp->answer,"%d",&dp)!=1)
-           G_fatal_error("failed to interpret dp as an integer");
+           G_fatal_error(_("Failed to interpret dp as an integer"));
         if(dp>20 || dp < 0)
-           G_fatal_error("dp has to be from 0 to 20");
+           G_fatal_error(_("dp has to be from 0 to 20"));
     }
 
     width=10;
     if(parm.width->answer)
     {
         if(sscanf(parm.width->answer,"%d",&width)!=1)
-            G_fatal_error("failed to interpret width as an integer");
+            G_fatal_error(_("Failed to interpret width as an integer"));
     }
 
     null_str = parm.null->answer;
 
     if (flag.surfer->answer && flag.noheader->answer)
-    	G_fatal_error("Both -s and -h doesn't make sense.");
+    	G_fatal_error(_("Both -s and -h doesn't make sense"));
 
     if (flag.surfer->answer && flag.modflow->answer)
-        G_fatal_error("Use -M or -s, not both.");
+        G_fatal_error(_("Use -M or -s, not both"));
 
     name = parm.map->answer;
     mapset = G_find_cell2(name, "");
 
     if (!mapset)
-        G_fatal_error ("Cell file [%s] not found",name);
+        G_fatal_error (_("Raster map <%s> not found"),name);
 
 /* open raster map */
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
-        G_fatal_error("Unable to open input map");
+        G_fatal_error(_("Unable to open raster map <%s>"), name);
 
     map_type = G_get_raster_map_type(fd);
 
@@ -170,7 +170,7 @@ main(int argc, char *argv[])
     if(parm.output->answer && strcmp("-",parm.output->answer)!=0)
     {
         if(NULL == (fp = fopen(parm.output->answer, "w")))
-           G_fatal_error("Not able to open file [%s]", parm.output->answer);
+           G_fatal_error(_("Unable to open file <%s>"), parm.output->answer);
     }
     else
        fp = stdout;
@@ -181,7 +181,7 @@ main(int argc, char *argv[])
         if(!flag.noheader->answer)
         {
             if(writeGSheader(fp,name,mapset))
-               G_fatal_error ("Can't read fp range for [%s]",name);
+               G_fatal_error (_("Unable to read fp range for <%s>"),name);
         }
         rc=write_GSGRID(fd,fp,nrows,ncols,out_type,dp,surfer_null_str,width);
     }
@@ -197,7 +197,7 @@ main(int argc, char *argv[])
     }
     if(rc)
     {
-        G_fatal_error("Read failed at row [%d]",rc);
+        G_fatal_error(_("Read failed at row %d"),rc);
     }
   
 /* tidy up and go away */
