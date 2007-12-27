@@ -696,11 +696,6 @@ class mainFrame(wx.Frame):
         if cmd == [] or cmd == None:
             return
 
-        if self.standalone:
-            # change page if needed
-            if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
-                self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
-        
         if cmd[0][0:2] != "d.":
             # Send any non-display command to parent window (probably wxgui.py)
             # put to parents
@@ -713,6 +708,11 @@ class mainFrame(wx.Frame):
         else:
             runCmd = gcmd.Command(cmd)
 
+        if self.standalone:
+            # change page if needed
+            if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
+                self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
+        
     def OnCopy(self, event):
         """Copy the command"""
         cmddata = wx.TextDataObject()

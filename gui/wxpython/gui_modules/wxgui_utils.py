@@ -1154,12 +1154,18 @@ class GMConsole(wx.Panel):
                     os.unsetenv("GRASS_REGION")
 
                     # process GRASS command with argument
+                    self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
                     p1 = self.cmd_output.GetCurrentPos()
-                    self.cmd_output.AddText('$ %s' % ' '.join(cmdlist) + os.linesep)
+                    line = '$ %s' % ' '.join(cmdlist)
+                    if len(line) < 80:
+                        diff = 80 - len(line)
+                        line += diff * ' '
+                    line += '%s' % os.linesep
+                    self.cmd_output.AddText(line)
                     self.cmd_output.EnsureCaretVisible()
                     p2 = self.cmd_output.GetCurrentPos()
                     self.cmd_output.StartStyling(p1, 0xff)
-                    self.cmd_output.SetStyling(p2 - p1 + 1, self.cmd_output.StyleCommand)
+                    self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
 
                     
 #                     grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
