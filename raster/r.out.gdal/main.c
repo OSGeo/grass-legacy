@@ -1,4 +1,3 @@
-
 /****************************************************************************
 *
 * MODULE:       r.out.gdal
@@ -7,7 +6,7 @@
 *               based on GDAL library.
 *               Replace r.out.gdal.sh script based on gdal_translate
 *               executable.
-* COPYRIGHT:    (C) 2006 by the GRASS Development Team
+* COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -352,9 +351,12 @@ int main(int argc, char *argv[])
     flag_l = G_define_flag();
     flag_l->key = 'l';
     flag_l->description = _("List supported output formats");
+    flag_l->guisection = _("Print");
 
     input = G_define_standard_option(G_OPT_R_INPUT);
     input->required = NO;
+    input->description = _("Name of raster map (or group) to export");
+    input->guisection = _("Main");
 
     format = G_define_option();
     format->key = "format";
@@ -389,6 +391,8 @@ int main(int argc, char *argv[])
     output = G_define_standard_option(G_OPT_R_OUTPUT);
     output->required = NO;
     output->gisprompt = "new_file,file,output";
+    output->description = _("Name for output raster file");
+    output->guisection = _("Main");
 
     createopt = G_define_option();
     createopt->key = "createopt";
@@ -417,6 +421,11 @@ int main(int argc, char *argv[])
     if (flag_l->answer) {
 	supported_formats(&gdal_formats);
 	exit(EXIT_SUCCESS);
+    }
+
+    if (!input->answer) {
+	G_fatal_error(_("Required parameter <%s> not set"),
+		      input->key);
     }
 
     /* Try to open input GRASS raster.. */
@@ -538,7 +547,7 @@ int main(int argc, char *argv[])
 
     /* If file type not set by user ... */
     /* Get min/max values. */
-    if( G_read_fp_range(input->answer, mapset, &sRange ) == -1 ) {
+    if( G_read_fp_range(ref.file[0].name, ref.file[0].mapset, &sRange ) == -1 ) {
         bHaveMinMax = FALSE;
     } else {
         bHaveMinMax = TRUE;
@@ -636,6 +645,11 @@ int main(int argc, char *argv[])
     /* Export to GDAL raster */
     int band;
     for (band = 0; band < ref.nfiles; band++) {
+	if (ref.nfiles > 1) {
+	    G_verbose_message(_("Exporting raster map <%s> (band %d)..."),
+			      G_fully_qualified_name(ref.file[band].name, ref.file[band].mapset),
+			      band+1);
+	}
 	if (import_band
 	    (hCurrDS, band + 1, ref.file[band].name, ref.file[band].mapset,
 	     &cellhead, maptype, nodataval) < 0)
