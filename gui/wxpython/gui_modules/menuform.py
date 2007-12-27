@@ -308,6 +308,7 @@ class processTask(HandlerBase):
             self.inFlag = True;
             self.flag_description = ''
             self.flag_default = ''
+            self.flag_guisection = ''
             self.flag_values = []
             # Look for the flag name
             self.flag_name = attrs.get('name', None)
@@ -336,7 +337,7 @@ class processTask(HandlerBase):
 
         if name == 'guisection':
             self.inGuisection = True
-            self.param_guisection = ''
+            self.guisection = ''
 
         if name == 'keywords':
             self.inKeywordsContent = True
@@ -369,7 +370,7 @@ class processTask(HandlerBase):
             # TODO: a set of flags to treat this case of a description sub-element
             self.value_tmp = self.value_tmp + ch
         if self.inGuisection:
-            self.param_guisection = self.param_guisection + ch
+            self.guisection = self.guisection + ch
         if self.inKeywordsContent:
             self.keyword = self.keyword + ch
 
@@ -404,7 +405,8 @@ class processTask(HandlerBase):
             self.inFlag = False;
             self.task.flags.append({
                 "name" : self.flag_name,
-                "description" : self.flag_description } )
+                "description" : self.flag_description,
+                "guisection" : self.flag_guisection } )
 
         if name == 'label':
             self.param_label = normalize_whitespace(self.label)
@@ -428,7 +430,10 @@ class processTask(HandlerBase):
             self.inValueContent = False
 
         if name == 'guisection':
-            self.param_guisection = normalize_whitespace(self.param_guisection)
+            if self.inParameter:
+                self.param_guisection = normalize_whitespace(self.guisection)
+            elif self.inFlag:
+                self.flag_guisection = normalize_whitespace(self.guisection)
             self.inGuisection = False
 
         if name == 'keywords':
