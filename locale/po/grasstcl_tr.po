@@ -1,14 +1,14 @@
 # translation of grasstcl_tr.po to TÜRKÇE
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2006, 2007, GRASS Development Team
+# Copyright (C) 2006, 2007 GRASS Development Team
 # Osman Yalcin Yilmaz <yilmazy@istanbul.edu.tr>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-01 17:52+0200\n"
-"PO-Revision-Date: 2007-12-05 21:56+0200\n"
+"POT-Creation-Date: 2007-12-23 21:40+0200\n"
+"PO-Revision-Date: 2007-12-23 22:00+0200\n"
 "Last-Translator: Osman Yalçın YILMAZ\n"
 "Language-Team: TÜRKÇE <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,9 @@ msgstr "Coğrafi referanslı dosya yolu"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr "Coğrafi referanslı dosya yolu (GDAL/OGR tarafından okunabilir biçimde olmalıdır)"
+msgstr ""
+"Coğrafi referanslı dosya yolu (GDAL/OGR tarafından okunabilir biçimde "
+"olmalıdır)"
 
 #: ../lib/init/file_option.tcl:105 ../lib/init/gis_set.tcl:243
 #: ../lib/init/epsg_option.tcl:135 ../lib/init/epsg_option.tcl:148
@@ -52,7 +54,7 @@ msgstr "Mevki belirle"
 #: ../lib/init/file_option.tcl:114 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/gtcltk/select.tcl:209
 #: ../gui/tcltk/gis.m/rules.tcl:172 ../gui/tcltk/gis.m/gm.tcl:507
-#: ../gui/tcltk/gis.m/georect.tcl:700 ../gui/tcltk/gis.m/mapcanvas.tcl:855
+#: ../gui/tcltk/gis.m/georect.tcl:700 ../gui/tcltk/gis.m/mapcanvas.tcl:856
 #: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
 msgid "Cancel"
 msgstr "İptal"
@@ -81,7 +83,8 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"coğrafi referanslı dosyadan yeni mevki oluşturmada hata. g.proj komutu takip eden mesajı verdi:\n"
+"coğrafi referanslı dosyadan yeni mevki oluşturmada hata. g.proj komutu takip "
+"eden mesajı verdi:\n"
 "\n"
 "%s"
 
@@ -1231,7 +1234,7 @@ msgstr "Grup dosyasını aç"
 
 #: ../gui/tcltk/d.m/menu.tcl:172 ../gui/tcltk/gis.m/gmmenu.tcl:88
 #: ../gui/tcltk/gis.m/runandoutput.tcl:125
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:859
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:860
 msgid "Save"
 msgstr "Kaydet"
 
@@ -1692,7 +1695,9 @@ msgstr "Categori değerleri ve etiketleri değiştir"
 
 #: ../gui/tcltk/d.m/menu.tcl:315
 msgid "Edit category values of individual cells for displayed raster map"
-msgstr "Görüntülenen raster haritanın hücrelerinin kategori değerlerini tek tek düzelt"
+msgstr ""
+"Görüntülenen raster haritanın hücrelerinin kategori değerlerini tek tek "
+"düzelt"
 
 #: ../gui/tcltk/d.m/menu.tcl:318
 msgid "Reclassify categories for areas of specified sizes"
@@ -2374,7 +2379,7 @@ msgid "List tables"
 msgstr "Tabloları listele"
 
 #: ../gui/tcltk/d.m/menu.tcl:554 ../gui/tcltk/gis.m/gmmenu.tcl:615
-#: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:1829
+#: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/mapcanvas.tcl:1830
 msgid "Query"
 msgstr "Sorgu"
 
@@ -4964,8 +4969,8 @@ msgid ""
 "control points before georectifying map."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/georect.tcl:1576 ../gui/tcltk/gis.m/mapcanvas.tcl:592
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1136 ../gui/tcltk/gis.m/mapcanvas.tcl:1189
+#: ../gui/tcltk/gis.m/georect.tcl:1576 ../gui/tcltk/gis.m/mapcanvas.tcl:593
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1137 ../gui/tcltk/gis.m/mapcanvas.tcl:1190
 msgid "Error setting region"
 msgstr "Bölgeyi ayarlamada hata"
 
@@ -4973,47 +4978,47 @@ msgstr "Bölgeyi ayarlamada hata"
 msgid "Please wait..."
 msgstr "Lütfen bekleyin..."
 
-#: ../gui/tcltk/gis.m/georect.tcl:2018 ../gui/tcltk/gis.m/mapcanvas.tcl:1214
+#: ../gui/tcltk/gis.m/georect.tcl:2018 ../gui/tcltk/gis.m/mapcanvas.tcl:1215
 msgid "Drag or click mouse to zoom"
 msgstr "Yaklaştırma için fareyi tıkla yada sürükle"
 
-#: ../gui/tcltk/gis.m/georect.tcl:2020 ../gui/tcltk/gis.m/mapcanvas.tcl:1216
+#: ../gui/tcltk/gis.m/georect.tcl:2020 ../gui/tcltk/gis.m/mapcanvas.tcl:1217
 msgid "Drag or click mouse to unzoom"
 msgstr "Uzaklaştırma için fareyi tıkla yada sürükle"
 
-#: ../gui/tcltk/gis.m/georect.tcl:2218 ../gui/tcltk/gis.m/mapcanvas.tcl:1451
+#: ../gui/tcltk/gis.m/georect.tcl:2218 ../gui/tcltk/gis.m/mapcanvas.tcl:1452
 msgid "Drag with mouse to pan"
 msgstr "Kaydırma için fareyi tıkla yada sürükle"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:522
-msgid "Max zoom in reached"
-msgstr "Yakınlaştırmanın en sonuna gelindi "
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:523
+msgid "Maximum zoom-in reached"
+msgstr "Yakınlaştırmanın en sonuna ulaşıldı"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:601
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:602
 msgid "please wait..."
 msgstr "lütfen bekleyin..."
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1783
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1784
 msgid "You have to select map layer first"
 msgstr "Önce harita katmanını seçmelisiniz"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1784
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:762 ../gui/tcltk/gis.m/mapcanvas.tcl:1785
 msgid "No map layer selected"
 msgstr "Hiçbir harita katmanı seçilmedi"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:833
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:834
 msgid "Save Region"
 msgstr "Bölgeyi kaydet"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:836
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:837
 msgid "Save current display geometry to named region"
 msgstr "Geçerli görüntü geometirisini isimlendirilmiş bölge olarak kaydet"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:842
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:843
 msgid "Enter region name"
 msgstr "Bölge adını gir"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:877
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:878
 #, tcl-format
 msgid ""
 "Region file %s already exists. \n"
@@ -5022,32 +5027,32 @@ msgstr ""
 "%s bölge dosyası halihazırda mevcut. \n"
 "Üzerine yazılmasını istermisin?"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1064
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1065
 #, tcl-format
 msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1578
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1579
 msgid "Measurement"
 msgstr "Ölçüm"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1597
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1598
 msgid "Draw measure line with mouse"
 msgstr "Ölçme çizgisini fareyle çizin"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1754
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1755
 msgid "Click to query feature"
 msgstr "Objeyi sorgulama için tıklayın"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1822
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1823
 msgid "This layer type does not support queries"
 msgstr "Bu katman tipi sorgulamayı desteklemiyor"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1823
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1824
 msgid "Query not supported"
 msgstr "Sorgu desteklenmiyor"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1830
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1831
 msgid "You must select a map to query\n"
 msgstr "Sorgulama için bir harita seçmelisiniz\n"
 

@@ -1,13 +1,13 @@
-# translation of grasstcl_tr.po to TÜRKÇE
+# translation of grasslibs_tr.po to TÜRKÇE
+# Copyright (C) 2006, 2007 GRASS Development Team
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2006, 2007, GRASS Development Team
 # oyy <yilmazy@istanbul.edu.tr>, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-01 17:52+0200\n"
+"POT-Creation-Date: 2007-12-23 21:40+0200\n"
 "PO-Revision-Date: 2007-12-02 19:27+0200\n"
 "Last-Translator: Osman Yalçın YILMAZ\n"
 "Language-Team: TÜRKÇE <grass-translations@lists.osgeo.org>\n"
@@ -105,7 +105,9 @@ msgstr "İki eşlemli maske oluşturuldu"
 msgid ""
 "taking too long to find points for interpolation--please change the region "
 "to area where your points are. Continuing calculations..."
-msgstr "enterpolasyon için nokta bulmak çok zaman alacak-- lütfen bölgeyi, noktalarınızın bulunduğu alana değiştirn. Hesaplamaya devam ediliyor..."
+msgstr ""
+"enterpolasyon için nokta bulmak çok zaman alacak-- lütfen bölgeyi, "
+"noktalarınızın bulunduğu alana değiştirn. Hesaplamaya devam ediliyor..."
 
 #: ../lib/rst/interp_float/vinput2d.c:81
 msgid "Vector is not 3D"
@@ -166,7 +168,8 @@ msgstr "yetersiz veriye sahip şerit var"
 #: ../lib/rst/interp_float/vinput2d.c:302
 #, c-format
 msgid "there are points outside specified 2D/3D region--ignored %d points"
-msgstr "Belirlenen 2D/3D bölgenin dışında noktalar var -- %d nokta yok sayılıyor"
+msgstr ""
+"Belirlenen 2D/3D bölgenin dışında noktalar var -- %d nokta yok sayılıyor"
 
 #: ../lib/rst/interp_float/vinput2d.c:304
 #, c-format
@@ -272,7 +275,9 @@ msgstr "<%s> Datum'u GRASS tarafından tanınmıyor ve değişkenler yok."
 msgid ""
 "Datum <%s> apparently recognised by GRASS but no parameters found. You may "
 "want to look into this."
-msgstr "<%s> Datum'u GRASS tarafından tanınıyor ama değişkenler yok. Bunları girmelisiniz."
+msgstr ""
+"<%s> Datum'u GRASS tarafından tanınıyor ama değişkenler yok. Bunları "
+"girmelisiniz."
 
 #: ../lib/proj/convert.c:453
 #, c-format
@@ -323,8 +328,11 @@ msgstr "Sembol satırı koordinatları okunamıyor: %s"
 
 #: ../lib/symbol/read.c:252
 #, c-format
-msgid "Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
-msgstr "Yanlış sembol adı: '%s' ( group/name veya group/name@mapset şeklinde olmalıdır)"
+msgid ""
+"Incorrect symbol name: '%s' (should be: group/name or group/name@mapset)"
+msgstr ""
+"Yanlış sembol adı: '%s' ( group/name veya group/name@mapset şeklinde "
+"olmalıdır)"
 
 #: ../lib/symbol/read.c:274
 #, c-format
@@ -453,7 +461,8 @@ msgid "BiCGStab -- iteration %i error  %g\n"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:59
-msgid "The type of solver which should solve the symmetric linear equation system"
+msgid ""
+"The type of solver which should solve the symmetric linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:71
@@ -465,7 +474,8 @@ msgid "Maximum number of iteration used to solver the linear equation system"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:89
-msgid "Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
+msgid ""
+"Error break criteria for iterative solvers (jacobi, sor, cg or bicgstab)"
 msgstr ""
 
 #: ../lib/gpde/N_parse_options.c:98
@@ -799,7 +809,8 @@ msgstr "Uygun olmayan tablo ad yazımı <%s>. Harf ile başlamalıdır.\n"
 #: ../lib/db/dbmi_base/legal_dbname.c:36
 #, c-format
 msgid "Illegal table map name <%s>. Character <%c> not allowed.\n"
-msgstr "Uygun olmayan tablo ad yazımı <%s>. <%c> karakteri kullanılmamalıdır.\n"
+msgstr ""
+"Uygun olmayan tablo ad yazımı <%s>. <%c> karakteri kullanılmamalıdır.\n"
 
 #: ../lib/db/dbmi_client/column.c:106
 #, c-format
@@ -885,7 +896,8 @@ msgstr "Çıktı dosyasında kullanılan veri tipi"
 
 #: ../lib/g3d/g3dparam.c:63
 msgid "Precision used in the output file (default, max, or 0 to 52)"
-msgstr "Çıktı dosyasında kullanılan hassaslık (varsayılan, en büyük, veya 0-52)"
+msgstr ""
+"Çıktı dosyasında kullanılan hassaslık (varsayılan, en büyük, veya 0-52)"
 
 #: ../lib/g3d/g3dparam.c:73
 msgid "The compression method used in the output file"
@@ -997,7 +1009,8 @@ msgstr "MAPSET %s - erişim engellendi"
 
 #: ../lib/gis/gisinit.c:101
 #, c-format
-msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgid ""
+"\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
 
 #: ../lib/gis/range.c:195
@@ -1336,22 +1349,28 @@ msgstr "%s dizini açılamadı"
 #: ../lib/gis/timestamp.c:298
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "%s harita takımındaki %s haritası %s için zaman damgası dosyası oluşturulamıyor"
+msgstr ""
+"%s harita takımındaki %s haritası %s için zaman damgası dosyası "
+"oluşturulamıyor"
 
 #: ../lib/gis/timestamp.c:308
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr " %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası belirlendi"
+msgstr ""
+" %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası "
+"belirlendi"
 
 #: ../lib/gis/timestamp.c:332
 #, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
-msgstr " %s harita takımındaki %s haritası %s için zaman damgası dosyası açılamıyor"
+msgstr ""
+" %s harita takımındaki %s haritası %s için zaman damgası dosyası açılamıyor"
 
 #: ../lib/gis/timestamp.c:342
 #, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
-msgstr " %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası"
+msgstr ""
+" %s harita takımındaki %s haritası %s için geçersiz zaman damgası dosyası"
 
 #: ../lib/gis/format.c:162
 #, c-format
@@ -1533,7 +1552,9 @@ msgstr "Katman numarası"
 msgid ""
 "A single vector map can be connected to multiple database tables. This "
 "number determines which table to use."
-msgstr "Tek bir vektör harita birçok veritabanı tablosuna bağlanabilir. Bu sayı hangi tablonun kullanılacağını belirler."
+msgstr ""
+"Tek bir vektör harita birçok veritabanı tablosuna bağlanabilir. Bu sayı "
+"hangi tablonun kullanılacağını belirler."
 
 #: ../lib/gis/parser.c:583
 msgid "Category value"
@@ -1872,7 +1893,8 @@ msgstr ""
 #: ../lib/gis/get_row.c:564
 #, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
-msgstr "[%s] harita takımındaki [%s] sıkıştırılmış haritasını okumada hata, satır %d"
+msgstr ""
+"[%s] harita takımındaki [%s] sıkıştırılmış haritasını okumada hata, satır %d"
 
 #: ../lib/gis/get_row.c:568
 #, c-format
@@ -1930,7 +1952,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:550
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 
 #: ../lib/gis/ask_cell.c:56 ../lib/gis/ask_cell.c:75 ../lib/gis/ask_cell.c:94
@@ -2376,7 +2399,8 @@ msgstr "[%s deki %s] için üstbilgi dosyası açılamıyo"
 #: ../lib/gis/get_cellhd.c:106
 #, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
-msgstr "Üstbilgi dosyası geçersiz olan [%s deki %s] in yeniden sınıflandırılmasıdır\n"
+msgstr ""
+"Üstbilgi dosyası geçersiz olan [%s deki %s] in yeniden sınıflandırılmasıdır\n"
 
 #: ../lib/gis/get_cellhd.c:110
 #, c-format
@@ -2399,7 +2423,8 @@ msgstr "Komut satırında kaydetmek için geçmiş dosyasında yetersiz alan"
 
 #: ../lib/gis/history.c:291
 msgid "Not enough room in history file for command line (truncated)."
-msgstr "Komut satırında kaydetmek için geçmiş dosyasında yetersiz alan (kesiliyor)"
+msgstr ""
+"Komut satırında kaydetmek için geçmiş dosyasında yetersiz alan (kesiliyor)"
 
 #: ../lib/gis/proj3.c:66 ../lib/vector/Vlib/header.c:488
 msgid "Unknown projection"
@@ -3443,8 +3468,10 @@ msgid "Programmer requested unknown open level %d"
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:168
-msgid "Vector map which is not in the current mapset cannot be opened for update"
-msgstr "Geçerli harita takımında olmayan vektör harita güncellemek için açılamıyor"
+msgid ""
+"Vector map which is not in the current mapset cannot be opened for update"
+msgstr ""
+"Geçerli harita takımında olmayan vektör harita güncellemek için açılamıyor"
 
 #: ../lib/vector/Vlib/open.c:186
 #, c-format
@@ -3576,4 +3603,3 @@ msgstr "Adaların topolojisi okunamıyor"
 #, c-format
 msgid "Cannot read topo for isle [%d]"
 msgstr "[%d] adasının topolojisi okunamıyor"
-
