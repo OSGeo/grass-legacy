@@ -32,7 +32,7 @@ int report_range (void)
       }
   }
   if(G_read_range(name, mapset, &range)<=0)
-     G_fatal_error(_("Unable to read range for map %s"), name);
+     G_fatal_error(_("Unable to read range for map <%s>"), name);
 
   G_get_range_min_max(&range, &old_min, &old_max);
   if(G_is_c_null_value(&old_min) || G_is_c_null_value(&old_max))
