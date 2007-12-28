@@ -174,11 +174,11 @@ proc mkmainPanel { BASE } {
 
 	set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
 		-variable draw_option -value 0 -width 8 \
-		-command "change_display 1" ]
+		-command "set Nv_(FlyThrough) 0; change_display 1" ]
 
 	set draw_var2 [radiobutton $BASE.midt.b2 -text "center" \
 		-variable draw_option -value 1 -width 8 \
-		-command "change_display 0" ]
+		-command "set Nv_(FlyThrough) 0; change_display 0" ]
 	$draw_var1 select
 
 	help $BASE.midt.b1 balloon "Change view by moving eye position"
@@ -498,9 +498,9 @@ proc change_display {flag} {
 	global XY Nv_
 	global Nauto_draw
 
-   set NAME $XY
-   set NAME2 [winfo parent $NAME]
-   catch "destroy $XY"
+	set NAME $XY
+	set NAME2 [winfo parent $NAME]
+	catch "destroy $XY"
 
 	# *** ACS_MODIFY 1.0 - one line
 	
@@ -523,23 +523,24 @@ proc change_display {flag} {
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
 		
 		#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-			if {$Nv_(FlyThrough) == 0} {
-				# original line
-				pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
-			}
+		if {$Nv_(FlyThrough) == 0} {
+			# original line
+			pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
+		}
 		#*** ACS_MODIFY 1.0 END ******************************************************
 		update_height $h		
 		reset_res
 		move_position
 	}
 	
+	
 	#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-		if {$Nv_(FlyThrough)} {
-			pack_XY
-		} else {
-			# original line
-		   pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
-		}
+	if {$Nv_(FlyThrough)} {
+		pack_XY
+	} else {
+		# original line
+		pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
+	}
 	#*** ACS_MODIFY 1.0 END ******************************************************
 	if {$Nauto_draw == 1} {Ndraw_all}
 }
