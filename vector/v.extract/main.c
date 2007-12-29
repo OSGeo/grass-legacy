@@ -10,7 +10,7 @@
  *             boundaries for 1 or several areas of a list of
  *             user provided categories.
  *
- * COPYRIGHT:  (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
  *
  *             This program is free software under the 
  *             GNU General Public License (>=v2). 
@@ -71,13 +71,9 @@ int main (int argc, char **argv)
     /* set up the options and flags for the command line parser */
     module = G_define_module();
     module->keywords = _("vector");
-    module->label =
+    module->description =
 	_("Selects vector objects from an existing vector map and "
 	  "creates a new map containing only the selected objects.");
-    module->description =
-	_("If 'list', 'file' and 'where' options are not specified, "
-	  "all features of given type and layer are extracted. Categories "
-	  "are not changed in that case.");
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
@@ -174,7 +170,7 @@ int main (int argc, char **argv)
 	for (i = 0; listopt->answers[i]; i++) {
             G_debug ( 2, "catlist item: %s", listopt->answers[i]);
 	    if (!scan_cats (listopt->answers[i], &x, &y))
-		G_fatal_error(_("Category value in <%s> not valid"), listopt->answers[i]);
+		G_fatal_error(_("Category value in '%s' not valid"), listopt->answers[i]);
         }
 	    
 	/* valid list, put into cat value array */
@@ -217,9 +213,11 @@ int main (int argc, char **argv)
 	}
         Fi = Vect_get_field( &In, field);
 	if ( !Fi ) {
-	    G_fatal_error ( _("No layer database connection") );
+	    G_fatal_error ( _("Database connection not defined for layer %d"), field);
 	}
-	G_message(_("Load categories from the database (table = %s, db = %s)."),  Fi->table, Fi->database);
+
+	G_debug(1, "Loading categories from table <%s>",
+		Fi->table);
 	
         driver = db_start_driver(Fi->driver);
         if (driver == NULL)
@@ -231,7 +229,7 @@ int main (int argc, char **argv)
             G_fatal_error(_("Unable to open database <%s> by driver <%s>"), Fi->database, driver) ;
 											 
 	ncats = db_select_int( driver, Fi->table, Fi->key, whereopt->answer, &cats);
-	G_message(_("%d categories loaded from the database"),  ncats);
+	G_message(_("%d categories loaded from table <%s>"),  ncats, Fi->table);
 	
 	db_close_database(driver);
 	db_shutdown_driver(driver);
@@ -247,7 +245,10 @@ int main (int argc, char **argv)
     
     xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field, type_only, r_flag -> answer ? 1 : 0);
     
-    Vect_build (&Out, stdout );
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&Out, stdout);
+    else
+	Vect_build (&Out, NULL);
     
 
     /* Copy tables */
@@ -286,7 +287,7 @@ int main (int argc, char **argv)
 	}
 
 	/* Copy tables */
-	G_message ( _("Writing attributes...") );
+	G_verbose_message ( _("Writing attributes...") );
 
 	/* Number of output tabs */
 	for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
@@ -315,12 +316,12 @@ int main (int argc, char **argv)
 	    if ( nocats[i] == 0 ) continue;
 	    if ( fields[i] == field && new_cat != -1 ) continue;
 	
-	    G_message ( _("Layer %d"), fields[i] );
+	    G_verbose_message ( _("Layer %d"), fields[i] );
 
 	    /* Make a list of categories */
 	    IFi = Vect_get_field ( &In, fields[i] );
 	    if ( !IFi ) { /* no table */
-		G_message ( _("No table") );
+		G_verbose_message ( _("No table") );
 		continue;
 	    }
 	    
@@ -336,7 +337,7 @@ int main (int argc, char **argv)
 		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
 				      IFi->key, OFi->database, OFi->driver);
 	    }
-	    G_message ( _("Done") );
+	    G_done_msg(" ");
 	}
     }
 
@@ -363,7 +364,10 @@ int main (int argc, char **argv)
 	    }
 	}
 	Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
-	Vect_build ( &Out, stderr );
+	if (G_verbose() > G_verbose_min())
+	    Vect_build (&Out, stderr);
+	else
+	    Vect_build (&Out, NULL);
     }
     
     Vect_close (&Out);
