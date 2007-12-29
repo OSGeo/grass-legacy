@@ -86,6 +86,16 @@ r.out.gdal in=elevation.10m out=ned_elev10m.tif type=Float64 createopt="INTERLEA
 r.out.gdal input=elevation.10m output=elev_dem10.img format=HFA type=Float32
 </pre></div>
 
+<h4>Export group of image maps as multi-band file</h4>
+<div class="code"><pre>
+g.list group
+i.group group=tm7 subgroup=tm7 input=tm7_10,tm7_20,tm7_30,tm7_40,tm7_50,tm7_60,tm7_70
+i.group -l tm7
+r.out.gdal tm7 type=UInt16 out=lsat_multiband.tif
+gdalinfo lsat_multiband.tif
+</pre></div>
+
+
 <H2>GDAL RELATED ERROR MESSAGES</H2>
 
 <ul>
