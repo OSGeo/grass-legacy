@@ -19,6 +19,7 @@ SUBDIRS = \
 	d.text.freetype \
 	d.vect.thematic \
 	db.dropcol \
+	db.droptable \
 	db.in.ogr \
 	db.out.ogr \
 	db.test \
