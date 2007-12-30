@@ -67,6 +67,9 @@ class Data:
                  ("ASCII 3D import", "Import ASCII 3D file", "self.OnMenuCmd", "r3.in.ascii"),
                  ("Vis5D import", "Import Vis5D file", "self.OnMenuCmd", "r3.in.v5d"),
                  )),
+              ("Import database table", (
+                 ("Multiple import formats using OGR", "Import multiple formats using OGR", "self.OnMenuCmd", "db.in.ogr"),
+                 )),
               ("","","", ""),
               ("Export raster map", (
                  ("Multiple export formats using GDAL", "Export multiple formats using GDAL", "self.OnMenuCmd", "r.out.gdal"),
