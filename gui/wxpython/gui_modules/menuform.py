@@ -776,10 +776,10 @@ class cmdPanel(wx.Panel):
         for task in not_hidden:
             if task.get( 'required','no' ) == 'yes':
                 # All required go into Main, even if they had defined another guisection
-                task['guisection'] = _( 'Main' )
+                task['guisection'] = _( 'Required' )
             if task.get( 'guisection','' ) == '':
                 # Undefined guisections end up into Options
-                task['guisection'] = _( 'Options' )
+                task['guisection'] = _( 'Optional' )
             if not is_section.has_key(task['guisection']):
                 # We do it like this to keep the original order, except for Main which goes first
                 is_section[task['guisection']] = 1
@@ -789,7 +789,7 @@ class cmdPanel(wx.Panel):
         del is_section
 
         # Main goes first, Options goes second
-        for (newidx,content) in [ (0,_( 'Main' )), (1,_('Options')) ]:
+        for (newidx,content) in [ (0,_( 'Required' )), (1,_('Optional')) ]:
             if content in sections:
                 idx = sections.index( content )
                 sections[idx:idx+1] = []
