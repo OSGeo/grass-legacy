@@ -231,6 +231,7 @@ Icons = {
     "workspaceNew" : MetaIcon (img=icons_img["workspaceNew"], label="Create new workspace file"),
     "workspaceOpen" : MetaIcon (img=icons_img["workspaceOpen"], label="Open existing workspace file"),
     "workspaceSave" : MetaIcon (img=icons_img["workspaceSave"], label="Save current workspace to file"),
+    # TODO: "layer" is not conformant with GRASS vocabulary (vector layer: 1..x) ! 
     "addrast"    : MetaIcon (img=icons_img["addrast"], label="Add raster map layer"),
     "addvect"    : MetaIcon (img=icons_img["addvect"], label="Add vector map layer"),
     "addcmd"     : MetaIcon (img=icons_img["addcmd"], label="Add command layer"),
