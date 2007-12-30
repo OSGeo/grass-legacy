@@ -42,6 +42,8 @@ v.info -c dtmpoints
 </pre></div>
 <P>
 If an ID column is missing in the DBF file, it has to be added beforehand, e.g. with OpenOffice.
+Alternatively, import the table with <em>db.in.ogr</em> into GRASS and then with <em>v.in.db</em>
+from the imported table (<em>db.in.ogr</em> optionally adds an unique ID column).
 
 <h3>4) Import of a points table (x, y, z) from SQLite file to vector points map:</h3>
 
@@ -73,6 +75,7 @@ v.in.db driver=dbf  database=/home/user/tables/ table=pointsfile x=x y=y z=z \
 
 <em>
 <a href="db.execute.html">db.execute</a>,
+<a href="db.in.ogr.html">db.in.ogr</a>,
 <a href="v.info.html">v.info</a>,
 <a href="v.in.ogr.html">v.in.ogr</a>,
 <a href="v.to.db.html">v.to.db</a>,<br>
