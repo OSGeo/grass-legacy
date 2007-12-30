@@ -80,6 +80,8 @@ class GRASSStartup(wx.Frame):
                                       label=_("Welcome to GRASS GIS %s\n"
                                               "The world's leading open source GIS") % grassVersion,
                                       style=wx.ALIGN_CENTRE)
+        self.SetFont(wx.Font(pointSize=9, family=wx.FONTFAMILY_DEFAULT,
+                             style=wx.NORMAL, weight=wx.NORMAL))
         self.ltitle = wx.StaticText(parent=self, id=wx.ID_ANY,
                                     label=_("Select an existing project location and mapset\n"
                                             "or define a new location"),
@@ -104,7 +106,7 @@ class GRASSStartup(wx.Frame):
 
         # buttons
         self.bstart = wx.Button(parent=self, id=wx.ID_ANY,
-                                label=_("Start GRASS"), size=(200, -1))
+                                label=_("Start GRASS"), size=(180, -1))
         self.bstart.SetDefault()
         self.bexit = wx.Button(parent=self, id=wx.ID_EXIT)
         self.bhelp = wx.Button(parent=self, id=wx.ID_HELP)
@@ -122,13 +124,15 @@ class GRASSStartup(wx.Frame):
         self.tgisdbase = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(300, -1),
                                      style=wx.TE_LEFT)
 
+        # TODO: sort list, but keep mapsets aligned to sorted locations
         # Locations
         self.lpanel = wx.Panel(parent=self,id=wx.ID_ANY)
         self.lblocations = wx.ListBox(parent=self.lpanel,
-                                      id=wx.ID_ANY, size=(150, 200),
+                                      id=wx.ID_ANY, size=(180, 200),
                                       choices=self.listOfLocations,
                                       style=wx.LB_SINGLE)
 
+        # TODO: sort; but keep PERMANENT on top of list
         # Mapsets
         self.mpanel = wx.Panel(parent=self,id=wx.ID_ANY)
         self.lbmapsets = wx.ListBox(parent=self.mpanel,
