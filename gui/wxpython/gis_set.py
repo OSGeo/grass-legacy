@@ -512,10 +512,11 @@ class GRASSStartup(wx.Frame):
         """Update list of mapsets"""
         self.listOfMapsets = []
 
+        self.listOfMapsets.append('PERMANENT')
         for mapset in glob.glob(os.path.join(self.gisdbase, location, "*")):
-            if os.path.isdir(mapset):
+            if os.path.isdir(mapset) and os.path.basename(mapset) != 'PERMANENT':
                 self.listOfMapsets.append(os.path.basename(mapset))
-
+ 
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets,0)
 
