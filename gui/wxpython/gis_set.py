@@ -623,6 +623,7 @@ class GRASSStartup(wx.Frame):
 
     def OnHelp(self, event):
         """'Help' button clicked"""
+        # help text in lib/init/helptext.html
         file=os.path.join(self.gisbase, "docs", "html", "helptext.html")
 
         helpFrame = HelpWindow(parent=self, id=wx.ID_ANY,
