@@ -23,7 +23,7 @@ PURPOSE:   Create a new GRASS Location. User can choose from multiple methods.
 AUTHORS:   The GRASS Development Team
            Michael Barton
            Jachym Cepicky
-           Various updates: Martin Landa <landa.martin gmail.com>
+           Martin Landa <landa.martin gmail.com>
            
 COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
            This program is free software under the GNU General Public
@@ -35,6 +35,7 @@ import shutil
 import re
 import string
 import sys
+import locale
 
 import wx
 import wx.lib.mixins.listctrl as listmix
@@ -66,7 +67,7 @@ class BaseClass(wx.Object):
     def __init__(self):
         pass
 
-    def MakeLabel(self, text="", style=wx.ALIGN_RIGHT):
+    def MakeLabel(self, text="", style=wx.ALIGN_LEFT):
         """Make aligned label"""
         return wx.StaticText(parent=self, id=wx.ID_ANY, label=text,
                              style=style)
@@ -87,7 +88,8 @@ class TitledPage(BaseClass, wiz.WizardPageSimple):
     labels, text entries, and buttons.
     """
     def __init__(self, parent, title):
-        wiz.WizardPageSimple.__init__(self, parent)
+
+        self.page = wiz.WizardPageSimple.__init__(self, parent)
 
         # page title
         self.title = wx.StaticText(parent=self, id=wx.ID_ANY, label=title)
@@ -95,9 +97,10 @@ class TitledPage(BaseClass, wiz.WizardPageSimple):
 
         # main sizer
         self.sizer = wx.GridBagSizer(vgap=0, hgap=0)
-
+        
     def DoLayout(self):
         """Do page layout"""
+      
         tmpsizer = wx.BoxSizer(wx.VERTICAL)
 
         tmpsizer.Add(item=self.title, proportion=0,
@@ -112,6 +115,7 @@ class TitledPage(BaseClass, wiz.WizardPageSimple):
 
         self.SetAutoLayout(True)
         self.SetSizer(tmpsizer)
+        tmpsizer.Fit(self)
         self.Layout()
 
 class DatabasePage(TitledPage):
@@ -132,6 +136,7 @@ class DatabasePage(TitledPage):
         self.tlocation = self.MakeTextCtrl("newLocation", size=(300, -1))
         
         # layout
+        self.sizer.AddGrowableCol(3)
         self.sizer.Add(item=self.MakeLabel(_("GIS Data Directory:")),
                        flag=wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -167,7 +172,7 @@ class DatabasePage(TitledPage):
         # bindings
         self.Bind(wx.EVT_BUTTON,                self.OnBrowse, self.bbrowse)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChanging)
-        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED,  self.OnPageChanged)
+        self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED,  self.OnEnterPage)
         self.tgisdbase.Bind(wx.EVT_TEXT,        self.OnChangeName)
         self.tlocation.Bind(wx.EVT_TEXT,        self.OnChangeName)
 
@@ -212,22 +217,16 @@ class DatabasePage(TitledPage):
             event.Veto()
             return
 
-        #         if not self.tlocation.GetValue():
-        #             dlg = wx.MessageDialog(parent=self, message=_("Unable to create new location: location not set "
-        #                     ,"Could not create location",  wx.OK|wx.ICON_INFORMATION)
-        #                                    dlg.ShowModal()
-        #             dlg.Destroy()
-        #             event.Veto()
-        #             return
-
         self.location = self.tlocation.GetValue()
         self.grassdatabase = self.tgisdbase.GetValue()
 
-    def OnPageChanged(self, event=None):
+    def OnEnterPage(self, event):
         """Wizard page changed"""
         self.grassdatabase = self.tgisdbase.GetValue()
         self.location = self.tlocation.GetValue()
 
+        event.Skip()
+        
 class CoordinateSystemPage(TitledPage):
     """
     Wizard page for choosing method for location creation
@@ -254,6 +253,7 @@ class CoordinateSystemPage(TitledPage):
                                      label=_("Create arbitrary non-earth "
                                              "coordinate system (XY)"))
         # layout
+        self.sizer.AddGrowableCol(1)
         self.sizer.Add(item=self.radio1,
                        flag=wx.ALIGN_LEFT, pos=(1, 1))
         self.sizer.Add(item=self.radio2,
@@ -332,6 +332,7 @@ class ProjectionsPage(TitledPage):
         self.projlist = ItemList(self, data=self.parent.projections.items(),
                                  columns=[_('Code'), _('Description')])
         # layout
+        self.sizer.AddGrowableCol(3)
         self.sizer.Add(item=self.MakeLabel(_("Projection code:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -346,7 +347,8 @@ class ProjectionsPage(TitledPage):
         self.sizer.Add(item=self.searchb,
                        flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL,
                        border=5, pos=(2, 2))
-
+        
+        self.sizer.AddGrowableRow(3)
         self.sizer.Add(item=self.projlist,
                        flag=wx.EXPAND |
                        wx.ALIGN_LEFT |
@@ -417,21 +419,25 @@ class ProjectionsPage(TitledPage):
         self.tproj.SetValue(self.proj)
 
 class ItemList(wx.ListCtrl,
-               listmix.ListCtrlAutoWidthMixin):
+               listmix.ListCtrlAutoWidthMixin,
+               listmix.ColumnSorterMixin):
     """Generic list (for projections, ellipsoids, etc.)"""
 
-    def __init__(self, parent, data, columns):
+    def __init__(self, parent, columns, data=None):
         wx.ListCtrl.__init__(self, parent=parent, id=wx.ID_ANY,
                              style=wx.LC_REPORT |
+                             wx.LC_VIRTUAL | 
                              wx.LC_HRULES |
                              wx.LC_VRULES |
-                             wx.LC_SINGLE_SEL, size=(400, 100))
+                             wx.LC_SINGLE_SEL |
+                             wx.LC_SORT_ASCENDING, size=(400, 100))
 
-        # dict to list
+        # original data or None
         self.sourceData = data
-
-        listmix.ListCtrlAutoWidthMixin.__init__(self)
-
+        
+        #
+        # insert columns
+        #
         i = 0
         for column in columns:
             self.InsertColumn(i, column)
@@ -443,8 +449,42 @@ class ItemList(wx.ListCtrl,
             for i in range(self.GetColumnCount()):
                 self.SetColumnWidth(i, wx.LIST_AUTOSIZE_USEHEADER)
 
+        #
+        # listmix
+        #
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        listmix.ColumnSorterMixin.__init__(self, self.GetColumnCount())
+            
+        #
+        # add some attributes
+        #
+        self.attr1 = wx.ListItemAttr()
+        self.attr1.SetBackgroundColour(wx.Colour(238,238,238))
+        self.attr2 = wx.ListItemAttr()
+        self.attr2.SetBackgroundColour("white")
+        self.il = wx.ImageList(16, 16)
+        self.sm_up = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_UP,   wx.ART_TOOLBAR,
+                                                          (16,16)))
+        self.sm_dn = self.il.Add(wx.ArtProvider_GetBitmap(wx.ART_GO_DOWN, wx.ART_TOOLBAR,
+                                                          (16,16)))
+        self.SetImageList(self.il, wx.IMAGE_LIST_SMALL)
+
+        #
+        # sort by first column
+        #
+        if self.sourceData:
+            self.SortListItems(col=0, ascending=True)
+
+        #
+        # bindings
+        #
+        self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColumnClick)
+
     def Populate(self, data=None, update=False):
         """Populate list"""
+        self.itemDataMap  = {}
+        self.itemIndexMap = []
+        
         if data is None:
             data = self.sourceData
         elif update:
@@ -453,33 +493,111 @@ class ItemList(wx.ListCtrl,
         try:
             data.sort()
             self.DeleteAllItems()
+            row = 0
             for value in data:
-                entry = self.GetItemCount()
-                index = self.InsertStringItem(entry, value[0])
+                # index = self.InsertStringItem(sys.maxint, str(value[0]))
+                self.itemDataMap[row] = [value[0]]
                 for i in range(1, len(value)):
-                    try:
-                        self.SetStringItem(index, i, value[i])
-                    except:
-                        self.SetStringItem(index, i, unicode(value[i], 'latin1'))
+                    # try:
+                    # self.SetStringItem(index, i, str(value[i]))
+                    # except:
+                    # self.SetStringItem(index, i, unicode(str(value[i]), 'latin1'))
+                    self.itemDataMap[row].append(value[i])
+                # self.SetItemData(index, row)
+                self.itemIndexMap.append(row)
+                row += 1
 
+            self.SetItemCount(row)
+            
             # set column width
-            for i in range(self.GetColumnCount()):
-                self.SetColumnWidth(i, wx.LIST_AUTOSIZE)
-            for i in range(self.GetColumnCount()):
-                if self.GetColumnWidth(i) < 80:
-                    self.SetColumnWidth(i, 80)
-
+            # for i in range(self.GetColumnCount()):
+            # self.SetColumnWidth(i, wx.LIST_AUTOSIZE)
+            # for i in range(self.GetColumnCount()):
+            # if self.GetColumnWidth(i) < 80:
+            # self.SetColumnWidth(i, 80)
+            self.SetColumnWidth(0, 80)
+            self.SetColumnWidth(1, 300)
+            
             self.SendSizeEvent()
             
         except StandardError, e:
-            dlg = wx.MessageDialog(parent=self,
-                                   message=_("Unable to read list: %s ") % e,
-                                   caption=_("Error"),  style=wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Unable to read list: %s ") % e,
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+
+    def OnColumnClick(self, event):
+        """Sort by column"""
+        self._col = event.GetColumn()
+
+        # remove duplicated arrow symbol from column header
+        # FIXME: should be done automatically
+        info = wx.ListItem()
+        info.m_mask = wx.LIST_MASK_TEXT | wx.LIST_MASK_IMAGE
+        info.m_image = -1
+        for column in range(self.GetColumnCount()):
+            info.m_text = self.GetColumn(column).GetText()
+            self.SetColumn(column, info)
+
+        event.Skip()
+
+    def GetSortImages(self):
+        """Used by the ColumnSorterMixin, see wx/lib/mixins/listctrl.py"""
+        return (self.sm_dn, self.sm_up)
+
+    def OnGetItemText(self, item, col):
+        """Get item text"""
+        index = self.itemIndexMap[item]
+        s = str(self.itemDataMap[index][col])
+        return s
+
+    def OnGetItemAttr(self, item):
+        """Get item attributes"""
+        index = self.itemIndexMap[item]
+        if ( index % 2) == 0:
+            return self.attr2
+        else:
+            return self.attr1
+
+    def SortItems(self, sorter=cmp):
+        """Sort items"""
+        items = list(self.itemDataMap.keys())
+        items.sort(self.Sorter)
+        self.itemIndexMap = items
+
+        # redraw the list
+        self.Refresh()
+        
+    def Sorter(self, key1, key2):
+        colName = self.GetColumn(self._col).GetText()
+        ascending = self._colSortFlag[self._col]
+        # convert always string
+        item1 = self.itemDataMap[key1][self._col]
+        item2 = self.itemDataMap[key2][self._col]
+
+        if type(item1) == type('') or type(item2) == type(''):
+            cmpVal = locale.strcoll(str(item1), str(item2))
+        else:
+            cmpVal = cmp(item1, item2)
+
+
+        # If the items are equal then pick something else to make the sort value unique
+        if cmpVal == 0:
+            cmpVal = apply(cmp, self.GetSecondarySortValues(self._col, key1, key2))
+
+        if ascending:
+            return cmpVal
+        else:
+            return -cmpVal
+
+    def GetListCtrl(self):
+        """Used by listmix.ColumnSorterMixin"""
+        return self
 
     def Search (self, index, str):
-        """Search projection by name"""
+        """Search projection by description
+
+        Return first found item or None
+        """
         if str == '':
             self.Populate(self.sourceData)
             return None
@@ -524,6 +642,7 @@ class ProjTypePage(TitledPage):
         self.label_hemisphere = self.MakeLabel(_("Hemisphere for zone:"))
 
         # layout
+        self.sizer.AddGrowableCol(2)
         self.sizer.Add(item=self.radio1,
                        flag=wx.ALIGN_LEFT, pos=(1, 1), span=(1, 2))
         self.sizer.Add(item=self.radio2,
@@ -647,6 +766,7 @@ class DatumPage(TitledPage):
         self.transformlist.sourceData = data
         
         # layout
+        self.sizer.AddGrowableCol(4)
         self.sizer.Add(item=self.MakeLabel(_("Datum code:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -665,6 +785,7 @@ class DatumPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, border=5, pos=(2, 2))
 
+        self.sizer.AddGrowableRow(3)
         self.sizer.Add(item=self.datumlist,
                        flag=wx.EXPAND |
                        wx.ALIGN_LEFT |
@@ -778,7 +899,7 @@ class DatumPage(TitledPage):
         index = event.m_itemIndex
         item = event.GetItem()
 
-        self.transform = item.GetText()
+        self.transform = self.transformlist.GetItem(index, 0).GetText()
         self.transdatum = self.parent.transforms[self.transform][0]
         self.transregion = self.parent.transforms[self.transform][1]
         self.transparams = self.parent.transforms[self.transform][2]
@@ -789,7 +910,7 @@ class DatumPage(TitledPage):
         index = event.m_itemIndex
         item = event.GetItem()
 
-        self.datum = item.GetText()
+        self.datum = self.datumlist.GetItem(index, 0).GetText()
         self.datumdesc = self.parent.datums[self.datum][0]
         self.ellipsoid = self.parent.datums[self.datum][1]
         self.datumparams = self.parent.datums[self.datum][2]
@@ -829,6 +950,7 @@ class EllipsePage(TitledPage):
                                     columns=[_('Code'), _('Description')])
 
         # layout
+        self.sizer.AddGrowableCol(4)
         self.sizer.Add(item=self.MakeLabel(_("Ellipsoid code:")),
                        flag=wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -845,11 +967,12 @@ class EllipsePage(TitledPage):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, border=5, pos=(2, 2))
-                                    
+
+        self.sizer.AddGrowableRow(3)
         self.sizer.Add(item=self.ellipselist,
                        flag=wx.EXPAND |
                        wx.ALIGN_LEFT |
-                       wx.ALL, border=5, pos=(3, 1), span=(1, 3))
+                       wx.ALL, border=5, pos=(3, 1), span=(1, 4))
 
         # events
         self.ellipselist.Bind(wx.EVT_LIST_ITEM_SELECTED,    self.OnItemSelected)
@@ -916,7 +1039,7 @@ class EllipsePage(TitledPage):
         index = event.m_itemIndex
         item = event.GetItem()
 
-        self.ellipse = item.GetText()
+        self.ellipse = self.ellipselist.GetItem(index, 0).GetText()
         self.ellipsedesc = self.parent.ellipsoids[self.ellipse][0]
         self.ellipseparams = self.parent.ellipsoids[self.ellipse][1]
 
@@ -939,6 +1062,7 @@ class GeoreferencedFilePage(TitledPage):
         self.bbrowse = self.MakeButton(_("Browse"))
 
         # do layout
+        self.sizer.AddGrowableCol(3)
         self.sizer.Add(item=self.lfile, flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTRE_VERTICAL |
                        wx.ALL, border=5, pos=(1, 1))
@@ -1009,7 +1133,7 @@ class EPSGPage(TitledPage):
         TitledPage.__init__(self, wizard, _("Choose EPSG Code"))
         self.parent = parent
         self.epsgCodeDict = {}
-        self.epsgcode = ''
+        self.epsgcode = None
         self.epsgdesc = ''
         self.epsgparams = ''
 
@@ -1038,6 +1162,7 @@ class EPSGPage(TitledPage):
                                  columns=[_('Code'), _('Description'), _('Parameters')])
 
         # layout
+        self.sizer.AddGrowableCol(3)
         self.sizer.Add(item=self.lfile,
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL |
@@ -1073,9 +1198,10 @@ class EPSGPage(TitledPage):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALL, border=5, pos=(3, 3))
 
+        self.sizer.AddGrowableRow(4)
         self.sizer.Add(item=self.epsglist,
                        flag=wx.ALIGN_LEFT | wx.EXPAND, pos=(4, 1),
-                       span=(2, 4))
+                       span=(1, 3))
 
         # events
         self.bbrowse.Bind(wx.EVT_BUTTON, self.OnBrowse)
@@ -1091,7 +1217,7 @@ class EPSGPage(TitledPage):
         # self.DoLayout()
 
     def OnEnterPage(self, event):
-        if len(self.epsgcode) == 0:
+        if self.epsgcode:
             # disable 'next' button by default
             wx.FindWindowById(wx.ID_FORWARD).Enable(False)
         else:
@@ -1106,9 +1232,14 @@ class EPSGPage(TitledPage):
 
     def OnText(self, event):
         self.epsgcode = event.GetString()
+        try:
+            self.epsgcode = int(self.epsgcode)
+        except:
+            self.epsgcode = None
+            
         nextButton = wx.FindWindowById(wx.ID_FORWARD)
 
-        if len(self.epsgcode) > 0 and self.epsgcode in self.epsgCodeDict.keys():
+        if self.epsgcode and self.epsgcode in self.epsgCodeDict.keys():
             self.epsgdesc = self.epsgCodeDict[self.epsgcode][0]
             self.epsgparams = self.epsgCodeDict[self.epsgcode][1]
             if not nextButton.IsEnabled():
@@ -1126,10 +1257,10 @@ class EPSGPage(TitledPage):
         
         try:
             self.epsgcode = self.epsglist.Search(index=1, str=str)[0]
+            self.tcode.SetValue(str(self.epsgcode))
         except:
-            self.epsgcode = ''
-
-        self.tcode.SetValue(self.epsgcode)
+            self.epsgcode = None
+            self.tcode.SetValue('')
 
         event.Skip()
         
@@ -1144,54 +1275,47 @@ class EPSGPage(TitledPage):
 
         event.Skip()
 
-    def OnItemSelected(self,event):
+    def OnItemSelected(self, event):
+        """EPSG code selected from the list"""
         index = event.m_itemIndex
         item = event.GetItem()
 
-        self.epsgcode = item.GetText()
+        self.epsgcode = int(self.epsglist.GetItem(index, 0).GetText())
         self.epsgdesc = self.epsglist.GetItem(index, 1).GetText()
         self.tcode.SetValue(str(self.epsgcode))
 
+        event.Skip()
+        
     def OnBrowseCodes(self, event, search=None):
         """Browse EPSG codes"""
         try:
             data = []
             self.epsgCodeDict = {}
-            f = open(self.tfile.GetValue(),"r")
-            descr = None
-            code = None
-            params = None
+            f = open(self.tfile.GetValue(), "r")
             i = 0
+            code = None
             for line in f.readlines():
+
                 line = line.strip()
-                if line.find("#") == 0:
+
+                if line[0] == '#':
                     descr = line[1:].strip()
-                elif line.find("<") == 0:
-                    code = line.split(" ")[0]
-                    for par in line.split(" ")[1:]:
-                        params += par + " "
-                    code = code[1:-1]
-                if code == None:
-                    code = 'no code'
-                if descr == None:
-                    descr = 'no description'
-                if params == None:
-                    params = 'no parameters'
-                
-                if i % 2 == 0:
+                elif line[0] == '<':
+                    code, params = line.split(" ", 1)
+                    code = int(code.replace('<', '').replace('>', ''))
+
+                if code is not None:
                     data.append((code, descr, params))
                     self.epsgCodeDict[code] = (descr, params)
-                    descr = None; code = None; params = ""
+                    code = None
                 i += 1
             f.close()
 
             self.epsglist.Populate(data, update=True)
         except StandardError, e:
-            dlg = wx.MessageDialog(parent=self,
-                                   message=_("Unable to read EPGS codes: %s " % e,
-                                             _("Error"),  wx.OK | wx.ICON_ERROR))
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Unable to read EPGS codes: %s ") % e,
+                          caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
 
 class CustomPage(TitledPage):
     """
@@ -1212,12 +1336,14 @@ class CustomPage(TitledPage):
         self.label_proj4string = self.MakeLabel(_("Enter PROJ.4 parameters string:"))
 
         # layout
+        self.sizer.AddGrowableCol(2)
         self.sizer.Add(self.label_proj4string,
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(1, 1))
+        self.sizer.AddGrowableRow(2)
         self.sizer.Add(self.text_proj4string,
                        flag=wx.ALIGN_LEFT | wx.ALL | wx.EXPAND, 
-                       border=5, pos=(2, 1), span=(1, 4))
+                       border=5, pos=(2, 1), span=(1, 2))
 
         self.text_proj4string.Bind(wx.EVT_TEXT, self.GetProjstring)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.OnPageChanging)
@@ -1263,10 +1389,10 @@ class SummaryPage(TitledPage):
         self.parent = parent
 
         # labels
-        self.ldatabase  =    self.MakeLabel("")
-        self.llocation  =    self.MakeLabel("")
-        self.lprojection =    self.MakeLabel("")
-        self.lproj4string =    self.MakeLabel("")
+        self.ldatabase  = self.MakeLabel("")
+        self.llocation  = self.MakeLabel("")
+        self.lprojection = self.MakeLabel("")
+        self.lproj4string = self.MakeLabel("")
         self.lproj4stringLabel = self.MakeLabel("")
         
         self.lprojection.Wrap(400)
@@ -1279,6 +1405,7 @@ class SummaryPage(TitledPage):
         
     def __DoLayout(self):
         """Do page layout"""
+        self.sizer.AddGrowableCol(1)
         self.sizer.Add(item=self.MakeLabel(_("GRASS Database:")),
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(1, 0))
@@ -1291,12 +1418,6 @@ class SummaryPage(TitledPage):
         self.sizer.Add(item=self.llocation,
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(2, 1))
-        #         self.sizer.Add(item=wx.StaticLine(self, -1), 
-        #                        flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL,
-        #                        pos=(3, 0), span=(1, 2))
-        #         self.sizer.Add(item=(10,10),
-        #                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
-        #                        border=5, pos=(4, 0))
         self.sizer.Add(item=self.MakeLabel(_("Projection:")),
                        flag=wx.ALIGN_LEFT | wx.ALL,
                        border=5, pos=(3, 0))
@@ -1311,14 +1432,14 @@ class SummaryPage(TitledPage):
                        border=5, pos=(4, 1))
         self.sizer.Add(item=(10,20),
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
-                       border=5, pos=(5, 0))
+                       border=5, pos=(5, 0), span=(1, 2))
+        self.sizer.AddGrowableRow(6)
         self.sizer.Add(item=self.MakeLabel(_("You can set the default extents "
-                                             "and resolution after creating new location")),
-                       flag=wx.ALIGN_CENTRE | wx.ALL,
-                       border=5, pos=(6, 0), span=(1, 3))
-        self.sizer.Add(item=self.MakeLabel(_("or you can set them during a working session.")),
-                       flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(7, 0),
-                       span=(1, 3))
+                                             "and resolution after creating new location%s"
+                                             "or you can set them during a working session.") % os.linesep,
+                                           style=wx.ALIGN_CENTER),
+                       flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(6, 0),
+                       span=(1, 2))
 
     def OnEnterPage(self,event):
         """
@@ -1503,11 +1624,12 @@ class LocationWizard(wx.Object):
                     dlg.Destroy()
 
             elif success == False:
-                dlg = wx.MessageBox(parent=self.wizard,
-                                    message=_("Unable to create new location."),
-                                    caption=_("Error"),
-                                    style=wx.OK | wx.ICON_ERROR)
-                self.Destroy()
+                dlg = wx.MessageDialog(parent=self.wizard,
+                                       message=_("Unable to create new location."),
+                                       caption=_("Error"),
+                                       style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                if dlg.ShowModal() == wx.ID_OK:
+                    self.wizard.Destroy()
             else: # None
                 pass
         else:
