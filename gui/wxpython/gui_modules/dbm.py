@@ -108,9 +108,9 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # sort item by category (id)
         if keyColumn > -1:
-            self.SortListItems(col=keyColumn, ascending=1) 
+            self.SortListItems(col=keyColumn, ascending=True) 
         else:
-            self.SortListItems(col=0, ascending=1) 
+            self.SortListItems(col=0, ascending=True) 
 
         # events
         self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnItemSelected)
@@ -218,7 +218,7 @@ class VirtualAttributeList(wx.ListCtrl,
             # self.SetStringItem(index=index, col=j+1, label=str(self.itemDataMap[i][j+1]))
                 
             # self.SetItemData(item=index, data=i)
-
+            
             self.itemIndexMap.append(i)
             if keyId > -1: # load cats only when LoadData() is called first time
                 self.itemCatsMap[i] = cat
@@ -297,15 +297,14 @@ class VirtualAttributeList(wx.ListCtrl,
         """Column heading clicked -> sorting"""
         self._col = event.GetColumn()
 
-        # FIXME
-        # This artificial code removes duplicated arrow symbol from
-        # column header, should be done automatically
+        # remove duplicated arrow symbol from column header
+        # FIXME: should be done automatically
+        info = wx.ListItem()
+        info.m_mask = wx.LIST_MASK_TEXT | wx.LIST_MASK_IMAGE
+        info.m_image = -1
         for column in range(self.GetColumnCount()):
-            name = self.GetColumn(column).GetText()
-            width = self.GetColumnWidth(column)
-            self.DeleteColumn(column)
-            self.InsertColumn(column, name)
-            self.SetColumnWidth(column, width)
+            info.m_text = self.GetColumn(column).GetText()
+            self.SetColumn(column, info)
 
         event.Skip()
 
@@ -331,7 +330,7 @@ class VirtualAttributeList(wx.ListCtrl,
             cmpVal = cmp(item1, item2)
 
 
-        # If the items are equal then pick something else to make the sort v    ->alue unique
+        # If the items are equal then pick something else to make the sort value unique
         if cmpVal == 0:
             cmpVal = apply(cmp, self.GetSecondarySortValues(self._col, key1, key2))
 
@@ -943,7 +942,7 @@ class AttributeManager(wx.Frame):
         menu.Append(self.popupDataID4, _("Delete all records"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID5, _("Select all"))
-        menu.Append(self.popupDataID6, _("Select none"))
+        menu.Append(self.popupDataID6, _("Deselect all"))
         menu.AppendSeparator()
         menu.Append(self.popupDataID7, _("Display selected"))
         if not self.map or len(list.GetSelectedItems()) == 0:
@@ -1496,9 +1495,9 @@ class AttributeManager(wx.Frame):
 
         # sort by key column
         if keyColumn > -1:
-            listWin.SortListItems(col=keyColumn, ascending=1)
+            listWin.SortListItems(col=keyColumn, ascending=True)
         else:
-            listWin.SortListItems(col=0, ascending=1) 
+            listWin.SortListItems(col=0, ascending=True) 
 
         # update statusbar
         self.log.write(_("Number of loaded records: %d") % \
@@ -3028,14 +3027,14 @@ class VectorDBInfo:
             columns = {} # {name: {type, length, [values], [ids]}}
 
             if columnsCommand.returncode == 0:
-                # get rid of nrows and ncols row...
+                # skip nrows and ncols
                 i = 0
                 for line in columnsCommand.ReadStdOutput()[2:]:
                     num, name, type, length = line.strip().split(':')
-                    # FIXME: here will be more types
+                    # FIXME: support more datatypes
                     if type.lower() == "integer":
                         ctype = int
-                    elif type.lower() == "double" or type.lower() == "float":
+                    elif type.lower() == "double precision":
                         ctype = float
                     else:
                         ctype = str
