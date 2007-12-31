@@ -502,6 +502,8 @@ class GRASSStartup(wx.Frame):
                     self.listOfLocations.append(os.path.basename(location))
             except:
                 pass
+            
+        self.listOfLocations.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
 
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations, 0)
@@ -512,10 +514,12 @@ class GRASSStartup(wx.Frame):
         """Update list of mapsets"""
         self.listOfMapsets = []
 
-        self.listOfMapsets.append('PERMANENT')
         for mapset in glob.glob(os.path.join(self.gisdbase, location, "*")):
             if os.path.isdir(mapset) and os.path.basename(mapset) != 'PERMANENT':
                 self.listOfMapsets.append(os.path.basename(mapset))
+        
+        self.listOfMapsets.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
+        self.listOfMapsets.insert(0,'PERMANENT')
  
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets,0)
