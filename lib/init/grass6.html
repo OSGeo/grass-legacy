@@ -17,7 +17,7 @@
 <H2>SYNOPSIS</H2>
 
 <B>grass63</B> [<B>-</B>] [<B>-v</B>] [<B>-h | -help | --help</B>]
-    [<B>-text | -gui | -oldgui]</B>]
+    [<B>-text | -gui | -tcltk | -wx]</B>]
     [[[<B>&lt;GISDBASE&gt;/</B>]<B>&lt;LOCATION_NAME&gt;/</B>]
     	<B>&lt;MAPSET&gt;</B>]
 
@@ -42,7 +42,7 @@ options) will start grass with the previous settings for the user interface
 and mapset.
 
 <P>
-If you specify a graphical user interface (eg Tcl/Tk) the <EM>grass63</EM>
+If you specify a graphical user interface (Tcl/Tk or wxPython), the <EM>grass63</EM>
 program will try to verify that the system you specified exists and that you
 can access it successfully. If any of these checks fail, then <EM>grass63</EM>
 will automatically switch back to the text user interface mode.
@@ -68,8 +68,8 @@ All command line options are optional.
 <DT><B>-gui</B> (or <B>-tcltk</B>)
 <DD> Indicates that the Tcl/Tk based graphical user interface should be used
 
-<DT><B>-oldgui</B>
-<DD> Indicates that the old graphical user interface should be used (d.m)
+<DT><B>-wx</B>
+<DD> Indicates that the new Python based graphical user interface should be used (wxgrass)
 
 <DT><B>-v</B> <B>--version</B>
 <DD> Prints the version for GRASS
@@ -81,7 +81,7 @@ All command line options are optional.
 <DL>
 <DT><B>GISDBASE</B>
 <DD> Initial database directory which should be a fully qualified path
-    (eg /usr/local/share/grassdata)
+    (e.g., /usr/local/share/grassdata)
 
 <DT><B>LOCATION_NAME</B>
 <DD> Initial location directory which is a subdirectory of GISDBASE
@@ -106,8 +106,8 @@ The <EM>grass63</EM> program will check for the existence of an environment
 variable called GRASS_GUI which indicates the type of user interface for
 GRASS to use. If this variable is not set when <EM>grass63</EM> is run, then
 it will be created and then saved in the $HOME/.grassrc6 file for the next
-time GRASS is run. In addition to "text" or "tcltk", the GRASS_GUI variable
-can be set to the name of the GUI to use, for example "gis.m" or "d.m".
+time GRASS is run. In addition to "text", "tcltk" or "wx", the GRASS_GUI variable
+can be set to the name of the GUI to use, for example "gis.m" or "wxgrass".
 
 <P>
 There is an order of precedence in the way <EM>grass63</EM> determines the user
@@ -144,6 +144,9 @@ for an example.
 
 <DT><B>GRASS_WISH</B>
 <DD> Command to use to override wish
+
+<DT><B>GRASS_PYTHON</B>
+<DD> Command to use to override python
 
 </DL>
 
@@ -342,7 +345,8 @@ first version of <EM>wish</EM>.
 
 <H2>FILES</H2>
 
-<EM>$UNIX_BIN/grass63</EM> - GRASS startup program<BR><BR>
+<EM>$UNIX_BIN/grass63</EM> - GRASS startup program (Linux, MacOSX etc.)<BR><BR>
+<EM>$WINDOWS_BIN/grass63.bat</EM> - GRASS startup program (MS-Windows)<BR><BR>
 <EM>$GISBASE/etc/Init.sh</EM> - GRASS initialization script called by
     <EM>grass63</EM><BR><BR>
 <EM>$GISBASE/etc/gis_set.tcl</EM> - Tcl/Tk script to set the
