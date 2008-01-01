@@ -225,7 +225,7 @@ class GMFrame(wx.Frame):
             if len(eachItem) == 2:
                 label = eachItem[0]
                 subMenu = self.__createMenu(eachItem[1])
-                menu.AppendMenu(wx.NewId(), label, subMenu)
+                menu.AppendMenu(wx.ID_ANY, label, subMenu)
             else:
                 self.__createMenuItem(menu, *eachItem)
         self.Bind(wx.EVT_MENU_HIGHLIGHT_ALL, self.OnMenuHighlight)
@@ -237,7 +237,12 @@ class GMFrame(wx.Frame):
         if not label:
             menu.AppendSeparator()
             return
-        menuItem = menu.Append(-1, label, help, kind)
+
+        if len(gcmd) > 0:
+            helpString = gcmd + ' (' + help + ')'
+        else:
+            helpString = help
+        menuItem = menu.Append(wx.ID_ANY, label, helpString, kind)
         if label:
             menucmd[label] = gcmd
         rhandler = eval(handler)
