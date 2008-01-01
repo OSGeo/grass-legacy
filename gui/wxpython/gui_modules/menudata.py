@@ -9,8 +9,9 @@ PURPOSE:    Complex list for main menu entries for GRASS wxPython GUI.
 AUTHORS:    The GRASS Development Team
             Michael Barton (Arizona State University)
             Yann Chemin
-
-COPYRIGHT:  (C) 2007 by the GRASS Development Team
+            Martin Landa <landa.martin gmail.com>
+            
+COPYRIGHT:  (C) 2007-2008 by the GRASS Development Team
             This program is free software under the GNU General Public
             License (>=v2). Read the file COPYING that comes with GRASS
             for details.
@@ -142,16 +143,16 @@ class Data:
               )),
           ("Config", (
               ("Region", (
-                ("Display region", "Display region settings", "self.RunMenuCmd", ['g.region', '-p']),
+                ("Display region", "Display region settings", "self.RunMenuCmd", "g.region -p"),
                 ("Set region", "Change region settings", "self.OnMenuCmd", "g.region"),
               )),
               ("GRASS working environment", (
                 ("Mapset access", "Set/unset access to other mapsets in current location", "self.OnMapsets", ""),
                 ("Change working environment", "Change current working session to new mapset, location, or data directory", "self.OnMenuCmd", "g.mapset"),
                 ("User access", "Change access by other users to current mapset", "self.OnMenuCmd", "g.access"),
-                ("Show settings", "Show current GRASS environment settings", "self.RunMenuCmd", ['g.gisenv',' ']),
+                ("Show settings", "Show current GRASS environment settings", "self.RunMenuCmd", "g.gisenv"),
                 ("Change settings", "Change GRASS environment settings", "self.OnMenuCmd", "g.gisenv"),
-                ("Version", "Show current GRASS version", "self.RunMenuCmd", ['g.version','-c']),
+                ("Version", "Show current GRASS version", "self.RunMenuCmd", "g.version -c"),
               )),
               ("Manage projections", (
                 ("Manage projections", "Show projection information and create projection files", "self.OnMenuCmd", "g.proj"),
@@ -345,7 +346,6 @@ class Data:
                 ("Linear regression", "Linear regression between 2 maps", "self.OnMenuCmd", "r.regression.line"),
                 ("Mutual category occurrences", "Mutual category occurrences (coincidence)", "self.OnMenuCmd", "r.coin"),
                 )),
-#              ("","","", "")
               )),
           ("Vector", (
               ("Develop map", (
@@ -447,7 +447,6 @@ class Data:
                 ("Quadrat indices", "Indices of point counts in quadrats", "self.OnMenuCmd", "v.qcount"),
                 ("Test normality", "Test normality of point distribution", "self.OnMenuCmd", "v.normal"),
                 )),
-#              ("","","", "")
               )),
           ("Imagery", (
               ("Develop images and groups", (
@@ -498,7 +497,6 @@ class Data:
                 ("Kappa analysis", "Kappa classification accuracy assessment", "self.OnMenuCmd", "r.kappa"),
                 ("OIF for LandSat TM", "Optimum index factor for LandSat TM", "self.OnMenuCmd", "i.oif"),
                 )),
-#              ("","","", "")
               )),
           ("Volumes", (
               ("Develop grid3D volumes", (
@@ -514,7 +512,6 @@ class Data:
               ("Report and Statistics", (
                 ("Basic volume information", "Report basic information about grid3D volume", "self.OnMenuCmd", "r3.info"),
                 )),
-#              ("","","", "")
               )),
           ("Database", (
               ("Database information", (
@@ -548,12 +545,9 @@ class Data:
                 ("Reconnect vector to database", "Reconnect vector map to attribute database", "self.OnMenuCmd", "v.db.reconnect.all"),
                 ("Set vector - database connection", "Set database connection for vector attributes", "self.OnMenuCmd", "v.db.connect"),
                 )),
-#              ("","","", "")
               )),
           ("Help", (
-              ("GRASS GIS help", "GRASS GIS help", "self.RunMenuCmd", ['g.manual', '-i']),
-              ("GRASS GIS Layer Manager help", "GRASS GIS Layer Manager help", "self.RunMenuCmd", ['g.manual', 'gis.m']),
+              ("GRASS GIS help", "GRASS GIS help", "self.RunMenuCmd", "g.manual -i"),
+              ("GRASS GIS Layer Manager help", "GRASS GIS Layer Manager help", "self.RunMenuCmd", "g.manual gis.m"),
               ("About GRASS GIS", "About GRASS GIS", "self.OnAboutGRASS", ""),
-#              ("About system (not functional)", "About system", "self.OnMenuCmd", ""),
-#              ("","","", "")
               )))]
