@@ -1,21 +1,20 @@
 <h2>DESCRIPTION</h2>
 
-<p><i>v.vol.rst</i> interpolates values to a 3-dimensional grid from
+<p><i>v.vol.rst</i> interpolates values to a 3-dimensional raster map from
 3-dimensional point data (e.g. temperature, rainfall data from climatic
 stations, concentrations from drill holes etc.) given in a 3-D vector
-point file named <i>input</i>.&nbsp; The size of the output 3-D grid
+point file named <i>input</i>.&nbsp; The size of the output 
 3d raster map <i>elev</i> is given by the current 3D region. Sometimes, the
 user
 may want to get a 2-D map showing a modelled phenomenon at a
 crossection surface. In that case, <i>cellinp</i> and <i>cellout</i>
-options must be specified and then the output 2D grid file <i>cellout</i>
-contains crossection of interpolated volume with surface defined by <i>cellinp</i>
-2D grid input file. As an
-option, simultaneously with interpolation, geometric parameters of the
-interpolated
+options must be specified and then the output 2D raster map <i>cellout</i>
+contains crossection of the interpolated volume with a surface 
+defined by <i>cellinp</i>
+2D raster map. As an option, simultaneously with interpolation, 
+geometric parameters of the interpolated
 phenomenon can be computed (magnitude of gradient, direction of
-gradient defined by horizontal and vertical angles), change of
-gradient,
+gradient defined by horizontal and vertical angles), change of gradient,
 Gauss-Kronecker curvature, or mean curvature). These geometric
 parameteres are saved as
 3d raster maps <i>gradient, aspect1, aspect2, ncurv, gcurv, mcurv</i>,
@@ -23,31 +22,28 @@ respectively.
 </p>
 <p>At first, data points are checked for identical points and points
 that are closer to each other than given <i>dmin</i> are removed.
-Parameters
-<i>wmult</i> and <i>zmult</i> allow user to re-scale the w-values and
-z-coordinates
-of the point data (useful e.g. for transformation of elevations given
-in feet
-to meters, so that the proper values of gradient and curvatures can be
-computed).
+Parameters <i>wmult</i> and <i>zmult</i> allow user to re-scale 
+the w-values and z-coordinates of the point data (useful e.g. for 
+transformation of elevations given in feet to meters, so that the 
+proper values of gradient and curvatures can be computed).
+Rescaling of z-coordinates is also needed when the distances
+in vertical direction are much smaller than the horizontal
+distances, if that is the case, the value of <i>zmult</i>
+should be selected so that the vertical and horizontal distances
+have about the same magnitude.
 </p>
 <p>Regularized spline with tension method is used in the interpolation.
-The <i>tension</i> parameter tunes the character of the resulting
-volume from thin plate
-to membrane. Higher values of tension parameter reduce the overshoots
-that
+The <i>tension</i> parameter controls the distance over which 
+each given point influences the resulting volume (with very high tension, 
+each point influences only its close neighborhood and the volume goes
+rapidly to trend between the points).
+Higher values of tension parameter reduce the overshoots that
 can appear in volumes with rapid change of gradient. For noisy data, it
 is possible to define a global smoothing parameter, <i>smooth</i>.
 With the
 smoothing parameter set to zero (<i>smooth=0</i>) the resulting volume
-passes
-exactly through the data points. Also, the user can use a spatially
-variable
-smoothing using <i>smatt</i> option by setting the parameter <i>smatt</i>
-to the value j for the j-th floating point attribute in the input
-vector point file, representing the smoothing parameter for each point.
-When smoothing is used,
-it is possible to output vector map <i>devi</i>
+passes exactly through the data points. 
+When smoothing is used, it is possible to output a vector map <i>devi</i>
 containing deviations of the resulting volume from the given data. </p>
 <p>User can define a 2D raster map named <i>maskmap</i>, which will
 be used as a mask. The interpolation is skipped for 3-dimensional cells
@@ -164,12 +160,11 @@ values while then finer steps can be used in all parameters. The
 reasonable range is <em>tension</em>=10...100,
 <em>smooth</em>=0.1...1.0, <em>zmult</em>=10...100.
 <p>
-
 In <em>v.vol.rst</em> the tension parameter is much more sensitive to
-changes than in <em>v.surf.rst</em>. Usually <em>tension</em>=10...20
-provide best results.  But the user should always check the
-result by visual inspection, sometimes CV does not provide the best
-results, especially when the density of data are insufficient. Then
+changes than in <em>v.surf.rst</em>, 
+therefore the user should always check the
+result by visual inspection. Minimizing CV does not always provide the best
+result, especially when the density of data are insufficient. Then
 the optimal result found by CV is an oversmoothed surface.
 
 
@@ -186,17 +181,16 @@ mean curvatures (<i>mcurv</i>) are computed directly from the
 interpolation function so that the important relationships between
 these parameters are preserved. More information on these parameters
 can be found in Mitasova et al., 1995 or Thorpe, 1979.</p>
+
 <p>The program gives warning when significant overshoots appear and
 higher tension should be used. However, with tension too high the
-resulting volume changes its behavior to membrane( rubber sheet
-stretched over the data points resulting in a peak in each given point
-and everywhere else the volume goes rapidly to trend). With smoothing
+resulting volume will have local maximum in each given point
+and everywhere else the volume goes rapidly to trend. With smoothing
 parameter greater than zero the volume
 will not pass through the data points and the higher the parameter the
 closer
 the volume will be to the trend. For theory on smoothing with splines
-see
-Talmi and Gilat, 1977 or Wahba, 1990. </p>
+see Talmi and Gilat, 1977 or Wahba, 1990. </p>
 <p>If a visible connection of segments appears, the program should be
 rerun with higher <i>npmin</i> to get more points from the
 neighborhood of given segment. </p>
@@ -231,7 +225,9 @@ a 3D vector map from a table containing x,y,z columns.
 <h2>AUTHOR</h2>
 <p>Original version of program (in FORTRAN) and GRASS enhancements: <br>
 Lubos Mitas, NCSA, University of Illinois at Urbana-Champaign,
-Illinois, USA,<a href="mailto:lubos_mitas@ncsu.edu">lubos_mitas@ncsu.edu</a><br>
+Illinois, USA, since 2000 at Department of Physics, 
+North Carolina State University, Raleigh, USA
+<a href="mailto:lubos_mitas@ncsu.edu">lubos_mitas@ncsu.edu</a><br>
 Helena Mitasova, Department of Marine, Earth and Atmospheric Sciences,
 North Carolina State University, Raleigh, USA, <a
  href="mailto:hmitaso@unity.ncsu.edu">hmitaso@unity.ncsu.edu</a></p>
