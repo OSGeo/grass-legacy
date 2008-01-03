@@ -501,11 +501,10 @@ else
 			mkdir -p "$LOCATION"
 			cp "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" "$LOCATION/WIND"
 			echo "Missing WIND file fixed"
-			# predefine DBF driver
-			#  why is this needed ??
-			#echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
-			#echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
-			#mkdir "$LOCATION"/dbf
+			# predefine DBF driver to avoid v.* module breakage
+			echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
+			echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
+			mkdir "$LOCATION"/dbf
 		   fi
 		fi
     	fi
