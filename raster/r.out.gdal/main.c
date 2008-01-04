@@ -81,7 +81,7 @@ void supported_formats(char **formats)
 
 int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 		struct Cell_head *cellhead, RASTER_MAP_TYPE maptype,
-		double nodataval)
+		double nodataval, char *nodatakey)
 {
 
     struct Colors sGrassColors;
@@ -224,12 +224,12 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 
     /* Copy data form GRASS raster to memory raster */
     int row, col;
+    int n_nulls = 0;
     if (maptype == FCELL_TYPE) {
 
 	/* Source datatype understandible by GDAL */
 	GDALDataType datatype = GDT_Float32;
 	FCELL fnullval = (FCELL) nodataval;
-	GDALSetRasterNoDataValue(hBand, nodataval);
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
@@ -239,8 +239,13 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
 	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++)
-		if (nulls[col])
+		if (nulls[col]) {
 		    ((FCELL *) bufer)[col] = fnullval;
+		    if (n_nulls == 0) {
+			GDALSetRasterNoDataValue(hBand, nodataval);
+		    }
+		    n_nulls++;
+		}
 
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
@@ -255,7 +260,6 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 
 	GDALDataType datatype = GDT_Float64;
 	DCELL dnullval = (DCELL) nodataval;
-	GDALSetRasterNoDataValue(hBand, nodataval);
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
@@ -265,8 +269,13 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
 	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++)
-		if (nulls[col])
-		    ((DCELL *) bufer)[col] = dnullval;
+		if (nulls[col]) {
+ 		    ((DCELL *) bufer)[col] = dnullval;
+		    if (n_nulls == 0) {
+			GDALSetRasterNoDataValue(hBand, nodataval);
+		    }
+		    n_nulls++;
+		}
 
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
@@ -281,7 +290,6 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 
 	GDALDataType datatype = GDT_Int32;
 	CELL inullval = (CELL) nodataval;
-	GDALSetRasterNoDataValue(hBand, nodataval);
 	for (row = 0; row < rows; row++) {
 
 	    if (G_get_raster_row(fd, bufer, row, maptype) < 0) {
@@ -291,8 +299,13 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
 	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++)
-		if (nulls[col])
-		    ((CELL *) bufer)[col] = inullval;
+		if (nulls[col]) {
+ 		    ((CELL *) bufer)[col] = inullval;
+		    if (n_nulls == 0) {
+			GDALSetRasterNoDataValue(hBand, nodataval);
+		    }
+		    n_nulls++;
+		}
 
 	    if (GDALRasterIO
 		(hBand, GF_Write, 0, row, cols, 1, bufer, cols, 1, datatype, 0,
@@ -302,6 +315,19 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    }
 	    G_percent(row + 1, rows, 2);
 	}
+    }
+
+    if (n_nulls > 0) {
+	if (maptype == CELL_TYPE)
+	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
+			"For no-data values was used value %d. "
+			"You can specify nodata value by %s parameter."),
+		      (int) nodataval, nodatakey);
+	else
+	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
+			"For no-data values was used value %g. "
+			"You can specify nodata value by %s parameter."),
+		      nodataval, nodatakey);
     }
 
     return 0;
@@ -331,7 +357,7 @@ int main(int argc, char *argv[])
 
     struct GModule *module;
     struct Flag *flag_l;
-    struct Option *input, *format, *type, *output, *createopt, *metaopt;
+    struct Option *input, *format, *type, *output, *createopt, *metaopt, *nodataopt;
 
     struct Cell_head cellhead;
     struct Ref ref;
@@ -409,6 +435,13 @@ int main(int argc, char *argv[])
 			     "if possible");
     metaopt->multiple = YES;
     metaopt->required = NO;
+
+    nodataopt = G_define_option();
+    nodataopt->key = "nodata";
+    nodataopt->type = TYPE_DOUBLE;
+    nodataopt->description = _("Assign a specified nodata value to output bands");
+    nodataopt->multiple = NO;
+    nodataopt->required = NO;
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -545,6 +578,11 @@ int main(int argc, char *argv[])
 	}
     }
 
+    /* force nodata-value if needed */
+    if (nodataopt->answer) {
+	nodataval = atof(nodataopt->answer);
+    }
+
     /* If file type not set by user ... */
     /* Get min/max values. */
     if( G_read_fp_range(ref.file[0].name, ref.file[0].mapset, &sRange ) == -1 ) {
@@ -652,7 +690,7 @@ int main(int argc, char *argv[])
 	}
 	if (import_band
 	    (hCurrDS, band + 1, ref.file[band].name, ref.file[band].mapset,
-	     &cellhead, maptype, nodataval) < 0)
+	     &cellhead, maptype, nodataval, nodataopt->key) < 0)
 	    G_warning(_("Unable to export raster map <%s>"),
 		      ref.file[band].name);
     }
