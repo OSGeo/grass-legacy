@@ -52,6 +52,7 @@ int main (int argc, char *argv[])
     int         force_imagery = FALSE;
     char	error_msg[8096];
     int 	projcomp_error=0;
+    int overwrite;
 
     struct GModule *module;
     struct
@@ -123,6 +124,11 @@ int main (int argc, char *argv[])
     flag_k->key = 'k';
     flag_k->description = _("Keep band numbers instead of using band color names");
 
+    /* The parser checks if the map already exists in current mapset, this is
+     * wrong if location options is used, so we switch out the check and do it
+     * in the module after the parser */
+    overwrite = G_check_overwrite(argc, argv);
+
     if (G_parser(argc,argv))
         exit(EXIT_FAILURE);
 
@@ -174,6 +180,18 @@ int main (int argc, char *argv[])
 	        GDALGetDriverLongName( hDriver ) );
 	}
 	exit(EXIT_SUCCESS);
+    }
+
+    if (G_legal_filename(output) < 0)
+	G_fatal_error(_("<%s> is an illegal file name"), output);
+
+    if ( !parm.outloc->answer ) { /* Check if the map exists */
+	if ( G_find_cell2 (output, G_mapset()) ) {
+	    if (overwrite)
+	        G_warning ( _("Raster map <%s> already exists and will be overwritten"), output );
+	    else
+	        G_fatal_error ( _("Raster map <%s> already exists"), output );
+	}
     }
 
 /* -------------------------------------------------------------------- */
@@ -250,12 +268,15 @@ int main (int argc, char *argv[])
         /* Convert projection information non-interactively as we can't
 	 * assume the user has a terminal open */
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
-			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 )
+			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 ) {
 	    G_fatal_error(_("Unable to convert input map projection to GRASS "
 			  "format; cannot create new location."));
-	else		  
+	}
+	else {  
             G_make_location( parm.outloc->answer, &cellhd,
 			     proj_info, proj_units, NULL );
+	    G_message(_("Location <%s> created"), parm.outloc->answer);
+	}
     }
     else
     {
