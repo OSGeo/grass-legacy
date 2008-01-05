@@ -1,19 +1,16 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       gproj library
- * AUTHOR(S):    Paul Kelly
- *               Frank Warmerdam
- * PURPOSE:      Functions for manipulating co-ordinate system representations
- * COPYRIGHT:    (C) 2003 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file convert.c
+
+   \brief GProj library - Functions for manipulating co-ordinate system representations
+
+   \author Paul Kelly, Frank Warmerdam 
+
+   (C) 2003-2008 by the GRASS Development Team
+ 
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+**/
 
 #include <grass/config.h>
 
@@ -107,12 +104,12 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
     hSRS = OSRNewSpatialReference(NULL);
 
     if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0) {
-	G_warning(_("Can't parse GRASS PROJ_INFO file"));
+	G_warning(_("Unable parse GRASS PROJ_INFO file"));
 	return NULL;
     }
 
     if ((proj4 = pj_get_def(pjinfo.pj, 0)) == NULL) {
-	G_warning(_("Can't get PROJ.4-style parameter string"));
+	G_warning(_("Unable get PROJ.4-style parameter string"));
 	return NULL;
     }
 
@@ -124,13 +121,13 @@ OGRSpatialReferenceH GPJ_grass_to_osr(struct Key_Value * proj_info,
 	proj4mod = proj4;
 
     if ((errcode = OSRImportFromProj4(hSRS, proj4mod)) != OGRERR_NONE) {
-	G_warning(_("OGR can't parse PROJ.4-style parameter string:\n" 
-		    "%s\n(OGR Error code was %d)"), proj4mod, errcode);
+	G_warning(_("OGR can't parse PROJ.4-style parameter string: " 
+		    "%s (OGR Error code was %d)"), proj4mod, errcode);
 	return NULL;
     }
 
     if ((errcode = OSRExportToWkt(hSRS, &wkt)) != OGRERR_NONE) {
-	G_warning(_("OGR can't get WKT-style parameter string\n"
+	G_warning(_("OGR can't get WKT-style parameter string "
 		    "(OGR Error code was %d)"), errcode);
 	return NULL;
     }
@@ -428,7 +425,7 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 	    {
 	        if( paramspresent < 2)
 		    /* Only give warning if no parameters present */
-	            G_warning(_("Datum <%s> not recognised by GRASS and no parameters found."),
+	            G_warning(_("Datum <%s> not recognised by GRASS and no parameters found"),
 			      pszDatumName);
 	    }
             else
