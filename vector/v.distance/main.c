@@ -68,7 +68,7 @@ static int print_upload(NEAR *, UPLOAD *, int, dbCatValArray *, dbCatVal *);
 
 int main (int argc, char *argv[])
 {
-    int    i, j;
+    int    i, j, k;
     int    print_as_matrix; /* only for all */
     int    all;             /* calculate from each to each within the threshold */
     char   *mapset;
@@ -471,6 +471,13 @@ int main (int argc, char *argv[])
     count = 0; /* count of distances in 'all' mode */
     /* Find nearest lines */
     if ( to_type & (GV_POINTS | GV_LINES) ) {
+	struct line_pnts *LLPoints;
+	if (G_projection() == PROJECTION_LL) {
+	    LLPoints = Vect_new_line_struct();
+	}
+	else {
+	    LLPoints = NULL;
+	}
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    int tmp_tcat;
 	    double tmp_tangle, tangle;
@@ -503,7 +510,20 @@ int main (int argc, char *argv[])
 		
 		/* TODO: more cats of the same field */
 		Vect_cat_get(TCats, to_field, &tmp_tcat);
-	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
+		if (G_projection() == PROJECTION_LL) {
+		    /* calculate distances in meters not degrees (only 2D) */
+		    Vect_reset_line(LLPoints);
+		    Vect_append_point(LLPoints, FPoints->x[0], FPoints->y[0], FPoints->z[0]);
+		    Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
+		    tmp_dist = Vect_line_geodesic_length(LLPoints);
+		    Vect_reset_line(LLPoints);
+		    for (k = 0; k < tseg; k++)
+			Vect_append_point(LLPoints, TPoints->x[k], TPoints->y[k], TPoints->z[k]);
+		    Vect_append_point(LLPoints, tmp_tx, tmp_ty, tmp_tz);
+		    tmp_talong = Vect_line_geodesic_length(LLPoints);
+		}
+		
+		G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
 		if ( all ) {
 		    if ( anear <= count ) {
@@ -561,6 +581,9 @@ int main (int argc, char *argv[])
 		}
 		near->count++;
 	    }
+	}
+	if (LLPoints) {
+	    Vect_destroy_line_struct(LLPoints);
 	}
     }
 
