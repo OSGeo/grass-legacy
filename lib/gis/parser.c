@@ -1272,6 +1272,9 @@ static void G_usage_xml (void)
 	char *s, *top;
 	int i;
 	char *encoding;
+	int new_prompt = 0;
+
+	new_prompt = uses_new_gisprompt();
 
 /* gettext converts strings to encoding returned by nl_langinfo(CODESET) */
 
@@ -1476,6 +1479,29 @@ static void G_usage_xml (void)
 	 *****
 	 *****
 	 *****/
+
+	if (new_prompt) {
+	        /* overwrite */
+	        fprintf(stdout, "\t<flag name=\"%s\">\n", "overwrite");
+		fprintf(stdout, "\t\t<description>\n\t\t\t");
+		print_escaped_for_xml(stdout, "Allow output files to overwrite existing files");
+		fprintf(stdout, "\n\t\t</description>\n");
+		fprintf (stdout, "\t</flag>\n");
+	}
+	
+	/* verbose */
+	fprintf(stdout, "\t<flag name=\"%s\">\n", "verbose");
+	fprintf(stdout, "\t\t<description>\n\t\t\t");
+	print_escaped_for_xml(stdout, "Verbose module output");
+	fprintf(stdout, "\n\t\t</description>\n");
+	fprintf (stdout, "\t</flag>\n");
+	
+	/* quiet */
+	fprintf(stdout, "\t<flag name=\"%s\">\n", "quiet");
+	fprintf(stdout, "\t\t<description>\n\t\t\t");
+	print_escaped_for_xml(stdout, "Quiet module output");
+	fprintf(stdout, "\n\t\t</description>\n");
+	fprintf (stdout, "\t</flag>\n");
 
 	fprintf(stdout, "</task>\n");
 }
