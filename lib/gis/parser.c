@@ -1,7 +1,7 @@
 /**
  * \file parser.c
  *
- * \brief Argument parsing functions.
+ * \brief GIS library - Argument parsing functions.
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -889,10 +889,14 @@ int G_parser (int argc, char **argv)
                         else if ( strcmp(ptr,"--v") == 0 || strcmp(ptr,"--verbose") == 0 )
 			{
                             char buff[32];
-                            /* print everything: verbosity level 2 */
+                            /* print everything: max verbosity level */
 			    module_info.verbose = G_verbose_max();
                             sprintf(buff,"GRASS_VERBOSE=%d",G_verbose_max()) ;
                             putenv(G_store(buff));
+			    if (quiet == 1) {
+				G_warning(_("Use either --quiet or --verbose flag, not both. Assuming --verbose."));
+			    }
+			    quiet = -1;
 			}
 
 			/* Quiet option */
@@ -903,10 +907,11 @@ int G_parser (int argc, char **argv)
 			    module_info.verbose = G_verbose_min();
                             sprintf(buff,"GRASS_VERBOSE=%d",G_verbose_min()) ;
                             putenv(G_store(buff));
+			    if (quiet == -1) {
+				G_warning(_("Use either --quiet or --verbose flag, not both. Assuming --quiet."));
+			    }
 			    quiet = 1; /* for passing to gui init */
 			}
-
-
 
 			/* Force gui to come up */
 			else if ( strcmp(ptr,"--ui") == 0 )
