@@ -245,7 +245,10 @@ class grassTask:
 
         for flag in self.flags:
             if 'value' in flag and flag['value']:
-                cmd += [ '-' + flag['name'] ]
+                if len(flag['name']) > 1: # e.g. overwrite
+                    cmd += [ '--' + flag['name'] ]
+                else:
+                    cmd += [ '-' + flag['name'] ]
         for p in self.params:
             if p.get('value','') == '' and p.get('required','no') != 'no':
                 if p.get('default', '') != '':
@@ -839,6 +842,8 @@ class cmdPanel(wx.Panel):
             which_sizer.Add( item=chk, proportion=0, flag=wx.EXPAND| wx.TOP | wx.LEFT, border=5)
             f['wxId'] = chk.GetId()
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
+            if f['name'] in ('verbose', 'quiet'):
+                chk.Bind(wx.EVT_CHECKBOX, self.OnVerbosity)
 
         # parameters
         visible_params = [ p for p in self.task.params if not p.get( 'hidden', 'no' ) == 'yes' ]
@@ -1026,7 +1031,23 @@ class cmdPanel(wx.Panel):
         self.SetSizer( panelsizer )
         panelsizer.Fit(self)
         self.hasMain = tab.has_key( _('Main') ) # publish, to enclosing Frame for instance
-        
+
+    def OnVerbosity(self, event):
+        """Verbosity level changed"""
+        verbose = self.FindWindowById(self.task.get_flag('verbose')['wxId'])
+        quiet = self.FindWindowById(self.task.get_flag('quiet')['wxId'])
+        if event.IsChecked():
+            if event.GetId() == verbose.GetId():
+                if quiet.IsChecked():
+                    quiet.SetValue(False)
+                    self.task.get_flag('quiet')['value'] = False
+            else:
+                if verbose.IsChecked():
+                    verbose.SetValue(False)
+                    self.task.get_flag('verbose')['value'] = False
+
+        event.Skip()
+
     def OnPageChange(self, event):
         self.Layout()
 

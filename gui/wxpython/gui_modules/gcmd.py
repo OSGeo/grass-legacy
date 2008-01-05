@@ -175,7 +175,7 @@ class Command:
 
     """
     def __init__ (self, cmd, stdin=None,
-                  verbose=0, wait=True, log='gui',
+                  verbose=None, wait=True, log='gui',
                   stdout=None, stderr=None):
 
         self.cmd = cmd
@@ -184,15 +184,16 @@ class Command:
         # set verbosity level
         #
         verbose_orig = None
-        if ('--q' not in self.cmd or '--quiet' not in self.cmd) and \
-                ('--v' not in self.cmd or '--verbose' not in self.cmd):
-            if verbose == 0:
-                self.cmd.append('--quiet')
-            elif verbose == 3:
-                self.cmd.append('--verbose')
-            else:
-                verbose_orig = os.getenv("GRASS_VERBOSE")
-                os.environ["GRASS_VERBOSE"] = str(verbose)
+        if ('--q' not in self.cmd and '--quiet' not in self.cmd) and \
+                ('--v' not in self.cmd and '--verbose' not in self.cmd):
+            if verbose is not None:
+                if verbose == 0:
+                    self.cmd.append('--quiet')
+                elif verbose == 3:
+                    self.cmd.append('--verbose')
+                else:
+                    verbose_orig = os.getenv("GRASS_VERBOSE")
+                    os.environ["GRASS_VERBOSE"] = str(verbose)
 
         #
         # set message formatting

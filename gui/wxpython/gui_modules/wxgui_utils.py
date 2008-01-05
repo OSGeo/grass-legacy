@@ -28,6 +28,7 @@ import os
 import sys
 import string
 import time
+import textwrap
 
 import wx
 import wx.lib.customtreectrl as CT
@@ -1167,12 +1168,7 @@ class GMConsole(wx.Panel):
                     self.cmd_output.StartStyling(p1, 0xff)
                     self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
 
-                    
-#                     grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
-#                                             stdout=GMStdout(self.cmd_output),
-#                                             stderr=GMStderr(self.cmd_output,
-#                                                             self.console_progressbar))
-                    grassCmd = gcmd.Command(cmdlist, verbose=3, wait=False,
+                    grassCmd = gcmd.Command(cmdlist, wait=False,
                                             stdout=self.cmd_stdout,
                                             stderr=self.cmd_stderr)
 
@@ -1262,12 +1258,11 @@ class GMStdout:
         self.gmstc  = gmstc
 
     def write(self, s):
-        # if not self.gmstc.GetParent().IsShown():
-        #    self.mystc.GetParent().Show()
-
+        if len(s) == 0:
+            return
         s = s.replace('\n', os.linesep)
         p1 = self.gmstc.GetCurrentPos() # get caret position
-        self.gmstc.AddText(s)
+        self.gmstc.AddTextWrapped(s)
         self.gmstc.EnsureCaretVisible()
         p2 = self.gmstc.GetCurrentPos()
         self.gmstc.StartStyling(p1, 0xff)
@@ -1289,9 +1284,6 @@ class GMStderr:
         self.gmgauge = gmgauge
 
     def write(self, s):
-        # if self.gmstc.GetParent().IsShown() == False:
-        #    self.gmstc.GetParent().Show()
-        
         s = s.replace('\n', os.linesep)
         message = ''
         for line in s.split(os.linesep):
@@ -1317,16 +1309,21 @@ class GMStderr:
             elif 'GRASS_INFO_END' in line:
                 message = ''
             else:
-                p1 = self.gmstc.GetCurrentPos()
-                self.gmstc.AddText(line + os.linesep)
-                self.gmstc.EnsureCaretVisible()
-                p2 = self.gmstc.GetCurrentPos()
-                self.gmstc.StartStyling(p1, 0xff)
-                self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleUnknown)
+                if len(line) > 0:
+                    p1 = self.gmstc.GetCurrentPos()
+                    self.gmstc.AddTextWrapped(line)
+                    self.gmstc.EnsureCaretVisible()
+                    p2 = self.gmstc.GetCurrentPos()
+                    self.gmstc.StartStyling(p1, 0xff)
+                    self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleUnknown)
 
-            if message != '':
+            if len(message) > 0:
                 p1 = self.gmstc.GetCurrentPos()
-                self.gmstc.AddText(message + os.linesep)
+                if type == 'warning':
+                    message = 'WARNING: ' + message
+                elif type == 'error':
+                    message = 'ERROR: ' + message
+                self.gmstc.AddTextWrapped(message)
                 self.gmstc.EnsureCaretVisible()
                 p2 = self.gmstc.GetCurrentPos()
                 self.gmstc.StartStyling(p1, 0xff)
@@ -1415,16 +1412,11 @@ class GMStc(wx.stc.StyledTextCtrl):
         
         wx.TheClipboard.Flush()
         evt.Skip()
-        
-    def write(self, string, style=None):
-        """Add text to the text area"""
-        if not style:
-            style = self.StyleUnknown
 
-        p1 = self.GetCurrentPos()
-        self.AddText(string)
-        self.EnsureCaretVisible()
-        p2 = self.GetCurrentPos()
-        self.StartStyling(p1, 0xff)
-        self.SetStyling(p2 - p1 + 1, style)
+    def AddTextWrapped(self, str, wrap=80):
+        """Add string to text area.
 
+        String is wrapped and linesep is also added to the end
+        of the string"""
+        str = textwrap.fill(str, wrap) + os.linesep
+        self.AddText(str)
