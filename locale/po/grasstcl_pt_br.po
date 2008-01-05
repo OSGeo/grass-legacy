@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-02 18:35-0200\n"
-"PO-Revision-Date: 2008-01-02 19:52-0200\n"
+"POT-Creation-Date: 2008-01-04 20:33-0200\n"
+"PO-Revision-Date: 2008-01-05 00:59-0200\n"
 "Last-Translator: Fernando Ferreira <fernando@vps.fmvz.usp.br>\n"
 "Language-Team: Brazilian Portuguese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -748,7 +748,9 @@ msgstr "Salvar tela como arquivo de imagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:178
 msgid "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-msgstr "XWD (Salvar tela, selecionada com o mouse, para mapa.xwd no diretório pessoal)"
+msgstr ""
+"XWD (Salvar tela, selecionada com o mouse, para mapa.xwd no diretório "
+"pessoal)"
 
 #: ../gui/tcltk/d.m/menu.tcl:179
 msgid "Save displays to multiple graphic file formats"
@@ -937,9 +939,8 @@ msgid "Reproject raster from other location"
 msgstr "Reprojetar raster de outra locação"
 
 #: ../gui/tcltk/d.m/menu.tcl:238
-#:, fuzzy 
 msgid "Generate tiling for other projection"
-msgstr "Gerar mosaico para outras projeções"
+msgstr "Gerar 'tile' para outras projeções"
 
 #: ../gui/tcltk/d.m/menu.tcl:240 ../gui/tcltk/gis.m/gmmenu.tcl:248
 msgid "Manage map colors"
@@ -980,7 +981,7 @@ msgstr "Criar buffers raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:252
 msgid "Create raster MASK"
-msgstr "Criar MASK raster"
+msgstr "Criar Máscara raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:253
 msgid "Locate closest points between areas in 2 raster maps"
@@ -997,7 +998,7 @@ msgstr "Análise de vizinhança"
 
 #: ../gui/tcltk/d.m/menu.tcl:256
 msgid "Moving window analysis of raster cells"
-msgstr "Análise de janela móvel de células raster"
+msgstr "Análise de janela móvel das células raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:257
 msgid "Analyze vector points in neighborhood of raster cells"
@@ -1148,7 +1149,7 @@ msgstr "Criação de bacias de drenagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:301 ../gui/tcltk/gis.m/gmmenu.tcl:317
 msgid "Landscape structure modeling"
-msgstr "Modelagem da estrutura do relevo"
+msgstr "Modelagem da estrutura da paisagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:302 ../gui/tcltk/gis.m/gmmenu.tcl:329
 msgid "Set up sampling and analysis framework"
@@ -1156,7 +1157,7 @@ msgstr "Configurar estrutura de amostragem e análise"
 
 #: ../gui/tcltk/d.m/menu.tcl:304
 msgid "Analyze landscape characteristics"
-msgstr "Analisar características do relevo"
+msgstr "Analisar características da paisagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:305
 msgid "Analyze landscape patch characteristics"
@@ -1168,7 +1169,7 @@ msgstr "Saída de informações de trechos da paisagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:308 ../gui/tcltk/gis.m/gmmenu.tcl:348
 msgid "Wildfire modeling"
-msgstr "Modelagem de incõndios florestais"
+msgstr "Modelagem de incêndios florestais"
 
 #: ../gui/tcltk/d.m/menu.tcl:309
 msgid "Generate rate of spread (ROS) maps"
@@ -1210,11 +1211,11 @@ msgstr "Recodificar categorias usando regras (criar novo mapa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:323
 msgid "Recode categories using rules file (create new map)"
-msgstr "Recodificar categorias usando arquivo de regras (crias novo mapa)"
+msgstr "Recodificar categorias usando arquivo de regras (criar novo mapa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:325
 msgid "Rescale categories (create new map)"
-msgstr "Reescalonar categorias (crias novo mapa)"
+msgstr "Reescalonar categorias (criar novo mapa)"
 
 #: ../gui/tcltk/d.m/menu.tcl:326
 msgid "Rescale categories with equalized histogram (create new map)"
@@ -1290,13 +1291,11 @@ msgstr "Interpolação dos pontos vetoriais pelo inverso da distância"
 
 #: ../gui/tcltk/d.m/menu.tcl:349
 msgid "Regularized spline tension interpolation from vector points or contours"
-msgstr "Interpolar pontos ou isolinhas por tensão regularizada da spline"
+msgstr "Interpolar pontos ou isolinhas com spline regularizado com tensão"
 
 #: ../gui/tcltk/d.m/menu.tcl:351
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr ""
-"Preencher células nulas através de interpolação por tensão regularizada da "
-"spline"
+msgstr "Preencher células nulas através de interpolação por spline regularizado com tensão"
 
 #: ../gui/tcltk/d.m/menu.tcl:354 ../gui/tcltk/d.m/menu.tcl:459
 #: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:398
@@ -1335,7 +1334,7 @@ msgstr "Resumo estatístico para células agrupadas (funciona com r.clump)"
 
 #: ../gui/tcltk/d.m/menu.tcl:363 ../gui/tcltk/gis.m/gmmenu.tcl:407
 msgid "Total surface area corrected for topography"
-msgstr "Superfície total da área corrigida pela topografia"
+msgstr "Área de superfície total corrigida pela topografia"
 
 #: ../gui/tcltk/d.m/menu.tcl:364 ../gui/tcltk/d.m/menu.tcl:463
 #: ../gui/tcltk/gis.m/gmmenu.tcl:408
@@ -1352,7 +1351,7 @@ msgstr "Amostrar valores nos perfis"
 
 #: ../gui/tcltk/d.m/menu.tcl:368
 msgid "Sample values along transects (use azimuth, distance)"
-msgstr "Amostrar valores nos perfis (usa azimute, distância)"
+msgstr "Amostrar valores nos perfis (usar azimute, distância)"
 
 #: ../gui/tcltk/d.m/menu.tcl:370 ../gui/tcltk/gis.m/gmmenu.tcl:413
 msgid "Covariance/correlation"
@@ -1424,7 +1423,7 @@ msgstr "Reprojetar vetor de outra locação"
 
 #: ../gui/tcltk/d.m/menu.tcl:396 ../gui/tcltk/gis.m/gmmenu.tcl:620
 msgid "Vector<->database connections"
-msgstr "Conexões vetor <-> base de dados"
+msgstr "Vetor <-> conexões com base de dados"
 
 #: ../gui/tcltk/d.m/menu.tcl:397
 msgid "Create new vector as link to external OGR layer"
@@ -2958,9 +2957,8 @@ msgid "Georectify"
 msgstr "Georretificar"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:189
-#, fuzzy
 msgid "Animate raster maps"
-msgstr "Animar série de mapas raster"
+msgstr "Animar série de mapas raster "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:191
 msgid "Bearing/distance to coordinates"
@@ -3164,7 +3162,7 @@ msgstr "Linhas de fluxo"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:305 ../gui/tcltk/gis.m/gmmenu.tcl:585
 msgid "Groundwater flow model"
-msgstr ""
+msgstr "Modelo de drenagem de terreno"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:308
 msgid "SIMWE sediment flux modeling"
@@ -3428,9 +3426,8 @@ msgid "Create 3D vector over raster"
 msgstr "Criar vetor 3D sobre raster"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:437
-#, fuzzy
 msgid "Extrude 3D vector"
-msgstr "Extrudar vetor 2D para vetor 3D"
+msgstr "Extrudar vetor 3D"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:439
 msgid "Link to OGR"
@@ -3441,9 +3438,8 @@ msgid "Create labels"
 msgstr "Criar etiquetas"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:443
-#, fuzzy
 msgid "Reposition vector"
-msgstr "Sítios (GRASS 5.x) para vetor"
+msgstr "Reposicionar vetor"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:444
 msgid "Reproject vector"
@@ -3462,9 +3458,8 @@ msgid "Query with attributes"
 msgstr "Pesquisar por atributos "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:452
-#, fuzzy
 msgid "Query with coordinate(s)"
-msgstr "Pesquisar por coordenada(s)"
+msgstr "Pesquisar por coordenada(s) "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:453
 msgid "Query with another map"
@@ -3500,7 +3495,7 @@ msgstr "Criar LRS"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:463
 msgid "Create stationing"
-msgstr ""
+msgstr "Criar estações"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:464
 msgid "Create points/segments"
@@ -3508,16 +3503,15 @@ msgstr "Criar pontos/segmentos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:465
 msgid "Find ID and offset"
-msgstr ""
+msgstr "Encontrar ID e afastamento"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:467
 msgid "Nearest features"
 msgstr "Objetos mais próximos"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:471
-#, fuzzy
 msgid "Visibility network"
-msgstr "Visibilidade"
+msgstr "Rede de visibilidade"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:473
 msgid "Display shortest route"
@@ -3536,9 +3530,8 @@ msgid "Patch (combine)"
 msgstr "Remendar (combinar)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:488
-#, fuzzy
 msgid "Manage or report categories"
-msgstr "Anexar, apagar ou relatar categorias"
+msgstr "Gerenciar ou relatar categorias"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:489
 msgid "Reclassify objects interactively"
@@ -3591,7 +3584,7 @@ msgstr "Atualizar atributos da área a partir do raster"
 #: ../gui/tcltk/gis.m/gmmenu.tcl:511
 #, fuzzy
 msgid "Update point attributes from areas"
-msgstr "editar atributos (modo formulário)"
+msgstr "Atualizar atributos dos pontos das áreas"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:512
 #, fuzzy
