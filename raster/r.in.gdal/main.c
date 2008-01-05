@@ -86,11 +86,11 @@ int main (int argc, char *argv[])
     parm.input->description = _("Raster file to be imported");
     parm.input->gisprompt = "old_file,file,input";
     parm.input->required = NO; /* not required because of -f flag */
-    parm.input->guisection = _("Main");
+    parm.input->guisection = _("Required");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
     parm.output->required = NO; /* not required because of -f flag */
-    parm.output->guisection = _("Main");
+    parm.output->guisection = _("Required");
 
     parm.band = G_define_option();
     parm.band->key = "band";
