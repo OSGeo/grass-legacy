@@ -3,12 +3,12 @@
  *
  * \brief GIS library - Argument parsing functions.
  *
- * This program is free software under the GNU General Public License
- * (>=v2). Read the file COPYING that comes with GRASS for details.
- *
  * \author Radim Blazek
  *
- * \date 2003-2006
+ * \date 2003-2008 (C) The GRASS development team
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
  */
 
 /***************************************************************************
@@ -781,8 +781,8 @@ int G_parser (int argc, char **argv)
 				j++;
 			    }
 			    if ( !found ) {
-				G_warning ( "BUG in descriptions, option %s in %s does not exist",
-				             tokens[i], opt->key );
+				G_warning (_("BUG in descriptions, option %s in %s does not exist"),
+					   tokens[i], opt->key );
 			    } else {
 				opt->descs[j] = G_store ( tokens[i+1] );
 			    }
@@ -1261,6 +1261,9 @@ static void print_escaped_for_html( FILE *f, char *str ) {
 }
 #undef do_escape
 
+/**
+   \brief Print module usage description in XML format.
+**/
 static void G_usage_xml (void)
 {
 	struct Option *opt ;
@@ -1477,6 +1480,9 @@ static void G_usage_xml (void)
 	fprintf(stdout, "</task>\n");
 }
 
+/**
+   \brief Print module usage description in HTML format.
+**/
 static void G_usage_html (void)
 {
 	struct Option *opt ;
@@ -1704,6 +1710,9 @@ static void G_usage_html (void)
     fprintf(stdout, "</body>\n</html>\n");
 }
 
+/**
+   \brief Print module usage description used in shell scripts.
+**/
 static void G_script(void)
 {
 	FILE *fp = stdout;
@@ -1817,6 +1826,11 @@ static void G_script(void)
 		);
 }
 
+/**
+  \brief Generates tcltk dialog.
+
+  \param[out] fp File to store tcltk code
+**/
 static void generate_tcl(FILE *fp)
 {
 	int new_prompt = uses_new_gisprompt();
@@ -1914,7 +1928,9 @@ static void generate_tcl(FILE *fp)
 	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
 
-/* Build Tcl/Tk gui */
+/**
+   \brief Build Tcl/Tk GUI dialog
+**/
 static void G_gui_tcltk (void)
 {
 	FILE *fp;
@@ -1937,7 +1953,7 @@ static void G_gui_tcltk (void)
 #endif
 
 	if (!fp)
-		G_fatal_error("unable to spawn wish");
+	    G_fatal_error(_("Unable to spawn wish"));
 
 	fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
 
@@ -1946,32 +1962,48 @@ static void G_gui_tcltk (void)
 	G_pclose(fp);
 }
 
-/* Build wxPython gui */
+/**
+   \brief Build wxPython GUI dialog
+**/
 static void G_gui_wx (void)
 {
 	char script[GPATH_MAX];
 
 	if (!pgm_name)
-		pgm_name = G_program_name ();
+	    pgm_name = G_program_name ();
 	if (!pgm_name)
-		G_fatal_error("unable to determine program name");
+	    G_fatal_error(_("Unable to determine program name"));
 
 	sprintf(script, "%s/etc/wx/gui_modules/menuform.py", getenv("GISBASE"));
 	G_spawn("python", "menuform.py", script, pgm_name, NULL);
 }
 
-/* Invoke gui */
+/**
+   \brief Invoke GUI dialog 
+
+   Use G_gui_wx() or G_gui_tcltk() to generate GUI dialog.
+
+   G_gui_tcltk() is called by default (if GRASS_GUI is not defined)
+**/
 static void G_gui (void)
 {
-	char *gui = getenv("GRASS_GUI");
+    /* read environment variables first then internal GRASS variable */
+    char *gui = getenv("GRASS_GUI");
+    if (!gui) {
+	gui = G_getenv("GRASS_GUI");
+    }
 
-	if (gui && strcmp(gui, "wx") == 0)
-		G_gui_wx();
-	else
-		G_gui_tcltk();
+    if (gui && strcmp(gui, "wx") == 0)
+	G_gui_wx();
+    else
+	G_gui_tcltk();
+
+    return;
 }
 
-/* Send Tcl/Tk code to tcltkgrass */
+/**
+   \brief Send Tcl/Tk code to tcltkgrass 
+**/
 static void G_tcltk (void)
 {
 	if (!pgm_name)
@@ -2538,7 +2570,7 @@ static int check_overwrite (void)
 			    if ( G_find_file (element, opt->answer, G_mapset()) ) /* found */
 			    {
 				if ( !overwrite && !over ) { 
-				    fprintf(stderr,_("ERROR: option <%s>: <%s> exists.\n"), 
+				    fprintf(stderr, _("ERROR: option <%s>: <%s> exists.\n"), 
 						   opt->key, opt->answer );
 
 				    error = 1;
@@ -2763,7 +2795,6 @@ static int gis_prompt (struct Option *opt, char *buff)
 	return 0;
 }
 
-
 /**
  * \fn char *G_recreate_command (void)
  *
@@ -2774,7 +2805,6 @@ static int gis_prompt (struct Option *opt, char *buff)
  *
  * \retval char * Pointer to a char string
  */
-
 char *G_recreate_command (void)
 {
 	static char *buff;
@@ -2878,4 +2908,3 @@ char *G_recreate_command (void)
 
 	return(buff) ;
 }
-
