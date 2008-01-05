@@ -382,7 +382,7 @@ int main(int argc, char *argv[])
     input = G_define_standard_option(G_OPT_R_INPUT);
     input->required = NO;
     input->description = _("Name of raster map (or group) to export");
-    input->guisection = _("Main");
+    input->guisection = _("Required");
 
     format = G_define_option();
     format->key = "format";
@@ -418,7 +418,7 @@ int main(int argc, char *argv[])
     output->required = NO;
     output->gisprompt = "new_file,file,output";
     output->description = _("Name for output raster file");
-    output->guisection = _("Main");
+    output->guisection = _("Required");
 
     createopt = G_define_option();
     createopt->key = "createopt";
