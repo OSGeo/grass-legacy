@@ -9,7 +9,7 @@
  *               Jachym Cepicky <jachym les-ejk.cz>, Markus Neteler <neteler itc.it>,
  *               Paul Kelly <paul-grass stjohnspoint.co.uk>
  * PURPOSE:      
- * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1999-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -100,7 +100,7 @@ int main (int argc, char *argv[])
    
     /* The parser checks if the map already exists in current mapset,
        we switch out the check and do it
-       * in the module after the parser */
+       in the module after the parser */
     overwrite = G_check_overwrite(argc, argv);
 
     if (G_parser (argc, argv)) exit (EXIT_FAILURE);
@@ -114,7 +114,7 @@ int main (int argc, char *argv[])
       omap_name = map_name;
     if (omap_name && !flag.list->answer && !overwrite && G_find_vector2(omap_name, G_mapset()))
 	    G_fatal_error(_("option <%s>: <%s> exists."),
-			  "output", omap_name);
+			  omapopt->key, omap_name);
     if (isetopt->answer) iset_name = isetopt->answer;
     else iset_name = G_store (G_mapset());
 
@@ -144,7 +144,7 @@ int main (int argc, char *argv[])
     if (stat >= 0) {  /* yes, we can access the mapset */
 	/* if requested, list the vector maps in source location - MN 5/2001*/
 	if (flag.list->answer) {
-	   G_message(_("Checking location <%s>, mapset <%s>:"),
+	  G_verbose_message(_("Checking location <%s> mapset <%s>"),
 		     iloc_name, iset_name);
 	   G_list_element ("vector", "vector", iset_name, 0);
 	   exit(EXIT_SUCCESS); /* leave v.proj after listing*/
@@ -159,7 +159,7 @@ int main (int argc, char *argv[])
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, iset_name) ;
 	if (mapset == NULL)
-	    G_fatal_error(_("Vector map <%s> in location <%s> in mapset <%s> not available"),
+	    G_fatal_error(_("Vector map <%s> in location <%s> mapset <%s> not found"),
 			  map_name, iloc_name, iset_name);
 
 	 /*** Get projection info for input mapset ***/
@@ -202,7 +202,10 @@ int main (int argc, char *argv[])
     G_free_key_value(in_unit_keys);
     G_free_key_value(out_proj_keys);
     G_free_key_value(out_unit_keys);
-    pj_print_proj_params(&info_in, &info_out);
+
+    if (G_verbose() == G_verbose_max()) {
+	pj_print_proj_params(&info_in, &info_out);
+    }
 
     G_debug ( 1, "Open new: location: %s mapset : %s", G__location_path(), G_mapset() );
     Vect_open_new (&Out_Map, omap_name, Vect_is_3d(&Map) );
@@ -222,8 +225,6 @@ int main (int argc, char *argv[])
     sprintf(date,"%s %d %d",mon,day,yr);
     Vect_set_date ( &Out_Map, date );
 
-    G_message(_("Re-projecting vector map..."));
-
     /* Initialize the Point / Cat structure */
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
@@ -240,7 +241,7 @@ int main (int argc, char *argv[])
 	if ( type == -2) break;
 	if(pj_do_transform( Points->n_points, Points->x, Points->y, 
 			    flag.transformz->answer? Points->z : NULL,
-		              &info_in,&info_out)<0) 
+			    &info_in,&info_out) < 0) 
 	{ 
 	    G_fatal_error(_("Error in pj_do_transform"));
 	}
@@ -253,7 +254,11 @@ int main (int argc, char *argv[])
 
     Vect_close (&Map); 
 
-    Vect_build (&Out_Map, stderr);
+    if (G_verbose() > G_verbose_min())
+	Vect_build (&Out_Map, stderr);
+    else
+	Vect_build (&Out_Map, NULL);
+
     Vect_close (&Out_Map); 
 
     exit(EXIT_SUCCESS);
