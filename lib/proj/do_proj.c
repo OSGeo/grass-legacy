@@ -1,20 +1,17 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       gproj library
- * AUTHOR(S):    Original Author unknown, probably Soil Conservation Service
- *               Eric Miller
- *               Paul Kelly
- * PURPOSE:      Functions for re-projecting point data
- * COPYRIGHT:    (C) 2003 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file do_proj.c
+
+   \brief GProj library - Functions for re-projecting point data
+
+   \author Original Author unknown, probably Soil Conservation Service
+   Eric Miller, Paul Kelly
+
+   (C) 2003-2008 by the GRASS Development Team
+
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+**/
 
 #include <stdio.h>
 #include <string.h>
@@ -22,6 +19,7 @@
 
 #include <grass/gis.h>
 #include <grass/gprojects.h>
+#include <grass/glocale.h>
 
 /* a couple defines to simplify reading the function */
 #define MULTIPLY_LOOP(x,y,c,m) \
@@ -104,8 +102,7 @@ int pj_do_proj(double *x, double *y,
 	}
     }
     if (ok < 0) {
-	fprintf(stderr, "pj_transform() failed\ncause: ");
-	fprintf(stderr, "%s\n", pj_strerrno(ok));
+	G_warning (_("pj_transform() failed: %s"), pj_strerrno(ok));
     }
     return ok;
 }
@@ -178,8 +175,7 @@ int pj_do_transform(int count, double *x, double *y, double *h,
 	G_free(h);
 
     if (ok < 0) {
-	fprintf(stderr, "pj_transform() failed\ncause: ");
-	fprintf(stderr, "%s\n", pj_strerrno(ok));
+	G_warning(_("pj_transform() failed: %s"), pj_strerrno(ok));
     }
     return ok;
 }

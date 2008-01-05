@@ -1,20 +1,16 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       gproj library
- * AUTHOR(S):    Original Author unknown, probably CERL
- *               Paul Kelly - paul-grass@stjohnspoint.co.uk
- * PURPOSE:      provide functions for reading ellipsoid parameters from the
- *               location database.     
- * COPYRIGHT:    (C) 2000, 2003 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file ellipse.c
+
+   \brief GProj library - Functions for reading datum parameters from the location database
+
+   \author Paul Kelly <paul-grass stjohnspoint.co.uk>
+
+   (C) 2003-2008 by the GRASS Development Team
+ 
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+**/
 
 #include <unistd.h>
 #include <ctype.h>
@@ -56,7 +52,7 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 {
     struct gpj_ellps estruct;
     struct gpj_datum dstruct;
-    char *err, *str, *str1, *str3;
+    char *str, *str1, *str3;
 
     str = G_find_key_value("datum", proj_keys);
 
@@ -74,9 +70,7 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 
     if (str != NULL) {
 	if (GPJ_get_ellipsoid_by_name(str, &estruct) < 0) {
-	    G_asprintf(&err, _("invalid ellipsoid %s in file")
-		       , str);
-	    G_fatal_error(err);
+	    G_fatal_error(_("Invalid ellipsoid <%s> in file"), str);
 	}
 	else {
 	    *a = estruct.a;
@@ -99,12 +93,12 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 	    else if ((str3 = G_find_key_value("b", proj_keys)) != NULL)
 		G_asprintf(&str1, "b=%s", str3);
 	    else
-		G_fatal_error
-		    ("No secondary ellipsoid descriptor (rf, es or b) in file");
+		G_fatal_error(_("No secondary ellipsoid descriptor "
+				"(rf, es or b) in file"));
 
 	    if (get_a_e2_f(str, str1, a, e2, rf) == 0)
-		G_fatal_error
-		    ("Invalid ellipsoid descriptors (a, rf, es or b) in file");
+		G_fatal_error(_("Invalid ellipsoid descriptors "
+				"(a, rf, es or b) in file"));
 	    *rf = 1.0 / *rf;
 	    return 1;
 	}
@@ -117,9 +111,7 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 		return 0;
 	    }
 	    else {
-		G_asprintf(&err, _("No ellipsoid info given in file")
-		    );
-		G_fatal_error(err);
+		G_fatal_error(_("No ellipsoid info given in file"));
 	    }
 	}
     }
@@ -217,7 +209,7 @@ struct ellps_list *read_ellipsoid_table(int fatal)
 
     if (fd == NULL) {
 	perror(file);
-	G_asprintf(&errbuf, _("unable to open ellipsoid table file: %s"), file);
+	G_asprintf(&errbuf, _("Unable to open ellipsoid table file <%s>"), file);
 	fatal ? G_fatal_error(errbuf) : G_warning(errbuf);
 	G_free(errbuf);
 	return 0;

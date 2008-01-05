@@ -1,20 +1,16 @@
-/*
- * $Id$
- *
- ****************************************************************************
- *
- * MODULE:       gproj library
- * AUTHOR(S):    Andreas Lange - andreas.lange@rhein-main.de
- *               Paul Kelly - paul-grass@stjohnspoint.co.uk
- * PURPOSE:      provide functions for reading datum parameters from the
- *               location database.     
- * COPYRIGHT:    (C) 2000, 2003 by the GRASS Development Team
- *
- *               This program is free software under the GNU General Public
- *               License (>=v2). Read the file COPYING that comes with GRASS
- *               for details.
- *
- *****************************************************************************/
+/**
+   \file datum.c
+
+   \brief GProj library - Functions for reading datum parameters from the location database
+
+   \author Andreas Lange <andreas.lange rhein-main.de>, Paul Kelly <paul-grass stjohnspoint.co.uk>
+
+   (C) 2003-2008 by the GRASS Development Team
+ 
+   This program is free software under the GNU General Public
+   License (>=v2). Read the file COPYING that comes with GRASS
+   for details.
+**/
 
 #include <unistd.h>
 #include <string.h>
@@ -253,7 +249,7 @@ int GPJ_ask_datum_params(const char *datumname, char **params)
     {
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-            G_warning(_("Cannot open temp file") );
+            G_warning(_("Unable to open temporary file"));
         }
 
         fprintf(Tmp_fd,"Number\tDetails\t\n---\n");
@@ -409,7 +405,7 @@ struct gpj_datum_transform_list *GPJ_get_datum_transform_by_name(const char
 
     fd = fopen(file, "r");
     if (!fd) {
-	G_warning(_("unable to open datum table file: %s"), file);
+	G_warning(_("Unable to open datum table file <%s>"), file);
 	return outputlist;
     }
 
@@ -422,7 +418,7 @@ struct gpj_datum_transform_list *GPJ_get_datum_transform_by_name(const char
 
 	if (sscanf(buf, "%99s \"%1023[^\"]\" \"%1023[^\"]\" \"%1023[^\"]\"",
 		   name, params, where_used, comment) != 4) {
-	    G_warning(_("error in datum table file, line %d"), line);
+	    G_warning(_("Error in datum table file <%s>, line %d"), file, line);
 	    continue;
 	}
 
@@ -472,7 +468,7 @@ struct datum_list *read_datum_table(void)
 
     fd = fopen(file, "r");
     if (!fd) {
-	G_warning(_("unable to open datum table file: %s"), file);
+	G_warning(_("Unable to open datum table file <%s>"), file);
 	return NULL;
     }
 
@@ -486,7 +482,7 @@ struct datum_list *read_datum_table(void)
 
 	if (sscanf(buf, "%s \"%1023[^\"]\" %s dx=%lf dy=%lf dz=%lf",
 		   name, descr, ellps, &dx, &dy, &dz) != 6) {
-	    G_warning(_("error in datum table file, line %d"), line);
+	    G_warning(_("Error in datum table file <%s>, line %d"), file, line);
 	    continue;
 	}
 
