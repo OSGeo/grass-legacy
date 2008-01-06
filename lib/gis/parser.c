@@ -1400,9 +1400,9 @@ static void G_usage_xml (void)
 			}
 
 			if(opt->def) {
-				fprintf(stdout, "\t\t\t<default>\n\t\t\t");
+				fprintf(stdout, "\t\t<default>\n\t\t\t");
 				print_escaped_for_xml(stdout, opt->def);
-				fprintf(stdout, "\n\t\t\t</default>\n");
+				fprintf(stdout, "\n\t\t</default>\n");
 			}
 
 			if(opt->options) {
