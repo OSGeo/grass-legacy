@@ -52,6 +52,7 @@ import sys
 import re
 import string
 import textwrap
+
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
@@ -296,6 +297,7 @@ class processTask(HandlerBase):
             self.param_description = ''
             self.param_default = ''
             self.param_values = []
+            self.param_values_description = []
             self.param_gisprompt = False
             self.param_age = ''
             self.param_element = ''
@@ -398,6 +400,7 @@ class processTask(HandlerBase):
                 "guisection" : self.param_guisection,
                 "default" : self.param_default,
                 "values" : self.param_values,
+                "values_desc" : self.param_values_description,
                 "value" : ''})
 
             if self.inFirstParameter:
@@ -415,7 +418,9 @@ class processTask(HandlerBase):
             self.param_label = normalize_whitespace(self.label)
 
         if name == 'description':
-            if self.inParameter:
+            if self.inValueContent:
+                self.param_values_description.append(normalize_whitespace(self.description))
+            elif self.inParameter:
                 self.param_description = normalize_whitespace(self.description)
             elif self.inFlag:
                 self.flag_description = normalize_whitespace(self.description)
@@ -429,7 +434,7 @@ class processTask(HandlerBase):
 
         if name == 'value':
             v = normalize_whitespace(self.value_tmp)
-            self.param_values = self.param_values + [ normalize_whitespace(self.value_tmp) ]
+            self.param_values.append(normalize_whitespace(self.value_tmp))
             self.inValueContent = False
 
         if name == 'guisection':
@@ -828,35 +833,50 @@ class cmdPanel(wx.Panel):
         self.notebook.SetSelection(0)
         panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
 
+        #
         # flags
+        #
         text_style = wx.FONTWEIGHT_NORMAL
         visible_flags = [ f for f in self.task.flags if not f.get( 'hidden', 'no' ) == 'yes' ]
         for f in visible_flags:
             which_sizer = tabsizer[ f['guisection'] ]
             which_panel = tab[ f['guisection'] ]
-            title = text_beautify( f['description'] )
+            # if label is given -> label and description -> tooltip
+            # otherwise description -> lavel
+            if p.get('label','') != '':
+                title = text_beautify( f['label'] )
+                tooltip = text_beautify ( f['description'] )
+            else:
+                title = text_beautify( f['description'] )
+                tooltip = None
             chk = wx.CheckBox(parent=which_panel, label = title, style = wx.NO_BORDER)
+            if tooltip:
+                chk.SetToolTipString(tooltip)
             if 'value' in f:
                 chk.SetValue( f['value'] )
-            chk.SetFont( wx.Font( pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT, style=wx.NORMAL, weight=text_style))
-            which_sizer.Add( item=chk, proportion=0, flag=wx.EXPAND| wx.TOP | wx.LEFT, border=5)
+            chk.SetFont(wx.Font(pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT,
+                                style=wx.NORMAL, weight=text_style))
+            which_sizer.Add( item=chk, proportion=0, flag=wx.EXPAND | wx.TOP | wx.LEFT, border=5)
             f['wxId'] = chk.GetId()
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
             if f['name'] in ('verbose', 'quiet'):
                 chk.Bind(wx.EVT_CHECKBOX, self.OnVerbosity)
 
+        #
         # parameters
+        #
         visible_params = [ p for p in self.task.params if not p.get( 'hidden', 'no' ) == 'yes' ]
         for p in visible_params:
             which_sizer = tabsizer[ p['guisection'] ]
             which_panel = tab[ p['guisection'] ]
-            # label <-> description
+            # if label is given -> label and description -> tooltip
+            # otherwise description -> lavel
             if p.get('label','') != '':
                 title = text_beautify( p['label'] )
                 tooltip = text_beautify ( p['description'] )
             else:
                 title = text_beautify( p['description'] )
-                tooltip = ''
+                tooltip = None
             txt = None
 
             # text style (required -> bold)
@@ -873,10 +893,9 @@ class cmdPanel(wx.Panel):
 
             if ( len(p.get('values',[]) ) > 0):
                 valuelist=map( str, p.get('values',[]) )
-                # list of values
+                # list of values (checkbox)
                 if p.get('multiple','no') == 'yes':
                     txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ":")
-                    txt.SetToolTip(wx.ToolTip(tooltip))
                     if len(valuelist) > 6:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
                     else:
@@ -894,7 +913,7 @@ class cmdPanel(wx.Panel):
                         hSizer.Add( item=chkbox, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
                         chkbox.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
                     which_sizer.Add( item=hSizer, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=5 )
-                # one value
+                # one value (textctrl)
                 elif len(valuelist) == 1:
                     txt = wx.StaticText(parent=which_panel,
                                         label = _('%s. Valid range=%s') % (title, str(valuelist).strip("[]'") + ':' ) )
@@ -909,14 +928,16 @@ class cmdPanel(wx.Panel):
                     p['wxId'] = txt2.GetId()
                     txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
-                    # combo
+                    # list of values (combo)
                     txt = wx.StaticText(parent=which_panel, label = title + ':' )
                     which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
-                    cb = wx.ComboBox(which_panel, -1, p.get('default',''),
-                                     wx.Point(-1, -1), wx.Size(STRING_ENTRY_WIDTH, -1),
-                                     valuelist, wx.CB_DROPDOWN)
-                    if p.get('value','') != '': cb.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add( item=cb, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
+                    cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
+                                     size=wx.Size(STRING_ENTRY_WIDTH, -1),
+                                     choices=valuelist, style=wx.CB_DROPDOWN)
+                    if p.get('value','') != '':
+                        cb.SetValue(p['value']) # parameter previously set
+                    which_sizer.Add( item=cb, proportion=0,
+                                     flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     p['wxId'] = cb.GetId()
                     cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
 
@@ -1010,6 +1031,19 @@ class cmdPanel(wx.Panel):
 
             if txt is not None:
                 txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                # create tooltip if given
+                if len(p['values_desc']) > 0:
+                    if tooltip:
+                        tooltip += 2 * os.linesep
+                    else:
+                        tooltip = ''
+                    for i in range(len(p['values'])):
+                        tooltip += p['values'][i] + ': ' + p['values_desc'][i] + os.linesep
+                    tooltip.strip(os.linesep)
+                if tooltip:
+                    txt.SetToolTipString(tooltip)
+
+
 
         maxsizes = (0,0)
         for section in sections:
@@ -1210,7 +1244,7 @@ class GUI:
         self.grass_task = grassTask()
         handler = processTask(self.grass_task)
         xml.sax.parseString( getInterfaceDescription(cmd[0]), handler )
-            
+
         # if layer parameters previously set, re-insert them into dialog
         if completed is not None:
             if 'params' in dcmd_params:
