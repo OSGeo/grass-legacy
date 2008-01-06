@@ -183,7 +183,7 @@ int parser(int argc, char* argv[], struct GParams *params,
 
     params -> close = G_define_flag();
     params -> close -> key = 'c';
-    params -> close -> label = _("Close added boundaries (using threshold distance)");
+    params -> close -> description = _("Close added boundaries (using threshold distance)");
 
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
