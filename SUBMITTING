@@ -1,4 +1,4 @@
-$Id$
+$Date$
 
 NOTE: Please improve this list!
 
@@ -33,6 +33,7 @@ following rules:
     http://www.gnu.org/prep/standards.html
 
     In future, there will be a centralized contribution directory.
+
 
 3.  Add a header section to each file you submit and make sure you include
     the copyright. The purpose section is meant to contain a general
@@ -189,11 +190,13 @@ following rules:
 	Could somebody please add others (please verify that they are
 	useful and safe first)
 
+
 12. Use function names which fulfil the official GNU naming convention.
     http://www.gnu.org/prep/standards/html_node/Names.html#Names
 
     Instead of naming a function like: MyNewFunction() use underscores
     for seperation and lower case letters: my_new_function().
+
 
 13. Don't use the C++ comment style! This confuses several compilers.
     Use instead:
@@ -237,6 +240,7 @@ following rules:
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
+
 17. Suggested compiler flags:
     We suggest to use very strict compiler flags to capture errors
     at the very beginning. Here our list of flags, please use them
@@ -252,6 +256,7 @@ following rules:
     MacOSX:     [to be suggested]
 
     MS-Windows: [to be suggested]
+
 
 18. Make sure a new line is at the end of each file.
 
@@ -275,6 +280,7 @@ following rules:
               vector/v.digit/Makefile
 
     If you are unsure, please ask on the GRASS Developers list.
+
     
 20. Have a look at ./INSTALL
 
@@ -316,6 +322,7 @@ following rules:
     "svn diff display/d.vect/main.c"; that way, the diff will
     include the pathname rather than just "main.c".
 
+
 27. Try to use module names which describe shortly the intended purpose of the module.
 
     The first letters for module name should be:
@@ -338,6 +345,7 @@ following rules:
     Example:
        instead of r.to.rast3.elev use r.to.rast3elev    
 
+
 28. Use the grass test suite to test your modules.
 
     http://www-pool.math.tu-berlin.de/~soeren/grass/GRASS_TestSuite
@@ -355,14 +363,31 @@ following rules:
 
     http://www.grass-gis.org/mailman/listinfo/grass-qa
 
-29. Tell the other developers about the new code using the following e-mail:
+
+29. When submitting new files to the repository set SVN properties,
+    usually for directory
+
+      svn:ignore : *.tmp.html
+      		   *OBJ*
+
+    or e.g. for C-file
+    
+      svn:mime-type : text/x-csrc
+      svn:keywords : Author Date Id
+      svn:eol-style : native
+
+    See
+    http://svnbook.red-bean.com/en/1.4/svn.advanced.props.html
+
+
+30. Tell the other developers about the new code using the following e-mail:
     grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
     http://lists.osgeo.org/mailman/listinfo/grass-dev
 
 
-30. In case of questions feel free to contact the developers at the above
+31. In case of questions feel free to contact the developers at the above
     mailing list.
     http://www.grass-gis.org/devel/index.php#submission
 
