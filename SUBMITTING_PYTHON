@@ -1,4 +1,4 @@
-$Id:$
+$Date$
 
 NOTE: Please improve this list!
 
@@ -12,6 +12,7 @@ care of following rules:
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
 [ see SUBMITTING_DOCS for documentation ]
 
+
 1.  Indentation
 
     As Python determines nesting based upon indentation, it
@@ -21,6 +22,7 @@ care of following rules:
 
     See also "Python Style Guide" by Guido van Rossum
     http://www.python.org/doc/essays/styleguide.html
+
 
 2.  Add a header section to the script you submit and make sure you
     include the copyright. The purpose section is meant to contain a
@@ -48,17 +50,22 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
    The copyright protects your rights according to GNU General Public
    License (www.gnu.org).
 
+
 3.  - deleted.
     We don't want the $ ID $ in source code any more as it causes problems
     for the branches.
+
 
 4. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
 
+
 5. Make sure a new line is at the end of each file.
 
+
 6. For consistency, use README rather than README.txt for any README files.
+
 
 7. Be sure to develop on top of the LATEST GRASS code (which is in SVN repository).
    You can re-check before submission with 'svn diff':
@@ -71,11 +78,28 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
    "svn diff gui/wxpython/wxgui.py"; that way, the diff will
    include the pathname rather than just "wxgui.py".
 
+
+8. When submitting new files to the repository set SVN properties,
+   usually for directory
+
+      svn:ignore : *.pyc
+
+   or e.g. for Python file
+    
+      svn:mime-type : text/python
+      svn:keywords : Author Date Id
+      svn:eol-style : native
+
+   See
+   http://svnbook.red-bean.com/en/1.4/svn.advanced.props.html
+
+
 8. Tell the other developers about the new code using the following e-mail:
    grass-dev@lists.osgeo.org
  
    To subscribe to this mailing list, see
    http://lists.osgeo.org/mailman/listinfo/grass-dev
+
 
 9. In case of questions feel free to contact the developers at the above
    mailing list.

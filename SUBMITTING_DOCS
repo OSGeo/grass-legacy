@@ -1,4 +1,4 @@
-$Id$
+$Date$
 
 NOTE: Please improve this list!
 
@@ -12,10 +12,12 @@ care of following rules:
 [ see SUBMITTING_TCLTK for tcl and tk hints ]
 [ see SUBMITTING_PYTHON for Python code hints ]
 
+
 1. Editing of HTML pages
    To avoid insertion of too complicated HTML tags (see also below),
    we strongly suggest to use a plain text editor rather than a
    HTML editor for editing.
+
 
 2. Module manual page:
    Place the documentation in HTML format into 'description.html'.
@@ -40,6 +42,7 @@ care of following rules:
    The online WWW man pages is updated every Saturday (from SVN
    repository).
 
+
 3. Usage of limited HTML tags
    Since the MAN conversion of g.html2man is limited, please use
    no other HTML tags than:
@@ -47,7 +50,19 @@ care of following rules:
    <H2> <H3> <H4>  <HEAD> <HEADER> <HR> <I> <IMG> <LI> <OL> <P>
    <PRE> <SUP> <TABLE> <TD> <TH> <TITLE> <TR> <UL>
 
-See also:
+
+4. When submitting new files to the repository set SVN properties,
+   e.g. for HTML file
+    
+       svn:mime-type : text/html
+       svn:keywords : Author Date Id
+       svn:eol-style : native
+
+   See
+   http://svnbook.red-bean.com/en/1.4/svn.advanced.props.html
+
+
+5. See also
    http://grass.gdf-hannover.de/wiki/Updating_GRASS_Documentation
 
 ...
