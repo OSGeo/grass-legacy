@@ -1261,12 +1261,13 @@ class GMStdout:
         if len(s) == 0:
             return
         s = s.replace('\n', os.linesep)
-        p1 = self.gmstc.GetCurrentPos() # get caret position
-        self.gmstc.AddTextWrapped(s)
-        self.gmstc.EnsureCaretVisible()
-        p2 = self.gmstc.GetCurrentPos()
-        self.gmstc.StartStyling(p1, 0xff)
-        self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleOutput)
+        for line in s.split(os.linesep):
+            p1 = self.gmstc.GetCurrentPos() # get caret position
+            self.gmstc.AddTextWrapped(line)
+            self.gmstc.EnsureCaretVisible()
+            p2 = self.gmstc.GetCurrentPos()
+            self.gmstc.StartStyling(p1, 0xff)
+            self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleOutput)
 
 class GMStderr:
     """GMConsole standard error output
