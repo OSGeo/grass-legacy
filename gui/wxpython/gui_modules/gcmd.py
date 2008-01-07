@@ -46,7 +46,7 @@ import wxgui_utils
 from debug import Debug as Debug
 
 class Popen(subprocess.Popen):
-    """Subclass Popen..."""
+    """Subclass subprocess.Popen"""
     def recv(self, maxsize=None):
         return self._recv('stdout', maxsize)
     
@@ -152,16 +152,7 @@ class Command:
     """
     Run GRASS command in separate thread
 
-    Parameters:
-    cmd     - command given as list
-    stdin   - standard input stream
-    verbose - verbose mode [0, 3]
-    wait    - wait for child execution terminated
-    dlgMsg  - type of error message (None, gui, txt), only if wait is True
-    stdout  - redirect standard output or None
-    stderr  - redirect standard error output or None
-
-    If stdout/err is redirected, write() method is required for the given classes.
+    If stdout/err is redirected, write() method is required for the given classes
 
     Usage:
         cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=3, wait=True)
@@ -173,6 +164,13 @@ class Command:
         else:
             print 'FAILURE (%d)' % cmd.returncode
 
+    @param cmd     command given as list
+    @param stdin   standard input stream
+    @param verbose verbose level [0, 3] (--q, --v)
+    @param wait    wait for child execution terminated
+    @param log     logging type (None, gui, txt), only if wait is True
+    @param stdout  redirect standard output or None
+    @param stderr  redirect standard error output or None
     """
     def __init__ (self, cmd, stdin=None,
                   verbose=None, wait=True, log='gui',
