@@ -108,7 +108,8 @@ if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
   LAYER="layer=$GIS_OPT_DB_TABLE"
 fi
 
-WARNING="`v.in.ogr --q dsn=\"$GIS_OPT_DSN\" $LAYER out=$GIS_OPT_OUTPUT -o 2>&1 | grep cat`"
+# check ERRORs and cat and cat_ issues (maybe problem with translated messages)
+WARNING="`v.in.ogr --q dsn=\"$GIS_OPT_DSN\" $LAYER out=$GIS_OPT_OUTPUT -o 2>&1 | grep 'ERROR\|cat' | grep -v 'truncated'`"
 #if [ $? -ne 0 ] ;  then
 if [ ! -z "$WARNING" ] ; then
    if [ ! -z "$GIS_OPT_DB_TABLE" ] ; then
