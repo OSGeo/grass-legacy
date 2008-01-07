@@ -7,6 +7,21 @@ to attribute table attached to first vector map or printed to
 'stdout'.  A new vector map may be created where lines connecting
 nearest points on features are written.
 
+<H2>NOTES</H2>
+
+If a nearest feature does not have a category, column is updated
+to <B>null</B>.  This is true also for areas, which means for example,
+that if point is in island (area WITHOUT
+category), <EM>v.distance</EM> does not search for nearest area WITH
+category, island is identified as nearest and category updated to
+null.
+<p>
+The upload <B>column</B>(s) must already exist. Create one with <em>v.db.addcol</em>.
+<p>
+In lat-long location <em>v.distance</em> gives distances (<b>dist</b>
+and <b>to_along</b>) in meters not in degrees calculated as geodesic
+distances on a sphere.
+
 <h2>EXAMPLES</H2>
 
 <H3>Find nearest lines</H3>
@@ -112,20 +127,6 @@ v.distance -pa from=archsites to=archsites upload=dist col=dist
 
 Note: Matrix-like output is enabled only for flag <EM>-a</EM> and one
 given upload option.
-
-<H2>NOTES</H2>
-
-If a nearest feature does not have a category, column is updated
-to <B>null</B>.  This is true also for areas, which means for example,
-that if point is in island (area WITHOUT
-category), <EM>v.distance</EM> does not search for nearest area WITH
-category, island is identified as nearest and category updated to
-null.
-<p>
-The upload <B>column</B>(s) must already exist. Create one with <em>v.db.addcol</em>.
-<p>
-In lat-long location <em>v.distance</em> gives distances (<b>dist</b>
-and <b>to_along</b>) in meters not in degrees.
 
 <H2>SEE ALSO</H2>
 
