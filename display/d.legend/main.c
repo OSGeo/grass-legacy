@@ -39,7 +39,7 @@ int main( int argc, char **argv )
 {
 	char *mapset ;
 	char buff[512];
-	char map_name[64] ;
+	const char *map_name;
 	char window_name[64] ;
 	int black ;
 	int cats_num ;
@@ -70,7 +70,8 @@ int main( int argc, char **argv )
 	DCELL min_dcolr, max_dcolr;
 	int x0, x1, y0, y1, xyTemp;
 	double X0, X1, Y0, Y1;
-	int SigDigits, MaxLabelLen;
+	int SigDigits;
+	unsigned int MaxLabelLen;
 	char DispFormat[5];	/*  %.Xf\0  */
 	int flip, horiz, UserRange;
 	double UserRangeMin, UserRangeMax, UserRangeTemp;
@@ -82,16 +83,12 @@ int main( int argc, char **argv )
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->keywords = _("display");
+	module->keywords = _("display, cartography");
 	module->description =
 	    _("Displays a legend for a raster map in the active frame "
 	      "of the graphics monitor.");
 
-	opt1 = G_define_option() ;
-	opt1->key        = "map" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->gisprompt  = "old,cell,raster" ;
+	opt1 = G_define_standard_option(G_OPT_R_MAP) ;
 	opt1->description= _("Name of raster map");
 
 	opt2 = G_define_option() ;
@@ -188,7 +185,7 @@ int main( int argc, char **argv )
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
-	strcpy(map_name, opt1->answer) ;
+	map_name = opt1->answer;
 
         hide_catstr = hidestr->answer;  /* note hide_catstr gets changed and re-read below */
         hide_catnum = hidenum->answer;
@@ -250,7 +247,7 @@ int main( int argc, char **argv )
 	
 	
 	/* Make sure map is available */
-	mapset = G_find_cell (map_name, "") ;
+	mapset = G_find_cell2 (map_name, "") ;
 	if (mapset == NULL)
 	    G_fatal_error(_("Raster map <%s> not found"), map_name);
 
@@ -339,7 +336,7 @@ int main( int argc, char **argv )
 
 	horiz = (x1-x0 > y1-y0);
 	if(horiz)
-	    fprintf(stderr, _("Drawing horizontal legend as box width exceeds height.\n"));
+	    G_warning(_("Drawing horizontal legend as box width exceeds height"));
 	
 	if(!fp && horiz)	/* better than nothing */
 		do_smooth = TRUE;
@@ -421,7 +418,7 @@ int main( int argc, char **argv )
 			maxCat=0;	/* reset */
 			for(i=0, k=0; i<catlistCount; i++) {
 				if( (catlist[i] < min_ind) || (catlist[i] > max_ind) ) {
-				    G_fatal_error(_("use=%s out of range [%d,%d]. (extend with range= ?)"),
+				    G_fatal_error(_("use=%s out of range [%d,%d] (extend with range= ?)"),
 						opt8->answers[i], min_ind, max_ind);
 				}
 
@@ -471,8 +468,7 @@ int main( int argc, char **argv )
 		/*  an alternate solution is to set   dots_per_line=1         */
 		if ((dots_per_line == 0) && (do_smooth == 0)) {
 		    if(!use_catlist) {
-			fprintf(stderr,
-			    _("Forcing a smooth legend: too many categories for current window height.\n"));
+			G_warning(_("Forcing a smooth legend: too many categories for current window height"));
 			do_smooth = 1;
 		    }
 		}
@@ -526,7 +522,7 @@ int main( int argc, char **argv )
 		if(use_catlist) {
 			for(i=0; i<catlistCount; i++) {
 				if( (catlist[i] < dmin) || (catlist[i] > dmax) ) {
-				    G_fatal_error(_("use=%s out of range [%.3f, %.3f]. (extend with range= ?)"),
+				    G_fatal_error(_("use=%s out of range [%.3f, %.3f] (extend with range= ?)"),
 						opt8->answers[i], dmin, dmax);
 				}
 				if( strlen(opt8->answers[i]) > MaxLabelLen )
