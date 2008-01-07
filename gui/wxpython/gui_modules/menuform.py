@@ -1178,12 +1178,12 @@ def getInterfaceDescription( cmd ):
     """
     Returns the XML description for the GRASS cmd.
 
-    The DTD must be located in $GISBASE/etx/wx/gui_modules/grass-interface.dtd,
+    The DTD must be located in $GISBASE/etc/grass-interface.dtd,
     otherwise the parser will not succeed.
 
     Note: 'cmd' is given as string
     """
-    gmpath = os.path.join(wxbase,"gui_modules")
+    gmpath = os.path.join(gisbase, "etc")
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
         raise IOError, _("Couldn't fetch interface description for command <%s>.") % cmd

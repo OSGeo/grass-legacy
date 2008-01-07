@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ..
 
-SUBDIRS = icons scripts
+SUBDIRS = icons scripts xml
 
 TCLTKBASED = tcltk
 PYTHONBASED = wxpython
