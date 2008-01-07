@@ -39,7 +39,7 @@ int main( int argc, char **argv )
 {
 	char *mapset ;
 	char buff[512];
-	const char *map_name;
+	char *map_name;
 	char window_name[64] ;
 	int black ;
 	int cats_num ;
