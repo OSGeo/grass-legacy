@@ -2651,8 +2651,10 @@ class MapFrame(wx.Frame):
             if vcmd:
                 self.gismanager.goutput.RunCmd(vcmd)
         else:
-            os.system(' '.join(rcmd))
-            os.system(' '.join(vcmd))
+            if rcmd:
+                gcmd.Command(rcmd)
+            if vcmd:
+                gcmd.Command(vcmd)
 
     def OnAnalyze(self, event):
         """
