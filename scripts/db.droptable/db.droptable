@@ -73,7 +73,7 @@ if [ $force -eq 1 ] ; then
 fi
 
 # check if table exists
-db.describe -c $GIS_OPT_TABLE 2>/dev/null
+db.describe -c $GIS_OPT_TABLE >/dev/null 2>/dev/null
 if [ $? -ne 0 ] ; then
         g.message -e "Table <$table> not found in current mapset"
         exit 1
