@@ -4,10 +4,11 @@
  * \brief Geodesic distance routines.
  *
  * Distance from point to point along a geodesic code from
- * Paul D. Thomas<br>
+ * Paul D. Thomas, 1970<br>
  * "Spheroidal Geodesics, Reference Systems, and Local Geometry"<br>
  * U.S. Naval Oceanographic Office, p. 162<br>
  * Engineering Library 526.3 T36s
+ * http://stinet.dtic.mil/oai/oai?&verb=getRecord&metadataPrefix=html&identifier=AD0703541
  *
  * <b>WARNING:</b> this code is preliminary and may be changed, 
  * including calling sequences to any of the functions defined here.
