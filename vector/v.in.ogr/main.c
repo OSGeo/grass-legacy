@@ -147,7 +147,7 @@ main (int argc, char *argv[])
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->options = "point,line,boundary,centroid";
     type_opt->answer = "";
-    type_opt->description = _("Optionaly change default input type");
+    type_opt->description = _("Optionally change default input type");
     type_opt->descriptions =
       _("point;import area centroids as points;"
 	"line;import area boundaries as lines;"
