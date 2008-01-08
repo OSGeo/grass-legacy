@@ -132,7 +132,7 @@ proc epsgOpt::epsgLocCom args {
 		-helptext [G_msg "Path to the EPSG-codes file"]
 		
 	#browse for epsg file
-	Button $row2.browseepsgfile -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+	Button $row2.browseepsgfile -justify center -padx 10 -bd 1 -text [G_msg "Browse..."] \
 		-helptext [G_msg "Browse to locate EPSG file"] \
 		-command "set epsgOpt::browsedepsg \[tk_getOpenFile -initialdir epsgOpt::browsedepsg -initialfile epsg \
 		-parent .optPopup -title \[ G_msg \"Choose EPSG file\" \] -multiple false\]" 
@@ -145,7 +145,7 @@ proc epsgOpt::epsgLocCom args {
 		-textvariable epsgOpt::epsg_code  -width 35 \
 		-helptext [G_msg "Enter EPSG code for selected projection"]
         
-	Button $row3.codebutton -justify center -width 10 -bd 1 -text [G_msg "Browse..."] \
+	Button $row3.codebutton -justify center -padx 10 -bd 1 -text [G_msg "Browse..."] \
 		-helptext [G_msg "View EPSG codes and projection information."] \
 		-command {
 			if {[file exists $epsgOpt::browsedepsg]} {
@@ -161,10 +161,10 @@ proc epsgOpt::epsgLocCom args {
                                      
 	pack $row3.code_entry $row3.codebutton -side left -fill x -expand 0 -padx 2
 	
-	Button $row4.submit -justify center -width 15 -text [G_msg "Define location"] \
+	Button $row4.submit -padx 10 -text [G_msg "Define location"] \
 		-command "epsgOpt::def_loc" -bd 1
 				
-	Button $row4.cancel -justify center -width 15 -text [G_msg "Cancel"] \
+	Button $row4.cancel -padx 10 -text [G_msg "Cancel"] \
 		-command {destroy .optPopup} -bd 1
 		
 	pack $row4.submit -side left -fill x -expand 0
@@ -308,10 +308,10 @@ proc epsgOpt::sel_dtrans {dtrans} {
     
     pack $row1
         
-    Button $row3.ok -text [G_msg "OK"] -width 8 -bd 1 \
+    Button $row3.ok -text [G_msg "OK"] -padx 10 -bd 1 \
     	-command "destroy .dtrans_sel"
     pack $row3.ok -side left -padx 3
-    button $row3.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
+    button $row3.cancel -text [G_msg "Cancel"] -padx 10 -bd 1 \
     	-command "set epsgOpt::dtnum -9; destroy .dtrans_sel"
     pack $row3.cancel -side left -padx 3
     pack $row3 -anchor center -pady 3
@@ -384,15 +384,14 @@ proc epsgOpt::codesEpsg args {
 	}
 			
 	set controls [frame .infoPopup.buttons]
-	button $controls.search -text [G_msg "Search"] -command "epsgOpt::search_epsg $epsgtxt" \
-		-bd 1
+	button $controls.search -text [G_msg "Search"] -padx 10 -bd 1 -command "epsgOpt::search_epsg $epsgtxt"
 	
-	Button $controls.grab -text [G_msg "Grab code"] -width 8 -bd 1 \
+	Button $controls.grab -text [G_msg "Grab code"] -padx 10 -bd 1 \
 		-command "epsgOpt::grabcode"
 	
 	pack $controls.search $controls.grab -side left -fill x -expand 0
 
-	button $controls.close -width 6 -text [G_msg "Close"] \
+	button $controls.close -padx 10 -text [G_msg "Close"] \
 		-command {destroy .infoPopup} -bd 1
 	pack $controls.close -side right -fill x -expand 0                  
 
@@ -433,10 +432,10 @@ proc epsgOpt::search_epsg { epsgtxt } {
     	-anchor w -fill x -expand 0
     pack $row2 -side top -padx 3 -expand 1 -fill both
     
-    Button $row4.search -text [G_msg "Search"] -width 8 -bd 1 \
+    Button $row4.search -text [G_msg "Search"] -padx 10 -bd 1 \
     	-command "epsgOpt::textsearch"
     pack $row4.search -side left -fill x -expand 0
-    button $row4.cancel -text [G_msg "Close"] -width 8 -bd 1 -command "destroy .search_epsg"
+    button $row4.cancel -text [G_msg "Close"] -padx 10 -bd 1 -command "destroy .search_epsg"
     pack $row4.cancel -side right -fill x -expand 0
     pack $row4 -side top -pady 3 -expand 1 -fill both
 
