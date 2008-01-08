@@ -19,14 +19,17 @@
 
 /*!
   \fn int Vect_legal_filename (char *s)
+
   \brief  Check if output is legal vector name.
 
   Rule:  [A-Za-z][A-Za-z0-9_@]*
 
- \param[in] s filename to be checked
+  Check also for SQL keywords.
 
- \return 1 OK
- \return -1 if name does not start with letter A..Za..z or if name does not continue with A..Za..z0..9_@
+  \param[in] s filename to be checked
+
+  \return 1 OK
+  \return -1 if name does not start with letter A..Za..z or if name does not continue with A..Za..z0..9_@
 */
 
 int Vect_legal_filename (char *s)
@@ -47,10 +50,21 @@ int Vect_legal_filename (char *s)
     }
 
     for (s++ ; *s; s++)
-	if (! ((*s >= 'A' && *s <= 'Z') || (*s >= 'a' && *s <= 'z') || (*s >= '0' && *s <= '9') || *s == '_' || *s == '@' ) ) {
+	if (! ((*s >= 'A' && *s <= 'Z') || (*s >= 'a' && *s <= 'z') ||
+	       (*s >= '0' && *s <= '9') || *s == '_' || *s == '@' ) ) {
 	    G_warning (_("Illegal vector map name <%s>. Character '%c' not allowed."), buf, *s);
 	    return -1;
 	}
+
+    /* full list of SQL keywords available at
+       http://www.postgresql.org/docs/8.2/static/sql-keywords-appendix.html
+    */
+    if (G_strcasecmp(buf, "and") == 0 ||
+	G_strcasecmp(buf, "or") == 0 ||
+	G_strcasecmp(buf, "not") == 0) {
+	G_warning (_("Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."), buf);
+	return -1;
+    }
 
     return 1;
 }
