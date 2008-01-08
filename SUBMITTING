@@ -380,14 +380,58 @@ following rules:
     http://svnbook.red-bean.com/en/1.4/svn.advanced.props.html
 
 
-30. Tell the other developers about the new code using the following e-mail:
+30. Use doxygen style for source code documentation. It is required
+    for GRASS libraries, but also recommended for GRASS modules.
+
+    Do not use structural command inside documentation block since it
+    leads to some duplication of information (e.g. do not use \fn
+    command in comment blocks). The exception is \file command for
+    documenting a file, in this case structural command is required.
+
+    For files
+
+    /**
+       \file snap.c
+   
+       \brief Vector library - Clean vector map (snap lines)
+
+       (C) 2001-2008 by the GRASS Development Team
+   
+       This program is free software under the 
+       GNU General Public License (>=v2). 
+       Read the file COPYING that comes with GRASS
+       for details.
+   
+       \author Radim Blazek
+   
+       \date 2001-2008
+    */
+
+    For functions
+
+    /**
+       \brief Snap lines in vector map to existing vertex in threshold
+
+       For details see Vect_snap_lines_list()
+
+       \param[in] Map input vector map 
+       \param[in] type type of lines to be snap
+       \param[in] thresh threshold value for snapping
+       \param[out] Err vector map where lines representing snap are written or NULL
+       \param[out] msgout file pointer where messages will be written or NULL
+       
+       \return	   
+    */
+
+
+31. Tell the other developers about the new code using the following e-mail:
     grass-dev@lists.osgeo.org
  
     To subscribe to this mailing list, see
     http://lists.osgeo.org/mailman/listinfo/grass-dev
 
 
-31. In case of questions feel free to contact the developers at the above
+32. In case of questions feel free to contact the developers at the above
     mailing list.
     http://www.grass-gis.org/devel/index.php#submission
 
