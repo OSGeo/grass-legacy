@@ -2,6 +2,8 @@
 #define MY_COMMON_H
 
 /* Includes */
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <string>
