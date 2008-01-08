@@ -2,6 +2,7 @@
 MODULE: digit
 
 CLASSES:
+ * DigitError
  * AbstractDigit 
  * VEdit
  * VDigit
@@ -25,7 +26,7 @@ PURPOSE: Digitization tool wxPython GUI prototype
 AUTHORS: The GRASS Development Team
          Martin Landa <landa.martin gmail.com>
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
@@ -45,21 +46,35 @@ import dbm
 from debug import Debug as Debug
 import gselect 
 try:
-    driverPath = os.path.join(os.getenv("GISBASE"), "etc","wx", "display_driver")
-    sys.path.append(driverPath)
-    from grass6_wxdriver import DisplayDriver
+    digitPath = os.path.join(os.getenv("GISBASE"), "etc","wx", "vdigit")
+    sys.path.append(digitPath)
+    from grass6_wxvdigit import DisplayDriver
 except ImportError, err:
     print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s).%s" \
           "Detailed information in README file." % \
           (os.linesep, err, os.linesep)
 
 USEVEDIT = True
-    
+
+class DigitError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        wx.MessageBox(parent=None,
+                      message=self.message,
+                      style=wx.ICON_ERROR)
+
 class AbstractDigit:
     """
     Abstract digitization class
     """
     def __init__(self, mapwindow, settings=None):
+        """Initialization
+
+        @param mapwindow reference to mapwindow (MapFrame) instance
+        @param settings  initial settings of digitization tool
+        """
         self.map       = None
 
         Debug.msg (3, "AbstractDigit.__init__(): map=%s" % \
@@ -112,28 +127,31 @@ class AbstractDigit:
         """Find maximum category number in the map layer
         and update Digit.settings['category']
 
-        Returns 'True' on success, 'False' on failure
+        @return 'True' on success, 'False' on failure
         """
         # vector map layer without categories, reset to '1'
         self.settings['category'] = 1
 
         if self.map:
-            categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
-                                           "input=%s" % self.map, 
-                                           "option=report",
-                                           "layer=%d" % self.settings["layer"]])
+            if USEVEDIT:
+                categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
+                                                "input=%s" % self.map, 
+                                                "option=report",
+                                                "layer=%d" % self.settings["layer"]])
 
-            if categoryCmd.returncode != 0:
-                return False
+                if categoryCmd.returncode != 0:
+                    return False
         
-            for line in categoryCmd.ReadStdOutput():
-                if "all" in line:
-                    try:
-                        maxCat = int(line.split(' ')[-1]) + 1
-                        self.settings['category'] = maxCat
-                    except:
-                        return False
-                    return True
+                for line in categoryCmd.ReadStdOutput():
+                    if "all" in line:
+                        try:
+                            maxCat = int(line.split(' ')[-1]) + 1
+                            self.settings['category'] = maxCat
+                        except:
+                            return False
+                        return True
+            else:
+                self.settings['category'] = self.digit.GetCategory(self.settings['layer']) + 1
     
     def SetCategory(self):
         """Return category number to use (according Settings)"""
@@ -148,11 +166,16 @@ class AbstractDigit:
         return self.settings["category"]
 
     def SetMapName(self, map):
-        """Set map name"""
+        """Set map name
+
+        @param map map name to be set up or None (will close currently edited map)
+        """
         Debug.msg (3, "AbstractDigit.SetMapName map=%s" % map)
         self.map = map
 
         self.driver.Reset(self.map)
+        if not USEVEDIT:
+            self.digit.InitCats()
         
 class VEdit(AbstractDigit):
     """
@@ -161,16 +184,24 @@ class VEdit(AbstractDigit):
     Note: This should be replaced by VDigit class.
     """
     def __init__(self, mapwindow, settings=None):
+        """Initialization
+
+        @param mapwindow reference to mapwindow (MapFrame) instance
+        @param settings  initial settings of digitization tool
+        """
         AbstractDigit.__init__(self, mapwindow, settings)
 
-    def AddPoint (self, map, type, x, y, z=None):
+    def AddPoint (self, map, point, x, y, z=None):
+        """Add point/centroid to the vector map layer
+
+        @param map   map name
+        @param point feature type (True for point, otherwise centroid)
+        @param x,y,z coordinates
         """
-        Add point/centroid to the vector map layer
-        """
-        if type == "centroid":
-            key = "C"
-        else:
+        if point:
             key = "P"
+        else:
+            key = "C"
 
         layer = self.settings["layer"]
         cat   = self.SetCategory()
@@ -194,9 +225,12 @@ class VEdit(AbstractDigit):
                 
         self.__AddFeature (map=map, input=addstring)
 
-    def AddLine (self, map, type, coords):
-        """
-        Add line/boundary to the vector map layer
+    def AddLine (self, map, line, coords):
+        """Add line/boundary to the vector map layer
+
+        @param map  map name
+        @param line feature type (True for line, otherwise boundary)
+        @param list of coordinates
         """
         if len(coords) < 2:
             return
@@ -204,12 +238,12 @@ class VEdit(AbstractDigit):
         layer = self.settings["layer"]
         cat   = self.SetCategory()
         
-        if type == "boundary":
-            key = "B"
-            flags = ['-c'] # close boundaries
-        else:
+        if line:
             key = "L"
             flags = []
+        else:
+            key = "B"
+            flags = ['-c'] # close boundaries
             
         if layer > 0 and cat != "None":
             addstring = "%s %d 1\n" % (key, len(coords))
@@ -233,10 +267,12 @@ class VEdit(AbstractDigit):
         self.__AddFeature (map=map, input=addstring, flags=flags)
 
     def __AddFeature (self, map, input, flags=[]):
+        """General method for adding feature to the vector map layer
+
+        @param map   map name
+        @param input feature definition in GRASS ASCII format
+        @param flags additional flags
         """
-        General method which adds feature to the vector map
-        """
-                        
         if self.settings['snapping'][0] <= 0:
             snap = "no"
         else:
@@ -267,7 +303,6 @@ class VEdit(AbstractDigit):
         
     def DeleteSelectedLines(self):
         """Delete selected vector features from the vector map"""
-
         selected = self.driver.GetSelected() # grassId
 
         if len(selected) <= 0:
@@ -292,16 +327,27 @@ class VEdit(AbstractDigit):
         return True
 
     def MoveSelectedLines(self, move):
-        """Move selected vector features"""
+        """Move selected vector features
+
+        @param move X,Y direction
+        """
         return self.__MoveFeature("move", None, move)
 
     def MoveSelectedVertex(self, coords, move):
-        """Move selected vertex of the line"""
+        """Move selected vertex of the line
+
+        @param coords click coordinates
+        @param move   X,Y direction
+        """
         return self.__MoveFeature("vertexmove", coords, move)
 
     def __MoveFeature(self, tool, coords, move):
-        """Move selected vector feature or vertex"""
+        """Move selected vector feature or vertex
 
+        @param tool   tool for v.edit
+        @param coords click coordinates
+        @param move   X,Y direction
+        """
         selected = self.driver.GetSelected()
 
         if len(selected) <= 0:
@@ -342,8 +388,10 @@ class VEdit(AbstractDigit):
         return True
 
     def SplitLine(self, coords):
-        """Split selected line on position 'coords'"""
+        """Split selected line on position 'coords'
 
+        @param coords coordinates to split line
+        """
         try:
             line = self.driver.GetSelected()[0]
         except:
@@ -365,15 +413,25 @@ class VEdit(AbstractDigit):
         return True
 
     def AddVertex(self, coords):
-        """Add new vertex to the selected line on position 'coords'"""
+        """Add new vertex to the selected line on position 'coords'
+
+        @param coords coordinates to add vertex
+        """
         return self.__ModifyVertex(coords, "vertexadd")
 
     def RemoveVertex(self, coords):
-        """Remove vertex from the selected line on position 'coords'"""
+        """Remove vertex from the selected line on position 'coords'
+
+        @param coords coordinates to remove vertex
+        """
         return self.__ModifyVertex(coords, "vertexdel")
     
     def __ModifyVertex(self, coords, action):
-        
+        """Generic method for vertex manipulation
+
+        @param coords coordinates
+        @param action operation to perform
+        """
         try:
             line = self.driver.GetSelected()[0]
         except:
@@ -395,7 +453,11 @@ class VEdit(AbstractDigit):
         return True
 
     def CopyCats(self, cats, ids):
-        """Copy given categories to objects with id listed in ids"""
+        """Copy given categories to objects with id listed in ids
+
+        @param cats list of cats to be copied
+        @param ids  ids of lines to be modified
+        """
         if len(cats) == 0 or len(ids) == 0:
             return False
 
@@ -413,7 +475,11 @@ class VEdit(AbstractDigit):
         return True
 
     def EditLine(self, line, coords):
-        """Edit existing line"""
+        """Edit existing line
+
+        @param line id of line to be modified
+        @param coords list of coordinates of modified line
+        """
         # remove line
         vEditDelete = gcmd.Command(['v.edit',
                                    '--q',
@@ -429,8 +495,10 @@ class VEdit(AbstractDigit):
         self.driver.ReloadMap()
 
     def __ModifyLines(self, tool):
-        """General method to modify selected lines"""
+        """Generic method to modify selected lines
 
+        @param tool operation to be performed by v.edit
+        """
         ids = self.driver.GetSelected()
 
         if len(ids) <= 0:
@@ -454,32 +522,29 @@ class VEdit(AbstractDigit):
 
     def FlipLine(self):
         """Flip selected lines"""
-
         return self.__ModifyLines('flip')
 
     def MergeLine(self):
         """Merge selected lines"""
-
         return self.__ModifyLines('merge')
 
     def BreakLine(self):
         """Break selected lines"""
-
         return self.__ModifyLines('break')
 
     def SnapLine(self):
         """Snap selected lines"""
-
         return self.__ModifyLines('snap')
 
     def ConnectLine(self):
         """Connect selected lines"""
-
         return self.__ModifyLines('connect')
 
     def CopyLine(self, ids=None):
-        """Copy features from (background) vector map"""
-        
+        """Copy features from (background) vector map
+
+        @param ids list of line ids to be copied
+        """
         if not ids:
             ids = self.driver.GetSelected()
 
@@ -505,7 +570,7 @@ class VEdit(AbstractDigit):
     def SelectLinesFromBackgroundMap(self, pos1, pos2):
         """Select features from background map
 
-        pos1, pos2: bounding box defifinition
+        @param pos1,pos2 bounding box defifinition
         """
 
         if self.settings['backgroundMap'] == '':
@@ -536,7 +601,10 @@ class VEdit(AbstractDigit):
         return ids
 
     def SelectLinesByQuery(self, pos1, pos2):
-        """Select features by query"""
+        """Select features by query
+
+        @param pos1, pos2 bounding box definition
+        """
         if self.settings['query'][0] == "length":
             thresh = self.settings['queryLength'][1]
             if self.settings["queryLength"][0] == "shorter than":
@@ -591,8 +659,12 @@ class VEdit(AbstractDigit):
 
     def ZBulkLine(self, pos1, pos2, value, step):
         """Provide z bulk-labeling (automated assigment of z coordinate
-        to 3d lines"""
-        
+        to 3d lines
+
+        @param pos1,pos2 bounding box definition for selecting lines to be labeled
+        @param value starting value
+        @param step  step value
+        """
         gcmd.Command(['v.edit',
                       '--q',
                       'map=%s' % self.map,
@@ -607,31 +679,87 @@ class VDigit(AbstractDigit):
     Under development (wxWidgets C/C++ background)
     """
     def __init__(self, mapwindow, settings=None):
+        """Initialization
+
+        @param mapwindow reference to mapwindow (MapFrame) instance
+        @param settings  initial settings of digitization tool
+        """
         AbstractDigit.__init__(self, mapwindow, settings)
 
         try:
-            from grass6_wxdriver import DigitClass
-            self.digit = DigitClass()
-        except:
+            from grass6_wxvdigit import Digit as DigitClass
+            self.digit = DigitClass(self.driver.GetDevice())
+        except ImportError, err:
+            print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s).%s" \
+                  "Detailed information in README file." % \
+                  (os.linesep, err, os.linesep)
             self.digit = None
 
+    def AddPoint (self, map, point, x, y, z=None):
+        """Add point/centroid to the vector map layer
+
+        @param map   map name (unused)
+        @param point  feature type (if True -> point otherwise centroid)
+        @param x,y,z coordinates
+        """
+        layer = self.settings["layer"]
+        cat   = self.SetCategory()
+        
+        if point:
+            type = 0x01 # point
+        else:
+            type = 0x08 # centroid
+
+        if z:
+            ret = self.digit.AddLine(type, [x, y, z], True, layer, cat)
+        else:
+            ret = self.digit.AddLine(type, [x, y], False, layer, cat)
+
+        if ret == -1:
+            raise DigitError, _("Adding new feature to vector map <%s> failed") % map
+        
+    def AddLine (self, map, line, coords):
+        """Add line/boundary to the vector map layer
+
+        @param map  map name
+        @param line feature type (True for line, otherwise boundary)
+        @param list of coordinates
+        """
+        if len(coords) < 2:
+            return
+
+        layer = self.settings["layer"]
+        cat   = self.SetCategory()
+
+        if line:
+            type = 0x02
+        else:
+            type = 0x04
+
+        listCoords = []
+        for c in coords:
+            for x in c:
+                listCoords.append(x)
+
+        if len(coords[0]) == 3: # with_z
+            ret = self.digit.AddLine(type, listCoords, True, layer, cat)
+        else:
+            ret = self.digit.AddLine(type, listCoords, False, layer, cat)
+
+        if ret == -1:
+            raise DigitError, _("Adding new feature to vector map <%s> failed") % map
+
+
     def DeleteSelectedLines(self):
-        """Delete selected vector features from the vector map"""
+        """Delete selected vector features from the vector map
 
-        selected = self.driver.GetSelected() # grassId
+        @return number of deleted lines
+        """
 
-        if len(selected) <= 0:
-            return False
-
-        ids = ",".join(["%d" % v for v in selected])
-
-        Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
-                      ids)
-
-        self.digit.DeleteSelectedLines()
+        nlines = self.digit.DeleteSelectedLines()
         #self.driver.DrawUpdatedLines()
 
-        return True
+        return nlines
 
 if USEVEDIT:
     class Digit(VEdit):
@@ -647,6 +775,11 @@ else:
 class AbstractDisplayDriver:
     """Abstract classs for display driver"""
     def __init__(self, parent, mapwindow):
+        """Initialization
+
+        @param parent
+        @param mapwindow reference to mapwindow (MFrame)
+        """
         self.parent      = parent
         self.mapwindow   = mapwindow
         
@@ -654,7 +787,11 @@ class AbstractDisplayDriver:
         self.selected    = []   # list of selected objects (grassId!)
 
     def GetThreshold(self, value=None, units=None):
-        """Return threshold in map units"""
+        """Return threshold in map units
+
+        @param value threshold to be set up
+        @param units units (map, screen)
+        """
         if not value:
             value = self.parent.settings["snapping"][0]
 
@@ -682,6 +819,11 @@ class CDisplayDriver(AbstractDisplayDriver):
     Display driver using grass6_wxdriver module
     """
     def __init__(self, parent, mapwindow):
+        """Initialization
+
+        @param parent
+        @param mapwindow reference to mapwindow (MFrame)
+        """
         AbstractDisplayDriver.__init__(self, parent, mapwindow)
 
         self.mapWindow = mapwindow
@@ -695,15 +837,28 @@ class CDisplayDriver(AbstractDisplayDriver):
         settings = self.parent.settings
         self.UpdateSettings()
 
+    def GetDevice(self):
+        """Get device"""
+        return self.__display
+    
     def SetDevice(self, pdc):
-        """Set device for driver"""
+        """Set device for driver
+
+        @param pdc wx.PseudoDC instance
+        """
         self.__display.SetDevice(pdc)
             
     def Reset(self, map):
-        """Close map and open new one"""
+        """Close map and open new one
+
+        map map name to be set up
+        """
         if map:
             name, mapset = map.split('@')
-            self.__display.OpenMap(str(name), str(mapset))
+            if USEVEDIT:
+                ret = self.__display.OpenMap(str(name), str(mapset), False)
+            else:
+                ret = self.__display.OpenMap(str(name), str(mapset), True)
         else:
             self.__display.CloseMap()
     
@@ -718,7 +873,7 @@ class CDisplayDriver(AbstractDisplayDriver):
     def DrawMap(self):
         """Draw vector map layer content
 
-        Return wx.Image 
+        @return wx.Image instance
         """
         import time
         start = time.clock()
@@ -733,8 +888,10 @@ class CDisplayDriver(AbstractDisplayDriver):
         """Select vector features by given bounding box.
 
         If type is given, only vector features of given type are selected.
-        """
 
+        @param begin,end bounding box definition
+        @param type      select only objects of given type
+        """
         x1, y1 = begin
         x2, y2 = end
 
@@ -748,8 +905,10 @@ class CDisplayDriver(AbstractDisplayDriver):
         """Select vector feature by coordinates of click point (in given threshold).
 
         If type is given, only vector features of given type are selected.
-        """
 
+        @param point click coordinates (bounding box given by threshold)
+        @param type  select only objects of given type
+        """
         ftype = -1 # all types
         if type:
             if type == "point":
@@ -772,9 +931,8 @@ class CDisplayDriver(AbstractDisplayDriver):
     def GetSelected(self, grassId=True):
         """Return ids of selected vector features
         
-        If grassId is True returns GRASS ids, otherwise
+        @param grassId if grassId is True returns GRASS ids, otherwise
         internal ids of objects drawn in PseudoDC"""
-        
         if grassId:
             selected = self.__display.GetSelected(True)
         else:
@@ -787,8 +945,10 @@ class CDisplayDriver(AbstractDisplayDriver):
 
     def GetSelectedVertex(self, coords):
         """Get PseudoDC id(s) of vertex (of selected line)
-        on position 'coords'"""
+        on position 'coords'
 
+        @param coords click position
+        """
         x, y = coords
 
         id = self.__display.GetSelectedVertex(x, y, self.GetThreshold())
@@ -799,8 +959,10 @@ class CDisplayDriver(AbstractDisplayDriver):
         return id 
 
     def SetSelected(self, id):
-        """Set selected vector features"""
+        """Set selected vector features
 
+        @param id line id to be selected
+        """
         Debug.msg(4, "CDisplayDriver.SetSelected(): id=%s" % id)
 
         self.__display.SetSelected(id)
@@ -831,66 +993,67 @@ class CDisplayDriver(AbstractDisplayDriver):
         if not self.__display:
             return
         
-        self.__display.SetSettings (wx.Color(settings['symbolHighlight'][1][0],
-                                           settings['symbolHighlight'][1][1],
-                                           settings['symbolHighlight'][1][2],
+        self.__display.UpdateSettings (wx.Color(settings['symbolHighlight'][1][0],
+                                                settings['symbolHighlight'][1][1],
+                                                settings['symbolHighlight'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolPoint'][0],
+                                       wx.Color(settings['symbolPoint'][1][0],
+                                                settings['symbolPoint'][1][1],
+                                                settings['symbolPoint'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolLine'][0],
+                                       wx.Color(settings['symbolLine'][1][0],
+                                                settings['symbolLine'][1][1],
+                                                settings['symbolLine'][1][2],
                                            255).GetRGB(),
-                                  settings['symbolPoint'][0],
-                                  wx.Color(settings['symbolPoint'][1][0],
-                                           settings['symbolPoint'][1][1],
-                                           settings['symbolPoint'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolLine'][0],
-                                  wx.Color(settings['symbolLine'][1][0],
-                                           settings['symbolLine'][1][1],
-                                           settings['symbolLine'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolBoundaryNo'][0],
-                                  wx.Color(settings['symbolBoundaryNo'][1][0],
-                                           settings['symbolBoundaryNo'][1][1],
-                                           settings['symbolBoundaryNo'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolBoundaryOne'][0],
-                                  wx.Color(settings['symbolBoundaryOne'][1][0],
-                                           settings['symbolBoundaryOne'][1][1],
-                                           settings['symbolBoundaryOne'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolBoundaryTwo'][0],
-                                  wx.Color(settings['symbolBoundaryTwo'][1][0],
-                                           settings['symbolBoundaryTwo'][1][1],
-                                           settings['symbolBoundaryTwo'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolCentroidIn'][0],
-                                  wx.Color(settings['symbolCentroidIn'][1][0],
-                                           settings['symbolCentroidIn'][1][1],
-                                           settings['symbolCentroidIn'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolCentroidOut'][0],
-                                  wx.Color(settings['symbolCentroidOut'][1][0],
-                                           settings['symbolCentroidOut'][1][1],
-                                           settings['symbolCentroidOut'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolCentroidDup'][0],
-                                  wx.Color(settings['symbolCentroidDup'][1][0],
-                                           settings['symbolCentroidDup'][1][1],
-                                           settings['symbolCentroidDup'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolNodeOne'][0],
-                                  wx.Color(settings['symbolNodeOne'][1][0],
-                                           settings['symbolNodeOne'][1][1],
-                                           settings['symbolNodeOne'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolNodeTwo'][0],
-                                  wx.Color(settings['symbolNodeTwo'][1][0],
-                                           settings['symbolNodeTwo'][1][1],
-                                           settings['symbolNodeTwo'][1][2],
-                                           255).GetRGB(),
-                                  settings['symbolVertex'][0],
-                                  wx.Color(settings['symbolVertex'][1][0],
-                                           settings['symbolVertex'][1][1],
-                                           settings['symbolVertex'][1][2],
-                                           255).GetRGB(),
-                                  settings['lineWidth'][0])
+                                       settings['symbolBoundaryNo'][0],
+                                       wx.Color(settings['symbolBoundaryNo'][1][0],
+                                                settings['symbolBoundaryNo'][1][1],
+                                                settings['symbolBoundaryNo'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolBoundaryOne'][0],
+                                       wx.Color(settings['symbolBoundaryOne'][1][0],
+                                                settings['symbolBoundaryOne'][1][1],
+                                                settings['symbolBoundaryOne'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolBoundaryTwo'][0],
+                                       wx.Color(settings['symbolBoundaryTwo'][1][0],
+                                                settings['symbolBoundaryTwo'][1][1],
+                                                settings['symbolBoundaryTwo'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolCentroidIn'][0],
+                                       wx.Color(settings['symbolCentroidIn'][1][0],
+                                                settings['symbolCentroidIn'][1][1],
+                                                settings['symbolCentroidIn'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolCentroidOut'][0],
+                                       wx.Color(settings['symbolCentroidOut'][1][0],
+                                                settings['symbolCentroidOut'][1][1],
+                                                settings['symbolCentroidOut'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolCentroidDup'][0],
+                                       wx.Color(settings['symbolCentroidDup'][1][0],
+                                                settings['symbolCentroidDup'][1][1],
+                                                settings['symbolCentroidDup'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolNodeOne'][0],
+                                       wx.Color(settings['symbolNodeOne'][1][0],
+                                                settings['symbolNodeOne'][1][1],
+                                                settings['symbolNodeOne'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolNodeTwo'][0],
+                                       wx.Color(settings['symbolNodeTwo'][1][0],
+                                                settings['symbolNodeTwo'][1][1],
+                                                settings['symbolNodeTwo'][1][2],
+                                                255).GetRGB(),
+                                       settings['symbolVertex'][0],
+                                       wx.Color(settings['symbolVertex'][1][0],
+                                                settings['symbolVertex'][1][1],
+                                                settings['symbolVertex'][1][2],
+                                                255).GetRGB(),
+                                       settings['lineWidth'][0],
+                                       self.GetThreshold())
 
 class DigitSettingsDialog(wx.Dialog):
     """
