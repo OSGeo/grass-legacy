@@ -1,6 +1,8 @@
+#ifndef __DRIVER_H__
+#define __DRIVER_H__
+
 #include <iostream> // debug
 #include <vector>
-//#include <map>
 #include <cmath>
 
 // For compilers that support precompilation, includes "wx.h".
@@ -20,7 +22,6 @@
 
 #include <Python.h>
 #include <wx/wxPython/pseudodc.h>
-//#include "pseudodc.h"
 
 extern "C" {
 #include <grass/gis.h>
@@ -31,7 +32,8 @@ extern "C" {
 
 class DisplayDriver
 {
- private:
+private:
+    friend class Digit;
     wxPseudoDC *dc;  // device content
 
     /* disabled due to expensive calling dc->SetId()
@@ -102,8 +104,9 @@ class DisplayDriver
 
 	symbol vertex;
 
-	int lineWidth; // screen units 
+	int lineWidth;    // screen units 
 
+	double threshold; // threshold value (map units)
     } settings;
 
     struct _topology {
@@ -144,47 +147,50 @@ class DisplayDriver
 
     void ResetTopology();
 
- public:
+public:
     /* constructor */
-    DisplayDriver(void *device);
+    DisplayDriver(void *);
     /* destructor */
     ~DisplayDriver();
 
     /* display */
-    int DrawMap(bool force);
+    int DrawMap(bool);
 
     /* select */
-    int SelectLinesByBox(double x1, double y1, double x2, double y2);
-    std::vector<double> SelectLineByPoint(double x, double y, double thresh,
-					  int type);
+    int SelectLinesByBox(double, double, double, double);
+    std::vector<double> SelectLineByPoint(double, double, double,
+					  int);
 
-    std::vector<int> GetSelected(bool grassId);
-    int SetSelected(std::vector<int> id);
-    std::vector<int> GetSelectedVertex(double x, double y, double thresh);
+    std::vector<int> GetSelected(bool);
+    int SetSelected(std::vector<int>);
+    std::vector<int> GetSelectedVertex(double, double, double);
 
     /* general */
     void CloseMap();
-    void OpenMap(const char *mapname, const char *mapset);
+    int  OpenMap(const char *, const char *, bool);
     void ReloadMap();
-    void SetDevice(void *device);
+    void SetDevice(void *);
 
     /* set */
-    void SetRegion(double north, double south, double east, double west,
-		   double ns_res, double ew_res,
-		   double center_easting, double center_northing,
-		   double map_width, double map_height);
+    void SetRegion(double, double, double, double,
+		   double, double,
+		   double, double,
+		   double, double);
 
-    void SetSettings(unsigned long highlight,
-		     bool ePoint,       unsigned long cPoint, /* enabled, color */
-		     bool eLine,        unsigned long cLine,
-		     bool eBoundaryNo,  unsigned long cBoundaryNo,
-		     bool eBoundaryOne, unsigned long cBoundaryOne,
-		     bool eBoundaryTwo, unsigned long cBoundaryTwo,
-		     bool eCentroidIn,  unsigned long cCentroidIn,
-		     bool eCentroidOut, unsigned long cCentroidOut,
-		     bool eCentroidDup, unsigned long cCentroidDup,
-		     bool eNodeOne,     unsigned long cNodeOne,
-		     bool eNodeTwo,     unsigned long cNodeTwo,
-		     bool eVertex,      unsigned long cVertex,
-		     int lineWidth);
+    void UpdateSettings(unsigned long,
+			bool, unsigned long, /* enabled, color */
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			bool, unsigned long,
+			int,
+			double);
 };
+
+#endif /* __DRIVER_H__ */

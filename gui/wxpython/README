@@ -31,17 +31,10 @@ wxPython GRASS Graphical User Interface
      http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
 
  E.g. On Debian GNU/Linux install these packages:
- * libwxbase2.8-0
- * libwxbase2.8-dbg
- * libwxbase2.8-dev
- * libwxgtk2.8-0
- * libwxgtk2.8-dbg
- * libwxgtk2.8-dev
- * python-wxgtk2.8
- * wx2.8-doc
- * wx2.8-examples
- * wx2.8-headers
- * wx2.8-i18n
+ apt-get install libwxbase2.8-0 libwxbase2.8-dbg libwxbase2.8-dev \
+ 	 libwxgtk2.8-0 libwxgtk2.8-dbg libwxgtk2.8-dev \
+	 python-wxgtk2.8 wx2.8-doc wx2.8-examples \
+	 wx2.8-headers wx2.8-i18n
 
 1 - INSTALLATION
 

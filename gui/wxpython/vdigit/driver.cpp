@@ -6,13 +6,14 @@
    This driver is designed for wxPython GRASS GUI (digitization tool).
    Draw vector map layer to PseudoDC.
 
-   \author Martin Landa <landa.martin gmail.com>
-
-   (C) 2007 by the GRASS Development Team
- 
    This program is free software under the GNU General Public
    License (>=v2). Read the file COPYING that comes with GRASS
    for details.
+
+   \author (C) by the GRASS Development Team
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2007-2008 
 */
 
 #include "driver.h"
@@ -446,6 +447,9 @@ int DisplayDriver::DrawLineNodes(int line)
 void DisplayDriver::CloseMap()
 {
     if (mapInfo) {
+	if (mapInfo->mode == GV_MODE_RW) {
+	    Vect_build(mapInfo, NULL);
+	}
 	Vect_close(mapInfo);
 	G_free ((void *) mapInfo);
 	mapInfo = NULL;
@@ -460,10 +464,13 @@ void DisplayDriver::CloseMap()
    \param[in] mapname name of vector map
    \param[in] mapset name of mapset where the vector map layer is stored
    
-   \return
+   \return topo level
+   \return -1 on error
 */
-void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
+int DisplayDriver::OpenMap(const char* mapname, const char *mapset, bool update)
 {
+    int ret;
+
     if (!mapInfo)
 	mapInfo = (struct Map_info *) G_malloc (sizeof (struct Map_info));
 
@@ -471,9 +478,14 @@ void DisplayDriver::OpenMap(const char* mapname, const char *mapset)
     Vect_set_open_level(2);
 
     // open existing map
-    Vect_open_old(mapInfo, (char*) mapname, (char *) mapset);
+    if (!update) {
+	ret = Vect_open_old(mapInfo, (char*) mapname, (char *) mapset);
+    }
+    else {
+	ret = Vect_open_update(mapInfo, (char*) mapname, (char *) mapset);
+    }
 
-    return;
+    return ret;
 }
 
 /**
@@ -496,7 +508,7 @@ void DisplayDriver::ReloadMap()
     Vect_close(mapInfo);
     mapInfo = NULL;
 
-    OpenMap(name, mapset);
+    OpenMap(name, mapset, false); // used only for v.edit
     //Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
     //Vect_build(mapInfo, stderr);
 
@@ -619,19 +631,20 @@ int DisplayDriver::DrawCross(int line, const wxPoint* point, int size)
   
   \return 
 */
-void DisplayDriver::SetSettings(unsigned long highlight,
-				bool ePoint,       unsigned long cPoint, /* enabled, color */
-				bool eLine,        unsigned long cLine,
-				bool eBoundaryNo,  unsigned long cBoundaryNo,
-				bool eBoundaryOne, unsigned long cBoundaryOne,
-				bool eBoundaryTwo, unsigned long cBoundaryTwo,
-				bool eCentroidIn,  unsigned long cCentroidIn,
-				bool eCentroidOut, unsigned long cCentroidOut,
-				bool eCentroidDup, unsigned long cCentroidDup,
-				bool eNodeOne,     unsigned long cNodeOne,
-				bool eNodeTwo,     unsigned long cNodeTwo,
-				bool eVertex,      unsigned long cVertex,
-				int lineWidth)
+void DisplayDriver::UpdateSettings(unsigned long highlight,
+				   bool ePoint,       unsigned long cPoint, /* enabled, color */
+				   bool eLine,        unsigned long cLine,
+				   bool eBoundaryNo,  unsigned long cBoundaryNo,
+				   bool eBoundaryOne, unsigned long cBoundaryOne,
+				   bool eBoundaryTwo, unsigned long cBoundaryTwo,
+				   bool eCentroidIn,  unsigned long cCentroidIn,
+				   bool eCentroidOut, unsigned long cCentroidOut,
+				   bool eCentroidDup, unsigned long cCentroidDup,
+				   bool eNodeOne,     unsigned long cNodeOne,
+				   bool eNodeTwo,     unsigned long cNodeTwo,
+				   bool eVertex,      unsigned long cVertex,
+				   int lineWidth,
+				   double threshold)
 {
     settings.highlight.Set(highlight);
 
@@ -664,9 +677,8 @@ void DisplayDriver::SetSettings(unsigned long highlight,
     settings.vertex.enabled = eVertex;
     settings.vertex.color.Set(cVertex);
 
-
     settings.lineWidth = lineWidth;
-    
+    settings.threshold = threshold;    
 }
 
 /**

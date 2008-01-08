@@ -906,9 +906,11 @@ class BufferedWindow(wx.Window):
             if digitToolbar.action == "addLine":
                 if digitToolbar.type in ["point", "centroid"]:
                     # add new point
-                    digitClass.AddPoint(map=map,
-                                        type=digitToolbar.type,
-                                        x=east, y=north)
+                    if digitToolbar.type == 'point':
+                        point = True
+                    else:
+                        point = False
+                    digitClass.AddPoint(map, point, east, north)
 
                     self.UpdateMap(render=False) # redraw map
 
@@ -1357,10 +1359,11 @@ class BufferedWindow(wx.Window):
                     # xy -> EN
                     # for coord in self.polycoords:
                     #    mapcoords.append(self.Pixel2Cell(coord))
-
-                    digitClass.AddLine(map=map,
-                                       type=digitToolbar.type,
-                                       coords=self.polycoords)
+                    if digitToolbar.type == 'line':
+                        line = True
+                    else:
+                        line = False
+                    digitClass.AddLine(map, line, self.polycoords)
 
                     position = self.Cell2Pixel(self.polycoords[-1])
                     self.polycoords = []
