@@ -454,7 +454,9 @@ int main(int argc, char *argv[])
 	    else if (parm->def_exists) {
 		/* don't ask, use the default */
 
-		if (G_strcasecmp(desc->type, "float") == 0) {
+		if (G_strcasecmp(desc->type, "float") == 0 ||
+		    G_strcasecmp(desc->type, "lat") == 0 ||
+		    G_strcasecmp(desc->type, "lon") == 0) {
 		    sprintf(tmp_buff, "%.10f", parm->deflt);
 		    G_set_key_value(desc->key, tmp_buff, out_proj_keys);
 		}
