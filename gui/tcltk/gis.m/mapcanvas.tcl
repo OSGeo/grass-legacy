@@ -593,8 +593,7 @@ proc MapCanvas::runprograms { mon mod } {
 			Gm::errmsg $error [G_msg "Error setting region"]
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
-		regexp -nocase {^.* (\(.*\))} $parts(projection) trash end
-		set parts(projection) [string trim $parts(projection) $end]
+		regexp -nocase {^([0-9]+)} $parts(projection) trash parts(projection)
 
 		set gregion "projection:$parts(projection); zone:$parts(zone); north:$parts(north); south:$parts(south); east:$parts(east); west:$parts(west); e-w resol:$parts(ewres);	 n-s resol:$parts(nsres)"
 	} 

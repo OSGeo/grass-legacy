@@ -113,19 +113,19 @@ proc command_window {where} {
 	set gronsole [Gronsole $where.gronsole -clickcmd "gronsole_history $cmdwin.text"]
 	set cmdtext [text $cmdwin.text -height 2 -width 80] 
 	$cmdwin setwidget $cmdtext
-	set runbutton [button $cmdpane.run -text [G_msg "Run"] -width 14 -default active -bd 1 \
+	set runbutton [button $cmdpane.run -text [G_msg "Run"] -width 14 -wraplength 90 -default active -bd 1 \
 		-command "run_disabled $gronsole $cmdpane.run \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set run2button [button $cmdpane.run2 -text [G_msg "Run (background)"] -width 14 -bd 1 \
+	set run2button [button $cmdpane.run2 -text [G_msg "Run (background)"] -width 14 -wraplength 90 -bd 1 \
 		-command "$gronsole run \[string trim \[$cmdtext get 1.0 end\]\] {} {}"]
-	set runuibutton [button $cmdpane.runui -text [G_msg "Run (GUI)"] -width 14 -bd 1 \
+	set runuibutton [button $cmdpane.runui -text [G_msg "Run (GUI)"] -width 14 -wraplength 90 -bd 1 \
 		-command "run_ui \[string trim \[$cmdtext get 1.0 end\]\]"]
-	set runxterm [button $cmdpane.xterm -text [G_msg "Run (in Xterm)"] -width 14 -bd 1 \
+	set runxterm [button $cmdpane.xterm -text [G_msg "Run (in Xterm)"] -width 14 -wraplength 90 -bd 1 \
 		-command "$gronsole run_xterm \[string trim \[$cmdtext get 1.0 end\]\] {}"]
 	set outpane [frame $where.output -bg $bgcolor]
 	set savebutton [button $outpane.save -text [G_msg "Save"] -command "$gronsole save" \
-		-bd 1 -width 5]
+		-bd 1 -padx 10]
 	set clearbutton [button $outpane.clear -text [G_msg "Clear"] -command "$gronsole clear" \
-		-bd 1 -width 5]
+		-bd 1 -padx 10]
 
 	pack $runbutton $run2button $runuibutton $runxterm \
 		-side left -expand yes -padx 5 -pady 5
