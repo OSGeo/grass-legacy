@@ -1,12 +1,20 @@
-/*
- * r.in.gdal imports many GIS/image formats into GRASS utilizing the GDAL
- * library
+/****************************************************************************
  *
- * copyright of this file
- * Author: Frank Warmerdam
+ * MODULE:       r.in.gdal
+ *               
+ * AUTHOR(S):    Frank Warmerdam (copyright of this file)
+ *               Added optional GCP transformation: Markus Neteler 10/2001
  *
- * Added optional GCP transformation: Markus Neteler 10/2001
- */
+ * PURPOSE:      Imports many GIS/image formats into GRASS utilizing the GDAL
+ *               library.
+ *
+ * COPYRIGHT:    (C) 2001 by Frank Warmerdam
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -67,21 +75,22 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, import");
     module->description =
         _("Import GDAL supported raster file into a binary raster map layer.");
 
 /* -------------------------------------------------------------------- */
 /*      Setup and fetch parameters.                                     */
 /* -------------------------------------------------------------------- */
-    parm.input = G_define_option();
-    parm.input->key = "input";
-    parm.input->type = TYPE_STRING;
-    parm.input->required = YES;
+    parm.input = G_define_standard_option(G_OPT_R_INPUT);
     parm.input->description = _("Raster file to be imported");
     parm.input->gisprompt = "old_file,file,input";
+    parm.input->required = NO; /* not required because of -f flag */
+    parm.input->guisection = _("Required");
 
     parm.output = G_define_standard_option(G_OPT_R_OUTPUT);
+    parm.output->required = NO; /* not required because of -f flag */
+    parm.output->guisection = _("Required");
 
     parm.band = G_define_option();
     parm.band->key = "band";
@@ -101,6 +110,7 @@ int main (int argc, char *argv[])
     parm.title->type = TYPE_STRING;
     parm.title->required = NO;
     parm.title->description = _("Title for resultant raster map");
+    parm.title->guisection = _("Metadata");
 
     parm.outloc = G_define_option();
     parm.outloc->key = "location";
@@ -119,6 +129,7 @@ int main (int argc, char *argv[])
     flag_f = G_define_flag();
     flag_f->key = 'f';
     flag_f->description = _("List supported formats and exit");
+    flag_f->guisection = _("Print");
 
     flag_k = G_define_flag();
     flag_k->key = 'k';
@@ -182,8 +193,17 @@ int main (int argc, char *argv[])
 	exit(EXIT_SUCCESS);
     }
 
+    if (!input) {
+	G_fatal_error(_("Required parameter <%s> not set"),
+		      parm.input->key);
+    }
+
+    if (!output) {
+	G_fatal_error(_("Name for output raster map not specified"));
+    }
+
     if (G_legal_filename(output) < 0)
-	G_fatal_error(_("<%s> is an illegal file name"), output);
+        G_fatal_error(_("<%s> is an illegal file name"), output);
 
     if ( !parm.outloc->answer ) { /* Check if the map exists */
 	if ( G_find_cell2 (output, G_mapset()) ) {
@@ -207,9 +227,9 @@ int main (int argc, char *argv[])
         l1bdriver=0;
     else {
         l1bdriver=1; /* AVHRR found, needs north south flip */
-	G_warning("The polynomial rectification used in i.rectify does "
-	    "not work well with NOAA/AVHRR data. Try using gdalwarp with "
-	    "thin plate spline rectification instead. (-tps)");
+	G_warning(_("The polynomial rectification used in i.rectify does "
+		    "not work well with NOAA/AVHRR data. Try using gdalwarp with "
+		    "thin plate spline rectification instead. (-tps)"));
     }
 
 /* -------------------------------------------------------------------- */
@@ -224,7 +244,8 @@ int main (int argc, char *argv[])
         && adfGeoTransform[5] < 0.0 )
     {
         if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0)
-	    G_fatal_error(_("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up."));
+	    G_fatal_error(_("Input raster map is rotated - cannot import. "
+			    "You may use 'gdalwarp' to transform the map to North-up."));
 
         cellhd.north = adfGeoTransform[3];
         cellhd.ns_res = fabs(adfGeoTransform[5]);
@@ -270,9 +291,9 @@ int main (int argc, char *argv[])
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
 			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 ) {
 	    G_fatal_error(_("Unable to convert input map projection to GRASS "
-			  "format; cannot create new location."));
+			    "format; cannot create new location."));
 	}
-	else {  
+	else {		  
             G_make_location( parm.outloc->answer, &cellhd,
 			     proj_info, proj_units, NULL );
 	    G_message(_("Location <%s> created"), parm.outloc->answer);
@@ -283,8 +304,8 @@ int main (int argc, char *argv[])
         /* Projection only required for checking so convert non-interactively */
         if ( GPJ_wkt_to_grass( &cellhd, &proj_info, 
 			       &proj_units, GDALGetProjectionRef(hDS), 0) < 0 )
-            G_warning(_("Unable to convert input map projection information to "
-		      "GRASS format for checking"));
+            G_warning(_("Unable to convert input raster map projection information to "
+			"GRASS format for checking"));
         else
 	{
 /* -------------------------------------------------------------------- */
@@ -302,7 +323,7 @@ int main (int argc, char *argv[])
             {
                 cellhd.proj = loc_wind.proj;
                 cellhd.zone = loc_wind.zone;
-        	G_warning(_("Over-riding projection check."));
+        	G_warning(_("Over-riding projection check"));
             } 
             else if( loc_wind.proj != cellhd.proj
                      || (projcomp_error=G_compare_projections( loc_proj_info, 
@@ -312,7 +333,7 @@ int main (int argc, char *argv[])
 
                 strcpy( error_msg, 
                         _("Projection of dataset does not"
-                        " appear to match current location.\n\n"));
+			  " appear to match current location.\n\n"));
 
                 /* TODO: output this info sorted by key: */
                 if( loc_proj_info != NULL )
@@ -347,7 +368,7 @@ int main (int argc, char *argv[])
                 }
                 else
                 {
-                    strcat( error_msg, "Import dataset PROJ_INFO is:\n" );
+                    strcat( error_msg, _("Import dataset PROJ_INFO is:\n") );
                     if( cellhd.proj == PROJECTION_XY )
                         sprintf( error_msg + strlen(error_msg), 
                                  "cellhd.proj = %d (unreferenced/unknown)\n", 
@@ -370,18 +391,21 @@ int main (int argc, char *argv[])
                                  cellhd.proj, cellhd.zone );
                 }
                 strcat( error_msg, 
-                 _("\nYou can use the -o flag to r.in.gdal to override this check and "
-		 "use the location definition for the dataset.\n" ));
+			_("\nYou can use the -o flag to r.in.gdal to override this check and "
+			  "use the location definition for the dataset.\n" ));
                 strcat( error_msg, 
-                 _("Consider generating a new location from the input dataset using "
-		 "the 'location' parameter.\n") );
+			_("Consider generating a new location from the input dataset using "
+			  "the 'location' parameter.\n") );
                 G_fatal_error( error_msg );
             }
-            else
+            else {
     	        G_message(_("Projection of input dataset and current location "
-		                "appear to match.\nProceeding with import...\n"));
+			    "appear to match"));
+	    }
 	}
     }
+
+    G_verbose_message(_("Proceeding with import..."));
     
 /* -------------------------------------------------------------------- */
 /*      Set the active window to match the available data.              */
@@ -406,12 +430,11 @@ int main (int argc, char *argv[])
         if( parm.band->answer != NULL )
             nBand = atoi(parm.band->answer);
         
-        hBand = GDALGetRasterBand(hDS,1);
+        hBand = GDALGetRasterBand(hDS, nBand);
         if( hBand == NULL )
         {
-            sprintf( error_msg, _("Selected band (%d) does not exist.\n"), 
-                     nBand );
-            G_fatal_error( error_msg );
+            G_fatal_error(_("Selected band (%d) does not exist"), 
+			  nBand );
         }
         
         ImportBand( hBand, output, NULL );
@@ -489,16 +512,13 @@ int main (int argc, char *argv[])
             sPoints.n2 = sPoints.e1 + 3 * sPoints.count;
             sPoints.status = (int *) G_malloc (sizeof(int) * sPoints.count);
             
-            G_message (_("Copying %d GCPS in points file for %s"), 
-                     sPoints.count, output );
+            G_message (_("Copying %d GCPS in points file for <%s>"), 
+		       sPoints.count, output );
             if( GDALGetGCPProjection(hDS) != NULL 
                 && strlen(GDALGetGCPProjection(hDS)) > 0 )
             {
-                fprintf(stderr, 
-                    "\n"
-                    "GCPs have the following OpenGIS WKT Coordinate System:\n"
-                    "%s\n", 
-                    GDALGetGCPProjection( hDS ) );
+		G_message("%s:\n%s", _("GCPs have the following OpenGIS WKT Coordinate System:"),
+			  GDALGetGCPProjection( hDS ) );
             }
 
             if (parm.target->answer)
@@ -506,11 +526,11 @@ int main (int argc, char *argv[])
                 SetupReprojector( GDALGetGCPProjection(hDS), 
                                   parm.target->answer, 
                                   &iproj, &oproj );
-                fprintf(stderr, "Re-projecting GCPs table:\n");
-                fprintf(stderr, " Input projection for GCP table:  %s\n", 
-                        iproj.proj);
-                fprintf(stderr, " Output projection for GCP table: %s\n", 
-                        oproj.proj);
+                G_message(_("Re-projecting GCPs table:"));
+                G_message(_("* Input projection for GCP table: %s"), 
+			  iproj.proj);
+		G_message(_("* Output projection for GCP table: %s"), 
+			  oproj.proj);
             }
 
             for( iGCP = 0; iGCP < sPoints.count; iGCP++ )
@@ -529,7 +549,7 @@ int main (int argc, char *argv[])
                     if(pj_do_proj( &(sPoints.e2[iGCP]), &(sPoints.n2[iGCP]),
                                    &iproj, &oproj) < 0)
                         G_fatal_error(_("Error in pj_do_proj (can't "
-                                      "re-projection GCP %i)\n"), 
+					"re-projection GCP %i)"), 
                                       iGCP);
                 }
             } /* for all GCPs*/
@@ -564,6 +584,8 @@ int main (int argc, char *argv[])
         G__put_window( &def_wind, "../PERMANENT", "DEFAULT_WIND" );
     } 
 
+    G_done_msg(" ");
+
     exit (EXIT_SUCCESS);
 }
 
@@ -590,7 +612,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
     GPJ_wkt_to_grass( &cellhd, &proj_info, &proj_units, pszSrcWKT, 0 );
 
     if (pj_get_kv(iproj, proj_info, proj_units) < 0)
-        G_fatal_error("Can't translate projection key values of input GCPs.");
+        G_fatal_error(_("Unable to translate projection key values of input GCPs"));
 
 /* -------------------------------------------------------------------- */
 /*      Get the projection of the target location.                      */
@@ -606,19 +628,19 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
 
         /* Get projection info from target location */
         if ((out_proj_info = G_get_projinfo()) == NULL)
-            G_fatal_error("Can't get projection info of target location");
+            G_fatal_error(_("Unable to get projection info of target location"));
         if ((out_unit_info = G_get_projunits()) == NULL)
-            G_fatal_error("Can't get projection units of target location");
+            G_fatal_error(_("Unable to get projection units of target location"));
         if (pj_get_kv(oproj, out_proj_info, out_unit_info) < 0)
-           G_fatal_error("Can't get projection key values of target location");
+           G_fatal_error(_("Unable to get projection key values of target location"));
     }
     else
     { /* can't access target mapset */
-        sprintf(errbuf, _("Mapset [%s] in target location [%s] - "),
+        sprintf(errbuf, _("Mapset <%s> in target location <%s> - "),
                 target_mapset, pszDstLoc);
         strcat(errbuf, permissions == 0
-               ? _("permission denied\n")
-               : _("not found\n"));
+               ? _("permission denied")
+               : _("not found"));
         G_fatal_error(errbuf);
     } /* permission check */
                 
@@ -697,12 +719,12 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         sprintf( outputReal, "%s.real", output);
         cfR = (*raster_open_new_func)((char *)outputReal, data_type);
         if (cfR < 0)
-            G_fatal_error(_("Unable to create raster map %s"), outputReal);
+            G_fatal_error(_("Unable to create raster map <%s>"), outputReal);
         sprintf( outputImg, "%s.imaginary", output);
 
         cfI = (*raster_open_new_func)((char *)outputImg, data_type);
         if (cfI < 0)
-            G_fatal_error(_("Unable to create raster map %s"), outputImg);
+            G_fatal_error(_("Unable to create raster map <%s>"), outputImg);
 
         cellReal = G_allocate_raster_buf(data_type);
         cellImg = G_allocate_raster_buf(data_type);
@@ -718,7 +740,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
     {
         cf = (*raster_open_new_func)((char *)output, data_type);
         if (cf < 0)
-            G_fatal_error(_("Unable to create raster map %s"), output);
+            G_fatal_error(_("Unable to create raster map <%s>"), output);
 
         if( group_ref != NULL )
             I_add_file_to_group_ref ((char *) output, G_mapset(), group_ref);
