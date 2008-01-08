@@ -2,15 +2,15 @@
 <!-- doxygenized from "GRASS 5 Programmer's Manual" 
      by M. Neteler 11/2005
   -->
-<title>GRASS and the PROJ.4 Projection Library</title>
 
 \section projintro GRASS and the PROJ4 projection library
 
-GRASS utilizes the PROJ4 library originally developed by Gerald Evenden/USGS
-(Cartographic Projection Procedures for the UNIX Environment -- A User's
-Manual, (Evenden, 1990, Open-file report 90-284).). The PROJ4
-(htp://proj.maptools.org) functions are used through wrapper functions
-in a GRASS environment.
+GRASS utilizes the PROJ4 library originally developed by Gerald
+Evenden/USGS (Cartographic Projection Procedures for the UNIX
+Environment -- A User's Manual, Evenden, 1990, Open-file report
+90-284). The PROJ4 (<a
+href="http://proj.maptools.org">http://proj.maptools.org</a>)
+functions are used through wrapper functions in a GRASS environment.
 
 Internally to the PROJ.4 library, projection may involve transformation to
 and from geodetic co-ordinates (latitude and longitude), and numerical
@@ -32,7 +32,7 @@ convert.c contains functions for converting GRASS co-ordinate system
 descriptions to and from the formats used by other GIS. Heavy use is
 made of the OGR library, part of GDAL (http://www.gdal.org/ogr/).
 
-\section datum_transformation Datum transformation
+\subsection datum_transformation Datum transformation
 
 GRASS generally supports datum transformation (3 parameters, 7 parameters
 and grid).
@@ -42,14 +42,13 @@ If a warning appears that a certain datum is not recognised by GRASS and
 no parameters found, the datum transformation parameters have to be
 added to $GISBASE/etc/datum.table (and also $GISBASE/etc/datumtransform.table
 if you have 7-parameter transformation parameters). No need to re-compile
-though. When adding to CVS, currently these files are still in lib/gis/. 
+though. When adding to SVN, currently these files are still in lib/gis/. 
 
 
-\section Makefile_Example Makefile Example
+\subsection Makefile_Example Makefile Example
 
 <P>
-The following code demonstrates the Makefile
-(see also \ref Compiling_and_Installing_GRASS_Modules).
+The following code demonstrates the Makefile.
 
 \verbatim
 MODULE_TOPDIR = ../..
