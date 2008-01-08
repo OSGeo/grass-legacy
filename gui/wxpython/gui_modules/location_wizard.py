@@ -2033,6 +2033,12 @@ class RegionDef(BaseClass, wx.Frame):
         self.bset.SetDefault()
 
         #
+        # image
+        #
+        self.img = wx.Image(os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
+                                         "qgis_world.png"), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
+
+        #
         # set current working environment to PERMANENT mapset
         # in selected location in order to set default region (WIND)
         #
@@ -2271,7 +2277,8 @@ class RegionDef(BaseClass, wx.Frame):
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALL, border=5,  pos=(2, 1))
 
-        gridSizer.Add(item=self.MakeLabel("+"),
+        gridSizer.Add(item=wx.StaticBitmap(self, wx.ID_ANY, self.img, (-1, -1),
+                                           (self.img.GetWidth(), self.img.GetHeight())),
                       flag=wx.ALIGN_CENTER |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALL, border=5, pos=(2, 2))
@@ -2437,6 +2444,7 @@ class RegionDef(BaseClass, wx.Frame):
 
 if __name__ == "__main__":
     app = wx.PySimpleApp()
-    gWizard = LocationWizard(None, "")
+    # gWizard = LocationWizard(None, "")
+    gWizard = RegionDef(None)
     gWizzard.Show()
     app.MainLoop()
