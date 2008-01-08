@@ -79,10 +79,10 @@ proc mkposPanel { BASE } {
 #################################
    
   # Mode setting radiobuttons
-  	set tmp3 [frame $BASE.top3]
+    set tmp3 [frame $BASE.top3]
     radiobutton $tmp3.r1 -text "Eye to surface" -variable "bearing_calc" -value "1" -command "catch {show_bearing}"
     radiobutton $tmp3.r2 -text "Surface to eye" -variable "bearing_calc" -value "2" -command "catch {show_bearing}"
-    button $tmp3.b1 -text "Calculate" -command "catch {calc_position $bearing_calc}" -bd 1
+    button $tmp3.b1 -text "Calculate" -command "catch {calc_position $bearing_calc};catch {show_bearing}" -bd 1
     pack $tmp3.r1 $tmp3.r2 $tmp3.b1 -side left -padx 3 -expand 1 -fill x
     
     pack $tmp3 -side top -fill x -expand 1 -pady 4
@@ -109,10 +109,7 @@ proc mkposPanel { BASE } {
     button $tmp4.b2 -text "Apply" -bd 1 \
     	-command {
 			#Set To coords
-			Nset_focus_real $Nv_(east2) $Nv_(north2) $Nv_(ht2)
-			#reset XY canvas
-			change_display 2
-		
+			Nset_focus_real $Nv_(east2) $Nv_(north2) $Nv_(ht2)		
 			#Set From coords
 			Nmove_to_real $Nv_(east1) $Nv_(north1) $Nv_(ht1)
 			#reset height
@@ -121,7 +118,8 @@ proc mkposPanel { BASE } {
 			#reset XY canvas
 			change_display 1
 		
-			Nquick_draw
+			#Nquick_draw
+			Ndraw_all
 			}
     
     button $tmp4.b3 -text "Close" -command "Nv_closePanel $BASE" -bd 1
@@ -163,71 +161,71 @@ return $val
 # Proc calc_position to coordinate from
 # rangle bearing and elev.
 proc calc_position {flag} {
-global Nv_
-
-set RAD 0.0174532925199432958
-
-#convert range to 2D range
-set range_xy  [expr (cos($Nv_(elev)*$RAD) * $Nv_(range))]
-set zz [expr (sin($Nv_(elev)*$RAD) * $Nv_(range))]
-set xx [expr (sin($Nv_(bearing)*$RAD) * $range_xy)]
-set yy [expr (cos($Nv_(bearing)*$RAD) * $range_xy)]
-
- if {$flag == 1} {
- #Calculate new surface center from eye position
- set Nv_(east2) [format_number [expr $Nv_(east1) + $xx]]
- set Nv_(north2) [format_number [expr $Nv_(north1) + $yy]]
- #always look down
- set Nv_(ht2) [format_number [expr $Nv_(ht1) - $zz]]
-  } else {
- #Calculate new eye position from surface center coord
- set Nv_(east1) [format_number [expr $Nv_(east2) + $xx]]
- set Nv_(north1) [format_number [expr $Nv_(north2) + $yy]]
- #always look up
- set Nv_(ht1) [format_number [expr $Nv_(ht2) + $zz]]
- }
+    global Nv_
+    
+    set RAD 0.0174532925199432958
+    
+    #convert range to 2D range
+    set range_xy  [expr (cos($Nv_(elev)*$RAD) * $Nv_(range))]
+    set zz [expr (sin($Nv_(elev)*$RAD) * $Nv_(range))]
+    set xx [expr (sin($Nv_(bearing)*$RAD) * $range_xy)]
+    set yy [expr (cos($Nv_(bearing)*$RAD) * $range_xy)]
+    
+    if {$flag == 1} {
+	#Calculate new surface center from eye position
+	set Nv_(east2) [format_number [expr $Nv_(east1) + $xx]]
+	set Nv_(north2) [format_number [expr $Nv_(north1) + $yy]]
+	#always look down
+	set Nv_(ht2) [format_number [expr $Nv_(ht1) - $zz]]
+    } else {
+	#Calculate new eye position from surface center coord
+	set Nv_(east1) [format_number [expr $Nv_(east2) + $xx]]
+	set Nv_(north1) [format_number [expr $Nv_(north2) + $yy]]
+	#always look up
+	set Nv_(ht1) [format_number [expr $Nv_(ht2) + $zz]]
+    }
 }
 
 ########################################
 # Proc show_bearing to calculate and show
 # current range and bearing
 proc show_bearing {} {
-global Nv_ bearing_calc
+    global Nv_ bearing_calc
 
-set RAD 0.0174532925199432958
+    set RAD 0.0174532925199432958
 
-if {$bearing_calc == 1} {
-	set xx [expr $Nv_(east2) - $Nv_(east1)]
-	set yy [expr $Nv_(north2) - $Nv_(north1)]
-	set zz [expr $Nv_(ht2) - $Nv_(ht1)]
-} else {
-	set xx [expr $Nv_(east1) - $Nv_(east2)]
-	set yy [expr $Nv_(north1) - $Nv_(north2)]
-	set zz [expr $Nv_(ht1) - $Nv_(ht2)]
-}
-
-set Nv_(range) [format_number [expr sqrt( ($xx*$xx) + ($yy*$yy) + ($zz*$zz) )]]
-set Nv_(elev) [format_number [expr sinh(abs($zz)/$Nv_(range))/$RAD ]]
-
-if {$yy == 0. && $xx == 0.} {
-	set bear_tmp 0.
-} elseif {$yy == 0.} {
-	set bear_tmp 90.
-} elseif {$xx == 0.} {
-        set bear_tmp 0.
-} else {
-set bear_tmp [expr atan(abs($xx)/abs($yy)) / $RAD]
-}
-if {$xx >= 0. && $yy > 0.} {
-	set Nv_(bearing) [format_number $bear_tmp]
-} elseif {$xx > 0. && $yy <= 0.} {
-	set Nv_(bearing) [format_number [expr 180. - $bear_tmp]]
-} elseif {$xx <= 0. && $yy < 0.} {
-	set Nv_(bearing) [format_number [expr $bear_tmp + 180.]]
-} elseif {$xx < 0. && $yy >= 0.} {
-	set Nv_(bearing) [format_number [expr 360. - $bear_tmp]]
-} else {
-	set Nv_(bearing) 999
-}
+    if {$bearing_calc == 1} {
+	    set xx [expr $Nv_(east2) - $Nv_(east1)]
+	    set yy [expr $Nv_(north2) - $Nv_(north1)]
+	    set zz [expr $Nv_(ht2) - $Nv_(ht1)]
+    } else {
+	    set xx [expr $Nv_(east1) - $Nv_(east2)]
+	    set yy [expr $Nv_(north1) - $Nv_(north2)]
+	    set zz [expr $Nv_(ht1) - $Nv_(ht2)]
+    }
+    
+    set Nv_(range) [format_number [expr sqrt( ($xx*$xx) + ($yy*$yy) + ($zz*$zz) )]]
+    set Nv_(elev) [format_number [expr sinh(abs($zz)/$Nv_(range))/$RAD ]]
+    
+    if {$yy == 0. && $xx == 0.} {
+	    set bear_tmp 0.
+    } elseif {$yy == 0.} {
+	    set bear_tmp 90.
+    } elseif {$xx == 0.} {
+	    set bear_tmp 0.
+    } else {
+	    set bear_tmp [expr atan(abs($xx)/abs($yy)) / $RAD]
+    }
+    if {$xx >= 0. && $yy > 0.} {
+	    set Nv_(bearing) [format_number $bear_tmp]
+    } elseif {$xx > 0. && $yy <= 0.} {
+	    set Nv_(bearing) [format_number [expr 180. - $bear_tmp]]
+    } elseif {$xx <= 0. && $yy < 0.} {
+	    set Nv_(bearing) [format_number [expr $bear_tmp + 180.]]
+    } elseif {$xx < 0. && $yy >= 0.} {
+	    set Nv_(bearing) [format_number [expr 360. - $bear_tmp]]
+    } else {
+	    set Nv_(bearing) 999
+    }
 	
 }
