@@ -7,9 +7,9 @@ include $(MODULE_TOPDIR)/include/Make/Script.make
 default: install_scripts
 
 install_scripts:
-	$(MKDIR) $(ETC)/wx/wx $(ETC)/wx/compat $(ETC)/wx/display_driver  $(ETC)/wx/gui_modules  $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images  $(ETC)/wx/scripts
+	$(MKDIR) $(ETC)/wx/wx $(ETC)/wx/compat $(ETC)/wx/vdigit $(ETC)/wx/gui_modules $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images  $(ETC)/wx/scripts
 	$(INSTALL_DATA) compat/* $(ETC)/wx/compat/
-	$(INSTALL_DATA) display_driver/* $(ETC)/wx/display_driver/
+	$(INSTALL_DATA) vdigit/* $(ETC)/wx/vdigit/
 	$(INSTALL_DATA) gui_modules/* $(ETC)/wx/gui_modules/
 	$(INSTALL_DATA) icons/*.* $(ETC)/wx/icons/
 	$(INSTALL_DATA) icons/silk/* $(ETC)/wx/icons/silk/
