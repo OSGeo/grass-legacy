@@ -540,7 +540,7 @@ proc Gm::SetFont { source } {
 
 ###############################################################################
 
-proc GmLib::errmsg { error args } {
+proc Gm::errmsg { error args } {
     # send error report and optional message (args) to tk_messageBox
     
     set message ""
