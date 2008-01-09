@@ -42,19 +42,17 @@ Contents
 2008
       rm -f include/VERSION~
 
-   - scn ci -m"GRASS 6.3.XXX" include/VERSION
-   - svn up
-
- o Create Changelog file
-     SVNBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
-     echo $SVNBRANCH
      #version:
      MAJOR=`cat include/VERSION | head -1 | tail -1`
      MINOR=`cat include/VERSION | head -2 | tail -1`
      RELEASE=`cat include/VERSION | head -3 | tail -1`
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
-     #create ChangeLog on release branch:
+
+   - svn ci -m"GRASS $VERSION" include/VERSION
+   - svn up
+
+ o Create Changelog file on release branch:
      # http://ch.tudelft.nl/~arthur/svn2cl/
      sh svn2cl
      mv ChangeLog ChangeLog_$VERSION
@@ -63,12 +61,13 @@ Contents
  o   Tag release (http://trac.osgeo.org/grass/browser/grass/tags):
      http://svnbook.red-bean.com/en/1.4/svn.branchmerge.tags.html
 
-          echo release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
+          RELEASETAG=release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
+          echo $RELEASETAG
 
-          svn copy http://trac.osgeo.org/grass/browser/grass/releasebranch_6_3 \
-	       http://trac.osgeo.org/grass/browser/grass/tags  \
-	       release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE} \
-	       -m "Tagging grass_${MAJOR}_${MINOR}_${RELEASE}"
+          URL=https://svn.osgeo.org/grass
+          svn copy $URL/grass/branches/releasebranch_6_3 \
+	       $URL/grass/tags/$RELEASETAG \
+	       -m "Tagging release grass_${MAJOR}_${MINOR}_${RELEASE}"
       
       
  o create source package (in the source directory):
@@ -86,7 +85,8 @@ Contents
      # Calculating MD5 sum:
      md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
- o reset include/VERSION file to SVN version
+ o reset include/VERSION file to SVN version:
+    vim include/VERSION
 
 #example
 6
@@ -94,9 +94,10 @@ Contents
 0svn
 2008
 
+    rm -f include/VERSION~
 
  o Store the source tarball in (use scp -p FILES grass:):
-     http://download.osgeo.org/grass/grass$MAJOR$MINOR/source/
+    echo  http://download.osgeo.org/grass/grass$MAJOR$MINOR/source/
    along with associated files:
      scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
          SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@download.osgeo.org:/osgeo/download/grass/grass$MAJOR$MINOR/source/
