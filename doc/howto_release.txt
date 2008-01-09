@@ -3,7 +3,7 @@ How to release GRASS binaries and source code
 $Date$
 
 Note: This text contains *some* rules only applicable to the
-      development coordinators at ITC-irst (currently Markus Neteler).
+      development coordinators at CEA (currently Markus Neteler).
 
 
 ###########################################
@@ -14,7 +14,7 @@ Contents
 ###########################################
 (A) HOWTO create a release
 
-1. Local work (basically at ITC-irst)
+1. Local work (basically at CEA)
 
    - check if
         ( cd doc/raster/r.example/ ; make )
@@ -37,17 +37,17 @@ Contents
 
 #example:
 6
-2
+3
 0RC1
-2006
+2008
       rm -f include/VERSION~
 
-   - submit include/VERSION to CVS
-   - cvs up -dP
+   - scn ci -m"GRASS 6.3.XXX" include/VERSION
+   - svn up
 
  o Create Changelog file
-     CVSBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
-     echo $CVSBRANCH
+     SVNBRANCH=`cat CVS/Entries | grep AUTHORS | cut -d'/' -f6 | cut -b2-`
+     echo $SVNBRANCH
      #version:
      MAJOR=`cat include/VERSION | head -1 | tail -1`
      MINOR=`cat include/VERSION | head -2 | tail -1`
@@ -55,15 +55,22 @@ Contents
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
      #create ChangeLog on release branch:
-     sh tools/cvs2cl.pl --follow "$CVSBRANCH"
+     # http://ch.tudelft.nl/~arthur/svn2cl/
+     sh svn2cl
      mv ChangeLog ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
- o   Tag release:
+ o   Tag release (http://trac.osgeo.org/grass/browser/grass/tags):
+     http://svnbook.red-bean.com/en/1.4/svn.branchmerge.tags.html
+
           echo release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
 
-          cvs tag release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
-
+          svn copy http://trac.osgeo.org/grass/browser/grass/releasebranch_6_3 \
+	       http://trac.osgeo.org/grass/browser/grass/tags  \
+	       release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE} \
+	       -m "Tagging grass_${MAJOR}_${MINOR}_${RELEASE}"
+      
+      
  o create source package (in the source directory):
      echo grass-${VERSION}
 
@@ -72,28 +79,29 @@ Contents
      # do not include the debian control files:
      mv grass-${VERSION}/debian .
      # create the package:
-     tar cvfzh grass-${VERSION}.tar.gz grass-${VERSION}/* --exclude=CVS
+     tar cvfzh grass-${VERSION}.tar.gz grass-${VERSION}/* --exclude=.svn
      # restore src code location:
      mv ./grass-${VERSION}/* .
      rmdir ./grass-${VERSION}
      # Calculating MD5 sum:
      md5sum grass-${VERSION}.tar.gz > grass-${VERSION}.md5sum
 
- o reset include/VERSION file to CVS version
+ o reset include/VERSION file to SVN version
 
 #example
 6
-2
-0cvs
-2006
+3
+0svn
+2008
 
 
  o Store the source tarball in (use scp -p FILES grass:):
-     http://grass.itc.it/grass/grass$MAJOR$MINOR/source/
+     http://download.osgeo.org/grass/grass$MAJOR$MINOR/source/
    along with associated files:
-     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@grass.itc.it:www/grass$MAJOR$MINOR/source/
+     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
+         SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@download.osgeo.org:/osgeo/download/grass/grass$MAJOR$MINOR/source/
 
- o update web site to new version (HTML in Web-CVS)
+ o update web site to new version (http://trac.osgeo.org/grass/browser/grass-web)
       - rss.xml (for news section)
       - download/software.inc
       - grass$MAJOR$MINOR/main.inc
@@ -110,16 +118,16 @@ Contents
       - download new source code package, compile with most settings
       -  cd dist.$ARCH/docs/html
          echo www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
-         scp -r * neteler@grass.itc.it:www/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
+         scp -r * neteler@download.osgeo.org:/osgeo/download/grass$MAJOR$MINOR/manuals/html$MAJOR${MINOR}_user/
 
- o stable release: update cronjob 'cron_grass62_release_src_snapshot.sh' to next but one
+ o stable release: update cronjob 'cron_grass63_release_src_snapshot.sh' to next but one
                    release tag for the differences
 
 2. Tell others about it:
 
  * If release candidate:
-    - <grass-announce@grass.itc.it>
-    - <grass-dev@grass.itc.it>
+    - <grass-announce@lists.osgeo.org>
+    - <grass-dev@lists.osgeo.org>
 
  * If official release:
    - publish related announcement press release at:
@@ -128,14 +136,14 @@ Contents
                        Note: DON'T use relative links there
 
    Our main mailing lists:
-                       http://grass.itc.it/mailman/listinfo/grass-announce
-                         <grass-announce@grass.itc.it>
-                       http://grass.itc.it/mailman/listinfo/grass-dev
-                         <grass-dev@grass.itc.it>
-                       http://grass.itc.it/mailman/listinfo/grassuser
-                         <grassuser@grass.itc.it>
-                       http://grass.itc.it/mailman/listinfo/wingrass
-                         <wingrass@grass.itc.it>
+                       http://lists.osgeo.org/mailman/listinfo/grass-announce
+                         <grass-announce@lists.osgeo.org>
+                       http://lists.osgeo.org/mailman/listinfo/grass-dev
+                         <grass-dev@lists.osgeo.org>
+                       http://lists.osgeo.org/mailman/listinfo/grassuser
+                         <grassuser@lists.osgeo.org>
+                       http://lists.osgeo.org/mailman/listinfo/wingrass
+                         <wingrass@lists.osgeo.org>
 
    DebianGIS:          <pkg-grass-general@lists.alioth.debian.org>
    FreeGIS:            <freegis-list@intevation.de>
@@ -174,27 +182,4 @@ Contents
 ###########################################
 (B) HOWTO create a branch
 
-1. update from CVS into clean directory
-
-yourcvsid=markus
-export CVSROOT=:ext:$yourcvsid@grasscvs:/grassrepository
-cvs -z3 checkout grass6
-mv grass6 grass6_tmp
-
-2. create the branch:
-
-BRANCH="releasebranch_6_3"
-cvs tag -b $BRANCH
-
-3. checkout the branch into new directory:
-
-yourcvsid=markus
-export CVSROOT=:ext:$yourcvsid@grasscvs:/grassrepository
-cvs -z3 checkout -r $BRANCH grass6
-mv grass6 clean_$BRANCH
-
-4. Take care that relevant HEAD changes are backported.
-
-5. For releasing beta1,..betaN, RC1..RCN, follow the
-   standard release rules.
-
+1. see SVN book
