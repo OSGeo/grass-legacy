@@ -1,7 +1,27 @@
+/*!
+   \file key_value1.c
+
+   \brief Key_Value management.
+
+   (C) 2001-2008 by the GRASS Development Team
+   
+   This program is free software under the 
+   GNU General Public License (>=v2). 
+   Read the file COPYING that comes with GRASS
+   for details.
+   
+   \author CERL
+*/
+
 #include <string.h>
 #include <stdlib.h>
 #include <grass/gis.h>
 
+/*!
+  \brief Allocate and initialize Key_Value structure
+
+  \return poiter to allocated Key_Value structure
+*/
 struct Key_Value *
 G_create_key_value(void)
 {
@@ -19,12 +39,20 @@ G_create_key_value(void)
     return kv;
 }
 
-/* if key has spaces in it, this will break the logic 
- * so rule is: NO SPACES IN key
- * returns 0 - no memory
- *         1 - ok, but key was NULL or "" so ignored
- *         2 - ok
- */
+/*!
+  \brief Set value for given key
+
+  If key has spaces in it, this will break the logic 
+  so rule is: NO SPACES IN key.
+
+  \param[in] key key to be set up
+  \param[in] value value for given key
+  \param[in,out] kv Key_value structure to be modified
+
+  \return 0 no memory
+  \return 1 ok, but key was NULL or "" so ignored
+  \return 2 ok
+*/
 int G_set_key_value (
     const char *key, const char *value,
     struct Key_Value *kv)
@@ -99,6 +127,15 @@ int G_set_key_value (
     return 2;
 }
 
+/*!
+  \brief Find given key
+
+  \param[in] key key to be found
+  \param[in] kv Key_value structure
+
+  \return poiter to value of key
+  \return NULL if no key found
+*/
 char *G_find_key_value (const char *key, const struct Key_Value *kv)
 {
     int n;
@@ -109,6 +146,13 @@ char *G_find_key_value (const char *key, const struct Key_Value *kv)
     return NULL;
 }
 
+/*!
+  \brief Free allocated Key_Value structure
+
+  \param[in] kv Key_Value structure
+
+  \return 0
+*/
 int G_free_key_value(struct Key_Value *kv)
 {
     int n;

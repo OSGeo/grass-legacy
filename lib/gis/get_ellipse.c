@@ -1,10 +1,32 @@
-#include <grass/gis.h>
-#include <grass/glocale.h>
+/*!
+   \file get_ellipse.c
+
+   \brief Getting ellipsoid parameters from the database.
+
+   This routine returns the ellipsoid parameters from the database.
+   If the PROJECTION_FILE exists in the PERMANENT mapset, read info
+   from that file, otherwise return WGS 84 values.
+
+   Returns: 1 ok, 0 default values used.
+   Dies with diagnostic if there is an error
+
+   (C) 2001-2008 by the GRASS Development Team
+   
+   This program is free software under the 
+   GNU General Public License (>=v2). 
+   Read the file COPYING that comes with GRASS
+   for details.
+   
+   \author CERL
+*/
+
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>  /* for sqrt() */
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
 static struct table
 {
@@ -23,42 +45,20 @@ void ellipsoid_table_file(char *);
 static int compare_table_names(const void *, const void *);
 static int read_ellipsoid_table(int );
 
-/*
- * This routine returns the ellipsoid parameters from the database.
- * If the PROJECTION_FILE exists in the PERMANENT mapset, read info from
- * that file, otherwise return WGS 84 values.
- *
- * Returns: 1 ok, 0 default values used.
- * Dies with diagnostic if there is an error
- */
-
 /*!
  * \brief get ellipsoid parameters
  *
- * This routine returns the semi-major axis <b>a</b> (in meters)
- * and the eccentricity squared <b>e2</b> for the ellipsoid associated with the
- * database. If there is no ellipsoid explicitly associated with the database, it
- * returns the values for the WGS 84 ellipsoid.
+ * This routine returns the semi-major axis <b>a</b> (in meters) and
+ * the eccentricity squared <b>e2</b> for the ellipsoid associated
+ * with the database. If there is no ellipsoid explicitly associated
+ * with the database, it returns the values for the WGS 84 ellipsoid.
  *
- *  \param a
- *  \param e2
- *  \return int
+ * \param[out] a semi-major axis
+ * \param[out] e2 eccentricity squared
+ *
+ * \return 1 success
+ * \return 0 default values used
  */
-
- 
-/*!
- * \brief get ellipsoid parameters
- *
- * This routine returns the semi-major axis <b>a</b> (in meters)
- * and the eccentricity squared <b>e2</b> for the ellipsoid associated with the
- * database. If there is no ellipsoid explicitly associated with the database, it
- * returns the values for the WGS 84 ellipsoid.
- *
- *  \param a
- *  \param e2
- *  \return int
- */
-
 int 
 G_get_ellipsoid_parameters (double *a, double *e2)
 {
@@ -70,40 +70,44 @@ G_get_ellipsoid_parameters (double *a, double *e2)
     proj_keys = NULL;
 
     G__file_name (ipath, "", PROJECTION_FILE, PERMANENT);
+
     if (access(ipath,0) !=0) 
     {
 	*a = 6378137.0 ;
 	*e2 = .006694385 ;
 	return 0;
     }
+
     proj_keys = G_read_key_value_file(ipath, &in_stat); 
+
     if (in_stat !=0)
     {
-	sprintf (err, _("Unable to open file %s in %s"),PROJECTION_FILE,PERMANENT);
-	G_fatal_error (err);
+	G_fatal_error (_("Unable to open file %s in <%s>"),
+		       PROJECTION_FILE, PERMANENT);
     }
+
     if ((str = G_find_key_value("ellps",proj_keys))!=NULL) {
       if (strncmp(str,"sphere",6)==0) { 
         str = G_find_key_value("a",proj_keys); 
         if (str!=NULL)  {
           if(sscanf(str,"%lf",a)!=1) {
-	    sprintf (err, _("invalid a: field %s in file %s in %s")
-                              ,str,PROJECTION_FILE,PERMANENT);
-	    G_fatal_error (err);
+	    sprintf (err, );
+	    G_fatal_error (_("Invalid a: field '%s' in file %s in <%s>"),
+			   str, PROJECTION_FILE, PERMANENT);
           }
         }
         else {
 	  *a = 6370997.0 ;
         }
 	*e2 = 0.0 ;
+
 	G_free_key_value(proj_keys);
 	return 0;
       }
       else {
         if (G_get_ellipsoid_by_name (str, a, e2)==0) {
-	  sprintf (err, _("invalid ellipsoid %s in file %s in %s")
-                              ,str,PROJECTION_FILE,PERMANENT);
-	  G_fatal_error (err);
+	    G_fatal_error (_("Invalid ellipsoid '%s' in file %s in <%s>"),
+			   str, PROJECTION_FILE, PERMANENT);
         }
         else {
 	    G_free_key_value(proj_keys);
@@ -116,15 +120,14 @@ G_get_ellipsoid_parameters (double *a, double *e2)
       str1 = G_find_key_value("es",proj_keys); 
       if ((str!=NULL) && (str1!=NULL)) {
         if(sscanf(str,"%lf",a)!=1) {
-	  sprintf (err, _("invalid a: field %s in file %s in %s")
-                            ,str,PROJECTION_FILE,PERMANENT);
-	  G_fatal_error (err);
+	    G_fatal_error (_("Invalid a: field '%s' in file %s in <%s>"),
+			   str, PROJECTION_FILE, PERMANENT);
         }
         if(sscanf(str1,"%lf",e2)!=1) {
-	  sprintf (err, _("invalid es: field %s in file %s in %s")
-                            ,str,PROJECTION_FILE,PERMANENT);
-	  G_fatal_error (err);
+	    G_fatal_error(_("Invalid es: field '%s' in file %s in <%s>"),
+			  str,PROJECTION_FILE,PERMANENT);
         }
+
 	G_free_key_value(proj_keys);
         return 1;
       }
@@ -137,9 +140,8 @@ G_get_ellipsoid_parameters (double *a, double *e2)
 	  return 0;
         }
         else {
- 	  sprintf (err, _("No ellipsoid info given in file %s in %s"),
-                                        PROJECTION_FILE,PERMANENT);
-	  G_fatal_error (err);
+	    G_fatal_error(_("No ellipsoid info given in file %s in <%s>"),
+			  PROJECTION_FILE,PERMANENT);
         }
       }
     }
@@ -151,42 +153,20 @@ G_get_ellipsoid_parameters (double *a, double *e2)
     return 0;
 }
 
-/*
- * looks up ellipsoid in ellipsoid table and returns the
- * a, e2 parameters for the ellipsoid
- *
- * returns 1 if ok,
- *         0 if not found in table
- */
-
-
-/*!
- * \brief get ellipsoid by name
- *
- * This routine returns the semi-major axis <b>a</b> (in
- * meters) and eccentricity squared <b>e2</b> for the named ellipsoid.  Returns
- * 1 if <b>name</b> is a known ellipsoid, 0 otherwise.
- *
- *  \param name
- *  \param a
- *  \param e2
- *  \return int
- */
-
- 
 /*!
  * \brief get ellipsoid parameters by name
  *
- * This routine returns the semi-major axis <b>a</b> (in
- * meters) and eccentricity squared <b>e2</b> for the named ellipsoid.  Returns
- * 1 if <b>name</b> is a known ellipsoid, 0 otherwise.
+ * This routine returns the semi-major axis <b>a</b> (in meters) and
+ * eccentricity squared <b>e2</b> for the named ellipsoid.  Returns 1
+ * if <b>name</b> is a known ellipsoid, 0 otherwise.
  *
- *  \param name
- *  \param a
- *  \param e2
- *  \return int
+ * \param[in]  name ellipsoid name
+ * \param[out] a    semi-major axis
+ * \param[out] e2   eccentricity squared
+ *
+ * \return 1 on success
+ * \return 0 if ellipsoid not found
  */
-
 int 
 G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
 {
@@ -206,63 +186,18 @@ G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
     return 0;
 }
 
-/*
- * returns name(s) of ellipsoid
- *
- * for (i = 0; name = G_ellipsoid_name(i); i++)
- *         ....
- */
-
-/*!
- * \brief return ellopsoid name
- *
- * This routine
- * returns a pointer to a string containg the name for the <b>n</b><i>th</i>
- * ellipsoid in the GRASS ellipsoid table; NULL when <b>n</b> is too large. It
- * can be used as follows:
- \code
-  int n ; 
-  char *name ; 
-  for ( n=0 ; name=G_ellipsoid_name(n) ; n++ ) 
-     fprintf(stdout, "%s\n", name);
- \endcode
- *
- *  \param n
- *  \return char * 
- */
-
- 
-/*!
- * \brief return ellopsoid name
- *
- * This routine
- * returns a pointer to a string containg the name for the <b>n</b><i>th</i>
- * ellipsoid in the GRASS ellipsoid table; NULL when <b>n</b> is below zero or
- * too large. It can be used as follows:
- \code
-  int n ; 
-  char *name ; 
-  for ( n=0 ; name=G_ellipsoid_name(n) ; n++ ) 
-   fprintf(stdout, "%s\n", name);
- \endcode
- *
- *  \param n
- *  \return char * 
- */
-
- 
 /*!
  * \brief get ellipsoid name
  *
- * This function
- * returns a pointer to the short name for the <b>n</b><i>th</i> ellipsoid.
- * If <b>n</b> is less than 0 or greater than the number of known ellipsoids,
- * it returns a NULL pointer. 
+ * This function returns a pointer to the short name for the
+ * <b>n</b><i>th</i> ellipsoid.  If <b>n</b> is less than 0 or greater
+ * than the number of known ellipsoids, it returns a NULL pointer.
  *
- *  \param n
- *  \return char * 
+ * \param[in] n ellipsoid identificator
+ *
+ *  \return char * ellipsoid name
+ *  \return NULL if no ellipsoid found
  */
-
 char *
 G_ellipsoid_name (int n)
 {
@@ -284,18 +219,19 @@ G_ellipsoid_name (int n)
 /*!
  * \brief get spheroid parameters by name
  *
- * This function returns the
- * semi-major axis <b>a</b> (in meters), the eccentricity squared <b>e2</b>
- * and the inverse flattening <b>f</b> for the named ellipsoid. Returns 1 if
- * <b>name</b> is a known ellipsoid, 0 otherwise. 
+ * This function returns the semi-major axis <b>a</b> (in meters), the
+ * eccentricity squared <b>e2</b> and the inverse flattening <b>f</b>
+ * for the named ellipsoid. Returns 1 if <b>name</b> is a known
+ * ellipsoid, 0 otherwise.
  *
- *  \param name
- *  \param a
- *  \param e2
- *  \param f
- *  \return int
+ * \param[in] name spheroid name
+ * \param[out] a   semi-major axis
+ * \param[out] e2  eccentricity squared
+ * \param[out] f   inverse flattening
+ *
+ * \return 1 on success
+ * \return 0 if no spheroid found
  */
-
 int 
 G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
 {
@@ -320,13 +256,14 @@ G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
 /*!
  * \brief get description for <b>n</b><i>th</i> ellipsoid
  *
- * This function returns a pointer to the
- * description text for the <b>n</b><i>th</i> ellipsoid. If <b>n</b> is less
- * than 0 or greater than the number of known ellipsoids, it returns a NULL
- * pointer. 
+ * This function returns a pointer to the description text for the
+ * <b>n</b><i>th</i> ellipsoid. If <b>n</b> is less than 0 or greater
+ * than the number of known ellipsoids, it returns a NULL pointer.
  *
- *  \param n
- *  \return char * 
+ * \param[in] n ellipsoid identificator
+ *
+ * \return pointer to ellipsoid description
+ * \return NULL if no ellipsoid found
  */
 
 char *
@@ -414,7 +351,7 @@ read_ellipsoid_table(int fatal)
     if (fd == NULL)
     {
 	perror (file);
-	sprintf (buf, _("unable to open ellipsoid table file: %s"), file);
+	sprintf (buf, _("Unable to open ellipsoid table file <%s>"), file);
 	fatal ? G_fatal_error(buf) : G_warning (buf);
 	return 0;
     }
