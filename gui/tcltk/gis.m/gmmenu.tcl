@@ -70,7 +70,7 @@ foreach menudat $menudatlist {
                 }
             }
             if {[catch {close $menudef} error]} {
-                Gm::errmsg $error ["Error reading xtnmenu.dat file"]
+                GmLib::errmsg $error ["Error reading xtnmenu.dat file"]
             }
         }
         set XtnsMenu "True"

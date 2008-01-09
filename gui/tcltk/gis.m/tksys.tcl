@@ -78,7 +78,7 @@ proc sys_getinfo { } {
     if { [string compare "$sys(user)" "unknown"] == 0 && \
 	 [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } {
 		if {[catch {set sys(user) [exec whoami]} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
     }
 
@@ -100,7 +100,7 @@ proc sys_getinfo { } {
 
 	if { [string compare "$sys(platform)" "$tcl_platform_subst(unix)"] == 0 } { 
 		if {[catch {set tmp [exec uname -srm]} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 		regsub -all { } $tmp {-} tmp 
 		set sys(uname) $tmp
@@ -212,11 +212,11 @@ proc sys_save { } {
 		return
     }
     if [catch {open $file w} error] {
-		Gm::errmsg $error 
+		GmLib::errmsg $error 
 	} else {
 		sys_putinfo $out
 		if {[catch {close $out} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
     }
 

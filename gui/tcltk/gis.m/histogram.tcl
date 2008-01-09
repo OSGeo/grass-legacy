@@ -81,7 +81,7 @@ proc GmHist::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -260,7 +260,7 @@ proc GmHist::display { node mod } {
 		catch {set rt [open "|r.info map=$opt($id,1,map) -t" r]}
 		set rasttype [read $rt]
 		if {[catch {close $rt} error]} {
-			Gm::errmsg $error [G_msg "r.info error"]
+			GmLib::errmsg $error [G_msg "r.info error"]
 		}
 		if {[regexp -nocase ".=FCELL" $rasttype] || [regexp -nocase ".=DCELL" $rasttype]} {
             append cmd " nsteps=$opt($id,1,nsteps)"
@@ -365,7 +365,7 @@ proc GmHist::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

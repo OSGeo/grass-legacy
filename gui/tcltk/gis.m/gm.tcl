@@ -29,23 +29,23 @@ lappend auto_path $env(GISBASE)/etc/gm
 package require -exact GisM 1.0
 
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 
 if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 
 # path to GIS Manager files
@@ -100,7 +100,7 @@ catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
-	Gm::errmsg $error
+	GmLib::errmsg $error
 }
 
 
@@ -452,7 +452,7 @@ proc Gm:DefaultFont { source } {
     wm title .dispfont [G_msg "Select GRASS display font"]
     
     if {[catch {set fontlist [exec d.font --q -l]} error]} {
-	    Gm::errmsg $error "d.font error"
+	    GmLib::errmsg $error "d.font error"
     }
     set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]
@@ -540,7 +540,7 @@ proc Gm::SetFont { source } {
 
 ###############################################################################
 
-proc Gm::errmsg { error args } {
+proc GmLib::errmsg { error args } {
     # send error report and optional message (args) to tk_messageBox
     
     set message ""

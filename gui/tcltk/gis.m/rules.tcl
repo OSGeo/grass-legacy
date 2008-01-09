@@ -204,7 +204,7 @@ proc GmRules::process_rules { cmd w quit } {
     set rulespid [pid]
 	
 	if {[catch {set rulesfile [exec g.tempfile pid=$rulespid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 
     # get rules from text widget
@@ -218,7 +218,7 @@ proc GmRules::process_rules { cmd w quit } {
     catch {set output [open $rulesfile w ]}
         puts $output $rules
 	if {[catch {close $output} error]} {
-		Gm::errmsg $error [G_msg "Error creating rules file"]
+		GmLib::errmsg $error [G_msg "Error creating rules file"]
 		return
 	}
 	

@@ -88,7 +88,7 @@ namespace eval GmAnim {
     
 	# create file for temporary image output
 	if {[catch {set tmpfile [exec g.tempfile pid=[pid]]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	
 }
@@ -856,7 +856,7 @@ proc GmAnim::load_files {} {
             
             # export the map to a PPM file            
             if {[catch {exec r.out.ppm input=$name output=$tmpfile --q} error]} {
-                Gm::errmsg $error
+                GmLib::errmsg $error
                 return -1
             }
             
@@ -933,20 +933,20 @@ proc GmAnim::switch_res { switch } {
     if { $switch == 1 } {
         # set temp region file for changing resolution  
         if {[catch {set region [exec g.region -u save=$tmpregion --o --q]} error]} {
-            Gm::errmsg $error
+            GmLib::errmsg $error
         }
         if {[catch {set env(WIND_OVERRIDE) $tmpregion} error]} {
-            Gm::errmsg $error
+            GmLib::errmsg $error
         }
     
         # change resolution
         if {[catch [exec g.region res=$pnmres] error]} {
-            Gm::errmsg $error
+            GmLib::errmsg $error
         }    
     } else { 
         # switch back to original region
         if {[catch {unset env(WIND_OVERRIDE)} error]} {
-            Gm::errmsg $error
+            GmLib::errmsg $error
         }
         if {[file exists $tmpregion]} {
             catch [exec g.remove region=$tmpregion --q 2> $devnull]
@@ -975,7 +975,7 @@ proc GmAnim::main {} {
 
     # set initial canvas geometry to match region    
     if {[catch {set region [exec g.region -ugp]} error]} {
-        Gm::errmsg $error
+        GmLib::errmsg $error
     }
 
     set reglist [split $region "\n"]

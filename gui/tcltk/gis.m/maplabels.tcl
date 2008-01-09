@@ -542,7 +542,7 @@ proc GmCLabels::display { node } {
 	}
 	# close labels file
 	if {[catch {close $labelfile} error]} {
-		Gm::errmsg $error
+		GmLib::errmsg $error
 	}
 }
 
