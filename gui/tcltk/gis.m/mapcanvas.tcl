@@ -209,7 +209,7 @@ proc MapCanvas::create { } {
 	# set tempfile for ppm output
 	set mappid [pid]
 	if {[catch {set mapfile($mon) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set maskfile($mon) $mapfile($mon)
 	append mapfile($mon) ".ppm"
@@ -218,7 +218,7 @@ proc MapCanvas::create { } {
 	# set tempfile and tmp directory path for composite output
 	set mappid [pid]
 	if {[catch {set outfile($mon) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	
 	set tmpdir [file dirname $outfile($mon)]
@@ -430,7 +430,7 @@ proc MapCanvas::get_mapunits {} {
 	    	set prj($key) $value	
 	    }
 	    if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "g.proj or projection error"]
+			GmLib::errmsg $error [G_msg "g.proj or projection error"]
 	    } 
 	}
 	# Length is calculated from the map canvas arrows
@@ -590,7 +590,7 @@ proc MapCanvas::runprograms { mon mod } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "Error setting region"]
+			GmLib::errmsg $error [G_msg "Error setting region"]
 		}
 		# Finally put this into wind file format to use with GRASS_REGION
 		regexp -nocase {^([0-9]+)} $parts(projection) trash parts(projection)
@@ -1133,7 +1133,7 @@ proc MapCanvas::zoom_gregion {mon args} {
 		}
 		
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "Error setting region"]
+			GmLib::errmsg $error [G_msg "Error setting region"]
 		}
 		
 		#set start point (sw corner)
@@ -1186,7 +1186,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	}
 	
 	if {[catch {eval [list exec -- $cmd] $args $options >& $devnull} error]} {
-		Gm::errmsg $error [G_msg "Error setting region"]
+		GmLib::errmsg $error [G_msg "Error setting region"]
 	}
 	
 }
