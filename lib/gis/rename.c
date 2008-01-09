@@ -36,7 +36,7 @@ int G_rename_file ( const char *oldname, const char *newname )
 {
 
     #ifdef __MINGW32__
-      remove(oldname);
+      remove(newname);
     #endif
 
     return rename(oldname, newname); 
