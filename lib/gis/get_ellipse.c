@@ -67,6 +67,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
     struct Key_Value *proj_keys;
     static char *PERMANENT = "PERMANENT";
 
+    proj_keys = NULL;
 
     G__file_name (ipath, "", PROJECTION_FILE, PERMANENT);
     if (access(ipath,0) !=0) 
@@ -95,6 +96,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
 	  *a = 6370997.0 ;
         }
 	*e2 = 0.0 ;
+	G_free_key_value(proj_keys);
 	return 0;
       }
       else {
@@ -103,7 +105,10 @@ G_get_ellipsoid_parameters (double *a, double *e2)
                               ,str,PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
-        else return 1;
+        else {
+	    G_free_key_value(proj_keys);
+	    return 1;
+	}
       }
     }
     else {
@@ -120,6 +125,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
                             ,str,PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
+	G_free_key_value(proj_keys);
         return 1;
       }
       else { 
@@ -127,6 +133,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
         if ((str==NULL)||(strcmp(str,"ll")==0)) { 
   	  *a = 6378137.0 ;
 	  *e2 = .006694385 ;
+	  G_free_key_value(proj_keys);
 	  return 0;
         }
         else {
@@ -136,6 +143,9 @@ G_get_ellipsoid_parameters (double *a, double *e2)
         }
       }
     }
+
+    G_free_key_value(proj_keys);
+
     return 1;
     /* whats that? al 05/2000 */
     return 0;
