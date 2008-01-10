@@ -483,6 +483,7 @@ int main (int argc, char *argv[])
 	    double tmp_tangle, tangle;
 
 	    G_debug (3, "fline = %d", fline);
+	    G_percent (fline, nfrom, 2);
 	    ftype = Vect_read_line ( &From, FPoints, FCats, fline );
 	    if ( !(ftype & from_type) ) continue;
 
@@ -591,6 +592,7 @@ int main (int argc, char *argv[])
     if ( to_type & GV_AREA ) {
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    G_debug (3, "fline = %d", fline);
+	    G_percent (fline, nfrom, 2);
 	    ftype = Vect_read_line ( &From, FPoints, FCats, fline );
 	    if ( !(ftype & from_type) ) continue;
 
