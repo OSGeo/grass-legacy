@@ -174,7 +174,7 @@ class Command:
     """
     def __init__ (self, cmd, stdin=None,
                   verbose=None, wait=True, log='gui',
-                  stdout=None, stderr=None):
+                  stdout=None, stderr=sys.stderr):
 
         self.cmd = cmd
 
