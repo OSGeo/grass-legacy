@@ -478,6 +478,7 @@ int main (int argc, char *argv[])
 	else {
 	    LLPoints = NULL;
 	}
+	G_verbose_message(_("Finding nearest lines..."));
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    int tmp_tcat;
 	    double tmp_tangle, tangle;
@@ -590,6 +591,7 @@ int main (int argc, char *argv[])
 
     /* Find nearest areas */
     if ( to_type & GV_AREA ) {
+	G_verbose_message(_("Finding nearest areas..."));
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    G_debug (3, "fline = %d", fline);
 	    G_percent (fline, nfrom, 2);
