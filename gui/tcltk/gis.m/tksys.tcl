@@ -13,7 +13,6 @@ exec $GRASS_WISH "$0" "$@"
 
 source $env(GISBASE)/etc/gtcltk/options.tcl
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
-source $env(GISBASE)/etc/gm/gm.tcl
 
 array set items { 
     platform   "Platform               "
