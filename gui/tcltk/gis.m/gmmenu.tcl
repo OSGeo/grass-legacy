@@ -84,9 +84,9 @@ foreach menudat $menudatlist {
 set descmenu [subst  {
  {[G_msg "&File"]} all file $tmenu {
 	{cascad {[G_msg "Workspace"]} {} "" $tmenu {			
-		{command {[G_msg "Open..."]} {} "Open gis.m workspace file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
-		{command {[G_msg "Save"]} {} "Save gis.m workspace file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
-		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
+		{command {[G_msg "Open..."]} {} "Open gis.m workspace file" {} -accelerator $keyctrl-O -command { GmLib::OpenFileBox }}
+		{command {[G_msg "Save"]} {} "Save gis.m workspace file" {} -accelerator $keyctrl-S -command { GmLib::SaveFileBox }}
+		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; GmLib::SaveFileBox }}
 		{command {[G_msg "Close"]} {} "Close gis.m workspace" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
 	}}
 	{separator}
@@ -217,7 +217,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Convert coordinates"]} {} "m.proj: Convert coordinates from one projection to another" {} -command {execute m.proj }}
 	}}
-	{command {[G_msg "Display font"]} {} "Set default display font" {} -command {Gm:DefaultFont "menu" }}
+	{command {[G_msg "Display font"]} {} "Set default display font" {} -command {Gm::defaultfont "menu" }}
  } 
  {[G_msg "&Raster"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			

@@ -28,28 +28,32 @@ package require -exact BWidget 1.2.1
 lappend auto_path $env(GISBASE)/etc/gm
 package require -exact GisM 1.0
 
+# path to GIS Manager files
+set gmpath $env(GISBASE)/etc/gm
+
+# Load common procedure library
+source $gmpath/gmlib.tcl
+
 if {[catch {set env(GISDBASE) [exec g.gisenv get=GISDBASE]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 if {[catch {set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 if {[catch {set env(MAPSET) [exec g.gisenv get=MAPSET]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 
 if {[catch {set gisdbase [exec g.gisenv get=GISDBASE]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 if {[catch {set location_name [exec g.gisenv get=LOCATION_NAME]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 if {[catch {set mapset [exec g.gisenv get=MAPSET]} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 
-# path to GIS Manager files
-set gmpath $env(GISBASE)/etc/gm
 
 # path to icons for GIS Manager
 set iconpath $env(GISBASE)/etc/gui/icons
@@ -100,7 +104,7 @@ catch {set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]}
 set GRASSVERSION [read -nonewline $fp]
 
 if {[catch {close $fp} error]} {
-	GmLib::errmsg $error
+	Gm::errmsg $error
 }
 
 
@@ -115,16 +119,16 @@ source $env(GISBASE)/etc/gui.tcl
 source $gmpath/runandoutput.tcl
 
 namespace eval Gm {
-    variable gm_mainframe
-    variable status
-    variable array tree # mon
-    variable rcfile
-    variable moncount
-    variable prgtext
-    variable mainwindow
-    variable dfont 
-    variable selectedfont
-    variable encoding
+	variable gm_mainframe
+	variable status
+	variable array tree # mon
+	variable rcfile
+	variable moncount
+	variable prgtext
+	variable mainwindow
+	variable dfont 
+	variable selectedfont
+	variable encoding
 	global array filename # mon
 
 }
@@ -136,27 +140,8 @@ global max_prgindic
 
 set max_prgindic 20
 
-
-###############################################################################
-
 append regexp .* $env(GISBASE) {[^:]*}
 regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
-
-
-###############################################################################
-
-#read_moncap
-
-proc Gm::color { color } {
-
-    regexp -- {#(..)(..)(..)} $color x r g b
-
-    set r [expr 0x$r ]
-    set g [expr 0x$g ]
-    set b [expr 0x$b ]
-
-    return "$r:$g:$b"
-}
 
 
 ###############################################################################
@@ -176,100 +161,88 @@ proc Gm::xmon { type cmd } {
 }
 
 ###############################################################################
-# Determine if an element already exists
-
-proc Gm::element_exists {elem name} {
-	global devnull
-	set exists 1
-	
-	set failure [catch {exec g.findfile element=$elem file=$name >& $devnull}]
-
-	return [expr {! $failure}]
-}
-
-###############################################################################
 
 
 proc Gm::create { } {
-    variable mainwindow
-    variable prgtext
-    variable gm_mainframe
-    variable tree
+	variable mainwindow
+	variable prgtext
+	variable gm_mainframe
+	variable tree
 	variable moncount
 	variable dfont
 	variable ecoding
-    global gmpath
-    global mon
-    global tree_pane
-    global options
-    global pgs
-    global prgindic
-    global keycontrol
-    global env
-    
-    # set display rendering environment for PNG/PPM output
-    set env(GRASS_RENDER_IMMEDIATE) "TRUE"
-    
-    # set default font
-    if {[catch {set env(GRASS_FONT)}]} {set env(GRASS_FONT) "romans"}
+	global gmpath
+	global mon
+	global tree_pane
+	global options
+	global pgs
+	global prgindic
+	global keycontrol
+	global env
+	
+	# set display rendering environment for PNG/PPM output
+	set env(GRASS_RENDER_IMMEDIATE) "TRUE"
+	
+	# set default font
+	if {[catch {set env(GRASS_FONT)}]} {set env(GRASS_FONT) "romans"}
 	set Gm::dfont ""
 	set Gm::encoding "ISO-8859-1"
 
 	set moncount 1
 
-    set Gm::prgtext [G_msg "Loading GIS Manager"]
-    set prgindic -1
-    _create_intro
-    update
+	set Gm::prgtext [G_msg "Loading GIS Manager"]
+	set prgindic -1
+	_create_intro
+	update
 
 	source $gmpath/gmmenu.tcl
 
-    set Gm::prgtext [G_msg "Creating MainFrame..."]
-
-    set gm_mainframe [MainFrame .mainframe \
+	set Gm::prgtext [G_msg "Creating MainFrame..."]
+    
+	set gm_mainframe [MainFrame .mainframe \
 		       -menu $descmenu \
 		       -textvariable Gm::status \
 		       -progressvar  Gm::prgindic ]
 
-    set mainwindow [$gm_mainframe getframe]
-
-    # toolbar 1 & 2 creation
-    set tb1  [$gm_mainframe addtoolbar]
-    GmToolBar1::create $tb1
-    set tb2  [$gm_mainframe addtoolbar]
-    GmToolBar2::create $tb2
-    set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]
-
-    # tree
-    set treemon [expr {$mon + 1}]
-    set tree_pane  [$pw1 add  -minsize 50 -weight 1]
-	set pgs [PagesManager $tree_pane.pgs]
-
-
-	pack $pgs -expand yes -fill both
-
-
-    # options
-    set options_pane  [$pw1 add -minsize 50 -weight 1]
-    set options_sw [ScrolledWindow $options_pane.sw -relief flat -borderwidth 1]
-    set options_sf [ScrollableFrame $options_sw.sf]
-    $options_sf configure -height 145 -width 460
-    $options_sw setwidget $options_sf
-    set options [$options_sf getframe]
-    pack $options_sw -fill both -expand yes
-
-    # Scroll the options window with the mouse
-    bind_scroll $options_sf
-
-    pack $pw1 -side top -expand yes -fill both -anchor n
-
-	# finish up
-    set Gm::prgtext [G_msg "Done"]
-
-    set Gm::status [G_msg "Welcome to GRASS GIS"]
-    $gm_mainframe showstatusbar status
-
-    pack $gm_mainframe -fill both -expand yes
+	set mainwindow [$gm_mainframe getframe]
+    
+	# toolbar 1 & 2 creation
+	set tb1  [$gm_mainframe addtoolbar]
+	GmToolBar1::create $tb1
+	set tb2  [$gm_mainframe addtoolbar]
+	GmToolBar2::create $tb2
+	set pw1 [PanedWindow $mainwindow.pw1 -side left -pad 0 -width 10 ]
+    
+	# tree
+	set treemon [expr {$mon + 1}]
+	set tree_pane  [$pw1 add  -minsize 50 -weight 1]
+	    set pgs [PagesManager $tree_pane.pgs]
+    
+    
+	    pack $pgs -expand yes -fill both
+    
+    
+	# options
+	set options_pane  [$pw1 add -minsize 50 -weight 1]
+	set options_sw [ScrolledWindow $options_pane.sw -relief flat -borderwidth 1]
+	set options_sf [ScrollableFrame $options_sw.sf]
+	$options_sf configure -height 145 -width 460
+	$options_sw setwidget $options_sf
+	set options [$options_sf getframe]
+	pack $options_sw -fill both -expand yes
+    
+	# Scroll the options window with the mouse
+	bind_scroll $options_sf
+    
+	pack $pw1 -side top -expand yes -fill both -anchor n
+    
+	    # finish up
+	set Gm::prgtext [G_msg "Done"]
+    
+	set Gm::status [G_msg "Welcome to GRASS GIS"]
+	$gm_mainframe showstatusbar status
+    
+	pack $gm_mainframe -fill both -expand yes
 
 	Gm::startmon
 
@@ -387,59 +360,8 @@ proc Gm::help { } {
 }
 
 ###############################################################################
-
-#open dialog box
-proc Gm::OpenFileBox { } {
-    variable mainwindow
-    global filename
-    global mon
-
-# thanks for brace tip to suchenwi from #tcl@freenode
-    set types [list \
-	    [list [G_msg "Map Resource File"] [list ".dm" ".dmrc" ".grc"]] \
-	    [list [G_msg "All Files"] "*"] \
-    ]
-
-	set filename_new [tk_getOpenFile -parent $mainwindow -filetypes $types \
-		-title [G_msg "Open File"] ]
-	if { $filename_new == "" } { return}
-	set filename($mon) $filename_new
-	GmTree::load $filename($mon)
-
-};
-
-###############################################################################
-
-#save dialog box
-proc Gm::SaveFileBox { } {
-    variable mainwindow
-    global filename
-    global mon
-
-    catch {
-        if {[ regexp -- {^Untitled_} $filename($mon) r]} {
-            set filename($mon) ""
-        }
-    }
-
-    if { $filename($mon) != "" } {
-    	GmTree::save $filename($mon)
-    } else {
-        set types [list \
-            [list [G_msg "Map Resource File"] {.grc}] \
-            [list [G_msg "DM Resource File"] [list {.dm} {.dmrc}]] \
-            [list [G_msg "All Files"] "*"] \
-        ]
-        set filename($mon) [tk_getSaveFile -parent $mainwindow -filetypes $types \
-            -title [G_msg "Save File"] -defaultextension .grc]
-	    if { $filename($mon) == "" } { return}
-	    GmTree::save $filename($mon)
-    }
-};
-
-###############################################################################
 # sets default display font
-proc Gm:DefaultFont { source } {
+proc Gm::defaultfont { source } {
 	global env iconpath
 	variable dfont
 	variable selectedfont
@@ -452,7 +374,7 @@ proc Gm:DefaultFont { source } {
     wm title .dispfont [G_msg "Select GRASS display font"]
     
     if {[catch {set fontlist [exec d.font --q -l]} error]} {
-	    GmLib::errmsg $error "d.font error"
+	    Gm::errmsg $error "d.font error"
     }
     set fontlist [string trim $fontlist]
     set fontlist [split $fontlist "\n"]
@@ -502,7 +424,7 @@ proc Gm:DefaultFont { source } {
     
 	set row [ frame .dispfont.buttons ]
 	Button $row.ok -text [G_msg "OK"] -width 8 -bd 1 \
-			-command "Gm::SetFont $source; destroy .dispfont"
+			-command "Gm::setfont $source; destroy .dispfont"
     pack $row.ok -side left -fill x -expand 0
     button $row.cancel -text [G_msg "Cancel"] -width 8 -bd 1 \
     	-command "destroy .dispfont"
@@ -516,7 +438,7 @@ proc Gm:DefaultFont { source } {
 };
 
 
-proc Gm::SetFont { source } {
+proc Gm::setfont { source } {
 	global env
 	variable dfont
 	variable selectedfont
@@ -529,31 +451,13 @@ proc Gm::SetFont { source } {
 		set env(GRASS_ENCODING) $encoding
 	}
 
-    set dfont $selectedfont
+	set dfont $selectedfont
     
 	if { $source == "menu" && $dfont != "" } {
 		set env(GRASS_FONT) $dfont
 		set dfont ""
 	}
 
-};
-
-###############################################################################
-
-proc Gm::errmsg { error args } {
-    # send error report and optional message (args) to tk_messageBox
-    
-    set message ""
-    
-    if { $args != ""} { 
-        set message [join $args]
-        append message ": " 
-     }
-
-    tk_messageBox -type ok -icon error -title [G_msg "Error"] \
-        -message "$message[G_msg $error]"
-    uplevel 1 return
-     
 };
 
 ###############################################################################

@@ -120,7 +120,7 @@ proc GmGridline::set_font { id } {
 	if {$GmGridline::opt($id,1,font) != "" } {
 		set Gm::dfont $GmGridline::opt($id,1,font)
 	}
-	Gm:DefaultFont dgrid
+	Gm::defaultfont dgrid
 	tkwait variable Gm::dfont
 	set GmGridline::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -299,9 +299,9 @@ proc GmGridline::display { node mod } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # set hex colors to rgb         
-    set gridcolor [Gm::color $opt($id,1,gridcolor)]
-    set gridborder [Gm::color $opt($id,1,gridborder)]
-    set txtcolor [Gm::color $opt($id,1,textcolor)]
+    set gridcolor [GmLib::color $opt($id,1,gridcolor)]
+    set gridborder [GmLib::color $opt($id,1,gridborder)]
+    set txtcolor [GmLib::color $opt($id,1,textcolor)]
 
     
     # d.grid command

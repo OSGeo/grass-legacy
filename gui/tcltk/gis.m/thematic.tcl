@@ -484,10 +484,10 @@ proc GmThematic::display { node mod } {
     if { $opt($id,1,column) == "" } { return }
 
     # set hex colors to rgb         
-    set pointcolor [Gm::color $opt($id,1,pointcolor)]
-    set linecolor [Gm::color $opt($id,1,linecolor)]
-    set startcolor [Gm::color $opt($id,1,startcolor)]
-    set endcolor [Gm::color $opt($id,1,endcolor)]
+    set pointcolor [GmLib::color $opt($id,1,pointcolor)]
+    set linecolor [GmLib::color $opt($id,1,linecolor)]
+    set startcolor [GmLib::color $opt($id,1,startcolor)]
+    set endcolor [GmLib::color $opt($id,1,endcolor)]
     
     # turn off x11 display
     set monitor "none"

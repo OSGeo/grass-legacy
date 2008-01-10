@@ -118,7 +118,7 @@ proc GmHist::set_font { id } {
 	if {$GmHist::opt($id,1,font) != "" } {
 		set Gm::dfont $GmHist::opt($id,1,font)
 	}
-	Gm:DefaultFont dhist
+	Gm::defaultfont dhist
 	tkwait variable Gm::dfont
 	set GmHist::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -239,8 +239,8 @@ proc GmHist::display { node mod } {
 
     if { $opt($id,1,map) == "" } { return } 
     
-	set color [Gm::color $opt($id,1,color)]
-    set bgcolor [Gm::color $opt($id,1,bgcolor)]
+	set color [GmLib::color $opt($id,1,color)]
+    set bgcolor [GmLib::color $opt($id,1,bgcolor)]
 
     # transparent background color
     if { $opt($id,1,bgcolor_none) == 1 } { 

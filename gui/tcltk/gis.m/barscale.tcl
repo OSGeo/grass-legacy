@@ -131,7 +131,7 @@ proc GmBarscale::set_font { id } {
 	if {$GmBarscale::opt($id,1,font) != "" } {
 		set Gm::dfont $GmBarscale::opt($id,1,font)
 	}
-	Gm:DefaultFont dbarscale
+	Gm::defaultfont dbarscale
 	tkwait variable Gm::dfont
 	set GmBarscale::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -288,8 +288,8 @@ proc GmBarscale::display { node mod } {
     if {$mod} {set opt($id,1,mod) 1}
 
     # set hex colors to rgb         
-    set tcolor [Gm::color $opt($id,1,tcolor)]
-    set bcolor [Gm::color $opt($id,1,bcolor)]
+    set tcolor [GmLib::color $opt($id,1,tcolor)]
+    set bcolor [GmLib::color $opt($id,1,bcolor)]
 
     # no background color
     if { $opt($id,1,bcolor_none) == 1 } { 
