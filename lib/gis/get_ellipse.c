@@ -63,7 +63,7 @@ int
 G_get_ellipsoid_parameters (double *a, double *e2)
 {
     int in_stat;
-    char err[1024], ipath[1024], *str, *str1;
+    char ipath[1024], *str, *str1;
     struct Key_Value *proj_keys;
     static char *PERMANENT = "PERMANENT";
 
@@ -91,7 +91,6 @@ G_get_ellipsoid_parameters (double *a, double *e2)
         str = G_find_key_value("a",proj_keys); 
         if (str!=NULL)  {
           if(sscanf(str,"%lf",a)!=1) {
-	    sprintf (err, );
 	    G_fatal_error (_("Invalid a: field '%s' in file %s in <%s>"),
 			   str, PROJECTION_FILE, PERMANENT);
           }
