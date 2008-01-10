@@ -627,9 +627,9 @@ proc GmVector::display { node mod } {
     # color
     if { $opt($id,1,rdmcolor) } { append cmd " -c" }
     if { $opt($id,1,sqlcolor) } { append cmd " -a" }
-    set color [Gm::color $opt($id,1,color)]
-    set fcolor [Gm::color $opt($id,1,fcolor)]
-    set lcolor [Gm::color $opt($id,1,lcolor)]
+    set color [GmLib::color $opt($id,1,color)]
+    set fcolor [GmLib::color $opt($id,1,fcolor)]
+    set lcolor [GmLib::color $opt($id,1,lcolor)]
 
     if { $opt($id,1,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
     append cmd " lcolor=$lcolor" 
@@ -739,7 +739,7 @@ proc GmVector::WorkOnVector { node mod } {
 
     if { $opt($id,1,vect) == "" } { return } 
     
-    if {[Gm::element_exists "vector" $opt($id,1,vect)]} {
+    if {[GmLib::element_exists "vector" $opt($id,1,vect)]} {
         set cmd [list v.digit "map=$opt($id,1,vect)"]
     } else { 
         set cmd [list v.digit -n "map=$opt($id,1,vect)"]

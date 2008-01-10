@@ -84,13 +84,13 @@ proc GmToolBar2::create { tb } {
         -helptext [G_msg "Create new workspace file (erase current workspace settings first)"]
 
     $bbox3 add -image [image create photo -file "$iconpath/file-open.gif"] \
-    	-command "Gm::OpenFileBox"\
+    	-command "GmLib::OpenFileBox"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Open existing workspace file"]
 
     $bbox3 add -image [image create photo -file "$iconpath/file-save.gif"]  \
-    	-command "Gm::SaveFileBox"\
+    	-command "GmLib::SaveFileBox"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -highlightbackground $bgcolor -activebackground $bgcolor \
         -helptext [G_msg "Save workspace file"]

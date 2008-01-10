@@ -114,7 +114,7 @@ proc GmDtext::set_font { id } {
 	if {$GmDtext::opt($id,1,font) != "" } {
 		set Gm::dfont $GmDtext::opt($id,1,font)
 	}
-	Gm:DefaultFont dtext
+	Gm::defaultfont dtext
 	tkwait variable Gm::dfont
 	set GmDtext::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -280,7 +280,7 @@ proc GmDtext::display { node mod } {
     if {$mod} {set opt($id,1,mod) 1}
 
     # set hex colors to rgb         
-    set color [Gm::color $opt($id,1,color)]
+    set color [GmLib::color $opt($id,1,color)]
     
 
     if { ! ( $opt($id,1,_check) ) } { return } 
