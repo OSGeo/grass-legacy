@@ -118,8 +118,6 @@ export LC_NUMERIC
 
 cleanup()
 {
- #restore settings:
- g.region region=i.fusion.brovey.$TMP
  g.remove region=i.fusion.brovey.$TMP > /dev/null
 }
 
@@ -137,10 +135,12 @@ if [ $? -ne 0 ] ; then
  exit 1
 fi
 
-#save current settings:
+# clone current region
 g.region save=i.fusion.brovey.$TMP > /dev/null
+WIND_OVERRIDE=i.fusion.brovey.$TMP
+export WIND_OVERRIDE
 
-g.message message="Temporarily setting raster resolution to PAN resolution: $PANRES"
+# set the resolution
 g.region res=$PANRES -ap > /dev/null
 
 g.message "Performing Brovey transformation..."

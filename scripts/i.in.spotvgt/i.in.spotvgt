@@ -200,8 +200,10 @@ g.message message="Imported SPOT VEGETATION NDVI map <$NAME>."
 # Coefficient a = 0.004
 # Coefficient b = -0.1
 
-#save region before zoom to SPOT image
-g.region save=spot_$PID 2>&1 >/dev/null
+# switch to a temporary region
+WIND_OVERRIDE=spot_$PID
+export WIND_OVERRIDE
+g.region -d 2>&1 >/dev/null
 g.region rast=$NAME 2>&1 >/dev/null
 
 g.message "Remapping digital numbers to NDVI..."
@@ -276,8 +278,7 @@ EOF
   g.message message="Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
 fi
 
-# restore user settings:
-g.region region=spot_$PID 2>&1 >/dev/null
+# remove the temporary region
 g.remove region=spot_$PID 2>&1 >/dev/null
 
 #### clean up the mess
