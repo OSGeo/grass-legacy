@@ -28,7 +28,7 @@ struct Key_Value* G_get_projunits(void)
 {
 	int stat;
         struct Key_Value *in_units_keys;
-	char path[1024];
+	char path[GPATH_MAX];
 
          G__file_name (path, "", UNIT_FILE, PERMANENT);
          if (access(path,0) != 0)
@@ -59,7 +59,7 @@ struct Key_Value* G_get_projinfo(void)
 {
 	int stat;
         struct Key_Value *in_proj_keys;
-	char path[1024];
+	char path[GPATH_MAX];
 
          G__file_name (path, "", PROJECTION_FILE, PERMANENT);
          if (access(path,0) != 0)

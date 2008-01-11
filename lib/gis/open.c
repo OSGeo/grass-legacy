@@ -89,8 +89,8 @@ static int G__open (
     const char *mapset,
     int mode)
 {
-    char path[1024];
-    char xname[512], xmapset[512], *dummy;
+    char path[GPATH_MAX];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX], *dummy;
 
 
     G__check_gisinit();

@@ -162,7 +162,7 @@ static int close_new (int fd,int ok)
     int stat;
     struct Categories cats;
     struct History hist;
-    char path[4096];
+    char path[GPATH_MAX];
     CELL cell_min, cell_max;
     int row, i, open_mode;
 

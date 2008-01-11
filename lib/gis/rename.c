@@ -65,7 +65,7 @@ int G_rename ( const char *element,
     const char *oldname, const char *newname)
 {
     const char *mapset;
-    char xname[512], xmapset[512];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     char from[512], to[512];
 
     /* name in mapset legal only if mapset is current mapset */

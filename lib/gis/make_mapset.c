@@ -40,7 +40,7 @@
 
 int G__make_mapset( const char *gisdbase_name, const char *location_name, const char *mapset_name )
 {
-    char	path[2048];
+    char	path[GPATH_MAX];
     struct Cell_head default_window;
 
     /* Get location */

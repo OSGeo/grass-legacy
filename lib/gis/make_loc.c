@@ -48,7 +48,7 @@ int G__make_location(
     FILE *report_file )
 
 {
-    char	path[2048];
+    char	path[GPATH_MAX];
     int         out_stat;
 
     /* Try to create the location directory, under the gisdbase. */

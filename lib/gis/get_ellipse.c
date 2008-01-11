@@ -63,7 +63,7 @@ int
 G_get_ellipsoid_parameters (double *a, double *e2)
 {
     int in_stat;
-    char ipath[1024], *str, *str1;
+    char ipath[GPATH_MAX], *str, *str1;
     struct Key_Value *proj_keys;
     static char *PERMANENT = "PERMANENT";
 
