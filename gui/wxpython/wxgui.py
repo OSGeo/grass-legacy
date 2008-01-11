@@ -80,8 +80,6 @@ import gui_modules.globalvar as globalvar
 from   gui_modules.debug import Debug as Debug
 from   icons.icon import Icons as Icons
 
-menucmd = {}
-
 class GMFrame(wx.Frame):
     """
     GIS Manager frame with notebook widget for controlling
@@ -102,6 +100,14 @@ class GMFrame(wx.Frame):
 
         self._auimgr = wx.aui.AuiManager(self)
 
+        # initialize variables
+        self.disp_idx      = 0            # index value for map displays and layer trees
+        self.curr_page     = ''           # currently selected page for layer tree notebook
+        self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
+        self.encoding      = 'ISO-8859-1' # default encoding for display fonts
+        self.workspaceFile = workspace    # workspace file
+        self.menucmd       = {}           # menuId / cmd
+
         # creating widgets
         # -> self.notebook, self.goutput, self.outpage
         self.notebook  = self.__createNoteBook()
@@ -112,13 +118,6 @@ class GMFrame(wx.Frame):
 
         # set environmental variables
         os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
-
-        # initialize variables
-        self.disp_idx      = 0            # index value for map displays and layer trees
-        self.curr_page     = ''           # currently selected page for layer tree notebook
-        self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
-        self.encoding      = 'ISO-8859-1' # default encoding for display fonts
-        self.workspaceFile = workspace    # workspace file
 
         # bindings
         self.Bind(wx.EVT_CLOSE,     self.OnCloseWindow)
@@ -242,10 +241,13 @@ class GMFrame(wx.Frame):
             helpString = gcmd + ' (' + help + ')'
         else:
             helpString = help
+
         menuItem = menu.Append(wx.ID_ANY, label, helpString, kind)
-        if label:
-            menucmd[label] = gcmd
+        
+        self.menucmd[menuItem.GetId()] = gcmd
+
         rhandler = eval(handler)
+
         self.Bind(wx.EVT_MENU, rhandler, menuItem)
 
     def __createNoteBook(self):
@@ -395,9 +397,7 @@ class GMFrame(wx.Frame):
 
 
         Return command as a list"""
-        menuitem = self.menubar.FindItemById(event.GetId())
-        itemtext = menuitem.GetText()
-        cmd = menucmd[itemtext]
+        cmd = self.menucmd[event.GetId()]
         try:
             cmdlist = cmd.split(' ')
         except: # already list?
