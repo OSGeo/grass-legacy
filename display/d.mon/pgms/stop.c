@@ -77,7 +77,7 @@ stop_mon (char *name, int forced)
 	    G_warning(_("Error - Monitor '%s' was not running"),name);
 	    break;
     case NO_MON:
-	    G_warning(_("Error - No such monitor as '%s'"),name);
+	    G_warning(_("No such monitor as <%s>"),name);
 	    break;
     case LOCKED:
 	    G_warning(_("Error - Monitor '%s' in use by another user"),name);

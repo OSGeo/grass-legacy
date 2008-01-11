@@ -428,7 +428,7 @@ int main(int argc, char *argv[])
     }
     else {
 	if((in_fp = fopen(infile, "r" )) == NULL )
-	    G_fatal_error(_("Could not open input file <%s>."), infile);
+	    G_fatal_error(_("Unable to open input file <%s>"), infile);
     }
 
     can_seek = fseek(in_fp, 0, SEEK_SET) == 0;

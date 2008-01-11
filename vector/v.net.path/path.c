@@ -43,7 +43,7 @@ int path ( struct Map_info *In, struct Map_info *Out, char *filename, int nfield
     if(filename) {
        /* open input file */
        if((in_file = fopen(filename, "r" )) == NULL )
-           G_fatal_error(_("Could not open input file <%s>."), filename);
+           G_fatal_error(_("Unable to open input file <%s>"), filename);
 				                                }
 
     AList = Vect_new_list ();

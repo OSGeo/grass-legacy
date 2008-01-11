@@ -191,7 +191,7 @@ main (int argc, char **argv)
     sprintf(in[0].name, "%s", x_opt->answer);
 
     if ((in[0].fp = fopen (in[0].full_name, "r")) == NULL)
-	G_fatal_error(_("Could not open input file <%s>."), in[0].full_name);
+	G_fatal_error(_("Unable to open input file <%s>"), in[0].full_name);
 
     num_y_files = 0;
     
@@ -203,7 +203,7 @@ main (int argc, char **argv)
 	 sprintf(in[j].name, "%s", name);
 
 	if ((in[j].fp = fopen (in[j].full_name, "r")) == NULL)
-	    G_fatal_error(_("Could not open input file <%s>."), in[j].full_name);
+	    G_fatal_error(_("Unable to open input file <%s>"), in[j].full_name);
 
 	num_y_files++;
 	if(num_y_files > 10)
