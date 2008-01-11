@@ -1,20 +1,16 @@
 <H2>DESCRIPTION</H2>
 
-<em>r.carve</em> takes vector stream data, transforms it to raster, and
-subtracts depth from the output DEM.
-
-<P>
-The program will take the vector stream data, transform them to
-raster, and subtracts a defaultdepth+additionaldepth from the DEM. If
-the given width is more than 1 cell it will carve the stream with the
-given width. With -n option it should eliminate all flat cells within
+<em>r.carve</em> accepts vector stream data as input, transforms them to
+raster, and subtracts a defaultdepth+additionaldepth from a DEM. If
+the given width is more than 1 cell, it will carve the stream with the
+given width. With the -n flag it should eliminate all flat cells within
 the stream, so when and if the water gets into the stream it will
 flow. The <em>points</em> option generates x,y,z for points which define the stream
-with the z value of the bottom of the carved-in stream. These points
+with the z-value of the bottom of the carved-in stream. These points
 can then be combined with contours to interpolate a new DEM with
 better representation of valleys.
 
-<H2>NOTES</H2>
+<H2>NOTE</H2>
 
 <em>r.carve</em> does not create a depressionless DEM because many
 depressions are in flat areas and not in the streams.
@@ -27,17 +23,11 @@ g.region rast=elevation.10m -p
 r.carve rast=elevation.10m vect=streams out=carve_dem width=20 depth=5
 </pre></div>
 
-<H2>BUGS AND CAVEAT</H2>
-
+<H2>BUGS</H2>
+<!-- Is this still the case as of Jan 11, 2008? - EP -->
 The module does not operate yet in latitude-longitude locations.  It
-has not been thoroughly tested so not all option may work properly -
+has not been thoroughly tested, so not all options may work properly -
 but this was the intention.
-
-<H2>SEE ALSO</H2>
-<EM><A HREF="r.flow.html">r.flow</A></EM>,
-<EM><A HREF="r.fill.dir.html">r.fill.dir</A></EM>,
-<EM><A HREF="r.watershed.html">r.watershed</A></EM> 
-
 
 <H2>REFERENCES</H2>
 
@@ -45,6 +35,11 @@ but this was the intention.
 modeling and Soil Erosion Simulations for Fort Hood and Fort Polk test
 areas</a>, by Helena Mitasova, Lubos Mitas, William M. Brown, Douglas
 M.  Johnston, GMSL (Report for CERL 1999)
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.flow.html">r.flow</A></EM>,
+<EM><A HREF="r.fill.dir.html">r.fill.dir</A></EM>,
+<EM><A HREF="r.watershed.html">r.watershed</A></EM> 
 
 <H2>AUTHOR</H2>
 Bill Brown (GMSL)<br>
