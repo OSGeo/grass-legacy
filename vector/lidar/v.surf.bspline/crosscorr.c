@@ -78,7 +78,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
 
     if (ndata > NDATA_MAX) 
 	G_warning (_("CrossCorrelation: %d are too many points. "
-		    "The cross validation would take too much time"), ndata);
+		    "The cross validation would take too much time."), ndata);
 
     /*points = Vect_new_line_struct ();*/
     /*Cats = Vect_new_cats_struct ();*/
@@ -90,7 +90,7 @@ cross_correlation (struct Map_info* Map, double passWE, double passNS)
     
     if (ndata > 50) 
 	G_warning (_("CrossCorrelation: Maybe, it takes too long. "
-		    "It will depend on how many points you are considering"));
+		    "It will depend on how many points you are considering."));
     else 
 	G_debug (5, "CrossCorrelation: It shouldn't take too long.");
 

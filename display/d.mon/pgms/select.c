@@ -27,7 +27,7 @@ main (int argc, char *argv[])
 
 	if (R_parse_monitorcap(MON_NAME,argv[1]) == NULL)
 	{
-		G_fatal_error(_("No such monitor as '%s'"),argv[1]);
+		G_fatal_error(_("No such monitor as <%s>"),argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
