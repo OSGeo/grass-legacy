@@ -164,6 +164,7 @@ int main(int argc, char *argv[])
     method_opt->description = _("Statistic to use for raster values");
     method_opt->options = "n,min,max,range,sum,mean,stddev,variance,coeff_var,median,percentile,skewness,trimmean";
     method_opt->answer = "mean";
+    method_opt->guisection = _("Output");
 
     type_opt = G_define_option();
     type_opt->key = "type";
@@ -172,8 +173,10 @@ int main(int argc, char *argv[])
     type_opt->options = "CELL,FCELL,DCELL";
     type_opt->answer = "FCELL";
     type_opt->description = _("Storage type for resultant raster map");
+    type_opt->guisection = _("Output");
 
     delim_opt = G_define_standard_option(G_OPT_F_SEP);
+    delim_opt->guisection = _("Input");
 
     xcol_opt = G_define_option();
     xcol_opt->key = "x";
@@ -182,6 +185,7 @@ int main(int argc, char *argv[])
     xcol_opt->answer = "1";
     xcol_opt->description =
 	_("Column number of x coordinates in input file (first column is 1)");
+    xcol_opt->guisection = _("Input");
 
     ycol_opt = G_define_option();
     ycol_opt->key = "y";
@@ -190,6 +194,7 @@ int main(int argc, char *argv[])
     ycol_opt->answer = "2";
     ycol_opt->description =
 	_("Column number of y coordinates in input file");
+    ycol_opt->guisection = _("Input");
 
     zcol_opt = G_define_option();
     zcol_opt->key = "z";
@@ -198,6 +203,7 @@ int main(int argc, char *argv[])
     zcol_opt->answer = "3";
     zcol_opt->description =
 	_("Column number of data values in input file");
+    zcol_opt->guisection = _("Input");
 
     zrange_opt = G_define_option();
     zrange_opt->key = "zrange";
@@ -205,6 +211,7 @@ int main(int argc, char *argv[])
     zrange_opt->required = NO;
     zrange_opt->key_desc   = "min,max";
     zrange_opt->description = _("Filter range for z data (min,max)");
+    zrange_opt->guisection = _("Input");
 
     percent_opt = G_define_option();
     percent_opt->key = "percent";
