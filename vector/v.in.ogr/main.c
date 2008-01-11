@@ -108,9 +108,11 @@ main (int argc, char *argv[])
     dsn_opt->description = _("Examples:\n"
 	"\t\tESRI Shapefile: directory containing shapefiles\n"
 	"\t\tMapInfo File: directory containing mapinfo files");
+    dsn_opt->guisection = _("Required");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->required = NO;
+    out_opt->guisection = _("Required");
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
@@ -121,6 +123,7 @@ main (int argc, char *argv[])
     layer_opt->description = _("Examples:\n"
 	"\t\tESRI Shapefile: shapefile name\n"
 	"\t\tMapInfo File: mapinfo file name");
+    layer_opt->guisection = _("Query");
 
     spat_opt = G_define_option();
     spat_opt->key = "spatial";
@@ -133,6 +136,7 @@ main (int argc, char *argv[])
     spat_opt->description = _("Format: xmin,ymin,xmax,ymax - usually W,S,E,N");
 
     where_opt = G_define_standard_option(G_OPT_WHERE);
+    where_opt->guisection = _("Query");
 
     min_area_opt = G_define_option();
     min_area_opt->key = "min_area";
@@ -153,6 +157,7 @@ main (int argc, char *argv[])
 	"line;import area boundaries as lines;"
 	"boundary;import lines as area boundaries;"
 	"centroid;import points as centroids");
+    type_opt->guisection = _("Query");
 
     snap_opt = G_define_option();
     snap_opt->key = "snap";
@@ -177,6 +182,7 @@ main (int argc, char *argv[])
     cnames_opt->description =
 	_("List of column names to be used instead of original names, "
 	  "first is used for category column");
+    cnames_opt->guisection = _("Attributes");
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
@@ -198,6 +204,7 @@ main (int argc, char *argv[])
     notab_flag = G_define_flag ();
     notab_flag->key             = 't';
     notab_flag->description = _("Do not create attribute table");
+    notab_flag->guisection = _("Attributes");
 
     over_flag = G_define_flag();
     over_flag->key = 'o';
@@ -215,6 +222,7 @@ main (int argc, char *argv[])
     tolower_flag = G_define_flag();
     tolower_flag->key = 'w';
     tolower_flag->description = _("Change column names to lowercase characters");
+    tolower_flag->guisection = _("Attributes");
 
      /* The parser checks if the map already exists in current mapset, this is
      * wrong if location options is used, so we switch out the check and do it
