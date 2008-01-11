@@ -50,6 +50,20 @@ using a different unit of measurement.
 
 <P>
 
+<H2>NOTES</H2>
+
+It is <B>not</B> a good idea to run <EM>r.coin</EM> on a
+map layer which has a monstrous number of categories (e.g.,
+unreclassed elevation).  Because <EM>r.coin</EM> reports
+information for each and every category, it is better to
+reclassify those categories (using <EM>r.reclass</EM>)
+into a more manageable number prior to running
+<EM>r.coin</EM> on the reclassed raster map layer.
+
+<P>
+
+<H2>EXAMPLE</H2>
+
 Below is a sample of tabular output produced by
 <EM>r.coin</EM>.  Here, map output is stated in units of
 square miles.  The report tabulates the coincidence of the
@@ -157,16 +171,6 @@ Panel #1 of 1
 |w/o 0   |     14.58 |     14.58 |
 +--------------------------------+
 </PRE>
-
-<H2>NOTES</H2>
-
-It is <B>not</B> a good idea to run <EM>r.coin</EM> on a
-map layer which has a monstrous number of categories (e.g.,
-unreclassed elevation).  Because <EM>r.coin</EM> reports
-information for each and every category, it is better to
-reclassify those categories (using <EM>r.reclass</EM>)
-into a more manageable number prior to running
-<EM>r.coin</EM> on the reclassed raster map layer.
 
 <P>
 
