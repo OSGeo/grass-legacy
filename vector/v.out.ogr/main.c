@@ -93,7 +93,8 @@ main (int argc, char *argv[])
     type_opt->answer = "line,boundary";
     type_opt->description = _("Feature type. Combination of types is not supported"
                               " by all formats.");
-    
+    type_opt->guisection = _("Input");
+
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
@@ -107,8 +108,10 @@ main (int argc, char *argv[])
     layer_opt->required = NO;
     layer_opt->label = _("OGR layer name. If not specified, input name is used.");
     layer_opt->description = _("For example: ESRI Shapefile: shapefile name");
+    layer_opt->guisection = _("Output");
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
+    field_opt->guisection = _("Input");
 
     frmt_opt = G_define_option();
     frmt_opt->key = "format";
@@ -118,7 +121,8 @@ main (int argc, char *argv[])
     frmt_opt->answer = "ESRI_Shapefile";
     frmt_opt->options = OGR_list_write_drivers();
     frmt_opt->description = _("OGR format");
-    
+    frmt_opt->guisection = _("Output");
+
     dsco              = G_define_option();
     dsco->key         = "dsco";
     dsco->type        = TYPE_STRING;
@@ -126,7 +130,8 @@ main (int argc, char *argv[])
     dsco->multiple    = YES;
     dsco->answer      = "";
     dsco->description = _("OGR dataset creation option (format specific, NAME=VALUE)");
-    
+    dsco->guisection = _("Output");
+
     lco               = G_define_option();
     lco->key          = "lco";
     lco->type         = TYPE_STRING;
@@ -134,11 +139,12 @@ main (int argc, char *argv[])
     lco->multiple     = YES;
     lco->answer       = "";
     lco->description  = _("OGR layer creation option (format specific, NAME=VALUE)");
-    
+    lco->guisection = _("Output");
+	
     cat_flag = G_define_flag ();
     cat_flag->key            = 'c';
     cat_flag->description    = _("Export features with category (labeled) only. "
-			       "Otherwise all features are exported");
+				 "Otherwise all features are exported");
 
     esristyle = G_define_flag();
     esristyle->key = 'e';
