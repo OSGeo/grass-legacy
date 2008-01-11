@@ -63,9 +63,9 @@ int G_read_colors (
     struct Colors *colors )
 {
     int fp;
-    char buf[512];
+    char buf[GNAME_MAX];
     char *err;
-    char xname[512], xmapset[512];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     struct Range range;
     struct FPRange drange;
     CELL min, max;

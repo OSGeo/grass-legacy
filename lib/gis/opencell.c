@@ -363,7 +363,7 @@ int G__open_cell_old (
 
 /* save name and mapset */
     {
-    char xname[512], xmapset[512];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     if (G__name_is_fully_qualified(name, xname, xmapset))
 	fcb->name   = G_store (xname);
     else

@@ -349,8 +349,8 @@ static char *ask (
     int (*lister)(),
     int type)
 {
-    char tmapset[256];
-    char xname[512], xmapset[512];
+    char tmapset[GMAPSET_MAX];
+    char xname[GNAME_MAX], xmapset[GMAPSET_MAX];
     int  name_is_qualified;
     int  ok;
     char tprompt[256];

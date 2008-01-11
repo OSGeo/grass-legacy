@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       GRASS 5 gis library, get_projname.c
@@ -23,7 +21,7 @@
 int G_ask_proj_name (char *proj_id, char *proj_name)
 
 {
-	char path[1024], buff[1024], answer[50], *a;
+	char path[GPATH_MAX], buff[GPATH_MAX], answer[50], *a;
         struct Key_Value *in_proj_keys;
 	char  *Tmp_file;
         FILE  *Tmp_fd = NULL;
@@ -31,16 +29,10 @@ int G_ask_proj_name (char *proj_id, char *proj_name)
 
         sprintf(path,"%s/etc/projections",G_gisbase());
         while (access(path,0) !=0)
-        { 
-          sprintf(buff,_("%s not found"),path);
-          G_fatal_error(buff);
-        }
+          G_fatal_error(_("%s not found"),path);
         in_proj_keys = G_read_key_value_file(path,&in_stat);
         if (in_stat != 0)
-        {
-          sprintf(buff,_("ERROR in reading %s"),path);
-          G_fatal_error(buff);
-        }
+          G_fatal_error(_("ERROR in reading %s"),path);
         npr = in_proj_keys->nitems;
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
