@@ -1,8 +1,7 @@
 HOWTO translate GRASS messages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-$Id$
-
+$Date$
 
 [ Web page: http://grass.osgeo.org/devel/i18n.php ]
 
@@ -91,10 +90,11 @@ Semi-automated procedure:
                         binary file)
 
 If you have any difficulty with these instructions please ask for help
-on the grass development mailing list <grass-dev AT grass.itc.it> (subscribe
-at http://grass.itc.it/mailman/listinfo/grass-dev). Your willingness, time,
-and effort translating are valuable. If necessary, all of these steps except
-for the actual translation can be done by someone else on a different computer. 
+on the GRASS development mailing list <grass-dev lists.osgeo.org>
+(subscribe at http://lists.osgeo.org/mailman/listinfo/grass-dev). Your
+willingness, time, and effort translating are valuable. If necessary,
+all of these steps except for the actual translation can be done by
+someone else on a different computer.
 
 A convenient software package to translate messages is 'kbabel'.
 It permits to enhance it's message database by loading existing
@@ -224,14 +224,14 @@ DETAILED PROCEDURE :
 
 7. Send the updated .po files to a GRASS Development Team member.
    If possible, please send diffs against CVS:
-   cvs diff -u grasslibs_LANG.po > grasslibs_LANG_po.diff
-   cvs diff -u grassmods_LANG.po > grassmods_LANG_po.diff
-   cvs diff -u grasstcl_LANG.po > grasstcl_LANG_po.diff
+   svn diff grasslibs_LANG.po > grasslibs_LANG_po.diff
+   svn diff grassmods_LANG.po > grassmods_LANG_po.diff
+   svn diff grasstcl_LANG.po > grasstcl_LANG_po.diff
 
    If you updated .c files with _() macros as explained
-   above, please send C file diffs against CVS:
+   above, please send C file diffs against SVN:
    
-   cvs diff -u file.c > file.diff
+   svn diff file.c > file.diff
    
    Thanks for submitting.
 
@@ -244,7 +244,7 @@ LINKS
 
 - KBabel: http://i18n.kde.org/tools/kbabel/
 - poEdit: http://poedit.sourceforge.net/
-- *.po files for many languages:  KDE translator center, http://i18n.kde.org/teams/
+- *.po files for many languages: KDE translator center, http://i18n.kde.org/teams/
 
 NOTES
 
