@@ -1,24 +1,19 @@
-/****************************************************************
- *
- * MODULE:     v.edit
- *
- * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa
- *
- * PURPOSE:    This module edits vector maps. 
- *             Vertex operations.
- *
- * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
- *
- *             This program is free software under the
- *             GNU General Public License (>=v2).
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- ****************************************************************/
+/**
+   \brief Vedit library - vertex manipulation
 
-#include "global.h"
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2006-2008 by the GRASS Development Team
+   Jachym Cepicky <jachym.cepicky gmail.com>
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2006-2008
+*/
+
+#include "vedit.h"
 
 /**
    \brief Move all vertices in bounding box(es)
@@ -28,18 +23,18 @@
    \param[in] List list of selected features
    \param[in] coord points location
    \param[in] thresh threshold value (also size of bounding boxes) (>0)
-   \param[in] move_x,move_y X,Y direction for moving
+   \param[in] move_x,move_y,move_z direction (move_z is used when map is 3D)
    \param[in] move_first move only first vertex found in the bounding box
-   \param[in] snap allow snapping (see global.h)
+   \param[in] snap snapping mode (see vedit.h)
 
    \return number of moved verteces
    \return -1 on error
  */
-int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
-		   struct ilist *List,
-		   struct line_pnts* coord, double thresh,
-		   double move_x, double move_y,
-		   int move_first, int snap)
+int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
+		      struct ilist *List,
+		      struct line_pnts* coord, double thresh,
+		      double move_x, double move_y, double move_z,
+		      int move_first, int snap)
 {
     int nvertices_moved, nlines_modified, nvertices_snapped;
 
@@ -97,22 +92,25 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 						 x[k], y[k], z[k],
 						 WITHOUT_Z);
 		    if (dist <= thresh) {
-			G_debug (3, "do_move_vertex(): line=%d; x=%f, y=%f -> x=%f, y=%f",
+			G_debug (3, "Vedit_move_vertex(): line=%d; x=%f, y=%f -> x=%f, y=%f",
 				 line, x[k], y[k], x[k] + move_x, y[k] + move_y);
 			x[k] += move_x;
 			y[k] += move_y;
+			if (Vect_is_3d(Map))
+			  z[k] += move_z;
+
 			moved[k] = 1;
 
-			G_debug (3, "line=%d, point=%d moved", line, k);
+			G_debug (3, "Vedit_move_vertex(): line=%d, point=%d", line, k);
 			
 			if (snap != NO_SNAP) {
-			    if (do_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
-					      (snap == SNAPVERTEX) ? 1 : 0) == 0) {
+			    if (Vedit_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
+						(snap == SNAPVERTEX) ? 1 : 0) == 0) {
 				/* check also background maps */
 				int bgi;
 				for (bgi = 0; bgi < nbgmaps; bgi++) {
-				    if (do_snap_point(BgMap[i], line, &x[k], &y[k], &z[k], thresh,
-						      (snap == SNAPVERTEX) ? 1 : 0))
+				    if (Vedit_snap_point(BgMap[i], line, &x[k], &y[k], &z[k], thresh,
+							 (snap == SNAPVERTEX) ? 1 : 0))
 					moved[k] = 2;
 					break; /* snapped, don't continue */
 				}
@@ -140,12 +138,14 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 		if (moved[0] == 1) { /* first node moved */
 		    x[0] = x[npoints-1];
 		    y[0] = y[npoints-1];
-		    z[0] = z[npoints-1];
+		    if (Vect_is_3d(Map))
+			z[0] = z[npoints-1];
 		}
 		else if (moved[npoints-1] == 1) { /* last node moved */
 		    x[npoints-1] = x[0];
 		    y[npoints-1] = y[0];
-		    z[npoints-1] = z[0];
+		    if (Vect_is_3d(Map))
+			z[npoints-1] = z[0];
 		}
 	    }
 	} /* for each coord */
@@ -173,7 +173,9 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
    \brief Add new vertex to line.
 
    Shape of line is not changed.
- 
+
+   TODO: 3D
+
    \param[in] Map vector map
    \param[in] List list of features
    \param[in] coord points location
@@ -182,8 +184,8 @@ int do_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
    \return number of add verteces
    \return -1 on error
 */
-int do_add_vertex (struct Map_info *Map, struct ilist *List,
-		   struct line_pnts* coord, double thresh)
+int Vedit_add_vertex(struct Map_info *Map, struct ilist *List,
+		     struct line_pnts* coord, double thresh)
 {
     int i, j;
     int type, line, seg;
@@ -231,7 +233,7 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List,
 		Vect_points_distance (px, py, 0.0, x[seg-1], y[seg-1], z[seg-1], WITHOUT_Z) > 0) {
 		/* add new vertex */
 		Vect_line_insert_point (Points, seg, px, py, 0.0);
-		G_debug (3, "do_add_vertex(): line=%d; x=%f, y=%f, index=%d", line, px, py, seg);
+		G_debug (3, "Vedit_add_vertex(): line=%d; x=%f, y=%f, index=%d", line, px, py, seg);
 		rewrite = 1;
 		nvertices_added++;
 	    }
@@ -258,7 +260,9 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List,
 
 /**
    \brief Remove vertex from line
-   
+
+   TODO: 3D
+
    \param[in] Map vector map
    \param[in] List list of selected features
    \param[in] coord points location
@@ -267,8 +271,8 @@ int do_add_vertex (struct Map_info *Map, struct ilist *List,
    \return number of removed vertices
    \return -1 on error
 */
-int do_remove_vertex(struct Map_info *Map, struct ilist *List,
-		     struct line_pnts *coord, double thresh)
+int Vedit_remove_vertex(struct Map_info *Map, struct ilist *List,
+			struct line_pnts *coord, double thresh)
 {
     int i, j, k;
     int type, line;
@@ -311,7 +315,7 @@ int do_remove_vertex(struct Map_info *Map, struct ilist *List,
 		if (dist <= thresh) {
 		    /* remove vertex */
 		    Vect_line_delete_point (Points, k);
-		    G_debug (3, "do_remove_vertex(): line=%d; x=%f, y=%f, index=%d", line, x[k], y[k], k);
+		    G_debug (3, "Vedit_remove_vertex(): line=%d; x=%f, y=%f, index=%d", line, x[k], y[k], k);
 		    k--;
 		    nvertices_removed++;
 		    rewrite = 1;

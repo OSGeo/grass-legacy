@@ -1,41 +1,19 @@
-/****************************************************************
- *
- * MODULE:     v.edit
- *
- * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym.cepicky gmail.com>
- *             Martin Landa <martin.landa gmail.com>
- *
- * PURPOSE:    This module edits vector map. 
- *             Break / connect the line
- *
- * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
- *
- *             This program is free software under the
- *             GNU General Public License (>=v2).
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- ****************************************************************/
+/**
+   \brief Vedit library - split/break line
+
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2007-2008 by the GRASS Development Team
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2007-2008
+*/
 
 #include <math.h>
-#include "global.h"
-
-/**
-   \brief Break selected lines
-
-   \param[in] Map vector map
-   \param[in] List list of selected lines
-
-   \return number of modified lines
-   \return -1 on error
- */
-
-int do_break (struct Map_info *Map, struct ilist *List) {
-
-    return Vect_break_lines_list(Map, List,
-				 GV_LINES, NULL, NULL);
-}
+#include "vedit.h"
 
 /**
    \brief Split selected lines on given position
@@ -48,9 +26,9 @@ int do_break (struct Map_info *Map, struct ilist *List) {
    \return number of modified lines
    \return -1 on error
  */
-int do_split (struct Map_info *Map, struct ilist *List,
-	      struct line_pnts *coord, double thresh,
-	      struct ilist *List_updated)
+int Vedit_split_lines(struct Map_info *Map, struct ilist *List,
+		      struct line_pnts *coord, double thresh,
+		      struct ilist *List_updated)
 {
     int i, j, l;
     int type, line, seg, newline;
@@ -159,11 +137,12 @@ int do_split (struct Map_info *Map, struct ilist *List,
    \param[in] List list of selected lines
    \param[in] thresh threshold value for connect
 
-   \return  number of modified lines
+   \return  1 lines connected
+   \return  0 lines not connected
    \return -1 on error
  */
-int do_connect (struct Map_info *Map, struct ilist *List,
-		double thresh)
+int Vedit_connect_lines (struct Map_info *Map, struct ilist *List,
+			 double thresh)
 {
     int nlines_modified, newline, intersection, linep, nlines_to_modify;
     int i, idx, pnt_idx[2];
@@ -320,9 +299,9 @@ int do_connect (struct Map_info *Map, struct ilist *List,
 	    Vect_list_append (List_break, line[1]);
 	    struct line_pnts *coord = Vect_new_line_struct();
 	    Vect_append_point(coord, nx[pnt_idx[1]], ny[pnt_idx[1]], nz[pnt_idx[1]]);
-	    do_split (Map, List_break, 
-		      coord, 1e-1, 
-		      List_updated);
+	    Vedit_split_lines(Map, List_break, 
+			      coord, 1e-1, 
+			      List_updated);
 	    Vect_destroy_line_struct(coord);
 	    /* snap lines */
 	    Vect_snap_lines_list (Map, List_updated, 1e-1, NULL, NULL);
@@ -345,5 +324,5 @@ int do_connect (struct Map_info *Map, struct ilist *List,
     Vect_destroy_list (List_break);
     Vect_destroy_list (List_updated);
 
-    return nlines_modified;
+    return nlines_modified == 2 ? 1 : 0;
 }

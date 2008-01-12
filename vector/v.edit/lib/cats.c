@@ -1,23 +1,19 @@
-/***************************************************************
- *
- * MODULE:     v.edit
- * 
- * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Radim Blazek, Martin Landa
- *               
- * PURPOSE:    This module edits vector maps.
- *
- * COPYRIGHT:  (C) 2001-2007 The GRASS Development Team
- *
- *             This program is free software under the 
- *             GNU General Public License (>=v2). 
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- **************************************************************/
+/**
+   \brief Vedit library - category manipulation
 
-#include "global.h"
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2006-2008 by the GRASS Development Team
+   Jachym Cepicky <jachym.cepicky gmail.com>
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2006-2008
+*/
+
+#include "vedit.h"
 
 /**
    \brief Edit category numbers of selected vector features
@@ -31,25 +27,17 @@
    \return number of modified features
    \return -1 on error
 */
-int cats (struct Map_info *Map, struct ilist *List,
-	  int layer, int del, char *cats_list)
+int Vedit_modify_cats (struct Map_info *Map, struct ilist *List,
+		       int layer, int del, struct cat_list *Clist)
 {
     int i, j;
     struct line_cats *Cats;
     struct line_pnts *Points;
-    struct cat_list *Clist;
     int line, type, cat;
     int nlines_modified, rewrite;
     
     nlines_modified = 0;
 
-    /* get list of categories */
-    Clist = Vect_new_cat_list();
-    if (Vect_str_to_cat_list(cats_list, Clist)) {
-	G_warning (_("Unable to get category list <%s>, editing terminated"), cats_list);
-	return -1;
-    }
-    
     /* features defined by cats */
     if(Clist->n_ranges > 0) {
 	Cats   = Vect_new_cats_struct (); 

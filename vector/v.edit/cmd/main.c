@@ -2,12 +2,12 @@
  *
  * MODULE:     v.edit
  *
+ * PURPOSE:    Editing vector map.
+ *
  * AUTHOR(S):  GRASS Development Team
  *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector map.
- *
- * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
@@ -39,11 +39,14 @@ int main (int argc, char *argv[])
 
     struct ilist *List;
 
+    struct cat_list *Clist;
+
     ascii  = NULL;
     List   = NULL;
     BgMap  = NULL;
     nbgmaps = 0;
     coord  = NULL;
+    Clist  = NULL;
 
     G_gisinit(argv[0]);
 
@@ -54,6 +57,13 @@ int main (int argc, char *argv[])
 
     if(!parser(argc, argv, &params, &action_mode))
 	exit(EXIT_FAILURE);
+
+    /* get list of categories */
+    Clist = Vect_new_cat_list();
+    if (Vect_str_to_cat_list(params.cat->answer, Clist)) {
+	G_fatal_error (_("Unable to get category list <%s>"),
+		       params.cat->answer);
+    }
 
     /* open input file */
     if (G_strcasecmp (params.in -> answer, "-") == 0 ||
@@ -213,81 +223,82 @@ int main (int argc, char *argv[])
 	G_message(_("%d features added"), ret);
 	if (ret > 0) {
 	    if (snap != NO_SNAP) { /* apply snapping */
-		do_snapping (&Map, BgMap, nbgmaps,
-			     List_added,
-			     thresh,
-			     snap == SNAP ? 0 : 1); /* snap to vertex ? */
+		Vedit_snap_lines(&Map, BgMap, nbgmaps,
+				 List_added,
+				 thresh,
+				 snap == SNAP ? 0 : 1); /* snap to vertex ? */
 	    }
 	    if (params.close -> answer) { /* close boundaries */
 		int nclosed;
-		nclosed = do_close (&Map, GV_BOUNDARY, thresh);
+		nclosed = close_lines(&Map, GV_BOUNDARY, thresh);
 		G_message (_("%d lines closed"), nclosed);
 	    }
 	}
 	Vect_destroy_list (List_added);
 	break;
     case MODE_DEL:
-	ret = do_delete(&Map, List);
+	ret = Vedit_delete_lines(&Map, List);
 	G_message(_("%d features deleted"), ret);
 	break;
     case MODE_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
-	ret = do_move(&Map, List,
-		      move_x, move_y, snap, thresh);
+	ret = Vedit_move_lines(&Map, List,
+			       move_x, move_y, 0.0, snap, thresh); /* TODO: 3D */
 	G_message(_("%d features moved"), ret);
 	break;
     case MODE_VERTEX_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
-	ret = do_move_vertex (&Map, BgMap, nbgmaps,
-			      List,
-			      coord, thresh,
-			      move_x, move_y,
-			      move_first, snap);
+	ret = Vedit_move_vertex(&Map, BgMap, nbgmaps,
+				List,
+				coord, thresh,
+				move_x, move_y, 0.0, /* TODO: 3D */
+				move_first, snap);
 	G_message(_("%d vertices moved"), ret);
 	break;
     case MODE_VERTEX_ADD:
-	ret = do_add_vertex (&Map, List,
-			     coord, thresh);
+	ret = Vedit_add_vertex(&Map, List,
+			       coord, thresh);
 	G_message(_("%d vertices added"), ret);    
 	break;
     case MODE_VERTEX_DELETE:
-	ret = do_remove_vertex(&Map, List,
-			       coord, thresh);
+	ret = Vedit_remove_vertex(&Map, List,
+				  coord, thresh);
 	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
 	if (params.coord->answer) {
-	    ret = do_split(&Map, List,
-			   coord, thresh, NULL);
+	    ret = Vedit_split_lines(&Map, List,
+				    coord, thresh, NULL);
 	}
 	else {
-	    ret = do_break(&Map, List);
+	    ret = Vect_break_lines_list(&Map, List,
+					GV_LINES, NULL, NULL);
 	}
 	G_message(_("%d lines broken"), ret);
 	break;
     case MODE_CONNECT:
-	ret = do_connect(&Map, List,
-			 thresh);
+	ret = Vedit_connect_lines(&Map, List,
+				  thresh);
 	G_message(_("%d lines connected"), ret);
       	break;
     case MODE_MERGE:
-	ret = do_merge(&Map, List);
+	ret = Vedit_merge_lines(&Map, List);
 	G_message (_("%d lines merged"), ret);
     	break;
     case MODE_SELECT:
 	print = 1;
-	ret = do_print_selected(List);
+	ret = print_selected(List);
 	break;
     case MODE_CATADD:
-	ret = cats(&Map, List,
-		   layer, 0, params.cat -> answer);
+	ret = Vedit_modify_cats(&Map, List,
+				layer, 0, Clist);
 	G_message(_("%d features modified"), ret);
     	break;
     case MODE_CATDEL:
-	ret = cats(&Map, List,
-		   layer, 1, params.cat -> answer);
+	ret = Vedit_modify_cats(&Map, List,
+				layer, 1, Clist);
 	G_message(_("%d features modified"), ret);
 	break;
     case MODE_COPY:
@@ -298,18 +309,18 @@ int main (int argc, char *argv[])
 			    "vector map <%s>."),
 			  Vect_get_full_name(BgMap[0]));
 	    
-	    ret = do_copy(&Map, BgMap[0], List);
+	    ret = Vedit_copy_lines(&Map, BgMap[0], List);
 	}
 	else {
-	    ret = do_copy(&Map, NULL, List);
+	    ret = Vedit_copy_lines(&Map, NULL, List);
 	}
 	G_message (_("%d features copied"), ret);
 	break;
     case MODE_SNAP:
-	ret = do_snap(&Map, List, thresh);
+	ret = snap_lines(&Map, List, thresh);
 	break;
     case MODE_FLIP:
-	ret = do_flip(&Map, List);
+	ret = Vedit_flip_lines(&Map, List);
 	G_message(_("%d lines flipped"), ret);
 	break;
     case MODE_NONE:
@@ -327,9 +338,9 @@ int main (int argc, char *argv[])
 	x2    = atof(params.bbox->answers[2]);
 	y2    = atof(params.bbox->answers[3]);
 
-	ret = bulk_labeling (&Map, List,
-			     x1, y1, x2, y2,
-			     start, step);
+	ret = Vedit_bulk_labeling (&Map, List,
+				   x1, y1, x2, y2,
+				   start, step);
 
 	G_message(_("%d lines labeled"), ret);
 	break;
@@ -380,6 +391,9 @@ int main (int argc, char *argv[])
 
     if (coord)
 	Vect_destroy_line_struct(coord);
+
+    if (Clist) 
+	Vect_destroy_cat_list(Clist);
 
     G_done_msg (" ");
 

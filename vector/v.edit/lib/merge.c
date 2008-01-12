@@ -1,24 +1,19 @@
-/****************************************************************
- *
- * MODULE:     v.edit
- *
- * AUTHOR(S):  GRASS Development Team
- *             Original author Jachym Cepicky <jachym  les-ejk cz>
- *             Updated by Martin Landa <landa.martin gmail.com> (2007/03)
- *
- * PURPOSE:    This module edits vector map.
- *             Merge lines.
- *
- * COPYRIGHT:  (C) 2002-2008 by the GRASS Development Team
- *
- *             This program is free software under the
- *             GNU General Public License (>=v2).
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- ****************************************************************/
+/**
+   \brief Vedit library - merge lines
 
-#include "global.h"
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2006-2008 by the GRASS Development Team
+   Jachym Cepicky <jachym.cepicky gmail.com>
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2006-2008
+*/
+
+#include "vedit.h"
 
 /**
    \brief Merge two given lines a, b
@@ -42,13 +37,15 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
 /**
    \brief Merge lines/boundaries
  
+   At least two lines need to be given.
+
    \param[in] Map vector map
    \param[in] List list of selected features
 
    \return number of merged lines
    \return -1 on error
 */
-int do_merge(struct Map_info *Map, struct ilist *List)
+int Vedit_merge_lines(struct Map_info *Map, struct ilist *List)
 {
     struct ilist *List_in_box;
     
@@ -66,7 +63,7 @@ int do_merge(struct Map_info *Map, struct ilist *List)
     if (List->n_values < 2) {
 	G_warning (_("Only %d lines found, at least two needed"),
 		   List->n_values);
-	return -1;
+	return 0;
     }
     
     Points1 = Vect_new_line_struct();
@@ -202,8 +199,8 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
     double mindist;
     
     /* find mininal distance and its index */
-    mindist = min_distance_line (Points1, Points2,
-				 &mindistidx);
+    mindist = Vedit_get_min_distance(Points1, Points2, 0, /* TODO 3D */
+				     &mindistidx);
 
     G_debug (3, "merge line ? index: %d, mindist: %g, thresh: %g",
 	     mindistidx, mindist, thresh);

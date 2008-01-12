@@ -2,20 +2,19 @@
  *
  * MODULE:     v.edit
  *
+ * PURPOSE:    Editing vector map.
+ *
  * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa <landa.martin gmail.com>
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector map.
- *             Select vector features.
- *
- * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
+ * TODO:       3D support
  ****************************************************************/
 
 #include <grass/dbmi.h>
@@ -176,7 +175,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
    \return number of selected features
    \return -1 on error
 */
-int do_print_selected(struct ilist *List)
+int print_selected(struct ilist *List)
 {
     int i;
 
