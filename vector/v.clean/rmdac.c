@@ -52,7 +52,7 @@ rmdac ( struct Map_info *Out, struct Map_info *Err )
 		ndupl++;
 
 		if (G_verbose() > G_verbose_min())
-		  fprintf (stderr, _("\rDuplicate area centroids: %5d"), ndupl);
+		  fprintf (stderr, "\r%s: %5d", _("Duplicate area centroids"), ndupl);
 
 		if (Err) {
 		    Vect_write_line(Err, type, Points, Cats);

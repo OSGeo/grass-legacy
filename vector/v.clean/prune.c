@@ -190,7 +190,7 @@ prune ( struct Map_info *Out, int otype, double thresh, struct Map_info *Err)
 	    }
 		
 	    if (G_verbose() > G_verbose_min()) 
-	      fprintf (stderr, _("\rRemoved vertices: %5d"), nremoved);
+	      fprintf (stderr, "\r%s: %5d", _("Removed vertices"), nremoved);
 	    
 	    fflush ( stderr );
 	}
