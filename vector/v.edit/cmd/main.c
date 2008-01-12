@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
 
     /* get list of categories */
     Clist = Vect_new_cat_list();
-    if (Vect_str_to_cat_list(params.cat->answer, Clist)) {
+    if (params.cat->answer && Vect_str_to_cat_list(params.cat->answer, Clist)) {
 	G_fatal_error (_("Unable to get category list <%s>"),
 		       params.cat->answer);
     }
