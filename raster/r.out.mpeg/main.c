@@ -215,7 +215,7 @@ static int load_files(void)
 
 	    strcpy(name, vfiles[vnum][cnt]);
 	    if (!quiet)
-		G_message(_("\rReading file '%s'"), name);
+		G_message("\r%s <%s>", _("Reading file"), name);
 
 	    mapset = G_find_cell2 (name, "");
 	    if (mapset == NULL)

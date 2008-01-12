@@ -504,7 +504,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    }
 	    i++; j++;
 	}
-	prnmsg (_("\r%d primitives registered      \n"), plus->n_lines);
+	prnmsg ("\r%d %s      \n", plus->n_lines, _("primitives registered"));
 
 	plus->built = GV_BUILD_BASE;
     }
@@ -531,7 +531,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		Vect_build_line_area ( Map, i, side );
 	    }
 	}
-	prnmsg (_("\r%d areas built      \n%d isles built\n"), plus->n_areas, plus->n_isles );
+	prnmsg ("\r%d %s      \n%d %s\n", plus->n_areas, _("areas built"), plus->n_isles, _("isles built"));
 	plus->built = GV_BUILD_AREAS;
     }
     
