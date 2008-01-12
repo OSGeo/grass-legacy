@@ -95,6 +95,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> in -> required    = NO;
     params -> in -> label       = _("ASCII file to be converted to binary vector map");
     params -> in -> description = _("If not given (or \"-\") reads from standard input");
+    params -> in -> guisection  = _("Input");
 
     params -> move = G_define_option();
     params -> move->key         = "move";
@@ -207,7 +208,8 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
     params -> header -> description  = _("Do not expect header of input data");
-	
+    params -> header -> guisection  = _("Input");
+
     params -> topo = G_define_flag();
     params -> topo -> key = 't';
     params -> topo -> description = _("Do not build topology");
