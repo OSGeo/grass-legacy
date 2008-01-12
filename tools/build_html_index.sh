@@ -88,7 +88,7 @@ write_html_footer()
 # $2: help index url
 echo "<hr>" >> $1
 echo "<p><a href=\"$2\">Help Index</a> | <a href=\"full_index.html\">Full Index</a><br>" >> $1
-echo "&copy; 2003-2007 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>" >> $1
+echo "&copy; 2003-2008 <a href=\"http://grass.osgeo.org\">GRASS Development Team</a></p>" >> $1
 echo "</body>" >> $1   
 echo "</html>" >> $1
 }
