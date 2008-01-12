@@ -1,24 +1,19 @@
-/***************************************************************
- *
- * MODULE:     v.edit
- * 
- * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa <landa.martin gmail.com>
- *               
- * PURPOSE:    This module edits vector map.
- *             Copy selected features.
- *
- * COPYRIGHT:  (C) 2007 by the GRASS Development Team
- *
- *             This program is free software under the 
- *             GNU General Public License (>=v2). 
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- **************************************************************/
+/**
+   \brief Vedit library - copy features
 
-#include "global.h"
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2007-2008 by the GRASS Development Team
+   Jachym Cepicky <jachym.cepicky gmail.com>
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2007-2008
+*/
+
+#include "vedit.h"
 
 /**
    \brief Copy selected features
@@ -30,7 +25,8 @@
    \return number of copied features
    \return -1 on error 
  */
-int do_copy (struct Map_info *Map, struct Map_info *FromMap, struct ilist *List)
+int Vedit_copy_lines (struct Map_info *Map, struct Map_info *FromMap,
+		      struct ilist *List)
 {
     struct line_cats *Cats;
     struct line_pnts *Points;

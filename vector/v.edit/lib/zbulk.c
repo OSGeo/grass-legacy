@@ -1,24 +1,19 @@
-/***************************************************************
- *
- * MODULE:     v.edit
- * 
- * AUTHOR(S):  GRASS Development Team
- *             Martin Landa <landa.martin gmail.com>
- *               
- * PURPOSE:    This module edits vector maps.
- *             Bulk labeling (automated labeling of vector features)
- *
- * COPYRIGHT:  (C) 2007 The GRASS Development Team
- *
- *             This program is free software under the 
- *             GNU General Public License (>=v2). 
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- **************************************************************/
+/**
+   \brief Vedit library - Bulk labeling (automated labeling of vector features)
+
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2007-2008 by the GRASS Development Team
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2007-2008
+*/
 
 #include <grass/dbmi.h>
-#include "global.h"
+#include "vedit.h"
 
 /**
    \brief Z bulk-labeling.
@@ -34,9 +29,9 @@
    \return number of modified features
    \return -1 on error
 */
-int bulk_labeling (struct Map_info *Map, struct ilist *List,
-		   double x1, double y1, double x2, double y2,
-		   double start, double step)
+int Vedit_bulk_labeling (struct Map_info *Map, struct ilist *List,
+			 double x1, double y1, double x2, double y2,
+			 double start, double step)
 {
     int i, cv_i, p_i;
     int line, type, temp_line;
