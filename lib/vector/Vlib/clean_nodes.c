@@ -1,33 +1,40 @@
-/* **************************************************************
- * 
- * MODULE:       vector library
- * 
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean boundaries at nodes
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
+/*!
+  \file clean_nodes.c
+  
+  \brief Vector library - Clean boundaries at nodes
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /*!
- \fn void Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout)
- \brief It may happen that even if the angle between 2 boundaries at node is very small,
-        the calculated angle is 0 because of representation error.
-	The map must be built at least on level GV_BUILD_BASE
+  \brief Clean small angles at nodes.
 
- \param Map input map
- \param Err vector map where error line segments are written
- \param msgout file pointer where messages will be written or NULL
- \return number of line modifications
+  It may happen that even if the angle between 2 boundaries at node is
+  very small, the calculated angle is 0 because of
+  representation error.  The map must be built at least on level
+  GV_BUILD_BASE
+
+  \param Map input map
+  \param Err vector map where error line segments are written
+  \param msgout file pointer where messages will be written or NULL
+
+  \return number of line modifications
 */
 int 
 Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_info *Err, FILE *msgout)
@@ -42,7 +49,7 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
     LCats = Vect_new_cats_struct ();
     OCats = Vect_new_cats_struct ();
 
-    if ( msgout ) fprintf (msgout, "Modifications: %5d", nmodif ); 
+    if ( msgout ) fprintf (msgout, "%s: %5d", _("Modifications"), nmodif ); 
     
     for ( node = 1; node <= Vect_get_num_nodes(Map); node++ ){ 
 	int i, nlines;
@@ -206,7 +213,7 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 	    }
     
 	    if ( msgout ) {
-		fprintf (msgout, "\rModifications: %5d", nmodif ); 
+		fprintf (msgout, "\r%s: %5d", _("Modifications"), nmodif ); 
 		fflush ( msgout );
 	    }
 
@@ -220,4 +227,3 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 
     return (nmodif);
 }
-

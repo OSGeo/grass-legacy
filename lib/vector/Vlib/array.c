@@ -1,18 +1,22 @@
-/*****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file array.c
+  
+  \brief Vector library - array structure
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
@@ -26,12 +30,15 @@ static int in_array(int *cats, size_t ncats, int cat);
 
 
 /*!
-  \fn VARRAY *Vect_new_varray (int size)
   \brief Create new VARRAY and allocate space for given number of items.
+
   Space allocated is 'size + 1' so that lines are accessed by line id.
   Array values are set to 0.
-  Returns : pointer to new VARRAY
-            NULL if failed
+  
+  \param size size of array
+
+  \return pointer to new VARRAY
+  \return NULL if failed
  */
 
 VARRAY *
@@ -55,17 +62,23 @@ Vect_new_varray (int size)
 }
 
 /*!
-  \fn int Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring,
-                                int type, int value, VARRAY *varray )
-  \brief Set values in 'varray' to 'value' if category of object of given type is in 
-  'cstring' (string representing category list like: '1,3,5-7').
-  'type' may be either: GV_AREA
-                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+  \brief Set values in 'varray' to 'value'.
+
+  If category of object of given type is in 'cstring' (string
+  representing category list like: '1,3,5-7').  'type' may be either:
+  GV_AREA or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID
 
   Array is not reset to zero before, but old values (if any > 0) are overwritten.
 
-  Return: number of items set
-          -1 on error
+  \param Map vector map
+  \param field layer number
+  \param cstring pointer to string with categories
+  \param type feature type
+  \param value value to set up
+  \param[in,out] varray varray structure to modify
+
+  \return number of items set
+  \return -1 on error
  */
 int 
 Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring,
@@ -93,17 +106,23 @@ Vect_set_varray_from_cat_string ( struct Map_info *Map, int field, char *cstring
 }
 
 /*!
-  \fn int Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list *clist,
-                                int type, int value, VARRAY *varray )
-  \brief
-   Set values in 'varray' to 'value' if category of object of given type is in 'clist' (category list).
-  'type' may be either: GV_AREA
-                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+  \brief Set values in 'varray' to 'value'
+
+  If category of object of given type is in 'clist' (category list).
+  'type' may be either: GV_AREA or: GV_POINT | GV_LINE | GV_BOUNDARY |
+  GV_CENTROID
 		    
   Array is not reset to zero before, but old values (if any > 0) are overwritten.
 
-  Return: number of items set
-          -1 on error
+  \param Map vector map
+  \param field layer number
+  \param clist list of categories
+  \param type feature type
+  \param value value to set up
+  \param[in,out] varray varray structure to modify
+  
+  \return number of items set
+  \return -1 on error
  */
 int 
 Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list *clist,
@@ -118,7 +137,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
     
     /* Check type */
     if ( (type & GV_AREA) && (type & (GV_POINTS | GV_LINES)) ) {
-	G_warning(_("Mixed area and other type requested for vector array."));
+	G_warning(_("Mixed area and other type requested for vector array"));
 	return 0;
     }
     
@@ -128,7 +147,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
 	n = Vect_get_num_areas (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning(_("Not enough space in vector array."));
+	    G_warning(_("Not enough space in vector array"));
 	    return 0;
 	}
 	    
@@ -148,7 +167,7 @@ Vect_set_varray_from_cat_list ( struct Map_info *Map, int field, struct cat_list
 	n = Vect_get_num_lines (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning(_("Not enough space in vector array."));
+	    G_warning(_("Not enough space in vector array"));
 	    return 0;
 	}
 	    
@@ -196,24 +215,31 @@ static int in_array (int *cats, size_t ncats, int cat)
 }
 
 /*!
-  \fn int Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
-                                int type, int value, VARRAY *varray )
-  \brief Set values in 'varray' to 'value' if category of object of given type is in 
-  categories selected from DB based on where statement (given without where).
-  'type' may be either: GV_AREA
-                    or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID  
+  \brief Set values in 'varray' to 'value'.
 
-  Array is not reset to zero before, but old values (if any > 0) are overwritten.
+  if category of object of given type is in categories selected from
+  DB based on where statement (given without where).  'type' may be
+  either: GV_AREA or: GV_POINT | GV_LINE | GV_BOUNDARY | GV_CENTROID
 
-  Return: number of items set
-          -1 on error
+  Array is not reset to zero before, but old values (if any > 0) are
+  overwritten.
+
+  \param Map vector map
+  \param field layer number
+  \param where where statement
+  \param type feature type
+  \param value value to set up
+  \param[in,out] varray varray structure to modify
+  
+  \return number of items set
+  \return -1 on error
  */
 int 
 Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
                                 int type, int value, VARRAY *varray )
 {
     int i, n, c, centr, cat, *cats;
-    size_t ncats;
+    int ncats;
     int ni = 0; /* number of items set */
     int ltype; /* line type */
     struct line_cats *Cats;
@@ -226,7 +252,7 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 
     /* Check type */
     if ( (type & GV_AREA) && (type & (GV_POINTS | GV_LINES)) ) {
-	G_warning(_("Mixed area and other type requested for vector array."));
+	G_warning(_("Mixed area and other type requested for vector array"));
 	return 0;
     }
     
@@ -235,13 +261,14 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
     /* Select categories from DB to array */
     Fi = Vect_get_field ( Map, field);
     if ( Fi == NULL ) {
-	G_warning(_("Cannot get field info"));
+      G_warning(_("Database connection not defined for layer %d"), field);
 	return -1;
     }
     
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
-	G_warning(_("Cannot open database"));
+	G_warning(_("Unable to open database <%s> by driver <%s>"),
+		  Fi->database, Fi->driver);
 	return -1;
     }
 
@@ -250,7 +277,8 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
     db_close_database_shutdown_driver ( driver );
 
     if(ncats == -1) {
-	G_warning(_("Could not select from table/column"));
+	G_warning(_("Unable to select record from table <%s> (key %s, where %s)"),
+		  Fi->table, Fi->key, where);
 	return -1;
     }
 
@@ -258,7 +286,7 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 	n = Vect_get_num_areas (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning(_("Not enough space in vector array."));
+	    G_warning(_("Not enough space in vector array"));
 	    return 0;
 	}
 	    
@@ -288,7 +316,7 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 	n = Vect_get_num_lines (Map);
 	
 	if ( n > varray->size ) { /* not enough space */
-	    G_warning(_("Not enough space in vector array."));
+	    G_warning(_("Not enough space in vector array"));
 	    return 0;
 	}
 	    
@@ -321,4 +349,3 @@ Vect_set_varray_from_db ( struct Map_info *Map, int field, char *where,
 
     return ni;
 }
-

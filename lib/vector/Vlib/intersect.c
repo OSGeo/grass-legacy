@@ -1,35 +1,22 @@
 /*!
- * \file intersect.c
- *
- * \brief Higher level functions for reading/writing/manipulating vectors.
- *
- * (C) 2001 by the GRASS Development Team
- *
- * This program is free software under the GNU General Public
- *   	    	License (>=v2). Read the file COPYING that comes with GRASS
- *   	    	for details.
- *
- * \author Original author CERL, probably Dave Gerdes or Mike Higgins. Radim Blazek
- *
- */
+  \file intersect.c
+  
+  \brief Vector library - intersection
+  
+  Higher level functions for reading/writing/manipulating vectors.
 
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek.
+  
+  \date 2001-2008
+*/
 
 #include <stdlib.h>
 #include <math.h>
@@ -103,14 +90,13 @@ static int find_cross(int id, int *arg);
 */ 
 
 /*!
- * \fn int Vect_segment_intersection (
-    double ax1, double ay1, double az1, double ax2, double ay2, double az2, 
-    double bx1, double by1, double bz1, double bx2, double by2, double bz2, 
-    double *x1, double *y1, double *z1, 
-    double *x2, double *y2, double *z2, 
-    int with_z)           
- *
  * \brief Check for intersect of 2 line segments.
+ *
+ * \param[in] ax1,ay1,az1,ax2,ay2,az2 input line a
+ * \param[in] bx1,by1,bz1,bx2,by2,bz2 input line b
+ * \param[out] x1,y1,z1 intersection point1 (case 2-4)
+ * \param[out] x2,y2,z2 intersection point2 (case 2-4)
+ * \param[in] with_z use z coordinate (3D) (TODO)
  *
  * \return 0 - do not intersect,
  * \return 1 - intersect at one point,
@@ -118,12 +104,6 @@ static int find_cross(int id, int *arg);
  * \return 3 - a contains b,
  * \return 4 - b contains a,
  * \return 5 - identical
- *
- * \param[in] ax1,ay1,az1,ax2,ay2,az2 input line a
- * \param[in] bx1,by1,bz1,bx2,by2,bz2 input line b
- * \param[out] x1,y1,z1 intersection point1 (case 2-4)
- * \param[out] x2,y2,z2 intersection point2 (case 2-4)
- * \param[in] with_z use z coordinate (3D) (TODO)
 */
 int Vect_segment_intersection (
     double ax1, double ay1, double az1, double ax2, double ay2, double az2, 
@@ -484,23 +464,11 @@ static int cross_seg(int id, int *arg)
 }
 
 /*!
- * \fn int Vect_line_intersection (
-    struct line_pnts *APoints, 
-    struct line_pnts *BPoints,
-    struct line_pnts ***ALines, 
-    struct line_pnts ***BLines, 
-    int    *nalines,
-    int    *nblines,
-    int    with_z)
- * 
  * \brief Intersect 2 lines.
  *
  * Creates array of new lines created from original A line, by
  * intersection with B line. Points (Points->n_points == 1) are not
  * supported.
- *
- * \return 0 no intersection 
- * \return 1 intersection found
  *
  * \param[in] APoints first input line 
  * \param[in] BPoints second input line 
@@ -509,6 +477,9 @@ static int cross_seg(int id, int *arg)
  * \param[out] nalines number of new lines (ALines)
  * \param[out] nblines number of new lines (BLines)
  * \param[in] with_z 3D, not supported!
+ *
+ * \return 0 no intersection 
+ * \return 1 intersection found
 */
 int 
 Vect_line_intersection (
@@ -950,18 +921,16 @@ static int find_cross(int id, int *arg)
 }
 
 /*!
- * \fn int Vect_line_check_intersection ( struct line_pnts *APoints, struct line_pnts *BPoints, int with_z)
- *
  * \brief Check if 2 lines intersect.
  *
  * Points (Points->n_points == 1) are also supported.
  *
- * \return 0 no intersection 
- * \return 1 intersection found
- *
  * \param[in] APoints first input line 
  * \param[in] BPoints second input line 
  * \param[in] with_z 3D, not supported (only if one or both are points)!
+ *
+ * \return 0 no intersection 
+ * \return 1 intersection found
  */
 int 
 Vect_line_check_intersection (

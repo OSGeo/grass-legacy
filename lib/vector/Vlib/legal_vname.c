@@ -3,23 +3,24 @@
   
   \brief Vector library - Check if map name is legal vector map name
   
-  \author Radim Blazek
-  
-  (C) 2001 by the GRASS Development Team
+  (C) 2001-2008 by the GRASS Development Team
   
   This program is free software under the 
   GNU General Public License (>=v2). 
   Read the file COPYING that comes with GRASS
   for details.
+
+  \author Radim Blazek
+  
+  \date 2001-2008
 */
+
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
 /*!
-  \fn int Vect_legal_filename (char *s)
-
   \brief  Check if output is legal vector name.
 
   Rule:  [A-Za-z][A-Za-z0-9_@]*
@@ -70,7 +71,6 @@ int Vect_legal_filename (char *s)
 }
 
 /*!
-  \fn int Vect_check_input_output_name ( char * input, char * output, int error )
   \brief Check for input and output vector map name.
 
   Check

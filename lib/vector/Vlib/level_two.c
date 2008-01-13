@@ -1,31 +1,32 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file level_two.c
+  
+  \brief Vector library - topo level 
+  
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
+
+#include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
-#include <stdlib.h>
-
-/* INTERFACE LEVEL II  */
+#include <grass/glocale.h>
 
 /*!
- \fn int Vect_get_num_nodes (struct Map_info *map)
- \brief get number of nodes
- \return number of nodes
- \param Map_info structure
+  \brief Get number of nodes
+
+  \param Map vector map
+
+  \return number of nodes
  */
 int 
 Vect_get_num_nodes (struct Map_info *map)
@@ -34,10 +35,12 @@ Vect_get_num_nodes (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_primitives (struct Map_info *map, int type)
- \brief get number of primitives
- \return number of primitives of given type 
- \param Map_info structure
+  \brief Get number of primitives
+
+  \param map vector map
+  \patam type feature type
+
+  \return number of primitives of given type 
  */
 int 
 Vect_get_num_primitives (struct Map_info *map, int type)
@@ -55,10 +58,11 @@ Vect_get_num_primitives (struct Map_info *map, int type)
 }
 
 /*!
- \fn int Vect_get_num_lines (struct Map_info *map)
- \brief get number of line vectors (points, lines, centroids)
- \return number of line vectors
- \param Map_info structure
+  \brief Fet number of line vectors (points, lines, centroids)
+
+  \param map vector map
+
+  \return number of line vectors
  */
 int 
 Vect_get_num_lines (struct Map_info *map)
@@ -67,10 +71,11 @@ Vect_get_num_lines (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_areas (struct Map_info *map)
- \brief get number of areas
- \return number of areas
- \param Map_info structure
+  \brief Get number of areas
+
+  \param map vector map
+
+  \return number of areas
  */
 int 
 Vect_get_num_areas (struct Map_info *map)
@@ -79,12 +84,12 @@ Vect_get_num_areas (struct Map_info *map)
 }
 
 /*!
- *  \fn int Vect_get_num_faces (struct Map_info *map)
- *  \brief get number of faces
- *  \return number of faces
- *  \param Map_info structure
- *
- */
+  \brief Get number of faces
+
+  \param map vector map
+  
+  \return number of faces
+*/
 int
 Vect_get_num_faces (struct Map_info *map)
 {
@@ -92,10 +97,11 @@ Vect_get_num_faces (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_islands (struct Map_info *map)
- \brief get number of islands
- \return number of islands
- \param Map_info structure
+  \brief Get number of islands
+
+  \param map vector map
+
+  \return number of islands
  */
 int 
 Vect_get_num_islands (struct Map_info *map)
@@ -104,10 +110,11 @@ Vect_get_num_islands (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_dblinks (struct Map_info *map)
- \brief get number of defined dblinks
- \return number of dblinks
- \param Map_info structure
+  \brief Get number of defined dblinks
+
+  \param map vector map
+
+  \return number of dblinks
  */
 int 
 Vect_get_num_dblinks (struct Map_info *map)
@@ -116,10 +123,11 @@ Vect_get_num_dblinks (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_updated_lines (struct Map_info *map)
- \brief get number of updated lines
- \return number of updated lines
- \param Map_info structure
+  \brief Get number of updated lines
+
+  \param map vector map
+
+  \return number of updated lines
  */
 int 
 Vect_get_num_updated_lines (struct Map_info *map)
@@ -128,10 +136,12 @@ Vect_get_num_updated_lines (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_updated_line (struct Map_info *map, int idx)
- \brief get updated line by index
- \return updated line
- \param Map_info structure
+  \brief Get updated line by index
+
+  \param map vector map
+  \param idx index
+
+  \return updated line
  */
 int 
 Vect_get_updated_line (struct Map_info *map, int idx)
@@ -140,10 +150,11 @@ Vect_get_updated_line (struct Map_info *map, int idx)
 }
 
 /*!
- \fn int Vect_get_num_updated_nodes (struct Map_info *map)
- \brief get number of updated nodes
- \return number of updated nodes
- \param Map_info structure
+  \brief Get number of updated nodes
+
+  \param map vector map
+
+  \return number of updated nodes
  */
 int 
 Vect_get_num_updated_nodes (struct Map_info *map)
@@ -152,10 +163,12 @@ Vect_get_num_updated_nodes (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_updated_node (struct Map_info *map, int idx)
- \brief get updated node by index
- \return updated node
- \param Map_info structure
+  \brief Get updated node by index
+
+  \param map vector map
+  \param idx index
+
+  \return updated node
  */
 int 
 Vect_get_updated_node (struct Map_info *map, int idx)
@@ -164,10 +177,13 @@ Vect_get_updated_node (struct Map_info *map, int idx)
 }
 
 /*!
- \fn int Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
- \brief get 2D/3D coordinates of node
- \return 2D/3D coordinates of node
- \param Map_info structure, node number, xyz coordinates values
+  \brief Get 2D/3D coordinates of node
+
+  \param map vector map
+  \param num 
+  \param x,y,z coordinates values
+
+  \return 2D/3D coordinates of node
  */
 int 
 Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
@@ -185,17 +201,20 @@ Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double 
 }
 
 /*!
- \fn int Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
- \brief get starting and ending node of line
- \return numbers of line nodes
- \param Map_info structure, line number, numbers of line nodes
+  \brief Get starting and ending node of line
+  
+  \param Map vector map
+  \param line line id
+  \param n1, n2 ids of line nodes
+
+  \return numbers of line nodes
 */
 int 
 Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
 {
 
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     if ( n1 != NULL ) 
 	*n1 = Map->plus.Line[line]->N1;
@@ -207,17 +226,20 @@ Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
 }
 
 /*!
- \fn int Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
- \brief get areas/isles on the left and right
- \return numbers of areas/isles on the left and right
- \param Map_info structure, line number, numbers of areas/isles on the left and right
+  \brief Get areas/isles on the left and right
+
+  \param Map vector map
+  \param line
+  \param[out] left,right numbers of areas/isles on the left and right
+
+  \return numbers of areas/isles on the left and right
 */
 int 
 Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
 {
 
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     if ( left != NULL ) 
 	*left = Map->plus.Line[line]->left;
@@ -229,67 +251,75 @@ Vect_get_line_areas ( struct Map_info *Map, int line, int *left, int *right)
 }
 
 /*!
- \fn int Vect_get_node_n_lines ( struct Map_info *Map, int node )
- \brief returns number of lines for node
- \return numbers of line for a node ??
- \param Map_info structure, node number
+  \brief Returns number of lines for node
+  
+  \param Map vector map
+  \param node node id
+
+  \return numbers of lines for a node
 */
 int 
 Vect_get_node_n_lines ( struct Map_info *Map, int node )
 {
 
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     return ( Map->plus.Node[node]->n_lines );
 
 }
 
 /*!
- \fn int Vect_get_node_line ( struct Map_info *Map, int node, int line )
- \brief returns line number for node line index
- \return line number for node line index 
- \param Map vector map
- \param node node number
- \param line line index, range : 0 - Vect_get_node_n_lines()
+  \brief Returns line number for node line index
+  
+  \param Map vector map
+  \param node node number
+  \param line line index, range : 0 - Vect_get_node_n_lines()
+
+  \return line number for node line index 
 */
 int 
 Vect_get_node_line ( struct Map_info *Map, int node, int line )
 {
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     return ( Map->plus.Node[node]->lines[line] );
 }
 
 /*!
- \fn int Vect_get_node_line_angle ( struct Map_info *Map, int node, int line )
- \brief angle of segment of the line connected to the node
- \return angle of segment of the line connected to the node
- \param Map vector map
- \param node node number
- \param line line index, range : 0 - Vect_get_node_n_lines()
+  \brief Angle of segment of the line connected to the node
+
+  \param Map vector map
+  \param node node number
+  \param line line index, range : 0 - Vect_get_node_n_lines()
+
+  \return angle of segment of the line connected to the node
 */
 float 
 Vect_get_node_line_angle ( struct Map_info *Map, int node, int line )
 {
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     return ( Map->plus.Node[node]->angles[line] );
 }
 
 /*!
- \fn int Vect_get_centroid_area ( struct Map_info *Map, int centroid )
- \brief returns ID of area the centroid is within
- \return ID of area the centroid is within, 0 for not in area, negative ID if area/centroid (?) is duplicate
- \param Map_info structure, centroid number
+  \brief Returns ID of area the centroid is within
+
+  \param Map vector map
+  \param centroid centroid id
+
+  \return ID of area the centroid is within
+  \return 0 for not in area
+  \return negative ID if area/centroid (?) is duplicate
 */
 int 
 Vect_get_centroid_area ( struct Map_info *Map, int centroid )
 {
     if ( Map->level < 2 )
-	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+	G_fatal_error (_("Vector map <%s> is not open on level >= 2"), Vect_get_full_name(Map));
     
     return ( Map->plus.Line[centroid]->left );
 }

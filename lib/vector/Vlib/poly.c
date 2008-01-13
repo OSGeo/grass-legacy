@@ -1,25 +1,29 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file poly.c
+  
+  \brief Vector library - polygon related fns
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001
+*/
+
 #include <math.h>
 #include <stdlib.h>
 #include <grass/Vect.h>
 #include <grass/gis.h>
 #include <grass/linkm.h>
+#include <grass/glocale.h>
 
 struct Slink
   {
@@ -38,14 +42,19 @@ static int Vect__divide_and_conquer (struct Slink *, struct line_pnts *,
 
 
 /*!
- \fn int Vect_get_point_in_area ( struct Map_info *Map, int area, double *X, double *Y)
- \brief get point inside area and outside all islands
-        Take a line and intersect it with the polygon and any islands.
-        sort the list of X values from these intersections.  This will
-        be a list of segments alternating  IN/OUT/IN/OUT of the polygon.
-        Pick the largest IN segment and take the midpoint. 
- \return 0 on success, -1 on error
- \param Map_info structure, area number, x, y
+  \brief Get point inside area and outside all islands.
+  
+  Take a line and intersect it with the polygon and any islands.
+  sort the list of X values from these intersections.  This will
+  be a list of segments alternating  IN/OUT/IN/OUT of the polygon.
+  Pick the largest IN segment and take the midpoint. 
+  
+  \param Map vector map
+  \param area area id
+  \param[out] X,Y point coordinateds
+
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_get_point_in_area ( struct Map_info *Map, int area, double *X, double *Y)
@@ -113,15 +122,20 @@ V__within (double a, double x, double b)
 }
 
 /*
-   **
-   **  For each intersection of a polygon w/ a line, stuff the 
-   **   X value in the Inter  Points array.  I used line_pnts, just
-   **   cuz the memory management was already there.  I am getting real
-   **   tired of managing realloc stuff.
-   **  Assumes that no vertex of polygon lies on Y
-   **  This is taken care of by functions calling this function
-   **
-   ** returns 0  or  -1 on error 
+  \brief Intersects line with polygon
+
+  For each intersection of a polygon w/ a line, stuff the X value in
+  the Inter Points array.  I used line_pnts, just cuz the memory
+  management was already there.  I am getting real tired of managing
+  realloc stuff.  Assumes that no vertex of polygon lies on Y This is
+  taken care of by functions calling this function
+
+  \param Points line
+  \param y ?
+  \param Iter intersection ?
+
+  \return 0 on success
+  \return -1 on error 
  */
 int 
 Vect__intersect_line_with_poly (
@@ -157,10 +171,15 @@ Vect__intersect_line_with_poly (
 }
 
 /*!
- \fn int Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
- \brief get point inside polygon. This does NOT consider ISLANDS!
- \return 0 on success, -1 on error
- \param line_pnts structure
+  \brief Get point inside polygon.
+
+  This does NOT consider ISLANDS!
+
+  \param Points polygon
+  \param[out] X,Y point coordinates
+
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
@@ -221,28 +240,36 @@ Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
 
   if (ret < 0)
     {
-      fprintf (stderr, "Could not find point in polygon\n");
+      G_warning ("Vect_get_point_in_poly(): %s", _("Unable to find point in polygon"));
       return -1;
     }
 
-/*DEBUG fprintf (stderr, "Found point in %d iterations\n", 10 - ret); */
+  G_debug(3, "Found point in %d iterations", 10 - ret); 
 
   return 0;
 }
 
 
 /*
-   ** provide a breadth first binary division of real space along line segment
-   **  looking for a point w/in the polygon.
-   **
-   **  This routine walks along the list of points on line segment
-   **  and divides each pair in half. It sticks that new point right into
-   **  the list, and then checks to see if it is inside the poly. 
-   **
-   **  after going through the whole list, it calls itself.  The list 
-   **   now has a whole extra set of points to divide again.
-   **
-   **  returns # levels it took  or -1 if exceeded # of levels
+  \brief Provide a breadth first binary division of real space along line segment.
+
+  Looking for a point w/in the polygon.
+  
+  This routine walks along the list of points on line segment
+  and divides each pair in half. It sticks that new point right into
+  the list, and then checks to see if it is inside the poly. 
+  
+  After going through the whole list, it calls itself.  The list 
+  now has a whole extra set of points to divide again.
+  
+  \param Head 
+  \param Points
+  \param Token
+  \param X,Y
+  \param levels
+
+  \return # levels it took
+  \return -1 if exceeded # of levels
  */
 static int 
 Vect__divide_and_conquer (
@@ -254,7 +281,7 @@ Vect__divide_and_conquer (
 {
   struct Slink *A, *B, *C;
 
-/*DEBUG fprintf (stderr, "              LEVEL %d\n", levels); */
+  G_debug (3, "Vect__divide_and_conquer(): LEVEL %d", levels);
   A = Head;
   B = Head->next;
 
@@ -288,7 +315,6 @@ Vect__divide_and_conquer (
   return Vect__divide_and_conquer (Head, Points, Token, X, Y, --levels);
 }
 
-
 static void 
 destroy_links (struct Slink *Head)
 {
@@ -306,11 +332,13 @@ destroy_links (struct Slink *Head)
 
 
 /*!
- \fn int Vect_find_poly_centroid ( struct line_pnts *points,
-			  double *cent_x, double *cent_y)
- \brief get centroid of polygon
- \return 0 on success, -1 on error
- \param line_pnts * structure, x, y of centroid
+  \brief Get centroid of polygon
+
+  \param points polygon
+  \param[out] cent_x,cent_y centroid coordinates
+
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_find_poly_centroid (
@@ -393,16 +421,20 @@ Vect_point_in_islands (
 */
 
 /*!
- \fn int Vect_get_point_in_poly_isl ( struct line_pnts *Points, struct line_pnts **IPoints,
-			     int n_isles,
-			     double *att_x, double *att_y)
- \brief get point inside polygon but outside the islands specifiled in IPoints.
-        Take a line and intersect it with the polygon and any islands.
-        sort the list of X values from these intersections.  This will
-        be a list of segments alternating  IN/OUT/IN/OUt of the polygon.
-        Pick the largest IN segment and take the midpoint. 
- \return 0 on success, -1 on error
- \param Map_info structure
+  \brief Get point inside polygon but outside the islands specifiled in IPoints.
+  
+  Take a line and intersect it with the polygon and any islands.
+  sort the list of X values from these intersections.  This will
+  be a list of segments alternating  IN/OUT/IN/OUt of the polygon.
+  Pick the largest IN segment and take the midpoint. 
+
+  \param Points polygon
+  \param IPoints isles
+  \param n_isles number of isles
+  \param[out] att_x,att_y point coordinates
+
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_get_point_in_poly_isl (
@@ -458,7 +490,7 @@ Vect_get_point_in_poly_isl (
 	  return 0;
 	}
     }
-/* guess we have to do it the hard way... */
+  /* guess we have to do it the hard way... */
 
   /* first find att_y close to cent_y so that no points lie on the line */
   /* find the point closest to line from below, and point close to line
@@ -543,7 +575,7 @@ Vect_get_point_in_poly_isl (
  * Returns: -1 point exactly on segment
  *          number of intersections
  */
-int 
+static int 
 segments_x_ray ( double X, double Y, struct line_pnts *Points)
 {
     double x1, x2, y1, y2;
@@ -625,19 +657,22 @@ segments_x_ray ( double X, double Y, struct line_pnts *Points)
 	}
 	/* should not be reached (one condition is not necessary, but it is may be better readable
 	 * and it is a check) */
-	G_warning ( "segments_x_ray() conditions failed:" );
-        G_warning ( "X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f", X, Y, x1, y1, x2, y2 );
+	G_warning ("segments_x_ray() %s: X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f",
+		   _("conditions failed"), X, Y, x1, y1, x2, y2 );
     }
 
     return  n_intersects;
 }
 
-/*
- *  Determines if a point (X,Y) is inside a polygon.
- *
- *  Returns: 0 - outside
- *           1 - inside 
- *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+/*!
+  \brief Determines if a point (X,Y) is inside a polygon.
+
+  \param X,Y point coordinates
+  \param Points polygon
+
+  \return 0 - outside
+  \return 1 - inside 
+  \return 2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
  */
 int
 Vect_point_in_poly ( double X, double Y, struct line_pnts *Points)
@@ -656,13 +691,17 @@ Vect_point_in_poly ( double X, double Y, struct line_pnts *Points)
         return 0;
 }
 
-/*
- *  Determines if a point (X,Y) is inside an area outer ring. Islands are not considered.
- *
- *  Returns: 0 - outside
- *           1 - inside 
- *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
- */
+/*!
+  \brief Determines if a point (X,Y) is inside an area outer ring. Islands are not considered.
+ 
+  \param X,Y point coordinates
+  \param Map vector map
+  \param area area id
+
+  \return 0 - outside
+  \return 1 - inside 
+  \return 2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+*/
 int
 Vect_point_in_area_outer_ring ( double X, double Y, struct Map_info *Map, int area)
 {
@@ -713,13 +752,17 @@ Vect_point_in_area_outer_ring ( double X, double Y, struct Map_info *Map, int ar
         return 0;
 }
 
-/*
- *  Determines if a point (X,Y) is inside an island.
- *
- *  Returns: 0 - outside
- *           1 - inside 
- *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
- */
+/*!
+  \brief Determines if a point (X,Y) is inside an island.
+
+  \param X,Y point coordinates
+  \param Map vector map
+  \param isle isle id
+
+  \return 0 - outside
+  \return 1 - inside 
+  \return 2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+*/
 int
 Vect_point_in_island ( double X, double Y, struct Map_info *Map, int isle)
 {
@@ -764,4 +807,3 @@ Vect_point_in_island ( double X, double Y, struct Map_info *Map, int isle)
     else
         return 0;
 }
-

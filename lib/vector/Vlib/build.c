@@ -1,20 +1,22 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file build.c
+  
+  \brief Vector library - Building topology
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -56,11 +58,13 @@ int prnmsg ( char *msg, ...) {
 }
 
 /*!
- \fn int Vect_build ( struct Map_info *Map, FILE *msgout ) 
- \brief build topology for vector map
- \return 1 on success, 0 on error
- \param Map vector map
- \param msgout file for message output (stdout/stderr for example) or NULL
+  \brief Build topology for vector map
+
+  \param Map vector map
+  \param msgout file for message output (stdout/stderr for example) or NULL
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_build ( struct Map_info *Map, FILE *msgout ) 
@@ -70,10 +74,11 @@ Vect_build ( struct Map_info *Map, FILE *msgout )
 
 
 /*!
- \fn int Vect_get_built ( struct Map_info *Map ) 
- \brief return current highest built level (part)
- \return current highest built level
- \param Map vector map
+  \brief Return current highest built level (part)
+
+  \param Map vector map
+
+  \return current highest built level
 */
 int
 Vect_get_built ( struct Map_info *Map ) 
@@ -82,38 +87,41 @@ Vect_get_built ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_build_partial ( struct Map_info *Map, int top, FILE *msgout ) 
- \brief build partial topology for vector map. Should only be used in special cases
- of vector processing.
+  \brief Build partial topology for vector map.
 
- This functions optionaly builds only some parts of topology. Highest level is specified by build
- parameter which may be:
- GV_BUILD_NONE - nothing is build;
- GV_BUILD_BASE - basic topology, nodes, spatial index;
- GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas;
- GV_BUILD_ATTACH_ISLES - attach islands to areas;
- GV_BUILD_CENTROIDS - assign centroids to areas;
- GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS.
+  Should only be used in special cases of vector processing.
 
- If functions is called with build lower than current value of the Map, the level is downgraded to 
- requested value.
+  This functions optionaly builds only some parts of topology. Highest level is specified by build
+  parameter which may be:
+   - GV_BUILD_NONE - nothing is build;
+   - GV_BUILD_BASE - basic topology, nodes, spatial index;
+   - GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas;
+   - GV_BUILD_ATTACH_ISLES - attach islands to areas;
+   - GV_BUILD_CENTROIDS - assign centroids to areas;
+   - GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS.
 
- All calls to Vect_write_line(), Vect_rewrite_line(), Vect_delete_line() respect the last value of 
- build used in this function.
+   If functions is called with build lower than current value of the Map, the level is downgraded to 
+   requested value.
 
- Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE,
- other formats ignore build and build always GV_BUILD_ALL
+   All calls to Vect_write_line(), Vect_rewrite_line(), Vect_delete_line() respect the last value of 
+   build used in this function.
 
- Note that the functions has effect only if requested level is higher than current level, to rebuild
- part of topology, call first downgrade and then upgrade, for example:
-    Vect_build()
-    Vect_build_partial(,GV_BUILD_BASE,)
-    Vect_build_partial(,GV_BUILD_AREAS,) 
+   Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE,
+   other formats ignore build and build always GV_BUILD_ALL
+   
+   Note that the functions has effect only if requested level is higher than current level, to rebuild
+   part of topology, call first downgrade and then upgrade, for example:
+   
+   Vect_build()
+   Vect_build_partial(,GV_BUILD_BASE,)
+   Vect_build_partial(,GV_BUILD_AREAS,) 
  
- \return 1 on success, 0 on error
- \param Map vector map
- \param build highest level of build
- \param msgout file pointer for message output (stdout/stderr for example) or NULL
+
+   \param Map vector map
+   \param build highest level of build
+   \param msgout file pointer for message output (stdout/stderr for example) or NULL
+
+   \return 1 on success, 0 on error
 */
 int
 Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout ) 
@@ -132,7 +140,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     Map->plus.Spidx_built = 1;
     
     plus = &(Map->plus);
-    prnmsg ( _("Building topology ...\n") );
+    prnmsg ( _("Building topology for vector map <%s>...\n"), Vect_get_name(Map));
     plus->with_z = Map->head.with_z;
     plus->spidx_with_z = Map->head.with_z;
 
@@ -145,7 +153,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 
     if ( ret == 0 ) { return 0; } 
 
-    prnmsg (_("Topology was built.\n"));
+    prnmsg (_("Topology was built\n"));
     
     Map->level = LEVEL_2;
     plus->mode = GV_MODE_WRITE;
@@ -226,16 +234,17 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 }
 
 /*!
- \fn int Vect_save_topo ( struct Map_info *Map )
- \brief save topology file for vector map
- \return 1 on success, 0 on error
- \param Map vector map
+  \brief Save topology file for vector map
+
+  \param Map vector map
+
+  \return 1 on success, 0 on error
 */
 int
 Vect_save_topo ( struct Map_info *Map )
 {
     struct Plus_head *plus ;
-    char   fname[1024], buf[1024];
+    char   fname[GPATH_MAX], buf[GPATH_MAX];
     GVFILE  fp;
     
     G_debug (1, "Vect_save_topo()"); 
@@ -249,15 +258,15 @@ Vect_save_topo ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning(_("Can't open topo file for write <%s>"), fname);
-	    return 0;
+        G_warning(_("Unable to open topo file for write <%s>"), fname);
+	return 0;
     }
 
     /* set portable info */
     dig_init_portable ( &(plus->port), dig__byte_order_out ());
     
     if ( 0 > dig_write_plus_file (&fp, plus) ) {
-        G_warning (_("Error writing out topo file."));
+        G_warning (_("Error writing out topo file"));
 	return 0;
     }
     
@@ -267,11 +276,13 @@ Vect_save_topo ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_topo_dump ( struct Map_info *Map, FILE *out )
- \brief dump topology to file
- \return 1 on success, 0 on error
- \param Map vector map
- \param out file for output (stdout/stderr for example)
+  \brief Dump topology to file
+
+  \param Map vector map
+  \param out file for output (stdout/stderr for example)
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_topo_dump ( struct Map_info *Map, FILE *out )
@@ -366,16 +377,18 @@ Vect_topo_dump ( struct Map_info *Map, FILE *out )
 }
 
 /*!
- \fn int Vect_save_spatial_index ( struct Map_info *Map )
- \brief save spatial index file
- \return 1 on success, 0 on error
- \param Map vector map
+  \brief Save spatial index file
+
+  \param Map vector map
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_save_spatial_index ( struct Map_info *Map )
 {
     struct Plus_head *plus ;
-    char   fname[1024], buf[1024];
+    char   fname[GPATH_MAX], buf[GPATH_MAX];
     GVFILE   fp;
     
     G_debug (1, "Vect_save_spatial_index()"); 
@@ -389,15 +402,15 @@ Vect_save_spatial_index ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning(_("Can't open spatial index file for write <%s>"), fname);
-	    return 0;
+        G_warning(_("Unable open spatial index file for write <%s>"), fname);
+	return 0;
     }
 
     /* set portable info */
     dig_init_portable ( &(plus->spidx_port), dig__byte_order_out ());
     
     if ( 0 > dig_write_spidx (&fp, plus) ) {
-        G_warning (_("Error writing out spatial index file."));
+        G_warning (_("Error writing out spatial index file"));
 	return 0;
     }
     
@@ -407,11 +420,13 @@ Vect_save_spatial_index ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_spatial_index_dump ( struct Map_info *Map, FILE *out )
- \brief dump spatial index to file
- \return 1 on success, 0 on error
- \param Map vector map
- \param out file for output (stdout/stderr for example)
+  \brief Dump spatial index to file
+
+  \param Map vector map
+  \param out file for output (stdout/stderr for example)
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_spatial_index_dump ( struct Map_info *Map, FILE *out ) 
@@ -426,4 +441,3 @@ Vect_spatial_index_dump ( struct Map_info *Map, FILE *out )
 
     return 1;
 }
-

@@ -1,33 +1,40 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file overlay.c
+  
+  \brief Vector library - overlays
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  This is file is just example and starting point for writing overlay
+  functions!!!
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <string.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-/* This is file is just example and starting point for writing overlay functions!!! */
-int Vect_overlay_and ( struct Map_info *, int, struct ilist *, struct ilist *,
-	               struct Map_info *, int, struct ilist *, struct ilist *,
-		       struct Map_info *);
-
+int Vect_overlay_and (struct Map_info *, int, struct ilist *, struct ilist *,
+		      struct Map_info *, int, struct ilist *, struct ilist *,
+		      struct Map_info *);
 
 /*!
- \fn int Vect_overlay_str_to_operator ( char *str )
- \brief Get operator code from string
- \return operator code, -1 on error
- \param operator code string
+  \brief Get operator code from string
+
+  \param str operator code string
+
+  \return operator code
+  \return -1 on error
 */
 int 
 Vect_overlay_str_to_operator ( char *str )
@@ -41,16 +48,19 @@ Vect_overlay_str_to_operator ( char *str )
     return -1;
 }
     
-
 /*!
- \fn int Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
-               struct Map_info *BMap, int btype, struct ilist *BList, struct ilist *BAList,
-	       int operator,  struct Map_info *OMap )
+  \brief Overlay 2 vector maps and create new one
 
- \brief Overlay 2 maps and create new one
- \return 0 on success,?? on error
- \param AMap, atype, AList, AAList, BMap, btype, BList, BAList,
-   operator, OMap
+  \param AMap vector map A
+  \param AList unused ?
+  \param AAList unused ?
+  \param BMap vector map B
+  \param BList unused ?
+  \param BAList unused ?
+  \param operator operator code
+  \param OMap output vector map
+
+  \return 0 on success
 */
 int 
 Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList, /* map A */
@@ -63,23 +73,32 @@ Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ili
             Vect_overlay_and ( AMap, atype, AList, AAList, BMap, btype, BList, BAList, OMap );
             break;
 	default:
-	    G_fatal_error (" Vect_overlay(): unknown operator" );
+	    G_fatal_error ("Vect_overlay(): %s", _("unknown operator"));
     }
     
     return 0;
 }
 
 /*!
- \fn int Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
-                   struct Map_info *BMap, int btype, struct ilist *BList, struct ilist *BAList,
-                   struct Map_info *OMap )
- \brief overlay 2 vector maps with AND.  AND supports:       point line area
+  \brief Overlay 2 vector maps with AND.
+
+  AND supports:point line area
                point  +     -    +
                line   -     -    -
                area   +     -    -
- \return 1 on success, 0 on error
- \param AMap,  atype,  AList, AAList, BMap, btype, BList, BAList,
-                   OMap )
+
+  \param AMap vector map A
+  \param atype feature type for A
+  \param AList unused ?
+  \param AAList unused ?
+  \param BMap vector map B
+  \param btype feature type for B
+  \param BList unused ?
+  \param BAList unused ?
+  \param operator operator code
+
+  \return 1 on success
+  \return 0 on error
 */
 int 
 Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct ilist *AAList,
@@ -102,10 +121,10 @@ Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct
     
     /* TODO: support all types; at present only point x point, area x point and point x area supported  */
     if ( ( atype & GV_LINES ) || (btype & GV_LINES) )
-        G_warning ("overlay: line/boundary types not supported by AND operator"); 
+        G_warning (_("Overlay: line/boundary types not supported by AND operator")); 
     
     if ( ( atype & GV_AREA ) && (btype & GV_AREA) )
-        G_warning ("overlay: area x area types not supported by AND operator"); 
+        G_warning (_("Overlay: area x area types not supported by AND operator")); 
 	
     /* TODO: more points in one node in one map */
     
@@ -213,4 +232,3 @@ Vect_overlay_and ( struct Map_info *AMap, int atype, struct ilist *AList, struct
 
     return 0;
 }
-

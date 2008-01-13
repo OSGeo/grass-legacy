@@ -1,29 +1,32 @@
-/***************************************************************
- *
- * MODULE:       vector library
- * 
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean lines
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
+/*!
+  \file bridges.c
+  
+  \brief Vector library - clean geometry (bridges)
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-void
+static void
 remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *msgout );
     
 /*!
- \fn void Vect_remove_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout)
- \brief Remove bridges from vector map.
+  \brief Remove bridges from vector map.
 
   Remove bridges (type boundary) connecting areas to islands or 2 islands.
   Islands and areas must be already clean, i.e. without dangles.
@@ -31,9 +34,11 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
   Optionaly deleted bridges are written to error map. 
   Input map must be opened on level 2 for update at least on level GV_BUILD_BASE
    
- \param Map input map where bridges are deleted
- \param Err vector map where deleted bridges are written or NULL
- \param msgout file pointer where messages will be written or NULL
+  \param Map input map where bridges are deleted
+  \param Err vector map where deleted bridges are written or NULL
+  \param msgout file pointer where messages will be written or NULL
+  
+  \return
 */
 
 void
@@ -43,8 +48,7 @@ Vect_remove_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout )
 }
 
 /*!
- \fn void Vect_remove_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout)
- \brief Change type of bridges in vector map.
+  \brief Change type of bridges in vector map.
 
   Change the type of bridges (type boundary) connecting areas to islands or 2 islands.
   Islands and areas must be already clean, i.e. without dangles.
@@ -52,9 +56,11 @@ Vect_remove_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout )
   Optionaly changed bridges are written to error map. 
   Input map must be opened on level 2 for update at least on level GV_BUILD_BASE.
    
- \param Map input map where bridges are changed
- \param Err vector map where changed bridges are written or NULL
- \param msgout file pointer where messages will be written or NULL
+  \param Map input map where bridges are changed
+  \param Err vector map where changed bridges are written or NULL
+  \param msgout file pointer where messages will be written or NULL
+
+  \return
 */
 
 void
@@ -75,7 +81,6 @@ Vect_chtype_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout )
 	      traversed from other side it is a bridge.
               
 	      List of all lines in chain is created during the cycle.
-
 */
 void
 remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *msgout )
@@ -109,8 +114,8 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
 
     G_debug (1, "nlines =  %d", nlines );
 
-    if ( msgout ) fprintf (msgout, "Removed bridges: %5d  %s: %5d",
-                                    bridges_removed, lmsg, lines_removed );
+    if ( msgout ) fprintf (msgout, "%s: %5d  %s: %5d",
+			   _("Removed bridges"), bridges_removed, lmsg, lines_removed );
     
     for ( line = 1; line <= nlines; line++ ){ 
 	if ( !Vect_line_alive ( Map, line ) ) continue;
@@ -182,16 +187,14 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
 	}
 
 	if ( msgout ) {
-	    fprintf (msgout, "\rRemoved bridges: %5d  %s: %5d",
-					bridges_removed, lmsg, lines_removed );
+	    fprintf (msgout, "\r%s: %5d  %s: %5d",
+		     _("Removed bridges"), bridges_removed, lmsg, lines_removed );
 	    fflush ( msgout );
 	}
     }
     if ( msgout ) {
-	fprintf (msgout, "\rRemoved bridges: %5d  %s: %5d",
-				    bridges_removed, lmsg, lines_removed );
+	fprintf (msgout, "\r%s: %5d  %s: %5d",
+		 _("Removed bridges"), bridges_removed, lmsg, lines_removed );
 	fprintf (msgout, "\n" );
     }
 }
-
-

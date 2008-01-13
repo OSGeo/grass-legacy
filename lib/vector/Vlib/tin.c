@@ -1,30 +1,36 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file tin.c
+  
+  \brief Vector library - TIN
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <grass/Vect.h>
 
 /*!
- \fn int Vect_tin_get_z ( struct Map_info *Map,
-		   double tx, double ty,
-		   double *tz, double *angle, double *slope)
- \brief calculates z coordinate for point from TIN
- \return 1 on success,
-            0 point is not in area,
-           -1 area has not 4 points or has island
- \param Map_info structure
+  \brief Calculates z coordinate for point from TIN
+
+  \param Map pointer to vector map
+  \param tx,ty point coordinates
+  \param[out] tz z-coordinate of point
+  \param[out] angle angle
+  \param[out] slope slope
+
+  \return 1 on success,
+  \return 0 point is not in area,
+  \return -1 area has not 4 points or has island
 */
 int 
 Vect_tin_get_z (
@@ -85,5 +91,3 @@ Vect_tin_get_z (
   
   return 1;
 }
-
-

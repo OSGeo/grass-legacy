@@ -1,25 +1,29 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-#include <stdlib.h>
-#include <string.h>
-#include <grass/gis.h>
-#include <grass/dbmi.h>
-#include <grass/Vect.h>
-#include <grass/glocale.h>
+/*!
+ * \file map.c
+ *
+ * \brief Vector library - net releated fns
+ *
+ * Higher level functions for reading/writing/manipulating vectors.
+ *
+ * (C) 2001-2008 by the GRASS Development Team
+ *
+ * This program is free software under the 
+ * GNU General Public License (>=v2). 
+ * Read the file COPYING that comes with GRASS
+ * for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2001-2008
+ */
+
+#include<stdlib.h>
+#include<string.h>
+#include<fcntl.h>
+#include<grass/gis.h>
+#include<grass/dbmi.h>
+#include<grass/Vect.h>
+#include<grass/glocale.h>
 
 static int From_node;   /* from node set in SP and used by clipper for first arc */  
 
@@ -59,43 +63,38 @@ static int clipper ( dglGraph_s    *pgraph ,
 }
 
 /*!
- \fn Vect_net_build_graph (  struct Map_info *Map,
-			int ltype, 
-       			int afield,
-			int nfield,
-			char *afcol,
-			char *abcol,
-			char *ncol, 
-			int geo, 
-		        int algorithm ) 
- \brief Build network graph. Internal format for edge costs is integer, costs are multiplied
-        before conversion to int by 1000 and for lenghts LL without geo flag by 1000000.
-	The same multiplication factor is used for nodes.
-	Costs in database column may be 'integer' or 'double precision' number >= 0
-	or -1 for infinity i.e. arc or node is closed and cannot be traversed
-	If record in table is not found for arcs, arc is skip.
-	If record in table is not found for node, costs for node are set to 0.
- \return 0 on success, 1 on error
- \param Map_info structure, 
-   line type for arcs, 
-   arc costs field,
-   node costs field, 
-   column with forward costs for arc (if NULL use length),
-   column with backward costs for arc (if NULL, back costs = forward costs), 
-   column with costs for nodes (if NULL, do not use node costs), 
-   use geodesic calculation for length (LL), 
-   not used (in future code for algorithm)
+  \brief Build network graph.
+  
+  Internal format for edge costs is integer, costs are multiplied
+  before conversion to int by 1000 and for lenghts LL without geo flag by 1000000.
+  The same multiplication factor is used for nodes.
+  Costs in database column may be 'integer' or 'double precision' number >= 0
+  or -1 for infinity i.e. arc or node is closed and cannot be traversed
+  If record in table is not found for arcs, arc is skip.
+  If record in table is not found for node, costs for node are set to 0.
+  
+  \param Map vector map
+  \param ltype line type for arcs
+  \param afield arc costs field (if 0, use length)
+  \param nfield node costs field (if 0, do not use node costs)
+  \param afcol column with forward costs for arc
+  \param abcol column with backward costs for arc (if NULL, back costs = forward costs), 
+  \param ncol column with costs for nodes (if NULL, do not use node costs), 
+  \param geo use geodesic calculation for length (LL), 
+  \param algorithm not used (in future code for algorithm)
+
+   \return 0 on success, 1 on error
 */
 int
 Vect_net_build_graph (  struct Map_info *Map,
-			int ltype,   /* line type for arcs */
-       			int afield,  /* arc costs field (if 0, use length) */
-			int nfield,  /* node costs field (if 0, do not use node costs) */
-			char *afcol, /* column with forward costs for arc */
-			char *abcol, /* column with backward costs for arc (if NULL, back = forward) */
-			char *ncol,  /* column with costs for nodes */
-			int geo,     /* use geodesic calculation for length (LL) */
-		        int algorithm ) /* not used, in future code for algorithm */
+			int ltype,  
+       			int afield, 
+			int nfield, 
+			char *afcol,
+			char *abcol,
+			char *ncol, 
+			int geo,    
+		        int algorithm )
 {
     int    i, j, from, to, line, nlines, nnodes, ret, type, cat, skipped, cfound;
     int    dofw, dobw;
@@ -117,7 +116,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     G_debug (1, "Vect_build_graph(): ltype = %d, afield = %d, nfield = %d", ltype, afield, nfield); 
     G_debug (1, "    afcol = %s, abcol = %s, ncol = %s", afcol, abcol, ncol); 
 
-    G_message (_("Building graph ..."));
+    G_message (_("Building graph..."));
 
     Map->graph_line_type = ltype;
 
@@ -153,7 +152,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     else
         dglInitialize(gr, (dglByte_t)1, (dglInt32_t)0, (dglInt32_t)0, opaqueset);
 
-    if ( gr == NULL ) G_fatal_error (_("Cannot build network graph")); 
+    if ( gr == NULL ) G_fatal_error (_("Unable build network graph")); 
 
     db_init_handle (&handle);
     db_init_string ( &stmt);
@@ -167,22 +166,26 @@ Vect_net_build_graph (  struct Map_info *Map,
 	/* Get field info */
 	if ( afield < 1 ) G_fatal_error (_("Arc field < 1"));
         Fi = Vect_get_field( Map, afield);
-	if ( Fi == NULL ) G_fatal_error (_("Cannot get field info"));
+	if ( Fi == NULL )
+	  G_fatal_error (_("Database connection not defined for layer %d"),
+			 afield);
 	
 	/* Open database */
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	    G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			  Fi->database, Fi->driver) ;
 
 	/* Load costs to array */
 	if ( db_get_column ( driver, Fi->table, afcol, &Column ) != DB_OK) 
-            G_fatal_error(_("Cannot get column info"));
+	    G_fatal_error(_("Column <%s> not found in table <%s>"),
+			  afcol, Fi->table);
 
 	fctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	
 	if ( fctype != DB_C_TYPE_INT && fctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Column type not supported"));
+	    G_fatal_error (_("Data type of column <%s> not supported (must be numeric)"),
+			   afcol);
 
 	db_CatValArray_init ( &fvarr );
 	nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, afcol, NULL, &fvarr );
@@ -190,12 +193,14 @@ Vect_net_build_graph (  struct Map_info *Map,
 
 	if ( abcol != NULL ) { 
 	    if ( db_get_column ( driver, Fi->table, abcol, &Column ) != DB_OK) 
-		G_fatal_error(_("Cannot get column info"));
+		G_fatal_error(_("Column <%s> not found in table <%s>"),
+			      abcol, Fi->table);
 
 	    bctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	    
 	    if ( bctype != DB_C_TYPE_INT && bctype != DB_C_TYPE_DOUBLE )
-		G_fatal_error (_("Column type not supported"));
+		G_fatal_error (_("Data type of column <%s> not supported (must be numeric)"),
+			       abcol);
 
 	    db_CatValArray_init ( &bvarr );
 	    nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, abcol, NULL, &bvarr );
@@ -205,7 +210,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	
     skipped = 0;
     
-    G_message (_("Registering arcs ..."));
+    G_message (_("Registering arcs..."));
     
     for ( i = 1; i <= nlines; i++ ) {
 	G_percent ( i, nlines, 1 ); /* must be before any continue */
@@ -296,24 +301,28 @@ Vect_net_build_graph (  struct Map_info *Map,
         G_debug ( 2, "Set nodes' costs");
 	if ( nfield < 1 ) G_fatal_error ("Node field < 1");
 
-        G_message (_("Setting node costs ..."));
+        G_message (_("Setting node costs..."));
 
         Fi = Vect_get_field( Map, nfield);
-	if ( Fi == NULL ) G_fatal_error (_("Cannot get field info"));
+	if ( Fi == NULL )
+	    G_fatal_error (_("Database connection not defined for layer %d"),
+			   nfield);
 	
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	    G_fatal_error(_("Cannot open database <%s> by driver <%s>"),
+	    G_fatal_error(_("Unable to open database <%s> by driver <%s>"),
 			  Fi->database, Fi->driver) ;
 
 	/* Load costs to array */
 	if ( db_get_column ( driver, Fi->table, ncol, &Column ) != DB_OK) 
-            G_fatal_error(_("Cannot get column info"));
+            G_fatal_error(_("Column <%s> not found in table <%s>"),
+			  ncol, Fi->table);
 
 	fctype = db_sqltype_to_Ctype ( db_get_column_sqltype(Column) );
 	
 	if ( fctype != DB_C_TYPE_INT && fctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Column type not supported"));
+	    G_fatal_error (_("Data type of column <%s> not supported (must be numeric)"),
+			   ncol);
 
 	db_CatValArray_init ( &fvarr );
 	nrec = db_select_CatValArray ( driver, Fi->table, Fi->key, ncol, NULL, &fvarr );
@@ -365,9 +374,10 @@ Vect_net_build_graph (  struct Map_info *Map,
 	db_CatValArray_free ( &fvarr);
     }
     
-    G_message (_("Flattening the graph ...")); 
+    G_message (_("Flattening the graph...")); 
     ret = dglFlatten ( gr );
-    if ( ret < 0 ) G_fatal_error (_("GngFlatten error"));
+    if ( ret < 0 )
+	G_fatal_error (_("GngFlatten error"));
     
     /* init SP cache */
     /* Disabled because of BUG1 in dglib. Without cache it is terribly slow, but with cache there
@@ -381,15 +391,23 @@ Vect_net_build_graph (  struct Map_info *Map,
 
 
 /*!
- \fn int Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
- \brief Find shortest path. Costs for 'from' and 'to' nodes are not considered (SP found even if
-        'from' or 'to' are 'closed' (costs = -1) and costs of these nodes are not added to SP costs result.
- \return number of segments : ( 0 is correct for from = to, or List == NULL ),
-              ? sum of costs is better return value,
-           -1 : destination unreachable
- \param Map_info structure, from?, to?, ilist? cost
+  \brief Find shortest path.
+
+  Costs for 'from' and 'to' nodes are not considered (SP found even if
+  'from' or 'to' are 'closed' (costs = -1) and costs of these
+  nodes are not added to SP costs result.
+
+  \param Map vector map
+  \param from from node
+  \param to to node
+  \param[out] List list of line ids (path)
+  \param[out] cost costs value
+
+  \return number of segments
+  \return 0 is correct for from = to, or List == NULL ) ? sum of costs is better return value,
+  \return -1 : destination unreachable
+
 */
-#include<fcntl.h>
 int
 Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
 {
@@ -428,7 +446,7 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 	return -1;
     }
     else if ( nRet < 0 ) {
-        fprintf( stderr , "dglShortestPath error: %s\n", dglStrerror( &(Map->graph) ) );
+        G_warning(_("dglShortestPath error: %s"), dglStrerror( &(Map->graph) ) );
 	return -1;
     }
     
@@ -462,11 +480,17 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     return (cArc);
 }
 
-/* 
-*  Returns in cost for given direction (GV_FORWARD,GV_BACKWARD) in *cost.
-*  cost is set to -1 if closed.
-*  Return : 1 : OK
-*           0 : does not exist (was not inserted)
+/*! 
+  \brief Returns in cost for given direction in *cost.
+
+  cost is set to -1 if closed.
+
+  \param Map vector map
+  \param line line id
+  \param direction direction (GV_FORWARD, GV_BACKWARD) 
+
+  \return 1 OK
+  \return 0 does not exist (was not inserted)
 */
 int
 Vect_net_get_line_cost ( struct Map_info *Map, int line, int direction, double *cost )
@@ -504,9 +528,14 @@ Vect_net_get_line_cost ( struct Map_info *Map, int line, int direction, double *
     return 1;
 }
 
-/* 
-*  Returns in cost for given node in *cost.
-*  Return : 1 : OK
+/*!
+  \brief Get cost of node
+
+  \param Map vector map
+  \param node node id
+  \param[out] cost costs value
+
+  \return 1
 */
 int
 Vect_net_get_node_cost ( struct Map_info *Map, int node, double *cost )
@@ -521,27 +550,22 @@ Vect_net_get_node_cost ( struct Map_info *Map, int node, double *cost )
 }
 
 /*!
- \fn int Vect_net_nearest_nodes ( struct Map_info *Map, double x, double y, double z, 
- 		int direction, double maxdist,
-		int *node1, int *node2, int *ln, double *costs1, double costs2,
-                struct line_pnts *Points1, struct line_pnts *Points1 )
- \brief Find nearest node(s) on network. 
- 
- \return number of nodes found (0,1,2)
- \param Map
- \param x point x coordinate
- \param y point y coordinate
- \param z point z coordinate (NOT USED !)
- \param direction (GV_FORWARD - from point to net, GV_BACKWARD - from net to point)
- \param maxdist maximum distance to the network
- \param node1 pointer where to store the node number (or NULL)
- \param node2 pointer where to store the node number (or NULL)
- \param ln    pointer where to store the nearest line number (or NULL)
- \param costs1 pointer where to store costs on nearest line to node1 (not costs from x,y,z to the line) (or NULL)
- \param costs2 pointer where to store costs on nearest line to node2 (not costs from x,y,z to the line) (or NULL)
- \param Points1 pointer to structure where to store vertices on nearest line to node1 (or NULL)
- \param Points2 pointer to structure where to store vertices on nearest line to node2 (or NULL)
- \param pointer where to distance to the line (or NULL)
+  \brief Find nearest node(s) on network. 
+  
+  \param Map vetor map
+  \param x,y,z point coordinates (z coordinate NOT USED !)
+  \param direction (GV_FORWARD - from point to net, GV_BACKWARD - from net to point)
+  \param maxdist maximum distance to the network
+  \param node1 pointer where to store the node number (or NULL)
+  \param node2 pointer where to store the node number (or NULL)
+  \param ln    pointer where to store the nearest line number (or NULL)
+  \param costs1 pointer where to store costs on nearest line to node1 (not costs from x,y,z to the line) (or NULL)
+  \param costs2 pointer where to store costs on nearest line to node2 (not costs from x,y,z to the line) (or NULL)
+  \param Points1 pointer to structure where to store vertices on nearest line to node1 (or NULL)
+  \param Points2 pointer to structure where to store vertices on nearest line to node2 (or NULL)
+  \param pointer where to distance to the line (or NULL)
+
+  \return number of nodes found (0,1,2)
 */
 int Vect_net_nearest_nodes ( struct Map_info *Map, 
 	                     double x, double y, double z, 
@@ -706,31 +730,22 @@ int Vect_net_nearest_nodes ( struct Map_info *Map,
 }
 
 /*!
- \fn int Vect_net_shortest_path_coor ( struct Map_info *Map, 
-                double fx, double fy, double fz, double tx, double ty, double tz,
-		double fmax, double tmax,
-		double *costs, struct line_pnts *Points,
-		double *fdist, double *tdist )
- \brief Find shortest path on network between 2 points given by coordinates. 
+  \brief Find shortest path on network between 2 points given by coordinates. 
+  
+  \param Map vector map
+  \param fx,fy,fz from point x coordinate (z ignored)
+  \param tx,ty,tz to point x coordinate (z ignored)
+  \param fmax maximum distance to the network from 'from'
+  \param tmax maximum distance to the network from 'to'
+  \param costs pointer where to store costs on the network (or NULL)
+  \param Points pointer to the structure where to store vertices of shortest path (or NULL)
+  \param List pointer to the structure where list of lines on the network is stored (or NULL)
+  \param FPoints pointer to the structure where to store line from 'from' to first network node (or NULL)
+  \param TPoints pointer to the structure where to store line from last network node to 'to' (or NULL)
+  \param fdist distance from 'from' to the net (or NULL)
+  \param tdist distance from 'to' to the net (or NULL)
 
- \return 1 OK, 0 not reachable
- 
- \param Map
- \param fx from point x coordinate
- \param fy from point y coordinate
- \param fz from point z coordinate (ignored)
- \param tx to point x coordinate
- \param ty to point y coordinate
- \param tz to point z coordinate (ignored)
- \param fmax maximum distance to the network from 'from'
- \param tmax maximum distance to the network from 'to'
- \param costs pointer where to store costs on the network (or NULL)
- \param Points pointer to the structure where to store vertices of shortest path (or NULL)
- \param List pointer to the structure where list of lines on the network is stored (or NULL)
- \param FPoints pointer to the structure where to store line from 'from' to first network node (or NULL)
- \param TPoints pointer to the structure where to store line from last network node to 'to' (or NULL)
- \param fdist distance from 'from' to the net (or NULL)
- \param tdist distance from 'to' to the net (or NULL)
+  \return 1 OK, 0 not reachable
 */
 int 
 Vect_net_shortest_path_coor ( struct Map_info *Map, 

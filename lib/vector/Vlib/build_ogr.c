@@ -1,18 +1,22 @@
-/****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek, Piero Cavalieri
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file build_ogr.c
+  
+  \brief Vector library - Building topology for OGR
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek, Piero Cavalieri
+  
+  \date 2001-2008
+*/
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,14 +25,13 @@
 #include <grass/glocale.h>
 
 /* 
-*   Line offset is
-*      - centroids   : FID
-*      - other types : index of the first record (which is FID) in offset array.
-*
-*   Category: FID, not all layer have FID, OGRNullFID is defined (5/2004) as -1, so FID should be only >= 0
-*
-*/
-
+ *   Line offset is
+ *      - centroids   : FID
+ *      - other types : index of the first record (which is FID) in offset array.
+ *
+ *   Category: FID, not all layer have FID, OGRNullFID is defined (5/2004) as -1, so FID should be only >= 0
+ *
+ */
 
 #ifdef HAVE_OGR
 #include <ogr_api.h>
@@ -84,7 +87,7 @@ static void del_part ( GEOM_PARTS *parts )
 }
 
 /* Add parts to offset */
-static void add_parts_to_offset ( struct Map_info *Map, GEOM_PARTS *parts, int line ) 
+static void add_parts_to_offset ( struct Map_info *Map, GEOM_PARTS *parts) 
 {
     int i, j;
 
@@ -135,16 +138,12 @@ static int add_line ( struct Map_info *Map, int type, struct line_pnts *Points,
     }
 
     if ( type != GV_CENTROID ) /* because centroids are read from topology, not from layer */ 
-        add_parts_to_offset ( Map, parts, line );
+        add_parts_to_offset ( Map, parts);
 
     return line;
 }
 
-/* Recursively add geometry to topology 
-* 
-*  
-*
-*/
+/* Recursively add geometry to topology */
 static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEOM_PARTS *parts )
 {
     struct  Plus_head *plus;
@@ -255,7 +254,7 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
 	    /* create virtual centroid */
 	    ret = Vect_get_point_in_poly_isl ( Points[0], Points+1, nRings-1, &x, &y );
 	    if (ret < -1) {
-		G_warning (_("Cannot calculate centroid for area %d"), outer_area );
+		G_warning (_("Unable to calculate centroid for area %d"), outer_area );
 	    } else { 
                 P_AREA  *Area;
 
@@ -290,7 +289,7 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
 	    break;
 
 	default:
-	    G_warning (_("OGR feature type %d not supported)"), eType);
+	    G_warning (_("OGR feature type %d not supported"), eType);
 	    break;
     }
 
@@ -298,10 +297,14 @@ static int add_geometry ( struct Map_info *Map, OGRGeometryH hGeom, int FID, GEO
 }
 
 /*!
- \fn int Vect_build_ogr ( struct Map_info *Map, FILE *msgout ) 
- \brief build topology 
- \return 1 on success, 0 on error
- \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
+  \brief Build topology 
+
+  \param Map_info vector map
+  \param build build level 
+  \param msgout message output (stdout/stderr for example) or NULL
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
@@ -311,7 +314,8 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
     OGRFeatureH  hFeature;
     OGRGeometryH hGeom;
 
-    if ( build != GV_BUILD_ALL ) G_fatal_error ("Partial build for OGR is not supported.");
+    if ( build != GV_BUILD_ALL )
+      G_fatal_error (_("Partial build for OGR is not supported"));
 
     Msgout = msgout;
 
@@ -322,14 +326,14 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
 
     /* test layer capabilities */
     if ( !OGR_L_TestCapability ( Map->fInfo.ogr.layer, OLCRandomRead ) ) {
-	G_warning ("Random read is not supported by OGR for this layer, cannot build support." );
+	G_warning (_("Random read is not supported by OGR for this layer, cannot build support"));
 	return 0;
     }
     
     init_parts (&parts);
 
     /* Note: Do not use OGR_L_GetFeatureCount (it may scan all features)!!! */
-    prnmsg ("Feature: ");
+    prnmsg (_("Feature: "));
 
     OGR_L_ResetReading ( Map->fInfo.ogr.layer );
     count = iFeature = 0;
@@ -354,7 +358,7 @@ Vect_build_ogr (struct Map_info *Map, int build, FILE * msgout)
 
 	FID = (int) OGR_F_GetFID ( hFeature );
 	if ( FID == OGRNullFID ) {
-	    G_warning (_("OGR feature without ID ignored."));
+	    G_warning (_("OGR feature without ID ignored"));
 	    OGR_F_Destroy( hFeature );
 	    continue;
 	}

@@ -5,16 +5,19 @@
  *
  * Higher level functions for reading/writing/manipulating vectors.
  *
- * \author Original author CERL, probably Dave Gerdes or Mike
- * Higgins. Update to GRASS 5.7 Radim Blazek and David D. Gray.
- *
- * (C) 2001 by the GRASS Development Team
+ * (C) 2001-2008 by the GRASS Development Team
  *
  * This program is free software under the 
  * GNU General Public License (>=v2). 
  * Read the file COPYING that comes with GRASS
  * for details.
+ *
+ * \author Original author CERL, probably Dave Gerdes or Mike
+ * Higgins. Update to GRASS 5.7 Radim Blazek and David D. Gray.
+ *
+ * \date 2001-2008
  */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
@@ -28,8 +31,8 @@
 #include <grass/Vect.h>
 #include <grass/dbmi.h>
 #include <grass/glocale.h>
+
 /*!
-  \fn int Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
   \brief Copy all alive elements of opened vector map to another opened vector map
 
   \param[in] In input vector map
@@ -49,7 +52,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
     Cats = Vect_new_cats_struct ();
    
     if ( Vect_level ( In ) < 1 )
-	G_fatal_error ("Vect_copy_map_lines(): input vector map is not open");
+	G_fatal_error ("Vect_copy_map_lines(): %s", _("input vector map is not open"));
     
     ret = 0;
     /* Note: sometimes is important to copy on level 2 (pseudotopo centroids) 
@@ -59,7 +62,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	for ( i = 1; i <= nlines; i++ ) {
 	    type =  Vect_read_line (In, Points, Cats, i);
 	    if ( type == -1 ) {
-		G_warning (_("Unable to read vector map <%s%s>"), In->name, In->mapset);
+		G_warning (_("Unable to read vector map <%s>"), Vect_get_full_name(In));
 		ret = 1;
 		break;
 	    } 
@@ -72,7 +75,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 	while ( 1 ) {
 	    type =  Vect_read_next_line (In, Points, Cats);
 	    if ( type == -1 ) {
-		G_warning (_("Unable to read vector map <%s%s>"), In->name, In->mapset);
+		G_warning (_("Unable to read vector map <%s>"), Vect_get_full_name(In));
 		ret = 1;
 		break;
 	    } else if ( type == -2 ) { /* EOF */ 
@@ -133,7 +136,6 @@ copy_file(const char *src, const char *dst)
 }
 
 /*!
-  \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
   \brief Copy a map including attribute tables
   
   Old vector is deleted
@@ -152,7 +154,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     int i, n, ret, type;
     struct Map_info In, Out;
     struct field_info *Fi, *Fin;
-    char   old_path[1000], new_path[1000], buf[1000]; 
+    char   old_path[GPATH_MAX], new_path[GPATH_MAX], buf[GPATH_MAX]; 
     struct stat info;
     char *files[] = { GRASS_VECT_FRMT_ELEMENT, GRASS_VECT_COOR_ELEMENT,
                       GRASS_VECT_HEAD_ELEMENT, GRASS_VECT_HIST_ELEMENT,
@@ -262,18 +264,19 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 }
 
 /*!
- \fn int Vect_rename ( char *in, char *out, FILE *msgout )
- \brief Rename a map, attribute tables are created in the same database where input tables were stored.
+  \brief Rename a map.
 
- The original format (native/OGR) is used.
- Old map ('out') is deleted!!!
+  Attribute tables are created in the same database where input tables were stored.
 
- \param[in] in input vector map name
- \param[in] out output vector map name
- \param[in] msgout output file for messages or NULL 
+  The original format (native/OGR) is used.
+  Old map ('out') is deleted!!!
 
- \return -1 error
- \return 0 success
+  \param[in] in input vector map name
+  \param[in] out output vector map name
+  \param[in] msgout output file for messages or NULL 
+
+  \return -1 error
+  \return 0 success
 */
 int 
 Vect_rename ( char *in, char *out, FILE *msgout )
@@ -388,13 +391,12 @@ Vect_rename ( char *in, char *out, FILE *msgout )
 }
 
 /*!
- \fn int Vect_delete ( char *map )
- \brief Delete vector map including attribute tables
-
- \param[in] map vector map name
-
- \return -1 error
- \return 0 success
+  \brief Delete vector map including attribute tables
+  
+  \param[in] map vector map name
+  
+  \return -1 error
+  \return 0 success
 */
 int 
 Vect_delete ( char *map )
@@ -402,7 +404,7 @@ Vect_delete ( char *map )
     int i, n, ret;
     struct Map_info Map;
     struct field_info *Fi;
-    char   buf[5000];
+    char   buf[GPATH_MAX];
     DIR    *dir;
     struct dirent *ent; 
     char *tmp;
@@ -412,7 +414,7 @@ Vect_delete ( char *map )
     G_chop ( map );
 
     if ( map == NULL || strlen ( map ) == 0 ) {
-	G_warning ( "Invalid vector map name <%s>", map ? map : "null");
+	G_warning (_("Invalid vector map name <%s>"), map ? map : "null");
 	return -1;
     }
 
@@ -428,7 +430,7 @@ Vect_delete ( char *map )
 	Vect_set_open_level (1); /* Topo not needed */
 	ret = Vect_open_old_head (&Map, map, G_mapset());
 	if ( ret < 1 ) {
-	    G_warning ( "Unable to open header file for vector map <%s>", map );
+	    G_warning (_("Unable to open header file for vector map <%s>"), map );
 	    return -1;
 	}
 
@@ -462,7 +464,7 @@ Vect_delete ( char *map )
 			return -1;
 		    }
 		} else {
-		    G_warning ( "Table <%s> linked to vector map <%s> does not exist",
+		    G_warning (_("Table <%s> linked to vector map <%s> does not exist"),
 				Fi->table, map);
 		}
 	    }
@@ -520,17 +522,16 @@ Vect_delete ( char *map )
 }
 
 /*!
- \fn int Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
- \brief Copy tables linked to vector map.
-
- All if field = 0, or table defined by given field if field > 0
-
- \param[in] In input vector map
- \param[out] Out output vector map
- \param[in] field layer number
-
- \return 0 on success
- \return -1 on error
+  \brief Copy tables linked to vector map.
+  
+  All if field = 0, or table defined by given field if field > 0
+  
+  \param[in] In input vector map
+  \param[out] Out output vector map
+  \param[in] field layer number
+  
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
@@ -589,19 +590,17 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
 }
 
 /*!
- \fn int Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in, 
-                           int field_out, char *field_name, int type )
- \brief Copy table linked to vector map based on type.
-
- \param[in] In input vector map
- \param[out] Out output vector map
- \param[in] field_in input layer number
- \param[in] field_out output layer number
- \param[in] field_name layer name
- \param[in] type feature type
-
- \return 0 on success
- \return -1 on error
+  \brief Copy table linked to vector map based on type.
+  
+  \param[in] In input vector map
+  \param[out] Out output vector map
+  \param[in] field_in input layer number
+  \param[in] field_out output layer number
+  \param[in] field_name layer name
+  \param[in] type feature type
+  
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in, 
@@ -611,21 +610,19 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
 }
 
 /*!
- \fn int Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 
-                           int field_out, char *field_name, int type, int *cats, int ncats )
- \brief Copy table linked to vector map based on category numbers.
-
- \param[in] In input vector map
- \param[out] Out output vector map
- \param[in] field_in input layer number
- \param[in] field_out output layer number
- \param[in] field_name layer name
- \param[in] type feature type
- \param[in] cats pointer to array of cats or NULL
- \param[in] ncats number of cats in 'cats'
-
- \return 0 on success
- \return -1 on error
+  \brief Copy table linked to vector map based on category numbers.
+  
+  \param[in] In input vector map
+  \param[out] Out output vector map
+  \param[in] field_in input layer number
+  \param[in] field_out output layer number
+  \param[in] field_name layer name
+  \param[in] type feature type
+  \param[in] cats pointer to array of cats or NULL
+  \param[in] ncats number of cats in 'cats'
+  
+  \return 0 on success
+  \return -1 on error
 */
 int 
 Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 

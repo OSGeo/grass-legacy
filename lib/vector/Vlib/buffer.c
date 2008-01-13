@@ -1,9 +1,22 @@
-/* Functions: nearest, adjust_line, parallel_line
-**
-** Author: Radim Blazek Feb 2000
-**
-**
+/*!
+  \file buffer.c
+  
+  \brief Vector library - nearest, adjust_line, parallel_line
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
 */
+
 #include <stdlib.h>
 #include <math.h>
 #include <grass/Vect.h>
@@ -35,7 +48,7 @@ static void vect(double x1, double y1, double x2, double y2, double *x, double *
 **         -1 found overlap
 **          0 not found
 */
-int find_cross ( struct line_pnts *Points, int s1, int s2, int s3, int s4,  int *s5, int *s6 )
+static int find_cross ( struct line_pnts *Points, int s1, int s2, int s3, int s4,  int *s5, int *s6 )
 {
     int i, j, np, ret;
     double *x, *y;
@@ -79,7 +92,7 @@ int find_cross ( struct line_pnts *Points, int s1, int s2, int s3, int s4,  int 
 ** returns:  1 in buffer
 **           0 not  in buffer
 */
-int point_in_buf ( struct line_pnts *Points, double px, double py, double d )
+static int point_in_buf ( struct line_pnts *Points, double px, double py, double d )
 {
     int i, np;
     double sd;
@@ -114,7 +127,7 @@ int point_in_buf ( struct line_pnts *Points, double px, double py, double d )
 **        than I am should write paralle_line + clean_parallel
 **        better;    RB March 2000
 */
-void clean_parallel ( struct line_pnts *Points, struct line_pnts *origPoints, double d , int rm_end )
+static void clean_parallel ( struct line_pnts *Points, struct line_pnts *origPoints, double d , int rm_end )
 {
     int i, j, np, npn, sa, sb;
     int sa_max = 0;
@@ -238,7 +251,7 @@ void clean_parallel ( struct line_pnts *Points, struct line_pnts *origPoints, do
 *
 *  New line is written to existing nPoints structure.
 */
-void parallel_line (struct line_pnts *Points, double d, double tol, struct line_pnts *nPoints)
+static void parallel_line (struct line_pnts *Points, double d, double tol, struct line_pnts *nPoints)
 {
     int i, j, np, na, side;
     double *x, *y, nx, ny, tx, ty, vx, vy, ux, uy, wx, wy;
@@ -311,14 +324,15 @@ void parallel_line (struct line_pnts *Points, double d, double tol, struct line_
 }
 
 /*!
-  \fn void Vect_line_parallel ( struct line_pnts *InPoints, double distance, double tolerance, int rm_end,
-                       struct line_pnts *OutPoints )
   \brief Create parrallel line
+  
   \param InPoints input line
-  \param distance
+  \param distance create parrallel line in distance
   \param tolerance maximum distance between theoretical arc and polygon segments
   \param rm_end remove end points falling into distance
-  \param OutPoints output line
+  \param[out] OutPoints output line
+
+  \return
 */
 void
 Vect_line_parallel ( struct line_pnts *InPoints, double distance, double tolerance, int rm_end,
@@ -330,22 +344,24 @@ Vect_line_parallel ( struct line_pnts *InPoints, double distance, double toleran
     parallel_line ( InPoints, distance, tolerance, OutPoints);
 
     clean_parallel ( OutPoints, InPoints, distance, rm_end );
+
+    return;
 }
 
 /*!
-  \fn void Vect_line_buffer ( struct line_pnts *InPoints, double distance, double tolerance,
-                              struct line_pnts *OutPoints )
   \brief Create buffer around the line line.
-         Buffer is closed counter clockwise polygon.
-         Warning: output line may contain loops!
+
+  Buffer is closed counter clockwise polygon.
+  Warning: output line may contain loops!
+  
   \param InPoints input line
-  \param distance
+  \param distance create buffer in distance
   \param tolerance maximum distance between theoretical arc and polygon segments
-  \param OutPoints output line
+  \param[out] OutPoints output line
 */
 void
 Vect_line_buffer ( struct line_pnts *InPoints, double distance, double tolerance,
-                     struct line_pnts *OutPoints )
+		   struct line_pnts *OutPoints )
 {
     double dangle;
     int    side, npoints;
@@ -439,6 +455,8 @@ Vect_line_buffer ( struct line_pnts *InPoints, double distance, double tolerance
 	Vect_append_point ( OutPoints, OutPoints->x[0], OutPoints->y[0], 0 );
     }
     Vect_line_prune ( OutPoints );
+
+    return;
 }
 
 

@@ -1,59 +1,50 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-/*
- *V1_read_next_line (Map, line_p)
- *              reads thru digit file looking for next line within window,
- *              stores info in struct instead of args.
- *      NOTE:  line_p->alloc_points better be set to 0 for the first call.
- * 
- * returns:  -1 on error
- *           -2 EOF
- *           line type (positive value) if it found a line
+/*!
+  \file read_nat.c
+  
+  \brief Vector library - reading data (native format)
+  
+  Higher level functions for reading/writing/manipulating vectors.
 
- **
- **
- **  The action of this routine can be modified by:
- **    Vect_read_constraint_region ()
- **    Vect_read_constraint_type   ()
- **    Vect_remove_constraints     ()
- **
- */
+  The action of this routine can be modified by:
+   - Vect_read_constraint_region()
+   - Vect_read_constraint_type()
+   - Vect_remove_constraints()
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001
+*/
 
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
-int Vect__Read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+static int
+Vect__Read_line_nat (struct Map_info *,
+		     struct line_pnts *,
+		     struct line_cats *,
+		     long);
 
 /*!
- * \fn int V1_read_line_nat (struct Map_info *Map, struct line_pnts *Points, struct line_cats *Cats, long offset)
- *	      
  * \brief Read line from coor file on given offset.
+ *
+ * \param Map vector map 
+ * \param Points container used to store line points within
+ * \param Cats container used to store line categories within
+ * \param offset given offset 
  *
  * \return line type
  * \return 0 dead line
  * \return -2 end of table (last row)
  * \return -1 out of memory
- *
- * \param Map vector map layer
- * \param Points container used to store line points within
- * \param Cats container used to store line categories within
- * \param offset given offset 
  */
 int 
 V1_read_line_nat (
@@ -66,18 +57,16 @@ V1_read_line_nat (
 }
 
 /*!
- * \fn int V1_read_next_line_nat (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
- *
  * \brief Read next line from coor file.
+ *
+ * \param Map vector map layer
+ * \param line_p container used to store line points within
+ * \param line_c container used to store line categories within
  *
  * \return line type
  * \return 0 dead line
  * \return -2 end of table (last row)
  * \return -1 out of memory
- *
- * \param Map vector map layer
- * \param line_p container used to store line points within
- * \param line_c container used to store line categories within
  */
 int 
 V1_read_next_line_nat (
@@ -124,23 +113,20 @@ V1_read_next_line_nat (
       return (itype);
     }
   /* NOTREACHED */
-
-}				/*  dig_read_line_struct_in_box()  */
+} 
 
 /*!
- * \fn int V2_read_line_nat (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c, int line)
- *
  * \brief Reads any specified line, this is NOT affected by constraints
- *
- * \return line type ( > 0 )
- * \return 0 dead line
- * \return -1 out of memory
- * \return -2 end of file
  *
  * \param Map vector map layer
  * \param line_p container used to store line points within
  * \param line_c container used to store line categories within
  * \param line line id
+ *
+ * \return line type ( > 0 )
+ * \return 0 dead line
+ * \return -1 out of memory
+ * \return -2 end of file
  */
 int 
 V2_read_line_nat (
@@ -157,24 +143,22 @@ V2_read_line_nat (
     Line = Map->plus.Line[line]; 
 
     if ( Line == NULL )
-	G_fatal_error (_("Attempt to read dead line [%d]"), line );
+      G_fatal_error ("V2_read_line_nat(): %s %d", _("Attempt to read dead line"), line );
 	    
     return Vect__Read_line_nat (Map, line_p, line_c, Line->offset);
 }
 
 /*!
- * \fn int V2_read_next_line_nat (struct Map_info *Map, struct line_pnts *line_p, struct line_cats *line_c)
- *
  * \brief Reads next unread line each time called.  Use Vect_rewind to reset.
+ *
+ * \param Map vector map layer
+ * \param line_p container used to store line points within
+ * \param line_c container used to store line categories within
  * 
  * \return line type ( > 0 )
  * \return 0 dead line
  * \return -1 out of memory
  * \return -2 end of file
- *
- * \param Map vector map layer
- * \param line_p container used to store line points within
- * \param line_c container used to store line categories within
  */
 int 
 V2_read_next_line_nat (
@@ -222,24 +206,21 @@ V2_read_next_line_nat (
       return V2_read_line_nat (Map, line_p, line_c, Map->next_line++);
     }
 
-  /* NOTREACHED */
-}
+  /* NOTREACHED */}
 
 
 /*!  
- * \fn int Vect__Read_line_nat (struct Map_info *Map, struct line_pnts *p, struct line_cats *c, long offset)
- *
  * \brief Read line from coor file 
- *
- * \return line type ( > 0 )
- * \return 0 dead line
- * \return -1 out of memory
- * \return -2 end of file
  *
  * \param Map vector map layer
  * \param p container used to store line points within
  * \param c container used to store line categories within
  * \param offset given offset
+ *
+ * \return line type ( > 0 )
+ * \return 0 dead line
+ * \return -1 out of memory
+ * \return -2 end of file
  */
 int
 Vect__Read_line_nat (
@@ -331,9 +312,7 @@ Vect__Read_line_nat (
       if (0 >= dig__fread_port_I (&n_points, 1, &(Map->dig_fp) )) return (-2);
   }
 
-#ifdef GDEBUG
   G_debug (3, "    n_points = %d", n_points);
-#endif
 
   if ( p != NULL ) {	  
       if (0 > dig_alloc_points (p, n_points + 1))
@@ -364,4 +343,3 @@ Vect__Read_line_nat (
   
   return (type);
 }
-

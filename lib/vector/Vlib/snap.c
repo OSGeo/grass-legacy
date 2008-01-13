@@ -3,15 +3,20 @@
  *
  * \brief Vector library - Clean vector map (snap lines)
  *
- * \author Radim Blazek
+ * Higher level functions for reading/writing/manipulating vectors.
  *
- * (C) 2001 by the GRASS Development Team
+ * (C) 2001-2008 by the GRASS Development Team
  *
  * This program is free software under the 
  * GNU General Public License (>=v2). 
  * Read the file COPYING that comes with GRASS
  * for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2001
  */
+
 #include <math.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
@@ -40,16 +45,13 @@ int add_item(int id, struct ilist *list)
     return 1;
 }
 
-
 /*!
- * \fn void Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thresh, struct Map_info *Err, FILE *msgout)
- *
  * \brief Snap selected lines to existing vertex in threshold.
  *
  * Snap selected lines to existing vertices.
  * 
  * \warning Lines are not necessarily snapped to nearest vertex, but to vertex in threshold! 
-  
+ *
  * Lines showing how vertices were snapped may be optionaly written to error map. 
  * Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
  *
@@ -58,7 +60,8 @@ int add_item(int id, struct ilist *list)
  * \param[in] thresh threshold in which snap vertices
  * \param[out] Err vector map where lines representing snap are written or NULL
  * \param[out] msgout file pointer where messages will be written or NULL
- \return
+ *
+ * \return void
 */
 
 /* As mentioned above, lines are not necessarily snapped to nearest vertex! For example:
@@ -72,7 +75,6 @@ int add_item(int id, struct ilist *list)
      | 2
      |	
 */
-
 void 
 Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thresh, struct Map_info *Err, FILE *msgout)
 {
@@ -114,7 +116,7 @@ Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thr
     XPnts = NULL;
     printed = 0;
 
-    if ( msgout ) fprintf (msgout, "%s ...", _("Registering points")); 
+    if ( msgout ) fprintf (msgout, "%s...", _("Registering points")); 
 
     for ( line_idx = 0; line_idx < List_lines -> n_values; line_idx++ ){ 
 	int v;
@@ -154,7 +156,7 @@ Vect_snap_lines_list (struct Map_info *Map, struct ilist *List_lines, double thr
             }
 	}
 	if ( msgout && printed > 1000 ) {
-	    fprintf (msgout, "\r%s ... %d", _("Registering points"), point - 1); 
+	    fprintf (msgout, "\r%s... %d", _("Registering points"), point - 1); 
 	    fflush ( msgout );
 	    printed = 0;
 	}
@@ -392,8 +394,6 @@ static int sort_new(const void *pa, const void *pb)
 }
 
 /*!
- * \fn void Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
- *
  * \brief Snap lines in vector map to existing vertex in threshold.
  *
  * For details see Vect_snap_lines_list()
@@ -403,7 +403,8 @@ static int sort_new(const void *pa, const void *pb)
  * \param[in] thresh threshold in which snap vertices
  * \param[out] Err vector map where lines representing snap are written or NULL
  * \param[out] msgout file pointer where messages will be written or NULL
- \return
+ *
+ * \return void
 */
 void 
 Vect_snap_lines (struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )

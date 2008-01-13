@@ -1,20 +1,23 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file close.c
+  
+  \brief Vector library - Close map
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -22,6 +25,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 static int
 clo_dummy () {
@@ -29,7 +33,7 @@ clo_dummy () {
 }
 
 #ifndef HAVE_OGR
-static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+static int format () { G_fatal_error (_("Requested format is not compiled in this version")); return 0; }
 #endif
 
 static int (*Close_array[][2]) () =
@@ -44,10 +48,12 @@ static int (*Close_array[][2]) () =
 
 
 /*!
- \fn int Vect_close (struct Map_info *Map)
- \brief close vector data file
- \return 0 on success, non-zero on error
- \param Map_info structure
+  \brief Close vector data file
+  
+  \param Map vector map to be closed
+
+  \return 0 on success
+  \return non-zero on error
 */
 int 
 Vect_close (struct Map_info *Map)
@@ -59,8 +65,8 @@ Vect_close (struct Map_info *Map)
     
     /* Store support files if in write mode on level 2 */
     if ( strcmp(Map->mapset,G_mapset()) == 0 && Map->support_updated && Map->plus.built == GV_BUILD_ALL) {
-        char buf[1000];
-        char file_path[2000];
+        char buf[GPATH_MAX];
+        char file_path[GPATH_MAX];
         struct stat info;
 
 	/* Delete old support files if available */
@@ -117,16 +123,18 @@ Vect_close (struct Map_info *Map)
     /* Close level 1 files / data sources if not head_only */
     if ( !Map->head_only ) {
 	if (  ((*Close_array[Map->format][1]) (Map)) != 0 ) { 
-	    G_warning ("Cannot close vector '%s'", Vect_get_full_name(Map) );
+	    G_warning (_("Unable close vector <%s>"),
+		       Vect_get_full_name(Map) );
 	    return 1;
 	}
     }
 
-    free (Map->name); Map->name = NULL;
-    free (Map->mapset); Map->mapset = NULL;
+    G_free ((void *) Map->name);
+    Map->name = NULL;
+    G_free ((void *) Map->mapset);
+    Map->mapset = NULL;
 
     Map->open = VECT_CLOSED_CODE;
 
     return 0;
 }
-
