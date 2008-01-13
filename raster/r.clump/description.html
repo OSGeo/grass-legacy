@@ -1,9 +1,9 @@
 <H2>DESCRIPTION</H2>
 
 <EM>r.clump</EM> finds all areas of contiguous cell category values in the
-input raster map layer <EM>name</B>.</EM> It assigns a unique category value
+input raster map layer <EM>name.</EM> It assigns a unique category value
 to each such area ("clump") in the resulting output raster map layer
-<EM>name</B>.</EM> If the user does not provide input and output map layer
+<EM>name.</EM> If the user does not provide input and output map layer
 names on the command line, the program will prompt the user for these names,
 using the standard <A HREF="parser.html">parser</A> interface.
 
@@ -13,20 +13,18 @@ clumped together.  (The user can run <EM><A
 HREF="r.reclass.html">r.reclass</A></EM> prior to <EM>r.clump</EM> to
 recategorize cells and reassign cell category values.)
 
-<H2>ALGORITHM</H2>
+<H2>NOTES</H2>
 
 <EM>r.clump</EM> moves a 2x2 matrix over the input raster map layer. 
 The lower right-hand corner of the matrix is grouped with the cells above it, 
-or to the left of it. 
-(Diagonal cells are not considered.) 
-
-<H2>NOTES</H2>
+or to the left of it (diagonal cells are not considered.) 
+<P>
 
 <EM>r.clump</EM> works properly with raster map layers that
 contain only "fat" areas (more than a single cell in
 width).  Linear elements (lines that are a single cell
 wide) may or may not be clumped together depending on the
-direction of the line -- horizontal and vertical lines of
+direction of the line - horizontal and vertical lines of
 cells are considered to be contiguous, but diagonal lines
 of cells are not considered to be contiguous and are broken
 up into separate clumps.
