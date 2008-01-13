@@ -1,31 +1,33 @@
-/**************************************************************
- *
- * MODULE:       vector library
- *  
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean lines
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
+/*!
+  \file dangles.c
+  
+  \brief Vector library - clean geometry (dangles)
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-void remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, 
+static void remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, 
 	              struct Map_info *Err, FILE *msgout );
 
 /*!
- \fn void Vect_remove_dangles ( struct Map_info *Map, int type, double maxlength, 
-                              struct Map_info *Err, FILE *msgout)
- \brief Remove dangles from vector map.
-
+  \brief Remove dangles from vector map.
+  
   Remove dangles of given type shorter than maxlength from vector map. 
   Line is considered to be a dangle if on at least one end node is no other line of given type(s).
   If a dangle is formed by more lines, such string of lines is taken as one dangle and 
@@ -33,11 +35,13 @@ void remove_dangles ( struct Map_info *Map, int type, int chtype, double maxleng
   Optionaly deleted dangles are written to error map. 
   Input map must be opened on level 2 for update.
 
- \param Map input map where have to be deleted
- \param type type of dangles 
- \param maxlength maxlength of dangles or -1 for all dangles
- \param Err vector map where deleted dangles are written or NULL
- \param msgout file pointer where messages will be written or NULL
+  \param Map input map where have to be deleted
+  \param type type of dangles 
+  \param maxlength maxlength of dangles or -1 for all dangles
+  \param Err vector map where deleted dangles are written or NULL
+  \param msgout file pointer where messages will be written or NULL
+
+  \return
 */
 void 
 Vect_remove_dangles ( struct Map_info *Map, int type, double maxlength, struct Map_info *Err, FILE *msgout )
@@ -46,28 +50,29 @@ Vect_remove_dangles ( struct Map_info *Map, int type, double maxlength, struct M
 }
     
 /*!
- \fn void Vect_chtype_dangles ( struct Map_info *Map, double maxlength, 
-                              struct Map_info *Err, FILE *msgout)
- \brief Change boundary dangles to lines.
-
+  \brief Change boundary dangles to lines.
+  
   Change boundary dangles to lines. 
   Boundary is considered to be a dangle if on at least one end node is no other boundary.
   If a dangle is formed by more boundaries, such string of boundaries is taken as one dangle and 
   either deleted are all parts or nothing.
   Optionaly deleted dangles are written to error map. 
   Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
+  
+  \param Map input map where have to be deleted
+  \param type type of dangles 
+  \param maxlength maxlength of dangles or -1 for all dangles
+  \param Err vector map where deleted dangles are written or NULL
+  \param msgout file pointer where messages will be written or NULL
 
- \param Map input map where have to be deleted
- \param type type of dangles 
- \param maxlength maxlength of dangles or -1 for all dangles
- \param Err vector map where deleted dangles are written or NULL
- \param msgout file pointer where messages will be written or NULL
+  \return 
 */
 void 
 Vect_chtype_dangles ( struct Map_info *Map, double maxlength, struct Map_info *Err, FILE *msgout )
 {
     remove_dangles ( Map, 0, 1, maxlength, Err, msgout );
 }
+
 /*
   Remove dangles of given type shorter than maxlength from vector map. 
   Line is considered to be a dangle if on at least one end node is no other line of given type(s).
@@ -86,7 +91,7 @@ Vect_chtype_dangles ( struct Map_info *Map, double maxlength, struct Map_info *E
   Err vector map where deleted dangles are written or NULL
   msgout file pointer where messages will be written or NULL
 */
-void 
+static void 
 remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, struct Map_info *Err, FILE *msgout )
 {
     struct line_pnts *Points;
@@ -113,8 +118,8 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
     Cats = Vect_new_cats_struct ();
     List = Vect_new_list ();
     
-    if ( msgout ) fprintf (msgout, "Removed dangles: %5d  %s: %5d", 
-	                            dangles_removed, lmsg, lines_removed ); 
+    if ( msgout ) fprintf (msgout, "%s: %5d  %s: %5d", 
+			   _("Removed dangles"), dangles_removed, lmsg, lines_removed ); 
 
     nnodes = Vect_get_num_nodes (Map);
     G_debug (2, "nnodes =  %d", nnodes );
@@ -202,16 +207,16 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 		}
 	    }
 	    if ( msgout ) {
-		if ( msgout ) fprintf (msgout, "\rRemoved dangles: %5d  %s: %5d", 
-						dangles_removed, lmsg, lines_removed ); 
+		if ( msgout ) fprintf (msgout, "\r%s: %5d  %s: %5d", 
+				       _("Removed dangles"), dangles_removed, lmsg, lines_removed ); 
 		fflush ( msgout );
 	    }
 	    dangles_removed++;
 	}
     }
     if ( msgout ) {
-	if ( msgout ) fprintf (msgout, "\rRemoved dangles: %5d  %s: %5d", 
-					dangles_removed, lmsg, lines_removed ); 
+	if ( msgout ) fprintf (msgout, "\r%s: %5d  %s: %5d", 
+			       _("Removed dangles"), dangles_removed, lmsg, lines_removed ); 
         fprintf (msgout, "\n" ); 
     }
 }

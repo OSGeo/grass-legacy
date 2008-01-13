@@ -1,35 +1,39 @@
-/* **************************************************************
- * 
- * MODULE:       vector library
- * 
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean lines
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
+/*!
+  \file remove_duplicates.c
+  
+  \brief Vector library - clean geometry (remove duplicates)
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /*!
- \fn void Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout)
- \brief Remove duplicate lines from vector map.
+  \brief Remove duplicate lines from vector map.
+  
+  Remove duplicate lines of given types from vector map. Duplicate lines may be optionaly 
+  written to error map. Input map must be opened on level 2 for update. Categories are merged.
+  
+  \param Map vector map where duplicate lines will be deleted
+  \param type type of line to be delete
+  \param Err vector map where duplicate lines will be written or NULL
+  \param msgout file pointer where messages will be written or NULL
 
- Remove duplicate lines of given types from vector map. Duplicate lines may be optionaly 
- written to error map. Input map must be opened on level 2 for update. Categories are merged.
-
- \param Map input map where duplicate lines will be deleted
- \param type type of line to be delete
- \param Err vector map where duplicate lines will be written or NULL
- \param msgout file pointer where messages will be written or NULL
- \return
+  \return void
 */
 void 
 Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout )
@@ -60,7 +64,7 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	*/
         /* TODO: 3D */
 	ndupl = 0;
-	if ( msgout ) fprintf (msgout, "Duplicates: %5d", ndupl ); 
+	if ( msgout ) fprintf (msgout, "%s: %5d", _("Duplicates"), ndupl ); 
 	for ( i = 1; i <= nlines; i++ ){ 
 	    if ( !Vect_line_alive ( Map, i ) ) continue;
 
@@ -122,7 +126,7 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 		ndupl++;
 		
 		if ( msgout ) {
-		    fprintf (stderr, "\rDuplicates: %5d", ndupl ); 
+		    fprintf (stderr, "\r%s: %5d", _("Duplicates"), ndupl ); 
 		    fflush ( stderr );
 		}
 		
@@ -135,4 +139,3 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 
 	return;
 }
-

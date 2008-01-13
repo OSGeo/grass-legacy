@@ -1,26 +1,32 @@
-/****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file type.c
+  
+  \brief Vector library - feature type
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
 /*!
- \fn int Vect_option_to_types (struct Option *type_opt )
- \brief get types from options
- \return types, -1 on error
- \param Option structure
+  \brief Get types from options
+
+  \param type_opt Option structure
+
+  \return types
+  \return -1 on error
 */
 int
 Vect_option_to_types (struct Option *type_opt )
@@ -60,4 +66,3 @@ Vect_option_to_types (struct Option *type_opt )
 
     return type;
 }
-

@@ -1,23 +1,27 @@
-/* **************************************************************
- * 
- * MODULE:       vector library
- * 
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean lines
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
+/*!
+  \file break_polygons.c
+  
+  \brief Vector library - clean geometry (break polygons)
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h> 
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 typedef struct {
     double x, y;
@@ -36,22 +40,22 @@ void srch (int id, int *arg)
 }
 
 /*!
- \fn void Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout)
- \brief Break polygons in vector map.
+  \brief Break polygons in vector map.
+  
+  Breaks lines specified by type in vector map. Points at intersections may be optionaly 
+  written to error map. Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
+  
+  Function is optimized for closed polygons rigs (e.g. imported from OGR) but with clean geometry -
+  adjacent polygons mostly have identical boundary. Function creates database of ALL points
+  in the map, and then is looking for those where polygons should be broken. 
+  Lines may be broken only at points existing in input map! 
+  
+  \param Map input map where polygons will be broken
+  \param type type of line to be broken
+  \param Err vector map where points at intersections will be written or NULL
+  \param msgout file pointer where messages will be written or NULL
 
- Breaks lines specified by type in vector map. Points at intersections may be optionaly 
- written to error map. Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
- 
- Function is optimized for closed polygons rigs (e.g. imported from OGR) but with clean geometry -
- adjacent polygons mostly have identical boundary. Function creates database of ALL points
- in the map, and then is looking for those where polygons should be broken. 
- Lines may be broken only at points existing in input map! 
-
- \param Map input map where polygons will be broken
- \param type type of line to be broken
- \param Err vector map where points at intersections will be written or NULL
- \param msgout file pointer where messages will be written or NULL
- \return
+  \return
 */
 void 
 Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout )
@@ -184,24 +188,24 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
             }
 	}
 	if ( msgout && printed > 5000 ) {
-	    fprintf (msgout, "\rRegistering points ... %d", npoints - 1); 
+	    fprintf (msgout, "\r%s %d", _("Registering points"), npoints - 1); 
 	    fflush ( msgout );
 	    printed = 0;
 	}
 	printed++;
     }
     if ( msgout ) {
-	fprintf (msgout, "\rRegistering points ... %d", npoints - 1 ); 
-	fprintf ( msgout, "\n" ); 
-	fprintf ( msgout, "All points (vertices): %5d\n", nallpoints ); 
-	fprintf ( msgout, "Registered points (unique coordinates): %5d\n", npoints - 1 ); 
-	fprintf ( msgout, "Points marked for break: %5d\n", nmarks ); 
+	fprintf (msgout, "\r%s %d", _("Registering points"), npoints - 1 ); 
+	fprintf (msgout, "\n" ); 
+	fprintf (msgout, "%s: %5d\n", _("All points (vertices)"), nallpoints ); 
+	fprintf (msgout, "%s: %5d\n", _("Registered points (unique coordinates)"), npoints - 1 ); 
+	fprintf (msgout, "%s: %5d\n", _("Points marked for break"), nmarks ); 
     }
 
     /* G_sleep (10); */
     
     nbreaks = 0;
-    if ( msgout ) fprintf (msgout, "Breaks: %5d", nbreaks ); 
+    if ( msgout ) fprintf (msgout, "%s: %5d", _("Breaks"), nbreaks ); 
     printed = 0;
 
     /* Second loop through lines (existing when loop is started, no need to process lines written again)
@@ -265,7 +269,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
 	    }
 		
 	    if ( msgout && printed > 1000 ) {
-		fprintf ( msgout, "\rBreaks: %5d", nbreaks ); 
+		fprintf ( msgout, "\r%s: %5d", _("Breaks"), nbreaks ); 
 		fflush ( msgout );
 		printed = 0;
 	    }
@@ -285,7 +289,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
     }
 
     if ( msgout )
-	fprintf ( msgout, "\rBreaks: %5d", nbreaks ); 
+	fprintf ( msgout, "\r%s: %5d", _("Breaks"), nbreaks ); 
 
     /* Write points on breaks */
     if ( Err ) {
@@ -304,4 +308,3 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
     G_free ( XPnts );
     RTreeDestroyNode ( RTree);
 }
-

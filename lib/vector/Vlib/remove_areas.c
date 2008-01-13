@@ -1,35 +1,40 @@
-/* **************************************************************
- * 
- * MODULE:       vector library
- * 
- * AUTHOR(S):    Radim Blazek
- *               
- * PURPOSE:      Clean areas
- *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- *
- *               This program is free software under the 
- *               GNU General Public License (>=v2). 
- *               Read the file COPYING that comes with GRASS
- *               for details.
- *
- **************************************************************/
-#include <stdlib.h> 
+/*!
+  \file remove_areas.c
+  
+  \brief Vector library - clean geometry (remove small areas)
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /*!
- \fn void Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *Err, FILE *msgout)
- \brief Remove small areas from the map map. Centroid of the area and the longest boundary 
-        with adjacent area is removed.
-        Map topology must be built GV_BUILD_CENTROIDS
+  \brief Remove small areas from the map map.
 
- \param Map input map
- \param thresh maximum area size for removed areas
- \param Err vector map where removed lines and centroids are written
- \param msgout file pointer where messages will be written or NULL
- \param removed_area  pointer to where total size of removed area is stored or NULL
- \return number of removed areas 
+  Centroid of the area and the longest boundary 
+  with adjacent area is removed.
+  Map topology must be built GV_BUILD_CENTROIDS.
+
+  \param Map vector map
+  \param thresh maximum area size for removed areas
+  \param Err vector map where removed lines and centroids are written
+  \param msgout file pointer where messages will be written or NULL
+  \param removed_area  pointer to where total size of removed area is stored or NULL
+
+  \return number of removed areas 
 */
 int 
 Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *Err, FILE *msgout, 
@@ -48,7 +53,7 @@ Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
-    if ( msgout ) fprintf (msgout, "Removed areas: %5d", nremoved ); 
+    if ( msgout ) fprintf (msgout, "%s: %5d", _("Removed areas"), nremoved ); 
     
     for ( area = 1; area <= Vect_get_num_areas(Map); area++ ){ 
 	int i, j, centroid, dissolve_neighbour;
@@ -85,7 +90,7 @@ Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *
 	    line = List->value[i];
 	    
 	    if ( !Vect_line_alive(Map,abs(line)) ) /* Should not happen */
-		G_fatal_error ("Area is composed of dead boundary" );
+		G_fatal_error (_("Area is composed of dead boundary"));
 
 	    Vect_get_line_areas ( Map, abs(line), &left, &right );
 	    if ( line > 0 ) neighbour = left;
@@ -160,7 +165,7 @@ Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *
 
 	nremoved++;
 	if ( msgout ) {
-	    fprintf (msgout, "\rRemoved areas: %5d", nremoved ); 
+	    fprintf (msgout, "\r%s: %5d", _("Removed areas"), nremoved ); 
 	    fflush ( stderr );
 	}
     }
@@ -171,4 +176,3 @@ Vect_remove_small_areas ( struct Map_info *Map, double thresh, struct Map_info *
 
     return (nremoved);
 }
-

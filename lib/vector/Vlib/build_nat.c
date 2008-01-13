@@ -1,20 +1,21 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file build_nat.c
+  
+  \brief Vector library - Building topology for native format
+  
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -26,10 +27,15 @@ extern FILE *Msgout;
 extern int prnmsg ( char *msg, ...) ;
 
 /*!
- \fn int Vect_build_line_area ( struct Map_info *Map, int iline, int side )
- \brief build area on given side of line ( GV_LEFT or GV_RIGHT )
- \return > 0 : number of  area, < 0 : number of isle, 0 : not created (may also already exist)
- \param Map_info structure, line number ?, side (left? right?)
+  \brief Build area on given side of line (GV_LEFT or GV_RIGHT)
+
+  \param Map_info vector map
+  \param iline line id
+  \param side side (GV_LEFT or GV_RIGHT)
+
+  \return > 0 number of  area
+  \return < 0 number of isle
+  \return 0 not created (may also already exist)
 */
 int
 Vect_build_line_area ( struct Map_info *Map, int iline, int side )
@@ -84,7 +90,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	area = dig_add_area (plus, n_lines, lines);
 	if ( area == -1 ) { /* error */
 	    Vect_close ( Map );
-	    G_fatal_error ( _("Cannot add area (map closed, topo saved)") );
+	    G_fatal_error ( _("Unable to add area (map closed, topo saved)") );
 	}
 	G_debug ( 3, "  -> area %d", area );
 	return area;
@@ -92,7 +98,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	isle = dig_add_isle (plus, n_lines, lines);
 	if ( isle == -1 ) { /* error */
 	    Vect_close ( Map );
-	    G_fatal_error ( _("Cannot add isle (map closed, topo saved)") );
+	    G_fatal_error ( _("Unable to add isle (map closed, topo saved)") );
 	}
 	G_debug ( 3, "  -> isle %d", isle );
 	return -isle;
@@ -107,10 +113,13 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 }
 
 /*!
- \fn int Vect_isle_find_area ( struct Map_info *Map, int isle ) 
- \brief find area outside island
- \return number of  area(s), 0 if not found
- \param Map_info structure, isle number
+  \brief Find area outside island
+
+  \param Map_info vector map
+  \param isle isle id
+
+  \return number of  area(s)
+  \return 0 if not found
 */
 int
 Vect_isle_find_area ( struct Map_info *Map, int isle ) 
@@ -135,7 +144,7 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
     plus = &(Map->plus);
 
     if (  plus->Isle[isle] == NULL ) {
-	G_warning ("Request to find area outside nonexisting isle");
+	G_warning (_("Request to find area outside nonexisting isle"));
 	return 0;
     }
 
@@ -224,10 +233,12 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
 }
 
 /*!
- \fn int Vect_attach_isle ( struct Map_info *Map, int isle ) 
- \brief (Re)Attach isle to area
- \return ? not sure yet what should be returned
- \param Map_info structure, isle number
+  \brief (Re)Attach isle to area
+
+  \param Map_info vector map
+  \param isle isle id
+
+  \return 0
 */
 int
 Vect_attach_isle ( struct Map_info *Map, int isle ) 
@@ -257,10 +268,12 @@ Vect_attach_isle ( struct Map_info *Map, int isle )
 }
 
 /*!
- \fn int Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
- \brief (Re)Attach isles to areas in given box
- \return ? not sure yet what should be returned
- \param Map_info structure, BOUND_BOX
+  \brief (Re)Attach isles to areas in given box
+
+  \param Map_info vector map
+  \param box bounding box
+
+  \return 0
 */
 int
 Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
@@ -290,10 +303,12 @@ Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
 }
 
 /*!
- \fn int Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box ) 
- \brief (Re)Attach centroids to areas in given box
- \return ? not sure yet what should be returned
- \param Map_info structure, BOUND_BOX
+  \brief (Re)Attach centroids to areas in given box
+
+  \param Map_info vector map
+  \param box bounding box
+
+  \return 0
 */
 int
 Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box ) 
@@ -377,10 +392,14 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
 }
     
 /*!
- \fn int Vect_build_nat ( struct Map_info *Map, FILE *msgout )
- \brief build topology 
- \return 1 on success, 0 on error
- \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
+  \brief Build topology 
+
+  \param Map_info vector map
+  \param build build level
+  \param msgout message output (stdout/stderr for example) or NULL
+
+  \return 1 on success
+  \return 0 on error
 */
 int
 Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
@@ -470,7 +489,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    type = Vect_read_next_line (Map, Points, Cats);
 	    /* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
 	    if ( type == -1 ) { 
-		fprintf (stderr, "\nERROR: vector map - can't read\n" );
+		G_warning(_("Unable to read vector map"));
 		return 0;
 	    } else if ( type == -2 ) {
 		break;
@@ -514,7 +533,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     if ( plus->built < GV_BUILD_AREAS ) {
 	/* Build areas */
 	/* Go through all bundaries and try to build area for both sides */
-	prnmsg ("Building areas: ");
+	prnmsg (_("Building areas: "));
 	for (i = 1; i <= plus->n_lines; i++) {
 	    G_percent2 ( i, plus->n_lines, 1, msgout );
 
@@ -605,5 +624,3 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 
     return 1;
 }
-
-

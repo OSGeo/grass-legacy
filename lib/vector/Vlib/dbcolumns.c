@@ -1,18 +1,22 @@
-/****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Markus Neteler
-*
-* PURPOSE:      DB info on vectors maps
-*
-* COPYRIGHT:    (C) 2005 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file dbcolumns.c
+  
+  \brief Vector library - DB info on vectors maps
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2005-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Markus Neteler
+  
+  \date 2005-2008
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -25,12 +29,14 @@
 #include <grass/dbmi.h>
 
 /*!
- \fn char *Vect_get_column_names(struct Map_info *Map, int field)
- \brief fetches list of DB column names of vector map attribute table
- \return list of column(s) names on success, NULL on error 
- \param vector map
-*/
+  \brief Fetches list of DB column names of vector map attribute table
 
+  \param Map vector map
+  \param field layer number
+
+  \return list of column(s) names on success
+  \return NULL on error 
+*/
 char *Vect_get_column_names(struct Map_info *Map, int field)
 {
     int num_dblinks, ncols, col;
@@ -86,10 +92,13 @@ char *Vect_get_column_names(struct Map_info *Map, int field)
 }
 
 /*!
- \fn char *Vect_get_column_types(struct Map_info *Map, int field)
- \brief fetches list of DB column types of vector map attribute table
- \return list of column(s) types on success, NULL on error 
- \param vector map
+  \brief Fetches list of DB column types of vector map attribute table
+
+  \param Map vector map
+  \param field layer number
+
+  \return list of column(s) types on success
+  \return NULL on error 
 */
 char *Vect_get_column_types(struct Map_info *Map, int field)
 {
@@ -147,10 +156,13 @@ char *Vect_get_column_types(struct Map_info *Map, int field)
 
 
 /*!
- \fn char *Vect_get_column_names_types(struct Map_info *Map, int field)
- \brief fetches list of DB column names and types of vector map attribute table
- \return list of column(s) types on success, NULL on error 
- \param vector map
+  \brief Fetches list of DB column names and types of vector map attribute table
+
+  \param Map vector map
+  \param field layer number
+
+  \return list of column(s) types on success
+  \retutn NULL on error 
 */
 char *Vect_get_column_names_types(struct Map_info *Map, int field)
 {

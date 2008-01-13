@@ -1,28 +1,34 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file array.c
+  
+  \brief Vector library - bounding box related fns
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
 /*!
- \fn int Vect_point_in_box (double x, double y, double z, BOUND_BOX *Box)
- \brief tests for point in box
- \return 1 point is in box, 0 point is not in box
- \param xyz coordinates, boundary box
+  \brief Tests for point in box
+
+  \param x,y,z coordinates
+  \param Box boundary box
+
+  \return 1 point is in box
+  \return 0 point is not in box
 */
 int 
 Vect_point_in_box (double x, double y, double z, BOUND_BOX *Box)
@@ -39,10 +45,13 @@ Vect_point_in_box (double x, double y, double z, BOUND_BOX *Box)
 }
 
 /*!
- \fn int Vect_box_overlap (BOUND_BOX *A, BOUND_BOX *B)
- \brief tests for overlap of two boxes
- \return 1 boxes overlap, 0 boxes do not overlap
- \param boundary box A, boundary box B
+  \brief Tests for overlap of two boxes
+  
+  \param A boundary box A
+  \param B boundary box B
+
+  \return 1 boxes overlap
+  \return 0 boxes do not overlap
 */
 int 
 Vect_box_overlap (BOUND_BOX *A, BOUND_BOX *B)
@@ -59,10 +68,12 @@ Vect_box_overlap (BOUND_BOX *A, BOUND_BOX *B)
 }
 
 /*!
- \fn int Vect_box_copy (BOUND_BOX *A, BOUND_BOX *B)
- \brief copy box B to box A
- \return 1
- \param boundary box1, boundary box2
+  \brief Copy box B to box A
+
+  \param A boundary A
+  \param B boundary B
+
+  \return 1
 */
 int 
 Vect_box_copy (BOUND_BOX *A, BOUND_BOX *B)
@@ -79,10 +90,12 @@ Vect_box_copy (BOUND_BOX *A, BOUND_BOX *B)
 }
 
 /*!
- \fn int Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
- \brief extend box A by box B
- \return 1
- \param boundary box1, boundary box2
+  \brief Extend box A by box B
+
+  \param A boundary A
+  \param B boundary B
+
+  \return 1
 */
 int 
 Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
@@ -100,8 +113,7 @@ Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
 
 
 /*!
- * \fn int Vect_box_clip (double *x, double *y, double *c_x, double *c_y, BOUND_BOX *Box)
- * \brief clip coordinates to box, if necessary, lines extending outside of a box.
+ * \brief Clip coordinates to box, if necessary, lines extending outside of a box.
  *
  * A line represented by the coordinates <b>x, y</b> and <b>c_x, c_y</b> is clipped to
  * the window defined by <b>s</b> (south), <b>n</b> (north), <b>w</b>
@@ -116,12 +128,12 @@ Vect_box_extend (BOUND_BOX *A, BOUND_BOX *B)
  * <b>e.</b> The <b>y</b> and <b>c_y</b> values returned lie between 
  * <b>s</b> and <b>n.</b>
  *
- *  \param x
- *  \param y
- *  \param c_x
- *  \param c_y
- *  \param boundary box
- *  \return 1 if any clipping occured, 0 otherwise
+ *  \param x, y coordinates (w, e)
+ *  \param c_x,c_y coordinates (s, n)
+ *  \param Box boundary box
+ *
+ *  \return 1 if any clipping occured
+ *  \return 0 otherwise
  */
 
 int
@@ -194,10 +206,14 @@ Vect_box_clip (double *x, double *y, double *c_x, double *c_y, BOUND_BOX *Box)
 
 
 /*!
- \fn int Vect_get_line_box (struct Map_info *Map, int line, BOUND_BOX *Box )
- \brief get line number in boundary box ??
- \return 1 on success, 0 line is dead
- \param Map_info structure, line number, boundary box
+  \brief Get boundary box of line
+
+  \param Map vector map
+  \param line line id
+  \param[out] Box bounding box
+
+  \return 1 on success
+  \return 0 line is dead
 */
 int 
 Vect_get_line_box (struct Map_info *Map, int line, BOUND_BOX *Box )
@@ -229,10 +245,14 @@ Vect_get_line_box (struct Map_info *Map, int line, BOUND_BOX *Box )
 }
 
 /*!
- \fn int Vect_get_area_box (struct Map_info *Map, int area, BOUND_BOX *Box )
- \brief get area number in boundary box ?
- \return 1 on success, 0 area is dead
- \param Map_info structure, area number, boundary box
+  \brief Get boundary box of area
+
+  \param Map vector map
+  \param area area id
+  \param[out] Box bounding box
+
+  \return 1 on success
+  \return 0 area is dead
 */
 int 
 Vect_get_area_box (struct Map_info *Map, int area, BOUND_BOX *Box )
@@ -264,10 +284,14 @@ Vect_get_area_box (struct Map_info *Map, int area, BOUND_BOX *Box )
 }
 
 /*!
- \fn int Vect_get_isle_box (struct Map_info *Map, int isle, BOUND_BOX *Box )
- \brief get isle number in boundary box ?
- \return 1 on success, 0 isle is dead
- \param Map_info structure, isle number, boundary box
+  \brief Get boundary box of isle
+  
+  \param Map vector map
+  \param isle isle id
+  \param[out] Box bounding box
+
+  \return 1 on success
+  \return 0 isle is dead
 */
 int 
 Vect_get_isle_box (struct Map_info *Map, int isle, BOUND_BOX *Box )
@@ -299,10 +323,12 @@ Vect_get_isle_box (struct Map_info *Map, int isle, BOUND_BOX *Box )
 }
 
 /*!
- \fn int Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
- \brief falls map into boundary box ???
- \return 1 on success, 0 on error
- \param Map_info structure, boundary box
+  \brief Get boundary box of map
+
+  \param Map vector map
+  \param[out] Box bouding box
+
+  \return 1 on success, 0 on error
 */
 int 
 Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
@@ -323,10 +349,12 @@ Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
 
 
 /*!
- \fn int Vect_region_box (struct Cell_head *Window, BOUND_BOX *Box )
- \brief copy region Window to Box
- \return 1 on success, 0 on error
- \param region structure, boundary box
+  \brief Copy region Window to Box
+
+  \param Window region structure (raster-based)
+  \param[out] Box boundary box (vector-based)
+
+  \return 1 on success, 0 on error
 */
 int 
 Vect_region_box ( struct Cell_head *Window, BOUND_BOX *Box )

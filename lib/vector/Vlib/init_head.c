@@ -1,31 +1,37 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file init_head.c
+  
+  \brief Vector library - init header of vector map
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  Initialize Head structure.  To make sure that we are not writing
+  out garbage to a file.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
+
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
-/*
-   **
-   **  Initialize Head structure.  To make sure that we are not writing
-   **    out garbage to a file.
-   **
- */
+/*!
+  \brief Initialize head structure
+  
+  \param Map vector map
 
+  \return 0
+*/
 int 
 Vect__init_head (struct Map_info *Map)
 {
@@ -58,10 +64,12 @@ Vect__init_head (struct Map_info *Map)
 }
 
 /*!
- \fn int Vect_copy_head_data (struct Map_info *from, struct Map_info *to)
- \brief copy header data from one to another map
- \return 0 on success, ?? on error
- \param from Map_info structure, to Map_info structure
+  \brief Copy header data from one to another map
+
+  \param from target vector map 
+  \param to destination vector map
+
+  \return 0 on success
 */
 int 
 Vect_copy_head_data (struct Map_info *from, struct Map_info *to)

@@ -1,33 +1,38 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file rewind.c
+  
+  \brief Vector library - select vector features
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
 /*!
- \fn int Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 
-	                            int type, struct ilist *list)
- \brief Select lines by box. Select lines whose boxes overlap specified box!!!
+  \brief Select lines by box.
+
+  Select lines whose boxes overlap specified box!!!
   It means that selected line may or may not overlap the box.
- \return number of lines
- \param Map
- \param Box 
- \param type line type
- \param output list, must be initialized
+
+  \param Map vector map
+  \param Box bounding box
+  \param type line type
+  \param[out] list output list, must be initialized
+
+  \return number of lines
 */
 int 
 Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 
@@ -69,13 +74,16 @@ Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box,
 }
 
 /*!
- \fn int Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
- \brief Select areas by box. Select areas whose boxes overlap specified box!!!
+  \brief Select areas by box.
+
+  Select areas whose boxes overlap specified box!!!
   It means that selected area may or may not overlap the box.
- \return number of areas
- \param Map
- \param Box 
- \param output list, must be initialized
+
+  \param Map vector map
+  \param Box bounding box
+  \param[out] output list, must be initialized
+
+  \return number of areas
 */
 int 
 Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
@@ -103,13 +111,16 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
 
 
 /*!
- \fn  int Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
- \brief   Select isles by box. Select isles whose boxes overlap specified box!!!
-    It means that selected isle may or may not overlap the box.
- \return number of isles
- \param Map
- \param Box 
- \param output list, must be initialized
+  \brief Select isles by box.
+
+  Select isles whose boxes overlap specified box!!!
+  It means that selected isle may or may not overlap the box.
+
+  \param Map vector map
+  \param Box bounding box
+  \param[out] list output list, must be initialized
+
+  \return number of isles
 */
 int 
 Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
@@ -130,12 +141,13 @@ Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
 }
 
 /*!
- \fn int Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
- \brief Select nodes by box.
- \return number of nodes
- \param Map
- \param Box 
- \param output list, must be initialized
+  \brief Select nodes by box.
+
+  \param Map vector map
+  \param Box bounding box
+  \param[out] list output list, must be initialized
+
+  \return number of nodes
 */
 int 
 Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
@@ -162,17 +174,18 @@ Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
 }
 
 /*!
- \fn int Vect_select_lines_by_polygon (struct Map_info *Map, struct line_pnts *Polygon, int nisles,
-                                       struct line_pnts **Isles, int type, struct ilist *list)
- \brief Select lines by Polygon with optional isles. 
-        Polygons should be closed, i.e. first and last points must be identical.
- \return number of lines
- \param Map 
- \param Polygon outer ring
- \param nisles number of islands or 0
- \param Isles array of islands or NULL
- \param type line type
- \param list output list, must be initialised
+  \brief Select lines by Polygon with optional isles. 
+  
+  Polygons should be closed, i.e. first and last points must be identical.
+
+  \param Map vector map
+  \param Polygon outer ring
+  \param nisles number of islands or 0
+  \param Isles array of islands or NULL
+  \param type line type
+  \param[out] list output list, must be initialised
+
+  \return number of lines
 */
 int 
 Vect_select_lines_by_polygon ( struct Map_info *Map, struct line_pnts *Polygon, int nisles,
@@ -252,17 +265,20 @@ Vect_select_lines_by_polygon ( struct Map_info *Map, struct line_pnts *Polygon, 
 
 
 /*!
- \fn int Vect_select_areas_by_polygon (struct Map_info *Map, struct line_pnts *Polygon, int nisles,
-                                       struct line_pnts **Isles, struct ilist *list)
- \brief Select areas by Polygon with optional isles. 
-        Polygons should be closed, i.e. first and last points must be identical.
-        Warning : values in list may be duplicate!
- \return number of areas
- \param Map 
- \param Polygon outer ring
- \param nisles number of islands or 0
- \param Isles array of islands or NULL
- \param list output list, must be initialised
+  \brief Select areas by Polygon with optional isles. 
+  
+  Polygons should be closed, i.e. first and last points must be identical.
+  
+  Warning : values in list may be duplicate!
+
+
+  \param Map vector map
+  \param Polygon outer ring
+  \param nisles number of islands or 0
+  \param Isles array of islands or NULL
+  \param[out] list output list, must be initialised
+
+  \return number of areas
 */
 int 
 Vect_select_areas_by_polygon ( struct Map_info *Map, struct line_pnts *Polygon, int nisles,
@@ -315,4 +331,3 @@ Vect_select_areas_by_polygon ( struct Map_info *Map, struct line_pnts *Polygon, 
     
     return List->n_values;
 }
-    

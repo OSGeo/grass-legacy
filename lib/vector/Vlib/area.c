@@ -1,32 +1,37 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file area.c
+  
+  \brief Vector library - area feature related fns
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /*!
- \fn int Vect_get_area_points (
-		       struct Map_info *Map,
-		       int area,
-		       struct line_pnts *BPoints)
- \brief returns the polygon array of points in BPoints
- \return number of points or -1 on error
- \param Map_info structure, area number, line_pnts structure
+  \brief Returns the polygon array of points in BPoints
+
+  \param Map vector map
+  \param area area id
+  \param[out] BPoints points array
+
+  \return number of points
+  \return -1 on error
 */
 int 
 Vect_get_area_points (
@@ -47,7 +52,7 @@ Vect_get_area_points (
   Area = Plus->Area[area];
 
   if ( Area == NULL ) { /* dead area */
-      G_warning ("Attempt to read points of nonexisting area" ); 
+      G_warning (_("Attempt to read points of nonexisting area")); 
       return -1;      /* error , because we should not read dead areas */
   }
   
@@ -84,13 +89,13 @@ Vect_get_area_points (
 }
 
 /*!
- \fn int Vect_get_isle_points (
-		       struct Map_info *Map,
-		       int isle,
-		       struct line_pnts *BPoints)
- \brief returns the polygon array of points in BPoints
- \return number of points or -1 on error
- \param Map_info structure, island number, line_pnts structure
+  \brief Returns the polygon array of points in BPoints
+
+  \param Map vector map
+  \param isle island id
+  \param[out] BPoints points array
+
+  \return number of points or -1 on error
 */
 int 
 Vect_get_isle_points (
@@ -123,7 +128,7 @@ Vect_get_isle_points (
       G_debug ( 3, "  append line(%d) = %d", i, line );	
 
       if (0 > Vect_read_line (Map, Points, NULL, aline)) {
-          G_fatal_error ( "Cannot read line %d",  aline );
+          G_fatal_error (_("Unable to read line %d"),  aline );
       }
       
       G_debug ( 3, "  line n_points = %d", Points->n_points );	
@@ -143,12 +148,13 @@ Vect_get_isle_points (
 }
 
 /*!
- \fn int Vect_get_area_centroid (
-		       struct Map_info *Map,
-		       int area )
- \brief returns centroid number of area
- \return centroid number of area or 0
- \param Map_info structure, area number
+  \brief Returns centroid number of area
+
+  \param Map vector map
+  \param area area id
+
+  \return centroid number of area
+  \return 0 if no centroid found
 */
 int 
 Vect_get_area_centroid (
@@ -163,19 +169,20 @@ Vect_get_area_centroid (
   Plus = &(Map->plus);
   Area = Plus->Area[area];
 
-  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  if ( Area == NULL )
+      G_fatal_error (_("Attempt to read topo for dead area (%d)"), area);
   
   return ( Area->centroid );
 }
 
 /*!
- \fn int Vect_get_area_boundaries (
-		       struct Map_info *Map,
-		       int area,
-		       struct ilist *List )
- \brief creates list of boundaries for area
- \return number of boundaries
- \param Map_info structure, area number, List pointer to list
+  \brief Creates list of boundaries for area
+
+  \param Map vector map
+  \param area area id
+  \param List pointer to list of boundaries
+
+  \return number of boundaries
 */
 int 
 Vect_get_area_boundaries (
@@ -194,7 +201,8 @@ Vect_get_area_boundaries (
   Plus = &(Map->plus);
   Area = Plus->Area[area];
 
-  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  if ( Area == NULL )
+      G_fatal_error (_("Attempt to read topo for dead area (%d)"), area);
 
   for (i = 0; i < Area->n_lines; i++) {
       line = Area->lines[i];
@@ -205,15 +213,13 @@ Vect_get_area_boundaries (
 }
 
 /*!
- \fn int Vect_get_isle_boundaries (
-		       struct Map_info *Map,
-		       int isle,
-		       struct ilist *List )
- \brief creates list of boundaries for isle
- \return number of boundaries
- \param Map vector map
- \param isle island number
- \param List pointer to list where boundaries are stored
+  \brief Creates list of boundaries for isle
+
+  \param Map vector map
+  \param isle island number
+  \param List pointer to list where boundaries are stored
+
+  \return number of boundaries
 */
 int 
 Vect_get_isle_boundaries (
@@ -243,12 +249,13 @@ Vect_get_isle_boundaries (
 }
 
 /*!
- \fn int Vect_get_area_num_isles (
-		       struct Map_info *Map,
-		       int area )
- \brief returns number of isles for area
- \return number of isles for area or 0
- \param Map_info structure, area number
+  \brief Returns number of isles for area
+  
+  \param Map vector map
+  \param area area id
+
+  \return number of isles for area
+  \return 0 if area not found
 */
 int 
 Vect_get_area_num_isles (
@@ -263,7 +270,8 @@ Vect_get_area_num_isles (
   Plus = &(Map->plus);
   Area = Plus->Area[area];
   
-  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  if ( Area == NULL )
+      G_fatal_error (_("Attempt to read topo for dead area (%d)"), area);
   
   G_debug ( 3, "  n_isles = %d", Area->n_isles );	
   
@@ -272,13 +280,14 @@ Vect_get_area_num_isles (
 }
 
 /*!
- \fn int Vect_get_area_isle (
-		       struct Map_info *Map,
-		       int area,
-                       int isle)
- \brief returns isle for area
- \return isles for area or 0
- \param Map_info structure, area number, island number
+  \brief Returns isle for area
+
+  \param Map vector map
+  \param area area id
+  \param isle isle id
+  
+  \return isles for area
+  \return 0 if no isle found
 */
 int 
 Vect_get_area_isle (
@@ -294,7 +303,8 @@ Vect_get_area_isle (
   Plus = &(Map->plus);
   Area = Plus->Area[area];
   
-  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  if ( Area == NULL )
+      G_fatal_error (_("Attempt to read topo for dead area (%d)"), area);
 
   G_debug ( 3, "  -> isle = %d", Area->isles[isle] );	
   
@@ -302,11 +312,13 @@ Vect_get_area_isle (
 }
 
 /*!
- \fn int Vect_get_isle_area ( struct Map_info *Map, int isle)
- \brief returns area for isle
- \return  area or 0
- \param Map vector
- \isle island number
+  \brief Returns area for isle
+
+  \param Map vector
+  \param isle island number
+
+  \return area id
+  \return 0 area not found
 */
 int 
 Vect_get_isle_area ( struct Map_info *Map, int isle)
@@ -319,7 +331,8 @@ Vect_get_isle_area ( struct Map_info *Map, int isle)
   Plus = &(Map->plus);
   Isle = Plus->Isle[isle];
   
-  if ( Isle == NULL ) G_fatal_error ( "Attempt to read topo for dead isle (%d)", isle);
+  if ( Isle == NULL )
+      G_fatal_error (_("Attempt to read topo for dead isle (%d)"), isle);
 
   G_debug ( 3, "  -> area = %d", Isle->area );	
   
@@ -328,11 +341,11 @@ Vect_get_isle_area ( struct Map_info *Map, int isle)
 
 
 /*!
- *  \fn double Vect_area_perimeter ( struct line_pnts *Points )
- *  \brief calculate area perimeter
- *  \return area perimeter
- *  \param line_pnts * structure
- *  
+  \brief Calculate area perimeter
+
+  \param Points list of points defining area boundary
+
+  \return area perimeter
 */
 double 
 Vect_area_perimeter ( struct line_pnts *Points )
@@ -342,13 +355,14 @@ Vect_area_perimeter ( struct line_pnts *Points )
 
 
 /*!
- \fn int Vect_point_in_area (
-		       struct Map_info *Map,
-		       int area,
-		       double x, double y)
- \brief returns 1 if point is in area
- \return 1 if point is in area 0 if not
- \param Map_info structure, area number, xy coordinate of point
+  \brief Returns 1 if point is in area
+
+  \param Map vector map
+  \param area area id
+  \param x,y point coordinates
+
+  \return 1 if point is in area
+  \return 0 if not 
 */
 int 
 Vect_point_in_area (
@@ -379,13 +393,12 @@ Vect_point_in_area (
 }
 
 /*!
- \fn double Vect_get_area_area (
-		       struct Map_info *Map,
-		       int area)
- \brief returns area of area without areas of isles
- \return area of area without areas of isles
- \param Map_info structure
- \param area number
+  \brief Returns area of area without areas of isles
+
+  \param Map vector map
+  \param area area id
+
+  \return area of area without areas of isles
 */
 double 
 Vect_get_area_area (
@@ -427,11 +440,14 @@ Vect_get_area_area (
 }
 
 /*!
-\brief Get area categories
-\param vmap: Map input
-\param varea: area number
-\return 0 OK centroid found (but may be without categories)
-\return 1 no centroid found
+  \brief Get area categories
+
+  \param Map vector map
+  \param area area id
+  \param[out] Cats list of categories
+
+  \return 0 OK centroid found (but may be without categories)
+  \return 1 no centroid found
 */
 int
 Vect_get_area_cats ( struct Map_info *Map, int area, struct line_cats *Cats ) 
@@ -452,11 +468,14 @@ Vect_get_area_cats ( struct Map_info *Map, int area, struct line_cats *Cats )
 }
 
 /*!
-\brief Find FIRST category of given field and area
-\param vmap: Map input
-\param varea: area number
-\return first found category of given field
-\return -1 no centroid or no category found
+  \brief Find FIRST category of given field and area
+
+  \param Map vector map
+  \param area area id
+  \param field layer number
+
+  \return first found category of given field
+  \return -1 no centroid or no category found
 */
 int
 Vect_get_area_cat ( struct Map_info *Map, int area, int field ) 
@@ -481,4 +500,3 @@ Vect_get_area_cat ( struct Map_info *Map, int area, int field )
      
     return -1;
 }
-

@@ -1,29 +1,34 @@
-/****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file hist.c
+  
+  \brief Vector library - history manipulation
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001-2008
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <grass/Vect.h>
 
 /*!
- \fn int Vect_hist_command ( struct Map_info *Map )
- \brief write command info to history file
- \return 0 OK, -1 error
- \param struct Map_info *Map
+  \brief Write command info to history file
+
+  \param Map vector map
+
+  \return 0 OK
+  \return -1 error
 */
 int 
 Vect_hist_command ( struct Map_info *Map )
@@ -49,10 +54,12 @@ Vect_hist_command ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_hist_write ( struct Map_info *Map, char *str )
- \brief write string to history file
- \return the number of characters printed
- \param struct Map_info *Map, char *str
+  \brief Write string to history file
+
+  \param Map vector map
+  \param str string to write
+
+  \return the number of characters printed
 */
 int 
 Vect_hist_write ( struct Map_info *Map, char *str )
@@ -67,12 +74,15 @@ Vect_hist_write ( struct Map_info *Map, char *str )
 }
 
 /*!
- \fn char Vect_hist_read ( char *s, int size, struct Map_info *Map )
- \brief reads one line from history file without newline character
- \return return s on success, and NULL on error or EOF
- \param s buffer, allocated space must be size+1
- \param size maximum number of character
- \param Map 
+  \brief Reads one line from history file without newline character
+
+  \param s buffer, allocated space must be size+1
+  \param size maximum number of character
+  \param Map vector map
+
+  \return return s on success
+  \return NULL on error
+  \return EOF end of file
 */
 char * 
 Vect_hist_read ( char *s, int size, struct Map_info *Map )
@@ -90,10 +100,11 @@ Vect_hist_read ( char *s, int size, struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_hist_rewind ( struct Map_info *Map )
- \brief rewind history file
- \return the number of characters printed
- \param struct Map_info *Map, char *str
+  \brief Rewind history file
+
+  \param Map vector map
+
+  \return void
 */
 void 
 Vect_hist_rewind ( struct Map_info *Map )
@@ -105,10 +116,13 @@ Vect_hist_rewind ( struct Map_info *Map )
 }
 
 /*!
- \fn int Vect_hist_copy ( struct Map_info *In, struct Map_info *Out )
- \brief copy history from one map to another
- \return 0 OK, -1 error
- \param struct Map_info *In, struct Map_info *Out
+  \brief Copy history from one map to another
+
+  \param In input vector map
+  \param Out output vector map
+
+  \return 0 OK
+  \return -1 error
 */
 int 
 Vect_hist_copy ( struct Map_info *In, struct Map_info *Out )
@@ -145,4 +159,3 @@ Vect_hist_copy ( struct Map_info *In, struct Map_info *Out )
     Vect_hist_write ( Out, "---------------------------------------------------------------------------------\n");
     return ( 0 ); 
 }
-

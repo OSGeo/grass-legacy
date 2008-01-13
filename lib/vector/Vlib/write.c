@@ -1,34 +1,36 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file type.c
+  
+  \brief Vector library - write data
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Radim Blazek
+  
+  \date 2001
+*/
+
 #include <grass/gis.h>
 #include <grass/glocale.h>
 #include <grass/Vect.h>
 
 static long write_dummy () { 
-    G_warning ( _("Vect_write_line() for this format/level not supported") );
+    G_warning ("Vect_write_line() %s", _("for this format/level not supported") );
     return -1; 
 }
 static int rewrite_dummy () { 
-    G_warning ( _("Vect_rewrite_line() for this format/level not supported") );
+    G_warning ("Vect_rewrite_line() %s",  _("for this format/level not supported") );
     return -1; 
 }
 static int  delete_dummy () { 
-    G_warning ( _("Vect_delete_line() for this format/level not supported") );
+    G_warning ("Vect_delete_line() %s",  _("for this format/level not supported") );
     return -1; 
 }
 
@@ -67,18 +69,16 @@ static int (*Vect_delete_line_array[][3]) () =
 };
 
 /*!
- \fn long Vect_write_line (
-     struct Map_info *Map,
-     int type,
-     struct line_pnts *points,
-     struct line_cats *cats)
- \brief writes new line to the end of file (table)
-        the function calls fatal error on error
- \param Map_info structure
- \param vector type
- \param line_pnts structure
- \param line_cats structure
- \return offset into file where the line starts
+  \brief Writes new line to the end of file (table)
+
+  The function calls G_fatal_error() on error.
+
+  \param Map pointer to vector map
+  \param type vector type
+  \param points line geometry
+  \param cats line categories
+  
+  \return offset into file where the line starts
 */
 long
 Vect_write_line (
@@ -93,7 +93,7 @@ Vect_write_line (
 	           Map->name, Map->format, Map->level);
 
     if (!VECT_OPEN (Map))
-	G_fatal_error ( _("Cannot write line, the map is not opened") );
+	G_fatal_error ( _("Unable to write line, vector map is not opened") );
 
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
@@ -104,28 +104,28 @@ Vect_write_line (
     offset = (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 
     if ( offset == -1 )
-	G_fatal_error ( _("Cannot write line (negative offset)") );
+	G_fatal_error ( _("Unable to write line (negative offset)") );
 
     return offset;
 }
 
 
 /*!
- \fn int Vect_rewrite_line (
-     struct Map_info *Map,
-     int line,
-     int type,
-     struct line_pnts *points,
-     struct line_cats *cats)
- \brief rewrites line info at the given offset. The number of points
-   or cats or type may change. If necessary, the old line is deleted and
-   new is written.
- \param Map_info structure
- \param line number
- \param vector type
- \param line_pnts structure
- \param line_cats structure
- \return number of new line, -1 on error
+  \brief Rewrites line info at the given offset.
+
+  The number of points or cats or type may change. If necessary, the
+  old line is deleted and new is written.
+
+  This function calls G_fatal_error() on error.
+
+  \param Map pointer to vector map
+  \param line line id
+  \param type vector type
+  \param points line geometry
+  \param cats line categories
+  
+  \return number of new line
+  \return -1 on error
 */
 int
 Vect_rewrite_line (
@@ -140,7 +140,7 @@ Vect_rewrite_line (
     G_debug (3, "Vect_rewrite_line(): name = %s, line = %d", Map->name, line);
     
     if (!VECT_OPEN (Map))
-	G_fatal_error ( _("Cannot rewrite line, the map is not opened") );
+	G_fatal_error ( _("Unable to rewrite line, vector map is not opened") );
     
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
@@ -151,7 +151,7 @@ Vect_rewrite_line (
     ret = (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
 
     if ( ret == -1 )
-	G_fatal_error ( _("Cannot rewrite line") );
+	G_fatal_error ( _("Unable to rewrite line %d"), line);
 
     return ret;
 }
@@ -176,29 +176,35 @@ V1_delete_line (
 */
 
 /*!
- \ fn int Vect_delete_line (
-     struct Map_info *Map,
-     int line)
- \brief deletes line of given number. Map must be opened on level 2.
- \return 0 on success, -1 on error
- \param Map_info structure
- \param line number
+  \brief Deletes line of given number.
+
+  Vector map must be opened on topo level 2.
+
+  This function calls G_fatal_error() on error.
+
+  \param Map pointer to vector map
+  \param line line id
+
+  \return 0 on success
+  \return -1 on error
 */
 int
 Vect_delete_line (
-     struct Map_info *Map,
-     int line)
+    struct Map_info *Map,
+    int line)
 {
     int ret;
     
     G_debug (3, "Vect_delete_line(): name = %s, line = %d", Map->name, line);
     
     if ( Map->level < 2 ) {
-	G_fatal_error ( _("Cannot delete the line, map '%s' is not opened on level 2"), Map->name );
+	G_fatal_error ( _("Unable to delete line %d, "
+			  "vector map <%s> is not opened on topo level 2"), line, Map->name );
     }
     
     if ( Map->mode != GV_MODE_RW && Map->mode != GV_MODE_WRITE ) {
-	G_fatal_error ( _("Cannot delete the line, map '%s' is not in opened in 'write' mode"), Map->name );
+	G_fatal_error ( _("Unable to delete line %d, "
+			  "vector map <%s> is not in opened in 'write' mode"), line, Map->name );
     }
     
     dig_line_reset_updated ( &(Map->plus) );
@@ -210,8 +216,7 @@ Vect_delete_line (
     ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
 
     if ( ret == -1 )
-	G_fatal_error ( _("Cannot delete line") );
+	G_fatal_error ( _("Unable to delete line %d from vector map <%s>"), line, Map->name );
 
     return ret;
 }
-

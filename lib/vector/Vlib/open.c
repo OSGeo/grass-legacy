@@ -5,15 +5,17 @@
  *
  * Higher level functions for reading/writing/manipulating vectors.
  *
- * \author Original author CERL, probably Dave Gerdes or Mike
- * Higgins. Update to GRASS 5.7 Radim Blazek and David D. Gray.
- *
- * (C) 2001 by the GRASS Development Team
+ * (C) 2001-2008 by the GRASS Development Team
  *
  * This program is free software under the 
  * GNU General Public License (>=v2). 
  * Read the file COPYING that comes with GRASS
  * for details.
+ *
+ * \author Original author CERL, probably Dave Gerdes or Mike
+ * Higgins. Update to GRASS 5.7 Radim Blazek and David D. Gray.
+ *
+ * \date 2001-2008
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,7 +46,7 @@ static int (*Open_old_array[][2]) () =
 #endif
 };
 
-void 
+static void 
 fatal_error ( int ferror, char *errmsg ) 
 {
       switch ( ferror ) {
@@ -61,8 +63,6 @@ fatal_error ( int ferror, char *errmsg )
 
 
 /*!
- * \fn int Vect_set_open_level (int level)
- *
  * \brief Predetermine level at which a map will be opened for
  * reading.
  *
@@ -100,8 +100,6 @@ Vect_set_open_level (int level)
 
 
 /*! 
- * \fn Vect__open_old (struct Map_info *Map, char *name, char *mapset, int update, int head_only)
- * 
  * \brief Open old vector for reading.
  *
  * In case of error, the functions respect fatal error settings.
@@ -363,8 +361,6 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 }
 
 /*!
- * \fn int Vect_open_old ( struct Map_info *Map, char *name, char *mapset)
- *
  * \brief Open existing vector for reading
  *
  * In case of error, the functions respect fatal error settings.
@@ -386,8 +382,6 @@ Vect_open_old (
 }
 
 /*!
- * \fn int Vect_open_update ( struct Map_info *Map, char *name, char *mapset)
- *
  * \brief Open existing vector for reading/writing
  *
  * In case of error, the functions respect fatal error settings.
@@ -424,8 +418,6 @@ Vect_open_update (struct Map_info *Map, char *name, char *mapset)
 }
 
 /*! 
- * \fn Vect_open_old_head (struct Map_info *Map,char *name, char *mapset)
- *
  * \brief Reads only info about vector from headers of 'head', 'dbln',
  * 'topo' and 'cidx' file.
  *
@@ -445,8 +437,6 @@ Vect_open_old_head (struct Map_info *Map, char *name, char *mapset)
 }
 
 /*!
- * \fn int Vect_open_update_head ( struct Map_info *Map, char *name, char *mapset)
- *
  * \brief Open old vector head for updating (mostly for database link updates)
  *
  * In case of error, the functions respect fatal error settings.
@@ -480,8 +470,6 @@ Vect_open_update_head ( struct Map_info *Map, char *name, char *mapset)
 }
 
 /*!
- * \fn int Vect_open_new ( struct Map_info *Map, char *name, int with_z)
- *
  * \brief Open new vector for reading/writing
  *
  * \param[out] Map vector map
@@ -565,8 +553,6 @@ Vect_open_new (struct Map_info *Map, char *name, int with_z)
 }
 
 /*!
- * \fn int Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
- *
  * \brief Update Coor_info structure
  *
  * \param[in] Map vector map
@@ -615,8 +601,6 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
 }
 
 /*!
- * \fn char * Vect_maptype_info ( struct Map_info *Map )
- *
  * \brief Gets maptype (native, shape, postgis)
  *
  * \param[in] Map vector map
@@ -646,8 +630,6 @@ Vect_maptype_info ( struct Map_info *Map )
 
 
 /*!
- * \fn int Vect_open_topo (struct Map_info *Map, int head_only)
- *
  * \brief Open topo file
  *
  * \param[in,out] Map vector map
@@ -728,8 +710,6 @@ Vect_open_topo (struct Map_info *Map, int head_only)
 }
 
 /*!
- * \fn int Vect_open_spatial_index (struct Map_info *Map)
- *
  * \brief Open spatial index file
  *
  * \param[in,out] Map vector map
