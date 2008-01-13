@@ -207,6 +207,10 @@ USE_OPENDWG         = @USE_OPENDWG@
 PYVERSION           = @PYVERSION@
 USE_PYTHON          = @USE_PYTHON@
 
+#wxPython
+WXVERSION           = @WXVERSION@
+USE_WXPYTHON        = @USE_WXPYTHON@
+
 #i18N
 HAVE_NLS            = @HAVE_NLS@
 
