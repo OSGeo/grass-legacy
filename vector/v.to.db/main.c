@@ -30,12 +30,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, database, attribute table");
-    module->label    = _("Populate database values from vector features.");
-    module->description =
-	_("Load values from vector to database. For "
-	  "uploaded/printed category values '-1' is used for 'no category' "
-	  "and 'null'/'-' if category cannot be found or multiple categories "
-	  "were found.");
+    module->description = _("Populate database values from vector features.");
 
     parse_command_line (argc, argv);
 

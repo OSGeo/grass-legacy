@@ -27,20 +27,19 @@ parse_command_line (int argc, char *argv[])
 	    struct Flag *p, *s, *t;
     } flags;
 
-    parms.vect = G_define_standard_option(G_OPT_V_INPUT);
-    parms.vect->key    = "map";
+    parms.vect = G_define_standard_option(G_OPT_V_MAP);
 
     parms.type = G_define_standard_option(G_OPT_V_TYPE) ;
     parms.type->options      = "point,line,boundary,centroid";
     parms.type->answer       = "point,line,boundary,centroid";
-    parms.type->description  = _("Type of elements (for coor valid point/centroid, "
-			       "for length valid line/boundary)");	
+    parms.type->label        = _("Type of elements (for coor valid point/centroid, "
+				 "for length valid line/boundary)");	
     
     parms.field = G_define_standard_option(G_OPT_V_FIELD);
 
     parms.qfield = G_define_standard_option(G_OPT_V_FIELD);
     parms.qfield->key = "qlayer";
-    parms.qfield->description = _("Query layer. Used by 'query' option.");
+    parms.qfield->label = _("Query layer (used by 'query' option)");
 
     parms.option = G_define_option();
     parms.option->key          = "option";
@@ -67,7 +66,7 @@ parse_command_line (int argc, char *argv[])
 		 "query;result of a database query for all records of the geometry"
 		       "(or geometries) from table specified by 'qlayer' option;"
 		 "slope;slope steepness of vector line or boundary;"
-		 "sinuous;Line Sinuousity. Calculated as line length / distance between end points;";
+		 "sinuous;line sinuousity, calculated as line length / distance between end points;";
 
     parms.units = G_define_option();
     parms.units->key   = "units";
@@ -78,34 +77,27 @@ parse_command_line (int argc, char *argv[])
     parms.units->label = _("Units");
     parms.units->description = _("mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)");
 
-    parms.col = G_define_option();
-    parms.col->key    = "column";
-    parms.col->type   = TYPE_STRING ;
-    parms.col->required = NO ;
-    parms.col->multiple = YES ;
-    parms.col->gisprompt  = "column(s)" ;
-    parms.col->description = _("Column(s)");
+    parms.col = G_define_standard_option(G_OPT_COLUMNS);
 
-    parms.qcol = G_define_option();
+    parms.qcol = G_define_standard_option(G_OPT_COLUMN);
     parms.qcol->key    = "qcolumn";
-    parms.qcol->type   = TYPE_STRING ;
-    parms.qcol->required = NO ;
-    parms.qcol->multiple = NO ;
-    parms.qcol->gisprompt  = "query column";
-    parms.qcol->label = _("Query column used for 'query' option");
+    parms.qcol->label = _("Name of attribute column used for 'query' option");
     parms.qcol->description = _("E.g. 'cat', 'count(*)', 'sum(val)'");
 
     flags.p = G_define_flag();
     flags.p->key = 'p';
     flags.p->description = _("Print only");
-    
+    flags.p->guisection = _("Print");
+	
     flags.s = G_define_flag();
     flags.s->key = 's';
     flags.s->description = _("Only print sql statements");	
-    
+    flags.s->guisection = _("Print");
+
     flags.t = G_define_flag();
     flags.t->key = 'c';
     flags.t->description = _("In print mode prints totals for options: length,area,count");	
+    flags.t->guisection = _("Print");
 
     if (G_parser(argc,argv)) exit(EXIT_FAILURE);
 
