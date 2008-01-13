@@ -12,7 +12,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\i \cf0 2007-12-1\
+\i \cf0 2008-1-13\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \i0 \cf0 \
@@ -246,6 +246,14 @@ If there are still problems building NVIZ, add this to configure:\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
+To install the new Python GUI (see REQUIREMENTS.html), add this to configure:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs20 \cf0 --with-python\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \
 If you want ffmpeg support (see build instructions below), add this:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
@@ -311,7 +319,7 @@ Tcl/Tk 8.4 can be built 64bits on OSX with a little help (8.5 easily can, but th
 \cf0 \ulnone \
 After running make, 
 \f1\fs20 make bindist
-\f0\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  There 
+\f0\fs24  will assemble an installer package.  This will have the name "GRASS-[version].pkg" and will be found in the macosx folder in the GRASS source.  On Tiger, there 
 \b will be
 \b0  some 
 \b non-fatal errors
@@ -321,7 +329,7 @@ After running make,
 \
 The installer takes care of binary installation, and creating the /Library/GRASS support folder and Help Viewer link.\
 \
-This installer currently does NOT do any verification of installed dependencies.\
+This installer currently does NOT do any verification of installed dependencies or system version.\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Bundling Libraries and Programs\
@@ -484,8 +492,7 @@ To configure Tcl for quad-arch universal + 32bit + 64bit:\
 
 \f0\fs24 \cf0 \
 To configure Tk for quad-arch universal + 32bit + 64bit:\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs20 \cf0 $ CFLAGS="-arch ppc -arch i386 -arch ppc64 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure --prefix=/usr/local/tcltk --enable-threads --with-x --with-tcl=/usr/local/tcltk/lib\
@@ -521,8 +528,7 @@ For GPSBabel, unzip the source and cd to the source folder in a Terminal.  Then:
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs20 \cf0 $ export MACOSX_DEPLOYMENT_TARGET=10.4\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 $ ./configure --disable-dependency-tracking --with-zlib=system --with-expathdr=/usr/X11R6/include --with-libexpat=/usr/X11R6/lib CFLAGS="-Os -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
+$ ./configure --disable-dependency-tracking --with-zlib=system --with-expathdr=/usr/X11R6/include --with-libexpat=/usr/X11R6/lib CFLAGS="-Os -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk"\
 $ make\
 $ sudo make install\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
