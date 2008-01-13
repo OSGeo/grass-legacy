@@ -25,7 +25,9 @@ import sys
 import glob
 import shutil
 
-import wx
+from gui_modules import utils
+
+utils.ImportWx()
 import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
