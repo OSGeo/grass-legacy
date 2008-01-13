@@ -47,7 +47,7 @@ void read_side_cats ( struct line_cats *ACats, int *val, int *count )
 
 /* 
  * Read: - points/centroids : cat,count,coor
- *       - lines/boundaries : cat,count,length,slope
+ *       - lines/boundaries : cat,count,length,slope,sinuous
  */
 
 int 
@@ -55,12 +55,13 @@ read_lines(struct Map_info *Map )
 {
     int    i, idx, nlines, type, found;
     register int line_num;
-    struct line_pnts *Points;
+    struct line_pnts *Points,*EndPoints;
     struct line_cats *Cats, *LCats, *RCats;
-    double len,slope;
+    double len,slope,dist;
 
     /* Initialize the Point struct */
     Points = Vect_new_line_struct();
+    EndPoints = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
     LCats = Vect_new_cats_struct ();
     RCats = Vect_new_cats_struct ();
@@ -151,6 +152,21 @@ read_lines(struct Map_info *Map )
 		    }
                     slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
 		    Values[idx].d1 += slope;
+		} else if ( options.option == O_SINUOUS && (type & GV_LINES) ) {
+		    /* Calculate line length / distance between end points */
+		    Vect_append_point(EndPoints, Points->x[0], Points->y[0], Points->z[0]);
+		    Vect_append_point(EndPoints, Points->x[Points->n_points-1], Points->y[Points->n_points-1], Points->z[Points->n_points-1]);
+		    if (!Vect_is_3d(Map)) {
+			len = length (Points->n_points, Points->x, Points->y);
+			dist = length (EndPoints->n_points, EndPoints->x, EndPoints->y);
+		    }
+		    else {
+			len = Vect_line_length(Points);
+			dist = Vect_line_length(EndPoints);
+		    }
+		    Vect_destroy_line_struct(EndPoints);
+		    EndPoints = Vect_new_line_struct();
+		    Values[idx].d1 = len / dist;
 		}
 
 		found = 1;
@@ -197,8 +213,22 @@ read_lines(struct Map_info *Map )
 		}
                 slope = (Points->z[Points->n_points-1] - Points->z[0])/len;
                 Values[idx].d1 += slope;
-            }
-
+            } else if ( options.option == O_SINUOUS && (type & GV_LINES) ) {
+		/* Calculate line length / distance between end points */
+		Vect_append_point(EndPoints, Points->x[0], Points->y[0], Points->z[0]);
+		Vect_append_point(EndPoints, Points->x[Points->n_points-1], Points->y[Points->n_points-1], Points->z[Points->n_points-1]);
+		if (!Vect_is_3d(Map)) {
+		    len = length (Points->n_points, Points->x, Points->y);
+		    dist = length (EndPoints->n_points, EndPoints->x, EndPoints->y);
+		}
+		else {
+		    len = Vect_line_length(Points);
+		    dist = Vect_line_length(EndPoints);
+		}
+		Vect_destroy_line_struct(EndPoints);
+		EndPoints = Vect_new_line_struct();
+		Values[idx].d1 = len / dist;
+	    }
 	}
     }
 

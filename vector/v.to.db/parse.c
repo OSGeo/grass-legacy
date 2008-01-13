@@ -47,12 +47,12 @@ parse_command_line (int argc, char *argv[])
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,compact,fd,perimeter,length,count,coor,start,end,sides,query,slope";
+    parms.option->options      = "cat,area,compact,fd,perimeter,length,count,coor,start,end,sides,query,slope,sinuous";
     parms.option->description  = _("Value to upload");
     parms.option->descriptions  = 
 		 "cat;insert new row for each category if doesn't exist yet;"
 		 "area;area size;"
-    	 "compact;compactness of an area, calculated as \n"
+		 "compact;compactness of an area, calculated as \n"
 		 "              compactness = perimeter / (2 * sqrt(PI * area));"
 		 "fd;fractal dimension of boundary defining a polygon, calculated as \n"
 		 "              fd = 2 * (log(perimeter) / log(area));"
@@ -66,7 +66,8 @@ parse_command_line (int argc, char *argv[])
 		       "'qlayer' is used for area category;"
 		 "query;result of a database query for all records of the geometry"
 		       "(or geometries) from table specified by 'qlayer' option;"
-		 "slope;slope steepness of vector line or boundary";
+		 "slope;slope steepness of vector line or boundary;"
+		 "sinuous;Line Sinuousity. Calculated as line length / distance between end points;";
 
     parms.units = G_define_option();
     parms.units->key   = "units";
@@ -138,7 +139,7 @@ parse_command_line (int argc, char *argv[])
     if (!options.print) {
 	if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
 	     || options.option == O_QUERY || options.option == O_COMPACT || options.option == O_FD
-	     || options.option == O_PERIMETER || options.option == O_SLOPE ) /* one column required */
+	     || options.option == O_PERIMETER || options.option == O_SLOPE || options.option == O_SINUOUS ) /* one column required */
 	{
 	    if ( ncols != 1) {
 		G_fatal_error ( _("This option requires one column") );
@@ -161,6 +162,10 @@ parse_command_line (int argc, char *argv[])
 
     if ( options.option == O_SIDES && !(options.type | GV_BOUNDARY) )
 	G_fatal_error ( _("The 'sides' option makes sense only for boundaries"));
+
+    if ( options.option == O_SINUOUS && !(options.type | GV_LINES) )
+	G_fatal_error ( _("The 'sinuous' option makes sense only for lines"));
+
 
     return 0;
 }
@@ -196,6 +201,7 @@ int parse_option (char *s)
     else if (strcmp (s, "fd") == 0) x = O_FD;
     else if (strcmp (s, "perimeter") == 0) x = O_PERIMETER;
     else if (strcmp (s, "slope") == 0) x = O_SLOPE;
+    else if (strcmp (s, "sinuous") == 0) x = O_SINUOUS;
 
     return x;
 }
