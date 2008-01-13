@@ -8,15 +8,16 @@
 # PURPOSE:  	This configure runs all the tests to determine what components
 #   	    	are installed on the current system. It also defines certain
 #   	    	configuration variables for compilation and installation.
-# COPYRIGHT:    (C) 2000,2004 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000-2008 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
 #   	    	for details.
 #
-# MANUAL:       http://www.gnu.org/manual/autoconf/html_mono/autoconf.html
+# MANUAL:       http://www.gnu.org/software/autoconf/manual/autoconf.html
 # Website for   config.guess, config.sub:
 #               http://savannah.gnu.org/cgi-bin/viewcvs/config/config/
+#               Note: use autoconf-2.13
 #############################################################################
 
 define([AC_CACHE_LOAD], )
@@ -192,6 +193,7 @@ LOC_ARG_WITH(readline, Readline, no)
 LOC_ARG_WITH(opendwg, openDWG, no)
 LOC_ARG_WITH(curses, Curses, yes)
 LOC_ARG_WITH(python, PYTHON, no)
+LOC_ARG_WITH(wxpython, wxPython, no)
 
 # With includes and libs options
 
@@ -676,7 +678,6 @@ fi
 if test "$with_gdal" = "no" ; then
   AC_MSG_RESULT(no)
 else
-  AC_MSG_RESULT(yes)
   AC_PATH_PROG(GDAL_CONFIG, gdal-config, no)
 
   if test "$GDAL_CONFIG" = "no" ; then
@@ -1625,9 +1626,9 @@ PYMINVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[2:3]'`]
 AC_MSG_RESULT($PYVERSION)
 AC_SUBST(PYVERSION)
 
-# make sure Python is version 2
+# make sure Python is version >= 2.3
 if test "$PYMAJVERSION" -lt "2" || \
-   (test "$PYMAJVERSION" -eq "2" && test "$PYMINVERSION" -lt "2"); then
+   (test "$PYMAJVERSION" -eq "2" && test "$PYMINVERSION" -lt "3"); then
   AC_MSG_ERROR([This version of GRASS requires at least Python version 2.3.  
 The one you have seems to be $PYVERSION.  You can specify an alternate python 
 by using (for example) --with-python=/usr/bin/python2.3])
@@ -1636,6 +1637,45 @@ fi
 fi
 
 AC_SUBST(USE_PYTHON)
+
+# wxPython check
+LOC_CHECK_USE(wxpython, wxPython, USE_WXPYTHON)
+
+if test -n "$USE_WXPYTHON"; then
+   # Python support required
+   if test -z "$USE_PYTHON"; then
+      AC_MSG_ERROR([*** wxPython requires PYTHON functionality (--with-python).])	
+   fi
+
+   # find out wxPython version
+   AC_MSG_CHECKING(wxPython version)
+   WXVERSION=`$PYTHON_BIN -c ['import wx; print wx.__version__'`]
+   if test -z "$WXVERSION"; then
+      AC_MSG_ERROR([*** couldn't find wxPython.])	
+   fi
+   
+   WXMAJVERSION=`$PYTHON_BIN -c ['import wx; print wx.__version__[:1]'`]
+   WXMINVERSION=`$PYTHON_BIN -c ['import wx; print wx.__version__[2:3]'`]
+   AC_MSG_RESULT($WXVERSION)
+   AC_SUBST(WXVERSION)
+
+   # make sure Python is version >= 2.4
+   if test "$PYMAJVERSION" -lt "2" || \
+      (test "$PYMAJVERSION" -eq "2" && test "$PYMINVERSION" -lt "4"); then
+      AC_MSG_ERROR([*** wxPython functionality requires at least Python version 2.4.  
+      The one you have seems to be $PYVERSION.  You can specify an alternate python 
+      by using (for example) --with-python=/usr/bin/python2.4])
+   fi
+
+   # make sure wxPython is version >= 2.8
+   if test "$WXMAJVERSION" -lt "2" || \
+      (test "$WXMAJVERSION" -eq "2" && test "$WXMINVERSION" -lt "8"); then
+        AC_MSG_ERROR([*** This version of GRASS requires at least wxPython version 2.8.  
+	The one you have seems to be $WXVERSION.])
+   fi
+fi
+
+AC_SUBST(USE_WXPYTHON)
 
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
@@ -1684,7 +1724,7 @@ LOC_MSG_USE(GDAL support,USE_GDAL)
 LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG_USE(JPEG support,USE_JPEG)
 LOC_MSG_USE(LAPACK support,USE_LAPACK)
-LOC_MSG_USE(Large File Support (LFS), USE_LARGEFILES)
+LOC_MSG_USE(Large File support (LFS), USE_LARGEFILES)
 LOC_MSG_USE(Motif support,USE_MOTIF)
 LOC_MSG_USE(MySQL support,USE_MYSQL)
 LOC_MSG_USE(NLS support,USE_NLS)
@@ -1694,6 +1734,7 @@ LOC_MSG_USE(OpenGL support,USE_OPENGL)
 LOC_MSG_USE(PNG support,USE_PNG)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(Python support,USE_PYTHON)
+LOC_MSG_USE(wxPython support,USE_WXPYTHON)
 LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG_USE(SQLite support,USE_SQLITE)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
