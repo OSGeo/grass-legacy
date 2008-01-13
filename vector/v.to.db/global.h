@@ -70,6 +70,8 @@ EXT VSTAT
 
 #define O_FD		13 /* fractal dimension */
 
+#define O_SINUOUS       14 /* sinuousity of a line (length / <distance between end points>) */
+
 #define U_ACRES		1
 #define U_HECTARES	2
 #define U_KILOMETERS	3

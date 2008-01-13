@@ -82,7 +82,12 @@ report (void)
 
 
             break;
-
+        case O_SINUOUS:
+	    if (G_verbose() > G_verbose_min())
+		fprintf (stdout,"cat|sinuous\n");
+	    for ( i = 0; i < vstat.rcat; i++ )
+		fprintf (stdout, "%d|%.15g\n", Values[i].cat, Values[i].d1);
+            break;
         case O_COOR:
         case O_START:
         case O_END:

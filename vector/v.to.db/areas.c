@@ -51,7 +51,7 @@ int read_areas(struct Map_info *Map)
 		    case O_COMPACT:
 			Values[idx].d1 = perimeter / (2.0 * sqrt(M_PI * area));
 			break;
-			case O_FD:
+		    case O_FD:
 			Values[idx].d1 = 2.0 * log(perimeter) / log(area) ;
 			break;
 		    }
