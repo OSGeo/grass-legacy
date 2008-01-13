@@ -1,20 +1,24 @@
 """
-MODULE: utils.py
+@package utils.py
 
-CLASSES:
-    * GetTempfile
+@brief Misc utilities for GRASS wxPython GUI
 
-PURPOSE: Misc utilities for GRASS wxPython GUI
+(C) 2007-2008 by the GRASS Development Team
 
-AUTHORS: The GRASS Development Team
+This program is free software under the GNU General Public
+License (>=v2). Read the file COPYING that comes with GRASS
+for details.
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
-         This program is free software under the GNU General Public
-         License (>=v2). Read the file COPYING that comes with GRASS
-         for details.
+@author Martin Landa, Jachym Cepicky
+
+@date 2007-2008
 """
 
 import os
+import sys
+
+gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(gmpath)
 
 import gcmd
 
@@ -22,10 +26,9 @@ def GetTempfile(pref=None):
     """
     Creates GRASS temporary file using defined prefix.
 
-    Parameters:
-        pref: prefer the given path
-    Returns:
-        Path to file name (string) or None
+    @param pref prefer the given path
+
+    @return Path to file name (string) or None
     """
 
     tempfileCmd = gcmd.Command(["g.tempfile",
@@ -43,7 +46,13 @@ def GetTempfile(pref=None):
         return Node
 
 def GetLayerNameFromCmd(dcmd):
-    """Get layer name from GRASS command"""
+    """Get layer name from GRASS command
+
+    @param dcmd GRASS command (given as list)
+
+    @return map name
+    @return '' if no map name found in command
+    """
     mapname = ''
     for item in dcmd:
         if 'map=' in item:
@@ -72,6 +81,11 @@ def ListOfCatsToRange(cats):
     """Convert list of category number to range(s)
 
     Used for example for d.vect cats=[range]
+
+    @param cats category list
+
+    @return category range string
+    @return '' on error
     """
 
     catstr = ''
@@ -100,3 +114,22 @@ def ListOfCatsToRange(cats):
             i += 1
         
     return catstr.strip(',')
+
+def ImportWx():
+    """Try to import wx module and check its version"""
+    majorVersion = 2.8
+    minorVersion = 1.1
+    try:
+        import wx
+        version = wx.__version__
+        if float(version[:3]) < majorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+        if float(version[:3]) == 2.8 and \
+                float(version[4:]) < minorVersion:
+            raise ValueError('You are using wxPython version %s' % str(version))
+
+    except (ImportError, ValueError), e:
+        print >> sys.stderr, 'ERROR: ' + str(e) + \
+            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
+            (str(majorVersion), str(minorVersion))
+        sys.exit(1)

@@ -38,19 +38,6 @@ import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
 
-import wx
-import wx.aui
-import wx.combo
-import wx.html
-import wx.stc
-import wx.lib.customtreectrl as CT
-import wx.lib.flatnotebook as FN
-from wx.lib.wordwrap import wordwrap
-try:
-    import subprocess
-except:
-    import compat.subprocess as subprocess
-
 import gui_modules
 gmpath = gui_modules.__path__[0]
 sys.path.append(gmpath)
@@ -63,6 +50,20 @@ import icons
 gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
+import gui_modules.utils as utils
+utils.ImportWx()
+import wx.aui
+import wx.combo
+import wx.html
+import wx.stc
+import wx.lib.customtreectrl as CT
+import wx.lib.flatnotebook as FN
+from wx.lib.wordwrap import wordwrap
+try:
+    import subprocess
+except:
+    import compat.subprocess as subprocess
+
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
 import gui_modules.menudata as menudata
@@ -72,7 +73,6 @@ import gui_modules.defaultfont as defaultfont
 import gui_modules.histogram as histogram
 import gui_modules.profile as profile
 import gui_modules.rules as rules
-import gui_modules.utils as utils
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
