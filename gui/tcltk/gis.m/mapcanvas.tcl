@@ -1058,8 +1058,8 @@ proc MapCanvas::currentzoom { mon } {
 	set ewres [lindex $region 5]
 
 	if { $nsres == $ewres } {
-	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g $mapunits"] \
-		$rows $cols $nsres]
+	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g %s"] \
+		$rows $cols $nsres $mapunits]
 	} else {
 	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"] \
 		$rows $cols $nsres $ewres]
@@ -1684,9 +1684,9 @@ proc MapCanvas::measure { mon x y } {
 
 
 	monitor_annotate $measurement_annotation_handle \
-		[G_msg " --segment length = $out_seg\n"]
+		[format [G_msg " --segment length = %s\n"] $out_seg]
 	monitor_annotate $measurement_annotation_handle \
-		[G_msg "cumulative length = $out_tot\n"]
+		[format [G_msg "cumulative length = %s\n"] $out_tot]
 
 	set linex1 $linex2
 	set liney1 $liney2
