@@ -12,8 +12,8 @@ ifneq ($(strip $(TCLTKLIBS)),)
     SUBDIRS += $(TCLTKBASED)
 endif
 
-#compile if Python present:
-ifneq ($(strip $(USE_PYTHON)),)
+#compile if wxPython present:
+ifneq ($(strip $(USE_WXPYTHON)),)
     SUBDIRS += $(PYTHONBASED)
 endif
 
