@@ -12,7 +12,7 @@ PURPOSE: GRASS debugging
 AUTHORS: The GRASS Development Team
          Martin Landa <landa.martin gmail.com>
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
@@ -28,15 +28,7 @@ class DebugMsg:
     """
     GRASS Debugging
 
-    Usage:
-    import cmd
-
-         cmd.Command (cmd=["g.gisenv", "set=DEBUG=3"]) # only GUI debug messages DEBUG=GUI:3
-
-         import grassenv # or reload (grassenv)
-
-         debug = Debug()
-         debug.msg (3, "message level=%d" % 3)
+    export GRASS_WX_DEBUG=[0-5]
     """
     def __init__(self):
         # default level
@@ -59,7 +51,7 @@ class DebugMsg:
     def msg (self, level, message):
         self._update_level()
         if self.debuglevel > 0 and level > 0 and level <= self.debuglevel:
-            print >> sys.stderr, "GUI D%d/%d: %s" % (level, level, message)
+            print >> sys.stderr, "GUI D%d/%d: %s" % (level, self.debuglevel, message)
 
 # Debug instance
 Debug = DebugMsg()
