@@ -1,5 +1,5 @@
 /*!
- * \file map.c
+ * \file net.c
  *
  * \brief Vector library - net releated fns
  *

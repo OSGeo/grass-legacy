@@ -1,5 +1,5 @@
 /*!
-  \file rewind.c
+  \file select.c
   
   \brief Vector library - select vector features
   
