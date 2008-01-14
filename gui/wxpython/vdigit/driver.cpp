@@ -35,11 +35,17 @@ DisplayDriver::DisplayDriver(void *device)
 
     dc = (wxPseudoDC *) device;
 
-    points       = Vect_new_line_struct();
+    points = Vect_new_line_struct();
     pointsScreen = new wxList();
-    cats         = Vect_new_cats_struct();
+    cats = Vect_new_cats_struct();
+    
+    selected = Vect_new_list();
 
     drawSegments = false;
+
+    // avoid GUI crash
+    // Vect_set_fatal_error(GV_FATAL_PRINT);
+    // G_set_error_routine(print_error);
 }
 
 /**
@@ -59,6 +65,7 @@ DisplayDriver::~DisplayDriver()
     Vect_destroy_line_struct(points);
     delete pointsScreen;
     Vect_destroy_cats_struct(cats);
+    Vect_destroy_list(selected);
 }
 
 /**
@@ -97,34 +104,15 @@ int DisplayDriver::DrawMap(bool force)
 
     /* nlines = Vect_get_num_lines(mapInfo); */
 
-    //Vect_build_partial(mapInfo, GV_BUILD_NONE, stderr);
-    //Vect_build(mapInfo, stderr);
-
     Vect_get_map_box(mapInfo, &mapBox);
 
     // draw lines inside of current display region
     nlines = Vect_select_lines_by_box(mapInfo, &(region.box),
      				      GV_POINTS | GV_LINES, // fixme
 				      listLines);
-    /*
-    nlines = Vect_select_lines_by_box(mapInfo, &mapBox,
-				      GV_POINTS | GV_LINES, // fixme
- 				      listLines);
 
-    for (int i = 0; i < listLines->n_values; i++) {
-	DrawLine(listLines->value[i]);
-    }
-    */
-
-#ifdef DEBUG
-    std::cerr.flags(std::ios_base::fixed);
-    std::cerr << "region: W=" << region.box.W
-	      << "; E=" << region.box.E
-	      << "; S=" << region.box.S
-	      << "; N=" << region.box.N << std::endl;
-
-    std::cerr << "-> nlines=" << nlines << std::endl;
-#endif
+    G_debug(3, "driver.DrawMap(): region: w=%f, e=%f, s=%f, n=%f",
+	    region.box.W, region.box.E, region.box.S, region.box.N);
 
     bool inBox;
     dc->BeginDrawing();
@@ -133,9 +121,7 @@ int DisplayDriver::DrawMap(bool force)
     }
     dc->EndDrawing();
 
-#ifdef DEBUG
-    PrintIds();
-#endif
+    // PrintIds();
 
     Vect_destroy_list(listLines);
 
@@ -578,20 +564,6 @@ void DisplayDriver::SetRegion(double north, double south, double east, double we
     region.map_width  = map_width;
     region.map_height = map_height;
 
-#ifdef DEBUG
-    std::cerr << "region: n=" << north
-	      << "; s=" << south
-	      << "; e=" << east
-	      << "; w=" << west
-	      << "; ns_res=" << ns_res
-	      << "; ew_res=" << ew_res
-	      << "; center_easting=" << center_easting
-	      << "; center_northing=" << center_northing
-	      << "; map_width=" << map_width
-	      << "; map_height=" << map_height
-	      << std::endl;
-#endif
-
     // calculate real region
     region.map_res = (region.ew_res > region.ns_res) ? region.ew_res : region.ns_res;
 
@@ -643,8 +615,7 @@ void DisplayDriver::UpdateSettings(unsigned long highlight,
 				   bool eNodeOne,     unsigned long cNodeOne,
 				   bool eNodeTwo,     unsigned long cNodeTwo,
 				   bool eVertex,      unsigned long cVertex,
-				   int lineWidth,
-				   double threshold)
+				   int lineWidth)
 {
     settings.highlight.Set(highlight);
 
@@ -678,7 +649,6 @@ void DisplayDriver::UpdateSettings(unsigned long highlight,
     settings.vertex.color.Set(cVertex);
 
     settings.lineWidth = lineWidth;
-    settings.threshold = threshold;    
 }
 
 /**
@@ -692,16 +662,6 @@ void DisplayDriver::UpdateSettings(unsigned long highlight,
 */
 void DisplayDriver::PrintIds()
 {
-    /*
-      for (ids_map::const_iterator i = ids.begin(), e = ids.end();
-      i != e; ++i) {
-      std::cerr << "line=" << i->first << ": "
-      << "npoints=" << i->second.npoints
-      << " startId=" << i->second.startId
-      << std::endl;
-      }
-    */
-
     std::cerr << "topology.highlight: " << topology.highlight << std::endl;
 
     std::cerr << "topology.point: " << topology.point << std::endl;
@@ -734,9 +694,10 @@ void DisplayDriver::PrintIds()
       topology.vertex * 2 << std::endl;
 
     std::cerr << "selected: ";
-    for (std::vector<int>::const_iterator i = selected.begin(), e = selected.end();
-	 i != e; ++i)
-	std::cerr << *i << " ";
+
+    for (int i = 0; i < selected->n_values; i++) {
+	std::cerr << selected->value[i] << " ";
+    }
     std::cerr << std::endl;
 
     return;
@@ -785,21 +746,24 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
     for (int i = 0; i < list->n_values; i++) {
 	line = list->value[i];
 	if (!IsSelected(line)) {
-	    selected.push_back(line);
+	    // selected.push_back(line);
+	    Vect_list_append(selected, line);
 	}
 	else {
-	    selected.erase(GetSelectedIter(line));
+	    // selected.erase(GetSelectedIter(line));
+	    Vect_list_delete(selected, line);
 	}
     }
 
     // remove all duplicate ids
-    sort(selected.begin(), selected.end());
-    selected.erase(unique(selected.begin(), selected.end()), selected.end());
+    // sort(selected.begin(), selected.end());
+    // selected.erase(unique(selected.begin(), selected.end()), selected.end());
 
     Vect_destroy_line_struct(bbox);
     Vect_destroy_list(list);
 
-    return selected.size();
+    // return selected.size();
+    return selected->n_values;
 }
 
 /**
@@ -838,7 +802,8 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 			  ftype, thresh, 0, 0);
 
     if (line > 0) {
-	selected.push_back(line);
+	// selected.push_back(line);
+	Vect_list_append(selected, line);
 	type = Vect_read_line (mapInfo, points, cats, line);
 	Vect_line_distance (points, x, y, 0.0, WITHOUT_Z,
 			    &px, &py, &pz,
@@ -862,7 +827,8 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 */
 bool DisplayDriver::IsSelected(int line)
 {
-    if (GetSelectedIter(line) != selected.end())
+    // if (GetSelectedIter(line) != selected.end())
+    if (Vect_val_in_list(selected, line))
 	return true;
 
     return false;
@@ -876,6 +842,7 @@ bool DisplayDriver::IsSelected(int line)
    \return item iterator
    \return selected.end() if object is not selected
 */
+/*
 std::vector<int>::iterator DisplayDriver::GetSelectedIter(int line)
 {
     for(std::vector<int>::iterator i = selected.begin(), e = selected.end();
@@ -886,7 +853,7 @@ std::vector<int>::iterator DisplayDriver::GetSelectedIter(int line)
 
     return selected.end();
 }
-
+*/
 /**
    \brief Get ids of selected objects
 
@@ -898,7 +865,7 @@ std::vector<int>::iterator DisplayDriver::GetSelectedIter(int line)
 std::vector<int> DisplayDriver::GetSelected(bool grassId)
 {
     if (grassId)
-	return selected;
+	return ListToVector(selected);
 
     std::vector<int> dc_ids;
     long int line;
@@ -908,7 +875,7 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
     }
     else {
 	int npoints;
-	Vect_read_line(mapInfo, points, NULL, selected[0]);
+	Vect_read_line(mapInfo, points, NULL, selected->value[0]);
 	npoints = points->n_points;
 	for (int i = 1; i < 2 * npoints; i++) {
 	  dc_ids.push_back(i);
@@ -955,9 +922,10 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 */
 int DisplayDriver::SetSelected(std::vector<int> id)
 {
-    selected = id;
+    // selected = id;
+    VectorToList(selected, id);
 
-    if (selected.size() <= 0)
+    if (selected->n_values <= 0)
 	drawSegments = false;
 
     return 1;
@@ -988,11 +956,11 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
     std::vector<int> returnId;
 
     // only one object can be selected
-    if (selected.size() != 1 || !drawSegments) 
+    if (selected->n_values != 1 || !drawSegments) 
 	return returnId;
 
     startId = 1;
-    line = selected[0];
+    line = selected->value[0];
 
     type = Vect_read_line (mapInfo, points, cats, line);
         
@@ -1075,4 +1043,62 @@ void DisplayDriver::ResetTopology()
     topology.vertex = 0;
 
     return;
+}
+
+/**
+   \brief Convert vect list to std::vector
+
+   \param list vect list
+
+   \return std::vector
+*/
+std::vector<int> DisplayDriver::ListToVector(struct ilist *list)
+{
+    std::vector<int> vect;
+
+    if (!list)
+	return vect;
+
+    for (int i = 0; i < list->n_values; i++) {
+	vect.push_back(list->value[i]);
+    }
+
+    return vect;
+}
+
+/**
+   \brief Convert std::vector to vect list
+
+   \param list vect list
+   \param vec  std::vector instance
+
+   \return number of items
+   \return -1 on error
+*/
+int DisplayDriver::VectorToList(struct ilist *list, const std::vector<int>& vec)
+{
+    if (!list)
+	return -1;
+
+    Vect_reset_list(list);
+
+    for (std::vector<int>::const_iterator i = vec.begin(), e = vec.end();
+	 i != e; ++i) {
+	Vect_list_append(list, *i);
+    }
+
+    return list->n_values;
+}
+
+/**
+   \brief Error messages handling 
+
+   \param msg message
+   \param type type message (MSG, WARN, ERR)
+
+   \return 0
+*/
+int print_error(const char *msg, int type)
+{
+    return 0;
 }

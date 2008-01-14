@@ -28,8 +28,6 @@ extern "C" {
 #include <grass/Vect.h>
 }
 
-// #define DEBUG
-
 class DisplayDriver
 {
 private:
@@ -56,7 +54,10 @@ private:
     ids_map ids; // gId : {dcIds, ...}
     */
 
-    std::vector<int> selected; // list of selected features (gId)
+    // list of selected features (gId)
+    // std::vector<int> selected; 
+    struct ilist *selected;
+
     bool drawSegments;         // draw segments of selected line
 
     struct Map_info  *mapInfo;
@@ -105,8 +106,6 @@ private:
 	symbol vertex;
 
 	int lineWidth;    // screen units 
-
-	double threshold; // threshold value (map units)
     } settings;
 
     struct _topology {
@@ -143,7 +142,9 @@ private:
 
     /* select feature */
     bool IsSelected(int line);
-    std::vector<int>::iterator GetSelectedIter(int line);
+    // std::vector<int>::iterator GetSelectedIter(int line);
+    std::vector<int> ListToVector(struct ilist *);
+    int VectorToList(struct ilist *, const std::vector<int>&);
 
     void ResetTopology();
 
@@ -189,8 +190,9 @@ public:
 			bool, unsigned long,
 			bool, unsigned long,
 			bool, unsigned long,
-			int,
-			double);
+			int);
 };
+
+int print_error(const char *, int);
 
 #endif /* __DRIVER_H__ */
