@@ -1,5 +1,5 @@
 /*!
-  \file array.c
+  \file box.c
   
   \brief Vector library - bounding box related fns
   

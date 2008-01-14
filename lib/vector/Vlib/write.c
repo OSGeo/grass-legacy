@@ -1,5 +1,5 @@
 /*!
-  \file type.c
+  \file write.c
   
   \brief Vector library - write data
   
