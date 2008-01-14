@@ -51,11 +51,10 @@ int Vedit_copy_lines (struct Map_info *Map, struct Map_info *FromMap,
 
         type = Vect_read_line(FromMap, Points, Cats, line);
 
-        G_debug(3, "Copying line type %d number %d", type, line);
+        G_debug(3, "Vedit_copy_lines(): type=%d, line=%d", type, line);
 
         /* copy */
         if (Vect_write_line (Map, type, Points, Cats) < 0) {
-            G_warning (_("Unable to write line %d"), line);
 	    return -1;
 	}
         

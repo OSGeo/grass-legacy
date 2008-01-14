@@ -1,5 +1,5 @@
 /**
-   \brief Vedit library - split/break line
+   \brief Vedit library - split/break lines
 
    This program is free software under the
    GNU General Public License (>=v2).
@@ -21,7 +21,7 @@
    \param[in] Map vector map
    \param[in] List list of selected lines
    \param[in] coord points location
-   \param[in] List_updated list of rewritten features (if given)
+   \param[in] List_updated list of rewritten features (or NULL)
 
    \return number of modified lines
    \return -1 on error
@@ -72,14 +72,15 @@ int Vedit_split_lines(struct Map_info *Map, struct ilist *List,
 		continue;
 	    }
 
-	    G_debug (3, "do_break: line=%d, x=%f, y=%f, px=%f, py=%f, seg=%d, dist=%f, spdist=%f, lpdist=%f",
+	    G_debug (3, "Vedit_split_lines(): line=%d, x=%f, y=%f, px=%f, py=%f, seg=%d, "
+		     "dist=%f, spdist=%f, lpdist=%f",
 		     line, coord->x[j], coord->y[j], px, py, seg, dist, spdist, lpdist);
 
 	    if (spdist <= 0.0 ||
 		spdist >= Vect_line_length(Points))
 		continue;
 	    
-	    G_debug (3, "do_break: line=%d broken", line);
+	    G_debug (3, "Vedit_split_lines(): line=%d", line);
 
 	    /* copy first line part */
 	    for (l = 0; l < seg; l++) {
@@ -92,6 +93,9 @@ int Vedit_split_lines(struct Map_info *Map, struct ilist *List,
 	    
 	    /* rewrite the line */
 	    newline = Vect_rewrite_line (Map, line, type, Points2, Cats);
+	    if (newline < 0) {
+		return -1;
+	    }
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    Vect_reset_line (Points2);
@@ -107,6 +111,9 @@ int Vedit_split_lines(struct Map_info *Map, struct ilist *List,
 	    
 	    /* rewrite the line */
 	    newline = Vect_write_line (Map, type, Points2, Cats);
+	    if (newline < 0) {
+		return -1;
+	    }
    	    if (List_updated)
 		Vect_list_append (List_updated, newline);
 	    
@@ -233,7 +240,7 @@ int Vedit_connect_lines (struct Map_info *Map, struct ilist *List,
 	}
     
 	if (!n_on_line[0] || !n_on_line[1]) {
-	    G_warning (_("Unable to connect line id %d to line %d"), line[0], line[1]);
+	    G_warning (_("Unable to connect lines %d,%d"), line[0], line[1]);
 	    continue;
 	}
 
@@ -260,13 +267,11 @@ int Vedit_connect_lines (struct Map_info *Map, struct ilist *List,
 					     Points[0] -> z[pnt_idx[0]],
 					     WITHOUT_Z);
 
-	G_debug (3, "do_connect: dist=%f/%f -> pnt_idx=%d -> x=%f, y=%f / dist_connect=%f (thresh=%f)",
+	G_debug (3, "Vedit_connect_lines(): dist=%f/%f -> pnt_idx=%d -> "
+		 "x=%f, y=%f / dist_connect=%f (thresh=%f)",
 		 dist[0], dist[1], pnt_idx[0], nx[pnt_idx[1]], ny[pnt_idx[1]], dist_connect, thresh);
 
 	if (thresh >= 0.0 && dist_connect > thresh) {
-	    G_warning (_("Unable to connect line id %d to line %d because of threshold distance. "
-			 "Run v.edit with other threshold distance value."),
-		       line[0], line[1]);
 	    continue;
 	}
     
@@ -282,6 +287,9 @@ int Vedit_connect_lines (struct Map_info *Map, struct ilist *List,
 	    
 	    /* rewrite the first line */
 	    newline = Vect_rewrite_line (Map, line[0], type[0], Points[0], Cats[0]);
+	    if (newline < 0) {
+		return -1;
+	    }
 	    Vect_list_append (List_updated, newline);
 	    connected = 1;
 	}
@@ -310,8 +318,7 @@ int Vedit_connect_lines (struct Map_info *Map, struct ilist *List,
 	
 	if (connected)
 	    nlines_modified += 2;
-	else
-	    G_warning (_("Unable to connect line id %d to line %d"), line[0], line[1]);
+
     } /* for each line pair */
 
     /* destroy structures */
