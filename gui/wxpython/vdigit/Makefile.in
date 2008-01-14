@@ -7,42 +7,39 @@ PYTHONVERSION=@PYVERSION@
 MODULE_TOPDIR = ../../..
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
-include $(MODULE_TOPDIR)/include/Make/Doxygen.make
 
 SWIG=swig
 
-CFLAGS=-c -fpic -I/usr/include/python$(PYTHONVERSION) -I./ -I$(ARCH_DISTDIR)/include `wx-config --cxxflags` `gdal-config --cflags`
+CXXFLAGS=-c -fpic -I$(ARCH_DISTDIR)/include  -I/usr/include/python$(PYTHONVERSION) `wx-config --cxxflags`
 
-LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) -lgrass_vect -lgrass_gis `wx-config --libs` -L./ -lgdi
+LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) `wx-config --libs` -lgdi
+
+LOCAL_HEADERS=digit.h driver.h
+SOURCES=driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp
+
+OBJARCH=OBJ.$(ARCH)
+OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))
 
 default: grass6_wxvdigit.so
 
 clean:
-	-rm -f *.o _grass6_wxvdigit.so grass6_wxvdigit_wrap.cxx grass6_wxvdigit.py grass6_wxvdigit.i grass6_wxvdigit.pyc	 
+	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit_wrap.cxx grass6_wxvdigit.py grass6_wxvdigit.i grass6_wxvdigit.pyc	 
 
 grass6_wxvdigit.i:
 	cat ./digit.i > grass6_wxvdigit.i
-	echo "/* auto-generate swig typedef file (with some GRASS functions removed) */" >> grass6_wxvdigit.i
+	cat ./dig_types.i >> grass6_wxvdigit.i
+	echo "/* auto-generate swig typedef file */" >> grass6_wxvdigit.i
 	cat ./driver.h >> grass6_wxvdigit.i
 	cat ./digit.h >> grass6_wxvdigit.i
 
 grass6_wxvdigit_wrap.cxx: grass6_wxvdigit.i
 	$(SWIG) -c++ -python -shadow $<
 
-grass6_wxvdigit_wrap.o: grass6_wxvdigit_wrap.cxx
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
+$(OBJARCH)/grass6_wxvdigit_wrap.o: grass6_wxvdigit_wrap.cxx $(OBJARCH)
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE_DIRS) $< -o $@
 
-driver.o: driver.cpp driver.h
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
+$(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE_DIRS) $< -o $@
 
-digit.o: digit.cpp digit.h
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
-
-cats.o: cats.cpp digit.h
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
-
-line.o: line.cpp digit.h
-	$(CXX) $(CFLAGS) $(INCLUDE_DIRS) $<
-
-grass6_wxvdigit.so: grass6_wxvdigit_wrap.o driver.o digit.o cats.o line.o
-	$(CXX) $(LDFLAGS) grass6_wxvdigit_wrap.o driver.o digit.o cats.o line.o -o _grass6_wxvdigit.so
+grass6_wxvdigit.so: $(OBJARCH)/grass6_wxvdigit_wrap.o $(OBJ)
+	$(CXX) $(LDFLAGS) $(OBJARCH)/grass6_wxvdigit_wrap.o $(OBJ) -o _grass6_wxvdigit.so

@@ -29,4 +29,7 @@ Digit::Digit(DisplayDriver *ddriver)
     if (display->mapInfo) {
 	InitCats();
     }
+
+    // avoid GUI crash
+    // Vect_set_fatal_error(GV_FATAL_PRINT);
 }

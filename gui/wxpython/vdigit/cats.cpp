@@ -7,8 +7,9 @@
    License (>=v2). Read the file COPYING that comes with GRASS
    for details.
 
-   \author (C) by The GRASS development team
-   Martin Landa <landa.martin gmail.com>
+   (C) 2008 by The GRASS development team
+
+   \author Martin Landa <landa.martin gmail.com>
 
    \date 2008 
 */
@@ -105,3 +106,18 @@ int Digit::SetCategory(int layer, int cat)
     return old_cat;
 }
 
+/**
+   \brief Copy categories from one vector feature to other
+
+   \param cats  list of layer/category to be copied			       
+   \param ids   list of line ids where to copy categories
+
+   \return number of modified features
+   \return -1 on error
+*/
+int Digit::CopyCats(std::vector<std::vector<int> > cats, std::vector<int> ids)
+{
+  /* TODO */
+
+  return 0;
+}
