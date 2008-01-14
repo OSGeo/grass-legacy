@@ -109,7 +109,6 @@ static int G__open (
 	}
 	if ((dummy = G_find_file2 (element, name, mapset)) == NULL)
 	    return -1;
-	G_free (dummy);
 	G__file_name (path, element, name, mapset);
 
 	return open (path, 0);
