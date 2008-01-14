@@ -199,13 +199,6 @@ main (int argc, char *argv[])
     Vect_set_open_level (2); 
     Vect_open_old (&In, in_opt->answer, mapset); 
 
-    /* check if the map is 3d */
-    if (Vect_is_3d(&In)) {
-	G_warning (_("Vector map <%s> is 3D. "
-		     "Use format specific layer creation options (parameter 'lco') to export in 3D rather than 2D (default)"),
-		   in_opt->answer);
-    }
-
     /* fetch PROJ info */
     G_get_default_window(&cellhd);
     if( cellhd.proj == PROJECTION_XY )
@@ -234,7 +227,7 @@ main (int argc, char *argv[])
 	    G_debug (2, " -> driver = %d", drn); 
 	}
     }
-    if ( drn == -1 ) G_fatal_error ( _("Driver %s not found"), frmt_opt->answer ); 
+    if ( drn == -1 ) G_fatal_error ( _("OGR driver <%s> not found"), frmt_opt->answer ); 
     Ogr_driver = OGRGetDriver( drn );
 
     /* parse dataset creation options */
@@ -242,7 +235,7 @@ main (int argc, char *argv[])
     while (dsco->answers[i]) {
 	tokens = G_tokenize(dsco->answers[i], "=");
 	if (G_number_of_tokens(tokens))
-	    papszLCO = CSLSetNameValue(papszDSCO, tokens[0], tokens[1]);
+	    papszDSCO = CSLSetNameValue(papszDSCO, tokens[0], tokens[1]);
 	G_free_tokens(tokens);
 	i++;
     }
@@ -250,7 +243,7 @@ main (int argc, char *argv[])
     papszDSCO = dsco->answers;
     Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, papszDSCO );
     CSLDestroy( papszDSCO );
-    if ( Ogr_ds == NULL ) G_fatal_error (_("Cannot open OGR data source '%s'"), dsn_opt->answer);
+    if ( Ogr_ds == NULL ) G_fatal_error (_("Unable to open OGR data source '%s'"), dsn_opt->answer);
 
     /* parse layer creation options */
     i = 0;
@@ -262,9 +255,30 @@ main (int argc, char *argv[])
 	i++;
     }
 
+    /* check if the map is 3d */
+    if (Vect_is_3d(&In)) {
+	/* specific check for shp */
+	if (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0) {
+	    const char *shpt;
+	    shpt = CSLFetchNameValue(papszLCO, "SHPT");
+	    if (!shpt || shpt[strlen(shpt)-1] != 'Z') {
+		G_warning (_("Vector map <%s> is 3D. "
+			     "Use format specific layer creation options (parameter 'lco') "
+			     "to export in 3D rather than 2D (default)"),
+			   in_opt->answer);
+	    }
+	}
+	else {
+	    G_warning (_("Vector map <%s> is 3D. "
+			 "Use format specific layer creation options (parameter 'lco') "
+			 "to export in 3D rather than 2D (default)"),
+		       in_opt->answer);
+	}
+    }
+
     Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, papszLCO );
     CSLDestroy( papszLCO );
-    if ( Ogr_layer == NULL ) G_fatal_error (_("Cannot create layer"));
+    if ( Ogr_layer == NULL ) G_fatal_error (_("Unable to create OGR layer"));
     
     db_init_string(&dbstring);
 
@@ -339,22 +353,28 @@ main (int argc, char *argv[])
 
     /* check what users wants to export and what's present in the map */
     if ( Vect_get_num_primitives(&In, GV_POINT) > 0 && !(otype & GV_POINTS) )
-      G_warning(_("%d Point(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_POINT));
+      G_warning(_("%d point(s) found, but not requested to be exported. "
+		  "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_POINT));
 
     if ( Vect_get_num_primitives(&In, GV_LINE) > 0 && !(otype & GV_LINES) )
-      G_warning(_("%d Line(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_LINE));
+      G_warning(_("%d line(s) found, but not requested to be exported. "
+		  "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_LINE));
 
     if ( Vect_get_num_primitives(&In, GV_BOUNDARY) > 0 && !(otype & GV_BOUNDARY) && !(otype & GV_AREA) )
-      G_warning(_("%d Boundary(ies) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_BOUNDARY));
+      G_warning(_("%d boundary(ies) found, but not requested to be exported. "
+		  "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_BOUNDARY));
 
     if ( Vect_get_num_primitives(&In, GV_CENTROID) > 0 && !(otype & GV_CENTROID) && !(otype & GV_AREA) )
-      G_warning(_("%d Centroid(s) found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_CENTROID));
+      G_warning(_("%d centroid(s) found, but not requested to be exported. "
+		  "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_CENTROID));
 
     if ( Vect_get_num_primitives(&In, GV_AREA) > 0  && !(otype & GV_AREA) )
-       G_warning(_("%d Areas found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_AREA));
+       G_warning(_("%d areas found, but not requested to be exported. "
+		   "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_AREA));
 
     if ( Vect_get_num_primitives(&In, GV_FACE) > 0  && !(otype & GV_FACE) )
-       G_warning(_("%d Faces found, but not requested to be exported. Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_FACE));
+       G_warning(_("%d faces found, but not requested to be exported. "
+		   "Verify 'type' parameter."),Vect_get_num_primitives(&In, GV_FACE));
 
     /* add? GV_KERNEL */
 
@@ -435,7 +455,7 @@ main (int argc, char *argv[])
 
     /* Areas (run always to count features of different type) */
     if ( otype & GV_AREA ) {
-	G_message(_("Exporting %i areas (may take some time) ..."), Vect_get_num_areas(&In) );
+	G_message(_("Exporting %i areas (may take some time)..."), Vect_get_num_areas(&In) );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    OGRGeometryH    ring;
 	    
@@ -567,9 +587,9 @@ main (int argc, char *argv[])
 
     /* Summary */
     G_message(_("%d features written"), fout);
-    if ( nocat > 0 ) G_warning ( "%d features without category written", nocat);
-    if ( noatt > 0 ) G_warning ( "%d features without attributes written", noatt);
-    if ( nocatskip > 0 ) G_warning ( "%d features found without category skip", nocatskip);
+    if ( nocat > 0 ) G_warning (_("%d features without category written"), nocat);
+    if ( noatt > 0 ) G_warning (_("%d features without attributes written"), noatt);
+    if ( nocatskip > 0 ) G_warning (_("%d features found without category skip"), nocatskip);
 
     /* Enable this? May be confusing that for area type are not reported all boundaries/centroids.
     *  OTOH why should be reported? */
