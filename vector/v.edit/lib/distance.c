@@ -66,5 +66,8 @@ double Vedit_get_min_distance(struct line_pnts *Points1, struct line_pnts *Point
 	    *mindistidx = i;
     }
 
-    return distances [*mindistidx];
+    G_debug(3, "Vedit_get_min_distance(): dists=%f,%f,%f,%f",
+	    distances[0], distances[1], distances[2], distances[3]);
+
+    return distances[*mindistidx];
 }

@@ -61,8 +61,6 @@ int Vedit_merge_lines(struct Map_info *Map, struct ilist *List)
     nlines_merged = 0;
     
     if (List->n_values < 2) {
-	G_warning (_("Only %d lines found, at least two needed"),
-		   List->n_values);
 	return 0;
     }
     
@@ -146,12 +144,10 @@ int Vedit_merge_lines(struct Map_info *Map, struct ilist *List)
 			     Points2, Cats2,
 			     -1.0,  &Points); /* do not use threshold value */
 		
-		G_debug (3, "merge lines: %d, %d", line1, line2);
+		G_debug (3, "Vedit_merge_lines(): lines=%d,%d", line1, line2);
 		
 		if (Points -> n_points > 0) {
 		    if (Vect_delete_line(Map, line2) == -1) {
-			G_warning (_("Unable to delete line %d"),
-				   line2);
 			return -1;
 		    }
 		    
@@ -164,8 +160,6 @@ int Vedit_merge_lines(struct Map_info *Map, struct ilist *List)
 	if (Points -> n_points > 0) {
 	    line = Vect_rewrite_line (Map, line1, type1, Points, Cats1);
 	    if (line < 0) {
-		G_warning (_("Unable to rewrite line %d"),
-			   line1);
 		return -1;
 	    }
 	    
@@ -202,7 +196,7 @@ static int merge_lines (struct line_pnts *Points1, struct line_cats *Cats1,
     mindist = Vedit_get_min_distance(Points1, Points2, 0, /* TODO 3D */
 				     &mindistidx);
 
-    G_debug (3, "merge line ? index: %d, mindist: %g, thresh: %g",
+    G_debug (3, "   merge line ? index: %d, mindist: %g, thresh: %g",
 	     mindistidx, mindist, thresh);
     
     if (thresh > 0 && mindist > thresh) {

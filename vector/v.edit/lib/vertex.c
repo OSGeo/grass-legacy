@@ -152,7 +152,6 @@ int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps
 	
 	if (rewrite) {
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0)  {
-		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    
@@ -243,7 +242,6 @@ int Vedit_add_vertex(struct Map_info *Map, struct ilist *List,
 	if (rewrite) {
 	    Vect_line_prune (Points);
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning(_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 		
@@ -326,7 +324,6 @@ int Vedit_remove_vertex(struct Map_info *Map, struct ilist *List,
 	if (rewrite) {
 	    /* rewrite the line */
 	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-		G_warning (_("Unable to rewrite line %d"), line);
 		return -1;
 	    }
 	    

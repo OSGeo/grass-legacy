@@ -50,7 +50,7 @@ int Vedit_move_lines(struct Map_info *Map, struct ilist *List,
 
         type = Vect_read_line(Map, Points, Cats, line);
 
-        G_debug(3, "Vedit_move_lines(): type=%d, id=%d", type, line);
+        G_debug(3, "Vedit_move_lines(): type=%d, line=%d", type, line);
 
 	x = Points->x;
 	y = Points->y;
@@ -74,8 +74,6 @@ int Vedit_move_lines(struct Map_info *Map, struct ilist *List,
 	newline = Vect_rewrite_line (Map, line, type, Points, Cats);
 
         if (newline < 0)  {
-	    G_warning(_("Unable to rewrite line %d"),
-		      line);
             return -1;
         }
 

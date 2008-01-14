@@ -72,6 +72,7 @@ int Vedit_snap_point(struct Map_info *Map,
 	    *y = Points->y[mindist_idx];
 	    *z = Points->z[mindist_idx];
 	    snapped = 1;
+	    G_debug(3, "Vedit_snap_point(): line=%d", line2snap);
 	}
     }
 
@@ -149,11 +150,11 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	z[npoints-1] = z[0];
 	
 	rewrite = 1;
+	G_debug(3, "Vedit_snap_line(): line=%d", line);
     }
 
     if (rewrite) {
 	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    G_warning(_("Unable to rewrite line %d"), line);
 	    return -1;
 	}
     }

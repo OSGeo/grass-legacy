@@ -35,8 +35,7 @@ int Vedit_delete_lines(struct Map_info *Map, struct ilist *List)
 	line = List -> value[i];
 
 	if (Vect_line_alive(Map, line)) {
-	    if (-1 == Vect_delete_line(Map, line)) { 
-		G_warning (_("Unable to delete line %d"), line);
+	    if (Vect_delete_line(Map, line) < 0) { 
 		return -1;
 	    }
 

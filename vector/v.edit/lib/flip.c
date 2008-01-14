@@ -49,10 +49,10 @@ int Vedit_flip_lines(struct Map_info *Map, struct ilist *List)
 	Vect_line_reverse (Points);
 
 	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    G_warning (_("Unable to rewrite line %d"),
-		       line);
 	    return -1;
 	}
+
+	G_debug(3, "Vedit_flip_lines(): line=%d", line);
 
 	nlines_flipped++;
     }
