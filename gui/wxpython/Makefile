@@ -2,9 +2,11 @@ MODULE_TOPDIR = ../..
 
 PGM=wxgrass
 
-include $(MODULE_TOPDIR)/include/Make/Script.make
+SUBDIRS=vdigit
 
-default: install_scripts
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+default: parsubdirs install_scripts
 
 install_scripts:
 	$(MKDIR) $(ETC)/wx/wx $(ETC)/wx/compat $(ETC)/wx/vdigit $(ETC)/wx/gui_modules $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images  $(ETC)/wx/scripts
@@ -17,3 +19,5 @@ install_scripts:
 	$(INSTALL_DATA) scripts/* $(ETC)/wx/scripts/
 	$(INSTALL_DATA) gis_set.py wxgui.py $(ETC)/wx/
 	$(INSTALL) -m 755 wxgrass $(GISBASE)/scripts/
+
+clean: cleansubdirs

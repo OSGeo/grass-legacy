@@ -128,6 +128,7 @@ class MapLayer(object):
             return None
 
         runcmd = gcmd.Command(cmd=self.cmdlist + ['--q']) # run quiet
+        
         if runcmd.returncode != 0:
             self.mapfile = None
             self.maskfile = None

@@ -30,7 +30,7 @@ int Digit::InitCats()
 
     struct lcat lc;
 
-    G_debug(2, "vdigit.InitCats()");
+    G_debug(2, "wxDigit.InitCats()");
 
     if (!cats.empty()) {	
 	cats.clear();
@@ -55,7 +55,7 @@ int Digit::InitCats()
 	lc.cat = max_cat;
 
 	cats.push_back(lc);
-	G_debug(3, "vdigit.InitCats(): layer=%d, cat=%d", lc.layer, lc.cat);
+	G_debug(3, "wxDigit.InitCats(): layer=%d, cat=%d", lc.layer, lc.cat);
     }
 
     return 0;
@@ -99,7 +99,7 @@ int Digit::SetCategory(int layer, int cat)
 	if (layer == (*i).layer) {
 	    old_cat = (*i).cat;
 	    (*i).cat = cat;
-	    G_debug(3, "vdigit.SetCategory(): layer=%d, cat=%d", layer, cat);
+	    G_debug(3, "wxDigit.SetCategory(): layer=%d, cat=%d", layer, cat);
 	}
     }
 

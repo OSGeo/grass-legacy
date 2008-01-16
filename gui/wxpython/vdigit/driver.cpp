@@ -43,8 +43,8 @@ DisplayDriver::DisplayDriver(void *device)
 
     drawSegments = false;
 
-    // avoid GUI crash
-    // Vect_set_fatal_error(GV_FATAL_PRINT);
+    // avoid GUI crash when G_fatal_error() is called (opening the vector map)
+    Vect_set_fatal_error(GV_FATAL_PRINT);
     // G_set_error_routine(print_error);
 }
 
@@ -111,7 +111,7 @@ int DisplayDriver::DrawMap(bool force)
      				      GV_POINTS | GV_LINES, // fixme
 				      listLines);
 
-    G_debug(3, "driver.DrawMap(): region: w=%f, e=%f, s=%f, n=%f",
+    G_debug(3, "wxDriver.DrawMap(): region: w=%f, e=%f, s=%f, n=%f",
 	    region.box.W, region.box.E, region.box.S, region.box.N);
 
     bool inBox;
@@ -426,22 +426,27 @@ int DisplayDriver::DrawLineNodes(int line)
 /*
   \brief Close vector map layer
   
-  \param
+  \param void
 
-  \return
+  \return 0 on success
+  \return non-zero on error
 */
-void DisplayDriver::CloseMap()
+int DisplayDriver::CloseMap()
 {
+    int ret;
+
+    ret = -1;
     if (mapInfo) {
 	if (mapInfo->mode == GV_MODE_RW) {
+	    /* rebuild topology */
 	    Vect_build(mapInfo, NULL);
 	}
-	Vect_close(mapInfo);
+	ret = Vect_close(mapInfo);
 	G_free ((void *) mapInfo);
 	mapInfo = NULL;
     }
     
-    return;
+    return ret;
 }
 
 /**
@@ -463,12 +468,20 @@ int DisplayDriver::OpenMap(const char* mapname, const char *mapset, bool update)
     // define open level (level 2: topology)
     Vect_set_open_level(2);
 
+    // avoid GUI crash when G_fatal_error() is called (opening the vector map)
+    Vect_set_fatal_error(GV_FATAL_PRINT);
+
     // open existing map
     if (!update) {
 	ret = Vect_open_old(mapInfo, (char*) mapname, (char *) mapset);
     }
     else {
 	ret = Vect_open_update(mapInfo, (char*) mapname, (char *) mapset);
+    }
+
+    if (ret == -1) { // error
+	G_free((void *) mapInfo);
+	mapInfo = NULL;
     }
 
     return ret;
@@ -1100,5 +1113,7 @@ int DisplayDriver::VectorToList(struct ilist *list, const std::vector<int>& vec)
 */
 int print_error(const char *msg, int type)
 {
+    fprintf(stderr, "%s", msg);
+    
     return 0;
 }
