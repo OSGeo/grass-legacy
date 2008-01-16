@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 18:45+0100\n"
-"PO-Revision-Date: 2008-01-11 19:01+0100\n"
+"POT-Creation-Date: 2008-01-16 18:09+0100\n"
+"PO-Revision-Date: 2008-01-16 19:37+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -766,124 +766,126 @@ msgstr ""
 "Intento de leer el ángulo para la línea que no está conectada al nodo: nodo "
 "= [%d] línea = [%d]"
 
-#: ../lib/vector/Vlib/build.c:27 ../lib/vector/Vlib/open.c:32
-#: ../lib/vector/Vlib/write.c:36
+#: ../lib/vector/Vlib/build.c:29 ../lib/vector/Vlib/open.c:34
+#: ../lib/vector/Vlib/close.c:36 ../lib/vector/Vlib/read.c:27
+#: ../lib/vector/Vlib/rewind.c:34 ../lib/vector/Vlib/write.c:38
 msgid "Requested format is not compiled in this version"
 msgstr "El formato requerido no es compilabel en esta versión"
 
-#: ../lib/vector/Vlib/build.c:135
-msgid "Building topology ...\n"
-msgstr "Creando topología ...\n"
+#: ../lib/vector/Vlib/build.c:143
+#, fuzzy, c-format
+msgid "Building topology for vector map <%s>...\n"
+msgstr "Por favor regenera la topología para el mapa vectorial <%s@%s>"
 
-#: ../lib/vector/Vlib/build.c:148
-msgid "Topology was built.\n"
-msgstr "La topología fue creada.\n"
+#: ../lib/vector/Vlib/build.c:156
+msgid "Topology was built\n"
+msgstr "La topología fue creada\n"
 
-#: ../lib/vector/Vlib/build.c:160
+#: ../lib/vector/Vlib/build.c:168
 #, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Número de nodos     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:161
+#: ../lib/vector/Vlib/build.c:169
 #, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Número de elementos %d\n"
 
-#: ../lib/vector/Vlib/build.c:162
+#: ../lib/vector/Vlib/build.c:170
 #, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Número de puntos    :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:163
+#: ../lib/vector/Vlib/build.c:171
 #, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Número de lineas     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:164
+#: ../lib/vector/Vlib/build.c:172
 #, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Número de contornos:   %d\n"
 
-#: ../lib/vector/Vlib/build.c:165
+#: ../lib/vector/Vlib/build.c:173
 #, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Número de centroides :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:168
+#: ../lib/vector/Vlib/build.c:176
 #, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Número de faces     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:171
+#: ../lib/vector/Vlib/build.c:179
 #, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Número de kernels   :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:206
+#: ../lib/vector/Vlib/build.c:214
 #, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Número de polígonos     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:207
+#: ../lib/vector/Vlib/build.c:215
 #, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Número de islas     :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:210
+#: ../lib/vector/Vlib/build.c:218
 #, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Número de contornos incorrectos   :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:213
+#: ../lib/vector/Vlib/build.c:221
 #, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Número de centroides fuera del polígono:   %d\n"
 
-#: ../lib/vector/Vlib/build.c:216
+#: ../lib/vector/Vlib/build.c:224
 #, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Número de centroides duplicados    :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:219
+#: ../lib/vector/Vlib/build.c:227
 #, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Número de polígonos sin centroide :   %d\n"
 
-#: ../lib/vector/Vlib/build.c:222
+#: ../lib/vector/Vlib/build.c:230
 msgid "Number of areas     :   -\n"
 msgstr "Número de polígonos     :   -\n"
 
-#: ../lib/vector/Vlib/build.c:223
+#: ../lib/vector/Vlib/build.c:231
 msgid "Number of isles     :   -\n"
 msgstr "Número de islas     :   -\n"
 
-#: ../lib/vector/Vlib/build.c:252
+#: ../lib/vector/Vlib/build.c:261
 #, c-format
-msgid "Can't open topo file for write <%s>"
-msgstr "No se puede abrir el archivo de topografía para escritura <%s>"
+msgid "Unable to open topo file for write <%s>"
+msgstr "No se puede abrir el archivo de topología para escritura <%s>"
 
-#: ../lib/vector/Vlib/build.c:260
-msgid "Error writing out topo file."
-msgstr "Error al escribir el archivo de topogrfía."
+#: ../lib/vector/Vlib/build.c:269
+msgid "Error writing out topo file"
+msgstr "Error al escribir el archivo de topología"
 
-#: ../lib/vector/Vlib/build.c:392
+#: ../lib/vector/Vlib/build.c:405
 #, c-format
-msgid "Can't open spatial index file for write <%s>"
+msgid "Unable open spatial index file for write <%s>"
 msgstr "No se puede abrir el archivo de índices espaciales para escritura <%s>"
 
-#: ../lib/vector/Vlib/build.c:400
-msgid "Error writing out spatial index file."
-msgstr "Error al escribir el archivo de índices espaciales."
+#: ../lib/vector/Vlib/build.c:413
+msgid "Error writing out spatial index file"
+msgstr "Error al escribir el archivo de índices espaciales"
 
-#: ../lib/vector/Vlib/intersect.c:147
+#: ../lib/vector/Vlib/intersect.c:127
 msgid "3D not supported by Vect_segment_intersection()"
 msgstr "3D no soportadas por Vect_segment_intersection()"
 
-#: ../lib/vector/Vlib/intersect.c:285
+#: ../lib/vector/Vlib/intersect.c:265
 msgid "Vect_segment_intersection() ERROR (collinear vertical segments)"
 msgstr "Vect_segment_intersection() ERROR (segmentos verticales colineales)"
 
-#: ../lib/vector/Vlib/intersect.c:367
+#: ../lib/vector/Vlib/intersect.c:347
 msgid "Vect_segment_intersection() ERROR (collinear non vertical segments)"
 msgstr "Vect_segment_intersection() ERROR (segmentos no verticales colineales)"
 
@@ -892,42 +894,42 @@ msgstr "Vect_segment_intersection() ERROR (segmentos no verticales colineales)"
 msgid "Programmer requested unknown open level %d"
 msgstr "El programador solicitó el nivel abierto %d desconocido"
 
-#: ../lib/vector/Vlib/open.c:158 ../lib/vector/Vlib/legal_vname.c:108
-#: ../lib/vector/Vlib/legal_vname.c:110 ../lib/vector/Vlib/map.c:302
+#: ../lib/vector/Vlib/open.c:156 ../lib/vector/Vlib/legal_vname.c:108
+#: ../lib/vector/Vlib/legal_vname.c:110 ../lib/vector/Vlib/map.c:305
 #, c-format
 msgid "Vector map <%s> not found"
 msgstr "Mapa vectorial <%s> no encontrado"
 
-#: ../lib/vector/Vlib/open.c:168
+#: ../lib/vector/Vlib/open.c:166
 msgid "Vector map which is not in the current mapset cannot be opened for update"
 msgstr ""
 "Un mapa que no está en el directorio de mapas actual no se puede abrir para "
 "actualizar"
 
-#: ../lib/vector/Vlib/open.c:186
+#: ../lib/vector/Vlib/open.c:184
 #, c-format
 msgid "Unable to open vector map <%s>"
 msgstr "No se puede abrir el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/open.c:196 ../lib/vector/Vlib/open.c:256
-#: ../lib/vector/Vlib/open.c:273
+#: ../lib/vector/Vlib/open.c:194 ../lib/vector/Vlib/open.c:254
+#: ../lib/vector/Vlib/open.c:271
 #, c-format
 msgid "Unable to open vector map <%s> on topology level %d"
 msgstr "No se puede abrir el mapa vectorial <%s> en el nivel topológico %d"
 
 #
-#: ../lib/vector/Vlib/open.c:197
+#: ../lib/vector/Vlib/open.c:195
 msgid "Unable to read head file"
 msgstr "No se puede leer el archivo de cabecera"
 
 #
-#: ../lib/vector/Vlib/open.c:217
+#: ../lib/vector/Vlib/open.c:215
 #, c-format
 msgid "Unable to open topology file for vector map <%s>"
 msgstr "No se puede abrir el archivo de topología para el mapa vectorial <%s>"
 
 #
-#: ../lib/vector/Vlib/open.c:240
+#: ../lib/vector/Vlib/open.c:238
 #, c-format
 msgid "Unable to open category index file for vector map <%s>"
 msgstr ""
@@ -935,106 +937,115 @@ msgstr ""
 "%s>"
 
 #
-#: ../lib/vector/Vlib/open.c:321 ../lib/vector/Vlib/open.c:542
+#: ../lib/vector/Vlib/open.c:319 ../lib/vector/Vlib/open.c:530
 #, c-format
 msgid "Unable to open history file for vector map <%s>"
 msgstr "No se puede abrir el archivo histórico para el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/open.c:508 ../lib/vector/Vlib/map.c:167
-#: ../lib/vector/Vlib/map.c:290
+#: ../lib/vector/Vlib/open.c:496 ../lib/vector/Vlib/map.c:169
+#: ../lib/vector/Vlib/map.c:293
 #, c-format
 msgid "Vector map name is not SQL compliant"
 msgstr "El nombre del mapa vectorial no se ajusta a SQL"
 
-#: ../lib/vector/Vlib/open.c:515 ../lib/vector/Vlib/map.c:171
-#: ../lib/vector/Vlib/map.c:294
+#: ../lib/vector/Vlib/open.c:503 ../lib/vector/Vlib/map.c:173
+#: ../lib/vector/Vlib/map.c:297
 #, c-format
 msgid "Vector map <%s> already exists and will be overwritten"
 msgstr "El mapa vectorial <%s> ya existe y será sobrescrito"
 
-#: ../lib/vector/Vlib/open.c:519 ../lib/vector/Vlib/map.c:174
+#: ../lib/vector/Vlib/open.c:507 ../lib/vector/Vlib/map.c:176
 #, c-format
 msgid "Unable to delete vector map <%s>"
 msgstr "No se puede borrar el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/open.c:533
+#: ../lib/vector/Vlib/open.c:521
 #, c-format
 msgid "Unable to create vector map <%s>"
 msgstr "No se puede crear el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/open.c:590
+#: ../lib/vector/Vlib/open.c:576
 #, c-format
 msgid "Unable to stat file <%s>"
 msgstr "No se puede abrir el archivo <%s>"
 
-#: ../lib/vector/Vlib/open.c:701
+#: ../lib/vector/Vlib/open.c:683
 msgid "Size of 'coor' file differs from value saved in topology file"
 msgstr ""
 "El tamaño del archivo 'coor' difiere del valor guardado en el archivo de "
 "topología."
 
-#: ../lib/vector/Vlib/open.c:712
+#: ../lib/vector/Vlib/open.c:694
 #, c-format
 msgid "Please rebuild topology for vector map <%s@%s>"
 msgstr "Por favor regenera la topología para el mapa vectorial <%s@%s>"
 
-#: ../lib/vector/Vlib/snap.c:117 ../lib/vector/Vlib/snap.c:157
+#: ../lib/vector/Vlib/snap.c:119 ../lib/vector/Vlib/snap.c:159
+#: ../lib/vector/Vlib/break_polygons.c:191
+#: ../lib/vector/Vlib/break_polygons.c:198
 msgid "Registering points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:166
+#: ../lib/vector/Vlib/snap.c:168
 msgid "All vertices"
 msgstr "Todos los vértices"
 
-#: ../lib/vector/Vlib/snap.c:167
+#: ../lib/vector/Vlib/snap.c:169
 msgid "Registered points"
 msgstr "Registrando puntos: "
 
-#: ../lib/vector/Vlib/snap.c:212
+#: ../lib/vector/Vlib/snap.c:214
 msgid "Nodes marked as anchor"
 msgstr "Nodos marcados como fijos"
 
-#: ../lib/vector/Vlib/snap.c:213
+#: ../lib/vector/Vlib/snap.c:215
 msgid "Nodes marked to be snapped"
 msgstr "Nodos marcados para eliminar"
 
-#: ../lib/vector/Vlib/snap.c:222 ../lib/vector/Vlib/snap.c:362
+#: ../lib/vector/Vlib/snap.c:224 ../lib/vector/Vlib/snap.c:364
 msgid "Snaps"
 msgstr ""
 
-#: ../lib/vector/Vlib/snap.c:370
+#: ../lib/vector/Vlib/snap.c:372
 msgid "Snapped vertices"
 msgstr "Vértices eliminados"
 
-#: ../lib/vector/Vlib/snap.c:371
+#: ../lib/vector/Vlib/snap.c:373
 msgid "New vertices"
 msgstr "Nuevos vértices"
 
-#: ../lib/vector/Vlib/legal_vname.c:42
+#: ../lib/vector/Vlib/close.c:126
+#, fuzzy, c-format
+msgid "Unable close vector <%s>"
+msgstr "No se puede abrir el mapa vectorial <%s>"
+
+#: ../lib/vector/Vlib/legal_vname.c:43
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'."
 msgstr ""
 "El nombre <%s> del mapa vectorial no está permitido. No puede contener '.' o "
 "'NULO'."
 
-#: ../lib/vector/Vlib/legal_vname.c:48
+#: ../lib/vector/Vlib/legal_vname.c:49
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter."
 msgstr ""
 "El nombre <%s> del mapa vectorial no está permitido. Debe empezar con una "
 "letra."
 
-#: ../lib/vector/Vlib/legal_vname.c:55
+#: ../lib/vector/Vlib/legal_vname.c:56
 #, c-format
 msgid "Illegal vector map name <%s>. Character '%c' not allowed."
 msgstr ""
 "El nombre <%s> del mapa vectorial no está permitido. El carácter '%c' no "
 "está permitido."
 
-#: ../lib/vector/Vlib/legal_vname.c:65
+#: ../lib/vector/Vlib/legal_vname.c:66
 #, c-format
 msgid "Illegal vector map name <%s>. SQL keyword cannot be used as vector map name."
-msgstr "El nombre <%s> del mapa vectorial no está permitido. Las palabras clave de SQL no se puede usar como nombre de mapa vectorial."
+msgstr ""
+"El nombre <%s> del mapa vectorial no está permitido. Las palabras clave de "
+"SQL no se puede usar como nombre de mapa vectorial."
 
 #: ../lib/vector/Vlib/legal_vname.c:95 ../lib/vector/Vlib/legal_vname.c:97
 #, c-format
@@ -1085,223 +1096,482 @@ msgstr ""
 "No se puede abrir el archivo del índice de categorías para el mapa vectorial "
 "<%s@%s>"
 
-#: ../lib/vector/Vlib/array.c:84
+#: ../lib/vector/Vlib/clean_nodes.c:52 ../lib/vector/Vlib/clean_nodes.c:216
+msgid "Modifications"
+msgstr "Modificaciones"
+
+#: ../lib/vector/Vlib/read.c:99
+#, fuzzy
+msgid "vector map is not opened"
+msgstr "Mapa vectorial <%s> no encontrado"
+
+#: ../lib/vector/Vlib/read.c:102
+#, c-format
+msgid "Vect_read_line(): line %d is not reasonable (max line in vector map: %d)"
+msgstr ""
+
+#: ../lib/vector/Vlib/dangles.c:122 ../lib/vector/Vlib/dangles.c:211
+#: ../lib/vector/Vlib/dangles.c:219
+msgid "Removed dangles"
+msgstr ""
+
+#: ../lib/vector/Vlib/array.c:97
 #, c-format
 msgid "%d errors in category string."
 msgstr "%d errores en la cadena de categoría."
 
-#: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
-msgid "Mixed area and other type requested for vector array."
+#: ../lib/vector/Vlib/array.c:140 ../lib/vector/Vlib/array.c:255
+#, fuzzy
+msgid "Mixed area and other type requested for vector array"
 msgstr "Área mixta y otro tipo solicitado para la matriz vectorial."
 
-#: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
-#: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
-msgid "Not enough space in vector array."
-msgstr "Espacio insuficiente en la matriz vectorial."
+#: ../lib/vector/Vlib/array.c:150 ../lib/vector/Vlib/array.c:170
+#: ../lib/vector/Vlib/array.c:289 ../lib/vector/Vlib/array.c:319
+msgid "Not enough space in vector array"
+msgstr "Espacio insuficiente en la matriz vectorial"
 
-#: ../lib/vector/Vlib/array.c:238 ../lib/vector/Vlib/net.c:170
-#: ../lib/vector/Vlib/net.c:302
-msgid "Cannot get field info"
-msgstr "No se puede obtener información de la capa"
+#: ../lib/vector/Vlib/array.c:264 ../lib/vector/Vlib/map.c:227
+#: ../lib/vector/Vlib/map.c:340 ../lib/vector/Vlib/map.c:444
+#: ../lib/vector/Vlib/map.c:552 ../lib/vector/Vlib/map.c:639
+#: ../lib/vector/Vlib/net.c:170 ../lib/vector/Vlib/net.c:308
+#, c-format
+msgid "Database connection not defined for layer %d"
+msgstr "Conexión a base de datos no definida para la capa %d"
 
-#: ../lib/vector/Vlib/array.c:244
-msgid "Cannot open database"
-msgstr "No se puede abrir la base de datos"
+#: ../lib/vector/Vlib/array.c:270 ../lib/vector/Vlib/map.c:249
+#: ../lib/vector/Vlib/map.c:376 ../lib/vector/Vlib/map.c:578
+#: ../lib/vector/Vlib/net.c:176 ../lib/vector/Vlib/net.c:313
+#, c-format
+msgid "Unable to open database <%s> by driver <%s>"
+msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
 
-#: ../lib/vector/Vlib/array.c:253
-msgid "Could not select from table/column"
-msgstr "No se pudo seleccionar de la tabla/columna"
+#: ../lib/vector/Vlib/array.c:280
+#, fuzzy, c-format
+msgid "Unable to select record from table <%s> (key %s, where %s)"
+msgstr "No se puede crear el índice para la tabla <%s>, clave <%s>"
 
-#: ../lib/vector/Vlib/cats.c:45
+#: ../lib/vector/Vlib/break_polygons.c:200
+msgid "All points (vertices)"
+msgstr "Todos los puntos (vértices)"
+
+#: ../lib/vector/Vlib/break_polygons.c:201
+msgid "Registered points (unique coordinates)"
+msgstr "Puntos registrados (coordenadas únicas)"
+
+#: ../lib/vector/Vlib/break_polygons.c:202
+#, fuzzy
+msgid "Points marked for break"
+msgstr "Nodos marcados para eliminar"
+
+#: ../lib/vector/Vlib/break_polygons.c:208
+#: ../lib/vector/Vlib/break_polygons.c:272
+#: ../lib/vector/Vlib/break_polygons.c:292
+msgid "Breaks"
+msgstr ""
+
+#: ../lib/vector/Vlib/bridges.c:118 ../lib/vector/Vlib/bridges.c:191
+#: ../lib/vector/Vlib/bridges.c:197
+msgid "Removed bridges"
+msgstr ""
+
+#: ../lib/vector/Vlib/poly.c:243
+msgid "Unable to find point in polygon"
+msgstr "No se puede encontrar el punto en el polígono"
+
+#: ../lib/vector/Vlib/poly.c:661
+#, fuzzy
+msgid "conditions failed"
+msgstr "Fallo en la conexión."
+
+#: ../lib/vector/Vlib/cats.c:46
 msgid "Vect_new_cats_struct(): Out of memory"
 msgstr "Vect_new_cats_struct(): sin memoria"
 
-#: ../lib/vector/Vlib/cats.c:138
+#: ../lib/vector/Vlib/cats.c:135
 #, c-format
 msgid "Too many categories (%d), unable to set cat %d (layer %d)"
 msgstr "Demasiadas categorías (%d), no se puede establecer la categoría %d (capa %d)"
 
-#: ../lib/vector/Vlib/cats.c:408
+#: ../lib/vector/Vlib/cats.c:398
 #, c-format
 msgid "Unable to convert category string '%s' (from '%s') to category range"
 msgstr ""
 "No se puede convertir la cadena de categoría '%s? (desde '%s') a intervalo "
 "de categorías"
 
-#: ../lib/vector/Vlib/build_nat.c:87
-msgid "Cannot add area (map closed, topo saved)"
-msgstr "No se puede añadir polígono (mapa cerrado, topo grabada)"
+#: ../lib/vector/Vlib/sindex.c:97
+msgid "not implemented"
+msgstr "Sin implementar"
 
-#: ../lib/vector/Vlib/build_nat.c:95
-msgid "Cannot add isle (map closed, topo saved)"
-msgstr "No se puede añadir una isla (mapa cerrado; topo grabada)"
+#: ../lib/vector/Vlib/sindex.c:108
+#, c-format
+msgid "Unable to delete item %d from spatial index"
+msgstr "No se puede borrar el elemento %d del índice espacial"
 
-#: ../lib/vector/Vlib/build_nat.c:104
+#: ../lib/vector/Vlib/sindex.c:127
+msgid ""
+"Unable to build spatial index from topology, vector map is not opened at "
+"topo level 2"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:169
+msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:180
+msgid "BUG (Vect_build_sidx_from_topo): line does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:198
+msgid "BUG (Vect_build_sidx_from_topo): area does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/sindex.c:216
+msgid "BUG (Vect_build_sidx_from_topo): isle does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/write_nat.c:38
+#, c-format
+msgid "BUG (delete_area_cats_from_cidx): Area %d does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/write_nat.c:60
+#, c-format
+msgid "BUG (add_area_cats_to_cidx): Area %d does not exist"
+msgstr ""
+
+#: ../lib/vector/Vlib/write_nat.c:565
+#, fuzzy
+msgid "Attempt to delete dead line"
+msgstr "Intento de borrar un área inexistente"
+
+#: ../lib/vector/Vlib/level_two.c:217 ../lib/vector/Vlib/level_two.c:242
+#: ../lib/vector/Vlib/level_two.c:266 ../lib/vector/Vlib/level_two.c:285
+#: ../lib/vector/Vlib/level_two.c:303 ../lib/vector/Vlib/level_two.c:322
+#, c-format
+msgid "Vector map <%s> is not open on level >= 2"
+msgstr "El mapa vectorial <%s> no está abierto en un nivel >= 2"
+
+#: ../lib/vector/Vlib/graph.c:107 ../lib/vector/Vlib/net.c:380
+msgid "GngFlatten error"
+msgstr "Error 'GngFlatten'"
+
+#
+#: ../lib/vector/Vlib/graph.c:137
+msgid "Unable to add network arc"
+msgstr "No se puede añadir arco de red"
+
+#: ../lib/vector/Vlib/graph.c:218 ../lib/vector/Vlib/net.c:449
+#, c-format
+msgid "dglShortestPath error: %s"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:93
+msgid "Unable to add area (map closed, topo saved)"
+msgstr "No se puede añadir área (mapa cerrado, topología guardada)"
+
+#: ../lib/vector/Vlib/build_nat.c:101
+msgid "Unable to add isle (map closed, topo saved)"
+msgstr "No se puede añadir isla (mapa cerrado; topología guardada)"
+
+#: ../lib/vector/Vlib/build_nat.c:110
 msgid "Area of size = 0.0 ignored"
 msgstr "Área del polígono = 0.0 ignorado"
 
-#: ../lib/vector/Vlib/build_nat.c:466
+#: ../lib/vector/Vlib/build_nat.c:147
+msgid "Request to find area outside nonexisting isle"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:485
 msgid "Registering lines: "
 msgstr "Registrando lineas: "
 
-#: ../lib/vector/Vlib/build_nat.c:507
-#, c-format
-msgid "\r%d primitives registered      \n"
+#: ../lib/vector/Vlib/build_nat.c:492
+msgid "Unable to read vector map"
+msgstr "No se puede leer el mapa vectorial"
+
+#: ../lib/vector/Vlib/build_nat.c:526
+#, fuzzy
+msgid "primitives registered"
 msgstr "\r%d elementos registrados      \n"
 
-#: ../lib/vector/Vlib/build_nat.c:534
-#, c-format
-msgid ""
-"\r%d areas built      \n"
-"%d isles built\n"
-msgstr ""
-"\r%d polígonos construídos      \n"
-"%d islas construidas\n"
+#: ../lib/vector/Vlib/build_nat.c:536
+msgid "Building areas: "
+msgstr "Construyendo áreas: "
 
-#: ../lib/vector/Vlib/build_nat.c:542
+#: ../lib/vector/Vlib/build_nat.c:553
+#, fuzzy
+msgid "areas built"
+msgstr "El grafo fue creado"
+
+#: ../lib/vector/Vlib/build_nat.c:553
+msgid "isles built"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:561
 msgid "Attaching islands: "
 msgstr "Adjuntando islas: "
 
-#: ../lib/vector/Vlib/build_nat.c:557
+#: ../lib/vector/Vlib/build_nat.c:576
 msgid "Attaching centroids: "
 msgstr "Adjuntando centroides: "
 
-#: ../lib/vector/Vlib/build_ogr.c:258
+#: ../lib/vector/Vlib/open_nat.c:143
 #, c-format
-msgid "Cannot calculate centroid for area %d"
-msgstr "No se puede calcular el centroide para el polígono %d"
+msgid ""
+"Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
+"excess)"
+msgstr ""
 
-#: ../lib/vector/Vlib/build_ogr.c:293
+#: ../lib/vector/Vlib/open_nat.c:146
 #, c-format
-msgid "OGR feature type %d not supported)"
+msgid ""
+"Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
+"missing)."
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:257
+#, c-format
+msgid "Unable to calculate centroid for area %d"
+msgstr "No se puede calcular el centroide para el área %d"
+
+#: ../lib/vector/Vlib/build_ogr.c:292 ../lib/vector/Vlib/read_ogr.c:112
+#: ../lib/vector/Vlib/read_ogr.c:285
+#, fuzzy, c-format
+msgid "OGR feature type %d not supported"
 msgstr "No se soportan entidades del tipo %d OGR"
 
-#: ../lib/vector/Vlib/build_ogr.c:350
+#: ../lib/vector/Vlib/build_ogr.c:318
+msgid "Partial build for OGR is not supported"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:329
+msgid "Random read is not supported by OGR for this layer, cannot build support"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_ogr.c:336
+msgid "Feature: "
+msgstr "Objeto espacial: "
+
+#: ../lib/vector/Vlib/build_ogr.c:354
 #, c-format
 msgid "Feature %d without geometry ignored"
 msgstr "Entidad %d sin geometría, ignorada"
 
-#: ../lib/vector/Vlib/build_ogr.c:357
-msgid "OGR feature without ID ignored."
-msgstr "Elemento OGR sin ID ignorado."
+#: ../lib/vector/Vlib/build_ogr.c:361
+msgid "OGR feature without ID ignored"
+msgstr "Objeto espacial OGR sin ID ignorado"
 
-#: ../lib/vector/Vlib/map.c:62 ../lib/vector/Vlib/map.c:75
+#: ../lib/vector/Vlib/level.c:39
+msgid "Map structure was never initialized"
+msgstr "La estructura del mapa nunca se inicializó"
+
+#: ../lib/vector/Vlib/level.c:41
+msgid "Map structure has been closed"
+msgstr "Se ha cerrado la estructura del mapa"
+
+#: ../lib/vector/Vlib/area.c:55
+msgid "Attempt to read points of nonexisting area"
+msgstr "Intento de leer puntos de un área inexistente"
+
+#
+#: ../lib/vector/Vlib/area.c:131
 #, c-format
-msgid "Unable to read vector map <%s%s>"
-msgstr "No se puede leer el mapa vectorial <%s%s>"
+msgid "Unable to read line %d"
+msgstr "No se puede leer la línea %d"
 
-#: ../lib/vector/Vlib/map.c:197 ../lib/vector/Vlib/map.c:305
+#: ../lib/vector/Vlib/area.c:173 ../lib/vector/Vlib/area.c:205
+#: ../lib/vector/Vlib/area.c:274 ../lib/vector/Vlib/area.c:307
+#, fuzzy, c-format
+msgid "Attempt to read topo for dead area (%d)"
+msgstr "Intento de leer una línea inexistente [%d]"
+
+#: ../lib/vector/Vlib/area.c:335
+#, fuzzy, c-format
+msgid "Attempt to read topo for dead isle (%d)"
+msgstr "Intento de leer una línea inexistente [%d]"
+
+#: ../lib/vector/Vlib/open_ogr.c:54
+msgid "OGR format cannot be updated"
+msgstr "No se puede actualizar el formato OGR"
+
+#: ../lib/vector/Vlib/open_ogr.c:66
+#, c-format
+msgid "Unable to open OGR data source '%s'"
+msgstr "No se puede abrir la fuente de datos OGR '%s'"
+
+#: ../lib/vector/Vlib/open_ogr.c:84
+#, c-format
+msgid "Unable to open layer <%s>"
+msgstr "No se puede abrir la capa <%s>"
+
+#
+#: ../lib/vector/Vlib/open_ogr.c:128
+#, fuzzy, c-format
+msgid "Unable to open fidx file for vector map <%s@%s>"
+msgstr ""
+"No se puede abrir el archivo del índice de categorías para el mapa vectorial "
+"<%s@%s>"
+
+#: ../lib/vector/Vlib/open_ogr.c:144
+#, c-format
+msgid ""
+"Feature index format version %d.%d is not supported by this release. Try to "
+"rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/open_ogr.c:148
+#, c-format
+msgid ""
+"Your GRASS version does not fully support feature index format %d.%d of the "
+"vector. Consider to rebuild topology or upgrade GRASS."
+msgstr ""
+
+#: ../lib/vector/Vlib/remove_areas.c:56 ../lib/vector/Vlib/remove_areas.c:168
+msgid "Removed areas"
+msgstr "Áreas eliminadas"
+
+#: ../lib/vector/Vlib/remove_areas.c:93
+msgid "Area is composed of dead boundary"
+msgstr ""
+
+#: ../lib/vector/Vlib/remove_duplicates.c:67
+#: ../lib/vector/Vlib/remove_duplicates.c:129
+msgid "Duplicates"
+msgstr "Duplicados"
+
+#: ../lib/vector/Vlib/map.c:55
+#, fuzzy
+msgid "input vector map is not open"
+msgstr "Mapa vectorial <%s> no encontrado"
+
+#: ../lib/vector/Vlib/map.c:65 ../lib/vector/Vlib/map.c:78
+#, c-format
+msgid "Unable to read vector map <%s>"
+msgstr "No se puede leer el mapa vectorial <%s>"
+
+#: ../lib/vector/Vlib/map.c:199 ../lib/vector/Vlib/map.c:308
 #, c-format
 msgid "Unable to copy vector map <%s> to <%s>"
 msgstr "No se puede copiar el mapa vectorial <%s> en <%s>"
 
-#: ../lib/vector/Vlib/map.c:225 ../lib/vector/Vlib/map.c:337
-#: ../lib/vector/Vlib/map.c:442 ../lib/vector/Vlib/map.c:551
-#: ../lib/vector/Vlib/map.c:642
-#, c-format
-msgid "Database connection not defined for layer %d"
-msgstr "Conexión a base de datos no definida para la capa %d"
-
-#: ../lib/vector/Vlib/map.c:239 ../lib/vector/Vlib/map.c:352
-#: ../lib/vector/Vlib/map.c:571 ../lib/vector/Vlib/map.c:668
+#: ../lib/vector/Vlib/map.c:241 ../lib/vector/Vlib/map.c:355
+#: ../lib/vector/Vlib/map.c:572 ../lib/vector/Vlib/map.c:665
 #, c-format
 msgid "Unable to copy table <%s>"
 msgstr "No se puede copiar la tabla <%s>"
 
-#: ../lib/vector/Vlib/map.c:247 ../lib/vector/Vlib/map.c:373
-#: ../lib/vector/Vlib/map.c:577
-#, c-format
-msgid "Unable to open database <%s> by driver <%s>"
-msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
-
-#: ../lib/vector/Vlib/map.c:251 ../lib/vector/Vlib/map.c:377
-#: ../lib/vector/Vlib/map.c:581
+#: ../lib/vector/Vlib/map.c:253 ../lib/vector/Vlib/map.c:380
+#: ../lib/vector/Vlib/map.c:582
 #, c-format
 msgid "Unable to create index for table <%s>, key <%s>"
 msgstr "No se puede crear el índice para la tabla <%s>, clave <%s>"
 
-#: ../lib/vector/Vlib/map.c:366 ../lib/vector/Vlib/map.c:460
+#: ../lib/vector/Vlib/map.c:369 ../lib/vector/Vlib/map.c:462
 #, c-format
 msgid "Unable to delete table <%s>"
 msgstr "No se puede borrar la tabla <%s>"
 
+#: ../lib/vector/Vlib/map.c:417
+#, c-format
+msgid "Invalid vector map name <%s>"
+msgstr "El nombre del mapa vectorial <%s> no es válido"
+
 #
-#: ../lib/vector/Vlib/map.c:451
+#: ../lib/vector/Vlib/map.c:433
+#, c-format
+msgid "Unable to open header file for vector map <%s>"
+msgstr "No se puede abrir el archivo de cabecera del mapa vectorial <%s>"
+
+#
+#: ../lib/vector/Vlib/map.c:453
 #, c-format
 msgid "Unable to find table <%s> linked to vector map <%s>"
 msgstr "No se puede encontrar la tabla <%s> enlazada con el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/map.c:479
+#
+#: ../lib/vector/Vlib/map.c:467
+#, c-format
+msgid "Table <%s> linked to vector map <%s> does not exist"
+msgstr "La tabla <%s> enlazada con el mapa vectorial <%s> no existe"
+
+#: ../lib/vector/Vlib/map.c:481
 #, c-format
 msgid "Unable to open directory '%s'"
 msgstr "No se puede abrir el directorio '%s'"
 
-#: ../lib/vector/Vlib/map.c:490
+#: ../lib/vector/Vlib/map.c:492
 #, c-format
 msgid "Unable to delete file '%s'"
 msgstr "No se puede borrar el archivo '%s'"
 
-#: ../lib/vector/Vlib/map.c:507
+#: ../lib/vector/Vlib/map.c:509
 #, c-format
 msgid "Unable to rename directory '%s' to '%s'"
 msgstr "No se puede cambiar el nombre del directorio '%s' a '%s'"
 
-#: ../lib/vector/Vlib/map.c:515
+#: ../lib/vector/Vlib/map.c:517
 #, c-format
 msgid "Unable to remove directory '%s'"
 msgstr "No se puede eliminar el directorio '%s'"
 
 #
-#: ../lib/vector/Vlib/map.c:563 ../lib/vector/Vlib/map.c:656
+#: ../lib/vector/Vlib/map.c:564 ../lib/vector/Vlib/map.c:653
 #, c-format
 msgid "Unable to add database link for vector map <%s>"
 msgstr "No se puede añadir el enlace a la base de datos para el mapa vectorial <%s>"
 
-#: ../lib/vector/Vlib/read_nat.c:160
-#, c-format
-msgid "Attempt to read dead line [%d]"
+#: ../lib/vector/Vlib/read_nat.c:146
+#, fuzzy
+msgid "Attempt to read dead line"
 msgstr "Intento de leer una línea inexistente [%d]"
 
-#
-#: ../lib/vector/Vlib/read_ogr.c:110 ../lib/vector/Vlib/read_ogr.c:289
-#, c-format
-msgid "OGR feature type [%d] not supported"
-msgstr "No se soportan entidades del tipo [%d] OGR"
+#: ../lib/vector/Vlib/overlay.c:76
+msgid "unknown operator"
+msgstr "Operador desconocido"
+
+#: ../lib/vector/Vlib/overlay.c:124
+msgid "Overlay: line/boundary types not supported by AND operator"
+msgstr ""
+
+#: ../lib/vector/Vlib/overlay.c:127
+msgid "Overlay: area x area types not supported by AND operator"
+msgstr ""
 
 #
 #: ../lib/vector/Vlib/read_ogr.c:165
-msgid "OGR feature without ID."
-msgstr "Elemento OGR sin ID."
+msgid "OGR feature without ID"
+msgstr "Objeto espacial OGR sin ID"
 
-#: ../lib/vector/Vlib/read_ogr.c:365
+#: ../lib/vector/Vlib/read_ogr.c:352 ../lib/vector/Vlib/read_ogr.c:359
 #, c-format
-msgid "Cannot get feature geometry, FID [%ld]"
-msgstr "No se puede adquirir la geometría, FID [%ld]"
+msgid "Unable to get feature geometry, FID %ld"
+msgstr "No se puede adquirir la geometría del objeto espacial, FID %ld"
 
-#: ../lib/vector/Vlib/field.c:76
-msgid "Field number must be 1 or greater."
-msgstr "Número del campo debe ser 1 o mayor."
+#: ../lib/vector/Vlib/field.c:90
+msgid "Layer number must be 1 or greater"
+msgstr "El número de la capa debe ser 1 o mayor"
 
-#: ../lib/vector/Vlib/field.c:81
-msgid "Cannot add database link, map is not opened in WRITE mode."
+#: ../lib/vector/Vlib/field.c:95
+msgid "Unable to add database link, map is not opened in WRITE mode"
 msgstr ""
-"No se puede añadir un link a la dase de datos, el mapa no está abierto en "
-"modo ESCRITURA."
+"No se puede añadir el enlace a la dase de datos, el mapa no está abierto en "
+"modo ESCRITURA"
 
-#: ../lib/vector/Vlib/field.c:87
-msgid "Cannot add database link."
-msgstr "No se puede añadir un link a la base de datos."
+#: ../lib/vector/Vlib/field.c:101
+msgid "Unable to add database link"
+msgstr "No se puede añadir el enlace a la base de datos"
 
-#: ../lib/vector/Vlib/field.c:93 ../lib/vector/Vlib/field.c:136
-msgid "Cannot write database links."
-msgstr "No se pueden escribir enlaces a la base de datos."
+#: ../lib/vector/Vlib/field.c:107 ../lib/vector/Vlib/field.c:153
+msgid "Unable to write database links"
+msgstr "No se pueden escribir los enlaces a la base de datos"
 
-#: ../lib/vector/Vlib/field.c:192
+#: ../lib/vector/Vlib/field.c:221
 #, c-format
-msgid "Field number <%d> or name <%s> already exists"
-msgstr "El número del campo <%d> o el nombre <%s> ya existe"
+msgid "Layer number %d or name <%s> already exists"
+msgstr "El número de capa %d o el nombre <%s> ya existen"
 
-#: ../lib/vector/Vlib/field.c:252
+#: ../lib/vector/Vlib/field.c:285
 msgid ""
 "Default driver / database set to:\n"
 "driver: dbf\n"
@@ -1311,75 +1581,82 @@ msgstr ""
 "driver: dbf\n"
 "base de datos: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
-#: ../lib/vector/Vlib/field.c:262
+#: ../lib/vector/Vlib/field.c:295
 msgid "Default driver is not set"
 msgstr "El controlador predeterminado no ha sido inicializado"
 
-#: ../lib/vector/Vlib/field.c:264
+#: ../lib/vector/Vlib/field.c:297
 msgid "Default database is not set"
 msgstr "La base de datos por defecto no ha sido inicializada"
 
-#: ../lib/vector/Vlib/field.c:315
+#: ../lib/vector/Vlib/field.c:352
 #, c-format
 msgid "Requested dblink %d, maximum link number %d"
 msgstr "dblink requerido %d, el número de link más alto%d"
 
-#: ../lib/vector/Vlib/field.c:441
-msgid "Cannot open OGR DBMI driver."
-msgstr "No se puede abrir el controlador OGR DBMI."
+#: ../lib/vector/Vlib/field.c:487
+msgid "Unable to open OGR DBMI driver"
+msgstr "No se puede abrir el controlador OGR DBMI"
 
-#: ../lib/vector/Vlib/field.c:510
+#: ../lib/vector/Vlib/field.c:516
+msgid ""
+"All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
+"available in OGR DB table"
+msgstr ""
+
+#: ../lib/vector/Vlib/field.c:557
 #, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "No se puede determinar como leer los links para el formato %d"
 
-#: ../lib/vector/Vlib/field.c:538
+#: ../lib/vector/Vlib/field.c:585
 #, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Error en la regla en la fila %d en %s"
 
-#: ../lib/vector/Vlib/field.c:665
-msgid "Bug: attempt to update map which is not in current mapset."
-msgstr ""
-"Error: tentativa de actulizar un mapa que no es el directorio de mapas "
-"actual."
+#: ../lib/vector/Vlib/field.c:636
+#, c-format
+msgid "Unable to open vector database definition file '%s'"
+msgstr "No se puede abrir el archivo '%s' de definición de la base de datos del vectorial"
 
-#: ../lib/vector/Vlib/net.c:120
-msgid "Building graph ..."
-msgstr "Construyendo gráfico..."
+#: ../lib/vector/Vlib/field.c:721
+msgid "Bug: attempt to update map which is not in current mapset"
+msgstr "Error: intento de actulizar un mapa que no es el directorio de mapas actual"
 
-#: ../lib/vector/Vlib/net.c:156
-msgid "Cannot build network graph"
+#: ../lib/vector/Vlib/net.c:119
+msgid "Building graph..."
+msgstr "Construyendo grafo..."
+
+#: ../lib/vector/Vlib/net.c:155
+#, fuzzy
+msgid "Unable build network graph"
 msgstr "Imposible crear grafo"
 
-#: ../lib/vector/Vlib/net.c:162
+#: ../lib/vector/Vlib/net.c:161
 msgid "Forward costs column not specified"
 msgstr "Columna de costos no especificada"
 
-#: ../lib/vector/Vlib/net.c:168
+#: ../lib/vector/Vlib/net.c:167
 msgid "Arc field < 1"
 msgstr "Campo de arco < 1"
 
-#: ../lib/vector/Vlib/net.c:175 ../lib/vector/Vlib/net.c:306
+#: ../lib/vector/Vlib/net.c:181 ../lib/vector/Vlib/net.c:196
+#: ../lib/vector/Vlib/net.c:318
 #, c-format
-msgid "Cannot open database <%s> by driver <%s>"
-msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
+msgid "Column <%s> not found in table <%s>"
+msgstr "No se encuentra la columna <%s> en la tabla <%s>"
 
-#: ../lib/vector/Vlib/net.c:180 ../lib/vector/Vlib/net.c:193
-#: ../lib/vector/Vlib/net.c:311
-msgid "Cannot get column info"
-msgstr "No se puede obtener información de la columna"
+#: ../lib/vector/Vlib/net.c:187 ../lib/vector/Vlib/net.c:202
+#: ../lib/vector/Vlib/net.c:324
+#, c-format
+msgid "Data type of column <%s> not supported (must be numeric)"
+msgstr "El tipo de datos de la columna <%s> no está soportado (debe ser numérico)"
 
-#: ../lib/vector/Vlib/net.c:185 ../lib/vector/Vlib/net.c:198
-#: ../lib/vector/Vlib/net.c:316
-msgid "Column type not supported"
-msgstr "No se soporta el tipo de columna"
-
-#: ../lib/vector/Vlib/net.c:208
-msgid "Registering arcs ..."
+#: ../lib/vector/Vlib/net.c:213
+msgid "Registering arcs..."
 msgstr "Registrando arcos..."
 
-#: ../lib/vector/Vlib/net.c:230
+#: ../lib/vector/Vlib/net.c:235
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, forward/both direction(s)) not found "
@@ -1388,7 +1665,7 @@ msgstr ""
 "El registro de la línea %d (cat = %d, directa/ambas direcciones) no se "
 "encuentra (se salta directa/ambas direcciones de línea)"
 
-#: ../lib/vector/Vlib/net.c:244
+#: ../lib/vector/Vlib/net.c:249
 #, c-format
 msgid ""
 "Database record for line %d (cat = %d, backword direction) not found"
@@ -1398,84 +1675,105 @@ msgstr ""
 "salta la dirección de la línea)"
 
 #
-#: ../lib/vector/Vlib/net.c:277
+#: ../lib/vector/Vlib/net.c:282
 msgid "Cannot add network arc"
 msgstr "No se puede añadir arco"
 
-#: ../lib/vector/Vlib/net.c:299
-msgid "Setting node costs ..."
-msgstr "Estableciendo costes ..."
+#: ../lib/vector/Vlib/net.c:304
+msgid "Setting node costs..."
+msgstr "Estableciendo costes de nodos..."
 
-#: ../lib/vector/Vlib/net.c:344
+#: ../lib/vector/Vlib/net.c:353
 #, c-format
 msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr ""
 "No se encuentra el registro para el nodo %d (cat = %d). El coste se "
 "establece como 0"
 
-#: ../lib/vector/Vlib/net.c:368
-msgid "Flattening the graph ..."
+#: ../lib/vector/Vlib/net.c:377
+#, fuzzy
+msgid "Flattening the graph..."
 msgstr "Suavizando el gráfico..."
 
-#: ../lib/vector/Vlib/net.c:370
-msgid "GngFlatten error"
-msgstr "Error 'GngFlatten'"
-
-#: ../lib/vector/Vlib/net.c:377
+#: ../lib/vector/Vlib/net.c:387
 msgid "Graph was built"
 msgstr "El grafo fue creado"
 
-#: ../lib/vector/Vlib/net.c:501
+#: ../lib/vector/Vlib/net.c:525
 msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Dirección de línea errónea en 'Vect_net_get_line_cost()'"
 
-#: ../lib/vector/Vlib/header.c:488 ../lib/gis/proj3.c:66
+#: ../lib/vector/Vlib/line.c:61
+msgid "Out of memory"
+msgstr "Sin memoria"
+
+#: ../lib/vector/Vlib/line.c:205 ../lib/vector/Vlib/line.c:237
+msgid "Index out of range in"
+msgstr "Índice fuera del intervalo en"
+
+#: ../lib/vector/Vlib/line.c:522
+msgid "Segment outside line, no segment created"
+msgstr "El segmento está fuera de la línea, no se ha creado ningún segmento"
+
+#
+#: ../lib/vector/Vlib/header.c:100 ../lib/vector/Vlib/header.c:149
+#, c-format
+msgid "Unable to open header file of vector <%s>"
+msgstr "No se puede abrir el archivo de cabecera del vectorial <%s>"
+
+#: ../lib/vector/Vlib/header.c:156
+#, c-format
+msgid "Corrupted row in head: %s"
+msgstr "Línea dañada en la cabecera: %s"
+
+#: ../lib/vector/Vlib/header.c:187
+#, c-format
+msgid "Unknown keyword %s in vector head"
+msgstr "Palabra clave %s descconocida en la cabecera"
+
+#: ../lib/vector/Vlib/header.c:533 ../lib/gis/proj3.c:66
 msgid "Unknown projection"
 msgstr "Proyección desconocida"
 
-#: ../lib/vector/Vlib/write.c:23
-msgid "Vect_write_line() for this format/level not supported"
+#: ../lib/vector/Vlib/write.c:25 ../lib/vector/Vlib/write.c:29
+#: ../lib/vector/Vlib/write.c:33
+#, fuzzy
+msgid "for this format/level not supported"
 msgstr "Vect_write_line() no es soportado para este formato/nivel"
 
-#: ../lib/vector/Vlib/write.c:27
-msgid "Vect_rewrite_line() for this format/level not supported"
-msgstr "Vect_rewrite_line() no es soportado para este formato/nivel"
-
-#: ../lib/vector/Vlib/write.c:31
-msgid "Vect_delete_line() for this format/level not supported"
-msgstr "Vect_delete_line() no es soportado para este formato nivel"
-
 #: ../lib/vector/Vlib/write.c:96
-msgid "Cannot write line, the map is not opened"
-msgstr "No se puede insertar una línea, el mapa no ha sido abierto"
+msgid "Unable to write line, vector map is not opened"
+msgstr "No se puede escribir la línea, el mapa vectorial no está abierto"
 
 #: ../lib/vector/Vlib/write.c:107
-msgid "Cannot write line (negative offset)"
-msgstr "No es posbible escribir la línea (compensación negativa)"
+msgid "Unable to write line (negative offset)"
+msgstr "No se puede escribir la línea (desplazamiento negativo)"
 
 #: ../lib/vector/Vlib/write.c:143
-msgid "Cannot rewrite line, the map is not opened"
-msgstr "No se puede reescribir una línea, el mapa no ha sido abierto"
+msgid "Unable to rewrite line, vector map is not opened"
+msgstr "No se puede reescribir la línea, el mapa vectorial no está abierto"
 
 #: ../lib/vector/Vlib/write.c:154
-msgid "Cannot rewrite line"
-msgstr "No se puede reescribir una línea"
-
-#: ../lib/vector/Vlib/write.c:197
 #, c-format
-msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "No se puede borrar la línea, el mapa '%s' no está abierto en nivel 2"
+msgid "Unable to rewrite line %d"
+msgstr "No se puede reescribir la línea %d"
 
 #: ../lib/vector/Vlib/write.c:201
+#, fuzzy, c-format
+msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
+msgstr "No se puede borrar la línea, el mapa '%s' no está abierto en nivel 2"
+
+#: ../lib/vector/Vlib/write.c:206
 #, c-format
-msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
+msgid "Unable to delete line %d, vector map <%s> is not in opened in 'write' mode"
 msgstr ""
-"No se puede borrar la línea, el mapa '%s' no ha sido abierto en modo "
+"No se puede borrar la línea %d, el mapa vectorial <%s> no ha sido abierto en modo "
 "'escritura'"
 
-#: ../lib/vector/Vlib/write.c:213
-msgid "Cannot delete line"
-msgstr "No se puede borrar la línea"
+#: ../lib/vector/Vlib/write.c:219
+#, c-format
+msgid "Unable to delete line %d from vector map <%s>"
+msgstr "No se puede borrar la línea %d del mapa vectorial <%s>"
 
 #: ../lib/vask/V_support.c:58
 #, c-format
@@ -1526,7 +1824,7 @@ msgid "Unable to open temporary file"
 msgstr "No se puede abrir el archivo temporal"
 
 #: ../lib/proj/datum.c:337 ../lib/gis/get_ell_name.c:46
-#: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_projname.c:59
+#: ../lib/gis/get_datum_name.c:56 ../lib/gis/get_projname.c:51
 #, c-format
 msgid "Hit RETURN to cancel request\n"
 msgstr "Presione ENTER para cancelar la solicitud\n"
@@ -1552,12 +1850,16 @@ msgstr "No se puede obtener la cadena de parámetros estilo PROJ.4"
 #: ../lib/proj/convert.c:124
 #, c-format
 msgid "OGR can't parse PROJ.4-style parameter string: %s (OGR Error code was %d)"
-msgstr "OGR no puede analizar la cadena de parámetros estilo PROJ.4: %s (El código de error de OGR fue %d)"
+msgstr ""
+"OGR no puede analizar la cadena de parámetros estilo PROJ.4: %s (El código "
+"de error de OGR fue %d)"
 
 #: ../lib/proj/convert.c:130
 #, c-format
 msgid "OGR can't get WKT-style parameter string (OGR Error code was %d)"
-msgstr "OGR no puede obtener la cadena de parámetros estilo WKT (El código de error de OGR fue %d)"
+msgstr ""
+"OGR no puede obtener la cadena de parámetros estilo WKT (El código de error "
+"de OGR fue %d)"
 
 #: ../lib/proj/convert.c:391
 msgid "No projection name! Projection parameters likely to be meaningless."
@@ -1610,7 +1912,7 @@ msgstr "Descriptores de elipsoide no válidos (a, rf, es o b) en el archivo"
 msgid "No ellipsoid info given in file"
 msgstr "No hay información de elipsoide en el archivo"
 
-#: ../lib/proj/ellipse.c:212 ../lib/gis/get_ellipse.c:353
+#: ../lib/proj/ellipse.c:212 ../lib/gis/get_ellipse.c:296
 #, c-format
 msgid "Unable to open ellipsoid table file <%s>"
 msgstr "No se puede abrir el archivo que contiene la tabla del elipsoide <%s>"
@@ -1719,7 +2021,7 @@ msgstr ""
 "ser obtenida"
 
 #: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_datum_name.c:67
-#: ../lib/gis/get_projname.c:47
+#: ../lib/gis/get_projname.c:39
 msgid "Cannot open temp file"
 msgstr "No se puede abrir el archivo temporal"
 
@@ -2184,11 +2486,8 @@ msgid "MAPSET %s - permission denied"
 msgstr "directorio de mapas %s - permiso denegado"
 
 #: ../lib/gis/gisinit.c:101
-#, c-format
-msgid "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr ""
-"\aERROR: Sistema no iniciado. EL programador no incluyo la llamada a "
-"G_gisinit()\n"
+msgid "System not initialized. Programmer forgot to call G_gisinit()."
+msgstr "El sistema no está inicializado. El programador olvidó llamar a G_gisinit()."
 
 #: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
 #, c-format
@@ -2224,17 +2523,17 @@ msgstr "error leyendo una fila nula %d"
 msgid "Could not realloc buffer"
 msgstr "No fue posible reasignar el buffer"
 
-#: ../lib/gis/get_projname.c:35
+#: ../lib/gis/get_projname.c:32
 #, c-format
 msgid "%s not found"
 msgstr "%s no encontrado"
 
-#: ../lib/gis/get_projname.c:41
+#: ../lib/gis/get_projname.c:35
 #, c-format
 msgid "ERROR in reading %s"
 msgstr "ERROR de lectura %s"
 
-#: ../lib/gis/get_projname.c:57
+#: ../lib/gis/get_projname.c:49
 #, c-format
 msgid ""
 "\n"
@@ -2245,12 +2544,12 @@ msgstr ""
 "\n"
 "Por favor indique el nombre de la proyección\n"
 
-#: ../lib/gis/get_projname.c:58
+#: ../lib/gis/get_projname.c:50
 #, c-format
 msgid "Enter 'list' for the list of available projections\n"
 msgstr "Teclee 'list' para mostrar la lista de proyecciones disponibles\n"
 
-#: ../lib/gis/get_projname.c:80
+#: ../lib/gis/get_projname.c:72
 #, c-format
 msgid ""
 "\n"
@@ -2443,40 +2742,40 @@ msgstr ""
 "soporte de la categoría para el archivo de vectores [%s] en el directorio de "
 "mapas [%s] %s"
 
-#: ../lib/gis/get_ellipse.c:85
+#: ../lib/gis/get_ellipse.c:87
 #, c-format
 msgid "Unable to open file %s in <%s>"
 msgstr "No se puede abrir el archivo %s en <%s>"
 
-#: ../lib/gis/get_ellipse.c:94 ../lib/gis/get_ellipse.c:122
-#, c-format
-msgid "Invalid a: field '%s' in file %s in <%s>"
-msgstr "a no válido: campo '%s' en el archivo %s en <%s>"
-
-#: ../lib/gis/get_ellipse.c:108
-#, c-format
-msgid "Invalid ellipsoid '%s' in file %s in <%s>"
-msgstr "Elipsoide no válida '%s' en el archivo %s en <%s>"
-
-#: ../lib/gis/get_ellipse.c:126
-#, c-format
-msgid "Invalid es: field '%s' in file %s in <%s>"
-msgstr "es no válido: campo '%s' en el archivo %s en <%s>"
-
-#: ../lib/gis/get_ellipse.c:142
-#, c-format
-msgid "No ellipsoid info given in file %s in <%s>"
-msgstr "No se ha proporcionado información de la elipsoide en el archivo %s en <%s>"
-
-#: ../lib/gis/get_ellipse.c:402
+#: ../lib/gis/get_ellipse.c:345
 #, c-format
 msgid "Lines%s of ellipsoid table file <%s> are invalid"
 msgstr "Las lineas %s del archivo <%s> de la tabla del elipsoide son inválidas"
 
-#: ../lib/gis/get_ellipse.c:403
+#: ../lib/gis/get_ellipse.c:346
 #, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
 msgstr "La línea %s del archivo <%s> de la tabla del elipsoide es inválida"
+
+#: ../lib/gis/get_ellipse.c:365 ../lib/gis/get_ellipse.c:391
+#, c-format
+msgid "Invalid a: field '%s' in file %s in <%s>"
+msgstr "a no válido: campo '%s' en el archivo %s en <%s>"
+
+#: ../lib/gis/get_ellipse.c:378
+#, c-format
+msgid "Invalid ellipsoid '%s' in file %s in <%s>"
+msgstr "Elipsoide no válida '%s' en el archivo %s en <%s>"
+
+#: ../lib/gis/get_ellipse.c:395
+#, c-format
+msgid "Invalid es: field '%s' in file %s in <%s>"
+msgstr "es no válido: campo '%s' en el archivo %s en <%s>"
+
+#: ../lib/gis/get_ellipse.c:409
+#, c-format
+msgid "No ellipsoid info given in file %s in <%s>"
+msgstr "No se ha proporcionado información de la elipsoide en el archivo %s en <%s>"
 
 #: ../lib/gis/location.c:49
 #, c-format
