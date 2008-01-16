@@ -140,9 +140,13 @@ global max_prgindic
 
 set max_prgindic 20
 
-append regexp .* $env(GISBASE) {[^:]*}
-regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
-
+if { $tcl_platform(platform) == "windows" } {
+	append regexp .* $env(GISBASE) {[^;]*}
+	regsub -- $regexp $env(PATH) "&;$env(GISBASE)/etc/gui/scripts" env(PATH)
+} else {
+	append regexp .* $env(GISBASE) {[^:]*}
+	regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/gui/scripts" env(PATH)
+}
 
 ###############################################################################
 # Deprecated
