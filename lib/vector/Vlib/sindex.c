@@ -94,7 +94,7 @@ Vect_spatial_index_del_item ( SPATIAL_INDEX *si, int id )
     G_debug(3, "Vect_spatial_index_del_item(): id = %d", id );
 
     /* TODO */
-    G_fatal_error ("Vect_spatial_index_del_item() %s", _("not implemented"));
+    G_fatal_error ("Vect_spatial_index_del_item() %s", _("Not implemented"));
 
     /* Bounding box of item would be needed, which is not stored in si. */
     

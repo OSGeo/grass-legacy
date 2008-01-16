@@ -658,7 +658,7 @@ segments_x_ray ( double X, double Y, struct line_pnts *Points)
 	/* should not be reached (one condition is not necessary, but it is may be better readable
 	 * and it is a check) */
 	G_warning ("segments_x_ray() %s: X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f",
-		   _("conditions failed"), X, Y, x1, y1, x2, y2 );
+		   _("Conditions failed"), X, Y, x1, y1, x2, y2 );
     }
 
     return  n_intersects;

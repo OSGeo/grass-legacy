@@ -52,7 +52,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
     Cats = Vect_new_cats_struct ();
    
     if ( Vect_level ( In ) < 1 )
-	G_fatal_error ("Vect_copy_map_lines(): %s", _("input vector map is not open"));
+	G_fatal_error ("Vect_copy_map_lines(): %s", _("Input vector map is not open"));
     
     ret = 0;
     /* Note: sometimes is important to copy on level 2 (pseudotopo centroids) 

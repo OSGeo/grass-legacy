@@ -152,7 +152,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     else
         dglInitialize(gr, (dglByte_t)1, (dglInt32_t)0, (dglInt32_t)0, opaqueset);
 
-    if ( gr == NULL ) G_fatal_error (_("Unable build network graph")); 
+    if ( gr == NULL ) G_fatal_error (_("Unable to build network graph")); 
 
     db_init_handle (&handle);
     db_init_string ( &stmt);
