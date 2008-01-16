@@ -4,15 +4,20 @@
 <EM>r.plane</EM> creates a tilted plane raster map given user-specified
 parameters for inclination, azimuth, and the geographic location of a
 point on the plane.<BR>
-The angle orientations of <em>azimuth</em> are: 0 degree = N, 90 degree = E etc.
+The angle orientations of the <em>azimuth</em> parameter increase counter-clockwise,
+i.e., 0 degree = N, 45 degree = NW, 90 degree = W etc.
+<P>
+Increasing values of the <em>dip</em> parameter progressively lower (or dip) the northern
+half of the plane, and incline the southern half, assuming the <em>azimuth</em> parameter 
+is held constant at 0 degrees.
 
 
-<H2>HINTS</H2>
+<H2>NOTES</H2>
 <tt>g.region -c</tt> provides the easting and northing coordinates for
 the center of the current region.
 <P>
 <em>int</em> maps take less disk space than <em>float</em>s, which in turn
-take up less space than <em>double</em>s. (but can be less exact)
+take up less space than <em>double</em>s (but can be less exact).
 
 
 <H2>EXAMPLE</H2>
