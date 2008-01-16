@@ -9,6 +9,24 @@ output into a file.
 
 The output is an N x N symmetric covariance (correlation) matrix, 
 where N is the number of raster map layers specified on the command line. 
+
+
+<H2>NOTES</H2>
+
+This module can be used as the first step of a principle components 
+transformation. 
+The covariance matrix would be input into a system which determines 
+eigen values and eigen vectors. An NxN covariance matrix would result in 
+N real eigen values and N eigen vectors (each composed of N real numbers). 
+
+<P>
+
+The module <EM><A HREF="m.eigensystem.html">m.eigensystem</A></EM> in
+src.contrib can be compiled and used to generate the eigen values and
+vectors.
+
+<H2>EXAMPLE</H2>
+
 For example, 
 
 <DL>
@@ -24,13 +42,6 @@ would produce a 3x3 matrix (values are example only):
      0.889581  0.939452  1.000000
 </PRE>
 
-<H2>PRINCIPLE COMPONENTS</H2>
-
-This module can be used as the first step of a principle components 
-transformation. 
-The covariance matrix would be input into a system which determines 
-eigen values and eigen vectors. An NxN covariance matrix would result in 
-N real eigen values and N eigen vectors (each composed of N real numbers). 
 In the above example, the eigen values and corresponding eigen vectors 
 for the covariance matrix are: 
 
@@ -70,12 +81,6 @@ It may be necessary to rescale
 <EM>pc.1</EM>, <EM>pc.2</EM> and <EM>pc.3</EM> to 
 the desired range (e.g. 0-255). 
 This can be done with <EM><A HREF="r.rescale.html">r.rescale</A></EM>.
-
-<H2>NOTES</H2>
-
-The module <EM><A HREF="m.eigensystem.html">m.eigensystem</A></EM> in
-src.contrib can be compiled and used to generate the eigen values and
-vectors.
 
 <H2>SEE ALSO</H2>
 
