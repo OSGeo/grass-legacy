@@ -204,7 +204,7 @@ Vect_delete_line (
     
     if ( Map->mode != GV_MODE_RW && Map->mode != GV_MODE_WRITE ) {
 	G_fatal_error ( _("Unable to delete line %d, "
-			  "vector map <%s> is not in opened in 'write' mode"), line, Map->name );
+			  "vector map <%s> is not opened in 'write' mode"), line, Map->name );
     }
     
     dig_line_reset_updated ( &(Map->plus) );

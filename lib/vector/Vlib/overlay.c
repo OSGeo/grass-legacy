@@ -73,7 +73,7 @@ Vect_overlay ( struct Map_info *AMap, int atype, struct ilist *AList, struct ili
             Vect_overlay_and ( AMap, atype, AList, AAList, BMap, btype, BList, BAList, OMap );
             break;
 	default:
-	    G_fatal_error ("Vect_overlay(): %s", _("unknown operator"));
+	    G_fatal_error ("Vect_overlay(): %s", _("Unknown operator"));
     }
     
     return 0;
