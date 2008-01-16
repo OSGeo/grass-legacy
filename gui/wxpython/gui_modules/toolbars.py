@@ -26,6 +26,7 @@ sys.path.append(gmpath)
 import gcmd as cmd
 import grassenv
 from digit import Digit as Digit
+from digit import DigitError as DigitError
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -568,12 +569,22 @@ class DigitToolbar(AbstractToolbar):
         """
         Start editing of selected vector map layer.
 
-        Return True on success or False if layer cannot be edited
+        @param layerSelectedId id of layer to be edited
+        
+        @return True on success
+        @return False on error
         """
         try:
             self.layerSelectedID = self.layers.index(layerSelected)
             mapLayer = self.layers[self.layerSelectedID]
         except:
+            return False
+
+        try:
+            self.parent.digit.SetMapName(mapLayer.name)
+        except DigitError, e:
+            self.layerSelectedID = None
+            print e # wxMessageBox
             return False
 
         # update toolbar
@@ -584,7 +595,6 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg (4, "DigitToolbar.StartEditing(): layerSelectedID=%d layer=%s" % \
                    (self.layerSelectedID, mapLayer.name))
 
-        self.parent.digit.SetMapName(mapLayer.name)
 
         # deactive layer
         self.mapcontent.ChangeLayerActive(mapLayer, False)

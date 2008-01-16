@@ -46,14 +46,17 @@ import dbm
 from debug import Debug as Debug
 import gselect 
 try:
-    digitPath = os.path.join(os.getenv("GISBASE"), "etc","wx", "vdigit")
+    digitPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "vdigit")
     sys.path.append(digitPath)
-    from grass6_wxvdigit import DisplayDriver
+    import grass6_wxvdigit as vdigit
 except ImportError, err:
-    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s).%s" \
+    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
           "Detailed information in README file." % \
-          (os.linesep, err, os.linesep)
+          (os.linesep, err)
 
+#
+# Use v.edit on background or experimental C++ interface (not yet completed)
+#
 USEVEDIT = True
 
 class DigitError(Exception):
@@ -62,8 +65,11 @@ class DigitError(Exception):
 
     def __str__(self):
         wx.MessageBox(parent=None,
+                      caption=_("Error in digitization tool"),
                       message=self.message,
                       style=wx.ICON_ERROR)
+
+        return ''
 
 class AbstractDigit:
     """
@@ -173,9 +179,19 @@ class AbstractDigit:
         Debug.msg (3, "AbstractDigit.SetMapName map=%s" % map)
         self.map = map
 
-        self.driver.Reset(self.map)
+        ret = self.driver.Reset(self.map)
+        if map and ret == -1:
+            raise DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
+                               'Try to run v.build for rebuilding the topology.') % map)
+        if not map and ret != 0:
+            raise DigitError(_('Closing vector map <%s> failed. The vector map is probably broken. '
+                               'Try to run v.build for rebuilding the topology.') % map)
+            
         if not USEVEDIT:
-            self.digit.InitCats()
+            try:
+                self.digit.InitCats()
+            except:
+                pass
         
 class VEdit(AbstractDigit):
     """
@@ -192,7 +208,7 @@ class VEdit(AbstractDigit):
         AbstractDigit.__init__(self, mapwindow, settings)
 
     def AddPoint (self, map, point, x, y, z=None):
-        """Add point/centroid to the vector map layer
+        """Add point/centroid
 
         @param map   map name
         @param point feature type (True for point, otherwise centroid)
@@ -226,7 +242,7 @@ class VEdit(AbstractDigit):
         self.__AddFeature (map=map, input=addstring)
 
     def AddLine (self, map, line, coords):
-        """Add line/boundary to the vector map layer
+        """Add line/boundary
 
         @param map  map name
         @param line feature type (True for line, otherwise boundary)
@@ -267,7 +283,7 @@ class VEdit(AbstractDigit):
         self.__AddFeature (map=map, input=addstring, flags=flags)
 
     def __AddFeature (self, map, input, flags=[]):
-        """General method for adding feature to the vector map layer
+        """Generic method to add new vector feature
 
         @param map   map name
         @param input feature definition in GRASS ASCII format
@@ -302,7 +318,7 @@ class VEdit(AbstractDigit):
         self.driver.ReloadMap()
         
     def DeleteSelectedLines(self):
-        """Delete selected vector features from the vector map"""
+        """Delete selected features"""
         selected = self.driver.GetSelected() # grassId
 
         if len(selected) <= 0:
@@ -327,14 +343,16 @@ class VEdit(AbstractDigit):
         return True
 
     def MoveSelectedLines(self, move):
-        """Move selected vector features
+        """Move selected features
 
         @param move X,Y direction
         """
         return self.__MoveFeature("move", None, move)
 
     def MoveSelectedVertex(self, coords, move):
-        """Move selected vertex of the line
+        """Move selected vertex
+
+        Feature geometry is changed.
 
         @param coords click coordinates
         @param move   X,Y direction
@@ -342,11 +360,11 @@ class VEdit(AbstractDigit):
         return self.__MoveFeature("vertexmove", coords, move)
 
     def __MoveFeature(self, tool, coords, move):
-        """Move selected vector feature or vertex
+        """Move selected vector feature (line, vertex)
 
         @param tool   tool for v.edit
         @param coords click coordinates
-        @param move   X,Y direction
+        @param move   direction (x, y)
         """
         selected = self.driver.GetSelected()
 
@@ -387,40 +405,15 @@ class VEdit(AbstractDigit):
 
         return True
 
-    def SplitLine(self, coords):
-        """Split selected line on position 'coords'
-
-        @param coords coordinates to split line
-        """
-        try:
-            line = self.driver.GetSelected()[0]
-        except:
-            return False
-
-        command = ["v.edit", "--q",
-                   "map=%s" % self.map,
-                   "tool=break",
-                   "ids=%s" % line,
-                   "coords=%f,%f" % (float(coords[0]),float(coords[1])),
-                   "thresh=%f" % self.driver.GetThreshold()]
-
-        # run the command
-        vedit = gcmd.Command(cmd=command)
-
-        # redraw map
-        self.driver.ReloadMap()
-        
-        return True
-
     def AddVertex(self, coords):
-        """Add new vertex to the selected line on position 'coords'
+        """Add new vertex to the selected line/boundary on position 'coords'
 
         @param coords coordinates to add vertex
         """
         return self.__ModifyVertex(coords, "vertexadd")
 
     def RemoveVertex(self, coords):
-        """Remove vertex from the selected line on position 'coords'
+        """Remove vertex from the selected line/boundary on position 'coords'
 
         @param coords coordinates to remove vertex
         """
@@ -452,30 +445,33 @@ class VEdit(AbstractDigit):
         
         return True
 
-    def CopyCats(self, cats, ids):
-        """Copy given categories to objects with id listed in ids
+    def SplitLine(self, coords):
+        """Split selected line/boundary on position 'coords'
 
-        @param cats list of cats to be copied
-        @param ids  ids of lines to be modified
+        @param coords coordinates to split line
         """
-        if len(cats) == 0 or len(ids) == 0:
+        try:
+            line = self.driver.GetSelected()[0]
+        except:
             return False
 
-        # collect cats
-        gcmd.Command(['v.edit',
-                     '--q',
-                     'map=%s' % self.map,
-                     'tool=catadd',
-                     'cats=%s' % ",".join(["%d" % v for v in cats]),
-                     'ids=%s' % ",".join(["%d" % v for v in ids])])
-        
-        # reload map (needed for v.edit)
-        self.driver.ReloadMap()
+        command = ["v.edit", "--q",
+                   "map=%s" % self.map,
+                   "tool=break",
+                   "ids=%s" % line,
+                   "coords=%f,%f" % (float(coords[0]),float(coords[1])),
+                   "thresh=%f" % self.driver.GetThreshold()]
 
+        # run the command
+        vedit = gcmd.Command(cmd=command)
+
+        # redraw map
+        self.driver.ReloadMap()
+        
         return True
 
     def EditLine(self, line, coords):
-        """Edit existing line
+        """Edit existing line/boundary
 
         @param line id of line to be modified
         @param coords list of coordinates of modified line
@@ -495,7 +491,7 @@ class VEdit(AbstractDigit):
         self.driver.ReloadMap()
 
     def __ModifyLines(self, tool):
-        """Generic method to modify selected lines
+        """Generic method to modify selected lines/boundaries
 
         @param tool operation to be performed by v.edit
         """
@@ -521,24 +517,41 @@ class VEdit(AbstractDigit):
         return True
 
     def FlipLine(self):
-        """Flip selected lines"""
+        """Flip selected lines/boundaries"""
         return self.__ModifyLines('flip')
 
     def MergeLine(self):
-        """Merge selected lines"""
+        """Merge selected lines/boundaries"""
         return self.__ModifyLines('merge')
 
     def BreakLine(self):
-        """Break selected lines"""
+        """Break selected lines/boundaries"""
         return self.__ModifyLines('break')
 
     def SnapLine(self):
-        """Snap selected lines"""
+        """Snap selected lines/boundaries"""
         return self.__ModifyLines('snap')
 
     def ConnectLine(self):
-        """Connect selected lines"""
+        """Connect selected lines/boundaries"""
         return self.__ModifyLines('connect')
+
+
+    def ZBulkLine(self, pos1, pos2, value, step):
+        """Provide z bulk-labeling (automated assigment of z coordinate
+        to 3d lines
+
+        @param pos1,pos2 bounding box definition for selecting lines to be labeled
+        @param value starting value
+        @param step  step value
+        """
+        gcmd.Command(['v.edit',
+                      '--q',
+                      'map=%s' % self.map,
+                      'tool=zbulk',
+                      'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1]),
+                      'zbulk=%f,%f' % (value, step)])
+
 
     def CopyLine(self, ids=None):
         """Copy features from (background) vector map
@@ -565,6 +578,28 @@ class VEdit(AbstractDigit):
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
                         
+        return True
+
+    def CopyCats(self, cats, ids):
+        """Copy given categories to objects with id listed in ids
+
+        @param cats list of cats to be copied
+        @param ids  ids of lines to be modified
+        """
+        if len(cats) == 0 or len(ids) == 0:
+            return False
+
+        # collect cats
+        gcmd.Command(['v.edit',
+                     '--q',
+                     'map=%s' % self.map,
+                     'tool=catadd',
+                     'cats=%s' % ",".join(["%d" % v for v in cats]),
+                     'ids=%s' % ",".join(["%d" % v for v in ids])])
+        
+        # reload map (needed for v.edit)
+        self.driver.ReloadMap()
+
         return True
 
     def SelectLinesFromBackgroundMap(self, pos1, pos2):
@@ -657,21 +692,6 @@ class VEdit(AbstractDigit):
         
         return ids
 
-    def ZBulkLine(self, pos1, pos2, value, step):
-        """Provide z bulk-labeling (automated assigment of z coordinate
-        to 3d lines
-
-        @param pos1,pos2 bounding box definition for selecting lines to be labeled
-        @param value starting value
-        @param step  step value
-        """
-        gcmd.Command(['v.edit',
-                      '--q',
-                      'map=%s' % self.map,
-                      'tool=zbulk',
-                      'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1]),
-                      'zbulk=%f,%f' % (value, step)])
-
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -687,43 +707,43 @@ class VDigit(AbstractDigit):
         AbstractDigit.__init__(self, mapwindow, settings)
 
         try:
-            from grass6_wxvdigit import Digit as DigitClass
-            self.digit = DigitClass(self.driver.GetDevice())
-        except ImportError, err:
-            print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s).%s" \
-                  "Detailed information in README file." % \
-                  (os.linesep, err, os.linesep)
+            self.digit = vdigit.Digit(self.driver.GetDevice())
+        except (ImportError, NameError):
             self.digit = None
 
     def AddPoint (self, map, point, x, y, z=None):
-        """Add point/centroid to the vector map layer
+        """Add new point/centroid
 
-        @param map   map name (unused)
-        @param point  feature type (if True -> point otherwise centroid)
+        @param map   map name (unused, for compatability with VEdit)
+        @param point feature type (if true point otherwise centroid)
         @param x,y,z coordinates
         """
         layer = self.settings["layer"]
         cat   = self.SetCategory()
         
         if point:
-            type = 0x01 # point
+            type = vdigit.GV_POINT 
         else:
-            type = 0x08 # centroid
+            type = vdigit.GV_CENTROID 
+
+        snap, thresh = self.__getSnapThreshold()
 
         if z:
-            ret = self.digit.AddLine(type, [x, y, z], True, layer, cat)
+            ret = self.digit.AddLine(type, [x, y, z], layer, cat,
+                                     self.settings["backgroundMap"], snap, thresh)
         else:
-            ret = self.digit.AddLine(type, [x, y], False, layer, cat)
+            ret = self.digit.AddLine(type, [x, y], layer, cat,
+                                     self.settings["backgroundMap"], snap, thresh)
 
         if ret == -1:
             raise DigitError, _("Adding new feature to vector map <%s> failed") % map
         
     def AddLine (self, map, line, coords):
-        """Add line/boundary to the vector map layer
+        """Add line/boundary
 
-        @param map  map name
-        @param line feature type (True for line, otherwise boundary)
-        @param list of coordinates
+        @param map    map name (unused, for compatability with VEdit)
+        @param line   feature type (if True line, otherwise boundary)
+        @param coords list of coordinates
         """
         if len(coords) < 2:
             return
@@ -732,34 +752,150 @@ class VDigit(AbstractDigit):
         cat   = self.SetCategory()
 
         if line:
-            type = 0x02
+            type = vdigit.GV_LINE
         else:
-            type = 0x04
+            type = vdigit.GV_BOUNDARY
 
         listCoords = []
         for c in coords:
             for x in c:
                 listCoords.append(x)
 
-        if len(coords[0]) == 3: # with_z
-            ret = self.digit.AddLine(type, listCoords, True, layer, cat)
-        else:
-            ret = self.digit.AddLine(type, listCoords, False, layer, cat)
+        snap, thresh = self.__getSnapThreshold()
+
+        ret = self.digit.AddLine(type, listCoords, layer, cat,
+                                 self.settings["backgroundMap"], snap, thresh)
 
         if ret == -1:
             raise DigitError, _("Adding new feature to vector map <%s> failed") % map
 
 
     def DeleteSelectedLines(self):
-        """Delete selected vector features from the vector map
+        """Delete selected features
 
         @return number of deleted lines
         """
-
-        nlines = self.digit.DeleteSelectedLines()
-        #self.driver.DrawUpdatedLines()
+        nlines = self.digit.DeleteLines()
 
         return nlines
+
+    def MoveSelectedLines(self, move):
+        """Move selected features
+
+        @param move direction (x, y)
+        """
+        snap, thresh = self.__getSnapThreshold()
+
+        nlines = self.digit.MoveLines(move[0], move[1], 0.0, # TODO 3D
+                                      snap, thresh) 
+
+        return nlines
+
+    def MoveSelectedVertex(self, coords, move):
+        """Move selected vertex of the line
+
+        @param coords click coordinates
+        @param move   X,Y direction
+
+        @return 1 vertex moved
+        @return 0 vertex not moved (not found, line is not selected)
+        """
+        snap, thresh = self.__getSnapThreshold()
+
+        return self.digit.MoveVertex(coords[0], coords[1], 0.0, # TODO 3D
+                                     move[0], move[1], 0.0,
+                                     snap, thresh)
+
+    def AddVertex(self, coords):
+        """Add new vertex to the selected line/boundary on position 'coords'
+
+        @param coords coordinates to add vertex
+        """
+        return self.digit.ModifyLineVertex(1, coords[0], coords[1], 0.0, # TODO 3D
+                                           self.driver.GetThreshold())
+
+    def RemoveVertex(self, coords):
+        """Remove vertex from the selected line/boundary on position 'coords'
+
+        @param coords coordinates to remove vertex
+        """
+        return self.digit.ModifyLineVertex(0, coords[0], coords[1], 0.0, # TODO 3D
+                                           self.driver.GetThreshold())
+
+    def SplitLine(self, coords):
+        """Split selected line/boundary on position 'coords'
+
+        @param coords coordinates to split line
+
+        @return 1 line splitted
+        @return 0 no action
+        @return -1 error
+        """
+        return self.digit.SplitLine(coords[0], coords[1], 0.0, # TODO 3D
+                                    self.driver.GetThreshold())
+
+    def EditLine(self, line, coords):
+        """Edit existing line/boundary
+
+        @param line id of line to be modified
+        @param coords list of coordinates of modified line
+        """
+        return self.digit.RewriteLine(line, coords)
+
+    def FlipLine(self):
+        """Flip selected lines/boundaries"""
+        return self.digit.FlipLines()
+
+    def MergeLine(self):
+        """Merge selected lines/boundaries"""
+        return self.digit.MergeLines()
+
+    def BreakLine(self):
+        """Break selected lines/boundaries"""
+        return self.digit.BreakLines()
+
+    def SnapLine(self):
+        """Snap selected lines/boundaries"""
+        return self.digit.SnapLines()
+
+    def ConnectLine(self):
+        """Connect selected lines/boundaries"""
+        return self.digit.ConnectLines()
+
+    def CopyLine(self, ids=None):
+        """Copy features from (background) vector map
+
+        @param ids list of line ids to be copied
+        """
+        return self.digit.CopyLines(ids, self.settings['backgroundMap'])
+
+    def CopyCats(self, cats, ids):
+        """Copy given categories to objects with id listed in ids
+
+        @param cats list of cats to be copied
+        @param ids  ids of lines to be modified
+        """
+        if len(cats) == 0 or len(ids) == 0:
+            return False
+
+        return self.digit.CopyCats(cats, ids)
+
+    def __getSnapThreshold(self):
+        """Get snap mode and threshold value
+
+        @return (snap, thresh)
+        """
+        thresh = self.driver.GetThreshold()
+
+        if thresh > 0.0:
+            if self.settings['snapToVertex']:
+                snap = vdigit.SNAPVERTEX
+            else:
+                snap = vdigit.SNAP
+        else:
+            snap = v.digit.NO_SNAP
+
+        return (snap, thresh)
 
 if USEVEDIT:
     class Digit(VEdit):
@@ -830,7 +966,7 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         # initialize wx display driver
         try:
-            self.__display = DisplayDriver(mapwindow.pdcVector)
+            self.__display = vdigit.DisplayDriver(mapwindow.pdcVector)
         except:
             self.__display = None
             
@@ -849,9 +985,16 @@ class CDisplayDriver(AbstractDisplayDriver):
         self.__display.SetDevice(pdc)
             
     def Reset(self, map):
-        """Close map and open new one
+        """Reset map
 
-        map map name to be set up
+        Open or close the vector map by driver.
+
+        @param map map name or None to close the map
+
+        @return 0 on success (close map)
+        @return topo level on success (open map)
+        @return non-zero (close map)
+        @return -1 on error (open map)
         """
         if map:
             name, mapset = map.split('@')
@@ -860,7 +1003,9 @@ class CDisplayDriver(AbstractDisplayDriver):
             else:
                 ret = self.__display.OpenMap(str(name), str(mapset), True)
         else:
-            self.__display.CloseMap()
+            ret = self.__display.CloseMap()
+
+        return ret
     
     def ReloadMap(self):
         """Reload map (close and re-open).
@@ -1052,8 +1197,7 @@ class CDisplayDriver(AbstractDisplayDriver):
                                                 settings['symbolVertex'][1][1],
                                                 settings['symbolVertex'][1][2],
                                                 255).GetRGB(),
-                                       settings['lineWidth'][0],
-                                       self.GetThreshold())
+                                       settings['lineWidth'][0])
 
 class DigitSettingsDialog(wx.Dialog):
     """

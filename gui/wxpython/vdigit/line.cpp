@@ -55,7 +55,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	return -1;
     }
 
-    G_debug(1, "Digit.AddLine(): npoints=%d", npoints);
+    G_debug(2, "wxDigit.AddLine(): npoints=%d, layer=%d, cat=%d, snap=%d",
+	    npoints, layer, cat, snap);
 
     /* TODO: 3D */
     if (!(type & GV_POINTS) && !(type & GV_LINES)) {
@@ -112,16 +113,18 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	    Points->x[last] = Points->x[0];
 	    Points->y[last] = Points->y[0];
 	    Points->z[last] = Points->z[0];
-	    G_debug(3, "Digit.AddLine(): boundary closed");
+	    G_debug(3, "wxDigit.AddLine(): boundary closed");
 	}
     }
 
     newline = Vect_write_line(display->mapInfo, type, Points, Cats);
 
     if (snap != NO_SNAP) { /* apply snapping */
-	Vedit_snap_line(display->mapInfo, BgMap, nbgmaps, /* limited only to one background map */
+      /*
+	Vedit_snap_line(display->mapInfo, BgMap, nbgmaps,
 			newline,
-			threshold, (SNAP) ? 0 : 1); /* snap to vertex ? */
+			threshold, (SNAP) ? 0 : 1); 
+      */
     }
 
     Vect_destroy_line_struct(Points);
@@ -130,6 +133,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     if (BgMap && BgMap[0]) {
 	Vect_close(BgMap[0]);
     }
+
+    G_debug(2, "wxDigit.AddLine(): line=%d written", newline);
 
     return 1;
 }

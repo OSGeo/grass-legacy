@@ -167,8 +167,8 @@ public:
     std::vector<int> GetSelectedVertex(double, double, double);
 
     /* general */
-    void CloseMap();
-    int  OpenMap(const char *, const char *, bool);
+    int CloseMap();
+    int OpenMap(const char *, const char *, bool);
     void ReloadMap();
     void SetDevice(void *);
 
