@@ -1,27 +1,32 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/*!
+  \file write_nat.c
+  
+  \brief Vector library - write data
+  
+  Higher level functions for reading/writing/manipulating vectors.
+
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-void delete_area_cats_from_cidx ( struct Map_info *Map, int area ) 
+static void delete_area_cats_from_cidx ( struct Map_info *Map, int area ) 
 {
     int i;
     P_AREA *Area;
@@ -30,7 +35,7 @@ void delete_area_cats_from_cidx ( struct Map_info *Map, int area )
     G_debug ( 3, "delete_area_cats_from_cidx() area = %d", area );
 
     Area =  Map->plus.Area[area];
-    if ( !Area ) G_fatal_error ("BUG (delete_area_cats_from_cidx): Area %d does not exist", area );
+    if ( !Area ) G_fatal_error (_("BUG (delete_area_cats_from_cidx): Area %d does not exist"), area);
 
     if ( Area->centroid == 0 ) return;
 
@@ -43,7 +48,7 @@ void delete_area_cats_from_cidx ( struct Map_info *Map, int area )
     }
 }
 
-void add_area_cats_to_cidx ( struct Map_info *Map, int area ) 
+static void add_area_cats_to_cidx ( struct Map_info *Map, int area ) 
 {
     int i;
     P_AREA *Area;
@@ -52,7 +57,7 @@ void add_area_cats_to_cidx ( struct Map_info *Map, int area )
     G_debug ( 3, "add_area_cats_to_cidx() area = %d", area );
 
     Area =  Map->plus.Area[area];
-    if ( !Area ) G_fatal_error ("BUG (add_area_cats_to_cidx): Area %d does not exist", area );
+    if ( !Area ) G_fatal_error (_("BUG (add_area_cats_to_cidx): Area %d does not exist"), area );
 
     if ( Area->centroid == 0 ) return;
 
@@ -66,12 +71,19 @@ void add_area_cats_to_cidx ( struct Map_info *Map, int area )
 }
 
 long V1__rewrite_line_nat ( struct Map_info *Map, long   offset, int    type,
-		       struct line_pnts *points, struct line_cats *cats);
+			    struct line_pnts *points, struct line_cats *cats);
 
-/* Writes line to 'coor' file.
-*  
-*  Returns: offset into file
-*           -1 on error */
+/**
+   \brief Writes line to 'coor' file
+
+   \param Map pointer to vector map
+   \param type feature type
+   \param points line geometry
+   \param cats line cats
+
+   \return offset into file
+   \return -1 on error
+*/
 long 
 V1_write_line_nat (  struct Map_info *Map,
 		     int    type,
@@ -90,10 +102,17 @@ V1_write_line_nat (  struct Map_info *Map,
   return V1__rewrite_line_nat (Map, offset, type, points, cats);
 }
 
-/* Writes line to 'coor' file.
-*  
-*  Returns: number of new line
-*           -1 on error */
+/**
+   \brief Writes line to 'coor' file.
+
+   \param Map pointer to vector map
+   \param type feature type
+   \param points line geometry
+   \param cats line cats
+
+   \return  number of new line
+   \return -1 on error
+*/
 long 
 V2_write_line_nat (  struct Map_info *Map,
 		     int    type,
@@ -276,15 +295,25 @@ V2_write_line_nat (  struct Map_info *Map,
     return line;
 }
 
-/* Rewrites line at the given offset.
-*  If the number of points or cats differs from
-*  the original one or the type is changed:
-*  GV_POINTS -> GV_LINES or GV_LINES -> GV_POINTS,
-*  the old one is deleted and the
-*  new is appended to the end of the file.
-*
-*  Returns: line offset
-*           -1 on error
+/**
+   \brief Rewrites line at the given offset.
+   
+   If the number of points or cats differs from
+   the original one or the type is changed:
+   GV_POINTS -> GV_LINES or GV_LINES -> GV_POINTS,
+   the old one is deleted and the
+   new is appended to the end of the file.
+
+   Old line is deleted (marked as dead), new line written.
+
+   \param Map pointer to vector map
+   \param offset line offset
+   \param type feature type
+   \param points line geometry
+   \param cats line cats
+
+   \return line offset (rewriten line)
+   \return -1 on error
 */
 long 
 V1_rewrite_line_nat (  struct Map_info *Map,
@@ -332,10 +361,19 @@ V1_rewrite_line_nat (  struct Map_info *Map,
   }
 }
 
-/* Rewrites line of given number.
-* 
-*  Returns: number of new line
-*           -1 on error
+/**
+   \brief Rewrites line of given number.
+
+   Old line is deleted (marked as dead), new line written.
+
+   \param Map pointer to vector map
+   \param line line id
+   \param type feature type
+   \param points line geometry
+   \param cats line cats
+
+   \return number of new line
+   \return -1 on error
 */
 int
 V2_rewrite_line_nat (  struct Map_info *Map,
@@ -355,10 +393,17 @@ V2_rewrite_line_nat (  struct Map_info *Map,
     return ( V2_write_line_nat ( Map, type, points, cats) );
 }
 
-/* Rewrites line at the given offset.
-*
-*  Returns: line offset
-*           -1 on error
+/**
+   \brief Rewrites line at the given offset.
+
+   \param Map pointer to vector map
+   \param offset line offset
+   \param type feature type
+   \param points line geometry
+   \param cats line cats
+
+   \return line offset
+   \return -1 on error
 */
 long 
 V1__rewrite_line_nat (
@@ -447,10 +492,14 @@ V1__rewrite_line_nat (
   return offset;
 }
 
-/* Deletes line at the given offset.
-*
-*  Returns:  0 ok
-*           -1 on error
+/**
+   \brief Deletes line at the given offset.
+
+   \param Map pointer to vector map
+   \param offset line offset
+
+   \return  0 ok
+   \return -1 on error
 */
 int 
 V1_delete_line_nat (
@@ -486,10 +535,14 @@ V1_delete_line_nat (
   return 0;
 }
 
-/* Deletes line of given number.
-*
-*  Returns:  0 ok
-*           -1 on error
+/**
+   \brief Deletes line of given number.
+
+   \param pointer to vector map
+   \param line line id
+
+   \return 0 ok
+   \return -1 on error
 */
 int 
 V2_delete_line_nat ( struct Map_info *Map, int  line )
@@ -509,7 +562,7 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   if (  plus->built >= GV_BUILD_BASE ) {
       Line = Map->plus.Line[line]; 
 
-      if ( Line == NULL ) G_fatal_error ("Attempt to delete dead line");
+      if ( Line == NULL ) G_fatal_error (_("Attempt to delete dead line"));
       type = Line->type;
   }
 
@@ -655,4 +708,3 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   G_debug ( 3, "updated lines : %d , updated nodes : %d", plus->n_uplines, plus->n_upnodes );
   return ret;
 }
-

@@ -1,35 +1,45 @@
-/*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-#include <unistd.h>
-#include <grass/Vect.h>
-#include <grass/gis.h>
+/*!
+  \file open_nat.c
+  
+  \brief Vector library - open vector map (native format)
+  
+  Higher level functions for reading/writing/manipulating vectors.
 
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL, probably Dave Gerdes or Mike Higgins.
+  Update to GRASS 5.7 Radim Blazek and David D. Gray.
+  
+  \date 2001
+*/
+
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static char name_buf[1024];
-int check_coor ( struct Map_info *Map );
+#include <grass/Vect.h>
+#include <grass/gis.h>
+#include <grass/glocale.h>
 
-/* Open old file.
-*  Map->name and Map->mapset must be set before
-*  
-*  Return: 0 success
-*         -1 error */
+static char name_buf[GPATH_MAX];
+static int check_coor ( struct Map_info *Map );
+
+/**
+   \brief Open existing vector map
+
+   Map->name and Map->mapset must be set before.
+
+   \param Map poiter to vector map
+   \param update non-zero for write mode, otherwise read-only
+
+   \return 0 success
+   \return -1 error
+*/
 int 
 V1_open_old_nat ( struct Map_info *Map, int update)
 {
@@ -59,10 +69,17 @@ V1_open_old_nat ( struct Map_info *Map, int update)
   return (0);
 }
 
-/* Open new file.
-*  
-*  Return: 0 success
-*         -1 error */
+/**
+   \brief Open/Create new vector map.
+
+   \param Map pointer to vector map
+   \param name map name
+   \param with_z 2D or 3D (unused?)
+
+
+   \return 0 success
+   \return -1 error 
+*/
 int 
 V1_open_new_nat (
 	      struct Map_info *Map,
@@ -123,11 +140,11 @@ int check_coor ( struct Map_info *Map )
 	                     Map->head.size, CInfo.size);
 
     if ( dif > 0 ) {
-        G_warning ( "coor files of vector '%s@%s' is larger than it should be "
-	            "(%ld bytes excess).", Map->name, Map->mapset, dif);
+	G_warning (_("Coor files of vector map <%s@%s> is larger than it should be "
+		     "(%ld bytes excess)"), Map->name, Map->mapset, dif);
     } else if ( dif < 0 ) {
-        G_warning ( "coor files of vector '%s@%s' is shorter than it should be "
-	            "(%ld bytes missing).", Map->name, Map->mapset, -dif);
+        G_warning (_("Coor files of vector <%s@%s> is shorter than it should be "
+		     "(%ld bytes missing)."), Map->name, Map->mapset, -dif);
     }
     return 1;
 }
