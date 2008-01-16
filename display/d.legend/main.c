@@ -336,11 +336,11 @@ int main( int argc, char **argv )
 
 	horiz = (x1-x0 > y1-y0);
 	if(horiz)
-	    G_warning(_("Drawing horizontal legend as box width exceeds height"));
-	
+	    G_message(_("Drawing horizontal legend as box width exceeds height"));
+
 	if(!fp && horiz)	/* better than nothing */
 		do_smooth = TRUE;
-	
+
 
 	MaxLabelLen = 0;	/* init variable */
 
@@ -468,7 +468,7 @@ int main( int argc, char **argv )
 		/*  an alternate solution is to set   dots_per_line=1         */
 		if ((dots_per_line == 0) && (do_smooth == 0)) {
 		    if(!use_catlist) {
-			G_warning(_("Forcing a smooth legend: too many categories for current window height"));
+			G_message(_("Forcing a smooth legend: too many categories for current window height"));
 			do_smooth = 1;
 		    }
 		}
