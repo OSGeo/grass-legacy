@@ -1,25 +1,24 @@
 <H2>DESCRIPTION</H2>
 
 <EM>v.distance</EM> finds the nearest element in vector map
-(<B>to</B>) for elements in vector map (<B>from</B>). Various
-information about relation (distance, category, etc.) may be uploaded
-to attribute table attached to first vector map or printed to
+(<em>to</em>) for elements in vector map (<em>from</em>). Various
+information about the vectors' relationships (distance, category, etc.) may be uploaded
+to the attribute table attached to the first vector map, or printed to
 'stdout'.  A new vector map may be created where lines connecting
 nearest points on features are written.
 
 <H2>NOTES</H2>
 
-If a nearest feature does not have a category, column is updated
-to <B>null</B>.  This is true also for areas, which means for example,
-that if point is in island (area WITHOUT
-category), <EM>v.distance</EM> does not search for nearest area WITH
-category, island is identified as nearest and category updated to
-null.
+If a nearest feature does not have a category, the attribute column is updated
+to <em>null</em>.  This is true also for areas, which means for example,
+that if a point is in an island (area WITHOUT category), <EM>v.distance</EM> 
+does not search for the nearest area WITH category; the island is identified 
+as the nearest and category updated to null.
 <p>
-The upload <B>column</B>(s) must already exist. Create one with <em>v.db.addcol</em>.
+The upload <em>column</em>(s) must already exist. Create one with <em>v.db.addcol</em>.
 <p>
-In lat-long location <em>v.distance</em> gives distances (<b>dist</b>
-and <b>to_along</b>) in meters not in degrees calculated as geodesic
+In lat-long locations <em>v.distance</em> gives distances (<em>dist</em>
+and <em>to_along</em>) in meters not in degrees calculated as geodesic
 distances on a sphere.
 
 <h2>EXAMPLES</H2>
@@ -28,7 +27,7 @@ distances on a sphere.
 
 Find <EM>nearest lines</EM> in vector map <B>ln</B> for points from
 vector map <B>pnt</B> within the given threshold and write related
-line categories to column <B>linecat</B> in attribute table attached
+line categories to column <B>linecat</B> in an attribute table attached
 to vector map <B>pnt</B>:
 
 <div class="code"><pre>
@@ -37,11 +36,11 @@ v.distance from=pnt to=ln upload=cat column=linecat
 
 <H3>Find nearest area</H3>
 
-For each point from vector map <B>pnt</B> find <EM>nearest area</EM>
+For each point from vector map <B>pnt</B>, find <EM>nearest area</EM>
 from map <B>ar</B> within the given threshold and write the related
-area categories to column <B>areacat</B> in attribute table attached
-to vector map <B>pnt</B>. In case a point falls into a polygon area,
-the distance is zero:
+area categories to column <B>areacat</B> in an attribute table attached
+to vector map <B>pnt</B> (in the case that a point falls into a polygon area,
+the distance is zero):
 
 <div class="code"><pre>
 v.distance from=pnt to=ar upload=cat column=areacat
@@ -61,9 +60,9 @@ v.distance -p from=pnt to=ln out=connections upload=dist column=dist
 <H3>Query information</H3>
 
 Query information from selected point(s). <EM>v.distance</EM> takes
-points from vector map as input instead of stdin. First new vector map
-with query points, has to be created, then the map can be analysed:
-<br>   
+points from a vector map as input instead of stdin. A new vector map
+with query points has to be created before the map can be analysed.
+<p>
 
 Create query map (if not present):
 
@@ -80,9 +79,9 @@ v.distance from=pnt to=map_to_query upload=cat col=somecol -p
 <H3>Point-in-polygon</H3>
 
 Find <EM>area</EM> from vector map <B>ar</B> for each point from
-vector map <B>pnt</B> in which the individual point falls into and
+vector map <B>pnt</B> in which the individual point falls, and
 write the related area categories to column <B>areacat</B> into
-attribute table attached to vector map <B>pnt</B>:
+the attribute table attached to vector map <B>pnt</B>:
 
 <div class="code"><pre>
 v.distance from=pnt to=ar dmax=0 upload=cat column=areacat
