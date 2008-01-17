@@ -94,8 +94,8 @@ if [ -z "$GIS_OPT_COLUMN" ] ; then
 else
 
     COLTYPE=`v.info -c "$GIS_OPT_INPUT" --quiet | grep ".*|$GIS_OPT_COLUMN$" | cut -f1 -d'|'`
-    if [ "$COLTYPE" != "INTEGER" ] ; then
-       g.message -e "Key column must be of type INTEGER"
+    if [ "$COLTYPE" != "INTEGER" ] && [ "$COLTYPE" != "CHARACTER" ] ; then
+       g.message -e "Key column must be of type integer or string"
        exit 1
     fi
 
