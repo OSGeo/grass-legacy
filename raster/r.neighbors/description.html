@@ -50,7 +50,7 @@ can perform the following operations:
 
 
 <P>
-
+<DL>
 
 <DT><B>average</B> 
 
@@ -127,11 +127,12 @@ In the above example, the interspersion is:
 The result is rounded to the nearest integer (in this case 64).
 ERROR .RE
 
-
+</DL>
 <P>
+<BR>
 
 <EM>Neighborhood Size:</EM>
-The neighborhood <EM>size</EM> specifies which cells surrounding any given
+<DD>The neighborhood <EM>size</EM> specifies which cells surrounding any given
 cell fall into the neighborhood for that cell.
 The size must be an odd integer.
 For example,
@@ -142,11 +143,11 @@ For example,
                              |_|_|_|
 
 </PRE>
-
+</DD>
 <P>
 
-<EM>Matrix weights: </EM>
-A custom matrix can be used if none of the neighborhood operation
+<EM>Matrix weights:</EM>
+<DD>A custom matrix can be used if none of the neighborhood operation
 methods are desirable by using the <EM>weight</EM>.  This option must
 be used in conjunction with the <EM>size</EM> option to specify the
 matrix size.  The weights desired are to be entered into a text file.
@@ -192,8 +193,8 @@ By default, if unspecified,
 <DD>If specified, <EM>r.neighbors</EM> will run relatively quietly
 (i.e., without printing to standard output notes on the program's progress).
 If unspecified, the program will print messages to standard output by default.
+</DD>
 
-</DL>
 <H2>NOTES</H2>
 
 The <EM>r.neighbors</EM> program works in the current geographic region
