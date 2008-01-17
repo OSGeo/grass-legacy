@@ -92,10 +92,16 @@ if [ -z "$GIS_OPT_COLUMN" ] ; then
    v.extract -d input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT" type=area \
              layer="$GIS_OPT_LAYER"
 else
+
+    COLTYPE=`v.info -c "$GIS_OPT_INPUT" --quiet | grep ".*|$GIS_OPT_COLUMN$" | cut -f1 -d'|'`
+    if [ "$COLTYPE" != "INTEGER" ] ; then
+       g.message -e "Key column must be of type INTEGER"
+       exit 1
+    fi
+
    table=`v.db.connect $GIS_OPT_INPUT -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
    if [ -z "$table" ] ; then
       g.message -e 'There is no table connected to this map!'
-      cleanup
       exit 1
    fi
    v.reclass input="$GIS_OPT_INPUT" output="$GIS_OPT_OUTPUT"_${TMP} layer="$GIS_OPT_LAYER" \
