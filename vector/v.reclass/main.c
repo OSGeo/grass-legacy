@@ -24,7 +24,8 @@
 
 int inpt (FILE *rulefd, char *buf);
 int key_data (char *buf, char **k, char **d);
-int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, dbCatValArray *cvarr, int optiond);
+int reclass ( struct Map_info *In, struct Map_info *Out, int type,
+	      int field, dbCatValArray *cvarr, int optiond);
 
 static int cmpcat ( const void *pa, const void *pb)
 {
@@ -56,42 +57,40 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->keywords = _("vector, attribute table");
-    module->description = "Changes vector category values for an existing vector map "
-	    "according to results of SQL queries or a value in attribute table column.";
+    module->description = _("Changes vector category values for an existing vector map "
+	    "according to results of SQL queries or a value in attribute table column.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
-    out_opt =  G_define_standard_option(G_OPT_V_OUTPUT);
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    rules_opt = G_define_option();
+    rules_opt = G_define_standard_option(G_OPT_F_INPUT);
     rules_opt->key = "rules";
     rules_opt->required = NO;
-    rules_opt->type = TYPE_STRING;
-    rules_opt->description =  "Full path to the reclass rule file";
+    rules_opt->description =  _("Full path to the reclass rule file");
 
-    col_opt = G_define_option();
-    col_opt->key            = "column";
-    col_opt->type           = TYPE_STRING;
-    col_opt->required       = NO;
-    col_opt->multiple       = NO;
-    col_opt->description    = "The name of the column values of which are used as new categories. "
-	                      "The column must be type integer.";
-    
+    col_opt = G_define_standard_option(G_OPT_COLUMN);
+    col_opt->label =
+	_("The name of the column whose values are to be used as new categories");
+    col_opt->description = _("The column must be type integer or string");
+
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
-    type_opt->description = "Select type";
+    type_opt->description = _("Select type");
     type_opt->options = "point,line,boundary,centroid";
     type_opt->answer = "point,line,boundary,centroid";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
-    if (G_parser(argc, argv)) exit(1);
+    if (G_parser(argc, argv))
+	exit(EXIT_FAILURE);
+
 
     type = Vect_option_to_types ( type_opt );
     field = atoi (field_opt->answer);
     
     if ( (!(rules_opt->answer) && !(col_opt->answer)) || 
 	 (rules_opt->answer && col_opt->answer) ) { 
-	G_fatal_error ( "Either 'rules' or 'col' must be specified.");
+	G_fatal_error( _("Either 'rules' or 'col' must be specified"));
     }
 
     Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
@@ -125,7 +124,7 @@ main (int argc, char *argv[])
 	ctype = db_column_Ctype ( Driver, Fi->table, col_opt->answer );
 
 	if ( ctype == -1 ) {
-	    G_fatal_error ("Column <%s> not found", col_opt->answer );
+	    G_fatal_error(_("Column <%s> not found"), col_opt->answer );
         } 
 	else if ( ctype == DB_C_TYPE_INT ) 
 	{
@@ -166,7 +165,8 @@ main (int argc, char *argv[])
 
 	    nrows = db_get_num_rows ( &cursor );
 	    G_debug (3, "  %d rows selected", nrows );
-	    if ( nrows < 0 ) G_fatal_error ( "Cannot select records from database");
+	    if ( nrows < 0 )
+		G_fatal_error( _("Cannot select records from database"));
 		
 	    db_CatValArray_alloc( &cvarr, nrows );
 
@@ -178,7 +178,7 @@ main (int argc, char *argv[])
 	    G_debug (3, "  key type = %d", type );
 
 	    if ( ctype != DB_C_TYPE_INT ) { 
-		G_fatal_error ( "Key column type is not integer" ); /* shouldnot happen */
+		G_fatal_error ( _("Key column type is not integer") ); /* shouldnot happen */
 	    }	
 
 	    cvarr.ctype = DB_C_TYPE_INT;
@@ -201,11 +201,11 @@ main (int argc, char *argv[])
 	    }
 
             if ( db_create_index2(Driver2, NewFi->table, "cat" ) != DB_OK )
-                G_warning ( "Cannot create index" );
+		G_warning( _("Cannot create index") );
 
 	    if (db_grant_on_table (Driver2, NewFi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	    {
-		G_fatal_error ( "Cannot grant privileges on table %s", NewFi->table );
+		G_fatal_error ( _("Cannot grant privileges on table <%s>"), NewFi->table );
 	    }
 
 	    newval = 0;
@@ -213,7 +213,7 @@ main (int argc, char *argv[])
 	    /* fetch the data */
 	    for ( i = 0; i < nrows; i++ ) {
 		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) {
-		    G_fatal_error ( "Cannot fetch data" );
+		    G_fatal_error ( _("Cannot fetch data") );
 		}
 
 		column = db_get_table_column(table, 1);
@@ -235,7 +235,7 @@ main (int argc, char *argv[])
 			Vect_close (&Out);
 			db_close_database_shutdown_driver ( Driver );
 			db_close_database_shutdown_driver ( Driver2 );
-			G_fatal_error ( "Cannot insert data: %s", db_get_string (&stmt2) );
+			G_fatal_error( _("Cannot insert data: [%s]"), db_get_string (&stmt2) );
 		    }
 		}
 
@@ -260,7 +260,7 @@ main (int argc, char *argv[])
 	} 
         else 
         {	    
-	    G_fatal_error ( "Column type must be integer or string" );
+	    G_fatal_error( _("Column type must be integer or string") );
 	}
 
     } else {
@@ -271,7 +271,7 @@ main (int argc, char *argv[])
 	G_debug (2, "Reading rules");
 	
 	if ( (rulefd = fopen(rules_opt->answer, "r")) == NULL )
-	    G_fatal_error ("Unable to open rule file %s", rules_opt->answer);
+	    G_fatal_error (_("Unable to open rule file <%s>"), rules_opt->answer);
 
 	db_CatValArray_alloc ( &cvarr, Vect_get_num_lines(&In) );
 	
@@ -284,17 +284,17 @@ main (int argc, char *argv[])
 	    G_debug (3, "key = %s data = %s", key, data);
 	    
 	    if (KEY("cat")) {	
-		if ( cat > 0 ) G_fatal_error ( "Category %d overwritten by %s", cat, data);
+		if ( cat > 0 ) G_fatal_error( _("Category %d overwritten by '%s'"), cat, data);
 		cat = atoi ( data );
-		if( cat <= 0 ) G_fatal_error ( "Category '%s' invalid", data);
+		if( cat <= 0 ) G_fatal_error ( _("Category '%s' invalid"), data);
 	    } else if (KEY("label")) {
-		if ( label ) G_fatal_error ( "Label '%s' overwritten by '%s'", label, data);
+		if ( label ) G_fatal_error ( _("Label '%s' overwritten by '%s'"), label, data);
 		label = G_store ( data );
 	    } else if (KEY("where")) {	
-		if ( where ) G_fatal_error ( "Condition '%s' overwritten by '%s'", where, data);
+		if ( where ) G_fatal_error ( _("Condition '%s' overwritten by '%s'"), where, data);
 		where = G_store(data);
 	    } else {
-		G_fatal_error ( "Unknown rule option: '%s'", key );
+		G_fatal_error ( _("Unknown rule option: '%s'"), key );
 	    }
 
 	    if ( cat > 0 && where ) {
@@ -305,7 +305,8 @@ main (int argc, char *argv[])
 		if ( !label ) label = where;
 
 		ncats = db_select_int ( Driver, Fi->table, Fi->key, where, &cats);
-		if ( ncats == -1 ) G_fatal_error("Cannot select values from database");
+		if ( ncats == -1 )
+		    G_fatal_error(_("Cannot select values from database"));
 		G_debug (3, "  ncats = %d", ncats);
 		
 
@@ -320,8 +321,9 @@ main (int argc, char *argv[])
 		    }
 		}
 		if (over > 0) 
-		    G_warning ("%d previously set categories overwritten by new category %d.", over, cat);
-			
+		    G_warning(_("%d previously set categories overwritten by new category %d"),
+				over, cat);
+
 		for ( i = 0; i < ncats; i++ ) {
 		    if ( cats[i] <= 0 ) continue;
 
@@ -343,7 +345,7 @@ main (int argc, char *argv[])
 	}
 
 	if ( cat > 0 || where )
-	    G_fatal_error ( "Incomplete rule");
+	    G_fatal_error(_("Incomplete rule"));
     }
 
     db_close_database_shutdown_driver(Driver);
@@ -383,7 +385,3 @@ main (int argc, char *argv[])
 
     exit(EXIT_SUCCESS);
 }
-
-
-
-
