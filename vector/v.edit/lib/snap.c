@@ -44,7 +44,7 @@ int Vedit_snap_point(struct Map_info *Map,
 
     line2snap = Vect_find_line(Map, *x, *y, *z,
 			       -1, thresh, WITHOUT_Z, line);
-    
+
     if (line2snap > 0) {
 	Vect_read_line(Map, Points, NULL, line2snap);
 	
@@ -72,9 +72,11 @@ int Vedit_snap_point(struct Map_info *Map,
 	    *y = Points->y[mindist_idx];
 	    *z = Points->z[mindist_idx];
 	    snapped = 1;
-	    G_debug(3, "Vedit_snap_point(): line=%d", line2snap);
 	}
     }
+
+    G_debug(3, "Vedit_snap_point(): map=%s, line2snap=%d, snapped=%d",
+	    Map->name, line2snap, snapped);
 
     Vect_destroy_line_struct(Points);
 
@@ -107,7 +109,9 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 
     struct line_cats *Cats;
 
-    Cats   = Vect_new_cats_struct();
+    Cats = Vect_new_cats_struct();
+
+    G_debug(3, "Vedit_snap_line(): thresh=%g, to_vertex=%d", thresh, to_vertex);
 
     if (line > 0 && !Vect_line_alive (Map, line))
 	return -1;
@@ -129,8 +133,7 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	}
 	else {
 	    /* check also background maps */
-	    int bgi;
-	    for (bgi = 0; bgi < nbgmaps; bgi++) {
+	    for (i = 0; i < nbgmaps; i++) {
 		if (Vedit_snap_point(BgMap[i], -1, &x[node], &y[node], &z[node], thresh,
 				     to_vertex)) {
 		    rewrite = 1;
