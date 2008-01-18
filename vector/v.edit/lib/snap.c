@@ -18,7 +18,7 @@
    \brief Snap given point to the nearest feature
    
    \param[in] Map vector map
-   \param[in] line line id to be snapped
+   \param[in] line line to be excluded (point on line)
    \param[in] x,y,z point on line to be snapped
    \param[in] thresh snapping threshold (>0)
    \param[in] vertex snap also to vertex
@@ -84,34 +84,34 @@ int Vedit_snap_point(struct Map_info *Map,
 /**
    \brief Snap lines/boudaries to the nearest feature
    
-   \param[in] Map vector map
-   \param[in] BgMap,nbgmaps List of background maps
-   \param[in] line line to be snapped
+   If 'line' > 0, given line is snapped and rewritten.
+
+   \param[in] Map pointer to vector map
+   \param[in] BgMap,nbgmaps list of background maps used for snapping
+   \param[in] line line to be snapped (if already written, otherwise -1)
+   \param[in] Points line geometry
    \param[in] layer layer number
    \param[in] thresh threshold value used for snapping (>0)
    \param[in] to_vertex allow snapping also to vertex
 
    \return 1 line snapped
    \return 0 line not snapped
-   \return -1 line is dead
+   \return -1 line is dead (if 'line' is > 0)
 */
 int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
-		    int line,
+		    int line, struct line_pnts* Points, 
 		    double thresh, int to_vertex)
 {
     int i, type, npoints, node, rewrite;
     double *x, *y, *z;
 
-    struct line_pnts *Points;
     struct line_cats *Cats;
 
-    Points = Vect_new_line_struct();
     Cats   = Vect_new_cats_struct();
 
-    if (!Vect_line_alive (Map, line))
+    if (line > 0 && !Vect_line_alive (Map, line))
 	return -1;
 
-    type = Vect_read_line(Map, Points, Cats, line);
     npoints = Points -> n_points;
     x = Points->x;
     y = Points->y;
@@ -131,7 +131,7 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	    /* check also background maps */
 	    int bgi;
 	    for (bgi = 0; bgi < nbgmaps; bgi++) {
-		if (Vedit_snap_point(BgMap[i], line, &x[node], &y[node], &z[node], thresh,
+		if (Vedit_snap_point(BgMap[i], -1, &x[node], &y[node], &z[node], thresh,
 				     to_vertex)) {
 		    rewrite = 1;
 		    break; /* snapped, don't continue */
@@ -150,16 +150,10 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 	z[npoints-1] = z[0];
 	
 	rewrite = 1;
-	G_debug(3, "Vedit_snap_line(): line=%d", line);
     }
 
-    if (rewrite) {
-	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    return -1;
-	}
-    }
+    G_debug(3, "Vedit_snap_line(): line=%d, snapped=%d", line, rewrite);
     
-    Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 
     return rewrite;
@@ -176,21 +170,39 @@ int Vedit_snap_line(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
    \param[in] to_vertex allow snapping also to vertex
 
    \return number of snapped lines
+   \return -1 on error
 */
 int Vedit_snap_lines(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 		     struct ilist* List,
 		     double thresh, int to_vertex)
 {
-    int i, line;
+    int i, line, type;
     int nlines_modified;
+
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
 
     for(i = 0; i < List -> n_values; i++) {
 	line = List -> value[i];
+	type = Vect_read_line(Map, Points, Cats, line);
+	if (type < 0) {
+	    return -1;
+	}
 	if (Vedit_snap_line(Map, BgMap, nbgmaps,
-			    line, thresh, to_vertex) == 1) {
+			    line, Points, thresh, to_vertex) == 1) {
+	    if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
+		return -1;
+	    }
+
 	    nlines_modified++;
 	}
     }
+
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
 
     return nlines_modified;
 }

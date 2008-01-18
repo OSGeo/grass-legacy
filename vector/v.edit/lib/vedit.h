@@ -47,7 +47,7 @@ int Vedit_snap_point(struct Map_info *,
 		     int, double *, double *, double *, double,
 		     int);
 int Vedit_snap_line(struct Map_info *, struct Map_info **, int,
-		    int,
+		    int, struct line_pnts *,
 		    double, int);
 int Vedit_snap_lines(struct Map_info *, struct Map_info **, int,
 		     struct ilist*,
