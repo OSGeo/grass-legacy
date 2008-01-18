@@ -336,6 +336,7 @@ G_define_standard_option (int opt)
     Opt = G_define_option();
 
     switch ( opt ) {
+	/* Database options (change to G_OPT_DB_*?) */
 	case G_OPT_WHERE:
 	    Opt->key          = "where";
 	    Opt->type         = TYPE_STRING;
@@ -384,6 +385,7 @@ G_define_standard_option (int opt)
 	    Opt->multiple     = YES;
 	    Opt->description  = _("Name of attribute column(s)");
 	    break;
+
         /* imagery group */
         case G_OPT_I_GROUP:
 	    Opt->key          = "group";
@@ -393,6 +395,7 @@ G_define_standard_option (int opt)
 	    Opt->gisprompt    = "old,group,group";
 	    Opt->description  = _("Name of input imagery group");
             break;
+
 	/* raster maps */    
 	case G_OPT_R_INPUT:
 	    Opt->key          = "input";
