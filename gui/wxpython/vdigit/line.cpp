@@ -31,7 +31,7 @@ extern "C" {
    \param snap   snapping mode (see vedit.h)
    \param thresh threshold value for snapping
 
-   \return 1 on success
+   \return 0 on success
    \return -1 on failure
 */
 int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
@@ -68,18 +68,28 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     }
 
     BgMap = NULL;
+    nbgmaps = 0;
 
-    if (bgmap) {
-	const char *mapset;
-	mapset = G_find_vector2 (bgmap, ""); 
-	if (mapset) {
-	    if (strcmp(G_fully_qualified_name((const char*) display->mapInfo->name, (const char*) G_mapset()),
-		       G_fully_qualified_name((const char*) bgmap, (const char*) mapset))) {
-		nbgmaps = 1;
-		BgMap = (struct Map_info**) G_realloc ((void *) BgMap, nbgmaps * sizeof(struct Map_info*));
-		BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
-		
-		Vect_open_old(BgMap[nbgmaps-1], (char *) bgmap, (char*) mapset);
+    if (bgmap && strlen(bgmap) > 0) {
+	char name[GNAME_MAX];
+	char mapset[GMAPSET_MAX];
+	if (G_find_vector2 (bgmap, "") == NULL) {
+	    return -1;
+	}
+
+	G__name_is_fully_qualified(bgmap, name, mapset);
+	if (strcmp(G_fully_qualified_name((const char*) display->mapInfo->name, (const char*) G_mapset()),
+		   G_fully_qualified_name((const char*) bgmap, (const char*) mapset))) {
+	    nbgmaps = 1;
+	    BgMap = (struct Map_info**) G_malloc (nbgmaps * sizeof(struct Map_info*));
+	    BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
+	    
+	    // avoid GUI crash
+	    Vect_set_fatal_error(GV_FATAL_PRINT);
+
+	    if (Vect_open_old(BgMap[nbgmaps-1], name, mapset) == -1) {
+		G_free ((void *) BgMap[nbgmaps-1]);
+		return -1;
 	    }
 	}
     }
@@ -117,14 +127,14 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	}
     }
 
-    newline = Vect_write_line(display->mapInfo, type, Points, Cats);
-
-    if (snap != NO_SNAP) { /* apply snapping */
-      /*
+    if (snap != NO_SNAP) { /* apply snapping (node or vertex) */
 	Vedit_snap_line(display->mapInfo, BgMap, nbgmaps,
-			newline,
+			-1, Points,
 			threshold, (SNAP) ? 0 : 1); 
-      */
+    }
+
+    if (Vect_write_line(display->mapInfo, type, Points, Cats) < 0) {
+	return -1;
     }
 
     Vect_destroy_line_struct(Points);
@@ -136,7 +146,7 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 
     G_debug(2, "wxDigit.AddLine(): line=%d written", newline);
 
-    return 1;
+    return 0;
 }
 
 /**
