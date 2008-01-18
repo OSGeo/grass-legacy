@@ -730,13 +730,13 @@ class VDigit(AbstractDigit):
 
         if z:
             ret = self.digit.AddLine(type, [x, y, z], layer, cat,
-                                     self.settings["backgroundMap"], snap, thresh)
+                                     str(self.settings["backgroundMap"]), snap, thresh)
         else:
             ret = self.digit.AddLine(type, [x, y], layer, cat,
-                                     self.settings["backgroundMap"], snap, thresh)
+                                     str(self.settings["backgroundMap"]), snap, thresh)
 
         if ret == -1:
-            raise DigitError, _("Adding new feature to vector map <%s> failed") % map
+            raise DigitError, _("Adding new feature to vector map <%s> failed.") % map
         
     def AddLine (self, map, line, coords):
         """Add line/boundary
@@ -764,10 +764,10 @@ class VDigit(AbstractDigit):
         snap, thresh = self.__getSnapThreshold()
 
         ret = self.digit.AddLine(type, listCoords, layer, cat,
-                                 self.settings["backgroundMap"], snap, thresh)
+                                 str(self.settings["backgroundMap"]), snap, thresh)
 
         if ret == -1:
-            raise DigitError, _("Adding new feature to vector map <%s> failed") % map
+            raise DigitError, _("Adding new feature to vector map <%s> failed.") % map
 
 
     def DeleteSelectedLines(self):
