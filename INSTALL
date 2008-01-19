@@ -1,5 +1,5 @@
                    INSTALL GRASS from source code
-                   $Date$
+		   ------------------------------
 
 Please read *all* text below.
 
@@ -51,13 +51,13 @@ GRASS source code is currently distributed in 2 forms:
   package) and the version is composed of 3 numbers, e.g. 6.0.0, 6.0.1
   etc.
 
-2) CVS or CVS Snapshots of source code (CVS or CVS snapshot)
+2) SVN or SVN Snapshots of source code (SVN or SVN snapshot)
 
-  This version of the source code can be acquired either from the CVS
-  repository (intevation.de:/grassrepository/grass6) or as a snapshot
-  (*.tar.gz package) of that CVS repository. The CVS snapshot name
+  This version of the source code can be acquired either from the SVN
+  repository (http://svn.osgeo.org/grass/) or as a snapshot
+  (*.tar.gz package) of that SVN repository. The SVN snapshot name
   contains the date when the snapshot was created (checked out from
-  the CVS repository), e.g. grass-6.3.cvs_src_snapshot_2006_10_28.tar.gz
+  the SVN repository), e.g. grass-6.3.svn_src_snapshot_2008_01_19.tar.gz
 
 
 (B) COMPILATION
@@ -176,18 +176,18 @@ GRASS startup menu to the directory.
 Enjoy.
 
 
-(G) UPDATE OF SOURCE CODE (CVS or CVS snapshot only)
+(G) UPDATE OF SOURCE CODE (SVN or SVN snapshot only)
 
 Assuming that you want to update your current installation from
-CVS, you have to perform a few steps. In general:
+SVN, you have to perform a few steps. In general:
 
-- update from CVS
+- update from SVN
 - configure, compile
 
 In detail:
 
     cd /where/your/grass6sourcecode/lives/
-    cvs update -dP
+    svn update
     ./configure ...
     make
     make install
@@ -281,23 +281,23 @@ Individual programs may or may not work with large files - please report.
 
 Note that this code is still actively being developed and errors inevitably
 turn up. If you find a bug, please report it to the GRASS bug tracking system
-so we can fix it. see  http://www.grass-gis.org/bugtracking/bugreport.html
+so we can fix it. See http://grass.osgeo.org/bugtracking/index.php
 
 If you are interested in helping to develop GRASS, please join the GRASS
-developers mailing list. see  http://www.grass-gis.org/devel/index.php
+developers mailing list. See http://grass.osgeo.org/devel/index.php
 
 
 (M) GRASS PROGRAMMER'S MANUAL
 
 The Programmer's manual is generated with doxygen from the source code.
 Please see the README file and the files at:
-http://www.grass-gis.org/devel/index.php#prog
+http://grass.osgeo.org/devel/index.php#prog
 
 
 (N) CONTRIBUTING CODE AND PATCHES
 
-Please see ./SUBMITTING, ./SUBMITTING_DOCS, ./SUBMITTING_TCLTK and
-./SUBMITTING_SCRIPTS in this directory.
+Please see ./SUBMITTING, ./SUBMITTING_DOCS, ./SUBMITTING_TCLTK
+./SUBMITTING_PYTHON and ./SUBMITTING_SCRIPTS in this directory.
 
 
 (O) DRAFT TUTORIAL
@@ -305,5 +305,5 @@ Please see ./SUBMITTING, ./SUBMITTING_DOCS, ./SUBMITTING_TCLTK and
 http://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassSixTutorial
 
 ------------------
-GRASS Development Team
+(C) 1999-2008 by The GRASS Development Team
 $Date$
