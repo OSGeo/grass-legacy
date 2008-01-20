@@ -1,20 +1,28 @@
-/*
- * Copyright (C) 1994. James Darrell McCauley.  (darrell@mccauley-usa.com)
- * 	                                        http://mccauley-usa.com/
- *
- * This program is free software under the GPL (>=v2)
- * Read the file GPL.TXT coming with GRASS for details.
- *
- * 1/2006: moved to libgis from v.sample/v.drape for clone removal
- ***************************************************
- */
+/*!
+  \file sample.c
+  
+  \brief GIS library - sampling methods (extract a cell value from
+  raster map)
+
+  1/2006: moved to libgis from v.sample/v.drape for clone removal
+  
+  (C) 2001-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author James Darrell McCauley <darrell mccauley-usa.com>, http://mccauley-usa.com/
+
+  \date 1994
+*/
 
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
-
 
 /* prototypes */
 static double raster_sample_nearest (int fd,
@@ -34,20 +42,19 @@ static void raster_row_error(const struct Cell_head *window, double north, doubl
 
 
 /*!
- *  \function double G_get_raster_sample (int fd, struct Cell_head *window, 
- *                   struct Categories *cats, double north, double east,
- *                   int usedesc, INTERP_TYPE itype)
- *  \brief extract a cell value from raster map at given northing and 
- *         easting with a sampled 3x3 window using a specified interpolation
- *         method
+ *  \brief Extract a cell value from raster map.
+ *
+ *  Extract a cell value from raster map at given northing and easting
+ *  with a sampled 3x3 window using a specified interpolation method.
  *
  *  \param fd file descriptor
- *  \param window
+ *  \param window region settings
  *  \param cats categories
  *  \param north northing position
  *  \param east easting position
  *  \param usedesc flag to scan category label
  *  \param itype interpolation method
+ *
  *  \return cell value at given position
  */
 
@@ -71,7 +78,7 @@ double G_get_raster_sample (int fd,
         retval = raster_sample_cubic(fd, window, cats, north, east, usedesc);
     break;
     default:
-        G_fatal_error(_("unknown interpolation type"));
+	G_fatal_error("G_get_raster_sample: %s",_("Unknown interpolation type"));
     }
 
     return retval;
@@ -436,16 +443,8 @@ static double raster_sample_cubic (int fd,
     for (i = 0; i < 4; ++i)
         tmp[i] = G_interp_cubic(east, grid[i][0], grid[i][1], grid[i][2], grid[i][3]);
 
-#ifdef DEBUG
-    for (i = 0; i < 4; ++i) {
-        for (j = 0; j < 4; ++j)
-            fprintf(stderr, "%g ", grid[i][j]);
-        fprintf(stderr, "\n");
-    }
-
-    G_message("DIAG: (%d,%d) 1=%3.2g 2=%3.2g 3=%3.2g 4=%3.2g\te=%g n=%g",
-              row, col, tmp[0], tmp[1], tmp[2], tmp[3], east, north);
-#endif
+    G_debug(3, "raster_sample_cubic(): DIAG: (%d,%d) 1=%3.2g 2=%3.2g 3=%3.2g 4=%3.2g\te=%g n=%g",
+	    row, col, tmp[0], tmp[1], tmp[2], tmp[3], east, north);
 
     G_free(arow);
     G_free(brow);
@@ -479,5 +478,5 @@ static void raster_row_error(const struct Cell_head *window, double north, doubl
          window->north, window->south, window->east, window->west);
     G_debug(3, "      \tData point is north=%g east=%g", north, east);
 
-    G_fatal_error(_("problem reading raster cell file"));
+    G_fatal_error(_("Problem reading raster map"));
 }
