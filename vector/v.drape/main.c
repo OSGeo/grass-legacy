@@ -1,4 +1,3 @@
-
 /**********************************************************
  *
  * MODULE:       v.drape
@@ -17,7 +16,7 @@
  **********************************************************/
 
 
- /** Doxygen Style Comments
+/** Doxygen Style Comments
 \file main.c
 \brief v.drape module for converting 2D vectors into 3D vectors by means of sampling an elevation raster.
  
@@ -26,14 +25,7 @@
 \date 2005.09.20
  
 \todo add support for areas
-\todo Enhanced error checking such as
-	\li does the elevation raster cover the entire are of the vector map?
-	\li does the current region include the entire input vector map ?
-\todo Make a description.html for documentation
-
- */
-
-
+*/
 
 #include <stdlib.h>
 #include <math.h>
@@ -41,32 +33,31 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
-
 int main(int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *type_opt, *rast_opt, *method_opt;	
+    struct Option *in_opt, *out_opt, *type_opt, *rast_opt, *method_opt, *scale_opt;
+
     struct Map_info In, Out;
     struct line_pnts *Points;
     struct line_cats *Cats;
     /* int    layer; */
     int line, nlines, otype, ltype;
+    BOUND_BOX in_bbox, region_bbox, rast_bbox;
 
-    /* Raster stuff from v.sample::main.c */
     char *mapset;
     int j;
     double scale, estimated_elevation;
     INTERP_TYPE method = UNKNOWN;
     int fdrast;			/* file descriptor for raster map is int */
-    struct Cell_head window;
-    /* end raster stuff */
+    struct Cell_head window, rast_window;
 
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("vector");
+    module->keywords = _("vector, geometry, sampling");
     module->description =
-      _("Converts 2D vector to 3D vector by sampling of elevation raster. Default sampling by nearest neighbor.");
+      _("Converts vector map to 3D by sampling of elevation raster map.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -75,11 +66,16 @@ int main(int argc, char *argv[])
     type_opt->answer = "point,centroid,line,boundary,face,kernel";
 
     /* raster sampling */
-    rast_opt = G_define_option();
+    rast_opt = G_define_standard_option(G_OPT_R_MAP);
     rast_opt->key = "rast";
-    rast_opt->type = TYPE_STRING;
     rast_opt->required = NO;
-    rast_opt->description = _("Elevation raster for height extraction");
+    rast_opt->description = _("Elevation raster map for height extraction");
+
+    scale_opt = G_define_option();
+    scale_opt->key = "scale";
+    scale_opt->type = TYPE_DOUBLE;
+    scale_opt->description = _("Scale sampled raster values");
+    scale_opt->answer = "1.0";
 
     method_opt = G_define_option();
     method_opt->key = "method";
@@ -105,7 +101,6 @@ int main(int argc, char *argv[])
 	method = CUBIC;
     else
     {
-        G_message(_("defaulting to nearest neighbor sampling"));
         method = NEAREST;
     }
 
@@ -113,6 +108,12 @@ int main(int argc, char *argv[])
 
     /* setup the region */
     G_get_window(&window);
+
+    /* used to scale sampled raster values*/
+    scale = atof(scale_opt->answer);
+
+    /* Check output type */
+    otype = Vect_option_to_types(type_opt);
 
     /* check for the elev raster, and check for error condition */
     if ((mapset = G_find_cell(rast_opt->answer, "")) == NULL) {
@@ -124,19 +125,47 @@ int main(int argc, char *argv[])
 	G_fatal_error(_("Unable to open raster map <%s>"), rast_opt->answer);
     }
 
-    /* used to scale sampled raster values: will need to add an option to modify this later */
-    scale = 1;
-
-
-    /* Check output type */
-    otype = Vect_option_to_types(type_opt);
+    /* read raster header */
+    G_get_cellhd(rast_opt->answer, mapset, &rast_window);
 
     Vect_set_open_level(2);
-    Vect_open_old(&In, in_opt->answer, "");
+
+    /* check input/output vector maps */
+    Vect_check_input_output_name(in_opt->answer, out_opt->answer, GV_FATAL_EXIT);
+
+    mapset = G_find_vector2(in_opt->answer, "");
+    if (!mapset) {
+	G_fatal_error(_("Vector map <%s> not found"), in_opt->answer);
+    }
+
+    Vect_open_old(&In, in_opt->answer, mapset);
+
+    /* checks 
+       does the elevation raster cover the entire are of the vector map?
+       does the current region include the entire input vector map ?
+    */
+    Vect_get_map_box(&In, &in_bbox);
+    Vect_region_box(&window, &region_bbox);
+    Vect_region_box(&rast_window, &rast_bbox);
+    if (in_bbox.W < region_bbox.W ||
+	in_bbox.E > region_bbox.E ||
+	in_bbox.S < region_bbox.S ||
+	in_bbox.N > region_bbox.N) {
+	G_warning (_("Current region does not include the entire input vector map <%s>"),
+		   in_opt->answer);
+    }
+    if (in_bbox.W < rast_bbox.W ||
+	in_bbox.E > rast_bbox.E ||
+	in_bbox.S < rast_bbox.S ||
+	in_bbox.N > rast_bbox.N) {	
+	G_warning (_("Elevation raster map <%s> does not cover the entire area "
+		     "of the input vector map <%s>. "),
+		   rast_opt->answer, in_opt->answer);
+    }
 
     /* setup the new vector map */
-    /* remember to open the new vector map as 3D:  Vect_open_new(,,1) */
-    Vect_open_new(&Out, out_opt->answer, 1);
+    /* remember to open the new vector map as 3D */
+    Vect_open_new(&Out, out_opt->answer, WITH_Z);
     Vect_copy_head_data(&In, &Out);
     Vect_hist_copy(&In, &Out);
     Vect_hist_command(&Out);
@@ -158,7 +187,7 @@ int main(int argc, char *argv[])
 	for (line = 1; line <= nlines; line++) {
 
 	    /* progress feedback */
-	    G_percent(line, nlines, 1);
+	    G_percent(line, nlines, 2);
 
 	    /* get the line type */
 	    ltype = Vect_read_line(&In, Points, Cats, line);
@@ -224,7 +253,13 @@ int main(int argc, char *argv[])
     /* close input vector */
     Vect_close(&In);
     /* build topology for output vector */
-    Vect_build(&Out, stderr);
+    if (G_verbose() > G_verbose_min()) {
+	Vect_build(&Out, stderr);
+    }
+    else {
+	Vect_build(&Out, NULL);
+    }
+
     /* close output vector */
     Vect_close(&Out);
 
