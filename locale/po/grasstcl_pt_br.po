@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_pt_br\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-04 20:33-0200\n"
-"PO-Revision-Date: 2008-01-05 00:59-0200\n"
+"POT-Creation-Date: 2008-01-19 17:57-0200\n"
+"PO-Revision-Date: 2008-01-19 21:34-0200\n"
 "Last-Translator: Fernando Ferreira <fernando@vps.fmvz.usp.br>\n"
 "Language-Team: Brazilian Portuguese <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -1287,7 +1287,7 @@ msgstr "Interpolar a partir das isolinhas do raster"
 
 #: ../gui/tcltk/d.m/menu.tcl:348
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr "Interpolação dos pontos vetoriais pelo inverso da distância"
+msgstr "Interpolação dos pontos vetoriais ponderada pelo inverso da distância"
 
 #: ../gui/tcltk/d.m/menu.tcl:349
 msgid "Regularized spline tension interpolation from vector points or contours"
@@ -1295,7 +1295,9 @@ msgstr "Interpolar pontos ou isolinhas com spline regularizado com tensão"
 
 #: ../gui/tcltk/d.m/menu.tcl:351
 msgid "Fill NULL cells by interpolation using regularized spline tension"
-msgstr "Preencher células nulas através de interpolação por spline regularizado com tensão"
+msgstr ""
+"Preencher células nulas através de interpolação por spline regularizado com "
+"tensão"
 
 #: ../gui/tcltk/d.m/menu.tcl:354 ../gui/tcltk/d.m/menu.tcl:459
 #: ../gui/tcltk/d.m/menu.tcl:515 ../gui/tcltk/gis.m/gmmenu.tcl:398
@@ -1599,7 +1601,7 @@ msgstr "Amostrar mapa raster sob pontos dados"
 
 #: ../gui/tcltk/d.m/menu.tcl:453 ../gui/tcltk/gis.m/gmmenu.tcl:514
 msgid "Sample raster neighborhood around points"
-msgstr "Amostrar vizinhança do raster ao redor de pontos"
+msgstr "Amostrar raster na vizinhança ao redor de pontos"
 
 #: ../gui/tcltk/d.m/menu.tcl:455
 msgid "Partition points into test/training sets for k-fold cross validatation"
@@ -1663,7 +1665,7 @@ msgstr "Gerenciar cores da imagem"
 #: ../gui/tcltk/d.m/menu.tcl:478
 msgid "Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
-"Balanceia cores e melhora tabela de cores de imagens multibanda para "
+"Balanço de cores e realce da tabela de cores de imagens multibanda para "
 "exibição RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:479
@@ -1684,23 +1686,23 @@ msgstr "Retificar e georeferenciar grupo de imagens"
 
 #: ../gui/tcltk/d.m/menu.tcl:483
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
-msgstr "Definir pontos de controle sobre o mapa raster ou digitar"
+msgstr "Definir pontos de controle sobre o mapa raster ou através do teclado"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
-msgstr "Definir pontos de controle sobre o mapa vetorial ou digitar"
+msgstr "Definir pontos de controle sobre o mapa vetorial ou através do teclado"
 
 #: ../gui/tcltk/d.m/menu.tcl:487
 msgid "Affine and Polynomial rectification (rubber sheet)"
-msgstr "Retificação Afim e Polinomial"
+msgstr "Retificação Afim e Polinomial (rubber sheet)"
 
 #: ../gui/tcltk/d.m/menu.tcl:488 ../gui/tcltk/gis.m/gmmenu.tcl:541
 msgid "Ortho photo rectification"
-msgstr "Orto-Retificação de fotos"
+msgstr "Ortoretificação de fotos"
 
 #: ../gui/tcltk/d.m/menu.tcl:491
 msgid "Brovey transformation and pan sharpening"
-msgstr "Transformação de Brovey e afinamento pancromático"
+msgstr "Transformação de Brovey e pan sharpening"
 
 #: ../gui/tcltk/d.m/menu.tcl:492 ../gui/tcltk/gis.m/gmmenu.tcl:548
 msgid "Classify image"
@@ -1736,7 +1738,7 @@ msgstr "Filtrar imagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:503
 msgid "Zero edge crossing detection"
-msgstr "Detecção de cruzamento de zero"
+msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:504
 msgid "User defined matrix/convolving filter"
@@ -1768,11 +1770,11 @@ msgstr "Transformada Rápida de Fourier (FFT)"
 
 #: ../gui/tcltk/d.m/menu.tcl:512
 msgid "Inverse Fast Fourier Transform"
-msgstr "Transformada Rápida Inversa de Fourier (IFFT)"
+msgstr "Transformada Rápida de Fourier Inversa (IFFT)"
 
 #: ../gui/tcltk/d.m/menu.tcl:517
 msgid "Range of image values"
-msgstr "Limite dos valores da imagem"
+msgstr "Limites dos valores da imagem"
 
 #: ../gui/tcltk/d.m/menu.tcl:519
 msgid "Bit pattern comparison for ID of low quality pixels"
@@ -1780,7 +1782,7 @@ msgstr "Comparação de padrão de bits para identificação de pixels de baixa quali
 
 #: ../gui/tcltk/d.m/menu.tcl:520
 msgid "Kappa classification accuracy assessment"
-msgstr "Estimativa da precisão da classificação Kappa"
+msgstr "Estimativa da acurácia da classificação Kappa"
 
 #: ../gui/tcltk/d.m/menu.tcl:521
 msgid "Optimum index factor for LandSat TM"
@@ -1796,7 +1798,7 @@ msgstr "Desenvolver volumes grid3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:526 ../gui/tcltk/gis.m/gmmenu.tcl:579
 msgid "Manage nulls for grid3D volume"
-msgstr "Gerenciar nulos para volume 3D"
+msgstr "Gerenciar nulos para volumes grid3D"
 
 #: ../gui/tcltk/d.m/menu.tcl:527 ../gui/tcltk/gis.m/gmmenu.tcl:580
 msgid "Manage timestamp for grid3D volume"
@@ -1901,7 +1903,7 @@ msgstr "Ajuda do GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:627
 msgid "GIS Manager &help"
-msgstr "Ajuda do Gerenciador do SIG"
+msgstr "A&juda do Gerenciador do SIG"
 
 #: ../gui/tcltk/d.m/menu.tcl:561 ../gui/tcltk/gis.m/gmmenu.tcl:627
 msgid "GIS Manager help"
@@ -1913,7 +1915,7 @@ msgstr "Sobre o &GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:562 ../gui/tcltk/gis.m/gmmenu.tcl:628
 msgid "About GRASS"
-msgstr "Sobre o &GRASS"
+msgstr "Sobre o GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:563 ../gui/tcltk/gis.m/gmmenu.tcl:629
 msgid "About &System"
@@ -2222,7 +2224,7 @@ msgstr "Mostrar quando o tamanho médio da região for"
 
 #: ../gui/tcltk/d.m/vector.tcl:386
 msgid "Line width for ps.map print output:"
-msgstr "Espessura da linha para impressão via ps.map"
+msgstr "Espessura da linha para impressão via ps.map:"
 
 #: ../gui/tcltk/d.m/vector.tcl:388
 msgid "Line width used for printing"
@@ -2271,7 +2273,7 @@ msgstr "cor do ponto"
 
 #: ../gui/tcltk/d.m/thematic.tcl:212 ../gui/tcltk/gis.m/thematic.tcl:326
 msgid "line color"
-msgstr "Cor da Linha"
+msgstr "cor da Linha"
 
 #: ../gui/tcltk/d.m/thematic.tcl:230
 msgid "Graduate colors: preset color schemes"
@@ -2322,6 +2324,7 @@ msgid "Add thematic map layer"
 msgstr "Adicionar camada de mapa temático"
 
 #: ../gui/tcltk/d.m/tool2.tcl:76
+#, fuzzy
 msgid "Add paint labels layer (from directory paint/labels)"
 msgstr "Adicionar camada de rótulos (do diretório paint/labels)"
 
@@ -2589,7 +2592,7 @@ msgstr "Desenhar gradiente suave"
 
 #: ../gui/tcltk/d.m/legend.tcl:177
 msgid "flip legend"
-msgstr "Espelhar legenda"
+msgstr "espelhar legenda"
 
 #: ../gui/tcltk/d.m/frames.tcl:60 ../gui/tcltk/gis.m/frames.tcl:112
 msgid "create and select frame"
@@ -2744,8 +2747,9 @@ msgid "  scale factor"
 msgstr "  fator de escala"
 
 #: ../gui/tcltk/gis.m/chart.tcl:255
+#, fuzzy
 msgid "\tfixed chart size (if size column not used)"
-msgstr "\ttamnho do gráfico (se coluna tamanho não for usada)"
+msgstr "\ttamanho do gráfico (se coluna tamanho não for usada)"
 
 #: ../gui/tcltk/gis.m/chart.tcl:262
 msgid "\tchart outline color:"
@@ -2946,7 +2950,7 @@ msgstr "Vetor para volume"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:182
 msgid "Sites to vector"
-msgstr "Sítios (GRASS 5.x) para vetor"
+msgstr "Sítios para vetor"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:184
 msgid "Volume to raster series"
@@ -2961,6 +2965,7 @@ msgid "Animate raster maps"
 msgstr "Animar série de mapas raster "
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:191
+#, fuzzy
 msgid "Bearing/distance to coordinates"
 msgstr "Azimute/distância para coordenadas"
 
