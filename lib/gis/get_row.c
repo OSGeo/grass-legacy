@@ -1,80 +1,17 @@
-/**********************************************************************
- *
- *   get_row_nomask() works for all map types and doesn't consider
- *   null row corresponding to the requested row 
- *
- *   G_get_map_row(fd, buf, row)
- *      int fd                     file descriptor for the opened map
- *      CELL *buf                  buffer for the row to be placed into
- *      int row                    data row desired
- *
- *   G_get_raster_row(fd, buf, row, data_type)
- *      int fd                     file descriptor for the opened map
- *      void *buf                  buffer for the row to be placed into
- *      int row                    data row desired
- *      RASTER_MAP_TYPE data_type  FCELL_TYPE, DCELL_TYPE, or CELL_TYPE.
- *
- *   G_get_c_raster_row(fd, buf, row)
- *      int fd                     file descriptor for the opened map
- *      CELL *buf                  buffer for the row to be placed into
- *      int row                    data row desired
- *
- *   G_get_f_raster_row(fd, buf, row)
- *      int fd                     file descriptor for the opened map
- *      FCELL *buf                 buffer for the row to be placed into
- *      int row                    data row desired
- *
- *   G_get_d_raster_row(fd, buf, row)
- *      int fd                     file descriptor for the opened map
- *      DCELL *buf                 buffer for the row to be placed into
- *      int row                    data row desired
- *
- *   Reads appropriate information into the buffer "buf" associated 
- *   with the requested row "row".  "buf" is associated with the
- *   current window.
- *
- *   Note, that the type of the data in "buf" (say X) is independent of 
- *   the type of the data in the file described by fd (say Y).
- *
- *   Step 1:  Read appropriate raw map data into a intermediate buffer.
- *   Step 2:  Convert the data into a CPU readable format, and subsequently
- *            resample the data. the data is stored in a second intermediate 
- *            buffer (the type of the data in this buffer is Y).
- *   Step 3:  Convert this type Y data into type X data and store it in
- *            buffer "buf". Conversion is performed in functions 
- *            "transfer_to_cell_XY". (For details of the conversion between
- *            two particular types check the functions).
- *   Step 4:  read or simmulate null value row and zero out cells corresponding 
- *            to null value cells. The masked out cells are set to null when the
- *            mask exists. (the MASK is taken care of by null values
- *            (if the null file doesn't exist for this map, then the null row
- *            is simulated by assuming that all zero are nulls *** in case
- *            of G_get_raster_row() and assuming that all data is valid 
- *            in case of G_get_f/d_raster_row(). In case of deprecated function
- *            G_get_map_row() all nulls are converted to zeros (so there are
- *	      no embedded nulls at all). Also all masked out cells become zeros.
- *
- *   returns:    1  if successful
- *               0  row requested not within window
- *              -1  on fail
- *
- *   diagnostics: first read request (for each open cell file)
- *                that fails will generate a warning message.
- *                subsequent failures will be silent.
- **********************************************************************
- *   G_get_null_value_row(fd, buf, row)
- *      int fd                     file descriptor for the opened map
- *      char *buf                  buffer for the row to be placed into
- *      int row                    data row desired
- *
- *   read or simmulate null value row and set the cells corresponding 
- *   to null value to 1. The masked out cells are set to null when the
- *   mask exists. (the MASK is taken care of by null values
- *   (if the null file doesn't exist for this map, then the null row
- *   is simulated by assuming that all zeros in raster map are nulls.
- *   Also all masked out cells become nulls.
- *
- **********************************************************************/
+/*!
+  \file get_row.c
+  
+  \brief GIS library - get raster row
+
+  (C) 2003-2008 by the GRASS Development Team
+  
+  This program is free software under the 
+  GNU General Public License (>=v2). 
+  Read the file COPYING that comes with GRASS
+  for details.
+  
+  \author Original author CERL
+*/
 
 #include <string.h>
 #include <unistd.h>
@@ -107,7 +44,7 @@ static int compute_window_row(int fd, int row, int *cellRow)
     /* check for row in window */
     if (row < 0 || row >= G__.window.rows)
     {
-	G_warning(_("[%s in %s] - read request for row %d is outside region"),
+	G_warning(_("Reading raster map <%s@%s> request for row %d is outside region"),
 		  fcb->name, fcb->mapset, row);
     
 	return -1;
@@ -178,7 +115,7 @@ static int read_data_fp_compressed(int fd, int row, unsigned char *data_buf, int
 
     *nbytes = fcb->nbytes;
 
-    if (G_zlib_read(fd, readamount, data_buf, bufsize) != bufsize)
+    if ((size_t) G_zlib_read(fd, readamount, data_buf, bufsize) != bufsize)
 	return -1;
 
     return 0;
@@ -293,7 +230,7 @@ static void cell_values_int(
 {
     CELL *c = cell;
     COLUMN_MAPPING cmapold = 0;
-    int big = nbytes >= sizeof(CELL);
+    int big = (size_t) nbytes >= sizeof(CELL);
     int i;
 
     for (i = 0; i < n; i++)
@@ -419,7 +356,7 @@ static void cell_values_double(
 
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_double(xdrs, &c[i]))
-		G_fatal_error(_("cell_values_double: xdr_double failed for index %d."), i);
+		G_fatal_error(_("cell_values_double: xdr_double failed for index %d"), i);
 	
 	cmapold--;
     }
@@ -529,7 +466,10 @@ static void transfer_to_cell_fd(int fd, void *cell)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-
+/*
+ *   works for all map types and doesn't consider
+ *   null row corresponding to the requested row 
+ */
 static int get_map_row_nomask(int fd, void *rast, int row, RASTER_MAP_TYPE data_type)
 {
     static void (*transfer_to_cell_FtypeOtype[3][3])() =
@@ -561,12 +501,11 @@ static int get_map_row_nomask(int fd, void *rast, int row, RASTER_MAP_TYPE data_
 	    if (!fcb->io_error)
 	    {
 		if (fcb->cellhd.compressed)
-			G_warning(_("error reading compressed map [%s] in "
-				"mapset [%s], row %d"),
-				fcb->name, fcb->mapset, r);
+			G_warning(_("Error reading compressed map <%s@%s>, row %d"),
+				  fcb->name, fcb->mapset, r);
 		else
-			G_warning(_("error reading map [%s] in mapset [%s], row %d"),
-				fcb->name, fcb->mapset, r);
+			G_warning(_("Error reading map <%s@%s>, row %d"),
+				  fcb->name, fcb->mapset, r);
 
 		fcb->io_error = 1;
 	    }
@@ -651,28 +590,35 @@ static int get_map_row(
 /*--------------------------------------------------------------------------*/
 
 /*!
- * \brief read a raster map (without masking)
+ * \brief Read raster row without masking (this routine is deprecated)
  *
- * This routine reads the specified <b>row</b>
- * from the raster map open on file descriptor <b>fd</b> into the
- * <b>cell</b> buffer like G_get_map_row() does. The difference is that
- * masking is suppressed. If the user has a mask set, G_get_map_row( ) will
- * apply the mask but G_get_map_row_nomask() will ignore it.
- * This routine prints a diagnostic message and returns -1 if there is an error 
+ * This routine reads the specified <em>row</em> from the raster map
+ * open on file descriptor <em>fd</em> into the <em>buf</em> buffer
+ * like G_get_map_row() does. The difference is that masking is
+ * suppressed. If the user has a mask set, G_get_map_row() will apply
+ * the mask but G_get_map_row_nomask() will ignore it. This routine
+ * prints a diagnostic message and returns -1 if there is an error
  * reading the raster map. Otherwise a nonnegative value is returned.
- * <b>Note.</b> Ignoring the mask is not generally acceptable. Users expect 
- * the mask to be applied. However, in some cases ignoring the mask is 
- * justified. For example, the GRASS modules <i>r.describe</i>, which reads 
- * the raster map directly to report all data values in a raster map, and 
- * <i>r.slope.aspect</i>, which produces slope and aspect from elevation, 
- * ignore both the mask and the region. However, the number of GRASS modules 
- * which do this should be minimal. See Mask for more information 
- * about the mask.
  *
- *  \param fd
- *  \param cell
- *  \param row
- *  \return int
+ * <b>Note.</b> Ignoring the mask is not generally acceptable. Users
+ * expect the mask to be applied. However, in some cases ignoring the
+ * mask is justified. For example, the GRASS modules
+ * <i>r.describe</i>, which reads the raster map directly to report
+ * all data values in a raster map, and <i>r.slope.aspect</i>, which
+ * produces slope and aspect from elevation, ignore both the mask and
+ * the region. However, the number of GRASS modules which do this
+ * should be minimal. See Mask for more information about the mask.
+ *
+ * <b>This routine is deprecated! Use G_get_raster_row_nomask()
+ * instead.</b>
+ *
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_map_row_nomask(int fd, CELL *buf, int row)
@@ -681,16 +627,18 @@ int G_get_map_row_nomask(int fd, CELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Read raster row without masking
  *
- *  Same as <tt>G_get_f_raster_row()</tt>
- *  except no masking occurs.
+ *  Same as G_get_raster_row() except no masking occurs.
  *
- *  \param fd
- *  \param fcell
- *  \param row
- *  \param map_type
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ * \param data_type data type
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_raster_row_nomask(int fd, void *buf, int row, RASTER_MAP_TYPE data_type)
@@ -699,14 +647,18 @@ int G_get_raster_row_nomask(int fd, void *buf, int row, RASTER_MAP_TYPE data_typ
 }
 
 /*!
- * \brief 
+ * \brief Read raster row without masking (CELL type)
  *
- * Same as <tt>G_get_c_raster_row()</tt> except no masking occurs.
+ *  Same as G_get_c_raster_row() except no masking occurs.
  *
- *  \param fd
- *  \param buf
- *  \param row
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ * \param data_type data type
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_c_raster_row_nomask(int fd, CELL *buf, int row)
@@ -715,14 +667,18 @@ int G_get_c_raster_row_nomask(int fd, CELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Read raster row without masking (FCELL type)
  *
- * Same as <tt>G_get_f_raster_row()</tt> except no masking occurs.
+ *  Same as G_get_f_raster_row() except no masking occurs.
  *
- *  \param fd
- *  \param fcell
- *  \param row
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ * \param data_type data type
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_f_raster_row_nomask(int fd, FCELL *buf, int row)
@@ -731,14 +687,18 @@ int G_get_f_raster_row_nomask(int fd, FCELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Read raster row without masking (DCELL type)
  *
- * Same as <tt>G_get_d_raster_row()</tt> except no masking occurs.
+ *  Same as G_get_d_raster_row() except no masking occurs.
  *
- *  \param fd
- *  \param dcell
- *  \param row
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ * \param data_type data type
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_d_raster_row_nomask(int fd, DCELL *buf, int row)
@@ -749,17 +709,23 @@ int G_get_d_raster_row_nomask(int fd, DCELL *buf, int row)
 /*--------------------------------------------------------------------------*/
 
 /*!
- * \brief 
+ * \brief Get raster row (this routine is deprecated!)
  *
- * If the map is floating-point, quantize the
- * floating-point values to integer using the quantization rules established for
- * the map when the map was opened for reading (this quantization is read from
- * cell_misc/name/f_quant file, but can be reset after opening raster map by
- * G_set_quant_rules()).
- * NULL values are converted to zeros.
- * <b>This routine is deprecated!!</b>
+ * If the map is floating-point, quantize the floating-point values to
+ * integer using the quantization rules established for the map when
+ * the map was opened for reading (this quantization is read from
+ * cell_misc/name/f_quant file, but can be reset after opening raster
+ * map by G_set_quant_rules()). NULL values are converted to zeros.
  *
- *  \return int
+ * <b>This routine is deprecated! Use G_get_raster_row() instead.</b>
+ *
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_map_row(int fd, CELL *buf, int row)
@@ -768,18 +734,46 @@ int G_get_map_row(int fd, CELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Get raster row
  *
- * If <em>data_type</em> is CELL_TYPE, calls
- * G_get_c_raster_row(fd, (CELL *) rast, row);
- * If <em>data_type</em> is FCELL_TYPE, calls G_get_f_raster_row(fd, (FCELL *) rast, row);
- * If <em>data_type</em> is DCELL_TYPE, calls G_get_d_raster_row(fd, (DCELL *) rast, row);
+ * If <em>data_type</em> is
+ *  - CELL_TYPE, calls G_get_c_raster_row()
+ *  - FCELL_TYPE, calls G_get_f_raster_row()
+ *  - DCELL_TYPE, calls G_get_d_raster_row()
  *
- *  \param fd
- *  \param rast
- *  \param row
- *  \param data_type
- *  \return int
+ *   Reads appropriate information into the buffer <em>buf</em> associated 
+ *   with the requested row <em>row</em>. <em>buf</em> is associated with the
+ *   current window.
+ *
+ *   Note, that the type of the data in <em>buf</em> (say X) is independent of 
+ *   the type of the data in the file described by <em>fd</em> (say Y).
+ *
+ *    - Step 1:  Read appropriate raw map data into a intermediate buffer.
+ *    - Step 2:  Convert the data into a CPU readable format, and subsequently
+ *            resample the data. the data is stored in a second intermediate 
+ *            buffer (the type of the data in this buffer is Y).
+ *    - Step 3:  Convert this type Y data into type X data and store it in
+ *            buffer "buf". Conversion is performed in functions 
+ *            "transfer_to_cell_XY". (For details of the conversion between
+ *            two particular types check the functions).
+ *    - Step 4:  read or simmulate null value row and zero out cells corresponding 
+ *            to null value cells. The masked out cells are set to null when the
+ *            mask exists. (the MASK is taken care of by null values
+ *            (if the null file doesn't exist for this map, then the null row
+ *            is simulated by assuming that all zero are nulls *** in case
+ *            of G_get_raster_row() and assuming that all data is valid 
+ *            in case of G_get_f/d_raster_row(). In case of deprecated function
+ *            G_get_map_row() all nulls are converted to zeros (so there are
+ *	      no embedded nulls at all). Also all masked out cells become zeros.
+ *
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ * \param data_type data type
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_raster_row(int fd, void *buf, int row, RASTER_MAP_TYPE data_type)
@@ -788,21 +782,25 @@ int G_get_raster_row(int fd, void *buf, int row, RASTER_MAP_TYPE data_type)
 }
 
 /*!
- * \brief 
+ * \brief Get raster row (CELL type)
  *
- * Reads a row
- * of raster data and leaves the NULL values intact. (As opposed to the
- * deprecated function <tt>G_get_map_row()</tt> which converts NULL values to
- * zero.) 
- * <b>NOTE.</b> When the raster map is old and null file doesn't exist, it is
- * assumed that all 0-cells are no-data. When map is floating point, uses quant
- * rules set explicitly by G_set_quant_rules() or stored in map's quant file to
- * convert floats to integers.
+ * Reads a row of raster data and leaves the NULL values intact. (As
+ * opposed to the deprecated function G_get_map_row() which
+ * converts NULL values to zero.) 
  *
- *  \param fd
- *  \param buf
- *  \param row
- *  \return int
+ * <b>NOTE.</b> When the raster map is old and null file doesn't
+ * exist, it is assumed that all 0-cells are no-data. When map is
+ * floating point, uses quant rules set explicitly by
+ * G_set_quant_rules() or stored in map's quant file to convert floats
+ * to integers.
+ *
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_c_raster_row(int fd, CELL *buf, int row)
@@ -811,18 +809,21 @@ int G_get_c_raster_row(int fd, CELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Get raster row (FCELL type)
  *
- * Read a row
- * from the raster map open on <em>fd</em> into the <tt>float</tt> array <em>fcell</em>
- * performing type conversions as necessary based on the actual storage type of
- * the map. Masking, resampling into the current region.  NULL-values are always
+ * Read a row from the raster map open on <em>fd</em> into the
+ * <tt>float</tt> array <em>fcell</em> performing type conversions as
+ * necessary based on the actual storage type of the map. Masking,
+ * resampling into the current region.  NULL-values are always
  * embedded in <tt>fcell</tt> (<em>never converted to a value</em>).
  *
- *  \param fd
- *  \param fcell
- *  \param row
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_f_raster_row(int fd, FCELL *buf, int row)
@@ -831,15 +832,18 @@ int G_get_f_raster_row(int fd, FCELL *buf, int row)
 }
 
 /*!
- * \brief 
+ * \brief Get raster row (DCELL type)
  *
- *  Same as
- * <tt>G_get_f_raster_row()</tt> except that the array <em>dcell</em> is <tt>double</tt>.
+ * Same as G_get_f_raster_row() except that the array <em>dcell</em>
+ * is <tt>double</tt>.
  *
- *  \param fd
- *  \param dcell
- *  \param row
- *  \return int
+ * \param fd file descriptor for the opened raster map
+ * \param buf buffer for the row to be placed into
+ * \param row data row desired
+ *
+ * \return 1 on success
+ * \return 0 row requested not within window
+ * \return -1 on error
  */
 
 int G_get_d_raster_row(int fd, DCELL *buf, int row)
@@ -912,13 +916,13 @@ static int read_null_bits(
 
     if (lseek(null_fd, offset, SEEK_SET) < 0)
     {
-	G_warning(_("error reading null row %d"), R);
+	G_warning(_("Error reading null row %d"), R);
 	return -1;
     }
 
     if (read(null_fd, flags, size) != size)
     {
-	G_warning(_("error reading null row %d"), R);
+	G_warning(_("Error reading null row %d"), R);
 	return -1;
     }
 
@@ -932,7 +936,7 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 
     if (row > G__.window.rows || row < 0)   
     {
-	G_warning(_("[%s in %s] - read request for row %d is outside region"),
+	G_warning(_("Reading raster map <%s@%s> request for row %d is outside region"),
 		  fcb->name, fcb->mapset, row);
     }
           
@@ -999,7 +1003,7 @@ static void get_null_value_row_nomask(int fd, char *flags, int row)
 	    fcb->NULL_ROWS[i] = G_realloc (fcb->NULL_ROWS[i],
 					G__null_bitstream_size(G__.window.cols)+1);
 	    if (fcb->NULL_ROWS[i] == NULL)
-		G_fatal_error(_("Could not realloc buffer"));
+		G_fatal_error("get_null_value_row_nomask: %s", _("Unable to realloc buffer"));
 		
 	    G__convert_01_flags(flags, fcb->NULL_ROWS[i], G__.window.cols);
 
@@ -1079,6 +1083,22 @@ static int embed_nulls(
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
+/*!
+  \brief Read or simmulate null value row
+
+  Read or simmulate null value row and set the cells corresponding 
+  to null value to 1. The masked out cells are set to null when the
+  mask exists. (the MASK is taken care of by null values
+  (if the null file doesn't exist for this map, then the null row
+  is simulated by assuming that all zeros in raster map are nulls.
+  Also all masked out cells become nulls.
+
+  \param fd file descriptor for the opened map
+  \param buf buffer for the row to be placed into
+  \param row data row desired
+
+  \return 1
+*/
 int G_get_null_value_row(int fd, char *flags, int row)
 {
     get_null_value_row(fd, flags, row, 1);
