@@ -1,10 +1,8 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE: 	GRASS ogsf library
-* AUTHOR(S):	none
+* AUTHOR(S):	Bill Brown, USACERL
 * PURPOSE: 	This file needs to be re-written in OpenGL
 * COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
