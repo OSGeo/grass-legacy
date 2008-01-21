@@ -2,7 +2,9 @@
  *
  * MODULE:       r3.showdspf
  * AUTHOR(S):    Bill Brown, CERL
- *               ported to OpenGL by Steve Hall
+ *               ported from IrisGL to OpenGL by Ken Sakai, Steve Hall,
+ *               Lockheed Martin Space Systems,
+ *               Sunnyale, California, Modification date: March 2000
  * PURPOSE:      Visualization program which loads the isosurfaces previously calculated
  *               using r3.mkdspf
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
