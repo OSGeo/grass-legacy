@@ -1,3 +1,4 @@
+#include <cstring>
 #include "6s.h"
 #include "common.h"
 #include "GeomCond.h"
