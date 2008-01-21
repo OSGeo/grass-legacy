@@ -62,8 +62,7 @@ int main(int argc, char **argv)
     RSEGMENT *rseg;
     struct Option *in_opt, *out_opt, *labels_opt;
     struct Option *lfield_opt;
-    struct Option *table_opt, *offset_opt;
-    
+    struct Option *driver_opt, *database_opt, *table_opt, *offset_opt;
     struct Option *Xoffset;
     struct Option *Yoffset;
     struct Option *Reference;
@@ -79,11 +78,12 @@ int main(int argc, char **argv)
 
     struct GModule *module;
     char   *mapset, buf[2000];
+    char   *drv, *db;
     struct Map_info In, Out;
     struct line_cats *LCats, *SCats; 
     struct line_pnts *LPoints, *SPoints;
-    dbDriver *driver;
-    dbHandle handle;
+    dbDriver *rsdriver;
+    dbHandle rshandle;
     dbString stmt;	   
     dbCursor cursor;
     dbTable  *table;
@@ -112,6 +112,22 @@ int main(int argc, char **argv)
     lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
     lfield_opt->description = _("Line layer");
+    
+    driver_opt = G_define_option() ;
+    driver_opt->key         = "rsdriver" ;
+    driver_opt->type        = TYPE_STRING ;
+    driver_opt->required    = NO;
+    driver_opt->description = _("Driver name for reference system table");
+    if ( (drv=db_get_default_driver_name()) )
+    driver_opt->answer = drv;
+    
+    database_opt = G_define_option() ;
+    database_opt->key         = "rsdatabase" ;
+    database_opt->type        = TYPE_STRING ;
+    database_opt->required    = NO;
+    database_opt->description = _("Database name for reference system table");
+    if ( (db=db_get_default_database_name()) )
+    database_opt->answer = db;
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
@@ -270,11 +286,11 @@ int main(int argc, char **argv)
 			   labels_opt->answer);
     }
     
-    db_init_handle (&handle);
+    db_init_handle (&rshandle);
     db_init_string (&stmt);
-    driver = db_start_driver(NULL);
-    db_set_handle (&handle, NULL, NULL);
-    if (db_open_database(driver, &handle) != DB_OK)
+    rsdriver = db_start_driver(driver_opt->answer);
+    db_set_handle (&rshandle, database_opt->answer, NULL);
+    if (db_open_database(rsdriver, &rshandle) != DB_OK)
         G_fatal_error(_("Unable to open database for reference table"));
 
     /* For each line select all existeng reference segments, sort them along the line
@@ -300,7 +316,7 @@ int main(int argc, char **argv)
 	db_append_string ( &stmt, buf);
 	
 	G_debug(1, "    select");
-	if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
+	if (db_open_select_cursor(rsdriver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
 	    G_fatal_error (_("Unable to select records from LRS table: %s"), buf);
 
 	table = db_get_cursor_table (&cursor);
@@ -377,7 +393,7 @@ int main(int argc, char **argv)
                 G_debug(2, "mp = %d sta = %d station = %f", mp, sta, station );
 		
 	        G_debug(1, "      get offset");
-                ret = LR_get_offset( driver, table_opt->answer, "lcat", "lid",
+                ret = LR_get_offset( rsdriver, table_opt->answer, "lcat", "lid",
                       "start_map", "end_map", "start_mp", "start_off", "end_mp", "end_off",
 		      rseg[seg].lid, mp, sta * sta_multip, mp_multip, &lcat, &map_offset );
 	        /* G_debug(1, "      get offset time = %d", t2 - t1); */
@@ -465,7 +481,7 @@ int main(int argc, char **argv)
 
     }
 
-    db_close_database(driver);
+    db_close_database(rsdriver);
     Vect_build (&Out, stderr);
 
     /* Free, close ... */
