@@ -1,3 +1,4 @@
+#include <cstring>
 #include "common.h"
 #include "GeomCond.h"
 #include "AtmosModel.h"
