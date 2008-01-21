@@ -48,12 +48,12 @@ int main (int argc, char *argv[])
     use_opt->multiple       = NO;
     use_opt->options        = "attr,cat,val,z,dir";
     use_opt->answer         = "attr";
-    use_opt->description    = _("Source of raster values:\n"
-			"\t\tattr - read values from attribute table\n"
-			"\t\tcat  - use category values\n"
-			"\t\tval  - use value specified by value option\n"
-			"\t\tz    - use z coordinate (points or contours only)\n"
-			"\t\tdir  - output as flow direction (lines only)");
+    use_opt->description    = _("Source of raster values");
+    use_opt->descriptions   = _("attr;read values from attribute table;"
+				"cat;use category values;"
+				"val;use value specified by value option;"
+				"z;use z coordinate (points or contours only);"
+				"dir;output as flow direction (lines only)");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
     type_opt -> options = "point,line,area";
@@ -62,13 +62,9 @@ int main (int argc, char *argv[])
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     /* for GRASS 7, IMHO this should be changed to "attrcolumn" */
-    col = G_define_option();
-    col->key            = "column";
-    col->type           = TYPE_STRING;
-    col->key_desc       = "name";
-    col->required       = NO;
-    col->multiple       = NO;
+    col = G_define_standard_option(G_OPT_COLUMN);
     col->description    = _("Name of column for attr parameter (data type must be numeric)");
+    col->guisection = _("Attributes");
 
     val_opt = G_define_option();
     val_opt->key              = "value";
@@ -86,19 +82,15 @@ int main (int argc, char *argv[])
     rows->answer           = "4096";
     rows->description      = _("Number of rows to hold in memory");
 
-    rgbcol_opt = G_define_option();
+    rgbcol_opt = G_define_standard_option(G_OPT_COLUMN);
     rgbcol_opt->key        = "rgbcolumn";
-    rgbcol_opt->type       = TYPE_STRING ;
-    rgbcol_opt->required   = NO ;
-    rgbcol_opt->multiple   = NO ;
     rgbcol_opt->description= _("Name of color definition column (with RRR:GGG:BBB entries)");
+    rgbcol_opt->guisection = _("Attributes");
 
-    label_opt = G_define_option();
+    label_opt = G_define_standard_option(G_OPT_COLUMN);
     label_opt->key        = "labelcolumn";
-    label_opt->type       = TYPE_STRING ;
-    label_opt->required   = NO ;
-    label_opt->multiple   = NO ;
     label_opt->description= _("Name of column used as raster category labels");
+    label_opt->guisection = _("Attributes");
 
     if (G_parser (argc, argv))
 	exit(EXIT_FAILURE);
