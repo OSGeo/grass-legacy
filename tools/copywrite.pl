@@ -2,6 +2,13 @@
 
 ## Script to easily add missing copyright statements in
 ## GRASS source code files
+## 2006, written by Schuyler Erle <schuyler , nocat net>
+##
+## COPYRIGHT:    (C) 2006 by the GRASS Development Team
+##
+##               This program is free software under the GNU General Public
+##               License (>=v2). Read the file COPYING that comes with GRASS
+##               for details.
 ##
 ## The script searches and opens sequentially all files
 ## which lack the word "copyright". Additionally the local
@@ -11,8 +18,6 @@
 ##
 ## Please run from top source code directory.
 ## For usage details, see below.
-##
-## 2006, written by Schuyler Erle <schuyler , nocat net>
 
 #-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#-=-#
 #
