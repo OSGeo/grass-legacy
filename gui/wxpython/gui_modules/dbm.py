@@ -2670,9 +2670,12 @@ class DisplayAttributesDialog(wx.Dialog):
 
             wx.MessageBox(parent=self.parent,
                           message=_("No attribute table linked to "
-                                    "vector map <%s> found.%s"
-                                    "%s") % (self.map, os.linesep, label),
-                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                                    "vector map <%s> found. %s "
+                                    "%sYou can disable this message from digitization settings. Or "
+                                    "you can create and link attribute table to the vector map "
+                                    "using Attribute Table Manager.") % \
+                              (self.map, label, os.linesep),
+                          caption=_("Message"), style=wx.OK | wx.ICON_EXCLAMATION | wx.CENTRE)
             self.mapDBInfo = None
             return
 
@@ -2994,8 +2997,8 @@ class VectorDBInfo:
         """Check DB connection"""
         layerCommand = gcmd.Command(cmd=["v.db.connect",
                                          "-g", "--q",
-                                        "map=%s" % self.map,],
-                                    log=None)
+                                         "map=%s" % self.map,],
+                                    rerr=None, stderr=None)
         if layerCommand.returncode != 0:
             return False
 

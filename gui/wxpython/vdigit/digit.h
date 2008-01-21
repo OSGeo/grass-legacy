@@ -43,6 +43,10 @@ public:
     int ModifyLineVertex(int, double, double, double,
 			 double);
 
+    std::vector<int> SelectLinesByQuery(double, double, double,
+					double, double, double, bool,
+					int, int, double);
+
     int CopyCats(std::vector<std::vector<int> >, std::vector<int>);
 
     int GetCategory(int);

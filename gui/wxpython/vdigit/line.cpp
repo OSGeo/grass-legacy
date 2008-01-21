@@ -321,9 +321,7 @@ int Digit::MergeLines()
 	return -1;
     }
 
-    /*
-      ret = Vedit_merge_lines(display->mapInfo, display->selected);
-    */
+    ret = Vedit_merge_lines(display->mapInfo, display->selected);
 
     return ret;
 }
@@ -342,10 +340,8 @@ int Digit::BreakLines()
 	return -1;
     }
 
-    /*
     ret = Vect_break_lines_list(display->mapInfo, display->selected,
 				GV_LINES, NULL, NULL);
-    */
 
     return ret;
 }
@@ -366,10 +362,9 @@ int Digit::SnapLines(double thresh)
 	return -1;
     }
 
-    /*
     Vect_snap_lines_list (display->mapInfo, display->selected,
-    thresh, NULL, NULL);
-    */
+			  thresh, NULL, NULL);
+
     return ret;
 }
 
@@ -388,10 +383,9 @@ int Digit::ConnectLines(double thresh)
 	return -1;
     }
 
-    /*
-    ret = Vedit_connect_lines(&Map, List,
+    ret = Vedit_connect_lines(display->mapInfo, display->selected,
 			      thresh);
-    */
+
     return ret;
 }
 
@@ -416,10 +410,8 @@ int Digit::ZBulkLabeling(double x1, double y1, double x2, double y2,
 	return -1;
     }
 
-    /*
     ret = Vedit_bulk_labeling (display->mapInfo, display->selected,
 			       x1, y1, x2, y2, start, step);
-    */
 
     return ret;
 }
@@ -454,21 +446,23 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
 	Vect_open_old(bgMap, (char *) bgmap_name, (char *) mapset); /* TODO */
     }
 
-/*
-    if (!ids.empty) {
-	list = Vect_new_list_struct();
+    if (!ids.empty()) {
+	list = Vect_new_list();
+	for (std::vector<int>::const_iterator b = ids.begin(), e = ids.end();
+	     b != e; ++b) {
+	    Vect_list_append(list, *b);
+	}
     }
     else {
 	list = display->selected;
     }
 
-    int Vedit_copy_lines (display->mapInfo, bgMap,
-			  list);
+    Vedit_copy_lines (display->mapInfo, bgMap,
+		      list);
 
     if (list != display->selected) {
-	Vect_destroy_list_struct(list);
+	Vect_destroy_list(list);
     }
-*/
 
     if (bgMap) {
 	Vect_close(bgMap);
@@ -476,5 +470,4 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
     }
 
     return ret;
-    
 }

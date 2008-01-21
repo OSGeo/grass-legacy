@@ -23,10 +23,9 @@ import os, sys
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
 sys.path.append(gmpath)
 
-import gcmd as cmd
+import gcmd
 import grassenv
 from digit import Digit as Digit
-from digit import DigitError as DigitError
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -582,7 +581,7 @@ class DigitToolbar(AbstractToolbar):
 
         try:
             self.parent.digit.SetMapName(mapLayer.name)
-        except DigitError, e:
+        except gcmd.DigitError, e:
             self.layerSelectedID = None
             print e # wxMessageBox
             return False
