@@ -15,7 +15,7 @@ CXXFLAGS=-c -fpic -I$(ARCH_DISTDIR)/include  -I/usr/include/python$(PYTHONVERSIO
 LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) `wx-config --libs` -lgdi
 
 LOCAL_HEADERS=digit.h driver.h
-SOURCES=driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp
+SOURCES=driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp select.cpp
 
 OBJARCH=OBJ.$(ARCH)
 OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))

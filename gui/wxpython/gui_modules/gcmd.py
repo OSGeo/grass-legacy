@@ -1,21 +1,24 @@
 """
-MODULE: gcmd
+@package gcmd
 
-CLASSES:
-    * Popen
-    * Command
-    * CommandThread
+@brief GRASS command interface
 
-PURPOSE:   GRASS command interface
+Classes:
+ * GException
+ * DigitError
+ * Popen
+ * Command
+ * CommandThread
 
-AUTHORS:   The GRASS Development Team
-           Original author: Jachym Cepicky
-           Various updates: Martin Landa <landa.martin gmail.com>
+(C) 2007-2008 by the GRASS Development Team
+This program is free software under the GNU General Public
+License (>=v2). Read the file COPYING that comes with GRASS
+for details.
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
-           This program is free software under the GNU General Public
-           License (>=v2). Read the file COPYING that comes with GRASS
-           for details.
+@author Jachym Cepicky
+Martin Landa <landa.martin gmail.com>
+
+@date 2007-2008
 """
 
 import os
@@ -25,8 +28,8 @@ import errno
 try:
     import subprocess
 except:
-    CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
-    sys.path.append(CompatPath)
+    compatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+    sys.path.append(compatPath)
     import subprocess
 if subprocess.mswindows:
     from win32file import ReadFile, WriteFile
@@ -37,13 +40,54 @@ else:
     import fcntl
 from threading import Thread
 
-import wx # GUI dialogs...
+import wx
 
-GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(GuiModulePath)
-# debugging & log window
-import wxgui_utils
+guiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+sys.path.append(guiModulePath)
+import wxgui_utils # log window
 from debug import Debug as Debug
+
+class GException(Exception):
+    """Generic exception"""
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        wx.MessageBox(parent=None,
+                      caption=_("Error"),
+                      message=self.message,
+                      style=wx.ICON_ERROR)
+
+        return ''
+
+class CmdError(GException):
+    """Exception used for GRASS commands.
+
+    See Command class (command exits with EXIT_FAILURE,
+    G_fatal_error() is called)."""
+    def __init(self, cmd, message):
+        GException.__init__(message)
+
+    def __str__(self):
+        wx.MessageBox(parent=None,
+                      caption=_("Error in command execution"),
+                      message=self.message,
+                      style=wx.ICON_ERROR)
+        
+        return ''  
+
+class DigitError(GException):
+    """Exception raised during digitization session"""
+    def __init(self, message):
+        GException.__init__(message)
+
+    def __str__(self):
+        wx.MessageBox(parent=None,
+                      caption=_("Error in digitization tool"),
+                      message=self.message,
+                      style=wx.ICON_ERROR)
+
+        return ''
 
 class Popen(subprocess.Popen):
     """Subclass subprocess.Popen"""
@@ -152,9 +196,10 @@ class Command:
     """
     Run GRASS command in separate thread
 
-    If stdout/err is redirected, write() method is required for the given classes
+    If stdout/err is redirected, write() method is required for the
+    given classes.
 
-    Usage:
+    @code
         cmd = Command(cmd=['d.rast', 'elevation.dem'], verbose=3, wait=True)
 
         if cmd.returncode == None:
@@ -163,20 +208,24 @@ class Command:
             print 'SUCCESS'
         else:
             print 'FAILURE (%d)' % cmd.returncode
+    @endcode
 
     @param cmd     command given as list
     @param stdin   standard input stream
     @param verbose verbose level [0, 3] (--q, --v)
     @param wait    wait for child execution terminated
-    @param log     logging type (None, gui, txt), only if wait is True
+    @param rerr    error handling (when CmdError raised).
+    True for redirection to stderr, False for GUI dialog,
+    None for no operation (quiet mode)
     @param stdout  redirect standard output or None
     @param stderr  redirect standard error output or None
     """
     def __init__ (self, cmd, stdin=None,
-                  verbose=None, wait=True, log='gui',
+                  verbose=None, wait=True, rerr=False,
                   stdout=None, stderr=sys.stderr):
 
         self.cmd = cmd
+        self.stderr = stderr
 
         #
         # set verbosity level
@@ -221,20 +270,23 @@ class Command:
         if self.returncode is not None:
             Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=%d, alive=%s" % \
                            (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
-            if log and self.returncode != 0:
-                if log == 'gui': # GUI dialog
-                    dlg = wx.MessageDialog(None,
-                                           ("Execution failed: '%s'\n\n" 
-                                            "Details:\n%s") % (' '.join(self.cmd),
-                                                               self.PrintModuleOutput()),
-                                           ("Error"), wx.OK | wx.ICON_ERROR)
-                    dlg.ShowModal()
-                    dlg.Destroy()
-                else: # otherwise 'txt'
-                    print >> sys.stderr, "Execution failed: '%s'" % (' '.join(self.cmd))
-                    print >> sys.stderr, "\nDetails:\n%s" % self.PrintModuleOutput()
+            if rerr is not None and self.returncode != 0:
+                if rerr is False: # GUI dialog
+                    try:
+                        raise CmdError, _("Execution failed: '%s'%s%s" 
+                                          "Details:%s%s") % (' '.join(self.cmd),
+                                                             os.linesep, os.linesep,
+                                                             os.linesep,
+                                                             self.PrintModuleOutput())
+                    except CmdError, e:
+                        print e
+                elif rerr == sys.stderr: # redirect message to sys
+                    stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
+                    stderr.write("%sDetails:%s%s" % (os.linesep,
+                                                     self.PrintModuleOutput(),
+                                                     os.linesep))
             else:
-                pass
+                pass # nop
         else:
             Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=?, alive=%s" % \
                            (' '.join(cmd), wait, self.cmdThread.isAlive()))
@@ -254,6 +306,8 @@ class Command:
         """Read stream and return list of lines
 
         Note: Remove os.linesep from output
+
+        @param stream stream to be read
         """
         lineList = []
 
@@ -270,8 +324,7 @@ class Command:
         return lineList
                     
     def ReadStdOutput(self):
-        """Read standard output and return list"""
-
+        """Read standard output and return list of lines"""
         if self.cmdThread.stdout:
             stream = self.cmdThread.stdout # use redirected stream instead
             stream.seek(0)
@@ -281,16 +334,21 @@ class Command:
         return self.__ReadOutput(stream)
     
     def ReadErrOutput(self):
-        """Read standard error output and return list"""
-        
+        """Read standard error output and return list of lines"""
         return self.__ReadOutput(self.cmdThread.module.stderr)
 
     def __ProcessStdErr(self):
         """
         Read messages/warnings/errors from stderr
-        """
-        lines = self.ReadErrOutput()
 
+        @return list of (type, message)
+        """
+        if self.stderr is None:
+            lines = self.ReadErrOutput()
+        else:
+            lines = self.cmdThread.rerr.strip('%s' % os.linesep). \
+                split('%s' % os.linesep)
+        
         msg = []
 
         type    = None
@@ -316,7 +374,14 @@ class Command:
         return msg
 
     def PrintModuleOutput(self, error=True, warning=True, message=True):
-        """Store module errors, warnings, messages to output string"""
+        """Print module errors, warnings, messages to output
+
+        @param error print errors
+        @param warning print warnings
+        @param message print messages
+
+        @return string
+        """
 
         msgString = ""
         for type, msg in self.__ProcessStdErr():
@@ -324,17 +389,23 @@ class Command:
                 if (type == 'ERROR' and error) or \
                         (type == 'WARNING' and warning) or \
                         (type == 'MESSAGE' and message):
-                    msgString += " " + type + ": " + msg + "\n"
+                    msgString += " " + type + ": " + msg + "%s" % os.linesep
             else:
-                msgString += " " + msg + "\n"
+                msgString += " " + msg + "%s" % os.linesep
 
         return msgString
 
 
 class CommandThread(Thread):
-    """Run command in separate thread"""
+    """Run command in separate thread
+
+    @param cmd GRASS command (given as list)
+    @param stdin standard input stream 
+    @param stdout  redirect standard output or None
+    @param stderr  redirect standard error output or None
+    """
     def __init__ (self, cmd, stdin=None,
-                  stdout=None, stderr=None):
+                  stdout=None, stderr=sys.stderr):
 
         Thread.__init__(self)
         
@@ -344,6 +415,7 @@ class CommandThread(Thread):
         self.stderr       = stderr
 
         self.module       = None
+        self.rerr         = ''
 
     def run(self):
         """Run command"""
@@ -383,7 +455,9 @@ class CommandThread(Thread):
             # wx.PostEvent(self.stdout, evt)
             # wx.PostEvent(self.stderr, evt)
             try:
-                streamTo.write(streamFrom.read())
+                line = streamFrom.read()
+                # self.rerr = self.__parseString(line)
+                streamTo.write(line)
             except IOError:
                 pass
                 
@@ -391,10 +465,30 @@ class CommandThread(Thread):
             
         # get the last output
         try:
-            streamTo.write(streamFrom.read())
+            line = streamFrom.read()
+            self.rerr = self.__parseString(line)
+            streamTo.write(line)
         except IOError:
             pass
 
+    def __parseString(self, string):
+        """Parse line
+
+        @param line line to parsed, all GRASS_INFO
+        messages are removed from line
+        
+        @return string with GRASS_INFO messages
+        """
+        err = ''
+        for line in string.split('%s' % os.linesep):
+            if 'GRASS_INFO_ERROR' in line:
+                err += line + '%s' % os.linesep
+            elif err != '' and 'GRASS_INFO_END' in line:
+                err += line
+                
+        return err
+        
+        
 # testing ...
 if __name__ == "__main__":
     SEP = "-----------------------------------------------------------------------------"
@@ -404,7 +498,7 @@ if __name__ == "__main__":
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
 
-    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, log='txt')
+    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, rerr=True)
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -421,7 +515,7 @@ if __name__ == "__main__":
     cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp", "dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
                   verbose=False,
-                  wait=True, log='txt')
+                  wait=True, rerr=None)
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -436,7 +530,7 @@ if __name__ == "__main__":
     # returncode will be None
     print "Running d.vect tmp..."
 
-    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, log='txt')
+    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, rerr=None)
 
     if cmd.returncode == None:
         print "RUNNING"

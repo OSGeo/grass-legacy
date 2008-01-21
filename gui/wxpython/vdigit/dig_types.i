@@ -17,3 +17,7 @@
 #define NO_SNAP    0 /* snapping disabled */
 #define SNAP       1 /* snapping enabled for nodes */
 #define SNAPVERTEX 2 /* snapping enabled for vertex also */
+
+#define QUERY_UNKNOWN -1
+#define QUERY_LENGTH   0 /* select by line length */
+#define QUERY_DANGLE   1 /* select dangles */

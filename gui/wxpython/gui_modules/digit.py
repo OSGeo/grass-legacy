@@ -59,18 +59,6 @@ except ImportError, err:
 #
 USEVEDIT = True
 
-class DigitError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        wx.MessageBox(parent=None,
-                      caption=_("Error in digitization tool"),
-                      message=self.message,
-                      style=wx.ICON_ERROR)
-
-        return ''
-
 class AbstractDigit:
     """
     Abstract digitization class
@@ -181,10 +169,10 @@ class AbstractDigit:
 
         ret = self.driver.Reset(self.map)
         if map and ret == -1:
-            raise DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
+            raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
                                'Try to run v.build for rebuilding the topology.') % map)
         if not map and ret != 0:
-            raise DigitError(_('Closing vector map <%s> failed. The vector map is probably broken. '
+            raise gcmd.DigitError(_('Closing vector map <%s> failed. The vector map is probably broken. '
                                'Try to run v.build for rebuilding the topology.') % map)
             
         if not USEVEDIT:
@@ -192,7 +180,22 @@ class AbstractDigit:
                 self.digit.InitCats()
             except:
                 pass
-        
+
+    def SelectLinesByQueryThresh(self):
+        """Generic method used for SelectLinesByQuery()
+        -- to get threshold value"""
+        thresh = 0.0
+        if self.settings['query'][0] == "length":
+            thresh = self.settings['queryLength'][1]
+            if self.settings["queryLength"][0] == "shorter than":
+                thresh = -1 * thresh
+        else:
+            thresh = self.settings['queryDangle'][1]
+            if self.settings["queryDangle"][0] == "shorter than":
+                thresh = -1 * thresh
+
+        return thresh
+
 class VEdit(AbstractDigit):
     """
     Prototype of digitization class based on v.edit command
@@ -640,15 +643,8 @@ class VEdit(AbstractDigit):
 
         @param pos1, pos2 bounding box definition
         """
-        if self.settings['query'][0] == "length":
-            thresh = self.settings['queryLength'][1]
-            if self.settings["queryLength"][0] == "shorter than":
-                thresh = -1 * thresh
-        else:
-            thresh = self.settings['queryDangle'][1]
-            if self.settings["queryDangle"][0] == "shorter than":
-                thresh = -1 * thresh
-
+        thresh = self.SelectLinesByQueryThresh()
+        
         w, n = pos1
         e, s = pos2
 
@@ -673,10 +669,6 @@ class VEdit(AbstractDigit):
                   'bbox=%f,%f,%f,%f' % (w, n, e, s),
                   'query=%s' % self.settings['query'][0],
                   'thresh=%f' % thresh])
-
-        if self.settings['query'] == "length" and \
-                self.settings['queryLength'][0] == "longer than":
-            vEdit.append('-r') # FIXBUG: reverse selection regardless of bbox
 
         vEditCmd = gcmd.Command(vEdit)
         
@@ -736,7 +728,7 @@ class VDigit(AbstractDigit):
                                      str(self.settings["backgroundMap"]), snap, thresh)
 
         if ret == -1:
-            raise DigitError, _("Adding new feature to vector map <%s> failed.") % map
+            raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
         
     def AddLine (self, map, line, coords):
         """Add line/boundary
@@ -767,7 +759,7 @@ class VDigit(AbstractDigit):
                                  str(self.settings["backgroundMap"]), snap, thresh)
 
         if ret == -1:
-            raise DigitError, _("Adding new feature to vector map <%s> failed.") % map
+            raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
 
 
     def DeleteSelectedLines(self):
@@ -840,7 +832,17 @@ class VDigit(AbstractDigit):
         @param line id of line to be modified
         @param coords list of coordinates of modified line
         """
-        return self.digit.RewriteLine(line, coords)
+        try:
+            lineid = line[0]
+        except:
+            lineid = -1
+
+        listCoords = []
+        for c in coords:
+            for x in c:
+                listCoords.append(x)
+
+        return self.digit.RewriteLine(lineid, listCoords)
 
     def FlipLine(self):
         """Flip selected lines/boundaries"""
@@ -856,11 +858,13 @@ class VDigit(AbstractDigit):
 
     def SnapLine(self):
         """Snap selected lines/boundaries"""
-        return self.digit.SnapLines()
+        snap, thresh = self.__getSnapThreshold()
+        return self.digit.SnapLines(thresh)
 
     def ConnectLine(self):
         """Connect selected lines/boundaries"""
-        return self.digit.ConnectLines()
+        snap, thresh = self.__getSnapThreshold()
+        return self.digit.ConnectLines(thresh)
 
     def CopyLine(self, ids=None):
         """Copy features from (background) vector map
@@ -880,6 +884,32 @@ class VDigit(AbstractDigit):
 
         return self.digit.CopyCats(cats, ids)
 
+    def SelectLinesByQuery(self, pos1, pos2):
+        """Select features by query
+
+        @param pos1, pos2 bounding box definition
+        """
+        thresh = self.SelectLinesByQueryThresh()
+        
+        w, n = pos1
+        e, s = pos2
+
+        query = vdigit.QUERY_UNKNOWN
+        if self.settings['query'][0] == 'length':
+            query = vdigit.QUERY_LENGTH
+        elif self.settings['query'][0] == 'dangle':
+            query = vdigit.QUERY_DANGLE
+
+        type = vdigit.GV_POINTS | vdigit.GV_LINES # TODO: 3D
+        
+        ids = self.digit.SelectLinesByQuery(w, n, 0.0, e, s, 1000.0, self.settings['query'][1],
+                                            query, type, thresh)
+
+        Debug.msg(4, "VDigit.SelectLinesByQuery(): %s" % \
+                      ",".join(["%d" % v for v in ids]))
+        
+        return ids
+    
     def __getSnapThreshold(self):
         """Get snap mode and threshold value
 
@@ -998,10 +1028,13 @@ class CDisplayDriver(AbstractDisplayDriver):
         """
         if map:
             name, mapset = map.split('@')
-            if USEVEDIT:
-                ret = self.__display.OpenMap(str(name), str(mapset), False)
-            else:
-                ret = self.__display.OpenMap(str(name), str(mapset), True)
+            try:
+                if USEVEDIT:
+                    ret = self.__display.OpenMap(str(name), str(mapset), False)
+                else:
+                    ret = self.__display.OpenMap(str(name), str(mapset), True)
+            except SystemExit:
+                ret = -1
         else:
             ret = self.__display.CloseMap()
 
@@ -1108,7 +1141,8 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         @param id line id to be selected
         """
-        Debug.msg(4, "CDisplayDriver.SetSelected(): id=%s" % id)
+        Debug.msg(4, "CDisplayDriver.SetSelected(): id=%s" % \
+                  ",".join(["%d" % v for v in id]))
 
         self.__display.SetSelected(id)
 

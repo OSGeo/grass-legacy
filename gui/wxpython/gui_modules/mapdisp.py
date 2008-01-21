@@ -910,6 +910,7 @@ class BufferedWindow(wx.Window):
                         point = True
                     else:
                         point = False
+
                     digitClass.AddPoint(map, point, east, north)
 
                     self.UpdateMap(render=False) # redraw map
@@ -1179,7 +1180,7 @@ class BufferedWindow(wx.Window):
                         self.UpdateMap(render=False)
 
                 else: # no vector object found
-                    #self.UpdateMap(render=False)
+                    self.UpdateMap(render=False, renderVector=False)
                     pass
 
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
