@@ -31,6 +31,7 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 #include "mm.h" // Get the memory manager.
