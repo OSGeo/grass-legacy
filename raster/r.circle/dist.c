@@ -79,7 +79,7 @@ int main(
     mult->key                    = "mult";
     mult->type                   = TYPE_DOUBLE;
     mult->required               = NO;
-    mult->description            = _("Multiplier");
+    mult->description            = _("Data value multiplier");
 
     flag = G_define_flag();
     flag->key         = 'b' ;
