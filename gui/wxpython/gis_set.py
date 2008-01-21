@@ -82,8 +82,8 @@ class GRASSStartup(wx.Frame):
                                       label=_("Welcome to GRASS GIS %s\n"
                                               "The world's leading open source GIS") % grassVersion,
                                       style=wx.ALIGN_CENTRE)
-        self.SetFont(wx.Font(pointSize=9, family=wx.FONTFAMILY_DEFAULT,
-                             style=wx.NORMAL, weight=wx.NORMAL))
+        #self.SetFont(wx.Font(pointSize=9, family=wx.FONTFAMILY_DEFAULT,
+        #                     style=wx.NORMAL, weight=wx.NORMAL))
         self.ltitle = wx.StaticText(parent=self, id=wx.ID_ANY,
                                     label=_("Select an existing project location and mapset\n"
                                             "or define a new location"),
