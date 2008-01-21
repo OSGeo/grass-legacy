@@ -39,9 +39,10 @@ int main(int argc, char **argv)
     double thresh, multip;
     struct Option *lines_opt, *points_opt;
     struct Option *lfield_opt, *pfield_opt;
-    struct Option *table_opt, *thresh_opt;
+    struct Option *driver_opt, *database_opt, *table_opt, *thresh_opt;
     struct GModule *module;
     char   *mapset;
+    char   *drv, *db;
     struct Map_info LMap, PMap;
     struct line_cats *LCats, *PCats; 
     struct line_pnts *LPoints, *PPoints;
@@ -73,6 +74,22 @@ int main(int argc, char **argv)
     pfield_opt->key = "player";
     pfield_opt->answer = "1";
     pfield_opt->description = _("Point layer");
+    
+    driver_opt = G_define_option() ;
+    driver_opt->key         = "rsdriver" ;
+    driver_opt->type        = TYPE_STRING ;
+    driver_opt->required    = NO;
+    driver_opt->description = _("Driver name for reference system table");
+    if ( (drv=db_get_default_driver_name()) )
+    driver_opt->answer = drv;
+    
+    database_opt = G_define_option() ;
+    database_opt->key         = "rsdatabase" ;
+    database_opt->type        = TYPE_STRING ;
+    database_opt->required    = NO;
+    database_opt->description = _("Database name for reference system table");
+    if ( (db=db_get_default_database_name()) )
+    database_opt->answer = db;
     
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
@@ -118,8 +135,8 @@ int main(int argc, char **argv)
     
     db_init_handle (&rshandle);
     db_init_string (&rsstmt);
-    rsdriver = db_start_driver(NULL);
-    db_set_handle (&rshandle, NULL, NULL);
+    rsdriver = db_start_driver(driver_opt->answer);
+    db_set_handle (&rshandle, database_opt->answer, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
         G_fatal_error(_("Unable to open database for reference table"));
 
