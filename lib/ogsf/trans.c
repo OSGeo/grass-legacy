@@ -1,7 +1,3 @@
-/*
-* $Id$
-*/
-
 /* NOTE: This file should be REMOVED and any calls to the functions in this
 ** file should be replaced with appropriate OpenGL calls.
 */
@@ -9,7 +5,15 @@
 /*
 **  Written by Dave Gerdes Jan 1990
 **  Copyright  Dave Gerdes 1990    All rights reserved
+**  US Army Construction Engineering Research Lab
 **
+**  Further authors: Justin Hickey, Bob Covill, Brad Douglas
+**
+**  COPYRIGHT:    (C) 1999, 2006 by the GRASS Development Team
+**
+**               This program is free software under the GNU General Public
+**               License (>=v2). Read the file COPYING that comes with GRASS
+**               for details.
 **
 **  Matrix Transformation library.
 **  
