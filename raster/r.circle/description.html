@@ -6,6 +6,9 @@ The output cell values increase linearly from the specified center. The <EM>min<
 and <EM>max</EM> parameters control the inner and outer output raster map radii, respectively. 
 
 <p>
+The <EM>mult</EM>parameter can be used to multiply the output raster cells by a common factor.
+Note that this parameter does not affect the output raster position or size; only the z-values
+are changed with this parameter. 
 
 Binary output raster values can be created with the <B>-b</B> flag. Raster maps so created
 can be used to create binary filters for use in <EM>i.ifft</EM> (inverse Fourier transformations;
