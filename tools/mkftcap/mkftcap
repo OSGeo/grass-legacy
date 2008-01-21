@@ -1,5 +1,19 @@
 #!/bin/sh
 
+############################################################################
+#
+# MODULE:       mkftcap
+# AUTHOR(S):    Glynn Clements, Michael Barton, Paul Kelly
+# PURPOSE:      create font typecap file
+# COPYRIGHT:    (C) 2007 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
+
 exts='ttf TTF pfa PFA pfb PFB dfont DFONT oft OFT'
 
 (
