@@ -93,10 +93,10 @@ int main(int argc, char **argv)
     struct Option *lfield_opt, *pfield_opt;
     struct Option *lidcol_opt, *pidcol_opt;
     struct Option *start_mp_opt, *start_off_opt, *end_mp_opt, *end_off_opt;
-    struct Option *thresh_opt;
-    struct Option *table_opt;
+    struct Option *driver_opt, *database_opt, *table_opt, *thresh_opt;
     struct GModule *module;
     char   *mapset, buf[2000];
+    char   *drv, *db;
     struct Map_info In, Out, PMap, EMap;
     struct line_cats *LCats, *PCats; 
     struct line_pnts *LPoints, *L2Points, *PPoints;
@@ -186,6 +186,22 @@ int main(int argc, char **argv)
     end_off_opt->description = _("Column containing offset from milepost for the end "
 				 "of previous segment");
     
+    driver_opt = G_define_option() ;
+    driver_opt->key         = "rsdriver" ;
+    driver_opt->type        = TYPE_STRING ;
+    driver_opt->required    = NO;
+    driver_opt->description = _("Driver name for reference system table");
+    if ( (drv=db_get_default_driver_name()) )
+    driver_opt->answer = drv;
+    
+    database_opt = G_define_option() ;
+    database_opt->key         = "rsdatabase" ;
+    database_opt->type        = TYPE_STRING ;
+    database_opt->required    = NO;
+    database_opt->description = _("Database name for reference system table");
+    if ( (db=db_get_default_database_name()) )
+    database_opt->answer = db;
+    
     table_opt = G_define_option() ;
     table_opt->key         = "rstable" ;
     table_opt->type        = TYPE_STRING ;
@@ -268,8 +284,8 @@ int main(int argc, char **argv)
     /* Open database for RS table */
     db_init_handle (&rshandle);
     db_init_string (&rsstmt);
-    rsdriver = db_start_driver(NULL);
-    db_set_handle (&rshandle, NULL, NULL);
+    rsdriver = db_start_driver(driver_opt->answer);
+    db_set_handle (&rshandle, database_opt->answer, NULL);
     if (db_open_database(rsdriver, &rshandle) != DB_OK)
         G_fatal_error(_("Unable to open database for reference table"));
 
