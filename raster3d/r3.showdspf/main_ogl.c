@@ -1,3 +1,18 @@
+/****************************************************************************
+ *
+ * MODULE:       r3.showdspf
+ * AUTHOR(S):    Bill Brown, CERL
+ *               ported to OpenGL by Steve Hall
+ * PURPOSE:      Visualization program which loads the isosurfaces previously calculated
+ *               using r3.mkdspf
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 #include <grass/G3d.h>
 #include <grass/config.h>
 
