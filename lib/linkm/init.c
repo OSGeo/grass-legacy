@@ -3,7 +3,24 @@
 **  	April 1992
 **  Copyright 1992 USA-CERL   All rights reserved.
 **
-*/
+****************************************************************************
+ *
+ * MODULE:       LINKED LIST MEMORY MANAGER
+ *
+ * AUTHOR(S):    David Gerdes 1992, US Army Construction Engineering Research Lab
+ *
+ * PURPOSE:      Outputs a raster map layer showing the cumulative cost
+ *               of moving between different geographic locations on an
+ *               input raster map layer whose cell category values
+ *               represent cost.
+ *
+ * COPYRIGHT:    (C) 1999, 2006 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ***************************************************************************/
 #include <stdlib.h>
 #include <grass/linkm.h>
 
