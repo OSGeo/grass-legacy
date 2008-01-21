@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       i.smap segmentation
+ * AUTHOR(S):    Charles Bouman,
+ *               School of Electrical Engineering, Purdue University
+ * PURPOSE:      image classification and segmentation
+ * COPYRIGHT:    (C) 1999-2007 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
 #include <stdlib.h>
 #include <unistd.h>
 #include <grass/imagery.h>
