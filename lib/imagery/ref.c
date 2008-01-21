@@ -1,3 +1,16 @@
+/****************************************************************************
+ *
+ * MODULE:       imagery library
+ * AUTHOR(S):    Original author(s) name(s) unknown - written by CERL
+ * PURPOSE:      Image processing library
+ * COPYRIGHT:    (C) 1999, 2005 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ *****************************************************************************/
+
 /***********************************************************
 * I_fopen_group_ref_new (group)
 * I_fopen_group_ref_old (group)
