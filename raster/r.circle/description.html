@@ -9,10 +9,12 @@ and <EM>max</EM> parameters control the inner and outer output raster map radii,
 The <EM>mult</EM>parameter can be used to multiply the output raster cells by a common factor.
 Note that this parameter does not affect the output raster position or size; only the z-values
 are changed with this parameter. 
-
-Binary output raster values can be created with the <B>-b</B> flag. Raster maps so created
-can be used to create binary filters for use in <EM>i.ifft</EM> (inverse Fourier transformations;
+<P>
+Binary-output raster maps (solid circles of one value) can be created
+with the <B>-b</B> flag. Raster maps so created can be used to create
+binary filters for use in <EM>i.ifft</EM> (inverse Fourier transformations;
 apply filter with <EM>r.mask</EM>).
+
 
 <H2>EXAMPLES</H2>
 
@@ -34,16 +36,21 @@ NORTHCENTER=`g.region -c | awk ' /center northing:/ { print $3 }'`
 r.circle -b output=circle coordinate=${EASTCENTER},${NORTHCENTER} min=500 max=1000
 </PRE>	
 
+
 <H2>SEE ALSO</H2>
-<EM><A HREF="g.region.html">g.region</A></EM>,
-<EM><A HREF="g.remove.html">g.remove</A></EM>, 
-<EM><A HREF="g.rename.html">g.rename</A></EM>, 
-<EM><A HREF="i.fft.html">i.fft</A></EM>, 
-<EM><A HREF="i.ifft.html">i.ifft</A></EM>,
-<EM><A HREF="r.mask">r.mask</A></EM>
+<EM>
+<A HREF="g.region.html">g.region</A>,
+<A HREF="g.remove.html">g.remove</A>, 
+<A HREF="g.rename.html">g.rename</A>, 
+<A HREF="i.fft.html">i.fft</A>, 
+<A HREF="i.ifft.html">i.ifft</A>,
+<A HREF="r.mask">r.mask</A>
+</EM>
+
 
 <H2>AUTHOR</H2>
 Bill Brown, U.S. Army Construction Engineering Research Laboratory<br>
 Additional flag/min/max parameter by Markus Neteler, University of Hannover
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
