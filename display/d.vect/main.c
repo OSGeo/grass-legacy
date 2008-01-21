@@ -303,7 +303,7 @@ main (int argc, char **argv)
 	render_opt->type       = TYPE_STRING ;
 	render_opt->required   = NO;
 	render_opt->multiple   = NO;
-	render_opt->answer     = "l" ;
+	render_opt->answer     = "c" ;
 	render_opt->options    = "g,r,d,c,l";
 	render_opt->description= _("Rendering method for filled polygons");
 	render_opt->descriptions= _(
