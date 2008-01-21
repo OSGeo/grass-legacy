@@ -1,5 +1,18 @@
 #!/bin/sh
 
+############################################################################
+#
+# MODULE:       mkhtml.sh
+# AUTHOR(S):    Markus Neteler, Glynn Clements
+# PURPOSE:      create HTML manual page snippets
+# COPYRIGHT:    (C) 2007 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
 PGM=$1
 
 if ! grep -i '<html>' ${PGM}.tmp.html > /dev/null 2>&1 ; then

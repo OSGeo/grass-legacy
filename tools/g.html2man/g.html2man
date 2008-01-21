@@ -2,11 +2,22 @@
 eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
     if 0;
 
+############################################################################
+#
+# MODULE:       g.html2man
+# AUTHOR(S):    Daniel Calvelo Aros
+# PURPOSE:      convert HTML formatted page to MAN page format
+# COPYRIGHT:    (C) 2004 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
 # Note: the GRASS_PERL variables must be set!
 # Usage:
 #       perl g.html2man <html file> <man file> <section>
-#
-# Main author: Daniel Calvelo Aros
 
 our $preformat, $in_bu, $in_nb, @nb_n;
 our $suppress = 0;
