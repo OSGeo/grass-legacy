@@ -65,7 +65,7 @@ int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cva
 
         if (Vect_get_area_points (Map, list[i].index, Points) <= 0)
         {
-            G_warning (_("Get area [%d] failed"), list[i].index);
+            G_warning (_("Get area %d failed"), list[i].index);
             return -1;
         }
 

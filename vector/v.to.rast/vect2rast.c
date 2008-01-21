@@ -41,14 +41,15 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     Vect_open_old (&Map, vector_map, vector_mapset);
 
     if ( (use == USE_Z) && !(Vect_is_3d(&Map)) )
-	G_fatal_error (_("Vector map is not 3D"));
+	G_fatal_error (_("Vector map <%s> is not 3D"), Vect_get_full_name(&Map));
 
     switch (use)
     {
     case USE_ATTR:
 	db_CatValArray_init ( &cvarr );
         if (!(Fi = Vect_get_field (&Map, field)))
-	    G_fatal_error (_("Unable to get layer info for vector map"));
+	    G_fatal_error (_("Database connection not defined for layer %d"),
+			   field);
 
 	if ((Driver = db_start_driver_open_database ( Fi->driver, Fi->database)) == NULL)
 	    G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
@@ -61,11 +62,12 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 
 	ctype = cvarr.ctype;
 	if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
-	    G_fatal_error (_("Column type [%s] not supported (did you mean 'labelcolumn'?)"),
-				db_sqltype_name(ctype));
+	    G_fatal_error (_("Column type (%s) not supported (did you mean 'labelcolumn'?)"),
+			   db_sqltype_name(ctype));
 
 	if ( nrec < 0 )
-            G_fatal_error (_("Cannot select data from table"));
+            G_fatal_error (_("No records selected from table <%s>"),
+			   Fi->table);
 
 	G_debug (1, "%d records selected from table", nrec);
 
@@ -90,7 +92,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
             format = USE_DCELL;
         break;
         default:
-            G_fatal_error (_("Unable to use column '%s'"), column);
+            G_fatal_error (_("Unable to use column <%s>"), column);
         break;
         }
     break;

@@ -123,17 +123,18 @@ int update_dbcolors(char *rast_name, char *vector_map, int field, char *rgb_colu
 
     db_CatValArray_init ( &cvarr );
     if ((Fi = Vect_get_field (&Map, field)) == NULL)
-        G_fatal_error (_("Unable to get layer info for vector map"));
+	G_fatal_error (_("Database connection not defined for layer %d"),
+		       field);
 
     if ((Driver = db_start_driver_open_database (Fi->driver, Fi->database)) == NULL)
         G_fatal_error (_("Unable to open database <%s> by driver <%s>"), Fi->database, Fi->driver);
 
     /* get number of records in attr_column */
     if ((nrec = db_select_CatValArray (Driver, Fi->table, Fi->key, attr_column , NULL, &cvarr)) == -1)
-        G_fatal_error (_("Unknown column '%s' in table '%s'"), attr_column, Fi->table);
+        G_fatal_error (_("Unknown column <%s> in table <%s>"), attr_column, Fi->table);
 
     if (nrec < 0)
-        G_fatal_error (_("No records selected from table '%s'"), Fi->table);
+        G_fatal_error (_("No records selected from table <%s>"), Fi->table);
 
     G_debug (3, "nrec = %d", nrec );
 
@@ -257,7 +258,8 @@ int update_labels (char *rast_name, char *vector_map, int field,
 
         db_CatValArray_init (&cvarr);
         if (!(Fi = Vect_get_field (&Map, field)))
-            G_fatal_error (_("Unable to get layer info for vector map"));
+            G_fatal_error (_("Database connection not defined for layer %d"),
+			   field);
 
         if (!(Driver = db_start_driver_open_database (Fi->driver, Fi->database)))
             G_fatal_error (_("Unable to open database <%s> by driver <%s>"), 
@@ -265,11 +267,11 @@ int update_labels (char *rast_name, char *vector_map, int field,
 
         /* get number of records in label_column */
         if ((nrec = db_select_CatValArray (Driver, Fi->table, Fi->key, attr_column, NULL, &cvarr)) == -1)
-            G_fatal_error (_("Unknown column '%s' in table '%s'"), 
+            G_fatal_error (_("Unknown column <%s> in table <%s>"), 
                         attr_column, Fi->table);
 
         if (nrec < 0)
-            G_fatal_error (_("No records selected from table '%s'"), Fi->table);
+            G_fatal_error (_("No records selected from table <%s>"), Fi->table);
 
         G_debug (3, "nrec = %d", nrec );
 
@@ -317,7 +319,8 @@ int update_labels (char *rast_name, char *vector_map, int field,
                 db_set_string (&my_labels_rules[i].label, db_get_value_string (&value)); 
             break;
             default:
-                G_warning (_("Column type [%d] not supported"), col_type);
+                G_warning (_("Column type (%s) not supported"),
+			   db_sqltype_name(col_type));
             }
 
             /* add the raster category to label */
@@ -464,7 +467,7 @@ int update_labels (char *rast_name, char *vector_map, int field,
 
     G_close_cell (fd);
     if (G_write_cats (rast_name, &rast_cats) <= 0)
-        G_warning (_("Unable to write categories for map <%s>"), rast_name);
+        G_warning (_("Unable to write categories for raster map <%s>"), rast_name);
     G_free_cats (&rast_cats);
 
     return 1;
