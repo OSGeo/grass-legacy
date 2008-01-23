@@ -87,12 +87,20 @@ differs from that of the input raster map(s), on-the-fly resampling is
 performed (nearest neighbor resampling). If this is not desired, the
 input map(s) has/have to be resampled beforehand with one of the dedicated
 modules.
-<P>
+
+<h4>Raster MASKs</h4>
 If a raster map named "MASK" exists, most GRASS raster modules will operate
 only on data falling inside the masked area, and treat any data falling
 outside of the mask as if its value were NULL. The mask is only applied
 when <em>reading</em> an existing GRASS raster map, for example when used
-in a module as an input map. (see <a href="r.mask.html">r.mask</a>)
+in a module as an input map.
+<P>
+The mask is read as an integer map. If MASK is actually a
+floating-point map, the values will be converted to integers using the
+map's quantisation rules (this defaults to round-to-nearest, but can
+be changed with r.quant).
+<P>
+(see <a href="r.mask.html">r.mask</a>)
 
 <h3>Raster map statistics</h3>
 
