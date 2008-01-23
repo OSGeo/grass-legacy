@@ -1258,8 +1258,8 @@ class GMApp(wx.App):
         wx.InitAllImageHandlers()
 
         # create splash screen
-        introImagePath = os.path.join(os.getenv("GISBASE"), "etc", "gm", "intro.gif")
-        introImage     = wx.Image(introImagePath, wx.BITMAP_TYPE_GIF)
+        introImagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images", "intro.png")
+        introImage     = wx.Image(introImagePath, wx.BITMAP_TYPE_PNG)
         introBmp       = introImage.ConvertToBitmap()
         wx.SplashScreen (bitmap=introBmp, splashStyle=wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,
                          milliseconds=1500, parent=None, id=wx.ID_ANY)
