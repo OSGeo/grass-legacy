@@ -1,34 +1,35 @@
 """
-MODULE:    dbm.py
+@package dbm.py
 
-CLASSES:
-    * Log
-    * VirtualAttributeList
-    * AttributeManager
-    * DisplayAttributesDialog
-    * VectorDBInfo
-    * ModifyTableRecord
-    * NewVectorDialog
+@brief GRASS attribute table manager
 
-PURPOSE:   GRASS attribute table manager
+This program is based on FileHunter, published in 'The wxPython Linux
+Tutorial' on wxPython WIKI pages.
 
-           This program is based on FileHunter, published in 'The wxPython Linux
-           Tutorial' on wxPython WIKI pages.
+It also uses some functions at
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
 
-           It also uses some functions at
-           http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
+@code
+dbm.py vector@mapset
+@endcode
 
-           dbm.py vector@mapset
+List of classes:
+ - Log
+ - VirtualAttributeList
+ - AttributeManager
+ - DisplayAttributesDialog
+ - VectorDBInfo
+ - ModifyTableRecord
+ - NewVectorDialog
 
-AUTHOR(S): GRASS Development Team
-           Original author: Jachym Cepicky <jachym.cepicky gmail.com>
-           Various updates: Martin Landa <landa.martin gmail.com>
+(C) 2007 by the GRASS Development Team
 
-COPYRIGHT: (C) 2007 by the GRASS Development Team
+This program is free software under the GNU General Public
+License (>=v2). Read the file COPYING that comes with GRASS
+for details.
 
-           This program is free software under the GNU General Public
-           License (>=v2). Read the file COPYING that comes with GRASS
-           for details.
+@author Jachym Cepicky <jachym.cepicky gmail.com>
+Martin Landa <landa.martin gmail.com>
 """
 
 import sys
@@ -382,8 +383,10 @@ class AttributeManager(wx.Frame):
 
         if len(self.mapDBInfo.layers.keys()) == 0:
             wx.MessageBox(parent=self.parent,
-                          message=_("Database connection for map <%s> "
-                                    "is not defined in DB file.") % self.vectmap,
+                          message=_("Database connection for vector map <%s> "
+                                    "is not defined in DB file. "
+                                    "You can define new connection in "
+                                    "'Manage layers'.") % self.vectmap,
                           caption=_("Attribute Table Manager"),
                           style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
 
@@ -702,7 +705,7 @@ class AttributeManager(wx.Frame):
                          flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
                          border=3)
 
-            btnAddCol = wx.Button(parent=panel, id=wx.ID_ADD)
+            btnAddCol = wx.Button(parent=panel, id=wx.ID_ANY, label=_('&Add'))
             btnAddCol.Bind(wx.EVT_BUTTON, self.OnTableItemAdd)
             btnAddCol.Enable(False)
             self.layerPage[layer]['addColButton'] = btnAddCol.GetId()
@@ -1261,7 +1264,7 @@ class AttributeManager(wx.Frame):
         nameTo = self.FindWindowById(self.layerPage[self.layer]['renameColTo']).GetValue()
 
         if not name or not nameTo:
-            wx.MessageBox(self=self.parent,
+            wx.MessageBox(self=self,
                           message=_("Unable to rename column. "
                                     "No column name defined."),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
@@ -1269,10 +1272,10 @@ class AttributeManager(wx.Frame):
             item = list.FindItem(start=-1, str=name)
             if item > -1:
                 if list.FindItem(start=-1, str=nameTo) > -1:
-                    wx.MessageBox(parent=self.parent,
-                                  message=_("Unable to rename column. "
-                                            "Column <%s> already exists in the table.") % \
-                                  nameTo,
+                    wx.MessageBox(parent=self,
+                                  message=_("Unable to rename column <%s>. "
+                                            "Column <%s> already exists in the table <%s>.") % \
+                                  (name, nameTo, self.mapDBInfo.layers[self.layer]["table"]),
                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 else:
                     list.SetItemText(item, nameTo)
@@ -1282,9 +1285,10 @@ class AttributeManager(wx.Frame):
                                                 'layer=%d' % self.layer,
                                                 'column=%s,%s' % (name, nameTo)])
             else:
-                wx.MessageBox(parent=self.parent,
+                wx.MessageBox(parent=self,
                               message=_("Unable to rename column. "
-                                        "Column <%s> doesn't exist in the table.") % name,
+                                        "Column <%s> doesn't exist in the table <%s>.") % \
+                                  (name, self.mapDBInfo.layers[self.layer]["table"]),
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
 
         event.Skip()
@@ -1348,7 +1352,7 @@ class AttributeManager(wx.Frame):
         name = self.FindWindowById(self.layerPage[self.layer]['addColName']).GetValue()
 
         if not name:
-            wx.MessageBox(parent=self.parent,
+            wx.MessageBox(parent=self,
                           message=_("Unable to add column to the table. "
                                     "No column name defined."),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
@@ -1367,9 +1371,9 @@ class AttributeManager(wx.Frame):
             list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
             # check for duplicate items
             if list.FindItem(start=-1, str=name) > -1:
-                wx.MessageBox(parent=self.parent,
-                              message=_("Unable to add column <%s> to the table. "
-                                        "Column already exists.") % name,
+                wx.MessageBox(parent=self,
+                              message=_("Column <%s> already exists in table <%s>.") % \
+                                  (name, self.mapDBInfo.layers[self.layer]["table"]),
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
             index = list.InsertStringItem(sys.maxint, str(name))
@@ -2449,11 +2453,11 @@ class LayerBook(wx.Notebook):
         key      = self.tableWidgets['key'][1].GetValue()
         
         if not table or not key:
-            wx.MessageBox(parent=self.parent,
+            wx.MessageBox(parent=self,
                           message=_("Unable to create new table.%s"
                                     "Table name or key column name is missing.") % \
                           (os.linesep),
-                          caption=_("Error"), flag=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return
         
         # create table
@@ -2487,7 +2491,7 @@ class LayerBook(wx.Notebook):
         key      = self.addLayerWidgets['key'][1].GetStringSelection()
         
         if layer in self.mapDBInfo.layers.keys():
-            wx.MessageBox(parent=self.parent,
+            wx.MessageBox(parent=self,
                           message=_("Unable to add new layer to vector map <%s>.%s"
                                     "Layer %d already exists.") % \
                           (self.mapDBInfo.map, os.linesep, layer),
