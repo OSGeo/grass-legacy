@@ -39,6 +39,12 @@ areas outside the MASK will be ignored until the MASK file
 is removed.
 <p>
 
+The mask is read as an integer map. If MASK is actually a
+floating-point map, the values will be converted to integers using the
+map's quantisation rules (this defaults to round-to-nearest, but can
+be changed with r.quant).
+<p>
+
 <em>r.mask</em> uses <em>r.reclass</em> to create a reclassification of an
 existing raster map and name it MASK. The user can select category values to use
 in the MASK with the <em>maskcats</em> parameter; if <em>r.mask</em>
