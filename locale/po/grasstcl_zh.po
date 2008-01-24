@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_zh\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-11 18:45+0100\n"
+"POT-Creation-Date: 2008-01-24 17:42+0100\n"
 "PO-Revision-Date: 2007-11-29 12:13+0800\n"
 "Last-Translator: Su Yongheng <night2008@gmail.com>\n"
 "Language-Team: Simplified Chinese <grass-translations@lists.osgeo.org>\n"
@@ -39,7 +39,7 @@ msgid "Settings already opened"
 msgstr "设置已经打开"
 
 #: ../vector/v.digit/settings.tcl:160 ../lib/init/epsg_option.tcl:311
-#: ../gui/tcltk/gis.m/gm.tcl:426 ../gui/tcltk/gis.m/animate.tcl:536
+#: ../gui/tcltk/gis.m/gm.tcl:430 ../gui/tcltk/gis.m/animate.tcl:536
 #: ../gui/tcltk/gis.m/dnviz.tcl:228 ../gui/tcltk/gis.m/rules.tcl:170
 msgid "OK"
 msgstr ""
@@ -283,7 +283,7 @@ msgstr "完成"
 
 #: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
-#: ../gui/tcltk/gis.m/gm.tcl:429 ../gui/tcltk/gis.m/animate.tcl:538
+#: ../gui/tcltk/gis.m/gm.tcl:433 ../gui/tcltk/gis.m/animate.tcl:538
 #: ../gui/tcltk/gis.m/dnviz.tcl:230 ../gui/tcltk/gis.m/mapcanvas.tcl:855
 #: ../gui/tcltk/gis.m/georect.tcl:700 ../gui/tcltk/gis.m/rules.tcl:172
 msgid "Cancel"
@@ -1119,45 +1119,45 @@ msgstr ""
 msgid "v.label"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:193 ../gui/tcltk/d.m/d.m.tcl:314
+#: ../gui/tcltk/gis.m/gm.tcl:197 ../gui/tcltk/d.m/d.m.tcl:314
 msgid "Loading GIS Manager"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:200
+#: ../gui/tcltk/gis.m/gm.tcl:204
 msgid "Creating MainFrame..."
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:240 ../gui/tcltk/d.m/d.m.tcl:404
+#: ../gui/tcltk/gis.m/gm.tcl:244 ../gui/tcltk/d.m/d.m.tcl:404
 msgid "Done"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:242
+#: ../gui/tcltk/gis.m/gm.tcl:246
 msgid "Welcome to GRASS GIS"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:275
+#: ../gui/tcltk/gis.m/gm.tcl:279
 #, tcl-format
 msgid "Map Display %d"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:300
+#: ../gui/tcltk/gis.m/gm.tcl:304
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:374
+#: ../gui/tcltk/gis.m/gm.tcl:378
 msgid "Select GRASS display font"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:384
+#: ../gui/tcltk/gis.m/gm.tcl:388
 msgid "Font: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:419
+#: ../gui/tcltk/gis.m/gm.tcl:423
 msgid "Character encoding: "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/gm.tcl:500
+#: ../gui/tcltk/gis.m/gm.tcl:504
 #, tcl-format
 msgid "GRASS%s GIS Manager - %s %s"
 msgstr ""
@@ -1439,17 +1439,17 @@ msgstr ""
 msgid "     set borders (bottom,top,left,right): "
 msgstr ""
 
-#: ../gui/tcltk/gis.m/tksys.tcl:56
+#: ../gui/tcltk/gis.m/tksys.tcl:57
 msgid ""
 "\n"
 "***** Please wait *****"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/tksys.tcl:57
+#: ../gui/tcltk/gis.m/tksys.tcl:58
 msgid "Gathering information about your system"
 msgstr ""
 
-#: ../gui/tcltk/gis.m/tksys.tcl:229
+#: ../gui/tcltk/gis.m/tksys.tcl:230
 msgid "***** Done *****"
 msgstr ""
 
@@ -4018,6 +4018,11 @@ msgid ""
 "Do you want to overwrite it?"
 msgstr ""
 
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1061
+#, tcl-format
+msgid "Display: rows=%d columns=%d  resolution=%g %s"
+msgstr ""
+
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1064
 #, tcl-format
 msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
@@ -4041,6 +4046,16 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1597
 msgid "Draw measure line with mouse"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1687
+#, tcl-format
+msgid " --segment length = %s\n"
+msgstr ""
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1689
+#, tcl-format
+msgid "cumulative length = %s\n"
 msgstr ""
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1754
