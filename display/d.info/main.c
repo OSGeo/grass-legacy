@@ -52,7 +52,7 @@ int main(int argc,char *argv[])
 
 	gflag = G_define_flag();
 	gflag->key = 'g';
-	gflag->description = _("Display screen rectangle coordinates (west, east, north, south)");
+	gflag->description = _("Display screen rectangle coordinates and resolution (west, east, north, south, ewres, nsres)");
 
 	cflag = G_define_flag();
 	cflag->key = 'c';
@@ -136,6 +136,8 @@ int main(int argc,char *argv[])
 	    fprintf(stdout, "e=%f\n", window.east);
 	    fprintf(stdout, "n=%f\n", window.north);
 	    fprintf(stdout, "s=%f\n", window.south);
+	    fprintf(stdout, "ewres=%f\n", window.ew_res);
+	    fprintf(stdout, "nsres=%f\n", window.ns_res);
 	   
 	}
 	
