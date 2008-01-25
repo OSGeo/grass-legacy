@@ -91,6 +91,11 @@ fi
 
 #calculate regression equation
 r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
+if [ ! -s "$TMP" ] ; then
+    g.message -e "One or both input maps only contain no data (NULL) pixels in the current region"
+    exit 1
+fi
+
 awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
  sumXY +=$1*$2*$3;\
 }\
