@@ -22,7 +22,7 @@
 int main(int argc,char *argv[])
 {
 	struct GModule *module;
-	struct Flag *rflag, *dflag, *cflag, *fflag, *bflag;
+	struct Flag *rflag, *dflag, *cflag, *fflag, *bflag, *gflag;
 	int l, r, t, b;
 	char window_name[128];
 	struct Cell_head window;
@@ -50,6 +50,10 @@ int main(int argc,char *argv[])
 	bflag->key = 'b';
 	bflag->description = _("Display screen rectangle of current region");
 
+	gflag = G_define_flag();
+	gflag->key = 'g';
+	gflag->description = _("Display screen rectangle coordinates (west, east, north, south)");
+
 	cflag = G_define_flag();
 	cflag->key = 'c';
 	cflag->description = _("Display number of colors");
@@ -58,7 +62,7 @@ int main(int argc,char *argv[])
 		exit(EXIT_FAILURE);
 
 	if(!rflag->answer && !dflag->answer && !cflag->answer &&
-				!fflag->answer && !bflag->answer)
+				!fflag->answer && !bflag->answer && !gflag->answer)
 	{
 		G_usage();
 		exit(EXIT_FAILURE);
@@ -117,6 +121,22 @@ int main(int argc,char *argv[])
 	    b = D_get_d_south();
 
 	    fprintf(stdout, "region: %d %d %d %d\n", l, r, t, b);
+	}
+
+	if (gflag->answer)
+	{
+	    if (D_get_cur_wind(window_name))
+		G_fatal_error(_("No current window"));
+	    if (D_set_cur_wind(window_name))
+		G_fatal_error(_("Current window not available"));
+
+	    /* Read in the map window associated with window */
+	    G_get_window(&window) ;
+	    fprintf(stdout, "w=%f\n", window.west);
+	    fprintf(stdout, "e=%f\n", window.east);
+	    fprintf(stdout, "n=%f\n", window.north);
+	    fprintf(stdout, "s=%f\n", window.south);
+	   
 	}
 	
 	R_close_driver();	
