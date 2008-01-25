@@ -202,6 +202,7 @@ fi
 echo "$output $LAT $LON $SCALE" >> $HOME/.gpsdrive/map_koord.txt
 
 g.message "Center lat,lon is [$LAT,$LON]"
-g.message "Center lat,lon is [$LAT,$LON]"
+g.message "Scale is [1:${SCALE}]"
 
 g.message "Done."
+
