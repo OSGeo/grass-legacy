@@ -112,7 +112,9 @@ int bar (
 		   if(G_is_d_null_value(&range_dmin) || G_is_d_null_value(&range_dmax))
 		        G_fatal_error("Floating point data range is empty");
 
-                   while((range_dmax - range_dmin)/tics[i].every > max_tics)
+		   if ( (range_dmax - range_dmin) < 1.0) tics[i].every = 5;
+		   if ( (range_dmax - range_dmin) < 110) tics[i].every = 20; /* dirrty hack */
+		   while((range_dmax - range_dmin)/tics[i].every > max_tics)
 		       i++;
                 }
 		else
@@ -314,9 +316,12 @@ int bar (
 			R_cont_rel( (int)0 , (int)(BIG_TIC*(b-t)) );
 		        if(nodata && i==dist_stats->mincat)
 			   sprintf(txt, "null");
-			else if(is_fp)
-			   sprintf(txt,"%d",(int) (dmin/(double) tic_unit));
-                        else
+			else if(is_fp) {
+			   if ( (range_dmax - range_dmin) < 1.0)
+				sprintf(txt,"%.2f", dmin/(double) tic_unit);
+			   else
+				sprintf(txt,"%d",(int) (dmin/(double) tic_unit));
+			} else
 			   sprintf(txt,"%d",(int) (i/tic_unit));
 			text_height = (b-t)*TEXT_HEIGHT;
 			text_width = (r-l)*TEXT_WIDTH;
