@@ -334,12 +334,27 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 # identify current monitor or start monitor
-currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
+if [ "$GIS_FLAG_S" -ne 1 ] ; then
+    currmon=`eval d.mon -L | grep "(selected)" | awk '{print $1}'`
+fi
 
 if [ -z "$currmon" -a "$GIS_FLAG_S" -ne 1 ] ; then
         g.message -e message='*** You must open a display monitor ***'
 	cleanup
 	exit 2
+fi
+
+# if running in the GUI, do not create a graphic legend in an xmon
+if [ "$GIS_FLAG_S" -eq 1 ] ; then
+    GIS_FLAG_L=0
+    # if running in GUI, turn off immediate mode rendering so that the
+    # iterated d.vect commands will composite using the display driver
+    rendermode=$GRASS_RENDER_IMMEDIATE
+    pngread=$GRASS_PNG_READ
+    GRASS_PNG_READ=TRUE
+    export GRASS_PNG_READ
+    GRASS_PNG_AUTO_WRITE=FALSE
+    export GRASS_PNG_AUTO_WRITE
 fi
 
 table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
@@ -472,7 +487,6 @@ g.message message="Thematic map legend for column $GIS_OPT_COLUMN of map $GIS_OP
 g.message message="Value range: $min - $max"
 
 # graduated color thematic mapping
-
 if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
     # set color schemes for graduated color maps
     case "$GIS_OPT_COLORSCHEME" in
@@ -621,18 +635,6 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
 
     i=1
     first="true"
-
-	# if running in GUI, turn off immediate mode rendering so that the
-	# iterated d.vect commands will composite using the display driver
-	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
-		rendermode=$GRASS_RENDER_IMMEDIATE
-		autowrite=$GRASS_PNG_AUTO_WRITE
-		GRASS_RENDER_IMMEDIATE=FALSE
-		export GRASS_RENDER_IMMEDIATE
-		GRASS_PNG_AUTO_WRITE=FALSE
-		export GRASS_PNG_AUTO_WRITE
-		d.mon start=PNG
-	fi
 
     while [ $i -le $numint ]     
         do 
@@ -869,17 +871,6 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_colors" ] ; then
         line3=`expr $line3 - 4`
     done
     
-    # reset rendering for GUI use
-	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
-		d.mon stop=PNG
-		if [ -n "$currmon" ] ; then
-		    d.mon select=$currmon
-		fi
-		GRASS_RENDER_IMMEDIATE=$rendermodeexport
-		export GRASS_RENDER_IMMEDIATE
-		GRASS_PNG_AUTO_WRITE=$autowrite
-		export GRASS_PNG_AUTO_WRITE
-	fi
 fi
 
 #graduated points and line widths thematic mapping
@@ -969,18 +960,6 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
 
     i=$numint
     ptsize=$GIS_OPT_MAXSIZE
-
-	# if running in GUI, turn off immediate mode rendering so that the
-	# iterated d.vect commands will composite using the display driver
-	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
-		rendermode=$GRASS_RENDER_IMMEDIATE
-		autowrite=$GRASS_PNG_AUTO_WRITE
-		GRASS_RENDER_IMMEDIATE=FALSE
-		export GRASS_RENDER_IMMEDIATE
-		GRASS_PNG_AUTO_WRITE=FALSE
-		export GRASS_PNG_AUTO_WRITE
-		d.mon start=PNG
-	fi
 
     while [ $i -ge 1 ]     
         do 
@@ -1166,18 +1145,16 @@ if [ "$GIS_OPT_THEMETYPE" = "graduated_points" -o "$GIS_OPT_THEMETYPE" = "gradua
         line2=`expr $line2 - $lineht`
         i=`expr $i - 1`
     done
-    # reset rendering for GUI use
-	if [ "$GIS_FLAG_S"  -eq 1 ] ; then
-		d.mon stop=PNG
-		if [ -n "$currmon" ] ; then 
-		    d.mon select=$currmon
-		fi
-		GRASS_RENDER_IMMEDIATE=$rendermode
-		export GRASS_RENDER_IMMEDIATE
-		GRASS_PNG_AUTO_WRITE=$autowrite
-		export GRASS_PNG_AUTO_WRITE
-	fi
 
+fi
+
+if [ "$GIS_FLAG_S" -eq 1 ] ; then
+    # reset display parameters
+    #GRASS_PNG_READ=$pngread
+    GRASS_PNG_READ=FALSE
+    export GRASS_PNG_READ
+    GRASS_RENDER_IMMEDIATE=$rendermode
+    export GRASS_RENDER_IMMEDIATE
 fi
 
 # Create graphic legend
