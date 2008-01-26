@@ -16,7 +16,7 @@
 /* *************************************************************** */
 /* **** univar_stat constructor ********************************** */
 /* *************************************************************** */
-univar_stat *create_univar_stat_struct(int map_type, int size)
+univar_stat *create_univar_stat_struct(int map_type, int size, int n_perc)
 {
     univar_stat *stats;
 
@@ -26,7 +26,11 @@ univar_stat *create_univar_stat_struct(int map_type, int size)
     stats->sumsq = 0.0;
     stats->min = 0.0 / 0.0;	/*set to nan as default */
     stats->max = 0.0 / 0.0;	/*set to nan as default */
-    stats->perc = 0;
+    stats->n_perc = n_perc;
+    if (n_perc > 0)
+	stats->perc = (int *) G_malloc (n_perc * sizeof (int));
+    else
+	stats->perc = NULL;
     stats->sum_abs = 0.0;
     stats->n = 0;
     stats->size = size;
@@ -54,6 +58,8 @@ univar_stat *create_univar_stat_struct(int map_type, int size)
 /* *************************************************************** */
 void free_univar_stat_struct(univar_stat * stats)
 {
+    if (stats->perc) 
+	G_free(stats->perc);
     if (stats->dcell_array)
 	G_free(stats->dcell_array);
     if (stats->fcell_array)
@@ -75,9 +81,10 @@ int print_stats(univar_stat * stats)
     char sum_str[100];
     double mean, variance, stdev, var_coef;
     /*for extendet stats */
-    double quartile_25 = 0.0, quartile_75 = 0.0, quartile_perc = 0.0;
+    double quartile_25 = 0.0, quartile_75 = 0.0, *quartile_perc;
     double median = 0.0;
-    int qpos_25, qpos_75, qpos_perc;
+    unsigned int i;
+    int qpos_25, qpos_75, *qpos_perc;
 
 
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
@@ -127,9 +134,13 @@ int print_stats(univar_stat * stats)
 
     /* TODO: mode, skewness, kurtosis */
     if (param.extended->answer) {
+	qpos_perc = (int *) G_calloc(stats->n_perc, sizeof(int));
+	quartile_perc = (double *) G_calloc(stats->n_perc, sizeof(double));
+	for (i = 0; i < stats->n_perc; i++) {
+	    qpos_perc[i] = (int) (stats->n * stats->perc[i] / 100. - 0.5);
+	}
 	qpos_25 = (int)(stats->n * 0.25 - 0.5);
 	qpos_75 = (int)(stats->n * 0.75 - 0.5);
-	qpos_perc = (int)(stats->n * stats->perc / 100. - 0.5);
 
 	switch (stats->map_type) {
 	case CELL_TYPE:
@@ -143,7 +154,9 @@ int print_stats(univar_stat * stats)
 		    (double)(stats->cell_array[stats->n / 2 - 1] +
 			     stats->cell_array[stats->n / 2]) / 2.0;
 	    quartile_75 = (double)stats->cell_array[qpos_75];
-	    quartile_perc = (double)stats->cell_array[qpos_perc];
+	    for (i = 0; i < stats->n_perc; i++) {
+		quartile_perc[i] = (double) stats->cell_array[qpos_perc[i]];
+	    }
 	    break;
 
 	case FCELL_TYPE:
@@ -157,7 +170,9 @@ int print_stats(univar_stat * stats)
 		    (double)(stats->fcell_array[stats->n / 2 - 1] +
 			     stats->fcell_array[stats->n / 2]) / 2.0;
 	    quartile_75 = (double)stats->fcell_array[qpos_75];
-	    quartile_perc = (double)stats->fcell_array[qpos_perc];
+	    for (i = 0; i < stats->n_perc; i++) {
+		quartile_perc[i] = (double)stats->fcell_array[qpos_perc[i]];
+	    }
 	    break;
 
 	case DCELL_TYPE:
@@ -171,7 +186,9 @@ int print_stats(univar_stat * stats)
 		    (stats->dcell_array[stats->n / 2 - 1] +
 		     stats->dcell_array[stats->n / 2]) / 2.0;
 	    quartile_75 = stats->dcell_array[qpos_75];
-	    quartile_perc = stats->dcell_array[qpos_perc];
+	    for (i = 0; i < stats->n_perc; i++) {
+		quartile_perc[i] = stats->dcell_array[qpos_perc[i]];
+	    }
 	    break;
 
 	default:
@@ -182,7 +199,15 @@ int print_stats(univar_stat * stats)
 	    fprintf(stdout, "first_quartile=%g\n", quartile_25);
 	    fprintf(stdout, "median=%g\n", median);
 	    fprintf(stdout, "third_quartile=%g\n", quartile_75);
-	    fprintf(stdout, "percentile_%d=%g\n", stats->perc, quartile_perc);
+	    for (i = 0; i < stats->n_perc; i++) {
+		if (stats->perc[i] == 25 ||
+		    stats->perc[i] == 50 ||
+		    stats->perc[i] == 75) {
+		    /* skip 1st quartile, median, 3rd quartile */
+		    continue;
+		}
+		fprintf(stdout, "percentile_%d=%g\n", stats->perc[i], quartile_perc[i]);
+	    }
 	}
 	else {
 	    fprintf(stdout, "1st quartile: %g\n", quartile_25);
@@ -192,21 +217,31 @@ int print_stats(univar_stat * stats)
 		fprintf(stdout, "median (even number of cells): %g\n", median);
 	    fprintf(stdout, "3rd quartile: %g\n", quartile_75);
 
-	    if (stats->perc % 10 == 1 && stats->perc != 11)
-		fprintf(stdout, "%dst percentile: %g\n", stats->perc,
-			quartile_perc);
-	    else if (stats->perc % 10 == 2 && stats->perc != 12)
-		fprintf(stdout, "%dnd percentile: %g\n", stats->perc,
-			quartile_perc);
-	    else if (stats->perc % 10 == 3 && stats->perc != 13)
-		fprintf(stdout, "%drd percentile: %g\n", stats->perc,
-			quartile_perc);
-	    else
-		fprintf(stdout, "%dth percentile: %g\n", stats->perc,
-			quartile_perc);
-	}
-    }
 
+	    for (i = 0; i < stats->n_perc; i++) {
+		if (stats->perc[i] == 25 ||
+		    stats->perc[i] == 50 ||
+		    stats->perc[i] == 75) {
+		    /* skip 1st quartile, median, 3rd quartile */
+		    continue;
+		}
+		if (stats->perc[i] % 10 == 1 && stats->perc[i] != 11)
+		    fprintf(stdout, "%dst percentile: %g\n", stats->perc[i],
+			    quartile_perc[i]);
+		else if (stats->perc[i] % 10 == 2 && stats->perc[i] != 12)
+		    fprintf(stdout, "%dnd percentile: %g\n", stats->perc[i],
+			    quartile_perc[i]);
+		else if (stats->perc[i] % 10 == 3 && stats->perc[i] != 13)
+		    fprintf(stdout, "%drd percentile: %g\n", stats->perc[i],
+			    quartile_perc[i]);
+		else
+		    fprintf(stdout, "%dth percentile: %g\n", stats->perc[i],
+			    quartile_perc[i]);
+	    }
+	}
+	G_free ((void *) quartile_perc);
+	G_free ((void *) qpos_perc);
+    }
 
     if (!(param.shell_style->answer))
 	G_message("\n");

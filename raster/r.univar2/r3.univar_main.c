@@ -32,6 +32,7 @@ void set_params()
     param.percentile->key = "percentile";
     param.percentile->type = TYPE_INTEGER;
     param.percentile->required = NO;
+    param.percentile->multiple = YES;
     param.percentile->options = "0-100";
     param.percentile->answer = "90";
     param.percentile->description =
@@ -65,6 +66,7 @@ int main(int argc, char *argv[])
     char *infile;
     void *map;
     G3D_Region region;
+    unsigned int i;
     unsigned int rows, cols, depths;
     unsigned int x, y, z;
 
@@ -110,8 +112,14 @@ int main(int argc, char *argv[])
 	G3d_fatalError(_("Error opening g3d map <%s>"), infile);
 
     map_type = G3d_tileTypeMap(map);
-    stats = create_univar_stat_struct(map_type, cols * rows * depths);
-    sscanf(param.percentile->answer, "%i", &stats->perc);
+
+    i = 0;
+    while(param.percentile->answers[i])
+	i++;
+    stats = create_univar_stat_struct(map_type, cols * rows, i);
+    for(i = 0; i < stats->n_perc; i++) {
+	sscanf(param.percentile->answers[i], "%i", &stats->perc[i]);
+    }
 
     stats->n = 0;
     for (z = 0; z < depths; z++) {	/*From the bottom to the top */

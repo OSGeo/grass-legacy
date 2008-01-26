@@ -29,7 +29,8 @@ typedef struct
     double sumsq;
     double min;
     double max;
-    int perc;
+    unsigned int n_perc;
+    int *perc;
     double sum_abs;
     int n;
     int size;
@@ -57,7 +58,7 @@ void heapsort_double(double *data, int n);
 void heapsort_float(float *data, int n);
 void heapsort_int(int *data, int n);
 int print_stats(univar_stat * stats);
-univar_stat *create_univar_stat_struct(int map_type, int size);
+univar_stat *create_univar_stat_struct(int map_type, int size, int n_perc);
 void free_univar_stat_struct(univar_stat * stats);
 
 #endif
