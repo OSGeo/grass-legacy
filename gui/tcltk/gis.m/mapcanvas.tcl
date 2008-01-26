@@ -1058,8 +1058,8 @@ proc MapCanvas::currentzoom { mon } {
 	set ewres [lindex $region 5]
 
 	if { $nsres == $ewres } {
-	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g %s"] \
-		$rows $cols $nsres $mapunits]
+	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d columns=%d  resolution=%g $mapunits"] \
+		$rows $cols $nsres]
 	} else {
 	    set MapCanvas::regionstr [format [G_msg "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"] \
 		$rows $cols $nsres $ewres]
@@ -1176,7 +1176,7 @@ proc MapCanvas::set_wind {mon args overwrite} {
 
 	set options {}
 	foreach attr $zoom_attrs value $values {
-		if {$attr != "rows" && $attr != "cols"} {
+		if {$attr != "rows" && $attr != "cols" && $attr != "ewres" && $attr!= "nsres"} {
 			lappend options "$attr=$value"
 		}		
 	}
@@ -1684,9 +1684,9 @@ proc MapCanvas::measure { mon x y } {
 
 
 	monitor_annotate $measurement_annotation_handle \
-		[format [G_msg " --segment length = %s\n"] $out_seg]
+		[G_msg " --segment length = $out_seg\n"]
 	monitor_annotate $measurement_annotation_handle \
-		[format [G_msg "cumulative length = %s\n"] $out_tot]
+		[G_msg "cumulative length = $out_tot\n"]
 
 	set linex1 $linex2
 	set liney1 $liney2
