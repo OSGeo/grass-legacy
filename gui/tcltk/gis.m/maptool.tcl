@@ -181,22 +181,22 @@ proc MapToolBar::create { tb } {
 #	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
 
 	$zoommenu add command \
-		-label [G_msg "Zoom to selected map"] \
+		-label [G_msg "Zoom display to selected map"] \
 		-command {MapCanvas::zoom_map $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to saved region"] \
+		-label [G_msg "Zoom display to saved region"] \
 		-command {MapCanvas::zoom_region $mon}
 	$zoommenu add command \
-		-label [G_msg "Save display geometry to named region"] \
+		-label [G_msg "Save display extents to named region"] \
 		-command {MapCanvas::save_region $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to current region (set with g.region)"] \
+		-label [G_msg "Zoom display to computational region (set with g.region)"] \
 		-command {MapCanvas::zoom_current $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to default region"] \
+		-label [G_msg "Zoom display to default region"] \
 		-command {MapCanvas::zoom_default $mon}
 	$zoommenu add command \
-		-label [G_msg "Set current region (WIND file) to match display"] \
+		-label [G_msg "Set computational region extents to match display"] \
 		-command {MapCanvas::set_wind $mon "" 0}
 
 	$mapzoom configure -menu $zoommenu
