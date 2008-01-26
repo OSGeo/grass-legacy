@@ -893,8 +893,9 @@ class cmdPanel(wx.Panel):
 
             if ( len(p.get('values',[]) ) > 0):
                 valuelist=map( str, p.get('values',[]) )
-                # list of values (checkbox)
-                if p.get('multiple','no') == 'yes':
+
+                if p.get('multiple','no') == 'yes' and \
+                        p.get('type', '') == 'string':
                     txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ":")
                     if len(valuelist) > 6:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
@@ -913,33 +914,48 @@ class cmdPanel(wx.Panel):
                         hSizer.Add( item=chkbox, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
                         chkbox.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
                     which_sizer.Add( item=hSizer, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=5 )
-                # one value (textctrl)
-                elif len(valuelist) == 1:
-                    txt = wx.StaticText(parent=which_panel,
-                                        label = _('%s. Valid range=%s') % (title, str(valuelist).strip("[]'") + ':' ) )
-                    which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
-
-                    txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-                    if p.get('value','') != '':
-                        txt2.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add(item=txt2, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
-
-                    p['wxId'] = txt2.GetId()
-                    txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
-                    # list of values (combo)
-                    txt = wx.StaticText(parent=which_panel, label = title + ':' )
-                    which_sizer.Add(item=txt, proportion=0, flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
-                    cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
-                                     size=wx.Size(STRING_ENTRY_WIDTH, -1),
-                                     choices=valuelist, style=wx.CB_DROPDOWN)
-                    if p.get('value','') != '':
-                        cb.SetValue(p['value']) # parameter previously set
-                    which_sizer.Add( item=cb, proportion=0,
-                                     flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
-                    p['wxId'] = cb.GetId()
-                    cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
+                    if len(valuelist) == 1: # -> textctrl
+                        txt = wx.StaticText(parent=which_panel,
+                                            label = _('%s. Valid range=%s') % \
+                                                (title, str(valuelist).strip("[]'") + ':' ) )
+                        which_sizer.Add(item=txt, proportion=0,
+                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+
+                        if p.get('type','') == 'integer' and \
+                                p.get('multiple','no') == 'no':
+                            # for multiple integers use textctrl instead of spinsctrl
+                            try:
+                                minValue, maxValue = map(int, valuelist[0].split('-'))
+                            except ValueError:
+                                minValue = -1e6
+                                maxValue = 1e6
+                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=(50, -1),
+                                               min=minValue, max=maxValue)
+                        else:
+                            txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
+                                               size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                        if p.get('value','') != '':
+                            txt2.SetValue(p['value']) # parameter previously set
+                        which_sizer.Add(item=txt2, proportion=0,
+                                        flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
+
+                        p['wxId'] = txt2.GetId()
+                        txt2.Bind(wx.EVT_TEXT, self.OnSetValue)
+                    else:
+                        # list of values (combo)
+                        txt = wx.StaticText(parent=which_panel, label = title + ':' )
+                        which_sizer.Add(item=txt, proportion=0,
+                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                        cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
+                                         size=wx.Size(STRING_ENTRY_WIDTH, -1),
+                                         choices=valuelist, style=wx.CB_DROPDOWN)
+                        if p.get('value','') != '':
+                            cb.SetValue(p['value']) # parameter previously set
+                        which_sizer.Add( item=cb, proportion=0,
+                                         flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
+                        p['wxId'] = cb.GetId()
+                        cb.Bind( wx.EVT_COMBOBOX, self.OnSetValue)
 
             # text entry
             if (p.get('type','string') in ('string','integer','float')
