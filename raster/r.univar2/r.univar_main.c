@@ -31,6 +31,7 @@ void set_params()
     param.percentile->key = "percentile";
     param.percentile->type = TYPE_INTEGER;
     param.percentile->required = NO;
+    param.percentile->multiple = YES;
     param.percentile->options = "0-100";
     param.percentile->answer = "90";
     param.percentile->description =
@@ -53,7 +54,7 @@ void set_params()
 /* *************************************************************** */
 int main(int argc, char *argv[])
 {
-
+    unsigned int i;
     unsigned int row, col;	/* counters */
     unsigned int rows, cols;	/*  totals  */
 
@@ -103,8 +104,13 @@ int main(int argc, char *argv[])
     rows = region.rows;		/* use G_window_rows(), G_window_cols() here? */
     cols = region.cols;
 
-    stats = create_univar_stat_struct(map_type, cols * rows);
-    sscanf(param.percentile->answer, "%i", &stats->perc);
+    i = 0;
+    while(param.percentile->answers[i])
+	i++;
+    stats = create_univar_stat_struct(map_type, cols * rows, i);
+    for(i = 0; i < stats->n_perc; i++) {
+	sscanf(param.percentile->answers[i], "%i", &stats->perc[i]);
+    }
 
     raster_row = G_calloc(cols, G_raster_size(map_type));
 
