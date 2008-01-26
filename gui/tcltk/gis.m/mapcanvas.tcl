@@ -1170,15 +1170,43 @@ proc MapCanvas::set_wind {mon args overwrite} {
 	variable zoom_attrs
 	global devnull
 
+	#get current region settings for resolution
+	if {![catch {open [concat "|g.region" "-ugp" $args "2> $devnull"] r} input]} {
+		while {[gets $input line] >= 0} {
+			if { [regexp -nocase {^([a-z]+)=(.*)$} $line trash key value] } {
+				set parts($key) $value
+			}
+		}
+		
+		if {[catch {close $input} error]} {
+			GmLib::errmsg $error [G_msg "Error reading current resolution with g.region"]
+		}
+		
+	} else {
+		puts $input
+	}
+
+	#set computational region extents while maintaining current resolution
 	set values [MapCanvas::currentzoom $mon]
 	
 	set cmd "g.region"
 
 	set options {}
+	
+	lappend options "-a"
+	
 	foreach attr $zoom_attrs value $values {
 		if {$attr != "rows" && $attr != "cols" && $attr != "ewres" && $attr!= "nsres"} {
 			lappend options "$attr=$value"
 		}		
+	}
+	
+	if {$parts(nsres) != ""} {
+		lappend options "nsres=$parts(nsres)"		
+	}
+
+	if {$parts(ewres) != ""} {
+		lappend options "ewres=$parts(ewres)"		
 	}
 
 	if {$overwrite == 1} {
