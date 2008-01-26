@@ -108,6 +108,7 @@ bindist-macosx:
 	@# build the package
 ifeq ($(XCODE_VER),xcode3)
 	${PACKAGEMAKER} --target 10.4 --root-volume-only --id org.osgeo.grass --root dist/${MACOSX_APP_NAME} --info dist/Info.plist --out "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" --resources dist/resources
+	rm -f "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg/Contents/Resources/TokenDefinitions.plist"
 else
 	${PACKAGEMAKER} -build -ds -p "GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.pkg" -f dist/${MACOSX_APP_NAME} -r dist/resources -i dist/Info.plist -d dist/Description.plist
 endif
