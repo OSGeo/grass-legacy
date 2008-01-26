@@ -783,11 +783,13 @@ class BufferedWindow(wx.Window):
         wheel = event.GetWheelRotation()
         # zoom with mouse wheel
         if wheel != 0:
+            current  = event.GetPositionTuple()[:]
             Debug.msg (5, "BufferedWindow.MouseAction(): wheel=%d" % wheel)
-            # zoom 1/2 of the screen
-            begin = (self.Map.width / 4, self.Map.height / 4)
-            end   = (self.Map.width - self.Map.width / 4,
-                     self.Map.height - self.Map.height / 4)
+            # zoom 1/2 of the screen, centered to current mouse position (TODO: settings)
+            begin = (current[0] - self.Map.width / 4,
+                     current[1] - self.Map.height / 4)
+            end   = (current[0] + self.Map.width / 4,
+                     current[1] + self.Map.height / 4)
 
             if wheel > 0:
                 zoomtype = 1
@@ -1067,7 +1069,19 @@ class BufferedWindow(wx.Window):
 
         if self.mouse['use'] in ["zoom", "pan"]:
             # set region in zoom or pan
-            self.Zoom(self.mouse['begin'], self.mouse['end'], self.zoomtype)
+            begin = self.mouse['begin']
+            end = self.mouse['end']
+            if self.mouse['use'] == 'zoom':
+                # set region for click (zero-width box)
+                if begin[0] - end[0] == 0 or \
+                        begin[1] - end[1] == 0:
+                    # zoom 1/2 of the screen (TODO: settings)
+                    begin = (end[0] - self.Map.width / 4,
+                             end[1] - self.Map.height / 4)
+                    end   = (end[0] + self.Map.width / 4,
+                             end[1] + self.Map.height / 4)
+
+            self.Zoom(begin, end, self.zoomtype)
 
             # redraw map
             self.UpdateMap(render=True)
