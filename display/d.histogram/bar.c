@@ -317,7 +317,7 @@ int bar (
 		        if(nodata && i==dist_stats->mincat)
 			   sprintf(txt, "null");
 			else if(is_fp) {
-			   if ( (range_dmax - range_dmin) < 1.0)
+			   if ( (range_dmax - range_dmin) <= 1.0)
 				sprintf(txt,"%.2f", dmin/(double) tic_unit);
 			   else
 				sprintf(txt,"%d",(int) (dmin/(double) tic_unit));
