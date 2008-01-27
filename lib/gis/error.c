@@ -93,6 +93,16 @@ static int write_error (const char *, int, const char *,
                         time_t, const char *);
 static int log_error (const char *, int);
 
+static int
+vfprint_error (int type, const char *template, va_list ap)
+{
+    char buffer[2000];  /* G_asprintf does not work */
+
+    vsprintf (buffer, template, ap);
+
+    /* . */
+    return print_error (buffer, type);
+}
 
 /*!
  * \fn void G_message (const char *msg,...)
@@ -105,15 +115,11 @@ static int log_error (const char *, int);
 */
 void G_message (const char *msg,...)
 {
-    char buffer[2000];  /* G_asprintf does not work */
-    va_list ap;
-
     if( G_verbose() >= G_verbose_std() ) {
+	va_list ap;
 	va_start(ap, msg);
-	vsprintf(buffer,msg,ap);
+	vfprint_error (MSG, msg, ap);
 	va_end(ap);
-
-	print_error (buffer,MSG);
     }
 }
 
@@ -130,15 +136,11 @@ void G_message (const char *msg,...)
 */
 void G_verbose_message (const char *msg, ...)
 {
-    char buffer[2000];  /* G_asprintf does not work */
-    va_list ap;
-
     if( G_verbose() > G_verbose_std() ) {
+	va_list ap;
 	va_start(ap, msg);
-	vsprintf(buffer,msg,ap);
+	vfprint_error (MSG, msg, ap);
 	va_end(ap);
-
-	G_message(buffer);
     }
 }
 
@@ -158,15 +160,11 @@ void G_verbose_message (const char *msg, ...)
 */
 void G_important_message(const char *msg, ...)
 {
-    char buffer[2000];  /* G_asprintf does not work */
-    va_list ap;
-
     if( G_verbose() > G_verbose_min() ) {
+	va_list ap;
 	va_start(ap, msg);
-	vsprintf(buffer,msg,ap);
+	vfprint_error (MSG, msg, ap);
 	va_end(ap);
-
-	print_error (buffer,MSG);
     }
 }
 
@@ -194,14 +192,11 @@ void G_important_message(const char *msg, ...)
 */
 int G_fatal_error (const char *msg,...)
 {
-    char buffer[2000];  /* No novels to the error logs, OK? */
     va_list ap;
 
     va_start(ap,msg);
-    vsprintf(buffer,msg,ap);
+    vfprint_error (ERR, msg, ap);
     va_end(ap);
-
-    print_error (buffer,ERR);
     
     exit (EXIT_FAILURE);
 }
@@ -221,15 +216,13 @@ int G_fatal_error (const char *msg,...)
 */
 int G_warning (const char *msg, ...)
 {
-    char buffer[2000];
     va_list ap;
 
     if (no_warn) return 0;
 
     va_start(ap,msg);
-    vsprintf(buffer,msg,ap);
+    vfprint_error (WARN, msg, ap);
     va_end(ap);
-    print_error (buffer,WARN);
 
     return 0;
 }
