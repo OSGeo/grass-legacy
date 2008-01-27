@@ -349,7 +349,7 @@ if [ "$GIS_FLAG_S" -eq 1 ] ; then
     GIS_FLAG_L=0
     # if running in GUI, turn off immediate mode rendering so that the
     # iterated d.vect commands will composite using the display driver
-    rendermode=$GRASS_RENDER_IMMEDIATE
+    autowrite=$GRASS_PNG_AUTO_WRITE
     pngread=$GRASS_PNG_READ
     GRASS_PNG_READ=TRUE
     export GRASS_PNG_READ
@@ -1150,11 +1150,10 @@ fi
 
 if [ "$GIS_FLAG_S" -eq 1 ] ; then
     # reset display parameters
-    #GRASS_PNG_READ=$pngread
-    GRASS_PNG_READ=FALSE
+    GRASS_PNG_READ=$pngread
     export GRASS_PNG_READ
-    GRASS_RENDER_IMMEDIATE=$rendermode
-    export GRASS_RENDER_IMMEDIATE
+    GRASS_PNG_AUTO_WRITE=$autowrite
+    export GRASS_PNG_AUTO_WRITE
 fi
 
 # Create graphic legend
