@@ -153,7 +153,7 @@ Note:  geographic region definition files may be selected
 from other mapsets as well, if accessible and in the user's
 mapset search path.
 
-<li>Set current geographic region from a raster (cell) map
+<li>Set current geographic region from a raster map
 layer Allows the user to select a raster map layer, copies
 the cell header for this map layer to the current
 geographic region, and then lets the user edit the current
@@ -170,7 +170,7 @@ the user's current mapset.  This option is useful when the
 current geographic region is set directly using option 2,
 or even by another GRASS program
 
-(e.g., <em><a HREF="d.m.html">d.m</a></em>).
+(e.g., <em><a HREF="gis.m.html">gis.m</a></em>).
 
 This option installs an otherwise temporary geographic
 region setting into the geographic region definition data
@@ -200,10 +200,12 @@ current geographic region.
 
 Alternately, the user can modify the settings of the current geographic region
 by specifying all needed parameters on the command line.
+
+<!--
 The user enters the command  <b>g.region</b> <em>parms</em>, where
 <em>parms</em> are the following parameters and/or flags:
 
-<!--
+
 <h3>Flags:</h3>
 
 <dl>
@@ -320,7 +322,7 @@ the named <b>raster</b> map.
 raster map, and align the current region to a row and
 column edge in the named map.  Alignment only moves the
 existing region edges outward to the edges of the next
-nearest cell in the named raster map -- not to the named
+nearest cell in the named raster map - not to the named
 map's edges.  To perform the latter function, use the
 <b>rast=</b><em>name</em> option.
 
@@ -407,24 +409,23 @@ the raster map layer <em>soils</em>.
 
 <p>
 
-<!-- how does this work?
+
 <dt><div class="code"><pre>
-g.region rast=soils  ???
+g.region zoom=soils
 </pre></div>
 
 <dd> This form will first look up the cell header file for
 the raster map layer <em>soils</em>, use this as the
 current region setting, and then shrink the region down to
-the smallest region which still encompasses all non-zero
-data in the map layer <em>soils</em>.  Note that if the
-parameter <em>rast=soils</em> were not specified, the
+the smallest region which still encompasses all non-NULL <!--? non-zero ? -->
+data in the map layer <em>soils</em>.  <!-- Note that if the
+parameter <em>zoom=soils</em> were not specified, the
 zoom would move to encompass all non-zero data values in
 the soils map that were located within the current region
-setting.
+setting. -->
 
 <p>
 
--->
 
 <dt><div class="code"><pre>
 g.region -up rast=soils
@@ -439,11 +440,11 @@ without changing the current region settings.
 <p>
 
 <dt><div class="code"><pre>
-g.region -p rast=soils
+g.region -up zoom=soils save=soils
 </pre></div>
 
 <dd> This will zoom into the smallest region which
-encompasses all non-zero soils data values, and save the
+encompasses all non-NULL <!-- non-zero? --> soils data values, and save the
 new region settings in a file to be called <em>soils</em>
 and stored under the <kbd>windows</kbd> directory in the
 user's current mapset.  The current region settings are not
@@ -674,4 +675,5 @@ Michael Shapiro,
 U.S.Army Construction Engineering 
 Research Laboratory
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
