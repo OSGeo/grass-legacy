@@ -17,6 +17,7 @@ TCLTK_INTERNAL = \#
 endif
 MAKE_DIR_CMD = mkdir -p -m 755
 INSTALL_BIN = ${INSTALL} -m 755
+GRASS_VERSION_BUILD = `/bin/date "+%y%m%d"`
 
 OBJS = Info.plist GRASS.scpt grass.sh main.o
 
@@ -85,6 +86,7 @@ $(OBJDIR)/Info.plist: Info.plist.in
 	sed -e "s,@GRASS_VERSION_MAJOR@,$(GRASS_VERSION_MAJOR),g" \
 	-e "s,@GRASS_VERSION_MINOR@,$(GRASS_VERSION_MINOR),g" \
 	-e "s,@GRASS_VERSION_RELEASE@,$(GRASS_VERSION_RELEASE),g" \
+	-e "s,@GRASS_VERSION_BUILD@,$(GRASS_VERSION_BUILD),g" \
 	Info.plist.in > $(OBJDIR)/Info.plist
 
 $(OBJDIR)/GRASS.scpt: GRASS.applescript
