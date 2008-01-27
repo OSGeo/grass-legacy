@@ -528,7 +528,7 @@ static void print_sentence (FILE *fd, const int type, const char *msg)
 	    next++;
 		
 	    if ( *next == '\n' ) {
-	        *next++;
+	        next++;
 		break;
 	    }
 	}
