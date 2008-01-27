@@ -46,7 +46,7 @@ echo " <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
 <h2>GRASS GIS $GRASSVERSION Reference Manual</h2>
 
 <p>Geographic Resources Analysis Support System, commonly referred to as
-<a href=\"http://grass.itc.it\">GRASS</a>, 
+<a href=\"http://grass.osgeo.org\">GRASS</a>, 
 is a Geographic Information System (GIS) used for geospatial data management
 and analysis, image processing, graphics/maps production, spatial modeling,
 and visualization. GRASS is currently used in academic and commercial settings
