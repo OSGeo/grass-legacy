@@ -162,7 +162,7 @@ then
 else
 	g.message -e "Sorry, point must be within current region"
 	g.message -e "Current region:"
-	g.message -e "west: "$w   "east: "$e
+	g.message -e "west: $w   east: $e"
 	exit 1
 fi
 
@@ -174,7 +174,7 @@ then
 else
 	g.message -e "Sorry, point must be within current region"
 	g.message -e "Current region:"
-	g.message -e "south: "$s   "north: "$n
+	g.message -e "south: $s   north: $n"
 	exit 1
 fi
 
