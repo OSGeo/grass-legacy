@@ -23,6 +23,10 @@
 #%  key: g
 #%  description: Print in shell script style
 #%End
+#%flag
+#%  key: s
+#%  description: Slower but accurate
+#%End
 #%option
 #% key: map1
 #% type: string
@@ -90,7 +94,14 @@ fi
 
 
 #calculate regression equation
-r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
+if [ $GIS_FLAG_S -eq 1 ] ; then
+   # slower but accurate
+   r.stats -n1  input=$GIS_OPT_MAP1,$GIS_OPT_MAP2 | sed 's+$+ 1+g' > "$TMP"
+else
+   # count "identical" pixels
+   r.stats -cnA input=$GIS_OPT_MAP1,$GIS_OPT_MAP2  > "$TMP"
+fi
+
 if [ ! -s "$TMP" ] ; then
     g.message -e "One or both input maps only contain no data (NULL) pixels in the current region"
     exit 1
