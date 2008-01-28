@@ -40,7 +40,7 @@ main (int argc, char **argv)
 	int do_text, fontsize;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *fsize, *tcolor;
-	struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84;
+	struct Flag *noborder, *notext, *geogrid, *nogrid, *wgs84, *cross, *fiducial;
 	struct pj_info info_in;  /* Proj structures */
 	struct pj_info info_out; /* Proj structures */
 
@@ -101,6 +101,16 @@ main (int argc, char **argv)
 	wgs84->description =
 	    _("Draw geographic grid (referenced to WGS84 ellipsoid)");
 
+#ifdef NOTYET
+	cross = G_define_flag();
+	cross->key = 'c';
+	cross->description = _("Draw '+' marks instead of grid lines");
+
+	fiducial = G_define_flag();
+	fiducial->key = 'f';
+	fiducial->description = _("Draw fiducial marks instead of grid lines");
+#endif
+
 	nogrid = G_define_flag();
 	nogrid->key = 'n';
 	nogrid->description = _("Disable grid drawing");
@@ -131,6 +141,18 @@ main (int argc, char **argv)
 
 	if(notext->answer) do_text = FALSE;
 	else do_text = TRUE;
+
+#ifdef NOTYET
+	int mark_type = MARK_GRID;
+	if (cross->answer && fiducial->answer)
+		G_fatal_error(_("Chose a single mark style"));
+	if (cross->answer)
+		mark_type = MARK_CROSS;
+	if (fiducial->answer)
+		mark_type = MARK_FIDUCIAL;
+
+	/* then pass mark_type to plot_grid() and plot_geogrid() */
+#endif
 
 	fontsize = atoi(fsize->answer);
 
