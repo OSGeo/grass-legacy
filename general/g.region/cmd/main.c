@@ -320,9 +320,9 @@ int main (int argc, char *argv[])
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
 	parm.zoom->description =
-	    _("Set region to match this raster map then shrink in to meet data");
+	    _("Shrink region until it meets data from this raster map");
 	parm.zoom->gisprompt   = "old,cell,raster";
-	parm.zoom->guisection  = _("Existing");
+	parm.zoom->guisection  = _("Bounds");
 
 	parm.align = G_define_option();
 	parm.align->key         = "align";
