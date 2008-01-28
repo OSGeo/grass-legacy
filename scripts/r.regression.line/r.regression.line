@@ -25,7 +25,7 @@
 #%End
 #%flag
 #%  key: s
-#%  description: Slower but accurate
+#%  description: Slower but accurate (applies to FP maps only)
 #%End
 #%option
 #% key: map1
