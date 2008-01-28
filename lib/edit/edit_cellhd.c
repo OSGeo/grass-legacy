@@ -45,6 +45,64 @@
  *       0 ok
  *
  **********************************************************************/
+
+/* Documentation moved here from the g.region man page:
+ *  (g.region no longer does interactive; lib/init/set_data.c is the
+ *   only thing left using E_edit_cellhd() AFAICT.  --HB 28 Jan 2008)
+ *
+ * <h2>REGION EDIT PROMPT</h2>
+ *
+ * Most of the options will require the user to edit a
+ * geographic region, be it the current geographic region or
+ * one stored in the user's named region definitions
+ * (the <kbd>windows</kbd> directory).  A standard prompt is
+ * used to perform this edit.  An example is shown below:
+ *
+ *
+ *
+ * <pre>
+ * ---------------------------------------------------------------
+ *  |                         IDENTIFY REGION                     |
+ *  |                                                             |
+ *  |           ===========  DEFAULT REGION  ==========           |
+ *  |           |    Default North: 3402025.00        |           |
+ *  |           |                                     |           |
+ *  |           |          ===YOUR REGION===          |           |
+ *  |           |          |  NORTH EDGE   |          |           |
+ *  |           |          |  3402025.00_  |          |           |
+ *  |           |          |               |          |           |
+ *  | Def West: |WEST EDGE |               |EAST EDGE | Def.East: |
+ *  | 233975.00 |233975.00_|               |236025.00_| 236025.00 |
+ *  |           |          |  SOUTH EDGE   |          |           |
+ *  |           |          |  3399975.00_  |          |           |
+ *  |           |          =================          |           |
+ *  |           |                                     |           |
+ *  |           |    Default South: 3399975.00        |           |
+ *  |           =======================================           |
+ *  |                                                             |
+ *  |              Default   GRID RESOLUTION   Region             |
+ *  |               50.00   --- East-West ---  50.00__            |
+ *  |               50.00   -- North-South --  50.00__            |
+ *  |                                                             |
+ *  |                                                             |
+ *  |     AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE     |
+ *  ---------------------------------------------------------------
+ *  </pre>
+ *
+ *  The fields NORTH EDGE, SOUTH EDGE, WEST EDGE and EAST EDGE,
+ *  are the boundaries of the geographic region that the user
+ *  can change.  The fields Default North, Default South, Def
+ *  West and Def East are the boundaries of the default
+ *  geographic region that are displayed for reference and
+ *  <em>cannot</em> be changed.  The two GRID RESOLUTION Region
+ *  fields (east-west, and north-south) are the geographic
+ *  region's cell resolutions that the user can change.  The
+ *  two GRID RESOLUTION Default fields list the resolutions of
+ *  the default geographic region;  these are displayed for
+ *  reference and cannot be changed here by the user.
+ *
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include <grass/vask.h>
