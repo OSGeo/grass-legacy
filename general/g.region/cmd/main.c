@@ -319,9 +319,10 @@ int main (int argc, char *argv[])
 	parm.zoom->required    = NO;
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
-	parm.zoom->description = _("Raster map to zoom into");
+	parm.zoom->description =
+	    _("Set region to match this raster map then shrink in to meet data");
 	parm.zoom->gisprompt   = "old,cell,raster";
-	parm.zoom->guisection  = _("Resolution");
+	parm.zoom->guisection  = _("Existing");
 
 	parm.align = G_define_option();
 	parm.align->key         = "align";
