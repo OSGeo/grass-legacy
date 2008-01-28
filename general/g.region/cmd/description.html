@@ -85,127 +85,8 @@ region.  Users may also access saved region definitions
 stored under other mapsets in the current location, if
 these mapsets are included in the user's mapset search
 path or the '@' operator is used (<tt>region_name@mapset</tt>).
-
 </dl>
 
-
-<!-- interactive mode no longer available, moved to startup ...?
-<h2>REGION EDIT PROMPT</h2>
-
-Most of the options will require the user to edit a
-geographic region, be it the current geographic region or
-one stored in the user's data base of region definitions
-(the <kbd>windows</kbd> directory).  A standard prompt is
-used to perform this edit.  An example is shown below:
-
-
-
-<pre>
----------------------------------------------------------------
-|                         IDENTIFY REGION                     |
-|                                                             |
-|           ===========  DEFAULT REGION  ==========           |
-|           |    Default North: 3402025.00        |           |
-|           |                                     |           |
-|           |          ===YOUR REGION===          |           |
-|           |          |  NORTH EDGE   |          |           |
-|           |          |  3402025.00_  |          |           |
-|           |          |               |          |           |
-| Def West: |WEST EDGE |               |EAST EDGE | Def.East: |
-| 233975.00 |233975.00_|               |236025.00_| 236025.00 |
-|           |          |  SOUTH EDGE   |          |           |
-|           |          |  3399975.00_  |          |           |
-|           |          =================          |           |
-|           |                                     |           |
-|           |    Default South: 3399975.00        |           |
-|           =======================================           |
-|                                                             |
-|              Default   GRID RESOLUTION   Region             |
-|               50.00   --- East-West ---  50.00__            |
-|               50.00   -- North-South --  50.00__            |
-|                                                             |
-|                                                             |
-|     AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE     |
----------------------------------------------------------------
-</pre>
-
-The fields NORTH EDGE, SOUTH EDGE, WEST EDGE and EAST EDGE,
-are the boundaries of the geographic region that the user
-can change.  The fields Default North, Default South, Def
-West and Def East are the boundaries of the default
-geographic region that are displayed for reference and
-<em>cannot</em> be changed.  The two GRID RESOLUTION Region
-fields (east-west, and north-south) are the geographic
-region's cell resolutions that the user can change.  The
-two GRID RESOLUTION Default fields list the resolutions of
-the default geographic region;  these are displayed for
-reference and cannot be changed here by the user.
-
-<h2>REGION MANAGEMENT MENU OPTIONS</h2>
-
-<ol>
-
-<li>Modify the current geographic region directly Allows
-the user to edit the current region.
-
-
-<li>Set current geographic region from default region
-Copies the default region to the current geographic region,
-and then lets the user edit the current geographic region.
-
-<li>Set current geographic region from a data base
-geographic region Allows the user to select a geographic
-region by name from the data base of geographic regions to
-become the current geographic region, and then lets the
-user edit the current geographic region.
-
-<br>
-Note:  geographic region definition files may be selected
-from other mapsets as well, if accessible and in the user's
-mapset search path.
-
-<li>Set current geographic region from a raster map
-layer Allows the user to select a raster map layer, copies
-the cell header for this map layer to the current
-geographic region, and then lets the user edit the current
-geographic region.  This option is useful when subsequent
-GRASS operations will be used to produce a raster map layer
-from one input raster map layer and it is necessary that
-the result coincide with the input raster map layer.
-
-<li>Save the current geographic region (window) in the data
-base Allows the user to save the current geographic region
-settings in the user's data base of such settings.  These
-files are stored in the <kbd>windows</kbd> directory under
-the user's current mapset.  This option is useful when the
-current geographic region is set directly using option 2,
-or even by another GRASS program
-
-(e.g., <em><a HREF="gis.m.html">gis.m</a></em>).
-
-This option installs an otherwise temporary geographic
-region setting into the geographic region definition data
-base for recall when needed.
-
-<li>Create a new data base geographic region setting
-Creates a new geographic region definition in the user's
-data base of such settings in the <kbd>windows</kbd>
-directory under the current mapset, using the geographic
-region edit prompt described above.  After the geographic
-region definition is created, the user is asked if this
-geographic region setting should also be used as the
-current geographic region.
-
-<li>Modify a data base geographic region setting Modifies a
-geographic region setting (in the data base of such
-settings in the <kbd>windows</kbd> directory of the current
-mapset), using the geographic region edit prompt.  After
-the changes have been made, the user is asked if this
-geographic region setting should also be used as the
-current geographic region.
-
-</ol>
--->
 
 <h2>NOTES</h2>
 
@@ -601,7 +482,8 @@ projection since it is reprojected on the fly.
 <a HREF="g.access.html">g.access</a><br>
 <a HREF="g.mapsets.html">g.mapsets</a><br>
 <a HREF="g.proj.html">g.proj</a><BR>
-<a HREF="variables.html#internal">GRASS_REGION and WIND_OVERRIDE environment variables</a><BR>
+<a HREF="g.setproj.html">g.setproj</a><BR>
+environment variables: <a HREF="variables.html#internal">GRASS_REGION and WIND_OVERRIDE</a>
 </em>
 
 
