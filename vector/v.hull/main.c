@@ -4,8 +4,8 @@
 
 * @Copyright Andrea Aime <aaime@libero.it>
 * 23 Sept. 2001
-* Last updated 19 Dec 2003, Markus Neteler to 5.7
-*
+* Updated 19 Dec 2003, Markus Neteler to 5.7
+* Last updated 16 jan 2007, Benjamin Ducke to support 3D hull creation
 
 * This file is part of GRASS GIS. It is free software. You can
 * redistribute it and/or modify it under the terms of
@@ -19,6 +19,7 @@
 * GNU General Public License for more details.
 ******************************************************************************/
 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -26,9 +27,12 @@
 #include <grass/Vect.h>
 #include <grass/glocale.h>
 
+#include "chull.h"
+
 struct Point {
    double x;
    double y;
+   double z;
 };
 
 int rightTurn(struct Point *P, int i, int j, int k) {
@@ -118,6 +122,36 @@ int convexHull(struct Point* P, const int numPoints, int **hull) {
 
 
 
+void convexHull3d(struct Point* P, const int numPoints, struct Map_info *Map ) {
+
+	int error;
+	int i;
+	double *px;
+	double *py;
+	double *pz;
+	
+	px = G_malloc ( sizeof (double) * numPoints );
+	py = G_malloc ( sizeof (double) * numPoints );
+	pz = G_malloc ( sizeof (double) * numPoints );
+	
+	for ( i=0; i < numPoints; i++ ) {
+		px[i] = (P)[i].x;
+		py[i] = (P)[i].y;
+		pz[i] = (P)[i].z;
+	}
+	
+	/* make 3D hull */
+	error = make3DHull ( px, py, pz, numPoints, Map );
+	if ( error < 0 ) {	
+		G_fatal_error ("Simple planar hulls not implemented yet");
+	}
+	
+	G_free ( px );
+	G_free ( py );
+	G_free ( pz );
+
+}
+
 #define ALLOC_CHUNK 256
 int loadSiteCoordinates(struct Map_info *Map, struct Point **points, int all,
 			struct Cell_head *window)
@@ -155,6 +189,7 @@ int loadSiteCoordinates(struct Map_info *Map, struct Point **points, int all,
 	    
             (*points)[pointIdx].x = sites->x[0];
             (*points)[pointIdx].y = sites->y[0];
+	    (*points)[pointIdx].z = sites->z[0];
             pointIdx++;
         }
     }
@@ -216,7 +251,7 @@ int outputHull(struct Map_info *Map, struct Point* P, int *hull,
 int main(int argc, char **argv) {
     struct GModule *module;
     struct Option *input, *output;
-    struct Flag *all;
+    struct Flag *all, *flat;
     struct Cell_head window;
 
     char *mapset;
@@ -226,6 +261,9 @@ int main(int argc, char **argv) {
     struct Point *points;  /* point loaded from site file */
     int *hull;   /* index of points located on the convex hull */
     int numSitePoints, numHullPoints;
+
+    int MODE2D;
+        
 
     G_gisinit (argv[0]);
 
@@ -243,6 +281,10 @@ int main(int argc, char **argv) {
     all->key = 'a';
     all->description = _("Use all vector points (do not limit to current region)");
 
+    flat = G_define_flag ();
+    flat->key = 'f';
+    flat->description = _("Create a 'flat' 2D hull even if the input is 3D points");
+
     if (G_parser (argc, argv))
 	exit (EXIT_FAILURE);
 
@@ -257,7 +299,7 @@ int main(int argc, char **argv) {
 
     /* open site file */
     if (Vect_open_old(&Map, sitefile, mapset) < 0)
-        G_fatal_error (_("Unable to open vector map <%s>"), sitefile);
+        G_fatal_error (_("Cannot open vector map <%s>"), sitefile);
 
     /* load site coordinates */
     G_get_window (&window);
@@ -268,17 +310,45 @@ int main(int argc, char **argv) {
     if(numSitePoints < 3 )
         G_fatal_error (_("Convex hull calculation requires at least three points"));
 
+
+    /* create a 2D or a 3D hull? */
+    MODE2D = 1;
+    if ( Vect_is_3d ( &Map ) ) {
+    	MODE2D = 0;
+    }
+    if ( flat->answer ) {
+    	MODE2D = 1;
+    }
+
+
     /* create vector map */
-    if (0 > Vect_open_new (&Map, output->answer, 0) )
-        G_fatal_error (_("Unable to create vector map <%s>"), output->answer);
+    if ( MODE2D ) {
+    	if (0 > Vect_open_new (&Map, output->answer, 0 ) ) {
+        	G_fatal_error (_("Cannot open vector map <%s>"), output->answer);
+	}
+    } else {
+    	if (0 > Vect_open_new (&Map, output->answer, 1 ) ) {
+        	G_fatal_error (_("Cannot open vector map <%s>"), output->answer);
+	}  
+    }
 
     Vect_hist_command ( &Map );
 
-    /* compute convex hull */
-    numHullPoints = convexHull(points, numSitePoints, &hull);
+    if ( MODE2D ) {
+    
+       /* compute convex hull */
+       numHullPoints = convexHull(points, numSitePoints, &hull);
+    
+       /* output vector map */
+       outputHull(&Map, points, hull, numHullPoints);
 
-    /* output vector map */
-    outputHull(&Map, points, hull, numHullPoints);
+    } else {
+
+	/* this does everything for the 3D hull including vector map creation */     
+    	convexHull3d (points, numSitePoints, &Map );
+
+    }
+    
 
     /* clean up and bye bye */
     Vect_build (&Map, stderr);
