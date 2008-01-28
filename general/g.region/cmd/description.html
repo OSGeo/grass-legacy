@@ -204,118 +204,60 @@ the changes have been made, the user is asked if this
 geographic region setting should also be used as the
 current geographic region.
 
-
 </ol>
+-->
 
-<h2>NON-INTERACTIVE PROGRAM USE</h2>
+<h2>NOTES</h2>
 
-Alternately, the user can modify the settings of the current geographic region
-by specifying all needed parameters on the command line.
+After all updates have been applied, the current region's
+southern and western boundaries are (silently) adjusted so
+that the north/south distance is a multiple of the
+north/south resolution and that the east/west distance is a
+multiple of the east/west resolution.
 
-
-The user enters the command  <b>g.region</b> <em>parms</em>, where
-<em>parms</em> are the following parameters and/or flags:
-
-
-<h3>Flags:</h3>
-
-<dl>
-
-<dt><b>-a</b> 
-<dd>Align the region to the resolution supplied by the user. The default is to
+<p>
+With the <b>-a</b> flag all four boundaries are adjusted 
+to be even multiples of the resolution, aligning the region to the
+resolution supplied by the user. The default is to
 align the region resolution to match the region boundaries.
 
-<dt><b>-d</b> 
-<dd>Set current region settings equal to default region settings.
-
-<dt><b>-g</b> 
-<dd>Print the current region settings (shell script style) in a
-format that can be given back to <em>g.region</em> on its command line.
-
-<dt><b>-p</b>
-<dd>Print the current region settings.
-
-<dt><b>-l</b>
-
-<dd>Print the current region settings in lat/long coordinates.
-
-<dt><b>-c</b>
-<dd>Print the current region map center coordinates.
-
-<dt><b>-m</b>
-<dd>Print the region resolution in meters (from geodesic). With no other
+<p>
+The <b>-m</b> flag will report the region resolution in meters. The
+resolution is calculated by averaging the resolution at the region
+boundaries. This resolution is calculated by dividing the geodesic 
+distance in meters at the boundary by the number of rows or columns.
+For example the east / west resolution (ewres) is determined from an 
+average of the geodesic distances at the North and South boundaries 
+divided by the number of columns.
+<!-- add'l info. include?
+Print the region resolution in meters (from geodesic). With no other
 flags the default output format is shell stype (-g). The region resolution
 represents the center of the map. The resolutions are calculated at the four
 outside edges, then the two NS edges are averaged and the two EW edges are
 averaged, the results finally printed.
+-->
 
-<dt><b>-u</b>
-<dd>Do not update the current region file settings.  Allows the user to
-temporarily use a different region setting, without saving this setting.
-</dl>
 
-<h3>Parameters:</h3>
+<p>
+The <b>-p</b> (or <b>-g</b>) option is recognized
+last.  This means that all changes are applied to the
+region settings before printing occurs.
+<P>
+The <b>-g</b> flag prints the current region settings in shell script style.
+This format can be given back to <em>g.region</em> on its command line.
+This may also be used to save region settings as shell environment variables
+with the UNIX eval command, "<tt>eval `g.region -g`</tt>".
+
+
+<h3>Additional parameter information:</h3>
 
 <dl>
-<dt><b>region=</b><em>name</em> 
-
-<dd>Make current region settings same as the named region
-file settings
-
-<dt><b>rast=</b><em>name</em> 
-<dd>Make current region settings same as those in the named
-raster map's cell header.  But see
-<a HREF="#parm-zoom"><b>zoom=</b><em>name</em> option</a>, below.
-
-<dt><b>vector=</b><em>name</em> 
-<dd>Make the current region settings the same as those of
-the named vector map.
-
-<dt><b>sites=</b><em>name</em> 
-
-
-<dd>Set the current region to the smallest region
-encompassing all coordinates in the named
-<kbd>site_lists</kbd> file, aligned with the current
-region.
-
 <dt><b>3dview=</b><em>name</em> 
 <dd>Make current region settings same as those in the named
 3dview file, which holds the region that was current when
 the 3dview was saved.
 
-<dt><b>n=</b><em>value</em> 
-<dd>Set map coordinate value for the region's northern edge
-to <em>value</em>
 
-<dt><b>s=</b><em>value</em> 
-
-<dd>Set map coordinate value for the region's southern edge
-to <em>value</em>
-
-<dt><b>e=</b><em>value</em> 
-<dd>Set map coordinate value for the region's eastern edge
-to <em>value</em>
-
-<dt><b>w=</b><em>value</em> 
-<dd>Set map coordinate value for the region's western edge
-to <em>value</em>
-
-<dt><b>res=</b><em>value</em> 
-<dd>Set grid resolution (both north-south and east-west) to
-<em>value</em>
-
-<dt><b>nsres=</b><em>value</em> 
-<dd>Set north-south grid resolution value to <em>value</em>
-
-<dt><b>ewres=</b><em>value</em> 
-
-<dd>Set east-west grid resolution value to <em>value</em>
--->
-
-<h3>Parameters:</h3>
-
-<dl>
 <dt><b>zoom=</b><em>name</em>
 <dd>Shrink current region settings to the smallest region
 encompassing all non-NULL data in the named raster map
@@ -340,40 +282,8 @@ existing region edges outward to the edges of the next
 nearest cell in the named raster map - not to the named
 map's edges.  To perform the latter function, use the
 <b>rast=</b><em>name</em> option.
-
-<!--
-<dt><b>save=</b><em>name</em> 
-<dd>Save current region settings in the named region file
--->
-
 </dl>
 
-
-<h2>NOTES</h2>
-
-After all updates have been applied, the current region's
-southern and western boundaries are (silently) adjusted so
-that the north/south distance is a multiple of the
-north/south resolution and that the east/west distance is a
-multiple of the east/west resolution.
-
-<p>
-With the <b>-a</b> flag all four boundaries are adjusted 
-to be even multiples of the resolution.
-
-<p>
-The <b>-m</b> flag will report the region resolution in meters. The
-resolution is calculated by averaging the resolution at the region
-boundaries. This resolution is calculated by dividing the geodesic 
-distance in meters at the boundary by the number of rows or columns.
-For example the east / west resolution (ewres) is determined from an 
-average of the geodesic distances at the North and South boundaries 
-divided by the number of columns.
-
-<p>
-The <b>-p</b> (or <b>-g</b>) option is recognized
-last.  This means that all changes are applied to the
-region settings before printing occurs.
 
 
 <h2>EXAMPLES</h2>
