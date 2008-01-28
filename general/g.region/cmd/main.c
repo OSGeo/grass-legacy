@@ -101,8 +101,8 @@ int main (int argc, char *argv[])
 
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
-	flag.lprint->description = _("Print the current region in lat/long on current "
-				     "ellipsoid/datum");
+	flag.lprint->description = _("Print the current region in lat/long "
+				     "using the current ellipsoid/datum");
 	flag.lprint->guisection  = _("Print");
 
 	flag.eprint = G_define_flag();
@@ -340,7 +340,8 @@ int main (int argc, char *argv[])
 	parm.save->required    = NO;
 	parm.save->multiple    = NO;
 	parm.save->type        = TYPE_STRING;
-	parm.save->description = _("Save the current region to region definition file");
+	parm.save->description =
+	    _("Save current region settings in named region file");
 	parm.save->gisprompt   = "new,windows,region";
 	parm.save->guisection  = _("Effects");
 
