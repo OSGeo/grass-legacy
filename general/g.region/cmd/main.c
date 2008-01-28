@@ -320,7 +320,7 @@ int main (int argc, char *argv[])
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
 	parm.zoom->description =
-	    _("Shrink region until it meets data from this raster map");
+	    _("Shrink region until it meets non-NULL data from this raster map");
 	parm.zoom->gisprompt   = "old,cell,raster";
 	parm.zoom->guisection  = _("Bounds");
 
@@ -330,7 +330,8 @@ int main (int argc, char *argv[])
 	parm.align->required    = NO;
 	parm.align->multiple    = NO;
 	parm.align->type        = TYPE_STRING;
-	parm.align->description = _("Raster map to align to");
+	parm.align->description =
+	    _("Adjust region cells to cleanly align with this raster map");
 	parm.align->gisprompt   = "old,cell,raster";
 	parm.align->guisection  = _("Bounds");
 
