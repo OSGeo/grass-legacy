@@ -20,7 +20,7 @@ rem set GRASS_SH=c:\msys\1.0\bin\sh.exe
 
 rem Path to utilities used by some scripts, such as awk, sed, etc
 rem (adjust to where you installed msys, gnuwin32, or other similar utilises)
-rem set set PATH=%PATH%;c:\msys\1.0\bin;c:\msys\1.0\lib
+rem set PATH=%PATH%;c:\msys\1.0\bin;c:\msys\1.0\lib
 
 rem Path to your web browser
 rem set GRASS_HTML_BROWSER=%SYSTEMDRIVE%/PROGRA~1/INTERN~1/IEXPLORE.EX
