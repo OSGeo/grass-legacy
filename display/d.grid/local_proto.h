@@ -1,3 +1,5 @@
+#include <grass/gprojects.h>
+
 /* plot.c */
 int plot_grid(double, double, double, int, int, int, int);
 int plot_geogrid(double, struct pj_info, struct pj_info, int, int, int, int);
@@ -8,3 +10,12 @@ float get_heading(double, double);
 
 /* plotborder.c */
 int plot_border(double, double, double);
+
+#define MARK_GRID     0
+#define MARK_CROSS    1
+#define MARK_FIDUCIAL 2
+
+/* fiducial.c */
+void plot_cross(double, double, int, double);
+void plot_fiducial(double, double, int, double);
+void plot_symbol(double, double, int, double, char*);
