@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     i = 0;
     while(param.percentile->answers[i])
 	i++;
-    stats = create_univar_stat_struct(map_type, cols * rows, i);
+    stats = create_univar_stat_struct(map_type, cols * rows * depths, i);
     for(i = 0; i < stats->n_perc; i++) {
 	sscanf(param.percentile->answers[i], "%i", &stats->perc[i]);
     }
