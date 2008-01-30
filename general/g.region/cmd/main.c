@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
 
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
-	flag.lprint->description = _("Print the current region in lat/long on current ellipsoid/datum");
+	flag.lprint->description = _("Print the current region in lat/long using the current ellipsoid/datum");
 	flag.lprint->guisection  = _("Print");
 
 	flag.eprint = G_define_flag();
@@ -294,9 +294,9 @@ int main (int argc, char *argv[])
 	parm.zoom->required    = NO;
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
-	parm.zoom->description = _("Raster map to zoom into");
+	parm.zoom->description = _("Shrink region until it meets non-NULL data from this raster map");
 	parm.zoom->gisprompt   = "old,cell,raster";
-	parm.zoom->guisection  = _("Resolution");
+	parm.zoom->guisection  = _("Bounds");
 
 	parm.align = G_define_option();
 	parm.align->key         = "align";
@@ -304,7 +304,7 @@ int main (int argc, char *argv[])
 	parm.align->required    = NO;
 	parm.align->multiple    = NO;
 	parm.align->type        = TYPE_STRING;
-	parm.align->description = _("Raster map to align to");
+	parm.align->description = _("Adjust region cells to cleanly align with this raster map");
 	parm.align->gisprompt   = "old,cell,raster";
 	parm.align->guisection  = _("Bounds");
 
