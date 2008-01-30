@@ -200,12 +200,6 @@ int print_stats(univar_stat * stats)
 	    fprintf(stdout, "median=%g\n", median);
 	    fprintf(stdout, "third_quartile=%g\n", quartile_75);
 	    for (i = 0; i < stats->n_perc; i++) {
-		if (stats->perc[i] == 25 ||
-		    stats->perc[i] == 50 ||
-		    stats->perc[i] == 75) {
-		    /* skip 1st quartile, median, 3rd quartile */
-		    continue;
-		}
 		fprintf(stdout, "percentile_%d=%g\n", stats->perc[i], quartile_perc[i]);
 	    }
 	}
@@ -219,12 +213,6 @@ int print_stats(univar_stat * stats)
 
 
 	    for (i = 0; i < stats->n_perc; i++) {
-		if (stats->perc[i] == 25 ||
-		    stats->perc[i] == 50 ||
-		    stats->perc[i] == 75) {
-		    /* skip 1st quartile, median, 3rd quartile */
-		    continue;
-		}
 		if (stats->perc[i] % 10 == 1 && stats->perc[i] != 11)
 		    fprintf(stdout, "%dst percentile: %g\n", stats->perc[i],
 			    quartile_perc[i]);
