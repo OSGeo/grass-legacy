@@ -32,10 +32,21 @@ void set_RGBA_from_components(
     color->b = b;
 }
 
-/* Parses color string and fills RGBA array
+
+/* 
+ * \brief Parses color string and fill RGBA array
+ *
+ * If the color is valid the color's alpha value is set to RGBA_COLOR_OPAQUE.
+ * The 'none' case is handed by setting the alpha channel to RGBA_COLOR_NONE.
+ *
  *  Returns: 1 - OK
- *           2 - NONE 
+ *           2 - NONE
  *           0 - Error 
+ *
+ *  \param color_string
+ *  \param RGBA_Color struct to be populated
+ *  \return int
+ * 
  */
 int set_RGBA_from_str(RGBA_Color *color, const char *clr_str)
 {
