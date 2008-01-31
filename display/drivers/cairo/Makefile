@@ -6,8 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-CAIRO_CFLAGS = $(shell pkg-config --cflags cairo)
-EXTRA_CFLAGS = -I../../../lib/driver -I../../../lib/cairodriver $(CAIRO_CFLAGS)
+EXTRA_CFLAGS = -I../../../lib/driver -I../../../lib/cairodriver $(CAIROINC)
 
 OBJS = main.o
 

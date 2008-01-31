@@ -186,6 +186,7 @@ LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
 LOC_ARG_WITH(lapack, LAPACK, no)
 LOC_ARG_WITH(motif, Motif, no)
+LOC_ARG_WITH(cairo, Cairo, no)
 LOC_ARG_WITH(freetype, FreeType, no)
 LOC_ARG_WITH(glw, GLw, no)
 LOC_ARG_WITH(nls, NLS, no)
@@ -1000,6 +1001,7 @@ LOC_CHECK_INC_PATH(ffmpeg, FFMPEG, FFMPEGINCPATH)
 
 LOC_CHECK_INCLUDES(avcodec.h,FFMPEG,$FFMPEGINCPATH)
 LOC_CHECK_INCLUDES(avformat.h,FFMPEG,$FFMPEGINCPATH)
+LOC_CHECK_INCLUDES(swscale.h,FFMPEG,$FFMPEGINCPATH)
 
 AC_DEFINE(HAVE_FFMPEG)
 
@@ -1419,6 +1421,40 @@ AC_SUBST(XMLIB)
 
 # Done checking Motif
 
+# Enable Cairo display driver option
+
+LOC_CHECK_USE(cairo,Cairo,USE_CAIRO)
+
+CAIROINC=
+CAIROLIB=
+
+if test -n "$USE_CAIRO"; then
+
+# With Cairo includes directory
+
+CAIROINC=`pkg-config --cflags cairo`
+
+LOC_CHECK_INCLUDES(cairo.h,Cairo,$CAIROINC)
+
+# With Cairo library directory
+
+CAIROLIB=`pkg-config --libs cairo`
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $CAIROLIB"
+AC_CHECK_FUNC(cairo_create,,[
+AC_MSG_ERROR([*** Unable to locate cairo_create() function.])
+])
+LDFLAGS=${ac_save_ldflags}
+
+fi # $USE_CAIRO
+
+AC_SUBST(CAIROINC)
+AC_SUBST(CAIROLIB)
+AC_SUBST(USE_CAIRO)
+
+# Done checking Cairo
+
 # Enable GLw option
 
 LOC_CHECK_USE(glw,GLw,USE_GLW)
@@ -1699,5 +1735,6 @@ LOC_MSG_USE(SQLite support,USE_SQLITE)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(TIFF support,USE_TIFF)
 LOC_MSG_USE(X11 support,USE_X11)
+LOC_MSG_USE(Cairo support,USE_CAIRO)
 LOC_MSG_USE(MacOSX application,MACOSX_APP)
 LOC_MSG()
