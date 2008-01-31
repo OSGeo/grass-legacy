@@ -24,53 +24,10 @@
  *               Eric G. Miller <egm2 jps.net>,
  *               Justin Hickey <jhickey hpcc.nectec.or.th>
  * PURPOSE:      visualization and animation tool
- * COPYRIGHT:    (C) 2002-2005 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2002-2088 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
  *               for details.
  *
  *****************************************************************************/
-HOWTO - Adding new header files from tcl/tk:
-
-$Date$
-
-Problem: The header files tkInt.h and tkIntDecls.h differ between
-         the various TK library versions. If not updated, NVIZ
-         will just crash (or doesn't compile at all).
-
-Solution: We have to add the individual header files (tkInt.h and
-          tkIntDecls.h) from the tk source code. For that
-          they are renamed according to their version number.
-          The togl.c contains a set of 'if' + 'elif' to reflect
-          the various version numbers.
-
-Step-by-step:
-
-1. download TK from http://tcl.sourceforge.net
-    -> File Distributions
-       -> View All Project Files
-           -> tk8.4.9-src.tar.gz (example)
-   
-   extract:
-    tar xvfz tk8.4.9-src.tar.gz tk8.4.9/generic/tkInt.h
-    tar xvfz tk8.4.9-src.tar.gz tk8.4.9/generic/tkIntDecls.h
-    
-   and add here (rename!)
-     tkInt.h      -> tkInt8.x[.y].h (e.g. tkInt8.4.9.h)
-     tkIntDecls.h -> tkIntDecls8.x[.y].h (e.g. tkIntDecls8.4.9.h)
-
-2. change within tkInt8.x[.y].h the include statement from tkIntDecls.h 
-   to tkIntDecls8.x[.y].h
-
-3. edit togl.c
-   add 'elif' statement with new names according to version
-   of TK
-
-4. complain about these stupid things to Tcl/Tk developers
-
-
-Markus
-
-
-
