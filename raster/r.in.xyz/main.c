@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     method_opt->description = _("Statistic to use for raster values");
     method_opt->options = "n,min,max,range,sum,mean,stddev,variance,coeff_var,median,percentile,skewness,trimmean";
     method_opt->answer = "mean";
-    method_opt->guisection = _("Output");
+    method_opt->guisection = _("Statistic");
 
     type_opt = G_define_option();
     type_opt->key = "type";
@@ -173,7 +173,6 @@ int main(int argc, char *argv[])
     type_opt->options = "CELL,FCELL,DCELL";
     type_opt->answer = "FCELL";
     type_opt->description = _("Storage type for resultant raster map");
-    type_opt->guisection = _("Output");
 
     delim_opt = G_define_standard_option(G_OPT_F_SEP);
     delim_opt->guisection = _("Input");
@@ -211,7 +210,6 @@ int main(int argc, char *argv[])
     zrange_opt->required = NO;
     zrange_opt->key_desc   = "min,max";
     zrange_opt->description = _("Filter range for z data (min,max)");
-    zrange_opt->guisection = _("Input");
 
     percent_opt = G_define_option();
     percent_opt->key = "percent";
@@ -227,6 +225,7 @@ int main(int argc, char *argv[])
     pth_opt->required = NO;
     pth_opt->options = "1-100";
     pth_opt->description = _("pth percentile of the values");
+    pth_opt->guisection = _("Statistic");
 
     trim_opt = G_define_option();
     trim_opt->key = "trim";
@@ -235,6 +234,7 @@ int main(int argc, char *argv[])
     trim_opt->options = "0-50";
     trim_opt->description =
 	_("Discard <trim> percent of the smallest and <trim> percent of the largest observations");
+    trim_opt->guisection = _("Statistic");
 
     scan_flag = G_define_flag();
     scan_flag->key = 's';
