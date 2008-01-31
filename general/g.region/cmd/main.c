@@ -38,7 +38,6 @@ int main (int argc, char *argv[])
 	char *name;
 	char *mapset;
 	char *err;
-	char *G_align_window();
 	int projection;
 	char **rast_ptr, **vect_ptr;
 
