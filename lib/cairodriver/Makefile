@@ -5,11 +5,8 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 PACKAGE ="libcairodriver"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 
-CAIRO_CFLAGS:=$(shell pkg-config --cflags cairo)
-EXTRA_CFLAGS=-I../driver $(CAIRO_CFLAGS) $(PICFLAGS) $(DEFS)
-
-CAIRO_LIBS:=$(shell pkg-config --libs cairo)
-EXTRA_LIBS=$(DRIVERLIB) $(GISLIB) $(CAIRO_LIBS)
+EXTRA_CFLAGS=-I../driver $(CAIROINC) $(PICFLAGS) $(DEFS)
+EXTRA_LIBS=$(DRIVERLIB) $(GISLIB) $(CAIROLIB)
 
 # added constant to /include/Make/Grass.make.in
 LIB_NAME = $(CAIRODRIVER_LIBNAME)

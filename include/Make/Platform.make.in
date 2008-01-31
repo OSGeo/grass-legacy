@@ -203,6 +203,11 @@ OPENDWGLIBPATH      = @OPENDWGLIBPATH@
 OPENDWGLIB          = @OPENDWGLIB@
 USE_OPENDWG         = @USE_OPENDWG@
 
+#cairo
+CAIROINC            = @CAIROINC@
+CAIROLIB            = @CAIROLIB@
+USE_CAIRO           = @USE_CAIRO@
+
 #Python
 PYVERSION           = @PYVERSION@
 USE_PYTHON          = @USE_PYTHON@
