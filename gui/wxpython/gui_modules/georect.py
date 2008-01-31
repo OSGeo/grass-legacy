@@ -62,6 +62,7 @@ import menuform
 import gselect
 import disp_print
 import gcmd
+import utils
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -153,9 +154,22 @@ class GeorectWizard(object):
 
         #set environmental variables
         cmdlist = ['g.gisenv', 'get=GISDBASE']
-        global grassdatabase
+        #global grassdatabase
         p = gcmd.Command(cmdlist)
-        grassdatabase = p.ReadStdOutput()[0]
+        self.grassdatabase = p.ReadStdOutput()[0]
+        
+        # read original environment settings
+        self.orig_env = os.environ.copy()
+        self.orig_gisrc = self.orig_env['GISRC']
+        f = open(self.orig_gisrc)
+        self.gisrc_dict = {}
+        try:
+            for line in f:
+                line = line.strip('/n')
+                self.gisrc_dict[line.split(':')[0]] = line.split(':')[1].strip()
+        finally:
+            f.close()
+        self.src_gisrc = '' #GISRC file for source location/mapset of map(s) to georectify
 
         cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
         global curr_location
@@ -232,14 +246,30 @@ class GeorectWizard(object):
         self.gcpmgr.Update()
 
         self.Cleanup()
+        
+    def SetSrcEnv(self, location, mapset):
+        """Create environment to use for location and mapset
+        that are the source of the file(s) to georectify"""
+        
+        self.src_env = os.environ.copy()
+        self.gisrc_dict['LOCATION_NAME'] = location
+        self.gisrc_dict['MAPSET'] = mapset
+        self.src_gisrc = utils.GetTempfile()     
+        f = open(self.src_gisrc, mode='w')        
+        for line in self.gisrc_dict.items():
+            f.write(line[0]+": "+line[1]+"\n")
+        f.close()
+        self.src_env["GISRC"] = self.src_gisrc
 
-    def SwitchLocMapset(self, location, mapset):
-
-        cmdlist = ['g.gisenv', 'set=LOCATION_NAME=%s' % location]
-        gcmd.Command(cmdlist)
-
-        cmdlist = ['g.gisenv', 'set=MAPSET=%s' % mapset]
-        gcmd.Command(cmdlist)
+    def SwitchEnv(self, grc):
+        """Switches between original working location/mapset and
+        location/mapset that is source of file(s) to georectify"""
+        
+        if grc == 'original':
+            os.environ["GISRC"] = str(self.orig_gisrc)
+        elif grc == 'source':
+            os.environ["GISRC"] = str(self.src_gisrc)
+        
 
     def onWizFinished(self):
         global grassdatabase
@@ -265,7 +295,7 @@ class GeorectWizard(object):
     def Cleanup(self):
         # return to current location and mapset
         global curr_location
-        self.SwitchLocMapset(curr_location, curr_mapset)
+        self.SwitchEnv('original')
         self.wizard.Destroy()
 
 class LocationPage(TitledPage):
@@ -277,18 +307,19 @@ class LocationPage(TitledPage):
         TitledPage.__init__(self, wizard, "Select map type and location/mapset")
 
         self.parent = parent
-        global grassdatabase
-        global xy_location
-        global xy_mapset
+        self.grassdatabase = self.parent.grassdatabase
+        
+        self.xylocation = ''
+        self.xymapset = ''
 
-        tmplist = os.listdir(grassdatabase)
+        tmplist = os.listdir(self.grassdatabase)
 
         self.locList = []
 
         # Create a list of valid locations
         for item in tmplist:
-            if os.path.isdir(os.path.join(grassdatabase,item)) and \
-                os.path.exists(os.path.join(grassdatabase,item,'PERMANENT')):
+            if os.path.isdir(os.path.join(self.grassdatabase,item)) and \
+                os.path.exists(os.path.join(self.grassdatabase,item,'PERMANENT')):
                 self.locList.append(item)
 
         self.mapsetList = []
@@ -340,36 +371,34 @@ class LocationPage(TitledPage):
             maptype = 'vector'
 
     def OnLocation(self, event):
-        global grassdatabase
-        global xy_location
+        """Sets source location for map(s) to georectify"""
 
-        xy_location = event.GetString()
-        tmplist = os.listdir(os.path.join(grassdatabase,xy_location))
+        self.xylocation = event.GetString()
+        tmplist = os.listdir(os.path.join(self.grassdatabase,self.xylocation))
         self.mapsetList = []
         for item in tmplist:
-            if os.path.isdir(os.path.join(grassdatabase,xy_location,item)):
+            if os.path.isdir(os.path.join(self.grassdatabase,self.xylocation,item)):
                 self.mapsetList.append(item)
 
         self.cb_mapset.SetItems(self.mapsetList)
 
     def OnMapset(self, event):
-        global xy_mapset
-        global xy_location
+        """Sets source mapset for map(s) to georectify"""
 
-        if xy_location == '':
+        if self.xylocation == '':
             wx.MessageBox('You must select a valid location before selecting a mapset')
             return
 
-        xy_mapset = event.GetString()
+        self.xymapset = event.GetString()
 
     def onPageChanging(self,event=None):
-        global xy_location
-        global xy_mapset
 
-        if event.GetDirection() and (xy_location == '' or xy_mapset == ''):
+        if event.GetDirection() and (self.xylocation == '' or self.xymapset == ''):
             wx.MessageBox('You must select a valid location and mapset in order to continue')
             event.Veto()
             return
+        else:
+            self.parent.SetSrcEnv(self.xylocation, self.xymapset)
 
     def OnPageChanged(self,event=None):
         pass
@@ -383,6 +412,9 @@ class GroupPage(TitledPage):
 
         self.parent = parent
         self.groupList = []
+        self.grassdatabase = self.parent.grassdatabase
+        self.xylocation = ''
+        self.xymapset = ''
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, 'select group:',
@@ -409,14 +441,8 @@ class GroupPage(TitledPage):
         self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
 
     def OnGroup(self, event):
-        global xy_location
-        global xy_mapset
         global xy_group
-
-        if xy_location == '' or xy_mapset == '':
-            wx.MessageBox('You must select a valid location and mapset before selecting a group')
-            return
-
+        
         xy_group = event.GetString()
 
     def onPageChanging(self,event=None):
@@ -428,23 +454,25 @@ class GroupPage(TitledPage):
             return
 
     def OnPageChanged(self,event=None):
-        global grassdatabase
-        global xy_location
-        global xy_mapset
 
         self.groupList = []
         tmplist = []
-        tmplist = os.listdir(os.path.join(grassdatabase,xy_location,xy_mapset,'group'))\
+        self.xylocation = self.parent.gisrc_dict['LOCATION_NAME']
+        self.xymapset = self.parent.gisrc_dict['MAPSET']
 
-        if tmplist == []:
-            wx.MessageBox('No map/imagery groups exist to georectify. You will need to create one')
-        else:
-            for item in tmplist:
-                if os.path.isdir(os.path.join(grassdatabase,xy_location,xy_mapset,'group',item)):
-                    self.groupList.append(item)
+        print 'location/mapset =',self.xylocation,self.xymapset
+        tmplist = os.listdir(os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group'))
 
-            self.cb_group.SetItems(self.groupList)
-
+        if event.GetDirection() and xy_group == '':
+            if tmplist == []:
+                wx.MessageBox('No map/imagery groups exist to georectify. You will need to create one')
+            else:
+                for item in tmplist:
+                    if os.path.isdir(os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group',item)):
+                        self.groupList.append(item)
+    
+                self.cb_group.SetItems(self.groupList)
+                
 class DispMapPage(TitledPage):
     """
     Select ungeoreferenced map to display for interactively
@@ -485,19 +513,15 @@ class DispMapPage(TitledPage):
             return
 
     def OnPageChanged(self,event=None):
-        global curr_location
-        global curr_mapset
-        global xy_location
-        global xy_mapset
         global maptype
 
         if event.GetDirection():
             # switch to xy location if coming into the page from preceding
-            self.parent.SwitchLocMapset(xy_location, xy_mapset)
+            self.parent.SwitchEnv('source')
             self.selection.SetElementList(maptype)
         else:
             # switch back to current location if leaving the page
-            self.parent.SwitchLocMapset(curr_location, curr_mapset)
+            self.parent.SwitchEnv('original')
 
 class GCP(wx.Frame):
     """
