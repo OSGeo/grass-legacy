@@ -317,6 +317,21 @@ Topology general characteristics:
 <li>currently only 2D topology is supported
 </ol>
 
+In GRASS, the following vector objects are defined:
+
+<ul>
+<li> point: a point;
+<li> line: a directed sequence of connected vertices with two endpoints called nodes;
+<li> boundary: the border line to describe an area;
+<li> centroid: a point within a closed boundary;
+<li> area: the topological composition of centroid and boundary;
+<li> face: a 3D area;
+<li> kernel: a 3D centroid in a volume (not yet implemented);
+<li> volume: a 3D corpus, the topological composition of faces and kernel (not yet implemented).
+</ul>
+
+Note that all lines and boundaries can be polylines (with nodes in between). 
+
 <p>
 Topology is written for native format while pseudo-topology is written
 for OGR sources, SHAPE-link.
