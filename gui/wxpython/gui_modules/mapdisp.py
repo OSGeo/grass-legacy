@@ -1103,6 +1103,10 @@ class BufferedWindow(wx.Window):
                 self.DrawLines(pdc=self.pdcTmp)
             except:
                 pass
+        elif self.mouse["use"] == "pointer" and self.parent.grtoolbar:
+            print self.Pixel2Cell(self.mouse['end'])
+            self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
+                                       size=5)
 
         elif self.mouse["use"] == "pointer" and self.parent.digittoolbar:
             # digitization tool active
@@ -1995,7 +1999,7 @@ class MapFrame(wx.Frame):
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
                  tree=None, notebook=None, gismgr=None, page=None,
-                 Map=None, auimgr=None):
+                 Map=None, auimgr=None, gwiz=None, georect=False):
         """
             Main map display window with toolbars, statusbar and
             DrawWindow
@@ -2014,6 +2018,8 @@ class MapFrame(wx.Frame):
                 gismgr  -- GIS Manager panel
                 page    -- notebook page with layer tree
                 Map     -- instance of render.Map
+                gwiz    -- ID of GeorectWizard
+                georect -- is window used by georectifier
         """
 
         Debug.msg (1, "MapFrame.__init__(): size=%d,%d" % (size[0], size[1]))
@@ -2025,6 +2031,9 @@ class MapFrame(wx.Frame):
         self.tree       = tree     # GIS Manager layer tree object
         self.page       = page     # Notebook page holding the layer tree
         self.layerbook  = notebook # GIS Manager layer tree notebook
+        self.georect    = georect  # Map display used for setting GCPs for georectifier
+        self.gwiz       = gwiz     # Georectifier object
+        self.parent     = parent
 
         #
         # available cursors
@@ -2244,12 +2253,18 @@ class MapFrame(wx.Frame):
         Change choicebook
         page to match display
         """
-
-        # change bookcontrol page to page associated with display
-        if self.page :
-            pgnum = self.layerbook.GetPageIndex(self.page)
-            if pgnum > -1:
-                self.layerbook.SetSelection(pgnum)
+        
+        if self.georect:
+            if event.GetActive():
+                self.gwiz.SwitchEnv('new')
+            else:
+                self.gwiz.SwitchEnv('original')
+        else:
+            # change bookcontrol page to page associated with display
+            if self.page :
+                pgnum = self.layerbook.GetPageIndex(self.page)
+                if pgnum > -1:
+                    self.layerbook.SetSelection(pgnum)
         event.Skip()
 
     def OnMotion(self, event):
@@ -2304,6 +2319,8 @@ class MapFrame(wx.Frame):
                 self.MapWindow.mouse['box'] = 'point'
             else: # moveLine, deleteLine
                 self.MapWindow.mouse['box'] = 'box'
+        elif self.grtoolbar:
+            self.MapWindow.SetCursor(self.cursors["cross"])
         else:
             self.MapWindow.SetCursor(self.cursors["default"])
 
