@@ -126,14 +126,10 @@ d.out.file -c sf_cairo2 format=png
 
 <H2>NOTES</H2> 
 
-<P>
-The driver is still in development. Currently the way to enable Cairo driver
-support is to build grass with
-<div class="code"><PRE>
-make USE_CAIRO=1
-</PRE></div>
-
-This requires a reasonably recent version of the cairo libraries (cairo.h).
+<P>The driver is still in development. Enable it by specifying
+<CODE>--with-cairo</CODE> when configuring GRASS. This
+requires a reasonably recent version of the Cairo libraries
+and a working pkg-config.</P>
 
 <P>Antialiasing is enabled by default for bitmap formats. There is
 currently no way of disabling this.</P>
