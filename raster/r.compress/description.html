@@ -1,6 +1,5 @@
 <H2>DESCRIPTION</H2>
 
-
 The GRASS program <EM>r.compress</EM> can be used to compress and decompress
 raster map layers.
 
@@ -13,11 +12,12 @@ boundary, geology, soils and land use maps) can be greatly
 reduced in size. Some raster map layers are shrunk to
 roughly 1% of their original sizes.  Raster map layers
 containing complex images such as elevation and photo or
-satellite images may increase slightly in size. GRASS uses
-a new compressed format, and all new raster maps are now
-automatically stored in compressed form (see FORMATS
-below).  GRASS programs can read both compressed and
-regular (uncompressed) file formats.  This allows the use
+satellite images may increase slightly in size.
+<!-- The 'new compressed format' probably isn't new anymore as of 2008. - EP 
+GRASS uses a new compressed format, -->
+All new raster maps are now automatically stored in compressed 
+form (see FORMATS below).  GRASS programs can read both compressed 
+and regular (uncompressed) file formats.  This allows the use
 of whichever raster data format consumes less space.
 
 <P>
@@ -30,14 +30,13 @@ it was compressed, the raster map became only 1249 bytes
 <P>
 
 Raster files may be decompressed to return them to their
-original format, using the <B>-u</B> option of
+original format, using the <B>-u</B> flag of 
 <EM>r.compress</EM>. If <EM>r.compress</EM> is asked to
 compress a raster map which is already compressed (or to
-decompress an already decompressed file), it simply informs
-the user of this and asks the user if he wishes to perform
-the reverse operation.
+decompress an already decompressed raster map), it simply informs
+the user the map is already (de)compressed and exits. 
 
-<H2>PROGRAM OPTIONS</H2>
+<H2>NOTES</H2>
 
 <EM>r.compress</EM> can be run either non-interactively or
 interactively.  In non-interactive use, the user must
@@ -45,25 +44,10 @@ specify the name(s) of the raster map layer(s) to be
 compressed (or decompressed) on the command line, using the
 form <B>map=</B><EM>name</EM>[,<EM>name</EM>,...] (where
 each <EM>name</EM> is the name of a raster map layer to be
-compressed or decompressed). To decompress a map, the user
-must include the <B>-u</B> option on the command line. If
-the <B>-u</B> option is not included on the command line,
-<EM>r.compress</EM> will attempt to compress the named map
-layer(s).
+compressed or decompressed). The default behavior is to 
+compress the named map(s).  
 
-<P>
-
-If the user simply types <B>r.compress</B> without specifying any 
-map layer name(s) on the command line, 
-<EM>r.compress</EM> will prompt the user for the names of the map layers 
-to be compressed/decompressed, and ask whether these maps are to be 
-compressed or decompressed.
-<P>
-If the <B>-u</B> flag is set, <EM>r.compress</EM> converts a compressed map
-to its <EM>uncompressed</EM> format.  If not set, <EM>r.compress</EM> will
-attempt to compress the named map layer(s).
-
-<H2>FORMATS</H2>
+<H3>FORMATS</H3>
 
 Conceptually, a raster data file consists of rows of cells,
 with each row containing the same number of cells.  A cell
@@ -103,7 +87,7 @@ no longer produce), and the version 3.0 format (which is
 automatically used when new raster map layers are
 created).
 
-<H3>PRE-3.0 FORMAT:</H3> 
+<H4>PRE-3.0 FORMAT:</H4> 
 
 First 3 bytes (chars) - These are a special code that identifies 
 the raster data as compressed. 
@@ -124,7 +108,7 @@ one.  The first byte of each group gives a count (up to
 255) of the number of cells that contain the category
 values given by the remaining bytes of the group.
 
-<H3>POST-3.0 FORMAT:</H3> 
+<H4>POST-3.0 FORMAT:</H4> 
 
 The 3 byte code is not used. 
 Instead, a field in the cell header is used to indicate compressed format. 
