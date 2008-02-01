@@ -80,6 +80,7 @@ import gui_modules.globalvar as globalvar
 from   gui_modules.debug import Debug as Debug
 from   icons.icon import Icons as Icons
 
+
 class GMFrame(wx.Frame):
     """
     GIS Manager frame with notebook widget for controlling
@@ -107,6 +108,7 @@ class GMFrame(wx.Frame):
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
         self.workspaceFile = workspace    # workspace file
         self.menucmd       = {}           # menuId / cmd
+        self.georectifying = False        # says whether we're running the georectifier
 
         # creating widgets
         # -> self.notebook, self.goutput, self.outpage
@@ -314,8 +316,9 @@ class GMFrame(wx.Frame):
         """
         Launch georectifier module
         """
+        self.georectifying = True
         georect.GeorectWizard(self)
-
+        
     def OnMapsets(self, event):
         """
         Launch mapset access dialog
