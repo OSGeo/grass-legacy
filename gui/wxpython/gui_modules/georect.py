@@ -72,50 +72,15 @@ sys.path.append(imagepath)
 
 # global variables
 global grassdatabase
-global curr_location
-global curr_mapset
-
-global xy_location
-global xy_mapset
 global xy_group
 global xy_map
 
 global maptype
 
-xy_location = ''
-xy_mapset = ''
 xy_group = ''
 xy_map = ''
 maptype = 'cell'
 
-class Georectify(object):
-    """
-    Init class for georectifying. Launches startup dialog
-    for setting georectifying parameters.
-    """
-    def __init__(self,parent):
-
-        self.parent = parent
-
-        # launch the startup dialog
-        dlg = GeorectStart(self.parent)
-
-        dlg.CenterOnScreen()
-
-        dlg.ShowModal()
-
-        # If OK button pressed in decoration control dialog
-#        if dlg.ShowModal() == wx.ID_OK:
-#            # go on to GCP management
-#            pass
-
-
-
-
-        # starup dialog calls GCP which
-
-    def StartUp(self):
-        pass
 
 class TitledPage(wiz.WizardPageSimple):
     """
@@ -159,8 +124,8 @@ class GeorectWizard(object):
         self.grassdatabase = p.ReadStdOutput()[0]
         
         # read original environment settings
-        self.orig_env = os.environ.copy()
-        self.orig_gisrc = self.orig_env['GISRC']
+        #self.orig_env = os.environ.copy()
+        self.orig_gisrc = os.environ['GISRC']
         f = open(self.orig_gisrc)
         self.gisrc_dict = {}
         try:
@@ -169,17 +134,7 @@ class GeorectWizard(object):
                 self.gisrc_dict[line.split(':')[0]] = line.split(':')[1].strip()
         finally:
             f.close()
-        self.src_gisrc = '' #GISRC file for source location/mapset of map(s) to georectify
-
-        cmdlist = ['g.gisenv', 'get=LOCATION_NAME']
-        global curr_location
-        p = gcmd.Command(cmdlist)
-        curr_location = p.ReadStdOutput()[0]
-
-        cmdlist = ['g.gisenv', 'get=MAPSET']
-        global curr_mapset
-        p = gcmd.Command(cmdlist)
-        curr_mapset = p.ReadStdOutput()[0]
+        self.new_gisrc = '' #GISRC file for source location/mapset of map(s) to georectify
 
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Setup for georectification")
@@ -210,40 +165,49 @@ class GeorectWizard(object):
         else:
             wx.MessageBox("Georectifying setup canceled.")
 
-        # start display showing xymap
-        self.Map = render.Map()    # instance of render.Map to be associated with display
-
-        global maptype
-        global xy_map
-
-        if maptype == 'cell':
-            rendertype = 'raster'
-            cmdlist = ['d.rast', 'map=%s' % xy_map]
-        elif maptype == 'vector':
-            rendertype = 'vector'
-            cmdlist = ['d.vect', 'map=%s' % xy_map]
-
-        self.Map.AddLayer(type=rendertype, command=cmdlist,l_active=True,
-                          l_hidden=False, l_opacity=1, l_render=False)
-
-        self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
+        # start display showing xymap - need to put an if statement here
+        if success != False:
+            self.Map = render.Map()    # instance of render.Map to be associated with display
+    
+            global maptype
+            global xy_map
+    
+            if maptype == 'cell':
+                rendertype = 'raster'
+                cmdlist = ['d.rast', 'map=%s' % xy_map]
+            elif maptype == 'vector':
+                rendertype = 'vector'
+                cmdlist = ['d.vect', 'map=%s' % xy_map]
+    
+            self.Map.AddLayer(type=rendertype, command=cmdlist,l_active=True,
+                              l_hidden=False, l_opacity=1, l_render=False)
+    
+            self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
                  pos=wx.DefaultPosition, size=(640,480),
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["georect"],
-                 Map=self.Map)
+                 Map=self.Map, gwiz=self, georect=True)
+            
+            self.mapwin = self.xy_mapdisp.MapWindow
+            
+            # set mouse characteristics
+            self.mapwin.mouse['box'] = 'point'
+            self.mapwin.zoomtype = 0
+            self.mapwin.pen     = wx.Pen(colour='black',   width=2, style=wx.SOLID)
+            self.mapwin.SetCursor(self.xy_mapdisp.cursors["cross"])
+            
+            # draw selected xy map
+            self.xy_mapdisp.MapWindow.UpdateMap()
 
-        # draw selected xy map
-        self.xy_mapdisp.MapWindow.UpdateMap()
-
-        #show new display
-        self.xy_mapdisp.Show()
-        self.xy_mapdisp.Refresh()
-        self.xy_mapdisp.Update()
-
-        # start GCP form
-        self.gcpmgr = GCP(self.parent)
-        self.gcpmgr.Show()
-        self.gcpmgr.Refresh()
-        self.gcpmgr.Update()
+            #show new display
+            self.xy_mapdisp.Show()
+            self.xy_mapdisp.Refresh()
+            self.xy_mapdisp.Update()
+    
+            # start GCP form
+            self.gcpmgr = GCP(self.parent)
+            self.gcpmgr.Show()
+            self.gcpmgr.Refresh()
+            self.gcpmgr.Update()
 
         self.Cleanup()
         
@@ -251,15 +215,13 @@ class GeorectWizard(object):
         """Create environment to use for location and mapset
         that are the source of the file(s) to georectify"""
         
-        self.src_env = os.environ.copy()
         self.gisrc_dict['LOCATION_NAME'] = location
         self.gisrc_dict['MAPSET'] = mapset
-        self.src_gisrc = utils.GetTempfile()     
-        f = open(self.src_gisrc, mode='w')        
+        self.new_gisrc = utils.GetTempfile()     
+        f = open(self.new_gisrc, mode='w')        
         for line in self.gisrc_dict.items():
             f.write(line[0]+": "+line[1]+"\n")
         f.close()
-        self.src_env["GISRC"] = self.src_gisrc
 
     def SwitchEnv(self, grc):
         """Switches between original working location/mapset and
@@ -267,34 +229,29 @@ class GeorectWizard(object):
         
         if grc == 'original':
             os.environ["GISRC"] = str(self.orig_gisrc)
-        elif grc == 'source':
-            os.environ["GISRC"] = str(self.src_gisrc)
+        elif grc == 'new':
+            os.environ["GISRC"] = str(self.new_gisrc)
         
 
     def onWizFinished(self):
         global grassdatabase
-        global curr_location
-        global curr_mapset
-        global xy_location
-        global xy_mapset
         global xy_group
         global xy_map
         global maptype
 
-        print 'Current global variables'
-        print 'curr_location=',curr_location
-        print 'curr_mapset=',curr_mapset
-        print 'xy_location=',xy_location
-        print 'xy_mapset=',xy_mapset
-        print 'xy_group=',xy_group
-        print 'xy_map=',xy_map
-        print 'maptype=',maptype
+        #print 'Current global variables'
+        #print 'curr_location=',curr_location
+        #print 'curr_mapset=',curr_mapset
+        #print 'xy_location=',xy_location
+        #print 'xy_mapset=',xy_mapset
+        #print 'xy_group=',xy_group
+        #print 'xy_map=',xy_map
+        #print 'maptype=',maptype
 
         return True
 
     def Cleanup(self):
         # return to current location and mapset
-        global curr_location
         self.SwitchEnv('original')
         self.wizard.Destroy()
 
@@ -374,10 +331,13 @@ class LocationPage(TitledPage):
         """Sets source location for map(s) to georectify"""
 
         self.xylocation = event.GetString()
+        
+        #create a list of valid mapsets
         tmplist = os.listdir(os.path.join(self.grassdatabase,self.xylocation))
         self.mapsetList = []
         for item in tmplist:
-            if os.path.isdir(os.path.join(self.grassdatabase,self.xylocation,item)):
+            if os.path.isdir(os.path.join(self.grassdatabase,self.xylocation,item)) and \
+                os.path.exists(os.path.join(self.grassdatabase,self.xylocation,item,'WIND')):
                 self.mapsetList.append(item)
 
         self.cb_mapset.SetItems(self.mapsetList)
@@ -460,7 +420,7 @@ class GroupPage(TitledPage):
         self.xylocation = self.parent.gisrc_dict['LOCATION_NAME']
         self.xymapset = self.parent.gisrc_dict['MAPSET']
 
-        print 'location/mapset =',self.xylocation,self.xymapset
+        # create a list of groups in selected mapset
         tmplist = os.listdir(os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group'))
 
         if event.GetDirection() and xy_group == '':
@@ -517,7 +477,7 @@ class DispMapPage(TitledPage):
 
         if event.GetDirection():
             # switch to xy location if coming into the page from preceding
-            self.parent.SwitchEnv('source')
+            self.parent.SwitchEnv('new')
             self.selection.SetElementList(maptype)
         else:
             # switch back to current location if leaving the page
@@ -528,6 +488,7 @@ class GCP(wx.Frame):
     Manages ground control points for georectifying. Calculates RMS statics.
     Calls i.rectify or v.transform to georectify map.
     """
+
     def __init__(self,parent,id=-1,title="Create & manage ground control points"):
         wx.Frame.__init__(self, parent, id , title, size=(500,400))
 
@@ -567,7 +528,6 @@ class GCP(wx.Frame):
             self.list.SetStringItem(index, 3, i[3])
             self.list.SetStringItem(index, 4, i[4])
             self.list.SetStringItem(index, 5, i[5])
-
 
         p.SetSizer(self.sizer)
 
@@ -631,7 +591,6 @@ class GCP(wx.Frame):
     def OnItemSelected(self, event):
         self.selected = event.GetIndex()
 
-
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
@@ -639,6 +598,9 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
         ListCtrlAutoWidthMixin.__init__(self)
 
 
+
+# These 2 grid classes are ones I tried to use instead of a list. Might want
+# to rethink this later
 class GCPGrid(gridlib.Grid):
     def __init__(self, parent):
         gridlib.Grid.__init__(self, parent, -1)
