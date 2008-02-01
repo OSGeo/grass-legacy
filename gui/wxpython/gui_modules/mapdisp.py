@@ -137,12 +137,13 @@ class BufferedWindow(wx.Window):
                  pos = wx.DefaultPosition,
                  size = wx.DefaultSize,
                  style=wx.NO_FULL_REPAINT_ON_RESIZE,
-                 Map=None, tree=None):
+                 Map=None, tree=None, gismgr=None):
 
         wx.Window.__init__(self, parent, id, pos, size, style)
         self.parent = parent
         self.Map = Map
         self.tree = tree
+        self.gismanager=gismgr
 
         #
         # Flags
@@ -1103,7 +1104,8 @@ class BufferedWindow(wx.Window):
                 self.DrawLines(pdc=self.pdcTmp)
             except:
                 pass
-        elif self.mouse["use"] == "pointer" and self.parent.grtoolbar:
+        elif self.mouse["use"] == "pointer" and self.gismanager.georectifying:
+            self.SetCursor(self.parent.cursors["cross"])
             print self.Pixel2Cell(self.mouse['end'])
             self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
                                        size=5)
@@ -2114,7 +2116,7 @@ class MapFrame(wx.Frame):
         self.__InitDisplay() # initialize region values
 
         # initialize buffered DC & set default cursor
-        self.MapWindow = BufferedWindow(self, id=wx.ID_ANY, Map=self.Map, tree=self.tree)
+        self.MapWindow = BufferedWindow(self, id=wx.ID_ANY, Map=self.Map, tree=self.tree, gismgr=self.gismanager)
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor(self.cursors["default"])
 
@@ -2297,7 +2299,7 @@ class MapFrame(wx.Frame):
         self.MapWindow.UpdateMap(render=True)
 
     def OnPointer(self, event):
-        """Pointer button clicled"""
+        """Pointer button clicked"""
 
         self.MapWindow.mouse['use'] = "pointer"
         self.MapWindow.mouse['box'] = "point"
@@ -2319,7 +2321,7 @@ class MapFrame(wx.Frame):
                 self.MapWindow.mouse['box'] = 'point'
             else: # moveLine, deleteLine
                 self.MapWindow.mouse['box'] = 'box'
-        elif self.grtoolbar:
+        elif self.gismanager.georectifying:
             self.MapWindow.SetCursor(self.cursors["cross"])
         else:
             self.MapWindow.SetCursor(self.cursors["default"])

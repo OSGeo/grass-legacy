@@ -135,7 +135,7 @@ class GeorectWizard(object):
         finally:
             f.close()
         self.new_gisrc = '' #GISRC file for source location/mapset of map(s) to georectify
-
+        
         # define wizard pages
         self.wizard = wiz.Wizard(parent, -1, "Setup for georectification")
         self.startpage = LocationPage(self.wizard, self)
@@ -185,7 +185,7 @@ class GeorectWizard(object):
             self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
                  pos=wx.DefaultPosition, size=(640,480),
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["georect"],
-                 Map=self.Map, gwiz=self, georect=True)
+                 Map=self.Map, gwiz=self, gismgr=self.parent, georect=True)
             
             self.mapwin = self.xy_mapdisp.MapWindow
             
@@ -253,6 +253,7 @@ class GeorectWizard(object):
     def Cleanup(self):
         # return to current location and mapset
         self.SwitchEnv('original')
+        self.parent.georect = False
         self.wizard.Destroy()
 
 class LocationPage(TitledPage):
