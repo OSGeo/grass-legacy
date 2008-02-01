@@ -95,12 +95,39 @@ set by other means.
 
 <H2>AUTOMATED SCRIPT CREATION</H2>
 
-The flag <em>--script</em> added to a GRASS command, 
+The flag <em>--script</em> added to a GRASS command, generates shell output.
 To write out a <em>g.parser</em> boilerplate for easy prototyping of shell
 scripts, the flag <em>--script</em> can be added to any GRASS command. Example:
 
 <div class="code"><pre>
 v.in.db --script
+</pre></div>
+
+<H2>Help page template (HTML)</H2>
+
+The flag <em>--html-description</em> added to a GRASS command, generates a 
+related help page template in HTML. Example:
+
+<div class="code"><pre>
+v.in.db --html-description
+</pre></div>
+
+<H2>GUI window parser (XML)</H2>
+
+The flag <em>--interface-description</em> added to a GRASS command, generates a
+related help page template in XML. Example:
+
+<div class="code"><pre>
+v.in.db --interface-description
+</pre></div>
+
+<H2>GUI window parser (TclTk)</H2>
+
+The flag <em>--tcltk</em> added to a GRASS command, generates a
+a XML description of the GUI interface. Example
+
+<div class="code"><pre>
+v.in.db --tcltk
 </pre></div>
 
 
