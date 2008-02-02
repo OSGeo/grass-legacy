@@ -14,7 +14,7 @@
 #############################################################################
 
 #%Module
-#%  description: Blends color components of two raster maps by a given ratio
+#%  description: Blends color components of two raster maps by a given ratio.
 #%  keywords: raster
 #%End
 #%option
@@ -36,7 +36,7 @@
 #%option
 #% key: output
 #% type: string
-#% description: Base name for red, green, & blue output maps containing the blend
+#% description: Base name for red, green and blue output maps containing the blend
 #% key_desc : name
 #% required : yes
 #%end
