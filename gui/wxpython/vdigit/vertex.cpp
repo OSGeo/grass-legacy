@@ -50,7 +50,7 @@ int Digit::MoveVertex(double x, double y, double z,
 			    display->selected,
 			    point, thresh,
 			    move_x, move_y, move_z,
-			    1, (snap == SNAPVERTEX) ? 1 : 0); 
+			    1, snap); 
 
     Vect_destroy_line_struct(point);
 

@@ -115,7 +115,7 @@ class TitledPage(BaseClass, wiz.WizardPageSimple):
 
         self.SetAutoLayout(True)
         self.SetSizer(tmpsizer)
-        tmpsizer.Fit(self)
+        # tmpsizer.Fit(self)
         self.Layout()
 
 class DatabasePage(TitledPage):

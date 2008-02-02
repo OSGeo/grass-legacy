@@ -398,7 +398,6 @@ class GMFrame(wx.Frame):
     def GetMenuCmd(self, event):
         """Get GRASS command from menu item
 
-
         Return command as a list"""
         cmd = self.menucmd[event.GetId()]
         try:
@@ -406,6 +405,13 @@ class GMFrame(wx.Frame):
         except: # already list?
             cmdlist = cmd
 
+        layer = self.curr_page.maptree.layer_selected
+        name = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].name
+        type = self.curr_page.maptree.GetPyData(layer)[0]['type']
+        if type == 'raster' and cmdlist[0][0] == 'r' and cmdlist[0][1] != '3':
+            cmdlist.append(name) # TODO map/input=
+        elif type == 'vector' and cmdlist[0][0] == 'v':
+            cmdlist.append(name) # TODO map/input=
         return cmdlist
 
     def RunMenuCmd(self, event):

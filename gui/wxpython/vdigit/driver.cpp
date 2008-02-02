@@ -738,6 +738,8 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
     struct ilist *list;
     struct line_pnts *bbox;
 
+    drawSegments = false;
+
     type = -1; // all types
 
     list = Vect_new_list();

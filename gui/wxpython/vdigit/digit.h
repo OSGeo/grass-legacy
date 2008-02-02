@@ -1,6 +1,10 @@
 #ifndef __DIGIT_H__
 #define __DIGIT_H__
 
+#define GSQL_MAX 4000
+
+#include <map>
+
 class Digit
 {
 private:
@@ -25,7 +29,7 @@ public:
     int SplitLine(double, double, double,
 		  double);
 
-    int DeleteLines();
+    int DeleteLines(bool);
     int MoveLines(double, double, double,
 		  int, double);
     int FlipLines();
@@ -48,8 +52,8 @@ public:
 					int, int, double);
 
     int CopyCats(std::vector<std::vector<int> >, std::vector<int>);
-
     int GetCategory(int);
+    std::map<int, std::vector<int> > GetLineCats();
 
 };
 

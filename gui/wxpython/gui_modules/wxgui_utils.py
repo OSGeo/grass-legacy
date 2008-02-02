@@ -1291,7 +1291,7 @@ class GMStderr:
             if len(line) == 0:
                 continue
 
-            if 'GRASS_INFO_PERCENT:' in line:
+            if 'GRASS_INFO_PERCENT' in line:
                 # 'GRASS_INFO_PERCENT: 10' -> value=10
                 value = int(line.split(':')[1].strip())
                 if value < 100:
