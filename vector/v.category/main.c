@@ -6,7 +6,7 @@
  * *               
  * * PURPOSE:      Category manipulations
  * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * * COPYRIGHT:    (C) 2001-2008 by the GRASS Development Team
  * *
  * *               This program is free software under the 
  * *               GNU General Public License (>=v2). 
@@ -51,19 +51,20 @@ main (int argc, char *argv[])
 	static struct line_pnts *Points;
 	struct line_cats *Cats;
 	struct field_info *Fi;
-        int    i, j, ret, option, otype, type, with_z, step;
+	struct cat_list *Clist;
+        int    i, j, ret, option, otype, type, with_z, step, id;
 	int    n_areas, centr, new_centr;
 	double x, y;
 	int    cat, ocat, *fields, nfields, field;
 	struct GModule *module;
 	struct Option *in_opt, *out_opt, *option_opt, *type_opt;
-	struct Option *cat_opt, *field_opt, *step_opt;
+	struct Option *cat_opt, *field_opt, *step_opt, *id_opt;
 	struct Flag *shell;
 	FREPORT **freps;
 	int nfreps, rtype, fld;
 
 	module = G_define_module();
-	module->keywords = _("vector");
+	module->keywords = _("vector, category");
 	module->description = 
 	    _("Attach, delete or report vector categories to map geometry.");
 
@@ -102,6 +103,12 @@ main (int argc, char *argv[])
 	step_opt->answer = "1";
         step_opt->description = _("Category increment");
 
+	id_opt = G_define_standard_option(G_OPT_V_CAT);
+	id_opt->multiple = YES;
+	id_opt->label = _("Feature id(s)");
+	id_opt->description = _("By default all ids are processed");
+	id_opt->key = "id";
+
 	shell = G_define_flag();
         shell->key         = 'g';
         shell->label       = _("Shell script style, currently only for report");
@@ -138,31 +145,20 @@ main (int argc, char *argv[])
 
 	cat = atoi( cat_opt->answer );
 	step = atoi( step_opt->answer );
-        
-	i = 0;
-        otype = 0; 
-	while (type_opt->answers[i])
-	  {
-	    switch ( type_opt->answers[i][0] )
-	      {
-	        case 'p':
-	            otype |= GV_POINT;
-		    break;
-	        case 'l':
-	            otype |= GV_LINE;
-		    break;
-	        case 'b':
-	            otype |= GV_BOUNDARY;
-		    break;
-	        case 'c':
-	            otype |= GV_CENTROID;
-		    break;
-	        case 'a':
-	            otype |= GV_AREA;
-		    break;
-	      }
-	    i++;
-	  }
+	otype = Vect_option_to_types(type_opt);
+
+	/* collect ids */
+	if (id_opt->answer) {
+	    Clist = Vect_new_cat_list ();
+	    Clist->field = atoi (field_opt->answer);
+	    ret = Vect_str_to_cat_list (id_opt->answer, Clist);
+	    if (ret > 0) {
+	        G_warning (_("%d errors in id option"), ret);
+	    }
+	}
+	else {
+	    Clist = NULL;
+	}
 
 	/* read fields */
 	i = 0; nfields = 0;
@@ -208,20 +204,23 @@ main (int argc, char *argv[])
 	    Vect_hist_command ( &Out );
         }
 
+	id = 0;
+
         switch ( option) {	
 	    case (O_ADD):	  
 		/* Lines */
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
-	            if ( type & otype )
-	               {
-                         if( (Vect_cat_get (Cats, fields[0], &ocat)) == 0)
-	                   {
-                             Vect_cat_set (Cats, fields[0], cat);
-	                     cat += step;
-	                   }
-	               }	   
-	            Vect_write_line ( &Out, type, Points, Cats );  
+		      id++;
+		      if ( type & otype && (!Clist || 
+					    (Clist && Vect_cat_in_cat_list(id, Clist) == TRUE))) {
+			  if( (Vect_cat_get (Cats, fields[0], &ocat)) == 0)
+			  {
+			      Vect_cat_set (Cats, fields[0], cat);
+			      cat += step;
+			  }
+		      }	   
+		      Vect_write_line ( &Out, type, Points, Cats );
 	          }
 		/* Areas */
 		if ( otype & GV_AREA ) {
@@ -232,7 +231,7 @@ main (int argc, char *argv[])
 			if ( centr > 0 ) continue; /* Centroid exists and may be processed as line */
 			ret = Vect_get_point_in_area ( &In, i, &x, &y );
 			if ( ret < 0 ) {
-			    G_warning (_("Cannot calculate area centroid"));
+			    G_warning (_("Unable to calculate area centroid"));
 			    continue;
 			}
 			Vect_reset_line ( Points );
@@ -250,37 +249,43 @@ main (int argc, char *argv[])
 	    case (O_DEL):	  
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
-	            if ( type & otype )
+		    id++;
+	            if ( type & otype  && (!Clist || 
+					   (Clist && Vect_cat_in_cat_list(id, Clist) == TRUE)))
 	               {
                          ret = Vect_cat_del (Cats, fields[0]);
 	               }	   
-	            Vect_write_line ( &Out, type, Points, Cats );  
+	            Vect_write_line ( &Out, type, Points, Cats );
 	          }
 		break;
 
 	    case (O_CHFIELD):	  
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
-	            if ( type & otype ) {
+		    id++;
+	            if ( type & otype && (!Clist || 
+					  (Clist && Vect_cat_in_cat_list(id, Clist) == TRUE))) {
 			for ( i = 0 ; i < Cats->n_cats; i++ ) {
 			   if ( Cats->field[i] == fields[0] ) {
 			       Cats->field[i] = fields[1];
 			   }
 			}
 	            }
-	            Vect_write_line ( &Out, type, Points, Cats );  
+	            Vect_write_line ( &Out, type, Points, Cats );
 	        }
 		break;
 		
 	    case (O_SUM):	  
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
-	            if ( type & otype ) {
+		    id++;
+	            if ( type & otype && (!Clist || 
+					  (Clist && Vect_cat_in_cat_list(id, Clist) == TRUE))) {
 			for ( i = 0 ; i < Cats->n_cats; i++ ) {
 			   if ( Cats->field[i] == fields[0] ) {
 			       Cats->cat[i] += cat;
 			   }
 			}
 	            }	   
-	            Vect_write_line ( &Out, type, Points, Cats );  
+	            Vect_write_line ( &Out, type, Points, Cats );
 	        }
 		break;
 
@@ -289,6 +294,10 @@ main (int argc, char *argv[])
 		freps = NULL;
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
+		    id++;
+		    if (Clist && Vect_cat_in_cat_list(id, Clist) == FALSE)
+			continue;
+
                     switch (type)
 		      {
                         case (GV_POINT):
@@ -386,7 +395,7 @@ main (int argc, char *argv[])
 				     freps[i]->max[FR_ALL]);
 		    } else {
 		        if (freps[i]->table != '\0') {
-			    G_message("%s: %d / %s", _("Layer / table"),
+			    G_message("%s: %d/%s", _("Layer/table"),
 				      freps[i]->field, freps[i]->table);
 		        }
 		        else {
@@ -419,16 +428,20 @@ main (int argc, char *argv[])
 					freps[i]->min[FR_ALL],
 					freps[i]->max[FR_ALL]);
 		    }
-
 		  }
 		break;
 		
 	    case (O_PRN):
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
+		    id++;
 		    int has = 0;
 		    
-	            if ( !(type & otype) ) continue;
-		    
+	            if ( !(type & otype) )
+			continue;
+
+		    if (Clist && Vect_cat_in_cat_list(id, Clist) == FALSE)
+			continue;
+
 		    /* Check if the line has at least one cat */
 		    for (i=0; i < nfields; i++) {
 			for (j=0; j < Cats->n_cats; j++) {
@@ -460,7 +473,12 @@ main (int argc, char *argv[])
 	
 	if (option == O_ADD || option == O_DEL || option == O_CHFIELD || option == O_SUM) {
 	    Vect_copy_tables ( &In, &Out, 0 );
-	    Vect_build (&Out, stderr);
+	    if (G_verbose() > G_verbose_min()) {
+		Vect_build (&Out, stderr);
+	    }
+	    else {
+		Vect_build (&Out, NULL);
+	    }
 	    Vect_close (&Out);
 	}
 	Vect_close (&In);

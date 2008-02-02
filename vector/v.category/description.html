@@ -1,30 +1,41 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.category</em> attaches, deletes or reports vector categories to map
-geometry. These categories (IDs) are used to link a vector map to an
-attribute table.
+<em>v.category</em> attaches, deletes or reports vector categories to
+map geometry. These categories (IDs) are used to link geometry
+object(s) to attribute record (from attribute table linked to vector map).
 
 <h2>NOTES</h2>
-<p>
-Use <em>v.to.db</em> to upload related categories to a linked attribute
-table.
+
+Use <em><a href="v.to.db.html">v.to.db</a></em> to upload related categories to
+a linked attribute table.
+
 <p>
 The <b>type</b> parameter specifies the type of geometry objects to which the category is added;
 it is similar to an input filter - only the geometry specified in 'type' is processed.
+
 <p>
-If the <b>type</b> parameter is set to <b>centroid</b> and the <b>option</b> parameter set to <b>add</b>,
-new categories will be added to existing centroids. Note however, that new centroids cannot be created this way. 
-To do so, they must be added manually using v.digit or by running v.category with the type parameter set 
-to area (see below also).
+If the <b>type</b> parameter is set to <b>centroid</b> and
+the <b>option</b> parameter set to <b>add</b>, new categories will be
+added to existing centroids. Note however, that new centroids cannot
+be created this way.  To do so, they must be added manually
+using <em><a href="v.digit.html">v.digit</a></em> or by
+running <em>v.category</em> with the type parameter set to area (see
+below also).
+
 <p>
 Areas are a special case because it is impossible to attach a cat to an area without a centroid;
 in this case, the module places new centroids in areas automatically.
 
+<p>
+The <b>id</b> parameter specifies the list of feature ids to which the
+operation is performed. By default all vector features are processed.
+
 <h2>EXAMPLES</h2>
 
-<em>1) Report vector categories</em><br>
+<h3>Report vector categories</h3>
+
 <div class="code"><pre>
-v.category in=testmap option=report
+v.category input=testmap option=report
 
 LAYER/TABLE 1/testmap:
 type       count        min        max
@@ -35,18 +46,20 @@ centroid       0          0          0
 area           0          0          0
 all         1379          1       1379
 </pre></div>
-<P>
 
-<em>2) Delete all vector categories in layer 1</em><br>
+<h3>Delete all vector categories in layer 1</h3>
+
 <div class="code"><pre>
-v.category in=testmap out=outmap option=del
+v.category input=testmap output=outmap option=del
 </pre></div>
-<p>
 
-<em>3) Add vector categories in layer 1 with step=2</em><br>
+<h3>Add vector categories in layer 1 with step=2</h3>
+
 <div class="code"><pre>
-v.category in=outmap out=stepmap option=add step=2
+v.category input=outmap output=stepmap option=add step=2
 
+# report
+v.category input=stepmap option=report
 LAYER/TABLE 1/outmap:
 type       count        min        max
 point          0          0          0
@@ -56,14 +69,23 @@ centroid       0          0          0
 area           0          0          0
 all         1379          1       2757
 </pre></div>
-<P>
 
-<em>4) Add categories/centroids to a vector map without categories</em><br>
+<h3>Add categories/centroids to a vector map without categories</h3>
+
 <div class="code"><pre>
-v.category in=wkt out=wktnew option=add
+v.category input=wkt output=wktnew option=add
 </pre></div>
-<P>
-Results can be tested using <em><a HREF="d.what.vect.html">d.what.vect</a></em>. 
+
+Results can be tested
+using <em><a HREF="d.what.vect.html">d.what.vect</a></em>.
+
+<h3>Print vector categories of given layer</h3>
+
+Print vector categories from the first layer, only for feature ids 1-50.
+
+<div class="code"><pre>
+v.category input=roads option=print layer=1 id=1-50
+</pre></div>
 
 <h2>SEE ALSO</h2>
 
@@ -74,6 +96,8 @@ Results can be tested using <em><a HREF="d.what.vect.html">d.what.vect</a></em>.
 
 <h2>AUTHOR</h2>
 
-Radim Blazek, ITC-Irst, Trento, Italy
+Radim Blazek, ITC-irst, Trento, Italy<br>
+Modified (the id parameter) by Martin Landa, FBK-irst (formely ITC-irst), Trento, Italy, 2008/02
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
