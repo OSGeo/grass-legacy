@@ -12,6 +12,8 @@
 #define GV_POINTS (GV_POINT | GV_CENTROID )
 #define GV_LINES (GV_LINE | GV_BOUNDARY )
 
+#define PORT_DOUBLE_MAX 1.7976931348623157e+308
+
 /* extracted from vector/v.edit/lib/vedit.h */
 
 #define NO_SNAP    0 /* snapping disabled */

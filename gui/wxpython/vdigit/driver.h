@@ -158,9 +158,9 @@ public:
     int DrawMap(bool);
 
     /* select */
-    int SelectLinesByBox(double, double, double, double);
+    int SelectLinesByBox(double, double, double, double, double, double, int);
     std::vector<double> SelectLineByPoint(double, double, double,
-					  int);
+					  double, int, int);
 
     std::vector<int> GetSelected(bool);
     int SetSelected(std::vector<int>);

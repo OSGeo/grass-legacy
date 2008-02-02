@@ -722,42 +722,40 @@ void DisplayDriver::PrintIds()
    If line id is already in the list of selected lines, then it will
    be excluded from this list.
 
-   \param[in] x1,y1,x2,y2 corners coordinates of bounding box
+
+   \param[in] x1,y1,z1,x2,y2,z3 bounding box definition
+   \param[in] type feature type
 
    \return number of selected features
    \return -1 on error
 */
-int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
+int DisplayDriver::SelectLinesByBox(double x1, double y1, double z1, 
+				    double x2, double y2, double z2,
+				    int type)
 {
     if (!mapInfo)
 	return -1;
 
-    int type, line;
-    double dx, dy;
+    int line;
 
     struct ilist *list;
     struct line_pnts *bbox;
 
     drawSegments = false;
 
-    type = -1; // all types
-
     list = Vect_new_list();
     bbox = Vect_new_line_struct();
 
-    dx = std::fabs(x2 - x1);
-    dy = std::fabs(y2 - y1);
-        
-    Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
-    Vect_append_point(bbox, x2, y1,  PORT_DOUBLE_MAX);
-    Vect_append_point(bbox, x2, y2, -PORT_DOUBLE_MAX);
-    Vect_append_point(bbox, x1, y2,  PORT_DOUBLE_MAX);
-    Vect_append_point(bbox, x1, y1, -PORT_DOUBLE_MAX);
+    Vect_append_point(bbox, x1, y1, z1);
+    Vect_append_point(bbox, x2, y1, z2);
+    Vect_append_point(bbox, x2, y2, z1);
+    Vect_append_point(bbox, x1, y2, z2);
+    Vect_append_point(bbox, x1, y1, z1);
         
     Vect_select_lines_by_polygon(mapInfo, bbox,
-				 0, NULL,
+				 0, NULL, /* isles */
 				 type, list);
-	
+
     for (int i = 0; i < list->n_values; i++) {
 	line = list->value[i];
 	if (!IsSelected(line)) {
@@ -778,7 +776,8 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
     Vect_destroy_list(list);
 
     // return selected.size();
-    return selected->n_values;
+    // return selected->n_values;
+    return list->n_values;
 }
 
 /**
@@ -790,12 +789,12 @@ int DisplayDriver::SelectLinesByBox(double x1, double y1, double x2, double y2)
 
    \param[in] x,y point of searching
    \param[in] thresh threshold value where to search
-   \param[in] onlyType select vector object of given type
+   \param[in] type select vector object of given type
 
    \return point on line if line found
 */
-std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double thresh,
-						     int type)
+std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double z,
+						     double thresh, int type, int with_z)
 {
     long int line;
     int ftype;
@@ -803,28 +802,28 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 
     std::vector<double> p;
 
-    if (type == -1) {
-	ftype = GV_POINTS | GV_LINES;
-    }
-    else if (type == 0) {
-	ftype = GV_POINTS;
-    }
-    else if (type == 1) {
-	ftype = GV_LINES;
-    }
-
-    line = Vect_find_line(mapInfo, x, y, 0.0,
-			  ftype, thresh, 0, 0);
+    line = Vect_find_line(mapInfo, x, y, z,
+			  type, thresh, with_z, 0);
 
     if (line > 0) {
-	// selected.push_back(line);
-	Vect_list_append(selected, line);
+	if (!IsSelected(line)) {
+	    // selected.push_back(line);
+	    Vect_list_append(selected, line);
+	}
+	else {
+	    // selected.erase(GetSelectedIter(line));
+	    Vect_list_delete(selected, line);
+	}
+
 	type = Vect_read_line (mapInfo, points, cats, line);
-	Vect_line_distance (points, x, y, 0.0, WITHOUT_Z,
+	Vect_line_distance (points, x, y, z, with_z,
 			    &px, &py, &pz,
 			    NULL, NULL, NULL);
 	p.push_back(px);
 	p.push_back(py);
+	if (with_z) {
+	    p.push_back(pz);
+	}
     }
 
     drawSegments = true;
