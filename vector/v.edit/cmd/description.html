@@ -1,9 +1,7 @@
 <h2>DESCRIPTION</h2>
 
-<p>
 The module <em>v.edit</em> allows the user to edit a vector map
 via command line interface. 
-</p>
 
 <p>
 <em>v.edit</em> supports only "simple" vector features: points,
@@ -13,7 +11,6 @@ centroids, lines and boundaries. Currently, only 2D vector features
 <p>
 Provides editing features' geometry. Attribute data connected to the
 vector map are not modified at all.
-</p>
 
 <p>
 Vector features can be selected either by internal <b>id</b>,
@@ -24,7 +21,6 @@ coordinates is affected by the current 2D resolution. It can be
 changed using threshold distance <b>thresh</b>. The options
 are <em>orthogonal</em>, i.e. can be used in various combinations. For
 example:
-</p>
 
 <div class="code"><pre>
 v.edit map=roads tool=select \
@@ -38,18 +34,15 @@ covered by two bounding boxes (center at 599505,4921010 and
 label='interstate'.
 
 <h2>NOTES</h2>
-<p>
+
 If no vector features are selected or the flag <b>-t</b> is
 used, topology is not build at the end.
-</p>
 
 <h2>USAGE</h2>
 
 <h3>Feature selection</h3>
 
-<p>
 Vector features can be selected in several ways:
-</p>
 <ul>
     <li><b>ids</b> - using internal (unique) feature id's</li>
     <li><b>cats</b> - using category numbers</li>
@@ -57,13 +50,11 @@ Vector features can be selected in several ways:
     box, size defined by <b>thresh</b>)</li>
     <li><b>bbox</b> - using bounding box</li>
     <li><b>polygon</b> - using polygon (at least 3 coordinate pairs have to be set)</li>
-    <li><b>where</b> - using 'where' statement (attribute data)
+    <li><b>where</b> - using where statement (attribute data)
     <li><b>query</b> - special query (e.g. minimal vector line length)
 </ul>
 
-<p>
 Additional parameters for vector feature specification are:
-</p>
 <ul>
     <li><b>layer</b> - layer number (currently used only
     with <b>cats</b> or <b>where</b> option)</li>
@@ -75,7 +66,7 @@ Additional parameters for vector feature specification are:
 
 <ul>
     <li><b>create</b> - Create new (empty) vector map
-    (see <a href="v.in.ascii.html">v.in.ascii</a>). Optionally vector
+    (see <em><a href="v.in.ascii.html">v.in.ascii</a></em>). Optionally vector
     features (in GRASS ASCII standard format) can be read from
     standard input (<b>input=-</b>) or from the text file given by
     the <b>input</b> option.</li>
@@ -114,15 +105,17 @@ Additional parameters for vector feature specification are:
     boundaries. The geometry of the merged vector lines can be
     changed. If the second line from two selected lines is in opposite
     direction to the first, it will be flipped. See also
-    module <a href="v.build.polylines.html">v.build.polylines</a>.</li>
+    module <em><a href="v.build.polylines.html">v.build.polylines</a></em>.</li>
 
     <li><b>break</b> - Split given vector line or boundary into two
     lines on location given by <b>coords</b>. If <b>coords</b> not
     given, breaks all selected lines at each intersection (based
-    on <a href="v.clean.html">v.clean</a>, tool=break).</li>
+    on <em><a href="v.clean.html">v.clean</a></em>, tool=break).</li>
     
     <li><b>snap</b> - Snap vector features in given threshold. See
-    also module <a href="v.clean.html">v.clean</a>.</li>
+    also module <em><a href="v.clean.html">v.clean</a></em>. Note that this
+    tool supports only snapping to nodes. Parameters <b>snap</b> and
+    <b>bgmap</b> are ignored.</li>
 
     <li><b>connect</b> - Connect selected lines or boundaries, the
     first given line is connected to the second one. The second line
@@ -159,75 +152,69 @@ Additional parameters for vector feature specification are:
 <h2>EXAMPLES</h2>
 
 <h3>Create new vector map</h3>
-<p>
+
 Create new (empty) vector map:
-</p>
+
 <div class="code"><pre>
 v.edit tool=create map=vectmap
 </pre></div>
 
-<p>
 Create new vector map and read data from file 'roads.txt':
-</p>
+
 <div class="code"><pre>
 v.out.ascii in=roads format=standard > roads.txt;
 v.edit tool=create map=vectmap input=roads.txt
 </pre></div>
 
 or alternatively
+
 <div class="code"><pre>
 cat roads.txt | v.edit tool=create map=vectmap input=-
 </pre></div>
 
 <h3>Add new features to existing vector map</h3>
 
-<p>
 Add point to the vector map (without header):
-</p>
+
 <div class="code"><pre>
 echo "P 1 1
  640794 214874
  1 1" | v.edit -n tool=add map=vectmap
 </pre></div>
 
-<p>
 Add new features read from standard input:
-</p>
+
 <div class="code"><pre>
 v.out.ascii in=railroads format=standard | v.edit tool=add map=vectmap
 </pre></div>
 
 <h3>Delete selected features from vector map layer</h3>
 
-<p>
 Remove all vector features with category number 1 or 2:
-</p>
+
 <div class="code"><pre>
 v.edit tool=delete map=roads cats=1,2
 </pre></div>
 
-<p>
 Remove all vector features except of those with category number 1 or 2
 (reverse selection):
-</p>
+
 <div class="code"><pre>
 v.edit -r tool=delete map=roads cats=1,2
 </pre></div>
 
-<p>
 Remove features with category 1 or 2 located on coordinates
 600952.625,4926107 (bounding box based on the current 2D resolution):
-</p>
+
 <div class="code"><pre>
 g.region -d;
 v.edit tool=delete map=roads cats=1,2 coords=600952.625,4926107
 </pre></div>
 
-<p>
 Remove all features with category 1 and 2 covered by two bounding boxes
 (center coordinates 592542.892,4924766.996 and 603389.062,4918292.187, 
 size 2000 map units):
-</p>
+
 <div class="code"><pre>
 v.edit map=roads tool=delete \
   coord=592542.892,4924766.996,603389.062,4918292.187 \
@@ -244,30 +231,24 @@ v.edit map=roads tool=copy bgmap=archsites cat=1
 
 <h3>Move features</h3>
 
-<p>
 Move feature (vector point) located on coordinates 602580,4918480 to
 coordinates 603580,4919480:
-</p>
 
 <div class="code"><pre>
 v.edit tool=move map=archsites coord=602580,4918480 th=1e-2 move=1000,1000
 </pre></div>
 
-<p>
 Move all features with category 1 1000 map units to the west and 1000
 map units to the south. Moved features snap to nodes in threshold
 distance 10 map units:
-</p>
 
 <div class="code"><pre>
 v.edit tool=move map=roads cat=1 move=1000,-1000 snap=node thresh=10
 </pre></div>
 
-<p>
 Move all features defined by bounding box
 601530,4921560,602520,4922310 (W,S,E,N) 1000 map units to the
 east and 1000 map units to the north:
-</p>
 
 <div class="code"><pre>
 v.edit tool=move map=roads bbox=601530,4921560,602520,4922310 move=-1000,1000
@@ -275,9 +256,7 @@ v.edit tool=move map=roads bbox=601530,4921560,602520,4922310 move=-1000,1000
 
 <h3>Flip direction of vector lines</h3>
 
-<p>
 Flip direction of all vector lines:
-</p>
 
 <div class="code"><pre>
 v.edit tool=flip map=streams cats=1-9999 type=line
@@ -294,6 +273,7 @@ v.edit tool=catadd map=roads \
 </pre></div>
 
 Delete layer/category 1/1, line id 1:
+
 <div class="code"><pre>
 v.edit tool=catdel map=roads id=1 cats=5
 </pre></div>
@@ -376,16 +356,14 @@ v.edit tool=vertexmove map=roads cats=1-10 coord=604441,4921088 \
 
 <h3>Select features and print their id's</h3>
 
-<p>
 Print id's of selected features, e.g.:
-</p>
 
 <div class="code"><pre>
 v.edit map=soils@PERMANENT tool=select \
   bbox=595733.8125,4919781.75,598536.1875,4917396.75 --q
 </pre></div>
 
-Example with <em>d.vect</em>:
+Example with <em><a href="d.vect.html">d.vect</a></em>:
 
 <div class="code"><pre>
 d.erase;
@@ -441,7 +419,8 @@ v.edit a2 tool=zbulk bbox=586121.25049368,4911970.21547109,603092.60466035,49270
 <h2>AUTHOR</h2>
 
 Original author: Wolf Bergenheim - independent developer<br>
-Various updates: Jachym Cepicky, Mendel University of Agriculture and Forestry in Brno, Czech Republic,<br>
+Various updates: Jachym Cepicky, Mendel University of Agriculture and Forestry in Brno, Czech Republic<br>
 Martin Landa, FBK-irst (formerly ITC-irst), Trento, Italy
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
