@@ -2909,7 +2909,7 @@ class DisplayAttributesDialog(wx.Dialog):
             # use scrolled panel instead (and fix initial max height of the window to 480px)
             ### panel = wx.Panel(parent=self.notebook, id=wx.ID_ANY)
             panel = scrolled.ScrolledPanel(parent=self.notebook, id=wx.ID_ANY,
-                                           size=(-1, 300))
+                                           size=(-1, 150))
             panel.SetupScrolling(scroll_x=False)
             
             self.notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
@@ -3001,7 +3001,7 @@ class VectorDBInfo:
         """Check DB connection"""
         layerCommand = gcmd.Command(cmd=["v.db.connect",
                                          "-g", "--q",
-                                         "map=%s" % self.map,],
+                                         "map=%s" % self.map],
                                     rerr=None, stderr=None)
         if layerCommand.returncode != 0:
             return False

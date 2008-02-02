@@ -951,9 +951,12 @@ class BufferedWindow(wx.Window):
 
             elif digitToolbar.action in ["moveLine", "moveVertex", "editLine"] and \
                     not hasattr(self, "moveBegin"):
-                self.moveBegin = [0, 0]
-                self.moveCoords = self.Pixel2Cell(self.mouse['begin'])
-                self.moveIds   = []
+                # incremental value
+                self.moveBegin = [0, 0] 
+                # geographic coordinates of initial position (self.mouse['end'])
+                self.moveCoords = []
+                # list of ids to modify    
+                self.moveIds   = [] 
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     # set pen
                     self.pen = self.polypen = wx.Pen(colour=digitClass.settings["symbolHighlight"][1],
@@ -992,18 +995,32 @@ class BufferedWindow(wx.Window):
                             digitToolbar.attributesDialog.Hide()
 
                 else: # displayCats
+                    coords = (east, north)
                     if digitToolbar.categoryDialog is None:
                         # open new dialog
-                        digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
-                                                                          map=map,
-                                                                          queryCoords=(east, north),
-                                                                          qdist=qdist,
-                                                                          pos=posWindow,
-                                                                          title=_("Update categories"))
+                        if digitClass.type == 'vedit':
+                            digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
+                                                                              map=map,
+                                                                              query=(coords, qdist),
+                                                                              pos=posWindow,
+                                                                              title=_("Update categories"))
+                        else:
+                            if digitClass.driver.SelectLineByPoint(coords) is not None:
+                                print '#', digitClass.driver.GetSelected()[0], \
+                                    digitClass.GetLineCats()
+                                digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
+                                                                                  map=map,
+                                                                                  cats=digitClass.GetLineCats(),
+                                                                                  line=digitClass.driver.GetSelected()[0],
+                                                                                  pos=posWindow,
+                                                                                  title=_("Update categories"))
+                            
                     else:
                         # update currently open dialog
-                        digitToolbar.categoryDialog.UpdateDialog(queryCoords=(east, north),
-                                                                 qdist=qdist)
+                        if digitClass.type == 'vedit':
+                            digitToolbar.categoryDialog.UpdateDialog(query=(coords, qdist))
+                        else:
+                            digitToolbar.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats())
 
                     line = digitToolbar.categoryDialog.GetLine()
                     redraw = False
@@ -1118,6 +1135,11 @@ class BufferedWindow(wx.Window):
             pos1 = self.Pixel2Cell(self.mouse['begin'])
             pos2 = self.Pixel2Cell(self.mouse['end'])
 
+            if hasattr(self, "moveBegin"):
+                self.moveCoords = pos2
+                # eliminate initial mouse moving efect
+                self.mouse['begin'] = self.mouse['end'] 
+
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex",
                                        "copyCats", "editLine", "flipLine",
                                        "mergeLine", "snapLine",
@@ -1179,15 +1201,19 @@ class BufferedWindow(wx.Window):
                         digitClass.driver.SetSelected(selected)
 
                 else:
-                    # -> moveLine || deleteLine, etc. (select by box)
-                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
-
+                    # -> moveLine || deleteLine, etc. (select by point/box)
+                    if digitClass.driver.SelectLineByPoint(pos1) is not None:
+                        nselected = 1
+                    else:
+                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
+                    
                 if nselected > 0:
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             # -> move line
                             self.moveIds = digitClass.driver.GetSelected(grassId=False)
+                            print self.moveIds, nselected
 
                         elif digitToolbar.action == "moveVertex":
                             # -> move vertex
@@ -1201,7 +1227,6 @@ class BufferedWindow(wx.Window):
 
                 else: # no vector object found
                     self.UpdateMap(render=False, renderVector=False)
-                    pass
 
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
                 pointOnLine = digitClass.driver.SelectLineByPoint(pos1,

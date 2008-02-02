@@ -16,6 +16,7 @@
 
 extern "C" {
 #include <grass/vedit.h>
+#include <grass/dbmi.h>
 }
 #include "driver.h"
 #include "digit.h"
@@ -244,18 +245,97 @@ int Digit::SplitLine(double x, double y, double z,
 /**
    \brief Delete selected vector features
 
+   \param delete_records delete also attribute records
+
    \return number of deleted lines
    \return -1 on error
 */
-int Digit::DeleteLines()
+int Digit::DeleteLines(bool delete_records)
 {
     int ret;
+    int n_dblinks;
+    struct line_cats *Cats, *Cats_del;
 
     if (!display->mapInfo) {
 	return -1;
     }
 
+    n_dblinks = Vect_get_num_dblinks(display->mapInfo);
+    Cats_del = NULL;
+
+    /* collect categories if needed */
+    if (delete_records) {
+	Cats = Vect_new_cats_struct();
+	Cats_del = Vect_new_cats_struct();
+	for (int i = 0; i < display->selected->n_values; i++) {
+	    if (Vect_read_line(display->mapInfo, NULL, Cats, display->selected->value[i]) < 0) {
+		Vect_destroy_cats_struct(Cats_del);
+		return -1;
+	    }
+	    for (int j = 0; j < Cats->n_cats; j++) {
+		Vect_cat_set(Cats_del, Cats->field[j], Cats->cat[j]);
+	    }
+	}
+	Vect_destroy_cats_struct(Cats);
+    }
+
     ret = Vedit_delete_lines(display->mapInfo, display->selected);
+
+    if (ret > 0 && delete_records) {
+	struct field_info *fi;
+	char buf[GSQL_MAX];
+	dbDriver *driver;
+	dbHandle handle;
+	dbString stmt;
+
+	for (int dblink = 0; dblink < n_dblinks; dblink++) {
+	    fi = Vect_get_dblink(display->mapInfo, dblink);
+	    if (fi == NULL) {
+		return -1;
+	    }
+
+	    driver = db_start_driver(fi->driver);
+	    if (driver == NULL) {
+		return -1;
+	    }
+
+	    db_init_handle (&handle);
+	    db_set_handle (&handle, fi->database, NULL);
+	    if (db_open_database(driver, &handle) != DB_OK) {
+		return -1;
+	    }
+
+	    db_init_string (&stmt);
+	    sprintf (buf, "DELETE FROM %s WHERE", fi->table);
+	    db_set_string(&stmt, buf);
+	    int n_cats = 0;
+	    for (int c = 0; c < Cats_del->n_cats; c++) {
+		if (Cats_del->field[c] == fi->number) {
+		    sprintf (buf, " %s = %d", fi->key, Cats_del->cat[c]);
+		    db_append_string(&stmt, buf);
+		    if (n_cats > 0) {
+			sprintf (buf, " or");
+			db_append_string(&stmt, buf);
+		    }
+		    n_cats++;
+		}
+	    }
+
+	    Vect_cat_del(Cats_del, fi->number);
+
+	    if (n_cats &&
+		db_execute_immediate (driver, &stmt) != DB_OK ) {
+		return -1;
+	    }
+	    
+	    db_close_database(driver);
+	    db_shutdown_driver(driver);
+	}
+    }
+
+    if (Cats_del) {
+	Vect_destroy_cats_struct(Cats_del);
+    }
 
     return ret;
 }

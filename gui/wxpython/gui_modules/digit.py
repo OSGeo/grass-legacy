@@ -107,6 +107,9 @@ class AbstractDigit:
             self.settings["layer"] = 1
             self.settings["category"] = 1
             self.settings["categoryMode"] = "Next to use"
+            
+            # delete existing feature(s)
+            self.settings["delRecord"] = True
 
             # query tool
             self.settings["query"]       = ("length", True)   # name, select by box
@@ -292,7 +295,7 @@ class VEdit(AbstractDigit):
         @param input feature definition in GRASS ASCII format
         @param flags additional flags
         """
-        if self.settings['snapping'][0] <= 0:
+        if self.settings['snapping'][0] <= 0.0:
             snap = "no"
         else:
             if self.settings['snapToVertex']:
@@ -315,7 +318,7 @@ class VEdit(AbstractDigit):
 
         # run the command
         Debug.msg(4, "VEdit.AddFeature(): input=%s" % input)
-        vedit = gcmd.Command(cmd=command, stdin=input)
+        vedit = gcmd.Command(cmd=command, stdin=input, stderr=None)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -332,13 +335,49 @@ class VEdit(AbstractDigit):
         Debug.msg(4, "Digit.DeleteSelectedLines(): ids=%s" % \
                       ids)
 
+        # delete also attributes if requested
+        if self.settings['delRecord'] is True:
+            layerCommand = gcmd.Command(cmd=["v.db.connect",
+                                             "-g", "--q",
+                                             "map=%s" % self.map],
+                                        rerr=None, stderr=None)
+            if layerCommand.returncode == 0:
+                layers = {}
+                for line in layerCommand.ReadStdOutput():
+                    lineList = line.split(' ')
+                    layers[int(lineList[0])] = { "table"    : lineList[1],
+                                                 "key"      : lineList[2],
+                                                 "database" : lineList[3],
+                                                 "driver"   : lineList[4] }
+                for layer in layers.keys():
+                    printCats = gcmd.Command(['v.category',
+                                              '--q',
+                                              'input=%s' % self.map,
+                                              'layer=%d' % layer,
+                                              'option=print',
+                                              'id=%s' % ids])
+                    sql = 'DELETE FROM %s WHERE' % layers[layer]['table']
+                    n_cats = 0
+                    for cat in printCats.ReadStdOutput():
+                        for c in cat.split('/'):
+                            sql += ' cat = %d or' % int(c)
+                            n_cats += 1
+                    sql = sql.rstrip(' or')
+                    if n_cats > 0:
+                        gcmd.Command(['db.execute',
+                                      '--q',
+                                      'driver=%s' % layers[layer]['driver'],
+                                      'database=%s' % layers[layer]['database']],
+                                     stdin=sql,
+                                     rerr=None, stderr=None)
+
         command = [ "v.edit",
                     "map=%s" % self.map,
                     "tool=delete",
                     "ids=%s" % ids]
 
         # run the command
-        vedit = gcmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command, stderr=None)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -401,7 +440,7 @@ class VEdit(AbstractDigit):
             command.append("-1") # modify only first selected
                                              
         # run the command
-        vedit = gcmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command, stderr=None)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -441,7 +480,7 @@ class VEdit(AbstractDigit):
                    "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
-        vedit = gcmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command, stderr=None)
 
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
@@ -466,7 +505,7 @@ class VEdit(AbstractDigit):
                    "thresh=%f" % self.driver.GetThreshold()]
 
         # run the command
-        vedit = gcmd.Command(cmd=command)
+        vedit = gcmd.Command(cmd=command, stderr=None)
 
         # redraw map
         self.driver.ReloadMap()
@@ -484,7 +523,7 @@ class VEdit(AbstractDigit):
                                    '--q',
                                    'map=%s' % self.map,
                                    'tool=delete',
-                                   'ids=%s' % line])
+                                   'ids=%s' % line], stderr=None)
 
         # add line
         if len(coords) > 0:
@@ -767,7 +806,7 @@ class VDigit(AbstractDigit):
 
         @return number of deleted lines
         """
-        nlines = self.digit.DeleteLines()
+        nlines = self.digit.DeleteLines(self.settings['delRecord'])
 
         return nlines
 
@@ -909,7 +948,11 @@ class VDigit(AbstractDigit):
                       ",".join(["%d" % v for v in ids]))
         
         return ids
-    
+
+    def GetLineCats(self):
+        """Get layer/category pairs from given (selected) line"""
+        return self.digit.GetLineCats()
+        
     def __getSnapThreshold(self):
         """Get snap mode and threshold value
 
@@ -932,11 +975,13 @@ if USEVEDIT:
         """Default digit class"""
         def __init__(self, mapwindow):
             VEdit.__init__(self, mapwindow)
+            self.type = 'vedit'
 else:
     class Digit(VDigit):
         """Default digit class"""
         def __init__(self, mapwindow):
             VDigit.__init__(self, mapwindow)
+            self.type = 'vdigit'
 
 class AbstractDisplayDriver:
     """Abstract classs for display driver"""
@@ -1390,7 +1435,7 @@ class DigitSettingsDialog(wx.Dialog):
         sizer.Add(item=flexSizer1, proportion=1, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=1)
         sizer.Add(item=flexSizer2, proportion=1, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=1)
         sizer.Add(item=vertexSizer, proportion=1, flag=wx.BOTTOM | wx.LEFT | wx.EXPAND, border=1)
-        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
 
         #
         # attributes
@@ -1436,11 +1481,21 @@ class DigitSettingsDialog(wx.Dialog):
         sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
         border.Add(item=sizer, proportion=0,
                    flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+        # delete existing feature
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Delete existing feature(s)"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        # checkbox
+        self.deleteRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                        label=_("Delete record from table"))
+        self.deleteRecord.SetValue(self.parent.digit.settings["delRecord"])
+        sizer.Add(item=self.deleteRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
 
         # bindings
         self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
         self.Bind(wx.EVT_COMBOBOX, self.OnChangeCategoryMode, self.categoryMode)
-        
+
         panel.SetSizer(border)
         
         return panel
@@ -1660,6 +1715,9 @@ class DigitSettingsDialog(wx.Dialog):
             self.parent.digit.settings["category"] = int(self.category.GetValue())
         self.parent.digit.settings["categoryMode"] = self.categoryMode.GetValue()
 
+        # delete existing feature
+        self.parent.digit.settings["delRecord"] = self.deleteRecord.IsChecked()
+
         # threshold
         try:
             self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
@@ -1686,9 +1744,17 @@ class DigitSettingsDialog(wx.Dialog):
 class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     """
     Dialog used to display/modify categories of vector objects
+    
+    @param parent
+    @param title dialog title
+    @param query {coordinates, qdist}    - v.edit/v.what
+    @param cats  directory of categories - vdigit
+    @param line  line id                 - vdigit
+    @param pos
+    @param style
     """
     def __init__(self, parent, title,
-                 map, queryCoords, qdist,
+                 map, query=None, cats=None, line=None,
                  pos=wx.DefaultPosition,
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
 
@@ -1705,9 +1771,13 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         self.cats = {}
 
         # do not display dialog if no line is found (-> self.cats)
-        if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
-            Debug.msg(3, "DigitCategoryDialog(): nothing found!")
-            return
+        if cats is None:
+            if self.__GetCategories(query[0], query[1]) == 0 or not self.line:
+                Debug.msg(3, "DigitCategoryDialog(): nothing found!")
+                return
+        else:
+            self.cats = cats
+            self.line = line
         
         # make copy of cats (used for 'reload')
         self.cats_orig = copy.deepcopy(self.cats)
@@ -2038,9 +2108,11 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         """Get id of selected line of 'None' if no line is selected"""
         return self.line
 
-    def UpdateDialog(self, queryCoords, qdist):
+    def UpdateDialog(self, query=None, cats=None, line=None):
         """Update dialog
         
+        @param query {coordinates, distance} - v.edit/v.what
+        @param cats  directory layer/cats    - vdigit
         Return True if updated otherwise False
         """
 
@@ -2051,7 +2123,13 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         self.cats = {}
 
         # do not display dialog if no line is found (-> self.cats)
-        if self.__GetCategories(queryCoords, qdist) == 0 or not self.line:
+        if cats is None:
+            ret = self.__GetCategories(query[0], query[1])
+        else:
+            self.cats = cats
+            ret = 1
+            self.line = line
+        if ret == 0 or not self.line:
             Debug.msg(3, "DigitCategoryDialog(): nothing found!")
             return False
         

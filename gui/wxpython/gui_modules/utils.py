@@ -57,6 +57,8 @@ def GetLayerNameFromCmd(dcmd):
     for item in dcmd:
         if 'map=' in item:
             mapname = item.split('=')[1]
+        elif 'input=' in item:
+            mapname = item.split('=')[1]
         elif 'red=' in item:
             mapname = item.split('=')[1]
         elif 'h_map=' in item:
