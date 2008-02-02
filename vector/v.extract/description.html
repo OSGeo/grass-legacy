@@ -7,6 +7,11 @@ established.
 Dissolving (optional) is based on the output categories. If 2 adjacent
 areas have the same output category, the boundary is removed.
 
+<p>
+If <b>list</b>, <b>file</b> and <b>where</b> options are not
+specified, all features of given type and layer are
+extracted. Categories are not changed in that case.
+
 <h2>NOTES</h2>
 
 Only features with a category number will be extracted. So if you want to 
@@ -34,7 +39,7 @@ v.extract -d list=1-4 input=soils output=soil_groupa type=area new=-1
 produces a new vector map <b>soil_groupa</b> containing the areas from vector
 <b>soils</b> which have categories <b>1 thru 4</b>. Any common boundaries are
 dissolved, all areas in the new map will retain their original category
-numbers 1 thru 4, since <em>new</em> was set to -1.
+numbers 1 thru 4, since <b>new</b> was set to -1.
 
 <h3>Extract all areas and assign the same category to all:</h3>
 <div class="code"><pre>
@@ -108,15 +113,17 @@ v.extract -d in=map_with_islands out=maps_without_islands
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="v.category.html">v.category</a></em>,
-<em><a HREF="v.dissolve.html">v.dissolve</a></em>,
-<em><a HREF="v.reclass.html">v.reclass</a></em>,
-<em><a HREF="sql.html">GRASS SQL interface</a></em>
-
+<em>
+<a HREF="v.category.html">v.category</a>,
+<a HREF="v.dissolve.html">v.dissolve</a>,
+<a HREF="v.reclass.html">v.reclass</a>,
+<a HREF="sql.html">GRASS SQL interface</a>
+</em>
 
 <h2>AUTHORS</h2>
 
 R.L. Glenn, USDA, SCS, NHQ-CGIS<br>
 GRASS 6 port by Radim Blazek
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
