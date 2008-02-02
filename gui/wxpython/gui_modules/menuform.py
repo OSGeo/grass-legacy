@@ -1,5 +1,5 @@
 #! /usr/bin/python
-""" Construct simple wx.Python GUI from a GRASS command interface description.
+"""Construct simple wx.Python GUI from a GRASS command interface description.
 
 Classes:
  * testSAXContentHandler
@@ -11,39 +11,38 @@ Classes:
  * GrassGUIApp
  * GUI
 
-# Copyright (C) 2000-2007 by the GRASS Development Team
-# Author: Jan-Oliver Wagner <jan@intevation.de>
-# Improved by: Bernhard Reiter   <bernhard@intevation.de>
-# Improved by: Michael Barton, Arizona State University
-# Improved by: Daniel Calvelo <dca.gis@gmail.com>
-# Improved by: Martin Landa <landa.martin@gmail.com>
-#
-# This program is free software under the GPL (>=v2)
-# Read the file COPYING coming with GRASS for details.
+ Copyright (C) 2000-2007 by the GRASS Development Team
 
-# This program is just a coarse approach to
-# automatically build a GUI from a xml-based
-# GRASS user interface description.
-#
-# You need to have Python 2.4, wxPython 2.8 and python-xml.
-#
-# The XML stream is read from executing the command given in the
-# command line, thus you may call it for instance this way:
-#
-# python <this file.py> r.basins.fill
-#
-# Or you set an alias or wrap the call up in a nice
-# shell script, GUI environment ... please contribute your idea.
-#
-# Updated to wxPython 2.8 syntax and contrib widgets.
-# Methods added to make it callable by gui.
-# Method added to automatically re-run with pythonw on a Mac.
-#
-# TODO:
-#
-# - verify option value types
-# - add tooltips
-# - use DOM instead of SAX
+ This program is free software under the GPL (>=v2)
+ Read the file COPYING coming with GRASS for details.
+
+ This program is just a coarse approach to
+ automatically build a GUI from a xml-based
+ GRASS user interface description.
+
+ You need to have Python 2.4, wxPython 2.8 and python-xml.
+
+ The XML stream is read from executing the command given in the
+ command line, thus you may call it for instance this way:
+
+ python <this file.py> r.basins.fill
+
+ Or you set an alias or wrap the call up in a nice
+ shell script, GUI environment ... please contribute your idea.
+
+ Updated to wxPython 2.8 syntax and contrib widgets.
+ Methods added to make it callable by gui.
+ Method added to automatically re-run with pythonw on a Mac.
+
+@author Jan-Oliver Wagner <jan@intevation.de>
+Bernhard Reiter <bernhard@intevation.de>
+Michael Barton, Arizona State University
+Daniel Calvelo <dca.gis@gmail.com>
+Martin Landa <landa.martin@gmail.com>
+
+@todo
+ - verify option value types
+ - use DOM instead of SAX
 """
 __version__ ="$Revision$"
 
@@ -591,7 +590,7 @@ class mainFrame(wx.Frame):
                                                      type=wx.BITMAP_TYPE_PNG))
         topsizer.Add (item=self.logo, proportion=0, border=3,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)
-        guisizer.Add (item=topsizer, proportion=0, flag=wx.ALIGN_BOTTOM | wx.EXPAND)
+        guisizer.Add (item=topsizer, proportion=0, flag=wx.EXPAND)
 
         # notebooks
         self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=self.standalone)
@@ -654,6 +653,15 @@ class mainFrame(wx.Frame):
             btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
 
         guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
+
+        if self.get_dcmd is None:
+            # close dialog on run?
+            self.closebox = wx.CheckBox(parent=self,
+                                        label=_('Close dialog on run'), style = wx.NO_BORDER)
+            self.closebox.SetValue(True)
+            guisizer.Add(item=self.closebox, proportion=0,
+                         flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+                         border=5)
 
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
@@ -720,7 +728,12 @@ class mainFrame(wx.Frame):
             # change page if needed
             if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
                 self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
-        
+
+        if self.get_dcmd is None:
+            # close dialog?
+            if self.closebox.IsChecked():
+                self.Close()
+
     def OnCopy(self, event):
         """Copy the command"""
         cmddata = wx.TextDataObject()
@@ -856,7 +869,8 @@ class cmdPanel(wx.Panel):
                 chk.SetValue( f['value'] )
             chk.SetFont(wx.Font(pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT,
                                 style=wx.NORMAL, weight=text_style))
-            which_sizer.Add( item=chk, proportion=0, flag=wx.EXPAND | wx.TOP | wx.LEFT, border=5)
+            which_sizer.Add( item=chk, proportion=0,
+                             flag=wx.EXPAND | wx.TOP | wx.LEFT | wx.RIGHT, border=5)
             f['wxId'] = chk.GetId()
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
             if f['name'] in ('verbose', 'quiet'):
@@ -910,17 +924,20 @@ class cmdPanel(wx.Panel):
                     for val in valuelist:
                         chkbox = wx.CheckBox( parent=which_panel, label = text_beautify(val) )
                         p[ 'wxId' ].append( chkbox.GetId() )
-                        if isDefault.has_key(val): chkbox.SetValue( True )
-                        hSizer.Add( item=chkbox, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
+                        if isDefault.has_key(val):
+                            chkbox.SetValue( True )
+                        hSizer.Add( item=chkbox, proportion=0,
+                                    flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
                         chkbox.Bind(wx.EVT_CHECKBOX, self.OnCheckBoxMulti)
-                    which_sizer.Add( item=hSizer, proportion=0, flag=wx.ADJUST_MINSIZE | wx.ALL, border=5 )
+                    which_sizer.Add( item=hSizer, proportion=0,
+                                     flag=wx.EXPAND | wx.TOP | wx.RIGHT | wx.LEFT, border=5 )
                 else:
                     if len(valuelist) == 1: # -> textctrl
                         txt = wx.StaticText(parent=which_panel,
                                             label = _('%s. Valid range=%s') % \
                                                 (title, str(valuelist).strip("[]'") + ':' ) )
                         which_sizer.Add(item=txt, proportion=0,
-                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
 
                         if p.get('type','') == 'integer' and \
                                 p.get('multiple','no') == 'no':
@@ -930,7 +947,7 @@ class cmdPanel(wx.Panel):
                             except ValueError:
                                 minValue = -1e6
                                 maxValue = 1e6
-                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=(50, -1),
+                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=(300, -1),
                                                min=minValue, max=maxValue)
                         else:
                             txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
@@ -946,7 +963,7 @@ class cmdPanel(wx.Panel):
                         # list of values (combo)
                         txt = wx.StaticText(parent=which_panel, label = title + ':' )
                         which_sizer.Add(item=txt, proportion=0,
-                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                                        flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
                         cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
                                          size=wx.Size(STRING_ENTRY_WIDTH, -1),
                                          choices=valuelist, style=wx.CB_DROPDOWN)
@@ -964,7 +981,8 @@ class cmdPanel(wx.Panel):
                 and p.get('prompt','') != 'color'):
 
                 txt = wx.StaticText(parent=which_panel, label = title + ':' )
-                which_sizer.Add(item=txt, proportion=0, flag=wx.TOP | wx.LEFT | wx.EXPAND, border=5)
+                which_sizer.Add(item=txt, proportion=0,
+                                flag=wx.RIGHT | wx.LEFT | wx.TOP | wx.EXPAND, border=5)
 
                 txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
                                    size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
@@ -979,7 +997,7 @@ class cmdPanel(wx.Panel):
             if p.get('type','string') == 'string' and p.get('gisprompt',False) == True:
                 txt = wx.StaticText(parent=which_panel, label = title + ':')
                 which_sizer.Add(item=txt, proportion=0,
-                                flag=wx.ADJUST_MINSIZE | wx.TOP | wx.LEFT, border=5)
+                                flag=wx.ADJUST_MINSIZE | wx.RIGHT | wx.LEFT | wx.TOP, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p.get('prompt','') != 'color' and p.get('element', '') != 'file':
                     selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
@@ -987,7 +1005,8 @@ class cmdPanel(wx.Panel):
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set
 
-                    which_sizer.Add(item=selection, proportion=0, flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
+                    which_sizer.Add(item=selection, proportion=0,
+                                    flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
                     # A select.Select is a combobox with two children: a textctl and a popupwindow;
                     # we target the textctl here
                     p['wxId'] = selection.GetChildren()[0].GetId()
@@ -1009,7 +1028,8 @@ class cmdPanel(wx.Panel):
                     btn_colour = csel.ColourSelect(parent=which_panel, id=wx.ID_ANY,
                                                    label=label_color, colour=default_color,
                                                    pos=wx.DefaultPosition, size=(150,-1) )
-                    this_sizer.Add(item=btn_colour, proportion=0, flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
+                    this_sizer.Add(item=btn_colour, proportion=0,
+                                   flag=wx.ADJUST_MINSIZE | wx.BOTTOM | wx.LEFT, border=5)
                     # For color selectors, this is a two-member array, holding the IDs of
                     # the selector proper and either a "transparent" button or None
                     p['wxId'] = [btn_colour.GetId(),]
@@ -1021,7 +1041,8 @@ class cmdPanel(wx.Panel):
                         else:
                             none_check.SetValue(False)
                         none_check.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
-                        this_sizer.Add(none_check, 0, wx.ADJUST_MINSIZE| wx.ALL, 5)
+                        this_sizer.Add(item=none_check, proportion=0,
+                                       flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.RIGHT | wx.TOP, border=5)
                         which_sizer.Add( this_sizer )
                         none_check.Bind(wx.EVT_CHECKBOX, self.OnColorChange)
                         p['wxId'].append( none_check.GetId() )
@@ -1039,7 +1060,7 @@ class cmdPanel(wx.Panel):
                     if p.get('value','') != '':
                         fbb.SetValue(p['value']) # parameter previously set
                     which_sizer.Add(item=fbb, proportion=0,
-                                    flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.TOP, border=-3)
+                                    flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.TOP | wx.RIGHT, border=-3)
                     # A file browse button is a combobox with two children:
                     # a textctl and a button;
                     # we have to target the button here
