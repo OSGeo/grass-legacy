@@ -67,6 +67,7 @@ import utils
 from digit import Digit               as Digit
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from digit import DigitZBulkDialog    as DigitZBulkDialog
+from digit import GV_LINES            as Digit_Lines_Type
 from debug import Debug               as Debug
 from icon  import Icons               as Icons
 
@@ -1005,9 +1006,8 @@ class BufferedWindow(wx.Window):
                                                                               pos=posWindow,
                                                                               title=_("Update categories"))
                         else:
-                            if digitClass.driver.SelectLineByPoint(coords) is not None:
-                                print '#', digitClass.driver.GetSelected()[0], \
-                                    digitClass.GetLineCats()
+                            if digitClass.driver.SelectLineByPoint(coords,
+                                                                   digitClass.GetSelectType()) is not None:
                                 digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
                                                                                   map=map,
                                                                                   cats=digitClass.GetLineCats(),
@@ -1064,7 +1064,8 @@ class BufferedWindow(wx.Window):
                 if len(digitClass.driver.GetSelected()) > 1:
                     # if two line selected -> reset
                     digitClass.driver.SetSelected([])
-                digitClass.driver.SelectLineByPoint(self.Pixel2Cell(self.mouse['begin']))
+                digitClass.driver.SelectLineByPoint(self.Pixel2Cell(self.mouse['begin']),
+                                                    digitClass.GetSelectType())
 
         else:
             # get decoration id
@@ -1123,7 +1124,6 @@ class BufferedWindow(wx.Window):
                 pass
         elif self.mouse["use"] == "pointer" and self.gismanager.georectifying:
             self.SetCursor(self.parent.cursors["cross"])
-            print self.Pixel2Cell(self.mouse['end'])
             self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
                                        size=5)
 
@@ -1148,7 +1148,7 @@ class BufferedWindow(wx.Window):
                 # -> delete line || move line || move vertex
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     if len(digitClass.driver.GetSelected()) == 0:
-                        nselected = digitClass.driver.SelectLineByPoint(pos1, type="line")
+                        nselected = digitClass.driver.SelectLineByPoint(pos1, type=Digit_Lines_Type)
                         if digitToolbar.action == "editLine":
                             self.UpdateMap(render=False)
                             selVertex = digitClass.driver.GetSelectedVertex(pos1)[0]
@@ -1171,7 +1171,7 @@ class BufferedWindow(wx.Window):
                 elif digitToolbar.action == "copyCats":
                     if not hasattr(self, "copyCatsIds"):
                         # collect categories
-                        nselected = digitClass.driver.SelectLineByPoint(pos1, type="line")
+                        nselected = digitClass.driver.SelectLineByPoint(pos1, type=Digit_Lines_Type)
                         if nselected:
                             qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / \
                                                 self.Map.width)
@@ -1190,7 +1190,8 @@ class BufferedWindow(wx.Window):
                         # collect ids
                         digitClass.driver.SetSelected([])
                         # return number of selected features
-                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
+                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                                       digitClass.GetSelectType())
                         if nselected > 0:
                             self.copyCatsIds = digitClass.driver.GetSelected()
 
@@ -1202,18 +1203,19 @@ class BufferedWindow(wx.Window):
 
                 else:
                     # -> moveLine || deleteLine, etc. (select by point/box)
-                    if digitClass.driver.SelectLineByPoint(pos1) is not None:
-                        nselected = 1
-                    else:
-                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
-                    
+                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                                   digitClass.GetSelectType())
+                    if nselected == 0:
+                        if digitClass.driver.SelectLineByPoint(pos1,
+                                                               digitClass.GetSelectType()) is not None:
+                            nselected = 1
+
                 if nselected > 0:
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
                         # get pseudoDC id of objects which should be redrawn
                         if digitToolbar.action == "moveLine":
                             # -> move line
                             self.moveIds = digitClass.driver.GetSelected(grassId=False)
-                            print self.moveIds, nselected
 
                         elif digitToolbar.action == "moveVertex":
                             # -> move vertex
@@ -1230,7 +1232,7 @@ class BufferedWindow(wx.Window):
 
             elif digitToolbar.action in ["splitLine", "addVertex", "removeVertex"]:
                 pointOnLine = digitClass.driver.SelectLineByPoint(pos1,
-                                                                  type="line")
+                                                                  type=Digit_Lines_Type)
                 if pointOnLine:
                     self.UpdateMap(render=False) # highlight object
                     if digitToolbar.action in ["splitLine", "addVertex"]:
@@ -1247,7 +1249,8 @@ class BufferedWindow(wx.Window):
             elif digitToolbar.action == "copyLine":
                 if digitClass.settings['backgroundMap'] == '':
                     # no background map -> copy from current vector map layer
-                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
+                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                                   digitClass.GetSelectType())
 
                     if nselected > 0:
                         # highlight selected features
@@ -1281,7 +1284,8 @@ class BufferedWindow(wx.Window):
                 # select lines to be labeled
                 pos1 = self.polycoords[0]
                 pos2 = self.polycoords[1]
-                nselected = digitClass.driver.SelectLinesByBox(pos1, pos2)
+                nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                               digitClass.GetSelectType())
 
                 if nselected > 0:
                     # highlight selected features

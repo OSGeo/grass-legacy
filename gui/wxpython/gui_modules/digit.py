@@ -59,6 +59,8 @@ except ImportError, err:
 #
 USEVEDIT = True
 
+GV_LINES = vdigit.GV_LINES
+
 class AbstractDigit:
     """
     Abstract digitization class
@@ -115,6 +117,12 @@ class AbstractDigit:
             self.settings["query"]       = ("length", True)   # name, select by box
             self.settings["queryLength"] = ("shorter than", 0) # gt or lt, threshold
             self.settings["queryDangle"] = ("shorter than", 0)
+            # select feature (point, line, centroid, boundary)
+            self.settings["selectFeature"] = {}
+            self.settings["selectFeature"]["point"] = {'id': None, 'val': True}
+            self.settings["selectFeature"]["line"] = {'id': None, 'val': True}
+            self.settings["selectFeature"]["centroid"] = {'id': None, 'val': True}
+            self.settings["selectFeature"]["boundary"] = {'id': None, 'val': True} 
         else:
             self.settings = settings
 
@@ -198,6 +206,21 @@ class AbstractDigit:
                 thresh = -1 * thresh
 
         return thresh
+
+    def GetSelectType(self):
+        """Get type(s) to be selected
+
+        Used by SelectLinesByBox() and SelectLinesByPoint()"""
+
+        type = 0
+        for feature in (('point', vdigit.GV_POINT),
+                        ('line', vdigit.GV_LINE),
+                        ('centroid', vdigit.GV_CENTROID),
+                        ('boundary', vdigit.GV_BOUNDARY)):
+            if self.settings['selectFeature'][feature[0]]['val'] is True:
+                type |= feature[1]
+
+        return type
 
 class VEdit(AbstractDigit):
     """
@@ -1107,7 +1130,7 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         return nlines
 
-    def SelectLinesByBox(self, begin, end, type=None):
+    def SelectLinesByBox(self, begin, end, type=0):
         """Select vector features by given bounding box.
 
         If type is given, only vector features of given type are selected.
@@ -1118,13 +1141,15 @@ class CDisplayDriver(AbstractDisplayDriver):
         x1, y1 = begin
         x2, y2 = end
 
-        nselected = self.__display.SelectLinesByBox(x1, y1, x2, y2)
+        nselected = self.__display.SelectLinesByBox(x1, y1, -1.0 * vdigit.PORT_DOUBLE_MAX,
+                                                    x2, y2, vdigit.PORT_DOUBLE_MAX,
+                                                    type)
         Debug.msg(4, "CDisplayDriver.SelectLinesByBox(): selected=%d" % \
                       nselected)
 
         return nselected
 
-    def SelectLineByPoint(self, point, type=None):
+    def SelectLineByPoint(self, point, type=0):
         """Select vector feature by coordinates of click point (in given threshold).
 
         If type is given, only vector features of given type are selected.
@@ -1132,16 +1157,9 @@ class CDisplayDriver(AbstractDisplayDriver):
         @param point click coordinates (bounding box given by threshold)
         @param type  select only objects of given type
         """
-        ftype = -1 # all types
-        if type:
-            if type == "point":
-                ftype = 0
-            else:
-                ftype = 1 # line
-            
-        pointOnLine = self.__display.SelectLineByPoint(point[0], point[1],
+        pointOnLine = self.__display.SelectLineByPoint(point[0], point[1], 0.0,
                                                        self.GetThreshold(),
-                                                       ftype); 
+                                                       type, 0); # without_z
 
         if len(pointOnLine) > 0:
             Debug.msg(4, "CDisplayDriver.SelectLineByPoint(): pointOnLine=%f,%f" % \
@@ -1509,7 +1527,10 @@ class DigitSettingsDialog(wx.Dialog):
         notebook.AddPage(page=panel, text=_("Query tool"))
 
         border = wx.BoxSizer(wx.VERTICAL)
-        
+
+        #
+        # query tool box
+        #
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Choose query tool"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
@@ -1574,6 +1595,21 @@ class DigitSettingsDialog(wx.Dialog):
 
         # enable & disable items
         self.OnChangeQuery(None)
+
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
+
+        #
+        # select box
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Select vector features"))
+        sizer = wx.StaticBoxSizer(box, wx.HORIZONTAL)
+        for feature in ('point', 'line',
+                        'centroid', 'boundary'):
+            chkbox = wx.CheckBox(parent=panel, label=feature)
+            settings['selectFeature'][feature]['id'] = chkbox.GetId()
+            chkbox.SetValue(settings['selectFeature'][feature]['val'])
+            sizer.Add(item=chkbox, proportion=0,
+                      flag=wx.EXPAND | wx.ALL, border=3)
 
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
 
@@ -1733,6 +1769,12 @@ class DigitSettingsDialog(wx.Dialog):
                                                      int(self.queryLengthValue.GetValue()))
         self.parent.digit.settings["queryDangle"] = (self.queryDangleSL.GetStringSelection(),
                                                      int(self.queryDangleValue.GetValue()))
+
+        # select features
+        for feature in ('point', 'line',
+                        'centroid', 'boundary'):
+            self.parent.digit.settings['selectFeature'][feature]['val'] = \
+                self.FindWindowById(self.parent.digit.settings["selectFeature"][feature]['id']).IsChecked()
 
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
