@@ -162,8 +162,10 @@ class GeorectWizard(object):
                 pass
             else:
                 wx.MessageBox("Georectifying setup canceled.")
+                self.Cleanup()
         else:
             wx.MessageBox("Georectifying setup canceled.")
+            self.Cleanup()
 
         # start display showing xymap - need to put an if statement here
         if success != False:
@@ -181,18 +183,19 @@ class GeorectWizard(object):
     
             self.Map.AddLayer(type=rendertype, command=cmdlist,l_active=True,
                               l_hidden=False, l_opacity=1, l_render=False)
-    
+                
             self.xy_mapdisp = mapdisp.MapFrame(self.parent, title="Set ground control points (GCPs)",
                  pos=wx.DefaultPosition, size=(640,480),
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["georect"],
-                 Map=self.Map, gwiz=self, gismgr=self.parent, georect=True)
+                 Map=self.Map, gismgr=self.parent, georect=True)
             
             self.mapwin = self.xy_mapdisp.MapWindow
             
             # set mouse characteristics
             self.mapwin.mouse['box'] = 'point'
+            self.mapwin.mouse["use"] == "pointer"
             self.mapwin.zoomtype = 0
-            self.mapwin.pen     = wx.Pen(colour='black',   width=2, style=wx.SOLID)
+            self.mapwin.pen = wx.Pen(colour='black', width=2, style=wx.SOLID)
             self.mapwin.SetCursor(self.xy_mapdisp.cursors["cross"])
             
             # draw selected xy map
@@ -208,8 +211,11 @@ class GeorectWizard(object):
             self.gcpmgr.Show()
             self.gcpmgr.Refresh()
             self.gcpmgr.Update()
-
-        self.Cleanup()
+        else:
+            self.Cleanup()
+                    
+    def PrintCoord(self, coord, coordtype):
+        print coord,coordtype
         
     def SetSrcEnv(self, location, mapset):
         """Create environment to use for location and mapset
@@ -249,11 +255,13 @@ class GeorectWizard(object):
         #print 'maptype=',maptype
 
         return True
+        self.Cleanup()
 
     def Cleanup(self):
         # return to current location and mapset
         self.SwitchEnv('original')
-        self.parent.georect = False
+        self.parent.georectifying = False
+        self.xy_mapdisp.Destroy()
         self.wizard.Destroy()
 
 class LocationPage(TitledPage):
