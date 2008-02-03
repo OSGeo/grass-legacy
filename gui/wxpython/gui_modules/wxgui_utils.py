@@ -361,14 +361,7 @@ class LayerTree(CT.CustomTreeCtrl):
             event.Skip()
             return
 
-        # mark layer as 'edited'
-        self.mapdisplay.digittoolbar.StopEditing(maplayer)
-
-        if self.mapdisplay.digittoolbar: # disable the tool
-            self.mapdisplay.RemoveToolbar("digit")
-        else: # tool already enabled
-            pass
-
+        self.mapdisplay.digittoolbar.OnExit()
         self.mapdisplay.imgVectorMap = None
 
     def OnPopupProperties (self, event):

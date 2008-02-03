@@ -8,11 +8,8 @@
 class Digit
 {
 private:
-    struct lcat {
-	int layer;
-	int cat;
-    };
-    std::vector<lcat> cats;
+    /* layer / max category */
+    std::map<int, int> cats;
 
     DisplayDriver *display;
 
@@ -54,7 +51,7 @@ public:
     int CopyCats(std::vector<std::vector<int> >, std::vector<int>);
     int GetCategory(int);
     std::map<int, std::vector<int> > GetLineCats();
-
+    std::vector<int> GetLayers();
 };
 
 #endif /* __DIGIT_H__ */

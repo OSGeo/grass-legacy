@@ -25,12 +25,10 @@
 */
 int Digit::InitCats()
 {
-    int nfields, field, index, ncats, max_cat;
+    int ndblinks, nfields, field, ncats, max_cat;
     int cat, type, id; 
 
-    struct lcat lc;
-
-    G_debug(2, "wxDigit.InitCats()");
+    struct field_info *fi;
 
     if (!cats.empty()) {	
 	cats.clear();
@@ -40,22 +38,39 @@ int Digit::InitCats()
 	return -1;
     }
 
+    /* initialization */
+    ndblinks = Vect_get_num_dblinks(display->mapInfo);
+    for (int i = 0; i < ndblinks; i++) {
+	fi = Vect_get_dblink(display->mapInfo, i);
+	if (fi) {
+	    cats[fi->number] = PORT_INT_MIN;
+	}
+    }
+
+    /* find max category */
     nfields = Vect_cidx_get_num_fields (display->mapInfo);
-    
+    G_debug(2, "wxDigit.InitCats(): nfields=%d", nfields);    
+
     for (int i = 0; i < nfields; i++ ) {
 	field = Vect_cidx_get_field_number(display->mapInfo, i);
-	ncats = Vect_cidx_get_num_cats_by_index(display->mapInfo, index);
+	ncats = Vect_cidx_get_num_cats_by_index(display->mapInfo, i);
 	for (int j = 0; j < ncats; j++) {
-	    Vect_cidx_get_cat_by_index (display->mapInfo, index, j, &cat, &type, &id);
-	    if (cat > max_cat)
-		max_cat = cat;
+	    Vect_cidx_get_cat_by_index (display->mapInfo, i, j, &cat, &type, &id);
+	    if (cat > cats[field])
+		cats[field] = cat;
 	}
 
-	lc.layer = Vect_cidx_get_field_number(display->mapInfo, i);
-	lc.cat = max_cat;
+	G_debug(3, "wxDigit.InitCats(): layer=%d, cat=%d", field, cats[field]);
+    }
 
-	cats.push_back(lc);
-	G_debug(3, "wxDigit.InitCats(): layer=%d, cat=%d", lc.layer, lc.cat);
+    /* set default values */
+    for(std::map<int, int>::const_iterator b = cats.begin(), e = cats.end();
+	b != e; ++b ) {
+	if (b->second == PORT_INT_MIN) {
+	    cats[b->first] = 0;
+	    G_debug(3, "wxDigit.InitCats(): layer=%d, cat=%d", b->first, cats[b->first]);
+	}
+
     }
 
     return 0;
@@ -71,12 +86,9 @@ int Digit::InitCats()
 */
 int Digit::GetCategory(int layer)
 {
-    for(std::vector<struct lcat>::const_iterator i = cats.begin(), e = cats.end();
-	i != e; ++i) {
-	if (layer == (*i).layer) {
-	    G_debug(3, "v.digit.GetCategory(): layer=%d, cat=%d", (*i).layer, (*i).cat);
-	    return (*i).cat;
-	}
+    if (cats.find(layer) != cats.end()) {
+	G_debug(3, "v.digit.GetCategory(): layer=%d, cat=%d", layer, cats[layer]);
+	return cats[layer];
     }
 
     return -1;
@@ -89,37 +101,43 @@ int Digit::GetCategory(int layer)
    \param cats  category number to be set
 
    \return previosly set category
+   \return -1 if layer not available
 */
 int Digit::SetCategory(int layer, int cat)
 {
     int old_cat;
 
-    for(std::vector<struct lcat>::iterator i = cats.begin(), e = cats.end();
-	i != e; ++i) {
-	if (layer == (*i).layer) {
-	    old_cat = (*i).cat;
-	    (*i).cat = cat;
-	    G_debug(3, "wxDigit.SetCategory(): layer=%d, cat=%d", layer, cat);
-	}
+    if (cats.find(layer) != cats.end()) {
+	old_cat = cats[layer];
     }
+    else {
+	old_cat = -1;
+    }
+
+    cats[layer] = cat;
+    G_debug(3, "wxDigit.SetCategory(): layer=%d, cat=%d old_cat=%d",
+	    layer, cat, old_cat);
 
     return old_cat;
 }
 
 /**
-   \brief Copy categories from one vector feature to other
+   Get list of layers
 
-   \param cats  list of layer/category to be copied			       
-   \param ids   list of line ids where to copy categories
+   Requires InitCats() to be called.
 
-   \return number of modified features
-   \return -1 on error
+   \return list of layers
 */
-int Digit::CopyCats(std::vector<std::vector<int> > cats, std::vector<int> ids)
+std::vector<int> Digit::GetLayers()
 {
-  /* TODO */
+    std::vector<int> layers;
 
-  return 0;
+    for(std::map<int, int>::const_iterator b = cats.begin(), e = cats.end();
+	b != e; ++b ) {
+	layers.push_back(b->first);
+    }
+
+    return layers;
 }
 
 /**
@@ -169,4 +187,20 @@ std::map<int, std::vector<int> > Digit::GetLineCats()
     Vect_destroy_cats_struct(Cats);
 
     return lc;
+}
+
+/**
+   \brief Copy categories from one vector feature to other
+
+   \param cats  list of layer/category to be copied			       
+   \param ids   list of line ids where to copy categories
+
+   \return number of modified features
+   \return -1 on error
+*/
+int Digit::CopyCats(std::vector<std::vector<int> > cats, std::vector<int> ids)
+{
+  /* TODO */
+
+  return 0;
 }
