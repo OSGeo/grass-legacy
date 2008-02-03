@@ -858,6 +858,7 @@ class BufferedWindow(wx.Window):
 
         elif event.Moving():
             self.OnMouseMoving(event)
+        event.Skip()
 
     def OnLeftDown(self, event):
         """
@@ -1122,8 +1123,14 @@ class BufferedWindow(wx.Window):
                 self.DrawLines(pdc=self.pdcTmp)
             except:
                 pass
-        elif self.mouse["use"] == "pointer" and self.gismanager.georectifying:
+        elif self.mouse["use"] == "pointer" and self.parent.gismanager.georectifying:
             self.SetCursor(self.parent.cursors["cross"])
+            coord = self.Pixel2Cell(self.mouse['end'])
+            if self.parent.georect:
+                coordtype = 'gcp'
+            else:
+                coordtype = 'mapcoord'
+            self.gismanager.gr.PrintCoord(coord, coordtype)
             self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
                                        size=5)
 
@@ -2030,7 +2037,7 @@ class MapFrame(wx.Frame):
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
                  tree=None, notebook=None, gismgr=None, page=None,
-                 Map=None, auimgr=None, gwiz=None, georect=False):
+                 Map=None, auimgr=None, georect=False):
         """
             Main map display window with toolbars, statusbar and
             DrawWindow
@@ -2049,7 +2056,6 @@ class MapFrame(wx.Frame):
                 gismgr  -- GIS Manager panel
                 page    -- notebook page with layer tree
                 Map     -- instance of render.Map
-                gwiz    -- ID of GeorectWizard
                 georect -- is window used by georectifier
         """
 
@@ -2057,13 +2063,12 @@ class MapFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
-        self.gismanager = gismgr   # GIS Manager object
-        self.Map        = Map      # instance of render.Map
-        self.tree       = tree     # GIS Manager layer tree object
-        self.page       = page     # Notebook page holding the layer tree
-        self.layerbook  = notebook # GIS Manager layer tree notebook
-        self.georect    = georect  # Map display used for setting GCPs for georectifier
-        self.gwiz       = gwiz     # Georectifier object
+        self.gismanager = gismgr    # GIS Manager object
+        self.Map        = Map       # instance of render.Map
+        self.tree       = tree      # GIS Manager layer tree object
+        self.page       = page      # Notebook page holding the layer tree
+        self.layerbook  = notebook  # GIS Manager layer tree notebook
+        self.georect    = georect   # Map display used for setting GCPs for georectifier
         self.parent     = parent
 
         #
@@ -2281,15 +2286,24 @@ class MapFrame(wx.Frame):
 
     def OnFocus(self, event):
         """
-        Change choicebook
-        page to match display
+        Change choicebook page to match display.
+        Or set display for georectifying
         """
-        
         if self.georect:
-            if event.GetActive():
-                self.gwiz.SwitchEnv('new')
-            else:
-                self.gwiz.SwitchEnv('original')
+            # display used to set GCPs in map to georectify
+            try:
+                if event.GetActive():
+                    self.gismanager.gr.SwitchEnv('new')
+                else:
+                    self.gismanager.gr.SwitchEnv('original')
+            except:
+                pass
+            
+        elif self.gismanager.georectifying:
+            # in georectifying session; display used to get get geographic
+            # coordinates for GCPs
+            self.MapWindow.pen = wx.Pen(colour='black', width=2, style=wx.SOLID)
+            self.MapWindow.SetCursor(self.cursors["cross"])
         else:
             # change bookcontrol page to page associated with display
             if self.page :
