@@ -3,71 +3,61 @@
  *
  * \brief Vector library - Clean vector map (break lines)
  *
- * \author Radim Blazek
- *
- * (C) 2001 by the GRASS Development Team
+ * (C) 2001-2008 by the GRASS Development Team
  *
  * This program is free software under the 
  * GNU General Public License (>=v2). 
  * Read the file COPYING that comes with GRASS
  * for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2001
  */
 
 #include <stdlib.h> 
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
 /*!
- \brief Break lines in vector map at each intersection.
+  \brief Break lines in vector map at each intersection.
 
- For details see Vect_break_lines_list().
+  For details see Vect_break_lines_list().
 
- \param[in] Map input vector map where lines will be broken
- \param[in] type type of line to be broken
- \param[out] Err vector map where points at intersections will be written or NULL
- \param[out] msgout file pointer where messages will be written or NULL
+  \param Map input vector map 
+  \param type feature type
+  \param[out] Err vector map where points at intersections will be written or NULL
+  \param[out] msgout file pointer where messages will be written or NULL
 
- \return
+  \return
 */
 
 void 
 Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *msgout )
 {
-    int line, nlines;
-    struct ilist *List;
-    
-    List = Vect_new_list();
-
-    nlines = Vect_get_num_lines(Map);
-
-    for (line = 1; line <= nlines; line++) {
-	Vect_list_append (List, line);
-    }
-
-    Vect_break_lines_list (Map, List, type, Err, msgout);
-
-    Vect_destroy_list(List);
+    Vect_break_lines_list (Map, NULL, type, Err, msgout);
 
     return;
 }
 
 /*!
- \brief Break selected lines in vector map at each intersection.
+  \brief Break selected lines in vector map at each intersection.
+  
+  Breaks selected lines specified by type in vector map. Points at
+  intersections may be optionaly written to error map. Input vector map
+  must be opened on level 2 for update at least on GV_BUILD_BASE.
 
- Breaks selected lines specified by type in vector map. Points at
- intersections may be optionaly written to error map. Input vector map
- must be opened on level 2 for update at least on GV_BUILD_BASE.
+  The function also breaks lines forming collapsed loop, for example
+  0,0;1,0;0,0 is broken at 1,0.
+  
+  \param Map input vector map 
+  \param List_break list of lines to be broken or NULL
+  \param type feature type
+  \param[out] Err vector map where points at intersections will be written or NULL
+  \param[out] msgout file pointer where messages will be written or NULL
 
- The function also breaks lines forming collapsed loop, for example
- 0,0;1,0;0,0 is broken at 1,0.
-
- \param[in] Map input vector map where lines will be broken
- \param[in] List_break list of lines
- \param[in] type type of line to be broken
- \param[out] Err vector map where points at intersections will be written or NULL
- \param[out] msgout file pointer where messages will be written or NULL
-
- \return
+  \return number of intersections
 */
 
 int
@@ -77,7 +67,7 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
     struct line_pnts *APoints, *BPoints, *Points;
     struct line_pnts **AXLines, **BXLines;
     struct line_cats *ACats, *BCats, *Cats;
-    int    j, k, l, ret, atype, btype, aline, bline, found, iline;
+    int    j, k, l, ret, atype, btype, aline, bline, found, iline, nlines;
     int    naxlines, nbxlines, nx;
     double *xx=NULL, *yx=NULL, *zx=NULL;
     BOUND_BOX  ABox, BBox; 
@@ -100,7 +90,14 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
     
     is3d = Vect_is_3d ( Map );
 
-    G_debug (3, "nlines =  %d", List_break->n_values );
+    if (List_break) {
+	nlines = List_break->n_values;
+    }
+    else {
+	nlines = Vect_get_num_lines(Map);
+    }
+    G_debug (3, "nlines =  %d", nlines );
+
     /* To find intersection of two lines (Vect_line_intersection) is quite slow.
      * Fortunately usual lines/boundaries in GIS often forms a network where lines
      * are connected by end points, and touch by MBR. This function checks and occasionaly
@@ -116,10 +113,15 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
     printed = 0;
 
     if (msgout)
-	fprintf (msgout, "Intersections: %5d", nbreaks ); 
+	fprintf (msgout, _("%s %5d"), _("Intersections:"), nbreaks ); 
 
-    for ( iline = 0; iline < List_break->n_values; iline++ ){ 
-	aline = List_break->value[iline];
+    for ( iline = 0; iline < nlines; iline++ ) {
+	if (List_break) {
+	    aline = List_break->value[iline];
+	}
+	else {
+	    aline = iline + 1;
+	}
 	G_debug (3, "aline =  %d", aline);
 	if ( !Vect_line_alive ( Map, aline ) )
 	    continue;
@@ -155,6 +157,9 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
 	
 	for ( j = 0; j <  List->n_values; j++ ){ 
 	    bline = List->value[j];
+	    if (List_break && !Vect_val_in_list(List_break, bline)) {
+		continue;
+	    }
 	    G_debug (3, "  j = %d bline = %d", j, bline);
     
 	    /* Check if thouch by end node only */
@@ -238,7 +243,9 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
 		    if ( (atype & GV_POINTS) || AXLines[k]->n_points > 1 ) {
 			ret = Vect_write_line ( Map, atype, AXLines[k], ACats );  
 			G_debug (3, "Line %d written, npoints = %d", ret, AXLines[k]->n_points);
-			Vect_list_append(List_break, ret);
+			if (List_break) {
+			    Vect_list_append(List_break, ret);
+			}
 		    }
 		    
 		    /* Write intersection points */
@@ -266,7 +273,9 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
 		        if ( (btype & GV_POINTS) || BXLines[k]->n_points > 1 ) {
 			    ret = Vect_write_line ( Map, btype, BXLines[k], BCats );  
 			    G_debug (5, "Line %d written", ret);
-			    Vect_list_append(List_break, ret);
+			    if (List_break) {
+				Vect_list_append(List_break, ret);
+			    }
 			}
 			
 			/* Write intersection points */
@@ -311,17 +320,25 @@ Vect_break_lines_list ( struct Map_info *Map, struct ilist *List_break,
 	    }
 	    
 	    if (msgout && printed > 1000) {
-		fprintf (msgout, "\rIntersections: %5d (line %d)", nbreaks, aline ); 
+		fprintf (msgout, "\r%s %5d (line %d)", _("Intersections:"), nbreaks, aline ); 
 	        fflush ( msgout );
 		printed = 0;
 	    }
 	    printed++;
 	    if ( naxlines > 0 ) break; /* first line was broken and deleted -> take the next one */
 	}
-	G_debug (3, "nlines =  %d\n", List_break->n_values);
-    }
+
+	if (List_break) {
+	    nlines = List_break->n_values;
+	}
+	else {
+	    nlines = Vect_get_num_lines(Map);
+	}
+	G_debug (3, "nlines =  %d", nlines);
+    } /* for each line */
+
     if (msgout)
-	fprintf (msgout, "\rIntersections: %5d                         \n", nbreaks ); 
+	fprintf (msgout, "\r%s %5d                        \n", _("Intersections:"), nbreaks ); 
 
     Vect_destroy_list ( List );
 
