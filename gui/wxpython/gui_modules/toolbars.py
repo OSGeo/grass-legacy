@@ -364,7 +364,7 @@ class DigitToolbar(AbstractToolbar):
         self.type   = "centroid"
         self.parent.MapWindow.mouse['box'] = 'point'
 
-    def OnExit (self, event):
+    def OnExit (self, event=None):
         """Quit digitization tool"""
         # stop editing of the currently selected map layer
         try:

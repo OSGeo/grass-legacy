@@ -141,14 +141,15 @@ class AbstractDigit:
             if USEVEDIT:
                 categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
                                                 "input=%s" % self.map, 
-                                                "option=report",
-                                                "layer=%d" % self.settings["layer"]])
+                                                "option=report"])
 
                 if categoryCmd.returncode != 0:
                     return False
         
                 for line in categoryCmd.ReadStdOutput():
                     if "all" in line:
+                        if self.settings['layer'] != int(line.split(' ')[0]):
+                            continue
                         try:
                             maxCat = int(line.split(' ')[-1]) + 1
                             self.settings['category'] = maxCat
@@ -161,12 +162,9 @@ class AbstractDigit:
     def SetCategory(self):
         """Return category number to use (according Settings)"""
         if self.settings["categoryMode"] == "No category":
-            self.settings["category"] = "None"
+            self.settings["category"] = 1
         elif self.settings["categoryMode"] == "Next to use":
             self.SetCategoryNextToUse()
-        else:
-            if self.settings["category"] == "None":
-                self.SetCategoryNextToUse()
 
         return self.settings["category"]
 
@@ -746,6 +744,21 @@ class VEdit(AbstractDigit):
         
         return ids
 
+    def GetLayers(self):
+        """Return list of layers"""
+        layerCommand = gcmd.Command(cmd=["v.db.connect",
+                                             "-g", "--q",
+                                             "map=%s" % self.map],
+                                        rerr=None, stderr=None)
+        if layerCommand.returncode == 0:
+            layers = []
+            for line in layerCommand.ReadStdOutput():
+                lineList = line.split(' ')
+                layers.append(int(lineList[0]))
+            return layers
+
+        return [1]
+
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -975,7 +988,11 @@ class VDigit(AbstractDigit):
     def GetLineCats(self):
         """Get layer/category pairs from given (selected) line"""
         return self.digit.GetLineCats()
-        
+
+    def GetLayers(self):
+        """Get list of layers"""
+        return self.digit.GetLayers()
+
     def __getSnapThreshold(self):
         """Get snap mode and threshold value
 
@@ -1393,10 +1410,9 @@ class DigitSettingsDialog(wx.Dialog):
         self.lineWidthValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
                                           initial=self.parent.digit.settings["lineWidth"][0],
                                           min=1, max=1e6)
-        self.lineWidthUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                         style=wx.CB_SIMPLE | wx.CB_READONLY,
-                                         choices=["screen pixels", "map units"])
-        self.lineWidthUnit.SetValue(self.parent.digit.settings["lineWidth"][1])
+        self.lineWidthUnit = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                       choices=["screen pixels", "map units"])
+        self.lineWidthUnit.SetStringSelection(self.parent.digit.settings["lineWidth"][1])
         flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(self.lineWidthValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer.Add(self.lineWidthUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
@@ -1419,11 +1435,10 @@ class DigitSettingsDialog(wx.Dialog):
                                          initial=self.parent.digit.settings["snapping"][0],
                                          min=1, max=1e6)
         self.snappingValue.Bind(wx.EVT_SPINCTRL, self.OnChangeSnappingValue)
-        self.snappingUnit = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                        style=wx.CB_SIMPLE | wx.CB_READONLY,
-                                        choices=["screen pixels", "map units"])
-        self.snappingUnit.SetValue(self.parent.digit.settings["snapping"][1])
-        self.snappingUnit.Bind(wx.EVT_COMBOBOX, self.OnChangeSnappingUnits)
+        self.snappingUnit = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                      choices=["screen pixels", "map units"])
+        self.snappingUnit.SetStringSelection(self.parent.digit.settings["snapping"][1])
+        self.snappingUnit.Bind(wx.EVT_CHOICE, self.OnChangeSnappingUnits)
         flexSizer1.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer1.Add(self.snappingValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
         flexSizer1.Add(self.snappingUnit, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
@@ -1444,7 +1459,7 @@ class DigitSettingsDialog(wx.Dialog):
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.EXPAND)
         self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
         self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                          label=_("Snapping threshold is currently %.1f %s") % \
+                                          label=_("Snapping threshold is %.1f %s") % \
                                               (self.parent.digit.driver.GetThreshold(),
                                                self.mapUnits))
         vertexSizer.Add(item=self.snappingInfo, proportion=0,
@@ -1471,27 +1486,31 @@ class DigitSettingsDialog(wx.Dialog):
         settings = ((_("Layer"), 1), (_("Category"), 1), (_("Mode"), _("Next to use")))
         # layer
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
-        self.layer = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                 value=str(self.parent.digit.settings["layer"])) # TODO: validator
+        if self.parent.digit.map:
+            layers = map(str, self.parent.digit.GetLayers())
+        else:
+            layers = [str(self.parent.digit.settings["layer"])]
+        self.layer = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                               choices=layers)
+        self.layer.SetStringSelection(str(self.parent.digit.settings["layer"]))
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.layer, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category number
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
-        self.category = wx.TextCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                    value=str(self.parent.digit.settings["category"])) # TODO: validator
+        self.category = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                    initial=self.parent.digit.settings["category"],
+                                    min=-1e9, max=1e9) 
         if self.parent.digit.settings["categoryMode"] != "Manual entry":
-            self.category.SetEditable(False)
             self.category.Enable(False)
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.category, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
         # category mode
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
-        self.categoryMode = wx.ComboBox(parent=panel, id=wx.ID_ANY,
-                                        style=wx.CB_SIMPLE | wx.CB_READONLY, size=(125, -1),
-                                        choices=[_("Next to use"), _("Manual entry"), _("No category")])
-        self.categoryMode.SetValue(self.parent.digit.settings["categoryMode"])
+        self.categoryMode = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                      choices=[_("Next to use"), _("Manual entry"), _("No category")])
+        self.categoryMode.SetStringSelection(self.parent.digit.settings["categoryMode"])
         flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(item=self.categoryMode, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
@@ -1512,7 +1531,8 @@ class DigitSettingsDialog(wx.Dialog):
 
         # bindings
         self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
-        self.Bind(wx.EVT_COMBOBOX, self.OnChangeCategoryMode, self.categoryMode)
+        self.Bind(wx.EVT_CHOICE, self.OnChangeCategoryMode, self.categoryMode)
+        self.Bind(wx.EVT_CHOICE, self.OnChangeLayer, self.layer)
 
         panel.SetSizer(border)
         
@@ -1647,15 +1667,23 @@ class DigitSettingsDialog(wx.Dialog):
         self.parent.digit.settings["categoryMode"] = mode
         if mode == "Manual entry": # enable
             self.category.Enable(True)
-            self.category.SetEditable(True)
         elif self.category.IsEnabled(): # disable
-            self.category.SetEditable(False)
             self.category.Enable(False)
 
         if mode == "No category" and self.addRecord.IsChecked():
             self.addRecord.SetValue(False)
         self.parent.digit.SetCategory()
-        self.category.SetValue(str(self.parent.digit.settings['category']))
+        self.category.SetValue(self.parent.digit.settings['category'])
+
+    def OnChangeLayer(self, event):
+        """Layer changed"""
+        layer = int(event.GetString())
+        if layer > 0:
+            self.parent.digit.settings['layer'] = layer
+            self.parent.digit.SetCategory()
+            self.category.SetValue(self.parent.digit.settings['category'])
+            
+        event.Skip()
 
     def OnChangeAddRecord(self, event):
         """Checkbox 'Add new record' status changed"""
@@ -1664,17 +1692,21 @@ class DigitSettingsDialog(wx.Dialog):
     def OnChangeSnappingValue(self, event):
         """Change snapping value - update static text"""
         value = self.snappingValue.GetValue()
-        threshold = self.parent.digit.driver.GetThreshold(value)
-        self.snappingInfo.SetLabel(_("Snapping threshold is currently %.1f %s") % \
-                                       (threshold,
-                                        self.mapUnits))
+        if self.snappingUnit.GetStringSelection() == "map units":
+            threshold = value
+        else:
+            threshold = self.parent.digit.driver.GetThreshold(value)
+
+        self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % 
+                                   (threshold,
+                                    self.mapUnits))
 
         event.Skip()
 
     def OnChangeSnappingUnits(self, event):
         """Snapping units change -> update static text"""
         value = self.snappingValue.GetValue()
-        units = self.snappingUnit.GetValue()
+        units = self.snappingUnit.GetStringSelection()
         threshold = self.parent.digit.driver.GetThreshold(value, units)
 
         if units == "map units":
@@ -1735,21 +1767,21 @@ class DigitSettingsDialog(wx.Dialog):
                 self.parent.digit.settings[key] = (None, color.GetColour())
         # display
         self.parent.digit.settings["lineWidth"] = (int(self.lineWidthValue.GetValue()),
-                                                   self.lineWidthUnit.GetValue())
+                                                   self.lineWidthUnit.GetStringSelection())
 
         # snapping
         self.parent.digit.settings["snapping"] = (int(self.snappingValue.GetValue()), # value
-                                      self.snappingUnit.GetValue()) # unit
+                                      self.snappingUnit.GetStringSelection()) # unit
         self.parent.digit.settings["snapToVertex"] = self.snapVertex.IsChecked()
         
         # digitize new feature
         self.parent.digit.settings["addRecord"] = self.addRecord.IsChecked()
-        self.parent.digit.settings["layer"] = int(self.layer.GetValue())
+        self.parent.digit.settings["layer"] = int(self.layer.GetStringSelection())
         if self.parent.digit.settings["categoryMode"] == "No category":
             self.parent.digit.settings["category"] = None
         else:
             self.parent.digit.settings["category"] = int(self.category.GetValue())
-        self.parent.digit.settings["categoryMode"] = self.categoryMode.GetValue()
+        self.parent.digit.settings["categoryMode"] = self.categoryMode.GetStringSelection()
 
         # delete existing feature
         self.parent.digit.settings["delRecord"] = self.deleteRecord.IsChecked()

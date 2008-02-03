@@ -313,7 +313,7 @@ int Digit::DeleteLines(bool delete_records)
 		if (Cats_del->field[c] == fi->number) {
 		    sprintf (buf, " %s = %d", fi->key, Cats_del->cat[c]);
 		    db_append_string(&stmt, buf);
-		    if (n_cats > 0) {
+		    if (n_cats > 0 && c < Cats_del->n_cats) {
 			sprintf (buf, " or");
 			db_append_string(&stmt, buf);
 		    }

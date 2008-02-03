@@ -44,7 +44,7 @@ DisplayDriver::DisplayDriver(void *device)
     drawSegments = false;
 
     // avoid GUI crash when G_fatal_error() is called (opening the vector map)
-    Vect_set_fatal_error(GV_FATAL_PRINT);
+    // Vect_set_fatal_error(GV_FATAL_PRINT);
     // G_set_error_routine(print_error);
 }
 
@@ -439,9 +439,11 @@ int DisplayDriver::CloseMap()
     if (mapInfo) {
 	if (mapInfo->mode == GV_MODE_RW) {
 	    /* rebuild topology */
+	    Vect_build_partial(mapInfo, GV_BUILD_NONE, NULL);
 	    Vect_build(mapInfo, NULL);
 	}
-	ret = Vect_close(mapInfo);
+	/* close map and store topo/cidx */
+	ret = Vect_close(mapInfo); 
 	G_free ((void *) mapInfo);
 	mapInfo = NULL;
     }
