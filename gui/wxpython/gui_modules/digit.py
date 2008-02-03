@@ -49,7 +49,9 @@ try:
     digitPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "vdigit")
     sys.path.append(digitPath)
     import grass6_wxvdigit as vdigit
+    GV_LINES = vdigit.GV_LINES
 except ImportError, err:
+    GV_LINES = None
     print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
           "Detailed information in README file." % \
           (os.linesep, err)
@@ -58,8 +60,6 @@ except ImportError, err:
 # Use v.edit on background or experimental C++ interface (not yet completed)
 #
 USEVEDIT = True
-
-GV_LINES = vdigit.GV_LINES
 
 class AbstractDigit:
     """
