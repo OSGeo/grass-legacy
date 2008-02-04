@@ -33,8 +33,10 @@ void plot_symbol(double easting, double northing, int color, double rotation, ch
     line_color = G_malloc(sizeof(RGBA_Color));
     fill_color = G_malloc(sizeof(RGBA_Color));
 
-    /* TODO: color->RGB values, for now just use DEFAULT_FG_COLOR */
-    G_str_to_color(DEFAULT_FG_COLOR, &R, &G, &B);
+    if( D_color_number_to_RGB(color, &R, &G, &B) == 0 )
+	/* fall back to black on failure */
+	G_str_to_color(DEFAULT_FG_COLOR, &R, &G, &B);
+
     line_color->r = (unsigned char) R;
     line_color->g = (unsigned char) G;
     line_color->b = (unsigned char) B;
