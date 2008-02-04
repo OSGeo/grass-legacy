@@ -166,3 +166,47 @@ int D_raster_use_color(int color)
 
     return 0;
 }
+
+
+/*!
+ * \brief get RGB values from color number
+ *
+ * Translates the color number provided by D_parse_color
+ * into 0-255 RGB values.
+ *
+ * Returns 1 if color can be used to draw (is good and
+ * isn't 'none'), 0 otherwise.
+ *
+ *  \param color_number
+ *  \param red
+ *  \param green
+ *  \param blue
+ *
+ *  \return int
+ */
+int D_color_number_to_RGB(int color, int *r, int *g, int *b)
+{
+    const struct color_rgb *c;
+
+    if (color <= 0)
+	return 0;
+
+    if (color < G_num_standard_colors()) {
+	struct color_rgb col = G_standard_color_rgb(color);
+	if(r) *r = col.r;
+	if(g) *g = col.g;
+	if(b) *b = col.b;
+
+	return 1;
+    }
+
+    if (color >= ncolors)
+	return 0;
+
+    c = &colors[color];
+    if(r) *r = c->r;
+    if(g) *g = c->g;
+    if(b) *b = c->b;
+
+    return 1;
+}

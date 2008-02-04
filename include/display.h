@@ -125,6 +125,7 @@ int D_translate_or_add_color(const char *, int);
 int D_allocate_color(void);
 int D_parse_color(const char *, int);
 int D_raster_use_color(int);
+int D_color_number_to_RGB(int, int *, int *, int *);
 
 /* window.c */
 int D_new_window(char *, int, int, int, int);
