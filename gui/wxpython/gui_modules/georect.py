@@ -214,8 +214,9 @@ class GeorectWizard(object):
         else:
             self.Cleanup()
                     
-    def PrintCoord(self, coord, coordtype):
+    def PrintCoord(self, coordtype, coord):
         print coord,coordtype
+        self.gcpmgr.SetGCPData(coordtype, coord)
         
     def SetSrcEnv(self, location, mapset):
         """Create environment to use for location and mapset
@@ -232,7 +233,7 @@ class GeorectWizard(object):
     def SwitchEnv(self, grc):
         """Switches between original working location/mapset and
         location/mapset that is source of file(s) to georectify"""
-        
+        print 'switch = ',grc
         if grc == 'original':
             os.environ["GISRC"] = str(self.orig_gisrc)
         elif grc == 'new':
@@ -502,7 +503,8 @@ class GCP(wx.Frame):
         wx.Frame.__init__(self, parent, id , title, size=(500,400))
 
         toolbar = self.__createToolBar()
-        self.selected = 0
+        self.selected = 0 #gcp list item selected
+        self.mapcoordlist = [(0000000.00,0000000.00,'')] #list map coords and ID of map display they came from
 
         p = wx.Panel(self, -1, style=0)
 
@@ -515,7 +517,7 @@ class GCP(wx.Frame):
         box.Add(self.rb_grmethod, 0, wx.ALIGN_CENTER|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
-#        self.grid = GCPGrid(p)
+        # initialize list control for GCP management
         self.list = CheckListCtrl(p)
         self.sizer.Add(self.list, 1, wx.GROW|wx.ALL, 5)
         self.list.InsertColumn(0, 'use| X coord', width=120)
@@ -525,18 +527,14 @@ class GCP(wx.Frame):
         self.list.InsertColumn(4, 'Forward error')
         self.list.InsertColumn(5, 'Backward error')
 
-        initlist = [('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
-                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
-                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'), \
-                    ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00')]
+        i = ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00')
 
-        for i in initlist:
-            index = self.list.InsertStringItem(4, i[0])
-            self.list.SetStringItem(index, 1, i[1])
-            self.list.SetStringItem(index, 2, i[2])
-            self.list.SetStringItem(index, 3, i[3])
-            self.list.SetStringItem(index, 4, i[4])
-            self.list.SetStringItem(index, 5, i[5])
+        index = self.list.InsertStringItem(sys.maxint, i[0])
+        self.list.SetStringItem(index, 1, i[1])
+        self.list.SetStringItem(index, 2, i[2])
+        self.list.SetStringItem(index, 3, i[3])
+        self.list.SetStringItem(index, 4, i[4])
+        self.list.SetStringItem(index, 5, i[5])
 
         p.SetSizer(self.sizer)
 
@@ -563,27 +561,48 @@ class GCP(wx.Frame):
     def toolbarData(self):
 
         return   (
-                 ('savegcp', Icons["savefile"].GetBitmap(), Icons["savefile"].GetLabel(), self.SaveGCP),
+                 ('savegcp', Icons["savefile"].GetBitmap(), Icons["savefile"].GetLabel(), self.SaveGCPs),
                  ('addgcp',  wx.ArtProvider.GetBitmap(wx.ART_NEW, wx.ART_TOOLBAR, (16,16)), 'Add new GCP', self.AddGCP),
                  ('deletegcp',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected GCP', self.DeleteGCP),
                  ('cleargcp', Icons["cleargcp"].GetBitmap(), Icons["cleargcp"].GetLabel(), self.ClearGCP),
+                 ('refreshgcp', Icons["refreshgcp"].GetBitmap(), Icons["refreshgcp"].GetLabel(), self.RefreshGCPMarks),
                  ('rms', Icons["rms"].GetBitmap(), Icons["rms"].GetLabel(), self.OnRMS),
                  ('georect',  Icons["georect"].GetBitmap(),  Icons["georect"].GetLabel(),  self.OnGeorect),
                  ('quit',  wx.ArtProvider.GetBitmap(wx.ART_QUIT, wx.ART_TOOLBAR, (16,16)), 'Quit georectification module', self.OnQuit)
                   )
 
-    def SaveGCP(self, event):
+    def SaveGCPs(self, event):
         pass
 
     def DeleteGCP(self, event):
         self.list.DeleteItem(self.selected)
-        pass
+        del self.mapcoordlist[self.selected]
 
     def AddGCP(self, event):
         self.list.Append(['0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'])
+        self.mapcoordlist.append((0000000.00,0000000.00,''))
+        
+    def SetGCPData(self, coordtype, coord, mapdisp):
+        index = self.selected
+        coord0 = str(coord[0])
+        coord1 = str(coord[1])
+
+        if coordtype == 'gcpcoord':
+            self.list.SetStringItem(index, 0, coord0)
+            self.list.SetStringItem(index, 1, coord1)
+        if coordtype == 'mapcoord':
+            self.list.SetStringItem(index, 2, coord0)
+            self.list.SetStringItem(index, 3, coord1)
+            self.mapcoordlist[index] = [(coord[0], coord[1], mapdisp)]
+        if coordtype == 'rms':
+            self.list.SetStringItem(index, 4, coord0)
+            self.list.SetStringItem(index, 5, coord1) 
 
     def ClearGCP(self, event):
-        pass
+        index = self.selected
+        for i in range(6):
+            self.list.SetStringItem(index, i, '0000000.00')
+        self.mapcoordlist[index] = [(0000000.00,0000000.00,'')]
 
     def OnRMS(self, event):
         pass
@@ -592,21 +611,46 @@ class GCP(wx.Frame):
         pass
 
     def OnQuit(self, event):
-        pass
+        self.Destroy()
+        self.parent.Cleanup()
 
     def OnGRMethod(self, event):
         pass
 
     def OnItemSelected(self, event):
         self.selected = event.GetIndex()
+        print 'item = ',self.selected
+        
+    def RefreshGCPMarks(self, event):
+        for index in range(self.list.GetItemCount()):
+            if self.list.IsChecked(index):
+                coord0 = float(self.list.GetItem(index, 0).GetText())
+                coord1 = float(self.list.GetItem(index, 1).GetText())
+                coord2 = float(self.list.GetItem(index, 2).GetText())
+                coord3 = float(self.list.GetItem(index, 3).GetText())
+                print coord0,coord1,coord2,coord3,coord4
+                self.mapcoordlist[2].MapWindow.DrawCross(pdc=self.pdcTmp, coords=(coord2,coord3),
+                                       size=5)
+                self.mapcoordlist[2].MapWindow.UpdateMap()
+                self.parent.mapwin.DrawCross(pdc=self.pdcTmp, coords=(coord0,coord1),
+                                       size=5)
+                self.parent.mapwin.UpdateMap()
 
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
         wx.ListCtrl.__init__(self, parent, -1, style=wx.LC_REPORT | wx.SUNKEN_BORDER)
         CheckListCtrlMixin.__init__(self)
         ListCtrlAutoWidthMixin.__init__(self)
+        
+        self.CheckList = [] # tracks whether list items are checked or not
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
 
+    def OnItemActivated(self, event):
+        self.ToggleItem(event.m_itemIndex)
 
+    # this is called by the base class when an item is checked/unchecked
+    def OnCheckItem(self, index, flag):
+        pass
 
 # These 2 grid classes are ones I tried to use instead of a list. Might want
 # to rethink this later

@@ -1127,10 +1127,10 @@ class BufferedWindow(wx.Window):
             self.SetCursor(self.parent.cursors["cross"])
             coord = self.Pixel2Cell(self.mouse['end'])
             if self.parent.georect:
-                coordtype = 'gcp'
+                coordtype = 'gcpcoord'
             else:
                 coordtype = 'mapcoord'
-            self.gismanager.gr.PrintCoord(coord, coordtype)
+            self.gismanager.gr.gcpmgr.SetGCPData(coordtype, coord, self)
             self.DrawCross(pdc=self.pdcTmp, coords=self.mouse['end'],
                                        size=5)
 
