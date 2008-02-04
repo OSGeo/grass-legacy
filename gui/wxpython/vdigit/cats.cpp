@@ -141,22 +141,30 @@ std::vector<int> Digit::GetLayers()
 }
 
 /**
-   \brief Get list of layer/category(ies) for selected line.
+   \brief Get list of layer/category(ies) for selected feature.
+
+   \param line feature id (-1 for first selected feature)
 
    \return list of layer/cats
 */
-std::map<int, std::vector<int> > Digit::GetLineCats()
+std::map<int, std::vector<int> > Digit::GetLineCats(int line_id)
 {
     std::map<int, std::vector<int> > lc;
     int line, n_dblinks;
     struct line_cats *Cats;
     struct field_info *fi;
 
-    if (!display->mapInfo || display->selected->n_values < 1) {
+    if (!display->mapInfo) {
 	return lc;
     }
 
-    line = display->selected->value[0];
+    if (line_id == -1 && display->selected->n_values < 1) {
+	return lc;
+    }
+
+    if (line_id == -1) {
+	line = display->selected->value[0];
+    }
 
     if (!Vect_line_alive(display->mapInfo, line)) {
 	return lc;
@@ -187,6 +195,73 @@ std::map<int, std::vector<int> > Digit::GetLineCats()
     Vect_destroy_cats_struct(Cats);
 
     return lc;
+}
+
+/**
+   \brief Set categories for given feature/layer
+
+   \param line feature id (-1 for first selected feature)
+   \param layer layer number
+   \param cats list of cats
+   \param add True for add, False for delete
+
+   \return new feature id (feature need to be rewritten)
+   \return -1 on error
+*/
+int Digit::SetLineCats(int line_id, int layer, std::vector<int> cats, bool add)
+{
+    int line, ret, type;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+
+    if (!display->mapInfo) {
+	return -1;
+    }
+
+    if (line_id == -1 && display->selected->n_values < 1) {
+	return -1;
+    }
+    
+    if (line_id == -1) {
+	line = display->selected->value[0];
+    }
+     
+    if (!Vect_line_alive(display->mapInfo, line)) {
+	return -1;
+    }
+
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct();
+    type = Vect_read_line(display->mapInfo, Points, Cats, line);
+    if (type < 0) {
+	Vect_destroy_line_struct(Points);
+	Vect_destroy_cats_struct(Cats);
+	return -1;
+    }
+
+    for (std::vector<int>::const_iterator c = cats.begin(), e = cats.end();
+	 c != e; ++c) {
+	if (add) {
+	    Vect_cat_set(Cats, layer, *c);
+	}
+	else {
+	    Vect_field_cat_del(Cats, layer, *c);
+	}
+	G_debug(3, "Digit.SetLineCats(): layer=%d, cat=%d, add=%d",
+		layer, *c, add);
+    }
+
+    ret = Vect_rewrite_line(display->mapInfo, line, type,
+			    Points, Cats);
+    if (line_id == -1) {
+	/* update line id since the line was rewritten */
+	display->selected->value[0] = ret;
+    }
+
+    Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
+
+    return ret;
 }
 
 /**

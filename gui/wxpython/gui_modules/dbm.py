@@ -22,7 +22,7 @@ List of classes:
  - ModifyTableRecord
  - NewVectorDialog
 
-(C) 2007 by the GRASS Development Team
+(C) 2007-2008 by the GRASS Development Team
 
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
@@ -2638,21 +2638,26 @@ class DisplayAttributesDialog(wx.Dialog):
     to the vector map.
 
     Attribute data can be selected based on layer and category number
-    or coordinates"""
+    or coordinates.
+
+    @param parent
+    @param map vector map
+    @param query query coordinates and distance (used for v.edit)
+    @param cats {layer: cats}
+    @param line feature id (requested for cats)
+    @param style
+    @param pos
+    @param action (add, update, display)
+    """
     def __init__(self, parent, map,
-                 layer=-1, cat=-1, # select by layer/cat
-                 queryCoords=None, qdist=-1, # select by point
+                 query=None, cats=None, line=None,
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
                  pos=wx.DefaultPosition,
                  action="add"):
 
-        self.parent      = parent # mapdisplay.BufferedWindow
-        self.map         = map
-        self.layer       = layer
-        self.action      = action
-        self.cat         = cat
-        self.queryCoords = queryCoords
-        self.qdist       = qdist
+        self.parent = parent # mapdisplay.BufferedWindow
+        self.map    = map
+        self.action = action
 
         # id of selected line
         self.line = None
@@ -2663,14 +2668,9 @@ class DisplayAttributesDialog(wx.Dialog):
         layers = self.mapDBInfo.layers.keys() # get available layers
 
         # check if db connection / layer exists
-        if (self.layer == -1 and len(layers) <= 0) or \
-                (self.layer > 0 and self.layer not in layers):
-            if self.layer == -1:
-                label = _("Database connection "
-                          "is not defined in DB file.")
-            else:
-                label = _("Database connection for layer %d "
-                          "is not defined in DB file.") % self.layer
+        if len(layers) <= 0:
+            label = _("Database connection "
+                      "is not defined in DB file.")
 
             wx.MessageBox(parent=self.parent,
                           message=_("No attribute table linked to "
@@ -2689,10 +2689,6 @@ class DisplayAttributesDialog(wx.Dialog):
         # dialog body
         mainSizer = wx.BoxSizer(wx.VERTICAL)
 
-        if self.queryCoords: # select by position
-            self.line, nselected = self.mapDBInfo.SelectByPoint(self.queryCoords,
-                                                              self.qdist)
-
         # notebook
         self.notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
@@ -2700,7 +2696,7 @@ class DisplayAttributesDialog(wx.Dialog):
                                        label=_("Close dialog on submit"))
         self.closeDialog.SetValue(True)
 
-        self.UpdateDialog(cat, queryCoords, qdist)
+        self.UpdateDialog(query, cats, line)
 
         # set title
         if self.action == "update":
@@ -2860,15 +2856,12 @@ class DisplayAttributesDialog(wx.Dialog):
         """Get id of selected line or 'None' if no line is selected"""
         return self.line
 
-    def UpdateDialog(self, cat=-1, queryCoords=None, qdist=-1):
+    def UpdateDialog(self, query=None, cats=None, line=None):
         """Update dialog
 
         Return True if updated otherwise False
         """
-        self.cat         = cat
-        self.queryCoords = queryCoords
-        self.qdist       = qdist
-
+        self.line = line
         if not self.mapDBInfo:
             return False
 
@@ -2877,30 +2870,31 @@ class DisplayAttributesDialog(wx.Dialog):
         layers = self.mapDBInfo.layers.keys() # get available layers
 
         # id of selected line
-        if self.queryCoords: # select by position
-            self.line, nselected = self.mapDBInfo.SelectByPoint(queryCoords,
-                                                              qdist)
+        if query: # select by position
+            self.line, nselected = self.mapDBInfo.SelectByPoint(query[0],
+                                                                query[1])
         # reset notebook
         self.notebook.DeleteAllPages()
 
         for layer in layers: # for each layer
-            if self.layer > 0 and \
-                    self.layer != layer:
-                continue
+            if not query: # select by layer/cat
+                if cats.has_key(layer): 
+                    for cat in cats[layer]:
+                        nselected = self.mapDBInfo.SelectFromTable(layer, where="cat=%d" % cat)
+                else:
+                    nselected = 0
 
-            if not self.queryCoords: # select using layer/cat
-                nselected = self.mapDBInfo.SelectFromTable(layer, where="cat=%d" % self.cat)
-
-            if nselected <= 0 and self.action != "add":
-                continue # nothing selected ...
+            # if nselected <= 0 and self.action != "add":
+            #    continue # nothing selected ...
 
             if self.action == "add":
-                if nselected <= 0:
+                if nselected <= 0 and cats.has_key(layer):
                     table = self.mapDBInfo.layers[layer]["table"]
                     columns = self.mapDBInfo.tables[table]
                     for name in columns.keys():
                         if name == "cat":
-                            self.mapDBInfo.tables[table][name]['values'].append(self.cat)
+                            for cat in cats[layer]:
+                                self.mapDBInfo.tables[table][name]['values'].append(cat)
                         else:
                             self.mapDBInfo.tables[table][name]['values'].append('')
                 else: # change status 'add' -> 'update'
@@ -2924,7 +2918,7 @@ class DisplayAttributesDialog(wx.Dialog):
             if len(columns["cat"]['values']) == 0: # no cats
                 sizer  = wx.BoxSizer(wx.VERTICAL)
                 txt = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                    label=_("No categories available."))
+                                    label=_("No database record available."))
                 sizer.Add(txt, proportion=1,
                           flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.EXPAND)
                 border.Add(item=sizer, proportion=1,
@@ -3079,7 +3073,7 @@ class VectorDBInfo:
                                     'map=%s' % self.map,
                                     'east_north=%f,%f' % \
                                         (float(queryCoords[0]), float(queryCoords[1])),
-                                    'distance=%f' % qdist])
+                                    'distance=%f' % qdist], stderr=None)
 
         if cmdWhat.returncode == 0:
             read = False

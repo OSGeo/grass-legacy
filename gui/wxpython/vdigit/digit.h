@@ -50,7 +50,8 @@ public:
 
     int CopyCats(std::vector<std::vector<int> >, std::vector<int>);
     int GetCategory(int);
-    std::map<int, std::vector<int> > GetLineCats();
+    std::map<int, std::vector<int> > GetLineCats(int);
+    int SetLineCats(int, int, std::vector<int>, bool);
     std::vector<int> GetLayers();
 };
 

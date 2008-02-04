@@ -60,6 +60,14 @@ except ImportError, err:
 # Use v.edit on background or experimental C++ interface (not yet completed)
 #
 USEVEDIT = True
+if USEVEDIT is True:
+    print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface by default. " \
+        "This can significantly slow down some operations especially for " \
+        "middle-large vector maps. "\
+        "You can enable experimental vdigit interface by setting " \
+          "USEVEDIT to False in digit.py file." % \
+          os.linesep
+
 
 class AbstractDigit:
     """
@@ -985,9 +993,22 @@ class VDigit(AbstractDigit):
         
         return ids
 
-    def GetLineCats(self):
-        """Get layer/category pairs from given (selected) line"""
-        return self.digit.GetLineCats()
+    def GetLineCats(self, line=-1):
+        """Get layer/category pairs from given (selected) line
+        
+        @param line feature id (-1 for first selected line)
+        """
+        return self.digit.GetLineCats(line)
+
+    def SetLineCats(self, line, layer, cats, add=True):
+        """Set categories for given line and layer
+
+        @param line feature id
+        @param layer layer number (-1 for first selected line)
+        @param cats list of categories
+        @param add if True to add, otherwise do delete categories
+        """
+        return self.digit.SetLineCats(line, layer, cats, add)
 
     def GetLayers(self):
         """Get list of layers"""
@@ -1850,9 +1871,11 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                 Debug.msg(3, "DigitCategoryDialog(): nothing found!")
                 return
         else:
-            self.cats = cats
+            # self.cats = dict(cats)
+            for layer in cats.keys():
+                self.cats[layer] = list(cats[layer]) # TODO: tuple to list
             self.line = line
-        
+
         # make copy of cats (used for 'reload')
         self.cats_orig = copy.deepcopy(self.cats)
 
@@ -2118,24 +2141,34 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         # add/delete new category
         for action, cats in check.iteritems():
             for layer in cats[0].keys():
-                catList = ""
+                catList = []
                 for cat in cats[0][layer]:
                     if layer not in cats[1].keys() or \
                             cat not in cats[1][layer]:
-                        catList += "%s," % cat
-                if catList != "":
-                    catList = catList[:-1] # remove last comma
-                    vEditCmd = ['v.edit', '--q',
-                                'map=%s' % self.map,
-                                'layer=%d' % layer,
-                                'tool=%s' % action,
-                                'cats=%s' % catList,
-                                'id=%d' % self.line]
+                        catList.append(cat)
+                if catList != []:
+                    if USEVEDIT is True:
+                        vEditCmd = ['v.edit', '--q',
+                                    'map=%s' % self.map,
+                                    'layer=%d' % layer,
+                                    'tool=%s' % action,
+                                    'cats=%s' % ",".join(["%d" % v for v in catList]),
+                                    'id=%d' % self.line]
             
-                    gcmd.Command(vEditCmd)
-
-        # reload map (needed for v.edit)
-        self.parent.parent.digit.driver.ReloadMap()
+                        gcmd.Command(vEditCmd)
+                    else:
+                        if action == 'catadd':
+                            add = True
+                        else:
+                            add = False
+                        self.line = self.parent.parent.digit.SetLineCats(-1, layer,
+                                                                          catList, add)
+                        if self.line < 0:
+                            wx.MessageBox(parent=self, message=_("Unable to update vector map."),
+                                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
+        if USEVEDIT is True:           
+            # reload map (needed for v.edit)
+            self.parent.parent.digit.driver.ReloadMap()
 
         self.cats_orig = copy.deepcopy(self.cats)
 
@@ -2200,9 +2233,11 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         if cats is None:
             ret = self.__GetCategories(query[0], query[1])
         else:
-            self.cats = cats
-            ret = 1
+            # self.cats = dict(cats)
+            for layer in cats.keys():
+                self.cats[layer] = list(cats[layer]) # TODO: tuple to list
             self.line = line
+            ret = 1
         if ret == 0 or not self.line:
             Debug.msg(3, "DigitCategoryDialog(): nothing found!")
             return False
