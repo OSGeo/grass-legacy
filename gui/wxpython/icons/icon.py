@@ -116,6 +116,7 @@ icons_default = {
     'gcpset'     : 'gui-gcpset.gif',
     'georect'    : 'gui-georect.gif',
     'rms'        : 'gui-rms.gif',
+    'refreshgcp' : 'gui-display.gif'
     }
 
 # merge icons dictionaries, join paths
@@ -301,10 +302,11 @@ Icons = {
     "options"    : MetaIcon (img=icons_img["options"], label="Set histogram options"),
     "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze"),
     # georectify
-    'cleargcp'   : MetaIcon (img=icons_img["cleargcp"], label="Delete unselected GCPs"),
+    'cleargcp'   : MetaIcon (img=icons_img["cleargcp"], label="Clear selected GCP"),
     'gcpset'     : MetaIcon (img=icons_img["gcpset"], label="Set GCP"),
     'georect'    : MetaIcon (img=icons_img["georect"], label="Georectify"),
-    'rms'        : MetaIcon (img=icons_img["rms"], label="Calculate RMS error")}
+    'rms'        : MetaIcon (img=icons_img["rms"], label="Calculate RMS error"),
+    'refreshgcp' : MetaIcon (img=icons_img["refreshgcp"], label="Redraw GCP markers in map displays")}
 
 # testing ...
 if __name__ == "__main__":
