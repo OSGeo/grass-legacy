@@ -2259,7 +2259,7 @@ class MapFrame(wx.Frame):
         elif name == "digit":
             self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
 
-            for toolRow in range(0,2):
+            for toolRow in range(0, self.digittoolbar.numOfRows):
                 self._mgr.AddPane(self.digittoolbar.toolbar[toolRow],
                                   wx.aui.AuiPaneInfo().
                                   Name("digittoolbar" + str(toolRow)).Caption("Digit Toolbar").
@@ -2299,7 +2299,7 @@ class MapFrame(wx.Frame):
             return
         elif name == "digit":
             # TODO: not destroy only hide
-            for toolRow in range(0,2):
+            for toolRow in range(0, self.digittoolbar.numOfRows):
                 self._mgr.DetachPane (self.digittoolbar.toolbar[toolRow])
                 self.digittoolbar.toolbar[toolRow].Destroy()
             self.digittoolbar = None

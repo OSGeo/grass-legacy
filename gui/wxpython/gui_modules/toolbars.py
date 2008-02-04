@@ -250,44 +250,39 @@ class DigitToolbar(AbstractToolbar):
 
         # create toolbars (two rows)
         self.toolbar = []
-        numOfRows = 2
-        for row in range(0, numOfRows):
+        self.numOfRows = 1 # number of rows for toolbar
+        for row in range(0, self.numOfRows):
             self.toolbar.append(wx.ToolBar(parent=self.parent, id=wx.ID_ANY))
             self.toolbar[row].SetToolBitmapSize(wx.Size(24,24))
 
             # create toolbar
-            self.InitToolbar(self.parent, self.toolbar[row], self.ToolbarData(row))
+            if self.numOfRows ==  1:
+                rowdata=None
+            else:
+                rowdata = row
+            self.InitToolbar(self.parent, self.toolbar[row], self.ToolbarData(rowdata))
 
         # list of available vector maps
         self.UpdateListOfLayers(updateTool=True)
 
         # realize toolbar
-        for row in range(0, numOfRows):
+        for row in range(0, self.numOfRows):
             self.toolbar[row].Realize()
 
-    def ToolbarData(self, row):
+    def ToolbarData(self, row=None):
         """
         Toolbar data
         """
-
-        if row == 0:
-            self.displayCats = self.displayAttr = self.copyCats = None
-            self.settings = self.exit = None
-
-            return (("", "", "", "", "", "", ""),
-                    (self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
-                     wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
-                     self.OnSettings),
-                    (self.exit, "digExit", Icons["digExit"].GetBitmap(),
-                     wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
-                     self.OnExit))
-        else:
+        data = []
+        if row is None or row == 0:
             self.addPoint = self.addLine = self.addBoundary = self.addCentroid = None
             self.moveVertex = self.addVertex = self.removeVertex = None
             self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
-            self.additioanlTools = None
+            self.additionalTools = None
+            self.displayCats = self.displayAttr = self.copyCats = None
 
-            return ((self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
+            data = [("", "", "", "", "", "", ""),
+                    (self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digAddPoint"].GetLabel(), Icons["digAddPoint"].GetDesc(),
                      self.OnAddPoint),
                     (self.addLine, "digAddLine", Icons["digAddLine"].GetBitmap(),
@@ -329,10 +324,23 @@ class DigitToolbar(AbstractToolbar):
                     (self.displayAttr, "digDispAttr", Icons["digDispAttr"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digDispAttr"].GetLabel(), Icons["digDispAttr"].GetDesc(),
                      self.OnDisplayAttr),
-                    (self.additioanlTools, "digAdditionalTools", Icons["digAdditionalTools"].GetBitmap(),
+                    (self.additionalTools, "digAdditionalTools", Icons["digAdditionalTools"].GetBitmap(),
                      wx.ITEM_RADIO, Icons["digAdditionalTools"].GetLabel(),
                      Icons["digAdditionalTools"].GetDesc(),
-                     self.OnAdditionalToolMenu))
+                     self.OnAdditionalToolMenu)]
+
+        if row is None or row == 1:
+            self.settings = self.exit = None
+
+            data.append(("", "", "", "", "", "", ""))
+            data.append((self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
+                         wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
+                         self.OnSettings))
+            data.append((self.exit, "digExit", Icons["digExit"].GetBitmap(),
+                         wx.ITEM_NORMAL, Icons["digExit"].GetLabel(), Icons["digExit"].GetDesc(),
+                         self.OnExit))
+
+        return data
 
     def OnAddPoint(self, event):
         """Add point to the vector map Laier"""
@@ -671,10 +679,10 @@ class DigitToolbar(AbstractToolbar):
                 value = layerNameSelected
 
             if not self.comboid:
-                self.combo = wx.ComboBox(self.toolbar[0], id=wx.ID_ANY, value=value,
+                self.combo = wx.ComboBox(self.toolbar[self.numOfRows-1], id=wx.ID_ANY, value=value,
                                          choices=layerNameList, size=(150, -1),
                                          style=wx.CB_READONLY)
-                self.comboid = self.toolbar[0].InsertControl(0, self.combo)
+                self.comboid = self.toolbar[self.numOfRows-1].InsertControl(0, self.combo)
                 self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
             else:
                 self.combo.SetItems(layerNameList)
@@ -685,6 +693,6 @@ class DigitToolbar(AbstractToolbar):
             except ValueError:
                 self.layerSelectedID = None
 
-            self.toolbar[0].Realize()
+            self.toolbar[self.numOfRows-1].Realize()
 
         return layerNameList
