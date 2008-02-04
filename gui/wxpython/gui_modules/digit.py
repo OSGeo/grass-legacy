@@ -60,7 +60,7 @@ except ImportError, err:
 # Use v.edit on background or experimental C++ interface (not yet completed)
 #
 USEVEDIT = True
-if USEVEDIT is True:
+if USEVEDIT is True and GV_LINES is not None:
     print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface by default. " \
         "This can significantly slow down some operations especially for " \
         "middle-large vector maps. "\
