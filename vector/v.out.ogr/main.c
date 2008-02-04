@@ -1,21 +1,21 @@
 /*
- * ***************************************************************
- * *
- * * MODULE:       v.out.ogr
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               Some extensions: Markus Neteler
- * *
- * * PURPOSE:      Category manipulations
- * *               
- * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
- * **************************************************************/
+ ***************************************************************
+ *
+ * MODULE:	 v.out.ogr
+ * 
+ * AUTHOR(S):	 Radim Blazek
+ *		 Some extensions: Markus Neteler
+ *
+ * PURPOSE:	 Category manipulations
+ *		 
+ * COPYRIGHT:	 (C) 2001 by the GRASS Development Team
+ *
+ *		 This program is free software under the 
+ *		 GNU General Public License (>=v2). 
+ *		 Read the file COPYING that comes with GRASS
+ *		 for details.
+ *
+ **************************************************************/
 #include <stdlib.h> 
 #include <string.h> 
 #include <grass/gis.h>
@@ -30,8 +30,8 @@
 int    fout, fskip; /* features written/ skip */
 int    nocat, noatt, nocatskip; /* number of features without cats/atts written/skip */
 	
-int mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol, int doatt, 
-	 OGRFeatureH Ogr_feature);
+int mk_att ( int cat, struct field_info *Fi, dbDriver *Driver,
+	     int ncol, int keycol, int doatt, OGRFeatureH Ogr_feature);
 
 char *OGR_list_write_drivers();
 char OGRdrivers[2000];
@@ -84,15 +84,17 @@ main (int argc, char *argv[])
     /* Module options */
     module = G_define_module();
     module->keywords = _("vector, export");
-    module->description = _("Converts to one of the supported OGR vector formats.");
+    module->description =
+	_("Converts to one of the supported OGR vector formats.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->options = "point,kernel,centroid,line,boundary,area,face";
     type_opt->answer = "line,boundary";
-    type_opt->description = _("Feature type. Combination of types is not supported"
-                              " by all formats.");
+    type_opt->description =
+	_("Feature type. Combination of types is not supported "
+          "by all formats.");
     type_opt->guisection = _("Input");
 
     dsn_opt = G_define_option();
@@ -108,7 +110,7 @@ main (int argc, char *argv[])
     layer_opt->required = NO;
     layer_opt->label = _("OGR layer name. If not specified, input name is used.");
     layer_opt->description = _("For example: ESRI Shapefile: shapefile name");
-    layer_opt->guisection = _("Output");
+    layer_opt->guisection = _("Creation");
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
     field_opt->guisection = _("Input");
@@ -121,7 +123,7 @@ main (int argc, char *argv[])
     frmt_opt->answer = "ESRI_Shapefile";
     frmt_opt->options = OGR_list_write_drivers();
     frmt_opt->description = _("OGR format");
-    frmt_opt->guisection = _("Output");
+    frmt_opt->guisection = _("Creation");
 
     dsco              = G_define_option();
     dsco->key         = "dsco";
@@ -129,8 +131,9 @@ main (int argc, char *argv[])
     dsco->required    = NO;
     dsco->multiple    = YES;
     dsco->answer      = "";
-    dsco->description = _("OGR dataset creation option (format specific, NAME=VALUE)");
-    dsco->guisection = _("Output");
+    dsco->description =
+	_("OGR dataset creation option (format specific, NAME=VALUE)");
+    dsco->guisection  = _("Creation");
 
     lco               = G_define_option();
     lco->key          = "lco";
@@ -138,8 +141,9 @@ main (int argc, char *argv[])
     lco->required     = NO;
     lco->multiple     = YES;
     lco->answer       = "";
-    lco->description  = _("OGR layer creation option (format specific, NAME=VALUE)");
-    lco->guisection = _("Output");
+    lco->description  =
+	_("OGR layer creation option (format specific, NAME=VALUE)");
+    lco->guisection   = _("Creation");
 	
     cat_flag = G_define_flag ();
     cat_flag->key            = 'c';
@@ -155,7 +159,9 @@ main (int argc, char *argv[])
     poly_flag->key = 'p';
     poly_flag->description = _("Export lines as polygons");
 		
-    if (G_parser (argc, argv)) exit(EXIT_FAILURE); 
+    if (G_parser (argc, argv))
+	exit(EXIT_FAILURE); 
+
     
     /* read options */
     field = atoi( field_opt->answer );
