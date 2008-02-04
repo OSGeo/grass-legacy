@@ -923,9 +923,10 @@ class BufferedWindow(wx.Window):
                     # add new record into atribute table
                     if digitClass.settings["addRecord"]:
                         # select attributes based on layer and category
+                        cats = {}
+                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                   layer=digitClass.settings["layer"],
-                                                                   cat=digitClass.settings["category"],
+                                                                   cats=cats,
                                                                    pos=posWindow,
                                                                    action="add")
                         if addRecordDlg.mapDBInfo and \
@@ -970,20 +971,39 @@ class BufferedWindow(wx.Window):
 
             elif digitToolbar.action in ["displayAttrs", "displayCats"]:
                 qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
-                redraw = False
+                coords = (east, north)
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)
                     if digitToolbar.attributesDialog is None:
-                        digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                                    queryCoords=(east,
-                                                                                                 north),
-                                                                                    qdist=qdist,
-                                                                                    pos=posWindow,
-                                                                                    action="update")
+                        if digitClass.type == 'vedit':
+                            digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                                        query=(coords, qdist),
+                                                                                        pos=posWindow,
+                                                                                        action="update")
+                        else:
+                            if digitClass.driver.SelectLineByPoint(coords,
+                                                                   digitClass.GetSelectType()) is not None:
+                                digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                                            cats=digitClass.GetLineCats(),
+                                                                                            line=digitClass.driver.GetSelected()[0],
+                                                                                            action="update")
+
                     else:
                         # update currently open dialog
-                        digitToolbar.attributesDialog.UpdateDialog(queryCoords=(east, north),
-                                                                   qdist=qdist)
+                        if digitClass.type == 'vedit':
+                            digitToolbar.attributesDialog.UpdateDialog(query=(coords, qdist))
+                        else:
+                            # unselect
+                            digitClass.driver.SetSelected([])
+                            # select new feature
+                            if digitClass.driver.SelectLineByPoint(coords,
+                                                                   digitClass.GetSelectType()) is None:
+                                line = None
+                            else:
+                                line = digitClass.driver.GetSelected()[0]
+                            # upgrade dialog
+                            digitToolbar.attributesDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                                                                       line=line)
 
                     line = digitToolbar.attributesDialog.GetLine()
                     if digitToolbar.attributesDialog.mapDBInfo and line:
@@ -997,7 +1017,6 @@ class BufferedWindow(wx.Window):
                             digitToolbar.attributesDialog.Hide()
 
                 else: # displayCats
-                    coords = (east, north)
                     if digitToolbar.categoryDialog is None:
                         # open new dialog
                         if digitClass.type == 'vedit':
@@ -1021,10 +1040,19 @@ class BufferedWindow(wx.Window):
                         if digitClass.type == 'vedit':
                             digitToolbar.categoryDialog.UpdateDialog(query=(coords, qdist))
                         else:
-                            digitToolbar.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats())
+                            # unselect
+                            digitClass.driver.SetSelected([])
+                            # select new feature
+                            if digitClass.driver.SelectLineByPoint(coords,
+                                                                   digitClass.GetSelectType()) is None:
+                                line = None
+                            else:
+                                line = digitClass.driver.GetSelected()[0]
+                            # upgrade dialog
+                            digitToolbar.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                                                                     line=line)
 
                     line = digitToolbar.categoryDialog.GetLine()
-                    redraw = False
                     if line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
@@ -1196,9 +1224,14 @@ class BufferedWindow(wx.Window):
                     else:
                         # collect ids
                         digitClass.driver.SetSelected([])
-                        # return number of selected features
+                        # return number of selected features (by box/point)
                         nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
                                                                        digitClass.GetSelectType())
+                        if nselected == 0:
+                            if digitClass.driver.SelectLineByPoint(pos1,
+                                                                   digitClass.GetSelectType()) is not None:
+                                nselected = 1
+
                         if nselected > 0:
                             self.copyCatsIds = digitClass.driver.GetSelected()
 
@@ -1433,9 +1466,10 @@ class BufferedWindow(wx.Window):
                                                          position[1] + offset))
 
                         # select attributes based on layer and category
+                        cats = {}
+                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                   layer=digitClass.settings["layer"],
-                                                                   cat=digitClass.settings["category"],
+                                                                   cats=cats,
                                                                    pos=posWindow,
                                                                    action="add")
                         if addRecordDlg.mapDBInfo and \
