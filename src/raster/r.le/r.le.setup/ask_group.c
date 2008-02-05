@@ -341,7 +341,7 @@ void  ask_fromto()
   char 		*buf;
 
   G_system("clear");
-  fopen0("r.le.para/from_to", "w");
+  fp = fopen0("r.le.para/from_to", "w");
   buf = G_malloc(513);
 
   fprintf(stderr, "\n\n  Please enter \"FROM\" attribute group followed by \"0 end\"\n");
