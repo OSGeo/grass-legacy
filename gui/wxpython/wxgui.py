@@ -409,10 +409,12 @@ class GMFrame(wx.Frame):
         layer = self.curr_page.maptree.layer_selected
         name = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].name
         type = self.curr_page.maptree.GetPyData(layer)[0]['type']
-        if type == 'raster' and cmdlist[0][0] == 'r' and cmdlist[0][1] != '3':
-            cmdlist.append(name) # TODO map/input=
-        elif type == 'vector' and cmdlist[0][0] == 'v':
-            cmdlist.append(name) # TODO map/input=
+        if len(cmdlist) == 1: # only if no paramaters given
+            if type == 'raster' and cmdlist[0][0] == 'r' and cmdlist[0][1] != '3':
+                cmdlist.append(name) # TODO map/input=
+            elif type == 'vector' and cmdlist[0][0] == 'v':
+                cmdlist.append(name) # TODO map/input=
+
         return cmdlist
 
     def RunMenuCmd(self, event):
