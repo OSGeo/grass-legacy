@@ -11044,8 +11044,9 @@ SWIGINTERN PyObject *_wrap_Digit_MoveLines(PyObject *SWIGUNUSEDPARM(self), PyObj
   double arg2 ;
   double arg3 ;
   double arg4 ;
-  int arg5 ;
-  double arg6 ;
+  char *arg5 = (char *) 0 ;
+  int arg6 ;
+  double arg7 ;
   int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -11055,18 +11056,22 @@ SWIGINTERN PyObject *_wrap_Digit_MoveLines(PyObject *SWIGUNUSEDPARM(self), PyObj
   int ecode3 = 0 ;
   double val4 ;
   int ecode4 = 0 ;
-  int val5 ;
-  int ecode5 = 0 ;
-  double val6 ;
+  int res5 ;
+  char *buf5 = 0 ;
+  int alloc5 = 0 ;
+  int val6 ;
   int ecode6 = 0 ;
+  double val7 ;
+  int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
   PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Digit_MoveLines",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOO:Digit_MoveLines",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Digit, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Digit_MoveLines" "', argument " "1"" of type '" "Digit *""'"); 
@@ -11087,20 +11092,27 @@ SWIGINTERN PyObject *_wrap_Digit_MoveLines(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "Digit_MoveLines" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
-  ecode5 = SWIG_AsVal_int(obj4, &val5);
-  if (!SWIG_IsOK(ecode5)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Digit_MoveLines" "', argument " "5"" of type '" "int""'");
-  } 
-  arg5 = static_cast< int >(val5);
-  ecode6 = SWIG_AsVal_double(obj5, &val6);
+  res5 = SWIG_AsCharPtrAndSize(obj4, &buf5, NULL, &alloc5);
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "Digit_MoveLines" "', argument " "5"" of type '" "char const *""'");
+  }
+  arg5 = reinterpret_cast< char * >(buf5);
+  ecode6 = SWIG_AsVal_int(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Digit_MoveLines" "', argument " "6"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Digit_MoveLines" "', argument " "6"" of type '" "int""'");
   } 
-  arg6 = static_cast< double >(val6);
-  result = (int)(arg1)->MoveLines(arg2,arg3,arg4,arg5,arg6);
+  arg6 = static_cast< int >(val6);
+  ecode7 = SWIG_AsVal_double(obj6, &val7);
+  if (!SWIG_IsOK(ecode7)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Digit_MoveLines" "', argument " "7"" of type '" "double""'");
+  } 
+  arg7 = static_cast< double >(val7);
+  result = (int)(arg1)->MoveLines(arg2,arg3,arg4,(char const *)arg5,arg6,arg7);
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
   return resultobj;
 fail:
+  if (alloc5 == SWIG_NEWOBJ) delete[] buf5;
   return NULL;
 }
 
@@ -11363,8 +11375,9 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   double arg5 ;
   double arg6 ;
   double arg7 ;
-  int arg8 ;
-  double arg9 ;
+  char *arg8 = (char *) 0 ;
+  int arg9 ;
+  double arg10 ;
   int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -11380,10 +11393,13 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode6 = 0 ;
   double val7 ;
   int ecode7 = 0 ;
-  int val8 ;
-  int ecode8 = 0 ;
-  double val9 ;
+  int res8 ;
+  char *buf8 = 0 ;
+  int alloc8 = 0 ;
+  int val9 ;
   int ecode9 = 0 ;
+  double val10 ;
+  int ecode10 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -11393,8 +11409,9 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject * obj6 = 0 ;
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
+  PyObject * obj9 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOO:Digit_MoveVertex",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:Digit_MoveVertex",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Digit, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Digit_MoveVertex" "', argument " "1"" of type '" "Digit *""'"); 
@@ -11430,20 +11447,27 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "Digit_MoveVertex" "', argument " "7"" of type '" "double""'");
   } 
   arg7 = static_cast< double >(val7);
-  ecode8 = SWIG_AsVal_int(obj7, &val8);
-  if (!SWIG_IsOK(ecode8)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "Digit_MoveVertex" "', argument " "8"" of type '" "int""'");
-  } 
-  arg8 = static_cast< int >(val8);
-  ecode9 = SWIG_AsVal_double(obj8, &val9);
+  res8 = SWIG_AsCharPtrAndSize(obj7, &buf8, NULL, &alloc8);
+  if (!SWIG_IsOK(res8)) {
+    SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "Digit_MoveVertex" "', argument " "8"" of type '" "char const *""'");
+  }
+  arg8 = reinterpret_cast< char * >(buf8);
+  ecode9 = SWIG_AsVal_int(obj8, &val9);
   if (!SWIG_IsOK(ecode9)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "Digit_MoveVertex" "', argument " "9"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "Digit_MoveVertex" "', argument " "9"" of type '" "int""'");
   } 
-  arg9 = static_cast< double >(val9);
-  result = (int)(arg1)->MoveVertex(arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9);
+  arg9 = static_cast< int >(val9);
+  ecode10 = SWIG_AsVal_double(obj9, &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "Digit_MoveVertex" "', argument " "10"" of type '" "double""'");
+  } 
+  arg10 = static_cast< double >(val10);
+  result = (int)(arg1)->MoveVertex(arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8,arg9,arg10);
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (alloc8 == SWIG_NEWOBJ) delete[] buf8;
   return resultobj;
 fail:
+  if (alloc8 == SWIG_NEWOBJ) delete[] buf8;
   return NULL;
 }
 

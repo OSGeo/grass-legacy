@@ -59,7 +59,7 @@ except ImportError, err:
 #
 # Use v.edit on background or experimental C++ interface (not yet completed)
 #
-USEVEDIT = True
+USEVEDIT = False
 if USEVEDIT is True and GV_LINES is not None:
     print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface by default. " \
         "This can significantly slow down some operations especially for " \
@@ -467,7 +467,10 @@ class VEdit(AbstractDigit):
         if tool == "vertexmove":
             command.append("coords=%f,%f" % (float(coords[0]), float(coords[1])))
             command.append("-1") # modify only first selected
-                                             
+                         
+        if self.settings['backgroundMap'] != '':
+            command.append("bgmap=%s" % self.settings['backgroundMap'])
+                    
         # run the command
         vedit = gcmd.Command(cmd=command, stderr=None)
 
@@ -862,7 +865,7 @@ class VDigit(AbstractDigit):
         snap, thresh = self.__getSnapThreshold()
 
         nlines = self.digit.MoveLines(move[0], move[1], 0.0, # TODO 3D
-                                      snap, thresh) 
+                                      str(self.settings["backgroundMap"]), snap, thresh) 
 
         return nlines
 
@@ -879,7 +882,7 @@ class VDigit(AbstractDigit):
 
         return self.digit.MoveVertex(coords[0], coords[1], 0.0, # TODO 3D
                                      move[0], move[1], 0.0,
-                                     snap, thresh)
+                                     str(self.settings["backgroundMap"]), snap, thresh)
 
     def AddVertex(self, coords):
         """Add new vertex to the selected line/boundary on position 'coords'
