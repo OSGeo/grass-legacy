@@ -15,7 +15,7 @@ IconsSilk = {
     "query"      : 'information.png',
     "savefile"   : 'picture_save.png',
     "printmap"   : 'printer.png',
-    "pan"        : 'mouse.png', # should be changed, not nice icon
+    "pan"        : 'arrow_out.png', 
     # zoom (mapdisplay)
     "zoom_in"    : 'zoom_in.png',
     "zoom_out"   : 'zoom_out.png',
@@ -53,6 +53,7 @@ IconsSilk = {
     ## attributes
     "digDispAttr" : 'table.png',
     ## general
+    "digUndo" : 'arrow_undo.png',
     "digSettings" : 'color_swatch.png',
     "digAdditionalTools" : 'plugin.png',
     "digExit"     : 'door_in.png',

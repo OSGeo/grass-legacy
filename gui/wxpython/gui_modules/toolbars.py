@@ -330,9 +330,12 @@ class DigitToolbar(AbstractToolbar):
                      self.OnAdditionalToolMenu)]
 
         if row is None or row == 1:
-            self.settings = self.exit = None
+            self.undo = self.settings = self.exit = None
 
             data.append(("", "", "", "", "", "", ""))
+            data.append((self.undo, "digUndo", Icons["digUndo"].GetBitmap(),
+                         wx.ITEM_NORMAL, Icons["digUndo"].GetLabel(), Icons["digUndo"].GetDesc(),
+                         self.OnUndo))
             data.append((self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
                          wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
                          self.OnSettings))
@@ -451,6 +454,15 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnCopyCats():")
         self.action="copyCats"
         self.parent.MapWindow.mouse['box'] = 'point'
+
+    def OnUndo(self, event):
+        """Undo changes
+
+        @todo
+        """
+        wx.MessageBox(parent=self.parent, message=_("Undo is not implemented yet."),
+                      caption=_("Message"), style=wx.ID_OK | wx.ICON_INFORMATION)
+        event.Skip()
 
     def OnSettings(self, event):
         """Show settings dialog"""
@@ -680,7 +692,7 @@ class DigitToolbar(AbstractToolbar):
 
             if not self.comboid:
                 self.combo = wx.ComboBox(self.toolbar[self.numOfRows-1], id=wx.ID_ANY, value=value,
-                                         choices=layerNameList, size=(150, -1),
+                                         choices=layerNameList, size=(135, -1),
                                          style=wx.CB_READONLY)
                 self.comboid = self.toolbar[self.numOfRows-1].InsertControl(0, self.combo)
                 self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
