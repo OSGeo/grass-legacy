@@ -243,7 +243,8 @@ int main (int argc, char *argv[])
     case MODE_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
-	ret = Vedit_move_lines(&Map, List,
+	ret = Vedit_move_lines(&Map, BgMap, nbgmaps,
+			       List,
 			       move_x, move_y, 0.0, snap, thresh); /* TODO: 3D */
 	G_message(_("%d features moved"), ret);
 	break;
