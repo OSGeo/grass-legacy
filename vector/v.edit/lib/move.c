@@ -19,6 +19,7 @@
    \brief Move selected features
    
    \param[in] Map vector map
+   \param[in] BgMap, nbgmaps list of background vector maps for snapping   
    \param[in] List list of features to be moved
    \param[in] move_x,move_y,move_z direction (move_z used only if map is 3D)
    \param[in] snap enable snapping (see globals.h)
@@ -26,7 +27,8 @@
    \return number of modified features
    \return -1 on error
 */
-int Vedit_move_lines(struct Map_info *Map, struct ilist *List, 
+int Vedit_move_lines(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
+		     struct ilist *List,
 		     double move_x, double move_y, double move_z,
 		     int snap, double thresh)
 {
@@ -67,6 +69,12 @@ int Vedit_move_lines(struct Map_info *Map, struct ilist *List,
 		if (Vedit_snap_point(Map, line, &x[j], &y[j], &z[j], thresh,
 				     (snap == SNAPVERTEX) ? 1 : 0) == 0) {
 		    /* check also background maps */
+		    int bgi;
+		    for (bgi = 0; bgi < nbgmaps; bgi++) {
+			if (Vedit_snap_point(BgMap[i], line, &x[j], &y[j], &z[j], thresh,
+					     (snap == SNAPVERTEX) ? 1 : 0))
+			    break; /* snapped, don't continue */
+		    }
 		}
 	    }
         } /* for each point at line */

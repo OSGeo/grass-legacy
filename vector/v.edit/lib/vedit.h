@@ -43,7 +43,8 @@ int Vedit_flip_lines(struct Map_info *, struct ilist *);
 int Vedit_merge_lines(struct Map_info *, struct ilist *);
 
 /* move.c */
-int Vedit_move_lines(struct Map_info *, struct ilist *, 
+int Vedit_move_lines(struct Map_info *, struct Map_info **, int,
+		     struct ilist *, 
 		     double, double, double, int, double);
 
 /* select.c */
