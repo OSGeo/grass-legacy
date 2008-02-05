@@ -1708,7 +1708,7 @@ class DigitSettingsDialog(wx.Dialog):
 
     def OnChangeAddRecord(self, event):
         """Checkbox 'Add new record' status changed"""
-        self.category.SetValue(str(self.parent.digit.SetCategory()))
+        self.category.SetValue(self.parent.digit.SetCategory())
             
     def OnChangeSnappingValue(self, event):
         """Change snapping value - update static text"""
