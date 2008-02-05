@@ -70,28 +70,13 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 
     BgMap = NULL;
     nbgmaps = 0;
-
     if (bgmap && strlen(bgmap) > 0) {
-	char name[GNAME_MAX];
-	char mapset[GMAPSET_MAX];
-	if (G_find_vector2 (bgmap, "") == NULL) {
+	BgMap = OpenBackgroundVectorMap(bgmap);
+	if (!BgMap) {
 	    return -1;
 	}
-
-	G__name_is_fully_qualified(bgmap, name, mapset);
-	if (strcmp(G_fully_qualified_name((const char*) display->mapInfo->name, (const char*) G_mapset()),
-		   G_fully_qualified_name((const char*) bgmap, (const char*) mapset))) {
+	else {
 	    nbgmaps = 1;
-	    BgMap = (struct Map_info**) G_malloc (nbgmaps * sizeof(struct Map_info*));
-	    BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
-	    
-	    // avoid GUI crash
-	    Vect_set_fatal_error(GV_FATAL_PRINT);
-
-	    if (Vect_open_old(BgMap[nbgmaps-1], name, mapset) == -1) {
-		G_free ((void *) BgMap[nbgmaps-1]);
-		return -1;
-	    }
 	}
     }
 
@@ -345,6 +330,7 @@ int Digit::DeleteLines(bool delete_records)
     \brief Move selected vector features
 
     \param move_x,move_y,move_z move direction (move_z is used only if map is 3D)
+    \param bgmap  map of background map or NULL
     \param snap snapping move (see vedit.h)
     \param thresh threshold value for snapping
 
@@ -352,16 +338,35 @@ int Digit::DeleteLines(bool delete_records)
     \return -1 on error
 */
 int Digit::MoveLines(double move_x, double move_y, double move_z,
-		     int snap, double thresh)
+		     const char *bgmap, int snap, double thresh)
 {
     int ret;
+    struct Map_info **BgMap; /* backgroud vector maps */
+    int nbgmaps;             /* number of registrated background maps */
 
     if (!display->mapInfo)
 	return -1;
 
-    ret = Vedit_move_lines(display->mapInfo, display->selected,
+    BgMap = NULL;
+    nbgmaps = 0;
+    if (bgmap && strlen(bgmap) > 0) {
+	BgMap = OpenBackgroundVectorMap(bgmap);
+	if (!BgMap) {
+	    return -1;
+	}
+	else {
+	    nbgmaps = 1;
+	}
+    }
+
+    ret = Vedit_move_lines(display->mapInfo, BgMap, nbgmaps,
+			   display->selected,
 			   move_x, move_y, move_z,
 			   snap, thresh);
+
+    if (BgMap && BgMap[0]) {
+	Vect_close(BgMap[0]);
+    }
 
     return ret;
 }
@@ -550,4 +555,53 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
     }
 
     return ret;
+}
+
+/**
+   \brief Open background vector map
+
+   @todo support more background maps then only one
+
+   \param bgmap pointer to vector map name
+
+   \return vector map array
+   \return NULL on error
+*/
+struct Map_info** Digit::OpenBackgroundVectorMap(const char *bgmap)
+{
+    char name[GNAME_MAX];
+    char mapset[GMAPSET_MAX];
+    int nbgmaps;
+    struct Map_info** BgMap;
+
+    if (!display->mapInfo) {
+	return NULL;
+    }
+
+    if (G_find_vector2 (bgmap, "") == NULL) {
+	return NULL;
+    }
+    
+    nbgmaps = 0;
+
+    if (!G__name_is_fully_qualified(bgmap, name, mapset)) {
+	G_strncpy(name, bgmap, GNAME_MAX);
+	mapset[0] = '\0';
+    }
+    if (strcmp(G_fully_qualified_name((const char*) display->mapInfo->name, (const char*) G_mapset()),
+	       G_fully_qualified_name((const char*) bgmap, (const char*) mapset))) {
+	nbgmaps = 1;
+	BgMap = (struct Map_info**) G_malloc (nbgmaps * sizeof(struct Map_info*));
+	BgMap[nbgmaps-1] = (struct Map_info *) G_malloc (sizeof(struct Map_info));
+	
+	// avoid GUI crash
+	Vect_set_fatal_error(GV_FATAL_PRINT);
+	
+	if (Vect_open_old(BgMap[nbgmaps-1], name, mapset) == -1) {
+	    G_free ((void *) BgMap[nbgmaps-1]);
+	    BgMap = NULL;
+	}
+    }
+    
+    return BgMap;
 }

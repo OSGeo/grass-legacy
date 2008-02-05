@@ -25,6 +25,7 @@ extern "C" {
 
    \param x,y,z coordinates (z is used only if map is 3d)
    \param move_x,move_y,move_z direction for moving vertex
+   \param bgmap  map of background map or NULL
    \param snap snap mode (see vector/v.edit/lib/vedit.h)
    \param thresh threshold value to identify vertex position
 
@@ -34,23 +35,41 @@ extern "C" {
 */
 int Digit::MoveVertex(double x, double y, double z,
 		      double move_x, double move_y, double move_z,
-		      int snap, double thresh) {
+		      const char *bgmap, int snap, double thresh) {
 
     int ret;
     struct line_pnts *point;
+    struct Map_info **BgMap; /* backgroud vector maps */
+    int nbgmaps;             /* number of registrated background maps */
 
     if (!display->mapInfo)
 	return -1;
+
+    BgMap = NULL;
+    nbgmaps = 0;
+    if (bgmap && strlen(bgmap) > 0) {
+	BgMap = OpenBackgroundVectorMap(bgmap);
+	if (!BgMap) {
+	    return -1;
+	}
+	else {
+	    nbgmaps = 1;
+	}
+    }
 
     point = Vect_new_line_struct();
     Vect_append_point(point, x, y, z);
 
     /* move only first found vertex in bbox */
-    ret = Vedit_move_vertex(display->mapInfo, NULL, 0, /* TODO: BG */
+    ret = Vedit_move_vertex(display->mapInfo, BgMap, nbgmaps, 
 			    display->selected,
 			    point, thresh,
 			    move_x, move_y, move_z,
 			    1, snap); 
+
+    if (BgMap && BgMap[0]) {
+	Vect_close(BgMap[0]);
+    }
 
     Vect_destroy_line_struct(point);
 

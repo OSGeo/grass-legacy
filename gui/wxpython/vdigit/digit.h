@@ -14,6 +14,7 @@ private:
     DisplayDriver *display;
 
     int SetCategory(int, int);
+    struct Map_info** OpenBackgroundVectorMap(const char *);
 
 public:
     Digit(DisplayDriver *);
@@ -28,7 +29,7 @@ public:
 
     int DeleteLines(bool);
     int MoveLines(double, double, double,
-		  int, double);
+		  const char*, int, double);
     int FlipLines();
     int MergeLines();
     int BreakLines();
@@ -40,7 +41,7 @@ public:
 
     int MoveVertex(double, double, double,
 		   double, double, double,
-		   int, double);
+		   const char*, int, double);
     int ModifyLineVertex(int, double, double, double,
 			 double);
 
