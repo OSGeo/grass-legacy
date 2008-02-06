@@ -240,6 +240,7 @@ int Digit::DeleteLines(bool delete_records)
     int ret;
     int n_dblinks;
     struct line_cats *Cats, *Cats_del;
+    // struct ilist *List;
 
     if (!display->mapInfo) {
 	return -1;
@@ -247,17 +248,36 @@ int Digit::DeleteLines(bool delete_records)
 
     n_dblinks = Vect_get_num_dblinks(display->mapInfo);
     Cats_del = NULL;
+    // List = NULL;
 
     /* collect categories if needed */
     if (delete_records) {
 	Cats = Vect_new_cats_struct();
+	// List = Vect_new_list();
 	Cats_del = Vect_new_cats_struct();
 	for (int i = 0; i < display->selected->n_values; i++) {
 	    if (Vect_read_line(display->mapInfo, NULL, Cats, display->selected->value[i]) < 0) {
 		Vect_destroy_cats_struct(Cats_del);
+		Vect_destroy_list(List);
 		return -1;
 	    }
 	    for (int j = 0; j < Cats->n_cats; j++) {
+		/*
+		  To find other vector objects with the same category,
+		  category index is need to be updated (i.e. to
+		  rebuild topo, sidx, cidx). This can be time-consuming
+		  task for large vector maps.
+		*/
+		/*
+		  Vect_build(display->mapInfo, NULL);
+		  Vect_cidx_find_all(display->mapInfo, Cats->field[j],
+		  GV_POINTS | GV_LINES, Cats->cat[j],
+		  List);
+		if (List->n_values == 1 &&
+		    List->value[0] == display->selected->value[i]) {
+		    Vect_cat_set(Cats_del, Cats->field[j], Cats->cat[j]);
+		}
+		*/
 		Vect_cat_set(Cats_del, Cats->field[j], Cats->cat[j]);
 	    }
 	}
@@ -296,12 +316,12 @@ int Digit::DeleteLines(bool delete_records)
 	    int n_cats = 0;
 	    for (int c = 0; c < Cats_del->n_cats; c++) {
 		if (Cats_del->field[c] == fi->number) {
-		    sprintf (buf, " %s = %d", fi->key, Cats_del->cat[c]);
-		    db_append_string(&stmt, buf);
-		    if (n_cats > 0 && c < Cats_del->n_cats) {
+		    if (n_cats > 0) {
 			sprintf (buf, " or");
 			db_append_string(&stmt, buf);
 		    }
+		    sprintf (buf, " %s = %d", fi->key, Cats_del->cat[c]);
+		    db_append_string(&stmt, buf);
 		    n_cats++;
 		}
 	    }
@@ -318,10 +338,18 @@ int Digit::DeleteLines(bool delete_records)
 	}
     }
 
+    /* update category settings */
+    // InitCats();
+
     if (Cats_del) {
 	Vect_destroy_cats_struct(Cats_del);
     }
 
+    /*
+    if(List) {
+	Vect_destroy_list(List);
+    }
+    */
     return ret;
 }
 
