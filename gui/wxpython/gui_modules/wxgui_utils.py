@@ -1088,7 +1088,7 @@ class GMConsole(wx.Panel):
         rendered in map display widget that currently has
         the focus (as indicted by mdidx).
         """
-
+        
         # map display window available ?
         try:
             curr_disp = self.parent.curr_page.maptree.mapdisplay
@@ -1147,25 +1147,29 @@ class GMConsole(wx.Panel):
                     tmpreg = os.getenv("GRASS_REGION")
                     os.unsetenv("GRASS_REGION")
 
-                    # process GRASS command with argument
-                    self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
-                    p1 = self.cmd_output.GetCurrentPos()
-                    line = '$ %s' % ' '.join(cmdlist)
-                    if len(line) < 80:
-                        diff = 80 - len(line)
-                        line += diff * ' '
-                    line += '%s' % os.linesep
-                    self.cmd_output.AddText(line)
-                    self.cmd_output.EnsureCaretVisible()
-                    p2 = self.cmd_output.GetCurrentPos()
-                    self.cmd_output.StartStyling(p1, 0xff)
-                    self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
-
-                    grassCmd = gcmd.Command(cmdlist, wait=False,
-                                            stdout=self.cmd_stdout,
-                                            stderr=self.cmd_stderr)
-
-                    self.cmdThreads.append(grassCmd.cmdThread)
+                    if len(cmdlist) == 1:
+                        #process GRASS command without argument
+                        menuform.GUI().ParseCommand(cmdlist, parentframe=self)
+                    else:
+                        # process GRASS command with argument
+                        self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
+                        p1 = self.cmd_output.GetCurrentPos()
+                        line = '$ %s' % ' '.join(cmdlist)
+                        if len(line) < 80:
+                            diff = 80 - len(line)
+                            line += diff * ' '
+                        line += '%s' % os.linesep
+                        self.cmd_output.AddText(line)
+                        self.cmd_output.EnsureCaretVisible()
+                        p2 = self.cmd_output.GetCurrentPos()
+                        self.cmd_output.StartStyling(p1, 0xff)
+                        self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
+    
+                        grassCmd = gcmd.Command(cmdlist, wait=False,
+                                                stdout=self.cmd_stdout,
+                                                stderr=self.cmd_stderr)
+    
+                        self.cmdThreads.append(grassCmd.cmdThread)
 
                     # deactivate computational region and return to display settings
                     if tmpreg:
@@ -1173,7 +1177,7 @@ class GMConsole(wx.Panel):
 
         else:
             # Send any other command to the shell. Send output to
-            # console output window.
+            # console output window
 
             if self.parent.notebook.GetSelection() != 1:
                 # select 'Command output' tab
