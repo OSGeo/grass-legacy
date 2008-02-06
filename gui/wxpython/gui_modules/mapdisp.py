@@ -59,7 +59,6 @@ import gselect
 import disp_print
 import gcmd
 import dbm
-import defaultfont
 import histogram
 import profile
 import globalvar
