@@ -63,7 +63,6 @@ import histogram
 import profile
 import globalvar
 import utils
-from digit import Digit               as Digit
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from digit import DigitZBulkDialog    as DigitZBulkDialog
 from digit import GV_LINES            as Digit_Lines_Type
@@ -2221,11 +2220,6 @@ class MapFrame(wx.Frame):
         # Current location information
         #
         self.projinfo = self.Map.ProjInfo()
-
-        #
-        # Initialization of digitization tool
-        #
-        self.digit = Digit(mapwindow=self.MapWindow)
 
         #
         # Init zoom history

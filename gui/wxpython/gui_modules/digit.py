@@ -45,6 +45,7 @@ import gcmd
 import dbm
 from debug import Debug as Debug
 import gselect 
+from preferences import globalSettings as UserSettings
 try:
     digitPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "vdigit")
     sys.path.append(digitPath)
@@ -56,18 +57,14 @@ except ImportError, err:
           "Detailed information in README file." % \
           (os.linesep, err)
 
-#
-# Use v.edit on background or experimental C++ interface (not yet completed)
-#
-USEVEDIT = False
-if USEVEDIT is True and GV_LINES is not None:
-    print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface by default. " \
+# which interface to use?
+if UserSettings.Get('digitInterface') == 'vedit' and GV_LINES is not None:
+    print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface. " \
         "This can significantly slow down some operations especially for " \
         "middle-large vector maps. "\
-        "You can enable experimental vdigit interface by setting " \
-          "USEVEDIT to False in digit.py file." % \
+        "You can change the digitization interface in 'User preferences' " \
+        "(menu 'Config'->'Preferences')." % \
           os.linesep
-
 
 class AbstractDigit:
     """
@@ -146,7 +143,7 @@ class AbstractDigit:
         self.settings['category'] = 1
 
         if self.map:
-            if USEVEDIT:
+            if UserSettings.Get('digitInterface') == 'vedit':
                 categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
                                                 "input=%s" % self.map, 
                                                 "option=report"])
@@ -192,7 +189,7 @@ class AbstractDigit:
             raise gcmd.DigitError(_('Closing vector map <%s> failed. The vector map is probably broken. '
                                'Try to run v.build for rebuilding the topology.') % map)
             
-        if not USEVEDIT:
+        if UserSettings.Get('digitInterface') != 'v.edit':
             try:
                 self.digit.InitCats()
             except:
@@ -1034,7 +1031,7 @@ class VDigit(AbstractDigit):
 
         return (snap, thresh)
 
-if USEVEDIT:
+if UserSettings.Get('digitInterface') == 'vedit':
     class Digit(VEdit):
         """Default digit class"""
         def __init__(self, mapwindow):
@@ -1138,7 +1135,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         if map:
             name, mapset = map.split('@')
             try:
-                if USEVEDIT:
+                if UserSettings.Get('digitInterface') == 'vedit':
                     ret = self.__display.OpenMap(str(name), str(mapset), False)
                 else:
                     ret = self.__display.OpenMap(str(name), str(mapset), True)
@@ -2150,7 +2147,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                             cat not in cats[1][layer]:
                         catList.append(cat)
                 if catList != []:
-                    if USEVEDIT is True:
+                    if UserSettings.Get('digitInterface') == 'vedit':
                         vEditCmd = ['v.edit', '--q',
                                     'map=%s' % self.map,
                                     'layer=%d' % layer,
@@ -2169,7 +2166,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                         if self.line < 0:
                             wx.MessageBox(parent=self, message=_("Unable to update vector map."),
                                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-        if USEVEDIT is True:           
+        if UserSettings.Get('digitInterface') == 'vedit':           
             # reload map (needed for v.edit)
             self.parent.parent.digit.driver.ReloadMap()
 

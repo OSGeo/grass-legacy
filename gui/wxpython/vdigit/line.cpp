@@ -258,7 +258,7 @@ int Digit::DeleteLines(bool delete_records)
 	for (int i = 0; i < display->selected->n_values; i++) {
 	    if (Vect_read_line(display->mapInfo, NULL, Cats, display->selected->value[i]) < 0) {
 		Vect_destroy_cats_struct(Cats_del);
-		Vect_destroy_list(List);
+		//Vect_destroy_list(List);
 		return -1;
 	    }
 	    for (int j = 0; j < Cats->n_cats; j++) {
