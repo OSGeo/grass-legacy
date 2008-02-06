@@ -51,7 +51,6 @@ import menuform
 import disp_print
 import gselect
 import gcmd
-import gui_modules.defaultfont as defaultfont
 from debug import Debug as Debug
 from icon import Icons as Icons
 

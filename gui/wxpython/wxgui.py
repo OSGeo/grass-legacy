@@ -69,7 +69,7 @@ import gui_modules.mapdisp as mapdisp
 import gui_modules.menudata as menudata
 import gui_modules.menuform as menuform
 import gui_modules.grassenv as grassenv
-import gui_modules.defaultfont as defaultfont
+import gui_modules.preferences as preferences
 import gui_modules.histogram as histogram
 import gui_modules.profile as profile
 import gui_modules.rules as rules
@@ -792,30 +792,11 @@ class GMFrame(wx.Frame):
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
 
-    def DefaultFont(self, event):
-        """Set default font for GRASS displays"""
+    def OnPreferences(self, event):
+        """General GUI preferences/settings"""
+        preferences.PreferencesDialog(parent=self, title=_("GUI Preferences")).ShowModal()
 
-        dlg = defaultfont.SetDefaultFont(self, wx.ID_ANY, 'Select default display font',
-                                   pos=wx.DefaultPosition, size=wx.DefaultSize,
-                                   style=wx.DEFAULT_DIALOG_STYLE,
-                                   encoding=self.encoding)
-        if dlg.ShowModal() == wx.ID_CANCEL:
-            dlg.Destroy()
-            return
-
-        # set default font type, font, and encoding to whatever selected in dialog
-
-        if dlg.font != None:
-            self.font = dlg.font
-        if dlg.encoding != None:
-            self.encoding = dlg.encoding
-
-        dlg.Destroy()
-
-        # set default font and encoding environmental variables
-        os.environ["GRASS_FONT"] = self.font
-        if self.encoding != None and self.encoding != "ISO-8859-1":
-            os.environ["GRASS_ENCODING"] = self.encoding
+        event.Skip()
 
     def DispHistogram(self, event):
         """

@@ -160,7 +160,7 @@ class Data:
                 ("","","", ""),
                 ("Convert coordinates", "Convert coordinates from one projection to another", "self.OnMenuCmd", "m.proj"),
               )),
-              ("Display font", "Set default font for GRASS displays", "self.DefaultFont", ""),
+              ("Preferences", "GUI preferences (display font, etc.)", "self.OnPreferences", ""),
               )),
           ("Raster", (
               ("Develop map", (
