@@ -25,7 +25,7 @@ sys.path.append(gmpath)
 
 import gcmd
 import grassenv
-from digit import Digit as Digit
+import digit
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -593,6 +593,9 @@ class DigitToolbar(AbstractToolbar):
         @return True on success
         @return False on error
         """
+        reload(digit)
+        from digit import Digit as Digit
+        self.parent.digit = Digit(mapwindow=self.parent.MapWindow)
         try:
             self.layerSelectedID = self.layers.index(layerSelected)
             mapLayer = self.layers[self.layerSelectedID]
@@ -657,8 +660,11 @@ class DigitToolbar(AbstractToolbar):
             self.parent.MapWindow.pdcVector = None
             self.parent.digit.driver.SetDevice(None)
 
+            self.parent.digit = None
+
             return True
 
+        
         return False
 
     def UpdateListOfLayers (self, updateTool=False):

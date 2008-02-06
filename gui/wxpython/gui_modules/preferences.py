@@ -35,18 +35,35 @@ class Settings:
     """Generic class where to store settings"""
     def __init__(self):
         self.defaultSettings = {
+            # general
             'displayFont' : '',
-            'digitInterface' : 'v.edit',
+            # advanced
+            'settingsFile' : 'home', # home, location, mapset
+            'digitInterface' : 'vedit', # vedit, vdigit
             }
         
         self.userSettings = copy.deepcopy(self.defaultSettings)
 
     def Get(self, key):
-        """Get user settings"""
+        """Get value by key
+
+        @return value
+        @return None if key not found
+        """
         if self.userSettings.has_key(key):
             return self.userSettings[key]
         else:
             None
+    
+    def Set(self, key, value):
+        """Set value by key
+
+        Raise KeyError if key is not found
+        """
+        if self.userSettings.has_key(key):
+            self.userSettings[key] = value
+        else:
+            raise KeyError
 
 globalSettings = Settings()
 
@@ -117,7 +134,7 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(0, 0))
         fontButton = wx.Button(parent=panel, id=wx.ID_ANY,
-                               label=_("Set font"))
+                               label=_("Set font"), size=(100, -1))
         gridSizer.Add(item=fontButton,
                       flag=wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL,
@@ -151,25 +168,41 @@ class PreferencesDialog(wx.Dialog):
         gridSizer.AddGrowableCol(0)
 
         #
+        # place where to store settings
+        #
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Place where to store settings:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(0, 0))
+        self.settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                      choices=['home', 'location', 'mapset'])
+        self.settingsFile.SetStringSelection(self.settings.Get('settingsFile'))
+        gridSizer.Add(item=self.settingsFile,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(0, 1))
+
+        #
         # digitization interface
         #
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("Digitization interface:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
-                       pos=(0, 0))
-        digitIF = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                            choices=['v.digit', 'v.edit'])
-        digitIF.SetStringSelection(self.settings.Get('digitInterface'))
-        gridSizer.Add(item=digitIF,
+                       pos=(1, 0))
+        self.digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                        choices=['vdigit', 'vedit'])
+        self.digitInterface.SetStringSelection(self.settings.Get('digitInterface'))
+        gridSizer.Add(item=self.digitInterface,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(0, 1))
+                      pos=(1, 1))
 
         digitNote = wordwrap(_("Note: User can choose from two interfaces for digitization. "
                                "The simple one uses v.edit command on the background. "
                                "Map topology is rebuild on each operation which can "
-                               "significantly slow-down response. The v.digit is a native "
+                               "significantly slow-down response. The vdigit is a native "
                                "interface which uses v.edit functionality, but doesn't "
                                "call the command itself."),
                              self.GetSize()[0]-50, wx.ClientDC(self))
@@ -178,7 +211,7 @@ class PreferencesDialog(wx.Dialog):
                                          label=digitNote),
                       flag=wx.ALIGN_LEFT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(1, 0), span=(1, 2))
+                      pos=(2, 0), span=(1, 2))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
@@ -215,15 +248,27 @@ class PreferencesDialog(wx.Dialog):
 
     def OnOK(self, event):
         """Button 'OK' clicked"""
+        self.__UpdateSettings()
         self.Close()
 
     def OnApply(self, event):
         """Button 'Apply' clicked"""
-        pass
-
+        self.__UpdateSettings()
+        
     def OnCancel(self, event):
         """Button 'Cancel' clicked"""
         self.Close()
+
+    def __UpdateSettings(self):
+        """Update user settings"""
+        # font
+        # TODO
+
+        # location
+        self.settings.Set('settingsFile', self.settingsFile.GetStringSelection())
+        
+        # digitization interface
+        self.settings.Set('digitInterface', self.digitInterface.GetStringSelection())
 
 class SetDefaultFont(wx.Dialog):
     """
