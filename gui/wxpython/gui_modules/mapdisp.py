@@ -2222,6 +2222,11 @@ class MapFrame(wx.Frame):
         self.projinfo = self.Map.ProjInfo()
 
         #
+        # Initialization of digitization tool
+        #
+        self.digit = None
+
+        #
         # Init zoom history
         #
         self.MapWindow.ZoomHistory(self.Map.region['n'],
