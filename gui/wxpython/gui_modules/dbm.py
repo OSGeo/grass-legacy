@@ -2774,14 +2774,19 @@ class DisplayAttributesDialog(wx.Dialog):
                     except:
                         newvalue = self.FindWindowById(id).GetLabel()
 
+                    if newvalue == '':
+                        newvalue = None
+                        
                     if newvalue != value:
                         updatedColumns.append(name)
-                        if type != 'character':
-                            updatedValues.append(newvalue)
+                        if newvalue is None:
+                            updatedValues.append('NULL')
                         else:
-                            updatedValues.append("'" + newvalue + "'")
-                        if updateValues:
-                            columns[name]['values'][idx] = newvalue
+                            if type != 'character':
+                                updatedValues.append(newvalue)
+                            else:
+                                updatedValues.append("'" + newvalue + "'")
+                        columns[name]['values'][idx] = newvalue
 
                 if self.action != "add" and len(updatedValues) == 0:
                     continue
@@ -2888,15 +2893,16 @@ class DisplayAttributesDialog(wx.Dialog):
             #    continue # nothing selected ...
 
             if self.action == "add":
-                if nselected <= 0 and cats.has_key(layer):
-                    table = self.mapDBInfo.layers[layer]["table"]
-                    columns = self.mapDBInfo.tables[table]
-                    for name in columns.keys():
-                        if name == "cat":
-                            for cat in cats[layer]:
-                                self.mapDBInfo.tables[table][name]['values'].append(cat)
-                        else:
-                            self.mapDBInfo.tables[table][name]['values'].append('')
+                if nselected <= 0:
+                    if cats.has_key(layer):
+                        table = self.mapDBInfo.layers[layer]["table"]
+                        columns = self.mapDBInfo.tables[table]
+                        for name in columns.keys():
+                            if name == "cat":
+                                for cat in cats[layer]:
+                                    self.mapDBInfo.tables[table][name]['values'].append(cat)
+                            else:
+                                self.mapDBInfo.tables[table][name]['values'].append(None)
                 else: # change status 'add' -> 'update'
                     self.action = "update"
 
@@ -2932,7 +2938,10 @@ class DisplayAttributesDialog(wx.Dialog):
                 # columns
                 for name in columns.keys():
                     vtype  = columns[name]['type']
-                    value = str(columns[name]['values'][idx])
+                    if columns[name]['values'][idx] is not None:
+                        value = str(columns[name]['values'][idx])
+                    else:
+                        value = ''
 
                     if name.lower() == "cat":
                         box    = wx.StaticBox (parent=panel, id=wx.ID_ANY,
@@ -3129,7 +3138,10 @@ class VectorDBInfo:
             for line in selectCommand.ReadStdOutput():
                 name, value = line.split('|')
                 # casting ...
-                value = self.tables[table][name]['ctype'] (value)
+                if value:
+                    value = self.tables[table][name]['ctype'] (value)
+                else:
+                    value = None
                 self.tables[table][name]['values'].append(value)
                 nselected = 1
 
