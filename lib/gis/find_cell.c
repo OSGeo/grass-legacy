@@ -43,7 +43,7 @@
 \code
   char name[GNAME_MAX];
   char *mapset;
-  if ((mapset = G_find_cell(name,"")) = = NULL)
+  if ((mapset = G_find_cell(name,"")) == NULL)
   // not found
 \endcode
  *
@@ -51,7 +51,7 @@
  *
 \code
   char name[GNAME_MAX];
-  if (G_find_cell(name,G_mapset( )) = = NULL)
+  if (G_find_cell(name,G_mapset( )) == NULL)
   // not found
 \endcode
  *

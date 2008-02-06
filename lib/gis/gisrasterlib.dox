@@ -119,7 +119,7 @@ char name[GNAME_MAX];
 
 mapset = G_ask_cell_old("Enter raster file to be processed", name);
 
-if (mapset = = NULL)
+if (mapset == NULL)
   return(0);
 \endverbatim
 

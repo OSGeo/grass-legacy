@@ -336,7 +336,7 @@ char name[GNAME_MAX];
 char *mapset;
 
 mapset = G_ask_old("", name, "paint/labels", "labels");
-if (mapset = = NULL)
+if (mapset == NULL)
     exit(EXIT_SUCCESS); /* user canceled the request */
 \endverbatim
 
