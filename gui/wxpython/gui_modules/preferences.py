@@ -1,7 +1,7 @@
 """
 @package preferences
 
-@brief GUI preferences dialog
+@brief User preferences dialog
 
 Sets default display font, etc.
 
@@ -20,22 +20,47 @@ Martin Landa <landa.martin gmail.com>
 
 import os
 import sys
+import copy
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
+from wx.lib.wordwrap import wordwrap
 
 gmpath = os.path.join( os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(gmpath)
 
 import gcmd
 
+class Settings:
+    """Generic class where to store settings"""
+    def __init__(self):
+        self.defaultSettings = {
+            'displayFont' : '',
+            'digitInterface' : 'v.edit',
+            }
+        
+        self.userSettings = copy.deepcopy(self.defaultSettings)
+
+    def Get(self, key):
+        """Get user settings"""
+        if self.userSettings.has_key(key):
+            return self.userSettings[key]
+        else:
+            None
+
+globalSettings = Settings()
+
 class PreferencesDialog(wx.Dialog):
-    """GUI preferences dialog"""
-    def __init__(self, parent, title, style=wx.DEFAULT_DIALOG_STYLE):
+    """User preferences dialog"""
+    def __init__(self, parent, title,
+                 settings=globalSettings,
+                 style=wx.DEFAULT_DIALOG_STYLE):
         self.parent = parent # GMFrame
         self.title = title
-        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title,
+                           style=style)
 
+        self.settings = settings
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
@@ -80,7 +105,7 @@ class PreferencesDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("General settings"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
-        gridSizer = wx.GridBagSizer (hgap=5, vgap=5)
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
         gridSizer.AddGrowableCol(0)
 
         #
@@ -94,12 +119,17 @@ class PreferencesDialog(wx.Dialog):
         fontButton = wx.Button(parent=panel, id=wx.ID_ANY,
                                label=_("Set font"))
         gridSizer.Add(item=fontButton,
-                       flag=wx.ALIGN_LEFT |
+                      flag=wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(0, 1))
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Currently selected font:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(1, 0), span=(1, 2))
 
-        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=10)
-        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -117,11 +147,41 @@ class PreferencesDialog(wx.Dialog):
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Advanced settings"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
-        gridSizer = wx.GridBagSizer (hgap=5, vgap=5)
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
         gridSizer.AddGrowableCol(0)
 
-        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=10)
-        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+        #
+        # digitization interface
+        #
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Digitization interface:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(0, 0))
+        digitIF = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                            choices=['v.digit', 'v.edit'])
+        digitIF.SetStringSelection(self.settings.Get('digitInterface'))
+        gridSizer.Add(item=digitIF,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(0, 1))
+
+        digitNote = wordwrap(_("Note: User can choose from two interfaces for digitization. "
+                               "The simple one uses v.edit command on the background. "
+                               "Map topology is rebuild on each operation which can "
+                               "significantly slow-down response. The v.digit is a native "
+                               "interface which uses v.edit functionality, but doesn't "
+                               "call the command itself."),
+                             self.GetSize()[0]-50, wx.ClientDC(self))
+
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=digitNote),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(1, 0), span=(1, 2))
+
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
