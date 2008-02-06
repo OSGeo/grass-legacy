@@ -406,15 +406,17 @@ class GMFrame(wx.Frame):
         except: # already list?
             cmdlist = cmd
 
-        # This section is not completed and breaks the menu. Uncomment when completed and tested
-        #layer = self.curr_page.maptree.layer_selected
-        #name = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].name
-        #type = self.curr_page.maptree.GetPyData(layer)[0]['type']
-        #if len(cmdlist) == 1: # only if no paramaters given
-        #    if type == 'raster' and cmdlist[0][0] == 'r' and cmdlist[0][1] != '3':
-        #        cmdlist.append(name) # TODO map/input=
-        #    elif type == 'vector' and cmdlist[0][0] == 'v':
-        #        cmdlist.append(name) # TODO map/input=
+        try:
+            layer = self.curr_page.maptree.layer_selected
+            name = self.curr_page.maptree.GetPyData(layer)[0]['maplayer'].name
+            type = self.curr_page.maptree.GetPyData(layer)[0]['type']
+        except:
+            layer = None
+        if layer and len(cmdlist) == 1: # only if no paramaters given
+            if type == 'raster' and cmdlist[0][0] == 'r' and cmdlist[0][1] != '3':
+                cmdlist.append(name) # TODO map/input=
+            elif type == 'vector' and cmdlist[0][0] == 'v':
+                cmdlist.append(name) # TODO map/input=
 
         return cmdlist
 
