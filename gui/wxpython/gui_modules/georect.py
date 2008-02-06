@@ -63,6 +63,7 @@ import gselect
 import disp_print
 import gcmd
 import utils
+import menuform
 from debug import Debug as Debug
 from icon import Icons as Icons
 
@@ -207,7 +208,7 @@ class GeorectWizard(object):
             self.xy_mapdisp.Update()
     
             # start GCP form
-            self.gcpmgr = GCP(self.parent)
+            self.gcpmgr = GCP(self.parent, grwiz=self)
             self.gcpmgr.Show()
             self.gcpmgr.Refresh()
             self.gcpmgr.Update()
@@ -233,7 +234,6 @@ class GeorectWizard(object):
     def SwitchEnv(self, grc):
         """Switches between original working location/mapset and
         location/mapset that is source of file(s) to georectify"""
-        print 'switch = ',grc
         if grc == 'original':
             os.environ["GISRC"] = str(self.orig_gisrc)
         elif grc == 'new':
@@ -262,8 +262,11 @@ class GeorectWizard(object):
         # return to current location and mapset
         self.SwitchEnv('original')
         self.parent.georectifying = False
-        self.xy_mapdisp.Destroy()
-        self.wizard.Destroy()
+        try:
+            self.xy_mapdisp.Destroy()
+            self.wizard.Destroy()
+        except:
+            pass
 
 class LocationPage(TitledPage):
     """
@@ -406,6 +409,7 @@ class GroupPage(TitledPage):
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         self.Bind(wx.EVT_COMBOBOX, self.OnGroup, self.cb_group)
+        self.Bind(wx.EVT_BUTTON, self.OnMkGroup, self.btn_mkgroup)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChanging)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChanged)
         self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
@@ -414,6 +418,11 @@ class GroupPage(TitledPage):
         global xy_group
         
         xy_group = event.GetString()
+        
+    def OnMkGroup(self, event):
+        self.parent.SwitchEnv('new')
+        cmdlist = ['i.group']       
+        menuform.GUI().ParseCommand(cmdlist, parentframe=self.parent.parent)
 
     def onPageChanging(self,event=None):
         global xy_group
@@ -499,10 +508,13 @@ class GCP(wx.Frame):
     Calls i.rectify or v.transform to georectify map.
     """
 
-    def __init__(self,parent,id=-1,title="Create & manage ground control points"):
+    def __init__(self,parent,id=-1,title="Create & manage ground control points",
+                 size=wx.DefaultSize, grwiz=None):
         wx.Frame.__init__(self, parent, id , title, size=(500,400))
 
         toolbar = self.__createToolBar()
+        
+        self.grwiz = grwiz
         self.selected = 0 #gcp list item selected
         self.mapcoordlist = [(0000000.00,0000000.00,'')] #list map coords and ID of map display they came from
 
@@ -535,6 +547,8 @@ class GCP(wx.Frame):
         self.list.SetStringItem(index, 3, i[3])
         self.list.SetStringItem(index, 4, i[4])
         self.list.SetStringItem(index, 5, i[5])
+        
+        self.list.CheckItem(0, True)
 
         p.SetSizer(self.sizer)
 
@@ -580,7 +594,10 @@ class GCP(wx.Frame):
 
     def AddGCP(self, event):
         self.list.Append(['0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00'])
+        index = self.list.GetItemCount() - 1
         self.mapcoordlist.append((0000000.00,0000000.00,''))
+        self.list.CheckItem(index, True)
+        self.list.SetItemState(index, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
         
     def SetGCPData(self, coordtype, coord, mapdisp):
         index = self.selected
@@ -593,7 +610,7 @@ class GCP(wx.Frame):
         if coordtype == 'mapcoord':
             self.list.SetStringItem(index, 2, coord0)
             self.list.SetStringItem(index, 3, coord1)
-            self.mapcoordlist[index] = [(coord[0], coord[1], mapdisp)]
+            self.mapcoordlist[index] = (coord[0], coord[1], mapdisp)
         if coordtype == 'rms':
             self.list.SetStringItem(index, 4, coord0)
             self.list.SetStringItem(index, 5, coord1) 
@@ -602,7 +619,7 @@ class GCP(wx.Frame):
         index = self.selected
         for i in range(6):
             self.list.SetStringItem(index, i, '0000000.00')
-        self.mapcoordlist[index] = [(0000000.00,0000000.00,'')]
+        self.mapcoordlist[index] = (0000000.00,0000000.00,'')
 
     def OnRMS(self, event):
         pass
@@ -619,22 +636,41 @@ class GCP(wx.Frame):
 
     def OnItemSelected(self, event):
         self.selected = event.GetIndex()
-        print 'item = ',self.selected
         
     def RefreshGCPMarks(self, event):
+        """
+        Update GCP and map coord maps and redraw
+        active GCP markers on both
+        """
+        self.grwiz.SwitchEnv("new")
+        self.grwiz.mapwin.UpdateMap()
+        self.grwiz.SwitchEnv("original")
+        mapid = ''
+        for map in self.mapcoordlist:
+            if map[2] != mapid and map[2] != '':
+                map[2].UpdateMap()
+                mapid = map[2]
         for index in range(self.list.GetItemCount()):
-            if self.list.IsChecked(index):
+            if self.list.IsChecked(index) and (
+                (self.list.GetItem(index, 0).GetText() != '0000000.00' and 
+                 self.list.GetItem(index, 1).GetText() != '0000000.00') or 
+                (self.list.GetItem(index, 2).GetText() != '0000000.00' and 
+                 self.list.GetItem(index, 3).GetText() != '0000000.00')
+                ):
+                print 'checked? ',index,self.list.IsChecked(index)
                 coord0 = float(self.list.GetItem(index, 0).GetText())
                 coord1 = float(self.list.GetItem(index, 1).GetText())
                 coord2 = float(self.list.GetItem(index, 2).GetText())
                 coord3 = float(self.list.GetItem(index, 3).GetText())
-                print coord0,coord1,coord2,coord3,coord4
-                self.mapcoordlist[2].MapWindow.DrawCross(pdc=self.pdcTmp, coords=(coord2,coord3),
-                                       size=5)
-                self.mapcoordlist[2].MapWindow.UpdateMap()
-                self.parent.mapwin.DrawCross(pdc=self.pdcTmp, coords=(coord0,coord1),
-                                       size=5)
-                self.parent.mapwin.UpdateMap()
+                
+                self.grwiz.SwitchEnv("new")
+                pxcoord1 = self.grwiz.mapwin.Cell2Pixel((coord0, coord1))
+                self.grwiz.mapwin.DrawCross(pdc=self.grwiz.mapwin.pdcTmp,
+                                            coords=pxcoord1, size=5)
+                self.grwiz.SwitchEnv("original")
+                pxcoord2 = self.mapcoordlist[index][2].Cell2Pixel((coord2, coord3))
+                self.mapcoordlist[index][2].DrawCross(pdc=self.mapcoordlist[index][2].pdcTmp,
+                                                      coords=pxcoord2, size=5)
 
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def __init__(self, parent):
@@ -651,98 +687,5 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     # this is called by the base class when an item is checked/unchecked
     def OnCheckItem(self, index, flag):
         pass
-
-# These 2 grid classes are ones I tried to use instead of a list. Might want
-# to rethink this later
-class GCPGrid(gridlib.Grid):
-    def __init__(self, parent):
-        gridlib.Grid.__init__(self, parent, -1)
-        table = GCPDateTable()
-        # The second parameter means that the grid is to take ownership of the
-        # table and will destroy it when done.  Otherwise you would need to keep
-        # a reference to it and call it's Destroy method later.
-        self.SetTable(table, True)
-        self.SetRowLabelSize(10)
-        self.SetMargins(0,0)
-        self.AutoSizeColumns(True)
-        gridlib.EVT_GRID_CELL_LEFT_DCLICK(self, self.OnLeftDClick)
-    # I do this because I don't like the default behaviour of not starting the
-    # cell editor on double clicks, but only a second click.
-    def OnLeftDClick(self, evt):
-        if self.CanEnableCellControl():
-            self.EnableCellEditControl()
-
-class GCPDateTable(gridlib.PyGridTableBase):
-    def __init__(self):
-        gridlib.PyGridTableBase.__init__(self)
-        self.colLabels = ['Use', 'X Coord', 'Y Coord', 'East', 'North',
-                          'Forward Error', 'Backward Error']
-        self.dataTypes = [gridlib.GRID_VALUE_BOOL,
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          gridlib.GRID_VALUE_FLOAT + ':7,2',
-                          ]
-        self.data = [
-            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00'],
-            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00'],
-            [1, '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00', '0000000.00']
-            ]
-    #--------------------------------------------------
-    # required methods for the wxPyGridTableBase interface
-    def GetNumberRows(self):
-        return len(self.data) + 1
-    def GetNumberCols(self):
-        return len(self.data[0])
-    def IsEmptyCell(self, row, col):
-        try:
-            return not self.data[row][col]
-        except IndexError:
-            return True
-    # Get/Set values in the table.  The Python version of these
-    # methods can handle any data-type, (as long as the Editor and
-    # Renderer understands the type too,) not just strings as in the
-    # C++ version.
-    def GetValue(self, row, col):
-        try:
-            return self.data[row][col]
-        except IndexError:
-            return ''
-    def SetValue(self, row, col, value):
-        try:
-            self.data[row][col] = value
-        except IndexError:
-            # add a new row
-            self.data.append([''] * self.GetNumberCols())
-            self.SetValue(row, col, value)
-            # tell the grid we've added a row
-            msg = gridlib.GridTableMessage(self,            # The table
-                    gridlib.GRIDTABLE_NOTIFY_ROWS_APPENDED, # what we did to it
-                    1                                       # how many
-                    )
-            self.GetView().ProcessTableMessage(msg)
-    #--------------------------------------------------
-    # Some optional methods
-    # Called when the grid needs to display labels
-    def GetColLabelValue(self, col):
-        return self.colLabels[col]
-    # Called to determine the kind of editor/renderer to use by
-    # default, doesn't necessarily have to be the same type used
-    # natively by the editor/renderer if they know how to convert.
-    def GetTypeName(self, row, col):
-        return self.dataTypes[col]
-    # Called to determine how the data can be fetched and stored by the
-    # editor and renderer.  This allows you to enforce some type-safety
-    # in the grid.
-    def CanGetValueAs(self, row, col, typeName):
-        colType = self.dataTypes[col].split(':')[0]
-        if typeName == colType:
-            return True
-        else:
-            return False
-    def CanSetValueAs(self, row, col, typeName):
-        return self.CanGetValueAs(row, col, typeName)
 
 
