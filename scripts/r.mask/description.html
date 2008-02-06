@@ -7,7 +7,7 @@ control raster operations.
 The MASK is only applied when <em>reading</em> an existing GRASS raster map,
 for example when used in a module as an input map.
 
-The MASK will block out certain areas of a raster map from analysis, by
+The MASK will block out certain areas of a raster map from analysis and/or display, by
 "hiding" them from sight of other GRASS modules. Data falling within the bounaries of the MASK 
 can be modified and operated upon by other GRASS raster modules; data
 falling outside the MASK is treated as if it were NULL.
@@ -46,9 +46,10 @@ be changed with r.quant).
 <p>
 
 <em>r.mask</em> uses <em>r.reclass</em> to create a reclassification of an
-existing raster map and name it MASK. The user can select category values to use
-in the MASK with the <em>maskcats</em> parameter; if <em>r.mask</em>
-is run from the command line, the category values listed in <em>maskcats</em> 
+existing raster map and name it MASK. A reclass map takes up less space, but
+is affected by any changes to the underlying map from which it was created. The user 
+can select category values from the input raster to use in the MASK with the <em>maskcats</em> parameter; 
+if <em>r.mask</em> is run from the command line, the category values listed in <em>maskcats</em> 
 must be quoted (see example below).
 <p>
 
