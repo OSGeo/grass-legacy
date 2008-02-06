@@ -29,7 +29,7 @@ extern "C" {
    \param snap snap mode (see vector/v.edit/lib/vedit.h)
    \param thresh threshold value to identify vertex position
 
-   \param 1 vertex added/removed
+   \param 1 vertex moved
    \param 0 nothing changed
    \param -1 error
 */
