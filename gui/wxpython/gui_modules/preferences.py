@@ -39,7 +39,7 @@ class Settings:
             'displayFont' : '',
             # advanced
             'settingsFile' : 'home', # home, location, mapset
-            'digitInterface' : 'vedit', # vedit, vdigit
+            'digitInterface' : 'vdigit', # vedit, vdigit
             }
         
         self.userSettings = copy.deepcopy(self.defaultSettings)
