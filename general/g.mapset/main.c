@@ -150,7 +150,7 @@ main (int argc, char *argv[])
 	G__setenv("MONITOR",cap->name);
 	R__open_quiet();
 	if ( R_open_driver() == 0 ) {
-            D_erase("white");
+            D_erase(DEFAULT_BG_COLOR);
 	    D_add_to_list("d.erase");
 	    R_close_driver();
 	    R_release_driver();
