@@ -698,7 +698,7 @@ class DigitToolbar(AbstractToolbar):
 
             if not self.comboid:
                 self.combo = wx.ComboBox(self.toolbar[self.numOfRows-1], id=wx.ID_ANY, value=value,
-                                         choices=layerNameList, size=(135, -1),
+                                         choices=layerNameList, size=(105, -1),
                                          style=wx.CB_READONLY)
                 self.comboid = self.toolbar[self.numOfRows-1].InsertControl(0, self.combo)
                 self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
