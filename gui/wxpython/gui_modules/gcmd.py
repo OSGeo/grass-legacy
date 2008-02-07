@@ -44,7 +44,7 @@ import wx
 
 guiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(guiModulePath)
-import wxgui_utils # log window
+# import wxgui_utils # log window
 from debug import Debug as Debug
 
 class GException(Exception):
