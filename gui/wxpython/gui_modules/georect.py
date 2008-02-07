@@ -43,13 +43,6 @@ import wx.grid as gridlib
 
 from threading import Thread
 
-try:
-    import subprocess
-except:
-    CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
-    sys.path.append(CompatPath)
-    from compat import subprocess
-
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
 sys.path.append(gmpath)
 gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons" )
@@ -131,8 +124,9 @@ class GeorectWizard(object):
         self.gisrc_dict = {}
         try:
             for line in f:
-                line = line.strip('/n')
-                self.gisrc_dict[line.split(':')[0]] = line.split(':')[1].strip()
+                if line != '':
+                    line = line.strip(' \n')
+                    self.gisrc_dict[line.split(':')[0]] = line.split(':')[1].strip()
         finally:
             f.close()
             
@@ -157,7 +151,8 @@ class GeorectWizard(object):
 
         self.wizard.FitToPage(self.startpage)
 
-#        self.Bind(wx.EVT_CLOSE,    self.OnCloseWindow)
+        #self.Bind(wx.EVT_CLOSE,    self.Cleanup)
+        self.parent.Bind(wx.EVT_ACTIVATE, self.OnGLMFocus)
 
         success = False
 
@@ -242,6 +237,10 @@ class GeorectWizard(object):
     def onWizFinished(self):
         return True
         self.Cleanup()
+        
+    def OnGLMFocus(self, event):
+        #self.SwitchEnv('original')
+        pass
 
     def Cleanup(self):
         # return to current location and mapset
@@ -374,7 +373,9 @@ class GroupPage(TitledPage):
         self.xylocation = ''
         self.xymapset = ''
         self.xygroup = ''
-
+        
+        self.extension = 'georect'+str(os.getpid())
+        
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, 'select group:',
                 style=wx.ALIGN_RIGHT)
@@ -390,12 +391,21 @@ class GroupPage(TitledPage):
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, -1, 'Create group if none exists', style=wx.ALIGN_LEFT)
         box.Add(label, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-        self.btn_mkgroup = wx.Button(self, wx.ID_ANY, "Make group ...")
+        self.btn_mkgroup = wx.Button(self, wx.ID_ANY, "Create/edit group ...")
         box.Add(self.btn_mkgroup, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(self, -1, 'Extension for output maps:', style=wx.ALIGN_LEFT)
+        box.Add(label, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.ext_txt = wx.wx.TextCtrl(self, -1, "", size=(150,-1))
+        self.ext_txt.SetValue(self.extension)
+        box.Add(self.ext_txt, 0, wx.ALIGN_LEFT|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
         self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         self.Bind(wx.EVT_COMBOBOX, self.OnGroup, self.cb_group)
         self.Bind(wx.EVT_BUTTON, self.OnMkGroup, self.btn_mkgroup)
+        self.Bind(wx.EVT_TEXT, self.OnExtension, self.ext_txt)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGING, self.onPageChanging)
         self.Bind(wiz.EVT_WIZARD_PAGE_CHANGED, self.OnPageChanged)
         self.Bind(wx.EVT_CLOSE, self.parent.Cleanup)
@@ -413,8 +423,12 @@ class GroupPage(TitledPage):
             cmdlist = ['i.group']       
             menuform.GUI().ParseCommand(cmdlist, parentframe=self.parent.parent)
         elif maptype == 'vector':
-            pass
-            # need a custom vector group creator
+            dlg = VectGroup(self, wx.ID_ANY, self.grassdatabase, self.xylocation, self.xymapset, self.xygroup)
+            if dlg.ShowModal() == wx.ID_OK:
+                dlg.MakeVGroup()
+            
+    def OnExtension(self, event):
+        self.extension = event.GetString()
 
     def onPageChanging(self,event=None):
         global xy_group
@@ -424,8 +438,12 @@ class GroupPage(TitledPage):
             event.Veto()
             return
 
-    def OnPageChanged(self,event=None):
+        if event.GetDirection() and self.extension == '':
+            wx.MessageBox('You must enter an map name extension in order to continue')
+            event.Veto()
+            return
 
+    def OnPageChanged(self,event=None):
         self.groupList = []
         tmplist = []
         self.xylocation = self.parent.gisrc_dict['LOCATION_NAME']
@@ -514,6 +532,7 @@ class GCP(wx.Frame):
         self.xylocation = self.grwiz.gisrc_dict['LOCATION_NAME']
         self.xymapset = self.grwiz.gisrc_dict['MAPSET']
         self.xygroup = self.grwiz.grouppage.xygroup
+        self.extension = self.grwiz.grouppage.extension
         self.pointsfile = os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group',self.xygroup,'POINTS')
         self.rgrpfile = os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group',self.xygroup,'REF')
         self.vgrpfile = os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group',self.xygroup,'VREF')
@@ -521,6 +540,7 @@ class GCP(wx.Frame):
         
         self.SetTarget(self.xygroup, self.currentlocation, self.currentmapset)
 
+        self.gr_order = 1 #polynomial order transformation for georectification
         self.selected = 0 #gcp list item selected
         self.mapcoordlist = [(0000000.00,0000000.00,'')] #list map coords and ID of map display they came from
 
@@ -547,8 +567,8 @@ class GCP(wx.Frame):
         if os.path.isfile(self.pointsfile):
             self.ReadGCPs()
             self.ResizeColumns()
-        else:
-            # initialize a blank line in the GCP list
+        elif self.list.self.list.GetItemCount() == 0:
+            # initialize 3 blank lines in the GCP list (minimum for georectification)
             i = ('0000000.00','0000000.00','0000000.00','0000000.00','0000.00','0000.00')
             index = self.list.InsertStringItem(sys.maxint, i[0])
             self.list.SetStringItem(index, 1, i[1])
@@ -557,6 +577,8 @@ class GCP(wx.Frame):
             self.list.SetStringItem(index, 4, i[4])
             self.list.SetStringItem(index, 5, i[5])
             self.list.CheckItem(0, True)
+            self.AddGCP(None)
+            self.AddGCP(None)
             self.ResizeColumns()
 
         self.sizer.Add(self.list, 1, wx.EXPAND|wx.ALL, 5)
@@ -565,6 +587,8 @@ class GCP(wx.Frame):
         self.Bind(wx.EVT_RADIOBOX, self.OnGRMethod, self.rb_grmethod)
         self.list.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
+        self.Bind(wx.EVT_ACTIVATE, self.OnFocus)
+        self.Bind(wx.EVT_CLOSE, self.grwiz.Cleanup)
 
     def __createToolBar(self):
         """Creates toolbar"""
@@ -573,6 +597,9 @@ class GCP(wx.Frame):
         for each in self.toolbarData():
             self.addToolbarButton(toolbar, *each)
         toolbar.Realize()
+        
+    def OnFocus(self, event):
+        self.grwiz.SwitchEnv('new')
         
     def ResizeColumns(self):
         for i in range(6):
@@ -654,6 +681,7 @@ class GCP(wx.Frame):
         self.mapcoordlist.append((0000000.00,0000000.00,''))
         self.list.CheckItem(index, True)
         self.list.SetItemState(index, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        self.ResizeColumns()
         return index
         
     def SetGCPData(self, coordtype, coord, mapdisp=None, check=True):
@@ -696,8 +724,8 @@ class GCP(wx.Frame):
         f = open(self.pointsfile)
         try:
             for line in f:
-                if line[0] != '#':
-                    line = line.strip('/n')
+                if line[0] != '#' and line !='':
+                    line = line.strip(' \n')
                     coords = line.split()
                     if coords[4] == '1':
                         check = True
@@ -707,11 +735,10 @@ class GCP(wx.Frame):
                     for i in range(4):
                         self.list.SetStringItem(index, i, coords[i])
                     self.list.CheckItem(index, check)
+            self.RefreshGCPMarks(None)
         finally:
             f.close()
             
-        self.list.RefreshItems(0, self.list.GetItemCount()-1)
-
     def OnRMS(self, event):
         """
         calculates RMS error
@@ -722,8 +749,53 @@ class GCP(wx.Frame):
         """
         georectifies map using i.rectify or v.transform
         """
+        global maptype
         
-        pass
+        cmd_stdout = ''
+        cmd_stderr = ''
+        
+        if maptype == 'cell':
+            cmdlist = ['i.rectify', '-ca', 'group=%s' % self.xygroup, 'extension=%s' % self.extension, 'order=%s' % self.gr_order]
+            p = gcmd.Command(cmd=cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
+            if p.returncode == 0:
+                wx.MessageBox("All maps were georectified successfully")
+            else:
+                wx.MessageBox(cmd_stderr+'\n'+cmd_stdout)
+        elif maptype == 'vector':
+            # loop through all vectors in VREF and move resulting vector to target location
+            f = open(self.vgrpfile)
+            vectlist = []
+            try:
+                for vect in f:
+                    vect = vect.strip(' \n')
+                    vectlist.append(vect)
+            finally:
+                f.close()
+            for vect in vectlist:
+                outname = vect+'_'+self.extension
+                cmdlist = ['v.transform', '--q', 'input=%s' % vect, 'output=%s' % outname, 'pointsfile=%s' % self.pointsfile]
+                #p = subprocess.Popen(cmdlist, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                #cmd_stdout = p.stdout.read()
+                #cmd_stderr = p.stderr.read()
+                                
+                p = gcmd.Command(cmd=cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
+                    
+            if p.returncode == 0:
+                wx.MessageBox("All maps were georectified successfully")
+                for vect in vectlist:
+                    outname = vect+'_'+self.extension
+                    xyvpath = os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'vector',outname)
+                    vpath = os.path.join(self.grassdatabase,self.currentlocation,self.currentmapset,'vector',outname)
+                    if os.path.isfile(vpath):
+                        wx.MessageBox("%s already exists. Change extension name and georectify again" % outname)
+                    else:
+                        shutil.move(xyvpath, vpath)
+            else:
+                wx.MessageBox(cmd_stderr+'\n'+cmd_stdout)
+                                    
+            wx.MessageBox('For vector files with attribute tables, you will need to manually copy the tables to the new location')
+        else:
+            return
 
     def OnQuit(self, event):
         self.Destroy()
@@ -779,16 +851,17 @@ class GCP(wx.Frame):
                 pxcoord1 = self.grwiz.mapwin.Cell2Pixel((coord0, coord1))
                 self.grwiz.mapwin.DrawCross(pdc=self.grwiz.mapwin.pdcTmp,
                                             coords=pxcoord1, size=5)
-                self.grwiz.SwitchEnv("original")
-                pxcoord2 = self.mapcoordlist[index][2].Cell2Pixel((coord2, coord3))
-                self.mapcoordlist[index][2].DrawCross(pdc=self.mapcoordlist[index][2].pdcTmp,
+                if self.mapcoordlist != [] and self.mapcoordlist[index][2] != '':
+                    self.grwiz.SwitchEnv("original")
+                    pxcoord2 = self.mapcoordlist[index][2].Cell2Pixel((coord2, coord3))
+                    self.mapcoordlist[index][2].DrawCross(pdc=self.mapcoordlist[index][2].pdcTmp,
                                                       coords=pxcoord2, size=5)
                 
     def OnGRMethod(self, event):
         """
         sets transformation type for georectifying
         """
-        pass
+        self.gr_order = event.GetInt() + 1
 
 
 class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
@@ -805,15 +878,105 @@ class CheckListCtrl(wx.ListCtrl, CheckListCtrlMixin, ListCtrlAutoWidthMixin):
     def OnCheckItem(self, index, flag):
         pass
 
+class VectGroup(wx.Dialog):
+    """
+    dialog to create a vector group (VREF file) for georectifying
+    """
+
+    def __init__(self, parent, id, grassdb, location, mapset, group,
+                style=wx.DEFAULT_DIALOG_STYLE):
+  
+        wx.Dialog.__init__(self, parent, id, style=style)
+        
+        self.grassdatabase = grassdb
+        self.xylocation = location
+        self.xymapset = mapset
+        self.xygroup = group
+        
+        # get list of valid vector directories
+        vectlist = os.listdir(os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'vector'))
+        for dir in vectlist:
+            if os.path.isfile(os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'vector',dir,'coor')):
+                pass
+            else:
+                vectlist.remove(dir)
+        
+        self.vgrouplist = []
+        self.vgrpfile = os.path.join(self.grassdatabase,self.xylocation,self.xymapset,'group',self.xygroup,'VREF')
+        if os.path.isfile(self.vgrpfile):
+            f = open(self.vgrpfile)
+            try:
+                for line in f:
+                    if line != '':
+                        self.vgrouplist.append(line.strip(' \n'))
+            finally:
+                f.close()
+        
+        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
+        self.btnSubmit = wx.Button(self, wx.ID_OK)
+        self.btnSubmit.SetDefault()
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY,
+                              label='Select vector map(s) to add to group:')
+        box.Add(label, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.LEFT, border=5)
+        self.addmap = wx.CheckListBox(self, -1, wx.DefaultPosition, wx.DefaultSize, vectlist)
+        box.Add(self.addmap, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT| wx.LEFT, border=5)
+        sizer.Add(box, flag=wx.ALIGN_RIGHT | wx.ALL, border=3)
+        
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY,
+                              label='Select vector map(s) to remove from group:')
+        box.Add(label, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT | wx.LEFT, border=5)
+        self.remmap = wx.CheckListBox(self, -1, wx.DefaultPosition, wx.DefaultSize, self.vgrouplist)
+        box.Add(self.remmap, flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_RIGHT| wx.LEFT, border=5)
+        sizer.Add(box, flag=wx.ALIGN_RIGHT | wx.ALL, border=3)
+
+        # buttons
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(self.btnCancel)
+        btnSizer.AddButton(self.btnSubmit)
+        btnSizer.Realize()
+
+        sizer.Add(item=btnSizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+        self.Layout()
+        
+        self.Bind(wx.EVT_CHECKLISTBOX, self.AddVect, self.addmap)
+        self.Bind(wx.EVT_CHECKLISTBOX, self.RemoveVect, self.remmap)
+
+    def AddVect(self, event):
+        index = event.GetSelection()
+        label = self.addmap.GetString(index)
+        if self.addmap.IsChecked(index):
+            self.vgrouplist.append(label)
+        self.addmap.SetSelection(index)    # so that (un)checking also selects (moves the highlight)
+        event.Skip()
+        
+    def RemoveVect(self, event):
+        index = event.GetSelection()
+        label = self.remmap.GetString(index)
+        if self.remmap.IsChecked(index):
+            self.vgrouplist.remove(label)
+        self.remmap.SetSelection(index)    # so that (un)checking also selects (moves the highlight)
+        event.Skip()
+        
+    def MakeVGroup(self):
+        f = open(self.vgrpfile, mode='w')
+        for vect in self.vgrouplist:
+            f.write(vect+'\n')
+         
+
 class EditGPC(wx.Dialog):
-    """Dialog for editing GPC line in list control"""
+    """Dialog for editing GPC and map coordinates in list control"""
     def __init__(self, parent, id, data, 
                 style=wx.DEFAULT_DIALOG_STYLE):
- 
-        """
-        dialog for editing GCP and map coordinates
-        """
- 
+  
         wx.Dialog.__init__(self, parent, id, style=style)
 
         self.btnCancel = wx.Button(self, wx.ID_CANCEL)
@@ -821,10 +984,6 @@ class EditGPC(wx.Dialog):
         self.btnSubmit.SetDefault()
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-
-        # data area
-        #gridSizer = wx.GridBagSizer(vgap=3, hgap=3)
-        #gridSizer.AddGrowableCol(4)
        
         box = wx.BoxSizer(wx.HORIZONTAL)
         xlabel = wx.StaticText(parent=self, id=wx.ID_ANY,
@@ -861,9 +1020,6 @@ class EditGPC(wx.Dialog):
         btnSizer.AddButton(self.btnCancel)
         btnSizer.AddButton(self.btnSubmit)
         btnSizer.Realize()
-
-        #sizer.Add(item=gridSizer, proportion=1,
-        #          flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         sizer.Add(item=btnSizer, proportion=0,
                   flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)

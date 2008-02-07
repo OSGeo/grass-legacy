@@ -131,7 +131,7 @@ class Data:
                 ("Volume to raster series", "Convert raster to vector map", "self.OnMenuCmd", "r3.to.rast"),
                 )),
               ("","","", ""),
-              ("Georectify (not functional)", "Georectify raster and vector maps", "self.OnGeorectify", ""),
+              ("Georectify", "Georectify raster and vector maps", "self.OnGeorectify", ""),
               ("","","", ""),
               ("NViz (requires TclTk)", "N-Dimensional visualization of maps and volumes", "self.OnMenuCmd", "nviz"),
               ("","","", ""),
