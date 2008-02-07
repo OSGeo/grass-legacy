@@ -467,6 +467,11 @@ class DigitToolbar(AbstractToolbar):
     def OnSettings(self, event):
         """Show settings dialog"""
 
+        if self.parent.digit is None:
+            reload(digit)
+            from digit import Digit as Digit
+            self.parent.digit = Digit(mapwindow=self.parent.MapWindow)
+            
         if not self.settingsDialog:
             self.settingsDialog = DigitSettingsDialog(parent=self.parent, title=_("Digitization settings"),
                                                       style=wx.DEFAULT_DIALOG_STYLE)
