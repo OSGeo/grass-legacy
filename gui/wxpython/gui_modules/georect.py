@@ -750,17 +750,24 @@ class GCP(wx.Frame):
         georectifies map using i.rectify or v.transform
         """
         global maptype
-        
-        cmd_stdout = ''
-        cmd_stderr = ''
-        
+                
         if maptype == 'cell':
+            print 'in cell rectify'
             cmdlist = ['i.rectify', '-ca', 'group=%s' % self.xygroup, 'extension=%s' % self.extension, 'order=%s' % self.gr_order]
-            p = gcmd.Command(cmd=cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
+            p = gcmd.Command(cmd=cmdlist)
+            stdout = p.ReadStdOutput()
+            stderr = p.ReadErrOutput()
+            msg = err = ''
             if p.returncode == 0:
-                wx.MessageBox("All maps were georectified successfully")
+                for line in stdout:
+                    msg = msg+line+'\n'
+                for line in stderr:
+                    err = err+line+'\n'
+                wx.MessageBox('All maps georectified successfully\n'+msg+'\n'+err)
             else:
-                wx.MessageBox(cmd_stderr+'\n'+cmd_stdout)
+                for line in stderr:
+                    err = err+line+'\n'
+                wx.MessageBox(err)
         elif maptype == 'vector':
             # loop through all vectors in VREF and move resulting vector to target location
             f = open(self.vgrpfile)
@@ -774,12 +781,14 @@ class GCP(wx.Frame):
             for vect in vectlist:
                 outname = vect+'_'+self.extension
                 cmdlist = ['v.transform', '--q', 'input=%s' % vect, 'output=%s' % outname, 'pointsfile=%s' % self.pointsfile]
-                #p = subprocess.Popen(cmdlist, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                #cmd_stdout = p.stdout.read()
-                #cmd_stderr = p.stderr.read()
                                 
-                p = gcmd.Command(cmd=cmdlist, stdout=cmd_stdout, stderr=cmd_stderr)
-                    
+                p = gcmd.Command(cmd=cmdlist)
+                stdout = p.ReadStdOutput()
+                msg = '****'+outname+'****\n'
+                for line in stdout:
+                    msg = msg+line+'\n'
+                wx.MessageBox(msg)
+                
             if p.returncode == 0:
                 wx.MessageBox("All maps were georectified successfully")
                 for vect in vectlist:
@@ -789,11 +798,11 @@ class GCP(wx.Frame):
                     if os.path.isfile(vpath):
                         wx.MessageBox("%s already exists. Change extension name and georectify again" % outname)
                     else:
-                        shutil.move(xyvpath, vpath)
-            else:
-                wx.MessageBox(cmd_stderr+'\n'+cmd_stdout)
+                        shutil.move(xyvpath, vpath)                
                                     
-            wx.MessageBox('For vector files with attribute tables, you will need to manually copy the tables to the new location')
+                wx.MessageBox('For vector files with attribute tables, you will need to manually copy the tables to the new location')
+            else:
+                wx.MessageBox('Some maps were not georectified successfully')
         else:
             return
 
