@@ -498,7 +498,7 @@ if __name__ == "__main__":
     # d.rast verbosely, wait for process termination
     print "Running d.rast..."
 
-    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=True, wait=True, rerr=True)
+    cmd = Command(cmd=["d.rast", "elevation.dem"], verbose=3, wait=True, rerr=True)
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -514,7 +514,7 @@ if __name__ == "__main__":
 
     cmd = Command(cmd=["v.net.path", "in=roads@PERMANENT", "out=tmp", "dmax=100000", "--o"],
                   stdin="0 593527.6875 4925297.0625 602083.875 4917545.8125",
-                  verbose=False,
+                  verbose=0,
                   wait=True, rerr=None)
 
     if cmd.returncode == None:
@@ -530,7 +530,7 @@ if __name__ == "__main__":
     # returncode will be None
     print "Running d.vect tmp..."
 
-    cmd = Command(["d.vect", "tmp"], verbose=False, wait=False, rerr=None)
+    cmd = Command(["d.vect", "tmp"], verbose=2, wait=False, rerr=None)
 
     if cmd.returncode == None:
         print "RUNNING"
@@ -538,3 +538,16 @@ if __name__ == "__main__":
         print "SUCCESS"
     else:
         print "FAILURE (%d)" % cmd.returncode
+
+    cmd = Command(["g.region", "-p"])
+
+    for line in cmd.ReadStdOutput():
+        print line
+
+    cmd = Command(["g.region", "-p"], stderr=None)
+
+    for line in cmd.ReadStdOutput():
+        print line
+    for line in cmd.ReadErrOutput():
+        print line
+    
