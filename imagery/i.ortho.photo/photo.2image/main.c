@@ -88,7 +88,9 @@ int main (int argc, char *argv[])
     Compute_equation();
 
     signal (SIGINT, SIG_IGN);
+#ifdef SIGQUIT
     signal (SIGQUIT, SIG_IGN); 
+#endif
 
     Init_graphics();
     display_title (VIEW_MAP1);
