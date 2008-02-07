@@ -124,6 +124,16 @@ driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'
 oldcol="`echo $GIS_OPT_COLUMN | cut -d',' -f1`"
 newcol="`echo $GIS_OPT_COLUMN | cut -d',' -f2`"
 
+if [ "$driver" = "dbf" ] ; then
+  # strangely "" counts as 1
+  NAMELEN=`echo "$newcol" | wc -c | awk '{print $1}'`
+  if [ "$NAMELEN" -gt 11 ] ; then
+   g.message -e "Column name too long <$newcol>: the DBF driver only supports up to 10 characters as column name."
+   cleanup
+   exit 1
+  fi
+fi
+
 if [ "$col" = "cat" ] ; then
    g.message -e "Cannot rename <$col> column as it is needed to keep table \
      connected to vector map"
