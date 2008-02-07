@@ -19,7 +19,9 @@ int set_signals (void)
 /* set the ctrlz catch 
 	signal (SIGTSTP, ctrlz);
 */
+#ifdef SIGTSTP
 	signal (SIGTSTP, SIG_IGN); /* ignore ctrl-Z */
+#endif
 
         /* set other signal catches */
 	signalflag.interrupt = 0;
