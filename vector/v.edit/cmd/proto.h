@@ -27,7 +27,7 @@ int sel_by_polygon(struct Map_info *,
 		   int, struct line_pnts *,
 		   struct ilist *);
 int sel_by_id(struct Map_info *,
-	      char *,
+	      int, char *,
 	      struct ilist *);
 int sel_by_where(struct Map_info *,
 		 int, int, char *,

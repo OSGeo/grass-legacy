@@ -1,4 +1,6 @@
 /**
+   \file merge.c
+
    \brief Vedit library - merge lines
 
    This program is free software under the

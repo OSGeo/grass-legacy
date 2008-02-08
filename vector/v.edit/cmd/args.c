@@ -86,9 +86,11 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "Connect two lines;"
 				     "zbulk;"
 				     "Z bulk-labeling (automated assignment of z coordinate to "
-				     "vector lines)");
+				     "vector lines);"
+				     "chtype;"
+				     "Change feature type (point<->centroid, line<->boundary)");
     params -> tool->options     = "create,add,delete,copy,move,flip,catadd,catdel,"
-      "merge,break,snap,connect,"
+      "merge,break,snap,connect,chtype,"
       "vertexadd,vertexdel,vertexmove,zbulk,select";
 
     params -> in = G_define_standard_option (G_OPT_F_INPUT);
@@ -275,32 +277,28 @@ int parser(int argc, char* argv[], struct GParams *params,
 	*action_mode = MODE_VERTEX_MOVE;
     }
     else if(G_strcasecmp (params -> tool -> answer, "select") == 0) { 
-        /* del requires a cats or or bbox or coords */
 	*action_mode = MODE_SELECT;
     }
     else if(G_strcasecmp (params -> tool -> answer, "catadd") == 0) { 
-        /* cat requires a cats or or bbox or coords */
 	*action_mode = MODE_CATADD;
     }
     else if(G_strcasecmp (params -> tool -> answer, "catdel") == 0) {
-        /* cat requires a cats or or bbox or coords */
 	*action_mode = MODE_CATDEL;
     }
     else if(G_strcasecmp(params -> tool -> answer, "copy") == 0) { 
-        /* del requires a cats or or bbox or coords */
 	*action_mode = MODE_COPY;
     }
     else if(G_strcasecmp (params -> tool -> answer, "snap") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_SNAP;
     }
     else if(G_strcasecmp (params -> tool -> answer, "flip") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_FLIP;
     }
     else if(G_strcasecmp (params -> tool -> answer, "zbulk") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_ZBULK;
+    }
+    else if(G_strcasecmp (params -> tool -> answer, "chtype") == 0) {
+      	*action_mode = MODE_CHTYPE;
     }
     else
     {

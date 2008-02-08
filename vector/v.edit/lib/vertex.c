@@ -1,4 +1,6 @@
 /**
+   \file vertex.c
+
    \brief Vedit library - vertex manipulation
 
    This program is free software under the

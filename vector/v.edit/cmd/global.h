@@ -34,6 +34,8 @@ enum mode {
     MODE_NONE,
     /* z bulk-labeling */
     MODE_ZBULK,
+    /* change feature type (point<->centroid, line<->boundary) */
+    MODE_CHTYPE,
 };
 
 struct GParams { 

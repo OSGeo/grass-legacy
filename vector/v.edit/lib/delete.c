@@ -1,4 +1,6 @@
 /**
+   \file delete.c
+
    \brief Vedit library - delete features
 
    This program is free software under the

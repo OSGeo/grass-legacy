@@ -1,4 +1,6 @@
 /**
+   \file move.c
+
    \brief Vedit library - snapping
 
    This program is free software under the

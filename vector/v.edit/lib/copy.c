@@ -1,4 +1,6 @@
 /**
+   \file copy.c
+
    \brief Vedit library - copy features
 
    This program is free software under the

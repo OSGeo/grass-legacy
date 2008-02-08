@@ -1,4 +1,6 @@
 /**
+   \file cats.c
+
    \brief Vedit library - category manipulation
 
    This program is free software under the

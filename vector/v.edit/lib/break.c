@@ -1,4 +1,6 @@
 /**
+   \file break.c
+
    \brief Vedit library - split/break lines
 
    This program is free software under the

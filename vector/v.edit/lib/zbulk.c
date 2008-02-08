@@ -1,4 +1,6 @@
 /**
+   \file zbulk.c
+
    \brief Vedit library - Bulk labeling (automated labeling of vector features)
 
    This program is free software under the

@@ -1,4 +1,6 @@
 /**
+   \file distance.c
+
    \brief Vedit library - distance calculation
 
    This program is free software under the

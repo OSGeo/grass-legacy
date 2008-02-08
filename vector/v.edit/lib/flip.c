@@ -1,4 +1,6 @@
 /**
+   \file flip.c
+
    \brief Vedit library - lines flipping
 
    This program is free software under the
