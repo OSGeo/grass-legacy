@@ -125,8 +125,10 @@ oldcol="`echo $GIS_OPT_COLUMN | cut -d',' -f1`"
 newcol="`echo $GIS_OPT_COLUMN | cut -d',' -f2`"
 
 if [ "$driver" = "dbf" ] ; then
-  NAMELEN=`echo -n "$newcol" | wc -c | awk '{print $1}'`
-  if [ "$NAMELEN" -gt 10 ] ; then
+  NAMELEN=`echo "$newcol" | wc -c | awk '{print $1}'`
+  #max DBF column name length is 10, but wc counts echo's \n char so we test for 11.
+  #  'echo -n' (output as string, ie with no newline) is apparently not portable.
+  if [ "$NAMELEN" -gt 11 ] ; then
    g.message -e "Column name too long <$newcol>: the DBF driver only supports up to 10 characters as column name."
    cleanup
    exit 1
