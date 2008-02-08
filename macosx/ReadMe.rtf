@@ -484,13 +484,16 @@ Building a universal X11 Tcl/Tk is easy, and not worth the time to make an Xcode
 Unzip them, and in a Terminal (fill in [bracketed] items with appropriate values, drag-n-drop folders from the Finder for easy path entry), each prompt is a complete line, no returns except at the ends:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul Tiger\ulnone \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs20 \cf0 $ cd [/path/to/Tcl/source]/unix\
+$ export MACOSX_DEPLOYMENT_TARGET=10.3\
 $ CFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3" ./configure --prefix=/usr/local/tcltk --enable-threads\
 $ make\
 $ sudo make install\
 $ sudo ln -sf libtcl8.4.dylib /usr/local/tcltk/lib/libtcl.dylib\
-\
 \
 $ cd [/path/to/Tk/source]/unix\
 $ CFLAGS="-arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.3" ./configure --prefix=/usr/local/tcltk --enable-threads --with-x --with-tcl=/usr/local/tcltk/lib\
@@ -512,7 +515,9 @@ To configure Tcl for quad-arch universal + 32bit + 64bit:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\f1\fs20 \cf0 $ CFLAGS="-arch ppc -arch i386 -arch ppc64 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure --prefix=/usr/local/tcltk --enable-threads\
+\f1\fs20 \cf0 $ export MACOSX_DEPLOYMENT_TARGET=10.5\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 $ CFLAGS="-arch ppc -arch i386 -arch ppc64 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure --prefix=/usr/local/tcltk --enable-threads\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
@@ -525,7 +530,21 @@ To configure Tk for quad-arch universal + 32bit + 64bit:\
 
 \f0\fs24 \cf0 \
 This will only run on Leopard.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul \ulc0 Panther\ulnone \
 \
+To configure on Panther, use these simplified configure commands in place of the above, and skip the MACOSX_DEPLOYMENT_TARGET setting:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs20 \cf0 $ ./configure --prefix=/usr/local/tcltk --enable-threads\
+\
+$ ./configure --prefix=/usr/local/tcltk --enable-threads --with-x --with-tcl=/usr/local/tcltk/lib\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 \
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
