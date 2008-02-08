@@ -607,6 +607,14 @@ class VEdit(AbstractDigit):
         """Connect selected lines/boundaries"""
         return self.__ModifyLines('connect')
 
+    def TypeConvForSelectedLines(self):
+        """Feature type conversion for selected objects.
+
+        Supported conversions:
+         - point <-> centroid
+         - line <-> boundary
+        """
+        return self.__ModifyLines('chtype')
 
     def ZBulkLine(self, pos1, pos2, value, step):
         """Provide z bulk-labeling (automated assigment of z coordinate

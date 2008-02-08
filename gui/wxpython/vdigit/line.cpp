@@ -646,59 +646,12 @@ struct Map_info** Digit::OpenBackgroundVectorMap(const char *bgmap)
 */
 int Digit::TypeConvLines()
 {
-    int nlines, line;
-    int type, newtype;
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-
     if (!display->mapInfo) {
 	return -1;
     }
 
-    nlines = 0;
-
-    Points = Vect_new_line_struct();
-    Cats = Vect_new_cats_struct();
-
-    for (int i = 0; i < display->selected->n_values; i++) {
-	line = display->selected->value[i];
-	if (!Vect_line_alive(display->mapInfo, line))
-	    continue;
-	type = Vect_read_line(display->mapInfo, Points, Cats, line);
-	if (type < 0) {
-	    return -1;
-	}
-	switch (type) {
-	case GV_POINT:
-	    newtype = GV_CENTROID;
-	    break;
-	case GV_CENTROID:
-	    newtype = GV_POINT;
-	    break;
-	case GV_LINE:
-	    newtype = GV_BOUNDARY;
-	    break;
-	case GV_BOUNDARY:
-	    newtype = GV_LINE;
-	    break;
-	default:
-	    newtype = -1;
-	    break;
-	}
-	
-	G_debug(3, "Digit.TypeConvLines(): line=%d, from_type=%d, to_type=%d",
-		line, type, newtype);
-	
-	if (newtype > 0) {
-	    if (Vect_rewrite_line(display->mapInfo, line, newtype, Points, Cats) < 0) {
-		return -1;
-	    }
-	    nlines++;
-	}
-    }
-    
-    Vect_destroy_line_struct(Points);
-    Vect_destroy_cats_struct(Cats);
-
-    return nlines;
+    int npoints, nlines, ncentroids, nboundaries;
+    return Vedit_chtype_lines (display->mapInfo, display->selected,
+			       &npoints, &ncentroids,
+			       &nlines, &nboundaries);
 }
