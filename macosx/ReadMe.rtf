@@ -1,5 +1,5 @@
 {\rtf1\ansi\ansicpg1252\cocoartf949
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset238 Monaco;}
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
 {\colortbl;\red255\green255\blue255;}
 \margl1440\margr1440\vieww8720\viewh11500\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\qc\pardirnatural
@@ -12,7 +12,7 @@
 \fs24 \cf0 \
 \pard\tx1080\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
-\i \cf0 2008-1-13\
+\i \cf0 2008-2-7\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \i0 \cf0 \
@@ -26,6 +26,7 @@ About\
 Building GRASS\
 	Application Build\
 	Universal Build*\
+	Optimization*\
 	Configure Example*\
 	Leopard Notes*\
 	Building an Installer Package\
@@ -208,6 +209,28 @@ export LDFLAGS="-arch ppc -arch i386 -isysroot $SDKROOT"\
 
 \f0\fs24 \cf0 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \ul Optimization\ulnone \
+\
+By default, GRASS configures with debugging symbols turned on (the "-g" flag), and level 2 optimization ("-O2").  If you don't want debugging on (it greatly increases the binary size) or want to use a different optimization, just add an optimization flag to the above CFLAGS and CXXFLAGS exports.  Specifying an optimization disables debugging.  Some common optimizations are (see the gcc man page for complete details):\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\fs20 \cf0 -O2
+\f0\fs24 	most optimizations, a common default\
+
+\f1\fs20 -O3
+\f0\fs24 	high\
+
+\f1\fs20 -Os
+\f0\fs24 	optimize for speed, also keep the binary size small (the Apple standard)\
+\
+If you want debugging with a different optimization flag, use one of the above optimization flags plus "
+\f1\fs20 -g
+\f0\fs24 ".\
+\
+Remember to separate all flags with spaces.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Configure Example\ulnone \
 \
 As an example, to build GRASS using my frameworks and Tcl/Tk as built in the build notes below, this should work 
@@ -303,6 +326,8 @@ To get libGL to work in GRASS, before configuring, edit
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
+It may be necessary to change this in configure, or configure will fail to locate libGL.  I don't want to go into a lot of detail, but replace all "-lGL" with the above dylib_file string.\
+\
 \'95 64bits\
 \
 Almost all of GRASS can be built 64bits. Use the above universal flags section and set the arch's to "
