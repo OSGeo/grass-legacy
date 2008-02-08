@@ -1014,6 +1014,18 @@ class VDigit(AbstractDigit):
         """Get list of layers"""
         return self.digit.GetLayers()
 
+    def TypeConvForSelectedLines(self):
+        """Feature type conversion for selected objects.
+
+        Supported conversions:
+         - point <-> centroid
+         - line <-> boundary
+
+        @return number of modified features
+        @return -1 on error
+        """
+        return self.digit.TypeConvLines()
+
     def __getSnapThreshold(self):
         """Get snap mode and threshold value
 

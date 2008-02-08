@@ -1176,7 +1176,7 @@ class BufferedWindow(wx.Window):
             if digitToolbar.action in ["deleteLine", "moveLine", "moveVertex",
                                        "copyCats", "editLine", "flipLine",
                                        "mergeLine", "snapLine",
-                                       "queryLine", "breakLine"]:
+                                       "queryLine", "breakLine", "typeConv"]:
                 nselected = 0
                 # -> delete line || move line || move vertex
                 if digitToolbar.action in ["moveVertex", "editLine"]:
@@ -1554,6 +1554,11 @@ class BufferedWindow(wx.Window):
                     digitClass.ZBulkLine(pos1, pos2, dlg.value.GetValue(), dlg.step.GetValue())
 
                 self.UpdateMap(render=False, renderVector=True)
+            elif digitToolbar.action == "typeConv":
+                # -> feature type conversion
+                # - point <-> centroid
+                # - line <-> boundary
+                digitClass.TypeConvForSelectedLines()
 
             if digitToolbar.action != "addLine":
                 # unselect and re-render
@@ -1588,10 +1593,10 @@ class BufferedWindow(wx.Window):
                 self.UpdateMap(render=False, renderVector=False)
 
             elif digitToolbar.action in ["deleteLine", "moveLine", "splitLine",
-                                  "addVertex", "removeVertex", "moveVertex",
-                                  "copyCats", "flipLine", "mergeLine",
-                                  "snapLine", "connectLine", "copyLine",
-                                  "queryLine", "breakLine"]:
+                                         "addVertex", "removeVertex", "moveVertex",
+                                         "copyCats", "flipLine", "mergeLine",
+                                         "snapLine", "connectLine", "copyLine",
+                                         "queryLine", "breakLine", "typeConv"]:
                 # varios tools -> unselected selected features
                 digitClass.driver.SetSelected([])
                 if digitToolbar.action in ["moveLine", "moveVertex", "editLine"] and \
