@@ -32,8 +32,6 @@ import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
 
-from gui_modules import location_wizard
-
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""
     def __init__(self, parent=None, id=wx.ID_ANY, style=wx.DEFAULT_FRAME_STYLE):
@@ -370,7 +368,7 @@ class GRASSStartup(wx.Frame):
 
     def OnWizard(self, event):
         """Location wizard started"""
-        reload(location_wizard)
+        from gui_modules import location_wizard
         gWizard = location_wizard.LocationWizard(self, self.tgisdbase.GetValue())
         if gWizard.location != None:
             self.OnSetDatabase(event)
