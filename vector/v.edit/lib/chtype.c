@@ -1,4 +1,6 @@
 /**
+   \file chtype.c
+
    \brief Vedit library - change feature type
 
    Supported conversions:
