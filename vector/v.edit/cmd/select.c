@@ -47,7 +47,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     /* select by id's */
     if (params -> id -> answer != NULL) {
 	sel_by_id(Map,
-		  params -> id -> answer,
+		  type, params -> id -> answer,
 		  List);
     }
 
@@ -429,16 +429,17 @@ int sel_by_polygon(struct Map_info *Map,
    \brief Select features by id
 
    \param[in] Map vector map
+   \param[in] type feature type
    \param[in] ids ids list
    \param[in,out] List list of selected features
  
    \return number of selected lines
 */
 int sel_by_id(struct Map_info *Map,
-	      char *ids,
+	      int type, char *ids,
 	      struct ilist* List)
 {
-    int i, j;
+    int i;
     int num, id;
     struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
     struct ilist *List_tmp;
@@ -457,13 +458,14 @@ int sel_by_id(struct Map_info *Map,
     num = Vect_get_num_lines (Map);
 
     for(i = 0; i < il -> n_ranges; i++) {
-	for(id = il -> min[i]; id <= il -> max[i]; id++) {
-	    for (j = 1; j <= num; j++) {
-		if (id == j) {
-		    Vect_list_append (List_tmp, id);
-		}
-            }
-        }
+	for (id = 1; id <= num; id++) {
+	    if (!(Vect_read_line(Map, NULL, NULL, id) & type)) {
+		continue;
+	    }
+	    if (id >= il -> min[i] && id <= il -> max[i]) {
+		Vect_list_append (List_tmp, id);
+	    }
+	}
     }
     
     G_debug (1, "  %d lines selected (by id)", List_tmp -> n_values);

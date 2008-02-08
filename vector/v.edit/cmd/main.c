@@ -346,6 +346,35 @@ int main (int argc, char *argv[])
 	G_message(_("%d lines labeled"), ret);
 	break;
     }
+    case MODE_CHTYPE: {
+	int npoints, nlines, ncentroids, nboundaries;
+	ret = Vedit_chtype_lines(&Map, List,
+				 &npoints, &ncentroids,
+				 &nlines, &nboundaries);
+
+	if (ret > 0) {
+	    if (npoints > 0) {
+		G_message(_("%d points converted to centroids"),
+			  npoints);
+	    }
+	    if (ncentroids > 0) {
+		G_message(_("%d centroids converted to points"),
+			  ncentroids);
+	    }
+	    if (nlines > 0) {
+		G_message(_("%d lines converted to boundaries"),
+			  nlines);
+	    }
+	    if (nboundaries > 0) {
+		G_message(_("%d boundaries converted to lines"),
+			  nboundaries);
+	    }
+	}
+	else {
+	    G_message(_("No feature modified"));
+	}
+	break;
+    }
     default:
 	G_warning(_("Operation not implemented"));
 	ret = -1;
