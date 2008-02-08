@@ -19,3 +19,5 @@ namespace std {
 namespace std { 
    %template(IntVecIntMap) map<int, vector<int> >;
 }
+%include "driver.h"
+%include "digit.h"

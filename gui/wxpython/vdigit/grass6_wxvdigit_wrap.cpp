@@ -11245,6 +11245,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Digit_TypeConvLines(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Digit *arg1 = (Digit *) 0 ;
+  int result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Digit_TypeConvLines",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Digit, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Digit_TypeConvLines" "', argument " "1"" of type '" "Digit *""'"); 
+  }
+  arg1 = reinterpret_cast< Digit * >(argp1);
+  result = (int)(arg1)->TypeConvLines();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Digit_ZBulkLabeling(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   Digit *arg1 = (Digit *) 0 ;
@@ -12016,6 +12038,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Digit_BreakLines", _wrap_Digit_BreakLines, METH_VARARGS, NULL},
 	 { (char *)"Digit_SnapLines", _wrap_Digit_SnapLines, METH_VARARGS, NULL},
 	 { (char *)"Digit_ConnectLines", _wrap_Digit_ConnectLines, METH_VARARGS, NULL},
+	 { (char *)"Digit_TypeConvLines", _wrap_Digit_TypeConvLines, METH_VARARGS, NULL},
 	 { (char *)"Digit_ZBulkLabeling", _wrap_Digit_ZBulkLabeling, METH_VARARGS, NULL},
 	 { (char *)"Digit_CopyLines", _wrap_Digit_CopyLines, METH_VARARGS, NULL},
 	 { (char *)"Digit_MoveVertex", _wrap_Digit_MoveVertex, METH_VARARGS, NULL},
@@ -12640,6 +12663,7 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_InstallConstants(d,swig_const_table);
   
   
+  SWIG_Python_SetConstant(d, "GSQL_MAX",SWIG_From_int(static_cast< int >(4000)));
   SWIG_Python_SetConstant(d, "GV_POINT",SWIG_From_int(static_cast< int >(0x01)));
   SWIG_Python_SetConstant(d, "GV_LINE",SWIG_From_int(static_cast< int >(0x02)));
   SWIG_Python_SetConstant(d, "GV_BOUNDARY",SWIG_From_int(static_cast< int >(0x04)));
@@ -12657,6 +12681,5 @@ SWIGEXPORT void SWIG_init(void) {
   SWIG_Python_SetConstant(d, "QUERY_UNKNOWN",SWIG_From_int(static_cast< int >(-1)));
   SWIG_Python_SetConstant(d, "QUERY_LENGTH",SWIG_From_int(static_cast< int >(0)));
   SWIG_Python_SetConstant(d, "QUERY_DANGLE",SWIG_From_int(static_cast< int >(1)));
-  SWIG_Python_SetConstant(d, "GSQL_MAX",SWIG_From_int(static_cast< int >(4000)));
 }
 

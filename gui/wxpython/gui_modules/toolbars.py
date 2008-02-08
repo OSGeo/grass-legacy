@@ -514,6 +514,10 @@ class DigitToolbar(AbstractToolbar):
         toolMenu.AppendItem(zbulk)
         self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnZBulk, zbulk)
 
+        typeconv = wx.MenuItem(toolMenu, wx.ID_ANY, 'Feature type conversion')
+        toolMenu.AppendItem(typeconv)
+        self.parent.MapWindow.Bind(wx.EVT_MENU, self.OnTypeConversion, typeconv)
+
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.parent.MapWindow.PopupMenu(toolMenu)
@@ -566,6 +570,17 @@ class DigitToolbar(AbstractToolbar):
         Debug.msg(2, "Digittoolbar.OnZBulk():")
         self.action="zbulkLine"
         self.parent.MapWindow.mouse['box'] = 'line'
+
+    def OnTypeConversion(self, event):
+        """Feature type conversion
+
+        Supported conversions:
+         - point <-> centroid
+         - line <-> boundary
+        """
+        Debug.msg(2, "Digittoolbar.OnTypeConversion():")
+        self.action="typeConv"
+        self.parent.MapWindow.mouse['box'] = 'box'
 
     def OnSelectMap (self, event):
         """

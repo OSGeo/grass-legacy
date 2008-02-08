@@ -35,6 +35,7 @@ public:
     int BreakLines();
     int SnapLines(double);
     int ConnectLines(double);
+    int TypeConvLines();
     int ZBulkLabeling(double, double, double, double,
 		      double, double);
     int CopyLines(std::vector<int>, const char*);
