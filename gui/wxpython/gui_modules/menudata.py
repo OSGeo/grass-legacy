@@ -548,7 +548,7 @@ class Data:
                 )),
               )),
           ("Help", (
-              ("GRASS GIS help", "GRASS GIS help", "self.RunMenuCmd", "g.manual -i"),
-              ("GRASS GIS Layer Manager help", "GRASS GIS Layer Manager help", "self.RunMenuCmd", "g.manual gis.m"),
+              ("GRASS GIS help", "GRASS GIS Reference Manual", "self.RunMenuCmd", "g.manual -i"),
+              ("GRASS GIS GUI help", "GUI-related Reference Manual", "self.RunMenuCmd", "g.manual wxGUI"),
               ("About GRASS GIS", "About GRASS GIS", "self.OnAboutGRASS", ""),
               )))]
