@@ -102,9 +102,16 @@ class GeorectWizard(object):
     """
 
     def __init__(self, parent):
-        wizbmp = wx.Image(os.path.join(os.getenv("GISBASE"),"etc","wx","images","wizard.png"), wx.BITMAP_TYPE_PNG)
-        wizbmp.Rescale(250,600)
-        wizbmp = wizbmp.ConvertToBitmap()
+        #
+        # define wizard image
+        #
+        # file = "loc_wizard.png"
+        #file = "loc_wizard_qgis.png"
+        #imagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
+        #                         file)
+        #wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
+        ## wizbmp.Rescale(250,600)
+        #wizbmp = wizbmp.ConvertToBitmap()
 
         self.parent = parent
 
