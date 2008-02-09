@@ -7,9 +7,9 @@ int
 get_mapset_path (void)
 {
     static int first = 1;
-    char buf[1024];
+    char buf[4096];
     char *b;
-    char name[50];
+    char name[GMAPSET_MAX];
     int n;
     int action;	/* defines action to be taken in set_path function */
 
@@ -27,7 +27,7 @@ get_mapset_path (void)
     nchoices = 0;
 
     fprintf (stdout,"\nnew list> ");
-    if (!fgets (b = buf,1024,stdin)) goto same;
+    if (!fgets (b = buf,4096,stdin)) goto same;
     while(isspace(*b))b++;
 
 	switch (*b) {
