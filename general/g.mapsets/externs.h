@@ -1,9 +1,9 @@
 #ifdef MAIN
-	char *mapset_name[256];
+	char *mapset_name[GMAPSET_MAX];
 	int nmapsets ;
-	int choice[256];
+	int choice[GMAPSET_MAX];
 	int nchoices;
-	int curr_mapset[256];
+	int curr_mapset[GMAPSET_MAX];
 	int ncurr_mapsets;
 #else
 	extern char *mapset_name[];

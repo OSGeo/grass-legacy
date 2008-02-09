@@ -25,7 +25,7 @@
 #include "local_proto.h"
 #include "externs.h"
 
-static char Path[4096];
+static char Path[GPATH_MAX];
 
 int 
 main (int argc, char *argv[])
