@@ -30,11 +30,9 @@
 char *
 G_mapset(void)
 {
-    static char mapset[30];
+    static char mapset[GMAPSET_MAX];
     static int first = 1;
     char *m;
-
-    char msg[100];
 
     m = G__mapset();
     if( m == NULL )
@@ -53,14 +51,13 @@ G_mapset(void)
 	    return mapset;
     /*
     case 0:
-	    sprintf(msg,"MAPSET %s - permission denied", mapset);
+	    G_fatal_error ("MAPSET %s - permission denied", mapset);
 	    break;
     */
     default:
-	    sprintf(msg,_("MAPSET %s not found"), mapset);
+	    G_fatal_error (_("MAPSET %s not found"), mapset);
 	    break;
     }
-    G_fatal_error (msg);
     exit(EXIT_FAILURE);
 }
 
