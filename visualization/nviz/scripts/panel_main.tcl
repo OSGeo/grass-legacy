@@ -501,10 +501,9 @@ proc change_display {flag} {
 	set NAME $XY
 	set NAME2 [winfo parent $NAME]
 	catch "destroy $XY"
-
-	# *** ACS_MODIFY 1.0 - one line
 	
 	if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
+	
 	set h [lindex [Nget_real_position 1] 2]
 	set min [lindex [Nget_height] 1]
 	set max [lindex [Nget_height] 2]
@@ -521,27 +520,16 @@ proc change_display {flag} {
 		#draw center position
 		inform "Set center of view position"
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
-		
-		#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-		if {$Nv_(FlyThrough) == 0} {
-			# original line
-			pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
-		}
-		#*** ACS_MODIFY 1.0 END ******************************************************
 		update_height $h		
 		reset_res
 		move_position
 	}
-	
-	
-	#*** ACS_MODIFY 1.0 BEGIN ******************************************************
-	if {$Nv_(FlyThrough)} {
+		
+	if {$Nv_(FlyThrough) == 0} {
 		pack_XY
 	} else {
-		# original line
 		pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
 	}
-	#*** ACS_MODIFY 1.0 END ******************************************************
 	if {$Nauto_draw == 1} {Ndraw_all}
 }
 
