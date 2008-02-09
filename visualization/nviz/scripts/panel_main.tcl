@@ -174,11 +174,11 @@ proc mkmainPanel { BASE } {
 
 	set draw_var1 [radiobutton $BASE.midt.b1 -text "eye" \
 		-variable draw_option -value 0 -width 8 \
-		-command "set Nv_(FlyThrough) 0; change_display 1" ]
+		-command "change_display 1" ]
 
 	set draw_var2 [radiobutton $BASE.midt.b2 -text "center" \
 		-variable draw_option -value 1 -width 8 \
-		-command "set Nv_(FlyThrough) 0; change_display 0" ]
+		-command "change_display 0" ]
 	$draw_var1 select
 
 	help $BASE.midt.b1 balloon "Change view by moving eye position"
@@ -191,7 +191,7 @@ proc mkmainPanel { BASE } {
 		# original code
 		pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
 	}
-	help $BASE.midt.b3 balloon "Change view interactively in display"
+	help $BASE.midt.b3 balloon "Change view using mouse to control fly-through"
 
 	# make	position "widget"
 	set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_eye_position]
@@ -414,6 +414,7 @@ proc mk_exag_slider {W} {
 
 	return $W.zexag
 }
+
 proc mk_hgt_slider {W} {
 	global Nv_
 
@@ -507,22 +508,17 @@ proc change_display {flag} {
 	set h [lindex [Nget_real_position 1] 2]
 	set min [lindex [Nget_height] 1]
 	set max [lindex [Nget_height] 2]
+	set Nv_(FlyThrough) 0
 	
 	if {$flag == 1} {
 		#draw eye position
 		inform "Set eye position"
 		set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
-		update_height $h
-		reset_res
-		move_position
 		
 	} elseif {$flag == 0} {
 		#draw center position
 		inform "Set center of view position"
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
-		update_height $h		
-		reset_res
-		move_position
 	}
 		
 	if {$Nv_(FlyThrough) == 0} {
@@ -530,6 +526,10 @@ proc change_display {flag} {
 	} else {
 		pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
 	}
+
+	update_height $h		
+	reset_res
+	move_position
 	if {$Nauto_draw == 1} {Ndraw_all}
 }
 
