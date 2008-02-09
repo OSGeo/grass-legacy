@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ../..
 
-PGM = wxgrass
-
 #SUBDIRS=vdigit docs
 SUBDIRS = docs
 
@@ -10,7 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 default: parsubdirs install_scripts
 
 install_scripts:
-	$(MKDIR) $(ETC)/wx/compat $(ETC)/wx/gui_modules $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images $(ETC)/wx/scripts $(ETC)/wx/vdigit 
+	$(MKDIR) $(ETC)/wx $(ETC)/wx/compat $(ETC)/wx/gui_modules $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images $(ETC)/wx/scripts $(ETC)/wx/vdigit 
 	$(INSTALL_DATA) compat/* $(ETC)/wx/compat/
 	$(INSTALL_DATA) gui_modules/* $(ETC)/wx/gui_modules/
 	$(INSTALL_DATA) icons/*.* $(ETC)/wx/icons/
