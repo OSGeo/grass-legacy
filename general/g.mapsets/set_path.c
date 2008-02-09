@@ -5,7 +5,7 @@
 
 int set_mapset_path (void)
 {
-    char command[1024];
+    char command[4096];
     int n;
     int i;
     int skip;
