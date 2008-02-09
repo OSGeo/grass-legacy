@@ -6,7 +6,7 @@
 #exclude following list of modules from help index:
 # escape it properly:
 ## TODO: better fix this in include/Make/Html.make, see bug #5361
-EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg"
+EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target\|helptext\.html\|r\.watershed\.ram\|r\.watershed\.seg\|wxGUI.*html"
 ############# nothing to configure below ############
 
 #fetch the ARCH for store the files:
@@ -45,7 +45,8 @@ echo " <link rel=\"stylesheet\" href=\"grassdocs.css\" type=\"text/css\">
 
 <h2>GRASS GIS $GRASSVERSION Reference Manual</h2>
 
-<p>Geographic Resources Analysis Support System, commonly referred to as
+<p>
+<em>Geographic Resources Analysis Support System</em>, commonly referred to as
 <a href=\"http://grass.osgeo.org\">GRASS</a>, 
 is a Geographic Information System (GIS) used for geospatial data management
 and analysis, image processing, graphics/maps production, spatial modeling,
@@ -179,6 +180,7 @@ echo "<tr><td>&nbsp;&nbsp;r3.* </td><td>raster3D commands</td></tr>" >> $FULLIND
 echo "<tr><td>&nbsp;&nbsp;v.*  </td><td>vector commands</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;<a href=\"gis.m.html\">gis.m</a> </td><td>GUI frontend to GIS menus and display</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;<a href=\"nviz.html\">nviz</a> </td><td>visualization suite</td></tr>" >> $FULLINDEX
+echo "<tr><td>&nbsp;&nbsp;<a href=\"wxGUI.html\">wxGUI</a> </td><td>wxPython-based GUI frontend</td></tr>" >> $FULLINDEX
 echo "<tr><td>&nbsp;&nbsp;<a href=\"xganim.html\">xganim</a> </td><td>raster map slideshow</td></tr>" >> $FULLINDEX
 echo "</table>" >> $FULLINDEX
 
@@ -258,6 +260,7 @@ done
 #extra stuff for 'nviz' and 'xganim' and GUIs:
 echo "<li><a href=\"gis.m.html\">gis.m</a> and <a href=\"d.m.html\">d.m</a> GIS managers</li>" >> $FILENAME
 echo "<li><a href=\"nviz.html\">nviz</a> visualization and animation tool</li>" >> $FILENAME
+echo "<li><a href=\"wxGUI.html\">wxGUI</a> wxPython-based GUI frontend</li>" >> $FILENAME
 echo "<li><a href=\"xganim.html\">xganim</a> tool  for animating a raster map series</li>" >> $FILENAME
 	      
 echo "</ul>" >> $FILENAME
