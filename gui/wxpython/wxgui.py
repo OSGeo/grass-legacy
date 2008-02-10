@@ -842,10 +842,10 @@ class GMFrame(wx.Frame):
                  ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.OnRaster),
                  ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.OnVector),
                  ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.AddCommand),
-                 ('addgrp',  wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_TOOLBAR, (16,16)),  Icons["addgrp"].GetLabel(), self.AddGroup),
+                 ('addgrp',  Icons["addgrp"].GetBitmap(),  Icons["addgrp"].GetLabel(), self.AddGroup),
                  ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.OnOverlay),
                  ('addlabels',  Icons["addlabels"].GetBitmap(),  Icons["addlabels"].GetLabel(), self.AddLabels),
-                 ('delcmd',  wx.ArtProvider.GetBitmap(wx.ART_DELETE, wx.ART_TOOLBAR, (16,16)), 'Delete selected layer', self.DeleteLayer),
+                 ('delcmd',  Icons["delcmd"].GetBitmap(),  Icons["delcmd"].GetLabel(), self.DeleteLayer),
                  ('', '', '', ''),
                  ('attrtable', Icons["attrtable"].GetBitmap(), Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
                   )
