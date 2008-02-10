@@ -28,8 +28,8 @@ import gcmd
 
 class SelectDialog(wx.Dialog):
     def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',
-                           pos=wx.DefaultPosition, size=(-1,-1), type='cell',
-                           style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+                pos=wx.DefaultPosition, size=(-1,-1), type='cell', multiple=False,
+                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
         """
         A dialog box for the GIS element selector control so that it can be launched
         from a button or other control.
@@ -37,11 +37,12 @@ class SelectDialog(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
-        self.selection = ''
+        self.selection = None
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        self.selection = Select(self, id=wx.ID_ANY, size=(300,-1),type=type)
+        self.selection = Select(self, id=wx.ID_ANY, size=(300,-1), type=type,
+                                multiple=multiple)
         sizer.Add(self.selection, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
@@ -61,24 +62,21 @@ class SelectDialog(wx.Dialog):
 
         self.SetSizer(sizer)
         sizer.Fit(self)
-        self.Layout()
-                
-    def ElementName(self):
-        element = self.selection.GetValue()
-        return element
 
 class Select(wx.combo.ComboCtrl):
-    def __init__(self, parent, id, size, type):
+    def __init__(self, parent, id, size, type, multiple):
         """
         Custom control to create a ComboBox with a tree control
-        to display GIS elements within acessible mapsets.
-        Elements can be selected with mouse.
+        to display and select GIS elements within acessible mapsets.
+        Elements can be selected with mouse. Can allow multiple selections, when
+        argument multiple=True. Multiple selections are separated by commas.
         """
         wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
         self.tcp = TreeCtrlComboPopup()
         self.SetPopupControl(self.tcp)
         self.SetPopupExtents(0,100)
         self.tcp.GetElementList(type)
+        self.tcp.SetMultiple(multiple)
 
     def SetElementList(self, type):
         self.tcp.seltree.DeleteAllItems()
@@ -91,11 +89,10 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     """
 
     # overridden ComboPopup methods
-
     def Init(self):
-        self.value = None
+        self.value = [] # for multiple is False -> len(self.value) in [0,1]
         self.curitem = None
-
+        self.multiple = False
 
     def Create(self, parent):
         self.seltree = wx.TreeCtrl(parent, style=wx.TR_HIDE_ROOT
@@ -130,14 +127,17 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         return self.seltree
 
     def GetStringValue(self):
-        if self.value:
-            return self.seltree.GetItemText(self.value)
-        return ""
+        str = ""
+        for value in self.value:
+            str += self.seltree.GetItemText(value) + ","
+        str = str.rstrip(',')
+        return str
 
     def OnPopup(self):
-        if self.value:
-            self.seltree.EnsureVisible(self.value)
-            self.seltree.SelectItem(self.value)
+        """Limited only for first selected"""
+        if len(self.value) > 0:
+            self.seltree.EnsureVisible(self.value[0])
+            self.seltree.SelectItem(self.value[0])
 
     def SetStringValue(self, value):
         # this assumes that item strings are unique...
@@ -146,7 +146,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             return
         found = self.FindItem(root, value)
         if found:
-            self.value = found
+            self.value.append(found)
             self.seltree.SelectItem(found)
 
     def GetAdjustedSize(self, minWidth, prefHeight, maxHeight):
@@ -274,13 +274,20 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             self.curitem = item
 
             if self.seltree.GetRootItem() == self.seltree.GetItemParent(item):
-                self.value = None # cannot select mapset item
+                self.value = [] # cannot select mapset item
             else:
-                self.value = item
+                if self.multiple is True:
+                    self.value.append(item)
+                else:
+                    self.value = [item, ]
 
             self.Dismiss()
 
         evt.Skip()
+
+    def SetMultiple(self, value):
+        """Select multiple items?"""
+        self.multiple = value
 
 
 
