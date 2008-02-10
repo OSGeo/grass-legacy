@@ -68,10 +68,10 @@ proc GmGroup::save { tree depth node } {
 proc GmGroup::display { node mod } {
     variable opt
     variable tree
-	global mon
-	global drawprog
-	global commandlist
-	set commandlist {}
+    global mon
+    global drawprog
+    global commandlist
+    set commandlist {}
 
     set tree($mon) $GmTree::tree($mon)
 	set layers ""
@@ -81,12 +81,12 @@ proc GmGroup::display { node mod } {
         if { ! ( $opt($id,_check) ) } { return }
     }
 
-	#invert layer list to put first tree node as top map layer
-	foreach n [$tree($mon) nodes $node] {
-		set layers [linsert $layers 0 $n]
-	}
-	
-	# display each node/layer
+    #invert layer list to put first tree node as top map layer
+    foreach n [$tree($mon) nodes $node] {
+	    set layers [linsert $layers 0 $n]
+    }
+    
+    # display each node/layer
     foreach n $layers {
         GmTree::display_node $n $mod
         incr drawprog
@@ -97,35 +97,40 @@ proc GmGroup::display { node mod } {
 ###############################################################################
 
 # display background maps for digitizing in v.digit
-proc GmGroup::vdigit_display { node digitnode } {
+proc GmGroup::vdigit_display { vectmap } {
     variable opt
     variable tree
     variable bg_command 
-	global mon
-	global drawprog
-	global commandlist
-	
-	set bg_command ""
-	
-	# display selected layers to create a display command list if needed
-	if {[llength $commandlist] == 0} {
-		MapCanvas::request_redraw $mon 1
-		vwait commandlist
-	}
+    global mon
+    global drawprog
+    global commandlist
 
-	# if the layer being digitized is the only one displayed, then don't
-	# make it a background layer too. This avoids a black background.
-	if {[llength $commandlist] == 1} {return $bg_command}
+    set bg_command ""
+    
+    # display selected layers to create a display command list if needed
+    if {[llength $commandlist] == 0} {
+            MapCanvas::request_redraw $mon 1
+            vwait commandlist
+    }
+    
+    # if the layer being digitized is the only one displayed, then don't
+    # make it a background layer too. This avoids a black background.
+    set mapname [lindex [split [lindex [split [lindex $commandlist 0] ] 1] =] 1]
+    
+    if {[llength $commandlist] == 1 && $mapname == $vectmap} {
+        return $bg_command
+    }
 
-	# add each command in display command list to background commands
-	foreach cmd $commandlist {
-		append bg_command "$cmd;"
-	}
-		
-	# get rid of the ; at the end of the background command list
-	set bg_command [string trimright $bg_command ";"]
-	
-	return $bg_command
+    # add each command in display command list to background commands
+    foreach cmd $commandlist {
+            append bg_command "$cmd;"
+    }
+    
+            
+    # get rid of the ; at the end of the background command list
+    set bg_command [string trimright $bg_command ";"]
+    
+    return $bg_command
 				
 }
 
@@ -164,7 +169,7 @@ proc GmGroup::nvdisplay { node } {
 		}
 		
 		if {[catch {eval exec "$cmd 2> $devnull &"} error]} {
-		    Gm::errmsg $error
+		    GmLib::errmsg $error
 		}
 	}
 
@@ -204,13 +209,13 @@ proc GmGroup::nviz { node } {
 			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				Gm::errmsg $error
+				GmLib::errmsg $error
 			}
 
 			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} error]} {
 				if { $rinfo == "" } {set surf ""}
 			} else {
-				Gm::errmsg $error
+				GmLib::errmsg $error
 			}
 
 			if { $surf == "" || $clr == "" } { return }
@@ -235,7 +240,7 @@ proc GmGroup::nviz { node } {
 			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} error]} {
 				if { $vinfo == "" } {set vect ""}
 			} else {
-				Gm::errmsg $error
+				GmLib::errmsg $error
 			}
 			
 			if {$vect == ""} {return}

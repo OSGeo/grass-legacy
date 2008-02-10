@@ -191,7 +191,7 @@ proc GmVector::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -252,7 +252,7 @@ proc GmVector::show_data { id } {
 	if {![catch {open "|v.db.connect map=$mapname layer=$layernum -g" r} vdb]} {
 		set vectdb [read $vdb]
 		if {[catch {close $vdb} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 
 		set vdblist [split $vectdb " "]
@@ -570,7 +570,7 @@ proc GmVector::vecttype { vect } {
 	if {![catch {open "|v.info map=$vect 2> $devnull" r} rv]} {
 		set vinfo [read $rv]
 		if {[catch {close $rv} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 
 		if { $vinfo == "" } {return}
@@ -627,9 +627,9 @@ proc GmVector::display { node mod } {
     # color
     if { $opt($id,1,rdmcolor) } { append cmd " -c" }
     if { $opt($id,1,sqlcolor) } { append cmd " -a" }
-    set color [Gm::color $opt($id,1,color)]
-    set fcolor [Gm::color $opt($id,1,fcolor)]
-    set lcolor [Gm::color $opt($id,1,lcolor)]
+    set color [GmLib::color $opt($id,1,color)]
+    set fcolor [GmLib::color $opt($id,1,fcolor)]
+    set lcolor [GmLib::color $opt($id,1,lcolor)]
 
     if { $opt($id,1,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
     append cmd " lcolor=$lcolor" 
@@ -739,7 +739,7 @@ proc GmVector::WorkOnVector { node mod } {
 
     if { $opt($id,1,vect) == "" } { return } 
     
-    if {[Gm::element_exists "vector" $opt($id,1,vect)]} {
+    if {[GmLib::element_exists "vector" $opt($id,1,vect)]} {
         set cmd [list v.digit "map=$opt($id,1,vect)"]
     } else { 
         set cmd [list v.digit -n "map=$opt($id,1,vect)"]
@@ -816,7 +816,7 @@ proc GmVector::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

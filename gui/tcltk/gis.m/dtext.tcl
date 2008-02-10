@@ -89,7 +89,7 @@ proc GmDtext::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -114,7 +114,7 @@ proc GmDtext::set_font { id } {
 	if {$GmDtext::opt($id,1,font) != "" } {
 		set Gm::dfont $GmDtext::opt($id,1,font)
 	}
-	Gm:DefaultFont dtext
+	Gm::defaultfont dtext
 	tkwait variable Gm::dfont
 	set GmDtext::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -280,7 +280,7 @@ proc GmDtext::display { node mod } {
     if {$mod} {set opt($id,1,mod) 1}
 
     # set hex colors to rgb         
-    set color [Gm::color $opt($id,1,color)]
+    set color [GmLib::color $opt($id,1,color)]
     
 
     if { ! ( $opt($id,1,_check) ) } { return } 
@@ -398,7 +398,7 @@ proc GmDtext::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
