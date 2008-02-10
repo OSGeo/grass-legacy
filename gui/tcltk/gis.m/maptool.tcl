@@ -181,22 +181,22 @@ proc MapToolBar::create { tb } {
 #	set zdimg [image create photo -file "$iconpath/gui-zoom_default.gif"]
 
 	$zoommenu add command \
-		-label [G_msg "Zoom to selected map"] \
+		-label [G_msg "Zoom display to selected map"] \
 		-command {MapCanvas::zoom_map $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to saved region"] \
+		-label [G_msg "Zoom display to saved region"] \
 		-command {MapCanvas::zoom_region $mon}
 	$zoommenu add command \
-		-label [G_msg "Save display geometry to named region"] \
+		-label [G_msg "Save display extents to named region"] \
 		-command {MapCanvas::save_region $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to current region (set with g.region)"] \
+		-label [G_msg "Zoom display to computational region (set with g.region)"] \
 		-command {MapCanvas::zoom_current $mon}
 	$zoommenu add command \
-		-label [G_msg "Zoom to default region"] \
+		-label [G_msg "Zoom display to default region"] \
 		-command {MapCanvas::zoom_default $mon}
 	$zoommenu add command \
-		-label [G_msg "Set current region (WIND file) to match display"] \
+		-label [G_msg "Set computational region extents to match display"] \
 		-command {MapCanvas::set_wind $mon "" 0}
 
 	$mapzoom configure -menu $zoommenu
@@ -391,19 +391,19 @@ proc MapToolBar::savefile { type quality } {
 		switch $type {
 			"bmp" {
 				if { [catch {exec gdal_translate $path.ppm $path.bmp -of BMP} error ]} {
-					Gm::errmsg $error [G_msg "Could not create BMP"]
+					GmLib::errmsg $error [G_msg "Could not create BMP"]
 				}
 				catch {file delete $path.ppm}
 			}
 			"jpg" {
 			    if { $quality == 300 } {
 					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=95 -outsize 300% 300% } error ]} {
-						Gm::errmsg $error [G_msg "Could not create JPG"]
+						GmLib::errmsg $error [G_msg "Could not create JPG"]
 					}					
 					catch {file delete $path.ppm}
 				} else {
 					if { [catch {exec gdal_translate $path.ppm $path.jpg -of JPEG -co QUALITY=$quality  } error ]} {
-						Gm::errmsg $error [G_msg "Could not create JPG"]
+						GmLib::errmsg $error [G_msg "Could not create JPG"]
 					}					
 
 					catch {file delete $path.ppm}
@@ -411,7 +411,7 @@ proc MapToolBar::savefile { type quality } {
 			}
 			"png" {
 				if { [catch {exec gdal_translate $path.ppm $path.png -of PNG} error ]} {
-					Gm::errmsg $error [G_msg "Could not create PNG"]
+					GmLib::errmsg $error [G_msg "Could not create PNG"]
 				}
 				
 				catch {file delete $path.ppm}
@@ -421,7 +421,7 @@ proc MapToolBar::savefile { type quality } {
 			}
 			"tif" {
 				if { [catch {exec gdal_translate $path.ppm $path.tif -of GTIFF} error ]} {
-					Gm::errmsg $error [G_msg "Could not create TIF"]
+					GmLib::errmsg $error [G_msg "Could not create TIF"]
 				}
 				
 				catch {file delete $path.ppm}

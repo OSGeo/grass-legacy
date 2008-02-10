@@ -73,7 +73,7 @@ proc run_ui {cmd} {
     set code ""
 
 	if {[catch {set code [exec -- $program --tcltk 2> $devnull]} error]} {
-		Gm::errmsg $error
+		GmLib::errmsg $error
 	}
 
     set path .dialog$dlg
@@ -94,7 +94,7 @@ proc run_ui {cmd} {
 
 proc run_disabled {gronsole button cmd} {
 	if {[catch {$button configure -state disabled} error]} {
-		Gm::errmsg $error
+		GmLib::errmsg $error
 	}
 
 	$gronsole run $cmd {running} "catch {$button configure -state active}"
@@ -166,7 +166,7 @@ proc execute {cmd} {
 proc spawn {cmd args} {
 
 	if {[catch {eval [list exec -- $cmd] $args &} error]} {
-		Gm::errmsg $error
+		GmLib::errmsg $error
 	}
 
 }
@@ -196,7 +196,7 @@ proc run {cmd args} {
 	# eval exec -- $cmd $args >@ stdout 2>@ stderr
 	
 	if {[catch {eval [list exec -- $cmd] $args >& $devnull} error]} {
-		Gm::errmsg $error
+		GmLib::errmsg $error
 	}
 
 	
@@ -228,12 +228,12 @@ proc term {cmd args} {
 	
 	if { $mingw == "1" } {
 		if {[catch {eval [list exec -- cmd.exe /c start $env(GISBASE)/etc/grass-run.bat $cmd] $args &} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 	   
 	} else {
 		if {[catch {eval [list exec -- $env(GISBASE)/etc/grass-xterm-wrapper -name xterm-grass -e $env(GISBASE)/etc/grass-run.sh $cmd] $args &} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 	   
 	}

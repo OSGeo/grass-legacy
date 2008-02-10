@@ -191,14 +191,14 @@ proc psprint::init_tmpfiles { } {
 	# get temporary file for postscript printing
 	set pid [ pid ]
 	if {[catch {set tmppsfile [ exec g.tempfile pid=$pid ]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 
 	append tmppsfile ".ps"
 	set pid [ pid ]
     
 	if {[catch {set tmppngfile [ exec g.tempfile pid=$pid ]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	    append tmppngfile ".png"
 }
@@ -431,14 +431,14 @@ proc psprint::print { cv } {
 	# lpr printing		
  	if { $printmode == "lpr" } {
  		if {[catch {exec lpr -o position=center $tmppsfile } error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 	}
 
 	# postsript printing via ghostsript
 	if { $printmode == "psprint" && $printer != "" } {
 		if {[catch {exec $cmd  $format -sDEVICE#$printer -r$res -sNOPAUSE -dBATCH -- $tmppsfile} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 		 
 	}
@@ -446,7 +446,7 @@ proc psprint::print { cv } {
 	# output to pdf file via ghostscript	
 	if { $printmode == "pdf" && $pdffile != "" } {
 		if {[catch {exec $cmd  $format -sDEVICE#pdfwrite -r$res -sNOPAUSE -sOutputFile#$pdffile -dBATCH -- $tmppsfile} error]} {
-			Gm::errmsg $error
+			GmLib::errmsg $error
 		}
 		 
 	}

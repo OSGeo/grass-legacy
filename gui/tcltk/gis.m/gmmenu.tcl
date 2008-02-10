@@ -70,7 +70,7 @@ foreach menudat $menudatlist {
                 }
             }
             if {[catch {close $menudef} error]} {
-                Gm::errmsg $error ["Error reading xtnmenu.dat file"]
+                GmLib::errmsg $error ["Error reading xtnmenu.dat file"]
             }
         }
         set XtnsMenu "True"
@@ -84,9 +84,9 @@ foreach menudat $menudatlist {
 set descmenu [subst  {
  {[G_msg "&File"]} all file $tmenu {
 	{cascad {[G_msg "Workspace"]} {} "" $tmenu {			
-		{command {[G_msg "Open..."]} {} "Open gis.m workspace file" {} -accelerator $keyctrl-O -command { Gm::OpenFileBox }}
-		{command {[G_msg "Save"]} {} "Save gis.m workspace file" {} -accelerator $keyctrl-S -command { Gm::SaveFileBox }}
-		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; Gm::SaveFileBox }}
+		{command {[G_msg "Open..."]} {} "Open gis.m workspace file" {} -accelerator $keyctrl-O -command { GmLib::OpenFileBox }}
+		{command {[G_msg "Save"]} {} "Save gis.m workspace file" {} -accelerator $keyctrl-S -command { GmLib::SaveFileBox }}
+		{command {[G_msg "Save as..."]} {} "Save gis.m workspace file as new name" {} -command { set filename($mon) "" ; GmLib::SaveFileBox }}
 		{command {[G_msg "Close"]} {} "Close gis.m workspace" {} -accelerator $keyctrl-W -command { GmTree::FileClose {}}}
 	}}
 	{separator}
@@ -204,7 +204,7 @@ set descmenu [subst  {
 		{command {[G_msg "Change region settings"]} {} "g.region: " {} -command {execute g.region }}
 	}}
 	{cascad {[G_msg "GRASS working environment"]} {} "" $tmenu {			
-		{command {[G_msg "Mapset access"]} {} "g.mapsets.tcl: Access other mapsets in current location" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
+		{command {[G_msg "Mapset access"]} {} "g.mapsets.tcl: Access other mapsets in current location" {} -command {exec $env(GRASS_WISH) $env(GISBASE)/etc/g.mapsets.tcl --tcltk &}}
 		{command {[G_msg "Change working environment"]} {} "g.mapset: Change current working session to new mapset, location, or GISDBASE" {} -command {execute g.mapset }}
 		{command {[G_msg "User access"]} {} "g.access: Modify access by other users to current mapset" {} -command {execute g.access }}
 		{command {[G_msg "Show settings"]} {} "g.gisenv: Show current GRASS environment settings" {} -command {run_panel g.gisenv }}
@@ -217,7 +217,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Convert coordinates"]} {} "m.proj: Convert coordinates from one projection to another" {} -command {execute m.proj }}
 	}}
-	{command {[G_msg "Display font"]} {} "Set default display font" {} -command {Gm:DefaultFont "menu" }}
+	{command {[G_msg "Display font"]} {} "Set default display font" {} -command {Gm::defaultfont "menu" }}
  } 
  {[G_msg "&Raster"]} all options $tmenu {
 	{cascad {[G_msg "Develop map"]} {} "" $tmenu {			

@@ -96,7 +96,7 @@ proc GmGridline::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"
@@ -120,7 +120,7 @@ proc GmGridline::set_font { id } {
 	if {$GmGridline::opt($id,1,font) != "" } {
 		set Gm::dfont $GmGridline::opt($id,1,font)
 	}
-	Gm:DefaultFont dgrid
+	Gm::defaultfont dgrid
 	tkwait variable Gm::dfont
 	set GmGridline::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""
@@ -299,9 +299,9 @@ proc GmGridline::display { node mod } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # set hex colors to rgb         
-    set gridcolor [Gm::color $opt($id,1,gridcolor)]
-    set gridborder [Gm::color $opt($id,1,gridborder)]
-    set txtcolor [Gm::color $opt($id,1,textcolor)]
+    set gridcolor [GmLib::color $opt($id,1,gridcolor)]
+    set gridborder [GmLib::color $opt($id,1,gridborder)]
+    set txtcolor [GmLib::color $opt($id,1,textcolor)]
 
     
     # d.grid command
@@ -403,7 +403,7 @@ proc GmGridline::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

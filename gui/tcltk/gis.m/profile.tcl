@@ -174,7 +174,7 @@ proc GmProfile::setelev { pmap } {
 			set elev($key) $value	
 		}
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "r.univar error"]
+			GmLib::errmsg $error [G_msg "r.univar error"]
 		}
 	
 		set elevmax $elev(max)
@@ -412,7 +412,7 @@ proc GmProfile::pdraw { } {
 	    set prj($key) $value    
 	}
 	if {[catch {close $input} error]} {
-	    Gm::errmsg $error [G_msg "g.proj or projection error"]
+	    GmLib::errmsg $error [G_msg "g.proj or projection error"]
 	} 
     }
 
@@ -531,7 +531,7 @@ proc GmProfile::pdraw { } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "r.profile error"]
+			GmLib::errmsg $error [G_msg "r.profile error"]
 		}
 	}
 
@@ -616,7 +616,7 @@ proc GmProfile::pdraw { } {
 			}
 		}
 		if {[catch {close $input} error]} {
-			Gm::errmsg $error [G_msg "r.profile error"]
+			GmLib::errmsg $error [G_msg "r.profile error"]
 		}
 	}
 

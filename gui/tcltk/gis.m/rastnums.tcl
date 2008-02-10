@@ -76,7 +76,7 @@ proc GmRnums::create { tree parent } {
 	# create files in tmp diretory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 		return
 	}
 	set lfilemask($count) $lfile($count)
@@ -246,7 +246,7 @@ proc GmRnums::display { node mod } {
 	catch {set rc [open "|g.region -ugp" r]}
 	set rowscolumns [read $rc]
 	if {[catch {close $rc} error]} {
-		Gm::errmsg $error "Region settings error"
+		GmLib::errmsg $error "Region settings error"
 	}
 	regexp {rows=(\d*)} $rowscolumns string rows
 	regexp {cols=(\d*)} $rowscolumns string cols
@@ -357,7 +357,7 @@ proc GmRnums::duplicate { tree parent node id } {
 	# create files in tmp directory for layer output
 	set mappid [pid]
 	if {[catch {set lfile($count) [exec g.tempfile pid=$mappid]} error]} {
-		Gm::errmsg $error [G_msg "Error creating tempfile"]
+		GmLib::errmsg $error [G_msg "Error creating tempfile"]
 	}
 	set lfilemask($count) $lfile($count)
 	append lfile($count) ".ppm"

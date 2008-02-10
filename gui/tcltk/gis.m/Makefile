@@ -14,3 +14,6 @@ install_scripts:
 	for file in docs/gm_*.html ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
 	for file in docs/gm_*.png ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
 	for file in docs/gm_*.jpg ; do $(INSTALL_DATA) $$file $(GISBASE)/docs/html/ ; done
+
+$(BIN)/$(PGM).bat: $(PGM).bat
+	$(INSTALL_DATA) $< $@
