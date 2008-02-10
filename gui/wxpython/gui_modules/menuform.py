@@ -1005,7 +1005,7 @@ class cmdPanel(wx.Panel):
                         multiple = True
                     else:
                         multiple = False
-                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
+                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(400,-1),
                                                type=p.get('element',''), multiple=multiple)
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set
