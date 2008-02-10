@@ -730,21 +730,31 @@ proc load_3dview { dummy } {
         # Do not redraw automaticly display while loading state...
         set oNauto_draw $Nauto_draw
         set Nauto_draw 0
-        #do a quick draw to make sure display initialized
-        Nquick_draw
-        Nload_3dview $file_name
 
 	#do a quick draw to make sure display initialized
 	Nquick_draw
 	Nload_3dview $file_name
 
 	#Reset position GUI
-	set ht [lindex [Nget_real_position 1] 2]
+	#set ht [lindex [Nget_real_position 1] 2]
+	# for some strange reason height gets read/loaded from file correctly 
+	#   only if view is loaded for second time
+	# Also currently light related stuff is not updated
+	set ht [lindex [Nget_height] 0]
+	set ex [Nget_exag]
+	set tw [Nget_twist]
+	set pe [Nget_fov]
 	#reset height
-	Nv_setEntry $Nv_(main_BASE).midf.height.f.entry	 $ht
+	Nv_setEntry $Nv_(main_BASE).midf.height.f.entry	$ht
 	Nv_floatscaleCallback $Nv_(main_BASE).midf.height e 2 null $ht
-	#change_display 2
-	#change_display 1
+	# reset exag
+	Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $ex
+	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag b 2 Nchange_exag $ex
+	# reset twist/perspective
+	Nv_setEntry $Nv_(main_BASE).bframe.cframe.tw.f.entry $tw
+	Nv_scaleCallback $Nv_(main_BASE).bframe.cframe.tw b 2 Nchange_twist $tw
+	Nv_setEntry $Nv_(main_BASE).bframe.cframe.pers.f.entry $pe
+	Nv_scaleCallback $Nv_(main_BASE).bframe.cframe.pers b 2 Nchange_persp $pe
 
         if { $draw_option == 1 } { change_display 0 } \
         elseif { $draw_option == 0 } { change_display 1 }
