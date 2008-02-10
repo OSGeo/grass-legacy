@@ -128,13 +128,17 @@ fi
 
 if [ -f "$FILE.hgt.zip" ] ; then
     #### check if we have unzip
-    if [ ! -x "`which unzip`" ] || [ ! -x "`which file`" ] ; then
-	g.message -e "\"unzip\" and \"file\" are required, please install them first"
+    if [ ! -x "`which unzip`" ] ; then
+	g.message -e "The \"unzip\" program is required, please install it first"
 	exit 1
     fi
 
     # really a ZIP file?
-    if [ "`file -ib "$FILE.hgt.zip"`" != "application/x-zip" ] ; then
+    # make it quiet in a safe way (just in case -qq isn't portable)
+    UNZIP=-qq
+    export UNZIP
+    unzip -t "$FILE.hgt.zip" 
+    if [ $? -ne 0 ] ; then
 	g.message -e "'$FILE.hgt.zip' does not appear to be a valid zip file."
 	exit 1
     fi
