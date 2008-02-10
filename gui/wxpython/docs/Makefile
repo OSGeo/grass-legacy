@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../../..
 
-FILES = wxGUI wxGUI.Digitization_Tool
+FILES = wxGUI wxGUI.Digitization_Tool wxGUI.Attribute_Table_Manager
 
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
