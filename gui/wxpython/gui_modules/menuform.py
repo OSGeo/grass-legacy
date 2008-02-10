@@ -659,7 +659,7 @@ class mainFrame(wx.Frame):
             # close dialog on run?
             self.closebox = wx.CheckBox(parent=self,
                                         label=_('Close dialog on run'), style = wx.NO_BORDER)
-            self.closebox.SetValue(True)
+            self.closebox.SetValue(False)
             guisizer.Add(item=self.closebox, proportion=0,
                          flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
                          border=5)
