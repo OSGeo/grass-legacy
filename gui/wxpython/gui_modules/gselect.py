@@ -31,8 +31,8 @@ class SelectDialog(wx.Dialog):
                            pos=wx.DefaultPosition, size=(-1,-1), type='cell',
                            style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
         """
-        A dialog box for the GIS element selector control so that it can be launched f
-        rom a button or other control.
+        A dialog box for the GIS element selector control so that it can be launched
+        from a button or other control.
         """
 
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
@@ -41,10 +41,8 @@ class SelectDialog(wx.Dialog):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
         self.selection = Select(self, id=wx.ID_ANY, size=(300,-1),type=type)
-        box.Add(self.selection, 0, wx.ALIGN_CENTER|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(self.selection, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
 
         line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
         sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
@@ -63,6 +61,11 @@ class SelectDialog(wx.Dialog):
 
         self.SetSizer(sizer)
         sizer.Fit(self)
+        self.Layout()
+                
+    def ElementName(self):
+        element = self.selection.GetValue()
+        return element
 
 class Select(wx.combo.ComboCtrl):
     def __init__(self, parent, id, size, type):

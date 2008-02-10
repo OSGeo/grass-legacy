@@ -55,6 +55,7 @@ import textwrap
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
+from wx.lib.expando import ExpandoTextCtrl, EVT_ETC_LAYOUT_NEEDED
 import wx.html
 
 # Do the python 2.0 standard xml thing and map it on the old names
@@ -823,6 +824,8 @@ class cmdPanel(wx.Panel):
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(globalvar.FNPageColor)
         self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
+        self.selecttxt = '' # special text control to receive multiple GIS element selections
+        self.element = '' # GIS element to select in multi-selection control
         tab = {}
         tabsizer = {}
         for section in sections:
@@ -1000,17 +1003,34 @@ class cmdPanel(wx.Panel):
                                 flag=wx.ADJUST_MINSIZE | wx.RIGHT | wx.LEFT | wx.TOP, border=5)
                 # element selection tree combobox (maps, icons, regions, etc.)
                 if p.get('prompt','') != 'color' and p.get('element', '') != 'file':
-                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
-                                              type=p.get('element','') )
-                    if p.get('value','') != '':
-                        selection.SetValue(p['value']) # parameter previously set
+                    self.element = ''
+                    if p.get('multiple','no') == 'no':
+                        selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(300,-1),
+                                                  type=p.get('element','') )
+                        if p.get('value','') != '':
+                            selection.SetValue(p['value']) # parameter previously set
 
-                    which_sizer.Add(item=selection, proportion=0,
-                                    flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
-                    # A select.Select is a combobox with two children: a textctl and a popupwindow;
-                    # we target the textctl here
-                    p['wxId'] = selection.GetChildren()[0].GetId()
-                    selection.Bind(wx.EVT_TEXT, self.OnSetValue)
+                        which_sizer.Add(item=selection, proportion=0,
+                                        flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
+                        # A select.Select is a combobox with two children: a textctl and a popupwindow;
+                        # we target the textctl here
+                        p['wxId'] = selection.GetChildren()[0].GetId()
+                        selection.Bind(wx.EVT_TEXT, self.OnSetValue)                    
+                    else:
+                        btn4 = wx.Button(parent=which_panel, id=wx.ID_ANY, label='Select...')
+                        self.element = p.get('element','')
+                        self.selecttxt = ExpandoTextCtrl(parent=which_panel, id=wx.ID_ANY, value = p.get('default',''),
+                                           size = (300, -1))
+                        if p.get('value','') != '':
+                            self.selecttxt.SetValue(p['value']) # parameter previously set
+                        box = wx.BoxSizer(wx.HORIZONTAL)
+                        box.Add(item=btn4, proportion=0, flag=wx.LEFT, border=2)
+                        box.Add(item=self.selecttxt, proportion=0, flag=wx.LEFT | wx.RIGHT, border=5)
+                        which_sizer.Add(item=box, proportion=0, flag=wx.BOTTOM | wx.LEFT, border=5)
+                        p['wxId'] = self.selecttxt.GetId()
+                        btn4.Bind(wx.EVT_BUTTON, self.OnSelectButton)
+                        self.selecttxt.Bind(EVT_ETC_LAYOUT_NEEDED, self.OnRefit)
+                        self.selecttxt.Bind(wx.EVT_TEXT, self.OnSetValue)
                 # color entry
                 elif p.get('prompt','') == 'color':
                     # Heuristic way of finding whether transparent is allowed
@@ -1079,8 +1099,6 @@ class cmdPanel(wx.Panel):
                     tooltip.strip(os.linesep)
                 if tooltip:
                     txt.SetToolTipString(tooltip)
-
-
 
         maxsizes = (0,0)
         for section in sections:
@@ -1190,7 +1208,7 @@ class cmdPanel(wx.Panel):
                 porf[ 'value' ] = me.GetValue()
 
         self.OnUpdateValues()
-
+        event.Skip()
 
     def createCmd( self, ignoreErrors = False ):
         """
@@ -1209,7 +1227,38 @@ class cmdPanel(wx.Panel):
             cmd = None
 
         return cmd
+    
+    def OnRefit(self, event):
+        # The Expando control will redo the layout of the
+        # sizer it belongs to, but sometimes this may not be
+        # enough, so it will send us this event so we can do any
+        # other layout adjustments needed.  In this case we'll
+        # just resize the frame to fit the new needs of the sizer.
+        print 'in on refit'
+        self.Fit()
+        if event != None:
+            event.Skip()
 
+    def OnSelectButton(self, event):
+        """
+        Calls map selection control as a dialog instead of a comboBox so that
+        multiple maps can be selected.
+        """
+        # Get any values already set in map txtctrl.
+        elements = self.selecttxt.GetValue()
+        name = ''
+        dlg = gselect.SelectDialog(self, type=self.element)
+        dlg.CenterOnParent(wx.BOTH)
+        if dlg.ShowModal() == wx.ID_OK:
+            name = dlg.ElementName()
+            name = name.split('@')[0]
+            
+            if elements == '':
+                elements = name
+            else:
+                elements = '%s,%s' % (elements, name)
+                
+            self.selecttxt.SetValue(elements)        
 
 def getInterfaceDescription( cmd ):
     """
