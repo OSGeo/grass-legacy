@@ -258,7 +258,12 @@ int chaiken(struct line_pnts *Points, double thresh, int with_z)
 void refine_tangent(POINT * p)
 {
     double l = point_dist2(*p);
-    point_scalar(*p, (double)1.0 / sqrt(sqrt(sqrt(l))), p);
+    if (l < 1e-12) {
+	point_scalar(*p, 0.0, p);
+    }
+    else {
+	point_scalar(*p, (double)1.0 / sqrt(sqrt(sqrt(l))), p);
+    }
     return;
 }
 
@@ -281,7 +286,7 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
 
     /* line is too short */
     if (n <= 2) {
-	return 1;
+	return n;
     }
 
     /* convert degrees=>radians */
