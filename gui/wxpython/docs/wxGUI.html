@@ -218,6 +218,167 @@ the 'Set current region to match display' item in the zoom menu (in
 the map display toolbar) will the current display extents be copied to
 the computational region extents.
 
+<h4>Map Display Toolbar</h4>
+
+<dl>
+
+<dt><img src="../../etc/wx/icons/silk/map_go.png">&nbsp;
+  <img src="icons/gui-display.gif"> Display active layers (current region)</dt>
+<dd>Displays all active layers from layer tree at current resolution
+and region extents for that map display window.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/arrow_refresh.png">&nbsp;
+  <img src="icons/gui-redraw.gif"> Re-render and display all active
+layers and zoom to current region</dt>
+<dd>Resets the region to the display resolution and extents and forces
+re-display and re-rendering all active layers.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/cross.png">&nbsp;
+  <img src="icons/gui-erase.gif"> Erase display content</dt>
+<dd>Erases the currently selected map display to a white background;
+also removes all frames,
+see <em><a href="d.erase.html">d.erase</a>, <a href="d.frame.html">d.frame
+-e</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/cursor.png">&nbsp;
+  <img src="icons/gui-pointer.gif"> Arrow cursor</dt>
+<dd>Select arrow cursor for map display.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/information.png">&nbsp;
+  <img src="icons/gui-query.gif"> Query tool (select a map first)</dt>
+<dd>Query selected raster, RGB raster (all three map channels will be
+queried), or vector map(s) using the mouse. Map(s) must be selected
+before query.  Vector charts and thematic vector maps cannot be
+queried. The results of the query will be displayed in the console
+window,
+see <em><a href="r.what.html">r.what</a>, <a href="v.what.html">v.what</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/arrow_out.png">&nbsp;
+  <img src="icons/gui-pan.gif"> Pan</dt>
+<dd>Interactive selection of a new center of view in the active
+display monitor. Drag the pan cursor while pressing the left mouse
+button to pan.  Panning changes the location of the region displayed
+but not the size of the area displayed or the resolution. Panning
+does <em>not</em> affect the computational region for other GIS
+processes, see <em><a href="g.region.html">g.region</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/zoom_in.png">&nbsp;
+  <img src="icons/gui-zoom_in.gif"> Zoom in</dt>
+<dd>Interactive zooming with the mouse in the active display monitor.
+Drawing a box or just click with the mouse (left button) and zoom-in
+cursor causes the display to zoom in so that the area defined by the
+box fills the display. The map resolution is not changed. Clicking
+with the zoom-in cursor causes the display to zoom in by 30%, centered
+on the point where the mouse is clicked. Zooming resets the display
+region extents (both size and location of area displayed). It
+does <em>not</em> affect the computational region for other GIS
+processes, see <em><a href="g.region.html">g.region</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/zoom_out.png">&nbsp;
+  <img src="icons/gui-zoom_out.gif"> Zoom out</dt>
+<dd>Interactive zooming with the mouse in the active display monitor.
+Drawing a box or just click with the mouse (left button) and zoom-out
+cursor causes the display to zoom in so that the area displayed
+shrinks to fill the area defined by the box. The map resolution is not
+changed. Clicking with the zoom-out cursor causes the display to zoom
+out by 30%, centered on the point where the mouse is clicked. Zooming
+resets the display region extents (both size and location of area
+displayed). It does <em>not</em> affect the computational region for
+other GIS processes,
+see <em><a href="g.region.html">g.region</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/zoom_back.png">&nbsp;
+  <img src="icons/gui-zoom_back.gif"> Revert zoom</dt>
+<dd>Returns to the previous zoom. Up to 10 levels of zoom back are
+maintained, see <em><a href="g.region.html">g.region</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/zoom.png">&nbsp;
+  <img src="icons/gui-mapzoom.gif"> Zoom menu</dt>
+<dd>Automatic zoom settings menu. Zoom to match the extents of a selected
+map, zoom to match the computational region (set with
+<em>g.region</em>), zoom to match the extents of a saved region or
+save the current extents to a named region file, or to set
+computational region (the mapset's <tt>WIND</tt> file) to match the
+current display extents (does not change the resolution).
+See <em><a href="g.region.html">g.region</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/application_lightning.png">&nbsp;
+  <img src="icons/gui-rastanalyze.gif"> Analyze menu</dt>
+<dd>Contains functions for distance measurement, creating histogram or
+profile tool.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/sum.png">&nbsp;
+  <img src="icons/gui-measure.gif"> Distance measurement tool</dt>
+<dd>Interactive measurement of lengths defined with the mouse. The
+length of each segment and the cumulative length of all segments
+measuered is displayed in the command output window frame. Lengths are
+measured in the current measurement unit,
+see <em><a href="d.measure.html">d.measure</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/wand.png">&nbsp;
+  <img src="icons/gui-profile.gif"> Profile tool</dt>
+<dd>Interactively create profile of a raster map. Profile transect is
+drawn with the mouse in map display. The profile may be of the
+displayed map or a different map,
+see <em><a href="gm_profile.html">Profile Tool help
+page</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/chart_bar.png">&nbsp;
+  <img src="icons/module-d.histogram.gif"> Display histogram of selected raster map</td>
+<dd>Displays histogram of selected raster map or image in new window,
+see <em><a href="d.histogram.html">d.histogram</a</em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/overlays.png">&nbsp;
+  <img src="icons/gui-rastanalyze.gif"> Add overlay</dt>
+<dd>Adds overlay to map display like barscale, north arrow, text.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/page_white_picture.png">&nbsp;
+  <img src="icons/module-d.barscale.gif"> Add scalebar and north arrow</dt>
+<dd>Adds layer to display a combined scalebar and north arrow. Options
+include scalebar placement (using screen coordinates or a mouse),
+scalebar format, and scalebar colors,
+see <em><a href="d.barscale.html">d.barscale</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/page_green.png">&nbsp;
+  <img src="icons/module-d.legend.gif"> Add legend of raster map</dt>
+<dd>Adds layer to display with legend of selected raster map,
+see <a href="d.legend.html">d.legend</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/textfield_add.png">&nbsp;
+  <img src="icons/module-d.text.gif"> Add text layer</dt>
+<dd>Adds layer to display a line of text using default GRASS font
+(selected with <em><a href="d.font.html">d.font</a></em>).  Options
+include: text placement (screen coordinates); and text size, bolding,
+and color, see <em><a href="d.text.html">d.text</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/picture_save.png">&nbsp;
+  <img src="icons/file-save.gif"> Export map display</dt>
+<dd>Exports visible map display to different raster graphic formats.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/printer.png">&nbsp;
+  <img src="icons/file-print.gif"> Print map</dt>
+<dd>Prints map on the UNIX <i>lpr</i> printer or PostScript device;
+saves visible map display (including PostScript text and labels) to PDF
+or EPS file. Requires <tt>ghostscript</tt> for all output except EPS.</dd>
+
+</dl>
+
+<h2>CONFIGURATION</h2>
+
+User preferences dialog ('Config->Preferences') enables configuration
+of various options.
+
+<h3>Icon Theme</h3>
+
+Currently are supported two icon theme sets:
+
+<ul>
+  <li>original <em>GRASS theme</em></li>
+  <li><em>Silk theme</em> based
+  on <a href="http://www.famfamfam.com/lab/icons/silk/">Silk icon
+  set</a>, v1.3</li>
+</ul>
+
 <h2>SEE ALSO</h2>
 
 <em>
