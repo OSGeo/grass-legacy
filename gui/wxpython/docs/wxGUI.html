@@ -67,6 +67,128 @@ groups can be activated or deactivated for display. Layer tree
 composition can be saved to a workspace file and opened in subsequent
 sessions, restoring all layers and their display options.
 
+<h4>Layer Manager Toolbar</h4>
+
+<dl>
+
+<dt><img src="../../etc/wx/icons/silk/application_add.png">&nbsp;
+  <img src="icons/gui-startmon.gif"> Open new Map Display Window</dt>
+<dd>Opens a new map display and creates empty layer tree tab in Layer Manager.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/page_white.png">&nbsp;
+  <img src="icons/file-new.gif">Creates new workspace file</dt>
+<dd>Removes all layers in the layer tree and creates a new, empty tree
+where new layers can be added.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/folder.png">&nbsp;
+  <img src="icons/file-open.gif">Open an existing workspace file</dt>
+<dd>Opens an previously saved workspace file, containing a set of display
+layers and their option settings.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/page_save.png">&nbsp;
+  <img src="icons/file-save.gif"> Save layers composition to workspace
+  file</dt>
+<dd>Saves current set of layers and their options to a workspace
+  file.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/image_add.png">&nbsp;
+  <img src="icons/element-cell.gif"> Add raster-based map layer</dt>
+<dd>Adds raster map to layer tree, see <em><a href="d.rast.html">d.rast</a></em>. Includes also shaded relief map, RGB or HIS map or raster flow arrows map.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/picture_empty.png">&nbsp;
+  <img src="icons/module-d.shadedmap.gif"> Add shaded relief map layer</dt>
+<dd>Adds shaded relief raster map layer,
+see <em><a href="d.shadedmap.html">d.shadedmap</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/rgb.png">&nbsp;
+  <img src="icons/channel-rgb.gif"> Add RGB raster layer</dt>
+<dd>Combines and displays three raster maps defined as red, green, and blue
+channels, see <em><a href="d.rgb.html">d.rgb</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/his.png">&nbsp;
+  <img src="icons/channel-his.gif"> Add HIS raster layer</dt>
+<dd>Combines and displays two or three raster maps defined as hue,
+intensity, and (optionally) saturation channels,
+see <em><a href="d.his.html">d.his</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/arrow_out.png">&nbsp;
+  <img src="icons/module-d.rast.arrow.gif"> Add raster arrows layer</dt>
+<dd>Adds map of raster cells with directional arrows drawn.  Arrow
+direction and length are determined by separate aspect/directional map
+and (optional) slope/intensity map,
+see <em><a href="d.rast.arrow.html">d.rast.arrow</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/map_add.png">&nbsp;
+  <img src="icons/element-vector.gif"> Add vector-based map layer</dt>
+<dd>Adds a vector map layer, see <em><a href="d.vect.html">d.vect</a></em>. Includes also thematic vector map or thematic charts layer.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/thematic.png">&nbsp;
+  <img src="icons/module-d.vect.thematic.gif"> Add thematic map layer
+  (for all vector types)</dt>
+<dd>Adds layer for thematic display values from a numeric attribute
+column associated with a vector map. Options include: thematic display
+type (graduated colors or point sizes), methods for creating display
+intervals, SQL query of attribute column to limit vector objects to
+display, control of point icon types and sizes, control of thematic
+color schemes, creation of legend for thematic map, and saving the
+results of thematic mapping to a ps.map instructions file for later
+printing,
+see <em><a href="d.vect.thematic.html">d.vect.thematic</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/chart_bar.png">&nbsp;
+  <img src="icons/module-d.vect.chart.gif"> Add thematic charts layer
+(for vector points)</dt>
+<dd>Adds layer in which pie or bar charts can be automatically created
+at vector point locations. Charts display values from selected columns
+in the associated attribute table. Options include: chart type, layer
+and attributes to chart, chart colors, and chart size (fixed or based
+on attribute column),
+see <em><a href="d.vect.chart.html">d.vect.chart</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/cog_add.png">&nbsp;
+  <img src="icons/gui-cmd.gif"> Add command layer</dt>
+<dd>Adds a layer in which a GRASS GIS command or command list can be entered.
+For a command list use the pipe symbol as ";" as separator.
+For example:
+
+<div class="code"><pre>
+d.rast soils;d.rast -o roads;d.vect streams col=blue
+</pre></div>
+
+Note that when an option of the command contains spaces, you need to
+escape them with the backslash ('\') character, for example:
+<div class="code"><pre>
+d.text.freetype text=Population\ density</tt>
+</pre></div>
+</dd>
+
+<dt><img src="../../etc/wx/icons/silk/folder_add.png">&nbsp;
+  <img src="icons/gui-group.gif"> Add layer group</dt>
+<dd>Adds an empty layer group. Layers can then be added to the group.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/images.png">&nbsp;
+  <img src="icons/module-d.grid.gif"> Add overlay grids and lines</dt>
+<dd>Adds layer to display regular grid (for all locations), or geodesic and
+rhumblines (for latitude/longitude locations only), see <em><a href="d.grid.html">d.grid</a>, <a href="d.geodesic.html">d.geodesic</a>, <a href="d.rhumbline.html">d.rhumbline</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/tag_blue_add.png">&nbsp;
+  <img src="icons/module-d.labels.gif"> Add labels layer for vector
+objects (from existing labels file)</dt>
+<dd>Add raster text layer from a labels file for vector objects
+created with the <em><a href="v.label.html">v.label</a></em> module
+(accessed from button in options panel). A labels file can also be
+created with a text editor,
+see <em><a href="d.labels.html">d.labels</a></em>.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/bin_closed.png">&nbsp;
+  <img src="icons/edit-cut.gif"> Remove layer for layer tree</dt>
+<dd>Removes selected layer or layer group from layer tree.</dd>
+
+<dt><img src="../../etc/wx/icons/silk/application_view_columns.png">&nbsp;
+  <img src="icons/db-values.gif"> Open <a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager</a> for selected vector map</dt>
+<dd>Displays attribute data of selected vector map.</dd>
+
+</dl>
 
 <h3>Map Display Window</h3>
 
@@ -99,7 +221,8 @@ the computational region extents.
 <h2>SEE ALSO</h2>
 
 <em>
-<a href="wxGUI.Digitization_Tool.html">Digitization tool</a>
+<a href="wxGUI.Digitization_Tool.html">Digitization tool</a>,
+<a href="wxGUI.Attribute_Table_Manager.html">Attribute Table Manager<a>
 </em>
 
 <p>
