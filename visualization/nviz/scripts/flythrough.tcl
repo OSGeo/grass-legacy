@@ -50,7 +50,7 @@ fly_set_icons $bit_map_path/flythrough
 ################################################################################
 
 proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
-	global fly
+	global Nv_ fly draw_option
 
 	# Flythrough menus
 	set fly(EYE_RADIOBUTTON) $draw_var1
@@ -58,7 +58,7 @@ proc mkFlyButtons {BASE frame draw_lab draw_var1 draw_var2} {
 
 	set fly(FLY_RADIOBUTTON) [radiobutton $BASE.$frame.b3 \
                  -variable draw_option -value 3 -text "fly"\
-				 -command "fly_change_mode 0" ]
+				 -command "set Nv_(FlyThrough) 1; fly_change_mode 0" ]
 
 
     set fly(FLY_MENUBUTTON) $BASE.$frame.flymenu
