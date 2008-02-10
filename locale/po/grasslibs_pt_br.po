@@ -502,17 +502,17 @@ msgid "Can't read header file for [%s in %s]\n"
 msgstr "não é possível ler o cabeçalho do arquivo para [%s em %s]\n"
 
 #: ../lib/gis/get_cellhd.c:75
-#, c-format
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] "
 msgstr "É uma reclassificação de [%s em %s]"
 
 #: ../lib/gis/get_cellhd.c:78
-#, c-format
+#, fuzzy, c-format
 msgid "which is missing"
 msgstr "que está faltando"
 
 #: ../lib/gis/get_cellhd.c:80
-#, c-format
+#, fuzzy, c-format
 msgid "whose header file can't be opened"
 msgstr "de cujo arquivo o cabeçalho não pode ser aberto"
 
@@ -522,14 +522,14 @@ msgid "Can't open header file for [%s in %s]"
 msgstr "não é possível abrir o arquivo de cabeçalho para  [%s em %s]"
 
 #: ../lib/gis/get_cellhd.c:106
-#, c-format
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
 msgstr ""
 "Esta é uma reclassificação de [%s em %s] cujo arquivo de cabeçalho está "
 "incorreto\n"
 
 #: ../lib/gis/get_cellhd.c:110
-#, c-format
+#, fuzzy, c-format
 msgid "Invalid format\n"
 msgstr "Formato inválido\n"
 
@@ -596,32 +596,32 @@ msgstr ""
 "elipsóide inválido\n"
 
 #: ../lib/gis/get_ellipse.c:81
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open file %s in %s"
 msgstr "não foi possível abrir o arquivo %s em %s"
 
 #: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
-#, c-format
+#, fuzzy, c-format
 msgid "invalid a: field %s in file %s in %s"
 msgstr "Parâmetro 'a' inválido: campo %s no arquivo %s em %s"
 
 #: ../lib/gis/get_ellipse.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file %s in %s"
 msgstr "elipsóide inválido %s no arquivo %s em %s"
 
 #: ../lib/gis/get_ellipse.c:119
-#, c-format
+#, fuzzy, c-format
 msgid "invalid es: field %s in file %s in %s"
 msgstr "Parâmetro 'es' inválido: campo %s no arquivo %s em %s"
 
 #: ../lib/gis/get_ellipse.c:133
-#, c-format
+#, fuzzy, c-format
 msgid "No ellipsoid info given in file %s in %s"
 msgstr "Elipsóide não fornecido no arquivo %s em %s"
 
 #: ../lib/gis/get_ellipse.c:407 ../lib/proj/ellipse.c:220
-#, c-format
+#, fuzzy, c-format
 msgid "unable to open ellipsoid table file: %s"
 msgstr "não foi possível abrir o arquivo com a tabela de datum: %s"
 
@@ -681,7 +681,7 @@ msgstr ""
 "projeção inválida\n"
 
 #: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
-#, c-format
+#, fuzzy, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
 msgstr "[%s em %s] - instrução de leitura para a linha %d está fora da região"
 
@@ -691,26 +691,27 @@ msgid "cell_values_float: xdr_float failed for index %d"
 msgstr "cell_values_float: xdr_float falhou para o índice %d"
 
 #: ../lib/gis/get_row.c:422
-#, c-format
+#, fuzzy, c-format
 msgid "cell_values_double: xdr_double failed for index %d."
 msgstr "cell_values_double: xdr_double falhou para o índice %d"
 
 #: ../lib/gis/get_row.c:564
-#, c-format
+#, fuzzy, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
 msgstr "erro lendo mapa compactado [%s] no mapset [%s], linha %d"
 
 #: ../lib/gis/get_row.c:568
-#, c-format
+#, fuzzy, c-format
 msgid "error reading map [%s] in mapset [%s], row %d"
 msgstr "erro lendo mapa [%s] no mapset [%s], linha %d"
 
 #: ../lib/gis/get_row.c:915 ../lib/gis/get_row.c:921
-#, c-format
+#, fuzzy, c-format
 msgid "error reading null row %d"
 msgstr "erro lendo linha nula %d"
 
 #: ../lib/gis/get_row.c:1002
+#, fuzzy
 msgid "Could not realloc buffer"
 msgstr "não consegui realocar o buffer"
 
@@ -762,7 +763,7 @@ msgid "MAPSET %s not found"
 msgstr "MAPSET %s não encontrado"
 
 #: ../lib/gis/gisinit.c:101
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
@@ -1794,6 +1795,7 @@ msgid "Unable to create dependency file in [%s in %s]"
 msgstr "não é possível criar arquivo de dependência [%s em %s]"
 
 #: ../lib/gis/sample.c:74
+#, fuzzy
 msgid "unknown interpolation type"
 msgstr "Tipo de interpolação desconhecida"
 
@@ -1802,6 +1804,7 @@ msgid "\"no data\" label found; setting to zero"
 msgstr "rótulo \"no data\" encontrado; ajustando para zero"
 
 #: ../lib/gis/sample.c:482
+#, fuzzy
 msgid "problem reading raster cell file"
 msgstr "problema lendo arquivo cell raster"
 
@@ -2370,9 +2373,9 @@ msgid ""
 msgstr ""
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
+#, fuzzy, c-format
 msgid "Requested raster map <%s> not found"
-msgstr ""
+msgstr "Vetor de entrada '%s' não encontrado"
 
 #: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, c-format
@@ -2631,7 +2634,7 @@ msgid ""
 msgstr ""
 
 #: ../lib/proj/ellipse.c:77
-#, c-format
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file"
 msgstr "elipsóide inválido %s no arquivo"
 
@@ -2899,6 +2902,7 @@ msgid "Building topology ...\n"
 msgstr "Criando topologia ...\n"
 
 #: ../lib/vector/Vlib/build.c:148
+#, fuzzy
 msgid "Topology was built.\n"
 msgstr "A topologia foi criada.\n"
 
@@ -3001,10 +3005,12 @@ msgid "Error writing out spatial index file."
 msgstr "Erro de escrita no arquivo de índices espaciais.\n"
 
 #: ../lib/vector/Vlib/build_nat.c:87
+#, fuzzy
 msgid "Cannot add area (map closed, topo saved)"
 msgstr "não consegui adicionar área (mapa fechado, topo salva)"
 
 #: ../lib/vector/Vlib/build_nat.c:95
+#, fuzzy
 msgid "Cannot add isle (map closed, topo saved)"
 msgstr "não consegui adicionar ilha (mapa fechado; topo salva)"
 
@@ -3017,7 +3023,7 @@ msgid "Registering lines: "
 msgstr "Registrando linhas: "
 
 #: ../lib/vector/Vlib/build_nat.c:507
-#, c-format
+#, fuzzy, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitivas registradas      \n"
 
@@ -3039,12 +3045,12 @@ msgid "Attaching centroids: "
 msgstr "Anexando centróides:"
 
 #: ../lib/vector/Vlib/build_ogr.c:258
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot calculate centroid for area %d"
 msgstr "não consegui calcular centróide para área %d"
 
 #: ../lib/vector/Vlib/build_ogr.c:293
-#, c-format
+#, fuzzy, c-format
 msgid "OGR feature type %d not supported)"
 msgstr "Feição OGR tipo %d não suportada)"
 
@@ -3054,6 +3060,7 @@ msgid "Feature %d without geometry ignored"
 msgstr "Feição %d sem geometria ignorada"
 
 #: ../lib/vector/Vlib/build_ogr.c:357
+#, fuzzy
 msgid "OGR feature without ID ignored."
 msgstr "Ignorando feição OGR sem ID"
 
@@ -3109,25 +3116,29 @@ msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Não consegui abrir histórico para o vetor %s"
 
 #: ../lib/vector/Vlib/field.c:76
+#, fuzzy
 msgid "Field number must be 1 or greater."
 msgstr "Número do campo deve ser 1 ou maior."
 
 #: ../lib/vector/Vlib/field.c:81
+#, fuzzy
 msgid "Cannot add database link, map is not opened in WRITE mode."
 msgstr ""
 "não é possível adicionar um link ao banco de dados, o mapa não está aberto "
 "em modo ESCRITA."
 
 #: ../lib/vector/Vlib/field.c:87
+#, fuzzy
 msgid "Cannot add database link."
 msgstr "não é possível adicionar um link ao banco de dados."
 
 #: ../lib/vector/Vlib/field.c:93 ../lib/vector/Vlib/field.c:136
+#, fuzzy
 msgid "Cannot write database links."
 msgstr "não consegui escrever os links para o banco de dados"
 
 #: ../lib/vector/Vlib/field.c:192
-#, c-format
+#, fuzzy, c-format
 msgid "Field number <%d> or name <%s> already exists"
 msgstr "O campo número <%d> ou o nome <%s> já existem"
 
@@ -3155,6 +3166,7 @@ msgid "Requested dblink %d, maximum link number %d"
 msgstr "dblink %d solicitado, %d links no máximo"
 
 #: ../lib/vector/Vlib/field.c:441
+#, fuzzy
 msgid "Cannot open OGR DBMI driver."
 msgstr "não consegui abrir driver DBMI OGR"
 
@@ -3169,6 +3181,7 @@ msgid "Error in rule on row %d in %s"
 msgstr "Erro na regra da linha %d em %s"
 
 #: ../lib/vector/Vlib/field.c:665
+#, fuzzy
 msgid "Bug: attempt to update map which is not in current mapset."
 msgstr "Bug: tentativa de atualizar mapa que não está no mapset atual."
 
@@ -3376,8 +3389,9 @@ msgid "Database record for node %d (cat = %d) not found (cost set to 0)"
 msgstr "Registro no banco de dados para categoria %d não encontrado"
 
 #: ../lib/vector/Vlib/net.c:368
+#, fuzzy
 msgid "Flattening the graph ..."
-msgstr ""
+msgstr "Criando topologia ...\n"
 
 #: ../lib/vector/Vlib/net.c:370
 msgid "GngFlatten error"
@@ -3456,9 +3470,9 @@ msgid "Please rebuild topology for vector map <%s@%s>"
 msgstr "Favor reconstruir a topologia do vetor '%s@%s'"
 
 #: ../lib/vector/Vlib/read_nat.c:160
-#, c-format
+#, fuzzy, c-format
 msgid "Attempt to read dead line [%d]"
-msgstr ""
+msgstr "não consegui abrir arquivo temporário"
 
 #: ../lib/vector/Vlib/read_ogr.c:110 ../lib/vector/Vlib/read_ogr.c:289
 #, fuzzy, c-format
@@ -3510,8 +3524,9 @@ msgid "New vertices"
 msgstr ""
 
 #: ../lib/vector/Vlib/write.c:23
+#, fuzzy
 msgid "Vect_write_line() for this format/level not supported"
-msgstr "Vect_write_line() não é suportada para este nível/formato"
+msgstr "Vect_rewrite_line() não é suportada para este nível/formato"
 
 #: ../lib/vector/Vlib/write.c:27
 msgid "Vect_rewrite_line() for this format/level not supported"
@@ -3522,14 +3537,17 @@ msgid "Vect_delete_line() for this format/level not supported"
 msgstr "Vect_delete_line() não é suportada para este nível/formato"
 
 #: ../lib/vector/Vlib/write.c:96
+#, fuzzy
 msgid "Cannot write line, the map is not opened"
 msgstr "não consegui escrever a linha, o mapa não foi aberto"
 
 #: ../lib/vector/Vlib/write.c:107
+#, fuzzy
 msgid "Cannot write line (negative offset)"
 msgstr "não consegui escrever a linha (deslocamento negativo)"
 
 #: ../lib/vector/Vlib/write.c:143
+#, fuzzy
 msgid "Cannot rewrite line, the map is not opened"
 msgstr "não consegui reescrever a linha, o mapa não está aberto"
 
@@ -3538,12 +3556,12 @@ msgid "Cannot rewrite line"
 msgstr "não consegui reescrever a linha"
 
 #: ../lib/vector/Vlib/write.c:197
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
 msgstr "não é possível apagar a linha, o mapa '%s' não está aberto no nível 2"
 
 #: ../lib/vector/Vlib/write.c:201
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
 msgstr ""
 "não consegui apagar a linha, o mapa '%s' não está aberto em modo de escrita"
@@ -3638,36 +3656,227 @@ msgid ""
 "node = [%d] line = [%d]"
 msgstr ""
 
-#~ msgid "Output name '%s' is not valid vector name."
-#~ msgstr "Nome de arquivo de saída %s não é um nome de vetor válido."
+msgid "Output name '%s' is not valid vector name."
+msgstr "Nome de arquivo de saída %s não é um nome de vetor válido."
 
-#~ msgid "Input vector '%s' not found"
+#, fuzzy
+msgid "Input vector '%s' not found"
+msgstr "Vetor de entrada '%s' não encontrado"
+
+msgid "Cannot copy vector '%s' to '%s'"
+msgstr "não consegui copiar o vetor '%s' para '%s'"
+
+#, fuzzy
+msgid "Cannot open existing vector map <%s>"
+msgstr "não posso apagar o vetor existente %s"
+
+#, fuzzy
+msgid "Cannot delete existing vector <%s>"
+msgstr "não posso apagar o vetor existente %s"
+
+msgid "Cannot open new vector %s"
+msgstr "não consegui abrir vetor novo %s"
+
+msgid "Cannot open history file for vector '%s'"
+msgstr "Não consegui abrir histórico para o vetor %s"
+
+msgid "Could not stat file '%s'"
+msgstr "não consegui obter informações sobre o arquivo '%s'"
+
+#, fuzzy
+msgid "Can't open directory %s"
+msgstr "não consegui abrir vetor novo %s"
+
+#, fuzzy
+msgid "Unable to allocate options"
+msgstr "não consegui alocar memória\n"
+
+#, fuzzy
+#~ msgid "Unable to open raster map <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Unable to create raster map <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Building topology for vector map <%s>...\n"
+#~ msgstr "Favor reconstruir a topologia do vetor '%s@%s'"
+
+#, fuzzy
+#~ msgid "Unable to close vector <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid ""
+#~ "Illegal vector map name <%s>. SQL keyword cannot be used as vector map "
+#~ "name."
+#~ msgstr "Nome de mapa de vetor <%s> ilegal. Caractere <%c> não permitido.\n"
+
+#, fuzzy
+#~ msgid "Vector map is not opened"
 #~ msgstr "Vetor de entrada '%s' não encontrado"
 
-#~ msgid "Cannot copy vector '%s' to '%s'"
-#~ msgstr "não consegui copiar o vetor '%s' para '%s'"
+#, fuzzy
+#~ msgid "Unable to select record from table <%s> (key %s, where %s)"
+#~ msgstr "não consegui criar o arquivo de cabeçalho para [%s em %s]"
 
 #, fuzzy
-#~ msgid "Cannot open existing vector map <%s>"
-#~ msgstr "não posso apagar o vetor existente %s"
+#~ msgid "Registered points (unique coordinates)"
+#~ msgstr "Registrando linhas: "
 
 #, fuzzy
-#~ msgid "Cannot delete existing vector <%s>"
-#~ msgstr "não posso apagar o vetor existente %s"
+#~ msgid "Unable to find point in polygon"
+#~ msgstr "não consegui encontrar [%s] em [%s]"
 
-#~ msgid "Cannot open new vector %s"
-#~ msgstr "não consegui abrir vetor novo %s"
+#, fuzzy
+#~ msgid "Conditions failed"
+#~ msgstr "Falha na conexão.\n"
 
-#~ msgid "Cannot open history file for vector '%s'"
+#, fuzzy
+#~ msgid "Unable to delete item %d from spatial index"
+#~ msgstr "não foi possível abrir o arquivo %s em %s"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is not open on level >= 2"
+#~ msgstr "Vetor de entrada '%s' não encontrado"
+
+#, fuzzy
+#~ msgid "Unable to add network arc"
+#~ msgstr "não consegui calcular centróide para área %d"
+
+#, fuzzy
+#~ msgid "Unable to read vector map"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Building areas: "
+#~ msgstr "Criando topologia ...\n"
+
+#, fuzzy
+#~ msgid "Areas built"
+#~ msgstr "A topologia foi criada.\n"
+
+#, fuzzy
+#~ msgid "Unable to read line %d"
+#~ msgstr "não consegui abrir arquivo temporário"
+
+#, fuzzy
+#~ msgid "Attempt to read topo for dead area (%d)"
+#~ msgstr "não consegui calcular centróide para área %d"
+
+#, fuzzy
+#~ msgid "Attempt to read topo for dead isle (%d)"
+#~ msgstr "não consegui ler o histograma para [%s em %s]"
+
+#, fuzzy
+#~ msgid "Unable to open OGR data source '%s'"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Unable to open layer <%s>"
+#~ msgstr "não foi possível abrir o arquivo %s em %s"
+
+#, fuzzy
+#~ msgid "Unable to open fidx file for vector map <%s@%s>"
 #~ msgstr "Não consegui abrir histórico para o vetor %s"
 
-#~ msgid "Could not stat file '%s'"
-#~ msgstr "não consegui obter informações sobre o arquivo '%s'"
+#, fuzzy
+#~ msgid "Duplicates"
+#~ msgstr "campo Este duplicado"
 
 #, fuzzy
-#~ msgid "Can't open directory %s"
-#~ msgstr "não consegui abrir vetor novo %s"
+#~ msgid "Invalid vector map name <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
 
 #, fuzzy
-#~ msgid "Unable to allocate options"
-#~ msgstr "não consegui alocar memória\n"
+#~ msgid "Unable to open header file for vector map <%s>"
+#~ msgstr "Não consegui abrir histórico para o vetor %s"
+
+#, fuzzy
+#~ msgid "Table <%s> linked to vector map <%s> does not exist"
+#~ msgstr "Não consegui abrir histórico para o vetor %s"
+
+#, fuzzy
+#~ msgid "Unknown operator"
+#~ msgstr "Erro desconhecido"
+
+#, fuzzy
+#~ msgid "Unable to open vector database definition file '%s'"
+#~ msgstr "não foi possível abrir o arquivo com a tabela de datum: %s"
+
+#, fuzzy
+#~ msgid "Column <%s> not found in table <%s>"
+#~ msgstr "Impossível descrever tabela <%s>"
+
+#, fuzzy
+#~ msgid "Data type of column <%s> not supported (must be numeric)"
+#~ msgstr "Tipo da coluna z não é suportado (deve ser inteiro ou double)"
+
+#, fuzzy
+#~ msgid "Index out of range in"
+#~ msgstr "Dimensões da matriz além dos limites"
+
+#, fuzzy
+#~ msgid "Unable to open header file of vector <%s>"
+#~ msgstr "Não consegui abrir histórico para o vetor %s"
+
+#, fuzzy
+#~ msgid "Unknown keyword %s in vector head"
+#~ msgstr "Tipo de vetor desconhecido"
+
+#, fuzzy
+#~ msgid "for this format/level not supported"
+#~ msgstr "Vect_write_line() não é suportada para este nível/formato"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "não foi possível abrir o arquivo %s em %s"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "Impossível mudar de diretório para %s"
+
+#, fuzzy
+#~ msgid "Unable to open temporary file"
+#~ msgstr "não foi possível abrir o arquivo %s em %s"
+
+#, fuzzy
+#~ msgid "Unable to open datum table file <%s>"
+#~ msgstr "não foi possível abrir o arquivo com a tabela de datum: %s"
+
+#, fuzzy
+#~ msgid "Error in datum table file <%s>, line %d"
+#~ msgstr "erro no arquivo da tabela de datum, linha %d"
+
+#, fuzzy
+#~ msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
+#~ msgstr "elipsóide inválido %s no arquivo"
+
+#, fuzzy
+#~ msgid "Unable to read header file for raster map <%s@%s>."
+#~ msgstr "não consegui criar o arquivo de cabeçalho para [%s em %s]"
+
+#, fuzzy
+#~ msgid "Unable to open header file for raster map <%s@%s>"
+#~ msgstr "Não consegui abrir histórico para o vetor %s"
+
+#, fuzzy
+#~ msgid "Unable to spawn wish"
+#~ msgstr "não consegui abrir [%s]"
+
+#, fuzzy
+#~ msgid "Unable to determine program name"
+#~ msgstr "não consegui encontrar o diretório do usuário"
+
+#, fuzzy
+#~ msgid "G_getenv(): Variable %s not set"
+#~ msgstr "GISRC - variável não incializada"
+
+#, fuzzy
+#~ msgid "Mask raster map <%s> not found"
+#~ msgstr "Vetor de entrada '%s' não encontrado"
+
+#, fuzzy
+#~ msgid "Cannot open database"
+#~ msgstr "não consegui abrir banco de dados %s"

@@ -6,6 +6,7 @@
 # Jáchym Èepický <jachym.cepicky centrum.cz>, 2005.
 # correction by Michal Bíl <michal.bil seznam.cz>, 2005.
 # Záboj Hrázský <zabojhrazsky seznam.cz>, 2006.
+# Jan Trochta <j.trochta seznam.cz>, 2008.
 #
 msgid ""
 msgstr ""
@@ -515,9 +516,9 @@ msgid "SOR -- iteration %5i error %g\n"
 msgstr "SOR -- iterace %5i chyba %g\n"
 
 #: ../lib/gpde/N_arrays_io.c:55
-#, c-format
+#, fuzzy, c-format
 msgid "Requested raster map <%s> not found"
-msgstr "Po¾adovaná rastrová mapa <%s> nebyla nalezena"
+msgstr "Po¾adovaná g3d mapa <%s> nebyla nalezena"
 
 #: ../lib/gpde/N_arrays_io.c:67 ../lib/gpde/N_arrays_io.c:190
 #, c-format
@@ -1015,17 +1016,17 @@ msgid "Can't read header file for [%s in %s]\n"
 msgstr "Nelze pøeèíst hlavièku souboru pro [%s v %s]\n"
 
 #: ../lib/gis/get_cellhd.c:75
-#, c-format
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] "
 msgstr "Jde o reklasifikaci [%s v %s] "
 
 #: ../lib/gis/get_cellhd.c:78
-#, c-format
+#, fuzzy, c-format
 msgid "which is missing"
 msgstr "jen¾ chybí"
 
 #: ../lib/gis/get_cellhd.c:80
-#, c-format
+#, fuzzy, c-format
 msgid "whose header file can't be opened"
 msgstr "jeho¾ hlavièkový soubor nelze otevøít"
 
@@ -1035,12 +1036,12 @@ msgid "Can't open header file for [%s in %s]"
 msgstr "Nelze otevøít hlavièkový soubor pro [%s v %s]"
 
 #: ../lib/gis/get_cellhd.c:106
-#, c-format
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
 msgstr "Jde o reklasifikaci [%s v %s] jeho¾ hlavièkový soubor je neplatný\n"
 
 #: ../lib/gis/get_cellhd.c:110
-#, c-format
+#, fuzzy, c-format
 msgid "Invalid format\n"
 msgstr "Neplatný formát\n"
 
@@ -1162,32 +1163,32 @@ msgid "unable to determine user's home directory"
 msgstr "nelze urèit domovský adresáø u¾ivatele"
 
 #: ../lib/gis/get_ellipse.c:82
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to open file %s in %s"
 msgstr "Nelze otevøít soubor %s v %s"
 
 #: ../lib/gis/get_ellipse.c:90 ../lib/gis/get_ellipse.c:119
-#, c-format
+#, fuzzy, c-format
 msgid "invalid a: field %s in file %s in %s"
 msgstr "neplatná a: polo¾ka %s v souboru %s v %s"
 
 #: ../lib/gis/get_ellipse.c:104
-#, c-format
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file %s in %s"
 msgstr "neplatný ref. elipsoid %s v souboru %s v %s"
 
 #: ../lib/gis/get_ellipse.c:124
-#, c-format
+#, fuzzy, c-format
 msgid "invalid es: field %s in file %s in %s"
 msgstr "neplatná es: polo¾ka %s v souboru %s v %s"
 
 #: ../lib/gis/get_ellipse.c:140
-#, c-format
+#, fuzzy, c-format
 msgid "No ellipsoid info given in file %s in %s"
 msgstr "V souboru %s v %s chybí informace o ref. elipsoidu"
 
 #: ../lib/gis/get_ellipse.c:417 ../lib/proj/ellipse.c:220
-#, c-format
+#, fuzzy, c-format
 msgid "unable to open ellipsoid table file: %s"
 msgstr "nelze otevøít soubor s tabulkou ref. elipsoidu: %s"
 
@@ -1385,7 +1386,7 @@ msgid "Invalid timestamp file for %s map %s in mapset %s"
 msgstr "Neplatný soubor s èasovou znaèkou pro %s mapu %s v mapsetu %s"
 
 #: ../lib/gis/get_row.c:110 ../lib/gis/get_row.c:935
-#, c-format
+#, fuzzy, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
 msgstr "[%s v %s] - po¾adavek na ètení øádku %d vnì regionu"
 
@@ -1395,26 +1396,27 @@ msgid "cell_values_float: xdr_float failed for index %d"
 msgstr "cell_values_float: xdr_float neúspì¹né pro index %d."
 
 #: ../lib/gis/get_row.c:422
-#, c-format
+#, fuzzy, c-format
 msgid "cell_values_double: xdr_double failed for index %d."
 msgstr "cell_values_double: xdr_double neúspì¹né pro index %d."
 
 #: ../lib/gis/get_row.c:564
-#, c-format
+#, fuzzy, c-format
 msgid "error reading compressed map [%s] in mapset [%s], row %d"
 msgstr "chyba pøi ètení komprimované mapy [%s] v mapsetu [%s], øádek %d"
 
 #: ../lib/gis/get_row.c:568
-#, c-format
+#, fuzzy, c-format
 msgid "error reading map [%s] in mapset [%s], row %d"
 msgstr "chyba pøi ètení mapy [%s] v mapsetu [%s], øádek %d"
 
 #: ../lib/gis/get_row.c:915 ../lib/gis/get_row.c:921
-#, c-format
+#, fuzzy, c-format
 msgid "error reading null row %d"
 msgstr "chyba pøi ètení prázdného øádku %d"
 
 #: ../lib/gis/get_row.c:1002
+#, fuzzy
 msgid "Could not realloc buffer"
 msgstr "Buffer nelze realokovat"
 
@@ -1439,7 +1441,7 @@ msgid "MAPSET %s not found"
 msgstr "MAPSET %s nebyl nalezen"
 
 #: ../lib/gis/gisinit.c:101
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\aERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
@@ -1696,6 +1698,7 @@ msgid "Cannot open debug file '%s'"
 msgstr "Nelze otevøít doèasný soubor '%s'"
 
 #: ../lib/gis/sample.c:74
+#, fuzzy
 msgid "unknown interpolation type"
 msgstr "Neznámý zpùsob interpolace"
 
@@ -1704,6 +1707,7 @@ msgid "\"no data\" label found; setting to zero"
 msgstr "nalezen prazdny retezec v popisu; nastavuji na nula"
 
 #: ../lib/gis/sample.c:482
+#, fuzzy
 msgid "problem reading raster cell file"
 msgstr "Potí¾e pøi ètení souboru cell (rastrová data)"
 
@@ -2504,7 +2508,7 @@ msgid "Cannot read topo for isle [%d]"
 msgstr "Nelze èíst topologii pro ostrov [%d]"
 
 #: ../lib/vector/Vlib/map.c:62 ../lib/vector/Vlib/map.c:75
-#, c-format
+#, fuzzy, c-format
 msgid "Unable to read vector map <%s%s>"
 msgstr "Nelze èíst vektorovou mapu <%s%s>"
 
@@ -2698,8 +2702,9 @@ msgid "Unable to open category index file for vector map <%s@%s>"
 msgstr "Nelze otevøít soubor s indexem kategorií pro vektorovou mapu <%s@%s>"
 
 #: ../lib/vector/Vlib/write.c:23
+#, fuzzy
 msgid "Vect_write_line() for this format/level not supported"
-msgstr "Vect_write_line() pro tento formát/úroveò není podporován"
+msgstr "Vect_rewrite_line() pro tento formát/úroveò není podporován"
 
 #: ../lib/vector/Vlib/write.c:27
 msgid "Vect_rewrite_line() for this format/level not supported"
@@ -2715,14 +2720,17 @@ msgid "Requested format is not compiled in this version"
 msgstr "Po¾adovaný formát není zkompilován v této verzi"
 
 #: ../lib/vector/Vlib/write.c:96
+#, fuzzy
 msgid "Cannot write line, the map is not opened"
 msgstr "Nelze zapsat linii, mapa není otevøena"
 
 #: ../lib/vector/Vlib/write.c:107
+#, fuzzy
 msgid "Cannot write line (negative offset)"
 msgstr "Nelze zapsat linii (záporný offset)"
 
 #: ../lib/vector/Vlib/write.c:143
+#, fuzzy
 msgid "Cannot rewrite line, the map is not opened"
 msgstr "Nelze pøepsat linii, mapa není otevøena"
 
@@ -2731,12 +2739,12 @@ msgid "Cannot rewrite line"
 msgstr "Nelze pøepsat linii"
 
 #: ../lib/vector/Vlib/write.c:197
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
 msgstr "Nelze odstranit linii, mapa '%s' není otevøena na úrovni 2"
 
 #: ../lib/vector/Vlib/write.c:201
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
 msgstr "Nelze odstranit linii, mapa '%s' není otevøena v módu pro 'zápis'"
 
@@ -2750,11 +2758,13 @@ msgid "%d errors in category string."
 msgstr "%d chyb v "
 
 #: ../lib/vector/Vlib/array.c:121 ../lib/vector/Vlib/array.c:229
+#, fuzzy
 msgid "Mixed area and other type requested for vector array."
 msgstr "Smíchané plochy a jiné typy jsou po¾adovány pro vektorové pole."
 
 #: ../lib/vector/Vlib/array.c:131 ../lib/vector/Vlib/array.c:151
 #: ../lib/vector/Vlib/array.c:261 ../lib/vector/Vlib/array.c:291
+#, fuzzy
 msgid "Not enough space in vector array."
 msgstr "Nedostatek místa ve vektorovém poli."
 
@@ -2833,10 +2843,12 @@ msgid "Please rebuild topology for vector map <%s@%s>"
 msgstr "Vytvoøte prosím znovu topologii pro vektorovou mapu <%s@%s>"
 
 #: ../lib/vector/Vlib/net.c:120
+#, fuzzy
 msgid "Building graph ..."
 msgstr "Vytváøení struktury grafu ..."
 
 #: ../lib/vector/Vlib/net.c:156
+#, fuzzy
 msgid "Cannot build network graph"
 msgstr "Nelze sestavit strukturu grafu"
 
@@ -2864,6 +2876,7 @@ msgid "Column type not supported"
 msgstr "Datový typ sloupce není podporován"
 
 #: ../lib/vector/Vlib/net.c:208
+#, fuzzy
 msgid "Registering arcs ..."
 msgstr "Registrace arcs ..."
 
@@ -2890,6 +2903,7 @@ msgid "Cannot add network arc"
 msgstr "Nelze pøidat arc sítì"
 
 #: ../lib/vector/Vlib/net.c:299
+#, fuzzy
 msgid "Setting node costs ..."
 msgstr "Nastavení váhy uzlù ..."
 
@@ -2900,6 +2914,7 @@ msgstr ""
 "Datový záznam pro uzel %d (cat = %d) nebyl nalezen (váha nastavena na 0)"
 
 #: ../lib/vector/Vlib/net.c:368
+#, fuzzy
 msgid "Flattening the graph ..."
 msgstr "Zpracování grafu ..."
 
@@ -2916,10 +2931,12 @@ msgid "Wrong line direction in Vect_net_get_line_cost()"
 msgstr "Chybný smìr linie ve Vect_net_get_line_cost()"
 
 #: ../lib/vector/Vlib/build_nat.c:87
+#, fuzzy
 msgid "Cannot add area (map closed, topo saved)"
 msgstr "Nelze pøidat plochu (mapa uzavøena, topologie ulo¾ena)"
 
 #: ../lib/vector/Vlib/build_nat.c:95
+#, fuzzy
 msgid "Cannot add isle (map closed, topo saved)"
 msgstr "Nelze pøidat ostrov (mapa uzavøena, topologie ulo¾ena)"
 
@@ -2932,7 +2949,7 @@ msgid "Registering lines: "
 msgstr "Registrace linií: "
 
 #: ../lib/vector/Vlib/build_nat.c:507
-#, c-format
+#, fuzzy, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitiv zaregistrováno       \n"
 
@@ -2954,12 +2971,12 @@ msgid "Attaching centroids: "
 msgstr "Pøipojování centroidù: "
 
 #: ../lib/vector/Vlib/build_ogr.c:258
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot calculate centroid for area %d"
 msgstr "Nemohu urèit centroid pro plochu %d"
 
 #: ../lib/vector/Vlib/build_ogr.c:293
-#, c-format
+#, fuzzy, c-format
 msgid "OGR feature type %d not supported)"
 msgstr "Typ prvku OGR %d není podporován)"
 
@@ -2969,6 +2986,7 @@ msgid "Feature %d without geometry ignored"
 msgstr "Prvek %d bez geometrie je ignorován"
 
 #: ../lib/vector/Vlib/build_ogr.c:357
+#, fuzzy
 msgid "OGR feature without ID ignored."
 msgstr "Prvek OGR bez ID je ignorován."
 
@@ -2994,16 +3012,17 @@ msgid "OGR feature type [%d] not supported"
 msgstr "Typ prvku OGR [%d] není podporován"
 
 #: ../lib/vector/Vlib/read_ogr.c:165
+#, fuzzy
 msgid "OGR feature without ID."
 msgstr "Prvek OGR bez ID."
 
 #: ../lib/vector/Vlib/read_ogr.c:365
-#, c-format
+#, fuzzy, c-format
 msgid "Cannot get feature geometry, FID [%ld]"
 msgstr "Nelze pøeèíst prvky geometrie, FID [%ld]"
 
 #: ../lib/vector/Vlib/read_nat.c:160
-#, c-format
+#, fuzzy, c-format
 msgid "Attempt to read dead line [%d]"
 msgstr "Pokus èíst mrtvou linii [%d]"
 
@@ -3024,6 +3043,7 @@ msgid "Building topology ...\n"
 msgstr "Vytváøím topologii ...\n"
 
 #: ../lib/vector/Vlib/build.c:148
+#, fuzzy
 msgid "Topology was built.\n"
 msgstr "Topologie byla vytvoøena.\n"
 
@@ -3106,41 +3126,47 @@ msgid "Number of isles     :   -\n"
 msgstr "Poèet ostrovù       :   -\n"
 
 #: ../lib/vector/Vlib/build.c:252
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open topo file for write <%s>"
 msgstr "Nelze otevøít soubor s topologií pro zápis: <%s>"
 
 #: ../lib/vector/Vlib/build.c:260
+#, fuzzy
 msgid "Error writing out topo file."
 msgstr "Chyba pøi sestavení souboru s topologií."
 
 #: ../lib/vector/Vlib/build.c:392
-#, c-format
+#, fuzzy, c-format
 msgid "Can't open spatial index file for write <%s>"
 msgstr "Nelze otevøít soubor s prostorovým indexem pro zápis <%s>"
 
 #: ../lib/vector/Vlib/build.c:400
+#, fuzzy
 msgid "Error writing out spatial index file."
 msgstr "Chyba pøi sestavení souboru s prostorovým indexem."
 
 #: ../lib/vector/Vlib/field.c:76
+#, fuzzy
 msgid "Field number must be 1 or greater."
 msgstr "Èíslo polo¾ky musí být vìt¹í nebo rovno 1."
 
 #: ../lib/vector/Vlib/field.c:81
+#, fuzzy
 msgid "Cannot add database link, map is not opened in WRITE mode."
 msgstr "Nelze pøidat spojení s databází, mapa není otevøena v módu pro ZÁPIS."
 
 #: ../lib/vector/Vlib/field.c:87
+#, fuzzy
 msgid "Cannot add database link."
 msgstr "Nelze pøidat spojení s databází."
 
 #: ../lib/vector/Vlib/field.c:93 ../lib/vector/Vlib/field.c:136
+#, fuzzy
 msgid "Cannot write database links."
 msgstr "Nelze zapsat spojení s databází."
 
 #: ../lib/vector/Vlib/field.c:192
-#, c-format
+#, fuzzy, c-format
 msgid "Field number <%d> or name <%s> already exists"
 msgstr "Pole s èíslem <%d> nebo názvem <%s> ji¾ existuje."
 
@@ -3168,6 +3194,7 @@ msgid "Requested dblink %d, maximum link number %d"
 msgstr "Po¾adovaný dblink %d, maximální poèet spojení %d"
 
 #: ../lib/vector/Vlib/field.c:441
+#, fuzzy
 msgid "Cannot open OGR DBMI driver."
 msgstr "Nelze otevøít ovladaè pro OGR DBMI"
 
@@ -3182,6 +3209,7 @@ msgid "Error in rule on row %d in %s"
 msgstr "Chyba v pravidlu na øádku %d v %s"
 
 #: ../lib/vector/Vlib/field.c:665
+#, fuzzy
 msgid "Bug: attempt to update map which is not in current mapset."
 msgstr "Bug: pokus o aktualizaci mapy, která není v aktuálním mapsetu."
 
@@ -3569,7 +3597,7 @@ msgid "some points outside of region -- will ignore..."
 msgstr "nìkteré body mimo region -- budou ignorovány..."
 
 #: ../lib/proj/ellipse.c:77
-#, c-format
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file"
 msgstr "neplatný referenèní elipsoid %s v souboru"
 
@@ -3617,15 +3645,17 @@ msgid "Output Unit Factor"
 msgstr "Vstupní jednotkový faktor"
 
 #: ../lib/proj/convert.c:110
+#, fuzzy
 msgid "Can't parse GRASS PROJ_INFO file"
 msgstr "Nelze parsovat soubor GRASS PROJ_FILE"
 
 #: ../lib/proj/convert.c:115
+#, fuzzy
 msgid "Can't get PROJ.4-style parameter string"
 msgstr "Nelze získat parametr ve stylu PROJ.4"
 
 #: ../lib/proj/convert.c:127
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "OGR can't parse PROJ.4-style parameter string:\n"
 "%s\n"
@@ -3636,7 +3666,7 @@ msgstr ""
 "(kód OGR chyba je %d)"
 
 #: ../lib/proj/convert.c:133
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "OGR can't get WKT-style parameter string\n"
 "(OGR Error code was %d)"
@@ -3651,7 +3681,7 @@ msgstr ""
 "význam."
 
 #: ../lib/proj/convert.c:431
-#, c-format
+#, fuzzy, c-format
 msgid "Datum <%s> not recognised by GRASS and no parameters found."
 msgstr ""
 "Geodetické datum <%s> nebylo GRASS rozpoznáno a nebyly nalezeny ¾ádné "
@@ -3698,3 +3728,222 @@ msgstr "Nemohu nalézt/otevøít symbol: '%s'"
 #, c-format
 msgid "Incorrect symbol color: '%s', using default."
 msgstr "Nesprávná barva pro symbol: '%s', pou¾ívám výchozí"
+
+#, fuzzy
+#~ msgid "Raster map <%s> not found"
+#~ msgstr "Vektorová mapa <%s> nebyla nalezena"
+
+#, fuzzy
+#~ msgid "Unable to open raster map <%s>"
+#~ msgstr "Nelze otevøít vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Unable to create raster map <%s>"
+#~ msgstr "Nelze vytvoøit vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Building topology for vector map <%s>...\n"
+#~ msgstr "Vytvoøte prosím znovu topologii pro vektorovou mapu <%s@%s>"
+
+#, fuzzy
+#~ msgid "Unable to close vector <%s>"
+#~ msgstr "Nelze otevøít vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Vector map is not opened"
+#~ msgstr "Vektorová mapa <%s> nebyla nalezena"
+
+#, fuzzy
+#~ msgid "Unable to select record from table <%s> (key %s, where %s)"
+#~ msgstr "Nelze vytvoøit index pro tabulku <%s>, klíè <%s>"
+
+#, fuzzy
+#~ msgid "All points (vertices)"
+#~ msgstr "V¹echny opìrné body"
+
+#, fuzzy
+#~ msgid "Registered points (unique coordinates)"
+#~ msgstr "Registrovaných bodù"
+
+#, fuzzy
+#~ msgid "Points marked for break"
+#~ msgstr "Uzel oznaèen jako pøipojený"
+
+#, fuzzy
+#~ msgid "Unable to find point in polygon"
+#~ msgstr "nelze nalézt [%s] v [%s]"
+
+#, fuzzy
+#~ msgid "Conditions failed"
+#~ msgstr "Pøipojení selhalo."
+
+#, fuzzy
+#~ msgid "Unable to delete item %d from spatial index"
+#~ msgstr "Nelze smazat soubor <%s>"
+
+#, fuzzy
+#~ msgid "Attempt to delete dead line"
+#~ msgstr "Pokus o odstranìní mrtvé plochy"
+
+#, fuzzy
+#~ msgid "Vector map <%s> is not open on level >= 2"
+#~ msgstr "Vektorová mapa <%s> nebyla nalezena"
+
+#, fuzzy
+#~ msgid "Unable to add network arc"
+#~ msgstr "Nelze pøidat arc sítì"
+
+#, fuzzy
+#~ msgid "Unable to read vector map"
+#~ msgstr "Nelze èíst vektorovou mapu <%s%s>"
+
+#, fuzzy
+#~ msgid "Building areas: "
+#~ msgstr "Vytváøení struktury grafu ..."
+
+#, fuzzy
+#~ msgid "Areas built"
+#~ msgstr "Struktura grafu sestavena"
+
+#, fuzzy
+#~ msgid "Feature: "
+#~ msgstr "Typ(y) vektorových objektù"
+
+#, fuzzy
+#~ msgid "Map structure was never initialized"
+#~ msgstr "Vektorová struktura nebyla inicializována"
+
+#, fuzzy
+#~ msgid "Attempt to read points of nonexisting area"
+#~ msgstr "Pokus o odstranìné ostrova z mrtvé plochy"
+
+#, fuzzy
+#~ msgid "Unable to read line %d"
+#~ msgstr "Nelze èíst hlavièkový soubor"
+
+#, fuzzy
+#~ msgid "Attempt to read topo for dead area (%d)"
+#~ msgstr "Pokus èíst mrtvou linii [%d]"
+
+#, fuzzy
+#~ msgid "Attempt to read topo for dead isle (%d)"
+#~ msgstr "Pokus èíst mrtvou linii [%d]"
+
+#, fuzzy
+#~ msgid "Unable to open OGR data source '%s'"
+#~ msgstr "Nelze otevøít adresáø <%s>"
+
+#, fuzzy
+#~ msgid "Unable to open layer <%s>"
+#~ msgstr "Nelze otevøít soubor %s"
+
+#, fuzzy
+#~ msgid "Unable to open fidx file for vector map <%s@%s>"
+#~ msgstr ""
+#~ "Nelze otevøít soubor s indexem kategorií pro vektorovou mapu <%s@%s>"
+
+#, fuzzy
+#~ msgid "Duplicates"
+#~ msgstr "duplicitní polo¾ka pro východ"
+
+#, fuzzy
+#~ msgid "Input vector map is not open"
+#~ msgstr "Vektorová mapa <%s> nebyla nalezena"
+
+#, fuzzy
+#~ msgid "Invalid vector map name <%s>"
+#~ msgstr "Nelze èíst vektorovou mapu <%s%s>"
+
+#, fuzzy
+#~ msgid "Unable to open header file for vector map <%s>"
+#~ msgstr "Nelze otevøít soubor s historií pro vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Table <%s> linked to vector map <%s> does not exist"
+#~ msgstr "Nelze nelézt tabulku <%s> pøipojenou k vektorové mapì <%s>"
+
+#, fuzzy
+#~ msgid "Unknown operator"
+#~ msgstr "neznámá chyba"
+
+#, fuzzy
+#~ msgid "Unable to open vector database definition file '%s'"
+#~ msgstr "nelze otevøít soubor s vý¹kovým systémem (datum): %s"
+
+#, fuzzy
+#~ msgid "Column <%s> not found in table <%s>"
+#~ msgstr "Nelze popsat tabulku <%s>"
+
+#, fuzzy
+#~ msgid "Data type of column <%s> not supported (must be numeric)"
+#~ msgstr ""
+#~ "Datový typ sloupce z není podporován (musí být interger nebo double)"
+
+#, fuzzy
+#~ msgid "Out of memory"
+#~ msgstr "G_malloc: do¹la pamì»"
+
+#, fuzzy
+#~ msgid "Index out of range in"
+#~ msgstr "Index vrstev je mimo rozsah"
+
+#, fuzzy
+#~ msgid "Unable to open header file of vector <%s>"
+#~ msgstr "Nelze otevøít soubor s historií pro vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Unknown keyword %s in vector head"
+#~ msgstr "Neznámý vektorový typ"
+
+#, fuzzy
+#~ msgid "for this format/level not supported"
+#~ msgstr "Vect_write_line() pro tento formát/úroveò není podporován"
+
+#, fuzzy
+#~ msgid "Unable to rewrite line %d"
+#~ msgstr "Nelze smazat soubor <%s>"
+
+#, fuzzy
+#~ msgid "Unable to delete line %d from vector map <%s>"
+#~ msgstr "Nelze smazat vektorovou mapu <%s>"
+
+#, fuzzy
+#~ msgid "Unable to open temporary file"
+#~ msgstr "Nelze otevøít soubor %s"
+
+#, fuzzy
+#~ msgid "Unable to open datum table file <%s>"
+#~ msgstr "nelze otevøít soubor s vý¹kovým systémem (datum): %s"
+
+#, fuzzy
+#~ msgid "Error in datum table file <%s>, line %d"
+#~ msgstr "chyba v souboru obsahující vý¹kový systém (datum), na øádku %d"
+
+#, fuzzy
+#~ msgid "Invalid ellipsoid descriptors (a, rf, es or b) in file"
+#~ msgstr "neplatný referenèní elipsoid %s v souboru"
+
+#, fuzzy
+#~ msgid "Unable to read header file for raster map <%s@%s>."
+#~ msgstr "Nelze vytvoøit hlavièkový soubor pro [%s v %s]"
+
+#, fuzzy
+#~ msgid "Unable to open header file for raster map <%s@%s>"
+#~ msgstr ""
+#~ "Nelze otevøít soubor s indexem kategorií pro vektorovou mapu <%s@%s>"
+
+#, fuzzy
+#~ msgid "Unable to spawn wish"
+#~ msgstr "Nelze otevøít %s"
+
+#, fuzzy
+#~ msgid "Unable to determine program name"
+#~ msgstr "nelze urèit domovský adresáø u¾ivatele"
+
+#, fuzzy
+#~ msgid "G_getenv(): Variable %s not set"
+#~ msgstr "GISRC - promìnná není nastavena"
+
+#, fuzzy
+#~ msgid "Mask raster map <%s> not found"
+#~ msgstr "Po¾adovaná rastrová mapa <%s> nebyla nalezena"

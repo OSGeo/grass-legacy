@@ -516,8 +516,8 @@ msgstr "Nastavit jas  pro kanál intenzita v HIS"
 #: ../gui/tcltk/d.m/rgbhis.tcl:147 ../gui/tcltk/d.m/raster.tcl:143
 msgid "overlay maps from other layers (transparent null value cells)"
 msgstr ""
-"pøekrývající se mapy z ostatních vrstev (transparentní jsou buòky s "
-"prázdnou hodnotou)"
+"pøekrývající se mapy z ostatních vrstev (transparentní jsou buòky s prázdnou "
+"hodnotou)"
 
 #: ../gui/tcltk/gis.m/dnviz.tcl:49 ../gui/tcltk/gis.m/rules.tcl:35
 msgid "Select input map"
@@ -2744,8 +2744,8 @@ msgid ""
 "Select non-georectified raster or vector to display for marking ground "
 "control points"
 msgstr ""
-"Vybrat rastrovou nebo vektorovou vrstvu jako podklad pro oznaèení vlí"
-"covacích bodù"
+"Vybrat rastrovou nebo vektorovou vrstvu jako podklad pro oznaèení "
+"vlícovacích bodù"
 
 #: ../gui/tcltk/gis.m/georect.tcl:690
 msgid "5. Start georectifying"
@@ -2774,8 +2774,8 @@ msgstr "první stupeò"
 #: ../gui/tcltk/gis.m/georect.tcl:1010
 msgid "affine transformation  (rasters & vectors). Requires 3+ GCPs."
 msgstr ""
-"afinní transformace (rasttové & vektorové vrstvy). Vy¾aduje nejménì 3 vlí"
-"covací body."
+"afinní transformace (rasttové & vektorové vrstvy). Vy¾aduje nejménì 3 "
+"vlícovací body."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1015
 msgid "2nd order"
@@ -2784,8 +2784,8 @@ msgstr "druhý stupeò"
 #: ../gui/tcltk/gis.m/georect.tcl:1016
 msgid "polynomial transformation  (rasters only). Requires 6+ GCPs."
 msgstr ""
-"polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 6 vlí"
-"covacích bodù."
+"polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 6 "
+"vlícovacích bodù."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1020
 msgid "3rd order"
@@ -2794,8 +2794,8 @@ msgstr "tøetí stupeò"
 #: ../gui/tcltk/gis.m/georect.tcl:1021
 msgid "polynomial transformation  (rasters only). Requires 10+ GCPs."
 msgstr ""
-"polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 10 vlí"
-"covacích bodù."
+"polynomní transformace (pouze rastrové vrstvy). Vy¾aduje minimálnì 10 "
+"vlícovacích bodù."
 
 #: ../gui/tcltk/gis.m/georect.tcl:1028
 msgid "Use"
@@ -2919,8 +2919,8 @@ msgstr "Odstranit vrstvu"
 #: ../gui/tcltk/gis.m/gmtool2.tcl:84 ../gui/tcltk/d.m/tool1.tcl:121
 msgid "Create new workspace file (erase current workspace settings first)"
 msgstr ""
-"Vytvoøit nový soubor s pracovní oblastí (sma¾e aktuální nastavení "
-"pracovní oblasti)"
+"Vytvoøit nový soubor s pracovní oblastí (sma¾e aktuální nastavení pracovní "
+"oblasti)"
 
 #: ../gui/tcltk/gis.m/gmtool2.tcl:90 ../gui/tcltk/d.m/tool1.tcl:124
 msgid "Open existing workspace file"
@@ -3935,8 +3935,7 @@ msgstr "     Nová vektorová vrstva"
 
 #: ../gui/tcltk/gis.m/vector.tcl:514
 msgid "Select existing vector for saving queried objects"
-msgstr ""
-"vybrat existující vektorovou vrstvu pro ulo¾ení dotazovaných objektù"
+msgstr "vybrat existující vektorovou vrstvu pro ulo¾ení dotazovaných objektù"
 
 #: ../gui/tcltk/gis.m/vector.tcl:522 ../gui/tcltk/d.m/vector.tcl:376
 msgid "Display when avg. region dimension is"
@@ -4000,8 +3999,7 @@ msgstr "liniové namísto prou¾kového mìøítka "
 
 #: ../gui/tcltk/d.m/barscale.tcl:118 ../gui/tcltk/d.m/legend.tcl:185
 msgid "place with mouse (cannot save placement with group)"
-msgstr ""
-"umístit pomocí my¹i (nelze ulo¾it umístìní v souvislosti se skupinou)"
+msgstr "umístit pomocí my¹i (nelze ulo¾it umístìní v souvislosti se skupinou)"
 
 #: ../gui/tcltk/d.m/rgbhis.tcl:96
 msgid "red (RGB) or hue (HIS):"
@@ -4292,8 +4290,7 @@ msgstr "Ukonèit Display Manager"
 
 #: ../gui/tcltk/d.m/menu.tcl:190
 msgid "Zoom to maximum extent of all displayed maps"
-msgstr ""
-"Zvìt¹it na maximální výøez pokrývající v¹echny zobrazené mapové vrstvy"
+msgstr "Zvìt¹it na maximální výøez pokrývající v¹echny zobrazené mapové vrstvy"
 
 #: ../gui/tcltk/d.m/menu.tcl:193
 msgid "Access other mapsets in current location"
@@ -4323,8 +4320,7 @@ msgstr ""
 #: ../gui/tcltk/d.m/menu.tcl:202
 msgid "Show projection information and create projection files"
 msgstr ""
-"Zobrazit informace o kartografickém zobrazení a vytvoøit související "
-"soubory"
+"Zobrazit informace o kartografickém zobrazení a vytvoøit související soubory"
 
 #: ../gui/tcltk/d.m/menu.tcl:204
 msgid "Convert coordinates from one projection to another"
@@ -4505,8 +4501,7 @@ msgstr "Ztenèit liniové prvky"
 
 #: ../gui/tcltk/d.m/menu.tcl:288
 msgid "Carve stream channels into elevation map using vector streams map"
-msgstr ""
-"Zaznamenat trasu toku do vý¹kového modelu pomocí vektorové vrstvy toku"
+msgstr "Zaznamenat trasu toku do vý¹kového modelu pomocí vektorové vrstvy toku"
 
 #: ../gui/tcltk/d.m/menu.tcl:289
 msgid "Depressionless elevation map and flowline map"
@@ -4773,8 +4768,7 @@ msgstr "Vytvoøit lineární referenèní systém"
 
 #: ../gui/tcltk/d.m/menu.tcl:409
 msgid "Create stationing from imput lines, and linear reference system"
-msgstr ""
-"Vytvoøit stanièení ze vstupních linií a lineární referenèní systém"
+msgstr "Vytvoøit stanièení ze vstupních linií a lineární referenèní systém"
 
 #: ../gui/tcltk/d.m/menu.tcl:410
 msgid ""
@@ -4936,14 +4930,14 @@ msgstr "Rektifikovat a georeferencovat obrazovou skupinu"
 #: ../gui/tcltk/d.m/menu.tcl:483
 msgid "Set ground control points (GCP's) from raster map or keyboard entry"
 msgstr ""
-"Oznaèit vlícovací body (ground control points - GCP) na podkladové "
-"rastrové vrstvì nebo pomocí klávesnice"
+"Oznaèit vlícovací body (ground control points - GCP) na podkladové rastrové "
+"vrstvì nebo pomocí klávesnice"
 
 #: ../gui/tcltk/d.m/menu.tcl:485
 msgid "Set ground control points (GCP's) from vector map or keyboard entry"
 msgstr ""
-"Oznaèit vlícovací body (ground control points - GCP) na podkladové "
-"vektorové vrstvì nebo pomocí klávesnice"
+"Oznaèit vlícovací body (ground control points - GCP) na podkladové vektorové "
+"vrstvì nebo pomocí klávesnice"
 
 #: ../gui/tcltk/d.m/menu.tcl:487
 msgid "Affine and Polynomial rectification (rubber sheet)"
@@ -5287,8 +5281,7 @@ msgstr "odstranit v¹echny rámce"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr ""
-"     (ponechte prázdné a umístìte pomocí my¹i; pozice nebude ulo¾ena)"
+msgstr "     (ponechte prázdné a umístìte pomocí my¹i; pozice nebude ulo¾ena)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -5903,8 +5896,7 @@ msgstr "UPOZORNÌNÍ: neplatná location"
 #, tcl-format
 msgid ""
 "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr ""
-"Varování: locatio <%s> v GISDBASE <%s> nenjí adresáø nebo neexistuje."
+msgstr "Varování: locatio <%s> v GISDBASE <%s> nenjí adresáø nebo neexistuje."
 
 #: ../lib/init/gis_set.tcl:177
 #, tcl-format
@@ -6103,3 +6095,11 @@ msgstr "volitelné"
 #: ../lib/gis/gui.tcl:578
 msgid "multiple"
 msgstr "mnohonásobné"
+
+#, fuzzy
+#~ msgid "Display: rows=%d columns=%d  resolution=%g %s"
+#~ msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
+
+#, fuzzy
+#~ msgid "cumulative length = %s\n"
+#~ msgstr "Výpoèet kumulativního pohyby nákladù mezi lokacemi"
