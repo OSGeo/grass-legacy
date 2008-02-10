@@ -166,7 +166,7 @@ int distance_weighting(struct line_pnts *Points, double slide, int look_ahead,
 		continue;
 	    point_assign(Points, j, with_z, &p);
 	    d = point_dist(p, c);
-	    if (d < 0.0000000001)
+	    if (d < GRASS_EPSILON)
 		continue;
 	    d = (double)1.0 / d;
 	    dists += d;
