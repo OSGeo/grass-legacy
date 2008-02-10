@@ -30,19 +30,115 @@ gmpath = os.path.join( os.getenv("GISBASE"), "etc", "wx", "gui_modules")
 sys.path.append(gmpath)
 
 import gcmd
+import grassenv
 
 class Settings:
     """Generic class where to store settings"""
     def __init__(self):
+        # filename for settings
+        self.fileName = ".grasswx"
+
+        # default settings
         self.defaultSettings = {
             # general
             'displayFont' : '',
             # advanced
-            'settingsFile' : 'home', # home, location, mapset
+            'settingsFile' : 'gisdbase', # gisdbase, location, mapset
             'digitInterface' : 'vdigit', # vedit, vdigit
+            'iconTheme': 'silk', # grass, silk
             }
         
+        # user settings
         self.userSettings = copy.deepcopy(self.defaultSettings)
+        try:
+            self.ReadSettingsFile()
+        except IOError, e:
+            raise gcmd.SettingsError(e)
+        except:
+            gcmd.SettingsError('Reading settings failed.')
+
+    def ReadSettingsFile(self, settings=None):
+        """Reads settings file (mapset, location, gisdbase)"""
+        if settings is None:
+            settings = self.userSettings
+
+        # look for settings file
+        # -> mapser
+        #  -> location
+        #   -> gisdbase
+        gisdbase = grassenv.GetGRASSVariable("GISDBASE")
+        location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
+        mapset_name = grassenv.GetGRASSVariable("MAPSET")
+
+        mapset_file = os.path.join(gisdbase, location_name, mapset_name, self.fileName)
+        location_file = os.path.join(gisdbase, location_name, self.fileName)
+        gisdbase_file = os.path.join(gisdbase, self.fileName)
+
+        if os.path.isfile(mapset_file):
+            self.__ReadFile(mapset_file)
+        elif os.path.isfile(location_file):
+            self.__ReadFile(location_file)
+        elif os.path.isfile(gisdbase_file):
+            self.__ReadFile(gisdbase_file)
+
+    def __ReadFile(self, filename, settings=None):
+        """Read settings from file to dict"""
+        if settings is None:
+            settings = self.userSettings
+
+        try:
+            file = open(filename, "r")
+            for line in file.readlines():
+                try:
+                    key, value = line.rstrip('%s' % os.linesep).split(':', 1)
+                except:
+                    raise SettingsError('Reading settings from file <%s> failed. '
+                                        'Line \'%s\'.' % (filename, line))
+                if settings.has_key(key):
+                    settings[key] = value
+                else:
+                    raise SettingsError('Reading settings from file <%s> failed. '
+                                        'Unknow item <%s>.' % (filename, key))
+        except IOError, e:
+            raise gcmd.SettingsError(e)
+        except:
+            raise gcmd.SettingsError('Reading settings from file <%s> failed.' % filename)
+
+        file.close()
+
+    def SaveToFile(self, settings=None):
+        """Save settings to the file"""
+        if settings is None:
+            settings = self.userSettings
+        
+        loc = self.Get('settingsFile')
+        gisdbase = grassenv.GetGRASSVariable("GISDBASE")
+        location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
+        mapset_name = grassenv.GetGRASSVariable("MAPSET")
+        filePath = None
+        if loc == 'gisdbase':
+            filePath = os.path.join(gisdbase, self.fileName)
+        elif loc == 'location':
+            filePath = os.path.join(gisdbase, location_name, self.fileName)
+        elif loc == 'mapset':
+            filePath = os.path.join(gisdbase, location_name, mapset_name, self.fileName)
+        
+        if filePath is None:
+            raise gcmd.SettingsError('Uknown file location.')
+
+        try:
+            file = open(filePath, "w")
+            for item in settings.keys():
+                if settings[item] != '':
+                    file.write('%s:%s%s' % (item, settings[item], os.linesep))
+        except IOError, e:
+            raise gcmd.SettingsError(e)
+        except:
+            raise gcmd.SettingsError('Writing settings to file <%s> failed.' % filePath)
+
+        file.close()
+
+        return filePath
 
     def Get(self, key):
         """Get value by key
@@ -86,23 +182,23 @@ class PreferencesDialog(wx.Dialog):
         self.__CreateAdvancedPage(notebook)
 
         # buttons
-        # btnSave = wx.Button(self, wx.ID_SAVE)
+        btnSave = wx.Button(self, wx.ID_SAVE)
         btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnOk = wx.Button(self, wx.ID_OK)
-        btnOk.SetDefault()
+        # btnOk = wx.Button(self, wx.ID_OK)
+        btnSave.SetDefault()
 
         # bindigs
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
         btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
-        # btnSizer.AddButton(btnSave)
+        btnSizer.AddButton(btnSave)
         btnSizer.AddButton(btnApply)
-        btnSizer.AddButton(btnOk)
+        # btnSizer.AddButton(btnOk)
         btnSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -167,6 +263,8 @@ class PreferencesDialog(wx.Dialog):
         gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
         gridSizer.AddGrowableCol(0)
 
+        row = 0
+
         #
         # place where to store settings
         #
@@ -174,15 +272,43 @@ class PreferencesDialog(wx.Dialog):
                                          label=_("Place where to store settings:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
-                       pos=(0, 0))
+                       pos=(row, 0))
         self.settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                      choices=['home', 'location', 'mapset'])
+                                      choices=['gisdbase', 'location', 'mapset'])
         self.settingsFile.SetStringSelection(self.settings.Get('settingsFile'))
         gridSizer.Add(item=self.settingsFile,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(0, 1))
+                      pos=(row, 1))
+        row += 1
 
+        #
+        # icon theme
+        #
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Icon theme:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(row, 0))
+        self.iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                   choices=['grass', 'silk'])
+        self.iconTheme.SetStringSelection(self.settings.Get('iconTheme'))
+        gridSizer.Add(item=self.iconTheme,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 1))
+        
+        row += 1
+        iconNote = wordwrap(_("Note: Requires GUI restart."),
+                            self.GetSize()[0]-50, wx.ClientDC(self))
+
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=iconNote),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0), span=(1, 2))
+        row += 1
+        
         #
         # digitization interface
         #
@@ -190,14 +316,15 @@ class PreferencesDialog(wx.Dialog):
                                          label=_("Digitization interface:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
-                       pos=(1, 0))
+                       pos=(row, 0))
         self.digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                         choices=['vdigit', 'vedit'])
         self.digitInterface.SetStringSelection(self.settings.Get('digitInterface'))
         gridSizer.Add(item=self.digitInterface,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(1, 1))
+                      pos=(row, 1))
+        row += 1
 
         digitNote = wordwrap(_("Note: User can choose from two interfaces for digitization. "
                                "The simple one uses v.edit command on the background. "
@@ -211,7 +338,7 @@ class PreferencesDialog(wx.Dialog):
                                          label=digitNote),
                       flag=wx.ALIGN_LEFT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(2, 0), span=(1, 2))
+                      pos=(row, 0), span=(1, 2))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
@@ -246,9 +373,11 @@ class PreferencesDialog(wx.Dialog):
 
         event.Skip()
 
-    def OnOK(self, event):
-        """Button 'OK' clicked"""
+    def OnSave(self, event):
+        """Button 'Save' clicked"""
         self.__UpdateSettings()
+        file = self.settings.SaveToFile()
+        self.parent.goutput.cmd_stdout.write('Settings saved to file <%s>.' % file)
         self.Close()
 
     def OnApply(self, event):
@@ -266,6 +395,9 @@ class PreferencesDialog(wx.Dialog):
 
         # location
         self.settings.Set('settingsFile', self.settingsFile.GetStringSelection())
+
+        # icon theme
+        self.settings.Set('iconTheme', self.iconTheme.GetStringSelection())
         
         # digitization interface
         self.settings.Set('digitInterface', self.digitInterface.GetStringSelection())

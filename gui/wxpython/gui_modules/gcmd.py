@@ -49,14 +49,15 @@ from debug import Debug as Debug
 
 class GException(Exception):
     """Generic exception"""
-    def __init__(self, message):
+    def __init__(self, message, parent=None):
         self.message = message
+        self.parent = parent
 
     def __str__(self):
-        wx.MessageBox(parent=None,
+        wx.MessageBox(parent=self.parent,
                       caption=_("Error"),
                       message=self.message,
-                      style=wx.ICON_ERROR)
+                      style=wx.ICON_ERROR | wx.CENTRE)
 
         return ''
 
@@ -69,12 +70,26 @@ class CmdError(GException):
         GException.__init__(message)
 
     def __str__(self):
-        wx.MessageBox(parent=None,
+        wx.MessageBox(parent=self.parent,
                       caption=_("Error in command execution"),
                       message=self.message,
-                      style=wx.ICON_ERROR)
+                      style=wx.ICON_ERROR | wx.CENTRE)
         
-        return ''  
+        return '' 
+
+class SettingsError(GException):
+    """Exception used for GRASS settings, see
+    gui_modules/preferences.py."""
+    def __init(self, message):
+        GException.__init__(message)
+
+    def __str__(self):
+        wx.MessageBox(parent=self.parent,
+                      caption=_("Preferences error"),
+                      message=self.message,
+                      style=wx.ICON_ERROR | wx.CENTRE)
+        
+        return '' 
 
 class DigitError(GException):
     """Exception raised during digitization session"""
