@@ -508,7 +508,6 @@ proc change_display {flag} {
 	set h [lindex [Nget_real_position 1] 2]
 	set min [lindex [Nget_height] 1]
 	set max [lindex [Nget_height] 2]
-	set Nv_(FlyThrough) 0
 	
 	if {$flag == 1} {
 		#draw eye position
@@ -521,12 +520,13 @@ proc change_display {flag} {
 		set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
 	}
 		
-	if {$Nv_(FlyThrough) == 0} {
+	if {$Nv_(FlyThrough)} {
 		pack_XY
 	} else {
 		pack $XY -side left -before $Nv_(HEIGHT_SLIDER)
 	}
 
+	set Nv_(FlyThrough) 0
 	update_height $h		
 	reset_res
 	move_position
