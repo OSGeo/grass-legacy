@@ -71,7 +71,7 @@ IconsSilk = {
     "addovl"     : 'images.png',
     "addgrid"    : 'application_view_icons.png',
     "addlabels"  : 'tag_blue_add.png',
-    "delcmd"     : 'cross.png',
+    "delcmd"     : 'bin_closed.png',
     "attrtable"  : 'application_view_columns.png',
     "addrgb"     : 'rgb.png',
     "addhis"     : 'his.png',
