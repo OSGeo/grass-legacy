@@ -97,38 +97,40 @@ proc GmGroup::display { node mod } {
 ###############################################################################
 
 # display background maps for digitizing in v.digit
-proc GmGroup::vdigit_display { node digitnode } {
+proc GmGroup::vdigit_display { vectmap } {
     variable opt
     variable tree
     variable bg_command 
-	global mon
-	global drawprog
-	global commandlist
+    global mon
+    global drawprog
+    global commandlist
 
-	set bg_command ""
-	
-	# display selected layers to create a display command list if needed
-	if {[llength $commandlist] == 0} {
-		MapCanvas::request_redraw $mon 1
-		vwait commandlist
-	}
-	
-	# if the layer being digitized is the only one displayed, then don't
-	# make it a background layer too. This avoids a black background.
-	if {[llength $commandlist] == 1 && [lindex [split [lindex $commandlist 0]] 0] == "d.vect"} {
-	    return $bg_command
-	}
+    set bg_command ""
+    
+    # display selected layers to create a display command list if needed
+    if {[llength $commandlist] == 0} {
+            MapCanvas::request_redraw $mon 1
+            vwait commandlist
+    }
+    
+    # if the layer being digitized is the only one displayed, then don't
+    # make it a background layer too. This avoids a black background.
+    set mapname [lindex [split [lindex [split [lindex $commandlist 0] ] 1] =] 1]
+    
+    if {[llength $commandlist] == 1 && $mapname == $vectmap} {
+        return $bg_command
+    }
 
-	# add each command in display command list to background commands
-	foreach cmd $commandlist {
-		append bg_command "$cmd;"
-	}
-	
-		
-	# get rid of the ; at the end of the background command list
-	set bg_command [string trimright $bg_command ";"]
-	
-	return $bg_command
+    # add each command in display command list to background commands
+    foreach cmd $commandlist {
+            append bg_command "$cmd;"
+    }
+    
+            
+    # get rid of the ; at the end of the background command list
+    set bg_command [string trimright $bg_command ";"]
+    
+    return $bg_command
 				
 }
 
