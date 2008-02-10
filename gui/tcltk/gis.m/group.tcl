@@ -107,11 +107,8 @@ proc GmGroup::vdigit_display { node digitnode } {
 
 	set bg_command ""
 	
-	puts "list 1 = $commandlist"
-	
 	# display selected layers to create a display command list if needed
 	if {[llength $commandlist] == 0} {
-		puts "in loop"
 		MapCanvas::request_redraw $mon 1
 		vwait commandlist
 	}
