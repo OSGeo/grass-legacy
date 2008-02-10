@@ -29,21 +29,38 @@ Available drivers are listed in <a href="sql.html">SQL support in GRASS GIS</a>.
 The default DBF driver provides only very limited SQL
 support (as DBF is not an SQL DB) while the other DBMS backends (such
 as PostgreSQL, MySQL etc) provide full SQL support since the SQL
-commands are sent directly to the DBMS.
+commands are sent directly to the DBMS. 
 
-<h3>Import from external database tables</h3>
+<h3>DB connection management</h3>
 
-The module <a href="db.in.ogr.html">db.in.ogr</a> can be used to import external
-attribute tables.
+The current database management settings are shown or modified with
+<a href="db.connect.html">db.connect</a> for current mapset. Available DBMI drivers
+are listed with <a href="db.drivers.html">db.drivers</a>. Some DBMI backends
+require a user/password for driver/database to be set with <a href="db.login.html">db.login</a>. 
+In order to test a driver, run <a href="db.test.html">db.test</a>. 
+
+<h3>Attribute data import and export</h3>
+
+Attribute data can be imported with <a href="db.in.ogr.html">db.in.ogr</a> from
+various formats and exported with <a href="db.out.ogr.html">db.out.ogr</a>. To internally 
+copy a a full table or selectively parts of it, use <a href="db.copy.html">db.copy</a>.
+<p>
+
+Further conversion tools:
+<ul>
+<li><a href="http://mdbtools.sourceforge.net/">MDB Tools</a>: Convert MS-Access data to SQL, DBF, etc.</li>
+<li><a href="http://grass.gdf-hannover.de/wiki/Openoffice.org_with_SQL_Databases">Openoffice.org with SQL Databases</a>
+</ul>
+
 
 <h3>SQL commands</h3>
 
-SQL commands can be directly executed with
-<a href="db.execute.html">db.execute</a>, <a href="db.select.html">db.select</a>
-and the other db.* modules.
+GRASS supports to main SQL operations, execution of an SQL statement 
+(<a href="db.execute.html">db.execute</a>) and selection
+of data from a table (<a href="db.select.html">db.select</a>).
 See the <a href="sql.html">SQL help page</a> for examples.
 
-<h3>Managing the default settings</h3>
+<h3>Managing the default DBMI settings</h3>
  
 Per default vector map attributes are stored in DBF table files. This default
 definition can be modified with <a href="db.connect.html">db.connect</a>. If an
@@ -62,16 +79,15 @@ pages are only available if driver was compiled in this installation):
 <li>PostgreSQL: <a href="grass-pg.html">PostgreSQL</a> and PostGIS page</li>
 </ul>
 
-<!-- maybe this should go somehwhere else, but I'm not sure where? -->
-Conversion tools:<BR>
-<ul>
-<a href=http://mdbtools.sourceforge.net/>MDB Tools</a>:
-Convert MS-Access data to SQL, DBF, etc.
-Example:
-<div class="code"><pre>
-gmdb dbfile.mdb
-</pre></div>
-</ul>
+<h3>Metadata</h3>
+All columns for a given table are listed with <a href="db.columns.html">db.columns</a>.
+The command <a href="db.describe.html">db.describe</a> describes a table in detail. To
+list all available tables for a given database, run <a href="db.tables.html">db.tables</a>.
+
+<h3>Table maintenance</h3>
+To drop a column from a selected attribute table, use <a href="db.dropcol.html">db.dropcol</a>.
+With <a href="db.droptable.html">db.droptable</a> an attribute table can be deleted.
+
 
 <h3>Database Schema</h3>
 
