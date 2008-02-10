@@ -258,7 +258,7 @@ int chaiken(struct line_pnts *Points, double thresh, int with_z)
 void refine_tangent(POINT * p)
 {
     double l = point_dist2(*p);
-    if (l < 1e-12) {
+    if (l < GRASS_EPSILON) {
 	point_scalar(*p, 0.0, p);
     }
     else {
@@ -369,10 +369,8 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
     point_assign(Points, n - 1, with_z, &p0);
     point_list_add(last, p0);
 
-    if (point_list_copy_to_line_pnts(head, Points) == -1) {
+    if (point_list_copy_to_line_pnts(head, Points) == -1)
 	G_fatal_error(_("Out of memory"));
-	exit(1);
-    }
 
     point_list_free(head);
     return Points->n_points;
