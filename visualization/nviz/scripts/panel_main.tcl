@@ -249,7 +249,7 @@ proc mkmainPanel { BASE } {
 
 	# reset button goes here so it can reference P
 	Button $BASE.midf.lookat.reset -text "reset" \
-		-bd 1 -command "do_reset $XY $H $E $P" \
+		-bd 1 -command "do_reset $XY $H $E $P $T" \
 		-helptext "Reset view to default"
 
 	pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
@@ -378,7 +378,7 @@ proc do_clear {} {
 
 # TODO - if started with view file, use these params for reset
 
-proc do_reset {XY H E P} {
+proc do_reset {XY H E P T} {
 	global Nv_
 	global Nauto_draw
 
@@ -397,6 +397,7 @@ proc do_reset {XY H E P} {
 	Nv_floatscaleCallback $H b 2 update_height $val
 
 	Nv_scaleCallback $P b 0 Nchange_persp 40
+	Nv_scaleCallback $T b 0 Nchange_twist 0
 	if {$Nauto_draw == 1} {Ndraw_all}
 
 	appNotBusy
