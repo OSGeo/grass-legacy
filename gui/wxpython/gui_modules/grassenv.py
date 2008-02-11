@@ -17,15 +17,15 @@ COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
 import os
 import sys
 
+import globalvar
+
 try:
     import subprocess
 except:
-    CompatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+    CompatPath = os.path.join(globalvar.ETCWXDIR, "compat")
     sys.path.append(CompatPath)
     import subprocess
     
-# gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-# sys.path.append(gmpath)
 # import gcmd
 
 def GetGRASSVariable(var):

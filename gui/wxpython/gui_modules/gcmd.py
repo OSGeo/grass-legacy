@@ -25,10 +25,13 @@ import os
 import sys
 import time
 import errno
+
+import wx
+
 try:
     import subprocess
 except:
-    compatPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "compat")
+    compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
     sys.path.append(compatPath)
     import subprocess
 if subprocess.mswindows:
@@ -40,10 +43,6 @@ else:
     import fcntl
 from threading import Thread
 
-import wx
-
-guiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(guiModulePath)
 # import wxgui_utils # log window
 from debug import Debug as Debug
 

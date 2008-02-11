@@ -26,9 +26,6 @@ import wx
 import wx.lib.filebrowsebutton as filebrowse
 from wx.lib.wordwrap import wordwrap
 
-gmpath = os.path.join( os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(gmpath)
-
 import gcmd
 import grassenv
 

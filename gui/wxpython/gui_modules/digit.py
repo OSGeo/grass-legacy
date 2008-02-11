@@ -44,15 +44,17 @@ import wx.lib.mixins.listctrl as listmix
 import gcmd
 import dbm
 from debug import Debug as Debug
-import gselect 
+import gselect
+import globalvar
 from preferences import globalSettings as UserSettings
 try:
-    digitPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "vdigit")
+    digitPath = os.path.join(globalvar.ETCWXDIR, "vdigit")
     sys.path.append(digitPath)
     import grass6_wxvdigit as vdigit
     GV_LINES = vdigit.GV_LINES
 except ImportError, err:
     GV_LINES = None
+    print err
 #    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
 #          "Detailed information in README file." % \
 #          (os.linesep, err)

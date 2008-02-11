@@ -16,6 +16,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
            for details.
 """
 
+import os
+
 import wx
 import wx.lib.flatnotebook as FN
 
@@ -23,7 +25,12 @@ import wx.lib.flatnotebook as FN
 Query layer (generated for example by selecting item in the Attribute Table Manager)
 Deleted automatically on re-render action
 """
+# temporal query layer (removed on re-render action)
 QUERYLAYER = 'qlayer'
+
+# path to python scripts
+ETCDIR = os.path.join(os.getenv("GISBASE"), "etc")
+ETCWXDIR = os.path.join(ETCDIR, "wxpython")
 
 """Style definition for FlatNotebook pages"""
 FNPageStyle = FN.FNB_VC8 | \

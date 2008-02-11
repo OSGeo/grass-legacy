@@ -511,8 +511,7 @@ class GMFrame(wx.Frame):
         Return False on error"""
 
         # dtd
-        gisbase = os.getenv("GISBASE")
-        dtdFilename = os.path.join(gisbase, "etc", "wx", "gui_modules", "grass-grc.dtd")
+        dtdFilename = os.path.join(globalvar.ETCWXDIR, "gui_modules", "grass-grc.dtd")
 
         # validate xml agains dtd
         #         dtd = xmldtd.load_dtd(dtdFilename)
@@ -1251,7 +1250,7 @@ class GMApp(wx.App):
         wx.InitAllImageHandlers()
 
         # create splash screen
-        introImagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images", "intro.png")
+        introImagePath = os.path.join(globalvar.ETCWXDIR, "images", "intro.png")
         introImage     = wx.Image(introImagePath, wx.BITMAP_TYPE_PNG)
         introBmp       = introImage.ConvertToBitmap()
         wx.SplashScreen (bitmap=introBmp, splashStyle=wx.SPLASH_CENTRE_ON_SCREEN | wx.SPLASH_TIMEOUT,

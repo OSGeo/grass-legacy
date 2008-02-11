@@ -21,9 +21,6 @@ import sys
 import wx
 import wx.combo
 
-GuiModulePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(GuiModulePath)
-
 import gcmd
 
 class SelectDialog(wx.Dialog):

@@ -22,10 +22,11 @@ import sys
 
 import wx
 
-gmPath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
+gmPath = os.path.join(os.getenv("GISBASE"), "etc", "wxpython", "gui_modules")
 sys.path.append(gmPath)
 
 import grassenv
+import globalvar
 from preferences import globalSettings as UserSettings
 
 # iconpath = grassenv.GetGRASSVariable('GRASS_ICONPATH')
@@ -33,12 +34,12 @@ from preferences import globalSettings as UserSettings
 #    iconpath = os.getenv("GRASS_ICONPATH")
 iconTheme = UserSettings.Get('iconTheme')
 if iconTheme and iconTheme == 'silk':
-    iconpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "icons", "silk")
+    iconpath = os.path.join(globalvar.ETCWXDIR, "icons", "silk")
 else:
     iconpath = None
 
-iconpath_default = os.path.join(os.getenv("GISBASE"), "etc", "gui", "icons")
-iconpath_vdigit  = os.path.join(os.getenv("GISBASE"), "etc", "v.digit")
+iconpath_default = os.path.join(globalvar.ETCDIR, "gui", "icons")
+iconpath_vdigit  = os.path.join(globalvar.ETCDIR, "v.digit")
 
 icons_default = {
     # map display
