@@ -21,8 +21,7 @@ COPYRIGHT: (C) 2007-2008 by the GRASS Development Team
 import os
 import sys
 
-gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(gmpath)
+import globalvar
 
 class DebugMsg:
     """

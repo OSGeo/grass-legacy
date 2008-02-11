@@ -36,9 +36,6 @@ import wx.combo
 import wx.stc
 import wx.lib.newevent
 
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
-sys.path.append(gmpath)
-
 import menuform
 import mapdisp
 import render

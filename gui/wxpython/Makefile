@@ -1,23 +1,24 @@
 MODULE_TOPDIR = ../..
 
-#SUBDIRS=vdigit docs
+# SUBDIRS=vdigit docs
 SUBDIRS = docs
+ETCDIR = $(ETC)/wxpython
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 default: parsubdirs install_scripts
 
 install_scripts:
-	$(MKDIR) $(ETC)/wx $(ETC)/wx/compat $(ETC)/wx/gui_modules $(ETC)/wx/icons $(ETC)/wx/icons/silk $(ETC)/wx/images $(ETC)/wx/scripts $(ETC)/wx/vdigit 
-	$(INSTALL_DATA) compat/* $(ETC)/wx/compat/
-	$(INSTALL_DATA) gui_modules/* $(ETC)/wx/gui_modules/
-	$(INSTALL_DATA) icons/*.* $(ETC)/wx/icons/
-	$(INSTALL_DATA) icons/silk/* $(ETC)/wx/icons/silk/
-	$(INSTALL_DATA) images/* $(ETC)/wx/images/
-	$(INSTALL_DATA) scripts/* $(ETC)/wx/scripts/
-	$(INSTALL_DATA) gis_set.py wxgui.py README $(ETC)/wx/
-#	$(INSTALL_DATA) vdigit/_grass6_wxvdigit.so $(ETC)/wx/vdigit/
-#	$(INSTALL_DATA) vdigit/grass6_wxvdigit.py $(ETC)/wx/vdigit/
+	$(MKDIR) $(ETCDIR) $(ETCDIR)/compat $(ETCDIR)/gui_modules $(ETCDIR)/icons $(ETCDIR)/icons/silk $(ETCDIR)/images $(ETCDIR)/scripts $(ETCDIR)/vdigit 
+	$(INSTALL_DATA) compat/* $(ETCDIR)/compat/
+	$(INSTALL_DATA) gui_modules/* $(ETCDIR)/gui_modules/
+	$(INSTALL_DATA) icons/*.* $(ETCDIR)/icons/
+	$(INSTALL_DATA) icons/silk/* $(ETCDIR)/icons/silk/
+	$(INSTALL_DATA) images/* $(ETCDIR)/images/
+	$(INSTALL_DATA) scripts/* $(ETCDIR)/scripts/
+	$(INSTALL_DATA) gis_set.py wxgui.py README $(ETCDIR)/
+#	$(INSTALL_DATA) vdigit/_grass6_wxvdigit.so $(ETCDIR)/vdigit/
+#	$(INSTALL_DATA) vdigit/grass6_wxvdigit.py $(ETCDIR)/vdigit/
 	$(INSTALL) -m 755 wxgrass $(GISBASE)/scripts/
 
 clean: cleansubdirs

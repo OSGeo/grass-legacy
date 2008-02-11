@@ -26,8 +26,9 @@ import time
 
 import grassenv
 import gcmd
+import globalvar
 
-imagePath = os.path.join( os.getenv("GISBASE"), "etc", "wx")
+imagePath = os.path.join(globalvar.ETCWXDIR)
 sys.path.append(imagePath)
 import images
 imagepath = images.__path__[0]

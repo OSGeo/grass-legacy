@@ -21,16 +21,15 @@ import wx.aui
 import os, sys, time, glob, math
 from threading import Thread
 
+import globalvar
 try:
     import subprocess
 except:
-    CompatPath = os.path.join( os.getenv("GISBASE"), "etc", "wx")
+    CompatPath = os.path.join(globalvar.ETCWXDIR)
     sys.path.append(CompatPath)
     from compat import subprocess
 
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
-sys.path.append(gmpath)
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
+gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
 sys.path.append(gmpath)
 
 import render

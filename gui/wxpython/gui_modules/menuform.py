@@ -70,12 +70,13 @@ import gettext
 gettext.install("wxgrass")
 
 gisbase = os.getenv("GISBASE")
+import globalvar
 if gisbase is None:
     print >>sys.stderr, "We don't seem to be properly installed, or we are being run outside GRASS. Expect glitches."
     gisbase = os.path.join(os.path.dirname( sys.argv[0] ), os.path.pardir)
     wxbase = gisbase
 else:
-    wxbase = os.path.join(gisbase,"etc","wx")
+    wxbase = os.path.join(globalvar.ETCWXDIR)
 
 sys.path.append( wxbase)
 imagepath = os.path.join(wxbase,"images")
@@ -84,7 +85,6 @@ sys.path.append(imagepath)
 import grassenv
 import gselect
 import gcmd
-import globalvar
 try:
     import subprocess
 except:
@@ -1222,13 +1222,12 @@ def getInterfaceDescription( cmd ):
 
     Note: 'cmd' is given as string
     """
-    gmpath = os.path.join(gisbase, "etc")
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
         raise IOError, _("Couldn't fetch interface description for command <%s>.") % cmd
     p = re.compile( '(grass-interface.dtd)')
     p.search( cmdout )
-    cmdout = p.sub( gmpath+r'/grass-interface.dtd', cmdout)
+    cmdout = p.sub(globalvar.ETCDIR + r'/grass-interface.dtd', cmdout)
     return cmdout
 
 class GrassGUIApp(wx.App):

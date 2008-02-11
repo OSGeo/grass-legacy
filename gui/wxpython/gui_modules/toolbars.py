@@ -20,15 +20,16 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import wx
 import os, sys
 
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons")
-sys.path.append(gmpath)
-
+import globalvar
 import gcmd
 import grassenv
 import digit
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
+
+gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
+sys.path.append(gmpath)
 
 class AbstractToolbar:
     """Abstract toolbar class"""

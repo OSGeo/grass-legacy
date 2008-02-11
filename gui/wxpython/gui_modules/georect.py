@@ -27,13 +27,6 @@ import math
 import tempfile
 import shutil
 
-try:
-    import subprocess # Not needed if GRASS commands could actually be quiet
-except:
-    CompatPath = os.path.join( os.getenv("GISBASE"),"etc","wx")
-    sys.path.append(CompatPath)
-    from compat import subprocess
-
 import wx
 import wx.aui
 import wx.lib.filebrowsebutton as filebrowse
@@ -43,11 +36,7 @@ import wx.grid as gridlib
 
 from threading import Thread
 
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","gui_modules" )
-sys.path.append(gmpath)
-gmpath = os.path.join( os.getenv("GISBASE"),"etc","wx","icons" )
-sys.path.append(gmpath)
-
+import globalvar
 import mapdisp
 import render
 import toolbars
@@ -59,6 +48,16 @@ import utils
 import menuform
 from debug import Debug as Debug
 from icon import Icons as Icons
+
+try:
+    import subprocess # Not needed if GRASS commands could actually be quiet
+except:
+    CompatPath = globalvar.ETCWXDIR
+    sys.path.append(CompatPath)
+    from compat import subprocess
+
+gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
+sys.path.append(gmpath)
 
 import images
 imagepath = images.__path__[0]
@@ -107,7 +106,7 @@ class GeorectWizard(object):
         #
         # file = "loc_wizard.png"
         #file = "loc_wizard_qgis.png"
-        #imagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
+        #imagePath = os.path.join(globalvar.ETCWXDIR, "images",
         #                         file)
         #wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
         ## wizbmp.Rescale(250,600)

@@ -17,9 +17,6 @@ for details.
 import os
 import sys
 
-gmpath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "gui_modules")
-sys.path.append(gmpath)
-
 import gcmd
 
 def GetTempfile(pref=None):

@@ -42,9 +42,12 @@ import wx.lib.mixins.listctrl as listmix
 import wx.wizard as wiz
 
 import gcmd
+import globalvar
 try:
     import subprocess
 except:
+    CompatPath = os.path.join(globalvar.ETCWXDIR)
+    sys.path.append(CompatPath)
     from compat import subprocess
 
 global coordsys
@@ -1523,8 +1526,7 @@ class LocationWizard(wx.Object):
         #
         # file = "loc_wizard.png"
         file = "loc_wizard_qgis.png"
-        imagePath = os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
-                                 file)
+        imagePath = os.path.join(globalvar.ETCWXDIR, "images", file)
         wizbmp = wx.Image(imagePath, wx.BITMAP_TYPE_PNG)
         # wizbmp.Rescale(250,600)
         wizbmp = wizbmp.ConvertToBitmap()
@@ -1642,7 +1644,7 @@ class LocationWizard(wx.Object):
     def __readData(self):
         """Get georeferencing information from tables in $GISBASE/etc"""
         # read projection definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "projections"), "r")
+        f = open(os.path.join(globalvar.ETCDIR, "projections"), "r")
         self.projections = {}
         for line in f.readlines():
             line = line.expandtabs(1)
@@ -1654,7 +1656,7 @@ class LocationWizard(wx.Object):
         f.close()
 
         # read datum definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datum.table"), "r")
+        f = open(os.path.join(globalvar.ETCDIR "datum.table"), "r")
         self.datums = {}
         paramslist = []
         for line in f.readlines():
@@ -1672,7 +1674,7 @@ class LocationWizard(wx.Object):
         f.close()
 
         # read datum transforms parameters
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "datumtransform.table"), "r")
+        f = open(os.path.join(globalvar.ETCDIR, "datumtransform.table"), "r")
         self.transforms = {}
         j = 1
         for line in f.readlines():
@@ -1700,7 +1702,7 @@ class LocationWizard(wx.Object):
         f.close()
 
         # read ellipsiod definitions
-        f = open(os.path.join(os.getenv("GISBASE"), "etc", "ellipse.table"), "r")
+        f = open(os.path.join(globalvar.ETCDIR, "ellipse.table"), "r")
         self.ellipsoids = {}
         for line in f.readlines():
             line = line.expandtabs(1)
@@ -2035,7 +2037,7 @@ class RegionDef(BaseClass, wx.Frame):
         #
         # image
         #
-        self.img = wx.Image(os.path.join(os.getenv("GISBASE"), "etc", "wx", "images",
+        self.img = wx.Image(os.path.join(globalvar.ETCWXDIR, "images",
                                          "qgis_world.png"), wx.BITMAP_TYPE_PNG).ConvertToBitmap()
 
         #

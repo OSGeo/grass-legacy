@@ -26,6 +26,7 @@ import glob
 import shutil
 
 from gui_modules import utils
+from gui_modules import globalvar
 
 utils.ImportWx()
 import wx.html
@@ -56,7 +57,7 @@ class GRASSStartup(wx.Frame):
         #
         # image
         try:
-            name = os.path.join(self.gisbase, "etc", "gintro.gif")
+            name = os.path.join(globalvar.ETCDIR, "gintro.gif")
             self.hbitmap = wx.StaticBitmap(self, wx.ID_ANY,
                                            wx.Bitmap(name=name,
                                                      type=wx.BITMAP_TYPE_GIF))
@@ -67,7 +68,7 @@ class GRASSStartup(wx.Frame):
         ### crashes when LOCATION doesn't exist
         # versionCmd = gcmd.Command(['g.version'], log=None)
         # grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
-        versionFile = open(os.path.join(self.gisbase, "etc", "VERSIONNUMBER"))
+        versionFile = open(os.path.join(globalvar.ETCDIR, "VERSIONNUMBER"))
         grassVersion = versionFile.readline().replace('%s' % os.linesep, '').strip()
         versionFile.close()
 
@@ -160,7 +161,7 @@ class GRASSStartup(wx.Frame):
     def _set_properties(self):
         """Set frame properties"""
         self.SetTitle(_("Welcome to GRASS GIS"))
-        self.SetIcon(wx.Icon(os.path.join(self.gisbase, "etc", "dm", "grass.gif"),
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, "dm", "grass.gif"),
                              wx.BITMAP_TYPE_GIF))
 
         self.lwelcome.SetForegroundColour(wx.Colour(35, 142, 35))
