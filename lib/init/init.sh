@@ -130,9 +130,9 @@ for i in "$@" ; do
 	    shift
 	    ;;
 	*)
-	    GRASS_GUI="text"
-	    shift
-	    ;;
+	    echo "ERROR: Invalid user interface specified."
+	    echo "Use the -help option to select a valid interface."
+	    exit 1
     esac
 done
 
@@ -777,7 +777,7 @@ case "$GRASS_GUI" in
 	fi
 	;;
     wxpython)
-        "$GISBASE/scripts/wxgrass" &
+        "$GISBASE/scripts/wxgui" &
 	;;
 
     # Ignore others
@@ -824,7 +824,7 @@ case "$GRASS_GUI" in
         echo "If required, restart the graphical user interface with: d.m"
         ;;
     wxpython)
-        echo "If required, restart the graphical user interface with: wxgrass"
+        echo "If required, restart the graphical user interface with: wxgui"
         ;;
     *)
         echo "Start the graphical user interface with: gis.m"
