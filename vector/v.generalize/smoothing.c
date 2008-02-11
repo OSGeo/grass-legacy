@@ -166,7 +166,7 @@ int distance_weighting(struct line_pnts *Points, double slide, int look_ahead,
 		continue;
 	    point_assign(Points, j, with_z, &p);
 	    d = point_dist(p, c);
-	    if (d < 0.0000000001)
+	    if (d < GRASS_EPSILON)
 		continue;
 	    d = (double)1.0 / d;
 	    dists += d;
@@ -314,7 +314,7 @@ int hermite(struct line_pnts *Points, double step, double angle_thresh,
 
     /* we always operate on the segment point[i]..point[i+1] */
     while (i < n - 1) {
-	if (next > length || (length - length_begin < 0.0000001)) {	/* segmet i..i+1 is finished or too short */
+	if (next > length || (length - length_begin < GRASS_EPSILON)) {	/* segmet i..i+1 is finished or too short */
 	    i++;
 	    if (i >= n - 1)
 		break;		/* we are already out out of line */
