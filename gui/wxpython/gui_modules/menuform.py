@@ -67,7 +67,7 @@ from xml.sax import make_parser
 import os
 from os import system
 import gettext
-gettext.install("wxgrass")
+gettext.install("wxgui")
 
 gisbase = os.getenv("GISBASE")
 import globalvar

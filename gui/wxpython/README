@@ -42,13 +42,9 @@ Go to directory:
 
 $ cd gui/wxpython
 
-1) Copy everything from gui directory into a new directory $GISBASE/etc/wx.
-     Or easier, create symlink (in running GRASS session):
-	 ln -s `pwd` $GISBASE/etc/wx
+and run 
 
-2) Copy the script "wxgrass" into $GISBASE/scripts.
-     Or easier, create symlink (in running GRASS session):
-         ln -s `pwd`/wxgrass $GISBASE/scripts
+$ make
 
 2 - STARTUP WITH GRASS INITIALIZATION
 
@@ -69,13 +65,13 @@ $ grass -wx
 
 Simply type
 
-$ wxgrass
+$ wxgui
 
 from the GRASS terminal.
 
 You can also specify workspace file to load on startup.
 
-$ wxgrass myworkspace.grc
+$ wxgui myworkspace.grc
 
 4 - CLI Display scripts
 
