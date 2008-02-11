@@ -116,7 +116,7 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     if (snap != NO_SNAP) { /* apply snapping (node or vertex) */
 	Vedit_snap_line(display->mapInfo, BgMap, nbgmaps,
 			-1, Points,
-			threshold, (SNAP) ? 0 : 1); 
+			threshold, (snap == SNAP) ? 0 : 1); 
     }
 
     if (Vect_write_line(display->mapInfo, type, Points, Cats) < 0) {
@@ -140,16 +140,23 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 
    \param line line id
    \param coords line geometry
+   \param bgmap  map of background map or NULL
+   \param snap   snapping mode (see vedit.h)
+   \param thresh threshold value for snapping
 
    \return new line id
    \return -1 error
 */
-int Digit::RewriteLine(int line, std::vector<double> coords)
+int Digit::RewriteLine(int line, std::vector<double> coords,
+		       const char *bgmap, int snap, double threshold)
 {
     int ret, type, dim;
     double x, y, z;
     struct line_pnts *points;
     struct line_cats *cats;
+
+    struct Map_info **BgMap; /* backgroud vector maps */
+    int nbgmaps;             /* number of registrated background maps */
 
     if (!display->mapInfo) {
 	return -1;
@@ -158,6 +165,18 @@ int Digit::RewriteLine(int line, std::vector<double> coords)
     /* line alive ? */
     if (!Vect_line_alive(display->mapInfo, line)) {
 	return -1;
+    }
+
+    BgMap = NULL;
+    nbgmaps = 0;
+    if (bgmap && strlen(bgmap) > 0) {
+	BgMap = OpenBackgroundVectorMap(bgmap);
+	if (!BgMap) {
+	    return -1;
+	}
+	else {
+	    nbgmaps = 1;
+	}
     }
     
     ret = 0;
@@ -186,6 +205,12 @@ int Digit::RewriteLine(int line, std::vector<double> coords)
 	}
     }
 
+    if (snap != NO_SNAP) { /* apply snapping (node or vertex) */
+	Vedit_snap_line(display->mapInfo, BgMap, nbgmaps,
+			-1, points,
+			threshold, (snap == SNAP) ? 0 : 1); 
+    }
+
     /* rewrite line */
     if (ret == 0) {
 	if (Vect_rewrite_line(display->mapInfo, line, type, points, cats) < 0) {
@@ -195,6 +220,10 @@ int Digit::RewriteLine(int line, std::vector<double> coords)
 
     Vect_destroy_line_struct(points);
     Vect_destroy_cats_struct(cats);
+
+    if (BgMap && BgMap[0]) {
+	Vect_close(BgMap[0]);
+    }
 
     return ret;
 }

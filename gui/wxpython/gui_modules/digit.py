@@ -938,7 +938,10 @@ class VDigit(AbstractDigit):
             for x in c:
                 listCoords.append(x)
 
-        return self.digit.RewriteLine(lineid, listCoords)
+        snap, thresh = self.__getSnapThreshold()
+        
+        return self.digit.RewriteLine(lineid, listCoords,
+                                      str(self.settings["backgroundMap"]), snap, thresh)
 
     def FlipLine(self):
         """Flip selected lines/boundaries"""
