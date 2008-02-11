@@ -54,7 +54,6 @@ try:
     GV_LINES = vdigit.GV_LINES
 except ImportError, err:
     GV_LINES = None
-    print err
 #    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
 #          "Detailed information in README file." % \
 #          (os.linesep, err)
