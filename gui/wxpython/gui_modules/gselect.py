@@ -61,7 +61,7 @@ class SelectDialog(wx.Dialog):
         sizer.Fit(self)
 
 class Select(wx.combo.ComboCtrl):
-    def __init__(self, parent, id, size, type, multiple):
+    def __init__(self, parent, id, size, type, multiple=False):
         """
         Custom control to create a ComboBox with a tree control
         to display and select GIS elements within acessible mapsets.
