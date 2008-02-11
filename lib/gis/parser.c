@@ -2022,7 +2022,7 @@ static void G_gui (void)
 	gui = G_getenv("GRASS_GUI");
     }
 
-    if (gui && strcmp(gui, "wx") == 0)
+    if (gui && strcmp(gui, "wxpython") == 0)
 	G_gui_wx();
     else
 	G_gui_tcltk();
