@@ -23,7 +23,8 @@ public:
 
     int AddLine(int, std::vector<double>, int, int,
 		const char*, int, double);
-    int RewriteLine(int, std::vector<double>);
+    int RewriteLine(int, std::vector<double>,
+		    const char*, int, double);
     int SplitLine(double, double, double,
 		  double);
 
