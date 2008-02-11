@@ -55,11 +55,11 @@ GRASS_GUI: tcktk (or whatever you have here)
 
 with
 
-GRASS_GUI: wx
+GRASS_GUI: wxpython
 
 or easier start new GRASS session with -wx switch.
 
-$ grass -wx
+$ grass -wxpython
 
 3 - STARTUP FROM GRASS TERMINAL
 
@@ -148,6 +148,5 @@ $ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so $GISBAS
 
 Then you can compile the driver
 
-$ cd $GISBASE/etc/wx/vdigit
+$ cd $GISBASE/etc/wxpython/vdigit
 $ make
-
