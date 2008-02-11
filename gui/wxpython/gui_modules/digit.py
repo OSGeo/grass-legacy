@@ -53,9 +53,9 @@ try:
     GV_LINES = vdigit.GV_LINES
 except ImportError, err:
     GV_LINES = None
-    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
-          "Detailed information in README file." % \
-          (os.linesep, err)
+#    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
+#          "Detailed information in README file." % \
+#          (os.linesep, err)
 
 # which interface to use?
 if UserSettings.Get('digitInterface') == 'vedit' and GV_LINES is not None:
@@ -181,7 +181,11 @@ class AbstractDigit:
         Debug.msg (3, "AbstractDigit.SetMapName map=%s" % map)
         self.map = map
 
-        ret = self.driver.Reset(self.map)
+        try:
+            ret = self.driver.Reset(self.map)
+        except:
+            raise gcmd.DigitError('Unable to initialize display driver, see README file for more information.')
+        
         if map and ret == -1:
             raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
                                'Try to run v.build for rebuilding the topology.') % map)
