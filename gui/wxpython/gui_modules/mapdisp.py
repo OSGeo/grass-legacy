@@ -2307,7 +2307,7 @@ class MapFrame(wx.Frame):
                 self.digittoolbar.toolbar[toolRow].Destroy()
             self.digittoolbar = None
 
-        self.maptoolbar.combo.SetValue ("");
+        self.maptoolbar.combo.SetValue ("Tools");
         self._mgr.Update()
 
     def __InitDisplay(self):
