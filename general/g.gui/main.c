@@ -18,6 +18,7 @@
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/glocale.h>
+#include <grass/spawn.h>
 
 int main(int argc, char *argv[])
 {
@@ -49,13 +50,13 @@ int main(int argc, char *argv[])
     else {
 	type->answer = "tcltk";
     }
-/*
+
     rc_file = G_define_option();
     rc_file->key = "rc";
     rc_file->type = TYPE_STRING;
     rc_file->required = NO;
-    rc_file->description = _("Name of GIS manager settings file (.grc)");
-*/
+    rc_file->description = _("Name of manager settings file (.grc)");
+
     oneoff = G_define_flag();
     oneoff->key         = 'u';
     oneoff->description = _("Do not modify default GUI setting");
@@ -70,17 +71,29 @@ int main(int argc, char *argv[])
 	}
     }
 
-/* TODO: build string to include dmrc= file */
-/*       use G_spawn() ? */
-
     if (strcmp(type->answer, "oldtcltk") == 0) {
-	G_system("d.m");
+	if (rc_file->answer) {
+	    G_spawn("d.m", "dmrc=%s", rc_file->answer, NULL);
+	}
+	else {
+	    G_system("d.m");
+	}
     }
     else if (strcmp(type->answer, "tcltk") == 0) {
-	G_system("gis.m");
+	if (rc_file->answer) {
+	    G_spawn("gis.m", "dmrc=%s", rc_file->answer, NULL);
+	}
+	else {
+	    G_system("gis.m");
+	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
-	G_system("wxgui");
+	if (rc_file->answer) {
+	    G_spawn("wxgui", "dmrc=%s", rc_file->answer, NULL);
+	}
+	else {
+	    G_system("wxgui");
+	}
     }
 
     exit(EXIT_SUCCESS);
