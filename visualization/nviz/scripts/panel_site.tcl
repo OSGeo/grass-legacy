@@ -114,7 +114,7 @@ proc mksitePanel { BASE } {
 		-command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $bottom.close -side right
 
-    button $bottom.draw_current -text {DRAW CURRENT} -fg darkgreen -anchor s \
+    button $bottom.draw_current -text "DRAW CURRENT" -fg darkgreen -anchor s \
 		-command {Nsite_draw_one [Nget_current site]} -bd 1
 
     pack $bottom.draw_current -side left
@@ -178,7 +178,7 @@ proc mksitePanel { BASE } {
 	set site_attr(FIELD_ATTR_PANEL) 0
     
 	checkbutton $row4.themechk -text "thematic mapping for vector points" \
-		-variable site_attr(FIELD_ATTR_PANEL) -command "site_attr_gui $row5 $bottom $curr" \
+		-variable site_attr(FIELD_ATTR_PANEL) -command "if {$curr!=0} {site_attr_gui $row5 $bottom $curr}" \
 		-offvalue 0 -onvalue 1
 	pack $row4.themechk -side left -anchor nw
     
