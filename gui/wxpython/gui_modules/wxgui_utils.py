@@ -1161,7 +1161,8 @@ class GMConsole(wx.Panel):
                         p2 = self.cmd_output.GetCurrentPos()
                         self.cmd_output.StartStyling(p1, 0xff)
                         self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
-    
+
+                        # TODO: allow running multiple instances
                         grassCmd = gcmd.Command(cmdlist, wait=False,
                                                 stdout=self.cmd_stdout,
                                                 stderr=self.cmd_stderr)

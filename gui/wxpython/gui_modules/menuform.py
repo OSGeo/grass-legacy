@@ -539,8 +539,6 @@ class mainFrame(wx.Frame):
         self.task = task_description
         self.parent = parent
 
-        self.standalone = True
-
         # module name + keywords
         title = self.task.name
         try:
@@ -576,10 +574,12 @@ class mainFrame(wx.Frame):
         # set apropriate output window
         if self.parent:
             self.standalone   = False
-            try:
-                self.goutput  = self.parent.GetLogWindow()
-            except:
-                self.goutput  = None
+        else:
+            self.standalone = True
+            #             try:
+            #                 self.goutput  = self.parent.GetLogWindow()
+            #             except:
+            #                 self.goutput  = None
 
         # logo+description
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -595,8 +595,9 @@ class mainFrame(wx.Frame):
 
         # notebooks
         self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=self.standalone)
-        if self.standalone:
-            self.goutput = self.notebookpanel.goutput
+        ### add 'command output' tab also for dialog open from menu
+        #         if self.standalone:
+        self.goutput = self.notebookpanel.goutput
         self.notebookpanel.OnUpdateValues = self.updateValuesHook
         guisizer.Add (item=self.notebookpanel, proportion=1, flag=wx.EXPAND)
 
@@ -725,10 +726,10 @@ class mainFrame(wx.Frame):
         else:
             runCmd = gcmd.Command(cmd)
 
-        if self.standalone:
-            # change page if needed
-            if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
-                self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
+        #if self.standalone:
+        # change page if needed
+        if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
+            self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
 
         if self.get_dcmd is None:
             # close dialog?
@@ -833,11 +834,12 @@ class cmdPanel(wx.Panel):
             self.notebook.AddPage( tab[section], text=section )
 
         # are we running from command line?
-        if standalone:
-            from gui_modules import wxgui_utils
-            self.goutput = wxgui_utils.GMConsole(self)
-            self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
-            self.outpageid = self.notebook.GetPageCount() - 1
+        ### add 'command output' tab regardless standalone dialog
+        #        if standalone:
+        from gui_modules import wxgui_utils
+        self.goutput = wxgui_utils.GMConsole(self)
+        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
+        self.outpageid = self.notebook.GetPageCount() - 1
 
         manual_tab =  helpPanel( parent = self.notebook, grass_command = self.task.name)
         if manual_tab.Ok:
