@@ -17,7 +17,7 @@ WXLDFLAGS := $(shell wx-config --libs)
 LDFLAGS=-shared -fpic -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) -lgdi $(WXLDFLAGS)
 
 LOCAL_HEADERS=digit.h driver.h
-SOURCES=driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp select.cpp
+SOURCES=driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp select.cpp grass6_wxvdigit_wrap.cpp
 
 OBJARCH=OBJ.$(ARCH)
 OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))
