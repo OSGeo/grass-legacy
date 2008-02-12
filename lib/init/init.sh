@@ -1,8 +1,6 @@
 #!/bin/sh
 #############################################################################
 #
-# $Id$
-#
 # MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
@@ -130,7 +128,7 @@ for i in "$@" ; do
 	    shift
 	    ;;
 	*)
-	    echo "ERROR: Invalid user interface specified."
+	    echo "ERROR: Invalid user interface <$i> specified."
 	    echo "Use the -help option to select a valid interface."
 	    exit 1
     esac
