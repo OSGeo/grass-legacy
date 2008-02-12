@@ -25,7 +25,7 @@ OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))
 default: grass6_wxvdigit.so
 
 clean:
-	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit_wrap.cpp grass6_wxvdigit.py grass6_wxvdigit.i grass6_wxvdigit.pyc	 
+	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit.i	 
 
 grass6_wxvdigit.i:
 	cat ./digit.i > grass6_wxvdigit.i
@@ -37,11 +37,8 @@ grass6_wxvdigit.i:
 grass6_wxvdigit_wrap.cpp: grass6_wxvdigit.i
 	$(SWIG) -c++ -python -shadow -o $@ $<
 
-$(OBJARCH)/grass6_wxvdigit_wrap.o: grass6_wxvdigit_wrap.cpp $(OBJARCH)
-	$(CXX) $(CXXFLAGS) $(INCLUDE_DIRS) $< -o $@
-
 $(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
 	$(CXX) $(CXXFLAGS) $(INCLUDE_DIRS) $< -o $@
 
-grass6_wxvdigit.so: $(OBJARCH)/grass6_wxvdigit_wrap.o $(OBJ)
-	$(CXX) $(LDFLAGS) $(OBJARCH)/grass6_wxvdigit_wrap.o $(OBJ) -o _grass6_wxvdigit.so
+grass6_wxvdigit.so: $(OBJ)
+	$(CXX) $(LDFLAGS) $(OBJ) -o _grass6_wxvdigit.so

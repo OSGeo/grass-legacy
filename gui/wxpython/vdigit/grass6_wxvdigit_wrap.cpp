@@ -10912,16 +10912,29 @@ SWIGINTERN PyObject *_wrap_Digit_RewriteLine(PyObject *SWIGUNUSEDPARM(self), PyO
   Digit *arg1 = (Digit *) 0 ;
   int arg2 ;
   std::vector<double,std::allocator<double > > arg3 ;
+  char *arg4 = (char *) 0 ;
+  int arg5 ;
+  double arg6 ;
   int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
+  int res4 ;
+  char *buf4 = 0 ;
+  int alloc4 = 0 ;
+  int val5 ;
+  int ecode5 = 0 ;
+  double val6 ;
+  int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOO:Digit_RewriteLine",&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:Digit_RewriteLine",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Digit, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Digit_RewriteLine" "', argument " "1"" of type '" "Digit *""'"); 
@@ -10941,10 +10954,27 @@ SWIGINTERN PyObject *_wrap_Digit_RewriteLine(PyObject *SWIGUNUSEDPARM(self), PyO
     arg3 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  result = (int)(arg1)->RewriteLine(arg2,arg3);
+  res4 = SWIG_AsCharPtrAndSize(obj3, &buf4, NULL, &alloc4);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "Digit_RewriteLine" "', argument " "4"" of type '" "char const *""'");
+  }
+  arg4 = reinterpret_cast< char * >(buf4);
+  ecode5 = SWIG_AsVal_int(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "Digit_RewriteLine" "', argument " "5"" of type '" "int""'");
+  } 
+  arg5 = static_cast< int >(val5);
+  ecode6 = SWIG_AsVal_double(obj5, &val6);
+  if (!SWIG_IsOK(ecode6)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "Digit_RewriteLine" "', argument " "6"" of type '" "double""'");
+  } 
+  arg6 = static_cast< double >(val6);
+  result = (int)(arg1)->RewriteLine(arg2,arg3,(char const *)arg4,arg5,arg6);
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (alloc4 == SWIG_NEWOBJ) delete[] buf4;
   return resultobj;
 fail:
+  if (alloc4 == SWIG_NEWOBJ) delete[] buf4;
   return NULL;
 }
 
