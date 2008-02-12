@@ -79,7 +79,7 @@ proc mkvectPanel { BASE } {
     set tmp [frame $BASE.f]
     button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s -bd 1
     pack $tmp.close -side right
-    button $tmp.draw_current -text {DRAW CURRENT} -bd 1 -fg darkgreen \
+    button $tmp.draw_current -text "DRAW CURRENT" -bd 1 -fg darkgreen \
 		-command {Nvect_draw_one [Nget_current vect]}
     pack $tmp.draw_current -side left
     pack $tmp -side bottom -fill x -expand 1 -padx 3
@@ -89,6 +89,7 @@ proc mkvectPanel { BASE } {
     set row1 [frame $tmp.row1]
     set row2 [frame $tmp.row2]
     set row3 [frame $tmp.row3]
+    set row4 [frame $tmp.row4]
     set tmp1a [frame $row1.b]
     
     set wlabel [label $row1.wlabel -text "line width" \
@@ -106,14 +107,14 @@ proc mkvectPanel { BASE } {
 		-command "change_color vect $row1.color"]
     bind $row1.color <Expose> "$row1.color configure -bg \[get_curr_sv_color vect\]"
     
-    set rb1 [radiobutton $row1.label2 -text "display flat" \
-		-variable flat_state -value 1 -command "check_list $row2.list"]
+    set rb1 [radiobutton $row2.label2 -text "display flat" \
+		-variable flat_state -value 1 -command "check_list $row3.list"]
 
     set rb2 [radiobutton $row2.label1 -text "display on surface(s):" \
 		-variable flat_state -value 0 \
-        -command "check_list $row2.list"]
+        -command "check_list $row3.list"]
 
-    set htscale [Nv_mkScale $row3.scale h "vector height\nabove surface" 0 10000 $height set_ht 1]
+    set htscale [Nv_mkScale $row4.scale h "vector height\nabove surface" 0 10000 $height set_ht 1]
 
 
     pack $wlabel $vlinewidth -side left
@@ -122,21 +123,22 @@ proc mkvectPanel { BASE } {
     pack $row1 -expand 1 -fill none -pady 4
     pack $rb2 -side left 
     pack $row2 -side left
+    pack $row3 -side left
     pack $htscale -side top -anchor w
-    pack $row3 -side top -fill x -expand 1 -pady 4 
+    pack $row4 -side top -fill x -expand 1 -pady 4 
 
 	# Let radiobutton state handle building list
 	# of available surfaces
     if {$flat_state == 0} {
 		$row2.label1 select
-		check_list $row2.list
+		check_list $row3.list
     } else {
 		$row2.label2 select
-		check_list $row2.list
+		check_list $row3.list
     }
 
-    pack $row1 $row2 -side top -fill both -expand 1
-    pack $row3 -side right -fill both -expand 1
+    pack $row1 $row2 $row3 -side top -fill both -expand 1
+    pack $row4 -side right -fill both -expand 1
     pack $tmp -side top  -fill both -expand 1  -padx 3
 
     return $panel

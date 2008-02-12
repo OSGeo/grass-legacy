@@ -426,8 +426,7 @@ proc site_attr_create_win {_idx} {
 			generate a color table."
 		}
 		default {
-			puts "WARNING: No thematic mapping preferences set"
-			for $site_attr($_idx.ATTR)!"
+			puts "WARNING: No thematic mapping preferences set for $site_attr($_idx.ATTR)!"
 		}
 	}
 
