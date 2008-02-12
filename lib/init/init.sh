@@ -127,10 +127,6 @@ for i in "$@" ; do
 	    GRASS_GUI="wxpython"
 	    shift
 	    ;;
-	*)
-	    echo "ERROR: Invalid user interface <$i> specified."
-	    echo "Use the -help option to select a valid interface."
-	    exit 1
     esac
 done
 
