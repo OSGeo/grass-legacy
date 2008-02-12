@@ -1,20 +1,36 @@
 <h2>DESCRIPTION</h2>
 
 <p>
-This program allows user to start selected graphical user interface (GUI) from command line
-prompt.
+This program allows user to start a selected graphical user interface (GUI)
+from command line prompt.
 
 <p>
 Currently three different GUIs are supported:
 
 <ul>
-<li><b>oldtcltk</b> - Old TCL/TK based GUI aka <a href="d.m.html">Display Manager</a></li>
-<li><b>tcltk</b> - Current TCL/TK based GUI aka <a href="gis.m.html">GIS Manager</a></li>
-<li><b>wxpython</b> - New wxPython based GUI aka <a href="wxGUI.html">wxGUI</a></li>
+<li><b>tcltk</b> - Current TCL/TK based GUI aka the <em>gis.m</em>
+    <a href="gis.m.html">GIS Manager</a></li>
+<li><b>oldtcltk</b> - Old TCL/TK based GUI aka the <em>d.m</em>
+    <a href="d.m.html">Display Manager</a></li>
+<li><b>wxpython</b> - New wxPython based GUI aka
+    <a href="wxGUI.html">wxGUI</a></li>
 </ul>
 
-If GRASS_GUI variable is not set or differs from selected option then
-GRASS_GUI is changed, selected GUI is used as default UI.
+If the <em>g.gisenv</em> <tt>GRASS_GUI</tt> variable is not set or differs
+from the option selected with this module, and the <b>-u</b> flag is not
+set, then the <tt>GRASS_GUI</tt> variable is permanently changed and the
+selected GUI will be used as the default UI from then on.
+
+<h2>NOTES</h2>
+
+Valid values for GRASS_GUI are <tt>text</tt>, <tt>tcltk</tt>,
+<tt>oldtcltk</tt>, and <tt>wxpython</tt>.
+
+<em>g.gisenv</em> variables are stored in the user's home directory
+in a hidden file called ".grassrc6". They are not shell environment
+variables and the "rc" file is not a classic UNIX run command file,
+it just contains persistent GRASS variables and is not executed.
+
 
 <h2>SEE ALSO</h2>
 
@@ -23,7 +39,7 @@ GRASS_GUI is changed, selected GUI is used as default UI.
 <a href="http://grass.gdf-hannover.de/wiki/WxPython-based_GUI_for_GRASS">wxGUI wiki-page</a><br>
 <a href="gis.m.html">TCL/TK based GIS Manager (gis.m)</a>,<br>
 <a href="d.m.html">TCL/TK based Display Manager (d.m)</a>,<br><br>
-<a href="g.gisenv.html">g.gisenv</a>, <a href="variables.html">variables list</a>
+<a href="g.gisenv.html">g.gisenv</a>, <a href="variables.html">GRASS variables list</a>
 </em>
 
 
