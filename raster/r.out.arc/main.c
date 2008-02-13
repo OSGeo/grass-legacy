@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
        	exit (EXIT_FAILURE);
 
+
     sscanf(parm.dp->answer, "%d", &dp);
     if(dp>20 || dp < 0)
        G_fatal_error("dp has to be from 0 to 20");
@@ -206,6 +207,10 @@ int main(int argc, char *argv[])
 	fprintf (fp,"\n");
 	*/
     }
+
+    /* make sure it got to 100% */
+    G_percent(1, 1, 2);
+
     G_close_cell(fd);
     fclose(fp);
 
