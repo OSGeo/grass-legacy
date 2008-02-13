@@ -45,7 +45,7 @@ GLOBAL SHORT	drain[3][3]	DRAINVAR;
 GLOBAL SHORT	updrain[3][3]	UPDRAINVAR; 
 GLOBAL char dr_mod[9] DRVAR ;
 GLOBAL char dc_mod[9] DCVAR ;
-GLOBAL char	basin_name[80], swale_name[80], half_name[80], elev_name[80], armsed_name[80];
+GLOBAL char	basin_name[GNAME_MAX], swale_name[GNAME_MAX], half_name[GNAME_MAX], elev_name[GNAME_MAX], armsed_name[GNAME_MAX];
 GLOBAL int	nrows, ncols, done, total;
 GLOBAL int	array_size, high_index, do_index;
 GLOBAL char	*drain_ptrs, ha_f, el_f, ar_f;

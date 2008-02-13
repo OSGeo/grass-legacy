@@ -235,8 +235,7 @@ int parse_units (char *s)
 
 int parse_layer (char *s)
 {
-	char msg[100];
-	char name[200];
+	char name[GNAME_MAX];
 	char *mapset;
 	struct FPRange fp_range;
 	int n;
@@ -245,9 +244,7 @@ int parse_layer (char *s)
 	mapset = G_find_cell2 (name, "");
 
 	if (mapset == NULL)
-	{
 	    G_fatal_error (_("Raster map <%s> not found"), s);
-	}
 
 	n = nlayers++ ;
 	layers = (LAYER *)G_realloc(layers, nlayers * sizeof(LAYER));
@@ -261,10 +258,8 @@ int parse_layer (char *s)
         if(is_fp[n])
 	{
            if(G_read_fp_range (name, mapset, &fp_range) < 0)
-           {
              G_fatal_error (_("Unable to read fp range for raster map <%s>"),
 			    name);
-           }
  	   G_get_fp_range_min_max (&fp_range, &DMIN[n], &DMAX[n]);
         }
 

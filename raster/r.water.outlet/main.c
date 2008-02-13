@@ -35,7 +35,7 @@ int main (int argc, char *argv[])
 	double	N,E;
 	int	row, col, basin_fd, drain_fd;
 	CELL	*cell_buf;
-	char	drain_name[80], *drain_mapset, E_f, dr_f, ba_f, N_f,  errr;
+	char	drain_name[GNAME_MAX], *drain_mapset, E_f, dr_f, ba_f, N_f,  errr;
 	struct GModule *module;
         struct Option *opt1, *opt2, *opt3, *opt4;
 	char *buf;

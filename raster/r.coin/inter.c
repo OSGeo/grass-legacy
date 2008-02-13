@@ -25,7 +25,7 @@ int interactive_version (void)
 {
     int  cols;
     char key;
-    char line[128],outname[128],command[1024];
+    char line[128],outname[GNAME_MAX],command[1024];
     char ans[80];
 
     setbuf(stderr,NULL);
@@ -37,11 +37,11 @@ int interactive_version (void)
 
     mapset1 = G_ask_cell_old("Enter Name of Map Layer 1",map1name);
     if(!mapset1)
-	    exit (0);
+	    G_fatal_error (_("Raster map <%s> not found"), map1name);
 
     mapset2 = G_ask_cell_old("Enter Name of Map Layer 2",map2name);
     if(!mapset2)
-	    exit (0);
+	    G_fatal_error (_("Raster map <%s> not found"), map2name);
 
     make_coin();
     check_report_size();

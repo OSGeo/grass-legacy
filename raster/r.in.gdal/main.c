@@ -602,7 +602,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
     struct Key_Value *proj_info=NULL, *proj_units=NULL;
     char errbuf[256];
     int permissions;
-    char target_mapset[80];
+    char target_mapset[GMAPSET_MAX];
     struct Key_Value *out_proj_info,  /* projection information of    */
                      *out_unit_info;  /* input and output mapsets     */
 
