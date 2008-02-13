@@ -3,15 +3,15 @@
   struct Quant quant_struct;
   CELL old_min, old_max;
   DCELL old_dmin, old_dmax;
-  char *name[100];  /* input map names */
-  char *mapset[100];  /* input mapsets */
+  char *name[GNAME_MAX];  /* input map names */
+  char *mapset[GMAPSET_MAX];  /* input mapsets */
   int noi;
 #else
   extern struct Quant quant_struct;
   extern CELL old_min, old_max;
   extern DCELL old_dmin, old_dmax;
-  extern char *name[100];  /* input map names */
-  extern char *mapset[100];  /* input mapsets */
+  extern char *name[GNAME_MAX];  /* input map names */
+  extern char *mapset[GMAPSET_MAX];  /* input mapsets */
   extern int noi;
 #endif
 /* read_rules.c */

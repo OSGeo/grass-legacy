@@ -33,7 +33,7 @@ int main (int argc, char *argv[])
     int n,err;
     int projection;
     char *mapset;
-    char name[256];
+    char name[GNAME_MAX];
 
     struct GModule *module;
     struct
