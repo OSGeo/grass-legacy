@@ -590,10 +590,10 @@ static char *ask (
 
 static int parselist ( char *input, int option, char *mapset)
 {
-    char list[30];
-    char f1[30];
-    char f2[30];
-    char f3[30];
+    char list[GNAME_MAX];
+    char f1[GMAPSET_MAX];
+    char f2[GMAPSET_MAX];
+    char f3[GMAPSET_MAX];
     int count;
 
     *list = *f1 = *f2 = 0;

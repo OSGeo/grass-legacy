@@ -10,11 +10,11 @@
 #ifndef GLOBAL
 #define GLOBAL extern
 #endif
-GLOBAL char new_name[40], current_name[40], orig_name[40];
+GLOBAL char new_name[GNAME_MAX], current_name[GNAME_MAX], orig_name[GNAME_MAX];
 GLOBAL char grid_color_name[40];
 GLOBAL DCELL max_value, min_value;
 GLOBAL int cellsize;
-GLOBAL char user_mapset[40], current_mapset[40], orig_mapset[40];
+GLOBAL char user_mapset[GMAPSET_MAX], current_mapset[GMAPSET_MAX], orig_mapset[GMAPSET_MAX];
 GLOBAL struct Cell_head real_window;
 GLOBAL char *tempfile;
 GLOBAL struct Categories cats;
