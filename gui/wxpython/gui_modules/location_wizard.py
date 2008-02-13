@@ -1656,7 +1656,7 @@ class LocationWizard(wx.Object):
         f.close()
 
         # read datum definitions
-        f = open(os.path.join(globalvar.ETCDIR "datum.table"), "r")
+        f = open(os.path.join(globalvar.ETCDIR, "datum.table"), "r")
         self.datums = {}
         paramslist = []
         for line in f.readlines():
