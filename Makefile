@@ -421,9 +421,12 @@ html2pdfdoccomplete:
 
 changelog:
 	@ echo "creating ChangeLog file (following 'trunk' only)..."
-	@ # cvs2cl.pl creates a GNU style ChangeLog file:
-	@ # http://www.red-bean.com/cvs2cl
-	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -F trunk -f ./ChangeLog
+	@ # svn2cl creates a GNU style ChangeLog file:
+	@ # http://ch.tudelft.nl/~arthur/svn2cl/
+	@if [ ! -x "`which svn2cl`" ] ; then \
+		echo "\"svn2cl\" is required, please install first from http://ch.tudelft.nl/~arthur/svn2cl/" ;	exit 1 ; \
+	fi
+	sh svn2cl ./ChangeLog
 
 
 builddemolocation:
