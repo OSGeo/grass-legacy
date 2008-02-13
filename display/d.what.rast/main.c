@@ -8,7 +8,7 @@
  *               Huidae Cho <grass4u gmail.com>, 
  *               Eric G. Miller <egm2 jps.net>, 
  *               Glynn Clements <glynn gclements.plus.com>, 
- *               Hamish Bowman <hamish_nospam yahoo.com>
+ *               Hamish Bowman <hamish_b yahoo.com>
  * PURPOSE:      interactive query of cat/label of raster map in display
  * COPYRIGHT:    (C) 1999-2006 by the GRASS Development Team
  *
@@ -42,7 +42,7 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->keywords = _("display");
-    module->description = 
+	module->description = 
 	  _("Allows the user to interactively query the category contents "
 	  "of multiple raster map layers at user specified locations "
 	  "within the current geographic region.");
@@ -143,8 +143,8 @@ int main (int argc, char **argv)
 		width = mwidth = 0;
 		for (i=0; i<nrasts; i++)
 		{
-			name[i] = (char *)G_malloc(80);
-			mapset[i] = (char *)G_malloc(80);
+			name[i] = (char *)G_malloc(GNAME_MAX);
+			mapset[i] = (char *)G_malloc(GMAPSET_MAX);
 
 			if ((fd[i] = opencell (rast[i], name[i], mapset[i])) < 0)
 			    G_fatal_error(_("Raster map <%s> not found"), rast[i]);
