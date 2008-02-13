@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM = d.rast.edit
+PGM = d.rast.edit.old
 
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 DEPENDENCIES= $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
