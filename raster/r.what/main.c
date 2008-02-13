@@ -64,8 +64,9 @@ int main(int argc,char *argv[])
   int line;
   char buffer[1024];
   char **ptr;
-  struct Option *opt1, *opt2, *opt3, *opt4;
+  struct Option *opt1, *opt2, *opt3, *opt4, *opt_fs;
   struct Flag *flag1, *flag2, *flag3, *flag4;
+  char fs;
   int Cache_size;
   int done = 0;
   int point, point_cnt;
@@ -112,6 +113,8 @@ int main(int argc,char *argv[])
   opt3->answer     = "*";
   opt3->description= _("Char string to represent no data cell") ;
 
+  opt_fs = G_define_standard_option(G_OPT_F_SEP);
+
   opt4 = G_define_option() ;
   opt4->key        = "east_north";
   opt4->type       = TYPE_DOUBLE;
@@ -143,6 +146,18 @@ int main(int argc,char *argv[])
 
   projection = G_projection();
 
+    /* see v.in.ascii for a better solution */
+    if (opt_fs->answer != NULL) {
+        if (strcmp(opt_fs->answer, "space") == 0)
+            fs = ' ';
+        else if (strcmp(opt_fs->answer, "tab") == 0)
+            fs = '\t';
+        else if (strcmp(opt_fs->answer, "\\t") == 0)
+            fs = '\t';
+        else
+            fs = opt_fs->answer[0];
+    }
+
   withcats = 0;
   nfiles = 0;
 
@@ -152,11 +167,11 @@ int main(int argc,char *argv[])
     Cache_size = atoi (opt2->answer);
 
   null_str = opt3->answer;
-  
+
   if (Cache_size < 1) Cache_size = 1;
 
   cache = (struct order *) G_malloc (sizeof (struct order) * Cache_size);
-  
+
   /* note this is not kosher */
   withcats = flag1->answer;
 
@@ -369,8 +384,8 @@ int main(int argc,char *argv[])
       cache[point].east_buf, cache[point].north_buf, cache[point].col, cache[point].row);
 
 
-      fprintf (stdout,"%s|%s|%s", cache[point].east_buf, cache[point].north_buf, 
-		    cache[point].lab_buf);
+      fprintf (stdout,"%s%c%s%c%s", cache[point].east_buf, fs, cache[point].north_buf, 
+		    fs, cache[point].lab_buf);
 
       for (i = 0; i < nfiles; i++)
       {
@@ -378,26 +393,26 @@ int main(int argc,char *argv[])
          {
 	    if(G_is_c_null_value(&cache[point].value[i]))
 	    {
-	       fprintf (stdout,"|%s", null_str);
+	       fprintf (stdout,"%c%s", fs, null_str);
                continue;
             }
-	    fprintf (stdout,"|%ld", (long) cache[point].value[i]);
+	    fprintf (stdout,"%c%ld", fs, (long) cache[point].value[i]);
          }
 	 else /* FCELL or DCELL */
          {
 	    if(G_is_d_null_value(&cache[point].dvalue[i]))
 	    {
-	       fprintf (stdout,"|%s", null_str);
+	       fprintf (stdout,"%c%s", fs, null_str);
                continue;
             }
 	    sprintf (tmp_buf,"%.10f", cache[point].dvalue[i]);
 	    G_trim_decimal(tmp_buf);
-	    fprintf (stdout,"|%s", tmp_buf);
+	    fprintf (stdout,"%c%s", fs, tmp_buf);
          }
 	 if (withcats)
-	    fprintf (stdout,"|%s", G_get_cat (cache[point].value[i], &cats[i]));
+	    fprintf (stdout,"%c%s", fs, G_get_cat (cache[point].value[i], &cats[i]));
 	 if (flag4->answer)
-	    fprintf (stdout,"|%s", cache[point].clr_buf[i]);
+	    fprintf (stdout,"%c%s", fs, cache[point].clr_buf[i]);
       }
       fprintf (stdout,"\n");
     }
