@@ -127,10 +127,6 @@ for i in "$@" ; do
 	    GRASS_GUI="wxpython"
 	    shift
 	    ;;
-	*)
-	    GRASS_GUI="text"
-	    shift
-	    ;;
     esac
 done
 
