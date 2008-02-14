@@ -85,7 +85,7 @@ fi
 
 cleanup()
 {
- \rm -f $TMP $TMP.sort
+   \rm -f "$TMP" "$TMP.sort"
 }
 
 # what to do in case of user break:
@@ -115,9 +115,9 @@ else
 fi
 
 if [ -z "$GIS_OPT_WHERE" ] ; then
-   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TMP"
+   db.select table="$GIS_OPT_TABLE" $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TMP"
 else
-   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TMP"
+   db.select table="$GIS_OPT_TABLE" $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TMP"
 fi
 
 
