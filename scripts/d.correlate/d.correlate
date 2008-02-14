@@ -12,6 +12,7 @@
 #               License (>=v2). Read the file COPYING that comes with GRASS
 #               for details.
 #
+# TODO GRASS 7: rename parameters to map1, map2 or better multiple map=map1[,map2[...]]
 #############################################################################
 
 #%Module
