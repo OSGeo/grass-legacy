@@ -111,7 +111,7 @@ wordcount()
 
 cleanup()
 {
-\rm -f ${TMP} ${TMP}_*
+   \rm -f "${TMP}" "${TMP}_*"
 }
 
 #################################
@@ -175,7 +175,7 @@ echo $REPLICATE >> ${TMP}_sine_cosine_replic
 
 PI=3.14159265358979323846
 if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
-  rm -f ${TMP}_outercircle
+  rm -f "${TMP}_outercircle"
     echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
 
   awk -v PI=$PI -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
@@ -443,7 +443,7 @@ echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*
 tail -n $SUBLENGTH ${TMP}_outercircle | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_outercircle_lineto
 
 cat ${TMP}_outercircle_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
-rm -f ${TMP}_outercircle_lineto
+rm -f "${TMP}_outercircle_lineto"
 
 echo "stroke
 
@@ -479,7 +479,7 @@ echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*
 tail -n $SUBLENGTH ${TMP}_sine_cosine_replic | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_sine_cosine_replic_lineto
 
 cat ${TMP}_sine_cosine_replic_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
-rm -f ${TMP}_sine_cosine_replic_lineto
+rm -f "${TMP}_sine_cosine_replic_lineto"
 
 echo "stroke
 %%
@@ -501,7 +501,7 @@ echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*
 tail -n $SUBLENGTH ${TMP}_vector | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_vector_lineto
 
 cat ${TMP}_vector_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
-rm -f ${TMP}_vector_lineto
+rm -f "${TMP}_vector_lineto"
 
 echo "stroke
 
