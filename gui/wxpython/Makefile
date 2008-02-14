@@ -19,6 +19,6 @@ install_scripts:
 	$(INSTALL_DATA) gis_set.py wxgui.py README $(ETCDIR)/
 #	$(INSTALL_DATA) vdigit/_grass6_wxvdigit.so $(ETCDIR)/vdigit/
 #	$(INSTALL_DATA) vdigit/grass6_wxvdigit.py $(ETCDIR)/vdigit/
-	$(INSTALL) -m 755 wxgui $(GISBASE)/scripts/
+	$(INSTALL) -m 755 wxgui $(ETCDIR)/scripts/
 
 clean: cleansubdirs

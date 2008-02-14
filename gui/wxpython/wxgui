@@ -7,7 +7,7 @@
 #%option
 #% key: workspace
 #% type: string
-#% description: Name of Layer Manager settings file (.grc)
+#% description: Name of workspace file (.grc)
 #% required : no
 #%End
 

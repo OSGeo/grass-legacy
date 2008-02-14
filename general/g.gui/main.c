@@ -27,6 +27,7 @@ int main(int argc, char *argv[])
     struct Flag *oneoff;
     struct GModule *module;
     char *gui_type_env;
+    char progname[GPATH_MAX];
 
     G_gisinit(argv[0]);
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
     type->description = _("GUI type");
     type->descriptions = _("tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
 			   "oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);"
-			   "wxpython;wxPython based next generation GUI (wxgui)");
+			   "wxpython;wxPython based next generation GUI");
     type->options = "tcltk,oldtcltk,wxpython";
     gui_type_env = G__getenv("GRASS_GUI");
     if (gui_type_env && strcmp(gui_type_env, "text")) {
@@ -89,12 +90,12 @@ int main(int argc, char *argv[])
 	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
-	/* sprintf (progname, "%s/etc/wxpython/wxgui", G_gisbase()); */
+	sprintf (progname, "%s/etc/wxpython/scripts/wxgui", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn("wxgui", "workspace=%s", rc_file->answer, NULL);
+	    G_spawn(progname, "wxgui", rc_file->answer, NULL);
 	}
 	else {
-	    G_system("wxgui");
+	    G_spawn(progname, "wxgui", NULL);
 	}
     }
 
