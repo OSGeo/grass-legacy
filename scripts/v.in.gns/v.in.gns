@@ -76,9 +76,9 @@ LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 
 if [ -n "$GIS_OPT_FILE" ] ; then
-    FILEORIG=$GIS_OPT_FILE
+    FILEORIG="$GIS_OPT_FILE"
     if [ -n "$GIS_OPT_VECT" ] ; then
-       FILE=$GIS_OPT_VECT
+       FILE="$GIS_OPT_VECT"
     else
        FILE=`basename $FILEORIG .txt`
     fi
@@ -91,7 +91,7 @@ if [ $? -ne 0 ] || [ -z "$TMPFILE" ] ; then
     exit 1
 fi
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMPFILE} ${TMPFILE}_ascii.csv' 2 3 15
+trap 'rm -f "${TMPFILE}" "${TMPFILE}_ascii.csv"' 2 3 15
 
 #are we in LatLong location?
 g.proj -p | grep -i name | grep -i Lon  > /dev/null
@@ -103,14 +103,14 @@ fi
 #let's go
 #change TAB to semicolon
 TAB=`awk 'BEGIN{printf "\t";}'`
-cat ${FILEORIG} | sed  "s+$TAB+;+g"  > ${TMPFILE}
+cat "${FILEORIG}" | sed  "s+$TAB+;+g"  > "${TMPFILE}"
 
 #header elimination:
 HEADER="RC;UFI;UNI;LAT;LONG;DMS_LAT;DMS_LONG;UTM;JOG;FC;DSG;PC;CC1;ADM1;ADM2;DIM;CC2;NT;LC;SHORT_FORM;GENERIC;SORT_NAME;FULL_NAME;FULL_NAME_ND;MODIFY_DATE"
-cat ${TMPFILE} | grep -v "^${HEADER}" > ${TMPFILE}_ascii.csv
-rm -f ${TMPFILE}
+cat "${TMPFILE}" | grep -v "^${HEADER}" > "${TMPFILE}_ascii.csv"
+rm -f "${TMPFILE}"
 
-NUM_PLACES="`wc -l ${TMPFILE}_ascii.csv | awk '{print $1}'`"
+NUM_PLACES=`wc -l "${TMPFILE}_ascii.csv" | awk '{print $1}'`
 g.message "Converted $NUM_PLACES place names."
 
 #TODO: fix dms_lat,dms_long DDMMSS -> DD:MM:SS
@@ -128,12 +128,12 @@ g.message "Converted $NUM_PLACES place names."
 # full_name_sd -> funamesd
 #
 # pump data into GRASS:
-cat ${TMPFILE}_ascii.csv | v.in.ascii cat=0 x=5 y=4 fs=';' \
-  out=$FILE columns='rc integer,uf1 integer,uni integer,lat double precision,lon double precision,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(3),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
+v.in.ascii cat=0 x=5 y=4 fs=';' in="${TMPFILE}_ascii.csv" out="$FILE" \
+   columns='rc integer,uf1 integer,uni integer,lat double precision,lon double precision,dms_lat varchar(6),dms_long varchar(7),utm varchar(4),jog varchar(7),fc varchar(1),dsg varchar(5),pc integer,cci varchar(2),adm1 varchar(2),adm2 varchar(200),dim integer,cc2 varchar(2),nt varchar(1),lc varchar(3),shortform varchar(128),generic varchar(128),sortname varchar(200),fullname varchar(200),funamesd varchar(200),mod_date date' 
 
-rm -f ${TMPFILE}_ascii.csv
+rm -f "${TMPFILE}_ascii.csv"
 
 # write cmd history:
-v.support $FILE cmdhist="${CMDLINE}"
+v.support "$FILE" cmdhist="${CMDLINE}"
 
 exit 0
