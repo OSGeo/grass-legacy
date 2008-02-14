@@ -208,28 +208,28 @@ GetTiles() {
 
   mkdir -p "${GIS_OPT_FOLDER}"
 
-  FOLDERPLUS=${GIS_OPT_FOLDER}/${GIS_OPT_PREFIX}_${GIS_OPT_REGION}
+  FOLDERPLUS="${GIS_OPT_FOLDER}/${GIS_OPT_PREFIX}_${GIS_OPT_REGION}"
 
   if [ $GIS_FLAG_C -eq 1 ] ; then
-    rm -f ${FOLDERPLUS}*
+    rm -f "${FOLDERPLUS}*"
   fi
 
   if [ -x "`which wget`" ] ; then
-    REQUESTFILE=${FOLDERPLUS}.wget
+    REQUESTFILE="${FOLDERPLUS}.wget"
   else
-    REQUESTFILE=${FOLDERPLUS}.curl
+    REQUESTFILE="${FOLDERPLUS}.curl"
   fi
 
   #reset the requestfile
-  echo -n "" > ${REQUESTFILE}
-  echo "$PROJ4_SRS" > ${FOLDERPLUS}.proj4
+  echo -n "" > "${REQUESTFILE}"
+  echo "$PROJ4_SRS" > "${FOLDERPLUS}.proj4"
 
   for i in $TILES ; do
 	eval "$i"
 	SIZE="bbox=$w,$s,$e,$n&width=$cols&height=$rows"
 	message 1 "$SIZE"
-	IMAGEFILE=${FOLDERPLUS}_${NUMBER_OF_TILES}
-	OUTPUT_FILE=${IMAGEFILE}${FILE_EXTENT}
+	IMAGEFILE="${FOLDERPLUS}_${NUMBER_OF_TILES}"
+	OUTPUT_FILE="${IMAGEFILE}${FILE_EXTENT}"
 	# We could add world files here to help out gdalwarp.
 	# And here it is:
 	# Displacement from top left cell to the one to the right of it and to the one below it:
@@ -256,8 +256,8 @@ GetTiles() {
 
 # Initialize variables:
 
-SERVER=${GIS_OPT_MAPSERVER}
-SRS=${GIS_OPT_SRS}
+SERVER="${GIS_OPT_MAPSERVER}"
+SRS="${GIS_OPT_SRS}"
 SRS_lower=`echo $SRS | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"`
 
 
@@ -272,10 +272,10 @@ else
 	SRS_SCALE=1
 fi
 
-WMS_QUERY=${GIS_OPT_WMSQUERY}
+WMS_QUERY="${GIS_OPT_WMSQUERY}"
 
 if [ -z "$GIS_OPT_REGION" ] ; then
-	TILESET_OPTIONS=$GIS_OPT_TILEOPTIONS
+	TILESET_OPTIONS="$GIS_OPT_TILEOPTIONS"
 else
 	TILESET_OPTIONS="region=$GIS_OPT_REGION $GIS_OPT_TILEOPTIONS"
 fi
