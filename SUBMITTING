@@ -137,7 +137,12 @@ following rules:
     For errors and warnings please use the G_fatal_error() and
     G_warning() functions. General messages for the user should use
     G_message() while debug messages should use G_debug() whenever
-    possible.
+    possible. There are two variants to G_message(): G_verbose_message()
+    which will only display the message if in verbose mode, and
+    G_important_message() which will always show the message unless
+    the module is running in --quiet mode. G_fatal_error() and
+    G_warning() will always be displayed regardless of verbosity setting.
+    Messages sent to any of these functions will be printed to stderr.
 
     G_message() output is not expected to be sent to pipe or file.
 
