@@ -51,24 +51,24 @@ int main(int argc, char *argv[])
 	type->answer = "tcltk";
     }
 
-    rc_file = G_define_option();
-    rc_file->key = "rc";
-    rc_file->type = TYPE_STRING;
+    rc_file = G_define_standard_option(G_OPT_F_INPUT);
+    rc_file->key = "workspace";
     rc_file->required = NO;
-    rc_file->description = _("Name of manager settings file (.grc)");
+    rc_file->description = _("Name of workspace file");
 
     oneoff = G_define_flag();
     oneoff->key         = 'u';
-    oneoff->description = _("Do not modify default GUI setting");
+    oneoff->description = _("Update default GUI setting");
 
     if (argc > 1 && G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
-    if (gui_type_env && !oneoff->answer) {
-	if (strcmp(gui_type_env, type->answer) != 0) {
-	    G_message(_("<%s> is now the default GUI"), type->answer);
-	    G_setenv("GRASS_GUI", type->answer);
-	}
+
+    if ( ( (gui_type_env && oneoff->answer) &&
+	    strcmp(gui_type_env, type->answer) != 0 ) || !gui_type_env ) {
+	G_message(_("<%s> is now the default GUI"), type->answer);
+	G_setenv("GRASS_GUI", type->answer);
+
     }
 
     if (strcmp(type->answer, "oldtcltk") == 0) {
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
 	if (rc_file->answer) {
-	    G_spawn("wxgui", "dmrc=%s", rc_file->answer, NULL);
+	    G_spawn("wxgui", "workspace=%s", rc_file->answer, NULL);
 	}
 	else {
 	    G_system("wxgui");
