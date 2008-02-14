@@ -5,7 +5,7 @@
 #%  keywords: general, gui
 #% End
 #%option
-#% key: dmrc
+#% key: workspace
 #% type: string
 #% description: Name of Layer Manager settings file (.grc)
 #% required : no
@@ -25,9 +25,9 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-if test -n "$GIS_OPT_DMRC" ; then
+if test -n "$GIS_OPT_WORKSPACE" ; then
     # load workspace file
-    python "$GISBASE/etc/wxpython/wxgui.py" "--workspace" "$GIS_OPT_DMRC" &
+    python "$GISBASE/etc/wxpython/wxgui.py" "--workspace" "$GIS_OPT_WORKSPACE" &
 else
     python "$GISBASE/etc/wxpython/wxgui.py" &
 fi
