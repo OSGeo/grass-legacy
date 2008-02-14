@@ -87,20 +87,22 @@ eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
 if [ ! "$file" ] ; then
    g.message -e  "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
+else
+   MAP_NAME=`echo "$GIS_OPT_MAP" | cut -f1 -d'@'`
 fi
 
 if [ -z "$GIS_OPT_TABLE" ] ; then
     if [ $GIS_OPT_LAYER -eq 1 ] ; then
-       g.message "Using vector map name as table name: ${GIS_OPT_MAP}" 
-       table=${GIS_OPT_MAP}
+       g.message "Using vector map name as table name: $MAP_NAME" 
+       table="$MAP_NAME"
     else
        # two avoid tables with identical names on higher layers
-       g.message "Using vector map name extended by layer number as table name: ${GIS_OPT_MAP}_$GIS_OPT_LAYER" 
-       table=${GIS_OPT_MAP}_$GIS_OPT_LAYER
+       g.message "Using vector map name extended by layer number as table name: ${MAP_NAME}_$GIS_OPT_LAYER" 
+       table="${MAP_NAME}_$GIS_OPT_LAYER"
     fi
 else
     g.message "Using user specified table name: $GIS_OPT_TABLE"
-    table=$GIS_OPT_TABLE
+    table="$GIS_OPT_TABLE"
 fi
 
 # we use the DB settings of layer 1 to find out default connection
@@ -125,19 +127,19 @@ if [ $? -ne 0 ] ; then
    fi
 else
    # there is a definition for layer 1, so we check for the user defined layer
-   database=`v.db.connect $GIS_OPT_MAP -g | grep -w $QUERYLAYER | awk '{print $4}'`
+   database=`v.db.connect "$GIS_OPT_MAP" -g | grep -w $QUERYLAYER | awk '{print $4}'`
    if [ -z "database" ] ; then
       #nothing on user defined layer, so we use the default mapset settings in this case:
       database=`db.connect -p | grep database | cut -d':' -f2`
       driver=`db.connect -p | grep driver | cut -d':' -f2`
    else
-      driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $QUERYLAYER | awk '{print $5}'`
+      driver=`v.db.connect "$GIS_OPT_MAP" -g | grep -w $QUERYLAYER | awk '{print $5}'`
    fi
 fi
 
 #maybe there is already a table linked to the selected layer?
-if [ $GIS_OPT_LAYER -eq 1 ] ; then
-  v.db.connect $GIS_OPT_MAP -g 2> /dev/null | grep -w $GIS_OPT_LAYER > /dev/null
+if [ "$GIS_OPT_LAYER" -eq 1 ] ; then
+  v.db.connect "$GIS_OPT_MAP" -g 2> /dev/null | grep -w $GIS_OPT_LAYER > /dev/null
   if [ $? -eq 0 ] ; then
      g.message -e "There is already a table linked to layer <$GIS_OPT_LAYER>" 
      exit 1
@@ -162,9 +164,9 @@ if [ $? -ne 0 ] ; then
 
    # take care if the DBF directory is missing (heck, the DBF driver should take care!)
    if [ "$driver" = "dbf" ] ; then
-       if test ! -d ${LOCATION}/dbf ; then
-          g.message "Creating missing DBF directory in MAPSET <${MAPSET}>" 
-          mkdir -p ${LOCATION}/dbf
+       if test ! -d "${LOCATION}/dbf" ; then
+          g.message "Creating missing DBF directory in MAPSET <$MAPSET>"
+          mkdir -p "${LOCATION}/dbf"
          db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
        fi
    fi
@@ -177,16 +179,16 @@ if [ $? -ne 0 ] ; then
 fi
 
 # connect the map to the DB:
-v.db.connect map=$GIS_OPT_MAP database=$database driver=$driver layer=$GIS_OPT_LAYER table=$table key=cat
+v.db.connect map="$GIS_OPT_MAP" database=$database driver=$driver layer="$GIS_OPT_LAYER" table=$table key=cat
 
 # finally we have to add cats into the attribute DB to make modules such as v.what.rast happy:
 # (creates new row for each vector line):
-v.to.db $GIS_OPT_MAP layer=$GIS_OPT_LAYER option=cat col=cat
+v.to.db "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER option=cat col=cat
 
 g.message "Current attribute table links:"
 v.db.connect -p $GIS_OPT_MAP
 
 # write cmd history:
-v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+v.support map="$GIS_OPT_MAP" cmdhist="${CMDLINE}"
 
 exit 0
