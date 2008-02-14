@@ -315,12 +315,8 @@ esac
 
 cleanup()
 {
-    \rm -f $TMP1 $TMP1.sort
-    \rm -f $TMP2 $TMP2.sort
-    \rm -f $TMP3 $TMP3.sort
-    \rm -f $TMP4 $TMP4.sort
-    \rm -f $TMP5 $TMP5.sort
-    \rm -f $TMP6 $TMP6.sort
+    \rm -f "$TMP1" "$TMP1.sort" "$TMP2" "$TMP2.sort" "$TMP3" "$TMP3.sort" \
+           "$TMP4" "$TMP4.sort" "$TMP5" "$TMP5.sort" "$TMP6" "$TMP6.sort"
 }
 
 # what to do in case of user break:
