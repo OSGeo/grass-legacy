@@ -108,14 +108,12 @@ if [ "$GIS_OPT_FORMAT" = "ESRI_Shapefile" ] ; then
   echo "$GIS_OPT_DSN" | grep '\.dbf$' > /dev/null
   if [ $? -eq 0 ] ; then
     OUTNAME="`basename $GIS_OPT_DSN .dbf`"
-    rm -f $OUTNAME.shp
-    rm -f $OUTNAME.shx
-    rm -f $OUTNAME.prj
+    rm -f "$OUTNAME.shp" "$OUTNAME.shx" "$OUTNAME.prj"
     OUTNAME="$OUTNAME.dbf"
   else
-    rm -f $GIS_OPT_DSN/$GIS_OPT_INPUT.shp
-    rm -f $GIS_OPT_DSN/$GIS_OPT_INPUT.shx
-    rm -f $GIS_OPT_DSN/$GIS_OPT_INPUT.prj
+    rm -f "$GIS_OPT_DSN/$GIS_OPT_INPUT.shp" \
+          "$GIS_OPT_DSN/$GIS_OPT_INPUT.shx" \
+          "$GIS_OPT_DSN/$GIS_OPT_INPUT.prj"
     OUTNAME="$GIS_OPT_DSN/$GIS_OPT_INPUT.dbf"
   fi
 else
