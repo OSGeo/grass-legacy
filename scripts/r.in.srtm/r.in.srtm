@@ -115,12 +115,12 @@ if [ $? -ne 0 ] ; then
 fi
 
 # use these from now on:
-FILE=`echo $GIS_OPT_INPUT | sed 's+.hgt++'| sed 's+.zip++'`
+FILE=`echo "$GIS_OPT_INPUT" | sed 's+.hgt++'| sed 's+.zip++'`
 TILE=`echo "$FILE" | sed 's+^.*/++'`
 FDIR=`echo "$FILE" | sed 's+[^/]*$++'`
 
 if [ -z "$GIS_OPT_OUTPUT" ] ; then
-  TILEOUT=$TILE
+  TILEOUT="$TILE"
 else
   TILEOUT="$GIS_OPT_OUTPUT"
 fi
@@ -183,7 +183,7 @@ if [ $IS_ZIP -eq 1 ] ; then
 fi
 
 g.message "Converting input file to BIL..."
-mv $TILE.hgt "$TMPDIR"/$TILE.bil
+mv $TILE.hgt "$TMPDIR"/"$TILE.bil"
 
 LL_LATITUDE=`echo $TILE  | cut -b2-3`
 LL_LONGITUDE=`echo $TILE | cut -b5-7`
@@ -221,7 +221,7 @@ NODATA -32768
 ULXMAP $ULXMAP
 ULYMAP $ULYMAP
 XDIM 0.000833333333333
-YDIM 0.000833333333333"> $TILE.hdr
+YDIM 0.000833333333333"> "$TILE.hdr"
 else
   g.message "Attempting to import 1-arcsec data."
   echo "BYTEORDER M
@@ -238,15 +238,15 @@ NODATA -32768
 ULXMAP $ULXMAP
 ULYMAP $ULYMAP
 XDIM 0.000277777777777778
-YDIM 0.000277777777777778"> $TILE.hdr
+YDIM 0.000277777777777778"> "$TILE.hdr"
 fi
 
 #create prj file: To be precise, we would need EGS96! But who really cares...
 echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
 
-r.in.gdal in=$TILE.bil out=$TILEOUT
+r.in.gdal in="$TILE.bil" out="$TILEOUT"
 
-\rm -f $TILE.bil $TILE.hdr $TILE.prj $TILE.hgt.zip
+\rm -f "$TILE.bil" "$TILE.hdr" "$TILE.prj" "$TILE.hgt.zip"
 cd ..
 rmdir "$TMPDIR"
 
