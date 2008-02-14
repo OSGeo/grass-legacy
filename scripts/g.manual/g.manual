@@ -47,6 +47,9 @@ if [ "$HOSTTYPE" = "macintosh" ] ; then
     BROWSERNAME="default Macintosh web browser"
 #hack for Cygwin:
 elif [ "$OSTYPE" = "cygwin" ] ; then
+    if  [ -z "$CYGWIN_ROOT" ] ; then
+        CYGWIN_ROOT="\cygwin"
+    fi
     for i in C D E F G H I J K L M N O P Q R S T U V W X Y Z NOT_FOUND
     do
         j="$i:$CYGWIN_ROOT$GRASS_DOC_BASE"
