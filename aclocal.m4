@@ -1,5 +1,5 @@
 
-AC_DEFUN(LOC_CHECK_USE,[
+AC_DEFUN([LOC_CHECK_USE],[
 AC_MSG_CHECKING(whether to use $2)
 AC_MSG_RESULT("$with_$1")
 case "$with_$1" in
@@ -10,7 +10,7 @@ esac
 
 ])
 
-AC_DEFUN(LOC_CHECK_INC_PATH,[
+AC_DEFUN([LOC_CHECK_INC_PATH],[
 AC_MSG_CHECKING(for location of $2 includes)
 case "$with_$1_includes" in
 y | ye | yes | n | no)
@@ -30,7 +30,7 @@ if test -n "$with_$1_includes" ; then
 fi
 ])
 
-AC_DEFUN(LOC_CHECK_LIB_PATH,[
+AC_DEFUN([LOC_CHECK_LIB_PATH],[
 AC_MSG_CHECKING(for location of $2 library)
 case "$with_$1_libs" in
 y | ye | yes | n | no)
@@ -50,7 +50,7 @@ if test -n "$with_$1_libs"; then
 fi
 ])
 
-AC_DEFUN(LOC_CHECK_SHARE_PATH,[
+AC_DEFUN([LOC_CHECK_SHARE_PATH],[
 AC_MSG_CHECKING(for location of $2 data files)
 case "$with_$1_share" in
 y | ye | yes | n | no)
@@ -68,7 +68,7 @@ if test -n "$with_$1_share" ; then
 fi
 ])
 
-AC_DEFUN(LOC_CHECK_INCLUDES,[
+AC_DEFUN([LOC_CHECK_INCLUDES],[
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$3 $CPPFLAGS"
 AC_CHECK_HEADERS($1, [], ifelse($4,[],[
@@ -123,7 +123,7 @@ ifelse($8,[],[
 LDFLAGS=${ac_save_ldflags}
 ])
 
-AC_DEFUN(LOC_CHECK_VERSION_STRING,[
+AC_DEFUN([LOC_CHECK_VERSION_STRING],[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$5 $CPPFLAGS"
@@ -144,13 +144,13 @@ int main(void) {
 CPPFLAGS=$ac_save_cppflags
 ])
 
-AC_DEFUN(LOC_CHECK_SHARE,[
+AC_DEFUN([LOC_CHECK_SHARE],[
 AC_CHECK_FILE($3/$1, [], ifelse($4,[],[
     AC_MSG_ERROR([*** Unable to locate $2 data files.])
 ], $4))
 ])
 
-AC_DEFUN(LOC_CHECK_VERSION_INT,[
+AC_DEFUN([LOC_CHECK_VERSION_INT],[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$5 $CPPFLAGS"
@@ -173,31 +173,31 @@ CPPFLAGS=$ac_save_cppflags
 
 dnl autoconf undefines "eval", so use "builtin([eval], ...)"
 
-AC_DEFUN(LOC_PAD,[$1[]ifelse(builtin([eval],len($1) > 23),1,[
+AC_DEFUN([LOC_PAD],[$1[]ifelse(builtin([eval],len($1) > 23),1,[
                           ],substr([                        ],len($1)))])
 
-AC_DEFUN(LOC_ARG_WITH,[
+AC_DEFUN([LOC_ARG_WITH],[
 AC_ARG_WITH($1,
 LOC_PAD([  --with-$1])[support $2 functionality (default: ]ifelse([$3],,yes,[$3])[)],,
 [with_]patsubst([$1], -, _)[=]ifelse([$3],,yes,[$3]))
 ])
 
-AC_DEFUN(LOC_ARG_WITH_INC,[
+AC_DEFUN([LOC_ARG_WITH_INC],[
 AC_ARG_WITH($1-includes,
 LOC_PAD([  --with-$1-includes=DIRS])[$2 include files are in DIRS])
 ])
 
-AC_DEFUN(LOC_ARG_WITH_LIB,[
+AC_DEFUN([LOC_ARG_WITH_LIB],[
 AC_ARG_WITH($1-libs,
 LOC_PAD([  --with-$1-libs=DIRS])[$2 library files are in DIRS])
 ])
 
-AC_DEFUN(LOC_ARG_WITH_SHARE,[
+AC_DEFUN([LOC_ARG_WITH_SHARE],[
 AC_ARG_WITH($1-share,
 LOC_PAD([  --with-$1-share=DIR])[$2 data files are in DIR])
 ])
 
-AC_DEFUN(LOC_OPTIONAL,[
+AC_DEFUN([LOC_OPTIONAL],[
 AC_MSG_CHECKING(whether to build $1)
 if test -n "$USE_$2" ; then
 	AC_MSG_RESULT(yes)
@@ -223,7 +223,7 @@ int main(void) {
 }
 ])
 
-AC_DEFUN(LOC_CHECK_FP_INF_NAN,[
+AC_DEFUN([LOC_CHECK_FP_INF_NAN],[
 AC_MSG_CHECKING([for full floating-point support]$1)
 AC_TRY_RUN(LOC_FP_TEST,
 [   AC_MSG_RESULT(yes)
@@ -237,7 +237,7 @@ AC_TRY_RUN(LOC_FP_TEST,
 
 dnl check whether the compiler supports the -mieee switch
 
-AC_DEFUN(LOC_CHECK_CC_MIEEE,[
+AC_DEFUN([LOC_CHECK_CC_MIEEE],[
 AC_MSG_CHECKING(whether "cc -mieee" works)
 ac_save_cflags=${CFLAGS}
 CFLAGS="$CFLAGS -mieee"
@@ -248,15 +248,15 @@ AC_TRY_COMPILE(,,
 CFLAGS=${ac_save_cflags}
 ])
 
-AC_DEFUN(LOC_MSG,[
+AC_DEFUN([LOC_MSG],[
 echo "$1"
 ])
 
-AC_DEFUN(LOC_PAD_26,[substr([                           ],len($1))])
+AC_DEFUN([LOC_PAD_26],[substr([                           ],len($1))])
 
-AC_DEFUN(LOC_YES_NO,[if test -n "${$1}" ; then echo yes ; else echo no ; fi])
+AC_DEFUN([LOC_YES_NO],[if test -n "${$1}" ; then echo yes ; else echo no ; fi])
 
-AC_DEFUN(LOC_MSG_USE,[
+AC_DEFUN([LOC_MSG_USE],[
 [echo "  $1:]LOC_PAD_26($1)`LOC_YES_NO($2)`"])
 
 #------------------------------------------------------------------------
@@ -280,7 +280,7 @@ AC_DEFUN(LOC_MSG_USE,[
 #		SHARED_BUILD	Value of 1 or 0
 #------------------------------------------------------------------------
 
-AC_DEFUN(SC_ENABLE_SHARED, [
+AC_DEFUN([SC_ENABLE_SHARED], [
     AC_MSG_CHECKING([how to build libraries])
     AC_ARG_ENABLE(shared,
 	[  --enable-shared         build and link with shared libraries [--enable-shared]],
@@ -407,7 +407,7 @@ AC_DEFUN(SC_ENABLE_SHARED, [
 #
 #--------------------------------------------------------------------
 
-AC_DEFUN(SC_CONFIG_CFLAGS, [
+AC_DEFUN([SC_CONFIG_CFLAGS], [
 
     # Step 0.a: Enable 64 bit support?
 
