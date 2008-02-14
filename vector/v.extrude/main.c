@@ -191,8 +191,6 @@ int main(int argc, char *argv[])
 	    G_verbose_message (_("Extruding areas..."));
 	for (areanum = 1; areanum <= nelements; areanum++) {
 
-	    G_percent(areanum, nelements, 1);
-
 	    G_debug(3, "area = %d", areanum);
 
 	    if (!Vect_area_alive(&In, areanum))
@@ -241,6 +239,8 @@ int main(int argc, char *argv[])
 		    fdrast, trace, objheight, voffset, window, GV_AREA,
 		    centroid);
 
+	    G_percent(areanum, nelements, 1);
+
 	} /* foreach area */
 
     }
@@ -252,8 +252,6 @@ int main(int argc, char *argv[])
 	nelements = Vect_get_num_lines(&In);
 	G_verbose_message(_("Extruding basic vector objects..."));
 	for (line = 1; line <= nelements; line++) {
-	    /* progress feedback */
-	    G_percent(line, nelements, 1);
 
 	    /* read line */
 	    type = Vect_read_line(&In, Points, Cats, line);
@@ -318,8 +316,14 @@ int main(int argc, char *argv[])
 
 	    extrude(&In, &Out, Cats, Points,
 		    fdrast, trace, objheight, voffset, window, type, -1);
+
+	    /* progress feedback */
+	    G_percent(line, nelements, 1);
+
 	} /* for each line */
     } /* else if area */
+
+    G_percent(1,1,1);
 
     if (driver) {
 	db_close_database(driver);
