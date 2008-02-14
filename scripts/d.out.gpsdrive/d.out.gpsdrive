@@ -99,7 +99,7 @@ export LC_NUMERIC
 
 
 if [ ! -d "$HOME/.gpsdrive" ] ; then
-    mkdir  $HOME/.gpsdrive
+    mkdir "$HOME/.gpsdrive"
 fi
 
 # GpsDrive scales maps named top_* as lat/lon (1:1) on-screen
@@ -168,10 +168,10 @@ d.mon select="$curr_mon"
 
 if [ "$GIS_FLAG_J" -eq 1 ] ; then
    out_jpeg="`basename $output .png`.jpg"
-   cd $HOME/.gpsdrive
+   cd "$HOME/.gpsdrive"
    sync  # sleep 1
-   pngtopnm $output | pnmtojpeg > $out_jpeg
-   rm -f $output
+   pngtopnm "$output" | pnmtojpeg > "$out_jpeg"
+   rm -f "$output"
    output="$out_jpeg"
 fi
 
@@ -199,7 +199,7 @@ if [ $IS_LATLON -eq 0 ] && [ "$SCALE" -ge 125000 ] ; then
    g.message -w "Projected input maps may be somewhat inaccurate at this scale."
 fi
 
-echo "$output $LAT $LON $SCALE" >> $HOME/.gpsdrive/map_koord.txt
+echo "$output $LAT $LON $SCALE" >> "$HOME/.gpsdrive/map_koord.txt"
 
 g.message "Center lat,lon is [$LAT,$LON]"
 g.message "Scale is [1:${SCALE}]"
