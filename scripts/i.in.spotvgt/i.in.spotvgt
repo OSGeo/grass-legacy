@@ -178,16 +178,16 @@ fi
 
 ### create VRT header for NDVI
 
-PROJFILE=${SPOTDIR}/0001_LOG.TXT
-VRTFILE=$TMPFILE.vrt
+PROJFILE="${SPOTDIR}/0001_LOG.TXT"
+VRTFILE="$TMPFILE.vrt"
 
 # first process the NDVI:
-rm -f $VRTFILE
-create_VRT_file $VRTFILE $GIS_OPT_FILE
+rm -f "$VRTFILE"
+create_VRT_file "$VRTFILE" "$GIS_OPT_FILE"
 
 ## let's import the NDVI map...
 g.message "Importing SPOT VGT NDVI map..."
-r.in.gdal $VRTFILE output=$NAME
+r.in.gdal "$VRTFILE" output="$NAME"
 if [ $? -eq 1 ] ; then
    g.message -e "An error occurred. Stop."
    exit 1
@@ -207,16 +207,16 @@ g.message message="Imported SPOT VEGETATION NDVI map <$NAME>."
 # switch to a temporary region
 WIND_OVERRIDE=spot_$PID
 export WIND_OVERRIDE
-g.region -d 2>&1 >/dev/null
-g.region rast=$NAME 2>&1 >/dev/null
+g.region -d --quiet
+g.region rast="$NAME" --quiet
 
 g.message "Remapping digital numbers to NDVI..."
-r.mapcalc "${NAME}_$PID=0.004 * $NAME - 0.1"
-g.remove rast=$NAME 2>&1 >/dev/null
-g.rename rast=${NAME}_$PID,${NAME} >/dev/null
+r.mapcalc "${NAME}_$PID = 0.004 * $NAME - 0.1"
+g.remove rast="$NAME" --quiet
+g.rename rast="${NAME}_$PID","$NAME" --quiet
 
 #apply color table:
-r.colors ${NAME} color=ndvi 2>&1 >/dev/null
+r.colors "$NAME" color=ndvi --quiet
 
 ##########################
 # second, optionally process the SM quality map:
@@ -248,18 +248,18 @@ r.colors ${NAME} color=ndvi 2>&1 >/dev/null
 
 if [ $GIS_FLAG_A -eq 1 ] ; then
   g.message "Importing SPOT VGT NDVI quality map..."
-  rm -f $VRTFILE
-  create_VRT_file $VRTFILE `echo ${GIS_OPT_FILE} | sed 's+NDV+SM+g'`
+  rm -f "$VRTFILE"
+  create_VRT_file "$VRTFILE" `echo ${GIS_OPT_FILE} | sed 's+NDV+SM+g'`
 
   ## let's import the SM quality map...
-  r.in.gdal $VRTFILE output=$NAME.sm
+  r.in.gdal "$VRTFILE" output="$NAME.sm"
   if [ $? -eq 1 ] ; then
      g.message -e "An error occurred. Stop."
      exit 1
   fi
 
 # some of the possible values:
-r.colors $NAME.sm col=rules << EOF
+r.colors "$NAME.sm" col=rules << EOF
 8 50 50 50
 11 70 70 70
 12 90 90 90
@@ -278,19 +278,19 @@ EOF
   g.message ""
   g.message message="Filtering NDVI map by Status Map quality layer..."
   r.mapcalc "${NAME}_filt=if($NAME.sm >= 248, $NAME, null() )"
-  r.colors ${NAME}_filt color=ndvi 2>&1 >/dev/null
+  r.colors "${NAME}_filt" color=ndvi --quiet
   g.message message="Filtered SPOT VEGETATION NDVI map <${NAME}_filt>."
 fi
 
 # remove the temporary region
-g.remove region=spot_$PID 2>&1 >/dev/null
+g.remove region="spot_$PID" --quiet
 
 #### clean up the mess
-rm -f $VRTFILE $TMPFILE
+rm -f "$VRTFILE" "$TMPFILE"
 
 #### end
 # write cmd history:
-r.support ${NAME} history="${CMDLINE}"
+r.support "$NAME" history="${CMDLINE}"
 
 g.message "Done."
 
