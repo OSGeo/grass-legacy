@@ -93,7 +93,7 @@ if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
 fi
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}*' 2 3 15
+trap 'rm -f "${TMP}*"' 2 3 15
 
 # setting environment, so that awk works properly in all languages
 unset LC_ALL
@@ -110,7 +110,7 @@ az=$GIS_OPT_AZIMUTH
 ea=$GIS_OPT_EASTING
 no=$GIS_OPT_NORTHING
 el=$GIS_OPT_ELEVATION
-name=$GIS_OPT_NAME
+name="$GIS_OPT_NAME"
 type=$GIS_OPT_TYPE
 
 eval `g.region -g`
