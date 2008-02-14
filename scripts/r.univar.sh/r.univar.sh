@@ -74,7 +74,7 @@ fi
 
 cleanup()
 {
- \rm -f $TMP $TMP.sort
+   \rm -f "$TMP" "$TMP.sort"
 }
 
 # what to do in case of user break:
