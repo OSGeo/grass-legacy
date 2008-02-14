@@ -139,7 +139,7 @@ then
 	srcfile="HDF4_EOS:EOS_SWATH:"\"$GIS_OPT_INPUT\"":"$dataset
 elif [ "$GIS_OPT_PROCTYPE" = "DEM" ] 
 then
-	srcfile=$GIS_OPT_INPUT
+	srcfile="$GIS_OPT_INPUT"
 fi
 
 tempfile=`g.tempfile $$`.tif
@@ -161,14 +161,14 @@ gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
 #import geotiff to GRASS
 g.message "Importing into GRASS ..."
 
-r.in.gdal input=$tempfile output=$GIS_OPT_OUTPUT
+r.in.gdal input="$tempfile" output="$GIS_OPT_OUTPUT"
 
 #cleanup
 g.message "Cleaning up ..."
-rm -f $tempfile
+rm -f "$tempfile"
 
 # write cmd history:
-r.support $GIS_OPT_OUTPUT history="${CMDLINE}"
+r.support "$GIS_OPT_OUTPUT" history="${CMDLINE}"
 
 g.message "Done."
 
