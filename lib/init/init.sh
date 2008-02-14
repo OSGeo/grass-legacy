@@ -771,7 +771,7 @@ case "$GRASS_GUI" in
 	fi
 	;;
     wxpython)
-        "$GISBASE/scripts/wxgui" &
+        "$GISBASE/etc/wxpython/scripts/wxgui"
 	;;
 
     # Ignore others
@@ -812,16 +812,16 @@ echo "See the licence terms with:              g.version -c"
 
 case "$GRASS_GUI" in
     tcltk | gis.m)
-        echo "If required, restart the graphical user interface with: gis.m"
+        echo "If required, restart the graphical user interface with: g.gui type=tcltk"
         ;;
     oldtcltk | d.m)
-        echo "If required, restart the graphical user interface with: d.m"
+        echo "If required, restart the graphical user interface with: g.gui type=oldtcltk"
         ;;
     wxpython)
-        echo "If required, restart the graphical user interface with: wxgui"
+        echo "If required, restart the graphical user interface with: g.gui type=wxpython"
         ;;
     *)
-        echo "Start the graphical user interface with: gis.m"
+        echo "Start the graphical user interface with: g.gui type=tcltk"
         ;;
 esac
 
