@@ -120,7 +120,7 @@ following rules:
     }
 
 
-8.  Exit status is defined as EXIT_SUCCESS or EXIT_FAILURE, e.g.
+8.  Module exit status is defined as EXIT_SUCCESS or EXIT_FAILURE, e.g.
 
     {
       ...
