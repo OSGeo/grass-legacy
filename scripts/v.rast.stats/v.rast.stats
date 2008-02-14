@@ -122,7 +122,6 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 
-VECTOR="$GIS_OPT_VECTOR"
 RASTER="$GIS_OPT_RASTER"
 COLPREFIX="$GIS_OPT_COLPREFIX"
 
@@ -131,11 +130,15 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file="$VECTOR" mapset="$MAPSET"`
+eval `g.findfile element=vector file="$GIS_OPT_VECTOR" mapset="$MAPSET"`
 if [ ! "$file" ] ; then
-   g.message -e "Vector map <$VECTOR> not found"
+   g.message -e "Vector map <$GIS_OPT_VECTOR> not found in current mapset"
    exit 1
+else
+   VECTOR=`echo "$GIS_OPT_VECTOR" | cut -f1 -d'@'`
 fi
+
+
 #check the input raster map
 eval `g.findfile element=cell file="$RASTER"`
 if [ ! "$file" ] ; then
