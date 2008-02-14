@@ -84,7 +84,7 @@ fi
 
 cleanup()
 {
- \rm -f $TMP $TMP.coltypes $TMP.colnames $TMP.coldesc
+ \rm -f "$TMP" "$TMP.coltypes" "$TMP.colnames" "$TMP.coldesc"
 }
 
 # what to do in case of user break:
