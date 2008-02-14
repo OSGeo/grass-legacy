@@ -83,7 +83,7 @@ fi
 
 cleanup()
 {
- \rm -f $TMP $TMP.coltypes $TMP.colnames $TMP.coldesc
+ \rm -f "$TMP" "$TMP.coltypes" "$TMP.colnames" "$TMP.coldesc"
 }
 
 # what to do in case of user break:
@@ -107,20 +107,20 @@ error()
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
+eval `g.findfile element=vector file="$GIS_OPT_MAP" mapset="$MAPSET"`
 if [ ! "$file" ] ; then
    g.message -e  "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
 fi
 
-table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+table=`v.db.connect "$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $2}'`
 if [ -z "$table" ] ; then
    g.message 'There is no table connected to this map! Cannot rename any column.'
    cleanup
    exit 1
 fi
-database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
+database=`v.db.connect "$GIS_OPT_MAP" -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
+driver=`v.db.connect "$GIS_OPT_MAP" -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
 oldcol="`echo $GIS_OPT_COLUMN | cut -d',' -f1`"
 newcol="`echo $GIS_OPT_COLUMN | cut -d',' -f2`"
 
@@ -143,7 +143,7 @@ if [ "$col" = "cat" ] ; then
 fi
 
 # old col there?
-v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${oldcol}$" 2>&1 >/dev/null
+v.info --quiet -c "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${oldcol}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	g.message -e "Column <$oldcol> not found in table"
 	cleanup
@@ -158,12 +158,12 @@ oldcollength=`db.describe -c table=$table database=$database driver=$driver | gr
 if [ "$driver" = "sqlite" -o "$driver" = "dbf" ] ; then
 
 	if [ "$oldcoltype" = "CHARACTER" ] ; then
-	    v.db.addcol $GIS_OPT_MAP layer=$GIS_OPT_LAYER col="$newcol varchar($oldcollength)" || error
+	    v.db.addcol "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol varchar($oldcollength)" || error
 	else
-	    v.db.addcol $GIS_OPT_MAP layer=$GIS_OPT_LAYER col="$newcol $oldcoltype" || error
+	    v.db.addcol "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol $oldcoltype" || error
 	fi
 	echo "UPDATE $table SET $newcol=$oldcol" | db.execute database=$database driver=$driver
-	v.db.dropcol $GIS_OPT_MAP layer=$GIS_OPT_LAYER col=$oldcol
+	v.db.dropcol "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col=$oldcol
 else
 	echo "ALTER TABLE $table RENAME $oldcol TO $newcol" | db.execute database=$database driver=$driver || error
 fi
@@ -172,7 +172,7 @@ fi
 cleanup
 
 # write cmd history:
-v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+v.support "${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
 
 exit 0
 
