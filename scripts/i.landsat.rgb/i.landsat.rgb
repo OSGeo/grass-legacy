@@ -81,7 +81,13 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
 
-# setting environment, so that awk works properly in all languages (unused?)
+# check if we have awk
+if [ ! -x "`which awk`" ] ; then
+    g.message -e "awk required, please install awk or gawk first"
+    exit 1
+fi 
+
+# setting environment, so that awk works properly in all languages
 unset LC_ALL
 LC_NUMERIC=C
 export LC_NUMERIC
@@ -116,10 +122,10 @@ fi
 
 if [ 0 -eq $GIS_FLAG_P ] ; then
    for i in $RED $GREEN $BLUE ; do
-      g.message "Processing [$i] .."
+      g.message "Processing <$i> ..."
       MIN=`r.univar -ge $i perc=2 | grep "^percentile_" | cut -d'=' -f2`
       MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
-      #echo "[$i]:  min=$MIN   max=$MAX"
+      g.message -d message="<$i>:  min=$MIN   max=$MAX"
       r.colors $i col=rules << EOF
 	0% black
 	$MIN black
@@ -131,18 +137,14 @@ else
    ALL_MAX=0
    ALL_MIN=255
    for i in $RED $GREEN $BLUE ; do
-      g.message "Processing [$i] .."
+      g.message "Processing <$i> ..."
       MIN=`r.univar -ge $i perc=2  | grep "^percentile_" | cut -d'=' -f2`
       MAX=`r.univar -ge $i perc=$BRIGHTNESS | grep "^percentile_" | cut -d'=' -f2`
-      #echo "[$i]:  min=$MIN   max=$MAX"
-      if [ $MAX -gt $ALL_MAX ] ; then
-	ALL_MAX=$MAX
-      fi
-      if [ $MIN -lt $ALL_MIN ] ; then
-	ALL_MIN=$MIN
-      fi
+      g.message -d message="<$i>:  min=$MIN   max=$MAX"
+      ALL_MAX=`echo "$MAX $ALL_MAX" | awk '{if ($1 > $2) print $1; else print $2}'`
+      ALL_MIN=`echo "$MIN $ALL_MIN" | awk '{if ($1 < $2) print $1; else print $2}'` 
    done
-   #echo "all_min=$ALL_MIN   all_max=$ALL_MAX"
+   g.message -d message="all_min=$ALL_MIN   all_max=$ALL_MAX"
    for i in $RED $GREEN $BLUE ; do
       r.colors $i col=rules << EOF
 	0% black
