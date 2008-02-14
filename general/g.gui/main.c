@@ -3,6 +3,7 @@
  * MODULE:       g.gui
  *
  * AUTHOR(S):    Martin Landa <landa.martin gmail.com>
+ *		 Hamish Bowman <hamish_b yahoo com> (fine tuning)
  *
  * PURPOSE:      Start GRASS GUI from command line.
  *
@@ -39,8 +40,8 @@ int main(int argc, char *argv[])
     type->type = TYPE_STRING;
     type->required = YES;
     type->description = _("GUI type");
-    type->descriptions = _("tcltk;TCL/TK based GUI - GIS Manager (gis.m);"
-			   "oldtcltk;Old TCL/TK based GUI - Display Manager (d.m);"
+    type->descriptions = _("tcltk;Tcl/Tk based GUI - GIS Manager (gis.m);"
+			   "oldtcltk;Old Tcl/Tk based GUI - Display Manager (d.m);"
 			   "wxpython;wxPython based next generation GUI (wxgui)");
     type->options = "tcltk,oldtcltk,wxpython";
     gui_type_env = G__getenv("GRASS_GUI");
