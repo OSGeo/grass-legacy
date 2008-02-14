@@ -28,14 +28,20 @@ namespace eval GmLib {
 #read_moncap
 
 proc GmLib::color { color } {
-
-    regexp -- {#(..)(..)(..)} $color x r g b
-
-    set r [expr 0x$r ]
-    set g [expr 0x$g ]
-    set b [expr 0x$b ]
-
-    return "$r:$g:$b"
+        
+        if {$color == "white"} {
+                set r 255
+                set g 255
+                set b 255
+        } else {
+                regexp -- {#(..)(..)(..)} $color x r g b
+                        
+                set r [expr 0x$r ]
+                set g [expr 0x$g ]
+                set b [expr 0x$b ]
+        }
+        
+        return "$r:$g:$b"
 }
 
 
