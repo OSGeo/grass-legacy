@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
 	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
+	/* sprintf (progname, "%s/etc/wxpython/wxgui", G_gisbase()); */
 	if (rc_file->answer) {
 	    G_spawn("wxgui", "workspace=%s", rc_file->answer, NULL);
 	}
