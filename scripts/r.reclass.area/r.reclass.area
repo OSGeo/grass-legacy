@@ -94,7 +94,7 @@ if [ -z "$GIS_OPT_GREATER" -a -z "$GIS_OPT_LESSER" ] ; then
 fi
  
 
-file2=$infile.clump.$outfile
+file2="$infile.clump.$outfile"
 
 eval `g.findfile element=cell file=$infile`
 filename="${fullname}"
@@ -103,7 +103,7 @@ if [ "$filename" = "" ] ; then
   g.message -e "Raster map [$infile] does not exist."
   exit 1
 else
-  infile=$filename
+  infile="$filename"
 fi
 
 eval `g.findfile element=cell file=$file2`
@@ -114,7 +114,7 @@ if test "$filename2" ; then
   exit 1
 else
  g.message "Generating a clumped raster file ..."
- r.clump input=$infile output=$file2
+ r.clump input="$infile" output="$file2"
 fi
 
 ## calculation in acres
@@ -146,22 +146,22 @@ fi
 if test $op = 0; then
    g.message "Generating a reclass rules file with area size less than or equal to $limit hectares"
    r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
-     {if (hectares <= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > $infile.rules
+     {if (hectares <= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > "$infile.rules"
   else
    g.message  "Generating a reclass rules file with area size greater than or equal to $limit hectares"
    r.stats -aln in=$file2,$infile fs='|' | awk -F'|' '{limit='$limit'; hectares=$5 * 0.0001; 
-     {if (hectares >= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > $infile.rules
+     {if (hectares >= limit) printf("%d = %d %s\n",$1,$3,$4)}}' > "$infile.rules"
 fi
 #fi
 
 if test "$outfile" = ""; then
-outfile=${infile}_${limit}
+   outfile="${infile}_${limit}"
 fi
 g.message "Generating reclass raster map <$outfile>"
-cat $infile.rules | r.reclass i=$file2 o=$outfile.recl
+cat "$infile.rules" | r.reclass i="$file2" o="$outfile.recl"
 r.mapcalc "$outfile=$outfile.recl"
 g.message "Written: $outfile"
-g.remove rast=$outfile.recl,$file2 > /dev/null 2> /dev/null
+g.remove rast="$outfile.recl","$file2" --quiet
 
 #####cleanup
-rm -f $infile.rules
+rm -f "$infile.rules"
