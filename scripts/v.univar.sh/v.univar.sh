@@ -88,7 +88,7 @@ fi
 
 cleanup()
 {
- \rm -f $TMP $TMP.sort
+   \rm -f "$TMP" "$TMP.sort"
 }
 
 # what to do in case of user break:
@@ -118,9 +118,9 @@ else
 fi
 
 if [ -z "$GIS_OPT_WHERE" ] ; then
-   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TMP"
+   db.select table="$GIS_OPT_TABLE" $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE" -c > "$TMP"
 else
-   db.select table=$GIS_OPT_TABLE $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TMP"
+   db.select table="$GIS_OPT_TABLE" $db $drv sql="select $GIS_OPT_COLUMN from $GIS_OPT_TABLE WHERE $GIS_OPT_WHERE" -c > "$TMP"
 fi
 
 
@@ -142,7 +142,7 @@ fi
 
 # calculate statistics
 g.message "Calculating statistics..."
-cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0; min = 10e10 ; max = -min}
+cat "$TMP" | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0; min = 10e10 ; max = -min}
 function abs(x){return x < 0 ? -x : x}
 (NF>0) {
 	sum += $1 ; sum2 += $1 * $1 ; sum3 += abs($1) ; N++;
@@ -170,9 +170,9 @@ END{
 
 if [ $GIS_FLAG_E -eq 1 ] ; then
   #preparations:
-  cat $TMP | sort -n > $TMP.sort
-  NUMBER=`cat $TMP.sort | wc -l | awk '{print $1}'`
-  ODDEVEN=`echo $NUMBER | awk '{print $1%2}'`
+  cat "$TMP" | sort -n > $TMP.sort
+  NUMBER=`cat "$TMP.sort" | wc -l | awk '{print $1}'`
+  ODDEVEN=`echo "$NUMBER" | awk '{print $1%2}'`
 
   # 0.25 quartile
   QUARTILE=0.25
