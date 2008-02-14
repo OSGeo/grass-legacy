@@ -183,7 +183,7 @@ if [ $IS_ZIP -eq 1 ] ; then
 fi
 
 g.message "Converting input file to BIL..."
-mv $TILE.hgt "$TMPDIR"/"$TILE.bil"
+mv "$TILE.hgt" "${TMPDIR}/$TILE.bil"
 
 LL_LATITUDE=`echo $TILE  | cut -b2-3`
 LL_LONGITUDE=`echo $TILE | cut -b5-7`
@@ -245,10 +245,17 @@ fi
 echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
 
 r.in.gdal in="$TILE.bil" out="$TILEOUT"
+EXITCODE=$?
 
 \rm -f "$TILE.bil" "$TILE.hdr" "$TILE.prj" "$TILE.hgt.zip"
 cd ..
 rmdir "$TMPDIR"
+
+if [ "$EXITCODE" -ne 0 ] ; then
+   g.message -e "Unable to import data"
+   exit 1
+fi
+
 
 #nice color table #and zoom to tile
 r.colors color=srtm map="$TILEOUT"
