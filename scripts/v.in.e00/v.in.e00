@@ -100,7 +100,7 @@ fi
 
 #### trap ctrl-c so that we can clean up tmp
 #### take care to define ${TMP}:
-#trap 'rm -f ${TMP}' 2 3 15
+#trap 'rm -f "${TMP}"' 2 3 15
 
 # check that the user didn't use all three, which gets past the parser.
 if [ "$GIS_OPT_TYPE" != "point" ] && \
@@ -120,12 +120,12 @@ fi
 
 #check if this is a split E00 file (.e01, .e02 ...):
 MERGING=0
-if test -f $E00NAME.e01 ; then
+if test -f "$E00NAME.e01" ; then
   g.message "Found that E00 file is split into pieces (.e01, ...). Merging..."
   MERGING=1
   EXTENSION="NOCAPS" # .e00 .e01 ...
 fi
-if test -f $E00NAME.E01 ; then
+if test -f "$E00NAME.E01" ; then
   g.message "Found that E00 file is split into pieces (.e01, ...). Merging..."
   MERGING=1
   EXTENSION="CAPS" # .E00 .E01 ...
@@ -140,7 +140,7 @@ fi
 if [ -n "$GIS_OPT_VECT" ] ; then
     NAME="$GIS_OPT_VECT"
 else
-    NAME=$E00NAME
+    NAME="$E00NAME"
 fi
 
 ### do import
@@ -166,24 +166,24 @@ cd "$TMPDIR"
 if [ $MERGING -eq 1 ] ; then
   if  [ "$EXTENSION" = "CAPS" ] ; then
      cat `ls -1 $E00NAME.E* | sort` > $E00NAME.cat.$E00TMP.e00
-     GIS_OPT_FILE=$E00NAME.cat.$E00TMP.e00
+     GIS_OPT_FILE="$E00NAME.cat.$E00TMP.e00"
   fi
   if  [ "$EXTENSION" = "NOCAPS" ] ; then
      cat `ls -1 $E00NAME.e* | sort` > $E00NAME.cat.$E00TMP.e00
-     GIS_OPT_FILE=$E00NAME.cat.$E00TMP.e00
+     GIS_OPT_FILE="$E00NAME.cat.$E00TMP.e00"
   fi
 fi
 
 g.message "An error may appear next which will be ignored..."
-avcimport $GIS_OPT_FILE $E00SHORTNAME 2>/dev/null >/dev/null
+avcimport "$GIS_OPT_FILE" "$E00SHORTNAME" 2>/dev/null >/dev/null
 if [ $? -eq 1 ] ; then
    g.message "E00 ASCII found and converted to Arc Coverage in current directory"
 else
    g.message "E00 Compressed ASCII found. Will uncompress first..."
-   rm -rf $E00SHORTNAME info
-   e00conv $GIS_OPT_FILE $E00TMP.e00
+   rm -rf "$E00SHORTNAME" info
+   e00conv "$GIS_OPT_FILE" "$E00TMP.e00"
    g.message "...converted to Arc Coverage in current directory"
-   avcimport $E00TMP.e00 $E00SHORTNAME 2>/dev/null
+   avcimport "$E00TMP.e00" "$E00SHORTNAME" 2>/dev/null
 fi
 
 ## let's import...
@@ -194,10 +194,10 @@ NAME=`echo $NAME | sed 's+-+_+g'`
 
 if [ "$GIS_OPT_TYPE" = "point" ] ; then
         g.message "Importing points..."
-        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB type=point output=$NAME
+        v.in.ogr -o dsn="$E00SHORTNAME" layer=LAB type=point output="$NAME"
 	if [ $? -eq 1 ] ; then
    	g.message -e "An error occurred while running v.in.ogr"
-   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
+   	rm -rf "$E00TMP.e00" "$E00SHORTNAME" info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -206,10 +206,10 @@ fi
 
 if [ "$GIS_OPT_TYPE" = "line" ] ; then
         g.message "Importing lines..."
-        v.in.ogr -o dsn=$E00SHORTNAME layer=ARC type=line output=$NAME
+        v.in.ogr -o dsn="$E00SHORTNAME" layer=ARC type=line output="$NAME"
 	if [ $? -eq 1 ] ; then
    	g.message -e "An error occurred while running v.in.ogr"
-   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
+   	rm -rf "$E00TMP.e00" "$E00SHORTNAME" info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -220,10 +220,10 @@ fi
 if [ "$GIS_OPT_TYPE" = "area" ] ; then
         g.message "Importing areas..."
         # we must reconstruct topology and cleanup polygons:
-        v.in.ogr -o dsn=$E00SHORTNAME layer=LAB,ARC type=centroid,boundary output=$NAME
+        v.in.ogr -o dsn="$E00SHORTNAME" layer=LAB,ARC type=centroid,boundary output="$NAME"
 	if [ $? -eq 1 ] ; then
    	g.message -e "An error occurred. Stop."
-   	rm -rf $E00TMP.e00 $E00SHORTNAME info 2>&1 > /dev/null
+   	rm -rf "$E00TMP.e00" "$E00SHORTNAME" info 2>&1 > /dev/null
    	exit 1
 	fi
 fi
@@ -231,8 +231,8 @@ fi
 g.message "Imported <$GIS_OPT_TYPE> vector map <$NAME>."
 
 #### clean up the mess
-rm -f "$TMPDIR"/$E00NAME.e* "$TMPDIR"/$E00NAME.E*
-rm -rf $E00TMP.e00 $E00SHORTNAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+rm -f "${TMPDIR}/$E00NAME.e*" "${TMPDIR}/$E00NAME.E*"
+rm -rf "$E00TMP.e00" "$E00SHORTNAME" info "$E00NAME.cat.$E00TMP.e00" 2>&1 > /dev/null
 cd ..
 rmdir "$TMPDIR"
 
@@ -240,6 +240,6 @@ rmdir "$TMPDIR"
 g.message "Done."
 
 # write cmd history:
-v.support $NAME cmdhist="${CMDLINE}"
+v.support "$NAME" cmdhist="${CMDLINE}"
 
 exit 0
