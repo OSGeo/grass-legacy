@@ -87,8 +87,6 @@ eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
 if [ ! "$file" ] ; then
    g.message -e  "Vector map '$GIS_OPT_MAP' not found in current mapset"
    exit 1
-else
-   MAP_NAME=`echo "$GIS_OPT_MAP" | cut -f1 -d'@'`
 fi
 
 if [ -z "$GIS_OPT_TABLE" ] ; then
