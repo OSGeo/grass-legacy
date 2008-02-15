@@ -84,6 +84,7 @@ icons_default = {
     # gis manager
     "newdisplay" : 'gui-startmon.gif',
     "workspaceNew" : 'file-new.gif',
+    "workspaceLoad" : 'file-new.gif', # change the icon if possible
     "workspaceOpen" : 'file-open.gif',
     "workspaceSave" : 'file-save.gif',
     "addrast"    : 'element-cell.gif',
@@ -239,6 +240,7 @@ Icons = {
     # gis manager
     "newdisplay" : MetaIcon (img=icons_img["newdisplay"], label="Start new display"),
     "workspaceNew" : MetaIcon (img=icons_img["workspaceNew"], label="Create new workspace file"),
+    "workspaceLoad" : MetaIcon (img=icons_img["workspaceLoad"], label="Load map layers into workspace"),
     "workspaceOpen" : MetaIcon (img=icons_img["workspaceOpen"], label="Open existing workspace file"),
     "workspaceSave" : MetaIcon (img=icons_img["workspaceSave"], label="Save current workspace to file"),
     # TODO: "layer" is not conformant with GRASS vocabulary (vector layer: 1..x) ! 

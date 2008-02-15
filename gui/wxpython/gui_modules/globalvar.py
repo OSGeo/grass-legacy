@@ -19,7 +19,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 import os
 
 import utils
-utils.ImportWx()
+utils.CheckForWx()
+import wx
 import wx.lib.flatnotebook as FN
 
 """

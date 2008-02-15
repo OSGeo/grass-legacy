@@ -52,7 +52,8 @@ import string
 import textwrap
 
 import utils
-utils.ImportWx()
+utils.CheckForWx()
+import wx
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
