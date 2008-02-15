@@ -30,7 +30,7 @@ grass6_wxvdigit.i:
 	cat ./digit.h >> grass6_wxvdigit.i
 
 create_wrap.cpp: grass6_wxvdigit.i
-	$(SWIG) -c++ -python -shadow -o $@ $<
+	$(SWIG) -c++ -python -shadow -o grass6_wxvdigit_wrap.cpp $<
 
 $(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
 	$(CXX) $(CXXFLAGS) $(INCLUDE_DIRS) $< -o $@
