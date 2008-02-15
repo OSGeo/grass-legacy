@@ -60,6 +60,7 @@ IconsSilk = {
     # gis manager
     "newdisplay" : 'application_add.png',
     "workspaceNew" : 'page_white.png',
+    "workspaceLoad" : 'page_white_get.png',
     "workspaceOpen" : 'folder.png',
     "workspaceSave" : 'page_save.png',
     "addrast"    : 'image_add.png',

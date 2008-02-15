@@ -112,7 +112,7 @@ def ListOfCatsToRange(cats):
         
     return catstr.strip(',')
 
-def ImportWx():
+def CheckForWx():
     """Try to import wx module and check its version"""
     majorVersion = 2.8
     minorVersion = 1.1
@@ -130,3 +130,29 @@ def ImportWx():
             '. wxPython >= %s.%s is required. Detailed information in README file.' % \
             (str(majorVersion), str(minorVersion))
         sys.exit(1)
+
+def ListOfMapsets():
+    """Get list of available/accessible mapsets
+
+    @return ([available mapsets], [accessible mapsets]) 
+    """
+    import gcmd
+    all_mapsets = []
+    accessible_mapsets = []
+    
+    cmd = gcmd.Command(['g.mapsets', '-l'])
+    
+    try:
+        for mset in cmd.ReadStdOutput()[0].split(' '):
+            all_mapsets.append(mset.strip('%s' % os.linesep))
+    except:
+        raise gcmd.CmdError('Unable to get list of available mapsets.')
+            
+    cmd = gcmd.Command(['g.mapsets', '-p'])
+    try:
+        for mset in cmd.ReadStdOutput()[0].split(' '):
+            accessible_mapsets.append(mset.strip('\n'))
+    except:
+        raise gcmd.CmdError('Unable to get list of accessible mapsets.')
+
+    return (all_mapsets, accessible_mapsets)

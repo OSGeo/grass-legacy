@@ -28,7 +28,8 @@ import shutil
 from gui_modules import utils
 from gui_modules import globalvar
 
-utils.ImportWx()
+utils.CheckForWx()
+import wx
 import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse

@@ -29,6 +29,7 @@ class Data:
               ("Workspace", (
                  ("New", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
                  ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
+                 ("Load", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
                  ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
                  ("Save as", "Save current workspace as", "self.OnWorkspaceSaveAs", ""),
                  ("Close", "Close selected workspace file", "self.OnWorkspaceClose", ""),

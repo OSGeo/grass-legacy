@@ -51,7 +51,8 @@ gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
 import gui_modules.utils as utils
-utils.ImportWx()
+utils.CheckForWx()
+import wx
 import wx.aui
 import wx.combo
 import wx.html
@@ -459,6 +460,26 @@ class GMFrame(wx.Frame):
 
         wx.AboutBox(info)
 
+    def OnWorkspace(self, event):
+        """Workspace menu (new, load)"""
+        point = wx.GetMousePosition()
+        menu = wx.Menu()
+
+        # Add items to the menu
+        new = wx.MenuItem(menu, wx.ID_ANY, Icons["workspaceNew"].GetLabel())
+        new.SetBitmap(Icons["workspaceNew"].GetBitmap(self.iconsize))
+        menu.AppendItem(new)
+        self.Bind(wx.EVT_MENU, self.OnWorkspaceNew, new)
+
+        load = wx.MenuItem(menu, wx.ID_ANY, Icons["workspaceLoad"].GetLabel())
+        load.SetBitmap(Icons["workspaceLoad"].GetBitmap(self.iconsize))
+        menu.AppendItem(load)
+        self.Bind(wx.EVT_MENU, self.OnWorkspaceLoad, load)
+
+        # create menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+
     def OnWorkspaceNew(self, event=None):
         """Create new workspace file
 
@@ -571,6 +592,28 @@ class GMFrame(wx.Frame):
             return False
 
         return True
+
+    def OnWorkspaceLoad(self, event=None):
+        """Load given map layers into layer tree"""
+        dialog = wxgui_utils.LoadMapLayersDialog(parent=self, title=_("Load map layers into layer tree"))
+
+        if dialog.ShowModal() == wx.ID_OK:
+            maptree = self.curr_page.maptree
+            for layerName in dialog.GetMapLayers():
+                if dialog.GetLayerType() == 'raster':
+                    cmd = ['d.rast', 'map=%s' % layerName]
+                elif dialog.GetLayerType() == 'vector':
+                    cmd = ['d.vect', 'map=%s' % layerName]
+                newItem = maptree.AddLayer(ltype=dialog.GetLayerType(),
+                                           lname=layerName,
+                                           lchecked=True,
+                                           lopacity=1.0,
+                                           lcmd=cmd,
+                                           lgroup=None)
+                maptree.PropertiesDialog(newItem, show=False)
+
+            # reverse list of map layers
+            maptree.Map.ReverseListOfLayers()
 
     def OnWorkspaceSaveAs(self, event=None):
         """Save workspace definition to selected file"""
@@ -833,21 +876,33 @@ class GMFrame(wx.Frame):
     def ToolbarData(self):
 
         return   (
-                 ('newdisplay', Icons["newdisplay"].GetBitmap(), Icons["newdisplay"].GetLabel(), self.NewDisplay),
+                 ('newdisplay', Icons["newdisplay"].GetBitmap(),
+                  Icons["newdisplay"].GetLabel(), self.NewDisplay),
                  ('', '', '', ''),
-                 ('workspaceNew', Icons["workspaceNew"].GetBitmap(), Icons["workspaceNew"].GetLabel(), self.OnWorkspaceNew),
-                 ('workspaceOpen', Icons["workspaceOpen"].GetBitmap(), Icons["workspaceOpen"].GetLabel(), self.OnWorkspaceOpen),
-                 ('workspaceSave', Icons["workspaceSave"].GetBitmap(), Icons["workspaceSave"].GetLabel(), self.OnWorkspaceSave),
+                 ('workspaceLoad', Icons["workspaceLoad"].GetBitmap(),
+                  Icons["workspaceLoad"].GetLabel(), self.OnWorkspace),
+                 ('workspaceOpen', Icons["workspaceOpen"].GetBitmap(),
+                  Icons["workspaceOpen"].GetLabel(), self.OnWorkspaceOpen),
+                 ('workspaceSave', Icons["workspaceSave"].GetBitmap(),
+                  Icons["workspaceSave"].GetLabel(), self.OnWorkspaceSave),
                  ('', '', '', ''),
-                 ('addrast', Icons["addrast"].GetBitmap(), Icons["addrast"].GetLabel(), self.OnRaster),
-                 ('addvect', Icons["addvect"].GetBitmap(), Icons["addvect"].GetLabel(), self.OnVector),
-                 ('addcmd',  Icons["addcmd"].GetBitmap(),  Icons["addcmd"].GetLabel(),  self.AddCommand),
-                 ('addgrp',  Icons["addgrp"].GetBitmap(),  Icons["addgrp"].GetLabel(), self.AddGroup),
-                 ('addovl',  Icons["addovl"].GetBitmap(),  Icons["addovl"].GetLabel(), self.OnOverlay),
-                 ('addlabels',  Icons["addlabels"].GetBitmap(),  Icons["addlabels"].GetLabel(), self.AddLabels),
-                 ('delcmd',  Icons["delcmd"].GetBitmap(),  Icons["delcmd"].GetLabel(), self.DeleteLayer),
+                 ('addrast', Icons["addrast"].GetBitmap(),
+                  Icons["addrast"].GetLabel(), self.OnRaster),
+                 ('addvect', Icons["addvect"].GetBitmap(),
+                  Icons["addvect"].GetLabel(), self.OnVector),
+                 ('addcmd',  Icons["addcmd"].GetBitmap(),
+                  Icons["addcmd"].GetLabel(),  self.AddCommand),
+                 ('addgrp',  Icons["addgrp"].GetBitmap(),
+                  Icons["addgrp"].GetLabel(), self.AddGroup),
+                 ('addovl',  Icons["addovl"].GetBitmap(),
+                  Icons["addovl"].GetLabel(), self.OnOverlay),
+                 ('addlabels',  Icons["addlabels"].GetBitmap(),
+                  Icons["addlabels"].GetLabel(), self.AddLabels),
+                 ('delcmd',  Icons["delcmd"].GetBitmap(),
+                  Icons["delcmd"].GetLabel(), self.DeleteLayer),
                  ('', '', '', ''),
-                 ('attrtable', Icons["attrtable"].GetBitmap(), Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
+                 ('attrtable', Icons["attrtable"].GetBitmap(),
+                  Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
                   )
 
     def ShowAttributeTable(self, event):
@@ -1166,21 +1221,8 @@ class MapsetAccess(wx.Dialog):
                            style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
-        cmdlist = ['g.mapsets', '-l']
-        self.all_mapsets = gcmd.Command(cmdlist).module_stdout.read().strip().split(' ')
-        for mset in self.all_mapsets:
-            indx = self.all_mapsets.index(mset)
-            self.all_mapsets[indx] = mset.strip('\n')
-
-        cmdlist = ['g.mapsets', '-p']
-        self.accessible_mapsets = gcmd.Command(cmdlist).module_stdout.read().strip().split(' ')
-        for mset in self.accessible_mapsets:
-            indx = self.accessible_mapsets.index(mset)
-            self.accessible_mapsets[indx] = mset.strip('\n')
-
-        cmdlist = ['g.gisenv', 'get=MAPSET']
-        self.curr_mapset = gcmd.Command(cmdlist).module_stdout.read().strip()
-
+        self.all_mapsets, self.accessible_mapsets = utils.ListOfMapsets()
+        self.curr_mapset = grassenv.GetGRASSVariable('MAPSET')
 
         # remove PERMANENT and current mapset from list because they are always accessible
         self.PERMANENT_ndx = self.all_mapsets.index("PERMANENT")
