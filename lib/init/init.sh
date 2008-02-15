@@ -812,16 +812,16 @@ echo "See the licence terms with:              g.version -c"
 
 case "$GRASS_GUI" in
     tcltk | gis.m)
-        echo "If required, restart the GUI with:       g.gui flavor=tcltk"
+        echo "If required, restart the GUI with:       g.gui tcltk"
         ;;
     oldtcltk | d.m)
-        echo "If required, restart the GUI with:       g.gui flavor=oldtcltk"
+        echo "If required, restart the GUI with:       g.gui oldtcltk"
         ;;
     wxpython)
-        echo "If required, restart the GUI with:       g.gui flavor=wxpython"
+        echo "If required, restart the GUI with:       g.gui wxpython"
         ;;
     *)
-        echo "Start the GUI with:                      g.gui flavor=tcltk"
+        echo "Start the GUI with:                      g.gui tcltk"
         ;;
 esac
 
