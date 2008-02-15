@@ -131,13 +131,16 @@ eval `g.gisenv`
 
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file="$GIS_OPT_VECTOR" mapset="$MAPSET"`
-if [ ! "$file" ] ; then
+VECT_MAPSET=`echo "$GIS_OPT_VECTOR" | grep '@' | cut -f2 -d'@'`
+if [ -z "$VECT_MAPSET" ] ; then
+   VECT_MAPSET="$MAPSET"
+fi
+if [ ! "$file" ] || [ "$VECT_MAPSET" != "$MAPSET" ] ; then
    g.message -e "Vector map <$GIS_OPT_VECTOR> not found in current mapset"
    exit 1
 else
    VECTOR=`echo "$GIS_OPT_VECTOR" | cut -f1 -d'@'`
 fi
-
 
 #check the input raster map
 eval `g.findfile element=cell file="$RASTER"`
