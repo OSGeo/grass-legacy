@@ -18,7 +18,8 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 
 import os
 
-import wx
+import utils
+utils.ImportWx()
 import wx.lib.flatnotebook as FN
 
 """

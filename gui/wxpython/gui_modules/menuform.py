@@ -46,12 +46,13 @@ Martin Landa <landa.martin@gmail.com>
 """
 __version__ ="$Revision$"
 
-import wx
 import sys
 import re
 import string
 import textwrap
 
+import utils
+utils.ImportWx()
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
 import wx.lib.filebrowsebutton as filebrowse
