@@ -1,10 +1,16 @@
 MODULE_TOPDIR = ../..
 
-# SUBDIRS=vdigit docs
 SUBDIRS = docs
-ETCDIR = $(ETC)/wxpython
+
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
+ifneq ($(USE_WXWIDGETS),)
+  SUBDIRS += vdigit
+endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+ETCDIR = $(ETC)/wxpython
 
 default: parsubdirs install_scripts
 
@@ -17,8 +23,6 @@ install_scripts:
 	$(INSTALL_DATA) images/* $(ETCDIR)/images/
 	$(INSTALL_DATA) scripts/* $(ETCDIR)/scripts/
 	$(INSTALL_DATA) gis_set.py wxgui.py README $(ETCDIR)/
-#	$(INSTALL_DATA) vdigit/_grass6_wxvdigit.so $(ETCDIR)/vdigit/
-#	$(INSTALL_DATA) vdigit/grass6_wxvdigit.py $(ETCDIR)/vdigit/
 	$(INSTALL) -m 755 wxgui $(ETCDIR)/scripts/
 
 clean: cleansubdirs

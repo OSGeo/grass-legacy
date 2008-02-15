@@ -114,7 +114,6 @@ int DisplayDriver::DrawMap(bool force)
     G_debug(3, "wxDriver.DrawMap(): region: w=%f, e=%f, s=%f, n=%f",
 	    region.box.W, region.box.E, region.box.S, region.box.N);
 
-    bool inBox;
     dc->BeginDrawing();
     for (int i = 0; i < listLines->n_values; i++) {
 	DrawLine(listLines->value[i]);
@@ -146,6 +145,9 @@ int DisplayDriver::DrawLine(int line)
     bool draw;   // draw object ?
 
     wxPen *pen;
+
+    pen = NULL;
+    draw = false;
 
     // read line
     type = Vect_read_line (mapInfo, points, cats, line);
@@ -243,7 +245,7 @@ int DisplayDriver::DrawLine(int line)
 	    // long int startId = ids[line].startId + 1;
 	    if (dcId > 0 && drawSegments) {
 		dcId = 2; // first segment
-		for (int i = 0; i < pointsScreen->GetCount() - 1; dcId += 2) {
+		for (size_t i = 0; i < pointsScreen->GetCount() - 1; dcId += 2) {
 		wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
 		wxPoint *point_end = (wxPoint *) pointsScreen->Item(++i)->GetData();
 
@@ -261,7 +263,7 @@ int DisplayDriver::DrawLine(int line)
 	    }
 	    else {
 		wxPoint points[pointsScreen->GetCount()];
-		for (int i = 0; i < pointsScreen->GetCount(); i++) {
+		for (size_t i = 0; i < pointsScreen->GetCount(); i++) {
 		    wxPoint *point_beg = (wxPoint *) pointsScreen->Item(i)->GetData();
 		    points[i] = *point_beg;
 		}
@@ -317,7 +319,7 @@ int DisplayDriver::DrawLineVerteces(int line)
     dc->SetId(dcId); /* 0 | 1 (selected) */
     dc->SetPen(*pen);
 
-    for (int i = 1; i < pointsScreen->GetCount() - 1; i++, dcId += 2) {
+    for (size_t i = 1; i < pointsScreen->GetCount() - 1; i++, dcId += 2) {
 	point = (wxPoint*) pointsScreen->Item(i)->GetData();
 
 	if (IsSelected(line) && drawSegments) {
@@ -364,7 +366,7 @@ int DisplayDriver::DrawLineNodes(int line)
     // get nodes
     Vect_get_line_nodes(mapInfo, line, &(nodes[0]), &(nodes[1]));
         
-    for (int i = 0; i < sizeof(nodes) / sizeof(int); i++) {
+    for (size_t i = 0; i < sizeof(nodes) / sizeof(int); i++) {
 	node = nodes[i];
 	// get coordinates
 	Vect_get_node_coor(mapInfo, node,
@@ -799,7 +801,6 @@ std::vector<double> DisplayDriver::SelectLineByPoint(double x, double y, double 
 						     double thresh, int type, int with_z)
 {
     long int line;
-    int ftype;
     double px, py, pz;
 
     std::vector<double> p;
@@ -884,7 +885,6 @@ std::vector<int> DisplayDriver::GetSelected(bool grassId)
 	return ListToVector(selected);
 
     std::vector<int> dc_ids;
-    long int line;
 
     if (!drawSegments) {
 	dc_ids.push_back(1);
@@ -979,7 +979,9 @@ std::vector<int> DisplayDriver::GetSelectedVertex(double x, double y, double thr
     line = selected->value[0];
 
     type = Vect_read_line (mapInfo, points, cats, line);
-        
+
+    minDist = 0.0;
+    Gid = -1;
     // find the closest vertex (x, y)
     DCid = 1;
     for(int idx = 0; idx < points->n_points; idx++) {

@@ -38,8 +38,8 @@ extern "C" {
 int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 		   const char *bgmap, int snap, double threshold)
 {
-    int i, npoints;
-    int newline;
+    size_t i;
+    size_t npoints;
 
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -130,8 +130,6 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 	Vect_close(BgMap[0]);
     }
 
-    G_debug(2, "wxDigit.AddLine(): line=%d written", newline);
-
     return 0;
 }
 
@@ -151,7 +149,6 @@ int Digit::RewriteLine(int line, std::vector<double> coords,
 		       const char *bgmap, int snap, double threshold)
 {
     int ret, type, dim;
-    double x, y, z;
     struct line_pnts *points;
     struct line_cats *cats;
 
@@ -442,9 +439,7 @@ int Digit::FlipLines()
 	return -1;
     }
 
-    /*
-      ret = Vedit_flip_lines(display->mapInfo, display->selected);
-    */
+    ret = Vedit_flip_lines(display->mapInfo, display->selected);
 
     return ret;
 }
@@ -493,13 +488,11 @@ int Digit::BreakLines()
 
    \param thresh threshold value for snapping
 
-   \return number of modified lines
+   \return 0 on success 
    \return -1 on error
 */
 int Digit::SnapLines(double thresh)
 {
-    int ret;
-
     if (!display->mapInfo) {
 	return -1;
     }
@@ -507,7 +500,7 @@ int Digit::SnapLines(double thresh)
     Vect_snap_lines_list (display->mapInfo, display->selected,
 			  thresh, NULL, NULL);
 
-    return ret;
+    return 0;
 }
 
 /**
@@ -599,8 +592,8 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
 	list = display->selected;
     }
 
-    Vedit_copy_lines (display->mapInfo, bgMap,
-		      list);
+    ret = Vedit_copy_lines (display->mapInfo, bgMap,
+			    list);
 
     if (list != display->selected) {
 	Vect_destroy_list(list);
@@ -640,6 +633,7 @@ struct Map_info** Digit::OpenBackgroundVectorMap(const char *bgmap)
     }
     
     nbgmaps = 0;
+    BgMap = NULL;
 
     if (!G__name_is_fully_qualified(bgmap, name, mapset)) {
 	G_strncpy(name, bgmap, GNAME_MAX);
