@@ -25,7 +25,7 @@
 */
 int Digit::InitCats()
 {
-    int ndblinks, nfields, field, ncats, max_cat;
+    int ndblinks, nfields, field, ncats;
     int cat, type, id; 
 
     struct field_info *fi;
@@ -162,6 +162,7 @@ std::map<int, std::vector<int> > Digit::GetLineCats(int line_id)
 	return lc;
     }
 
+    line = -1;
     if (line_id == -1) {
 	line = display->selected->value[0];
     }
@@ -222,6 +223,7 @@ int Digit::SetLineCats(int line_id, int layer, std::vector<int> cats, bool add)
 	return -1;
     }
     
+    line = -1;
     if (line_id == -1) {
 	line = display->selected->value[0];
     }
