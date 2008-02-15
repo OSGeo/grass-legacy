@@ -17,8 +17,6 @@ for details.
 import os
 import sys
 
-import gcmd
-
 def GetTempfile(pref=None):
     """
     Creates GRASS temporary file using defined prefix.
@@ -27,7 +25,7 @@ def GetTempfile(pref=None):
 
     @return Path to file name (string) or None
     """
-
+    import gcmd
     tempfileCmd = gcmd.Command(["g.tempfile",
                                 "pid=%d" %
                                 os.getpid()])
