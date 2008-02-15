@@ -489,6 +489,9 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
       sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
+
+   G_command_history(&hist);
+
     if (ts == 1) G_write_history (depth0, &hist);
 	else
     G_write_history (depth, &hist);
@@ -508,7 +511,7 @@ int output_data(int tt, double ft)
 /*    fprintf (stdout, "\n history initiated\n");
     fflush(stdout);*/
 
-    sprintf(hist.edhist[0],"init.walk=%d, maxwalk=%d, remaining walkers=%d",nwalk,maxwa,nwalka);
+    sprintf(hist.edhist[0],"init.walkers=%d, maxwalk=%d, rem. walkers=%d",nwalk,maxwa,nwalka);
     sprintf(hist.edhist[1],"duration (sec.)=%d, time-serie iteration=%d",timesec,tt);
 
     sprintf(hist.edhist[2],"written walkers=%d, deltap=%f, mean vel.=%f",
@@ -519,6 +522,9 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
       sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
+
+   G_command_history(&hist);
+
     if (ts == 1) G_write_history (disch0, &hist);
 	else
     G_write_history (disch, &hist);
@@ -550,6 +556,9 @@ int output_data(int tt, double ft)
       sprintf (hist.datsrc_2, "input files: %s %s %s %s", manin,detin,tranin,tauin);
 
     hist.edlinecnt = 4;
+
+    G_command_history(&hist);
+
     if (ts == 1) G_write_history (flux0, &hist);
 	else
     G_write_history (flux, &hist);
@@ -703,7 +712,6 @@ int output_et()
             G_free_colors(&colors);
   /*  } */
    }
-
 
    return 1;
 }
