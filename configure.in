@@ -193,7 +193,12 @@ LOC_ARG_WITH(nls, NLS, no)
 LOC_ARG_WITH(readline, Readline, no)
 LOC_ARG_WITH(opendwg, openDWG, no)
 LOC_ARG_WITH(curses, Curses, yes)
-LOC_ARG_WITH(python, PYTHON, no)
+AC_ARG_WITH(python,
+[  --with-python[=path/python-config] enable Python support (python-config with path, \
+e.g. '--with-python=/usr/bin/python2.5-config', default: no)],, with_python="no")
+AC_ARG_WITH(wxwidgets,
+[  --with-wxwidgets[=path/wx-config] enable wxWidgets support (wx-config with path, \
+e.g. '--with-wxwidgets=/usr/local/bin/wx-config', default: no)],, with_wxwidgets="no")
 
 # With includes and libs options
 
@@ -1623,55 +1628,114 @@ AC_SUBST(USE_LARGEFILES)
 
 # Python check
 
-LOC_CHECK_USE(python, PYTHON, USE_PYTHON)
+AC_MSG_CHECKING(whether to use Python)
 
-if test -n "$USE_PYTHON"; then
+PYTHONINC=
+PYTHONCFLAGS=
+PYTHONLDFLAGS=
+USE_PYTHON=
 
-# check for Python executable 
-
-if test -z "$PYTHON_BIN"; then
-  AC_PATH_PROG(PYTHON_BIN, python)
-  if test -z "$PYTHON_BIN"; then
-    AC_PATH_PROG(PYTHON_BIN, python2.3)
-    if test -z "$PYTHON_BIN"; then
-      AC_PATH_PROG(PYTHON_BIN, python2.4)
-      if test -z "$PYTHON_BIN"; then
-         AC_MSG_ERROR(python binary not found in path)
-      fi
-    fi
+if test "$with_python" = "no" ; then
+  AC_MSG_RESULT(no)
+else
+  AC_MSG_RESULT(yes)
+  USE_PYTHON="1"
+  if test "$with_python" != "yes" ; then
+    PY_CONFIG="$with_python"
   fi
-fi
-AC_SUBST(PYTHON)
-PYTHON=`basename $PYTHON_BIN`
 
+  AC_PATH_PROG(PY_CONFIG, python-config, no)
 
-# check for Python executable
-if test -z "$PYTHON_BIN"; then
-  AC_PATH_PROG(PYTHON_BIN, python)
-  if test -z "$PYTHON_BIN"; then
-    AC_MSG_ERROR(python binary not found in path)
-  fi
-fi
+  if test "$PY_CONFIG" = "no" ; then
+    AC_MSG_ERROR([*** couldn't find python-config])
+ fi
 
-# find out python version
-AC_MSG_CHECKING(Python version)
-PYVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[:3]'`]
-PYMAJVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[:1]'`]
-PYMINVERSION=`$PYTHON_BIN -c ['import sys; print sys.version[2:3]'`]
-AC_MSG_RESULT($PYVERSION)
-AC_SUBST(PYVERSION)
+  # With Python includes directory 
 
-# make sure Python is version >= 2.3
-if test "$PYMAJVERSION" -lt "2" || \
-   (test "$PYMAJVERSION" -eq "2" && test "$PYMINVERSION" -lt "3"); then
-  AC_MSG_ERROR([This version of GRASS requires at least Python version 2.3.  
-The one you have seems to be $PYVERSION.  You can specify an alternate python 
-by using (for example) --with-python=/usr/bin/python2.3])
-fi
+  PYTHONINC=`"$PY_CONFIG" --includes`
+  LOC_CHECK_INCLUDES(Python.h,Python,$PYTHONINC) 
 
-fi
+  PYTHONCFLAGS=`"$PY_CONFIG" --cflags`
 
+  # With Python library directory
+
+  PYTHONLDFLAGS=`"$PY_CONFIG" --ldflags`
+
+fi # Done checking Python
+
+AC_SUBST(PYTHONINC)
+AC_SUBST(PYTHONCFLAGS)
+AC_SUBST(PYTHONLDFLAGS)
 AC_SUBST(USE_PYTHON)
+
+# Enable wxWidgets support (for wxGUI)
+
+AC_MSG_CHECKING(whether to use wxWidgets)
+
+WXVERSION=
+WXWIDGETSCXXFLAGS= 
+WXWIDGETSCPPFLAGS=  
+WXWIDGETSLIB=  
+USE_WXWIDGETS=
+
+if test "$with_wxwidgets" = "no" ; then
+  AC_MSG_RESULT(no)
+else
+  AC_MSG_RESULT(yes)
+  USE_WXWIDGETS="1"
+  if test "`basename $with_wxwidgets`" = "wx-config" ; then
+    WX_CONFIG="$with_wxwidgets"
+  fi
+
+  AC_PATH_PROG(WX_CONFIG, wx-config, no)
+
+  if test "$WX_CONFIG" = "no" ; then
+    AC_MSG_ERROR([*** couldn't find wx-config
+
+  	  	  wxWidgets must be installed on your system.
+  
+                  Please check that wx-config is in path, the directory
+                  where wxWidgets libraries are installed (returned by
+                  'wx-config --libs' or 'wx-config --static --libs' command)
+                  is in LD_LIBRARY_PATH or equivalent variable and
+                  wxWidgets version is 2.8.1 or above.])
+ fi
+
+ # Check wxWidgets version
+
+ REQWX="2.8.1"
+
+ AC_MSG_CHECKING([wxWidgets version])
+ if WXVERSION=`"$WX_CONFIG" --version`; then
+   AC_MSG_RESULT([$WXVERSION])
+ else
+   AC_MSG_RESULT([not found])
+   AC_MSG_ERROR([wxWidgets is required.])
+ fi
+ if test `expr "$WXVERSION" \< "$REQWX"` = 1 ; then
+   AC_MSG_ERROR([*** wxWidgets "$REQWX" or later is required.])
+ fi
+
+ # With wxWidgets includes directory 
+
+ WXWIDGETSCXXFLAGS=`"$WX_CONFIG" --cxxflags`
+ WXWIDGETSCPPFLAGS=`"$WX_CONFIG" --cppflags`
+
+ LOC_CHECK_INCLUDES(wx/wxprec.h,wxWidgets,$WXWIDGETSCPPFLAGS) 
+ LOC_CHECK_INCLUDES(wx/wxPython/pseudodc.h,wxWidgets,$WXWIDGETSCPPFLAGS) 
+
+ # With wxWidgets library directory 
+
+ WXWIDGETSLIB=`"$WX_CONFIG" --libs`
+fi # $USE_WXWIDGETS
+
+AC_SUBST(WXVERSION) 
+AC_SUBST(WXWIDGETSCXXFLAGS)
+AC_SUBST(WXWIDGETSCPPFLAGS) 
+AC_SUBST(WXWIDGETSLIB) 
+AC_SUBST(USE_WXWIDGETS) 
+
+# Done checking wxWidgets
 
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
@@ -1733,6 +1797,7 @@ LOC_MSG_USE(Python support,USE_PYTHON)
 LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG_USE(SQLite support,USE_SQLITE)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
+LOC_MSG_USE(wxWidgets support,USE_WXWIDGETS)
 LOC_MSG_USE(TIFF support,USE_TIFF)
 LOC_MSG_USE(X11 support,USE_X11)
 LOC_MSG_USE(Cairo support,USE_CAIRO)
