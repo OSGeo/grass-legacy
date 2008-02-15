@@ -1018,7 +1018,7 @@ else
   if { (eval echo configure:1019: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; }; then
     for file in conftest.*; do
       case $file in
-      *.$ac_ext | *.c | *.o | *.obj) ;;
+      *.c | *.o | *.obj) ;;
       *) ac_cv_exeext=`echo $file | sed -e s/conftest//` ;;
       esac
     done
@@ -15985,33 +15985,35 @@ echo "GRASS is now configured for:  ${host}"
 echo ""
 
 
-echo " Source directory:            ${SRCDIR}"
+echo "  Source directory:            ${SRCDIR}"
 
 
-echo " Build directory:             ${DSTDIR}"
+echo "  Build directory:             ${DSTDIR}"
 
 
-echo " Installation directory:      ${INSTDIR}"
+echo "  Installation directory:      ${INSTDIR}"
 
 
-echo " Startup script in directory: ${bindir}"
+echo "  Startup script in directory: ${bindir}"
 
 
-echo " C compiler:                  ${CC} ${CFLAGS}"
+echo "  C compiler:                  ${CC} ${CFLAGS}"
 
 
-echo " C++ compiler:                ${CXX} ${CXXFLAGS}"
+echo "  C++ compiler:                ${CXX} ${CXXFLAGS}"
 
-#LOC_MSG([ FORTRAN compiler:            ${F77} ${FFLAGS}])
+#LOC_MSG([  FORTRAN compiler:            ${F77} ${FFLAGS}])
 
-echo " Building shared libraries:   ${shared_ok}"
-
-
-echo " 64bit support:               ${do64bit}"
+echo "  Building shared libraries:   ${shared_ok}"
 
 
-echo " OpenGL platform:             ${OPENGL_TYPE}"
+echo "  64bit support:               ${do64bit}"
 
+
+echo "  OpenGL platform:             ${OPENGL_TYPE}"
+
+
+echo "  MacOSX application:         `if test -n "${MACOSX_APP}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
@@ -16024,6 +16026,8 @@ echo ""
 echo "  BLAS support:               `if test -n "${USE_BLAS}" ; then echo yes ; else echo no ; fi`"
 
 echo "  C++ support:                `if test -n "${USE_CXX}" ; then echo yes ; else echo no ; fi`"
+
+echo "  Cairo support:              `if test -n "${USE_CAIRO}" ; then echo yes ; else echo no ; fi`"
 
 echo "  DWG support:                `if test -n "${USE_OPENDWG}" ; then echo yes ; else echo no ; fi`"
 
@@ -16072,10 +16076,6 @@ echo "  wxWidgets support:          `if test -n "${USE_WXWIDGETS}" ; then echo y
 echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
 
 echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
-
-echo "  Cairo support:              `if test -n "${USE_CAIRO}" ; then echo yes ; else echo no ; fi`"
-
-echo "  MacOSX application:         `if test -n "${MACOSX_APP}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
