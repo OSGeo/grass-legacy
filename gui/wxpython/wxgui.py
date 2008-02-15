@@ -599,6 +599,10 @@ class GMFrame(wx.Frame):
 
         if dialog.ShowModal() == wx.ID_OK:
             maptree = self.curr_page.maptree
+            busy = wx.BusyInfo(message=_("Please wait, loading map layers into layer tree..."),
+                               parent=self)
+            wx.Yield()
+
             for layerName in dialog.GetMapLayers():
                 if dialog.GetLayerType() == 'raster':
                     cmd = ['d.rast', 'map=%s' % layerName]
@@ -610,7 +614,8 @@ class GMFrame(wx.Frame):
                                            lopacity=1.0,
                                            lcmd=cmd,
                                            lgroup=None)
-                maptree.PropertiesDialog(newItem, show=False)
+
+            busy.Destroy()
 
             # reverse list of map layers
             maptree.Map.ReverseListOfLayers()

@@ -514,9 +514,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.GetPyData(layer)[0]['maplayer'] = maplayer
 
             # run properties dialog if no properties given
-            if len(cmd) > 1:
-                self.PropertiesDialog(layer, show=False)
-            else:
+            if len(cmd) == 0:
                 self.PropertiesDialog(layer, show=True)
 
         else: # group
