@@ -54,7 +54,6 @@ Darwin*)
 	;;
 esac
 
-
 # Go through the command line options
 for i in "$@" ; do
     
@@ -70,10 +69,11 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui | -tcltk | -wxpython] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-v | --version] [-text | -gui | -tcltk | -oldtcltk | -wxpython] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
+	    echo "  -v or --version                show version information and exit"
             echo "  -text                          use text based interface"
             echo "                                   and set as default"
             echo "  -gui                           use graphical user interface (tcltk by default)"
