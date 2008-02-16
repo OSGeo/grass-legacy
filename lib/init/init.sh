@@ -1,8 +1,6 @@
 #!/bin/sh
 #############################################################################
 #
-# $Id$
-#
 # MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
@@ -72,14 +70,21 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-text | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-v | --version] [-text | -gui | -tcltk | -oldtcltk | -wxpython] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
-            echo "  -text                          use text based interface and set as default"
-            echo "  -gui (or -tcltk)               use Tcl/Tk based graphical user interface"
+	    echo "  -v or --version                show version information and exit"
+            echo "  -text                          use text based interface"
             echo "                                   and set as default"
-	    echo "  -oldgui                        use the old GUI interface and set as default"
+            echo "  -gui                           use graphical user interface (tcltk by default)"
+            echo "                                   and set as default"
+            echo "  -tcltk                         use Tcl/Tk based graphical user interface"
+            echo "                                   and set as default"
+	    echo "  -oldtcltk                      use old Tcl/Tk based graphical user interface"
+            echo "                                   and set as default"
+            echo "  -wxpython                      use wxPython based graphical user interface"
+            echo "                                   and set as default"
             echo
             echo "Parameters:"
             echo "  GISDBASE                       initial database (path to GIS data)"
@@ -89,7 +94,7 @@ for i in "$@" ; do
             echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial mapset directory"
             echo
             echo "Environment variables relevant for startup:"
-            echo "  GRASS_GUI                      select GUI (text, gis.m, d.m, wx)"
+            echo "  GRASS_GUI                      select GUI (text, gui, tcltk, oldtcltk, wxpython)"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
             echo "  GRASS_HTML_BROWSER             set html web browser for help pages"
@@ -112,15 +117,15 @@ for i in "$@" ; do
 	    shift
 	    ;;
 
-	# Check if the -oldgui flag was given
-	-oldgui)
-	    GRASS_GUI="d.m"
+	# Check if the -oldtcltk flag was given
+	-oldtcltk)
+	    GRASS_GUI="oldtcltk"
 	    shift
 	    ;;
 
-	# Check if the -wx flag was given
-	-wx)
-	    GRASS_GUI="wx"
+	# Check if the -wxpython flag was given
+	-wxpython)
+	    GRASS_GUI="wxpython"
 	    shift
 	    ;;
     esac
@@ -378,12 +383,13 @@ echo "Starting GRASS ..."
 if [ "$DISPLAY" -o "$MINGW" ] ; then
 
     # Check if python is working properly
-    if [ "$GRASS_GUI" = "wx" ]; then
+    if [ "$GRASS_GUI" = "wxpython" ]; then
         echo 'variable=True' | "$GRASS_PYTHON" >/dev/null 2>&1
     fi
     # Check if we need to find wish
     if [ "$GRASS_GUI" = "tcltk" ] || \
         [ "$GRASS_GUI" = "gis.m" ] || \
+	[ "$GRASS_GUI" = "oldtcltk" ] || \
         [ "$GRASS_GUI" = "d.m" ] ; then
 
 	# Check if wish is working properly
@@ -395,7 +401,7 @@ if [ "$DISPLAY" -o "$MINGW" ] ; then
         # Set the tcltkgrass base directory
         TCLTKGRASSBASE="$ETC"
         # Set the wxpython base directory
-        WXPYTHONGRASSBASE="$ETC/wx"
+        WXPYTHONGRASSBASE="$ETC/wxpython"
     else
 
         # Wish was not found - switch to text interface mode
@@ -553,18 +559,17 @@ if [ ! "$LOCATION" ] ; then
 	    ;;
 	
 	# Check for tcltk interface
-	tcltk | gis.m | d.m | wx)
+	tcltk | gis.m | oldtcltk | d.m | wxpython)
 
         if [ "$GRASS_GUI" = "tcltk" ] || \
 			[ "$GRASS_GUI" = "gis.m" ] || \
+			[ "$GRASS_GUI" = "oldtcltk" ] || \
 			[ "$GRASS_GUI" = "d.m" ] ; then
 
 			# eval `foo` will return subshell return code and not app foo return code!!!
 			eval '"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"'
 			thetest=$?
 		else
-			#"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"
-			#exit
 			eval '"$GRASS_PYTHON" "$WXPYTHONGRASSBASE/gis_set.py"'
 			thetest=$?
 		fi
@@ -575,7 +580,7 @@ if [ ! "$LOCATION" ] ; then
 
          	    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
-		    echo "Error in Tcl/Tk startup. If necessary, please"
+		    echo "Error in GUI startup. If necessary, please"
 		    echo "report this error to the GRASS developers."
 		    echo "Switching to text mode now."
 		    echo "Hit RETURN to continue..."
@@ -756,7 +761,7 @@ case "$GRASS_GUI" in
 		"$GISBASE/scripts/gis.m"
 	fi	
 	;;
-    d.m)
+    oldtcltk | d.m)
 	if [ "$osxaqua" ] ; then
 		"$GISBASE/scripts/d.m" | sh &
 	else
@@ -764,9 +769,8 @@ case "$GRASS_GUI" in
 	fi
 	;;
 
-    wx)
-        # coming soon, see ^
-        "$GISBASE/scripts/wxgrass" &
+    wxpython)
+        "$GISBASE/etc/wxpython/scripts/wxgui"
 	;;
 
     # Ignore others
@@ -807,13 +811,16 @@ echo "See the licence terms with:              g.version -c"
 
 case "$GRASS_GUI" in
     tcltk | gis.m)
-        echo "If required, restart the graphical user interface with: gis.m"
+        echo "If required, restart the GUI with:       g.gui tcltk"
         ;;
-    wx)
-        echo "If required, restart the graphical user interface with: wxgrass &"
+    oldtcltk | d.m)
+        echo "If required, restart the GUI with:       g.gui oldtcltk"
+        ;;
+    wxpython)
+        echo "If required, restart the GUI with:       g.gui wxpython"
         ;;
     *)
-        echo "Start the graphical user interface with: gis.m"
+        echo "Start the GUI with:                      g.gui tcltk"
         ;;
 esac
 
