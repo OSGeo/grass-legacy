@@ -20,7 +20,8 @@ char *disch;
 char *err;
 char *outwalk;
 char *mapset;
-char *mscale;
+
+/* Flag*/
 char *tserie;
 
 char *wdepth;
@@ -33,16 +34,20 @@ char *conc;
 char *flux;
 char *erdep;
 
+/*New Input val*/
+char *rainval;
+char *maninval;
+
   struct
   {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
   } parm;
 
   struct
   {
-    struct Flag *mscale, *tserie;
+    struct Flag *tserie;
   } flag;
 
 
@@ -82,7 +87,7 @@ double mayy, miyy, maxx, mixx;
 int mx, my;
 int mx2, my2;
 
-double bxmi,bymi,bxma,byma,bresx,bresy;
+/*double bxmi,bymi,bxma,byma,bresx,bresy;*/
 int maxwab;
 double step,conv;
 
@@ -112,6 +117,10 @@ int iterout, mx2o, my2o;
 int miter,nwalka,lwwfin;
 double timec;
 int ts, timesec;
+
+double rain_val;
+double manin_val;
+
 #else
 extern FILE *fdelevin, *fddxin, *fddyin, *fdrain, *fdinfil, *fdtraps, *fdmanin, *fddepth, *fddisch, *fderr, *fdoutwalk,*fdwalkers;
 extern FILE *fdwdepth,*fddetin,*fdtranin,*fdtauin, *fdtc, *fdet, *fdconc, *fdflux,*fderdep;
@@ -130,7 +139,6 @@ extern char *disch;
 extern char *err;
 extern char *outwalk;
 extern char *mapset;
-extern char *mscale;
 extern char *tserie;
 
 extern char *wdepth;
@@ -143,17 +151,19 @@ extern char *conc;
 extern char *flux;
 extern char *erdep;
 
+extern char *rainval;
+extern char *maninval;
 
 extern struct
   {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
   } parm;
 
 extern struct
   {
-    struct Flag *mscale, *tserie;
+    struct Flag *tserie;
   } flag;
 
 
@@ -194,7 +204,7 @@ extern double mayy, miyy, maxx, mixx;
 extern int mx, my;
 extern int mx2, my2;
 
-extern double bxmi,bymi,bxma,byma,bresx,bresy;
+/*extern double bxmi,bymi,bxma,byma,bresx,bresy;*/
 extern int maxwab;
 extern double step,conv;
 
@@ -224,4 +234,7 @@ extern int iterout, mx2o, my2o;
 extern int miter,nwalka,lwwfin;
 extern double timec;
 extern int ts, timesec;
+
+extern double rain_val;
+extern double manin_val;
 #endif
