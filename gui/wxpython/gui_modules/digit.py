@@ -184,8 +184,10 @@ class AbstractDigit:
 
         try:
             ret = self.driver.Reset(self.map)
-        except:
-            raise gcmd.DigitError('Unable to initialize display driver, see README file for more information.')
+        except StandardError, e:
+            raise gcmd.DigitError('Unable to initialize display driver, '
+                                  'see README file for more information.%s%s'
+                                  'Details: %s' % (os.linesep, os.linesep, e))
         
         if map and ret == -1:
             raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
