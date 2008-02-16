@@ -1,0 +1,57 @@
+<!--	grass-grc.dtd
+
+	Copyright (C) 2007 by the GRASS Development Team
+	Author: Martin Landa <landa.martin gmail.com>
+	
+	This program is free software under the GPL (>=v2)
+	Read the file COPYING coming with GRASS for details.
+-->
+
+
+<!--
+        a grass-grc defines workspace file content
+-->
+
+<!ELEMENT grass-grc (grc)>
+
+<!ELEMENT grc (display*)>
+
+<!--    a display element defines map layer connected to given
+	map display widnow
+-->
+<!ELEMENT display (group*, layer*)>
+
+<!--    group of map layers
+-->
+<!ELEMENT group (layer*)>
+<!ATTLIST group	name	CDATA #REQUIRED>
+<!ATTLIST group	checked CDATA #REQUIRED>
+
+<!--    map layer
+-->
+<!ELEMENT layer (task?)>
+<!ATTLIST layer	type	CDATA #REQUIRED>
+<!ATTLIST layer	name	CDATA #REQUIRED>
+<!ATTLIST layer	checked CDATA #REQUIRED>
+<!ATTLIST layer	opacity	CDATA #IMPLIED>
+
+<!--	task describes the interface of a single
+	GRASS command. 
+-->
+<!ELEMENT task	        (parameter*, flag*)>
+<!ATTLIST task	name	CDATA #REQUIRED>
+
+<!--	a parameter must have a name and a value
+-->
+<!ELEMENT parameter     (value)>
+<!ATTLIST parameter	name		CDATA #REQUIRED>
+
+<!--    value of parameter
+-->
+<!ELEMENT value         (#PCDATA)>
+
+
+<!--    enabled flag
+-->
+<!ELEMENT flag         EMPTY>
+<!ATTLIST flag         name            CDATA #REQUIRED>
