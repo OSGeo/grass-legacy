@@ -74,6 +74,7 @@ import gui_modules.preferences as preferences
 import gui_modules.histogram as histogram
 import gui_modules.profile as profile
 import gui_modules.rules as rules
+import gui_modules.mcalc_builder as mapcalculator
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
@@ -88,8 +89,7 @@ class GMFrame(wx.Frame):
     GRASS GIS. Includes command console page for typing GRASS
     (and other) commands, tree widget page for managing GIS map layers.
     """
-    def __init__(self, parent, id=wx.ID_ANY,
-                 title=_("GRASS GIS Layer Manager"),
+    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager"),
                  workspace=None):
         self.parent    = parent
         self.baseTitle = title
@@ -867,6 +867,13 @@ class GMFrame(wx.Frame):
         self.profile.Show()
         self.profile.Refresh()
         self.profile.Update()
+        
+    def DispMapCalculator(self, event):
+        """
+        Init map calculator for interactive creation of mapcalc statements
+        """
+        
+        self.mapcalculator = mapcalculator.MapCalcFrame(self, wx.ID_ANY, title='')
 
 
     def AddToolbarButton(self, toolbar, label, icon, help, handler):
@@ -1307,7 +1314,7 @@ class GMApp(wx.App):
 
         # create and show main frame
         mainframe = GMFrame(parent=None, id=wx.ID_ANY,
-                            title=_("GRASS GIS Layer Manager (Experimental Prototype)"),
+                            title=_("GRASS GIS Layer Manager"),
                             workspace = self.workspaceFile)
 
         mainframe.Show()
