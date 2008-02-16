@@ -29,7 +29,6 @@ class Data:
               ("Workspace", (
                  ("New", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
                  ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
-                 ("Load", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
                  ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
                  ("Save as", "Save current workspace as", "self.OnWorkspaceSaveAs", ""),
                  ("Close", "Close selected workspace file", "self.OnWorkspaceClose", ""),
@@ -198,7 +197,7 @@ class Data:
               ("Buffer rasters", "Create raster buffers around raster objects", "self.OnMenuCmd", "r.buffer"),
               ("Closest points", "r.distance", "self.OnMenuCmd", "r.distance"),
               ("MASK", "Develop raster mask", "self.OnMenuCmd", "r.mask"),
-              ("Map calculator", "Map calculator for map algebra", "self.OnMenuCmd", "scripts/mapcalc_gparser.sh"),
+              ("Map calculator", "Map calculator for map algebra", "self.DispMapCalculator", ""),
               ("Neighborhood analysis", (
                 ("Moving window", "Moving window analysis of raster cells", "self.OnMenuCmd", "r.neighbors"),
                 ("Neighborhood points", "Analyze vector points in neighborhood of raster cells", "self.OnMenuCmd", "v.neighbors"),
