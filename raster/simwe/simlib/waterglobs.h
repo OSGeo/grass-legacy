@@ -41,11 +41,14 @@ GLOBAL char *conc;
 GLOBAL char *flux;
 GLOBAL char *erdep;
 
+GLOBAL char *rainval;
+GLOBAL char *maninval;
+
 GLOBAL struct
 {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
 } parm;
 
 
@@ -123,5 +126,10 @@ GLOBAL int iterout, mx2o, my2o;
 GLOBAL int miter,nwalka,lwwfin;
 GLOBAL double timec;
 GLOBAL int ts, timesec;
+
+GLOBAL double rain_val;
+GLOBAL double manin_val;
+
+GLOBAL struct History history;	/* holds meta-data (title, comments,..) */
 
 #endif /* __WATERGLOBS_H__ */
