@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	_("Launches a GRASS graphical user interface (GUI) session.");
 
     type = G_define_option();
-    type->key = "flavor";
+    type->key = "gui";
     type->type = TYPE_STRING;
     type->required = YES;
     type->description = _("GUI type");
