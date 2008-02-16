@@ -433,12 +433,11 @@ class CommandThread(Thread):
 
     def run(self):
         """Run command"""
+        # TODO: wx.Exectute/wx.Process (?)
         self.module = Popen(self.cmd,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
-            
-        # close_fds=False) ### Unix only
 
         if self.stdin: # read stdin if requested ...
             self.module.stdin.write(self.stdin)
@@ -448,43 +447,59 @@ class CommandThread(Thread):
             return
 
         # redirect standard outputs...
-        if self.stdout:
-            self.__redirect_stream(self.module.stdout, self.stdout)
-        
-        if self.stderr:
-            self.__redirect_stream(self.module.stderr, self.stderr)
+        if self.stdout or self.stderr:
+            self.__redirect_stream()
 
-    def __redirect_stream(self, streamFrom, streamTo):
+    def __read_all(self, fd):
+        out = ""
+        while True:
+            try:
+                bytes = fd.read(4096)
+            except IOError, e:
+                if e[0] != errno.EAGAIN:
+                    raise
+                break
+            if not bytes:
+                break
+            out += bytes
+
+        return out
+
+    def __redirect_stream(self):
         """Redirect stream"""
-        # make stdout/stderr non-blocking
-        out_fileno = streamFrom.fileno()
+        if self.stdout:
+            # make module stdout/stderr non-blocking
+            out_fileno = self.module.stdout.fileno()
+            # FIXME (MS Windows)
+            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
             
-        # FIXME (MS Windows)
-        flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
-        fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-            
+        if self.stderr:
+            # make module stdout/stderr non-blocking
+            out_fileno = self.module.stderr.fileno()
+            # FIXME (MS Windows)
+            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+
         # wait for the process to end, sucking in stuff until it does end
         while self.module.poll() is None:
-            # evt = wxgui_utils.UpdateGMConsoleEvent()
-            # wx.PostEvent(self.stdout, evt)
-            # wx.PostEvent(self.stderr, evt)
-            try:
-                line = streamFrom.read()
-                # self.rerr = self.__parseString(line)
-                streamTo.write(line)
-            except IOError:
-                pass
-                
-            time.sleep(0.1)
-            
-        # get the last output
-        try:
-            line = streamFrom.read()
-            self.rerr = self.__parseString(line)
-            streamTo.write(line)
-        except IOError:
-            pass
+            time.sleep(.1)
+            if self.stdout:
+                line = self.__read_all(self.module.stdout)
+                self.stdout.write(line)
+            if self.stderr:
+                line = self.__read_all(self.module.stderr)
+                self.stderr.write(line)
 
+        # get the last output
+        if self.stdout:
+            line = self.__read_all(self.module.stdout)
+            self.stdout.write(line)
+        if self.stderr:
+            line = self.__read_all(self.module.stderr)
+            self.stderr.write(line)
+            self.rerr = self.__parseString(line)
+        
     def __parseString(self, string):
         """Parse line
 
