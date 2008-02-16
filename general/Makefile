@@ -9,6 +9,7 @@ SUBDIRS = \
 	g.findetc \
 	g.findfile \
 	g.gisenv \
+	g.gui \
 	g.mapset \
 	g.mapsets \
 	g.message \
