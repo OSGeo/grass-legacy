@@ -38,7 +38,7 @@ wxPython GRASS Graphical User Interface
 
 1 - INSTALLATION
 
-Go to directory:
+Go to:
 
 $ cd gui/wxpython
 
@@ -49,7 +49,7 @@ $ make
 2 - STARTUP WITH GRASS INITIALIZATION
 
 If you want to run wxPython GUI automatically when you start
-GRASS, edit your .grassrc6 file to replace...
+GRASS, edit your .grassrc6 file to replace
 
 GRASS_GUI: tcktk (or whatever you have here)
 
@@ -57,7 +57,7 @@ with
 
 GRASS_GUI: wxpython
 
-or easier start new GRASS session with -wx switch.
+or easier start new GRASS session with -wxpython switch.
 
 $ grass -wxpython
 
@@ -65,13 +65,13 @@ $ grass -wxpython
 
 Simply type
 
-$ wxgui
+$ g.gui wxpython
 
 from the GRASS terminal.
 
 You can also specify workspace file to load on startup.
 
-$ wxgui myworkspace.grc
+$ g.gui gui=wxpython workspace=myworkspace.grc
 
 4 - CLI Display scripts
 
@@ -138,11 +138,15 @@ User can change icon theme in Preferences dialog
 
 7 - DIGITIZATION TOOL
 
-To enable digitization tool you need to compile display driver located
-in directory 'vdigit'. Note that you need to compile GRASS
-with C++ support (--with-cxx).
+To enable digitization tool you need to compile 'vdigit'
+component. Note that you must configure GRASS with C++ (--with-cxx),
+Python (--with-python) and wxWidgets (--with-wxwidgets) support.
 
-First, create symlink, e.g.
+First, create a symlink to _gdi_.so shared library
+
+$ ln -s `locate _gdi_.so` $GISBASE/lib/libgdi.so
+
+e.g.
 
 $ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so $GISBASE/lib/libgdi.so
 
