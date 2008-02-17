@@ -37,12 +37,13 @@ char *erdep;
 /*New Input val*/
 char *rainval;
 char *maninval;
+char *infilval;
 
   struct
   {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval,*infilval;
   } parm;
 
   struct
@@ -120,6 +121,7 @@ int ts, timesec;
 
 double rain_val;
 double manin_val;
+double infil_val;
 
 #else
 extern FILE *fdelevin, *fddxin, *fddyin, *fdrain, *fdinfil, *fdtraps, *fdmanin, *fddepth, *fddisch, *fderr, *fdoutwalk,*fdwalkers;
@@ -153,12 +155,13 @@ extern char *erdep;
 
 extern char *rainval;
 extern char *maninval;
+extern char *infilval;
 
 extern struct
   {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval,*infilval;
   } parm;
 
 extern struct
@@ -237,4 +240,5 @@ extern int ts, timesec;
 
 extern double rain_val;
 extern double manin_val;
+extern double infil_val;
 #endif
