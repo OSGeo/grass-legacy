@@ -104,6 +104,7 @@ class MapCalcFrame(wx.Frame):
         self.btn_clear = wx.Button(self, -1, "Clear")
         self.btn_help = wx.Button(self, -1, "Help")
         self.btn_run = wx.Button(self, -1, "Run")
+        self.btn_run.SetDefault()
         self.btn_close = wx.Button(self, -1, "Close")
 
         self.btn_pow = wx.Button(self, -1, "^")
@@ -160,12 +161,7 @@ class MapCalcFrame(wx.Frame):
         self.btn_cond.SetToolTipString('conditional')
         
         #
-        # Text labels
-        #
-        #self.label_headding = wx.StaticText(self, -1, '')
-
-        #
-        # Text areas
+        # Text area
         #
         self.text_mcalc = wx.TextCtrl(self, -1, '', size=(-1,75),style=wx.TE_MULTILINE)
         
@@ -268,13 +264,13 @@ class MapCalcFrame(wx.Frame):
 
         buttonsizer3 = wx.GridBagSizer(7, 1)
         buttonsizer3.Add(self.newmaplabel, (0,0), (1,2), wx.ALIGN_CENTER)
-        buttonsizer3.Add(self.newmaptxt, (1,0), (1,2))
+        buttonsizer3.Add(self.newmaptxt, (1,0), (1,2), wx.TOP, 4)
         buttonsizer3.Add(self.mapsellabel, (2,0), (1,2), wx.ALIGN_CENTER)
         buttonsizer3.Add(self.mapselect, (3,0), (1,2))
         buttonsizer3.Add(self.functlabel, (4,0), (1,2), wx.ALIGN_CENTER)
         buttonsizer3.Add(self.function, (5,0), (1,2))
-        buttonsizer3.Add(self.btn_clear, (6,0))
-        buttonsizer3.Add(self.btn_paren, (6,1))
+        buttonsizer3.Add(self.btn_paren, (6,0), (1,1), wx.ALIGN_CENTER)
+        buttonsizer3.Add(self.btn_clear, (6,1), (1,1), wx.ALIGN_CENTER)
         
         buttonsizer4 = wx.GridSizer(4, 3, 3, 3)
         buttonsizer4.Add(self.btn_run,0,wx.RIGHT,5)
@@ -363,17 +359,20 @@ class MapCalcFrame(wx.Frame):
         if self.newmap == '':
             wx.MessageBox("You must enter the name of a new map to create")
             return
+        
+        if self.text_mcalc.GetValue() == '':
+            wx.MessageBox("You must enter a mapcalc statement to create a new map")
+            return
 
-        if self.parent:
-            try:
-                mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
-                mctxt = mctxt.replace(" ","")
-                cmdlist = ["r.mapcalc"," %s=%s" % (self.newmap,mctxt)]
-                p = gcmd.Command(cmdlist)
-                if p.returncode == 0:
-                    wx.MessageBox("Map %s created successfully" % self.newmap)
-            except:
-                pass
+        try:
+            mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
+            mctxt = mctxt.replace(" ","")
+            cmdlist = ["r.mapcalc"," %s=%s" % (self.newmap,mctxt)]
+            p = gcmd.Command(cmdlist)
+            if p.returncode == 0:
+                wx.MessageBox("Map %s created successfully" % self.newmap)
+        except:
+            pass
 
     def OnClear(self, event):
         self.text_mcalc.SetValue("")
@@ -381,7 +380,6 @@ class MapCalcFrame(wx.Frame):
     def OnHelp(self, event):
         cmdlist = ['g.manual','r.mapcalc']
         gcmd.Command(cmdlist)
-        pass
 
     def OnClose(self,event):
         self.Destroy()
