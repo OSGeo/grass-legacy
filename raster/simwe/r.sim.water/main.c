@@ -43,13 +43,13 @@
  *
  * Notes on modifications:
  * v. 1.0 May 2002
- *
+ * modified by Y. Chemin in February 2008 (reporting, optional inputs)
  */
 
 /********************************/
 /* DEFINE GLOB VAR		*/
 /********************************/
-#define NWALK	"2000000"
+#define NWALK	"1000000"
 #define DIFFC	"0.8"
 #define HMAX	"0.3"
 #define HALPHA	"4.0"
@@ -57,8 +57,9 @@
 #define NITER   "10"
 #define ITEROUT "2"
 #define DENSITY "200"
-#define RAINVAL "30"
+#define RAINVAL "50"
 #define MANINVAL "0.1"
+#define INFILVAL "0.0"
 
 /********************************/
 /* INCLUDES			*/
@@ -108,7 +109,7 @@ int main ( int argc, char *argv[])
 	G_gisinit (argv[0]);
 	
 	module = G_define_module();
-	module->keywords = _("raster");
+	module->keywords = _("raster, flow, hydrology");
 	module->description =        
 		_("Overland flow hydrologic simulation using "
 		"path sampling method (SIMWE)");
@@ -163,7 +164,7 @@ int main ( int argc, char *argv[])
 	parm.elevin->type = TYPE_STRING;
 	parm.elevin->required = YES;
 	parm.elevin->gisprompt = "old,cell,raster";
-	parm.elevin->description = _("Name of the elevation raster map, same units as N,E: [m] or [ft] ");
+	parm.elevin->description = _("Name of the elevation raster map [m]");
 	parm.elevin->guisection  = _("Input_options");
 	
 	parm.dxin = G_define_option();
@@ -171,7 +172,7 @@ int main ( int argc, char *argv[])
 	parm.dxin->type = TYPE_STRING;
 	parm.dxin->required = YES;
 	parm.dxin->gisprompt = "old,cell,raster";
-	parm.dxin->description = _("Name of the x-derivatives raster map [m/m] or [ft/ft]");
+	parm.dxin->description = _("Name of the x-derivatives raster map [m/m]");
 	parm.dxin->guisection  = _("Input_options");
 	
 	parm.dyin = G_define_option();
@@ -179,7 +180,7 @@ int main ( int argc, char *argv[])
 	parm.dyin->type = TYPE_STRING;
 	parm.dyin->required = YES;
 	parm.dyin->gisprompt = "old,cell,raster";
-	parm.dyin->description = _("Name of the y-derivatives raster map [m/m] or [ft/ft]");
+	parm.dyin->description = _("Name of the y-derivatives raster map [m/m]");
 	parm.dyin->guisection  = _("Input_options");
 	
 	parm.rain = G_define_option();
@@ -201,18 +202,18 @@ int main ( int argc, char *argv[])
 	parm.infil = G_define_option();
 	parm.infil->key = "infil";
 	parm.infil->type = TYPE_STRING;
-	parm.infil->required = YES;
+	parm.infil->required = NO;
 	parm.infil->gisprompt = "old,cell,raster";
 	parm.infil->description = _("Name of the runoff infiltration rate raster map [mm/hr]");
 	parm.infil->guisection  = _("Input_options");
 	
-	parm.traps = G_define_option();
-	parm.traps->key = "traps";
-	parm.traps->type = TYPE_STRING;
-	parm.traps->required = NO;
-	parm.traps->gisprompt = "old,cell,raster";
-	parm.traps->description = _("Name of the flow controls raster map (permeability ratio 0-1)");
-	parm.traps->guisection  = _("Input_options");
+	parm.infilval = G_define_option();
+	parm.infilval->key = "infil_val";
+	parm.infilval->type = TYPE_DOUBLE;
+	parm.infilval->answer = INFILVAL;
+	parm.infilval->required = NO;
+	parm.infilval->description = _("Runoff infiltration rate unique value [mm/hr]");
+	parm.infilval->guisection  = _("Input_options");
 	
 	parm.manin = G_define_option();
 	parm.manin->key = "manin";
@@ -229,6 +230,14 @@ int main ( int argc, char *argv[])
 	parm.maninval->required = NO;
 	parm.maninval->description = _("Mannings n unique value");
 	parm.maninval->guisection  = _("Input_options");
+	
+	parm.traps = G_define_option();
+	parm.traps->key = "traps";
+	parm.traps->type = TYPE_STRING;
+	parm.traps->required = NO;
+	parm.traps->gisprompt = "old,cell,raster";
+	parm.traps->description = _("Name of the flow controls raster map (permeability ratio 0-1)");
+	parm.traps->guisection  = _("Input_options");
 	
 	/* needs to be updated to GRASS 6 vector format !! */
 	parm.sfile = G_define_option ();
@@ -372,20 +381,83 @@ int main ( int argc, char *argv[])
 	sscanf(parm.hmax->answer, "%lf", &hhmax);
 	sscanf(parm.halpha->answer, "%lf", &halpha);
 	sscanf(parm.hbeta->answer, "%lf", &hbeta);
-	/*Check for Rain Unique Value Input*/
-	if(parm.rainval->answer==NULL){
-		rain_val = -999.99;
-		printf("rain_val is set to: %f\n",rain_val);
+	/* if no rain map input, then:*/
+	if(parm.rain->answer==NULL){
+		/*Check for Rain Unique Value Input*/
+		/* if no rain unique value input*/
+		if(parm.rainval->answer==NULL){
+			/*No rain input so use default*/
+			sscanf(RAINVAL, "%lf", &rain_val);
+		/* if rain unique input exist, load it*/
+		} else {
+			/*Unique value input only*/
+			sscanf(parm.rainval->answer, "%lf", &rain_val);
+		}
+	/* if Rain map exists*/
 	} else {
-		sscanf(parm.rainval->answer, "%lf", &rain_val);
+		/*Map input, so set rain_val to -999.99*/
+		if(parm.rainval->answer==NULL){
+			rain_val = -999.99;
+		} else {
+			/*both map and unique value exist*/
+			/*Choose the map, discard the unique value*/
+			rain_val = -999.99;
+		}
 	}
-	/*Check for Manin Unique Value Input*/
-	if(parm.maninval->answer==NULL){
-		manin_val = -999.99;
-		printf("manin_val is set to: %f\n",manin_val);
+	/* Report the final value of rain_val*/
+	printf("rain_val is set to: %f\n",rain_val);
+
+	/* if no Mannings map, then:*/
+	if(parm.manin->answer==NULL){
+		/*Check for Manin Unique Value Input*/
+		/* if no Mannings unique value input*/
+		if(parm.maninval->answer==NULL){
+			/*No Mannings input so use default*/
+			sscanf(MANINVAL, "%lf", &manin_val);
+		/* if mannings unique input value exists, load it*/
+		} else {
+			/*Unique value input only*/
+			sscanf(parm.maninval->answer, "%lf", &manin_val);
+		}
+	/* if Mannings map exists*/
 	} else {
-		sscanf(parm.maninval->answer, "%lf", &manin_val);
+		/* Map input, set manin_val to -999.99*/
+		if(parm.maninval->answer==NULL){
+			manin_val = -999.99;
+		} else {
+			/*both map and unique value exist*/
+			/*Choose map, discard the unique value*/
+			manin_val = -999.99;
+		}
 	}
+	/* Report the final value of manin_val*/
+	printf("manin_val is set to: %f\n",manin_val);
+
+	/* if no infiltration map, then:*/
+	if(parm.infil->answer==NULL){
+		/*Check for Infil Unique Value Input*/
+		/*if no infiltration unique value input*/
+		if(parm.infilval->answer==NULL){
+			/*No infiltration unique value so use default*/
+			sscanf(INFILVAL, "%lf", &infil_val);
+		/* if infiltration unique value exists, load it*/
+		} else {
+			/*unique value input only*/
+			sscanf(parm.infilval->answer, "%lf", &infil_val);
+		}
+	/* if infiltration map exists */
+	} else {
+		/* Map input, set infil_val to -999.99 */
+		if(parm.infilval->answer==NULL){
+			infil_val = -999.99;
+		} else {
+			/*both map and unique value exist*/
+			/*Choose map, discard the unique value*/
+			infil_val = -999.99;
+		}		
+	}
+	/* Report the final value of infil_val*/
+	printf("infil_val is set to: %f\n",infil_val);
 
 	/* Recompute timesec from user input in minutes
 	 * to real timesec in seconds */
