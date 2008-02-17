@@ -89,7 +89,7 @@ class GMFrame(wx.Frame):
     GRASS GIS. Includes command console page for typing GRASS
     (and other) commands, tree widget page for managing GIS map layers.
     """
-    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager"),
+    def __init__(self, parent, id=wx.ID_ANY, title=_("GRASS GIS Layer Manager (Experimental Prototype)"),
                  workspace=None):
         self.parent    = parent
         self.baseTitle = title
