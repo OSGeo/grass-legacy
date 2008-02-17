@@ -24,6 +24,15 @@
 
 trap "echo 'User break!' ; exit" 2 3 15
 
+# change to wxpython as needed
+DEFAULT_GUI="tcltk"
+
+# the following is only meant to be an internal variable for debugging this script.
+#  use 'g.gisenv set="DEBUG=[0-5]"' to turn GRASS debug mode on properly.
+if [ -z "$GRASS_DEBUG" ] ; then
+   GRASS_DEBUG=0
+fi
+
 # Set the GRASS_PERL variable
 GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
@@ -76,7 +85,7 @@ for i in "$@" ; do
 	    echo "  -v or --version                show version information and exit"
             echo "  -text                          use text based interface"
             echo "                                   and set as default"
-            echo "  -gui                           use graphical user interface (tcltk by default)"
+            echo "  -gui                           use graphical user interface ($DEFAULT_GUI by default)"
             echo "                                   and set as default"
             echo "  -tcltk                         use Tcl/Tk based graphical user interface"
             echo "                                   and set as default"
@@ -108,10 +117,15 @@ for i in "$@" ; do
 	    GRASS_GUI="text"
 	    shift
 	    ;;
-	
+
+	# Check if the -gui flag was given
+	-gui)
+	    GRASS_GUI="$DEFAULT_GUI"
+	    shift
+	    ;;
+
 	# Check if the -tcltk flag was given
-	# change -gui to wxpython as needed
-	-gui | -tcltk)
+	-tcltk)
 	    GRASS_GUI="tcltk"
 	    shift
 	    ;;
@@ -191,14 +205,13 @@ if [ ! "$GRASS_GUI" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
     
-    # Set the GRASS user interface to the default if needed - currently tcltk
+    # Set the GRASS user interface to the default if needed
     if [ ! "$GRASS_GUI" ] ; then
-	GRASS_GUI="tcltk"
+	GRASS_GUI="$DEFAULT_GUI"
     fi
 else
     if [ "$GRASS_GUI" = "gui" ] ; then
-	# change to wxpython as needed
-    	GRASS_GUI="tcltk"
+    	GRASS_GUI="$DEFAULT_GUI"
     fi
 fi
 
@@ -374,7 +387,7 @@ if [ ! -f "$GISRC" ] ; then
     #GRASS_GUI="text"
     
 else
-    echo "Cleaning up temporary files....."
+    echo "Cleaning up temporary files ..."
     ("$ETC/clean_temp" > /dev/null &)
 fi
 
@@ -752,7 +765,10 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
 fi
 
 # Start the chosen GUI but ignore text
-echo "GRASS GUI should be $GRASS_GUI"
+if [ "$GRASS_DEBUG" -ne 0 ] ; then
+   echo "GRASS GUI should be $GRASS_GUI"
+fi
+
 case "$GRASS_GUI" in
     
     # Check for tcltk interface
@@ -785,7 +801,7 @@ if [ "$MINGW" ] ; then
 # TODO: uncomment when PDCurses works.
 #	cls
 else
-	if [ -z "$GRASS_BATCH_JOB" ] ; then
+	if [ -z "$GRASS_BATCH_JOB" ] && [ "$GRASS_DEBUG" -eq 0 ] ; then
 	   tput clear
 	fi
 fi
@@ -953,33 +969,39 @@ if [ "$MINGW" ] ; then
 # TODO: uncomment when PDCurses works.
 #	cls
 else
-	if [ -z "$GRASS_BATCH_JOB" ] ; then
+	if [ -z "$GRASS_BATCH_JOB" ] && [ "$GRASS_DEBUG" -eq 0 ] ; then
 	   tput clear
 	fi
 fi
 
-echo "Closing monitors....."
+echo "Closing monitors ..."
 for MON  in `d.mon -L | grep running | grep -v "not running" | sed 's/ .*//'`
-do 
-    echo d.mon stop=$MON
-    d.mon stop=$MON 
+do
+    if [ "$GRASS_DEBUG" -ne 0 ] ; then
+       echo "d.mon stop=$MON"
+    fi
+    d.mon stop="$MON"
 done
 
-echo "Cleaning up temporary files....."
+echo "Cleaning up temporary files ..."
 
 "$ETC/clean_temp" > /dev/null
 rm -f "$lockfile"
 
 # Save GISRC
 cp "$GISRC" "$GISRCRC"
-rm -rf "$tmp"  # remove session files from tmpdir
 
-echo "done"
+# remove session files from tmpdir
+rm -rf "$tmp"
+#### after this point no more grass modules may be called ####
+
+echo "Done."
 echo 
 echo 
 echo 
 echo "Goodbye from GRASS GIS"
 echo
+
 if [ -x "$GRASS_BATCH_JOB" ] ; then
    echo "Batch job '$GRASS_BATCH_JOB' (defined in GRASS_BATCH_JOB variable) was executed."
    exit $EXIT_VAL
