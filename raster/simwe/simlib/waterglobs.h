@@ -43,12 +43,13 @@ GLOBAL char *erdep;
 
 GLOBAL char *rainval;
 GLOBAL char *maninval;
+GLOBAL char *infilval;
 
 GLOBAL struct
 {
     struct Option *elevin,*dxin,*dyin,*rain,*infil,*traps,*manin,*sfile,*depth,*disch,*err,
 *outwalk,*nwalk,*niter,*outiter,*density,*diffc,*hmax,*halpha,*hbeta,*wdepth,
-*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval;
+*detin,*tranin,*tauin,*tc,*et,*conc,*flux,*erdep,*rainval,*maninval,*infilval;
 } parm;
 
 
@@ -129,6 +130,7 @@ GLOBAL int ts, timesec;
 
 GLOBAL double rain_val;
 GLOBAL double manin_val;
+GLOBAL double infil_val;
 
 GLOBAL struct History history;	/* holds meta-data (title, comments,..) */
 
