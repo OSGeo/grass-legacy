@@ -116,10 +116,10 @@ int input_data (void)
 	v1 = (double **)G_malloc (sizeof(double *)*(my));
 	v2 = (double **)G_malloc (sizeof(double *)*(my));
 
-	if(rain != NULL||rain_val >0.0)
+	if(rain != NULL||rain_val >= 0.0)
 		si = (double **)G_malloc (sizeof(double *)*(my));
 
-	if(infil != NULL)
+	if(infil != NULL||infil_val >= 0.0)
 		inf = (double **)G_malloc (sizeof(double *)*(my));
 
 	if(traps != NULL)
@@ -146,10 +146,10 @@ int input_data (void)
 		v1[l]   = (double*)G_malloc (sizeof(double)*(mx));
 		v2[l]   = (double*)G_malloc (sizeof(double)*(mx));
 
-		if(rain != NULL||rain_val > 0.0)
+		if(rain != NULL||rain_val >= 0.0)
 			si[l]   = (double*)G_malloc (sizeof(double)*(mx));
 
-		if(infil != NULL)
+		if(infil != NULL||infil_val >= 0.0)
 			inf[l]   = (double*)G_malloc (sizeof(double)*(mx));
 
 		if(traps != NULL)
@@ -327,6 +327,15 @@ int input_data (void)
 						inf[row_rev][j] = UNDEF;
 						zz[row_rev][j] = UNDEF;
 					}
+				} else { /* Added by Yann 20080216*/
+					/* If infil==NULL, then use infilval */
+					if( infil_val >= 0.0 ){
+						inf[row_rev][j]= infil_val * unitconv; /*conv mm/hr to m/s*/
+					/*	printf("infil_val = %f \n",inf[row_rev][j]);*/
+					} else {
+						inf[row_rev][j] = UNDEF;
+						zz[row_rev][j] = UNDEF;
+					}
 				}
 
 				if (traps != NULL)
@@ -347,6 +356,7 @@ int input_data (void)
 					si[row_rev][j] = UNDEF;
 					zz[row_rev][j] = UNDEF;
 				}
+				
 				if (infil != NULL)
 				{
 					if(!G_is_d_null_value(cell4a+j))
@@ -356,7 +366,17 @@ int input_data (void)
 						inf[row_rev][j] = UNDEF;
 						zz[row_rev][j] = UNDEF;
 					}
+				} else { /* Added by Yann 20080216*/
+					/* If infil==NULL, then use infilval */
+					if( infil_val >= 0.0 ){
+						inf[row_rev][j]= infil_val * unitconv; /*conv mm/hr to m/s*/
+						/*printf("infil_val = %f \n",inf[row_rev][j]);*/
+					} else {
+						inf[row_rev][j] = UNDEF;
+						zz[row_rev][j] = UNDEF;
+					}
 				}
+				
 				if (traps != NULL)
 				{
 					if(!G_is_f_null_value(cell4b+j))
@@ -432,7 +452,9 @@ int input_data (void)
 
 	if(traps != NULL)
 		G_close_cell(fd4b);
+	/* Maybe a conditional to manin!=NULL here ! */	
 	G_close_cell(fd5);
+	/****************/
 
 	if(detin != NULL)
 		G_close_cell(fd9);
