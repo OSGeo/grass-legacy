@@ -325,7 +325,7 @@ class MapCalcFrame(wx.Frame):
         elif event.GetId() == self.btn_and.GetId(): mark = "&&"
         elif event.GetId() == self.btn_andnull.GetId(): mark = "&&&"
         elif event.GetId() == self.btn_cond.GetId(): mark = "?:"
-        elif event.GetId() == self.btn_brackets.GetId(): mark = "()"        
+        elif event.GetId() == self.btn_paren.GetId(): mark = "()"        
         self.__addSomething(mark)
         
     def OnNewmap(self, event):
@@ -368,12 +368,10 @@ class MapCalcFrame(wx.Frame):
             try:
                 mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
                 mctxt = mctxt.replace(" ","")
-                cmdstr = "r.mapcalc '%s=%s'" % (self.newmap,mctxt)
-                print 'cmdstr=',cmdstr
-                cmdlist = ['r.mapcalc', ' %s=%s' % (self.newmap,mctxt)]
-                p = os.system(cmdstr)
-                #p = gcmd.Command(cmdlist, stderr=None)
-                #print p.PrintModuleOutput
+                cmdlist = ["r.mapcalc"," %s=%s" % (self.newmap,mctxt)]
+                p = gcmd.Command(cmdlist)
+                if p.returncode == 0:
+                    wx.MessageBox("Map %s created successfully" % self.newmap)
             except:
                 pass
 
