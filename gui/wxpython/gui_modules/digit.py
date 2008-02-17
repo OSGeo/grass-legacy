@@ -1539,8 +1539,11 @@ class DigitSettingsDialog(wx.Dialog):
         text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
         if self.parent.digit.map:
             layers = map(str, self.parent.digit.GetLayers())
+            if len(layers) == 0:
+                layers = [str(self.parent.digit.settings["layer"]), ]
         else:
-            layers = [str(self.parent.digit.settings["layer"])]
+            layers = [str(self.parent.digit.settings["layer"]), ]
+        
         self.layer = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                choices=layers)
         self.layer.SetStringSelection(str(self.parent.digit.settings["layer"]))
