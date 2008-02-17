@@ -462,12 +462,7 @@ class Data:
                 ("HIS to RGB", "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "self.OnMenuCmd", "i.his.rgb"),
                 ("RGB to HIS", "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "self.OnMenuCmd", "i.rgb.his"),
                 )),
-              ("Rectify and georeference image group", (
-                ("Set GCP's from raster map (requires Xterm)", "Set ground control points (GCP's) from raster map or keyboard entry", "self.OnXTerm", "i.points"),
-                ("Set GCP's from vector map (requires Xterm)", "Set ground control points (GCP's) from vector map or keyboard entry", "self.OnXTerm", "i.vpoints"),
-                ("Georectification (rubber sheet)", "Affine and Polynomial rectification (rubber sheet)", "self.OnMenuCmd", "i.rectify"),
-                ("Ortho photo rectification (requies Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
-                )),
+              ("Ortho photo rectification (requires Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
               ("","","", ""),
               ("Brovey sharpening", "Brovey transformation and pan sharpening", "self.OnMenuCmd", "i.fusion.brovey"),
               ("Classify image", (
