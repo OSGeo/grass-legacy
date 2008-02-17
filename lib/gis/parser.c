@@ -1740,7 +1740,7 @@ static void G_usage_html (void)
 }
 
 /**
-   \brief Print module usage description used in shell scripts.
+   \brief Print a module parameter template to assist with creating shell script wrappers.
 **/
 static void G_script(void)
 {
@@ -1982,7 +1982,7 @@ static void G_gui_tcltk (void)
 #endif
 
 	if (!fp)
-	    G_fatal_error(_("Unable to spawn wish"));
+	    G_fatal_error(_("Unable to spawn the 'wish' program"));
 
 	fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
 
