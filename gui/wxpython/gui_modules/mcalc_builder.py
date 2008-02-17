@@ -35,17 +35,17 @@ imagepath = images.__path__[0]
 sys.path.append(imagepath)
 
 class MapCalcFrame(wx.Frame):
-    """Mapcalc Frame class"""
+    """
+    Mapcalc Frame class. Calculator-style window to create
+    and run r.mapcalc statements
+    """
     def __init__(self, parent, id, title, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.TAB_TRAVERSAL|wx.DEFAULT_FRAME_STYLE):
 
         wx.Frame.__init__(self, parent, id, title, pos=pos, size=size, style=style)
         
         self.Centre(wx.BOTH)
-        self.SetTitle(_("GRASS Mapcalc Statement Builder") )
-        #self.SetIcon(wx.Icon(os.path.join(imagepath, 
-        #                                  'grass_sql.png'),
-        #                     wx.BITMAP_TYPE_ANY))
+        self.SetTitle(_("GRASS Map Calculator") )
 
         #
         # variables
@@ -94,9 +94,6 @@ class MapCalcFrame(wx.Frame):
                         'nsres()',
                         'null()'
                         ]
-
-        # Init
-
 
         #
         # Buttons
@@ -225,10 +222,6 @@ class MapCalcFrame(wx.Frame):
         self.__doLayout()
 
     def __doLayout(self):
-        #mcalc_box = wx.StaticBox(self, -1, "%s" % self.heading)
-        #mcalc_boxsizer = wx.StaticBoxSizer(mcalc_box,wx.VERTICAL)
-        #mcalc_boxsizer.Add(self.text_mcalc, flag=wx.EXPAND)
-
         pagesizer = wx.BoxSizer(wx.VERTICAL)
         
         controlsizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -297,6 +290,10 @@ class MapCalcFrame(wx.Frame):
         self.Show(True)
 
     def AddMark(self,event):
+        """
+        Sends operators to insertion method
+        """
+        
         if event.GetId() == self.btn_compl.GetId(): mark = "~"
         elif event.GetId() == self.btn_not.GetId(): mark = "!"
         elif event.GetId() == self.btn_pow.GetId(): mark = "^"
@@ -328,11 +325,17 @@ class MapCalcFrame(wx.Frame):
         self.newmap = event.GetString()
 
     def OnSelect(self, event):
+        """
+        Gets raster map or function selection and send it to insertion method
+        """
         item = event.GetString()
         self.__addSomething(item)
         self.text_mcalc.SetFocus()
 
     def __addSomething(self,what):
+        """
+        Inserts operators, map names, and functions into text area
+        """
         self.text_mcalc.SetFocus()
         mcalcstr = self.text_mcalc.GetValue()
         newmcalcstr = ''
@@ -356,6 +359,9 @@ class MapCalcFrame(wx.Frame):
         self.text_mcalc.Update()
 
     def OnMCalcRun(self,event):
+        """
+        Builds and runs r.mapcalc statement
+        """
         if self.newmap == '':
             wx.MessageBox("You must enter the name of a new map to create")
             return
@@ -375,9 +381,15 @@ class MapCalcFrame(wx.Frame):
             pass
 
     def OnClear(self, event):
+        """
+        Clears text area
+        """
         self.text_mcalc.SetValue("")
         
     def OnHelp(self, event):
+        """
+        Launches r.mapcalc help
+        """
         cmdlist = ['g.manual','r.mapcalc']
         gcmd.Command(cmdlist)
 
