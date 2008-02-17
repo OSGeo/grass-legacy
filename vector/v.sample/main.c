@@ -120,7 +120,7 @@ int main(int argc, char **argv)
     flag.C = G_define_flag();
     flag.C->key = 'c';
     flag.C->description =
-        _("Cubic convolution interpolation [default is nearest neighbor]");
+        _("Cubic convolution interpolation (default is nearest neighbor)");
 
     /* please, remove before GRASS 7 released */
     flag.q = G_define_flag();
