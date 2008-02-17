@@ -224,6 +224,15 @@ resampling algorithm):
 gdalwarp rotated.tif northup.tif
 </pre></div>
 
+<p>
+<i>"ERROR: Projection of dataset does not appear to match the current location."</i><br>
+
+You need to create a location whose projection matches the data you
+wish to import. Try using <em>g.proj</em> with the <em>-c</em> flag and the
+<em>location=</em> and <em>georef=</em> options to create a new location based 
+upon the projection information in the file. You should then be able to import the
+file into that location with <em>r.in.gdal</em>. If desired, you can then re-project
+it to another location with <em>r.proj</em>.
 
 <H2>SEE ALSO</H2>
 <EM>
@@ -236,10 +245,15 @@ gdalwarp rotated.tif northup.tif
 
 <H2>REFERENCES</H2>
 
-GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a>
+GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a><br>
+
+<em>
+<a href="g.proj.html">g.proj</a>
+<em>
+
 
 <H2>AUTHOR</H2>
 
-<a href="http://pobox.com/~warmerdam">Frank Warmerdam</a> (<a href="mailto:warmerdam AT pobox dot com">email</a>).
+<a href="http://home.gdal.org/warmerda/">Frank Warmerdam</a> (<a href="mailto:warmerdam AT pobox dot com">email</a>).
 
 <p><i>Last changed: $Date$</i>
