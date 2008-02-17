@@ -368,7 +368,8 @@ class MapCalcFrame(wx.Frame):
             try:
                 mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
                 mctxt = mctxt.replace(" ","")
-                cmdstr = 'r.mapcalc %s=%s' % (self.newmap,mctxt)
+                cmdstr = "r.mapcalc '%s=%s'" % (self.newmap,mctxt)
+                print 'cmdstr=',cmdstr
                 cmdlist = ['r.mapcalc', ' %s=%s' % (self.newmap,mctxt)]
                 p = os.system(cmdstr)
                 #p = gcmd.Command(cmdlist, stderr=None)
