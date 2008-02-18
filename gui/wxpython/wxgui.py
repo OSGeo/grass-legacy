@@ -628,9 +628,6 @@ class GMFrame(wx.Frame):
 
             busy.Destroy()
 
-            # reverse list of map layers
-            maptree.Map.ReverseListOfLayers()
-
     def OnWorkspaceSaveAs(self, event=None):
         """Save workspace definition to selected file"""
 
