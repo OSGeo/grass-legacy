@@ -190,11 +190,13 @@ class AbstractDigit:
                                   'Details: %s' % (os.linesep, os.linesep, e))
         
         if map and ret == -1:
-            raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. The vector map is probably broken. '
-                               'Try to run v.build for rebuilding the topology.') % map)
+            raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. '
+                                    'Data are probably corrupted, '
+                                    'try to run v.build for rebuilding the topology.') % map)
         if not map and ret != 0:
-            raise gcmd.DigitError(_('Closing vector map <%s> failed. The vector map is probably broken. '
-                               'Try to run v.build for rebuilding the topology.') % map)
+            raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. '
+                                    'Data are probably corrupted, '
+                                    'try to run v.build for rebuilding the topology.') % map)
             
         if UserSettings.Get('digitInterface') != 'v.edit':
             try:
