@@ -49,7 +49,7 @@
 /********************************/
 /* DEFINE GLOB VAR		*/
 /********************************/
-#define NWALK	"1000000"
+/* #define NWALK	"1000000" */
 #define DIFFC	"0.8"
 #define HMAX	"0.3"
 #define HALPHA	"4.0"
@@ -256,9 +256,9 @@ int main ( int argc, char *argv[])
 	parm.nwalk = G_define_option();
 	parm.nwalk->key = "nwalk";
 	parm.nwalk->type = TYPE_INTEGER;
-	parm.nwalk->answer = NWALK; 
+/*	parm.nwalk->answer = NWALK; */
 	parm.nwalk->required = NO;
-	parm.nwalk->description = _("Number of walkers");
+	parm.nwalk->description = _("Number of walkers, default is twice the no. of cells");
 	parm.nwalk->guisection  = _("Parameters");
 	
 	parm.niter = G_define_option();
@@ -346,7 +346,7 @@ int main ( int argc, char *argv[])
 	outwalk = parm.outwalk->answer;
 	sfile = parm.sfile->answer;
 	
-	sscanf(parm.nwalk->answer, "%d", &maxwa);
+/*	sscanf(parm.nwalk->answer, "%d", &maxwa); */
 	sscanf(parm.niter->answer, "%d", &timesec);
 	sscanf(parm.outiter->answer, "%d", &iterout);
 	sscanf(parm.density->answer, "%d", &ldemo);
@@ -379,7 +379,7 @@ int main ( int argc, char *argv[])
 		}
 	}
 	/* Report the final value of rain_val*/
-	printf("rain_val is set to: %f\n",rain_val);
+	G_message(_("rain_val is set to: %f\n"),rain_val);
 
 	/* if no Mannings map, then:*/
 	if(parm.manin->answer==NULL){
@@ -405,7 +405,7 @@ int main ( int argc, char *argv[])
 		}
 	}
 	/* Report the final value of manin_val*/
-	printf("manin_val is set to: %f\n",manin_val);
+	G_message(_("manin_val is set to: %f\n"),manin_val);
 
 	/* if no infiltration map, then:*/
 	if(parm.infil->answer==NULL){
@@ -431,7 +431,7 @@ int main ( int argc, char *argv[])
 		}		
 	}
 	/* Report the final value of infil_val*/
-	printf("infil_val is set to: %f\n",infil_val);
+	G_message(_("infil_val is set to: %f\n"),infil_val);
 
 	/* Recompute timesec from user input in minutes
 	 * to real timesec in seconds */
@@ -440,15 +440,17 @@ int main ( int argc, char *argv[])
 	if ((timesec/iterout) > 100.0) 
 		G_message(_("More than 100 files are going to be created !!!!!"));
 
-	/* compute how big the raster is and set this to appr 2 walkers per cell 
+	/* compute how big the raster is and set this to appr 2 walkers per cell */
        if(parm.nwalk->answer==NULL){
+                        maxwa = mx*my*2;
                         rwalk = (double) (mx*my*2.);
+                        G_message(_("default nwalk=%d, rwalk=%f"), maxwa, rwalk);
                 } else {
+                        sscanf(parm.nwalk->answer, "%d", &maxwa);
                         rwalk = (double) maxwa;
                 }
-        */
 
-	rwalk = (double) maxwa; 
+/*	rwalk = (double) maxwa; */
 
 	if (conv != 1.0) 
 		G_message(_("Using metric conversion factor %f, step=%f"), conv, step);
