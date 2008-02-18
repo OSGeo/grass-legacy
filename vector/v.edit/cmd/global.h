@@ -34,11 +34,9 @@ enum mode {
     MODE_NONE,
     /* z bulk-labeling */
     MODE_ZBULK,
+    /* change feature type (point<->centroid, line<->boundary) */
+    MODE_CHTYPE,
 };
-
-#define NO_SNAP    0 /* snapping disabled */
-#define SNAP       1 /* snapping enabled for nodes */
-#define SNAPVERTEX 2 /* snapping enabled for vertex also */
 
 struct GParams { 
     struct Option *map, *in, *maxdist, *tool,
@@ -48,5 +46,6 @@ struct GParams {
 };
 
 # include "proto.h"
+# include "../lib/vedit.h"
 
 #endif

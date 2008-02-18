@@ -1,3 +1,22 @@
+/****************************************************************
+ *
+ * MODULE:     v.edit
+ *
+ * PURPOSE:    Editing vector map.
+ *
+ * AUTHOR(S):  GRASS Development Team
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
+ *
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
+ *
+ *             This program is free software under the
+ *             GNU General Public License (>=v2).
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
+ *
+ * TODO:       3D support
+ ****************************************************************/
+
 #include "global.h"
 
 /**
@@ -48,7 +67,7 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "merge;"
 				     "Merge selected vector lines;"
 				     "break;"
-				     "Break (split) vector line into two separate lines;"
+				     "Break/split vector lines;"
 				     "select;"
 				     "Select lines and print their ID's;"
 				     "catadd;"
@@ -67,15 +86,18 @@ int parser(int argc, char* argv[], struct GParams *params,
 				     "Connect two lines;"
 				     "zbulk;"
 				     "Z bulk-labeling (automated assignment of z coordinate to "
-				     "vector lines)");
+				     "vector lines);"
+				     "chtype;"
+				     "Change feature type (point<->centroid, line<->boundary)");
     params -> tool->options     = "create,add,delete,copy,move,flip,catadd,catdel,"
-      "merge,break,snap,connect,"
+      "merge,break,snap,connect,chtype,"
       "vertexadd,vertexdel,vertexmove,zbulk,select";
 
     params -> in = G_define_standard_option (G_OPT_F_INPUT);
     params -> in -> required    = NO;
     params -> in -> label       = _("ASCII file to be converted to binary vector map");
     params -> in -> description = _("If not given (or \"-\") reads from standard input");
+    params -> in -> guisection  = _("Input");
 
     params -> move = G_define_option();
     params -> move->key         = "move";
@@ -151,7 +173,7 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> bmaps = G_define_standard_option(G_OPT_V_MAPS);
     params -> bmaps -> key = "bgmap";
     params -> bmaps -> required = NO;
-    params -> bmaps -> description = _("Name of background vector map(s) snap to");
+    params -> bmaps -> description = _("Name of background vector map(s)");
 
     params -> snap = G_define_option();
     params -> snap -> key          = "snap";
@@ -183,12 +205,13 @@ int parser(int argc, char* argv[], struct GParams *params,
 
     params -> close = G_define_flag();
     params -> close -> key = 'c';
-    params -> close -> label = _("Close added boundaries (using threshold distance)");
+    params -> close -> description = _("Close added boundaries (using threshold distance)");
 
     params -> header = G_define_flag();
     params -> header -> key          = 'n';
     params -> header -> description  = _("Do not expect header of input data");
-	
+    params -> header -> guisection  = _("Input");
+
     params -> topo = G_define_flag();
     params -> topo -> key = 't';
     params -> topo -> description = _("Do not build topology");
@@ -254,32 +277,28 @@ int parser(int argc, char* argv[], struct GParams *params,
 	*action_mode = MODE_VERTEX_MOVE;
     }
     else if(G_strcasecmp (params -> tool -> answer, "select") == 0) { 
-        /* del requires a cats or or bbox or coords */
 	*action_mode = MODE_SELECT;
     }
     else if(G_strcasecmp (params -> tool -> answer, "catadd") == 0) { 
-        /* cat requires a cats or or bbox or coords */
 	*action_mode = MODE_CATADD;
     }
     else if(G_strcasecmp (params -> tool -> answer, "catdel") == 0) {
-        /* cat requires a cats or or bbox or coords */
 	*action_mode = MODE_CATDEL;
     }
     else if(G_strcasecmp(params -> tool -> answer, "copy") == 0) { 
-        /* del requires a cats or or bbox or coords */
 	*action_mode = MODE_COPY;
     }
     else if(G_strcasecmp (params -> tool -> answer, "snap") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_SNAP;
     }
     else if(G_strcasecmp (params -> tool -> answer, "flip") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_FLIP;
     }
     else if(G_strcasecmp (params -> tool -> answer, "zbulk") == 0) {
-	/* del requires a cats or or bbox or coords */ 
 	*action_mode = MODE_ZBULK;
+    }
+    else if(G_strcasecmp (params -> tool -> answer, "chtype") == 0) {
+      	*action_mode = MODE_CHTYPE;
     }
     else
     {
@@ -309,8 +328,7 @@ int parser(int argc, char* argv[], struct GParams *params,
         }
     }
     
-    if (*action_mode == MODE_BREAK ||
-	*action_mode == MODE_VERTEX_ADD ||
+    if (*action_mode == MODE_VERTEX_ADD ||
 	*action_mode == MODE_VERTEX_DELETE ||
 	*action_mode == MODE_VERTEX_MOVE)
     {

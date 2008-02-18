@@ -1,3 +1,22 @@
+/****************************************************************
+ *
+ * MODULE:     v.edit
+ *
+ * PURPOSE:    Editing vector map.
+ *
+ * AUTHOR(S):  GRASS Development Team
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
+ *
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
+ *
+ *             This program is free software under the
+ *             GNU General Public License (>=v2).
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
+ *
+ * TODO:       3D support
+ ****************************************************************/
+
 #include <string.h>
 #include "global.h"
 
@@ -256,7 +275,7 @@ read_head ( FILE * dascii, struct Map_info *Map )
 
    \return number of modified features
 */
-int do_close(struct Map_info *Map, int ltype, double thresh)
+int close_lines(struct Map_info *Map, int ltype, double thresh)
 {
     int nlines, line, type, nlines_modified, newline;
     int npoints;

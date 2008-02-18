@@ -2,19 +2,19 @@
  *
  * MODULE:     v.edit
  *
+ * PURPOSE:    Editing vector map.
+ *
  * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa <landa.martin gmail.com>
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector map.
- *
- * COPYRIGHT:  (C) 2002-2007 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
+ * TODO:       3D support
  ****************************************************************/
 
 #include "global.h"
@@ -63,57 +63,6 @@ double max_distance(double maxdistance)
     G_debug (3, "max_distance(): threshold is %g", maxd);
 
     return maxd;
-}
-
-/**
-   \brief Calculate distances between two lines
- 
-   array distances hold distances between first and last point of both lines:
-   distances[0] = first-first
-   distances[1] = first-last
-   distances[2] = last-first
-   distances[3] = last-last
-   
-   \param[in] Points1 first line
-   \param[in] Points2 second line
-   \param[out] index of minimal distance
-
-   \return minimal distance 
-*/
-double min_distance_line (struct line_pnts *Points1, struct line_pnts *Points2,
-			  int* mindistidx)
-{
-    unsigned int i;
-    double distances [4];
-
-    distances[0] = Vect_points_distance(Points1->x[0], Points1->y[0], Points1->z[0],
-					Points2->x[0], Points2->y[0], Points2->z[0], 0);
-    
-    distances[1] = Vect_points_distance(Points1->x[0], Points1->y[0], Points1->z[0],
-					Points2->x[Points2->n_points-1],
-					Points2->y[Points2->n_points-1],
-					Points2->z[Points2->n_points-1], 0);
-    
-    distances[2] = Vect_points_distance(Points1->x[Points1->n_points-1],
-					Points1->y[Points1->n_points-1],
-					Points1->z[Points1->n_points-1],
-					Points2->x[0], Points2->y[0], Points2->z[0], 0);
-    
-    distances[3] = Vect_points_distance(Points1->x[Points1->n_points-1],
-					Points1->y[Points1->n_points-1],
-					Points1->z[Points1->n_points-1],
-					Points2->x[Points2->n_points-1],
-					Points2->y[Points2->n_points-1],
-					Points2->z[Points2->n_points-1], 0);
-    
-    /* find the minimal distance between first or last point of both lines */
-    *mindistidx = 0;
-    for (i = 0; i < sizeof (distances) / sizeof (double); i++) {
-	if (distances[i] >= 0.0 && distances[i] < distances[*mindistidx])
-	    *mindistidx = i;
-    }
-
-    return distances [*mindistidx];
 }
 
 /**

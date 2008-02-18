@@ -2,20 +2,19 @@
  *
  * MODULE:     v.edit
  *
+ * PURPOSE:    Editing vector map.
+ *
  * AUTHOR(S):  GRASS Development Team
- *             Jachym Cepicky <jachym  les-ejk cz>
- *             Martin Landa <landa.martin gmail.com>
+ *             Wolf Bergenheim, Jachym Cepicky, Martin Landa
  *
- * PURPOSE:    This module edits vector map.
- *             Select vector features.
- *
- * COPYRIGHT:  (C) 2006-2007 by the GRASS Development Team
+ * COPYRIGHT:  (C) 2006-2008 by the GRASS Development Team
  *
  *             This program is free software under the
  *             GNU General Public License (>=v2).
  *             Read the file COPYING that comes with GRASS
  *             for details.
  *
+ * TODO:       3D support
  ****************************************************************/
 
 #include <grass/dbmi.h>
@@ -48,7 +47,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
     /* select by id's */
     if (params -> id -> answer != NULL) {
 	sel_by_id(Map,
-		  params -> id -> answer,
+		  type, params -> id -> answer,
 		  List);
     }
 
@@ -151,9 +150,33 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 
     /* selecy by query */
     if (params -> query -> answer != NULL) {
-	sel_by_query(Map,
-		     type, layer, thresh, params -> query -> answer,
-		     List);
+	int query_type;
+	struct ilist *List_tmp;
+	if (first_selection) {
+	    List_tmp = List;
+	    first_selection = 0;
+	}
+	else {
+	    List_tmp = Vect_new_list();
+	}
+
+	query_type = QUERY_UNKNOWN;
+	if (strcmp(params->query->answer, "length") == 0) {
+	    query_type = QUERY_LENGTH;
+	}
+	else if (strcmp(params->query->answer, "dangle") == 0) {
+	    query_type = QUERY_DANGLE;
+	}
+
+	Vedit_select_by_query(Map,
+			      type, layer, thresh, query_type,
+			      List_tmp);
+
+	/* merge lists (only duplicate items) */
+	if (List_tmp != List) {
+	    merge_lists (List, List_tmp);
+	    Vect_destroy_list (List_tmp);
+	}
     }
 
     if (params -> reverse -> answer) {
@@ -176,7 +199,7 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
    \return number of selected features
    \return -1 on error
 */
-int do_print_selected(struct ilist *List)
+int print_selected(struct ilist *List)
 {
     int i;
 
@@ -406,16 +429,17 @@ int sel_by_polygon(struct Map_info *Map,
    \brief Select features by id
 
    \param[in] Map vector map
+   \param[in] type feature type
    \param[in] ids ids list
    \param[in,out] List list of selected features
  
    \return number of selected lines
 */
 int sel_by_id(struct Map_info *Map,
-	      char *ids,
+	      int type, char *ids,
 	      struct ilist* List)
 {
-    int i, j;
+    int i;
     int num, id;
     struct cat_list *il; /* NOTE: this is not cat list, but list of id's */
     struct ilist *List_tmp;
@@ -434,13 +458,14 @@ int sel_by_id(struct Map_info *Map,
     num = Vect_get_num_lines (Map);
 
     for(i = 0; i < il -> n_ranges; i++) {
-	for(id = il -> min[i]; id <= il -> max[i]; id++) {
-	    for (j = 1; j <= num; j++) {
-		if (id == j) {
-		    Vect_list_append (List_tmp, id);
-		}
-            }
-        }
+	for (id = 1; id <= num; id++) {
+	    if (!(Vect_read_line(Map, NULL, NULL, id) & type)) {
+		continue;
+	    }
+	    if (id >= il -> min[i] && id <= il -> max[i]) {
+		Vect_list_append (List_tmp, id);
+	    }
+	}
     }
     
     G_debug (1, "  %d lines selected (by id)", List_tmp -> n_values);
@@ -602,145 +627,4 @@ int reverse_selection (struct Map_info *Map, int type, struct ilist** List) {
     *List = list_reverse;
 
     return 1;
-}
-
-/**
-   \brief Select features by query (based on geometry)
-
-   \param[in] Map vector map
-   \param[in] type feature type
-   \param[in] layer layer number
-   \param[in] thresh threshold value (< 0 for 'shorter', > 0 for 'longer')
-   \param[in] query query (length, dangle, ...)
-   \param[in,out] List list of selected features
- 
-   \return number of selected lines
-*/
-int sel_by_query(struct Map_info *Map,
-		 int type, int layer, double thresh, const char *query,
-		 struct ilist* List)
-{
-    int num, line, ltype, cat;
-    double length;
-    struct ilist *List_tmp;
-    struct line_pnts *Points;
-    struct line_cats *Cats;
-
-    if (first_selection) {
-	List_tmp = List;
-	first_selection = 0;
-    }
-    else {
-	List_tmp = Vect_new_list();
-    }
-
-    Points = Vect_new_line_struct();
-    Cats   = Vect_new_cats_struct();
-
-    num = Vect_get_num_lines (Map);
-
-    for (line = 1; line <= num; line++) {
-	if (!Vect_line_alive(Map, line))
-	    continue;
-	
-	ltype = Vect_read_line(Map, Points, Cats, line);
-	Vect_cat_get(Cats, layer, &cat); /* get first category from layer */
-
-	if (!(ltype & type))
-	    continue;
-
-	if (strcmp(query, "length") == 0) {
-	    length = Vect_line_length(Points);
-	    if (thresh <= 0.0) { /* shorter then */
-		if (length <= fabs(thresh))
-		    Vect_list_append(List_tmp, line);
-	    }
-	    else { /* longer then */
-		if (length > thresh)
-		    Vect_list_append(List_tmp, line);
-	    }
-	}
-	else if (strcmp(query, "dangle") == 0) {
-	    if (!(type & GV_LINES))
-		continue;
-	    /* check if line is dangle */
-
-	    int i, cat_curr;
-	    int node1, node2, node;        /* nodes */
-	    int nnode1, nnode2;            /* number of line in node */
-	    double nx, ny, nz;             /* node coordinates */
-	    struct ilist *exclude, *found; /* line id of nearest lines */
-	    struct line_cats *Cats_curr;   
-
-	    Vect_get_line_nodes(Map, line, &node1, &node2);
-	    
-	    node = -1;
-	    nnode1 = Vect_get_node_n_lines(Map, node1);
-	    nnode2 = Vect_get_node_n_lines(Map, node2);
-
-	    if ((nnode1 == 4 && nnode2 == 1) ||
-		(nnode1 == 1 && nnode2 == 4)) {
-		if (nnode1 == 4)
-		    node = node1;
-		else
-		    node = node2;
-	    }
-
-	    /* no dangle ? */
-	    if (node == -1)
-		continue;
-
-	    length = Vect_line_length(Points);
-	    if (thresh <= 0.0) { /* shorter then */
-		if (length > fabs(thresh))
-		    continue;
-	    }
-	    else { /* longer then */
-		if (length <= thresh)
-		    continue;
-	    }
-	    
-	    /* at least one of the lines need to have same category number */
-	    exclude = Vect_new_list();
-	    found   = Vect_new_list();
-
-	    Vect_get_node_coor(Map, node, &nx, &ny, &nz);
-
-	    Vect_list_append(exclude, line);
-	    Vect_find_line_list(Map, nx, ny, nz,
-				GV_LINES, 0.0, WITHOUT_Z,
-				exclude, found);
-
-	    Cats_curr = Vect_new_cats_struct();
-
-	    for (i = 0; i < found->n_values; i++) {
-		Vect_read_line(Map, NULL, Cats_curr, found->value[i]);
-		if (Vect_cat_get(Cats_curr, layer, &cat_curr) > -1) {
-		    if (cat == cat_curr)
-			Vect_list_append(List_tmp, line);
-		}
-	    }
-
-	    Vect_destroy_cats_struct(Cats_curr);
-	    Vect_destroy_list(exclude);
-	    Vect_destroy_list(found);
-	}
-	else {
-	    /* this shouldn't happen */
-	    G_fatal_error (_("Unknown query tool '%s'"), query);
-	}
-    }
-
-    G_debug (1, "  %d lines selected (by query '%s')", List_tmp -> n_values, query);
-
-    /* merge lists (only duplicate items) */
-    if (List_tmp != List) {
-	merge_lists (List, List_tmp);
-	Vect_destroy_list (List_tmp);
-    }
-
-    Vect_destroy_line_struct(Points);
-    Vect_destroy_cats_struct(Cats);
-
-    return List -> n_values; 
 }
