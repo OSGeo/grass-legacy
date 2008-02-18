@@ -46,6 +46,7 @@ import histogram
 import utils
 from debug import Debug as Debug
 from icon import Icons as Icons
+from preferences import globalSettings as UserSettings
 try:
     import subprocess
 except:
@@ -1483,9 +1484,10 @@ class LoadMapLayersDialog(wx.Dialog):
         bodySizer.Add(item=wx.StaticText(parent=self, label=_("Mapset:")),
                       flag=wx.ALIGN_CENTER_VERTICAL,
                       pos=(1,0))
+
         self.mapset = wx.ComboBox(parent=self, id=wx.ID_ANY,
                                   style=wx.CB_SIMPLE | wx.CB_READONLY,
-                                  choices=utils.ListOfMapsets()[0],
+                                  choices=UserSettings.Get('mapsetPath', internal=True),
                                   size=(200,-1))
         self.mapset.SetStringSelection(grassenv.GetGRASSVariable("MAPSET"))
         bodySizer.Add(item=self.mapset,
