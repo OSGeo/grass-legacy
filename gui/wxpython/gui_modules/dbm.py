@@ -2015,8 +2015,8 @@ class LayerBook(wx.Notebook):
 
         if len(self.defaultDriver) == 0 or \
                len(self.defaultDatabase) == 0:
-            raise gcmd.GException(_('Unable to determine default DB connection settings. '
-                                   'Please define DB connection using db.connect module.'))
+            raise gcmd.DBMError(_('Unable to determine default DB connection settings. '
+                                  'Please define DB connection using db.connect module.'))
         
         self.defaultTables = self.__getTables(self.defaultDriver, self.defaultDatabase)
         try:

@@ -48,13 +48,14 @@ from debug import Debug as Debug
 
 class GException(Exception):
     """Generic exception"""
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title=_("Error"), parent=None):
         self.message = message
         self.parent = parent
-
+        self.title = title
+        
     def __str__(self):
         wx.MessageBox(parent=self.parent,
-                      caption=_("Error"),
+                      caption=self.title,
                       message=self.message,
                       style=wx.ICON_ERROR | wx.CENTRE)
 
@@ -65,43 +66,24 @@ class CmdError(GException):
 
     See Command class (command exits with EXIT_FAILURE,
     G_fatal_error() is called)."""
-    def __init(self, cmd, message):
-        GException.__init__(message)
-
-    def __str__(self):
-        wx.MessageBox(parent=self.parent,
-                      caption=_("Error in command execution"),
-                      message=self.message,
-                      style=wx.ICON_ERROR | wx.CENTRE)
-        
-        return '' 
+    def __init__(self, cmd, message):
+        GException.__init__(self, message, title=_("Error in command execution"))
 
 class SettingsError(GException):
     """Exception used for GRASS settings, see
     gui_modules/preferences.py."""
-    def __init(self, message):
-        GException.__init__(message)
-
-    def __str__(self):
-        wx.MessageBox(parent=self.parent,
-                      caption=_("Preferences error"),
-                      message=self.message,
-                      style=wx.ICON_ERROR | wx.CENTRE)
-        
-        return '' 
+    def __init__(self, message):
+        GException.__init__(self, message, title=_("Preferences error"))
 
 class DigitError(GException):
     """Exception raised during digitization session"""
-    def __init(self, message):
-        GException.__init__(message)
+    def __init__(self, message):
+        GException.__init__(self, message, title=_("Error in digitization tool"))
 
-    def __str__(self):
-        wx.MessageBox(parent=None,
-                      caption=_("Error in digitization tool"),
-                      message=self.message,
-                      style=wx.ICON_ERROR)
-
-        return ''
+class DBMError(GException):
+    """Exception raised for Attribute Table Manager"""
+    def __init__(self, message):
+        GException.__init__(self, message, title=_("Error in Attribute Table Manager"))
 
 class Popen(subprocess.Popen):
     """Subclass subprocess.Popen"""
