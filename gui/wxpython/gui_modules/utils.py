@@ -17,6 +17,13 @@ for details.
 import os
 import sys
 
+try:
+    import subprocess
+except:
+    compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
+    sys.path.append(compatPath)
+    import subprocess
+
 def GetTempfile(pref=None):
     """
     Creates GRASS temporary file using defined prefix.
@@ -139,19 +146,29 @@ def ListOfMapsets():
     import gcmd
     all_mapsets = []
     accessible_mapsets = []
-    
-    cmd = gcmd.Command(['g.mapsets', '-l'])
+
+    ### FIXME
+    # problem using Command here (see preferences.py)
+    # cmd = gcmd.Command(['g.mapsets', '-l'])
+    cmd = subprocess.Popen(['g.mapsets', '-l'],
+                           stdout=subprocess.PIPE)
     
     try:
-        for mset in cmd.ReadStdOutput()[0].split(' '):
-            all_mapsets.append(mset.strip('%s' % os.linesep))
+        # for mset in cmd.ReadStdOutput()[0].split(' '):
+        for mset in cmd.stdout.readlines()[0].strip('%s' % os.linesep).split(' '):
+            if len(mset) > 0:
+                all_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of available mapsets.')
-            
-    cmd = gcmd.Command(['g.mapsets', '-p'])
+    
+    # cmd = gcmd.Command(['g.mapsets', '-p'])
+    cmd = subprocess.Popen(['g.mapsets', '-p'],
+                           stdout=subprocess.PIPE)
     try:
-        for mset in cmd.ReadStdOutput()[0].split(' '):
-            accessible_mapsets.append(mset.strip('\n'))
+        # for mset in cmd.ReadStdOutput()[0].split(' '):
+        for mset in cmd.stdout.readlines()[0].strip('%s' % os.linesep).split(' '):
+            if len(mset) > 0:
+                accessible_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of accessible mapsets.')
 

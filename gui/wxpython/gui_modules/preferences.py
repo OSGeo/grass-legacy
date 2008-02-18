@@ -28,6 +28,7 @@ from wx.lib.wordwrap import wordwrap
 
 import gcmd
 import grassenv
+import utils
 
 class Settings:
     """Generic class where to store settings"""
@@ -39,6 +40,7 @@ class Settings:
         self.defaultSettings = {
             # general
             'displayFont' : '',
+            'mapsetPath' : 'p', # current mapset search path
             # advanced
             'settingsFile' : 'gisdbase', # gisdbase, location, mapset
             'digitInterface' : 'vdigit', # vedit, vdigit
@@ -54,6 +56,19 @@ class Settings:
         except:
             gcmd.SettingsError('Reading settings failed.')
 
+        # internal settings (based on user settings)
+        self.internalSettings = {}
+        self.internalSettings["mapsetPath"] = self.GetMapsetPath()
+
+    def GetMapsetPath(self):
+        """Store mapset search path"""
+        all, access = utils.ListOfMapsets()
+
+        if self.Get('mapsetPath') == 'p':
+            return access
+        else:
+            return all
+    
     def ReadSettingsFile(self, settings=None):
         """Reads settings file (mapset, location, gisdbase)"""
         if settings is None:
@@ -137,24 +152,34 @@ class Settings:
 
         return filePath
 
-    def Get(self, key):
+    def Get(self, key, internal=False):
         """Get value by key
 
         @return value
         @return None if key not found
         """
-        if self.userSettings.has_key(key):
-            return self.userSettings[key]
+        if internal is True:
+            settings = self.internalSettings
         else:
-            None
+            settings = self.userSettings
+            
+        if settings.has_key(key):
+            return settings[key]
+
+        return None
     
-    def Set(self, key, value):
+    def Set(self, key, value, internal=False):
         """Set value by key
 
         Raise KeyError if key is not found
         """
-        if self.userSettings.has_key(key):
-            self.userSettings[key] = value
+        if internal is True:
+            settings = self.internalSettings
+        else:
+            settings = self.userSettings
+            
+        if settings.has_key(key):
+            settings[key] = value
         else:
             raise KeyError
 
@@ -238,6 +263,25 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(1, 0), span=(1, 2))
 
+        #
+        # mapsets path
+        # 
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Mapsets path:")),
+                       flag=wx.ALIGN_LEFT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(2, 0))
+        self.mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+                                      choices=['mapset search path', 'all available mapsets'])
+        if self.settings.Get('mapsetPath') == 'p':
+            self.mapsetPath.SetSelection(0)
+        else:
+            self.mapsetPath.SetSelection(1)
+        gridSizer.Add(item=self.mapsetPath,
+                      flag=wx.ALIGN_RIGHT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(2, 1))
+        
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
 
@@ -245,7 +289,8 @@ class PreferencesDialog(wx.Dialog):
         
         # bindings
         fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
-
+        self.mapsetPath.Bind(wx.EVT_CHOICE, self.OnChangeMapsetPath)
+        
         return panel
 
     def __CreateAdvancedPage(self, notebook):
@@ -370,6 +415,16 @@ class PreferencesDialog(wx.Dialog):
 
         event.Skip()
 
+    def OnChangeMapsetPath(self, event):
+        """Mapset path changed"""
+        if event.GetSelection() == 0:
+            self.settings.Set('mapsetPath', 'p')
+        else:
+            self.settings.Set('mapsetPath', 'l')
+
+        # update internal settings
+        self.settings.Set("mapsetPath", self.settings.GetMapsetPath(), internal=True)
+        
     def OnSave(self, event):
         """Button 'Save' clicked"""
         self.__UpdateSettings()
