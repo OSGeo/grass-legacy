@@ -108,8 +108,10 @@ class MapCalcFrame(wx.Frame):
             indx = self.funct_list.index('nsres()') +1
             self.funct_list.insert(indx, 'tbres()')
             maplabel = 'volume'
+            element = 'rast3d'
         else:
             maplabel = 'map'
+            element = 'cell'
 
         #
         # Buttons
@@ -184,7 +186,7 @@ class MapCalcFrame(wx.Frame):
         self.newmaptxt = wx.TextCtrl(self, wx.ID_ANY, size=(250,-1))
         self.mapsellabel = wx.StaticText(self, -1, 'Insert existing %s' % maplabel)
         self.mapselect = gselect.Select(self, wx.ID_ANY, size=(250,-1),
-                                        type='cell', multiple=False)
+                                        type=element, multiple=False)
         self.functlabel = wx.StaticText(self, -1, 'Insert mapcalc function')
         self.function = wx.ComboBox(self, wx.ID_ANY, "", (-1,-1), 
                          (250, -1), self.funct_list, wx.CB_DROPDOWN
