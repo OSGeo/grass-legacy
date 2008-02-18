@@ -878,8 +878,16 @@ class GMFrame(wx.Frame):
         Init map calculator for interactive creation of mapcalc statements
         """
         
-        self.mapcalculator = mapcalculator.MapCalcFrame(self, wx.ID_ANY, title='')
+        self.mapcalculator = mapcalculator.MapCalcFrame(self, wx.ID_ANY, title='',
+                                                        dimension=2)
 
+    def Disp3DMapCalculator(self, event):
+        """
+        Init map calculator for interactive creation of mapcalc statements
+        """
+        
+        self.mapcalculator = mapcalculator.MapCalcFrame(self, wx.ID_ANY, title='',
+                                                        dimension=3)
 
     def AddToolbarButton(self, toolbar, label, icon, help, handler):
         """Adds button to the given toolbar"""
