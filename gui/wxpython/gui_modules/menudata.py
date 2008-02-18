@@ -462,6 +462,7 @@ class Data:
                 ("HIS to RGB", "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "self.OnMenuCmd", "i.his.rgb"),
                 ("RGB to HIS", "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "self.OnMenuCmd", "i.rgb.his"),
                 )),
+              ("Rectify image or raster", "Rectifies raster using information in previously created POINTS file", "self.OnMenuCmd", "i.rectify"),
               ("Ortho photo rectification (requires Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
               ("","","", ""),
               ("Brovey sharpening", "Brovey transformation and pan sharpening", "self.OnMenuCmd", "i.fusion.brovey"),
