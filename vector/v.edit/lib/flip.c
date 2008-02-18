@@ -1,24 +1,20 @@
-/***************************************************************
- *
- * MODULE:     v.edit
- * 
- * AUTHOR(S):  GRASS Development Team
- *             Martin Landa <landa.martin gmail.com>
- *               
- * PURPOSE:    This module edits vector maps.
- *             Flip direction of selected vector lines.
- *             Inspired by v.flip script by Maciej Sieczka
- *
- * COPYRIGHT:  (C) 2007 The GRASS Development Team
- *
- *             This program is free software under the 
- *             GNU General Public License (>=v2). 
- *             Read the file COPYING that comes with GRASS
- *             for details.
- *
- **************************************************************/
+/**
+   \file flip.c
 
-#include "global.h"
+   \brief Vedit library - lines flipping
+
+   This program is free software under the
+   GNU General Public License (>=v2).
+   Read the file COPYING that comes with GRASS
+   for details.
+
+   \author (C) 2007-2008 by the GRASS Development Team
+   Martin Landa <landa.martin gmail.com>
+
+   \date 2007-2008
+*/
+
+#include "vedit.h"
 
 /**
    \brief Flip direction of selected vector lines
@@ -29,7 +25,7 @@
    \return number of modified lines
    \return -1 on error
  */
-int do_flip (struct Map_info *Map, struct ilist *List)
+int Vedit_flip_lines(struct Map_info *Map, struct ilist *List)
 {
     struct line_cats *Cats;
     struct line_pnts *Points;
@@ -55,10 +51,10 @@ int do_flip (struct Map_info *Map, struct ilist *List)
 	Vect_line_reverse (Points);
 
 	if (Vect_rewrite_line (Map, line, type, Points, Cats) < 0) {
-	    G_warning (_("Unable to rewrite line %d"),
-		       line);
 	    return -1;
 	}
+
+	G_debug(3, "Vedit_flip_lines(): line=%d", line);
 
 	nlines_flipped++;
     }
