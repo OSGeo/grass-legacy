@@ -66,8 +66,8 @@ class LayerTree(CT.CustomTreeCtrl):
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
                  CT.TR_EDIT_LABELS|CT.TR_MULTIPLE,
-                 idx=None, gismgr=None, notebook=None, auimgr=None):
-        CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
+                 idx=None, gismgr=None, notebook=None, auimgr=None, showMapDisplay=True):
+        CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style, ctstyle)
 
         ### SetAutoLayout() causes that no vertical scrollbar is displayed
         ### when some layers are not visible in layer tree
@@ -103,10 +103,11 @@ class LayerTree(CT.CustomTreeCtrl):
                                    str(self.disp_idx) + 
                                    " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
 
-        #show new display
-        self.mapdisplay.Show()
-        self.mapdisplay.Refresh()
-        self.mapdisplay.Update()
+        # show new display
+        if showMapDisplay is True:
+            self.mapdisplay.Show()
+            self.mapdisplay.Refresh()
+            self.mapdisplay.Update()
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, (None,None))

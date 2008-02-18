@@ -150,7 +150,7 @@ class GMFrame(wx.Frame):
         wx.CallAfter(self.notebook.SetSelection, 0)
 
         # start default initial display
-        self.NewDisplay()
+        self.NewDisplay(show=False)
         
         # load workspace file if requested
         if (self.workspaceFile):
@@ -159,6 +159,9 @@ class GMFrame(wx.Frame):
                 self.SetTitle(self.baseTitle + " - " +  os.path.basename(self.workspaceFile))
             else:
                 self.workspaceFile = None
+
+        # show map display widnow
+        self.curr_page.maptree.mapdisplay.Show()
 
     def __doLayout(self):
         """Do Layout (unused bacause of aui manager...)"""
@@ -568,6 +571,11 @@ class GMFrame(wx.Frame):
             # sax
             grcXml = ProcessGrcXml()
             xml.sax.parseString(fileStream, grcXml)
+
+            busy = wx.BusyInfo(message=_("Please wait, loading map layers into layer tree..."),
+                               parent=self)
+            wx.Yield()
+
             for layer in grcXml.layers:
                 if layer['display'] >= self.disp_idx:
                     # create new map display window if needed
@@ -581,6 +589,8 @@ class GMFrame(wx.Frame):
                                            lgroup=layer['group'])
                 maptree.PropertiesDialog(newItem, show=False)
 
+            busy.Destroy()
+            
             # reverse list of map layers
             maptree.Map.ReverseListOfLayers()
 
@@ -902,7 +912,7 @@ class GMFrame(wx.Frame):
 
         return   (
                  ('newdisplay', Icons["newdisplay"].GetBitmap(),
-                  Icons["newdisplay"].GetLabel(), self.NewDisplay),
+                  Icons["newdisplay"].GetLabel(), self.OnNewDisplay),
                  ('', '', '', ''),
                  ('workspaceLoad', Icons["workspaceLoad"].GetBitmap(),
                   Icons["workspaceLoad"].GetLabel(), self.OnWorkspace),
@@ -979,12 +989,14 @@ class GMFrame(wx.Frame):
                                               pointdata=pointdata)
         self.dbmanager.Show()
 
-    def NewDisplay(self, event=None):
-        """
-        Create new layer tree, which will
+    def OnNewDisplay(self, event=None):
+        """Create new layer tree and map display instance"""
+        self.NewDisplay()
+
+    def NewDisplay(self, show=True):
+        """Create new layer tree, which will
         create an associated map display frame
         """
-
         Debug.msg(3, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
 
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
@@ -998,7 +1010,7 @@ class GMFrame(wx.Frame):
                                                        |wx.TR_LINES_AT_ROOT|wx.TR_EDIT_LABELS|wx.TR_HIDE_ROOT
                                                        |wx.TR_DEFAULT_STYLE|wx.NO_BORDER|wx.FULL_REPAINT_ON_RESIZE,
                                                        idx=self.disp_idx, gismgr=self, notebook=self.gm_cb,
-                                                       auimgr=self._auimgr)
+                                                       auimgr=self._auimgr, showMapDisplay=show)
 
         # layout for controls
         cb_boxsizer = wx.BoxSizer(wx.VERTICAL)
