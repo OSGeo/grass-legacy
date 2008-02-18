@@ -504,8 +504,8 @@ class GRASSStartup(wx.Frame):
                     self.listOfLocations.append(os.path.basename(location))
             except:
                 pass
-            
-        self.listOfLocations.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
+
+        utils.ListSortLower(self.listOfLocations)
 
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations, 0)
@@ -520,7 +520,7 @@ class GRASSStartup(wx.Frame):
             if os.path.isdir(mapset) and os.path.basename(mapset) != 'PERMANENT':
                 self.listOfMapsets.append(os.path.basename(mapset))
         
-        self.listOfMapsets.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
+        utils.ListSortLower(self.listOfMapsets)
         self.listOfMapsets.insert(0,'PERMANENT')
  
         self.lbmapsets.Clear()
