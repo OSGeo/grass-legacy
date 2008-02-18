@@ -40,12 +40,18 @@ class MapCalcFrame(wx.Frame):
     and run r.mapcalc statements
     """
     def __init__(self, parent, id, title, pos=wx.DefaultPosition,
-                 size=wx.DefaultSize, style=wx.TAB_TRAVERSAL|wx.DEFAULT_FRAME_STYLE):
+                 size=wx.DefaultSize, style=wx.TAB_TRAVERSAL|wx.DEFAULT_FRAME_STYLE,
+                 dimension=2):
 
-        wx.Frame.__init__(self, parent, id, title, pos=pos, size=size, style=style)
+        wx.Frame.__init__(self, parent, id, title, pos, size,
+                          style)
         
         self.Centre(wx.BOTH)
-        self.SetTitle(_("GRASS Map Calculator") )
+
+        if dimension == 3:
+            self.SetTitle(_("GRASS 3D Map Calculator") )
+        else:
+            self.SetTitle(_("GRASS Map Calculator") )
 
         #
         # variables
@@ -53,6 +59,7 @@ class MapCalcFrame(wx.Frame):
         self.parent = parent
         self.heading = 'mapcalc statement'
         self.newmap = ''
+        self.dimension = dimension
         self.funct_list = [
                         'abs(x)',
                         'acos(x)',
@@ -94,6 +101,15 @@ class MapCalcFrame(wx.Frame):
                         'nsres()',
                         'null()'
                         ]
+        
+        if self.dimension == 3:
+            indx = self.funct_list.index('y()') +1
+            self.funct_list.insert(indx, 'z()')
+            indx = self.funct_list.index('nsres()') +1
+            self.funct_list.insert(indx, 'tbres()')
+            maplabel = 'volume'
+        else:
+            maplabel = 'map'
 
         #
         # Buttons
@@ -164,9 +180,9 @@ class MapCalcFrame(wx.Frame):
         
         #
         # Map and function insertion text and ComboBoxes
-        self.newmaplabel = wx.StaticText(self, -1, 'Name of new map to create')
+        self.newmaplabel = wx.StaticText(self, -1, 'Name of new %s to create' % maplabel)
         self.newmaptxt = wx.TextCtrl(self, wx.ID_ANY, size=(250,-1))
-        self.mapsellabel = wx.StaticText(self, -1, 'Insert existing map')
+        self.mapsellabel = wx.StaticText(self, -1, 'Insert existing %s' % maplabel)
         self.mapselect = gselect.Select(self, wx.ID_ANY, size=(250,-1),
                                         type='cell', multiple=False)
         self.functlabel = wx.StaticText(self, -1, 'Insert mapcalc function')
@@ -373,7 +389,11 @@ class MapCalcFrame(wx.Frame):
         try:
             mctxt = self.text_mcalc.GetValue().strip().replace("\n"," ")
             mctxt = mctxt.replace(" ","")
-            cmdlist = ["r.mapcalc"," %s=%s" % (self.newmap,mctxt)]
+            if self.dimension == 3:
+                cmdlist = ["r3.mapcalc"," %s=%s" % (self.newmap,mctxt)]
+            else:
+                cmdlist = ["r.mapcalc"," %s=%s" % (self.newmap,mctxt)]
+
             p = gcmd.Command(cmdlist)
             if p.returncode == 0:
                 wx.MessageBox("Map %s created successfully" % self.newmap)
