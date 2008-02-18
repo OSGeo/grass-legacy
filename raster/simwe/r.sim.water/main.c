@@ -159,35 +159,24 @@ int main ( int argc, char *argv[])
 	mx2 = mx2o - 2*((int) (stepx / bresx));
 	my2 = my2o - 2*((int) (stepy / bresy)); 
 	*/
-	parm.elevin = G_define_option();
+	parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
 	parm.elevin->key = "elevin";
-	parm.elevin->type = TYPE_STRING;
-	parm.elevin->required = YES;
-	parm.elevin->gisprompt = "old,cell,raster";
 	parm.elevin->description = _("Name of the elevation raster map [m]");
 	parm.elevin->guisection  = _("Input_options");
 	
-	parm.dxin = G_define_option();
+	parm.dxin = G_define_standard_option(G_OPT_R_INPUT);
 	parm.dxin->key = "dxin";
-	parm.dxin->type = TYPE_STRING;
-	parm.dxin->required = YES;
-	parm.dxin->gisprompt = "old,cell,raster";
 	parm.dxin->description = _("Name of the x-derivatives raster map [m/m]");
 	parm.dxin->guisection  = _("Input_options");
 	
-	parm.dyin = G_define_option();
+	parm.dyin = G_define_standard_option(G_OPT_R_INPUT);
 	parm.dyin->key = "dyin";
-	parm.dyin->type = TYPE_STRING;
-	parm.dyin->required = YES;
-	parm.dyin->gisprompt = "old,cell,raster";
 	parm.dyin->description = _("Name of the y-derivatives raster map [m/m]");
 	parm.dyin->guisection  = _("Input_options");
 	
-	parm.rain = G_define_option();
+	parm.rain = G_define_standard_option(G_OPT_R_INPUT);
 	parm.rain->key = "rain";
-	parm.rain->type = TYPE_STRING;
 	parm.rain->required = NO;
-	parm.rain->gisprompt = "old,cell,raster";
 	parm.rain->description = _("Name of the rainfall excess rate (rain-infilt) raster map [mm/hr]");
 	parm.rain->guisection  = _("Input_options");
 	
@@ -199,11 +188,9 @@ int main ( int argc, char *argv[])
 	parm.rainval->description = _("Rainfall excess rate unique value [mm/hr]");
 	parm.rainval->guisection  = _("Input_options");
 	
-	parm.infil = G_define_option();
+	parm.infil = G_define_standard_option(G_OPT_R_INPUT);
 	parm.infil->key = "infil";
-	parm.infil->type = TYPE_STRING;
 	parm.infil->required = NO;
-	parm.infil->gisprompt = "old,cell,raster";
 	parm.infil->description = _("Name of the runoff infiltration rate raster map [mm/hr]");
 	parm.infil->guisection  = _("Input_options");
 	
@@ -215,11 +202,9 @@ int main ( int argc, char *argv[])
 	parm.infilval->description = _("Runoff infiltration rate unique value [mm/hr]");
 	parm.infilval->guisection  = _("Input_options");
 	
-	parm.manin = G_define_option();
+	parm.manin = G_define_standard_option(G_OPT_R_INPUT);
 	parm.manin->key = "manin";
-	parm.manin->type = TYPE_STRING;
 	parm.manin->required = NO;
-	parm.manin->gisprompt = "old,cell,raster";
 	parm.manin->description = _("Name of the Mannings n raster map");
 	parm.manin->guisection  = _("Input_options");
 	
@@ -231,59 +216,47 @@ int main ( int argc, char *argv[])
 	parm.maninval->description = _("Mannings n unique value");
 	parm.maninval->guisection  = _("Input_options");
 	
-	parm.traps = G_define_option();
+	parm.traps = G_define_standard_option(G_OPT_R_INPUT);
 	parm.traps->key = "traps";
-	parm.traps->type = TYPE_STRING;
 	parm.traps->required = NO;
-	parm.traps->gisprompt = "old,cell,raster";
 	parm.traps->description = _("Name of the flow controls raster map (permeability ratio 0-1)");
 	parm.traps->guisection  = _("Input_options");
 	
 	/* needs to be updated to GRASS 6 vector format !! */
-	parm.sfile = G_define_option ();
+	parm.sfile = G_define_standard_option (G_OPT_V_INPUT);
 	parm.sfile->key = "vector";
-	parm.sfile->type = TYPE_STRING;
 	parm.sfile->required = NO;
-	parm.sfile->gisprompt = "old,vector,vector";
 	parm.sfile->description = _("Name of the sampling locations vector points map");
 	parm.sfile->guisection  = _("Input_options");
 	
-	parm.depth = G_define_option();
+	parm.depth = G_define_standard_option(G_OPT_R_OUTPUT);
 	parm.depth->key = "depth";
-	parm.depth->type = TYPE_STRING;
 	parm.depth->required = NO;
-	parm.depth->gisprompt = "new,cell,raster";
 	parm.depth->description = _("Output water depth raster map [m]");
 	parm.depth->guisection  = _("Output_options");
 	
-	parm.disch = G_define_option();
+	parm.disch = G_define_standard_option(G_OPT_R_OUTPUT);
 	parm.disch->key = "disch";
-	parm.disch->type = TYPE_STRING;
 	parm.disch->required = NO;
-	parm.disch->gisprompt = "new,cell,raster";
 	parm.disch->description = _("Output water discharge raster map [m3/s]");
 	parm.disch->guisection  = _("Output_options");
 	
-	parm.err = G_define_option();
+	parm.err = G_define_standard_option(G_OPT_R_OUTPUT);
 	parm.err->key = "err";
-	parm.err->type = TYPE_STRING;
 	parm.err->required = NO;
-	parm.err->gisprompt = "new,cell,raster";
 	parm.err->description = _("Output simulation error raster map [m]");
 	parm.err->guisection  = _("Output_options");
 	
-	parm.outwalk = G_define_option ();
+	parm.outwalk = G_define_standard_option(G_OPT_V_OUTPUT);
 	parm.outwalk->key = "outwalk";
-	parm.outwalk->type = TYPE_STRING;
 	parm.outwalk->required = NO;
-	parm.outwalk->gisprompt = "new,vector,vector";
 	parm.outwalk->description = _("Name of the output walkers vector points map");
 	parm.outwalk->guisection  = _("Output_options");
 	
 	parm.nwalk = G_define_option();
 	parm.nwalk->key = "nwalk";
 	parm.nwalk->type = TYPE_INTEGER;
-	parm.nwalk->answer = NWALK;
+	parm.nwalk->answer = NWALK; 
 	parm.nwalk->required = NO;
 	parm.nwalk->description = _("Number of walkers");
 	parm.nwalk->guisection  = _("Parameters");
@@ -381,6 +354,7 @@ int main ( int argc, char *argv[])
 	sscanf(parm.hmax->answer, "%lf", &hhmax);
 	sscanf(parm.halpha->answer, "%lf", &halpha);
 	sscanf(parm.hbeta->answer, "%lf", &hbeta);
+
 	/* if no rain map input, then:*/
 	if(parm.rain->answer==NULL){
 		/*Check for Rain Unique Value Input*/
@@ -465,8 +439,16 @@ int main ( int argc, char *argv[])
         iterout = iterout * 60.0;
 	if ((timesec/iterout) > 100.0) 
 		G_message(_("More than 100 files are going to be created !!!!!"));
-	/* compute how big the raster is and set this to appr 2 walkers per cell */
-	rwalk = (double) maxwa;
+
+	/* compute how big the raster is and set this to appr 2 walkers per cell 
+       if(parm.nwalk->answer==NULL){
+                        rwalk = (double) (mx*my*2.);
+                } else {
+                        rwalk = (double) maxwa;
+                }
+        */
+
+	rwalk = (double) maxwa; 
 
 	if (conv != 1.0) 
 		G_message(_("Using metric conversion factor %f, step=%f"), conv, step);
