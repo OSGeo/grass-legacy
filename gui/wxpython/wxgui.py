@@ -818,8 +818,6 @@ class GMFrame(wx.Frame):
 
         # make list of xmons that are not running
         cmdlist = ["d.mon", "-L"]
-        #p = subprocess.Popen(cmdlist, stdout=subprocess.PIPE)
-        output = ''
         p = gcmd.Command(cmdlist)
 
         for line in p.ReadStdOutput():                
