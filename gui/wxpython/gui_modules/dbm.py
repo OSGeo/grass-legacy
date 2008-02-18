@@ -160,7 +160,11 @@ class VirtualAttributeList(wx.ListCtrl,
         if len(self.itemCatsMap) > 0:
             keyId = -1
         else:
-            keyId = columnNames.index(keyColumn)
+            try:
+                # for maps connected via v.external
+                keyId = columnNames.index(keyColumn)
+            except:
+                keyId = -1
 
         i = 0
         info = wx.ListItem()
@@ -2009,6 +2013,11 @@ class LayerBook(wx.Notebook):
             elif item == 'database':
                 self.defaultDatabase = value
 
+        if len(self.defaultDriver) == 0 or \
+               len(self.defaultDatabase) == 0:
+            raise gcmd.GException(_('Unable to determine default DB connection settings. '
+                                   'Please define DB connection using db.connect module.'))
+        
         self.defaultTables = self.__getTables(self.defaultDriver, self.defaultDatabase)
         try:
             self.defaultColumns = self.__getColumns(self.defaultDriver, self.defaultDatabase,
