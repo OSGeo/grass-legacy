@@ -28,6 +28,7 @@ import time
 import traceback
 import types
 import re
+import string
 ### for GRC (workspace file) parsering
 # xmlproc not available on Mac OS
 # from xml.parsers.xmlproc import xmlproc
@@ -816,26 +817,32 @@ class GMFrame(wx.Frame):
         gisbase = os.environ['GISBASE']
 
         # make list of xmons that are not running
-        cmdlist = ['d.mon', '-L']
+        cmdlist = ["d.mon", "-L"]
+        #p = subprocess.Popen(cmdlist, stdout=subprocess.PIPE)
+        output = ''
         p = gcmd.Command(cmdlist)
-        output = p.module_stdout.read().split('\n')
-        for outline in output:
-            outline = outline.strip()
-            if outline.startswith('x') and 'not running' in outline:
 
-                xmonlist.append(outline[0:2])
+        for line in p.ReadStdOutput():                
+            line = line.strip()
+            if line.startswith('x') and 'not running' in line:
+                xmonlist.append(line[0:2])
 
         # open available xmon
         xmon = xmonlist[0]
-        cmdlist = ['d.mon','start=%s' % xmon]
-        p = subprocess.Popen(cmdlist)
+        cmdlist = ["d.mon","start=%s" % xmon]
+        p = gcmd.Command(cmdlist)
 
-        # run the command
+        # run the command        
+        runbat = os.path.join(gisbase,'etc','grass-run.bat')
+        xtermwrapper = os.path.join(gisbase,'etc','grass-xterm-wrapper')
+        grassrun = os.path.join(gisbase,'etc','grass-run.sh')
+        command = ' '.join(command)
+        
         if 'OS' in os.environ and os.environ['OS'] == "Windows_NT":
-            cmdlist = ['cmd.exe', '/c', 'start', os.path.join(gisbase,'etc','grass-run.bat'), command]
+            cmdlist = ["cmd.exe", "/c", 'start "%s"' % runbat, command]
         else:
-            cmdlist = [os.path.join(gisbase,'etc','grass-xterm-wrapper'), '-name', 'xterm-grass', '-e', os.path.join(gisbase,'etc','grass-run.sh'), command]
-        gcmd.Command(cmdlist)
+            cmdlist = [xtermwrapper, '-e "%s"' % grassrun, command]
+        p = gcmd.Command(cmdlist)
 
         # reset display mode
         os.environ['GRASS_RENDER_IMMEDIATE'] = 'TRUE'
