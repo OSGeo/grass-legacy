@@ -232,6 +232,39 @@ class AbstractDigit:
 
         return type
 
+    def SelectLinesFromBackgroundMap(self, pos1, pos2):
+        """Select features from background map
+
+        @param pos1,pos2 bounding box defifinition
+        """
+
+        if self.settings['backgroundMap'] == '':
+            Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): []")
+            return []
+
+        x1, y1 = pos1
+        x2, y2 = pos2
+
+        vEditCmd = gcmd.Command(['v.edit',
+                                 '--q',
+                                 'map=%s' % self.settings['backgroundMap'],
+                                 'tool=select',
+                                 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
+                                 #'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
+                                 #    (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
+                                             
+        try:
+            output = vEditCmd.ReadStdOutput()[0] # first line
+            ids = output.split(',') 
+            ids = map(int, ids) # str -> int
+        except:
+            return []
+
+        Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): %s" % \
+                      ",".join(["%d" % v for v in ids]))
+        
+        return ids
+
 class VEdit(AbstractDigit):
     """
     Prototype of digitization class based on v.edit command
@@ -688,39 +721,6 @@ class VEdit(AbstractDigit):
 
         return True
 
-    def SelectLinesFromBackgroundMap(self, pos1, pos2):
-        """Select features from background map
-
-        @param pos1,pos2 bounding box defifinition
-        """
-
-        if self.settings['backgroundMap'] == '':
-            Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): []")
-            return []
-
-        x1, y1 = pos1
-        x2, y2 = pos2
-
-        vEditCmd = gcmd.Command(['v.edit',
-                                 '--q',
-                                 'map=%s' % self.settings['backgroundMap'],
-                                 'tool=select',
-                                 'bbox=%f,%f,%f,%f' % (pos1[0], pos1[1], pos2[0], pos2[1])])
-                                 #'polygon=%f,%f,%f,%f,%f,%f,%f,%f,%f,%f' % \
-                                 #    (x1, y1, x2, y1, x2, y2, x1, y2, x1, y1)])
-                                             
-        try:
-            output = vEditCmd.ReadStdOutput()[0] # first line
-            ids = output.split(',') 
-            ids = map(int, ids) # str -> int
-        except:
-            return []
-
-        Debug.msg(4, "VEdit.SelectLinesFromBackgroundMap(): %s" % \
-                      ",".join(["%d" % v for v in ids]))
-        
-        return ids
-
     def SelectLinesByQuery(self, pos1, pos2):
         """Select features by query
 
@@ -770,9 +770,9 @@ class VEdit(AbstractDigit):
     def GetLayers(self):
         """Return list of layers"""
         layerCommand = gcmd.Command(cmd=["v.db.connect",
-                                             "-g", "--q",
-                                             "map=%s" % self.map],
-                                        rerr=None, stderr=None)
+                                         "-g", "--q",
+                                         "map=%s" % self.map],
+                                    rerr=None, stderr=None)
         if layerCommand.returncode == 0:
             layers = []
             for line in layerCommand.ReadStdOutput():
@@ -780,7 +780,7 @@ class VEdit(AbstractDigit):
                 layers.append(int(lineList[0]))
             return layers
 
-        return [1]
+        return [1,]
 
 class VDigit(AbstractDigit):
     """
@@ -972,7 +972,7 @@ class VDigit(AbstractDigit):
 
         @param ids list of line ids to be copied
         """
-        return self.digit.CopyLines(ids, self.settings['backgroundMap'])
+        return self.digit.CopyLines(ids, str(self.settings['backgroundMap']))
 
     def CopyCats(self, cats, ids):
         """Copy given categories to objects with id listed in ids

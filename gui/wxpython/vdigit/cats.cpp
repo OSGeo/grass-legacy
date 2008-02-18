@@ -54,6 +54,9 @@ int Digit::InitCats()
     for (int i = 0; i < nfields; i++ ) {
 	field = Vect_cidx_get_field_number(display->mapInfo, i);
 	ncats = Vect_cidx_get_num_cats_by_index(display->mapInfo, i);
+	if (field <= 0) {
+	    continue;
+	}
 	for (int j = 0; j < ncats; j++) {
 	    Vect_cidx_get_cat_by_index (display->mapInfo, i, j, &cat, &type, &id);
 	    if (cat > cats[field])
