@@ -155,8 +155,10 @@ def ListOfMapsets():
     
     try:
         # for mset in cmd.ReadStdOutput()[0].split(' '):
-        for mset in cmd.stdout.readlines()[0].strip('%s' % os.linesep).split(' '):
-            if len(mset) > 0:
+        for line in cmd.stdout.readlines():
+            for mset in line.strip('%s' % os.linesep).split(' '):
+                if len(mset) == 0:
+                    continue
                 all_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of available mapsets.')
@@ -166,10 +168,19 @@ def ListOfMapsets():
                            stdout=subprocess.PIPE)
     try:
         # for mset in cmd.ReadStdOutput()[0].split(' '):
-        for mset in cmd.stdout.readlines()[0].strip('%s' % os.linesep).split(' '):
-            if len(mset) > 0:
+        for line in cmd.stdout.readlines():
+            for mset in line.strip('%s' % os.linesep).split(' '):
+                if len(mset) == 0:
+                    continue
                 accessible_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of accessible mapsets.')
 
+    ListSortLower(all_mapsets)
+    
     return (all_mapsets, accessible_mapsets)
+
+def ListSortLower(list):
+    """Sort list items (not case-sensitive)"""
+    list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
+    
