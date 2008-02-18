@@ -502,7 +502,7 @@ class Data:
                 )),
               ("","","", ""),
               ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
-              ("3D map calculator", "Map calculator for volumetric map algebra", "self.OnMenuCmd", "r3.mapcalculator"),
+              ("3D map calculator", "Map calculator for volumetric map algebra", "self.Disp3DMapCalculator", ""),
               ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
               ("Interpolate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
               ("","","", ""),
