@@ -330,7 +330,7 @@ class Data:
               ("","","", ""),
               ("Report and statistics", (
                 ("Basic raster information", "Report basic file information", "self.OnMenuCmd", "r.info"),
-                ("Report category information", "Report category labels and values", "self.OnMenuCmd", "r.cats"),
+                ("Report category information", "Report category labels and values", "self.OnMenuCmd", "r.category"),
                 ("","","", ""),
                 ("General statistics", "General statistics", "self.OnMenuCmd", "r.stats"),
                 ("Range of category values", "Range of all category values", "self.OnMenuCmd", "r.describe"),
