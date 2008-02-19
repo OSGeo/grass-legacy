@@ -23,7 +23,7 @@ Example for Spearfish forest areas:
 <div class="code"><pre>
 g.region rast=landcover.30m -p
 # extract forested areas:
-r.cats landcover.30m
+r.category landcover.30m
 r.mapcalc "forests=if(landcover.30m >= 41 && landcover.30m <=43,1,null())"
 
 # patch density (7x7 moving window defined in r.li.setup):
