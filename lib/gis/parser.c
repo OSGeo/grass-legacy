@@ -1750,9 +1750,10 @@ static void G_script(void)
 	fprintf(fp, "#!/bin/sh\n\n");
 	fprintf(fp, "############################################################################\n");
 	fprintf(fp, "#\n");
-	fprintf(fp, "# MODULE:       \n");
+	fprintf(fp, "# MODULE:       %s_wrapper\n", G_program_name());
 	fprintf(fp, "# AUTHOR(S):    %s\n", G_whoami());
-	fprintf(fp, "# COPYRIGHT:    (C) 2007 GRASS Development Team/%s\n", G_whoami());
+	fprintf(fp, "# PURPOSE:      \n");
+	fprintf(fp, "# COPYRIGHT:    (C) 2008 GRASS Development Team/%s\n", G_whoami());
 	fprintf(fp, "#\n");
 	fprintf(fp, "#  This program is free software; you can redistribute it and/or modify\n");
 	fprintf(fp, "#  it under the terms of the GNU General Public License as published by\n");
