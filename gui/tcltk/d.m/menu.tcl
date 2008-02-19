@@ -353,7 +353,7 @@ set descmenu [subst {
 	{separator}
 	{cascad {[G_msg "Reports and statistics"]} {} "" $tmenu {			
 		{command {[G_msg "Report basic file information"]} {} "r.info" {} -command {execute r.info }}
-		{command {[G_msg "Report category labels and values"]} {} "r.cats" {} -command {execute r.cats }}
+		{command {[G_msg "Manage category labels and values"]} {} "r.category" {} -command {execute r.category }}
 		{separator}
 		{command {[G_msg "General statistics"]} {} "r.stats" {} -command {execute r.stats }}
 		{command {[G_msg "Range of all category values"]} {} "r.describe" {} -command {execute r.describe }}
