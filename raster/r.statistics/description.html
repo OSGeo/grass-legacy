@@ -75,7 +75,7 @@ Calculation of average elevation of each field in the Spearfish region:
 
 <div class="code"><pre>
 r.statistics base=fields cover=elevation.dem out=elevstats method=average
-r.cats elevstats
+r.category elevstats
 r.mapcalc "fieldelev=@elevstats"
 r.univar fieldelev
 </pre></div>
@@ -89,7 +89,7 @@ r.univar fieldelev
 <A HREF="r.mapcalc.html">r.mapcalc</A>,
 <A HREF="r.neighbors.html">r.neighbors</A>,
 <A HREF="r.univar.html">r.univar</A>
-<A HREF="r.cats">r.cats</A>
+<A HREF="r.category">r.category</A>
 </EM>
 
 <H2>AUTHOR</H2>
