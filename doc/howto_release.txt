@@ -49,19 +49,21 @@ Contents
      VERSION=${MAJOR}.${MINOR}.${RELEASE}
      echo $VERSION
 
-   - svn ci -m"GRASS $VERSION" include/VERSION
-   - svn up
+     svn ci -m"GRASS $VERSION" include/VERSION
+     svn up
 
  o Create Changelog file on release branch:
      # http://ch.tudelft.nl/~arthur/svn2cl/
-     sh svn2cl
+     svn2cl
      mv ChangeLog ChangeLog_$VERSION
+     head ChangeLog_$VERSION
      gzip ChangeLog_$VERSION
 
  o   Tag release (http://trac.osgeo.org/grass/browser/grass/tags):
      http://svnbook.red-bean.com/en/1.4/svn.branchmerge.tags.html
 
-          RELEASETAG=release_`date +"%Y%m%d"`_grass_${MAJOR}_${MINOR}_${RELEASE}
+          TODAY=`date +"%Y%m%d"`
+          RELEASETAG=release_${TODAY}_grass_${MAJOR}_${MINOR}_${RELEASE}
           echo $RELEASETAG
 
           URL=https://svn.osgeo.org/grass
@@ -95,12 +97,21 @@ Contents
 2008
 
     rm -f include/VERSION~
+    svn ci -m"back to SVN" include/VERSION
 
- o Store the source tarball in (use scp -p FILES grass:):
-    echo  http://download.osgeo.org/grass/grass$MAJOR$MINOR/source/
+
+ o Store the source tarball (twice) in (use scp -p FILES grass:):
+    SERVER1=download.osgeo.org:/osgeo/download/grass/grass$MAJOR$MINOR/source/
+    SERVER2=grass.osgeo.org:/osgeo/grass/rsync/grass$MAJOR$MINOR/source/
+    echo $SERVER1
+    echo $SERVER2
+
    along with associated files:
-     scp grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
-         SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@download.osgeo.org:/osgeo/download/grass/grass$MAJOR$MINOR/source/
+     scp -p grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
+         SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@$SERVER1
+     scp -p grass-$VERSION.* AUTHORS COPYING ChangeLog_$VERSION.gz INSTALL REQUIREMENTS.html SUBMITTING SUBMITTING_DOCS \
+         SUBMITTING_TCLTK SUBMITTING_SCRIPTS neteler@$SERVER2
+     
 
  o update web site to new version (http://trac.osgeo.org/grass/browser/grass-web)
       - rss.xml (for news section)
