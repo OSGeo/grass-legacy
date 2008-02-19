@@ -102,7 +102,7 @@ v.db.update elevrand_3d col=soilrange value=NULL where="soilrange=0"
 v.db.select elevrand_3d
 
 # interpolate volume
-v.vol.rst elevrand_3d wcol=soilrange elev=soilrange
+v.vol.rst elevrand_3d wcol=soilrange elev=soilrange zmult=100
 
 # visualize
 nviz elevation.10m vol=soilrange
@@ -121,7 +121,7 @@ only a subset of the input vectors.
 
 <div class="code"><pre>
 # preparation as in above example
-v.vol.rst elevrand_3d wcol=soilrange elev=soilrange where="soilrange > 3"
+v.vol.rst elevrand_3d wcol=soilrange elev=soilrange zmult=100 where="soilrange > 3"
 </pre></div>
 
 
@@ -144,7 +144,7 @@ representing the whole dataset.
 <P>
 <div class="code"><pre>
 v.info -c precip3d
-v.vol.rst -c input=precip3d wcolumn=precip segmax=700 cvdev=cvdevmap tension=10
+v.vol.rst -c input=precip3d wcolumn=precip zmult=50 segmax=700 cvdev=cvdevmap tension=10
 v.db.select cvdevmap
 v.univar cvdevmap col=flt1 type=point
 </pre></div>
