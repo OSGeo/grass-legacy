@@ -379,7 +379,7 @@ int main ( int argc, char *argv[])
 		}
 	}
 	/* Report the final value of rain_val*/
-	G_message(_("rain_val is set to: %f\n"),rain_val);
+	G_debug(3, "rain_val is set to: %f\n",  rain_val);
 
 	/* if no Mannings map, then:*/
 	if(parm.manin->answer==NULL){
@@ -405,7 +405,7 @@ int main ( int argc, char *argv[])
 		}
 	}
 	/* Report the final value of manin_val*/
-	G_message(_("manin_val is set to: %f\n"),manin_val);
+	G_debug(3,"manin_val is set to: %f\n",manin_val);
 
 	/* if no infiltration map, then:*/
 	if(parm.infil->answer==NULL){
@@ -431,7 +431,7 @@ int main ( int argc, char *argv[])
 		}		
 	}
 	/* Report the final value of infil_val*/
-	G_message(_("infil_val is set to: %f\n"),infil_val);
+	G_debug(3,"infil_val is set to: %f\n",infil_val);
 
 	/* Recompute timesec from user input in minutes
 	 * to real timesec in seconds */
