@@ -453,6 +453,7 @@ set descmenu [subst  {
 	{command {[G_msg "Query with another map"]} {} " v.select: Query objects using objects from a second map" {} -command {execute v.select }}
 	{separator}
 	{command {[G_msg "Buffer vectors"]} {} "v.buffer: Create vector buffers around vector objects" {} -command {execute v.buffer }}
+	{command {[G_msg "Dissolve boundaries"]} {} "v.dissolve: Dissolve common boundaries and optionally reclassify objects with common cats or attributes" {} -command {execute v.dissolve }}
 	{cascad {[G_msg "Lidar analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Detect edges"]} {} "v.lidar.edgedetection: Detect object edges in Lidar data" {} -command {execute v.lidar.edgedetection }}
 		{command {[G_msg "Detect interiors"]} {} "v.lidar.growing: Detect interiors of objects in Lidar data" {} -command {execute v.lidar.growing }}
