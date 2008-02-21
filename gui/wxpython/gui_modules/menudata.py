@@ -355,6 +355,7 @@ class Data:
                 ("","","", ""),
                 ("Create/rebuild topology", "Create or rebuild topology of vector objects", "self.OnMenuCmd", "v.build"),
                 ("Clean vector map", "Clean vector objects", "self.OnMenuCmd", "v.clean"),
+                ("Generalization", "Smooth, simplify, displace, or generalize a vector map", "self.OnMenuCmd", "v.generalize"),
                 ("","","", ""),
                 ("Convert object types", "Convert vector objects from one feature type to another", "self.OnMenuCmd", "v.type.sh"),
                 ("","","", ""),
@@ -397,6 +398,7 @@ class Data:
               ("Network analysis", (
                 ("Allocate subnets", "Allocate subnets for nearest centers", "self.OnMenuCmd", "v.net.alloc"),
                 ("Network maintenance", "Network maintenance", "self.OnMenuCmd", "v.net"),
+                ("Visibility network", "Create and maintain a visibility network", "self.OnMenuCmd", "v.net.visibility"),
                 ("Shortest route", "Calculate shortest route along network between 2 nodes", "self.OnMenuCmd", "v.net.path"),
                 ("Display shortest route (requires XTerm)", " Display shortest route along network between 2 nodes (visualization only)", "self.OnXTerm", "d.path"),
                 ("Split net", "Split net into bands between cost isolines", "self.OnMenuCmd", "v.net.iso"),
