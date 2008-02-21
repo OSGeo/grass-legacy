@@ -422,6 +422,7 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Create/rebuild topology: "]} {} "v.build: Create or rebuild topology of vector objects" {} -command {execute v.build }}
 		{command {[G_msg "Clean vector"]} {} "v.clean: Clean vector objects" {} -command {execute v.clean }}
+		{command {[G_msg "Generalization"]} {} "v.generalize: Smooth, simplify, displace, or generalize a vector map" {} -command {execute v.generalize }}
 		{separator}
 		{command {[G_msg "Convert object types"]} {} "v.type: Convert vector objects from one feature type to another" {} -command {execute $env(GISBASE)/etc/gui/scripts/v.type.sh }}
 		{separator}
@@ -445,7 +446,6 @@ set descmenu [subst  {
 		{separator}
 		{command {[G_msg "Metadata support"]} {} "v.support: Edit metadata for vector map" {} -command {execute v.support }}
 		{separator}
-		{command {[G_msg "Generalization"]} {} "v.generalize: Generalize a vector map" {} -command {execute v.generalize }}
 	}}
 	{separator}
 	{command {[G_msg "Query with attributes"]} {} "v.extract: Query vector objects by attribute values" {} -command {execute v.extract }}
@@ -453,7 +453,6 @@ set descmenu [subst  {
 	{command {[G_msg "Query with another map"]} {} " v.select: Query objects using objects from a second map" {} -command {execute v.select }}
 	{separator}
 	{command {[G_msg "Buffer vectors"]} {} "v.buffer: Create vector buffers around vector objects" {} -command {execute v.buffer }}
-	{command {[G_msg "Dissolve boundaries"]} {} "v.dissolve: Dissolve common boundaries and optionally reclassify objects with common cats or attributes" {} -command {execute v.dissolve }}
 	{cascad {[G_msg "Lidar analysis"]} {} "" $tmenu {			
 		{command {[G_msg "Detect edges"]} {} "v.lidar.edgedetection: Detect object edges in Lidar data" {} -command {execute v.lidar.edgedetection }}
 		{command {[G_msg "Detect interiors"]} {} "v.lidar.growing: Detect interiors of objects in Lidar data" {} -command {execute v.lidar.growing }}
