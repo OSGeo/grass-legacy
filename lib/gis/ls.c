@@ -155,6 +155,7 @@ void G_ls_format(const char **list, int num_items, int perline, FILE *stream)
                       /* Auto-fit the number of items that will
                        * fit per line (+1 because of space after item) */
         perline = screen_width / (max_len + 1);
+        if (perline < 1) perline = 1;
     }   
    
     /* Field width to accomodate longest filename */
