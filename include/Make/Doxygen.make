@@ -17,7 +17,7 @@ htmldocs-single: checkdoxygen cleandocs
 htmldocs: checkdoxygen cleandocs
 # hack needed to get main page at beginning:
 	@mv $(DOXINPUT) $(DOXINPUT).org
-	@cat $(DOXINPUT).org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXINPUT)
+	@sed 's+/\*! \\page +/\*! \\mainpage +g' $(DOXINPUT).org > $(DOXINPUT)
 	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_html
 	@mv $(DOXINPUT).org $(DOXINPUT)
 	@echo "HTML reference in directory ./html/index.html"
@@ -27,7 +27,7 @@ latexdocs: checkdoxygen cleandocs
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
 # hack needed to get main page at beginning:
 	@mv $(DOXINPUT) $(DOXINPUT).org
-	@cat $(DOXINPUT).org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXINPUT)
+	@sed 's+/\*! \\page +/\*! \\mainpage +g' $(DOXINPUT).org > $(DOXINPUT)
 	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
@@ -39,7 +39,7 @@ pdfdocs: checkdoxygen cleandocs
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
 # hack needed to get main page at beginning:
 	@mv $(DOXINPUT) $(DOXINPUT).org
-	@cat $(DOXINPUT).org | sed 's+/\*! \\page +/\*! \\mainpage +g' > $(DOXINPUT)
+	@sed 's+/\*! \\page +/\*! \\mainpage +g' $(DOXINPUT).org > $(DOXINPUT)
 	doxygen $(MODULE_TOPDIR)/include/Make/Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
