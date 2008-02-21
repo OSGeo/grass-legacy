@@ -90,12 +90,12 @@ int main(int argc, char *argv[])
 	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
-	sprintf (progname, "%s/etc/wxpython/scripts/wxgui", G_gisbase());
+	sprintf (progname, "%s/etc/wxpython/wxgui.py", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn(progname, "wxgui", rc_file->answer, NULL);
+	    G_spawn("python", "wxgui", progname, "--workspace", rc_file->answer, NULL);
 	}
 	else {
-	    G_spawn(progname, "wxgui", NULL);
+	    G_spawn("python", "wxgui", progname, NULL);
 	}
     }
 
