@@ -115,9 +115,9 @@ int input_data (void)
 	zz = (float **)G_malloc (sizeof(float *)*(my));
 	v1 = (double **)G_malloc (sizeof(double *)*(my));
 	v2 = (double **)G_malloc (sizeof(double *)*(my));
-
-	if(rain != NULL||rain_val >= 0.0)
+	if(rain != NULL||rain_val >= 0.0){
 		si = (double **)G_malloc (sizeof(double *)*(my));
+	}
 
 	if(infil != NULL||infil_val >= 0.0)
 		inf = (double **)G_malloc (sizeof(double *)*(my));
@@ -169,7 +169,7 @@ int input_data (void)
 			gama[l]  = (double*)G_malloc (sizeof(double)*(mx));
 	}
 
-	G_message (_("Running MAY 10 version, started modifications on 20080211"));
+	G_debug(3, "Running MAY 10 version, started modifications on 20080211");
 
 	/* Check if data available in mapsets
 	 * if found, then open the files */
@@ -280,7 +280,7 @@ int input_data (void)
 		for (j=0; j<mx; j++)
 		{
 			row_rev = my - row - 1;
-
+			/*if elevation data exists store in zz[][]*/
 			if(!G_is_f_null_value(cell1+j))
 				zz[row_rev][j] = (float ) (conv * cell1[j]);
 			else
@@ -296,32 +296,38 @@ int input_data (void)
 			else
 				v2[row_rev][j] = UNDEF;
 
+			/* undef all area if something's missing */
 			if(v1[row_rev][j] == UNDEF || v2[row_rev][j] == UNDEF)
-				zz[row_rev][j] = UNDEF; /* undef all area if something's missing */
+				zz[row_rev][j] = UNDEF; 
 	   
 			/* should be ? 
 			 * if(v1[row_rev][j] == UNDEF || v2[row_rev][j] == UNDEF || 
-			 * zz[row_rev][j] = UNDEF)
-				 * {v1[row_rev][j] == UNDEF;
-  				 * v2[row_rev][j] == UNDEF;
-				 * zz[row_rev][j] = UNDEF;}
-				 * printout warning?
-			*/      
+			 * zz[row_rev][j] == UNDEF) {
+			 * 	v1[row_rev][j] == UNDEF;
+			 * 	v2[row_rev][j] == UNDEF;
+			 * 	zz[row_rev][j] == UNDEF;
+			 * 	}
+			 */    /*printout warning?*/     
+
+			/* If Rain Exists, then load data */
 			if (rain != NULL)
 			{
 				if(!G_is_d_null_value(cell4+j))
-					si[row_rev][j] = ((double ) cell4[j]) * unitconv; /*conv mm/hr to m/s*/
+					si[row_rev][j] = ((double ) cell4[j]) * unitconv; 
+					/*conv mm/hr to m/s*/
 				/*printf("\n INPUTrain, convert %f %f",si[row_rev][j],unitconv); */
 
 				else {
 					si[row_rev][j] = UNDEF;
 					zz[row_rev][j] = UNDEF;
 				}
-
+				
+				/* Load infiltration map too if it exists*/
 				if (infil != NULL)
 				{
 					if(!G_is_d_null_value(cell4a+j))
-						inf[row_rev][j] = (double ) cell4a[j] * unitconv;  /*conv mm/hr to m/s*/
+						inf[row_rev][j] = (double ) cell4a[j] * unitconv;  
+						/*conv mm/hr to m/s*/
 					/*printf("\nINPUT infilt,convert %f %f",inf[row_rev][j],unitconv);*/
 		  			else {
 						inf[row_rev][j] = UNDEF;
@@ -348,43 +354,43 @@ int input_data (void)
 					}
 		  		}
 			} else { /* Added by Yann 20080213*/
-				/* If rain==NULL, then use rainval */
-				if(rain_val>0.0){
-					si[row_rev][j]= rain_val*unitconv; /* conv mm/hr to m/s */
-				/*printf("\n INPUTrainval, convert %f %f",si[row_rev][j],unitconv); */
-				} else {
-					si[row_rev][j] = UNDEF;
-					zz[row_rev][j] = UNDEF;
-				}
-				
-				if (infil != NULL)
-				{
-					if(!G_is_d_null_value(cell4a+j))
-						inf[row_rev][j] = (double ) cell4a[j] * unitconv;  /*conv mm/hr to m/s*/
-					/*printf("\nINPUT infilt,convert %f %f",inf[row_rev][j],unitconv);*/
-		  			else {
-						inf[row_rev][j] = UNDEF;
-						zz[row_rev][j] = UNDEF;
-					}
-				} else { /* Added by Yann 20080216*/
-					/* If infil==NULL, then use infilval */
-					if( infil_val >= 0.0 ){
-						inf[row_rev][j]= infil_val * unitconv; /*conv mm/hr to m/s*/
-						/*printf("infil_val = %f \n",inf[row_rev][j]);*/
-					} else {
-						inf[row_rev][j] = UNDEF;
-						zz[row_rev][j] = UNDEF;
-					}
-				}
-				
-				if (traps != NULL)
-				{
-					if(!G_is_f_null_value(cell4b+j))
-						trap[row_rev][j] = (float) cell4b[j]; /* no conv, unitless */
-					else {
-						trap[row_rev][j] = UNDEF;
-						zz[row_rev][j] = UNDEF;
-					}
+ 				/* If rain==NULL, then use rainval */
+ 				if(rain_val>=0.0){
+ 					si[row_rev][j]= rain_val*unitconv; /* conv mm/hr to m/s */
+ 				/*printf("\n INPUTrainval, convert %f %f",si[row_rev][j],unitconv); */
+ 				} else {
+ 					si[row_rev][j] = UNDEF;
+ 					zz[row_rev][j] = UNDEF;
+ 				}
+ 				
+ 				if (infil != NULL)
+ 				{
+ 					if(!G_is_d_null_value(cell4a+j))
+ 						inf[row_rev][j] = (double ) cell4a[j] * unitconv;  /*conv mm/hr to m/s*/
+ 					/*printf("\nINPUT infilt,convert %f %f",inf[row_rev][j],unitconv);*/
+ 		  			else {
+ 						inf[row_rev][j] = UNDEF;
+ 						zz[row_rev][j] = UNDEF;
+ 					}
+ 				} else { /* Added by Yann 20080216*/
+ 					/* If infil==NULL, then use infilval */
+ 					if( infil_val >= 0.0 ){
+ 						inf[row_rev][j]= infil_val * unitconv; /*conv mm/hr to m/s*/
+ 						/*printf("infil_val = %f \n",inf[row_rev][j]);*/
+ 					} else {
+ 						inf[row_rev][j] = UNDEF;
+ 						zz[row_rev][j] = UNDEF;
+ 					}
+ 				}
+ 				
+ 				if (traps != NULL)
+ 				{
+ 					if(!G_is_f_null_value(cell4b+j))
+ 						trap[row_rev][j] = (float) cell4b[j]; /* no conv, unitless */
+ 					else {
+ 						trap[row_rev][j] = UNDEF;
+ 						zz[row_rev][j] = UNDEF;
+ 					}
 		  		}
 			} /* End of added by Yann 20080213*/
 			if (manin != NULL){
@@ -394,7 +400,7 @@ int input_data (void)
 					cchez[row_rev][j] = UNDEF;
 					zz[row_rev][j] = UNDEF;
 				}
-			} else if(manin_val>0.0) { /* Added by Yann 20080213 */
+			} else if(manin_val>=0.0) { /* Added by Yann 20080213 */
 				cchez[row_rev][j] = (float) manin_val;
 			} else {	
 				G_fatal_error(_("Raster map <%s> not found, and manin_val undefined, choose one to be allowed to process"), manin);
@@ -682,7 +688,6 @@ int grad_check (void)
 			} /*DEFined area */
 		}
 	}
-
 	return 1;
 }
 
