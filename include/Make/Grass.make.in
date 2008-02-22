@@ -88,6 +88,7 @@ endif
 
 ##################### library names #####################################
 
+ARRAYSTATS_LIBNAME        = grass_arraystats
 BITMAP_LIBNAME        = grass_bitmap
 BTREE_LIBNAME         = grass_btree
 COORCNV_LIBNAME       = grass_coorcnv
@@ -182,6 +183,7 @@ LRS_LIBNAME           = grass_lrs
 
 ##################### library switches ##################################
 
+ARRAYSTATSLIB      = -l$(ARRAYSTATS_LIBNAME) $(GISLIB) 
 BITMAPLIB     = -l$(BITMAP_LIBNAME) $(LINKMLIB) 
 BTREELIB      = -l$(BTREE_LIBNAME)
 COORCNVLIB    = -l$(COORCNV_LIBNAME)
@@ -277,6 +279,7 @@ LRSLIB        = -l$(LRS_LIBNAME) $(DBMIBASELIB) $(DBMICLIENTLIB) $(GISLIB)
 ISMAPDEP    = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(ISMAP_LIBNAME)$(STLIB_SUFFIX)
 MANAGEDEP   = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(MANAGE_LIBNAME)$(STLIB_SUFFIX)
 
+ARRAYSTATSDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(ARRAYSTATS_LIBNAME)$(LIB_SUFFIX)
 BITMAPDEP   = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(BITMAP_LIBNAME)$(LIB_SUFFIX)
 BTREEDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(BTREE_LIBNAME)$(LIB_SUFFIX)
 COORCNVDEP  = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(COORCNV_LIBNAME)$(LIB_SUFFIX)
