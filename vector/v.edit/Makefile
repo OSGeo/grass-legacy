@@ -1,13 +1,12 @@
 MODULE_TOPDIR = ../..
 
-SUBDIRS1 = cmd
+PGM = v.edit
 
-SUBDIRS = lib $(SUBDIRS1)
+LIBES = $(VEDITLIB) $(VECTLIB) $(GISLIB)
+DEPENDENCIES= $(VEDITDEP) $(VECTDEP) $(GISDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: parsubdirs
-
-clean: cleansubdirs
-
-$(SUBDIRS1): lib
+default: cmd

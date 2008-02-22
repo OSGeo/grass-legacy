@@ -8,9 +8,6 @@ EXTRA_LIBS = $(VECTLIB) $(DBMILIB) $(GISLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-default: lib $(ARCH_INCDIR)/vedit.h
-
-$(ARCH_INCDIR)/vedit.h: vedit.h
-	$(INSTALL_DATA) vedit.h $(ARCH_INCDIR)/vedit.h
+default: lib
 
 
