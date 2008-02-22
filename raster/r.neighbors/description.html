@@ -21,7 +21,7 @@ line.  Alternately, the user can simply type
 arguments.  In this case, the user will be prompted for
 flag settings and parameter values.
 
-<H2>OPTIONS</H2>
+<H3>OPTIONS</H3>
 
 The user must specify the names of the raster map layers to
 be used for <EM>input</EM> and <EM>output</EM>, the
@@ -33,7 +33,7 @@ be assigned to the raster map layer <EM>output</EM>, elect
 to not align the resolution of the output with that of the
 input (the <EM>-a</EM> option), run <EM>r.neighbors</EM> with
 a custom matrix weights with the <EM>weight</EM> option, and
-elect to run<EM>r.neighbors</EM> quietly (the <EM>-q</EM> option).
+elect to run <EM>r.neighbors</EM> quietly (the <EM>-q</EM> option).
 These options are described further below.
 
 
@@ -125,7 +125,6 @@ In the above example, the interspersion is:
 <BR>
 
 The result is rounded to the nearest integer (in this case 64).
-ERROR .RE
 
 </DL>
 <P>
@@ -177,6 +176,7 @@ This corresponds to the following 3x3 matrix:
 
 <P>
 
+<H3>FLAGS</H3>
 
 <DT><B>-a</B> 
 
@@ -187,6 +187,40 @@ It is recommended, but not required, that the resolution
 of the geographic region be the same as that of the raster map layer.
 By default, if unspecified,
 <EM>r.neighbors</EM> will align these geographic region settings.
+<p>
+
+<DT><B>-c</B>
+<DD>
+This flag will use a circular neighborhood for the moving analysis window,
+centered on the current cell. 
+
+<p>
+The exact masks for the first few neighborhood sizes are as follows:
+<div class="code"><PRE>
+3x3     . X .		5x5	. . X . .	7x7	. . . X . . . 
+        X O X			. X X X .		. X X X X X .
+        . X .			X X O X X		. X X X X X .
+				. X X X .		X X X O X X X
+ 				. . X . .		. X X X X X .
+							. X X X X X .
+        						. . . X . . .							
+
+9x9	. . . . X . . . .		11x11   . . . . . X . . . . .
+	. . X X X X X . .			. . X X X X X X X . .
+        . X X X X X X X .			. X X X X X X X X X .
+        . X X X X X X X .			. X X X X X X X X X .
+        X X X X O X X X X			. X X X X X X X X X .
+        . X X X X X X X .			X X X X X O X X X X X
+        . X X X X X X X .			. X X X X X X X X X .	
+        . . X X X X X . .			. X X X X X X X X X .
+        . . . . X . . . .			. X X X X X X X X X .
+				        	. . X X X X X X X . .
+				        	. . . . . X . . . . .	
+</PRE></div>
+
+
+        
+<p>
 
 <DT><B>-q</B> 
 
@@ -194,6 +228,7 @@ By default, if unspecified,
 (i.e., without printing to standard output notes on the program's progress).
 If unspecified, the program will print messages to standard output by default.
 </DD>
+
 
 <H2>NOTES</H2>
 
@@ -205,8 +240,20 @@ these geographic region settings.  However, the user can elect to keep
 original input and output resolutions which are not aligned by specifying
 this (e.g., using the <EM>-a</EM> option).
 
-
 <P>
+With the <b>-c</b> flag, differently-shaped neighborhood analysis windows may be achieved by
+using the <em>weight=</em> parameter to specify a weights file where all values
+are equal (for <em>method</em>=sum, the sum of the weights should be 1). The user
+can also vary the weights at the edge of the neighborhood according to 
+the proportion of the cell that lies inside the neighborhood circle, 
+effectively anti-aliasing the analysis mask.
+<p>
+
+For aggregates where a weighted calculation isn't meaningful
+(specifically: minimum, maximum, diversity and interspersion), the
+weights are used to create a binary mask, where zero causes the cell
+to be ignored and any non-zero value causes the cell to be used.
+<p>
 
 <EM>r.neighbors</EM> copies the GRASS <EM>color</EM> files associated with
 the input raster map layer for those output map layers that are based
@@ -215,7 +262,7 @@ Because standard deviation, variance, diversity, and interspersion are indices,
 rather than direct correspondents to input values,
 no <EM>color</EM> files are copied for these map layers.
 (The user should note that although the <EM>color</EM> file is copied
-for <EM>average</EM>d neighborhood function output,
+for <EM>average</EM> neighborhood function output,
 whether or not the color file makes sense for the output
 will be dependent on the input data values.)
 
@@ -233,4 +280,13 @@ will be dependent on the input data values.)
 Michael Shapiro,
 U.S.Army Construction Engineering Research Laboratory 
 
-<p><i>Last changed: $Date$</i>
+<p><i>Last changed: $Date$</i>  
+				        
+				        
+				        
+				        
+
+
+
+
+
