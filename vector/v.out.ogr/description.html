@@ -64,9 +64,35 @@ v.out.ogr input=polygons type=area \
 
 <h3>Export to KML (Google Earth)</h3>
 
-Export faces (3D vectors) from GRASS vector map in KML format for Google Earth:
+<b>Example 1 (Latitude-Longitude location):</b><br>
+Export faces (3D vectors) from GRASS vector map to KML format for Google Earth:
 <div class="code"><pre>
-v.out.ogr in=buildings_3d dsn=buildings_3d.kml olayer=buildings_3d format=KML type=face
+v.out.ogr input=buildings_3d dsn=buildings_3d.kml olayer=buildings_3d \
+          format=KML type=face
+</pre></div>
+
+<p>
+<b>Example 2 (Latitude-Longitude location):</b><br>
+Generate and export GRASS vector "asteroid" map (faces, 3D vectors) to KML format for Google Earth:
+<div class="code"><pre>
+# near Raleigh (NC, USA)
+g.region n=35.73952587 s=35.73279182 w=-78.68263928 e=-78.67499517
+
+# two layers of random points
+v.random -z output=random3d_a n=10 zmin=0 zmax=200
+v.random -z output=random3d_b n=15 zmin=400 zmax=600
+
+# merge into one 3D points map
+v.patch input=random3d_a,random3d_b output=random3d
+
+# generate 3D convex hull
+v.hull input=random3d output="random3d_hull"
+
+# export to KML 3D
+v.out.ogr input=random3d_hull dsn=random3d_hull.kml format=KML \
+          type=face dsco="AltitudeMode=absolute"
+
+# now open KML file 'random3d_hull.kml' in Google Earth or NASA WorldWind or ...
 </pre></div>
 
 
