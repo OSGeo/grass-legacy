@@ -1191,12 +1191,8 @@ class CDisplayDriver(AbstractDisplayDriver):
 
         @return wx.Image instance
         """
-        import time
-        start = time.clock()
         nlines = self.__display.DrawMap(True) # force
-        stop = time.clock()
-        Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d, sec=%f" % \
-                      (nlines, stop-start))
+        Debug.msg(3, "CDisplayDriver.DrawMap(): nlines=%d" % nlines)
 
         return nlines
 
