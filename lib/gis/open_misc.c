@@ -56,7 +56,7 @@ static int G__open_misc (
 	}
 	if ((dummy = G_find_file2_misc (dir, element, name, mapset)) == NULL)
 	    return -1;
-	G_free (dummy);
+
 	G__file_name_misc (path, dir, element, name, mapset);
 
 	return open (path, 0);
