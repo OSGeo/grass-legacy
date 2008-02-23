@@ -12,7 +12,7 @@
    \date 2007-2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 static int select_by_query(struct Map_info *, int, int, int,
 			   int, double,

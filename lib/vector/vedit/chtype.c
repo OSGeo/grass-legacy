@@ -18,7 +18,7 @@
    \date 2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 int Vedit_chtype_lines(struct Map_info *Map, struct ilist *List,
 		       int *npoints, int *ncentroids,
