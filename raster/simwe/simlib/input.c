@@ -605,7 +605,8 @@ int grad_check (void)
 	
 	fprintf (stderr, "\n");
 	G_message (_("Min elevation \t= %.2f m\nMax elevation \t= %.2f m\n"),zmin,zmax);
-	G_message (_("Mean Rainfall \t= %f m/s\nMean flow velocity \t= %f m/s\n"),si0,vmean);
+	G_message (_("Mean Source Rate (rainf. excess or sediment) \t= %f m/s or kg/m2s \n"),si0);
+	G_message (_("Mean flow velocity \t= %f m/s\n"),vmean);
 	G_message (_("Mean Mannings \t= %f\n"),1.0/chmean);
 
 	deltap = amin1(deltap,deltaw);
