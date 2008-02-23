@@ -49,7 +49,7 @@
 /********************************/
 /* DEFINE GLOB VAR              */
 /********************************/
-#define NWALK	"1000000"
+/* #define NWALK	"1000000" */
 #define DIFFC	"0.8"
 #define NITER   "10"
 #define ITEROUT "2"
@@ -249,7 +249,7 @@ int main ( int argc, char *argv[])
 	parm.nwalk = G_define_option();
 	parm.nwalk->key = "nwalk";
 	parm.nwalk->type = TYPE_INTEGER;
-        parm.nwalk->answer = NWALK;
+/*      parm.nwalk->answer = NWALK; */
 	parm.nwalk->required = NO;
 	parm.nwalk->description = _("Number of walkers");
 	parm.nwalk->guisection  = _("Parameters");
@@ -317,7 +317,7 @@ int main ( int argc, char *argv[])
 	erdep = parm.erdep->answer;
 	sfile = parm.sfile->answer;
 	
-	sscanf(parm.nwalk->answer, "%d", &maxwa);
+/*	sscanf(parm.nwalk->answer, "%d", &maxwa); */
 	sscanf(parm.niter->answer, "%d", &timesec);
 	sscanf(parm.outiter->answer, "%d", &iterout);
 	sscanf(parm.density->answer, "%d", &ldemo);
