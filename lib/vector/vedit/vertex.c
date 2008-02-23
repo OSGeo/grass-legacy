@@ -15,7 +15,7 @@
    \date 2006-2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Move all vertices in bounding box(es)

@@ -15,7 +15,7 @@
    \date 2006-2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Add/remove categories of selected vector features

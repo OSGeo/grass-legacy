@@ -15,7 +15,7 @@
 */
 
 #include <grass/dbmi.h>
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Z bulk-labeling.

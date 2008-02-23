@@ -15,7 +15,7 @@
 */
 
 #include <math.h>
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Split selected lines on given position

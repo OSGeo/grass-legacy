@@ -14,7 +14,7 @@
    \date 2007-2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Flip direction of selected vector lines

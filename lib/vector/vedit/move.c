@@ -15,7 +15,7 @@
    \date 2007-2008
 */
 
-#include "vedit.h"
+#include <grass/vedit.h>
 
 /**
    \brief Move selected features
