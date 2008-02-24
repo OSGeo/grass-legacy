@@ -391,7 +391,7 @@ class BufferedWindow(wx.Window):
 
         Debug.msg(4, "BufferedWindow.OnPaint(): redrawAll=%s" % self.redrawAll)
 
-        dc = wx.BufferedPaintDC(self, self._buffer)
+        dc = wx.BufferedPaintDC(self, self.buffer)
 
         # we need to clear the dc BEFORE calling PrepareDC
         #bg = wx.Brush(self.GetBackgroundColour())
@@ -414,9 +414,9 @@ class BufferedWindow(wx.Window):
             if self.pdcVector:
                 self.pdcVector.DrawToDCClipped(dc, rgn)
 
-            self._bufferLast = None
+            self.bufferLast = None
         else: # do not redraw pdc and pdcVector
-            if self._bufferLast is None:
+            if self.bufferLast is None:
                 # draw to the dc
                 self.pdc.DrawToDC(dc)
 
@@ -424,11 +424,11 @@ class BufferedWindow(wx.Window):
                     self.pdcVector.DrawToDC(dc)
 
                 # store buffered image
-                # self._bufferLast = wx.BitmapFromImage(self._buffer.ConvertToImage())
-                self._bufferLast = dc.GetAsBitmap(wx.Rect(0, 0, self.Map.width, self.Map.height))
+                # self.bufferLast = wx.BitmapFromImage(self.buffer.ConvertToImage())
+                self.bufferLast = dc.GetAsBitmap(wx.Rect(0, 0, self.Map.width, self.Map.height))
 
             pdcLast = wx.PseudoDC()
-            pdcLast.DrawBitmap(bmp=self._bufferLast, x=0, y=0)
+            pdcLast.DrawBitmap(bmp=self.bufferLast, x=0, y=0)
             pdcLast.DrawToDC(dc)
 
         # draw temporary object on the foreground
@@ -452,8 +452,8 @@ class BufferedWindow(wx.Window):
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
         # a file, or whatever.
-        self._buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1,self.Map.height))
-        #self._buffer = wx.EmptyBitmap(mwidth, mheight)
+        self.buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1,self.Map.height))
+        #self.buffer = wx.EmptyBitmap(mwidth, mheight)
 
         # get the image to be rendered
         self.img = self.GetImage()
@@ -488,11 +488,11 @@ class BufferedWindow(wx.Window):
         This draws the psuedo DC to a buffer that
         can be saved to a file.
         """
-        dc = wx.BufferedPaintDC(self, self._buffer)
+        dc = wx.BufferedPaintDC(self, self.buffer)
         self.pdc.DrawToDC(dc)
         if self.pdcVector:
             self.pdcVector.DrawToDC(dc)
-        self._buffer.SaveFile(FileName, FileType)
+        self.buffer.SaveFile(FileName, FileType)
 
     def GetOverlay(self):
         """
@@ -529,17 +529,33 @@ class BufferedWindow(wx.Window):
         """
         Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
+
+        @param render render map layer composition
+        @param renderVector render vector map layer (digitizer)
+        @param counter reference to layer counter (progress bar)
         """
 
-        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s" % \
-                   (render, renderVector))
+        start = time.clock()
+
+        if self.img is None:
+            render = True
+
+        #
+        # initialize process bar
+        #
+        if render is True or renderVector is True:
+            self.parent.onRenderGauge.Show()
+            if self.parent.onRenderGauge.GetRange() > 0:
+                self.parent.onRenderGauge.SetValue(1)
+                self.parent.onRenderTimer.Start(100)
+            self.parent.onRenderCounter = 0
 
         #
         # render background image if needed
         #
-        if render or self.img == None:
+        if render:
             self.Map.ChangeMapSize(self.GetClientSize())
-            self.mapfile = self.Map.Render(force=True)
+            self.mapfile = self.Map.Render(force=True, mapWindow=self.parent)
             self.img = self.GetImage() # id=99
             self.resize = False
 
@@ -618,11 +634,23 @@ class BufferedWindow(wx.Window):
         if len(self.polycoords) > 0:
             self.DrawLines(self.pdcTmp)
 
+        stop = time.clock()
+
+        #
+        # hide process bar
+        #
+        if self.parent.onRenderGauge.GetRange() > 0:
+            self.parent.onRenderTimer.Stop()
+        self.parent.onRenderGauge.Hide()
+
         #
         # update statusbar
         #
         self.Map.SetRegion()
         self.parent.StatusbarUpdate()
+
+        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%d" % \
+                   (render, renderVector, (stop-start)))
 
         return True
 
@@ -641,7 +669,7 @@ class BufferedWindow(wx.Window):
         dc.SetBackground(wx.Brush("White"))
         dc.Clear()
 
-        self.dragimg = wx.DragImage(self._buffer)
+        self.dragimg = wx.DragImage(self.buffer)
         self.dragimg.BeginDrag((0, 0), self)
         self.dragimg.GetImageRect(moveto)
         self.dragimg.Move(moveto)
@@ -2176,6 +2204,12 @@ class MapFrame(wx.Frame):
                                     size=(150, -1))
         self.mapScale.Hide()
         self.statusbar.Bind(wx.EVT_TEXT_ENTER, self.OnChangeMapScale, self.mapScale)
+        # on-render gauge
+        self.onRenderGauge = wx.Gauge(parent=self.statusbar, id=wx.ID_ANY,
+                                      range=0, style=wx.GA_HORIZONTAL)
+        self.onRenderGauge.Hide()
+        self.Bind(wx.EVT_TIMER, self.TimerOnRender)
+        self.onRenderTimer = wx.Timer(self)
 
         self.Map.SetRegion() # set region
 
@@ -2361,18 +2395,21 @@ class MapFrame(wx.Frame):
 
         event.Skip()
 
-    def ReDraw(self, event):
+    def OnDraw(self, event):
         """
         Redraw button clicked
         """
-        Debug.msg(3, "BufferedWindow.ReDraw():")
         self.MapWindow.UpdateMap(render=False)
 
-    def ReRender(self, event):
+    def TimerOnRender(self, event):
+        """Update process bar"""
+        self.onRenderGauge.SetValue(self.onRenderCounter)
+
+    def OnRender(self, event):
         """
         Rerender button clicked
         """
-        Debug.msg(3, "BufferedWindow.ReRender():")
+        # redraw map composition
         qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)
         for layer in qlayer:
             self.Map.DeleteLayer(layer)
@@ -2600,17 +2637,22 @@ class MapFrame(wx.Frame):
         # reposition checkbox
         widgets = [(0, self.showRegion),
                    (0, self.mapScale),
+                   (0, self.onRenderGauge),
                    (1, self.toggleStatus),
                    (2, self.autoRender)]
         for idx, win in widgets:
             rect = self.statusbar.GetFieldRect(idx)
-            if idx == 0: # show region / mapscale
+            if idx == 0: # show region / mapscale / process bar
+                # -> size
                 wWin, hWin = win.GetBestSize()
+                if win == self.onRenderGauge:
+                    wWin = rect.width - 6
+                # -> position
                 if win == self.showRegion:
-                    x, y = rect.x + rect.width - wWin, rect.y-1
+                    x, y = rect.x + rect.width - wWin, rect.y - 1
                 else:
-                    x, y = rect.x + 3, rect.y-1
-                w, h = wWin, rect.height+2
+                    x, y = rect.x + 3, rect.y - 1
+                w, h = wWin, rect.height + 2
             else: # choice || auto-rendering
                 x, y = rect.x, rect.y-1
                 w, h = rect.width, rect.height+2
