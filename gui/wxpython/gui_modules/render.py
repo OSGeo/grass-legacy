@@ -606,15 +606,23 @@ class Map(object):
             Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
         # compose command
-        compcmd = ["g.pnmcomp",
-                   "in=%s" % ",".join(maps),
-                   "mask=%s" % ",".join(masks),
-                   "opacity=%s" % repr(",".join(opacities)),
-                   "background=255:255:255",
-                   "width=%s" % str(self.width),
-                   "height=%s" % str(self.height),
-                   "output=%s" % self.mapfile]
+        #         compcmd = ["g.pnmcomp",
+        #                    "in='%s'" % ",".join(maps),
+        #                    "mask=%s" % ",".join(masks),
+        #                    "opacity=%s" % ",".join(opacities),
+        #                    "background=255:255:255",
+        #                    "width=%s" % str(self.width),
+        #                    "height=%s" % str(self.height),
+        #                    "output=%s" % self.mapfile]
         
+        compcmd = "g.pnmcomp in='" + ",".join(maps) + \
+            "' mask='" + ",".join(masks) + \
+            "' opacity=" + ",".join(opacities)+ \
+            " background=255:255:255" + \
+            " width=" + str(self.width) + \
+            " height=" + str(self.height) + \
+            " output='" + self.mapfile + "'"
+
         # render overlays
 
         os.unsetenv("GRASS_REGION")
@@ -624,7 +632,8 @@ class Map(object):
 
         # run g.composite to get composite image
         try:
-            gcmd.Command(compcmd)
+            # gcmd.Command(compcmd)
+            os.system(compcmd)
         except gcmd.CmdError, e:
             print e
             return None
