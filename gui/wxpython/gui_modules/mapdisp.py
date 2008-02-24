@@ -649,7 +649,7 @@ class BufferedWindow(wx.Window):
         self.Map.SetRegion()
         self.parent.StatusbarUpdate()
 
-        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%d" % \
+        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%g" % \
                    (render, renderVector, (stop-start)))
 
         return True
