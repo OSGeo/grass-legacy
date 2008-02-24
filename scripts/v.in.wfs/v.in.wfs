@@ -64,7 +64,7 @@ OUT=$GIS_OPT_output
 WFS_URL="$GIS_OPT_WFS"
 
 g.message "Retrieving data ..."
-lynx -dump "$WFS_URL" > "$TMP.xml"
+lynx -source "$WFS_URL" > "$TMP.xml"
 
 v.in.ogr dsn="$TMP.xml" out=$OUT -o
 #rm -f "$TMP.xml"
