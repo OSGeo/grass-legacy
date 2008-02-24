@@ -25,7 +25,8 @@ struct bin
 static int rows, cols;
 
 static DCELL min, max;
-static int num_quant;
+static int num_quants;
+static DCELL *quants;
 static int num_slots;
 static unsigned int *slots;
 static DCELL slot_size;
@@ -48,7 +49,7 @@ static inline int get_slot(DCELL c)
 
 static inline double get_quantile(int n)
 {
-	return (double) total * n / num_quant;
+	return (double) total * quants[n];
 }
 
 static void get_slot_counts(int infile)
@@ -90,7 +91,7 @@ static void initialize_bins(void)
 	double next;
 	int bin = 0;
 	unsigned long accum = 0;
-	int quant = 1;
+	int quant = 0;
 
 	G_message(_("Computing bins"));
 
@@ -196,7 +197,7 @@ static void compute_quantiles(void)
 	struct bin *b = &bins[0];
 	int quant;
 
-	for (quant = 1; quant < num_quant; quant++)
+	for (quant = 0; quant < num_quants; quant++)
 	{
 		double next = get_quantile(quant);
 		double k, v;
@@ -213,7 +214,7 @@ static void compute_quantiles(void)
 			? values[b->base + i0]
 			: values[b->base + i0] * (i1 - k) + values[b->base + i1] * (k - i0);
 
-		printf("%2d: %f\n", quant, v);
+		printf("%d:%f:%f\n", quant, 100 * quants[quant], v);
 	}
 }
 
@@ -221,7 +222,7 @@ int main( int argc, char *argv[])
 {
 	struct GModule *module;
 	struct {
-		struct Option *input, *quant, *slots;
+		struct Option *input, *quant, *perc, *slots;
 	} opt;
 	int infile;
 	struct FPRange range;
@@ -242,6 +243,13 @@ int main( int argc, char *argv[])
 	opt.quant->description = _("Number of quantiles");
 	opt.quant->answer      = "4";
 
+	opt.perc = G_define_option();
+	opt.perc->key          = "percentiles";
+	opt.perc->type         = TYPE_DOUBLE;
+	opt.perc->required     = NO;
+	opt.perc->multiple     = YES;
+	opt.perc->description  = _("List of percentiles");
+
 	opt.slots = G_define_option();
 	opt.slots->key         = "bins";
 	opt.slots->type        = TYPE_INTEGER;
@@ -252,8 +260,27 @@ int main( int argc, char *argv[])
 	if (G_parser(argc, argv))
 		exit(EXIT_FAILURE);
 
-	num_quant = atoi(opt.quant->answer);
 	num_slots = atoi(opt.slots->answer);
+
+	if (opt.perc->answer)
+	{
+		int i;
+		for (i = 0; opt.perc->answers[i]; i++)
+			;
+		num_quants = i;
+		quants = G_calloc(num_quants, sizeof(DCELL));
+		for (i = 0; i < num_quants; i++)
+			quants[i] = atof(opt.perc->answers[i]) / 100;
+		qsort(quants, num_quants, sizeof(DCELL), compare_dcell);
+	}
+	else
+	{
+		int i;
+		num_quants = atoi(opt.quant->answer) - 1;
+		quants = G_calloc(num_quants, sizeof(DCELL));
+		for (i = 0; i < num_quants; i++)
+			quants[i] = 1.0 * (i + 1) / (num_quants + 1);
+	}
 
 	infile = G_open_cell_old(opt.input->answer, "");
 	if (infile < 0)
@@ -272,7 +299,7 @@ int main( int argc, char *argv[])
 
 	get_slot_counts(infile);
 
-	bins = G_calloc(num_quant, sizeof(struct bin));
+	bins = G_calloc(num_quants, sizeof(struct bin));
 	initialize_bins();
 	G_free(slots);
 
