@@ -789,26 +789,32 @@ class GMFrame(wx.Frame):
         input and processes rules
         """
         command = self.GetMenuCmd(event)
+
         dlg = rules.RulesText(self, cmd=command)
         if dlg.ShowModal() == wx.ID_OK:
             gtemp = utils.GetTempfile()
-            output = open(gtemp,"w")
+            output = open(gtemp, "w")
             try:
                 output.write(dlg.rules)
             finally:
                 output.close()
 
-            if command == 'r.colors':
-                cmdlist = [command,'map=%s' % dlg.inmap,'rules=%s' % gtemp,'--verbose']
+            if command[0] == 'r.colors':
+                cmdlist = [command[0],
+                           'map=%s' % dlg.inmap,
+                           'rules=%s' % gtemp]
             else:
-                cmdlist = [command,'input=%s' % dlg.inmap,'output=%s' % dlg.outmap,'rules=%s' % gtemp]
+                cmdlist = [command[0],
+                           'input=%s' % dlg.inmap,
+                           'output=%s' % dlg.outmap,
+                           'rules=%s' % gtemp]
 
             if dlg.overwrite == True:
                 cmdlist.append('--o')
 
-            gcmd.Command(cmdlist, verbose=3)
+            dlg.Destroy()
 
-        dlg.Destroy()
+            self.goutput.RunCmd(cmdlist)
 
     def OnXTerm(self, event):
         """
