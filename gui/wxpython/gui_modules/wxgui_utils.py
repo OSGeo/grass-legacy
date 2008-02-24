@@ -672,12 +672,12 @@ class LayerTree(CT.CustomTreeCtrl):
             else:
                 self.Map.ChangeLayerActive(self.GetPyData(item)[0]['maplayer'], checked)
 
+        # update progress bar range (mapwindow statusbar)
+        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
             self.mapdisplay.OnRender(None)
-
-        # update progress bar range (mapwindow statusbar)
-        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
     def OnCmdChanged(self, event):
         """Change command string"""
