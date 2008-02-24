@@ -1015,7 +1015,7 @@ class cmdPanel(wx.Panel):
                         selection.SetValue(p['value']) # parameter previously set
 
                     which_sizer.Add(item=selection, proportion=0,
-                                    flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT, border=5)
+                                    flag=wx.ADJUST_MINSIZE| wx.BOTTOM | wx.LEFT | wx.RIGHT, border=5)
                     # A select.Select is a combobox with two children: a textctl and a popupwindow;
                     # we target the textctl here
                     p['wxId'] = selection.GetChildren()[0].GetId()
@@ -1083,8 +1083,9 @@ class cmdPanel(wx.Panel):
                         tooltip += 2 * os.linesep
                     else:
                         tooltip = ''
-                    for i in range(len(p['values'])):
-                        tooltip += p['values'][i] + ': ' + p['values_desc'][i] + os.linesep
+                    if len(p['values']) == len(p['values_desc']):
+                        for i in range(len(p['values'])):
+                            tooltip += p['values'][i] + ': ' + p['values_desc'][i] + os.linesep
                     tooltip.strip(os.linesep)
                 if tooltip:
                     txt.SetToolTipString(tooltip)
