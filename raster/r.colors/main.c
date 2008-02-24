@@ -122,12 +122,13 @@ int main(int argc, char **argv)
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->keywords = _("raster");
+    module->keywords = _("raster, color table");
     module->description =
 	_("Creates/modifies the color table associated with a raster map layer.");
 
     opt.map = G_define_standard_option(G_OPT_R_MAP);
     opt.map->required      = NO;
+    opt.map->guisection = _("Required");
 
     scan_rules();
 
@@ -138,11 +139,37 @@ int main(int argc, char **argv)
     opt.colr->required     = NO;
     opt.colr->options      = rules_list();
     opt.colr->description  = _("Type of color table");
-    opt.colr->descriptions =
-	"grey.eq;histogram equalized grey scale;"
-	"grey.log;histogram logarithmic transformed grey scale;"
-	"random;random color table;"
-	"rules;create new color table by rules";
+    opt.colr->descriptions = 
+	_("aspect;aspect oriented grey colors;"   
+	  "aspectcolr;aspect oriented rainbow colors;"
+	  "bcyr;blue through cyan through yellow to red;"
+	  "bgyr;blue through green through yellow to red;"
+	  "byg;blue through yellow to green colors;"
+	  "byr;blue through yellow to red colors;"
+	  "curvature;for terrain curvatures (from v.surf.rst and r.slope.aspect curvature colors);"
+	  "differences;differences oriented colors;"
+	  "elevation;maps percentage ranges of raster values to elevation color ramp;"
+	  "etopo2;rainbow color ramp for the ETOPO2 2-minute Worldwide Bathymetry/Topography dataset;"
+	  "evi;enhanced vegetative index colors;"
+	  "grey;grey scale;"
+	  "grey1.0;grey scale for raster values between 0.0-1.0;"
+	  "grey255;grey scale for raster values bewtween 0-255;"
+	  "grey.eq;histogram-equalized grey scale;"
+	  "grey.log;histogram logarithmic transformed grey scale;"
+	  "gyr;green through yellow to red colors;"
+	  "ndvi;Normalized Difference Vegetation Index colors;"
+	  "population;color table covering human population classification breaks;"
+	  "rainbow;rainbow color table;"
+	  "ramp;color ramp;"
+	  "random;random color table;"
+	  "rules;create new color table based on user-specified rules;"
+	  "ryb;red through yellow to blue colors;"
+	  "ryg;red through yellow to green colors;"
+	  "slope;r.slope.aspect-type slope colors for raster values 0-90;"
+	  "srtm;color palette for Shuttle Radar Topography Mission elevation values;"
+	  "terrain;global elevation color table covering -11000 to +8850m;"
+	  "wave;color wave;");
+    opt.colr->guisection = _("Colors");
 
     opt.rast = G_define_option();
     opt.rast->key          = "raster";
@@ -151,12 +178,11 @@ int main(int argc, char **argv)
     opt.rast->gisprompt    = "old,cell,raster";
     opt.rast->description  = _("Raster map name from which to copy color table");
 
-    opt.rules = G_define_option();
+    opt.rules = G_define_standard_option(G_OPT_F_INPUT);
     opt.rules->key         = "rules";
-    opt.rules->type        = TYPE_STRING;
     opt.rules->required    = NO;
     opt.rules->description = _("Path to rules file");
-    opt.rules->gisprompt   = "old_file,file,input";
+    opt.rules->guisection = _("Colors");
 
     flag.r = G_define_flag();
     flag.r->key = 'r';  
@@ -173,14 +199,17 @@ int main(int argc, char **argv)
     flag.n = G_define_flag();
     flag.n->key = 'n';  
     flag.n->description = _("Invert colors");
+    flag.n->guisection = _("Colors");
 
     flag.g = G_define_flag();
     flag.g->key = 'g';  
     flag.g->description = _("Logarithmic scaling");
+    flag.g->guisection = _("Colors");
 
     flag.e = G_define_flag();
     flag.e->key = 'e';  
     flag.e->description = _("Histogram equalization");
+    flag.e->guisection = _("Colors");
 
     flag.i = G_define_flag();
     flag.i->key = 'i';  
