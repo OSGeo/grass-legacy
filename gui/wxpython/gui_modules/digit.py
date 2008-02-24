@@ -1865,7 +1865,7 @@ class DigitSettingsDialog(wx.Dialog):
 
         # redraw map if auto-rendering is enabled
         if self.parent.autoRender.GetValue(): 
-            self.parent.ReRender(None)
+            self.parent.OnRender(None)
 
 class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     """
