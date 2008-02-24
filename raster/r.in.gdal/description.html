@@ -1,31 +1,31 @@
-<H2>DESCRIPTION</H2>
+<h2>DESCRIPTION</h2>
 
-<EM>r.in.gdal</EM> allows a user to create a (binary) GRASS raster map layer,
+<em>r.in.gdal</em> allows a user to create a (binary) GRASS raster map layer,
 or imagery group,
 from any GDAL supported raster map format, with an optional title.  The
 imported file may also be optionally used to create a new location.
 
-<!--<H2>OPTIONS</H2>
+<!--<h2>OPTIONS</h2>
 
 Extended explanations:
 
-<H3>Flags:</H3>
+<h3>Flags:</h3>
 
-<DT><B>-e</B>
-<DD>Extend the DEFAULT_WIND in PERMANENT mapset to include the region of
+<dt><b>-e</b>
+<dd>Extend the DEFAULT_WIND in PERMANENT mapset to include the region of
 the new map layer.  Old resolution is preserved, but the region, and rows/cols
 are updated.  This will fail if the user doesn't have write access to the
 PERMANENT mapset.
-</DL>-->
+</dl>-->
 
-<H2>GDAL supported raster formats</H2>
+<h2>GDAL supported raster formats</h2>
 
 Full details on GDAL supported formats are available at:<p>
 
-<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a><P>
+<a href="http://www.gdal.org/formats_list.html">http://www.gdal.org/formats_list.html</a><p>
 
-Selected formats of more than 40 supported formats:
-<PRE>
+Selected formats of more than 45 supported formats:
+<pre>
 
 Long Format Name                                        Code                    Creation        Georeferencing          Maximum File Size
 
@@ -77,20 +77,20 @@ USGS SDTS DEM (*CATD.DDF)                               SDTS                    
 SAR CEOS                                                SAR_CEOS                No              Yes                     --
 USGS ASCII DEM (.dem)                                   USGSDEM                 No              Yes                     --
 X11 Pixmap (.xpm)                                       XPM                     Yes             No			
-</PRE>
-<H2>Location Creation</H2>
+</pre>
+<h2>Location Creation</h2>
 
-<B>r.in.gdal</B> attempts to preserve projection information when importing
+<b>r.in.gdal</b> attempts to preserve projection information when importing
 datasets if the source format includes projection information, and if
 the GDAL driver supports it.  If the projection of the source dataset does
 not match the projection of the current location <b>r.in.gdal</b> will 
 report an error message (<tt>Projection of dataset does not appear to 
 match current location</tt>) and then report the PROJ_INFO parameters of
-the source dataset.<P>
+the source dataset.<p>
 
 If the user wishes to ignore the difference between the apparent coordinate
 system of the source data and the current location, they may pass the 
-<b>-o</b> flag to override the projection check. <P>
+<b>-o</b> flag to override the projection check. <p>
 
 If the user wishes to import the data with the full projection definition,
 it is possible to have r.in.gdal automatically create a new location based
@@ -98,7 +98,7 @@ on the projection and extents of the file being read.  This is accomplished
 by passing the name to be used for the new location via the <b>location</b>
 parameter.  Upon completion of the command, a new location will have been
 created (with only a PERMANENT mapset), and the raster will have been
-imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
+imported with the indicated <b>output</b> name into the PERMANENT mapset.<p>
 
 Support for GCPs: In case the image contains GCPs they are written to a
 POINTS file within an imagery group. They can directly be used for 
@@ -107,64 +107,64 @@ automatically re-project the GCPs from their own projection into another
 projection read from the PROJ_INFO file of the location name
 <em>target</em>.
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 I plan to make a variety of improvements to <b>r.in.gdal</b> in the future
 including support for reporting everything known about a dataset if the 
-<b>output</b> parameter is not set.<P>
+<b>output</b> parameter is not set.<p>
 
-The <B>r.in.gdal</B> comand does support the following features, as long as 
+The <b>r.in.gdal</b> comand does support the following features, as long as 
 the underlying format driver supports it:<p>
 
-<DL>
+<dl>
 
-<DT> Color Table
-<DD> Bands with associated colortables will have the color tables transferred.
+<dt> Color Table
+<dd> Bands with associated colortables will have the color tables transferred.
 Note that if the source has no colormap, r.in.gdal in GRASS 5.0 will emit
 no colormap.  Use r.colors map=... color=grey to assign a greyscale colormap.
 In a future version of GRASS r.in.gdal will likely be upgraded to automatically
 emit greyscale colormaps.
-<BR>
+<br>
 
-<DT> Data Types
-<DD> Most GDAL data types are supported.  Float32 and Float64 type bands
+<dt> Data Types
+<dd> Most GDAL data types are supported.  Float32 and Float64 type bands
 are translated as GRASS floating point cells (but not double precision ...
 this could be added if needed), and most other types are translated as 
 GRASS integer cells.  This includes 16bit integer data sources.  Complex
 (some SAR signal data formats) data bands are translated to two floating
-point cell layers (*.real and *.imaginary).<BR>
+point cell layers (*.real and *.imaginary).<br>
 
-<DT> Georeferencing
-<DD> If the dataset has affine georeferencing information, this will be used
+<dt> Georeferencing
+<dd> If the dataset has affine georeferencing information, this will be used
 to set the north, south, east and west edges.  Rotational coefficients will
-be ignored, resulting in incorrect positioning for rotated datasets.  <BR>
+be ignored, resulting in incorrect positioning for rotated datasets.  <br>
 
-<DT> Projection
-<DD> The datasets projection will be used to compare to the current location
+<dt> Projection
+<dd> The datasets projection will be used to compare to the current location
 or to define a new location.  Internally GDAL represents projections in 
 OpenGIS Well Known Text format.  A large subset of the total set of GRASS
-projections are supported.<BR>
+projections are supported.<br>
 
-<DT> Null Values
-<DD> Raster bands for which a null value is recognised by GDAL will have
+<dt> Null Values
+<dd> Raster bands for which a null value is recognised by GDAL will have
 the null pixels transformed into GRASS style nulls during import.  Many
 generic formats (and formats poorly supported by GDAL) do not have a way
 of recognising null pixels in which case r.null should be used after the
-import.<BR>
+import.<br>
 
-<DT> GCPs
-<DD> Datasets that have Ground Control Points will have them imported as
+<dt> GCPs
+<dd> Datasets that have Ground Control Points will have them imported as
 a POINTS file associated with the imagery group.  Datasets with only one
 band that would otherwise have been translated as a simple raster map
 will also have an associated imagery group if there are ground control points.
 The coordinate system of the ground control points is reported by r.in.gdal
 but not preserved.  It is up to the user to ensure that the location 
 established with i.target has a compatible coordinate system before using
-the points with i.rectify.<BR>
+the points with i.rectify.<br>
 
-</DL>
+</dl>
 
-<H2>EXAMPLES</H2>
+<h2>EXAMPLES</h2>
 
 <h3>GTOPO30 DEM</h3>
 
@@ -177,9 +177,9 @@ with <em>r.colors</em>.
 
 <h3>GLOBE DEM</h3>
 
-To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
+To import <a href="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
 (approx 1km resolution, better than GTOPO30 DEM data), the user has to download
-additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
+additionally the related <a href="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
 Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
 
 <h3>Worldclim.org</h3>
@@ -211,7 +211,7 @@ r.in.gdal HDF4_EOS:EOS_GRID:"MOD15A2.A2003153.h18v04.004.2003171141042.hdf":MOD_
 </pre></div>
 
 
-<H2>NOTES</H2>
+<h2>NOTES</h2>
 
 <i>"ERROR: Input map is rotated - cannot import."</i><br>
 In this case the image must be first externally rotated, applying the rotation info stored in 
@@ -232,20 +232,20 @@ wish to import. Try using <em>location</em> parameter to create a new location b
 upon the projection information in the file. If desired, you can then re-project
 it to another location with <em>r.proj</em>.
 
-<H2>SEE ALSO</H2>
-<EM>
-<A HREF="r.colors.html">r.colors</A>,
-<A HREF="r.in.ascii.html">r.in.ascii</A>,
-<A HREF="r.in.arc.html">r.in.arc</A>,
-<A HREF="r.in.bin.html">r.in.bin</A>,
-<A HREF="r.null.html">r.null</A>
-</EM>
+<h2>SEE ALSO</h2>
+<em>
+<a href="r.colors.html">r.colors</a>,
+<a href="r.in.ascii.html">r.in.ascii</a>,
+<a href="r.in.arc.html">r.in.arc</a>,
+<a href="r.in.bin.html">r.in.bin</a>,
+<a href="r.null.html">r.null</a>
+</em>
 
-<H2>REFERENCES</H2>
+<h2>REFERENCES</h2>
 
 GDAL Pages: <a href="http://www.gdal.org">http://www.gdal.org/</a><br>
 
-<H2>AUTHOR</H2>
+<h2>AUTHOR</h2>
 
 <a href="http://home.gdal.org/warmerda/">Frank Warmerdam</a> (<a href="mailto:warmerdam AT pobox dot com">email</a>).
 
