@@ -879,8 +879,6 @@ static int open_null_read(int fd)
 	fcb->null_file_exists = 0;
 	return -1;
     }
-
-    G_free(dummy);
  
     null_fd = G_open_old_misc("cell_misc", NULL_FILE, name, mapset);
     if (null_fd < 0)
