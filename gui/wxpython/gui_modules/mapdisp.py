@@ -2515,7 +2515,7 @@ class MapFrame(wx.Frame):
     def OnToggleRender(self, event):
         """Enable/disable auto-rendering"""
         if self.autoRender.GetValue():
-            self.ReRender(None)
+            self.OnRender(None)
 
     def OnToggleShowRegion(self, event):
         """Show/Hide extent in map canvas"""
@@ -2527,7 +2527,7 @@ class MapFrame(wx.Frame):
 
         # redraw map if auto-rendering is enabled
         if self.autoRender.GetValue():
-            self.ReRender(None)
+            self.OnRender(None)
 
 
     def OnToggleStatus(self, event):
@@ -3534,7 +3534,7 @@ class MapApp(wx.App):
     def watcher(self):
         """Redraw, if new layer appears"""
         if self.redraw:
-            self.mapFrm.ReDraw(None)
+            self.mapFrm.OnDraw(None)
         self.redraw = False
         return
 # end of class MapApp

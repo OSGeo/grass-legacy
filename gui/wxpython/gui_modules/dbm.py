@@ -481,12 +481,6 @@ class AttributeManager(wx.Frame):
         self.SetSize((680, 520))
         self.SetMinSize(self.GetSize())
 
-    def __del__(self):
-        pass
-        #         if self.qlayer and self.map:
-        #             self.map.DeleteLayer(self.qlayer)
-        #             self.mapdisplay.ReRender(None)
-
     def __createBrowsePage(self, onlyLayer=-1):
         """Create browse tab page"""
         for layer in self.mapDBInfo.layers.keys():

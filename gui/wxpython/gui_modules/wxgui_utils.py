@@ -646,7 +646,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers (updateTool=True)
@@ -674,7 +674,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
         # update progress bar range (mapwindow statusbar)
         self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
@@ -736,7 +736,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
     def OnChangeSel(self, event):
         oldlayer = event.GetOldItem()
@@ -982,7 +982,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
     def setNotebookPage(self,pg):
         self.parent.notebook.SetSelection(pg)
