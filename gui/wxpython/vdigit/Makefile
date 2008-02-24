@@ -5,9 +5,9 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 SWIG = swig
 
-CXXFLAGS = -c -fpic -I$(ARCH_DISTDIR)/include $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
+CXXFLAGS = -c ${SHLIB_CFLAGS} -I$(ARCH_DISTDIR)/include $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
 
-LDFLAGS = -shared -fpic -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB) -lgdi 
+LDFLAGS = -shared ${SHLIB_CFLAGS} -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB) -lgdi 
 
 LOCAL_HEADERS = digit.h driver.h
 SOURCES = driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp select.cpp grass6_wxvdigit_wrap.cpp
