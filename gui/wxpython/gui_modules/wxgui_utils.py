@@ -536,6 +536,10 @@ class LayerTree(CT.CustomTreeCtrl):
             else:
                 ctrl.SetValue(lname)
 
+        # updated progress bar range (mapwindow statusbar)
+        if checked is True:
+            self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
         return layer
 
     def PropertiesDialog (self, layer, show=True):
@@ -647,6 +651,9 @@ class LayerTree(CT.CustomTreeCtrl):
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers (updateTool=True)
 
+        # update progress bar range (mapwindow statusbar)
+        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
         event.Skip()
 
     def OnLayerChecked(self, event):
@@ -668,6 +675,9 @@ class LayerTree(CT.CustomTreeCtrl):
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
             self.mapdisplay.ReRender(None)
+
+        # update progress bar range (mapwindow statusbar)
+        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
     def OnCmdChanged(self, event):
         """Change command string"""

@@ -19,6 +19,8 @@ COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
 import os, sys, glob, math
 import utils
 
+import wx
+
 import gcmd
 from debug import Debug as Debug
 
@@ -589,7 +591,7 @@ class Map(object):
 
         return selected
 
-    def Render(self, force=False):
+    def Render(self, force=False, mapWindow=None):
         """
         Creates final image composite
 
@@ -619,7 +621,13 @@ class Map(object):
                 # render if there is no mapfile
                 if layer.mapfile == None:
                     layer.Render()
+                    
 
+                # process bar
+                if mapWindow is not None:
+                    mapWindow.onRenderCounter += 1
+
+                wx.Yield()
                 # redraw layer content
                 if force:
                     if not layer.Render():
@@ -630,7 +638,8 @@ class Map(object):
                     maps.append(layer.mapfile)
                     masks.append(layer.maskfile)
                     opacities.append(str(layer.opacity))
-
+                
+                
             Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
             # make arrays to strings
