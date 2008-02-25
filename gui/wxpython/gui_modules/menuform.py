@@ -1369,6 +1369,7 @@ if __name__ == "__main__":
         print _("usage: %s <grass command>") % sys.argv[0]
         sys.exit()
     if sys.argv[1] != 'test':
+        q=wx.LogNull()
         GrassGUIApp( grassTask( sys.argv[1] ) ).MainLoop()
     else: #Test
         # Test grassTask from within a GRASS session
@@ -1459,5 +1460,6 @@ if __name__ == "__main__":
             "value" : True
             }
             ]
+        q=wx.LogNull()
         GrassGUIApp( task ).MainLoop()
 

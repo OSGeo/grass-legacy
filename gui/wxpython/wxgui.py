@@ -1533,6 +1533,7 @@ def main(argv=None):
     # run application
     #
     app = GMApp(workspaceFile)
+    q=wx.LogNull()
     app.MainLoop()
 
 if __name__ == "__main__":
