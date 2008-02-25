@@ -86,7 +86,7 @@ if [ -d "/Applications/Utilities/X11.app" ] ; then
 	fi
 fi
 
-# xterm - make sure X11 is in PATH
+# make sure X11 is in PATH
 pathX11=`echo "$PATH" | grep '/usr/X11\(R6\)\?/bin'`
 if [ ! "$pathX11" ] ; then
 	if [ -d "/usr/X11" ] ; then
@@ -96,6 +96,13 @@ if [ ! "$pathX11" ] ; then
 		PATH="$PATH:/usr/X11R6/bin"
 		export PATH
 	fi
+fi
+
+# default xterm Terminal emulator
+# note: only app startup defaults this way, CLI build still defaults to xterm
+if [ ! "$GRASS_XTERM" ] ; then
+	GRASS_XTERM="$GISBASE/etc/grass-xterm-mac"
+	export GRASS_XTERM
 fi
 
 # default to internal X11 Tcl/Tk
