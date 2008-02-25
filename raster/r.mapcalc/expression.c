@@ -312,7 +312,7 @@ static char *format_constant(const expression *e)
 	if (e->res_type == CELL_TYPE)
 		sprintf(buff, "%d", e->data.con.ival);
 	else
-		sprintf(buff, "%f", e->data.con.fval);
+		sprintf(buff, "%.8g", e->data.con.fval);
 
 	return strdup(buff);
 }
