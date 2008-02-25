@@ -11,7 +11,7 @@ namespace eval GmGroup {
     variable nvelev ""
     variable nvcolor ""
     variable nvpoints ""
-	variable nvlines ""
+    variable nvlines ""
 }
 
 
@@ -143,14 +143,21 @@ proc GmGroup::nvdisplay { node } {
     variable nvelev 
     variable nvcolor
     variable nvpoints
-	variable nvlines
-	global mon
-	global drawprog
-	global devnull
+    variable nvlines
+    global mon
+    global drawprog
+    global devnull
+    #global commandlist
+
+    #
+    #if {[llength $commandlist] == 0} {
+    #    MapCanvas::request_redraw $mon 1
+    #    vwait commandlist
+    #}
 
     set tree($mon) $GmTree::tree($mon)
     if { $node != "root" } {
-		set id [GmTree::node_id $node] 
+        set id [GmTree::node_id $node] 
         if { ! ( $opt($id,_check) ) } { return }
     }
 
@@ -159,24 +166,26 @@ proc GmGroup::nvdisplay { node } {
         incr drawprog
     }
 
-	if { $nvelev!= "" } {
-		set cmd [list nviz elevation=$nvelev color=$nvcolor]
-		if {$nvlines != ""} {
-			lappend cmd vector=$nvlines
-		}
-		if {$nvpoints != ""} {
-			lappend cmd points=$nvpoints
-		}
-		
-		if {[catch {eval exec "$cmd 2> $devnull &"} error]} {
-		    GmLib::errmsg $error
-		}
-	}
+    if { $nvelev!= "" } {
+        set cmd [list nviz elevation=$nvelev color=$nvcolor]
+        if {$nvlines != ""} {
+            lappend cmd vector=$nvlines
+        }
+        if {$nvpoints != ""} {
+            lappend cmd points=$nvpoints
+        }
+        
+        if {[catch {eval exec "$cmd 2> $devnull &"} error]} {
+            GmLib::errmsg $error
+        }
+    } else {
+        return
+    }
 
-	set nvelev ""
-	set nvcolor ""
-	set nvlines ""
-	set nvpoints ""
+    set nvelev ""
+    set nvcolor ""
+    set nvlines ""
+    set nvpoints ""
 }
 
 
@@ -187,83 +196,84 @@ proc GmGroup::nviz { node } {
     variable nvelev 
     variable nvcolor
     variable nvpoints
-	variable nvlines
-	global mon
-	global drawprog
-	global devnull
-		
-	#set id [GmTree::node_id $node] 
+    variable nvlines
+    global mon
+    global drawprog
+    global devnull
+            
+    #set id [GmTree::node_id $node] 
+    set vect ""
+    set vecttype ""
+    set type [GmTree::node_type $node]
+    
+    switch $type {
+        "group" {
+           GmGroup::nvdisplay $node 
+        }
+        "raster" {
+            set surf [GmRaster::addelev $node]
+            if {$surf == ""} {return}
+            set clr [GmRaster::addcolor $node]
+            if {$clr == ""} {set clr $surf}
 
-	set type [GmTree::node_type $node]
+            # test whether surf and clr are valid files
+            if {[catch {set rexist [eval exec "r.info map=$surf 2> $devnull"]} error]} {
+                return
+            } else {
+                if { $rexist == "" } {return}
+            }
 
-	
-	switch $type {
-		"group" {
-			GmGroup::nvdisplay $node 
-		}
-		"raster" {
-			set surf [GmRaster::addelev $node]
-			set clr [GmRaster::addcolor $node]
+            if {[catch {set rexist [eval exec "r.info map=$clr 2> $devnull"]} error]} {
+                set clr $surf
+            } else {
+                if {$rexist == "" } {set clr $surf}
+            }
 
-			# test whether surf and clr are valid files
-			if {![catch {set rinfo [eval exec "r.info map=$surf 2> $devnull"]} error]} {
-				if { $rinfo == "" } {set surf ""}
-			} else {
-				GmLib::errmsg $error
-			}
-
-			if {![catch {set rinfo [eval exec "r.info map=$clr 2> $devnull"]} error]} {
-				if { $rinfo == "" } {set surf ""}
-			} else {
-				GmLib::errmsg $error
-			}
-
-			if { $surf == "" || $clr == "" } { return }
-
-			# add surf and clr to list of maps to display in nviz
-			if {$nvelev == "" } {
-				set nvelev $surf
-			} else {
-				append nvelev ",$surf"
-			}
-				
-			if {$nvcolor == "" } {
-				set nvcolor $clr
-			} else {
-				append nvcolor ",$clr"
-			}
-		}
-		"vector" {
-			set vect [GmVector::addvect $node]	
-			# test whether vect is a valid file
-
-			if {![catch {set vinfo [eval exec "v.info map=$vect 2> $devnull"]} error]} {
-				if { $vinfo == "" } {set vect ""}
-			} else {
-				GmLib::errmsg $error
-			}
-			
-			if {$vect == ""} {return}
-			set vecttype [GmVector::vecttype $vect]
-			if {$vecttype == ""} {return}
-			
-			if {$vecttype == "points"} {
-				# display vector in nviz as points
-				if {$nvpoints == "" } {
-					set nvpoints $vect
-				} else {
-					append nvpoints ",$vect"
-				}
-			} else {
-				# display vector in nviz as lines
-				if {$nvlines == "" } {
-					set nvlines $vect
-				} else {
-					append nvlines ",$vect"
-				}
-			}
-		}
-	}
+            # add surf and clr to list of maps to display in nviz
+            if {$nvelev == "" } {
+                set nvelev $surf
+            } else {
+                append nvelev ",$surf"
+            }
+                    
+            if {$nvcolor == "" } {
+                set nvcolor $clr
+            } else {
+                append nvcolor ",$clr"
+            }
+        }
+        "vector" {
+            set vect [GmVector::addvect $node]
+            if {$vect == ""} {return}
+            
+            # test whether vect is a valid file
+            if {[catch {set vexist [eval exec "v.info map=$vect 2> $devnull"]} error]} {
+                return
+            } else {
+                if {$vexist != ""} {
+                    set vecttype [GmVector::vecttype $vect]
+                } else {
+                    return
+                }
+            }
+                        
+            if {$vecttype == "points"} {
+                # display vector in nviz as points
+                if {$nvpoints == "" } {
+                    set nvpoints $vect
+                } else {
+                    append nvpoints ",$vect"
+                }
+            } else {
+                # display vector in nviz as lines
+                if {$nvlines == "" } {
+                    set nvlines $vect
+                } else {
+                    append nvlines ",$vect"
+                }
+            }
+        }
+    }
 }
 
 
