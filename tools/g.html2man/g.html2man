@@ -52,7 +52,7 @@ sub CvtTable {
   $ncols = -1 + scalar split /<td/i, $one_row;
   $has_header = m|<th|i ;
   s|[\n\r]||g;
-  s|</tr.*?>|\n|gis;
+  s|</tr.*?>|\n.br\n|gis;
   s|</td.*?>|\t|gis;
   foreach $tag ( qw(<td.*?> <th.*?> </th> <tr.*?>) ){
     s/$tag//gi;
