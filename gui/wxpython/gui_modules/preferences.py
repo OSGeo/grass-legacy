@@ -6,8 +6,9 @@
 Sets default display font, etc.
 
 Classes:
- * PreferencesDialog
- * SetDefaultFont
+ - PreferencesDialog
+ - SetDefaultFont
+ - MapsetAccess
 
 (C) 2007-2008 by the GRASS Development Team
 This program is free software under the GNU General Public
@@ -553,3 +554,81 @@ class SetDefaultFont(wx.Dialog):
               fontlist.append(dfonts[item])
 
         return fontlist
+
+class MapsetAccess(wx.Dialog):
+    """
+    Controls setting options and displaying/hiding map overlay decorations
+    """
+    def __init__(self, parent, id, title=_('Set/unset access to mapsets in current location'),
+                 pos=wx.DefaultPosition, size=(-1, -1),
+                 style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+
+        self.all_mapsets, self.accessible_mapsets = utils.ListOfMapsets()
+        self.curr_mapset = grassenv.GetGRASSVariable('MAPSET')
+
+        # make a checklistbox from available mapsets and check those that are active
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        label = wx.StaticText(parent=self, id=wx.ID_ANY,
+                              label=_("Check mapset to make it accessible, uncheck it to hide it.%s"
+                                      "Note: PERMANENT and current mapset are always accessible.") % os.linesep)
+        sizer.Add(item=label, proportion=0,
+                  flag=wx.ALL, border=5)
+
+        self.mapsetlb = wx.CheckListBox(parent=self, id=wx.ID_ANY, pos=wx.DefaultPosition,
+                                        size=(350,200), choices=self.all_mapsets)
+        self.mapsetlb.Bind(wx.EVT_CHECKLISTBOX, self.OnCheckMapset)
+        
+        sizer.Add(item=self.mapsetlb, proportion=1,
+                  flag=wx.ALL | wx.EXPAND, border=5)
+
+        # check all accessible mapsets
+        if globalSettings.Get('mapsetPath') == 'l':
+            for mset in self.all_mapsets:
+                self.mapsetlb.Check(self.all_mapsets.index(mset), True)
+        else:
+            for mset in self.accessible_mapsets:
+                self.mapsetlb.Check(self.all_mapsets.index(mset), True)
+
+        # dialog buttons
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY,
+                             style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTRE | wx.ALL, border=5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+        okbtn = wx.Button(self, wx.ID_OK)
+        okbtn.SetDefault()
+        btnsizer.AddButton(okbtn)
+
+        cancelbtn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(cancelbtn)
+        btnsizer.Realize()
+
+        sizer.Add(item=btnsizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_RIGHT | wx.ALL, border=5)
+
+        # do layout
+        self.Layout()
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+        self.SetMinSize(self.GetBestSize())
+        
+    def OnCheckMapset(self, event):
+        """Mapset checked/unchecked"""
+        mapset = self.mapsetlb.GetString(event.GetSelection())
+        if mapset == 'PERMANENT' or mapset == self.curr_mapset:
+            self.mapsetlb.Check(event.GetSelection(), True)
+        
+    def GetMapsets(self):
+        """Get list of checked mapsets"""
+        ms = []
+        i = 0
+        for mset in self.all_mapsets:
+            if self.mapsetlb.IsChecked(i):
+                ms.append(mset)
+            i += 1
+
+        return ms
