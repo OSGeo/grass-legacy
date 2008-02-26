@@ -222,7 +222,7 @@ sub DoList {
       );
   }
   s/<TD>/| /i;
-  s/<TR>/\n/i;
+  s/<TR>/\n.br\n/i;
 
   return 1;
 }
