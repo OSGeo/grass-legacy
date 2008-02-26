@@ -208,11 +208,10 @@ class DatabasePage(TitledPage):
             error = _("Location already exists in GRASS Database.")
 
         if error != '':
-            dlg = wx.MessageDialog(parent=self, message=_("Unable to create location <%s>.%s"
-                                                          "%s" % \
-                                                              (str(self.tlocation.GetValue()),
-                                                               os.linesep,
-                                                               error)),
+            dlg = wx.MessageDialog(parent=self, message="%s <%s>.%s%s" % (_("Unable to create location"),
+                                                                          str(self.tlocation.GetValue()),
+                                                                          os.linesep,
+                                                                          error),
                                    caption=_("Error"),  style=wx.OK | wx.ICON_ERROR)
             
             dlg.ShowModal()

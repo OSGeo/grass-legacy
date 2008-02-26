@@ -1508,9 +1508,9 @@ class DigitSettingsDialog(wx.Dialog):
         vertexSizer.Add(item=self.snapVertex, proportion=0, flag=wx.EXPAND)
         self.mapUnits = self.parent.MapWindow.Map.ProjInfo()['units']
         self.snappingInfo = wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                          label=_("Snapping threshold is %.1f %s") % \
-                                              (self.parent.digit.driver.GetThreshold(),
-                                               self.mapUnits))
+                                          label=_("Snapping threshold is %(value).1f %(units)s") % \
+                                              {'value' : self.parent.digit.driver.GetThreshold(),
+                                               'units' : self.mapUnits})
         vertexSizer.Add(item=self.snappingInfo, proportion=0,
                         flag=wx.ALL | wx.EXPAND, border=1)
 
@@ -1749,9 +1749,9 @@ class DigitSettingsDialog(wx.Dialog):
         else:
             threshold = self.parent.digit.driver.GetThreshold(value)
 
-        self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % 
-                                   (threshold,
-                                    self.mapUnits))
+        self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
+                                   {'value' : threshold,
+                                    'units' : self.mapUnits})
 
         event.Skip()
 
@@ -1762,13 +1762,13 @@ class DigitSettingsDialog(wx.Dialog):
         threshold = self.parent.digit.driver.GetThreshold(value, units)
 
         if units == "map units":
-            self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
-                                           (value,
-                                            self.mapUnits))
+            self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(name)s") % 
+                                       {'value' : value,
+                                        'units' : self.mapUnits})
         else:
-            self.snappingInfo.SetLabel(_("Snapping threshold is %.1f %s") % \
-                                           (threshold,
-                                            self.mapUnits))
+            self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
+                                       {'value' : threshold,
+                                        'units' : self.mapUnits})
             
         event.Skip()
 
@@ -2048,10 +2048,11 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
             event.Veto()
             self.list.SetStringItem(itemIndex, 0, str(layerNew))
             self.list.SetStringItem(itemIndex, 1, str(catNew))
-            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%s/%s>.\n"
+            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%(layer)s/%(category)s>.\n"
                                            "Layer and category number must be integer.\n"
                                            "Layer number must be greater then zero.") %
-                                   (str(self.layerNew.GetValue()), str(self.catNew.GetValue())),
+                                   { 'layer': str(self.layerNew.GetValue()),
+                                     'category' : str(self.catNew.GetValue()) },
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -2218,10 +2219,11 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
             if layer <= 0:
                 raise ValueError
         except ValueError:
-            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%s/%s>.\n"
+            dlg = wx.MessageDialog(self, _("Unable to add new layer/category <%(layer)s/%(category)s>.\n"
                                            "Layer and category number must be integer.\n"
                                            "Layer number must be greater then zero.") %
-                                   (str(self.layerNew.GetValue()), str(self.catNew.GetValue())),
+                                   {'layer' : str(self.layerNew.GetValue()),
+                                    'category' : str(self.catNew.GetValue())},
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()

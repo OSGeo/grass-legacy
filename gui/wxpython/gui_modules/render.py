@@ -97,8 +97,8 @@ class MapLayer(object):
                       'overlay']
 
         if self.type not in layertypes:
-            raise gcmd.GException(_("Type <%s> of layer <%s> is not supported yet") % \
-                                      (self.type, self.name))
+            raise gcmd.GException(_("Type <%(type)s> of layer <%(name)s> is not supported yet") % \
+                                      {'type' : self.type, 'name' : self.name})
         
         #
         # start monitor
@@ -256,8 +256,7 @@ class Map(object):
         try:
             windfile = open (windfile, "r")
         except StandardError, e:
-            sys.stderr.write(_("Unable to open file <%s>: %s") % \
-                                 (windfile,e))
+            sys.stderr.write("%s %<s>: %s" % (_("Unable to open file"), windfile, e))
             sys.exit(1)
 
         for line in windfile.readlines():

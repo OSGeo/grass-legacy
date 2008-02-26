@@ -451,10 +451,11 @@ class GRASSStartup(wx.Frame):
         location = self.listOfLocations[self.lblocations.GetSelection()]
         mapset   = self.listOfMapsets[self.lbmapsets.GetSelection()]
 
-        dlg = wx.MessageDialog(parent=self, message=_("Do you want to continue with deleting mapset <%s> "
-                                                      "from location <%s>?\n\n"
+        dlg = wx.MessageDialog(parent=self, message=_("Do you want to continue with deleting mapset <%(mapset)s> "
+                                                      "from location <%(location)s>?\n\n"
                                                       "ALL MAPS included in this mapset will be "
-                                                      "PERMANENTLY DELETED!") % (mapset, location),
+                                                      "PERMANENTLY DELETED!") % {'mapset' : mapset,
+                                                                                 'location' : location},
                                caption=_("Delete selected mapset"),
                                style=wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 
