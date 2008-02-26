@@ -50,6 +50,12 @@ import sys
 import re
 import string
 import textwrap
+import os
+from os import system
+
+### i18N
+import gettext
+gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
 import utils
 utils.CheckForWx()
@@ -65,11 +71,6 @@ import xml.sax
 import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
-
-import os
-from os import system
-import gettext
-gettext.install("grasswx")
 
 gisbase = os.getenv("GISBASE")
 import globalvar

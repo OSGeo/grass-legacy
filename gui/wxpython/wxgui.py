@@ -29,6 +29,7 @@ import traceback
 import types
 import re
 import string
+import getopt
 ### for GRC (workspace file) parsering
 # xmlproc not available on Mac OS
 # from xml.parsers.xmlproc import xmlproc
@@ -38,6 +39,9 @@ import xml.sax
 import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
+### i18N
+import gettext
+gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
 import gui_modules
 gmpath = gui_modules.__path__[0]
@@ -1450,17 +1454,14 @@ def main(argv=None):
 
     workspaceFile = process_opt(opts, args)[0]
 
-    # replace with the appropriate catalog name
-    gettext.install("GMApp") 
-
     #
     # run application
     #
     app = GMApp(workspaceFile)
-    q=wx.LogNull()
+    # suppress wxPython logs
+    q = wx.LogNull()
+
     app.MainLoop()
 
 if __name__ == "__main__":
-    import getopt
-    import gettext
     sys.exit(main())
