@@ -271,11 +271,13 @@ class Command:
                 if rerr is False: # GUI dialog
                     try:
                         raise CmdError(cmd=self.cmd,
-                                       message=_("Execution failed: '%s'%s%s" 
-                                                 "Details:%s%s") % (' '.join(self.cmd),
-                                                                    os.linesep, os.linesep,
-                                                                    os.linesep,
-                                                                    self.PrintModuleOutput()))
+                                       message="%s '%s'%s%s%s %s%s" %
+                                       (_("Execution failed:"),
+                                        ' '.join(self.cmd),
+                                        os.linesep, os.linesep,
+                                        _("Details:"),
+                                        os.linesep,
+                                        self.PrintModuleOutput()))
                     except CmdError, e:
                         print e
                 elif rerr == sys.stderr: # redirect message to sys

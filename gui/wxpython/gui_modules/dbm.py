@@ -490,7 +490,7 @@ class AttributeManager(wx.Frame):
             panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
             self.layerPage[layer] = {'browsePage': panel.GetId()}
 
-            self.browsePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+            self.browsePage.AddPage(page=panel, text=" %s %d " % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -630,7 +630,7 @@ class AttributeManager(wx.Frame):
 
             panel = wx.Panel(parent=self.manageTablePage, id=wx.ID_ANY)
             self.layerPage[layer]['tablePage'] = panel.GetId()
-            self.manageTablePage.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+            self.manageTablePage.AddPage(page=panel, text=" %s %d " % (_("Layer"), layer))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -1073,9 +1073,9 @@ class AttributeManager(wx.Frame):
                     try:
                         values[i] = list.columns[columnName[i]]['ctype'] (values[i])
                     except:
-                        raise ValueError(_("Casting value '%s' to %s failed.") % \
-                                             (str(values[i]),
-                                              list.columns[columnName[i]]['type']))
+                        raise ValueError(_("Casting value '%(value)s' to %(type)s failed.") % 
+                                         {'value' : str(values[i]),
+                                          'type' : list.columns[columnName[i]]['type']})
                     columnsString += '%s,' % columnName[i]
                     if list.columns[columnName[i]]['ctype'] == str:
                         valuesString += "'%s'," % values[i]
@@ -1084,8 +1084,8 @@ class AttributeManager(wx.Frame):
 
             except ValueError, err:
                 wx.MessageBox(parent=self,
-                              message=_("Unable to insert new record.%s"
-                                        "%s") % (os.linesep, err),
+                              message="%s%s%s" % (_("Unable to insert new record."),
+                                                    os.linesep, err),
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
 
@@ -1170,9 +1170,9 @@ class AttributeManager(wx.Frame):
                                 list.itemDataMap[item][idx] = \
                                     list.columns[columnName[i]]['ctype'] (values[i])
                             except:
-                                raise ValueError(_("Casting value '%s' to %s failed.") % \
-                                                     (str(values[i]),
-                                                      list.columns[columnName[i]]['type']))
+                                raise ValueError(_("Casting value '%(value)s' to %(type)s failed.") % \
+                                                     {'value' : str(values[i]),
+                                                      'type' : list.columns[columnName[i]]['type']})
 
                             if list.columns[columnName[i]]['ctype'] == str:
                                 updateString += "%s='%s'," % (columnName[i], values[i])
@@ -1183,8 +1183,8 @@ class AttributeManager(wx.Frame):
 
             except ValueError, err:
                 wx.MessageBox(parent=self,
-                              message=_("Unable to update existing record.%s"
-                                        "%s") % (os.linesep, err),
+                              message="%s%s%s" % (_("Unable to update existing record."),
+                                                  os.linesep, err),
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
 
@@ -1271,9 +1271,10 @@ class AttributeManager(wx.Frame):
             if item > -1:
                 if list.FindItem(start=-1, str=nameTo) > -1:
                     wx.MessageBox(parent=self,
-                                  message=_("Unable to rename column <%s>. "
-                                            "Column <%s> already exists in the table <%s>.") % \
-                                  (name, nameTo, self.mapDBInfo.layers[self.layer]["table"]),
+                                  message=_("Unable to rename column <%(column)s>. "
+                                            "Column <%(columnTo)s> already exists in the table <%(table)s>.") % \
+                                      {'column' : name, 'columnTo' : nameTo,
+                                       'table' : self.mapDBInfo.layers[self.layer]["table"]},
                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 else:
                     list.SetItemText(item, nameTo)
@@ -1285,8 +1286,8 @@ class AttributeManager(wx.Frame):
             else:
                 wx.MessageBox(parent=self,
                               message=_("Unable to rename column. "
-                                        "Column <%s> doesn't exist in the table <%s>.") % \
-                                  (name, self.mapDBInfo.layers[self.layer]["table"]),
+                                        "Column <%(column)s> doesn't exist in the table <%(table)s>.") % 
+                              {'column' : name, 'table' : self.mapDBInfo.layers[self.layer]["table"]},
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
 
         event.Skip()
@@ -1370,8 +1371,8 @@ class AttributeManager(wx.Frame):
             # check for duplicate items
             if list.FindItem(start=-1, str=name) > -1:
                 wx.MessageBox(parent=self,
-                              message=_("Column <%s> already exists in table <%s>.") % \
-                                  (name, self.mapDBInfo.layers[self.layer]["table"]),
+                              message=_("Column <%(column)s> already exists in table <%(table)s>.") % \
+                                  {'column' : name, 'table' : self.mapDBInfo.layers[self.layer]["table"]},
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 return
             index = list.InsertStringItem(sys.maxint, str(name))
@@ -2495,9 +2496,9 @@ class LayerBook(wx.Notebook):
         
         if layer in self.mapDBInfo.layers.keys():
             wx.MessageBox(parent=self,
-                          message=_("Unable to add new layer to vector map <%s>.%s"
-                                    "Layer %d already exists.") % \
-                          (self.mapDBInfo.map, os.linesep, layer),
+                          message=_("Unable to add new layer to vector map <%(vector)s>.\n"
+                                    "Layer %(layer)d already exists.") % 
+                          {'vector' : self.mapDBInfo.map, 'layer' : layer},
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return
 
@@ -2677,11 +2678,11 @@ class DisplayAttributesDialog(wx.Dialog):
 
             wx.MessageBox(parent=self.parent,
                           message=_("No attribute table linked to "
-                                    "vector map <%s> found. %s "
-                                    "%sYou can disable this message from digitization settings. Or "
+                                    "vector map <%(vector)s> found. %(msg)s "
+                                    "\nYou can disable this message from digitization settings. Or "
                                     "you can create and link attribute table to the vector map "
-                                    "using Attribute Table Manager.") % \
-                              (self.map, label, os.linesep),
+                                    "using Attribute Table Manager.") % 
+                          {'vector' : self.map, 'msg' : label},
                           caption=_("Message"), style=wx.OK | wx.ICON_EXCLAMATION | wx.CENTRE)
             self.mapDBInfo = None
             return
@@ -2915,7 +2916,7 @@ class DisplayAttributesDialog(wx.Dialog):
                                            size=(-1, 150))
             panel.SetupScrolling(scroll_x=False)
             
-            self.notebook.AddPage(page=panel, text=_(" %s %d ") % (_("Layer"), layer))
+            self.notebook.AddPage(page=panel, text=" %s %d " % (_("Layer"), layer))
             
             # notebook body
             border = wx.BoxSizer(wx.VERTICAL)

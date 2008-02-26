@@ -69,7 +69,7 @@ from xml.sax import make_parser
 import os
 from os import system
 import gettext
-gettext.install("wxgui")
+gettext.install("grasswx")
 
 gisbase = os.getenv("GISBASE")
 import globalvar
@@ -258,7 +258,8 @@ class grassTask:
                     cmd += [ '%s=%s' % ( p['name'], p['default'] ) ]
                 else:
                     cmd += [ '%s=%s' % ( p['name'], _('<required>') ) ]
-                    errStr += _("Parameter %s (%s) is missing.\n") % ( p['name'], p['description'] )
+                    errStr += _("Parameter %(name)s (%(desc)s) is missing.\n") % \
+                        {'name' : p['name'], 'desc' : p['description']}
                     errors += 1
             elif p.get('value','') != '' and p['value'] != p.get('default','') :
                 # Output only values that have been set, and different from defaults
@@ -939,8 +940,8 @@ class cmdPanel(wx.Panel):
                 else:
                     if len(valuelist) == 1: # -> textctrl
                         txt = wx.StaticText(parent=which_panel,
-                                            label = _('%s. Valid range=%s') % \
-                                                (title, str(valuelist).strip("[]'") + ':' ) )
+                                            label = "%s. %s=%s" (title, _('Valid range'),
+                                                                 str(valuelist).strip("[]'") + ':'))
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
 

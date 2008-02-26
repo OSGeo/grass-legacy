@@ -588,8 +588,8 @@ class GMFrame(wx.Frame):
             file.close()
         except IOError, err:
             wx.MessageBox(parent=self,
-                          message=_("Unable to read workspace file <%s>.%s%s") % \
-                          (filename, os.linesep, err),
+                          message="%s <%s>. %s%s" % (_("Unable to read workspace file"),
+                                                     filename, os.linesep, err),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
