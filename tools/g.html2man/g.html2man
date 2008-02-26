@@ -194,7 +194,7 @@ sub DoList {
   if (m#^ *<DD> *$#i) {return 0};
   if (m#^ *</DD> *$#i) {return 0};
   if (m#^</LI>$#i) {return 0};
-  s#<DD>##i;
+  s#<DD>#\n.br\n#i;
   s#</DD>##i;
 
   s#^.*<DL> *$##i;
@@ -221,7 +221,9 @@ sub DoList {
       $nb_n[$in_nb]++                     # because we post-increment after encountering each <li>
       );
   }
-  s/<TD>/\t| /gi;
+
+  # move into CvtTable()  ??
+  s/<TD.*?>/\t| /gi;
   s/<TR.*?>/\n.br\n/i;
 
   return 1;
