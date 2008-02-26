@@ -1,0 +1,1777 @@
+# translation of grasswxpy.po to Czech
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2008, GRASS Development Team
+# Martin Landa <landa.martin gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grasswxpy_cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-26 22:13+0100\n"
+"PO-Revision-Date: 2008-02-26 23:34+0100\n"
+"Last-Translator: Martin Landa <landa.martin gmail.com>\n"
+"Language-Team: Czech <grass-translations@lists.osgeo.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../gui/wxpython/wxgui.py:93
+msgid "GRASS GIS Layer Manager (Experimental Prototype)"
+msgstr "GRASS GIS Manager (Experimentální prototyp)"
+
+#: ../gui/wxpython/wxgui.py:278
+msgid "Map layers for each display"
+msgstr "Mapové vrstvy pro ka¾dé mapové okno"
+
+#: ../gui/wxpython/wxgui.py:282 ../gui/wxpython/gui_modules/menuform.py:844
+msgid "Command output"
+msgstr "Výstup pøíkazù"
+
+#: ../gui/wxpython/wxgui.py:394
+msgid "Type GRASS command and run by pressing ENTER"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:489
+msgid ""
+"Workspace is not empty. Do you want to store current settings to workspace "
+"file?"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:492
+msgid "Save current settings?"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:507
+msgid "Choose workspace file"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:566 ../gui/wxpython/wxgui.py:604
+msgid "Please wait, loading map layers into layer tree..."
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:591
+msgid "Unable to read workspace file"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:593 ../gui/wxpython/wxgui.py:733
+#: ../gui/wxpython/wxgui.py:758 ../gui/wxpython/wxgui.py:957
+#: ../gui/wxpython/wxgui.py:1242 ../gui/wxpython/gui_modules/menuform.py:1214
+#: ../gui/wxpython/gui_modules/location_wizard.py:215
+#: ../gui/wxpython/gui_modules/location_wizard.py:528
+#: ../gui/wxpython/gui_modules/location_wizard.py:1320
+#: ../gui/wxpython/gui_modules/location_wizard.py:1630
+#: ../gui/wxpython/gui_modules/location_wizard.py:1804
+#: ../gui/wxpython/gui_modules/location_wizard.py:1905
+#: ../gui/wxpython/gui_modules/location_wizard.py:2066
+#: ../gui/wxpython/gui_modules/location_wizard.py:2085
+#: ../gui/wxpython/gui_modules/location_wizard.py:2392
+#: ../gui/wxpython/gui_modules/gcmd.py:51
+#: ../gui/wxpython/gui_modules/mapdisp.py:919
+#: ../gui/wxpython/gui_modules/mapdisp.py:1469
+#: ../gui/wxpython/gui_modules/dbm.py:1089
+#: ../gui/wxpython/gui_modules/dbm.py:1188
+#: ../gui/wxpython/gui_modules/dbm.py:1268
+#: ../gui/wxpython/gui_modules/dbm.py:1278
+#: ../gui/wxpython/gui_modules/dbm.py:1291
+#: ../gui/wxpython/gui_modules/dbm.py:1357
+#: ../gui/wxpython/gui_modules/dbm.py:1376
+#: ../gui/wxpython/gui_modules/dbm.py:2464
+#: ../gui/wxpython/gui_modules/dbm.py:2502
+#: ../gui/wxpython/gui_modules/digit.py:2056
+#: ../gui/wxpython/gui_modules/digit.py:2200
+#: ../gui/wxpython/gui_modules/digit.py:2227
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:312
+#: ../gui/wxpython/gis_set.py:603
+msgid "Error"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:600
+msgid "Load map layers into layer tree"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:625
+msgid "Choose file to save current workspace"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:640 ../gui/wxpython/wxgui.py:657
+#, python-format
+msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:642 ../gui/wxpython/wxgui.py:660
+msgid "File exits"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:732
+#, python-format
+msgid "Unable to open workspace file <%s> for writing."
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:757
+msgid "Writing current settings to workspace file failed."
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:854
+msgid "User preferences"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:955
+msgid "Attribute management is available only for vector map layers"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:980 ../gui/wxpython/gui_modules/dbm.py:3340
+#, python-format
+msgid "GRASS GIS Attribute Table Manager - vector map layer <%s>"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1207
+msgid "Do you want to remove map layer <"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1210
+msgid "Do you want to remove selected layer from layer tree?"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1213
+msgid "Remove map layer"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1242
+msgid "No layer selected"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1270
+msgid "GRASS GIS Layer Manager"
+msgstr ""
+
+#: ../gui/wxpython/wxgui.py:1399
+msgid "re-executing using pythonw"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:52
+msgid "GRASS 3D Map Calculator"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:54
+msgid "GRASS Map Calculator"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/toolbars.py:464
+msgid "Undo is not implemented yet."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/toolbars.py:465
+#: ../gui/wxpython/gui_modules/dbm.py:2686
+msgid "Message"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/toolbars.py:477
+msgid "Digitization settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:147
+#: ../gui/wxpython/gui_modules/menuform.py:1029
+msgid "Select Color"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:194
+msgid "unknown"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:210
+#, python-format
+msgid "Parameter not found : %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:226
+#, python-format
+msgid "Flag not found : %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:260
+msgid "<required>"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:261
+#, python-format
+msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:608
+msgid "Enter parameters for "
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:612
+msgid " (those of Main in bold typeface are required)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:623
+msgid "Cancel the command settings and ignore changes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:642
+msgid "&Run"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:643
+msgid "Run the command"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:646
+msgid "C&opy"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:647
+msgid "Copy the current command string to the clipboard"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:665
+msgid "Close dialog on run"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:752
+#, python-format
+msgid "'%s' copied to clipboard"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:767
+#, python-format
+msgid ""
+"This is a sample program for\n"
+"GRASS command interface parsing\n"
+"and automatic GUI building. \n"
+"%s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:770
+msgid "About GrassGUI"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:805
+#: ../gui/wxpython/gui_modules/menuform.py:818
+msgid "Required"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:808
+#: ../gui/wxpython/gui_modules/menuform.py:818
+msgid "Optional"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:850
+msgid "Manual"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:910
+msgid "[multiple]"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:943
+msgid "Valid range"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1048
+msgid "Transparent"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1065
+#, python-format
+msgid "Choose %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1066
+msgid "File"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1067
+#: ../gui/wxpython/gui_modules/location_wizard.py:135
+#: ../gui/wxpython/gui_modules/location_wizard.py:1064
+#: ../gui/wxpython/gui_modules/location_wizard.py:1156
+#: ../gui/wxpython/gis_set.py:116
+msgid "Browse"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1113
+msgid "Main"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1233
+#, python-format
+msgid "Couldn't fetch interface description for command <%s>."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1315
+#, python-format
+msgid "Unable to parse command %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/menuform.py:1370
+#, python-format
+msgid "usage: %s <grass command>"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:43
+#, python-format
+msgid "GRASS SQL Builder: %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:129
+msgid "Define GRASS Database and Location Name"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:143
+#: ../gui/wxpython/gis_set.py:92
+msgid "GIS Data Directory:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:159
+msgid "Project Location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:197
+msgid "Choose GRASS data directory:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:208
+msgid "Location already exists in GRASS Database."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:211
+msgid "Unable to create location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:237
+msgid "Choose method for creating a new location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:244
+msgid "Select coordinate system"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:247
+msgid "Select EPSG code for coordinate system"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:249
+msgid "Use coordinate system of selected georeferenced file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:252
+msgid "Create custom PROJ.4 parameters string for coordinate system"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:255
+msgid "Create arbitrary non-earth coordinate system (XY)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:320
+msgid "Choose projection"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:335
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+#: ../gui/wxpython/gui_modules/location_wizard.py:952
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Code"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:335
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+#: ../gui/wxpython/gui_modules/location_wizard.py:952
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Description"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:338
+msgid "Projection code:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:346
+msgid "Search in projection description:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:527
+#, python-format
+msgid "Unable to read list: %s "
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:627
+#: ../gui/wxpython/gui_modules/location_wizard.py:1330
+msgid "Choose method of specifying georeferencing parameters"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:635
+msgid "Select datum with associated ellipsoid"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:638
+msgid "Select ellipsoid"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:639
+msgid "Set zone for UTM projection:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:641
+msgid "Zone:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:644
+msgid "Hemisphere for zone:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:732
+msgid "Specify geodetic datum"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+msgid "Ellipsoid"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+msgid "Datum"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:772
+msgid "Datum code:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:781
+#: ../gui/wxpython/gui_modules/location_wizard.py:964
+msgid "Search in description:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:796
+msgid "Transformation parameters:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:929
+msgid "Specify ellipsoid"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:956
+msgid "Ellipsoid code:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1057
+msgid "Select georeferenced file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1062
+msgid "Georeferenced file:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1116
+msgid "Choose a georeferenced file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1135
+msgid "Choose EPSG Code"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1143
+msgid "Path to the EPSG-codes file:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1145
+msgid "EPSG code:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1147
+msgid "Search in code description:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1157
+msgid "Browse EPSG Codes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Parameters"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1271
+msgid "Choose EPSG codes file:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1319
+#, python-format
+msgid "Unable to read EPGS codes: %s "
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1338
+msgid "Enter PROJ.4 parameters string:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1389
+msgid "Summary"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1411
+msgid "GRASS Database:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1417
+msgid "Location Name:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1423
+msgid "Projection:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1439
+#, python-format
+msgid ""
+"You can set the default extents and resolution after creating new location%"
+"sor you can set them during a working session."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1462
+msgid "Proj4 definition:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1504
+#, python-format
+msgid "Do you want to create new location '%s'?"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1505
+msgid "Create new location?"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1541
+msgid "Define new GRASS Location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1614
+msgid "Do you want to set the default region extents and resolution now?"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1616
+#, python-format
+msgid "New location '%s' created"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1629
+msgid "Unable to create new location."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1638
+#, python-format
+msgid "Location wizard canceled.%sNew location not created."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1641
+#: ../gui/wxpython/gis_set.py:120
+msgid "Location wizard"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1728
+#, python-format
+msgid "Unable to create new location: %s already exists"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1730
+msgid "ERROR"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1803
+#, python-format
+msgid "Unable to create new location: %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1904
+msgid "EPSG code missing. Unable to create new location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1923
+msgid "Select the number of a datum transformation to use"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1937
+msgid "You must select a datum transform"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1968
+#, python-format
+msgid "Unable to create new location: could not find file %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1988
+msgid "Set default region extent and resolution"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2032
+msgid "&Set region"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2033
+msgid "Cancel"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2065
+msgid "A valid location must be selected"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2084
+msgid "Invalid region"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2114
+msgid "Click here to show 3D settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2115
+msgid "Click here to hide 3D settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2138
+#: ../gui/wxpython/gui_modules/location_wizard.py:2419
+#, python-format
+msgid "Rows: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2139
+#: ../gui/wxpython/gui_modules/location_wizard.py:2420
+#, python-format
+msgid "Cols: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2140
+#: ../gui/wxpython/gui_modules/location_wizard.py:2421
+#, python-format
+msgid "Cells: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2181
+#: ../gui/wxpython/gui_modules/location_wizard.py:2423
+#, python-format
+msgid "Depth: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2182
+#: ../gui/wxpython/gui_modules/location_wizard.py:2424
+#, python-format
+msgid "3D Cells: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2185
+msgid "Top"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2193
+msgid "Bottom"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2201
+msgid "T-B resolution"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2264
+msgid "North"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2272
+msgid "West"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2292
+msgid "East"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2301
+msgid "South"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2305
+msgid "N-S resolution"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2313
+msgid "E-W resolution"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2391
+#, python-format
+msgid "Invalid value: %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:71
+#, python-format
+msgid "Error in command execution %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:77
+msgid "Preferences error"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:82
+msgid "Error in digitization tool"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:87
+msgid "Error in Attribute Table Manager"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:275
+msgid "Execution failed:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/gcmd.py:278
+msgid "Details:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:918
+msgid "No vector map layer selected for editing"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:1053
+#: ../gui/wxpython/gui_modules/mapdisp.py:1062
+msgid "Update categories"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:1468
+msgid "No vector map layer is selected"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:1579
+msgid "Z bulk-labeling dialog"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2054
+#, python-format
+msgid ""
+"Region file <%s>already exists.\n"
+"Do you want to overwrite it?"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2055
+msgid "Warning"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2189
+msgid "Render"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2192
+msgid "Enable/disable auto-rendering"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2195
+msgid "Show"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2199
+msgid "Show/hide computational region extent (set with g.region)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2768
+msgid "You must select a map layer in the Layer Manager to query"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2770
+msgid "Nothing to query"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3036
+msgid "Scale and North arrow"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3042
+msgid "Show/hide scale and arrow"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3043
+msgid "scale object"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3096
+msgid "Show/hide legend"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3097
+msgid "legend object"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3269
+msgid "Set options"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3276
+#, python-format
+msgid ""
+"Drag %s with mouse in pointer mode\n"
+"to position. Double-click to change options"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3354
+msgid "Enter text:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:180
+msgid "Can display only 256 columns"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:233
+msgid "Limit 100000 records"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:390
+#, python-format
+msgid ""
+"Database connection for vector map <%s> is not defined in DB file. You can "
+"define new connection in 'Manage layers'."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:394
+msgid "Attribute Table Manager"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:433
+msgid "Browse data"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:439
+msgid "Manage tables"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:445
+msgid "Manage layers"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:451
+#: ../gui/wxpython/gui_modules/digit.py:1446
+msgid "Settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:454
+msgid "Click here to show database connection information"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:455
+msgid "Click here to hide database connection information"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:493
+#: ../gui/wxpython/gui_modules/dbm.py:633
+#: ../gui/wxpython/gui_modules/dbm.py:1938
+#: ../gui/wxpython/gui_modules/dbm.py:2041
+#: ../gui/wxpython/gui_modules/dbm.py:2276
+#: ../gui/wxpython/gui_modules/dbm.py:2919
+#: ../gui/wxpython/gui_modules/digit.py:1535
+#: ../gui/wxpython/gui_modules/digit.py:1537
+#: ../gui/wxpython/gui_modules/digit.py:1943
+#: ../gui/wxpython/gui_modules/digit.py:2313
+msgid "Layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:499
+msgid "Attribute data - right-click to edit/manage records"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:525
+msgid "SQL Query"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:545
+#: ../gui/wxpython/gui_modules/dbm.py:1613
+msgid "SQL Builder"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:549
+msgid "Simple"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:552
+#: ../gui/wxpython/gui_modules/preferences.py:300
+msgid "Advanced"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:619
+#: ../gui/wxpython/gui_modules/dbm.py:962
+#: ../gui/wxpython/gui_modules/dbm.py:1398
+#: ../gui/wxpython/gui_modules/dbm.py:1506
+#, python-format
+msgid "Number of loaded records: %d"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:649
+#, python-format
+msgid "Table %s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:662
+#: ../gui/wxpython/gui_modules/dbm.py:1885
+msgid "Column name"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:673
+msgid "Data type"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:689
+#: ../gui/wxpython/gui_modules/dbm.py:1885
+msgid "Length"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:706
+msgid "&Add"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:716
+msgid "Rename column"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:726
+msgid "To"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:736
+msgid "&Rename"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:792
+msgid "Layers of vector map"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:801
+msgid "List of layers"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:854
+#: ../gui/wxpython/gui_modules/preferences.py:241
+msgid "General settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:858
+msgid "Highlighting"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:870
+msgid "Line width (in pixels)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:937
+msgid "Edit selected record"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:941
+#: ../gui/wxpython/gui_modules/dbm.py:1047
+msgid "Insert new record"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:942
+msgid "Delete selected record(s)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:943
+msgid "Delete all records"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:945
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1568
+msgid "Select all"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:946
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1569
+msgid "Deselect all"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:948
+msgid "Display selected"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:951
+#: ../gui/wxpython/gui_modules/dbm.py:1671
+#: ../gui/wxpython/gui_modules/dbm.py:1677
+msgid "Extract selected"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:956
+#: ../gui/wxpython/gui_modules/dbm.py:1312
+#: ../gui/wxpython/gui_modules/digit.py:2091
+msgid "Reload"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1058
+#, python-format
+msgid "Record with category number %d already exists in the table."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1068
+#, python-format
+msgid "Category number (column %s) is missing."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1076
+#: ../gui/wxpython/gui_modules/dbm.py:1173
+#, python-format
+msgid "Casting value '%(value)s' to %(type)s failed."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1087
+msgid "Unable to insert new record."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1152
+msgid "Update existing record"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1186
+msgid "Unable to update existing record."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1266
+msgid "Unable to rename column. No column name defined."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1274
+#, python-format
+msgid ""
+"Unable to rename column <%(column)s>. Column <%(columnTo)s> already exists "
+"in the table <%(table)s>."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1288
+#, python-format
+msgid ""
+"Unable to rename column. Column <%(column)s> doesn't exist in the table <%"
+"(table)s>."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1307
+msgid "Drop selected column"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1310
+msgid "Drop all columns"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1355
+msgid "Unable to add column to the table. No column name defined."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1374
+#, python-format
+msgid "Column <%(column)s> already exists in table <%(table)s>."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1567
+msgid "Database connection"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1670
+msgid "Nothing to extract."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1753
+#: ../gui/wxpython/gui_modules/dbm.py:2218
+#: ../gui/wxpython/gui_modules/dbm.py:2590
+#, python-format
+msgid "Drop also linked attribute table (%s)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1885
+msgid "Type"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1938
+#: ../gui/wxpython/gui_modules/dbm.py:2047
+#: ../gui/wxpython/gui_modules/dbm.py:2284
+msgid "Driver"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1938
+#: ../gui/wxpython/gui_modules/dbm.py:2052
+#: ../gui/wxpython/gui_modules/dbm.py:2290
+msgid "Database"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1938
+#: ../gui/wxpython/gui_modules/dbm.py:2058
+#: ../gui/wxpython/gui_modules/dbm.py:2296
+msgid "Table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:1938
+msgid "Key"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2013
+msgid ""
+"Unable to determine default DB connection settings. Please define DB "
+"connection using db.connect module."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2030
+msgid "Add new layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2063
+#: ../gui/wxpython/gui_modules/dbm.py:2086
+#: ../gui/wxpython/gui_modules/dbm.py:2302
+msgid "Key column"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2081
+msgid "Table name"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2094
+msgid "&Create table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2098
+msgid "&Add layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2102
+msgid "&Set default"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2115
+msgid "Layer description"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2162
+msgid "Table description"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2201
+msgid "Delete selected layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2204
+msgid "Layer to detele"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2225
+msgid "&Delete layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2269
+msgid "Modify selected layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2333
+msgid "&Modify layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2461
+#, python-format
+msgid "Unable to create new table.%sTable name or key column name is missing."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2499
+#, python-format
+msgid ""
+"Unable to add new layer to vector map <%(vector)s>.\n"
+"Layer %(layer)d already exists."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2676
+msgid "Database connection is not defined in DB file."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2680
+#, python-format
+msgid ""
+"No attribute table linked to vector map <%(vector)s> found. %(msg)s \n"
+"You can disable this message from digitization settings. Or you can create "
+"and link attribute table to the vector map using Attribute Table Manager."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2700
+msgid "Close dialog on submit"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2707
+msgid "Update attributes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2709
+msgid "Add attributes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2711
+msgid "Display attributes"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2715
+msgid "&Reload"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2716
+msgid "&Submit"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2931
+msgid "No database record available."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:2952
+#: ../gui/wxpython/gui_modules/digit.py:1535
+#: ../gui/wxpython/gui_modules/digit.py:1947
+#: ../gui/wxpython/gui_modules/digit.py:2314
+msgid "Category"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:3271
+msgid "Name for new vector map layer:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/dbm.py:3278
+msgid "Allow output files to overwrite existing files"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:193
+#: ../gui/wxpython/gui_modules/digit.py:197
+#, python-format
+msgid ""
+"Unable to open vector map <%s> for editing. Data are probably corrupted, try "
+"to run v.build for rebuilding the topology."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:831
+#: ../gui/wxpython/gui_modules/digit.py:862
+#, python-format
+msgid "Adding new feature to vector map <%s> failed."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1382
+msgid "Apply"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1384
+msgid "OK"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1411
+msgid "Symbology"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1453
+msgid "Display"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1458
+msgid "Line width"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1475
+msgid "Snapping"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1482
+msgid "Snapping threshold"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1495
+msgid "Backgroud vector map"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1506
+msgid "Snap also to vertex"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1511
+#: ../gui/wxpython/gui_modules/digit.py:1752
+#: ../gui/wxpython/gui_modules/digit.py:1769
+#, python-format
+msgid "Snapping threshold is %(value).1f %(units)s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1525
+msgid "Digitize new feature"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1529
+msgid "Add new record into table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1535
+msgid "Mode"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1535
+#: ../gui/wxpython/gui_modules/digit.py:1564
+msgid "Next to use"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1552
+msgid "Category number"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1562
+msgid "Category mode"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1564
+msgid "Manual entry"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1564
+msgid "No category"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1574
+msgid "Delete existing feature(s)"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1578
+msgid "Delete record from table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1599
+msgid "Query tool"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1606
+msgid "Choose query tool"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1611
+msgid "Select by box"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1620
+msgid "length"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1625
+msgid "Select lines"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1627
+#: ../gui/wxpython/gui_modules/digit.py:1650
+msgid "shorter than"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1627
+#: ../gui/wxpython/gui_modules/digit.py:1650
+msgid "longer than"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1643
+msgid "dangle"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1648
+msgid "Select dangles"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1676
+msgid "Select vector features"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1765
+#, python-format
+msgid "Snapping threshold is %(value).1f %(name)s"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1921
+msgid "List of categories"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1937
+msgid "Add new category"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2051
+#: ../gui/wxpython/gui_modules/digit.py:2222
+#, python-format
+msgid ""
+"Unable to add new layer/category <%(layer)s/%(category)s>.\n"
+"Layer and category number must be integer.\n"
+"Layer number must be greater then zero."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2085
+msgid "Delete selected"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2089
+msgid "Delete all"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2199
+msgid "Unable to update vector map."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2351
+#, python-format
+msgid "%d lines selected for z bulk-labeling"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2354
+msgid "Set value"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2361
+msgid "Starting value"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:2370
+msgid "Step"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:100
+#, python-format
+msgid "Type <%(type)s> of layer <%(name)s> is not supported yet"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:236
+msgid "GISBASE not set, you must be in GRASS GIS to run this program"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:259
+msgid "Unable to open file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:675
+#, python-format
+msgid "Could not render layer <%s>\n"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:739
+#, python-format
+msgid "Unable render layer <%s>"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/render.py:848
+#: ../gui/wxpython/gui_modules/render.py:882
+#, python-format
+msgid "Unable render overlay <%s>"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:238
+msgid "General"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:251
+msgid "Default font for GRASS displays:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:256
+msgid "Set font"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:262
+msgid "Currently selected font:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:271
+msgid "Mapsets path:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:303
+msgid "Advanced settings"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:315
+msgid "Place where to store settings:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:332
+msgid "Icon theme:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:345
+msgid "Note: Requires GUI restart."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:359
+msgid "Digitization interface:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:372
+msgid ""
+"Note: User can choose from two interfaces for digitization. The simple one "
+"uses v.edit command on the background. Map topology is rebuild on each "
+"operation which can significantly slow-down response. The vdigit is a native "
+"interface which uses v.edit functionality, but doesn't call the command "
+"itself."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:396
+msgid "Select default display font"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:562
+msgid "Set/unset access to mapsets in current location"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/preferences.py:574
+#, python-format
+msgid ""
+"Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
+"and current mapset are always accessible."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:29
+msgid "Enter rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:49
+msgid "Create new color table using color rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:50
+msgid "Raster map:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:52
+msgid "Enter color rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:55
+msgid "Reclassify raster map using rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:56
+#: ../gui/wxpython/gui_modules/rules.py:68
+msgid "Map to reclassify:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:57
+#: ../gui/wxpython/gui_modules/rules.py:69
+msgid "Reclassified map:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:58
+#: ../gui/wxpython/gui_modules/rules.py:70
+msgid "Enter reclassification rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:61
+msgid "Recode raster map using rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:62
+msgid "Map to recode:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:63
+msgid "Recoded map:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:64
+msgid "Enter recoding rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:67
+msgid "Reclassify vector map using SQL rules"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/rules.py:102
+msgid "overwrite existing file"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:102
+msgid "GRASS GIS Map Display: "
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:225
+msgid "Remove"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:229
+msgid "Rename"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:236
+msgid "Properties"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:247
+msgid "Show attribute table"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:250
+msgid "Start editing"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:251
+msgid "Stop editing"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:272
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:281
+msgid "Metadata"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:279
+msgid "Histogram"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:310
+msgid "Unable to display histogram for raster map layer"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1137
+#, python-format
+msgid "Command '%s' not yet implemented"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1150
+msgid "Please wait, there is another command currently running"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1229
+msgid "Save file as ..."
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1453
+msgid "Load"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1488
+msgid "Layer type:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1499
+msgid "Mapset:"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1512
+msgid "List of maps:"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:77
+msgid "Choose project location and mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:80
+msgid "Manage"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:82
+#, python-format
+msgid ""
+"Welcome to GRASS GIS %s\n"
+"The world's leading open source GIS"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:88
+msgid ""
+"Select an existing project location and mapset\n"
+"or define a new location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:94
+msgid ""
+"Project location\n"
+"(projection/coordinate system)"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:97
+msgid ""
+"Accessible mapsets\n"
+"(directories of GIS files)"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:100
+msgid ""
+"Create new mapset\n"
+"in selected location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:103
+msgid "Define new location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:106
+msgid ""
+"Rename/delete selected\n"
+"mapset or location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:111
+msgid "Start GRASS"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:118
+msgid "Create mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:164
+msgid "Welcome to GRASS GIS"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:172
+msgid "Enter GRASS session"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:404 ../gui/wxpython/gis_set.py:428
+#, python-format
+msgid ""
+"Current name: %s\n"
+"Enter new name:"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:405
+msgid "Rename selected mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:416
+msgid "Unable to rename mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:429
+msgid "Rename selected location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:442
+msgid "Unable to rename location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:454
+#, python-format
+msgid ""
+"Do you want to continue with deleting mapset <%(mapset)s> from location <%"
+"(location)s>?\n"
+"\n"
+"ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:459
+msgid "Delete selected mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:468
+msgid "Unable to delete mapset"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:479
+#, python-format
+msgid ""
+"Do you want to continue with deleting location <%s>?\n"
+"\n"
+"ALL MAPS included in this location will be PERMANENTLY DELETED!"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:483
+msgid "Delete selected location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:494
+msgid "Unable to delete location"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:588
+msgid "Enter name for new mapset:"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:602
+#, python-format
+msgid "Unable to create new mapset: %s"
+msgstr ""
+
+#: ../gui/wxpython/gis_set.py:633
+msgid "GRASS Quickstart"
+msgstr ""
+
+#: ../gui/wxpython/icons/icon.py:153
+msgid "Unable to load icon theme, using default icon theme..."
+msgstr ""
