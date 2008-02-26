@@ -579,7 +579,9 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().ParseCommand(['d.vect'], completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'thememap':
-            menuform.GUI().ParseCommand(['d.vect.thematic'],
+            # -s flag requested, otherwise only first thematic category is displayed
+            # should be fixed by C-based d.thematic.* modules
+            menuform.GUI().ParseCommand(['d.vect.thematic', '-s'], 
                                         completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'themechart':

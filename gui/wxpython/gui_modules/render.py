@@ -110,7 +110,7 @@ class MapLayer(object):
         #
         try:
             runcmd = gcmd.Command(cmd=self.cmdlist + ['--q'])
-        except gcmd.CommandError, e:
+        except gcmd.CmdError, e:
             print e
         
         if runcmd.returncode != 0:
