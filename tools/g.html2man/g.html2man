@@ -221,8 +221,8 @@ sub DoList {
       $nb_n[$in_nb]++                     # because we post-increment after encountering each <li>
       );
   }
-  s/<TD>/| /i;
-  s/<TR>/\n.br\n/i;
+  s/<TD>/\t| /gi;
+  s/<TR.*?>/\n.br\n/i;
 
   return 1;
 }
