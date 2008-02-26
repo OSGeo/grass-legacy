@@ -67,7 +67,8 @@ class CmdError(GException):
     See Command class (command exits with EXIT_FAILURE,
     G_fatal_error() is called)."""
     def __init__(self, cmd, message):
-        GException.__init__(self, message, title=_("Error in command execution"))
+        self.cmd = cmd
+        GException.__init__(self, message, title=_("Error in command execution %s" % self.cmd[0]))
 
 class SettingsError(GException):
     """Exception used for GRASS settings, see
@@ -269,11 +270,12 @@ class Command:
             if rerr is not None and self.returncode != 0:
                 if rerr is False: # GUI dialog
                     try:
-                        raise CmdError, _("Execution failed: '%s'%s%s" 
-                                          "Details:%s%s") % (' '.join(self.cmd),
-                                                             os.linesep, os.linesep,
-                                                             os.linesep,
-                                                             self.PrintModuleOutput())
+                        raise CmdError(cmd=self.cmd,
+                                       message=_("Execution failed: '%s'%s%s" 
+                                                 "Details:%s%s") % (' '.join(self.cmd),
+                                                                    os.linesep, os.linesep,
+                                                                    os.linesep,
+                                                                    self.PrintModuleOutput()))
                     except CmdError, e:
                         print e
                 elif rerr == sys.stderr: # redirect message to sys
@@ -480,8 +482,9 @@ class CommandThread(Thread):
         if self.stderr:
             line = self.__read_all(self.module.stderr)
             self.stderr.write(line)
-            self.rerr = self.__parseString(line)
-        
+
+        self.rerr = self.__parseString(line)
+
     def __parseString(self, string):
         """Parse line
 
