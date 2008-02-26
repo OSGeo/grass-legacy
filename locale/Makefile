@@ -1,5 +1,6 @@
 # written by Markus Neteler
 # tcl stuff by Cedric Shock
+# wxpython by Martin Landa
 
 MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Module.make
@@ -22,18 +23,25 @@ PO_DIR = po
 LIBDOMAIN = grasslibs
 MODDOMAIN = grassmods
 TCLDOMAIN = grasstcl
-DOMAINS = $(LIBDOMAIN) $(MODDOMAIN) $(TCLDOMAIN)
+WXPYDOMAIN = grasswxpy
+DOMAINS = $(LIBDOMAIN) $(MODDOMAIN) $(TCLDOMAIN) $(WXPYDOMAIN)
 
 LIB_POTFILES = find ../lib -name '*.c' | xargs grep -l "_(\""
 MOD_POTFILES = find ../ -name '*.c' | grep -v '../lib' | xargs grep -l "_(\""
-TCL_POTFILES = find ../ -name '*.tcl' | grep -v '../dist' | xargs grep -l "\\[_ \|\\[G_msg" 
+TCL_POTFILES = find ../ -name '*.tcl' | grep -v '../dist' | xargs grep -l "\\[_ \|\\[G_msg"
+WXPY_POTFILES = find ../gui/wxpython -name '*.py' | xargs grep -l "_(\""
 
 #The xgettext utility is used to automate the creation of
 #portable message files (.po)
 pot:
+	@echo "Generating $(LIBDOMAIN)..."
 	xgettext -k_ -o ./templates/$(LIBDOMAIN).pot `$(LIB_POTFILES)`
+	@echo "Generating $(MODDOMAIN)..."
 	xgettext -k_ -o ./templates/$(MODDOMAIN).pot `$(MOD_POTFILES)`
+	@echo "Generating $(TCLDOMAIN)..."
 	xgettext -k_ --keyword=G_msg -o ./templates/$(TCLDOMAIN).pot `$(TCL_POTFILES)`
+	@echo "Generating $(WXPYDOMAIN)..."
+	xgettext -k_ -o ./templates/$(WXPYDOMAIN).pot `$(WXPY_POTFILES)` 
 
 #merge already existing translations with new messages in POT template file and create new po files:
 update-po:
