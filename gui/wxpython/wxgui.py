@@ -1267,7 +1267,6 @@ class GMApp(wx.App):
 
         # create and show main frame
         mainframe = GMFrame(parent=None, id=wx.ID_ANY,
-                            title=_("GRASS GIS Layer Manager"),
                             workspace = self.workspaceFile)
 
         mainframe.Show()
