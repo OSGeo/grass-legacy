@@ -12,7 +12,7 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 ETCDIR = $(ETC)/wxpython
 
-default: parsubdirs install_scripts
+default: install_scripts parsubdirs
 
 install_scripts:
 	$(MKDIR) $(ETCDIR) $(ETCDIR)/compat $(ETCDIR)/gui_modules $(ETCDIR)/icons $(ETCDIR)/icons/silk $(ETCDIR)/images $(ETCDIR)/scripts $(ETCDIR)/vdigit 
