@@ -29,7 +29,7 @@
 #% key: wgetoptions
 #% type: string
 #% description: Additional options for wget
-#% answer: -c -t 5 --user-agent=MSIE5.5 
+#% answer: -c -t 5
 #% required : no
 #%end
 #%option

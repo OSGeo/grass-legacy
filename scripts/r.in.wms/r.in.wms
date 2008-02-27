@@ -246,7 +246,8 @@ message () {
 exitprocedure()
 {
 	g.message -e 'User break!'
-	PATH=$prevPATH
+	# is this bogus? won't PATH revert on exit anyway?
+	PATH="$prevPATH"
 	export PATH
 	\rm -f "${TMP}"*
 	exit 1
@@ -303,11 +304,11 @@ listLayers() {
 	### wget or curl the XML and grep the lines with layer names
 	g.message message="List of layers for server ${GIS_OPT_MAPSERVER}:"
 	if [ "$USE_WGET" ] ; then
-	    wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
-	    message 1 wget ${GIS_OPT_WGETOPTIONS} --post-data=${STRING} $GIS_OPT_MAPSERVER -O $CAPABILITIES_FILE;
+	    wget $GIS_OPT_WGETOPTIONS --post-data="${STRING}" "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE";
+	    message 1 wget $GIS_OPT_WGETOPTIONS --post-data="${STRING}" "$GIS_OPT_MAPSERVER" -O "$CAPABILITIES_FILE";
 	else
-	    curl ${GIS_OPT_CURLOPTIONS} -o $CAPABILITIES_FILE -d ${STRING} $GIS_OPT_MAPSERVER
-	    message 1 curl ${GIS_OPT_CURLOPTIONS} -o $CAPABILITIES_FILE -d ${STRING} $GIS_OPT_MAPSERVER
+	    curl $GIS_OPT_CURLOPTIONS -o "$CAPABILITIES_FILE" -d "${STRING}" "$GIS_OPT_MAPSERVER"
+	    message 1 curl $GIS_OPT_CURLOPTIONS -o "$CAPABILITIES_FILE" -d "${STRING}" "$GIS_OPT_MAPSERVER"
 	fi
 
 	# use xml2
@@ -398,16 +399,16 @@ addflag REQUEST o ${GIS_FLAG_O}
 addflag REQUEST c ${GIS_FLAG_C}
 addflag REQUEST p ${GIS_FLAG_P}
 addargument REQUEST folder "${GIS_OPT_FOLDER}"
-addargument REQUEST prefix ${PREFIX}
-addargument REQUEST region ${GIS_OPT_REGION}
-addargument REQUEST mapserver ${GIS_OPT_MAPSERVER}
-addargument REQUEST layers ${GIS_OPT_LAYERS}
-addargument REQUEST styles ${GIS_OPT_STYLES}
-addargument REQUEST srs ${GIS_OPT_SRS}
-addargument REQUEST format ${GIS_OPT_FORMAT}
-addargument REQUEST wmsquery ${GIS_OPT_WMSQUERY}
-addargument REQUEST maxcols ${GIS_OPT_MAXCOLS}
-addargument REQUEST maxrows ${GIS_OPT_MAXROWS}
+addargument REQUEST prefix "${PREFIX}"
+addargument REQUEST region "${GIS_OPT_REGION}"
+addargument REQUEST mapserver "${GIS_OPT_MAPSERVER}"
+addargument REQUEST layers "${GIS_OPT_LAYERS}"
+addargument REQUEST styles "${GIS_OPT_STYLES}"
+addargument REQUEST srs "${GIS_OPT_SRS}"
+addargument REQUEST format "${GIS_OPT_FORMAT}"
+addargument REQUEST wmsquery "${GIS_OPT_WMSQUERY}"
+addargument REQUEST maxcols "${GIS_OPT_MAXCOLS}"
+addargument REQUEST maxrows "${GIS_OPT_MAXROWS}"
 addargument REQUEST tileoptions "${GIS_OPT_TILEOPTIONS}"
 
 if [ $GIS_FLAG_D -eq 0 ] ; then
@@ -421,6 +422,7 @@ fi
 
 addargument DOWNLOAD requestfile "${REQUESTFILE}"
 addargument DOWNLOAD wgetoptions "${GIS_OPT_WGETOPTIONS}"
+addargument DOWNLOAD curloptions "${GIS_OPT_CURLOPTIONS}"
 
 message 1 "wms.download $DOWNLOAD"
 eval "wms.download $DOWNLOAD"
@@ -445,9 +447,9 @@ addflag GDALWARP c 1
 addflag GDALWARP k ${GIS_FLAG_K}
 addflag GDALWARP p ${GIS_FLAG_P}
 addargument GDALWARP input "$FILES"
-addargument GDALWARP output ${GIS_OPT_OUTPUT}
-addargument GDALWARP method ${GIS_OPT_METHOD}
-addargument GDALWARP s_srs ${GIS_OPT_SRS}
+addargument GDALWARP output "${GIS_OPT_OUTPUT}"
+addargument GDALWARP method "${GIS_OPT_METHOD}"
+addargument GDALWARP s_srs "${GIS_OPT_SRS}"
 
 # check for error like 'Service Exception Report'
 if [ `file -b "$FILES" | grep -c "^HTML\|^XML"` -eq 1 ] ; then
