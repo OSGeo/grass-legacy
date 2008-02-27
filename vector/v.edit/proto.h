@@ -12,7 +12,7 @@ int close_lines(struct Map_info *, int, double);
 /* select.c */
 int print_selected(struct ilist *);
 struct ilist* select_lines(struct Map_info *, enum mode,
-			   struct GParams *,
+			   struct GParams *, double *,
 			   struct ilist *);
 int sel_by_cat(struct Map_info *, struct cat_list*,
 	       int, int, char *,
