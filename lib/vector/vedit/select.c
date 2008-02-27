@@ -60,7 +60,7 @@ int Vedit_select_by_query(struct Map_info *Map,
     }
     case QUERY_DANGLE: {
 	thresh_tmp = fabs(thresh);
-	Vect_select_dangles (Map, type, thresh_tmp, stderr,
+	Vect_select_dangles (Map, type, thresh_tmp, NULL,
 			     List_query);
 	if (thresh <= 0.0) { /* shorter than */
 	    for(i = 0; i < List_query->n_values; i++) {
