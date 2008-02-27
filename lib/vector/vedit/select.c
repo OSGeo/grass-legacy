@@ -14,21 +14,15 @@
 
 #include <grass/vedit.h>
 
-static int select_by_query(struct Map_info *, int, int, int,
-			   int, double,
-			   struct line_pnts *, struct line_cats *);
+static int select_by_query(struct Map_info *, int, int, double,
+			   int, struct line_pnts *, struct line_cats *);
 
 /**
-   \brief Select features by query (based on geometry)
+   \brief Select features by query (based on geometry properties)
 
    Currently supported:
-    - QUERY_LENGTH, select all lines longer then threshold (or shorter if threshold is negative)
-    - QUERY_DANGLE, select all dangles then threshold (or shorter if threshold is negative)
-
-   If <em>List</em> is not empty query only those feature, otherwise query all
-   vector features stored in the vector map.
-
-   \todo Rewrite dangle part to use Vector library functionality
+    - QUERY_LENGTH, select all features longer then threshold (or shorter if threshold is negative)
+    - QUERY_DANGLE, select all dangles longer then threshold (or shorter if threshold is negative)
 
    \param[in] Map vector map
    \param[in] type feature type
@@ -44,6 +38,7 @@ int Vedit_select_by_query(struct Map_info *Map,
 			  struct ilist* List)
 {
     int num, line, i;
+    double thresh_tmp;
     struct line_pnts *Points;
     struct line_cats *Cats;
     struct ilist *List_query;
@@ -53,33 +48,34 @@ int Vedit_select_by_query(struct Map_info *Map,
 
     List_query = Vect_new_list();
 
-    if (List->n_values > 0) { /* query only selected */
-	for (i = 0; i < List->n_values; i++) {
-	    line = List->value[i];
-	    if (select_by_query(Map, line, type, layer,
-				query, thresh,
-				Points, Cats) == 1) {
-		if (!Vect_val_in_list(List, line)) {
-		    Vect_list_append(List, line);
-		}
-	    }
-	    else {
-		if (Vect_val_in_list(List, line)) {
-		    Vect_list_delete(List, line);
-		    i--;
-		}
-	    }
-	}
-    }
-    else { /* global query */
+    switch (query) {
+    case QUERY_LENGTH: {
 	num = Vect_get_num_lines (Map);
 	for (line = 1; line <= num; line++) {
-	    if (select_by_query(Map, line, type, layer,
-				query, thresh,
-				Points, Cats) == 1) {
+	    if (select_by_query(Map, line, type, thresh,
+				query, Points, Cats))
 		Vect_list_append(List, line);
+	}
+	break;
+    }
+    case QUERY_DANGLE: {
+	thresh_tmp = fabs(thresh);
+	Vect_select_dangles (Map, type, thresh_tmp, stderr,
+			     List_query);
+	if (thresh <= 0.0) { /* shorter than */
+	    for(i = 0; i < List_query->n_values; i++) {
+		Vect_list_append(List, List_query->value[i]);
+	    } 
+	}
+	else { /* longer than */
+	    for(i = 1; i <= Vect_get_num_lines(Map); i++) {
+		if (!Vect_val_in_list(List_query, i))
+		    Vect_list_append(List, i);
 	    }
 	}
+	break;
+    }
+    default: break;
     }
 
     G_debug (3, "Vedit_select_by_query(): %d lines selected (by query %d)", List -> n_values, query);
@@ -92,24 +88,22 @@ int Vedit_select_by_query(struct Map_info *Map,
 }
 
 /**
-   \brief Query given line
+   \brief Query given feature
 
    \return 1 line test positive 
    \return 0 line test negative
    \return -1 on error (line is dead)
 */
-static int select_by_query(struct Map_info *Map, int line, int type, int layer,
-			   int query, double thresh,
-			   struct line_pnts* Points, struct line_cats* Cats) 
+static int select_by_query(struct Map_info *Map, int line, int type, double thresh,
+			   int query, struct line_pnts *Points, struct line_cats *Cats)
 {
-    int ltype, cat;
+    int ltype;
     double length;
 
     if (!Vect_line_alive(Map, line))
 	return -1;
     
     ltype = Vect_read_line(Map, Points, Cats, line);
-    Vect_cat_get(Cats, layer, &cat); /* get first category from layer */
     
     if (!(ltype & type))
 	return -1;
@@ -126,6 +120,13 @@ static int select_by_query(struct Map_info *Map, int line, int type, int layer,
 	}
     }
     else if (query == QUERY_DANGLE) {
+	/*
+	  this code is currently replaced by Vect_select_dangle()
+	  not used by v.edit
+	*/
+	int layer, cat;
+	layer = 1;
+	Vect_cat_get(Cats, layer, &cat); /* get first category from layer */
 	if (!(type & GV_LINES))
 	    return -1;
 	/* check if line is dangle */
