@@ -277,6 +277,7 @@ void Vect_snap_lines ( struct Map_info *, int, double, struct Map_info *, FILE *
 void Vect_snap_lines_list (struct Map_info *, struct ilist *, double, struct Map_info *, FILE *);
 void Vect_remove_dangles ( struct Map_info *, int, double, struct Map_info *, FILE * );
 void Vect_chtype_dangles ( struct Map_info *, double, struct Map_info *, FILE * );
+void Vect_select_dangles (struct Map_info *, int, double, FILE *, struct ilist *);
 void Vect_remove_bridges ( struct Map_info *, struct Map_info *, FILE * );
 void Vect_chtype_bridges ( struct Map_info *, struct Map_info *, FILE * );
 int Vect_remove_small_areas ( struct Map_info *, double, struct Map_info *, FILE *, double * );
