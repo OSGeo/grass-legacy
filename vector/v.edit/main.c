@@ -33,7 +33,7 @@ int main (int argc, char *argv[])
     int i;
     int move_first, snap;
     int ret, print, layer;
-    double move_x, move_y, thresh;
+    double move_x, move_y, thresh[3];
     
     struct line_pnts *coord;
 
@@ -145,12 +145,24 @@ int main (int argc, char *argv[])
     }
 
     layer = atoi (params.fld -> answer);
-    if (params.query->answer) { /* allow negative threshold value (shorter / longer) */
-	thresh = atof (params.maxdist -> answer);
+    i = 0;
+    while(params.maxdist->answers[i]) {
+	switch(i) {
+	case THRESH_COORDS:
+	    thresh[THRESH_COORDS] = max_distance(atof (params.maxdist -> answers[THRESH_COORDS]));
+	    thresh[THRESH_SNAP] = thresh[THRESH_QUERY] = thresh[THRESH_COORDS];
+	    break;
+	case THRESH_SNAP:
+	    thresh[THRESH_SNAP] = max_distance(atof (params.maxdist -> answers[THRESH_SNAP]));
+	    break;
+	case THRESH_QUERY:
+	    thresh[THRESH_QUERY] = atof (params.maxdist -> answers[THRESH_QUERY]);
+	    break;
+	default: break;
+	}
+	i++;
     }
-    else {
-	thresh = max_distance(atof (params.maxdist -> answer));
-    }
+    
     move_first = params.move_first->answer ? 1 : 0;
     snap = NO_SNAP;
     if (strcmp(params.snap->answer, "node") == 0)
@@ -163,12 +175,12 @@ int main (int argc, char *argv[])
 	List = Vect_new_list();
 	if (action_mode == MODE_COPY && BgMap && BgMap[0]) {
 	    List = select_lines(BgMap[0], action_mode,
-				&params,
+				&params, thresh,
 				List);
 	}
 	else {
 	    List = select_lines(&Map, action_mode,
-				&params,
+				&params, thresh,
 				List);
 	}
     }
@@ -222,16 +234,17 @@ int main (int argc, char *argv[])
 	ret = asc_to_bin(ascii, &Map, List_added);
 	G_message(_("%d features added"), ret);
 	if (ret > 0) {
+	    G_verbose_message(_("Threshold value for snapping is %.2f"), thresh[THRESH_SNAP]);
 	    if (snap != NO_SNAP) { /* apply snapping */
 		Vedit_snap_lines(&Map, BgMap, nbgmaps,
 				 List_added,
-				 thresh,
+				 thresh[THRESH_SNAP],
 				 snap == SNAP ? 0 : 1); /* snap to vertex ? */
 	    }
 	    if (params.close -> answer) { /* close boundaries */
 		int nclosed;
-		nclosed = close_lines(&Map, GV_BOUNDARY, thresh);
-		G_message (_("%d lines closed"), nclosed);
+		nclosed = close_lines(&Map, GV_BOUNDARY, thresh[THRESH_SNAP]);
+		G_message (_("%d boundaries closed"), nclosed);
 	    }
 	}
 	Vect_destroy_list (List_added);
@@ -243,35 +256,37 @@ int main (int argc, char *argv[])
     case MODE_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
+	G_verbose_message(_("Threshold value for snapping is %.2f"), thresh[THRESH_SNAP]);
 	ret = Vedit_move_lines(&Map, BgMap, nbgmaps,
 			       List,
-			       move_x, move_y, 0.0, snap, thresh); /* TODO: 3D */
+			       move_x, move_y, 0.0, snap, thresh[THRESH_SNAP]); /* TODO: 3D */
 	G_message(_("%d features moved"), ret);
 	break;
     case MODE_VERTEX_MOVE:
 	move_x = atof(params.move -> answers[0]);
 	move_y = atof(params.move -> answers[1]);
+	G_verbose_message(_("Threshold value for snapping is %.2f"), thresh[THRESH_SNAP]);
 	ret = Vedit_move_vertex(&Map, BgMap, nbgmaps,
 				List,
-				coord, thresh,
+				coord, thresh[THRESH_COORDS], thresh[THRESH_SNAP],
 				move_x, move_y, 0.0, /* TODO: 3D */
 				move_first, snap);
 	G_message(_("%d vertices moved"), ret);
 	break;
     case MODE_VERTEX_ADD:
 	ret = Vedit_add_vertex(&Map, List,
-			       coord, thresh);
+			       coord, thresh[THRESH_COORDS]);
 	G_message(_("%d vertices added"), ret);    
 	break;
     case MODE_VERTEX_DELETE:
 	ret = Vedit_remove_vertex(&Map, List,
-				  coord, thresh);
+				  coord, thresh[THRESH_COORDS]);
 	G_message(_("%d vertices removed"), ret);
 	break;
     case MODE_BREAK:
 	if (params.coord->answer) {
 	    ret = Vedit_split_lines(&Map, List,
-				    coord, thresh, NULL);
+				    coord, thresh[THRESH_COORDS], NULL);
 	}
 	else {
 	    ret = Vect_break_lines_list(&Map, List,
@@ -280,8 +295,9 @@ int main (int argc, char *argv[])
 	G_message(_("%d lines broken"), ret);
 	break;
     case MODE_CONNECT:
+	G_verbose_message(_("Threshold value for snapping is %.2f"), thresh[THRESH_SNAP]);
 	ret = Vedit_connect_lines(&Map, List,
-				  thresh);
+				  thresh[THRESH_SNAP]);
 	G_message(_("%d lines connected"), ret);
       	break;
     case MODE_MERGE:
@@ -318,7 +334,8 @@ int main (int argc, char *argv[])
 	G_message (_("%d features copied"), ret);
 	break;
     case MODE_SNAP:
-	ret = snap_lines(&Map, List, thresh);
+	G_verbose_message(_("Threshold value for snapping is %.2f"), thresh[THRESH_SNAP]);
+	ret = snap_lines(&Map, List, thresh[THRESH_SNAP]);
 	break;
     case MODE_FLIP:
 	ret = Vedit_flip_lines(&Map, List);

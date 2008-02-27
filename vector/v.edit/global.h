@@ -10,6 +10,10 @@
 
 # define SEP "----------------------------------"
 
+#define THRESH_COORDS 0
+#define THRESH_SNAP   1
+#define THRESH_QUERY  2
+
 enum mode {
     /* geometry of features is not changed */
     MODE_CREATE,         /* create new vector map */

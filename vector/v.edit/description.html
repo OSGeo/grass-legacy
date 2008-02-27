@@ -13,14 +13,13 @@ Provides editing features' geometry. Attribute data connected to the
 vector map are not modified at all.
 
 <p>
-Vector features can be selected either by internal <b>id</b>,
-category number <b>cats</b>, coordinates <b>coords</b>, bounding
+Vector features can be selected either by internal <b>id</b>, category
+number <b>cats</b>, coordinates <b>coords</b>, bounding
 box <b>bbox</b>, <b>polygon</b>, <b>where</b> statement (attribute
-data) or by <b>query</b>. Selecting features by
-coordinates is affected by the current 2D resolution. It can be
-changed using threshold distance <b>thresh</b>. The options
-are <em>orthogonal</em>, i.e. can be used in various combinations. For
-example:
+data) or by <b>query</b>. Selecting features by coordinates is
+affected by the current 2D resolution or by the threshold distance
+given by <b>thresh</b>. The options are <em>orthogonal</em>, i.e. can
+be used in various combinations. For example:
 
 <div class="code"><pre>
 v.edit map=roads tool=select \
@@ -75,8 +74,9 @@ Additional parameters for vector feature specification are:
     standard format) to existing vector map. Features can be read from
     standard input or from the given text file (<b>input</b>
     option). If no header is given, the <b>-n</b> flag must be
-    used. Added features can be snapped (based on <b>snap</b>
-    parameter) using threshold distance <b>thresh</b>.</li>
+    used. Added features can be snapped (defined by <b>snap</b>
+    parameter) to nodes or vertices based on threshold
+    distance <b>thresh</b>.</li>
 
     <li><b>delete</b> - Delete selected vector features from existing
     vector map.</li>
@@ -88,8 +88,9 @@ Additional parameters for vector feature specification are:
     <li><b>move</b> - Move selected features of existing vector map
     relatively to their current location. This tool requires
     <b>move</b> option. The option defines coordinates of the movement
-    direction. Moved features can be snapped (based on <b>snap</b>
-    parameter) using threshold distance <b>thresh</b>.</li>
+    direction. Moved features can be snapped (defined by <b>snap</b>
+    parameter) to nodes or vertices based on threshold
+    distance <b>thresh</b>.</li>
 
     <li><b>flip</b> - Flip direction of selected vector lines
     (lines or boundaries).</li>
@@ -119,8 +120,9 @@ Additional parameters for vector feature specification are:
 
     <li><b>connect</b> - Connect selected lines or boundaries, the
     first given line is connected to the second one. The second line
-    is broken if necessary. The lines are connected regarding
-    threshold distance <b>thresh</b>.</li>
+    is broken if necessary. The lines are connected only if distance
+    between them is not greater than snapping threshold
+    distance <b>thresh</b>.</li>
 
     <li><b>chtype</b> - Change feature type of selected geometry
     objects. Points are converted to centroids, centroids to points,
@@ -137,10 +139,10 @@ Additional parameters for vector feature specification are:
 
     <li><b>vertexmove</b> - Move vertex(ces) specified
     by <b>coords</b> option. Direction of the movement is specified by
-    the <b>move</b> option. If <b>-1</b> is given only first found line or
-    boundary in bounding box is modified. Moved vertex can be snapped
-    (based on <b>snap</b> parameter) using threshold
-    distance <b>thresh</b>.</li>
+    the <b>move</b> option. If <b>-1</b> is given only first found
+    line or boundary in bounding box is modified. Moved vertex can be
+    snapped (defined <b>snap</b>) to nodes or vertices based on
+    threshold distance <b>thresh</b>.</li>
     
     <li><b>zbulk</b> - Assign z coordinate to 3D vector lines in given
     bounding box. The first found line will get z coordinate based on
@@ -247,7 +249,7 @@ map units to the south. Moved features snap to nodes in threshold
 distance 10 map units:
 
 <div class="code"><pre>
-v.edit tool=move map=roads cat=1 move=1000,-1000 snap=node thresh=10
+v.edit tool=move map=roads cat=1 move=1000,-1000 snap=node thresh=-1,10
 </pre></div>
 
 Move all features defined by bounding box
@@ -311,7 +313,7 @@ v.edit map=roads tool=break cat=1
 Snap all lines using threshold distance 20 map units:
 
 <div class="code"><pre>
-v.edit map=roads id=1-9999 tool=snap thresh=20 type=line
+v.edit map=roads id=1-9999 tool=snap thresh=-1,20 type=line
 </pre></div>
 
 <h3>Connect lines</h3>
@@ -326,7 +328,7 @@ Connect line id 48 to line id 565; line id 60 to line id
 50. Maximum threshold distance is 700 map units:
 
 <div class="code"><pre>
-v.edit map=roads tool=connect id=48,565,60,50 thresh=1000
+v.edit map=roads tool=connect id=48,565,60,50 thresh=-1,700
 </pre></div>
 
 <h3>Add vertex</h3>
@@ -380,13 +382,13 @@ d.vect -i map=roads cats=`v.edit map=roads tool=select \
 Select all lines shorter (or equal) than 10 map units:
 
 <div class="code"><pre>
-v.edit map=roads tool=select query=length thresh=-10
+v.edit map=roads tool=select query=length thresh=-1,0,-10
 </pre></div>
 
 Select from given bounding box all lines longer then 200 map units:
 
 <div class="code"><pre>
-v.edit map=roads tool=select bbox=598260,4919730,605100,4926240 query=length thresh=1000
+v.edit map=roads tool=select bbox=598260,4919730,605100,4926240 query=length thresh=-1,0,1000
 </pre></div>
 
 <h3>Fix height of contours</h3>
