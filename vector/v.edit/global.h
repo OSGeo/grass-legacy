@@ -6,6 +6,7 @@
 # include <grass/gis.h>
 # include <grass/Vect.h>
 # include <grass/glocale.h>
+# include <grass/vedit.h>
 
 # define SEP "----------------------------------"
 
@@ -46,6 +47,5 @@ struct GParams {
 };
 
 # include "proto.h"
-# include "../lib/vedit.h"
 
 #endif
