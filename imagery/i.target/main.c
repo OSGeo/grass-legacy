@@ -45,6 +45,7 @@ int main (int argc, char *argv[])
         _("Targets an imagery group to a GRASS location and mapset.");
         	
     group = G_define_standard_option (G_OPT_I_GROUP);
+    group->gisprompt = "any,group,group";
 
     loc = G_define_option();
     loc->key             = "location";
@@ -91,14 +92,14 @@ int main (int argc, char *argv[])
                 group->answer, G_location(), G_mapset());
     } else {
         /* point group target to specified mapset and location */
+
+/* TODO: check if it is in current mapset and strip off @mapset part, if present */
+
         I_put_target(group->answer, loc->answer, mapset->answer);
         G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
                 group->answer, loc->answer, mapset->answer);
     }
 
-    G_done_msg (_("Done."));
+    G_done_msg(" ");
     exit(EXIT_SUCCESS);
 }
-
-
-
