@@ -2,11 +2,22 @@
 eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
     if 0;
 
+############################################################################
+#
+# MODULE:       g.html2man
+# AUTHOR(S):    Daniel Calvelo Aros
+# PURPOSE:      convert HTML formatted page to MAN page format
+# COPYRIGHT:    (C) 2004 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+
 # Note: the GRASS_PERL variables must be set!
 # Usage:
 #       perl g.html2man <html file> <man file> <section>
-#
-# Main author: Daniel Calvelo Aros
 
 our $preformat, $in_bu, $in_nb, @nb_n;
 our $suppress = 0;
@@ -41,7 +52,7 @@ sub CvtTable {
   $ncols = -1 + scalar split /<td/i, $one_row;
   $has_header = m|<th|i ;
   s|[\n\r]||g;
-  s|</tr.*?>|\n|gis;
+  s|</tr.*?>|\n.br\n|gis;
   s|</td.*?>|\t|gis;
   foreach $tag ( qw(<td.*?> <th.*?> </th> <tr.*?>) ){
     s/$tag//gi;
@@ -183,7 +194,7 @@ sub DoList {
   if (m#^ *<DD> *$#i) {return 0};
   if (m#^ *</DD> *$#i) {return 0};
   if (m#^</LI>$#i) {return 0};
-  s#<DD>##i;
+  s#<DD>#\n.br\n#i;
   s#</DD>##i;
 
   s#^.*<DL> *$##i;
@@ -210,8 +221,10 @@ sub DoList {
       $nb_n[$in_nb]++                     # because we post-increment after encountering each <li>
       );
   }
-  s/<TD>/| /i;
-  s/<TR>/\n/i;
+
+  # move into CvtTable()  ??
+  s/<TD.*?>/\t| /gi;
+  s/<TR.*?>/\n.br\n/i;
 
   return 1;
 }
