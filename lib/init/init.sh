@@ -297,39 +297,25 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
 	fi
 
     else
-      for i in `echo "$PATH" | sed 's/^:/.:/
+      # the usual suspects
+      BROWSERS="htmlview konqueror mozilla mozilla-firefox firefox opera netscape dillo"
+      for BROWSER in $BROWSERS ; do
+	for i in `echo "$PATH" | sed 's/^:/.:/
                                 s/::/:.:/g
                                 s/:$/:./
                                 s/:/ /g'`
-      do
-        if [ -f "$i/htmlview" ] ; then  
-            GRASS_HTML_BROWSER=htmlview  
-            break  
-        elif [ -f "$i/konqueror" ] ; then  
-            GRASS_HTML_BROWSER=konqueror
+	do
+	  if [ -f "$i/$BROWSER" ] ; then  
+            GRASS_HTML_BROWSER="$BROWSER"
             break
-        elif [ -f "$i/mozilla" ] ; then
-            GRASS_HTML_BROWSER=mozilla
-            break
-        elif [ -f "$i/mozilla-firefox" ] ; then
-            GRASS_HTML_BROWSER=mozilla-firefox
-            break
-        elif [ -f "$i/firefox" ] ; then
-            GRASS_HTML_BROWSER=firefox
-            break
-        elif [ -f "$i/opera" ] ; then
-            GRASS_HTML_BROWSER=opera
-            break
-        elif [ -f "$i/netscape" ] ; then
-            GRASS_HTML_BROWSER=netscape
-            break
-        elif [ -f "$i/dillo" ] ; then
-            GRASS_HTML_BROWSER=dillo
-            break
-        fi
+	  fi
+	done
+	if [ -n "$GRASS_HTML_BROWSER" ] ; then
+	   break
+	fi
       done
     fi
-            
+   
 elif [ "$MACOSX" ] ; then
     # OSX doesn't execute browsers from the shell PATH - route thru a script
     GRASS_HTML_BROWSER_MACOSX="-b $GRASS_HTML_BROWSER"
@@ -806,7 +792,21 @@ else
 	fi
 fi
 
-cat <<EOF
+
+say_hello()
+{
+    if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
+	cat "$GISBASE/locale/$LCL/etc/welcome"
+    else
+	cat "$ETC/welcome"
+    fi
+
+}
+
+if [ -n "$GRASS_BATCH_JOB" ] ; then
+  say_hello
+else
+  cat <<EOF
           __________  ___   __________    _______________
          / ____/ __ \/   | / ___/ ___/   / ____/  _/ ___/
         / / __/ /_/ / /| | \__ \\\\_  \\   / / __ / / \\__ \\ 
@@ -815,34 +815,30 @@ cat <<EOF
 
 EOF
 
-if [ -f "$GISBASE/locale/$LCL/etc/welcome" ] ; then
-	cat "$GISBASE/locale/$LCL/etc/welcome"
-else
-	cat "$ETC/welcome"
-fi
+  say_hello
+  echo "GRASS homepage:                          http://grass.osgeo.org/"
+  echo "This version running thru:               $shellname ($SHELL)"
+  echo "Help is available with the command:      g.manual -i"
+  echo "See the licence terms with:              g.version -c"
 
-echo "GRASS homepage:                          http://grass.osgeo.org/"
-echo "This version running thru:               $shellname ($SHELL)"
-echo "Help is available with the command:      g.manual -i"
-echo "See the licence terms with:              g.version -c"
-
-case "$GRASS_GUI" in
-    tcltk | gis.m)
+  case "$GRASS_GUI" in
+     tcltk | gis.m)
         echo "If required, restart the GUI with:       g.gui tcltk"
         ;;
-    oldtcltk | d.m)
+     oldtcltk | d.m)
         echo "If required, restart the GUI with:       g.gui oldtcltk"
         ;;
-    wxpython)
+     wxpython)
         echo "If required, restart the GUI with:       g.gui wxpython"
         ;;
-    *)
-        echo "Start the GUI with:                      g.gui tcltk"
+     *)
+        echo "Start the GUI with:                      g.gui $DEFAULT_GUI"
         ;;
-esac
+  esac
 
-echo "When ready to quit enter:                exit"
-echo
+  echo "When ready to quit enter:                exit"
+  echo
+fi
 
 
 case "$sh" in
@@ -995,15 +991,17 @@ cp "$GISRC" "$GISRCRC"
 rm -rf "$tmp"
 #### after this point no more grass modules may be called ####
 
-echo "Done."
-echo 
-echo 
-echo 
-echo "Goodbye from GRASS GIS"
-echo
 
 if [ -x "$GRASS_BATCH_JOB" ] ; then
    echo "Batch job '$GRASS_BATCH_JOB' (defined in GRASS_BATCH_JOB variable) was executed."
+   echo "Goodbye from GRASS GIS"
    exit $EXIT_VAL
+else
+   echo "Done."
+   echo 
+   echo 
+   echo
+   echo "Goodbye from GRASS GIS"
+   echo
 fi
 
