@@ -14,6 +14,7 @@
  *   This program is a replacement for the r.univar shell script
  */
 
+#include <assert.h>
 #define MAIN
 #include "globals.h"
 
@@ -25,7 +26,7 @@ void set_params();
 /* ************************************************************************* */
 void set_params()
 {
-    param.inputfile = G_define_standard_option(G_OPT_R_MAP);
+    param.inputfile = G_define_standard_option (G_OPT_R_MAPS);
 
     param.percentile = G_define_option();
     param.percentile->key = "percentile";
@@ -48,26 +49,21 @@ void set_params()
     return;
 }
 
+static int open_raster (const char *infile);
+static univar_stat *univar_stat_with_percentiles (int map_type,
+						  int size);
+static void process_raster (univar_stat *stats, int fd,
+			    const struct Cell_head *region);
 
 /* *************************************************************** */
 /* **** the main functions for r.univar ************************** */
 /* *************************************************************** */
 int main(int argc, char *argv[])
 {
-    unsigned int i;
-    unsigned int row, col;	/* counters */
     unsigned int rows, cols;	/*  totals  */
+    int rasters;
 
-    int val_i;			/* for misc use */
-    float val_f;		/* for misc use */
-    double val_d;		/* for misc use */
-    int first = TRUE;		/* min/max init flag */
-
-    char *infile, *mapset;
-    void *raster_row, *ptr;
-    RASTER_MAP_TYPE map_type;
     struct Cell_head region;
-    int fd;
     struct GModule *module;
     univar_stat *stats;
 
@@ -85,8 +81,67 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
 
+    G_get_window(&region);
+    rows = region.rows;
+    cols = region.cols;
 
-    infile = param.inputfile->answer;
+    /* count the rasters given */
+    {
+	const char **p;
+	for (p = (const char **)param.inputfile->answers, rasters = 0;
+	     *p;
+	     p++, rasters++)
+	    ;
+    }
+
+    /* process them all */
+    {
+	size_t cells = rasters * cols * rows;
+	int map_type = param.extended->answer ? -2 : -1;
+	char **p;
+
+	stats = ((map_type == -1)
+		 ? create_univar_stat_struct (-1, cells, 0)
+		 : 0);
+
+	for (p = (const char **)param.inputfile->answers; *p; p++) {
+	    int fd = open_raster (*p);
+
+	    if (map_type != -1) {
+		/* NB: map_type must match when doing extended stats */
+		int this_type = G_get_raster_map_type (fd);
+		assert (this_type > -1);
+		if (map_type < -1) {
+		    assert (stats == 0);
+		    map_type = this_type;
+		    stats = univar_stat_with_percentiles (map_type,
+							  cells);
+		} else if (this_type != map_type) {
+		    G_fatal_error (_("Raster <%s> type mismatch"), *p);
+		}
+	    }
+
+	    process_raster (stats, fd, &region);
+	}
+    }
+
+    if (!(param.shell_style->answer))
+	G_percent (rows, rows, 2);	/* finish it off */
+
+    /* create the output */
+    print_stats(stats);
+
+    /* release memory */
+    free_univar_stat_struct(stats);
+
+    exit(EXIT_SUCCESS);
+}
+
+static int
+open_raster (const char *infile)
+{
+    char *mapset;
+    int fd;
 
     mapset = G_find_cell2(infile, "");
     if (mapset == NULL) {
@@ -97,23 +152,48 @@ int main(int argc, char *argv[])
     if (fd < 0)
 	G_fatal_error(_("Unable to open raster map <%s>"), infile);
 
-    map_type = G_get_raster_map_type(fd);
+    /* . */
+    return fd;
+}
 
-    G_get_window(&region);
-    rows = region.rows;		/* use G_window_rows(), G_window_cols() here? */
-    cols = region.cols;
+static univar_stat *
+univar_stat_with_percentiles (int map_type, int size)
+{
+    univar_stat *stats;
+    int i;
 
     i = 0;
     while(param.percentile->answers[i])
 	i++;
-    stats = create_univar_stat_struct(map_type, cols * rows, i);
+    stats = create_univar_stat_struct (map_type, size, i);
     for(i = 0; i < stats->n_perc; i++) {
 	sscanf(param.percentile->answers[i], "%i", &stats->perc[i]);
     }
 
+    /* . */
+    return stats;
+}
+
+static void
+process_raster (univar_stat *stats, int fd,
+		const struct Cell_head *region)
+{
+    /* use G_window_rows(), G_window_cols() here? */
+    const int rows = region->rows;
+    const int cols = region->cols;
+    int first = (stats->n < 1);
+
+    RASTER_MAP_TYPE map_type;
+    unsigned int row;
+    void *raster_row;
+
+    map_type = G_get_raster_map_type (fd);
     raster_row = G_calloc(cols, G_raster_size(map_type));
 
     for (row = 0; row < rows; row++) {
+	void *ptr;
+	unsigned int col;
+
 	if (G_get_raster_row(fd, raster_row, row, map_type) < 0)
 	    G_fatal_error(_("Reading row %d"), row);
 
@@ -128,7 +208,7 @@ int main(int argc, char *argv[])
 
 
 	    if (map_type == CELL_TYPE) {
-		val_i = *((CELL *) ptr);
+		const int val_i = *((CELL *) ptr);
 
 		stats->sum += val_i;
 		stats->sumsq += (val_i * val_i);
@@ -150,7 +230,7 @@ int main(int argc, char *argv[])
 		}
 	    }
 	    else if (map_type == FCELL_TYPE) {
-		val_f = *((FCELL *) ptr);
+		const float val_f = *((FCELL *) ptr);
 
 		stats->sum += val_f;
 		stats->sumsq += (val_f * val_f);
@@ -172,7 +252,7 @@ int main(int argc, char *argv[])
 		}
 	    }
 	    else if (map_type == DCELL_TYPE) {
-		val_d = *((DCELL *) ptr);
+		const double val_d = *((DCELL *) ptr);
 
 		stats->sum += val_d;
 		stats->sumsq += val_d * val_d;
@@ -199,14 +279,4 @@ int main(int argc, char *argv[])
 	if (!(param.shell_style->answer))
 	    G_percent(row, rows, 2);
     }
-    if (!(param.shell_style->answer))
-	G_percent(row, rows, 2);	/* finish it off */
-
-    /* create the output */
-    print_stats(stats);
-
-    /* release memory */
-    free_univar_stat_struct(stats);
-
-    exit(EXIT_SUCCESS);
 }
