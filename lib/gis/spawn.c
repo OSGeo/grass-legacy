@@ -204,14 +204,37 @@ static const char *directory;
 
 #ifdef __MINGW32__
 
-static int do_spawn(const char *command)
+static int do_redirects(struct redirect *redirects, int num_redirects)
 {
-	G_warning("do_spawn: not implemented");
-
-	return -1;
+	if (num_redirects > 0)
+		G_fatal_error("G_spawn_ex: redirection not (yet) supported on Windows");
 }
 
-#else
+static void do_bindings(char **env, struct binding *bindings, int num_bindings)
+{
+	if (num_bindings > 0)
+		G_fatal_error("G_spawn_ex: redirection not (yet) supported on Windows");
+
+	return env;
+}
+
+static int do_spawn(const char *command)
+{
+	char **env;
+	int status;
+
+	do_redirects(redirects, num_redirects);
+	env = do_bindings(_environ, bindings, num_bindings);
+
+	status = spawnvpe(background ? _P_NOWAIT : _P_WAIT, command, (char **) args, env);
+
+	if (!background && status < 0)
+		G_warning(_("Unable to execute command"));
+
+	return status;
+}
+
+#else  /* __MINGW32__ */
 
 static int undo_signals(struct signal *signals, int num_signals, int which)
 {
