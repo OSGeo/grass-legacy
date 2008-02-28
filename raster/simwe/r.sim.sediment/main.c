@@ -49,10 +49,10 @@
 /********************************/
 /* DEFINE GLOB VAR              */
 /********************************/
-#define NWALK	"2000000"
+/* #define NWALK	"1000000" */
 #define DIFFC	"0.8"
-#define NITER   "1200"
-#define ITEROUT "300"
+#define NITER   "10"
+#define ITEROUT "2"
 #define DENSITY "200"
 #define MANINVAL "0.1"
 
@@ -133,7 +133,9 @@ int main ( int argc, char *argv[])
 		yp0 = ymin + stepy / 2.;
 		xmax = xmin + stepx * (float) mx;
 		ymax = ymin + stepy * (float) my;
+		hhc = hhmax = 0.;
 			
+/*
 		bxmi=2093113. * conv;
 		bymi=731331. * conv;
 		bxma=2093461. * conv;
@@ -142,12 +144,10 @@ int main ( int argc, char *argv[])
 		bresy=2. * conv;
 		maxwab=100000;
 		
-		hhc = hhmax = 0.;
-		
 		mx2o= (int)((bxma-bxmi)/bresx);
 		my2o= (int)((byma-bymi)/bresy);
 		
-		/* relative small box coordinates: leave 1 grid layer for overlap */
+		/* relative small box coordinates: leave 1 grid layer for overlap 
 		
 		bxmi = bxmi - mixx + stepx;
 		bymi = bymi - miyy + stepy;
@@ -155,6 +155,7 @@ int main ( int argc, char *argv[])
 		byma = byma - miyy - stepy;
 		mx2 = mx2o - 2*((int) (stepx / bresx));
 		my2 = my2o - 2*((int) (stepy / bresy)); 
+*/
 
 	parm.elevin = G_define_standard_option(G_OPT_R_INPUT);
 	parm.elevin->key = "elevin";
@@ -248,7 +249,7 @@ int main ( int argc, char *argv[])
 	parm.nwalk = G_define_option();
 	parm.nwalk->key = "nwalk";
 	parm.nwalk->type = TYPE_INTEGER;
-	parm.nwalk->answer = NWALK;
+/*      parm.nwalk->answer = NWALK; */
 	parm.nwalk->required = NO;
 	parm.nwalk->description = _("Number of walkers");
 	parm.nwalk->guisection  = _("Parameters");
@@ -284,7 +285,7 @@ int main ( int argc, char *argv[])
 	parm.diffc->required = NO;
 	parm.diffc->description = _("Water diffusion constant");
 	parm.diffc->guisection  = _("Parameters");
-	
+/*	
 	flag.mscale = G_define_flag ();
 	flag.mscale->key = 'm';
 	flag.mscale->description = _("Multiscale simulation");
@@ -292,12 +293,13 @@ int main ( int argc, char *argv[])
 	flag.tserie = G_define_flag ();
 	flag.tserie->key = 't';
 	flag.tserie->description = _("Time-series output");
+*/
 
 	if (G_parser (argc, argv))
 		exit (EXIT_FAILURE);
 
-	mscale=flag.mscale->answer ? "m" : NULL;
-	tserie=flag.tserie->answer ? "t" : NULL;
+/*	mscale=flag.mscale->answer ? "m" : NULL; 
+	tserie=flag.tserie->answer ? "t" : NULL; */
 	
 	elevin = parm.elevin->answer;
 	wdepth = parm.wdepth->answer;
@@ -315,7 +317,7 @@ int main ( int argc, char *argv[])
 	erdep = parm.erdep->answer;
 	sfile = parm.sfile->answer;
 	
-	sscanf(parm.nwalk->answer, "%d", &maxwa);
+/*	sscanf(parm.nwalk->answer, "%d", &maxwa); */
 	sscanf(parm.niter->answer, "%d", &timesec);
 	sscanf(parm.outiter->answer, "%d", &iterout);
 	sscanf(parm.density->answer, "%d", &ldemo);
