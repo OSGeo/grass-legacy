@@ -211,7 +211,7 @@ process_raster (univar_stat *stats, int fd,
 		const int val_i = *((CELL *) ptr);
 
 		stats->sum += val_i;
-		stats->sumsq += (val_i * val_i);
+		stats->sumsq += (double) val_i * val_i;
 		stats->sum_abs += abs(val_i);
 
 		if (param.extended->answer)
@@ -233,7 +233,7 @@ process_raster (univar_stat *stats, int fd,
 		const float val_f = *((FCELL *) ptr);
 
 		stats->sum += val_f;
-		stats->sumsq += (val_f * val_f);
+		stats->sumsq += (double) val_f * val_f;
 		stats->sum_abs += fabs(val_f);
 
 		if (param.extended->answer)
