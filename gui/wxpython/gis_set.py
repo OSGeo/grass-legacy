@@ -353,7 +353,7 @@ class GRASSStartup(wx.Frame):
             try:
                 rc = open(gisrc, "r")
                 for line in rc.readlines():
-                    key, val = line.split(":")
+                    key, val = line.split(":", 1)
                     grassrc[key.strip()] = val.strip()
             finally:
                 rc.close()
