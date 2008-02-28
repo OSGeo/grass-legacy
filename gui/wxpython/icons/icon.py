@@ -32,7 +32,7 @@ from preferences import globalSettings as UserSettings
 # iconpath = grassenv.GetGRASSVariable('GRASS_ICONPATH')
 # if not iconpath:
 #    iconpath = os.getenv("GRASS_ICONPATH")
-iconTheme = UserSettings.Get('iconTheme')
+iconTheme = UserSettings.Get(group='advanced', key='iconTheme', subkey='value')
 if iconTheme and iconTheme == 'silk':
     iconpath = os.path.join(globalvar.ETCWXDIR, "icons", "silk")
 else:

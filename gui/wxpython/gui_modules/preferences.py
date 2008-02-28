@@ -39,14 +39,63 @@ class Settings:
 
         # default settings
         self.defaultSettings = {
+            #
             # general
-            'displayFont' : '',
-            'mapsetPath' : 'p', # current mapset search path
+            #
+            'general': {
+            'displayFont' : { 'value' : '' },
+            'mapsetPath'  : { 'value' : 'p' }, # current mapset search path
+            },
+            #
             # advanced
-            'settingsFile' : 'gisdbase', # gisdbase, location, mapset
-            'digitInterface' : 'vdigit', # vedit, vdigit
-            'iconTheme': 'silk', # grass, silk
+            #
+            'advanced' : {
+            'settingsFile'   : { 'value' : 'gisdbase' }, # gisdbase, location, mapset
+            'digitInterface' : { 'value' : 'vdigit' }, # vedit, vdigit
+            'iconTheme'      : { 'value' : 'silk' }, # grass, silk
+            },
+            #
+            # vdigit
+            #
+            'vdigit' : {
+            # symbology
+            'symbolHighlight'   : { 'enabled' : None,  'color' : (255, 255, 0, 255) }, #yellow
+            'symbolPoint'       : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
+            'symbolLine'        : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
+            'symbolBoundaryNo'  : { 'enabled' : True,  'color' : (126, 126, 126, 255) }, # grey
+            'symbolBoundaryOne' : { 'enabled' : True,  'color' : (0, 255, 0, 255) }, # green
+            'symbolBoundaryTwo' : { 'enabled' : True,  'color' : (255, 135, 0, 255) }, # orange
+            'symbolCentroidIn'  : { 'enabled' : True,  'color' : (0, 0, 255, 255) }, # blue
+            'symbolCentroidOut' : { 'enabled' : True,  'color' : (165, 42, 42, 255) }, # brown
+            'symbolCentroidDup' : { 'enabled' : True,  'color' : (156, 62, 206, 255) }, # violet
+            'symbolNodeOne'     : { 'enabled' : True,  'color' : (255, 0, 0, 255) }, # red
+            'symbolNodeTwo'     : { 'enabled' : True,  'color' : (0, 86, 45, 255) }, # dark green
+            'symbolVertex'      : { 'enabled' : False, 'color' : (255, 20, 147, 255) }, # deep pink
+            # display
+            'lineWidth' : { 'value' : 2, 'units' : 'screen pixels' },
+            # snapping
+            'snapping' : { 'value' : 10, 'units' : 'screen pixels' },
+            'snapToVertex' : { 'enabled' : False },
+            'backgroundMap' : {'value' : ''},
+            # digitize new record
+            'addRecord' : { 'enabled' : True },
+            'layer' : {'value' : 1 },
+            'category' : {'value' : 1 },
+            'categoryMode' : {'value' : 'Next to use' },
+            # delete existing feature(s)
+            'delRecord' : { 'enabled' : True },
+            # query tool
+            'query'       : { 'type' : 'length', 'box' : True },
+            'queryLength' : { 'than' : 'shorter than', 'thresh' : 0 },
+            'queryDangle' : { 'than' : 'shorter than', 'thresh' : 0 },
+            # select feature (point, line, centroid, boundary)
+            'selectFeaturePoint'    : { 'enabled' : True },
+            'selectFeatureLine'     : { 'enabled' : True },
+            'selectFeatureCentroid' : { 'enabled' : True },
+            'selectFeatureBoundary' : { 'enabled' : True },
+            'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
             }
+        }
         
         # user settings
         self.userSettings = copy.deepcopy(self.defaultSettings)
@@ -59,13 +108,15 @@ class Settings:
 
         # internal settings (based on user settings)
         self.internalSettings = {}
-        self.internalSettings["mapsetPath"] = self.GetMapsetPath()
+        self.internalSettings['general'] = {}
+        self.internalSettings['general']["mapsetPath"] = {}
+        self.internalSettings['general']["mapsetPath"]['value'] = self.GetMapsetPath()
 
     def GetMapsetPath(self):
         """Store mapset search path"""
         all, access = utils.ListOfMapsets()
 
-        if self.Get('mapsetPath') == 'p':
+        if self.Get(group='general', key='mapsetPath', subkey='value') == 'p':
             return access
         else:
             return all
@@ -100,22 +151,21 @@ class Settings:
             settings = self.userSettings
 
         try:
+            # print '#', filename
             file = open(filename, "r")
             for line in file.readlines():
-                try:
-                    key, value = line.rstrip('%s' % os.linesep).split(':', 1)
-                except:
-                    raise SettingsError('Reading settings from file <%s> failed. '
-                                        'Line \'%s\'.' % (filename, line))
-                if settings.has_key(key):
-                    settings[key] = value
-                else:
-                    raise SettingsError('Reading settings from file <%s> failed. '
-                                        'Unknow item <%s>.' % (filename, key))
+                line = line.rstrip('%s' % os.linesep)
+                group, key = line.split(':')[0:2]
+                kv = line.split(':')[2:]
+                idx = 0
+                while idx < len(kv):
+                    # print group, key, kv[idx], kv[idx+1]
+                    # settings.Set(grou=group, key=key, subkey=kv[idx], value=kv[idx+1])
+                    idx += 2
         except IOError, e:
             raise gcmd.SettingsError(e)
         except:
-            raise gcmd.SettingsError('Reading settings from file <%s> failed.' % filename)
+            raise gcmd.SettingsError(_('Reading settings from file <%s> failed.') % filename)
 
         file.close()
 
@@ -124,7 +174,7 @@ class Settings:
         if settings is None:
             settings = self.userSettings
         
-        loc = self.Get('settingsFile')
+        loc = self.Get(group='advanced', key='settingsFile', subkey='value')
         gisdbase = grassenv.GetGRASSVariable("GISDBASE")
         location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
         mapset_name = grassenv.GetGRASSVariable("MAPSET")
@@ -141,9 +191,15 @@ class Settings:
 
         try:
             file = open(filePath, "w")
-            for item in settings.keys():
-                if settings[item] != '':
-                    file.write('%s:%s%s' % (item, settings[item], os.linesep))
+            for group in settings.keys():
+                for item in settings[group].keys():
+                    file.write('%s:%s:' % (group, item))
+                    items = settings[group][item].keys()
+                    for idx in range(len(items)):
+                        file.write('%s:%s' % (items[idx], settings[group][item][items[idx]]))
+                        if idx < len(items) - 1:
+                            file.write(':')
+                    file.write('%s' % os.linesep)
         except IOError, e:
             raise gcmd.SettingsError(e)
         except:
@@ -153,34 +209,54 @@ class Settings:
 
         return filePath
 
-    def Get(self, key, internal=False):
-        """Get value by key
-
-        @return value
-        @return None if key not found
-        """
-        if internal is True:
-            settings = self.internalSettings
-        else:
-            settings = self.userSettings
-            
-        if settings.has_key(key):
-            return settings[key]
-
-        return None
-    
-    def Set(self, key, value, internal=False):
-        """Set value by key
+    def Get(self, group, key, subkey=None, internal=False):
+        """Get value by key/subkey
 
         Raise KeyError if key is not found
+        
+        @param group settings group
+        @param key
+        @param subkey if not given return dict of key
+        
+        @return value
+
         """
         if internal is True:
             settings = self.internalSettings
         else:
             settings = self.userSettings
             
-        if settings.has_key(key):
-            settings[key] = value
+        if settings.has_key(group) and settings[group].has_key(key):
+            if subkey is None:
+                return settings[group][key]
+            else:
+                if settings[group][key].has_key(subkey):
+                    return settings[group][key][subkey]
+                else:
+                    raise KeyError
+        else:
+            raise KeyError
+        
+        return None
+    
+    def Set(self, group, key, subkey, value, internal=False):
+        """Set value by key/subkey
+
+        Raise KeyError if key is not found
+        
+        @param group settings group
+        @param key
+        @param subkey
+        @param value 
+        """
+        if internal is True:
+            settings = self.internalSettings
+        else:
+            settings = self.userSettings
+            
+        if settings.has_key(group) and settings[group].has_key(key) and \
+               settings[group][key].has_key(subkey):
+            settings[group][key][subkey] = value
         else:
             raise KeyError
 
@@ -274,7 +350,7 @@ class PreferencesDialog(wx.Dialog):
                        pos=(2, 0))
         self.mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
                                       choices=['mapset search path', 'all available mapsets'])
-        if self.settings.Get('mapsetPath') == 'p':
+        if self.settings.Get(group='general', key='mapsetPath', subkey='value') == 'p':
             self.mapsetPath.SetSelection(0)
         else:
             self.mapsetPath.SetSelection(1)
@@ -318,7 +394,7 @@ class PreferencesDialog(wx.Dialog):
                        pos=(row, 0))
         self.settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                       choices=['gisdbase', 'location', 'mapset'])
-        self.settingsFile.SetStringSelection(self.settings.Get('settingsFile'))
+        self.settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='value'))
         gridSizer.Add(item=self.settingsFile,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
@@ -335,7 +411,7 @@ class PreferencesDialog(wx.Dialog):
                        pos=(row, 0))
         self.iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                    choices=['grass', 'silk'])
-        self.iconTheme.SetStringSelection(self.settings.Get('iconTheme'))
+        self.iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='value'))
         gridSizer.Add(item=self.iconTheme,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
@@ -362,7 +438,7 @@ class PreferencesDialog(wx.Dialog):
                        pos=(row, 0))
         self.digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                         choices=['vdigit', 'vedit'])
-        self.digitInterface.SetStringSelection(self.settings.Get('digitInterface'))
+        self.digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='value'))
         gridSizer.Add(item=self.digitInterface,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
@@ -419,12 +495,12 @@ class PreferencesDialog(wx.Dialog):
     def OnChangeMapsetPath(self, event):
         """Mapset path changed"""
         if event.GetSelection() == 0:
-            self.settings.Set('mapsetPath', 'p')
+            self.settings.Set(group='general', key='mapsetPath', subkey='value', value='p')
         else:
-            self.settings.Set('mapsetPath', 'l')
+            self.settings.Set(group='general', key='mapsetPath', subkey='value', value='l')
 
         # update internal settings
-        self.settings.Set("mapsetPath", self.settings.GetMapsetPath(), internal=True)
+        self.settings.Set(group='general', key="mapsetPath", subkey='value', value=self.settings.GetMapsetPath(), internal=True)
         
     def OnSave(self, event):
         """Button 'Save' clicked"""
@@ -447,13 +523,13 @@ class PreferencesDialog(wx.Dialog):
         # TODO
 
         # location
-        self.settings.Set('settingsFile', self.settingsFile.GetStringSelection())
+        self.settings.Set(group='advanced', key='settingsFile', subkey='value', value=self.settingsFile.GetStringSelection())
 
         # icon theme
-        self.settings.Set('iconTheme', self.iconTheme.GetStringSelection())
+        self.settings.Set(group='advanced', key='iconTheme', subkey='value', value=self.iconTheme.GetStringSelection())
         
         # digitization interface
-        self.settings.Set('digitInterface', self.digitInterface.GetStringSelection())
+        self.settings.Set(group='advanced', key='digitInterface', subkey='value', value=self.digitInterface.GetStringSelection())
 
 class SetDefaultFont(wx.Dialog):
     """
@@ -584,7 +660,7 @@ class MapsetAccess(wx.Dialog):
                   flag=wx.ALL | wx.EXPAND, border=5)
 
         # check all accessible mapsets
-        if globalSettings.Get('mapsetPath') == 'l':
+        if globalSettings.Get(group='general', key='mapsetPath', subkey='value') == 'l':
             for mset in self.all_mapsets:
                 self.mapsetlb.Check(self.all_mapsets.index(mset), True)
         else:
