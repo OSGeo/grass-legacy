@@ -343,8 +343,8 @@ class GMFrame(wx.Frame):
             # run g.mapsets with string of accessible mapsets
             cmdlist = ['g.mapsets', 'mapset=%s' % ','.join(ms)]
             gcmd.Command(cmdlist)
-            UserSettings.Set('mapsetPath', ms, internal=True)
-            print UserSettings.Get('mapsetPath', internal=True)
+            UserSettings.Set(group='general', key='mapsetPath', subkey='value', value=ms, internal=True)
+            print UserSettings.Get(group='general', key='mapsetPath', internal=True)
             
     def OnRDigit(self, event):
         """

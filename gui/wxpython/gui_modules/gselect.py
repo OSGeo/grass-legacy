@@ -160,7 +160,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         curr_mapset = gcmd.Command(cmdlist).ReadStdOutput()[0]
 
         #mapsets in current location
-        mapsets = UserSettings.Get('mapsetPath', internal=True)
+        mapsets = UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True)
         # map element types to g.mlist types
         elementdict = {'cell':'rast',
                        'raster':'rast',
