@@ -63,6 +63,7 @@ Darwin*)
 	;;
 esac
 
+
 # Go through the command line options
 for i in "$@" ; do
     
@@ -78,11 +79,14 @@ for i in "$@" ; do
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "  $CMD_NAME [-h | -help | --help] [-v | --version] [-text | -gui | -tcltk | -oldtcltk | -wxpython] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo "  $CMD_NAME [-h | -help | --help] [-v | --version] [-c]"
+	    echo "          [-text | -gui | -tcltk | -oldtcltk | -wxpython]"
+	    echo "          [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
 	    echo "  -v or --version                show version information and exit"
+	    echo "  -c                             create given mapset if it doesn't exist"
             echo "  -text                          use text based interface"
             echo "                                   and set as default"
             echo "  -gui                           use graphical user interface ($DEFAULT_GUI by default)"
@@ -141,6 +145,12 @@ for i in "$@" ; do
 	    GRASS_GUI="wxpython"
 	    shift
 	    ;;
+
+    	# Check if the user wants to create a new mapset
+	-c)
+	    CREATE_NEW=1
+	    shift
+	    ;;
     esac
 done
 
@@ -167,6 +177,14 @@ else
 	USER="`whoami`"
 fi
 
+
+# all exits after setting up $tmp should also tidy it up
+cleanup_tmp()
+{
+  # remove session files from tmpdir
+  rm -rf "$tmp"
+}
+
 ## use TMPDIR if it exists, otherwise /tmp
 #tmp=${TMPDIR-/tmp}
 #tmp="$tmp/grass6-$USER-$GIS_LOCK"
@@ -189,7 +207,8 @@ if [ -f "$GISRCRC" ] ; then
     cp "$GISRCRC" "$GISRC"
     if [ $? -eq 1 ] ; then
     	echo "Cannot copy '$GISRCRC' to '$GISRC'"
-    	exit
+	cleanup_tmp
+    	exit 1
     fi
 fi
 
@@ -487,17 +506,20 @@ else
 
     if [ "$GISDBASE" -a "$LOCATION_NAME" -a "$MAPSET" ] ; then
     	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
-    
+
     	if [ ! -r "$LOCATION/WIND" ] ; then
 		if [ "$LOCATION_NAME" = "PERMANENT" ] ; then
 		   echo "$LOCATION: Not a valid GRASS location"
+		   cleanup_tmp
 		   exit 1
 		else
 		   # the user wants to create mapset on the fly
-		   if [ ! -f "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" ] ; then
+		   if [ -n "$CREATE_NEW" ] && [ "$CREATE_NEW" -eq 1 ] ; then
+		     if [ ! -f "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" ] ; then
 			echo "The LOCATION \"$LOCATION_NAME\" does not exist. Please create first"
+			cleanup_tmp
 			exit 1
-		   else
+		     else
 			mkdir -p "$LOCATION"
 			cp "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" "$LOCATION/WIND"
 			echo "Missing WIND file fixed"
@@ -505,10 +527,15 @@ else
 			echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
 			echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
 			mkdir "$LOCATION"/dbf
+		     fi
+		   else
+			echo "$LOCATION: Not a valid GRASS location"
+			cleanup_tmp
+			exit 1
 		   fi
 		fi
     	fi
-    
+
     	if [ -s "$GISRC" ] ; then
     	    sed -e "s|^GISDBASE:.*$|GISDBASE: $GISDBASE|; \
     	    	s|^LOCATION_NAME:.*$|LOCATION_NAME: $LOCATION_NAME|; \
@@ -529,7 +556,8 @@ else
     else
     	echo "GISDBASE, LOCATION_NAME and MAPSET variables not set properly."
     	echo "Interactive startup needed."
-    	exit
+	cleanup_tmp
+    	exit 1
     fi
 fi
 
@@ -554,6 +582,7 @@ if [ ! "$LOCATION" ] ; then
 			fi
 		    fi
 		    
+		    cleanup_tmp
 		    exit
 		    ;;
     	    esac
@@ -609,6 +638,7 @@ if [ ! "$LOCATION" ] ; then
 				fi
 			    fi
 
+			    cleanup_tmp
 			    exit
 			    ;;
     		    esac
@@ -622,13 +652,15 @@ if [ ! "$LOCATION" ] ; then
     	    		    echo "GISDBASE: $OLD_DB" > "$GISRC"
     	    		    echo "LOCATION_NAME: $OLD_LOC" >> "$GISRC"
     	    		    echo "MAPSET: $OLD_MAP" >> "$GISRC"
-    	    		    exit
+    	    		    cleanup_tmp
+			    exit
     	    		fi
     		    fi
 
 		    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
     	    		echo "The selected location is not a valid GRASS location"
-    	    		exit 1
+    	    		cleanup_tmp
+			exit 1
 		    fi
 
 		    ;;
@@ -637,6 +669,7 @@ if [ ! "$LOCATION" ] ; then
 			# User wants to exit from GRASS
 			echo "Received EXIT message from GUI."
 			echo "GRASS is not started. Bye."
+			cleanup_tmp
 			exit 0
 			;;
 		*)
@@ -649,7 +682,8 @@ if [ ! "$LOCATION" ] ; then
 	*)
 	    # Shouldn't need this but you never know
 	    echo "ERROR: Invalid user interface specified - <$GRASS_GUI>."
-	    echo "Use the -help option to select a valid interface."
+	    echo "Use the --help option to see valid interface names."
+	    cleanup_tmp
 	    exit 1
 	    ;;
     esac
@@ -666,6 +700,7 @@ if [ -z "$GISDBASE" ] || [ -z "$LOCATION_NAME" ] || [ -z "$MAPSET" ] ; then
     echo "MAPSET=[$MAPSET]"
     echo
     echo "Check the <$GISRCRC> file."
+    cleanup_tmp
     exit 1
 fi
 
@@ -678,11 +713,12 @@ case $? in
     0) ;;
     1)
     	echo "$USER is currently running GRASS in selected mapset (file $lockfile found). Concurrent use not allowed."
-    	rm -rf "$tmp"  # remove session files from tmpdir
+    	cleanup_tmp
     	exit 1 ;;
     *)
     	echo Unable to properly access "$lockfile"
     	echo Please notify system personel.
+	cleanup_tmp
     	exit 1 ;;
 esac
 
@@ -725,7 +761,7 @@ fi
 if [ ! -x "$SHELL" ] ; then
     echo "ERROR: The SHELL variable is not set" 1>&2
     rm -f "$lockfile"
-    rm -rf "$tmp"  # remove session files from tmpdir
+    cleanup_tmp
     exit 1
 fi
 
@@ -734,14 +770,18 @@ if [ -n "$GRASS_BATCH_JOB" ] ; then
    # defined, but ...
    if [ ! -f "$GRASS_BATCH_JOB" ] ; then
       # wrong file
-      echo "Job file '$GRASS_BATCH_JOB' has been defined in the 'GRASS_BATCH_JOB' variable but not found. Exiting."
+      echo "Job file '$GRASS_BATCH_JOB' has been defined in"
+      echo "the 'GRASS_BATCH_JOB' variable but not found. Exiting."
+      echo
       echo "Use 'unset GRASS_BATCH_JOB' to disable batch job processing."
+      cleanup_tmp
       exit 1
    else
       # right file, but ...
       if [ ! -x "$GRASS_BATCH_JOB" ] ; then
-         echo "Please change file permission to 'executable' for '$GRASS_BATCH_JOB'"
-         exit 1
+	 echo "Please change file permission to 'executable' for '$GRASS_BATCH_JOB'"
+	 cleanup_tmp
+	 exit 1
       else
          echo "Executing '$GRASS_BATCH_JOB' ..."
          GRASS_GUI="text"
@@ -987,10 +1027,9 @@ rm -f "$lockfile"
 # Save GISRC
 cp "$GISRC" "$GISRCRC"
 
-# remove session files from tmpdir
-rm -rf "$tmp"
-#### after this point no more grass modules may be called ####
 
+cleanup_tmp
+#### after this point no more grass modules may be called ####
 
 if [ -x "$GRASS_BATCH_JOB" ] ; then
    echo "Batch job '$GRASS_BATCH_JOB' (defined in GRASS_BATCH_JOB variable) was executed."
@@ -998,8 +1037,8 @@ if [ -x "$GRASS_BATCH_JOB" ] ; then
    exit $EXIT_VAL
 else
    echo "Done."
-   echo 
-   echo 
+   echo
+   echo
    echo
    echo "Goodbye from GRASS GIS"
    echo
