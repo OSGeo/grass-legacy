@@ -27,12 +27,12 @@ class Data:
         return [(
           ("File", (
               ("Workspace", (
-                 ("New", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
-                 ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
-                 ("Load", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
-                 ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
-                 ("Save as", "Save current workspace as", "self.OnWorkspaceSaveAs", ""),
-                 ("Close", "Close selected workspace file", "self.OnWorkspaceClose", ""),
+                 ("New workspace", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
+                 ("Open existing workspace", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
+                 ("Load map layers", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
+                 ("Save workspace", "Save current workspace to file", "self.OnWorkspaceSave", ""),
+                 ("Save workspace as", "Save current workspace as file", "self.OnWorkspaceSaveAs", ""),
+                 ("Close current workspace", "Close current workspace", "self.OnWorkspaceClose", ""),
                  )),
               ("","","", ""),
               ("Import raster map", (
