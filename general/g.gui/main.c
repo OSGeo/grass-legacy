@@ -74,19 +74,21 @@ int main(int argc, char *argv[])
     }
 
     if (strcmp(type->answer, "oldtcltk") == 0) {
+	sprintf(progname, "%s/etc/dm/d.m.tcl", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn("d.m", "dmrc=%s", rc_file->answer, NULL);
+	    G_spawn(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl", rc_file->answer, NULL);
 	}
 	else {
-	    G_system("d.m");
+	    G_spawn(getenv("GRASS_WISH"), "d.m", progname, "-name", "d_m_tcl", NULL);
 	}
     }
     else if (strcmp(type->answer, "tcltk") == 0) {
+	sprintf(progname, "%s/etc/gm/gm.tcl", G_gisbase());
 	if (rc_file->answer) {
-	    G_spawn("gis.m", "dmrc=%s", rc_file->answer, NULL);
+	    G_spawn(getenv("GRASS_WISH"), "gis.m", progname, "-name", "gm_tcl", rc_file->answer, NULL);
 	}
 	else {
-	    G_system("gis.m");
+	    G_spawn(getenv("GRASS_WISH"), "gis.m", progname, "-name", "gm_tcl", NULL);
 	}
     }
     else if (strcmp(type->answer, "wxpython") == 0) {
