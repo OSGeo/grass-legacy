@@ -1339,9 +1339,13 @@ class DigitSettingsDialog(wx.Dialog):
 
         # bindigs
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnApply.SetToolTipString(_("Apply changes for this session"))
+        btnApply.SetDefault()
         btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
+        btnSave.SetToolTipString(_("Close window and save changes to user settings file"))
         btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
-
+        btnCancel.SetToolTipString(_("Close window and ignore changes"))
+        
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
