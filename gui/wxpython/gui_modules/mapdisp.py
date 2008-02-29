@@ -68,6 +68,7 @@ from digit import DigitZBulkDialog    as DigitZBulkDialog
 from digit import GV_LINES            as Digit_Lines_Type
 from debug import Debug               as Debug
 from icon  import Icons               as Icons
+from preferences import globalSettings as UserSettings
 
 import images
 imagepath = images.__path__[0]
@@ -947,10 +948,11 @@ class BufferedWindow(wx.Window):
                     self.UpdateMap(render=False) # redraw map
 
                     # add new record into atribute table
-                    if digitClass.settings["addRecord"]:
+                    if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
                         # select attributes based on layer and category
                         cats = {}
-                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
+                        cats[UserSettings.Get(group='vdigit', key="layer", subkey='value')] = \
+                                                              (UserSettings.Get(group='vdigit', key="category", subkey='value'), )
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                    cats=cats,
                                                                    pos=posWindow,
@@ -988,7 +990,7 @@ class BufferedWindow(wx.Window):
                 self.moveIds   = [] 
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     # set pen
-                    self.pen = self.polypen = wx.Pen(colour=digitClass.settings["symbolHighlight"][1],
+                    self.pen = self.polypen = wx.Pen(colour=UserSettings.Get(group='vdigit', key="symbolHighlight", subkey='color'),
                                                      width=2, style=wx.SHORT_DASH)
                     self.pdcTmp.SetPen(self.polypen)
 
@@ -1313,7 +1315,7 @@ class BufferedWindow(wx.Window):
                                        size=5)
 
             elif digitToolbar.action == "copyLine":
-                if digitClass.settings['backgroundMap'] == '':
+                if UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value') == '':
                     # no background map -> copy from current vector map layer
                     nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
                                                                    digitClass.GetSelectType())
@@ -1327,12 +1329,12 @@ class BufferedWindow(wx.Window):
                     # copy features from background map
                     self.copyIds = digitClass.SelectLinesFromBackgroundMap(pos1, pos2)
                     if len(self.copyIds) > 0:
-                        color = digitClass.settings['symbolHighlight'][1]
+                        color = UserSettings.Get(group='vdigit', key='symbolHighlight', subkey='color')
                         colorStr = str(color[0]) + ":" + \
                             str(color[1]) + ":" + \
                             str(color[2]) + ":"
                         dVectTmp = ['d.vect',
-                                    'map=%s' % digitClass.settings['backgroundMap'],
+                                    'map=%s' % UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value'),
                                     'cats=%s' % utils.ListOfCatsToRange(self.copyIds),
                                     '-i',
                                     'color=%s' % colorStr,
@@ -1486,14 +1488,15 @@ class BufferedWindow(wx.Window):
                     self.UpdateMap(render=False)
 
                     # add new record into atribute table
-                    if digitClass.settings["addRecord"]:
+                    if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
                         offset   = 5
                         posWindow = self.ClientToScreen((position[0] + offset,
                                                          position[1] + offset))
 
                         # select attributes based on layer and category
                         cats = {}
-                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
+                        cats[UserSettings.Get(group='vdigit', key="layer", subkey='value')] = \
+                                                              (UserSettings.Get(group='vdigit', key="category", subkey='value'), )
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                    cats=cats,
                                                                    pos=posWindow,
