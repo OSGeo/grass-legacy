@@ -14,12 +14,10 @@
 #
 #############################################################################
 
-
 #%Module
 #%  description: Allows to update a column in the attribute table connected to a vector map.
 #%  keywords: vector, database, attribute table
 #%End
-
 #%option
 #% key: map
 #% type: string
@@ -27,7 +25,6 @@
 #% description: Vector map to edit the attribute table for
 #% required : yes
 #%end
-
 #%option
 #% key: layer
 #% type: integer
@@ -35,28 +32,24 @@
 #% answer: 1
 #% required : no
 #%end
-
 #%option
 #% key: column
 #% type: string
 #% description: Column to update
 #% required : yes
 #%end
-
 #%option
 #% key: value
 #% type: string
 #% description: Value to update the column with (varchar values have to be in single quotes, e.g. 'grass')
 #% required : no
 #%end
-
 #%option
 #% key: qcolumn
 #% type: string
 #% description: Column to query
 #% required : no
 #%end
-
 #%option
 #% key: where
 #% type: string
@@ -103,16 +96,18 @@ if [ ! "$file" ] ; then
    exit 1
 fi
 
-table=`v.db.connect "$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $2}'`
+table=`v.db.connect map="$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $2}'`
 if [ -z "$table" ] ; then
    g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
    exit 1
 fi
-database=`v.db.connect "$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $4}'`
-driver=`v.db.connect "$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $5}'`
+
+database=`v.db.connect map="$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $4}'`
+driver=`v.db.connect map="$GIS_OPT_MAP" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $5}'`
 
 # checking column types
 coltype=`v.info -c map="$GIS_OPT_MAP" --quiet | grep -w "$GIS_OPT_COLUMN" | cut -d'|' -f1`
+
 if [ -n "$GIS_OPT_QCOLUMN" ] ; then
    if [ -n "$GIS_OPT_VALUE" ] ; then
       g.message -e 'Either value or qcolumn parameter have to be used'
