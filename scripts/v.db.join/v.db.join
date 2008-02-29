@@ -79,26 +79,28 @@ if [ "$driver" = "dbf" ] ; then
    g.message -e "JOIN is not supported for tables stored in DBF format."
    exit 1
 fi
-maptable="`v.db.connect -g $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d' ' -f2`"
+maptable=`v.db.connect -g "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" | cut -d' ' -f2`
 if [ -z "$maptable" ] ; then
    g.message 'There is no table connected to this map! Cannot join any column.'
    cleanup
    exit 1
 fi
-v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${GIS_OPT_column}$" 2>&1 >/dev/null
+v.info --quiet -c "$GIS_OPT_MAP" layer="$GIS_OPT_LAYER" | \
+   cut -d'|' -f1,2 | grep "|${GIS_OPT_column}$" 2>&1 >/dev/null
+
 if [ $? -ne 0 ] ; then
-	g.message -e "Column <$GIS_OPT_column> not found in table <$GIS_OPT_MAP> at layer $GIS_OPT_LAYER"
-	exit 1
+    g.message -e "Column <$GIS_OPT_column> not found in table <$GIS_OPT_MAP> at layer $GIS_OPT_LAYER"
+    exit 1
 fi
 
 # we use map DBMI settings
-COLLIST=`db.describe  -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f2`
+COLLIST=`db.describe  -c driver="$driver" database="$database" table="$GIS_OPT_otable" | grep '^Column ' | cut -d':' -f2`
 # heck, types may have white space
-COLTYPES="`db.describe -c driver=$driver database=$database table=$GIS_OPT_otable | grep '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`"
+COLTYPES=`db.describe -c driver="$driver" database="$database" table="$GIS_OPT_otable" | grep '^Column ' | cut -d':' -f3 | tr -s ' ' '_'`
 
 i=1
 for col in $COLLIST ; do
-  v.db.addcol $GIS_OPT_MAP col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
+  v.db.addcol "$GIS_OPT_MAP" col="$col `echo $COLTYPES | cut -d' ' -f$i | tr -s '_' ' '`"
   if [ $? -ne 0 ] ; then
 	g.message -e "Cannot continue."
 	exit 1
@@ -109,6 +111,6 @@ for col in $COLLIST ; do
 done
 
 # write cmd history:
-v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+v.support "${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
 
 exit 0
