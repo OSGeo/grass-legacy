@@ -30,13 +30,15 @@ from wx.lib.wordwrap import wordwrap
 import gcmd
 import grassenv
 import utils
+from debug import Debug as Debug
 
 class Settings:
     """Generic class where to store settings"""
     def __init__(self):
         # filename for settings
         self.fileName = ".grasswx"
-
+        self.filePath = None
+        
         # default settings
         self.defaultSettings = {
             #
@@ -101,10 +103,8 @@ class Settings:
         self.userSettings = copy.deepcopy(self.defaultSettings)
         try:
             self.ReadSettingsFile()
-        except IOError, e:
-            raise gcmd.SettingsError(e)
-        except:
-            gcmd.SettingsError('Reading settings failed.')
+        except gcmd.GException, e:
+            raise gcmd.SettingsError(_('Reading settings failed\n\n%s.'), e)
 
         # internal settings (based on user settings)
         self.internalSettings = {}
@@ -139,19 +139,21 @@ class Settings:
         gisdbase_file = os.path.join(gisdbase, self.fileName)
 
         if os.path.isfile(mapset_file):
-            self.__ReadFile(mapset_file)
+            self.filePath = mapset_file
         elif os.path.isfile(location_file):
-            self.__ReadFile(location_file)
+            self.filePath = location_file
         elif os.path.isfile(gisdbase_file):
-            self.__ReadFile(gisdbase_file)
-
+            self.filePath = gisdbase_file
+        
+        if self.filePath:
+            self.__ReadFile(self.filePath)
+            
     def __ReadFile(self, filename, settings=None):
         """Read settings from file to dict"""
         if settings is None:
             settings = self.userSettings
 
         try:
-            # print '#', filename
             file = open(filename, "r")
             for line in file.readlines():
                 line = line.rstrip('%s' % os.linesep)
@@ -159,15 +161,35 @@ class Settings:
                 kv = line.split(':')[2:]
                 idx = 0
                 while idx < len(kv):
-                    # print group, key, kv[idx], kv[idx+1]
-                    # settings.Set(grou=group, key=key, subkey=kv[idx], value=kv[idx+1])
+                    subkey = kv[idx]
+                    value = kv[idx+1]
+                    if len(value) == 0:
+                        self.Set(group=group, key=key, subkey=subkey, value='')
+                    else:
+                        # casting
+                        if value == 'True':
+                            value = True
+                        elif value == 'False':
+                            value = False
+                        elif value == 'None':
+                            value = None
+                        elif value[0] == '(':
+                            tmp = value.replace('(','').replace(')', '').split(',')
+                            try:
+                                value = tuple(map(int, tmp))
+                            except:
+                                value = tuple(tmp)
+                        else:
+                            try:
+                                value = int(value)
+                            except:
+                                pass
+                        Debug.msg(3, 'Settings(): group=%s, key=%s, subkey=%s, value=%s' %
+                                  (group, key, subkey, value))
+                        self.Set(group=group, key=key, subkey=subkey, value=value)
                     idx += 2
-        except IOError, e:
-            raise gcmd.SettingsError(e)
-        except:
-            raise gcmd.SettingsError(_('Reading settings from file <%s> failed.') % filename)
-
-        file.close()
+        finally:
+            file.close()
 
     def SaveToFile(self, settings=None):
         """Save settings to the file"""
