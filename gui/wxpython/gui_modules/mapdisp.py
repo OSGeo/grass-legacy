@@ -998,7 +998,7 @@ class BufferedWindow(wx.Window):
                 pass
 
             elif digitToolbar.action in ["displayAttrs", "displayCats"]:
-                qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
+                qdist = digitClass.driver.GetThreshold(type='selectThresh')
                 coords = (east, north)
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)

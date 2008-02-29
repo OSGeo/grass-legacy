@@ -327,7 +327,7 @@ class VEdit(AbstractDigit):
         command = ["v.edit", "-n", "--q", 
                    "map=%s" % map,
                    "tool=add",
-                   "thresh=%f" % self.driver.GetThreshold(),
+                   "thresh=%f,%f" % (self.driver.GetThreshold(type='selectThresh'), self.driver.GetThreshold(type='snapping')),
                    "snap=%s" % snap]
 
         if UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value') != '':
@@ -453,7 +453,7 @@ class VEdit(AbstractDigit):
                    "tool=%s" % tool,
                    "ids=%s" % ids,
                    "move=%f,%f" % (float(move[0]),float(move[1])),
-                   "thresh=%f" % self.driver.GetThreshold(),
+                   "thresh=%f,%f" % (self.driver.GetThreshold(type='selectThresh'), self.driver.GetThreshold(type='snapping')),
                    "snap=%s" % snap]
 
         if tool == "vertexmove":
@@ -465,7 +465,7 @@ class VEdit(AbstractDigit):
                     
         # run the command
         vedit = gcmd.Command(cmd=command, stderr=None)
-
+        
         # reload map (needed for v.edit)
         self.driver.ReloadMap()
 
@@ -501,7 +501,7 @@ class VEdit(AbstractDigit):
                    "tool=%s" % action,
                    "ids=%s" % line,
                    "coords=%f,%f" % (float(coords[0]),float(coords[1])),
-                   "thresh=%f" % self.driver.GetThreshold()]
+                   "thresh=%f,%f" % (self.driver.GetThreshold(type='selectThresh'), self.driver.GetThreshold(type='snapping'))]
 
         # run the command
         vedit = gcmd.Command(cmd=command, stderr=None)
@@ -526,7 +526,7 @@ class VEdit(AbstractDigit):
                    "tool=break",
                    "ids=%s" % line,
                    "coords=%f,%f" % (float(coords[0]),float(coords[1])),
-                   "thresh=%f" % self.driver.GetThreshold()]
+                   "thresh=%f" % self.driver.GetThreshold(type='selectThresh')]
 
         # run the command
         vedit = gcmd.Command(cmd=command, stderr=None)
@@ -573,7 +573,7 @@ class VEdit(AbstractDigit):
                  'ids=%s' % ",".join(["%d" % v for v in ids])]
 
         if tool in ['snap', 'connect']:
-            vEdit.append("thresh=%f" % self.driver.GetThreshold())
+            vEdit.append("thresh=%f,%f" % (self.driver.GetThreshold(type='selectThresh'), self.driver.GetThreshold(type='snapping')))
 
         runCmd = gcmd.Command(vEdit)
 
@@ -775,10 +775,10 @@ class VDigit(AbstractDigit):
 
         if z:
             ret = self.digit.AddLine(type, [x, y, z], layer, cat,
-                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value'), snap, thresh))
+                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
         else:
             ret = self.digit.AddLine(type, [x, y], layer, cat,
-                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value'), snap, thresh))
+                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
 
         if ret == -1:
             raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
@@ -809,7 +809,7 @@ class VDigit(AbstractDigit):
         snap, thresh = self.__getSnapThreshold()
 
         ret = self.digit.AddLine(type, listCoords, layer, cat,
-                                 str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value'), snap, thresh))
+                                 str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
 
         if ret == -1:
             raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
@@ -832,7 +832,7 @@ class VDigit(AbstractDigit):
         snap, thresh = self.__getSnapThreshold()
 
         nlines = self.digit.MoveLines(move[0], move[1], 0.0, # TODO 3D
-                                      str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value'), snap, thresh))
+                                      str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
 
         return nlines
 
@@ -849,7 +849,8 @@ class VDigit(AbstractDigit):
 
         return self.digit.MoveVertex(coords[0], coords[1], 0.0, # TODO 3D
                                      move[0], move[1], 0.0,
-                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
+                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap,
+                                     self.driver.GetThreshold(type='selectThresh'), thresh)
 
     def AddVertex(self, coords):
         """Add new vertex to the selected line/boundary on position 'coords'
@@ -857,7 +858,7 @@ class VDigit(AbstractDigit):
         @param coords coordinates to add vertex
         """
         return self.digit.ModifyLineVertex(1, coords[0], coords[1], 0.0, # TODO 3D
-                                           self.driver.GetThreshold())
+                                           self.driver.GetThreshold(type='selectThresh'))
 
     def RemoveVertex(self, coords):
         """Remove vertex from the selected line/boundary on position 'coords'
@@ -865,7 +866,7 @@ class VDigit(AbstractDigit):
         @param coords coordinates to remove vertex
         """
         return self.digit.ModifyLineVertex(0, coords[0], coords[1], 0.0, # TODO 3D
-                                           self.driver.GetThreshold())
+                                           self.driver.GetThreshold(type='selectThresh'))
 
     def SplitLine(self, coords):
         """Split selected line/boundary on position 'coords'
@@ -877,7 +878,7 @@ class VDigit(AbstractDigit):
         @return -1 error
         """
         return self.digit.SplitLine(coords[0], coords[1], 0.0, # TODO 3D
-                                    self.driver.GetThreshold())
+                                    self.driver.GetThreshold('selectThresh'))
 
     def EditLine(self, line, coords):
         """Edit existing line/boundary
@@ -1043,17 +1044,17 @@ class AbstractDisplayDriver:
         self.ids         = {}   # dict[g6id] = [pdcId]
         self.selected    = []   # list of selected objects (grassId!)
 
-    def GetThreshold(self, value=None, units=None):
+    def GetThreshold(self, type='snapping', value=None, units=None):
         """Return threshold in map units
 
         @param value threshold to be set up
         @param units units (map, screen)
         """
         if not value:
-            value = UserSettings.Get(group='vdigit', key="snapping", subkey='value')
+            value = UserSettings.Get(group='vdigit', key=type, subkey='value')
 
         if not units:
-            units = UserSettings.Get(group='vdigit', key="snapping", subkey='units')
+            units = UserSettings.Get(group='vdigit', key=type, subkey='units')
 
         if units == "screen pixels":
             # pixel -> cell
@@ -1067,7 +1068,7 @@ class AbstractDisplayDriver:
         else:
             threshold = value
 
-        Debug.msg(4, "AbstractDisplayDriver.GetThreshold(): thresh=%f" % threshold)
+        Debug.msg(4, "AbstractDisplayDriver.GetThreshold(): type=%s, thresh=%f" % (type, threshold))
         
         return threshold
 
@@ -1176,7 +1177,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         @param type  select only objects of given type
         """
         pointOnLine = self.__display.SelectLineByPoint(point[0], point[1], 0.0,
-                                                       self.GetThreshold(),
+                                                       self.GetThreshold(type='selectThresh'),
                                                        type, 0); # without_z
 
         if len(pointOnLine) > 0:
@@ -1210,7 +1211,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         """
         x, y = coords
 
-        id = self.__display.GetSelectedVertex(x, y, self.GetThreshold())
+        id = self.__display.GetSelectedVertex(x, y, self.GetThreshold(type='selectThresh'))
 
         Debug.msg(4, "CDisplayDriver.GetSelectedVertex(): id=%s" % \
                       (",".join(["%d" % v for v in id])))
@@ -1326,25 +1327,26 @@ class DigitSettingsDialog(wx.Dialog):
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
         self.__CreateSymbologyPage(notebook)
         parent.digit.SetCategory() # update category number (next to use)
-        self.__CreateSettingsPage(notebook)
+        self.__CreateGeneralPage(notebook)
+        self.__CreateAttributesPage(notebook)
         self.__CreateQueryPage(notebook)
 
         # buttons
-        btnApply = wx.Button(self, wx.ID_APPLY, _("Apply") )
+        btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnOk = wx.Button(self, wx.ID_OK, _("OK") )
-        btnOk.SetDefault()
+        btnSave = wx.Button(self, wx.ID_SAVE)
+        btnSave.SetDefault()
 
         # bindigs
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
-        btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
         btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
         btnSizer.AddButton(btnApply)
-        btnSizer.AddButton(btnOk)
+        btnSizer.AddButton(btnSave)
         btnSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -1390,11 +1392,11 @@ class DigitSettingsDialog(wx.Dialog):
         
         return panel
 
-    def __CreateSettingsPage(self, notebook):
+    def __CreateGeneralPage(self, notebook):
         """Create notebook page concerning with symbology settings"""
 
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
-        notebook.AddPage(page=panel, text=_("Settings"))
+        notebook.AddPage(page=panel, text=_("General"))
 
         border = wx.BoxSizer(wx.VERTICAL)
         
@@ -1472,71 +1474,38 @@ class DigitSettingsDialog(wx.Dialog):
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
 
         #
-        # attributes
+        # select box
         #
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new feature"))
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Select vector features"))
+        # feature type
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        # checkbox
-        self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                     label=_("Add new record into table"))
-        self.addRecord.SetValue(UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled'))
-        sizer.Add(item=self.addRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
-        # settings
-        flexSizer = wx.FlexGridSizer(cols=2, hgap=3, vgap=3)
+        inSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.selectFeature = {}
+        for feature in ('Point', 'Line',
+                        'Centroid', 'Boundary'):
+            chkbox = wx.CheckBox(parent=panel, label=feature)
+            self.selectFeature[feature] = chkbox.GetId()
+            chkbox.SetValue(UserSettings.Get(group='vdigit', key='selectFeature'+feature, subkey='enabled'))
+            inSizer.Add(item=chkbox, proportion=0,
+                        flag=wx.EXPAND | wx.ALL, border=5)
+        sizer.Add(item=inSizer, proportion=0, flag=wx.EXPAND)
+        # threshold
+        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        settings = ((_("Layer"), 1), (_("Category"), 1), (_("Mode"), _("Next to use")))
-        # layer
-        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
-        if self.parent.digit.map:
-            layers = map(str, self.parent.digit.GetLayers())
-            if len(layers) == 0:
-                layers = [str(UserSettings.Get(group='vdigit', key="layer", subkey='value')), ]
-        else:
-            layers = [str(UserSettings.Get(group='vdigit', key="layer", subkey='value')), ]
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select threshold"))
+        self.selectThreshValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(75, -1),
+                                             initial=UserSettings.Get(group='vdigit', key="selectThresh", subkey='value'),
+                                             min=1, max=1e6)
+        units = wx.StaticText(parent=panel, id=wx.ID_ANY, size=(115, -1),
+                              label=UserSettings.Get(group='vdigit', key="lineWidth", subkey='units'),
+                              style=wx.ALIGN_LEFT)
+        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.selectThreshValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
+        flexSizer.Add(units, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL | wx.LEFT,
+                      border=10)
+        sizer.Add(item=flexSizer, proportion=0, flag=wx.EXPAND)
         
-        self.layer = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                               choices=layers)
-        self.layer.SetStringSelection(str(UserSettings.Get(group='vdigit', key="layer", subkey='value')))
-        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.layer, proportion=0,
-                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-        # category number
-        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
-        self.category = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                    initial=UserSettings.Get(group='vdigit', key="category", subkey='value'),
-                                    min=-1e9, max=1e9) 
-        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') != "Manual entry":
-            self.category.Enable(False)
-        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.category, proportion=0,
-                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-        # category mode
-        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
-        self.categoryMode = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                      choices=[_("Next to use"), _("Manual entry"), _("No category")])
-        self.categoryMode.SetStringSelection(UserSettings.Get(group='vdigit', key="categoryMode", subkey='value'))
-        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(item=self.categoryMode, proportion=0,
-                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
-
-        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
-        border.Add(item=sizer, proportion=0,
-                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
-        # delete existing feature
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Delete existing feature(s)"))
-        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        # checkbox
-        self.deleteRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                        label=_("Delete record from table"))
-        self.deleteRecord.SetValue(UserSettings.Get(group='vdigit', key="delRecord", subkey='enabled'))
-        sizer.Add(item=self.deleteRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
-        border.Add(item=sizer, proportion=0,
-                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
-
-        # bindings
-        self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
-        self.Bind(wx.EVT_CHOICE, self.OnChangeCategoryMode, self.categoryMode)
-        self.Bind(wx.EVT_CHOICE, self.OnChangeLayer, self.layer)
+        border.Add(item=sizer, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
 
         panel.SetSizer(border)
         
@@ -1620,41 +1589,93 @@ class DigitSettingsDialog(wx.Dialog):
 
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=5)
 
-        #
-        # select box
-        #
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Select vector features"))
-        # feature type
-        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-        inSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.selectFeature = {}
-        for feature in ('Point', 'Line',
-                        'Centroid', 'Boundary'):
-            chkbox = wx.CheckBox(parent=panel, label=feature)
-            self.selectFeature[feature] = chkbox.GetId()
-            chkbox.SetValue(UserSettings.Get(group='vdigit', key='selectFeature'+feature, subkey='enabled'))
-            inSizer.Add(item=chkbox, proportion=0,
-                        flag=wx.EXPAND | wx.ALL, border=5)
-        sizer.Add(item=inSizer, proportion=0, flag=wx.EXPAND)
-        # threshold
-        flexSizer = wx.FlexGridSizer (cols=3, hgap=5, vgap=5)
-        flexSizer.AddGrowableCol(0)
-        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Select threshold"))
-        self.selectThreshValue = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(75, -1),
-                                             initial=UserSettings.Get(group='vdigit', key="selectThresh", subkey='value'),
-                                             min=1, max=1e6)
-        units = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("screen pixels"))
-        flexSizer.Add(text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.selectThreshValue, proportion=0, flag=wx.ALIGN_CENTER | wx.FIXED_MINSIZE)
-        flexSizer.Add(units, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL | wx.FIXED_MINSIZE)
-        sizer.Add(item=flexSizer, proportion=0, flag=wx.EXPAND)
-        
-        border.Add(item=sizer, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
-        
         panel.SetSizer(border)
         
         return panel
 
+    def __CreateAttributesPage(self, notebook):
+        """Create notebook page for query tool"""
+
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Attributes"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+
+        #
+        # add new record
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Digitize new feature"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        # checkbox
+        self.addRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                     label=_("Add new record into table"))
+        self.addRecord.SetValue(UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled'))
+        sizer.Add(item=self.addRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        # settings
+        flexSizer = wx.FlexGridSizer(cols=2, hgap=3, vgap=3)
+        flexSizer.AddGrowableCol(0)
+        settings = ((_("Layer"), 1), (_("Category"), 1), (_("Mode"), _("Next to use")))
+        # layer
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Layer"))
+        if self.parent.digit.map:
+            layers = map(str, self.parent.digit.GetLayers())
+            if len(layers) == 0:
+                layers = [str(UserSettings.Get(group='vdigit', key="layer", subkey='value')), ]
+        else:
+            layers = [str(UserSettings.Get(group='vdigit', key="layer", subkey='value')), ]
+        
+        self.layer = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                               choices=layers)
+        self.layer.SetStringSelection(str(UserSettings.Get(group='vdigit', key="layer", subkey='value')))
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.layer, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        # category number
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category number"))
+        self.category = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                    initial=UserSettings.Get(group='vdigit', key="category", subkey='value'),
+                                    min=-1e9, max=1e9) 
+        if UserSettings.Get(group='vdigit', key="categoryMode", subkey='value') != "Manual entry":
+            self.category.Enable(False)
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.category, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+        # category mode
+        text = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Category mode"))
+        self.categoryMode = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                      choices=[_("Next to use"), _("Manual entry"), _("No category")])
+        self.categoryMode.SetStringSelection(UserSettings.Get(group='vdigit', key="categoryMode", subkey='value'))
+        flexSizer.Add(item=text, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(item=self.categoryMode, proportion=0,
+                      flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
+
+        sizer.Add(item=flexSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.ALL | wx.EXPAND, border=5)
+
+        #
+        # delete existing record
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Delete existing feature(s)"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        
+        # checkbox
+        self.deleteRecord = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                        label=_("Delete record from table"))
+        self.deleteRecord.SetValue(UserSettings.Get(group='vdigit', key="delRecord", subkey='enabled'))
+        sizer.Add(item=self.deleteRecord, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
+        border.Add(item=sizer, proportion=0,
+                   flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=5)
+
+        # bindings
+        self.Bind(wx.EVT_CHECKBOX, self.OnChangeAddRecord, self.addRecord)
+        self.Bind(wx.EVT_CHOICE, self.OnChangeCategoryMode, self.categoryMode)
+        self.Bind(wx.EVT_CHOICE, self.OnChangeLayer, self.layer)
+
+        panel.SetSizer(border)
+        
+        return panel
 
     def __SymbologyData(self):
         """
@@ -1759,10 +1780,12 @@ class DigitSettingsDialog(wx.Dialog):
             self.queryDangleSL.Enable(True)
             self.queryDangleValue.Enable(True)
 
-    def OnOK(self, event):
-        """Button 'OK' clicked"""
+    def OnSave(self, event):
+        """Button 'Save' clicked"""
         self.UpdateSettings()
         self.parent.digittoolbar.settingsDialog = None
+        file = UserSettings.SaveToFile()
+        self.parent.gismanager.goutput.cmd_stdout.write('Settings saved to file <%s>.' % file)
         self.Close()
 
     def OnApply(self, event):
@@ -1804,11 +1827,8 @@ class DigitSettingsDialog(wx.Dialog):
         # delete existing feature
         UserSettings.Set(group='vdigit', key="delRecord", subkey='enabled', value=self.deleteRecord.IsChecked())
 
-        # threshold
-        try:
-            self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
-        except:
-            pass
+        # snapping threshold
+        self.parent.digit.threshold = self.parent.digit.driver.GetThreshold()
 
         # query tool
         if self.queryLength.GetValue():
@@ -1826,6 +1846,7 @@ class DigitSettingsDialog(wx.Dialog):
                         'Centroid', 'Boundary'):
             UserSettings.Set(group='vdigit', key='selectFeature'+feature, subkey='enabled',
                                            value=self.FindWindowById(self.selectFeature[feature]).IsChecked())
+        UserSettings.Set(group='vdigit', key="selectThresh", subkey='value', value=int(self.selectThreshValue.GetValue()))
 
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
