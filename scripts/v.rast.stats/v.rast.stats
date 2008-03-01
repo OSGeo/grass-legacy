@@ -122,7 +122,6 @@ exitprocedure()
 trap "exitprocedure" 2 3 15
 
 
-VECTOR="$GIS_OPT_VECTOR"
 RASTER="$GIS_OPT_RASTER"
 COLPREFIX="$GIS_OPT_COLPREFIX"
 
@@ -131,11 +130,18 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
 # does map exist in CURRENT mapset?
-eval `g.findfile element=vector file="$VECTOR" mapset="$MAPSET"`
-if [ ! "$file" ] ; then
-   g.message -e "Vector map <$VECTOR> not found"
-   exit 1
+eval `g.findfile element=vector file="$GIS_OPT_VECTOR" mapset="$MAPSET"`
+VECT_MAPSET=`echo "$GIS_OPT_VECTOR" | grep '@' | cut -f2 -d'@'`
+if [ -z "$VECT_MAPSET" ] ; then
+   VECT_MAPSET="$MAPSET"
 fi
+if [ ! "$file" ] || [ "$VECT_MAPSET" != "$MAPSET" ] ; then
+   g.message -e "Vector map <$GIS_OPT_VECTOR> not found in current mapset"
+   exit 1
+else
+   VECTOR=`echo "$GIS_OPT_VECTOR" | cut -f1 -d'@'`
+fi
+
 #check the input raster map
 eval `g.findfile element=cell file="$RASTER"`
 if [ ! "$file" ] ; then
@@ -191,7 +197,7 @@ fi
 
 #check if DBF driver used, in this case cut to 10 chars col names:
 DBFDRIVER=0
-v.db.connect -g "$VECTOR" | cut -d' ' -f5 | grep -i dbf --quiet
+v.db.connect -g "$VECTOR" | grep -w "$GIS_OPT_LAYER" | cut -d' ' -f5 | grep -i dbf --quiet
 if [ $? -eq 0 ] ; then
    DBFDRIVER=1
 else
@@ -203,7 +209,7 @@ DB_SQLDRIVER=`v.db.connect -g "$VECTOR" | cut -d' ' -f5`
 DB_DATABASE="`v.db.connect -g "$VECTOR" | cut -d' ' -f4`"
 
 #Find out which table is linked to the vector map on the given layer
-TABLE=`v.db.connect $VECTOR -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+TABLE=`v.db.connect map="$VECTOR" -g | grep -w "$GIS_OPT_LAYER" | awk '{print $2}'`
 if [ -z "$TABLE" ] ; then
    g.message -e 'There is no table connected to this map! Run v.db.connect or v.db.addtable first.'
    exit 1
