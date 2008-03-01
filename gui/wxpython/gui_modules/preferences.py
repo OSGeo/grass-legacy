@@ -45,67 +45,73 @@ class Settings:
             # general
             #
             'general': {
-            'displayFont' : { 'value' : '' },
-            'mapsetPath'  : { 'value' : 'p' }, # current mapset search path
-            },
+                'mapsetPath'  : { 'value' : 'p' }, # current mapset search path
+                },
+            #
+            # display
+            #
+            'display': {
+                'displayFont' : { 'value' : '' },
+                'rasterOverlay' : { 'enabled' : False },
+                },
             #
             # advanced
             #
             'advanced' : {
-            'settingsFile'   : { 'value' : 'gisdbase' }, # gisdbase, location, mapset
-            'digitInterface' : { 'value' : 'vdigit' }, # vedit, vdigit
-            'iconTheme'      : { 'value' : 'silk' }, # grass, silk
-            },
+                'settingsFile'   : { 'value' : 'gisdbase' }, # gisdbase, location, mapset
+                'digitInterface' : { 'value' : 'vdigit' }, # vedit, vdigit
+                'iconTheme'      : { 'value' : 'silk' }, # grass, silk
+                },
             #
             # vdigit
             #
             'vdigit' : {
-            # symbology
-            'symbolHighlight'   : { 'enabled' : None,  'color' : (255, 255, 0, 255) }, #yellow
-            'symbolPoint'       : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
-            'symbolLine'        : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
-            'symbolBoundaryNo'  : { 'enabled' : True,  'color' : (126, 126, 126, 255) }, # grey
-            'symbolBoundaryOne' : { 'enabled' : True,  'color' : (0, 255, 0, 255) }, # green
-            'symbolBoundaryTwo' : { 'enabled' : True,  'color' : (255, 135, 0, 255) }, # orange
-            'symbolCentroidIn'  : { 'enabled' : True,  'color' : (0, 0, 255, 255) }, # blue
-            'symbolCentroidOut' : { 'enabled' : True,  'color' : (165, 42, 42, 255) }, # brown
-            'symbolCentroidDup' : { 'enabled' : True,  'color' : (156, 62, 206, 255) }, # violet
-            'symbolNodeOne'     : { 'enabled' : True,  'color' : (255, 0, 0, 255) }, # red
-            'symbolNodeTwo'     : { 'enabled' : True,  'color' : (0, 86, 45, 255) }, # dark green
-            'symbolVertex'      : { 'enabled' : False, 'color' : (255, 20, 147, 255) }, # deep pink
-            # display
-            'lineWidth' : { 'value' : 2, 'units' : 'screen pixels' },
-            # snapping
-            'snapping' : { 'value' : 10, 'units' : 'screen pixels' },
-            'snapToVertex' : { 'enabled' : False },
-            'backgroundMap' : {'value' : ''},
-            # digitize new record
-            'addRecord' : { 'enabled' : True },
-            'layer' : {'value' : 1 },
-            'category' : {'value' : 1 },
-            'categoryMode' : {'value' : 'Next to use' },
-            # delete existing feature(s)
-            'delRecord' : { 'enabled' : True },
-            # query tool
-            'query'       : { 'type' : 'length', 'box' : True },
-            'queryLength' : { 'than' : 'shorter than', 'thresh' : 0 },
-            'queryDangle' : { 'than' : 'shorter than', 'thresh' : 0 },
-            # select feature (point, line, centroid, boundary)
-            'selectFeaturePoint'    : { 'enabled' : True },
-            'selectFeatureLine'     : { 'enabled' : True },
-            'selectFeatureCentroid' : { 'enabled' : True },
-            'selectFeatureBoundary' : { 'enabled' : True },
-            'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
+                # symbology
+                'symbolHighlight'   : { 'enabled' : None,  'color' : (255, 255, 0, 255) }, #yellow
+                'symbolPoint'       : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
+                'symbolLine'        : { 'enabled' : True,  'color' : (0, 0, 0, 255) }, # black
+                'symbolBoundaryNo'  : { 'enabled' : True,  'color' : (126, 126, 126, 255) }, # grey
+                'symbolBoundaryOne' : { 'enabled' : True,  'color' : (0, 255, 0, 255) }, # green
+                'symbolBoundaryTwo' : { 'enabled' : True,  'color' : (255, 135, 0, 255) }, # orange
+                'symbolCentroidIn'  : { 'enabled' : True,  'color' : (0, 0, 255, 255) }, # blue
+                'symbolCentroidOut' : { 'enabled' : True,  'color' : (165, 42, 42, 255) }, # brown
+                'symbolCentroidDup' : { 'enabled' : True,  'color' : (156, 62, 206, 255) }, # violet
+                'symbolNodeOne'     : { 'enabled' : True,  'color' : (255, 0, 0, 255) }, # red
+                'symbolNodeTwo'     : { 'enabled' : True,  'color' : (0, 86, 45, 255) }, # dark green
+                'symbolVertex'      : { 'enabled' : False, 'color' : (255, 20, 147, 255) }, # deep pink
+                # display
+                'lineWidth' : { 'value' : 2, 'units' : 'screen pixels' },
+                # snapping
+                'snapping' : { 'value' : 10, 'units' : 'screen pixels' },
+                'snapToVertex' : { 'enabled' : False },
+                'backgroundMap' : {'value' : ''},
+                # digitize new record
+                'addRecord' : { 'enabled' : True },
+                'layer' : {'value' : 1 },
+                'category' : {'value' : 1 },
+                'categoryMode' : {'value' : 'Next to use' },
+                # delete existing feature(s)
+                'delRecord' : { 'enabled' : True },
+                # query tool
+                'query'       : { 'type' : 'length', 'box' : True },
+                'queryLength' : { 'than' : 'shorter than', 'thresh' : 0 },
+                'queryDangle' : { 'than' : 'shorter than', 'thresh' : 0 },
+                # select feature (point, line, centroid, boundary)
+                'selectFeaturePoint'    : { 'enabled' : True },
+                'selectFeatureLine'     : { 'enabled' : True },
+                'selectFeatureCentroid' : { 'enabled' : True },
+                'selectFeatureBoundary' : { 'enabled' : True },
+                'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
+                }
             }
-        }
         
         # user settings
         self.userSettings = copy.deepcopy(self.defaultSettings)
         try:
             self.ReadSettingsFile()
-        except gcmd.GException, e:
-            raise gcmd.SettingsError(_('Reading settings failed\n\n%s.'), e)
-
+        except gcmd.SettingsError, e:
+            print >> sys.stderr, e.message
+        
         # internal settings (based on user settings)
         self.internalSettings = {}
         self.internalSettings['general'] = {}
@@ -248,19 +254,15 @@ class Settings:
         else:
             settings = self.userSettings
             
-        if settings.has_key(group) and settings[group].has_key(key):
+        try:
             if subkey is None:
                 return settings[group][key]
             else:
-                if settings[group][key].has_key(subkey):
-                    return settings[group][key][subkey]
-                else:
-                    raise KeyError
-        else:
-            raise KeyError
+                return settings[group][key][subkey]
+        except KeyError:
+            raise gcmd.SettingsError(_("Unable to get value of '%s:%s:%s'.") %
+                                     (group, key, subkey))
         
-        return None
-    
     def Set(self, group, key, subkey, value, internal=False):
         """Set value by key/subkey
 
@@ -275,18 +277,17 @@ class Settings:
             settings = self.internalSettings
         else:
             settings = self.userSettings
-            
-        if settings.has_key(group) and settings[group].has_key(key) and \
-               settings[group][key].has_key(subkey):
+
+        try:
             settings[group][key][subkey] = value
-        else:
-            raise KeyError
+        except KeyError:
+            raise gcmd.SettingsError(_("Unable to set '%s:%s:%s'") % (group, key, subkey))
 
 globalSettings = Settings()
 
 class PreferencesDialog(wx.Dialog):
     """User preferences dialog"""
-    def __init__(self, parent, title,
+    def __init__(self, parent, title=_("User settings"),
                  settings=globalSettings,
                  style=wx.DEFAULT_DIALOG_STYLE):
         self.parent = parent # GMFrame
@@ -300,26 +301,29 @@ class PreferencesDialog(wx.Dialog):
 
         # create notebook pages
         self.__CreateGeneralPage(notebook)
+        self.__CreateDisplayPage(notebook)
         self.__CreateAdvancedPage(notebook)
 
         # buttons
         btnSave = wx.Button(self, wx.ID_SAVE)
         btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
-        # btnOk = wx.Button(self, wx.ID_OK)
         btnSave.SetDefault()
 
         # bindigs
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+        btnApply.SetToolTipString(_("Apply changes for this session"))
         btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
+        btnSave.SetToolTipString(_("Close window and save changes to user settings file"))
+        btnSave.SetDefault()
         btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+        btnCancel.SetToolTipString(_("Close window and ignore changes"))
 
         # sizers
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(btnCancel)
         btnSizer.AddButton(btnSave)
         btnSizer.AddButton(btnApply)
-        # btnSizer.AddButton(btnOk)
         btnSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -343,33 +347,14 @@ class PreferencesDialog(wx.Dialog):
         gridSizer.AddGrowableCol(0)
 
         #
-        # display font
-        #
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Default font for GRASS displays:")),
-                       flag=wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(0, 0))
-        fontButton = wx.Button(parent=panel, id=wx.ID_ANY,
-                               label=_("Set font"), size=(100, -1))
-        gridSizer.Add(item=fontButton,
-                      flag=wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(0, 1))
-        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
-                                         label=_("Currently selected font:")),
-                       flag=wx.ALIGN_LEFT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(1, 0), span=(1, 2))
-
-        #
         # mapsets path
-        # 
+        #
+        row = 0
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("Mapsets path:")),
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
-                       pos=(2, 0))
+                       pos=(row, 0))
         self.mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
                                       choices=['mapset search path', 'all available mapsets'])
         if self.settings.Get(group='general', key='mapsetPath', subkey='value') == 'p':
@@ -379,7 +364,7 @@ class PreferencesDialog(wx.Dialog):
         gridSizer.Add(item=self.mapsetPath,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
-                      pos=(2, 1))
+                      pos=(row, 1))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
@@ -387,8 +372,67 @@ class PreferencesDialog(wx.Dialog):
         panel.SetSizer(border)
         
         # bindings
-        fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
         self.mapsetPath.Bind(wx.EVT_CHOICE, self.OnChangeMapsetPath)
+        
+        return panel
+
+    def __CreateDisplayPage(self, notebook):
+        """Create notebook page concerning with symbology settings"""
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Display"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Font settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # font settings
+        #
+        row = 0
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Default font for GRASS displays:")),
+                       flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        fontButton = wx.Button(parent=panel, id=wx.ID_ANY,
+                               label=_("Set font"), size=(100, -1))
+        gridSizer.Add(item=fontButton,
+                      flag=wx.ALIGN_RIGHT |
+                       wx.ALIGN_CENTER_VERTICAL,
+                       pos=(row, 1))
+
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
+        # raster settings
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Raster settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # raster overlay
+        #
+        row = 0
+        self.rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                         label=_("Overlay raster map layers"))
+        self.rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
+        gridSizer.Add(item=self.rasterOverlay,
+                       pos=(row, 0), span=(1, 2))
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+
+        panel.SetSizer(border)
+        
+        # bindings
+        fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
         
         return panel
 
@@ -541,17 +585,24 @@ class PreferencesDialog(wx.Dialog):
 
     def __UpdateSettings(self):
         """Update user settings"""
-        # font
-        # TODO
-
+        #
+        # display
+        #
         # location
-        self.settings.Set(group='advanced', key='settingsFile', subkey='value', value=self.settingsFile.GetStringSelection())
-
+        self.settings.Set(group='display', key='rasterOverlay', subkey='enabled',
+                          value=self.rasterOverlay.IsChecked())
+        #
+        # advanced
+        #
+        # location
+        self.settings.Set(group='advanced', key='settingsFile', subkey='value',
+                          value=self.settingsFile.GetStringSelection())
         # icon theme
-        self.settings.Set(group='advanced', key='iconTheme', subkey='value', value=self.iconTheme.GetStringSelection())
-        
+        self.settings.Set(group='advanced', key='iconTheme', subkey='value',
+                          value=self.iconTheme.GetStringSelection())
         # digitization interface
-        self.settings.Set(group='advanced', key='digitInterface', subkey='value', value=self.digitInterface.GetStringSelection())
+        self.settings.Set(group='advanced', key='digitInterface', subkey='value',
+                          value=self.digitInterface.GetStringSelection())
 
 class SetDefaultFont(wx.Dialog):
     """

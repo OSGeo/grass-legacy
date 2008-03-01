@@ -856,7 +856,7 @@ class GMFrame(wx.Frame):
 
     def OnPreferences(self, event):
         """General GUI preferences/settings"""
-        preferences.PreferencesDialog(parent=self, title=_("User preferences")).ShowModal()
+        preferences.PreferencesDialog(parent=self).ShowModal()
 
     def DispHistogram(self, event):
         """
