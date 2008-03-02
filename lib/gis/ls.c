@@ -5,7 +5,7 @@
 
    \author Paul Kelly
    
-   (C) 2007 by the GRASS Development Team
+   (C) 2007, 2008 by the GRASS Development Team
 
    This program is free software under the GNU General Public
    License (>=v2). Read the file COPYING that comes with GRASS
@@ -124,7 +124,7 @@ void G_ls(const char *dir, FILE *stream)
 
 void G_ls_format(const char **list, int num_items, int perline, FILE *stream)
 {
-    int i, j;
+    int i;
 
     int field_width, column_height;
     int screen_width = 80; /* Default width of 80 columns */
@@ -163,20 +163,25 @@ void G_ls_format(const char **list, int num_items, int perline, FILE *stream)
     /* Longest column height (i.e. num_items <= perline * column_height) */
     column_height = (num_items / perline) + ((num_items % perline) > 0);
 
-    for (i=0; i < column_height; i++)     
-    {	
-        for (j=0; j < perline; j++)
-	{
-	    int cur = j * column_height + i;
-	   
-	    if (cur >= num_items)
-	        continue; /* No more items to print in this row */
-	   
-            /* Print filenames in left-justified fixed-width fields */
-            fprintf(stream, "%-*s", field_width, list[cur]);
-	}       
-        fprintf(stream, "\n");
-    }   
+    {
+	const int max
+	    = num_items + column_height - (num_items % column_height);
+	const char **next;
+
+	for (i = 1, next = list; i <= num_items; i++) {
+	    const char **cur = next;
+
+	    next += column_height;
+	    if (next >= list + num_items) {
+		/* the next item has to be on the other line */
+		next -= (max - 1
+			 - (next < list + max ? column_height : 0));
+		fprintf (stream, "%s\n", *cur);
+	    } else {
+		fprintf (stream, "%-*s", field_width, *cur);
+	    }
+	}
+    }
    
     return;
 }
