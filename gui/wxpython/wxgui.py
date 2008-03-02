@@ -41,10 +41,7 @@ HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
 ### i18N
 import gettext
-try:
-    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
-except:
-    print >> sys.stderr, 'WARNING: Unable to load locale'
+gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
 import gui_modules
 gmpath = gui_modules.__path__[0]
@@ -190,11 +187,11 @@ class GMFrame(wx.Frame):
         self.cmdprompt = wx.Panel(self)
 
         label = wx.StaticText(parent=self.cmdprompt, id=wx.ID_ANY, label="Cmd >")
-        label.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT,
-                              style=wx.NORMAL, weight=wx.BOLD))
+	# label.SetFont(wx.Font(pointSize=11, family=wx.FONTFAMILY_DEFAULT,
+        #                      style=wx.NORMAL, weight=wx.BOLD))
         input = wx.TextCtrl(parent=self.cmdprompt, id=wx.ID_ANY,
                             value="",
-                            style=wx.HSCROLL | wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
+                            style=wx.TE_LINEWRAP | wx.TE_PROCESS_ENTER,
                             size=(-1, 25))
 
         input.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
@@ -307,6 +304,8 @@ class GMFrame(wx.Frame):
         """Creates toolbar"""
 
         self.toolbar = self.CreateToolBar()
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
+
         for each in self.ToolbarData():
             self.AddToolbarButton(self.toolbar, *each)
         self.toolbar.Realize()

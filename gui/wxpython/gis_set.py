@@ -53,6 +53,8 @@ class GRASSStartup(wx.Frame):
 
         wx.Frame.__init__(self, parent=parent, id=id, style=style)
 
+	self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
         #
         # graphical elements
         #
@@ -67,68 +69,69 @@ class GRASSStartup(wx.Frame):
 
         # labels
         ### crashes when LOCATION doesn't exist
-        # versionCmd = gcmd.Command(['g.version' + globalvar.EXT_BIN], log=None)
+        # versionCmd = gcmd.Command(['g.version'], log=None)
         # grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
         versionFile = open(os.path.join(globalvar.ETCDIR, "VERSIONNUMBER"))
         grassVersion = versionFile.readline().replace('%s' % os.linesep, '').strip()
         versionFile.close()
 
-        self.select_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
+        self.select_box = wx.StaticBox (parent=self.panel, id=wx.ID_ANY,
                                         label=" %s " % _("Choose project location and mapset"))
 
-        self.manage_box = wx.StaticBox (parent=self, id=wx.ID_ANY,
+        self.manage_box = wx.StaticBox (parent=self.panel, id=wx.ID_ANY,
                                         label=" %s " % _("Manage"))
-        self.lwelcome = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.lwelcome = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                       label=_("Welcome to GRASS GIS %s\n"
                                               "The world's leading open source GIS") % grassVersion,
                                       style=wx.ALIGN_CENTRE)
         #self.SetFont(wx.Font(pointSize=9, family=wx.FONTFAMILY_DEFAULT,
         #                     style=wx.NORMAL, weight=wx.NORMAL))
-        self.ltitle = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.ltitle = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                     label=_("Select an existing project location and mapset\n"
                                             "or define a new location"),
                                     style=wx.ALIGN_CENTRE)
-        self.ldbase = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.ldbase = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                     label=_("GIS Data Directory:"))
-        self.llocation = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.llocation = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                        label=_("Project location\n(projection/coordinate system)"),
                                        style=wx.ALIGN_CENTRE)
-        self.lmapset = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.lmapset = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                      label=_("Accessible mapsets\n(directories of GIS files)"),
                                      style=wx.ALIGN_CENTRE)
-        self.lcreate = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.lcreate = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                      label=_("Create new mapset\nin selected location"),
                                      style=wx.ALIGN_CENTRE)
-        self.ldefine = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.ldefine = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                      label=_("Define new location"),
                                      style=wx.ALIGN_CENTRE)
-        self.lmanageloc = wx.StaticText(parent=self, id=wx.ID_ANY,
+        self.lmanageloc = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                         label=_("Rename/delete selected\nmapset or location"),
                                         style=wx.ALIGN_CENTRE)
 
         # buttons
-        self.bstart = wx.Button(parent=self, id=wx.ID_ANY,
+        self.bstart = wx.Button(parent=self.panel, id=wx.ID_ANY,
                                 label=_("Start GRASS"), size=(180, -1))
         self.bstart.SetDefault()
-        self.bexit = wx.Button(parent=self, id=wx.ID_EXIT)
-        self.bhelp = wx.Button(parent=self, id=wx.ID_HELP)
-        self.bbrowse = wx.Button(parent=self, id=wx.ID_ANY,
+        self.bexit = wx.Button(parent=self.panel, id=wx.ID_EXIT)
+        self.bhelp = wx.Button(parent=self.panel, id=wx.ID_HELP)
+        self.bbrowse = wx.Button(parent=self.panel, id=wx.ID_ANY,
                                  label=_("Browse"))
-        self.bmapset = wx.Button(parent=self, id=wx.ID_ANY,
+        self.bmapset = wx.Button(parent=self.panel, id=wx.ID_ANY,
                                  label=_("Create mapset"))
-        self.bwizard = wx.Button(parent=self, id=wx.ID_ANY,
+        self.bwizard = wx.Button(parent=self.panel, id=wx.ID_ANY,
                                  label=_("Location wizard"))
-        self.manageloc = wx.Choice(parent=self, id=wx.ID_ANY,
+        self.manageloc = wx.Choice(parent=self.panel, id=wx.ID_ANY,
                                    choices=['Rename mapset','Rename location',
                                             'Delete mapset', 'Delete location'])
+	self.manageloc.SetSelection(0)
 
         # textinputs
-        self.tgisdbase = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(300, -1),
+        self.tgisdbase = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY, value="", size=(300, -1),
                                      style=wx.TE_LEFT)
 
         # TODO: sort list, but keep mapsets aligned to sorted locations
         # Locations
-        self.lpanel = wx.Panel(parent=self,id=wx.ID_ANY)
+        self.lpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
         self.lblocations = wx.ListBox(parent=self.lpanel,
                                       id=wx.ID_ANY, size=(180, 200),
                                       choices=self.listOfLocations,
@@ -136,7 +139,7 @@ class GRASSStartup(wx.Frame):
 
         # TODO: sort; but keep PERMANENT on top of list
         # Mapsets
-        self.mpanel = wx.Panel(parent=self,id=wx.ID_ANY)
+        self.mpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
         self.lbmapsets = wx.ListBox(parent=self.mpanel,
                                     id=wx.ID_ANY, size=(150, 200),
                                     choices=self.listOfMapsets,
@@ -298,7 +301,7 @@ class GRASSStartup(wx.Frame):
                   flag=wx.ADJUST_MINSIZE |
                   wx.ALIGN_CENTER_VERTICAL |
                   wx.ALIGN_CENTER_HORIZONTAL |
-                  wx.BOTTOM | wx.TOP,
+                  wx.ALL,
                   border=5) # image
         sizer.Add(item=self.lwelcome, # welcome message
                   proportion=0,
@@ -334,10 +337,11 @@ class GRASSStartup(wx.Frame):
                   wx.RIGHT | wx.LEFT,
                   border=5)
 
-        self.SetAutoLayout(True)
-        self.SetSizer(sizer)
-        sizer.Fit(self)
+        self.panel.SetAutoLayout(True)
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self.panel)
         sizer.SetSizeHints(self)
+
         self.Layout()
 
     def _read_grassrc(self):
@@ -609,11 +613,11 @@ class GRASSStartup(wx.Frame):
 
     def OnStart(self, event):
         """'Start GRASS' button clicked"""
-        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
+        gcmd.Command(["g.gisenv",
                       "set=GISDBASE=%s" % self.tgisdbase.GetValue()])
-        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
+        gcmd.Command(["g.gisenv",
                       "set=LOCATION_NAME=%s" % self.listOfLocations[self.lblocations.GetSelection()]])
-        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
+        gcmd.Command(["g.gisenv",
                       "set=MAPSET=%s" % self.listOfMapsets[self.lbmapsets.GetSelection()]])
 
         self.Destroy()

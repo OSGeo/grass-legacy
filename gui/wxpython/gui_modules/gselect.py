@@ -157,7 +157,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         with all relevant elements displayed beneath each mapset branch
         """
         #set environmental variables
-        cmdlist = ['g.gisenv' + globalvar.EXT_BIN, 'get=MAPSET']
+        cmdlist = ['g.gisenv', 'get=MAPSET']
         curr_mapset = gcmd.Command(cmdlist).ReadStdOutput()[0]
 
         #mapsets in current location
@@ -222,7 +222,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             dir_node = self.AddItem('Mapset: '+dir)
             self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
             try:
-                cmdlist = ['g.mlist' + globalvar.EXT_SCT, 'type=%s' % elementdict[element], 'mapset=%s' % dir]
+                cmdlist = ['g.mlist', 'type=%s' % elementdict[element], 'mapset=%s' % dir]
                 elem_list = gcmd.Command(cmdlist).ReadStdOutput()
                 elem_list.sort()
                 for elem in elem_list:

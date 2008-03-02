@@ -107,7 +107,8 @@ VSPACE = 4
 HSPACE = 4
 MENU_HEIGHT = 25
 STATUSBAR_HEIGHT = 30
-ENTRY_HEIGHT = 25
+# ENTRY_HEIGHT = 25
+ENTRY_HEIGHT = -1
 STRING_ENTRY_WIDTH = 300
 BUTTON_HEIGHT = 44
 BUTTON_WIDTH = 100
@@ -243,7 +244,7 @@ class grassTask:
         built so far, even though it would not be a correct command
         for GRASS.
         """
-        cmd = [self.name + globalvar.EXT_BIN]
+        cmd = [self.name]
         errors = 0
         errStr = ""
 
@@ -553,6 +554,8 @@ class mainFrame(wx.Frame):
         wx.Frame.__init__(self, parent=parent, id=ID, title=title,
                           pos=wx.DefaultPosition, style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
+	self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
         # statusbar
         self.CreateStatusBar()
         # icon
@@ -589,7 +592,7 @@ class mainFrame(wx.Frame):
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
 
         # GRASS logo
-        self.logo = wx.StaticBitmap(parent=self,
+        self.logo = wx.StaticBitmap(parent=self.panel,
                                     bitmap=wx.Bitmap(name=os.path.join(imagepath,
                                                                        'grass-tiny-logo.png'),
                                                      type=wx.BITMAP_TYPE_PNG))
@@ -598,7 +601,7 @@ class mainFrame(wx.Frame):
         guisizer.Add (item=topsizer, proportion=0, flag=wx.EXPAND)
 
         # notebooks
-        self.notebookpanel = cmdPanel (parent=self, task=self.task, standalone=self.standalone)
+        self.notebookpanel = cmdPanel (parent=self.panel, task=self.task, standalone=self.standalone)
         ### add 'command output' tab also for dialog open from menu
         #         if self.standalone:
         self.goutput = self.notebookpanel.goutput
@@ -620,13 +623,13 @@ class mainFrame(wx.Frame):
         # buttons
         btnsizer = wx.BoxSizer(orient=wx.HORIZONTAL)
         # cancel
-        btn_cancel = wx.Button(parent=self, id=wx.ID_CANCEL)
+        btn_cancel = wx.Button(parent=self.panel, id=wx.ID_CANCEL)
         btn_cancel.SetToolTipString(_("Cancel the command settings and ignore changes"))
         btnsizer.Add(item=btn_cancel, proportion=0, flag=wx.ALL | wx.ALIGN_CENTER, border=10)
         btn_cancel.Bind(wx.EVT_BUTTON, self.OnCancel)
         if self.get_dcmd is not None: # A callback has been set up
-            btn_apply = wx.Button(parent=self, id=wx.ID_APPLY)
-            btn_ok = wx.Button(parent=self, id=wx.ID_OK)
+            btn_apply = wx.Button(parent=self.panel, id=wx.ID_APPLY)
+            btn_ok = wx.Button(parent=self.panel, id=wx.ID_OK)
             btn_ok.SetDefault()
 
             btnsizer.Add(item=btn_apply, proportion=0,
@@ -640,11 +643,11 @@ class mainFrame(wx.Frame):
             btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
             # run
-            btn_run = wx.Button(parent=self, id=wx.ID_OK, label= _("&Run"))
+            btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Run"))
             btn_run.SetToolTipString(_("Run the command"))
             btn_run.SetDefault()
             # copy
-            btn_clipboard = wx.Button(parent=self, id=wx.ID_COPY, label=_("C&opy"))
+            btn_clipboard = wx.Button(parent=self.panel, id=wx.ID_COPY, label=_("C&opy"))
             btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard"))
 
             btnsizer.Add(item=btn_run, proportion=0,
@@ -662,7 +665,7 @@ class mainFrame(wx.Frame):
 
         if self.get_dcmd is None:
             # close dialog on run?
-            self.closebox = wx.CheckBox(parent=self,
+            self.closebox = wx.CheckBox(parent=self.panel,
                                         label=_('Close dialog on run'), style = wx.NO_BORDER)
             self.closebox.SetValue(False)
             guisizer.Add(item=self.closebox, proportion=0,
@@ -673,18 +676,23 @@ class mainFrame(wx.Frame):
 
         constrained_size = self.notebookpanel.GetSize()
         # 80 takes the tabbar into account
-        self.notebookpanel.SetSize( (constrained_size[0],constrained_size[1]+80) ) 
+        self.notebookpanel.SetSize( (constrained_size[0] + 25, constrained_size[1] + 80) ) 
         self.notebookpanel.Layout()
-        
+
         # for too long descriptions
-        self.description = StaticWrapText (parent=self, label=self.task.description)
+        self.description = StaticWrapText (parent=self.panel, label=self.task.description)
         topsizer.Add (item=self.description, proportion=1, border=5,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
 
-        guisizer.SetSizeHints(self)
-        self.SetAutoLayout(True)
-        self.SetSizer(guisizer)
-        guisizer.Fit(self)
+        # set frame size
+        self.SetSize(self.notebookpanel.GetSize())
+        self.SetMinSize(self.notebookpanel.GetSize())
+
+        guisizer.SetSizeHints(self.panel)
+        self.panel.SetAutoLayout(True)
+        self.panel.SetSizer(guisizer)
+        guisizer.Fit(self.panel)
+
         self.Layout()
 
     def updateValuesHook(self):
@@ -874,8 +882,8 @@ class cmdPanel(wx.Panel):
                 chk.SetToolTipString(tooltip)
             if 'value' in f:
                 chk.SetValue( f['value'] )
-            chk.SetFont(wx.Font(pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT,
-                                style=wx.NORMAL, weight=text_style))
+            # chk.SetFont(wx.Font(pointSize=fontsize, family=wx.FONTFAMILY_DEFAULT,
+            #                    style=wx.NORMAL, weight=text_style))
             which_sizer.Add( item=chk, proportion=0,
                              flag=wx.EXPAND | wx.TOP | wx.LEFT | wx.RIGHT, border=5)
             f['wxId'] = chk.GetId()
@@ -1051,7 +1059,7 @@ class cmdPanel(wx.Panel):
                             none_check.SetValue(True)
                         else:
                             none_check.SetValue(False)
-                        none_check.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                        # none_check.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
                         this_sizer.Add(item=none_check, proportion=0,
                                        flag=wx.ADJUST_MINSIZE | wx.LEFT | wx.RIGHT | wx.TOP, border=5)
                         which_sizer.Add( this_sizer )
@@ -1078,7 +1086,7 @@ class cmdPanel(wx.Panel):
                     p['wxId'] = fbb.GetChildren()[1].GetId()
 
             if txt is not None:
-                txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
+                # txt.SetFont( wx.Font( fontsize, wx.FONTFAMILY_DEFAULT, wx.NORMAL, text_style, 0, ''))
                 # create tooltip if given
                 if len(p['values_desc']) > 0:
                     if tooltip:
@@ -1092,6 +1100,9 @@ class cmdPanel(wx.Panel):
                 if tooltip:
                     txt.SetToolTipString(tooltip)
 
+	#
+	# determine panel size
+	#
         maxsizes = (0,0)
         for section in sections:
             tabsizer[section].SetSizeHints( tab[section] )
@@ -1108,7 +1119,6 @@ class cmdPanel(wx.Panel):
             tab[section].SetMinSize( constrained_size )
         if manual_tab.Ok:
             manual_tab.SetMinSize( constrained_size )
-
         self.SetSizer( panelsizer )
         panelsizer.Fit(self)
         self.hasMain = tab.has_key( _('Main') ) # publish, to enclosing Frame for instance
@@ -1243,7 +1253,7 @@ class GrassGUIApp(wx.App):
     """
     def __init__(self, grass_task):
         self.grass_task = grass_task
-        wx.App.__init__(self)
+        wx.App.__init__(self, False)
 
     def OnInit(self):
         self.mf = mainFrame(parent=None, ID=wx.ID_ANY, task_description=self.grass_task)

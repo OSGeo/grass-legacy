@@ -37,7 +37,7 @@ def GetTempfile(pref=None):
     """
     import gcmd
 
-    tempfileCmd = gcmd.Command(["g.tempfile" + globalvar.EXT_BIN,
+    tempfileCmd = gcmd.Command(["g.tempfile",
                                 "pid=%d" % os.getpid()])
 
     tempfile = tempfileCmd.ReadStdOutput()[0].strip()
@@ -191,4 +191,3 @@ def ListOfMapsets():
 def ListSortLower(list):
     """Sort list items (not case-sensitive)"""
     list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
-    
