@@ -61,7 +61,7 @@ proc setfont {path font} {
 
 set help_font [font create -family Times -size 10]
 
-proc Gm::helptext {title textopts tagopts message} {
+proc helptext {title textopts tagopts message} {
     global help_font
 
     toplevel .helptext
@@ -93,4 +93,4 @@ proc Gm::helptext {title textopts tagopts message} {
 if {[catch {set text [exec g.version -c]} error]} {
     tk_messageBox -type ok -icon error -title [G_msg "Error"] -message [G_msg $error]
 }
-Gm::helptext {About GRASS} {-width 75} {-justify left} $text
+helptext {About GRASS} {-width 75} {-justify left} $text
