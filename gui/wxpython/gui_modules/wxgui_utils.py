@@ -37,6 +37,7 @@ import wx.combo
 import wx.stc
 import wx.lib.newevent
 
+import globalvar
 import menuform
 import mapdisp
 import render

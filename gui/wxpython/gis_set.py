@@ -67,7 +67,7 @@ class GRASSStartup(wx.Frame):
 
         # labels
         ### crashes when LOCATION doesn't exist
-        # versionCmd = gcmd.Command(['g.version'], log=None)
+        # versionCmd = gcmd.Command(['g.version' + globalvar.EXT_BIN], log=None)
         # grassVersion = versionCmd.ReadStdOutput()[0].replace('GRASS', '').strip()
         versionFile = open(os.path.join(globalvar.ETCDIR, "VERSIONNUMBER"))
         grassVersion = versionFile.readline().replace('%s' % os.linesep, '').strip()
@@ -609,11 +609,11 @@ class GRASSStartup(wx.Frame):
 
     def OnStart(self, event):
         """'Start GRASS' button clicked"""
-        gcmd.Command(["g.gisenv",
+        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
                       "set=GISDBASE=%s" % self.tgisdbase.GetValue()])
-        gcmd.Command(["g.gisenv",
+        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
                       "set=LOCATION_NAME=%s" % self.listOfLocations[self.lblocations.GetSelection()]])
-        gcmd.Command(["g.gisenv",
+        gcmd.Command(["g.gisenv" + globalvar.EXT_BIN,
                       "set=MAPSET=%s" % self.listOfMapsets[self.lbmapsets.GetSelection()]])
 
         self.Destroy()

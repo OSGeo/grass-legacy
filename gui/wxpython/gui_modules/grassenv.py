@@ -32,11 +32,10 @@ def GetGRASSVariable(var):
     """Return GRASS variable or '' if variable is not defined"""
     # gisEnv = gcmd.Command(['g.gisenv'])
 
-    gisEnv = subprocess.Popen(['g.gisenv'],
+    gisEnv = subprocess.Popen(['g.gisenv' + globalvar.EXT_BIN],
                               stdin=None,
                               stdout=subprocess.PIPE,
-                              stderr=None,
-                              close_fds=True)
+                              stderr=None)
 
     for item in gisEnv.stdout.readlines():
         if var in item:

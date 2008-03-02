@@ -243,7 +243,7 @@ class grassTask:
         built so far, even though it would not be a correct command
         for GRASS.
         """
-        cmd = [self.name]
+        cmd = [self.name + globalvar.EXT_BIN]
         errors = 0
         errStr = ""
 

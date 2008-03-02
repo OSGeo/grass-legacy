@@ -1983,7 +1983,7 @@ class BufferedWindow(wx.Window):
         # for user to set explicitly with g.region
         new = self.Map.AlignResolution()
 
-        cmdRegion = ["g.region", "--o",
+        cmdRegion = ["g.region" + globalvar.EXT_BIN, "--o",
                      "n=%f"    % new['n'],
                      "s=%f"    % new['s'],
                      "e=%f"    % new['e'],
@@ -2015,7 +2015,8 @@ class BufferedWindow(wx.Window):
 
         wind = dlg.wind
 
-        p = gcmd.Command (["g.region", "-ugp", "region=%s" % wind])
+        p = gcmd.Command (["g.region" + globalvar.EXT_BIN,
+	                   "-ugp", "region=%s" % wind])
 
         if p.returncode == 0:
             output = p.ReadStdOutput()
@@ -2067,7 +2068,7 @@ class BufferedWindow(wx.Window):
         """Save region settings"""
         new = self.Map.AlignResolution()
 
-        cmdRegion = ["g.region",
+        cmdRegion = ["g.region" + globalvar.EXT_BIN,
                      "-u",
                      "n=%f" % new['n'],
                      "s=%f" % new['s'],
@@ -2794,13 +2795,13 @@ class MapFrame(wx.Frame):
 
         # build query commands for any selected rasters and vectors
         if raststr != '':
-            rcmd = ['r.what', '--q',
+            rcmd = ['r.what' + globalvar.EXT_BIN, '--q',
                     '-f',
                     'input=%s' % raststr.rstrip(','),
                     'east_north=%f,%f' % (float(east), float(north))]
 
         if vectstr != '':
-            vcmd = ['v.what', '--q',
+            vcmd = ['v.what' + globalvar.EXT_BIN, '--q',
                     '-a',
                     'map=%s' % vectstr.rstrip(','),
                     'east_north=%f,%f' % (float(east), float(north)),

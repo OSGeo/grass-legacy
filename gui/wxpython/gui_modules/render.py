@@ -17,11 +17,21 @@ for details.
 @date 2006-2008
 """
 
-import os, sys, glob, math
-import utils
+import os
+import sys
+import glob
+import math
+try:
+    import subprocess
+except:
+    compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
+    sys.path.append(compatPath)
+    import subprocess
 
 import wx
 
+import globalvar
+import utils
 import gcmd
 from debug import Debug as Debug
 
@@ -104,7 +114,7 @@ class MapLayer(object):
         # start monitor
         #
         os.environ["GRASS_PNGFILE"] = self.mapfile
-
+        
         #
         # execute command
         #
@@ -237,7 +247,7 @@ class Map(object):
                                    "in GRASS GIS to run this program")
             sys.exit(1)
 
-        gisenvCmd = gcmd.Command(["g.gisenv"])
+        gisenvCmd = gcmd.Command(["g.gisenv" + globalvar.EXT_BIN])
 
         for line in gisenvCmd.ReadStdOutput():
             line = line.strip()
@@ -385,7 +395,7 @@ class Map(object):
         os.unsetenv("GRASS_REGION")
 
         # do not update & shell style output
-        cmdList = ["g.region", "-u", "-g", "-p", "-c"]
+        cmdList = ["g.region" + globalvar.EXT_BIN, "-u", "-g", "-p", "-c"]
 
         if rast:
             cmdList.append('rast=%s' % rast)
@@ -483,7 +493,7 @@ class Map(object):
 
         projinfo = {}
 
-        p = gcmd.Command(['g.proj', '-p'])
+        p = gcmd.Command(['g.proj' + globalvar.EXT_BIN, '-p'])
 
         if p.returncode == 0:
             for line in p.ReadStdOutput():
@@ -604,23 +614,41 @@ class Map(object):
                 
             Debug.msg (3, "Map.Render() type=%s, layer=%s " % (layer.type, layer.name))
 
-        # compose command
-        #         compcmd = ["g.pnmcomp",
-        #                    "in='%s'" % ",".join(maps),
-        #                    "mask=%s" % ",".join(masks),
-        #                    "opacity=%s" % ",".join(opacities),
-        #                    "background=255:255:255",
-        #                    "width=%s" % str(self.width),
-        #                    "height=%s" % str(self.height),
-        #                    "output=%s" % self.mapfile]
-        
-        compcmd = "g.pnmcomp in='" + ",".join(maps) + \
-            "' mask='" + ",".join(masks) + \
-            "' opacity=" + ",".join(opacities)+ \
+	# ugly hack for MSYS
+	if not subprocess.mswindows:
+	    mapstr = ",".join(maps)
+	    maskstr = ",".join(masks)
+            mapoutstr = self.mapfile
+	else:
+	    mapstr = ""
+	    for item in maps:
+                mapstr += item.replace('\\', '/')		
+	    mapstr = mapstr.rstrip(',')
+	    maskstr = ""
+            for item in masks:
+		maskstr += item.replace('\\', '/')
+	    maskstr = maskstr.rstrip(',')
+	    mapoutstr = self.mapfile.replace('\\', '/')
+
+        compstring = "g.pnmcomp" + globalvar.EXT_BIN + \
+            " in=" + mapstr + \
+            " mask=" + maskstr + \
+            " opacity=" + ",".join(opacities)+ \
             " background=255:255:255" + \
             " width=" + str(self.width) + \
             " height=" + str(self.height) + \
-            " output='" + self.mapfile + "'"
+            " output=" + mapoutstr
+
+        # compose command
+        complist = ["g.pnmcomp" + globalvar.EXT_BIN,
+                   "in=%s" % ",".join(maps),
+	           "mask=%s" % ",".join(masks),
+                   "opacity=%s" % ",".join(opacities),
+                   "background=255:255:255",
+                   "width=%s" % str(self.width),
+                   "height=%s" % str(self.height),
+                   "output=%s" % self.mapfile]
+
 
         # render overlays
 
@@ -629,10 +657,10 @@ class Map(object):
         if tmp_region:
             os.environ["GRASS_REGION"] = tmp_region
 
-        # run g.composite to get composite image
+        # run g.pngcomp to get composite image
         try:
-            # gcmd.Command(compcmd)
-            os.system(compcmd)
+            gcmd.Command(complist)
+	    # os.system(compstring)
         except gcmd.CmdError, e:
             print e
             return None

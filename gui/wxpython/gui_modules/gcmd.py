@@ -457,16 +457,18 @@ class CommandThread(Thread):
             # make module stdout/stderr non-blocking
             out_fileno = self.module.stdout.fileno()
             # FIXME (MS Windows)
-            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-            
+	    if not subprocess.mswindows:
+                flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+                fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+                
         if self.stderr:
             # make module stdout/stderr non-blocking
             out_fileno = self.module.stderr.fileno()
             # FIXME (MS Windows)
-            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-
+	    if not subprocess.mswindows:
+                flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+                fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+                
         # wait for the process to end, sucking in stuff until it does end
         while self.module.poll() is None:
             time.sleep(.1)

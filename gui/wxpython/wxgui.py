@@ -41,7 +41,10 @@ HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
 ### i18N
 import gettext
-gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+try:
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+except:
+    print >> sys.stderr, 'WARNING: Unable to load locale'
 
 import gui_modules
 gmpath = gui_modules.__path__[0]
@@ -1256,7 +1259,7 @@ class GMApp(wx.App):
         self.workspaceFile = workspace
         
         # call parent class initializer
-        wx.App.__init__(self)
+        wx.App.__init__(self, False)
         
     def OnInit(self):
         # initialize all available image handlers
