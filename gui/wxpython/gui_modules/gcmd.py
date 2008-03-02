@@ -44,6 +44,8 @@ else:
 from threading import Thread
 
 # import wxgui_utils # log window
+import globalvar
+import utils
 from debug import Debug as Debug
 
 class GException(Exception):
@@ -222,6 +224,12 @@ class Command:
                   stdout=None, stderr=sys.stderr):
 
         self.cmd = cmd
+	# hack around platform-specific extension for binaries
+	if self.cmd[0] in globalvar.grassCmd['script']:
+	    self.cmd[0] = self.cmd[0] + globalvar.EXT_SCT
+	else:
+	    self.cmd[0] = self.cmd[0] + globalvar.EXT_BIN
+
         self.stderr = stderr
 
         #

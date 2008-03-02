@@ -70,11 +70,8 @@ class MapToolbar(AbstractToolbar):
         self.mapcontent = map
         self.mapdisplay = mapdisplay
 
-        self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
-
-        # self.SetToolBar(self.toolbar)
-        tsize = (24, 24)
-        self.toolbar.SetToolBitmapSize(tsize)
+	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
 
         self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
 
@@ -167,8 +164,7 @@ class GRToolbar(AbstractToolbar):
         self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
 
         # self.SetToolBar(self.toolbar)
-        tsize = (24, 24)
-        self.toolbar.SetToolBitmapSize(tsize)
+        self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
 
         self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
 
@@ -254,6 +250,7 @@ class DigitToolbar(AbstractToolbar):
         self.numOfRows = 1 # number of rows for toolbar
         for row in range(0, self.numOfRows):
             self.toolbar.append(wx.ToolBar(parent=self.parent, id=wx.ID_ANY))
+	    self.toolbar[row].SetToolBitmapSize(globalvar.toolbarSize)
             self.toolbar[row].SetToolBitmapSize(wx.Size(24,24))
 
             # create toolbar

@@ -247,7 +247,7 @@ class Map(object):
                                    "in GRASS GIS to run this program")
             sys.exit(1)
 
-        gisenvCmd = gcmd.Command(["g.gisenv" + globalvar.EXT_BIN])
+        gisenvCmd = gcmd.Command(["g.gisenv"])
 
         for line in gisenvCmd.ReadStdOutput():
             line = line.strip()
@@ -395,7 +395,7 @@ class Map(object):
         os.unsetenv("GRASS_REGION")
 
         # do not update & shell style output
-        cmdList = ["g.region" + globalvar.EXT_BIN, "-u", "-g", "-p", "-c"]
+        cmdList = ["g.region", "-u", "-g", "-p", "-c"]
 
         if rast:
             cmdList.append('rast=%s' % rast)
@@ -493,7 +493,7 @@ class Map(object):
 
         projinfo = {}
 
-        p = gcmd.Command(['g.proj' + globalvar.EXT_BIN, '-p'])
+        p = gcmd.Command(['g.proj', '-p'])
 
         if p.returncode == 0:
             for line in p.ReadStdOutput():
@@ -640,7 +640,7 @@ class Map(object):
             " output=" + mapoutstr
 
         # compose command
-        complist = ["g.pnmcomp" + globalvar.EXT_BIN,
+        complist = ["g.pnmcomp",
                    "in=%s" % ",".join(maps),
 	           "mask=%s" % ",".join(masks),
                    "opacity=%s" % ",".join(opacities),

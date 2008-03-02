@@ -49,9 +49,33 @@ FNPageStyle = FN.FNB_VC8 | \
     FN.FNB_TABS_BORDER_SIMPLE 
 FNPageColor = wx.Colour(125,200,175)
 
+"""@brief File name extension binaries/scripts"""
 if subprocess.mswindows:
     EXT_BIN = '.exe'
     EXT_SCT = '.bat'
 else:
     EXT_BIN = ''
     EXT_SCT = ''
+
+def __getGRASSCmds(bin=True, scripts=True):
+    """
+    Create list of all available GRASS commands to use when
+    parsing string from the command line
+    """
+    gcmdlst = []
+    gisbase = os.environ['GISBASE']
+    if bin is True:
+        gcmdlst = os.listdir(os.path.join(gisbase, 'bin'))
+    if scripts is True:
+        gcmdlst = gcmdlst + os.listdir(os.path.join(gisbase, 'scripts'))
+    # self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
+
+    return gcmdlst
+
+"""@brief Collected GRASS-relared binaries/scripts"""
+grassCmd = {}
+grassCmd['all'] = __getGRASSCmds()
+grassCmd['script'] = __getGRASSCmds(bin=False)
+
+"""@Toolbar icon size"""
+toolbarSize = (24, 24)

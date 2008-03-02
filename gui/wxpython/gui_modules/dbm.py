@@ -37,6 +37,10 @@ import os
 import locale
 import tempfile
 
+### i18N
+import gettext
+gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
+
 import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
@@ -201,7 +205,8 @@ class VirtualAttributeList(wx.ListCtrl,
         i = 0
         outFile.seek(0)
         while True:
-            record = outFile.readline().replace(os.linesep, '')
+            # os.linesep doesn't work here (MSYS)
+            record = outFile.readline().replace('\n', '')
             if not record:
                 break
             self.itemDataMap[i] = []
@@ -362,6 +367,8 @@ class AttributeManager(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, size=(900,600), style=style)
 
+        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
         try:
             self.map        = self.parent.curr_page.maptree.Map
             self.mapdisplay = self.parent.curr_page.maptree.mapdisplay
@@ -420,7 +427,7 @@ class AttributeManager(wx.Frame):
         # really needed (ML)
         # self.notebook.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN, wx.NORMAL, wx.NORMAL, 0, ''))
 
-        self.notebook = FN.FlatNotebook(parent=self, id=wx.ID_ANY,
+        self.notebook = FN.FlatNotebook(parent=self.panel, id=wx.ID_ANY,
                                         style=FN.FNB_BOTTOM |
                                         FN.FNB_NO_NAV_BUTTONS |
                                         FN.FNB_FANCY_TABS)
@@ -464,8 +471,8 @@ class AttributeManager(wx.Frame):
         #
         # buttons
         #
-        self.btnApply      = wx.Button(parent=self, id=wx.ID_APPLY)
-        self.btnQuit       = wx.Button(parent=self, id=wx.ID_EXIT)
+        self.btnApply      = wx.Button(parent=self.panel, id=wx.ID_APPLY)
+        self.btnQuit       = wx.Button(parent=self.panel, id=wx.ID_EXIT)
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
 
         # events

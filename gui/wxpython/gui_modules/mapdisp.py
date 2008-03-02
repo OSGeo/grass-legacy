@@ -1983,7 +1983,7 @@ class BufferedWindow(wx.Window):
         # for user to set explicitly with g.region
         new = self.Map.AlignResolution()
 
-        cmdRegion = ["g.region" + globalvar.EXT_BIN, "--o",
+        cmdRegion = ["g.region", "--o",
                      "n=%f"    % new['n'],
                      "s=%f"    % new['s'],
                      "e=%f"    % new['e'],
@@ -2015,7 +2015,7 @@ class BufferedWindow(wx.Window):
 
         wind = dlg.wind
 
-        p = gcmd.Command (["g.region" + globalvar.EXT_BIN,
+        p = gcmd.Command (["g.region",
 	                   "-ugp", "region=%s" % wind])
 
         if p.returncode == 0:
@@ -2068,7 +2068,7 @@ class BufferedWindow(wx.Window):
         """Save region settings"""
         new = self.Map.AlignResolution()
 
-        cmdRegion = ["g.region" + globalvar.EXT_BIN,
+        cmdRegion = ["g.region",
                      "-u",
                      "n=%f" % new['n'],
                      "s=%f" % new['s'],
@@ -2187,6 +2187,7 @@ class MapFrame(wx.Frame):
                                                  "Geometry",
                                                  "Map scale"])
         self.statusText = "Coordinates"
+	self.toggleStatus.SetStringSelection(self.statusText)
         self.statusbar.Bind(wx.EVT_CHOICE, self.OnToggleStatus, self.toggleStatus)
         # auto-rendering checkbox
         self.autoRender = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
@@ -2653,13 +2654,15 @@ class MapFrame(wx.Frame):
                     wWin = rect.width - 6
                 # -> position
                 if win == self.showRegion:
-                    x, y = rect.x + rect.width - wWin, rect.y - 1
+                    x, y = rect.x + rect.width - wWin, rect.y - 2
                 else:
-                    x, y = rect.x + 3, rect.y - 1
+                    x, y = rect.x + 3, rect.y - 2
                 w, h = wWin, rect.height + 2
             else: # choice || auto-rendering
-                x, y = rect.x, rect.y-1
-                w, h = rect.width, rect.height+2
+                x, y = rect.x, rect.y - 2
+                w, h = rect.width, rect.height + 2
+		if idx == 2:
+		    x += 10
 
             win.SetPosition((x, y))
             win.SetSize((w, h))
@@ -2795,13 +2798,13 @@ class MapFrame(wx.Frame):
 
         # build query commands for any selected rasters and vectors
         if raststr != '':
-            rcmd = ['r.what' + globalvar.EXT_BIN, '--q',
+            rcmd = ['r.what', '--q',
                     '-f',
                     'input=%s' % raststr.rstrip(','),
                     'east_north=%f,%f' % (float(east), float(north))]
 
         if vectstr != '':
-            vcmd = ['v.what' + globalvar.EXT_BIN, '--q',
+            vcmd = ['v.what', '--q',
                     '-a',
                     'map=%s' % vectstr.rstrip(','),
                     'east_north=%f,%f' % (float(east), float(north)),

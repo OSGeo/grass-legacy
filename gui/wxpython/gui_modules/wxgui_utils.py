@@ -1030,7 +1030,6 @@ class GMConsole(wx.Panel):
         # initialize variables
         self.Map             = None
         self.parent          = parent              # GMFrame
-        self.gcmdlst         = self.GetGRASSCmds() # list of commands in bin and scripts
         self.cmdThreads      = []                  # list of command threads (alive or dead)
 
         # progress bar
@@ -1078,19 +1077,6 @@ class GMConsole(wx.Panel):
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
-    def GetGRASSCmds(self):
-        """
-        Create list of all available GRASS commands to use when
-        parsing string from the command line
-        """
-        gcmdlst = []
-        gisbase = os.environ['GISBASE']
-        gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
-        gcmdlst = gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
-        #self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
-
-        return gcmdlst
-
     def RunCmd(self, command):
         """
         Run in GUI or shell GRASS (or other) commands typed into
@@ -1118,7 +1104,7 @@ class GMConsole(wx.Panel):
         except:
             cmdlist = command
 
-        if cmdlist[0] in self.gcmdlst:
+        if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             if cmdlist[0][0:2] == "d.": # display GRASS commands
