@@ -64,21 +64,10 @@ fi
 
 PROG=`basename $0`
 
-#### check if we have awk
-if [ ! -x "`which awk`" ] ; then
-    g.message -e "awk required, please install awk or gawk first"
-    exit 1
-fi
-
-# setting environment, so that awk works properly in all languages
-unset LC_ALL
-LC_NUMERIC=C
-export LC_NUMERIC
-
 #### setup temporary file
 TMP="`g.tempfile pid=$$`"
 if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
-    g.message -e "Unable to create temporary files" 
+    g.message -e "Unable to create temporary files."
     exit 1
 fi
 
@@ -90,7 +79,7 @@ cleanup()
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
+ g.message -e "User break!"
  cleanup
  exit 1
 }
@@ -104,30 +93,31 @@ eval `g.gisenv`
 # does map exist in CURRENT mapset?
 eval `g.findfile element=vector file=$GIS_OPT_MAP mapset=$MAPSET`
 if [ ! "$file" ] ; then
-   g.message -e "Vector map '$GIS_OPT_MAP' not found in current mapset"
+   g.message -e "Vector map '$GIS_OPT_MAP' not found in current mapset."
    exit 1
 fi
 
-table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $2}'`
+table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | cut -f2 -d" "`
 if [ -z "$table" ] ; then
-   g.message 'There is no table connected to this map! Cannot delete any column.'
+   g.message -e "There is no table connected to this map! Cannot delete any column."
    cleanup
    exit 1
 fi
-database=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $4}'`
-driver=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | awk '{print $5}'`
+keycol=`v.db.connect -g map=$GIS_OPT_MAP | grep -w $GIS_OPT_LAYER | cut -f3 -d" "`
+database=`v.db.connect -g map=$GIS_OPT_MAP | grep -w $GIS_OPT_LAYER | cut -f4 -d" "`
+driver=`v.db.connect -g map=$GIS_OPT_MAP | grep -w $GIS_OPT_LAYER | cut -f5 -d" "`
 col="$GIS_OPT_COLUMN"
 
-if [ "$col" = "cat" ] ; then
+if [ "$col" = "$keycol" ] ; then
    g.message -e "Cannot delete <$col> column as it is needed to keep table\
-      connected to the vector map"
+      <$table> connected to the input vector map <$GIS_OPT_MAP>."
    cleanup
    exit 1
 fi
 
 v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
-	g.message -e "Column <$col> not found in table"
+	g.message -e "Column <$col> not found in table <$table>."
 	cleanup
 	exit 1
 fi
