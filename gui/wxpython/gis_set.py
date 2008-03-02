@@ -61,11 +61,11 @@ class GRASSStartup(wx.Frame):
         # image
         try:
             name = os.path.join(globalvar.ETCDIR, "gintro.gif")
-            self.hbitmap = wx.StaticBitmap(self, wx.ID_ANY,
+            self.hbitmap = wx.StaticBitmap(self.panel, wx.ID_ANY,
                                            wx.Bitmap(name=name,
                                                      type=wx.BITMAP_TYPE_GIF))
         except:
-            self.hbitmap = wx.StaticBitmap(self, wx.ID_ANY, wx.EmptyBitmap(530,150))
+            self.hbitmap = wx.StaticBitmap(self.panel, wx.ID_ANY, wx.EmptyBitmap(530,150))
 
         # labels
         ### crashes when LOCATION doesn't exist
