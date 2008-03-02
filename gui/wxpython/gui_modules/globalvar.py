@@ -18,10 +18,18 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 
 import os
 
-import utils
-utils.CheckForWx()
+### recursive import problem 
+# import utils
+# utils.CheckForWx()
 import wx
 import wx.lib.flatnotebook as FN
+
+try:
+    import subprocess
+except:
+    compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
+    sys.path.append(compatPath)
+    import subprocess
 
 """
 Query layer (generated for example by selecting item in the Attribute Table Manager)
@@ -40,3 +48,10 @@ FNPageStyle = FN.FNB_VC8 | \
     FN.FNB_NODRAG | \
     FN.FNB_TABS_BORDER_SIMPLE 
 FNPageColor = wx.Colour(125,200,175)
+
+if subprocess.mswindows:
+    EXT_BIN = '.exe'
+    EXT_SCT = '.bat'
+else:
+    EXT_BIN = ''
+    EXT_SCT = ''
