@@ -18,6 +18,8 @@
 #
 ############################################################################
 #
+# Requires GRASS SWIG-Python interface
+# Requires Numeric module (NumPy) from  http://numpy.scipy.org/
 # Requires NumPrt module from  http://geosci.uchicago.edu/csc/numptr/
 #
 

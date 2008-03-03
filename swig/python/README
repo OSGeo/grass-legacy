@@ -28,7 +28,9 @@ Eg:
 	mapset=python_grass6.G_mapset()
 	print mapset
 
-More examples can be found on the GRASS wiki site's Python page:
+See examples/m.distance for an example of a working SWIG-Python module.
+
+More examples can be found on the GRASS Wiki site's Python page:
   http://grass.gdf-hannover.de/wiki/GRASS_and_Python#Python-SWIG-GRASS_interface
 
 
