@@ -66,14 +66,13 @@ do_list() {
 	MAPSET=""
     fi
 
-    g.list type=$type mapset=$mapset \
-	| grep -v '^-\+$' \
-	| grep -v "files available" \
+    g.list type="$type" mapset="$mapset" \
+	| grep -vE '^-+$|files available' \
 	| grep -vi "mapset" \
 	| sed 's/  */\
 /g' \
-	| grep -v '^$' \
-	| grep "$search" \
+	| grep . \
+	| grep -- "$search" \
 	| sort \
 	| sed -e "s/$/$MAPSET/"
 }
