@@ -1,7 +1,8 @@
-all = ["grass.form.gif",
-       "grass.map.gif",
-       "grass.smlogo.gif",
-       "grasslogo_big.gif",
-       "grass_db.png",
-       "grass_sql.png",
-       ]
+all = [
+    "grass_form.png",
+    "intro.png",
+    "intro.xcf",
+    "loc_wizard.png",
+    "loc_wizard_qgis.png",
+    "qgis_world.png",
+    ]
