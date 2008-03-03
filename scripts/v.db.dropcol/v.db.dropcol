@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:       v.db.dropcolumn
-# AUTHOR(S):   	Markus Neteler
+# AUTHOR(S):    Markus Neteler
 # PURPOSE:      interface to db.execute to drop a column from the 
 #               attribute table connected to a given vector map
 #               - Based on v.db.addcol
@@ -97,7 +97,7 @@ if [ ! "$file" ] ; then
    exit 1
 fi
 
-table=`v.db.connect $GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | cut -f2 -d" "`
+table=`v.db.connect map=$GIS_OPT_MAP -g | grep -w $GIS_OPT_LAYER | cut -f2 -d" "`
 if [ -z "$table" ] ; then
    g.message -e 'There is no table connected to the input vector map! Cannot delete any column.'
    cleanup
@@ -115,7 +115,7 @@ if [ "$col" = "$keycol" ] ; then
    exit 1
 fi
 
-v.info --q -c $GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
+v.info --q -c map=$GIS_OPT_MAP layer=$GIS_OPT_LAYER | cut -d'|' -f1,2 | grep "|${col}$" 2>&1 >/dev/null
 if [ $? -ne 0 ] ; then
 	g.message -e "Column <$col> not found in table <$table>."
 	cleanup
@@ -125,7 +125,7 @@ fi
 if [ "$driver" = "sqlite" ] ; then
 	#echo "Using special trick for SQLite"
 	# http://www.sqlite.org/faq.html#q13
-	v.info --q -c $table | cut -d'|' -f1,2 | grep -v "|${col}$" > $TMP.coldesc
+	v.info --q -c map=$table | cut -d'|' -f1,2 | grep -v "|${col}$" > $TMP.coldesc
 	# need to revert order:
 	cat $TMP.coldesc | cut -d'|' -f1 > $TMP.coltypes
 	cat $TMP.coldesc | cut -d'|' -f2 > $TMP.colnames
@@ -158,6 +158,6 @@ fi
 cleanup
 
 # write cmd history:
-v.support ${GIS_OPT_MAP} cmdhist="${CMDLINE}"
+v.support map=${GIS_OPT_MAP} cmdhist="${CMDLINE}"
 
 exit 0
