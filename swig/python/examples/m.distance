@@ -17,6 +17,9 @@
 #               for details.
 #
 ############################################################################
+#
+# Requires NumPrt module from  http://geosci.uchicago.edu/csc/numptr/
+#
 
 #%Module
 #%  label: Finds the distance between two or more points.
@@ -43,7 +46,8 @@ def main():
     #   export PYTHONPATH=/usr/src/grass63/swig/python
     #   check with "import sys; sys.path"
     # or:
-    sys.path.append("/usr/src/grass/svn/grass63/swig/python")
+    sys.path.append("/usr/src/grass63/swig/python")
+    # FIXME: install the g6lib.py bindings in $GISBASE/lib/ ?
     import python_grass6 as g6lib
  
     # for passing pointers
@@ -81,7 +85,7 @@ def main():
                 coords += line.split(',')
 
     if len(coords) < 4:
-       print "A minimum of four input coordinates are needed"
+       print "A minimum of two input coordinate pairs are needed"
        return
 
 
