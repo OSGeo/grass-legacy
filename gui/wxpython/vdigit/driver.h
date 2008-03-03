@@ -172,6 +172,9 @@ public:
     void ReloadMap();
     void SetDevice(void *);
 
+    /* misc */
+    std::vector<double> GetMapBoundingBox();
+
     /* set */
     void SetRegion(double, double, double, double,
 		   double, double,

@@ -1941,7 +1941,12 @@ class BufferedWindow(wx.Window):
         if layer.type in ('raster', 'rgb', 'his', 'shaded', 'arrow'):
             self.Map.region = self.Map.GetRegion(rast="%s" % layer.name)
         elif layer.type in ('vector', 'thememap', 'themechart'):
-            self.Map.region = self.Map.GetRegion(vect="%s" % layer.name)
+            if self.parent.digit and layer.name == self.parent.digit.map and \
+               self.parent.digit.type == 'vdigit':
+                w, s, b, e, n, t = self.parent.digit.driver.GetMapBoundingBox()
+                self.Map.region = self.Map.GetRegion(n=n, s=s, w=w, e=e)
+            else:
+                self.Map.region = self.Map.GetRegion(vect="%s" % layer.name)
         else:
             return
 

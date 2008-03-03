@@ -277,17 +277,14 @@ class Command:
                            (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
             if rerr is not None and self.returncode != 0:
                 if rerr is False: # GUI dialog
-                    try:
-                        raise CmdError(cmd=self.cmd,
-                                       message="%s '%s'%s%s%s %s%s" %
-                                       (_("Execution failed:"),
-                                        ' '.join(self.cmd),
-                                        os.linesep, os.linesep,
-                                        _("Details:"),
-                                        os.linesep,
-                                        self.PrintModuleOutput()))
-                    except CmdError, e:
-                        print e
+                    raise CmdError(cmd=self.cmd,
+                                   message="%s '%s'%s%s%s %s%s" %
+                                   (_("Execution failed:"),
+                                    ' '.join(self.cmd),
+                                    os.linesep, os.linesep,
+                                    _("Details:"),
+                                    os.linesep,
+                                    self.PrintModuleOutput()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
