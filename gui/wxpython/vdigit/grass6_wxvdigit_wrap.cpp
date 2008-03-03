@@ -10384,6 +10384,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DisplayDriver_GetMapBoundingBox(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DisplayDriver *arg1 = (DisplayDriver *) 0 ;
+  std::vector<double,std::allocator<double > > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DisplayDriver_GetMapBoundingBox",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DisplayDriver, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DisplayDriver_GetMapBoundingBox" "', argument " "1"" of type '" "DisplayDriver *""'"); 
+  }
+  arg1 = reinterpret_cast< DisplayDriver * >(argp1);
+  result = (arg1)->GetMapBoundingBox();
+  resultobj = swig::from(static_cast< std::vector<double,std::allocator<double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DisplayDriver_SetRegion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DisplayDriver *arg1 = (DisplayDriver *) 0 ;
@@ -12061,6 +12083,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DisplayDriver_OpenMap", _wrap_DisplayDriver_OpenMap, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_ReloadMap", _wrap_DisplayDriver_ReloadMap, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_SetDevice", _wrap_DisplayDriver_SetDevice, METH_VARARGS, NULL},
+	 { (char *)"DisplayDriver_GetMapBoundingBox", _wrap_DisplayDriver_GetMapBoundingBox, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_SetRegion", _wrap_DisplayDriver_SetRegion, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_UpdateSettings", _wrap_DisplayDriver_UpdateSettings, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_swigregister", DisplayDriver_swigregister, METH_VARARGS, NULL},
