@@ -52,11 +52,13 @@ try:
     sys.path.append(digitPath)
     import grass6_wxvdigit as vdigit
     GV_LINES = vdigit.GV_LINES
+    digitErr = ''
 except ImportError, err:
     GV_LINES = None
-#    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
-#          "Detailed information in README file." % \
-#          (os.linesep, err)
+    digitErr = err
+    #    print >> sys.stderr, "%sWARNING: Digitization tool is disabled (%s). " \
+    #          "Detailed information in README file." % \
+    #          (os.linesep, err)
 
 # which interface to use?
 if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit' and GV_LINES is not None:
@@ -140,7 +142,7 @@ class AbstractDigit:
         except StandardError, e:
             raise gcmd.DigitError('Unable to initialize display driver, '
                                   'see README file for more information.%s%s'
-                                  'Details: %s' % (os.linesep, os.linesep, e))
+                                  'Details: %s (%s)' % (os.linesep, os.linesep, e, digitErr))
         
         if map and ret == -1:
             raise gcmd.DigitError(_('Unable to open vector map <%s> for editing. '
