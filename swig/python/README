@@ -5,6 +5,7 @@ which allows to call GRASS functions from python programs.
 Currently only a limited set of functions (those needed for
 me) are wrapped.
 
+
 How to INSTALL?
 ---------------
 1. Install SWIG
@@ -16,6 +17,7 @@ How to INSTALL?
 
 It will create two files, python_grass6.py and _python_grass6.so.
 
+
 How to use it?
 --------------
 
@@ -25,6 +27,10 @@ Eg:
 	import python_grass6
 	mapset=python_grass6.G_mapset()
 	print mapset
+
+More examples can be found on the GRASS wiki site's Python page:
+  http://grass.gdf-hannover.de/wiki/GRASS_and_Python#Python-SWIG-GRASS_interface
+
 
 DEBUGGING
 ----------
@@ -38,6 +44,7 @@ e.g.
 TODO
 -----
 See TODO in this directory.
+
 
 AUTHOR
 -----
