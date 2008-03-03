@@ -613,7 +613,7 @@ class mainFrame(wx.Frame):
         if self.notebookpanel.hasMain:
             # We have to wait for the notebookpanel to be filled in order
             # to know if there actually is a Main tab
-            status_text += _(" (those of Main in bold typeface are required)")
+            status_text += _(" (those in bold typeface are required)")
         try:
             self.task.getCmd()
             self.updateValuesHook()
@@ -674,24 +674,25 @@ class mainFrame(wx.Frame):
 
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
-        constrained_size = self.notebookpanel.GetSize()
+        #constrained_size = self.notebookpanel.GetSize()
         # 80 takes the tabbar into account
-        self.notebookpanel.SetSize( (constrained_size[0] + 25, constrained_size[1] + 80) ) 
-        self.notebookpanel.Layout()
+        #self.notebookpanel.SetSize( (constrained_size[0] + 25, constrained_size[1]) ) 
+        #self.notebookpanel.Layout()
 
         # for too long descriptions
         self.description = StaticWrapText (parent=self.panel, label=self.task.description)
         topsizer.Add (item=self.description, proportion=1, border=5,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
 
-        # set frame size
-        self.SetSize(self.notebookpanel.GetSize())
-        self.SetMinSize(self.notebookpanel.GetSize())
-
+        # do layout
         guisizer.SetSizeHints(self.panel)
-        self.panel.SetAutoLayout(True)
+        # called automatically by SetSizer()
+        self.panel.SetAutoLayout(True) 
         self.panel.SetSizer(guisizer)
         guisizer.Fit(self.panel)
+
+        # set frame size
+        self.SetMinSize(self.GetBestSize())
 
         self.Layout()
 
@@ -1105,23 +1106,24 @@ class cmdPanel(wx.Panel):
 	#
         maxsizes = (0,0)
         for section in sections:
-            tabsizer[section].SetSizeHints( tab[section] )
-            tab[section].SetAutoLayout(True)
+            # tabsizer[section].SetSizeHints( tab[section] )
+            #tab[section].SetAutoLayout(True)
             tab[section].SetSizer( tabsizer[section] )
             tabsizer[section].Fit( tab[section] )
             tab[section].Layout()
-            minsecsizes = tabsizer[section].GetMinSize()
+            minsecsizes = tabsizer[section].GetSize()
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
         # TODO: be less arbitrary with these 600
-        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]) + 25 )
+        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]))
         for section in sections:
             tab[section].SetMinSize( constrained_size )
+            tab[section].SetSize( constrained_size )
         if manual_tab.Ok:
             manual_tab.SetMinSize( constrained_size )
         self.SetSizer( panelsizer )
         panelsizer.Fit(self)
-        self.hasMain = tab.has_key( _('Main') ) # publish, to enclosing Frame for instance
+        self.hasMain = tab.has_key( _('Required') ) # publish, to enclosing Frame for instance
 
     def OnVerbosity(self, event):
         """Verbosity level changed"""

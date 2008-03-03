@@ -2654,15 +2654,15 @@ class MapFrame(wx.Frame):
                     wWin = rect.width - 6
                 # -> position
                 if win == self.showRegion:
-                    x, y = rect.x + rect.width - wWin, rect.y - 2
+                    x, y = rect.x + rect.width - wWin, rect.y - 1
                 else:
-                    x, y = rect.x + 3, rect.y - 2
+                    x, y = rect.x + 3, rect.y - 1
                 w, h = wWin, rect.height + 2
             else: # choice || auto-rendering
-                x, y = rect.x, rect.y - 2
+                x, y = rect.x, rect.y - 1
                 w, h = rect.width, rect.height + 2
 		if idx == 2:
-		    x += 10
+		    x += 5
 
             win.SetPosition((x, y))
             win.SetSize((w, h))
