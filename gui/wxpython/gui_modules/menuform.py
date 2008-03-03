@@ -82,7 +82,7 @@ else:
     wxbase = os.path.join(globalvar.ETCWXDIR)
 
 sys.path.append( wxbase)
-imagepath = os.path.join(wxbase,"images")
+imagepath = os.path.join(wxbase, "images")
 sys.path.append(imagepath)
 
 import grassenv
@@ -558,8 +558,9 @@ class mainFrame(wx.Frame):
 
         # statusbar
         self.CreateStatusBar()
+
         # icon
-        self.SetIcon(wx.Icon(os.path.join(imagepath, 'grass.form.gif'), wx.BITMAP_TYPE_GIF))
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_dialog.ico'), wx.BITMAP_TYPE_ICO))
 
         # menu
         #         menu = wx.Menu()
@@ -594,7 +595,7 @@ class mainFrame(wx.Frame):
         # GRASS logo
         self.logo = wx.StaticBitmap(parent=self.panel,
                                     bitmap=wx.Bitmap(name=os.path.join(imagepath,
-                                                                       'grass-tiny-logo.png'),
+                                                                       'grass_form.png'),
                                                      type=wx.BITMAP_TYPE_PNG))
         topsizer.Add (item=self.logo, proportion=0, border=3,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL)

@@ -165,8 +165,8 @@ class GRASSStartup(wx.Frame):
     def _set_properties(self):
         """Set frame properties"""
         self.SetTitle(_("Welcome to GRASS GIS"))
-        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, "dm", "grass.gif"),
-                             wx.BITMAP_TYPE_GIF))
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, "grass.ico"),
+                             wx.BITMAP_TYPE_ICO))
 
         self.lwelcome.SetForegroundColour(wx.Colour(35, 142, 35))
         self.lwelcome.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
