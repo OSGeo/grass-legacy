@@ -2158,7 +2158,8 @@ class MapFrame(wx.Frame):
         #
         self.SetClientSize(size)
         self.iconsize = (16, 16)
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
+
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_map.ico'), wx.BITMAP_TYPE_ICO))
 
         #
         # Fancy gui

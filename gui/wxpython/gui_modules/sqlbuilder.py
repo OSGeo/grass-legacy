@@ -41,9 +41,7 @@ class SQLFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id, title)
 
         self.SetTitle(_("GRASS SQL Builder: %s") % (qtype.upper()))
-        self.SetIcon(wx.Icon(os.path.join(imagepath, 
-                                          'grass_sql.png'),
-                             wx.BITMAP_TYPE_ANY))
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_sql.ico'), wx.BITMAP_TYPE_ICO))
 
         #
         # variables
