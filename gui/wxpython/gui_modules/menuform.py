@@ -692,8 +692,11 @@ class mainFrame(wx.Frame):
         self.panel.SetSizer(guisizer)
         guisizer.Fit(self.panel)
 
-        # set frame size
-        self.SetMinSize(self.GetBestSize())
+        sizeFrame = self.GetBestSize()
+        self.SetMinSize(sizeFrame)
+        self.SetSize((sizeFrame[0], sizeFrame[1] +
+                      self.notebookpanel.constrained_size[1] -
+                      self.notebookpanel.panelMinHeight))
 
         self.Layout()
 
@@ -1116,14 +1119,19 @@ class cmdPanel(wx.Panel):
             maxsizes = map( lambda x: max( maxsizes[x], minsecsizes[x] ), (0,1) )
 
         # TODO: be less arbitrary with these 600
-        constrained_size = (min(600, maxsizes[0]), min(600, maxsizes[1]))
+        self.panelMinHeight = 100
+        self.constrained_size = (min(600, maxsizes[0]) + 25, min(600, maxsizes[1]))
         for section in sections:
-            tab[section].SetMinSize( constrained_size )
-            tab[section].SetSize( constrained_size )
+            tab[section].SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
+            # tab[section].SetMinSize( constrained_size )
+
         if manual_tab.Ok:
-            manual_tab.SetMinSize( constrained_size )
+            manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
+            # manual_tab.SetMinSize( constrained_size )
+
         self.SetSizer( panelsizer )
-        panelsizer.Fit(self)
+        panelsizer.Fit(self.notebook)
+
         self.hasMain = tab.has_key( _('Required') ) # publish, to enclosing Frame for instance
 
     def OnVerbosity(self, event):
