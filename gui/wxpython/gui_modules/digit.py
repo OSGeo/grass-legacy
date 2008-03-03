@@ -1245,6 +1245,14 @@ class CDisplayDriver(AbstractDisplayDriver):
                                  reg['center_easting'],
                                  reg['center_northing'],
                                  map.width, map.height)
+
+    def GetMapBoundingBox(self):
+        """Return bounding box of given vector map layer
+
+        @return (w,s,b,e,n,t)
+        """
+
+        return self.__display.GetMapBoundingBox()
     
     def UpdateSettings(self):
         """Update display driver settings"""

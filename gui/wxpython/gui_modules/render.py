@@ -376,7 +376,8 @@ class Map(object):
             self.height = 480
             return False
 
-    def GetRegion(self, rast=None, vect=None):
+    def GetRegion(self, rast=None, vect=None,
+                  n=None, s=None, e=None, w=None):
         """
         Get region settings
 
@@ -397,12 +398,32 @@ class Map(object):
         # do not update & shell style output
         cmdList = ["g.region", "-u", "-g", "-p", "-c"]
 
+        if n:
+            cmdList.append('n=%s' % n)
+        if s:
+            cmdList.append('s=%s' % s)
+        if e:
+            cmdList.append('e=%s' % e)
+        if w:
+            cmdList.append('w=%s' % w)
+
         if rast:
             cmdList.append('rast=%s' % rast)
-        elif vect:
+        if vect:
             cmdList.append('vect=%s' % vect)
 
-        cmdRegion = gcmd.Command(cmdList)
+        try:
+            cmdRegion = gcmd.Command(cmdList)
+        except gcmd.CmdError, e:
+            if rast:
+                e.message = _("Unable to zoom to raster map <%s>.") % rast + \
+                '%s%s' % (os.linesep, os.linesep) + e.message
+            elif vect:
+                e.message = _("Unable to zoom to vector map <%s>.") % vect + \
+                '%s%s' % (os.linesep, os.linesep) + e.message
+
+            print e
+            return self.region
 
         for reg in cmdRegion.ReadStdOutput():
             key, val = reg.split("=", 1)
