@@ -135,13 +135,15 @@ int main (int argc, char **argv)
     {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0)
-         G_fatal_error(_("Database connection for map <%s> is not defined in DB file"), input);
+         G_fatal_error(_("Database connection for map <%s> is not defined in DB file"),
+		       G_fully_qualified_name(input, mapset));
       else /* num_dblinks > 0 */
       {
         if (print->answer || shell_print->answer)
         {
 	  if ( !(shell_print->answer) ) {
-              G_message(_("Vector map <%s> is connected by:"), input);
+              G_message(_("Vector map <%s> is connected by:"),
+			G_fully_qualified_name(input, mapset));
 	  }
           for (i = 0; i < num_dblinks; i++) {
             if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
