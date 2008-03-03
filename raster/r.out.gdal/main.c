@@ -320,12 +320,12 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     if (n_nulls > 0) {
 	if (maptype == CELL_TYPE)
 	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
-			"For no-data values was used value %d. "
+			"The value %d was used to represent no-data values in the input map."
 			"You can specify nodata value by %s parameter."),
 		      (int) nodataval, nodatakey);
 	else
 	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
-			"For no-data values was used value %g. "
+			"The value %g was used to represent no-data values in the input map."
 			"You can specify nodata value by %s parameter."),
 		      nodataval, nodatakey);
     }
