@@ -1,4 +1,3 @@
-
 /****************************************************************************
 *
 * MODULE:       r.out.gdal
@@ -7,7 +6,7 @@
 *               based on GDAL library.
 *               Replace r.out.gdal.sh script based on gdal_translate
 *               executable.
-* COPYRIGHT:    (C) 2006 by the GRASS Development Team
+* COPYRIGHT:    (C) 2006-2007 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -271,7 +270,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++)
 		if (nulls[col]) {
-		    ((DCELL *) bufer)[col] = dnullval;
+ 		    ((DCELL *) bufer)[col] = dnullval;
 		    if (n_nulls == 0) {
 			GDALSetRasterNoDataValue(hBand, nodataval);
 		    }
@@ -301,7 +300,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
 	    G_get_null_value_row(fd, nulls, row);
 	    for (col = 0; col < cols; col++)
 		if (nulls[col]) {
-		    ((CELL *) bufer)[col] = inullval;
+ 		    ((CELL *) bufer)[col] = inullval;
 		    if (n_nulls == 0) {
 			GDALSetRasterNoDataValue(hBand, nodataval);
 		    }
@@ -321,17 +320,16 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     if (n_nulls > 0) {
 	if (maptype == CELL_TYPE)
 	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
-			"For no-data values was used value %d. "
+			"The value %d was used to represent no-data values in the input map."
 			"You can specify nodata value by %s parameter."),
 		      (int) nodataval, nodatakey);
 	else
 	    G_warning(_("Input raster map constains cells with NULL-value (no-data). "
-			"For no-data values was used value %g. "
+			"The value %g was used to represent no-data values in the input map."
 			"You can specify nodata value by %s parameter."),
 		      nodataval, nodatakey);
     }
-		    
-		    
+
     return 0;
 }
 
@@ -379,9 +377,12 @@ int main(int argc, char *argv[])
     flag_l = G_define_flag();
     flag_l->key = 'l';
     flag_l->description = _("List supported output formats");
+    flag_l->guisection = _("Print");
 
     input = G_define_standard_option(G_OPT_R_INPUT);
     input->required = NO;
+    input->description = _("Name of raster map (or group) to export");
+    input->guisection = _("Required");
 
     format = G_define_option();
     format->key = "format";
@@ -416,6 +417,8 @@ int main(int argc, char *argv[])
     output = G_define_standard_option(G_OPT_R_OUTPUT);
     output->required = NO;
     output->gisprompt = "new_file,file,output";
+    output->description = _("Name for output raster file");
+    output->guisection = _("Required");
 
     createopt = G_define_option();
     createopt->key = "createopt";
@@ -451,6 +454,11 @@ int main(int argc, char *argv[])
     if (flag_l->answer) {
 	supported_formats(&gdal_formats);
 	exit(EXIT_SUCCESS);
+    }
+
+    if (!input->answer) {
+	G_fatal_error(_("Required parameter <%s> not set"),
+		      input->key);
     }
 
     /* Try to open input GRASS raster.. */
@@ -577,7 +585,7 @@ int main(int argc, char *argv[])
 
     /* If file type not set by user ... */
     /* Get min/max values. */
-    if( G_read_fp_range(input->answer, mapset, &sRange ) == -1 ) {
+    if( G_read_fp_range(ref.file[0].name, ref.file[0].mapset, &sRange ) == -1 ) {
         bHaveMinMax = FALSE;
     } else {
         bHaveMinMax = TRUE;
@@ -600,14 +608,16 @@ int main(int argc, char *argv[])
 	   /* Special tricks for GeoTIFF color table support and such */
 	    if (dfCellMin >= 0 && dfCellMax < 256 ) {
 		datatype = GDT_Byte;
+		nodataval = (double)(unsigned char)0xFFu;
 	    } else {
 		if (dfCellMin >= 0 && dfCellMax < 65536 ) {
-			datatype = GDT_UInt16;
+		    datatype = GDT_UInt16;
+		    nodataval = (double)(short)0x8000;
 		} else {
-			datatype = GDT_Int32; /* need to furthermore fine tune this? */
+		    datatype = GDT_Int32; /* need to furthermore fine tune this? */
+		    nodataval = (double)(int)0x80000000;
 		}
 	    }
-	    nodataval = (double)(int)0x80000000;
 	}
     }
 
@@ -675,6 +685,11 @@ int main(int argc, char *argv[])
     /* Export to GDAL raster */
     int band;
     for (band = 0; band < ref.nfiles; band++) {
+	if (ref.nfiles > 1) {
+	    G_verbose_message(_("Exporting raster map <%s> (band %d)..."),
+			      G_fully_qualified_name(ref.file[band].name, ref.file[band].mapset),
+			      band+1);
+	}
 	if (import_band
 	    (hCurrDS, band + 1, ref.file[band].name, ref.file[band].mapset,
 	     &cellhead, maptype, nodataval, nodataopt->key) < 0)
