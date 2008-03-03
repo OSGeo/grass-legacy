@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:       v.db.renamecol
-# AUTHOR(S):   	Markus Neteler
+# AUTHOR(S):    Markus Neteler
 # PURPOSE:      interface to db.execute to drop a column from the 
 #               attribute table connected to a given vector map
 #               - Based on v.db.dropcol
@@ -150,9 +150,9 @@ oldcollength=`db.describe -c table=$table database=$database driver=$driver | gr
 if [ "$driver" = "sqlite" -o "$driver" = "dbf" ] ; then
 
 	if [ "$oldcoltype" = "CHARACTER" ] ; then
-	    v.db.addcol "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol varchar($oldcollength)" || error
+	    v.db.addcol map="$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol varchar($oldcollength)" || error
 	else
-	    v.db.addcol "$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol $oldcoltype" || error
+	    v.db.addcol map="$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col="$newcol $oldcoltype" || error
 	fi
 	echo "UPDATE $table SET $newcol=$oldcol" | db.execute database=$database driver=$driver
 	v.db.dropcol map="$GIS_OPT_MAP" layer=$GIS_OPT_LAYER col=$oldcol
@@ -164,6 +164,6 @@ fi
 cleanup
 
 # write cmd history:
-v.support "${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
+v.support map="${GIS_OPT_MAP}" cmdhist="${CMDLINE}"
 
 exit 0
