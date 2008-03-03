@@ -608,14 +608,16 @@ int main(int argc, char *argv[])
 	   /* Special tricks for GeoTIFF color table support and such */
 	    if (dfCellMin >= 0 && dfCellMax < 256 ) {
 		datatype = GDT_Byte;
+		nodataval = (double)(unsigned char)0xFFu;
 	    } else {
 		if (dfCellMin >= 0 && dfCellMax < 65536 ) {
-			datatype = GDT_UInt16;
+		    datatype = GDT_UInt16;
+		    nodataval = (double)(short)0x8000;
 		} else {
-			datatype = GDT_Int32; /* need to furthermore fine tune this? */
+		    datatype = GDT_Int32; /* need to furthermore fine tune this? */
+		    nodataval = (double)(int)0x80000000;
 		}
 	    }
-	    nodataval = (double)(int)0x80000000;
 	}
     }
 
