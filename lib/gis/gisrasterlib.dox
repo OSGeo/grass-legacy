@@ -65,8 +65,10 @@ and creating support files for newly created raster files.
 
 <P>
 Raster file data can be of type CELL, FCELL or DCELL, they are defined
-in "gis.h".
-
+in "gis.h". CELL is a 32-bit signed integer, FCELL is an IEEE single-precision
+floating-point, and  DCELL is an IEEE double-precision floating-point.
+G3D (GRID3D) is treated as DCELL.
+<P>
 
 Prompting for Raster Files</A>
 
