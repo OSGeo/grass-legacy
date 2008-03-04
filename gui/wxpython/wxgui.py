@@ -572,7 +572,8 @@ class GMFrame(wx.Frame):
             try:
                 xml.sax.parseString(fileStream, grcXml)
             except xml.sax.SAXParseException, err:
-                raise gcmd.GStdError(_("Reading workspace file <%s> failed.") % filename + \
+                raise gcmd.GStdError(_("Reading workspace file <%s> failed. "
+                                       "Invalid file, unable to parse XML document.") % filename + \
                                          "\n\n%s" % err,
                                      parent=self)
 
