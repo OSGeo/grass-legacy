@@ -353,8 +353,10 @@ else
 	    g.message "Patching tiles  (this may take some time)"
 	    g.message -d message="patch list = [$MAPLIST]"
 
-	    # HACK: for 8nig PNG, GIF all the different tiles can have different color tables
-	    #	so patches output end up all freaky. r.mapcalc r#,g#,b# manual patching + r.composite?
+	    # HACK: for 8bit PNG, GIF all the different tiles can have
+	    #   different color tables so patches output end up all freaky.
+	    #	r.mapcalc r#,g#,b# manual patching + r.composite?
+	    #	or d.out.file + r.in.png + r.region?
 
 	    #r.patch input="$MAPLIST" output="${GIS_OPT_OUTPUT}"
 	    IFS=" "
