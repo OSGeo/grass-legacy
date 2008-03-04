@@ -116,15 +116,15 @@ PROG=`basename $0`
 
 #### check for gpsbabel 
  if [ ! -x "`which gpsbabel`" ] ; then
-    g.message -e "The gpsbabel program was not found, please install it first."
-    g.message -e "       http://gpsbabel.sourceforge.net"
+    g.message -e "The gpsbabel program was not found, please install it first.
+                  http://gpsbabel.sourceforge.net"
     exit 1
 fi
 
 #### check for cs2cs
 if [ ! -x "`which cs2cs`" ] ; then
-    g.message -e "The cs2cs program was not found, please install it first." 
-    g.message -e "http://proj.maptools.org" 
+    g.message -e "The cs2cs program was not found, please install it first.
+                   http://proj.maptools.org"
     exit 1
 fi
 
