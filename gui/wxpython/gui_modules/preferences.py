@@ -25,6 +25,7 @@ import copy
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
+import wx.lib.colourselect as csel
 from wx.lib.wordwrap import wordwrap
 
 import gcmd
@@ -35,17 +36,21 @@ from debug import Debug as Debug
 class Settings:
     """Generic class where to store settings"""
     def __init__(self):
-        # filename for settings
+        #
+        # settings filename
+        #
         self.fileName = ".grasswx"
         self.filePath = None
-        
+
+        #
         # default settings
+        #
         self.defaultSettings = {
             #
             # general
             #
             'general': {
-                'mapsetPath'  : { 'value' : 'p' }, # current mapset search path
+                'mapsetPath'  : { 'selection' : 0 }, # current mapset search path
                 },
             #
             # display
@@ -62,6 +67,13 @@ class Settings:
                 'digitInterface' : { 'value' : 'vdigit' }, # vedit, vdigit
                 'iconTheme'      : { 'value' : 'silk' }, # grass, silk
                 },
+            #
+            # Attribute Table Manager
+            #
+            'atm' : {
+            'highlight' : { 'color' : (255, 255, 0, 255), 'width' : 2},
+            'leftDbClick' : { 'selection' : 0 },
+            },
             #
             # vdigit
             #
@@ -104,25 +116,46 @@ class Settings:
                 'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
                 }
             }
-        
+
+        #
         # user settings
+        #
         self.userSettings = copy.deepcopy(self.defaultSettings)
         try:
             self.ReadSettingsFile()
         except gcmd.SettingsError, e:
             print >> sys.stderr, e.message
-        
+
+        #
         # internal settings (based on user settings)
+        #
         self.internalSettings = {}
-        self.internalSettings['general'] = {}
-        self.internalSettings['general']["mapsetPath"] = {}
+        for group in self.userSettings.keys():
+            if group == 'vdigit':
+                continue # skip digitization settings (separate window frame)
+            self.internalSettings[group] = {}
+            for key in self.userSettings[group].keys():
+                self.internalSettings[group][key] = {}
+                self.internalSettings[group][key]['subkey'] = None # subkey in userSettings dict
+                self.internalSettings[group][key]['winId'] = None  # widget ID
         self.internalSettings['general']["mapsetPath"]['value'] = self.GetMapsetPath()
+        self.internalSettings['general']['mapsetPath']['choices'] = [_('Mapset search path'),
+                                                                     _('All available mapsets')]
+        self.internalSettings['atm']['leftDbClick']['choices'] = [_('Edit selected record'),
+                                                                  _('Display selected')]
+        self.internalSettings['advanced']['settingsFile']['choices'] = ['gisdbase',
+                                                                        'location',
+                                                                        'mapset']
+        self.internalSettings['advanced']['iconTheme']['choices'] = ['grass',
+                                                                     'silk']
+        self.internalSettings['advanced']['digitInterface']['choices'] = ['vedit',
+                                                                          'vdigit']
 
     def GetMapsetPath(self):
         """Store mapset search path"""
         all, access = utils.ListOfMapsets()
 
-        if self.Get(group='general', key='mapsetPath', subkey='value') == 'p':
+        if self.Get(group='general', key='mapsetPath', subkey='selection') == 0:
             return access
         else:
             return all
@@ -190,8 +223,8 @@ class Settings:
                                 value = int(value)
                             except:
                                 pass
-                        Debug.msg(3, 'Settings(): group=%s, key=%s, subkey=%s, value=%s' %
-                                  (group, key, subkey, value))
+                        # Debug.msg(3, 'Settings(): group=%s, key=%s, subkey=%s, value=%s' %
+                        #          (group, key, subkey, value))
                         self.Set(group=group, key=key, subkey=subkey, value=value)
                     idx += 2
         finally:
@@ -279,6 +312,8 @@ class Settings:
             settings = self.userSettings
 
         try:
+            if not settings[group][key].has_key(subkey):
+                raise KeyError
             settings[group][key][subkey] = value
         except KeyError:
             raise gcmd.SettingsError(_("Unable to set '%s:%s:%s'") % (group, key, subkey))
@@ -302,6 +337,7 @@ class PreferencesDialog(wx.Dialog):
         # create notebook pages
         self.__CreateGeneralPage(notebook)
         self.__CreateDisplayPage(notebook)
+        self.__CreateAttributeManagerPage(notebook)
         self.__CreateAdvancedPage(notebook)
 
         # buttons
@@ -355,13 +391,14 @@ class PreferencesDialog(wx.Dialog):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
-        self.mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
-                                      choices=['mapset search path', 'all available mapsets'])
-        if self.settings.Get(group='general', key='mapsetPath', subkey='value') == 'p':
-            self.mapsetPath.SetSelection(0)
-        else:
-            self.mapsetPath.SetSelection(1)
-        gridSizer.Add(item=self.mapsetPath,
+        mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+                                    choices=self.settings.Get(group='general', key='mapsetPath', subkey='choices', internal=True),
+                                    name="GetSelection")
+        mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
+        self.settings.Set(group='general', key='mapsetPath', subkey='winId', value=mapsetPath.GetId(), internal=True)
+        self.settings.Set(group='general', key='mapsetPath', subkey='subkey', value='selection', internal=True)
+        
+        gridSizer.Add(item=mapsetPath,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
@@ -371,13 +408,10 @@ class PreferencesDialog(wx.Dialog):
 
         panel.SetSizer(border)
         
-        # bindings
-        self.mapsetPath.Bind(wx.EVT_CHOICE, self.OnChangeMapsetPath)
-        
         return panel
 
     def __CreateDisplayPage(self, notebook):
-        """Create notebook page concerning with symbology settings"""
+        """Create notebook page concerning for display settings"""
         panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
         notebook.AddPage(page=panel, text=_("Display"))
 
@@ -420,11 +454,15 @@ class PreferencesDialog(wx.Dialog):
         # raster overlay
         #
         row = 0
-        self.rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                         label=_("Overlay raster map layers"))
-        self.rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
-        gridSizer.Add(item=self.rasterOverlay,
-                       pos=(row, 0), span=(1, 2))
+        rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Overlay raster map layers"),
+                                    name='IsChecked')
+        rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
+        self.settings.Set(group='display', key='rasterOverlay', subkey='winId', value=rasterOverlay.GetId(), internal=True)
+        self.settings.Set(group='display', key='rasterOverlay', subkey='subkey', value='enabled', internal=True)
+
+        gridSizer.Add(item=rasterOverlay,
+                      pos=(row, 0), span=(1, 2))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
@@ -434,6 +472,82 @@ class PreferencesDialog(wx.Dialog):
         # bindings
         fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
         
+        return panel
+
+    def __CreateAttributeManagerPage(self, notebook):
+        """Create notebook page concerning for 'Attribute Table Manager' settings"""
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Attribute Table Manager"))
+
+        pageSizer = wx.BoxSizer(wx.VERTICAL)
+
+        #
+        # highlighting
+        #
+        highlightBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                    label=" %s " % _("Highlighting"))
+        highlightSizer = wx.StaticBoxSizer(highlightBox, wx.VERTICAL)
+
+        flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Color")
+        hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
+                                    colour=self.settings.Get(group='atm', key='highlight', subkey='color'),
+                                    size=(25, 25),
+                                    name="GetValue")
+        
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width (in pixels)"))
+        self.hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                                   initial=self.settings.Get(group='atm', key='highlight',subkey='width'),
+                                   min=1, max=1e6)
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+
+
+        highlightSizer.Add(item=flexSizer,
+                           proportion=0,
+                           flag=wx.ALL | wx.EXPAND,
+                           border=5)
+
+        pageSizer.Add(item=highlightSizer,
+                      proportion=0,
+                      flag=wx.ALL | wx.EXPAND,
+                      border=5)
+
+        #
+        # data browser related settings
+        #
+        dataBrowserBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
+                                    label=" %s " % _("Data browser"))
+        dataBrowserSizer = wx.StaticBoxSizer(dataBrowserBox, wx.VERTICAL)
+
+        flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
+        flexSizer.AddGrowableCol(0)
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Left double click")
+        leftDbClick = wx.Choice(parent=panel, id=wx.ID_ANY,
+                                choices=self.settings.Get(group='atm', key='leftDbClick', subkey='choices', internal=True),
+                                name="GetSelection")
+        leftDbClick.SetSelection(self.settings.Get(group='atm', key='leftDbClick', subkey='selection'))
+        self.settings.Set(group='atm', key='leftDbClick', subkey='winId', value=leftDbClick.GetId(), internal=True)
+        self.settings.Set(group='atm', key='leftDbClick', subkey='subkey', value='selection', internal=True)
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(leftDbClick, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+
+        dataBrowserSizer.Add(item=flexSizer,
+                           proportion=0,
+                           flag=wx.ALL | wx.EXPAND,
+                           border=5)
+
+        pageSizer.Add(item=dataBrowserSizer,
+                      proportion=0,
+                      flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
+                      border=5)
+
+        panel.SetSizer(pageSizer)
+
         return panel
 
     def __CreateAdvancedPage(self, notebook):
@@ -458,10 +572,14 @@ class PreferencesDialog(wx.Dialog):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
-        self.settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                      choices=['gisdbase', 'location', 'mapset'])
-        self.settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='value'))
-        gridSizer.Add(item=self.settingsFile,
+        settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                 choices=self.settings.Get(group='advanced', key='settingsFile', subkey='choices', internal=True),
+                                 name='GetStringSelection')
+        settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='value'))
+        self.settings.Set(group='advanced', key='settingsFile', subkey='winId', value=settingsFile.GetId(), internal=True)
+        self.settings.Set(group='advanced', key='settingsFile', subkey='subkey', value='value', internal=True)
+
+        gridSizer.Add(item=settingsFile,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
@@ -475,10 +593,14 @@ class PreferencesDialog(wx.Dialog):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
-        self.iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                   choices=['grass', 'silk'])
-        self.iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='value'))
-        gridSizer.Add(item=self.iconTheme,
+        iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                              choices=self.settings.Get(group='advanced', key='iconTheme', subkey='choices', internal=True),
+                              name="GetStringSelection")
+        iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='value'))
+        self.settings.Set(group='advanced', key='iconTheme', subkey='winId', value=iconTheme.GetId(), internal=True)
+        self.settings.Set(group='advanced', key='iconTheme', subkey='subkey', value='value', internal=True)
+
+        gridSizer.Add(item=iconTheme,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
@@ -502,10 +624,14 @@ class PreferencesDialog(wx.Dialog):
                        flag=wx.ALIGN_LEFT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
-        self.digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                        choices=['vdigit', 'vedit'])
-        self.digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='value'))
-        gridSizer.Add(item=self.digitInterface,
+        digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
+                                   choices=self.settings.Get(group='advanced', key='digitInterface', subkey='choices', internal=True),
+                                   name="GetStringSelection")
+        digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='value'))
+        self.settings.Set(group='advanced', key='digitInterface', subkey='winId', value=digitInterface.GetId(), internal=True)
+        self.settings.Set(group='advanced', key='digitInterface', subkey='subkey', value='value', internal=True)
+
+        gridSizer.Add(item=digitInterface,
                       flag=wx.ALIGN_RIGHT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
@@ -558,16 +684,6 @@ class PreferencesDialog(wx.Dialog):
 
         event.Skip()
 
-    def OnChangeMapsetPath(self, event):
-        """Mapset path changed"""
-        if event.GetSelection() == 0:
-            self.settings.Set(group='general', key='mapsetPath', subkey='value', value='p')
-        else:
-            self.settings.Set(group='general', key='mapsetPath', subkey='value', value='l')
-
-        # update internal settings
-        self.settings.Set(group='general', key="mapsetPath", subkey='value', value=self.settings.GetMapsetPath(), internal=True)
-        
     def OnSave(self, event):
         """Button 'Save' clicked"""
         self.__UpdateSettings()
@@ -585,24 +701,24 @@ class PreferencesDialog(wx.Dialog):
 
     def __UpdateSettings(self):
         """Update user settings"""
-        #
-        # display
-        #
-        # location
-        self.settings.Set(group='display', key='rasterOverlay', subkey='enabled',
-                          value=self.rasterOverlay.IsChecked())
-        #
-        # advanced
-        #
-        # location
-        self.settings.Set(group='advanced', key='settingsFile', subkey='value',
-                          value=self.settingsFile.GetStringSelection())
-        # icon theme
-        self.settings.Set(group='advanced', key='iconTheme', subkey='value',
-                          value=self.iconTheme.GetStringSelection())
-        # digitization interface
-        self.settings.Set(group='advanced', key='digitInterface', subkey='value',
-                          value=self.digitInterface.GetStringSelection())
+        for group in self.settings.internalSettings.keys():
+            for key in self.settings.internalSettings[group].keys():
+                id  = self.settings.internalSettings[group][key]['winId']
+                subkey = self.settings.internalSettings[group][key]['subkey']
+                if id is None or subkey is None:
+                    continue
+                win = self.FindWindowById(id)
+                if win.GetName() == 'GetValue':
+                    value = win.GetValue()
+                elif win.GetName() == 'GetSelection':
+                    value = win.GetSelection()
+                elif win.GetName() == 'IsChecked':
+                    value = win.IsChecked()
+                elif win.GetName() == 'GetStringSelection':
+                    value = win.GetStringSelection()
+                else:
+                    value = None
+                self.settings.Set(group, key, subkey, value)
 
 class SetDefaultFont(wx.Dialog):
     """
@@ -733,7 +849,7 @@ class MapsetAccess(wx.Dialog):
                   flag=wx.ALL | wx.EXPAND, border=5)
 
         # check all accessible mapsets
-        if globalSettings.Get(group='general', key='mapsetPath', subkey='value') == 'l':
+        if globalSettings.Get(group='general', key='mapsetPath', subkey='selection') == 1:
             for mset in self.all_mapsets:
                 self.mapsetlb.Check(self.all_mapsets.index(mset), True)
         else:
