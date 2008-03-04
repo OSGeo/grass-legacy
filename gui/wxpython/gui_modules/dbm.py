@@ -44,7 +44,6 @@ gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unico
 import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
-import wx.lib.colourselect as csel
 import wx.lib.scrolledpanel as scrolled
 
 import sqlbuilder
@@ -53,6 +52,7 @@ import gcmd
 import globalvar
 import utils
 from debug import Debug as Debug
+from preferences import globalSettings as UserSettings
 
 class Log:
     """
@@ -405,14 +405,6 @@ class AttributeManager(wx.Frame):
                           style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
 
         #
-        # default settings (TODO global settings file)
-        #
-        self.settings = {}
-        self.settings['highlight'] = {}
-        self.settings['highlight']['color'] = (255, 255, 0, 255) # yellow
-        self.settings['highlight']['width'] = 2
-
-        #
         # list of command/SQL statements to be performed
         #
         self.listOfCommands      = []
@@ -455,19 +447,12 @@ class AttributeManager(wx.Frame):
         self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
         self.manageLayerPage.SetTabAreaColour(globalvar.FNPageColor)
 
-        self.settingsPage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
-                                            style=dbmStyle)
-        #self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
-        self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
-        self.settingsPage.SetTabAreaColour(globalvar.FNPageColor)
-
         self.infoCollapseLabelExp = _("Click here to show database connection information")
         self.infoCollapseLabelCol = _("Click here to hide database connection information")
 
         self.__createBrowsePage()
         self.__createManageTablePage()
         self.__createManageLayerPage()
-        self.__createSettingsPage()
 
         self.notebook.SetSelection(0) # select browse tab
 
@@ -799,7 +784,7 @@ class AttributeManager(wx.Frame):
         return list
 
     def __createManageLayerPage(self):
-        """Create settings page"""
+        """Create manage page"""
         splitterWin = wx.SplitterWindow(parent=self.manageLayerPage, id=wx.ID_ANY)
         self.manageLayerPage.AddPage(page=splitterWin,
                                      text=_("Layers of vector map")) # dummy page
@@ -860,45 +845,6 @@ class AttributeManager(wx.Frame):
         # listmix.ColumnSorterMixin.__init__(self, 2)
 
         return list
-
-    def __createSettingsPage(self):
-        """Create settings page"""
-        panel = wx.Panel(parent=self.settingsPage, id=wx.ID_ANY)
-        self.settingsPage.AddPage(page=panel, text=_("General settings")) # dummy page
-
-        pageSizer = wx.BoxSizer(wx.VERTICAL)
-        highlightBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
-                                    label=" %s " % _("Highlighting"))
-        highlightSizer = wx.StaticBoxSizer(highlightBox, wx.VERTICAL)
-
-        flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
-        flexSizer.AddGrowableCol(0)
-        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Color")
-        self.hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
-                                          colour=self.settings['highlight']['color'],
-                                          size=(25, 25))
-        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
-
-        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width (in pixels)"))
-        self.hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                   initial=self.settings['highlight']['width'],
-                                   min=1, max=1e6)
-        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
-
-
-        highlightSizer.Add(item=flexSizer,
-                           proportion=0,
-                           flag=wx.ALL | wx.EXPAND,
-                           border=5)
-
-        pageSizer.Add(item=highlightSizer,
-                      proportion=0,
-                      flag=wx.ALL | wx.EXPAND,
-                      border=5)
-
-        panel.SetSizer(pageSizer)
 
     def __layout(self):
         """Do layout"""
@@ -1486,9 +1432,6 @@ class AttributeManager(wx.Frame):
         # perform select statement
         self.OnApplySqlStatement(event)
 
-        # update settings
-        self.UpdateSettings()
-
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
         keyColumn = -1 # index of key column
@@ -1649,10 +1592,9 @@ class AttributeManager(wx.Frame):
             map.DeleteLayer(self.qlayer)
 
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
-        # cats = list.selectedCats[:]
         cats = list.GetSelectedItems()
 
-        color = self.settings['highlight']['color']
+        color = UserSettings.Get(group='atm', key='highlight', subkey='color')
         colorStr = str(color[0]) + ":" + \
             str(color[1]) + ":" + \
             str(color[2]) + ":"
@@ -1660,10 +1602,8 @@ class AttributeManager(wx.Frame):
                "map=%s" % self.vectmap,
                "color=%s" % colorStr,
                "fcolor=%s" % colorStr,
-               #               "cats=%s" % (",".join(["%d" % c for c in cats])),
-               # FIXME
                "cats=%s" % utils.ListOfCatsToRange(cats),
-               "width=%d"  % self.settings['highlight']['width']]
+               "width=%d"  % UserSettings.Get(group='atm', key='highlight', subkey='width')]
         if self.icon:
             cmd.append("icon=%s" % (self.icon))
         if self.pointsize:
@@ -1713,11 +1653,6 @@ class AttributeManager(wx.Frame):
 
         return False
                 
-    def UpdateSettings(self):
-        """Update settings dict"""
-        self.settings['highlight']['color'] = self.hlColor.GetColour()
-        self.settings['highlight']['width'] = int(self.hlWidth.GetValue())
-
     def UpdateDialog(self, layer):
         """Updates dialog layout for given layer"""
         #
