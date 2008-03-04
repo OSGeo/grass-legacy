@@ -63,9 +63,9 @@ class Settings:
             # advanced
             #
             'advanced' : {
-                'settingsFile'   : { 'value' : 'gisdbase' }, # gisdbase, location, mapset
-                'digitInterface' : { 'value' : 'vdigit' }, # vedit, vdigit
-                'iconTheme'      : { 'value' : 'silk' }, # grass, silk
+                'settingsFile'   : { 'type' : 'gisdbase' }, # gisdbase, location, mapset
+                'digitInterface' : { 'type' : 'vdigit' }, # vedit, vdigit
+                'iconTheme'      : { 'type' : 'silk' }, # grass, silk
                 },
             #
             # Attribute Table Manager
@@ -136,8 +136,7 @@ class Settings:
             self.internalSettings[group] = {}
             for key in self.userSettings[group].keys():
                 self.internalSettings[group][key] = {}
-                self.internalSettings[group][key]['subkey'] = None # subkey in userSettings dict
-                self.internalSettings[group][key]['winId'] = None  # widget ID
+
         self.internalSettings['general']["mapsetPath"]['value'] = self.GetMapsetPath()
         self.internalSettings['general']['mapsetPath']['choices'] = [_('Mapset search path'),
                                                                      _('All available mapsets')]
@@ -235,7 +234,7 @@ class Settings:
         if settings is None:
             settings = self.userSettings
         
-        loc = self.Get(group='advanced', key='settingsFile', subkey='value')
+        loc = self.Get(group='advanced', key='settingsFile', subkey='type')
         gisdbase = grassenv.GetGRASSVariable("GISDBASE")
         location_name = grassenv.GetGRASSVariable("LOCATION_NAME")
         mapset_name = grassenv.GetGRASSVariable("MAPSET")
@@ -248,7 +247,7 @@ class Settings:
             filePath = os.path.join(gisdbase, location_name, mapset_name, self.fileName)
         
         if filePath is None:
-            raise gcmd.SettingsError('Uknown file location.')
+            raise gcmd.SettingsError(_('Uknown settings file location.'))
 
         try:
             file = open(filePath, "w")
@@ -316,7 +315,7 @@ class Settings:
                 raise KeyError
             settings[group][key][subkey] = value
         except KeyError:
-            raise gcmd.SettingsError(_("Unable to set '%s:%s:%s'") % (group, key, subkey))
+            raise gcmd.SettingsError(_("Unable to set '%s:%s:%s'") % (group, key, subkey),)
 
 globalSettings = Settings()
 
@@ -333,6 +332,9 @@ class PreferencesDialog(wx.Dialog):
         self.settings = settings
         # notebook
         notebook = wx.Notebook(parent=self, id=wx.ID_ANY, style=wx.BK_DEFAULT)
+
+        # dict for window ids
+        self.winId = {}
 
         # create notebook pages
         self.__CreateGeneralPage(notebook)
@@ -395,8 +397,7 @@ class PreferencesDialog(wx.Dialog):
                                     choices=self.settings.Get(group='general', key='mapsetPath', subkey='choices', internal=True),
                                     name="GetSelection")
         mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
-        self.settings.Set(group='general', key='mapsetPath', subkey='winId', value=mapsetPath.GetId(), internal=True)
-        self.settings.Set(group='general', key='mapsetPath', subkey='subkey', value='selection', internal=True)
+        self.winId['general:mapsetPath:selection'] = mapsetPath.GetId()
         
         gridSizer.Add(item=mapsetPath,
                       flag=wx.ALIGN_RIGHT |
@@ -458,8 +459,7 @@ class PreferencesDialog(wx.Dialog):
                                     label=_("Overlay raster map layers"),
                                     name='IsChecked')
         rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
-        self.settings.Set(group='display', key='rasterOverlay', subkey='winId', value=rasterOverlay.GetId(), internal=True)
-        self.settings.Set(group='display', key='rasterOverlay', subkey='subkey', value='enabled', internal=True)
+        self.winId['display:rasterOverlay:enabled'] = rasterOverlay.GetId()
 
         gridSizer.Add(item=rasterOverlay,
                       pos=(row, 0), span=(1, 2))
@@ -493,19 +493,20 @@ class PreferencesDialog(wx.Dialog):
         label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Color")
         hlColor = csel.ColourSelect(parent=panel, id=wx.ID_ANY,
                                     colour=self.settings.Get(group='atm', key='highlight', subkey='color'),
-                                    size=(25, 25),
-                                    name="GetValue")
-        
+                                    size=(25, 25))
+        self.winId['atm:highlight:color'] = hlColor.GetId()
+
         flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        flexSizer.Add(hlColor, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
         label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Line width (in pixels)"))
-        self.hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
-                                   initial=self.settings.Get(group='atm', key='highlight',subkey='width'),
-                                   min=1, max=1e6)
-        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
-        flexSizer.Add(self.hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
+        hlWidth = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(50, -1),
+                              initial=self.settings.Get(group='atm', key='highlight',subkey='width'),
+                              min=1, max=1e6)
+        self.winId['atm:highlight:width'] = hlWidth.GetId()
 
+        flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
+        flexSizer.Add(hlWidth, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
         highlightSizer.Add(item=flexSizer,
                            proportion=0,
@@ -526,13 +527,13 @@ class PreferencesDialog(wx.Dialog):
 
         flexSizer = wx.FlexGridSizer (cols=2, hgap=5, vgap=5)
         flexSizer.AddGrowableCol(0)
-        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label="Left double click")
+        label = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Left mouse double click"))
         leftDbClick = wx.Choice(parent=panel, id=wx.ID_ANY,
                                 choices=self.settings.Get(group='atm', key='leftDbClick', subkey='choices', internal=True),
                                 name="GetSelection")
         leftDbClick.SetSelection(self.settings.Get(group='atm', key='leftDbClick', subkey='selection'))
-        self.settings.Set(group='atm', key='leftDbClick', subkey='winId', value=leftDbClick.GetId(), internal=True)
-        self.settings.Set(group='atm', key='leftDbClick', subkey='subkey', value='selection', internal=True)
+        self.winId['atm:leftDbClick:selection'] = leftDbClick.GetId()
+
         flexSizer.Add(label, proportion=0, flag=wx.ALIGN_CENTER_VERTICAL)
         flexSizer.Add(leftDbClick, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE)
 
@@ -575,9 +576,8 @@ class PreferencesDialog(wx.Dialog):
         settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                  choices=self.settings.Get(group='advanced', key='settingsFile', subkey='choices', internal=True),
                                  name='GetStringSelection')
-        settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='value'))
-        self.settings.Set(group='advanced', key='settingsFile', subkey='winId', value=settingsFile.GetId(), internal=True)
-        self.settings.Set(group='advanced', key='settingsFile', subkey='subkey', value='value', internal=True)
+        settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='type'))
+        self.winId['advanced:settingsFile:type'] = settingsFile.GetId()
 
         gridSizer.Add(item=settingsFile,
                       flag=wx.ALIGN_RIGHT |
@@ -596,9 +596,8 @@ class PreferencesDialog(wx.Dialog):
         iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                               choices=self.settings.Get(group='advanced', key='iconTheme', subkey='choices', internal=True),
                               name="GetStringSelection")
-        iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='value'))
-        self.settings.Set(group='advanced', key='iconTheme', subkey='winId', value=iconTheme.GetId(), internal=True)
-        self.settings.Set(group='advanced', key='iconTheme', subkey='subkey', value='value', internal=True)
+        iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='type'))
+        self.winId['advanced:iconTheme:type'] = iconTheme.GetId()
 
         gridSizer.Add(item=iconTheme,
                       flag=wx.ALIGN_RIGHT |
@@ -627,9 +626,8 @@ class PreferencesDialog(wx.Dialog):
         digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
                                    choices=self.settings.Get(group='advanced', key='digitInterface', subkey='choices', internal=True),
                                    name="GetStringSelection")
-        digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='value'))
-        self.settings.Set(group='advanced', key='digitInterface', subkey='winId', value=digitInterface.GetId(), internal=True)
-        self.settings.Set(group='advanced', key='digitInterface', subkey='subkey', value='value', internal=True)
+        digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='type'))
+        self.winId['advanced:digitInterface:type'] = digitInterface.GetId()
 
         gridSizer.Add(item=digitInterface,
                       flag=wx.ALIGN_RIGHT |
@@ -694,31 +692,29 @@ class PreferencesDialog(wx.Dialog):
     def OnApply(self, event):
         """Button 'Apply' clicked"""
         self.__UpdateSettings()
-        
+        self.Close()
+
     def OnCancel(self, event):
         """Button 'Cancel' clicked"""
         self.Close()
 
     def __UpdateSettings(self):
         """Update user settings"""
-        for group in self.settings.internalSettings.keys():
-            for key in self.settings.internalSettings[group].keys():
-                id  = self.settings.internalSettings[group][key]['winId']
-                subkey = self.settings.internalSettings[group][key]['subkey']
-                if id is None or subkey is None:
-                    continue
-                win = self.FindWindowById(id)
-                if win.GetName() == 'GetValue':
-                    value = win.GetValue()
-                elif win.GetName() == 'GetSelection':
-                    value = win.GetSelection()
-                elif win.GetName() == 'IsChecked':
-                    value = win.IsChecked()
-                elif win.GetName() == 'GetStringSelection':
-                    value = win.GetStringSelection()
-                else:
-                    value = None
-                self.settings.Set(group, key, subkey, value)
+        for item in self.winId.keys():
+            group, key, subkey = item.split(':')
+            id = self.winId[item]
+            win = self.FindWindowById(id)
+            if win.GetName() == 'GetValue':
+                value = win.GetValue()
+            elif win.GetName() == 'GetSelection':
+                value = win.GetSelection()
+            elif win.GetName() == 'IsChecked':
+                value = win.IsChecked()
+            elif win.GetName() == 'GetStringSelection':
+                value = win.GetStringSelection()
+            else:
+                value = win.GetValue()
+            self.settings.Set(group, key, subkey, value)
 
 class SetDefaultFont(wx.Dialog):
     """

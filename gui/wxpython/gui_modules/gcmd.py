@@ -74,25 +74,33 @@ class CmdError(GException):
 
     See Command class (command exits with EXIT_FAILURE,
     G_fatal_error() is called)."""
-    def __init__(self, cmd, message):
+    def __init__(self, cmd, message, parent=None):
         self.cmd = cmd
-        GException.__init__(self, message, title=_("Error in command execution %s" % self.cmd[0]))
+        GException.__init__(self, message,
+                            title=_("Error in command execution %s" % self.cmd[0]),
+                            parent=parent)
 
 class SettingsError(GException):
     """Exception used for GRASS settings, see
     gui_modules/preferences.py."""
-    def __init__(self, message):
-        GException.__init__(self, message, title=_("Preferences error"))
+    def __init__(self, message, parent=None):
+        GException.__init__(self, message,
+                            title=_("Preferences error"),
+                            parent=parent)
 
 class DigitError(GException):
     """Exception raised during digitization session"""
-    def __init__(self, message):
-        GException.__init__(self, message, title=_("Error in digitization tool"))
+    def __init__(self, message, parent=None):
+        GException.__init__(self, message,
+                            title=_("Error in digitization tool"),
+                            parent=parent)
 
 class DBMError(GException):
     """Exception raised for Attribute Table Manager"""
     def __init__(self, message):
-        GException.__init__(self, message, title=_("Error in Attribute Table Manager"))
+        GException.__init__(self, message,
+                            title=_("Error in Attribute Table Manager"),
+                            parent=parent)
 
 class Popen(subprocess.Popen):
     """Subclass subprocess.Popen"""
