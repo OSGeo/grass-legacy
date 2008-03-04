@@ -526,8 +526,13 @@ class AttributeManager(wx.Frame):
             win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
             win.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnDataRightUp) #wxMSW
             win.Bind(wx.EVT_RIGHT_UP,            self.OnDataRightUp) #wxGTK
-            win.Bind(wx.EVT_LEFT_DCLICK, self.OnDataItemEdit)
-            win.Bind(wx.EVT_COMMAND_LEFT_DCLICK, self.OnDataItemEdit)
+            if UserSettings.Get(group='atm', key='leftDbClick', subkey='selection') == 0:
+                win.Bind(wx.EVT_LEFT_DCLICK, self.OnDataItemEdit)
+                win.Bind(wx.EVT_COMMAND_LEFT_DCLICK, self.OnDataItemEdit)
+            else:
+                win.Bind(wx.EVT_LEFT_DCLICK, self.OnDataDrawSelected)
+                win.Bind(wx.EVT_COMMAND_LEFT_DCLICK, self.OnDataDrawSelected)
+                
             
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,

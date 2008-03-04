@@ -61,7 +61,7 @@ except ImportError, err:
     #          (os.linesep, err)
 
 # which interface to use?
-if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit' and GV_LINES is not None:
+if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit' and GV_LINES is not None:
     print >> sys.stderr, "%sWARNING: Digitization tool uses v.edit interface. " \
         "This can significantly slow down some operations especially for " \
         "middle-large vector maps. "\
@@ -98,7 +98,7 @@ class AbstractDigit:
         UserSettings.Set(group='vdigit', key='category', subkey='value', value=1)
 
         if self.map:
-            if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit':
+            if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit':
                 categoryCmd = gcmd.Command(cmd=["v.category", "-g", "--q",
                                                 "input=%s" % self.map, 
                                                 "option=report"])
@@ -153,7 +153,7 @@ class AbstractDigit:
                                     'Data are probably corrupted, '
                                     'try to run v.build for rebuilding the topology.') % map)
             
-        if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') != 'v.edit':
+        if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') != 'v.edit':
             try:
                 self.digit.InitCats()
             except:
@@ -1019,7 +1019,7 @@ class VDigit(AbstractDigit):
 
         return (snap, thresh)
 
-if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit':
+if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit':
     class Digit(VEdit):
         """Default digit class"""
         def __init__(self, mapwindow):
@@ -1122,7 +1122,7 @@ class CDisplayDriver(AbstractDisplayDriver):
         if map:
             name, mapset = map.split('@')
             try:
-                if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit':
+                if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit':
                     ret = self.__display.OpenMap(str(name), str(mapset), False)
                 else:
                     ret = self.__display.OpenMap(str(name), str(mapset), True)
@@ -2181,7 +2181,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                             cat not in cats[1][layer]:
                         catList.append(cat)
                 if catList != []:
-                    if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit':
+                    if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit':
                         vEditCmd = ['v.edit', '--q',
                                     'map=%s' % self.map,
                                     'layer=%d' % layer,
@@ -2200,7 +2200,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
                         if self.line < 0:
                             wx.MessageBox(parent=self, message=_("Unable to update vector map."),
                                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-        if UserSettings.Get(group='advanced', key='digitInterface', subkey='value') == 'vedit':           
+        if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vedit':           
             # reload map (needed for v.edit)
             self.parent.parent.digit.driver.ReloadMap()
 
