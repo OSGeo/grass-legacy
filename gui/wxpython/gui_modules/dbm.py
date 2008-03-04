@@ -365,7 +365,10 @@ class AttributeManager(wx.Frame):
         self.pointdata = pointdata
         self.parent    = parent # GMFrame
 
-        wx.Frame.__init__(self, parent, id, title, size=(900,600), style=style)
+        wx.Frame.__init__(self, parent, id, title, style=style)
+
+        # icon
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_sql.ico'), wx.BITMAP_TYPE_ICO))
 
         self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
 
@@ -434,25 +437,25 @@ class AttributeManager(wx.Frame):
 
         dbmStyle = globalvar.FNPageStyle
 
-        self.browsePage = FN.FlatNotebook(self, id=wx.ID_ANY,
+        self.browsePage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
                                           style=dbmStyle)
         # self.notebook.AddPage(self.browsePage, caption=_("Browse data"))
         self.notebook.AddPage(self.browsePage, text=_("Browse data")) # FN
         self.browsePage.SetTabAreaColour(globalvar.FNPageColor)
 
-        self.manageTablePage = FN.FlatNotebook(self, id=wx.ID_ANY,
+        self.manageTablePage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
                                           style=dbmStyle)
         #self.notebook.AddPage(self.manageTablePage, caption=_("Manage tables"))
         self.notebook.AddPage(self.manageTablePage, text=_("Manage tables")) # FN
         self.manageTablePage.SetTabAreaColour(globalvar.FNPageColor)
 
-        self.manageLayerPage = FN.FlatNotebook(self, id=wx.ID_ANY,
+        self.manageLayerPage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
                                                style=dbmStyle)
         #self.notebook.AddPage(self.manageLayerPage, caption=_("Manage layers"))
         self.notebook.AddPage(self.manageLayerPage, text=_("Manage layers")) # FN
         self.manageLayerPage.SetTabAreaColour(globalvar.FNPageColor)
 
-        self.settingsPage = FN.FlatNotebook(self, id=wx.ID_ANY,
+        self.settingsPage = FN.FlatNotebook(self.panel, id=wx.ID_ANY,
                                             style=dbmStyle)
         #self.notebook.AddPage(self.settingsPage, caption=_("Settings"))
         self.notebook.AddPage(self.settingsPage, text=_("Settings")) # FN
@@ -485,7 +488,7 @@ class AttributeManager(wx.Frame):
         self.__layout()
 
         # self.SetMinSize(self.GetBestSize())
-        self.SetSize((680, 520))
+        self.SetSize((680, 550)) # FIXME hard-coded size
         self.SetMinSize(self.GetSize())
 
     def __createBrowsePage(self, onlyLayer=-1):
@@ -538,7 +541,9 @@ class AttributeManager(wx.Frame):
             win.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnDataItemActivated)
             win.Bind(wx.EVT_COMMAND_RIGHT_CLICK, self.OnDataRightUp) #wxMSW
             win.Bind(wx.EVT_RIGHT_UP,            self.OnDataRightUp) #wxGTK
-
+            win.Bind(wx.EVT_LEFT_DCLICK, self.OnDataItemEdit)
+            win.Bind(wx.EVT_COMMAND_LEFT_DCLICK, self.OnDataItemEdit)
+            
             listSizer.Add(item=win, proportion=1,
                           flag=wx.EXPAND | wx.ALL,
                           border=3)
@@ -687,6 +692,7 @@ class AttributeManager(wx.Frame):
                                          "double",
                                          "varchar",
                                          "date"]) # FIXME
+            type.SetSelection(0)
             type.Bind(wx.EVT_CHOICE, self.OnTableChangeType)
             self.layerPage[layer]['addColType'] = type.GetId()
             subSizer.Add(item=type,
@@ -909,10 +915,9 @@ class AttributeManager(wx.Frame):
         mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
 
-        self.SetAutoLayout(True)
-        self.SetSizer(mainSizer)
-        # FIXME
-        # mainSizer.Fit(self) # problem connected to aui
+        self.panel.SetAutoLayout(True)
+        self.panel.SetSizer(mainSizer)
+        mainSizer.Fit(self.panel)
         self.Layout()
         
     def OnDataRightUp(self, event):
@@ -1043,16 +1048,20 @@ class AttributeManager(wx.Frame):
             missingKey = False
             
         # add other visible columns
+        colIdx = 0
+        keyId = -1
         for col in columnName:
             if col == keyColumn: # key 
                 if missingKey is False: 
                     data.append((col, str(maxCat + 1)))
+                    keyId = colIdx
             else:
                 data.append((col, ''))
-
+            colIdx += 1
+                
         dlg = ModifyTableRecord(parent=self, id=wx.ID_ANY,
                                 title=_("Insert new record"),
-                                data=data)
+                                data=data, keyEditable=(keyId, True))
 
         if dlg.ShowModal() == wx.ID_OK:
             try: # get category number
@@ -1068,7 +1077,7 @@ class AttributeManager(wx.Frame):
                 values = dlg.GetValues() # values (need to be casted)
                 columnsString = ''
                 valuesString   = ''
-                
+
                 for i in range(len(values)):
                     if len(values[i]) == 0: # NULL
                         if columnName[i] == keyColumn:
@@ -3179,40 +3188,67 @@ class ModifyTableRecord(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, id, title, style=style)
 
-        self.panel = scrolled.ScrolledPanel(parent=self, id=wx.ID_ANY,
-                                            style=wx.TAB_TRAVERSAL)
+        self.keyId = keyEditable[0]
         
-        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
-        self.btnSubmit = wx.Button(self, wx.ID_OK)
+        self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
+
+        self.dataPanel = scrolled.ScrolledPanel(parent=self.panel, id=wx.ID_ANY,
+                                            style=wx.TAB_TRAVERSAL)
+        self.dataPanel.SetupScrolling(scroll_x=False)
+        
+        #
+        # buttons
+        #
+        self.btnCancel = wx.Button(self.panel, wx.ID_CANCEL)
+        self.btnSubmit = wx.Button(self.panel, wx.ID_OK)
         self.btnSubmit.SetDefault()
 
+        #
+        # data area
+        #
         self.widgets = []
         id = 0
+        self.box = False
+        self.cat = None
         for column, value in data:
-            label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
+            if keyEditable[0] == id:
+                self.cat = int(value)
+                if keyEditable[1] == False:
+                    self.box = True
+                    id += 1
+                    continue
+                else:
+                    valueWin = wx.SpinCtrl(parent=self.dataPanel, id=wx.ID_ANY,
+                                           value=value, min=-1e9, max=1e9, size=(250, -1))
+            else:
+                valueWin = wx.TextCtrl(parent=self.dataPanel, id=wx.ID_ANY,
+                                       value=value, size=(250, -1))
+                                
+            label = wx.StaticText(parent=self.dataPanel, id=wx.ID_ANY,
                                   label=column + ":")
-            value = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
-                                value=value, size=(250, -1))
-            if keyEditable[0] > -1: # id given
-                if keyEditable[0] == id:
-                    value.Enable(keyEditable[1])
+
             self.widgets.append((label.GetId(),
-                                 value.GetId()))
+                                 valueWin.GetId()))
 
             id += 1
             
         self.__Layout()
 
-        winSize = self.GetSize()
+        # winSize = self.GetSize()
         # fix height of window frame if needed
-        if winSize[1] > 480:
-            winSize[1] = 480
-            self.SetSize(winSize)
-        self.SetMinSize(winSize)
+        # if winSize[1] > 480:
+        #    winSize[1] = 480
+        #    self.SetSize(winSize)
+        # self.SetMinSize(winSize)
 
     def __Layout(self):
         """Do layout"""
         sizer = wx.BoxSizer(wx.VERTICAL)
+
+        if self.box:
+            box = wx.StaticBox(parent=self.panel, id=wx.ID_ANY,
+                               label=" %s %d " % (_("Category"), self.cat))
+            boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
         # data area
         dataSizer = wx.FlexGridSizer (cols=2, hgap=3, vgap=3)
@@ -3225,29 +3261,55 @@ class ModifyTableRecord(wx.Dialog):
             dataSizer.Add(label, proportion=0,
                           flag=wx.ALIGN_CENTER_VERTICAL)
             dataSizer.Add(value, proportion=0,
-                          flag=wx.EXPAND)
+                          flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
 
-        self.panel.SetSizer(dataSizer)
-        self.panel.SetAutoLayout(1)
-        self.panel.SetupScrolling(scroll_x=False)
+        self.dataPanel.SetAutoLayout(True)
+        self.dataPanel.SetSizer(dataSizer)
+        dataSizer.Fit(self.dataPanel)
 
+        if self.box:
+            boxSizer.Add(item=self.dataPanel, proportion=1,
+                         flag=wx.EXPAND | wx.ALL, border=5)
+            
         # buttons
         btnSizer = wx.StdDialogButtonSizer()
         btnSizer.AddButton(self.btnCancel)
         btnSizer.AddButton(self.btnSubmit)
         btnSizer.Realize()
 
-        sizer.Add(item=self.panel, proportion=1,
-                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+        if not self.box:
+            sizer.Add(item=self.dataPanel, proportion=1,
+                      flag=wx.EXPAND | wx.ALL, border=5)
+        else:
+            sizer.Add(item=boxSizer, proportion=1,
+                      flag=wx.EXPAND | wx.ALL, border=5)
+            
 
         sizer.Add(item=btnSizer, proportion=0,
-                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+                 flag=wx.EXPAND | wx.ALL, border=5)
 
-        self.SetSizer(sizer)
-        self.SetAutoLayout(1)
+        #sizer.SetSizeHints(self.panel)
+        self.panel.SetAutoLayout(True)
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self.panel)
 
+        self.Layout()
+
+        # set window frame size (min & max)
+        minFrameHeight = 150
+        maxFrameHeight = 2 * minFrameHeight
+        if self.GetSize()[1] > minFrameHeight:
+            self.SetMinSize((self.GetSize()[0], minFrameHeight))
+        else:
+            self.SetMinSize(self.GetSize())
+
+        if self.GetSize()[1] > maxFrameHeight:
+            self.SetSize((self.GetSize()[0], maxFrameHeight))
+        else:
+            self.SetSize(self.panel.GetSize())
+            
     def GetValues(self, columns=None):
-        """Return list of values (as string).
+        """Return list of values (casted to string).
 
         If columns is given (list), return only values of given columns.
         """
@@ -3255,9 +3317,13 @@ class ModifyTableRecord(wx.Dialog):
         for labelId, valueId in self.widgets:
             column = self.FindWindowById(labelId).GetLabel().replace(':', '')
             if columns is None or column in columns:
-                value = self.FindWindowById(valueId).GetValue()
+                value = str(self.FindWindowById(valueId).GetValue()) # -> string
                 valueList.append(value)
 
+        # add key value
+        if self.box:
+            valueList.insert(self.keyId, str(self.cat))
+                             
         return valueList
 
 class NewVectorDialog(wx.Dialog):
