@@ -206,6 +206,7 @@ $CHANNEL_SUFFIXES" | sort -u`
 	    # run r.mapcalc to crop to region
 	    GRASS_VERBOSE=1 \
 	      r.mapcalc "${MAP}${sfx} = ${TMPMAPNAME}${sfx}"
+	    r.colors map=${MAP}${sfx} rast=${TMPMAPNAME}${sfx} --quiet
 	fi
 
 	# Remove the old channels:
@@ -318,12 +319,18 @@ NUM_TILES="$TITER"
 
 # If there's more than one tile patch them together, otherwise just rename that tile.
 if [ $NUM_TILES -eq 1 ] ; then
-	for SUFFIX in $CHANNEL_SUFFIXES ; do
+	if [ -n "$CHANNEL_SUFFIXES" ] ; then
+	    for SUFFIX in $CHANNEL_SUFFIXES ; do
 		eval "$SUFFIX"
 		#Rename tile 0 to be the output
 		GRASS_VERBOSE=1 \
 		  g.rename rast="${GIS_OPT_OUTPUT}_tile_0${sfx}","${GIS_OPT_OUTPUT}${sfx}"
-	done
+	    done
+	else  # single-band, single-tile
+	    #Rename tile 0 to be the output
+	    GRASS_VERBOSE=1 \
+	      g.rename rast="${GIS_OPT_OUTPUT}_tile_0${sfx}","${GIS_OPT_OUTPUT}${sfx}" --quiet
+	fi
 else
 	# Patch together each channel:
 	g.message -d message="SUFFIXES: [$SUFFIXES]"
@@ -343,11 +350,34 @@ else
 	    done
 	else
 	    # single-band data
-	    g.message "Patching tiles"
+	    g.message "Patching tiles  (this may take some time)"
 	    g.message -d message="patch list = [$MAPLIST]"
-	    r.patch input="$MAPLIST" output="${GIS_OPT_OUTPUT}"
+
+	    # HACK: for 8nig PNG, GIF all the different tiles can have different color tables
+	    #	so patches output end up all freaky. r.mapcalc r#,g#,b# manual patching + r.composite?
+
+	    #r.patch input="$MAPLIST" output="${GIS_OPT_OUTPUT}"
+	    IFS=" "
+	    for COLOR in r g b ; do
+		for MAP in `echo "$MAPLIST" | tr ',' ' '` ; do
+		  GRASS_VERBOSE=0 \
+		     r.mapcalc "${MAP}_${COLOR} = ${COLOR}#$MAP"
+	          r.colors  map="${MAP}_${COLOR}" color="grey255" --quiet
+	          r.null "${MAP}_${COLOR}" setnull=255  --quiet # so patching works
+	       done
+
+	       GRASS_VERBOSE=1\
+		  r.patch input=`echo "$MAPLIST" | sed -e "s/,/_${COLOR},/g" -e "s/$/_${COLOR}/"` \
+		     output="${MAP}_${COLOR}_all"
+	    done
+	    r.composite red="${MAP}_r_all" green="${MAP}_g_all" blue="${MAP}_b_all" \
+	       output="${GIS_OPT_OUTPUT}"
+
 	    if [ $? -eq 0 ] ; then
-		g.remove rast="$MAPLIST" --quiet
+	        IFS=','
+		for MAP in $MAPLIST ; do
+		   g.mremove -f rast="${MAP}*" --quiet
+		done
 	    fi
 	fi
 fi
@@ -355,7 +385,7 @@ fi
 # Set up color counter
 COLORS=0
 
-IFS=$defaultIFS
+IFS="$defaultIFS"
 for SUFFIX in $SUFFIXES ; do
 	eval "$SUFFIX"
 	# Keep track of colors
