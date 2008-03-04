@@ -568,7 +568,13 @@ class GMFrame(wx.Frame):
 
             # sax
             grcXml = ProcessGrcXml()
-            xml.sax.parseString(fileStream, grcXml)
+            
+            try:
+                xml.sax.parseString(fileStream, grcXml)
+            except xml.sax.SAXParseException, err:
+                raise gcmd.GStdError(_("Reading workspace file <%s> failed.") % filename + \
+                                         "\n\n%s" % err,
+                                     parent=self)
 
             busy = wx.BusyInfo(message=_("Please wait, loading map layers into layer tree..."),
                                parent=self)
@@ -599,7 +605,10 @@ class GMFrame(wx.Frame):
                                                      filename, os.linesep, err),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
-
+        except gcmd.GStdError, e:
+            print e
+            return False
+                               
         return True
 
     def OnWorkspaceLoad(self, event=None):

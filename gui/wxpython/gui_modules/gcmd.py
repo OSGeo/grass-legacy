@@ -63,6 +63,12 @@ class GException(Exception):
 
         return ''
 
+class GStdError(GException):
+    """Generic exception"""
+
+    def __init__(self, message, title=_("Error"), parent=None):
+        GException.__init__(self, message, title=title, parent=parent)
+
 class CmdError(GException):
     """Exception used for GRASS commands.
 
