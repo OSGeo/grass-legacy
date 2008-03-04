@@ -113,21 +113,21 @@ def main():
     x = [x1]
     y = [y1]
 
-    for i in range((len(coords) / 2) - 1):
+    for i in range(1, (len(coords) / 2)):
 
         if proj_type == 2:
-            g6lib.G_scan_easting(coords[ (i+1)*2 + 0 ], eastPtr, 3)
-            g6lib.G_scan_northing(coords[ (i+1)*2 + 1 ], northPtr, 3)
+            g6lib.G_scan_easting (coords[ i*2 + 0 ], eastPtr, 3)
+            g6lib.G_scan_northing(coords[ i*2 + 1 ], northPtr, 3)
             x2 = float(easting)
             y2 = float(northing)
         else:
-            x2 = float(coords[ (i+1)*2 + 0 ])
-            y2 = float(coords[ (i+1)*2 + 1 ])
+            x2 = float(coords[ i*2 + 0 ])
+            y2 = float(coords[ i*2 + 1 ])
 
         segment_distance = g6lib.G_distance(x1, y1, x2, y2)
         overall_distance += segment_distance
 
-        print "segment %d distance is %.2f meters" % (i+1, segment_distance)
+        print "segment %d distance is %.2f meters" % (i, segment_distance)
 
         # add to the area array
 
