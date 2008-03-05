@@ -17,6 +17,8 @@ How to INSTALL?
 
 It will create two files, python_grass6.py and _python_grass6.so.
 
+4. It is useful to build the NumPtr module as well.
+   - see README.GRASS in that directory for instructions
 
 How to use it?
 --------------

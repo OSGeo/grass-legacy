@@ -101,6 +101,8 @@ def main():
         northing = Numeric.array(0., Numeric.Float64)
         northPtr = NumPtr.getpointer(northing)
 
+        # TODO: for clarity, figure out how to replace "3" with
+        #       the defined LOCATION_LL constant from gis.i
         g6lib.G_scan_easting(coords[0], eastPtr, 3)
         g6lib.G_scan_northing(coords[1], northPtr, 3)
         x1 = float(easting)
