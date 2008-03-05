@@ -36,6 +36,11 @@
 #%  key_desc: x,y
 #%  description: Comma separated list of coordinate pairs
 #%End
+#%Flag
+#%  key: i
+#%  description: Read coordinate pairs from stdin
+#%End
+
 
 import sys
 import os
@@ -71,12 +76,10 @@ def main():
     # parser always creates at least an empty variable, and sys.argv is
     #  toast, so no way to check if option was given. So it hangs if
     #  --q was the only option given and there is no data from stdin.
-    coord_ans = os.getenv("GIS_OPT_COORD")
-    if coord_ans:
-        # read from coord= command line option
-        coords = coord_ans.split(',')
-    else:
-        # FIXME: this can hang if no input is given
+    coord_ans  = os.getenv("GIS_OPT_COORD")
+    stdin_flag = bool(int(os.getenv("GIS_FLAG_I")))
+
+    if stdin_flag is True:
         coords = []
         # read line by line from stdin
         while 1:
@@ -85,6 +88,10 @@ def main():
                 break
             else:
                 coords += line.split(',')
+    else:
+        # read from coord= command line option
+        coords = coord_ans.split(',')
+
 
     if len(coords) < 4:
        print "A minimum of two input coordinate pairs are needed"
