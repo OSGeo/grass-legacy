@@ -27,15 +27,15 @@ of the string, if enclosed in ${xxx} syntax (see examples above).</p>
 <tt>$GISBASE/etc/fontcap</tt>. If the environment variable
 <strong>GRASS_FONT_CAP</strong> is set, the output will instead be written 
 to the file specified by that variable. This is useful if you don't have
-permission to modify <tt>$GISBASE/etc/fontcap</tt>, in this case you can
+permission to modify <tt>$GISBASE/etc/fontcap</tt>: in this case you can
 use e.g.
 
 <div class="code"><pre>
-g.mkfontcap -s > $HOME/.gfontcap
-
 # use local file version instead of system copy
 GRASS_FONT_CAP=$HOME/.gfontcap
 export $GRASS_FONT_CAP
+
+g.mkfontcap
 </pre></div>
 
 to create a personal copy and then to make GRASS use that file
