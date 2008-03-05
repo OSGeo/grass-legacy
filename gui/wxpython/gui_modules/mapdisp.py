@@ -865,7 +865,9 @@ class BufferedWindow(wx.Window):
             # dragging anything else - rubber band box or line
             else:
                 self.mouse['end'] = event.GetPositionTuple()[:]
-                self.MouseDraw(pdc=self.pdcTmp)
+                if event.LeftIsDown():
+                    # draw box only when left mouse button is pressed
+                    self.MouseDraw(pdc=self.pdcTmp)
 
         # double click
         elif event.ButtonDClick():
@@ -1199,7 +1201,13 @@ class BufferedWindow(wx.Window):
             pos2 = self.Pixel2Cell(self.mouse['end'])
 
             if hasattr(self, "moveBegin"):
-                self.moveCoords = pos2
+                if len(digitClass.driver.GetSelected()) == 0:
+                    self.moveCoords = pos2
+                else:
+                    dx = pos2[0] - pos1[0]
+                    dy = pos2[1] - pos1[1]
+                    self.moveCoords = (self.moveCoords[0] + dx,
+                                       self.moveCoords[1] + dy)
                 # eliminate initial mouse moving efect
                 self.mouse['begin'] = self.mouse['end'] 
 
@@ -1271,12 +1279,16 @@ class BufferedWindow(wx.Window):
 
                 else:
                     # -> moveLine || deleteLine, etc. (select by point/box)
-                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
-                                                                   digitClass.GetSelectType())
-                    if nselected == 0:
-                        if digitClass.driver.SelectLineByPoint(pos1,
-                                                               digitClass.GetSelectType()) is not None:
-                            nselected = 1
+                    if digitToolbar.action == 'moveLine' and \
+                           len(digitClass.driver.GetSelected()) > 0:
+                        nselected = 0
+                    else:
+                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                                       digitClass.GetSelectType())
+                        if nselected == 0:
+                            if digitClass.driver.SelectLineByPoint(pos1,
+                                                                   digitClass.GetSelectType()) is not None:
+                                nselected = 1
 
                 if nselected > 0:
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
@@ -1447,6 +1459,29 @@ class BufferedWindow(wx.Window):
                 r.Inflate(4,4)
                 self.RefreshRect(r, False)
 
+        digitToolbar = self.parent.digittoolbar
+        if digitToolbar:
+            digitClass = self.parent.digit
+            # digitization tool (confirm action)
+            if digitToolbar.action in ["moveLine", "moveVertex"] and \
+                    hasattr(self, "moveBegin"):
+
+                pTo = self.Pixel2Cell(event.GetPositionTuple())
+                pFrom = self.moveCoords
+                move = (pTo[0]-pFrom[0], pTo[1]-pFrom[1])
+                
+                if digitToolbar.action == "moveLine":
+                    # move line
+                    digitClass.MoveSelectedLines(move)
+                elif digitToolbar.action == "moveVertex":
+                    # move vertex
+                    digitClass.MoveSelectedVertex(pFrom,
+                                                  move)
+
+                del self.moveBegin
+                del self.moveCoords
+                del self.moveIds
+
         event.Skip()
 
     def OnRightUp(self, event):
@@ -1513,24 +1548,6 @@ class BufferedWindow(wx.Window):
             elif digitToolbar.action == "deleteLine":
                 # -> delete selected vector features
                 digitClass.DeleteSelectedLines()
-            elif digitToolbar.action in ["moveLine", "moveVertex"] and \
-                    hasattr(self, "moveBegin"):
-
-                pTo = self.Pixel2Cell(event.GetPositionTuple())
-                pFrom = self.moveCoords
-                move = (pTo[0]-pFrom[0], pTo[1]-pFrom[1])
-
-                if digitToolbar.action == "moveLine":
-                    # move line
-                    digitClass.MoveSelectedLines(move)
-                elif digitToolbar.action == "moveVertex":
-                    # move vertex
-                    digitClass.MoveSelectedVertex(pFrom,
-                                                  move)
-
-                del self.moveBegin
-                del self.moveCoords
-                del self.moveIds
             elif digitToolbar.action == "splitLine":
                 # split line
                 digitClass.SplitLine(self.Pixel2Cell(self.mouse['begin']))

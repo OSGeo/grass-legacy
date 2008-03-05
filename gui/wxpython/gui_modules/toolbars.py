@@ -37,10 +37,16 @@ class AbstractToolbar:
         pass
 
     def InitToolbar(self, parent, toolbar, toolData):
-        """Initialize toolbar, i.e. add tools to the toolbar"""
+        """Initialize toolbar, i.e. add tools to the toolbar
 
+        @return list of ids (of added tools)
+        """
+
+        ids = []
         for tool in toolData:
-            self.CreateTool(parent, toolbar, *tool)
+            ids.append(self.CreateTool(parent, toolbar, *tool))
+
+        return ids
 
     def ToolbarData(self):
         """Toolbar data"""
@@ -49,18 +55,24 @@ class AbstractToolbar:
 
     def CreateTool(self, parent, toolbar, tool, label, bitmap, kind,
                    shortHelp, longHelp, handler):
-        """Add tool to the toolbar"""
+        """Add tool to the toolbar
+
+        @return id of tool
+        """
 
         bmpDisabled=wx.NullBitmap
 
+        id = wx.NewId()
         if label:
-            tool = toolbar.AddLabelTool(wx.ID_ANY, label, bitmap,
+            tool = toolbar.AddLabelTool(id, label, bitmap,
                                         bmpDisabled, kind,
                                         shortHelp, longHelp)
             parent.Bind(wx.EVT_TOOL, handler, tool)
         else: # add separator
             toolbar.AddSeparator()
 
+        return id
+    
 class MapToolbar(AbstractToolbar):
     """
     Main Map Display toolbar
@@ -73,8 +85,8 @@ class MapToolbar(AbstractToolbar):
 	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
 
-        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
-
+        self.pointerId = self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())[4]
+        
         # optional tools
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
                                  choices=['Digitize'], style=wx.CB_READONLY, size=(90, -1))
@@ -84,7 +96,7 @@ class MapToolbar(AbstractToolbar):
 
         # realize the toolbar
         self.toolbar.Realize()
-
+            
     def ToolbarData(self):
         """Toolbar data"""
 
@@ -252,7 +264,8 @@ class DigitToolbar(AbstractToolbar):
             self.toolbar.append(wx.ToolBar(parent=self.parent, id=wx.ID_ANY))
 	    self.toolbar[row].SetToolBitmapSize(globalvar.toolbarSize)
             self.toolbar[row].SetToolBitmapSize(wx.Size(24,24))
-
+            self.toolbar[row].Bind(wx.EVT_TOOL, self.OnTool)
+            
             # create toolbar
             if self.numOfRows ==  1:
                 rowdata=None
@@ -267,6 +280,9 @@ class DigitToolbar(AbstractToolbar):
         for row in range(0, self.numOfRows):
             self.toolbar[row].Realize()
 
+        # toogle to pointer by default
+        self.OnTool(None)
+        
     def ToolbarData(self, row=None):
         """
         Toolbar data
@@ -343,6 +359,14 @@ class DigitToolbar(AbstractToolbar):
 
         return data
 
+    def OnTool(self, event):
+        """Tool selected -> toggle tool to pointer"""
+        id = self.parent.maptoolbar.pointerId
+        self.parent.maptoolbar.toolbar.ToggleTool(id, True)
+        self.parent.maptoolbar.mapdisplay.OnPointer(event)
+        if event:
+            event.Skip()
+        
     def OnAddPoint(self, event):
         """Add point to the vector map Laier"""
         Debug.msg (2, "DigitToolbar.OnAddPoint()")
