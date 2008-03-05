@@ -936,7 +936,7 @@ class cmdPanel(wx.Panel):
                     else:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.HORIZONTAL )
                     isDefault = {}
-                    for defval in p.get('value','').split(','):
+                    for defval in p.get('default','').split(','):
                         isDefault[ defval ] = 'yes'
                         # for multi checkboxes, this is an array of all wx IDs
                         # for each individual checkbox
@@ -1004,15 +1004,24 @@ class cmdPanel(wx.Panel):
                 which_sizer.Add(item=txt, proportion=0,
                                 flag=wx.RIGHT | wx.LEFT | wx.TOP | wx.EXPAND, border=5)
 
-                txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                   size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
-
+                if p.get('type','string') == 'string':
+                    txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
+                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                    txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
+                else:
+                    minValue = -1e9
+                    maxValue = 1e9
+                    txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
+                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT),
+                                       min=minValue, max=maxValue)
+                    txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
+                    txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
+                    
                 if p.get('value','') != '':
                     txt3.SetValue(p['value']) # parameter previously set
 
                 which_sizer.Add(item=txt3, proportion=0, flag=wx.BOTTOM | wx.LEFT, border=5)
                 p['wxId'] = txt3.GetId()
-                txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
 
             if p.get('type','string') == 'string' and p.get('gisprompt',False) == True:
                 txt = wx.StaticText(parent=which_panel, label = title + ':')
