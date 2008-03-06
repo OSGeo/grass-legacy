@@ -772,7 +772,7 @@ class mainFrame(wx.Frame):
         """Abort running command"""
         try:
             self.goutput.GetListOfCmdThreads()[0].abort()
-        except KeyError:
+        except IndexError:
             pass
 
     def OnCopy(self, event):
