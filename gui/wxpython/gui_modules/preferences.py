@@ -80,7 +80,7 @@ class Settings:
             'cmd': {
             'overwrite' : { 'enabled' : False },
             'closeDlg' : { 'enabled' : False },
-            'verbosity' : { 'verbose' : 'grassenv' },
+            'verbosity' : { 'selection' : 'grassenv' },
             },
             #
             # vdigit
@@ -523,11 +523,19 @@ class PreferencesDialog(wx.Dialog):
                       pos=(row, 0), span=(1, 2))
         row += 1
         # verbosity
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Verbosity level:")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
         verbosity = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
-                              choices=self.settings.Get(group='general', key='verbosity', subkey='choices', internal=True),
-                              name="GetSelection")
-        mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
-        self.winId['general:mapsetPath:selection'] = mapsetPath.GetId()
+                              choices=self.settings.Get(group='cmd', key='verbosity', subkey='choices', internal=True),
+                              name="GetStringSelection")
+        verbosity.SetStringSelection(self.settings.Get(group='cmd', key='verbosity', subkey='selection'))
+        self.winId['cmd:verbosity:selection'] = verbosity.GetId()
+
+        gridSizer.Add(item=verbosity,
+                      pos=(row, 1))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
