@@ -1022,15 +1022,15 @@ class GMConsole(wx.Panel):
     Create and manage output console for commands entered on the
     GIS Manager command line.
     """
-    def __init__(self, parent, id=wx.ID_ANY,
+    def __init__(self, parent, id=wx.ID_ANY, margin=False,
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
+                 style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
 
         # initialize variables
         self.Map             = None
-        self.parent          = parent              # GMFrame
-        self.cmdThreads      = []                  # list of command threads (alive or dead)
+        self.parent          = parent # GMFrame
+        self.cmdThreads      = []     # list of running commands (alive or dead)
 
         # progress bar
         self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
@@ -1038,11 +1038,7 @@ class GMConsole(wx.Panel):
                                             style=wx.GA_HORIZONTAL)
 
         # text control for command output
-        ### self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
-        ### style=wx.TE_MULTILINE| wx.TE_READONLY)
-        ### self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN,
-        ### wx.NORMAL, wx.NORMAL, 0, ''))
-        self.cmd_output = GMStc(parent=self, id=wx.ID_ANY)
+        self.cmd_output = GMStc(parent=self, id=wx.ID_ANY, margin=margin)
         # redirect
         self.cmd_stdout = GMStdout(self.cmd_output)
         self.cmd_stderr = GMStderr(self.cmd_output,
@@ -1054,7 +1050,7 @@ class GMConsole(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
 
-         # output control layout
+        # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
         gridsizer1 = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
         boxsizer1.Add(item=self.cmd_output, proportion=1,
@@ -1074,12 +1070,32 @@ class GMConsole(wx.Panel):
         boxsizer1.Fit(self)
         boxsizer1.SetSizeHints(self)
 
+        # set up event handler for any command thread results
+        gcmd.EVT_RESULT(self, self.OnResult)
+
+        # layout
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
+    def WriteCmdLog(self, line, pid=None):
+        """Write out line in selected style"""
+        self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
+        p1 = self.cmd_output.GetCurrentPos()
+        if pid:
+            line = '(' + str(pid) + ') ' + line
+        if len(line) < 80:
+            diff = 80 - len(line)
+            line += diff * ' '
+            line += '%s' % os.linesep
+            self.cmd_output.AddText(line)
+            self.cmd_output.EnsureCaretVisible()
+            p2 = self.cmd_output.GetCurrentPos()
+            self.cmd_output.StartStyling(p1, 0xff)
+            self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
+        
     def RunCmd(self, command):
         """
-        Run in GUI or shell GRASS (or other) commands typed into
+        Run in GUI GRASS (or other) commands typed into
         console command text widget, and send stdout output to output
         text widget.
 
@@ -1098,8 +1114,8 @@ class GMConsole(wx.Panel):
         except:
             curr_disp = None
 
+        # command given as a string ?
         try:
-            # if command is not already a list, make it one
             cmdlist = command.strip().split(' ')
         except:
             cmdlist = command
@@ -1127,47 +1143,28 @@ class GMConsole(wx.Panel):
                     wx.MessageBox(message=_("Command '%s' not yet implemented") % cmdlist[0])
                     return False
 
-                # add layer
+                # add layer into layer tree
                 self.parent.curr_page.maptree.AddLayer(ltype=layertype,
                                                        lcmd=cmdlist)
 
-            else: # other GRASS commands
+            else: # other GRASS commands (r|v|g|...)
                 if self.parent.notebook.GetSelection() != 1:
                     # select 'Command output' tab
                     self.parent.notebook.SetSelection(1)
                 
-                if len(self.GetListOfCmdThreads(onlyAlive=True)) > 0:
-                    busy = wx.BusyInfo(message=_("Please wait, there is another command "
-                                                 "currently running"),
-                                       parent=self.parent)
-                    # wx.Yield()
-                    time.sleep(3)
-                    busy.Destroy()
-                else:
                     # activate computational region (set with g.region)
                     # for all non-display commands.
                     tmpreg = os.getenv("GRASS_REGION")
                     os.unsetenv("GRASS_REGION")
 
                     if len(cmdlist) == 1:
-                        #process GRASS command without argument
+                        # process GRASS command without argument
                         menuform.GUI().ParseCommand(cmdlist, parentframe=self)
                     else:
                         # process GRASS command with argument
-                        self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
-                        p1 = self.cmd_output.GetCurrentPos()
-                        line = '$ %s' % ' '.join(cmdlist)
-                        if len(line) < 80:
-                            diff = 80 - len(line)
-                            line += diff * ' '
-                        line += '%s' % os.linesep
-                        self.cmd_output.AddText(line)
-                        self.cmd_output.EnsureCaretVisible()
-                        p2 = self.cmd_output.GetCurrentPos()
-                        self.cmd_output.StartStyling(p1, 0xff)
-                        self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
-
-                        # TODO: allow running multiple instances
+                        self.cmdPID = len(self.cmdThreads)+1
+                        self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=self.cmdPID)
+                                                
                         grassCmd = gcmd.Command(cmdlist, wait=False,
                                                 stdout=self.cmd_stdout,
                                                 stderr=self.cmd_stderr)
@@ -1178,6 +1175,7 @@ class GMConsole(wx.Panel):
                     if tmpreg:
                         os.environ["GRASS_REGION"] = tmpreg
 
+                    return grassCmd
         else:
             # Send any other command to the shell. Send output to
             # console output window
@@ -1191,13 +1189,12 @@ class GMConsole(wx.Panel):
             # if command is not a GRASS command, treat it like a shell command
             generalCmd = subprocess.Popen(cmdlist,
                                           stdout=subprocess.PIPE,
-                                          stderr=subprocess.PIPE,
-                                          close_fds=True)
+                                          stderr=subprocess.PIPE)
             
             for outline in generalCmd.stdout:
                 print outline
                    
-        return True
+            return None
 
     def ClearHistory(self, event):
         """Clear history of commands"""
@@ -1231,7 +1228,7 @@ class GMConsole(wx.Panel):
 
         dlg.Destroy()
 
-    def GetListOfCmdThreads(self, onlyAlive=False):
+    def GetListOfCmdThreads(self, onlyAlive=True):
         """Return list of command threads)"""
         list = []
         for t in self.cmdThreads:
@@ -1242,6 +1239,26 @@ class GMConsole(wx.Panel):
             list.append(t)
 
         return list
+
+    def OnResult(self, event):
+        """Show result status"""
+        if event.cmdThread is None:
+            # Thread aborted (using our convention of None return)
+            self.WriteCmdLog(_('Command aborted'),
+                             pid=self.cmdPID)
+        else:
+            # Process results here
+            self.WriteCmdLog(_('Command finished (%d sec)') % (time.time() - event.cmdThread.startTime),
+                             pid=self.cmdPID)
+
+        self.console_progressbar.SetValue(0) # reset progress bar on '0%'
+        if hasattr(self.parent.parent, "btn_run"): # menuform.mainFrame
+            dialog = self.parent.parent
+            dialog.btn_run.Enable(True)
+            if dialog.get_dcmd is None and \
+                   dialog.closebox.IsChecked():
+                time.sleep(1)
+                dialog.Close()
 
 class GMStdout:
     """GMConsole standard output
@@ -1297,7 +1314,7 @@ class GMStderr:
                 if value < 100:
                     self.gmgauge.SetValue(value)
                 else:
-                    self.gmgauge.SetValue(0) # reset progress bar on '100%'
+                    self.gmgauge.SetValue(0) # reset progress bar on '0%'
             elif 'GRASS_INFO_MESSAGE' in line:
                 type = 'message'
                 message += line.split(':')[1].strip()
@@ -1346,7 +1363,7 @@ class GMStc(wx.stc.StyledTextCtrl):
     Copyright: (c) 2005-2007 Jean-Michel Fauth
     Licence:   GPL
     """    
-    def __init__(self, parent, id):
+    def __init__(self, parent, id, margin=False):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
         
@@ -1381,23 +1398,25 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.StyleSetSpec(self.StyleWarning, self.StyleWarningSpec)
         self.StyleSetSpec(self.StyleMessage, self.StyleMessageSpec)
         self.StyleSetSpec(self.StyleUnknown, self.StyleUnknownSpec)
-        
+
         #
-        # margin widths
+        # line margins
         #
-        self.SetMarginWidth(0, 0)
+        # TODO print number only from cmdlog
         self.SetMarginWidth(1, 0)
         self.SetMarginWidth(2, 0)
+        if margin:
+            self.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
+            self.SetMarginWidth(0, 30)
+        else:
+            self.SetMarginWidth(0, 0)
 
         #
         # miscellaneous
         #
-        self.SetMarginLeft(2)
         self.SetViewWhiteSpace(False)
         self.SetTabWidth(4)
         self.SetUseTabs(False)
-        # self.SetEOLMode(wx.stc.STC_EOL_CRLF)
-        # self.SetViewEOL(True)
         self.UsePopUp(True)
         self.SetSelBackground(True, "#FFFF00")
         self.SetUseHorizontalScrollBar(True)

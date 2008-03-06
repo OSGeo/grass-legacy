@@ -25,6 +25,7 @@ import os
 import sys
 import time
 import errno
+import signal
 
 import wx
 
@@ -123,7 +124,14 @@ class Popen(subprocess.Popen):
     def _close(self, which):
         getattr(self, which).close()
         setattr(self, which, None)
-    
+
+    def kill(self):
+        """Try to kill running process"""
+        try:
+            os.kill(-self.pid, signal.SIGTERM) # kill whole group
+        except OSError:
+            pass
+
     if subprocess.mswindows:
         def send(self, input):
             if not self.stdin:
@@ -204,6 +212,22 @@ class Popen(subprocess.Popen):
             finally:
                 if not conn.closed:
                     fcntl.fcntl(conn, fcntl.F_SETFL, flags)
+
+# Define notification event for thread completion
+EVT_RESULT_ID = wx.NewId()
+
+def EVT_RESULT(win, func):
+    """Define Result Event"""
+    win.Connect(-1, -1, EVT_RESULT_ID, func)
+
+class ResultEvent(wx.PyEvent):
+    """Simple event to carry arbitrary result data"""
+    def __init__(self, data):
+        wx.PyEvent.__init__(self)
+
+        self.SetEventType(EVT_RESULT_ID)
+
+        self.cmdThread = data
 
 class Command:
     """
@@ -428,16 +452,22 @@ class CommandThread(Thread):
 
         Thread.__init__(self)
         
-        self.cmd          = cmd
-        self.stdin        = stdin
-        self.stdout       = stdout
-        self.stderr       = stderr
+        self.cmd    = cmd
+        self.stdin  = stdin
+        self.stdout = stdout
+        self.stderr = stderr
 
-        self.module       = None
-        self.rerr         = ''
+        self.module = None
+        self.rerr   = ''
 
+        self._want_abort = False
+        self.startTime = None
+
+        self.setDaemon(True)
+        
     def run(self):
         """Run command"""
+        self.startTime = time.time()
         # TODO: wx.Exectute/wx.Process (?)
         self.module = Popen(self.cmd,
                             stdin=subprocess.PIPE,
@@ -491,6 +521,12 @@ class CommandThread(Thread):
         # wait for the process to end, sucking in stuff until it does end
         while self.module.poll() is None:
             time.sleep(.1)
+            if self._want_abort: # abort running process
+                if hasattr(self.stderr, "gmstc"):
+                    self.module.kill()
+                    # -> GMConsole
+                    wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(None))
+                return 
             if self.stdout:
                 line = self.__read_all(self.module.stdout)
                 self.stdout.write(line)
@@ -507,6 +543,17 @@ class CommandThread(Thread):
             self.stderr.write(line)
 
         self.rerr = self.__parseString(line)
+
+        if hasattr(self.stderr, "gmstc"):
+            # -> GMConsole
+            if self._want_abort: # abort running process
+                wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(None))
+            else:
+                wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(self))
+
+    def abort(self):
+        """Abort running process, used by main thread to signal an abort"""
+        self._want_abort = True
 
     def __parseString(self, string):
         """Parse line

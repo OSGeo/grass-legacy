@@ -88,6 +88,8 @@ sys.path.append(imagepath)
 import grassenv
 import gselect
 import gcmd
+import wxgui_utils
+from preferences import globalSettings as UserSettings
 try:
     import subprocess
 except:
@@ -602,7 +604,8 @@ class mainFrame(wx.Frame):
         guisizer.Add (item=topsizer, proportion=0, flag=wx.EXPAND)
 
         # notebooks
-        self.notebookpanel = cmdPanel (parent=self.panel, task=self.task, standalone=self.standalone)
+        self.notebookpanel = cmdPanel (parent=self.panel, task=self.task, standalone=self.standalone,
+                                       mainFrame=self)
         ### add 'command output' tab also for dialog open from menu
         #         if self.standalone:
         self.goutput = self.notebookpanel.goutput
@@ -644,14 +647,21 @@ class mainFrame(wx.Frame):
             btn_ok.Bind(wx.EVT_BUTTON, self.OnOK)
         else: # We're standalone
             # run
-            btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Run"))
-            btn_run.SetToolTipString(_("Run the command"))
-            btn_run.SetDefault()
+            self.btn_run = wx.Button(parent=self.panel, id=wx.ID_OK, label= _("&Run"))
+            self.btn_run.SetToolTipString(_("Run the command"))
+            self.btn_run.SetDefault()
+            # abort
+            btn_abort = wx.Button(parent=self.panel, id=wx.ID_STOP)
+            btn_abort.SetToolTipString(_("Abort the running command"))
             # copy
-            btn_clipboard = wx.Button(parent=self.panel, id=wx.ID_COPY, label=_("C&opy"))
+            btn_clipboard = wx.Button(parent=self.panel, id=wx.ID_COPY)
             btn_clipboard.SetToolTipString(_("Copy the current command string to the clipboard"))
 
-            btnsizer.Add(item=btn_run, proportion=0,
+            btnsizer.Add(item=btn_abort, proportion=0,
+                         flag=wx.ALL | wx.ALIGN_CENTER,
+                         border=10)
+
+            btnsizer.Add(item=self.btn_run, proportion=0,
                          flag=wx.ALL | wx.ALIGN_CENTER,
                          border=10)
 
@@ -659,16 +669,17 @@ class mainFrame(wx.Frame):
                          flag=wx.ALL | wx.ALIGN_CENTER,
                          border=10)
 
-            btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
+            self.btn_run.Bind(wx.EVT_BUTTON, self.OnRun)
+            btn_abort.Bind(wx.EVT_BUTTON, self.OnAbort)
             btn_clipboard.Bind(wx.EVT_BUTTON, self.OnCopy)
 
         guisizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER)
 
         if self.get_dcmd is None:
-            # close dialog on run?
+            # close dialog when command is terminated
             self.closebox = wx.CheckBox(parent=self.panel,
-                                        label=_('Close dialog on run'), style = wx.NO_BORDER)
-            self.closebox.SetValue(False)
+                                        label=_('Close dialog on finish'), style = wx.NO_BORDER)
+            self.closebox.SetValue(UserSettings.Get(group='cmd', key='closeDlg', subkey='enabled'))
             guisizer.Add(item=self.closebox, proportion=0,
                          flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
                          border=5)
@@ -680,12 +691,16 @@ class mainFrame(wx.Frame):
         #self.notebookpanel.SetSize( (constrained_size[0] + 25, constrained_size[1]) ) 
         #self.notebookpanel.Layout()
 
-        # for too long descriptions
+        #
+        # put module description
+        #
         self.description = StaticWrapText (parent=self.panel, label=self.task.description)
         topsizer.Add (item=self.description, proportion=1, border=5,
                       flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
 
+        #
         # do layout
+        #
         guisizer.SetSizeHints(self.panel)
         # called automatically by SetSizer()
         self.panel.SetAutoLayout(True) 
@@ -726,6 +741,9 @@ class mainFrame(wx.Frame):
 
     def OnRun(self, event):
         """Run the command"""
+        if len(self.goutput.GetListOfCmdThreads()) > 0:
+            return
+
         cmd = self.createCmd()
 
         if cmd == [] or cmd == None:
@@ -741,17 +759,21 @@ class mainFrame(wx.Frame):
                 print >> sys.stderr, "parent window is: %s" % (str(self.parent))
             # Send any other command to the shell.
         else:
-            runCmd = gcmd.Command(cmd)
+            gcmd.Command(cmd)
 
-        #if self.standalone:
+        # if self.standalone:
         # change page if needed
         if self.notebookpanel.notebook.GetSelection() != self.notebookpanel.outpageid:
             self.notebookpanel.notebook.SetSelection(self.notebookpanel.outpageid)
 
-        if self.get_dcmd is None:
-            # close dialog?
-            if self.closebox.IsChecked():
-                self.Close()
+        self.btn_run.Enable(False)
+        
+    def OnAbort(self, event):
+        """Abort running command"""
+        try:
+            self.goutput.GetListOfCmdThreads()[0].abort()
+        except KeyError:
+            pass
 
     def OnCopy(self, event):
         """Copy the command"""
@@ -802,9 +824,10 @@ class cmdPanel(wx.Panel):
     """
     A panel containing a notebook dividing in tabs the different guisections of the GRASS cmd.
     """
-    def __init__( self, parent, task, standalone, *args, **kwargs ):
+    def __init__( self, parent, task, standalone, mainFrame, *args, **kwargs ):
         wx.Panel.__init__( self, parent, *args, **kwargs )
 
+        self.parent = mainFrame
         self.task = task
         fontsize = 10
 
@@ -853,8 +876,7 @@ class cmdPanel(wx.Panel):
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
         #        if standalone:
-        from gui_modules import wxgui_utils
-        self.goutput = wxgui_utils.GMConsole(self)
+        self.goutput = wxgui_utils.GMConsole(parent=self, margin=False)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
         self.outpageid = self.notebook.GetPageCount() - 1
 
@@ -895,7 +917,9 @@ class cmdPanel(wx.Panel):
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
             if f['name'] in ('verbose', 'quiet'):
                 chk.Bind(wx.EVT_CHECKBOX, self.OnVerbosity)
-
+            elif f['name'] == 'overwrite':
+                chk.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
+                
         #
         # parameters
         #
