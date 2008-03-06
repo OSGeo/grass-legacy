@@ -63,7 +63,7 @@ main (int argc, char *argv[])
         tool_opt->description = _("Cleaning tool");
         tool_opt->descriptions = 
 	    _("break;break lines at each intersection;"
-	      "rmdupl;remove duplicate lines (pay attention to categories!);"
+	      "rmdupl;remove duplicate lines (pay attention to categories!);" /* works for points too? what about other features? see lib/vector/Vlib/remove_duplicates.c */
 	      "rmdangle;remove dangles, threshold ignored if < 0;"
 	      "chdangle;change the type of boundary dangle to line, "
 	      "threshold ignored if < 0, input line type is ignored;"
