@@ -1114,12 +1114,22 @@ class GMConsole(wx.Panel):
         except:
             curr_disp = None
 
+        if len(self.GetListOfCmdThreads()) > 0:
+            # only one running command enabled (per GMConsole instance)
+            busy = wx.BusyInfo(message=_("Unable to run the command, another command is running..."),
+                               parent=self)
+            wx.Yield()
+            time.sleep(3)
+            busy.Destroy()
+            return 
+
         # command given as a string ?
         try:
             cmdlist = command.strip().split(' ')
         except:
             cmdlist = command
 
+        # print cmdlist[0], globalvar.grassCmd['all']
         if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
@@ -1152,34 +1162,34 @@ class GMConsole(wx.Panel):
                     # select 'Command output' tab
                     self.parent.notebook.SetSelection(1)
                 
-                    # activate computational region (set with g.region)
-                    # for all non-display commands.
-                    tmpreg = os.getenv("GRASS_REGION")
-                    os.unsetenv("GRASS_REGION")
-
-                    if len(cmdlist) == 1:
-                        # process GRASS command without argument
-                        menuform.GUI().ParseCommand(cmdlist, parentframe=self)
-                    else:
-                        # process GRASS command with argument
-                        self.cmdPID = len(self.cmdThreads)+1
-                        self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=self.cmdPID)
-                                                
-                        grassCmd = gcmd.Command(cmdlist, wait=False,
-                                                stdout=self.cmd_stdout,
-                                                stderr=self.cmd_stderr)
-    
-                        self.cmdThreads.append(grassCmd.cmdThread)
-
-                    # deactivate computational region and return to display settings
-                    if tmpreg:
-                        os.environ["GRASS_REGION"] = tmpreg
-
+                # activate computational region (set with g.region)
+                # for all non-display commands.
+                tmpreg = os.getenv("GRASS_REGION")
+                os.unsetenv("GRASS_REGION")
+                print cmdlist
+                if len(cmdlist) == 1:
+                    # process GRASS command without argument
+                    menuform.GUI().ParseCommand(cmdlist, parentframe=self)
+                else:
+                    # process GRASS command with argument
+                    self.cmdPID = len(self.cmdThreads)+1
+                    print self.cmdPID
+                    self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=self.cmdPID)
+                    
+                    grassCmd = gcmd.Command(cmdlist, wait=False,
+                                            stdout=self.cmd_stdout,
+                                            stderr=self.cmd_stderr)
+                    
+                    self.cmdThreads.append(grassCmd.cmdThread)
+                    
                     return grassCmd
+                # deactivate computational region and return to display settings
+                if tmpreg:
+                    os.environ["GRASS_REGION"] = tmpreg
         else:
             # Send any other command to the shell. Send output to
             # console output window
-
+            print cmdlist
             if self.parent.notebook.GetSelection() != 1:
                 # select 'Command output' tab
                 self.parent.notebook.SetSelection(1)
