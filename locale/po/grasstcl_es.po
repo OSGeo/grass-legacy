@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-24 17:42+0100\n"
-"PO-Revision-Date: 2008-01-24 19:44+0100\n"
+"POT-Creation-Date: 2008-03-06 17:44+0100\n"
+"PO-Revision-Date: 2008-03-06 17:59+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -216,11 +216,11 @@ msgstr "Alejar"
 msgid "Pan"
 msgstr "Encuadrar"
 
-#: ../vector/v.digit/toolbox.tcl:194 ../gui/tcltk/gis.m/maptool.tcl:196
+#: ../vector/v.digit/toolbox.tcl:194
 msgid "Zoom to default region"
 msgstr "Zum a la región por defecto"
 
-#: ../vector/v.digit/toolbox.tcl:207 ../gui/tcltk/gis.m/maptool.tcl:187
+#: ../vector/v.digit/toolbox.tcl:207
 msgid "Zoom to saved region"
 msgstr "Zum a una región guardada"
 
@@ -294,11 +294,11 @@ msgstr "Cancelar"
 
 #: ../lib/gis/gui.tcl:11 ../lib/gis/gui.tcl:15 ../lib/gis/gui.tcl:19
 #: ../lib/gis/gui.tcl:310 ../gui/tcltk/gis.m/runandoutput.tcl:258
-#: ../gui/tcltk/gis.m/grassabout.tcl:94 ../gui/tcltk/gis.m/gmlib.tcl:131
+#: ../gui/tcltk/gis.m/grassabout.tcl:94 ../gui/tcltk/gis.m/gmlib.tcl:137
 msgid "Error"
 msgstr "Error"
 
-#: ../lib/gis/gui.tcl:229 ../gui/tcltk/gis.m/gmlib.tcl:113
+#: ../lib/gis/gui.tcl:229 ../gui/tcltk/gis.m/gmlib.tcl:119
 msgid "Save File"
 msgstr "Guardar archivo"
 
@@ -1325,23 +1325,31 @@ msgid "Zoom to..."
 msgstr "Zum a..."
 
 #: ../gui/tcltk/gis.m/maptool.tcl:184
-msgid "Zoom to selected map"
-msgstr "Zum al mapa seleccionado"
+msgid "Zoom display to selected map"
+msgstr "Zum de la visualización al mapa seleccionado"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:187
+msgid "Zoom display to saved region"
+msgstr "Zum de la visualización a la región guardada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:190
-msgid "Save display geometry to named region"
-msgstr "Guardar las límites de la visualización en la región indicada"
+msgid "Save display extents to named region"
+msgstr "Guardar las límites de la visualización en la región designada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
-msgid "Zoom to current region (set with g.region)"
-msgstr "Zum a la región actual (establecida con g.region)"
+msgid "Zoom display to computational region (set with g.region)"
+msgstr "Zum de la visualización a la región computacional (establecida con g.region)"
+
+#: ../gui/tcltk/gis.m/maptool.tcl:196
+msgid "Zoom display to default region"
+msgstr "Zum de la visualización a la región predeterminada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:199
-msgid "Set current region (WIND file) to match display"
-msgstr "Establecer la región actual (archivo WIND) para ajustar a la visualización"
+msgid "Set computational region extents to match display"
+msgstr "Establecer la extensión de la región computacional para ajustar a la visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:615
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1829 ../gui/tcltk/d.m/menu.tcl:554
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1857 ../gui/tcltk/d.m/menu.tcl:554
 msgid "Query"
 msgstr "Consultas"
 
@@ -2546,8 +2554,8 @@ msgid "Report basic file information"
 msgstr "Informe básico del contenido del archivo"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:400
-msgid "Report category information"
-msgstr "Información de categoría"
+msgid "Manage category information"
+msgstr "Administrar información de categoría"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:402 ../gui/tcltk/d.m/menu.tcl:358
 msgid "General statistics"
@@ -2618,61 +2626,61 @@ msgstr "Crear/reconstruir topología: "
 msgid "Clean vector"
 msgstr "Limpiar vectorial"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:426
+#: ../gui/tcltk/gis.m/gmmenu.tcl:425
+msgid "Generalization"
+msgstr "Generalización"
+
+#: ../gui/tcltk/gis.m/gmmenu.tcl:427
 msgid "Convert object types"
 msgstr "Convertir tipos objetos"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:428
+#: ../gui/tcltk/gis.m/gmmenu.tcl:429
 msgid "Add centroids"
 msgstr "Añadir centroides"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:430
+#: ../gui/tcltk/gis.m/gmmenu.tcl:431
 msgid "Build polylines"
 msgstr "Construir polilíneas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:431
+#: ../gui/tcltk/gis.m/gmmenu.tcl:432
 msgid "Split polylines"
 msgstr "Dividir polilíneas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:432
+#: ../gui/tcltk/gis.m/gmmenu.tcl:433
 msgid "Parallel lines"
 msgstr "Líneas parelelas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:434
+#: ../gui/tcltk/gis.m/gmmenu.tcl:435
 msgid "Dissolve boundaries"
 msgstr "Disolver contornos"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:436
+#: ../gui/tcltk/gis.m/gmmenu.tcl:437
 msgid "Create 3D vector over raster"
 msgstr "Crear vectorial 3D sobre ráster"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:437
+#: ../gui/tcltk/gis.m/gmmenu.tcl:438
 msgid "Extrude 3D vector"
 msgstr "Extrudir vectorial 3D"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:439
+#: ../gui/tcltk/gis.m/gmmenu.tcl:440
 msgid "Link to OGR"
 msgstr "Enlazar a OGR"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:441
+#: ../gui/tcltk/gis.m/gmmenu.tcl:442
 msgid "Create labels"
 msgstr "Crear etiquetas"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:443
+#: ../gui/tcltk/gis.m/gmmenu.tcl:444
 msgid "Reposition vector"
 msgstr "Reposicionar vectorial"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:444
+#: ../gui/tcltk/gis.m/gmmenu.tcl:445
 msgid "Reproject vector"
 msgstr "Reproyectar vectorial"
 
-#: ../gui/tcltk/gis.m/gmmenu.tcl:446
+#: ../gui/tcltk/gis.m/gmmenu.tcl:447
 msgid "Metadata support"
 msgstr "Soporte de metadatos"
-
-#: ../gui/tcltk/gis.m/gmmenu.tcl:448
-msgid "Generalization"
-msgstr "Generalización"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:451
 msgid "Query with attributes"
@@ -4031,7 +4039,7 @@ msgid "Maximum zoom-in reached"
 msgstr "Máximo aumento de zum alcanzado"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:593 ../gui/tcltk/gis.m/mapcanvas.tcl:1136
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1189 ../gui/tcltk/gis.m/georect.tcl:1576
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1217 ../gui/tcltk/gis.m/georect.tcl:1576
 msgid "Error setting region"
 msgstr "Error al establecer la región"
 
@@ -4039,11 +4047,11 @@ msgstr "Error al establecer la región"
 msgid "please wait..."
 msgstr "por favor espere..."
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1783
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:760 ../gui/tcltk/gis.m/mapcanvas.tcl:1811
 msgid "You have to select map layer first"
 msgstr "Tiene que seleccionar la capa del mapa primero"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1784
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:761 ../gui/tcltk/gis.m/mapcanvas.tcl:1812
 msgid "No map layer selected"
 msgstr "Ninguna capa de mapa seleccionada"
 
@@ -4068,59 +4076,48 @@ msgstr ""
 "El archivo de región %s ya existe. \n"
 "¿Quiere sobrescribirlo?"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1061
-#, tcl-format
-msgid "Display: rows=%d columns=%d  resolution=%g %s"
-msgstr "Mostrar: filas=%d columnas=%d resolución=%g %s"
-
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1064
 #, tcl-format
 msgid "Display: rows=%d cols=%d  N-S res=%g  E-W res=%g"
 msgstr "Mostrar: filas=%d columnas=%d resolución N-S=%g resolución E-W=%g"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1214 ../gui/tcltk/gis.m/georect.tcl:2018
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1182
+msgid "Error reading current resolution with g.region"
+msgstr "Error al leer la resolución actual con g.region"
+
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1242 ../gui/tcltk/gis.m/georect.tcl:2018
 msgid "Drag or click mouse to zoom"
 msgstr "Arrastrar o clic de ratón para hacer zum"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1216 ../gui/tcltk/gis.m/georect.tcl:2020
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1244 ../gui/tcltk/gis.m/georect.tcl:2020
 msgid "Drag or click mouse to unzoom"
 msgstr "Arrastrar o clic de ratón para deshacer zum"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1451 ../gui/tcltk/gis.m/georect.tcl:2218
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1479 ../gui/tcltk/gis.m/georect.tcl:2218
 msgid "Drag with mouse to pan"
 msgstr "Arrastrar con el ratón para panorámica"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1578
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1606
 msgid "Measurement"
 msgstr "Medida"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1597
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1625
 msgid "Draw measure line with mouse"
 msgstr "Dibujar línea de medida con el ratón"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1687
-#, tcl-format
-msgid " --segment length = %s\n"
-msgstr " --longitud de segmento = %s\n"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1689
-#, tcl-format
-msgid "cumulative length = %s\n"
-msgstr "longitud acumulada = %s\n"
-
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1754
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1782
 msgid "Click to query feature"
 msgstr "Hacer clic para consultar elemento"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1822
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1850
 msgid "This layer type does not support queries"
 msgstr "Este tipo de capa no soporta consultas"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1823
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1851
 msgid "Query not supported"
 msgstr "Consulta no soportada"
 
-#: ../gui/tcltk/gis.m/mapcanvas.tcl:1830
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:1858
 msgid "You must select a map to query\n"
 msgstr "Se debe seleccionar un mapa a consultar\n"
 
@@ -4608,19 +4605,19 @@ msgstr "incluir valores nulos"
 msgid "r.info error"
 msgstr "error de r.info"
 
-#: ../gui/tcltk/gis.m/gmlib.tcl:79 ../gui/tcltk/gis.m/gmlib.tcl:108
+#: ../gui/tcltk/gis.m/gmlib.tcl:85 ../gui/tcltk/gis.m/gmlib.tcl:114
 msgid "Map Resource File"
 msgstr "Archivo de recurso de mapa"
 
-#: ../gui/tcltk/gis.m/gmlib.tcl:80 ../gui/tcltk/gis.m/gmlib.tcl:110
+#: ../gui/tcltk/gis.m/gmlib.tcl:86 ../gui/tcltk/gis.m/gmlib.tcl:116
 msgid "All Files"
 msgstr "Todos los archivos"
 
-#: ../gui/tcltk/gis.m/gmlib.tcl:84
+#: ../gui/tcltk/gis.m/gmlib.tcl:90
 msgid "Open File"
 msgstr "Abrir archivo"
 
-#: ../gui/tcltk/gis.m/gmlib.tcl:109
+#: ../gui/tcltk/gis.m/gmlib.tcl:115
 msgid "DM Resource File"
 msgstr "Archivo de recurso DM"
 
@@ -5438,8 +5435,8 @@ msgstr ""
 "spline"
 
 #: ../gui/tcltk/d.m/menu.tcl:356
-msgid "Report category labels and values"
-msgstr "Informe de las etiquetas de categoría y valores"
+msgid "Manage category labels and values"
+msgstr "Administrar etiquetas de categoría y valores"
 
 #: ../gui/tcltk/d.m/menu.tcl:359
 msgid "Range of all category values"

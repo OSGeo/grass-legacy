@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-24 17:42+0100\n"
-"PO-Revision-Date: 2008-01-24 19:47+0100\n"
+"POT-Creation-Date: 2008-03-06 17:44+0100\n"
+"PO-Revision-Date: 2008-03-06 18:03+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -481,7 +481,9 @@ msgstr "Escribir matriz 3D en el mapa g3D <%s>"
 
 #: ../lib/gpde/N_solvers.c:51
 msgid "The gauss elimination solver does not work with sparse matrices"
-msgstr "El método de resolución por eliminación de Gauss no funciona con matrices dispersas"
+msgstr ""
+"El método de resolución por eliminación de Gauss no funciona con matrices "
+"dispersas"
 
 #: ../lib/gpde/N_solvers.c:61
 msgid "Starting direct gauss elimination solver"
@@ -536,7 +538,9 @@ msgstr "Método no lineal de gradientes conjugados (CG) -- iteración %5i error %g
 #: ../lib/gpde/N_solvers_krylov.c:530
 #, c-format
 msgid "Sparse BiCGStab -- iteration %i error  %g\n"
-msgstr "Gradientes biconjugados estabilizados (BiCGStab) dispersos -- iteración %i error %g\n"
+msgstr ""
+"Gradientes biconjugados estabilizados (BiCGStab) dispersos -- iteración %i "
+"error %g\n"
 
 #: ../lib/gpde/N_solvers_krylov.c:533
 #, c-format
@@ -1094,19 +1098,19 @@ msgid "Modifications"
 msgstr "Modificaciones"
 
 #: ../lib/vector/Vlib/read.c:99
-#, fuzzy
-msgid "Vector map is not opened"
-msgstr "Mapa vectorial <%s> no encontrado"
+msgid "vector map is not opened"
+msgstr "el mapa vectorial no está abierto"
 
 #: ../lib/vector/Vlib/read.c:102
 #, c-format
 msgid "Vect_read_line(): line %d is not reasonable (max line in vector map: %d)"
 msgstr ""
 
-#: ../lib/vector/Vlib/dangles.c:122 ../lib/vector/Vlib/dangles.c:211
-#: ../lib/vector/Vlib/dangles.c:219
-msgid "Removed dangles"
-msgstr ""
+#: ../lib/vector/Vlib/dangles.c:169 ../lib/vector/Vlib/dangles.c:263
+#: ../lib/vector/Vlib/dangles.c:274
+#, fuzzy
+msgid "Removed dangles:"
+msgstr "Áreas eliminadas"
 
 #: ../lib/vector/Vlib/array.c:97
 #, c-format
@@ -1142,6 +1146,16 @@ msgstr "No se puede abrir la base de datos <%s> con el controlador <%s>"
 msgid "Unable to select record from table <%s> (key %s, where %s)"
 msgstr "No se puede seleccionar el registro de la tabla <%s> (clave<%s, donde %s)"
 
+#: ../lib/vector/Vlib/break_lines.c:116
+#, c-format
+msgid "%s %5d"
+msgstr "%s %5d"
+
+#: ../lib/vector/Vlib/break_lines.c:116 ../lib/vector/Vlib/break_lines.c:323
+#: ../lib/vector/Vlib/break_lines.c:341
+msgid "Intersections:"
+msgstr "Intersecciones:"
+
 #: ../lib/vector/Vlib/break_polygons.c:200
 msgid "All points (vertices)"
 msgstr "Todos los puntos (vértices)"
@@ -1151,29 +1165,27 @@ msgid "Registered points (unique coordinates)"
 msgstr "Puntos registrados (coordenadas únicas)"
 
 #: ../lib/vector/Vlib/break_polygons.c:202
-#, fuzzy
 msgid "Points marked for break"
-msgstr "Nodos marcados para eliminar"
+msgstr "Puntos marcados para rupturas"
 
 #: ../lib/vector/Vlib/break_polygons.c:208
 #: ../lib/vector/Vlib/break_polygons.c:272
 #: ../lib/vector/Vlib/break_polygons.c:292
 msgid "Breaks"
-msgstr ""
+msgstr "Rupturas"
 
 #: ../lib/vector/Vlib/bridges.c:118 ../lib/vector/Vlib/bridges.c:191
 #: ../lib/vector/Vlib/bridges.c:197
 msgid "Removed bridges"
-msgstr ""
+msgstr "Puentes eliminados"
 
 #: ../lib/vector/Vlib/poly.c:243
 msgid "Unable to find point in polygon"
 msgstr "No se puede encontrar el punto en el polígono"
 
 #: ../lib/vector/Vlib/poly.c:661
-#, fuzzy
-msgid "Conditions failed"
-msgstr "Fallo en la conexión."
+msgid "conditions failed"
+msgstr "fallaron las condiciones"
 
 #: ../lib/vector/Vlib/cats.c:46
 msgid "Vect_new_cats_struct(): Out of memory"
@@ -1192,9 +1204,8 @@ msgstr ""
 "de categorías"
 
 #: ../lib/vector/Vlib/sindex.c:97
-#, fuzzy
-msgid "Not implemented"
-msgstr "Sin implementar"
+msgid "not implemented"
+msgstr "sin implementar"
 
 #: ../lib/vector/Vlib/sindex.c:108
 #, c-format
@@ -1205,7 +1216,9 @@ msgstr "No se puede borrar el elemento %d del índice espacial"
 msgid ""
 "Unable to build spatial index from topology, vector map is not opened at "
 "topo level 2"
-msgstr "No se puede construir el índice espacial a partir de la topología, el mapa vectorial no está abierto en el nivel topológico 2"
+msgstr ""
+"No se puede construir el índice espacial a partir de la topología, el mapa "
+"vectorial no está abierto en el nivel topológico 2"
 
 #: ../lib/vector/Vlib/sindex.c:169
 msgid "BUG (Vect_build_sidx_from_topo): node does not exist"
@@ -1283,23 +1296,20 @@ msgid "Unable to read vector map"
 msgstr "No se puede leer el mapa vectorial"
 
 #: ../lib/vector/Vlib/build_nat.c:526
-#, fuzzy
-msgid "Primitives registered"
-msgstr "\r%d elementos registrados      \n"
+msgid "primitives registered"
+msgstr "primitivos registrados"
 
 #: ../lib/vector/Vlib/build_nat.c:536
 msgid "Building areas: "
 msgstr "Construyendo áreas: "
 
 #: ../lib/vector/Vlib/build_nat.c:553
-#, fuzzy
-msgid "Areas built"
-msgstr "El grafo fue creado"
+msgid "areas built"
+msgstr "áreas construidas"
 
 #: ../lib/vector/Vlib/build_nat.c:553
-#, fuzzy
-msgid "Isles built"
-msgstr "El grafo fue creado"
+msgid "isles built"
+msgstr "islas construidas"
 
 #: ../lib/vector/Vlib/build_nat.c:561
 msgid "Attaching islands: "
@@ -1314,14 +1324,18 @@ msgstr "Adjuntando centroides: "
 msgid ""
 "Coor files of vector map <%s@%s> is larger than it should be (%ld bytes "
 "excess)"
-msgstr "El archivo de coordenadas del mapa vectorial <%s@%s> es mayor de lo que debiera (%ld bytes de exceso)"
+msgstr ""
+"El archivo de coordenadas del mapa vectorial <%s@%s> es mayor de lo que "
+"debiera (%ld bytes de exceso)"
 
 #: ../lib/vector/Vlib/open_nat.c:146
 #, c-format
 msgid ""
 "Coor files of vector <%s@%s> is shorter than it should be (%ld bytes "
 "missing)."
-msgstr "El archivo de coordenadas del mapa vectorial <%s@%s> es más pequeno de lo que debiera (faltan %ld bytes)"
+msgstr ""
+"El archivo de coordenadas del mapa vectorial <%s@%s> es más pequeno de lo "
+"que debiera (faltan %ld bytes)"
 
 #: ../lib/vector/Vlib/build_ogr.c:257
 #, c-format
@@ -1340,7 +1354,9 @@ msgstr "No está soportada la construcción parcial para OGR"
 
 #: ../lib/vector/Vlib/build_ogr.c:329
 msgid "Random read is not supported by OGR for this layer, cannot build support"
-msgstr "La lectura aleatoria no está soportada por OGR para esta capa, no se puede construir el soporte"
+msgstr ""
+"La lectura aleatoria no está soportada por OGR para esta capa, no se puede "
+"construir el soporte"
 
 #: ../lib/vector/Vlib/build_ogr.c:336
 msgid "Feature: "
@@ -1409,14 +1425,20 @@ msgstr "No se puede abrir el archivo fidx para el mapa vectorial <%s@%s>"
 msgid ""
 "Feature index format version %d.%d is not supported by this release. Try to "
 "rebuild topology or upgrade GRASS."
-msgstr "La versión del formato de índice de objetos espaciales %d.%d no está soportada por esta versión. Intente reconstruir la topología o actualice GRASS."
+msgstr ""
+"La versión del formato de índice de objetos espaciales %d.%d no está "
+"soportada por esta versión. Intente reconstruir la topología o actualice "
+"GRASS."
 
 #: ../lib/vector/Vlib/open_ogr.c:148
 #, c-format
 msgid ""
 "Your GRASS version does not fully support feature index format %d.%d of the "
 "vector. Consider to rebuild topology or upgrade GRASS."
-msgstr "Su versión de GRASS no soporta completamente el formato de índice de objetos espaciales %d.%d del vectorial. Considere reconstruir la topología o actualice GRASS."
+msgstr ""
+"Su versión de GRASS no soporta completamente el formato de índice de objetos "
+"espaciales %d.%d del vectorial. Considere reconstruir la topología o "
+"actualice GRASS."
 
 #: ../lib/vector/Vlib/remove_areas.c:56 ../lib/vector/Vlib/remove_areas.c:168
 msgid "Removed areas"
@@ -1432,8 +1454,8 @@ msgid "Duplicates"
 msgstr "Duplicados"
 
 #: ../lib/vector/Vlib/map.c:55
-msgid "Input vector map is not open"
-msgstr "El mapa vectorial de entrada no está abierto"
+msgid "input vector map is not open"
+msgstr "el mapa vectorial de entrada no está abierto"
 
 #: ../lib/vector/Vlib/map.c:65 ../lib/vector/Vlib/map.c:78
 #, c-format
@@ -1517,8 +1539,8 @@ msgid "Attempt to read dead line"
 msgstr "Intento de leer una línea inexistente [%d]"
 
 #: ../lib/vector/Vlib/overlay.c:76
-msgid "Unknown operator"
-msgstr "Operador desconocido"
+msgid "unknown operator"
+msgstr "operador desconocido"
 
 #: ../lib/vector/Vlib/overlay.c:124
 msgid "Overlay: line/boundary types not supported by AND operator"
@@ -1592,7 +1614,9 @@ msgstr "No se puede abrir el controlador OGR DBMI"
 msgid ""
 "All FID tests failed. Neither 'FID' nor 'ogc_fid' nor 'ogr_fid' nor 'gid' "
 "available in OGR DB table"
-msgstr "Todas las pruebas de FID fallaron. Ni 'FID' ni 'ogc_fid' ni 'ogr_fid' ni 'gid' están disponibles en la tabla de la base de datos OGR."
+msgstr ""
+"Todas las pruebas de FID fallaron. Ni 'FID' ni 'ogc_fid' ni 'ogr_fid' ni "
+"'gid' están disponibles en la tabla de la base de datos OGR."
 
 #: ../lib/vector/Vlib/field.c:557
 #, c-format
@@ -1752,17 +1776,43 @@ msgstr "No se puede reescribir la línea %d"
 #: ../lib/vector/Vlib/write.c:201
 #, c-format
 msgid "Unable to delete line %d, vector map <%s> is not opened on topo level 2"
-msgstr "No se puede borrar la línea %d, el mapa vectorial <%s> no está abierto en el nivel topológico 2"
+msgstr ""
+"No se puede borrar la línea %d, el mapa vectorial <%s> no está abierto en el "
+"nivel topológico 2"
 
 #: ../lib/vector/Vlib/write.c:206
 #, c-format
 msgid "Unable to delete line %d, vector map <%s> is not opened in 'write' mode"
-msgstr "No se puede borrar la línea %d, el mapa vectorial <%s> no está abierto en modo 'escritura'"
+msgstr ""
+"No se puede borrar la línea %d, el mapa vectorial <%s> no está abierto en "
+"modo 'escritura'"
 
 #: ../lib/vector/Vlib/write.c:219
 #, c-format
 msgid "Unable to delete line %d from vector map <%s>"
 msgstr "No se puede borrar la línea %d del mapa vectorial <%s>"
+
+#: ../lib/vector/vedit/select.c:196
+#, fuzzy
+msgid "Unknown query tool"
+msgstr "Operador desconocido"
+
+#
+#: ../lib/vector/vedit/break.c:245
+#, c-format
+msgid "Unable to connect lines %d,%d"
+msgstr "No se pueden conectar las líneas %d,%d"
+
+#
+#: ../lib/vector/vedit/cats.c:65
+#, fuzzy, c-format
+msgid "Unable to set category %d for line %d"
+msgstr "No se puede leer la línea %d"
+
+#: ../lib/vector/vedit/cats.c:74
+#, fuzzy, c-format
+msgid "Unable to delete layer/category %d/%d line %d"
+msgstr "No se puede borrar el mapa vectorial <%s>"
 
 #: ../lib/vask/V_support.c:58
 #, c-format
@@ -2140,7 +2190,7 @@ msgstr "Presiona ENTER para continuar -->"
 #: ../lib/gis/list.c:184
 #, c-format
 msgid "%s files available in mapset <%s>:\n"
-msgstr "%s archivos disponibles en el directorio de mapas <%s>:\n"
+msgstr "Archivos %s disponibles en el directorio de mapas <%s>:\n"
 
 #: ../lib/gis/list.c:258
 msgid "G_list: Unknown element type"
@@ -2307,59 +2357,59 @@ msgstr "Regla errónea (%s): %s"
 msgid "Too many arguments"
 msgstr "Demasiados argumentos"
 
-#: ../lib/gis/spawn.c:132 ../lib/gis/spawn.c:385
+#: ../lib/gis/spawn.c:132 ../lib/gis/spawn.c:408
 msgid "Unable to create a new process"
 msgstr "No se puede crear un nuevo proceso"
 
-#: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:410
+#: ../lib/gis/spawn.c:142 ../lib/gis/spawn.c:232 ../lib/gis/spawn.c:433
 msgid "Unable to execute command"
 msgstr "No se puede ejecutar el comando"
 
-#: ../lib/gis/spawn.c:237 ../lib/gis/spawn.c:245
+#: ../lib/gis/spawn.c:260 ../lib/gis/spawn.c:268
 #, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: no es posible restablecer la señal  %d"
 
-#: ../lib/gis/spawn.c:278
+#: ../lib/gis/spawn.c:301
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: no es posible restablecer la señal %d"
 
-#: ../lib/gis/spawn.c:288
+#: ../lib/gis/spawn.c:311
 #, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: no es posible ignorar la señal %d"
 
-#: ../lib/gis/spawn.c:299
+#: ../lib/gis/spawn.c:322
 #, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: no es posible bloquear la señal %d"
 
-#: ../lib/gis/spawn.c:308
+#: ../lib/gis/spawn.c:331
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: no es posible desbloquear la señal %d"
 
-#: ../lib/gis/spawn.c:334
+#: ../lib/gis/spawn.c:357
 #, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: no es posible abrir el archivo %s"
 
-#: ../lib/gis/spawn.c:340 ../lib/gis/spawn.c:350
+#: ../lib/gis/spawn.c:363 ../lib/gis/spawn.c:373
 #, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: no es posible duplicar el descriptor %d a %d"
 
-#: ../lib/gis/spawn.c:402
+#: ../lib/gis/spawn.c:425
 #, c-format
 msgid "Unable to change directory to %s"
 msgstr "No se puede cambiar el directorio a %s"
 
-#: ../lib/gis/mapset.c:41
+#: ../lib/gis/mapset.c:39
 msgid "MAPSET is not set"
 msgstr "directorio de mapas no está inicializado"
 
-#: ../lib/gis/mapset.c:60 ../lib/gis/gisinit.c:58
+#: ../lib/gis/mapset.c:58 ../lib/gis/gisinit.c:58
 #, c-format
 msgid "MAPSET %s not found"
 msgstr "directorio de mapas %s no encontrado"
@@ -2478,10 +2528,12 @@ msgstr "directorio de mapas %s - permiso denegado"
 msgid "System not initialized. Programmer forgot to call G_gisinit()."
 msgstr "El sistema no está inicializado. El programador olvidó llamar a G_gisinit()."
 
-#: ../lib/gis/get_row.c:47 ../lib/gis/get_row.c:939
+#: ../lib/gis/get_row.c:47 ../lib/gis/get_row.c:937
 #, c-format
 msgid "Reading raster map <%s@%s> request for row %d is outside region"
-msgstr "La solicitud de lectura del mapa ráster <%s@%s> para la fila %d está fuera de la región"
+msgstr ""
+"La solicitud de lectura del mapa ráster <%s@%s> para la fila %d está fuera "
+"de la región"
 
 #: ../lib/gis/get_row.c:315
 #, c-format
@@ -2503,12 +2555,12 @@ msgstr "Error al leer el mapa comprimido <%s@%s>, fila %d"
 msgid "Error reading map <%s@%s>, row %d"
 msgstr "Error al leer el mapa <%s@%s>, fila %d"
 
-#: ../lib/gis/get_row.c:919 ../lib/gis/get_row.c:925
+#: ../lib/gis/get_row.c:917 ../lib/gis/get_row.c:923
 #, c-format
 msgid "Error reading null row %d"
 msgstr "Error al leer la fila nula %d"
 
-#: ../lib/gis/get_row.c:1006
+#: ../lib/gis/get_row.c:1004
 msgid "Unable to realloc buffer"
 msgstr "No se puede reasignar la memoria intermedia"
 
@@ -2674,11 +2726,11 @@ msgstr "No se puede crear el encabezado para el archivo [%s]"
 msgid "unable to determine user's home directory"
 msgstr "no es posible determinar el directorio home del usuario"
 
-#: ../lib/gis/error.c:315
+#: ../lib/gis/error.c:308
 msgid "WARNING: "
 msgstr "ATENCIÓN: "
 
-#: ../lib/gis/error.c:316
+#: ../lib/gis/error.c:309
 msgid "ERROR: "
 msgstr "ERROR: "
 
@@ -2712,7 +2764,9 @@ msgstr "No se puede abrir el archivo de cabecera del mapa ráster <%s@%s>"
 #: ../lib/gis/get_cellhd.c:107
 #, c-format
 msgid " It is a reclass of raster map <%s@%s> whose header file is invalid."
-msgstr " Esta es una reclasificación del mapa ráster <%s@ %s> cuyo archivo de cabecera es inválido."
+msgstr ""
+" Esta es una reclasificación del mapa ráster <%s@ %s> cuyo archivo de "
+"cabecera es inválido."
 
 #: ../lib/gis/get_cellhd.c:111
 #, c-format
@@ -3009,7 +3063,7 @@ msgstr ""
 "\n"
 "Opciones:\n"
 
-#: ../lib/gis/parser.c:1166 ../lib/gis/parser.c:1654 ../lib/gis/parser.c:1940
+#: ../lib/gis/parser.c:1166 ../lib/gis/parser.c:1654 ../lib/gis/parser.c:1941
 msgid "Allow output files to overwrite existing files"
 msgstr "Permitir a los archivos de salida sobrescribir los archivos existentes"
 
@@ -3063,48 +3117,48 @@ msgstr "Opciones"
 msgid "Default"
 msgstr "Por defecto"
 
-#: ../lib/gis/parser.c:1942
+#: ../lib/gis/parser.c:1943
 msgid "Allow overwrite"
 msgstr "Permitir sobrescribir"
 
-#: ../lib/gis/parser.c:1950
+#: ../lib/gis/parser.c:1951
 msgid "Run with minimal output messages"
 msgstr "Ejecutar con el mínimo de mensajes de salida"
 
-#: ../lib/gis/parser.c:1952
+#: ../lib/gis/parser.c:1953
 msgid "Run quietly"
 msgstr "Ejecutar en modo silencioso"
 
-#: ../lib/gis/parser.c:1985
+#: ../lib/gis/parser.c:1986
 #, fuzzy
-msgid "Unable to spawn wish"
+msgid "Unable to spawn the 'wish' program"
 msgstr "No se puede abrir %s"
 
-#: ../lib/gis/parser.c:2004
+#: ../lib/gis/parser.c:2005
 msgid "Unable to determine program name"
 msgstr "No se puede determinar el nombre del programa"
 
-#: ../lib/gis/parser.c:2059
+#: ../lib/gis/parser.c:2060
 #, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   opciones: "
 
-#: ../lib/gis/parser.c:2108 ../lib/gis/parser.c:2125
+#: ../lib/gis/parser.c:2109 ../lib/gis/parser.c:2126
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
 msgstr "Lo sentimos, <%c> no es una opción válida\n"
 
-#: ../lib/gis/parser.c:2180
+#: ../lib/gis/parser.c:2181
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
 msgstr "Lo sentimos, <%s=> es ambiguo\n"
 
-#: ../lib/gis/parser.c:2187
+#: ../lib/gis/parser.c:2188
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
 msgstr "Lo sentimos, <%s> no es un parámetro válido\n"
 
-#: ../lib/gis/parser.c:2272
+#: ../lib/gis/parser.c:2273
 #, c-format
 msgid ""
 "\n"
@@ -3113,12 +3167,12 @@ msgstr ""
 "\n"
 "ERROR: sintaxis del rango no admitida para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2274
+#: ../lib/gis/parser.c:2275
 #, c-format
 msgid "       Presented as: %s\n"
 msgstr "       Presentado como: %s\n"
 
-#: ../lib/gis/parser.c:2277
+#: ../lib/gis/parser.c:2278
 #, c-format
 msgid ""
 "\n"
@@ -3127,12 +3181,12 @@ msgstr ""
 "\n"
 "ERROR: valor <%s> fuera del rango para el parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2279
+#: ../lib/gis/parser.c:2280
 #, c-format
 msgid "       Legal range: %s\n"
 msgstr "       Intervalo legal: %s\n"
 
-#: ../lib/gis/parser.c:2282
+#: ../lib/gis/parser.c:2283
 #, c-format
 msgid ""
 "\n"
@@ -3141,7 +3195,7 @@ msgstr ""
 "\n"
 "ERROR: falta el valor del parámetro <%s>\n"
 
-#: ../lib/gis/parser.c:2442
+#: ../lib/gis/parser.c:2443
 #, c-format
 msgid ""
 "\n"
@@ -3152,7 +3206,7 @@ msgstr ""
 "ERROR: el parámetro requerido  <%s> no se ha establecido:\n"
 "    (%s).\n"
 
-#: ../lib/gis/parser.c:2545
+#: ../lib/gis/parser.c:2546
 #, c-format
 msgid ""
 "\n"
@@ -3161,17 +3215,17 @@ msgstr ""
 "\n"
 "ERROR: la opción <%s> debe proporcionarse en múltiplos de %d\n"
 
-#: ../lib/gis/parser.c:2547
+#: ../lib/gis/parser.c:2548
 #, c-format
 msgid "       You provided %d items:\n"
 msgstr "       Proporcionó %d elementos:\n"
 
-#: ../lib/gis/parser.c:2602
+#: ../lib/gis/parser.c:2603
 #, c-format
 msgid "ERROR: option <%s>: <%s> exists.\n"
 msgstr "ERROR: la opción <%s>: <%s> existe.\n"
 
-#: ../lib/gis/parser.c:2649
+#: ../lib/gis/parser.c:2650
 #, c-format
 msgid ""
 "\n"
@@ -3180,7 +3234,7 @@ msgstr ""
 "\n"
 "OPCIÓN: ¿Definir la siguiente opción?\n"
 
-#: ../lib/gis/parser.c:2663
+#: ../lib/gis/parser.c:2664
 #, c-format
 msgid ""
 "\n"
@@ -3189,51 +3243,51 @@ msgstr ""
 "\n"
 "OPCIÓN:   %s\n"
 
-#: ../lib/gis/parser.c:2664
+#: ../lib/gis/parser.c:2665
 #, c-format
 msgid "     key: %s\n"
 msgstr "     clave: %s\n"
 
-#: ../lib/gis/parser.c:2666
+#: ../lib/gis/parser.c:2667
 #, c-format
 msgid "  format: %s\n"
 msgstr "  formato: %s\n"
 
-#: ../lib/gis/parser.c:2668
+#: ../lib/gis/parser.c:2669
 #, c-format
 msgid " default: %s\n"
 msgstr " por defecto: %s\n"
 
-#: ../lib/gis/parser.c:2669
+#: ../lib/gis/parser.c:2670
 #, c-format
 msgid "required: %s\n"
 msgstr "se requiere: %s\n"
 
-#: ../lib/gis/parser.c:2671
+#: ../lib/gis/parser.c:2672
 #, c-format
 msgid "multiple: %s\n"
 msgstr "múltiple: %s\n"
 
-#: ../lib/gis/parser.c:2673
+#: ../lib/gis/parser.c:2674
 #, c-format
 msgid " options: %s\n"
 msgstr " opciones: %s\n"
 
-#: ../lib/gis/parser.c:2688
+#: ../lib/gis/parser.c:2689
 #, c-format
 msgid "enter option > "
 msgstr "introduce una opción > "
 
-#: ../lib/gis/parser.c:2702 ../lib/gis/parser.c:2713
+#: ../lib/gis/parser.c:2703 ../lib/gis/parser.c:2714
 msgid "   Try again? "
 msgstr "   ¿Intentar de nuevo? "
 
-#: ../lib/gis/parser.c:2711
+#: ../lib/gis/parser.c:2712
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
 msgstr "Lo siento, %s no se acepta.\n"
 
-#: ../lib/gis/parser.c:2722
+#: ../lib/gis/parser.c:2723
 #, c-format
 msgid ""
 "\n"
@@ -3244,11 +3298,11 @@ msgstr ""
 "Usted ha seleccionado:\n"
 "  %s\n"
 
-#: ../lib/gis/parser.c:2723
+#: ../lib/gis/parser.c:2724
 msgid "Is this correct? "
 msgstr "¿Es correcto? "
 
-#: ../lib/gis/parser.c:2792
+#: ../lib/gis/parser.c:2793
 msgid "to accept the default"
 msgstr "para aceptar los valores por defecto"
 
