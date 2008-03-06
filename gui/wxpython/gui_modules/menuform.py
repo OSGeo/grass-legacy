@@ -917,6 +917,9 @@ class cmdPanel(wx.Panel):
             chk.Bind(wx.EVT_CHECKBOX, self.OnSetValue)
             if f['name'] in ('verbose', 'quiet'):
                 chk.Bind(wx.EVT_CHECKBOX, self.OnVerbosity)
+                vq = UserSettings.Get(group='cmd', key='verbosity', subkey='selection')
+                if f['name'] == vq:
+                    chk.SetValue(True)
             elif f['name'] == 'overwrite':
                 chk.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
                 
