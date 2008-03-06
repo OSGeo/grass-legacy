@@ -20,7 +20,9 @@ Messages containing "<tt>=</tt>" must use the full <b>message=</b> syntax so
 the parser doesn't get confused.
 <P>
 Messages containing '<tt>!</tt>' and '<tt>$</tt>' must use single 'quotes' to
-avoid unwanted shell translation.
+avoid unwanted shell translation. (Apparently '!' will not be expanded if
+double-quoted in a non-interactive shell (i.e. a script), but it is probably
+worth single-quoting it anyway to avoid contex based confusion later on)
 <P>
 If you want a long message (mutli-line) to be dealt with as a single
 paragraph, use a single call to <em>g.message</em> with text split in the
