@@ -128,11 +128,7 @@ create_VRT_file(){
  #echo $SOUTHCORNER
  #echo $RESOLUTION
 
- echo -n "<VRTDataset rasterXSize=" >> $1
- echo -n "\"$XSIZE\"" >> $1
- echo -n " rasterYSize=" >> $1
- echo "\"$YSIZE\">" >> $1
-
+ echo "<VRTDataset rasterXSize=\"$XSIZE\" rasterYSize=\"$YSIZE\">" >> "$1"
  echo " <SRS>GEOGCS[&quot;wgs84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;wgs84&quot;,6378137,298.257223563],TOWGS84[0.000,0.000,0.000]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;degree&quot;,0.0174532925199433]]</SRS>" >> $1
  echo "   <GeoTransform>$WESTCORNER, $RESOLUTION, 0.0000000000000000e+00, $NORTHCORNER, 0.0000000000000e+00, -$RESOLUTION</GeoTransform>" >> $1
  echo "   <VRTRasterBand dataType=\"Byte\" band=\"1\">" >> $1
