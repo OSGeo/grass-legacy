@@ -75,6 +75,14 @@ class Settings:
             'leftDbClick' : { 'selection' : 0 },
             },
             #
+            # Command
+            #
+            'cmd': {
+            'overwrite' : { 'enabled' : False },
+            'closeDlg' : { 'enabled' : False },
+            'verbosity' : { 'verbose' : 'grassenv' },
+            },
+            #
             # vdigit
             #
             'vdigit' : {
@@ -149,6 +157,9 @@ class Settings:
                                                                      'silk']
         self.internalSettings['advanced']['digitInterface']['choices'] = ['vedit',
                                                                           'vdigit']
+        self.internalSettings['cmd']['verbosity']['choices'] = ['grassenv',
+                                                                'verbose',
+                                                                'quiet']
 
     def GetMapsetPath(self):
         """Store mapset search path"""
@@ -323,7 +334,7 @@ class PreferencesDialog(wx.Dialog):
     """User preferences dialog"""
     def __init__(self, parent, title=_("User settings"),
                  settings=globalSettings,
-                 style=wx.DEFAULT_DIALOG_STYLE):
+                 style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
         self.parent = parent # GMFrame
         self.title = title
         wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title,
@@ -339,6 +350,7 @@ class PreferencesDialog(wx.Dialog):
         # create notebook pages
         self.__CreateGeneralPage(notebook)
         self.__CreateDisplayPage(notebook)
+        self.__CreateCmdPage(notebook)
         self.__CreateAttributeManagerPage(notebook)
         self.__CreateAdvancedPage(notebook)
 
@@ -405,7 +417,7 @@ class PreferencesDialog(wx.Dialog):
                       pos=(row, 1))
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=3)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -471,6 +483,56 @@ class PreferencesDialog(wx.Dialog):
         
         # bindings
         fontButton.Bind(wx.EVT_BUTTON, self.OnSetFont)
+        
+        return panel
+
+    def __CreateCmdPage(self, notebook):
+        """Create notebook page for commad dialog settings"""
+        panel = wx.Panel(parent=notebook, id=wx.ID_ANY)
+        notebook.AddPage(page=panel, text=_("Command"))
+
+        border = wx.BoxSizer(wx.VERTICAL)
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Command dialog settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # command dialog settings
+        #
+        row = 0
+        # overwrite
+        overwrite = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                label=_("Allow output files to overwrite existing files"),
+                                name="IsChecked")
+        overwrite.SetValue(self.settings.Get(group='cmd', key='overwrite', subkey='enabled'))
+        self.winId['cmd:overwrite:enabled'] = overwrite.GetId()
+
+        gridSizer.Add(item=overwrite,
+                      pos=(row, 0), span=(1, 2))
+        row += 1
+        # close
+        close = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                            label=_("Close on finish"),
+                            name="IsChecked")
+        close.SetValue(self.settings.Get(group='cmd', key='closeDlg', subkey='enabled'))
+        self.winId['cmd:closeDlg:enabled'] = close.GetId()
+
+        gridSizer.Add(item=close,
+                      pos=(row, 0), span=(1, 2))
+        row += 1
+        # verbosity
+        verbosity = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
+                              choices=self.settings.Get(group='general', key='verbosity', subkey='choices', internal=True),
+                              name="GetSelection")
+        mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
+        self.winId['general:mapsetPath:selection'] = mapsetPath.GetId()
+
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+
+        panel.SetSizer(border)
         
         return panel
 
