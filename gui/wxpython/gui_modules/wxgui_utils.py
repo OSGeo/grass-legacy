@@ -1129,7 +1129,6 @@ class GMConsole(wx.Panel):
         except:
             cmdlist = command
 
-        # print cmdlist[0], globalvar.grassCmd['all']
         if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
@@ -1166,14 +1165,12 @@ class GMConsole(wx.Panel):
                 # for all non-display commands.
                 tmpreg = os.getenv("GRASS_REGION")
                 os.unsetenv("GRASS_REGION")
-                print cmdlist
                 if len(cmdlist) == 1:
                     # process GRASS command without argument
                     menuform.GUI().ParseCommand(cmdlist, parentframe=self)
                 else:
                     # process GRASS command with argument
                     self.cmdPID = len(self.cmdThreads)+1
-                    print self.cmdPID
                     self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=self.cmdPID)
                     
                     grassCmd = gcmd.Command(cmdlist, wait=False,
@@ -1189,7 +1186,6 @@ class GMConsole(wx.Panel):
         else:
             # Send any other command to the shell. Send output to
             # console output window
-            print cmdlist
             if self.parent.notebook.GetSelection() != 1:
                 # select 'Command output' tab
                 self.parent.notebook.SetSelection(1)
