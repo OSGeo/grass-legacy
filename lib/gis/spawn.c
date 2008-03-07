@@ -210,7 +210,7 @@ static int do_redirects(struct redirect *redirects, int num_redirects)
 		G_fatal_error("G_spawn_ex: redirection not (yet) supported on Windows");
 }
 
-static void do_bindings(char **env, struct binding *bindings, int num_bindings)
+static char** do_bindings(char **env, struct binding *bindings, int num_bindings)
 {
 	if (num_bindings > 0)
 		G_fatal_error("G_spawn_ex: redirection not (yet) supported on Windows");
