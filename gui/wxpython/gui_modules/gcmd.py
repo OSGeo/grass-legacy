@@ -6,7 +6,7 @@
 Classes:
  * GException
  * DigitError
- * Popen
+ * Popen (from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/440554)
  * Command
  * CommandThread
 
@@ -127,10 +127,12 @@ class Popen(subprocess.Popen):
 
     def kill(self):
         """Try to kill running process"""
-        try:
+        if subprocess.mswindows:
+            import win32api
+            handle = win32api.OpenProcess(1, 0, self.pid)
+            return (0 != win32api.TerminateProcess(handle, 0))
+	else:
             os.kill(-self.pid, signal.SIGTERM) # kill whole group
-        except OSError:
-            pass
 
     if subprocess.mswindows:
         def send(self, input):
@@ -212,6 +214,37 @@ class Popen(subprocess.Popen):
             finally:
                 if not conn.closed:
                     fcntl.fcntl(conn, fcntl.F_SETFL, flags)
+
+message = "Other end disconnected!"
+
+def recv_some(p, t=.1, e=1, tr=5, stderr=0):
+    if tr < 1:
+        tr = 1
+    x = time.time()+t
+    y = []
+    r = ''
+    pr = p.recv
+    if stderr:
+        pr = p.recv_err
+    while time.time() < x or r:
+        r = pr()
+        if r is None:
+            if e:
+                raise Exception(message)
+            else:
+                break
+        elif r:
+            y.append(r)
+        else:
+            time.sleep(max((x-time.time())/tr, 0))
+    return ''.join(y)
+    
+def send_all(p, data):
+    while len(data):
+        sent = p.send(data)
+        if sent is None:
+            raise Exception(message)
+        data = buffer(data, sent)
 
 # Define notification event for thread completion
 EVT_RESULT_ID = wx.NewId()
@@ -528,18 +561,22 @@ class CommandThread(Thread):
                     wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(None))
                 return 
             if self.stdout:
-                line = self.__read_all(self.module.stdout)
+                # line = self.__read_all(self.module.stdout)
+                line = recv_some(self.module, e=0, stderr=0)
                 self.stdout.write(line)
             if self.stderr:
-                line = self.__read_all(self.module.stderr)
+                # line = self.__read_all(self.module.stderr)
+                line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
 
         # get the last output
         if self.stdout:
-            line = self.__read_all(self.module.stdout)
+            # line = self.__read_all(self.module.stdout)
+            line = recv_some(self.module, e=0, stderr=0)
             self.stdout.write(line)
         if self.stderr:
-            line = self.__read_all(self.module.stderr)
+            # line = self.__read_all(self.module.stderr)
+            line = recv_some(self.module, e=0, stderr=1)
             self.stderr.write(line)
 
         self.rerr = self.__parseString(line)
