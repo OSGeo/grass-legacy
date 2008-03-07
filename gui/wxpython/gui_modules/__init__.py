@@ -21,4 +21,5 @@ all = [ "dbm",
         "toolbox",
         "track",
         "utils",
+        "workspace",
         "wxgui_utils" ]
