@@ -62,15 +62,25 @@ def __getGRASSCmds(bin=True, scripts=True):
     Create list of all available GRASS commands to use when
     parsing string from the command line
     """
-    gcmdlst = []
     gisbase = os.environ['GISBASE']
+    binlst = []
     if bin is True:
-        gcmdlst = os.listdir(os.path.join(gisbase, 'bin'))
+        binlst = os.listdir(os.path.join(gisbase, 'bin'))
+        if subprocess.mswindows:
+            for idx in range(len(binlst)):
+                binlst[idx] = binlst[idx].replace(EXT_BIN, '')
+                binlst[idx] = binlst[idx].replace(EXT_SCT, '')
+    sctlst = []
     if scripts is True:
-        gcmdlst = gcmdlst + os.listdir(os.path.join(gisbase, 'scripts'))
+        sctlst = sctlst + os.listdir(os.path.join(gisbase, 'scripts'))
+        if subprocess.mswindows:
+            for idx in range(len(binlst)):
+                binlst[idx] = binlst[idx].replace(EXT_BIN, '')
+                binlst[idx] = binlst[idx].replace(EXT_SCT, '')
+
     # self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
 
-    return gcmdlst
+    return binlst + sctlst
 
 """@brief Collected GRASS-relared binaries/scripts"""
 grassCmd = {}
