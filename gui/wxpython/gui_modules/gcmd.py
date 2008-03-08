@@ -132,7 +132,10 @@ class Popen(subprocess.Popen):
             handle = win32api.OpenProcess(1, 0, self.pid)
             return (0 != win32api.TerminateProcess(handle, 0))
 	else:
-            os.kill(-self.pid, signal.SIGTERM) # kill whole group
+            try:
+                os.kill(-self.pid, signal.SIGTERM) # kill whole group
+            except OSError:
+                pass
 
     if subprocess.mswindows:
         def send(self, input):
