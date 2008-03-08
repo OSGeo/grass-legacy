@@ -920,8 +920,10 @@ class cmdPanel(wx.Panel):
                 vq = UserSettings.Get(group='cmd', key='verbosity', subkey='selection')
                 if f['name'] == vq:
                     chk.SetValue(True)
+                    f['value'] = True
             elif f['name'] == 'overwrite':
                 chk.SetValue(UserSettings.Get(group='cmd', key='overwrite', subkey='enabled'))
+                f['value'] = True
                 
         #
         # parameters
