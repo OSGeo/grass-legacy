@@ -231,7 +231,7 @@ fi
 g.message "Imported <$GIS_OPT_TYPE> vector map <$NAME>."
 
 #### clean up the mess
-rm -f "${TMPDIR}/$E00NAME.e*" "${TMPDIR}/$E00NAME.E*"
+rm -f "${TMPDIR}/$E00NAME.e"* "${TMPDIR}/$E00NAME.E"*
 rm -rf "$E00TMP.e00" "$E00SHORTNAME" info "$E00NAME.cat.$E00TMP.e00" 2>&1 > /dev/null
 cd ..
 rmdir "$TMPDIR"
