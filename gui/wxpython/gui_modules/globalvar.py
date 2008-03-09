@@ -17,11 +17,18 @@ COPYRIGHT: (C) 2007 by the GRASS Development Team
 """
 
 import os
+import sys
+import locale
 
 ### recursive import problem 
 # import utils
 # utils.CheckForWx()
-import wx
+try:
+    import wx
+except locale.Error, e:
+    print >> sys.stderr, "Unable to set locale:", e
+    os.environ['LC_ALL'] = ''
+    import wx
 import wx.lib.flatnotebook as FN
 
 try:
