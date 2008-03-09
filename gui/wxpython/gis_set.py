@@ -25,8 +25,10 @@ import sys
 import glob
 import shutil
 
+### i18N
+import gettext
+
 from gui_modules import utils
-from gui_modules import globalvar
 
 utils.CheckForWx()
 import wx
@@ -34,9 +36,13 @@ import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
 
+from gui_modules import globalvar
+
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""
     def __init__(self, parent=None, id=wx.ID_ANY, style=wx.DEFAULT_FRAME_STYLE):
+
+        gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
         #
         # GRASS variables
