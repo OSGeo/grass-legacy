@@ -355,12 +355,16 @@ class PreferencesDialog(wx.Dialog):
         self.__CreateAdvancedPage(notebook)
 
         # buttons
+        btnDefault = wx.Button(self, wx.ID_ANY, _("Set to default"))
         btnSave = wx.Button(self, wx.ID_SAVE)
         btnApply = wx.Button(self, wx.ID_APPLY)
         btnCancel = wx.Button(self, wx.ID_CANCEL)
         btnSave.SetDefault()
 
         # bindigs
+        btnDefault.Bind(wx.EVT_BUTTON, self.OnDefault)
+        btnDefault.SetToolTipString(_("Revert settings to default "
+                                      "(to apply changes press button 'Apply')"))
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
         btnApply.SetToolTipString(_("Apply changes for this session"))
         btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
@@ -370,19 +374,27 @@ class PreferencesDialog(wx.Dialog):
         btnCancel.SetToolTipString(_("Close window and ignore changes"))
 
         # sizers
-        btnSizer = wx.StdDialogButtonSizer()
-        btnSizer.AddButton(btnCancel)
-        btnSizer.AddButton(btnSave)
-        btnSizer.AddButton(btnApply)
-        btnSizer.Realize()
+        btnSizer = wx.BoxSizer(wx.HORIZONTAL)
+        btnSizer.Add(item=btnDefault, proportion=1,
+                     flag=wx.ALL, border=5)
+        btnStdSizer = wx.StdDialogButtonSizer()
+        btnStdSizer.AddButton(btnCancel)
+        btnStdSizer.AddButton(btnSave)
+        btnStdSizer.AddButton(btnApply)
+        btnStdSizer.Realize()
         
         mainSizer = wx.BoxSizer(wx.VERTICAL)
         mainSizer.Add(item=notebook, proportion=1, flag=wx.EXPAND | wx.ALL, border=5)
         mainSizer.Add(item=btnSizer, proportion=0,
-                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+                      flag=wx.EXPAND, border=0)
+        mainSizer.Add(item=btnStdSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_RIGHT, border=5)
 
         self.SetSizer(mainSizer)
         mainSizer.Fit(self)
+
+        self.SetMinSize(self.GetBestSize())
+        self.SetSize((500, 375))
 
     def __CreateGeneralPage(self, notebook):
         """Create notebook page concerning with symbology settings"""
@@ -406,7 +418,8 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
         mapsetPath = wx.Choice(parent=panel, id=wx.ID_ANY, size=(200, -1),
-                                    choices=self.settings.Get(group='general', key='mapsetPath', subkey='choices', internal=True),
+                                    choices=self.settings.Get(group='general', key='mapsetPath',
+                                                              subkey='choices', internal=True),
                                     name="GetSelection")
         mapsetPath.SetSelection(self.settings.Get(group='general', key='mapsetPath', subkey='selection'))
         self.winId['general:mapsetPath:selection'] = mapsetPath.GetId()
@@ -538,7 +551,7 @@ class PreferencesDialog(wx.Dialog):
                       pos=(row, 1))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -644,7 +657,8 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
         settingsFile = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                 choices=self.settings.Get(group='advanced', key='settingsFile', subkey='choices', internal=True),
+                                 choices=self.settings.Get(group='advanced', key='settingsFile',
+                                                           subkey='choices', internal=True),
                                  name='GetStringSelection')
         settingsFile.SetStringSelection(self.settings.Get(group='advanced', key='settingsFile', subkey='type'))
         self.winId['advanced:settingsFile:type'] = settingsFile.GetId()
@@ -664,7 +678,8 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
         iconTheme = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                              choices=self.settings.Get(group='advanced', key='iconTheme', subkey='choices', internal=True),
+                              choices=self.settings.Get(group='advanced', key='iconTheme',
+                                                        subkey='choices', internal=True),
                               name="GetStringSelection")
         iconTheme.SetStringSelection(self.settings.Get(group='advanced', key='iconTheme', subkey='type'))
         self.winId['advanced:iconTheme:type'] = iconTheme.GetId()
@@ -694,9 +709,11 @@ class PreferencesDialog(wx.Dialog):
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 0))
         digitInterface = wx.Choice(parent=panel, id=wx.ID_ANY, size=(125, -1),
-                                   choices=self.settings.Get(group='advanced', key='digitInterface', subkey='choices', internal=True),
+                                   choices=self.settings.Get(group='advanced', key='digitInterface',
+                                                             subkey='choices', internal=True),
                                    name="GetStringSelection")
-        digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface', subkey='type'))
+        digitInterface.SetStringSelection(self.settings.Get(group='advanced', key='digitInterface',
+                                                            subkey='type'))
         self.winId['advanced:digitInterface:type'] = digitInterface.GetId()
 
         gridSizer.Add(item=digitInterface,
@@ -753,20 +770,39 @@ class PreferencesDialog(wx.Dialog):
         event.Skip()
 
     def OnSave(self, event):
-        """Button 'Save' clicked"""
+        """Button 'Save' pressed"""
         self.__UpdateSettings()
         file = self.settings.SaveToFile()
-        self.parent.goutput.cmd_stdout.write('Settings saved to file <%s>.' % file)
+        self.parent.goutput.cmd_stdout.write(_('Settings saved to file <%s>.') % file)
         self.Close()
 
     def OnApply(self, event):
-        """Button 'Apply' clicked"""
+        """Button 'Apply' pressed"""
         self.__UpdateSettings()
         self.Close()
 
     def OnCancel(self, event):
-        """Button 'Cancel' clicked"""
+        """Button 'Cancel' pressed"""
         self.Close()
+
+    def OnDefault(self, event):
+        """Button 'Set to default' pressed"""
+        self.settings.userSettings = copy.deepcopy(self.settings.defaultSettings)
+        
+        # update widgets
+        for gks in self.winId.keys():
+            group, key, subkey = gks.split(':')
+            value = self.settings.Get(group, key, subkey)
+            win = self.FindWindowById(self.winId[gks])
+            if win.GetName() in ('GetValue', 'IsChecked'):
+                value = win.SetValue(value)
+            elif win.GetName() == 'GetSelection':
+                value = win.SetSelection(value)
+            elif win.GetName() == 'GetStringSelection':
+                value = win.SetStringSelection(value)
+            else:
+                value = win.SetValue(value)
+
 
     def __UpdateSettings(self):
         """Update user settings"""
