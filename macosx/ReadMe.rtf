@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf949
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf270
 {\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
 {\colortbl;\red255\green255\blue255;}
 \margl1440\margr1440\vieww8720\viewh11500\viewkind0
@@ -290,7 +290,7 @@ If you want ffmpeg support (see build instructions below), add this:\
 \cf0 \ulnone \
 \'95 Linker Problem\
 \
-The linker in Leopard's GCC has a bit of a problem with some libraries, notably X11's libGL.  When trying to link libGL (for example), it spits back an error:\
+The linker in Leopard's GCC from Xcode 3.0 has a bit of a problem with some libraries, notably X11's libGL.  When trying to link libGL (for example), it spits back an error:\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
@@ -298,35 +298,7 @@ The linker in Leopard's GCC has a bit of a problem with some libraries, notably 
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
-The standard workaround for this is to link using the 
-\f1\fs20 -dylib_file
-\f0\fs24  flag, which tells the linker where the library 
-\i really
-\i0  is:\
-\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f1\fs20 \cf0 -dylib_file /usr/X11/lib/libGL.dylib:/usr/X11/lib/libGL.dylib\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f0\fs24 \cf0 \
-Notice that both paths are the same, this is just how the workaround operates.  This causes some undefined symbol errors, so 
-\f1\fs20 -undefined dynamic_lookup
-\f0\fs24  is also needed.\
-\
-To get libGL to work in GRASS, before configuring, edit 
-\f1\fs20 include/Make/Platform.make.in
-\f0\fs24  and change the 
-\f1\fs20 OPENGLLIB=
-\f0\fs24  line to:\
-\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f1\fs20 \cf0 OPENGLLIB = -dylib_file /usr/X11/lib/libGL.dylib:/usr/X11/lib/libGL.dylib -undefined dynamic_lookup\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f0\fs24 \cf0 \
-It may be necessary to change this in configure, or configure will fail to locate libGL.  I don't want to go into a lot of detail, but replace all "-lGL" with the above dylib_file string.\
+Xcode 3.1 does not have this problem.  In other words, make sure to install the latest Xcode (currently the iPhone SDK beta = Xcode 3.1 beta).\
 \
 \'95 64bits\
 \
@@ -334,9 +306,9 @@ Almost all of GRASS can be built 64bits. Use the above universal flags section a
 \f1\fs20 ppc64
 \f0\fs24 " for PPC processors (I believe all are inherently 64bits), and "
 \f1\fs20 x86_64
-\f0\fs24 " for Intel processors (ie Core 2 Duo, but not Core Duo).  You don't need to build universal, but can have only one arch flag if desired. The SDK option is not needed.\
+\f0\fs24 " for Intel processors (ie Core 2 Duo, but not Core Duo).  You don't need to build universal, but can have only one arch flag if desired. The SDK flag is not needed.\
 \
-Tcl/Tk 8.4 can be built 64bits on OSX with a little help (8.5 easily can, but there are other runtime problems).\
+The wxPython parts(ie vdigit) cannot be built 64bits.  This is due to Carbon not being 64bit, which wx depends on.  Because gui/wxpython shares CXXFLAGS with the rest of GRASS, vdigit will fail unless the makefile it patched.\
 \
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 \cf0 \ul Building an Installer Package\
@@ -516,8 +488,7 @@ To configure Tcl for quad-arch universal + 32bit + 64bit:\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f1\fs20 \cf0 $ export MACOSX_DEPLOYMENT_TARGET=10.5\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 $ CFLAGS="-arch ppc -arch i386 -arch ppc64 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure --prefix=/usr/local/tcltk --enable-threads\
+$ CFLAGS="-arch ppc -arch i386 -arch ppc64 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5" ./configure --prefix=/usr/local/tcltk --enable-threads\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
 
 \f0\fs24 \cf0 \
@@ -530,10 +501,9 @@ To configure Tk for quad-arch universal + 32bit + 64bit:\
 
 \f0\fs24 \cf0 \
 This will only run on Leopard.\
+\
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-\cf0 \ul \ulc0 Panther\ulnone \
+\cf0 \ul Panther\ulnone \
 \
 To configure on Panther, use these simplified configure commands in place of the above, and skip the MACOSX_DEPLOYMENT_TARGET setting:\
 \
