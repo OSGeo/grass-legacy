@@ -211,7 +211,7 @@ class grassTask:
             if p['name'] == aParam or \
                     p['name'][:lparam] == aParam:
                 return p
-        raise ValueError, _("Parameter not found : %s") % aParam
+        raise ValueError, _("Parameter not found: %s") % aParam
 
     def set_param(self, aParam, aValue):
         """
@@ -227,7 +227,7 @@ class grassTask:
         for f in self.flags:
             if f['name'] == aFlag:
                 return f
-        raise ValueError, _("Flag not found : %s") % aFlag
+        raise ValueError, _("Flag not found: %s") % aFlag
 
     def set_flag(self, aFlag, aValue):
         """
@@ -801,9 +801,9 @@ class mainFrame(wx.Frame):
     def OnAbout(self, event):
         """General 'about' information"""
         dlg = wx.MessageDialog(self, _("This is a sample program for\n"
-            "GRASS command interface parsing\n"
-            "and automatic GUI building. \n%s") %(__version__),
-            _("About GrassGUI"), wx.OK | wx.ICON_INFORMATION)
+                                       "GRASS command interface parsing\n"
+                                       "and automatic GUI building.\n%s") %(__version__),
+                               _("About wxPython GRASS GUI"), wx.OK | wx.ICON_INFORMATION)
         dlg.ShowModal()
         dlg.Destroy()
 
@@ -1033,9 +1033,10 @@ class cmdPanel(wx.Panel):
                 which_sizer.Add(item=txt, proportion=0,
                                 flag=wx.RIGHT | wx.LEFT | wx.TOP | wx.EXPAND, border=5)
 
-                if p.get('type','string') == 'string':
+                if p.get('multiple','yes') == 'yes' or \
+                        p.get('type','string') == 'string':
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                                   size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     minValue = -1e9
@@ -1290,7 +1291,7 @@ def getInterfaceDescription( cmd ):
     """
     cmdout = os.popen(cmd + r' --interface-description', "r").read()
     if not len(cmdout) > 0 :
-        raise IOError, _("Couldn't fetch interface description for command <%s>.") % cmd
+        raise IOError, _("Unable to fetch interface description for command '%s'.") % cmd
     p = re.compile( '(grass-interface.dtd)')
     p.search( cmdout )
     cmdout = p.sub(globalvar.ETCDIR + r'/grass-interface.dtd', cmdout)
