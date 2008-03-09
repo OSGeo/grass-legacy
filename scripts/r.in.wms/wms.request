@@ -211,7 +211,8 @@ GetTiles() {
   FOLDERPLUS="${GIS_OPT_FOLDER}/${GIS_OPT_PREFIX}_${GIS_OPT_REGION}"
 
   if [ $GIS_FLAG_C -eq 1 ] ; then
-    rm -f "${FOLDERPLUS}*"
+    g.message -v message="Removing files <${FOLDERPLUS}*>"
+    rm -f "$FOLDERPLUS"*
   fi
 
   if [ -x "`which wget`" ] ; then
