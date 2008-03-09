@@ -107,8 +107,8 @@ class MapLayer(object):
                       'overlay']
 
         if self.type not in layertypes:
-            raise gcmd.GException(_("Type <%(type)s> of layer <%(name)s> is not supported yet") % \
-                                      {'type' : self.type, 'name' : self.name})
+            raise gcmd.GStdError(_("<%(name)s>: layer type <%(type)s> is not supported yet.") % \
+                                     {'type' : self.type, 'name' : self.name})
         
         #
         # start monitor
@@ -244,8 +244,7 @@ class Map(object):
         """
 
         if not os.getenv("GISBASE"):
-            print >> sys.stderr, _("GISBASE not set, you must be "
-                                   "in GRASS GIS to run this program")
+            print >> sys.stderr, _("GISBASE not set. You must be in GRASS GIS to run this program.")
             sys.exit(1)
 
         gisenvCmd = gcmd.Command(["g.gisenv"])
@@ -722,8 +721,7 @@ class Map(object):
         Debug.msg (3, "Map.AddLayer(): layer=%s" % layer.name)
         if l_render:
             if not layer.Render():
-                print >> sys.stderr, _("Could not render layer <%s>\n") % \
-                                      (name)
+                raise gcmd.GStdError(_("Unable to render map layer <%s>.") % (name))
 
         return self.layers[-1]
 
@@ -786,7 +784,7 @@ class Map(object):
             self.layers[oldlayerindex] = newlayer
 
         if l_render and not layer.Render():
-            raise gcmd.GException(_("Unable render layer <%s>") % 
+            raise gcmd.GException(_("Unable to render map layer <%s>.") % 
                                   (name))
 
         return self.layers[-1]
@@ -895,7 +893,7 @@ class Map(object):
         self.overlays.append(overlay)
 
         if l_render and command != '' and not overlay.Render():
-            raise gcmd.GException(_("Unable render overlay <%s>") % 
+            raise gcmd.GException(_("Unable render overlay <%s>.") % 
                                   (name))
 
         self.ovlookup[ovltype] = overlay
@@ -929,7 +927,7 @@ class Map(object):
             self.ovlookup[ovltype] = newoverlay
 
         if l_render and command != '' and not overlay.Render():
-            raise gcmd.GException(_("Unable render overlay <%s>") % 
+            raise gcmd.GException(_("Unable render overlay <%s>.") % 
                                   (name))
 
         return self.overlays[-1]

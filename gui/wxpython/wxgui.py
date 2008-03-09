@@ -658,7 +658,7 @@ class GMFrame(wx.Frame):
         if os.path.exists(filename):
             dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
                                                    "Do you want to overwrite this file?") % filename,
-                                   caption=_("File exits"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
+                                   caption=_("Warning"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
             if dlg.ShowModal() != wx.ID_OK:
                 dlg.Destroy()
                 return False
@@ -676,7 +676,7 @@ class GMFrame(wx.Frame):
             dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
                                                    "Do you want to overwrite this file?") % \
                                        self.workspaceFile,
-                                   caption=_("File exits"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
+                                   caption=_("Warning"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
             if dlg.ShowModal() != wx.ID_OK:
                 dlg.Destroy()
             else:
@@ -972,7 +972,7 @@ class GMFrame(wx.Frame):
         if not maptype or maptype != 'vector':
             dlg = wx.MessageDialog(parent=self,
                                    message=_("Attribute management is available only "
-                                             "for vector map layers"),
+                                             "for vector maps."),
                                    caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -996,8 +996,8 @@ class GMFrame(wx.Frame):
         pointdata = (icon, size)
 
         self.dbmanager = dbm.AttributeManager(parent=self, id=wx.ID_ANY,
-                                              title=_("GRASS GIS Attribute Table Manager - "
-                                                      "vector map layer <%s>") % mapname,
+                                              title="%s - <%s>" % (_("GRASS GIS Attribute Table Manager"),
+                                                                   mapname),
                                               size=wx.Size(500,300), vectmap=mapname,
                                               pointdata=pointdata)
         self.dbmanager.Show()
@@ -1223,10 +1223,11 @@ class GMFrame(wx.Frame):
 
         layerName = str(self.curr_page.maptree.GetItemText(self.curr_page.maptree.layer_selected))
         if layerName:
-            message = _("Do you want to remove map layer <" + layerName + "> "
-                        "from layer tree?")
+            message = _("Do you want to remove map layer <%s> "
+                        "from layer tree?") % layerName
         else:
-            message = _("Do you want to remove selected layer from layer tree?")
+            message = _("Do you want to remove selected map layer "
+                        "from layer tree?")
 
         dlg = wx.MessageDialog (parent=self, message=message,
                                 caption=_("Remove map layer"),
@@ -1296,7 +1297,7 @@ class GMApp(wx.App):
 def reexec_with_pythonw():
   if sys.platform == 'darwin' and \
     not sys.executable.endswith('MacOS/Python'):
-    print >> sys.stderr, _('re-executing using pythonw')
+    print >> sys.stderr, 're-executing using pythonw'
     os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
 
 class Usage(Exception):

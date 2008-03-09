@@ -918,7 +918,7 @@ class BufferedWindow(wx.Window):
                 map = digitToolbar.layers[digitToolbar.layerSelectedID].name
             except:
                 map = None
-                dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                dlg = wx.MessageDialog(self, _("No vector map selected for editing."),
                                        _("Error"), wx.OK | wx.ICON_ERROR)
                 dlg.ShowModal()
                 dlg.Destroy()
@@ -1502,7 +1502,7 @@ class BufferedWindow(wx.Window):
                     map = digitToolbar.layers[digitToolbar.layerSelectedID].name
                 except:
                     map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"),
+                    dlg = wx.MessageDialog(self, _("No vector map selected for editing."),
                                            _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
@@ -2077,7 +2077,8 @@ class BufferedWindow(wx.Window):
         if windpath and not os.path.exists(windpath):
             self.SaveRegion(wind)
         elif windpath and os.path.exists(windpath):
-            overwrite = wx.MessageBox(_("Region file <%s>already exists.\nDo you want to overwrite it?") % (wind),
+            overwrite = wx.MessageBox(_("Region file <%s> already exists. "
+                                        "Do you want to overwrite it?") % (wind),
                                       _("Warning"), wx.YES_NO)
             if (overwrite == wx.YES):
                 self.SaveRegion(wind)
@@ -2795,9 +2796,8 @@ class MapFrame(wx.Frame):
 
         if not self.tree.GetSelections():
             dlg = wx.MessageDialog(parent=self,
-                                   message=_('You must select a map layer in the '
-                                             'Layer Manager to query'),
-                                   caption=_('Nothing to query'),
+                                   message=_('No map layer selected for querying.'),
+                                   caption=_('Message'),
                                    style=wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -3069,7 +3069,7 @@ class MapFrame(wx.Frame):
                         ovltype=ovltype,
                         cmd='d.barscale',
                         drawid=id,
-                        checktxt = _("Show/hide scale and arrow"),
+                        checktxt = _("Show/hide scale and North arrow"),
                         ctrltxt = _("scale object"),
                         params = params)
 
@@ -3303,8 +3303,8 @@ class DecDialog(wx.Dialog):
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Drag %s with mouse in pointer mode\nto position. "
-                                      "Double-click to change options" % ctrltxt))
+                              label=_("Drag %s with mouse in pointer mode to position. "
+                                      "Double-click to change options." % ctrltxt))
         box.Add(item=label, proportion=0,
                 flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
         sizer.Add(item=box, proportion=0,
