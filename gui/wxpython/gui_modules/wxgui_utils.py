@@ -308,8 +308,8 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
         if not mapLayer.name:
-            dlg = wx.MessageDialog(self, _("Unable to display histogram for "
-                                           "raster map layer"),
+            dlg = wx.MessageDialog(self, _("Unable to display histogram of "
+                                           "raster map."),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -1149,7 +1149,7 @@ class GMConsole(wx.Panel):
                                  'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[cmdlist[0]]
                 except KeyError:
-                    wx.MessageBox(message=_("Command '%s' not yet implemented") % cmdlist[0])
+                    wx.MessageBox(message=_("Command '%s' not yet implemented.") % cmdlist[0])
                     return False
 
                 # add layer into layer tree
@@ -1219,7 +1219,7 @@ class GMConsole(wx.Panel):
 
         wildcard = "Text file (*.txt)|*.txt"
         dlg = wx.FileDialog(
-            self, message=_("Save file as ..."), defaultDir=os.getcwd(),
+            self, message=_("Save file as..."), defaultDir=os.getcwd(),
             defaultFile="grass_cmd_history.txt", wildcard=wildcard,
             style=wx.SAVE|wx.FD_OVERWRITE_PROMPT)
 
@@ -1500,7 +1500,7 @@ class LoadMapLayersDialog(wx.Dialog):
         bodySizer.AddGrowableRow(2)
         
         # layer type
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Layer type:")),
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Map layer type:")),
                       flag=wx.ALIGN_CENTER_VERTICAL,
                       pos=(0,0))
 

@@ -53,20 +53,20 @@ class RulesText(wx.Dialog):
             seltype = 'cell'
         elif self.cmd[0] == 'r.reclass':
             label1 = _('Reclassify raster map using rules')
-            label2 = _('Map to reclassify:')
-            label3 = _('Reclassified map:')
+            label2 = _('Raster map to reclassify:')
+            label3 = _('Reclassified raster map:')
             label4 = _('Enter reclassification rules')
             seltype = 'cell'
         elif self.cmd[0] == 'r.recode':
             label1 = _('Recode raster map using rules')
-            label2 = _('Map to recode:')
-            label3 = _('Recoded map:')
+            label2 = _('Raster map to recode:')
+            label3 = _('Recoded raster map:')
             label4 = _('Enter recoding rules')
             seltype = 'cell'
         elif self.cmd[0] == 'v.reclass':
             label1 = _('Reclassify vector map using SQL rules')
-            label2 = _('Map to reclassify:')
-            label3 = _('Reclassified map:')
+            label2 = _('Vector map to reclassify:')
+            label3 = _('Reclassified vector map:')
             label4 = _('Enter reclassification rules')
             seltype = 'vector'
 
@@ -98,7 +98,7 @@ class RulesText(wx.Dialog):
             boxSizer.Add(item=self.selectionOutput,
                          pos=(row,1))
             row += 1
-
+            # TODO remove (see Preferences dialog)
             self.ovrwrtcheck = wx.CheckBox(parent=self, id=wx.ID_ANY, label=_('overwrite existing file'))
             self.ovrwrtcheck.SetValue(self.overwrite)
             boxSizer.Add(item=self.ovrwrtcheck,

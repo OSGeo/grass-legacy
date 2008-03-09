@@ -181,7 +181,7 @@ class VirtualAttributeList(wx.ListCtrl,
             i += 1
 
             if i >= 256:
-                self.log.write(_("Can display only 256 columns"))
+                self.log.write(_("Can display only 256 columns."))
 
         ### self.mapDBInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
         #
@@ -235,7 +235,7 @@ class VirtualAttributeList(wx.ListCtrl,
 
             i += 1
             if i >= 100000:
-                print >> sys.stderr, _("Limit 100000 records")
+                self.log.write(_("Limit 100000 records."))
                 break
 
         self.SetItemCount(i)
@@ -400,7 +400,7 @@ class AttributeManager(wx.Frame):
                           message=_("Database connection for vector map <%s> "
                                     "is not defined in DB file. "
                                     "You can define new connection in "
-                                    "'Manage layers'.") % self.vectmap,
+                                    "'Manage layers' tab.") % self.vectmap,
                           caption=_("Attribute Table Manager"),
                           style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
 
@@ -689,7 +689,7 @@ class AttributeManager(wx.Frame):
                          flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
                          border=3)
             # length
-            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Length"))
+            label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Data length"))
             length = wx.SpinCtrl(parent=panel, id=wx.ID_ANY, size=(65, -1),
                                  initial=250,
                                  min=1, max=1e6)
@@ -706,7 +706,7 @@ class AttributeManager(wx.Frame):
                          flag=wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
                          border=3)
 
-            btnAddCol = wx.Button(parent=panel, id=wx.ID_ANY, label=_('&Add'))
+            btnAddCol = wx.Button(parent=panel, id=wx.ID_ADD)
             btnAddCol.Bind(wx.EVT_BUTTON, self.OnTableItemAdd)
             btnAddCol.Enable(False)
             self.layerPage[layer]['addColButton'] = btnAddCol.GetId()
@@ -1838,7 +1838,7 @@ class TableListCtrl(wx.ListCtrl,
         itemData = {} # requested by sorter
 
         if not update:
-            headings = [_("Column name"), _("Type"), _("Length")]
+            headings = [_("Column name"), _("Data type"), _("Data length")]
             i = 0
             for h in headings:
                 self.InsertColumn(col=i, heading=h)
@@ -1983,7 +1983,7 @@ class LayerBook(wx.Notebook):
     def __createAddPage(self):
         """Add new layer"""
         self.addPanel = wx.Panel(parent=self, id=wx.ID_ANY)
-        self.AddPage(page=self.addPanel, text=_("Add new layer"))
+        self.AddPage(page=self.addPanel, text=_("Add layer"))
 
         try:
             maxLayer = max(self.mapDBInfo.layers.keys())
@@ -2414,9 +2414,8 @@ class LayerBook(wx.Notebook):
         
         if not table or not key:
             wx.MessageBox(parent=self,
-                          message=_("Unable to create new table.%s"
-                                    "Table name or key column name is missing.") % \
-                          (os.linesep),
+                          message=_("Unable to create new table. "
+                                    "Table name or key column name is missing."),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return
         
@@ -2452,7 +2451,7 @@ class LayerBook(wx.Notebook):
         
         if layer in self.mapDBInfo.layers.keys():
             wx.MessageBox(parent=self,
-                          message=_("Unable to add new layer to vector map <%(vector)s>.\n"
+                          message=_("Unable to add new layer to vector map <%(vector)s>. "
                                     "Layer %(layer)d already exists.") % 
                           {'vector' : self.mapDBInfo.map, 'layer' : layer},
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
@@ -2634,7 +2633,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
             wx.MessageBox(parent=self.parent,
                           message=_("No attribute table linked to "
-                                    "vector map <%(vector)s> found. %(msg)s "
+                                    "vector map <%(vector)s> found. %(msg)s"
                                     "\nYou can disable this message from digitization settings. Or "
                                     "you can create and link attribute table to the vector map "
                                     "using Attribute Table Manager.") % 
@@ -3281,12 +3280,13 @@ class NewVectorDialog(wx.Dialog):
         self.btnOK.Enable(False)
 
         self.label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
-                                   label=_("Name for new vector map layer:"))
+                                   label=_("Name for new vector map:"))
         self.mapName = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
                                    value='', size=(250, -1),
                                    style=wx.TE_PROCESS_ENTER)
         self.mapName.Bind(wx.EVT_TEXT, self.OnMapName)
 
+        # TODO remove (see Preferences dialog)
         self.overwrite = wx.CheckBox(parent=self.panel, id=wx.ID_ANY,
                                      label=_("Allow output files to overwrite existing files"))
 
@@ -3350,8 +3350,8 @@ def main(argv=None):
 
     app = wx.PySimpleApp()
     f = AttributeManager(parent=None, id=wx.ID_ANY,
-                         title=_("GRASS GIS Attribute Table Manager - vector map layer <%s>") % \
-                             argv[1],
+                         title="%s - <%s>" % (_("GRASS GIS Attribute Table Manager"),
+                                              argv[1]),
                          size=(900,600), vectmap=argv[1])
     f.Show()
 

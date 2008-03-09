@@ -303,8 +303,8 @@ class Settings:
             else:
                 return settings[group][key][subkey]
         except KeyError:
-            raise gcmd.SettingsError(_("Unable to get value of '%s:%s:%s'.") %
-                                     (group, key, subkey))
+            raise gcmd.SettingsError("%s %s:%s:%s." % (_("Unable to get value"),
+                                                       group, key, subkey))
         
     def Set(self, group, key, subkey, value, internal=False):
         """Set value by key/subkey
@@ -326,7 +326,7 @@ class Settings:
                 raise KeyError
             settings[group][key][subkey] = value
         except KeyError:
-            raise gcmd.SettingsError(_("Unable to set '%s:%s:%s'") % (group, key, subkey),)
+            raise gcmd.SettingsError("%s '%s:%s:%s'" % (_("Unable to set "), group, key, subkey))
 
 globalSettings = Settings()
 
@@ -363,15 +363,14 @@ class PreferencesDialog(wx.Dialog):
 
         # bindigs
         btnDefault.Bind(wx.EVT_BUTTON, self.OnDefault)
-        btnDefault.SetToolTipString(_("Revert settings to default "
-                                      "(to apply changes press button 'Apply')"))
+        btnDefault.SetToolTipString(_("Revert settings to default and apply changes"))
         btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
         btnApply.SetToolTipString(_("Apply changes for this session"))
         btnSave.Bind(wx.EVT_BUTTON, self.OnSave)
-        btnSave.SetToolTipString(_("Close window and save changes to user settings file"))
+        btnSave.SetToolTipString(_("Close dialog and save changes to user settings file"))
         btnSave.SetDefault()
         btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
-        btnCancel.SetToolTipString(_("Close window and ignore changes"))
+        btnCancel.SetToolTipString(_("Close dialog and ignore changes"))
 
         # sizers
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -481,7 +480,7 @@ class PreferencesDialog(wx.Dialog):
         #
         row = 0
         rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                    label=_("Overlay raster map layers"),
+                                    label=_("Overlay raster maps"),
                                     name='IsChecked')
         rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
         self.winId['display:rasterOverlay:enabled'] = rasterOverlay.GetId()
@@ -527,7 +526,7 @@ class PreferencesDialog(wx.Dialog):
         row += 1
         # close
         close = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                            label=_("Close on finish"),
+                            label=_("Close dialog on finish"),
                             name="IsChecked")
         close.SetValue(self.settings.Get(group='cmd', key='closeDlg', subkey='enabled'))
         self.winId['cmd:closeDlg:enabled'] = close.GetId()
@@ -727,7 +726,7 @@ class PreferencesDialog(wx.Dialog):
                                "Map topology is rebuild on each operation which can "
                                "significantly slow-down response. The vdigit is a native "
                                "interface which uses v.edit functionality, but doesn't "
-                               "call the command itself."),
+                               "call the module itself."),
                              self.GetSize()[0]-50, wx.ClientDC(self))
 
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
@@ -773,7 +772,7 @@ class PreferencesDialog(wx.Dialog):
         """Button 'Save' pressed"""
         self.__UpdateSettings()
         file = self.settings.SaveToFile()
-        self.parent.goutput.cmd_stdout.write(_('Settings saved to file <%s>.') % file)
+        self.parent.goutput.cmd_stdout.write(_('Settings saved to file \'%s\'.') % file)
         self.Close()
 
     def OnApply(self, event):

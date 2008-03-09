@@ -49,9 +49,9 @@ class MapCalcFrame(wx.Frame):
         self.Centre(wx.BOTH)
 
         if dimension == 3:
-            self.SetTitle(_("GRASS 3D Map Calculator") )
+            self.SetTitle(_("GRASS %s Map Calculator") % "3D" )
         else:
-            self.SetTitle(_("GRASS Map Calculator") )
+            self.SetTitle(_("GRASS %s Map Calculator") % "2D" )
 
         #
         # variables
