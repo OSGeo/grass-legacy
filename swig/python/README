@@ -8,12 +8,13 @@ me) are wrapped.
 
 How to INSTALL?
 ---------------
-1. Install SWIG
+1. Install SWIG, the Simplified Wrapper and Interface Generator
+     http://www.swig.org
 
-2. Edit the Makefile
-   - set python version
+2. Be sure you configured GRASS with support for Python:
+     ./configure --with-python=/usr/bin/python2.5-config
 
-3. Run make
+3. Run make in the swig/python/ directory
 
 It will create two files, python_grass6.py and _python_grass6.so.
 
