@@ -1,5 +1,10 @@
 MODULE_TOPDIR = ..
 
+#compile if PYTHON present:
+ifneq ($(USE_PYTHON),)
+    SUBDIRS += python
+endif
+
 # doxygen:
 DOXNAME=swig
 
