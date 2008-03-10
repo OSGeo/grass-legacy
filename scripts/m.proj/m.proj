@@ -234,7 +234,7 @@ else
    EXITCODE=$?
 
    #### check if transform REALLY worked (e.g. bogus output if grid file not found)
-   if [ -n "`head -n 1 "$outfile" | grep '^*'`" ] ; then
+   if [ -n "`head -n 1 "$outfile" | grep '^\*'`" ] ; then
       EXITCODE=1
    fi
 fi
