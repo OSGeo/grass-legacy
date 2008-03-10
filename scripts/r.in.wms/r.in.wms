@@ -387,8 +387,8 @@ listLayers() {
 		    grep "Name\|Title\|Style\|Layer" | \
 		    sed -e "s/<Layer .*>/LAYER:/" \
 		      -e "s/<\/Layer.*>//" \
-		      -e "s/<Name>\s*\(\w*\)/~\1~/g" \
-		      -e "s/<\/Name>\n//g" \
+		      -e "s/<Name>\s*\([^<]*\)/~\1~/g" \
+		      -e "s/<\/Name>\n\?//g" \
 		      -e "s/<Style>\n*\s*\(\w*\)/Style: \1/" \
 		      -e "s/<\/Style>//" \
 		      -e "s/<Title>\(.*\)<\/Title>/\t --\1 /" \
