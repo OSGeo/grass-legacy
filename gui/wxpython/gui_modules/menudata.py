@@ -351,7 +351,7 @@ class Data:
           ("Vector", (
               ("Develop vector map", (
                 ("Create empty vector map", "Create new empty vector map", "self.OnMenuCmd", "v.edit tool=create"),
-                ("Digitize vector map", "Digitize/edit vector map", "self.OnMenuCmd", "v.digit"),
+#                ("Digitize vector map", "Digitize/edit vector map", "self.OnMenuCmd", "v.digit"),
                 ("","","", ""),
                 ("Create/rebuild topology", "Create or rebuild topology of vector objects", "self.OnMenuCmd", "v.build"),
                 ("Clean vector map", "Clean vector objects", "self.OnMenuCmd", "v.clean"),
