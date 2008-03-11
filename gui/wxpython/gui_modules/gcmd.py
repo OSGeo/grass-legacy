@@ -6,7 +6,7 @@
 Classes:
  * GException
  * DigitError
- * Popen
+ * Popen (from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/440554)
  * Command
  * CommandThread
 
@@ -25,6 +25,7 @@ import os
 import sys
 import time
 import errno
+import signal
 
 import wx
 
@@ -44,64 +45,63 @@ else:
 from threading import Thread
 
 # import wxgui_utils # log window
+import globalvar
+import utils
 from debug import Debug as Debug
 
 class GException(Exception):
     """Generic exception"""
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title=_("Error"), parent=None):
         self.message = message
         self.parent = parent
-
+        self.title = title
+        
     def __str__(self):
         wx.MessageBox(parent=self.parent,
-                      caption=_("Error"),
+                      caption=self.title,
                       message=self.message,
                       style=wx.ICON_ERROR | wx.CENTRE)
 
         return ''
+
+class GStdError(GException):
+    """Generic exception"""
+
+    def __init__(self, message, title=_("Error"), parent=None):
+        GException.__init__(self, message, title=title, parent=parent)
 
 class CmdError(GException):
     """Exception used for GRASS commands.
 
     See Command class (command exits with EXIT_FAILURE,
     G_fatal_error() is called)."""
-    def __init(self, cmd, message):
-        GException.__init__(message)
-
-    def __str__(self):
-        wx.MessageBox(parent=self.parent,
-                      caption=_("Error in command execution"),
-                      message=self.message,
-                      style=wx.ICON_ERROR | wx.CENTRE)
-        
-        return '' 
+    def __init__(self, cmd, message, parent=None):
+        self.cmd = cmd
+        GException.__init__(self, message,
+                            title=_("Error in command execution %s" % self.cmd[0]),
+                            parent=parent)
 
 class SettingsError(GException):
     """Exception used for GRASS settings, see
     gui_modules/preferences.py."""
-    def __init(self, message):
-        GException.__init__(message)
-
-    def __str__(self):
-        wx.MessageBox(parent=self.parent,
-                      caption=_("Preferences error"),
-                      message=self.message,
-                      style=wx.ICON_ERROR | wx.CENTRE)
-        
-        return '' 
+    def __init__(self, message, parent=None):
+        GException.__init__(self, message,
+                            title=_("Preferences error"),
+                            parent=parent)
 
 class DigitError(GException):
     """Exception raised during digitization session"""
-    def __init(self, message):
-        GException.__init__(message)
+    def __init__(self, message, parent=None):
+        GException.__init__(self, message,
+                            title=_("Error in digitization tool"),
+                            parent=parent)
 
-    def __str__(self):
-        wx.MessageBox(parent=None,
-                      caption=_("Error in digitization tool"),
-                      message=self.message,
-                      style=wx.ICON_ERROR)
-
-        return ''
+class DBMError(GException):
+    """Exception raised for Attribute Table Manager"""
+    def __init__(self, message):
+        GException.__init__(self, message,
+                            title=_("Error in Attribute Table Manager"),
+                            parent=parent)
 
 class Popen(subprocess.Popen):
     """Subclass subprocess.Popen"""
@@ -124,7 +124,19 @@ class Popen(subprocess.Popen):
     def _close(self, which):
         getattr(self, which).close()
         setattr(self, which, None)
-    
+
+    def kill(self):
+        """Try to kill running process"""
+        if subprocess.mswindows:
+            import win32api
+            handle = win32api.OpenProcess(1, 0, self.pid)
+            return (0 != win32api.TerminateProcess(handle, 0))
+	else:
+            try:
+                os.kill(-self.pid, signal.SIGTERM) # kill whole group
+            except OSError:
+                pass
+
     if subprocess.mswindows:
         def send(self, input):
             if not self.stdin:
@@ -206,6 +218,53 @@ class Popen(subprocess.Popen):
                 if not conn.closed:
                     fcntl.fcntl(conn, fcntl.F_SETFL, flags)
 
+message = "Other end disconnected!"
+
+def recv_some(p, t=.1, e=1, tr=5, stderr=0):
+    if tr < 1:
+        tr = 1
+    x = time.time()+t
+    y = []
+    r = ''
+    pr = p.recv
+    if stderr:
+        pr = p.recv_err
+    while time.time() < x or r:
+        r = pr()
+        if r is None:
+            if e:
+                raise Exception(message)
+            else:
+                break
+        elif r:
+            y.append(r)
+        else:
+            time.sleep(max((x-time.time())/tr, 0))
+    return ''.join(y)
+    
+def send_all(p, data):
+    while len(data):
+        sent = p.send(data)
+        if sent is None:
+            raise Exception(message)
+        data = buffer(data, sent)
+
+# Define notification event for thread completion
+EVT_RESULT_ID = wx.NewId()
+
+def EVT_RESULT(win, func):
+    """Define Result Event"""
+    win.Connect(-1, -1, EVT_RESULT_ID, func)
+
+class ResultEvent(wx.PyEvent):
+    """Simple event to carry arbitrary result data"""
+    def __init__(self, data):
+        wx.PyEvent.__init__(self)
+
+        self.SetEventType(EVT_RESULT_ID)
+
+        self.cmdThread = data
+
 class Command:
     """
     Run GRASS command in separate thread
@@ -239,6 +298,12 @@ class Command:
                   stdout=None, stderr=sys.stderr):
 
         self.cmd = cmd
+	# hack around platform-specific extension for binaries
+	if self.cmd[0] in globalvar.grassCmd['script']:
+	    self.cmd[0] = self.cmd[0] + globalvar.EXT_SCT
+	else:
+	    self.cmd[0] = self.cmd[0] + globalvar.EXT_BIN
+
         self.stderr = stderr
 
         #
@@ -286,14 +351,14 @@ class Command:
                            (' '.join(cmd), wait, self.returncode, self.cmdThread.isAlive()))
             if rerr is not None and self.returncode != 0:
                 if rerr is False: # GUI dialog
-                    try:
-                        raise CmdError, _("Execution failed: '%s'%s%s" 
-                                          "Details:%s%s") % (' '.join(self.cmd),
-                                                             os.linesep, os.linesep,
-                                                             os.linesep,
-                                                             self.PrintModuleOutput())
-                    except CmdError, e:
-                        print e
+                    raise CmdError(cmd=self.cmd,
+                                   message="%s '%s'%s%s%s %s%s" %
+                                   (_("Execution failed:"),
+                                    ' '.join(self.cmd),
+                                    os.linesep, os.linesep,
+                                    _("Details:"),
+                                    os.linesep,
+                                    self.PrintModuleOutput()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
@@ -423,16 +488,22 @@ class CommandThread(Thread):
 
         Thread.__init__(self)
         
-        self.cmd          = cmd
-        self.stdin        = stdin
-        self.stdout       = stdout
-        self.stderr       = stderr
+        self.cmd    = cmd
+        self.stdin  = stdin
+        self.stdout = stdout
+        self.stderr = stderr
 
-        self.module       = None
-        self.rerr         = ''
+        self.module = None
+        self.rerr   = ''
 
+        self._want_abort = False
+        self.startTime = None
+
+        self.setDaemon(True)
+        
     def run(self):
         """Run command"""
+        self.startTime = time.time()
         # TODO: wx.Exectute/wx.Process (?)
         self.module = Popen(self.cmd,
                             stdin=subprocess.PIPE,
@@ -471,35 +542,59 @@ class CommandThread(Thread):
             # make module stdout/stderr non-blocking
             out_fileno = self.module.stdout.fileno()
             # FIXME (MS Windows)
-            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-            
+	    if not subprocess.mswindows:
+                flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+                fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+                
         if self.stderr:
             # make module stdout/stderr non-blocking
             out_fileno = self.module.stderr.fileno()
             # FIXME (MS Windows)
-            flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
-            fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
-
+	    if not subprocess.mswindows:
+                flags = fcntl.fcntl(out_fileno, fcntl.F_GETFL)
+                fcntl.fcntl(out_fileno, fcntl.F_SETFL, flags| os.O_NONBLOCK)
+                
         # wait for the process to end, sucking in stuff until it does end
         while self.module.poll() is None:
             time.sleep(.1)
+            if self._want_abort: # abort running process
+                if hasattr(self.stderr, "gmstc"):
+                    self.module.kill()
+                    # -> GMConsole
+                    wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(None))
+                return 
             if self.stdout:
-                line = self.__read_all(self.module.stdout)
+                # line = self.__read_all(self.module.stdout)
+                line = recv_some(self.module, e=0, stderr=0)
                 self.stdout.write(line)
             if self.stderr:
-                line = self.__read_all(self.module.stderr)
+                # line = self.__read_all(self.module.stderr)
+                line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
 
         # get the last output
         if self.stdout:
-            line = self.__read_all(self.module.stdout)
+            # line = self.__read_all(self.module.stdout)
+            line = recv_some(self.module, e=0, stderr=0)
             self.stdout.write(line)
         if self.stderr:
-            line = self.__read_all(self.module.stderr)
+            # line = self.__read_all(self.module.stderr)
+            line = recv_some(self.module, e=0, stderr=1)
             self.stderr.write(line)
-            self.rerr = self.__parseString(line)
-        
+
+        self.rerr = self.__parseString(line)
+
+        if hasattr(self.stderr, "gmstc"):
+            # -> GMConsole
+            if self._want_abort: # abort running process
+                wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(None))
+            else:
+                wx.PostEvent(self.stderr.gmstc.parent, ResultEvent(self))
+
+    def abort(self):
+        """Abort running process, used by main thread to signal an abort"""
+        self._want_abort = True
+
     def __parseString(self, string):
         """Parse line
 

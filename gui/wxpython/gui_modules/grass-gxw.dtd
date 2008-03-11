@@ -1,4 +1,4 @@
-<!--	grass-grc.dtd
+<!--	grass-gxw.dtd
 
 	Copyright (C) 2007 by the GRASS Development Team
 	Author: Martin Landa <landa.martin gmail.com>
@@ -9,12 +9,12 @@
 
 
 <!--
-        a grass-grc defines workspace file content
+        a grass-gxw defines workspace file content
 -->
 
-<!ELEMENT grass-grc (grc)>
+<!ELEMENT grass-gxw (gxw)>
 
-<!ELEMENT grc (display*)>
+<!ELEMENT gxw (display*)>
 
 <!--    a display element defines map layer connected to given
 	map display widnow

@@ -17,28 +17,43 @@ for details.
 import os
 import sys
 
+import globalvar
+try:
+    import subprocess
+except:
+    compatPath = os.path.join(globalvar.ETCWXDIR, "compat")
+    sys.path.append(compatPath)
+    import subprocess
+
 def GetTempfile(pref=None):
     """
     Creates GRASS temporary file using defined prefix.
+
+    @todo Fix path on MS Windows/MSYS
 
     @param pref prefer the given path
 
     @return Path to file name (string) or None
     """
     import gcmd
+
     tempfileCmd = gcmd.Command(["g.tempfile",
-                                "pid=%d" %
-                                os.getpid()])
+                                "pid=%d" % os.getpid()])
 
     tempfile = tempfileCmd.ReadStdOutput()[0].strip()
 
+    # FIXME
+    # ugly hack for MSYS (MS Windows)
+    if subprocess.mswindows:
+	tempfile = tempfile.replace("/", "\\")
     try:
         path, file = os.path.split(tempfile)
         if pref:
-            file = "%s%s" % (pref, file)
-        return os.path.join(path, file)
+            return os.path.join(pref, file)
+	else:
+	    return tempfile
     except:
-        return Node
+        return None
 
 def GetLayerNameFromCmd(dcmd):
     """Get layer name from GRASS command
@@ -139,20 +154,40 @@ def ListOfMapsets():
     import gcmd
     all_mapsets = []
     accessible_mapsets = []
-    
-    cmd = gcmd.Command(['g.mapsets', '-l'])
+
+    ### FIXME
+    # problem using Command here (see preferences.py)
+    # cmd = gcmd.Command(['g.mapsets', '-l'])
+    cmd = subprocess.Popen(['g.mapsets' + globalvar.EXT_BIN, '-l'],
+                           stdout=subprocess.PIPE)
     
     try:
-        for mset in cmd.ReadStdOutput()[0].split(' '):
-            all_mapsets.append(mset.strip('%s' % os.linesep))
+        # for mset in cmd.ReadStdOutput()[0].split(' '):
+        for line in cmd.stdout.readlines():
+            for mset in line.strip('%s' % os.linesep).split(' '):
+                if len(mset) == 0:
+                    continue
+                all_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of available mapsets.')
-            
-    cmd = gcmd.Command(['g.mapsets', '-p'])
+    
+    # cmd = gcmd.Command(['g.mapsets', '-p'])
+    cmd = subprocess.Popen(['g.mapsets' + globalvar.EXT_BIN, '-p'],
+                           stdout=subprocess.PIPE)
     try:
-        for mset in cmd.ReadStdOutput()[0].split(' '):
-            accessible_mapsets.append(mset.strip('\n'))
+        # for mset in cmd.ReadStdOutput()[0].split(' '):
+        for line in cmd.stdout.readlines():
+            for mset in line.strip('%s' % os.linesep).split(' '):
+                if len(mset) == 0:
+                    continue
+                accessible_mapsets.append(mset)
     except:
         raise gcmd.CmdError('Unable to get list of accessible mapsets.')
 
+    ListSortLower(all_mapsets)
+    
     return (all_mapsets, accessible_mapsets)
+
+def ListSortLower(list):
+    """Sort list items (not case-sensitive)"""
+    list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))

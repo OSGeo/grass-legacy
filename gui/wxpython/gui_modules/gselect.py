@@ -21,7 +21,9 @@ import sys
 import wx
 import wx.combo
 
+import globalvar
 import gcmd
+from preferences import globalSettings as UserSettings
 
 class SelectDialog(wx.Dialog):
     def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',
@@ -159,9 +161,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
         curr_mapset = gcmd.Command(cmdlist).ReadStdOutput()[0]
 
         #mapsets in current location
-        cmdlist = ['g.mapsets', '-p']
-        mapsets = gcmd.Command(cmdlist).ReadStdOutput()[0].split(' ')
-
+        mapsets = UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True)
         # map element types to g.mlist types
         elementdict = {'cell':'rast',
                        'raster':'rast',

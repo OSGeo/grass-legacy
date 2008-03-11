@@ -27,12 +27,12 @@ class Data:
         return [(
           ("File", (
               ("Workspace", (
-                 ("New", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
-                 ("Open", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
-                 ("Load", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
-                 ("Save", "Save current workspace to file", "self.OnWorkspaceSave", ""),
-                 ("Save as", "Save current workspace as", "self.OnWorkspaceSaveAs", ""),
-                 ("Close", "Close selected workspace file", "self.OnWorkspaceClose", ""),
+                 ("New workspace", "Create new workspace file (erase current workspace settings first)", "self.OnWorkspaceNew", ""),
+                 ("Open existing workspace", "Open existing workspace file", "self.OnWorkspaceOpen", ""),
+                 ("Load map layers", "Load map layers into layer tree", "self.OnWorkspaceLoad", ""),
+                 ("Save workspace", "Save current workspace to file", "self.OnWorkspaceSave", ""),
+                 ("Save workspace as", "Save current workspace as file", "self.OnWorkspaceSaveAs", ""),
+                 ("Close current workspace", "Close current workspace", "self.OnWorkspaceClose", ""),
                  )),
               ("","","", ""),
               ("Import raster map", (
@@ -198,7 +198,7 @@ class Data:
               ("Buffer rasters", "Create raster buffers around raster objects", "self.OnMenuCmd", "r.buffer"),
               ("Closest points", "r.distance", "self.OnMenuCmd", "r.distance"),
               ("MASK", "Develop raster mask", "self.OnMenuCmd", "r.mask"),
-              ("Map calculator", "Map calculator for map algebra", "self.OnMenuCmd", "scripts/mapcalc_gparser.sh"),
+              ("Map calculator", "Map calculator for map algebra", "self.DispMapCalculator", ""),
               ("Neighborhood analysis", (
                 ("Moving window", "Moving window analysis of raster cells", "self.OnMenuCmd", "r.neighbors"),
                 ("Neighborhood points", "Analyze vector points in neighborhood of raster cells", "self.OnMenuCmd", "v.neighbors"),
@@ -355,6 +355,7 @@ class Data:
                 ("","","", ""),
                 ("Create/rebuild topology", "Create or rebuild topology of vector objects", "self.OnMenuCmd", "v.build"),
                 ("Clean vector map", "Clean vector objects", "self.OnMenuCmd", "v.clean"),
+                ("Generalization", "Smooth, simplify, displace, or generalize a vector map", "self.OnMenuCmd", "v.generalize"),
                 ("","","", ""),
                 ("Convert object types", "Convert vector objects from one feature type to another", "self.OnMenuCmd", "v.type.sh"),
                 ("","","", ""),
@@ -397,6 +398,7 @@ class Data:
               ("Network analysis", (
                 ("Allocate subnets", "Allocate subnets for nearest centers", "self.OnMenuCmd", "v.net.alloc"),
                 ("Network maintenance", "Network maintenance", "self.OnMenuCmd", "v.net"),
+                ("Visibility network", "Create and maintain a visibility network", "self.OnMenuCmd", "v.net.visibility"),
                 ("Shortest route", "Calculate shortest route along network between 2 nodes", "self.OnMenuCmd", "v.net.path"),
                 ("Display shortest route (requires XTerm)", " Display shortest route along network between 2 nodes (visualization only)", "self.OnXTerm", "d.path"),
                 ("Split net", "Split net into bands between cost isolines", "self.OnMenuCmd", "v.net.iso"),
@@ -462,12 +464,8 @@ class Data:
                 ("HIS to RGB", "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)", "self.OnMenuCmd", "i.his.rgb"),
                 ("RGB to HIS", "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)", "self.OnMenuCmd", "i.rgb.his"),
                 )),
-              ("Rectify and georeference image group", (
-                ("Set GCP's from raster map (requires Xterm)", "Set ground control points (GCP's) from raster map or keyboard entry", "self.OnXTerm", "i.points"),
-                ("Set GCP's from vector map (requires Xterm)", "Set ground control points (GCP's) from vector map or keyboard entry", "self.OnXTerm", "i.vpoints"),
-                ("Georectification (rubber sheet)", "Affine and Polynomial rectification (rubber sheet)", "self.OnMenuCmd", "i.rectify"),
-                ("Ortho photo rectification (requies Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
-                )),
+              ("Rectify image or raster", "Rectifies raster using information in previously created POINTS file", "self.OnMenuCmd", "i.rectify"),
+              ("Ortho photo rectification (requires Xterm)", "Ortho Photo rectification", "self.OnXTerm", "i.ortho.photo"),
               ("","","", ""),
               ("Brovey sharpening", "Brovey transformation and pan sharpening", "self.OnMenuCmd", "i.fusion.brovey"),
               ("Classify image", (
@@ -507,7 +505,7 @@ class Data:
                 )),
               ("","","", ""),
               ("3D MASK", "Create 3D mask for grid3D operations", "self.OnMenuCmd", "r3.mask"),
-              ("3D map calculator", "Map calculator for volumetric map algebra", "self.OnMenuCmd", "r3.mapcalculator"),
+              ("3D map calculator", "Map calculator for volumetric map algebra", "self.Disp3DMapCalculator", ""),
               ("Cross section", "Create 2D raster cross section from grid3d volume", "self.OnMenuCmd", "r3.cross.rast"),
               ("Interpolate volume from points", "Interpolate volume from vector points using splines", "self.OnMenuCmd", "v.vol.rst"),
               ("","","", ""),

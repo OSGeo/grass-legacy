@@ -144,13 +144,18 @@ Python (--with-python) and wxWidgets (--with-wxwidgets) support.
 
 First, create a symlink to _gdi_.so shared library
 
-$ ln -s `locate _gdi_.so` $GISBASE/lib/libgdi.so
+$ sudo ln -s `locate _gdi_.so` /usr/local/lib/libgdi.so
 
 e.g.
 
-$ ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so $GISBASE/lib/libgdi.so
+$ sudo ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so /usr/local/lib/libgdi.so
+
+Make sure you set up LD_LIBRARY_PATH or noted '/usr/local/lib' in
+/etc/ld.so.conf.
+
+$ sudo ldconfig
 
 Then you can compile the driver
 
-$ cd $GISBASE/etc/wxpython/vdigit
+$ cd gui/wxpython/vdigit
 $ make

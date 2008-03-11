@@ -10384,6 +10384,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DisplayDriver_GetMapBoundingBox(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  DisplayDriver *arg1 = (DisplayDriver *) 0 ;
+  std::vector<double,std::allocator<double > > result;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DisplayDriver_GetMapBoundingBox",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_DisplayDriver, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "DisplayDriver_GetMapBoundingBox" "', argument " "1"" of type '" "DisplayDriver *""'"); 
+  }
+  arg1 = reinterpret_cast< DisplayDriver * >(argp1);
+  result = (arg1)->GetMapBoundingBox();
+  resultobj = swig::from(static_cast< std::vector<double,std::allocator<double > > >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_DisplayDriver_SetRegion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   DisplayDriver *arg1 = (DisplayDriver *) 0 ;
@@ -11430,6 +11452,7 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   char *arg8 = (char *) 0 ;
   int arg9 ;
   double arg10 ;
+  double arg11 ;
   int result;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -11452,6 +11475,8 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   int ecode9 = 0 ;
   double val10 ;
   int ecode10 = 0 ;
+  double val11 ;
+  int ecode11 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -11462,8 +11487,9 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject * obj7 = 0 ;
   PyObject * obj8 = 0 ;
   PyObject * obj9 = 0 ;
+  PyObject * obj10 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOO:Digit_MoveVertex",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOO:Digit_MoveVertex",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Digit, 0 |  0 );
   if (!SWIG_IsOK(res1)) {
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Digit_MoveVertex" "', argument " "1"" of type '" "Digit *""'"); 
@@ -11514,7 +11540,12 @@ SWIGINTERN PyObject *_wrap_Digit_MoveVertex(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "Digit_MoveVertex" "', argument " "10"" of type '" "double""'");
   } 
   arg10 = static_cast< double >(val10);
-  result = (int)(arg1)->MoveVertex(arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8,arg9,arg10);
+  ecode11 = SWIG_AsVal_double(obj10, &val11);
+  if (!SWIG_IsOK(ecode11)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode11), "in method '" "Digit_MoveVertex" "', argument " "11"" of type '" "double""'");
+  } 
+  arg11 = static_cast< double >(val11);
+  result = (int)(arg1)->MoveVertex(arg2,arg3,arg4,arg5,arg6,arg7,(char const *)arg8,arg9,arg10,arg11);
   resultobj = SWIG_From_int(static_cast< int >(result));
   if (alloc8 == SWIG_NEWOBJ) delete[] buf8;
   return resultobj;
@@ -12052,6 +12083,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"DisplayDriver_OpenMap", _wrap_DisplayDriver_OpenMap, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_ReloadMap", _wrap_DisplayDriver_ReloadMap, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_SetDevice", _wrap_DisplayDriver_SetDevice, METH_VARARGS, NULL},
+	 { (char *)"DisplayDriver_GetMapBoundingBox", _wrap_DisplayDriver_GetMapBoundingBox, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_SetRegion", _wrap_DisplayDriver_SetRegion, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_UpdateSettings", _wrap_DisplayDriver_UpdateSettings, METH_VARARGS, NULL},
 	 { (char *)"DisplayDriver_swigregister", DisplayDriver_swigregister, METH_VARARGS, NULL},
