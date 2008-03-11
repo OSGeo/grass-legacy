@@ -50,6 +50,10 @@ FILES = \
 	$(ETC)/epsg_option.tcl \
 	$(ETC)/file_option.tcl \
 	$(ETC)/gintro.gif \
+	$(ETC)/grass.ico \
+	$(ETC)/grass_map.ico \
+	$(ETC)/grass_dialog.ico \
+	$(ETC)/grass_sql.ico \
 	$(ETC)/grass-run.sh \
 	$(ETC)/grass-xterm-wrapper \
 	$(ETC)/html_browser_mac.sh
@@ -154,6 +158,22 @@ $(ETC)/msgs: msgs
 $(ETC)/gintro.gif: gintro.gif
 	rm -f $@
 	$(INSTALL_DATA) gintro.gif $@
+
+$(ETC)/grass.ico: grass.ico
+	rm -f $@
+	$(INSTALL_DATA) $< $@
+
+$(ETC)/grass_map.ico: grass_map.ico
+	rm -f $@
+	$(INSTALL_DATA) $< $@
+
+$(ETC)/grass_sql.ico: grass_sql.ico
+	rm -f $@
+	$(INSTALL_DATA) $< $@
+
+$(ETC)/grass_dialog.ico: grass_dialog.ico
+	rm -f $@
+	$(INSTALL_DATA) $< $@
 
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
