@@ -20,3 +20,5 @@ clean: cleansubdirs
 diglib: rtree
 
 Vlib: rtree dglib diglib
+
+vedit: Vlib
