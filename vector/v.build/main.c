@@ -79,7 +79,7 @@ main (int argc, char *argv[])
 	Vect_set_open_level (1); 
 	Vect_open_old (&Map, map_opt->answer, G_mapset()); 
 
-	Vect_build ( &Map, stdout );
+	Vect_build ( &Map, stderr );
     }
     /* dump topology */
     if (dump || sdump || cdump) {
@@ -146,8 +146,6 @@ main (int argc, char *argv[])
 	    }
 	}
 
-	G_message ("");
-	G_important_message (_("Building topology for error vector map..."));
 	Vect_build ( &Err, stdout );
         Vect_close ( &Err );
     }
