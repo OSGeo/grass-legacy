@@ -237,6 +237,7 @@ class DisplayDriver(_object):
     def OpenMap(*args): return _grass6_wxvdigit.DisplayDriver_OpenMap(*args)
     def ReloadMap(*args): return _grass6_wxvdigit.DisplayDriver_ReloadMap(*args)
     def SetDevice(*args): return _grass6_wxvdigit.DisplayDriver_SetDevice(*args)
+    def GetMapBoundingBox(*args): return _grass6_wxvdigit.DisplayDriver_GetMapBoundingBox(*args)
     def SetRegion(*args): return _grass6_wxvdigit.DisplayDriver_SetRegion(*args)
     def UpdateSettings(*args): return _grass6_wxvdigit.DisplayDriver_UpdateSettings(*args)
 DisplayDriver_swigregister = _grass6_wxvdigit.DisplayDriver_swigregister

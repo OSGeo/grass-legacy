@@ -1109,6 +1109,33 @@ int DisplayDriver::VectorToList(struct ilist *list, const std::vector<int>& vec)
 }
 
 /**
+   \brief Get bounding box of (opened) vector map layer
+
+   \return (w,s,b,e,n,t)
+*/
+std::vector<double> DisplayDriver::GetMapBoundingBox()
+{
+    std::vector<double> region;
+    BOUND_BOX bbox;
+
+    if (!mapInfo) {
+	return region;
+    }
+    
+    Vect_get_map_box(mapInfo, &bbox);
+
+    region.push_back(bbox.W);
+    region.push_back(bbox.S);
+    region.push_back(bbox.B);
+
+    region.push_back(bbox.E);
+    region.push_back(bbox.N);
+    region.push_back(bbox.T);
+
+    return region;
+}
+
+/**
    \brief Error messages handling 
 
    \param msg message
@@ -1122,3 +1149,4 @@ int print_error(const char *msg, int type)
     
     return 0;
 }
+

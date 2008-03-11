@@ -37,6 +37,7 @@ import wx.combo
 import wx.stc
 import wx.lib.newevent
 
+import globalvar
 import menuform
 import mapdisp
 import render
@@ -46,6 +47,7 @@ import histogram
 import utils
 from debug import Debug as Debug
 from icon import Icons as Icons
+from preferences import globalSettings as UserSettings
 try:
     import subprocess
 except:
@@ -65,10 +67,12 @@ class LayerTree(CT.CustomTreeCtrl):
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
                  CT.TR_EDIT_LABELS|CT.TR_MULTIPLE,
-                 idx=None, gismgr=None, notebook=None, auimgr=None):
-        CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style,ctstyle)
+                 idx=None, gismgr=None, notebook=None, auimgr=None, showMapDisplay=True):
+        CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style, ctstyle)
 
-        self.SetAutoLayout(True)
+        ### SetAutoLayout() causes that no vertical scrollbar is displayed
+        ### when some layers are not visible in layer tree
+        # self.SetAutoLayout(True)
         self.SetGradientStyle(1)
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(150, 150, 150))
@@ -100,10 +104,11 @@ class LayerTree(CT.CustomTreeCtrl):
                                    str(self.disp_idx) + 
                                    " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
 
-        #show new display
-        self.mapdisplay.Show()
-        self.mapdisplay.Refresh()
-        self.mapdisplay.Update()
+        # show new display
+        if showMapDisplay is True:
+            self.mapdisplay.Show()
+            self.mapdisplay.Refresh()
+            self.mapdisplay.Update()
 
         self.root = self.AddRoot("Map Layers")
         self.SetPyData(self.root, (None,None))
@@ -303,8 +308,8 @@ class LayerTree(CT.CustomTreeCtrl):
         """
         mapLayer = self.GetPyData(self.layer_selected)[0]['maplayer']
         if not mapLayer.name:
-            dlg = wx.MessageDialog(self, _("Unable to display histogram for "
-                                           "raster map layer"),
+            dlg = wx.MessageDialog(self, _("Unable to display histogram of "
+                                           "raster map."),
                                    _("Error"), wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -532,6 +537,10 @@ class LayerTree(CT.CustomTreeCtrl):
             else:
                 ctrl.SetValue(lname)
 
+        # updated progress bar range (mapwindow statusbar)
+        if checked is True:
+            self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
         return layer
 
     def PropertiesDialog (self, layer, show=True):
@@ -550,7 +559,10 @@ class LayerTree(CT.CustomTreeCtrl):
                                                        parentframe=self, show=show)
             self.GetPyData(layer)[0]['cmd'] = cmdValidated
         elif ltype == 'raster':
-            menuform.GUI().ParseCommand(['d.rast'], completed=(self.GetOptData,layer,params),
+            cmd = ['d.rast']
+            if UserSettings.Get(group='display', key='rasterOverlay', subkey='enabled'):
+                cmd.append('-o')
+            menuform.GUI().ParseCommand(cmd, completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'rgb':
             menuform.GUI().ParseCommand(['d.rgb'], completed=(self.GetOptData,layer,params),
@@ -571,7 +583,9 @@ class LayerTree(CT.CustomTreeCtrl):
             menuform.GUI().ParseCommand(['d.vect'], completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'thememap':
-            menuform.GUI().ParseCommand(['d.vect.thematic'],
+            # -s flag requested, otherwise only first thematic category is displayed
+            # should be fixed by C-based d.thematic.* modules
+            menuform.GUI().ParseCommand(['d.vect.thematic', '-s'], 
                                         completed=(self.GetOptData,layer,params),
                                         parentframe=self)
         elif ltype == 'themechart':
@@ -638,10 +652,13 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
         if self.mapdisplay.digittoolbar:
             self.mapdisplay.digittoolbar.UpdateListOfLayers (updateTool=True)
+
+        # update progress bar range (mapwindow statusbar)
+        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
         event.Skip()
 
@@ -661,9 +678,12 @@ class LayerTree(CT.CustomTreeCtrl):
             else:
                 self.Map.ChangeLayerActive(self.GetPyData(item)[0]['maplayer'], checked)
 
+        # update progress bar range (mapwindow statusbar)
+        self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
+
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
     def OnCmdChanged(self, event):
         """Change command string"""
@@ -722,7 +742,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
     def OnChangeSel(self, event):
         oldlayer = event.GetOldItem()
@@ -968,7 +988,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # redraw map if auto-rendering is enabled
         if self.mapdisplay.autoRender.GetValue(): 
-            self.mapdisplay.ReRender(None)
+            self.mapdisplay.OnRender(None)
 
     def setNotebookPage(self,pg):
         self.parent.notebook.SetSelection(pg)
@@ -1002,16 +1022,15 @@ class GMConsole(wx.Panel):
     Create and manage output console for commands entered on the
     GIS Manager command line.
     """
-    def __init__(self, parent, id=wx.ID_ANY,
+    def __init__(self, parent, id=wx.ID_ANY, margin=False,
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.TAB_TRAVERSAL|wx.FULL_REPAINT_ON_RESIZE):
+                 style=wx.TAB_TRAVERSAL | wx.FULL_REPAINT_ON_RESIZE):
         wx.Panel.__init__(self, parent, id, pos, size, style)
 
         # initialize variables
         self.Map             = None
-        self.parent          = parent              # GMFrame
-        self.gcmdlst         = self.GetGRASSCmds() # list of commands in bin and scripts
-        self.cmdThreads      = []                  # list of command threads (alive or dead)
+        self.parent          = parent # GMFrame
+        self.cmdThreads      = []     # list of running commands (alive or dead)
 
         # progress bar
         self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
@@ -1019,11 +1038,7 @@ class GMConsole(wx.Panel):
                                             style=wx.GA_HORIZONTAL)
 
         # text control for command output
-        ### self.cmd_output = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
-        ### style=wx.TE_MULTILINE| wx.TE_READONLY)
-        ### self.cmd_output.SetFont(wx.Font(10, wx.FONTFAMILY_MODERN,
-        ### wx.NORMAL, wx.NORMAL, 0, ''))
-        self.cmd_output = GMStc(parent=self, id=wx.ID_ANY)
+        self.cmd_output = GMStc(parent=self, id=wx.ID_ANY, margin=margin)
         # redirect
         self.cmd_stdout = GMStdout(self.cmd_output)
         self.cmd_stderr = GMStderr(self.cmd_output,
@@ -1035,7 +1050,7 @@ class GMConsole(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.ClearHistory, self.console_clear)
         self.Bind(wx.EVT_BUTTON, self.SaveHistory,  self.console_save)
 
-         # output control layout
+        # output control layout
         boxsizer1 = wx.BoxSizer(wx.VERTICAL)
         gridsizer1 = wx.GridSizer(rows=1, cols=2, vgap=0, hgap=0)
         boxsizer1.Add(item=self.cmd_output, proportion=1,
@@ -1055,25 +1070,32 @@ class GMConsole(wx.Panel):
         boxsizer1.Fit(self)
         boxsizer1.SetSizeHints(self)
 
+        # set up event handler for any command thread results
+        gcmd.EVT_RESULT(self, self.OnResult)
+
+        # layout
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
-    def GetGRASSCmds(self):
-        """
-        Create list of all available GRASS commands to use when
-        parsing string from the command line
-        """
-        gcmdlst = []
-        gisbase = os.environ['GISBASE']
-        gcmdlst = os.listdir(os.path.join(gisbase,'bin'))
-        gcmdlst = gcmdlst + os.listdir(os.path.join(gisbase,'scripts'))
-        #self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
-
-        return gcmdlst
-
+    def WriteCmdLog(self, line, pid=None):
+        """Write out line in selected style"""
+        self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
+        p1 = self.cmd_output.GetCurrentPos()
+        if pid:
+            line = '(' + str(pid) + ') ' + line
+        if len(line) < 80:
+            diff = 80 - len(line)
+            line += diff * ' '
+            line += '%s' % os.linesep
+            self.cmd_output.AddText(line)
+            self.cmd_output.EnsureCaretVisible()
+            p2 = self.cmd_output.GetCurrentPos()
+            self.cmd_output.StartStyling(p1, 0xff)
+            self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
+        
     def RunCmd(self, command):
         """
-        Run in GUI or shell GRASS (or other) commands typed into
+        Run in GUI GRASS (or other) commands typed into
         console command text widget, and send stdout output to output
         text widget.
 
@@ -1092,13 +1114,22 @@ class GMConsole(wx.Panel):
         except:
             curr_disp = None
 
+        if len(self.GetListOfCmdThreads()) > 0:
+            # only one running command enabled (per GMConsole instance)
+            busy = wx.BusyInfo(message=_("Unable to run the command, another command is running..."),
+                               parent=self)
+            wx.Yield()
+            time.sleep(3)
+            busy.Destroy()
+            return 
+
+        # command given as a string ?
         try:
-            # if command is not already a list, make it one
             cmdlist = command.strip().split(' ')
         except:
             cmdlist = command
 
-        if cmdlist[0] in self.gcmdlst:
+        if cmdlist[0] in globalvar.grassCmd['all']:
             # send GRASS command without arguments to GUI command interface
             # except display commands (they are handled differently)
             if cmdlist[0][0:2] == "d.": # display GRASS commands
@@ -1118,64 +1149,43 @@ class GMConsole(wx.Panel):
                                  'd.rhumbline'    : 'rhumb',
                                  'd.labels'       : 'labels'}[cmdlist[0]]
                 except KeyError:
-                    wx.MessageBox(message=_("Command '%s' not yet implemented") % cmdlist[0])
+                    wx.MessageBox(message=_("Command '%s' not yet implemented.") % cmdlist[0])
                     return False
 
-                # add layer
+                # add layer into layer tree
                 self.parent.curr_page.maptree.AddLayer(ltype=layertype,
                                                        lcmd=cmdlist)
 
-            else: # other GRASS commands
+            else: # other GRASS commands (r|v|g|...)
                 if self.parent.notebook.GetSelection() != 1:
                     # select 'Command output' tab
                     self.parent.notebook.SetSelection(1)
                 
-                if len(self.GetListOfCmdThreads(onlyAlive=True)) > 0:
-                    busy = wx.BusyInfo(message=_("Please wait, there is another command "
-                                                 "currently running"),
-                                       parent=self.parent)
-                    # wx.Yield()
-                    time.sleep(3)
-                    busy.Destroy()
+                # activate computational region (set with g.region)
+                # for all non-display commands.
+                tmpreg = os.getenv("GRASS_REGION")
+                os.unsetenv("GRASS_REGION")
+                if len(cmdlist) == 1:
+                    # process GRASS command without argument
+                    menuform.GUI().ParseCommand(cmdlist, parentframe=self)
                 else:
-                    # activate computational region (set with g.region)
-                    # for all non-display commands.
-                    tmpreg = os.getenv("GRASS_REGION")
-                    os.unsetenv("GRASS_REGION")
-
-                    if len(cmdlist) == 1:
-                        #process GRASS command without argument
-                        menuform.GUI().ParseCommand(cmdlist, parentframe=self)
-                    else:
-                        # process GRASS command with argument
-                        self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
-                        p1 = self.cmd_output.GetCurrentPos()
-                        line = '$ %s' % ' '.join(cmdlist)
-                        if len(line) < 80:
-                            diff = 80 - len(line)
-                            line += diff * ' '
-                        line += '%s' % os.linesep
-                        self.cmd_output.AddText(line)
-                        self.cmd_output.EnsureCaretVisible()
-                        p2 = self.cmd_output.GetCurrentPos()
-                        self.cmd_output.StartStyling(p1, 0xff)
-                        self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
-
-                        # TODO: allow running multiple instances
-                        grassCmd = gcmd.Command(cmdlist, wait=False,
-                                                stdout=self.cmd_stdout,
-                                                stderr=self.cmd_stderr)
-    
-                        self.cmdThreads.append(grassCmd.cmdThread)
-
-                    # deactivate computational region and return to display settings
-                    if tmpreg:
-                        os.environ["GRASS_REGION"] = tmpreg
-
+                    # process GRASS command with argument
+                    self.cmdPID = len(self.cmdThreads)+1
+                    self.WriteCmdLog('%s' % ' '.join(cmdlist), pid=self.cmdPID)
+                    
+                    grassCmd = gcmd.Command(cmdlist, wait=False,
+                                            stdout=self.cmd_stdout,
+                                            stderr=self.cmd_stderr)
+                    
+                    self.cmdThreads.append(grassCmd.cmdThread)
+                    
+                    return grassCmd
+                # deactivate computational region and return to display settings
+                if tmpreg:
+                    os.environ["GRASS_REGION"] = tmpreg
         else:
             # Send any other command to the shell. Send output to
             # console output window
-
             if self.parent.notebook.GetSelection() != 1:
                 # select 'Command output' tab
                 self.parent.notebook.SetSelection(1)
@@ -1185,13 +1195,12 @@ class GMConsole(wx.Panel):
             # if command is not a GRASS command, treat it like a shell command
             generalCmd = subprocess.Popen(cmdlist,
                                           stdout=subprocess.PIPE,
-                                          stderr=subprocess.PIPE,
-                                          close_fds=True)
+                                          stderr=subprocess.PIPE)
             
             for outline in generalCmd.stdout:
                 print outline
                    
-        return True
+            return None
 
     def ClearHistory(self, event):
         """Clear history of commands"""
@@ -1210,7 +1219,7 @@ class GMConsole(wx.Panel):
 
         wildcard = "Text file (*.txt)|*.txt"
         dlg = wx.FileDialog(
-            self, message=_("Save file as ..."), defaultDir=os.getcwd(),
+            self, message=_("Save file as..."), defaultDir=os.getcwd(),
             defaultFile="grass_cmd_history.txt", wildcard=wildcard,
             style=wx.SAVE|wx.FD_OVERWRITE_PROMPT)
 
@@ -1225,7 +1234,7 @@ class GMConsole(wx.Panel):
 
         dlg.Destroy()
 
-    def GetListOfCmdThreads(self, onlyAlive=False):
+    def GetListOfCmdThreads(self, onlyAlive=True):
         """Return list of command threads)"""
         list = []
         for t in self.cmdThreads:
@@ -1236,6 +1245,26 @@ class GMConsole(wx.Panel):
             list.append(t)
 
         return list
+
+    def OnResult(self, event):
+        """Show result status"""
+        if event.cmdThread is None:
+            # Thread aborted (using our convention of None return)
+            self.WriteCmdLog(_('Command aborted'),
+                             pid=self.cmdPID)
+        else:
+            # Process results here
+            self.WriteCmdLog(_('Command finished (%d sec)') % (time.time() - event.cmdThread.startTime),
+                             pid=self.cmdPID)
+
+        self.console_progressbar.SetValue(0) # reset progress bar on '0%'
+        if hasattr(self.parent.parent, "btn_run"): # menuform.mainFrame
+            dialog = self.parent.parent
+            dialog.btn_run.Enable(True)
+            if dialog.get_dcmd is None and \
+                   dialog.closebox.IsChecked():
+                time.sleep(1)
+                dialog.Close()
 
 class GMStdout:
     """GMConsole standard output
@@ -1291,7 +1320,7 @@ class GMStderr:
                 if value < 100:
                     self.gmgauge.SetValue(value)
                 else:
-                    self.gmgauge.SetValue(0) # reset progress bar on '100%'
+                    self.gmgauge.SetValue(0) # reset progress bar on '0%'
             elif 'GRASS_INFO_MESSAGE' in line:
                 type = 'message'
                 message += line.split(':')[1].strip()
@@ -1340,7 +1369,7 @@ class GMStc(wx.stc.StyledTextCtrl):
     Copyright: (c) 2005-2007 Jean-Michel Fauth
     Licence:   GPL
     """    
-    def __init__(self, parent, id):
+    def __init__(self, parent, id, margin=False):
         wx.stc.StyledTextCtrl.__init__(self, parent, id)
         self.parent = parent
         
@@ -1375,23 +1404,25 @@ class GMStc(wx.stc.StyledTextCtrl):
         self.StyleSetSpec(self.StyleWarning, self.StyleWarningSpec)
         self.StyleSetSpec(self.StyleMessage, self.StyleMessageSpec)
         self.StyleSetSpec(self.StyleUnknown, self.StyleUnknownSpec)
-        
+
         #
-        # margin widths
+        # line margins
         #
-        self.SetMarginWidth(0, 0)
+        # TODO print number only from cmdlog
         self.SetMarginWidth(1, 0)
         self.SetMarginWidth(2, 0)
+        if margin:
+            self.SetMarginType(0, wx.stc.STC_MARGIN_NUMBER)
+            self.SetMarginWidth(0, 30)
+        else:
+            self.SetMarginWidth(0, 0)
 
         #
         # miscellaneous
         #
-        self.SetMarginLeft(2)
         self.SetViewWhiteSpace(False)
         self.SetTabWidth(4)
         self.SetUseTabs(False)
-        # self.SetEOLMode(wx.stc.STC_EOL_CRLF)
-        # self.SetViewEOL(True)
         self.UsePopUp(True)
         self.SetSelBackground(True, "#FFFF00")
         self.SetUseHorizontalScrollBar(True)
@@ -1469,7 +1500,7 @@ class LoadMapLayersDialog(wx.Dialog):
         bodySizer.AddGrowableRow(2)
         
         # layer type
-        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Layer type:")),
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Map layer type:")),
                       flag=wx.ALIGN_CENTER_VERTICAL,
                       pos=(0,0))
 
@@ -1483,9 +1514,10 @@ class LoadMapLayersDialog(wx.Dialog):
         bodySizer.Add(item=wx.StaticText(parent=self, label=_("Mapset:")),
                       flag=wx.ALIGN_CENTER_VERTICAL,
                       pos=(1,0))
+
         self.mapset = wx.ComboBox(parent=self, id=wx.ID_ANY,
                                   style=wx.CB_SIMPLE | wx.CB_READONLY,
-                                  choices=utils.ListOfMapsets()[0],
+                                  choices=UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True),
                                   size=(200,-1))
         self.mapset.SetStringSelection(grassenv.GetGRASSVariable("MAPSET"))
         bodySizer.Add(item=self.mapset,

@@ -27,7 +27,8 @@ extern "C" {
    \param move_x,move_y,move_z direction for moving vertex
    \param bgmap  map of background map or NULL
    \param snap snap mode (see vector/v.edit/lib/vedit.h)
-   \param thresh threshold value to identify vertex position
+   \param thresh_coords threshold value to identify vertex position
+   \param thresh_snap threshold value to snap moved vertex
 
    \param 1 vertex moved
    \param 0 nothing changed
@@ -35,7 +36,8 @@ extern "C" {
 */
 int Digit::MoveVertex(double x, double y, double z,
 		      double move_x, double move_y, double move_z,
-		      const char *bgmap, int snap, double thresh) {
+		      const char *bgmap, int snap,
+		      double thresh_coords, double thresh_snap) {
 
     int ret;
     struct line_pnts *point;
@@ -63,7 +65,7 @@ int Digit::MoveVertex(double x, double y, double z,
     /* move only first found vertex in bbox */
     ret = Vedit_move_vertex(display->mapInfo, BgMap, nbgmaps, 
 			    display->selected,
-			    point, thresh,
+			    point, thresh_coords, thresh_snap,
 			    move_x, move_y, move_z,
 			    1, snap); 
 

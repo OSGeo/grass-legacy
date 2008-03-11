@@ -68,6 +68,7 @@ from digit import DigitZBulkDialog    as DigitZBulkDialog
 from digit import GV_LINES            as Digit_Lines_Type
 from debug import Debug               as Debug
 from icon  import Icons               as Icons
+from preferences import globalSettings as UserSettings
 
 import images
 imagepath = images.__path__[0]
@@ -391,7 +392,7 @@ class BufferedWindow(wx.Window):
 
         Debug.msg(4, "BufferedWindow.OnPaint(): redrawAll=%s" % self.redrawAll)
 
-        dc = wx.BufferedPaintDC(self, self._buffer)
+        dc = wx.BufferedPaintDC(self, self.buffer)
 
         # we need to clear the dc BEFORE calling PrepareDC
         #bg = wx.Brush(self.GetBackgroundColour())
@@ -414,9 +415,9 @@ class BufferedWindow(wx.Window):
             if self.pdcVector:
                 self.pdcVector.DrawToDCClipped(dc, rgn)
 
-            self._bufferLast = None
+            self.bufferLast = None
         else: # do not redraw pdc and pdcVector
-            if self._bufferLast is None:
+            if self.bufferLast is None:
                 # draw to the dc
                 self.pdc.DrawToDC(dc)
 
@@ -424,11 +425,11 @@ class BufferedWindow(wx.Window):
                     self.pdcVector.DrawToDC(dc)
 
                 # store buffered image
-                # self._bufferLast = wx.BitmapFromImage(self._buffer.ConvertToImage())
-                self._bufferLast = dc.GetAsBitmap(wx.Rect(0, 0, self.Map.width, self.Map.height))
+                # self.bufferLast = wx.BitmapFromImage(self.buffer.ConvertToImage())
+                self.bufferLast = dc.GetAsBitmap(wx.Rect(0, 0, self.Map.width, self.Map.height))
 
             pdcLast = wx.PseudoDC()
-            pdcLast.DrawBitmap(bmp=self._bufferLast, x=0, y=0)
+            pdcLast.DrawBitmap(bmp=self.bufferLast, x=0, y=0)
             pdcLast.DrawToDC(dc)
 
         # draw temporary object on the foreground
@@ -452,8 +453,8 @@ class BufferedWindow(wx.Window):
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
         # a file, or whatever.
-        self._buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1,self.Map.height))
-        #self._buffer = wx.EmptyBitmap(mwidth, mheight)
+        self.buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1,self.Map.height))
+        #self.buffer = wx.EmptyBitmap(mwidth, mheight)
 
         # get the image to be rendered
         self.img = self.GetImage()
@@ -488,11 +489,11 @@ class BufferedWindow(wx.Window):
         This draws the psuedo DC to a buffer that
         can be saved to a file.
         """
-        dc = wx.BufferedPaintDC(self, self._buffer)
+        dc = wx.BufferedPaintDC(self, self.buffer)
         self.pdc.DrawToDC(dc)
         if self.pdcVector:
             self.pdcVector.DrawToDC(dc)
-        self._buffer.SaveFile(FileName, FileType)
+        self.buffer.SaveFile(FileName, FileType)
 
     def GetOverlay(self):
         """
@@ -529,17 +530,33 @@ class BufferedWindow(wx.Window):
         """
         Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
+
+        @param render render map layer composition
+        @param renderVector render vector map layer (digitizer)
+        @param counter reference to layer counter (progress bar)
         """
 
-        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s" % \
-                   (render, renderVector))
+        start = time.clock()
+
+        if self.img is None:
+            render = True
+
+        #
+        # initialize process bar
+        #
+        if render is True or renderVector is True:
+            self.parent.onRenderGauge.Show()
+            if self.parent.onRenderGauge.GetRange() > 0:
+                self.parent.onRenderGauge.SetValue(1)
+                self.parent.onRenderTimer.Start(100)
+            self.parent.onRenderCounter = 0
 
         #
         # render background image if needed
         #
-        if render or self.img == None:
+        if render:
             self.Map.ChangeMapSize(self.GetClientSize())
-            self.mapfile = self.Map.Render(force=True)
+            self.mapfile = self.Map.Render(force=True, mapWindow=self.parent)
             self.img = self.GetImage() # id=99
             self.resize = False
 
@@ -618,11 +635,23 @@ class BufferedWindow(wx.Window):
         if len(self.polycoords) > 0:
             self.DrawLines(self.pdcTmp)
 
+        stop = time.clock()
+
+        #
+        # hide process bar
+        #
+        if self.parent.onRenderGauge.GetRange() > 0:
+            self.parent.onRenderTimer.Stop()
+        self.parent.onRenderGauge.Hide()
+
         #
         # update statusbar
         #
         self.Map.SetRegion()
         self.parent.StatusbarUpdate()
+
+        Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%g" % \
+                   (render, renderVector, (stop-start)))
 
         return True
 
@@ -641,7 +670,7 @@ class BufferedWindow(wx.Window):
         dc.SetBackground(wx.Brush("White"))
         dc.Clear()
 
-        self.dragimg = wx.DragImage(self._buffer)
+        self.dragimg = wx.DragImage(self.buffer)
         self.dragimg.BeginDrag((0, 0), self)
         self.dragimg.GetImageRect(moveto)
         self.dragimg.Move(moveto)
@@ -836,7 +865,9 @@ class BufferedWindow(wx.Window):
             # dragging anything else - rubber band box or line
             else:
                 self.mouse['end'] = event.GetPositionTuple()[:]
-                self.MouseDraw(pdc=self.pdcTmp)
+                if event.LeftIsDown():
+                    # draw box only when left mouse button is pressed
+                    self.MouseDraw(pdc=self.pdcTmp)
 
         # double click
         elif event.ButtonDClick():
@@ -887,7 +918,7 @@ class BufferedWindow(wx.Window):
                 map = digitToolbar.layers[digitToolbar.layerSelectedID].name
             except:
                 map = None
-                dlg = wx.MessageDialog(self, _("No vector map layer selected for editing"),
+                dlg = wx.MessageDialog(self, _("No vector map selected for editing."),
                                        _("Error"), wx.OK | wx.ICON_ERROR)
                 dlg.ShowModal()
                 dlg.Destroy()
@@ -919,10 +950,11 @@ class BufferedWindow(wx.Window):
                     self.UpdateMap(render=False) # redraw map
 
                     # add new record into atribute table
-                    if digitClass.settings["addRecord"]:
+                    if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
                         # select attributes based on layer and category
                         cats = {}
-                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
+                        cats[UserSettings.Get(group='vdigit', key="layer", subkey='value')] = \
+                                                              (UserSettings.Get(group='vdigit', key="category", subkey='value'), )
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                    cats=cats,
                                                                    pos=posWindow,
@@ -960,7 +992,7 @@ class BufferedWindow(wx.Window):
                 self.moveIds   = [] 
                 if digitToolbar.action in ["moveVertex", "editLine"]:
                     # set pen
-                    self.pen = self.polypen = wx.Pen(colour=digitClass.settings["symbolHighlight"][1],
+                    self.pen = self.polypen = wx.Pen(colour=UserSettings.Get(group='vdigit', key="symbolHighlight", subkey='color'),
                                                      width=2, style=wx.SHORT_DASH)
                     self.pdcTmp.SetPen(self.polypen)
 
@@ -968,7 +1000,7 @@ class BufferedWindow(wx.Window):
                 pass
 
             elif digitToolbar.action in ["displayAttrs", "displayCats"]:
-                qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
+                qdist = digitClass.driver.GetThreshold(type='selectThresh')
                 coords = (east, north)
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)
@@ -1169,7 +1201,13 @@ class BufferedWindow(wx.Window):
             pos2 = self.Pixel2Cell(self.mouse['end'])
 
             if hasattr(self, "moveBegin"):
-                self.moveCoords = pos2
+                if len(digitClass.driver.GetSelected()) == 0:
+                    self.moveCoords = pos2
+                else:
+                    dx = pos2[0] - pos1[0]
+                    dy = pos2[1] - pos1[1]
+                    self.moveCoords = (self.moveCoords[0] + dx,
+                                       self.moveCoords[1] + dy)
                 # eliminate initial mouse moving efect
                 self.mouse['begin'] = self.mouse['end'] 
 
@@ -1241,12 +1279,16 @@ class BufferedWindow(wx.Window):
 
                 else:
                     # -> moveLine || deleteLine, etc. (select by point/box)
-                    nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
-                                                                   digitClass.GetSelectType())
-                    if nselected == 0:
-                        if digitClass.driver.SelectLineByPoint(pos1,
-                                                               digitClass.GetSelectType()) is not None:
-                            nselected = 1
+                    if digitToolbar.action == 'moveLine' and \
+                           len(digitClass.driver.GetSelected()) > 0:
+                        nselected = 0
+                    else:
+                        nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
+                                                                       digitClass.GetSelectType())
+                        if nselected == 0:
+                            if digitClass.driver.SelectLineByPoint(pos1,
+                                                                   digitClass.GetSelectType()) is not None:
+                                nselected = 1
 
                 if nselected > 0:
                     if digitToolbar.action in ["moveLine", "moveVertex"]:
@@ -1285,7 +1327,7 @@ class BufferedWindow(wx.Window):
                                        size=5)
 
             elif digitToolbar.action == "copyLine":
-                if digitClass.settings['backgroundMap'] == '':
+                if UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value') == '':
                     # no background map -> copy from current vector map layer
                     nselected = digitClass.driver.SelectLinesByBox(pos1, pos2,
                                                                    digitClass.GetSelectType())
@@ -1299,12 +1341,12 @@ class BufferedWindow(wx.Window):
                     # copy features from background map
                     self.copyIds = digitClass.SelectLinesFromBackgroundMap(pos1, pos2)
                     if len(self.copyIds) > 0:
-                        color = digitClass.settings['symbolHighlight'][1]
+                        color = UserSettings.Get(group='vdigit', key='symbolHighlight', subkey='color')
                         colorStr = str(color[0]) + ":" + \
                             str(color[1]) + ":" + \
                             str(color[2]) + ":"
                         dVectTmp = ['d.vect',
-                                    'map=%s' % digitClass.settings['backgroundMap'],
+                                    'map=%s' % UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value'),
                                     'cats=%s' % utils.ListOfCatsToRange(self.copyIds),
                                     '-i',
                                     'color=%s' % colorStr,
@@ -1417,6 +1459,29 @@ class BufferedWindow(wx.Window):
                 r.Inflate(4,4)
                 self.RefreshRect(r, False)
 
+        digitToolbar = self.parent.digittoolbar
+        if digitToolbar:
+            digitClass = self.parent.digit
+            # digitization tool (confirm action)
+            if digitToolbar.action in ["moveLine", "moveVertex"] and \
+                    hasattr(self, "moveBegin"):
+
+                pTo = self.Pixel2Cell(event.GetPositionTuple())
+                pFrom = self.moveCoords
+                move = (pTo[0]-pFrom[0], pTo[1]-pFrom[1])
+                
+                if digitToolbar.action == "moveLine":
+                    # move line
+                    digitClass.MoveSelectedLines(move)
+                elif digitToolbar.action == "moveVertex":
+                    # move vertex
+                    digitClass.MoveSelectedVertex(pFrom,
+                                                  move)
+
+                del self.moveBegin
+                del self.moveCoords
+                del self.moveIds
+
         event.Skip()
 
     def OnRightUp(self, event):
@@ -1437,7 +1502,7 @@ class BufferedWindow(wx.Window):
                     map = digitToolbar.layers[digitToolbar.layerSelectedID].name
                 except:
                     map = None
-                    dlg = wx.MessageDialog(self, _("No vector map layer is selected"),
+                    dlg = wx.MessageDialog(self, _("No vector map selected for editing."),
                                            _("Error"), wx.OK | wx.ICON_ERROR)
                     dlg.ShowModal()
                     dlg.Destroy()
@@ -1458,14 +1523,15 @@ class BufferedWindow(wx.Window):
                     self.UpdateMap(render=False)
 
                     # add new record into atribute table
-                    if digitClass.settings["addRecord"]:
+                    if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
                         offset   = 5
                         posWindow = self.ClientToScreen((position[0] + offset,
                                                          position[1] + offset))
 
                         # select attributes based on layer and category
                         cats = {}
-                        cats[digitClass.settings["layer"]] = (digitClass.settings["category"],)
+                        cats[UserSettings.Get(group='vdigit', key="layer", subkey='value')] = \
+                                                              (UserSettings.Get(group='vdigit', key="category", subkey='value'), )
                         addRecordDlg = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                    cats=cats,
                                                                    pos=posWindow,
@@ -1482,24 +1548,6 @@ class BufferedWindow(wx.Window):
             elif digitToolbar.action == "deleteLine":
                 # -> delete selected vector features
                 digitClass.DeleteSelectedLines()
-            elif digitToolbar.action in ["moveLine", "moveVertex"] and \
-                    hasattr(self, "moveBegin"):
-
-                pTo = self.Pixel2Cell(event.GetPositionTuple())
-                pFrom = self.moveCoords
-                move = (pTo[0]-pFrom[0], pTo[1]-pFrom[1])
-
-                if digitToolbar.action == "moveLine":
-                    # move line
-                    digitClass.MoveSelectedLines(move)
-                elif digitToolbar.action == "moveVertex":
-                    # move vertex
-                    digitClass.MoveSelectedVertex(pFrom,
-                                                  move)
-
-                del self.moveBegin
-                del self.moveCoords
-                del self.moveIds
             elif digitToolbar.action == "splitLine":
                 # split line
                 digitClass.SplitLine(self.Pixel2Cell(self.mouse['begin']))
@@ -1910,7 +1958,12 @@ class BufferedWindow(wx.Window):
         if layer.type in ('raster', 'rgb', 'his', 'shaded', 'arrow'):
             self.Map.region = self.Map.GetRegion(rast="%s" % layer.name)
         elif layer.type in ('vector', 'thememap', 'themechart'):
-            self.Map.region = self.Map.GetRegion(vect="%s" % layer.name)
+            if self.parent.digit and layer.name == self.parent.digit.map and \
+               self.parent.digit.type == 'vdigit':
+                w, s, b, e, n, t = self.parent.digit.driver.GetMapBoundingBox()
+                self.Map.region = self.Map.GetRegion(n=n, s=s, w=w, e=e)
+            else:
+                self.Map.region = self.Map.GetRegion(vect="%s" % layer.name)
         else:
             return
 
@@ -1984,7 +2037,8 @@ class BufferedWindow(wx.Window):
 
         wind = dlg.wind
 
-        p = gcmd.Command (["g.region", "-ugp", "region=%s" % wind])
+        p = gcmd.Command (["g.region",
+	                   "-ugp", "region=%s" % wind])
 
         if p.returncode == 0:
             output = p.ReadStdOutput()
@@ -2023,7 +2077,8 @@ class BufferedWindow(wx.Window):
         if windpath and not os.path.exists(windpath):
             self.SaveRegion(wind)
         elif windpath and os.path.exists(windpath):
-            overwrite = wx.MessageBox(_("Region file <%s>already exists.\nDo you want to overwrite it?") % (wind),
+            overwrite = wx.MessageBox(_("Region file <%s> already exists. "
+                                        "Do you want to overwrite it?") % (wind),
                                       _("Warning"), wx.YES_NO)
             if (overwrite == wx.YES):
                 self.SaveRegion(wind)
@@ -2126,7 +2181,8 @@ class MapFrame(wx.Frame):
         #
         self.SetClientSize(size)
         self.iconsize = (16, 16)
-        self.SetIcon(wx.Icon(os.path.join(imagepath,'grass.map.gif'), wx.BITMAP_TYPE_ANY))
+
+        self.SetIcon(wx.Icon(os.path.join(globalvar.ETCDIR, 'grass_map.ico'), wx.BITMAP_TYPE_ICO))
 
         #
         # Fancy gui
@@ -2155,6 +2211,7 @@ class MapFrame(wx.Frame):
                                                  "Geometry",
                                                  "Map scale"])
         self.statusText = "Coordinates"
+	self.toggleStatus.SetStringSelection(self.statusText)
         self.statusbar.Bind(wx.EVT_CHOICE, self.OnToggleStatus, self.toggleStatus)
         # auto-rendering checkbox
         self.autoRender = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
@@ -2176,6 +2233,12 @@ class MapFrame(wx.Frame):
                                     size=(150, -1))
         self.mapScale.Hide()
         self.statusbar.Bind(wx.EVT_TEXT_ENTER, self.OnChangeMapScale, self.mapScale)
+        # on-render gauge
+        self.onRenderGauge = wx.Gauge(parent=self.statusbar, id=wx.ID_ANY,
+                                      range=0, style=wx.GA_HORIZONTAL)
+        self.onRenderGauge.Hide()
+        self.Bind(wx.EVT_TIMER, self.TimerOnRender)
+        self.onRenderTimer = wx.Timer(self)
 
         self.Map.SetRegion() # set region
 
@@ -2361,18 +2424,21 @@ class MapFrame(wx.Frame):
 
         event.Skip()
 
-    def ReDraw(self, event):
+    def OnDraw(self, event):
         """
         Redraw button clicked
         """
-        Debug.msg(3, "BufferedWindow.ReDraw():")
         self.MapWindow.UpdateMap(render=False)
 
-    def ReRender(self, event):
+    def TimerOnRender(self, event):
+        """Update process bar"""
+        self.onRenderGauge.SetValue(self.onRenderCounter)
+
+    def OnRender(self, event):
         """
         Rerender button clicked
         """
-        Debug.msg(3, "BufferedWindow.ReRender():")
+        # redraw map composition
         qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)
         for layer in qlayer:
             self.Map.DeleteLayer(layer)
@@ -2478,7 +2544,7 @@ class MapFrame(wx.Frame):
     def OnToggleRender(self, event):
         """Enable/disable auto-rendering"""
         if self.autoRender.GetValue():
-            self.ReRender(None)
+            self.OnRender(None)
 
     def OnToggleShowRegion(self, event):
         """Show/Hide extent in map canvas"""
@@ -2490,7 +2556,7 @@ class MapFrame(wx.Frame):
 
         # redraw map if auto-rendering is enabled
         if self.autoRender.GetValue():
-            self.ReRender(None)
+            self.OnRender(None)
 
 
     def OnToggleStatus(self, event):
@@ -2600,20 +2666,27 @@ class MapFrame(wx.Frame):
         # reposition checkbox
         widgets = [(0, self.showRegion),
                    (0, self.mapScale),
+                   (0, self.onRenderGauge),
                    (1, self.toggleStatus),
                    (2, self.autoRender)]
         for idx, win in widgets:
             rect = self.statusbar.GetFieldRect(idx)
-            if idx == 0: # show region / mapscale
+            if idx == 0: # show region / mapscale / process bar
+                # -> size
                 wWin, hWin = win.GetBestSize()
+                if win == self.onRenderGauge:
+                    wWin = rect.width - 6
+                # -> position
                 if win == self.showRegion:
-                    x, y = rect.x + rect.width - wWin, rect.y-1
+                    x, y = rect.x + rect.width - wWin, rect.y - 1
                 else:
-                    x, y = rect.x + 3, rect.y-1
-                w, h = wWin, rect.height+2
+                    x, y = rect.x + 3, rect.y - 1
+                w, h = wWin, rect.height + 2
             else: # choice || auto-rendering
-                x, y = rect.x, rect.y-1
-                w, h = rect.width, rect.height+2
+                x, y = rect.x, rect.y - 1
+                w, h = rect.width, rect.height + 2
+		if idx == 2:
+		    x += 5
 
             win.SetPosition((x, y))
             win.SetSize((w, h))
@@ -2723,9 +2796,8 @@ class MapFrame(wx.Frame):
 
         if not self.tree.GetSelections():
             dlg = wx.MessageDialog(parent=self,
-                                   message=_('You must select a map layer in the '
-                                             'Layer Manager to query'),
-                                   caption=_('Nothing to query'),
+                                   message=_('No map layer selected for querying.'),
+                                   caption=_('Message'),
                                    style=wx.OK | wx.ICON_INFORMATION)
             dlg.ShowModal()
             dlg.Destroy()
@@ -2997,7 +3069,7 @@ class MapFrame(wx.Frame):
                         ovltype=ovltype,
                         cmd='d.barscale',
                         drawid=id,
-                        checktxt = _("Show/hide scale and arrow"),
+                        checktxt = _("Show/hide scale and North arrow"),
                         ctrltxt = _("scale object"),
                         params = params)
 
@@ -3231,8 +3303,8 @@ class DecDialog(wx.Dialog):
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Drag %s with mouse in pointer mode\nto position. "
-                                      "Double-click to change options" % ctrltxt))
+                              label=_("Drag %s with mouse in pointer mode to position. "
+                                      "Double-click to change options." % ctrltxt))
         box.Add(item=label, proportion=0,
                 flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
         sizer.Add(item=box, proportion=0,
@@ -3492,7 +3564,7 @@ class MapApp(wx.App):
     def watcher(self):
         """Redraw, if new layer appears"""
         if self.redraw:
-            self.mapFrm.ReDraw(None)
+            self.mapFrm.OnDraw(None)
         self.redraw = False
         return
 # end of class MapApp

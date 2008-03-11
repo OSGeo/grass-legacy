@@ -208,11 +208,10 @@ class DatabasePage(TitledPage):
             error = _("Location already exists in GRASS Database.")
 
         if error != '':
-            dlg = wx.MessageDialog(parent=self, message=_("Unable to create location <%s>.%s"
-                                                          "%s" % \
-                                                              (str(self.tlocation.GetValue()),
-                                                               os.linesep,
-                                                               error)),
+            dlg = wx.MessageDialog(parent=self, message="%s <%s>.%s%s" % (_("Unable to create location"),
+                                                                          str(self.tlocation.GetValue()),
+                                                                          os.linesep,
+                                                                          error),
                                    caption=_("Error"),  style=wx.OK | wx.ICON_ERROR)
             
             dlg.ShowModal()
@@ -245,7 +244,7 @@ class CoordinateSystemPage(TitledPage):
                                      label=_("Select coordinate system"),
                                      style = wx.RB_GROUP)
         self.radio2 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Select EPSG code for coordinate system"))
+                                     label=_("Select EPSG code of coordinate system"))
         self.radio3 = wx.RadioButton(parent=self, id=wx.ID_ANY,
                                      label=_("Use coordinate system of selected "
                                              "georeferenced file"))
@@ -253,7 +252,7 @@ class CoordinateSystemPage(TitledPage):
                                      label=_("Create custom PROJ.4 parameters "
                                              "string for coordinate system"))
         self.radio5 = wx.RadioButton(parent=self, id=wx.ID_ANY,
-                                     label=_("Create arbitrary non-earth "
+                                     label=_("Use arbitrary non-earth "
                                              "coordinate system (XY)"))
         # layout
         self.sizer.AddGrowableCol(1)
@@ -344,7 +343,7 @@ class ProjectionsPage(TitledPage):
                        flag=wx.ALIGN_RIGHT | wx.EXPAND | wx.ALL,
                        border=5, pos=(1, 2))
 
-        self.sizer.Add(item=self.MakeLabel(_("Search in projection description:")),
+        self.sizer.Add(item=self.MakeLabel(_("Search in description:")),
                        flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL | wx.ALL,
                        border=5, pos=(2, 1))
         self.sizer.Add(item=self.searchb,
@@ -525,7 +524,7 @@ class ItemList(wx.ListCtrl,
             
         except StandardError, e:
             wx.MessageBox(parent=self,
-                          message=_("Unable to read list: %s ") % e,
+                          message=_("Unable to read list: %s") % e,
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
 
     def OnColumnClick(self, event):
@@ -1114,7 +1113,7 @@ class GeoreferencedFilePage(TitledPage):
     def OnBrowse(self, event):
         """Choose file"""
         dlg = wx.FileDialog(self,
-                            _("Choose a georeferenced file"),
+                            _("Select georeferenced file"),
                             os.getcwd(), "", "*.*", wx.OPEN)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
@@ -1145,7 +1144,7 @@ class EPSGPage(TitledPage):
                                     style=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
         self.lcode= self.MakeLabel(_("EPSG code:"),
                                     style=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
-        self.lsearch = self.MakeLabel(_("Search in code description:"),
+        self.lsearch = self.MakeLabel(_("Search in description:"),
                                        style=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
 
         # text input
@@ -1317,7 +1316,7 @@ class EPSGPage(TitledPage):
             self.epsglist.Populate(data, update=True)
         except StandardError, e:
             wx.MessageBox(parent=self,
-                          message=_("Unable to read EPGS codes: %s ") % e,
+                          message=_("Unable to read EPGS codes: %s") % e,
                           caption=_("Error"),  style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
 
 class CustomPage(TitledPage):
@@ -1436,13 +1435,13 @@ class SummaryPage(TitledPage):
         self.sizer.Add(item=(10,20),
                        flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL,
                        border=5, pos=(5, 0), span=(1, 2))
-        self.sizer.AddGrowableRow(6)
-        self.sizer.Add(item=self.MakeLabel(_("You can set the default extents "
-                                             "and resolution after creating new location%s"
-                                             "or you can set them during a working session.") % os.linesep,
-                                           style=wx.ALIGN_CENTER),
-                       flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(6, 0),
-                       span=(1, 2))
+        # self.sizer.AddGrowableRow(6)
+        #self.sizer.Add(item=self.MakeLabel(_("You can set the default extents "
+        #                                     "and resolution after creating new location%s"
+        #                                     "or you can set them during a working session.") % os.linesep,
+        #                                   style=wx.ALIGN_CENTER),
+        #               flag=wx.ALIGN_CENTRE | wx.ALL, border=5, pos=(6, 0),
+        #               span=(1, 2))
 
     def OnEnterPage(self,event):
         """
@@ -1460,7 +1459,7 @@ class SummaryPage(TitledPage):
             self.lproj4string.SetLabel('')
         else:
             self.lproj4string.Show()
-            self.lproj4stringLabel.SetLabel(_("Proj4 definition:"))
+            self.lproj4stringLabel.SetLabel(_("PROJ.4 definition:"))
             if coordsys == 'proj':
                 self.lproj4string.SetLabel(self.parent.CreateProj4String())
             else:
@@ -1502,7 +1501,7 @@ class SummaryPage(TitledPage):
 
     def OnFinish(self, event):
         dlg = wx.MessageDialog(parent=self.wizard,
-                               message=_("Do you want to create new location '%s'?") % location,
+                               message=_("Do you want to create GRASS location <%s>?") % location,
                                caption=_("Create new location?"),
                                style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
 
@@ -1614,7 +1613,7 @@ class LocationWizard(wx.Object):
                 dlg = wx.MessageDialog(parent=self.parent,
                                        message=_("Do you want to set the default "
                                                  "region extents and resolution now?"),
-                                       caption=_("New location '%s' created") % self.location,
+                                       caption=_("Location <%s> created") % self.location,
                                        style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
                 dlg.CenterOnScreen()
                 if dlg.ShowModal() == wx.ID_YES:
@@ -1627,7 +1626,7 @@ class LocationWizard(wx.Object):
 
             elif success == False:
                 dlg = wx.MessageDialog(parent=self.wizard,
-                                       message=_("Unable to create new location."),
+                                       message="%s." % _("Unable to create new location"),
                                        caption=_("Error"),
                                        style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 if dlg.ShowModal() == wx.ID_OK:
@@ -1636,10 +1635,9 @@ class LocationWizard(wx.Object):
                 pass
         else:
             win = wx.MessageBox(parent=self.parent,
-                          message=_("Location wizard canceled.%s"
-                                    "New location not created.") % \
-                              os.linesep,
-                          caption=_("Location wizard"))
+                                message=_("Location wizard canceled. "
+                                          "Location not created."),
+                                caption=_("Location wizard"))
 
     def __readData(self):
         """Get georeferencing information from tables in $GISBASE/etc"""
@@ -1726,9 +1724,11 @@ class LocationWizard(wx.Object):
         # location already exists?
         if os.path.isdir(os.path.join(database,location)):
             dlg = wx.MessageDialog(parent=self.wizard,
-                                   message=_("Unable to create new location: %s already exists")
-                                             % os.path.join(database, location),
-                                   caption=_("ERROR"),
+                                   message="%s <%s>: %s" % \
+                                       (_("Unable to create new location"),
+                                        os.path.join(database, location),
+                                        _("Location already exists in GRASS Database.")),
+                                   caption=_("Error"),
                                    style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
             dlg.Destroy()
@@ -1801,7 +1801,7 @@ class LocationWizard(wx.Object):
 
         except OSError, e:
             dlg = wx.MessageDialog(parent=self.wizard,
-                                   message=_("Unable to create new location: %s") % e,
+                                   message="%s: %s" % (_("Unable to create new location"), e),
                                    caption=_("Error"),
                                    style=wx.OK | wx.ICON_ERROR)
             dlg.ShowModal()
@@ -1902,7 +1902,7 @@ class LocationWizard(wx.Object):
         # should not happend
         if epsgcode == '':
             wx.MessageBox(parent=self,
-                          message=_("EPSG code missing. Unable to create new location"),
+                          message="%s: %s" % (_("Unable to create new location"), _("EPSG code missing.")),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
             return False
         
@@ -1921,7 +1921,7 @@ class LocationWizard(wx.Object):
             dtrans = ''
             # open a dialog to select datum transform number
             dlg = wx.TextEntryDialog(self.wizard, dtoptions,
-                                     caption=_('Select the number of a datum transformation to use'),
+                                     caption=_('Select datum transformation'),
                                      defaultValue='1',
                                          style=wx.TE_WORDWRAP | wx.MINIMIZE_BOX | wx.MAXIMIZE_BOX|
                                      wx.RESIZE_BORDER |wx.VSCROLL |
@@ -1935,7 +1935,7 @@ class LocationWizard(wx.Object):
                 if dtrans != '':
                     dlg.Destroy()
                 else:
-                    wx.MessageBox(_('You must select a datum transform'))
+                    wx.MessageBox(_('Datum transform is required.'))
                     return False
 
             cmdlist = ['g.proj', '-c',
@@ -1966,7 +1966,10 @@ class LocationWizard(wx.Object):
         # this should not happen
         if not georeffile or not os.path.isfile(georeffile):
             dlg = wx.MessageBox(parent=self.wizard,
-                                message=_("Unable to create new location: could not find file %s") % georeffile,
+                                message="%s: %s ('%s')" % \
+                                    (_("Unable to create new location"),
+                                     _("file not found"),
+                                     georeffile),
                                 caption=("Error"), style=wx.OK | wx.ICON_ERROR)
             return False
 
@@ -2031,7 +2034,7 @@ class RegionDef(BaseClass, wx.Frame):
         # buttons
         #
         self.bset = self.MakeButton(_("&Set region"), id=wx.ID_OK)
-        self.bcancel = self.MakeButton(_("Cancel"), id=wx.ID_CANCEL)
+        self.bcancel = wx.Button(self, id=wx.ID_CANCEL)
         self.bset.SetDefault()
 
         #
@@ -2063,7 +2066,7 @@ class RegionDef(BaseClass, wx.Frame):
                 gcmd.Command(cmdlist)
         else:
             dlg = wx.MessageBox(parent=self,
-                                message=_('A valid location must be selected'),
+                                message=_('Invalid location selected.'),
                                 caption=_("Error"), style=wx.ID_OK | wx.ICON_ERROR)
             return
 

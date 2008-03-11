@@ -43,7 +43,8 @@ public:
 
     int MoveVertex(double, double, double,
 		   double, double, double,
-		   const char*, int, double);
+		   const char*, int,
+		   double, double);
     int ModifyLineVertex(int, double, double, double,
 			 double);
 
