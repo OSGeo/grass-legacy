@@ -21,8 +21,8 @@ install_scripts:
 	$(INSTALL_DATA) icons/*.* $(ETCDIR)/icons/
 	$(INSTALL_DATA) icons/silk/* $(ETCDIR)/icons/silk/
 	$(INSTALL_DATA) images/* $(ETCDIR)/images/
-	$(INSTALL_DATA) scripts/* $(ETCDIR)/scripts/
 	$(INSTALL_DATA) gis_set.py wxgui.py README $(ETCDIR)/
+	$(INSTALL) -m 755 scripts/* $(ETCDIR)/scripts/	
 	$(INSTALL) -m 755 wxgui $(ETCDIR)/scripts/
 
 clean: cleansubdirs
