@@ -1748,7 +1748,7 @@ class DigitSettingsDialog(wx.Dialog):
         if self.snappingUnit.GetStringSelection() == "map units":
             threshold = value
         else:
-            threshold = self.parent.digit.driver.GetThreshold(value)
+            threshold = self.parent.digit.driver.GetThreshold(value=value)
 
         self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
                                    {'value' : threshold,
@@ -1760,7 +1760,7 @@ class DigitSettingsDialog(wx.Dialog):
         """Snapping units change -> update static text"""
         value = self.snappingValue.GetValue()
         units = self.snappingUnit.GetStringSelection()
-        threshold = self.parent.digit.driver.GetThreshold(value, units)
+        threshold = self.parent.digit.driver.GetThreshold(value=value, units=units)
 
         if units == "map units":
             self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
