@@ -70,7 +70,7 @@ int Vedit_snap_lines(struct Map_info *, struct Map_info **, int,
 /* vertex.c */
 int Vedit_move_vertex(struct Map_info *, struct Map_info **, int,
 		      struct ilist *,
-		      struct line_pnts*, double,
+		      struct line_pnts*, double, double,
 		      double, double, double,
 		      int, int);
 int Vedit_add_vertex(struct Map_info *Map, struct ilist *,

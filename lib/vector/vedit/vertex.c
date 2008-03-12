@@ -24,7 +24,8 @@
    \param[in] BgMap, nbgmaps list of background vector maps for snapping
    \param[in] List list of selected features
    \param[in] coord points location
-   \param[in] thresh threshold value (also size of bounding boxes) (>0)
+   \param[in] thresh_coords threshold value for selecting vector feature
+   \param[in] thresh_snap threshold value used for snapping
    \param[in] move_x,move_y,move_z direction (move_z is used when map is 3D)
    \param[in] move_first move only first vertex found in the bounding box
    \param[in] snap snapping mode (see vedit.h)
@@ -34,7 +35,7 @@
  */
 int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps,
 		      struct ilist *List,
-		      struct line_pnts* coord, double thresh,
+		      struct line_pnts* coord, double thresh_coords, double thresh_snap,
 		      double move_x, double move_y, double move_z,
 		      int move_first, int snap)
 {
@@ -93,7 +94,7 @@ int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps
 		    dist = Vect_points_distance (east, north, 0.0,
 						 x[k], y[k], z[k],
 						 WITHOUT_Z);
-		    if (dist <= thresh) {
+		    if (dist <= thresh_coords) {
 			G_debug (3, "Vedit_move_vertex(): line=%d; x=%f, y=%f -> x=%f, y=%f",
 				 line, x[k], y[k], x[k] + move_x, y[k] + move_y);
 			x[k] += move_x;
@@ -106,12 +107,12 @@ int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps
 			G_debug (3, "Vedit_move_vertex(): line=%d, point=%d", line, k);
 			
 			if (snap != NO_SNAP) {
-			    if (Vedit_snap_point(Map, line, &x[k], &y[k], &z[k], thresh,
+			    if (Vedit_snap_point(Map, line, &x[k], &y[k], &z[k], thresh_snap,
 						(snap == SNAPVERTEX) ? 1 : 0) == 0) {
 				/* check also background maps */
 				int bgi;
 				for (bgi = 0; bgi < nbgmaps; bgi++) {
-				    if (Vedit_snap_point(BgMap[bgi], line, &x[k], &y[k], &z[k], thresh,
+				    if (Vedit_snap_point(BgMap[bgi], line, &x[k], &y[k], &z[k], thresh_snap,
 							 (snap == SNAPVERTEX) ? 1 : 0))
 					moved[k] = 2;
 					break; /* snapped, don't continue */
@@ -135,7 +136,7 @@ int Vedit_move_vertex(struct Map_info *Map, struct Map_info **BgMap, int nbgmaps
 	    if ((type & GV_LINES) &&
 		Vect_points_distance(x[0], y[0], z[0],
 				     x[npoints-1], y[npoints-1], z[npoints-1],
-				     WITHOUT_Z) <= thresh) {
+				     WITHOUT_Z) <= thresh_snap) {
 
 		if (moved[0] == 1) { /* first node moved */
 		    x[0] = x[npoints-1];
