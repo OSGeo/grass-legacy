@@ -654,7 +654,7 @@ int main (int argc, char *argv[])
 		for ( j = 0; j < TCats->n_cats; j++) {
 		    if ( TCats->field[j] == to_field ) {
 			if ( tmp_tcat >= 0 ) 
-			    G_warning (_("More cats of to_layer"));
+			    G_warning (_("More cats found in to_layer (area=%d)"), area);
 			tmp_tcat = TCats->cat[j];
 		    }
 		}
