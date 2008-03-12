@@ -54,7 +54,9 @@ double max_distance(double maxdistance)
 	else
 	    maxd = yres;
 
-	G_important_message (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
+	/*
+	  G_important_message (_("Threshold distance set to %g map units (based on 2D resolution)"), maxd);
+	*/
     }
     else {
         maxd = maxdistance;
