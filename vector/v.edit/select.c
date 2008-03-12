@@ -34,15 +34,13 @@ static int merge_lists (struct ilist*, struct ilist*);
    \return list of newly selected features
 */
 struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
-			   struct GParams *params,
+			   struct GParams *params, double *thresh,
 			   struct ilist *List)
 {
     int layer, type;
-    double thresh;
 
     layer  = atoi (params -> fld -> answer);
     type   = Vect_option_to_types (params -> type);
-    thresh = atof (params -> maxdist -> answer);
 
     /* select by id's */
     if (params -> id -> answer != NULL) {
@@ -74,8 +72,9 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 	    i += 2;
 	}
 
+	G_verbose_message(_("Threshold value for coordinates is %.2f"), thresh[THRESH_COORDS]);
         sel_by_coordinates(Map,
-			   type, coords, thresh,
+			   type, coords, thresh[THRESH_COORDS],
 			   List);
 
 	Vect_destroy_line_struct(coords);
@@ -168,8 +167,9 @@ struct ilist *select_lines(struct Map_info *Map, enum mode action_mode,
 	    query_type = QUERY_DANGLE;
 	}
 
+	G_verbose_message(_("Threshold value for querying is %.2f"), thresh[THRESH_QUERY]);
 	Vedit_select_by_query(Map,
-			      type, layer, thresh, query_type,
+			      type, layer, thresh[THRESH_QUERY], query_type,
 			      List_tmp);
 
 	/* merge lists (only duplicate items) */

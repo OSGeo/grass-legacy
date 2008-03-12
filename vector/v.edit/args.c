@@ -111,10 +111,10 @@ int parser(int argc, char* argv[], struct GParams *params,
     params -> maxdist->key         = "thresh";
     params -> maxdist->type        = TYPE_DOUBLE;
     params -> maxdist->required    = NO;
-    params -> maxdist->multiple    = NO;
-    params -> maxdist->label       = _("Threshold distance");
+    params -> maxdist->multiple    = YES;
+    params -> maxdist->label       = _("Threshold distance (coords,snap,query)");
     params -> maxdist->description = _("'-1' for threshold based on the current resolution settings");
-    params -> maxdist->answer      = "-1";
+    params -> maxdist->answer      = "-1,0,0";
 
     params -> id = G_define_standard_option(G_OPT_V_CATS);
     params -> id->required    = NO;
