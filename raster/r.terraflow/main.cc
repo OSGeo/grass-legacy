@@ -324,8 +324,12 @@ void record_args(int argc, char **argv) {
     exit(1);
   }
 
+#ifdef __MINGW32__
+  strcpy(buf, ctime(&t));
+#else
   ctime_r(&t, buf);
   buf[24] = '\0';
+#endif
   stats->timestamp(buf);
   
   *stats << "Command Line: " << endl;
@@ -519,7 +523,8 @@ main(int argc, char *argv[]) {
  
   /* check STREAM path (the place where intermediate STREAMs are placed) */
   sprintf(buf, "%s=%s",STREAM_TMPDIR, opt->streamdir);
-  putenv(buf);
+  /* don't pass an automatic variable; putenv() isn't guaranteed to make a copy */
+  putenv(G_store(buf));
   if (getenv(STREAM_TMPDIR) == NULL) {
     fprintf(stderr, "%s:", STREAM_TMPDIR);
     G_fatal_error("not set");

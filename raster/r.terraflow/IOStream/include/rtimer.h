@@ -22,6 +22,38 @@
 
 /* $Id$ */
 
+#ifdef __MINGW32__
+
+#include <time.h>
+#include <stdio.h>
+#include <string.h>
+#include <strings.h>
+
+typedef struct {
+  time_t tv1, tv2;
+} Rtimer;
+
+#define rt_start(rt)				\
+  if((time(&(rt.tv1)) == ((time_t) -1))) {	\
+	perror("time");				\
+	exit(1);				\
+  }
+
+/* doesn't really stop, just updates endtimes */
+#define rt_stop(rt)								\
+  if((time(&(rt.tv2)) == ((time_t) -1))) {	\
+	perror("time");				\
+	exit(1);				\
+  }
+
+#define rt_u_useconds(rt)	rt_w_useconds(rt)
+
+#define rt_s_useconds(rt)	rt_w_useconds(rt)
+
+#define rt_w_useconds(rt)	(1.0e6 * (rt.tv2 - rt.tv1))
+
+#else /* __MINGW32__ */
+
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <stdio.h>
@@ -48,10 +80,6 @@ typedef struct {
         perror("rusage/gettimeofday");			\
         exit(1);								\
   }
-
-/* not required to be called, but makes values print as 0. 
-   obviously a hack */
-#define rt_zero(rt) bzero(&(rt),sizeof(Rtimer));
 	
 
 #define rt_u_useconds(rt)							\
@@ -72,12 +100,16 @@ typedef struct {
 	  - ((double)rt.tv1.tv_usec +			\
 		 (double)rt.tv1.tv_sec*1000000))
 
+#endif /* __MINGW32__ */
+
+/* not required to be called, but makes values print as 0. 
+   obviously a hack */
+#define rt_zero(rt) bzero(&(rt),sizeof(Rtimer));
+
 #define rt_seconds(rt) (rt_w_useconds(rt)/1000000)
 
 #define rt_sprint(buf, rt) rt_sprint_safe(buf,rt)
 
 char * rt_sprint_safe(char *buf, Rtimer rt);
-
-
 
 #endif /* RTIMER_H */
