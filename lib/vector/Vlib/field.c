@@ -281,21 +281,24 @@ struct field_info
 
     G_debug (2, "drv = %s db = %s", drv, db );
 
-    if ( !connection.driverName && !connection.databaseName ) { /* Set default values and create dbf db dir */
-	G_warning ( _("Default driver / database set to:\n"
-		      "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/") );
-	    
-	connection.driverName = "dbf";
-	connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
-	db_set_connection( &connection );
-	
-	sprintf ( buf, "%s/%s/%s/dbf", Map->gisdbase, Map->location, Map->mapset );
-	G__make_mapset_element ( "dbf" );
-    } else if ( !connection.driverName ) {
+
+    if ( !connection.driverName && !connection.databaseName ) {
+	/* Set default values and create dbf db dir */
+	db_set_default_connection();
+	db_get_connection(&connection);
+
+	G_warning(_("Default driver / database set to:\n"
+	    "driver: %s\ndatabase: %s"), connection.driverName,
+	    connection.databaseName);
+    }
+    /* they must be a matched pair, so if one is set but not the other
+        then give up and let the user figure it out */
+    else if ( !connection.driverName ) {
        G_fatal_error ( _("Default driver is not set") ); 
     } else if ( !connection.databaseName ) {
        G_fatal_error ( _("Default database is not set") ); 
     }
+
     drv = connection.driverName;
     db = connection.databaseName;
     
