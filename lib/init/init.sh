@@ -695,12 +695,11 @@ if [ "$GRASS_FONT_CAP" ] && [ ! -f "$GRASS_FONT_CAP" ] ; then
 fi
 
 # predefine DBF driver if DB connection not defined
-#  why is this needed ??
-# if [ ! -e "$LOCATION/VAR" ] ; then
-#   echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
-#   echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
-#   mkdir "$LOCATION"/dbf
-# fi
+if [ ! -e "$LOCATION/VAR" ] ; then
+   echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
+   echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
+   mkdir "$LOCATION"/dbf
+fi
 
 trap "" 2 3 15
 
