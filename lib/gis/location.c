@@ -26,8 +26,8 @@
  *
  * Returns the full UNIX path name of the current database
  * location. For example, if the user is working in location
- * <i>spearfish</i> in the <i>/usr/grass5/data</i> database directory,
- * this routine will return a string which looks like
+ * <i>spearfish</i> in the <i>/home/user/grassdata</i> database
+ * directory, this routine will return a string which looks like
  * <i>/home/user/grassdata/spearfish</i>.
  *
  *  \param
