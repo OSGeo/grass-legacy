@@ -23,7 +23,7 @@ It will create two files, python_grass6.py and _python_grass6.so.
    (python_grass6.pyc). The .pyc file is platform independent and may be
    safely shared among systems. Even so, it doesn't hurt to rebuild it
    ourselves while we still have write permissions and to make sure we
-   are using an up to date copy. (out of data copies will be ignored)
+   are using an up to date copy. (out of date copies will be ignored)
 
 5. It is useful to build the NumPtr module as well.
    - see README.GRASS in that directory for instructions
