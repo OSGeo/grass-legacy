@@ -89,8 +89,8 @@ fi
 
 if [ -z "$GIS_OPT_OUTPUT" ] ; then
   # file name laundery
-  TMPNAME="`echo $INPUT | tr -s '.' '_'`"
-  GIS_OPT_OUTPUT="`basename $TMPNAME`"
+  TMPNAME=`echo "$INPUT" | tr -s '.' '_'`
+  GIS_OPT_OUTPUT=`basename "$TMPNAME"`
 fi
 
 if [ -z "$GRASS_OVERWRITE" ] ; then

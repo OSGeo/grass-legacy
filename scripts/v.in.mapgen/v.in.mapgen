@@ -122,7 +122,7 @@ if [ $GIS_FLAG_F -eq 1 ] ; then
   #  tac $FILE | $AWK 'BEGIN { FS="," ; R=0 }
   #    $1~/\d*/   { printf("L %d\n", R) }
   #    $1~/   .*/ { printf(" %lf %lf\n", $2, $1) ; ++R }
-  #    $1~/END/   { }' | tac > $TMP
+  #    $1~/END/   { }' | tac > "$TMP"
 
   ## matlab format. Cleanse with NaN->nan and spaces to tabs
   tac "$FILE" | awk '{print $1 "\t" $2 "\t" $3}

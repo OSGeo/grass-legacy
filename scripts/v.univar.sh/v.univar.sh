@@ -170,14 +170,14 @@ END{
 
 if [ $GIS_FLAG_E -eq 1 ] ; then
   #preparations:
-  cat "$TMP" | sort -n > $TMP.sort
+  cat "$TMP" | sort -n > "$TMP.sort"
   NUMBER=`cat "$TMP.sort" | wc -l | awk '{print $1}'`
   ODDEVEN=`echo "$NUMBER" | awk '{print $1%2}'`
 
   # 0.25 quartile
   QUARTILE=0.25
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS $TMP.sort | tail -n 1`
+  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -n 1`
   echo "1st Quartile: $QELEMENT"
 
   #Calculate median
@@ -187,13 +187,13 @@ if [ $GIS_FLAG_E -eq 1 ] ; then
    EVENMEDIANNUMBER=`expr $NUMBER / 2`
    EVENMEDIANNUMBERPLUSONE=`expr $EVENMEDIANNUMBER + 1`
    # select two numbers
-   SELECTEDNUMBERS=`cat $TMP.sort | head -n $EVENMEDIANNUMBERPLUSONE | tail -n 2`
+   SELECTEDNUMBERS=`cat "$TMP.sort" | head -n $EVENMEDIANNUMBERPLUSONE | tail -n 2`
    RESULTEVENMEDIAN=`echo $SELECTEDNUMBERS | awk '{printf "%f", ($1 + $2)/2.0}'`
    echo "Median (even N): $RESULTEVENMEDIAN"
   else
    # odd
    ODDMEDIANNUMBER=`echo $NUMBER | awk '{printf "%d", int($1/2+.5)}'`
-   RESULTODDMEDIAN=`cat $TMP.sort | head -n $ODDMEDIANNUMBER | tail -n 1 | awk '{printf "%f", $1}'`
+   RESULTODDMEDIAN=`cat "$TMP.sort" | head -n $ODDMEDIANNUMBER | tail -n 1 | awk '{printf "%f", $1}'`
    echo "Median (odd N): $RESULTODDMEDIAN"
   fi
 
@@ -201,13 +201,13 @@ if [ $GIS_FLAG_E -eq 1 ] ; then
   # 0.75 quartile
   QUARTILE=0.75
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS $TMP.sort | tail -n 1`
+  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -n 1`
   echo "3rd Quartile: $QELEMENT"
 
   # 0.90 percentile
   QUARTILE=0.9
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-  QELEMENT=`head -n $QPOS $TMP.sort | tail -n 1`
+  QELEMENT=`head -n $QPOS "$TMP.sort" | tail -n 1`
   echo "90th Percentile: $QELEMENT"
 
 fi

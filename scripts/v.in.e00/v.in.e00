@@ -165,11 +165,11 @@ cd "$TMPDIR"
 
 if [ $MERGING -eq 1 ] ; then
   if  [ "$EXTENSION" = "CAPS" ] ; then
-     cat `ls -1 $E00NAME.E* | sort` > $E00NAME.cat.$E00TMP.e00
+     cat `ls -1 "$E00NAME.E"* | sort` > "$E00NAME.cat.$E00TMP.e00"
      GIS_OPT_FILE="$E00NAME.cat.$E00TMP.e00"
   fi
   if  [ "$EXTENSION" = "NOCAPS" ] ; then
-     cat `ls -1 $E00NAME.e* | sort` > $E00NAME.cat.$E00TMP.e00
+     cat `ls -1 "$E00NAME.e"* | sort` > "$E00NAME.cat.$E00TMP.e00"
      GIS_OPT_FILE="$E00NAME.cat.$E00TMP.e00"
   fi
 fi
