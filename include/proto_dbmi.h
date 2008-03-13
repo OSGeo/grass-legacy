@@ -292,6 +292,7 @@ void        db_set_cursor_token       (dbCursor *cursor , dbToken token );
 void        db_set_cursor_type_insert (dbCursor *cursor );
 void        db_set_cursor_type_readonly (dbCursor *cursor );
 void        db_set_cursor_type_update (dbCursor *cursor );
+int         db_set_default_connection (void);
 void        db_set_error_who          (char *me );
 int         db_set_handle             (dbHandle *handle , char *dbName , char *dbPath );
 int         db_set_index_column_name  (dbIndex *index , int column_num , char *name );

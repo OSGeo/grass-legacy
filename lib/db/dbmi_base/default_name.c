@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <grass/gis.h>
 #include <grass/dbmi.h>
 
@@ -66,3 +67,44 @@ db_get_default_group_name ( void )
     return NULL;
 }
 
+
+
+/*!
+ \fn char * db_set_default_connection(void)
+ \brief sets up database connection settings using GRASS default from dbmi.h
+ \return returns DB_OK (TODO: DB_OK on success, DB_* error code on fail)
+*/
+int db_set_default_connection(void)
+{
+    dbConnection connection;
+    char buf[GPATH_MAX];
+
+    /* is this really needed ? */
+    db_get_connection(&connection);
+
+    if(strcmp(DB_DEFAULT_DRIVER, "dbf") == 0 ) {
+	/* Set default values and create dbf db dir */
+
+	connection.driverName = "dbf";
+	connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
+	db_set_connection( &connection );
+
+	sprintf ( buf, "%s/%s/dbf", G_location_path(), G_mapset());
+	G__make_mapset_element ( "dbf" );
+    }
+    else if (strcmp(DB_DEFAULT_DRIVER, "sqlite") == 0 ) {
+	/* Set default values and create dbf db dir */
+
+	connection.driverName = "sqlite";
+/*
+ * TODO: Use one DB for entire mapset (LFS problems?)
+ *	or per-map DBs in $MASPET/vector/mapname/sqlite.db (how to set that here?)
+ *	or $MAPSET/sqlite/mapname.sql as with dbf?
+ */
+	connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/sqlite.db";
+	db_set_connection( &connection );
+    }
+    else G_fatal_error("Programmer error");
+
+    return DB_OK;
+}
