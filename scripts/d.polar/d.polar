@@ -116,23 +116,23 @@ cleanup()
 
 #################################
 # this file contains everthing:
-r.stats -1 "$GIS_OPT_MAP" > ${TMP}_raw
-TOTALNUMBER=`wc -l ${TMP}_raw | awk '{print $1}'`
+r.stats -1 "$GIS_OPT_MAP" > "${TMP}_raw"
+TOTALNUMBER=`wc -l "${TMP}_raw" | awk '{print $1}'`
 
 g.message "Calculating statistics for polar diagram... (be patient)"
 
 #wipe out NULL data and undef data if defined by user
 # - generate degree binned to integer, eliminate NO DATA (NULL):
 # change 360 to 0 to close polar diagram:
-cat ${TMP}_raw | grep -v '^\*$' | grep -v "^${GIS_OPT_UNDEF}$" | \
-    awk '{printf "%d\n", int($1 + .5)}' | sed 's+^360+0+g'  > ${TMP}_binned
+cat "${TMP}_raw" | grep -v '^\*$' | grep -v "^${GIS_OPT_UNDEF}$" | \
+    awk '{printf "%d\n", int($1 + .5)}' | sed 's+^360+0+g'  > "${TMP}_binned"
 
 # make radians
-cat ${TMP}_binned | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > ${TMP}_binned_radians
+cat "${TMP}_binned" | awk '{printf "%f\n", (3.14159265 * $1 ) / 180.}'  > "${TMP}_binned_radians"
 
 #################################
 # generate numbers for max circle
-TOTALVALIDNUMBER=`wc -l ${TMP}_binned_radians | awk '{print $1}'`
+TOTALVALIDNUMBER=`wc -l "${TMP}_binned_radians" | awk '{print $1}'`
 
 if [ "$TOTALVALIDNUMBER" -eq 0 ] ; then
    g.message -e "No data pixel found"
@@ -142,41 +142,41 @@ fi
 
 #################################
 # unit vector on raw data converted to radians without no data:
-cat ${TMP}_raw | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
+cat "${TMP}_raw" | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += cos(3.14159265 * $1 / 180.)}
-END{print sum}' > ${TMP}_cos_sums
+END{print sum}' > "${TMP}_cos_sums"
 
-cat ${TMP}_raw | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
+cat "${TMP}_raw" | grep -v '^\*' | grep -v "^${GIS_OPT_UNDEF}$" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
        {sum += sin(3.14159265 * $1 / 180.)}
-END{print sum}' > ${TMP}_sin_sums
+END{print sum}' > "${TMP}_sin_sums"
 
 # cos -> x, sin -> y
-echo "`cat ${TMP}_cos_sums` $TOTALVALIDNUMBER" | awk '{printf "%.8f\n", $1/$2}' > ${TMP}_x_unit_vector
-echo "`cat ${TMP}_sin_sums` $TOTALVALIDNUMBER" | awk '{printf "%.8f\n", $1/$2}' > ${TMP}_y_unit_vector
-UNITVECTOR="`paste -d' ' ${TMP}_x_unit_vector ${TMP}_y_unit_vector`"
+echo "`cat "${TMP}_cos_sums"` $TOTALVALIDNUMBER" | awk '{printf "%.8f\n", $1/$2}' > "${TMP}_x_unit_vector"
+echo "`cat "${TMP}_sin_sums"` $TOTALVALIDNUMBER" | awk '{printf "%.8f\n", $1/$2}' > "${TMP}_y_unit_vector"
+UNITVECTOR=`paste -d' ' "${TMP}_x_unit_vector" "${TMP}_y_unit_vector"`
 
 #################################
 # how many are there?:
-wordcount ${TMP}_binned_radians | sort -n -t ' ' -k 1 > ${TMP}_occurencies
+wordcount "${TMP}_binned_radians" | sort -n -t ' ' -k 1 > "${TMP}_occurrences"
 
 # find the maximum value
-MAXRADIUS="`cat ${TMP}_occurencies | sort -n -t ' ' -k 2 | tail -n 1 | cut -d' ' -f2`"
+MAXRADIUS="`cat "${TMP}_occurrences" | sort -n -t ' ' -k 2 | tail -n 1 | cut -d' ' -f2`"
 
 # now do cos() sin()
-cat ${TMP}_occurencies | awk '{printf "%f %f\n", cos($1) * $2 , sin($1) *$2}' > ${TMP}_sine_cosine
+cat "${TMP}_occurrences" | awk '{printf "%f %f\n", cos($1) * $2 , sin($1) *$2}' > "${TMP}_sine_cosine"
 
 # to close the curve, we replicate the first value
-REPLICATE=`head -n 1 ${TMP}_sine_cosine`
-echo "\"Real data angles"           >  ${TMP}_sine_cosine_replic
-cat ${TMP}_sine_cosine >> ${TMP}_sine_cosine_replic
-echo $REPLICATE >> ${TMP}_sine_cosine_replic
+REPLICATE=`head -n 1 "${TMP}_sine_cosine"`
+echo "\"Real data angles"           >  "${TMP}_sine_cosine_replic"
+cat "${TMP}_sine_cosine" >> "${TMP}_sine_cosine_replic"
+echo $REPLICATE >> "${TMP}_sine_cosine_replic"
 
 PI=3.14159265358979323846
 if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
   rm -f "${TMP}_outercircle"
-    echo "\"All Data incl. NULLs"           > ${TMP}_outercircle
+    echo "\"All Data incl. NULLs"           > "${TMP}_outercircle"
 
   awk -v PI=$PI -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
       -v MAXRADIUS=$MAXRADIUS 'BEGIN {
@@ -185,16 +185,16 @@ if [ -n "$GIS_OPT_EPS" ] || [ $GIS_FLAG_X -eq 1 ] ; then
 	      cos(i * PI/180) * TOTAL/TOTALVALID * MAXRADIUS,
 	      sin(i * PI/180) * TOTAL/TOTALVALID * MAXRADIUS)
 	}
-   }' >> ${TMP}_outercircle
+   }' >> "${TMP}_outercircle"
 fi
 
 
 # fix vector length to become visible (x? of $MAXRADIUS):
 AUTOSTRETCH="1"
-echo "\"Avg. Direction" >  ${TMP}_vector
-echo "0 0"         >> ${TMP}_vector
+echo "\"Avg. Direction" > "${TMP}_vector"
+echo "0 0"         >> "${TMP}_vector"
 echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | \
-    awk '{printf "%f %f\n", $1 * $3, $2 * $3}' >> ${TMP}_vector
+    awk '{printf "%f %f\n", $1 * $3, $2 * $3}' >> "${TMP}_vector"
 
 
 ###########################################################
@@ -203,9 +203,9 @@ echo "$UNITVECTOR $MAXRADIUS $AUTOSTRETCH" | \
 plot_xgraph()
 {
 # by M.Neteler
-echo "" > ${TMP}_newline
-cat ${TMP}_sine_cosine_replic ${TMP}_newline ${TMP}_outercircle \
-      ${TMP}_newline ${TMP}_vector | xgraph
+echo "" > "${TMP}_newline"
+cat "${TMP}_sine_cosine_replic" "${TMP}_newline" "${TMP}_outercircle" \
+      "${TMP}_newline" "${TMP}_vector" | xgraph
 }
 
 
@@ -262,9 +262,9 @@ RING=0.95
 SCALEVAL=`awk -v RING=$RING -v TOTAL=$TOTALNUMBER -v TOTALVALID=$TOTALVALIDNUMBER \
     'BEGIN { print RING * TOTALVALID/TOTAL }'`
 
-cat ${TMP}_sine_cosine_replic | tail -n +2 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
+cat "${TMP}_sine_cosine_replic" | tail -n +2 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
     '{printf "%f %f\n", ((SCL * $1/MAX) +1)*50, ((SCL * $2/MAX) +1)*50}' \
-       > ${TMP}_sine_cosine_replic_normalized
+       > "${TMP}_sine_cosine_replic_normalized"
 
 # create circle
 awk -v RING=$RING -v PI=$PI 'BEGIN {
@@ -272,10 +272,10 @@ awk -v RING=$RING -v PI=$PI 'BEGIN {
      printf("%f %f\n", 50*(1+(RING * sin(i * (PI/180)))),
 	    50*(1+(RING * cos(i * (PI/180)))) )
    }
- }' > ${TMP}_circle
+ }' > "${TMP}_circle"
 
 # trend vector
-VECT=`cat ${TMP}_vector | tail -n 1 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
+VECT=`cat "${TMP}_vector" | tail -n 1 | awk -v SCL=$SCALEVAL -v MAX=$MAXRADIUS \
     '{printf "%f %f\n", ((SCL * $1/MAX)+1)*50, ((SCL * $2/MAX)+1)*50}'`
 
 
@@ -296,7 +296,7 @@ d.graph << EOF
   #   mandatory when drawing proportional to non-square frame
   color 180:255:180
   polyline
-    `cat ${TMP}_circle`
+    `cat "${TMP}_circle"`
 
   # draw axes
   color 180:180:180
@@ -310,7 +310,7 @@ d.graph << EOF
   color red
   width 0
   polyline
-   `cat ${TMP}_sine_cosine_replic_normalized`
+   `cat "${TMP}_sine_cosine_replic_normalized"`
 
   # draw vector
   color blue
@@ -405,7 +405,7 @@ REALDATALEGENDY=`echo "1.90 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 AVERAGEDIRECTIONLEGENDY=`echo "1.85 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 
 ##########
-cat ${GISBASE}/etc/d.polar/ps_defs.eps > $PSOUT
+cat ${GISBASE}/etc/d.polar/ps_defs.eps > "$PSOUT"
 
 echo "
 $EPSSCALE $EPSSCALE scale                           %% EPS-SCALE EPS-SCALE scale
@@ -434,15 +434,15 @@ $DIAGRAMLINEWIDTH setlinewidth                          %% DIAGRAM-LINEWIDTH set
 newpath
                                         %% coordinates of rescaled, translated outer circle follow
                                         %% first point moveto, then lineto
-" >> $PSOUT
+" >> "$PSOUT"
 
-SUBLENGTH=`wc -l ${TMP}_outercircle | awk '{printf "%d", $1 - 2}'`
-LINE1=`head -n 2 ${TMP}_outercircle | tail -n 1`
-echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> $PSOUT
+SUBLENGTH=`wc -l "${TMP}_outercircle" | awk '{printf "%d", $1 - 2}'`
+LINE1=`head -n 2 "${TMP}_outercircle" | tail -n 1`
+echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> "$PSOUT"
 
-tail -n $SUBLENGTH ${TMP}_outercircle | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_outercircle_lineto
+tail -n $SUBLENGTH "${TMP}_outercircle" | sed "s+\$+ $SCALE $HALFFRAME+g" > "${TMP}_outercircle_lineto"
 
-cat ${TMP}_outercircle_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
+cat "${TMP}_outercircle_lineto" | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> "$PSOUT"
 rm -f "${TMP}_outercircle_lineto"
 
 echo "stroke
@@ -470,15 +470,18 @@ $DIAGRAMLINEWIDTH setlinewidth                          %% DIAGRAM-LINEWIDTH set
 newpath
                                         %% coordinates of rescaled, translated diagram follow
                                         %% first point moveto, then lineto
-" >> $PSOUT
+" >> "$PSOUT"
 
-SUBLENGTH=`wc -l ${TMP}_sine_cosine_replic | awk '{printf "%d", $1 - 2}'`
-LINE1=`head -n 2 ${TMP}_sine_cosine_replic | tail -n 1`
-echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> $PSOUT
+SUBLENGTH=`wc -l "${TMP}_sine_cosine_replic" | awk '{printf "%d", $1 - 2}'`
+LINE1=`head -n 2 "${TMP}_sine_cosine_replic" | tail -n 1`
+echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> "$PSOUT"
 
-tail -n $SUBLENGTH ${TMP}_sine_cosine_replic | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_sine_cosine_replic_lineto
+tail -n $SUBLENGTH "${TMP}_sine_cosine_replic" | \
+   sed "s+\$+ $SCALE $HALFFRAME+g" > "${TMP}_sine_cosine_replic_lineto"
 
-cat ${TMP}_sine_cosine_replic_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
+cat "${TMP}_sine_cosine_replic_lineto" | \
+   awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> "$PSOUT"
+
 rm -f "${TMP}_sine_cosine_replic_lineto"
 
 echo "stroke
@@ -494,13 +497,13 @@ newpath
                                         %% first point moveto, second lineto
 " >> $PSOUT
 
-SUBLENGTH=`wc -l ${TMP}_vector | awk '{printf "%d", $1 - 2}'`
-LINE1=`head -n 2 ${TMP}_vector | tail -n 1`
-echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> $PSOUT
+SUBLENGTH=`wc -l "${TMP}_vector" | awk '{printf "%d", $1 - 2}'`
+LINE1=`head -n 2 "${TMP}_vector" | tail -n 1`
+echo $LINE1 $SCALE $HALFFRAME | awk '{printf "%.2f %.2f moveto\n", $1*$3+$4, $2*$3+$4}' >> "$PSOUT"
 
-tail -n $SUBLENGTH ${TMP}_vector | sed "s+\$+ $SCALE $HALFFRAME+g" > ${TMP}_vector_lineto
+tail -n $SUBLENGTH "${TMP}_vector" | sed "s+\$+ $SCALE $HALFFRAME+g" > "${TMP}_vector_lineto"
 
-cat ${TMP}_vector_lineto | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> $PSOUT
+cat "${TMP}_vector_lineto" | awk '{printf "%.2f %.2f lineto\n",$1*$3+$4, $2*$3+$4 }' >> "$PSOUT"
 rm -f "${TMP}_vector_lineto"
 
 echo "stroke
@@ -520,7 +523,7 @@ col4                                    %% colDIAGRAM-COLOR
 col1                                    %% colAVERAGE-DIRECTION-COLOR
 %% Line below: (AVERAGE-DIRECTION-STRING) LEGENDS-X AVERAGE-DIRECTION-LEGEND-Y 4 just-string
 ($AVERAGEDIRECTIONSTRING) $LEGENDSX $AVERAGEDIRECTIONLEGENDY 4 just-string
-" >> $PSOUT
+" >> "$PSOUT"
 
 g.message "Done."
 }
