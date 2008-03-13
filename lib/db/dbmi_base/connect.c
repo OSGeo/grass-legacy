@@ -11,6 +11,8 @@ int
 db_set_connection (dbConnection *connection)
 
 {
+/* TODO: add checks and return DB_* error code if needed */
+
     if ( connection->driverName )
 	G_setenv2("DB_DRIVER", connection->driverName, G_VAR_MAPSET);
 
@@ -50,6 +52,8 @@ int
 db_get_connection (dbConnection *connection)
 
 {
+/* TODO: add checks and return DB_* error code if needed */
+
     connection->driverName = G__getenv2("DB_DRIVER", G_VAR_MAPSET);
     connection->databaseName = G__getenv2("DB_DATABASE", G_VAR_MAPSET);    
     connection->schemaName = G__getenv2("DB_SCHEMA", G_VAR_MAPSET);    
