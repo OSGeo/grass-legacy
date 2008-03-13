@@ -588,6 +588,8 @@ int open_output_map(const char *name, int res_type)
 	void *handle;
 	int fd;
 
+	G3d_setFileType(res_type == FCELL_TYPE ? FCELL_TYPE : DCELL_TYPE);
+
 	handle = G3d_openCellNew(
 		(char *) name,
 		res_type == FCELL_TYPE ? FCELL_TYPE : DCELL_TYPE,
