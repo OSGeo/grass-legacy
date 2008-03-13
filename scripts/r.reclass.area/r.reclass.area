@@ -141,7 +141,7 @@ fi
 # echo 
 # echo "Generating a reclass rules file categorized by hectares"
 # r.stats -an in=$file2,$infile |awk '{hectares=$3 * 0.0001; 
-# printf("%d = %d %.4f\n",$1,hectares,hectares)}' > $infile.rules
+# printf("%d = %d %.4f\n",$1,hectares,hectares)}' > "$infile.rules"
 # else
 if test $op = 0; then
    g.message "Generating a reclass rules file with area size less than or equal to $limit hectares"
