@@ -18,9 +18,9 @@ How to INSTALL?
 
 It will create two files, python_grass6.py and _python_grass6.so.
 
-4. From within GRASS (or a fakegrass session) run "python test.py" to
+4. From within GRASS (or a fake grass session) run "python test.py" to
    test and to automatically create a byte-compiled version of the module
-   (python_grass6.pyc). The .pyc file is platform indepenent and may be
+   (python_grass6.pyc). The .pyc file is platform independent and may be
    safely shared among systems. Even so, it doesn't hurt to rebuild it
    ourselves while we still have write permissions and to make sure we
    are using an up to date copy. (out of data copies will be ignored)

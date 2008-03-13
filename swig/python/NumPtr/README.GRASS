@@ -15,9 +15,9 @@ How to build:
  cd NumPtr
  python setup.py build
 
- run "python build/lib.linux-i686-2.4/test.py" to test and to create
+ Run "python build/lib.linux-i686-2.4/test.py" to test and to create
  a byte-compiled version of the module (NumPtr.pyc). The .pyc file
- is platform indepenent and may be safely shared among systems.
+ is platform independent and may be safely shared among systems.
  Even so, it doesn't hurt to do it ourselves to make sure we are using
  an up to date copy.
 
