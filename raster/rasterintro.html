@@ -169,16 +169,22 @@ Hydrologic simulation model are available as
 
 <h3>Raster format</h3>
 
-Raster data can be stored in GRASS as a 2D integer grid, 2D floating
-point grid (single or double precision), or as a 3D floating point
-grid (single or double precision). The internal raster format is
-architecture independent and portable between 32bit and 64bit
-machines.  Internally, the integer format is called CELL, single
-precision floating point is called FCELL, double precision floating
-point is DCELL, and 3D raster is called GRID3D. The choice of the
-integer or floating point data depends on the application.
-<p>
+Raster data can be stored in GRASS as 2D or 3D grids. 2D rasters
+support 3 data types: 32bit signed integer, single- and double-precision
+floating-point. 3D rasters support only single- and double-precision
+floating-point. In most GRASS resources, 2D raster maps are usually
+called "raster", their integer data type "CELL", single-precision
+floating-point data type "FCELL" and double-precision floating-point
+"DCELL". The 3D raster map type is usually called "3D raster" but other
+names like "G3D", "voxel", "GRID3D" or "3d cell" are common. 3D raster's
+single-precision data type is most often called "float", and the
+double-precision one "double".
 
+<p>
+GRASS raster format is architecture independent and portable between
+32bit and 64bit machines.
+
+<p>
 GRASS distinguishes NULL and zero. When working with NULL data, it is
 important to know that operations on NULL cells lead to NULL cells.
 
