@@ -515,18 +515,14 @@ else
 		else
 		   # the user wants to create mapset on the fly
 		   if [ -n "$CREATE_NEW" ] && [ "$CREATE_NEW" -eq 1 ] ; then
-		     if [ ! -f "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" ] ; then
-			echo "The LOCATION \"$LOCATION_NAME\" does not exist. Please create first"
+		     if [ ! -f "$GISDBASE/$LOCATION_NAME/PERMANENT/DEFAULT_WIND" ] ; then
+			echo "The LOCATION \"$LOCATION_NAME\" does not exist. Please create it first"
 			cleanup_tmp
 			exit 1
 		     else
 			mkdir -p "$LOCATION"
-			cp "$GISDBASE/$LOCATION_NAME/PERMANENT/WIND" "$LOCATION/WIND"
+			cp "$GISDBASE/$LOCATION_NAME/PERMANENT/DEFAULT_WIND" "$LOCATION/WIND"
 			echo "Missing WIND file fixed"
-			# predefine DBF driver to avoid v.* module breakage
-			echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
-			echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
-			mkdir "$LOCATION"/dbf
 		     fi
 		   else
 			echo "$LOCATION: Not a valid GRASS location"
@@ -728,13 +724,11 @@ if [ "$GRASS_FONT_CAP" ] && [ ! -f "$GRASS_FONT_CAP" ] ; then
 	g.mkfontcap
 fi
 
-# predefine DBF driver if DB connection not defined
-#  why is this needed ??
-# if [ ! -e "$LOCATION/VAR" ] ; then
-#   echo "DB_DRIVER: dbf" > "$LOCATION/VAR"
-#   echo "DB_DATABASE: \$GISDBASE/\$LOCATION_NAME/\$MAPSET/dbf/" >> "$LOCATION/VAR"
-#   mkdir "$LOCATION"/dbf
-# fi
+# predefine default driver if DB connection not defined
+#  is this really needed?? Modules should call this when/if required.
+if [ ! -e "$LOCATION/VAR" ] ; then
+   db.connect -c --quiet
+fi
 
 trap "" 2 3 15
 
