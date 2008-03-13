@@ -51,8 +51,8 @@ export LC_NUMERIC
 # what to do in case of user break:
 exitprocedure()
 {
- g.message -e 'User break!'
- exit 1
+   g.message -e 'User break!'
+   exit 1
 }
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
@@ -61,9 +61,13 @@ trap "exitprocedure" 2 3 15
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 
-table=$GIS_OPT_TABLE
-database=`db.connect -p | grep 'database' | cut -d ':' -f2`
-driver=`db.connect -p | grep 'driver' | cut -d ':' -f2`
+table="$GIS_OPT_TABLE"
+
+# check if DB parameters are set, and if not set them.
+db.connect -c
+
+database=`db.connect -p | grep '^database' | cut -d ':' -f2`
+driver=`db.connect -p | grep '^driver' | cut -d ':' -f2`
 # schema needed for PG?
 col="$GIS_OPT_COLUMN"
 
@@ -73,10 +77,10 @@ if [ $force -eq 1 ] ; then
 fi
 
 # check if table exists
-db.describe -c $GIS_OPT_TABLE >/dev/null 2>/dev/null
+db.describe -c "$GIS_OPT_TABLE" >/dev/null 2>/dev/null
 if [ $? -ne 0 ] ; then
-        g.message -e "Table <$table> not found in current mapset"
-        exit 1
+   g.message -e "Table <$table> not found in current mapset"
+   exit 1
 fi
 
 # check if table is used somewhere (connected to vector map)

@@ -625,13 +625,8 @@ EOF
 	    exit 1
 	fi
 
-	## create db links if they don't exist  (Markus made it automatic now? MN: yes.)
-	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
-	DATABASE="`db.connect -p | grep '^database:' | cut -f2 -d:`"
-	if [ "$DRIVER" = "(null)" ] || [ "$DATABASE" = "(null)" ] ; then
-	    g.message "Setting default database driver to DBF."
-	    db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
-	fi
+	## create db links if they don't exist
+	db.connect -c
 	DRIVER="`db.connect -p | grep '^driver:' | cut -f2 -d:`"
 	if [ "$DRIVER" = "dbf" ] && [ ! -d "$LOCATION/dbf/" ] ; then
 	    mkdir "$LOCATION/dbf/"

@@ -113,30 +113,23 @@ fi
 # we use the DB settings of layer 1 to find out default connection
 QUERYLAYER=1
 
+# check if DB parameters are set, and if not set them.
+db.connect -c
+
 #check if anything is connected:
 v.db.connect map="$GIS_OPT_MAP" -g  2> /dev/null | grep '^1 ' > /dev/null
 if [ $? -ne 0 ] ; then
    # nothing defined for layer 1
-   g.message "Creating new DB connection based on default mapset settings..." 
-   database=`db.connect -p | grep database | cut -d':' -f2`
-   if [ $? -ne 0 ] ; then  # this tests the result of cut? what if "(null)"? grep -v '(null)'?
-       g.message -e "An error occured while running db.connect" 
-       exit 1
-   fi
-   driver=`db.connect -p | grep driver | cut -d':' -f2`
-   if [ -z "$driver" ] || [ -z "$database" ] ; then
-      g.message "Setting default database driver to DBF."
-      database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
-      driver=dbf
-      db.connect driver="$driver" database="$database"
-   fi
+   g.message "Creating new DB connection based on default mapset settings..."
+   database=`db.connect -p | grep '^database' | cut -d':' -f2`
+   driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
 else
    # there is a definition for layer 1, so we check for the user defined layer
    database=`v.db.connect map="$GIS_OPT_MAP" -g | grep -w "$QUERYLAYER" | awk '{print $4}'`
    if [ -z "database" ] ; then
       #nothing on user defined layer, so we use the default mapset settings in this case:
-      database=`db.connect -p | grep database | cut -d':' -f2`
-      driver=`db.connect -p | grep driver | cut -d':' -f2`
+      database=`db.connect -p | grep '^database' | cut -d':' -f2`
+      driver=`db.connect -p | grep '^driver' | cut -d':' -f2`
    else
       driver=`v.db.connect map="$GIS_OPT_MAP" -g | grep -w "$QUERYLAYER" | awk '{print $5}'`
    fi
@@ -172,7 +165,7 @@ if [ $? -ne 0 ] ; then
        if test ! -d "${LOCATION}/dbf" ; then
           g.message "Creating missing DBF directory in MAPSET <$MAPSET>"
           mkdir -p "${LOCATION}/dbf"
-         db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+          db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
        fi
    fi
 
