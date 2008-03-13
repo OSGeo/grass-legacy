@@ -125,7 +125,7 @@ int import_band(GDALDatasetH hMEMDS, int band, char *name, char *mapset,
     GDALSetRasterColorInterpretation(hBand, GPI_RGB);
     CPLPopErrorHandler();
 
-    if( G_read_colors(name, mapset, &sGrassColors ) == 1 )
+    if( G_read_colors(name, mapset, &sGrassColors ) >= 0 )
     {
 	int maxcolor, i;
 	CELL min, max;
