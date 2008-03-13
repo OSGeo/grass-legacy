@@ -12,7 +12,8 @@ is maintained in the GRASS database.
 The current DB connection is used to write the database table.
 <P>
 Generally, column names longer that 10 characters are shortened to
-10 characters to meet the DBF column name restrictions.
+10 characters to meet the DBF column name restrictions. If this is a
+problem consider choosing another database driver with <em>db.connect</em>.
 <P>
 To filter outliers (points outside of a country), the <em>v.select</em>
 module can be used to perform point-in-polygon tests. <em>v.select</em>
@@ -35,4 +36,5 @@ points map.
 
 Markus Neteler, <a href=http://mpa.itc.it>MPBA Group, ITC-irst</a>
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>

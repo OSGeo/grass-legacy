@@ -4,14 +4,15 @@
 <EM><b>v.db.univar</b></EM>  - Calculates basic univariate statistics for numeric
 attributes in a data table. It will calculate minimum, maximum, range, mean,
 standard deviation, variance, coefficient of variation, quartiles, median, and
-90th percentile. It uses db.select to create list values for statistical calculations.
+90th percentile.
+It uses <em>db.select</em> to create list values for statistical calculations.
 
 <EM>(GRASS Shell Script)</EM>
 
 <H2>NOTES</H2>
 
-Unless the database and driver are specified, it default the values set in
-<em>db.connect</em>.
+If the database and driver are not specified, the default values set in
+<em>db.connect</em> will be used.
 
 <H2>EXAMPLE</H2>
 
@@ -36,6 +37,6 @@ v.db.univar samples col=heights
 <H2>AUTHOR</H2>
  Michael Barton, Arizona State University
 <p>
-and authors of r.univar.sh 
+and authors of <em>r.univar.sh</em>
 <p>
 <i>Last changed: $Date$</i>
