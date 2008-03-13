@@ -242,7 +242,7 @@ YDIM 0.000277777777777778"> "$TILE.hdr"
 fi
 
 #create prj file: To be precise, we would need EGS96! But who really cares...
-echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
+echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > "$TILE.prj"
 
 r.in.gdal in="$TILE.bil" out="$TILEOUT"
 EXITCODE=$?

@@ -405,7 +405,7 @@ REALDATALEGENDY=`echo "1.90 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 AVERAGEDIRECTIONLEGENDY=`echo "1.85 $HALFFRAME" | awk '{printf "%.1f", $1 * $2}'`
 
 ##########
-cat ${GISBASE}/etc/d.polar/ps_defs.eps > "$PSOUT"
+cat "${GISBASE}/etc/d.polar/ps_defs.eps" > "$PSOUT"
 
 echo "
 $EPSSCALE $EPSSCALE scale                           %% EPS-SCALE EPS-SCALE scale
