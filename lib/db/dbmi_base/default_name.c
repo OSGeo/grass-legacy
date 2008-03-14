@@ -79,6 +79,8 @@ int db_set_default_connection(void)
     dbConnection connection;
     char buf[GPATH_MAX];
 
+    G_debug(1,"Creating new default DB params with db_set_default_connection()");
+
     /* is this really needed ? */
     db_get_connection(&connection);
 
