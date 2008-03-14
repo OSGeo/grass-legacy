@@ -635,12 +635,14 @@ main (int argc, char **argv)
 	        D_line_width(default_width);
 
 	    if ( area ) {
-		if ( level >= 2 ) {
-		    stat = darea ( &Map, Clist,
-			has_color ? &color : NULL, has_fcolor ? &fcolor : NULL, chcat,
-			(int) id_flag->answer, table_acolors_flag->answer,
-			cats_acolors_flag->answer, &window, rgbcol_opt->answer,
-			default_width, wcolumn_opt->answer, width_scale );
+		if ( level >= 2) {
+		    if ( display & DISP_SHAPE ) {
+			stat = darea ( &Map, Clist,
+				       has_color ? &color : NULL, has_fcolor ? &fcolor : NULL, chcat,
+				       (int) id_flag->answer, table_acolors_flag->answer,
+				       cats_acolors_flag->answer, &window, rgbcol_opt->answer,
+				       default_width, wcolumn_opt->answer, width_scale );
+		    }
 	            if ( wcolumn_opt->answer )
 	                D_line_width(default_width);
 		} else
@@ -701,7 +703,7 @@ main (int argc, char **argv)
 	R_close_driver();
 
 	if(verbose)
-	    G_done_msg ("");
+	    G_done_msg (" ");
 	
 	Vect_close (&Map);
 	Vect_destroy_cat_list (Clist);
