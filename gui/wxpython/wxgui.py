@@ -108,7 +108,7 @@ class GMFrame(wx.Frame):
         self._auimgr = wx.aui.AuiManager(self)
 
         # initialize variables
-        self.disp_idx      = 0            # index value for map displays and layer trees
+        self.disp_idx      = 1            # index value for map displays and layer trees
         self.curr_page     = ''           # currently selected page for layer tree notebook
         self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
