@@ -64,30 +64,27 @@ else:
     EXT_BIN = ''
     EXT_SCT = ''
 
-def __getGRASSCmds(bin=True, scripts=True):
+def __getGRASSCmds(bin=True, scripts=True, gui_scripts=True):
     """
     Create list of all available GRASS commands to use when
     parsing string from the command line
     """
     gisbase = os.environ['GISBASE']
-    binlst = []
+    list = []
     if bin is True:
-        binlst = os.listdir(os.path.join(gisbase, 'bin'))
-        if subprocess.mswindows:
-            for idx in range(len(binlst)):
-                binlst[idx] = binlst[idx].replace(EXT_BIN, '')
-                binlst[idx] = binlst[idx].replace(EXT_SCT, '')
-    sctlst = []
+        list = os.listdir(os.path.join(gisbase, 'bin'))
     if scripts is True:
-        sctlst = sctlst + os.listdir(os.path.join(gisbase, 'scripts'))
-        if subprocess.mswindows:
-            for idx in range(len(binlst)):
-                binlst[idx] = binlst[idx].replace(EXT_BIN, '')
-                binlst[idx] = binlst[idx].replace(EXT_SCT, '')
+        list = list + os.listdir(os.path.join(gisbase, 'scripts')) 
+    if gui_scripts is True:
+        os.environ["PATH"] = os.getenv("PATH") + ':%s' % os.path.join(gisbase, 'etc', 'gui', 'scripts')
+        list = list + os.listdir(os.path.join(gisbase, 'etc', 'gui', 'scripts'))
+       
+    if subprocess.mswindows:
+        for idx in range(len(list)):
+            list[idx] = list[idx].replace(EXT_BIN, '')
+            list[idx] = list[idx].replace(EXT_SCT, '')
 
-    # self.gcmdlst = self.gcmdlst + os.listdir(os.path.join(gisbase,'etc','gm','script'))
-
-    return binlst + sctlst
+    return list
 
 """@brief Collected GRASS-relared binaries/scripts"""
 grassCmd = {}
