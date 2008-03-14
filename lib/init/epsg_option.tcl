@@ -236,11 +236,11 @@ proc epsgOpt::runproj {} {
 		DialogGen .wrnDlg [G_msg "Error creating location!"] error \
 		[format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
 		0 OK
-	} elseif {$dtrans == ""} {
+	} elseif {$dtrans eq ""} {
 		# if nothing written to stdout, there was no choice of
 		# datum parameters and we need not do anything more   
 	
- 		if {$errMsg != ""} {
+ 		if {$errMsg ne ""} {
 		    DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
 		    [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
 		    0 OK
@@ -264,7 +264,7 @@ proc epsgOpt::runproj {} {
 		    [format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
 		    0 OK
 		} else {
- 		    if {$errMsg != ""} {
+ 		    if {$errMsg ne ""} {
 		        DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
 		        [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
 		        0 OK
