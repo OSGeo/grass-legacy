@@ -178,19 +178,97 @@ proc fileOpt::create_loc { } {
 	global location
 	global mapset
 
-	# create new location from georeferenced file
-	catch {exec g.proj -c georef=$filepath location=$fileLocation} errMsg
+	set dtrans ""
+	catch {set dtrans [exec g.proj --q -c location=$fileLocation georef=$filepath datumtrans=-1]} errMsg
+	
 	if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
-	        DialogGen .wrnDlg [G_msg "WARNING: Error creating new location"] warning \
-			[format [G_msg "Error creating new location from georeferenced file. \
-	                g.proj returned following message:\n\n%s"] $errMsg] \
-			0 OK
-	} else {
+		DialogGen .wrnDlg [G_msg "Error creating location!"] error \
+		[format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
+		0 OK
+	} elseif {$dtrans eq ""} {
+		# if nothing written to stdout, there was no choice of
+		# datum parameters and we need not do anything more   
+	
+ 		if {$errMsg ne ""} {
+		    DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
+		    [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
+		    0 OK
+	        }
 		set location $fileLocation
 		set mapset "PERMANENT"
+	} else {
+		# user selects datum transform
+		#create dialog that lists datum transforms, asks user to enter a number and press OK
+		set paramset [fileOpt::sel_dtrans $dtrans]
+
+		# operation canceled
+		if {$paramset == -9} {return}
+		
+		# create new location from georeferenced file
+		catch {exec g.proj --q -c georef=$filepath location=$fileLocation datumtrans=$paramset} errMsg
+	 	 
+		#catch any other errors 
+		if {[lindex $::errorCode 0] eq "CHILDSTATUS"} {
+		    DialogGen .wrnDlg [G_msg "Error creating location!"] warning \
+		    [format [G_msg "g.proj returned the following message:\n%s"] $errMsg] \
+		    0 OK
+		} else {
+ 		    if {$errMsg ne ""} {
+		        DialogGen .wrnDlg [G_msg "Informational output from g.proj"] info \
+		        [format [G_msg "g.proj returned the following informational message:\n%s"] $errMsg] \
+		        0 OK
+	            }
+		    set location $fileLocation
+		    set mapset "PERMANENT"
+		}
 	}
-	
 
 	return
+
+}
+
+proc fileOpt::sel_dtrans {dtrans} {
+
+# Dialog for selecting optional datum transform parameters
+# Argument is stdout from g.proj
+	
+    # default is not to specify datum transformation
+    set fileOpt::dtnum 0
+
+    # Create a popup search dialog
+    toplevel .dtrans_sel
+    wm title .dtrans_sel [G_msg "Select datum transformation parameters:"]
+    set row1 [frame .dtrans_sel.frame1] 
+    set row3 [frame .dtrans_sel.frame3] 
+
+    radiobutton $row1.0 -value 0 -variable fileOpt::dtnum -wraplength 640 -justify left -text [G_msg "Continue without specifying parameters - if used when creating a location, other GRASS modules will use the \"default\" (likely non-optimum) parameters for this datum if necessary in the future."]
+    pack $row1.0 -anchor w
+
+    set dtrans [split $dtrans "\n"]
+    for {set i 0} { $i < [llength $dtrans] } {incr i} {
+        set thisnum [lindex $dtrans $i]
+        if {$thisnum == "---"} {
+	    continue
+        }
+	set thisdesc $thisnum.
+	while { [incr i] < [llength $dtrans] && [lindex $dtrans $i] != "---"} {
+	    set thisdesc ${thisdesc}\n[lindex $dtrans $i]
+	}
+	radiobutton $row1.$thisnum -variable fileOpt::dtnum -value $thisnum -wraplength 640 -justify left -text $thisdesc
+	pack $row1.$thisnum -anchor w
+    }
+    
+    pack $row1
+        
+    Button $row3.ok -text [G_msg "OK"] -padx 10 -bd 1 \
+    	-command "destroy .dtrans_sel"
+    pack $row3.ok -side left -padx 3
+    button $row3.cancel -text [G_msg "Cancel"] -padx 10 -bd 1 \
+    	-command "set fileOpt::dtnum -9; destroy .dtrans_sel"
+    pack $row3.cancel -side left -padx 3
+    pack $row3 -anchor center -pady 3
+    
+    tkwait window .dtrans_sel
+    return $fileOpt::dtnum
 
 }
