@@ -1,35 +1,34 @@
 <h2>DESCRIPTION</h2>
 
-<em>r.contour</em> produces a GRASS binary vector map of specified contours from GRASS raster map layer.
+<em>r.contour</em> produces a GRASS binary vector map of specified contours from a GRASS raster map.
 
-<OL>
-<LI>Contours are produced from a user-specified list of levels.</LI>
-<LI>
-Contours are produced at some regular increment from user-specified minimum
-level to maximum level. If no minimum or maximum level is specified, minimum
-or maximum data value will be used.</LI>
-</OL>
+Contours can be produced using a comma-separated list of values in <b>levels</b>, or at some regular increment using the <b>step</b> parameter, using <b>minlevel</b> and <b>maxlevel</b> as minimum and maximum contour values, respectively. If no <b>minlevel</b> or <b>maxlevel</b> is specified, the minimum and maximum cell values in the <b>input</b> raster map will be used.
 
-<H2>
-NOTES</H2>
-<I>r.contour</I> will either step through incremental contours or produce
+<H2>NOTES</H2>
+<em>r.contour</em> will either step through incremental contours or produce
 contours from a list of levels, not both. If both a list of levels and
 a step are specified, the list will be produced and the step will be ignored.
 
+<p>Zero is treated as a valid data value by <em>r.contour</em>.
 
-<P>Zero is treated as a valid data value by <I>r.contour</I>.
-
-<P>If a contour level exactly matches a category value in the raster map,
+<p>If a contour level exactly matches a category value in the raster map,
 the contour line may backtrack on itself, causing illegal arcs to be produced
 in the output GRASS vector map.
 
-<P>The optional <em>cut</em> parameter allows to specify a minimum number of
-point for a contour line to be put into output vector map, so that small
-spurs, single points and so on won't be present and the output will be more
-clear.
+<p>The optional <b>cut</b> parameter allows the user to specify a minimum number of
+raster cells eligilble to be included in a contour line written to the <b>output</b> 
+vector map. It acts like a filter, omitting spurs, single points, etc., making the output more generalized.
 
-<H2>
-AUTHORS</H2>
+<h2>EXAMPLE</h2>
+In the Spearfish location, produce a vector contour map from input raster <i>elevation.dem</i> 
+with contour levels from 1000m to 2000m, 100m contour step, and a minimum of 200 input raster
+points contributing to the contour line:
+
+<div><pre class="code">
+r.contour input=elevation.dem output=elevation_dem_contours minlevel=1000 maxlevel=2000 step=100 cut=200
+</pre></div>
+
+<h2>AUTHORS</h2>
 Terry Baker, U.S. Army Construction Engineering Research Laboratory<br>
 3/2001: cut parameter and fixes by Andrea Aime (aaime@libero.it)
 
