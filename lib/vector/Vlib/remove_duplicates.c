@@ -62,9 +62,12 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	*  this line and check if some of them is identical. If someone is identical
 	*  remove current line. (In each step just one line is deleted)
 	*/
-        /* TODO: 3D */
+
 	ndupl = 0;
-	if ( msgout ) fprintf (msgout, "%s: %5d", _("Duplicates"), ndupl ); 
+
+	if ( msgout )
+	    fprintf (msgout, "%s: %5d", _("Duplicates"), ndupl ); 
+
 	for ( i = 1; i <= nlines; i++ ){ 
 	    if ( !Vect_line_alive ( Map, i ) ) continue;
 
@@ -89,8 +92,11 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 		/* Forward */
 		forw = 1;
 	        for ( k = 0; k <  APoints->n_points; k++ ){ 
-                    if ( APoints->x[k] != BPoints->x[k] || APoints->y[k] != BPoints->y[k] ) {
-                        forw = 0; break;
+                    if ( APoints->x[k] != BPoints->x[k] ||
+			 APoints->y[k] != BPoints->y[k] ||
+			 (Vect_is_3d(Map) && APoints->z[k] != BPoints->z[k])) {
+                        forw = 0;
+			break;
 		    }	
 		}
 		
@@ -98,8 +104,10 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 		backw = 1;
 	        for ( k = 0; k <  APoints->n_points; k++ ){ 
                     if ( APoints->x[k] != BPoints->x[npoints - k - 1] || 
-			 APoints->y[k] != BPoints->y[npoints - k - 1] ) {
-                        backw = 0; break;
+			 APoints->y[k] != BPoints->y[npoints - k - 1] ||
+ 			 (Vect_is_3d(Map) && APoints->z[k] != BPoints->z[npoints - k - 1])) {
+			backw = 0;
+			break;
 		    }	
 		}
 		
@@ -126,8 +134,8 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 		ndupl++;
 		
 		if ( msgout ) {
-		    fprintf (stderr, "\r%s: %5d", _("Duplicates"), ndupl ); 
-		    fflush ( stderr );
+		    fprintf (msgout, "\r%s: %5d", _("Duplicates"), ndupl ); 
+		    fflush (msgout);
 		}
 		
 		break; /* line was deleted -> take the next one */
@@ -135,7 +143,8 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	    nlines = Vect_get_num_lines (Map); /* For future when lines with cats will be rewritten */
 	    G_debug (3, "nlines =  %d\n", nlines );
 	}
-	if ( msgout ) fprintf (stderr, "\n" ); 
+	if ( msgout )
+	    fprintf (msgout, "\n"); 
 
 	return;
 }
