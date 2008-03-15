@@ -1,21 +1,19 @@
 """
-MODULE:     menudata.py
+@package menudata.py
 
-CLASSES:
-* Data
+@brief Complex list for main menu entries for GRASS wxPython GUI.
 
-PURPOSE:    Complex list for main menu entries for GRASS wxPython GUI.
-
-AUTHORS:    The GRASS Development Team
-Michael Barton (Arizona State University)
-Yann Chemin
-Martin Landa <landa.martin gmail.com>
+Classes:
+ - Data
 
 COPYRIGHT:  (C) 2007-2008 by the GRASS Development Team
 This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
+@author Michael Barton (Arizona State University)
+@author Yann Chemin
+@author Martin Landa <landa.martin gmail.com>
 """
 
 import os
