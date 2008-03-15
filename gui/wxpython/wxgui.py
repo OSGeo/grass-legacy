@@ -250,7 +250,7 @@ class GMFrame(wx.Frame):
             return
 
         if len(gcmd) > 0:
-            helpString = gcmd + ' (' + help + ')'
+            helpString = gcmd + ' -- ' + help
         else:
             helpString = help
 
