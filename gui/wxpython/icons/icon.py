@@ -34,7 +34,7 @@ from preferences import globalSettings as UserSettings
 #    iconpath = os.getenv("GRASS_ICONPATH")
 iconTheme = UserSettings.Get(group='advanced', key='iconTheme', subkey='type')
 if iconTheme and iconTheme == 'silk':
-    iconpath = os.path.join(globalvar.ETCWXDIR, "icons", "silk")
+    iconpath = os.path.join(os.getenv("GISBASE"), "docs", "html", "icons", "silk")
 else:
     iconpath = None
 
