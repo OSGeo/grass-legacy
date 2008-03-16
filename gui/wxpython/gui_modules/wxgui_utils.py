@@ -557,7 +557,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.GetPyData(layer)[0]['cmd'] = cmdValidated
         elif ltype == 'raster':
             cmd = ['d.rast']
-            if UserSettings.Get(group='display', key='rasterOverlay', subkey='enabled'):
+            if UserSettings.Get(group='cmd', key='rasterOverlay', subkey='enabled'):
                 cmd.append('-o')
             menuform.GUI().ParseCommand(cmd, completed=(self.GetOptData,layer,params),
                                         parentframe=self)
