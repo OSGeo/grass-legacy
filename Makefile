@@ -63,7 +63,7 @@ else
 	LOCALE=0
 endif
 
-FILES = AUTHORS COPYING README REQUIREMENTS.html GPL.TXT
+FILES = AUTHORS COPYING CHANGES REQUIREMENTS.html GPL.TXT
 
 BIN_DIST_FILES = $(FILES) \
 	grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp \
@@ -256,6 +256,7 @@ ifneq ($(strip $(MINGW)),)
 	-sed -e "s#WINGISBASE=.*#WINGISBASE=${INST_DIR}#" ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.bat > ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.bat
 	-chmod a+x ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.bat
 endif
+	-cd ${GISBASE} ; tar cBf - $(FILES) | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
@@ -277,7 +278,7 @@ endif
 	-sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/fontcap > ${INST_DIR}/etc/fontcap
 	@##### -chmod -R 1777 ${INST_DIR}/locks 2>/dev/null
 	-chmod -R a+rX ${INST_DIR} 2>/dev/null
-	#GEM installation
+	@#GEM installation
 	-tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
 	-${INSTALL} gem/gem6 ${BINDIR} 2>/dev/null
 	@# enable OSX Help Viewer
@@ -421,9 +422,12 @@ html2pdfdoccomplete:
 
 changelog:
 	@ echo "creating ChangeLog file (following 'trunk' only)..."
-	@ # cvs2cl.pl creates a GNU style ChangeLog file:
-	@ # http://www.red-bean.com/cvs2cl
-	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -F trunk -f ./ChangeLog
+	@ # svn2cl creates a GNU style ChangeLog file:
+	@ # http://ch.tudelft.nl/~arthur/svn2cl/
+	@if [ ! -x "`which svn2cl`" ] ; then \
+		echo "\"svn2cl\" is required, please install first from http://ch.tudelft.nl/~arthur/svn2cl/" ;	exit 1 ; \
+	fi
+	sh svn2cl ./ChangeLog
 
 
 builddemolocation:
