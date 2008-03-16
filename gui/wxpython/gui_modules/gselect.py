@@ -25,45 +25,9 @@ import globalvar
 import gcmd
 from preferences import globalSettings as UserSettings
 
-class SelectDialog(wx.Dialog):
-    def __init__(self, parent, id=wx.ID_ANY, title='Select GIS element',
-                pos=wx.DefaultPosition, size=(-1,-1), type='cell', multiple=False,
-                style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
-        """
-        A dialog box for the GIS element selector control so that it can be launched
-        from a button or other control.
-        """
-
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-
-        self.selection = None
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        self.selection = Select(self, id=wx.ID_ANY, size=(300,-1), type=type,
-                                multiple=multiple)
-        sizer.Add(self.selection, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        line = wx.StaticLine(self, -1, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
-
-        btnsizer = wx.StdDialogButtonSizer()
-
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
 class Select(wx.combo.ComboCtrl):
-    def __init__(self, parent, id, size, type, multiple=False):
+    def __init__(self, parent, id, size,
+                 type, multiple=False, mapsets=None):
         """
         Custom control to create a ComboBox with a tree control
         to display and select GIS elements within acessible mapsets.
@@ -71,10 +35,11 @@ class Select(wx.combo.ComboCtrl):
         argument multiple=True. Multiple selections are separated by commas.
         """
         wx.combo.ComboCtrl.__init__(self, parent=parent, id=id, size=size)
+
         self.tcp = TreeCtrlComboPopup()
         self.SetPopupControl(self.tcp)
         self.SetPopupExtents(0,100)
-        self.tcp.GetElementList(type)
+        self.tcp.GetElementList(type, mapsets)
         self.tcp.SetMultiple(multiple)
 
     def SetElementList(self, type):
@@ -151,17 +116,19 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
     def GetAdjustedSize(self, minWidth, prefHeight, maxHeight):
         return wx.Size(minWidth, min(200, maxHeight))
 
-    def GetElementList(self, element):
+    def GetElementList(self, element, mapsets=None):
         """
         Get list of GIS elements in accessible mapsets and display as tree
         with all relevant elements displayed beneath each mapset branch
         """
-        #set environmental variables
+        # get current mapset
         cmdlist = ['g.gisenv', 'get=MAPSET']
         curr_mapset = gcmd.Command(cmdlist).ReadStdOutput()[0]
+        
+        # list of mapsets in current location
+        if mapsets is None:
+            mapsets = UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True)
 
-        #mapsets in current location
-        mapsets = UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True)
         # map element types to g.mlist types
         elementdict = {'cell':'rast',
                        'raster':'rast',
@@ -209,7 +176,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
                        '3D view parameters':'3dview'}
 
         if element not in elementdict:
-            self.AddItem('Not selectable element')
+            self.AddItem(_('Not selectable element'))
             return
 
         # get directory tree nodes
@@ -218,6 +185,7 @@ class TreeCtrlComboPopup(wx.combo.ComboPopup):
             if i > 0 and mapsets[i] == curr_mapset:
                 mapsets[i] = mapsets[0]
                 mapsets[0] = curr_mapset
+
         for dir in mapsets:
             dir_node = self.AddItem('Mapset: '+dir)
             self.seltree.SetItemTextColour(dir_node,wx.Colour(50,50,200))
