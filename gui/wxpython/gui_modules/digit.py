@@ -1748,7 +1748,7 @@ class DigitSettingsDialog(wx.Dialog):
         if self.snappingUnit.GetStringSelection() == "map units":
             threshold = value
         else:
-            threshold = self.parent.digit.driver.GetThreshold(value)
+            threshold = self.parent.digit.driver.GetThreshold(value=value)
 
         self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
                                    {'value' : threshold,
@@ -1760,7 +1760,7 @@ class DigitSettingsDialog(wx.Dialog):
         """Snapping units change -> update static text"""
         value = self.snappingValue.GetValue()
         units = self.snappingUnit.GetStringSelection()
-        threshold = self.parent.digit.driver.GetThreshold(value, units)
+        threshold = self.parent.digit.driver.GetThreshold(value=value, units=units)
 
         if units == "map units":
             self.snappingInfo.SetLabel(_("Snapping threshold is %(value).1f %(units)s") % 
@@ -1943,16 +1943,16 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
 
         layerNewTxt = wx.StaticText(parent=self, id=wx.ID_ANY,
                                  label="%s:" % _("Layer"))
-        self.layerNew = wx.TextCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
-                                    value="1")
+        self.layerNew = wx.SpinCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
+                                    initial=1, min=1, max=1e9)
         catNewTxt = wx.StaticText(parent=self, id=wx.ID_ANY,
                                label="%s:" % _("Category"))
         try:
             newCat = max(self.cats[1]) + 1
         except:
             newCat = 1
-        self.catNew = wx.TextCtrl(parent=self, id=wx.ID_ANY, size=(50, -1),
-                                  value=str(newCat))
+        self.catNew = wx.SpinCtrl(parent=self, id=wx.ID_ANY, size=(75, -1),
+                                  initial=newCat, min=-1e9, max=1e9)
         btnAddCat = wx.Button(self, wx.ID_ADD)
         flexSizer.Add(item=layerNewTxt, proportion=0,
                       flag=wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL)
@@ -2240,7 +2240,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
         self.itemDataMap = self.list.Populate(update=True)
 
         # update category number for add
-        self.catNew.SetValue(str(cat + 1))
+        self.catNew.SetValue(cat + 1)
 
         event.Skip()
 

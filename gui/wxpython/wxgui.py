@@ -82,6 +82,7 @@ import gui_modules.georect as georect
 import gui_modules.dbm as dbm
 import gui_modules.globalvar as globalvar
 import gui_modules.workspace as workspace
+import gui_modules.goutput as goutput
 from   gui_modules.debug import Debug as Debug
 from   icons.icon import Icons as Icons
 
@@ -108,7 +109,7 @@ class GMFrame(wx.Frame):
         self._auimgr = wx.aui.AuiManager(self)
 
         # initialize variables
-        self.disp_idx      = 0            # index value for map displays and layer trees
+        self.disp_idx      = 1            # index value for map displays and layer trees
         self.curr_page     = ''           # currently selected page for layer tree notebook
         self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
@@ -250,7 +251,7 @@ class GMFrame(wx.Frame):
             return
 
         if len(gcmd) > 0:
-            helpString = gcmd + ' (' + help + ')'
+            helpString = gcmd + ' -- ' + help
         else:
             helpString = help
 
@@ -281,7 +282,7 @@ class GMFrame(wx.Frame):
         self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
-        self.goutput = wxgui_utils.GMConsole(self)
+        self.goutput = goutput.GMConsole(self)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
 
         # bingings
@@ -918,6 +919,7 @@ class GMFrame(wx.Frame):
         if not label:
             toolbar.AddSeparator()
             return
+
         tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
         self.Bind(wx.EVT_TOOL, handler, tool)
 
@@ -1294,12 +1296,6 @@ class GMApp(wx.App):
 
         return True
 
-def reexec_with_pythonw():
-  if sys.platform == 'darwin' and \
-    not sys.executable.endswith('MacOS/Python'):
-    print >> sys.stderr, 're-executing using pythonw'
-    os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
-
 class Usage(Exception):
     def __init__(self, msg):
         self.msg = msg
@@ -1331,7 +1327,7 @@ def main(argv=None):
     #
     # reexec for MacOS
     #
-    reexec_with_pythonw()
+    utils.reexec_with_pythonw()
 
     #
     # process command-line arguments

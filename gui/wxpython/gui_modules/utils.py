@@ -191,3 +191,10 @@ def ListOfMapsets():
 def ListSortLower(list):
     """Sort list items (not case-sensitive)"""
     list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
+
+def reexec_with_pythonw():
+    """Re-execute Python on Mac OS"""
+    if sys.platform == 'darwin' and \
+            not sys.executable.endswith('MacOS/Python'):
+        print >> sys.stderr, 're-executing using pythonw'
+        os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
