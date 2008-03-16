@@ -394,7 +394,7 @@ class Data:
                                 (_("Show settings"),
                                  _("Show current GRASS environment settings"),
                                  "self.RunMenuCmd",
-                                 "g.gisenv"),
+                                 "g.gisenv --v"),
                                 (_("Change settings"),
                                  _("Change GRASS environment settings"),
                                  "self.OnMenuCmd",
