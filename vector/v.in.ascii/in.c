@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     old->required = NO;
     old->description =
 	_("ASCII file to be imported, if not given reads from standard input");
+    old->guisection = _("Required");
 
     new = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -135,12 +136,12 @@ int main(int argc, char *argv[])
 
     zcoorf = G_define_flag();
     zcoorf->key = 'z';
-    zcoorf->description = _("Create 3D file");
+    zcoorf->description = _("Create 3D vector map");
 
     e_flag = G_define_flag();
     e_flag->key = 'e';
     e_flag->description =
-	_("Create a new empty map and exit. Nothing is read from input");
+	_("Create a new empty vector map and exit. Nothing is read from input");
 
     noheader_flag = G_define_flag();
     noheader_flag->key = 'n';
@@ -150,6 +151,7 @@ int main(int argc, char *argv[])
     t_flag = G_define_flag();
     t_flag->key = 't';
     t_flag->description = _("Do not create table in points mode");
+    t_flag->guisection = _("Columns");
 
     notopol_flag = G_define_flag();
     notopol_flag->key = 'b';
