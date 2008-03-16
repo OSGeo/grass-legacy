@@ -57,7 +57,6 @@ class Settings:
             #
             'display': {
                 'displayFont' : { 'value' : '' },
-                'rasterOverlay' : { 'enabled' : False },
                 },
             #
             # advanced
@@ -81,6 +80,7 @@ class Settings:
             'overwrite' : { 'enabled' : False },
             'closeDlg' : { 'enabled' : False },
             'verbosity' : { 'selection' : 'grassenv' },
+            'rasterOverlay' : { 'enabled' : False },
             },
             #
             # vdigit
@@ -332,7 +332,7 @@ globalSettings = Settings()
 
 class PreferencesDialog(wx.Dialog):
     """User preferences dialog"""
-    def __init__(self, parent, title=_("User settings"),
+    def __init__(self, parent, title=_("User GUI settings"),
                  settings=globalSettings,
                  style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
         self.parent = parent # GMFrame
@@ -453,7 +453,7 @@ class PreferencesDialog(wx.Dialog):
         row = 0
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("Default font for GRASS displays:")),
-                       flag=wx.ALIGN_LEFT |
+                      flag=wx.ALIGN_LEFT |
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 0))
         fontButton = wx.Button(parent=panel, id=wx.ID_ANY,
@@ -465,31 +465,6 @@ class PreferencesDialog(wx.Dialog):
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
-
-        #
-        # raster settings
-        #
-        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Raster settings"))
-        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
-
-        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
-        gridSizer.AddGrowableCol(0)
-
-        #
-        # raster overlay
-        #
-        row = 0
-        rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
-                                    label=_("Overlay raster maps"),
-                                    name='IsChecked')
-        rasterOverlay.SetValue(self.settings.Get(group='display', key='rasterOverlay', subkey='enabled'))
-        self.winId['display:rasterOverlay:enabled'] = rasterOverlay.GetId()
-
-        gridSizer.Add(item=rasterOverlay,
-                      pos=(row, 0), span=(1, 2))
-        
-        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -551,6 +526,31 @@ class PreferencesDialog(wx.Dialog):
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
+        # raster settings
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Raster settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # raster overlay
+        #
+        row = 0
+        rasterOverlay = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Overlay raster maps"),
+                                    name='IsChecked')
+        rasterOverlay.SetValue(self.settings.Get(group='cmd', key='rasterOverlay', subkey='enabled'))
+        self.winId['cmd:rasterOverlay:enabled'] = rasterOverlay.GetId()
+
+        gridSizer.Add(item=rasterOverlay,
+                      pos=(row, 0), span=(1, 2))
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -627,7 +627,7 @@ class PreferencesDialog(wx.Dialog):
         pageSizer.Add(item=dataBrowserSizer,
                       proportion=0,
                       flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
-                      border=5)
+                      border=3)
 
         panel.SetSizer(pageSizer)
 
