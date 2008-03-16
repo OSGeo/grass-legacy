@@ -82,6 +82,7 @@ import gui_modules.georect as georect
 import gui_modules.dbm as dbm
 import gui_modules.globalvar as globalvar
 import gui_modules.workspace as workspace
+import gui_modules.goutput as goutput
 from   gui_modules.debug import Debug as Debug
 from   icons.icon import Icons as Icons
 
@@ -281,7 +282,7 @@ class GMFrame(wx.Frame):
         self.notebook.AddPage(self.gm_cb, text=_("Map layers for each display"))
 
         # create command output text area and add it to main notebook page
-        self.goutput = wxgui_utils.GMConsole(self)
+        self.goutput = goutput.GMConsole(self)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output"))
 
         # bingings

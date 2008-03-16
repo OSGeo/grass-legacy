@@ -88,20 +88,15 @@ sys.path.append(imagepath)
 import grassenv
 import gselect
 import gcmd
-import wxgui_utils
+import goutput
+import utils
 from preferences import globalSettings as UserSettings
 try:
     import subprocess
 except:
     from compat import subprocess
 
-def reexec_with_pythonw():
-    if sys.platform == 'darwin' and\
-        not sys.executable.endswith('MacOS/Python'):
-        print >>sys.stderr,'re-executing using pythonw'
-        os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
-
-reexec_with_pythonw()
+utils.reexec_with_pythonw()
 
 ID_ABOUT_COMMAND = 102
 
@@ -479,6 +474,7 @@ class helpPanel(wx.html.HtmlWindow):
 
         If 'text' is given, it must be the HTML text to be presented in the Panel.
         """
+
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = gisbase + "/docs/html/"
         self.SetStandardFonts ( size = 10 )
@@ -490,6 +486,7 @@ class helpPanel(wx.html.HtmlWindow):
                 self.fillContentsFromFile ( self.fspath + grass_command + ".html",
                                             skip_description=skip_description )
             else:
+                ### FIXME: calling self.LoadPage is too time costly (why?)
                 self.LoadPage(self.fspath + grass_command + ".html")
                 self.Ok = True
         else:
@@ -879,7 +876,7 @@ class cmdPanel(wx.Panel):
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
         #        if standalone:
-        self.goutput = wxgui_utils.GMConsole(parent=self, margin=False)
+        self.goutput = goutput.GMConsole(parent=self, margin=False)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
         self.outpageid = self.notebook.GetPageCount() - 1
 
