@@ -45,8 +45,8 @@ main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
-    module->description = _("Change current mapset");
+    module->keywords = _("general, settings");
+    module->description = _("Change current mapset.");
 
     mapset_opt = G_define_option() ;
     mapset_opt->key         = "mapset" ;
@@ -102,7 +102,7 @@ main (int argc, char *argv[])
 
     /* TODO: this should be checked better (repeated '/' etc.) */
     if ( strcmp(mapset_old_path, mapset_new_path) == 0 )
-	G_fatal_error ( _("%s is already the current mapset"), mapset_new );
+	G_fatal_error ( _("<%s> is already the current mapset"), mapset_new );
     
     /* Check if the mapset exists and user is owner */
     G_debug ( 2, "check : %s", mapset_new_path );
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
     ret = G__mapset_permissions2 ( gisdbase_new, location_new, mapset_new );
     switch ( ret ) {
 	case 0:
-	    G_fatal_error ( _("You don't have permission to use this mapset.") );
+	    G_fatal_error ( _("You don't have permission to use this mapset") );
 	    break;
 	case -1:
 	    if ( f_add->answer == TRUE ) {
@@ -127,7 +127,7 @@ main (int argc, char *argv[])
     /* Check if the mapset is in use */
     gis_lock = getenv ( "GIS_LOCK" );
     if ( !gis_lock )
-	G_fatal_error ( _("Cannot read GIS_LOCK enviroment variable.") );
+	G_fatal_error ( _("Unable to read GIS_LOCK enviroment variable") );
 
     G_asprintf ( &lock_prog, "%s/etc/lock", G_gisbase() );
     
@@ -141,11 +141,11 @@ main (int argc, char *argv[])
     /* Warning: the value returned by system() is not that returned by exit() in executed program
      *          e.g. exit(1) -> 256 (multiplied by 256) */
     if ( ret != 0 )
-	G_fatal_error ( _("%s is currently running GRASS in selected mapset or lock file cannot be checked."),
+	G_fatal_error ( _("%s is currently running GRASS in selected mapset or lock file cannot be checked"),
 	        	G_whoami());
 
     /* Erase monitors */
-    G_message ( _("Erasing monitors ..." ));
+    G_message ( _("Erasing monitors..." ));
     while ((cap = R_parse_monitorcap(MON_NEXT,"")) != NULL) {
 	G__setenv("MONITOR",cap->name);
 	R__open_quiet();
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
 
     /* Clean temporary directory */
     sprintf(path, "%s/etc/clean_temp", G_gisbase());
-    G_message ( _("Cleaning up temporary files ..." ));
+    G_message ( _("Cleaning up temporary files..." ));
     G_spawn(path, "clean_temp", NULL);
     
     /* Reset variables */
@@ -175,7 +175,7 @@ main (int argc, char *argv[])
 
     G_free( mapset_old_path );
 
-    G_warning ( _("Your shell continues to use the history for the old mapset.") );
+    G_warning ( _("Your shell continues to use the history for the old mapset") );
     
     if ( (shell=getenv("SHELL")) ) {
 	if ( strstr(shell,"bash") ) {
@@ -192,4 +192,3 @@ main (int argc, char *argv[])
 
     return (EXIT_SUCCESS);
 }
-
