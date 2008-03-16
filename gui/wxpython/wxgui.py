@@ -1294,12 +1294,6 @@ class GMApp(wx.App):
 
         return True
 
-def reexec_with_pythonw():
-  if sys.platform == 'darwin' and \
-    not sys.executable.endswith('MacOS/Python'):
-    print >> sys.stderr, 're-executing using pythonw'
-    os.execvp('pythonw', ['pythonw', __file__] + sys.argv[1:])
-
 class Usage(Exception):
     def __init__(self, msg):
         self.msg = msg
@@ -1331,7 +1325,7 @@ def main(argv=None):
     #
     # reexec for MacOS
     #
-    reexec_with_pythonw()
+    utils.reexec_with_pythonw()
 
     #
     # process command-line arguments
