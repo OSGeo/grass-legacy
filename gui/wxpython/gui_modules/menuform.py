@@ -88,32 +88,30 @@ sys.path.append(imagepath)
 import grassenv
 import gselect
 import gcmd
-import wxgui_utils
+import goutput
+import utils
 from preferences import globalSettings as UserSettings
 try:
     import subprocess
 except:
     from compat import subprocess
 
-def reexec_with_pythonw():
-    if sys.platform == 'darwin' and\
-        not sys.executable.endswith('MacOS/Python'):
-        print >>sys.stderr,'re-executing using pythonw'
-        os.execvp('pythonw',['pythonw',__file__] + sys.argv[1:])
-
-reexec_with_pythonw()
+utils.reexec_with_pythonw()
 
 ID_ABOUT_COMMAND = 102
 
-VSPACE = 4
-HSPACE = 4
-MENU_HEIGHT = 25
-STATUSBAR_HEIGHT = 30
-# ENTRY_HEIGHT = 25
-ENTRY_HEIGHT = -1
-STRING_ENTRY_WIDTH = 300
-BUTTON_HEIGHT = 44
-BUTTON_WIDTH = 100
+#
+# Widgets dimension
+#
+SPIN_SIZE = (150, -1)
+COMBOBOX_SIZE = (300, -1)
+GSELECT_SIZE = (400, -1)
+TEXTCTRL_SIZE = (400, -1)
+
+#
+# Global GRASS variables
+#
+CURR_MAPSET = grassenv.GetGRASSVariable('MAPSET')
 
 # From lib/gis/col_str.c, except purple which is mentioned
 # there but not given RGB values
@@ -476,6 +474,7 @@ class helpPanel(wx.html.HtmlWindow):
 
         If 'text' is given, it must be the HTML text to be presented in the Panel.
         """
+
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = gisbase + "/docs/html/"
         self.SetStandardFonts ( size = 10 )
@@ -487,6 +486,7 @@ class helpPanel(wx.html.HtmlWindow):
                 self.fillContentsFromFile ( self.fspath + grass_command + ".html",
                                             skip_description=skip_description )
             else:
+                ### FIXME: calling self.LoadPage is too time costly (why?)
                 self.LoadPage(self.fspath + grass_command + ".html")
                 self.Ok = True
         else:
@@ -876,7 +876,7 @@ class cmdPanel(wx.Panel):
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
         #        if standalone:
-        self.goutput = wxgui_utils.GMConsole(parent=self, margin=False)
+        self.goutput = goutput.GMConsole(parent=self, margin=False)
         self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
         self.outpageid = self.notebook.GetPageCount() - 1
 
@@ -996,11 +996,11 @@ class cmdPanel(wx.Panel):
                             except ValueError:
                                 minValue = -1e6
                                 maxValue = 1e6
-                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=(300, -1),
+                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=SPIN_SIZE,
                                                min=minValue, max=maxValue)
                         else:
                             txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                               size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                                               size=TEXTCTRL_SIZE)
                         if p.get('value','') != '':
                             txt2.SetValue(p['value']) # parameter previously set
                         which_sizer.Add(item=txt2, proportion=0,
@@ -1014,7 +1014,7 @@ class cmdPanel(wx.Panel):
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
                         cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
-                                         size=wx.Size(STRING_ENTRY_WIDTH, -1),
+                                         size=COMBOBOX_SIZE,
                                          choices=valuelist, style=wx.CB_DROPDOWN)
                         if p.get('value','') != '':
                             cb.SetValue(p['value']) # parameter previously set
@@ -1036,13 +1036,13 @@ class cmdPanel(wx.Panel):
                 if p.get('multiple','yes') == 'yes' or \
                         p.get('type','string') == 'string':
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                   size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT))
+                                   size=TEXTCTRL_SIZE)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     minValue = -1e9
                     maxValue = 1e9
                     txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
-                                       size = (STRING_ENTRY_WIDTH, ENTRY_HEIGHT),
+                                       size=SPIN_SIZE,
                                        min=minValue, max=maxValue)
                     txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
@@ -1063,8 +1063,13 @@ class cmdPanel(wx.Panel):
                         multiple = True
                     else:
                         multiple = False
-                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=(400,-1),
-                                               type=p.get('element',''), multiple=multiple)
+                    if p.get('age','') == 'new':
+                        mapsets = [CURR_MAPSET,]
+                    else:
+                        mapsets = None
+
+                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=GSELECT_SIZE,
+                                               type=p.get('element',''), multiple=multiple, mapsets=mapsets)
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set
 
@@ -1114,10 +1119,10 @@ class cmdPanel(wx.Panel):
                 # file selector
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
                     fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, 
-                                                      size=(350, -1), labelText='',
-                                                      dialogTitle=_( 'Choose %s' ) % \
+                                                      size=GSELECT_SIZE, labelText='',
+                                                      dialogTitle=_('Choose %s') % \
                                                           p.get('description',_('File')),
-                                                      buttonText=_( 'Browse' ),
+                                                      buttonText=_('Browse'),
                                                       startDirectory=os.getcwd(), fileMode=0,
                                                       changeCallback=self.OnSetValue)
                     if p.get('value','') != '':
@@ -1378,7 +1383,7 @@ class GUI:
                     if self.grass_task.get_param(key)['element'] in ['cell', 'vector']:
                         # mapname -> mapname@mapset
                         if '@' not in value:
-                            value = value + '@' + grassenv.GetGRASSVariable('MAPSET')
+                            value = value + '@' + CURR_MAPSET
                     self.grass_task.set_param(key, value)
                     cmd_validated.append(key + '=' + value)
                     i = i + 1
