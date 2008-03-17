@@ -796,10 +796,10 @@ class mainFrame(wx.Frame):
     def OnCancel(self, event):
         """Cancel button pressed"""
         self.MakeModal(False)
-        # update only propwin reference
-        self.get_dcmd(dcmd=None, layer=self.layer, params=None,
-                      propwin=None)
-        self.Destroy()
+        if self.get_dcmd:
+            self.Hide()
+        else:
+            self.Destroy()
 
     def OnCloseWindow(self, event):
         """Close the main window"""
@@ -883,10 +883,12 @@ class cmdPanel(wx.Panel):
 
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
-        #        if standalone:
-        self.goutput = goutput.GMConsole(parent=self, margin=False)
-        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
-        self.outpageid = self.notebook.GetPageCount() - 1
+        if self.parent.get_dcmd is None:
+            self.goutput = goutput.GMConsole(parent=self, margin=False)
+            self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
+            self.outpageid = self.notebook.GetPageCount() - 1
+        else:
+            self.goutput = None
 
         manual_tab =  helpPanel( parent = self.notebook, grass_command = self.task.name)
         if manual_tab.Ok:
@@ -1172,7 +1174,7 @@ class cmdPanel(wx.Panel):
 
         # TODO: be less arbitrary with these 600
         self.panelMinHeight = 100
-        self.constrained_size = (min(600, maxsizes[0]) + 25, min(600, maxsizes[1]))
+        self.constrained_size = (min(600, maxsizes[0]) + 25, min(600, maxsizes[1]) + 25)
         for section in sections:
             tab[section].SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # tab[section].SetMinSize( constrained_size )
