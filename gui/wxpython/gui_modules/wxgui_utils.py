@@ -398,6 +398,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.GetPyData(self.layer_selected)[0]['ctrl'] = ctrl.GetId()
         self.layer_selected.SetWindow(ctrl)
 
+        self.RefreshSelected()
         self.Refresh()
         
     def RenameLayer (self, event):
@@ -588,11 +589,17 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def PropertiesDialog (self, layer, show=True):
         """Launch the properties dialog"""
-        global gmpath
+
+        if self.GetPyData(layer)[0].has_key('propwin'):
+            # avoid duplicated GUI dialog for given map layer
+            if self.GetPyData(layer)[0]['propwin'].IsShown():
+                self.GetPyData(layer)[0]['propwin'].SetFocus()
+                return
+        
         completed = ''
         params = self.GetPyData(layer)[1]
         ltype  = self.GetPyData(layer)[0]['type']
-
+                
         Debug.msg (3, "LayerTree.PropertiesDialog(): ltype=%s" % \
                    ltype)
 
@@ -972,14 +979,18 @@ class LayerTree(CT.CustomTreeCtrl):
         """Process layer data"""
 
         # set layer text to map name
-        mapname = utils.GetLayerNameFromCmd(dcmd)
-        self.SetItemText(layer, mapname)
+        if dcmd:
+            mapname = utils.GetLayerNameFromCmd(dcmd)
+            self.SetItemText(layer, mapname)
 
         # update layer data
-        self.SetPyData(layer, (self.GetPyData(layer)[0], params))
-        self.GetPyData(layer)[0]['cmd'] = dcmd
-        self.GetPyData(layer)[0]['propwin'] = propwin
-
+        if params:
+            self.SetPyData(layer, (self.GetPyData(layer)[0], params))
+        if dcmd:
+            self.GetPyData(layer)[0]['cmd'] = dcmd
+        if propwin:
+            self.GetPyData(layer)[0]['propwin'] = propwin
+        
         # check layer as active
         # self.CheckItem(layer, checked=True)
 
