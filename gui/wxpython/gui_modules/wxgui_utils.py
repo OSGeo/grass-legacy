@@ -15,7 +15,7 @@ AUTHORS:    The GRASS Development Team
             Jachym Cepicky (Mendel University of Agriculture)
             Martin Landa <landa.martin gmail.com>
 
-COPYRIGHT:  (C) 2007 by the GRASS Development Team
+COPYRIGHT:  (C) 2007-2008 by the GRASS Development Team
             This program is free software under the GNU General Public
             License (>=v2). Read the file COPYING that comes with GRASS
             for details.
@@ -591,13 +591,14 @@ class LayerTree(CT.CustomTreeCtrl):
 
     def PropertiesDialog (self, layer, show=True):
         """Launch the properties dialog"""
-
         if self.GetPyData(layer)[0].has_key('propwin') and \
                 self.GetPyData(layer)[0]['propwin'] is not None:
-            # avoid duplicated GUI dialog for given map layer
+            # recycle GUI dialogs
             if self.GetPyData(layer)[0]['propwin'].IsShown():
                 self.GetPyData(layer)[0]['propwin'].SetFocus()
-                return
+            else:
+                self.GetPyData(layer)[0]['propwin'].Show()
+            return
         
         completed = ''
         params = self.GetPyData(layer)[1]
