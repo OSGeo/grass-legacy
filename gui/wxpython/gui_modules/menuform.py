@@ -1394,13 +1394,18 @@ class GUI:
         self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
                             task_description=self.grass_task,
                             get_dcmd=get_dcmd, layer=layer)
-
+        
+        if get_dcmd is not None:
+            # update only propwin reference
+            get_dcmd(dcmd=None, layer=layer, params=None,
+                     propwin=self.mf)
+        
         if show:
             self.mf.Show(show)
             self.mf.MakeModal(modal)
         else:
             self.mf.OnApply(None)
-
+        
         return cmd
 
 class StaticWrapText(wx.StaticText):
