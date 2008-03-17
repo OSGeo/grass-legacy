@@ -1,12 +1,13 @@
 # translation of grasslibs_it.po to Italian
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, 2006, 2007 GRASS Development Team
+# Copyright (C) 2005, 2006, 2007, 2008 GRASS Development Team
 #
 # Maurizio Napolitano <napo at itc.it>, 2005.
 # Markus Neteler <neteler at itc.it>, 2005.
 # Luciano Montanaro <mikelima at cirulla.net>, 2006.
 # Giuseppe Patti <gpatt at tiscali.it>, 2006.
 # Tobias Vigl <vigltobias at icqmail.com>, 2007.
+# Luca Delucchi <lucadeluge at gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
