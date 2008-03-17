@@ -51,6 +51,7 @@ class Settings:
             #
             'general': {
                 'mapsetPath'  : { 'selection' : 0 }, # current mapset search path
+                'changeOpacityLevel' : { 'enabled' : False }, # show opacity level widget
                 },
             #
             # display
@@ -430,6 +431,31 @@ class PreferencesDialog(wx.Dialog):
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
+        # Layer Manager settings
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Layer Manager settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # show opacily level
+        #
+        row = 0
+        changeOpacityLevel = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_("Opacity level editable"),
+                                       name='IsChecked')
+        changeOpacityLevel.SetValue(self.settings.Get(group='general', key='changeOpacityLevel', subkey='enabled'))
+        self.winId['general:changeOpacityLevel:enabled'] = changeOpacityLevel.GetId()
+
+        gridSizer.Add(item=changeOpacityLevel,
+                      pos=(row, 0), span=(1, 2))
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         

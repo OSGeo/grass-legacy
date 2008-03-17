@@ -691,7 +691,7 @@ class Map(object):
         return self.mapfile
 
     def AddLayer(self, type, command, name=None,
-                 l_active=True, l_hidden=False, l_opacity=1, l_render=False):
+                 l_active=True, l_hidden=False, l_opacity=1.0, l_render=False):
         """
         Adds generic display command layer to list of layers
 
