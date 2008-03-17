@@ -482,6 +482,7 @@ class helpPanel(wx.html.HtmlWindow):
 
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = gisbase + "/docs/html/"
+
         self.SetStandardFonts ( size = 10 )
         self.SetBorders(10)
         wx.InitAllImageHandlers()
@@ -490,10 +491,11 @@ class helpPanel(wx.html.HtmlWindow):
             if skip_description:
                 self.fillContentsFromFile ( self.fspath + grass_command + ".html",
                                             skip_description=skip_description )
-            else:
-                ### FIXME: calling self.LoadPage is too time costly (why?)
-                self.LoadPage(self.fspath + grass_command + ".html")
                 self.Ok = True
+            else:
+                ### FIXME: calling LoadPage() is strangely time-consuming (only first call)
+                # self.LoadPage(self.fspath + grass_command + ".html")
+                self.Ok = False
         else:
             self.SetPage( text )
             self.Ok = True
@@ -872,7 +874,8 @@ class cmdPanel(wx.Panel):
         nbStyle = globalvar.FNPageStyle
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(globalvar.FNPageColor)
-        self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
+        self.notebook.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange)
+
         tab = {}
         tabsizer = {}
         for section in sections:
@@ -890,13 +893,13 @@ class cmdPanel(wx.Panel):
         else:
             self.goutput = None
 
-        manual_tab =  helpPanel( parent = self.notebook, grass_command = self.task.name)
-        if manual_tab.Ok:
-            manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( manual_tab, text = _("Manual") )
+        self.manual_tab = helpPanel(parent = self.notebook, grass_command = self.task.name)
+        self.manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
+        self.notebook.AddPage(self.manual_tab, text=_("Manual"))
+        self.manual_tab_id = self.notebook.GetPageCount() - 1
 
         self.notebook.SetSelection(0)
-        panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
+        panelsizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND )
 
         #
         # flags
@@ -1179,8 +1182,8 @@ class cmdPanel(wx.Panel):
             tab[section].SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # tab[section].SetMinSize( constrained_size )
 
-        if manual_tab.Ok:
-            manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
+        if self.manual_tab.Ok:
+            self.manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # manual_tab.SetMinSize( constrained_size )
 
         self.SetSizer( panelsizer )
@@ -1205,6 +1208,14 @@ class cmdPanel(wx.Panel):
         event.Skip()
 
     def OnPageChange(self, event):
+        if hasattr(self, "manual_tab_id") and \
+                event.GetSelection() == self.manual_tab_id:
+            # calling LoadPage() is strangely time-consuming (only first call)
+            # FIXME: move to helpPage.__init__()
+            if not self.manual_tab.Ok:
+                self.manual_tab.LoadPage(self.manual_tab.fspath + self.task.name + ".html")
+                self.manual_tab.Ok = True
+
         self.Layout()
 
     def OnColorChange( self, event ):
