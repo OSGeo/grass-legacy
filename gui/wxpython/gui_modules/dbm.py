@@ -41,6 +41,9 @@ import tempfile
 import gettext
 gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
+import globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
@@ -49,7 +52,6 @@ import wx.lib.scrolledpanel as scrolled
 import sqlbuilder
 import grassenv
 import gcmd
-import globalvar
 import utils
 from debug import Debug as Debug
 from preferences import globalSettings as UserSettings

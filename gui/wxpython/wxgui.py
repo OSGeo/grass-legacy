@@ -52,8 +52,9 @@ import icons
 gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
-import gui_modules.utils as utils
-utils.CheckForWx()
+import gui_modules.globalvar as globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.aui
 import wx.combo
@@ -67,6 +68,7 @@ try:
 except:
     import compat.subprocess as subprocess
 
+import gui_modules.utils as utils
 import gui_modules.preferences as preferences
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
@@ -80,7 +82,6 @@ import gui_modules.mcalc_builder as mapcalculator
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
-import gui_modules.globalvar as globalvar
 import gui_modules.workspace as workspace
 import gui_modules.goutput as goutput
 from   gui_modules.debug import Debug as Debug

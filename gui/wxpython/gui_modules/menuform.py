@@ -52,13 +52,17 @@ import string
 import textwrap
 import os
 from os import system
+import time
+start = time.time()
 
 ### i18N
 import gettext
 gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
-import utils
-utils.CheckForWx()
+
+import globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
@@ -72,8 +76,9 @@ import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
 
+import utils
+
 gisbase = os.getenv("GISBASE")
-import globalvar
 if gisbase is None:
     print >>sys.stderr, "We don't seem to be properly installed, or we are being run outside GRASS. Expect glitches."
     gisbase = os.path.join(os.path.dirname( sys.argv[0] ), os.path.pardir)
@@ -791,6 +796,9 @@ class mainFrame(wx.Frame):
     def OnCancel(self, event):
         """Cancel button pressed"""
         self.MakeModal(False)
+        # update only propwin reference
+        self.get_dcmd(dcmd=None, layer=self.layer, params=None,
+                      propwin=None)
         self.Destroy()
 
     def OnCloseWindow(self, event):
@@ -1314,6 +1322,7 @@ class GrassGUIApp(wx.App):
         self.mf = mainFrame(parent=None, ID=wx.ID_ANY, task_description=self.grass_task)
         self.mf.Show(True)
         self.SetTopWindow(self.mf)
+        # print >> sys.stderr, time.time() - start
         return True
 
 class GUI:
@@ -1334,6 +1343,7 @@ class GUI:
         * add key name for first parameter if not given
         * change mapname to mapname@mapset
         """
+        start = time.time()
         dcmd_params = {}
         if completed == None:
             get_dcmd = None
@@ -1406,6 +1416,7 @@ class GUI:
         else:
             self.mf.OnApply(None)
         
+        # print >> sys.stderr, time.time() - start
         return cmd
 
 class StaticWrapText(wx.StaticText):
