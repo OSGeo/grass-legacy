@@ -28,15 +28,14 @@ import shutil
 ### i18N
 import gettext
 
+from gui_modules import globalvar
+globalvar.CheckForWx()
 from gui_modules import utils
 
-utils.CheckForWx()
 import wx
 import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
-
-from gui_modules import globalvar
 
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""

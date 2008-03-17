@@ -127,25 +127,6 @@ def ListOfCatsToRange(cats):
         
     return catstr.strip(',')
 
-def CheckForWx():
-    """Try to import wx module and check its version"""
-    majorVersion = 2.8
-    minorVersion = 1.1
-    try:
-        import wx
-        version = wx.__version__
-        if float(version[:3]) < majorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-        if float(version[:3]) == 2.8 and \
-                float(version[4:]) < minorVersion:
-            raise ValueError('You are using wxPython version %s' % str(version))
-
-    except (ImportError, ValueError), e:
-        print >> sys.stderr, 'ERROR: ' + str(e) + \
-            '. wxPython >= %s.%s is required. Detailed information in README file.' % \
-            (str(majorVersion), str(minorVersion))
-        sys.exit(1)
-
 def ListOfMapsets():
     """Get list of available/accessible mapsets
 

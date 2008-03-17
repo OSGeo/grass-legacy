@@ -46,6 +46,8 @@ try:
 except:
     from compat import subprocess
 
+TREE_ITEM_HEIGHT = 25
+
 # define event for GRASS console (running GRASS command in separate thread)
 (UpdateGMConsoleEvent, EVT_UPDATE_GMCONSOLE) = wx.lib.newevent.NewEvent()
 
@@ -58,8 +60,8 @@ class LayerTree(CT.CustomTreeCtrl):
                  id=wx.ID_ANY, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
-                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT|
-                 CT.TR_EDIT_LABELS|CT.TR_MULTIPLE,
+                 CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT |
+                 CT.TR_EDIT_LABELS | CT.TR_SINGLE,
                  idx=None, gismgr=None, notebook=None, auimgr=None, showMapDisplay=True):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style, ctstyle)
 
@@ -108,11 +110,11 @@ class LayerTree(CT.CustomTreeCtrl):
         self.SetPyData(self.root, (None,None))
 
         #create image list to use with layer tree
-        il = wx.ImageList(16, 16, False)
+        il = wx.ImageList(16, 16, mask=False)
 
-        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN, wx.ART_OTHER, (16,16))
+        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER_OPEN, wx.ART_OTHER, (16, 16))
         self.folder_open = il.Add(trart)
-        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, (16,16))
+        trart = wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, (16, 16))
         self.folder = il.Add(trart)
 
         bmpsize = (16, 16)
@@ -158,8 +160,6 @@ class LayerTree(CT.CustomTreeCtrl):
         trgif = Icons["addcmd"].GetBitmap(bmpsize)
         self.cmd_icon = il.Add(trgif)
 
-        checksize = il.GetSize(0)
-        checkbmp = il.GetBitmap(0)
         self.AssignImageList(il)
 
         # use when groups implemented
@@ -376,7 +376,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """Popup opacity level indicator"""
         if not self.GetPyData(self.layer_selected)[0]['ctrl']:
             return
-        
+
         win = self.FindWindowById(self.GetPyData(self.layer_selected)[0]['ctrl'])
         type = win.GetName()
 
@@ -384,7 +384,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         opacity = self.GetPyData(self.layer_selected)[0]['maplayer'].GetOpacity()
         if type == 'staticText':
-            ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+            ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
                                style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100,
                                name='spinCtrl')
             ctrl.SetValue(opacity)
@@ -393,7 +393,7 @@ class LayerTree(CT.CustomTreeCtrl):
             ctrl = wx.StaticText(self, id=wx.ID_ANY,
                                  name='staticText')
             if opacity < 100:
-                ctrl.SetLabel('(' + str(opacity) + '%)')
+                ctrl.SetLabel('   (' + str(opacity) + '%)')
                 
         self.GetPyData(self.layer_selected)[0]['ctrl'] = ctrl.GetId()
         self.layer_selected.SetWindow(ctrl)
@@ -436,7 +436,7 @@ class LayerTree(CT.CustomTreeCtrl):
         else:
             # all other items (raster, vector, ...)
             if UserSettings.Get(group='general', key='changeOpacityLevel', subkey='enabled'):
-                ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                ctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
                                    style=wx.SP_ARROW_KEYS, initial=100, min=0, max=100,
                                    name='spinCtrl')
                 
@@ -532,7 +532,7 @@ class LayerTree(CT.CustomTreeCtrl):
                     ctrl.SetValue(int(lopacity * 100))
                 else:
                     if opacity < 1.0:
-                        ctrl.SetLabel('(' + str(int(opacity * 100)) + '%)')
+                        ctrl.SetLabel('   (' + str(int(opacity * 100)) + '%)')
             else:
                 opacity = 1.0
             if lcmd and len(lcmd) > 1:
@@ -585,12 +585,15 @@ class LayerTree(CT.CustomTreeCtrl):
         if checked is True:
             self.mapdisplay.onRenderGauge.SetRange(len(self.Map.GetListOfLayers(l_active=True)))
 
+        # layer.SetHeight(TREE_ITEM_HEIGHT)
+
         return layer
 
     def PropertiesDialog (self, layer, show=True):
         """Launch the properties dialog"""
 
-        if self.GetPyData(layer)[0].has_key('propwin'):
+        if self.GetPyData(layer)[0].has_key('propwin') and \
+                self.GetPyData(layer)[0]['propwin'] is not None:
             # avoid duplicated GUI dialog for given map layer
             if self.GetPyData(layer)[0]['propwin'].IsShown():
                 self.GetPyData(layer)[0]['propwin'].SetFocus()
@@ -795,6 +798,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.mapdisplay.OnRender(None)
 
     def OnChangeSel(self, event):
+        """Selection changed"""
         oldlayer = event.GetOldItem()
         layer = event.GetItem()
         self.layer_selected = layer
@@ -870,9 +874,9 @@ class LayerTree(CT.CustomTreeCtrl):
                 newctrl = wx.StaticText(self, id=wx.ID_ANY,
                                         name='staticText')
                 if opacity < 100:
-                    newctrl.SetLabel('(' + str(opacity) + '%)')
+                    newctrl.SetLabel('   (' + str(opacity) + '%)')
             else:
-                newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
+                newctrl = wx.SpinCtrl(self, id=wx.ID_ANY, value="",
                                       style=wx.SP_ARROW_KEYS, min=0, max=100,
                                       name='spinCtrl')
                 newctrl.SetValue(opacity)
@@ -928,7 +932,7 @@ class LayerTree(CT.CustomTreeCtrl):
             
         self.CheckItem(newItem, checked=checked)
 
-        event.Skip()
+        # newItem.SetHeight(TREE_ITEM_HEIGHT)
 
         return newItem
 
@@ -988,8 +992,7 @@ class LayerTree(CT.CustomTreeCtrl):
             self.SetPyData(layer, (self.GetPyData(layer)[0], params))
         if dcmd:
             self.GetPyData(layer)[0]['cmd'] = dcmd
-        if propwin:
-            self.GetPyData(layer)[0]['propwin'] = propwin
+        self.GetPyData(layer)[0]['propwin'] = propwin
         
         # check layer as active
         # self.CheckItem(layer, checked=True)
@@ -1061,8 +1064,8 @@ class LayerTree(CT.CustomTreeCtrl):
         if self.mapdisplay.autoRender.GetValue(): 
             self.mapdisplay.OnRender(None)
 
-        self.Refresh()
-        
+        # item.SetHeight(TREE_ITEM_HEIGHT)
+
     def setNotebookPage(self,pg):
         self.parent.notebook.SetSelection(pg)
 
