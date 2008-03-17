@@ -137,7 +137,7 @@ int print_stats(univar_stat * stats)
 	qpos_perc = (int *) G_calloc(stats->n_perc, sizeof(int));
 	quartile_perc = (double *) G_calloc(stats->n_perc, sizeof(double));
 	for (i = 0; i < stats->n_perc; i++) {
-	    qpos_perc[i] = (int) (stats->n * stats->perc[i] / 100. - 0.5);
+	    qpos_perc[i] = (int) (stats->n * 1e-2 * stats->perc[i] - 0.5);
 	}
 	qpos_25 = (int)(stats->n * 0.25 - 0.5);
 	qpos_75 = (int)(stats->n * 0.75 - 0.5);
