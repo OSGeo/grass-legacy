@@ -18,7 +18,8 @@
 
 struct point *make_list(struct point *head, int y, int x,
 			SEGMENT * seg_in_p, int viewpt_elev,
-			int quadrant, int row_viewpt, int col_viewpt)
+			int quadrant, int row_viewpt, int col_viewpt,
+			int docurv, double ellps_a)
 {
     double del_x, del_y, dist, orientation, inclination;
     static struct point *PRESENT_PT;
@@ -38,7 +39,7 @@ struct point *make_list(struct point *head, int y, int x,
     /* otherwise find orientation and inclination           */
     orientation = find_orientation(x, y, quadrant);
     inclination = find_inclination(x, y, viewpt_elev, seg_in_p,
-				   row_viewpt, col_viewpt);
+				   row_viewpt, col_viewpt, docurv, ellps_a);
 
     if (head == NULL) {		/*  first point ?           */
 	head = make_point(orientation, inclination, y, x);

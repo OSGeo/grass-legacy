@@ -11,6 +11,7 @@
 #include <math.h>
 #include <grass/gis.h>
 #include <grass/segment.h>
+#include <grass/glocale.h>
 #include "point.h"
 #include "radians.h"
 #include "local_proto.h"
@@ -42,7 +43,8 @@ struct point *hidden_point_elimination (
 	struct point *head, int viewpt_elev,
 	SEGMENT *seg_in_p, SEGMENT *seg_out_p, SEGMENT *seg_patt_p,
 	int quadrant, int sign_on_y, int sign_on_x,
-	int row_viewpt, int col_viewpt, int patt_flag)
+	int row_viewpt, int col_viewpt, int patt_flag,
+	int docurv, double ellps_a)
 
 {
 	struct point *CHECKED_PT, *BLOCKING_PT;
@@ -92,11 +94,11 @@ struct point *hidden_point_elimination (
 
 		inclination_neighbor_1 = 
 		    find_inclination(neighbor_1_x,neighbor_1_y,viewpt_elev,
-		    seg_in_p,row_viewpt,col_viewpt);
+		    seg_in_p,row_viewpt,col_viewpt, docurv, ellps_a);
 
 		inclination_neighbor_2 = 
 		    find_inclination(neighbor_2_x,neighbor_2_y,viewpt_elev,
-		    seg_in_p,row_viewpt,col_viewpt);
+		    seg_in_p,row_viewpt,col_viewpt, docurv, ellps_a);
 
 
 		/* check all points behind the blocking point		*/
@@ -278,11 +280,12 @@ find_orientation (int x, int y, int quadrant)
 /****************************************************************/
 
 double 
-find_inclination (int x, int y, int viewpt_elev, SEGMENT *seg_in_p, int row_viewpt, int col_viewpt)
+find_inclination (int x, int y, int viewpt_elev, SEGMENT *seg_in_p, int row_viewpt, int col_viewpt, 
+	int docurv, double ellps_a)
 
 
 {
-	double del_x, del_y,dist,atan(),sqrt();
+	double del_x, del_y,dist;
 	int abs();
 	FCELL picked_pt_elev;
 	extern struct Cell_head window;
@@ -293,6 +296,10 @@ find_inclination (int x, int y, int viewpt_elev, SEGMENT *seg_in_p, int row_view
 	dist=sqrt(del_x * del_x + del_y * del_y)*window.ns_res;
 
 	segment_get(seg_in_p,&picked_pt_elev,row_viewpt-y,x+col_viewpt);
+    
+	if (docurv)  /* decrease height of target point */
+	    picked_pt_elev = picked_pt_elev - ((dist*dist) / (2 * ellps_a));
+
 	return(atan((picked_pt_elev-viewpt_elev)/dist));
 }
 

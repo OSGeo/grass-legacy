@@ -19,7 +19,7 @@ struct point *segment(int segment_no, int xmax, int ymax,
 		      int sign_on_y, int sign_on_x, int viewpt_elev,
 		      SEGMENT * seg_in_p, SEGMENT * seg_out_p,
 		      SEGMENT * seg_patt_p, int row_viewpt, int col_viewpt,
-		      int patt_flag)
+		      int patt_flag, int docurv, double ellps_a)
 {
     int lower_limit_y, upper_limit_y, less, x, y,
 	x_actual, y_actual, x_flip, y_flip;
@@ -60,7 +60,7 @@ struct point *segment(int segment_no, int xmax, int ymax,
 
 	    /*      add chosen point to the point list              */
 	    head = make_list(head, y_actual, x_actual, seg_in_p,
-			     viewpt_elev, quadrant, row_viewpt, col_viewpt);
+			     viewpt_elev, quadrant, row_viewpt, col_viewpt, docurv, ellps_a);
 
 	}
     }	/* end of outer loop */
@@ -79,7 +79,7 @@ struct point *segment(int segment_no, int xmax, int ymax,
 	head = hidden_point_elimination(head, viewpt_elev,
 					seg_in_p, seg_out_p, seg_patt_p,
 					quadrant, sign_on_y, sign_on_x,
-					row_viewpt, col_viewpt, patt_flag);
+					row_viewpt, col_viewpt, patt_flag, docurv, ellps_a);
     }
 
     return (head);
