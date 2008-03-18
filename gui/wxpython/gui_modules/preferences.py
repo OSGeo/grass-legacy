@@ -23,7 +23,8 @@ import os
 import sys
 import copy
 import stat
-import pwd
+if os.name in ('posix', 'mac'):
+    import pwd
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
@@ -1049,10 +1050,15 @@ class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.Check
             mapsetPath = os.path.join(locationPath,
                                       mapset)
             stat_info = os.stat(mapsetPath)
-            # FIXME: pwd is only Unix-related
-            self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
-            self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) # FIXME
-
+	    if os.name in ('posix', 'mac'):
+                self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
+                # FIXME: get group name
+                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
+	    else:
+                # FIXME: no pwd under MS Windows (owner: 0, group: 0)
+                self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
+                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
+                
         self.SetColumnWidth(col=0, width=wx.LIST_AUTOSIZE)
         self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
         
