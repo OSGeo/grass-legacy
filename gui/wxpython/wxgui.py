@@ -1233,7 +1233,7 @@ class GMFrame(wx.Frame):
 
         dlg = wx.MessageDialog (parent=self, message=message,
                                 caption=_("Remove map layer"),
-                                style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
+                                style=wx.YES_NO | wx.YES_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
         if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
             dlg.Destroy()
