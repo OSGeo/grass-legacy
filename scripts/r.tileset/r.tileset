@@ -187,22 +187,14 @@ message () {
 # purpose: lookup values in passed by reference arrays
 
 Lookup_Mac() {
-
 # Assignment Command Statement Builder
-
-    echo -n 'eval '
-    echo -n "$3"                    # Destination name
-    echo -n '=${'
-    echo -n "$1"                    # Source name
-    echo -n "[$2]}"
-
-# That could all be a single command.
-# Matter of style only.
+# "$1" is Source name, "$3" is Destination name
+    echo "eval $3"'=${'"$1[$2]}"
 }
 
 # Lookup_Mac
 
-declare -f LookupP                # Function "Pointer"
+declare -f LookupP               # Function "Pointer"
 LookupP=Lookup_Mac               # Statement Builder
 
 lookup () {
