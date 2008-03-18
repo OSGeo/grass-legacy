@@ -750,10 +750,9 @@ class GMFrame(wx.Frame):
         try:
             file = open(filename, "w")
         except IOError:
-            dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s> for writing.") % filename,
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Unable to open workspace file <%s> for writing.") % filename,
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         try:
@@ -774,17 +773,16 @@ class GMFrame(wx.Frame):
             self.indent =- 4
             file.write('%s</gxw>\n' % (' ' * self.indent))
             del self.indent
-        except:
-            dlg = wx.MessageDialog(self, _("Writing current settings to workspace file failed."),
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+        except StandardError, e:
+            file.close()
+            wx.MessageBox(parent=self, message=_("Writing current settings to workspace file failed (%s)." % e),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         file.close()
-
+        
         return True
-
+    
     def OnWorkspaceClose(self, event=None):
         """Close file with workspace definition
 

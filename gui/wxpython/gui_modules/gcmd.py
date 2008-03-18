@@ -503,19 +503,22 @@ class CommandThread(Thread):
         
     def run(self):
         """Run command"""
+        if len(self.cmd) == 0:
+            return
+
         self.startTime = time.time()
         # TODO: wx.Exectute/wx.Process (?)
-        self.module = Popen(self.cmd,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-
+        try:
+            self.module = Popen(self.cmd,
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        except OSError, e:
+            raise CmdError(self.cmd[0], str(e))
+        
         if self.stdin: # read stdin if requested ...
             self.module.stdin.write(self.stdin)
             self.module.stdin.close()
-
-        if not self.module:
-            return
 
         # redirect standard outputs...
         if self.stdout or self.stderr:

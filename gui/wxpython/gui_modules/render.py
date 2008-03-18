@@ -83,6 +83,8 @@ class MapLayer(object):
 
         @return name of file with rendered image or None
         """
+        if len(self.cmdlist) == 0:
+            return
 
         Debug.msg (3, "MapLayer.Render(): type=%s" % \
                    (self.type))
@@ -143,7 +145,10 @@ class MapLayer(object):
         if not self.name:
             return ''
 
-        return self.name.split('@')[1]
+        try:
+            return self.name.split('@')[1]
+        except IndexError:
+            return self.name
 
     def GetCmd(self, string=False):
         """
