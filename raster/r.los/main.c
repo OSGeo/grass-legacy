@@ -35,6 +35,7 @@
 #include <grass/gis.h>
 #define MAIN
 #include <grass/segment.h>
+#include <grass/gprojects.h>
 #include <grass/glocale.h>
 #include "cmd_line.h"
 #include "point.h"
@@ -69,8 +70,10 @@ int main(int argc, char *argv[])
     struct point *heads[16], *SEARCH_PT;
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt5, *opt6, *opt7;
+    struct Flag *curvature;
     struct History history;
     char title[128];
+    double aa, e2;
 
     G_gisinit(argv[0]);
 
@@ -109,8 +112,13 @@ int main(int argc, char *argv[])
     opt6->type = TYPE_DOUBLE;
     opt6->required = NO;
     opt6->answer = "10000";
-    opt6->options = "0-999999";
+    opt6->options = "0-5000000";  /* observer can be in a plane, too */
     opt6->description = _("Maximum distance from the viewing point (meters)");
+    /* http://mintaka.sdsu.edu/GF/explain/atmos_refr/horizon.html */
+
+    curvature = G_define_flag();
+    curvature->key = 'c';
+    curvature->description = _("Consider earth curvature (current ellipsoid)");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -227,6 +235,18 @@ int main(int argc, char *argv[])
 	close(patt_fd);
     }
 
+   if (curvature->answer){
+      /* try to get the radius the standard GRASS way from the libs */
+      G_get_ellipsoid_parameters (&aa, &e2);
+      if (aa == 0) {
+          /* since there was a problem, take a hardcoded radius :( */
+          G_warning(_("Problem to obtain current ellipsoid parameters, using sphere (6370997.0)"));
+          aa = 6370997.00;
+      }
+      G_debug(3, "radius: %f", aa);
+    }
+    G_message(_("Using maximum distance from the viewing point (meters): %f"), max_dist);
+
     /*      open, initialize and segment all files          */
     in_fd = open(in_name, 2);
     segment_init(&seg_in, in_fd, 4);
@@ -304,7 +324,7 @@ int main(int argc, char *argv[])
 					slope_1, slope_2, flip, sign_on_y,
 					sign_on_x, viewpt_elev, &seg_in,
 					&seg_out, &seg_patt, row_viewpt,
-					col_viewpt, patt_flag);
+					col_viewpt, patt_flag, curvature->answer, aa);
 
 	G_percent(segment_no, 16, 5);
     }	/*      end of for-loop over segments           */

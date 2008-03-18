@@ -31,14 +31,14 @@ struct point *make_point(double, double, int, int);
 /* delete.c */
 struct point *delete(struct point *, struct point *, SEGMENT *, int, int);
 /* make_list.c */
-struct point *make_list(struct point *, int, int, SEGMENT *, int, int, int, int);
+struct point *make_list(struct point *, int, int, SEGMENT *, int, int, int, int, int, double);
 /* mark_pts.c */
 int mark_visible_points(struct point *, SEGMENT *, int, int, double, double);
 /* pts_elim.c */
-struct point *hidden_point_elimination(struct point *, int, SEGMENT *, SEGMENT *, SEGMENT *, int, int, int, int, int, int);
+struct point *hidden_point_elimination(struct point *, int, SEGMENT *, SEGMENT *, SEGMENT *, int, int, int, int, int, int, int, double);
 /* segment.c */
 struct point *segment(int, int, int, double, double,
-	int, int, int, int, SEGMENT *, SEGMENT *, SEGMENT *, int, int, int);
+	int, int, int, int, SEGMENT *, SEGMENT *, SEGMENT *, int, int, int, int, double);
 #endif
 /****************************************************************/
 
