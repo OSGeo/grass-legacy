@@ -198,13 +198,23 @@ class GRASSStartup(wx.Frame):
         if location:
             # list of locations
             self.UpdateLocations(self.gisdbase)
-            self.lblocations.SetSelection(self.listOfLocations.index(location))
-
+            try:
+                self.lblocations.SetSelection(self.listOfLocations.index(location))
+            except ValueError:
+                print >> sys.stderr, _("ERROR: Location <%s> not found in GISDBASE (%s)") %  \
+                    (location, self.gisdbase)
+                
             # list of mapsets
             self.UpdateMapsets(os.path.join(self.gisdbase,location))
-            mapset =self._getRCValue("MAPSET")
-            if  mapset:
-                self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
+            mapset = self._getRCValue("MAPSET")
+            if mapset:
+                try:
+                    self.lbmapsets.SetSelection(self.listOfMapsets.index(mapset))
+                except ValueError:
+                    self.lbmapsets.Clear()
+                    print >> sys.stderr, _("ERROR: Mapset <%s> not found") % \
+                        (mapset)
+
                 # self.bstart.Enable(True)
 
     def _do_layout(self):
