@@ -996,8 +996,8 @@ class cmdPanel(wx.Panel):
                 else:
                     if len(valuelist) == 1: # -> textctrl
                         txt = wx.StaticText(parent=which_panel,
-                                            label = "%s. %s=%s" (title, _('Valid range'),
-                                                                 str(valuelist).strip("[]'") + ':'))
+                                            label = "%s. %s %s" % (title, _('Valid range'),
+                                                                   str(valuelist[0]) + ':'))
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
 
