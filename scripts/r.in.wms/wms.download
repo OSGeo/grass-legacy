@@ -46,10 +46,6 @@
 #% description: Verbosity level
 #% answer: 1
 #%end
-#%Flag
-#% key: g
-#% description: Use alternative GET method (try if you have download problems)
-#%end
 
 if  [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." 1>&2
@@ -114,11 +110,7 @@ GetTiles() {
   g.message "Downloading tiles"
 
   # init POST-data vs. GET URL method variable
-  if [ $GIS_FLAG_G -eq 0 ] ; then
-      POST_DATA_OK=1
-  else
-      POST_DATA_OK=0
-  fi
+  POST_DATA_OK=1
 
   CONTENTS=`cat "${REQUESTFILE}"`
 
