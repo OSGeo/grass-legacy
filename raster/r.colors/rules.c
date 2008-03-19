@@ -81,7 +81,7 @@ static int read_rule(
 	if (tty)
 	    fprintf(stderr,"> ");
 
-	if (!fgets(buf, sizeof(buf), fp))
+	if (!G_getl2(buf, sizeof(buf), fp))
 	    return 0;
 
 	for (i = 0; buf[i]; i++)
