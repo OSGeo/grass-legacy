@@ -2,9 +2,11 @@
  *
  * MODULE:       db.describe
  * AUTHOR(S):    Radim Blazek <radim.blazek gmail.com> (original contributor)
- *               Glynn Clements <glynn gclements.plus.com>, Markus Neteler <neteler itc.it>, Stephan Holl
- * PURPOSE:      displays table information
- * COPYRIGHT:    (C) 2002-2007 by the GRASS Development Team
+ *               Glynn Clements <glynn gclements.plus.com>,
+ *               Markus Neteler <neteler itc.it>,
+ *               Stephan Holl
+ * PURPOSE:      Displays table information
+ * COPYRIGHT:    (C) 2002-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -125,7 +127,7 @@ parse_command_line(int argc, char **argv)
     module->description = _("Describes a table in detail.");
 
     if(G_parser(argc, argv))
-        exit (EXIT_SUCCESS);
+        exit (EXIT_FAILURE);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
