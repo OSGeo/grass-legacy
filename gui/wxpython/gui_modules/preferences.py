@@ -22,10 +22,14 @@ Martin Landa <landa.martin gmail.com>
 import os
 import sys
 import copy
+import stat
+if os.name in ('posix', 'mac'):
+    import pwd
 
 import wx
 import wx.lib.filebrowsebutton as filebrowse
 import wx.lib.colourselect as csel
+import wx.lib.mixins.listctrl as listmix
 from wx.lib.wordwrap import wordwrap
 
 import gcmd
@@ -51,6 +55,7 @@ class Settings:
             #
             'general': {
                 'mapsetPath'  : { 'selection' : 0 }, # current mapset search path
+                'changeOpacityLevel' : { 'enabled' : False }, # show opacity level widget
                 },
             #
             # display
@@ -430,6 +435,31 @@ class PreferencesDialog(wx.Dialog):
         
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        #
+        # Layer Manager settings
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Layer Manager settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
+        #
+        # show opacily level
+        #
+        row = 0
+        changeOpacityLevel = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                       label=_("Opacity level editable"),
+                                       name='IsChecked')
+        changeOpacityLevel.SetValue(self.settings.Get(group='general', key='changeOpacityLevel', subkey='enabled'))
+        self.winId['general:changeOpacityLevel:enabled'] = changeOpacityLevel.GetId()
+
+        gridSizer.Add(item=changeOpacityLevel,
+                      pos=(row, 0), span=(1, 2))
+        
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
@@ -926,8 +956,9 @@ class MapsetAccess(wx.Dialog):
     Controls setting options and displaying/hiding map overlay decorations
     """
     def __init__(self, parent, id, title=_('Set/unset access to mapsets in current location'),
-                 pos=wx.DefaultPosition, size=(-1, -1),
+                 pos=wx.DefaultPosition, size=(350, 400),
                  style=wx.DEFAULT_DIALOG_STYLE|wx.RESIZE_BORDER):
+        
         wx.Dialog.__init__(self, parent, id, title, pos, size, style)
 
         self.all_mapsets, self.accessible_mapsets = utils.ListOfMapsets()
@@ -942,9 +973,8 @@ class MapsetAccess(wx.Dialog):
         sizer.Add(item=label, proportion=0,
                   flag=wx.ALL, border=5)
 
-        self.mapsetlb = wx.CheckListBox(parent=self, id=wx.ID_ANY, pos=wx.DefaultPosition,
-                                        size=(350,200), choices=self.all_mapsets)
-        self.mapsetlb.Bind(wx.EVT_CHECKLISTBOX, self.OnCheckMapset)
+        self.mapsetlb = CheckListMapset(parent=self)
+        self.mapsetlb.LoadData(self.all_mapsets)
         
         sizer.Add(item=self.mapsetlb, proportion=1,
                   flag=wx.ALL | wx.EXPAND, border=5)
@@ -952,10 +982,11 @@ class MapsetAccess(wx.Dialog):
         # check all accessible mapsets
         if globalSettings.Get(group='general', key='mapsetPath', subkey='selection') == 1:
             for mset in self.all_mapsets:
-                self.mapsetlb.Check(self.all_mapsets.index(mset), True)
+                self.mapsetlb.CheckItem(self.all_mapsets.index(mset), True)
         else:
             for mset in self.accessible_mapsets:
-                self.mapsetlb.Check(self.all_mapsets.index(mset), True)
+                self.mapsetlb.CheckItem(self.all_mapsets.index(mset), True)
+                pass
 
         # dialog buttons
         line = wx.StaticLine(parent=self, id=wx.ID_ANY,
@@ -980,13 +1011,7 @@ class MapsetAccess(wx.Dialog):
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-        self.SetMinSize(self.GetBestSize())
-        
-    def OnCheckMapset(self, event):
-        """Mapset checked/unchecked"""
-        mapset = self.mapsetlb.GetString(event.GetSelection())
-        if mapset == 'PERMANENT' or mapset == self.curr_mapset:
-            self.mapsetlb.Check(event.GetSelection(), True)
+        self.SetMinSize(size)
         
     def GetMapsets(self):
         """Get list of checked mapsets"""
@@ -998,3 +1023,47 @@ class MapsetAccess(wx.Dialog):
             i += 1
 
         return ms
+
+class CheckListMapset(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin, listmix.CheckListCtrlMixin):
+    """List of mapset/owner/group"""
+    def __init__(self, parent, pos=wx.DefaultPosition,
+                 log=None):
+        self.parent = parent
+        
+        wx.ListCtrl.__init__(self, parent, wx.ID_ANY,
+                             style=wx.LC_REPORT)
+        listmix.CheckListCtrlMixin.__init__(self)
+        self.log = log
+
+        # setup mixins
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+
+    def LoadData(self, mapsets):
+        """Load data into list"""
+        self.InsertColumn(0, _('Mapset'))
+        self.InsertColumn(1, _('Owner'))
+        self.InsertColumn(2, _('Group'))
+        locationPath = os.path.join(grassenv.GetGRASSVariable('GISDBASE'),
+                                    grassenv.GetGRASSVariable('LOCATION_NAME'))
+        for mapset in mapsets:
+            index = self.InsertStringItem(sys.maxint, mapset)
+            mapsetPath = os.path.join(locationPath,
+                                      mapset)
+            stat_info = os.stat(mapsetPath)
+	    if os.name in ('posix', 'mac'):
+                self.SetStringItem(index, 1, "%s" % pwd.getpwuid(stat_info.st_uid)[0])
+                # FIXME: get group name
+                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid) 
+	    else:
+                # FIXME: no pwd under MS Windows (owner: 0, group: 0)
+                self.SetStringItem(index, 1, "%-8s" % stat_info.st_uid)
+                self.SetStringItem(index, 2, "%-8s" % stat_info.st_gid)
+                
+        self.SetColumnWidth(col=0, width=wx.LIST_AUTOSIZE)
+        self.SetColumnWidth(col=1, width=wx.LIST_AUTOSIZE)
+        
+    def OnCheckItem(self, index, flag):
+        """Mapset checked/unchecked"""
+        mapset = self.parent.all_mapsets[index]
+        if mapset == 'PERMANENT' or mapset == self.parent.curr_mapset:
+            self.CheckItem(index, True)

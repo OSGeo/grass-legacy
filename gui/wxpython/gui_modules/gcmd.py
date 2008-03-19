@@ -358,7 +358,8 @@ class Command:
                                     os.linesep, os.linesep,
                                     _("Details:"),
                                     os.linesep,
-                                    self.PrintModuleOutput()))
+                                    self.cmdThread.rerr))
+#                                    self.PrintModuleOutput()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
@@ -369,7 +370,6 @@ class Command:
         else:
             Debug.msg (3, "Command(): cmd='%s', wait=%s, returncode=?, alive=%s" % \
                            (' '.join(cmd), wait, self.cmdThread.isAlive()))
-
 
         if message_format:
             os.environ["GRASS_MESSAGE_FORMAT"] = message_format
@@ -503,19 +503,22 @@ class CommandThread(Thread):
         
     def run(self):
         """Run command"""
+        if len(self.cmd) == 0:
+            return
+
         self.startTime = time.time()
         # TODO: wx.Exectute/wx.Process (?)
-        self.module = Popen(self.cmd,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
-
+        try:
+            self.module = Popen(self.cmd,
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        except OSError, e:
+            raise CmdError(self.cmd[0], str(e))
+        
         if self.stdin: # read stdin if requested ...
             self.module.stdin.write(self.stdin)
             self.module.stdin.close()
-
-        if not self.module:
-            return
 
         # redirect standard outputs...
         if self.stdout or self.stderr:
@@ -571,7 +574,7 @@ class CommandThread(Thread):
                 # line = self.__read_all(self.module.stderr)
                 line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
-
+                
         # get the last output
         if self.stdout:
             # line = self.__read_all(self.module.stdout)
@@ -583,7 +586,7 @@ class CommandThread(Thread):
             self.stderr.write(line)
 
         self.rerr = self.__parseString(line)
-
+       
         if hasattr(self.stderr, "gmstc"):
             # -> GMConsole
             if self._want_abort: # abort running process
@@ -608,6 +611,10 @@ class CommandThread(Thread):
             if 'GRASS_INFO_ERROR' in line:
                 err += line + '%s' % os.linesep
             elif err != '' and 'GRASS_INFO_END' in line:
+                err += line
+            elif 'ERROR' in line:
+                err += line
+            elif err != '':
                 err += line
                 
         return err
