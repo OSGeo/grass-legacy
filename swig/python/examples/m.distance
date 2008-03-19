@@ -42,8 +42,12 @@
 #%End
 
 
-import sys
-import os
+import os, sys
+
+if not os.environ.has_key("GISBASE"):
+    print "You must be in GRASS GIS to run this program."
+    sys.exit(1)
+
 
 def main(): 
 
