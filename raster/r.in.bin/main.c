@@ -67,6 +67,7 @@ int main (int argc, char *argv[])
 	FILE *fd;
 	int cf;
 	struct Cell_head cellhd;
+	struct History history;
 	CELL *cell;
 	FCELL *fcell;
 	DCELL *dcell;
@@ -534,10 +535,17 @@ int main (int argc, char *argv[])
 
 		G_percent(row + 1, nrows, 2);
 	}
+
 	G_debug (1,"Creating support files for %s", output);
 	G_close_cell (cf);
+
 	if (title)
 		G_put_cell_title (output, title);
+
+	G_short_history(output, "raster", &history);
+	G_command_history(&history);
+	G_write_history(output, &history);
+
 
 	exit(EXIT_SUCCESS);
 }

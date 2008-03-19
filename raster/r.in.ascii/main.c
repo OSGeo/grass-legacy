@@ -42,6 +42,7 @@ main (int argc, char *argv[])
 	FILE *fd, *ft;
 	int cf,direction,sz;
 	struct Cell_head cellhd;
+	struct History history;
 	void *rast, *rast_ptr;
 	int row, col;
 	int nrows, ncols;
@@ -264,10 +265,15 @@ main (int argc, char *argv[])
 	unlink(temp);
 
 	G_close_cell (cf);
+
 	if (title)
 		G_put_cell_title (output, title);
 
-	G_done_msg ("");
+	G_short_history(output, "raster", &history);
+	G_command_history(&history);
+	G_write_history(output, &history);
+
+	G_done_msg(" ");
 
         exit(EXIT_SUCCESS);
 }
