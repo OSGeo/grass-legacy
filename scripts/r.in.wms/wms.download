@@ -29,7 +29,7 @@
 #% key: wgetoptions
 #% type: string
 #% description: Additional options for wget
-#% answer: -c -t 5 --user-agent=MSIE5.5 
+#% answer: -c -t 5
 #% required : no
 #%end
 #%option
@@ -45,6 +45,10 @@
 #% type: integer
 #% description: Verbosity level
 #% answer: 1
+#%end
+#%Flag
+#% key: g
+#% description: Use alternative GET method (try if you have download problems)
 #%end
 
 if  [ -z "$GISBASE" ] ; then
@@ -108,22 +112,30 @@ calculate() {
 # Download the tiles!!
 GetTiles() {
   g.message "Downloading tiles"
-  
+
+  # init POST-data vs. GET URL method variable
+  if [ $GIS_FLAG_G -eq 0 ] ; then
+      POST_DATA_OK=1
+  else
+      POST_DATA_OK=0
+  fi
 
   CONTENTS=`cat "${REQUESTFILE}"`
 
   NUMBER_OF_TILES=0
   for line in $CONTENTS ; do
-	g.message -d message="$line"
+	g.message -d message="wget command: [$line]"
 	eval "$line"
+
 	emptyness=`file "$OUTPUT_FILE" | grep empty$`
+
 	if [ -f "$OUTPUT_FILE" ] && [ -z "$emptyness" ] ; then
-	  g.message "Tile already downloaded"
+	   g.message "Tile already downloaded"
 	else
-	  GetData
-	  if [ $? -ne 0 ] ; then
-            NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
-          fi
+	   GetData
+	   if [ $? -ne 0 ] ; then
+              NUMBER_OF_TILES=`expr $NUMBER_OF_TILES + 1`
+           fi
 	fi
   done
 
@@ -140,24 +152,50 @@ GetTiles() {
 #Get the data from the WMS server
 GetData() {
    g.message "Downloading data"
-   g.message message="Requesting Data from ${SERVER}:"
-   g.message message="$STRING"
-   #download the File from the Server
-   if [ "$USE_WGET" ] ; then
-     wget ${WGET_OPTIONS} --post-data="${STRING}" "${SERVER}" -O "${OUTPUT_FILE}"
-   else
-	 curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" -d "${STRING}" "${SERVER}"
+   g.message -v message="Requesting Data from ${SERVER}:"
+   g.message -v message="$STRING"
+
+   if [ "$POST_DATA_OK" -eq 1 ] ; then
+      #download the File from the Server
+      if [ "$USE_WGET" ] ; then
+         wget ${WGET_OPTIONS} --post-data="${STRING}" "${SERVER}" -O "${OUTPUT_FILE}"
+      else
+         curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" -d "${STRING}" "${SERVER}"
+      fi
+      if [ $? -ne 0 ] ; then
+         g.message -e "Failed while downloading the data"
+         return 1
+      fi
+      if [ ! -f "$OUTPUT_FILE" ] ; then 
+         g.message -e "Not able to download the data"
+         return 1
+      fi
+
+       # work-around for brain-dead ArcIMS servers which want POST-data as part of the GET URL
+       #   (this is technically allowed by OGC WMS def v1.3.0 Sec6.3.4)
+      if [ `wc -c < "$OUTPUT_FILE"` -eq 0 ] ; then
+         g.message -w "Downloaded image file was empty -- trying another method"
+         POST_DATA_OK=0
+      fi
+   fi  # no else!
+
+   if [ "$POST_DATA_OK" -eq 0 ] ; then
+      g.message -v message=""
+      if [ "$USE_WGET" ] ; then
+	 wget ${WGET_OPTIONS} "${SERVER}${STRING}" -O "${OUTPUT_FILE}"
+      else
+	 curl ${CURL_OPTIONS} -o "${OUTPUT_FILE}" "${SERVER}${STRING}"
+      fi
+      if [ $? -ne 0 ] ; then
+         g.message -e "Failed while downloading the data"
+         return 1
+      fi
+      if [ ! -f "$OUTPUT_FILE" ] || [ `wc -c < "$OUTPUT_FILE"` -eq 0 ] ; then 
+         g.message -e "Not able to download the data"
+         return 1
+      fi
    fi
-   if [ $? -ne 0 ]; then
-     g.message -e "wget failed while downloading the data"
-     return 1
-   fi
-   if [ -f "${OUTPUT_FILE}" ]; then 
-     return 0
-   else
-     g.message -e "wget was not able to download the data"
-     return 1
-   fi
+
    return 0
 }
 
