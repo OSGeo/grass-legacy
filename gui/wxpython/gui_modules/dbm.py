@@ -2973,11 +2973,18 @@ class VectorDBInfo:
         # list of available layers & (table, database, driver)
         for line in layerCommand.ReadStdOutput():
             lineList = line.split(' ')
-            self.layers[int(lineList[0])] = { "table"    : lineList[1],
-                                              "key"      : lineList[2],
-                                              "database" : lineList[3],
-                                              "driver"   : lineList[4] }
-
+            if '/' in lineList[0]:
+                lineList[0], layer_name = lineList[0].split('/')
+            else:
+                layer_name = None
+            self.layers[int(lineList[0])] = {
+                "name"     : layer_name,
+                "table"    : lineList[1],
+                "key"      : lineList[2],
+                "database" : lineList[3],
+                "driver"   : lineList[4]
+                }
+            
         if (len(self.layers.keys()) == 0):
             return False
 
