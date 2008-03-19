@@ -83,6 +83,8 @@ class MapLayer(object):
 
         @return name of file with rendered image or None
         """
+        if len(self.cmdlist) == 0:
+            return
 
         Debug.msg (3, "MapLayer.Render(): type=%s" % \
                    (self.type))
@@ -143,7 +145,10 @@ class MapLayer(object):
         if not self.name:
             return ''
 
-        return self.name.split('@')[1]
+        try:
+            return self.name.split('@')[1]
+        except IndexError:
+            return self.name
 
     def GetCmd(self, string=False):
         """
@@ -691,7 +696,7 @@ class Map(object):
         return self.mapfile
 
     def AddLayer(self, type, command, name=None,
-                 l_active=True, l_hidden=False, l_opacity=1, l_render=False):
+                 l_active=True, l_hidden=False, l_opacity=1.0, l_render=False):
         """
         Adds generic display command layer to list of layers
 

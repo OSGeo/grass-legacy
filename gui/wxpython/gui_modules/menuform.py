@@ -52,13 +52,17 @@ import string
 import textwrap
 import os
 from os import system
+import time
+start = time.time()
 
 ### i18N
 import gettext
 gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
-import utils
-utils.CheckForWx()
+
+import globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.lib.flatnotebook as FN
 import wx.lib.colourselect as csel
@@ -72,8 +76,9 @@ import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
 
+import utils
+
 gisbase = os.getenv("GISBASE")
-import globalvar
 if gisbase is None:
     print >>sys.stderr, "We don't seem to be properly installed, or we are being run outside GRASS. Expect glitches."
     gisbase = os.path.join(os.path.dirname( sys.argv[0] ), os.path.pardir)
@@ -477,6 +482,7 @@ class helpPanel(wx.html.HtmlWindow):
 
         wx.html.HtmlWindow.__init__(self, *args, **kwargs)
         self.fspath = gisbase + "/docs/html/"
+
         self.SetStandardFonts ( size = 10 )
         self.SetBorders(10)
         wx.InitAllImageHandlers()
@@ -485,10 +491,11 @@ class helpPanel(wx.html.HtmlWindow):
             if skip_description:
                 self.fillContentsFromFile ( self.fspath + grass_command + ".html",
                                             skip_description=skip_description )
-            else:
-                ### FIXME: calling self.LoadPage is too time costly (why?)
-                self.LoadPage(self.fspath + grass_command + ".html")
                 self.Ok = True
+            else:
+                ### FIXME: calling LoadPage() is strangely time-consuming (only first call)
+                # self.LoadPage(self.fspath + grass_command + ".html")
+                self.Ok = False
         else:
             self.SetPage( text )
             self.Ok = True
@@ -791,7 +798,10 @@ class mainFrame(wx.Frame):
     def OnCancel(self, event):
         """Cancel button pressed"""
         self.MakeModal(False)
-        self.Destroy()
+        if self.get_dcmd:
+            self.Hide()
+        else:
+            self.Destroy()
 
     def OnCloseWindow(self, event):
         """Close the main window"""
@@ -864,7 +874,8 @@ class cmdPanel(wx.Panel):
         nbStyle = globalvar.FNPageStyle
         self.notebook = FN.FlatNotebook( self, id=wx.ID_ANY, style=nbStyle)
         self.notebook.SetTabAreaColour(globalvar.FNPageColor)
-        self.notebook.Bind( FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange )
+        self.notebook.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnPageChange)
+
         tab = {}
         tabsizer = {}
         for section in sections:
@@ -875,18 +886,20 @@ class cmdPanel(wx.Panel):
 
         # are we running from command line?
         ### add 'command output' tab regardless standalone dialog
-        #        if standalone:
-        self.goutput = goutput.GMConsole(parent=self, margin=False)
-        self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
-        self.outpageid = self.notebook.GetPageCount() - 1
+        if self.parent.get_dcmd is None:
+            self.goutput = goutput.GMConsole(parent=self, margin=False)
+            self.outpage = self.notebook.AddPage(self.goutput, text=_("Command output") )
+            self.outpageid = self.notebook.GetPageCount() - 1
+        else:
+            self.goutput = None
 
-        manual_tab =  helpPanel( parent = self.notebook, grass_command = self.task.name)
-        if manual_tab.Ok:
-            manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
-            self.notebook.AddPage( manual_tab, text = _("Manual") )
+        self.manual_tab = helpPanel(parent = self.notebook, grass_command = self.task.name)
+        self.manual_tabsizer = wx.BoxSizer(wx.VERTICAL)
+        self.notebook.AddPage(self.manual_tab, text=_("Manual"))
+        self.manual_tab_id = self.notebook.GetPageCount() - 1
 
         self.notebook.SetSelection(0)
-        panelsizer.Add( self.notebook, 1, flag=wx.EXPAND )
+        panelsizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND )
 
         #
         # flags
@@ -983,8 +996,8 @@ class cmdPanel(wx.Panel):
                 else:
                     if len(valuelist) == 1: # -> textctrl
                         txt = wx.StaticText(parent=which_panel,
-                                            label = "%s. %s=%s" (title, _('Valid range'),
-                                                                 str(valuelist).strip("[]'") + ':'))
+                                            label = "%s. %s %s" % (title, _('Valid range'),
+                                                                   str(valuelist[0]) + ':'))
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
 
@@ -1164,13 +1177,13 @@ class cmdPanel(wx.Panel):
 
         # TODO: be less arbitrary with these 600
         self.panelMinHeight = 100
-        self.constrained_size = (min(600, maxsizes[0]) + 25, min(600, maxsizes[1]))
+        self.constrained_size = (min(600, maxsizes[0]) + 25, min(600, maxsizes[1]) + 25)
         for section in sections:
             tab[section].SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # tab[section].SetMinSize( constrained_size )
 
-        if manual_tab.Ok:
-            manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
+        if self.manual_tab.Ok:
+            self.manual_tab.SetMinSize( (self.constrained_size[0], self.panelMinHeight) )
             # manual_tab.SetMinSize( constrained_size )
 
         self.SetSizer( panelsizer )
@@ -1195,6 +1208,14 @@ class cmdPanel(wx.Panel):
         event.Skip()
 
     def OnPageChange(self, event):
+        if hasattr(self, "manual_tab_id") and \
+                event.GetSelection() == self.manual_tab_id:
+            # calling LoadPage() is strangely time-consuming (only first call)
+            # FIXME: move to helpPage.__init__()
+            if not self.manual_tab.Ok:
+                self.manual_tab.LoadPage(self.manual_tab.fspath + self.task.name + ".html")
+                self.manual_tab.Ok = True
+
         self.Layout()
 
     def OnColorChange( self, event ):
@@ -1314,6 +1335,7 @@ class GrassGUIApp(wx.App):
         self.mf = mainFrame(parent=None, ID=wx.ID_ANY, task_description=self.grass_task)
         self.mf.Show(True)
         self.SetTopWindow(self.mf)
+        # print >> sys.stderr, time.time() - start
         return True
 
 class GUI:
@@ -1334,6 +1356,7 @@ class GUI:
         * add key name for first parameter if not given
         * change mapname to mapname@mapset
         """
+        start = time.time()
         dcmd_params = {}
         if completed == None:
             get_dcmd = None
@@ -1394,13 +1417,19 @@ class GUI:
         self.mf = mainFrame(parent=self.parent, ID=wx.ID_ANY,
                             task_description=self.grass_task,
                             get_dcmd=get_dcmd, layer=layer)
-
+        
+        if get_dcmd is not None:
+            # update only propwin reference
+            get_dcmd(dcmd=None, layer=layer, params=None,
+                     propwin=self.mf)
+        
         if show:
             self.mf.Show(show)
             self.mf.MakeModal(modal)
         else:
             self.mf.OnApply(None)
-
+        
+        # print >> sys.stderr, time.time() - start
         return cmd
 
 class StaticWrapText(wx.StaticText):

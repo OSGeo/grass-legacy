@@ -1,7 +1,9 @@
 wxPython GRASS Graphical User Interface
 =======================================
 
-0 - REQUIREMENTS
+$Date$
+
+1 - REQUIREMENTS
 
  GRASS GIS >= 6.3
  Python >= 2.4
@@ -36,19 +38,9 @@ wxPython GRASS Graphical User Interface
 	 python-wxgtk2.8 wx2.8-doc wx2.8-examples \
 	 wx2.8-headers wx2.8-i18n
 
-1 - INSTALLATION
-
-Go to:
-
-$ cd gui/wxpython
-
-and run 
-
-$ make
-
 2 - STARTUP WITH GRASS INITIALIZATION
 
-If you want to run wxPython GUI automatically when you start
+If you want to launch wxPython GUI automatically when you start
 GRASS, edit your .grassrc6 file to replace
 
 GRASS_GUI: tcktk (or whatever you have here)
@@ -59,11 +51,11 @@ GRASS_GUI: wxpython
 
 or easier start new GRASS session with -wxpython switch.
 
-$ grass -wxpython
+$ grass63 -wxpython
 
 3 - STARTUP FROM GRASS TERMINAL
 
-Simply type
+Simply run
 
 $ g.gui wxpython
 
@@ -71,11 +63,11 @@ from the GRASS terminal.
 
 You can also specify workspace file to load on startup.
 
-$ g.gui gui=wxpython workspace=myworkspace.grc
+$ g.gui gui=wxpython workspace=myworkspace.gxw
 
 4 - CLI Display scripts
 
-Note: This section is out-dated.
+Note: This section is out-dated!
 
 This is going to be replacement for command line tools like d.rast and
 d.vect.
@@ -122,23 +114,24 @@ clear the display and start from scratch.
 
 5 - DEBUGGING
 
-To enable GUI debugging messages on given level set GRASS_DEBUG_WX
-environment variables, e.g.
+To enable GUI debug messages on given level set GRASS_DEBUG_WX
+environment variable, e.g.
 
 $ export GRASS_WX_DEBUG=3
 
 6 - ICON THEMES
 
 Currently two icon themes are available:
+
     * original GRASS (based on TCL/TK GUI prototype)
-    * Silk-based
+    * Silk-based (default)
 
 User can change icon theme in Preferences dialog
 ('Config->Preferences').
 
 7 - DIGITIZATION TOOL
 
-To enable digitization tool you need to compile 'vdigit'
+To enable digitizer you need to compile 'vdigit'
 component. Note that you must configure GRASS with C++ (--with-cxx),
 Python (--with-python) and wxWidgets (--with-wxwidgets) support.
 
@@ -150,10 +143,10 @@ e.g.
 
 $ sudo ln -s /usr/lib/python2.4/site-packages/wx-2.8-gtk2-unicode/wx/_gdi_.so /usr/local/lib/libgdi.so
 
-Make sure you set up LD_LIBRARY_PATH or noted '/usr/local/lib' in
-/etc/ld.so.conf.
+Then update LD_LIBRARY_PATH or add '/usr/local/lib' to /etc/ld.so.conf
+(in this case run 'sudo ldconfig').
 
-$ sudo ldconfig
+TODO: Don't use direct linking here.
 
 Then you can compile the driver
 

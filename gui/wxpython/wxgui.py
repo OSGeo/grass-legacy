@@ -52,8 +52,9 @@ import icons
 gmpath = icons.__path__[0]
 sys.path.append(gmpath)
 
-import gui_modules.utils as utils
-utils.CheckForWx()
+import gui_modules.globalvar as globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.aui
 import wx.combo
@@ -67,6 +68,7 @@ try:
 except:
     import compat.subprocess as subprocess
 
+import gui_modules.utils as utils
 import gui_modules.preferences as preferences
 import gui_modules.wxgui_utils as wxgui_utils
 import gui_modules.mapdisp as mapdisp
@@ -80,7 +82,6 @@ import gui_modules.mcalc_builder as mapcalculator
 import gui_modules.gcmd as gcmd
 import gui_modules.georect as georect
 import gui_modules.dbm as dbm
-import gui_modules.globalvar as globalvar
 import gui_modules.workspace as workspace
 import gui_modules.goutput as goutput
 from   gui_modules.debug import Debug as Debug
@@ -749,10 +750,9 @@ class GMFrame(wx.Frame):
         try:
             file = open(filename, "w")
         except IOError:
-            dlg = wx.MessageDialog(self, _("Unable to open workspace file <%s> for writing.") % filename,
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Unable to open workspace file <%s> for writing.") % filename,
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         try:
@@ -773,17 +773,16 @@ class GMFrame(wx.Frame):
             self.indent =- 4
             file.write('%s</gxw>\n' % (' ' * self.indent))
             del self.indent
-        except:
-            dlg = wx.MessageDialog(self, _("Writing current settings to workspace file failed."),
-                                   _("Error"), wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+        except StandardError, e:
+            file.close()
+            wx.MessageBox(parent=self, message=_("Writing current settings to workspace file failed (%s)." % e),
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
             return False
 
         file.close()
-
+        
         return True
-
+    
     def OnWorkspaceClose(self, event=None):
         """Close file with workspace definition
 
@@ -919,7 +918,6 @@ class GMFrame(wx.Frame):
         if not label:
             toolbar.AddSeparator()
             return
-
         tool = toolbar.AddLabelTool(id=wx.ID_ANY, label=label, bitmap=icon, shortHelp=help)
         self.Bind(wx.EVT_TOOL, handler, tool)
 
@@ -1233,7 +1231,7 @@ class GMFrame(wx.Frame):
 
         dlg = wx.MessageDialog (parent=self, message=message,
                                 caption=_("Remove map layer"),
-                                style=wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
+                                style=wx.YES_NO | wx.YES_DEFAULT | wx.CANCEL | wx.ICON_QUESTION)
 
         if dlg.ShowModal() in [wx.ID_NO, wx.ID_CANCEL]:
             dlg.Destroy()

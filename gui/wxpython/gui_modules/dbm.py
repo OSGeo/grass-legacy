@@ -41,6 +41,9 @@ import tempfile
 import gettext
 gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
+import globalvar
+globalvar.CheckForWx()
+
 import wx
 import wx.lib.mixins.listctrl as listmix
 import wx.lib.flatnotebook as FN
@@ -49,7 +52,6 @@ import wx.lib.scrolledpanel as scrolled
 import sqlbuilder
 import grassenv
 import gcmd
-import globalvar
 import utils
 from debug import Debug as Debug
 from preferences import globalSettings as UserSettings
@@ -2971,11 +2973,18 @@ class VectorDBInfo:
         # list of available layers & (table, database, driver)
         for line in layerCommand.ReadStdOutput():
             lineList = line.split(' ')
-            self.layers[int(lineList[0])] = { "table"    : lineList[1],
-                                              "key"      : lineList[2],
-                                              "database" : lineList[3],
-                                              "driver"   : lineList[4] }
-
+            if '/' in lineList[0]:
+                lineList[0], layer_name = lineList[0].split('/')
+            else:
+                layer_name = None
+            self.layers[int(lineList[0])] = {
+                "name"     : layer_name,
+                "table"    : lineList[1],
+                "key"      : lineList[2],
+                "database" : lineList[3],
+                "driver"   : lineList[4]
+                }
+            
         if (len(self.layers.keys()) == 0):
             return False
 
