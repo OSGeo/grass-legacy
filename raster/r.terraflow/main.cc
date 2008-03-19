@@ -14,6 +14,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
+ *  TODO before GRASS 7 released: change param 'STREAM_DIR' -> 'stream_dir'
  *****************************************************************************/
  
 #include <stdio.h>
