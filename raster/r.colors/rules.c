@@ -129,7 +129,7 @@ static void badrule(int tty, const char *s, int code)
     if (tty)
 	G_warning(_("bad rule (%s); rule not added"), err);
     else
-	G_fatal_error(_("bad rule (%s): %s"), err, s);
+	G_fatal_error(_("bad rule (%s): [%s]"), err, s);
 }
 
 static int show_colors (FILE *fp)
