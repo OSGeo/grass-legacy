@@ -152,7 +152,9 @@ main (int argc, char *argv[])
         Vect_close ( &Err );
     }
 
-    Vect_close (&Map);
+    if (build || dump || sdump || cdump) {
+	Vect_close (&Map);
+    }
     
     exit(EXIT_SUCCESS);
 }
