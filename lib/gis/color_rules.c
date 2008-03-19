@@ -148,7 +148,8 @@ int G_read_color_rule(
 	if (ret == 0)
 	    return 1;
 
-	G_fatal_error(_("bad rule (%s): %s"), G_parse_color_rule_error(ret), buf);
+	G_fatal_error(_("bad rule (%s): [%s]"),
+	     G_parse_color_rule_error(ret), buf);
     }
 
     return 0;
