@@ -248,11 +248,9 @@ if [ -z "$COLTYPE" ] ; then
    exit 1 
 fi 
 
-if [ "$COLTYPE" = "integer" -o "$COLTYPE" = "double precision" ] ; then
-	echo -n ""
-else
-	g.message -e message="Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
-	exit 1
+if [ "$COLTYPE" != "integer" ] && [ "$COLTYPE" != "double precision" ] ; then
+    g.message -e message="Column <$GIS_OPT_COLUMN> is of type <$COLTYPE> which is not numeric."
+    exit 1
 fi
 
 # create temporary file to hold output from v.univar
