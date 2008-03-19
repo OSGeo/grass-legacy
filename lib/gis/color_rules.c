@@ -134,10 +134,11 @@ int G_read_color_rule(
 
     for (;;)
     {
-	if (!fgets(buf, sizeof(buf), fp))
+	if (!G_getl2(buf, sizeof(buf), fp))
 	    return 0;
 
 	G_strip(buf);
+	G_debug(5, "color buf = [%s]", buf);
 
 	if (*buf == '\0')
 	    continue;
