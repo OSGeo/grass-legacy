@@ -1,8 +1,10 @@
 <H2>DESCRIPTION</H2>
 
-<i>r.resamp.rst</i>
-reinterpolates the values a from given raster map (named
-<i>input</i>) to a new raster map (named <i>elev</i>).
+<i>r.resamp.rst</i> reinterpolates the values a from given raster map (named
+<i>input</i>) to a new raster map (named <i>elev</i>). 
+This module is intended for reinterpolation of continuous data
+to a different resolution rather than for interpolation from scattered data
+(use the <EM>v.surf.*</EM> modules for that purpose).
 
 Reinterpolation (resampling) is done to higher, same or lower resolution 
 specified by the <i>ew_res</i> and <i>ns_res</i> parameters.
