@@ -2287,7 +2287,7 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
             newCat = max(self.cats[1]) + 1
         except:
             newCat = 1
-        self.catNew.SetValue(str(newCat))
+        self.catNew.SetValue(newCat)
 
         return True
 
