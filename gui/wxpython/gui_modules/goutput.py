@@ -322,6 +322,8 @@ class GMStderr:
 
     def write(self, s):
         s = s.replace('\n', os.linesep)
+        # remove/replace escape sequences '\b' or '\r' from stream
+        s = s.replace('\b', '').replace('\r', '%s' % os.linesep)
         message = ''
         for line in s.split(os.linesep):
             if len(line) == 0:
