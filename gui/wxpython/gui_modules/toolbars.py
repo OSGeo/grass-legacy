@@ -24,6 +24,7 @@ import globalvar
 import gcmd
 import grassenv
 import digit
+import gdialogs
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
@@ -237,9 +238,10 @@ class DigitToolbar(AbstractToolbar):
     Toolbar for digitization
     """
 
-    def __init__(self, parent, map):
-        self.mapcontent    = map    # Map class instance
-        self.parent        = parent # MapFrame
+    def __init__(self, parent, map, layerTree=None):
+        self.mapcontent    = map       # Map class instance
+        self.parent        = parent    # MapFrame
+        self.layerTree     = layerTree # reference to layer tree associated to map display
 
         # selected map to digitize
         self.layerSelectedID  = None
@@ -612,15 +614,32 @@ class DigitToolbar(AbstractToolbar):
         firstly terminated. The map layer is closed. After this the
         selected map layer activated for editing.
         """
+        if event.GetSelection() == 0: # create new vector map layer
+            mapName = gdialogs.CreateNewVector(self.parent)
+            if mapName:
+                # add layer to map layer tree
+                if self.layerTree:
+                    self.layerTree.AddLayer(ltype='vector',
+                                            lname=mapName,
+                                            lchecked=True,
+                                            lopacity=1.0,
+                                            lcmd=['d.vect', 'map=%s' % mapName])
+                    
+                    vectLayers = self.UpdateListOfLayers(updateTool=True)
+                    selection = vectLayers.index(mapName)
+                else:
+                    pass # TODO (no Layer Manager)
+        else:
+            selection = event.GetSelection() - 1 # first option is 'New vector map'
 
-        if self.layerSelectedID == event.GetSelection():
+        if self.layerSelectedID == selection:
             return False
 
         if self.layerSelectedID != None: # deactive map layer for editing
             self.StopEditing(self.layers[self.layerSelectedID])
 
         # select the given map layer for editing
-        self.layerSelectedID = event.GetSelection()
+        self.layerSelectedID = selection
         self.StartEditing(self.layers[self.layerSelectedID])
 
         event.Skip()
@@ -740,12 +759,12 @@ class DigitToolbar(AbstractToolbar):
 
             if not self.comboid:
                 self.combo = wx.ComboBox(self.toolbar[self.numOfRows-1], id=wx.ID_ANY, value=value,
-                                         choices=layerNameList, size=(105, -1),
+                                         choices=[_('New vector map'), ] + layerNameList, size=(105, -1),
                                          style=wx.CB_READONLY)
                 self.comboid = self.toolbar[self.numOfRows-1].InsertControl(0, self.combo)
                 self.parent.Bind(wx.EVT_COMBOBOX, self.OnSelectMap, self.comboid)
             else:
-                self.combo.SetItems(layerNameList)
+                self.combo.SetItems([_('New vector map'), ] + layerNameList)
             
             # update layer index
             try:
