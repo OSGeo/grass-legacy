@@ -79,6 +79,17 @@ int main (int argc, char *argv[])
     }
 
     if (action_mode == MODE_CREATE) {
+	int overwrite;
+	overwrite = G_check_overwrite(argc, argv);
+	if (G_find_vector2(params.map -> answer, G_mapset()) ) {
+	    if (overwrite)
+		G_warning (_("Vector map <%s> already exists and will be overwritten"),
+			   params.map -> answer);
+	    else
+		G_fatal_error (_("Vector map <%s> already exists"),
+			       params.map -> answer);
+	}
+	
 	/* 3D vector maps? */
 	ret = Vect_open_new (&Map, params.map -> answer, WITHOUT_Z);
 	if (ret == -1) {
