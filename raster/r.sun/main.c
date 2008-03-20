@@ -1,3 +1,4 @@
+
 /*******************************************************************************
 r.sun: This program was writen by Jaro Hofierka in Summer 1993 and re-engineered
 in 1996-1999. In cooperation with Marcel Suri and Thomas Huld from JRC in Ispra
@@ -32,7 +33,7 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #define M2_PI    2. * M_PI
 #define RAD      360. / (2. * M_PI)
 #define DEG      (2. * M_PI)/360.
-#define EARTHRADIUS 6371000.    /* appx. for most ellipsoids or projections */
+#define EARTHRADIUS 6371000.	/* appx. for most ellipsoids or projections */
 #define UNDEF    0.		/* undefined value for terrain aspect */
 #define UNDEFZ   -9999.		/* internal undefined value for NULL */
 #define SKIP    "1"
@@ -74,7 +75,7 @@ char *insol_time = NULL;
 char *diff_rad = NULL;
 char *refl_rad = NULL;
 char *mapset1 = NULL, *mapset2 = NULL, *mapset3 = NULL, *mapset4 = NULL,
-     *mapset5 = NULL, *mapset6 = NULL, *mapset7 = NULL, *mapset8 = NULL;
+    *mapset5 = NULL, *mapset6 = NULL, *mapset7 = NULL, *mapset8 = NULL;
 char *per;
 char *shade;
 
@@ -153,13 +154,14 @@ int main(int argc, char *argv[])
     module->keywords = _("raster");
     module->label = _("Solar irradiance and irradiation model.");
     module->description =
-	_("Computes direct (beam), diffuse and reflected solar irradiation raster "
-	"maps for given day, latitude, surface and atmospheric conditions. Solar "
-	"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
-	"irradiance, daylight length) are saved in the map history file. "
-	"Alternatively, a local time can be specified to compute solar "
-	"incidence angle and/or irradiance raster maps. The shadowing effect of "
-	"the topography is optionally incorporated.");
+	_
+	("Computes direct (beam), diffuse and reflected solar irradiation raster "
+	 "maps for given day, latitude, surface and atmospheric conditions. Solar "
+	 "parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+	 "irradiance, daylight length) are saved in the map history file. "
+	 "Alternatively, a local time can be specified to compute solar "
+	 "incidence angle and/or irradiance raster maps. The shadowing effect of "
+	 "the topography is optionally incorporated.");
 
     if (G_get_set_window(&cellhd) == -1)
 	G_fatal_error("G_get_set_window() failed");
@@ -182,16 +184,19 @@ int main(int argc, char *argv[])
     parm.elevin->type = TYPE_STRING;
     parm.elevin->required = YES;
     parm.elevin->gisprompt = "old,cell,raster";
-    parm.elevin->description = _("Name of the input elevation raster map [meters]");
-    parm.elevin->guisection  = _("Input_options");
+    parm.elevin->description =
+	_("Name of the input elevation raster map [meters]");
+    parm.elevin->guisection = _("Input_options");
 
     parm.aspin = G_define_option();
     parm.aspin->key = "aspin";
     parm.aspin->type = TYPE_STRING;
     parm.aspin->required = YES;
     parm.aspin->gisprompt = "old,cell,raster";
-    parm.aspin->description = _("Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]");
-    parm.aspin->guisection  = _("Input_options");
+    parm.aspin->description =
+	_
+	("Name of the input aspect map (terrain aspect or azimuth of the solar panel) [decimal degrees]");
+    parm.aspin->guisection = _("Input_options");
 
 
     parm.slopein = G_define_option();
@@ -199,8 +204,10 @@ int main(int argc, char *argv[])
     parm.slopein->type = TYPE_STRING;
     parm.slopein->required = YES;
     parm.slopein->gisprompt = "old,cell,raster";
-    parm.slopein->description = _("Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]");
-    parm.slopein->guisection  = _("Input_options");
+    parm.slopein->description =
+	_
+	("Name of the input slope raster map (terrain slope or solar panel inclination) [decimal degrees]");
+    parm.slopein->guisection = _("Input_options");
 
     parm.linkein = G_define_option();
     parm.linkein->key = "linkein";
@@ -208,8 +215,9 @@ int main(int argc, char *argv[])
     parm.linkein->required = NO;
     parm.linkein->gisprompt = "old,cell,raster";
     parm.linkein->description =
-	_("Name of the Linke atmospheric turbidity coefficient input raster map [-]");
-    parm.linkein->guisection  = _("Input_options");
+	_
+	("Name of the Linke atmospheric turbidity coefficient input raster map [-]");
+    parm.linkein->guisection = _("Input_options");
 
     if (parm.linkein->answer == NULL) {
 	parm.lin = G_define_option();
@@ -217,9 +225,10 @@ int main(int argc, char *argv[])
 	parm.lin->type = TYPE_DOUBLE;
 	parm.lin->answer = LINKE;
 	parm.lin->required = NO;
-	parm.lin->guisection  = _("Input_options");
+	parm.lin->guisection = _("Input_options");
 	parm.lin->description =
-	    _("A single value of the Linke atmospheric turbidity coefficient [-]");
+	    _
+	    ("A single value of the Linke atmospheric turbidity coefficient [-]");
     }
 
     parm.albedo = G_define_option();
@@ -227,8 +236,9 @@ int main(int argc, char *argv[])
     parm.albedo->type = TYPE_STRING;
     parm.albedo->required = NO;
     parm.albedo->gisprompt = "old,cell,raster";
-    parm.albedo->description = _("Name of the ground albedo coefficient input raster map [-]");
-    parm.albedo->guisection  = _("Input_options");
+    parm.albedo->description =
+	_("Name of the ground albedo coefficient input raster map [-]");
+    parm.albedo->guisection = _("Input_options");
 
     if (parm.albedo->answer == NULL) {
 	parm.alb = G_define_option();
@@ -236,8 +246,9 @@ int main(int argc, char *argv[])
 	parm.alb->type = TYPE_DOUBLE;
 	parm.alb->answer = ALB;
 	parm.alb->required = NO;
-	parm.alb->guisection  = _("Input_options");
-	parm.alb->description = _("A single value of the ground albedo coefficient [-]");
+	parm.alb->guisection = _("Input_options");
+	parm.alb->description =
+	    _("A single value of the ground albedo coefficient [-]");
     }
 
     parm.latin = G_define_option();
@@ -247,15 +258,16 @@ int main(int argc, char *argv[])
     parm.latin->gisprompt = "old,cell,raster";
     parm.latin->description =
 	_("Name of the latitudes input raster map [decimal degrees]");
-    parm.latin->guisection  = _("Input_options");
+    parm.latin->guisection = _("Input_options");
 
     if (parm.latin->answer == NULL) {
 	parm.lat = G_define_option();
 	parm.lat->key = "lat";
 	parm.lat->type = TYPE_DOUBLE;
 	parm.lat->required = NO;
-	parm.lat->guisection  = _("Input_options");
-	parm.lat->description = _("A single value of latitude [decimal degrees]");
+	parm.lat->guisection = _("Input_options");
+	parm.lat->description =
+	    _("A single value of latitude [decimal degrees]");
     }
 
     parm.coefbh = G_define_option();
@@ -265,7 +277,7 @@ int main(int argc, char *argv[])
     parm.coefbh->gisprompt = "old,cell,raster";
     parm.coefbh->description =
 	_("Name of real-sky beam radiation coefficient raster map [-]");
-    parm.coefbh->guisection  = _("Input_options");
+    parm.coefbh->guisection = _("Input_options");
 
     parm.coefdh = G_define_option();
     parm.coefdh->key = "coefdh";
@@ -274,15 +286,16 @@ int main(int argc, char *argv[])
     parm.coefdh->gisprompt = "old,cell,raster";
     parm.coefdh->description =
 	_("Name of real-sky diffuse radiation coefficient raster map [-]");
-    parm.coefdh->guisection  = _("Input_options");
+    parm.coefdh->guisection = _("Input_options");
 
     parm.incidout = G_define_option();
     parm.incidout->key = "incidout";
     parm.incidout->type = TYPE_STRING;
     parm.incidout->required = NO;
     parm.incidout->gisprompt = "new,cell,raster";
-    parm.incidout->description = _("Output incidence angle raster map (mode 1 only)");
-    parm.incidout->guisection  = _("Output_options");
+    parm.incidout->description =
+	_("Output incidence angle raster map (mode 1 only)");
+    parm.incidout->guisection = _("Output_options");
 
     parm.beam_rad = G_define_option();
     parm.beam_rad->key = "beam_rad";
@@ -290,16 +303,18 @@ int main(int argc, char *argv[])
     parm.beam_rad->required = NO;
     parm.beam_rad->gisprompt = "new,cell,raster";
     parm.beam_rad->description =
-	_("Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
-    parm.beam_rad->guisection  = _("Output_options");
+	_
+	("Output beam irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
+    parm.beam_rad->guisection = _("Output_options");
 
     parm.insol_time = G_define_option();
     parm.insol_time->key = "insol_time";
     parm.insol_time->type = TYPE_STRING;
     parm.insol_time->required = NO;
     parm.insol_time->gisprompt = "new,cell,raster";
-    parm.insol_time->description = _("Output insolation time raster map [h] (mode 2 only)");
-    parm.insol_time->guisection  = _("Output_options");
+    parm.insol_time->description =
+	_("Output insolation time raster map [h] (mode 2 only)");
+    parm.insol_time->guisection = _("Output_options");
 
     parm.diff_rad = G_define_option();
     parm.diff_rad->key = "diff_rad";
@@ -307,8 +322,9 @@ int main(int argc, char *argv[])
     parm.diff_rad->required = NO;
     parm.diff_rad->gisprompt = "new,cell,raster";
     parm.diff_rad->description =
-	_("Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
-    parm.diff_rad->guisection  = _("Output_options");
+	_
+	("Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
+    parm.diff_rad->guisection = _("Output_options");
 
     parm.refl_rad = G_define_option();
     parm.refl_rad->key = "refl_rad";
@@ -316,8 +332,9 @@ int main(int argc, char *argv[])
     parm.refl_rad->required = NO;
     parm.refl_rad->gisprompt = "new,cell,raster";
     parm.refl_rad->description =
-	_("Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
-    parm.refl_rad->guisection  = _("Output_options");
+	_
+	("Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2.day-1] (mode 2)");
+    parm.refl_rad->guisection = _("Output_options");
 
     parm.day = G_define_option();
     parm.day->key = "day";
@@ -330,26 +347,28 @@ int main(int argc, char *argv[])
     parm.step->type = TYPE_DOUBLE;
     parm.step->answer = STEP;
     parm.step->required = NO;
-    parm.step->description = _("Time step when computing all-day radiation sums [decimal hours]");
+    parm.step->description =
+	_("Time step when computing all-day radiation sums [decimal hours]");
 
     parm.declin = G_define_option();
     parm.declin->key = "declin";
     parm.declin->type = TYPE_DOUBLE;
     parm.declin->required = NO;
     parm.declin->description =
-	_("Declination value (overriding the internally computed value) [radians]");
+	_
+	("Declination value (overriding the internally computed value) [radians]");
 
     parm.ltime = G_define_option();
     parm.ltime->key = "time";
     parm.ltime->type = TYPE_DOUBLE;
     /*          parm.ltime->answer = TIME; */
     parm.ltime->required = NO;
-    parm.ltime->description = _("Local (solar) time (to be set for mode 1 only) [decimal hours]");
+    parm.ltime->description =
+	_("Local (solar) time (to be set for mode 1 only) [decimal hours]");
 
     flag.shade = G_define_flag();
     flag.shade->key = 's';
-    flag.shade->description =
-	_("Incorporate the shadowing effect of terrain");
+    flag.shade->description = _("Incorporate the shadowing effect of terrain");
 
     if (G_parser(argc, argv))
 	exit(EXIT_FAILURE);
@@ -370,7 +389,7 @@ int main(int argc, char *argv[])
     diff_rad = parm.diff_rad->answer;
     refl_rad = parm.refl_rad->answer;
 
-    if((insol_time != NULL) && (incidout != NULL))
+    if ((insol_time != NULL) && (incidout != NULL))
 	G_fatal_error(_("insol_time and incidout are incompatible options"));
 
     sscanf(parm.day->answer, "%d", &day);
@@ -378,15 +397,17 @@ int main(int argc, char *argv[])
 
     tt = parm.ltime->answer;
     if (parm.ltime->answer != NULL) {
-	if(insol_time != NULL)
+	if (insol_time != NULL)
 	    G_fatal_error(_("time and insol_time are incompatible options"));
-	G_message(_("Mode 1: instantaneous solar incidence angle & irradiance given a set local time"));
+	G_message(_
+		  ("Mode 1: instantaneous solar incidence angle & irradiance given a set local time"));
 	sscanf(parm.ltime->answer, "%lf", &timo);
     }
     else {
-	if(incidout != NULL)
+	if (incidout != NULL)
 	    G_fatal_error(_("incidout requires time parameter to be set"));
-	G_message(_("Mode 2: integrated daily irradiation for a given day of the year"));
+	G_message(_
+		  ("Mode 2: integrated daily irradiation for a given day of the year"));
     }
 
     if (parm.linkein->answer == NULL)
@@ -435,7 +456,8 @@ int main(int argc, char *argv[])
 
 	if ((in_proj_info = G_get_projinfo()) == NULL)
 	    G_fatal_error
-		(_("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!"));
+		(_
+		 ("Can't get projection info of current location: please set latitude via 'lat' or 'latin' option!"));
 
 	if ((in_unit_info = G_get_projunits()) == NULL)
 	    G_fatal_error(_("Can't get projection units of current location"));
@@ -453,7 +475,7 @@ int main(int argc, char *argv[])
 	sprintf(oproj.proj, "ll");
 	if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
 	    G_fatal_error(_("Unable to set up lat/long projection parameters"));
-       
+
     }
 
 /**********end of parser - ******************************/
@@ -478,14 +500,14 @@ int INPUT(void)
     cell2 = G_allocate_f_raster_buf();
     cell3 = G_allocate_f_raster_buf();
 
-    z = (float **)G_malloc (sizeof(float *) * (m));
-    o = (float **)G_malloc (sizeof(float *) * (m));
-    s = (float **)G_malloc (sizeof(float *) * (m));
+    z = (float **)G_malloc(sizeof(float *) * (m));
+    o = (float **)G_malloc(sizeof(float *) * (m));
+    s = (float **)G_malloc(sizeof(float *) * (m));
 
     for (l = 0; l < m; l++) {
-	z[l] = (float *)G_malloc (sizeof(float) * (n));
-	o[l] = (float *)G_malloc (sizeof(float) * (n));
-	s[l] = (float *)G_malloc (sizeof(float) * (n));
+	z[l] = (float *)G_malloc(sizeof(float) * (n));
+	o[l] = (float *)G_malloc(sizeof(float) * (n));
+	s[l] = (float *)G_malloc(sizeof(float) * (n));
 
     }
 
@@ -504,9 +526,9 @@ int INPUT(void)
 
     if (linkein != NULL) {
 	cell4 = G_allocate_f_raster_buf();
-	li = (float **)G_malloc (sizeof(float *) * (m));
+	li = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
-	    li[l] = (float *)G_malloc (sizeof(float) * (n));
+	    li[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset4 = G_find_cell(linkein, "")) == NULL)
 	    G_fatal_error(_("linkein raster map <%s> not found"), linkein);
@@ -516,9 +538,9 @@ int INPUT(void)
 
     if (albedo != NULL) {
 	cell5 = G_allocate_f_raster_buf();
-	a = (float **)G_malloc (sizeof(float *) * (m));
+	a = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
-	    a[l] = (float *)G_malloc (sizeof(float) * (n));
+	    a[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset5 = G_find_cell(albedo, "")) == NULL)
 	    G_fatal_error(_("albedo raster map <%s> not found"), albedo);
@@ -528,9 +550,9 @@ int INPUT(void)
 
     if (latin != NULL) {
 	cell6 = G_allocate_f_raster_buf();
-	la = (float **)G_malloc (sizeof(float *) * (m));
+	la = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
-	    la[l] = (float *)G_malloc (sizeof(float) * (n));
+	    la[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset6 = G_find_cell(latin, "")) == NULL)
 	    G_fatal_error(_("latin raster map <%s> not found"), latin);
@@ -540,9 +562,9 @@ int INPUT(void)
 
     if (coefbh != NULL) {
 	rast1 = G_allocate_f_raster_buf();
-	cbhr = (float **)G_malloc (sizeof(float *) * (m));
+	cbhr = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
-	    cbhr[l] = (float *)G_malloc (sizeof(float) * (n));
+	    cbhr[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset7 = G_find_cell(coefbh, "")) == NULL)
 	    G_fatal_error(_("coefbh raster map <%s> not found"), coefbh);
@@ -552,9 +574,9 @@ int INPUT(void)
 
     if (coefdh != NULL) {
 	rast2 = G_allocate_f_raster_buf();
-	cdhr = (float **)G_malloc (sizeof(float *) * (m));
+	cdhr = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++)
-	    cdhr[l] = (float *)G_malloc (sizeof(float) * (n));
+	    cdhr[l] = (float *)G_malloc(sizeof(float) * (n));
 
 	if ((mapset8 = G_find_cell(coefdh, "")) == NULL)
 	    G_fatal_error(_("coefdh raster map <%s> not found"), coefdh);
@@ -664,7 +686,7 @@ int INPUT(void)
 		    o[i][j] = 90. - o[i][j];
 		else
 		    o[i][j] = 450. - o[i][j];
-		G_debug (3, "o:%f  z:%f  i:%d  j:%d", o[i][j], z[i][j], i, j);
+		G_debug(3, "o:%f  z:%f  i:%d  j:%d", o[i][j], z[i][j], i, j);
 
 		if (z[i][j] == UNDEFZ || o[i][j] == UNDEFZ || s[i][j] == UNDEFZ)
 		    z[i][j] = UNDEFZ;
@@ -724,12 +746,12 @@ int OUTGR(void)
 	cell10 = G_allocate_f_raster_buf();
 	fd10 = G_open_fp_cell_new(refl_rad);
 	if (fd10 < 0)
-	    G_fatal_error(_("Unable to create raster map %s"),refl_rad );
+	    G_fatal_error(_("Unable to create raster map %s"), refl_rad);
     }
 
 
     if (G_set_window(&cellhd) < 0)
-	G_fatal_error ("region error");
+	G_fatal_error("region error");
 
     if (m != G_window_rows())
 	G_fatal_error(_("rows changed from %d to %d"), m, G_window_rows());
@@ -796,23 +818,23 @@ int OUTGR(void)
 
     if (incidout != NULL) {
 	G_close_cell(fd7);
-        G_write_history(incidout, &hist);
+	G_write_history(incidout, &hist);
     }
     if (beam_rad != NULL) {
 	G_close_cell(fd8);
-        G_write_history(beam_rad, &hist);
+	G_write_history(beam_rad, &hist);
     }
     if (diff_rad != NULL) {
 	G_close_cell(fd9);
-        G_write_history(diff_rad, &hist);
+	G_write_history(diff_rad, &hist);
     }
     if (refl_rad != NULL) {
 	G_close_cell(fd10);
-        G_write_history(refl_rad, &hist);
+	G_write_history(refl_rad, &hist);
     }
     if (insol_time != NULL) {
 	G_close_cell(fd11);
-        G_write_history(insol_time, &hist);
+	G_write_history(insol_time, &hist);
     }
 
     return 1;
@@ -1126,32 +1148,32 @@ void where_is_point(void)
     double dx, dy;
     int i, j;
 
-    sx = xx0 * invstepx  + 0.5; /* offset 0.5 cell size to get the right cell i, j */
-    sy = yy0 * invstepy  + 0.5;
+    sx = xx0 * invstepx + 0.5;	/* offset 0.5 cell size to get the right cell i, j */
+    sy = yy0 * invstepy + 0.5;
 
     i = (int)sx;
     j = (int)sy;
 
     if (i <= n - 1 && j <= m - 1) {
 
-        dx = (double)i *stepx;
-        dy = (double)j *stepy;
+	dx = (double)i *stepx;
+	dy = (double)j *stepy;
 
-	length = DISTANCE1(xg0, dx, yg0, dy); /* dist from orig. grid point to the current grid point */
+	length = DISTANCE1(xg0, dx, yg0, dy);	/* dist from orig. grid point to the current grid point */
 
-        cube(j, i);
-        return;
+	cube(j, i);
+	return;
 
     }
-    else 
+    else
 	func = NULL;
 }
 
 void cube(int jmin, int imin)
 {
-        zp = z[jmin][imin];
-        if ((zp == UNDEFZ))
-            func = NULL;
+    zp = z[jmin][imin];
+    if ((zp == UNDEFZ))
+	func = NULL;
 }
 
 int searching(void)
@@ -1168,11 +1190,11 @@ int searching(void)
 	where_is_point();
 	if (func == NULL)
 	    return (3);
-/*	length += stepxy;*/
+	/*      length += stepxy; */
 
-	curvature_diff = EARTHRADIUS*(1.-cos(length/EARTHRADIUS));
-	z2 = z_orig + curvature_diff + length * tanh0; /* also corrected to the earth's curvature */
-	
+	curvature_diff = EARTHRADIUS * (1. - cos(length / EARTHRADIUS));
+	z2 = z_orig + curvature_diff + length * tanh0;	/* also corrected to the earth's curvature */
+
 	if (z2 < zp)
 	    succes = 2;		/* shadow */
 	if (z2 > zmax)
@@ -1193,9 +1215,9 @@ void calculate(void)
     double lum, q1;
 
     if (incidout != NULL) {
-	lumcl = (float **)G_malloc (sizeof(float *) * (m));
+	lumcl = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
-	    lumcl[l] = (float *)G_malloc (sizeof(float) * (n));
+	    lumcl[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 	for (j = 0; j < m; j++) {
 	    for (i = 0; i < n; i++)
@@ -1204,9 +1226,9 @@ void calculate(void)
     }
 
     if (beam_rad != NULL) {
-	beam = (float **)G_malloc (sizeof(float *) * (m));
+	beam = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
-	    beam[l] = (float *)G_malloc (sizeof(float) * (n));
+	    beam[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1216,9 +1238,9 @@ void calculate(void)
     }
 
     if (insol_time != NULL) {
-	insol = (float **)G_malloc (sizeof(float *) * (m));
+	insol = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
-	    insol[l] = (float *)G_malloc (sizeof(float) * (n));
+	    insol[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1228,9 +1250,9 @@ void calculate(void)
     }
 
     if (diff_rad != NULL) {
-	diff = (float **)G_malloc (sizeof(float *) * (m));
+	diff = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
-	    diff[l] = (float *)G_malloc (sizeof(float) * (n));
+	    diff[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1240,9 +1262,9 @@ void calculate(void)
     }
 
     if (refl_rad != NULL) {
-	refl = (float **)G_malloc (sizeof(float *) * (m));
+	refl = (float **)G_malloc(sizeof(float *) * (m));
 	for (l = 0; l < m; l++) {
-	    refl[l] = (float *)G_malloc (sizeof(float) * (n));
+	    refl[l] = (float *)G_malloc(sizeof(float) * (n));
 	}
 
 	for (j = 0; j < m; j++) {
@@ -1297,7 +1319,8 @@ void calculate(void)
 			longitude = xp;
 			latitude = yp;
 
-			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0) {
+			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) <
+			    0) {
 			    G_fatal_error(_("Error in pj_do_proj"));
 			}
 
@@ -1368,57 +1391,86 @@ void calculate(void)
 
     G_short_history("r.sun solar model output", "raster", &hist);
 
-    sprintf (hist.edhist[0], " ----------------------------------------------------------------");
-    sprintf (hist.edhist[1], " Day [1-365]:                              %d", day);
+    sprintf(hist.edhist[0],
+	    " ----------------------------------------------------------------");
+    sprintf(hist.edhist[1], " Day [1-365]:                              %d",
+	    day);
     hist.edlinecnt = 2;
 
     if (tt != NULL) {
-	sprintf (hist.edhist[hist.edlinecnt], " Local (solar) time (decimal hr.):         %.4f", timo);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Local (solar) time (decimal hr.):         %.4f", timo);
 	hist.edlinecnt++;
     }
 
-    sprintf (hist.edhist[hist.edlinecnt], " Solar constant (W/m^2):                   1367");
-    sprintf (hist.edhist[hist.edlinecnt+1], " Extraterrestrial irradiance (W/m^2):      %f", c);
-    sprintf (hist.edhist[hist.edlinecnt+2], " Declination (rad):                        %f", -declination);
+    sprintf(hist.edhist[hist.edlinecnt],
+	    " Solar constant (W/m^2):                   1367");
+    sprintf(hist.edhist[hist.edlinecnt + 1],
+	    " Extraterrestrial irradiance (W/m^2):      %f", c);
+    sprintf(hist.edhist[hist.edlinecnt + 2],
+	    " Declination (rad):                        %f", -declination);
     hist.edlinecnt += 3;
 
     if (lt != NULL)
-	sprintf (hist.edhist[hist.edlinecnt], " Latitude (deg):                           %.4f", -latitude * RAD);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Latitude (deg):                           %.4f",
+		-latitude * RAD);
     else
-	sprintf (hist.edhist[hist.edlinecnt], " Latitude min-max(deg):                    %.4f - %.4f", la_min, la_max);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Latitude min-max(deg):                    %.4f - %.4f",
+		la_min, la_max);
     hist.edlinecnt++;
 
     if (tt != NULL) {
-	sprintf (hist.edhist[hist.edlinecnt], " Sunrise time (hr.):                       %.2f", sunrise_time);
-	sprintf (hist.edhist[hist.edlinecnt+1], " Sunset time (hr.):                        %.2f", sunset_time);
-	sprintf (hist.edhist[hist.edlinecnt+2], " Daylight time (hr.):                      %.2f", sunset_time - sunrise_time);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Sunrise time (hr.):                       %.2f",
+		sunrise_time);
+	sprintf(hist.edhist[hist.edlinecnt + 1],
+		" Sunset time (hr.):                        %.2f", sunset_time);
+	sprintf(hist.edhist[hist.edlinecnt + 2],
+		" Daylight time (hr.):                      %.2f",
+		sunset_time - sunrise_time);
     }
     else {
-	sprintf (hist.edhist[hist.edlinecnt], " Sunrise time min-max (hr.):               %.2f - %.2f", sr_min, sr_max);
-	sprintf (hist.edhist[hist.edlinecnt+1], " Sunset time min-max (hr.):                %.2f - %.2f", ss_min, ss_max);
-	sprintf (hist.edhist[hist.edlinecnt+2], " Time step (hr.):                          %.4f", step);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Sunrise time min-max (hr.):               %.2f - %.2f",
+		sr_min, sr_max);
+	sprintf(hist.edhist[hist.edlinecnt + 1],
+		" Sunset time min-max (hr.):                %.2f - %.2f",
+		ss_min, ss_max);
+	sprintf(hist.edhist[hist.edlinecnt + 2],
+		" Time step (hr.):                          %.4f", step);
     }
     hist.edlinecnt += 3;
 
     if (incidout != NULL || tt != NULL) {
-	sprintf (hist.edhist[hist.edlinecnt], " Solar altitude (deg):                     %.4f", h0 * RAD);
-	sprintf (hist.edhist[hist.edlinecnt+1], " Solar azimuth (deg):                      %.4f", A0 * RAD);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Solar altitude (deg):                     %.4f", h0 * RAD);
+	sprintf(hist.edhist[hist.edlinecnt + 1],
+		" Solar azimuth (deg):                      %.4f", A0 * RAD);
 	hist.edlinecnt += 2;
     }
 
     if (linkein == NULL)
-	sprintf (hist.edhist[hist.edlinecnt], " Linke turbidity factor:                   %.1f", linke);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Linke turbidity factor:                   %.1f", linke);
     else
-	sprintf (hist.edhist[hist.edlinecnt], " Linke turbidity factor min-max:           %.1f-%.1f", li_min, li_max);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Linke turbidity factor min-max:           %.1f-%.1f", li_min,
+		li_max);
     hist.edlinecnt++;
 
     if (albedo == NULL)
-	sprintf (hist.edhist[hist.edlinecnt], " Ground albedo:                            %.3f", alb);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Ground albedo:                            %.3f", alb);
     else
-        sprintf (hist.edhist[hist.edlinecnt], " Ground albedo min-max:                    %.3f-%.3f", al_min, al_max);
+	sprintf(hist.edhist[hist.edlinecnt],
+		" Ground albedo min-max:                    %.3f-%.3f", al_min,
+		al_max);
     hist.edlinecnt++;
 
-    sprintf (hist.edhist[hist.edlinecnt], " -----------------------------------------------------------------");
+    sprintf(hist.edhist[hist.edlinecnt],
+	    " -----------------------------------------------------------------");
     hist.edlinecnt++;
 
     G_command_history(&hist);
