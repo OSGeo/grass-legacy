@@ -3233,23 +3233,23 @@ class MapFrame(wx.Frame):
         point = wx.GetMousePosition()
         zoommenu = wx.Menu()
         # Add items to the menu
-        zoommap = wx.MenuItem(zoommenu, wx.ID_ANY,'Zoom to selected map')
+        zoommap = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to selected map'))
         zoommenu.AppendItem(zoommap)
         self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToMap, zoommap)
 
-        zoomwind = wx.MenuItem(zoommenu, wx.ID_ANY,'Zoom to computational region (set with g.region)')
+        zoomwind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to computational region (set with g.region)'))
         zoommenu.AppendItem(zoomwind)
         self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToWind, zoomwind)
 
-        savewind = wx.MenuItem(zoommenu, wx.ID_ANY,'Set computational region from display')
+        savewind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Set computational region from display'))
         zoommenu.AppendItem(savewind)
         self.Bind(wx.EVT_MENU, self.MapWindow.DisplayToWind, savewind)
 
-        zoomsaved = wx.MenuItem(zoommenu, wx.ID_ANY,'Zoom to saved region')
+        zoomsaved = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to saved region'))
         zoommenu.AppendItem(zoomsaved)
         self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToSaved, zoomsaved)
 
-        savezoom = wx.MenuItem(zoommenu, wx.ID_ANY,'Save display geometry to named region')
+        savezoom = wx.MenuItem(zoommenu, wx.ID_ANY, _('Save display geometry to named region'))
         zoommenu.AppendItem(savezoom)
         self.Bind(wx.EVT_MENU, self.MapWindow.SaveDisplayRegion, savezoom)
 
