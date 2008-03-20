@@ -214,7 +214,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.popupID6 = wx.NewId()
             self.popupID7 = wx.NewId()
             self.popupID8 = wx.NewId()
-            
+            self.popupID9 = wx.NewId()
+                        
         self.popupMenu = wx.Menu()
         # general item
         self.popupMenu.Append(self.popupID1, text=_("Remove"))
@@ -237,6 +238,8 @@ class LayerTree(CT.CustomTreeCtrl):
             self.Bind(wx.EVT_MENU, self.OnPopupOpacityLevel, id=self.popupID8)
             self.popupMenu.Append(self.popupID3, text=_("Properties"))
             self.Bind(wx.EVT_MENU, self.OnPopupProperties, id=self.popupID3)
+            self.popupMenu.Append(self.popupID9, text=_("Zoom to selected map"))
+            self.Bind(wx.EVT_MENU, self.mapdisplay.MapWindow.ZoomToMap, id=self.popupID9)
 
         # specific items
         try:
