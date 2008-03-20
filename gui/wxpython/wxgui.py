@@ -84,6 +84,7 @@ import gui_modules.georect as georect
 import gui_modules.dbm as dbm
 import gui_modules.workspace as workspace
 import gui_modules.goutput as goutput
+import gui_modules.gdialogs as gdialogs
 from   gui_modules.debug import Debug as Debug
 from   icons.icon import Icons as Icons
 
@@ -433,6 +434,10 @@ class GMFrame(wx.Frame):
         cmd = self.GetMenuCmd(event)
         menuform.GUI().ParseCommand(cmd, parentframe=self)
 
+    def OnNewVector(self, event):
+        """Create new vector map layer"""
+        gdialogs.CreateNewVector(self)
+            
     def OnAboutGRASS(self, event):
         """Display 'About GRASS' dialog"""
         info = wx.AboutDialogInfo()

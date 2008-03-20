@@ -2323,7 +2323,7 @@ class MapFrame(wx.Frame):
                               CloseButton(False).Layer(2))
 
         elif name == "digit":
-            self.digittoolbar = toolbars.DigitToolbar(self, self.Map)
+            self.digittoolbar = toolbars.DigitToolbar(self, self.Map, self.tree)
 
             for toolRow in range(0, self.digittoolbar.numOfRows):
                 self._mgr.AddPane(self.digittoolbar.toolbar[toolRow],

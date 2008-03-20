@@ -976,8 +976,8 @@ class Data:
                         (_("Develop vector map"), (
                                 (_("Create new vector map"),
                                  _("Create new empty vector map"),
-                                 "self.OnMenuCmd",
-                                 "v.edit tool=create"),
+                                 "self.OnNewVector",
+                                 ""),
                                 #                                 (_("Digitize vector map"),
                                 #                                  _("Digitize/edit vector map"),
                                 #                                  "self.OnMenuCmd",
