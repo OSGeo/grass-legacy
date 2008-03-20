@@ -10621,7 +10621,7 @@ msgstr ""
 #: ../raster/r.digit/get_type.c:31
 #, c-format
 msgid "Please choose one of the following\n"
-msgstr "Per favore scegli uno dei seguenti"
+msgstr "Per favore scegli uno dei seguenti\n"
 
 #: ../raster/r.digit/get_type.c:32
 #, c-format
