@@ -103,21 +103,6 @@ except:
 
 utils.reexec_with_pythonw()
 
-ID_ABOUT_COMMAND = 102
-
-#
-# Widgets dimension
-#
-SPIN_SIZE = (150, -1)
-COMBOBOX_SIZE = (300, -1)
-GSELECT_SIZE = (400, -1)
-TEXTCTRL_SIZE = (400, -1)
-
-#
-# Global GRASS variables
-#
-CURR_MAPSET = grassenv.GetGRASSVariable('MAPSET')
-
 # From lib/gis/col_str.c, except purple which is mentioned
 # there but not given RGB values
 str2rgb = {'aqua': (100, 128, 255),
@@ -1009,11 +994,11 @@ class cmdPanel(wx.Panel):
                             except ValueError:
                                 minValue = -1e6
                                 maxValue = 1e6
-                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=SPIN_SIZE,
+                            txt2 = wx.SpinCtrl(parent=which_panel, id=wx.ID_ANY, size=globalvar.DIALOG_SPIN_SIZE,
                                                min=minValue, max=maxValue)
                         else:
                             txt2 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                               size=TEXTCTRL_SIZE)
+                                               size=globalvar.DIALOG_TEXTCTRL_SIZE)
                         if p.get('value','') != '':
                             txt2.SetValue(p['value']) # parameter previously set
                         which_sizer.Add(item=txt2, proportion=0,
@@ -1027,7 +1012,7 @@ class cmdPanel(wx.Panel):
                         which_sizer.Add(item=txt, proportion=0,
                                         flag=wx.ADJUST_MINSIZE | wx.TOP | wx.RIGHT | wx.LEFT, border=5)
                         cb = wx.ComboBox(parent=which_panel, id=wx.ID_ANY, value=p.get('default',''),
-                                         size=COMBOBOX_SIZE,
+                                         size=globalvar.DIALOG_COMBOBOX_SIZE,
                                          choices=valuelist, style=wx.CB_DROPDOWN)
                         if p.get('value','') != '':
                             cb.SetValue(p['value']) # parameter previously set
@@ -1049,13 +1034,13 @@ class cmdPanel(wx.Panel):
                 if p.get('multiple','yes') == 'yes' or \
                         p.get('type','string') == 'string':
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                   size=TEXTCTRL_SIZE)
+                                   size=globalvar.DIALOG_TEXTCTRL_SIZE)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     minValue = -1e9
                     maxValue = 1e9
                     txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
-                                       size=SPIN_SIZE,
+                                       size=globalvar.DIALOG_SPIN_SIZE,
                                        min=minValue, max=maxValue)
                     txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
@@ -1077,11 +1062,11 @@ class cmdPanel(wx.Panel):
                     else:
                         multiple = False
                     if p.get('age','') == 'new':
-                        mapsets = [CURR_MAPSET,]
+                        mapsets = [grassenv.GetGRASSVariable('MAPSET'),]
                     else:
                         mapsets = None
 
-                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=GSELECT_SIZE,
+                    selection = gselect.Select(parent=which_panel, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
                                                type=p.get('element',''), multiple=multiple, mapsets=mapsets)
                     if p.get('value','') != '':
                         selection.SetValue(p['value']) # parameter previously set
@@ -1132,7 +1117,7 @@ class cmdPanel(wx.Panel):
                 # file selector
                 elif p.get('prompt','') != 'color' and p.get('element', '') == 'file':
                     fbb = filebrowse.FileBrowseButton(parent=which_panel, id=wx.ID_ANY, 
-                                                      size=GSELECT_SIZE, labelText='',
+                                                      size=globalvar.DIALOG_GSELECT_SIZE, labelText='',
                                                       dialogTitle=_('Choose %s') % \
                                                           p.get('description',_('File')),
                                                       buttonText=_('Browse'),
@@ -1406,7 +1391,7 @@ class GUI:
                     if self.grass_task.get_param(key)['element'] in ['cell', 'vector']:
                         # mapname -> mapname@mapset
                         if '@' not in value:
-                            value = value + '@' + CURR_MAPSET
+                            value = value + '@' + grassenv.GetGRASSVariable('MAPSET')
                     self.grass_task.set_param(key, value)
                     cmd_validated.append(key + '=' + value)
                     i = i + 1
