@@ -39,5 +39,5 @@ $(SHLIB): $(OBJ)
 	$(SHLIB_LD) $(LDFLAGS) $(OBJ) -o $(SHLIB) 
 
 install_vdigit: $(SHLIB)
-	$(INSTALL_DATA) _grass6_wxvdigit.so $(ETCDIR)/vdigit/
+	$(INSTALL_DATA) $(SHLIB) $(ETCDIR)/vdigit/
 	$(INSTALL_DATA) grass6_wxvdigit.py $(ETCDIR)/vdigit/
