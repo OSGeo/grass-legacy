@@ -970,12 +970,11 @@ class GMFrame(wx.Frame):
             maptype = None
 
         if not maptype or maptype != 'vector':
-            dlg = wx.MessageDialog(parent=self,
-                                   message=_("Attribute management is available only "
-                                             "for vector maps."),
-                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR)
-            dlg.ShowModal()
-            dlg.Destroy()
+            wx.MessageBox(parent=self,
+                          message=_("Attribute management is available only "
+                                    "for vector maps."),
+                          caption=_("Message"),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
             return
 
         if not self.curr_page.maptree.GetPyData(layer)[0]:
@@ -1216,8 +1215,7 @@ class GMFrame(wx.Frame):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
-
-        if not self.curr_page.maptree.GetSelections():
+        if not self.curr_page.maptree.layer_selected:
             self.MsgNoLayerSelected()
             return
 
@@ -1259,9 +1257,10 @@ class GMFrame(wx.Frame):
 
     def MsgNoLayerSelected(self):
         """Show dialog message 'No layer selected'"""
-        dlg = wx.MessageDialog(self, _("No layer selected"), _("Error"), wx.OK | wx.ICON_ERROR)
-        dlg.ShowModal()
-        dlg.Destroy()
+        wx.MessageBox(parent=self,
+                      message=_("No map layer selected. Operation cancelled."),
+                      caption=_("Message"),
+                      style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
 
 class GMApp(wx.App):
     """
