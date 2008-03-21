@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
     struct Option *input_opt, *output_opt, *delim_opt, *percent_opt, *type_opt;
     struct Option *method_opt, *xcol_opt, *ycol_opt, *zcol_opt, *zrange_opt;
     struct Option *trim_opt, *pth_opt;
-    struct Flag *scan_flag, *shell_style;
+    struct Flag *scan_flag, *shell_style, *skipline;
 
 
     G_gisinit(argv[0]);
@@ -244,6 +244,9 @@ int main(int argc, char *argv[])
     shell_style->key = 'g';
     shell_style->description = _("In scan mode, print using shell script style");
 
+    skipline = G_define_flag();
+    skipline->key = 'i';
+    skipline->description = _("Ignore broken lines");
 
     if (G_parser(argc,argv))
 	exit(EXIT_FAILURE);
@@ -450,7 +453,7 @@ int main(int argc, char *argv[])
 	if( zrange_opt->answer )
 	    G_warning(_("zrange will not be taken into account during scan"));
 
-	scan_bounds(in_fp, xcol, ycol, zcol, fs, shell_style->answer);
+	scan_bounds(in_fp, xcol, ycol, zcol, fs, shell_style->answer, skipline->answer);
 
 	if(!from_stdin)
 	    fclose(in_fp);
@@ -559,10 +562,19 @@ int main(int argc, char *argv[])
 	    tokens = G_tokenize (buff, fs);
 	    ntokens = G_number_of_tokens ( tokens );
 
-	    if((ntokens < 3) || (max_col > ntokens) )
-		G_fatal_error(_("Not enough data columns. "
-		   "Incorrect delimiter or column number? "
-		   "Found the following character(s) in row %d:\n[%s]"), line, buff);
+	    if((ntokens < 3) || (max_col > ntokens) ) {
+		if (skipline->answer) {
+		   G_warning(_("Not enough data columns. "
+		     "Incorrect delimiter or column number? "
+		     "Found the following character(s) in row %d:\n[%s]"), line, buff);
+	    	   G_warning(_("Line ignored as requested"));
+		   continue; /* line is garbage */
+		} else {
+		   G_fatal_error(_("Not enough data columns. "
+		     "Incorrect delimiter or column number? "
+		     "Found the following character(s) in row %d:\n[%s]"), line, buff);
+		}
+	    }
 
 /* too slow?
 	    if ( G_projection() == PROJECTION_LL ) {
@@ -999,7 +1011,7 @@ int main(int argc, char *argv[])
 
 
 
-int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_style)
+int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_style, int skipline)
 {
     int    line, first, max_col;
     char   buff[BUFFSIZE];
@@ -1027,9 +1039,19 @@ int scan_bounds(FILE* fp, int xcol, int ycol, int zcol, char *fs, int shell_styl
 	tokens = G_tokenize (buff, fs);
 	ntokens = G_number_of_tokens ( tokens );
 
-	if((ntokens < 3) || (max_col > ntokens) )
-	    G_fatal_error(_("Not enough data columns. "
-	       "Incorrect delimiter or column number?\n[%s]"), buff);
+	if((ntokens < 3) || (max_col > ntokens) ) {
+	    if (skipline) {
+		   G_warning(_("Not enough data columns. "
+		     "Incorrect delimiter or column number? "
+		     "Found the following character(s) in row %d:\n[%s]"), line, buff);
+	    	   G_warning(_("Line ignored as requested"));
+		   continue; /* line is garbage */
+	    } else {
+		   G_fatal_error(_("Not enough data columns. "
+		     "Incorrect delimiter or column number? "
+		     "Found the following character(s) in row %d:\n[%s]"), line, buff);
+	    }
+	}
 
 /* too slow?
 	    if ( G_projection() == PROJECTION_LL ) {
