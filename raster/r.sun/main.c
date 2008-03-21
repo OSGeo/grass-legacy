@@ -6,7 +6,8 @@ a new version of r.sun was prepared using ESRA solar radiation formulas.
 See manual pages for details.
 (C) 2002 Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
               and GeoModel, s.r.o., Bratislava, Slovakia
-email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
+email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk,
+       Thomas Huld <Thomas.Huld@jrc.it> (lat/long fix)
 *******************************************************************************/
 /*
  * This program is free software; you can redistribute it and/or
@@ -57,6 +58,9 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #include <grass/gis.h>
 #include <grass/gprojects.h>
 #include <grass/glocale.h>
+
+const double deg2rad = M_PI / 180.;
+const double rad2deg = 180. / M_PI;
 
 FILE *felevin, *faspin, *fslopein, *flinkein, *falbedo, *flatin;
 FILE *fincidout, *fbeam_rad, *finsol_time, *fdiff_rad, *frefl_rad;
@@ -129,6 +133,23 @@ double longit_l, latid_l, cos_u, cos_v, sin_u, sin_v;
 double sin_phi_l, tan_lam_l, lum_C31_l, lum_C33_l;
 double beam_e, diff_e, refl_e, bh, dh, rr, insol_t;
 double cbh, cdh;
+
+#define DEGREEINMETERS 111120.
+
+int ll_correction = 0;
+double coslatsq;
+
+double distance(double x1, double x2, double y1, double y2)
+{
+    if (ll_correction) {
+	return DEGREEINMETERS * sqrt(coslatsq * (x1 - x2) * (x1 - x2)
+				     + (y1 - y2) * (y1 - y2));
+    }
+    else {
+	return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -388,6 +409,10 @@ int main(int argc, char *argv[])
     insol_time = parm.insol_time->answer;
     diff_rad = parm.diff_rad->answer;
     refl_rad = parm.refl_rad->answer;
+
+    if ((G_projection() == PROJECTION_LL)) {
+	ll_correction = 1;
+    }
 
     if ((insol_time != NULL) && (incidout != NULL))
 	G_fatal_error(_("insol_time and incidout are incompatible options"));
@@ -1159,7 +1184,7 @@ void where_is_point(void)
 	dx = (double)i *stepx;
 	dy = (double)j *stepy;
 
-	length = DISTANCE1(xg0, dx, yg0, dy);	/* dist from orig. grid point to the current grid point */
+	length = distance(xg0, dx, yg0, dy);	/* dist from orig. grid point to the current grid point */
 
 	cube(j, i);
 	return;
@@ -1287,6 +1312,11 @@ void calculate(void)
 	    yp = ymin + yy0;
 	    func = NULL;
 	    length = 0;
+
+	    if (ll_correction) {
+		coslat = cos(deg2rad * yp);
+		coslatsq = coslat * coslat;
+	    }
 
 	    z_orig = z1 = zp = z[j][i];
 	    o_orig = o[j][i];
