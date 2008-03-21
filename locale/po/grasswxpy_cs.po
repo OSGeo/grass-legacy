@@ -1,0 +1,1880 @@
+# translation of grasswxpy.po to Czech
+# This file is distributed under the same license as the GRASS package.
+# Copyright (C) 2008, GRASS Development Team
+# Martin Landa <landa.martin gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grasswxpy_cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-10 00:15+0100\n"
+"PO-Revision-Date: 2008-03-10 00:27+0100\n"
+"Last-Translator: Martin Landa <landa.martin gmail.com>\n"
+"Language-Team: Czech <grass-translations@lists.osgeo.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../gui/wxpython/wxgui.py:96
+msgid "GRASS GIS Layer Manager (Experimental Prototype)"
+msgstr "GRASS GIS Manager (Experimentální prototyp)"
+
+#: ../gui/wxpython/wxgui.py:281
+msgid "Map layers for each display"
+msgstr "Seznam mapových vrstev"
+
+#: ../gui/wxpython/wxgui.py:285 ../gui/wxpython/gui_modules/menuform.py:880
+msgid "Command output"
+msgstr "Výstup pøíkazù"
+
+#: ../gui/wxpython/wxgui.py:398
+msgid "Type GRASS command and run by pressing ENTER"
+msgstr "Napi¹te pøíkaz GRASSu a spus»te stiknutím ENTER"
+
+#: ../gui/wxpython/wxgui.py:493
+msgid ""
+"Workspace is not empty. Do you want to store current settings to workspace "
+"file?"
+msgstr ""
+"Workspace není prázdný. Pøejete si ulo¾it aktuální nastavení do souboru "
+"workspace?"
+
+#: ../gui/wxpython/wxgui.py:496
+msgid "Save current settings?"
+msgstr "Ulo¾it aktuální nastavení?"
+
+#: ../gui/wxpython/wxgui.py:511
+msgid "Choose workspace file"
+msgstr "Zvolit soubor workspace"
+
+#: ../gui/wxpython/wxgui.py:572 ../gui/wxpython/wxgui.py:577
+#, python-format
+msgid ""
+"Reading workspace file <%s> failed. Invalid file, unable to parse XML "
+"document."
+msgstr ""
+"Ètení souboru workspace <%s> selhalo. Neplatný soubor, nelze parsovat XML "
+"dokument."
+
+#: ../gui/wxpython/wxgui.py:582 ../gui/wxpython/wxgui.py:623
+msgid "Please wait, loading map layers into layer tree..."
+msgstr "Prosím èekejte, naèítám mapové vrstvy..."
+
+#: ../gui/wxpython/wxgui.py:607
+msgid "Unable to read workspace file"
+msgstr "Nelze èíst soubor workspace"
+
+#: ../gui/wxpython/wxgui.py:609 ../gui/wxpython/wxgui.py:752
+#: ../gui/wxpython/wxgui.py:777 ../gui/wxpython/wxgui.py:976
+#: ../gui/wxpython/wxgui.py:1262 ../gui/wxpython/gui_modules/menuform.py:1275
+#: ../gui/wxpython/gui_modules/location_wizard.py:215
+#: ../gui/wxpython/gui_modules/location_wizard.py:528
+#: ../gui/wxpython/gui_modules/location_wizard.py:1320
+#: ../gui/wxpython/gui_modules/location_wizard.py:1630
+#: ../gui/wxpython/gui_modules/location_wizard.py:1731
+#: ../gui/wxpython/gui_modules/location_wizard.py:1805
+#: ../gui/wxpython/gui_modules/location_wizard.py:1906
+#: ../gui/wxpython/gui_modules/location_wizard.py:2070
+#: ../gui/wxpython/gui_modules/location_wizard.py:2089
+#: ../gui/wxpython/gui_modules/location_wizard.py:2396
+#: ../gui/wxpython/gui_modules/gcmd.py:54
+#: ../gui/wxpython/gui_modules/gcmd.py:70
+#: ../gui/wxpython/gui_modules/mapdisp.py:922
+#: ../gui/wxpython/gui_modules/mapdisp.py:1506
+#: ../gui/wxpython/gui_modules/dbm.py:1056
+#: ../gui/wxpython/gui_modules/dbm.py:1155
+#: ../gui/wxpython/gui_modules/dbm.py:1235
+#: ../gui/wxpython/gui_modules/dbm.py:1245
+#: ../gui/wxpython/gui_modules/dbm.py:1258
+#: ../gui/wxpython/gui_modules/dbm.py:1324
+#: ../gui/wxpython/gui_modules/dbm.py:1343
+#: ../gui/wxpython/gui_modules/dbm.py:2419
+#: ../gui/wxpython/gui_modules/dbm.py:2457
+#: ../gui/wxpython/gui_modules/digit.py:2058
+#: ../gui/wxpython/gui_modules/digit.py:2202
+#: ../gui/wxpython/gui_modules/digit.py:2229
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:313
+#: ../gui/wxpython/gis_set.py:607
+msgid "Error"
+msgstr "Chyba"
+
+#: ../gui/wxpython/wxgui.py:619
+msgid "Load map layers into layer tree"
+msgstr "Naèíst mapové vrstvy do seznamu"
+
+#: ../gui/wxpython/wxgui.py:644
+msgid "Choose file to save current workspace"
+msgstr "Vybrat soubor pro ulo¾ení aktuálního workspace"
+
+#: ../gui/wxpython/wxgui.py:659 ../gui/wxpython/wxgui.py:676
+#, python-format
+msgid "Workspace file <%s> already exists. Do you want to overwrite this file?"
+msgstr "Soubor workspace <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
+
+#: ../gui/wxpython/wxgui.py:661 ../gui/wxpython/wxgui.py:679
+#: ../gui/wxpython/gui_modules/mapdisp.py:2082
+msgid "Warning"
+msgstr "Upozornìní"
+
+#: ../gui/wxpython/wxgui.py:751
+#, python-format
+msgid "Unable to open workspace file <%s> for writing."
+msgstr "Nelze otevøít soubor workspace <%s> pro zápis."
+
+#: ../gui/wxpython/wxgui.py:776
+msgid "Writing current settings to workspace file failed."
+msgstr "Zápis aktuálního nastavení do souboru workspace selhalo."
+
+#: ../gui/wxpython/wxgui.py:974
+msgid "Attribute management is available only for vector maps."
+msgstr "Správa atributových dat je dostupná pouze pro vektorové mapy."
+
+#: ../gui/wxpython/wxgui.py:999 ../gui/wxpython/gui_modules/dbm.py:3353
+msgid "GRASS GIS Attribute Table Manager"
+msgstr "GRASS GIS správce atributových data"
+
+#: ../gui/wxpython/wxgui.py:1226
+#, python-format
+msgid "Do you want to remove map layer <%s> from layer tree?"
+msgstr "Pøejete si odstranit mapovou vrstvu <%s> ze seznamu vrstev?"
+
+#: ../gui/wxpython/wxgui.py:1229
+msgid "Do you want to remove selected map layer from layer tree?"
+msgstr "Pøejete si odstranit vybranou mapovou vrstvu ze seznamu vrstev?"
+
+#: ../gui/wxpython/wxgui.py:1233
+msgid "Remove map layer"
+msgstr "Odstranit mapovou vrstvu"
+
+#: ../gui/wxpython/wxgui.py:1262
+msgid "No layer selected"
+msgstr "Nebyla vybrána ¾ádná vrstva"
+
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:52
+#: ../gui/wxpython/gui_modules/mcalc_builder.py:54
+#, python-format
+msgid "GRASS %s Map Calculator"
+msgstr "GRASS %s mapový kalkulátor"
+
+#: ../gui/wxpython/gui_modules/toolbars.py:485
+msgid "Undo is not implemented yet."
+msgstr "Undo není je¹tì implementováno."
+
+#: ../gui/wxpython/gui_modules/toolbars.py:486
+#: ../gui/wxpython/gui_modules/mapdisp.py:2800
+#: ../gui/wxpython/gui_modules/dbm.py:2641
+msgid "Message"
+msgstr "Zpráva"
+
+#: ../gui/wxpython/gui_modules/toolbars.py:498
+msgid "Digitization settings"
+msgstr "Nastavení"
+
+#: ../gui/wxpython/gui_modules/menuform.py:151
+#: ../gui/wxpython/gui_modules/menuform.py:1082
+msgid "Select Color"
+msgstr "Zvolit barvu"
+
+#: ../gui/wxpython/gui_modules/menuform.py:198
+msgid "unknown"
+msgstr "neznámý"
+
+#: ../gui/wxpython/gui_modules/menuform.py:214
+#, python-format
+msgid "Parameter not found: %s"
+msgstr "Paramentr nebyl nalezen: %s"
+
+#: ../gui/wxpython/gui_modules/menuform.py:230
+#, python-format
+msgid "Flag not found: %s"
+msgstr "Pøepínaè nebyl nalezen: %s"
+
+#: ../gui/wxpython/gui_modules/menuform.py:264
+msgid "<required>"
+msgstr "<po¾ádováno>"
+
+#: ../gui/wxpython/gui_modules/menuform.py:265
+#, python-format
+msgid "Parameter %(name)s (%(desc)s) is missing.\n"
+msgstr "Parametr %(name)s (%(desc)s) chybí.\n"
+
+#: ../gui/wxpython/gui_modules/menuform.py:616
+msgid "Enter parameters for "
+msgstr "Definujte parametry pro "
+
+#: ../gui/wxpython/gui_modules/menuform.py:620
+msgid " (those in bold typeface are required)"
+msgstr " (tuèný písmem zvýraznìné jsou po¾adovány)"
+
+#: ../gui/wxpython/gui_modules/menuform.py:631
+msgid "Cancel the command settings and ignore changes"
+msgstr "Zavøít dialog pøíkazu a ignorovat provedené zmìny"
+
+#: ../gui/wxpython/gui_modules/menuform.py:650
+msgid "&Run"
+msgstr "&Spustit"
+
+#: ../gui/wxpython/gui_modules/menuform.py:651
+msgid "Run the command"
+msgstr "Spustit pøíkaz"
+
+#: ../gui/wxpython/gui_modules/menuform.py:655
+msgid "Abort the running command"
+msgstr "Pøeru¹it bì¾ící pøíkaz"
+
+#: ../gui/wxpython/gui_modules/menuform.py:658
+msgid "Copy the current command string to the clipboard"
+msgstr "Kopírovat pøíkaz jako øetìzec do schránky"
+
+#: ../gui/wxpython/gui_modules/menuform.py:681
+#: ../gui/wxpython/gui_modules/preferences.py:529
+msgid "Close dialog on finish"
+msgstr "Zavøít dialog pøi ukonèení"
+
+#: ../gui/wxpython/gui_modules/menuform.py:788
+#, python-format
+msgid "'%s' copied to clipboard"
+msgstr "'%s' kopírováno do schránky"
+
+#: ../gui/wxpython/gui_modules/menuform.py:803
+#, python-format
+msgid ""
+"This is a sample program for\n"
+"GRASS command interface parsing\n"
+"and automatic GUI building.\n"
+"%s"
+msgstr ""
+"Toto je ukázkový program pro\n"
+"rozhraní GRASS pøíkazù\n"
+"a automatické generování GUI dialogù.\n"
+"%s"
+
+#: ../gui/wxpython/gui_modules/menuform.py:806
+msgid "About wxPython GRASS GUI"
+msgstr "O wxPython GRASS GUI"
+
+#: ../gui/wxpython/gui_modules/menuform.py:842
+#: ../gui/wxpython/gui_modules/menuform.py:855
+#: ../gui/wxpython/gui_modules/menuform.py:1174
+msgid "Required"
+msgstr "Po¾adováno"
+
+#: ../gui/wxpython/gui_modules/menuform.py:845
+#: ../gui/wxpython/gui_modules/menuform.py:855
+msgid "Optional"
+msgstr "Volitelné"
+
+#: ../gui/wxpython/gui_modules/menuform.py:886
+msgid "Manual"
+msgstr "Nápovìda"
+
+#: ../gui/wxpython/gui_modules/menuform.py:953
+msgid "[multiple]"
+msgstr "[mnohonásobné]"
+
+#: ../gui/wxpython/gui_modules/menuform.py:986
+msgid "Valid range"
+msgstr "Povolený rozsah"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1101
+msgid "Transparent"
+msgstr "Prùhledný"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1118
+#, python-format
+msgid "Choose %s"
+msgstr "Vybrat %s"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1119
+msgid "File"
+msgstr "Soubor"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1120
+#: ../gui/wxpython/gui_modules/location_wizard.py:135
+#: ../gui/wxpython/gui_modules/location_wizard.py:1064
+#: ../gui/wxpython/gui_modules/location_wizard.py:1156
+#: ../gui/wxpython/gis_set.py:118
+msgid "Browse"
+msgstr "Procházet"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1294
+#, python-format
+msgid "Unable to fetch interface description for command '%s'."
+msgstr "Nelze získat popis rozhraní pro pøíkaz '%s'."
+
+#: ../gui/wxpython/gui_modules/menuform.py:1376
+#, python-format
+msgid "Unable to parse command %s"
+msgstr "Nelze parsovat pøíkaz %s"
+
+#: ../gui/wxpython/gui_modules/menuform.py:1431
+#, python-format
+msgid "usage: %s <grass command>"
+msgstr "pou¾ití: %s <grass pøíkaz>"
+
+#: ../gui/wxpython/gui_modules/sqlbuilder.py:43
+#, python-format
+msgid "GRASS SQL Builder: %s"
+msgstr "GRASS SQL pomocník: %s"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:129
+msgid "Define GRASS Database and Location Name"
+msgstr "Definovat Databanku GRASSu a Název Lokace"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:143
+#: ../gui/wxpython/gis_set.py:94
+msgid "GIS Data Directory:"
+msgstr "Adresáø GIS dat:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:159
+msgid "Project Location"
+msgstr "Lokace projektu"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:197
+msgid "Choose GRASS data directory:"
+msgstr "Vybrat adresáø GRASS dat:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:208
+#: ../gui/wxpython/gui_modules/location_wizard.py:1730
+msgid "Location already exists in GRASS Database."
+msgstr "Lokace ji¾ existuje v databance GRASSu."
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:211
+msgid "Unable to create location"
+msgstr "Nelze vytvoøit lokaci"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:237
+msgid "Choose method for creating a new location"
+msgstr "Zvolte zpùsob vytvoøení nové lokace"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:244
+msgid "Select coordinate system"
+msgstr "Zvolit souøednicový systém"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:247
+msgid "Select EPSG code of coordinate system"
+msgstr "Zvolit EPSG kód souøadnicového systému"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:249
+msgid "Use coordinate system of selected georeferenced file"
+msgstr "Pou¾ít souøadnicový systém zvoleného georeferncované souboru"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:252
+msgid "Create custom PROJ.4 parameters string for coordinate system"
+msgstr "Definovat PROJ.4 parametry pro souøadnicový systém"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:255
+msgid "Use arbitrary non-earth coordinate system (XY)"
+msgstr "Pou¾ít matematický systém (XY)"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:320
+msgid "Choose projection"
+msgstr "Vybrat projekci"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:335
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+#: ../gui/wxpython/gui_modules/location_wizard.py:952
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Code"
+msgstr "Kód"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:335
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+#: ../gui/wxpython/gui_modules/location_wizard.py:952
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Description"
+msgstr "Popis"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:338
+msgid "Projection code:"
+msgstr "Kód projekce:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:346
+#: ../gui/wxpython/gui_modules/location_wizard.py:781
+#: ../gui/wxpython/gui_modules/location_wizard.py:964
+#: ../gui/wxpython/gui_modules/location_wizard.py:1147
+msgid "Search in description:"
+msgstr "Vyhledat v popisu:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:527
+#, python-format
+msgid "Unable to read list: %s"
+msgstr "Nelze naèíst seznam: %s"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:627
+#: ../gui/wxpython/gui_modules/location_wizard.py:1330
+msgid "Choose method of specifying georeferencing parameters"
+msgstr "Zvolit metodu specifikace parametrù georeference"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:635
+msgid "Select datum with associated ellipsoid"
+msgstr "Vybrat geodetické datum daného elipsoidu"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:638
+msgid "Select ellipsoid"
+msgstr "Vybrat referenèní elipsoid"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:639
+msgid "Set zone for UTM projection:"
+msgstr "Nastavit UTM zónu:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:641
+msgid "Zone:"
+msgstr "Zóna:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:644
+msgid "Hemisphere for zone:"
+msgstr "Polokoule:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:732
+msgid "Specify geodetic datum"
+msgstr "Specifikovat geodetické datum"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:759
+msgid "Ellipsoid"
+msgstr "Elipsoid"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:767
+msgid "Datum"
+msgstr "Datum"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:772
+msgid "Datum code:"
+msgstr "Kód datumu:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:796
+msgid "Transformation parameters:"
+msgstr "Parametry transformace:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:929
+msgid "Specify ellipsoid"
+msgstr "Definovat elipsoid"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:956
+msgid "Ellipsoid code:"
+msgstr "Kód elipsoidu:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1057
+#: ../gui/wxpython/gui_modules/location_wizard.py:1116
+msgid "Select georeferenced file"
+msgstr "Zvolit georeferencovaný soubor"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1062
+msgid "Georeferenced file:"
+msgstr "Georeferencovaný soubor:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1135
+msgid "Choose EPSG Code"
+msgstr "Zvolit EPSG kód"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1143
+msgid "Path to the EPSG-codes file:"
+msgstr "Cesta k souboru s EPSG kódy:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1145
+msgid "EPSG code:"
+msgstr "Kód EPSG:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1157
+msgid "Browse EPSG Codes"
+msgstr "Procházet EPSG kódy"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1164
+msgid "Parameters"
+msgstr "Parametry"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1271
+msgid "Choose EPSG codes file:"
+msgstr "Vybrat soubor s EPSG kódy:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1319
+#, python-format
+msgid "Unable to read EPGS codes: %s"
+msgstr "Nelze naèíst seznam EPSG: %s"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1338
+msgid "Enter PROJ.4 parameters string:"
+msgstr "Zvolte PROJ.4 parametry:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1389
+msgid "Summary"
+msgstr "Shrnutí"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1411
+msgid "GRASS Database:"
+msgstr "GRASS databanka:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1417
+msgid "Location Name:"
+msgstr "Název lokace:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1423
+msgid "Projection:"
+msgstr "Projekce:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1462
+msgid "PROJ.4 definition:"
+msgstr "Definice PROJ.4:"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1504
+#, python-format
+msgid "Do you want to create GRASS location <%s>?"
+msgstr "Pøejete si zalo¾it GRASS lokace <%s>?"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1505
+msgid "Create new location?"
+msgstr "Vytvoøit novou lokaci?"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1541
+msgid "Define new GRASS Location"
+msgstr "Definujte novou GRASS lokaci"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1614
+msgid "Do you want to set the default region extents and resolution now?"
+msgstr "Pøejete si nyní nastavit výchozí nastavení regionu a jeho rozli¹ení?"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1616
+#, python-format
+msgid "Location <%s> created"
+msgstr "Lokace <%s> vytvoøena"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1629
+#: ../gui/wxpython/gui_modules/location_wizard.py:1728
+#: ../gui/wxpython/gui_modules/location_wizard.py:1804
+#: ../gui/wxpython/gui_modules/location_wizard.py:1905
+#: ../gui/wxpython/gui_modules/location_wizard.py:1970
+msgid "Unable to create new location"
+msgstr "Nelze vytvoøit novou lokaci"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1638
+msgid "Location wizard canceled. Location not created."
+msgstr "Prùvodce vytvoøením lokace byl zavøen. Lokace nebyla vytvoøena."
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1640
+#: ../gui/wxpython/gis_set.py:122
+msgid "Location wizard"
+msgstr "Prùvodce vytvoøení lokace"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1905
+msgid "EPSG code missing."
+msgstr "Kód EPSG chybí."
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1924
+msgid "Select datum transformation"
+msgstr "Vybrat geodetické datum"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1938
+msgid "Datum transform is required."
+msgstr "Geodetické datum je vy¾adováno."
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1971
+msgid "file not found"
+msgstr "soubor nebyl nalezen"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:1992
+msgid "Set default region extent and resolution"
+msgstr "Nastavit výchozí region a jeho rozli¹ení"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2036
+msgid "&Set region"
+msgstr "&Nastavit region"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2069
+msgid "Invalid location selected."
+msgstr "Zvolena neplatná lokace."
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2088
+msgid "Invalid region"
+msgstr "Neplatný region"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2118
+msgid "Click here to show 3D settings"
+msgstr "Kliknìte zde pro zobrazení 3D nastavení"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2119
+msgid "Click here to hide 3D settings"
+msgstr "Kliknìte zde pro skrytí 3D nastavení"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2142
+#: ../gui/wxpython/gui_modules/location_wizard.py:2423
+#, python-format
+msgid "Rows: %d"
+msgstr "Øádky: %d"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2143
+#: ../gui/wxpython/gui_modules/location_wizard.py:2424
+#, python-format
+msgid "Cols: %d"
+msgstr "Sloupce: %d"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2144
+#: ../gui/wxpython/gui_modules/location_wizard.py:2425
+#, python-format
+msgid "Cells: %d"
+msgstr "Buòky: %d"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2185
+#: ../gui/wxpython/gui_modules/location_wizard.py:2427
+#, python-format
+msgid "Depth: %d"
+msgstr "Hloubka: %d"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2186
+#: ../gui/wxpython/gui_modules/location_wizard.py:2428
+#, python-format
+msgid "3D Cells: %d"
+msgstr "3D buòky: %d"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2189
+msgid "Top"
+msgstr "Vr¹ek"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2197
+msgid "Bottom"
+msgstr "Spodek"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2205
+msgid "T-B resolution"
+msgstr "Rozli¹ení V-S"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2268
+msgid "North"
+msgstr "Sever"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2276
+msgid "West"
+msgstr "Západ"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2296
+msgid "East"
+msgstr "Východ"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2305
+msgid "South"
+msgstr "Jih"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2309
+msgid "N-S resolution"
+msgstr "Rozli¹ní S-J"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2317
+msgid "E-W resolution"
+msgstr "Rozli¹ení V-Z"
+
+#: ../gui/wxpython/gui_modules/location_wizard.py:2395
+#, python-format
+msgid "Invalid value: %s"
+msgstr "Naplatná hodnota: %s"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:81
+#, python-format
+msgid "Error in command execution %s"
+msgstr "Chyba pøi vykonání pøíkazu %s"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:89
+msgid "Preferences error"
+msgstr "Chyba v nastavení"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:96
+msgid "Error in digitization tool"
+msgstr "Chyba v digititalizaèním modulu"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:103
+msgid "Error in Attribute Table Manager"
+msgstr "Chyba v Správci atributových dat"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:356
+msgid "Execution failed:"
+msgstr "Vykonání pøíkazu selhalo:"
+
+#: ../gui/wxpython/gui_modules/gcmd.py:359
+msgid "Details:"
+msgstr "Detaily:"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:921
+#: ../gui/wxpython/gui_modules/mapdisp.py:1505
+msgid "No vector map selected for editing."
+msgstr "Nebyla vybrána ¾ádná vektorová mapa pro editaci."
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:1057
+#: ../gui/wxpython/gui_modules/mapdisp.py:1066
+msgid "Update categories"
+msgstr "Aktualizovat kategorie"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:1599
+msgid "Z bulk-labeling dialog"
+msgstr "Dialog pøiøazení Z souøadnice"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2080
+#, python-format
+msgid "Region file <%s> already exists. Do you want to overwrite it?"
+msgstr "Soubor regionu <%s> ji¾ existuje. Pøejete si tento soubor pøepsat?"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2218
+msgid "Render"
+msgstr "Vykreslovat"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2221
+msgid "Enable/disable auto-rendering"
+msgstr "Zapnout/vypnout automatické vykreslování"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2224
+msgid "Show"
+msgstr "Zobrazit"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2228
+msgid "Show/hide computational region extent (set with g.region)"
+msgstr "Zobrazit/skrýt výpoèetní rozsah regionu (nastaven pomocí g.region)"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:2799
+msgid "No map layer selected for querying."
+msgstr "Nebyla vybrána ¾ádná mapová vrstva pro dotazování."
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3066
+msgid "Scale and North arrow"
+msgstr "Mìøítko a smìrová rù¾ice"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3072
+msgid "Show/hide scale and North arrow"
+msgstr "Zobrazit/skrýt mìøítko a smìrovou rù¾ici"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3073
+msgid "scale object"
+msgstr "mìøítko"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3126
+msgid "Show/hide legend"
+msgstr "Zobrazit/skrýt legendu"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3127
+msgid "legend object"
+msgstr "legenda"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3299
+msgid "Set options"
+msgstr "Nastavit volby"
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3306
+#, python-format
+msgid ""
+"Drag %s with mouse in pointer mode to position. Double-click to change "
+"options."
+msgstr ""
+"Pøesuòte my¹í (v módu ukazatele) na novou pozici. Dvojklik pro zmìnu "
+"nastavení."
+
+#: ../gui/wxpython/gui_modules/mapdisp.py:3384
+msgid "Enter text:"
+msgstr "Vlo¾te text:"
+
+#: ../gui/wxpython/gui_modules/dbm.py:184
+msgid "Can display only 256 columns."
+msgstr "Lze zobrazit pouze 256 sloupcù."
+
+#: ../gui/wxpython/gui_modules/dbm.py:238
+msgid "Limit 100000 records."
+msgstr "Limit 100000 záznamù pøekroèen."
+
+#: ../gui/wxpython/gui_modules/dbm.py:400
+#, python-format
+msgid ""
+"Database connection for vector map <%s> is not defined in DB file. You can "
+"define new connection in 'Manage layers' tab."
+msgstr ""
+"Databázové nastavení není pro vektorovou mapu <%s> definováno v souboru DB. "
+"Toto nastavení mù¾ete provést v panelu 'Správa vrstev'."
+
+#: ../gui/wxpython/gui_modules/dbm.py:404
+#: ../gui/wxpython/gui_modules/preferences.py:562
+msgid "Attribute Table Manager"
+msgstr "Správce atributových dat"
+
+#: ../gui/wxpython/gui_modules/dbm.py:435
+msgid "Browse data"
+msgstr "Procházet data"
+
+#: ../gui/wxpython/gui_modules/dbm.py:441
+msgid "Manage tables"
+msgstr "Správa tabulek"
+
+#: ../gui/wxpython/gui_modules/dbm.py:447
+msgid "Manage layers"
+msgstr "Správa vrstev"
+
+#: ../gui/wxpython/gui_modules/dbm.py:450
+msgid "Click here to show database connection information"
+msgstr "Kliknìte zde pro zobrazení informace databazového nastavení"
+
+#: ../gui/wxpython/gui_modules/dbm.py:451
+msgid "Click here to hide database connection information"
+msgstr "Kliknìte zde pro skrytí informace databazového nastavení"
+
+#: ../gui/wxpython/gui_modules/dbm.py:488
+#: ../gui/wxpython/gui_modules/dbm.py:635
+#: ../gui/wxpython/gui_modules/dbm.py:1894
+#: ../gui/wxpython/gui_modules/dbm.py:1997
+#: ../gui/wxpython/gui_modules/dbm.py:2232
+#: ../gui/wxpython/gui_modules/dbm.py:2874
+#: ../gui/wxpython/gui_modules/digit.py:1632
+#: ../gui/wxpython/gui_modules/digit.py:1634
+#: ../gui/wxpython/gui_modules/digit.py:1945
+#: ../gui/wxpython/gui_modules/digit.py:2315
+msgid "Layer"
+msgstr "Vrstva"
+
+#: ../gui/wxpython/gui_modules/dbm.py:494
+msgid "Attribute data - right-click to edit/manage records"
+msgstr "Atributová data - editace/správa záznamù pravé tlaèítko my¹i"
+
+#: ../gui/wxpython/gui_modules/dbm.py:520
+msgid "SQL Query"
+msgstr "Dotaz SQL"
+
+#: ../gui/wxpython/gui_modules/dbm.py:547
+#: ../gui/wxpython/gui_modules/dbm.py:1577
+msgid "SQL Builder"
+msgstr "SQL Pomocník"
+
+#: ../gui/wxpython/gui_modules/dbm.py:551
+msgid "Simple"
+msgstr "Jednodhuchý"
+
+#: ../gui/wxpython/gui_modules/dbm.py:554
+#: ../gui/wxpython/gui_modules/preferences.py:639
+msgid "Advanced"
+msgstr "Roz¹íøený"
+
+#: ../gui/wxpython/gui_modules/dbm.py:621
+#: ../gui/wxpython/gui_modules/dbm.py:925
+#: ../gui/wxpython/gui_modules/dbm.py:1365
+#: ../gui/wxpython/gui_modules/dbm.py:1470
+#, python-format
+msgid "Number of loaded records: %d"
+msgstr "Poèet nahraných záznamù: %d"
+
+#: ../gui/wxpython/gui_modules/dbm.py:651
+#, python-format
+msgid "Table %s"
+msgstr "Tabulka %s"
+
+#: ../gui/wxpython/gui_modules/dbm.py:664
+#: ../gui/wxpython/gui_modules/dbm.py:1841
+msgid "Column name"
+msgstr "Název sloupce"
+
+#: ../gui/wxpython/gui_modules/dbm.py:675
+#: ../gui/wxpython/gui_modules/dbm.py:1841
+msgid "Data type"
+msgstr "Datový typ"
+
+#: ../gui/wxpython/gui_modules/dbm.py:692
+#: ../gui/wxpython/gui_modules/dbm.py:1841
+msgid "Data length"
+msgstr "Datová délka"
+
+#: ../gui/wxpython/gui_modules/dbm.py:719
+msgid "Rename column"
+msgstr "Pøejmenovat sloupec"
+
+#: ../gui/wxpython/gui_modules/dbm.py:729
+msgid "To"
+msgstr "Na"
+
+#: ../gui/wxpython/gui_modules/dbm.py:739
+msgid "&Rename"
+msgstr "&Pøejmenovat"
+
+#: ../gui/wxpython/gui_modules/dbm.py:795
+msgid "Layers of vector map"
+msgstr "Vrstvy vektorové mapy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:804
+msgid "List of layers"
+msgstr "Seznam vrstev"
+
+#: ../gui/wxpython/gui_modules/dbm.py:900
+#: ../gui/wxpython/gui_modules/preferences.py:151
+msgid "Edit selected record"
+msgstr "Editovat vybraný záznam"
+
+#: ../gui/wxpython/gui_modules/dbm.py:904
+#: ../gui/wxpython/gui_modules/dbm.py:1014
+msgid "Insert new record"
+msgstr "Vlo¾it nový záznam"
+
+#: ../gui/wxpython/gui_modules/dbm.py:905
+msgid "Delete selected record(s)"
+msgstr "Smazat vybrané záznamy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:906
+msgid "Delete all records"
+msgstr "Smazat v¹echny záznamy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:908
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1583
+msgid "Select all"
+msgstr "Vybrat v¹e"
+
+#: ../gui/wxpython/gui_modules/dbm.py:909
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1584
+msgid "Deselect all"
+msgstr "Zru¹it výbìr"
+
+#: ../gui/wxpython/gui_modules/dbm.py:911
+#: ../gui/wxpython/gui_modules/preferences.py:152
+msgid "Display selected"
+msgstr "Zobrazit vybrané"
+
+#: ../gui/wxpython/gui_modules/dbm.py:914
+#: ../gui/wxpython/gui_modules/dbm.py:1632
+#: ../gui/wxpython/gui_modules/dbm.py:1638
+msgid "Extract selected"
+msgstr "Extrahovat vybrané"
+
+#: ../gui/wxpython/gui_modules/dbm.py:919
+#: ../gui/wxpython/gui_modules/dbm.py:1279
+#: ../gui/wxpython/gui_modules/digit.py:2093
+msgid "Reload"
+msgstr "Znovu naèíst"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1025
+#, python-format
+msgid "Record with category number %d already exists in the table."
+msgstr "Záznam kategorie %d ji¾ v atributové tabulce existuje."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1035
+#, python-format
+msgid "Category number (column %s) is missing."
+msgstr "Kategorie (sloupec %s) chybí."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1043
+#: ../gui/wxpython/gui_modules/dbm.py:1140
+#, python-format
+msgid "Casting value '%(value)s' to %(type)s failed."
+msgstr "Datová konverze hodnoty '%(value)s' na %(type)s selhala."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1054
+msgid "Unable to insert new record."
+msgstr "Nelze vlo¾it nový záznam."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1119
+msgid "Update existing record"
+msgstr "Modifikovat existující záznam"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1153
+msgid "Unable to update existing record."
+msgstr "Nelze modifikovat existující záznam."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1233
+msgid "Unable to rename column. No column name defined."
+msgstr "Nelze pøejmenovat sloupec. Nebyl zadáno jméno sloupce."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1241
+#, python-format
+msgid ""
+"Unable to rename column <%(column)s>. Column <%(columnTo)s> already exists "
+"in the table <%(table)s>."
+msgstr ""
+"Nelze pøejmenovat sloupec <%(column)s>. Sloupec <%s(columnTo)s> ji¾ v "
+"tabulce <%s(table)> existuje."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1255
+#, python-format
+msgid ""
+"Unable to rename column. Column <%(column)s> doesn't exist in the table <%"
+"(table)s>."
+msgstr ""
+"Nelze pøejmenovat sloupec. Sloupec <%s(column)s> v tabulce <%s(table)> "
+"neexistuje."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1274
+msgid "Drop selected column"
+msgstr "Odstranit zvolený sloupec"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1277
+msgid "Drop all columns"
+msgstr "Odstranit v¹echny sloupce"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1322
+msgid "Unable to add column to the table. No column name defined."
+msgstr ""
+"Nelze pøidat sloupec do attributové tabulky. Nebyl zadáno jméno sloupce."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1341
+#, python-format
+msgid "Column <%(column)s> already exists in table <%(table)s>."
+msgstr "Sloupec <%(column)s> ji¾ v tabulce <%(table)s> existuje."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1531
+msgid "Database connection"
+msgstr "Databázové spojení"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1631
+msgid "Nothing to extract."
+msgstr "Nebylo zvoleno nic pro extrahování."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1709
+#: ../gui/wxpython/gui_modules/dbm.py:2174
+#: ../gui/wxpython/gui_modules/dbm.py:2545
+#, python-format
+msgid "Drop also linked attribute table (%s)"
+msgstr "Odstranit také pøipojenou atributovou tabulku (%s)"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1894
+#: ../gui/wxpython/gui_modules/dbm.py:2003
+#: ../gui/wxpython/gui_modules/dbm.py:2240
+msgid "Driver"
+msgstr "Ovladaè"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1894
+#: ../gui/wxpython/gui_modules/dbm.py:2008
+#: ../gui/wxpython/gui_modules/dbm.py:2246
+msgid "Database"
+msgstr "Databáze"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1894
+#: ../gui/wxpython/gui_modules/dbm.py:2014
+#: ../gui/wxpython/gui_modules/dbm.py:2252
+msgid "Table"
+msgstr "Tabulka"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1894
+msgid "Key"
+msgstr "Klíè"
+
+#: ../gui/wxpython/gui_modules/dbm.py:1969
+msgid ""
+"Unable to determine default DB connection settings. Please define DB "
+"connection using db.connect module."
+msgstr ""
+"Nelze získat informace o DB nastavení. Prosím definujte toto nastavení "
+"pomocí modulu db.connect."
+
+#: ../gui/wxpython/gui_modules/dbm.py:1986
+msgid "Add layer"
+msgstr "Pøidat vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2019
+#: ../gui/wxpython/gui_modules/dbm.py:2042
+#: ../gui/wxpython/gui_modules/dbm.py:2258
+msgid "Key column"
+msgstr "Sloupec s klíèem"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2037
+msgid "Table name"
+msgstr "Nátev tabulky"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2050
+msgid "&Create table"
+msgstr "&Vytvoøit tabulku"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2054
+msgid "&Add layer"
+msgstr "&Pøidat vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2058
+msgid "&Set default"
+msgstr "&Nastavit výchozí"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2071
+msgid "Layer description"
+msgstr "Popis vrstvy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2118
+msgid "Table description"
+msgstr "Popis tabulky"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2157
+msgid "Delete selected layer"
+msgstr "Odstranit zvolenou vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2160
+msgid "Layer to detele"
+msgstr "Vrstva k odstranìní"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2181
+msgid "&Delete layer"
+msgstr "&Odstranit vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2225
+msgid "Modify selected layer"
+msgstr "Modifikovat vybranou vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2289
+msgid "&Modify layer"
+msgstr "&Modifikovat vrstvu"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2417
+msgid "Unable to create new table. Table name or key column name is missing."
+msgstr ""
+"Nelze vytvoøot novou atributovou tabulku. Nebyl zadán název tabulky nebo "
+"sloupec s klíèem."
+
+#: ../gui/wxpython/gui_modules/dbm.py:2454
+#, python-format
+msgid ""
+"Unable to add new layer to vector map <%(vector)s>. Layer %(layer)d already "
+"exists."
+msgstr ""
+"Nelze pøidat novou vrstvu k vektorové mapì <%(vector)s>. Vrstva %(layer)d "
+"ji¾ existuje."
+
+#: ../gui/wxpython/gui_modules/dbm.py:2631
+msgid "Database connection is not defined in DB file."
+msgstr "Databázové spojení není definováno v DB souboru."
+
+#: ../gui/wxpython/gui_modules/dbm.py:2635
+#, python-format
+msgid ""
+"No attribute table linked to vector map <%(vector)s> found. %(msg)s\n"
+"You can disable this message from digitization settings. Or you can create "
+"and link attribute table to the vector map using Attribute Table Manager."
+msgstr ""
+"K vektorové mapì <%(vector)s> není pøipojená ¾ádná atributová tabulka. %(msg)"
+"s\n"
+"Tuto zprávu lze potlaèit v nastavení digititalizaèního modulu. Anebo "
+"vytvoøte a pøipojte atributovou tabulku k vektorové mapì pomocí Správce "
+"atributových dat."
+
+#: ../gui/wxpython/gui_modules/dbm.py:2655
+msgid "Close dialog on submit"
+msgstr "Zavøít dialog pøi zápis"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2662
+msgid "Update attributes"
+msgstr "Modifikovat atributy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2664
+msgid "Add attributes"
+msgstr "Pøidat atributy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2666
+msgid "Display attributes"
+msgstr "Zobrazit atributy"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2670
+msgid "&Reload"
+msgstr "&Znovu nahrát"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2671
+msgid "&Submit"
+msgstr "&Zapsat"
+
+#: ../gui/wxpython/gui_modules/dbm.py:2886
+msgid "No database record available."
+msgstr "Není dostupný ¾ádný databázový záznam."
+
+#: ../gui/wxpython/gui_modules/dbm.py:2907
+#: ../gui/wxpython/gui_modules/dbm.py:3189
+#: ../gui/wxpython/gui_modules/digit.py:1632
+#: ../gui/wxpython/gui_modules/digit.py:1949
+#: ../gui/wxpython/gui_modules/digit.py:2316
+msgid "Category"
+msgstr "Kategorie"
+
+#: ../gui/wxpython/gui_modules/dbm.py:3283
+msgid "Name for new vector map:"
+msgstr "Název vektorové mapy:"
+
+#: ../gui/wxpython/gui_modules/dbm.py:3291
+#: ../gui/wxpython/gui_modules/preferences.py:519
+msgid "Allow output files to overwrite existing files"
+msgstr "Povolit pøepsání existujících souborù"
+
+#: ../gui/wxpython/gui_modules/digit.py:148
+#: ../gui/wxpython/gui_modules/digit.py:152
+#, python-format
+msgid ""
+"Unable to open vector map <%s> for editing. Data are probably corrupted, try "
+"to run v.build for rebuilding the topology."
+msgstr ""
+"Nelze otevøít vektorovou mapu <%s> pro editaci. Data jsou pravdìpodobnì "
+"po¹kozena, zkuste znovu sestavit topologii pomocí modulu v.build."
+
+#: ../gui/wxpython/gui_modules/digit.py:786
+#: ../gui/wxpython/gui_modules/digit.py:817
+#, python-format
+msgid "Adding new feature to vector map <%s> failed."
+msgstr "Zápis nového prvku do vektorové mapy <%s> selhalo."
+
+#: ../gui/wxpython/gui_modules/digit.py:1352
+#: ../gui/wxpython/gui_modules/preferences.py:368
+msgid "Apply changes for this session"
+msgstr "Aplikovat zmìny pro tuto seanci"
+
+#: ../gui/wxpython/gui_modules/digit.py:1355
+#: ../gui/wxpython/gui_modules/preferences.py:370
+msgid "Close dialog and save changes to user settings file"
+msgstr "Zavøít dialog a ulo¾it u¾ivatelské nastavení"
+
+#: ../gui/wxpython/gui_modules/digit.py:1357
+#: ../gui/wxpython/gui_modules/preferences.py:373
+msgid "Close dialog and ignore changes"
+msgstr "Zavøít dialog a ignorovat provedené zmìny"
+
+#: ../gui/wxpython/gui_modules/digit.py:1378
+msgid "Symbology"
+msgstr "Symbolika"
+
+#: ../gui/wxpython/gui_modules/digit.py:1413
+#: ../gui/wxpython/gui_modules/preferences.py:401
+msgid "General"
+msgstr "Obecné"
+
+#: ../gui/wxpython/gui_modules/digit.py:1420
+#: ../gui/wxpython/gui_modules/preferences.py:441
+msgid "Display"
+msgstr "Displej"
+
+#: ../gui/wxpython/gui_modules/digit.py:1425
+msgid "Line width"
+msgstr "©íøka linie"
+
+#: ../gui/wxpython/gui_modules/digit.py:1443
+msgid "Snapping"
+msgstr "Pøichycení"
+
+#: ../gui/wxpython/gui_modules/digit.py:1450
+msgid "Snapping threshold"
+msgstr "Práh pro pøichycení"
+
+#: ../gui/wxpython/gui_modules/digit.py:1463
+msgid "Backgroud vector map"
+msgstr "Podkladová vektorová mapa"
+
+#: ../gui/wxpython/gui_modules/digit.py:1474
+msgid "Snap also to vertex"
+msgstr "Pøichytávat také k vertexùm"
+
+#: ../gui/wxpython/gui_modules/digit.py:1479
+#: ../gui/wxpython/gui_modules/digit.py:1753
+#: ../gui/wxpython/gui_modules/digit.py:1766
+#: ../gui/wxpython/gui_modules/digit.py:1770
+#, python-format
+msgid "Snapping threshold is %(value).1f %(units)s"
+msgstr "Práh pøichycení je %(value).1%f %(units)s"
+
+#: ../gui/wxpython/gui_modules/digit.py:1493
+msgid "Select vector features"
+msgstr "Vybrat vektorový prvek"
+
+#: ../gui/wxpython/gui_modules/digit.py:1509
+msgid "Select threshold"
+msgstr "Zvolit práhovou hodnotu"
+
+#: ../gui/wxpython/gui_modules/digit.py:1532
+msgid "Query tool"
+msgstr "Nástroj pro dotazování"
+
+#: ../gui/wxpython/gui_modules/digit.py:1539
+msgid "Choose query tool"
+msgstr "Vybrat nástroj pro dotazování"
+
+#: ../gui/wxpython/gui_modules/digit.py:1544
+msgid "Select by box"
+msgstr "Vybrat my¹í"
+
+#: ../gui/wxpython/gui_modules/digit.py:1553
+msgid "length"
+msgstr "délka"
+
+#: ../gui/wxpython/gui_modules/digit.py:1558
+msgid "Select lines"
+msgstr "Vybrat linie"
+
+#: ../gui/wxpython/gui_modules/digit.py:1560
+#: ../gui/wxpython/gui_modules/digit.py:1583
+msgid "shorter than"
+msgstr "krat¹í ne¾"
+
+#: ../gui/wxpython/gui_modules/digit.py:1560
+#: ../gui/wxpython/gui_modules/digit.py:1583
+msgid "longer than"
+msgstr "del¹í ne¾"
+
+#: ../gui/wxpython/gui_modules/digit.py:1576
+msgid "dangle"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1581
+msgid "Select dangles"
+msgstr ""
+
+#: ../gui/wxpython/gui_modules/digit.py:1614
+msgid "Attributes"
+msgstr "Atributy"
+
+#: ../gui/wxpython/gui_modules/digit.py:1621
+msgid "Digitize new feature"
+msgstr "Digitalizovat nový prvek"
+
+#: ../gui/wxpython/gui_modules/digit.py:1626
+msgid "Add new record into table"
+msgstr "Pøidat nový záznam do atributové tabulky"
+
+#: ../gui/wxpython/gui_modules/digit.py:1632
+msgid "Mode"
+msgstr "Mód"
+
+#: ../gui/wxpython/gui_modules/digit.py:1632
+#: ../gui/wxpython/gui_modules/digit.py:1661
+msgid "Next to use"
+msgstr "Pou¾ít dal¹í"
+
+#: ../gui/wxpython/gui_modules/digit.py:1649
+msgid "Category number"
+msgstr "Èíslo kategorie"
+
+#: ../gui/wxpython/gui_modules/digit.py:1659
+msgid "Category mode"
+msgstr "Mód kategorie"
+
+#: ../gui/wxpython/gui_modules/digit.py:1661
+msgid "Manual entry"
+msgstr "Manuálnì"
+
+#: ../gui/wxpython/gui_modules/digit.py:1661
+msgid "No category"
+msgstr "®ádná kategorie"
+
+#: ../gui/wxpython/gui_modules/digit.py:1674
+msgid "Delete existing feature(s)"
+msgstr "Odstranit existující prvek(y)"
+
+#: ../gui/wxpython/gui_modules/digit.py:1679
+msgid "Delete record from table"
+msgstr "Odstranit záznam s tabulky"
+
+#: ../gui/wxpython/gui_modules/digit.py:1923
+msgid "List of categories"
+msgstr "Seznam kategorii"
+
+#: ../gui/wxpython/gui_modules/digit.py:1939
+msgid "Add new category"
+msgstr "Pøidat novou kategorii"
+
+#: ../gui/wxpython/gui_modules/digit.py:2053
+#: ../gui/wxpython/gui_modules/digit.py:2224
+#, python-format
+msgid ""
+"Unable to add new layer/category <%(layer)s/%(category)s>.\n"
+"Layer and category number must be integer.\n"
+"Layer number must be greater then zero."
+msgstr ""
+"Nelze pøidat identifikátor nové vrstvy/kategorie <%(layer)s/%(category)s>.\n"
+"Identifikátor vrstvy a kategorie musí být celé èíslo.\n"
+"Identifikátor vrstvy navíc vìt¹í ne¾ nula."
+
+#: ../gui/wxpython/gui_modules/digit.py:2087
+msgid "Delete selected"
+msgstr "Odstranit vybrané"
+
+#: ../gui/wxpython/gui_modules/digit.py:2091
+msgid "Delete all"
+msgstr "Odstranit v¹e"
+
+#: ../gui/wxpython/gui_modules/digit.py:2201
+msgid "Unable to update vector map."
+msgstr "Nelze modifikovat vektorovou mapu."
+
+#: ../gui/wxpython/gui_modules/digit.py:2353
+#, python-format
+msgid "%d lines selected for z bulk-labeling"
+msgstr "% linie vybráno pro oznaèení z souøadnice"
+
+#: ../gui/wxpython/gui_modules/digit.py:2356
+msgid "Set value"
+msgstr "Nastavit hodnotu"
+
+#: ../gui/wxpython/gui_modules/digit.py:2363
+msgid "Starting value"
+msgstr "Poèáteèní hodnota"
+
+#: ../gui/wxpython/gui_modules/digit.py:2372
+msgid "Step"
+msgstr "Krok"
+
+#: ../gui/wxpython/gui_modules/render.py:110
+#, python-format
+msgid "<%(name)s>: layer type <%(type)s> is not supported yet."
+msgstr "<%(name)s>: typ vrstvy <%(type)s> není podporován."
+
+#: ../gui/wxpython/gui_modules/render.py:247
+msgid "GISBASE not set. You must be in GRASS GIS to run this program."
+msgstr ""
+"GISBASE není nastavena. Spu¹tìní tohoto programu vy¾aduje bì¾ící instanci "
+"GRASSu,"
+
+#: ../gui/wxpython/gui_modules/render.py:269
+msgid "Unable to open file"
+msgstr "Nelze otevøít soubor"
+
+#: ../gui/wxpython/gui_modules/render.py:419
+#, python-format
+msgid "Unable to zoom to raster map <%s>."
+msgstr "Nelze nastavit zoom podle rastrové mapy <%s>."
+
+#: ../gui/wxpython/gui_modules/render.py:422
+#, python-format
+msgid "Unable to zoom to vector map <%s>."
+msgstr "Nelze nastavit zoom podle vektorové mapy <%s>."
+
+#: ../gui/wxpython/gui_modules/render.py:724
+#: ../gui/wxpython/gui_modules/render.py:787
+#, python-format
+msgid "Unable to render map layer <%s>."
+msgstr "Nelze vykreslit mapovou vrstvu <%s>."
+
+#: ../gui/wxpython/gui_modules/render.py:896
+#: ../gui/wxpython/gui_modules/render.py:930
+#, python-format
+msgid "Unable render overlay <%s>."
+msgstr "Nelze vykreslit overlay <%s>."
+
+#: ../gui/wxpython/gui_modules/preferences.py:149
+msgid "Mapset search path"
+msgstr "Vyhledávací cesta mapsetu"
+
+#: ../gui/wxpython/gui_modules/preferences.py:150
+msgid "All available mapsets"
+msgstr "V¹echny dostupné mapsety"
+
+#: ../gui/wxpython/gui_modules/preferences.py:261
+msgid "Uknown settings file location."
+msgstr "Neznámé umistìní souboru s nastavením."
+
+#: ../gui/wxpython/gui_modules/preferences.py:306
+msgid "Unable to get value"
+msgstr "Nelze získat hodnotu"
+
+#: ../gui/wxpython/gui_modules/preferences.py:329
+msgid "Unable to set "
+msgstr "Nelze nastavit "
+
+#: ../gui/wxpython/gui_modules/preferences.py:335
+msgid "User settings"
+msgstr "U¾ivatelské nastavení"
+
+#: ../gui/wxpython/gui_modules/preferences.py:358
+msgid "Set to default"
+msgstr "Nastavit výchozí"
+
+#: ../gui/wxpython/gui_modules/preferences.py:366
+msgid "Revert settings to default and apply changes"
+msgstr "Znovu nastavit výchozí nastavení a aplikovat"
+
+#: ../gui/wxpython/gui_modules/preferences.py:404
+msgid "General settings"
+msgstr "Obecné nastavení"
+
+#: ../gui/wxpython/gui_modules/preferences.py:415
+msgid "Mapsets path:"
+msgstr "Cesta k mapsetùm:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:444
+msgid "Font settings"
+msgstr "Nastavení písma"
+
+#: ../gui/wxpython/gui_modules/preferences.py:455
+msgid "Default font for GRASS displays:"
+msgstr "Výchozí písmo pro GRASS monitory:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:460
+msgid "Set font"
+msgstr "Nastavit písmo"
+
+#: ../gui/wxpython/gui_modules/preferences.py:472
+msgid "Raster settings"
+msgstr "Nastavení rasterù"
+
+#: ../gui/wxpython/gui_modules/preferences.py:483
+msgid "Overlay raster maps"
+msgstr "Pøekrývat rastrové mapy"
+
+#: ../gui/wxpython/gui_modules/preferences.py:504
+msgid "Command"
+msgstr "Pøíkazù"
+
+#: ../gui/wxpython/gui_modules/preferences.py:507
+msgid "Command dialog settings"
+msgstr "Dialog nastavení pøíkazù"
+
+#: ../gui/wxpython/gui_modules/preferences.py:539
+msgid "Verbosity level:"
+msgstr "Uroveò verbalismu:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:570
+msgid "Highlighting"
+msgstr "Zvýraznìní"
+
+#: ../gui/wxpython/gui_modules/preferences.py:584
+msgid "Line width (in pixels)"
+msgstr "©íøka linie (v pixelech)"
+
+#: ../gui/wxpython/gui_modules/preferences.py:607
+msgid "Data browser"
+msgstr "Datový prohli¾eè"
+
+#: ../gui/wxpython/gui_modules/preferences.py:612
+msgid "Left mouse double click"
+msgstr "Dvojklik levých tlaèítkem my¹i"
+
+#: ../gui/wxpython/gui_modules/preferences.py:642
+msgid "Advanced settings"
+msgstr "Roz¹íøené nastavení"
+
+#: ../gui/wxpython/gui_modules/preferences.py:654
+msgid "Place where to store settings:"
+msgstr "Místo kde ulo¾it nastavení:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:675
+msgid "Icon theme:"
+msgstr "Téma ikonek:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:692
+msgid "Note: Requires GUI restart."
+msgstr "Poznámka: Vy¾aduje restart GUI."
+
+#: ../gui/wxpython/gui_modules/preferences.py:706
+msgid "Digitization interface:"
+msgstr "Rozhraní digitalizace:"
+
+#: ../gui/wxpython/gui_modules/preferences.py:724
+msgid ""
+"Note: User can choose from two interfaces for digitization. The simple one "
+"uses v.edit command on the background. Map topology is rebuild on each "
+"operation which can significantly slow-down response. The vdigit is a native "
+"interface which uses v.edit functionality, but doesn't call the module "
+"itself."
+msgstr ""
+"Poznámka: U¾ivatel mù¾e zvolit ze dvou digitalizaèních rozhraní. První "
+"pou¾ívá module v.edit pøímo na pozadí. Tolopologie mapy je znovu sestavena "
+"pøi ka¾dé operaci, co¾ mù¾e vyznamnì zpomalit odezvu. Nativní vdigit "
+"rozhraní vychází z funkcionality module v.edit, nepou¾ívá ale modul pøímo."
+
+#: ../gui/wxpython/gui_modules/preferences.py:748
+msgid "Select default display font"
+msgstr "Vybrat výchozí písmo"
+
+#: ../gui/wxpython/gui_modules/preferences.py:775
+#, python-format
+msgid "Settings saved to file '%s'."
+msgstr "Nastavení ulo¾eno do souboru '%s'."
+
+#: ../gui/wxpython/gui_modules/preferences.py:928
+msgid "Set/unset access to mapsets in current location"
+msgstr "Nastavit/zru¹it pøístup k mapsetùm v aktuální lokaci"
+
+#: ../gui/wxpython/gui_modules/preferences.py:940
+#, python-format
+msgid ""
+"Check mapset to make it accessible, uncheck it to hide it.%sNote: PERMANENT "
+"and current mapset are always accessible."
+msgstr ""
+"Za¹krtnout mapset pro pøístup, zru¹it pro skrytí.%sPoznámka: Mapset "
+"PERMANENT a aktuální mapset jsou v¾dy pøístupné."
+
+#: ../gui/wxpython/gui_modules/rules.py:29
+msgid "Enter rules"
+msgstr "Vlo¾te pravidla"
+
+#: ../gui/wxpython/gui_modules/rules.py:49
+msgid "Create new color table using color rules"
+msgstr "Vytvoøit novou tabulku barev na základì pravidel"
+
+#: ../gui/wxpython/gui_modules/rules.py:50
+msgid "Raster map:"
+msgstr "Rastrová mapa:"
+
+#: ../gui/wxpython/gui_modules/rules.py:52
+msgid "Enter color rules"
+msgstr "Vlo¾te pravidla"
+
+#: ../gui/wxpython/gui_modules/rules.py:55
+msgid "Reclassify raster map using rules"
+msgstr "Reklasifikovat rastrovou mapu na základì pravidel"
+
+#: ../gui/wxpython/gui_modules/rules.py:56
+msgid "Raster map to reclassify:"
+msgstr "Rastrová mapa pro reklasifikaci:"
+
+#: ../gui/wxpython/gui_modules/rules.py:57
+msgid "Reclassified raster map:"
+msgstr "Reklasifikovaná rastrová mapa"
+
+#: ../gui/wxpython/gui_modules/rules.py:58
+#: ../gui/wxpython/gui_modules/rules.py:70
+msgid "Enter reclassification rules"
+msgstr "Vlo¾te reklasifikaèní pravidla"
+
+#: ../gui/wxpython/gui_modules/rules.py:61
+msgid "Recode raster map using rules"
+msgstr "Pøepsat rastrovou mapu na základì pravidel"
+
+#: ../gui/wxpython/gui_modules/rules.py:62
+msgid "Raster map to recode:"
+msgstr "Rastrová map pro pøepsání:"
+
+#: ../gui/wxpython/gui_modules/rules.py:63
+msgid "Recoded raster map:"
+msgstr "Pøepsana rastrová mapa"
+
+#: ../gui/wxpython/gui_modules/rules.py:64
+msgid "Enter recoding rules"
+msgstr "Vlo¾te pravidla pro pøepsání"
+
+#: ../gui/wxpython/gui_modules/rules.py:67
+msgid "Reclassify vector map using SQL rules"
+msgstr "Reklasifikovat vektorovou mapu na základì SQL pøíkazu"
+
+#: ../gui/wxpython/gui_modules/rules.py:68
+msgid "Vector map to reclassify:"
+msgstr "Vektorová mapa pro reklasifikaci:"
+
+#: ../gui/wxpython/gui_modules/rules.py:69
+msgid "Reclassified vector map:"
+msgstr "Reklasifikovaná vektorová mapa"
+
+#: ../gui/wxpython/gui_modules/rules.py:102
+msgid "overwrite existing file"
+msgstr "pøepsat existující soubor"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:103
+msgid "GRASS GIS Map Display: "
+msgstr "GRASS GIS Mapové okno: "
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:226
+msgid "Remove"
+msgstr "Odstranit"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:230
+msgid "Rename"
+msgstr "Pøejmenovat"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:237
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:248
+msgid "Show attribute table"
+msgstr "Zobrazit atributovou tabulku"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:251
+msgid "Start editing"
+msgstr "Spustit editaci"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:252
+msgid "Stop editing"
+msgstr "Ukonèit editaci"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:273
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:282
+msgid "Metadata"
+msgstr "Metadata"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:280
+msgid "Histogram"
+msgstr "Histogram"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:311
+msgid "Unable to display histogram of raster map."
+msgstr "Nelze zobrazit histogram rastrové mapy."
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1119
+msgid "Unable to run the command, another command is running..."
+msgstr "Nelze spustit pøíkaz, jiný pøíkaz je právì aktivní..."
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1152
+#, python-format
+msgid "Command '%s' not yet implemented."
+msgstr "Pøíkaz '%s' není je¹tì implementován."
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1222
+msgid "Save file as..."
+msgstr "Ulo¾it soubor jako..."
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1253
+msgid "Command aborted"
+msgstr "Pøíkaz pøeru¹en"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1257
+#, python-format
+msgid "Command finished (%d sec)"
+msgstr "Pøíkaz ukonèen (%d s)"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1468
+msgid "Load"
+msgstr "Nahrát"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1503
+msgid "Map layer type:"
+msgstr "Typ mapové vrstvy:"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1514
+msgid "Mapset:"
+msgstr "Mapset:"
+
+#: ../gui/wxpython/gui_modules/wxgui_utils.py:1527
+msgid "List of maps:"
+msgstr "Seznam map:"
+
+#: ../gui/wxpython/gis_set.py:79
+msgid "Choose project location and mapset"
+msgstr "Vybrat lokaci a mapset projektu"
+
+#: ../gui/wxpython/gis_set.py:82
+msgid "Manage"
+msgstr "Spravovat"
+
+#: ../gui/wxpython/gis_set.py:84
+#, python-format
+msgid ""
+"Welcome to GRASS GIS %s\n"
+"The world's leading open source GIS"
+msgstr ""
+"Vítejte v GRASS GIS %s\n"
+"Vedoucím open source GIS"
+
+#: ../gui/wxpython/gis_set.py:90
+msgid ""
+"Select an existing project location and mapset\n"
+"or define a new location"
+msgstr ""
+"Vyberte existující lokaci projektu nebo mapset\n"
+"nebo definujte novou lokaci"
+
+#: ../gui/wxpython/gis_set.py:96
+msgid ""
+"Project location\n"
+"(projection/coordinate system)"
+msgstr ""
+"Lokace projektu\n"
+"(projekce/souøadnicový systém)"
+
+#: ../gui/wxpython/gis_set.py:99
+msgid ""
+"Accessible mapsets\n"
+"(directories of GIS files)"
+msgstr ""
+"Pøístupné mapsety\n"
+"(adresáøe GIS dat)"
+
+#: ../gui/wxpython/gis_set.py:102
+msgid ""
+"Create new mapset\n"
+"in selected location"
+msgstr ""
+"Vytvoøit nový mapset\n"
+"ve vybrané lokaci"
+
+#: ../gui/wxpython/gis_set.py:105
+msgid "Define new location"
+msgstr "Definovat novou lokaci"
+
+#: ../gui/wxpython/gis_set.py:108
+msgid ""
+"Rename/delete selected\n"
+"mapset or location"
+msgstr ""
+"Pøejmenovat/odstranit vybran7\n"
+"mapset nebo lokaci"
+
+#: ../gui/wxpython/gis_set.py:113
+msgid "Start GRASS"
+msgstr "Spustit GRASS"
+
+#: ../gui/wxpython/gis_set.py:120
+msgid "Create mapset"
+msgstr "Vytvoøit mapset"
+
+#: ../gui/wxpython/gis_set.py:167
+msgid "Welcome to GRASS GIS"
+msgstr "Vítejte v GRASS GIS"
+
+#: ../gui/wxpython/gis_set.py:175
+msgid "Enter GRASS session"
+msgstr "Spustit GRASS seanci"
+
+#: ../gui/wxpython/gis_set.py:408 ../gui/wxpython/gis_set.py:432
+#, python-format
+msgid ""
+"Current name: %s\n"
+"Enter new name:"
+msgstr ""
+"Aktuální jméno: %s\n"
+"Vlo¾te nové jméno:"
+
+#: ../gui/wxpython/gis_set.py:409
+msgid "Rename selected mapset"
+msgstr "Pøejmenovat vybraný mapset"
+
+#: ../gui/wxpython/gis_set.py:420
+msgid "Unable to rename mapset"
+msgstr "Nelze pøejmenovat mapset"
+
+#: ../gui/wxpython/gis_set.py:433
+msgid "Rename selected location"
+msgstr "Pøejmenovat vybranou lokaci"
+
+#: ../gui/wxpython/gis_set.py:446
+msgid "Unable to rename location"
+msgstr "Nelze pøejmenovat lokaci"
+
+#: ../gui/wxpython/gis_set.py:458
+#, python-format
+msgid ""
+"Do you want to continue with deleting mapset <%(mapset)s> from location <%"
+"(location)s>?\n"
+"\n"
+"ALL MAPS included in this mapset will be PERMANENTLY DELETED!"
+msgstr ""
+"Pøejete si opravdu odstranit <%(mapset)s> z lokace <%s(location)s>?\n"
+"\n"
+"V©ECHNY MAPY totoho mapsetu budou NENÁVRATNÌ SMAZÁNY!"
+
+#: ../gui/wxpython/gis_set.py:463
+msgid "Delete selected mapset"
+msgstr "Odstranit vybraný mapset"
+
+#: ../gui/wxpython/gis_set.py:472
+msgid "Unable to delete mapset"
+msgstr "Nelze odstranit mapset"
+
+#: ../gui/wxpython/gis_set.py:483
+#, python-format
+msgid ""
+"Do you want to continue with deleting location <%s>?\n"
+"\n"
+"ALL MAPS included in this location will be PERMANENTLY DELETED!"
+msgstr ""
+"Pøejete si opravdu odstranit lokace <%s(location)s>?\n"
+"\n"
+"V©ECHNY MAPY této lokace budou NENÁVRATNÌ SMAZÁNY!<"
+
+#: ../gui/wxpython/gis_set.py:487
+msgid "Delete selected location"
+msgstr "Odstranit vybranou lokaci"
+
+#: ../gui/wxpython/gis_set.py:498
+msgid "Unable to delete location"
+msgstr "Nelze odstranit lokaci"
+
+#: ../gui/wxpython/gis_set.py:592
+msgid "Enter name for new mapset:"
+msgstr "Vlo¾te jméno nové mapsetu:"
+
+#: ../gui/wxpython/gis_set.py:606
+#, python-format
+msgid "Unable to create new mapset: %s"
+msgstr "Nelze vytvoøit nový mapset: %s"
+
+#: ../gui/wxpython/gis_set.py:637
+msgid "GRASS Quickstart"
+msgstr "GRASS Rychlý start"
+
+#: ../gui/wxpython/icons/icon.py:153
+msgid "Unable to load icon theme, using default icon theme..."
+msgstr "Nelze naèíst téma ikonek, bude pou¾ity výchozí téma..."
+
