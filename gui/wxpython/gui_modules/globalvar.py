@@ -56,7 +56,13 @@ FNPageStyle = FN.FNB_VC8 | \
     FN.FNB_TABS_BORDER_SIMPLE 
 FNPageColor = wx.Colour(125,200,175)
 
-"""@brief File name extension binaries/scripts"""
+"""Dialog widget dimension"""
+DIALOG_SPIN_SIZE = (150, -1)
+DIALOG_COMBOBOX_SIZE = (300, -1)
+DIALOG_GSELECT_SIZE = (400, -1)
+DIALOG_TEXTCTRL_SIZE = (400, -1)
+
+"""File name extension binaries/scripts"""
 if subprocess.mswindows:
     EXT_BIN = '.exe'
     EXT_SCT = '.bat'

@@ -19,6 +19,8 @@ import wx
 
 import gcmd
 import grassenv
+import globalvar
+import gselect
 from preferences import globalSettings as UserSettings
 
 class NewVectorDialog(wx.Dialog):
@@ -37,9 +39,9 @@ class NewVectorDialog(wx.Dialog):
 
         self.label = wx.StaticText(parent=self.panel, id=wx.ID_ANY,
                                    label=_("Name for new vector map:"))
-        self.mapName = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY,
-                                   value='', size=(250, -1),
-                                   style=wx.TE_PROCESS_ENTER)
+        self.mapName = gselect.Select(parent=self.panel, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
+                                      type='vector', mapsets=[grassenv.GetGRASSVariable('MAPSET'),])
+
         self.mapName.Bind(wx.EVT_TEXT, self.OnMapName)
 
         # TODO remove (see Preferences dialog)
@@ -113,7 +115,7 @@ def CreateNewVector(parent, title=_('Create new vector map')):
             
         p = gcmd.Command(cmd)
             
-    if p.returncode == 0:
-        return outmap
+        if p.returncode == 0:
+            return outmap
 
     return None
