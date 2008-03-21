@@ -17,7 +17,7 @@ ETCDIR = $(ETC)/wxpython
 
 SHLIB = _grass6_wxvdigit$(SHLIB_SUFFIX)
 
-default: $(SHLIB) install_vdigit
+default: install_vdigit
 
 clean:
 	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit.i	 
@@ -38,6 +38,6 @@ $(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
 $(SHLIB): $(OBJ)
 	$(SHLIB_LD) $(LDFLAGS) $(OBJ) -o $(SHLIB) 
 
-install_vdigit:
-	$(INSTALL_DATA) _grass6_wxvdigit.so $(ETCDIR)/vdigit/
+install_vdigit: $(SHLIB)
+	$(INSTALL_DATA) $(SHLIB) $(ETCDIR)/vdigit/
 	$(INSTALL_DATA) grass6_wxvdigit.py $(ETCDIR)/vdigit/
