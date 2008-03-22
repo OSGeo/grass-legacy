@@ -15,6 +15,8 @@ for details.
 @author Martin Landa <landa.martin gmail.com>
 """
 
+import sys
+
 import wx
 
 import gcmd
@@ -89,11 +91,13 @@ class NewVectorDialog(wx.Dialog):
 
     def GetName(self):
         """Return (mapName, overwrite)"""
-        return (self.mapName.GetValue() + '@' + grassenv.GetGRASSVariable('MAPSET'),
+        mapName = self.mapName.GetValue().split('@', 1)[0]
+
+        return (mapName,
                 self.overwrite.IsChecked())
 
-
-def CreateNewVector(parent, title=_('Create new vector map')):
+def CreateNewVector(parent, title=_('Create new vector map'),
+                    exceptMap=None):
     """Create new vector map layer
 
     @return name of create vector map
@@ -102,7 +106,13 @@ def CreateNewVector(parent, title=_('Create new vector map')):
     dlg = NewVectorDialog(parent=parent, id=wx.ID_ANY, title=title)
     if dlg.ShowModal() == wx.ID_OK:
         outmap, overwrite = dlg.GetName()
-        
+        if outmap == exceptMap:
+            wx.MessageBox(parent=parent,
+                          message=_("Unable to create vector map <%s>.") % outmap,
+                          caption=_("Error"),
+                          style=wx.ID_OK | wx.ICON_ERROR | wx.CENTRE)
+            return False
+
         if outmap == '': # should not happen
             return False
         
@@ -113,9 +123,14 @@ def CreateNewVector(parent, title=_('Create new vector map')):
         if overwrite is True:
             cmd.append('--overwrite')
             
-        p = gcmd.Command(cmd)
-            
+        try:
+            p = gcmd.Command(cmd, stderr=None)
+        except gcmd.CmdError, e:
+            print >> sys.stderr, e
+            return None
+
         if p.returncode == 0:
-            return outmap
+            # return fully qualified map name
+            return outmap + '@' + grassenv.GetGRASSVariable('MAPSET')
 
     return None

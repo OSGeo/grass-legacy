@@ -123,13 +123,14 @@ class MapLayer(object):
         try:
             runcmd = gcmd.Command(cmd=self.cmdlist + ['--q'],
                                   stderr=None)
+            if runcmd.returncode != 0:
+                self.mapfile = None
+                self.maskfile = None
+
         except gcmd.CmdError, e:
             print e
-        
-        if runcmd.returncode != 0:
             self.mapfile = None
             self.maskfile = None
-            return None
 
         #
         # stop monitor
