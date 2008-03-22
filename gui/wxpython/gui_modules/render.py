@@ -128,7 +128,7 @@ class MapLayer(object):
                 self.maskfile = None
 
         except gcmd.CmdError, e:
-            print e
+            print >> sys.stderr, e
             self.mapfile = None
             self.maskfile = None
 
@@ -428,7 +428,7 @@ class Map(object):
                 e.message = _("Unable to zoom to vector map <%s>.") % vect + \
                 '%s%s' % (os.linesep, os.linesep) + e.message
 
-            print e
+            print >> sys.stderr, e
             return self.region
 
         for reg in cmdRegion.ReadStdOutput():
@@ -689,7 +689,7 @@ class Map(object):
             gcmd.Command(complist)
 	    # os.system(compstring)
         except gcmd.CmdError, e:
-            print e
+            print >> sys.stderr, e
             return None
 
         Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
