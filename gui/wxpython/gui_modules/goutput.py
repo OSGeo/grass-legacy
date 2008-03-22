@@ -19,6 +19,7 @@ Martin Landa <landa.martin gmail.com>
 """
 
 import os
+import sys
 import textwrap
 import time
 
@@ -53,9 +54,12 @@ class GMConsole(wx.Panel):
         self.cmd_output = GMStc(parent=self, id=wx.ID_ANY, margin=margin)
         # redirect
         self.cmd_stdout = GMStdout(self.cmd_output)
+        ### sys.stdout = self.cmd_stdout
         self.cmd_stderr = GMStderr(self.cmd_output,
-                                   self.console_progressbar)
-
+                                   self.console_progressbar,
+                                   self.parent.notebook)
+        sys.stderr = self.cmd_stderr
+        
         # buttons
         self.console_clear = wx.Button(parent=self, id=wx.ID_CLEAR)
         self.console_save  = wx.Button(parent=self, id=wx.ID_SAVE)
@@ -316,11 +320,15 @@ class GMStderr:
     Copyright: (c) 2005-2007 Jean-Michel Fauth
     Licence:   GPL
     """
-    def __init__(self, gmstc, gmgauge):
-        self.gmstc   = gmstc
-        self.gmgauge = gmgauge
+    def __init__(self, gmstc, gmgauge, notebook):
+        self.gmstc    = gmstc
+        self.gmgauge  = gmgauge
+        self.notebook = notebook
 
     def write(self, s):
+        #        if self.notebook.GetSelection() != 1: # command output
+        #            self.notebook.SetSelection(1)
+
         s = s.replace('\n', os.linesep)
         # remove/replace escape sequences '\b' or '\r' from stream
         s = s.replace('\b', '').replace('\r', '%s' % os.linesep)

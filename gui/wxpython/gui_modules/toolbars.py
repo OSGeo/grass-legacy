@@ -615,7 +615,12 @@ class DigitToolbar(AbstractToolbar):
         selected map layer activated for editing.
         """
         if event.GetSelection() == 0: # create new vector map layer
-            mapName = gdialogs.CreateNewVector(self.parent)
+            if self.layerSelectedID is not None:
+                openVectorMap = self.layers[self.layerSelectedID].name.split('@')[0]
+            else:
+                openVectorMap = None
+            mapName = gdialogs.CreateNewVector(self.parent,
+                                               exceptMap=openVectorMap)
             if mapName:
                 # add layer to map layer tree
                 if self.layerTree:
@@ -629,6 +634,9 @@ class DigitToolbar(AbstractToolbar):
                     selection = vectLayers.index(mapName)
                 else:
                     pass # TODO (no Layer Manager)
+            else:
+                self.combo.SetValue(_('Select vector map'))
+                return 
         else:
             selection = event.GetSelection() - 1 # first option is 'New vector map'
 
@@ -667,7 +675,7 @@ class DigitToolbar(AbstractToolbar):
             self.parent.digit.SetMapName(mapLayer.name)
         except gcmd.DigitError, e:
             self.layerSelectedID = None
-            print e # wxMessageBox
+            print >> sys.stderr, e # wxMessageBox
             return False
 
         # update toolbar
@@ -753,7 +761,7 @@ class DigitToolbar(AbstractToolbar):
 
         if updateTool: # update toolbar
             if self.layerSelectedID == None:
-                value = 'Select vector map'
+                value = _('Select vector map')
             else:
                 value = layerNameSelected
 

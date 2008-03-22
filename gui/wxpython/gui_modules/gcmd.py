@@ -62,7 +62,7 @@ class GException(Exception):
                       message=self.message,
                       style=wx.ICON_ERROR | wx.CENTRE)
 
-        return ''
+        return 'GException: %s' % self.message
 
 class GStdError(GException):
     """Generic exception"""
@@ -358,8 +358,7 @@ class Command:
                                     os.linesep, os.linesep,
                                     _("Details:"),
                                     os.linesep,
-                                    self.cmdThread.rerr))
-#                                    self.PrintModuleOutput()))
+                                    self.PrintModuleOutput()))
                 elif rerr == sys.stderr: # redirect message to sys
                     stderr.write("Execution failed: '%s'" % (' '.join(self.cmd)))
                     stderr.write("%sDetails:%s%s" % (os.linesep,
@@ -383,8 +382,6 @@ class Command:
 
     def __ReadOutput(self, stream):
         """Read stream and return list of lines
-
-        Note: Remove os.linesep from output
 
         @param stream stream to be read
         """
@@ -452,7 +449,7 @@ class Command:
 
         return msg
 
-    def PrintModuleOutput(self, error=True, warning=True, message=True):
+    def PrintModuleOutput(self, error=True, warning=False, message=False):
         """Print module errors, warnings, messages to output
 
         @param error print errors
@@ -574,7 +571,7 @@ class CommandThread(Thread):
                 # line = self.__read_all(self.module.stderr)
                 line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
-                
+
         # get the last output
         if self.stdout:
             # line = self.__read_all(self.module.stdout)
@@ -585,8 +582,6 @@ class CommandThread(Thread):
             line = recv_some(self.module, e=0, stderr=1)
             self.stderr.write(line)
 
-        self.rerr = self.__parseString(line)
-       
         if hasattr(self.stderr, "gmstc"):
             # -> GMConsole
             if self._want_abort: # abort running process
@@ -598,28 +593,6 @@ class CommandThread(Thread):
         """Abort running process, used by main thread to signal an abort"""
         self._want_abort = True
 
-    def __parseString(self, string):
-        """Parse line
-
-        @param line line to parsed, all GRASS_INFO
-        messages are removed from line
-        
-        @return string with GRASS_INFO messages
-        """
-        err = ''
-        for line in string.split('%s' % os.linesep):
-            if 'GRASS_INFO_ERROR' in line:
-                err += line + '%s' % os.linesep
-            elif err != '' and 'GRASS_INFO_END' in line:
-                err += line
-            elif 'ERROR' in line:
-                err += line
-            elif err != '':
-                err += line
-                
-        return err
-        
-        
 # testing ...
 if __name__ == "__main__":
     SEP = "-----------------------------------------------------------------------------"
