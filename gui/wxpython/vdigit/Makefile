@@ -1,43 +1,35 @@
 MODULE_TOPDIR = ../../..
 
-include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-CXXFLAGS += $(SHLIB_CFLAGS) $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
+LIB_NAME = grass6_wxvdigit
+SOURCES := $(wildcard *.cpp) $(LIB_NAME)_wrap.cpp
+SHLIB_OBJS := $(patsubst %.cpp, $(OBJDIR)/%.o, $(SOURCES))
 
-LDFLAGS += $(SHLIB_LDFLAGS) -L$(ARCH_LIBDIR) $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB) $(PYTHONLDFLAGS) -lgdi
+EXTRA_CFLAGS = $(SHLIB_CFLAGS) $(GDALCFLAGS) $(PYTHONCFLAGS) $(WXWIDGETSCXXFLAGS)
+EXTRA_LIBS = $(VECTLIB) $(GISLIB) $(GDALLIBS) $(VEDITLIB) $(WXWIDGETSLIB) $(PYTHONLDFLAGS) -lgdi
 
 LOCAL_HEADERS = digit.h driver.h
-SOURCES = driver.cpp digit.cpp cats.cpp line.cpp vertex.cpp select.cpp grass6_wxvdigit_wrap.cpp
-
-OBJARCH = OBJ.$(ARCH)
-OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))
 
 ETCDIR = $(ETC)/wxpython
 
-SHLIB = _grass6_wxvdigit$(SHLIB_SUFFIX)
+SHLIB = $(OBJDIR)/_$(LIB_NAME)$(SHLIB_SUFFIX)
+
+EXTRA_CLEAN_FILES = $(SHLIB) $(LIB_NAME).i $(LIB_NAME).py $(LIB_NAME)_wrap.cpp
 
 default: install_vdigit
 
-clean:
-	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit.i	 
+$(LIB_NAME).i: digit.i dig_types.i driver.h digit.h
+	cat digit.i dig_types.i > $(LIB_NAME).i
+	echo "/* auto-generated swig typedef file */" >> $(LIB_NAME).i
+	cat driver.h digit.h >> $(LIB_NAME).i
 
-grass6_wxvdigit.i:
-	cat ./digit.i > grass6_wxvdigit.i
-	cat ./dig_types.i >> grass6_wxvdigit.i
-	echo "/* auto-generate swig typedef file */" >> grass6_wxvdigit.i
-	cat ./driver.h >> grass6_wxvdigit.i
-	cat ./digit.h >> grass6_wxvdigit.i
+$(LIB_NAME).py $(LIB_NAME)_wrap.cpp: $(LIB_NAME).i
+	$(SWIG) -c++ -python -shadow -o $(LIB_NAME)_wrap.cpp $<
 
-create_wrap.cpp: grass6_wxvdigit.i
-	$(SWIG) -c++ -python -shadow -o grass6_wxvdigit_wrap.cpp $<
+$(SHLIB): $(SHLIB_OBJS)
+	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS)
 
-$(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(SHLIB): $(OBJ)
-	$(SHLIB_LD) $(LDFLAGS) $(OBJ) -o $(SHLIB) 
-
-install_vdigit: $(SHLIB)
-	$(INSTALL_DATA) $(SHLIB) $(ETCDIR)/vdigit/
-	$(INSTALL_DATA) grass6_wxvdigit.py $(ETCDIR)/vdigit/
+install_vdigit: $(SHLIB) $(LIB_NAME).py
+	$(INSTALL) $(SHLIB) $(ETCDIR)/vdigit/
+	$(INSTALL_DATA) $(LIB_NAME).py $(ETCDIR)/vdigit/
