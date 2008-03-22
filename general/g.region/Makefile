@@ -1,12 +1,16 @@
-
 MODULE_TOPDIR = ../..
 
-SUBDIRS = \
-	cmd
+PGM = g.region
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+LIBES     = $(VECTLIB) $(G3DLIB) $(GPROJLIB) $(GISLIB) $(DATETIMELIB)
+DEPENDENCIES = $(VECTDEP) $(G3DDEP) $(GPROJDEP) $(GISDEP) $(DATETIMEDEP)
+EXTRA_INC = $(VECT_INC) $(PROJINC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
-default: parsubdirs
+include $(MODULE_TOPDIR)/include/Make/Module.make
 
-clean: cleansubdirs
+default: cmd
+
+
+
 
