@@ -193,7 +193,7 @@ LOC_ARG_WITH(readline, Readline, no)
 LOC_ARG_WITH(opendwg, openDWG, no)
 LOC_ARG_WITH(curses, Curses, yes)
 AC_ARG_WITH(python,
-[  --with-python[=path/python-config] enable Python support (python-config with path, \
+[  --with-python[=path/python-config] enable support for Python SWIG bindings (python-config with path, \
 e.g. '--with-python=/usr/bin/python2.5-config', default: no)],, with_python="no")
 AC_ARG_WITH(wxwidgets,
 [  --with-wxwidgets[=path/wx-config] enable wxWidgets support (wx-config with path, \
@@ -1597,6 +1597,7 @@ AC_MSG_CHECKING(whether to use Python)
 PYTHONINC=
 PYTHONCFLAGS=
 PYTHONLDFLAGS=
+SWIG=
 USE_PYTHON=
 
 if test "$with_python" = "no" ; then
@@ -1612,12 +1613,12 @@ else
 
   if test "$PY_CONFIG" = "no" ; then
     AC_MSG_ERROR([*** couldn't find python-config])
- fi
+  fi
 
   # With Python includes directory 
 
   PYTHONINC=`"$PY_CONFIG" --includes`
-  LOC_CHECK_INCLUDES(Python.h,Python,$PYTHONINC) 
+  LOC_CHECK_INCLUDES(Python.h,Python,$PYTHONINC)
 
   PYTHONCFLAGS=`"$PY_CONFIG" --cflags`
 
@@ -1625,11 +1626,18 @@ else
 
   PYTHONLDFLAGS=`"$PY_CONFIG" --ldflags`
 
+  # look for the swig program 
+  AC_PATH_PROG(SWIG, swig, no) 
+  if test "$SWIG" = "no" ; then 
+    AC_MSG_ERROR([*** couldn't find swig]) 
+  fi 
+
 fi # Done checking Python
 
 AC_SUBST(PYTHONINC)
 AC_SUBST(PYTHONCFLAGS)
 AC_SUBST(PYTHONLDFLAGS)
+AC_SUBST(SWIG)
 AC_SUBST(USE_PYTHON)
 
 # Enable wxWidgets support (for wxGUI)
