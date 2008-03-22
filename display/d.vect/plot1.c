@@ -282,7 +282,7 @@ int plot1 (
 	    switch ( ltype )
 	    {
 	    case -1:
-		fprintf (stderr, _("\nERROR: vector map - can't read\n" ));
+		G_warning(_("Unable to read vector map"));
 		return -1;
 	    case -2: /* EOF */
 		return  0;
@@ -290,6 +290,9 @@ int plot1 (
 	}
 
 	if ( !(type & ltype) ) continue;
+
+	if ( Points->n_points == 0 )
+	    continue;
 
 	if ( chcat ) {
 	     int found = 0;
