@@ -90,6 +90,11 @@ int main (int argc, char *argv[])
 			       params.map -> answer);
 	}
 	
+	if (G_legal_filename(params.map -> answer) == -1) {
+	    G_fatal_error(_("<%s> is an illegal file name"),
+			  params.map -> answer);
+	}
+
 	/* 3D vector maps? */
 	ret = Vect_open_new (&Map, params.map -> answer, WITHOUT_Z);
 	if (ret == -1) {
