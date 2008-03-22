@@ -15,22 +15,21 @@ OBJ := $(patsubst %.cpp, $(OBJARCH)/%.o, $(SOURCES))
 
 ETCDIR = $(ETC)/wxpython
 
-SHLIB = _grass6_wxvdigit$(SHLIB_SUFFIX)
+SHLIB = $(OBJARCH)/_grass6_wxvdigit$(SHLIB_SUFFIX)
+
+EXTRA_CLEAN_FILES = $(SHLIB) grass6_wxvdigit.i grass6_wxvdigit.py grass6_wxvdigit_wrap.cpp
 
 default: install_vdigit
 
-clean:
-	-rm -rf $(OBJARCH) _grass6_wxvdigit.so grass6_wxvdigit.i	 
-
-grass6_wxvdigit.i:
-	cat ./digit.i > grass6_wxvdigit.i
-	cat ./dig_types.i >> grass6_wxvdigit.i
+grass6_wxvdigit.i: digit.i dig_types.i driver.h digit.h
+	cat digit.i > grass6_wxvdigit.i
+	cat dig_types.i >> grass6_wxvdigit.i
 	echo "/* auto-generate swig typedef file */" >> grass6_wxvdigit.i
-	cat ./driver.h >> grass6_wxvdigit.i
-	cat ./digit.h >> grass6_wxvdigit.i
+	cat driver.h >> grass6_wxvdigit.i
+	cat digit.h >> grass6_wxvdigit.i
 
-create_wrap.cpp: grass6_wxvdigit.i
-	$(SWIG) -c++ -python -shadow -o grass6_wxvdigit_wrap.cpp $<
+grass6_wxvdigit.py grass6_wxvdigit_wrap.cpp: grass6_wxvdigit.i
+	$(SWIG) -c++ -python -shadow -o $@ $<
 
 $(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -38,6 +37,6 @@ $(OBJARCH)/%.o: %.cpp $(LOCAL_HEADERS)
 $(SHLIB): $(OBJ)
 	$(SHLIB_LD) $(LDFLAGS) $(OBJ) -o $(SHLIB) 
 
-install_vdigit: $(SHLIB)
-	$(INSTALL_DATA) $(SHLIB) $(ETCDIR)/vdigit/
+install_vdigit: $(SHLIB) grass6_wxvdigit.py
+	$(INSTALL) $(SHLIB) $(ETCDIR)/vdigit/
 	$(INSTALL_DATA) grass6_wxvdigit.py $(ETCDIR)/vdigit/
