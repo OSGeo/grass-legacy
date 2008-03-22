@@ -207,6 +207,7 @@ USE_OPENDWG         = @USE_OPENDWG@
 PYTHONINC           = @PYTHONINC@
 PYTHONCFLAGS        = @PYTHONCFLAGS@
 PYTHONLDFLAGS       = @PYTHONLDFLAGS@
+SWIG                = @SWIG@
 USE_PYTHON          = @USE_PYTHON@
 
 #wxWidgets
