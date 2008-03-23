@@ -154,7 +154,8 @@ class GMFrame(wx.Frame):
 
         # start default initial display
         self.NewDisplay(show=False)
-        
+        self.Show()
+
         # load workspace file if requested
         if (self.workspaceFile):
             # load given workspace file
@@ -164,6 +165,7 @@ class GMFrame(wx.Frame):
                 self.workspaceFile = None
 
         # show map display widnow
+        # -> OnSize() -> UpdateMap()
         self.curr_page.maptree.mapdisplay.Show()
 
     def __doLayout(self):
