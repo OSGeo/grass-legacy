@@ -21,6 +21,7 @@ import os
 import sys
 import glob
 import math
+# import time
 try:
     import subprocess
 except:
@@ -220,6 +221,10 @@ class Map(object):
         # setting some initial env. variables
         self.InitGisEnv() # g.gisenv
         self.InitRegion()
+
+        #
+        # GRASS environment variable (for rendering)
+        #
         os.environ["GRASS_TRANSPARENT"] = "TRUE"
         os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
 
@@ -236,7 +241,8 @@ class Map(object):
         #
         # setting region ('g.region -upg')
         #
-        self.region = self.GetRegion()
+        ### not needed here (MapFrame.OnSize())
+        # self.region = self.GetRegion()
 
         #
         # read WIND file
@@ -246,7 +252,8 @@ class Map(object):
         #
         # setting resolution
         #
-        self.SetRegion()
+        # not needed here (MapFrame.OnSize())
+        # self.SetRegion()
 
     def InitGisEnv(self):
         """
@@ -608,6 +615,8 @@ class Map(object):
         @return name of file with rendered image or None
         """
 
+        # startTime = time.time()
+
         maps = []
         masks =[]
         opacities = []
@@ -695,6 +704,8 @@ class Map(object):
             return None
 
         Debug.msg (2, "Map.Render() force=%s file=%s" % (force, self.mapfile))
+
+        # print time.time() - startTime
 
         return self.mapfile
 
