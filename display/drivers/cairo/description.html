@@ -11,70 +11,81 @@
 
 <H2>NAME</H2>
 <EM><B>Cairo driver</B></EM> - driver for bitmap or vector output using
-the Cairo graphics library
+the Cairo graphics library.
 <BR>
 <EM>(drivers)</EM> 
+
 <H2>DESCRIPTION</H2>
-<P>
+
 The Cairo driver generates PNG, BMP, PPM, PS, PDF or SVG images from GRASS
 display commands, using the
 <A HREF="http://www.cairographics.org/">Cairo graphics library</A>.
 The image format is selected from the extension of the output file.
+
 <P>
 It is started as 'pseudo' monitor (output to an image file) and when
 stopped, all output from previously used display commands are written to
 the output file.
 
 <H2>USAGE</H2>
+
 <H3>Environment variables</H3>
+
 Several environment variables affect the operation of the Cairo driver:
+
 <UL>
   <LI><B>GRASS_WIDTH=xxx</B><BR>
-     the width of the image.<BR><BR>
+     the width of the image.
+  </LI><BR>
   <LI><B>GRASS_HEIGHT=yyy</B><BR>
-    the height of the image.<BR><BR>
+    the height of the image.
+  </LI><BR>
   <LI><B>GRASS_CAIROFILE=filename</B><BR>
      the name and format of the resulting image file, default is
-     <b>map.png</b>.<BR>
+     <tt>map.png</tt>.<BR>
      The image format is determined from the file extension.<BR>
      Supported bitmap formats:
      <UL>
-     <LI><B>.png</B> - Portable Network Graphics (PNG)
-     <LI><B>.bmp</B> - Windows Bitmap (BMP)
-     <LI><B>.ppm</B> - Portable Pixmap (PPM)
+       <LI><B>.png</B> - Portable Network Graphics (PNG)</LI>
+       <LI><B>.bmp</B> - Windows Bitmap (BMP)</LI>
+       <LI><B>.ppm</B> - Portable Pixmap (PPM)</LI>
      </UL>
      Supported vector formats:
      <UL>
-     <LI><B>.pdf</B> - Portable Document Format (PDF)
-     <LI><B>.ps</B> - PostScript (PS)
-     <LI><B>.svg</B> - Scalable Vector Graphics (SVG)
+       <LI><B>.pdf</B> - Portable Document Format (PDF)</LI>
+       <LI><B>.ps</B> - PostScript (PS)</LI>
+       <LI><B>.svg</B> - Scalable Vector Graphics (SVG)</LI>
      </UL>
      (Note: Some formats may not be available, depending on your platform and
      the Cairo library that GRASS was built with.)
-     <br><br> 
+  </LI><BR> 
   <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>
      specifies the background color to use in RGB
-     notation (hex values). Default is <b>FFFFFF</b> (white).<br><br>
+    notation (hex values). Default is <b>FFFFFF</b> (white).
+  </LI><BR>
   <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>
-    sets transparent background on (TRUE) or off (FALSE, default).<BR><BR>
+    sets transparent background on (TRUE) or off (FALSE, default).
+  </LI><BR>
   <LI><B>GRASS_AUTO_WRITE=[TRUE|FALSE]</B><BR>
-     if set to "TRUE", the image file will be written after each 
-     operation (i.e. whenever a client disconnects), rather than
-     only being written out when the driver terminates.<BR>
-     (Note: This only applies to bitmap formats - vector formats
-     are always written directly to file)<BR><BR>
+    if set to <tt>TRUE</tt>, the image file will be written after each 
+    operation (i.e. whenever a client disconnects), rather than
+    only being written out when the driver terminates.<BR>
+    (Note: This only applies to bitmap formats - vector formats
+    are always written directly to file).
+  </LI><BR>
   <LI><B>GRASS_CAIRO_READ</B><BR>
-     if "TRUE", the Cairo driver will initialize the image from
-     the contents of $GRASS_CAIROFILE.<BR>
-     (Note: This is only supported for bitmap formats)<BR><BR>
+     if <tt>TRUE</tt>, the Cairo driver will initialize the image from
+    the contents of GRASS_CAIROFILE.<BR>
+    (Note: This is only supported for bitmap formats)
+  </LI><BR>
   <LI><B>GRASS_CAIRO_MAPPED</B><BR>
-     if "TRUE", the Cairo driver will map $GRASS_CAIROFILE as its framebuffer,
-     rather than using memory. This only works with BMP files.<BR><BR>
+    if <tt>TRUE</tt>, the Cairo driver will map GRASS_CAIROFILE as its framebuffer,
+    rather than using memory. This only works with BMP files.
+  </LI>
 </UL>
 
-
 <H3>Examples</H3>
-<P>
+
 Example using the driver directly (bash-syntax):
 <div class="code"><PRE>
 export GRASS_CAIROFILE=spearfish.png
@@ -88,8 +99,7 @@ d.vect map=roads width=2
 d.mon stop=cairo
 </PRE></div>
 
-<P>
-Example using <I>d.out.file</I>:
+Example using <em><a href="d.out.file.html">d.out.file</a></em>:
 <div class="code"><PRE>
 d.mon x0
 d.rast map=elevation.10m
@@ -100,7 +110,7 @@ d.out.file -c sf_cairo format=png size=800,800
 </PRE></div>
 
 <P>
-A more complicated example using <I>d.out.file</I>:
+A more complicated example using <em><a href="d.out.file.html">d.out.file</a></em>:
 <div class="code"><PRE>
 r.shaded.relief map=elevation.dem
 r.watershed elev=elevation.dem basin=watershed.basin thresh=10000
@@ -126,25 +136,28 @@ d.out.file -c sf_cairo2 format=png
 
 <H2>NOTES</H2> 
 
-<P>The driver is still in development. Enable it by specifying
+The driver is still in development. Enable it by specifying
 <CODE>--with-cairo</CODE> when configuring GRASS. This
 requires a reasonably recent version of the Cairo libraries
-and a working pkg-config.</P>
+and a working pkg-config.
 
-<P>Antialiasing is enabled by default for bitmap formats. There is
-currently no way of disabling this.</P>
+<P>
+Antialiasing is enabled by default for bitmap formats. There is
+currently no way of disabling this.
 
-<P>Cairo supports true vector format output whenever possible. However,
+<P>
+Cairo supports true vector format output whenever possible. However,
 if the selected format doesn't support a necessary feature, Cairo may
 fall back on rendering a bitmap representation of the image wrapped in
-the selected vector format.</P>
+the selected vector format.
 
-<P>Cairo driver output via <A HREF="d.out.file.html">d.out.file</A>
+<P>
+Cairo driver output via <em><A HREF="d.out.file.html">d.out.file</A></em>
 is supported via the -c flag.</P>
 
 <h2>SEE ALSO</h2>
 <EM>
-<A HREF="htmlmapdriver.html">HTML map driver</A>,
+<A HREF="htmlmapdriver.html">HTMLMAP driver</A>,
 <A HREF="pngdriver.html">PNG driver</A>,
 <A HREF="psdriver.html">PostScript driver</A>,
 <A href="xdriver.html">XDRIVER</A>
@@ -159,4 +172,3 @@ is supported via the -c flag.</P>
 <H2>AUTHOR</H2>
 Lars Ahlzen &lt;<I>lars (at) ahlzen.com</I>&gt;<BR>
 and the GRASS Development Team.
-
