@@ -128,9 +128,6 @@ class GMFrame(wx.Frame):
         self.toolbar   = self.__createToolBar()
         self.statusbar = self.CreateStatusBar(number=1)
 
-        # set environmental variables
-        os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
-
         # bindings
         self.Bind(wx.EVT_CLOSE,     self.OnCloseWindow)
         self.Bind(wx.EVT_LEFT_DOWN, self.AddRaster, self.notebook)

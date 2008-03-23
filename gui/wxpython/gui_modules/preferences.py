@@ -62,6 +62,7 @@ class Settings:
             #
             'display': {
                 'displayFont' : { 'value' : '' },
+                'driver': { 'type': 'default' },
                 },
             #
             # advanced
@@ -165,7 +166,8 @@ class Settings:
         self.internalSettings['cmd']['verbosity']['choices'] = ['grassenv',
                                                                 'verbose',
                                                                 'quiet']
-
+        self.internalSettings['display']['driver']['choices'] = ['default']
+        
     def GetMapsetPath(self):
         """Store mapset search path"""
         all, access = utils.ListOfMapsets()
@@ -492,6 +494,32 @@ class PreferencesDialog(wx.Dialog):
                       flag=wx.ALIGN_RIGHT |
                        wx.ALIGN_CENTER_VERTICAL,
                        pos=(row, 1))
+
+        #
+        # display driver
+        #
+        row = 1
+        gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
+                                         label=_("Display driver:")),
+                      flag=wx.ALIGN_LEFT |
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 0))
+        listOfDrivers = self.settings.Get(group='display', key='driver', subkey='choices', internal=True)
+        # check if cairo is available
+        if 'cairo' not in listOfDrivers:
+            for line in gcmd.Command(['d.mon', '-l']).ReadStdOutput():
+                if 'cairo' in line:
+                    listOfDrivers.append('cairo')
+                    break
+        driver = wx.Choice(parent=panel, id=wx.ID_ANY, size=(150, -1),
+                           choices=listOfDrivers,
+                           name="GetStringSelection")
+        driver.SetStringSelection(self.settings.Get(group='display', key='driver', subkey='type'))
+        self.winId['display:driver:type'] = driver.GetId()
+
+        gridSizer.Add(item=driver,
+                      pos=(row, 1))
+
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
