@@ -326,8 +326,8 @@ class GMStderr:
         self.notebook = notebook
 
     def write(self, s):
-        #        if self.notebook.GetSelection() != 1: # command output
-        #            self.notebook.SetSelection(1)
+        if self.notebook.GetSelection() != 1: # command output
+            self.notebook.SetSelection(1)
 
         s = s.replace('\n', os.linesep)
         # remove/replace escape sequences '\b' or '\r' from stream

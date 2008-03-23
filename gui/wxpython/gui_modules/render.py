@@ -34,6 +34,7 @@ import globalvar
 import utils
 import gcmd
 from debug import Debug as Debug
+from preferences import globalSettings as UserSettings
 
 #
 # use g.pnmcomp for creating image composition or
@@ -115,8 +116,14 @@ class MapLayer(object):
         #
         # start monitor
         #
-        os.environ["GRASS_PNGFILE"] = self.mapfile
-        
+        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
+            os.environ["GRASS_CAIROFILE"] = self.mapfile
+            if 'cairo' not in gcmd.Command(['d.mon', '-p']).ReadStdOutput()[0]:
+                gcmd.Command(['d.mon',
+                              'start=cairo'], stderr=None)
+        else:
+            os.environ["GRASS_PNGFILE"] = self.mapfile
+
         #
         # execute command
         #
@@ -135,7 +142,12 @@ class MapLayer(object):
         #
         # stop monitor
         #
-        os.unsetenv("GRASS_PNGFILE")
+        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
+            gcmd.Command(['d.mon',
+                          'stop=cairo'], stderr=None)
+            os.unsetenv("GRASS_CAIROFILE")
+        else:
+            os.unsetenv("GRASS_PNGFILE")
 
         return self.mapfile
 
@@ -199,7 +211,6 @@ class Map(object):
         # environment settings
         #
         self.env       = {}  # enviroment variables, like MAPSET, LOCATION_NAME, etc.
-        self.verbosity = 0   # --q
 
         # 
         # generated file for rendering the map
@@ -209,15 +220,8 @@ class Map(object):
         # setting some initial env. variables
         self.InitGisEnv() # g.gisenv
         self.InitRegion()
-        os.environ["GRASS_TRANSPARENT"]     = "TRUE"
+        os.environ["GRASS_TRANSPARENT"] = "TRUE"
         os.environ["GRASS_BACKGROUNDCOLOR"] = "ffffff"
-        os.environ["GRASS_HEIGHT"]          = str(self.height)
-        os.environ["GRASS_WIDTH"]           = str(self.width)
-        os.environ["GRASS_MESSAGE_FORMAT"]  = "gui"
-        os.environ["GRASS_PNG_AUTO_WRITE"]  = "TRUE"
-        os.environ["GRASS_TRUECOLOR"]       = "TRUE"
-        os.environ["GRASS_COMPRESSION"]     = "0"
-        os.environ["GRASS_VERBOSE"]         = str(self.verbosity)
 
     def InitRegion(self):
         """
@@ -612,6 +616,14 @@ class Map(object):
         os.environ["GRASS_REGION"] = self.SetRegion()
         os.environ["GRASS_WIDTH"]  = str(self.width)
         os.environ["GRASS_HEIGHT"] = str(self.height)
+        if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
+            os.environ["GRASS_AUTO_WRITE"] = "TRUE"
+            os.unsetenv("GRASS_RENDER_IMMEDIATE")
+        else:
+            os.environ["GRASS_PNG_AUTO_WRITE"] = "TRUE"
+            os.environ["GRASS_COMPRESSION"] = "0"
+            os.environ["GRASS_TRUECOLOR"] = "TRUE"
+            os.environ["GRASS_RENDER_IMMEDIATE"] = "TRUE"
 
         # render map layers
         for layer in self.layers + self.overlays:
@@ -657,15 +669,6 @@ class Map(object):
 	    maskstr = maskstr.rstrip(',')
 	    mapoutstr = self.mapfile.replace('\\', '/')
 
-        compstring = "g.pnmcomp" + globalvar.EXT_BIN + \
-            " in=" + mapstr + \
-            " mask=" + maskstr + \
-            " opacity=" + ",".join(opacities)+ \
-            " background=255:255:255" + \
-            " width=" + str(self.width) + \
-            " height=" + str(self.height) + \
-            " output=" + mapoutstr
-
         # compose command
         complist = ["g.pnmcomp",
                    "in=%s" % ",".join(maps),
@@ -687,7 +690,6 @@ class Map(object):
         # run g.pngcomp to get composite image
         try:
             gcmd.Command(complist)
-	    # os.system(compstring)
         except gcmd.CmdError, e:
             print >> sys.stderr, e
             return None
