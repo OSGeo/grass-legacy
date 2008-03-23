@@ -56,6 +56,7 @@ FILES = \
 	$(ETC)/grass_sql.ico \
 	$(ETC)/grass-run.sh \
 	$(ETC)/grass-xterm-wrapper \
+	$(ETC)/grass-xterm-mac \
 	$(ETC)/html_browser_mac.sh
 
 ifneq ($(strip $(MINGW)),)
@@ -199,6 +200,10 @@ $(ETC)/grass-run.bat: grass-run.bat
 
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
+
+$(ETC)/grass-xterm-mac: grass-xterm-mac
+	rm -f $@
+	@if [ "`cat ../../include/Make/Platform.make | grep -i '^ARCH.*darwin'`" ] ; then $(INSTALL) -m 755 grass-xterm-mac $(ETC) ; fi
 
 $(ETC)/prompt.sh: prompt.sh
 	rm -f $@
