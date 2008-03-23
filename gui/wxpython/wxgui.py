@@ -600,7 +600,7 @@ class GMFrame(wx.Frame):
                                            lopacity=layer['opacity'],
                                            lcmd=layer['cmd'],
                                            lgroup=layer['group'])
-                maptree.PropertiesDialog(newItem, show=False)
+            #   maptree.PropertiesDialog(newItem, show=False)
 
             busy.Destroy()
             
