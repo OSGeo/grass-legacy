@@ -13,7 +13,7 @@
 <H2>NAME</H2>
 
 <EM><B>XDRIVER - GRASS Monitor</B></EM>  - driver to display GRASS maps in
-X11 environment<BR> 
+X11 environment.<BR> 
 <EM>(drivers)</EM>
 
 <H2>DESCRIPTION</H2>
@@ -24,23 +24,22 @@ The GRASS XDRIVER can be used to display GRASS maps in X11 environment.
 
 Variables:
 <ul>
-<li>GRASS_WIDTH
-<br>&nbsp; set the x size in pixel for the XDRIVER (default: 640)
-<li>GRASS_HEIGHT
-<br>&nbsp; set the y size in pixel for the XDRIVER (default: 480)
-<!-- ??? -->
-<li>XDRIVER_TRUECOLOR=[TRUE|FALSE]
-<br>&nbsp; Look for a TrueColor visual (?)
-<li>XDRIVER_WINDOW
-<br>&nbsp; ?
-<li>XDRIVER_PRIVATE_CMAP
-<br>&nbsp; Private color map (?)
-
-<!-- removed? -->
-<li>XDRIVER_LEFT
-<br>&nbsp; defines the left position of GRASS monitor (<i>removed?</i>)
-<li>XDRIVER_TOP
-<br>&nbsp; define the upper position of GRASS monitor (<i>removed?</i>)
+  <li><b>GRASS_WIDTH</b><br>
+    set the x size in pixel for the XDRIVER (default: 640)</li><br>
+  <li><b>GRASS_HEIGHT</b><br>
+    set the y size in pixel for the XDRIVER (default: 480)</li></br>
+  <!-- ??? -->
+  <li><b>XDRIVER_TRUECOLOR=[TRUE|FALSE]</b><br>
+    Look for a TrueColor visual (?)</li><br>
+  <li><b>XDRIVER_WINDOW</b><br>
+    ?</li><br>
+  <li><b>XDRIVER_PRIVATE_CMAP</b><br>
+    Private color map (?)</li><br>
+  <!-- removed? -->
+  <li><b>XDRIVER_LEFT</b><br>
+    defines the left position of GRASS monitor (<i>removed?</i>)</li><br>
+  <li><b>XDRIVER_TOP</b><br>
+    define the upper position of GRASS monitor (<i>removed?</i>)</li><br>
 </ul>
 
 <h3>Set the XDRIVER size</h3>
@@ -57,21 +56,24 @@ setenv GRASS_WIDTH xxx
 setenv GRASS_HEIGHT yyy
 </pre></div>
 
-To control the XDRIVER, use the <A HREF="d.mon.html">d.mon</A> module.
+To control the XDRIVER, use the <em><A HREF="d.mon.html">d.mon</A></em> module.
 <p>
 The maximum color depth depends on the current X Server settings.
 
 <H2>SEE ALSO</H2>
 <EM>
-<A HREF="htmlmapdriver.html">HTML map driver</A>,
-<A HREF="pngdriver.html">PNG driver</A>,
-<A HREF="psdriver.html">PostScript driver</A>
-<BR>
-<A HREF="d.frame.html">d.frame</A>,
-<A HREF="d.mon.html">d.mon</A>,
-<A HREF="g.region.html">g.region</A>
+  <a href="displaydrivers.html">Display drivers</a>
+  <br>
+  <A HREF="htmlmapdriver.html">HTMLMAP driver</A>,
+  <A HREF="pngdriver.html">PNG driver</A>,
+  <A HREF="psdriver.html">PostScript driver</A>
+  <BR>
+  <A HREF="d.frame.html">d.frame</A>,
+  <A HREF="d.mon.html">d.mon</A>,
+  <A HREF="g.region.html">g.region</A>
+  <a href="d.rast.html">d.rast</A>, 
+  <a href="d.vect.html">d.vect</A>
 </EM>
-<BR>
 
 <H2>AUTHORS</H2>
 CERL<br>
@@ -80,6 +82,3 @@ Rewritten 2001 by Glynn Clements
 
 <p>
 <i>Last changed: $Date$</i>
-</p>
-</body>
-</html>
