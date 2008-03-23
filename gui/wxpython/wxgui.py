@@ -1013,7 +1013,7 @@ class GMFrame(wx.Frame):
         """Create new layer tree, which will
         create an associated map display frame
         """
-        Debug.msg(3, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
+        Debug.msg(1, "GMFrame.NewDisplay(): idx=%d" % self.disp_idx)
 
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
         self.pg_panel = wx.Panel(self.gm_cb, id=wx.ID_ANY, style= wx.EXPAND)

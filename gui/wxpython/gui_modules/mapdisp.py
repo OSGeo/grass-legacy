@@ -211,12 +211,10 @@ class BufferedWindow(wx.Window):
         self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
         self.hitradius = 10 # distance for selecting map decorations
 
-        self.Map.SetRegion() # make sure that extents are updated at init
-
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
         # platforms at initialization, but little harm done.
-        self.OnSize(None)
+        ### self.OnSize(None)
 
         # create PseudoDC used for background map, map decorations like scales and legends
         self.pdc = wx.PseudoDC()
@@ -2151,8 +2149,6 @@ class MapFrame(wx.Frame):
                 georect -- is window used by georectifier
         """
 
-        Debug.msg (1, "MapFrame.__init__(): size=%d,%d" % (size[0], size[1]))
-
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         self.gismanager = gismgr    # GIS Manager object
@@ -2240,19 +2236,19 @@ class MapFrame(wx.Frame):
         self.Bind(wx.EVT_TIMER, self.TimerOnRender)
         self.onRenderTimer = wx.Timer(self)
 
-        self.Map.SetRegion() # set region
-
         self.StatusbarReposition() # reposition statusbar
 
         #
-        # Init map display
+        # Init map display (buffered DC & set default cursor)
         #
-        self.__InitDisplay() # initialize region values
-
-        # initialize buffered DC & set default cursor
         self.MapWindow = BufferedWindow(self, id=wx.ID_ANY, Map=self.Map, tree=self.tree, gismgr=self.gismanager)
         self.MapWindow.Bind(wx.EVT_MOTION, self.OnMotion)
         self.MapWindow.SetCursor(self.cursors["default"])
+
+        #
+        # initialize region values
+        #
+        self.__InitDisplay() 
 
         #
         # Decoration overlays
@@ -2381,8 +2377,8 @@ class MapFrame(wx.Frame):
 
         Debug.msg(2, "MapFrame.__InitDisplay():")
         self.Map.ChangeMapSize(self.GetClientSize())
-        self.Map.GetRegion() # g.region -upg
-        self.Map.SetRegion() # adjust region to match display window
+        self.Map.region = self.Map.GetRegion() # g.region -upgc
+        # self.Map.SetRegion() # adjust region to match display window
 
     def OnFocus(self, event):
         """
