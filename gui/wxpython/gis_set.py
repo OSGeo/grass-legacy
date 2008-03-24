@@ -55,6 +55,7 @@ class GRASSStartup(wx.Frame):
         #
         self.listOfLocations = []
         self.listOfMapsets = []
+        self.listOfMapsetsEnabled = []
 
         wx.Frame.__init__(self, parent=parent, id=id, style=style)
 
@@ -534,17 +535,29 @@ class GRASSStartup(wx.Frame):
 
     def UpdateMapsets(self, location):
         """Update list of mapsets"""
+        self.FormerSelection = wx.NOT_FOUND # for non-selectable item
+
         self.listOfMapsets = []
+        self.listOfMapsetsEnabled = []
 
         for mapset in glob.glob(os.path.join(self.gisdbase, location, "*")):
             if os.path.isdir(mapset) and os.path.basename(mapset) != 'PERMANENT':
                 self.listOfMapsets.append(os.path.basename(mapset))
         
         utils.ListSortLower(self.listOfMapsets)
-        self.listOfMapsets.insert(0,'PERMANENT')
+        self.listOfMapsets.insert(0, 'PERMANENT')
  
         self.lbmapsets.Clear()
-        self.lbmapsets.InsertItems(self.listOfMapsets,0)
+        self.lbmapsets.InsertItems(self.listOfMapsets, 0)
+
+        # disable mapset with no permission
+        for line in gcmd.Command(['g.mapset',
+                                  '-l',
+                                  'location=%s' % os.path.basename(location),
+                                  'gisdbase=%s' % self.gisdbase]).ReadStdOutput():
+            self.listOfMapsetsEnabled += line.split(' ')
+
+        # TODO: non-selectable items in different style
 
         return self.listOfMapsets
 
@@ -562,8 +575,11 @@ class GRASSStartup(wx.Frame):
 
     def OnSelectMapset(self,event):
         """Mapset selected"""
-        # self.bstart.Enable(True)
-        event.Skip()
+        if event.GetString() not in self.listOfMapsetsEnabled:
+            self.lbmapsets.SetSelection(self.FormerSelection)
+        else:
+            self.FormerSelection = event.GetSelection()
+            event.Skip()
 
     def OnSetDatabase(self,event):
         """Database set"""
