@@ -1227,7 +1227,7 @@ int G_usage (void)
  * \param[in] str string to write
  */
 
-void print_escaped_for_xml (FILE * fp, char * str) {
+static void print_escaped_for_xml (FILE * fp, char * str) {
 	for (;*str;str++) {
 		switch (*str) {
 			case '&':
