@@ -94,14 +94,7 @@ main (int argc, char *argv[])
 
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
-	    {
 		G_fatal_error(_("Mapset <%s> not found"), mapset);
-		/*
-		  G_message(_("Available mapsets:"));
-		  G_ls(G_location_path(), stderr);
-		  exit(EXIT_FAILURE);
-		*/
-	    }
 	    nchoices++;
 	    strcat (Path, mapset);
 	    strcat (Path, " ");
@@ -128,14 +121,7 @@ main (int argc, char *argv[])
 
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
-	    {
 		G_fatal_error(_("Mapset <%s> not found"), mapset);
-		/*
-		  G_message(_("Available mapsets:"));
-		  G_ls(G_location_path(), stderr);
-		  exit(EXIT_FAILURE);
-		*/
-	    }
 	    nchoices++;
 	    strcat (Path, mapset);
 	    strcat (Path, " ");
