@@ -1,12 +1,13 @@
-/*********************************************************
- * G__make_mapset_element (element)
- *     char *element           element to be created in mapset
- *
- * make the specified element in the current mapset
- * will check for the existence of the element and
- * do nothing if it is found so this routine
- * can be called even if the element already exists
- ********************************************************/
+/*!
+  \file mapset_msc.c
+ 
+  \brief GIS library - Mapset user permission routines.
+
+  (C) 1999-2008 The GRASS development team
+
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+*/
 
 #include <string.h>
 #include <unistd.h>
@@ -16,6 +17,19 @@
 #include <grass/gis.h>
 #include <grass/glocale.h>
 
+/*!
+  \brief Create element in the current mapset.
+
+  Make the specified element in the current mapset
+  will check for the existence of the element and
+  do nothing if it is found so this routine
+  can be called even if the element already exists.
+
+  \param element element to be created in mapset
+
+  \return 0 ?
+  \return ?
+*/
 int G__make_mapset_element (const char *p_element)
 {
     char path[GPATH_MAX];
@@ -24,7 +38,7 @@ int G__make_mapset_element (const char *p_element)
 
     element = p_element;
     if (*element == 0)
-	    return 0;
+	return 0;
 
     G__file_name (p = path, "", "", G_mapset());
     while (*p)
@@ -46,7 +60,7 @@ int G__make_mapset_element (const char *p_element)
 	    if (access (path, 0) != 0)
 		G_mkdir(path);
 	    if (access (path, 0) != 0)
-		G_fatal_error (_("can't make mapset element %s (%s)"), p_element, path);
+		G_fatal_error (_("Unable to make mapset element %s (%s)"), p_element, path);
 	    if (*element == 0)
 		return 1;
 	}
@@ -54,6 +68,15 @@ int G__make_mapset_element (const char *p_element)
     }
 }
 
+/*!
+  \brief Create misc element in the current mapset.
+
+  \param dir directory path
+  \param name element name
+  
+  \return 0 ?
+  \return ?
+*/
 int G__make_mapset_element_misc (const char *dir, const char *name)
 {
     char buf[GNAME_MAX*2+1];
@@ -62,13 +85,15 @@ int G__make_mapset_element_misc (const char *dir, const char *name)
     return G__make_mapset_element(buf);
 }
 
-/****************************************************************
-* G__mapset_permissions (mapset)
-*
-* returns: 1 mapset exists, and user has permission
-*          0 mapset exists, BUT user denied permission
-*         -1 mapset does not exist
-****************************************************************/
+/*!
+   \brief Check for user mapset permission
+
+   \param mapset mapset name
+
+   \return 1 mapset exists, and user has permission
+   \return 0 mapset exists, BUT user denied permission
+   \return -1 mapset does not exist
+*/
 int G__mapset_permissions (const char *mapset)
 {
     char path[GPATH_MAX];
@@ -91,15 +116,17 @@ int G__mapset_permissions (const char *mapset)
     return 1;
 }
 
-/****************************************************************
-* G__mapset_permissions2 ( gisdbase, location, mapset)
-*
-* mapset_path is full path to mapset directory
-*
-* returns: 1 mapset exists, and user has permission
-*          0 mapset exists, BUT user denied permission
-*         -1 mapset does not exist
-****************************************************************/
+/*!
+   \brief Check for user mapset permission
+
+   \param gisdbase full path to GISDBASE
+   \param location location name
+   \param mapset mapset name
+
+   \return 1 mapset exists, and user has permission
+   \return 0 mapset exists, BUT user denied permission
+   \return -1 mapset does not exist
+*/
 int G__mapset_permissions2 ( const char * gisdbase, const char * location, const char *mapset )
 {
     char path[GPATH_MAX];
@@ -121,4 +148,3 @@ int G__mapset_permissions2 ( const char * gisdbase, const char * location, const
     
     return 1;
 }
-
