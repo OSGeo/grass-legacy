@@ -18,18 +18,11 @@ Usage: python update_menu_desc.py
 
 import os
 import sys
-### i18N
-import gettext
-gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
 import xml.sax
 import xml.sax.handler
 HandlerBase=xml.sax.handler.ContentHandler
 from xml.sax import make_parser
-
-sys.path.append('../gui_modules')
-import menudata
-import menuform
 
 def read_menudata():
     menu = menudata.Data() # get menu data
@@ -88,9 +81,23 @@ def main(argv=None):
 
     if len(argv) != 1:
         print >> sys.stderr, __doc__
-        sys.exit()
+        return 0
+
+    ### i18N
+    import gettext
+    gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
     read_menudata()
 
+    return 0
+
 if __name__ == '__main__':
-    main()
+    if os.getenv("GISBASE") is None:
+        print >> sys.stderr, "You must be in GRASS GIS to run this program."
+        sys.exit(1)
+
+    sys.path.append('../gui_modules')
+    import menudata
+    import menuform
+
+    sys.exit(main())
