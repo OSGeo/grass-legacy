@@ -32,7 +32,7 @@ main (int argc, char *argv[])
     int    ret;
     struct GModule *module;
     struct Option *gisdbase_opt, *location_opt, *mapset_opt;
-    struct Flag *f_add;
+    struct Flag *f_add, *f_list;
     char   *gisdbase_old, *location_old, *mapset_old;
     char   *gisdbase_new, *location_new, *mapset_new;
     char   *gis_lock; 
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
     mapset_opt = G_define_option() ;
     mapset_opt->key         = "mapset" ;
     mapset_opt->type        = TYPE_STRING ;
-    mapset_opt->required    = YES ;
+    mapset_opt->required    = NO ;
     mapset_opt->multiple    = NO ;
     mapset_opt->description = _("New MAPSET name") ;
 
@@ -74,8 +74,15 @@ main (int argc, char *argv[])
     f_add->description = _("Create mapset if it doesn't exist");
     f_add->answer      = FALSE;
 
+    f_list = G_define_flag() ;
+    f_list->key         = 'l' ;
+    f_list->description = _("List available mapsets");
+
     if (G_parser(argc, argv))
     	exit(EXIT_FAILURE);
+
+    if (!mapset_opt->answer && !f_list->answer)
+	G_fatal_error (_("Either mapset= or -l must be used"));
 
     /* Store original values */
     gisdbase_old = G__getenv ("GISDBASE");
@@ -95,6 +102,21 @@ main (int argc, char *argv[])
 	location_new = location_opt->answer;
     else
 	location_new = location_old;
+
+    if (f_list->answer) {
+	char **ms;
+	int nmapsets;
+	ms = G_available_mapsets();
+	
+	for (nmapsets = 0; ms[nmapsets]; nmapsets++) {
+	    if (G__mapset_permissions2 (gisdbase_new, location_new,  ms[nmapsets]) > 0) {
+		fprintf(stdout, "%s ", ms[nmapsets]);
+	    }
+	}
+	fprintf(stdout, "\n");
+	
+	exit(EXIT_SUCCESS);
+    }
 
     mapset_new = mapset_opt->answer;
     G_asprintf ( &mapset_new_path, "%s/%s/%s", gisdbase_new, location_new, 
