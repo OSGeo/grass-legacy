@@ -33,10 +33,10 @@
 
 FILE *fpsvg;
 
-int mk_path (struct line_pnts *Points, int precision);
-int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
+static int mk_path (struct line_pnts *Points, int precision);
+static int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
 		dbTable  *Table, int attr_cols[], int attr_size, int do_attr);
-int print_escaped_for_xml (char *str);
+static int print_escaped_for_xml (char *str);
 
 int main (int argc, char *argv[]) {
     int i,j, precision, field;
@@ -307,7 +307,7 @@ int main (int argc, char *argv[]) {
 }
 
 
-int mk_path (struct line_pnts *Points, int precision) {
+static int mk_path (struct line_pnts *Points, int precision) {
     int i;
     /* loop through points and create relative moves to save bandwidth */
     for ( i = 0; i < Points->n_points; i++ ) {
@@ -327,7 +327,7 @@ int mk_path (struct line_pnts *Points, int precision) {
 }
 
 /* extract custom-namespaced attributes if any*/
-int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
+static int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
 		dbTable  *Table, int attr_cols[], int attr_size, int do_attr) {
     int i, more;
     char buf[2000];
@@ -375,7 +375,7 @@ int mk_attribs (int cat, struct field_info *Fi, dbDriver *Driver,
 }
 
 /* escape for XML and replace double-quotes */
-int print_escaped_for_xml (char *str) {
+static int print_escaped_for_xml (char *str) {
     for (;*str;str++) {
         switch (*str) {
             case '&':
