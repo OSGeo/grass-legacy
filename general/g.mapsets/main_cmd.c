@@ -8,7 +8,7 @@
  *               Markus Neteler <neteler itc.it>, 
  *               Moritz Lennert <mlennert club.worldonline.be>
  * PURPOSE:      set current mapset path
- * COPYRIGHT:    (C) 1994-2007 by the GRASS Development Team
+ * COPYRIGHT:    (C) 1994-2008 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
  *               License (>=v2). Read the file COPYING that comes with GRASS
@@ -43,13 +43,10 @@ main (int argc, char *argv[])
     struct Flag *print;
     struct Flag *list;
 
-    if (argc < 2)
-	execl("/bin/sh", "sh", "-c", "$GISBASE/etc/g.mapsets.tcl", NULL);
-
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->keywords = _("general");
+    module->keywords = _("general, settings");
     module->description =
 	_("Modifies the user's current mapset "
 	"search path, affecting the user's access to data existing "
@@ -98,10 +95,12 @@ main (int argc, char *argv[])
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
 	    {
-		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
-		fprintf (stderr, "\nAvailable mapsets:\n\n");
-		G_ls(G_location_path(), stderr);
-		exit(EXIT_FAILURE);
+		G_fatal_error(_("Mapset <%s> not found"), mapset);
+		/*
+		  G_message(_("Available mapsets:"));
+		  G_ls(G_location_path(), stderr);
+		  exit(EXIT_FAILURE);
+		*/
 	    }
 	    nchoices++;
 	    strcat (Path, mapset);
@@ -130,12 +129,13 @@ main (int argc, char *argv[])
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
 	    {
-		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
-		fprintf (stderr, "\nAvailable mapsets:\n\n");
-		G_ls(G_location_path(), stderr);
-		exit(EXIT_FAILURE);
+		G_fatal_error(_("Mapset <%s> not found"), mapset);
+		/*
+		  G_message(_("Available mapsets:"));
+		  G_ls(G_location_path(), stderr);
+		  exit(EXIT_FAILURE);
+		*/
 	    }
-
 	    nchoices++;
 	    strcat (Path, mapset);
 	    strcat (Path, " ");
@@ -207,6 +207,3 @@ DISPLAY:
 
     exit(EXIT_SUCCESS);
 }
-
-
-
