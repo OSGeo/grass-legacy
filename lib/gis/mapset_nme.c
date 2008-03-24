@@ -1,20 +1,14 @@
-/*************************************************************************
- *
- *  G__mapset_name(n)
- *      given the index, return the char string name of the n'th mapset
- *      from the mapset_name[] list. The first call will initialize
- *      the list.
- *
- * Internal routines
- *
- *   get_list_of_mapsets()
- *      sets up the mapset_name[] list from the mapset
- *
- * Data structures
- *   mapset_name[]  list of mapset names
- *   nmapset        number of names in the above list
- *
- *************************************************************************/
+/*!
+  \file mapset_nme.c
+ 
+  \brief GIS library - Mapset name, search path routines.
+
+  (C) 1999-2008 The GRASS development team
+
+  This program is free software under the GNU General Public License
+  (>=v2). Read the file COPYING that comes with GRASS for details.
+*/
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
@@ -29,6 +23,16 @@ static int nmapset2 = 0;
 static int new_mapset(const char *);
 static int get_list_of_mapsets(void);
 
+/*!
+  \brief Get name of the n'th mapset from the mapset_name[] list.
+
+  The first call will initialize the list.
+
+  \param n mapset index
+
+  \return mapset name
+  \return NULL if mapset not found
+*/
 char *G__mapset_name (int n)
 {
 /*
@@ -95,7 +99,11 @@ static int new_mapset(const char *name)
     return 0;
 }
 
+/*!
+  \brief Define alternative mapset search path
 
+  \return 0
+*/
 int G__create_alt_search_path(void)
 {
     nmapset2 = nmapset;
@@ -103,10 +111,16 @@ int G__create_alt_search_path(void)
 
     nmapset = 0;
 
-    return 0;
+    return 0; /* ??? */
+
     get_list_of_mapsets();
 }
 
+/*!
+  \brief Switch mapset search path
+
+  \return 0
+*/
 int G__switch_search_path(void)
 {
     int n;
@@ -124,6 +138,11 @@ int G__switch_search_path(void)
     return 0;
 }
 
+/*!
+  \brief Reset number of mapsets
+
+  \return 0
+*/
 int G_reset_mapsets(void)
 {
     nmapset=0;
@@ -131,8 +150,13 @@ int G_reset_mapsets(void)
     return 0;
 }
 
-/* Returns pointer to zero terminated array of available mapsets.
- * List is updated by each call to this function */
+/*!
+  \brief Get list of available mapsets for current location
+
+  List is updated by each call to this function
+
+  \return pointer to zero terminated array of available mapsets.
+*/
 char **G_available_mapsets ( void )
 {
     int  i, n;  
@@ -183,10 +207,14 @@ char **G_available_mapsets ( void )
     return mapsets;
 }
 
-/* Add mapset to the list of mapsets in search path.
- * Mapset is add in memory only, not to the SEARCH_PATH file!
- * List is check first if already exists.
- */
+/*!
+  \brief Add mapset to the list of mapsets in search path.
+
+  Mapset is add in memory only, not to the SEARCH_PATH file!
+  List is check first if already exists.
+
+  \param mapset mapset name
+*/
 void G_add_mapset_to_search_path ( const char *mapset )
 {
     int i;
