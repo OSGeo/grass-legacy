@@ -1,33 +1,31 @@
-/*
-* $Id$
-*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
-*               Update to GRASS 5.7 Radim Blazek.
-*
-* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/**
+ * \file spindex.c
+ *
+ * \brief Vector library - spatial index (lower level functions)
+ *
+ * Lower level functions for reading/writing/manipulating vectors.
+ *
+ * (C) 2001 by the GRASS Development Team
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author CERL (probably Dave Gerdes), Radim Blazek
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
+#include <grass/glocale.h>
 
-/* 
-*  dig_spindex_init ()
-*  initit spatial index (nodes, lines, areas, isles)
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Initit spatial index (nodes, lines, areas, isles)
+
+  \param Plus pointer to Plus_head structure
+
+  \return 1 OK
+  \return 0 on error      
 */
 int 
 dig_spidx_init ( struct Plus_head *Plus) 
@@ -51,31 +49,54 @@ dig_spidx_init ( struct Plus_head *Plus)
     return 1;
 }
 
+/*!
+  \brief Free spatial index for nodes
+
+  \param Plus pointer to Plus_head structure
+*/
 void
 dig_spidx_free_nodes ( struct Plus_head *Plus) {
     RTreeDestroyNode ( Plus->Node_spidx );
     Plus->Node_spidx = RTreeNewIndex();
 }
+
+/*!
+  \brief Free spatial index for lines
+
+  \param Plus pointer to Plus_head structure
+*/
 void
 dig_spidx_free_lines ( struct Plus_head *Plus) {
     RTreeDestroyNode ( Plus->Line_spidx );
     Plus->Line_spidx = RTreeNewIndex();
 }
+
+/*!
+  \brief Free spatial index for areas
+
+  \param Plus pointer to Plus_head structure
+*/
 void
 dig_spidx_free_areas ( struct Plus_head *Plus) {
     RTreeDestroyNode ( Plus->Area_spidx );
     Plus->Area_spidx = RTreeNewIndex();
 }
+
+/*!
+  \brief Free spatial index for isles
+
+  \param Plus pointer to Plus_head structure
+*/
 void
 dig_spidx_free_isles ( struct Plus_head *Plus) {
     RTreeDestroyNode ( Plus->Isle_spidx );
     Plus->Isle_spidx = RTreeNewIndex();
 }
 
-/* 
-*  dig_spidx_free ()
-*  free spatial index (nodes, lines, areas, isles)
-*
+/*! 
+  \brief Free spatial index (nodes, lines, areas, isles)
+  
+  \param Plus pointer to Plus_head structure
 */
 void 
 dig_spidx_free ( struct Plus_head *Plus) 
@@ -86,13 +107,15 @@ dig_spidx_free ( struct Plus_head *Plus)
     dig_spidx_free_isles ( Plus );
 }
 
-/************************* ADD NEW *********************************/
-/* 
-*  dig_spindex_add_node ()
-*  add new node to spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Add new node to spatial index 
+
+  \param Plus pointer to Plus_head structure
+  \param node node id
+  \param x,y,z node coordinates
+
+  \return 1 OK
+  \return 0 on error      
 */
 int 
 dig_spidx_add_node ( struct Plus_head *Plus, int node, 
@@ -109,12 +132,14 @@ dig_spidx_add_node ( struct Plus_head *Plus, int node,
     return 1;
 }
 
-/* 
-*  dig_spindex_add_line ()
-*  add new line to spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Add new line to spatial index 
+
+  \param Plus pointer to Plus_head structure
+  \param line line id
+  \param box bounding box
+
+  \return 0
 */
 int 
 dig_spidx_add_line ( struct Plus_head *Plus, int line, BOUND_BOX *box ) 
@@ -130,12 +155,14 @@ dig_spidx_add_line ( struct Plus_head *Plus, int line, BOUND_BOX *box )
     return 0;
 }
 
-/* 
-*  dig_spindex_add_area ()
-*  add new area to spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+ \brief Add new area to spatial index 
+
+  \param Plus pointer to Plus_head structure
+  \param area area id
+  \param box bounding box
+
+  \return 0
 */
 int 
 dig_spidx_add_area ( struct Plus_head *Plus, int area, BOUND_BOX *box ) 
@@ -151,12 +178,14 @@ dig_spidx_add_area ( struct Plus_head *Plus, int area, BOUND_BOX *box )
     return 0;
 }
 
-/* 
-*  dig_spindex_add_isle ()
-*  add new island to spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Add new island to spatial index 
+
+  \param Plus pointer to Plus_head structure
+  \param isle isle id
+  \param box bounding box
+
+  \return 0
 */
 
 int 
@@ -173,12 +202,15 @@ dig_spidx_add_isle ( struct Plus_head *Plus, int isle, BOUND_BOX *box )
     return 0;
 }
 
-/* 
-*  dig_spindex_del_node ()
-*  delete node from spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Delete node from spatial index 
+
+  G_fatal_error() called on error.
+
+  \param Plus pointer to Plus_head structure
+  \param node node id
+
+  \return 0
 */
 int 
 dig_spidx_del_node ( struct Plus_head *Plus, int node ) 
@@ -196,17 +228,21 @@ dig_spidx_del_node ( struct Plus_head *Plus, int node )
     
     ret = RTreeDeleteRect( &rect, node, &(Plus->Node_spidx) ); 
 
-    if ( ret ) G_fatal_error ( "Cannot delete node %d from spatial index", node );
+    if ( ret )
+	G_fatal_error (_("Unable to delete node %d from spatial index"), node);
     
     return 0;
 }
 
-/* 
-*  dig_spindex_del_line ()
-*  delete line from spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Delete line from spatial index 
+
+  G_fatal_error() called on error.
+
+  \param Plus pointer to Plus_head structure
+  \param line line id
+
+  \return 0
 */
 int 
 dig_spidx_del_line ( struct Plus_head *Plus, int line ) 
@@ -228,17 +264,21 @@ dig_spidx_del_line ( struct Plus_head *Plus, int line )
     
     G_debug(3, "  ret = %d", ret );
     
-    if ( ret ) G_fatal_error ( "Cannot delete line %d from spatial index", line );
+    if ( ret )
+	G_fatal_error (_("Unable to delete line %d from spatial index"), line );
 
     return 0;
 }
 
-/* 
-*  dig_spindex_del_area ()
-*  delete area from spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*!
+  \brief Delete area from spatial index 
+
+  G_fatal_error() called on error.
+
+  \param Plus pointer to Plus_head structure
+  \param area area id
+
+  \return 0
 */
 int 
 dig_spidx_del_area ( struct Plus_head *Plus, int area ) 
@@ -252,7 +292,7 @@ dig_spidx_del_area ( struct Plus_head *Plus, int area )
     Area = Plus->Area[area];
 
     if (Area == NULL) {
-	G_fatal_error ("Attempt to delete sidx for dead area");
+	G_fatal_error (_("Attempt to delete sidx for dead area"));
     }
 
     rect.boundary[0] = Area->W; rect.boundary[1] = Area->S; rect.boundary[2] = Area->B;
@@ -260,17 +300,21 @@ dig_spidx_del_area ( struct Plus_head *Plus, int area )
     
     ret = RTreeDeleteRect( &rect, area, &(Plus->Area_spidx) ); 
 
-    if ( ret ) G_fatal_error ( "Cannot delete area %d from spatial index", area );
+    if ( ret )
+	G_fatal_error (_("Unable to delete area %d from spatial index"), area );
     
     return 0;
 }
 
-/* 
-*  dig_spindex_del_isle ()
-*  delete isle from spatial index 
-*
-*  returns 1 OK
-*          0 on error      
+/*! 
+  \brief Delete isle from spatial index 
+
+  G_fatal_error() called on error.
+
+  \param Plus pointer to Plus_head structure
+  \param isle isle id
+
+  \return 0
 */
 int 
 dig_spidx_del_isle ( struct Plus_head *Plus, int isle ) 
@@ -288,23 +332,28 @@ dig_spidx_del_isle ( struct Plus_head *Plus, int isle )
 
     ret = RTreeDeleteRect( &rect, isle, &(Plus->Isle_spidx) ); 
 
-    if ( ret ) G_fatal_error ( "Cannot delete isle %d from spatial index", isle );
+    if ( ret )
+	G_fatal_error (_("Unable to delete isle %d from spatial index"), isle );
     
     return 0;
 }
-/************************* SELECT BY BOX *********************************/
+
 /* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
 static int _add_item(int id, struct ilist *list)
 {
     dig_list_add ( list, id );
     return 1;
 }
-/* 
-*  dig_select_nodes ()
-*  select nodes by bbox 
-*
-*  returns: number of selected nodes
-*           -1 error
+
+/*!
+ \brief Select nodes by bbox 
+
+  \param Plus pointer to Plus_head structure
+  \param box bounding box
+  \param list list of selected lines
+
+  \return number of selected nodes
+  \return -1 on error
 */
 int 
 dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
@@ -329,12 +378,14 @@ static int _add_node(int id, int *node)
     return 0;
 }
 
-/* 
-*  dig_find_node ()
-*  find one node by coordinates 
-*
-*  returns: number of node
-*           0 not found
+/*!
+  \brief Find one node by coordinates 
+
+  \param Plus pointer to Plus_head structure
+  \param x,y,z coordinates
+  
+  \return number of node
+  \return 0 not found
 */
 int 
 dig_find_node ( struct Plus_head *Plus, double x, double y, double z ) 
@@ -356,11 +407,14 @@ dig_find_node ( struct Plus_head *Plus, double x, double y, double z )
     return node;
 }
 
-/* 
-*  dig_select_lines ()
-*  select lines by box 
-*
-*  returns: number of selected lines
+/*!
+  \brief Select lines by box 
+
+  \param Plus pointer to Plus_head structure
+  \param box bounding box
+  \param list list of selected lines
+
+  \return number of selected lines
 */
 int 
 dig_select_lines ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
@@ -378,11 +432,14 @@ dig_select_lines ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
     return ( list->n_values );
 }
 
-/* 
-*  dig_select_areas ()
-*  select areas by box 
-*
-*  returns: number of selected areas
+/*! 
+  \brief Select areas by box 
+
+  \param Plus pointer to Plus_head structure
+  \param box bounding box
+  \param list list of selected lines
+
+  \return number of selected areas
 */
 int 
 dig_select_areas ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
@@ -400,11 +457,14 @@ dig_select_areas ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
     return ( list->n_values );
 }
 
-/* 
-*  dig_select_isles ()
-*  select isles by box 
-*
-*  returns: number of selected isles
+/*!
+  \brief Select isles by box 
+
+  \param Plus pointer to Plus_head structure
+  \param box bounding box
+  \param list list of selected lines
+
+  \return number of selected isles
 */
 int 
 dig_select_isles ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
@@ -421,5 +481,3 @@ dig_select_isles ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
     
     return ( list->n_values );
 }
-
-
