@@ -14,7 +14,7 @@ AUTHORS:   The GRASS Development Team
            Jachym Cepicky
            Martin Landa <landa.martin gmail.com>
 
-COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+COPYRIGHT: (C) 2006-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
@@ -36,6 +36,7 @@ import wx
 import wx.html
 import wx.lib.rcsizer as rcs
 import wx.lib.filebrowsebutton as filebrowse
+import wx.lib.mixins.listctrl as listmix
 
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""
@@ -55,8 +56,8 @@ class GRASSStartup(wx.Frame):
         #
         self.listOfLocations = []
         self.listOfMapsets = []
-        self.listOfMapsetsEnabled = []
-
+        self.listOfMapsetsSelectable = []
+        
         wx.Frame.__init__(self, parent=parent, id=id, style=style)
 
 	self.panel = wx.Panel(parent=self, id=wx.ID_ANY)
@@ -135,21 +136,18 @@ class GRASSStartup(wx.Frame):
         self.tgisdbase = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY, value="", size=(300, -1),
                                      style=wx.TE_LEFT)
 
-        # TODO: sort list, but keep mapsets aligned to sorted locations
         # Locations
         self.lpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
-        self.lblocations = wx.ListBox(parent=self.lpanel,
-                                      id=wx.ID_ANY, size=(180, 200),
-                                      choices=self.listOfLocations,
-                                      style=wx.LB_SINGLE)
+        self.lblocations = GListBox(parent=self.lpanel,
+                                    id=wx.ID_ANY, size=(180, 200),
+                                    choices=self.listOfLocations)
 
         # TODO: sort; but keep PERMANENT on top of list
         # Mapsets
         self.mpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
-        self.lbmapsets = wx.ListBox(parent=self.mpanel,
-                                    id=wx.ID_ANY, size=(150, 200),
-                                    choices=self.listOfMapsets,
-                                    style=wx.LB_SINGLE)
+        self.lbmapsets = GListBox(parent=self.mpanel,
+                                  id=wx.ID_ANY, size=(150, 200),
+                                  choices=self.listOfMapsets)
 
         # layout & properties
         self._set_properties()
@@ -163,8 +161,8 @@ class GRASSStartup(wx.Frame):
         self.bmapset.Bind(wx.EVT_BUTTON,      self.OnCreateMapset)
         self.bwizard.Bind(wx.EVT_BUTTON,      self.OnWizard)
         self.manageloc.Bind(wx.EVT_CHOICE,    self.OnManageLoc)
-        self.lblocations.Bind(wx.EVT_LISTBOX, self.OnSelectLocation)
-        self.lbmapsets.Bind(wx.EVT_LISTBOX,   self.OnSelectMapset)
+        self.lblocations.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnSelectLocation)
+        self.lbmapsets.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnSelectMapset)
         self.Bind(wx.EVT_KEY_DOWN,            self.OnKeyPressedInDbase, self.tgisdbase)
         self.Bind(wx.EVT_CLOSE,               self.OnCloseWindow)
 
@@ -535,11 +533,11 @@ class GRASSStartup(wx.Frame):
 
     def UpdateMapsets(self, location):
         """Update list of mapsets"""
-        self.FormerSelection = wx.NOT_FOUND # for non-selectable item
+        self.FormerMapsetSelection = wx.NOT_FOUND # for non-selectable item
 
         self.listOfMapsets = []
-        self.listOfMapsetsEnabled = []
-
+        self.listOfMapsetsSelectable = []
+        
         for mapset in glob.glob(os.path.join(self.gisdbase, location, "*")):
             if os.path.isdir(mapset) and os.path.basename(mapset) != 'PERMANENT':
                 self.listOfMapsets.append(os.path.basename(mapset))
@@ -548,37 +546,56 @@ class GRASSStartup(wx.Frame):
         self.listOfMapsets.insert(0, 'PERMANENT')
  
         self.lbmapsets.Clear()
-        self.lbmapsets.InsertItems(self.listOfMapsets, 0)
 
-        # disable mapset with no permission
+        # disable mapset with denied permission
         for line in gcmd.Command(['g.mapset',
                                   '-l',
                                   'location=%s' % os.path.basename(location),
                                   'gisdbase=%s' % self.gisdbase]).ReadStdOutput():
-            self.listOfMapsetsEnabled += line.split(' ')
+            self.listOfMapsetsSelectable += line.split(' ')
 
-        # TODO: non-selectable items in different style
+        disabled = []
+        idx = 0
+        for mapset in self.listOfMapsets:
+            if mapset not in self.listOfMapsetsSelectable:
+                disabled.append(idx)
+            idx += 1
 
+        self.lbmapsets.InsertItems(self.listOfMapsets, 0, disabled=disabled)
+        
         return self.listOfMapsets
 
     def OnSelectLocation(self, event):
         """Location selected"""
+        if event:
+            self.lblocations.SetSelection(event.GetIndex())
+            
         if self.lblocations.GetSelection() > -1:
             self.UpdateMapsets(os.path.join(self.gisdbase,
                                             self.listOfLocations[self.lblocations.GetSelection()]))
         else:
             self.listOfMapsets = []
 
+        disabled = []
+        idx = 0
+        for mapset in self.listOfMapsets:
+            if mapset not in self.listOfMapsetsSelectable:
+                disabled.append(idx)
+            idx += 1
+
         self.lbmapsets.Clear()
-        self.lbmapsets.InsertItems(self.listOfMapsets, 0)
+        self.lbmapsets.InsertItems(self.listOfMapsets, 0, disabled=disabled)
+        
         self.lbmapsets.SetSelection(0)
 
-    def OnSelectMapset(self,event):
+    def OnSelectMapset(self, event):
         """Mapset selected"""
-        if event.GetString() not in self.listOfMapsetsEnabled:
-            self.lbmapsets.SetSelection(self.FormerSelection)
+        self.lbmapsets.SetSelection(event.GetIndex())
+
+        if event.GetText() not in self.listOfMapsetsSelectable:
+            self.lbmapsets.SetSelection(self.FormerMapsetSelection)
         else:
-            self.FormerSelection = event.GetSelection()
+            self.FormerMapsetSelection = event.GetIndex()
             event.Skip()
 
     def OnSetDatabase(self,event):
@@ -702,6 +719,51 @@ class HelpWindow(wx.Frame):
         #        sizer.SetSizeHints(self)
         self.Layout()
 
+class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
+    """Use wx.ListCtrl instead of wx.ListBox, different style for
+    non-selectable items (e.g. mapsets with denied permission)"""
+    def __init__(self, parent, id, size,
+                 choices, disabled=[]):
+
+        wx.ListCtrl.__init__(self, parent, id, size=size,
+                             style=wx.LC_REPORT | wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
+
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        
+        self.InsertColumn(0, '')
+
+        self.selected = wx.NOT_FOUND
+        
+        self.__LoadData(choices, disabled)
+        
+    def __LoadData(self, choices, disabled=[]):
+        """
+        Load data into list
+
+        @param choices list of item
+        @param disabled list of indeces of non-selectable items
+        """
+        idx = 0
+        for item in choices:
+            index = self.InsertStringItem(sys.maxint, item)
+            self.SetStringItem(index, 0, item)
+            if idx in disabled:
+                self.SetItemTextColour(idx, wx.Colour(150, 150, 150))
+            idx += 1
+            
+    def Clear(self):
+        self.DeleteAllItems()
+
+    def InsertItems(self, choices, pos, disabled=[]):
+        self.__LoadData(choices, disabled)
+
+    def SetSelection(self, item):
+        self.SetItemState(item, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        self.selected = item
+        
+    def GetSelection(self):
+        return self.selected
+        
 class StartUp(wx.App):
     """Start-up application"""
 
