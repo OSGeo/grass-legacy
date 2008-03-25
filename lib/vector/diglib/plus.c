@@ -1,7 +1,9 @@
 /**
  * \file plus.c
  *
- * \brief Lower level functions for reading/writing/manipulating vectors.
+ * \brief Vector library - update topo structure (lower level functions)
+ *
+ * Lower level functions for reading/writing/manipulating vectors.
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -10,25 +12,7 @@
  *
  * \date 2001-2006
  */
-/*
-* $Id$
-*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
-*               Update to GRASS 5.7 Radim Blazek.
-*
-* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -37,13 +21,11 @@
 #include <grass/glocale.h>
 
 /*!
- * \fn int dig_init_plus (struct Plus_head *Plus)
- * 
  * \brief Init head structure
  *
- * \return 1
+ * \param[in,out] Plus pointer to Plus_head structure
  *
- * \param[in,out] Plus Plus_head structure
+ * \return 1
  */
 int 
 dig_init_plus (struct Plus_head *Plus)
@@ -116,11 +98,9 @@ dig_init_plus (struct Plus_head *Plus)
 }
 
 /*!
- * \fn void dig_free_plus_nodes (struct Plus_head *Plus)
- *
  * \brief Free Plus->Node structure
  *
- * \param[in] Plus Plus_head structure
+ * \param[in] Plus pointer to Plus_head structure
  */
 void 
 dig_free_plus_nodes (struct Plus_head *Plus)
@@ -150,11 +130,9 @@ dig_free_plus_nodes (struct Plus_head *Plus)
 }
 
 /*!
- * \fn void dig_free_plus_lines (struct Plus_head *Plus)
- * 
  * \brief Free Plus->Line structure
  *
- * \param[in] Plus Plus_head structure
+ * \param[in] Plus pointer to Plus_head structure
  */
 void 
 dig_free_plus_lines (struct Plus_head *Plus)
@@ -188,11 +166,9 @@ dig_free_plus_lines (struct Plus_head *Plus)
 }
 
 /*!
- * \fn void dig_free_plus_areas (struct Plus_head *Plus)
- *
  * \brief Free Plus->Area structure
  *
- * \param[in] Plus Plus_head structure
+ * \param[in] Plus pointer to Plus_head structure
  */
 void 
 dig_free_plus_areas (struct Plus_head *Plus)
@@ -224,11 +200,9 @@ dig_free_plus_areas (struct Plus_head *Plus)
 }
 
 /*!
- * \fn void dig_free_plus_isles (struct Plus_head *Plus)
- *
  * \brief Free Plus->Isle structure
  *
- * \param[in] Plus Plus_head structure
+ * \param[in] Plus pointer to Plus_head structure
  */
 void 
 dig_free_plus_isles (struct Plus_head *Plus)
@@ -258,13 +232,11 @@ dig_free_plus_isles (struct Plus_head *Plus)
 }
 
 /*!
- * \fn void dig_free_plus (struct Plus_head *Plus)
- *
  * \brief Free Plus structure.
  *
  * Structure is not inited and dig_init_plus() should follow.
  *
- * \param[in] Plus Plus_head structure
+ * \param[in] Plus pointer to Plus_head structure
  */
 void 
 dig_free_plus (struct Plus_head *Plus)
@@ -279,16 +251,14 @@ dig_free_plus (struct Plus_head *Plus)
 }
 
 /*!
- * \fn int dig_load_plus (struct Plus_head *Plus, GVFILE * plus, int head_only)
- *
  * \brief Reads topo file to topo structure.
+ *
+ * \param[in,out] Plus pointer to Plus_head structure
+ * \param[in] plus topo file
+ * \param[in] head_only read only head
  * 
  * \return 1 on success
  * \return 0 on error
- *
- * \param[in,out] Plus Plus_head structure
- * \param[in] plus topo file
- * \param[in] head_only read only head
 */
 int 
 dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
@@ -315,61 +285,59 @@ dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
 
   /* Nodes */
   if ( dig_fseek (plus, Plus->Node_offset, 0) == -1 )
-    G_fatal_error (_("Cannot read topo for nodes"));
+    G_fatal_error (_("Unable read topology for nodes"));
     
   dig_alloc_nodes ( Plus, Plus->n_nodes );
   for (i = 1; i <= Plus->n_nodes; i++)
     {
       if ( dig_Rd_P_node ( Plus, i, plus) == -1 )
-	  G_fatal_error (_("Cannot read topo for node [%d]"), i);
+	  G_fatal_error (_("Unable to read topology for node %d"), i);
     }
   
   /* Lines */
   if ( dig_fseek (plus, Plus->Line_offset, 0) == -1 )
-    G_fatal_error (_("Cannot read topo for lines"));
+    G_fatal_error (_("Unable read topology for lines"));
 
   dig_alloc_lines ( Plus, Plus->n_lines );
   for (i = 1; i <= Plus->n_lines; i++)
     {
       if ( dig_Rd_P_line ( Plus, i, plus) == -1 )
-	  G_fatal_error (_("Cannot read topo for line [%d]"), i);
+	  G_fatal_error (_("Unable to read topology for line %d"), i);
     }
   
   /* Areas */
   if ( dig_fseek (plus, Plus->Area_offset, 0) == -1 )
-    G_fatal_error (_("Cannot read topo for areas"));
+    G_fatal_error (_("Unable to read topo for areas"));
 
   dig_alloc_areas ( Plus, Plus->n_areas );
   for (i = 1; i <= Plus->n_areas; i++)
     {
       if ( dig_Rd_P_area ( Plus, i, plus) == -1 ) 
-	  G_fatal_error (_("Cannot read topo for area [%d]"), i);
+	  G_fatal_error (_("Unable read topology for area %d"), i);
     }
   
   /* Isles */
   if ( dig_fseek (plus, Plus->Isle_offset, 0) == -1 )
-      G_fatal_error (_("Cannot read topo for isles"));
+      G_fatal_error (_("Unable to read topology for isles"));
   
   dig_alloc_isles ( Plus, Plus->n_isles );
   for (i = 1; i <= Plus->n_isles; i++)
     {
       if ( dig_Rd_P_isle ( Plus, i, plus) == -1 )
-	  G_fatal_error (_("Cannot read topo for isle [%d]"), i);
+	  G_fatal_error (_("Unable to read topology for isle %d"), i);
     }
 
   return (1);
 }
 
 /*!
- * \fn int dig_write_plus_file ( GVFILE * fp_plus, struct Plus_head *Plus)
- *
  * \brief Writes topo structure to topo file
+ *
+ * \param[in,out] fp_plus topo file
+ * \param[in] Plus pointer to Plus_head structure
  *
  * \return 0 on success
  * \return -1 on error
- *
- * \param[in,out] fp_plus topo file
- * \param[in] Plus Plus_head structure
  */
 int 
 dig_write_plus_file ( GVFILE * fp_plus,
@@ -381,38 +349,38 @@ dig_write_plus_file ( GVFILE * fp_plus,
 
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write head to plus file.\n");
+      G_warning(_("Unable to write head to plus file"));
       return (-1);
     }
 
   if (dig_write_nodes (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write nodes to plus file.\n");
+      G_warning(_("Unable to write nodes to plus file"));
       return (-1);
     }
 
   if (dig_write_lines (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write lines to plus file.\n");
+      G_warning(_("Unable to write lines to plus file"));
       return (-1);
     }
 
   if (dig_write_areas (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write areas to plus file.\n");
+      G_warning(_("Unable to write areas to plus file"));
       return (-1);
     }
 
   if (dig_write_isles (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write isles to plus file.\n");
+      G_warning(_("Unable to write isles to plus file"));
       return (-1);
     }
 
   dig_rewind (fp_plus);
   if (dig_Wr_Plus_head (fp_plus, Plus) < 0)
     {
-      fprintf (stderr, "\nERROR: Can't write head to plus file.\n");
+      G_warning(_("Unable to write head to plus file"));
       return (-1);
     }
 
@@ -421,15 +389,13 @@ dig_write_plus_file ( GVFILE * fp_plus,
 }				/*  write_plus_file()  */
 
 /*!
- * \fn int dig_write_nodes ( GVFILE * fp_plus, struct Plus_head *Plus)
- *
  * \brief Writes topo structure (nodes) to topo file
+ *
+ * \param[in,out] fp_plus topo file
+ * \param[in] Plus pointer to Plus_head structure
  *
  * \return 0 on success
  * \return -1 on error
- *
- * \param[in,out] fp_plus topo file
- * \param[in] Plus Plus_head structure
  */
 int 
 dig_write_nodes ( GVFILE * plus,
@@ -450,15 +416,13 @@ dig_write_nodes ( GVFILE * plus,
 }				/*  write_nodes()  */
 
 /*!
- * \fn int dig_write_lines ( GVFILE * fp_plus, struct Plus_head *Plus)
- *
  * \brief Writes topo structure (lines) to topo file
+ *
+ * \param[in,out] fp_plus topo file
+ * \param[in] Plus pointer to Plus_head structure
  *
  * \return 0 on success
  * \return -1 on error
- *
- * \param[in,out] fp_plus topo file
- * \param[in] Plus Plus_head structure
  */
 int 
 dig_write_lines ( GVFILE * plus,
@@ -480,15 +444,13 @@ dig_write_lines ( GVFILE * plus,
 }				/*  write_line()  */
 
 /*!
- * \fn int dig_write_areas ( GVFILE * fp_plus, struct Plus_head *Plus)
- *
  * \brief Writes topo structure (areas) to topo file
+ *
+ * \param[in,out] fp_plus topo file
+ * \param[in] Plus pointer to Plus_head structure
  *
  * \return 0 on success
  * \return -1 on error
- *
- * \param[in,out] fp_plus topo file
- * \param[in] Plus Plus_head structure
  */
 int 
 dig_write_areas ( GVFILE * plus,
@@ -510,15 +472,13 @@ dig_write_areas ( GVFILE * plus,
 }				/*  write_areas()  */
 
 /*!
- * \fn int dig_write_isles ( GVFILE * fp_plus, struct Plus_head *Plus)
- *
  * \brief Writes topo structure (isles) to topo file
+ *
+ * \param[in,out] fp_plus topo file
+ * \param[in] Plus pointer to Plus_head structure
  *
  * \return 0 on success
  * \return -1 on error
- *
- * \param[in,out] fp_plus topo file
- * \param[in] Plus Plus_head structure
  */
 int 
 dig_write_isles ( GVFILE * plus,

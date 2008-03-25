@@ -1,7 +1,9 @@
 /**
  * \file plus_node.c
  *
- * \brief Lower level functions for reading/writing/manipulating vectors.
+ * \brief Vector library - update topo for nodes (lower level functions)
+ *
+ * Lower level functions for reading/writing/manipulating vectors.
  *
  * This program is free software under the GNU General Public License
  * (>=v2). Read the file COPYING that comes with GRASS for details.
@@ -10,25 +12,7 @@
  *
  * \date 2001-2006
  */
-/*
-* $Id$
-*
-****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes.
-*               Update to GRASS 5.7 Radim Blazek.
-*
-* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+
 #include <stdlib.h>
 #include <math.h>
 #include <grass/Vect.h>
@@ -37,23 +21,21 @@
 static double dist_squared (double, double, double, double);
 
 /*!
- * \fn int dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid, struct line_pnts *points, int type)
- *
- * \brief Add 'line' info to 'node'
+ * \brief Add line info to node
  *
  * Line will be negative if END node
  *
  * 'node' must of course already exist space will be alloced to add 'line' to array
  *
- * \return -1 on error      
- * \return 0 line not added  (degenerate)
- * \return new number of lines in node 
- *
- * \param[in] plus Plus_head structure
+ * \param[in] plus pointer to Plus_head structure
  * \param[in] nodeid node id
  * \param[in] lineid line id
- * \param[in] points container used to store line points within
+ * \param[in] points line geometry
  * \param[in] type line type 
+ *
+ * \return -1 on error      
+ * \return 0 line not added (degenerate)
+ * \return new number of lines in node 
 */
 int 
 dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
@@ -103,23 +85,21 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
     }
 
     node->n_lines++;
-#ifdef GDEBUG
+
     G_debug (3, "dig_node_add_line(): line %d added position %d n_lines: %d angle %f", lineid, i, node->n_lines, angle);
-#endif
+
     return ((int) node->n_lines);
 }
 
 
 /*!
- * \fn int dig_add_node ( struct Plus_head *plus, double x, double y, double z)
- *
  * \brief Add new node to plus structure 
+ *
+ * \param[in] plus pointer to Plus_head structure
+ * \param[in] x,y,z coordinates
  *
  * \return -1 on error      
  * \return number of node
- *
- * \param[in] plus Plus_head structure
- * \param[in] x,y,z coordinates
  */
 int 
 dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
@@ -154,16 +134,14 @@ dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
 }
 
 /*!
- * \fn int dig_which_node ( struct Plus_head *plus, double x, double y, double thresh)
- *
  * \brief Return actual index into node arrays of the first set of matching coordinates
+ *
+ * \param[in] plus pointer to Plus_head structure
+ * \param[in] x,y coordinates
+ * \param[in] thresh threshold value
  *
  * \return node index
  * \return -1 if no node found
- *
- * \param[in] plus Plus_head structure
- * \param[in] x,y coordinates
- * \param[in] thresh given threshold value
  */
 int 
 dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
@@ -210,19 +188,17 @@ dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
 }				/*  which_node ()  */
 
 /*!
- * \fn float dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
- * 
  * \brief Return line angle
  *
- * Lines is specified by line ID in topology, NOT by order number.
- * Negative ID if looking for line end point.
+ * Lines is specified by line id in topology, NOT by order number.
+ * Negative id if looking for line end point.
+ *
+ * \param[in] plus pointer to Plus_head structure
+ * \param[in] nodeid node id
+ * \param[in] lineid line id
  *
  * \return line angle <-PI,PI>
  * \return 0 not reached
- *
- * \param[in] plus Plus_head structure
- * \param[in] nodeid node id
- * \param[in] lineid line id
  */
 float
 dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
@@ -242,7 +218,7 @@ dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
     }
 
     G_fatal_error (_("Attempt to read line angle for the line which is not connected to the node: "
-		     "node = [%d] line = [%d]"), nodeid, lineid);
+		     "node %d, line %d"), nodeid, lineid);
     
     return 0.0; /* not reached */
 }
