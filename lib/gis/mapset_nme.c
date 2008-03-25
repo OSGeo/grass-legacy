@@ -111,9 +111,7 @@ int G__create_alt_search_path(void)
 
     nmapset = 0;
 
-    return 0; /* ??? */
-
-    get_list_of_mapsets();
+    return 0;
 }
 
 /*!
