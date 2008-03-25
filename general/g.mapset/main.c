@@ -106,10 +106,14 @@ main (int argc, char *argv[])
     if (f_list->answer) {
 	char **ms;
 	int nmapsets;
+
+	G__setenv("LOCATION_NAME", location_new);
+	G__setenv("GISDBASE", gisdbase_new);
+
 	ms = G_available_mapsets();
 	
 	for (nmapsets = 0; ms[nmapsets]; nmapsets++) {
-	    if (G__mapset_permissions2 (gisdbase_new, location_new,  ms[nmapsets]) > 0) {
+	    if (G__mapset_permissions(ms[nmapsets]) > 0) {
 		fprintf(stdout, "%s ", ms[nmapsets]);
 	    }
 	}
