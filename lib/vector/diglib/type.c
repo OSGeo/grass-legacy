@@ -1,26 +1,27 @@
-/****************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/**
+ * \file diglib/type.c
+ *
+ * \brief Vector library - feature type conversion (lower level functions)
+ *
+ * Lower level functions for reading/writing/manipulating vectors.
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ *
+ * \date 2001
+ */
+
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
 /*!
- \fn int dig_type_to_store (int type)
- \brief convert type to store type
- \return store type
- \param type
+  \brief Convert type to store type
+
+  \param type feature type
+
+  \return store type
 */
 int
 dig_type_to_store (int type)
@@ -48,10 +49,11 @@ dig_type_to_store (int type)
 }
 
 /*!
- \fn int Vect_type_from_store (int type)
- \brief convert type from store type
- \return store type
- \param type
+  \brief Convert type from store type
+
+  \param type feature store type
+  
+  \return type
 */
 int
 dig_type_from_store (int stype)
@@ -77,4 +79,3 @@ dig_type_from_store (int stype)
 	   return 0;
     }
 }
-
