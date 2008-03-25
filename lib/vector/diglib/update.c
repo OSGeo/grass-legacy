@@ -1,28 +1,39 @@
-/***************************************************************************
-*
-* MODULE:       Vector library 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
-*
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
+/**
+ * \file update.c
+ *
+ * \brief Vector library - update topology (lower level functions)
+ *
+ * Lower level functions for reading/writing/manipulating vectors.
+ *
+ * (C) 2001 by the GRASS Development Team
+ *
+ * This program is free software under the GNU General Public License
+ * (>=v2). Read the file COPYING that comes with GRASS for details.
+ *
+ * \author Radim Blazek
+ */
+
 #include <stdlib.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 
+/*!
+  \brief Reset number of updated lines
+
+  \param Plus pointer to Plus_head structure
+*/
 void
 dig_line_reset_updated ( struct Plus_head *Plus )
 {
     Plus->n_uplines = 0;
 }
 
+/*!
+  \brief Add new line to updated
+
+  \param Plus pointer to Plus_head structure
+  \param line line id
+*/
 void
 dig_line_add_updated ( struct Plus_head *Plus, int line )
 {
@@ -44,12 +55,23 @@ dig_line_add_updated ( struct Plus_head *Plus, int line )
     Plus->n_uplines++;
 }
 
+/*!
+  \brief Reset number of updated nodes
+
+  \param Plus pointer to Plus_head structure
+*/
 void 
 dig_node_reset_updated ( struct Plus_head *Plus )
 {
     Plus->n_upnodes = 0;
 }
 
+/*!
+  \brief Add node to updated
+
+  \param Plus pointer to Plus_head structure
+  \param node node id
+*/
 void
 dig_node_add_updated ( struct Plus_head *Plus, int node )
 {
@@ -70,4 +92,3 @@ dig_node_add_updated ( struct Plus_head *Plus, int node )
     Plus->upnodes[Plus->n_upnodes] = node;
     Plus->n_upnodes++;
 }
-
