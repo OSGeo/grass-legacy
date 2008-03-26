@@ -57,11 +57,16 @@ statement. Refer to the manual entry for
 of the filtering syntax shown in the above expression.
 See, for example, the section on "The Neighborhood Modifier".
 
-
 <P>
-
 <EM>r.shaded.relief</EM> then runs <EM><a href="r.colors.html">r.colors</A></EM>
 to assign a grey-scale color table to the new shaded relief map.
+
+<H2>NOTES</H2>
+
+To visually improve the result of shade maps from low resolution elevation
+models, use <em>r.resamp.interp</em> with bilinear or bicubic method to
+resample the DEM at higher resolution. <EM>r.shaded.relief</EM> is then
+run on the resampled DEM.
 
 <H2>FILES</H2>
 
@@ -79,11 +84,14 @@ Westervelt, U.S. Army Construction Engineering Research Laboratory
 <!-- RGB version not ported to GRASS 6:
   <EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM><BR>
  -->
-<EM><A HREF="d.his.html">d.his</A></EM><br>
-<EM><A HREF="g.region.html">g.region</A></EM><br>
-<EM><A HREF="r.blend.html">r.blend</A></EM><br>
-<EM><A HREF="r.colors.html">r.colors</A></EM><br>
-<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+<EM>
+<A HREF="d.his.html">d.his</A>,<br>
+<A HREF="g.region.html">g.region</A>,<br>
+<A HREF="r.blend.html">r.blend</A>,<br>
+<A HREF="r.colors.html">r.colors</A>,<br>
+<A HREF="r.mapcalc.html">r.mapcalc</A>,<br>
+<A HREF="r.resamp.interp.html">r.resamp.interp</A>
+</EM>
 
 <H2>AUTHOR</H2>
 
