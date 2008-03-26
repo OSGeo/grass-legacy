@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: grassmods_it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-24 17:42+0100\n"
-"PO-Revision-Date: 2008-03-11 16:21+0100\n"
+"PO-Revision-Date: 2008-03-26 17:32+0100\n"
 "Last-Translator: Luca Delucchi <lucadeluge@gmail.com>\n"
 "Language-Team: Italian <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
@@ -7513,7 +7513,7 @@ msgstr ""
 #: ../raster/r.digit/get_type.c:31
 #, c-format
 msgid "Please choose one of the following\n"
-msgstr "Per favore scegli uno dei seguenti"
+msgstr "Per favore scegli uno dei seguenti\n"
 
 #: ../raster/r.digit/get_type.c:32
 #, c-format
