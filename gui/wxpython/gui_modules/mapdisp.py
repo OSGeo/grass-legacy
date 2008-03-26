@@ -143,7 +143,7 @@ class BufferedWindow(wx.Window):
         self.parent = parent
         self.Map = Map
         self.tree = tree
-        self.gismanager=gismgr
+        self.gismanager = gismgr
 
         #
         # Flags
@@ -210,6 +210,7 @@ class BufferedWindow(wx.Window):
 
         self.zoomtype = 1   # 1 zoom in, 0 no zoom, -1 zoom out
         self.hitradius = 10 # distance for selecting map decorations
+        self.dialogOffset = 5 # offset for dialog (e.g. DisplayAttributesDialog)
 
         # OnSize called to make sure the buffer is initialized.
         # This might result in OnSize getting called twice on some
@@ -924,10 +925,9 @@ class BufferedWindow(wx.Window):
                 return
 
             # calculate position of 'update record' dialog
-            offset = 5
             position = self.mouse['begin']
-            posWindow = self.ClientToScreen((position[0] + offset,
-                                             position[1] + offset))
+            posWindow = self.ClientToScreen((position[0] + self.dialogOffset,
+                                             position[1] + self.dialogOffset))
 
             if digitToolbar.action not in ["moveVertex", "addVertex",
                                            "removeVertex", "editLine"]:
@@ -1002,24 +1002,24 @@ class BufferedWindow(wx.Window):
                 coords = (east, north)
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)
-                    if digitToolbar.attributesDialog is None:
+                    if self.parent.attributesDialog is None:
                         if digitClass.type == 'vedit':
-                            digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                                        query=(coords, qdist),
-                                                                                        pos=posWindow,
-                                                                                        action="update")
+                            self.parent.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                                       query=(coords, qdist),
+                                                                                       pos=posWindow,
+                                                                                       action="update")
                         else:
                             if digitClass.driver.SelectLineByPoint(coords,
                                                                    digitClass.GetSelectType()) is not None:
-                                digitToolbar.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
-                                                                                            cats=digitClass.GetLineCats(),
-                                                                                            line=digitClass.driver.GetSelected()[0],
-                                                                                            action="update")
+                                self.parent.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                                                                           cats=digitClass.GetLineCats(),
+                                                                                           line=digitClass.driver.GetSelected()[0],
+                                                                                           action="update")
 
                     else:
                         # update currently open dialog
                         if digitClass.type == 'vedit':
-                            digitToolbar.attributesDialog.UpdateDialog(query=(coords, qdist))
+                            self.parent.attributesDialog.UpdateDialog(query=(coords, qdist))
                         else:
                             # unselect
                             digitClass.driver.SetSelected([])
@@ -1030,43 +1030,43 @@ class BufferedWindow(wx.Window):
                             else:
                                 line = digitClass.driver.GetSelected()[0]
                             # upgrade dialog
-                            digitToolbar.attributesDialog.UpdateDialog(cats=digitClass.GetLineCats(),
-                                                                       line=line)
+                            self.parent.attributesDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                                                                      line=line)
 
-                    line = digitToolbar.attributesDialog.GetLine()
-                    if digitToolbar.attributesDialog.mapDBInfo and line:
+                    line = self.parent.attributesDialog.GetLine()
+                    if self.parent.attributesDialog.mapDBInfo and line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
-                        if not digitToolbar.attributesDialog.IsShown():
-                            digitToolbar.attributesDialog.Show()
+                        if not self.parent.attributesDialog.IsShown():
+                            self.parent.attributesDialog.Show()
                     else:
                         digitClass.driver.SetSelected([])
-                        if digitToolbar.attributesDialog.IsShown():
-                            digitToolbar.attributesDialog.Hide()
+                        if self.parent.attributesDialog.IsShown():
+                            self.parent.attributesDialog.Hide()
 
                 else: # displayCats
-                    if digitToolbar.categoryDialog is None:
+                    if self.parent.categoryDialog is None:
                         # open new dialog
                         if digitClass.type == 'vedit':
-                            digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
-                                                                              map=map,
-                                                                              query=(coords, qdist),
-                                                                              pos=posWindow,
-                                                                              title=_("Update categories"))
+                            self.parent.categoryDialog = DigitCategoryDialog(parent=self,
+                                                                             map=map,
+                                                                             query=(coords, qdist),
+                                                                             pos=posWindow,
+                                                                             title=_("Update categories"))
                         else:
                             if digitClass.driver.SelectLineByPoint(coords,
                                                                    digitClass.GetSelectType()) is not None:
-                                digitToolbar.categoryDialog = DigitCategoryDialog(parent=self,
-                                                                                  map=map,
-                                                                                  cats=digitClass.GetLineCats(),
-                                                                                  line=digitClass.driver.GetSelected()[0],
-                                                                                  pos=posWindow,
-                                                                                  title=_("Update categories"))
+                                self.parent.categoryDialog = DigitCategoryDialog(parent=self,
+                                                                                 map=map,
+                                                                                 cats=digitClass.GetLineCats(),
+                                                                                 line=digitClass.driver.GetSelected()[0],
+                                                                                 pos=posWindow,
+                                                                                 title=_("Update categories"))
                             
                     else:
                         # update currently open dialog
                         if digitClass.type == 'vedit':
-                            digitToolbar.categoryDialog.UpdateDialog(query=(coords, qdist))
+                            self.parent.categoryDialog.UpdateDialog(query=(coords, qdist))
                         else:
                             # unselect
                             digitClass.driver.SetSelected([])
@@ -1077,19 +1077,19 @@ class BufferedWindow(wx.Window):
                             else:
                                 line = digitClass.driver.GetSelected()[0]
                             # upgrade dialog
-                            digitToolbar.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                            self.parent.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats(),
                                                                      line=line)
 
-                    line = digitToolbar.categoryDialog.GetLine()
+                    line = self.parent.categoryDialog.GetLine()
                     if line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
-                        if not digitToolbar.categoryDialog.IsShown():
-                            digitToolbar.categoryDialog.Show()
+                        if not self.parent.categoryDialog.IsShown():
+                            self.parent.categoryDialog.Show()
                     else:
                         digitClass.driver.SetSelected([])
-                        if digitToolbar.categoryDialog.IsShown():
-                            digitToolbar.categoryDialog.Hide()
+                        if self.parent.categoryDialog.IsShown():
+                            self.parent.categoryDialog.Hide()
 
                 self.UpdateMap(render=False)
 
@@ -1168,6 +1168,10 @@ class BufferedWindow(wx.Window):
         elif self.mouse["use"] == "query":
             # querying
             self.parent.QueryMap(self.mouse['begin'][0],self.mouse['begin'][1])
+
+        elif self.mouse["use"] == "queryVector":
+            # editable mode for vector map layers
+            self.parent.QueryVector(self.mouse['begin'][0],self.mouse['begin'][1])
 
         elif self.mouse["use"] in ["measure", "profile"]:
             # measure or profile
@@ -1522,9 +1526,8 @@ class BufferedWindow(wx.Window):
 
                     # add new record into atribute table
                     if UserSettings.Get(group='vdigit', key="addRecord", subkey='enabled') is True:
-                        offset   = 5
-                        posWindow = self.ClientToScreen((position[0] + offset,
-                                                         position[1] + offset))
+                        posWindow = self.ClientToScreen((position[0] + self.dialogOffset,
+                                                         position[1] + self.dialogOffset))
 
                         # select attributes based on layer and category
                         cats = {}
@@ -2298,6 +2301,12 @@ class MapFrame(wx.Frame):
                                    self.Map.region['e'],
                                    self.Map.region['w'])
 
+        #
+        # Re-use dialogs
+        #
+        self.attributesDialog = None # vector attributes
+        self.categoryDialog = None # vector category
+
     def AddToolbar(self, name):
         """
         Add defined toolbar to the window
@@ -2765,9 +2774,9 @@ class MapFrame(wx.Frame):
         """
         return self.Map
 
-    def OnQuery(self, event):
+    def OnQueryDisplay(self, event):
         """
-        Query currrent or last map
+        Query currrent raster/vector map layers (display mode)
         """
         # switch GIS Manager to output console to show query results
         self.gismanager.notebook.SetSelection(1)
@@ -2775,7 +2784,17 @@ class MapFrame(wx.Frame):
         self.MapWindow.mouse['use'] = "query"
         self.MapWindow.mouse['box'] = "point"
         self.MapWindow.zoomtype = 0
-        # event.Skip()
+
+        # change the cursor
+        self.MapWindow.SetCursor(self.cursors["cross"])
+
+    def OnQueryModify(self, event):
+        """
+        Query vector map layer (edit mode)
+        """
+        self.MapWindow.mouse['use'] = "queryVector"
+        self.MapWindow.mouse['box'] = "point"
+        self.MapWindow.zoomtype = 0
 
         # change the cursor
         self.MapWindow.SetCursor(self.cursors["cross"])
@@ -2840,6 +2859,116 @@ class MapFrame(wx.Frame):
                 gcmd.Command(rcmd)
             if vcmd:
                 gcmd.Command(vcmd)
+
+    def QueryVector(self, x, y):
+        """
+        Query vector map layer features
+
+        Attribute data of selected vector object are displayed in GUI dialog.
+        Data can be modified (On Submit)
+        """
+        if not self.tree.layer_selected or \
+                self.tree.GetPyData(self.tree.layer_selected)[0]['type'] != 'vector':
+            wx.MessageBox(parent=self,
+                          message=_("No vector map selected for querying."),
+                          caption=_("Message"),
+                          style=wx.OK | wx.ICON_INFORMATION | wx.CENTRE)
+            return 
+        
+        posWindow = self.ClientToScreen((x + self.MapWindow.dialogOffset,
+                                         y + self.MapWindow.dialogOffset))
+
+        qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / \
+                            self.Map.width)
+        east, north = self.MapWindow.Pixel2Cell((x, y))
+
+        mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name
+
+        if self.attributesDialog is None:
+            self.attributesDialog = dbm.DisplayAttributesDialog(parent=self.MapWindow,
+                                                                map=mapName,
+                                                                query=((east, north), qdist),
+                                                                pos=posWindow,
+                                                                action="update")
+        else:
+            # update currently open dialog
+            self.attributesDialog.UpdateDialog(query=((east, north), qdist))
+
+        line = self.attributesDialog.GetLine()
+        try:
+            qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)[0]
+        except IndexError:
+            qlayer = None
+            
+        if self.attributesDialog.mapDBInfo and line:
+            # highlight feature & re-draw map
+            if qlayer:
+                qlayer.cmdlist = self.AddTmpVectorMapLayer(mapName, line,
+                                                           useId=True,
+                                                           addLayer=False)
+            else:
+                self.AddTmpVectorMapLayer(mapName, line, useId=True)
+            self.MapWindow.UpdateMap(render=True)
+            # digitClass.driver.SetSelected([line])
+            if not self.attributesDialog.IsShown():
+                self.attributesDialog.Show()
+        else:
+            if qlayer:
+                self.Map.DeleteLayer(qlayer)
+                self.MapWindow.UpdateMap(render=True)
+            if self.attributesDialog.IsShown():
+                self.attributesDialog.Hide()
+
+    def OnQuery(self, event):
+        """Query tools menu"""
+        point = wx.GetMousePosition()
+        toolsmenu = wx.Menu()
+        # Add items to the menu
+        display = wx.MenuItem(toolsmenu, wx.ID_ANY, Icons["queryDisplay"].GetLabel())
+        toolsmenu.AppendItem(display)
+        self.Bind(wx.EVT_MENU, self.OnQueryDisplay, display)
+
+        modify = wx.MenuItem(toolsmenu, wx.ID_ANY, Icons["queryModify"].GetLabel())
+        toolsmenu.AppendItem(modify)
+        self.Bind(wx.EVT_MENU, self.OnQueryModify, modify)
+
+        self.PopupMenu(toolsmenu)
+        toolsmenu.Destroy()
+
+    def AddTmpVectorMapLayer(self, name, cats, useId=False, addLayer=True):
+        """
+        Add temporal vector map layer to map composition
+
+        @param name name of map layer
+        @param useId use feature id instead of category 
+        """
+        color = UserSettings.Get(group='atm', key='highlight', subkey='color')
+        colorStr = str(color[0]) + ":" + \
+        str(color[1]) + ":" + \
+        str(color[2]) + ":"
+
+        cmd = ["d.vect",
+               "map=%s" % name,
+               "color=%s" % colorStr,
+               "fcolor=%s" % colorStr,
+               "width=%d"  % UserSettings.Get(group='atm', key='highlight', subkey='width')]
+        
+        if useId:
+            cmd.append('-i')
+            cmd.append('cats=%s' % str(cats))
+        else:
+            cmd.append("cats=%s" % utils.ListOfCatsToRange(cats))
+
+        #     if self.icon:
+        #         cmd.append("icon=%s" % (self.icon))
+        #     if self.pointsize:
+        #         cmd.append("size=%s" % (self.pointsize))
+
+        if addLayer:
+            return self.Map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
+                                     l_active=True, l_hidden=True, l_opacity=1.0)
+        else:
+            return cmd
 
     def OnAnalyze(self, event):
         """

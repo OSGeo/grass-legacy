@@ -103,7 +103,7 @@ class MapToolbar(AbstractToolbar):
 
         self.displaymap = self.rendermap = self.erase = \
         self.pointer = self.query = self.pan = self.zoomin = self.zoomout = \
-        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap =None
+        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap = None
 
         # tool, label, bitmap, kind, shortHelp, longHelp, handler
         return (
@@ -120,8 +120,8 @@ class MapToolbar(AbstractToolbar):
             (self.pointer, "pointer", Icons["pointer"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pointer"].GetLabel(), Icons["pointer"].GetDesc(),
              self.mapdisplay.OnPointer),
-            (self.query, "query", Icons["query"].GetBitmap(),
-             wx.ITEM_RADIO, Icons["query"].GetLabel(), Icons["query"].GetDesc(),
+            (self.query, "queryDisplay", Icons["queryDisplay"].GetBitmap(),
+             wx.ITEM_RADIO, Icons["queryDisplay"].GetLabel(), Icons["queryDisplay"].GetDesc(),
              self.mapdisplay.OnQuery),
             (self.pan, "pan", Icons["pan"].GetBitmap(),
              wx.ITEM_RADIO, Icons["pan"].GetLabel(), Icons["pan"].GetDesc(),

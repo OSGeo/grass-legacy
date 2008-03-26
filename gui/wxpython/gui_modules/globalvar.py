@@ -70,7 +70,7 @@ else:
     EXT_BIN = ''
     EXT_SCT = ''
 
-def __getGRASSCmds(bin=True, scripts=True, gui_scripts=True):
+def GetGRASSCmds(bin=True, scripts=True, gui_scripts=True):
     """
     Create list of all available GRASS commands to use when
     parsing string from the command line
@@ -94,8 +94,8 @@ def __getGRASSCmds(bin=True, scripts=True, gui_scripts=True):
 
 """@brief Collected GRASS-relared binaries/scripts"""
 grassCmd = {}
-grassCmd['all'] = __getGRASSCmds()
-grassCmd['script'] = __getGRASSCmds(bin=False)
+grassCmd['all'] = GetGRASSCmds()
+grassCmd['script'] = GetGRASSCmds(bin=False)
 
 """@Toolbar icon size"""
 toolbarSize = (24, 24)
