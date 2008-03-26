@@ -970,7 +970,7 @@ class AttributeManager(wx.Frame):
             # list.lastTurnSelectedCats[:] != list.selectedCats[:]:
 
             # add map layer with higlighted vector features
-            self.AddQueryMapLayer(self.map)
+            self.AddQueryMapLayer()
             self.mapdisplay.MapWindow.UpdateMap(render=True)
 
         event.Skip()
@@ -1590,35 +1590,6 @@ class AttributeManager(wx.Frame):
 
         event.Skip()
 
-    def AddQueryMapLayer(self, map):
-        """Redraw a map
-
-        Return True if map has been redrawn, False if no map is given
-        """
-        if self.qlayer:
-            map.DeleteLayer(self.qlayer)
-
-        list = self.FindWindowById(self.layerPage[self.layer]['data'])
-        cats = list.GetSelectedItems()
-
-        color = UserSettings.Get(group='atm', key='highlight', subkey='color')
-        colorStr = str(color[0]) + ":" + \
-            str(color[1]) + ":" + \
-            str(color[2]) + ":"
-        cmd = ["d.vect",
-               "map=%s" % self.vectmap,
-               "color=%s" % colorStr,
-               "fcolor=%s" % colorStr,
-               "cats=%s" % utils.ListOfCatsToRange(cats),
-               "width=%d"  % UserSettings.Get(group='atm', key='highlight', subkey='width')]
-        if self.icon:
-            cmd.append("icon=%s" % (self.icon))
-        if self.pointsize:
-            cmd.append("size=%s" % (self.pointsize))
-
-        self.qlayer = map.AddLayer(type='vector', name=globalvar.QUERYLAYER, command=cmd,
-                                   l_active=True, l_hidden=True, l_opacity=1.0)
-
     def OnExtractSelected(self, event):
         """
         Extract vector objects selected in attribute browse window
@@ -1657,6 +1628,19 @@ class AttributeManager(wx.Frame):
                     return True
 
         return False
+
+    def AddQueryMapLayer(self):
+        """Redraw a map
+
+        Return True if map has been redrawn, False if no map is given
+        """
+        if self.qlayer:
+            self.mapdisplay.Map.DeleteLayer(self.qlayer)
+
+        list = self.FindWindowById(self.layerPage[self.layer]['data'])
+        cats = list.GetSelectedItems() # FIXME: category can be hiden in list
+
+        self.qlayer = self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats)
                 
     def UpdateDialog(self, layer):
         """Updates dialog layout for given layer"""
@@ -2795,9 +2779,12 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnCancel(self, event):
         """Cancel button pressed"""
-        self.parent.parent.digittoolbar.attributesDialog = None
-        self.parent.parent.digit.driver.SetSelected([])
-        self.parent.UpdateMap(render=False)
+        self.parent.parent.attributesDialog = None
+        if self.parent.parent.digit:
+            self.parent.parent.digit.driver.SetSelected([])
+            self.parent.UpdateMap(render=False)
+        else:
+            self.parent.parent.OnRender(None)
 
         self.Close()
 
@@ -2817,7 +2804,7 @@ class DisplayAttributesDialog(wx.Dialog):
             self.OnCancel(event)
 
     def GetLine(self):
-        """Get id of selected line or 'None' if no line is selected"""
+        """Get id of selected vector object or 'None' if nothing selected"""
         return self.line
 
     def UpdateDialog(self, query=None, cats=None, line=None):

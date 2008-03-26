@@ -18,6 +18,7 @@ import os
 import sys
 
 import globalvar
+import gcmd
 try:
     import subprocess
 except:
@@ -132,7 +133,6 @@ def ListOfMapsets():
 
     @return ([available mapsets], [accessible mapsets]) 
     """
-    import gcmd
     all_mapsets = []
     accessible_mapsets = []
 
