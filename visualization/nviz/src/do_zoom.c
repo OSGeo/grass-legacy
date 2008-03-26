@@ -101,13 +101,13 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 		    maxy = (int) (maxx / aspect) + 1;
 	    else 
 		    maxy = (int) (maxx / aspect);
-	    var_i = (int) (maxx/(c-a)) + 1;
+	    var_i = (maxx + (c-a) - 1)/(c-a);
     } else {
 	    if ( ( (maxy * aspect) - (int)(maxy * aspect) ) > .5)
 		    maxx = (int) (maxy * aspect) + 1;
 	    else
 		    maxx = (int) (maxy * aspect);
-	    var_i = (int)(maxy/(d-b))+1;
+	    var_i = (maxy + (d-b) - 1)/(d-b);
     }
     
     fprintf(stderr, "Final Assembled Image will be %d x %d\n", maxx, maxy);
