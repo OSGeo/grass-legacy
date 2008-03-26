@@ -30,7 +30,6 @@ import gettext
 
 from gui_modules import globalvar
 globalvar.CheckForWx()
-from gui_modules import utils
 
 import wx
 import wx.html
@@ -41,8 +40,6 @@ import wx.lib.mixins.listctrl as listmix
 class GRASSStartup(wx.Frame):
     """GRASS start-up screen"""
     def __init__(self, parent=None, id=wx.ID_ANY, style=wx.DEFAULT_FRAME_STYLE):
-
-        gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
         #
         # GRASS variables
@@ -781,9 +778,10 @@ if __name__ == "__main__":
         print >> sys.stderr, "Failed to start GUI, GRASS GIS is not running."
     else:
         import gettext
-        gettext.install("GRASSStartUp") # replace with the appropriate catalog name
+        gettext.install('grasswxpy', os.path.join(os.getenv("GISBASE"), 'locale'), unicode=True)
 
         import gui_modules.gcmd as gcmd
+        import gui_modules.utils as utils
 
         GRASSStartUp = StartUp(0)
         GRASSStartUp.MainLoop()
