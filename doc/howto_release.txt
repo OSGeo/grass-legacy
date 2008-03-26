@@ -169,6 +169,7 @@ Contents
    http://spatialnews.geocomm.com/submitnews.html (not free any more, convince editor@geocomm.com)
    admin@cartographyonline.com
    redazionenews@mondogis.net
+   mfeilner@linuxnewmedia.de
 
  Web:
    http://slashgeo.org/submit.pl
