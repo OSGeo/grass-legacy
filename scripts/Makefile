@@ -8,6 +8,7 @@ SUBDIRS = \
 	d.out.gpsdrive \
 	d.out.png \
 	d.out.file \
+	d.paint.labels \
 	d.polar \
 	d.rast.edit \
 	d.rast.leg \
@@ -34,7 +35,9 @@ SUBDIRS = \
 	i.spectral \
 	i.tasscap \
 	m.proj \
+	p.out.vrml \
 	r.blend \
+	r.cats \
 	r.fillnulls \
 	r.in.aster \
 	r.in.srtm \
