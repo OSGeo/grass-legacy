@@ -1,8 +1,9 @@
 <H2>DESCRIPTION</H2>
 
-<p>
-<EM>r.resamp.interp</EM> fills a grid cell (raster) matrix with interpolated values
-generated from a set of input layer data points. A choice of three
+<EM>r.resamp.interp</EM> resamples an input raster map by interpolating between
+the neighboring cells via a selectable resampling algorithm. All cells
+present in the neighborhood of the input raster cell must be non-null to
+generate a non-null cell in the output raster map. A choice of three
 interpolation methods is available; each uses the weighted values of a different
 number of adjacent cells in the input map to determine the value of each
 cell in the output map as follows:
@@ -11,14 +12,18 @@ cell in the output map as follows:
 <li>bilinear (4 cells)</li>
 <li>bicubic (16 cells)</li>
 </ul>
+
+This module is intended for reinterpolation of continuous data
+to a different resolution rather than for interpolation from scattered data
+(use the <EM>v.surf.*</EM> modules for that purpose).
 </p>
 
 
 <P>
 Note that for bilinear and bicubic interpolation,
 cells of the output raster that cannot be bounded by the appropriate number
-of input cell centers are set to null. This could occur due to the input
-cells being outside the current region, being NULL or MASKed.
+of input cell centers are set to NULL (NULL propagation). This could occur
+due to the input cells being outside the current region, being NULL or MASKed.
 </p>
 
 <H2>NOTES</H2>
