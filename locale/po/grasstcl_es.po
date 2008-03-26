@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-06 17:44+0100\n"
+"POT-Creation-Date: 2008-03-26 21:14+0100\n"
 "PO-Revision-Date: 2008-03-06 17:59+0100\n"
 "Last-Translator: Carlos Davila <carluti@users.sourceforge.net>\n"
 "Language-Team: Español <grass-translations@lists.osgeo.org>\n"
@@ -42,8 +42,9 @@ msgid "Settings already opened"
 msgstr "Configuración ya abierta"
 
 #: ../vector/v.digit/settings.tcl:160 ../lib/init/epsg_option.tcl:311
-#: ../gui/tcltk/gis.m/gm.tcl:430 ../gui/tcltk/gis.m/animate.tcl:536
-#: ../gui/tcltk/gis.m/dnviz.tcl:228 ../gui/tcltk/gis.m/rules.tcl:170
+#: ../lib/init/file_option.tcl:263 ../gui/tcltk/gis.m/gm.tcl:430
+#: ../gui/tcltk/gis.m/animate.tcl:536 ../gui/tcltk/gis.m/dnviz.tcl:228
+#: ../gui/tcltk/gis.m/rules.tcl:170
 msgid "OK"
 msgstr "OK"
 
@@ -286,9 +287,10 @@ msgstr "Ok"
 
 #: ../lib/gtcltk/select.tcl:209 ../lib/init/epsg_option.tcl:167
 #: ../lib/init/epsg_option.tcl:314 ../lib/init/file_option.tcl:114
-#: ../gui/tcltk/gis.m/gm.tcl:433 ../gui/tcltk/gis.m/animate.tcl:538
-#: ../gui/tcltk/gis.m/dnviz.tcl:230 ../gui/tcltk/gis.m/mapcanvas.tcl:855
-#: ../gui/tcltk/gis.m/georect.tcl:700 ../gui/tcltk/gis.m/rules.tcl:172
+#: ../lib/init/file_option.tcl:266 ../gui/tcltk/gis.m/gm.tcl:433
+#: ../gui/tcltk/gis.m/animate.tcl:538 ../gui/tcltk/gis.m/dnviz.tcl:230
+#: ../gui/tcltk/gis.m/mapcanvas.tcl:855 ../gui/tcltk/gis.m/georect.tcl:700
+#: ../gui/tcltk/gis.m/rules.tcl:172
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -470,10 +472,12 @@ msgid "WARNING: Location '%s' already exists: please try another name."
 msgstr "AVISO: la localización '%s' ya existe: por favor, pruebe otro nombre."
 
 #: ../lib/init/epsg_option.tcl:236 ../lib/init/epsg_option.tcl:263
+#: ../lib/init/file_option.tcl:185 ../lib/init/file_option.tcl:212
 msgid "Error creating location!"
 msgstr "¡Error al crear localización!"
 
 #: ../lib/init/epsg_option.tcl:237 ../lib/init/epsg_option.tcl:264
+#: ../lib/init/file_option.tcl:186 ../lib/init/file_option.tcl:213
 #, tcl-format
 msgid ""
 "g.proj returned the following message:\n"
@@ -483,10 +487,12 @@ msgstr ""
 "%s"
 
 #: ../lib/init/epsg_option.tcl:244 ../lib/init/epsg_option.tcl:268
+#: ../lib/init/file_option.tcl:193 ../lib/init/file_option.tcl:217
 msgid "Informational output from g.proj"
 msgstr "Salida informativa de g.proj"
 
 #: ../lib/init/epsg_option.tcl:245 ../lib/init/epsg_option.tcl:269
+#: ../lib/init/file_option.tcl:194 ../lib/init/file_option.tcl:218
 #, tcl-format
 msgid ""
 "g.proj returned the following informational message:\n"
@@ -495,11 +501,11 @@ msgstr ""
 "g.proj devolvió el siguiente mensaje informativo:\n"
 "%s"
 
-#: ../lib/init/epsg_option.tcl:288
+#: ../lib/init/epsg_option.tcl:288 ../lib/init/file_option.tcl:240
 msgid "Select datum transformation parameters:"
 msgstr "Seleccionar parámetros de transformación del datum:"
 
-#: ../lib/init/epsg_option.tcl:292
+#: ../lib/init/epsg_option.tcl:292 ../lib/init/file_option.tcl:244
 msgid ""
 "Continue without specifying parameters - if used when creating a location, "
 "other GRASS modules will use the \"default\" (likely non-optimum) parameters "
@@ -566,8 +572,10 @@ msgstr "AVISO: localización no válida"
 
 #: ../lib/init/gis_set.tcl:132
 #, tcl-format
-msgid "Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
-msgstr "AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
+msgid ""
+"Warning: location <%s> at GISDBASE <%s> is not a directory or does not exist."
+msgstr ""
+"AVISO: la localización <%s> en GISDBASE <%s> no es un directorio o no existe."
 
 #: ../lib/init/gis_set.tcl:177
 #, tcl-format
@@ -757,7 +765,8 @@ msgstr "Ruta de archivo georreferenciado"
 
 #: ../lib/init/file_option.tcl:102
 msgid "Path to georeferenced file (format must be readable by GDAL/OGR)"
-msgstr "Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
+msgstr ""
+"Ruta a archivo georreferenciado (el formato debe ser legible por GDAL/OGR)"
 
 #: ../lib/init/file_option.tcl:106
 msgid "Browse to locate georeferenced file"
@@ -772,23 +781,6 @@ msgid ""
 "WARNING: Please supply a\n"
 "valid georeferenced file"
 msgstr "AVISO: Por favor, especificar un archivo georreferenciado válido"
-
-#: ../lib/init/file_option.tcl:184
-msgid "WARNING: Error creating new location"
-msgstr "AVISO: Error al crear nueva localización"
-
-#: ../lib/init/file_option.tcl:185
-#, tcl-format
-msgid ""
-"Error creating new location from georeferenced file.  g.proj returned "
-"following message:\n"
-"\n"
-"%s"
-msgstr ""
-"Error al crear nueva localización con archivo georreferenciado.  g.proj "
-"devolvió el siguiente mensaje:\n"
-"\n"
-"%s"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:107 ../gui/tcltk/gis.m/thematic.tcl:607
 #: ../gui/tcltk/gis.m/thematic.tcl:680 ../gui/tcltk/gis.m/labels.tcl:78
@@ -1221,7 +1213,8 @@ msgstr "Mapa de pendiente/intensidad"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:134
 msgid "Display arrows whose orientations are based on raster aspect map"
-msgstr "Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
+msgstr ""
+"Mostrar flechas cuya orientación esté basada en mapa ráster de orientación"
 
 #: ../gui/tcltk/gis.m/rastarrows.tcl:140
 msgid "  (optionally, arrow lengths are based on slope or intensity map)"
@@ -1338,7 +1331,8 @@ msgstr "Guardar las límites de la visualización en la región designada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
 msgid "Zoom display to computational region (set with g.region)"
-msgstr "Zum de la visualización a la región computacional (establecida con g.region)"
+msgstr ""
+"Zum de la visualización a la región computacional (establecida con g.region)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:196
 msgid "Zoom display to default region"
@@ -1346,7 +1340,9 @@ msgstr "Zum de la visualización a la región predeterminada"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:199
 msgid "Set computational region extents to match display"
-msgstr "Establecer la extensión de la región computacional para ajustar a la visualización"
+msgstr ""
+"Establecer la extensión de la región computacional para ajustar a la "
+"visualización"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:615
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1857 ../gui/tcltk/d.m/menu.tcl:554
@@ -1468,7 +1464,8 @@ msgstr ""
 
 #: ../gui/tcltk/gis.m/frames.tcl:105
 msgid "Divide map display into frames for displaying multiple maps"
-msgstr "Dividir visualización de mapa en marcos para visualizar múltiples mapas"
+msgstr ""
+"Dividir visualización de mapa en marcos para visualizar múltiples mapas"
 
 #: ../gui/tcltk/gis.m/frames.tcl:112 ../gui/tcltk/d.m/frames.tcl:60
 msgid "create and select frame"
@@ -1575,7 +1572,8 @@ msgstr "Mapas para animación"
 
 #: ../gui/tcltk/gis.m/animate.tcl:479
 msgid "Select maps to animate in one or more frames (1 frame required)"
-msgstr "Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
+msgstr ""
+"Seleccionar mapas para animar en uno o más marcos (se requiere un marco)"
 
 #: ../gui/tcltk/gis.m/animate.tcl:492
 msgid "Maps for frame 1 (required): "
@@ -3481,7 +3479,8 @@ msgstr "leyenda para %s"
 
 #: ../gui/tcltk/gis.m/legend.tcl:165
 msgid "Display legend for raster map using cat values and labels"
-msgstr "Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
+msgstr ""
+"Mostrar leyenda para mapa ráster usando valores de categorías y etiquetas"
 
 #: ../gui/tcltk/gis.m/legend.tcl:182
 msgid "Raster map: "
@@ -3716,7 +3715,8 @@ msgstr "\tCobertura de color opcional. Usar mapa base para sombrear."
 
 #: ../gui/tcltk/gis.m/raster.tcl:214
 msgid "\tdrape map for color in color relief map or data fusion"
-msgstr "\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
+msgstr ""
+"\tmapa de cobertura para mapa de relieve color en color o fusión de datos"
 
 #: ../gui/tcltk/gis.m/raster.tcl:219
 msgid "\tdrape map:  "
@@ -3757,7 +3757,8 @@ msgid "chart for %s"
 msgstr "gráfico para %s"
 
 #: ../gui/tcltk/gis.m/chart.tcl:159
-msgid "Display pie and bar charts of attribute values at vector object locations"
+msgid ""
+"Display pie and bar charts of attribute values at vector object locations"
 msgstr ""
 "Mostrar gráficos de tarta o de barras de los valores de atributos en las "
 "localizaciones de los objetos vectoriales"
@@ -4132,7 +4133,8 @@ msgstr "Ubicación de la escala: 0-100% f desde la esquina superior izquierda"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:176
 msgid "\t enter x,y of scale/arrow upper left corner"
-msgstr "\t introducir X, Y de la esquina superior izquierda de la escala/flecha"
+msgstr ""
+"\t introducir X, Y de la esquina superior izquierda de la escala/flecha"
 
 #: ../gui/tcltk/gis.m/barscale.tcl:179
 msgid "    "
@@ -4196,7 +4198,8 @@ msgid "Raster map for blue or saturation channel"
 msgstr "Mapa ráster para el canal azul o de saturación"
 
 #: ../gui/tcltk/gis.m/rgbhis.tcl:136
-msgid "Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
+msgid ""
+"Display 3 raster maps as Red/Green/Blue or Hue/Intensity/Saturation channels"
 msgstr ""
 "Mostrar 3 mapas ráster como canales Rojo/Verde/Azul o de Tonalidad/"
 "Intensidad/Saturación"
@@ -4767,7 +4770,8 @@ msgstr "voltear leyenda"
 
 #: ../gui/tcltk/d.m/legend.tcl:185 ../gui/tcltk/d.m/barscale.tcl:118
 msgid "place with mouse (cannot save placement with group)"
-msgstr "colocar con el ratón (no se puede guardar en el emplazamiento en grupo) "
+msgstr ""
+"colocar con el ratón (no se puede guardar en el emplazamiento en grupo) "
 
 #: ../gui/tcltk/d.m/raster.tcl:85
 msgid "Raster name:"
@@ -4952,7 +4956,8 @@ msgstr "Archivo DXF (ASCII)"
 
 #: ../gui/tcltk/d.m/menu.tcl:138
 msgid "ASCII vector or point file/old GRASS ASCII vector file"
-msgstr "Vector ASCII de archivo de puntos/antiguo archivo vectorial GRASS ASCII"
+msgstr ""
+"Vector ASCII de archivo de puntos/antiguo archivo vectorial GRASS ASCII"
 
 #: ../gui/tcltk/d.m/menu.tcl:139
 msgid "POV-Ray format"
@@ -5100,11 +5105,13 @@ msgstr "Ajustar el entorno de GRASS"
 
 #: ../gui/tcltk/d.m/menu.tcl:201
 msgid "Create/edit projection information for current location"
-msgstr "Crear/editar la información de la proyección para la localización activa"
+msgstr ""
+"Crear/editar la información de la proyección para la localización activa"
 
 #: ../gui/tcltk/d.m/menu.tcl:202
 msgid "Show projection information and create projection files"
-msgstr "Mostrar información de la proyección y crear los archivos de proyección"
+msgstr ""
+"Mostrar información de la proyección y crear los archivos de proyección"
 
 #: ../gui/tcltk/d.m/menu.tcl:204
 msgid "Convert coordinates from one projection to another"
@@ -5180,7 +5187,8 @@ msgstr "Volver a muestrear utilizando varios métodos de interpolación"
 
 #: ../gui/tcltk/d.m/menu.tcl:232
 msgid "Resample using regularized spline with tension method"
-msgstr "Volver a muestrear utilizando spline regularizada con el método de tensión"
+msgstr ""
+"Volver a muestrear utilizando spline regularizada con el método de tensión"
 
 #: ../gui/tcltk/d.m/menu.tcl:235
 msgid "Support file creation and maintenance"
@@ -5376,7 +5384,8 @@ msgstr "Generar celdas ráster aleatorias"
 
 #: ../gui/tcltk/d.m/menu.tcl:332
 msgid "Generate random cells and vector points from raster map"
-msgstr "Generar celdas aleatorias y puntos vectoriales a partir de un mapa ráster"
+msgstr ""
+"Generar celdas aleatorias y puntos vectoriales a partir de un mapa ráster"
 
 #: ../gui/tcltk/d.m/menu.tcl:335
 msgid "Generate density surface using moving Gausian kernal"
@@ -5420,7 +5429,8 @@ msgstr "Interpolación de curvas de nivel ráster"
 
 #: ../gui/tcltk/d.m/menu.tcl:348
 msgid "Inverse distance weighted interpolation from vector points"
-msgstr "Interpolación de distancia inversa ponderada a partir de puntos vectoriales"
+msgstr ""
+"Interpolación de distancia inversa ponderada a partir de puntos vectoriales"
 
 #: ../gui/tcltk/d.m/menu.tcl:349
 msgid "Regularized spline tension interpolation from vector points or contours"
@@ -5580,7 +5590,8 @@ msgstr "Localizar las entidades más cercanas en puntos o centroides"
 
 #: ../gui/tcltk/d.m/menu.tcl:415
 msgid "Generate Thiessen polygons around points (Voronoi diagram)"
-msgstr "Generar polígonos de Thiessen alrededor de puntos (diagrama de Voronoi)"
+msgstr ""
+"Generar polígonos de Thiessen alrededor de puntos (diagrama de Voronoi)"
 
 #: ../gui/tcltk/d.m/menu.tcl:416
 msgid "Connect points to create Delaunay triangles"
@@ -5648,7 +5659,8 @@ msgstr "Muestrea mapas ráster"
 
 #: ../gui/tcltk/d.m/menu.tcl:451
 msgid "Calculate statistics for raster map overlain by vector map"
-msgstr "Calcular estadísticas para mapas ráster cubiertos por mapas vectoriales"
+msgstr ""
+"Calcular estadísticas para mapas ráster cubiertos por mapas vectoriales"
 
 #: ../gui/tcltk/d.m/menu.tcl:455
 msgid "Partition points into test/training sets for k-fold cross validatation"
@@ -5658,7 +5670,8 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:456
 msgid "Transfer attribute data from queried vector map to points"
-msgstr "Transferir datos de atributo de las consultas del mapa vectorial a puntos"
+msgstr ""
+"Transferir datos de atributo de las consultas del mapa vectorial a puntos"
 
 #: ../gui/tcltk/d.m/menu.tcl:461
 msgid "Load vector attributes to database or create reports"
@@ -5674,7 +5687,8 @@ msgstr "Comprobar la normalidad de la distribución de puntos"
 
 #: ../gui/tcltk/d.m/menu.tcl:466
 msgid "Calculate stats for raster map underlying vector objects"
-msgstr "Calcular estadísticas para objetos vectoriales superpuestos a un mapa ráster"
+msgstr ""
+"Calcular estadísticas para objetos vectoriales superpuestos a un mapa ráster"
 
 #: ../gui/tcltk/d.m/menu.tcl:467
 msgid "Indices of point counts in quadrats"
@@ -5693,19 +5707,22 @@ msgid "Mosaic up to 4 adjacent images"
 msgstr "Unir más de 4 imágenes adyacentes"
 
 #: ../gui/tcltk/d.m/menu.tcl:478
-msgid "Color balance and enhance color tables of multiband imagery for rgb display"
+msgid ""
+"Color balance and enhance color tables of multiband imagery for rgb display"
 msgstr ""
 "Balance de color y mejora de tablas de color de imágenes multibanda  para "
 "visualización RGB"
 
 #: ../gui/tcltk/d.m/menu.tcl:479
-msgid "Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
+msgid ""
+"Transform HIS (Hue/Intensity/Saturation) color image to RGB (Red/Green/Blue)"
 msgstr ""
 "Transformar imagen de color HIS (tono/intensidad/saturación) a RGB (rojo/"
 "verde/azul)"
 
 #: ../gui/tcltk/d.m/menu.tcl:480
-msgid "Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
+msgid ""
+"Transform RGB (Red/Green/Blue) color image to HIS (Hue/Intensity/Saturation)"
 msgstr ""
 "Transformar imágenes de color RGB (rojo/verde/azul) a HIS (tono/intensidad/"
 "saturación)"
@@ -5836,7 +5853,8 @@ msgstr "azul (RGB) o saturación (HIS):"
 
 #: ../gui/tcltk/d.m/fttext.tcl:102
 msgid "     (leave blank to place with mouse; position will not save)"
-msgstr "      (dejar en blanco para colocar con el ratón; la posición no se guardará)"
+msgstr ""
+"      (dejar en blanco para colocar con el ratón; la posición no se guardará)"
 
 #: ../gui/tcltk/d.m/fttext.tcl:108
 msgid "     coordinate type"
@@ -6114,3 +6132,16 @@ msgstr "Previsualizar"
 msgid "Test"
 msgstr "Test"
 
+#~ msgid "WARNING: Error creating new location"
+#~ msgstr "AVISO: Error al crear nueva localización"
+
+#~ msgid ""
+#~ "Error creating new location from georeferenced file.  g.proj returned "
+#~ "following message:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Error al crear nueva localización con archivo georreferenciado.  g.proj "
+#~ "devolvió el siguiente mensaje:\n"
+#~ "\n"
+#~ "%s"
