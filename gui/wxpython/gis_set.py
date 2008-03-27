@@ -728,8 +728,7 @@ class HelpWindow(wx.Frame):
         #        sizer.SetSizeHints(self)
         self.Layout()
 
-# class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
-class GListBox(wx.ListCtrl):
+class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
     """Use wx.ListCtrl instead of wx.ListBox, different style for
     non-selectable items (e.g. mapsets with denied permission)"""
     def __init__(self, parent, id, size,
@@ -737,11 +736,9 @@ class GListBox(wx.ListCtrl):
 
         wx.ListCtrl.__init__(self, parent, id, size=size,
                              style=wx.LC_REPORT | wx.LC_NO_HEADER | wx.LC_SINGLE_SEL |
-                             wx.BORDER_RAISED)
+                             wx.BORDER_SUNKEN)
 
-        self.width = size[0] - 20 # FIXME (width of vertical scrollbar)
-        
-        # listmix.ListCtrlAutoWidthMixin.__init__(self)
+        listmix.ListCtrlAutoWidthMixin.__init__(self)
         
         self.InsertColumn(0, '')
 
@@ -764,9 +761,6 @@ class GListBox(wx.ListCtrl):
                 self.SetItemTextColour(idx, wx.Colour(150, 150, 150))
             idx += 1
 
-        for col in range(self.GetColumnCount()):
-            self.SetColumnWidth(col, self.width)
-            
     def Clear(self):
         self.DeleteAllItems()
 
