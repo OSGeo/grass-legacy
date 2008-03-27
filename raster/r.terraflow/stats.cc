@@ -21,7 +21,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
+#ifndef __MINGW32__
 #include <sys/resource.h>
+#endif
 #include <stdio.h>
 #include <errno.h>
 
@@ -126,7 +128,9 @@ statsRecorder::statsRecorder(char *fname) : ofstream(noclobberFileName(fname)){
   //ofstream that takes an fd; wrote another noclobber() function that
   //closes fd and returns the name;
   rt_start(tm);
+#ifndef __MINGW32__
   bss = sbrk(0);
+#endif
   char buf[BUFSIZ];
   *this << freeMem(buf) << endl;
 }
@@ -135,6 +139,9 @@ statsRecorder::statsRecorder(char *fname) : ofstream(noclobberFileName(fname)){
 
 long 
 statsRecorder::freeMem() {
+#ifdef __MINGW32__
+  return -1;
+#else
   struct rlimit rlim;
   if (getrlimit(RLIMIT_DATA, &rlim) == -1) {
 	perror("getrlimit: ");
@@ -148,6 +155,7 @@ statsRecorder::freeMem() {
   } 
   long freeMem = rlim.rlim_cur - ((char*)sbrk(0)-(char*)bss);
   return freeMem;
+#endif /* __MINGW32__ */
 }
 
 char *

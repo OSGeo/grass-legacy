@@ -18,7 +18,9 @@
 
 
 #include <sys/types.h>
+#ifdef USE_LARGEMEM
 #include <sys/mman.h>
+#endif
 #include <ctype.h>
 
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
