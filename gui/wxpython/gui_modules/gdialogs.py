@@ -5,7 +5,8 @@
 
 List of classes:
  - NewVectorDialog
-
+ - SavedRegion
+ 
 (C) 2008 by the GRASS Development Team
 
 This program is free software under the GNU General Public
@@ -134,3 +135,62 @@ def CreateNewVector(parent, title=_('Create new vector map'),
             return outmap + '@' + grassenv.GetGRASSVariable('MAPSET')
 
     return None
+
+class SavedRegion(wx.Dialog):
+    def __init__(self, parent, id, title="", pos=wx.DefaultPosition, size=wx.DefaultSize,
+                 style=wx.DEFAULT_DIALOG_STYLE,
+                 loadsave='load'):
+        """
+        Loading and saving of display extents to saved region file
+        """
+        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+
+        self.loadsave = loadsave
+        self.wind = ''
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+
+        box = wx.BoxSizer(wx.HORIZONTAL)
+        if loadsave == 'load':
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Load region:"))
+            box.Add(item=label, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+            self.selection = gselect.Select(parent=self, id=wx.ID_ANY, size=globalvar.DIALOG_GSELECT_SIZE,
+                                            type='windows')
+            box.Add(item=self.selection, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+            self.selection.Bind(wx.EVT_TEXT, self.OnSelection)
+
+        elif loadsave == 'save':
+            label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Save region:"))
+            box.Add(item=label, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+            self.textentry = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="",
+                                         size=globalvar.DIALOG_TEXTCTRL_SIZE)
+            box.Add(item=self.textentry, proportion=0, flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+            self.textentry.Bind(wx.EVT_TEXT, self.OnText)
+
+        sizer.Add(item=box, proportion=0, flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
+                  border=5)
+
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20, -1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
+
+        btnsizer = wx.StdDialogButtonSizer()
+
+        btn = wx.Button(self, wx.ID_OK)
+        btn.SetDefault()
+        btnsizer.AddButton(btn)
+
+        btn = wx.Button(self, wx.ID_CANCEL)
+        btnsizer.AddButton(btn)
+        btnsizer.Realize()
+
+        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_RIGHT | wx.ALL, border=5)
+
+        self.SetSizer(sizer)
+        sizer.Fit(self)
+
+    def OnSelection(self, event):
+        self.wind = event.GetString()
+
+    def OnText(self, event):
+        self.wind = event.GetString()
