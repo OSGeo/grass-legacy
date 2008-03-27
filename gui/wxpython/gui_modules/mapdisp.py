@@ -7,7 +7,6 @@ CLASSES:
     * MapFrame
     * DecDialog
     * TextDialog
-    * SavedRegion
     * MapApp
 
 PURPOSE:   GIS map display canvas, with toolbar for various display
@@ -63,6 +62,7 @@ import histogram
 import profile
 import globalvar
 import utils
+import gdialogs
 from digit import DigitCategoryDialog as DigitCategoryDialog
 from digit import DigitZBulkDialog    as DigitZBulkDialog
 from digit import GV_LINES            as Digit_Lines_Type
@@ -1981,7 +1981,7 @@ class BufferedWindow(wx.Window):
     def ZoomToWind(self, event):
         """
         Set display geometry to match computational
-        region extents (set with g.region)
+        region settings (set with g.region)
         """
 
         self.Map.region = self.Map.GetRegion()
@@ -1994,6 +1994,19 @@ class BufferedWindow(wx.Window):
 
         self.parent.StatusbarUpdate()
 
+    def ZoomToDefault(self, event):
+        """Set display geometry to match default
+        region settings"""
+        self.Map.region = self.Map.GetRegion(default=True)
+        self.Map.AdjustRegion() # aling region extent to the display
+
+        self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
+                         self.Map.region['e'], self.Map.region['w'])
+
+        self.UpdateMap()
+
+        self.parent.StatusbarUpdate()
+        
     def DisplayToWind(self, event):
         """
         Set computational region (WIND file) to
@@ -2027,10 +2040,10 @@ class BufferedWindow(wx.Window):
 
         zoomreg = {}
 
-        dlg = SavedRegion(self, wx.ID_ANY, "Zoom to saved region extents",
-                          pos=wx.DefaultPosition, size=wx.DefaultSize,
-                          style=wx.DEFAULT_DIALOG_STYLE,
-                          loadsave='load')
+        dlg = gdialogs.SavedRegion(self, wx.ID_ANY, _("Zoom to saved region extents"),
+                                   pos=wx.DefaultPosition, size=wx.DefaultSize,
+                                   style=wx.DEFAULT_DIALOG_STYLE,
+                                   loadsave='load')
 
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
@@ -2061,10 +2074,10 @@ class BufferedWindow(wx.Window):
         Save display extents to named region file.
         """
 
-        dlg = SavedRegion(self, wx.ID_ANY, "Save display extents to region file",
-                          pos=wx.DefaultPosition, size=wx.DefaultSize,
-                          style=wx.DEFAULT_DIALOG_STYLE,
-                          loadsave='save')
+        dlg = gdialogs.SavedRegion(self, wx.ID_ANY, "Save display extents to region file",
+                                   pos=wx.DefaultPosition, size=wx.DefaultSize,
+                                   style=wx.DEFAULT_DIALOG_STYLE,
+                                   loadsave='save')
         if dlg.ShowModal() == wx.ID_CANCEL:
             dlg.Destroy()
             return
@@ -3366,13 +3379,17 @@ class MapFrame(wx.Frame):
         zoommenu.AppendItem(zoomwind)
         self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToWind, zoomwind)
 
-        savewind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Set computational region from display'))
-        zoommenu.AppendItem(savewind)
-        self.Bind(wx.EVT_MENU, self.MapWindow.DisplayToWind, savewind)
+        zoomdefault = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to default region'))
+        zoommenu.AppendItem(zoomdefault)
+        self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToDefault, zoomdefault)
 
         zoomsaved = wx.MenuItem(zoommenu, wx.ID_ANY, _('Zoom to saved region'))
         zoommenu.AppendItem(zoomsaved)
         self.Bind(wx.EVT_MENU, self.MapWindow.ZoomToSaved, zoomsaved)
+
+        savewind = wx.MenuItem(zoommenu, wx.ID_ANY, _('Set computational region from display'))
+        zoommenu.AppendItem(savewind)
+        self.Bind(wx.EVT_MENU, self.MapWindow.DisplayToWind, savewind)
 
         savezoom = wx.MenuItem(zoommenu, wx.ID_ANY, _('Save display geometry to named region'))
         zoommenu.AppendItem(savezoom)
@@ -3591,66 +3608,6 @@ class TextDialog(wx.Dialog):
             self.Layout()
 
         dlg.Destroy()
-
-
-class SavedRegion(wx.Dialog):
-    def __init__(self, parent, id, title="", pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE,
-                 loadsave='load'):
-        """
-        Loading and saving of display extents to saved region file
-        """
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-
-        self.loadsave = loadsave
-        self.wind = ''
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        if loadsave == 'load':
-            label = wx.StaticText(self, wx.ID_ANY, "Load region:")
-            box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-            self.selection = gselect.Select(self, id=wx.ID_ANY, size=(300,-1),
-                                              type='windows')
-            box.Add(self.selection, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-            self.selection.Bind(wx.EVT_TEXT, self.onSelection)
-
-        elif loadsave == 'save':
-            label = wx.StaticText(self, wx.ID_ANY, "Save region:")
-            box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-            self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
-            box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-            self.textentry.Bind(wx.EVT_TEXT, self.onText)
-
-        sizer.Add(item=box, proportion=0, flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL,
-                  border=5)
-
-        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(item=line, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.LEFT|wx.RIGHT, border=5)
-
-        btnsizer = wx.StdDialogButtonSizer()
-
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-
-        sizer.Add(item=btnsizer, proportion=0, flag=wx.ALIGN_CENTER|wx.ALL, border=5)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-    def onSelection(self, event):
-        self.wind = event.GetString()
-
-    def onText(self, event):
-        self.wind = event.GetString()
 
 class MapApp(wx.App):
     """

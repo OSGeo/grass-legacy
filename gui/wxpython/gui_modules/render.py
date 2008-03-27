@@ -297,7 +297,7 @@ class Map(object):
 
         return self.wind
         
-    def __adjustRegion(self):
+    def AdjustRegion(self):
         """
         Adjusts display resolution to match monitor size in pixels.
         Maintains constant display resolution, not related to computational
@@ -314,7 +314,7 @@ class Map(object):
         self.region['cols']  = round(mapwidth / self.region["ewres"])
         self.region['cells'] = self.region['rows'] * self.region['cols']
 
-        Debug.msg (3, "Map.__adjustRegion(): %s" % self.region)
+        Debug.msg (3, "Map.AdjustRegion(): %s" % self.region)
 
         return self.region
 
@@ -394,7 +394,7 @@ class Map(object):
             return False
 
     def GetRegion(self, rast=None, vect=None,
-                  n=None, s=None, e=None, w=None):
+                  n=None, s=None, e=None, w=None, default=False):
         """
         Get region settings
 
@@ -402,9 +402,11 @@ class Map(object):
 
         @param rast raster name or None
         @param vect vector name or None
+        @param n,s,e,w force extent
+        @param default force default region settings
         
         @return region settings as directory, e.g. {
-        "n":"4928010", "s":"4913700", "w":"589980",...}
+        'n':'4928010', 's':'4913700', 'w':'589980',...}
         """
 
         region = {}
@@ -415,6 +417,9 @@ class Map(object):
         # do not update & shell style output
         cmdList = ["g.region", "-u", "-g", "-p", "-c"]
 
+        if default:
+            cmdList.append('-d')
+            
         if n:
             cmdList.append('n=%s' % n)
         if s:
@@ -470,8 +475,8 @@ class Map(object):
         """
         grass_region = ""
 
-        # adjust region settigns to match monitor
-        self.region = self.__adjustRegion()
+        # adjust region settings to match monitor
+        self.region = self.AdjustRegion()
 
         #        newextents = self.AlignResolution()
         #        self.region['n'] = newextents['n']
