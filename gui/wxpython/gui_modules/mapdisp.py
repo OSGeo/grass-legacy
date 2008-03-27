@@ -2822,7 +2822,7 @@ class MapFrame(wx.Frame):
         qdist = 10.0 * ((self.Map.region['e'] - self.Map.region['w']) / self.Map.width)
         east, north = self.MapWindow.Pixel2Cell((x, y))
 
-        if not self.tree.GetSelections():
+        if not self.tree.layer_selected:
             dlg = wx.MessageDialog(parent=self,
                                    message=_('No map layer selected for querying.'),
                                    caption=_('Message'),
