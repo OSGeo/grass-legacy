@@ -72,10 +72,8 @@ Maintainer: M. Neteler
 * Mailman mailing lists + Spam filtering (at lists.osgeo.org since 11/2007)
 ** Mailman is doing the job, only registered users can post
 ** messages from unsubscribed people is auto-discarded without notification
-** the open "weblist" operates as:
-    User -> weblist at grass itc.it -> /etc/aliases -> 
-           -> neteler.osgeo..gmail.com (for Spam filtering) -> FWD -> 
-             -> grass-web at lists osgeo.org
+** the open "weblist" operates instead like this:
+    User -> grass-web at lists osgeo.org -> greylisting -> Mailman
 
 * Backup of mailing lists (mbox files)
 ** manually done by MN and Intevation (into freegis.org FTP space)
