@@ -61,7 +61,7 @@ class LayerTree(CT.CustomTreeCtrl):
                  size=wx.DefaultSize, style=wx.SUNKEN_BORDER,
                  ctstyle=CT.TR_HAS_BUTTONS | CT.TR_HAS_VARIABLE_ROW_HEIGHT |
                  CT.TR_HIDE_ROOT | CT.TR_ROW_LINES | CT.TR_FULL_ROW_HIGHLIGHT |
-                 CT.TR_EDIT_LABELS | CT.TR_SINGLE,
+                 CT.TR_EDIT_LABELS | CT.TR_MULTIPLE,
                  idx=None, gismgr=None, notebook=None, auimgr=None, showMapDisplay=True):
         CT.CustomTreeCtrl.__init__(self, parent, id, pos, size, style, ctstyle)
 
