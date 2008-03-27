@@ -8,7 +8,7 @@ $Date$
  GRASS GIS >= 6.3
  Python >= 2.4
  wxPython >= 2.8.1.1
-
+ 
  Get wxPython 2.8.x packages from:
  * Source: http://www.wxpython.org/download.php
  * Debian GNU/Linux: http://wiki.wxpython.org/InstallingOnUbuntuOrDebian
@@ -31,12 +31,20 @@ $Date$
  * ActiveStates for AIX, HP-UX, Linux (x86), Linux 64-bit (x86_64 AMD64), Mac OS X,
      Solaris (SPARC), Windows:
      http://www.activestate.com/store/download.aspx?prdGUID=b08b04e0-6872-4d9d-a722-7a0c2dea2758
-
+     
  E.g. On Debian GNU/Linux install these packages:
  apt-get install libwxbase2.8-0 libwxbase2.8-dbg libwxbase2.8-dev \
  	 libwxgtk2.8-0 libwxgtk2.8-dbg libwxgtk2.8-dev \
 	 python-wxgtk2.8 wx2.8-doc wx2.8-examples \
 	 wx2.8-headers wx2.8-i18n
+	 
+ MS-WINDOWS ONLY REQUIREMENTS
+ 
+ Python Extensions for MS-Windows >= Build 210
+ NumPy >= 1.0.4
+ 
+ Get Python Extensions for MS-Windows from: http://sourceforge.net/project/platformdownload.php?group_id=78018 
+ Get NumPy from: http://sourceforge.net/project/showfiles.php?group_id=1369&package_id=175103  
 
 2 - STARTUP WITH GRASS INITIALIZATION
 
