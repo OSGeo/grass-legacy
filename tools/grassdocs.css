@@ -1,5 +1,5 @@
 /* GRASS documentation site style sheet
- * (copyied by 'tools/build_html_index.sh')
+ * (copied by 'tools/build_html_index.sh')
  *
  * send improvements to weblist@grass.itc.it
  * 
@@ -13,40 +13,45 @@
 
 BODY{	background: white;
 	color: black;
+	font-family: arial,sans-serif;
 }
 
 H1{	background-color: white;
-	color: #409940;
-	font-family: sans-serif;
+	color: rgb(25%, 60%, 25%);
+	font-family: arial,sans-serif;
 	font-weight: bold;
 	font-size: x-large;
 }
 
 H2{	background-color: white;
-	color: #409940;
-	font-family: sans-serif;
+	color: rgb(25%, 60%, 25%);
+	font-family: arial,sans-serif;
 	font-weight: bold;
 	font-size: large;
 }
 
 H3{	background-color: white;
-	color: #409940;
-	font-family: sans-serif;
+	color: rgb(25%, 60%, 25%);
+	font-family: arial,sans-serif;
 	font-weight: bold;
 	font-size: large;
 }
 
 H4{	background-color: white;
-	color: #409940;
-	font-family: sans-serif;
+	color: rgb(25%, 60%, 25%);
+	font-family: arial,sans-serif;
 	font-weight: bold;
 	font-size: medium;
 }
 
 DIV.code{	width: 95%;
 		color : black;
-		background-color: #E5E5E5;
+		background-color: rgb(90%, 90%, 90%);
 		padding-left: 1em;
 		padding-right: 1em;
+}
+
+.leftmenu {
+	padding-left: 10px;
 }
 
