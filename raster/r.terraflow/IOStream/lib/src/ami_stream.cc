@@ -42,7 +42,11 @@ ami_single_temp_name(char *base, char* tmp_path) {
   assert(base_dir);
 
   sprintf(tmp_path, "%s/%s_XXXXXX", base_dir, base);
+#ifdef __MINGW32__
+  fd = mktemp(tmp_path) ? open(tmp_path, O_CREAT|O_EXCL|O_RDWR, 0600) : -1;
+#else
   fd  = mkstemp(tmp_path);
+#endif
 
   if (fd == -1) {
     cerr <<  "ami_single_temp_name: ";

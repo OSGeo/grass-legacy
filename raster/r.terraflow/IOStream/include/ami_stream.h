@@ -36,6 +36,10 @@ using namespace std;
 
 #include "mm.h" // Get the memory manager.
 
+#ifdef __MINGW32__
+#define getpagesize() (4096)
+#endif
+
 #define DEBUG_DELETE if(0)
 
 // The name of the environment variable which keeps the name of the
@@ -421,7 +425,7 @@ AMI_STREAM<T>::~AMI_STREAM(void)  {
   
   // Get rid of the file if not persistent and if not substream.
   if ((per != PERSIST_PERSISTENT) && (substream_level == 0)) {
-    if (unlink(path) == -1) {
+    if (remove(path) == -1) {
       cerr << "AMI_STREAM: failed to unlink " << path << endl;
       perror("cannot unlink ");
       assert(0);

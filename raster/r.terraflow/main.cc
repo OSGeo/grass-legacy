@@ -14,6 +14,7 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
+ *  TODO before GRASS 7 released: change param 'STREAM_DIR' -> 'stream_dir'
  *****************************************************************************/
  
 #include <stdio.h>
@@ -224,7 +225,7 @@ void check_header(char* cellname) {
   char *mapset;
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error(_("cell file [%s] not found"), cellname);
+    G_fatal_error(_("Raster map <%s> not found"), cellname);
   }
   /* read cell header */
   struct Cell_head cell_hd;
@@ -283,24 +284,24 @@ void check_args() {
 
   /* check if filled elevation grid name is  valid */
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->filled_grid);
   }
   /* check if output grid names are valid */
   if (G_legal_filename (opt->dir_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->dir_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->dir_grid);
   }
   if (G_legal_filename (opt->filled_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->filled_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->filled_grid);
   }
   if (G_legal_filename (opt->flowaccu_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->flowaccu_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->flowaccu_grid);
   }
   if (G_legal_filename (opt->watershed_grid) < 0) {
-    G_fatal_error(_("[%s] is an illegal name"), opt->watershed_grid);
+    G_fatal_error(_("<%s> is an illegal file name"), opt->watershed_grid);
   }
 #ifdef OUTPU_TCI
   if (G_legal_filename (opt->tci_grid) < 0) {
-  G_fatal_error(_("[%s] is an illegal name"), opt->tci_grid);
+  G_fatal_error(_("<%s> is an illegal file name"), opt->tci_grid);
   }
 #endif
   
@@ -324,8 +325,12 @@ void record_args(int argc, char **argv) {
     exit(1);
   }
 
+#ifdef __MINGW32__
+  strcpy(buf, ctime(&t));
+#else
   ctime_r(&t, buf);
   buf[24] = '\0';
+#endif
   stats->timestamp(buf);
   
   *stats << "Command Line: " << endl;
@@ -369,7 +374,7 @@ setFlowAccuColorTable(char* cellname) {
 
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error (_("cell file [%s] not found"), cellname);
+    G_fatal_error (_("Raster map <%s> not found"), cellname);
   }
   if (G_read_range(cellname, mapset, &r) == -1) {
     G_fatal_error(_("cannot read range"));
@@ -409,7 +414,7 @@ setSinkWatershedColorTable(char* cellname) {
 
   mapset = G_find_cell(cellname, "");
   if (mapset == NULL) {
-    G_fatal_error (_("cell file [%s] not found"), cellname);
+    G_fatal_error (_("Raster map <%s> not found"), cellname);
   }
   if (G_read_range(cellname, mapset, &r) == -1) {
     G_fatal_error(_("cannot read range"));
@@ -519,7 +524,8 @@ main(int argc, char *argv[]) {
  
   /* check STREAM path (the place where intermediate STREAMs are placed) */
   sprintf(buf, "%s=%s",STREAM_TMPDIR, opt->streamdir);
-  putenv(buf);
+  /* don't pass an automatic variable; putenv() isn't guaranteed to make a copy */
+  putenv(G_store(buf));
   if (getenv(STREAM_TMPDIR) == NULL) {
     fprintf(stderr, "%s:", STREAM_TMPDIR);
     G_fatal_error("not set");
