@@ -131,7 +131,7 @@ class GRASSStartup(wx.Frame):
 
         # textinputs
         self.tgisdbase = wx.TextCtrl(parent=self.panel, id=wx.ID_ANY, value="", size=(300, -1),
-                                     style=wx.TE_LEFT)
+                                     style=wx.TE_PROCESS_ENTER)
 
         # Locations
         self.lpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
@@ -160,7 +160,7 @@ class GRASSStartup(wx.Frame):
         self.manageloc.Bind(wx.EVT_CHOICE,    self.OnManageLoc)
         self.lblocations.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnSelectLocation)
         self.lbmapsets.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.OnSelectMapset)
-        self.Bind(wx.EVT_KEY_DOWN,            self.OnKeyPressedInDbase, self.tgisdbase)
+        self.tgisdbase.Bind(wx.EVT_TEXT_ENTER, self.OnSetDatabase)
         self.Bind(wx.EVT_CLOSE,               self.OnCloseWindow)
 
     def _set_properties(self):
@@ -526,6 +526,11 @@ class GRASSStartup(wx.Frame):
         self.lblocations.Clear()
         self.lblocations.InsertItems(self.listOfLocations, 0)
 
+        if len(self.listOfLocations) > 0:
+            self.lblocations.SetSelection(0)
+        else:
+            self.lblocations.SetSelection(wx.NOT_FOUND)
+
         return self.listOfLocations
 
     def UpdateMapsets(self, location):
@@ -574,12 +579,9 @@ class GRASSStartup(wx.Frame):
     def OnSelectLocation(self, event):
         """Location selected"""
         if event:
-            try:
-                self.lblocations.SetSelection(event.GetIndex())
-            except AttributeError:
-                self.lblocations.SetSelection(0)
+            self.lblocations.SetSelection(event.GetIndex())
             
-        if self.lblocations.GetSelection() > -1:
+        if self.lblocations.GetSelection() != wx.NOT_FOUND:
             self.UpdateMapsets(os.path.join(self.gisdbase,
                                             self.listOfLocations[self.lblocations.GetSelection()]))
         else:
@@ -594,8 +596,11 @@ class GRASSStartup(wx.Frame):
 
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets, 0, disabled=disabled)
-        
-        self.lbmapsets.SetSelection(0)
+
+        if len(self.listOfMapsets) > 0:
+            self.lbmapsets.SetSelection(0)
+        else:
+            self.lbmapsets.SetSelection(wx.NOT_FOUND)
 
     def OnSelectMapset(self, event):
         """Mapset selected"""
@@ -617,8 +622,10 @@ class GRASSStartup(wx.Frame):
 
         if self.listOfLocations != []:
             self.lblocations.SetSelection(0)
-
-        self.OnSelectLocation(event)
+        else:
+            self.lblocations.SetSelection(wx.NOT_FOUND)
+            
+        self.OnSelectLocation(None)
 
     def OnBrowse(self, event):
         """'Browse' button clicked"""
@@ -632,13 +639,6 @@ class GRASSStartup(wx.Frame):
         dlg.Destroy()
 
         self.OnSetDatabase(event)
-
-    def OnKeyPressedInDbase(self,event):
-        """GIS data directory changed"""
-        if wx.WXK_RETURN == event.KeyCode:
-            self.OnSetDatabase(event)
-        else:
-            event.Skip()
 
     def OnCreateMapset(self,event):
         """Create new mapset"""
