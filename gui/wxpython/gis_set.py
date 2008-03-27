@@ -143,7 +143,7 @@ class GRASSStartup(wx.Frame):
         # Mapsets
         self.mpanel = wx.Panel(parent=self.panel, id=wx.ID_ANY)
         self.lbmapsets = GListBox(parent=self.mpanel,
-                                  id=wx.ID_ANY, size=(150, 200),
+                                  id=wx.ID_ANY, size=(180, 200),
                                   choices=self.listOfMapsets)
 
         # layout & properties
@@ -545,9 +545,18 @@ class GRASSStartup(wx.Frame):
         self.lbmapsets.Clear()
 
         # disable mapset with denied permission
+        locationName = os.path.basename(location)
+        if self._getRCValue("LOCATION_NAME") == "<UNKNOWN>":
+            gcmd.Command(["g.gisenv",
+                          "set=GISDBASE=%s" % self.gisdbase])
+            gcmd.Command(["g.gisenv",
+                          "set=LOCATION_NAME=%s" % locationName])
+            gcmd.Command(["g.gisenv",
+                          "set=MAPSET=PERMANENT"])
+
         for line in gcmd.Command(['g.mapset',
                                   '-l',
-                                  'location=%s' % os.path.basename(location),
+                                  'location=%s' % locationName,
                                   'gisdbase=%s' % self.gisdbase]).ReadStdOutput():
             self.listOfMapsetsSelectable += line.split(' ')
 
@@ -565,7 +574,10 @@ class GRASSStartup(wx.Frame):
     def OnSelectLocation(self, event):
         """Location selected"""
         if event:
-            self.lblocations.SetSelection(event.GetIndex())
+            try:
+                self.lblocations.SetSelection(event.GetIndex())
+            except AttributeError:
+                self.lblocations.SetSelection(0)
             
         if self.lblocations.GetSelection() > -1:
             self.UpdateMapsets(os.path.join(self.gisdbase,
@@ -716,16 +728,20 @@ class HelpWindow(wx.Frame):
         #        sizer.SetSizeHints(self)
         self.Layout()
 
-class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
+# class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
+class GListBox(wx.ListCtrl):
     """Use wx.ListCtrl instead of wx.ListBox, different style for
     non-selectable items (e.g. mapsets with denied permission)"""
     def __init__(self, parent, id, size,
                  choices, disabled=[]):
 
         wx.ListCtrl.__init__(self, parent, id, size=size,
-                             style=wx.LC_REPORT | wx.LC_NO_HEADER | wx.LC_SINGLE_SEL)
+                             style=wx.LC_REPORT | wx.LC_NO_HEADER | wx.LC_SINGLE_SEL |
+                             wx.BORDER_RAISED)
 
-        listmix.ListCtrlAutoWidthMixin.__init__(self)
+        self.width = size[0] - 20 # FIXME (width of vertical scrollbar)
+        
+        # listmix.ListCtrlAutoWidthMixin.__init__(self)
         
         self.InsertColumn(0, '')
 
@@ -747,6 +763,9 @@ class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
             if idx in disabled:
                 self.SetItemTextColour(idx, wx.Colour(150, 150, 150))
             idx += 1
+
+        for col in range(self.GetColumnCount()):
+            self.SetColumnWidth(col, self.width)
             
     def Clear(self):
         self.DeleteAllItems()
