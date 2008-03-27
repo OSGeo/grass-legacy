@@ -25,7 +25,6 @@
 #include <GL/glx.h>
 
 static Display *dpy;
-static GLXContext ctx_orig;
 static GLXContext ctx;
 #ifdef HAVE_PBUFFERS
 static GLXPbuffer pbuffer;
@@ -237,9 +236,7 @@ int Create_OS_Ctx(int width, int height)
     GLXFBConfig *fbc;
     int elements;
 #endif
-#ifdef HAVE_PIXMAPS
     XVisualInfo *vi;
-#endif
 
     dpy = togl_display();
     if (dpy == NULL) {
@@ -247,12 +244,6 @@ int Create_OS_Ctx(int width, int height)
 	return (-1);
     }
     scr = togl_screen_number();
-
-    ctx_orig = glXGetCurrentContext();
-    if (ctx_orig == NULL) {
-	fprintf(stderr, "Unable to get current context\n");
-	return (-1);
-    }
 
 #ifdef HAVE_PBUFFERS
 #if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
@@ -265,20 +256,44 @@ int Create_OS_Ctx(int width, int height)
 
 	if (ver_minor >= 3)
 	{
+	    int fb_attrib[] = {
+		GLX_DOUBLEBUFFER, False,
+		GLX_RED_SIZE, 1,
+		GLX_GREEN_SIZE, 1,
+		GLX_BLUE_SIZE, 1,
+		GLX_DEPTH_SIZE, 1,
+		GLX_DRAWABLE_TYPE, GLX_PBUFFER_BIT,
+		None
+	    };
+
 	    fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
-	    fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
+	    fbc = glXChooseFBConfig(dpy, scr, fb_attrib, &elements);
 	    if (fbc)
 	    {
 		int pbuf_attrib[] = {
-		    GLX_PBUFFER_WIDTH, width + 1,
-		    GLX_PBUFFER_HEIGHT, height + 1,
+		    GLX_PBUFFER_WIDTH, width,
+		    GLX_PBUFFER_HEIGHT, height,
 		    None
 		};
 
 		pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
 		if (pbuffer)
-		    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+		{
+		    vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
+		    if (vi == NULL) {
+			fprintf(stderr, "Unable to get Visual\n");
+			return (-1);
+		    }
+
+		    ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
+		    if (ctx == NULL) {
+			fprintf(stderr, "Unable to create context\n");
+			return (-1);
+		    }
+
+		    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx);
+		}
 	    }
 	}
     }
