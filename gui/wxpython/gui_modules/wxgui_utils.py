@@ -540,7 +540,7 @@ class LayerTree(CT.CustomTreeCtrl):
                 opacity = 1.0
             if lcmd and len(lcmd) > 1:
                 cmd = lcmd
-                render = True
+                render = False
                 name = utils.GetLayerNameFromCmd(lcmd)
             else:
                 cmd = []
