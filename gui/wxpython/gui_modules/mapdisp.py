@@ -452,8 +452,7 @@ class BufferedWindow(wx.Window):
         # Make new off screen bitmap: this bitmap will always have the
         # current drawing in it, so it can be used to save the image to
         # a file, or whatever.
-        self.buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1,self.Map.height))
-        #self.buffer = wx.EmptyBitmap(mwidth, mheight)
+        self.buffer = wx.EmptyBitmap(max(1, self.Map.width), max(1, self.Map.height))
 
         # get the image to be rendered
         self.img = self.GetImage()
@@ -461,7 +460,8 @@ class BufferedWindow(wx.Window):
         # update map display
         if self.img and self.Map.width + self.Map.height > 0: # scale image during resize
             self.img = self.img.Scale(self.Map.width, self.Map.height)
-            self.UpdateMap()
+            if len(self.Map.GetListOfLayers()) > 0:
+                self.UpdateMap()
 
         # re-render image on idle
         self.resize = True
@@ -474,10 +474,9 @@ class BufferedWindow(wx.Window):
 
     def OnIdle(self, event):
         """
-        Only re-render a compsite map image from GRASS during
+        Only re-render a composite map image from GRASS during
         idle time instead of multiple times during resizing.
         """
-
         if self.resize:
             self.UpdateMap(render=True)
 
@@ -537,6 +536,11 @@ class BufferedWindow(wx.Window):
 
         start = time.clock()
 
+        self.resize = False
+
+        if len(self.Map.GetListOfLayers()) == 0:
+            return False
+
         if self.img is None:
             render = True
 
@@ -557,7 +561,6 @@ class BufferedWindow(wx.Window):
             self.Map.ChangeMapSize(self.GetClientSize())
             self.mapfile = self.Map.Render(force=True, mapWindow=self.parent)
             self.img = self.GetImage() # id=99
-            self.resize = False
 
         #
         # clear pseudoDcs
@@ -612,8 +615,6 @@ class BufferedWindow(wx.Window):
             for id in self.textdict:
                 self.Draw(self.pdc, img=self.textdict[id], drawid=id,
                           pdctype='text', coords=self.ovlcoords[id])
-
-        self.resize = False
 
         #
         # render region border (to self.pdcTmp)
@@ -2445,7 +2446,7 @@ class MapFrame(wx.Frame):
 
     def OnDraw(self, event):
         """
-        Redraw button clicked
+        Re-display current map composition
         """
         self.MapWindow.UpdateMap(render=False)
 
@@ -2455,9 +2456,9 @@ class MapFrame(wx.Frame):
 
     def OnRender(self, event):
         """
-        Rerender button clicked
+        Re-render map composition (each map layer)
         """
-        # redraw map composition
+        # detele tmp map layers (queries)
         qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)
         for layer in qlayer:
             self.Map.DeleteLayer(layer)
@@ -3044,20 +3045,19 @@ class MapFrame(wx.Frame):
 
         # initiating output
         style = self.gismanager.goutput.cmd_output.StyleWarning
-        self.gismanager.goutput.cmd_output.write('Click and drag with left mouse button '
-                                                 'to measure.%s'
-                                                 'Double click with left button to clear.%s' % \
-                                                     (os.linesep, os.linesep), style)
+        self.gismanager.goutput.WriteLog(_('Click and drag with left mouse button '
+                                           'to measure.%s'
+                                           'Double click with left button to clear.%s') % \
+                                             (os.linesep, os.linesep), style)
         if self.projinfo['proj'] != 'xy':
             units = self.projinfo['units']
             style = self.gismanager.goutput.cmd_output.StyleCommand
-            self.gismanager.goutput.cmd_output.write('Measuring distance ('
-                                                     + units + '):%s' % os.linesep,
-                                                     style)
+            self.gismanager.goutput.WriteLog(_('Measuring distance ('
+                                               + units + '):'),
+                                             style)
         else:
-            self.gismanager.goutput.cmd_output.write('Measuring distance:%s' % os.linesep,
-                                                     style)
-
+            self.gismanager.goutput.WriteLog(_('Measuring distance:'),
+                                             style)
 
     def MeasureDist(self, beginpt, endpt):
         """
@@ -3084,13 +3084,13 @@ class MapFrame(wx.Frame):
             angle = angle+90
             if angle < 0: angle = 360+angle
 
-            mstring = 'segment = %s %s\ttotal distance = %s %s\tbearing = %d deg\n' \
+            mstring = 'segment = %s %s\ttotal distance = %s %s\tbearing = %d deg' \
                 % (strdist,dunits,strtotdist,tdunits,angle)
         else:
-            mstring = 'segment = %s %s\ttotal distance = %s %s\n' \
+            mstring = 'segment = %s %s\ttotal distance = %s %s' \
                 % (strdist,dunits,strtotdist,tdunits)
 
-        self.gismanager.goutput.cmd_output.AddText(mstring)
+        self.gismanager.goutput.WriteLog(mstring)
 
         return dist
 
