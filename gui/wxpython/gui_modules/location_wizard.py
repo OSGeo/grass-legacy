@@ -1219,7 +1219,7 @@ class EPSGPage(TitledPage):
         # self.DoLayout()
 
     def OnEnterPage(self, event):
-        if self.epsgcode:
+        if not self.epsgcode:
             # disable 'next' button by default
             wx.FindWindowById(wx.ID_FORWARD).Enable(False)
         else:
