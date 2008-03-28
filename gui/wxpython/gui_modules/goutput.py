@@ -44,7 +44,8 @@ class GMConsole(wx.Panel):
         self.Map             = None
         self.parent          = parent # GMFrame
         self.cmdThreads      = {}     # cmdThread : cmdPID
-
+        self.lineWidth       = 80
+        
         # progress bar
         self.console_progressbar = wx.Gauge(parent=self, id=wx.ID_ANY,
                                             range=100, pos=(110, 50), size=(-1, 25),
@@ -103,6 +104,10 @@ class GMConsole(wx.Panel):
         p1 = self.cmd_output.GetCurrentPos()
         if pid:
             line = '(' + str(pid) + ') ' + line
+        # fill space
+        if len(line) < self.lineWidth:
+            diff = 80 - len(line) 
+            line += diff * ' '
         self.cmd_output.AddText(line + '%s' % os.linesep)
         self.cmd_output.EnsureCaretVisible()
         p2 = self.cmd_output.GetCurrentPos()
