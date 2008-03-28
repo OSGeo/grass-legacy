@@ -1225,6 +1225,9 @@ class EPSGPage(TitledPage):
         else:
             wx.FindWindowById(wx.ID_FORWARD).Enable(True)
 
+        # load default epsg database file
+        self.OnBrowseCodes(None)
+        
         event.Skip()
 
     def OnPageChanging(self, event):
