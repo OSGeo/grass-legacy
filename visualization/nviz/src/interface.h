@@ -264,7 +264,6 @@ int SetScriptFile_Cmd(ClientData, Tcl_Interp *, int, char **);
 /* do_zoom.c */
 int Create_OS_Ctx(int, int);
 int Destroy_OS_Ctx(void);
-int init_ctx(void);
 /* query_vect.c */
 char *query_vect( char *, double, double);
 

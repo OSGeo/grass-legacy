@@ -25,6 +25,7 @@
 #include <GL/glx.h>
 
 static Display *dpy;
+static int scr;
 static GLXContext ctx;
 #ifdef HAVE_PBUFFERS
 static GLXPbuffer pbuffer;
@@ -36,6 +37,8 @@ static GLXPixmap glxpixmap;
 #endif /* OPENGL_X11 */
 
 extern void swap_togl(void);
+
+static int init_ctx(void);
 
 /**********************************************/
 int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
@@ -202,20 +205,16 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     return (TCL_OK);
 }
 
-
 /********************************************
  * callbacks for PBuffer and GLXPixmap to
  * swap buffers 
 *********************************************/
-void swap_os(void)
+static void swap_os(void)
 {
 #ifdef OPENGL_X11
 #ifdef HAVE_PBUFFERS
     if (pbuffer)
-    {
 	glXSwapBuffers(dpy, pbuffer);
-	return;
-    }
 #endif
 #ifdef HAVE_PIXMAPS
     if (glxpixmap)
@@ -227,17 +226,133 @@ void swap_os(void)
 /********************************************
  * open an off-screen render context 
 ********************************************/
+
+static void create_pbuffer(int width, int height)
+{
+#ifdef HAVE_PBUFFERS
+#if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
+    static int ver_major, ver_minor;
+    static int fb_attrib[] = {
+	GLX_DOUBLEBUFFER, False,
+	GLX_RED_SIZE, 1,
+	GLX_GREEN_SIZE, 1,
+	GLX_BLUE_SIZE, 1,
+	GLX_DEPTH_SIZE, 1,
+	GLX_DRAWABLE_TYPE, GLX_PBUFFER_BIT,
+	None
+    };
+    static GLXFBConfig *fbc;
+    int pbuf_attrib[] = {
+	GLX_PBUFFER_WIDTH, width,
+	GLX_PBUFFER_HEIGHT, height,
+	None
+    };
+    int elements;
+    XVisualInfo *vi;
+
+    if (fbc) {
+	XFree(fbc);
+	fbc = NULL;
+    }
+
+    if (getenv("GRASS_NO_GLX_PBUFFERS"))
+	return;
+
+    if (!ver_major)
+	glXQueryVersion(dpy, &ver_major, &ver_minor);
+
+    if (ver_minor < 3)
+	return;
+
+    fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
+
+    fbc = glXChooseFBConfig(dpy, scr, fb_attrib, &elements);
+    if (!fbc) {
+	fprintf(stderr, "Unable to get FBConfig\n");
+	return;
+    }
+
+    vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
+    if (!vi) {
+	fprintf(stderr, "Unable to get Visual\n");
+	return;
+    }
+
+    ctx = glXCreateContext(dpy, vi, NULL, False);
+    if (!ctx) {
+	fprintf(stderr, "Unable to create context\n");
+	return;
+    }
+
+    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
+    if (!pbuffer) {
+	fprintf(stderr, "Unable to create Pbuffer\n");
+	return;
+    }
+
+    if (!glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx)) {
+	fprintf(stderr, "Unable to use context\n");
+	glXDestroyPbuffer(dpy, pbuffer);
+	pbuffer = None;
+	return;
+    }
+#endif
+#endif
+}
+
+static void create_pixmap(int width, int height)
+{
+#ifdef HAVE_PIXMAPS
+    static int att[] = {
+	GLX_RGBA,
+	GLX_RED_SIZE, 1,
+	GLX_GREEN_SIZE, 1,
+	GLX_BLUE_SIZE, 1,
+	GLX_DEPTH_SIZE, 1,
+	None
+    };
+    XVisualInfo *vi;
+
+    if (getenv("GRASS_NO_GLX_PIXMAPS"))
+	return;
+
+    fprintf(stderr, "Create PixMap Using GLX 1.1\n");
+
+    vi = glXChooseVisual(dpy, scr, att);
+    if (!vi) {
+	fprintf(stderr, "Unable to get Visual\n");
+	return;
+    }
+
+    ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
+    if (!ctx) {
+	fprintf(stderr, "Unable to create context\n");
+	return;
+    }
+
+    pixmap = XCreatePixmap(dpy, RootWindow(dpy, vi->screen),
+			   width, height, vi->depth);
+    if (!pixmap) {
+	fprintf(stderr, "Unable to create pixmap\n");
+	return;
+    }
+    glxpixmap = glXCreateGLXPixmap(dpy, vi, pixmap);
+    if (!glxpixmap) {
+	fprintf(stderr, "Unable to create GLX pixmap\n");
+	return;
+    }
+    if (!glXMakeCurrent(dpy, glxpixmap, ctx)) {
+	fprintf(stderr, "Unable to use context\n");
+	glXDestroyGLXPixmap(dpy, glxpixmap);
+	glxpixmap = None;
+	return;
+    }
+#endif
+}
+
 int Create_OS_Ctx(int width, int height)
 {
 #if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
-    int scr;
-
-#ifdef HAVE_PBUFFERS
-    GLXFBConfig *fbc;
-    int elements;
-#endif
-    XVisualInfo *vi;
-
     dpy = togl_display();
     if (dpy == NULL) {
 	fprintf(stderr, "Togl_Display Failed!\n");
@@ -245,107 +360,14 @@ int Create_OS_Ctx(int width, int height)
     }
     scr = togl_screen_number();
 
-#ifdef HAVE_PBUFFERS
-#if defined(GLX_PBUFFER_WIDTH) && defined(GLX_PBUFFER_HEIGHT)
-    if (!getenv("GRASS_NO_GLX_PBUFFERS"))
-    {
-	static int ver_major, ver_minor;
-
-	if (!ver_major)
-	    glXQueryVersion(dpy, &ver_major, &ver_minor);
-
-	if (ver_minor >= 3)
-	{
-	    int fb_attrib[] = {
-		GLX_DOUBLEBUFFER, False,
-		GLX_RED_SIZE, 1,
-		GLX_GREEN_SIZE, 1,
-		GLX_BLUE_SIZE, 1,
-		GLX_DEPTH_SIZE, 1,
-		GLX_DRAWABLE_TYPE, GLX_PBUFFER_BIT,
-		None
-	    };
-
-	    fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
-
-	    fbc = glXChooseFBConfig(dpy, scr, fb_attrib, &elements);
-	    if (fbc)
-	    {
-		int pbuf_attrib[] = {
-		    GLX_PBUFFER_WIDTH, width,
-		    GLX_PBUFFER_HEIGHT, height,
-		    None
-		};
-
-		pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
-		if (pbuffer)
-		{
-		    vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
-		    if (vi == NULL) {
-			fprintf(stderr, "Unable to get Visual\n");
-			return (-1);
-		    }
-
-		    ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
-		    if (ctx == NULL) {
-			fprintf(stderr, "Unable to create context\n");
-			return (-1);
-		    }
-
-		    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx);
-		}
-	    }
-	}
-    }
-#endif
-#endif
-
-#ifdef HAVE_PIXMAPS
+    create_pbuffer(width, height);
 #ifdef HAVE_PBUFFERS
     if (!pbuffer)
 #endif
-    if (!getenv("GRASS_NO_GLX_PIXMAPS"))
-    {
-	int att[] = {
-	    GLX_RGBA,
-	    GLX_RED_SIZE, 1,
-	    GLX_GREEN_SIZE, 1,
-	    GLX_BLUE_SIZE, 1,
-	    GLX_DEPTH_SIZE, 1,
-	    None
-	};
-	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
-
-	vi = glXChooseVisual(dpy, scr, att);
-	if (vi == NULL) {
-	    fprintf(stderr, "Unable to get Visual\n");
-	    return (-1);
-	}
-
-	ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
-	if (ctx == NULL) {
-	    fprintf(stderr, "Unable to create context\n");
-	    return (-1);
-	}
-
-	pixmap =
-	    XCreatePixmap(dpy, RootWindow(dpy, vi->screen), width, height,
-			  vi->depth);
-	if (!pixmap) {
-	    fprintf(stderr, "Unable to create pixmap\n");
-	    return (-1);
-	}
-	glxpixmap = glXCreateGLXPixmap(dpy, vi, pixmap);
-	if (!glxpixmap) {
-	    fprintf(stderr, "Unable to create pixmap\n");
-	    return (-1);
-	}
-	glXMakeCurrent(dpy, glxpixmap, ctx);
-    }
-#endif
+    create_pixmap(width, height);
 
     if (!pbuffer && !glxpixmap)
-	    return 1;
+	return 1;
 
     /* hide togl canvas before init_ctx 
      * This prevents bindings from re-initializing
@@ -353,14 +375,13 @@ int Create_OS_Ctx(int width, int height)
     hide_togl_win();
 
     /* Initalize off screen context */
-	if ( init_ctx() != 1) {
-		fprintf(stderr, "Error: Failed to Initiailze drawing area\n");
-		return (-1);
-	}
+    if ( init_ctx() != 1) {
+	fprintf(stderr, "Error: Failed to Initiailze drawing area\n");
+	return (-1);
+    }
 
     GS_set_swap_func(swap_os);
 
-    
     GS_set_viewport(0, width, 0, height);
     GS_set_draw(GSD_BACK);
     GS_ready_draw();
@@ -368,9 +389,7 @@ int Create_OS_Ctx(int width, int height)
     GS_done_draw();
 
     return (1);
-
 #else
-
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
 #endif /* defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)) */
@@ -411,9 +430,7 @@ int Destroy_OS_Ctx(void)
 	fprintf(stderr, "Destroy Pixmap\n");
 	XFreePixmap(dpy, pixmap);
 	pixmap = None;
-	return (1);
     }
-
 #endif
     GS_set_swap_func(swap_togl);
     show_togl_win();
@@ -426,7 +443,7 @@ int Destroy_OS_Ctx(void)
 /*****************************************************
  * Initialize graphics (lights) for new context 
 *****************************************************/
-int init_ctx(void)
+static int init_ctx(void)
 {
     float x, y, z;
     int num, w;
