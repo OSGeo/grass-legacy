@@ -55,47 +55,49 @@ static int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpr
     module = G_define_module();
     module->keywords = _("visualization");
     module->description =
-	_("nviz - Visualization and animation tool for GRASS data");
+	_("nviz - Visualization and animation tool for GRASS data.");
 
-    elev = G_define_option();
-    elev->key = "elevation";
-    elev->type = TYPE_STRING;
+    elev = G_define_standard_option(G_OPT_R_ELEV);
     elev->required = NO;
     elev->multiple = YES;
-    elev->gisprompt = "old,cell,Raster";
-    elev->description = _("Raster file(s) for Elevation");
+    elev->description = _("Name of raster map(s) for Elevation");
+    elev->guisection = _("Raster");
 
     colr = G_define_option();
     colr->key = "color";
     colr->type = TYPE_STRING;
     colr->required = NO;
     colr->multiple = YES;
-    colr->gisprompt = "old,cell,Raster";
-    colr->description = _("Raster file(s) for Color");
+    colr->gisprompt = "old,cell,raster";
+    colr->description = _("Name of raster map(s) for Color");
+    colr->guisection = _("Raster");
 
     vct = G_define_option();
     vct->key = "vector";
     vct->type = TYPE_STRING;
     vct->required = NO;
     vct->multiple = YES;
-    vct->gisprompt = "old,vector,Vector";
-    vct->description = _("Vector lines/areas overlay file(s)");
+    vct->gisprompt = "old,vector,vector";
+    vct->description = _("Name of vector lines/areas overlay map(s)");
+    vct->guisection = _("Vector");
 
     pnt = G_define_option();
     pnt->key = "points";
     pnt->type = TYPE_STRING;
     pnt->required = NO;
     pnt->multiple = YES;
-    pnt->gisprompt = "old,vector,Vector";
-    pnt->description = _("Vector points overlay file(s)");
+    pnt->gisprompt = "old,vector,vector";
+    pnt->description = _("Name of vector points overlay file(s)");
+    pnt->guisection = _("Vector");
 
     vol = G_define_option();
     vol->key = "volume";
     vol->type = TYPE_STRING;
     vol->required = NO;
     vol->multiple = YES;
-    vol->gisprompt = "old,grid3,3d raster";
+    vol->gisprompt = "old,grid3,3d-raster";
     vol->description = _("Name of existing 3d raster map");
+    vol->guisection = _("Raster");
 
     no_args = G_define_flag();
     no_args->key = 'q';
