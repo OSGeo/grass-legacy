@@ -98,22 +98,38 @@ class GMConsole(wx.Panel):
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
-    def WriteCmdLog(self, line, pid=None):
-        """Write out line in selected style"""
+    def WriteLog(self, line, style=None):
+        """Generic method for writing log message in 
+        given style
+
+        @param line text line
+        @param style text style (see GMStc)
+        @param stdout write to stdout or stderr
+        """
+        if not style:
+            style = self.cmd_output.StyleDefault
+
         self.cmd_output.GotoPos(self.cmd_output.GetEndStyled())
         p1 = self.cmd_output.GetCurrentPos()
-        if pid:
-            line = '(' + str(pid) + ') ' + line
+        
         # fill space
         if len(line) < self.lineWidth:
             diff = 80 - len(line) 
             line += diff * ' '
+
         self.cmd_output.AddText(line + '%s' % os.linesep)
         self.cmd_output.EnsureCaretVisible()
         p2 = self.cmd_output.GetCurrentPos()
         self.cmd_output.StartStyling(p1, 0xff)
-        self.cmd_output.SetStyling(p2 - p1, self.cmd_output.StyleCommand)
-        
+        self.cmd_output.SetStyling(p2 - p1, style)
+
+    def WriteCmdLog(self, line, pid=None):
+        """Write out line in selected style"""
+        if pid:
+            line = '(' + str(pid) + ') ' + line
+
+        self.WriteLog(line, self.cmd_output.StyleCommand)
+
     def RunCmd(self, command):
         """
         Run in GUI GRASS (or other) commands typed into
