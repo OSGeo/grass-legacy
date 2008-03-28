@@ -2220,6 +2220,7 @@ class MapFrame(wx.Frame):
                                       choices = ["Coordinates",
                                                  "Extent",
                                                  "Comp. extent",
+                                                 "Comp. region",
                                                  "Geometry",
                                                  "Map scale"])
         self.statusText = "Coordinates"
@@ -2233,7 +2234,7 @@ class MapFrame(wx.Frame):
         self.autoRender.SetToolTip(wx.ToolTip (_("Enable/disable auto-rendering")))
         # show region
         self.showRegion = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
-                                      label=_("Show"))
+                                      label=_("Show computational extent"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
@@ -2625,11 +2626,19 @@ class MapFrame(wx.Frame):
 
         elif self.statusText == "Comp. extent":
             compregion = self.Map.GetRegion()
-            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
-                                         (compregion["w"], compregion["e"],
-                                          compregion["s"], compregion["n"]), 0)
+            # self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
+            #                             (compregion["w"], compregion["e"],
+            #                              compregion["s"], compregion["n"]), 0)
+            self.statusbar.SetStatusText("", 0)
             self.showRegion.Show()
 
+        elif self.statusText == "Comp. region":
+            compregion = self.Map.GetRegion()
+            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f (%.2f,%.2f)" %
+                                         (compregion["w"], compregion["e"],
+                                          compregion["s"], compregion["n"],
+                                          compregion["ewres"], compregion["nsres"]), 0)
+            
         elif self.statusText == "Geometry":
             self.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
@@ -2695,10 +2704,11 @@ class MapFrame(wx.Frame):
                 if win == self.onRenderGauge:
                     wWin = rect.width - 6
                 # -> position
-                if win == self.showRegion:
-                    x, y = rect.x + rect.width - wWin, rect.y - 1
-                else:
-                    x, y = rect.x + 3, rect.y - 1
+                # if win == self.showRegion:
+                    # x, y = rect.x + rect.width - wWin, rect.y - 1
+                    # align left
+                # else:
+                x, y = rect.x + 3, rect.y - 1
                 w, h = wWin, rect.height + 2
             else: # choice || auto-rendering
                 x, y = rect.x, rect.y - 1
