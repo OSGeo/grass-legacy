@@ -16,7 +16,7 @@ ifndef TCLTK_INTERNAL
 TCLTK_INTERNAL = \#
 endif
 MAKE_DIR_CMD = mkdir -p -m 755
-INSTALL_BIN = ${INSTALL} -m 755
+INSTALL_BIN = ${INSTALL}
 GRASS_VERSION_BUILD = `/bin/date "+%y%m%d"`
 
 OBJS = Info.plist GRASS.scpt grass.sh main.o

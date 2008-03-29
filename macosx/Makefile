@@ -10,7 +10,7 @@ MACOSX_BUNDLE_PREFIX = ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR}
 VER_MINOR_REL = `printf "%d0%d" ${GRASS_VERSION_MINOR} ${GRASS_VERSION_RELEASE}`
 VER_DATE = `date +"%g%m%d"`
 MAKE_DIR_CMD = mkdir -p -m 755
-INSTALL_BIN = ${INSTALL} -m 755
+INSTALL_BIN = ${INSTALL}
 LN = /bin/ln -sf
 LN_DIR = /bin/ln -sfh
 

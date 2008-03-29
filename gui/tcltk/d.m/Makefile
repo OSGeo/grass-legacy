@@ -18,7 +18,6 @@ $(PROG2): *.gif *.tcl
 	for tcl in $(TCL); do \
 	    $(INSTALL) $$tcl $(ETC)/dm/ ; \
 	done
-	$(CHMOD) 755 $(ETC)/dm/tksys.tcl
-	$(INSTALL) -m 755 $(PGM2) $(PROG2)
+	$(INSTALL) $(PGM2) $(PROG2)
 	$(MKDIR) $(GISBASE)/etc/dm/script
-	$(INSTALL) -m 755 script/*.* $(GISBASE)/etc/dm/script
+	$(INSTALL) script/*.* $(GISBASE)/etc/dm/script

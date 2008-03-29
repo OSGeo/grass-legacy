@@ -15,9 +15,9 @@ default: cmd $(RPOLY) $(CTEST)
 
 $(RPOLY): v.rand.poly
 	if [ ! -d $(GISBASE)/scripts ]; then $(MKDIR) $(GISBASE)/scripts; fi
-	$(INSTALL) -m 755 v.rand.poly $(RPOLY)
+	$(INSTALL) v.rand.poly $(RPOLY)
 
 $(CTEST): v.clean.test
 	if [ ! -d $(GISBASE)/scripts ]; then $(MKDIR) $(GISBASE)/scripts; fi
-	$(INSTALL) -m 755 v.clean.test $(CTEST)
+	$(INSTALL) v.clean.test $(CTEST)
 

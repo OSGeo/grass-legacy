@@ -182,15 +182,15 @@ $(ETC)/grass_dialog.ico: grass_dialog.ico
 
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
-	$(INSTALL) -m 755 gis_set.tcl $(ETC)
+	$(INSTALL) gis_set.tcl $(ETC)
 
 $(ETC)/epsg_option.tcl: epsg_option.tcl
 	rm -f $@
-	$(INSTALL) -m 755 epsg_option.tcl $(ETC)
+	$(INSTALL) epsg_option.tcl $(ETC)
 
 $(ETC)/file_option.tcl: file_option.tcl
 	rm -f $@
-	$(INSTALL) -m 755 file_option.tcl $(ETC)
+	$(INSTALL) file_option.tcl $(ETC)
 
 $(ETC)/grass-run.sh: grass-run.src
 	rm -f $@
@@ -203,15 +203,15 @@ $(ETC)/grass-run.bat: grass-run.bat
 	$(INSTALL) grass-run.bat $(ETC)
 
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
-	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
+	$(INSTALL) grass-xterm-wrapper $(ETC)
 
 $(ETC)/grass-xterm-mac: grass-xterm-mac
-	$(INSTALL) -m 755 grass-xterm-mac $(ETC)
+	$(INSTALL) grass-xterm-mac $(ETC)
 
 $(ETC)/prompt.sh: prompt.sh
 	rm -f $@
-	$(INSTALL) -m 755 prompt.sh $(ETC)
+	$(INSTALL) prompt.sh $(ETC)
 
 $(ETC)/html_browser_mac.sh: html_browser_mac.sh
-	$(INSTALL) -m 755 html_browser_mac.sh $(ETC)
+	$(INSTALL) html_browser_mac.sh $(ETC)
 

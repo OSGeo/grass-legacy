@@ -19,4 +19,4 @@ default: cmd $(GUI)
 
 $(GUI): g.mapsets.tcl
 	if [ ! -d $(GISBASE)/etc ]; then $(MKDIR) $(GISBASE)/etc; fi
-	$(INSTALL) -m 755 g.mapsets.tcl $(GUI)
+	$(INSTALL) g.mapsets.tcl $(GUI)
