@@ -925,7 +925,7 @@ csh|tcsh)
 
 bash|msh)
     # save command history in mapset dir and remember more
-    HISTFILE="$LOCATION/.bash_history"
+    export HISTFILE="$LOCATION/.bash_history"
     if [ -z "$HISTSIZE" ] && [ -z "$HISTFILESIZE" ] ; then 
 	export HISTSIZE=3000
     fi
