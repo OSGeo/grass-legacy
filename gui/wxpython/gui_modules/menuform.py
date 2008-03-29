@@ -847,7 +847,7 @@ class cmdPanel(wx.Panel):
         del is_section
 
         # Main goes first, Options goes second
-        for (newidx,content) in [ (0,_( 'Required' )), (1,_('Optional')) ]:
+        for (newidx,content) in [ (0,_( 'Required' )), (len(sections)-1,_('Optional')) ]:
             if content in sections:
                 idx = sections.index( content )
                 sections[idx:idx+1] = []
