@@ -924,6 +924,15 @@ csh|tcsh)
     ;;
 
 bash|msh)
+    # save command history in mapset dir and remember more
+    HISTFILE="$LOCATION/.bash_history"
+    if [ -z "$HISTSIZE" ] && [ -z "$HISTFILESIZE" ] ; then 
+	export HISTSIZE=3000
+    fi
+
+    # instead of changing $HOME, start bash with: --rcfile "$LOCATION/.bashrc" ?
+    #   if so, must care be taken to explicity call .grass.bashrc et al for
+    #   non-interactive bash batch jobs?
     USERHOME="$HOME"      # save original home
     HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
@@ -933,7 +942,7 @@ bash|msh)
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "PS1='GRASS GRASS_VERSION_NUMBER ($LOCATION_NAME):\w > '" >> "$bashrc"
     echo "PROMPT_COMMAND=$GISBASE/etc/prompt.sh" >> "$bashrc"
-    
+
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
         cat "$USERHOME/.grass.bashrc" >> "$bashrc"
