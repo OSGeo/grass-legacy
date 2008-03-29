@@ -123,16 +123,12 @@ main (int argc, char **argv)
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
-	module->keywords = _("display");
+	module->keywords = _("display, vector");
 	module->description =
-	    _("Displays GRASS vector data in the active "
-		"frame on the graphics monitor.");
+	    _("Displays vector data in the active "
+	      "frame on the graphics monitor.");
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
-
-	type_opt = G_define_standard_option(G_OPT_V_TYPE);
-	type_opt->answer     = "point,line,boundary,centroid,area,face" ;
-	type_opt->options    = "point,line,boundary,centroid,area,face" ;
 
 	display_opt = G_define_option() ;
 	display_opt->key        = "display" ;
@@ -143,61 +139,23 @@ main (int argc, char **argv)
 	display_opt->options    = "shape,cat,topo,dir,attr,zcoor";
 	display_opt->description= _("Display");
 
-	attrcol_opt = G_define_option() ;
-	attrcol_opt->key        = "attrcol" ;
-	attrcol_opt->type       = TYPE_STRING ;
-	attrcol_opt->required   = NO ;
-	attrcol_opt->multiple   = NO ; /* or fix attr.c, around line 102 */
-	attrcol_opt->guisection = _("Labels");
-	attrcol_opt->description= _("Name of column to be displayed");
-
-	icon_opt = G_define_option() ;
-	icon_opt->key        = "icon" ;
-	icon_opt->type       = TYPE_STRING ;
-	icon_opt->required   = NO ;
-	icon_opt->multiple   = NO ;
-	icon_opt->guisection = _("Symbols");
-	icon_opt->answer     = "basic/x" ;
-	/* This could also use ->gisprompt = "old,symbol,symbol" instead of ->options */
-	icon_opt->options    = icon_files();
-	icon_opt->description= _("Point and centroid symbol");
-
-	size_opt = G_define_option() ;
-	size_opt->key        = "size" ;
-	size_opt->type       = TYPE_INTEGER ;
-	size_opt->answer     = "5" ;
-	size_opt->guisection = _("Symbols");
-	size_opt->description= _("Symbol size");
+	/* Query */
+	type_opt = G_define_standard_option(G_OPT_V_TYPE);
+	type_opt->answer     = "point,line,boundary,centroid,area,face" ;
+	type_opt->options    = "point,line,boundary,centroid,area,face" ;
+	type_opt->guisection = _("Query");
 
 	field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 	field_opt->description= _("Layer number. If -1, all layers are displayed.");
-
+	field_opt->guisection = _("Query");
+ 
 	cat_opt = G_define_standard_option(G_OPT_V_CATS) ;
 	cat_opt->guisection = _("Query");
 
 	where_opt = G_define_standard_option(G_OPT_WHERE) ;
 	where_opt->guisection = _("Query");
 
-	width_opt = G_define_option() ;
-	width_opt->key        = "width";
-	width_opt->type       = TYPE_INTEGER ;
-	width_opt->answer     = "0" ;
-	width_opt->guisection = _("Lines");
-	width_opt->description= _("Line width");
-
-	wcolumn_opt = G_define_option() ;
-	wcolumn_opt->key        = "wcolumn" ;
-	wcolumn_opt->type       = TYPE_STRING ;
-	wcolumn_opt->guisection = _("Lines");
-	wcolumn_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
-
-	wscale_opt = G_define_option() ;
-	wscale_opt->key        = "wscale" ;
-	wscale_opt->type       = TYPE_DOUBLE ;
-	wscale_opt->answer     = "1" ;
-	wscale_opt->guisection = _("Lines");
-	wscale_opt->description= _("Scale factor for wcolumn");
-
+	/* Colors */
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
@@ -223,6 +181,55 @@ main (int argc, char **argv)
 	rgbcol_opt->description=
 	    _("Name of color definition column (for use with -a flag)");
 	rgbcol_opt->answer     = "GRASSRGB" ;
+
+	/* Lines */
+	width_opt = G_define_option() ;
+	width_opt->key        = "width";
+	width_opt->type       = TYPE_INTEGER ;
+	width_opt->answer     = "0" ;
+	width_opt->guisection = _("Lines");
+	width_opt->description= _("Line width");
+
+	wcolumn_opt = G_define_option() ;
+	wcolumn_opt->key        = "wcolumn" ;
+	wcolumn_opt->type       = TYPE_STRING ;
+	wcolumn_opt->guisection = _("Lines");
+	wcolumn_opt->description= _("Name of column for line widths (these values will be scaled by wscale)");
+
+	wscale_opt = G_define_option() ;
+	wscale_opt->key        = "wscale" ;
+	wscale_opt->type       = TYPE_DOUBLE ;
+	wscale_opt->answer     = "1" ;
+	wscale_opt->guisection = _("Lines");
+	wscale_opt->description= _("Scale factor for wcolumn");
+
+	/* Symbols */
+	icon_opt = G_define_option() ;
+	icon_opt->key        = "icon" ;
+	icon_opt->type       = TYPE_STRING ;
+	icon_opt->required   = NO ;
+	icon_opt->multiple   = NO ;
+	icon_opt->guisection = _("Symbols");
+	icon_opt->answer     = "basic/x" ;
+	/* This could also use ->gisprompt = "old,symbol,symbol" instead of ->options */
+	icon_opt->options    = icon_files();
+	icon_opt->description= _("Point and centroid symbol");
+
+	size_opt = G_define_option() ;
+	size_opt->key        = "size" ;
+	size_opt->type       = TYPE_INTEGER ;
+	size_opt->answer     = "5" ;
+	size_opt->guisection = _("Symbols");
+	size_opt->description= _("Symbol size");
+
+	/* Labels */
+	attrcol_opt = G_define_option() ;
+	attrcol_opt->key        = "attrcol" ;
+	attrcol_opt->type       = TYPE_STRING ;
+	attrcol_opt->required   = NO ;
+	attrcol_opt->multiple   = NO ; /* or fix attr.c, around line 102 */
+	attrcol_opt->guisection = _("Labels");
+	attrcol_opt->description= _("Name of column to be displayed");
 
 	lfield_opt = G_define_option();
 	lfield_opt->key        = "llayer";
@@ -319,6 +326,7 @@ main (int argc, char **argv)
 	verbose_flag->key		= 'v';
 	verbose_flag->description	= _("Run verbosely");
 
+	/* Colors */
 	table_acolors_flag = G_define_flag ();
 	table_acolors_flag->key		= 'a';
 	table_acolors_flag->guisection  = _("Colors");
@@ -332,10 +340,11 @@ main (int argc, char **argv)
 	    _("Random colors according to category number "
 	      "(or layer number if 'layer=-1' is given)");
 
+	/* Query */
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
 	id_flag->guisection     = _("Query");
-	id_flag->description	= _("Use values from 'cats' option as line ID");
+	id_flag->description	= _("Use values from 'cats' option as feature id");
 
 	x_flag = G_define_flag ();
 	x_flag->key		= 'x';
