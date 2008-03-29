@@ -957,7 +957,7 @@ class cmdPanel(wx.Panel):
 
                 if p.get('multiple','no') == 'yes' and \
                         p.get('type', '') == 'string':
-                    txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ":")
+                    txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ": ")
                     if len(valuelist) > 6:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
                     else:
@@ -1243,6 +1243,8 @@ class cmdPanel(wx.Panel):
                 myIndex = p['wxId'].index( me )
         # Unpack current value list
         currentValues={}
+        for isThere in theParam.get('default','').split(','):
+            currentValues[isThere] = 1
         for isThere in theParam.get('value','').split(','):
             currentValues[isThere] = 1
         theValue = theParam['values'][myIndex]
