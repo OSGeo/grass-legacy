@@ -2779,7 +2779,7 @@ class DisplayAttributesDialog(wx.Dialog):
 
     def OnCancel(self, event):
         """Cancel button pressed"""
-        self.parent.parent.attributesDialog = None
+        self.parent.parent.dialogs['attributes'] = None
         if self.parent.parent.digit:
             self.parent.parent.digit.driver.SetSelected([])
             self.parent.UpdateMap(render=False)
