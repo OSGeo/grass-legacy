@@ -36,9 +36,22 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************
  *
- * $Log$
- * Revision 1.6  2007-09-05 11:50:23  markus
- * SHAPELIB copy updated
+ * $Log: shapefil.h,v $
+ * Revision 1.40  2007/12/06 07:00:25  fwarmerdam
+ * dbfopen now using SAHooks for fileio
+ *
+ * Revision 1.39  2007/12/04 20:37:56  fwarmerdam
+ * preliminary implementation of hooks api for io and errors
+ *
+ * Revision 1.38  2007/11/21 22:39:56  fwarmerdam
+ * close shx file in readonly mode (GDAL #1956)
+ *
+ * Revision 1.37  2007/10/27 03:31:14  fwarmerdam
+ * limit default depth of tree to 12 levels (gdal ticket #1594)
+ *
+ * Revision 1.36  2007/09/10 23:33:15  fwarmerdam
+ * Upstreamed support for visibility flag in SHPAPI_CALL for the needs
+ * of GDAL (gdal ticket #1810).
  *
  * Revision 1.35  2007/09/03 19:48:10  fwarmerdam
  * move DBFReadAttribute() static dDoubleField into dbfinfo
@@ -91,6 +104,7 @@
 
 #ifdef USE_CPL
 #include "cpl_error.h"
+#include "cpl_vsi.h"
 #endif
 
 #ifdef __cplusplus
@@ -113,7 +127,7 @@ extern "C" {
 /*      is disabled.                                                    */
 /* -------------------------------------------------------------------- */
 #define DISABLE_MULTIPATCH_MEASURE
-
+    
 /* -------------------------------------------------------------------- */
 /*      SHPAPI_CALL                                                     */
 /*                                                                      */
@@ -149,7 +163,12 @@ extern "C" {
 #endif
 
 #ifndef SHPAPI_CALL
-#  define SHPAPI_CALL
+#  if defined(USE_GCC_VISIBILITY_FLAG)
+#    define SHPAPI_CALL     __attribute__ ((visibility("default")))
+#    define SHPAPI_CALL1(x) __attribute__ ((visibility("default")))     x
+#  else
+#    define SHPAPI_CALL
+#  endif
 #endif
 
 #ifndef SHPAPI_CALL1
@@ -166,14 +185,39 @@ static char *cvsid_aw() { return( cvsid_aw() ? ((char *) NULL) : cpl_cvsid ); }
 #else
 #  define SHP_CVSID(string)
 #endif
+    
+/* -------------------------------------------------------------------- */
+/*      IO/Error hook functions.                                        */
+/* -------------------------------------------------------------------- */
+typedef int *SAFile;
+
+#ifndef SAOffset
+typedef unsigned long SAOffset;
+#endif
+
+typedef struct {
+    SAFile     (*FOpen) ( const char *filename, const char *path);
+    SAOffset   (*FRead) ( void *p, SAOffset size, SAOffset nmemb, SAFile file);
+    SAOffset   (*FWrite)( void *p, SAOffset size, SAOffset nmemb, SAFile file);
+    SAOffset   (*FSeek) ( SAFile file, SAOffset offset, int whence );
+    SAOffset   (*FTell) ( SAFile file );
+    int        (*FFlush)( SAFile file );
+    int        (*FClose)( SAFile file );
+
+    void       (*Error) ( const char *message );
+} SAHooks;
+
+void SHPAPI_CALL SASetupDefaultHooks( SAHooks *psHooks );
 
 /************************************************************************/
 /*                             SHP Support.                             */
 /************************************************************************/
 typedef	struct
 {
-    FILE        *fpSHP;
-    FILE	*fpSHX;
+    SAHooks sHooks;
+
+    SAFile      fpSHP;
+    SAFile 	fpSHX;
 
     int		nShapeType;				/* SHPT_* */
     
@@ -262,10 +306,19 @@ typedef struct
 /* -------------------------------------------------------------------- */
 /*      SHP API Prototypes                                              */
 /* -------------------------------------------------------------------- */
+
+/* If pszAccess is read-only, the fpSHX field of the returned structure */
+/* will be NULL as it is not necessary to keep the SHX file open */
 SHPHandle SHPAPI_CALL
       SHPOpen( const char * pszShapeFile, const char * pszAccess );
 SHPHandle SHPAPI_CALL
+      SHPOpenLL( const char *pszShapeFile, const char *pszAccess, 
+                 SAHooks *psHooks );
+SHPHandle SHPAPI_CALL
       SHPCreate( const char * pszShapeFile, int nShapeType );
+SHPHandle SHPAPI_CALL
+      SHPCreateLL( const char * pszShapeFile, int nShapeType,
+                   SAHooks *psHooks );
 void SHPAPI_CALL
       SHPGetInfo( SHPHandle hSHP, int * pnEntities, int * pnShapeType,
                   double * padfMinBound, double * padfMaxBound );
@@ -308,6 +361,9 @@ const char SHPAPI_CALL1(*)
 
 /* this can be two or four for binary or quad tree */
 #define MAX_SUBNODE	4
+
+/* upper limit of tree levels for automatic estimation */
+#define MAX_DEFAULT_TREE_DEPTH 12
 
 typedef struct shape_tree_node
 {
@@ -376,7 +432,9 @@ SHPSearchDiskTree( FILE *fp,
 /************************************************************************/
 typedef	struct
 {
-    FILE	*fp;
+    SAHooks sHooks;
+
+    SAFile	fp;
 
     int         nRecords;
 
@@ -415,10 +473,16 @@ typedef enum {
 
 #define XBASE_FLDHDR_SZ       32
 
+
 DBFHandle SHPAPI_CALL
       DBFOpen( const char * pszDBFFile, const char * pszAccess );
 DBFHandle SHPAPI_CALL
+      DBFOpenLL( const char * pszDBFFile, const char * pszAccess,
+                 SAHooks *psHooks );
+DBFHandle SHPAPI_CALL
       DBFCreate( const char * pszDBFFile );
+DBFHandle SHPAPI_CALL
+      DBFCreateLL( const char * pszDBFFile, SAHooks *psHooks );
 
 int	SHPAPI_CALL
       DBFGetFieldCount( DBFHandle psDBF );
