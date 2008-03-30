@@ -197,8 +197,8 @@ class GRASSStartup(wx.Frame):
             try:
                 self.lblocations.SetSelection(self.listOfLocations.index(location))
             except ValueError:
-                print >> sys.stderr, _("ERROR: Location <%s> not found in GISDBASE (%s)") %  \
-                    (location, self.gisdbase)
+                print >> sys.stderr, _("ERROR: Location <%s> not found") % \
+                    (location)
                 
             # list of mapsets
             self.UpdateMapsets(os.path.join(self.gisdbase,location))

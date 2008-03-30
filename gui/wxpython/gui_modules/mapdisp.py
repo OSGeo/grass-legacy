@@ -3047,8 +3047,8 @@ class MapFrame(wx.Frame):
         style = self.gismanager.goutput.cmd_output.StyleWarning
         self.gismanager.goutput.WriteLog(_('Click and drag with left mouse button '
                                            'to measure.%s'
-                                           'Double click with left button to clear.%s') % \
-                                             (os.linesep, os.linesep), style)
+                                           'Double click with left button to clear.') % \
+                                             (os.linesep), style)
         if self.projinfo['proj'] != 'xy':
             units = self.projinfo['units']
             style = self.gismanager.goutput.cmd_output.StyleCommand
