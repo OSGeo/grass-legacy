@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <grass/gis.h>
 #include <grass/imagery.h>
-
+#include <grass/glocale.h>
 
 /*!
  * \brief read target information
@@ -39,7 +39,7 @@ int I_get_target(
     if (!ok)
     {
 	*location = *mapset = 0;
-	G_warning ("unable to read target file for group [%s]", group);
+	G_warning (_("Unable to read target file for group [%s]"), group);
     }
 
     return ok;
