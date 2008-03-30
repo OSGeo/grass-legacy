@@ -36,6 +36,7 @@ int main (int argc, char *argv[])
     struct GModule *module;
     struct Flag *c;
     char t_mapset[GMAPSET_MAX], t_location[GMAPSET_MAX];
+    char group_name[GNAME_MAX], mapset_name[GMAPSET_MAX];
 
     G_gisinit (argv[0]);
 
@@ -67,14 +68,27 @@ int main (int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(EXIT_FAILURE);
 
+
+    /* check if current mapset:  (imagery libs are very lacking in this dept)
+	- abort if not,
+	- remove @mapset part if it is
+    */
+    if(G__name_is_fully_qualified(group->answer, group_name, mapset_name)) {
+	if(strcmp(mapset_name, G_mapset()))
+	    G_fatal_error(_("Group must exist in the current mapset"));
+    }
+    else {
+	strcpy(group_name, group->answer); /* FIXME for buffer overflow (have the parser check that?) */
+    }
+
     /* if no setting options are given, print the current target info */
     if( !c->answer && !mapset->answer && !loc->answer ) {
 
-        if (I_get_target (group->answer, t_location, t_mapset))
+        if (I_get_target (group_name, t_location, t_mapset))
             G_message (_("Group <%s> targeted for location [%s], mapset [%s]"),
-                        group->answer, t_location, t_mapset);
+                        group_name, t_location, t_mapset);
         else
-            G_message (_("Group <%s> has no target"), group->answer);
+            G_message (_("Group <%s> has no target"), group_name);
 
         exit (EXIT_SUCCESS);
     }
@@ -87,17 +101,17 @@ int main (int argc, char *argv[])
 
     if (c->answer) {
         /* point group target to current mapset and location */
-        I_put_target(group->answer, G_location(), G_mapset());
+        I_put_target(group_name, G_location(), G_mapset());
         G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
-                group->answer, G_location(), G_mapset());
+                group_name, G_location(), G_mapset());
     } else {
         /* point group target to specified mapset and location */
 
 /* TODO: check if it is in current mapset and strip off @mapset part, if present */
 
-        I_put_target(group->answer, loc->answer, mapset->answer);
+        I_put_target(group_name, loc->answer, mapset->answer);
         G_message(_("Group <%s> targeted for location [%s], mapset [%s]"),
-                group->answer, loc->answer, mapset->answer);
+                group_name, loc->answer, mapset->answer);
     }
 
     G_done_msg(" ");

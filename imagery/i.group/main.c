@@ -37,6 +37,7 @@ static int remove_subgroup_files(char group[INAME_LEN],
 int main(int argc, char *argv[])
 {
     char title[80];
+    char group[GNAME_MAX], mapset[GMAPSET_MAX];
     int m, k=0;
 
     struct Option *grp, *rast, *sgrp;
@@ -93,70 +94,83 @@ int main(int argc, char *argv[])
 	}
 	k++;
     }
-    
+
     if (k < 1 && !l->answer)  /* remove if input is requirement */
         G_fatal_error( _("No input raster map(s) specified") );
-    
-    I_location_info(title, argv[0]);
+
+
+    I_location_info(title, argv[0]);    /* unused? */
+
+    /* check if current mapset:  (imagery libs are very lacking in this dept)
+	- abort if not,
+	- remove @mapset part if it is
+    */
+    if(G__name_is_fully_qualified(grp->answer, group, mapset)) {
+	if(strcmp(mapset, G_mapset()))
+	    G_fatal_error(_("Group must exist in the current mapset"));
+    }
+    else {
+	strcpy(group, grp->answer); /* FIXME for buffer overflow (have the parser check that?) */
+    }
 
     if (r->answer) {
 	/* Remove files from Group */
 	
-	if (I_find_group(grp->answer) == 0) {
-	    G_fatal_error(_("Specified group does not exist"));
+	if (I_find_group(group) == 0) {
+	    G_fatal_error(_("Specified group does not exist in current mapset"));
 	}
 	
 	if (sgrp->answer) {
 	    G_verbose_message(_("Removing raster maps from subgroup <%s>..."), sgrp->answer);
-	    remove_subgroup_files(grp->answer, sgrp->answer, rast->answers, k);
+	    remove_subgroup_files(group, sgrp->answer, rast->answers, k);
 	}
 	else {
-	    G_verbose_message(_("Removing raster maps from group <%s>..."), grp->answer);
-	    remove_group_files(grp->answer, rast->answers, k);
+	    G_verbose_message(_("Removing raster maps from group <%s>..."), group);
+	    remove_group_files(group, rast->answers, k);
 	}
     }
     else {
         if (l->answer) {
-            struct Ref ref;
+	    /* List raster maps in group */
 
-	    /* List raster maps */
+            struct Ref ref;
 	    
-	    if (I_find_group(grp->answer) == 0) {
+	    if (I_find_group(group) == 0) {
 		G_fatal_error(_("Specified group does not exist"));
 	    }
 
 	    if (sgrp->answer) {
 		/* list subgroup files */
-	 	I_get_subgroup_ref(grp->answer, sgrp->answer, &ref);
+	 	I_get_subgroup_ref(group, sgrp->answer, &ref);
 		if(simple_flag->answer)
 		    I_list_subgroup_simple(&ref, stdout);
 		else
-		    I_list_subgroup(grp->answer, sgrp->answer, &ref, stdout);
+		    I_list_subgroup(group, sgrp->answer, &ref, stdout);
 	    }
 	    else {
 		/* list group files */
-		I_get_group_ref(grp->answer, &ref);
+		I_get_group_ref(group, &ref);
 		if(simple_flag->answer)
 		    I_list_group_simple(&ref, stdout);
 		else
-		    I_list_group(grp->answer, &ref, stdout);
+		    I_list_group(group, &ref, stdout);
             }
 	}
 	else {
 	    /* Create or update Group REF */
-	    if (I_find_group(grp->answer) == 0)
-		G_verbose_message(_("Group <%s> does not yet exist. Creating..."), grp->answer);
+	    if (I_find_group(group) == 0)
+		G_verbose_message(_("Group <%s> does not yet exist. Creating..."), group);
 	    
 	    if (sgrp->answer) {
-		G_verbose_message(_("Adding raster maps to group <%s>..."), grp->answer);
-		add_or_update_group(grp->answer, rast->answers, k);
+		G_verbose_message(_("Adding raster maps to group <%s>..."), group);
+		add_or_update_group(group, rast->answers, k);
 		
 		G_verbose_message(_("Adding raster maps to subgroup <%s>..."), sgrp->answer);
-		add_or_update_subgroup(grp->answer, sgrp->answer, rast->answers, k);
+		add_or_update_subgroup(group, sgrp->answer, rast->answers, k);
 	    }
 	    else {
-		G_verbose_message(_("Adding raster maps to group <%s>..."), grp->answer);
-		add_or_update_group(grp->answer, rast->answers, k);
+		G_verbose_message(_("Adding raster maps to group <%s>..."), group);
+		add_or_update_group(group, rast->answers, k);
 	    }
 	}
     }
