@@ -27,7 +27,7 @@ int I_find_group(char *group)
 
 int I_find_group_file(char *group, char *file)
 {
-    char element[100];
+    char element[GNAME_MAX];
 
     if (!I_find_group (group))
 	return 0;
@@ -35,14 +35,14 @@ int I_find_group_file(char *group, char *file)
 	return 0;
 
     sprintf (element, "group/%s", group);
-    G_debug(4,"I_find_group_file: element <%s>", element);
+    G_debug(4, "I_find_group_file: element <%s>", element);
 
     return G_find_file (element, file, G_mapset()) != NULL ;
 }
 
-int I_find_subgroup(char *group,char *subgroup)
+int I_find_subgroup(char *group, char *subgroup)
 {
-    char element[300];
+    char element[GNAME_MAX];
 
     if (!I_find_group(group))
 	return 0;
@@ -54,9 +54,9 @@ int I_find_subgroup(char *group,char *subgroup)
     return G_find_file (element, subgroup, G_mapset()) != NULL ;
 }
 
-int I_find_subgroup_file( char *group, char *subgroup, char *file)
+int I_find_subgroup_file(char *group, char *subgroup, char *file)
 {
-    char element[300];
+    char element[GNAME_MAX*2];
 
     if (!I_find_group(group))
 	return 0;

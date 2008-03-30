@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <grass/imagery.h>
 #include <grass/gis.h>
+#include <grass/imagery.h>
 #include <grass/glocale.h>
 
 
@@ -18,7 +18,7 @@ FILE *
 I_fopen_group_file_new(char *group, char *file)
 {
     FILE *fd;
-    char element[100];
+    char element[GNAME_MAX];
 
     /* get group element name */
     sprintf (element, "group/%s", group);
@@ -36,7 +36,7 @@ FILE *
 I_fopen_group_file_append (char *group, char *file)
 {
     FILE *fd;
-    char element[100];
+    char element[GNAME_MAX];
 
     /* get group element name */
     sprintf (element, "group/%s", group);
@@ -54,7 +54,7 @@ FILE *
 I_fopen_group_file_old (char *group, char *file)
 {
     FILE *fd;
-    char element[100];
+    char element[GNAME_MAX];
 
     /* find file first */
     if (!I_find_group_file (group, file))
@@ -84,7 +84,7 @@ I_fopen_subgroup_file_new (
     char *file)
 {
     FILE *fd;
-    char element[300];
+    char element[GNAME_MAX*2];
 
     /* get subgroup element name */
     sprintf (element, "group/%s/subgroup/%s", group, subgroup);
@@ -105,7 +105,7 @@ I_fopen_subgroup_file_append (
     char *file)
 {
     FILE *fd;
-    char element[300];
+    char element[GNAME_MAX*2];
 
     /* get subgroup element name */
     sprintf (element, "group/%s/subgroup/%s", group, subgroup);
@@ -126,7 +126,7 @@ I_fopen_subgroup_file_old (
     char *file)
 {
     FILE *fd;
-    char element[300];
+    char element[GNAME_MAX*2];
 
     /* find file first */
     if (!I_find_subgroup_file (group, subgroup, file))
