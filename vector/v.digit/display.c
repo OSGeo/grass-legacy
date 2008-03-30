@@ -199,7 +199,10 @@ void display_bg ( void )
 
     putenv("GRASS_RENDER_IMMEDIATE=TRUE");
     putenv("GRASS_TRUECOLOR=TRUE");
-    putenv("GRASS_BACKGROUNDCOLOR=FFFFFF");
+
+    sprintf(cmd_buf, "GRASS_BACKGROUNDCOLOR=%02x%02x%02x", 
+	Symb[SYMB_BACKGROUND].r, Symb[SYMB_BACKGROUND].g, Symb[SYMB_BACKGROUND].b );
+    putenv(cmd_buf);
 
     sprintf(img_buf, "GRASS_PNGFILE=%s.ppm", ppmfile);
     putenv(img_buf);
