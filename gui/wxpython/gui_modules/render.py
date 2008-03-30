@@ -459,8 +459,12 @@ class Map(object):
             os.environ["GRASS_REGION"] = tmpreg
 
         Debug.msg (3, "Map.GetRegion(): %s" % region)
-
+        
         return region
+
+    def GetCurrentRegion(self):
+        """Get current display region settings"""
+        return self.region
 
     def SetRegion(self, windres=False):
         """
