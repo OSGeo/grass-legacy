@@ -5,8 +5,6 @@ CLASSES:
     * Command
     * BufferedWindow
     * MapFrame
-    * DecDialog
-    * TextDialog
     * MapApp
 
 PURPOSE:   GIS map display canvas, with toolbar for various display
@@ -1033,16 +1031,16 @@ class BufferedWindow(wx.Window):
                 coords = (east, north)
                 if digitToolbar.action == "displayAttrs":
                     # select attributes based on coordinates (all layers)
-                    if self.parent.attributesDialog is None:
+                    if self.parent.dialogs['attributes'] is None:
                         if digitClass.type == 'vedit':
-                            self.parent.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                            self.parent.dialogs['attributes'] = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                                        query=(coords, qdist),
                                                                                        pos=posWindow,
                                                                                        action="update")
                         else:
                             if digitClass.driver.SelectLineByPoint(coords,
                                                                    digitClass.GetSelectType()) is not None:
-                                self.parent.attributesDialog = dbm.DisplayAttributesDialog(parent=self, map=map,
+                                self.parent.dialogs['attributes'] = dbm.DisplayAttributesDialog(parent=self, map=map,
                                                                                            cats=digitClass.GetLineCats(),
                                                                                            line=digitClass.driver.GetSelected()[0],
                                                                                            action="update")
@@ -1050,7 +1048,7 @@ class BufferedWindow(wx.Window):
                     else:
                         # update currently open dialog
                         if digitClass.type == 'vedit':
-                            self.parent.attributesDialog.UpdateDialog(query=(coords, qdist))
+                            self.parent.dialogs['attributes'].UpdateDialog(query=(coords, qdist))
                         else:
                             # unselect
                             digitClass.driver.SetSelected([])
@@ -1061,25 +1059,25 @@ class BufferedWindow(wx.Window):
                             else:
                                 line = digitClass.driver.GetSelected()[0]
                             # upgrade dialog
-                            self.parent.attributesDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                            self.parent.dialogs['attributes'].UpdateDialog(cats=digitClass.GetLineCats(),
                                                                       line=line)
 
-                    line = self.parent.attributesDialog.GetLine()
-                    if self.parent.attributesDialog.mapDBInfo and line:
+                    line = self.parent.dialogs['attributes'].GetLine()
+                    if self.parent.dialogs['attributes'].mapDBInfo and line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
-                        if not self.parent.attributesDialog.IsShown():
-                            self.parent.attributesDialog.Show()
+                        if not self.parent.dialogs['attributes'].IsShown():
+                            self.parent.dialogs['attributes'].Show()
                     else:
                         digitClass.driver.SetSelected([])
-                        if self.parent.attributesDialog.IsShown():
-                            self.parent.attributesDialog.Hide()
+                        if self.parent.dialogs['attributes'].IsShown():
+                            self.parent.dialogs['attributes'].Hide()
 
                 else: # displayCats
-                    if self.parent.categoryDialog is None:
+                    if self.parent.dialogs['category'] is None:
                         # open new dialog
                         if digitClass.type == 'vedit':
-                            self.parent.categoryDialog = DigitCategoryDialog(parent=self,
+                            self.parent.dialogs['category'] = DigitCategoryDialog(parent=self,
                                                                              map=map,
                                                                              query=(coords, qdist),
                                                                              pos=posWindow,
@@ -1087,7 +1085,7 @@ class BufferedWindow(wx.Window):
                         else:
                             if digitClass.driver.SelectLineByPoint(coords,
                                                                    digitClass.GetSelectType()) is not None:
-                                self.parent.categoryDialog = DigitCategoryDialog(parent=self,
+                                self.parent.dialogs['category'] = DigitCategoryDialog(parent=self,
                                                                                  map=map,
                                                                                  cats=digitClass.GetLineCats(),
                                                                                  line=digitClass.driver.GetSelected()[0],
@@ -1097,7 +1095,7 @@ class BufferedWindow(wx.Window):
                     else:
                         # update currently open dialog
                         if digitClass.type == 'vedit':
-                            self.parent.categoryDialog.UpdateDialog(query=(coords, qdist))
+                            self.parent.dialogs['category'].UpdateDialog(query=(coords, qdist))
                         else:
                             # unselect
                             digitClass.driver.SetSelected([])
@@ -1108,19 +1106,19 @@ class BufferedWindow(wx.Window):
                             else:
                                 line = digitClass.driver.GetSelected()[0]
                             # upgrade dialog
-                            self.parent.categoryDialog.UpdateDialog(cats=digitClass.GetLineCats(),
+                            self.parent.dialogs['category'].UpdateDialog(cats=digitClass.GetLineCats(),
                                                                      line=line)
 
-                    line = self.parent.categoryDialog.GetLine()
+                    line = self.parent.dialogs['category'].GetLine()
                     if line:
                         # highlight feature & re-draw map
                         digitClass.driver.SetSelected([line])
-                        if not self.parent.categoryDialog.IsShown():
-                            self.parent.categoryDialog.Show()
+                        if not self.parent.dialogs['category'].IsShown():
+                            self.parent.dialogs['category'].Show()
                     else:
                         digitClass.driver.SetSelected([])
-                        if self.parent.categoryDialog.IsShown():
-                            self.parent.categoryDialog.Hide()
+                        if self.parent.dialogs['category'].IsShown():
+                            self.parent.dialogs['category'].Hide()
 
                 self.UpdateMap(render=False)
 
@@ -2353,8 +2351,13 @@ class MapFrame(wx.Frame):
         #
         # Re-use dialogs
         #
-        self.attributesDialog = None # vector attributes
-        self.categoryDialog = None # vector category
+        self.dialogs = {}
+        self.dialogs['attributes'] = None
+        self.dialogs['category'] = None
+        self.dialogs['barscale'] = None
+        self.dialogs['legend'] = None
+
+        self.decorationDialog = None # decoration/overlays
 
     def AddToolbar(self, name):
         """
@@ -2942,23 +2945,23 @@ class MapFrame(wx.Frame):
 
         mapName = self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name
 
-        if self.attributesDialog is None:
-            self.attributesDialog = dbm.DisplayAttributesDialog(parent=self.MapWindow,
+        if self.dialogs['attributes'] is None:
+            self.dialogs['attributes'] = dbm.DisplayAttributesDialog(parent=self.MapWindow,
                                                                 map=mapName,
                                                                 query=((east, north), qdist),
                                                                 pos=posWindow,
                                                                 action="update")
         else:
             # update currently open dialog
-            self.attributesDialog.UpdateDialog(query=((east, north), qdist))
+            self.dialogs['attributes'].UpdateDialog(query=((east, north), qdist))
 
-        line = self.attributesDialog.GetLine()
+        line = self.dialogs['attributes'].GetLine()
         try:
             qlayer = self.Map.GetListOfLayers(l_name=globalvar.QUERYLAYER)[0]
         except IndexError:
             qlayer = None
             
-        if self.attributesDialog.mapDBInfo and line:
+        if self.dialogs['attributes'].mapDBInfo and line:
             # highlight feature & re-draw map
             if qlayer:
                 qlayer.cmdlist = self.AddTmpVectorMapLayer(mapName, line,
@@ -2968,14 +2971,14 @@ class MapFrame(wx.Frame):
                 self.AddTmpVectorMapLayer(mapName, line, useId=True)
             self.MapWindow.UpdateMap(render=True)
             # digitClass.driver.SetSelected([line])
-            if not self.attributesDialog.IsShown():
-                self.attributesDialog.Show()
+            if not self.dialogs['attributes'].IsShown():
+                self.dialogs['attributes'].Show()
         else:
             if qlayer:
                 self.Map.DeleteLayer(qlayer)
                 self.MapWindow.UpdateMap(render=True)
-            if self.attributesDialog.IsShown():
-                self.attributesDialog.Hide()
+            if self.dialogs['attributes'].IsShown():
+                self.dialogs['attributes'].Hide()
 
     def OnQuery(self, event):
         """Query tools menu"""
@@ -3229,6 +3232,8 @@ class MapFrame(wx.Frame):
         """
         Handler for scale/arrow map decoration menu selection.
         """
+        if self.dialogs['barscale']:
+            return
 
         ovltype = id = 0 # index for overlay layer in render
 
@@ -3245,18 +3250,19 @@ class MapFrame(wx.Frame):
         #            barcmd = 'd.barscale'
 
         # decoration overlay control dialog
-        dlg = DecDialog(parent=self, id=wx.ID_ANY, title=_('Scale and North arrow'),
-                        size=(350, 200),
-                        style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                        ovltype=ovltype,
-                        cmd='d.barscale',
-                        drawid=id,
-                        checktxt = _("Show/hide scale and North arrow"),
-                        ctrltxt = _("scale object"),
-                        params = params)
+        self.dialogs['barscale'] = \
+            gdialogs.DecorationDialog(parent=self, id=wx.ID_ANY, title=_('Scale and North arrow'),
+                                      size=(350, 200),
+                                      style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
+                                      ovltype=ovltype,
+                                      cmd='d.barscale',
+                                      drawid=id,
+                                      checktxt = _("Show/hide scale and North arrow"),
+                                      ctrltxt = _("scale object"),
+                                      params = params)
 
         # if OK button pressed in decoration control dialog
-        if dlg.ShowModal() == wx.ID_OK:
+        if self.dialogs['barscale'].Show() == wx.ID_OK:
             if self.ovlchk[id] == True:
                 # get overlay images (overlay must be active)
                 if not self.Map.ovlookup[ovltype].active:
@@ -3279,7 +3285,6 @@ class MapFrame(wx.Frame):
                                     coords=self.ovlcoords[id])
 
         self.MapWindow.UpdateMap()
-        dlg.Destroy()
 
         # close properties dialog if open
         #        try:
@@ -3291,6 +3296,9 @@ class MapFrame(wx.Frame):
         """
         Handler for legend map decoration menu selection.
         """
+        if self.dialogs['legend']:
+            return
+        
         ovltype = id = 1 # index for overlay layer in render
 
         if ovltype in self.params:
@@ -3299,20 +3307,19 @@ class MapFrame(wx.Frame):
             params = ''
 
         # Decoration overlay control dialog
-        dlg = DecDialog(parent=self, id=wx.ID_ANY, title=('Legend'),
-                        size=(350, 200),
-                        style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                        ovltype=ovltype,
-                        cmd='d.legend',
-                        drawid=id,
-                        checktxt = _("Show/hide legend"),
-                        ctrltxt = _("legend object"),
-                        params = params)
+        self.dialogs['legend'] = \
+            gdialogs.DecorationDialog(parent=self, id=wx.ID_ANY, title=('Legend'),
+                                      size=(350, 200),
+                                      style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
+                                      ovltype=ovltype,
+                                      cmd='d.legend',
+                                      drawid=id,
+                                      checktxt = _("Show/hide legend"),
+                                      ctrltxt = _("legend object"),
+                                      params = params)
 
         # If OK button pressed in decoration control dialog
-        val = dlg.ShowModal()
-        if val == wx.ID_OK:
-
+        if self.dialogs['legend'].Show() == wx.ID_OK:
             if self.ovlchk[id] == True:
                 # get overlay images (overlay must be active)
                 if not self.Map.ovlookup[ovltype].active:
@@ -3335,12 +3342,12 @@ class MapFrame(wx.Frame):
                                     coords=self.ovlcoords[id])
 
         self.MapWindow.UpdateMap()
-        dlg.Destroy()
+
         # close properties dialog if open
-#        try:
-#            self.propwin[ovltype].Close(True)
-#        except:
-#            pass
+        #        try:
+        #            self.propwin[ovltype].Close(True)
+        #        except:
+        #            pass
 
     def AddText(self, event):
         """
@@ -3361,10 +3368,10 @@ class MapFrame(wx.Frame):
             id = self.MapWindow.currtxtid
             textcoords = self.ovlcoords[id]
 
-        dlg = TextDialog(self, wx.ID_ANY, 'Text', size=(400, 200),
-                         style=wx.DEFAULT_DIALOG_STYLE,
-                         ovltype=ovltype,
-                         drawid=id)
+        dlg = gdialogs.TextLayerDialog(self, wx.ID_ANY, 'Text', size=(400, 200),
+                                       style=wx.DEFAULT_DIALOG_STYLE,
+                                       ovltype=ovltype,
+                                       drawid=id)
 
         dlg.CenterOnScreen()
 
@@ -3445,213 +3452,6 @@ class MapFrame(wx.Frame):
         zoommenu.Destroy()
 
 # end of class MapFrame
-
-class DecDialog(wx.Dialog):
-    """
-    Controls setting options and displaying/hiding map overlay decorations
-    """
-    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale',
-                 drawid=None, checktxt='', ctrltxt='', params=''):
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-
-        self.ovltype = ovltype
-        self.drawid  = drawid
-        self.ovlcmd  = cmd
-        self.parent  = parent
-        self.ovlchk  = self.parent.MapWindow.ovlchk
-        # previously set decoration options to pass back to options dialog
-        self.params  = params 
-
-        if self.ovltype not in self.parent.Map.ovlookup:
-            self.parent.Map.AddOverlay(self.ovltype, type='overlay',
-                                       command=[self.ovlcmd], l_active=False, l_render=False)
-
-        # self.MakeModal(True)
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        self.chkbox = wx.CheckBox(parent=self, id=wx.ID_ANY, label=checktxt)
-        if not drawid in self.ovlchk:
-            self.ovlchk[drawid] = True
-        self.chkbox.SetValue(self.ovlchk[drawid])
-        box.Add(item=self.chkbox, proportion=0,
-                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        optnbtn = wx.Button(parent=self, id=wx.ID_ANY, label=_("Set options"))
-        box.Add(item=optnbtn, proportion=0, flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(parent=self, id=wx.ID_ANY,
-                              label=_("Drag %s with mouse in pointer mode to position. "
-                                      "Double-click to change options." % ctrltxt))
-        box.Add(item=label, proportion=0,
-                flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
-        sizer.Add(item=box, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
-
-        line = wx.StaticLine(parent=self, id=wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(item=line, proportion=0,
-                  flag=wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, border=5)
-
-        # buttons
-        btnsizer = wx.StdDialogButtonSizer()
-
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        sizer.Add(item=btnsizer, proportion=0,
-                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
-
-
-        # bindings
-        self.Bind(wx.EVT_CHECKBOX, self.OnCheck,   self.chkbox)
-        self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-    def OnCheck(self, event):
-        """
-        Handler for checkbox for displaying/hiding decoration
-        """
-        check = event.IsChecked()
-        self.ovlchk[self.drawid] = check
-
-    def OnOptions(self, event):
-        """        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-        Sets option for decoration map overlays
-        """
-
-        # display properties dialog (modal mode)
-        menuform.GUI().ParseCommand([self.ovlcmd], gmpath,
-                                    completed=(self.parent.GetOptData, self.ovltype, self.params),
-                                    parentframe=self)
-
-class TextDialog(wx.Dialog):
-    """
-    Controls setting options and displaying/hiding map overlay decorations
-    """
-
-    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE,
-                 ovltype=2,drawid=None):
-
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
-
-        self.ovltype = ovltype
-        self.drawid  = drawid
-        self.parent  = parent
-
-        if drawid in self.parent.MapWindow.textdict:
-            self.currText, self.currFont, self.currClr, self.currRot = self.parent.MapWindow.textdict[drawid]
-        else:
-            self.currClr = wx.BLACK
-            self.currText = ''
-            self.currFont = self.GetFont()
-            self.currRot = 0.0
-
-        sizer = wx.BoxSizer(wx.VERTICAL)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, _("Enter text:"))
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-
-        self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
-        self.textentry.SetFont(self.currFont)
-        self.textentry.SetForegroundColour(self.currClr)
-        self.textentry.SetValue(self.currText)
-        box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, "Rotation:")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.rotation = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(75,-1), style=wx.SP_ARROW_KEYS)
-        self.rotation.SetRange(-360, 360)
-        self.rotation.SetValue(int(self.currRot))
-        box.Add(self.rotation, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        fontbtn = wx.Button(self, wx.ID_ANY, "Set font")
-        box.Add(fontbtn, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, ("Drag text with mouse in pointer mode\nto position. Double-click to change options"))
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
-
-        btnsizer = wx.StdDialogButtonSizer()
-
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
-
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
-        btnsizer.Realize()
-
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        self.SetSizer(sizer)
-        sizer.Fit(self)
-
-        # bindings
-        self.Bind(wx.EVT_BUTTON,     self.OnSelectFont, fontbtn)
-        self.Bind(wx.EVT_TEXT,       self.OnText,       self.textentry)
-        self.Bind(wx.EVT_SPINCTRL,   self.OnRotation,   self.rotation)
-
-    def OnText(self, event):
-        """Change text string"""
-        self.currText = event.GetString()
-
-    def OnRotation(self, event):
-        """Change rotation"""
-        self.currRot = event.GetInt()
-        Debug.msg (5, "TextDialog.OnRotation(): rotation=%f" % \
-               self.currRot)
-
-        event.Skip()
-
-    def OnSelectFont(self, event):
-        """Change font"""
-        data = wx.FontData()
-        data.EnableEffects(True)
-        data.SetColour(self.currClr)         # set colour
-        data.SetInitialFont(self.currFont)
-
-        dlg = wx.FontDialog(self, data)
-
-        if dlg.ShowModal() == wx.ID_OK:
-            data = dlg.GetFontData()
-            self.currFont = data.GetChosenFont()
-            self.currClr = data.GetColour()
-
-            self.textentry.SetFont(self.currFont)
-            self.textentry.SetForegroundColour(self.currClr)
-
-            self.Layout()
-
-        dlg.Destroy()
 
 class MapApp(wx.App):
     """
