@@ -2440,7 +2440,7 @@ class MapFrame(wx.Frame):
         # update statusbar if required
         e, n = self.MapWindow.Pixel2Cell(event.GetPositionTuple())
         if self.statusText == "Coordinates":
-            self.statusbar.SetStatusText("%.2f,%.2f" % (e, n), 0)
+            self.statusbar.SetStatusText("%.2f, %.2f" % (e, n), 0)
 
         event.Skip()
 
@@ -2621,7 +2621,7 @@ class MapFrame(wx.Frame):
             self.statusbar.SetStatusText("", 0)
 
         elif self.statusText == "Extent":
-            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
+            self.statusbar.SetStatusText("%.2f - %.2f, %.2f - %.2f" %
                                          (self.Map.region["w"], self.Map.region["e"],
                                           self.Map.region["s"], self.Map.region["n"]), 0)
 
@@ -2635,13 +2635,13 @@ class MapFrame(wx.Frame):
 
         elif self.statusText == "Comp. region":
             compregion = self.Map.GetRegion()
-            self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f (%.2f,%.2f)" %
+            self.statusbar.SetStatusText("%.2f - %.2f, %.2f - %.2f (%.2f, %.2f)" %
                                          (compregion["w"], compregion["e"],
                                           compregion["s"], compregion["n"],
                                           compregion["ewres"], compregion["nsres"]), 0)
             
         elif self.statusText == "Geometry":
-            self.statusbar.SetStatusText("rows=%d;cols=%d;nsres=%.2f;ewres=%.2f" %
+            self.statusbar.SetStatusText("rows=%d; cols=%d; nsres=%.2f; ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
                                           self.Map.region["nsres"], self.Map.region["ewres"]), 0)
         elif self.statusText == "Map scale":
