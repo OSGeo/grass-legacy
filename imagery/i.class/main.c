@@ -36,6 +36,8 @@ static int check_files (char *, char *, char *, char *);
 int main (int argc, char *argv[])
 {
     char *mapset;
+    char group[GNAME_MAX], grp_mapset[GMAPSET_MAX];
+
     struct Cell_head cellhd;
     struct GModule *module;
     struct Option *bg_map, *img_grp, *img_subgrp, *out_sig, *in_sig;
@@ -88,8 +90,22 @@ int main (int argc, char *argv[])
   if (G_maskfd() >= 0)
         G_fatal_error (_("You have a mask set. Unset mask and run again"));
 
+
+    /* check if current mapset:  (imagery libs are very lacking in this dept)
+	- abort if not,
+	- remove @mapset part if it is
+    */
+    if(G__name_is_fully_qualified(img_grp->answer, group, grp_mapset)) {
+	if(strcmp(grp_mapset, G_mapset()))
+	    G_fatal_error(_("Group must exist in the current mapset"));
+    }
+    else {
+	strcpy(group, img_grp->answer); /* FIXME for buffer overflow (have the parser check that?) */
+    }
+
     /* get group/subgroup, and signature files */
-    check_files (img_grp->answer, img_subgrp->answer, out_sig->answer, in_sig->answer);
+    check_files (group, img_subgrp->answer, out_sig->answer, in_sig->answer);
+
 
   /* initialize the Region structure */
     init_region (Region);
