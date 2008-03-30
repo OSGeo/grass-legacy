@@ -22,7 +22,7 @@
 #include <grass/gprojects.h>
 #include "local_proto.h"
 
-static int get_a_e2_f(const char *, const char *, double *, double *, double *);
+static int get_a_e2_rf(const char *, const char *, double *, double *, double *);
 
 /**
  * This routine returns the ellipsoid parameters from the database.
@@ -96,10 +96,9 @@ GPJ__get_ellipsoid_params(struct Key_Value *proj_keys,
 		G_fatal_error(_("No secondary ellipsoid descriptor "
 				"(rf, es or b) in file"));
 
-	    if (get_a_e2_f(str, str1, a, e2, rf) == 0)
+	    if (get_a_e2_rf(str, str1, a, e2, rf) == 0)
 		G_fatal_error(_("Invalid ellipsoid descriptors "
 				"(a, rf, es or b) in file"));
-	    *rf = 1.0 / *rf;
 	    return 1;
 	}
 	else {
@@ -150,9 +149,9 @@ int GPJ_get_ellipsoid_by_name(const char *name, struct gpj_ellps *estruct)
 }
 
 static int
-get_a_e2_f(const char *s1, const char *s2, double *a, double *e2, double *f)
+get_a_e2_rf(const char *s1, const char *s2, double *a, double *e2, double *recipf)
 {
-    double b, recipf;
+    double b, f;
 
     if (sscanf(s1, "a=%lf", a) != 1)
 	return 0;
@@ -161,15 +160,16 @@ get_a_e2_f(const char *s1, const char *s2, double *a, double *e2, double *f)
 	return 0;
 
     if (sscanf(s2, "e=%lf", e2) == 1) {
-	*f = (double)1.0 - sqrt((double)1.0 - *e2);
+	f = 1.0 - sqrt(1.0 - *e2);
+	*recipf = 1.0 / f;
 	return (*e2 >= 0.0);
     }
 
-    if (sscanf(s2, "f=1/%lf", &recipf) == 1) {
-	if (recipf <= 0.0)
+    if (sscanf(s2, "f=1/%lf", recipf) == 1) {
+	if (*recipf <= 0.0)
 	    return 0;
-	*f = (double)1.0 / (recipf);
-	*e2 = *f + *f - *f * *f;
+	f = 1.0 / *recipf;
+	*e2 = f * (2 - f);
 	return (*e2 >= 0.0);
     }
 
@@ -177,13 +177,14 @@ get_a_e2_f(const char *s1, const char *s2, double *a, double *e2, double *f)
 	if (b <= 0.0)
 	    return 0;
 	if (b == *a) {
-	    *f = 0.0;
+	    f = 0.0;
 	    *e2 = 0.0;
 	}
 	else {
-	    *f = ((*a) - b) / (*a);
-	    *e2 = *f + *f - *f * *f;
+	    f = (*a - b) / *a;
+	    *e2 = f * (2 - f);
 	}
+	*recipf = 1.0 / f;
 	return (*e2 >= 0.0);
     }
     return 0;
@@ -200,7 +201,7 @@ struct ellps_list *read_ellipsoid_table(int fatal)
     int line;
     int err;
     struct ellps_list *current = NULL, *outputlist = NULL;
-    double a, e2, f;
+    double a, e2, rf;
 
     int count = 0;
 
@@ -233,8 +234,8 @@ struct ellps_list *read_ellipsoid_table(int fatal)
 	}
 
 
-	if (get_a_e2_f(buf1, buf2, &a, &e2, &f)
-	    || get_a_e2_f(buf2, buf1, &a, &e2, &f)) {
+	if (get_a_e2_rf(buf1, buf2, &a, &e2, &rf)
+	    || get_a_e2_rf(buf2, buf1, &a, &e2, &rf)) {
 	    if (current == NULL)
 		current = outputlist = G_malloc(sizeof(struct ellps_list));
 	    else
@@ -243,7 +244,7 @@ struct ellps_list *read_ellipsoid_table(int fatal)
 	    current->longname = G_store(descr);
 	    current->a = a;
 	    current->es = e2;
-	    current->rf = (1 / f);
+	    current->rf = rf;
 	    current->next = NULL;
 	    count++;
 	}
