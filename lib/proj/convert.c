@@ -516,13 +516,15 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         {
             char *ellps = NULL;
             struct ellps_list *list, *listhead;
-            double a = atof(pszSemiMajor), flat = atof(pszInvFlat);
+            double a = atof(pszSemiMajor), invflat = atof(pszInvFlat), flat;
             double es;
            
             /* Allow for incorrect WKT describing a sphere where InvFlat 
              * is given as 0 rather than inf */
-            if( flat > 0 )
-                flat = 1 / flat;
+            if( invflat > 0 )
+                flat = 1 / invflat;
+            else
+                flat = 0;
             
             es = flat * (2.0 - flat);
 
@@ -535,7 +537,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 		 * by trial and error and could be fine-tuned, or possibly
 		 * a direct comparison of IEEE floating point values used. */
                 if ( ( a == list->a || fabs(a - list->a) < 0.1 || fabs(1 - a/list->a) < 0.0000001 ) &&
-                     ( es == list->es || fabs(es - list->es) < 0.000000001 || fabs(1 - es/list->es) < 0.0000001) )
+                     ( ( es == 0 && list->es == 0 ) || /* Special case for sphere */
+                       ( invflat == list->rf || fabs(invflat - list->rf) < 0.0000001 ) ) )
                 {
                     ellps = G_store(list->name);
                     break;
