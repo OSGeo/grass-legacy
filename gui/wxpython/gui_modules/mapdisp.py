@@ -538,8 +538,8 @@ class BufferedWindow(wx.Window):
 
         self.resize = False
 
-        if len(self.Map.GetListOfLayers()) == 0:
-            return False
+        # if len(self.Map.GetListOfLayers()) == 0:
+        #    return False
 
         if self.img is None:
             render = True
@@ -616,20 +616,7 @@ class BufferedWindow(wx.Window):
                 self.Draw(self.pdc, img=self.textdict[id], drawid=id,
                           pdctype='text', coords=self.ovlcoords[id])
 
-        #
-        # render region border (to self.pdcTmp)
-        #
-        if hasattr(self, "regionCoords"):
-            reg = self.Map.GetWindow()
-            self.polypen = wx.Pen(colour='red', width=2, style=wx.SOLID)
-            self.regionCoords = []
-            self.regionCoords.append((reg['west'], reg['north']))
-            self.regionCoords.append((reg['east'], reg['north']))
-            self.regionCoords.append((reg['east'], reg['south']))
-            self.regionCoords.append((reg['west'], reg['south']))
-            self.regionCoords.append((reg['west'], reg['north']))
-            # draw region extent
-            self.DrawLines(pdc=self.pdcTmp, polycoords=self.regionCoords)
+        self.DrawCompRegionExtent()
 
         # redraw pdcTmp if needed
         if len(self.polycoords) > 0:
@@ -654,6 +641,49 @@ class BufferedWindow(wx.Window):
                    (render, renderVector, (stop-start)))
 
         return True
+
+    def DrawCompRegionExtent(self):
+        """Draw computational region extent in the display
+        
+        Display region is drawn as a blue box inside the computational region,
+        computational region inside a display region as a red box).
+        """
+        if hasattr(self, "regionCoords"):
+            compReg = self.Map.GetRegion()
+            dispReg = self.Map.GetCurrentRegion()
+            reg = None
+            if self.IsInRegion(dispReg, compReg):
+                self.polypen = wx.Pen(colour='blue', width=3, style=wx.SOLID)
+                reg = dispReg
+            else:
+                self.polypen = wx.Pen(colour='red', width=3, style=wx.SOLID)
+                reg = compReg
+            
+            self.regionCoords = []
+            self.regionCoords.append((reg['w'], reg['n']))
+            self.regionCoords.append((reg['e'], reg['n']))
+            self.regionCoords.append((reg['e'], reg['s']))
+            self.regionCoords.append((reg['w'], reg['s']))
+            self.regionCoords.append((reg['w'], reg['n']))
+            # draw region extent
+            self.DrawLines(pdc=self.pdcTmp, polycoords=self.regionCoords)
+
+    def IsInRegion(self, region, refRegion):
+        """Test if 'region' is inside of 'refRegion'
+
+        @param region input region
+        @param refRegion reference region (e.g. computational region)
+
+        @return True if region is inside of refRegion
+        @return False 
+        """
+        if region['s'] >= refRegion['s'] and \
+                region['n'] <= refRegion['n'] and \
+                region['w'] >= refRegion['w'] and \
+                region['e'] <= refRegion['e']:
+            return True
+
+        return False
 
     def EraseMap(self):
         """
@@ -2240,7 +2270,11 @@ class MapFrame(wx.Frame):
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
         self.showRegion.SetToolTip(wx.ToolTip (_("Show/hide computational "
-                                                 "region extent (set with g.region)")))
+                                                 "region extent (set with g.region). "
+                                                 "Display region drawn as a blue box inside the "
+                                                 "computational region, "
+                                                 "computational region inside a display region "
+                                                 "as a red box).")))
         # map scale
         self.mapScale = wx.TextCtrl(parent=self.statusbar, id=wx.ID_ANY,
                                     value="", style=wx.TE_PROCESS_ENTER,
