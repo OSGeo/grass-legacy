@@ -952,10 +952,10 @@ class cmdPanel(wx.Panel):
                 if p.get('value','') ==  '' :
                     p['value'] = p.get('default','')
 
-            if ( len(p.get('values',[]) ) > 0):
+            if ( len(p.get('values', []) ) > 0):
                 valuelist=map( str, p.get('values',[]) )
 
-                if p.get('multiple','no') == 'yes' and \
+                if p.get('multiple', 'no') == 'yes' and \
                         p.get('type', '') == 'string':
                     txt = wx.StaticBox (parent=which_panel, id=0, label=" " + title + ": ")
                     if len(valuelist) > 6:
@@ -963,11 +963,13 @@ class cmdPanel(wx.Panel):
                     else:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.HORIZONTAL )
                     isDefault = {}
-                    for defval in p.get('default','').split(','):
+                    # copy default values
+                    p['value'] = p.get('default', '')
+                    for defval in p.get('default', '').split(','):
                         isDefault[ defval ] = 'yes'
                         # for multi checkboxes, this is an array of all wx IDs
                         # for each individual checkbox
-                        p[ 'wxId' ]=[]
+                        p[ 'wxId' ] = []
                     for val in valuelist:
                         chkbox = wx.CheckBox( parent=which_panel, label = text_beautify(val) )
                         p[ 'wxId' ].append( chkbox.GetId() )
@@ -1241,23 +1243,27 @@ class cmdPanel(wx.Panel):
             if 'wxId' in p and type( p['wxId'] ) == type( [] ) and me in p['wxId']:
                 theParam = p
                 myIndex = p['wxId'].index( me )
+
         # Unpack current value list
-        currentValues={}
-        for isThere in theParam.get('default','').split(','):
-            currentValues[isThere] = 1
-        for isThere in theParam.get('value','').split(','):
+        currentValues = {}
+        for isThere in theParam.get('value', '').split(','):
             currentValues[isThere] = 1
         theValue = theParam['values'][myIndex]
+
         if event.Checked():
             currentValues[ theValue ] = 1
         else:
             del currentValues[ theValue ]
-        currentValueList=[] # Keep the original order, so that some defaults may be recovered
+
+        # Keep the original order, so that some defaults may be recovered
+        currentValueList = [] 
         for v in theParam['values']:
             if currentValues.has_key(v):
                 currentValueList.append( v )
+
         # Pack it back
         theParam['value'] = ','.join( currentValueList )
+
         self.OnUpdateValues()
 
     def OnSetValue(self, event):
