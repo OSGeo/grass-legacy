@@ -53,7 +53,7 @@ class GMConsole(wx.Panel):
 
         # text control for command output
         self.cmd_output = GMStc(parent=self, id=wx.ID_ANY, margin=margin,
-                                wrap=60) # FIXME: hardcoded-value
+                                wrap=None) 
         
         # redirect
         self.cmd_stdout = GMStdout(self.cmd_output)
@@ -98,7 +98,7 @@ class GMConsole(wx.Panel):
         self.SetAutoLayout(True)
         self.SetSizer(boxsizer1)
 
-    def WriteLog(self, line, style=None):
+    def WriteLog(self, line, style=None, wrap=None):
         """Generic method for writing log message in 
         given style
 
@@ -117,7 +117,7 @@ class GMConsole(wx.Panel):
             diff = 80 - len(line) 
             line += diff * ' '
 
-        self.cmd_output.AddText(line + '%s' % os.linesep)
+        self.cmd_output.AddTextWrapped(line, wrap=wrap) # adds os.linesep
         self.cmd_output.EnsureCaretVisible()
         p2 = self.cmd_output.GetCurrentPos()
         self.cmd_output.StartStyling(p1, 0xff)
@@ -325,7 +325,7 @@ class GMStdout:
         s = s.replace('\n', os.linesep)
         for line in s.split(os.linesep):
             p1 = self.gmstc.GetCurrentPos() # get caret position
-            self.gmstc.AddTextWrapped(line)
+            self.gmstc.AddTextWrapped(line, wrap=None) # no wrapping && adds os.linesep
             self.gmstc.EnsureCaretVisible()
             p2 = self.gmstc.GetCurrentPos()
             self.gmstc.StartStyling(p1, 0xff)
@@ -380,7 +380,7 @@ class GMStderr:
             else:
                 if len(line) > 0:
                     p1 = self.gmstc.GetCurrentPos()
-                    self.gmstc.AddTextWrapped(line)
+                    self.gmstc.AddTextWrapped(line, wrap=60) # wrap && add os.linesep
                     self.gmstc.EnsureCaretVisible()
                     p2 = self.gmstc.GetCurrentPos()
                     self.gmstc.StartStyling(p1, 0xff)
@@ -392,7 +392,7 @@ class GMStderr:
                     message = 'WARNING: ' + message
                 elif type == 'error':
                     message = 'ERROR: ' + message
-                self.gmstc.AddTextWrapped(message)
+                self.gmstc.AddTextWrapped(message, wrap=60) #wrap && add os.linesep
                 self.gmstc.EnsureCaretVisible()
                 p2 = self.gmstc.GetCurrentPos()
                 self.gmstc.StartStyling(p1, 0xff)
@@ -490,13 +490,14 @@ class GMStc(wx.stc.StyledTextCtrl):
 
         String is wrapped and linesep is also added to the end
         of the string"""
-        if wrap is None:
-            if self.wrap is None:
-                wrap = 60
-            else:
-                wrap = self.wrap
-        
-        str = textwrap.fill(str, wrap) + os.linesep
+        if wrap is None and self.wrap:
+            wrap = self.wrap
+
+        if wrap is not None:
+            str = textwrap.fill(str, wrap) + os.linesep
+        else:
+            str += os.linesep
+            
         self.AddText(str)
 
     def SetWrap(self, wrap):
