@@ -2161,8 +2161,12 @@ class DigitCategoryDialog(wx.Dialog, listmix.ColumnSorterMixin):
     def OnCancel(self, event):
         """Cancel button pressed"""
         self.parent.parent.dialogs['category'] = None
-        self.parent.parent.digit.driver.SetSelected([])
-        self.parent.UpdateMap(render=False)
+        if self.parent.parent.digit:
+            self.parent.parent.digit.driver.SetSelected([])
+            self.parent.UpdateMap(render=False)
+        else:
+            self.parent.parent.OnRender(None)
+            
         self.Close()
 
     def OnApply(self, event):
