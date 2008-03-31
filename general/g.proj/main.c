@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     inepsg->key = "epsg";
     inepsg->type = TYPE_INTEGER;
     inepsg->required = NO;
-    inepsg->options  = "1-100000";
+    inepsg->options  = "1-1000000";
     inepsg->guisection = "Input";
     inepsg->description = _("EPSG projection code");
 
