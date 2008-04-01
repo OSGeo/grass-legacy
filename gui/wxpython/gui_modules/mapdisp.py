@@ -527,9 +527,8 @@ class BufferedWindow(wx.Window):
         Updates the canvas anytime there is a change to the underlaying images
         or to the geometry of the canvas.
 
-        @param render render map layer composition
-        @param renderVector render vector map layer (digitizer)
-        @param counter reference to layer counter (progress bar)
+        @param render re-render map composition
+        @param renderVector re-render vector map layer enabled for editing (used for digitizer)
         """
 
         start = time.clock()
@@ -557,7 +556,11 @@ class BufferedWindow(wx.Window):
         #
         if render:
             self.Map.ChangeMapSize(self.GetClientSize())
-            self.mapfile = self.Map.Render(force=True, mapWindow=self.parent)
+            windres = False
+            if self.parent.compResolution.GetValue():
+                # use computation region resolution for rendering
+                windres = True
+            self.mapfile = self.Map.Render(force=True, mapWindow=self.parent, windres=windres)
             self.img = self.GetImage() # id=99
 
         #
@@ -632,7 +635,7 @@ class BufferedWindow(wx.Window):
         #
         # update statusbar
         #
-        self.Map.SetRegion()
+        ### self.Map.SetRegion()
         self.parent.StatusbarUpdate()
 
         Debug.msg (2, "BufferedWindow.UpdateMap(): render=%s, renderVector=%s -> time=%g" % \
@@ -1997,8 +2000,8 @@ class BufferedWindow(wx.Window):
         else:
             return
 
-        self.Map.SetRegion()
-        self.Map.AlignExtentFromDisplay()
+        ### self.Map.SetRegion()
+        ### self.Map.AlignExtentFromDisplay()
 
         self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
                          self.Map.region['e'], self.Map.region['w'])
@@ -2012,9 +2015,8 @@ class BufferedWindow(wx.Window):
         Set display geometry to match computational
         region settings (set with g.region)
         """
-
         self.Map.region = self.Map.GetRegion()
-        self.Map.SetRegion()
+        ### self.Map.SetRegion(windres=True)
 
         self.ZoomHistory(self.Map.region['n'], self.Map.region['s'],
                          self.Map.region['e'], self.Map.region['w'])
@@ -2248,9 +2250,10 @@ class MapFrame(wx.Frame):
         self.toggleStatus = wx.Choice(self.statusbar, wx.ID_ANY,
                                       choices = ["Coordinates",
                                                  "Extent",
-                                                 "Comp. extent",
                                                  "Comp. region",
-                                                 "Geometry",
+                                                 "Show comp. extent",
+                                                 "Display mode",
+                                                 "Display geometry",
                                                  "Map scale"])
         self.statusText = "Coordinates"
 	self.toggleStatus.SetStringSelection(self.statusText)
@@ -2265,6 +2268,7 @@ class MapFrame(wx.Frame):
         self.showRegion = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
                                       label=_("Show computational extent"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleShowRegion, self.showRegion)
+        
         self.showRegion.SetValue(False)
         self.showRegion.Hide()
         self.showRegion.SetToolTip(wx.ToolTip (_("Show/hide computational "
@@ -2273,6 +2277,16 @@ class MapFrame(wx.Frame):
                                                  "computational region, "
                                                  "computational region inside a display region "
                                                  "as a red box).")))
+        # set resolution
+        self.compResolution = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
+                                         label=_("Constrain display resolution to computational settings"))
+        self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleResolution, self.compResolution)
+        self.compResolution.SetValue(UserSettings.Get(group='display', key='compResolution', subkey='enabled'))
+        self.compResolution.Hide()
+        self.compResolution.SetToolTip(wx.ToolTip (_("Constrain display resolution "
+                                                     "to computational region settings. "
+                                                     "Default value for new map displays can "
+                                                     "be set up in 'User GUI settings' dialog.")))
         # map scale
         self.mapScale = wx.TextCtrl(parent=self.statusbar, id=wx.ID_ANY,
                                     value="", style=wx.TE_PROCESS_ENTER,
@@ -2475,8 +2489,8 @@ class MapFrame(wx.Frame):
         Track mouse motion and update status bar
         """
         # update statusbar if required
-        e, n = self.MapWindow.Pixel2Cell(event.GetPositionTuple())
         if self.statusText == "Coordinates":
+            e, n = self.MapWindow.Pixel2Cell(event.GetPositionTuple())
             self.statusbar.SetStatusText("%.2f, %.2f" % (e, n), 0)
 
         event.Skip()
@@ -2500,6 +2514,9 @@ class MapFrame(wx.Frame):
         for layer in qlayer:
             self.Map.DeleteLayer(layer)
         self.MapWindow.UpdateMap(render=True)
+
+        # update statusbar
+        self.StatusbarUpdate()
 
     def OnPointer(self, event):
         """Pointer button clicked"""
@@ -2615,7 +2632,13 @@ class MapFrame(wx.Frame):
         if self.autoRender.GetValue():
             self.OnRender(None)
 
-
+    def OnToggleResolution(self, event):
+        """Use resolution of computation region settings
+        for redering image instead of display resolution"""
+        # redraw map if auto-rendering is enabled
+        if self.autoRender.GetValue():
+            self.OnRender(None)
+        
     def OnToggleStatus(self, event):
         """Toggle status text"""
         self.statusText = event.GetString()
@@ -2651,6 +2674,7 @@ class MapFrame(wx.Frame):
         """Update statusbar content"""
 
         self.showRegion.Hide()
+        self.compResolution.Hide()
         self.mapScale.Hide()
         self.mapScaleValue = self.ppm = None
 
@@ -2662,11 +2686,7 @@ class MapFrame(wx.Frame):
                                          (self.Map.region["w"], self.Map.region["e"],
                                           self.Map.region["s"], self.Map.region["n"]), 0)
 
-        elif self.statusText == "Comp. extent":
-            compregion = self.Map.GetRegion()
-            # self.statusbar.SetStatusText("%.2f-%.2f,%.2f-%.2f" %
-            #                             (compregion["w"], compregion["e"],
-            #                              compregion["s"], compregion["n"]), 0)
+        elif self.statusText == "Show comp. extent":
             self.statusbar.SetStatusText("", 0)
             self.showRegion.Show()
 
@@ -2676,8 +2696,12 @@ class MapFrame(wx.Frame):
                                          (compregion["w"], compregion["e"],
                                           compregion["s"], compregion["n"],
                                           compregion["ewres"], compregion["nsres"]), 0)
+
+        elif self.statusText == "Display mode":
+            self.statusbar.SetStatusText("", 0)
+            self.compResolution.Show()
             
-        elif self.statusText == "Geometry":
+        elif self.statusText == "Display geometry":
             self.statusbar.SetStatusText("rows=%d; cols=%d; nsres=%.2f; ewres=%.2f" %
                                          (self.Map.region["rows"], self.Map.region["cols"],
                                           self.Map.region["nsres"], self.Map.region["ewres"]), 0)
@@ -2730,6 +2754,7 @@ class MapFrame(wx.Frame):
         """Reposition checkbox in statusbar"""
         # reposition checkbox
         widgets = [(0, self.showRegion),
+                   (0, self.compResolution),
                    (0, self.mapScale),
                    (0, self.onRenderGauge),
                    (1, self.toggleStatus),

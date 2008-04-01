@@ -353,8 +353,7 @@ class Map(object):
         return new
 
     def AlignExtentFromDisplay(self):
-        """Sets display extents (n,s,e,w) to even multiple of
-        current display resolution from center point"""
+        """Align region extent based on display size from center point"""
 
         # calculate new bounding box based on center of display
         if self.region["ewres"] > self.region["nsres"]:
@@ -396,9 +395,9 @@ class Map(object):
     def GetRegion(self, rast=None, vect=None,
                   n=None, s=None, e=None, w=None, default=False):
         """
-        Get region settings
+        Get region settings (g.region -upgc)
 
-        Optionaly raster or vector map layer can be given.
+        Optionaly extent, raster or vector map layer can be given.
 
         @param rast raster name or None
         @param vect vector name or None
@@ -471,8 +470,7 @@ class Map(object):
         Render string for GRASS_REGION env. variable, so that the images will be rendered
         from desired zoom level.
 
-        @param windres If windres set to True, uses resolution from
-        WIND file rather than display (for modules that require set
+        @param windres uses resolution from WIND file rather than display (for modules that require set
         resolution like d.rast.num)
 
         @return String usable for GRASS_REGION variable or None
@@ -480,7 +478,8 @@ class Map(object):
         grass_region = ""
 
         # adjust region settings to match monitor
-        self.region = self.AdjustRegion()
+        if not windres:
+            self.region = self.AdjustRegion()
 
         #        newextents = self.AlignResolution()
         #        self.region['n'] = newextents['n']
@@ -517,11 +516,11 @@ class Map(object):
                     continue
                 elif key == "cols":
                     grass_region += 'cols: %d; ' % \
-                        (self.width)
+                        self.region['cols']
                     continue
                 elif key == "rows":
                     grass_region += 'rows: %d; ' % \
-                        (self.height)
+                        self.region['rows']
                     continue
                 else:
                     grass_region += key + ": "  + self.wind[key] + "; "
@@ -611,7 +610,7 @@ class Map(object):
 
         return selected
 
-    def Render(self, force=False, mapWindow=None):
+    def Render(self, force=False, mapWindow=None, windres=False):
         """
         Creates final image composite
 
@@ -620,6 +619,7 @@ class Map(object):
         
         @param force force rendering
         @param reference for MapFrame instance (for progress bar)
+        @param windres use region resolution (True) otherwise display resolution
 
         @return name of file with rendered image or None
         """
@@ -631,7 +631,7 @@ class Map(object):
         opacities = []
 
         tmp_region = os.getenv("GRASS_REGION")
-        os.environ["GRASS_REGION"] = self.SetRegion()
+        os.environ["GRASS_REGION"] = self.SetRegion(windres)
         os.environ["GRASS_WIDTH"]  = str(self.width)
         os.environ["GRASS_HEIGHT"] = str(self.height)
         if UserSettings.Get(group='display', key='driver', subkey='type') == 'cairo':
