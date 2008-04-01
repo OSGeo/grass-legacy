@@ -493,6 +493,10 @@ class GMFrame(wx.Frame):
         Erase current workspace settings first"""
 
         Debug.msg(4, "GMFrame.OnWorkspaceNew():")
+        
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay()
 
         maptree = self.curr_page.maptree
 
@@ -527,6 +531,10 @@ class GMFrame(wx.Frame):
             return
 
         Debug.msg(4, "GMFrame.OnWorkspaceOpen(): filename=%s" % filename)
+
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay()
 
         self.LoadWorkspaceFile(filename)
 
@@ -591,9 +599,10 @@ class GMFrame(wx.Frame):
                                parent=self)
             wx.Yield()
 
+            maptree = None
             for layer in gxwXml.layers:
                 if layer['display'] >= self.disp_idx:
-                    # create new map display window if needed
+                    # start new map display if no display is available
                     self.NewDisplay()
                 maptree = self.gm_cb.GetPage(layer['display']).maptree
                 newItem = maptree.AddLayer(ltype=layer['type'],
@@ -606,8 +615,9 @@ class GMFrame(wx.Frame):
 
             busy.Destroy()
             
-            # reverse list of map layers
-            maptree.Map.ReverseListOfLayers()
+            if maptree:
+                # reverse list of map layers
+                maptree.Map.ReverseListOfLayers()
 
             file.close()
         except IOError, err:
@@ -627,6 +637,10 @@ class GMFrame(wx.Frame):
         dialog = wxgui_utils.LoadMapLayersDialog(parent=self, title=_("Load map layers into layer tree"))
 
         if dialog.ShowModal() == wx.ID_OK:
+            # start new map display if no display is available
+            if not self.curr_page:
+                self.NewDisplay()
+
             maptree = self.curr_page.maptree
             busy = wx.BusyInfo(message=_("Please wait, loading map layers into layer tree..."),
                                parent=self)
@@ -941,28 +955,32 @@ class GMFrame(wx.Frame):
                   Icons["workspaceSave"].GetLabel(), self.OnWorkspaceSave),
                  ('', '', '', ''),
                  ('addrast', Icons["addrast"].GetBitmap(),
-                  Icons["addrast"].GetLabel(), self.OnRaster),
+                  Icons["addrast"].GetLabel(), self.OnAddRaster),
                  ('addvect', Icons["addvect"].GetBitmap(),
-                  Icons["addvect"].GetLabel(), self.OnVector),
+                  Icons["addvect"].GetLabel(), self.OnAddVector),
                  ('addcmd',  Icons["addcmd"].GetBitmap(),
-                  Icons["addcmd"].GetLabel(),  self.AddCommand),
+                  Icons["addcmd"].GetLabel(),  self.OnAddCommand),
                  ('addgrp',  Icons["addgrp"].GetBitmap(),
-                  Icons["addgrp"].GetLabel(), self.AddGroup),
+                  Icons["addgrp"].GetLabel(), self.OnAddGroup),
                  ('addovl',  Icons["addovl"].GetBitmap(),
-                  Icons["addovl"].GetLabel(), self.OnOverlay),
+                  Icons["addovl"].GetLabel(), self.OnAddOverlay),
                  ('addlabels',  Icons["addlabels"].GetBitmap(),
-                  Icons["addlabels"].GetLabel(), self.AddLabels),
+                  Icons["addlabels"].GetLabel(), self.OnAddLabels),
                  ('delcmd',  Icons["delcmd"].GetBitmap(),
-                  Icons["delcmd"].GetLabel(), self.DeleteLayer),
+                  Icons["delcmd"].GetLabel(), self.OnDeleteLayer),
                  ('', '', '', ''),
                  ('attrtable', Icons["attrtable"].GetBitmap(),
-                  Icons["attrtable"].GetLabel(), self.ShowAttributeTable)
+                  Icons["attrtable"].GetLabel(), self.OnShowAttributeTable)
                   )
 
-    def ShowAttributeTable(self, event):
+    def OnShowAttributeTable(self, event):
         """
         Show attribute table of the given vector map layer
         """
+        if not self.curr_page:
+            self.MsgNoLayerSelected()
+            return
+
         layer = self.curr_page.maptree.layer_selected
         # no map layer selected
         if not layer:
@@ -1051,11 +1069,16 @@ class GMFrame(wx.Frame):
         #        self._auimgr.Update()
 
     # toolBar button handlers
-    def OnRaster(self, event):
+    def OnAddRaster(self, event):
         """Add raster menu"""
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         point = wx.GetMousePosition()
         rastmenu = wx.Menu()
-        # Add items to the menu
+
+        # add items to the menu
         addrast = wx.MenuItem(rastmenu, -1, Icons["addrast"].GetLabel())
         addrast.SetBitmap(Icons["addrast"].GetBitmap(self.iconsize))
         rastmenu.AppendItem(addrast)
@@ -1090,9 +1113,16 @@ class GMFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(rastmenu)
         rastmenu.Destroy()
+        
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
 
-    def OnVector(self, event):
+    def OnAddVector(self, event):
         """Add vector menu"""
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         point = wx.GetMousePosition()
         vectmenu = wx.Menu()
 
@@ -1110,13 +1140,21 @@ class GMFrame(wx.Frame):
         addchart.SetBitmap(Icons["addchart"].GetBitmap(self.iconsize))
         vectmenu.AppendItem(addchart)
         self.Bind(wx.EVT_MENU, self.addThemeChart, addchart)
+
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(vectmenu)
         vectmenu.Destroy()
 
-    def OnOverlay(self, event):
-        """Add overlay menu"""
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
+
+    def OnAddOverlay(self, event):
+        """Add overlay menu""" 
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         point = wx.GetMousePosition()
         ovlmenu = wx.Menu()
 
@@ -1139,6 +1177,9 @@ class GMFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(ovlmenu)
         ovlmenu.Destroy()
+
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
 
     def AddRaster(self, event):
         self.notebook.SetSelection(0)
@@ -1184,15 +1225,29 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('themechart')
 
-    def AddCommand(self, event):
+    def OnAddCommand(self, event):
         """Add command line layer"""
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('command')
 
-    def AddGroup(self, event):
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
+
+    def OnAddGroup(self, event):
         """Add layer group"""
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('group')
+
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
 
     def AddGrid(self, event):
         """Add layer grid"""
@@ -1209,19 +1264,26 @@ class GMFrame(wx.Frame):
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('rhumb')
 
-    def AddLabels(self, event):
+    def OnAddLabels(self, event):
         """Add layer vector labels"""
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay(show=False)
+
         self.notebook.SetSelection(0)
         self.curr_page.maptree.AddLayer('labels')
+
+        # show map display
+        self.curr_page.maptree.mapdisplay.Show()
 
     def GetSelectedDisplay(self):
         return self.notebook.GetSelection()
 
-    def DeleteLayer(self, event):
+    def OnDeleteLayer(self, event):
         """
         Delete selected map display layer in GIS Manager tree widget
         """
-        if not self.curr_page.maptree.layer_selected:
+        if not self.curr_page or not self.curr_page.maptree.layer_selected:
             self.MsgNoLayerSelected()
             return
 
