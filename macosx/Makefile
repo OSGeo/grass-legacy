@@ -10,7 +10,6 @@ MACOSX_BUNDLE_PREFIX = ${GRASS_HOME}/macosx/dist/${MACOSX_APPDIR}
 VER_MINOR_REL = `printf "%d0%d" ${GRASS_VERSION_MINOR} ${GRASS_VERSION_RELEASE}`
 VER_DATE = `date +"%g%m%d"`
 MAKE_DIR_CMD = mkdir -p -m 755
-INSTALL_BIN = ${INSTALL}
 LN = /bin/ln -sf
 LN_DIR = /bin/ln -sfh
 
@@ -65,7 +64,7 @@ real-install-macosx:
 	-chmod -R a+rX ${prefix}/${MACOSX_APP_NAME} 2>/dev/null
 	-touch ${prefix}/${MACOSX_APP_NAME}
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${INST_DIR}/etc ; tar xBf - ) 2>/dev/null
-	-${INSTALL_BIN} ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	-${INSTALL} ${GRASS_HOME}/gem/gem6 ${prefix}/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - modbuild | (cd ${MACOSX_SUPPDIR} ; tar xBf - ) 2>/dev/null
 	@# help file package - in the future files will go in /Library/Documentation/Help
 	${LN_DIR} "${INST_DIR}/docs/html" /Library/Documentation/Help/GRASS-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}
@@ -93,7 +92,7 @@ bindist-macosx:
 	-sed 's#'${GISBASE}'#'${INST_DIR_MACOSX}'#g' ${GISBASE}/etc/monitorcap > dist/${MACOSX_APPDIR}/etc/monitorcap
 	-chmod -R a+rX dist/${MACOSX_APPDIR} 2>/dev/null
 	-cd ${GRASS_HOME} ; tar cBf - gem/skeleton | (cd ${MACOSX_BUNDLE_PREFIX}/etc ; tar xBf - ) 2>/dev/null
-	-${INSTALL_BIN} ${GRASS_HOME}/gem/gem6 dist/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
+	-${INSTALL} ${GRASS_HOME}/gem/gem6 dist/${MACOSX_APP_NAME}/Contents/MacOS 2>/dev/null
 	@# extras to bundle
 	${MAKE} bundle-macosx
 	@# pkg resources

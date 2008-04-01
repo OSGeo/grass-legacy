@@ -16,7 +16,6 @@ ifndef TCLTK_INTERNAL
 TCLTK_INTERNAL = \#
 endif
 MAKE_DIR_CMD = mkdir -p -m 755
-INSTALL_BIN = ${INSTALL}
 GRASS_VERSION_BUILD = `/bin/date "+%y%m%d"`
 
 OBJS = Info.plist GRASS.scpt grass.sh main.o
@@ -50,18 +49,18 @@ macosxapp: PkgInfo app.icns English.lproj/MainMenu.nib build_html_user_index.sh 
 	-tar cBf - English.lproj --exclude CVS | (cd ${APPDIR}/Resources ; tar xBf - ) 2>/dev/null
 	-${INSTALL_DATA} $(OBJDIR)/Info.plist ${APPDIR}
 	-${INSTALL_DATA} PkgInfo ${APPDIR}
-	-${INSTALL_BIN} $(OBJDIR)/grass.sh ${APPDIR}/MacOS
+	-${INSTALL} $(OBJDIR)/grass.sh ${APPDIR}/MacOS
 	-${INSTALL_DATA} $(OBJDIR)/GRASS.scpt ${APPDIR}/Resources/Scripts
-	-${INSTALL_BIN} build_html_user_index.sh ${APPDIR}/MacOS/etc
-	-${INSTALL_BIN} build_gui_user_menu.sh ${APPDIR}/MacOS/etc
+	-${INSTALL} build_html_user_index.sh ${APPDIR}/MacOS/etc
+	-${INSTALL} build_gui_user_menu.sh ${APPDIR}/MacOS/etc
 	@# TclTk embedding:
 ifdef OPENGL_X11
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/tclsh${TCLTKVER} ${APPDIR}/MacOS/bin
-	-${INSTALL_BIN} ${TCLTKPREFIX}/bin/wish${TCLTKVER} ${APPDIR}/MacOS/bin
+	-${INSTALL} ${TCLTKPREFIX}/bin/tclsh${TCLTKVER} ${APPDIR}/MacOS/bin
+	-${INSTALL} ${TCLTKPREFIX}/bin/wish${TCLTKVER} ${APPDIR}/MacOS/bin
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtcl${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
-	-${INSTALL_BIN} ${TCLTKPREFIX}/lib/libtk${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
+	-${INSTALL} ${TCLTKPREFIX}/lib/libtcl${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
+	-${INSTALL} ${TCLTKPREFIX}/lib/libtk${TCLTKVER}.dylib ${APPDIR}/MacOS/lib
 	-cd ${TCLTKPREFIX}/lib ; tar cBf - tcl${TCLTKVER} | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
 	-cd ${TCLTKPREFIX}/lib ; tar cBf - tk${TCLTKVER} | (cd ${APPDIR}/MacOS/lib ; tar xBf - ) 2>/dev/null
 	-${MAKE_DIR_CMD} ${APPDIR}/MacOS/include
