@@ -63,6 +63,7 @@ class Settings:
             'display': {
                 'displayFont' : { 'value' : '' },
                 'driver': { 'type': 'default' },
+                'compResolution' : { 'enabled' : False },
                 },
             #
             # advanced
@@ -492,8 +493,8 @@ class PreferencesDialog(wx.Dialog):
                                label=_("Set font"), size=(100, -1))
         gridSizer.Add(item=fontButton,
                       flag=wx.ALIGN_RIGHT |
-                       wx.ALIGN_CENTER_VERTICAL,
-                       pos=(row, 1))
+                      wx.ALIGN_CENTER_VERTICAL,
+                      pos=(row, 1))
 
         #
         # display driver
@@ -518,8 +519,22 @@ class PreferencesDialog(wx.Dialog):
         self.winId['display:driver:type'] = driver.GetId()
 
         gridSizer.Add(item=driver,
+                      flag=wx.ALIGN_RIGHT,
                       pos=(row, 1))
 
+
+        #
+        # display mode (use computation resolution?)
+        #
+        row += 1
+        compResolution = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Constrain display resolution to computational settings"),
+                                    name="IsChecked")
+        compResolution.SetValue(self.settings.Get(group='display', key='compResolution', subkey='enabled'))
+        self.winId['display:compResolution:enabled'] = compResolution.GetId()
+
+        gridSizer.Add(item=compResolution,
+                      pos=(row, 0), span=(1, 2))
 
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
         border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
