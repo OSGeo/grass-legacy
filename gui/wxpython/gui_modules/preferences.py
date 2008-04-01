@@ -64,6 +64,7 @@ class Settings:
                 'displayFont' : { 'value' : '' },
                 'driver': { 'type': 'default' },
                 'compResolution' : { 'enabled' : False },
+                'autoRendering': { 'enabled' : False },
                 },
             #
             # advanced
@@ -474,6 +475,7 @@ class PreferencesDialog(wx.Dialog):
         notebook.AddPage(page=panel, text=_("Display"))
 
         border = wx.BoxSizer(wx.VERTICAL)
+
         box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Font settings"))
         sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
 
@@ -496,10 +498,19 @@ class PreferencesDialog(wx.Dialog):
                       wx.ALIGN_CENTER_VERTICAL,
                       pos=(row, 1))
 
+        sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
+        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Default display settings"))
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+
+        gridSizer = wx.GridBagSizer (hgap=3, vgap=3)
+        gridSizer.AddGrowableCol(0)
+
         #
         # display driver
         #
-        row = 1
+        row = 0
         gridSizer.Add(item=wx.StaticText(parent=panel, id=wx.ID_ANY,
                                          label=_("Display driver:")),
                       flag=wx.ALIGN_LEFT |
@@ -536,8 +547,21 @@ class PreferencesDialog(wx.Dialog):
         gridSizer.Add(item=compResolution,
                       pos=(row, 0), span=(1, 2))
 
+        #
+        # auto-rendering
+        #
+        row += 1
+        autoRendering = wx.CheckBox(parent=panel, id=wx.ID_ANY,
+                                    label=_("Enable auto-rendering"),
+                                    name="IsChecked")
+        autoRendering.SetValue(self.settings.Get(group='display', key='autoRendering', subkey='enabled'))
+        self.winId['display:autoRendering:enabled'] = autoRendering.GetId()
+
+        gridSizer.Add(item=autoRendering,
+                      pos=(row, 0), span=(1, 2))
+
         sizer.Add(item=gridSizer, proportion=1, flag=wx.ALL | wx.EXPAND, border=5)
-        border.Add(item=sizer, proportion=0, flag=wx.ALL | wx.EXPAND, border=3)
+        border.Add(item=sizer, proportion=0, flag=wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND, border=3)
 
         panel.SetSizer(border)
         
