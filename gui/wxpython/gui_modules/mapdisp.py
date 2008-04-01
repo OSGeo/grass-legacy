@@ -2262,7 +2262,7 @@ class MapFrame(wx.Frame):
         self.autoRender = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
                                       label=_("Render"))
         self.statusbar.Bind(wx.EVT_CHECKBOX, self.OnToggleRender, self.autoRender)
-        self.autoRender.SetValue(False)
+        self.autoRender.SetValue(UserSettings.Get(group='display', key='autoRendering', subkey='enabled'))
         self.autoRender.SetToolTip(wx.ToolTip (_("Enable/disable auto-rendering")))
         # show region
         self.showRegion = wx.CheckBox(parent=self.statusbar, id=wx.ID_ANY,
