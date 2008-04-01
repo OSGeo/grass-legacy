@@ -183,7 +183,7 @@ class LayerTree(CT.CustomTreeCtrl):
         """Key pressed"""
         key = event.GetKeyCode()
         if key == wx.WXK_DELETE and self.gismgr:
-            self.gismgr.DeleteLayer(None)
+            self.gismgr.OnDeleteLayer(None)
 
         event.Skip()
 
@@ -219,7 +219,7 @@ class LayerTree(CT.CustomTreeCtrl):
         self.popupMenu = wx.Menu()
         # general item
         self.popupMenu.Append(self.popupID1, text=_("Remove"))
-        self.Bind(wx.EVT_MENU, self.gismgr.DeleteLayer, id=self.popupID1)
+        self.Bind(wx.EVT_MENU, self.gismgr.OnDeleteLayer, id=self.popupID1)
 
         if ltype != "command": # rename
             self.popupMenu.Append(self.popupID2, text=_("Rename"))
