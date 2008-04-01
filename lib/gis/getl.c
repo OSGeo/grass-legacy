@@ -37,12 +37,13 @@ int G_getl ( char *buf, int n, FILE *fd)
  * <code>\\r\\n (\\015\\012)</code> style newlines.
  * <br>
  * <br>
- * Reads in at most <b>n</b> characters from stream and stores them into the 
- * buffer pointed to by <b>buf</b>. Reading stops after an EOF or a newline.
- * New line is not stored in the buffer. At least <b>n</b>+1 must be allocated
+ * Reads in at most <b>n-1</b> characters from stream (the last spot is
+ * reserved for the end-of-string NUL) and stores them into the buffer
+ * pointed to by <b>buf</b>. Reading stops after an EOF or a newline.
+ * New line is not stored in the buffer. At least <b>n</b> must be allocated
  * for the string buffer.<br>
  *
- * \param buf: string buffer to receive read data, at least <b>n</b>+1 must
+ * \param buf: string buffer to receive read data, at least <b>n</b> must
  *   be allocated
  * \param n: maximum number of bytes to read
  * \param fd: file descriptor structure
