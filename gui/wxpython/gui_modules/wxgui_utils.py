@@ -250,7 +250,7 @@ class LayerTree(CT.CustomTreeCtrl):
         if mltype and mltype == "vector":
             self.popupMenu.AppendSeparator()
             self.popupMenu.Append(self.popupID4, text=_("Show attribute table"))
-            self.Bind (wx.EVT_MENU, self.gismgr.ShowAttributeTable, id=self.popupID4)
+            self.Bind (wx.EVT_MENU, self.gismgr.OnShowAttributeTable, id=self.popupID4)
 
             self.popupMenu.Append(self.popupID5, text=_("Start editing"))
             self.popupMenu.Append(self.popupID6, text=_("Stop editing"))
