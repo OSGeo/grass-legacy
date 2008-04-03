@@ -79,8 +79,6 @@ int Vedit_merge_lines(struct Map_info *Map, struct ilist *List)
     
     /* merge lines */
     for (line_i = 0; line_i < List -> n_values; line_i++) {
-	G_percent (line_i, List -> n_values, 2);
-	
 	line1 = List -> value[line_i];
 	
 	if (!Vect_line_alive (Map, line1))
