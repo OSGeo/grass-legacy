@@ -214,11 +214,20 @@ int Digit::RewriteLine(int line, std::vector<double> coords,
 			threshold, (snap == SNAP) ? 0 : 1); 
     }
 
+    /* register changeset */
+    AddActionToChangeset(changesets.size(), REWRITE, line);
+
     /* rewrite line */
     if (ret == 0) {
-	if (Vect_rewrite_line(display->mapInfo, line, type, points, cats) < 0) {
-	    ret = -1;
-	}
+	ret = Vect_rewrite_line(display->mapInfo, line, type, points, cats);
+    }
+
+    if (ret > 0) {
+	/* updates feature id (id is changed since line has been rewriten) */
+	changesets[changesets.size()-1][0].line = Vect_get_num_lines(display->mapInfo);
+    }
+    else {
+	changesets.erase(changesets.size()-1);
     }
 
     Vect_destroy_line_struct(points);
@@ -238,22 +247,39 @@ int Digit::RewriteLine(int line, std::vector<double> coords,
 
    \param x,y,z coordinates (z is used only if map is 3d)
    \param thresh threshold value to find a point on line
+
+   \return number of modified lines
+   \return -1 on error
 */
 int Digit::SplitLine(double x, double y, double z,
 		     double thresh)
 {
-    int ret;
+    int ret, changeset;
     struct line_pnts *point;
+    struct ilist *list;
 
     if (!display->mapInfo)
 	return -1;
 
     point = Vect_new_line_struct();
+    list  = Vect_new_list();
+
     Vect_append_point(point, x, y, z);
 
-    ret = Vedit_split_lines(display->mapInfo, display->selected,
-			    point, thresh, NULL);
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
+    }
 
+    ret = Vedit_split_lines(display->mapInfo, display->selected,
+			    point, thresh, list);
+
+    for (int i = 0; i < list->n_values; i++) {
+	AddActionToChangeset(changeset, ADD, list->value[i]);
+    }
+
+    Vect_destroy_list(list);
     Vect_destroy_line_struct(point);
 
     return ret;
@@ -407,7 +433,8 @@ int Digit::DeleteLines(bool delete_records)
 int Digit::MoveLines(double move_x, double move_y, double move_z,
 		     const char *bgmap, int snap, double thresh)
 {
-    int ret;
+    int ret, changeset;
+    long int nlines;
     struct Map_info **BgMap; /* backgroud vector maps */
     int nbgmaps;             /* number of registrated background maps */
 
@@ -426,10 +453,26 @@ int Digit::MoveLines(double move_x, double move_y, double move_z,
 	}
     }
 
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, REWRITE, display->selected->value[i]);
+    }
+    nlines = Vect_get_num_lines(display->mapInfo);
+
     ret = Vedit_move_lines(display->mapInfo, BgMap, nbgmaps,
 			   display->selected,
 			   move_x, move_y, move_z,
 			   snap, thresh);
+
+    if (ret > 0) {
+	for (int i = 0; i < display->selected->n_values; i++) {
+	    changesets[changeset][i].line = nlines + i + 1;
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
 
     if (BgMap && BgMap[0]) {
 	Vect_close(BgMap[0]);
@@ -446,13 +489,30 @@ int Digit::MoveLines(double move_x, double move_y, double move_z,
 */
 int Digit::FlipLines()
 {
-    int ret;
+    int ret, changeset;
+    long int nlines;
 
     if (!display->mapInfo) {
 	return -1;
     }
 
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, REWRITE, display->selected->value[i]);
+    }
+    nlines = Vect_get_num_lines(display->mapInfo);
+
     ret = Vedit_flip_lines(display->mapInfo, display->selected);
+
+    if (ret > 0) {
+	for (int i = 0; i < display->selected->n_values; i++) {
+	    changesets[changeset][i].line = nlines + i + 1;
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
 
     return ret;
 }
@@ -575,7 +635,8 @@ int Digit::ZBulkLabeling(double x1, double y1, double x2, double y2,
 */
 int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
 {
-    int ret;
+    int ret, changeset;
+    long int nlines;
     struct Map_info *bgMap;
     struct ilist *list;
 
@@ -585,7 +646,6 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
     if (!display->mapInfo) {
 	return -1;
     }
-
 
     if (bgmap_name) {
 	const char *mapset;
@@ -605,8 +665,18 @@ int Digit::CopyLines(std::vector<int> ids, const char* bgmap_name)
 	list = display->selected;
     }
 
+    nlines = Vect_get_num_lines(display->mapInfo);
+
     ret = Vedit_copy_lines (display->mapInfo, bgMap,
 			    list);
+
+    if (ret > 0) {
+	/* register changeset */
+	changeset = changesets.size();
+	for (int i = 0; i < list->n_values; i++) {
+	    AddActionToChangeset(changeset, ADD, nlines + i + 1);
+	}
+    }
 
     if (list != display->selected) {
 	Vect_destroy_list(list);

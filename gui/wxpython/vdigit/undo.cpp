@@ -72,7 +72,7 @@ int Digit::Undo(int level)
 
 /**
    \brief Apply changeset (undo/redo changeset)
-   
+
    \param changeset changeset id
    \param undo if true -> undo otherwise redo
 
@@ -102,6 +102,18 @@ int Digit::ApplyChangeset(int changeset, bool undo)
 	    }
 	    else {
 		G_debug(3, "Digit.ApplyChangeset(): changeset=%d, action=add, line=%d dead",
+			changeset, (*i).line);
+	    }
+	}
+	else if ((*i).type == REWRITE) {
+	    if (Vect_line_alive(display->mapInfo, (*i).line)) {
+		G_debug(3, "Digit.ApplyChangeset(): changeset=%d, action=rewrite, line=%d",
+			changeset, (*i).line);
+		if (Vect_rewrite_line (display->mapInfo, (*i).line, (*i).ltype, (*i).Points, (*i).Cats) < 0)
+		    return -1;
+	    }
+	    else {
+		G_debug(3, "Digit.ApplyChangeset(): changeset=%d, action=rewrite, line=%d -> dead",
 			changeset, (*i).line);
 	    }
 	}

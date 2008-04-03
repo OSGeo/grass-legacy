@@ -47,6 +47,9 @@ int Digit::MoveVertex(double x, double y, double z,
     if (!display->mapInfo)
 	return -1;
 
+    if (display->selected->n_values != 1)
+	return 0;
+
     BgMap = NULL;
     nbgmaps = 0;
     if (bgmap && strlen(bgmap) > 0) {
@@ -62,12 +65,23 @@ int Digit::MoveVertex(double x, double y, double z,
     point = Vect_new_line_struct();
     Vect_append_point(point, x, y, z);
 
+    /* register changeset */
+    AddActionToChangeset(changesets.size(), REWRITE, display->selected->value[0]);
+
     /* move only first found vertex in bbox */
     ret = Vedit_move_vertex(display->mapInfo, BgMap, nbgmaps, 
 			    display->selected,
 			    point, thresh_coords, thresh_snap,
 			    move_x, move_y, move_z,
 			    1, snap); 
+
+    if (ret > 0) {
+	/* updates feature id (id is changed since line has been rewriten) */
+	changesets[changesets.size()-1][0].line = Vect_get_num_lines(display->mapInfo);
+    }
+    else {
+	changesets.erase(changesets.size()-1);
+    }
 
     if (BgMap && BgMap[0]) {
 	Vect_close(BgMap[0]);
@@ -97,11 +111,17 @@ int Digit::ModifyLineVertex(int add, double x, double y, double z,
     int ret;
     struct line_pnts *point;
 
-    if (!display->mapInfo || display->selected->n_values != 1)
+    if (!display->mapInfo)
 	return -1;
+
+    if (display->selected->n_values != 1)
+	return 0;
 
     point = Vect_new_line_struct();
     Vect_append_point(point, x, y, z);
+
+    /* register changeset */
+    AddActionToChangeset(changesets.size(), REWRITE, display->selected->value[0]);
 
     if (add) {
 	ret = Vedit_add_vertex(display->mapInfo, display->selected,
@@ -110,6 +130,14 @@ int Digit::ModifyLineVertex(int add, double x, double y, double z,
     else {
 	ret = Vedit_remove_vertex(display->mapInfo, display->selected,
 				  point, thresh);
+    }
+
+    if (ret > 0) {
+	/* updates feature id (id is changed since line has been rewriten) */
+	changesets[changesets.size()-1][0].line = Vect_get_num_lines(display->mapInfo);
+    }
+    else {
+	changesets.erase(changesets.size()-1);
     }
 
     Vect_destroy_line_struct(point);
