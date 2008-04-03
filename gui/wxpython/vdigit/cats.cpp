@@ -256,8 +256,20 @@ int Digit::SetLineCats(int line_id, int layer, std::vector<int> cats, bool add)
 		layer, *c, add);
     }
 
+    /* register changeset */
+    AddActionToChangeset(changesets.size(), REWRITE, display->selected->value[0]);
+
     ret = Vect_rewrite_line(display->mapInfo, line, type,
 			    Points, Cats);
+
+    if (ret > 0) {
+	/* updates feature id (id is changed since line has been rewriten) */
+	changesets[changesets.size()-1][0].line = ret;
+    }
+    else {
+	changesets.erase(changesets.size()-1);
+    }
+
     if (line_id == -1) {
 	/* update line id since the line was rewritten */
 	display->selected->value[0] = ret;

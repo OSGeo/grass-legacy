@@ -18,7 +18,7 @@ private:
     struct Map_info** OpenBackgroundVectorMap(const char *);
 
     /* undo/redo */
-    enum action_type { ADD, DELETE };
+    enum action_type { ADD, DELETE, REWRITE };
     struct action_meta {
 	action_type type;
 	int line;
