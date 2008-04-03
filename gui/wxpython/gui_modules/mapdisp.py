@@ -2049,7 +2049,7 @@ class BufferedWindow(wx.Window):
         # We ONLY want to set extents here. Don't mess with resolution. Leave that
         # for user to set explicitly with g.region
         new = self.Map.AlignResolution()
-
+        
         cmdRegion = ["g.region", "--o",
                      "n=%f"    % new['n'],
                      "s=%f"    % new['s'],
@@ -2170,7 +2170,7 @@ class MapFrame(wx.Frame):
     drawing window.
     """
 
-    def __init__(self, parent=None, id=wx.ID_ANY, title="GRASS GIS - Map display",
+    def __init__(self, parent=None, id=wx.ID_ANY, title=_("GRASS GIS - Map display"),
                  pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.DEFAULT_FRAME_STYLE, toolbars=["map"],
                  tree=None, notebook=None, gismgr=None, page=None,
