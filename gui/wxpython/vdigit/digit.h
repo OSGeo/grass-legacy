@@ -3,6 +3,7 @@
 
 #define GSQL_MAX 4000
 
+#include <vector>
 #include <map>
 
 class Digit
@@ -16,8 +17,27 @@ private:
     int SetCategory(int, int);
     struct Map_info** OpenBackgroundVectorMap(const char *);
 
+    /* undo/redo */
+    enum action_type { ADD, DELETE };
+    struct action_meta {
+	action_type type;
+	int line;
+	/* TODO: replace by new Vect_restore_line() */
+	int ltype; // line type
+	struct line_pnts *Points;
+	struct line_cats *Cats;
+    };
+    std::map<int, std::vector<action_meta> > changesets;
+    int changesetCurrent;  /* first changeset to apply */
+    int changesetDead;     /* first dead changeset */
+
+    int AddActionToChangeset(int, action_type, int);
+    int ApplyChangeset(int, bool);
+    void FreeChangeset(int);
+
 public:
     Digit(DisplayDriver *);
+    ~Digit();
 
     int InitCats();
 
@@ -57,6 +77,8 @@ public:
     std::map<int, std::vector<int> > GetLineCats(int);
     int SetLineCats(int, int, std::vector<int>, bool);
     std::vector<int> GetLayers();
+
+    int Undo(int);
 };
 
 #endif /* __DIGIT_H__ */

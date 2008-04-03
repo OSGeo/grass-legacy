@@ -30,6 +30,21 @@ Digit::Digit(DisplayDriver *ddriver)
 	InitCats();
     }
 
+    changesetCurrent = -2; // initial value for undo/redo
+    changesetDead = -2;
+
     // avoid GUI crash
     // Vect_set_fatal_error(GV_FATAL_PRINT);
+}
+
+/**
+   Digit class destructor
+
+   Frees changeset structure
+*/
+Digit::~Digit()
+{
+    for(int changeset = 0; changeset < (int) changesets.size(); changeset++) {
+	FreeChangeset(changeset);
+    }
 }

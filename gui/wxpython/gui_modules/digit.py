@@ -80,7 +80,8 @@ class AbstractDigit:
         @param settings  initial settings of digitization tool
         """
         self.map       = None
-
+        self.mapWindow = mapwindow
+        
         Debug.msg (3, "AbstractDigit.__init__(): map=%s" % \
                    self.map)
 
@@ -739,6 +740,12 @@ class VEdit(AbstractDigit):
 
         return [1,]
 
+    def Undo(self, level=-1):
+        """Undo not implemented here"""
+        wx.MessageBox(parent=self.mapWindow, message=_("Undondo is not implemented in vedit component. "
+                                                    "Use vdigit instead."),
+                      caption=_("Message"), style=wx.ID_OK | wx.ICON_INFORMATION | wx.CENTRE)
+
 class VDigit(AbstractDigit):
     """
     Prototype of digitization class based on v.digit reimplementation
@@ -758,6 +765,11 @@ class VDigit(AbstractDigit):
         except (ImportError, NameError):
             self.digit = None
 
+        self.toolbar = mapwindow.parent.digittoolbar
+
+    def __del__(self):
+        del self.digit
+        
     def AddPoint (self, map, point, x, y, z=None):
         """Add new point/centroid
 
@@ -784,6 +796,8 @@ class VDigit(AbstractDigit):
 
         if ret == -1:
             raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
+
+        self.toolbar.EnableUndo()
         
     def AddLine (self, map, line, coords):
         """Add line/boundary
@@ -816,7 +830,8 @@ class VDigit(AbstractDigit):
         if ret == -1:
             raise gcmd.DigitError, _("Adding new feature to vector map <%s> failed.") % map
 
-
+        self.toolbar.EnableUndo()
+        
     def DeleteSelectedLines(self):
         """Delete selected features
 
@@ -824,6 +839,9 @@ class VDigit(AbstractDigit):
         """
         nlines = self.digit.DeleteLines(UserSettings.Get(group='vdigit', key='delRecord', subkey='enabled'))
 
+        if nlines > 0:
+            self.toolbar.EnableUndo()
+            
         return nlines
 
     def MoveSelectedLines(self, move):
@@ -836,6 +854,9 @@ class VDigit(AbstractDigit):
         nlines = self.digit.MoveLines(move[0], move[1], 0.0, # TODO 3D
                                       str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
 
+        if nlines > 0:
+            self.toolbar.EnableUndo()
+            
         return nlines
 
     def MoveSelectedVertex(self, coords, move):
@@ -849,44 +870,76 @@ class VDigit(AbstractDigit):
         """
         snap, thresh = self.__getSnapThreshold()
 
-        return self.digit.MoveVertex(coords[0], coords[1], 0.0, # TODO 3D
-                                     move[0], move[1], 0.0,
-                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap,
-                                     self.driver.GetThreshold(type='selectThresh'), thresh)
+        moved = self.digit.MoveVertex(coords[0], coords[1], 0.0, # TODO 3D
+                                      move[0], move[1], 0.0,
+                                      str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap,
+                                      self.driver.GetThreshold(type='selectThresh'), thresh)
+
+        if moved:
+            self.toolbar.EnableUndo()
+
+        return moved
 
     def AddVertex(self, coords):
         """Add new vertex to the selected line/boundary on position 'coords'
 
         @param coords coordinates to add vertex
+
+        @return 1 vertex added
+        @return 0 nothing changed
+        @return -1 on failure
         """
-        return self.digit.ModifyLineVertex(1, coords[0], coords[1], 0.0, # TODO 3D
-                                           self.driver.GetThreshold(type='selectThresh'))
+        added = self.digit.ModifyLineVertex(1, coords[0], coords[1], 0.0, # TODO 3D
+                                            self.driver.GetThreshold(type='selectThresh'))
+
+        if added > 0:
+            self.toolbar.EnableUndo()
+
+        return added
 
     def RemoveVertex(self, coords):
         """Remove vertex from the selected line/boundary on position 'coords'
 
         @param coords coordinates to remove vertex
+
+        @return 1 vertex removed
+        @return 0 nothing changed
+        @return -1 on failure
         """
-        return self.digit.ModifyLineVertex(0, coords[0], coords[1], 0.0, # TODO 3D
-                                           self.driver.GetThreshold(type='selectThresh'))
+        deleted = self.digit.ModifyLineVertex(0, coords[0], coords[1], 0.0, # TODO 3D
+                                              self.driver.GetThreshold(type='selectThresh'))
+
+        if deleted > 0:
+            self.toolbar.EnableUndo()
+
+        return deleted
+
 
     def SplitLine(self, coords):
         """Split selected line/boundary on position 'coords'
 
         @param coords coordinates to split line
 
-        @return 1 line splitted
-        @return 0 no action
+        @return 1 line modified
+        @return 0 nothing changed
         @return -1 error
         """
-        return self.digit.SplitLine(coords[0], coords[1], 0.0, # TODO 3D
-                                    self.driver.GetThreshold('selectThresh'))
+        ret = self.digit.SplitLine(coords[0], coords[1], 0.0, # TODO 3D
+                                   self.driver.GetThreshold('selectThresh'))
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def EditLine(self, line, coords):
         """Edit existing line/boundary
 
         @param line id of line to be modified
         @param coords list of coordinates of modified line
+
+        @return feature id of new line
+        @return -1 on error
         """
         try:
             lineid = line[0]
@@ -900,48 +953,115 @@ class VDigit(AbstractDigit):
 
         snap, thresh = self.__getSnapThreshold()
         
-        return self.digit.RewriteLine(lineid, listCoords,
-                                      str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
+        ret = self.digit.RewriteLine(lineid, listCoords,
+                                     str(UserSettings.Get(group='vdigit', key="backgroundMap", subkey='value')), snap, thresh)
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def FlipLine(self):
-        """Flip selected lines/boundaries"""
-        return self.digit.FlipLines()
+        """Flip selected lines/boundaries
+
+        @return number of modified lines
+        @return -1 on error
+        """
+        ret = self.digit.FlipLines()
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def MergeLine(self):
-        """Merge selected lines/boundaries"""
-        return self.digit.MergeLines()
+        """Merge selected lines/boundaries
+
+        @return number of modified lines
+        @return -1 on error
+        """
+        ret = self.digit.MergeLines()
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def BreakLine(self):
-        """Break selected lines/boundaries"""
-        return self.digit.BreakLines()
+        """Break selected lines/boundaries
+
+        @return number of modified lines
+        @return -1 on error
+        """
+        ret = self.digit.BreakLines()
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def SnapLine(self):
-        """Snap selected lines/boundaries"""
+        """Snap selected lines/boundaries
+
+        @return on success
+        @return -1 on error
+        """
         snap, thresh = self.__getSnapThreshold()
-        return self.digit.SnapLines(thresh)
+        ret = self.digit.SnapLines(thresh)
+        
+        if ret == 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def ConnectLine(self):
-        """Connect selected lines/boundaries"""
-        snap, thresh = self.__getSnapThreshold()
-        return self.digit.ConnectLines(thresh)
+        """Connect selected lines/boundaries
 
+        @return 1 lines connected
+        @return 0 lines not connected
+        @return -1 on error
+        """
+        snap, thresh = self.__getSnapThreshold()
+        ret = self.digit.ConnectLines(thresh)
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
+        
     def CopyLine(self, ids=None):
         """Copy features from (background) vector map
 
         @param ids list of line ids to be copied
+
+        @return number of copied features
+        @return -1 on error
         """
-        return self.digit.CopyLines(ids, str(UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value')))
+        ret = self.digit.CopyLines(ids, str(UserSettings.Get(group='vdigit', key='backgroundMap', subkey='value')))
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def CopyCats(self, cats, ids):
         """Copy given categories to objects with id listed in ids
 
         @param cats list of cats to be copied
         @param ids  ids of lines to be modified
+
+        @return number of modified features
+        @return -1 on error
         """
         if len(cats) == 0 or len(ids) == 0:
-            return False
+            return 0
 
-        return self.digit.CopyCats(cats, ids)
+        ret = self.digit.CopyCats(cats, ids)
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def SelectLinesByQuery(self, pos1, pos2):
         """Select features by query
@@ -983,8 +1103,16 @@ class VDigit(AbstractDigit):
         @param layer layer number (-1 for first selected line)
         @param cats list of categories
         @param add if True to add, otherwise do delete categories
+
+        @return new feature id (feature need to be rewritten)
+        @return -1 on error
         """
-        return self.digit.SetLineCats(line, layer, cats, add)
+        ret = self.digit.SetLineCats(line, layer, cats, add)
+
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
 
     def GetLayers(self):
         """Get list of layers"""
@@ -1000,8 +1128,33 @@ class VDigit(AbstractDigit):
         @return number of modified features
         @return -1 on error
         """
-        return self.digit.TypeConvLines()
+        ret = self.digit.TypeConvLines()
 
+        if ret > 0:
+            self.toolbar.EnableUndo()
+
+        return ret
+
+    def Undo(self, level=-1):
+        """Undo action
+
+        @param level levels to undo
+
+        @return id of current changeset
+        """
+        try:
+            ret = self.digit.Undo(level)
+        except SystemExit:
+            ret = -2
+
+        if ret == -2:
+            raise gcmd.DigitError, _("Undo failed, data corrupted.")
+
+        self.mapWindow.UpdateMap(render=False)
+        
+        if ret < 0: # disable undo tool
+            self.toolbar.EnableUndo(False)
+        
     def __getSnapThreshold(self):
         """Get snap mode and threshold value
 
@@ -1031,7 +1184,10 @@ else:
         def __init__(self, mapwindow):
             VDigit.__init__(self, mapwindow)
             self.type = 'vdigit'
-
+            
+        def __del__(self):
+            VDigit.__del__(self)
+            
 class AbstractDisplayDriver:
     """Abstract classs for display driver"""
     def __init__(self, parent, mapwindow):

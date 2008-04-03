@@ -41,6 +41,8 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     size_t i;
     size_t npoints;
 
+    int newline;
+
     struct line_pnts *Points;
     struct line_cats *Cats;
 
@@ -57,7 +59,7 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
     }
 
     G_debug(2, "wxDigit.AddLine(): npoints=%d, layer=%d, cat=%d, snap=%d",
-	    npoints, layer, cat, snap);
+	    (int) npoints, layer, cat, snap);
 
     /* TODO: 3D */
     if (!(type & GV_POINTS) && !(type & GV_LINES)) {
@@ -119,9 +121,13 @@ int Digit::AddLine(int type, std::vector<double> coords, int layer, int cat,
 			threshold, (snap == SNAP) ? 0 : 1); 
     }
 
-    if (Vect_write_line(display->mapInfo, type, Points, Cats) < 0) {
+    newline = Vect_write_line(display->mapInfo, type, Points, Cats);
+    if (newline < 0) {
 	return -1;
     }
+
+    /* register changeset */
+    AddActionToChangeset(changesets.size(), ADD, newline);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
@@ -265,6 +271,7 @@ int Digit::DeleteLines(bool delete_records)
 {
     int ret;
     int n_dblinks;
+    int changeset;
     struct line_cats *Cats, *Cats_del;
     // struct ilist *List;
 
@@ -308,6 +315,12 @@ int Digit::DeleteLines(bool delete_records)
 	    }
 	}
 	Vect_destroy_cats_struct(Cats);
+    }
+
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
     }
 
     ret = Vedit_delete_lines(display->mapInfo, display->selected);

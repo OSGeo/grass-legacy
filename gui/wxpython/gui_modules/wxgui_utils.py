@@ -89,7 +89,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # init associated map display
         self.mapdisplay = mapdisp.MapFrame(self,
-                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(640,480),
+                                           id=wx.ID_ANY, pos=wx.DefaultPosition, size=(680, 520),
                                            style=wx.DEFAULT_FRAME_STYLE,
                                            tree=self, notebook=self.notebook,
                                            gismgr=self.gismgr, page=self.treepg,

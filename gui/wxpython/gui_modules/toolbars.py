@@ -43,12 +43,9 @@ class AbstractToolbar:
         @return list of ids (of added tools)
         """
 
-        ids = []
         for tool in toolData:
-            ids.append(self.CreateTool(parent, toolbar, *tool))
-
-        return ids
-
+            self.CreateTool(parent, toolbar, *tool)
+            
     def ToolbarData(self):
         """Toolbar data"""
 
@@ -63,16 +60,15 @@ class AbstractToolbar:
 
         bmpDisabled=wx.NullBitmap
 
-        id = wx.NewId()
         if label:
-            tool = toolbar.AddLabelTool(id, label, bitmap,
+            toolWin = toolbar.AddLabelTool(tool, label, bitmap,
                                         bmpDisabled, kind,
                                         shortHelp, longHelp)
-            parent.Bind(wx.EVT_TOOL, handler, tool)
+            parent.Bind(wx.EVT_TOOL, handler, toolWin)
         else: # add separator
             toolbar.AddSeparator()
 
-        return id
+        return tool
     
 class MapToolbar(AbstractToolbar):
     """
@@ -86,7 +82,7 @@ class MapToolbar(AbstractToolbar):
 	self.toolbar = wx.ToolBar(parent=self.mapdisplay, id=wx.ID_ANY)
         self.toolbar.SetToolBitmapSize(globalvar.toolbarSize)
 
-        self.pointerId = self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())[4]
+        self.InitToolbar(self.mapdisplay, self.toolbar, self.ToolbarData())
         
         # optional tools
         self.combo = wx.ComboBox(parent=self.toolbar, id=wx.ID_ANY, value='Tools',
@@ -101,9 +97,20 @@ class MapToolbar(AbstractToolbar):
     def ToolbarData(self):
         """Toolbar data"""
 
-        self.displaymap = self.rendermap = self.erase = \
-        self.pointer = self.query = self.pan = self.zoomin = self.zoomout = \
-        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap = None
+        self.displaymap = wx.NewId()
+        self.rendermap = wx.NewId()
+        self.erase = wx.NewId()
+        self.pointer = wx.NewId()
+        self.query = wx.NewId()
+        self.pan = wx.NewId()
+        self.zoomin = wx.NewId()
+        self.zoomout = wx.NewId()
+        self.zoomback = wx.NewId()
+        self.zoommenu = wx.NewId()
+        self.analyze = wx.NewId()
+        self.dec = wx.NewId()
+        self.savefile = wx.NewId()
+        self.printmap = wx.NewId()
 
         # tool, label, bitmap, kind, shortHelp, longHelp, handler
         return (
@@ -187,9 +194,15 @@ class GRToolbar(AbstractToolbar):
     def ToolbarData(self):
         """Toolbar data"""
 
-        self.displaymap = self.rendermap = self.erase = \
-        self.gcpset = self.query = self.pan = self.zoomin = self.zoomout = \
-        self.zoomback = self.zoommenu = self.analyze = self.dec = self.savefile = self.printmap =None
+        self.displaymap = wx.NewId()
+        self.rendermap = wx.NewId()
+        self.erase = wx.NewId()
+        self.gcpset = wx.NewId()
+        self.pan = wx.NewId()
+        self.zoomin = wx.NewId()
+        self.zoomout = wx.NewId()
+        self.zoomback = wx.NewId()
+        self.zoommenu = wx.NewId()
 
         # tool, label, bitmap, kind, shortHelp, longHelp, handler
         return (
@@ -257,13 +270,12 @@ class DigitToolbar(AbstractToolbar):
         # only one dialog can be open
         self.settingsDialog   = None
 
-        # create toolbars (two rows)
+        # create toolbars (two rows optionaly)
         self.toolbar = []
         self.numOfRows = 1 # number of rows for toolbar
         for row in range(0, self.numOfRows):
             self.toolbar.append(wx.ToolBar(parent=self.parent, id=wx.ID_ANY))
 	    self.toolbar[row].SetToolBitmapSize(globalvar.toolbarSize)
-            self.toolbar[row].SetToolBitmapSize(wx.Size(24,24))
             self.toolbar[row].Bind(wx.EVT_TOOL, self.OnTool)
             
             # create toolbar
@@ -280,6 +292,9 @@ class DigitToolbar(AbstractToolbar):
         for row in range(0, self.numOfRows):
             self.toolbar[row].Realize()
 
+        # disable undo/redo
+        self.toolbar[0].EnableTool(self.undo, False)
+        
         # toogle to pointer by default
         self.OnTool(None)
         
@@ -289,11 +304,21 @@ class DigitToolbar(AbstractToolbar):
         """
         data = []
         if row is None or row == 0:
-            self.addPoint = self.addLine = self.addBoundary = self.addCentroid = None
-            self.moveVertex = self.addVertex = self.removeVertex = None
-            self.splitLine = self.editLine = self.moveLine = self.deleteLine = None
-            self.additionalTools = None
-            self.displayCats = self.displayAttr = self.copyCats = None
+            self.addPoint = wx.NewId()
+            self.addLine = wx.NewId()
+            self.addBoundary = wx.NewId()
+            self.addCentroid = wx.NewId()
+            self.moveVertex = wx.NewId()
+            self.addVertex = wx.NewId()
+            self.removeVertex = wx.NewId()
+            self.splitLine = wx.NewId()
+            self.editLine = wx.NewId()
+            self.moveLine = wx.NewId()
+            self.deleteLine = wx.NewId()
+            self.additionalTools = wx.NewId()
+            self.displayCats = wx.NewId()
+            self.displayAttr = wx.NewId()
+            self.copyCats = wx.NewId()
 
             data = [("", "", "", "", "", "", ""),
                     (self.addPoint, "digAddPoint", Icons["digAddPoint"].GetBitmap(),
@@ -344,12 +369,17 @@ class DigitToolbar(AbstractToolbar):
                      self.OnAdditionalToolMenu)]
 
         if row is None or row == 1:
-            self.undo = self.settings = self.exit = None
+            self.undo = wx.NewId()
+            self.settings = wx.NewId()
+            self.exit = wx.NewId()
 
             data.append(("", "", "", "", "", "", ""))
             data.append((self.undo, "digUndo", Icons["digUndo"].GetBitmap(),
                          wx.ITEM_NORMAL, Icons["digUndo"].GetLabel(), Icons["digUndo"].GetDesc(),
                          self.OnUndo))
+            # data.append((self.undo, "digRedo", Icons["digRedo"].GetBitmap(),
+            #             wx.ITEM_NORMAL, Icons["digRedo"].GetLabel(), Icons["digRedo"].GetDesc(),
+            #             self.OnRedo))
             data.append((self.settings, "digSettings", Icons["digSettings"].GetBitmap(),
                          wx.ITEM_NORMAL, Icons["digSettings"].GetLabel(), Icons["digSettings"].GetDesc(),
                          self.OnSettings))
@@ -361,7 +391,7 @@ class DigitToolbar(AbstractToolbar):
 
     def OnTool(self, event):
         """Tool selected -> toggle tool to pointer"""
-        id = self.parent.maptoolbar.pointerId
+        id = self.parent.maptoolbar.pointer
         self.parent.maptoolbar.toolbar.ToggleTool(id, True)
         self.parent.maptoolbar.mapdisplay.OnPointer(event)
         if event:
@@ -481,14 +511,23 @@ class DigitToolbar(AbstractToolbar):
         self.parent.MapWindow.mouse['box'] = 'point'
 
     def OnUndo(self, event):
-        """Undo changes
+        """Undo previous changes"""
+        self.parent.digit.Undo()
 
-        @todo
-        """
-        wx.MessageBox(parent=self.parent, message=_("Undo is not implemented yet."),
-                      caption=_("Message"), style=wx.ID_OK | wx.ICON_INFORMATION)
         event.Skip()
 
+    def EnableUndo(self, enable=True):
+        """Enable 'Undo' in toolbar
+
+        @param enable False for disable
+        """
+        if enable:
+            if self.toolbar[0].GetToolEnabled(self.undo) is False:
+                self.toolbar[0].EnableTool(self.undo, True)
+        else:
+            if self.toolbar[0].GetToolEnabled(self.undo) is True:
+                self.toolbar[0].EnableTool(self.undo, False)
+        
     def OnSettings(self, event):
         """Show settings dialog"""
 
@@ -702,7 +741,6 @@ class DigitToolbar(AbstractToolbar):
         if not self.parent.MapWindow.resize:
             self.parent.MapWindow.UpdateMap(render=True)
 
-
         return True
 
     def StopEditing (self, layerSelected):
@@ -730,6 +768,7 @@ class DigitToolbar(AbstractToolbar):
             self.parent.MapWindow.pdcVector = None
             self.parent.digit.driver.SetDevice(None)
 
+            self.parent.digit.__del__() # FIXME: destructor is not called here (del)
             self.parent.digit = None
 
             return True

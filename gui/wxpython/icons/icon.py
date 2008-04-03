@@ -302,8 +302,8 @@ Icons = {
     "digAdditionalTools" : MetaIcon (img=icons_img["digAdditionalTools"], label="Additional tools " \
                                          "(copy, flip, connect, etc.)",
                                      desc="Left: Select; Middle: Unselect; Right: Confirm"),
-    "digUndo" : MetaIcon (img=icons_img["digUndo"], label="Undo", 	 	 
-                          desc="Undo previous changes (not implemented yet)"),
+    "digUndo" : MetaIcon (img=icons_img["digUndo"], label="Undo",
+                          desc="Undo previous changes"),
     # analyze raster
     "analyze"    : MetaIcon (img=icons_img["analyze"], label="Analyze map"),
     "measure"    : MetaIcon (img=icons_img["measure"], label="Measure distance"),
