@@ -52,13 +52,13 @@ int main(int argc, char *argv[]) {
     int machine_endianness, file_endianness, endian_mismatch;  /* 0=little, 1=big */
     int data_format; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int (ie text) */
     int data_type;   /* 0=numbers  1=text */
-    long format_block;  /* combo of endianness, 0, data_format, and type */
-    static long realflag = 0;  /* 0=only real values used */
+    int format_block;  /* combo of endianness, 0, data_format, and type */
+    int realflag = 0;  /* 0=only real values used */
     /* should type be specifically uint32 ??? */
 
     char array_name[65];
     int name_len;
-    long mrows, ncols;  /* text/data/map array dimensions*/
+    int mrows, ncols;  /* text/data/map array dimensions*/
 
     int *pval_i;	/* for misc use */
     float *pval_f;	/* for misc use */
@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
     have_n = have_s = have_e = have_w = 0;
 
     /* Check Endian State of File */
-    fread(&format_block, sizeof(long), 1, fp1);
+    fread(&format_block, sizeof(int), 1, fp1);
     fseek(fp1, 0, SEEK_SET);  /* frewind() */
 
     file_endianness = format_block / 1000;  /* 0=little, 1=big */
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
     while (!feof(fp1)) {
 
 	/* scan for needed array variables */
-	fread(&format_block, sizeof(long), 1, fp1);
+	fread(&format_block, sizeof(int), 1, fp1);
 
 	if(feof(fp1))
 	    break;
@@ -181,19 +181,19 @@ int main(int argc, char *argv[]) {
 
 
 	/* 4 byte number of rows & columns */
-	fread(&mrows, sizeof(long), 1, fp1);
-	fread(&ncols, sizeof(long), 1, fp1);
+	fread(&mrows, sizeof(int), 1, fp1);
+	fread(&ncols, sizeof(int), 1, fp1);
 	if(mrows < 1 || ncols < 1)
 	    G_fatal_error(_("Array contains no data"));
 
 	/* 4 byte real/imag flag   0=real vals only */
-	fread(&realflag, sizeof(long), 1, fp1);
+	fread(&realflag, sizeof(int), 1, fp1);
 	if(realflag != 0)
 	    G_fatal_error(_("Array contains imaginary data"));
 
 
 	/* length of array_name+1 */
-	fread(&name_len, sizeof(long), 1, fp1);
+	fread(&name_len, sizeof(int), 1, fp1);
 	if(name_len < 1)
 	    G_fatal_error(_("Invalid array name"));
 
@@ -205,11 +205,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	G_debug(3, "array name     = [%s]", array_name);
-	G_debug(3, "  format block = [%04ld]", format_block);
+	G_debug(3, "  format block = [%04d]", format_block);
 	G_debug(3, "  data format  = [%d]", data_format);
 	G_debug(3, "  data type    = [%d]", data_type);
-	G_debug(3, "  rows         = [%ld]", mrows);
-	G_debug(3, "  cols         = [%ld]", ncols);
+	G_debug(3, "  rows         = [%d]", mrows);
+	G_debug(3, "  cols         = [%d]", ncols);
 
 	if(strcmp(array_name, "map_name") == 0) {
 	    have_name = 1;
@@ -333,7 +333,7 @@ int main(int argc, char *argv[]) {
 	    }
 	}
 
-	G_debug(3, "Read array '%s' [%ld,%ld] format=%d type=%d\n", 
+	G_debug(3, "Read array '%s' [%d,%d] format=%d type=%d\n", 
 	    array_name, ncols, mrows, data_format, data_type);
 
     } /* while !EOF */

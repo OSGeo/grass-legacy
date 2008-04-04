@@ -27,15 +27,15 @@ int main(int argc, char *argv[]) {
     int endianness;  /* 0=little, 1=big */
     int data_format;    /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int (ie text) */
     int data_type;      /* 0=numbers  1=text */
-    long format_block;  /* combo of endianness, 0, data_format, and type */
-    long realflag = 0;  /* 0=only real values used */
+    int format_block;  /* combo of endianness, 0, data_format, and type */
+    int realflag = 0;  /* 0=only real values used */
     /* should type be specifically uint32 ??? */
 
     char array_name[32];  /* variable names must start with a letter (case 
 			     sensitive) followed by letters, numbers, or 
 			     underscores. 31 chars max. */
     int name_len;
-    long mrows, ncols;  /* text/data/map array dimensions*/
+    int mrows, ncols;  /* text/data/map array dimensions*/
 
     int val_i;		/* for misc use */
     float val_f;	/* for misc use */
@@ -129,19 +129,19 @@ int main(int argc, char *argv[]) {
 
     /* 4 byte data format */
     format_block = endianness*1000 + data_format*10 + data_type;
-    fwrite(&format_block, sizeof(long), 1, fp1);
+    fwrite(&format_block, sizeof(int), 1, fp1);
     /* fprintf(stderr, "name data format is [%04ld]\n", format_block); */
 
     /* 4 byte number of rows & columns */
-    fwrite(&mrows, sizeof(long), 1, fp1);
-    fwrite(&ncols, sizeof(long), 1, fp1);
+    fwrite(&mrows, sizeof(int), 1, fp1);
+    fwrite(&ncols, sizeof(int), 1, fp1);
 
     /* 4 byte real/imag flag   0=real vals only */
-    fwrite(&realflag, sizeof(long), 1, fp1);
+    fwrite(&realflag, sizeof(int), 1, fp1);
 
     /* length of array_name+1 */
     name_len = strlen(array_name) + 1;
-    fwrite(&name_len, sizeof(long), 1, fp1);
+    fwrite(&name_len, sizeof(int), 1, fp1);
 
     /* array name */
     fprintf(fp1, "%s%c", array_name, '\0');
@@ -162,18 +162,18 @@ int main(int argc, char *argv[]) {
 
 	/* 4 byte data format */
 	format_block = endianness*1000 + data_format*10 + data_type;
-	fwrite(&format_block, sizeof(long), 1, fp1);
+	fwrite(&format_block, sizeof(int), 1, fp1);
 
 	/* 4 byte number of rows & columns */
-	fwrite(&mrows, sizeof(long), 1, fp1);
-	fwrite(&ncols, sizeof(long), 1, fp1);
+	fwrite(&mrows, sizeof(int), 1, fp1);
+	fwrite(&ncols, sizeof(int), 1, fp1);
 
 	/* 4 byte real/imag flag   0=real vals only */
-	fwrite(&realflag, sizeof(long), 1, fp1);
+	fwrite(&realflag, sizeof(int), 1, fp1);
 
 	/* length of array_name+1 */
 	name_len = strlen(array_name) + 1;
-	fwrite(&name_len, sizeof(long), 1, fp1);
+	fwrite(&name_len, sizeof(int), 1, fp1);
 
 	/* array name */
 	fprintf(fp1, "%s%c", array_name, '\0');
@@ -234,19 +234,19 @@ int main(int argc, char *argv[]) {
 
 	/* 4 byte data format */
 	format_block = endianness*1000 + data_format*10 + data_type;
-	fwrite(&format_block, sizeof(long), 1, fp1);
+	fwrite(&format_block, sizeof(int), 1, fp1);
 	/* fprintf(stderr, "bounds data format is [%04ld]\n", format_block); */
 
 	/* 4 byte number of rows , 4 byte number of colums */
-	fwrite(&mrows, sizeof(long), 1, fp1);
-	fwrite(&ncols, sizeof(long), 1, fp1);
+	fwrite(&mrows, sizeof(int), 1, fp1);
+	fwrite(&ncols, sizeof(int), 1, fp1);
 
 	/* 4 byte real/imag flag   0=only real */
-	fwrite(&realflag, sizeof(long), 1, fp1);
+	fwrite(&realflag, sizeof(int), 1, fp1);
 
 	/* length of array_name+1 */
 	name_len = strlen(array_name) + 1;
-	fwrite(&name_len, sizeof(long), 1, fp1);
+	fwrite(&name_len, sizeof(int), 1, fp1);
 
 	/* array name */
 	fprintf(fp1, "%s%c", array_name, '\0');
@@ -292,20 +292,20 @@ int main(int argc, char *argv[]) {
 
     /* 4 byte data format */
     format_block = (endianness*1000) + (data_format*10) + data_type;
-    fwrite(&format_block, sizeof(long), 1, fp1);
+    fwrite(&format_block, sizeof(int), 1, fp1);
 
-    G_debug(3, "map data format is [%04ld]\n", format_block);
+    G_debug(3, "map data format is [%04d]\n", format_block);
 
     /* 4 byte number of rows & columns*/
-    fwrite(&mrows, sizeof(long), 1, fp1);
-    fwrite(&ncols, sizeof(long), 1, fp1);
+    fwrite(&mrows, sizeof(int), 1, fp1);
+    fwrite(&ncols, sizeof(int), 1, fp1);
 
     /* 4 byte real/imag flag   0=only real */
-    fwrite(&realflag, sizeof(long), 1, fp1);
+    fwrite(&realflag, sizeof(int), 1, fp1);
 
     /* length of array_name+1 */
     name_len = strlen(array_name) + 1;
-    fwrite(&name_len, sizeof(long), 1, fp1);
+    fwrite(&name_len, sizeof(int), 1, fp1);
 
     /* array name */
     fprintf(fp1, "%s%c", array_name, '\0');
