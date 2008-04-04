@@ -201,3 +201,30 @@ void Digit::FreeChangeset(int changeset)
 
     return;
 }
+
+/**
+   \brief Remove action from changeset
+
+   \param changeset changeset id
+   \param type action type (ADD, DELETE, REWRITE)
+   \param line line id
+
+   \return number of actions in changeset
+   \return -1 on error
+*/
+int Digit::RemoveActionFromChangeset(int changeset, Digit::action_type type, int line)
+{
+    if (changesets.find(changeset) == changesets.end())
+	return -1;
+
+    std::vector<action_meta>& action = changesets[changeset];
+    for (std::vector<action_meta>::iterator i = action.begin(); i != action.end(); ++i) {
+	if ((*i).type == type && (*i).line == line) {
+	    G_debug (3, "Digit.RemoveActionFromChangeset(): changeset=%d, type=%d, line=%d",
+		     changeset, type, line);
+	    action.erase(i--);
+	}
+    }
+
+    return action.size();
+}
