@@ -22,6 +22,7 @@
 #ifdef OPENGL_X11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/Xmu/Xmu.h>
 #include <GL/glx.h>
 
 static Display *dpy;
@@ -350,15 +351,32 @@ static void create_pixmap(int width, int height)
 #endif
 }
 
+static int Error_Handler(ClientData closure, XErrorEvent *event)
+{
+    if (!dpy)
+	return 0;
+    XmuPrintDefaultErrorMessage(dpy, event, stderr);
+    return 0;
+}
+
 int Create_OS_Ctx(int width, int height)
 {
 #if defined(OPENGL_X11) && (defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS))
+    static int initialized;
     dpy = togl_display();
     if (dpy == NULL) {
 	fprintf(stderr, "Togl_Display Failed!\n");
 	return (-1);
     }
     scr = togl_screen_number();
+
+    if (!initialized)
+    {
+	int major, event, error;
+	if (XQueryExtension(dpy, "GLX", &major, &event, &error))
+	    Tk_CreateErrorHandler(dpy, -1, major, -1, Error_Handler, NULL);
+	initialized = 1;
+    }
 
     create_pbuffer(width, height);
 #ifdef HAVE_PBUFFERS
