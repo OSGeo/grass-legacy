@@ -525,13 +525,38 @@ int Digit::FlipLines()
 */
 int Digit::MergeLines()
 {
-    int ret;
+    int ret, changeset, line;
 
     if (!display->mapInfo) {
 	return -1;
     }
 
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
+    }
+
     ret = Vedit_merge_lines(display->mapInfo, display->selected);
+
+    if (ret > 0) {
+	/* update changeset */
+	for (int i = 0; i < display->selected->n_values; i++) {
+	    line = display->selected->value[i];
+	    if (Vect_line_alive(display->mapInfo, line)) {
+		RemoveActionFromChangeset(changeset, DELETE, line);
+	    }
+	}
+	for(int i = 0; i < Vect_get_num_updated_lines(display->mapInfo); i++) {
+	    line = Vect_get_updated_line(display->mapInfo, i);
+	    AddActionToChangeset(changeset, ADD, line);
+	}
+	for (int i = 0; i < display->selected->n_values; i++) {
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
 
     return ret;
 }
@@ -539,25 +564,54 @@ int Digit::MergeLines()
 /**
    \brief Breaks selected lines/boundaries
 
+   \todo undo
+
    \return number of modified lines
    \return -1 on error
 */
 int Digit::BreakLines()
 {
-    int ret;
+    int ret, changeset, line;
 
     if (!display->mapInfo) {
 	return -1;
     }
 
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
+    }
+
     ret = Vect_break_lines_list(display->mapInfo, display->selected,
 				GV_LINES, NULL, NULL);
+
+    if (ret > 0) {
+	/* update changeset */
+	for (int i = 0; i < display->selected->n_values; i++) {
+	    line = display->selected->value[i];
+	    if (Vect_line_alive(display->mapInfo, line)) {
+		RemoveActionFromChangeset(changeset, DELETE, line);
+	    }
+	}
+	for(int i = 0; i < Vect_get_num_updated_lines(display->mapInfo); i++) {
+	    line = Vect_get_updated_line(display->mapInfo, i);
+	    AddActionToChangeset(changeset, ADD, line);
+	}
+	for (int i = 0; i < display->selected->n_values; i++) {
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
 
     return ret;
 }
 
 /**
    \brief Snap selected lines/boundaries
+
+   \todo undo
 
    \param thresh threshold value for snapping
 
@@ -585,14 +639,36 @@ int Digit::SnapLines(double thresh)
 */
 int Digit::ConnectLines(double thresh)
 {
-    int ret;
+    int ret, changeset;
+    long int nlines_diff;
 
     if (!display->mapInfo) {
 	return -1;
     }
 
+    if (display->selected->n_values != 2)
+	return 0;
+
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
+    }
+
+    nlines_diff = Vect_get_num_lines(display->mapInfo);
+
     ret = Vedit_connect_lines(display->mapInfo, display->selected,
 			      thresh);
+
+    if (ret == 1) {
+	nlines_diff = Vect_get_num_lines(display->mapInfo) - nlines_diff;
+	for(int i = Vect_get_num_lines(display->mapInfo); i > nlines_diff; i--) {
+	    AddActionToChangeset(changeset, ADD, i);
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
 
     return ret;
 }
@@ -601,6 +677,8 @@ int Digit::ConnectLines(double thresh)
    \brief Automated labeling (z coordinate assignment) of vector lines (contours).
 
    Modified vector map must be 3D.
+
+   \todo Undo
 
    \param x1,y1,x2,y2 line nodes for intersection
    \param start starting value
@@ -752,12 +830,34 @@ struct Map_info** Digit::OpenBackgroundVectorMap(const char *bgmap)
 */
 int Digit::TypeConvLines()
 {
+    int ret;
+    int npoints, nlines, ncentroids, nboundaries;
+    int changeset, nlines_diff;
+
     if (!display->mapInfo) {
 	return -1;
     }
 
-    int npoints, nlines, ncentroids, nboundaries;
-    return Vedit_chtype_lines (display->mapInfo, display->selected,
+    /* register changeset */
+    changeset = changesets.size();
+    for (int i = 0; i < display->selected->n_values; i++) {
+	AddActionToChangeset(changeset, DELETE, display->selected->value[i]);
+    }
+
+    nlines_diff = Vect_get_num_lines(display->mapInfo);
+
+    ret = Vedit_chtype_lines (display->mapInfo, display->selected,
 			       &npoints, &ncentroids,
 			       &nlines, &nboundaries);
+
+    if(ret > 0) {
+	for(int i = Vect_get_num_lines(display->mapInfo); i > nlines_diff; i--) {
+	    AddActionToChangeset(changeset, ADD, i);
+	}
+    }
+    else {
+	changesets.erase(changeset);
+    }
+
+    return ret;
 }

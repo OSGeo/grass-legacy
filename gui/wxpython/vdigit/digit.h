@@ -34,6 +34,7 @@ private:
     int AddActionToChangeset(int, action_type, int);
     int ApplyChangeset(int, bool);
     void FreeChangeset(int);
+    int RemoveActionFromChangeset(int, action_type, int);
 
 public:
     Digit(DisplayDriver *);
