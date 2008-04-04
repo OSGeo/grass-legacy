@@ -12,8 +12,8 @@ option) any later version.
 Parts of GRASS are not copyright by the GRASS development team.
 The original authors hold the copyrights and you have to abide
 to their licensing terms where noted.
-(Keep in mind that code linking into GRASS can only be distributed 
-if compatible with the GPL.)                               
+(Keep in mind that code linking into GRASS can only be distributed
+if compatible with the GPL.)
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
