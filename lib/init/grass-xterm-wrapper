@@ -3,7 +3,7 @@
 
 if [ -z "$GRASS_XTERM" ] ; then
    # find a working xterm or xterm compatible executable
-   TERM_TRY="xterm rxvt"
+   TERM_TRY="xterm rxvt x-terminal-emulator"
    for TERM_PROG in $TERM_TRY ; do
       if [ -x "`which $TERM_PROG`" ] ; then
          GRASS_XTERM="$TERM_PROG"
