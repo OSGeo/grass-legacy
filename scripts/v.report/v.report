@@ -150,7 +150,7 @@ if [ $TABLEEXISTS -eq 1 ] ; then
       exit 1
    fi
    #fetch the requested attribute sorted by cat:
-   v.to.db -p map="$MAP" opt="$OPTION" col="$COLUMS" "$UNITSPARAM" \
+   v.to.db -p map="$MAP" opt="$OPTION" col="$COLUMS" $UNITSPARAM \
 	   layer="$LAYER" 2> /dev/null | grep -v '^cat' | grep -v '^-1' | grep -v '^0'\
 	   | sort -n -t'|' -k 1 | cut -d'|' -f2-4 > "$TMP2"
    #make pre-table
@@ -159,7 +159,7 @@ else
     v.category input="$MAP" layer="$LAYER" option=print | sort -n | uniq | \
         grep -v '^-1' | grep -v '^0' > "$TMP1"
     #make pre-table
-    v.to.db -p map="$MAP" opt="$OPTION" col="$COLUMS" "$UNITSPARAM" \
+    v.to.db -p map="$MAP" opt="$OPTION" col="$COLUMS" $UNITSPARAM \
 	   layer="$LAYER" 2> /dev/null | grep -v '^cat' | grep -v '^-1' | grep -v '^0'\
 	   | sort -n -t'|' -k 1 > "$TMP3"
 
