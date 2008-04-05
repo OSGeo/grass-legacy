@@ -77,10 +77,7 @@ int main(int argc, char *argv[]) {
     struct History history;
 
     struct Option *inputfile, *outputfile;
-
-    /* please, remove before GRASS 7 released */
-    struct Flag *verbose;
-
+    struct Flag *verbose; /* remove for GRASS 7 */
     struct GModule *module;
 
     int cf;
@@ -106,7 +103,7 @@ int main(int argc, char *argv[]) {
     outputfile = G_define_option() ;
     outputfile->key	= "output";
     outputfile->type       = TYPE_STRING;
-    outputfile->required   = YES;
+    outputfile->required   = NO;
     outputfile->gisprompt  = "new,cell,raster" ;
     outputfile->description= _("Name for the output raster map (override)");
 
@@ -120,6 +117,10 @@ int main(int argc, char *argv[]) {
 	exit(EXIT_FAILURE);
 
 
+    /* remove for GRASS 7  */
+    if(verbose->answer) 
+        G_warning(_("The '-v' flag is superseded and will be removed "
+                    "in future. Please use '--verbose' instead."));
 
   /******  SETUP  ****************************************************/
     /* Check Endian State of Host Computer*/
@@ -158,7 +159,7 @@ int main(int argc, char *argv[]) {
 
 
   /******  READ MAP  ****************************************************/
-    G_message(_("Reading MAT-File..."));
+    G_verbose_message(_("Reading MAT-File..."));
 
     while (!feof(fp1)) {
 
@@ -314,7 +315,7 @@ int main(int argc, char *argv[]) {
 	} /* endif map_data */
 
 	else {
-	    G_warning(_("Skipping unknown array '%s'"), array_name);
+	    G_important_message(_("Skipping unknown array '%s'"), array_name);
 	    switch (data_format) {
 	    /*   0=double	1=float   2=32bit signed int   5=8bit unsigned int(text)   */
 	      case 0: 
@@ -345,8 +346,25 @@ int main(int argc, char *argv[]) {
 
 
     /* set map name */
-    strncpy(map_name, outfile, 61);
-    
+    if(have_name) {
+	if(outfile) {
+	    if( 0 != strcmp(outfile, map_name) )
+		G_message(_("Setting map name to <%s> which overrides <%s>"),
+			outfile, map_name);
+	    strncpy(map_name, outfile, 61);
+	}
+    }
+    else {
+	if(outfile) {
+	    G_verbose_message(_("Setting map name to <%s>"), outfile);
+	    strncpy(map_name, outfile, 61);
+	}
+	else {
+	    G_message(_("No 'map_name' array found; using <MatFile>"));
+	    strcpy(map_name, "MatFile");
+	}
+    }
+
     G_strip(map_name);  /* remove leading and trailing whitespace */
     if(G_legal_filename(map_name) != 1)
 	G_fatal_error(_("<%s> is an illegal file name"), map_name);
@@ -373,20 +391,26 @@ int main(int argc, char *argv[]) {
     if(buff)  G_fatal_error(buff);
     G_set_window(&region);
 
-    /* please, remove before GRASS 7 released */
-    if(verbose->answer) 
-        G_warning(_("The '-v' flag is superseded and will be removed "
-                    "in future. Please use '--verbose' instead."));
-    
+    G_verbose_message("\nMap <%s> bounds set to:", map_name);
+    G_verbose_message("northern edge=%f", region.north);
+    G_verbose_message("southern edge=%f", region.south);
+    G_verbose_message("eastern edge=%f", region.east);
+    G_verbose_message("western edge=%f", region.west);
+    G_verbose_message("nsres=%f", region.ns_res);
+    G_verbose_message("ewres=%f", region.ew_res);
+    G_verbose_message("rows=%d", region.rows);
+    G_verbose_message("cols=%d", region.cols);
+    G_verbose_message("");
+
     /* prep memory */
-    raster =  G_allocate_raster_buf(map_type);
+    raster = G_allocate_raster_buf(map_type);
 
     cf = G_open_raster_new(map_name, map_type);
     if (cf < 0)
-	G_fatal_error (_("Unable to create raster map <%s>"), outfile);
+	G_fatal_error(_("Unable to create raster map <%s>"), outfile);
 
     /* write new raster map*/
-    G_message(_("Writing new raster map..."));
+    G_verbose_message(_("Writing new raster map..."));
 
     mrows = region.rows;
     ncols = region.cols;
@@ -436,7 +460,7 @@ int main(int argc, char *argv[]) {
 
 	if( 1 != G_put_raster_row(cf, raster, map_type) ) {
 	    G_close_cell(cf);
-	    G_fatal_error(_("Failed writing raster map <%s> row %d"), raster, row);
+	    G_fatal_error(_("Writing raster map, row %d"), row);
 	}
 
  	G_percent(row, mrows, 5);
@@ -459,7 +483,9 @@ int main(int argc, char *argv[]) {
     G_command_history(&history);
     G_write_history(map_name, &history);
 
-    return 0;
+    G_done_msg("");
+
+    exit(EXIT_SUCCESS);
 }
 
 
