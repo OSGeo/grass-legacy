@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     int realflag = 0;  /* 0=only real values used */
     /* should type be specifically uint32 ??? */
 
-    char array_name[65];
+    char array_name[65];  /* 65 = 64 + null-terminator */
     int name_len;
     int mrows, ncols;  /* text/data/map array dimensions*/
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     double *pval_d;	/* for misc use */
     char c, *buff;	/* for misc use */
 
-    char map_name[65], map_title[1024];
+    char map_name[65], map_title[1024];  /* 65 = 64 + null-terminator */
     double map_name_d[1024];  /* I'm not sure why you'd save char strings as double, but whatever */
 
     int have_name, have_data, have_title, have_n, have_s, have_e, have_w;
