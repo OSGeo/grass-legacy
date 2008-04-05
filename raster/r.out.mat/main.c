@@ -27,15 +27,15 @@ int main(int argc, char *argv[]) {
     int endianness;  /* 0=little, 1=big */
     int data_format;    /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int (ie text) */
     int data_type;      /* 0=numbers  1=text */
-    long format_block;  /* combo of endianness, 0, data_format, and type */
-    long realflag = 0;  /* 0=only real values used */
+    int format_block;  /* combo of endianness, 0, data_format, and type */
+    int realflag = 0;  /* 0=only real values used */
     /* should type be specifically uint32 ??? */
 
     char array_name[32];  /* variable names must start with a letter (case 
 			     sensitive) followed by letters, numbers, or 
 			     underscores. 31 chars max. */
     int name_len;
-    long mrows, ncols;  /* text/data/map array dimensions*/
+    int mrows, ncols;  /* text/data/map array dimensions*/
 
     int val_i;		/* for misc use */
     float val_f;	/* for misc use */
@@ -82,6 +82,13 @@ int main(int argc, char *argv[]) {
 	exit(EXIT_FAILURE);
 
 
+    /* please, remove before GRASS 7 released */
+    if(verbose->answer) {
+        putenv("GRASS_VERBOSE=3");
+        G_warning(_("The '-v' flag is superseded and will be removed "
+            "in future. Please use '--verbose' instead."));
+    }
+
     infile = inputfile->answer;
 
     basename = G_store(outputfile->answer);
@@ -125,23 +132,23 @@ int main(int argc, char *argv[]) {
     data_format = 5; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int(text) */
     data_type = 1;   /* 0=numbers  1=text */
 
-    G_message(_( "Exporting <%s>"), infile);
+    G_verbose_message(_("Exporting <%s>"), infile);
 
     /* 4 byte data format */
     format_block = endianness*1000 + data_format*10 + data_type;
-    fwrite(&format_block, sizeof(long), 1, fp1);
+    fwrite(&format_block, sizeof(int), 1, fp1);
     /* fprintf(stderr, "name data format is [%04ld]\n", format_block); */
 
     /* 4 byte number of rows & columns */
-    fwrite(&mrows, sizeof(long), 1, fp1);
-    fwrite(&ncols, sizeof(long), 1, fp1);
+    fwrite(&mrows, sizeof(int), 1, fp1);
+    fwrite(&ncols, sizeof(int), 1, fp1);
 
     /* 4 byte real/imag flag   0=real vals only */
-    fwrite(&realflag, sizeof(long), 1, fp1);
+    fwrite(&realflag, sizeof(int), 1, fp1);
 
     /* length of array_name+1 */
     name_len = strlen(array_name) + 1;
-    fwrite(&name_len, sizeof(long), 1, fp1);
+    fwrite(&name_len, sizeof(int), 1, fp1);
 
     /* array name */
     fprintf(fp1, "%s%c", array_name, '\0');
@@ -162,18 +169,18 @@ int main(int argc, char *argv[]) {
 
 	/* 4 byte data format */
 	format_block = endianness*1000 + data_format*10 + data_type;
-	fwrite(&format_block, sizeof(long), 1, fp1);
+	fwrite(&format_block, sizeof(int), 1, fp1);
 
 	/* 4 byte number of rows & columns */
-	fwrite(&mrows, sizeof(long), 1, fp1);
-	fwrite(&ncols, sizeof(long), 1, fp1);
+	fwrite(&mrows, sizeof(int), 1, fp1);
+	fwrite(&ncols, sizeof(int), 1, fp1);
 
 	/* 4 byte real/imag flag   0=real vals only */
-	fwrite(&realflag, sizeof(long), 1, fp1);
+	fwrite(&realflag, sizeof(int), 1, fp1);
 
 	/* length of array_name+1 */
 	name_len = strlen(array_name) + 1;
-	fwrite(&name_len, sizeof(long), 1, fp1);
+	fwrite(&name_len, sizeof(int), 1, fp1);
 
 	/* array name */
 	fprintf(fp1, "%s%c", array_name, '\0');
@@ -182,25 +189,18 @@ int main(int argc, char *argv[]) {
 	fprintf(fp1, "%s", maptitle);
     }
 
-
-    /* please, remove before GRASS 7 released */
-    if(verbose->answer) {
-        putenv("GRASS_VERBOSE=3");
-        G_warning(_("The '-v' flag is superseded and will be removed "
-            "in future. Please use '--verbose' instead."));
-    }
-
-
     /***** Write bounds *****/
-    G_message(_("Using the Current Region settings:"));
-    G_message(_("northern edge=%f"), region.north);
-    G_message(_("southern edge=%f"), region.south);
-    G_message(_("eastern edge=%f"), region.east);
-    G_message(_("western edge=%f"), region.west);
-    G_message(_("nsres=%f"), region.ns_res);
-    G_message(_("ewres=%f"), region.ew_res);
-    G_message(_("rows=%d"), region.rows);
-    G_message(_("cols=%d"), region.cols);
+    G_verbose_message("");
+    G_verbose_message(_("Using the Current Region settings:"));
+    G_verbose_message(_("northern edge=%f"), region.north);
+    G_verbose_message(_("southern edge=%f"), region.south);
+    G_verbose_message(_("eastern edge=%f"), region.east);
+    G_verbose_message(_("western edge=%f"), region.west);
+    G_verbose_message(_("nsres=%f"), region.ns_res);
+    G_verbose_message(_("ewres=%f"), region.ew_res);
+    G_verbose_message(_("rows=%d"), region.rows);
+    G_verbose_message(_("cols=%d"), region.cols);
+    G_verbose_message("");
 
     for (i=0; i<4; i++) {
 	switch (i) {
@@ -234,19 +234,19 @@ int main(int argc, char *argv[]) {
 
 	/* 4 byte data format */
 	format_block = endianness*1000 + data_format*10 + data_type;
-	fwrite(&format_block, sizeof(long), 1, fp1);
+	fwrite(&format_block, sizeof(int), 1, fp1);
 	/* fprintf(stderr, "bounds data format is [%04ld]\n", format_block); */
 
 	/* 4 byte number of rows , 4 byte number of colums */
-	fwrite(&mrows, sizeof(long), 1, fp1);
-	fwrite(&ncols, sizeof(long), 1, fp1);
+	fwrite(&mrows, sizeof(int), 1, fp1);
+	fwrite(&ncols, sizeof(int), 1, fp1);
 
 	/* 4 byte real/imag flag   0=only real */
-	fwrite(&realflag, sizeof(long), 1, fp1);
+	fwrite(&realflag, sizeof(int), 1, fp1);
 
 	/* length of array_name+1 */
 	name_len = strlen(array_name) + 1;
-	fwrite(&name_len, sizeof(long), 1, fp1);
+	fwrite(&name_len, sizeof(int), 1, fp1);
 
 	/* array name */
 	fprintf(fp1, "%s%c", array_name, '\0');
@@ -266,17 +266,17 @@ int main(int argc, char *argv[]) {
 
         case CELL_TYPE:
 	    data_format = 2;
-            G_message(_("Exporting raster as integer values"));
+            G_verbose_message(_("Exporting raster as integer values"));
 	    break;
 
 	case FCELL_TYPE:
 	    data_format = 1;
-            G_message(_("Exporting raster as floating point values"));
+            G_verbose_message(_("Exporting raster as floating point values"));
 	    break;
 
 	case DCELL_TYPE:
 	    data_format = 0;
-            G_message(_("Exporting raster as double FP values"));
+            G_verbose_message(_("Exporting raster as double FP values"));
 	    break;
 
 	default:
@@ -292,20 +292,20 @@ int main(int argc, char *argv[]) {
 
     /* 4 byte data format */
     format_block = (endianness*1000) + (data_format*10) + data_type;
-    fwrite(&format_block, sizeof(long), 1, fp1);
+    fwrite(&format_block, sizeof(int), 1, fp1);
 
-    G_debug(3, "map data format is [%04ld]\n", format_block);
+    G_debug(3, "map data format is [%04d]\n", format_block);
 
     /* 4 byte number of rows & columns*/
-    fwrite(&mrows, sizeof(long), 1, fp1);
-    fwrite(&ncols, sizeof(long), 1, fp1);
+    fwrite(&mrows, sizeof(int), 1, fp1);
+    fwrite(&ncols, sizeof(int), 1, fp1);
 
     /* 4 byte real/imag flag   0=only real */
-    fwrite(&realflag, sizeof(long), 1, fp1);
+    fwrite(&realflag, sizeof(int), 1, fp1);
 
     /* length of array_name+1 */
     name_len = strlen(array_name) + 1;
-    fwrite(&name_len, sizeof(long), 1, fp1);
+    fwrite(&name_len, sizeof(int), 1, fp1);
 
     /* array name */
     fprintf(fp1, "%s%c", array_name, '\0');
@@ -316,7 +316,7 @@ int main(int argc, char *argv[]) {
     G_debug(1, "mem alloc is %d bytes\n", /* I think _cols()+1 is unneeded? */
     	G_raster_size(map_type)*(G_window_rows()+1)*(G_window_cols()+1) );
 
-    G_message(_("Reading in map ... "));
+    G_verbose_message(_("Reading in map ... "));
 
     /* load entire map into memory */
     for (row = 0, ptr = raster; row < mrows; row++, 
@@ -328,7 +328,7 @@ int main(int argc, char *argv[]) {
     G_percent(row, mrows, 2);  /* finish it off */
 
     
-    G_message(_("Writing out map..."));
+    G_verbose_message(_("Writing out map..."));
 
     /* then write it to disk */
     /* NoGood: fwrite(raster, G_raster_size(map_type), mrows*ncols, fp1); */
@@ -382,7 +382,7 @@ int main(int argc, char *argv[]) {
     filesize=ftell(fp1);
     fclose(fp1);
 
-	G_message(_("%ld bytes written to '%s'"), filesize, outfile);
+    G_verbose_message(_("%ld bytes written to '%s'"), filesize, outfile);
 
     G_done_msg("");
 
