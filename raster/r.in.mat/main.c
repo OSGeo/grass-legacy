@@ -118,9 +118,11 @@ int main(int argc, char *argv[]) {
 
 
     /* remove for GRASS 7  */
-    if(verbose->answer) 
-        G_warning(_("The '-v' flag is superseded and will be removed "
-                    "in future. Please use '--verbose' instead."));
+    if(verbose->answer) {
+	putenv("GRASS_VERBOSE=3");
+	G_warning(_("The '-v' flag is superseded and will be removed "
+		    "in future. Please use '--verbose' instead."));
+    }
 
   /******  SETUP  ****************************************************/
     /* Check Endian State of Host Computer*/
@@ -391,15 +393,16 @@ int main(int argc, char *argv[]) {
     if(buff)  G_fatal_error(buff);
     G_set_window(&region);
 
-    G_verbose_message("\nMap <%s> bounds set to:", map_name);
-    G_verbose_message("northern edge=%f", region.north);
-    G_verbose_message("southern edge=%f", region.south);
-    G_verbose_message("eastern edge=%f", region.east);
-    G_verbose_message("western edge=%f", region.west);
-    G_verbose_message("nsres=%f", region.ns_res);
-    G_verbose_message("ewres=%f", region.ew_res);
-    G_verbose_message("rows=%d", region.rows);
-    G_verbose_message("cols=%d", region.cols);
+    G_verbose_message("");
+    G_verbose_message(_("Map <%s> bounds set to:"), map_name);
+    G_verbose_message(_("northern edge=%f"), region.north);
+    G_verbose_message(_("southern edge=%f"), region.south);
+    G_verbose_message(_("eastern edge=%f"), region.east);
+    G_verbose_message(_("western edge=%f"), region.west);
+    G_verbose_message(_("nsres=%f"), region.ns_res);
+    G_verbose_message(_("ewres=%f"), region.ew_res);
+    G_verbose_message(_("rows=%d"), region.rows);
+    G_verbose_message(_("cols=%d"), region.cols);
     G_verbose_message("");
 
     /* prep memory */
