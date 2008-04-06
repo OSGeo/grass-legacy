@@ -248,9 +248,11 @@ class DecorationDialog(wx.Dialog):
         # buttons
         btnsizer = wx.StdDialogButtonSizer()
 
-        btnOK = wx.Button(parent=self, id=wx.ID_OK)
-        btnOK.SetDefault()
-        btnsizer.AddButton(btnOK)
+        self.btnOK = wx.Button(parent=self, id=wx.ID_OK)
+        self.btnOK.SetDefault()
+        if self.name == 'legend':
+            self.btnOK.Enable(False)
+        btnsizer.AddButton(self.btnOK)
 
         btnCancel = wx.Button(parent=self, id=wx.ID_CANCEL)
         btnsizer.AddButton(btnCancel)
@@ -264,7 +266,7 @@ class DecorationDialog(wx.Dialog):
         #
         self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
         self.Bind(wx.EVT_BUTTON,   self.OnCancel,  btnCancel)
-        self.Bind(wx.EVT_BUTTON,   self.OnOK,      btnOK)
+        self.Bind(wx.EVT_BUTTON,   self.OnOK,      self.btnOK)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
@@ -335,6 +337,11 @@ class DecorationDialog(wx.Dialog):
                                       command=self.parent.MapWindow.overlays[self.ovlId]['cmd'],
                                       l_active=self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive(),
                                       l_render=False, l_hidden=True)
+
+        if self.name == 'legend' and \
+                params and \
+                not self.btnOK.IsEnabled():
+            self.btnOK.Enable()
 
 class TextLayerDialog(wx.Dialog):
     """
