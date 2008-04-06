@@ -1,10 +1,12 @@
 """
 @package render
 
-Rendering map layers into image
+Rendering map layers and overlays into map composition image
 
 Classes:
+ - Layer
  - MapLayer
+ - Overlay
  - Map
 
 C) 2006-2008 by the GRASS Development Team
@@ -12,7 +14,8 @@ This program is free software under the GNU General Public
 License (>=v2). Read the file COPYING that comes with GRASS
 for details.
 
-@author Michael Barton, Jachym Cepicky, Martin Landa
+@author Michael Barton, Jachym Cepicky,
+Martin Landa <landa.martin gmail.com>
 
 @date 2006-2008
 """
@@ -43,14 +46,21 @@ from preferences import globalSettings as UserSettings
 #
 USE_GPNMCOMP = True
 
-class MapLayer(object):
-    """Stores information about map layers or overlays to be displayed"""
+class Layer(object):
+    """Virtual class which stores information about layers (map layers and
+    overlays) of the map composition.
+
+    For map layer use MapLayer class.
+    For overlays use Overlay class.
+    """
+
     def __init__(self, type, cmd, name=None,
                  active=True, hidden=False, opacity=1.0):
         """
-        @param type layer type (raster, vector, overlay, command, etc.)
-        @param cmd GRASS command for rendering layer, given as list, e.g. ['d.rast', 'map=elevation@PERMANENT']
-        @param name layer name, e.g. 'elevation@PERMANENT'
+        @param type layer type ('raster', 'vector', 'overlay', 'command', etc.)
+        @param cmd GRASS command to render layer,
+        given as list, e.g. ['d.rast', 'map=elevation@PERMANENT']
+        @param name layer name, e.g. 'elevation@PERMANENT' (for layer tree)
         @param active layer is active, will be rendered only if True
         @param hidden layer is hidden, won't be listed in Layer Manager if True
         @param opacity layer opacity <0;1>
@@ -63,43 +73,41 @@ class MapLayer(object):
         self.hidden  = hidden
         self.opacity = opacity
 
-        Debug.msg (3, "MapLayer.__init__(): type=%s, cmd='%s', name=%s, " \
-                   "active=%d, opacity=%d, hidden=%d" % \
-                   (self.type, self.GetCmd(string=True), self.name, self.active,
-                    self.opacity, self.hidden))
+        Debug.msg (3, "Layer.__init__(): type=%s, cmd='%s', name=%s, " \
+                       "active=%d, opacity=%d, hidden=%d" % \
+                       (self.type, self.GetCmd(string=True), self.name, self.active,
+                        self.opacity, self.hidden))
 
         # generated file for layer
-        gtemp = utils.GetTempfile()
-        self.maskfile = gtemp + ".pgm"
-        if self.type == "overlay":
-            self.mapfile = gtemp + ".png"
-        else:
-            self.mapfile = gtemp + ".ppm"
+        self.gtemp = utils.GetTempfile()
+        self.maskfile = self.gtemp + ".pgm"
 
     def __del__(self):
-        Debug.msg (3, "MapLayer.__del__(): layer=%s, cmd='%s'" %
+        Debug.msg (3, "Layer.__del__(): layer=%s, cmd='%s'" %
                    (self.name, self.GetCmd(string=True)))
 
     def Render(self):
-        """Render map layer to image
+        """Render layer to image
 
-        @return name of file with rendered image or None
+        @return rendered image filename
+        @return None on error
         """
         if len(self.cmdlist) == 0:
-            return
+            return None
 
-        Debug.msg (3, "MapLayer.Render(): type=%s" % \
-                   (self.type))
+        Debug.msg (3, "Layer.Render(): type=%s" % \
+                       (self.type))
 
         #
         # to be sure, set temporary file with layer and mask
         #
-        gtemp = utils.GetTempfile()
-        self.maskfile = gtemp + ".pgm"
-        if self.type == 'overlay':
-            self.mapfile  = gtemp + ".png"
-        else:
-            self.mapfile  = gtemp + ".ppm"
+        if not self.gtemp:
+            gtemp = utils.GetTempfile()
+            self.maskfile = gtemp + ".pgm"
+            if self.type == 'overlay':
+                self.mapfile  = gtemp + ".png"
+            else:
+                self.mapfile  = gtemp + ".ppm"
 
         #
         # prepare command for each layer
@@ -152,21 +160,11 @@ class MapLayer(object):
 
         return self.mapfile
 
-    def GetMapset(self):
-        """
-        @return mapset name of the layer
-        """
-        if not self.name:
-            return ''
-
-        try:
-            return self.name.split('@')[1]
-        except IndexError:
-            return self.name
-
     def GetCmd(self, string=False):
         """
-        @param string get command as string if True otherwise list
+        Get GRASS command as list of string.
+
+        @param string get command as string if True otherwise as list
 
         @return command list/string
         """
@@ -177,7 +175,8 @@ class MapLayer(object):
 
     def GetOpacity(self, float=False):
         """
-        Get opacity level
+        Get layer opacity level
+
         @param float get opacity level in <0,1> otherwise <0,100>
 
         @return opacity level
@@ -187,9 +186,69 @@ class MapLayer(object):
         
         return int (self.opacity * 100)
 
+    def IsActive(self):
+        """Check if layer is activated for rendering"""
+        return self.active
+
+    def SetActive(self, enable=True):
+        """Active or deactive layer"""
+        self.active = enable
+            
+class MapLayer(Layer):
+    """Represents map layer in the map canvas"""
+    def __init__(self, type, cmd, name=None,
+                 active=True, hidden=False, opacity=1.0):
+        """
+        @param type layer type ('raster', 'vector', 'command', etc.)
+        @param cmd GRASS command to render layer,
+        given as list, e.g. ['d.rast', 'map=elevation@PERMANENT']
+        @param name layer name, e.g. 'elevation@PERMANENT' (for layer tree) or None
+        @param active layer is active, will be rendered only if True
+        @param hidden layer is hidden, won't be listed in Layer Manager if True
+        @param opacity layer opacity <0;1>
+        """
+        Layer.__init__(self, type, cmd, name,
+                       active, hidden, opacity)
+
+        self.mapfile = self.gtemp + ".ppm"
+
+    def GetMapset(self):
+        """
+        Get mapset of map layer
+
+        @return mapset name
+        @return '' on error (no name given)
+        """
+        if not self.name:
+            return ''
+
+        try:
+            return self.name.split('@')[1]
+        except IndexError:
+            return self.name
+
+class Overlay(Layer):
+    """Represents overlay displayed in map canvas"""
+    def __init__(self, id, type, cmd,
+                 active=True, hidden=True, opacity=1.0):
+        """
+        @param id overlay id (for PseudoDC)
+        @param type overlay type ('barscale', 'legend', etc.)
+        @param cmd GRASS command to render overlay,
+        given as list, e.g. ['d.legend', 'map=elevation@PERMANENT']
+        @param active layer is active, will be rendered only if True
+        @param hidden layer is hidden, won't be listed in Layer Manager if True
+        @param opacity layer opacity <0;1>
+        """
+        Layer.__init__(self, 'overlay', cmd, type,
+                       active, hidden, opacity)
+
+        self.id = id
+        self.mapfile = self.gtemp + ".png"
+
 class Map(object):
     """
-    Map composition (stack of map layers)
+    Map composition (stack of map layers and overlays)
     """
     def __init__(self):
         # 
@@ -561,7 +620,7 @@ class Map(object):
         layers. 
 
         @param l_type layer type, e.g. raster/vector/wms/overlay
-        @param l_mapset all layers from given mapset
+        @param l_mapset all layers from given mapset (only for maplayers)
         @param l_name all layers with given name
         @param l_active only layers with 'active' attribute set to True or False
         @param l_hidden only layers with 'hidden' attribute set to True or False
@@ -571,14 +630,20 @@ class Map(object):
 
         selected = []
 
+        if l_type == 'overlay':
+            list = self.overlays
+        else:
+            list = self.layers
+
         # ["raster", "vector", "wms", ... ]
-        for layer in self.layers + self.overlays:
+        for layer in list:
             # specified type only
             if l_type != None and layer.type != l_type:
                 continue
 
             # mapset
-            if l_mapset != None and layer.GetMapset() != l_mapset:
+            if (l_mapset != None and type != 'overlay') and \
+                    layer.GetMapset() != l_mapset:
                 continue
 
             # name
@@ -721,16 +786,15 @@ class Map(object):
     def AddLayer(self, type, command, name=None,
                  l_active=True, l_hidden=False, l_opacity=1.0, l_render=False):
         """
-        Adds generic display command layer to list of layers
+        Adds generic map layer to list of layers
 
-        @param item reference to item in layer tree
-        @param type layer type
+        @param type layer type ('raster', 'vector', etc.)
+        @param command  GRASS command given as list
         @param name layer name
-        @param cmd  GRASS command to render layer
-        @param l_active checked/not checked for display in layer tree
-        @param l_hidden not used here
-        @param l_opacity opacity leve range from 0(transparent)-1(not transparent)
-        @param l_render render an image if False
+        @param l_active layer render only if True
+        @param l_hidden layer not displayed in layer tree if True
+        @param l_opacity opacity level range from 0(transparent) - 1(not transparent)
+        @param l_render render an image if True
 
         @return new layer on success
         @return None on failure
@@ -753,33 +817,44 @@ class Map(object):
 
         return self.layers[-1]
 
-    def DeleteLayer(self, layer):
+    def DeleteLayer(self, layer, overlay=False):
         """
-        Removes layer from list of layers,
-        defined by reference to MapLayer instance
+        Removes layer from list of layers
 
-        Returns:
-            Removed layer on success or None
+        @param layer layer instance in layer tree
+        @param overlay delete overlay (use self.DeleteOverlay() instead)
+
+        @return removed layer on success or None
         """
 
         Debug.msg (3, "Map.DeleteLayer(): name=%s" % layer.name)
-        if layer in self.layers:
+
+        if overlay:
+            list = self.overlays
+        else:
+            list = self.list
+
+        if layer in list:
             if layer.mapfile:
                 base = os.path.split(layer.mapfile)[0]
                 mapfile = os.path.split(layer.mapfile)[1]
                 tempbase = mapfile.split('.')[0]
-                basefile = os.path.join(base,tempbase)+r'.*'
+                if base == '' or tempbase == '':
+                    return None
+                basefile = os.path.join(base, tempbase) + r'.*'
                 for f in glob.glob(basefile):
                     os.remove(f)
-            self.layers.remove(layer)
+            list.remove(layer)
+
             return layer
 
         return None
 
     def ReorderLayers(self, layerList):
         """
-        Make a new reordered list to match reordered
-        layer tree - for drag and drop
+        Reorder list to match layer tree
+
+        @param layerList list of layers
         """
         self.layers = layerList
 
@@ -793,7 +868,15 @@ class Map(object):
     def ChangeLayer(self, layer, type, command, name=None,
                     l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
-        Change the command and other other options for a layer
+        Change layer properties
+
+        @param type layer type ('raster', 'vector', etc.)
+        @param command  GRASS command given as list
+        @param name layer name
+        @param l_active layer render only if True
+        @param l_hidden layer not displayed in layer tree if True
+        @param l_opacity opacity level range from 0(transparent) - 1(not transparent)
+        @param l_render render an image if True
         """
 
         # l_opacity must be <0;1>
@@ -821,7 +904,7 @@ class Map(object):
         """
         Changes opacity value of map layer
 
-        @param layer layer instance
+        @param layer layer instance in layer tree
         @param l_opacity opacity level <0;1>
         """
         # l_opacity must be <0;1>
@@ -834,9 +917,9 @@ class Map(object):
 
     def ChangeLayerActive(self, layer, active):
         """
-        Change the active state of a layer
+        Enable or disable map layer
 
-        @param layer layer instance
+        @param layer layer instance in layer tree
         @param active to be rendered (True)
         """
         layer.active = active
@@ -848,7 +931,7 @@ class Map(object):
         """
         Change name of the layer
 
-        @param layer layer instance
+        @param layer layer instance in layer tree
         @param name  layer name to set up
         """
         Debug.msg (3, "Map.ChangeLayerName(): from=%s to=%s" % \
@@ -857,7 +940,7 @@ class Map(object):
 
     def RemoveLayer(self, name=None, id=None):
         """
-        Removes layer from layer list of layers
+        Removes layer from layer list
 
         Layer is defined by name@mapset or id.
 
@@ -886,9 +969,9 @@ class Map(object):
 
     def GetLayerIndex(self, layer):
         """
-        Returns index of layer in layer list.
+        Get index of layer in layer list.
 
-        @param layer layer instace
+        @param layer layer instace in layer tree
 
         @return layer index
         @return None
@@ -899,23 +982,25 @@ class Map(object):
         else:
             return None
 
-    def AddOverlay(self, ovltype=None, type='overlay', command=None,
-                   l_active=True, l_hidden=False, l_opacity=1, l_render=False):
+    def AddOverlay(self, id, type, command,
+                   l_active=True, l_hidden=True, l_opacity=1.0, l_render=False):
         """
-        Adds overlay (grid, barscale, others?) to list of overlays
-
-        @param ovltype overlay type
+        Adds overlay (grid, barscale, legend, etc.) to list of overlays
+        
+        @param id overlay id (PseudoDC)
+        @param type overlay type (barscale, legend)
         @param command GRASS command to render overlay
         @param l_active overlay activated (True) or disabled (False)
-        @param l_render render an image (True)
+        @param l_hidden overlay is not shown in layer tree (if True)
+        @param l_render render an image (if True)
 
         @return new layer on success
         @retutn None on failure
         """
 
         Debug.msg (2, "Map.AddOverlay(): cmd=%s, render=%d" % (command, l_render))
-        overlay = MapLayer(type='overlay', name=None, cmd=command,
-                           active=l_active, hidden=l_hidden, opacity=l_opacity)
+        overlay = Overlay(id=id, type=type, cmd=command,
+                          active=l_active, hidden=l_hidden, opacity=l_opacity)
 
         # add maplayer to the list of layers
         self.overlays.append(overlay)
@@ -924,56 +1009,78 @@ class Map(object):
             raise gcmd.GException(_("Unable render overlay <%s>.") % 
                                   (name))
 
-        self.ovlookup[ovltype] = overlay
-
         return self.overlays[-1]
 
-    def ChangeOverlay(self, ovltype, type, name, command,
+    def ChangeOverlay(self, id, type, command,
                       l_active=True, l_hidden=False, l_opacity=1, l_render=False):
         """
         Change overlay properities
 
-        @param ovltype overlay type
-        @param type layer type
-        @param command GRASS command to render an overlay
-        @param l_active overlay is active (True) or disabled (False)
-        @param l_hidded not used here
-        @param l_opacity opacity level <0,1>
-        @param l_render render overlay (True)
+        Add new overlay if overlay with 'id' doesn't exist.
 
-        @return new overlay instance
+        @param id overlay id (PseudoDC)
+        @param type overlay type (barscale, legend)
+        @param command GRASS command to render overlay
+        @param l_active overlay activated (True) or disabled (False)
+        @param l_hidden overlay is not shown in layer tree (if True)
+        @param l_render render an image (if True)
+
+        @return new layer on success
         """
+        overlay = self.GetOverlay(id, list=False)
+        if  overlay is None:
+            overlay = Overlay(id, type, command,
+                              l_active, l_hidden, l_opacity)
+        else:
+            overlay.id = id
+            overlay.name = type
+            overlay.cmdlist = command
+            overlay.active = l_active
+            overlay.hidden = l_hidden
+            overlay.opacity = l_opacity
 
-        newoverlay = MapLayer(type='overlay', name=name, cmd=command,
-                              active=l_active, hidden=l_hidden, opacity=l_opacity)
-
-        oldovlindex = self.overlays.index(self.ovlookup[ovltype])
-
-        # add overlay to the list of layers
-        if self.ovlookup[ovltype]:
-            self.overlays[oldovlindex] = newoverlay
-            self.ovlookup[ovltype] = newoverlay
-
-        if l_render and command != '' and not overlay.Render():
-            raise gcmd.GException(_("Unable render overlay <%s>.") % 
+        if l_render and command != [] and not overlay.Render():
+            raise gcmd.GException(_("Unable render overlay <%s>") % 
                                   (name))
 
-        return self.overlays[-1]
+        return overlay
 
-    def changeOverlayActive(self, ovltype, activ):
+    def GetOverlay(self, id, list=False):
+        """Return overlay(s) with 'id'
+
+        @param id overlay id
+        @param list return list of overlays of True
+        otherwise suppose 'id' to be unique
+        
+        @return list of overlays (list=True)
+        @return overlay (list=False)
+        @retur None (list=False) if no overlay or more overlays found
         """
-        Change active status of overlay
+        ovl = []
+        for overlay in self.overlays:
+            if overlay.id == id:
+                ovl.append(overlay)
+                
+        if not list:
+            if len(ovl) != 1:
+                return None
+            else:
+                return ovl[0]
+
+        return ovl
+
+    def DeleteOverlay(self, overlay):
+        """Delete overlay
+
+        @param id overlay id
+
+        @return removed overlay on success or None
         """
-        try:
-            overlay = self.ovlookup[ovltype]
-            overlay.active = activ
-            Debug.msg (3, "Map.changeOverlayActive(): type=%d, active=%d" % (type, activ))
-        except:
-            sys.stderr.write("Cannot change status of overlay index [%d]\n" % type)
+        return self.DeleteLayer(overlay, overlay=True)
 
     def Clean(self):
         """
-        Go trough all layers and remove them from layer list
+        Clean layer stack - go trough all layers and remove them from layer list
         Removes also l_mapfile and l_maskfile
 
         @return 1 on faulure
@@ -1020,9 +1127,16 @@ if __name__ == "__main__":
     map.width = 640
     map.height = 480
 
-    map.AddLayer(item=None, type="raster", name="elevation.dem", command = "d.rast elevation.dem@PERMANENT catlist=1000-1500 -i", l_opacity=.7)
+    map.AddLayer(item=None,
+                 type="raster",
+                 name="elevation.dem",
+                 command = ["d.rast", "elevation.dem@PERMANENT", "catlist=1000-1500", "-i"],
+                 l_opacity=.7)
 
-    map.AddLayer(item=None, type="vector", name="streams", command = "d.vect streams@PERMANENT color=red width=3 type=line")
+    map.AddLayer(item=None,
+                 type="vector",
+                 name="streams",
+                 command = ["d.vect", "streams@PERMANENT", "color=red", "width=3", "type=line"])
 
     image = map.Render(force=True)
 

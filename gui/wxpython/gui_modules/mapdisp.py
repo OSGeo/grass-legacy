@@ -2,10 +2,10 @@
 MODULE:    mapdisp.py
 
 CLASSES:
-    * Command
-    * BufferedWindow
-    * MapFrame
-    * MapApp
+ - Command
+ - BufferedWindow
+ - MapFrame
+ - MapApp
 
 PURPOSE:   GIS map display canvas, with toolbar for various display
            management functions, and second toolbar for vector
@@ -14,12 +14,11 @@ PURPOSE:   GIS map display canvas, with toolbar for various display
            Usage:
             python mapdisp.py monitor-identifier /path/to/command/file
 
-AUTHORS:   The GRASS Development Team
-           Michael Barton
+AUTHORS:   Michael Barton
            Jachym Cepicky
            Martin Landa <landa.martin gmail.com>
 
-COPYRIGHT: (C) 2006-2007 by the GRASS Development Team
+COPYRIGHT: (C) 2006-2008 by the GRASS Development Team
            This program is free software under the GNU General Public
            License (>=v2). Read the file COPYING that comes with GRASS
            for details.
@@ -177,11 +176,10 @@ class BufferedWindow(wx.Window):
         self.img = ""         # wx.Image object (self.mapfile)
         # used in digitization tool (do not redraw vector map)
         self.imgVectorMap = None
-        self.ovldict = {}     # list of images for overlays
-        self.ovlcoords = {}   # positioning coordinates for decoration overlay
-        self.ovlchk = {}      # showing/hiding decorations
-        self.imagedict = {}   # images and their PseudoDC ID's for painting and dragging
-        self.crop = {}        # coordinates to crop overlays to their data, indexed by image ID
+        # decoration overlays
+        self.overlays = {}
+        # images and their PseudoDC ID's for painting and dragging
+        self.imagedict = {}   
         self.select = {}      # selecting/unselecting decorations for dragging
         self.textdict = {}    # text, font, and color indexed by id
         self.currtxtid = None # PseudoDC id for currently selected text
@@ -238,17 +236,17 @@ class BufferedWindow(wx.Window):
         Draws map and overlay decorations
         """
         if drawid == None:
-            if pdctype == 'image' :
-                drawid = imagedict[img]
+            if pdctype == 'image' and img:
+                drawid = self.imagedict[img]
             elif pdctype == 'clear':
                 drawid == None
             else:
                 drawid = wx.NewId()
-        else:
-            self.ovlcoords[drawid] = coords
-            self.ovlchk[drawid] = True
-            pdc.SetId(drawid)
-            self.select[drawid] = False
+        
+        if img and pdctype == 'image':
+            # self.imagedict[img]['coords'] = coords
+            pdc.SetId(self.imagedict[img]['id'])
+            self.select[self.imagedict[img]['id']] = False # ?
 
         pdc.BeginDrawing()
 
@@ -277,7 +275,7 @@ class BufferedWindow(wx.Window):
             bitmap = wx.BitmapFromImage(img)
             w,h = bitmap.GetSize()
             pdc.DrawBitmap(bitmap, coords[0], coords[1], True) # draw the composite map
-            pdc.SetIdBounds(drawid, (coords[0],coords[1],w,h))
+            pdc.SetIdBounds(drawid, (coords[0],coords[1], w, h))
 
         elif pdctype == 'box': # draw a box on top of the map
             if self.pen:
@@ -292,7 +290,7 @@ class BufferedWindow(wx.Window):
                 rect = wx.Rect(x1,y1,rwidth,rheight)
                 pdc.DrawRectangleRect(rect)
                 pdc.SetIdBounds(drawid,rect)
-                self.ovlcoords[drawid] = coords
+                # self.ovlcoords[drawid] = coords
 
         elif pdctype == 'line': # draw a line on top of the map
             if self.pen:
@@ -300,7 +298,7 @@ class BufferedWindow(wx.Window):
                 pdc.SetPen(self.pen)
                 pdc.DrawLine(coords[0], coords[1], coords[2], coords[3])
                 pdc.SetIdBounds(drawid,(coords[0], coords[1], coords[2], coords[3]))
-                self.ovlcoords[drawid] = coords
+                # self.ovlcoords[drawid] = coords
 
         elif pdctype == 'polyline': # draw a polyline on top of the map
             if self.polypen:
@@ -321,7 +319,7 @@ class BufferedWindow(wx.Window):
                     y1=min(ylist)
                     y2=max(ylist)
                     pdc.SetIdBounds(drawid,(x1,y1,x2,y2))
-                    self.ovlcoords[drawid] = [x1,y1,x2,y2]
+                    # self.ovlcoords[drawid] = [x1,y1,x2,y2]
 
         elif pdctype == 'point': # draw point
             if self.pen:
@@ -332,21 +330,21 @@ class BufferedWindow(wx.Window):
                                coords[0] + 5,
                                coords[1] + 5)
                 pdc.SetIdBounds(drawid, coordsBound)
-                self.ovlcoords[drawid] = coords
+                # self.ovlcoords[drawid] = coords
 
         elif pdctype == 'text': # draw text on top of map
             text = img[0]
             rotation = float(img[3])
-            w,h = self.GetFullTextExtent(img[0])[0:2]
+            w, h = self.GetFullTextExtent(img[0])[0:2]
             pdc.SetFont(img[1])
             pdc.SetTextForeground(img[2])
-            coords,w,h = self.TextBounds(img,coords)
+            coords, w, h = self.TextBounds(img, coords)
             if rotation == 0:
                 pdc.DrawText(img[0], coords[0], coords[1])
             else:
                 pdc.DrawRotatedText(img[0], coords[0], coords[1], rotation)
             pdc.SetIdBounds(drawid, (coords[0], coords[1], w, h))
-            self.ovlcoords[drawid] = coords
+            # self.ovlcoords[drawid] = coords
 
         pdc.EndDrawing()
         self.Refresh()
@@ -356,6 +354,9 @@ class BufferedWindow(wx.Window):
     def TextBounds(self, textinfo, coords):
         """
         Return text boundary data
+
+        @param textinfo text metadata (text, font, color, rotation)
+        @param coords reference point
         """
         rotation = float(textinfo[3])
 
@@ -364,17 +365,21 @@ class BufferedWindow(wx.Window):
 
         self.Update()
         self.Refresh()
+
         self.SetFont(textinfo[1])
-        w,h = self.GetTextExtent(textinfo[0])
+
+        w, h = self.GetTextExtent(textinfo[0])
+
         if rotation == 0:
             coords[2], coords[3] = coords[0] + w, coords[1] + h
             return coords, w, h
-        else:
-            boxh = math.fabs(math.sin(math.radians(rotation)) * w) + h
-            boxw = math.fabs(math.cos(math.radians(rotation)) * w) + h
-            coords[2] = coords[0] + boxw
-            coords[3] = coords[1] + boxh
-            return coords, boxw, boxh
+
+        boxh = math.fabs(math.sin(math.radians(rotation)) * w) + h
+        boxw = math.fabs(math.cos(math.radians(rotation)) * w) + h
+        coords[2] = coords[0] + boxw
+        coords[3] = coords[1] + boxh
+        
+        return coords, boxw, boxh
 
     def OnPaint(self, event):
         """
@@ -494,33 +499,41 @@ class BufferedWindow(wx.Window):
     def GetOverlay(self):
         """
         Converts rendered overlay files to wx.Image
+
+        Updates self.imagedict
+
+        @return list of images
         """
-        self.ovldict = {}
+        imgs = []
         for overlay in self.Map.GetListOfLayers(l_type="overlay", l_active=True):
             if os.path.isfile(overlay.mapfile) and os.path.getsize(overlay.mapfile):
                 img = wx.Image(overlay.mapfile, wx.BITMAP_TYPE_ANY)
-                pdc_id = self.Map.overlays.index(overlay)
-                self.ovldict[pdc_id] = img  # image information for each overlay image
-                self.imagedict[img] = pdc_id # set image PeudoDC ID
+                pdc_id = self.Map.overlays.index(overlay) # ?
+                self.imagedict[img] = { 'id' : pdc_id,
+                                        'layer' : overlay,
+                                        'coords' : wx.Rect(0, 0, 0, 0) }
+                imgs.append(img)
 
-        Debug.msg (3, "BufferedWindow.GetOverlay(): numberof=%d" % len(self.ovldict))
-
-        return self.ovldict
+        return imgs
 
     def GetImage(self):
         """
         Converts redered map files to wx.Image
+
+        Updates self.imagedict (id=99)
+
+        @return wx.Image instance (map composition)
         """
+        imgId = 99
         if self.Map.mapfile and os.path.isfile(self.Map.mapfile) and \
                 os.path.getsize(self.Map.mapfile):
             img = wx.Image(self.Map.mapfile, wx.BITMAP_TYPE_ANY)
         else:
             img = None
 
-        self.imagedict[img] = 99 # set image PseudoDC ID
+        self.imagedict[img] = { 'id': imgId }
 
         return img
-
 
     def UpdateMap(self, render=True, renderVector=True):
         """
@@ -578,7 +591,7 @@ class BufferedWindow(wx.Window):
             self.Draw(self.pdc, pdctype='clear')
         else:
             try:
-                id = self.imagedict[self.img]
+                id = self.imagedict[self.img]['id']
             except:
                 return False
 
@@ -600,22 +613,18 @@ class BufferedWindow(wx.Window):
             self.parent.digit.driver.DrawMap()
 
         #
-        # render overlay
+        # render overlays
         #
-        self.ovldict = self.GetOverlay() # list of decoration overlay images
-        if self.ovldict != {}: # draw scale and legend overlays
-            for id in self.ovldict:
-                img = self.ovldict[id]
-                if id not in self.ovlcoords: self.ovlcoords[id] = wx.Rect(0,0,0,0)
-                if id not in self.ovlchk: self.ovlchk[id] = False
-                if self.ovlchk[id] == True: # draw any active and defined overlays
-                    self.Draw(self.pdc, img=img, drawid=id,
-                             pdctype='image', coords=self.ovlcoords[id])
+        for img in self.GetOverlay():
+            # draw any active and defined overlays
+            if self.imagedict[img]['layer'].IsActive():
+                id = self.imagedict[img]['id']
+                self.Draw(self.pdc, img=img, drawid=id,
+                          pdctype=self.overlays[id]['pdcType'], coords=self.overlays[id]['coords'])
 
-        if self.textdict != None: # draw text overlays
-            for id in self.textdict:
-                self.Draw(self.pdc, img=self.textdict[id], drawid=id,
-                          pdctype='text', coords=self.ovlcoords[id])
+        for id in self.textdict.keys():
+            self.Draw(self.pdc, img=self.textdict[id], drawid=id,
+                      pdctype='text', coords=[10, 10, 10, 10])
 
         self.DrawCompRegionExtent()
 
@@ -717,7 +726,7 @@ class BufferedWindow(wx.Window):
         """
         Debug.msg (5, "BufferedWindow.DragItem(): id=%d" % \
                        id)
-        x,y = self.lastpos
+        x, y = self.lastpos
         dx = event.GetX() - x
         dy = event.GetY() - y
         self.pdc.SetBackground(wx.Brush(self.GetBackgroundColour()))
@@ -731,9 +740,10 @@ class BufferedWindow(wx.Window):
         r2 = self.pdc.GetIdBounds(id)
         r = r.Union(r2)
         r.Inflate(4,4)
+
         self.Update()
         self.RefreshRect(r, False)
-        self.lastpos = (event.GetX(),event.GetY())
+        self.lastpos = (event.GetX(), event.GetY())
 
     def MouseDraw(self, pdc=None, begin=None, end=None):
         """
@@ -1414,10 +1424,10 @@ class BufferedWindow(wx.Window):
 
         elif self.dragid != None:
             # end drag of overlay decoration
-            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+            if self.overlays.has_key(self.dragid):
+                self.overlays[self.dragid]['coords'] = self.pdc.GetIdBounds(self.dragid)
             self.dragid = None
             self.currtxtid = None
-            id = None
             self.Update()
 
         event.Skip()
@@ -1458,14 +1468,14 @@ class BufferedWindow(wx.Window):
                 return
             self.dragid = idlist[0]
 
-            self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
+            # self.ovlcoords[self.dragid] = self.pdc.GetIdBounds(self.dragid)
             if self.dragid > 100:
                 self.currtxtid = self.dragid
-                self.parent.AddText(None)
+                self.parent.OnAddText(None)
             elif self.dragid == 0:
-                self.parent.AddBarscale(None)
+                self.parent.OnAddBarscale(None)
             elif self.dragid == 1:
-                self.parent.AddLegend(None)
+                self.parent.OnAddLegend(None)
 
         event.Skip()
 
@@ -2313,16 +2323,6 @@ class MapFrame(wx.Frame):
         # initialize region values
         #
         self.__InitDisplay() 
-
-        #
-        # Decoration overlays
-        #
-        self.ovlchk = self.MapWindow.ovlchk
-        self.ovlcoords = self.MapWindow.ovlcoords
-        # previously set decoration options parameters to insert into options dialog
-        self.params = {}
-        # ID of properties window open for overlay, indexed by overlay ID
-        self.propwin = {}
 
         #
         # Bind various events
@@ -3236,36 +3236,31 @@ class MapFrame(wx.Frame):
         AddScale = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addbarscale"].GetLabel())
         AddScale.SetBitmap(Icons["addbarscale"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddScale)
-        self.Bind(wx.EVT_MENU, self.AddBarscale, AddScale)
+        self.Bind(wx.EVT_MENU, self.OnAddBarscale, AddScale)
 
         AddLegend = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addlegend"].GetLabel())
         AddLegend.SetBitmap(Icons["addlegend"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddLegend)
-        self.Bind(wx.EVT_MENU, self.AddLegend, AddLegend)
+        self.Bind(wx.EVT_MENU, self.OnAddLegend, AddLegend)
 
         AddText = wx.MenuItem(decmenu, wx.ID_ANY, Icons["addtext"].GetLabel())
         AddText.SetBitmap(Icons["addtext"].GetBitmap(self.iconsize))
         decmenu.AppendItem(AddText)
-        self.Bind(wx.EVT_MENU, self.AddText, AddText)
+        self.Bind(wx.EVT_MENU, self.OnAddText, AddText)
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(decmenu)
         decmenu.Destroy()
 
-    def AddBarscale(self, event):
+    def OnAddBarscale(self, event):
         """
         Handler for scale/arrow map decoration menu selection.
         """
         if self.dialogs['barscale']:
             return
 
-        ovltype = id = 0 # index for overlay layer in render
-
-        if ovltype in self.params:
-            params = self.params[ovltype]
-        else:
-            params = ''
+        id = 0 # unique index for overlay layer
 
         # If location is latlon, only display north arrow (scale won't work)
         #        proj = self.projinfo['proj']
@@ -3276,157 +3271,87 @@ class MapFrame(wx.Frame):
 
         # decoration overlay control dialog
         self.dialogs['barscale'] = \
-            gdialogs.DecorationDialog(parent=self, id=wx.ID_ANY, title=_('Scale and North arrow'),
+            gdialogs.DecorationDialog(parent=self, title=_('Scale and North arrow'),
                                       size=(350, 200),
                                       style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                                      ovltype=ovltype,
                                       cmd='d.barscale',
-                                      drawid=id,
+                                      ovlId=id,
+                                      name='barscale',
                                       checktxt = _("Show/hide scale and North arrow"),
-                                      ctrltxt = _("scale object"),
-                                      params = params)
+                                      ctrltxt = _("scale object"))
 
-        # if OK button pressed in decoration control dialog
-        if self.dialogs['barscale'].Show() == wx.ID_OK:
-            if self.ovlchk[id] == True:
-                # get overlay images (overlay must be active)
-                if not self.Map.ovlookup[ovltype].active:
-                    self.Map.ovlookup[ovltype].active = True
-                    self.Map.Render(force=True)
+        self.dialogs['barscale'].Show()
 
-                ovldict = self.MapWindow.GetOverlay()
-
-                if id not in ovldict:
-                    self.MapWindow.UpdateMap()
-                    return
-
-                img = ovldict[id]
-
-                if id not in self.ovlcoords:
-                    self.ovlcoords[id] = [10,10]
-
-                self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
-                                    img=img, pdctype='image',
-                                    coords=self.ovlcoords[id])
-
-        self.MapWindow.UpdateMap()
-
-        # close properties dialog if open
-        #        try:
-        #            self.propwin[ovltype].Close(True)
-        #        except:
-        #            pass
-
-    def AddLegend(self, event):
+    def OnAddLegend(self, event):
         """
         Handler for legend map decoration menu selection.
         """
         if self.dialogs['legend']:
             return
         
-        ovltype = id = 1 # index for overlay layer in render
-
-        if ovltype in self.params:
-            params = self.params[ovltype]
-        else:
-            params = ''
+        id = 1 # index for overlay layer in render
 
         # Decoration overlay control dialog
         self.dialogs['legend'] = \
-            gdialogs.DecorationDialog(parent=self, id=wx.ID_ANY, title=('Legend'),
+            gdialogs.DecorationDialog(parent=self, title=('Legend'),
                                       size=(350, 200),
                                       style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                                      ovltype=ovltype,
                                       cmd='d.legend',
-                                      drawid=id,
+                                      ovlId=id,
+                                      name='legend',
                                       checktxt = _("Show/hide legend"),
-                                      ctrltxt = _("legend object"),
-                                      params = params)
+                                      ctrltxt = _("legend object")) 
 
-        # If OK button pressed in decoration control dialog
-        if self.dialogs['legend'].Show() == wx.ID_OK:
-            if self.ovlchk[id] == True:
-                # get overlay images (overlay must be active)
-                if not self.Map.ovlookup[ovltype].active:
-                    self.Map.ovlookup[ovltype].active = True
-                    self.Map.Render(force=True)
+        self.dialogs['legend'].Show()
 
-                ovldict = self.MapWindow.GetOverlay()
-
-                if id not in ovldict:
-                    self.MapWindow.UpdateMap()
-                    return
-
-                img = ovldict[id]
-
-                if id not in self.ovlcoords:
-                    self.ovlcoords[id] = [10,10]
-
-                self.MapWindow.Draw(self.MapWindow.pdc, drawid=id,
-                                    img=img, pdctype='image',
-                                    coords=self.ovlcoords[id])
-
-        self.MapWindow.UpdateMap()
-
-        # close properties dialog if open
-        #        try:
-        #            self.propwin[ovltype].Close(True)
-        #        except:
-        #            pass
-
-    def AddText(self, event):
+    def OnAddText(self, event):
         """
         Handler for text decoration menu selection.
         """
-        ovltype = 2 # index for overlay layer in render
+
+        id = 2 # index for overlay layer in render
 
         # default values
-        maptext = ''
-        textfont = self.GetFont()
-        textcolor = wx.BLACK
-        textcoords = [10, 10, 10, 10]
+        text = ''
+        font = self.GetFont()
+        color = wx.BLACK
+        coords = [10, 10, 10, 10]
         rotation = 0.0
 
-        if self.MapWindow.currtxtid == None: # text doesn't already exist
-            id = wx.NewId() + 100
-        else: # text already exists
-            id = self.MapWindow.currtxtid
-            textcoords = self.ovlcoords[id]
+        # if self.MapWindow.currtxtid == None: # text doesn't already exist
+        #    id = wx.NewId() + 100
+        # else: # text already exists
+        #    id = self.MapWindow.currtxtid
+            # textcoords = self.ovlcoords[id]
 
-        dlg = gdialogs.TextLayerDialog(self, wx.ID_ANY, 'Text', size=(400, 200),
-                                       style=wx.DEFAULT_DIALOG_STYLE,
-                                       ovltype=ovltype,
-                                       drawid=id)
+        dlg = gdialogs.TextLayerDialog(parent=self, ovlId=id, title=_('Add text layer'),
+                                       size=(400, 200))
 
         dlg.CenterOnScreen()
 
         # If OK button pressed in decoration control dialog
-        val = dlg.ShowModal()
-        if val == wx.ID_OK:
-            maptext    = dlg.currText
-            textfont   = dlg.currFont
-            textcolor  = dlg.currClr
-            rotation   = dlg.currRot
-            coords,w,h = self.MapWindow.TextBounds((maptext, textfont, textcolor, rotation),textcoords)
-
-        # delete object if if it has no text
-        if maptext == '':
+        if dlg.ShowModal() == wx.ID_OK:
+            text = dlg.GetValues()[0]
+            coords, w, h = self.MapWindow.TextBounds(dlg.GetValues(),
+                                                     coords)
+        # delete object if it has no text
+        if text == '':
             try:
                 self.MapWindow.pdc.ClearId(id)
                 self.MapWindow.pdc.RemoveId(id)
                 del self.MapWindow.textdict[id]
-                del self.ovlcoords[id]
+                # del self.ovlcoords[id]
             except:
                 pass
             return
 
         self.MapWindow.pdc.ClearId(id)
         self.MapWindow.pdc.SetId(id)
-        self.MapWindow.textdict[id] = (maptext,textfont,textcolor,rotation)
+        self.MapWindow.textdict[id] = (text, font, color, rotation)
         self.MapWindow.Draw(self.MapWindow.pdc, img=self.MapWindow.textdict[id],
-                            drawid=id, pdctype='text', coords=textcoords)
-        self.MapWindow.UpdateMap()
+                            drawid=id, pdctype='text', coords=coords)
 
+        self.MapWindow.UpdateMap(render=False, renderVector=False)
 
     def GetOptData(self, dcmd, type, params, propwin):
         """
