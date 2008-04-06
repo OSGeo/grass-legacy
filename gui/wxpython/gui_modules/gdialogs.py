@@ -202,32 +202,25 @@ class DecorationDialog(wx.Dialog):
     """
     Controls setting options and displaying/hiding map overlay decorations
     """
-    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE, ovltype=0, cmd='d.barscale',
-                 drawid=None, checktxt='', ctrltxt='', params=''):
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+    def __init__(self, parent, ovlId, title, cmd, name=None,
+                 pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE,
+                 checktxt='', ctrltxt=''):
 
-        self.ovltype = ovltype
-        self.drawid  = drawid
-        self.ovlcmd  = cmd
-        self.parent  = parent
-        self.ovlchk  = self.parent.MapWindow.ovlchk
-        # previously set decoration options to pass back to options dialog
-        self.params  = params 
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title, pos, size, style)
 
-        if self.ovltype not in self.parent.Map.ovlookup:
-            self.parent.Map.AddOverlay(self.ovltype, type='overlay',
-                                       command=[self.ovlcmd], l_active=False, l_render=False)
-
-        # self.MakeModal(True)
+        self.ovlId   = ovlId   # PseudoDC id
+        self.cmd     = cmd
+        self.name    = name    # overlay name
+        self.parent  = parent  # MapFrame
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         self.chkbox = wx.CheckBox(parent=self, id=wx.ID_ANY, label=checktxt)
-        if not drawid in self.ovlchk:
-            self.ovlchk[drawid] = True
-        self.chkbox.SetValue(self.ovlchk[drawid])
+        if self.parent.Map.GetOverlay(self.ovlId) is None:
+            self.chkbox.SetValue(True)
+        else:
+            self.chkbox.SetValue(self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive())
         box.Add(item=self.chkbox, proportion=0,
                 flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
         sizer.Add(item=box, proportion=0,
@@ -255,31 +248,43 @@ class DecorationDialog(wx.Dialog):
         # buttons
         btnsizer = wx.StdDialogButtonSizer()
 
-        btn = wx.Button(self, wx.ID_OK)
-        btn.SetDefault()
-        btnsizer.AddButton(btn)
+        btnOK = wx.Button(parent=self, id=wx.ID_OK)
+        btnOK.SetDefault()
+        btnsizer.AddButton(btnOK)
 
-        btn = wx.Button(self, wx.ID_CANCEL)
-        btnsizer.AddButton(btn)
+        btnCancel = wx.Button(parent=self, id=wx.ID_CANCEL)
+        btnsizer.AddButton(btnCancel)
         btnsizer.Realize()
 
         sizer.Add(item=btnsizer, proportion=0,
                   flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
 
-
+        #
         # bindings
-        self.Bind(wx.EVT_CHECKBOX, self.OnCheck,   self.chkbox)
+        #
         self.Bind(wx.EVT_BUTTON,   self.OnOptions, optnbtn)
+        self.Bind(wx.EVT_BUTTON,   self.OnCancel,  btnCancel)
+        self.Bind(wx.EVT_BUTTON,   self.OnOK,      btnOK)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
 
-    def OnCheck(self, event):
-        """
-        Handler for checkbox for displaying/hiding decoration
-        """
-        check = event.IsChecked()
-        self.ovlchk[self.drawid] = check
+        # create overlay if doesn't exist
+        self._CreateOverlay()
+
+    def _CreateOverlay(self):
+        if not self.parent.Map.GetOverlay(self.ovlId):
+            overlay = self.parent.Map.AddOverlay(id=self.ovlId, type=self.name,
+                                                 command=[self.cmd],
+                                                 l_active=False, l_render=False, l_hidden=True)
+
+            self.parent.MapWindow.overlays[self.ovlId] = {}
+            self.parent.MapWindow.overlays[self.ovlId] = { 'layer' : overlay,
+                                                           'params' : '',
+                                                           'propwin' : None,
+                                                           'cmd' : [self.cmd],
+                                                           'coords': (10, 10),
+                                                           'pdcType': 'image' }
 
     def OnOptions(self, event):
         """        self.SetSizer(sizer)
@@ -287,32 +292,64 @@ class DecorationDialog(wx.Dialog):
 
         Sets option for decoration map overlays
         """
+        if not self.parent.MapWindow.overlays.has_key(self.ovlId) or \
+                self.parent.MapWindow.overlays[self.ovlId]['propwin'] is None:
+            # display properties dialog
+            menuform.GUI().ParseCommand(cmd=[self.cmd],
+                                        completed=(self.GetOptData, self.name, ''),
+                                        parentframe=self.parent)
+        else:
+            if self.parent.MapWindow.overlays[self.ovlId]['propwin'].IsShown():
+                self.parent.MapWindow.overlays[self.ovlId]['propwin'].SetFocus()
+            else:
+                self.parent.MapWindow.overlays[self.ovlId]['propwin'].Show()
+        
+    def OnCancel(self, event):
+        """Cancel dialog"""
+        self.parent.dialogs['barscale'] = None
 
-        # display properties dialog (modal mode)
-        menuform.GUI().ParseCommand(cmd=[self.ovlcmd],
-                                    completed=(self.GetOptData, self.ovltype, self.params),
-                                    parentframe=self.parent)
+        self.Destroy()
+
+    def OnOK(self, event):
+        """Button 'OK' pressed"""
+        # enable or disable overlay
+        self.parent.Map.GetOverlay(self.ovlId).SetActive(self.chkbox.IsChecked())
+
+        # update map
+        self.parent.MapWindow.UpdateMap()
+
+        # close dialog
+        self.OnCancel(None)
 
     def GetOptData(self, dcmd, layer, params, propwin):
         """Process decoration layer data"""
-        pass
+        # update layer data
+        if params:
+            self.parent.MapWindow.overlays[self.ovlId]['params'] = params
+        if dcmd:
+            self.parent.MapWindow.overlays[self.ovlId]['cmd'] = dcmd
+        self.parent.MapWindow.overlays[self.ovlId]['propwin'] = propwin
+
+        # change parameters for item in layers list in render.Map
+        self.parent.Map.ChangeOverlay(id=self.ovlId, type=self.name,
+                                      command=self.parent.MapWindow.overlays[self.ovlId]['cmd'],
+                                      l_active=self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive(),
+                                      l_render=False, l_hidden=True)
 
 class TextLayerDialog(wx.Dialog):
     """
     Controls setting options and displaying/hiding map overlay decorations
     """
 
-    def __init__(self, parent, id, title, pos=wx.DefaultPosition, size=wx.DefaultSize,
-                 style=wx.DEFAULT_DIALOG_STYLE,
-                 ovltype=2,drawid=None):
+    def __init__(self, parent, ovlId, title, name='text',
+                 pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE):
 
-        wx.Dialog.__init__(self, parent, id, title, pos, size, style)
+        wx.Dialog.__init__(self, parent, wx.ID_ANY, title, pos, size, style)
 
-        self.ovltype = ovltype
-        self.drawid  = drawid
-        self.parent  = parent
+        self.ovlId = ovlId
+        self.parent = parent
 
-        if drawid in self.parent.MapWindow.textdict:
+        if self.ovlId in self.parent.MapWindow.textdict:
             self.currText, self.currFont, self.currClr, self.currRot = self.parent.MapWindow.textdict[drawid]
         else:
             self.currClr = wx.BLACK
@@ -321,52 +358,70 @@ class TextLayerDialog(wx.Dialog):
             self.currRot = 0.0
 
         sizer = wx.BoxSizer(wx.VERTICAL)
+        box = wx.GridBagSizer(vgap=5, hgap=5)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, _("Enter text:"))
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
+        # text entry
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Enter text:"))
+        box.Add(item=label,
+                flag=wx.ALIGN_CENTER_VERTICAL,
+                pos=(0, 0))
 
-        self.textentry = wx.TextCtrl(self, wx.ID_ANY, "", size=(200,-1))
+        self.textentry = wx.TextCtrl(parent=self, id=wx.ID_ANY, value="", size=(300,-1))
         self.textentry.SetFont(self.currFont)
         self.textentry.SetForegroundColour(self.currClr)
         self.textentry.SetValue(self.currText)
-        box.Add(self.textentry, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        box.Add(item=self.textentry,
+                pos=(0, 1))
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, "Rotation:")
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        self.rotation = wx.SpinCtrl(self, id=wx.ID_ANY, value="", pos=(30, 50),
-                        size=(75,-1), style=wx.SP_ARROW_KEYS)
+        # rotation
+        label = wx.StaticText(parent=self, id=wx.ID_ANY, label=_("Rotation:"))
+        box.Add(item=label,
+                flag=wx.ALIGN_CENTER_VERTICAL,
+                pos=(1, 0))
+        self.rotation = wx.SpinCtrl(parent=self, id=wx.ID_ANY, value="", pos=(30, 50),
+                                    size=(75,-1), style=wx.SP_ARROW_KEYS)
         self.rotation.SetRange(-360, 360)
         self.rotation.SetValue(int(self.currRot))
-        box.Add(self.rotation, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        box.Add(item=self.rotation,
+                flag=wx.ALIGN_RIGHT,
+                pos=(1, 1))
 
+        # font
+        fontbtn = wx.Button(parent=self, id=wx.ID_ANY, label=_("Set font"))
+        box.Add(item=fontbtn,
+                flag=wx.ALIGN_RIGHT,
+                pos=(2, 1))
+
+        sizer.Add(item=box, proportion=1,
+                  flag=wx.ALL, border=10)
+
+        # note
         box = wx.BoxSizer(wx.HORIZONTAL)
-        fontbtn = wx.Button(self, wx.ID_ANY, "Set font")
-        box.Add(fontbtn, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        label = wx.StaticText(parent=self, id=wx.ID_ANY,
+                              label=_("Drag text with mouse in pointer mode "
+                                      "to position.\nDouble-click to change options"))
+        box.Add(item=label, proportion=0,
+                flag=wx.ALIGN_CENTRE | wx.ALL, border=5)
+        sizer.Add(item=box, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_CENTER | wx.ALL, border=5)
 
-        box = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, wx.ID_ANY, ("Drag text with mouse in pointer mode\nto position. Double-click to change options"))
-        box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
-        sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
-
-        line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
-        sizer.Add(line, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.RIGHT|wx.TOP, 5)
+        line = wx.StaticLine(parent=self, id=wx.ID_ANY,
+                             size=(20,-1), style=wx.LI_HORIZONTAL)
+        sizer.Add(item=line, proportion=0,
+                  flag=wx.EXPAND | wx.ALIGN_CENTRE | wx.ALL, border=5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
-        btn = wx.Button(self, wx.ID_OK)
+        btn = wx.Button(parent=self, id=wx.ID_OK)
         btn.SetDefault()
         btnsizer.AddButton(btn)
 
-        btn = wx.Button(self, wx.ID_CANCEL)
+        btn = wx.Button(parent=self, id=wx.ID_CANCEL)
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        sizer.Add(item=btnsizer, proportion=0,
+                  flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
 
         self.SetSizer(sizer)
         sizer.Fit(self)
@@ -383,8 +438,6 @@ class TextLayerDialog(wx.Dialog):
     def OnRotation(self, event):
         """Change rotation"""
         self.currRot = event.GetInt()
-        Debug.msg (5, "TextDialog.OnRotation(): rotation=%f" % \
-               self.currRot)
 
         event.Skip()
 
@@ -408,3 +461,8 @@ class TextLayerDialog(wx.Dialog):
             self.Layout()
 
         dlg.Destroy()
+
+    def GetValues(self):
+        """Get text properties"""
+        return (self.currText, self.currFont,
+                self.currClr, self.currRot)
