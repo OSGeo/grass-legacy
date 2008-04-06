@@ -48,8 +48,8 @@ int get_circle (FILE *fd, struct Categories *labels)
     if (!get_point (&cx, &cy, east, north))
 	return 0;
 
-    px = cx+10;
-    py = cy+10;
+    px = cx;
+    py = cy;
     first = 1;
     do
     {
