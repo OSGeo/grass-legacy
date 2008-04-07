@@ -274,6 +274,11 @@ class DecorationDialog(wx.Dialog):
         # create overlay if doesn't exist
         self._CreateOverlay()
 
+        if self.parent.MapWindow.overlays[self.ovlId]['params']:
+            for p in self.parent.MapWindow.overlays[self.ovlId]['params']['params']:
+                if p.get('name', '') == 'map' and p.get('value', '') != '':
+                    self.btnOK.Enable()
+        
     def _CreateOverlay(self):
         if not self.parent.Map.GetOverlay(self.ovlId):
             overlay = self.parent.Map.AddOverlay(id=self.ovlId, type=self.name,
@@ -282,7 +287,7 @@ class DecorationDialog(wx.Dialog):
 
             self.parent.MapWindow.overlays[self.ovlId] = {}
             self.parent.MapWindow.overlays[self.ovlId] = { 'layer' : overlay,
-                                                           'params' : '',
+                                                           'params' : None,
                                                            'propwin' : None,
                                                            'cmd' : [self.cmd],
                                                            'coords': (10, 10),
