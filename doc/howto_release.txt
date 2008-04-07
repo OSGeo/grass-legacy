@@ -170,6 +170,7 @@ Contents
    admin@cartographyonline.com
    redazionenews@mondogis.net
    mfeilner@linuxnewmedia.de
+   info@harzer.de
 
  Web:
    http://slashgeo.org/submit.pl
