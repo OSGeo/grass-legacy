@@ -1138,7 +1138,7 @@ class VDigit(AbstractDigit):
     def Undo(self, level=-1):
         """Undo action
 
-        @param level levels to undo
+        @param level levels to undo (0 to revert all)
 
         @return id of current changeset
         """
@@ -1674,7 +1674,17 @@ class DigitSettingsDialog(wx.Dialog):
         flexSizer.Add(units, proportion=0, flag=wx.ALIGN_RIGHT | wx.FIXED_MINSIZE | wx.ALIGN_CENTER_VERTICAL | wx.LEFT,
                       border=10)
         sizer.Add(item=flexSizer, proportion=0, flag=wx.EXPAND)
-        
+        border.Add(item=sizer, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
+
+        #
+        # save-on-exit box
+        #
+        box   = wx.StaticBox (parent=panel, id=wx.ID_ANY, label=" %s " % _("Save changes"))
+        # save changes on exit?
+        sizer = wx.StaticBoxSizer(box, wx.VERTICAL)
+        self.save = wx.CheckBox(parent=panel, label=_("Save changes on exit automatically"))
+        self.save.SetValue(UserSettings.Get(group='vdigit', key='saveOnExit', subkey='enabled'))
+        sizer.Add(item=self.save, proportion=0, flag=wx.ALL | wx.EXPAND, border=1)
         border.Add(item=sizer, proportion=0, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=5)
 
         panel.SetSizer(border)
@@ -2018,6 +2028,9 @@ class DigitSettingsDialog(wx.Dialog):
                                            value=self.FindWindowById(self.selectFeature[feature]).IsChecked())
         UserSettings.Set(group='vdigit', key="selectThresh", subkey='value', value=int(self.selectThreshValue.GetValue()))
 
+        # on-exit
+        UserSettings.Set(group='vdigit', key="saveOnExit", subkey='enabled', value=self.save.IsChecked())
+        
         # update driver settings
         self.parent.digit.driver.UpdateSettings()
 

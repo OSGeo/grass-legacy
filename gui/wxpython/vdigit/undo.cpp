@@ -20,7 +20,9 @@
 #include "digit.h"
 
 /**
-   \brief Undo/Redo operations
+   \brief Undo/Redo changes in geometry
+
+   level=0 to revert all changes
 
    \param level level for undo/redo
 
@@ -44,7 +46,12 @@ int Digit::Undo(int level)
 	changesetCurrent = 0;
     }
 
-    G_debug(2, "Digit.Undo(): changeset_last=%d changeset_dead=%d, changeset_current=%d, level=%d",
+    if (level == 0) {
+	/* 0 -> undo all */
+	level = changesetDead - changesetCurrent;
+    }
+
+    G_debug(0, "Digit.Undo(): changeset_last=%d changeset_dead=%d, changeset_current=%d, level=%d",
 	    changesetLast, changesetDead, changesetCurrent, level);
     
     if (level < 0) { /* undo */
