@@ -506,7 +506,7 @@ class GMFrame(wx.Frame):
                                                     "Do you want to store current settings "
                                                     "to workspace file?"),
                                     caption=_("Save current settings?"),
-                                    style=wxYES_NO | wxYES_DEFAULT | wx.ICON_QUESTION)
+                                    style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
              if dlg.ShowModal() == wx.ID_YES:
                  self.OnWorkspaceSaveAs()
              dlg.Destroy()
@@ -680,8 +680,8 @@ class GMFrame(wx.Frame):
         if os.path.exists(filename):
             dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
                                                    "Do you want to overwrite this file?") % filename,
-                                   caption=_("Warning"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
-            if dlg.ShowModal() != wx.ID_OK:
+                                   caption=_("Warning"), style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+            if dlg.ShowModal() != wx.ID_YES:
                 dlg.Destroy()
                 return False
 
@@ -698,8 +698,8 @@ class GMFrame(wx.Frame):
             dlg = wx.MessageDialog(self, message=_("Workspace file <%s> already exists. "
                                                    "Do you want to overwrite this file?") % \
                                        self.workspaceFile,
-                                   caption=_("Warning"), style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
-            if dlg.ShowModal() != wx.ID_OK:
+                                   caption=_("Warning"), style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+            if dlg.ShowModal() == wx.ID_NO:
                 dlg.Destroy()
             else:
                 Debug.msg(4, "GMFrame.OnWorkspaceSave(): filename=%s" % self.workspaceFile)
