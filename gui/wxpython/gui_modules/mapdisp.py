@@ -245,7 +245,6 @@ class BufferedWindow(wx.Window):
         
         if img and pdctype == 'image':
             # self.imagedict[img]['coords'] = coords
-            pdc.SetId(self.imagedict[img]['id'])
             self.select[self.imagedict[img]['id']] = False # ?
 
         pdc.BeginDrawing()
@@ -262,6 +261,10 @@ class BufferedWindow(wx.Window):
         Debug.msg (5, "BufferedWindow.Draw(): id=%s, pdctype=%s, coord=%s" % \
                        (drawid, pdctype, coords))
 
+        # set PseudoDC id
+        if drawid:
+            pdc.SetId(drawid)
+        
         if pdctype == 'clear': # erase the display
             bg = wx.WHITE_BRUSH
             # bg = wx.Brush(self.GetBackgroundColour())
@@ -1811,7 +1814,6 @@ class BufferedWindow(wx.Window):
         self.Refresh()
 
         return exit
-
 
     def Pixel2Cell(self, (x, y)):
         """
