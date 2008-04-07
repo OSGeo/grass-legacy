@@ -31,7 +31,7 @@ Digit::Digit(DisplayDriver *ddriver)
     }
 
     changesetCurrent = -2; // initial value for undo/redo
-    changesetDead = -2;
+    changesetDead = -1;
 
     // avoid GUI crash
     // Vect_set_fatal_error(GV_FATAL_PRINT);

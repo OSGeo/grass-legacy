@@ -28,6 +28,7 @@ import gdialogs
 from digit import DigitSettingsDialog as DigitSettingsDialog
 from debug import Debug as Debug
 from icon import Icons as Icons
+from preferences import globalSettings as UserSettings
 
 gmpath = os.path.join(globalvar.ETCWXDIR, "icons")
 sys.path.append(gmpath)
@@ -752,14 +753,26 @@ class DigitToolbar(AbstractToolbar):
             self.layerSelectedID = None
             Debug.msg (4, "DigitToolbar.StopEditing(): layer=%s" % \
                        (layerSelected.name))
-            self.combo.SetValue ('Select vector map')
+            self.combo.SetValue (_('Select vector map'))
+
+            # save changes (only for vdigit)
+            if UserSettings.Get(group='advanced', key='digitInterface', subkey='type') == 'vdigit':
+                if UserSettings.Get(group='vdigit', key='saveOnExit', subkey='enabled') is False:
+                    dlg = wx.MessageDialog(parent=self.parent, message=_("Do you want to save changes "
+                                                                         "to vector map <%s>?") % layerSelected.name,
+                                           caption=_("Save changes?"),
+                                           style=wx.YES_NO | wx.YES_DEFAULT | wx.ICON_QUESTION)
+                    if dlg.ShowModal() == wx.ID_NO:
+                        # revert changes
+                        self.parent.digit.Undo(0)
+                    dlg.Destroy()
+
+            self.parent.digit.SetMapName(None) # -> close map
 
             # re-active layer 
             item = self.parent.tree.FindItemByData('maplayer', layerSelected)
             if item and self.parent.tree.IsItemChecked(item):
                 self.mapcontent.ChangeLayerActive(layerSelected, True)
-
-            self.parent.digit.SetMapName(None)
 
             # change cursor
             self.parent.MapWindow.SetCursor(self.parent.cursors["default"])

@@ -130,6 +130,8 @@ class Settings:
                 'selectFeatureCentroid' : { 'enabled' : True },
                 'selectFeatureBoundary' : { 'enabled' : True },
                 'selectThresh'          : { 'value' : 10, 'units' : 'screen pixels'},
+                # exit
+                'saveOnExit'            : { 'enabled' : False },
                 }
             }
 

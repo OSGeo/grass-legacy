@@ -506,8 +506,8 @@ class GMFrame(wx.Frame):
                                                     "Do you want to store current settings "
                                                     "to workspace file?"),
                                     caption=_("Save current settings?"),
-                                    style=wx.OK | wx.CANCEL | wx.ICON_QUESTION)
-             if dlg.ShowModal() == wx.ID_OK:
+                                    style=wxYES_NO | wxYES_DEFAULT | wx.ICON_QUESTION)
+             if dlg.ShowModal() == wx.ID_YES:
                  self.OnWorkspaceSaveAs()
              dlg.Destroy()
 
