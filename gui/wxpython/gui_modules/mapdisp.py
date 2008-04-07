@@ -262,7 +262,7 @@ class BufferedWindow(wx.Window):
                        (drawid, pdctype, coords))
 
         # set PseudoDC id
-        if drawid:
+        if drawid is not None:
             pdc.SetId(drawid)
         
         if pdctype == 'clear': # erase the display
