@@ -634,7 +634,7 @@ class GMFrame(wx.Frame):
 
     def OnWorkspaceLoad(self, event=None):
         """Load given map layers into layer tree"""
-        dialog = wxgui_utils.LoadMapLayersDialog(parent=self, title=_("Load map layers into layer tree"))
+        dialog = gdialogs.LoadMapLayersDialog(parent=self, title=_("Load map layers into layer tree"))
 
         if dialog.ShowModal() == wx.ID_OK:
             # start new map display if no display is available
