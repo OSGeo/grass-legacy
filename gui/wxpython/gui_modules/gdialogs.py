@@ -8,6 +8,7 @@ List of classes:
  - SavedRegion
  - DecorationDialog
  - TextLayerDialog 
+ - LoadMapLayersDialog
 
 (C) 2008 by the GRASS Development Team
 
@@ -19,6 +20,7 @@ for details.
 """
 
 import sys
+import re
 
 import wx
 
@@ -478,3 +480,201 @@ class TextLayerDialog(wx.Dialog):
         """Get text properties"""
         return (self.currText, self.currFont,
                 self.currClr, self.currRot)
+
+class LoadMapLayersDialog(wx.Dialog):
+    """Load selected map layers (raster, vector) into layer tree"""
+    def __init__(self, parent, title, style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER):
+        wx.Dialog.__init__(self, parent=parent, id=wx.ID_ANY, title=title, style=style)
+
+        self.parent = parent # GMFrame
+
+        #
+        # dialog body
+        #
+        self.bodySizer = self.__createDialogBody()
+        # update list of layer to be loaded
+        self.map_layers = [] # list of map layers (full list type/mapset)
+        self.LoadMapLayers(self.layerType.GetStringSelection()[:4],
+                           self.mapset.GetStringSelection())
+        #
+        # buttons
+        #
+        btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnOk = wx.Button(self, wx.ID_OK, _("Load") )
+        btnOk.SetDefault()
+
+        #
+        # bindigs
+        #
+        #btnOk.Bind(wx.EVT_BUTTON, self.OnOK)
+        #btnCancel.Bind(wx.EVT_BUTTON, self.OnCancel)
+
+        #
+        # sizers & do layout
+        #
+        btnSizer = wx.StdDialogButtonSizer()
+        btnSizer.AddButton(btnCancel)
+        btnSizer.AddButton(btnOk)
+        btnSizer.Realize()
+        
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        mainSizer.Add(item=self.bodySizer, proportion=1,
+                      flag=wx.EXPAND | wx.ALL, border=5)
+        mainSizer.Add(item=btnSizer, proportion=0,
+                      flag=wx.EXPAND | wx.ALL | wx.ALIGN_CENTER, border=5)
+
+        self.SetSizer(mainSizer)
+        mainSizer.Fit(self)
+
+        # set dialog min size
+        self.SetMinSize(self.GetSize())
+        
+    def __createDialogBody(self):
+        bodySizer = wx.GridBagSizer(vgap=3, hgap=3)
+        bodySizer.AddGrowableCol(1)
+        bodySizer.AddGrowableRow(3)
+        
+        # layer type
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Map layer type:")),
+                      flag=wx.ALIGN_CENTER_VERTICAL,
+                      pos=(0,0))
+
+        self.layerType = wx.Choice(parent=self, id=wx.ID_ANY,
+                                   choices=['raster', 'vector'], size=(100,-1))
+        self.layerType.SetSelection(0)
+        bodySizer.Add(item=self.layerType,
+                      pos=(0,1))
+        
+        # mapset filter
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Mapset:")),
+                      flag=wx.ALIGN_CENTER_VERTICAL,
+                      pos=(1,0))
+
+        self.mapset = wx.ComboBox(parent=self, id=wx.ID_ANY,
+                                  style=wx.CB_SIMPLE | wx.CB_READONLY,
+                                  choices=UserSettings.Get(group='general', key='mapsetPath', subkey='value', internal=True),
+                                  size=(250,-1))
+        self.mapset.SetStringSelection(grassenv.GetGRASSVariable("MAPSET"))
+        bodySizer.Add(item=self.mapset,
+                      pos=(1,1))
+
+        # map name filter
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("Filter:")),
+                      flag=wx.ALIGN_CENTER_VERTICAL,
+                      pos=(2,0))
+
+        self.filter = wx.TextCtrl(parent=self, id=wx.ID_ANY,
+                                  value="",
+                                  size=(250,-1))
+        bodySizer.Add(item=self.filter,
+                      flag=wx.EXPAND,
+                      pos=(2,1))
+
+        # layer list 
+        bodySizer.Add(item=wx.StaticText(parent=self, label=_("List of maps:")),
+                      flag=wx.ALIGN_CENTER_VERTICAL | wx.ALIGN_TOP,
+                      pos=(3,0))
+        self.layers = wx.CheckListBox(parent=self, id=wx.ID_ANY,
+                                      size=(250, 100),
+                                      choices=[])
+        bodySizer.Add(item=self.layers,
+                      flag=wx.EXPAND,
+                      pos=(3,1))
+
+        # bindings
+        self.layerType.Bind(wx.EVT_CHOICE, self.OnChangeParams)
+        self.mapset.Bind(wx.EVT_COMBOBOX, self.OnChangeParams)
+        self.layers.Bind(wx.EVT_RIGHT_DOWN, self.OnMenu)
+        self.filter.Bind(wx.EVT_TEXT, self.OnFilter)
+        return bodySizer
+
+    def LoadMapLayers(self, type, mapset):
+        """Load list of map layers
+
+        @param type layer type ('raster' or 'vector')
+        @param mapset mapset name
+        """
+        list = gcmd.Command(['g.mlist',
+                             'type=%s' % type,
+                             'mapset=%s' % mapset])
+
+        self.map_layers = []
+        for map in list.ReadStdOutput():
+            self.map_layers.append(map)
+            
+        self.layers.Set(self.map_layers)
+        
+        # check all items by default
+        for item in range(self.layers.GetCount()):
+            self.layers.Check(item)
+
+    def OnChangeParams(self, event):
+        """Filter parameters changed by user"""
+        # update list of layer to be loaded
+        self.LoadMapLayers(self.layerType.GetStringSelection()[:4],
+                           self.mapset.GetStringSelection())
+    
+        event.Skip()
+
+    def OnMenu(self, event):
+        """Table description area, context menu"""
+        if not hasattr(self, "popupID1"):
+            self.popupDataID1 = wx.NewId()
+            self.popupDataID2 = wx.NewId()
+
+            self.Bind(wx.EVT_MENU, self.OnSelectAll,   id=self.popupDataID1)
+            self.Bind(wx.EVT_MENU, self.OnDeselectAll, id=self.popupDataID2)
+
+        # generate popup-menu
+        menu = wx.Menu()
+        menu.Append(self.popupDataID1, _("Select all"))
+        menu.Append(self.popupDataID2, _("Deselect all"))
+
+        self.PopupMenu(menu)
+        menu.Destroy()
+
+    def OnSelectAll(self, event):
+        """Select all map layer from list"""
+        for item in range(self.layers.GetCount()):
+            self.layers.Check(item, True)
+
+    def OnDeselectAll(self, event):
+        """Select all map layer from list"""
+        for item in range(self.layers.GetCount()):
+            self.layers.Check(item, False)
+
+    def OnFilter(self, event):
+        """Apply filter for map names"""
+        if len(event.GetString()) == 0:
+           self.layers.Set(self.map_layers) 
+           return 
+
+        list = []
+        for layer in self.map_layers:
+            if re.compile('^' + event.GetString()).search(layer):
+                list.append(layer)
+
+        self.layers.Set(list)
+
+        event.Skip()
+
+    def GetMapLayers(self):
+        """Return list of checked map layers"""
+        layerNames = []
+        for indx in self.layers.GetSelections():
+            # layers.append(self.layers.GetStringSelec(indx))
+            pass
+
+        # return fully qualified map names
+        mapset = self.mapset.GetStringSelection()
+        for item in range(self.layers.GetCount()):
+            if not self.layers.IsChecked(item):
+                continue
+            layerNames.append(self.layers.GetString(item) + '@' + mapset)
+
+        return layerNames
+    
+    def GetLayerType(self):
+        """Get selected layer type"""
+        return self.layerType.GetStringSelection()
+    
