@@ -832,7 +832,7 @@ class Map(object):
         if overlay:
             list = self.overlays
         else:
-            list = self.list
+            list = self.layers
 
         if layer in list:
             if layer.mapfile:
