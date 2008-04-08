@@ -66,7 +66,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         ### SetAutoLayout() causes that no vertical scrollbar is displayed
         ### when some layers are not visible in layer tree
-        self.SetAutoLayout(True)
+        # self.SetAutoLayout(True)
         self.SetGradientStyle(1)
         self.EnableSelectionGradient(True)
         self.SetFirstGradientColour(wx.Colour(100, 100, 100))
