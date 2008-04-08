@@ -1635,6 +1635,9 @@ class AttributeManager(wx.Frame):
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         cats = list.GetSelectedItems() # FIXME: category can be hiden in list
 
+        if self.mapdisplay.Map.GetLayerIndex(self.qlayer) < 0:
+            self.qlayer = None
+            
         if self.qlayer:
             self.qlayer.SetCmd(self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats, addLayer=False))
         else:

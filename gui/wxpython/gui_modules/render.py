@@ -73,6 +73,8 @@ class Layer(object):
         self.hidden  = hidden
         self.opacity = opacity
 
+        self.force_render = True
+        
         Debug.msg (3, "Layer.__init__(): type=%s, cmd='%s', name=%s, " \
                        "active=%d, opacity=%d, hidden=%d" % \
                        (self.type, self.GetCmd(string=True), self.name, self.active,
@@ -158,6 +160,8 @@ class Layer(object):
         else:
             os.unsetenv("GRASS_PNGFILE")
 
+        self.force_render = False
+        
         return self.mapfile
 
     def GetCmd(self, string=False):
@@ -198,6 +202,9 @@ class Layer(object):
         """Set new command for layer"""
         self.cmdlist = cmd
         Debug.msg(3, "Layer.SetCmd(): cmd='%s'" % self.GetCmd(string=True))
+
+        # for re-rendering
+        self.force_render = True
         
 class MapLayer(Layer):
     """Represents map layer in the map canvas"""
@@ -720,9 +727,12 @@ class Map(object):
                 continue
             
             # render if there is no mapfile
-            if layer.mapfile == None or \
-                   (not os.path.isfile(layer.mapfile) or not os.path.getsize(layer.mapfile)):
-                layer.Render()
+            if force or \
+               layer.force_render or \
+               layer.mapfile == None or \
+               (not os.path.isfile(layer.mapfile) or not os.path.getsize(layer.mapfile)):
+                if not layer.Render():
+                    continue
                     
             # update process bar
             if mapWindow is not None:
@@ -730,11 +740,6 @@ class Map(object):
 
             wx.Yield()
             
-            # redraw layer content
-            if force:
-                if not layer.Render():
-                    continue
-
             # add image to compositing list
             if layer.type != "overlay":
                 maps.append(layer.mapfile)
@@ -974,20 +979,25 @@ class Map(object):
 
         return None
 
-    def GetLayerIndex(self, layer):
+    def GetLayerIndex(self, layer, overlay=False):
         """
         Get index of layer in layer list.
 
         @param layer layer instace in layer tree
-
+        @param overlay use list of overlays instead
+        
         @return layer index
-        @return None
+        @return -1 if layer not found
         """
-
-        if layer in self.layers:
-            return self.layers.index(layer)
+        if overlay:
+            list = self.overlay
         else:
-            return None
+            list = self.layers
+            
+        if layer in list:
+            return list.index(layer)
+
+        return -1
 
     def AddOverlay(self, id, type, command,
                    l_active=True, l_hidden=True, l_opacity=1.0, l_render=False):
