@@ -1036,7 +1036,10 @@ class cmdPanel(wx.Panel):
                 if p.get('multiple','yes') == 'yes' or \
                         p.get('type','string') == 'string':
                     txt3 = wx.TextCtrl(parent=which_panel, value = p.get('default',''),
-                                   size=globalvar.DIALOG_TEXTCTRL_SIZE)
+                                       size=globalvar.DIALOG_TEXTCTRL_SIZE)
+                    if p.get('value','') != '':
+                        txt3.SetValue(str(p['value'])) # parameter previously set
+
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                 else:
                     minValue = -1e9
@@ -1044,12 +1047,12 @@ class cmdPanel(wx.Panel):
                     txt3 = wx.SpinCtrl(parent=which_panel, value=p.get('default',''),
                                        size=globalvar.DIALOG_SPIN_SIZE,
                                        min=minValue, max=maxValue)
+                    if p.get('value','') != '':
+                        txt3.SetValue(int(p['value'])) # parameter previously set
+
                     txt3.Bind(wx.EVT_SPINCTRL, self.OnSetValue)
                     txt3.Bind(wx.EVT_TEXT, self.OnSetValue)
                     
-                if p.get('value','') != '':
-                    txt3.SetValue(p['value']) # parameter previously set
-
                 which_sizer.Add(item=txt3, proportion=0, flag=wx.BOTTOM | wx.LEFT, border=5)
                 p['wxId'] = txt3.GetId()
 
