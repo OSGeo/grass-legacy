@@ -556,7 +556,7 @@ class BufferedWindow(wx.Window):
             render = True
 
         #
-        # initialize process bar
+        # initialize process bar (only on 'render')
         #
         if render is True or renderVector is True:
             self.parent.onRenderGauge.Show()
@@ -575,8 +575,11 @@ class BufferedWindow(wx.Window):
                 # use computation region resolution for rendering
                 windres = True
             self.mapfile = self.Map.Render(force=True, mapWindow=self.parent, windres=windres)
-            self.img = self.GetImage() # id=99
-
+        else:
+            self.mapfile = self.Map.Render(force=False, mapWindow=self.parent)
+            
+        self.img = self.GetImage() # id=99
+            
         #
         # clear pseudoDcs
         #
@@ -2989,19 +2992,20 @@ class MapFrame(wx.Frame):
         if self.dialogs['attributes'].mapDBInfo and line:
             # highlight feature & re-draw map
             if qlayer:
-                qlayer.cmdlist = self.AddTmpVectorMapLayer(mapName, line,
-                                                           useId=True,
-                                                           addLayer=False)
+                qlayer.SetCmd(self.AddTmpVectorMapLayer(mapName, line,
+                                                        useId=True,
+                                                        addLayer=False))
             else:
                 self.AddTmpVectorMapLayer(mapName, line, useId=True)
-            self.MapWindow.UpdateMap(render=True)
+
+            self.MapWindow.UpdateMap(render=False, renderVector=False)
             # digitClass.driver.SetSelected([line])
             if not self.dialogs['attributes'].IsShown():
                 self.dialogs['attributes'].Show()
         else:
             if qlayer:
                 self.Map.DeleteLayer(qlayer)
-                self.MapWindow.UpdateMap(render=True)
+                self.MapWindow.UpdateMap(render=False, renderVector=False)
             if self.dialogs['attributes'].IsShown():
                 self.dialogs['attributes'].Hide()
 
@@ -3028,10 +3032,11 @@ class MapFrame(wx.Frame):
         @param name name of map layer
         @param useId use feature id instead of category 
         """
+        # color settings from ATM
         color = UserSettings.Get(group='atm', key='highlight', subkey='color')
         colorStr = str(color[0]) + ":" + \
         str(color[1]) + ":" + \
-        str(color[2]) + ":"
+        str(color[2])
 
         cmd = ["d.vect",
                "map=%s" % name,

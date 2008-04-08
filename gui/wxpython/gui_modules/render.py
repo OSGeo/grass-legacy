@@ -95,8 +95,8 @@ class Layer(object):
         if len(self.cmdlist) == 0:
             return None
 
-        Debug.msg (3, "Layer.Render(): type=%s" % \
-                       (self.type))
+        Debug.msg (3, "Layer.Render(): type=%s, name=%s" % \
+                       (self.type, self.name))
 
         #
         # to be sure, set temporary file with layer and mask
@@ -193,7 +193,12 @@ class Layer(object):
     def SetActive(self, enable=True):
         """Active or deactive layer"""
         self.active = enable
-            
+
+    def SetCmd(self, cmd):
+        """Set new command for layer"""
+        self.cmdlist = cmd
+        Debug.msg(3, "Layer.SetCmd(): cmd='%s'" % self.GetCmd(string=True))
+        
 class MapLayer(Layer):
     """Represents map layer in the map canvas"""
     def __init__(self, type, cmd, name=None,
@@ -710,19 +715,21 @@ class Map(object):
 
         # render map layers
         for layer in self.layers + self.overlays:
-            # skip if not active
+            # skip dead or disabled map layers
             if layer == None or layer.active == False:
                 continue
             
             # render if there is no mapfile
-            if layer.mapfile == None:
+            if layer.mapfile == None or \
+                   (not os.path.isfile(layer.mapfile) or not os.path.getsize(layer.mapfile)):
                 layer.Render()
                     
-            # process bar
+            # update process bar
             if mapWindow is not None:
                 mapWindow.onRenderCounter += 1
 
             wx.Yield()
+            
             # redraw layer content
             if force:
                 if not layer.Render():
