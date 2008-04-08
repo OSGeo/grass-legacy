@@ -967,11 +967,9 @@ class AttributeManager(wx.Frame):
     def OnDataDrawSelected(self, event):
         """Reload table description"""
         if self.map and self.mapdisplay:
-            # list.lastTurnSelectedCats[:] != list.selectedCats[:]:
-
             # add map layer with higlighted vector features
             self.AddQueryMapLayer()
-            self.mapdisplay.MapWindow.UpdateMap(render=True)
+            self.mapdisplay.MapWindow.UpdateMap(render=False, renderVector=False)
 
         event.Skip()
 
@@ -1634,13 +1632,13 @@ class AttributeManager(wx.Frame):
 
         Return True if map has been redrawn, False if no map is given
         """
-        if self.qlayer:
-            self.mapdisplay.Map.DeleteLayer(self.qlayer)
-
         list = self.FindWindowById(self.layerPage[self.layer]['data'])
         cats = list.GetSelectedItems() # FIXME: category can be hiden in list
 
-        self.qlayer = self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats)
+        if self.qlayer:
+            self.qlayer.SetCmd(self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats, addLayer=False))
+        else:
+            self.qlayer = self.mapdisplay.AddTmpVectorMapLayer(self.vectmap, cats)
                 
     def UpdateDialog(self, layer):
         """Updates dialog layout for given layer"""
