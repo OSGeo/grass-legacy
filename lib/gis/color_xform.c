@@ -165,7 +165,7 @@ int G_log_colors(
 	x = exp(lx);
 
 	if (i > 0)
-	    G_add_color_rule(prev, red, grn, blu, x, red2, grn2, blu2, dst);
+	    G_add_d_raster_color_rule(&prev, red, grn, blu, &x, red2, grn2, blu2, dst);
 
 	prev = x;
 
