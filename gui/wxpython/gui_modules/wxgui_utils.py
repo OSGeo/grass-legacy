@@ -454,9 +454,11 @@ class LayerTree(CT.CustomTreeCtrl):
                     layer = self.AppendItem(parentId=self.root,
                                             text='', ct_type=1, wnd=ctrl)
                 elif lgroup is None or lgroup is True:
-                    # insert item on given position
+                    # insert item as last child
                     parent = self.GetItemParent(self.layer_selected)
-                    layer = self.InsertItem(parentId=parent, input=self.GetPrevSibling(self.layer_selected),
+                    # layer = self.InsertItem(parentId=parent, input=self.GetPrevSibling(self.layer_selected),
+                    #                        text='', ct_type=1, wnd=ctrl)
+                    layer = self.AppendItem(parentId=parent,
                                             text='', ct_type=1, wnd=ctrl)
 
             else: # group (first child of self.layer_selected)
