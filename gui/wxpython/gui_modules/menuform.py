@@ -962,18 +962,20 @@ class cmdPanel(wx.Panel):
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.VERTICAL )
                     else:
                         hSizer=wx.StaticBoxSizer ( box=txt, orient=wx.HORIZONTAL )
-                    isDefault = {}
+                    isEnabled = {}
                     # copy default values
-                    p['value'] = p.get('default', '')
-                    for defval in p.get('default', '').split(','):
-                        isDefault[ defval ] = 'yes'
+                    if p['value'] == '':
+                        p['value'] = p.get('default', '')
+                        
+                    for defval in p.get('value', '').split(','):
+                        isEnabled[ defval ] = 'yes'
                         # for multi checkboxes, this is an array of all wx IDs
                         # for each individual checkbox
                         p[ 'wxId' ] = []
                     for val in valuelist:
                         chkbox = wx.CheckBox( parent=which_panel, label = text_beautify(val) )
                         p[ 'wxId' ].append( chkbox.GetId() )
-                        if isDefault.has_key(val):
+                        if isEnabled.has_key(val):
                             chkbox.SetValue( True )
                         hSizer.Add( item=chkbox, proportion=0,
                                     flag=wx.ADJUST_MINSIZE | wx.ALL, border=1 )
