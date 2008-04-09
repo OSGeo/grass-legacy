@@ -15,6 +15,7 @@
  */
 
 #include <assert.h>
+#include <string.h>
 #define MAIN
 #include "globals.h"
 
