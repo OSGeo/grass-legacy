@@ -41,6 +41,11 @@ class Data:
                                  "self.OnWorkspaceLoad",
                                  ""),
 
+                                (_("Load GRC file (Tcl/Tk GUI)"),
+                                 _("Load map layers from GRC file to layer tree (not fully implemented)"),
+                                 "self.OnWorkspaceLoadGrcFile",
+                                 ""),
+
                                 (_("Save workspace"),
                                  _("Save current workspace to file"),
                                  "self.OnWorkspaceSave",

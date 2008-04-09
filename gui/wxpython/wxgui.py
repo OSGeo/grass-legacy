@@ -660,6 +660,43 @@ class GMFrame(wx.Frame):
 
             busy.Destroy()
 
+    def OnWorkspaceLoadGrcFile(self, event):
+        """Load map layers from GRC file (Tcl/Tk GUI) into map layer tree"""
+        dlg = wx.FileDialog(parent=self, message=_("Choose GRC file to load"),
+                            defaultDir=os.getcwd(), wildcard="*.grc")
+
+        filename = ''
+        if dlg.ShowModal() == wx.ID_OK:
+            filename = dlg.GetPath()
+
+        if filename == '':
+            return
+
+        Debug.msg(4, "GMFrame.OnWorkspaceLoadGrcFile(): filename=%s" % filename)
+
+        # start new map display if no display is available
+        if not self.curr_page:
+            self.NewDisplay()
+
+        busy = wx.BusyInfo(message=_("Please wait, loading map layers into layer tree..."),
+                           parent=self)
+        wx.Yield()
+
+        for layer in workspace.ProcessGrcFile(filename).read(self):
+            maptree = self.gm_cb.GetPage(layer['display']).maptree
+            newItem = maptree.AddLayer(ltype=layer['type'],
+                                       lname=layer['name'],
+                                       lchecked=layer['checked'],
+                                       lopacity=layer['opacity'],
+                                       lcmd=layer['cmd'],
+                                       lgroup=layer['group'])
+
+            busy.Destroy()
+            
+        if maptree:
+            # reverse list of map layers
+            maptree.Map.ReverseListOfLayers()
+
     def OnWorkspaceSaveAs(self, event=None):
         """Save workspace definition to selected file"""
 
