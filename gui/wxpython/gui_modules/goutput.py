@@ -368,13 +368,13 @@ class GMStderr:
                     self.gmgauge.SetValue(0) # reset progress bar on '0%'
             elif 'GRASS_INFO_MESSAGE' in line:
                 type = 'message'
-                message += line.split(':')[1].strip()
+                message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_WARNING' in line:
                 type = 'warning'
-                message += line.split(':')[1].strip()
+                message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_ERROR' in line:
                 type = 'error'
-                message += line.split(':')[1].strip()
+                message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_END' in line:
                 message = ''
             else:
