@@ -161,8 +161,15 @@ int G_log_colors(
 	y = min + (max - min) * i / samples;
 	G_get_d_raster_color(&y, &red2, &grn2, &blu2, src);
 
-	lx = lmin + (lmax - lmin) * i / samples;
-	x = exp(lx);
+	if (i == 0)
+	    x = min;
+	else if (i == samples)
+	    x = max;
+	else
+	{
+	    lx = lmin + (lmax - lmin) * i / samples;
+	    x = exp(lx);
+	}
 
 	if (i > 0)
 	    G_add_d_raster_color_rule(&prev, red, grn, blu, &x, red2, grn2, blu2, dst);
