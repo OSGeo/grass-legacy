@@ -354,7 +354,9 @@ class GMStderr:
         s = s.replace('\n', os.linesep)
         # remove/replace escape sequences '\b' or '\r' from stream
         s = s.replace('\b', '').replace('\r', '%s' % os.linesep)
+        type = ''
         message = ''
+        printMessage = False
         for line in s.split(os.linesep):
             if len(line) == 0:
                 continue
@@ -368,16 +370,22 @@ class GMStderr:
                     self.gmgauge.SetValue(0) # reset progress bar on '0%'
             elif 'GRASS_INFO_MESSAGE' in line:
                 type = 'message'
+                if len(message) > 0:
+                    message += os.linesep
                 message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_WARNING' in line:
                 type = 'warning'
+                if len(message) > 0:
+                    message += os.linesep
                 message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_ERROR' in line:
                 type = 'error'
+                if len(message) > 0:
+                    message += os.linesep
                 message += line.split(':', 1)[1].strip()
             elif 'GRASS_INFO_END' in line:
-                message = ''
-            else:
+                printMessage = True
+            elif not type:
                 if len(line) > 0:
                     p1 = self.gmstc.GetCurrentPos()
                     self.gmstc.AddTextWrapped(line, wrap=60) # wrap && add os.linesep
@@ -385,14 +393,19 @@ class GMStderr:
                     p2 = self.gmstc.GetCurrentPos()
                     self.gmstc.StartStyling(p1, 0xff)
                     self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleUnknown)
+            elif len(line) > 0:
+                message += os.linesep + line.strip()
 
-            if len(message) > 0:
+            if printMessage and len(message) > 0:
                 p1 = self.gmstc.GetCurrentPos()
                 if type == 'warning':
                     message = 'WARNING: ' + message
                 elif type == 'error':
                     message = 'ERROR: ' + message
-                self.gmstc.AddTextWrapped(message, wrap=60) #wrap && add os.linesep
+                if '\n' not in message:
+                    self.gmstc.AddTextWrapped(message, wrap=60) #wrap && add os.linesep
+                else:
+                    self.gmstc.AddText(message + os.linesep)
                 self.gmstc.EnsureCaretVisible()
                 p2 = self.gmstc.GetCurrentPos()
                 self.gmstc.StartStyling(p1, 0xff)
@@ -402,6 +415,9 @@ class GMStderr:
                     self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleWarning)
                 elif type == 'message':
                     self.gmstc.SetStyling(p2 - p1 + 1, self.gmstc.StyleMessage)
+
+                type = ''
+                message = ''
 
 class GMStc(wx.stc.StyledTextCtrl):
     """Styled GMConsole
@@ -497,7 +513,7 @@ class GMStc(wx.stc.StyledTextCtrl):
             str = textwrap.fill(str, wrap) + os.linesep
         else:
             str += os.linesep
-            
+
         self.AddText(str)
 
     def SetWrap(self, wrap):
