@@ -38,8 +38,8 @@ main (int argc, char *argv[])
     char **tokens;
     int no_tokens;
     FILE *fp;
-	struct GModule *module;
-    struct Option *opt1, *opt2;
+    struct GModule *module;
+    struct Option *opt1, *opt2, *opt3;
     struct Flag *print;
     struct Flag *list;
 
@@ -65,6 +65,13 @@ main (int argc, char *argv[])
     opt2->required   = NO ;
     opt2->multiple   = YES ;
     opt2->description= _("Name(s) of existing mapset(s) to add to search list");
+
+    opt3 = G_define_option() ;
+    opt3->key        = "removemapset" ;
+    opt3->type       = TYPE_STRING ;
+    opt3->required   = NO ;
+    opt3->multiple   = YES ;
+    opt3->description= _("Name(s) of existing mapset(s) to remove from search list");
 
     list = G_define_flag();
     list->key = 'l';
@@ -128,6 +135,28 @@ main (int argc, char *argv[])
 	}
     }
 
+    /* remove from existing search path */
+    if (opt3->answer)
+    {
+	char *oldname;
+	Path[0] = '\0';
+	
+	/* read existing mapsets from SEARCH_PATH */
+        for (n = 0; (oldname = G__mapset_name(n)) ; n++)
+	{
+	    int found = 0;
+
+	    for (ptr = opt3->answers; *ptr; ptr++)
+		if (strcmp(oldname, *ptr) == 0)
+		    found = 1;
+
+	    if (found)
+		continue;
+
+	    strcat (Path, oldname);
+	    strcat (Path, " "); 
+	}
+    }
 
     /* stuffem sets nchoices*/
 
