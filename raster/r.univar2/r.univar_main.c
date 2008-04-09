@@ -183,12 +183,17 @@ process_raster (univar_stat *stats, int fd,
     const int cols = region->cols;
     int first = (stats->n < 1);
 
-    RASTER_MAP_TYPE map_type;
+    const RASTER_MAP_TYPE map_type = G_get_raster_map_type (fd);
+    void *nextp
+	= ((! param.extended->answer) ? 0
+	   : (map_type == DCELL_TYPE) ? stats->dcell_array
+	   : (map_type == FCELL_TYPE) ? stats->fcell_array
+	   : stats->cell_array);
+    const size_t value_sz = G_raster_size (map_type);
     unsigned int row;
     void *raster_row;
 
-    map_type = G_get_raster_map_type (fd);
-    raster_row = G_calloc(cols, G_raster_size(map_type));
+    raster_row = G_calloc (cols, value_sz);
 
     for (row = 0; row < rows; row++) {
 	void *ptr;
@@ -202,78 +207,37 @@ process_raster (univar_stat *stats, int fd,
 	for (col = 0; col < cols; col++) {
 
 	    if (G_is_null_value(ptr, map_type)) {
-		ptr = G_incr_void_ptr(ptr, G_raster_size(map_type));
+		ptr = G_incr_void_ptr (ptr, value_sz);
 		continue;
 	    }
 
+	    if (nextp) {
+		/* put the value into stats->XXXcell_array */
+		memcpy (nextp, ptr, value_sz);
+		nextp = G_incr_void_ptr (nextp, value_sz);
+	    }
 
-	    if (map_type == CELL_TYPE) {
-		const int val_i = *((CELL *) ptr);
+	    {
+		double val
+		    = ((map_type   == DCELL_TYPE) ? *((DCELL *) ptr)
+		       : (map_type == FCELL_TYPE) ? *((FCELL *) ptr)
+		       : *((CELL *) ptr));
 
-		stats->sum += val_i;
-		stats->sumsq += (double) val_i * val_i;
-		stats->sum_abs += abs(val_i);
-
-		if (param.extended->answer)
-		    stats->cell_array[stats->n] = val_i;
+		stats->sum += val;
+		stats->sumsq += val * val;
+		stats->sum_abs += fabs (val);
 
 		if (first) {
-		    stats->max = val_i;
-		    stats->min = val_i;
+		    stats->max = val;
+		    stats->min = val;
 		    first = FALSE;
-		}
-		else {
-		    if (val_i > stats->max)
-			stats->max = val_i;
-		    if (val_i < stats->min)
-			stats->min = val_i;
+		} else {
+		    if (val > stats->max) stats->max = val;
+		    if (val < stats->min) stats->min = val;
 		}
 	    }
-	    else if (map_type == FCELL_TYPE) {
-		const float val_f = *((FCELL *) ptr);
 
-		stats->sum += val_f;
-		stats->sumsq += (double) val_f * val_f;
-		stats->sum_abs += fabs(val_f);
-
-		if (param.extended->answer)
-		    stats->fcell_array[stats->n] = val_f;
-
-		if (first) {
-		    stats->max = val_f;
-		    stats->min = val_f;
-		    first = FALSE;
-		}
-		else {
-		    if (val_f > stats->max)
-			stats->max = val_f;
-		    if (val_f < stats->min)
-			stats->min = val_f;
-		}
-	    }
-	    else if (map_type == DCELL_TYPE) {
-		const double val_d = *((DCELL *) ptr);
-
-		stats->sum += val_d;
-		stats->sumsq += val_d * val_d;
-		stats->sum_abs += fabs(val_d);
-
-		if (param.extended->answer)
-		    stats->dcell_array[stats->n] = val_d;
-
-		if (first) {
-		    stats->max = val_d;
-		    stats->min = val_d;
-		    first = FALSE;
-		}
-		else {
-		    if (val_d > stats->max)
-			stats->max = val_d;
-		    if (val_d < stats->min)
-			stats->min = val_d;
-		}
-	    }
-	    ptr = G_incr_void_ptr(ptr, G_raster_size(map_type));
+	    ptr = G_incr_void_ptr (ptr, value_sz);
 	    stats->n++;
 	}
 	if (!(param.shell_style->answer))
