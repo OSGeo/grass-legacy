@@ -79,11 +79,11 @@ BIN_DIST_FILES = $(FILES) \
 	scripts
 
 default: builddemolocation
-	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
-	@echo "-------------------------"    >> $(GRASS_HOME)/error.log
-	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
-	@echo "--"                           >> $(GRASS_HOME)/error.log
-	@echo "Errors in:"                   >> $(GRASS_HOME)/error.log
+	@echo "GRASS GIS compilation log"     > $(ERRORLOG)
+	@echo "-------------------------"    >> $(ERRORLOG)
+	@echo "Started compilation: `date`"  >> $(ERRORLOG)
+	@echo "--"                           >> $(ERRORLOG)
+	@echo "Errors in:"                   >> $(ERRORLOG)
 	chmod 744 install-sh
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
@@ -93,19 +93,19 @@ default: builddemolocation
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.sh")
-	@if [ `cat "$(GRASS_HOME)/error.log" | wc -l` -gt 5 ] ; then \
-		echo "--"     >> $(GRASS_HOME)/error.log ; \
-		echo "In case of errors please change into the directory with error and run 'make'." >> $(GRASS_HOME)/error.log ; \
-		echo "If you get multiple errors, you need to deal with them in the order they"      >> $(GRASS_HOME)/error.log ; \
-		echo "appear in the error log. If you get an error building a library, you will"     >> $(GRASS_HOME)/error.log ; \
-		echo "also get errors from anything which uses the library."  >> $(GRASS_HOME)/error.log ; \
+	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 5 ] ; then \
+		echo "--"     >> $(ERRORLOG) ; \
+		echo "In case of errors please change into the directory with error and run 'make'." >> $(ERRORLOG) ; \
+		echo "If you get multiple errors, you need to deal with them in the order they"      >> $(ERRORLOG) ; \
+		echo "appear in the error log. If you get an error building a library, you will"     >> $(ERRORLOG) ; \
+		echo "also get errors from anything which uses the library."  >> $(ERRORLOG) ; \
 	else \
-		echo "No errors detected." >> $(GRASS_HOME)/error.log ; \
+		echo "No errors detected." >> $(ERRORLOG) ; \
 	fi
-	@echo "--"  >> $(GRASS_HOME)/error.log
-	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
-	@cat $(GRASS_HOME)/error.log
-	@if [ `cat "$(GRASS_HOME)/error.log" | wc -l` -gt 8 ] ; then false ; else true ; fi
+	@echo "--"  >> $(ERRORLOG)
+	@echo "Finished compilation: `date`" >> $(ERRORLOG)
+	@cat $(ERRORLOG)
+	@if [ `cat "$(ERRORLOG)" | wc -l` -gt 8 ] ; then false ; else true ; fi
 
 LIBDIRS = \
 	lib/external/shapelib \
@@ -181,7 +181,7 @@ libsclean: cleandistdirs
 
 distclean: clean
 	-rm -f config.cache config.log config.status config.status.${ARCH} 2>/dev/null
-	-rm -f ChangeLog ChangeLog.bak error.log grass.pc
+	-rm -f ChangeLog ChangeLog.bak $(ERRORLOG) grass.pc
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
 	-rm -f swig/perl/Makefile.PL swig/perl2/make.pl swig/python/Makefile 2>/dev/null
 
