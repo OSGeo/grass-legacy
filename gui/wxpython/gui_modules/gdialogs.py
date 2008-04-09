@@ -238,6 +238,9 @@ class DecorationDialog(wx.Dialog):
         label = wx.StaticText(parent=self, id=wx.ID_ANY,
                               label=_("Drag %s with mouse in pointer mode to position.\n"
                                       "Double-click to change options." % ctrltxt))
+        if self.name == 'legend':
+            label.SetLabel(label.GetLabel() + _('\nDefine raster map name for legend in '
+                                                'properties dialog.'))
         box.Add(item=label, proportion=0,
                 flag=wx.ALIGN_CENTRE|wx.ALL, border=5)
         sizer.Add(item=box, proportion=0,
