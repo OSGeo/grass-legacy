@@ -487,7 +487,7 @@ class AttributeManager(wx.Frame):
             panel = wx.Panel(parent=self.browsePage, id=wx.ID_ANY)
             self.layerPage[layer] = {'browsePage': panel.GetId()}
 
-            self.browsePage.AddPage(page=panel, text=" %s %d " % (_("Layer"), layer))
+            self.browsePage.AddPage(page=panel, text=" %d / %s %s" % (layer, _("Table"), self.mapDBInfo.layers[layer]['table']))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -634,7 +634,7 @@ class AttributeManager(wx.Frame):
 
             panel = wx.Panel(parent=self.manageTablePage, id=wx.ID_ANY)
             self.layerPage[layer]['tablePage'] = panel.GetId()
-            self.manageTablePage.AddPage(page=panel, text=" %s %d " % (_("Layer"), layer))
+            self.manageTablePage.AddPage(page=panel, text=" %d / %s %s" % (layer, _("Table"), self.mapDBInfo.layers[layer]['table']))
 
             pageSizer = wx.BoxSizer(wx.VERTICAL)
 
