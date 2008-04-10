@@ -355,6 +355,12 @@ class DecorationDialog(wx.Dialog):
         self.parent.MapWindow.overlays[self.ovlId]['propwin'] = propwin
 
         # change parameters for item in layers list in render.Map
+        # "Use mouse..." (-m) flag causes GUI freeze, trac #119
+        try:
+            self.parent.MapWindow.overlays[self.ovlId]['cmd'].remove('-m')
+        except ValueError:
+            pass
+        
         self.parent.Map.ChangeOverlay(id=self.ovlId, type=self.name,
                                       command=self.parent.MapWindow.overlays[self.ovlId]['cmd'],
                                       l_active=self.parent.MapWindow.overlays[self.ovlId]['layer'].IsActive(),
