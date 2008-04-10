@@ -3,9 +3,11 @@
 <EM>v.reclass</EM> allows user to create a new vector map based on the reclassification 
 of an existing vector map.  
 
-<BR><BR>
-Rules file may contain on each row either pair: <BR> 
-<I>keyword&nbsp;value</I> <BR>
+<p>
+Rules file may contain on each row either pair:
+<div class="code"><pre>
+keyword&nbsp;value
+</pre></div>
 (separated by space) or comment beginning by #(hash). 
 Definition of new category begins with keyword <I>cat</I> followed by new category value.
 Keyword <I>where</I> specifies SQL where condition.
@@ -15,7 +17,7 @@ Keyword <I>where</I> specifies SQL where condition.
 <div class="code"><pre>
 v.reclass input=land output=land_u type=boundary rules=land.rcl
 </pre></div>
-<P>
+
 the rules file contains :
 
 <div class="code"><pre>
@@ -33,25 +35,23 @@ from database by SQL select statement: <br>
 values selected from database by SQL select statement: <br>
 <I>select id from tland where use = 'E14' </I> changed to category 2.
 
-<BR>
-
-<P>
 <H2>NOTES</H2>
 No table is created for reclassed layer if <B>column</B> option is used and column type is
 integer (there is nothing which could be written to the table).
 <P>
-For dissolving common boundaries, see <em>v.extract</em>.
+For dissolving common boundaries, see <em><a href="v.dissolve.html">v.dissolve</a></em>.
 
-<P>
 <H2>BUGS</H2>
+
 No table is created for reclassed layer if <B>rules</B> option is used.
 
-<P>
 <H2>SEE ALSO</H2>
 
-<em><a HREF="v.dissolve.html">v.dissolve</a></em>,
-<em><A HREF="v.extract.html">v.extract</A></em>,
-<em><a HREF="v.reclass.html">v.reclass</a></em>,
+<em>
+<a HREF="v.dissolve.html">v.dissolve</a>,
+<A HREF="v.extract.html">v.extract</A>
+</em>
+<p>
 <em><a HREF="sql.html">GRASS SQL interface</a></em>
 
 <H2>AUTHOR</H2>
@@ -59,4 +59,5 @@ No table is created for reclassed layer if <B>rules</B> option is used.
 R.L. Glenn, USDA, SCS, NHQ-CGIS<BR>
 from v.reclass to v.db.reclass and later to v.reclass in 5.7 rewritten by Radim Blazek
 
-<p><i>Last changed: $Date$</i>
+<p>
+<i>Last changed: $Date$</i>
