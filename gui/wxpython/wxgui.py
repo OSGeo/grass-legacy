@@ -682,6 +682,7 @@ class GMFrame(wx.Frame):
                            parent=self)
         wx.Yield()
 
+        maptree = None
         for layer in workspace.ProcessGrcFile(filename).read(self):
             maptree = self.gm_cb.GetPage(layer['display']).maptree
             newItem = maptree.AddLayer(ltype=layer['type'],
