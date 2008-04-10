@@ -280,12 +280,19 @@ class DecorationDialog(wx.Dialog):
         # create overlay if doesn't exist
         self._CreateOverlay()
 
-        if self.parent.MapWindow.overlays[self.ovlId]['params']:
-            for p in self.parent.MapWindow.overlays[self.ovlId]['params']['params']:
-                if p.get('name', '') == 'map' and p.get('value', '') != '':
-                    self.btnOK.Enable()
-                    self.SetTitle(_('Legend of raster map <%s>') % \
-                                  utils.GetLayerNameFromCmd(self.parent.MapWindow.overlays[self.ovlId]['cmd']))
+        if len(self.parent.MapWindow.overlays[self.ovlId]['cmd']) > 1:
+            mapName = utils.GetLayerNameFromCmd(self.parent.MapWindow.overlays[self.ovlId]['cmd'])
+            if self.parent.MapWindow.overlays[self.ovlId]['propwin'] is None and mapName:
+                # build properties dialog
+                menuform.GUI().ParseCommand(cmd=self.cmd,
+                                            completed=(self.GetOptData, self.name, ''),
+                                            parentframe=self.parent, show=False)
+            if mapName:
+                # enable 'OK' button
+                self.btnOK.Enable()
+                # set title
+                self.SetTitle(_('Legend of raster map <%s>') % \
+                              mapName)
         
     def _CreateOverlay(self):
         if not self.parent.Map.GetOverlay(self.ovlId):
@@ -300,11 +307,6 @@ class DecorationDialog(wx.Dialog):
                                                            'cmd' : self.cmd,
                                                            'coords': (10, 10),
                                                            'pdcType': 'image' }
-
-            # build properties dialog
-            menuform.GUI().ParseCommand(cmd=self.cmd,
-                                        completed=(self.GetOptData, self.name, ''),
-                                        parentframe=self.parent, show=False)
         else:
             self.parent.MapWindow.overlays[self.ovlId]['propwin'].get_dcmd = self.GetOptData
 
@@ -315,10 +317,16 @@ class DecorationDialog(wx.Dialog):
 
         Sets option for decoration map overlays
         """
-        if self.parent.MapWindow.overlays[self.ovlId]['propwin'].IsShown():
-            self.parent.MapWindow.overlays[self.ovlId]['propwin'].SetFocus()
+        if self.parent.MapWindow.overlays[self.ovlId]['propwin'] is None:
+            # build properties dialog
+            menuform.GUI().ParseCommand(cmd=self.cmd,
+                                        completed=(self.GetOptData, self.name, ''),
+                                        parentframe=self.parent)
         else:
-            self.parent.MapWindow.overlays[self.ovlId]['propwin'].Show()
+            if self.parent.MapWindow.overlays[self.ovlId]['propwin'].IsShown():
+                self.parent.MapWindow.overlays[self.ovlId]['propwin'].SetFocus()
+            else:
+                self.parent.MapWindow.overlays[self.ovlId]['propwin'].Show()
 
     def OnCancel(self, event):
         """Cancel dialog"""
