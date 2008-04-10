@@ -3279,7 +3279,7 @@ class MapFrame(wx.Frame):
             gdialogs.DecorationDialog(parent=self, title=_('Scale and North arrow'),
                                       size=(350, 200),
                                       style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                                      cmd='d.barscale',
+                                      cmd=['d.barscale'],
                                       ovlId=id,
                                       name='barscale',
                                       checktxt = _("Show/hide scale and North arrow"),
@@ -3296,12 +3296,17 @@ class MapFrame(wx.Frame):
         
         id = 1 # index for overlay layer in render
 
+        cmd = ['d.legend']
+        if self.tree.layer_selected and \
+               self.tree.GetPyData(self.tree.layer_selected)[0]['type'] == 'raster':
+            cmd.append('map=%s' % self.tree.GetPyData(self.tree.layer_selected)[0]['maplayer'].name)
+
         # Decoration overlay control dialog
         self.dialogs['legend'] = \
             gdialogs.DecorationDialog(parent=self, title=('Legend'),
                                       size=(350, 200),
                                       style=wx.DEFAULT_DIALOG_STYLE | wx.CENTRE,
-                                      cmd='d.legend',
+                                      cmd=cmd,
                                       ovlId=id,
                                       name='legend',
                                       checktxt = _("Show/hide legend"),
