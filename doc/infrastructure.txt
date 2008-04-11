@@ -20,6 +20,8 @@ Maintainer: M. Neteler
 *** Apache Server with PHP
 ** Further addresses: http://www.grass-gis.org
 *** Apache rewrite engine to http://grass.osgeo.org
+** Notes: Since OSGeo-SAC doesn't want to hand out too many ssh accesses to the osgeo1 and osgeo2 machines, we moved grass.osgeo.org as
+virtual host onto Telascience.org infrastructure (sharing with other OSGeo services there)
 
 * Web pages:
 ** hosted in SVN server (developers can modify, see
