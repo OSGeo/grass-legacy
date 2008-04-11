@@ -10,27 +10,30 @@ Related Wiki documents:
 
 Maintainer: M. Neteler
 
-* http://grass.fbk.eu
-** 3Ghz Dual Core Pentium, sponsored by FBK-irst (formerly ITC-irst), Trento, Italy
-** Apache Server with PHP
-** OS: RHEL4 with overnight security updates
 * http://grass.osgeo.org
-** OSGeo infrastructure (http://wiki.osgeo.org/index.php/SAC)
-* http://www.grass-gis.org
-** Apache rewrite engine to http://grass.osgeo.org
+** X Ghz X CPU, sponsored by Telascience.org at San Diego Supercomputer Center (USA).
+** Hardware: Blade xblade14-2
+   (http://wiki.osgeo.org/wiki/SAC_Service_Status#Telascience_Blades
+    http://wiki.osgeo.org/index.php/SAC)
+** Software:
+*** OS: Fedora Core release 4 (Stentz)
+*** Apache Server with PHP
+** Further addresses: http://www.grass-gis.org
+*** Apache rewrite engine to http://grass.osgeo.org
 
 * Web pages:
-** hosted in the CVS server (developers can modify), downloaded to Web server
-   via cronjob hourly
+** hosted in SVN server (developers can modify, see
+   http://trac.osgeo.org/grass/wiki/WebPagesManagement),
+   downloaded to Web server via cronjob hourly
 ** written in simple PHP/HTML (just include() statement for menus)
 ** mirrored to selected tier-1 sites via rsync (hardcoded IPs to avoid
-   that too many sites connect at grass.fbk.eu)
+   that too many sites connect at grass.osgeo.org)
 ** tier-1 sites are mirrored via rsync to tier-2 mirrors (no hardcoded IPs)
-** RSS feed: rss.xml file stored in CVS-Web
-** TODO: To be migrated to OSGeo Drupal 12/2007
+** RSS feed: rss.xml file stored in SVN-Web
+** TODO: To be migrated to OSGeo Drupal (http://grass-dev.osgeo.org)
 
-* Weekly snapshots (generated Saturday morning Italian time):
-** Source code tarball of CVS HEAD
+* Weekly snapshots (generated Saturday morning California time):
+** Source code tarball of SVN HEAD
 ** Linux binary snapshot is compiled
 *** GRASS is compiled with GDAL, PROJ, SQLite, MySQL, PostgreSQL, FFTW, C++ support
 *** binary tar.gz is moved into Web space
@@ -38,55 +41,47 @@ Maintainer: M. Neteler
 * GRASS user manual HTML:
 ** generated during compilation of weekly Linux binary snapshot
 
-* GRASS programmer's manual (http://mpa.fbk.eu/markus/grass63progman/):
-** HTML: cronjob run Saturday morning Italian time
-** PDF: currently broken since PDFs aren't created for unknown reasons in cronjob
-** TODO: To be migrated to OSGeo server 12/2007
+* GRASS programmer's manual (http://download.osgeo.org/grass/grass6_progman/):
+** HTML: cronjob run Saturday morning California time
+** PDF: cronjob run Saturday morning California time
 
 * i18N translation statistics:
 ** generated during compilation of Linux binary snapshot, stats of
    (cd locale; make) are extracted into text file
 ** text file parsed by PHP page and shown as table
-** TODO: To be migrated to OSGeo server 12/2007
-
-* GRASS 5 tutorial (generated Saturday morning Italian time):
-** downloaded to Web server via cronjob
-** built with docbook
-** TODO: To be migrated to OSGeo server 12/2007
 
 * GRASS user map
-** GDF is creating png output via mapserver
+** GDF server is creating PNG output via Mapserver
 ** fetched every three hours via cronjob from http://mapserver.gdf-hannover.de/tmp/
 
 * GRASS-Mapserver demo
-** currently broken after grass.fbk.eu update
+** currently broken after grass.osgeo.org update
 
-* Search engine
+* Search engine (TODO!!)
 ** htdig runs once a week
-** searchgrass.inc contains selective entries (CVS-Web)
+** searchgrass.inc contains selective entries (SVN-Web)
 ** TODO: To be migrated to OSGeo server 12/2007
 
 * FTP server
 ** no longer available due to security risk
 
-* Mailman mailing lists + Spam filtering (at lists.osgeo.org since 11/2007)
+* Mailman mailing lists + greylisting (at lists.osgeo.org since 11/2007)
 ** Mailman is doing the job, only registered users can post
 ** messages from unsubscribed people is auto-discarded without notification
-** the open "weblist" operates as:
-    User -> weblist at grass itc.it -> /etc/aliases -> 
-           -> neteler.osgeo..gmail.com (for Spam filtering) -> FWD -> 
-             -> grass-web at lists osgeo.org
+** the open "weblist" operates instead like this:
+    User -> grass-web at lists osgeo.org -> greylisting -> Mailman
 
-* Backup of mailing lists (mbox files)
+* Backup of mailing lists (mbox files) (TODO!!)
 ** manually done by MN and Intevation (into freegis.org FTP space)
 ** nightly backup at OSGeo.org
+** TODO: Establish solution via local cp on lists.osgeo.org (SAC ticket todo)
 
 * Web statistics
-** Webalizer (http://grass.fbk.eu/webalizer/) runs daily as cronjob
+** See URL at http://wiki.osgeo.org/wiki/Project_Stats
+** Mirror Webalizer (http://grass.fbk.eu/webalizer/) runs daily as cronjob
 ** Sitemeter: http://www.sitemeter.com/?a=stats&s=s24grassgis
-** TODO: To be migrated to OSGeo server 12/2007
 
-Summary: The system should run almost autonomous.
+Summary: The system should run almost autonomously.
 
 == GRASS Mailing lists ==
 
@@ -94,8 +89,6 @@ Maintainer: Markus Neteler
 
 Available lists:
 
-* at FBK-irst (http://grass.fbk.eu/mailman/admin/):
-   grass-commit-addons  	Mailing list to distribute GRASS Addons-SVN commits
 * at OSGeo.org (http://lists.osgeo.org/mailman/listinfo):
    grass-abm 	 	Integration of GRASS with JAVA based agent based modeling (ABM)
    grass-announce 	GRASS announcements
@@ -111,6 +104,8 @@ Available lists:
    grass-web 		GRASS website mailing list
    grass-windows 	winGRASS - Using GRASS on MS-Windows systems mailing list
 
+* UNUSED: at FBK-irst (http://grass.fbk.eu/mailman/admin/):
+   grass-commit-addons          Mailing list to distribute GRASS Addons-SVN commits
 
 Notes:
 * grass-announce:
@@ -118,9 +113,9 @@ Notes:
   * has monthly password reminder disabled to avoid leakage into publicly archived lists
 * grass-qa is receiving posts from the GRASS Quality Control System at
   Ecole Polytechnique de Montreal, Canada. Not open for other postings.
-* grass-commit is receiving posts from the GRASS CVS server at intevation.de.
+* grass-commit is receiving posts from the GRASS SVN at osgeo.org.
   Not open for other postings.
-* weblist is an open list (posting without subscription possible) with (Google) spam filter
+* grass-web is an open list (posting without subscription possible) with (Google) spam filter
 
 
 == GRASS Wiki ==
@@ -134,6 +129,7 @@ Maintainer: Markus Neteler
 Summary: The system should run almost autonomous. An eye must be
          be kept on people trying to spam the site
 
+TODO: migrate to OSGeo
 
 == GRASS IRC ==
 
@@ -151,10 +147,10 @@ Web based client: http://irc.telascience.org/
 
 == GRASS Source code repository ==
 
-Maintainer: Bernhard Reiter, Jan-Oliver Wagner
+Maintainer: OSGeo-SAC, http://wiki.osgeo.org/wiki/SAC
 
-* intevation.de
-* CVS, sponsored by Intevation GmbH, Germany
+* http://trac.osgeo.org/grass/browser
+* SVN
 
 
 == GRASS Bugtracker ==
@@ -165,21 +161,28 @@ Maintainer: Bernhard Reiter, Jan-Oliver Wagner (gforce)
              - Scott Mitchell - website patches,
              - Martin Landa   - doc patches
 
-Old bugtracker (Dec 2000 - Dec 2006):
+Very old bugtracker (Dec 2000 - Dec 2006):
   * https://intevation.de/rt/webrt?q_queue=grass
   * webRT, sponsored by Intevation GmbH, Germany
   * spamassasin spamfilter locally, bogofilter at grass-dev list
   * reports are directly sent to GRASS Developers mailing list for notification
+  * TODO: migrate to trac
 
-New bugtracker (Jan 2007 - today):
+Old bugtracker (Jan 2007 - Dec 2008):
   * http://wald.intevation.org/tracker/?group_id=21
   * gforce, sponsored by Intevation GmbH, Germany
   * spamassasin spamfilter locally, bogofilter at grass-dev list
   * needs 'noreply*wald.intevation.org' to be enabled as alias in Mailman
+  * TODO: migrate to trac
+
+New bugtracker (Jan 2008 - today):
+  * http://trac.osgeo.org/grass/report
+  * Trac
+  * posts new bugs and comments to grass-dev list
 
 == GRASS Quality Control ==
 
-Maintainer: Giulio Antoniol
+Maintainer: Prof. Giulio Antoniol
 
 * http://web.soccerlab.polymtl.ca/grass-evolution/grass-browsers/grass-index-en.html
   implemented and sponsored by Ecole Polytechnique de Montreal, Canada
