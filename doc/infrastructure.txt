@@ -30,7 +30,7 @@ Maintainer: M. Neteler
    that too many sites connect at grass.osgeo.org)
 ** tier-1 sites are mirrored via rsync to tier-2 mirrors (no hardcoded IPs)
 ** RSS feed: rss.xml file stored in SVN-Web
-** TODO: To be migrated to OSGeo Drupal (http://grass-dev.osgeo.org)
+** TODO: To be migrated to OSGeo Drupal (http://grass-dev.osgeo.net)
 
 * Weekly snapshots (generated Saturday morning California time):
 ** Source code tarball of SVN HEAD
