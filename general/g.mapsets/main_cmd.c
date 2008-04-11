@@ -153,6 +153,7 @@ main (int argc, char *argv[])
 	    if (found)
 		continue;
 
+	    nchoices++;
 	    strcat (Path, oldname);
 	    strcat (Path, " "); 
 	}
