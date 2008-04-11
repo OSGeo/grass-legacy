@@ -551,19 +551,23 @@ class GRASSStartup(wx.Frame):
 
         # disable mapset with denied permission
         locationName = os.path.basename(location)
-        if self._getRCValue("LOCATION_NAME") == "<UNKNOWN>":
+
+        try:
+            mapsets = gcmd.Command(['g.mapset',
+                                    '-l',
+                                    'location=%s' % locationName,
+                                    'gisdbase=%s' % self.gisdbase],
+                                   stderr=None)
+
+            for line in mapsets.ReadStdOutput():
+                self.listOfMapsetsSelectable += line.split(' ')
+        except gcmd.CmdError:
             gcmd.Command(["g.gisenv",
                           "set=GISDBASE=%s" % self.gisdbase])
             gcmd.Command(["g.gisenv",
                           "set=LOCATION_NAME=%s" % locationName])
             gcmd.Command(["g.gisenv",
                           "set=MAPSET=PERMANENT"])
-
-        for line in gcmd.Command(['g.mapset',
-                                  '-l',
-                                  'location=%s' % locationName,
-                                  'gisdbase=%s' % self.gisdbase]).ReadStdOutput():
-            self.listOfMapsetsSelectable += line.split(' ')
 
         disabled = []
         idx = 0
