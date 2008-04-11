@@ -129,6 +129,10 @@ main (int argc, char *argv[])
 	    mapset = *ptr;
 	    if (G__mapset_permissions (mapset) < 0)
 		G_fatal_error(_("Mapset <%s> not found"), mapset);
+	    else
+		G_verbose_message(_("Mapset <%s> added to search path"),
+				  mapset);
+
 	    nchoices++;
 	    strcat (Path, mapset);
 	    strcat (Path, " ");
@@ -150,8 +154,11 @@ main (int argc, char *argv[])
 		if (strcmp(oldname, *ptr) == 0)
 		    found = 1;
 
-	    if (found)
+	    if (found) {
+		G_verbose_message(_("Mapset <%s> removed from search path"),
+				  oldname);
 		continue;
+	    }
 
 	    nchoices++;
 	    strcat (Path, oldname);
