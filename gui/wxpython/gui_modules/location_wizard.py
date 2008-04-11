@@ -2062,11 +2062,14 @@ class RegionDef(BaseClass, wx.Frame):
                 envval[key] = val
             self.currlocation = envval['LOCATION_NAME'].strip("';")
             self.currmapset = envval['MAPSET'].strip("';")
-            if self.currlocation == self.location and self.currmapset == 'PERMANENT':
-                pass
-            else:
-                cmdlist = ['g.mapset', 'location=%s' % self.location, 'mapset=PERMANENT']
-                gcmd.Command(cmdlist)
+            if self.currlocation != self.location or self.currmapset != 'PERMANENT':
+                # cmdlist = ['g.mapset', 'location=%s' % self.location, 'mapset=PERMANENT']
+                # gcmd.Command(cmdlist
+                gcmd.Command(["g.gisenv",
+                              "set=LOCATION_NAME=%s" % self.location])
+                gcmd.Command(["g.gisenv",
+                              "set=MAPSET=PERMANENT"])
+
         else:
             dlg = wx.MessageBox(parent=self,
                                 message=_('Invalid location selected.'),
