@@ -1,16 +1,16 @@
 # translation of grasstcl_cs.po to
 # This file is distributed under the same license as the GRASS package.
-# Copyright (C) 2005, GRASS Development Team
-# Martin Landa <landa.martin gmail.com>, 2006.
+# Copyright (C) 2005-2008, GRASS Development Team
+# Martin Landa <landa.martin gmail.com>, 2006-2008.
 # Jan Trochta <j.trochta seznam.cz>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grasstcl_cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-30 20:05+0200\n"
-"PO-Revision-Date: 2008-03-30 20:29+0200\n"
-"Last-Translator: Jan Trochta <j.trochta@seznam.cz>\n"
+"POT-Creation-Date: 2008-04-11 15:58+0200\n"
+"PO-Revision-Date: 2008-04-08 18:15+0200\n"
+"Last-Translator: honza <j.trochta@seznam.cz>\n"
 "Language-Team: Czech <grass-translations@lists.osgeo.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
@@ -357,7 +357,7 @@ msgstr "Zvìt¹it podle mapové vrstvy"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:187
 msgid "Zoom display to saved region"
-msgstr "Zvìt¹it podle regionu"
+msgstr "Zvìt¹it podle ulo¾eného regionu"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:190
 msgid "Save display extents to named region"
@@ -365,15 +365,15 @@ msgstr "Ulo¾it souèasný výøez do pojmenovaného regionu"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:193
 msgid "Zoom display to computational region (set with g.region)"
-msgstr "Pøiblí¾it na souèasný region (nastaven pomocí g.region)"
+msgstr "Pøiblí¾it na výpoètový region (nastaven pomocí g.region)"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:196
 msgid "Zoom display to default region"
-msgstr "Zvìt¹it podle výchozí regionu"
+msgstr "Zvìt¹it podle výchozího regionu"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:199
 msgid "Set computational region extents to match display"
-msgstr "Nastavit výpoèetní region podle displeje"
+msgstr "Nastavit výpoètový region podle displeje"
 
 #: ../gui/tcltk/gis.m/maptool.tcl:228 ../gui/tcltk/gis.m/gmmenu.tcl:615
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1857 ../gui/tcltk/d.m/menu.tcl:554
@@ -1545,7 +1545,7 @@ msgstr "Modelování povrchového odtoku SIMWE"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:308
 msgid "SIMWE sediment flux modeling"
-msgstr "Modelování povrchového odtoku SIMWE"
+msgstr "Modelování toku sedimentù SIMWE"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:310 ../gui/tcltk/d.m/menu.tcl:295
 msgid "Topographic index map"
@@ -1794,7 +1794,7 @@ msgstr "Vypsat základní informace o souboru"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:400
 msgid "Manage category information"
-msgstr "Správa kategorií"
+msgstr "Upravit informace o kategoriích"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:402 ../gui/tcltk/d.m/menu.tcl:358
 msgid "General statistics"
@@ -1847,7 +1847,7 @@ msgstr "Spoleèný výskyt kategorie (koincidence)"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:418 ../gui/tcltk/d.m/menu.tcl:375
 msgid "&Vector"
-msgstr "&Vektorová vrstva"
+msgstr "&Vektorová mapa"
 
 #: ../gui/tcltk/gis.m/gmmenu.tcl:420 ../gui/tcltk/d.m/menu.tcl:377
 msgid "Digitize"
@@ -2489,11 +2489,11 @@ msgstr "  nebo podle stoupajcí vellikosti (body a linie)"
 #: ../gui/tcltk/gis.m/thematic.tcl:233 ../gui/tcltk/gis.m/vector.tcl:316
 #: ../gui/tcltk/d.m/thematic.tcl:116
 msgid "Vector map:"
-msgstr "Vektorová mapová vrstva:"
+msgstr "Vektorová mapa:"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:236
 msgid "vector for thematic mapping"
-msgstr "vektorová vrstva pro tématickou mapu"
+msgstr "vektorová mapa pro tématickou mapu"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:251 ../gui/tcltk/d.m/thematic.tcl:131
 msgid "    vector type"
@@ -2579,7 +2579,7 @@ msgstr "    vlastní schéma barev - poèáteèní barva"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:356
 msgid " end color"
-msgstr " kooncová barva"
+msgstr " koncová barva"
 
 #: ../gui/tcltk/gis.m/thematic.tcl:358 ../gui/tcltk/d.m/thematic.tcl:243
 msgid "draw border"
@@ -2684,7 +2684,7 @@ msgstr "Vybrat existující vektorovou skupinu nebo název nové skupiny"
 
 #: ../gui/tcltk/gis.m/georect.tcl:484
 msgid "vector"
-msgstr "vektorová vrstva"
+msgstr "vektorová mapa"
 
 #: ../gui/tcltk/gis.m/georect.tcl:486
 msgid "Select xy vector(s) for group"
@@ -3317,7 +3317,7 @@ msgstr "Zobrazení: øádkù=%d sloupcù=%d S-J rozli¹ení=%g V-Z rozli¹ení= %g"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1182
 msgid "Error reading current resolution with g.region"
-msgstr "Chyba pøi ètení souèasného rozli¹ení modulem g.region"
+msgstr "Chyb pøi ètení souèasného rozli¹ení pomocí g.region"
 
 #: ../gui/tcltk/gis.m/mapcanvas.tcl:1606
 msgid "Measurement"
@@ -3936,7 +3936,7 @@ msgstr "Pøepsat existující"
 
 #: ../gui/tcltk/gis.m/vector.tcl:510
 msgid "     New vector"
-msgstr "     Nová vektorová vrstva"
+msgstr "     Nová vektorová mapa"
 
 #: ../gui/tcltk/gis.m/vector.tcl:514
 msgid "Select existing vector for saving queried objects"
@@ -4657,7 +4657,7 @@ msgstr ""
 
 #: ../gui/tcltk/d.m/menu.tcl:356
 msgid "Manage category labels and values"
-msgstr "Vypsat popisky a hodnoty kategorii"
+msgstr "Upravit popisky hodnoty kategorií"
 
 #: ../gui/tcltk/d.m/menu.tcl:359
 msgid "Range of all category values"
