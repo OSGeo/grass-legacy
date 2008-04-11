@@ -461,12 +461,12 @@ class AttributeManager(wx.Frame):
         #
         # buttons
         #
-        self.btnApply      = wx.Button(parent=self.panel, id=wx.ID_APPLY)
+        # self.btnApply      = wx.Button(parent=self.panel, id=wx.ID_APPLY)
         self.btnQuit       = wx.Button(parent=self.panel, id=wx.ID_EXIT)
         # self.btn_unselect = wx.Button(self, -1, "Unselect")
 
         # events
-        self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApply)
+        # self.btnApply.Bind(wx.EVT_BUTTON,           self.OnApply)
         self.btnQuit.Bind(wx.EVT_BUTTON,            self.OnCloseWindow)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.browsePage)
         self.Bind(FN.EVT_FLATNOTEBOOK_PAGE_CHANGED, self.OnLayerPageChanged, self.manageTablePage)
@@ -546,6 +546,8 @@ class AttributeManager(wx.Frame):
             #              border=3)
 
             # sql statement box
+            btnApply = wx.Button(parent=panel, id=wx.ID_APPLY)
+            btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
             btnSqlBuilder = wx.Button(parent=panel, id=wx.ID_ANY, label=_("SQL Builder"))
             btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
 
@@ -584,7 +586,8 @@ class AttributeManager(wx.Frame):
                                flag=wx.EXPAND | wx.ALIGN_CENTER_VERTICAL)
             sqlFlexSizer.Add(item=sqlSimpleSizer,
                              flag=wx.ALIGN_CENTER_VERTICAL | wx.EXPAND)
-            sqlFlexSizer.Add((0,0))
+            sqlFlexSizer.Add(item=btnApply,
+                             flag=wx.ALIGN_RIGHT)
             sqlFlexSizer.Add(item=sqlAdvanced,
                              flag=wx.ALIGN_CENTER_VERTICAL)
             sqlFlexSizer.Add(item=sqlStatement,
@@ -650,7 +653,7 @@ class AttributeManager(wx.Frame):
             # table description
             table = self.mapDBInfo.layers[layer]['table']
             tableBox = wx.StaticBox(parent=panel, id=wx.ID_ANY,
-                                    label=" %s " % _("Table %s") % table)
+                                    label=" %s " % _("Table %s - right-click to delete records") % table)
 
             tableSizer = wx.StaticBoxSizer(tableBox, wx.VERTICAL)
 
@@ -719,10 +722,10 @@ class AttributeManager(wx.Frame):
 
             # rename col
             label  = wx.StaticText(parent=panel, id=wx.ID_ANY, label=_("Rename column"))
-            column = wx.TextCtrl(parent=panel, id=wx.ID_ANY, value='',
-                                 size=(150, -1), style=wx.TE_PROCESS_ENTER)
-            column.Bind(wx.EVT_TEXT,       self.OnTableRenameColumnName,)
-            column.Bind(wx.EVT_TEXT_ENTER, self.OnTableItemChange)
+            column = wx.ComboBox(parent=panel, id=wx.ID_ANY, size=(150, -1),
+                                 style=wx.CB_SIMPLE | wx.CB_READONLY,
+                                 choices=self.mapDBInfo.GetColumns(table))
+            column.SetSelection(0)
             self.layerPage[layer]['renameCol'] = column.GetId()
             addSizer.Add(item=label,
                          flag=wx.ALIGN_CENTER_VERTICAL)
@@ -862,8 +865,8 @@ class AttributeManager(wx.Frame):
         btnSizer = wx.BoxSizer(wx.HORIZONTAL)
         btnSizer.Add(item=self.btnQuit, proportion=1,
                      flag=wx.ALL | wx.ALIGN_RIGHT | wx.SHAPED, border=5)
-        btnSizer.Add(item=self.btnApply,
-                     flag=wx.ALL, border=5)
+        # btnSizer.Add(item=self.btnApply,
+        #             flag=wx.ALL, border=5)
 
         mainSizer.Add(item=self.notebook, proportion=1, flag=wx.EXPAND)
         mainSizer.Add(item=btnSizer, proportion=0, flag=wx.EXPAND | wx.ALL, border=5)
@@ -1228,21 +1231,26 @@ class AttributeManager(wx.Frame):
         name   = self.FindWindowById(self.layerPage[self.layer]['renameCol']).GetValue()
         nameTo = self.FindWindowById(self.layerPage[self.layer]['renameColTo']).GetValue()
 
+        table = self.mapDBInfo.layers[self.layer]["table"]
+
         if not name or not nameTo:
             wx.MessageBox(self=self,
                           message=_("Unable to rename column. "
                                     "No column name defined."),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
         else:
             item = list.FindItem(start=-1, str=name)
             if item > -1:
                 if list.FindItem(start=-1, str=nameTo) > -1:
                     wx.MessageBox(parent=self,
-                                  message=_("Unable to rename column <%(column)s>. "
-                                            "Column <%(columnTo)s> already exists in the table <%(table)s>.") % \
+                                  message=_("Unable to rename column <%(column)s> to "
+                                            "<%(columnTo)s>. Column already exists "
+                                            "in the table <%(table)s>.") % \
                                       {'column' : name, 'columnTo' : nameTo,
-                                       'table' : self.mapDBInfo.layers[self.layer]["table"]},
+                                       'table' : table},
                                   caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                    return
                 else:
                     list.SetItemText(item, nameTo)
 
@@ -1254,8 +1262,18 @@ class AttributeManager(wx.Frame):
                 wx.MessageBox(parent=self,
                               message=_("Unable to rename column. "
                                         "Column <%(column)s> doesn't exist in the table <%(table)s>.") % 
-                              {'column' : name, 'table' : self.mapDBInfo.layers[self.layer]["table"]},
+                              {'column' : name, 'table' : table},
                               caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                return
+            
+        # apply changes
+        self.OnApply(event)
+        print self.mapDBInfo.GetColumns(table)
+
+        # update widgets
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetItems(self.mapDBInfo.GetColumns(table))
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetSelection(0)
+        self.FindWindowById(self.layerPage[self.layer]['renameColTo']).SetValue('')
 
         event.Skip()
 
@@ -1294,17 +1312,34 @@ class AttributeManager(wx.Frame):
             list.DeleteItem(item)
             item = list.GetFirstSelected()
 
+        # apply changes
+        self.OnApply(event)
+
+        # update widgets
+        table = self.mapDBInfo.layers[self.layer]['table']
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetItems(self.mapDBInfo.GetColumns(table))
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetSelection(0)
+
         event.Skip()
 
     def OnTableItemDeleteAll(self, event):
         """Delete all items from the list"""
         table = self.mapDBInfo.layers[self.layer]['table']
         cols = self.mapDBInfo.GetColumns(table)
-        self.listOfCommands = [['v.db.dropcol',
-                               'map=%s' % self.vectmap,
-                               'layer=%d' % self.layer,
-                               'column=%s' % ','.join(cols)]]
+        for col in cols:
+            self.listOfCommands = [['v.db.dropcol',
+                                    'map=%s' % self.vectmap,
+                                    'layer=%d' % self.layer,
+                                    'column=%s' % col]]
         self.FindWindowById(self.layerPage[self.layer]['tableData']).DeleteAllItems()
+
+        # apply changes
+        self.OnApply(event)
+
+        # update widgets
+        table = self.mapDBInfo.layers[self.layer]['table']
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetItems(self.mapDBInfo.GetColumns(table))
+        self.FindWindowById(self.layerPage[self.layer]['renameCol']).SetSelection(0)
 
         event.Skip()
 
@@ -1322,39 +1357,48 @@ class AttributeManager(wx.Frame):
                           message=_("Unable to add column to the table. "
                                     "No column name defined."),
                           caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
+
+        type = self.FindWindowById(self.layerPage[self.layer]['addColType']). \
+            GetStringSelection()
+        
+        # cast type if needed
+        if type == 'double':
+            type = 'double precision'
+        if type == 'varchar':
+            length = int(self.FindWindowById(self.layerPage[self.layer]['addColLength']). \
+                             GetValue())
         else:
-            type = self.FindWindowById(self.layerPage[self.layer]['addColType']). \
-                GetStringSelection()
-            # cast type if needed
-            if type == 'double':
-                type = 'double precision'
-            if type == 'varchar':
-                length = int(self.FindWindowById(self.layerPage[self.layer]['addColLength']). \
-                    GetValue())
-            else:
-                length = '' # FIXME
-            # add item to the list of table columns
-            list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
-            # check for duplicate items
-            if list.FindItem(start=-1, str=name) > -1:
-                wx.MessageBox(parent=self,
-                              message=_("Column <%(column)s> already exists in table <%(table)s>.") % \
-                                  {'column' : name, 'table' : self.mapDBInfo.layers[self.layer]["table"]},
-                              caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
-                return
-            index = list.InsertStringItem(sys.maxint, str(name))
-            list.SetStringItem(index, 0, str(name))
-            list.SetStringItem(index, 1, str(type))
-            list.SetStringItem(index, 2, str(length))
+            length = '' # FIXME
 
-            # add v.db.addcol command to the list
-            if type == 'varchar':
-                type += ' (%d)' % length
-            self.listOfCommands.append(['v.db.addcol',
-                                        'map=%s' % self.vectmap,
-                                        'layer=%d' % self.layer,
-                                        'columns=%s %s' % (name, type)])
+        # add item to the list of table columns
+        list = self.FindWindowById(self.layerPage[self.layer]['tableData'])
+        # check for duplicate items
+        if list.FindItem(start=-1, str=name) > -1:
+            wx.MessageBox(parent=self,
+                          message=_("Column <%(column)s> already exists in table <%(table)s>.") % \
+                              {'column' : name, 'table' : self.mapDBInfo.layers[self.layer]["table"]},
+                          caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+            return
+        index = list.InsertStringItem(sys.maxint, str(name))
+        list.SetStringItem(index, 0, str(name))
+        list.SetStringItem(index, 1, str(type))
+        list.SetStringItem(index, 2, str(length))
+        
+        # add v.db.addcol command to the list
+        if type == 'varchar':
+            type += ' (%d)' % length
+        self.listOfCommands.append(['v.db.addcol',
+                                    'map=%s' % self.vectmap,
+                                    'layer=%d' % self.layer,
+                                    'columns=%s %s' % (name, type)])
 
+        # apply changes
+        self.OnApply(event)
+
+        # update widgets
+        self.FindWindowById(self.layerPage[self.layer]['addColName']).SetValue('')
+        
     def OnLayerPageChanged(self, event):
         """Layer tab changed"""
         pageNum = event.GetSelection()
@@ -1406,7 +1450,6 @@ class AttributeManager(wx.Frame):
             # update data list
             list = self.FindWindowById(self.layerPage[self.layer]['data'])
             list.Update(self.mapDBInfo)
-            self.OnDataReload(None)
 
             # reset list of commands
             self.listOfCommands = []
@@ -1434,8 +1477,8 @@ class AttributeManager(wx.Frame):
             # reset list of statements
             self.listOfSQLStatements = []
 
-        # perform select statement
-        self.OnApplySqlStatement(event)
+            # perform select statement
+            self.OnApplySqlStatement(event)
 
     def OnApplySqlStatement(self, event):
         """Apply simple/advanced sql statement"""
