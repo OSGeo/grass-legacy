@@ -182,10 +182,8 @@ void SASetupDefaultHooks( SAHooks *psHooks )
     psHooks->FTell   = SADFTell;
     psHooks->FFlush  = SADFFlush;
     psHooks->FClose  = SADFClose;
-    psHooks->Remove  = SADRemove;
 
     psHooks->Error   = SADError;
-    psHooks->Atof    = atof;
 }
 
 
