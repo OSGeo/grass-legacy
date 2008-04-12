@@ -117,7 +117,7 @@ proc GmLegend::set_font { id } {
 	if {$GmLegend::opt($id,1,font) != "" } {
 		set Gm::dfont $GmLegend::opt($id,1,font)
 	}
-	Gm:DefaultFont dlegend
+	Gm::defaultfont dlegend
 	tkwait variable Gm::dfont
 	set GmLegend::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""

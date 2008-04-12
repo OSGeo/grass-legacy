@@ -18,9 +18,9 @@ namespace eval GmTree {
     variable legend_height 20
     variable legend_width 30
     variable treeht 6
-	global array tree # mon
-	global array filename # mon
-	variable array pg # mon
+	global array tree ;# mon
+	global array filename ;# mon
+	variable array pg ;# mon
 
 }
 
@@ -1143,7 +1143,7 @@ proc GmTree::node_type { node } {
 #digitize
 proc GmTree::vedit { } {
     variable tree
-	global options
+	global options env
     global mon
     
     if { [array size GmTree::tree] < 1 } {
@@ -1158,14 +1158,26 @@ proc GmTree::vedit { } {
     }
 
     set type [GmTree::node_type $sel]
+    set id [GmTree::node_id $sel]
 
     switch $type {
         raster {
-        Gm::xmon term r.digit
+			if { $GmRaster::opt($id,1,map) == "" } {
+        		tk_messageBox -type ok -icon warning -message [G_msg "Selected raster layer is empty"]
+        		return
+        	}
+        	unset env(GRASS_RENDER_IMMEDIATE)
+			guarantee_xmon
+			term r.digit 
+			set env(GRASS_RENDER_IMMEDIATE) "TRUE"
             return
         }
         vector {
-	    GmVector::WorkOnVector $sel 0
+        	if { $GmVector::opt($id,1,vect) == "" } {
+        		tk_messageBox -type ok -icon warning -message [G_msg "Selected vector layer is empty"]
+        		return
+        	}
+	    	GmVector::WorkOnVector $sel 0
         }
         default {
         	tk_messageBox -type ok -icon warning -message [G_msg "You can digitize raster or vector maps only"]
