@@ -5,7 +5,9 @@ SUBDIRS = docs
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 ifneq ($(USE_WXWIDGETS),)
-  SUBDIRS += vdigit
+  ifneq ($(USE_PYTHON),)
+    SUBDIRS += vdigit
+  endif
 endif
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
