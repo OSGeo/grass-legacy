@@ -745,7 +745,7 @@ proc GmVector::WorkOnVector { node mod } {
         set cmd [list v.digit -n "map=$opt($id,1,vect)"]
     }
 
-     set bg_command [GmGroup::vdigit_display "root" "vector:$id"]
+     set bg_command [GmGroup::vdigit_display "vector:$id"]
      if {$bg_command != ""} {
      	append cmd " {bgcmd=$bg_command}"
      }
