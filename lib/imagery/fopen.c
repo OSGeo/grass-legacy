@@ -18,12 +18,8 @@ FILE *
 I_fopen_group_file_new(char *group, char *file)
 {
     FILE *fd;
-    char element[GNAME_MAX];
 
-    /* get group element name */
-    sprintf (element, "group/%s", group);
-
-    fd = G_fopen_new (element, file);
+    fd = G_fopen_new_misc ("group", file, group);
     if (!fd)
         G_warning (_("Unable to create file [%s] of group [%s in %s]"),
                     file, group, G_mapset());
@@ -36,12 +32,8 @@ FILE *
 I_fopen_group_file_append (char *group, char *file)
 {
     FILE *fd;
-    char element[GNAME_MAX];
 
-    /* get group element name */
-    sprintf (element, "group/%s", group);
-
-    fd = G_fopen_append (element, file);
+    fd = G_fopen_append_misc ("group", file, group);
     if (!fd)
         G_warning (_("Unable to open file [%s] of group [%s in %s]"),
                     file, group, G_mapset());
@@ -54,7 +46,6 @@ FILE *
 I_fopen_group_file_old (char *group, char *file)
 {
     FILE *fd;
-    char element[GNAME_MAX];
 
     /* find file first */
     if (!I_find_group_file (group, file))
@@ -65,10 +56,7 @@ I_fopen_group_file_old (char *group, char *file)
 	return ((FILE *) NULL);
     }
 
-    /* get group element name */
-    sprintf (element, "group/%s", group);
-
-    fd = G_fopen_old (element, file, G_mapset());
+    fd = G_fopen_old_misc ("group", file, group, G_mapset());
     if (!fd)
         G_warning (_("Unable to open file [%s] of group [%s in %s]"),
                     file, group, G_mapset());
@@ -87,9 +75,9 @@ I_fopen_subgroup_file_new (
     char element[GNAME_MAX*2];
 
     /* get subgroup element name */
-    sprintf (element, "group/%s/subgroup/%s", group, subgroup);
+    sprintf (element, "subgroup/%s/%s", subgroup, file);
 
-    fd = G_fopen_new (element, file);
+    fd = G_fopen_new_misc ("group", element, group);
     if (!fd)
         G_warning (_("Unable to create file [%s] for subgroup [%s] of group [%s in %s]"),
                     file, subgroup, group, G_mapset());
@@ -108,9 +96,9 @@ I_fopen_subgroup_file_append (
     char element[GNAME_MAX*2];
 
     /* get subgroup element name */
-    sprintf (element, "group/%s/subgroup/%s", group, subgroup);
+    sprintf (element, "subgroup/%s/%s", subgroup, file);
 
-    fd = G_fopen_append (element, file);
+    fd = G_fopen_append_misc ("group", element, group);
     if (!fd)
         G_warning (_("Unable to open file [%s] for subgroup [%s] of group [%s in %s]"),
                     file, subgroup, group, G_mapset());
@@ -138,9 +126,9 @@ I_fopen_subgroup_file_old (
     }
 
     /* get subgroup element name */
-    sprintf (element, "group/%s/subgroup/%s", group, subgroup);
+    sprintf (element, "subgroup/%s/%s", subgroup, file);
 
-    fd = G_fopen_old (element, file, G_mapset());
+    fd = G_fopen_old_misc ("group", element, group, G_mapset());
     if (!fd)
         G_warning (_("Unable to open file [%s] for subgroup [%s] of group [%s in %s]"),
                     file, subgroup, group, G_mapset());

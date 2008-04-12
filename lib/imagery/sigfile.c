@@ -6,12 +6,12 @@ FILE *I_fopen_signature_file_new (
     char *subgroup,
     char *name)
 {
-    char element[200];
+    char element[GNAME_MAX*2];
     FILE *fd;
 
-    sprintf (element, "group/%s/subgroup/%s/sig", group, subgroup);
+    sprintf (element, "subgroup/%s/sig/%s", subgroup, name);
 
-    fd = G_fopen_new (element, name);
+    fd = G_fopen_new_misc ("group", element, group);
     if (fd == NULL)
 	G_warning ("unable to create signature file %s for subgroup %s of group %s",
 		   name, subgroup, group);
@@ -23,12 +23,12 @@ FILE *I_fopen_signature_file_old(
     char *subgroup,
     char *name)
 {
-    char element[200];
+    char element[GNAME_MAX*2];
     FILE *fd;
 
-    sprintf (element, "group/%s/subgroup/%s/sig", group, subgroup);
+    sprintf (element, "subgroup/%s/sig/%s", subgroup, name);
 
-    fd = G_fopen_old (element, name, G_mapset());
+    fd = G_fopen_old_misc ("group", element, group, G_mapset());
     if (fd == NULL)
 	G_warning ("unable to open signature file %s for subgroup %s of group [%s in %s]",
 		   name, subgroup, group, G_mapset());
