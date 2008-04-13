@@ -74,7 +74,8 @@ default: $(FILES)
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL_DATA) variables.html $(GISBASE)/docs/html/variables.html
 	$(INSTALL_DATA) grass6.html $(GISBASE)/docs/html/grass6.html
-	$(INSTALL_DATA) helptext.html help_loc_struct.png $(GISBASE)/docs/html/helptext.html
+	$(INSTALL_DATA) helptext.html $(GISBASE)/docs/html/helptext.html
+	$(INSTALL_DATA) help_loc_struct.png $(GISBASE)/docs/html/help_loc_struct.png
 
 $(ARCH_BINDIR)/$(START_UP): init.sh grass.src
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
