@@ -548,7 +548,7 @@ class GMFrame(wx.Frame):
         Return False on error"""
 
         # dtd
-        dtdFilename = os.path.join(globalvar.ETCWXDIR, "gui_modules", "grass-gxw.dtd")
+        dtdFilename = os.path.join(globalvar.ETCWXDIR, "xml", "grass-gxw.dtd")
 
         # validate xml agains dtd
         #         dtd = xmldtd.load_dtd(dtdFilename)
