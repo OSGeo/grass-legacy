@@ -254,9 +254,16 @@ proc guarantee_xmon {} {
 		}
 
 	}
+
 	if {[catch {close $input} error]} {
 		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
 			-message [G_msg "d.mon error: problem launching xmon, $error"]
+		return
+	}
+
+	if { ![info exists xmonlist] } {
+		tk_messageBox -type ok -icon error -title [G_msg "Error"] \
+			-message [G_msg "This module requires X11 support, but no xmons were found"]
 		return
 	}
 
