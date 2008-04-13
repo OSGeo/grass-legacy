@@ -616,33 +616,26 @@ class GRASSStartup(wx.Frame):
             self.FormerMapsetSelection = event.GetIndex()
             event.Skip()
 
-    def OnSetDatabase(self,event):
+    def OnSetDatabase(self, event):
         """Database set"""
         self.gisdbase = self.tgisdbase.GetValue()
-
+        
         self.UpdateLocations(self.gisdbase)
-        self.lblocations.Clear()
-        self.lblocations.InsertItems(self.listOfLocations,0)
 
-        if self.listOfLocations != []:
-            self.lblocations.SetSelection(0)
-        else:
-            self.lblocations.SetSelection(wx.NOT_FOUND)
-            
         self.OnSelectLocation(None)
 
     def OnBrowse(self, event):
         """'Browse' button clicked"""
         grassdata = None
 
-        dlg = wx.DirDialog(self, "Choose a GRASS directory:",
+        dlg = wx.DirDialog(self, _("Choose GIS Data Directory:"),
                            style=wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         if dlg.ShowModal() == wx.ID_OK:
             self.gisdbase = dlg.GetPath()
             self.tgisdbase.SetValue(self.gisdbase)
-        dlg.Destroy()
+            self.OnSetDatabase(event)
 
-        self.OnSetDatabase(event)
+        dlg.Destroy()
 
     def OnCreateMapset(self,event):
         """Create new mapset"""
@@ -772,7 +765,8 @@ class GListBox(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
         self.__LoadData(choices, disabled)
 
     def SetSelection(self, item):
-        self.SetItemState(item, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        if item != wx.NOT_FOUND:
+            self.SetItemState(item, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
         self.selected = item
         
     def GetSelection(self):
