@@ -96,7 +96,7 @@ class LayerTree(CT.CustomTreeCtrl):
 
         # title
         self.mapdisplay.SetTitle(_("GRASS GIS Map Display: " +
-                                   str(self.disp_idx) + 
+                                   str(self.disp_idx + 1) + 
                                    " - Location: " + grassenv.GetGRASSVariable("LOCATION_NAME")))
 
         # show new display
@@ -407,7 +407,8 @@ class LayerTree(CT.CustomTreeCtrl):
         """Rename layer"""
         self.EditLabel(self.layer_selected)
 
-    def AddLayer(self, ltype, lname=None, lchecked=None, lopacity=None, lcmd=None, lgroup=None):
+    def AddLayer(self, ltype, lname=None, lchecked=None,
+                 lopacity=None, lcmd=None, lgroup=None):
         """Add new item to the layer tree, create corresponding MapLayer instance.
         Launch property dialog if needed (raster, vector, etc.)
 

@@ -29,7 +29,7 @@
 
 <!--    map layer
 -->
-<!ELEMENT layer (task?)>
+<!ELEMENT layer (selected?, task?)>
 <!ATTLIST layer	type	CDATA #REQUIRED>
 <!ATTLIST layer	name	CDATA #REQUIRED>
 <!ATTLIST layer	checked CDATA #REQUIRED>
@@ -38,8 +38,12 @@
 <!--	task describes the interface of a single
 	GRASS command. 
 -->
-<!ELEMENT task	        (parameter*, flag*)>
+<!ELEMENT task	        (flag*, parameter*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
+
+<!--	layer selected
+-->
+<!ELEMENT selected      EMPTY>
 
 <!--	a parameter must have a name and a value
 -->
@@ -53,5 +57,5 @@
 
 <!--    enabled flag
 -->
-<!ELEMENT flag         EMPTY>
-<!ATTLIST flag         name            CDATA #REQUIRED>
+<!ELEMENT flag          EMPTY>
+<!ATTLIST flag          name            CDATA #REQUIRED>
