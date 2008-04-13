@@ -558,7 +558,11 @@ class GRASSStartup(wx.Frame):
 
         self.lbmapsets.Clear()
         self.lbmapsets.InsertItems(self.listOfMapsets, 0)
-        self.lbmapsets.SetSelection(0)
+        
+        if len(self.listOfMapsets) > 0:
+            self.lbmapsets.SetSelection(0)
+        else:
+            self.lbmapsets.SetSelection(wx.NOT_FOUND)
 
     def OnSelectMapset(self,event):
         """Mapset selected"""
