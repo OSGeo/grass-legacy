@@ -74,10 +74,11 @@ class ProcessWorkspaceFile(HandlerBase):
 
         elif name == 'layer':
             self.inLayer = True
-            self.layerType    = attrs.get('type', None)
-            self.layerName    = attrs.get('name', None)
-            self.layerChecked = attrs.get('checked', None)
-            self.layerOpacity = attrs.get('opacity', None)
+            self.layerType     = attrs.get('type', None)
+            self.layerName     = attrs.get('name', None)
+            self.layerChecked  = attrs.get('checked', None)
+            self.layerOpacity  = attrs.get('opacity', None)
+            self.layerSelected = False;
             self.cmd = []
 
         elif name == 'task':
@@ -98,6 +99,10 @@ class ProcessWorkspaceFile(HandlerBase):
             name = attrs.get('name', None)
             self.cmd.append('-' + name)
 
+        elif name == 'selected':
+            if self.inLayer:
+                self.layerSelected = True;
+            
     def endElement(self, name):
         if name == 'gxw':
             self.inGxw = False
@@ -112,13 +117,14 @@ class ProcessWorkspaceFile(HandlerBase):
         elif name == 'layer':
             self.inLayer = False
             self.layers.append({
-                    "type"    : self.layerType,
-                    "name"    : self.layerName,
-                    "checked" : int(self.layerChecked),
-                    "opacity" : None,
-                    "cmd"     : None,
-                    "group"   : self.inGroup,
-                    "display" : self.displayIndex})
+                    "type"     : self.layerType,
+                    "name"     : self.layerName,
+                    "checked"  : int(self.layerChecked),
+                    "opacity"  : None,
+                    "cmd"      : None,
+                    "group"    : self.inGroup,
+                    "display"  : self.displayIndex,
+                    "selected" : self.layerSelected})
 
             if self.layerOpacity:
                 self.layers[-1]["opacity"] = float(self.layerOpacity)

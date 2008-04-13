@@ -111,7 +111,7 @@ class GMFrame(wx.Frame):
         self._auimgr = wx.aui.AuiManager(self)
 
         # initialize variables
-        self.disp_idx      = 1            # index value for map displays and layer trees
+        self.disp_idx      = 0            # index value for map displays and layer trees
         self.curr_page     = ''           # currently selected page for layer tree notebook
         self.curr_pagenum  = ''           # currently selected page number for layer tree notebook
         self.encoding      = 'ISO-8859-1' # default encoding for display fonts
@@ -166,7 +166,8 @@ class GMFrame(wx.Frame):
 
         # show map display widnow
         # -> OnSize() -> UpdateMap()
-        self.curr_page.maptree.mapdisplay.Show()
+        if not self.curr_page.maptree.mapdisplay.IsShown():
+            self.curr_page.maptree.mapdisplay.Show()
 
     def __doLayout(self):
         """Do Layout (unused bacause of aui manager...)"""
@@ -600,18 +601,33 @@ class GMFrame(wx.Frame):
             wx.Yield()
 
             maptree = None
+            selected = [] # list of selected layers
             for layer in gxwXml.layers:
                 if layer['display'] >= self.disp_idx:
                     # start new map display if no display is available
                     self.NewDisplay()
+
                 maptree = self.gm_cb.GetPage(layer['display']).maptree
+
+                if not maptree.mapdisplay.IsShown():
+                    # show map display
+                    maptree.mapdisplay.Show()
+
                 newItem = maptree.AddLayer(ltype=layer['type'],
                                            lname=layer['name'],
                                            lchecked=layer['checked'],
                                            lopacity=layer['opacity'],
                                            lcmd=layer['cmd'],
                                            lgroup=layer['group'])
-            #   maptree.PropertiesDialog(newItem, show=False)
+                if layer['selected']:
+                    selected.append((maptree, newItem))
+                else:
+                    maptree.SelectItem(newItem, select=False)
+                    
+            for maptree, layer in selected:
+                if not maptree.IsSelected(layer):
+                    maptree.SelectItem(layer, select=True)
+                    maptree.layer_selected = layer
 
             busy.Destroy()
             
@@ -775,8 +791,12 @@ class GMFrame(wx.Frame):
                 opacity = maplayer.GetOpacity(float=True)
                 file.write('%s<layer type="%s" name="%s" checked="%d" opacity="%f">\n' % \
                                (' ' * self.indent, type, name, checked, opacity));
-                # layer properties
+
                 self.indent += 4
+                # selected ?
+                if item == mapTree.layer_selected:
+                    file.write('%s<selected />\n' % (' ' * self.indent))
+                # layer properties
                 file.write('%s<task name="%s">\n' % (' ' * self.indent, cmd[0]))
                 self.indent += 4
                 for option in cmd[1:]:
@@ -1075,7 +1095,7 @@ class GMFrame(wx.Frame):
 
         # make a new page in the bookcontrol for the layer tree (on page 0 of the notebook)
         self.pg_panel = wx.Panel(self.gm_cb, id=wx.ID_ANY, style= wx.EXPAND)
-        self.gm_cb.AddPage(self.pg_panel, text="Display "+ str(self.disp_idx), select = True)
+        self.gm_cb.AddPage(self.pg_panel, text="Display "+ str(self.disp_idx + 1), select = True)
         self.curr_page = self.gm_cb.GetCurrentPage()
 
         # create layer tree (tree control for managing GIS layers)  and put on new notebook page
