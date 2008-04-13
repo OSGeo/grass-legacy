@@ -571,6 +571,7 @@ class CommandThread(Thread):
                 # line = self.__read_all(self.module.stderr)
                 line = recv_some(self.module, e=0, stderr=1)
                 self.stderr.write(line)
+                self.rerr = line
 
         # get the last output
         if self.stdout:
@@ -581,6 +582,8 @@ class CommandThread(Thread):
             # line = self.__read_all(self.module.stderr)
             line = recv_some(self.module, e=0, stderr=1)
             self.stderr.write(line)
+            if len(line) > 0:
+                self.rerr = line
 
         if hasattr(self.stderr, "gmstc"):
             # -> GMConsole

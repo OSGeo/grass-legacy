@@ -1,7 +1,7 @@
 """
 @package dbm.py
 
-@brief GRASS attribute table manager
+@brief GRASS Attribute Table Manager
 
 This program is based on FileHunter, published in 'The wxPython Linux
 Tutorial' on wxPython WIKI pages.
@@ -10,7 +10,7 @@ It also uses some functions at
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/426407
 
 @code
-dbm.py vector@mapset
+python dbm.py vector@mapset
 @endcode
 
 List of classes:
@@ -137,10 +137,14 @@ class VirtualAttributeList(wx.ListCtrl,
         self.mapDBInfo = mapDBInfo
         self.LoadData(self.layer)
 
-    def LoadData(self, layer, cols='*', where=''):
+    def LoadData(self, layer, sql=None):
         """Load data into list
 
-        Returns id of key column or -1 if key column is not displayed
+        @param layer layer number
+        @param sql SQL select statement (if None 'SELECT * FROM table)
+
+        @return id of key column 
+        @return -1 if key column is not displayed
         """
 
         # These two should probably be passed to init more cleanly
@@ -152,14 +156,17 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # self.ClearAll()
         for i in range(self.GetColumnCount()):
-            self.DeleteColumn(0)
+            self.DeleteColumn(i)
 
         tableName    = self.mapDBInfo.layers[layer]['table']
         keyColumn    = self.mapDBInfo.layers[layer]['key']
         self.columns = self.mapDBInfo.tables[tableName]
 
-        if cols != '*':
-            columnNames = cols.split(',')
+        if sql is None:
+            sql = "SELECT * FROM %s" % tableName
+
+        if sql[7] != '*':
+            columnNames = sql[7:].split(' ')[0].split(',')
         else:
             columnNames = self.mapDBInfo.GetColumns(tableName)
 
@@ -185,15 +192,10 @@ class VirtualAttributeList(wx.ListCtrl,
             if i >= 256:
                 self.log.write(_("Can display only 256 columns."))
 
-        ### self.mapDBInfo.SelectFromTable(layer, cols, where) # <- values (FIXME)
         #
         # read data
         #
         # FIXME: Max. number of rows, while the GUI is still usable
-        if where is None or where is '':
-            sql="SELECT %s FROM %s" % (cols, tableName)
-        else:
-            sql="SELECT %s FROM %s WHERE %s" % (cols, tableName, where)
 
         # stdout can be very large, do not use PIPE, redirect to temp file
         # TODO: more effective way should be implemented...
@@ -547,7 +549,7 @@ class AttributeManager(wx.Frame):
 
             # sql statement box
             btnApply = wx.Button(parent=panel, id=wx.ID_APPLY)
-            btnApply.Bind(wx.EVT_BUTTON, self.OnApply)
+            btnApply.Bind(wx.EVT_BUTTON, self.OnApplySqlStatement)
             btnSqlBuilder = wx.Button(parent=panel, id=wx.ID_ANY, label=_("SQL Builder"))
             btnSqlBuilder.Bind(wx.EVT_BUTTON, self.OnBuilder)
 
@@ -1487,21 +1489,45 @@ class AttributeManager(wx.Frame):
         if self.FindWindowById(self.layerPage[self.layer]['simple']).GetValue():
             # simple sql statement
             where = self.FindWindowById(self.layerPage[self.layer]['where']).GetValue().strip()
-            if len(where) > 0:
-                keyColumn = listWin.LoadData(self.layer, where=where)
-            else:
+            try:
+                if len(where) > 0:
+                    sql = "SELECT * FROM %s WHERE %s" % (self.mapDBInfo.layers[self.layer]['table'],
+                                                         where)
+                    keyColumn = listWin.LoadData(self.layer, sql=sql)
+                else:
+                    keyColumn = listWin.LoadData(self.layer)
+            except gcmd.CmdError:
+                wx.MessageBox(parent=self,
+                              message=_("Loading attribute data failed. "
+                                        "Invalid SQL 'select' statement.\n\n"
+                                        "'%s'") % sql,
+                              caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
                 keyColumn = listWin.LoadData(self.layer)
+                self.FindWindowById(self.layerPage[self.layer]['where']).SetValue('')
         else:
             # advanced sql statement
-            valid, cols, where = \
-                self.ValidateSelectStatement( \
-                self.FindWindowById(self.layerPage[self.layer]['statement']).GetValue().strip())
-
-            Debug.msg(4, "AttributeManager.OnApplySqlStatament(): valid=%s, cols=%s, where=%s" %
-                      (valid, cols, where))
-
-            if valid is True:
-                keyColumn = listWin.LoadData(self.layer, cols=cols, where=where)
+            # valid, cols, where = \
+            #    self.ValidateSelectStatement( \
+            #    self.FindWindowById(self.layerPage[self.layer]['statement']).GetValue().strip())
+            #
+            #Debug.msg(4, "AttributeManager.OnApplySqlStatament(): valid=%s, cols=%s, where=%s" %
+            #          (valid, cols, where))
+            sql = self.FindWindowById(self.layerPage[self.layer]['statement']).GetValue()
+            try:
+                # if valid is True:
+                keyColumn = listWin.LoadData(self.layer,
+                                             sql=sql)
+                # else:
+                # raise gcmd.GException('')
+            except gcmd.CmdError:
+                wx.MessageBox(parent=self,
+                              message=_("Loading attribute data failed. "
+                                        "Invalid SQL 'select' statement.\n\n"
+                                        "'%s'") % sql,
+                              caption=_("Error"), style=wx.OK | wx.ICON_ERROR | wx.CENTRE)
+                keyColumn = listWin.LoadData(self.layer)
+                self.FindWindowById(self.layerPage[self.layer]['statement']).\
+                    SetValue("SELECT * FROM %s" % self.mapDBInfo.layers[self.layer]['table'])
 
         # sort by key column
         if keyColumn > -1:
