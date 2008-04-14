@@ -619,10 +619,13 @@ class GMFrame(wx.Frame):
                                            lopacity=layer['opacity'],
                                            lcmd=layer['cmd'],
                                            lgroup=layer['group'])
-                if layer['selected']:
-                    selected.append((maptree, newItem))
-                else:
-                    maptree.SelectItem(newItem, select=False)
+                
+                # tag 'selected' added 2008/04
+                if layer.has_key('selected'):
+                    if layer['selected']:
+                        selected.append((maptree, newItem))
+                    else:
+                        maptree.SelectItem(newItem, select=False)
                     
             for maptree, layer in selected:
                 if not maptree.IsSelected(layer):
