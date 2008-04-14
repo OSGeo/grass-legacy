@@ -17,12 +17,17 @@
 static int select_by_query(struct Map_info *, int, int, double,
 			   int, struct line_pnts *, struct line_cats *);
 
+static int merge_lists (struct ilist* alist, struct ilist* blist);
+
 /**
    \brief Select features by query (based on geometry properties)
 
    Currently supported:
-    - QUERY_LENGTH, select all features longer then threshold (or shorter if threshold is negative)
-    - QUERY_DANGLE, select all dangles longer then threshold (or shorter if threshold is negative)
+    - QUERY_LENGTH, select all features longer than threshold (or shorter if threshold is < 0)
+    - QUERY_DANGLE, select all dangles longer than threshold (or shorter if threshold is < 0)
+
+   Perform global query if <i>List</i> is empty otherwise query only
+   selected vector objects.
 
    \param[in] Map vector map
    \param[in] type feature type
@@ -46,43 +51,72 @@ int Vedit_select_by_query(struct Map_info *Map,
     Points = Vect_new_line_struct();
     Cats   = Vect_new_cats_struct();
 
-    List_query = Vect_new_list();
+    if (List->n_values == 0) {
+	List_query = List;
+    }
+    else {
+	List_query = Vect_new_list();
+    }
 
     switch (query) {
     case QUERY_LENGTH: {
-	num = Vect_get_num_lines (Map);
-	for (line = 1; line <= num; line++) {
-	    if (select_by_query(Map, line, type, thresh,
-				query, Points, Cats))
-		Vect_list_append(List, line);
+	if (List->n_values == 0) {
+	    /* query all vector objects in vector map */
+	    num = Vect_get_num_lines(Map);
+	    for (line = 1; line <= num; line++) {
+		if (select_by_query(Map, line, type, thresh,
+				    query, Points, Cats))
+		    Vect_list_append(List_query, line);
+	    }
 	}
-	break;
-    }
-    case QUERY_DANGLE: {
-	thresh_tmp = fabs(thresh);
-	Vect_select_dangles (Map, type, thresh_tmp, NULL,
-			     List_query);
-	if (thresh <= 0.0) { /* shorter than */
-	    for(i = 0; i < List_query->n_values; i++) {
-		Vect_list_append(List, List_query->value[i]);
-	    } 
-	}
-	else { /* longer than */
-	    for(i = 1; i <= Vect_get_num_lines(Map); i++) {
-		if (!Vect_val_in_list(List_query, i))
-		    Vect_list_append(List, i);
+	else {
+	    for (i = 0; i < List->n_values; i++) {
+		line = List->value[i];
+		if (select_by_query(Map, line, type, thresh,
+				    query, Points, Cats)) {
+		    Vect_list_append(List_query, line);
+		}
 	    }
 	}
 	break;
     }
+    case QUERY_DANGLE: {
+	struct ilist *List_dangle;
+
+	List_dangle = Vect_new_list();
+	thresh_tmp = fabs(thresh);
+
+	/* select dangles shorter than 'thresh_tmp' */
+	Vect_select_dangles (Map, type, thresh_tmp, NULL,
+			     List_dangle);
+
+	if (thresh <= 0.0) { /* shorter than */
+	    for(i = 0; i < List_dangle->n_values; i++) {
+		Vect_list_append(List_query, List_dangle->value[i]);
+	    } 
+	}
+	else { /* longer than */
+	    for(i = 1; i <= Vect_get_num_lines(Map); i++) {
+		if (!Vect_val_in_list(List_dangle, i))
+		    Vect_list_append(List_query, i);
+	    }
+	}
+
+	Vect_destroy_list(List_dangle);
+	break;
+    }
     default: break;
+    }
+
+    if (List != List_query) {
+	merge_lists(List, List_query);
+	Vect_destroy_list(List_query);
     }
 
     G_debug (3, "Vedit_select_by_query(): %d lines selected (by query %d)", List -> n_values, query);
 
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
-    Vect_destroy_list(List_query);
 
     return List -> n_values; 
 }
@@ -94,8 +128,8 @@ int Vedit_select_by_query(struct Map_info *Map,
    \return 0 line test negative
    \return -1 on error (line is dead)
 */
-static int select_by_query(struct Map_info *Map, int line, int type, double thresh,
-			   int query, struct line_pnts *Points, struct line_cats *Cats)
+int select_by_query(struct Map_info *Map, int line, int type, double thresh,
+		    int query, struct line_pnts *Points, struct line_cats *Cats)
 {
     int ltype;
     double length;
@@ -198,3 +232,31 @@ static int select_by_query(struct Map_info *Map, int line, int type, double thre
 
     return 0;
 }
+
+/**
+   \brief Merge two lists, i.e. store only duplicate items
+
+   \param[in,out] alist list to be merged
+   \param[in] blist list used for merging
+
+   \return result number of items
+*/
+int merge_lists (struct ilist* alist, struct ilist* blist)
+{
+    int i;
+
+    struct ilist* list_del;
+    
+    list_del = Vect_new_list();
+
+    for (i = 0; i < alist -> n_values; i++) {
+	if (!Vect_val_in_list (blist, alist -> value[i]))
+	    Vect_list_append (list_del, alist -> value[i]);
+    }
+
+    Vect_list_delete_list (alist, list_del);
+
+    Vect_destroy_list (list_del);
+
+    return alist -> n_values;
+} 
