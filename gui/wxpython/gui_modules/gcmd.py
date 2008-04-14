@@ -98,7 +98,7 @@ class DigitError(GException):
 
 class DBMError(GException):
     """Exception raised for Attribute Table Manager"""
-    def __init__(self, message):
+    def __init__(self, message, parent=None):
         GException.__init__(self, message,
                             title=_("Error in Attribute Table Manager"),
                             parent=parent)
