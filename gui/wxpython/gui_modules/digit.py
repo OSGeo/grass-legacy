@@ -708,8 +708,8 @@ class VEdit(AbstractDigit):
                   'map=%s' % self.map,
                   'tool=select',
                   'bbox=%f,%f,%f,%f' % (w, n, e, s),
-                  'query=%s' % UserSettings.Get(group='vdigit', key='query', subkey='thresh'),
-                  'thresh=%f' % thresh])
+                  'query=%s' % UserSettings.Get(group='vdigit', key='query', subkey='type'),
+                  'thresh=0,0,%f' % thresh])
 
         vEditCmd = gcmd.Command(vEdit)
         
@@ -1081,7 +1081,8 @@ class VDigit(AbstractDigit):
 
         type = vdigit.GV_POINTS | vdigit.GV_LINES # TODO: 3D
         
-        ids = self.digit.SelectLinesByQuery(w, n, 0.0, e, s, 1000.0, UserSettings.Get(group='vdigit', key='query', subkey='box'),
+        ids = self.digit.SelectLinesByQuery(w, n, 0.0, e, s, 1000.0,
+                                            UserSettings.Get(group='vdigit', key='query', subkey='box'),
                                             query, type, thresh)
 
         Debug.msg(4, "VDigit.SelectLinesByQuery(): %s" % \
