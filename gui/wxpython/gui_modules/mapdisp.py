@@ -3411,6 +3411,14 @@ class MapFrame(wx.Frame):
         self.PopupMenu(zoommenu)
         zoommenu.Destroy()
 
+    def SetProperties(self, render=False, mode=0, showCompExtent=False):
+        """Set properies of map display window"""
+        self.autoRender.SetValue(render)
+        self.toggleStatus.SetSelection(mode)
+        self.statusText = self.toggleStatus.GetStringSelection()
+        self.StatusbarUpdate()
+        self.showRegion.SetValue(showCompExtent)
+        
 # end of class MapFrame
 
 class MapApp(wx.App):
