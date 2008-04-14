@@ -114,7 +114,7 @@ proc GmRnums::set_font { id } {
 	if {$GmRnums::opt($id,1,font) != "" } {
 		set Gm::dfont $GmRnums::opt($id,1,font)
 	}
-	Gm:DefaultFont drastnum
+	Gm::defaultfont drastnum
 	tkwait variable Gm::dfont
 	set GmRnums::opt($id,1,font) $Gm::dfont
 	set Gm::dfont ""

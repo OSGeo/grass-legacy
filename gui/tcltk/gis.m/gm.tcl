@@ -482,7 +482,7 @@ proc Gm::cleanup { } {
 		catch {file delete $file}
 	}
 
-	if {[file exists $legfile]} {catch {file delete -force $legfile}}
+	if {[info exists legfile] && [file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 

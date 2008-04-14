@@ -312,8 +312,9 @@ proc GmCLabels::display { node } {
     
     set can($mon) $MapCanvas::can($mon)
     if {[string match {*[@]*} $opt($id,1,labels)]} { 
-		set tmp [string range $opt($id,1,labels) 0 [expr [string first "@" $opt($id,1,labels)] - 1] ]
-		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/PERMANENT/paint/labels/$tmp"
+		set labelfname [string range $opt($id,1,labels) 0 [expr [string first "@" $opt($id,1,labels)] - 1] ]
+		set labelmname [string range $opt($id,1,labels) [expr [string first "@" $opt($id,1,labels)] + 1] [string length $opt($id,1,labels)] ]
+		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$labelmname/paint/labels/$labelfname"
     } else {
 		set labelpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/paint/labels/$opt($id,1,labels)"
     }
@@ -321,7 +322,10 @@ proc GmCLabels::display { node } {
     if { ! ( $opt($id,1,_check) ) } { return } 
     
     # open the v.label file for reading
-	catch {set labelfile [open $labelpath r]}
+	if { [catch {set labelfile [open $labelpath r]} err ] } {
+		GmLib::errmsg $err [G_msg "Could not open labels file "]
+		return
+	}
 	
 	#loop through coordinates and options for each label
     while { [gets $labelfile in] > -1 } {
