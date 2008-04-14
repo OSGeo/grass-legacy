@@ -156,7 +156,7 @@ class VirtualAttributeList(wx.ListCtrl,
 
         # self.ClearAll()
         for i in range(self.GetColumnCount()):
-            self.DeleteColumn(i)
+            self.DeleteColumn(0)
 
         tableName    = self.mapDBInfo.layers[layer]['table']
         keyColumn    = self.mapDBInfo.layers[layer]['key']
