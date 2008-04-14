@@ -19,7 +19,7 @@
 
 
 namespace eval GmLib {
-	global array filename # mon
+	global array filename ;# mon
 
 }
 
