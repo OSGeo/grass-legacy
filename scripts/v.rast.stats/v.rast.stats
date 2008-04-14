@@ -264,7 +264,7 @@ done
 
 g.message -v "Adding columns <$ADDCOLS>"
 v.db.addcol map="$VECTOR" columns="$ADDCOLS"
-if [ $? -eq 1 ] ; then
+if [ $? -ne 0 ] ; then
    g.message -e "Cannot continue (problem adding columns)."
    cleanup
    exit 1
@@ -326,8 +326,10 @@ g.remove MASK --quiet 2>/dev/null
 
 cleanup
 
-g.message "Statistics calculated from raster map <$RASTER> and uploaded to \
+if [ "$EXITCODE" -eq 0 ] ; then
+  g.message "Statistics calculated from raster map <$RASTER> and uploaded to \
     attribute table of vector map <$VECTOR>."
-g.message "Done."
+  g.message "Done."
+fi
 
 exit $EXITCODE
