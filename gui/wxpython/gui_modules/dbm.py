@@ -249,6 +249,8 @@ class VirtualAttributeList(wx.ListCtrl,
             width = self.columns[col]['length'] * 6 # FIXME
             if width < 60:
                 width = 60
+            if width > 300:
+                width = 300
             self.SetColumnWidth(col=i, width=width)
             i += 1
 
