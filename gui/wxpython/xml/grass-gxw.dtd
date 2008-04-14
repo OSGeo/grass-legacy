@@ -18,8 +18,13 @@
 
 <!--    a display element defines map layer connected to given
 	map display widnow
+
+        render, mode and showCompExtent (added 2004/08)
 -->
-<!ELEMENT display (group*, layer*)>
+<!ELEMENT display ((group|layer)*)>
+<!ATTLIST display  render	   CDATA #IMPLIED>
+<!ATTLIST display  mode            CDATA #IMPLIED>
+<!ATTLIST display  showCompExtent  CDATA #IMPLIED>
 
 <!--    group of map layers
 -->
@@ -41,7 +46,7 @@
 <!ELEMENT task	        (flag*, parameter*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
 
-<!--	layer selected
+<!--	layer selected (added 2008/04)
 -->
 <!ELEMENT selected      EMPTY>
 

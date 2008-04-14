@@ -606,9 +606,13 @@ class GMFrame(wx.Frame):
                 if layer['display'] >= self.disp_idx:
                     # start new map display if no display is available
                     self.NewDisplay()
-
+                    
                 maptree = self.gm_cb.GetPage(layer['display']).maptree
-
+                mapdisplay = maptree.mapdisplay
+                mapdisplay.SetProperties(render=gxwXml.displays[layer['display']]['render'],
+                                         mode=gxwXml.displays[layer['display']]['mode'],
+                                         showCompExtent=gxwXml.displays[layer['display']]['showCompExtent'])
+                
                 if not maptree.mapdisplay.IsShown():
                     # show map display
                     maptree.mapdisplay.Show()
@@ -844,9 +848,16 @@ class GMFrame(wx.Frame):
             file.write('%s<gxw>\n' % (' ' * self.indent))
             # list of displays
             for page in range(0, self.gm_cb.GetPageCount()):
-                self.indent =+ 4
-                file.write('%s<display>\n' % (' ' * self.indent))
                 mapTree = self.gm_cb.GetPage(page).maptree
+
+                self.indent =+ 4
+                file.write('%s<display render="%d" '
+                           'mode="%d" showCompExtent="%d">\n' % (' ' * self.indent,
+                                                                 int(mapTree.mapdisplay.autoRender.IsChecked()),
+                                                                 mapTree.mapdisplay.toggleStatus.GetSelection(),
+                                                                 int(mapTree.mapdisplay.showRegion.IsChecked()),
+                                                                 ))
+
                 # list of layers
                 item = mapTree.GetFirstChild(mapTree.root)[0]
                 self.WriteLayersToWorkspaceFile(file, mapTree, item)

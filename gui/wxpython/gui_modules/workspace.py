@@ -45,8 +45,9 @@ class ProcessWorkspaceFile(HandlerBase):
         self.inValue     = False
         self.inGroup     = False
         self.inDisplay   = False
-
+        
         # list of layers
+        self.displays = []
         self.layers = []
         self.cmd    = []
         self.displayIndex = -1 # first display has index '0'
@@ -58,18 +59,22 @@ class ProcessWorkspaceFile(HandlerBase):
         elif name == 'display':
             self.inDisplay = True
             self.displayIndex += 1
-
+            self.displays.append({
+                "render"         : bool(attrs.get('render', False)),
+                "mode"           : int(attrs.get('mode', 0)),
+                "showCompExtent" : bool(attrs.get('showCompExtent', False))})
+            
         elif name == 'group':
             self.groupName    = attrs.get('name', None)
             self.groupChecked = attrs.get('checked', None)
             self.layers.append({
-                    "type"    : 'group',
-                    "name"    : self.groupName,
-                    "checked" : int(self.groupChecked),
-                    "opacity" : None,
-                    "cmd"     : None,
-                    "group"   : self.inGroup,
-                    "display" : self.displayIndex})
+                "type"    : 'group',
+                "name"    : self.groupName,
+                "checked" : int(self.groupChecked),
+                "opacity" : None,
+                "cmd"     : None,
+                "group"   : self.inGroup,
+                "display" : self.displayIndex})
             self.inGroup = True
 
         elif name == 'layer':
