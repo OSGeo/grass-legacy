@@ -22,23 +22,23 @@
         render, mode and showCompExtent (added 2004/08)
 -->
 <!ELEMENT display ((group|layer)*)>
-<!ATTLIST display  render	   CDATA #IMPLIED>
-<!ATTLIST display  mode            CDATA #IMPLIED>
-<!ATTLIST display  showCompExtent  CDATA #IMPLIED>
+<!ATTLIST display  render	   (0 | 1) #IMPLIED>
+<!ATTLIST display  mode            (0 | 1 | 2 | 3 | 4 | 5 | 6) #IMPLIED>
+<!ATTLIST display  showCompExtent  (0 | 1) #IMPLIED>
 
 <!--    group of map layers
 -->
 <!ELEMENT group (layer*)>
-<!ATTLIST group	name	CDATA #REQUIRED>
-<!ATTLIST group	checked CDATA #REQUIRED>
+<!ATTLIST group	name	CDATA   #REQUIRED>
+<!ATTLIST group	checked (0 | 1) #REQUIRED>
 
 <!--    map layer
 -->
 <!ELEMENT layer (selected?, task?)>
-<!ATTLIST layer	type	CDATA #REQUIRED>
-<!ATTLIST layer	name	CDATA #REQUIRED>
-<!ATTLIST layer	checked CDATA #REQUIRED>
-<!ATTLIST layer	opacity	CDATA #IMPLIED>
+<!ATTLIST layer	type	CDATA   #REQUIRED>
+<!ATTLIST layer	name	CDATA   #REQUIRED>
+<!ATTLIST layer	checked (0 | 1) #REQUIRED>
+<!ATTLIST layer	opacity	CDATA   #IMPLIED>
 
 <!--	task describes the interface of a single
 	GRASS command. 
