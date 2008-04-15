@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 #include <grass/gis.h>
 #include <grass/Vect.h>
 #include "list.h"
