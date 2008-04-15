@@ -201,6 +201,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     Destroy_OS_Ctx();
 #endif
 
+    fprintf(stderr, "Finished rendering max. size image\n");
     sprintf(inform_text, "inform \"Finished rendering max. size image\"");
     Tcl_Eval(interp, inform_text);
     return (TCL_OK);
