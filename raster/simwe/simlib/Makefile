@@ -7,8 +7,6 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 LIB_NAME = $(SIM_LIBNAME)
 
-LIB_OBJS = input.o random.o hydro.o output.o erod.o
-
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: $(ARCH_INCDIR)/waterglobs.h lib
