@@ -25,23 +25,23 @@
 # source $gmpath/maptool.tcl
 
 namespace eval MapCanvas {
-	variable array displayrequest # Indexed by mon, true if it wants to get displayed.
+	variable array displayrequest ;# Indexed by mon, true if it wants to get displayed.
 
 	# Something's modified the canvas or view, indexed by mon.
 	# Degree of modification 0 - none, 1 - zoom, 2 - canvas
 	variable array canmodified
 
-	variable array can # The canvas widgets of the monitors, indexed by mon
-	variable array mapframe # Frame widgets, indexed by mon
-	variable array canvas_w # Width and height of canvas. Indexed by mon
-	variable array canvas_h # mon
-	variable array driver_w # Actual width and height used while drawing / compositing. Indexed by mon
-	variable array driver_h # Actual width and height used while drawing / compositing. Indexed by mon
-	variable array exploremode # Whether or not to change regions to match monitor, indexed by mon
-	variable array map_ind # Indicator widgets, indexed by mon
-	variable array msg # status message, indexed by mon
-	variable b1north # capture north coordinate on clicking mouse
-	variable b1east # capture east coordinate on clicking mouse
+	variable array can ;# The canvas widgets of the monitors, indexed by mon
+	variable array mapframe ;# Frame widgets, indexed by mon
+	variable array canvas_w ;# Width and height of canvas. Indexed by mon
+	variable array canvas_h ;# mon
+	variable array driver_w ;# Actual width and height used while drawing / compositing. Indexed by mon
+	variable array driver_h ;# Actual width and height used while drawing / compositing. Indexed by mon
+	variable array exploremode ;# Whether or not to change regions to match monitor, indexed by mon
+	variable array map_ind ;# Indicator widgets, indexed by mon
+	variable array msg ;# status message, indexed by mon
+	variable b1north ;# capture north coordinate on clicking mouse
+	variable b1east ;# capture east coordinate on clicking mouse
 
 	
 	# zoom box corners indexed by mon
@@ -83,7 +83,7 @@ namespace eval MapCanvas {
 	# Their masks
 	variable array masklist 
 
-	global geoentry "" # variable holds path of entry widgets that use coordinates from canvas
+	global geoentry "" ;# variable holds path of entry widgets that use coordinates from canvas
 
 	# Current region and region historys
 	# Indexed by mon, history (1 (current) - zoomhistories), part (n, s, e, w, nsres, ewres, rows, cols).

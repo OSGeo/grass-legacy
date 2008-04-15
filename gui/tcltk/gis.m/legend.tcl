@@ -10,12 +10,12 @@
 ##########################################################################
 
 namespace eval GmLegend {
-    variable array opt # legend current options
+    variable array opt ;# legend current options
     variable count 1
-    variable array lfile # raster
-    variable array lfilemask # raster
+    variable array lfile ;# raster
+    variable array lfilemask ;# raster
     variable optlist
-    variable array dup # vector
+    variable array dup ;# vector
     variable llcorner
 }
 
@@ -153,6 +153,34 @@ proc GmLegend::select_map { id } {
     }
 }
 
+# Calculate optimal legend height for CELL maps
+proc GmLegend::getoptimalvsize { varname key op } {
+	upvar #0 $varname var
+	set numclass 0
+	
+	if {[string length $var($key)] > 0} {
+		if {![catch {open "|r.info -t map=$var($key)" r} iinput]} {
+			while {[gets $iinput iline] >= 0} {
+				if {[string equal "datatype=CELL" "$iline"]} {
+					if {![catch {open "|r.describe -1 -n --q map=$var($key)" r} dinput]} {
+						while {[gets $dinput dline] >= 0} {
+							incr numclass
+						}
+					}
+				}
+			}
+		}
+		if {$numclass > 0} {
+			set hg [expr {$numclass * 7}]
+			if {$hg > 80} {
+				set GmLegend::opt([string index $key 0],1,height) 80
+			} else {
+				set GmLegend::opt([string index $key 0],1,height) $hg
+			}
+		}
+	}
+}
+
 ###############################################################################
 # legend options
 proc GmLegend::options { id frm } {
@@ -176,7 +204,7 @@ proc GmLegend::options { id frm } {
 	Label $row.c -text [G_msg " Transparent"]
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes	
-	
+    
     # raster name
     set row [ frame $frm.map ]
     Label $row.a -text [G_msg "Raster map: "]
@@ -185,6 +213,8 @@ proc GmLegend::options { id frm } {
 	icon_configure $row.b element cell
     Entry $row.c -width 35 -text " $opt($id,1,map)" \
           -textvariable GmLegend::opt($id,1,map) 
+	trace add variable GmLegend::opt($id,1,map) write GmLegend::getoptimalvsize
+    
     Label $row.d -text "   "
     Button $row.e -text [G_msg "Help"] \
             -command "spawn g.manual --q d.legend" \
