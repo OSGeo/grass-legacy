@@ -3,7 +3,6 @@ MODULE_TOPDIR = ..
 SUBDIRS1 = \
 	i.ask \
 	i.atcorr \
-	i.class \
 	i.cluster \
 	i.find \
 	i.gensig \
@@ -11,13 +10,10 @@ SUBDIRS1 = \
 	i.group \
 	i.his.rgb \
 	i.maxlik \
-	i.ortho.photo \
-	i.points \
 	i.rectify \
 	i.rgb.his \
 	i.smap \
 	i.target \
-	i.vpoints \
 	i.pca \
 	i.cca
 
@@ -25,14 +21,17 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 FFTWBASED = i.fft i.ifft i.zc
 
+XMONBASED = i.class i.ortho.photo i.points i.vpoints
+
 #compile if FFTW present:
 ifneq ($(strip $(FFTWLIB)),)
-    SUBDIRS2 = $(SUBDIRS1) $(FFTWBASED)
-else
-    SUBDIRS2 = $(SUBDIRS1)
+    SUBDIRS += $(FFTWBASED)
 endif
 
-SUBDIRS = $(SUBDIRS2)
+#compile if interactive Xmons are present:
+ifneq ($(USE_X11),)
+    SUBDIRS += $(XMONBASED)
+endif
 
 PGM = imageryintro
 
