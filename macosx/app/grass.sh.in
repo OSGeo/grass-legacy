@@ -75,18 +75,35 @@ if [ ! "$GRASS_FONT_CAP" ] ; then
 fi
 export GRASS_FONT_CAP
 
+# default xterm Terminal emulator
+# note: only app startup defaults this way, CLI build still defaults to xterm
+if [ ! "$GRASS_XTERM" ] ; then
+	GRASS_XTERM="$GISBASE/etc/grass-xterm-mac"
+	export GRASS_XTERM
+fi
+
+# determine current term application (when grass.sh is run directly by the user)
+# use osascript so we can get name of term app, not shell process
+USERTERM=`osascript -e 'tell application "System Events" to item 1 of (get name of processes whose frontmost is true)'`
+if [ ! "$USERTERM" ] ; then
+	USERTERM="Terminal"
+fi
+
 ### X11 stuff
 
-# start X11 if not running - no need to check if running when using 'open'
+# start X11 if not running
 # some users may be annoyed by this, but X11 required for some stuff for now
 if [ -d "/Applications/Utilities/X11.app" ] ; then
 	# no need to start Leopard X11.app
 	if [ ! -d "/usr/X11" ] ; then
-		open /Applications/Utilities/X11.app
+		# check if running anyways, even though not necessary with "open"
+		if [ ! "`ps -axc | grep 'X11$'`" ] ; then
+			open /Applications/Utilities/X11.app
+		fi
 	fi
 fi
 
-# xterm - make sure X11 is in PATH
+# make sure X11 is in PATH
 pathX11=`echo "$PATH" | grep '/usr/X11\(R6\)\?/bin'`
 if [ ! "$pathX11" ] ; then
 	if [ -d "/usr/X11" ] ; then
@@ -118,19 +135,22 @@ if [ ! "$DISPLAY" ] ; then
 	DISPLAY=:0.0
 	export DISPLAY
 fi
+
 ### end X11 block
 
 # if gisrc has text startup, switch back to Terminal (gotta duplicate some init.sh stuff)
 # eventually, when TclTk optional, can run appropriate apps per GUI here (ie X11)
 GISRCRC="$HOME/.grassrc6"
-if [ -f "$GISRCRC" ] ; then
-	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRCRC"`
-fi
 if [ ! "$GRASS_GUI" ] ; then
-	GRASS_GUI="tcltk"
+	if [ -f "$GISRCRC" ] ; then
+		GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRCRC"`
+	fi
+	if [ ! "$GRASS_GUI" ] ; then
+		GRASS_GUI="tcltk"
+	fi
 fi
 if [ "$GRASS_GUI" = "text" ] ; then
-	osascript -e 'tell application "Terminal" to activate'
+	osascript -e "tell application \"$USERTERM\" to activate"
 fi
 
 exec "$GISBASE/etc/Init.sh" "$@"

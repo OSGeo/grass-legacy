@@ -55,8 +55,13 @@ FILES = \
 	$(ETC)/grass_dialog.ico \
 	$(ETC)/grass_sql.ico \
 	$(ETC)/grass-run.sh \
-	$(ETC)/grass-xterm-wrapper \
-	$(ETC)/html_browser_mac.sh
+	$(ETC)/grass-xterm-wrapper
+
+ifeq ($(findstring darwin,$(ARCH)),darwin)
+	FILES += \
+		$(ETC)/grass-xterm-mac \
+		$(ETC)/html_browser_mac.sh
+endif
 
 ifneq ($(strip $(MINGW)),)
 	FILES += \
@@ -200,11 +205,13 @@ $(ETC)/grass-run.bat: grass-run.bat
 $(ETC)/grass-xterm-wrapper: grass-xterm-wrapper
 	$(INSTALL) -m 755 grass-xterm-wrapper $(ETC)
 
+$(ETC)/grass-xterm-mac: grass-xterm-mac
+	$(INSTALL) grass-xterm-mac $(ETC)
+
 $(ETC)/prompt.sh: prompt.sh
 	rm -f $@
 	$(INSTALL) -m 755 prompt.sh $(ETC)
 
 $(ETC)/html_browser_mac.sh: html_browser_mac.sh
-	rm -f $@
-	@if [ "`cat ../../include/Make/Platform.make | grep -i '^ARCH.*darwin'`" ] ; then $(INSTALL) -m 755 html_browser_mac.sh $(ETC) ; fi
+	$(INSTALL) html_browser_mac.sh $(ETC)
 
