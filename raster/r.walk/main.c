@@ -233,7 +233,6 @@ int main(int argc, char *argv[])
     opt5 = G_define_option();
     opt5->key = "max_cost";
     opt5->type = TYPE_INTEGER;
-    opt5->key_desc = "cost";
     opt5->required = NO;
     opt5->multiple = NO;
     opt5->answer = "0";
@@ -242,7 +241,6 @@ int main(int argc, char *argv[])
     opt6 = G_define_option();
     opt6->key = "null_cost";
     opt6->type = TYPE_DOUBLE;
-    opt6->key_desc = "null cost";
     opt6->required = NO;
     opt6->multiple = NO;
     opt6->description =
@@ -251,7 +249,6 @@ int main(int argc, char *argv[])
     opt9 = G_define_option();
     opt9->key = "percent_memory";
     opt9->type = TYPE_INTEGER;
-    opt9->key_desc = "percent memory";
     opt9->required = NO;
     opt9->multiple = NO;
     opt9->answer = "100";
@@ -260,7 +257,6 @@ int main(int argc, char *argv[])
     opt14 = G_define_option();
     opt14->key = "nseg";
     opt14->type = TYPE_INTEGER;
-    opt14->key_desc = "nseg";
     opt14->required = NO;
     opt14->multiple = NO;
     opt14->answer = "4";
@@ -279,16 +275,15 @@ int main(int argc, char *argv[])
     opt11 = G_define_option();
     opt11->key = "lambda";
     opt11->type = TYPE_DOUBLE;
-    opt11->key_desc = "lambda";
-    opt11->required = YES;
+    opt11->required = NO;
     opt11->multiple = NO;
+    opt11->answer = "1.0";
     opt11->description =
 	_("Lambda coefficients for combining walking energy and friction cost");
 
     opt13 = G_define_option();
     opt13->key = "slope_factor";
     opt13->type = TYPE_DOUBLE;
-    opt13->key_desc = "slope_factor";
     opt13->required = NO;
     opt13->multiple = NO;
     opt13->answer = "-0.2125";
