@@ -121,7 +121,7 @@ source $gmpath/runandoutput.tcl
 namespace eval Gm {
 	variable gm_mainframe
 	variable status
-	variable array tree # mon
+	variable array tree ;# mon
 	variable rcfile
 	variable moncount
 	variable prgtext
@@ -129,7 +129,7 @@ namespace eval Gm {
 	variable dfont 
 	variable selectedfont
 	variable encoding
-	global array filename # mon
+	global array filename ;# mon
 
 }
 
@@ -482,7 +482,7 @@ proc Gm::cleanup { } {
 		catch {file delete $file}
 	}
 
-	if {[file exists $legfile]} {catch {file delete -force $legfile}}
+	if {[info exists legfile] && [file exists $legfile]} {catch {file delete -force $legfile}}
 
 	unset mon
 
