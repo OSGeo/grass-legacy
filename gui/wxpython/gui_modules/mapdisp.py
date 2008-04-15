@@ -3418,6 +3418,8 @@ class MapFrame(wx.Frame):
         self.statusText = self.toggleStatus.GetStringSelection()
         self.StatusbarUpdate()
         self.showRegion.SetValue(showCompExtent)
+        if showCompExtent:
+            self.MapWindow.regionCoords = []
         
 # end of class MapFrame
 
